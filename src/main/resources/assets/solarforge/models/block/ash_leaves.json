@@ -1,0 +1,6 @@
+{
+  "parent": "block/leaves",
+  "textures": {
+    "all": "solarforge:block/ash_leaves2"
+  }
+}

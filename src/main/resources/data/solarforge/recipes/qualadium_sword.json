@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "solarforge:qualadium_sword"
+    },
+    {
+      "item": "solarforge:charged_qualadium_ingot"
+    }
+  ],
+  "result": {
+    "item": "solarforge:qualadium_sword"
+  }
+}

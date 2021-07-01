@@ -1,0 +1,37 @@
+{
+  "type":"solarforge:infusing",
+  "input1": {
+    "item": "solarforge:illidium_shovel"
+  },
+  "input2": {
+    "item": "minecraft:air"
+  },
+  "input3": {
+    "item": "solarforge:qualadium_ingot"
+  },
+  "input4": {
+    "item": "minecraft:air"
+  },
+  "input5": {
+    "item": "solarforge:qualadium_ingot"
+  },
+  "input6": {
+    "item": "minecraft:air"
+  },
+  "input7": {
+    "item": "solarforge:qualadium_ingot"
+  },
+  "input8": {
+    "item": "minecraft:air"
+  },
+  "input9": {
+    "item": "solarforge:qualadium_ingot"
+  },
+  "result": {
+    "item": "solarforge:qualadium_shovel"
+  },
+  "time": 1500,
+  "requires": "solar_forge_progression_solar_lens_craft",
+  "category": "solar_category.tools",
+  "desc": "Upgraded illidium shovel."
+}

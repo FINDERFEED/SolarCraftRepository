@@ -1,0 +1,38 @@
+{
+  "type":"solarforge:infusing",
+  "input1": {
+    "item": "minecraft:netherite_pickaxe"
+  },
+  "input2": {
+    "item": "solarforge:miner_item"
+  },
+  "input3": {
+    "item": "solarforge:qualadium_ingot"
+  },
+  "input4": {
+    "item": "solarforge:energy_dust"
+  },
+  "input5": {
+    "item": "solarforge:qualadium_ingot"
+  },
+  "input6": {
+    "item": "solarforge:qualadium_pickaxe"
+  },
+  "input7": {
+    "item": "solarforge:solar_dust"
+  },
+  "input8": {
+    "item": "minecraft:redstone_block"
+  },
+  "input9": {
+    "item": "solarforge:solar_dust"
+  },
+  "result": {
+    "item": "solarforge:solar_god_pickaxe"
+  },
+  "time": 3000,
+  "requires": "solar_forge_progression_solar_lens_craft",
+  "category": "solar_category.tools",
+  "desc": "An upgradable pickaxe with big magical power."
+
+}

@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smithing",
+  "base": {
+    "item": "solarforge:qualadium_sword"
+  },
+  "addition": {
+    "item": "solarforge:charged_qualadium_ingot"
+  },
+  "result": {
+    "item": "solarforge:charged_qualadium_sword"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "parent": "block/cross",
+  "textures": {
+    "cross": "solarforge:block/solar_flower"
+  }
+}

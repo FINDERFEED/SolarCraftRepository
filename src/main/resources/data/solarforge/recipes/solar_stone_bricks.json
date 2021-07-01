@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "## ",
+    "## ",
+    "   "
+  ],
+  "key": {
+    "#": {
+      "item": "solarforge:solar_stone"
+    }
+  },
+  "result": {
+    "item": "solarforge:solar_stone_bricks",
+    "count": 4
+
+  }
+}

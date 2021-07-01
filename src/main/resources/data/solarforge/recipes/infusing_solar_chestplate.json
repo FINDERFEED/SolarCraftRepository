@@ -1,0 +1,38 @@
+{
+  "type":"solarforge:infusing",
+  "input1": {
+    "item": "minecraft:diamond_chestplate"
+  },
+  "input2": {
+    "item": "minecraft:gold_ingot"
+  },
+  "input3": {
+    "item": "solarforge:solar_dust"
+  },
+  "input4": {
+    "item": "minecraft:gold_ingot"
+  },
+  "input5": {
+    "item": "solarforge:solar_dust"
+  },
+  "input6": {
+    "item": "minecraft:gold_ingot"
+  },
+  "input7": {
+    "item": "solarforge:solar_dust"
+  },
+  "input8": {
+    "item": "minecraft:gold_ingot"
+  },
+  "input9": {
+    "item": "solarforge:solar_dust"
+  },
+  "result": {
+    "item": "solarforge:solar_chestplate"
+  },
+  "time": 500,
+  "requires": "solar_forge_progression_solar_infuser_create",
+  "category": "solar_category.armor",
+  "desc": "Armor that is a bit stronger than netherite"
+
+}

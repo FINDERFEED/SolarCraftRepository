@@ -1,0 +1,37 @@
+{
+  "type":"solarforge:infusing",
+  "input1": {
+    "item": "minecraft:diamond_sword"
+  },
+  "input2": {
+    "item": "minecraft:air"
+  },
+  "input3": {
+    "item": "solarforge:illidium_ingot"
+  },
+  "input4": {
+    "item": "minecraft:air"
+  },
+  "input5": {
+    "item": "solarforge:illidium_ingot"
+  },
+  "input6": {
+    "item": "minecraft:air"
+  },
+  "input7": {
+    "item": "solarforge:illidium_ingot"
+  },
+  "input8": {
+    "item": "minecraft:air"
+  },
+  "input9": {
+    "item": "solarforge:illidium_ingot"
+  },
+  "result": {
+    "item": "solarforge:illidium_sword"
+  },
+  "time": 1000,
+  "requires": "solar_forge_progression_solar_infuser_create",
+  "category": "solar_category.tools",
+  "desc": "This sword uses the power of the illidium ingots to mend itself and set enemies on fire"
+}

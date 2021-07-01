@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " J ",
+    "JFJ",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:iron_ingot"
+    },
+    "F": {
+      "item": "solarforge:solar_shard"
+    },
+    "J": {
+      "item": "solarforge:solar_stone"
+    }
+  },
+  "result": {
+    "item": "solarforge:solar_forge_infusion_pool"
+
+  }
+}

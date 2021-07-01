@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "   ",
+    " # ",
+    " F "
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:redstone"
+    },
+    "F": {
+      "item": "solarforge:illidium_ingot"
+    }
+  },
+  "result": {
+    "item": "solarforge:energy_meter"
+
+  }
+}

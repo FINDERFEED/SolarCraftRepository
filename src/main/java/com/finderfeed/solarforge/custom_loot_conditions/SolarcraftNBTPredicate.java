@@ -1,0 +1,48 @@
+package com.finderfeed.solarforge.custom_loot_conditions;
+
+import com.finderfeed.solarforge.SolarCraftTags;
+import com.finderfeed.solarforge.magic_items.item_tiers.SolarCraftToolTiers;
+import com.google.common.collect.ImmutableSet;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonSerializationContext;
+import net.minecraft.advancements.criterion.ItemPredicate;
+import net.minecraft.advancements.criterion.NBTPredicate;
+import net.minecraft.item.ItemStack;
+import net.minecraft.loot.*;
+import net.minecraft.loot.conditions.ILootCondition;
+import net.minecraft.loot.conditions.LootConditionManager;
+import net.minecraft.util.JSONUtils;
+
+import javax.annotation.Nullable;
+import java.util.Set;
+
+public class SolarcraftNBTPredicate extends ItemPredicate{
+    //public final NBTPredicate nbt;
+    public final String nbt;
+    public final String subNBT;
+
+    public final int higherthan;
+    public SolarcraftNBTPredicate(String prd,int higherthan,String subNBT){
+        this.subNBT = subNBT;
+        this.nbt = prd;
+
+        this.higherthan = higherthan;
+    }
+    public boolean matches(ItemStack stack){
+        if (    (stack.getTagElement(nbt) != null) &&
+                (stack.getTagElement(nbt).getInt(subNBT) >= higherthan)
+        ){
+            return true;
+        }
+        return false;
+    }
+    public static SolarcraftNBTPredicate fromJson(JsonObject json) {
+
+        String predicate = JSONUtils.getAsString(json,"nbt");
+        String subNBT = JSONUtils.getAsString(json,"subnbt");
+        int higherthan = JSONUtils.getAsInt(json,"higherthan");
+        return new SolarcraftNBTPredicate(predicate,higherthan,subNBT);
+    }
+}

@@ -1,0 +1,38 @@
+{
+  "type":"solarforge:infusing",
+  "input1": {
+    "item": "solarforge:qualadium_ingot"
+  },
+  "input2": {
+    "item": "solarforge:energy_dust"
+  },
+  "input3": {
+    "item": "solarforge:solar_dust"
+  },
+  "input4": {
+    "item": "solarforge:energy_dust"
+  },
+  "input5": {
+    "item": "solarforge:solar_dust"
+  },
+  "input6": {
+    "item": "solarforge:energy_dust"
+  },
+  "input7": {
+    "item": "solarforge:solar_dust"
+  },
+  "input8": {
+    "item": "solarforge:energy_dust"
+  },
+  "input9": {
+    "item": "solarforge:solar_dust"
+  },
+  "result": {
+    "item": "solarforge:charged_qualadium_ingot"
+  },
+  "time": 250,
+  "requires": "solar_forge_progression_energy_generator_craft",
+  "category": "solar_category.materials",
+  "desc": "Pure solar energy can be infused into qualadium ingot to increase its magical properties.",
+  "energy": 5000
+}

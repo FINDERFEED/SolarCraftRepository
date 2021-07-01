@@ -1,0 +1,38 @@
+{
+  "type":"solarforge:infusing",
+  "input1": {
+    "item": "solarforge:cold_star_piece_activated"
+  },
+  "input2": {
+    "item": "minecraft:glass"
+  },
+  "input3": {
+    "item": "minecraft:iron_block"
+  },
+  "input4": {
+    "item": "minecraft:glass"
+  },
+  "input5": {
+    "item": "minecraft:iron_block"
+  },
+  "input6": {
+    "item": "minecraft:glass"
+  },
+  "input7": {
+    "item": "minecraft:iron_block"
+  },
+  "input8": {
+    "item": "minecraft:glass"
+  },
+  "input9": {
+    "item": "minecraft:iron_block"
+  },
+  "result": {
+    "item": "solarforge:solar_lens"
+  },
+  "time": 2000,
+  "requires": "solar_forge_progression_cold_star_piece_activated",
+  "category": "solar_category.magic_items",
+  "desc": "This lens focuses and multiplies the light that pierces it"
+
+}

@@ -1,0 +1,38 @@
+{
+  "type":"solarforge:infusing",
+  "input1": {
+    "item": "minecraft:shield"
+  },
+  "input2": {
+    "item": "solarforge:energy_dust"
+  },
+  "input3": {
+    "item": "solarforge:qualadium_ingot"
+  },
+  "input4": {
+    "item": "solarforge:energy_dust"
+  },
+  "input5": {
+    "item": "solarforge:qualadium_ingot"
+  },
+  "input6": {
+    "item": "solarforge:energy_dust"
+  },
+  "input7": {
+    "item": "solarforge:solar_dust"
+  },
+  "input8": {
+    "item": "minecraft:gold_block"
+  },
+  "input9": {
+    "item": "solarforge:solar_dust"
+  },
+  "result": {
+    "item": "solarforge:solar_god_shield"
+  },
+  "time": 1500,
+  "requires": "solar_forge_progression_solar_lens_craft",
+  "category": "solar_category.magic_items",
+  "desc": "A shield with big magical power. When you are using it, it charges and then releases the blast that damages all mobs in 5 block radius."
+
+}

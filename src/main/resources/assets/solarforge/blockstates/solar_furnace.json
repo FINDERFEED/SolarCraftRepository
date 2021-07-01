@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=south": { "model": "solarforge:block/solar_furnace", "y": 180},
+    "facing=west": { "model": "solarforge:block/solar_furnace", "y": 270 },
+    "facing=north": { "model": "solarforge:block/solar_furnace", "y": 0 },
+    "facing=east": { "model": "solarforge:block/solar_furnace", "y": 90 }
+  }
+}

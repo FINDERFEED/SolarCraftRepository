@@ -1,0 +1,39 @@
+{
+  "type":"solarforge:infusing",
+  "input1": {
+    "item": "minecraft:iron_ingot"
+  },
+  "input2": {
+    "item": "minecraft:air"
+  },
+  "input3": {
+    "item": "minecraft:air"
+  },
+  "input4": {
+    "item": "minecraft:redstone"
+  },
+  "input5": {
+    "item": "minecraft:air"
+  },
+  "input6": {
+    "item": "minecraft:air"
+  },
+  "input7": {
+    "item": "minecraft:air"
+  },
+  "input8": {
+    "item": "solarforge:energy_dust"
+  },
+  "input9": {
+    "item": "minecraft:air"
+  },
+  "result": {
+    "item": "solarforge:solar_energy_repeater"
+  },
+  "time": 30,
+  "requires": "solar_forge_progression_energy_generator_craft",
+  "category": "solar_category.magic_items",
+  "desc": "Can be used to transfer solar energy",
+  "count": 4
+
+}

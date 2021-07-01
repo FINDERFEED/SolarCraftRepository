@@ -1,0 +1,32 @@
+{
+  "solar_strike_explosion_sound": {
+    "sounds": [ "solarforge:ray_explosion_sound" ]
+  },
+  "solar_strike_buildup": {
+    "sounds": ["solarforge:ray_buildup_sound"]
+  },
+  "crossbow_shoot": {
+    "sounds": ["solarforge:crossbow_shoot_sound"]
+  },
+  "crossbow_charge": {
+    "sounds": ["solarforge:crossbow_charge_shot"]
+  },
+  "crossbow_shot_impact": {
+    "sounds": ["solarforge:crossbow_shot_impact"]
+  },
+  "solar_mortar_shoot": {
+    "sounds": ["solarforge:solar_mortar_shoot"]
+  },
+  "solar_mortar_projectile": {
+    "sounds": ["solarforge:solar_mortar_projectile"]
+  },
+  "gem_insert": {
+    "sounds": ["solarforge:gem_insert"]
+  },
+  "ray_trap_proc": {
+    "sounds": ["solarforge:ray_trap_proc"]
+  },
+  "button_press2": {
+    "sounds": ["solarforge:button_press2"]
+  }
+}

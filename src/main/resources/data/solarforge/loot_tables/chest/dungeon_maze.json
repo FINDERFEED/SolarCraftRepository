@@ -1,0 +1,13 @@
+{
+  "pools": [{
+    "name":"basic_loot",
+    "rolls": 1,
+    "entries": [
+      {
+        "type": "item",
+        "name": "solarforge:solar_key",
+        "weight": 100
+      }
+    ]
+  }]
+}

@@ -1,0 +1,11 @@
+{
+  "parent": "block/stone",
+  "overrides": [
+    {
+      "predicate": {
+        "solarforge:unlocked": 1
+      },
+      "model": "solarforge:item/uldoradium_ore_unlocked"
+    }
+    ]
+}

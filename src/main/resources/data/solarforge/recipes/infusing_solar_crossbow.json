@@ -1,0 +1,39 @@
+{
+  "type":"solarforge:infusing",
+  "input1": {
+    "item": "minecraft:crossbow"
+  },
+  "input2": {
+    "item": "solarforge:qualadium_ingot"
+  },
+  "input3": {
+    "item": "minecraft:glass"
+  },
+  "input4": {
+    "item": "solarforge:medium_solar_reactor"
+  },
+  "input5": {
+    "item": "minecraft:glass"
+  },
+  "input6": {
+    "item": "solarforge:qualadium_ingot"
+  },
+  "input7": {
+    "item": "solarforge:algadium_ingot"
+  },
+  "input8": {
+    "item": "solarforge:algadium_block"
+  },
+  "input9": {
+    "item": "solarforge:algadium_ingot"
+  },
+  "result": {
+    "item": "solarforge:solar_crossbow"
+  },
+  "time": 5000,
+  "requires": "solar_forge_progression_energy_generator_craft",
+  "category": "solar_category.magic_items",
+  "desc": "Powerful ranged weapon. Damage: 0-120, when the damage is higher 30, projectile also causes an explosion on impact.",
+  "energy": 50000
+
+}

@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "facing=down":  { "model": "solarforge:block/ray_trap_block", "x": 90 },
+    "facing=up":    { "model": "solarforge:block/ray_trap_block", "x": 270 },
+    "facing=north": { "model": "solarforge:block/ray_trap_block" },
+    "facing=south": { "model": "solarforge:block/ray_trap_block", "y": 180 },
+    "facing=west":  { "model": "solarforge:block/ray_trap_block", "y": 270 },
+    "facing=east":  { "model": "solarforge:block/ray_trap_block", "y": 90 }
+  }
+}

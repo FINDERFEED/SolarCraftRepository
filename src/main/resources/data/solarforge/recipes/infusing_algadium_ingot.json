@@ -1,0 +1,37 @@
+{
+  "type":"solarforge:infusing",
+  "input1": {
+    "item": "solarforge:illidium_ingot"
+  },
+  "input2": {
+    "item": "solarforge:solar_dust"
+  },
+  "input3": {
+    "item": "minecraft:iron_ingot"
+  },
+  "input4": {
+    "item": "solarforge:energy_dust"
+  },
+  "input5": {
+    "item": "minecraft:iron_ingot"
+  },
+  "input6": {
+    "item": "solarforge:solar_dust"
+  },
+  "input7": {
+    "item": "minecraft:iron_ingot"
+  },
+  "input8": {
+    "item": "solarforge:energy_dust"
+  },
+  "input9": {
+    "item": "minecraft:iron_ingot"
+  },
+  "result": {
+    "item": "solarforge:algadium_ingot"
+  },
+  "time": 350,
+  "requires": "solar_forge_progression_solar_infuser_create",
+  "category": "solar_category.materials",
+  "desc": "Strong material that is often used in cores"
+}

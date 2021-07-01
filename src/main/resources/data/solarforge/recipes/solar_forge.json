@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#X#",
+    "XFX",
+    "#X#"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:iron_block"
+    },
+    "X": {
+      "item": "minecraft:obsidian"
+    },
+    "F": {
+      "item": "solarforge:solar_shard"
+    }
+  },
+  "result": {
+    "item": "solarforge:solar_forge"
+
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smithing",
+  "base": {
+    "item": "solarforge:qualadium_hoe"
+  },
+  "addition": {
+    "item": "solarforge:charged_qualadium_ingot"
+  },
+  "result": {
+    "item": "solarforge:charged_qualadium_hoe"
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "type":"solarforge:infusing",
+  "input1": {
+    "item": "solarforge:illidium_axe"
+  },
+  "input2": {
+    "item": "solarforge:energy_dust"
+  },
+  "input3": {
+    "item": "solarforge:qualadium_ingot"
+  },
+  "input4": {
+    "item": "solarforge:energy_dust"
+  },
+  "input5": {
+    "item": "solarforge:qualadium_ingot"
+  },
+  "input6": {
+    "item": "solarforge:energy_dust"
+  },
+  "input7": {
+    "item": "solarforge:qualadium_ingot"
+  },
+  "input8": {
+    "item": "solarforge:energy_dust"
+  },
+  "input9": {
+    "item": "solarforge:qualadium_ingot"
+  },
+  "result": {
+    "item": "solarforge:qualadium_axe"
+  },
+  "time": 2500,
+  "requires": "solar_forge_progression_solar_lens_craft",
+  "category": "solar_category.tools",
+  "desc": "Upgraded version of illidium axe. Will have a chance to duplicate the logs that you are harvesting."
+}

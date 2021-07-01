@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "axis=y":  { "model": "solarforge:block/burnt_log" },
+    "axis=z":   { "model": "solarforge:block/burnt_log", "x": 90 },
+    "axis=x":   { "model": "solarforge:block/burnt_log", "x": 90, "y": 90 }
+  }
+}

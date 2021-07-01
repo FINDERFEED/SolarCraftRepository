@@ -1,0 +1,13 @@
+{
+  "pools": [{
+    "name":"basic_loot",
+    "rolls": 1,
+    "entries": [
+      {
+        "type": "item",
+        "name": "solarforge:first_dimensional_shard",
+        "weight": 100
+      }
+    ]
+  }]
+}
