@@ -11,6 +11,7 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.shader.Framebuffer;
 import net.minecraft.client.shader.Shader;
 import net.minecraft.client.shader.ShaderDefault;
+import net.minecraft.client.shader.ShaderGroup;
 import net.minecraft.resources.IResourceManager;
 import net.minecraft.resources.ResourcePackType;
 import net.minecraft.resources.SimpleReloadableResourceManager;
@@ -49,6 +50,17 @@ public class RenderingTools {
 //        }
 //    }
 
+    public static final ShaderGroup SHADER_PROGRAM;
+
+    static {
+        try {
+            SHADER_PROGRAM = new ShaderGroup(Minecraft.getInstance().textureManager,Minecraft.getInstance().getResourceManager(),
+                    Minecraft.getInstance().getMainRenderTarget(), new ResourceLocation("solarforge:shaders/post/testshader.json"));
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw  new RuntimeException();
+        }
+    }
     public static void renderTest(RenderGameOverlayEvent.Pre event,int tick){
         MatrixStack stack = event.getMatrixStack();
         float partialTicks = event.getPartialTicks();
