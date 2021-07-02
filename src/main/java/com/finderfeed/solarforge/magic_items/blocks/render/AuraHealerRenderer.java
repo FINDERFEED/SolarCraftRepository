@@ -42,7 +42,7 @@ public class AuraHealerRenderer extends TileEntityRenderer<AuraHealerTile> {
         }
         model.renderToBuffer(matrices,buffer.getBuffer(RenderType.text(res)),p_225616_5_,p_225616_6_,1,1,1,1);
         matrices.popPose();
-        RenderingTools.SHADER_PROGRAM.process(1);
+//        RenderingTools.SHADER_PROGRAM.process(1);
 
 
     }

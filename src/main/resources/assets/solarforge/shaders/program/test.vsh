@@ -1,6 +1,5 @@
-#version 120
-void main(){
+void main() {
    vec4 vert = gl_Vertex;
    gl_Position = gl_ModelViewProjectionMatrix * vert;
-
+   texCoord = vec2(gl_MultiTexCoord0);
 }

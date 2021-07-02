@@ -22,6 +22,7 @@ import net.minecraft.util.math.vector.Vector3f;
 import net.minecraft.util.registry.Registry;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import org.lwjgl.opengl.GL12;
+import org.lwjgl.opengl.GL20;
 
 import java.io.IOException;
 import java.time.chrono.MinguoEra;
@@ -31,21 +32,22 @@ public class RenderingTools {
     public static final ResourceLocation TEST = new ResourceLocation("solarforge","textures/gui/solar_furnace_gui.png");
     public static final ResourceLocation RAY = new ResourceLocation("solarforge","textures/misc/ray_into_skyy.png");
 
-    public static final String SHADER = "solarforge:testshader";
-    public static final Shader SHADER_PROGRAM;
-
-    static {
-        try {
-            Framebuffer framebuffer = new Framebuffer(Minecraft.getInstance().getWindow().getWidth(),Minecraft.getInstance().getWindow().getHeight(),true,false);
-            SHADER_PROGRAM = new Shader(Minecraft.getInstance().getResourceManager(),SHADER,
-                    framebuffer,
-                    framebuffer);
-        } catch (IOException e) {
-
-            e.printStackTrace();
-            throw new RuntimeException();
-        }
-    }
+//    public static final String SHADER = "solarforge:testshader";
+//    public static final Shader SHADER_PROGRAM;
+//
+//    static {
+//        try {
+//            Framebuffer framebuffer = new Framebuffer(Minecraft.getInstance().getWindow().getWidth(),Minecraft.getInstance().getWindow().getHeight(),true,false);
+//            SHADER_PROGRAM = new Shader(Minecraft.getInstance().getResourceManager(),SHADER,
+//                    framebuffer,
+//                    framebuffer);
+//
+//        } catch (IOException e) {
+//
+//            e.printStackTrace();
+//            throw new RuntimeException();
+//        }
+//    }
 
     public static void renderTest(RenderGameOverlayEvent.Pre event,int tick){
         MatrixStack stack = event.getMatrixStack();
