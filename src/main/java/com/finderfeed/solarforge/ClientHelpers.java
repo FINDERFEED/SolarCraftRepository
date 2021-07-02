@@ -42,7 +42,6 @@ public class ClientHelpers {
         TileEntity tile = Minecraft.getInstance().level.getBlockEntity(pos);
         if (tile instanceof AbstractSolarNetworkRepeater){
             ((AbstractSolarNetworkRepeater) tile).connectedTo = pos2;
-            //test
         }
     }
 
