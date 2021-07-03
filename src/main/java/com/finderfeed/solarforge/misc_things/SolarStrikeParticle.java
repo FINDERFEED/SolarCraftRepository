@@ -1,5 +1,6 @@
 package com.finderfeed.solarforge.misc_things;
 
+import com.finderfeed.solarforge.shaders.Shaders;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
@@ -83,6 +84,7 @@ public class SolarStrikeParticle extends SpriteTexturedParticle {
     private static final IParticleRenderType SOLAR_STRIKE_PARTICLE_RENDER = new IParticleRenderType() {
         @Override
         public void begin(BufferBuilder bufferBuilder, TextureManager textureManager) {
+
             RenderSystem.depthMask(false);
             RenderSystem.enableBlend();
             RenderSystem.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE);

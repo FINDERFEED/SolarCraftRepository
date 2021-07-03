@@ -20,7 +20,7 @@ public class SolarShader {
     public SolarShader(String name){
         SHADER = GL20.glCreateProgram();
         VERTEX = GL20.glCreateShader(GL20.GL_VERTEX_SHADER);
-        VERTEX = GL20.glCreateShader(GL20.GL_FRAGMENT_SHADER);
+        FRAGMENT = GL20.glCreateShader(GL20.GL_FRAGMENT_SHADER);
 
         GL20.glShaderSource(VERTEX,readFile(name+".vert"));
         GL20.glCompileShader(VERTEX);
@@ -46,6 +46,11 @@ public class SolarShader {
         if (GL20.glGetProgrami(SHADER,GL20.GL_VALIDATE_STATUS) != 1){
             SolarForge.LOGGER.log(Level.ERROR,GL20.glGetProgramInfoLog(SHADER));
         }
+
+        GL20.glDetachShader(SHADER,VERTEX);
+        GL20.glDetachShader(SHADER,FRAGMENT);
+        GL20.glDeleteShader(VERTEX);
+        GL20.glDeleteShader(FRAGMENT);
     }
 
     public void process(){
@@ -53,7 +58,7 @@ public class SolarShader {
     }
 
     public void disable() {
-
+       GL20.glUseProgram(0);
     }
 
     private String readFile(String filename){
