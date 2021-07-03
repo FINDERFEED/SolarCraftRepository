@@ -82,7 +82,7 @@ public class RenderingTools {
 
     }
 
-    /*
+    /**
     *   Renders ray like in solar forge
      */
     public static void renderRay(MatrixStack stack, IRenderTypeBuffer buffer, float mod, float height, Direction direction,boolean rotate,float rotationModifier,float partialTicks){
