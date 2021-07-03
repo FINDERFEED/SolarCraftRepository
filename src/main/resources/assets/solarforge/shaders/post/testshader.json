@@ -1,0 +1,13 @@
+{
+  "targets": [
+    "swap"
+  ],
+  "passes": [
+    {
+      "name": "solarforge:testshader",
+      "intarget": "minecraft:main",
+      "outtarget": "swap",
+      "uniforms": []
+    }
+  ]
+}

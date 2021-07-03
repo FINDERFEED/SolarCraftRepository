@@ -30,8 +30,10 @@ public class AuraHealerRenderer extends TileEntityRenderer<AuraHealerTile> {
 
     @Override
     public void render(AuraHealerTile tile, float partialTicks, MatrixStack matrices, IRenderTypeBuffer buffer, int p_225616_5_, int p_225616_6_) {
+
         float time = (tile.getLevel().getGameTime()+partialTicks);
         matrices.pushPose();
+        RenderingTools.SHADER_PROGRAM.process(1);
         matrices.mulPose(Vector3f.XN.rotationDegrees(180));
         matrices.translate(0.5,-1.85,-0.5);
         float bigTing = 22 - (time + 15) % 45;
@@ -41,8 +43,10 @@ public class AuraHealerRenderer extends TileEntityRenderer<AuraHealerTile> {
             matrices.translate(0, -bigTing / 100, 0);
         }
         model.renderToBuffer(matrices,buffer.getBuffer(RenderType.text(res)),p_225616_5_,p_225616_6_,1,1,1,1);
+        RenderingTools.SHADER_PROGRAM.close();
         matrices.popPose();
-        RenderingTools.SHADER_PROGRAM.process(20);
+
+
 //        RenderingTools.SHADER_PROGRAM.process(1);
 
 

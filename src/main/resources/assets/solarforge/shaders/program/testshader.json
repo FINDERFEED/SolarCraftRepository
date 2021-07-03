@@ -5,7 +5,7 @@
     "dstrgb": "zero"
   },
   "vertex": "sobel",
-  "fragment": "solarforge:test",
+  "fragment": "blur",
   "attributes": [ "Position" ],
   "samplers": [
     { "name": "DiffuseSampler" }
