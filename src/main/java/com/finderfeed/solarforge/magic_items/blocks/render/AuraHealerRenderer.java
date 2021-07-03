@@ -3,6 +3,7 @@ package com.finderfeed.solarforge.magic_items.blocks.render;
 import com.finderfeed.solarforge.RenderingTools;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.AuraHealerTile;
 import com.finderfeed.solarforge.magic_items.blocks.rendering_models.AuraHealerModel;
+import com.finderfeed.solarforge.shaders.Shaders;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
@@ -12,8 +13,10 @@ import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.client.shader.Framebuffer;
 import net.minecraft.client.shader.Shader;
 import net.minecraft.resources.IResourceManager;
+import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.vector.Vector3f;
+import org.lwjgl.opengl.GL20;
 
 import java.io.IOException;
 
@@ -33,7 +36,7 @@ public class AuraHealerRenderer extends TileEntityRenderer<AuraHealerTile> {
 
         float time = (tile.getLevel().getGameTime()+partialTicks);
         matrices.pushPose();
-        RenderingTools.SHADER_PROGRAM.process(1);
+        Shaders.TEST.getShader().process();
         matrices.mulPose(Vector3f.XN.rotationDegrees(180));
         matrices.translate(0.5,-1.85,-0.5);
         float bigTing = 22 - (time + 15) % 45;
@@ -43,7 +46,8 @@ public class AuraHealerRenderer extends TileEntityRenderer<AuraHealerTile> {
             matrices.translate(0, -bigTing / 100, 0);
         }
         model.renderToBuffer(matrices,buffer.getBuffer(RenderType.text(res)),p_225616_5_,p_225616_6_,1,1,1,1);
-        RenderingTools.SHADER_PROGRAM.close();
+
+
         matrices.popPose();
 
 

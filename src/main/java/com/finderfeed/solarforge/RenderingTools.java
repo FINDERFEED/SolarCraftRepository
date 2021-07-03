@@ -50,7 +50,7 @@ public class RenderingTools {
 //        }
 //    }
 
-    public static final ShaderGroup SHADER_PROGRAM;
+    public static ShaderGroup SHADER_PROGRAM;
 
     static {
         try {
