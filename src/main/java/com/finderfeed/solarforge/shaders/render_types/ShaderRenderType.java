@@ -11,7 +11,8 @@ import net.minecraft.client.renderer.vertex.VertexFormat;
 import net.minecraft.util.ResourceLocation;
 
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
-
+import org.lwjgl.opengl.GL13;
+import org.lwjgl.opengl.GL20;
 
 
 public class ShaderRenderType extends RenderType {
@@ -23,6 +24,8 @@ public class ShaderRenderType extends RenderType {
             shader.process();
             ImmutableList<RenderState> states = ObfuscationReflectionHelper.getPrivateValue(RenderType.State.class,state,"field_228693_q_");
             states.forEach(RenderState::setupRenderState);
+
+
 
         }, ()->{
             shader.disable();
