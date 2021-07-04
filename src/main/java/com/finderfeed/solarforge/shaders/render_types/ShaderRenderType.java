@@ -23,6 +23,7 @@ public class ShaderRenderType extends RenderType {
             shader.process();
             ImmutableList<RenderState> states = ObfuscationReflectionHelper.getPrivateValue(RenderType.State.class,state,"field_228693_q_");
             states.forEach(RenderState::setupRenderState);
+
         }, ()->{
             shader.disable();
             ImmutableList<RenderState> states = ObfuscationReflectionHelper.getPrivateValue(RenderType.State.class,state,"field_228693_q_");
