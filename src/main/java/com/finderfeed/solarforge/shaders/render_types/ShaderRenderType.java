@@ -2,6 +2,7 @@ package com.finderfeed.solarforge.shaders.render_types;
 
 import com.finderfeed.solarforge.shaders.SolarShader;
 import com.google.common.collect.ImmutableList;
+import com.mojang.blaze3d.platform.GlStateManager;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.RenderState;
 import net.minecraft.client.renderer.RenderType;

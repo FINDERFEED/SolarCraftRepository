@@ -1,5 +1,12 @@
 #version 120
 
+uniform int screenW;
+uniform int screenH;
+uniform sampler2D sampler;
+
+
+varying vec2 texCoords;
+
 void main(){
-    gl_FragColor = vec4(1,1,1,0.5);
+    gl_FragColor = vec4(sampler,texCoords);
 }

@@ -79,9 +79,35 @@ public class SolarShader {
             }
         }catch (IOException e){
             e.printStackTrace();
-
+            throw new RuntimeException();
         }
         return builder.toString();
+    }
+
+    public void addUniform(String name,int value){
+        int loc = GL20.glGetUniformLocation(SHADER,name);
+        if (loc != -1){
+            GL20.glUniform1i(loc,value);
+        }
+    }
+
+    public void addUniform(String name,float value){
+        int loc = GL20.glGetUniformLocation(SHADER,name);
+        if (loc != -1){
+            GL20.glUniform1f(loc,value);
+        }
+    }
+
+
+
+
+    public void setDefaultUniforms(){
+        if (GL20.glGetUniformLocation(SHADER,"screenW") != -1){
+            GL20.glUniform1i(GL20.glGetUniformLocation(SHADER,"screenW"),Minecraft.getInstance().getWindow().getWidth());
+        }
+        if (GL20.glGetUniformLocation(SHADER,"screenH") != -1){
+            GL20.glUniform1i(GL20.glGetUniformLocation(SHADER,"screenH"),Minecraft.getInstance().getWindow().getHeight());
+        }
     }
 
 }
