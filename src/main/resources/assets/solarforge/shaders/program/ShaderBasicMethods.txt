@@ -1,0 +1,14 @@
+vec2 getWindow(float a,float b,float c){
+    vec4 clip = projection*(modelview*vec4(a,b,c,1));
+    vec3 ndc = clip.xyz/clip.w;
+    vec2 value = (ndc.xy+1.0)/2.0;
+    return value;
+}
+
+//credit to ReikaKalseki
+float getDistanceBetween(vec2 begin,vec2 end){
+        float f = float(screenH)/float(screenW);
+    	float dx = (begin.x-end.x);
+    	float dy = (begin.y-end.y)*f;
+    	return dx*dx+dy*dy;
+}
