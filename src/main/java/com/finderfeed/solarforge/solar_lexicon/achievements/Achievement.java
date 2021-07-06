@@ -2,10 +2,16 @@ package com.finderfeed.solarforge.solar_lexicon.achievements;
 
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.registries.items.ItemsRegister;
+import net.minecraft.block.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TranslationTextComponent;
 
 public enum Achievement {
+
+    RUNE_ENERGY_CLAIM("rune_energy_claim",1, ItemsRegister.SOLAR_WAND.get().getDefaultInstance(),new TranslationTextComponent("ach.rune_energy_claim"),1,new TranslationTextComponent("pre.rune_energy_claim")),
+    RUNE_ENERGY_DEPOSIT("rune_energy_deposit",1, ItemsRegister.RUNE_ENERGY_DEPOSIT.get().getDefaultInstance(),new TranslationTextComponent("ach.rune_energy_deposit"),1,new TranslationTextComponent("pre.rune_energy_deposit")),
+    SOLAR_RUNE("solar_rune",1, ItemsRegister.SOLAR_RUNE_ZETA.get().getDefaultInstance(),new TranslationTextComponent("ach.solar_rune"),1,new TranslationTextComponent("pre.solar_rune")),
+    ENTER_NETHER("enter_nether",1, Blocks.NETHERRACK.asItem().getDefaultInstance(),new TranslationTextComponent("ach.enter_nether"),1,new TranslationTextComponent("pre.enter_nether")),
     CRAFT_SOLAR_FORGE("solar_forge_craft",1, SolarForge.SOLAR_FORGE_ITEM.get().getDefaultInstance(),new TranslationTextComponent("ach.solar_forge_craft"),1,new TranslationTextComponent("pre.solar_forge_craft")),
     FIND_SOLAR_STONE("solar_stone",1, ItemsRegister.SOLAR_STONE.get().getDefaultInstance(),new TranslationTextComponent("ach.solar_stone"),2,new TranslationTextComponent("pre.solar_stone")),
     CRAFT_SOLAR_INFUSER("solar_infuser_create",2,SolarForge.INFUSING_STAND_ITEM.get().getDefaultInstance(),new TranslationTextComponent("ach.solar_infuser_create"),3,new TranslationTextComponent("pre.solar_infuser_create")),
@@ -25,6 +31,7 @@ public enum Achievement {
 
 
     public static Achievement[] ALL_ACHIEVEMENTS = {
+            ENTER_NETHER,
             CRAFT_SOLAR_FORGE,
             FIND_SOLAR_STONE,
             CRAFT_SOLAR_INFUSER,
@@ -42,6 +49,10 @@ public enum Achievement {
             TRANSMUTE_GEM,
             DIMENSIONAL_SHARD_DUNGEON
     };
+
+    public static Achievement[] getAllAchievements(){
+        return Achievement.class.getEnumConstants();
+    }
 
     public static Achievement getAchievementByName(String name){
         for (Achievement a : ALL_ACHIEVEMENTS){

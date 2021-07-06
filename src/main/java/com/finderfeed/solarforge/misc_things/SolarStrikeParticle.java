@@ -3,12 +3,10 @@ package com.finderfeed.solarforge.misc_things;
 import com.finderfeed.solarforge.shaders.Shaders;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.*;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.texture.AtlasTexture;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
@@ -41,7 +39,7 @@ public class SolarStrikeParticle extends SpriteTexturedParticle {
         this.y = p_i232448_4_;
         this.z = p_i232448_6_;
         this.lifetime = 60 + (int)(p_i232448_1_.random.nextFloat()*6);
-        this.quadSize = 2f;
+        this.quadSize = 0.5f;
 
 
     }
@@ -50,20 +48,28 @@ public class SolarStrikeParticle extends SpriteTexturedParticle {
 
     @Override
     public IParticleRenderType getRenderType() {
-        //setAlphaState(DEFAULT_ALPHA).setTransparencyState(TRANSLUCENT_TRANSPARENCY).setLightmapState(LIGHTMAP).setDepthTestState(NO_DEPTH_TEST).setWriteMaskState(COLOR_WRITE)
+
 
         return SOLAR_STRIKE_PARTICLE_RENDER ;
     }
 
+    @Override
+    public void render(IVertexBuilder builder, ActiveRenderInfo info, float partialTicks) {
 
 
+        super.render(builder, info, partialTicks);
+
+    }
 
     @Override
     public void tick() {
         super.tick();
-        if (this.lifetime-- <=0){
-            this.remove();
+        if (this.age <= 5){
+            this.scale(this.level.random.nextFloat()+1);
+        }else{
+            this.scale(0.95f);
         }
+
     }
 
     public static class Factory implements IParticleFactory<BasicParticleType>{
@@ -90,13 +96,10 @@ public class SolarStrikeParticle extends SpriteTexturedParticle {
             RenderSystem.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE);
             RenderSystem.alphaFunc(GL11.GL_GREATER, 0.003921569F);
             RenderSystem.disableLighting();
-
-
-
-
             textureManager.bind(AtlasTexture.LOCATION_PARTICLES);
             textureManager.getTexture(AtlasTexture.LOCATION_PARTICLES).setBlurMipmap(true, false);
             bufferBuilder.begin(GL11.GL_QUADS, DefaultVertexFormats.PARTICLE);
+
         }
 
         @Override

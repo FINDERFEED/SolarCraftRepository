@@ -109,4 +109,16 @@ public class ItemsRegister {
     public static final RegistryObject<Item> DEAD_SPROUT = ITEMS.register("dead_sprout",()->new BlockItem(BlocksRegistry.DEAD_SPROUT.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
     public static final RegistryObject<Item> FIRST_DIMENSIONAL_SHARD = ITEMS.register("first_dimensional_shard",()->new Item(new Item.Properties().tab(SolarForge.SOLAR_GROUP).rarity(Rarity.EPIC)));
     public static final RegistryObject<Item> ASH_ITEM = ITEMS.register("ash",()->new AshItem(new Item.Properties().tab(SolarForge.SOLAR_GROUP)));
+    public static final RegistryObject<Item> INFO_FRAGMENT = ITEMS.register("info_fragment",()->new Item(new Item.Properties().tab(SolarForge.SOLAR_GROUP)));
+    public static final RegistryObject<Item> MAGIC_HAND = ITEMS.register("magic_hand",()->new Item(new Item.Properties().tab(SolarForge.SOLAR_GROUP)));
+
+    public static final RegistryObject<Item> RUNE_ENERGY_DEPOSIT = ITEMS.register("rune_energy_deposit",()->new BlockItem(BlocksRegistry.RUNE_ENERGY_DEPOSIT.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
+
+    //runes
+    public static final RegistryObject<Item> SOLAR_RUNE_ZETA = ITEMS.register("solar_rune_zeta",()->new Item(new Item.Properties().tab(SolarForge.SOLAR_GROUP)));
+    public static final RegistryObject<Item> SOLAR_RUNE_ARDO = ITEMS.register("solar_rune_ardo",()->new Item(new Item.Properties().tab(SolarForge.SOLAR_GROUP)));
+    public static final RegistryObject<Item> SOLAR_RUNE_URBA = ITEMS.register("solar_rune_urba",()->new Item(new Item.Properties().tab(SolarForge.SOLAR_GROUP)));
+    public static final RegistryObject<Item> SOLAR_RUNE_KELDA = ITEMS.register("solar_rune_kelda",()->new Item(new Item.Properties().tab(SolarForge.SOLAR_GROUP)));
+    public static final RegistryObject<Item> SOLAR_RUNE_FIRA = ITEMS.register("solar_rune_fira",()->new Item(new Item.Properties().tab(SolarForge.SOLAR_GROUP)));
+    public static final RegistryObject<Item> SOLAR_RUNE_TERA = ITEMS.register("solar_rune_tera",()->new Item(new Item.Properties().tab(SolarForge.SOLAR_GROUP)));
 }

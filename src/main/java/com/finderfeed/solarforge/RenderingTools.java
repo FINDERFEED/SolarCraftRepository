@@ -33,34 +33,6 @@ public class RenderingTools {
     public static final ResourceLocation TEST = new ResourceLocation("solarforge","textures/gui/solar_furnace_gui.png");
     public static final ResourceLocation RAY = new ResourceLocation("solarforge","textures/misc/ray_into_skyy.png");
 
-//    public static final String SHADER = "solarforge:testshader";
-//    public static final Shader SHADER_PROGRAM;
-//
-//    static {
-//        try {
-//            Framebuffer framebuffer = new Framebuffer(Minecraft.getInstance().getWindow().getWidth(),Minecraft.getInstance().getWindow().getHeight(),true,false);
-//            SHADER_PROGRAM = new Shader(Minecraft.getInstance().getResourceManager(),SHADER,
-//                    framebuffer,
-//                    framebuffer);
-//
-//        } catch (IOException e) {
-//
-//            e.printStackTrace();
-//            throw new RuntimeException();
-//        }
-//    }
-
-    public static ShaderGroup SHADER_PROGRAM;
-
-    static {
-        try {
-            SHADER_PROGRAM = new ShaderGroup(Minecraft.getInstance().textureManager,Minecraft.getInstance().getResourceManager(),
-                    Minecraft.getInstance().getMainRenderTarget(), new ResourceLocation("solarforge:shaders/post/testshader.json"));
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw  new RuntimeException();
-        }
-    }
     public static void renderTest(RenderGameOverlayEvent.Pre event,int tick){
         MatrixStack stack = event.getMatrixStack();
         float partialTicks = event.getPartialTicks();

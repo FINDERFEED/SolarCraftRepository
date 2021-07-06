@@ -1,5 +1,9 @@
 package com.finderfeed.solarforge.on_screen_rendering;
 
+import com.finderfeed.solarforge.shaders.Shaders;
+import com.finderfeed.solarforge.shaders.SolarShader;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.shader.Framebuffer;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
@@ -10,12 +14,13 @@ public class TestRenderEvent {
 
     @SubscribeEvent
     public void render(RenderGameOverlayEvent.Pre event){
-        if (event.getType() == RenderGameOverlayEvent.ElementType.TEXT) {
-//            RenderingTools.renderTest(event, tick);
-//
-//
-//            tick++;
 
-        }
+
+    }
+
+
+    @SubscribeEvent
+    public void render(RenderGameOverlayEvent.Post event){
+
     }
 }

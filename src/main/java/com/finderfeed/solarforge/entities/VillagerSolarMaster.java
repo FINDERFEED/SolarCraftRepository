@@ -16,6 +16,7 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.*;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ForgeMod;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -46,6 +47,7 @@ public class VillagerSolarMaster extends CreatureEntity {
 
     @Override
     public ActionResultType mobInteract(PlayerEntity player, Hand hand) {
+
         if (!level.isClientSide && (hand.equals(Hand.MAIN_HAND))) {
             ItemStack stack = Items.EMERALD.getDefaultInstance();
             stack.setCount(64);

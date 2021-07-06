@@ -55,5 +55,6 @@ public class BlocksRegistry {
     public  static  final RegistryObject<BlueGemDoorBlock> BLUE_GEM_DOOR_BLOCK = BLOCKS.register("blue_gem_door_block",()-> new BlueGemDoorBlock(AbstractBlock.Properties.copy(Blocks.BEDROCK)));
     public  static  final RegistryObject<LeavesBlock> ASH_LEAVES = BLOCKS.register("ash_leaves",()-> new LeavesBlock(AbstractBlock.Properties.copy(Blocks.OAK_LEAVES).noOcclusion()));
     public  static  final RegistryObject<RotatedPillarBlock> BURNT_LOG = BLOCKS.register("burnt_log",()-> new RotatedPillarBlock(AbstractBlock.Properties.copy(Blocks.OAK_LOG)));
+    public  static  final RegistryObject<Block> RUNE_ENERGY_DEPOSIT = BLOCKS.register("rune_energy_deposit",()-> new Block(AbstractBlock.Properties.copy(Blocks.STONE)));
    // public  static  final RegistryObject<Block> SOLAR_CHEST = BLOCKS.register("solar_chest",()-> new ChestBlock(AbstractBlock.Properties.copy(Blocks.STONE), ()->TileEntityType.CHEST));
 }

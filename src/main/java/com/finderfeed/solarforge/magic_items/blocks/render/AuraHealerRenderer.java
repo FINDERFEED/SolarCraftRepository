@@ -5,6 +5,7 @@ import com.finderfeed.solarforge.magic_items.blocks.blockentities.AuraHealerTile
 import com.finderfeed.solarforge.magic_items.blocks.rendering_models.AuraHealerModel;
 import com.finderfeed.solarforge.shaders.Shaders;
 import com.finderfeed.solarforge.shaders.SolarShader;
+import com.finderfeed.solarforge.shaders.Uniform;
 import com.finderfeed.solarforge.shaders.render_types.ShaderRenderType;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.Minecraft;
@@ -51,11 +52,9 @@ public class AuraHealerRenderer extends TileEntityRenderer<AuraHealerTile> {
         } else {
             matrices.translate(0, -bigTing / 100, 0);
         }
-        SolarShader shader = Shaders.TEST.getShader();
-        shader.setDefaultUniforms();
-        shader.addUniform("sampler",0);
 
-        model.renderToBuffer(matrices,buffer.getBuffer(ShaderRenderType.textWithShader(res,shader)),p_225616_5_,p_225616_6_,1,1,1,1);
+
+        model.renderToBuffer(matrices,buffer.getBuffer(RenderType.text(res)),p_225616_5_,p_225616_6_,1,1,1,1);
        // RenderingTools.renderRay(matrices,buffer,0,0,Direction.UP,false,0,partialTicks);
        // Shaders.close();
 

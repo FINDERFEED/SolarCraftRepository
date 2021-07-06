@@ -4,18 +4,29 @@ import com.finderfeed.solarforge.SolarForge;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.vector.Matrix4f;
 import org.apache.logging.log4j.Level;
+import org.lwjgl.BufferUtils;
+import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.FloatBuffer;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class SolarShader {
 
     private int SHADER;
     private int VERTEX;
     private int FRAGMENT;
+
+    private List<Uniform> UNIFORMS = new ArrayList<>();
+
 
     public SolarShader(String name){
         SHADER = GL20.glCreateProgram();
@@ -55,6 +66,18 @@ public class SolarShader {
 
     public void process(){
         GL20.glUseProgram(SHADER);
+        UNIFORMS.forEach(Uniform::applyUniform);
+        setDefaultUniforms();
+        setMatrices();
+
+    }
+
+    public void addUniform(Uniform a){
+        UNIFORMS.add(a);
+    }
+
+    public int getSHADER() {
+        return SHADER;
     }
 
     public void disable() {
@@ -84,6 +107,12 @@ public class SolarShader {
         return builder.toString();
     }
 
+
+    /**
+     *
+     * Use another addUniform which takes a Uniform
+     *
+     */
     public void addUniform(String name,int value){
         int loc = GL20.glGetUniformLocation(SHADER,name);
         if (loc != -1){
@@ -91,23 +120,26 @@ public class SolarShader {
         }
     }
 
-    public void addUniform(String name,float value){
-        int loc = GL20.glGetUniformLocation(SHADER,name);
-        if (loc != -1){
-            GL20.glUniform1f(loc,value);
-        }
-    }
-
-
-
-
     public void setDefaultUniforms(){
-        if (GL20.glGetUniformLocation(SHADER,"screenW") != -1){
-            GL20.glUniform1i(GL20.glGetUniformLocation(SHADER,"screenW"),Minecraft.getInstance().getWindow().getWidth());
-        }
-        if (GL20.glGetUniformLocation(SHADER,"screenH") != -1){
-            GL20.glUniform1i(GL20.glGetUniformLocation(SHADER,"screenH"),Minecraft.getInstance().getWindow().getHeight());
-        }
+            if (GL20.glGetUniformLocation(SHADER, "screenW") != -1) {
+                GL20.glUniform1i(GL20.glGetUniformLocation(SHADER, "screenW"), Minecraft.getInstance().getWindow().getWidth());
+            }
+            if (GL20.glGetUniformLocation(SHADER, "screenH") != -1) {
+                GL20.glUniform1i(GL20.glGetUniformLocation(SHADER, "screenH"), Minecraft.getInstance().getWindow().getHeight());
+            }
+            addUniform("sampler",0);
+
+    }
+    public void setMatrices(){
+        FloatBuffer buffer = BufferUtils.createFloatBuffer(16);
+        GL11.glGetFloatv(GL11.GL_MODELVIEW_MATRIX,buffer);
+        buffer.rewind();
+        GL20.glUniformMatrix4fv(GL20.glGetUniformLocation(SHADER,"projection"),false,buffer);
+
+        FloatBuffer buffer2 = BufferUtils.createFloatBuffer(16);
+        GL11.glGetFloatv(GL11.GL_PROJECTION_MATRIX,buffer2);
+        buffer2.rewind();
+        GL20.glUniformMatrix4fv(GL20.glGetUniformLocation(SHADER,"modelview"),false,buffer2);
     }
 
 }

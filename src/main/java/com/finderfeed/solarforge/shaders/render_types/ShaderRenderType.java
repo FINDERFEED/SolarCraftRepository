@@ -22,6 +22,7 @@ public class ShaderRenderType extends RenderType {
 
         super(p_i225992_1_, p_i225992_2_, p_i225992_3_, p_i225992_4_, p_i225992_5_, p_i225992_6_,()->{
             shader.process();
+
             ImmutableList<RenderState> states = ObfuscationReflectionHelper.getPrivateValue(RenderType.State.class,state,"field_228693_q_");
             states.forEach(RenderState::setupRenderState);
 

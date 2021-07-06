@@ -97,7 +97,7 @@ public class ClientHelpers {
     public static void reloadProgression(ServerPlayerEntity playerServer){
 
         PlayerEntity player = Minecraft.getInstance().player;
-        for (Achievement a : Achievement.ALL_ACHIEVEMENTS){
+        for (Achievement a : Achievement.getAllAchievements()){
             Helpers.setAchievementStatus(a,player,Helpers.hasPlayerUnlocked(a,playerServer));
 
         }

@@ -7,6 +7,7 @@ import com.finderfeed.solarforge.SolarAbilities.SolarStunEffect;
 import com.finderfeed.solarforge.capability_mana.AttachManaCapabilityEvent;
 import com.finderfeed.solarforge.capability_mana.CapabilitySolarMana;
 import com.finderfeed.solarforge.entities.VillagerSolarMaster;
+import com.finderfeed.solarforge.events.PlayerTickEvent;
 import com.finderfeed.solarforge.infusing_table_things.*;
 import com.finderfeed.solarforge.infusing_table_things.infusing_pool.InfusingPool;
 import com.finderfeed.solarforge.misc_things.ParticlesList;
@@ -203,6 +204,7 @@ public class SolarForge
         CapabilitySolarMana.register();
         MinecraftForge.EVENT_BUS.addGenericListener(Entity.class,AttachManaCapabilityEvent::attachCapabilities);
         MinecraftForge.EVENT_BUS.addListener(AttachManaCapabilityEvent::tickEvent);
+        MinecraftForge.EVENT_BUS.register(new PlayerTickEvent());
         //MinecraftForge.EVENT_BUS.addListener(SolarWandItem::renderWandOverlays);
         MinecraftForge.EVENT_BUS.addListener(InfusingPool::placeBlockEvent);
         event.enqueueWork(()->{
@@ -217,6 +219,7 @@ public class SolarForge
 
         LOGGER.info("Got game settings {}", event.getMinecraftSupplier().get().options);
         MinecraftForge.EVENT_BUS.register(new TestRenderEvent());
+
         ScreenManager.register(SOLAR_FORGE_CONTAINER.get(), SolarForgeScreen::new);
         ScreenManager.register(INFUSING_TABLE_CONTAINER.get(), InfusingTableScreen::new);
     }
