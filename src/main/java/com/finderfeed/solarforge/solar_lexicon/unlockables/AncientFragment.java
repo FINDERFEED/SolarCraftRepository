@@ -151,7 +151,7 @@ public enum AncientFragment {
     }
 
 
-    public AncientFragment[] getAllFragments(){
+    public static AncientFragment[] getAllFragments(){
         return AncientFragment.class.getEnumConstants();
     }
     enum Type{

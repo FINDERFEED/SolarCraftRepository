@@ -34,6 +34,8 @@ import org.lwjgl.opengl.GL11;
 import java.util.*;
 
 public class Helpers {
+
+    public static final String FRAGMENT = "solar_forge_fragment_";
     public static final BlockClusterFeatureConfig SOLAR_FLOWER_CONFIG = (new BlockClusterFeatureConfig.Builder((new WeightedBlockStateProvider()).add(BlocksRegistry.ALGADIUM_BLOCK.get().defaultBlockState(), 2), SimpleBlockPlacer.INSTANCE)).tries(64).build();
     public static double GRAVITY_METRES_PER_SEC = 20;
     public static double GRAVITY_VELOCITY = 0.05;

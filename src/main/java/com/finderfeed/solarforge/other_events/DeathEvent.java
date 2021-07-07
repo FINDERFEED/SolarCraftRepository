@@ -24,7 +24,6 @@ public class DeathEvent {
 
     @SubscribeEvent
     public static void procImmortalityTotem(final LivingDeathEvent event){
-
         if (event.getEntityLiving() instanceof PlayerEntity && !event.getEntityLiving().level.isClientSide){
             PlayerEntity player = (PlayerEntity) event.getEntityLiving();
             int slot = findImmortalityTotem(player);
