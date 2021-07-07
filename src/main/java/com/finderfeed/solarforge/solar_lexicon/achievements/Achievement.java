@@ -30,25 +30,8 @@ public enum Achievement {
     DIMENSIONAL_SHARD_DUNGEON("dim_shard_dungeon",4,ItemsRegister.SOLAR_STONE_CHISELED.get().getDefaultInstance(), new TranslationTextComponent("ach.dim_shard_dungeon"),16,new TranslationTextComponent("pre.dim_shard_dungeon"));
 
 
-    public static Achievement[] ALL_ACHIEVEMENTS = {
-            ENTER_NETHER,
-            CRAFT_SOLAR_FORGE,
-            FIND_SOLAR_STONE,
-            CRAFT_SOLAR_INFUSER,
-            USE_SOLAR_INFUSER,
-            ACQUIRE_SOLAR_DUST,
-            FIND_KEY_LOCK_DUNGEON,
-            FIND_INFUSER_DUNGEON,
-            FIND_KEY_SOURCE,
-            ACQUIRE_COLD_STAR,
-            ACQUIRE_COLD_STAR_ACTIVATED,
-            CRAFT_SOLAR_LENS,
-            CRAFT_SOLAR_ENERGY_GENERATOR,
-            FIND_INCINERATED_FOREST,
-            TRADE_FOR_BLUE_GEM,
-            TRANSMUTE_GEM,
-            DIMENSIONAL_SHARD_DUNGEON
-    };
+
+    public static Achievement[] ALL_ACHIEVEMENTS = Achievement.class.getEnumConstants();
 
     public static Achievement[] getAllAchievements(){
         return Achievement.class.getEnumConstants();
