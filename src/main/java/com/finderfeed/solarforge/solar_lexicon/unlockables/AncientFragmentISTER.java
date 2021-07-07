@@ -23,16 +23,16 @@ public class AncientFragmentISTER extends ItemStackTileEntityRenderer {
             if (nbt != null) {
                 AncientFragment frag = AncientFragment.getFragmentByID(nbt.getString(ProgressionHelper.FRAG_ID));
                 if (frag != null) {
-                    GL11.glScalef(0.3f, 0.3f, 0.3f);
 
                     Minecraft.getInstance().getItemRenderer().renderGuiItem(frag.getIcon().getDefaultInstance(),0,0);
+
                 }
             }
         }
     }
 
     public static void renderItem(MatrixStack matrices, ItemStack stack, ItemCameraTransforms.TransformType type,IRenderTypeBuffer buffer,int light, int overlay){
-        Minecraft.getInstance().getItemRenderer().render(stack,type,true,matrices,buffer,light,overlay,
+        Minecraft.getInstance().getItemRenderer().render(stack,type,false,matrices,buffer,light,overlay,
                 Minecraft.getInstance().getModelManager().getModel(ModelRegistryEvents.ANCIENT_FRAGMENT_MODEL));
     }
 }
