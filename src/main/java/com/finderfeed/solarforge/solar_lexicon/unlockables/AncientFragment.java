@@ -72,6 +72,15 @@ public enum AncientFragment {
 
     public static Map<String,AncientFragment> FRAGMENTS_ID_MAP = new HashMap<>();
 
+
+    public static void initFragmentsMap(){
+        for (AncientFragment frag : getAllFragments()){
+            if (!FRAGMENTS_ID_MAP.containsKey(frag.getId())){
+                FRAGMENTS_ID_MAP.put(frag.getId(),frag);
+            }
+        }
+    }
+
     private final TranslationTextComponent translation;
     private final String id;
     private final Achievement neededProgression;
@@ -159,6 +168,11 @@ public enum AncientFragment {
         ITEM,
         INFORMATION
     }
+
+    public static AncientFragment getFragmentByID(String id){
+        return FRAGMENTS_ID_MAP.containsKey(id) ? FRAGMENTS_ID_MAP.get(id) : null;
+    }
+
     public static TranslationTextComponent tx(String a){
         return new TranslationTextComponent(a);
     }

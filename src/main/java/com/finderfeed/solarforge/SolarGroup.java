@@ -57,3 +57,21 @@ class SolarGroupTools extends ItemGroup{
         return ItemsRegister.ILLIDIUM_SWORD.get().getDefaultInstance();
     }
 }
+
+class SolarGroupFragments extends ItemGroup{
+
+    public SolarGroupFragments(String label) {
+        super(label);
+        this.setBackgroundImage(new ResourceLocation("solarforge","textures/gui/solar_items_tab.png"));
+    }
+
+
+    @Override
+    public ResourceLocation getTabsImage() {
+        return new ResourceLocation("solarforge","textures/gui/solar_items_tabs.png");
+    }
+    @Override
+    public ItemStack makeIcon() {
+        return ItemsRegister.INFO_FRAGMENT.get().getDefaultInstance();
+    }
+}

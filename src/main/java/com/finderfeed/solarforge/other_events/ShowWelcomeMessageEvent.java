@@ -4,6 +4,7 @@ package com.finderfeed.solarforge.other_events;
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
 import com.finderfeed.solarforge.solar_lexicon.packets.UpdateAllProgressionOnClient;
+import com.finderfeed.solarforge.solar_lexicon.unlockables.AncientFragment;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.text.StringTextComponent;
@@ -26,6 +27,9 @@ public class ShowWelcomeMessageEvent {
             if (!player.level.isClientSide) {
                 Helpers.updateProgression((ServerPlayerEntity) player);
             }
+
+
+            AncientFragment.initFragmentsMap();
         }
     }
 }

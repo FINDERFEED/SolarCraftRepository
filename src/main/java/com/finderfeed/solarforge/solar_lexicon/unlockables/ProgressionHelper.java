@@ -12,6 +12,10 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
+
+/**
+ * Class for all things with fragments
+ */
 public class ProgressionHelper {
 
     public static final String UNLOCK_PATTERN = "solar_forge_player_pattern";
@@ -20,6 +24,7 @@ public class ProgressionHelper {
 
     public static final int[] NULL_ARRAY = {-1,-1,-1,-1,-1,-1};
 
+    //they have weird names didnt they?
     public static final Item RUNES[] = {
             ItemsRegister.SOLAR_RUNE_ARDO.get(),
             ItemsRegister.SOLAR_RUNE_FIRA.get(),
@@ -28,6 +33,7 @@ public class ProgressionHelper {
             ItemsRegister.SOLAR_RUNE_URBA.get(),
             ItemsRegister.SOLAR_RUNE_ZETA.get(),
     };
+
 
 
     public static void givePlayerFragment(AncientFragment frag,PlayerEntity pe){
