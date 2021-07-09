@@ -8,6 +8,7 @@ import com.finderfeed.solarforge.misc_things.IProgressionBlock;
 import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
 import com.finderfeed.solarforge.registries.items.ItemsRegister;
 import com.finderfeed.solarforge.registries.sounds.Sounds;
+import com.finderfeed.solarforge.solar_lexicon.SolarLexicon;
 import com.finderfeed.solarforge.solar_lexicon.achievements.Achievement;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -25,6 +26,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
 
 public class ClientHelpers {
     public static ClientPlayerEntity getClientPlayer(){
@@ -138,5 +141,19 @@ public class ClientHelpers {
             return new TranslationTextComponent("item.solarforge.uldoradium_ore");
         }
         return null;
+    }
+
+
+    public static void updateLexiconInventory(ItemStack[] stacks){
+        ItemStack stack = Minecraft.getInstance().player.getMainHandItem();
+        if ((stack.getItem() instanceof SolarLexicon)){
+            IItemHandler handler = stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(null);
+            if (handler != null){
+                for (int i = 0; i < stacks.length;i++){
+                    handler.insertItem(i,stacks[i],false);
+                }
+            }
+
+        }
     }
 }

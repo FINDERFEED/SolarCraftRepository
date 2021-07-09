@@ -8,17 +8,23 @@ import com.finderfeed.solarforge.multiblocks.Multiblocks;
 import com.finderfeed.solarforge.recipe_types.InfusingRecipe;
 import com.finderfeed.solarforge.recipe_types.solar_smelting.SolarSmeltingRecipe;
 import com.finderfeed.solarforge.solar_lexicon.achievements.Achievement;
+import com.finderfeed.solarforge.solar_lexicon.unlockables.ProgressionHelper;
 import com.mojang.blaze3d.matrix.MatrixStack;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.Widget;
 import net.minecraft.item.Items;
+import net.minecraft.item.MinecartItem;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
+import java.util.Collection;
 import java.util.List;
 
 public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
@@ -26,6 +32,9 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
     public final ResourceLocation FRAME = new ResourceLocation("solarforge","textures/misc/frame.png");
     public final ResourceLocation MAIN_SCREEN_SCROLLABLE = new ResourceLocation("solarforge","textures/gui/solar_lexicon_main_page_scrollablet.png");
 
+
+
+    public IItemHandler handler;
     public final ItemStackButton goBack = new ItemStackButton(0,10,12,12,(button)->{minecraft.setScreen(new SolarLexiconScreen());}, SolarForge.SOLAR_FORGE_ITEM.get().getDefaultInstance(),0.7f,false);
     public final ItemStackButton nothing = new ItemStackButton(0,10,12,12,(button)->{}, Items.CRAFTING_TABLE.getDefaultInstance(),0.7f,false);
     public Point armorCategory;
@@ -110,6 +119,7 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
     @Override
     protected void init() {
         super.init();
+        handler = getLexiconInventory();
         int width = minecraft.getWindow().getWidth();
         int height = minecraft.getWindow().getHeight();
         int scale = (int) minecraft.getWindow().getGuiScale();
@@ -250,39 +260,6 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
         minecraft.getTextureManager().bind(MAIN_SCREEN);
         blit(matrices,relX,relY,0,0,256,256);
 
-
-//        if (this.prevscrollX != scrollX){
-//            List<Widget> list = this.buttons;
-//            list.remove(goBack);
-//            list.remove(nothing);
-//            for (Widget a : list) {
-//                if (prevscrollX < scrollX) {
-//                    a.x += 4;
-//                } else {
-//                    a.x -= 4;
-//                }
-//
-//            }
-//            this.prevscrollX = scrollX;
-//        }
-//        if (this.prevscrollY != scrollY){
-//            List<Widget> list = this.buttons;
-//            list.remove(goBack);
-//            list.remove(nothing);
-//            for (Widget a : list) {
-//                if (prevscrollY < scrollY) {
-//
-//                    a.y += 4;
-//                } else {
-//
-//                    a.y -= 4;
-//                }
-//
-//
-//            }
-//            this.prevscrollY = scrollY;
-//        }
-
         goBack.render(matrices,mousex,mousey,partialTicks);
         nothing.render(matrices,mousex,mousey,partialTicks);
 
@@ -312,4 +289,7 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
     }
 
 
+    public IItemHandler getLexiconInventory(){
+        return Minecraft.getInstance().player.getMainHandItem().getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(null);
+    }
 }

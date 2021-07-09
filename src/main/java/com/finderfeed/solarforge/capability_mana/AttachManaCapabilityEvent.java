@@ -22,6 +22,10 @@ public class AttachManaCapabilityEvent {
     }
 
 
+
+
+
+
     public static void tickEvent(final TickEvent.PlayerTickEvent event){
         PlayerEntity player = event.player;
         if (!player.level.isClientSide) {

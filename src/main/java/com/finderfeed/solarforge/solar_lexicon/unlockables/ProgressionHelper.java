@@ -7,16 +7,14 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import org.apache.logging.log4j.core.tools.picocli.CommandLine;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 
 /**
  * Class for all things with fragments
  */
 public class ProgressionHelper {
+
 
     public static final String UNLOCK_PATTERN = "solar_forge_player_pattern";
     public static final String TAG_ELEMENT = "fragment";
@@ -89,5 +87,9 @@ public class ProgressionHelper {
 
     public static boolean doPlayerHasFragment(PlayerEntity pe,AncientFragment frag){
         return  pe.getPersistentData().getBoolean(Helpers.FRAGMENT+frag.getId());
+    }
+
+    public static void getAllFragmentsForEntry(BookEntry entry){
+
     }
 }

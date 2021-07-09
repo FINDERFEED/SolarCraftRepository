@@ -7,6 +7,7 @@ import com.finderfeed.solarforge.infusing_table_things.infusing_pool.UpdateStack
 import com.finderfeed.solarforge.packets.*;
 import com.finderfeed.solarforge.solar_lexicon.packets.OpenScreenPacket;
 import com.finderfeed.solarforge.solar_lexicon.packets.UpdateAllProgressionOnClient;
+import com.finderfeed.solarforge.solar_lexicon.packets.UpdateInventoryPacket;
 import com.finderfeed.solarforge.solar_lexicon.packets.UpdateProgressionOnClient;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.ResourceLocation;
@@ -50,6 +51,7 @@ public class SolarForgePacketHandler {
         INSTANCE.registerMessage(nextID(), UpdateAllProgressionOnClient.class, UpdateAllProgressionOnClient::toBytes, UpdateAllProgressionOnClient::new, UpdateAllProgressionOnClient::handle);
         INSTANCE.registerMessage(nextID(), UpdateLaserTrapTile.class, UpdateLaserTrapTile::toBytes, UpdateLaserTrapTile::new, UpdateLaserTrapTile::handle);
         INSTANCE.registerMessage(nextID(), ReloadChunks.class, ReloadChunks::toBytes, ReloadChunks::new, ReloadChunks::handle);
+        INSTANCE.registerMessage(nextID(), UpdateInventoryPacket.class, UpdateInventoryPacket::toBytes, UpdateInventoryPacket::new, UpdateInventoryPacket::handle);
     }
     //RepeaterParentUpdateOnClient
 }

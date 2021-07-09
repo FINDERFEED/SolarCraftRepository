@@ -141,6 +141,5 @@ public class SolarForgeScreen extends ContainerScreen<SolarForgeContainer> {
 
 
 
-
 }
 

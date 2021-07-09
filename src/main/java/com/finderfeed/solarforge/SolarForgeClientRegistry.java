@@ -22,6 +22,7 @@ import com.finderfeed.solarforge.registries.projectiles.Projectiles;
 import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
 import com.finderfeed.solarforge.solar_forge_block.SolarForgeBlockEntityRenderer;
 import com.finderfeed.solarforge.solar_forge_screen.SolarForgeScreen;
+import com.finderfeed.solarforge.solar_lexicon.SolarLexiconContScreen;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.renderer.RenderType;
@@ -88,6 +89,7 @@ public class SolarForgeClientRegistry {
         ClientRegistry.bindTileEntityRenderer(TileEntitiesRegistry.RAY_TRAP_TILE_ENTITY.get(), RayTrapTileEntityRenderer::new);
 
         ScreenManager.register(Containers.SOLAR_FURNACE_CONTAINER.get(), SolarFurnaceScreen::new);
+        ScreenManager.register(Containers.SOLAR_LEXICON_CONTAINER.get(), SolarLexiconContScreen::new);
         event.enqueueWork(()->{
             ItemModelsProperties.register(ItemsRegister.ULDORADIUM_ORE.get(),new ResourceLocation("solarforge","unlocked"),(stack,world,living)->{
 

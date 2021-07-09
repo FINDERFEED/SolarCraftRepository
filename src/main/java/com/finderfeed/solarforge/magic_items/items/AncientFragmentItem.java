@@ -23,13 +23,14 @@ public class AncientFragmentItem extends Item {
 
     @Override
     public void fillItemCategory(ItemGroup p_150895_1_, NonNullList<ItemStack> list) {
-
-        for (AncientFragment frag : AncientFragment.getAllFragments()){
-            ItemStack stack = new ItemStack(this,1);
-            stack.getOrCreateTagElement(ProgressionHelper.TAG_ELEMENT).putString(ProgressionHelper.FRAG_ID,frag.getId());
-            list.add(stack);
+        super.fillItemCategory(p_150895_1_, list);
+        if (this.allowdedIn(p_150895_1_)) {
+            for (AncientFragment frag : AncientFragment.getAllFragments()) {
+                ItemStack stack = new ItemStack(this, 1);
+                stack.getOrCreateTagElement(ProgressionHelper.TAG_ELEMENT).putString(ProgressionHelper.FRAG_ID, frag.getId());
+                list.add(stack);
+            }
         }
 
-        super.fillItemCategory(p_150895_1_, list);
     }
 }

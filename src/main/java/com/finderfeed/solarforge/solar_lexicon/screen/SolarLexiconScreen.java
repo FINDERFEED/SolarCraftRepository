@@ -145,7 +145,7 @@ public class SolarLexiconScreen extends Screen implements IScrollable {
 
 
 
-        currentText = "Select Achievement";
+        currentText = "Select Progression";
         Minecraft mc = Minecraft.getInstance();
         currAch = new StringTextComponent("");
         int offsetX = 0;
