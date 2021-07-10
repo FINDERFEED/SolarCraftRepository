@@ -1,10 +1,14 @@
 package com.finderfeed.solarforge.solar_lexicon.unlockables;
 
 import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.SolarForge;
+import com.finderfeed.solarforge.recipe_types.InfusingRecipe;
+import com.finderfeed.solarforge.recipe_types.solar_smelting.SolarSmeltingRecipe;
 import com.finderfeed.solarforge.registries.items.ItemsRegister;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
 import org.apache.logging.log4j.core.tools.picocli.CommandLine;
 
 import java.util.*;
@@ -15,7 +19,8 @@ import java.util.*;
  */
 public class ProgressionHelper {
 
-
+    public static Map<Item, InfusingRecipe> INFUSING_RECIPE_MAP = new HashMap<>();
+    public static Map<Item, SolarSmeltingRecipe> SMELTING_RECIPE_MAP = new HashMap<>();
     public static final String UNLOCK_PATTERN = "solar_forge_player_pattern";
     public static final String TAG_ELEMENT = "fragment";
     public static final String FRAG_ID = "fragmentid";
@@ -89,7 +94,30 @@ public class ProgressionHelper {
         return  pe.getPersistentData().getBoolean(Helpers.FRAGMENT+frag.getId());
     }
 
-    public static void getAllFragmentsForEntry(BookEntry entry){
+    public static InfusingRecipe getInfusingRecipeForItem(Item item){
+        return INFUSING_RECIPE_MAP.get(item);
+    }
 
+    public static SolarSmeltingRecipe getSolarSmeltingRecipeForItem(Item item){
+        return SMELTING_RECIPE_MAP.get(item);
+    }
+
+
+    public static void initInfRecipesMap(World world){
+        List<InfusingRecipe> list = world.getRecipeManager().getAllRecipesFor(SolarForge.INFUSING_RECIPE_TYPE);
+        list.forEach((recipe)->{
+            if (recipe.tag.equals("") && !INFUSING_RECIPE_MAP.containsKey(recipe.output.getItem())) {
+                INFUSING_RECIPE_MAP.put(recipe.output.getItem(),recipe);
+            }
+        });
+    }
+
+    public static void initSmeltingRecipesMap(World world){
+        List<SolarSmeltingRecipe> list = world.getRecipeManager().getAllRecipesFor(SolarForge.SOLAR_SMELTING);
+        list.forEach((recipe)->{
+            if (!SMELTING_RECIPE_MAP.containsKey(recipe.output.getItem())) {
+                SMELTING_RECIPE_MAP.put(recipe.output.getItem(),recipe);
+            }
+        });
     }
 }

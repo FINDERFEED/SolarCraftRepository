@@ -30,6 +30,15 @@ public class ItemStackButton extends Button {
         this.qMark = qMark;
     }
 
+
+    public ItemStackButton(int x, int y, int xLoc, int yLoc, IPressable press,ItemStack stack,float scaleFactor,boolean qMark,Button.ITooltip tooltip) {
+        super(x,y,xLoc,yLoc,new StringTextComponent(""),press,tooltip);
+        this.stack = stack;
+        this.scaleFactor = scaleFactor;
+        this.qMark = qMark;
+    }
+
+
     @Override
     public void playDownSound(SoundHandler p_230988_1_) {
         p_230988_1_.play(SimpleSound.forUI(Sounds.BUTTON_PRESS2.get(),1,1));
@@ -39,6 +48,10 @@ public class ItemStackButton extends Button {
     public void renderButton(MatrixStack matrices, int mousex, int mousey, float partialTicks) {
         Minecraft mc = Minecraft.getInstance();
         matrices.pushPose();
+        if (this.isHovered){
+
+            this.renderToolTip(matrices,mousex,mousey);
+        }
         matrices.scale(scaleFactor,scaleFactor,scaleFactor);
         GL11.glScalef(scaleFactor,scaleFactor,scaleFactor);
         //if (!qMark) {
@@ -48,11 +61,13 @@ public class ItemStackButton extends Button {
 
         //}
 
+
         GL11.glScalef(1/scaleFactor,1/scaleFactor,1/scaleFactor);
         mc.getTextureManager().bind(LOC);
         RenderSystem.enableBlend();
         if (this.isHovered){
             this.blit(matrices,(int)(x/scaleFactor),(int)(y/scaleFactor),0,0,16,16);
+
         }
         matrices.popPose();
     }

@@ -5,6 +5,8 @@ import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
 import com.finderfeed.solarforge.solar_lexicon.packets.UpdateAllProgressionOnClient;
 import com.finderfeed.solarforge.solar_lexicon.unlockables.AncientFragment;
+import com.finderfeed.solarforge.solar_lexicon.unlockables.BookEntry;
+import com.finderfeed.solarforge.solar_lexicon.unlockables.ProgressionHelper;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.text.StringTextComponent;
@@ -30,6 +32,9 @@ public class ShowWelcomeMessageEvent {
 
 
             AncientFragment.initFragmentsMap();
+            BookEntry.initMap();
+            ProgressionHelper.initInfRecipesMap(event.getPlayer().level);
+            ProgressionHelper.initSmeltingRecipesMap(event.getPlayer().level);
         }
     }
 }

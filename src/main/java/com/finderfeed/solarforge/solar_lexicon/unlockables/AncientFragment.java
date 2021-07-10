@@ -160,11 +160,14 @@ public enum AncientFragment {
         return id;
     }
 
+    public Type getType() {
+        return type;
+    }
 
     public static AncientFragment[] getAllFragments(){
         return AncientFragment.class.getEnumConstants();
     }
-    enum Type{
+    public enum Type{
         STRUCTURE,
         ITEM,
         INFORMATION

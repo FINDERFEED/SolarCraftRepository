@@ -1,5 +1,6 @@
 package com.finderfeed.solarforge.solar_lexicon.screen;
 
+import com.finderfeed.solarforge.ClientHelpers;
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.misc_things.IScrollable;
@@ -7,12 +8,17 @@ import com.finderfeed.solarforge.misc_things.Multiblock;
 import com.finderfeed.solarforge.multiblocks.Multiblocks;
 import com.finderfeed.solarforge.recipe_types.InfusingRecipe;
 import com.finderfeed.solarforge.recipe_types.solar_smelting.SolarSmeltingRecipe;
+import com.finderfeed.solarforge.registries.items.ItemsRegister;
 import com.finderfeed.solarforge.solar_lexicon.achievements.Achievement;
+import com.finderfeed.solarforge.solar_lexicon.unlockables.AncientFragment;
+import com.finderfeed.solarforge.solar_lexicon.unlockables.BookEntry;
 import com.finderfeed.solarforge.solar_lexicon.unlockables.ProgressionHelper;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.AbstractGui;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.Widget;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.MinecartItem;
 import net.minecraft.util.ResourceLocation;
@@ -24,13 +30,15 @@ import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
-import java.util.Collection;
+import java.util.*;
 import java.util.List;
 
 public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
     public final ResourceLocation MAIN_SCREEN = new ResourceLocation("solarforge","textures/gui/solar_lexicon_recipes_page.png");
     public final ResourceLocation FRAME = new ResourceLocation("solarforge","textures/misc/frame.png");
     public final ResourceLocation MAIN_SCREEN_SCROLLABLE = new ResourceLocation("solarforge","textures/gui/solar_lexicon_main_page_scrollablet.png");
+
+    public Map<BookEntry,List<AncientFragment>> map = new HashMap<>();
 
 
 
@@ -68,9 +76,9 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
 
     @Override
     public void performScroll(int keyCode) {
-        if (keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_LEFT) && !(scrollX -4 < -400)){
+        if (keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_LEFT) && !(scrollX -4 < -700)){
             scrollX-=4;
-        } else if (keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_UP) && !(scrollY -4 < -138)){
+        } else if (keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_UP) && !(scrollY -4 < -700)){
             scrollY-=4;
         }else if(keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_DOWN) && !(scrollY +4 > 0)){
             scrollY+=4;
@@ -119,7 +127,10 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
     @Override
     protected void init() {
         super.init();
+
         handler = getLexiconInventory();
+        map = new HashMap<>();
+        populateMap();
         int width = minecraft.getWindow().getWidth();
         int height = minecraft.getWindow().getHeight();
         int scale = (int) minecraft.getWindow().getGuiScale();
@@ -129,6 +140,257 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
         scrollY = 0;
         prevscrollX = 0;
         prevscrollY = 0;
+
+
+
+
+
+
+
+        initButtons();
+        //doOldThings();
+        addButton(goBack);
+        addButton(nothing);
+        nothing.x = relX +207;
+        nothing.y = relY + 184;
+        goBack.x = relX +207;
+        goBack.y = relY + 164;
+    }
+
+
+
+    public void initButtons(){
+        map.forEach((entry,list)->{
+            for (int i = 0;i < list.size();i++){
+                AncientFragment fragment = list.get(i);
+                if (Helpers.hasPlayerUnlocked(fragment.getNeededProgression(),Minecraft.getInstance().player)) {
+                    if (fragment.getType() == AncientFragment.Type.INFORMATION) {
+                        BookEntry parent = entry.getParent();
+
+                        if (parent == null) {
+
+                            addInformationButton(fragment.getIcon().getDefaultInstance(),
+                                    relX + entry.getPlaceInBook().x + 5 + (i % 6) * 25,
+                                    relY + entry.getPlaceInBook().y + 5 + (int) Math.floor((float) i / 6) * 25);
+                        } else {
+                            addInformationButton(fragment.getIcon().getDefaultInstance(),
+                                    relX + parent.getPlaceInBook().x + 5 + (i % 6) * 25 + BookEntry.ENTRY_TREE.get(parent).indexOf(entry) * 200,
+                                    relY + parent.getPlaceInBook().y + 5 + (int) Math.floor((float) i / 6) * 25);
+                        }
+                    } else if (fragment.getType() == AncientFragment.Type.ITEM) {
+                        BookEntry parent = entry.getParent();
+
+                        if (parent == null) {
+                            if (fragment.getRecipeType() == SolarForge.INFUSING_RECIPE_TYPE) {
+                                addInfusingRecipeButton(ProgressionHelper.getInfusingRecipeForItem(fragment.getItem().getItem()),
+                                        relX + entry.getPlaceInBook().x + 5 + (i % 6) * 25,
+                                        relY + entry.getPlaceInBook().y + 5 + (int) Math.floor((float) i / 6) * 25);
+                            } else if (fragment.getRecipeType() == SolarForge.SOLAR_SMELTING) {
+                                addSmeltingRecipeButton(ProgressionHelper.getSolarSmeltingRecipeForItem(fragment.getItem().getItem()),
+                                        relX + entry.getPlaceInBook().x + 5 + (i % 6) * 25,
+                                        relY + entry.getPlaceInBook().y + 5 + (int) Math.floor((float) i / 6) * 25);
+                            }
+                        } else {
+                            if (fragment.getRecipeType() == SolarForge.INFUSING_RECIPE_TYPE) {
+                                addInfusingRecipeButton(ProgressionHelper.getInfusingRecipeForItem(fragment.getItem().getItem()),
+                                        relX + parent.getPlaceInBook().x + 5 + (i % 6) * 25,
+                                        relY + parent.getPlaceInBook().y + 5 + (int) Math.floor((float) i / 6) * 25);
+                            } else if (fragment.getRecipeType() == SolarForge.SOLAR_SMELTING) {
+                                addSmeltingRecipeButton(ProgressionHelper.getSolarSmeltingRecipeForItem(fragment.getItem().getItem()),
+                                        relX + parent.getPlaceInBook().x + 5 + (i % 6) * 25,
+                                        relY + parent.getPlaceInBook().y + 5 + (int) Math.floor((float) i / 6) * 25);
+                            }
+                        }
+                    } else if (fragment.getType() == AncientFragment.Type.STRUCTURE) {
+                        BookEntry parent = entry.getParent();
+
+                        if (parent == null) {
+
+                            addStructureButton(fragment.getStructure().getM(),
+                                    relX + entry.getPlaceInBook().x + 5 + (i % 6) * 25,
+                                    relY + entry.getPlaceInBook().y + 5 + (int) Math.floor((float) i / 6));
+                        } else {
+                            addStructureButton(fragment.getStructure().getM(),
+                                    relX + parent.getPlaceInBook().x + 5 + (i % 6) * 25 + BookEntry.ENTRY_TREE.get(parent).indexOf(entry) * 200,
+                                    relY + parent.getPlaceInBook().y + 5 + (int) Math.floor((float) i / 6));
+                        }
+                    }
+                }
+
+            }
+
+        });
+    }
+
+    public void addInfusingRecipeButton(InfusingRecipe recipe,int x , int y){
+        addButton(new ItemStackButton(x,y,24,24,(button)->{
+            minecraft.setScreen(new InfusingRecipeScreen(recipe));
+        },recipe.output,1.5f,false,(button,matrices,mx,my)->{
+            renderTooltip(matrices,recipe.output.getDisplayName(),mx,my);
+        }));
+    }
+
+
+    public void addSmeltingRecipeButton(SolarSmeltingRecipe recipe,int x , int y){
+        addButton(new ItemStackButton(x,y,24,24,(button)->{
+            minecraft.setScreen(new SmeltingRecipeScreen(recipe));
+        },recipe.output,1.5f,false,(button,matrices,mx,my)->{
+            renderTooltip(matrices,recipe.output.getDisplayName(),mx,my);
+        }));
+    }
+
+
+    public void addInformationButton(ItemStack logo,int x , int y){
+        addButton(new ItemStackButton(x,y,24,24,(button)->{
+            minecraft.setScreen(new InformationScreen(new StringTextComponent("")));
+        },logo,1.5f,false, (button,matrices,mx,my)->{
+            renderTooltip(matrices,logo.getDisplayName(),mx,my);
+        }));
+    }
+
+    public void addStructureButton(Multiblock structure,int x , int y){
+        addButton(new ItemStackButton(x,y,24,24,(button)->{
+            minecraft.setScreen(new StructureScreen(structure));
+        },structure.getMainBlock().asItem().getDefaultInstance(),1.5f,false, (button,matrices,mx,my)->{
+            renderTooltip(matrices,new StringTextComponent(structure.name),mx,my);
+        }));
+    }
+
+
+    @Override
+    public void render(MatrixStack matrices, int mousex, int mousey, float partialTicks) {
+        GL11.glEnable(GL11.GL_SCISSOR_TEST);
+        int width = minecraft.getWindow().getWidth();
+        int height = minecraft.getWindow().getHeight();
+        int scale = (int)minecraft.getWindow().getGuiScale();
+        GL11.glScissor(width/2-(83*scale),height/2-(89*scale),(188*scale),190*scale);
+        minecraft.getTextureManager().bind(MAIN_SCREEN_SCROLLABLE);
+        blit(matrices,relX,relY,0,0,256,256);
+        super.render(matrices,mousex,mousey,partialTicks);
+
+        minecraft.getTextureManager().bind(FRAME);
+
+
+        map.keySet().forEach((entry)->{
+            if (entry.getParent() == null){
+                if (Helpers.hasPlayerUnlocked(entry.toUnlock(),ClientHelpers.getClientPlayer())) {
+                    drawRectangle(matrices, calculateLength(entry), calculateHeight(entry), new Point(entry.getPlaceInBook().x+relX,entry.getPlaceInBook().y+relY));
+                    drawString(matrices, minecraft.font, entry.getTranslation(), relX+entry.getPlaceInBook().x + scrollX, relY+entry.getPlaceInBook().y - 8 + scrollY, 0xffffff);
+                }
+            }else{
+                int cord = 0;
+
+                for (BookEntry child : BookEntry.ENTRY_TREE.get(entry.getParent())){
+                    if (Helpers.hasPlayerUnlocked(child.toUnlock(),ClientHelpers.getClientPlayer())) {
+                        drawRectangle(matrices, calculateLength(child), calculateHeight(child), new Point(
+                                relX+entry.getPlaceInBook().x + 8 + cord*180,
+                                relY+entry.getPlaceInBook().y + 8
+                        ));
+                        drawString(matrices, minecraft.font, entry.getTranslation(), relX+entry.getPlaceInBook().x + scrollX, relY+entry.getPlaceInBook().y - 8 + scrollY, 0xffffff);
+                        cord++;
+                    }
+
+                }
+            }
+        });
+
+
+
+
+        GL11.glDisable(GL11.GL_SCISSOR_TEST);
+
+        minecraft.getTextureManager().bind(MAIN_SCREEN);
+        blit(matrices,relX,relY,0,0,256,256);
+
+        goBack.render(matrices,mousex,mousey,partialTicks);
+        nothing.render(matrices,mousex,mousey,partialTicks);
+
+        List<Widget> list = this.buttons;
+        list.remove(goBack);
+        list.remove(nothing);
+
+    }
+
+
+
+    public int calculateLength(BookEntry entry){
+        return map.containsKey(entry) ? map.get(entry).size()*25 : 0;
+    }
+
+    public int calculateHeight(BookEntry entry){
+        return map.containsKey(entry) ? (int)Math.floor((float)map.get(entry).size()/6)*25 : 0;
+    }
+
+
+    public void drawRectangle(MatrixStack matrices,int x,int y,Point p){
+        Helpers.drawLine(matrices,p.x+scrollX,p.y+scrollY,p.x+x+scrollX,p.y+scrollY,1,1,1);
+        Helpers.drawLine(matrices,p.x+x+scrollX,p.y+scrollY,p.x+x+scrollX,p.y+y+scrollY,1,1,1);
+        Helpers.drawLine(matrices,p.x+scrollX,p.y+y+scrollY,p.x+x+scrollX,p.y+y+scrollY,1,1,1);
+        Helpers.drawLine(matrices,p.x+scrollX,p.y+scrollY,p.x+scrollX,p.y+y+scrollY,1,1,1);
+    }
+
+
+    public void drawCategoryString(MatrixStack matrices,int count,TranslationTextComponent translationTextComponent,Point point){
+        int x;
+        if (count <= 6) {
+            x = (count) * 25;
+        }else{
+            x = 25*6;
+        }
+        int y = (int)((Math.floor((float)count/6)+1))*25;
+        drawRectangle(matrices,x,y,point);
+        drawString(matrices,minecraft.font,translationTextComponent,point.x+scrollX,point.y-8+scrollY,0xffffff);
+    }
+
+
+    public IItemHandler getLexiconInventory(){
+        return Minecraft.getInstance().player.getMainHandItem().getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(null);
+    }
+
+    private void populateMap(){
+        for (int i = 0;i < handler.getSlots();i++){
+            ItemStack stack = handler.getStackInSlot(i);
+            if (stack.getItem() == ItemsRegister.INFO_FRAGMENT.get()){
+                if (stack.getTagElement(ProgressionHelper.TAG_ELEMENT) != null) {
+                    AncientFragment frag = AncientFragment.getFragmentByID(stack.getTagElement(ProgressionHelper.TAG_ELEMENT).getString(ProgressionHelper.FRAG_ID));
+                    if (frag != null){
+                        if (map.containsKey(frag.getEntry())){
+                            map.get(frag.getEntry()).add(frag);
+                        }else{
+                            List<AncientFragment> fraglist = new ArrayList<>();
+                            fraglist.add(frag);
+                            map.put(frag.getEntry(),fraglist);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+//        drawCategoryString(matrices,armorRecipeCount,new TranslationTextComponent("solar_category.armor"),armorCategory);
+//        drawCategoryString(matrices,magicRecipesCount,new TranslationTextComponent("solar_category.magic_items"),magicItemsCategory);
+//        drawCategoryString(matrices,magicMaterialsCount,new TranslationTextComponent("solar_category.materials"),magicMaterialsCategory);
+//        drawCategoryString(matrices,magicToolsCount,new TranslationTextComponent("solar_category.tools"),magicToolsCategory);
+//        drawCategoryString(matrices,smeltingRecipeCount,new TranslationTextComponent("solar_category.smelting"),smeltingCategory);
+//        drawCategoryString(matrices,structuresCount,new TranslationTextComponent("solar_category.structures"),structures);
+//        drawCategoryString(matrices,upgradingRecipesCount,new TranslationTextComponent("solar_category.upgrade"),upgradingRecipesCategory);
+
+
+
+
+
+
+
+    private void doOldThings(){
         armorCategory = new Point(relX+20,relY+40);
         armorRecipeCount = 0;
 
@@ -216,80 +478,5 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
                 structuresCount++;
             }
         }
-
-        addButton(goBack);
-        addButton(nothing);
-        nothing.x = relX +207;
-        nothing.y = relY + 184;
-        goBack.x = relX +207;
-        goBack.y = relY + 164;
-
-
-
-    }
-
-
-    @Override
-    public void render(MatrixStack matrices, int mousex, int mousey, float partialTicks) {
-        GL11.glEnable(GL11.GL_SCISSOR_TEST);
-        int width = minecraft.getWindow().getWidth();
-        int height = minecraft.getWindow().getHeight();
-        int scale = (int)minecraft.getWindow().getGuiScale();
-        GL11.glScissor(width/2-(83*scale),height/2-(89*scale),(188*scale),190*scale);
-        minecraft.getTextureManager().bind(MAIN_SCREEN_SCROLLABLE);
-        blit(matrices,relX,relY,0,0,256,256);
-        super.render(matrices,mousex,mousey,partialTicks);
-
-        minecraft.getTextureManager().bind(FRAME);
-
-
-        drawCategoryString(matrices,armorRecipeCount,new TranslationTextComponent("solar_category.armor"),armorCategory);
-        drawCategoryString(matrices,magicRecipesCount,new TranslationTextComponent("solar_category.magic_items"),magicItemsCategory);
-        drawCategoryString(matrices,magicMaterialsCount,new TranslationTextComponent("solar_category.materials"),magicMaterialsCategory);
-        drawCategoryString(matrices,magicToolsCount,new TranslationTextComponent("solar_category.tools"),magicToolsCategory);
-        drawCategoryString(matrices,smeltingRecipeCount,new TranslationTextComponent("solar_category.smelting"),smeltingCategory);
-        drawCategoryString(matrices,structuresCount,new TranslationTextComponent("solar_category.structures"),structures);
-        drawCategoryString(matrices,upgradingRecipesCount,new TranslationTextComponent("solar_category.upgrade"),upgradingRecipesCategory);
-
-
-
-
-
-        GL11.glDisable(GL11.GL_SCISSOR_TEST);
-
-        minecraft.getTextureManager().bind(MAIN_SCREEN);
-        blit(matrices,relX,relY,0,0,256,256);
-
-        goBack.render(matrices,mousex,mousey,partialTicks);
-        nothing.render(matrices,mousex,mousey,partialTicks);
-
-
-    }
-
-
-
-    public void drawRectangle(MatrixStack matrices,int x,int y,Point p){
-        Helpers.drawLine(matrices,p.x+scrollX,p.y+scrollY,p.x+x+scrollX,p.y+scrollY,1,1,1);
-        Helpers.drawLine(matrices,p.x+x+scrollX,p.y+scrollY,p.x+x+scrollX,p.y+y+scrollY,1,1,1);
-        Helpers.drawLine(matrices,p.x+scrollX,p.y+y+scrollY,p.x+x+scrollX,p.y+y+scrollY,1,1,1);
-        Helpers.drawLine(matrices,p.x+scrollX,p.y+scrollY,p.x+scrollX,p.y+y+scrollY,1,1,1);
-    }
-
-
-    public void drawCategoryString(MatrixStack matrices,int count,TranslationTextComponent translationTextComponent,Point point){
-        int x;
-        if (count <= 6) {
-            x = (count) * 25;
-        }else{
-            x = 25*6;
-        }
-        int y = (int)((Math.floor((float)count/6)+1))*25;
-        drawRectangle(matrices,x,y,point);
-        drawString(matrices,minecraft.font,translationTextComponent,point.x+scrollX,point.y-8+scrollY,0xffffff);
-    }
-
-
-    public IItemHandler getLexiconInventory(){
-        return Minecraft.getInstance().player.getMainHandItem().getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(null);
     }
 }

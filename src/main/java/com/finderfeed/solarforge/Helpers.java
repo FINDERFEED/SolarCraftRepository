@@ -98,7 +98,7 @@ public class Helpers {
 
     public static boolean hasPlayerUnlocked(Achievement ach, PlayerEntity entity){
 
-        return entity.getPersistentData().getBoolean("solar_forge_progression_"+ach.getAchievementCode());
+        return ach == null ? true : entity.getPersistentData().getBoolean("solar_forge_progression_"+ach.getAchievementCode());
     }
 
     public static boolean canPlayerUnlock(Achievement ach, PlayerEntity entity){
