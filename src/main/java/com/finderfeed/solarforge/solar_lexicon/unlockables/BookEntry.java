@@ -21,9 +21,9 @@ public enum BookEntry {
     SKILLED_ITEMS(tx("solar_category.skilled_items"),point(180,260),Achievement.CRAFT_SOLAR_LENS,SKILLED),
     SKILLED_MATERIALS(tx("solar_category.skilled_materials"),point(180,260),Achievement.CRAFT_SOLAR_LENS,SKILLED),
 
-    MASTER(tx("solar_category.skilled"),point(20,560),Achievement.CRAFT_SOLAR_LENS,null),
-    MASTER_ITEMS(tx("solar_category.skilled_items"),point(180,260),Achievement.CRAFT_SOLAR_ENERGY_GENERATOR,MASTER),
-    MASTER_ENERGY(tx("solar_category.skilled_energy"),point(180,260),Achievement.CRAFT_SOLAR_ENERGY_GENERATOR,MASTER),
+    MASTER(tx("solar_category.master"),point(20,560),Achievement.CRAFT_SOLAR_LENS,null),
+    MASTER_ITEMS(tx("solar_category.master_items"),point(180,260),Achievement.CRAFT_SOLAR_ENERGY_GENERATOR,MASTER),
+    MASTER_ENERGY(tx("solar_category.master_energy"),point(180,260),Achievement.CRAFT_SOLAR_ENERGY_GENERATOR,MASTER),
     MASTER_MATERIALS(tx("solar_category.master_materials"),point(180,260),Achievement.CRAFT_SOLAR_ENERGY_GENERATOR,MASTER)
     ;
 

@@ -170,12 +170,12 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
                         if (parent == null) {
 
                             addInformationButton(fragment.getIcon().getDefaultInstance(),
-                                    relX + entry.getPlaceInBook().x + 5 + (i % 6) * 25,
-                                    relY + entry.getPlaceInBook().y + 5 + (int) Math.floor((float) i / 6) * 25);
+                                    relX + entry.getPlaceInBook().x  + (i % 6) * 25,
+                                    relY + entry.getPlaceInBook().y  + (int) Math.floor((float) i / 6) * 25);
                         } else {
                             addInformationButton(fragment.getIcon().getDefaultInstance(),
-                                    relX + parent.getPlaceInBook().x + 5 + (i % 6) * 25 + BookEntry.ENTRY_TREE.get(parent).indexOf(entry) * 200,
-                                    relY + parent.getPlaceInBook().y + 5 + (int) Math.floor((float) i / 6) * 25);
+                                    relX + parent.getPlaceInBook().x +10 + (i % 6) * 25 + BookEntry.ENTRY_TREE.get(parent).indexOf(entry) * 200,
+                                    relY + parent.getPlaceInBook().y + 10 + (int) Math.floor((float) i / 6) * 25);
                         }
                     } else if (fragment.getType() == AncientFragment.Type.ITEM) {
                         BookEntry parent = entry.getParent();
@@ -183,22 +183,22 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
                         if (parent == null) {
                             if (fragment.getRecipeType() == SolarForge.INFUSING_RECIPE_TYPE) {
                                 addInfusingRecipeButton(ProgressionHelper.getInfusingRecipeForItem(fragment.getItem().getItem()),
-                                        relX + entry.getPlaceInBook().x + 5 + (i % 6) * 25,
-                                        relY + entry.getPlaceInBook().y + 5 + (int) Math.floor((float) i / 6) * 25);
+                                        relX + entry.getPlaceInBook().x  + (i % 6) * 25,
+                                        relY + entry.getPlaceInBook().y  + (int) Math.floor((float) i / 6) * 25);
                             } else if (fragment.getRecipeType() == SolarForge.SOLAR_SMELTING) {
                                 addSmeltingRecipeButton(ProgressionHelper.getSolarSmeltingRecipeForItem(fragment.getItem().getItem()),
-                                        relX + entry.getPlaceInBook().x + 5 + (i % 6) * 25,
-                                        relY + entry.getPlaceInBook().y + 5 + (int) Math.floor((float) i / 6) * 25);
+                                        relX + entry.getPlaceInBook().x + 10 + (i % 6) * 25,
+                                        relY + entry.getPlaceInBook().y + 10 + (int) Math.floor((float) i / 6) * 25);
                             }
                         } else {
                             if (fragment.getRecipeType() == SolarForge.INFUSING_RECIPE_TYPE) {
                                 addInfusingRecipeButton(ProgressionHelper.getInfusingRecipeForItem(fragment.getItem().getItem()),
-                                        relX + parent.getPlaceInBook().x + 5 + (i % 6) * 25,
-                                        relY + parent.getPlaceInBook().y + 5 + (int) Math.floor((float) i / 6) * 25);
+                                        relX + parent.getPlaceInBook().x + 10 + (i % 6) * 25,
+                                        relY + parent.getPlaceInBook().y + 10 + (int) Math.floor((float) i / 6) * 25);
                             } else if (fragment.getRecipeType() == SolarForge.SOLAR_SMELTING) {
                                 addSmeltingRecipeButton(ProgressionHelper.getSolarSmeltingRecipeForItem(fragment.getItem().getItem()),
-                                        relX + parent.getPlaceInBook().x + 5 + (i % 6) * 25,
-                                        relY + parent.getPlaceInBook().y + 5 + (int) Math.floor((float) i / 6) * 25);
+                                        relX + parent.getPlaceInBook().x + 10 + (i % 6) * 25,
+                                        relY + parent.getPlaceInBook().y + 10 + (int) Math.floor((float) i / 6) * 25);
                             }
                         }
                     } else if (fragment.getType() == AncientFragment.Type.STRUCTURE) {
@@ -207,12 +207,12 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
                         if (parent == null) {
 
                             addStructureButton(fragment.getStructure().getM(),
-                                    relX + entry.getPlaceInBook().x + 5 + (i % 6) * 25,
-                                    relY + entry.getPlaceInBook().y + 5 + (int) Math.floor((float) i / 6));
+                                    relX + entry.getPlaceInBook().x + (i % 6) * 25,
+                                    relY + entry.getPlaceInBook().y + (int) Math.floor((float) i / 6));
                         } else {
                             addStructureButton(fragment.getStructure().getM(),
-                                    relX + parent.getPlaceInBook().x + 5 + (i % 6) * 25 + BookEntry.ENTRY_TREE.get(parent).indexOf(entry) * 200,
-                                    relY + parent.getPlaceInBook().y + 5 + (int) Math.floor((float) i / 6));
+                                    relX + parent.getPlaceInBook().x + 10 + (i % 6) * 25 + BookEntry.ENTRY_TREE.get(parent).indexOf(entry) * 200,
+                                    relY + parent.getPlaceInBook().y + 10 + (int) Math.floor((float) i / 6));
                         }
                     }
                 }
@@ -279,18 +279,27 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
                 }
             }else{
                 int cord = 0;
-
+                int maxEntries = 0;
+                int maxHeight = 0;
                 for (BookEntry child : BookEntry.ENTRY_TREE.get(entry.getParent())){
-                    if (Helpers.hasPlayerUnlocked(child.toUnlock(),ClientHelpers.getClientPlayer())) {
-                        drawRectangle(matrices, calculateLength(child), calculateHeight(child), new Point(
-                                relX+entry.getPlaceInBook().x + 8 + cord*180,
-                                relY+entry.getPlaceInBook().y + 8
-                        ));
-                        drawString(matrices, minecraft.font, entry.getTranslation(), relX+entry.getPlaceInBook().x + scrollX, relY+entry.getPlaceInBook().y - 8 + scrollY, 0xffffff);
-                        cord++;
+                    if (map.keySet().contains(child)) {
+                        if (Helpers.hasPlayerUnlocked(child.toUnlock(), ClientHelpers.getClientPlayer())) {
+                            int heightz = calculateHeight(entry);
+                            if (heightz > maxHeight) {
+                                maxHeight = heightz;
+                            }
+                            drawRectangle(matrices, calculateLength(child), heightz, new Point(
+                                    relX + entry.getParent().getPlaceInBook().x + 10 + cord * 180,
+                                    relY + entry.getParent().getPlaceInBook().y + 10
+                            ));
+                            drawString(matrices, minecraft.font, entry.getTranslation(), relX + entry.getParent().getPlaceInBook().x + 8 + cord * 180 + scrollX, relY + entry.getParent().getPlaceInBook().y + 1 + scrollY, 0xffffff);
+                            cord++;
+                            maxEntries++;
+                        }
                     }
-
                 }
+                drawRectangle(matrices, maxEntries*200, maxHeight+20, new Point(entry.getParent().getPlaceInBook().x+relX,entry.getParent().getPlaceInBook().y+relY));
+                drawString(matrices, minecraft.font, entry.getParent().getTranslation(), relX+entry.getParent().getPlaceInBook().x + scrollX, relY+entry.getParent().getPlaceInBook().y - 8 + scrollY, 0xffffff);
             }
         });
 
@@ -314,11 +323,16 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
 
 
     public int calculateLength(BookEntry entry){
+
+        if (map.containsKey(entry) && map.get(entry).size() >= 6){
+            return 6*25;
+        }
+
         return map.containsKey(entry) ? map.get(entry).size()*25 : 0;
     }
 
     public int calculateHeight(BookEntry entry){
-        return map.containsKey(entry) ? (int)Math.floor((float)map.get(entry).size()/6)*25 : 0;
+        return map.containsKey(entry) ? 25+(int)Math.floor((float)map.get(entry).size()/6)*25 : 25;
     }
 
 

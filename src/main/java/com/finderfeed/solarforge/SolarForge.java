@@ -8,6 +8,7 @@ import com.finderfeed.solarforge.capability_mana.AttachManaCapabilityEvent;
 import com.finderfeed.solarforge.capability_mana.CapabilitySolarMana;
 import com.finderfeed.solarforge.entities.VillagerSolarMaster;
 import com.finderfeed.solarforge.events.PlayerTickEvent;
+import com.finderfeed.solarforge.events.RenderEventsHandler;
 import com.finderfeed.solarforge.infusing_table_things.*;
 import com.finderfeed.solarforge.infusing_table_things.infusing_pool.InfusingPool;
 import com.finderfeed.solarforge.misc_things.ParticlesList;
@@ -184,7 +185,7 @@ public class SolarForge
 //        FMLJavaModLoadingContext.get().getModEventBus().addGenericListener(Biome.class,FeaturesRegistry::registerBiomes);
 
         FMLJavaModLoadingContext.get().getModEventBus().addListener(FeaturesRegistry::registerConfiguredFeatures);
-
+        MinecraftForge.EVENT_BUS.register(new RenderEventsHandler());
 
         // Register the doClientStuff method for modloading
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
