@@ -6,38 +6,47 @@ uniform sampler2D sampler;
 uniform mat4 modelview;
 uniform mat4 projection;
 
+uniform int time;
 uniform float distance;
 uniform float intensity;
 uniform float size;
-
+uniform float radiusCircle;
 
 varying vec2 texCoords;
 
+float roundToNearest(float val, float base) {
+    return ceil(val/base)*base;
+}
 
-const float PI = 3.1415926535;
-void main()
-{
-    float aperture = 178.0;
-    float apertureHalf = 0.5 * aperture * (PI / 180.0);
-    float maxFactor = sin(apertureHalf);
+bool isInCircle(float radius,vec2 dot,vec2 center){
+        float a = (dot.x - center.x)*(dot.x - center.x);
+        float b = (dot.y - center.y)*(dot.y - center.y);
+        if ((a + b) <= radius*radius ){
+            return true;
+        }
+    return false;
+}
 
-    vec2 uv;
-    vec2 xy = 2.0 * texCoords - 1.0;
-    float d = length(xy);
-    if (d < (2.0-maxFactor))
-    {
-        d = length(xy * maxFactor);
-        float z = sqrt(1.0 - d * d);
-        float r = atan(d, z) / PI;
-        float phi = atan(xy.y, xy.x);
-
-        uv.x = r * cos(phi) + 0.5;
-        uv.y = r * sin(phi) + 0.5;
+bool isOutOfCircle(float radius,vec2 dot,vec2 center){
+    float a = (dot.x - center.x)*(dot.x - center.x);
+    float b = (dot.y - center.y)*(dot.y - center.y);
+    if ((a + b) >= radius*radius ){
+        return true;
     }
-    else
-    {
-        uv = texCoords.xy;
+    return false;
+}
+
+
+void main() {
+    vec2 texUV = texCoords;
+    if (isInCircle(radiusCircle+0.05,texCoords,vec2(0.5,0.5))){
+        if (isOutOfCircle(radiusCircle-0.05,texCoords,vec2(0.5,0.5))){
+            float density = 1.0+intensity*12.0;
+            texUV.x = roundToNearest(texUV.x, density/(float(screenW)));
+            texUV.y = roundToNearest(texUV.y, density/(float(screenH)));
+            texUV.y += intensity*0.004*sin(float(time)+texUV.x*8.0);
+        }
     }
-    vec4 c = texture2D(sampler, uv);
-    gl_FragColor = c;
+    vec4 color = texture2D(sampler, texUV);
+    gl_FragColor = vec4(color.x, color.y, color.z, color.a);
 }

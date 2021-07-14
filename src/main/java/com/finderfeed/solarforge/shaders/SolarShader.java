@@ -67,13 +67,14 @@ public class SolarShader {
     public void process(){
         GL20.glUseProgram(SHADER);
         UNIFORMS.forEach(Uniform::applyUniform);
+        UNIFORMS.clear();
         setDefaultUniforms();
         setMatrices();
 
     }
 
     public void addUniform(Uniform a){
-        UNIFORMS.add(a);
+            UNIFORMS.add(a);
     }
 
     public int getSHADER() {

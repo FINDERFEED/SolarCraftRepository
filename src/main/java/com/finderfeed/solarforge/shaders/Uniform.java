@@ -55,6 +55,7 @@ public class Uniform {
                 if (loc != -1){
                     GL20.glUniform1i(loc,integer);
                 }
+
                 break;
             }
             case FLOAT:{
