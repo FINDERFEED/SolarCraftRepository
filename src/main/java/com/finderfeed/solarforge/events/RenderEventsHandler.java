@@ -16,6 +16,7 @@ import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import org.lwjgl.glfw.GLFW;
+import org.lwjgl.opengl.GL11;
 
 
 public class RenderEventsHandler {
@@ -30,25 +31,25 @@ public class RenderEventsHandler {
     @SubscribeEvent
     public void renderWorld(RenderWorldLastEvent event){
         if ((Minecraft.getInstance().getWindow().getScreenWidth() != 0) && (Minecraft.getInstance().getWindow().getScreenHeight() != 0)) {
-            if ((intensity > 0) && (radius <= 0.6) ) {
+            if ((intensity > 0)  ) {
                 Framebuffer buffer = Minecraft.getInstance().getMainRenderTarget();
                 buffer2.resize(Minecraft.getInstance().getWindow().getScreenWidth(), Minecraft.getInstance().getWindow().getScreenHeight(), false);
 
 
                 GlStateManager._glBindFramebuffer(FramebufferConstants.GL_FRAMEBUFFER, buffer2.frameBufferId);
 
-                Shaders.TEST.getShader().process();
-                Shaders.TEST.getShader().addUniform(new Uniform("distance", 10f, Shaders.TEST.getShader().getSHADER()));
-                Shaders.TEST.getShader().addUniform(new Uniform("size", 0.1f, Shaders.TEST.getShader().getSHADER()));
-                Shaders.TEST.getShader().addUniform(new Uniform("intensity", intensity, Shaders.TEST.getShader().getSHADER()));
-                Shaders.TEST.getShader().addUniform(new Uniform("radiusCircle", radius, Shaders.TEST.getShader().getSHADER()));
-                Shaders.TEST.getShader().addUniform(new Uniform("time", (int) Minecraft.getInstance().level.getGameTime(), Shaders.TEST.getShader().getSHADER()));
+                Shaders.WAVE.getShader().process();
+                int shader = Shaders.WAVE.getShader().getSHADER();
+                int time =(int)Minecraft.getInstance().level.getGameTime();
+                Shaders.WAVE.getShader().addUniform(new Uniform("intensity", intensity, shader));
+                Shaders.WAVE.getShader().addUniform(new Uniform("timeModifier", 3f, shader));
+                Shaders.WAVE.getShader().addUniform(new Uniform("time", time, shader));
                 buffer.blitToScreen(Minecraft.getInstance().getWindow().getScreenWidth(), Minecraft.getInstance().getWindow().getScreenHeight());
                 Shaders.close();
                 GlStateManager._glBindFramebuffer(FramebufferConstants.GL_FRAMEBUFFER, buffer.frameBufferId);
                 buffer2.blitToScreen(Minecraft.getInstance().getWindow().getScreenWidth(), Minecraft.getInstance().getWindow().getScreenHeight());
                 GlStateManager._glBindFramebuffer(FramebufferConstants.GL_FRAMEBUFFER, 0);
-                intensity-=0.007;
+                intensity-=0.02;
                 radius+=0.01;
             }
         }
@@ -57,7 +58,7 @@ public class RenderEventsHandler {
     @SubscribeEvent
     public void triggerShader(InputEvent.KeyInputEvent event){
         if ((event.getKey() == GLFW.GLFW_KEY_F) && event.getAction() == GLFW.GLFW_PRESS ){
-            this.intensity = 2;
+            this.intensity = 3;
             this.radius = 0;
 
         }

@@ -7,9 +7,8 @@ uniform mat4 modelview;
 uniform mat4 projection;
 
 uniform int time;
-uniform float distance;
 uniform float intensity;
-uniform float size;
+uniform float timeModifier;
 
 varying vec2 texCoords;
 
