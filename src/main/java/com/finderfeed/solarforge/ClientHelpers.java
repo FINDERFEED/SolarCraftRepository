@@ -1,5 +1,6 @@
 package com.finderfeed.solarforge;
 
+import com.finderfeed.solarforge.events.RenderEventsHandler;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.RayTrapTileEntity;
 import com.finderfeed.solarforge.misc_things.AbstractEnergyGeneratorTileEntity;
 import com.finderfeed.solarforge.misc_things.AbstractSolarCore;
@@ -155,5 +156,8 @@ public class ClientHelpers {
             }
 
         }
+    }
+    public static void triggerProgressionUnlockShader(){
+        RenderEventsHandler.triggerProgressionShader();
     }
 }

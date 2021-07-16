@@ -26,8 +26,8 @@ public class RenderEventsHandler {
             new Framebuffer(Minecraft.getInstance().getWindow().getScreenWidth(),Minecraft.getInstance().getWindow().getScreenHeight(),false,true);
 
 
-    public float intensity = 0;
-    public float radius = 0;
+    public static float intensity = 0;
+    public static float radius = 0;
     @SubscribeEvent
     public void renderWorld(RenderWorldLastEvent event){
         if ((Minecraft.getInstance().getWindow().getScreenWidth() != 0) && (Minecraft.getInstance().getWindow().getScreenHeight() != 0)) {
@@ -55,13 +55,10 @@ public class RenderEventsHandler {
         }
     }
 
-    @SubscribeEvent
-    public void triggerShader(InputEvent.KeyInputEvent event){
-        if ((event.getKey() == GLFW.GLFW_KEY_F) && event.getAction() == GLFW.GLFW_PRESS ){
-            this.intensity = 3;
-            this.radius = 0;
 
-        }
+    public static void triggerProgressionShader(){
+            intensity = 3;
+            radius = 0;
     }
 
 

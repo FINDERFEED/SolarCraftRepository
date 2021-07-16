@@ -64,4 +64,7 @@ public class TileEntitiesRegistry {
     public static final RegistryObject<TileEntityType<TrapControllerTile>> TRAP_STRUCT_CONTROLLER = TILE_ENTITY_TYPE.register("trap_controller_tile",()->
             TileEntityType.Builder.of(TrapControllerTile::new, BlocksRegistry.TRAP_CONTROLLER.get().getBlock()).build(null));
 
+    public static final RegistryObject<TileEntityType<RunicTableTileEntity>> RUNIC_TABLE_TILE = TILE_ENTITY_TYPE.register("runic_table_tile",()->
+            TileEntityType.Builder.of(RunicTableTileEntity::new, BlocksRegistry.RUNIC_TABLE.get().getBlock()).build(null));
+
 }

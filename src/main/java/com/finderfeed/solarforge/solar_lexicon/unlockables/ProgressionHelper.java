@@ -90,6 +90,20 @@ public class ProgressionHelper {
         }
     }
 
+
+    public static boolean doPlayerAlreadyHasPattern(PlayerEntity pe){
+        if (Arrays.equals(pe.getPersistentData().getIntArray(UNLOCK_PATTERN), new int[0])  || Arrays.equals(pe.getPersistentData().getIntArray(UNLOCK_PATTERN), NULL_ARRAY) ){
+            return false;
+        }
+        return true;
+    }
+
+
+    public static int[] getPlayerPattern(PlayerEntity pe){
+        return pe.getPersistentData().getIntArray(UNLOCK_PATTERN);
+    }
+
+
     public static boolean doPlayerHasFragment(PlayerEntity pe,AncientFragment frag){
         return  pe.getPersistentData().getBoolean(Helpers.FRAGMENT+frag.getId());
     }

@@ -112,6 +112,8 @@ public class ItemsRegister {
     public static final RegistryObject<Item> ASH_ITEM = ITEMS.register("ash",()->new AshItem(new Item.Properties().tab(SolarForge.SOLAR_GROUP)));
     public static final RegistryObject<Item> INFO_FRAGMENT = ITEMS.register("ancient_fragment",()->new AncientFragmentItem(new Item.Properties().tab(SolarForge.SOLAR_GROUP_FRAGMENTS).stacksTo(1).setISTER(()->AncientFragmentISTER::new)));
     public static final RegistryObject<Item> MAGIC_HAND = ITEMS.register("magic_hand",()->new Item(new Item.Properties().tab(SolarForge.SOLAR_GROUP)));
+    public static final RegistryObject<Item> RUNIC_TABLE = ITEMS.register("runic_table",()->new BlockItem(BlocksRegistry.RUNIC_TABLE.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
+
 
     public static final RegistryObject<Item> RUNE_ENERGY_DEPOSIT = ITEMS.register("rune_energy_deposit",()->new BlockItem(BlocksRegistry.RUNE_ENERGY_DEPOSIT.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
 

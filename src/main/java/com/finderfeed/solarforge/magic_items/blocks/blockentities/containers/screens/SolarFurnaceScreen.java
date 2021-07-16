@@ -39,6 +39,7 @@ public class SolarFurnaceScreen extends ContainerScreen<SolarFurnaceContainer> {
 
     @Override
     protected void renderBg(MatrixStack matrices, float partialTicks, int mousex, int mousey) {
+
         Minecraft.getInstance().getTextureManager().bind(GUI);
         int scale = (int) minecraft.getWindow().getGuiScale();
         int a = 1;

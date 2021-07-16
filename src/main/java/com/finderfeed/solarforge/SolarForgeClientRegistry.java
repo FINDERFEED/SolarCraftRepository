@@ -8,6 +8,7 @@ import com.finderfeed.solarforge.infusing_table_things.InfusingTableRenderer;
 import com.finderfeed.solarforge.infusing_table_things.infusing_pool.InfusingPoolRenderer;
 import com.finderfeed.solarforge.infusing_table_things.infusing_pool.InfusingPoolTileEntity;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.SolarEnergyRepeaterBlockEntity;
+import com.finderfeed.solarforge.magic_items.blocks.blockentities.containers.screens.RunicTableContainerScreen;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.containers.screens.SolarFurnaceScreen;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.projectiles.renderers.AbstractTurretProjectileRenderer;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.projectiles.renderers.MortarProjectileRenderer;
@@ -89,6 +90,7 @@ public class SolarForgeClientRegistry {
         ClientRegistry.bindTileEntityRenderer(TileEntitiesRegistry.RAY_TRAP_TILE_ENTITY.get(), RayTrapTileEntityRenderer::new);
 
         ScreenManager.register(Containers.SOLAR_FURNACE_CONTAINER.get(), SolarFurnaceScreen::new);
+        ScreenManager.register(Containers.RUNIC_TABLE_CONTAINER.get(), RunicTableContainerScreen::new);
         ScreenManager.register(Containers.SOLAR_LEXICON_CONTAINER.get(), SolarLexiconContScreen::new);
         event.enqueueWork(()->{
             ItemModelsProperties.register(ItemsRegister.ULDORADIUM_ORE.get(),new ResourceLocation("solarforge","unlocked"),(stack,world,living)->{

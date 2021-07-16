@@ -19,6 +19,7 @@ import net.minecraft.resources.IResourceManager;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.vector.Vector3f;
+import net.minecraftforge.common.MinecraftForge;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
 
@@ -43,7 +44,7 @@ public class AuraHealerRenderer extends TileEntityRenderer<AuraHealerTile> {
         matrices.pushPose();
 
 
-        //Shaders.TEST.getShader().process();
+
         matrices.mulPose(Vector3f.XN.rotationDegrees(180));
         matrices.translate(0.5,-1.85,-0.5);
         float bigTing = 22 - (time + 15) % 45;
@@ -55,8 +56,7 @@ public class AuraHealerRenderer extends TileEntityRenderer<AuraHealerTile> {
 
 
         model.renderToBuffer(matrices,buffer.getBuffer(RenderType.text(res)),p_225616_5_,p_225616_6_,1,1,1,1);
-       // RenderingTools.renderRay(matrices,buffer,0,0,Direction.UP,false,0,partialTicks);
-       // Shaders.close();
+;
 
 
         matrices.popPose();

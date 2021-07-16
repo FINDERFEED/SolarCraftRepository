@@ -1,6 +1,7 @@
 package com.finderfeed.solarforge.infusing_table_things;
 
 import com.finderfeed.solarforge.SolarForge;
+import com.finderfeed.solarforge.events.RenderEventsHandler;
 import com.finderfeed.solarforge.misc_things.AbstractEnergyGeneratorTileEntity;
 import com.finderfeed.solarforge.misc_things.AbstractSolarNetworkRepeater;
 import com.finderfeed.solarforge.misc_things.IEnergyUser;
@@ -57,6 +58,7 @@ public class SolarWandItem extends Item implements ManaConsumer {
             tile.triggerCrafting(ctx.getPlayer());
             return ActionResultType.SUCCESS;
         }
+
 
         return ActionResultType.FAIL;
     }
