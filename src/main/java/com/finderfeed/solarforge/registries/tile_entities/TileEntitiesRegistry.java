@@ -67,4 +67,7 @@ public class TileEntitiesRegistry {
     public static final RegistryObject<TileEntityType<RunicTableTileEntity>> RUNIC_TABLE_TILE = TILE_ENTITY_TYPE.register("runic_table_tile",()->
             TileEntityType.Builder.of(RunicTableTileEntity::new, BlocksRegistry.RUNIC_TABLE.get().getBlock()).build(null));
 
+    public static final RegistryObject<TileEntityType<RuneEnergyPylonTile>> RUNE_ENERGY_PYLON = TILE_ENTITY_TYPE.register("rune_energy_pylon",()->
+            TileEntityType.Builder.of(RuneEnergyPylonTile::new, BlocksRegistry.RUNE_ENERGY_PYLON.get().getBlock()).build(null));
+
 }

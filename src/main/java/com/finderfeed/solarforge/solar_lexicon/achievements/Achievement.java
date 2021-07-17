@@ -9,7 +9,7 @@ import net.minecraft.util.text.TranslationTextComponent;
 public enum Achievement {
 
     RUNE_ENERGY_CLAIM("rune_energy_claim",1, ItemsRegister.SOLAR_WAND.get().getDefaultInstance(),new TranslationTextComponent("ach.rune_energy_claim"),1,new TranslationTextComponent("pre.rune_energy_claim")),
-    RUNE_ENERGY_DEPOSIT("rune_energy_deposit",1, ItemsRegister.RUNE_ENERGY_DEPOSIT.get().getDefaultInstance(),new TranslationTextComponent("ach.rune_energy_deposit"),1,new TranslationTextComponent("pre.rune_energy_deposit")),
+    RUNE_ENERGY_DEPOSIT("rune_energy_deposit",1, ItemsRegister.RUNE_ENERGY_PYLON.get().getDefaultInstance(),new TranslationTextComponent("ach.rune_energy_deposit"),1,new TranslationTextComponent("pre.rune_energy_deposit")),
     SOLAR_RUNE("solar_rune",1, ItemsRegister.SOLAR_RUNE_ZETA.get().getDefaultInstance(),new TranslationTextComponent("ach.solar_rune"),1,new TranslationTextComponent("pre.solar_rune")),
     ENTER_NETHER("enter_nether",1, Blocks.NETHERRACK.asItem().getDefaultInstance(),new TranslationTextComponent("ach.enter_nether"),1,new TranslationTextComponent("pre.enter_nether")),
     CRAFT_SOLAR_FORGE("solar_forge_craft",1, SolarForge.SOLAR_FORGE_ITEM.get().getDefaultInstance(),new TranslationTextComponent("ach.solar_forge_craft"),1,new TranslationTextComponent("pre.solar_forge_craft")),

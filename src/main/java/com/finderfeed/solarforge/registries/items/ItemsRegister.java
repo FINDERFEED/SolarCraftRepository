@@ -114,7 +114,7 @@ public class ItemsRegister {
     public static final RegistryObject<Item> RUNIC_TABLE = ITEMS.register("runic_table",()->new BlockItem(BlocksRegistry.RUNIC_TABLE.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
 
 
-    public static final RegistryObject<Item> RUNE_ENERGY_DEPOSIT = ITEMS.register("rune_energy_deposit",()->new BlockItem(BlocksRegistry.RUNE_ENERGY_DEPOSIT.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
+    public static final RegistryObject<Item> RUNE_ENERGY_PYLON = ITEMS.register("rune_energy_pylon",()->new BlockItem(BlocksRegistry.RUNE_ENERGY_PYLON.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
 
 
     //runes

@@ -63,5 +63,17 @@ public class RunicEnergy {
         Type(String id){
             this.id = id;
         }
+
+
+        public static Type byId(String id){
+            for (Type type : values()){
+                if (type.id.equals(id)){
+                    return type;
+                }
+            }
+            return null;
+        }
+
+
     }
 }
