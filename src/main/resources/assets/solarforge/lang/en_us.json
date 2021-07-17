@@ -177,5 +177,6 @@
   "item.solarforge.ash": "Ash",
   "solarforge.radiant_chestplate": "When worn, damages ALL mobs around. Provides 17% miss chance.",
   "item.solarforge.radiant_chestplate": "Radiant Сuirass",
-  "solarforge.magnet_block": "Pulls all items around when powered by redstone. Will try to put items in the inventory below."
+  "solarforge.magnet_block": "Pulls all items around when powered by redstone. Will try to put items in the inventory below.",
+  "solarcraft.runic_table": "Open"
 }

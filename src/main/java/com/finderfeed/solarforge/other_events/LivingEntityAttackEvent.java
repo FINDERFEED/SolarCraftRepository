@@ -6,6 +6,8 @@ import com.finderfeed.solarforge.capability_mana.CapabilitySolarMana;
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
 import com.finderfeed.solarforge.solar_lexicon.achievements.Achievement;
 import com.finderfeed.solarforge.solar_lexicon.packets.UpdateProgressionOnClient;
+import com.finderfeed.solarforge.solar_lexicon.unlockables.AncientFragment;
+import com.finderfeed.solarforge.solar_lexicon.unlockables.ProgressionHelper;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -74,6 +76,12 @@ public class LivingEntityAttackEvent {
 
                 SolarForgePacketHandler.INSTANCE.sendTo(new UpdateProgressionOnClient(a.getAchievementCode(),playernew.getPersistentData().getBoolean(Helpers.PROGRESSION+a.getAchievementCode())),
                         ((ServerPlayerEntity) playernew).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+            }
+        }
+
+        for (AncientFragment fragment : AncientFragment.getAllFragments()){
+            if (ProgressionHelper.doPlayerHasFragment(peorig,fragment)){
+                ProgressionHelper.givePlayerFragment(fragment,playernew);
             }
         }
 

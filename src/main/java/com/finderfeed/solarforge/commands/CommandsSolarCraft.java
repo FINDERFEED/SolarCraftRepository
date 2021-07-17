@@ -1,7 +1,10 @@
 package com.finderfeed.solarforge.commands;
 
 import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.registries.items.ItemsRegister;
 import com.finderfeed.solarforge.solar_lexicon.achievements.Achievement;
+import com.finderfeed.solarforge.solar_lexicon.unlockables.AncientFragment;
+import com.finderfeed.solarforge.solar_lexicon.unlockables.ProgressionHelper;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.arguments.ArgumentType;
@@ -11,7 +14,9 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
+import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -24,10 +29,36 @@ public class CommandsSolarCraft {
                         .then(UnlockAchievementsCommand.register())
                         .then(refreshAchievements.register())
                         .then(AchievementsHelp.register())
+                        .then(RetainFragments.register())
         );
     }
 
 }
+
+class RetainFragments{
+    public static ArgumentBuilder<CommandSource,?> register(){
+        return Commands.literal("fragments")
+                .requires(cs->cs.hasPermission(0))
+                .executes((cmd)->{
+
+                    return retainFragments(cmd.getSource());
+                });
+    }
+
+    public static int retainFragments(CommandSource src) throws CommandSyntaxException {
+        ServerPlayerEntity playerEntity  = src.getPlayerOrException();
+        for (AncientFragment fragment : AncientFragment.getAllFragments()){
+            if (ProgressionHelper.doPlayerHasFragment(playerEntity,fragment)){
+                ItemStack frag = ItemsRegister.INFO_FRAGMENT.get().getDefaultInstance();
+                ProgressionHelper.applyTagToFragment(frag,fragment);
+                ItemEntity entity = new ItemEntity(playerEntity.level,playerEntity.getX(),playerEntity.getY()+0.3f,playerEntity.getZ(),frag);
+                playerEntity.getLevel().addFreshEntity(entity);
+            }
+        }
+        return 0;
+    }
+}
+
 
 class AchievementsHelp{
     public static ArgumentBuilder<CommandSource,?> register(){

@@ -48,7 +48,11 @@ public class RunicTableContainer extends AbstractContainer<RunicTableTileEntity>
     }
 
 
+    @Override
+    public void broadcastChanges() {
 
+        super.broadcastChanges();
+    }
 
     public int[] getPlayerPattern(){
         return new int[]{
@@ -83,8 +87,6 @@ public class RunicTableContainer extends AbstractContainer<RunicTableTileEntity>
         }
         throw new IllegalStateException("Tile Entity Is Not Correct");
     }
-
-
 
 
 

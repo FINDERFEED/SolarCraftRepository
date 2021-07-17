@@ -28,7 +28,7 @@ public class ProgressionHelper {
     public static final int[] NULL_ARRAY = {-1,-1,-1,-1,-1,-1};
 
     //they have weird names didnt they?
-    public static final Item RUNES[] = {
+    public static final Item[] RUNES = {
             ItemsRegister.SOLAR_RUNE_ARDO.get(),
             ItemsRegister.SOLAR_RUNE_FIRA.get(),
             ItemsRegister.SOLAR_RUNE_KELDA.get(),
@@ -49,9 +49,15 @@ public class ProgressionHelper {
             if (rndFragment != null){
 
                 stack.getOrCreateTagElement(TAG_ELEMENT).putString(FRAG_ID,rndFragment.getId());
+
             }
         }
     }
+
+    public static void applyTagToFragment(ItemStack stack,AncientFragment fragment){
+                stack.getOrCreateTagElement(TAG_ELEMENT).putString(FRAG_ID,fragment.getId());
+    }
+
 
     public static AncientFragment getRandomUnlockableFragment(PlayerEntity pe){
         List<AncientFragment> fraglist = getAllUnlockableFragments(pe);

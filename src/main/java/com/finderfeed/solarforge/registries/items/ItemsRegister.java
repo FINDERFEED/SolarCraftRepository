@@ -111,13 +111,15 @@ public class ItemsRegister {
     public static final RegistryObject<Item> FIRST_DIMENSIONAL_SHARD = ITEMS.register("first_dimensional_shard",()->new Item(new Item.Properties().tab(SolarForge.SOLAR_GROUP).rarity(Rarity.EPIC)));
     public static final RegistryObject<Item> ASH_ITEM = ITEMS.register("ash",()->new AshItem(new Item.Properties().tab(SolarForge.SOLAR_GROUP)));
     public static final RegistryObject<Item> INFO_FRAGMENT = ITEMS.register("ancient_fragment",()->new AncientFragmentItem(new Item.Properties().tab(SolarForge.SOLAR_GROUP_FRAGMENTS).stacksTo(1).setISTER(()->AncientFragmentISTER::new)));
-    public static final RegistryObject<Item> MAGIC_HAND = ITEMS.register("magic_hand",()->new Item(new Item.Properties().tab(SolarForge.SOLAR_GROUP)));
     public static final RegistryObject<Item> RUNIC_TABLE = ITEMS.register("runic_table",()->new BlockItem(BlocksRegistry.RUNIC_TABLE.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
 
 
     public static final RegistryObject<Item> RUNE_ENERGY_DEPOSIT = ITEMS.register("rune_energy_deposit",()->new BlockItem(BlocksRegistry.RUNE_ENERGY_DEPOSIT.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
 
+
     //runes
+    public static final RegistryObject<Item> SOLAR_RUNE_BASE = ITEMS.register("runestone",()->new Item(new Item.Properties().tab(SolarForge.SOLAR_GROUP)));
+
     public static final RegistryObject<Item> SOLAR_RUNE_ZETA = ITEMS.register("solar_rune_zeta",()->new Item(new Item.Properties().tab(SolarForge.SOLAR_GROUP)));
     public static final RegistryObject<Item> SOLAR_RUNE_ARDO = ITEMS.register("solar_rune_ardo",()->new Item(new Item.Properties().tab(SolarForge.SOLAR_GROUP)));
     public static final RegistryObject<Item> SOLAR_RUNE_URBA = ITEMS.register("solar_rune_urba",()->new Item(new Item.Properties().tab(SolarForge.SOLAR_GROUP)));

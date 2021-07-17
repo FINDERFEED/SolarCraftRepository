@@ -70,4 +70,6 @@ public class RunicTableTileEntity extends LockableLootTileEntity {
             ItemStackHelper.loadAllItems(cmp, this.items);
         }
     }
+
+
 }

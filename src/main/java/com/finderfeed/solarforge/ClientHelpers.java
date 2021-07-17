@@ -2,6 +2,7 @@ package com.finderfeed.solarforge;
 
 import com.finderfeed.solarforge.events.RenderEventsHandler;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.RayTrapTileEntity;
+import com.finderfeed.solarforge.magic_items.blocks.blockentities.containers.screens.RunicTableContainerScreen;
 import com.finderfeed.solarforge.misc_things.AbstractEnergyGeneratorTileEntity;
 import com.finderfeed.solarforge.misc_things.AbstractSolarCore;
 import com.finderfeed.solarforge.misc_things.AbstractSolarNetworkRepeater;
@@ -11,9 +12,11 @@ import com.finderfeed.solarforge.registries.items.ItemsRegister;
 import com.finderfeed.solarforge.registries.sounds.Sounds;
 import com.finderfeed.solarforge.solar_lexicon.SolarLexicon;
 import com.finderfeed.solarforge.solar_lexicon.achievements.Achievement;
+import com.finderfeed.solarforge.solar_lexicon.unlockables.ProgressionHelper;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.BlockItem;
@@ -34,6 +37,18 @@ public class ClientHelpers {
     public static ClientPlayerEntity getClientPlayer(){
         return Minecraft.getInstance().player;
     }
+
+    public static void updatePatternOnScreen(int[] pattern){
+        Screen screen = Minecraft.getInstance().screen;
+        if (screen instanceof RunicTableContainerScreen){
+            RunicTableContainerScreen screen1 = (RunicTableContainerScreen) screen;
+            screen1.pattern.clear();
+            for (int a : pattern){
+                screen1.pattern.add(ProgressionHelper.RUNES[a].getDefaultInstance());
+            }
+        }
+    }
+
 
     public static void playTotemAnimation( ){
         ClientPlayerEntity ent = Minecraft.getInstance().player;
