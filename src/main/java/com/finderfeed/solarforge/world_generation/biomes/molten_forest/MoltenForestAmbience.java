@@ -22,10 +22,10 @@ import org.apache.logging.log4j.core.tools.picocli.CommandLine;
 
 import java.util.*;
 
-public class BurntBiomeBurntTree extends Feature<NoFeatureConfig> {
+public class MoltenForestAmbience extends Feature<NoFeatureConfig> {
     private static final ResourceLocation TREE = new ResourceLocation("solarforge:worldgen_features/burnt_forest_ambience1");
     private static final ResourceLocation TREE2 = new ResourceLocation("solarforge:worldgen_features/burnt_biome_ambience2");
-    public BurntBiomeBurntTree(Codec<NoFeatureConfig> p_i231953_1_) {
+    public MoltenForestAmbience(Codec<NoFeatureConfig> p_i231953_1_) {
         super(p_i231953_1_);
     }
 

@@ -60,6 +60,7 @@ public class RuneEnergyPylonRenderer extends TileEntityRenderer<RuneEnergyPylonT
 
         matrices.mulPose(quaternion);
         matrices.mulPose(Vector3f.ZP.rotationDegrees(time%360));
+        matrices.scale(1.5f,1.5f,1.5f);
         Matrix4f matrix = matrices.last().pose();
         vertex.vertex(matrix, -0.5f,0.5f,0).color(255, 255, 0, 200).uv(0, 1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
         vertex.vertex(matrix,  0.5f,0.5f,0).color(255, 255, 0, 200).uv(1, 1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
@@ -72,10 +73,11 @@ public class RuneEnergyPylonRenderer extends TileEntityRenderer<RuneEnergyPylonT
         matrices.mulPose(quaternion);
         matrices.mulPose(Vector3f.ZN.rotationDegrees(time%360));
         Matrix4f matrix2 = matrices.last().pose();
-        vertex.vertex(matrix2, -0.5f,0.5f,0.00001f).color(255, 255, 0, 200).uv(0, 1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
-        vertex.vertex(matrix2,  0.5f,0.5f,0.00001f).color(255, 255, 0, 200).uv(1, 1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
-        vertex.vertex(matrix2,  0.5f,-0.5f,0.00001f).color(255, 255, 0, 200).uv(1, 0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
-        vertex.vertex(matrix2,  -0.5f,-0.5f,0.00001f).color(255, 255, 0, 200).uv(0, 0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
+        matrices.scale(1.5f,1.5f,1.5f);
+        vertex.vertex(matrix2, -0.5f,0.5f,0.001f).color(255, 255, 0, 200).uv(0, 1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
+        vertex.vertex(matrix2,  0.5f,0.5f,0.001f).color(255, 255, 0, 200).uv(1, 1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
+        vertex.vertex(matrix2,  0.5f,-0.5f,0.001f).color(255, 255, 0, 200).uv(1, 0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
+        vertex.vertex(matrix2,  -0.5f,-0.5f,0.001f).color(255, 255, 0, 200).uv(0, 0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
         matrices.popPose();
     }
 }

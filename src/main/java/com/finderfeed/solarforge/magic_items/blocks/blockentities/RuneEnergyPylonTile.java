@@ -47,7 +47,7 @@ public class RuneEnergyPylonTile extends TileEntity implements ITickableTileEnti
 
             if (updateTick >= 40){
                 SolarForgePacketHandler.INSTANCE.send(PacketDistributor.NEAR.with(PacketDistributor.TargetPoint.p(worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(), 40, level.dimension())),
-                        new UpdateTypeOnClientPacket(worldPosition,type.id));
+                        new UpdateTypeOnClientPacket(worldPosition, type.id));
                 updateTick = 0;
             }
         }
