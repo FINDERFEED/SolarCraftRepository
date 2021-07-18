@@ -3,10 +3,12 @@ package com.finderfeed.solarforge.world_generation.features.trunk_placers;
 import com.mojang.serialization.Codec;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
+import net.minecraft.util.registry.WorldGenRegistries;
 import net.minecraft.world.gen.trunkplacer.AbstractTrunkPlacer;
 import net.minecraft.world.gen.trunkplacer.TrunkPlacerType;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -45,6 +47,7 @@ public class TrunkPlacersRegistry {
 
     public static void registerTrunkPlacerTypes(final FMLCommonSetupEvent event){
         event.enqueueWork(()->{
+
             Registry.register(Registry.TRUNK_PLACER_TYPES,new ResourceLocation("solarforge","burnt_tree_trunk_placer_type"),BURNT_TREE_TRUNK_PLACER_TRUNK_PLACER_TYPE);
         });
     }

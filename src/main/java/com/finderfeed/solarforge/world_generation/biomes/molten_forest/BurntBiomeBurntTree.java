@@ -40,23 +40,12 @@ public class BurntBiomeBurntTree extends Feature<NoFeatureConfig> {
         Template templ = manager.getOrCreate(list.get(random.nextInt(2)));
 
         ChunkPos chunkpos = new ChunkPos(pos);
-        //MutableBoundingBox mutableboundingbox = new MutableBoundingBox(chunkpos.getMinBlockX(), 0, chunkpos.getMinBlockZ(), chunkpos.getMaxBlockX(), 256, chunkpos.getMaxBlockZ());
+
         PlacementSettings set = new PlacementSettings().addProcessor(BlockIgnoreStructureProcessor.AIR).setRandom(random).setRotation(rot).setBoundingBox(MutableBoundingBox.infinite());
 
 
 
-//        BlockPos[] poslits = {pos.below().south(3),
-//                pos.below().east(3),
-//                pos.below().east(3).south(3),
-//                pos.below()};
-//        boolean a = true;
-//        for (BlockPos hj : poslits){
-//            if ( !(world.getBlockState(hj).getBlock() instanceof GrassBlock )){
-//
-//                a = false;
-//                break;
-//            }
-//        }
+
         BlockPos pos1 = findFlatChunkPosition(world,pos,4,Blocks.GRASS_BLOCK);
 
         if (!pos1.equals(Helpers.NULL_POS)) {

@@ -2,11 +2,9 @@ package com.finderfeed.solarforge;
 
 import com.finderfeed.solarforge.events.RenderEventsHandler;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.RayTrapTileEntity;
+import com.finderfeed.solarforge.magic_items.blocks.blockentities.RuneEnergyPylonTile;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.containers.screens.RunicTableContainerScreen;
-import com.finderfeed.solarforge.misc_things.AbstractEnergyGeneratorTileEntity;
-import com.finderfeed.solarforge.misc_things.AbstractSolarCore;
-import com.finderfeed.solarforge.misc_things.AbstractSolarNetworkRepeater;
-import com.finderfeed.solarforge.misc_things.IProgressionBlock;
+import com.finderfeed.solarforge.misc_things.*;
 import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
 import com.finderfeed.solarforge.registries.items.ItemsRegister;
 import com.finderfeed.solarforge.registries.sounds.Sounds;
@@ -37,6 +35,16 @@ public class ClientHelpers {
     public static ClientPlayerEntity getClientPlayer(){
         return Minecraft.getInstance().player;
     }
+
+
+    public static void updateEnergyTypeOnClient(BlockPos pos,String id){
+        TileEntity tile = Minecraft.getInstance().level.getBlockEntity(pos);
+        if (tile instanceof RuneEnergyPylonTile){
+            RuneEnergyPylonTile pylon = (RuneEnergyPylonTile) tile;
+            pylon.setType(RunicEnergy.Type.byId(id));
+        }
+    }
+
 
     public static void updatePatternOnScreen(int[] pattern){
         Screen screen = Minecraft.getInstance().screen;

@@ -80,6 +80,7 @@ public class SolarForgeClientRegistry {
         RenderingRegistry.registerEntityRenderingHandler(Projectiles.TURRET_PROJECTILE.get(), AbstractTurretProjectileRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(Projectiles.VILLAGER_SOLAR_MASTER.get(), VillagerSolarMasterRenderer::new);
 
+        ClientRegistry.bindTileEntityRenderer(TileEntitiesRegistry.RUNE_ENERGY_PYLON.get(), RuneEnergyPylonRenderer::new);
         ClientRegistry.bindTileEntityRenderer(SolarForge.SOLAR_FORGE_BLOCKENTITY.get(), SolarForgeBlockEntityRenderer::new);
         ClientRegistry.bindTileEntityRenderer(TileEntitiesRegistry.INFUSING_POOL_BLOCKENTITY.get(), InfusingPoolRenderer::new);
         ClientRegistry.bindTileEntityRenderer(SolarForge.INFUSING_STAND_BLOCKENTITY.get(), InfusingTableRenderer::new);

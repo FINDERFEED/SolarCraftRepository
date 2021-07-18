@@ -34,7 +34,7 @@ public class BurntBiomeAmbienceSecond extends Feature<NoFeatureConfig> {
         Template templ = manager.getOrCreate(TREE);
 
         ChunkPos chunkpos = new ChunkPos(pos);
-        //MutableBoundingBox mutableboundingbox = new MutableBoundingBox(chunkpos.getMinBlockX(), 0, chunkpos.getMinBlockZ(), chunkpos.getMaxBlockX(), 256, chunkpos.getMaxBlockZ());
+
         PlacementSettings set = new PlacementSettings().addProcessor(BlockIgnoreStructureProcessor.AIR).setRandom(random).setRotation(rot).setBoundingBox(MutableBoundingBox.infinite());
 
 
@@ -52,9 +52,9 @@ public class BurntBiomeAmbienceSecond extends Feature<NoFeatureConfig> {
                 break;
             }
         }
-        System.out.println("b");
+
         if (a) {
-            System.out.println(pos);
+
             templ.placeInWorld(world, blockpos1, blockpos1, set, random, 4);
         }
         return true;

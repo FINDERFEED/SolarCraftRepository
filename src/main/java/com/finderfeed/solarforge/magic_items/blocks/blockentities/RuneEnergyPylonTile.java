@@ -1,16 +1,16 @@
 package com.finderfeed.solarforge.magic_items.blocks.blockentities;
 
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
+import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
+import com.finderfeed.solarforge.packets.UpdateTypeOnClientPacket;
 import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
+import net.minecraftforge.fml.network.PacketDistributor;
 
-import javax.annotation.Nullable;
+
 
 public class RuneEnergyPylonTile extends TileEntity implements ITickableTileEntity {
 
@@ -18,6 +18,7 @@ public class RuneEnergyPylonTile extends TileEntity implements ITickableTileEnti
     private int currentEnergy = 0;
     private int energyPerTick = 2;
     private int maxEnergy = 100000;
+    private int updateTick = 40;
 
     public RuneEnergyPylonTile() {
         super(TileEntitiesRegistry.RUNE_ENERGY_PYLON.get());
@@ -42,9 +43,15 @@ public class RuneEnergyPylonTile extends TileEntity implements ITickableTileEnti
             }else{
                 currentEnergy = maxEnergy;
             }
+            updateTick++;
 
+            if (updateTick >= 40){
+                SolarForgePacketHandler.INSTANCE.send(PacketDistributor.NEAR.with(PacketDistributor.TargetPoint.p(worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(), 40, level.dimension())),
+                        new UpdateTypeOnClientPacket(worldPosition,type.id));
+                updateTick = 0;
+            }
         }
-            System.out.println(type);
+
 
     }
 

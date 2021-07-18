@@ -54,6 +54,7 @@ public class SolarForgePacketHandler {
         INSTANCE.registerMessage(nextID(), UpdateInventoryPacket.class, UpdateInventoryPacket::toBytes, UpdateInventoryPacket::new, UpdateInventoryPacket::handle);
         INSTANCE.registerMessage(nextID(), RunicTablePacket.class, RunicTablePacket::toBytes, RunicTablePacket::new, RunicTablePacket::handle);
         INSTANCE.registerMessage(nextID(), UpdatePatternOnScreen.class, UpdatePatternOnScreen::toBytes, UpdatePatternOnScreen::new, UpdatePatternOnScreen::handle);
+        INSTANCE.registerMessage(nextID(), UpdateTypeOnClientPacket.class, UpdateTypeOnClientPacket::toBytes, UpdateTypeOnClientPacket::new, UpdateTypeOnClientPacket::handle);
     }
     //RepeaterParentUpdateOnClient
 }

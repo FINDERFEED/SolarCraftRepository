@@ -55,7 +55,7 @@ public abstract class AbstractSolarCore extends TileEntity implements ITickableT
                     toRemove.add(a);
                     b = true;
                 }
-                //setChanged();
+
 
                     SolarForgePacketHandler.INSTANCE.send(PacketDistributor.NEAR.with(PacketDistributor.TargetPoint.p(worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(), 40, level.dimension())),
                             new UpdateCoreOnClient(worldPosition, a, poslist.indexOf(a), b));
