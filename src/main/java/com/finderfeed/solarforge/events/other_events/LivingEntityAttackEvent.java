@@ -3,6 +3,7 @@ package com.finderfeed.solarforge.events.other_events;
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.capabilities.capability_mana.CapabilitySolarMana;
+import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Achievement;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.packets.UpdateProgressionOnClient;
@@ -56,6 +57,7 @@ public class LivingEntityAttackEvent {
             playernew.getPersistentData().putBoolean("solar_forge_can_player_use_meteorite",peorig.getPersistentData().getBoolean("solar_forge_can_player_use_meteorite"));
             playernew.getPersistentData().putBoolean("solar_forge_can_player_use_solar_heal",peorig.getPersistentData().getBoolean("solar_forge_can_player_use_solar_heal"));
             playernew.getPersistentData().putBoolean("solar_forge_can_player_use_alchemist",peorig.getPersistentData().getBoolean("solar_forge_can_player_use_alchemist"));
+            RunicEnergy.handleCloneEvent(event);
         }
         playernew.getPersistentData().putInt("solar_forge_ability_binded_1",peorig.getPersistentData().getInt("solar_forge_ability_binded_1"));
         playernew.getPersistentData().putInt("solar_forge_ability_binded_2",peorig.getPersistentData().getInt("solar_forge_ability_binded_2"));
@@ -84,6 +86,7 @@ public class LivingEntityAttackEvent {
                 ProgressionHelper.givePlayerFragment(fragment,playernew);
             }
         }
+
 
 
     }

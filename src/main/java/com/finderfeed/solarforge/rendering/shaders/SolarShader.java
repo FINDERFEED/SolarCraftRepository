@@ -21,6 +21,8 @@ public class SolarShader {
     private int VERTEX;
     private int FRAGMENT;
 
+    private boolean isActive = false;
+
     private List<Uniform> UNIFORMS = new ArrayList<>();
 
 
@@ -65,8 +67,16 @@ public class SolarShader {
         UNIFORMS.forEach(Uniform::applyUniform);
         UNIFORMS.clear();
         setDefaultUniforms();
-        setMatrices();
 
+
+    }
+
+    public boolean isActive(){
+        return isActive;
+    }
+
+    public void setActive(boolean a){
+        isActive = a;
     }
 
     public void addUniform(Uniform a){
@@ -131,12 +141,14 @@ public class SolarShader {
         FloatBuffer buffer = BufferUtils.createFloatBuffer(16);
         GL11.glGetFloatv(GL11.GL_MODELVIEW_MATRIX,buffer);
         buffer.rewind();
-        GL20.glUniformMatrix4fv(GL20.glGetUniformLocation(SHADER,"projection"),false,buffer);
+        UNIFORMS.add(new Uniform("modelview",buffer,SHADER));
 
         FloatBuffer buffer2 = BufferUtils.createFloatBuffer(16);
         GL11.glGetFloatv(GL11.GL_PROJECTION_MATRIX,buffer2);
         buffer2.rewind();
-        GL20.glUniformMatrix4fv(GL20.glGetUniformLocation(SHADER,"modelview"),false,buffer2);
+        UNIFORMS.add(new Uniform("projection",buffer2,SHADER));
+
     }
+
 
 }

@@ -28,13 +28,15 @@ public class RenderEventsHandler {
 
 
                 GlStateManager._glBindFramebuffer(FramebufferConstants.GL_FRAMEBUFFER, Framebuffers.buffer2.frameBufferId);
-
-                Shaders.WAVE.getShader().process();
                 int shader = Shaders.WAVE.getShader().getSHADER();
                 int time =(int)Minecraft.getInstance().level.getGameTime();
                 Shaders.WAVE.getShader().addUniform(new Uniform("intensity", intensity, shader));
                 Shaders.WAVE.getShader().addUniform(new Uniform("timeModifier", 3f, shader));
                 Shaders.WAVE.getShader().addUniform(new Uniform("time", time, shader));
+                Shaders.WAVE.getShader().setMatrices();
+
+
+                Shaders.WAVE.getShader().process();
                 buffer.blitToScreen(Minecraft.getInstance().getWindow().getScreenWidth(), Minecraft.getInstance().getWindow().getScreenHeight());
                 Shaders.close();
                 GlStateManager._glBindFramebuffer(FramebufferConstants.GL_FRAMEBUFFER, buffer.frameBufferId);
@@ -51,6 +53,31 @@ public class RenderEventsHandler {
             intensity = 3;
             radius = 0;
     }
+
+//    @SubscribeEvent
+//    public void renderTestWorld(RenderWorldLastEvent event){
+//        if ((Minecraft.getInstance().getWindow().getScreenWidth() != 0) && (Minecraft.getInstance().getWindow().getScreenHeight() != 0)) {
+//
+//                Framebuffer buffer = Minecraft.getInstance().getMainRenderTarget();
+//                Framebuffers.buffer2.resize(Minecraft.getInstance().getWindow().getScreenWidth(), Minecraft.getInstance().getWindow().getScreenHeight(), false);
+//
+//
+//                GlStateManager._glBindFramebuffer(FramebufferConstants.GL_FRAMEBUFFER, Framebuffers.buffer2.frameBufferId);
+//
+//                Shaders.TEST.getShader().process();
+//                Shaders.TEST.getShader().addUniform(new Uniform("intensity",8f,Shaders.TEST.getShader().getSHADER()));
+//                Shaders.TEST.getShader().addUniform(new Uniform("posX",-1f,Shaders.TEST.getShader().getSHADER()));
+//                Shaders.TEST.getShader().addUniform(new Uniform("posY",0.5f,Shaders.TEST.getShader().getSHADER()));
+//                Shaders.TEST.getShader().addUniform(new Uniform("posZ",1f,Shaders.TEST.getShader().getSHADER()));
+//                buffer.blitToScreen(Minecraft.getInstance().getWindow().getScreenWidth(), Minecraft.getInstance().getWindow().getScreenHeight());
+//                Shaders.close();
+//                GlStateManager._glBindFramebuffer(FramebufferConstants.GL_FRAMEBUFFER, buffer.frameBufferId);
+//                Framebuffers.buffer2.blitToScreen(Minecraft.getInstance().getWindow().getScreenWidth(), Minecraft.getInstance().getWindow().getScreenHeight());
+//                GlStateManager._glBindFramebuffer(FramebufferConstants.GL_FRAMEBUFFER, 0);
+//        }
+//    }
+
+
 
 
 

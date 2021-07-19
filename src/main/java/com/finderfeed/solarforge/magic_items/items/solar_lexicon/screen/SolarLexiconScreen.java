@@ -24,6 +24,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class SolarLexiconScreen extends Screen implements IScrollable {
 
@@ -37,6 +38,8 @@ public class SolarLexiconScreen extends Screen implements IScrollable {
     public final AchievementTree tree = AchievementTree.loadTree();
     public ITextComponent currAch;
     public Achievement currentAchievement = null;
+
+
 
     public List<Achievement> firstTier;
     public List<Achievement> secondTier;
@@ -128,6 +131,12 @@ public class SolarLexiconScreen extends Screen implements IScrollable {
 //    }
 
 
+    private void initMap(int tiersCount){
+        map.clear();
+        for (int i = 1;i < tiersCount+1;i++){
+            map.put(i,new ArrayList<>());
+        }
+    }
 
 
     @Override
@@ -142,47 +151,20 @@ public class SolarLexiconScreen extends Screen implements IScrollable {
         int scale = (int) minecraft.getWindow().getGuiScale();
         this.relX = (width/scale - 183)/2;
         this.relY = (height - 218*scale)/2/scale;
-
+        initMap(15);
 
 
         currentText = "Select Progression";
-        Minecraft mc = Minecraft.getInstance();
+
         currAch = new StringTextComponent("");
         int offsetX = 0;
         int offsetY = 0;
-        firstTier = new ArrayList<>();
-        secondTier = new ArrayList<>();
-        thirdTier = new ArrayList<>();
-        forthTier = new ArrayList<>();
-        fifthTier = new ArrayList<>();
-        sixthTier = new ArrayList<>();
+
         for (Achievement a : tree.ACHIEVEMENT_TREE.keySet()){
+            int tier = a.getAchievementTier();
+            map.get(tier).add(a);
+            offsetX = (map.get(tier).size()-1) * 35;
 
-            if (a.getAchievementTier() == 1){
-
-                offsetX = firstTier.size() * 35;
-                firstTier.add(a);
-            }
-            else if (a.getAchievementTier() ==2 ){
-                offsetX = secondTier.size() * 35;
-                secondTier.add(a);
-            }
-            else if (a.getAchievementTier() == 3){
-                offsetX = thirdTier.size() * 35;
-                thirdTier.add(a);
-            }
-            else if (a.getAchievementTier() == 4){
-                offsetX = forthTier.size() * 35;
-                forthTier.add(a);
-            }
-            else if (a.getAchievementTier() == 5){
-                offsetX = fifthTier.size() * 35;
-                fifthTier.add(a);
-            }
-            else if (a.getAchievementTier() == 6){
-                offsetX = sixthTier.size() * 35;
-                sixthTier.add(a);
-            }
 
             offsetY = (a.getAchievementTier() -1)* 30;
             boolean c = Helpers.canPlayerUnlock(a,minecraft.player);
@@ -210,12 +192,7 @@ public class SolarLexiconScreen extends Screen implements IScrollable {
         toggleRecipesScreen.y = relY + 184;
         justForge.x = relX +207;
         justForge.y = relY + 164;
-        map.put(1,firstTier);
-        map.put(2,secondTier);
-        map.put(3,thirdTier);
-        map.put(4,forthTier);
-        map.put(5,fifthTier);
-        map.put(6,sixthTier);
+
     }
     @Override
     public void render(MatrixStack matrices, int mousex, int mousey, float partialTicks) {

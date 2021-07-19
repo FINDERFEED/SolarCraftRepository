@@ -3,7 +3,8 @@ package com.finderfeed.solarforge.rendering.shaders;
 import org.lwjgl.opengl.GL20;
 
 public enum Shaders {
-    WAVE(new SolarShader("wave"));
+    WAVE(new SolarShader("wave")),
+    TEST(new SolarShader("test"));;
 
 
     private SolarShader shader;

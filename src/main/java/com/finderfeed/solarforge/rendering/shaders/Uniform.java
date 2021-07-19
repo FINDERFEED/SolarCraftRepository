@@ -17,6 +17,8 @@ public class Uniform {
 
     private Matrix4f m4f;
 
+    private FloatBuffer bufm4f;
+
     private Type type;
 
     /**
@@ -46,6 +48,10 @@ public class Uniform {
         this.m4f = a;
     }
 
+    public Uniform(String name,FloatBuffer a,int shader){
+        this(name,Type.FLOAT_BUFFER_MAT4F,shader);
+        this.bufm4f = a;
+    }
 
     public void applyUniform(){
         switch (type){
@@ -74,6 +80,13 @@ public class Uniform {
                 }
                 break;
             }
+            case FLOAT_BUFFER_MAT4F:{
+                int loc = GL20.glGetUniformLocation(SHADER,name);
+                if (loc != -1){
+                    GL20.glUniformMatrix4fv(loc,false,bufm4f);
+                }
+                break;
+            }
 
         }
     }
@@ -81,6 +94,7 @@ public class Uniform {
     enum Type{
         INT,
         FLOAT,
-        MATRIX4F
+        MATRIX4F,
+        FLOAT_BUFFER_MAT4F
     }
 }

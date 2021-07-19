@@ -3,6 +3,7 @@ package com.finderfeed.solarforge.misc_things;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 
 public class RunicEnergy {
 
@@ -57,6 +58,16 @@ public class RunicEnergy {
 
     public static void setEnergy(PlayerEntity playerEntity,Type type,float amount){
         playerEntity.getPersistentData().putFloat(DEFAULT_ENERGY_TAG+type.id,amount);
+    }
+
+
+    public static void handleCloneEvent(PlayerEvent.Clone event){
+        PlayerEntity newP = event.getPlayer();
+        PlayerEntity oldP = event.getOriginal();
+
+        for (Type type : Type.values()){
+            setEnergy(newP,getEnergy(oldP,type),type);
+        }
     }
 
     public enum Type{
