@@ -30,11 +30,7 @@ public abstract class AbstractStructureBlockentity extends TileEntity implements
         if (!this.level.isClientSide){
             List<PlayerEntity> list = this.level.getEntitiesOfClass(PlayerEntity.class,box.move(this.worldPosition));
             for (PlayerEntity a :list){
-
-                if (!Helpers.hasPlayerUnlocked(this.a,a)){
-                    Helpers.setAchievementStatus(this.a,a,true);
-                    SolarForgePacketHandler.INSTANCE.sendTo(new TriggerToastPacket(this.a.getId()),((ServerPlayerEntity)a).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
-                }
+                Helpers.fireProgressionEvent(a,this.a);
             }
         }
     }

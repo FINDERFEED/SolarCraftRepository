@@ -10,28 +10,28 @@ public class RunicEnergy {
     public static String DEFAULT_ENERGY_TAG = "solarcraft.solar_rune_energy_";
 
 
-    public static void setEnergy(PlayerEntity playerEntity,int amount, Type type){
+    public static void setEnergy(PlayerEntity playerEntity,float amount, Type type){
         CompoundNBT nbt = playerEntity.getPersistentData();
-        nbt.putInt(DEFAULT_ENERGY_TAG+type.id,amount);
+        nbt.putFloat(DEFAULT_ENERGY_TAG+type.id,amount);
     }
 
 
-    public static int givePlayerEnergy(PlayerEntity playerEntity,int energyAmount, Type type){
+    public static float givePlayerEnergy(PlayerEntity playerEntity,float energyAmount, Type type){
         CompoundNBT nbt = playerEntity.getPersistentData();
-        int maxEnergy = nbt.getInt(MAX_ENERGY_TAG);
+        float maxEnergy = nbt.getFloat(MAX_ENERGY_TAG);
         if (maxEnergy == 0){
             nbt.putInt(MAX_ENERGY_TAG,100000);
-            maxEnergy = nbt.getInt(MAX_ENERGY_TAG);
+            maxEnergy = nbt.getFloat(MAX_ENERGY_TAG);
         }
 
-        int kolvo = nbt.getInt(DEFAULT_ENERGY_TAG+type.id) + energyAmount;
+        float kolvo = nbt.getFloat(DEFAULT_ENERGY_TAG+type.id) + energyAmount;
         if (kolvo <= maxEnergy){
-            nbt.putInt(DEFAULT_ENERGY_TAG+type.id,kolvo);
+            nbt.putFloat(DEFAULT_ENERGY_TAG+type.id,kolvo);
             playerEntity.displayClientMessage(new StringTextComponent(type.id+" "+nbt.getInt(DEFAULT_ENERGY_TAG+type.id)),true);
             return 0;
         }else{
-            int raznitsa = kolvo - maxEnergy;
-            nbt.putInt(DEFAULT_ENERGY_TAG+type.id,maxEnergy);
+            float raznitsa = kolvo - maxEnergy;
+            nbt.putFloat(DEFAULT_ENERGY_TAG+type.id,maxEnergy);
             playerEntity.displayClientMessage(new StringTextComponent(type.id+" "+nbt.getInt(DEFAULT_ENERGY_TAG+type.id)),true);
             return raznitsa;
         }
@@ -40,8 +40,8 @@ public class RunicEnergy {
     }
 
 
-    public static boolean spendEnergy(PlayerEntity playerEntity,int amount,Type type){
-        int currentEnergy = getEnergy(playerEntity,type);
+    public static boolean spendEnergy(PlayerEntity playerEntity,float amount,Type type){
+        float currentEnergy = getEnergy(playerEntity,type);
         if ((currentEnergy - amount) >= 0){
             setEnergy(playerEntity,type,currentEnergy-amount);
             return true;
@@ -51,12 +51,12 @@ public class RunicEnergy {
     }
 
 
-    public static int getEnergy(PlayerEntity playerEntity,Type type){
-        return playerEntity.getPersistentData().getInt(DEFAULT_ENERGY_TAG+type.id);
+    public static float getEnergy(PlayerEntity playerEntity,Type type){
+        return playerEntity.getPersistentData().getFloat(DEFAULT_ENERGY_TAG+type.id);
     }
 
-    public static void setEnergy(PlayerEntity playerEntity,Type type,int amount){
-        playerEntity.getPersistentData().putInt(DEFAULT_ENERGY_TAG+type.id,amount);
+    public static void setEnergy(PlayerEntity playerEntity,Type type,float amount){
+        playerEntity.getPersistentData().putFloat(DEFAULT_ENERGY_TAG+type.id,amount);
     }
 
     public enum Type{

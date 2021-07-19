@@ -17,12 +17,7 @@ public class EnchancedBlueGem extends ItemWithGlint{
     @Override
     public void inventoryTick(ItemStack p_77663_1_, World p_77663_2_, Entity p_77663_3_, int p_77663_4_, boolean p_77663_5_) {
         if (!p_77663_2_.isClientSide && (p_77663_3_ instanceof PlayerEntity) ){
-            if (!Helpers.hasPlayerUnlocked(Achievement.TRANSMUTE_GEM,(PlayerEntity) p_77663_3_) && Helpers.canPlayerUnlock(Achievement.TRANSMUTE_GEM,(PlayerEntity) p_77663_3_)){
-                Helpers.setAchievementStatus(Achievement.TRANSMUTE_GEM,(PlayerEntity) p_77663_3_,true);
-                Helpers.triggerToast(Achievement.TRANSMUTE_GEM,(PlayerEntity) p_77663_3_);
-                Helpers.updateProgression((ServerPlayerEntity)p_77663_3_ );
-                Helpers.forceChunksReload((ServerPlayerEntity) p_77663_3_);
-            }
+            Helpers.fireProgressionEvent((PlayerEntity) p_77663_3_,Achievement.TRANSMUTE_GEM);
         }
         super.inventoryTick(p_77663_1_, p_77663_2_, p_77663_3_, p_77663_4_, p_77663_5_);
     }

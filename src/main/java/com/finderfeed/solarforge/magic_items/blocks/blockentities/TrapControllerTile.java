@@ -76,12 +76,7 @@ public class TrapControllerTile extends TileEntity implements ITickableTileEntit
                     worldPosition.offset(-7,-1,-3));
             List<PlayerEntity> list = level.getEntitiesOfClass(PlayerEntity.class,box);
             list.forEach((player)->{
-                if (!Helpers.hasPlayerUnlocked(Achievement.DIMENSIONAL_SHARD_DUNGEON,player) && Helpers.canPlayerUnlock(Achievement.DIMENSIONAL_SHARD_DUNGEON,player)){
-                    Helpers.setAchievementStatus(Achievement.DIMENSIONAL_SHARD_DUNGEON,player,true);
-                    Helpers.triggerToast(Achievement.DIMENSIONAL_SHARD_DUNGEON,player);
-                    Helpers.updateProgression((ServerPlayerEntity)player);
-                    Helpers.forceChunksReload((ServerPlayerEntity) player);
-                }
+                Helpers.fireProgressionEvent(player,Achievement.DIMENSIONAL_SHARD_DUNGEON);
             });
             if (!list.isEmpty()){
                 if (!ALREADY_ACTIVATED) {

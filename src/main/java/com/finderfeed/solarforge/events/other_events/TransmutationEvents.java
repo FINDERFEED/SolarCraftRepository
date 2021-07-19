@@ -35,9 +35,8 @@ public class TransmutationEvents {
             }
         }
 
-        if (event.getState().getBlock() == BlocksRegistry.SOLAR_STONE.get() && !Helpers.hasPlayerUnlocked(Achievement.FIND_SOLAR_STONE,event.getPlayer())){
-            event.getPlayer().getPersistentData().putBoolean(Helpers.PROGRESSION+ Achievement.FIND_SOLAR_STONE.getAchievementCode(),true);
-            SolarForgePacketHandler.INSTANCE.sendTo(new TriggerToastPacket(Achievement.FIND_SOLAR_STONE.getId()), ((ServerPlayerEntity) event.getPlayer()).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+        if (event.getState().getBlock() == BlocksRegistry.SOLAR_STONE.get() ){
+            Helpers.fireProgressionEvent(event.getPlayer(),Achievement.FIND_SOLAR_STONE);
         }
 
         if (event.getPlayer().getMainHandItem().getItem() instanceof VeinMiner){

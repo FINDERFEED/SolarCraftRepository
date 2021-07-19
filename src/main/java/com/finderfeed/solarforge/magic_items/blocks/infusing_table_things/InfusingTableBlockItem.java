@@ -21,10 +21,7 @@ public class InfusingTableBlockItem extends BlockItem {
     @Override
     public void onCraftedBy(ItemStack stack, World world, PlayerEntity pe) {
         if (!world.isClientSide){
-            if (!Helpers.hasPlayerUnlocked(Achievement.CRAFT_SOLAR_INFUSER,pe) && Helpers.canPlayerUnlock(Achievement.CRAFT_SOLAR_INFUSER,pe)){
-                pe.getPersistentData().putBoolean(Helpers.PROGRESSION+ Achievement.CRAFT_SOLAR_INFUSER.getAchievementCode(),true);
-                SolarForgePacketHandler.INSTANCE.sendTo(new TriggerToastPacket(Achievement.CRAFT_SOLAR_INFUSER.getId()), ((ServerPlayerEntity) pe).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
-            }
+            Helpers.fireProgressionEvent(pe,Achievement.CRAFT_SOLAR_INFUSER);
         }
         super.onCraftedBy(stack,world,pe);
     }

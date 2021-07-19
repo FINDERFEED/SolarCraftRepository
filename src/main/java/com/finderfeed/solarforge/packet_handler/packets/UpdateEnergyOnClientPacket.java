@@ -11,22 +11,22 @@ import java.util.function.Supplier;
 public class UpdateEnergyOnClientPacket extends AbstractPacket {
 
     public final String id;
-    public final int set;
+    public final float set;
 
-    public UpdateEnergyOnClientPacket(RunicEnergy.Type type,int amount){
+    public UpdateEnergyOnClientPacket(RunicEnergy.Type type,float amount){
         this.id = type.id;
         this.set = amount;
     }
 
     public UpdateEnergyOnClientPacket(PacketBuffer buf){
         this.id = buf.readUtf();
-        this.set = buf.readInt();
+        this.set = buf.readFloat();
     }
 
     @Override
     public void toBytes(PacketBuffer buf) {
         buf.writeUtf(id);
-        buf.writeInt(set);
+        buf.writeFloat(set);
     }
 
     @Override

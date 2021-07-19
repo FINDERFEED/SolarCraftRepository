@@ -16,9 +16,9 @@ import net.minecraftforge.fml.network.PacketDistributor;
 public class RuneEnergyPylonTile extends TileEntity implements ITickableTileEntity {
 
     private RunicEnergy.Type type = null;
-    private int currentEnergy = 0;
-    private int energyPerTick = 1;
-    private int maxEnergy = 100000;
+    private float currentEnergy = 0;
+    private float energyPerTick = 0.1f;
+    private float maxEnergy = 100000;
     private int updateTick = 40;
 
     public RuneEnergyPylonTile() {
@@ -63,9 +63,9 @@ public class RuneEnergyPylonTile extends TileEntity implements ITickableTileEnti
         if (this.type != null) {
             nbt.putString("energy_type", type.id);
         }
-        nbt.putInt("energy",currentEnergy);
-        nbt.putInt("energy_tick",energyPerTick);
-        nbt.putInt("maxenergy",maxEnergy);
+        nbt.putFloat("energy",currentEnergy);
+        nbt.putFloat("energy_tick",energyPerTick);
+        nbt.putFloat("maxenergy",maxEnergy);
         return super.save(nbt);
     }
 
@@ -73,31 +73,31 @@ public class RuneEnergyPylonTile extends TileEntity implements ITickableTileEnti
     public void load(BlockState p_230337_1_, CompoundNBT nbt) {
 
         this.type = RunicEnergy.Type.byId(nbt.getString("energy_type"));
-        currentEnergy = nbt.getInt("energy");
-        energyPerTick = nbt.getInt("energy_tick");
-        maxEnergy = nbt.getInt("maxenergy");
+        currentEnergy = nbt.getFloat("energy");
+        energyPerTick = nbt.getFloat("energy_tick");
+        maxEnergy = nbt.getFloat("maxenergy");
         super.load(p_230337_1_, nbt);
     }
 
-    public void givePlayerEnergy(PlayerEntity entity,int amount){
+    public void givePlayerEnergy(PlayerEntity entity,float amount){
         if (amount <= getCurrentEnergy()){
             this.currentEnergy-=amount;
-            int flag = RunicEnergy.givePlayerEnergy(entity,amount,type);
+            float flag = RunicEnergy.givePlayerEnergy(entity,amount,type);
             this.currentEnergy+=flag;
 
         }
     }
 
 
-    public void setCurrentEnergy(int currentEnergy) {
+    public void setCurrentEnergy(float currentEnergy) {
         this.currentEnergy = currentEnergy;
     }
 
-    public void setEnergyPerTick(int energyPerTick) {
+    public void setEnergyPerTick(float energyPerTick) {
         this.energyPerTick = energyPerTick;
     }
 
-    public void setMaxEnergy(int maxEnergy) {
+    public void setMaxEnergy(float maxEnergy) {
         this.maxEnergy = maxEnergy;
     }
 
@@ -107,15 +107,15 @@ public class RuneEnergyPylonTile extends TileEntity implements ITickableTileEnti
         return type;
     }
 
-    public int getEnergyPerTick() {
+    public float getEnergyPerTick() {
         return energyPerTick;
     }
 
-    public int getCurrentEnergy() {
+    public float getCurrentEnergy() {
         return currentEnergy;
     }
 
-    public int getMaxEnergy() {
+    public float getMaxEnergy() {
         return maxEnergy;
     }
 }

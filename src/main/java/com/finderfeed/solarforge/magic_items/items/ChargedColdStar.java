@@ -22,10 +22,7 @@ public class ChargedColdStar extends Item {
     @Override
     public void inventoryTick(ItemStack p_77663_1_, World p_77663_2_, Entity p_77663_3_, int p_77663_4_, boolean p_77663_5_) {
         if (!p_77663_2_.isClientSide && p_77663_3_ instanceof PlayerEntity){
-            if (Helpers.canPlayerUnlock(Achievement.ACQUIRE_COLD_STAR_ACTIVATED,(PlayerEntity) p_77663_3_) && !Helpers.hasPlayerUnlocked(Achievement.ACQUIRE_COLD_STAR_ACTIVATED,(PlayerEntity) p_77663_3_)){
-                Helpers.setAchievementStatus(Achievement.ACQUIRE_COLD_STAR_ACTIVATED,(PlayerEntity) p_77663_3_,true);
-                SolarForgePacketHandler.INSTANCE.sendTo(new TriggerToastPacket(Achievement.ACQUIRE_COLD_STAR_ACTIVATED.getId()), ((ServerPlayerEntity)p_77663_3_).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
-            }
+            Helpers.fireProgressionEvent((PlayerEntity) p_77663_3_,Achievement.ACQUIRE_COLD_STAR_ACTIVATED);
         }
         super.inventoryTick(p_77663_1_, p_77663_2_, p_77663_3_, p_77663_4_, p_77663_5_);
     }

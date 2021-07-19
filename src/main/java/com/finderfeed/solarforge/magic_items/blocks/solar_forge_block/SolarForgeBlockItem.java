@@ -29,11 +29,7 @@ public class SolarForgeBlockItem extends BlockItem {
     @Override
     public void onCraftedBy(ItemStack stack, World world, PlayerEntity pe) {
         if (!world.isClientSide){
-            if (!Helpers.hasPlayerUnlocked(Achievement.CRAFT_SOLAR_FORGE,pe) && Helpers.canPlayerUnlock(Achievement.CRAFT_SOLAR_FORGE,pe)){
-                pe.getPersistentData().putBoolean(Helpers.PROGRESSION+ Achievement.CRAFT_SOLAR_FORGE.getAchievementCode(),true);
-                SolarForgePacketHandler.INSTANCE.sendTo(new TriggerToastPacket(Achievement.CRAFT_SOLAR_FORGE.getId()), ((ServerPlayerEntity) pe).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
-
-            }
+            Helpers.fireProgressionEvent(pe,Achievement.CRAFT_SOLAR_FORGE);
         }
 
         super.onCraftedBy(stack,world,pe);

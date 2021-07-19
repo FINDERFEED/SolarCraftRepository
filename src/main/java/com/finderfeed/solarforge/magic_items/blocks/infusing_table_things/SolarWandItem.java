@@ -116,7 +116,7 @@ public class SolarWandItem extends Item implements ManaConsumer {
             if (!world.isClientSide){
                 RuneEnergyPylonTile tile = (RuneEnergyPylonTile) world.getBlockEntity(res.getBlockPos());
                 tile.givePlayerEnergy(player,5);
-
+                System.out.println(tile.getCurrentEnergy());
                 Helpers.updateRunicEnergyOnClient(tile.getEnergyType(),RunicEnergy.getEnergy(player,tile.getEnergyType()),player);
                 Helpers.fireProgressionEvent(player, Achievement.RUNE_ENERGY_CLAIM);
             }else{

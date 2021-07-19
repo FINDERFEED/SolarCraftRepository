@@ -338,7 +338,7 @@ public class Helpers {
     }
 
 
-    public static void updateRunicEnergyOnClient(RunicEnergy.Type type,int amount,PlayerEntity player){
+    public static void updateRunicEnergyOnClient(RunicEnergy.Type type,float amount,PlayerEntity player){
         SolarForgePacketHandler.INSTANCE.sendTo(new UpdateEnergyOnClientPacket(type, amount),
                 ((ServerPlayerEntity)player).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
     }
