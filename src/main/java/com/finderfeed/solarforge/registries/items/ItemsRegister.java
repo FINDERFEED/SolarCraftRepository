@@ -2,7 +2,7 @@ package com.finderfeed.solarforge.registries.items;
 
 import com.finderfeed.solarforge.SolarForge;
 
-import com.finderfeed.solarforge.infusing_table_things.SolarWandItem;
+import com.finderfeed.solarforge.magic_items.blocks.infusing_table_things.SolarWandItem;
 import com.finderfeed.solarforge.magic_items.armor.SolarArmorMaterial;
 import com.finderfeed.solarforge.magic_items.blocks.blockitems.TurretBlockItem;
 import com.finderfeed.solarforge.magic_items.blocks.blockitems.UldoradiumOreBlockitem;
@@ -15,8 +15,8 @@ import com.finderfeed.solarforge.misc_things.ColdStarPieceItem;
 import com.finderfeed.solarforge.misc_things.SolarDustItem;
 import com.finderfeed.solarforge.misc_things.VoidBlockWand;
 import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
-import com.finderfeed.solarforge.solar_lexicon.SolarLexicon;
-import com.finderfeed.solarforge.solar_lexicon.unlockables.AncientFragmentISTER;
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.SolarLexicon;
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.AncientFragmentISTER;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.*;
 import net.minecraftforge.fml.RegistryObject;

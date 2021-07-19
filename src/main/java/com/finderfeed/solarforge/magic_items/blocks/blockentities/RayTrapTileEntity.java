@@ -1,33 +1,23 @@
 package com.finderfeed.solarforge.magic_items.blocks.blockentities;
 
 import com.finderfeed.solarforge.Helpers;
-import com.finderfeed.solarforge.infusing_table_things.infusing_pool.UpdateStacksOnClientPacketPool;
 import com.finderfeed.solarforge.magic_items.blocks.RayTrapBlock;
 import com.finderfeed.solarforge.misc_things.ParticlesList;
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
-import com.finderfeed.solarforge.packets.UpdateLaserTrapTile;
-import com.finderfeed.solarforge.registries.sounds.Sounds;
+import com.finderfeed.solarforge.packet_handler.packets.UpdateLaserTrapTile;
 import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
-import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SUpdateTileEntityPacket;
-import net.minecraft.state.Property;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Direction;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.fml.network.PacketDistributor;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 public class RayTrapTileEntity extends TileEntity implements ITickableTileEntity {

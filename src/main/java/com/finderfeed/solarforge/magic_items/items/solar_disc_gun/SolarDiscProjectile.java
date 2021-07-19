@@ -1,33 +1,21 @@
 package com.finderfeed.solarforge.magic_items.items.solar_disc_gun;
 
-import com.finderfeed.solarforge.SolarAbilities.SolarStrikeEntity;
-import com.finderfeed.solarforge.SolarForge;
-import com.finderfeed.solarforge.misc_things.ParticleRegister;
 import com.finderfeed.solarforge.misc_things.ParticlesList;
 import com.finderfeed.solarforge.registries.projectiles.Projectiles;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.projectile.DamagingProjectileEntity;
-import net.minecraft.entity.projectile.ProjectileHelper;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.IPacket;
 import net.minecraft.particles.IParticleData;
-import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.WeightedRandom;
 import net.minecraft.util.math.*;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.math.vector.Vector3f;
-import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fml.network.NetworkHooks;
 
 import java.util.List;
-import java.util.Random;
 
 public class SolarDiscProjectile extends DamagingProjectileEntity {
     public int count = 0;

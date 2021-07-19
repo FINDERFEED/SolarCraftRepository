@@ -1,6 +1,5 @@
 package com.finderfeed.solarforge.AbilityClasses;
 
-import com.finderfeed.solarforge.capability_mana.CapabilitySolarMana;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.world.server.ServerWorld;
 

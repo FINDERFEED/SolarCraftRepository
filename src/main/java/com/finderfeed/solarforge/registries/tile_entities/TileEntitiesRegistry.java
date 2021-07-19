@@ -1,14 +1,11 @@
 package com.finderfeed.solarforge.registries.tile_entities;
 
-import com.finderfeed.solarforge.infusing_table_things.InfusingTableTileEntity;
-import com.finderfeed.solarforge.infusing_table_things.infusing_pool.InfusingPoolTileEntity;
+import com.finderfeed.solarforge.magic_items.blocks.infusing_table_things.infusing_pool.InfusingPoolTileEntity;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.*;
 import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
-import com.finderfeed.solarforge.structures.blocks.tile_entities.ColdStarInfuserTile;
-import com.finderfeed.solarforge.structures.blocks.tile_entities.KeyDefenderTile;
-import com.finderfeed.solarforge.structures.blocks.tile_entities.KeyLockStructureTile;
-import net.minecraft.tileentity.FurnaceTileEntity;
-import net.minecraft.tileentity.TileEntity;
+import com.finderfeed.solarforge.world_generation.structures.blocks.tile_entities.ColdStarInfuserTile;
+import com.finderfeed.solarforge.world_generation.structures.blocks.tile_entities.KeyDefenderTile;
+import com.finderfeed.solarforge.world_generation.structures.blocks.tile_entities.KeyLockStructureTile;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;

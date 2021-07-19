@@ -1,6 +1,5 @@
 package com.finderfeed.solarforge.particles;
 
-import com.finderfeed.solarforge.misc_things.SolarStrikeParticle;
 import net.minecraft.client.particle.*;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.particles.BasicParticleType;

@@ -3,7 +3,7 @@ package com.finderfeed.solarforge.misc_things;
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
 import com.finderfeed.solarforge.packet_handler.TriggerToastPacket;
-import com.finderfeed.solarforge.solar_lexicon.achievements.Achievement;
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Achievement;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -23,10 +23,7 @@ public class SolarDustItem extends Item {
         if (!p_77663_2_.isClientSide && p_77663_3_ instanceof PlayerEntity){
             PlayerEntity entity = (PlayerEntity) p_77663_3_;
 
-            if ((Helpers.canPlayerUnlock(Achievement.ACQUIRE_SOLAR_DUST,entity)) && !Helpers.hasPlayerUnlocked(Achievement.ACQUIRE_SOLAR_DUST,entity)){
-                Helpers.setAchievementStatus(Achievement.ACQUIRE_SOLAR_DUST,entity,true);
-                SolarForgePacketHandler.INSTANCE.sendTo(new TriggerToastPacket(Achievement.ACQUIRE_SOLAR_DUST.getId()), ((ServerPlayerEntity)entity).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
-            }
+            Helpers.fireProgressionEvent(entity,Achievement.ACQUIRE_SOLAR_DUST);
         }
         super.inventoryTick(p_77663_1_, p_77663_2_, p_77663_3_, p_77663_4_, p_77663_5_);
     }

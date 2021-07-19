@@ -1,19 +1,11 @@
 package com.finderfeed.solarforge.magic_items.items.projectiles;
 
 import com.finderfeed.solarforge.misc_things.ParticlesList;
-import com.finderfeed.solarforge.misc_things.SolarStrikeParticle;
-import com.finderfeed.solarforge.registries.items.ItemsRegister;
 import com.finderfeed.solarforge.registries.projectiles.Projectiles;
 import com.finderfeed.solarforge.registries.sounds.Sounds;
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.DamagingProjectileEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.IPacket;
@@ -23,18 +15,12 @@ import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.particles.IParticleData;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.EntityRayTraceResult;
-import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
-import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fml.network.NetworkHooks;
-
-import java.util.UUID;
 
 public class UltraCrossbowProjectile extends DamagingProjectileEntity {
     public static DataParameter<Float> PITCH = EntityDataManager.defineId(UltraCrossbowProjectile.class, DataSerializers.FLOAT);

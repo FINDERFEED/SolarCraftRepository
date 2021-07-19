@@ -2,8 +2,7 @@ package com.finderfeed.solarforge.registries.containers;
 
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.containers.RunicTableContainer;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.containers.SolarFurnaceContainer;
-import com.finderfeed.solarforge.solar_forge_screen.SolarForgeContainer;
-import com.finderfeed.solarforge.solar_lexicon.SolarLexiconContainer;
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.SolarLexiconContainer;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraftforge.common.extensions.IForgeContainerType;
 import net.minecraftforge.fml.RegistryObject;

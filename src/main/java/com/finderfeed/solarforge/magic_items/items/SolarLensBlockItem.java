@@ -4,7 +4,7 @@ package com.finderfeed.solarforge.magic_items.items;
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
 import com.finderfeed.solarforge.packet_handler.TriggerToastPacket;
-import com.finderfeed.solarforge.solar_lexicon.achievements.Achievement;
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Achievement;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;

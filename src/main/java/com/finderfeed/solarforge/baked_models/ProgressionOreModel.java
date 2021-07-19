@@ -4,7 +4,6 @@ package com.finderfeed.solarforge.baked_models;
 
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.misc_things.IProgressionBlock;
-import com.finderfeed.solarforge.solar_lexicon.achievements.Achievement;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.model.BakedQuad;

@@ -1,28 +1,17 @@
 package com.finderfeed.solarforge.magic_items.blocks.blockentities.containers;
 
-import com.finderfeed.solarforge.SolarForge;
-import com.finderfeed.solarforge.custom_slots.InputSlot;
-import com.finderfeed.solarforge.custom_slots.OutputSlot;
-import com.finderfeed.solarforge.solar_forge_block.SolarForgeBlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.LockableLootTileEntity;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIntArray;
-import net.minecraft.util.IWorldPosCallable;
-import net.minecraft.util.IntArray;
-import net.minecraft.util.math.BlockPos;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public abstract class AbstractContainer<T extends LockableLootTileEntity> extends Container {
     public List<ItemStack> list = new ArrayList<>(0);

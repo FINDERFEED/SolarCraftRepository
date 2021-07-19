@@ -4,7 +4,7 @@ import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.magic_items.blocks.BlueGemDoorBlock;
 import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
 import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
-import com.finderfeed.solarforge.solar_lexicon.achievements.Achievement;
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Achievement;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;

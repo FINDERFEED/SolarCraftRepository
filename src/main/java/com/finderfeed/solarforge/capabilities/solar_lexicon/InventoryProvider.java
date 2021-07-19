@@ -1,15 +1,12 @@
 package com.finderfeed.solarforge.capabilities.solar_lexicon;
 
-import com.finderfeed.solarforge.capability_mana.SolarForgeMana;
-import com.finderfeed.solarforge.capability_mana.SolarManaCapability;
-import com.finderfeed.solarforge.solar_lexicon.unlockables.AncientFragment;
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.AncientFragment;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Direction;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.Nonnull;

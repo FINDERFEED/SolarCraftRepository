@@ -1,16 +1,19 @@
 package com.finderfeed.solarforge;
 
-import com.finderfeed.solarforge.capability_mana.CapabilitySolarMana;
+import com.finderfeed.solarforge.capabilities.capability_mana.CapabilitySolarMana;
 import com.finderfeed.solarforge.events.my_events.ProgressionUnlockEvent;
 import com.finderfeed.solarforge.misc_things.Multiblock;
+import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
 import com.finderfeed.solarforge.packet_handler.TriggerToastPacket;
-import com.finderfeed.solarforge.packets.ReloadChunks;
+import com.finderfeed.solarforge.packet_handler.packets.ReloadChunks;
+import com.finderfeed.solarforge.packet_handler.packets.TriggerProgressionShaderPacket;
+import com.finderfeed.solarforge.packet_handler.packets.UpdateEnergyOnClientPacket;
 import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
 import com.finderfeed.solarforge.registries.items.ItemsRegister;
-import com.finderfeed.solarforge.solar_lexicon.achievement_tree.AchievementTree;
-import com.finderfeed.solarforge.solar_lexicon.achievements.Achievement;
-import com.finderfeed.solarforge.solar_lexicon.packets.UpdateProgressionOnClient;
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievement_tree.AchievementTree;
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Achievement;
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.packets.UpdateProgressionOnClient;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.AbstractGui;
@@ -333,4 +336,16 @@ public class Helpers {
     public static void fireProgressionEvent(PlayerEntity playerEntity, Achievement ach){
         MinecraftForge.EVENT_BUS.post(new ProgressionUnlockEvent(playerEntity,ach));
     }
+
+
+    public static void updateRunicEnergyOnClient(RunicEnergy.Type type,int amount,PlayerEntity player){
+        SolarForgePacketHandler.INSTANCE.sendTo(new UpdateEnergyOnClientPacket(type, amount),
+                ((ServerPlayerEntity)player).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+    }
+
+    public static void triggerProgressionShader(PlayerEntity playerEntity){
+        SolarForgePacketHandler.INSTANCE.sendTo(new TriggerProgressionShaderPacket(),
+                ((ServerPlayerEntity)playerEntity).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+    }
+
 }

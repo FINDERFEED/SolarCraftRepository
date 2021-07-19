@@ -3,8 +3,7 @@ package com.finderfeed.solarforge.misc_things;
 import com.finderfeed.solarforge.Helpers;
 
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
-import com.finderfeed.solarforge.packets.TileEnergyGeneratorUpdate;
-import com.finderfeed.solarforge.packets.UpdateCoreOnClient;
+import com.finderfeed.solarforge.packet_handler.packets.UpdateCoreOnClient;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 
@@ -14,9 +13,7 @@ import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.network.PacketDistributor;
 
-import javax.annotation.Nullable;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public abstract class AbstractSolarCore extends TileEntity implements ITickableTileEntity,IBindable,ISolarEnergyContainer {

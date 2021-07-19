@@ -8,9 +8,9 @@ import com.finderfeed.solarforge.misc_things.*;
 import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
 import com.finderfeed.solarforge.registries.items.ItemsRegister;
 import com.finderfeed.solarforge.registries.sounds.Sounds;
-import com.finderfeed.solarforge.solar_lexicon.SolarLexicon;
-import com.finderfeed.solarforge.solar_lexicon.achievements.Achievement;
-import com.finderfeed.solarforge.solar_lexicon.unlockables.ProgressionHelper;
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.SolarLexicon;
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Achievement;
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.ProgressionHelper;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
@@ -25,6 +25,7 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
@@ -36,6 +37,16 @@ public class ClientHelpers {
         return Minecraft.getInstance().player;
     }
 
+
+    public static void updateClientRunicEnergyForPlayer(int amount, RunicEnergy.Type type){
+        RunicEnergy.setEnergy(getClientPlayer(),amount,type);
+    }
+
+
+    public static void handleSolarWandParticles(Vector3d pos,Vector3d vel){
+        SmallSolarStrikeParticle particle = (SmallSolarStrikeParticle) Minecraft.getInstance().particleEngine.createParticle(ParticlesList.SMALL_SOLAR_STRIKE_PARTICLE.get(),pos.x,pos.y,pos.z,vel.normalize().x,vel.normalize().y,vel.normalize().z);
+        particle.setLifetime((int)Math.round(vel.length()/vel.normalize().length())*5/2 );
+    }
 
     public static void updateEnergyTypeOnClient(BlockPos pos,String id){
         TileEntity tile = Minecraft.getInstance().level.getBlockEntity(pos);

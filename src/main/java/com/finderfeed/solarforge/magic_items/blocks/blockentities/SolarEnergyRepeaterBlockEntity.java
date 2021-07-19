@@ -1,16 +1,11 @@
 package com.finderfeed.solarforge.magic_items.blocks.blockentities;
 
-import com.finderfeed.solarforge.infusing_table_things.UpdateProgressOnClientPacket;
 import com.finderfeed.solarforge.misc_things.AbstractSolarNetworkRepeater;
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
-import com.finderfeed.solarforge.packets.RepeaterParentUpdateOnClient;
+import com.finderfeed.solarforge.packet_handler.packets.RepeaterParentUpdateOnClient;
 import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
-import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.network.PacketDistributor;
-
-import java.util.Collection;
 
 public class SolarEnergyRepeaterBlockEntity extends AbstractSolarNetworkRepeater {
 

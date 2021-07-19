@@ -1,14 +1,12 @@
 package com.finderfeed.solarforge.magic_items.items;
 
-import com.finderfeed.solarforge.solar_lexicon.unlockables.AncientFragment;
-import com.finderfeed.solarforge.solar_lexicon.unlockables.ProgressionHelper;
-import net.minecraft.entity.Entity;
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.AncientFragment;
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.ProgressionHelper;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.NonNullList;
-import net.minecraft.world.World;
 
 public class AncientFragmentItem extends Item {
     public AncientFragmentItem(Properties p_i48487_1_) {

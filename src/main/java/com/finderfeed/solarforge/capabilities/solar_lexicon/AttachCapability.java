@@ -1,18 +1,12 @@
 package com.finderfeed.solarforge.capabilities.solar_lexicon;
 
 
-import com.finderfeed.solarforge.capability_mana.PlayerManaProvider;
-import com.finderfeed.solarforge.solar_lexicon.SolarLexicon;
-import com.finderfeed.solarforge.solar_lexicon.unlockables.AncientFragment;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.SolarLexicon;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.ItemStackHandler;
 
 @Mod.EventBusSubscriber(modid="solarforge",bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class AttachCapability {

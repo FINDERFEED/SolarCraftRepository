@@ -1,6 +1,5 @@
 package com.finderfeed.solarforge.packet_handler;
 
-import com.finderfeed.solarforge.capability_mana.CapabilitySolarMana;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.network.PacketBuffer;

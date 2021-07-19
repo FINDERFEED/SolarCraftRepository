@@ -4,15 +4,15 @@ package com.finderfeed.solarforge;
 import com.finderfeed.solarforge.SolarAbilities.MeteoriteProjectile;
 import com.finderfeed.solarforge.SolarAbilities.SolarStrikeEntity;
 import com.finderfeed.solarforge.SolarAbilities.SolarStunEffect;
-import com.finderfeed.solarforge.capability_mana.AttachManaCapabilityEvent;
-import com.finderfeed.solarforge.capability_mana.CapabilitySolarMana;
+import com.finderfeed.solarforge.capabilities.capability_mana.AttachManaCapabilityEvent;
+import com.finderfeed.solarforge.capabilities.capability_mana.CapabilitySolarMana;
 import com.finderfeed.solarforge.entities.VillagerSolarMaster;
 import com.finderfeed.solarforge.events.PlayerTickEvent;
 import com.finderfeed.solarforge.events.RenderEventsHandler;
-import com.finderfeed.solarforge.infusing_table_things.*;
-import com.finderfeed.solarforge.infusing_table_things.infusing_pool.InfusingPool;
+import com.finderfeed.solarforge.magic_items.blocks.infusing_table_things.*;
+import com.finderfeed.solarforge.magic_items.blocks.infusing_table_things.infusing_pool.InfusingPool;
 import com.finderfeed.solarforge.misc_things.ParticlesList;
-import com.finderfeed.solarforge.on_screen_rendering.TestRenderEvent;
+import com.finderfeed.solarforge.rendering.on_screen_rendering.TestRenderEvent;
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
 import com.finderfeed.solarforge.recipe_types.InfusingRecipe;
 import com.finderfeed.solarforge.recipe_types.InfusingRecipeType;
@@ -27,17 +27,17 @@ import com.finderfeed.solarforge.registries.items.ItemsRegister;
 import com.finderfeed.solarforge.registries.projectiles.Projectiles;
 import com.finderfeed.solarforge.registries.sounds.Sounds;
 import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
-import com.finderfeed.solarforge.solar_forge_block.SolarForgeBlock;
-import com.finderfeed.solarforge.solar_forge_block.SolarForgeBlockEntity;
+import com.finderfeed.solarforge.magic_items.blocks.solar_forge_block.SolarForgeBlock;
+import com.finderfeed.solarforge.magic_items.blocks.solar_forge_block.SolarForgeBlockEntity;
 
 
-import com.finderfeed.solarforge.solar_forge_block.SolarForgeBlockItem;
-import com.finderfeed.solarforge.solar_forge_screen.SolarForgeContainer;
-import com.finderfeed.solarforge.solar_forge_screen.SolarForgeScreen;
+import com.finderfeed.solarforge.magic_items.blocks.solar_forge_block.SolarForgeBlockItem;
+import com.finderfeed.solarforge.magic_items.blocks.solar_forge_block.solar_forge_screen.SolarForgeContainer;
+import com.finderfeed.solarforge.magic_items.blocks.solar_forge_block.solar_forge_screen.SolarForgeScreen;
 
 
-import com.finderfeed.solarforge.structures.SolarForgeStructureFeatures;
-import com.finderfeed.solarforge.structures.SolarForgeStructures;
+import com.finderfeed.solarforge.world_generation.structures.SolarForgeStructureFeatures;
+import com.finderfeed.solarforge.world_generation.structures.SolarForgeStructures;
 import com.finderfeed.solarforge.world_generation.BiomesRegister;
 import com.finderfeed.solarforge.world_generation.features.FeaturesRegistry;
 import com.finderfeed.solarforge.world_generation.features.foliage_placers.FoliagePlacerRegistry;
@@ -185,7 +185,7 @@ public class SolarForge
 //        FMLJavaModLoadingContext.get().getModEventBus().addGenericListener(Biome.class,FeaturesRegistry::registerBiomes);
 
         FMLJavaModLoadingContext.get().getModEventBus().addListener(FeaturesRegistry::registerConfiguredFeatures);
-        MinecraftForge.EVENT_BUS.register(new RenderEventsHandler());
+
 
         // Register the doClientStuff method for modloading
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
@@ -219,7 +219,7 @@ public class SolarForge
 
     private void doClientStuff(final FMLClientSetupEvent event) {
         // do something that can only be done on the client
-
+        MinecraftForge.EVENT_BUS.register(new RenderEventsHandler());
         LOGGER.info("Got game settings {}", event.getMinecraftSupplier().get().options);
         MinecraftForge.EVENT_BUS.register(new TestRenderEvent());
 

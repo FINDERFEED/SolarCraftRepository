@@ -2,9 +2,10 @@ package com.finderfeed.solarforge.magic_items.blocks.blockentities;
 
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
-import com.finderfeed.solarforge.packets.UpdateTypeOnClientPacket;
+import com.finderfeed.solarforge.packet_handler.packets.UpdateTypeOnClientPacket;
 import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
 import net.minecraft.block.BlockState;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
@@ -16,7 +17,7 @@ public class RuneEnergyPylonTile extends TileEntity implements ITickableTileEnti
 
     private RunicEnergy.Type type = null;
     private int currentEnergy = 0;
-    private int energyPerTick = 2;
+    private int energyPerTick = 1;
     private int maxEnergy = 100000;
     private int updateTick = 40;
 
@@ -77,6 +78,16 @@ public class RuneEnergyPylonTile extends TileEntity implements ITickableTileEnti
         maxEnergy = nbt.getInt("maxenergy");
         super.load(p_230337_1_, nbt);
     }
+
+    public void givePlayerEnergy(PlayerEntity entity,int amount){
+        if (amount <= getCurrentEnergy()){
+            this.currentEnergy-=amount;
+            int flag = RunicEnergy.givePlayerEnergy(entity,amount,type);
+            this.currentEnergy+=flag;
+
+        }
+    }
+
 
     public void setCurrentEnergy(int currentEnergy) {
         this.currentEnergy = currentEnergy;

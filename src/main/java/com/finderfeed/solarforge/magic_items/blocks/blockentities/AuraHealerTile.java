@@ -3,23 +3,16 @@ package com.finderfeed.solarforge.magic_items.blocks.blockentities;
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.misc_things.ParticlesList;
 import com.finderfeed.solarforge.multiblocks.Multiblocks;
-import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
-import com.finderfeed.solarforge.packets.RepeaterParentUpdateOnClient;
-import com.finderfeed.solarforge.packets.SpawnHealParticles;
 import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.vector.Vector3f;
 import net.minecraft.world.server.ServerWorld;
-import net.minecraftforge.fml.network.PacketDistributor;
 
 import java.util.List;
-import java.util.Random;
 
 public class AuraHealerTile extends TileEntity implements ITickableTileEntity {
     public int HEAL_TICK = 0;

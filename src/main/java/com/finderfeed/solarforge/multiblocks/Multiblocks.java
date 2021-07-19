@@ -3,7 +3,7 @@ package com.finderfeed.solarforge.multiblocks;
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.misc_things.Multiblock;
 import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
-import com.finderfeed.solarforge.solar_lexicon.achievements.Achievement;
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Achievement;
 
 public enum Multiblocks {
     SOLAR_CORE(new Multiblock(new Multiblock.Constructor()

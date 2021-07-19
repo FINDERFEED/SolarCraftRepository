@@ -2,11 +2,19 @@ package com.finderfeed.solarforge.misc_things;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.text.StringTextComponent;
 
 public class RunicEnergy {
 
     public static String MAX_ENERGY_TAG = "solarcraft.max_player_runic_energy";
     public static String DEFAULT_ENERGY_TAG = "solarcraft.solar_rune_energy_";
+
+
+    public static void setEnergy(PlayerEntity playerEntity,int amount, Type type){
+        CompoundNBT nbt = playerEntity.getPersistentData();
+        nbt.putInt(DEFAULT_ENERGY_TAG+type.id,amount);
+    }
+
 
     public static int givePlayerEnergy(PlayerEntity playerEntity,int energyAmount, Type type){
         CompoundNBT nbt = playerEntity.getPersistentData();
@@ -19,10 +27,12 @@ public class RunicEnergy {
         int kolvo = nbt.getInt(DEFAULT_ENERGY_TAG+type.id) + energyAmount;
         if (kolvo <= maxEnergy){
             nbt.putInt(DEFAULT_ENERGY_TAG+type.id,kolvo);
+            playerEntity.displayClientMessage(new StringTextComponent(type.id+" "+nbt.getInt(DEFAULT_ENERGY_TAG+type.id)),true);
             return 0;
         }else{
             int raznitsa = kolvo - maxEnergy;
             nbt.putInt(DEFAULT_ENERGY_TAG+type.id,maxEnergy);
+            playerEntity.displayClientMessage(new StringTextComponent(type.id+" "+nbt.getInt(DEFAULT_ENERGY_TAG+type.id)),true);
             return raznitsa;
         }
 
@@ -41,11 +51,11 @@ public class RunicEnergy {
     }
 
 
-    private static int getEnergy(PlayerEntity playerEntity,Type type){
+    public static int getEnergy(PlayerEntity playerEntity,Type type){
         return playerEntity.getPersistentData().getInt(DEFAULT_ENERGY_TAG+type.id);
     }
 
-    private static void setEnergy(PlayerEntity playerEntity,Type type,int amount){
+    public static void setEnergy(PlayerEntity playerEntity,Type type,int amount){
         playerEntity.getPersistentData().putInt(DEFAULT_ENERGY_TAG+type.id,amount);
     }
 

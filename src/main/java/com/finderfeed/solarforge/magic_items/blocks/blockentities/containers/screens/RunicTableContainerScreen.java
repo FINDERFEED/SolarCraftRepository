@@ -2,35 +2,23 @@ package com.finderfeed.solarforge.magic_items.blocks.blockentities.containers.sc
 
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.containers.RunicTableContainer;
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
-import com.finderfeed.solarforge.packets.RunicTablePacket;
-import com.finderfeed.solarforge.registries.items.ItemsRegister;
+import com.finderfeed.solarforge.packet_handler.packets.RunicTablePacket;
 import com.finderfeed.solarforge.rendering.item_renderers.TransparentItemrenderer;
-import com.finderfeed.solarforge.solar_lexicon.unlockables.ProgressionHelper;
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.ProgressionHelper;
 import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.client.gui.widget.button.Button;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
-import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.client.renderer.model.IBakedModel;
-import net.minecraft.client.renderer.model.ItemCameraTransforms;
-import net.minecraft.client.renderer.texture.AtlasTexture;
-import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.ITextProperties;
 import net.minecraft.util.text.TranslationTextComponent;
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.system.CallbackI;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class RunicTableContainerScreen extends ContainerScreen<RunicTableContainer> {

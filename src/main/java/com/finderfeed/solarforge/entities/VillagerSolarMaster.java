@@ -2,7 +2,7 @@ package com.finderfeed.solarforge.entities;
 
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.registries.items.ItemsRegister;
-import com.finderfeed.solarforge.solar_lexicon.achievements.Achievement;
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Achievement;
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
@@ -16,7 +16,6 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.*;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.common.ForgeMod;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -60,10 +59,7 @@ public class VillagerSolarMaster extends CreatureEntity {
                     playSound(SoundEvents.VILLAGER_NO,1,1);
                 } else {
                     player.sendMessage(new TranslationTextComponent("solarcraft.use_villager_success"), player.getUUID());
-                    if (!Helpers.hasPlayerUnlocked(Achievement.TRADE_FOR_BLUE_GEM,player) && Helpers.canPlayerUnlock(Achievement.TRADE_FOR_BLUE_GEM,player)){
-                        Helpers.setAchievementStatus(Achievement.TRADE_FOR_BLUE_GEM,player,true);
-                        Helpers.triggerToast(Achievement.TRADE_FOR_BLUE_GEM,player);
-                    }
+                    Helpers.fireProgressionEvent(player,Achievement.TRADE_FOR_BLUE_GEM);
 
                     playSound(SoundEvents.VILLAGER_YES,1,1);
                     TRADED_WITH.add(player.getUUID());

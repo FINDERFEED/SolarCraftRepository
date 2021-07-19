@@ -2,7 +2,7 @@ package com.finderfeed.solarforge.magic_items.blocks;
 
 import com.finderfeed.solarforge.misc_things.IProgressionBlock;
 import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
-import com.finderfeed.solarforge.solar_lexicon.achievements.Achievement;
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Achievement;
 import net.minecraft.block.*;
 
 import net.minecraft.entity.player.PlayerEntity;

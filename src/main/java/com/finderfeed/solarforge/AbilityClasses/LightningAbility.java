@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.AbilityClasses;
 
-import com.finderfeed.solarforge.capability_mana.CapabilitySolarMana;
+import com.finderfeed.solarforge.capabilities.capability_mana.CapabilitySolarMana;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.effect.LightningBoltEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;

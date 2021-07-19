@@ -1,16 +1,15 @@
 package com.finderfeed.solarforge.registries.blocks;
 
-import com.finderfeed.solarforge.infusing_table_things.infusing_pool.InfusingPool;
+import com.finderfeed.solarforge.magic_items.blocks.infusing_table_things.infusing_pool.InfusingPool;
 import com.finderfeed.solarforge.magic_items.blocks.BlueGemDoorBlock;
 import com.finderfeed.solarforge.magic_items.blocks.*;
 import com.finderfeed.solarforge.magic_items.decoration_blocks.SolarFlower;
-import com.finderfeed.solarforge.structures.blocks.ColdStarInfuser;
-import com.finderfeed.solarforge.structures.blocks.InvincibleStone;
-import com.finderfeed.solarforge.structures.blocks.KeyDefender;
-import com.finderfeed.solarforge.structures.blocks.KeyLockBlock;
+import com.finderfeed.solarforge.world_generation.structures.blocks.ColdStarInfuser;
+import com.finderfeed.solarforge.world_generation.structures.blocks.InvincibleStone;
+import com.finderfeed.solarforge.world_generation.structures.blocks.KeyDefender;
+import com.finderfeed.solarforge.world_generation.structures.blocks.KeyLockBlock;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
-import net.minecraft.particles.ParticleTypes;
 import net.minecraft.potion.Effects;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fml.RegistryObject;

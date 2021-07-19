@@ -1,13 +1,11 @@
 package com.finderfeed.solarforge.magic_items.blocks.blockentities.containers;
 
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.RunicTableTileEntity;
-import com.finderfeed.solarforge.magic_items.blocks.blockentities.SolarEnergyFurnaceTile;
 import com.finderfeed.solarforge.registries.containers.Containers;
 import com.finderfeed.solarforge.registries.items.ItemsRegister;
-import com.finderfeed.solarforge.solar_lexicon.unlockables.ProgressionHelper;
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.ProgressionHelper;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;

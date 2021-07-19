@@ -2,7 +2,7 @@ package com.finderfeed.solarforge.AbilityClasses;
 
 import com.finderfeed.solarforge.SolarAbilities.SolarStrikeEntity;
 import com.finderfeed.solarforge.SolarForge;
-import com.finderfeed.solarforge.capability_mana.CapabilitySolarMana;
+import com.finderfeed.solarforge.capabilities.capability_mana.CapabilitySolarMana;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;

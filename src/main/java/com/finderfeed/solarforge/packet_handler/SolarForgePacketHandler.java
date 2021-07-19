@@ -1,17 +1,15 @@
 package com.finderfeed.solarforge.packet_handler;
 
-import com.finderfeed.solarforge.capability_mana.UpdateManaPacket;
-import com.finderfeed.solarforge.infusing_table_things.UpdateProgressOnClientPacket;
-import com.finderfeed.solarforge.infusing_table_things.UpdateStacksOnClientTable;
-import com.finderfeed.solarforge.infusing_table_things.infusing_pool.UpdateStacksOnClientPacketPool;
-import com.finderfeed.solarforge.packets.*;
-import com.finderfeed.solarforge.solar_lexicon.packets.OpenScreenPacket;
-import com.finderfeed.solarforge.solar_lexicon.packets.UpdateAllProgressionOnClient;
-import com.finderfeed.solarforge.solar_lexicon.packets.UpdateInventoryPacket;
-import com.finderfeed.solarforge.solar_lexicon.packets.UpdateProgressionOnClient;
-import net.minecraft.entity.player.ServerPlayerEntity;
+import com.finderfeed.solarforge.capabilities.capability_mana.UpdateManaPacket;
+import com.finderfeed.solarforge.magic_items.blocks.infusing_table_things.UpdateProgressOnClientPacket;
+import com.finderfeed.solarforge.magic_items.blocks.infusing_table_things.UpdateStacksOnClientTable;
+import com.finderfeed.solarforge.magic_items.blocks.infusing_table_things.infusing_pool.UpdateStacksOnClientPacketPool;
+import com.finderfeed.solarforge.packet_handler.packets.*;
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.packets.OpenScreenPacket;
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.packets.UpdateAllProgressionOnClient;
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.packets.UpdateInventoryPacket;
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.packets.UpdateProgressionOnClient;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.network.NetworkDirection;
 import net.minecraftforge.fml.network.NetworkRegistry;
 import net.minecraftforge.fml.network.simple.SimpleChannel;
 
@@ -55,6 +53,8 @@ public class SolarForgePacketHandler {
         INSTANCE.registerMessage(nextID(), RunicTablePacket.class, RunicTablePacket::toBytes, RunicTablePacket::new, RunicTablePacket::handle);
         INSTANCE.registerMessage(nextID(), UpdatePatternOnScreen.class, UpdatePatternOnScreen::toBytes, UpdatePatternOnScreen::new, UpdatePatternOnScreen::handle);
         INSTANCE.registerMessage(nextID(), UpdateTypeOnClientPacket.class, UpdateTypeOnClientPacket::toBytes, UpdateTypeOnClientPacket::new, UpdateTypeOnClientPacket::handle);
+        INSTANCE.registerMessage(nextID(), UpdateEnergyOnClientPacket.class, UpdateEnergyOnClientPacket::toBytes, UpdateEnergyOnClientPacket::new, UpdateEnergyOnClientPacket::handle);
+        INSTANCE.registerMessage(nextID(), TriggerProgressionShaderPacket.class, TriggerProgressionShaderPacket::toBytes, TriggerProgressionShaderPacket::new, TriggerProgressionShaderPacket::handle);
     }
     //RepeaterParentUpdateOnClient
 }

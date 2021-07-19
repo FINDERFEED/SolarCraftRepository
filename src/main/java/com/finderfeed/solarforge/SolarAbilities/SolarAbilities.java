@@ -2,9 +2,7 @@ package com.finderfeed.solarforge.SolarAbilities;
 
 import com.finderfeed.solarforge.AbilityClasses.*;
 import com.finderfeed.solarforge.SolarForge;
-import com.finderfeed.solarforge.capability_mana.CapabilitySolarMana;
-import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
-import com.finderfeed.solarforge.packet_handler.ToggleAlchemistPacket;
+import com.finderfeed.solarforge.capabilities.capability_mana.CapabilitySolarMana;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -12,7 +10,6 @@ import net.minecraft.entity.effect.LightningBoltEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.entity.projectile.FireballEntity;
-import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
@@ -21,8 +18,6 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.math.vector.Vector3f;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.server.ServerWorld;
-import net.minecraftforge.fml.network.NetworkDirection;
-import org.lwjgl.system.CallbackI;
 
 import java.util.List;
 
@@ -53,7 +48,7 @@ public class SolarAbilities {
                     ability.cast(enti,world);
 
                 } else if (index == 6){
-                    MeteoriteAbility ability = new MeteoriteAbility("solar_heal",250);
+                    HealAbility ability = new HealAbility("solar_heal",250);
                     ability.cast(enti,world);
                 }else if (index == 7){
                     AlchemistAbility ability = new AlchemistAbility("alchemist",0);

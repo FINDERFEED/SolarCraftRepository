@@ -2,26 +2,17 @@ package com.finderfeed.solarforge.misc_things;
 
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
-import com.finderfeed.solarforge.packets.RepeaterParentUpdateOnClient;
-import com.finderfeed.solarforge.packets.TileEnergyGeneratorUpdate;
+import com.finderfeed.solarforge.packet_handler.packets.TileEnergyGeneratorUpdate;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.fml.network.PacketDistributor;
 
-import javax.annotation.Nullable;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-import java.util.function.Consumer;
 
 public abstract class AbstractEnergyGeneratorTileEntity extends TileEntity implements ITickableTileEntity,IBindable,ISolarEnergyContainer{
 
