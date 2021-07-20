@@ -90,19 +90,19 @@ public class RuneEnergyPylonRenderer extends TileEntityRenderer<RuneEnergyPylonT
 
         matrices.popPose();
 
-        Matrix4f projectionMatrix = Minecraft.getInstance().gameRenderer.getProjectionMatrix(Minecraft.getInstance().gameRenderer.getMainCamera(),1,false);
-
-        matrices.pushPose();
-
-        Matrix4f matrix4f = matrices.last().pose();
-        Shaders.TEST.getShader().addUniform(new Uniform("modelview",matrix4f,Shaders.TEST.getShader().getSHADER()));
-        Shaders.TEST.getShader().addUniform(new Uniform("projection",projectionMatrix,Shaders.TEST.getShader().getSHADER()));
-
-        Shaders.TEST.getShader().addUniform(new Uniform("intensity",5f,Shaders.TEST.getShader().getSHADER()));
-        Shaders.TEST.getShader().addUniform(new Uniform("scaleFactor",200f,Shaders.TEST.getShader().getSHADER()));
-        Shaders.TEST.getShader().addUniform(new Uniform("distance",length*length,Shaders.TEST.getShader().getSHADER()));
-
-        Shaders.TEST.getShader().setActive(true);
+//        Matrix4f projectionMatrix = Minecraft.getInstance().gameRenderer.getProjectionMatrix(Minecraft.getInstance().gameRenderer.getMainCamera(),1,true);
+//
+//        matrices.pushPose();
+//        matrices.translate(0.5,0.5,0.5);
+//        Matrix4f matrix4f = matrices.last().pose();
+//        Shaders.TEST.getShader().addUniform(new Uniform("modelview",matrix4f,Shaders.TEST.getShader().getSHADER()));
+//        Shaders.TEST.getShader().addUniform(new Uniform("projection",projectionMatrix,Shaders.TEST.getShader().getSHADER()));
+//
+//        Shaders.TEST.getShader().addUniform(new Uniform("intensity",5f,Shaders.TEST.getShader().getSHADER()));
+//        Shaders.TEST.getShader().addUniform(new Uniform("scaleFactor",200f,Shaders.TEST.getShader().getSHADER()));
+//        Shaders.TEST.getShader().addUniform(new Uniform("distance",length*length,Shaders.TEST.getShader().getSHADER()));
+//
+//        Shaders.TEST.getShader().setActive(true);
         matrices.popPose();
     }
 }

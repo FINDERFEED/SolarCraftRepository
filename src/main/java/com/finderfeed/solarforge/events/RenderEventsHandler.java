@@ -7,6 +7,12 @@ import com.mojang.blaze3d.platform.GlStateManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.shader.Framebuffer;
 import net.minecraft.client.shader.FramebufferConstants;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.util.math.RayTraceContext;
+import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.world.World;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
@@ -73,6 +79,19 @@ public class RenderEventsHandler {
                 Framebuffers.buffer2.blitToScreen(Minecraft.getInstance().getWindow().getScreenWidth(), Minecraft.getInstance().getWindow().getScreenHeight());
                 GlStateManager._glBindFramebuffer(FramebufferConstants.GL_FRAMEBUFFER, 0);
                 Shaders.TEST.getShader().setActive(false);
+
+            World world = Minecraft.getInstance().level;
+            PlayerEntity playerEntity = Minecraft.getInstance().player;
+
+            Vector3d playerPosition = playerEntity.position().add(0,playerEntity.getBbHeight()/2,0);  //just player position
+            float distance = 15; //distance in blocks
+            Vector3d playerMultipliedLookVector = playerEntity.getLookAngle().multiply(distance,distance,distance); //where player looks
+            Vector3d maximumBlockPosition = playerPosition.add(playerMultipliedLookVector);
+            RayTraceContext ctx = new RayTraceContext(playerPosition,maximumBlockPosition, RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.NONE,null);
+            BlockRayTraceResult trace = world.clip(ctx);
+            trace.getBlockPos(); // find a block by block position through World.getBlockstate();
+
+
         }
     }
 

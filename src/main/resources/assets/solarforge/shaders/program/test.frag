@@ -13,6 +13,7 @@ uniform float scaleFactor;
 
 varying vec2 texCoords;
 
+//THIS SHADER IS UNUSED BECAUSE IT BELONGS TO REIKA KALSEKI (CHROMATICRAFT MOD)!
 
 vec2 getScreenCoordinates(float a,float b,float c){
     vec4 clip = projection*(modelview*vec4(a,b,c,1));
