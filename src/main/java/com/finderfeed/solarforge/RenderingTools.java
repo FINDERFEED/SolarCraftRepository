@@ -1,32 +1,25 @@
 package com.finderfeed.solarforge;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
+
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.minecraft.client.MainWindow;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.AbstractGui;
+
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.client.shader.Framebuffer;
-import net.minecraft.client.shader.Shader;
-import net.minecraft.client.shader.ShaderDefault;
-import net.minecraft.client.shader.ShaderGroup;
-import net.minecraft.resources.IResourceManager;
-import net.minecraft.resources.ResourcePackType;
-import net.minecraft.resources.SimpleReloadableResourceManager;
+
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.vector.Matrix4f;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.math.vector.Vector3f;
-import net.minecraft.util.registry.Registry;
-import net.minecraftforge.client.event.RenderGameOverlayEvent;
-import org.lwjgl.opengl.GL12;
-import org.lwjgl.opengl.GL20;
 
-import java.io.IOException;
-import java.time.chrono.MinguoEra;
+import net.minecraft.util.math.vector.Vector3f;
+
+import net.minecraftforge.client.event.RenderGameOverlayEvent;
+
 
 public class RenderingTools {
 
@@ -123,5 +116,15 @@ public class RenderingTools {
         vertex.vertex(matrix, -0.5F * mod, height, -0.5F * mod).color(255, 255, 255, 255).uv(1, 1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
         vertex.vertex(matrix, -0.5F * mod, 0, -0.5F * mod).color(255, 255, 255, 255).uv(1, 0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
         stack.popPose();
+    }
+
+
+    public static void renderHandManually(MatrixStack matrixStack,float partialTicks){
+        boolean render = Minecraft.getInstance().gameRenderer.renderHand;
+
+        if (render){
+            RenderSystem.clear(256, Minecraft.ON_OSX);
+            Minecraft.getInstance().gameRenderer.renderItemInHand(matrixStack,Minecraft.getInstance().gameRenderer.getMainCamera(),partialTicks);
+        }
     }
 }
