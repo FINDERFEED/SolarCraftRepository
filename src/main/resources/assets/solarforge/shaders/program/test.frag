@@ -8,10 +8,8 @@ uniform mat4 projection;
 uniform float intensity;
 
 
-uniform float posX;
-uniform float posY;
-uniform float posZ;
-
+uniform float distance;
+uniform float scaleFactor;
 
 varying vec2 texCoords;
 
@@ -31,12 +29,14 @@ float distsq(vec2 a, vec2 b) {
 }
 
 void main() {
-    vec2 locusXY = getScreenCoordinates(posX, posY, posZ);
-    float distv = distsq(locusXY, texCoords);
-    float distfac_vertex = max(0.0, min(1.0, 3.0-400.0*distv));
-    float vf = intensity*distfac_vertex;
-    vec2 texUV = mix(texCoords, locusXY, vf/4.0);
-    vec4 color = texture2D(sampler, texUV);
+    vec2 coreXY = getScreenCoordinates(0, 0, 0);
 
-    gl_FragColor = vec4(color.x, color.y, color.z, color.a);
+    float distv = distsq(coreXY, texCoords);
+    float distfac_vertex = max(0.0, min(1.0, 3.5-40.0*distv*distance));
+    float f0 = max(intensity*0.5, intensity-scaleFactor*0.15);
+    float vf = f0*distfac_vertex;
+    vec2 texUV = mix(texCoords, coreXY, vf/7.5);
+    vec4 orig = texture2D(sampler, texUV);
+
+    gl_FragColor = vec4(orig.r, orig.g, orig.b, orig.a);
 }
