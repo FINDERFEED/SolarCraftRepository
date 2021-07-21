@@ -17,7 +17,7 @@ import net.minecraft.world.gen.GenerationStage;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import org.graalvm.compiler.serviceprovider.ServiceProvider;
+
 
 @Mod.EventBusSubscriber(modid = "solarforge",bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class EventHandler {
@@ -42,25 +42,13 @@ public class EventHandler {
             Helpers.forceChunksReload((ServerPlayerEntity) playerEntity);
             Helpers.triggerProgressionShader(playerEntity);
 
-            if (ach.equals(Achievement.FRAGMENT)){
-                ItemStack frag = ItemsRegister.INFO_FRAGMENT.get().getDefaultInstance();
-                ProgressionHelper.applyTagToFragment(frag, AncientFragment.FRAGMENT);
-                ItemEntity entity = new ItemEntity(playerEntity.level,playerEntity.getX(),playerEntity.getY()+0.3f,playerEntity.getZ(),frag);
-
-                ItemStack frag2 = ItemsRegister.INFO_FRAGMENT.get().getDefaultInstance();
-                ProgressionHelper.applyTagToFragment(frag2, AncientFragment.RUNIC_TABLE);
-                ItemEntity entity2 = new ItemEntity(playerEntity.level,playerEntity.getX(),playerEntity.getY()+0.3f,playerEntity.getZ(),frag2);
-                ProgressionHelper.givePlayerFragment(AncientFragment.FRAGMENT,playerEntity);
-                ProgressionHelper.givePlayerFragment(AncientFragment.RUNIC_TABLE,playerEntity);
-                playerEntity.level.addFreshEntity(entity);
-                playerEntity.level.addFreshEntity(entity2);
-            }else if (ach.equals(Achievement.RUNE_ENERGY_DEPOSIT)){
-                ItemStack frag = ItemsRegister.INFO_FRAGMENT.get().getDefaultInstance();
-                ProgressionHelper.applyTagToFragment(frag, AncientFragment.WAND);
-                ItemEntity entity = new ItemEntity(playerEntity.level,playerEntity.getX(),playerEntity.getY()+0.3f,playerEntity.getZ(),frag);
-                ProgressionHelper.givePlayerFragment(AncientFragment.WAND,playerEntity);
-                playerEntity.level.addFreshEntity(entity);
-            }
+//            if (ach.equals(Achievement.RUNE_ENERGY_DEPOSIT)){
+//                ItemStack frag = ItemsRegister.INFO_FRAGMENT.get().getDefaultInstance();
+//                ProgressionHelper.applyTagToFragment(frag, AncientFragment.WAND);
+//                ItemEntity entity = new ItemEntity(playerEntity.level,playerEntity.getX(),playerEntity.getY()+0.3f,playerEntity.getZ(),frag);
+//                ProgressionHelper.givePlayerFragment(AncientFragment.WAND,playerEntity);
+//                playerEntity.level.addFreshEntity(entity);
+//            }
         }
 
     }

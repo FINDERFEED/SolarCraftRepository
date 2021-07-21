@@ -7,15 +7,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TranslationTextComponent;
 
 public enum Achievement {
-
-    FRAGMENT("fragment",1, ItemsRegister.INFO_FRAGMENT.get().getDefaultInstance(),new TranslationTextComponent("ach.fragment"),1,new TranslationTextComponent("pre.fragment")),
     RUNE_ENERGY_CLAIM("rune_energy_claim",2, ItemsRegister.SOLAR_WAND.get().getDefaultInstance(),new TranslationTextComponent("ach.rune_energy_claim"),2,new TranslationTextComponent("pre.rune_energy_claim")),
     RUNE_ENERGY_DEPOSIT("rune_energy_deposit",1, ItemsRegister.RUNE_ENERGY_PYLON.get().getDefaultInstance(),new TranslationTextComponent("ach.rune_energy_deposit"),3,new TranslationTextComponent("pre.rune_energy_deposit")),
     SOLAR_RUNE("solar_rune",2, ItemsRegister.SOLAR_RUNE_ZETA.get().getDefaultInstance(),new TranslationTextComponent("ach.solar_rune"),4,new TranslationTextComponent("pre.solar_rune")),
     ENTER_NETHER("enter_nether",1, Blocks.NETHERRACK.asItem().getDefaultInstance(),new TranslationTextComponent("ach.enter_nether"),5,new TranslationTextComponent("pre.enter_nether")),
-    CRAFT_SOLAR_FORGE("solar_forge_craft",3, SolarForge.SOLAR_FORGE_ITEM.get().getDefaultInstance(),new TranslationTextComponent("ach.solar_forge_craft"),6,new TranslationTextComponent("pre.solar_forge_craft")),
-    FIND_SOLAR_STONE("solar_stone",3, ItemsRegister.SOLAR_STONE.get().getDefaultInstance(),new TranslationTextComponent("ach.solar_stone"),7,new TranslationTextComponent("pre.solar_stone")),
-    CRAFT_SOLAR_INFUSER("solar_infuser_create",4,SolarForge.INFUSING_STAND_ITEM.get().getDefaultInstance(),new TranslationTextComponent("ach.solar_infuser_create"),8,new TranslationTextComponent("pre.solar_infuser_create")),
+    CRAFT_SOLAR_FORGE("solar_forge_craft",2, SolarForge.SOLAR_FORGE_ITEM.get().getDefaultInstance(),new TranslationTextComponent("ach.solar_forge_craft"),6,new TranslationTextComponent("pre.solar_forge_craft")),
+    FIND_SOLAR_STONE("solar_stone",2, ItemsRegister.SOLAR_STONE.get().getDefaultInstance(),new TranslationTextComponent("ach.solar_stone"),7,new TranslationTextComponent("pre.solar_stone")),
+    CRAFT_SOLAR_INFUSER("solar_infuser_create",3,SolarForge.INFUSING_STAND_ITEM.get().getDefaultInstance(),new TranslationTextComponent("ach.solar_infuser_create"),8,new TranslationTextComponent("pre.solar_infuser_create")),
     USE_SOLAR_INFUSER("solar_infuser_use",4,ItemsRegister.SOLAR_WAND.get().getDefaultInstance(),new TranslationTextComponent("ach.solar_infuser_use"),9,new TranslationTextComponent("pre.solar_infuser_use")),
     ACQUIRE_SOLAR_DUST("acquire_solar_dust",3,ItemsRegister.SOLAR_DUST.get().getDefaultInstance(),new TranslationTextComponent("ach.acquire_solar_dust"),10,new TranslationTextComponent("pre.acquire_solar_dust")),
     FIND_KEY_LOCK_DUNGEON("find_key_lock",1,ItemsRegister.INVINCIBLE_STONE.get().getDefaultInstance(), new TranslationTextComponent("ach.key_lock_dungeon"),11,new TranslationTextComponent("pre.key_lock_dungeon")),

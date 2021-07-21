@@ -6,6 +6,8 @@ import java.util.*;
 
 public class AchievementTree {
 
+    public static final AchievementTree INSTANCE = loadTree();
+
     public HashMap<Achievement,TreePart<Achievement>> ACHIEVEMENT_TREE = new HashMap<>();
 
     public AchievementTree(){
@@ -63,6 +65,12 @@ public class AchievementTree {
 
         list.add(Achievement.TRANSMUTE_GEM);
         tree.addAchievementRequirements(Achievement.DIMENSIONAL_SHARD_DUNGEON,list);
+
+        tree.addAchievementRequirements(Achievement.CRAFT_SOLAR_FORGE,Achievement.ENTER_NETHER);
+        tree.addAchievementRequirements(Achievement.FIND_SOLAR_STONE,Achievement.ENTER_NETHER);
+        tree.addAchievementRequirements(Achievement.RUNE_ENERGY_CLAIM,Achievement.RUNE_ENERGY_DEPOSIT);
+        tree.addAchievementRequirements(Achievement.SOLAR_RUNE,Achievement.RUNE_ENERGY_DEPOSIT);
+
         return tree;
     }
 

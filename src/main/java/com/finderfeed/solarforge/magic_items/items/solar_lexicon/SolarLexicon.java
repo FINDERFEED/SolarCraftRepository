@@ -45,6 +45,23 @@ public class SolarLexicon extends Item {
                 ItemEntity entity = new ItemEntity(pe.level, pe.getX(), pe.getY() + 0.3f, pe.getZ(), frag);
                 ProgressionHelper.givePlayerFragment(AncientFragment.LEXICON, pe);
                 pe.level.addFreshEntity(entity);
+
+            }
+
+            if (!ProgressionHelper.doPlayerHasFragment(pe,AncientFragment.FRAGMENT)){
+                ItemStack frag = ItemsRegister.INFO_FRAGMENT.get().getDefaultInstance();
+                ProgressionHelper.applyTagToFragment(frag, AncientFragment.FRAGMENT);
+                ItemEntity entity = new ItemEntity(pe.level,pe.getX(),pe.getY()+0.3f,pe.getZ(),frag);
+                ProgressionHelper.givePlayerFragment(AncientFragment.FRAGMENT,pe);
+                pe.level.addFreshEntity(entity);
+            }
+
+            if (!ProgressionHelper.doPlayerHasFragment(pe,AncientFragment.RUNIC_TABLE)){
+                ItemStack frag = ItemsRegister.INFO_FRAGMENT.get().getDefaultInstance();
+                ProgressionHelper.applyTagToFragment(frag, AncientFragment.RUNIC_TABLE);
+                ItemEntity entity = new ItemEntity(pe.level,pe.getX(),pe.getY()+0.3f,pe.getZ(),frag);
+                ProgressionHelper.givePlayerFragment(AncientFragment.RUNIC_TABLE,pe);
+                pe.level.addFreshEntity(entity);
             }
             if (!pe.isCrouching()) {
                 AchievementTree tree = AchievementTree.loadTree();

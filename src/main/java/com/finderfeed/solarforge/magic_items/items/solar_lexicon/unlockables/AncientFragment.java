@@ -13,8 +13,8 @@ import java.util.*;
 
 public enum AncientFragment {
 
-    RUNIC_TABLE(tx("solar_fragment.runic_table"),"runic_table",Achievement.FRAGMENT,BookEntry.BEGINNING_INFO, ItemsRegister.SOLAR_LEXICON.get(),tx("runic_table.lore"),true),
-    FRAGMENT(tx("solar_fragment.fragment"),"fragment",Achievement.FRAGMENT,BookEntry.BEGINNING_INFO, ItemsRegister.SOLAR_LEXICON.get(),tx("fragment.lore"),false),
+    RUNIC_TABLE(tx("solar_fragment.runic_table"),"runic_table",null,BookEntry.BEGINNING_INFO, ItemsRegister.RUNIC_TABLE.get(),tx("runic_table.lore"),true),
+    FRAGMENT(tx("solar_fragment.fragment"),"fragment",null,BookEntry.BEGINNING_INFO, ItemsRegister.SOLAR_LEXICON.get(),tx("fragment.lore"),false),
     LEXICON(tx("solar_fragment.lexicon"),"lexicon",null,BookEntry.BEGINNING_INFO, ItemsRegister.SOLAR_LEXICON.get(),tx("lexicon.lore"),false),
     WAND(tx("solar_fragment.wand"),"wand",Achievement.RUNE_ENERGY_DEPOSIT,BookEntry.BEGINNING_INFO, ItemsRegister.SOLAR_WAND.get(),tx("wand.lore"),false),
     SOLAR_DUST(tx("solar_fragment.solar_dust"),"solar_dust",Achievement.CRAFT_SOLAR_FORGE,BookEntry.SOLAR_FORGE_BASICS, ItemsRegister.SOLAR_DUST.get(),tx("solar_dust.lore"),true),
@@ -83,10 +83,9 @@ public enum AncientFragment {
     };
 
     public static void initFragmentsMap(){
-        List<AncientFragment> list = Arrays.asList(FRAGMENTS_WITHOUT_TABLE_NEEDED);
 
         for (AncientFragment frag : getAllFragments()){
-            if (!FRAGMENTS_ID_MAP.containsKey(frag.getId()) && !list.contains(frag) ){
+            if (!FRAGMENTS_ID_MAP.containsKey(frag.getId())  ){
                 FRAGMENTS_ID_MAP.put(frag.getId(),frag);
             }
         }

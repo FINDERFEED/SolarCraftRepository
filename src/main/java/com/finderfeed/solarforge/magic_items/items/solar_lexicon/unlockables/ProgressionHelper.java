@@ -2,6 +2,7 @@ package com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables;
 
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.SolarForge;
+import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import com.finderfeed.solarforge.recipe_types.InfusingRecipe;
 import com.finderfeed.solarforge.recipe_types.solar_smelting.SolarSmeltingRecipe;
 import com.finderfeed.solarforge.registries.items.ItemsRegister;
@@ -35,6 +36,20 @@ public class ProgressionHelper {
             ItemsRegister.SOLAR_RUNE_URBA.get(),
             ItemsRegister.SOLAR_RUNE_ZETA.get(),
     };
+
+    public static Map<RunicEnergy.Type,Item> RUNES_MAP = null;
+
+
+    public static void initRunesMap(){
+        RUNES_MAP = new HashMap<>();
+        RUNES_MAP.put(RunicEnergy.Type.ARDO,ItemsRegister.SOLAR_RUNE_ARDO.get());
+        RUNES_MAP.put(RunicEnergy.Type.FIRA,ItemsRegister.SOLAR_RUNE_FIRA.get());
+        RUNES_MAP.put(RunicEnergy.Type.ZETA,ItemsRegister.SOLAR_RUNE_ZETA.get());
+        RUNES_MAP.put(RunicEnergy.Type.KELDA,ItemsRegister.SOLAR_RUNE_KELDA.get());
+        RUNES_MAP.put(RunicEnergy.Type.URBA,ItemsRegister.SOLAR_RUNE_URBA.get());
+        RUNES_MAP.put(RunicEnergy.Type.TERA,ItemsRegister.SOLAR_RUNE_TERA.get());
+
+    }
 
 
 

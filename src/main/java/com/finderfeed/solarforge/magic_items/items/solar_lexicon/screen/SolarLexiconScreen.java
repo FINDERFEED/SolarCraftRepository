@@ -69,7 +69,7 @@ public class SolarLexiconScreen extends Screen implements IScrollable {
 
     @Override
     public void performScroll(int keyCode) {
-        if (keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_LEFT) && !(scrollX -4 < -58)){
+        if (keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_LEFT) && !(scrollX -4 < -80)){
             scrollX-=4;
         } else if (keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_UP) && !(scrollY -4 < -138)){
             scrollY-=4;
@@ -205,7 +205,7 @@ public class SolarLexiconScreen extends Screen implements IScrollable {
         int scale = (int)minecraft.getWindow().getGuiScale();
 
         GL11.glScissor(width/2-(83*scale),height/2-(6*scale),(188*scale),107*scale);
-        blit(matrices,relX+scrollX,relY+scrollY,0,0,256,256);
+        blit(matrices,relX,relY,0,0,256,256);
 
         minecraft.getTextureManager().bind(FRAME);
         for (Achievement a : tree.ACHIEVEMENT_TREE.keySet()) {
