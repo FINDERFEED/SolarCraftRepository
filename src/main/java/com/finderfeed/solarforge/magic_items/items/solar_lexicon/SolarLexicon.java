@@ -1,13 +1,17 @@
 package com.finderfeed.solarforge.magic_items.items.solar_lexicon;
 
 import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.AncientFragment;
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.ProgressionHelper;
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.achievement_tree.AchievementTree;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Achievement;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.packets.OpenScreenPacket;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.packets.UpdateInventoryPacket;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.packets.UpdateProgressionOnClient;
+import com.finderfeed.solarforge.registries.items.ItemsRegister;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.Item;
@@ -35,6 +39,13 @@ public class SolarLexicon extends Item {
     @Override
     public ActionResult<ItemStack> use(World world, PlayerEntity pe, Hand hand) {
         if (!world.isClientSide && hand.equals(Hand.MAIN_HAND)){
+            if (!ProgressionHelper.doPlayerHasFragment(pe,AncientFragment.LEXICON)) {
+                ItemStack frag = ItemsRegister.INFO_FRAGMENT.get().getDefaultInstance();
+                ProgressionHelper.applyTagToFragment(frag, AncientFragment.LEXICON);
+                ItemEntity entity = new ItemEntity(pe.level, pe.getX(), pe.getY() + 0.3f, pe.getZ(), frag);
+                ProgressionHelper.givePlayerFragment(AncientFragment.LEXICON, pe);
+                pe.level.addFreshEntity(entity);
+            }
             if (!pe.isCrouching()) {
                 AchievementTree tree = AchievementTree.loadTree();
                 for (Achievement a : tree.ACHIEVEMENT_TREE.keySet()) {

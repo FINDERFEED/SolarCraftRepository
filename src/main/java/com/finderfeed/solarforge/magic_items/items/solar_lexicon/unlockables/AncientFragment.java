@@ -9,14 +9,14 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.util.text.TranslationTextComponent;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public enum AncientFragment {
+
     RUNIC_TABLE(tx("solar_fragment.runic_table"),"runic_table",Achievement.FRAGMENT,BookEntry.BEGINNING_INFO, ItemsRegister.SOLAR_LEXICON.get(),tx("runic_table.lore"),true),
     FRAGMENT(tx("solar_fragment.fragment"),"fragment",Achievement.FRAGMENT,BookEntry.BEGINNING_INFO, ItemsRegister.SOLAR_LEXICON.get(),tx("fragment.lore"),false),
     LEXICON(tx("solar_fragment.lexicon"),"lexicon",null,BookEntry.BEGINNING_INFO, ItemsRegister.SOLAR_LEXICON.get(),tx("lexicon.lore"),false),
-    WAND(tx("solar_fragment.wand"),"wand",null,BookEntry.BEGINNING_INFO, ItemsRegister.SOLAR_WAND.get(),tx("wand.lore"),false),
+    WAND(tx("solar_fragment.wand"),"wand",Achievement.RUNE_ENERGY_DEPOSIT,BookEntry.BEGINNING_INFO, ItemsRegister.SOLAR_WAND.get(),tx("wand.lore"),false),
     SOLAR_DUST(tx("solar_fragment.solar_dust"),"solar_dust",Achievement.CRAFT_SOLAR_FORGE,BookEntry.SOLAR_FORGE_BASICS, ItemsRegister.SOLAR_DUST.get(),tx("solar_dust.lore"),true),
     ENERGY_DUST(tx("solar_fragment.energy_dust"),"energy_dust",Achievement.CRAFT_SOLAR_FORGE,BookEntry.SOLAR_FORGE_BASICS, ItemsRegister.ENERGY_DUST.get(),tx("energy_dust.lore"),true),
     SOLAR_FORGE(tx("solar_fragment.solar_forge"),"solar_forge",Achievement.RUNE_ENERGY_CLAIM,BookEntry.SOLAR_FORGE_BASICS, ItemsRegister.SOLAR_DUST.get(),tx("solar_forge.lore"),true),
@@ -75,9 +75,18 @@ public enum AncientFragment {
     public static Map<String,AncientFragment> FRAGMENTS_ID_MAP = new HashMap<>();
 
 
+    public static AncientFragment[] FRAGMENTS_WITHOUT_TABLE_NEEDED = {
+            RUNIC_TABLE,
+            FRAGMENT,
+            LEXICON,
+            WAND
+    };
+
     public static void initFragmentsMap(){
+        List<AncientFragment> list = Arrays.asList(FRAGMENTS_WITHOUT_TABLE_NEEDED);
+
         for (AncientFragment frag : getAllFragments()){
-            if (!FRAGMENTS_ID_MAP.containsKey(frag.getId())){
+            if (!FRAGMENTS_ID_MAP.containsKey(frag.getId()) && !list.contains(frag) ){
                 FRAGMENTS_ID_MAP.put(frag.getId(),frag);
             }
         }
