@@ -1,0 +1,10 @@
+{
+  "textures": [
+    "solarforge:tile_energy_pylon_ardo",
+    "solarforge:tile_energy_pylon_fira",
+    "solarforge:tile_energy_pylon_kelda",
+    "solarforge:tile_energy_pylon_tera",
+    "solarforge:tile_energy_pylon_urba",
+    "solarforge:tile_energy_pylon_zeta"
+  ]
+}

@@ -1,5 +1,7 @@
 package com.finderfeed.solarforge.world_generation.structures.blocks;
 
+import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Achievement;
 import com.finderfeed.solarforge.registries.items.ItemsRegister;
 import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
 import net.minecraft.block.Block;
@@ -42,7 +44,7 @@ public class ColdStarInfuser extends Block {
             }
         }
 
-        if (!p_225533_2_.isClientSide){
+        if (!p_225533_2_.isClientSide && Helpers.hasPlayerUnlocked(Achievement.ACQUIRE_COLD_STAR,p_225533_4_)){
             if (p_225533_4_.getItemInHand(p_225533_5_).getItem() == ItemsRegister.COLD_STAR_PIECE.get()){
                 p_225533_4_.setItemInHand(p_225533_5_,new ItemStack(ItemsRegister.COLD_STAR_PIECE_ACTIVATED.get(),1));
 

@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "solarforge:burnt_log"
+    "solarforge:burnt_log",
+    "solarforge:runic_log"
   ]
 }

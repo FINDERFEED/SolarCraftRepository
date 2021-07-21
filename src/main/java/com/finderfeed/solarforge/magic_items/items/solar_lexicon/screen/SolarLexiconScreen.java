@@ -3,7 +3,7 @@ package com.finderfeed.solarforge.magic_items.items.solar_lexicon.screen;
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.misc_things.IScrollable;
-import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievement_tree.AchievementTree;
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.achievement_tree.AchievementTree;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Achievement;
 import com.mojang.blaze3d.matrix.MatrixStack;
 
@@ -24,7 +24,6 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class SolarLexiconScreen extends Screen implements IScrollable {
 

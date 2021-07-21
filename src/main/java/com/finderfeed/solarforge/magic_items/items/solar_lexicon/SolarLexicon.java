@@ -2,7 +2,7 @@ package com.finderfeed.solarforge.magic_items.items.solar_lexicon;
 
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
-import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievement_tree.AchievementTree;
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.achievement_tree.AchievementTree;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Achievement;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.packets.OpenScreenPacket;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.packets.UpdateInventoryPacket;

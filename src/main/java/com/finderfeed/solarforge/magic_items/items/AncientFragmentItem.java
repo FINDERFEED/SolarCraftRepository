@@ -1,18 +1,37 @@
 package com.finderfeed.solarforge.magic_items.items;
 
+import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Achievement;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.ProgressionHelper;
+import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.World;
+
+import javax.annotation.Nullable;
+import java.util.List;
 
 public class AncientFragmentItem extends Item {
     public AncientFragmentItem(Properties p_i48487_1_) {
         super(p_i48487_1_);
     }
 
+
+    @Override
+    public void inventoryTick(ItemStack p_77663_1_, World p_77663_2_, Entity p_77663_3_, int p_77663_4_, boolean p_77663_5_) {
+        if (!p_77663_2_.isClientSide && (p_77663_3_ instanceof PlayerEntity) ){
+            Helpers.fireProgressionEvent((PlayerEntity) p_77663_3_, Achievement.FRAGMENT);
+        }
+        super.inventoryTick(p_77663_1_, p_77663_2_, p_77663_3_, p_77663_4_, p_77663_5_);
+    }
 
     @Override
     public boolean verifyTagAfterLoad(CompoundNBT p_179215_1_) {
@@ -30,5 +49,21 @@ public class AncientFragmentItem extends Item {
             }
         }
 
+    }
+
+
+    @Override
+    public void appendHoverText(ItemStack stack, @Nullable World level, List<ITextComponent> texts, ITooltipFlag p_77624_4_) {
+        CompoundNBT nbt = stack.getTagElement(ProgressionHelper.TAG_ELEMENT);
+        if (nbt == null){
+            texts.add(new TranslationTextComponent("ancient_frag.no_tag"));
+        }else{
+            AncientFragment frag = AncientFragment.getFragmentByID(nbt.getString(ProgressionHelper.FRAG_ID));
+            if (frag != null){
+                texts.add(frag.getTranslation());
+            }
+        }
+
+        super.appendHoverText(stack, level, texts, p_77624_4_);
     }
 }

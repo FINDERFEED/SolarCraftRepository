@@ -1,4 +1,4 @@
-package com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievement_tree;
+package com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.achievement_tree;
 
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Achievement;
 

@@ -20,6 +20,7 @@ public class ParticleRegister {
         Minecraft.getInstance().particleEngine.register(ParticlesList.INVISIBLE_PARTICLE.get(), InvisibleParticle.Factory::new);
         Minecraft.getInstance().particleEngine.register(ParticlesList.HEAL_PARTICLE.get(), HealParticle.Factory::new);
         Minecraft.getInstance().particleEngine.register(ParticlesList.SMALL_SOLAR_STRIKE_PARTICLE.get(), SmallSolarStrikeParticle.Factory::new);
+        Minecraft.getInstance().particleEngine.register(ParticlesList.RUNE_PARTICLE.get(), RuneParticle.Factory::new);
     }
 
 }

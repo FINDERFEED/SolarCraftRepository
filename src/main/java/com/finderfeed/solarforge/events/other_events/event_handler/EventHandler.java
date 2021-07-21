@@ -7,6 +7,7 @@ import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Ac
 import com.finderfeed.solarforge.world_generation.features.FeaturesRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.GenerationStage;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -18,6 +19,9 @@ public class EventHandler {
     @SubscribeEvent
     public static void addFeatures(BiomeLoadingEvent event){
         event.getGeneration().addFeature(GenerationStage.Decoration.LOCAL_MODIFICATIONS, FeaturesRegistry.ENERGY_PYLON_CONFIGURED);
+        if (event.getCategory() == Biome.Category.PLAINS){
+            event.getGeneration().addFeature(GenerationStage.Decoration.VEGETAL_DECORATION,FeaturesRegistry.RUNIC_TREE_FEATURE);
+        }
     }
 
 

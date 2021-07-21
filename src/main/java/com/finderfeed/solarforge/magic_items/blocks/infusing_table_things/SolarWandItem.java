@@ -43,6 +43,7 @@ import net.minecraftforge.fml.network.NetworkDirection;
 
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public class SolarWandItem extends Item implements ManaConsumer {
@@ -108,7 +109,7 @@ public class SolarWandItem extends Item implements ManaConsumer {
     public void handleEnergyConsumption(World world, PlayerEntity player){
 
         Vector3d from = player.position().add(0,1.4,0);
-        Vector3d look = player.getLookAngle().multiply(15,15,15);
+        Vector3d look = player.getLookAngle().multiply(30,30,30);
         Vector3d to = from.add(look);
         RayTraceContext ctx = new RayTraceContext(from,to, RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.NONE,null);
         BlockRayTraceResult res = world.clip(ctx);
@@ -117,7 +118,7 @@ public class SolarWandItem extends Item implements ManaConsumer {
             if (!world.isClientSide){
                 RuneEnergyPylonTile tile = (RuneEnergyPylonTile) world.getBlockEntity(res.getBlockPos());
                 tile.givePlayerEnergy(player,5);
-                System.out.println(tile.getCurrentEnergy());
+
                 Helpers.updateRunicEnergyOnClient(tile.getEnergyType(),RunicEnergy.getEnergy(player,tile.getEnergyType()),player);
                 Helpers.fireProgressionEvent(player, Achievement.RUNE_ENERGY_CLAIM);
             }else{
@@ -172,6 +173,7 @@ class WandEvents{
                                     int width = event.getWindow().getGuiScaledWidth();
                                     AbstractGui.blit(event.getMatrixStack(), width / 2 - 20, height / 2 + 8, 0, 0, 40, 9, 40, 20);
                                     AbstractGui.blit(event.getMatrixStack(), width / 2 -7, height / 2 + 7, 0, 24, 14, 14, 80, 40);
+
                                 }
                             }
 

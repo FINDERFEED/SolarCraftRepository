@@ -6,7 +6,7 @@ import com.finderfeed.solarforge.packet_handler.ResetAllAbilitiesPacket;
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
 import com.finderfeed.solarforge.packet_handler.CastAbilityPacket;
 import com.finderfeed.solarforge.magic_items.blocks.solar_forge_block.solar_forge_screen.SolarForgeAbilityConfigScreen;
-import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievement_tree.AchievementTree;
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.achievement_tree.AchievementTree;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Achievement;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.api.distmarker.Dist;

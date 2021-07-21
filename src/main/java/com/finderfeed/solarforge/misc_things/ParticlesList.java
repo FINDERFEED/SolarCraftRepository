@@ -14,4 +14,5 @@ public class ParticlesList {
     public static final RegistryObject<BasicParticleType> INVISIBLE_PARTICLE = PARTICLES.register("invisible",()-> new BasicParticleType(true));
     public static final RegistryObject<BasicParticleType> HEAL_PARTICLE = PARTICLES.register("heal_particle",()-> new BasicParticleType(true));
     public static final RegistryObject<BasicParticleType> SMALL_SOLAR_STRIKE_PARTICLE = PARTICLES.register("small_solar_strike_particle",()-> new BasicParticleType(true));
+    public static final RegistryObject<BasicParticleType> RUNE_PARTICLE = PARTICLES.register("rune_particle",()-> new BasicParticleType(true));
 }

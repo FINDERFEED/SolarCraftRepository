@@ -11,7 +11,7 @@ import com.finderfeed.solarforge.packet_handler.packets.TriggerProgressionShader
 import com.finderfeed.solarforge.packet_handler.packets.UpdateEnergyOnClientPacket;
 import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
 import com.finderfeed.solarforge.registries.items.ItemsRegister;
-import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievement_tree.AchievementTree;
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.achievement_tree.AchievementTree;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Achievement;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.packets.UpdateProgressionOnClient;
 import com.mojang.blaze3d.matrix.MatrixStack;

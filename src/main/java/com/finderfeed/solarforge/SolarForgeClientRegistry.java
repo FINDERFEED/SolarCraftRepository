@@ -56,6 +56,7 @@ public class SolarForgeClientRegistry {
         RenderTypeLookup.setRenderLayer(BlocksRegistry.SOLAR_LENS.get(), RenderType.translucent());
         RenderTypeLookup.setRenderLayer(BlocksRegistry.SOLAR_FLOWER.get(), RenderType.cutout());
         RenderTypeLookup.setRenderLayer(BlocksRegistry.ASH_LEAVES.get(), RenderType.cutout());
+        RenderTypeLookup.setRenderLayer(BlocksRegistry.RUNIC_LEAVES.get(), RenderType.cutout());
         RenderTypeLookup.setRenderLayer(BlocksRegistry.DEAD_SPROUT.get(), RenderType.cutout());
 
         ClientRegistry.registerKeyBinding(FIRST_ABILITY_KEY);

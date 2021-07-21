@@ -1,0 +1,7 @@
+{
+  "parent": "block/cube_column",
+  "textures": {
+    "end": "solarforge:block/runic_log_top",
+    "side": "solarforge:block/runic_log"
+  }
+}
