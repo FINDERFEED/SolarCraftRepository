@@ -31,8 +31,5 @@
     "item": "solarforge:solar_disc_launcher"
   },
   "time": 3000,
-  "requires": "solar_forge_progression_solar_infuser_use",
-  "category": "solar_category.magic_items",
-  "desc": "A powerful ranged weapon. Projectiles do 5 magic damage and bounce 4 times between nearby mobs."
-
+  "fragment": "disc_launcher"
 }

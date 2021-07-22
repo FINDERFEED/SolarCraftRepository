@@ -43,28 +43,11 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
     public IItemHandler handler;
     public final ItemStackButton goBack = new ItemStackButton(0,10,12,12,(button)->{minecraft.setScreen(new SolarLexiconScreen());}, SolarForge.SOLAR_FORGE_ITEM.get().getDefaultInstance(),0.7f,false);
     public final ItemStackButton nothing = new ItemStackButton(0,10,12,12,(button)->{}, Items.CRAFTING_TABLE.getDefaultInstance(),0.7f,false);
-    public Point armorCategory;
-    public Point magicItemsCategory;
-
-    public int armorRecipeCount;
-    public int magicRecipesCount;
-
-    public Point magicMaterialsCategory;
-    public int magicMaterialsCount;
-
-    public Point magicToolsCategory;
-    public int magicToolsCount;
-
-    public Point smeltingCategory;
-    public int smeltingRecipeCount;
-
-    public Point upgradingRecipesCategory;
-    public int upgradingRecipesCount;
 
 
 
     public Point structures;
-    public int structuresCount;
+
     public int scrollX;
     public int scrollY;
     public int prevscrollX;
@@ -169,11 +152,13 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
 
                             addInformationButton(fragment.getIcon().getDefaultInstance(),
                                     relX + entry.getPlaceInBook().x  + (i % 6) * 25,
-                                    relY + entry.getPlaceInBook().y  + (int) Math.floor((float) i / 6) * 25);
+                                    relY + entry.getPlaceInBook().y  + (int) Math.floor((float) i / 6) * 25,
+                                    fragment);
                         } else {
                             addInformationButton(fragment.getIcon().getDefaultInstance(),
                                     relX + parent.getPlaceInBook().x +10 + (i % 6) * 25 + BookEntry.ENTRY_TREE.get(parent).indexOf(entry) * 200,
-                                    relY + parent.getPlaceInBook().y + 10 + (int) Math.floor((float) i / 6) * 25);
+                                    relY + parent.getPlaceInBook().y + 10 + (int) Math.floor((float) i / 6) * 25,
+                                    fragment);
                         }
                     } else if (fragment.getType() == AncientFragment.Type.ITEM) {
                         BookEntry parent = entry.getParent();
@@ -212,6 +197,22 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
                                     relX + parent.getPlaceInBook().x + 10 + (i % 6) * 25 + BookEntry.ENTRY_TREE.get(parent).indexOf(entry) * 200,
                                     relY + parent.getPlaceInBook().y + 10 + (int) Math.floor((float) i / 6));
                         }
+                    }else if (fragment.getType() == AncientFragment.Type.UPGRADE) {
+                        BookEntry parent = entry.getParent();
+
+                        if (parent == null) {
+                            if (fragment.getRecipeType() == SolarForge.INFUSING_RECIPE_TYPE) {
+                                addInfusingRecipeButton(ProgressionHelper.UPGRADES_INFUSING_RECIPE_MAP.get(fragment.getItem().getItem()),
+                                        relX + entry.getPlaceInBook().x  + (i % 6) * 25,
+                                        relY + entry.getPlaceInBook().y  + (int) Math.floor((float) i / 6) * 25);
+                            }
+                        } else {
+                            if (fragment.getRecipeType() == SolarForge.INFUSING_RECIPE_TYPE) {
+                                addInfusingRecipeButton(ProgressionHelper.UPGRADES_INFUSING_RECIPE_MAP.get(fragment.getItem().getItem()),
+                                        relX + parent.getPlaceInBook().x + 10 + (i % 6) * 25,
+                                        relY + parent.getPlaceInBook().y + 10 + (int) Math.floor((float) i / 6) * 25);
+                            }
+                        }
                     }
                 }
 
@@ -238,9 +239,9 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
     }
 
 
-    public void addInformationButton(ItemStack logo,int x , int y){
+    public void addInformationButton(ItemStack logo,int x , int y,AncientFragment fragment){
         addButton(new ItemStackButton(x,y,24,24,(button)->{
-            minecraft.setScreen(new InformationScreen(new StringTextComponent("")));
+            minecraft.setScreen(new InformationScreen(fragment,null));
         },logo,1.5f,false, (button,matrices,mx,my)->{
             renderTooltip(matrices,logo.getDisplayName(),mx,my);
         }));
@@ -253,6 +254,8 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
             renderTooltip(matrices,new StringTextComponent(structure.name),mx,my);
         }));
     }
+
+
 
 
     @Override
@@ -402,93 +405,93 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
 
 
 
-    private void doOldThings(){
-        armorCategory = new Point(relX+20,relY+40);
-        armorRecipeCount = 0;
-
-        magicItemsCategory = new Point(relX+20,relY+150);
-        magicRecipesCount = 0;
-
-        magicMaterialsCategory = new Point(relX+20,relY+260);
-        magicMaterialsCount = 0;
-
-        magicToolsCategory = new Point(relX+180,relY+40);
-        magicToolsCount = 0;
-
-        smeltingCategory = new Point(relX+180,relY+150);
-        smeltingRecipeCount = 0;
-
-        structures = new Point(relX+180,relY+260);
-        structuresCount = 0;
-
-        upgradingRecipesCategory = new Point(relX+360,relY+40);
-        upgradingRecipesCount = 0;
-
-        List<InfusingRecipe> recipe = minecraft.level.getRecipeManager().getAllRecipesFor(SolarForge.INFUSING_RECIPE_TYPE);
-        List<SolarSmeltingRecipe> recipeSmelt = minecraft.level.getRecipeManager().getAllRecipesFor(SolarForge.SOLAR_SMELTING);
-        for (InfusingRecipe a :recipe){
-            if (a.category.equals("solar_category.armor")){
-                if (minecraft.player.getPersistentData().getBoolean(a.child)){
-                    addButton(new ItemStackButton(armorCategory.x+armorRecipeCount*25,armorCategory.y + (int)Math.floor(((double)armorRecipeCount/6))*25,24,24,(button)->{
-                        minecraft.setScreen(new InfusingRecipeScreen(a));
-                    },a.output,1.5f,false));
-                    armorRecipeCount++;
-
-                }
-            }else if (a.category.equals("solar_category.magic_items")){
-                if (minecraft.player.getPersistentData().getBoolean(a.child)){
-                    addButton(new ItemStackButton(magicItemsCategory.x+magicRecipesCount*25 -(int)Math.floor(((double)magicRecipesCount/6))*25*6,magicItemsCategory.y + (int)Math.floor(((double)magicRecipesCount/6))*25,24,24,(button)->{
-                        minecraft.setScreen(new InfusingRecipeScreen(a));
-                    },a.output,1.5f,false));
-                    magicRecipesCount++;
-
-                }
-            }else if (a.category.equals("solar_category.materials")){
-                if (minecraft.player.getPersistentData().getBoolean(a.child)){
-                    addButton(new ItemStackButton(magicMaterialsCategory.x+magicMaterialsCount*25 -(int)Math.floor(((double)magicMaterialsCount/6))*25*6 ,magicMaterialsCategory.y + (int)Math.floor(((double)magicMaterialsCount/6))*25,24,24,(button)->{
-                        minecraft.setScreen(new InfusingRecipeScreen(a));
-                    },a.output,1.5f,false));
-                    magicMaterialsCount++;
-
-                }
-            }else if (a.category.equals("solar_category.tools")){
-                if (minecraft.player.getPersistentData().getBoolean(a.child)){
-                    addButton(new ItemStackButton(magicToolsCategory.x+magicToolsCount*25 -(int)Math.floor(((double)magicToolsCount/6))*25*6,magicToolsCategory.y + (int)Math.floor(((double)magicToolsCount/6))*25,24,24,(button)->{
-                        minecraft.setScreen(new InfusingRecipeScreen(a));
-                    },a.output,1.5f,false));
-                    magicToolsCount++;
-
-                }
-            }else if (a.category.equals("solar_category.upgrade")){
-                if (minecraft.player.getPersistentData().getBoolean(a.child)){
-                    addButton(new ItemStackButton(upgradingRecipesCategory.x+upgradingRecipesCount*25 -(int)Math.floor(((double)upgradingRecipesCount/6))*25*6,upgradingRecipesCategory.y + (int)Math.floor(((double)upgradingRecipesCount/6))*25,24,24,(button)->{
-                        minecraft.setScreen(new InfusingRecipeScreen(a));
-                    },a.output,1.5f,false));
-                    upgradingRecipesCount++;
-
-                }
-            }
-
-
-
-        }
-        for (SolarSmeltingRecipe a :recipeSmelt){
-            if (Helpers.hasPlayerUnlocked(Achievement.CRAFT_SOLAR_LENS, minecraft.player)){
-                addButton(new ItemStackButton(smeltingCategory.x+smeltingRecipeCount*25 -(int)Math.floor(((double)smeltingRecipeCount/6))*25*6,smeltingCategory.y + (int)Math.floor(((double)smeltingRecipeCount/6))*25,24,24,(button)->{
-                    minecraft.setScreen(new SmeltingRecipeScreen(a));
-                },a.output,1.5f,false));
-                smeltingRecipeCount++;
-            }
-        }
-
-        for (Multiblocks a : Multiblocks.ALL_STRUCTURES){
-            Multiblock b = a.getM();
-            if (Helpers.hasPlayerUnlocked(b.reqAchievement, minecraft.player)){
-                addButton(new ItemStackButton(structures.x+structuresCount*25 - (int)Math.floor(((double)structuresCount/6))*25*6,structures.y + (int)Math.floor(((double)structuresCount/6))*25,24,24,(button)->{
-                    minecraft.setScreen(new StructureScreen(b));
-                },b.getMainBlock().asItem().getDefaultInstance(),1.5f,false));
-                structuresCount++;
-            }
-        }
-    }
+//    private void doOldThings(){
+//        armorCategory = new Point(relX+20,relY+40);
+//        armorRecipeCount = 0;
+//
+//        magicItemsCategory = new Point(relX+20,relY+150);
+//        magicRecipesCount = 0;
+//
+//        magicMaterialsCategory = new Point(relX+20,relY+260);
+//        magicMaterialsCount = 0;
+//
+//        magicToolsCategory = new Point(relX+180,relY+40);
+//        magicToolsCount = 0;
+//
+//        smeltingCategory = new Point(relX+180,relY+150);
+//        smeltingRecipeCount = 0;
+//
+//        structures = new Point(relX+180,relY+260);
+//        structuresCount = 0;
+//
+//        upgradingRecipesCategory = new Point(relX+360,relY+40);
+//        upgradingRecipesCount = 0;
+//
+//        List<InfusingRecipe> recipe = minecraft.level.getRecipeManager().getAllRecipesFor(SolarForge.INFUSING_RECIPE_TYPE);
+//        List<SolarSmeltingRecipe> recipeSmelt = minecraft.level.getRecipeManager().getAllRecipesFor(SolarForge.SOLAR_SMELTING);
+//        for (InfusingRecipe a :recipe){
+//            if (a.category.equals("solar_category.armor")){
+//                if (minecraft.player.getPersistentData().getBoolean(a.child)){
+//                    addButton(new ItemStackButton(armorCategory.x+armorRecipeCount*25,armorCategory.y + (int)Math.floor(((double)armorRecipeCount/6))*25,24,24,(button)->{
+//                        minecraft.setScreen(new InfusingRecipeScreen(a));
+//                    },a.output,1.5f,false));
+//                    armorRecipeCount++;
+//
+//                }
+//            }else if (a.category.equals("solar_category.magic_items")){
+//                if (minecraft.player.getPersistentData().getBoolean(a.child)){
+//                    addButton(new ItemStackButton(magicItemsCategory.x+magicRecipesCount*25 -(int)Math.floor(((double)magicRecipesCount/6))*25*6,magicItemsCategory.y + (int)Math.floor(((double)magicRecipesCount/6))*25,24,24,(button)->{
+//                        minecraft.setScreen(new InfusingRecipeScreen(a));
+//                    },a.output,1.5f,false));
+//                    magicRecipesCount++;
+//
+//                }
+//            }else if (a.category.equals("solar_category.materials")){
+//                if (minecraft.player.getPersistentData().getBoolean(a.child)){
+//                    addButton(new ItemStackButton(magicMaterialsCategory.x+magicMaterialsCount*25 -(int)Math.floor(((double)magicMaterialsCount/6))*25*6 ,magicMaterialsCategory.y + (int)Math.floor(((double)magicMaterialsCount/6))*25,24,24,(button)->{
+//                        minecraft.setScreen(new InfusingRecipeScreen(a));
+//                    },a.output,1.5f,false));
+//                    magicMaterialsCount++;
+//
+//                }
+//            }else if (a.category.equals("solar_category.tools")){
+//                if (minecraft.player.getPersistentData().getBoolean(a.child)){
+//                    addButton(new ItemStackButton(magicToolsCategory.x+magicToolsCount*25 -(int)Math.floor(((double)magicToolsCount/6))*25*6,magicToolsCategory.y + (int)Math.floor(((double)magicToolsCount/6))*25,24,24,(button)->{
+//                        minecraft.setScreen(new InfusingRecipeScreen(a));
+//                    },a.output,1.5f,false));
+//                    magicToolsCount++;
+//
+//                }
+//            }else if (a.category.equals("solar_category.upgrade")){
+//                if (minecraft.player.getPersistentData().getBoolean(a.child)){
+//                    addButton(new ItemStackButton(upgradingRecipesCategory.x+upgradingRecipesCount*25 -(int)Math.floor(((double)upgradingRecipesCount/6))*25*6,upgradingRecipesCategory.y + (int)Math.floor(((double)upgradingRecipesCount/6))*25,24,24,(button)->{
+//                        minecraft.setScreen(new InfusingRecipeScreen(a));
+//                    },a.output,1.5f,false));
+//                    upgradingRecipesCount++;
+//
+//                }
+//            }
+//
+//
+//
+//        }
+//        for (SolarSmeltingRecipe a :recipeSmelt){
+//            if (Helpers.hasPlayerUnlocked(Achievement.CRAFT_SOLAR_LENS, minecraft.player)){
+//                addButton(new ItemStackButton(smeltingCategory.x+smeltingRecipeCount*25 -(int)Math.floor(((double)smeltingRecipeCount/6))*25*6,smeltingCategory.y + (int)Math.floor(((double)smeltingRecipeCount/6))*25,24,24,(button)->{
+//                    minecraft.setScreen(new SmeltingRecipeScreen(a));
+//                },a.output,1.5f,false));
+//                smeltingRecipeCount++;
+//            }
+//        }
+//
+//        for (Multiblocks a : Multiblocks.ALL_STRUCTURES){
+//            Multiblock b = a.getM();
+//            if (Helpers.hasPlayerUnlocked(b.reqAchievement, minecraft.player)){
+//                addButton(new ItemStackButton(structures.x+structuresCount*25 - (int)Math.floor(((double)structuresCount/6))*25*6,structures.y + (int)Math.floor(((double)structuresCount/6))*25,24,24,(button)->{
+//                    minecraft.setScreen(new StructureScreen(b));
+//                },b.getMainBlock().asItem().getDefaultInstance(),1.5f,false));
+//                structuresCount++;
+//            }
+//        }
+//    }
 }

@@ -31,8 +31,6 @@
     "item": "solarforge:solar_mortar_block"
   },
   "time": 3000,
-  "requires": "solar_forge_progression_energy_generator_craft",
-  "category": "solar_category.magic_items",
-  "desc": "Powerful defensive structure which attacks mobs below it in 50 blocks radius.",
+  "fragment": "solar_mortar",
   "energy": 50000
 }

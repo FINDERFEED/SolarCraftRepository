@@ -31,7 +31,5 @@
     "item": "solarforge:solar_mana_amulet"
   },
   "time": 250,
-  "requires": "solar_forge_progression_solar_infuser_use",
-  "category": "solar_category.tools",
-  "desc": "Increases the mana regen by 2 per second when in your inventory (mana regen doesnt stack)"
+  "fragment": "solar_mana_amulet"
 }

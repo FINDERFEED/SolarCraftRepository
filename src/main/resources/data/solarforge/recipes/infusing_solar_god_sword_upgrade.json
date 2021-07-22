@@ -31,9 +31,7 @@
     "item": "solarforge:solar_god_sword"
   },
   "time": 500,
-  "requires": "solar_forge_progression_energy_generator_craft",
-  "category": "solar_category.upgrade",
-  "desc": "Upgrade for solar god sword",
+  "fragment": "solar_god_sword_upgrade",
   "tag": "yes",
   "energy" : 10000
 }

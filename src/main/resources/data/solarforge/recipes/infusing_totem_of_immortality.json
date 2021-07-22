@@ -31,8 +31,6 @@
     "item": "solarforge:totem_of_immortality"
   },
   "time": 2000,
-  "requires": "solar_forge_progression_energy_generator_craft",
-  "category": "solar_category.magic_items",
-  "desc": "Works like totem of undying but heals you for full hp and applies 20 seconds of invulnerability",
+  "fragment": "totem_of_immortality",
   "energy" : 25000
 }

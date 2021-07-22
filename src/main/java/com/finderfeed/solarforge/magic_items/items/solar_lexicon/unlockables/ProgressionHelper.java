@@ -20,6 +20,7 @@ import java.util.*;
 public class ProgressionHelper {
 
     public static Map<Item, InfusingRecipe> INFUSING_RECIPE_MAP = new HashMap<>();
+    public static Map<Item, InfusingRecipe> UPGRADES_INFUSING_RECIPE_MAP = new HashMap<>();
     public static Map<Item, SolarSmeltingRecipe> SMELTING_RECIPE_MAP = new HashMap<>();
     public static final String UNLOCK_PATTERN = "solar_forge_player_pattern";
     public static final String TAG_ELEMENT = "fragment";
@@ -142,6 +143,8 @@ public class ProgressionHelper {
         list.forEach((recipe)->{
             if (recipe.tag.equals("") && !INFUSING_RECIPE_MAP.containsKey(recipe.output.getItem())) {
                 INFUSING_RECIPE_MAP.put(recipe.output.getItem(),recipe);
+            }else if (!recipe.tag.equals("") && !UPGRADES_INFUSING_RECIPE_MAP.containsKey(recipe.output.getItem())){
+                UPGRADES_INFUSING_RECIPE_MAP.put(recipe.output.getItem(),recipe);
             }
         });
     }

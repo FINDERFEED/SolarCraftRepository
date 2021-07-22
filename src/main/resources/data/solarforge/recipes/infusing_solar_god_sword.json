@@ -31,8 +31,6 @@
     "item": "solarforge:solar_god_sword"
   },
   "time": 3000,
-  "requires": "solar_forge_progression_solar_lens_craft",
-  "category": "solar_category.tools",
-  "desc": "An upgradable sword with big magical power."
+  "requires": "solar_god_sword"
 
 }

@@ -31,8 +31,5 @@
     "item": "solarforge:solar_god_shield"
   },
   "time": 1500,
-  "requires": "solar_forge_progression_solar_lens_craft",
-  "category": "solar_category.magic_items",
-  "desc": "A shield with big magical power. When you are using it, it charges and then releases the blast that damages all mobs in 5 block radius."
-
+  "fragment": "solar_god_shield"
 }

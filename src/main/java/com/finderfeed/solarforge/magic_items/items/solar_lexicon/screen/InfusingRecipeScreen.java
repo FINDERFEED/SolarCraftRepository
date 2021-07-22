@@ -81,7 +81,7 @@ public class InfusingRecipeScreen extends Screen {
         drawCenteredString(matrices, minecraft.font,new TranslationTextComponent("solarforge.seconds"),relX+30,relY+120,0xffffff);
         drawCenteredString(matrices, minecraft.font,new StringTextComponent(recipe.infusingTime / 20 +" ").append(new TranslationTextComponent("solarforge.seconds2")),relX+30,relY+130,0xffffff);
 
-        Helpers.drawBoundedText(matrices,relX+10,relY+152,33,recipe.description);
+//        Helpers.drawBoundedText(matrices,relX+10,relY+152,33,recipe.child.getItemDescription().getString());
 
         super.render(matrices,mousex,mousey,partialTicks);
         minecraft.getTextureManager().bind(REQ_ENERGY);

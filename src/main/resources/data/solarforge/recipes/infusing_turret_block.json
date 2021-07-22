@@ -31,7 +31,5 @@
     "item": "solarforge:turret_block"
   },
   "time": 250,
-  "requires": "solar_forge_progression_solar_infuser_use",
-  "category": "solar_category.magic_items",
-  "desc": "Defensive structure. Initial damage: 5. Can be upgraded using charged qualadium ingots."
+  "fragment": "solar_turret"
 }
