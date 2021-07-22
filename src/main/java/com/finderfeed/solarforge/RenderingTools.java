@@ -1,5 +1,6 @@
 package com.finderfeed.solarforge;
 
+import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import com.mojang.blaze3d.matrix.MatrixStack;
 
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -12,6 +13,7 @@ import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.vector.Matrix4f;
@@ -128,5 +130,33 @@ public class RenderingTools {
             RenderSystem.clear(256, Minecraft.ON_OSX);
             Minecraft.getInstance().gameRenderer.renderItemInHand(matrixStack,Minecraft.getInstance().gameRenderer.getMainCamera(),partialTicks);
         }
+    }
+
+
+    private static ResourceLocation runeEnergyOverlay = new ResourceLocation("solarforge","textures/misc/runic_energy_bar.png");
+    public static void renderRuneEnergyOverlay(MatrixStack stack, int x, int y, RunicEnergy.Type type){
+        stack.pushPose();
+        stack.translate(x,y,0);
+        stack.scale(0.7f,0.7f,0.7f);
+
+        PlayerEntity playerEntity = ClientHelpers.getClientPlayer();
+        Minecraft.getInstance().getTextureManager().bind(runeEnergyOverlay);
+        AbstractGui.blit(stack,0,0,0,0,10,60,20,60);
+        float currentEnergy = RunicEnergy.getEnergy(playerEntity,type);
+//        float maxEnergy = playerEntity.getPersistentData().getFloat(RunicEnergy.MAX_ENERGY_TAG); //TODO:Update max energy on client
+        int tex = Math.round(55*(currentEnergy/100000));
+
+        stack.mulPose(Vector3f.ZN.rotationDegrees(180));
+        stack.translate(-10,-60,0);
+        AbstractGui.blit(stack,0,0,10,0,10,tex,20,60);
+        stack.popPose();
+        stack.pushPose();
+        stack.translate(x,y,0);
+
+        stack.scale(0.7f,0.7f,0.7f);
+
+        Minecraft.getInstance().getTextureManager().bind(new ResourceLocation("solarforge", "textures/misc/tile_energy_pylon_" + type.id + ".png"));
+        AbstractGui.blit(stack,-3,63,0,0,16,16,16,16);
+        stack.popPose();
     }
 }

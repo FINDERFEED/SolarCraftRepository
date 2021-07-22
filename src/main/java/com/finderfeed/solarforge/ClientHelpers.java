@@ -39,6 +39,7 @@ public class ClientHelpers {
 
 
     public static void updateClientRunicEnergyForPlayer(float amount, RunicEnergy.Type type){
+
         RunicEnergy.setEnergy(getClientPlayer(),amount,type);
     }
 

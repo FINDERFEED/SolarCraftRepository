@@ -1,6 +1,9 @@
 {
-  "parent": "block/cube_all",
-  "textures": {
-    "all": "solarforge:block/solar_ore"
+  "loader": "solarforge:progression_ore_loader",
+  "orig_model": {
+    "parent": "block/cube_all",
+    "textures": {
+      "all": "solarforge:block/solar_ore"
+    }
   }
 }

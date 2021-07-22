@@ -30,7 +30,7 @@ public class RuneEnergyPylonRenderer extends TileEntityRenderer<RuneEnergyPylonT
         if (tile.getEnergyType() != null) {
             IVertexBuilder vertex = buffer.getBuffer(RenderType.text(new ResourceLocation("solarforge", "textures/misc/tile_energy_pylon_" + tile.getEnergyType().id + ".png")));
             float time = (Minecraft.getInstance().level.getGameTime()+partialTicks);
-            for (int i = 0; i < 9; i ++) {
+            for (int i = 0; i < 8; i ++) {
                 matrices.pushPose();
 
                 matrices.translate(0.5, 0.5, 0.5f);

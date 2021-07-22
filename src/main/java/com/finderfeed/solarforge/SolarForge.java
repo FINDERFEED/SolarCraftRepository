@@ -9,8 +9,10 @@ import com.finderfeed.solarforge.capabilities.capability_mana.CapabilitySolarMan
 import com.finderfeed.solarforge.entities.VillagerSolarMaster;
 import com.finderfeed.solarforge.events.PlayerTickEvent;
 import com.finderfeed.solarforge.events.RenderEventsHandler;
+import com.finderfeed.solarforge.magic_items.blocks.SolarOreBlock;
 import com.finderfeed.solarforge.magic_items.blocks.infusing_table_things.*;
 import com.finderfeed.solarforge.magic_items.blocks.infusing_table_things.infusing_pool.InfusingPool;
+import com.finderfeed.solarforge.magic_items.items.ProgressionBlockItem;
 import com.finderfeed.solarforge.misc_things.ParticlesList;
 import com.finderfeed.solarforge.rendering.on_screen_rendering.TestRenderEvent;
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
@@ -116,7 +118,7 @@ public class SolarForge
             .noOcclusion()
             .strength(3,3)));
 
-    public  static  final  RegistryObject<Block> SOLAR_ORE = BLOCKS.register("solar_ores",()-> new OreBlock(AbstractBlock.Properties.of(Material.STONE)
+    public  static  final  RegistryObject<SolarOreBlock> SOLAR_ORE = BLOCKS.register("solar_ores",()-> new SolarOreBlock(AbstractBlock.Properties.of(Material.STONE)
             .sound(SoundType.ANCIENT_DEBRIS)
             .harvestTool(ToolType.PICKAXE)
             .harvestLevel(2)
@@ -138,7 +140,7 @@ public class SolarForge
     public static final RegistryObject<EntityType<MeteoriteProjectile>> METEORITE = ENTITY_TYPE_REGISTER.register("solar_forge_meteorite_projectile",()->EntityType.Builder.<MeteoriteProjectile>of(MeteoriteProjectile::new,EntityClassification.MISC).sized(5,5).build("solar_forge_meteorite_projectile"));
     public static  final RegistryObject<Item> TEST_ITEM = ITEMS.register("solar_shard",()-> new Item(new Item.Properties().rarity(Rarity.EPIC).tab(SOLAR_GROUP)));
     public static  final RegistryObject<Item> SOLAR_FORGE_ITEM = ITEMS.register("solar_forge",()-> new SolarForgeBlockItem(SOLAR_FORGE.get().getBlock(),new Item.Properties().rarity(Rarity.EPIC).tab(SOLAR_GROUP_BLOCKS).stacksTo(1)));
-    public static  final RegistryObject<Item> SOLAR_ORE_ITEM = ITEMS.register("solar_ores",()-> new BlockItem(SOLAR_ORE.get().getBlock(),new Item.Properties().rarity(Rarity.EPIC).tab(SOLAR_GROUP_BLOCKS)));
+    public static  final RegistryObject<Item> SOLAR_ORE_ITEM = ITEMS.register("solar_ores",()-> new ProgressionBlockItem(SOLAR_ORE.get().getBlock(),new Item.Properties().rarity(Rarity.EPIC).tab(SOLAR_GROUP_BLOCKS)));
     public static  final RegistryObject<Item> INFUSING_STAND_ITEM = ITEMS.register("solar_infuser",()-> new InfusingTableBlockItem(SOLAR_INFUSER.get().getBlock(),new Item.Properties().rarity(Rarity.EPIC).tab(SOLAR_GROUP_BLOCKS).stacksTo(1)));
     // Directly reference a log4j logger.
     public static final Logger LOGGER = LogManager.getLogger();

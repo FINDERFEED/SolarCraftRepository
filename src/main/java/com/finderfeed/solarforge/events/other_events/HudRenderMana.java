@@ -1,7 +1,10 @@
 package com.finderfeed.solarforge.events.other_events;
 
+import com.finderfeed.solarforge.RenderingTools;
 import com.finderfeed.solarforge.capabilities.capability_mana.CapabilitySolarMana;
+import com.finderfeed.solarforge.magic_items.blocks.infusing_table_things.SolarWandItem;
 import com.finderfeed.solarforge.misc_things.ManaConsumer;
+import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.AbstractGui;
 import net.minecraft.util.ResourceLocation;
@@ -42,6 +45,16 @@ public class HudRenderMana {
                 AbstractGui.blit(event.getMatrixStack(),0,height/2-30,100,0,27,27,38,180,185);
             }
 
+            if (mc.player.getMainHandItem().getItem() instanceof SolarWandItem){
+                int height = event.getWindow().getGuiScaledHeight();
+                int width = event.getWindow().getGuiScaledWidth();
+                RenderingTools.renderRuneEnergyOverlay(event.getMatrixStack(),2,height/2-43, RunicEnergy.Type.KELDA);
+                RenderingTools.renderRuneEnergyOverlay(event.getMatrixStack(),14,height/2-43, RunicEnergy.Type.ARDO);
+                RenderingTools.renderRuneEnergyOverlay(event.getMatrixStack(),26,height/2-43, RunicEnergy.Type.ZETA);
+                RenderingTools.renderRuneEnergyOverlay(event.getMatrixStack(),2,height/2+15, RunicEnergy.Type.FIRA);
+                RenderingTools.renderRuneEnergyOverlay(event.getMatrixStack(),14,height/2+15, RunicEnergy.Type.TERA);
+                RenderingTools.renderRuneEnergyOverlay(event.getMatrixStack(),26,height/2+15, RunicEnergy.Type.URBA);
+            }
         }
 
 

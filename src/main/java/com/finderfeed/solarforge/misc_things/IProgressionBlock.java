@@ -10,7 +10,7 @@ import net.minecraft.state.Property;
 
 public interface IProgressionBlock {
 
-    Property<Boolean> UNLOCKED = BooleanProperty.create("unlocked");
+
 
 
     Block getUnlockedBlock();

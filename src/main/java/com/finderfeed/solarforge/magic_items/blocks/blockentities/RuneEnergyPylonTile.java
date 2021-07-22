@@ -39,8 +39,9 @@ public class RuneEnergyPylonTile extends TileEntity implements ITickableTileEnti
             if (this.type == null){
                 this.type = RunicEnergy.Type.values()[level.random.nextInt(RunicEnergy.Type.values().length-1)];
             }
+
             if (currentEnergy+energyPerTick <= maxEnergy){
-                currentEnergy+=energyPerTick;
+                currentEnergy+=500;
             }else{
                 currentEnergy = maxEnergy;
             }

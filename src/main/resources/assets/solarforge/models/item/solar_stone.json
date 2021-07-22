@@ -1,3 +1,11 @@
 {
-  "parent": "solarforge:block/solar_stone"
+  "parent": "block/stone",
+  "overrides": [
+    {
+      "predicate": {
+        "solarforge:unlocked": 1
+      },
+      "model": "solarforge:item/solar_stone_unlocked"
+    }
+  ]
 }

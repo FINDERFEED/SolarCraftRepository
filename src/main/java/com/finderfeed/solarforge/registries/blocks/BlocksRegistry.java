@@ -25,7 +25,7 @@ public class BlocksRegistry {
             .requiresCorrectToolForDrops()
             .noOcclusion()
             .strength(3,3)));
-    public  static  final RegistryObject<Block> SOLAR_STONE = BLOCKS.register("solar_stone",()-> new Block(AbstractBlock.Properties.copy(Blocks.ANDESITE)));
+    public  static  final RegistryObject<SolarStoneBlock> SOLAR_STONE = BLOCKS.register("solar_stone",()-> new SolarStoneBlock(AbstractBlock.Properties.copy(Blocks.ANDESITE)));
     public  static  final RegistryObject<Block> SOLAR_STONE_CHISELED = BLOCKS.register("chiseled_solar_stone",()-> new Block(AbstractBlock.Properties.copy(Blocks.STONE)));
     public  static  final RegistryObject<Block> SOLAR_STONE_COLLUMN = BLOCKS.register("solar_stone_collumn",()-> new Block(AbstractBlock.Properties.copy(Blocks.STONE)));
     public  static  final RegistryObject<Block> SOLAR_STONE_BRICKS = BLOCKS.register("solar_stone_bricks",()-> new RotatedPillarBlock(AbstractBlock.Properties.copy(Blocks.STONE)));
