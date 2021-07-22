@@ -1,5 +1,6 @@
 package com.finderfeed.solarforge.misc_things;
 
+import com.finderfeed.solarforge.Helpers;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.text.StringTextComponent;
@@ -68,6 +69,7 @@ public class RunicEnergy {
         for (Type type : Type.values()){
             setEnergy(newP,getEnergy(oldP,type),type);
         }
+
     }
 
     public enum Type{

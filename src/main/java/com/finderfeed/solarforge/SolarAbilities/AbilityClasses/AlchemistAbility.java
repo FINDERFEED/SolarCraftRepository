@@ -1,11 +1,11 @@
-package com.finderfeed.solarforge.AbilityClasses;
+package com.finderfeed.solarforge.SolarAbilities.AbilityClasses;
 
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.world.server.ServerWorld;
 
 public class AlchemistAbility extends AbstractAbility{
-    public AlchemistAbility(String id, int manacost) {
-        super(id, manacost);
+    public AlchemistAbility() {
+        super("alchemist",0, new RunicEnergyCostConstructor());
     }
 
     @Override

@@ -290,6 +290,7 @@ public class Helpers {
     }
 
     public static void forceChunksReload(ServerPlayerEntity playerEntity){
+
         SolarForgePacketHandler.INSTANCE.sendTo(new ReloadChunks(),playerEntity.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
     }
     public static List<BlockPos> getBlockPositionsByDirection(Direction dir,BlockPos mainpos,int count){
@@ -319,6 +320,7 @@ public class Helpers {
 
     public static Direction getRandomHorizontalDirection(boolean exclude, Direction whatToExclude, Random rnd){
         Direction[] horizontal = {Direction.EAST,Direction.NORTH,Direction.SOUTH,Direction.WEST};
+
         if (exclude){
             Direction direction = horizontal[rnd.nextInt(4)];
             while (direction.equals(whatToExclude)){
@@ -346,6 +348,22 @@ public class Helpers {
     public static void triggerProgressionShader(PlayerEntity playerEntity){
         SolarForgePacketHandler.INSTANCE.sendTo(new TriggerProgressionShaderPacket(),
                 ((ServerPlayerEntity)playerEntity).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+    }
+
+    public static class HashMapConstructor<T,E>{
+        private Map<T,E> MAP = new HashMap<>();
+
+        public HashMapConstructor(){}
+
+        public HashMapConstructor<T,E> addEntry(T key,E entry){
+            MAP.put(key,entry);
+            return this;
+        }
+
+        public Map<T,E> build(){
+            return MAP;
+        }
+
     }
 
 }

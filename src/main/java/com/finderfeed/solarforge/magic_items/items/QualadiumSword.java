@@ -1,24 +1,17 @@
 package com.finderfeed.solarforge.magic_items.items;
 
-import com.finderfeed.solarforge.AbilityClasses.DisarmAbility;
 import com.finderfeed.solarforge.SolarForge;
-import com.finderfeed.solarforge.magic_items.item_tiers.SolarCraftToolTiers;
-import com.finderfeed.solarforge.registries.effects.EffectsRegister;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.IItemTier;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.SwordItem;
-import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.DamageSource;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;

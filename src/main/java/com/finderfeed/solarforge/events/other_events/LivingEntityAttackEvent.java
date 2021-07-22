@@ -59,6 +59,9 @@ public class LivingEntityAttackEvent {
             playernew.getPersistentData().putBoolean("solar_forge_can_player_use_alchemist",peorig.getPersistentData().getBoolean("solar_forge_can_player_use_alchemist"));
             RunicEnergy.handleCloneEvent(event);
         }
+        for (RunicEnergy.Type type : RunicEnergy.Type.values()){
+            Helpers.updateRunicEnergyOnClient(type,RunicEnergy.getEnergy(peorig,type),peorig);
+        }
         playernew.getPersistentData().putInt("solar_forge_ability_binded_1",peorig.getPersistentData().getInt("solar_forge_ability_binded_1"));
         playernew.getPersistentData().putInt("solar_forge_ability_binded_2",peorig.getPersistentData().getInt("solar_forge_ability_binded_2"));
         playernew.getPersistentData().putInt("solar_forge_ability_binded_3",peorig.getPersistentData().getInt("solar_forge_ability_binded_3"));

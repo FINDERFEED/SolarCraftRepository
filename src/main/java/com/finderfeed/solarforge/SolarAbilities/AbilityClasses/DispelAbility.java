@@ -1,17 +1,22 @@
-package com.finderfeed.solarforge.AbilityClasses;
+package com.finderfeed.solarforge.SolarAbilities.AbilityClasses;
 
+import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.world.server.ServerWorld;
 
 public class DispelAbility extends AbstractAbility{
-    public DispelAbility(String id, int manacost) {
-        super(id, manacost);
+    public DispelAbility() {
+        super("solar_dispel",400,new RunicEnergyCostConstructor()
+        .addRunicEnergy(RunicEnergy.Type.FIRA,350)
+        .addRunicEnergy(RunicEnergy.Type.ZETA,500)
+        .addRunicEnergy(RunicEnergy.Type.KELDA,100));
     }
 
     @Override
     public void cast(ServerPlayerEntity playerEntity, ServerWorld world) {
-        if (playerEntity.getPersistentData().getBoolean("solar_forge_can_player_use_"+id)) {
+        super.cast(playerEntity, world);
+        if (allowed) {
 
             Object[] arr =  playerEntity.getActiveEffects().toArray();
             for (int i = 0; i < arr.length; i++) {
@@ -19,7 +24,7 @@ public class DispelAbility extends AbstractAbility{
                     playerEntity.removeEffect(((EffectInstance)arr[i]).getEffect());
                 }
             }
-            super.cast(playerEntity, world);
+
         }
 
     }

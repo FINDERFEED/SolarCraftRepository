@@ -1,4 +1,4 @@
-package com.finderfeed.solarforge.AbilityClasses;
+package com.finderfeed.solarforge.SolarAbilities.AbilityClasses;
 
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.world.server.ServerWorld;

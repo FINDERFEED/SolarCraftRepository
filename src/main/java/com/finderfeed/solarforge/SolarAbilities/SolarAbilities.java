@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.SolarAbilities;
 
-import com.finderfeed.solarforge.AbilityClasses.*;
+import com.finderfeed.solarforge.SolarAbilities.AbilityClasses.*;
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.capabilities.capability_mana.CapabilitySolarMana;
 import net.minecraft.entity.Entity;
@@ -26,37 +26,37 @@ public class SolarAbilities {
 
     public static void castAbility(ServerWorld world, ServerPlayerEntity enti, int index) {
         if (!enti.isSpectator()) {
-
-                if (index == 1) {
-                    FireballAbility ability = new FireballAbility("fireball",50);
-                    ability.cast(enti,world);
-
-                } else if (index == 2) {
-                    LightningAbility ability = new LightningAbility("lightning",50);
-                    ability.cast(enti,world);
-
-                } else if (index == 3) {
-                    SolarStrikeAbility ability = new SolarStrikeAbility("solar_strike",1000);
-                    ability.cast(enti,world);
-
-                } else if (index == 4) {
-                    DisarmAbility ability = new DisarmAbility("solar_stun",300);
-                    ability.cast(enti,world);
-
-                } else if (index == 5) {
-                    MeteoriteAbility ability = new MeteoriteAbility("meteorite",500);
-                    ability.cast(enti,world);
-
-                } else if (index == 6){
-                    HealAbility ability = new HealAbility("solar_heal",250);
-                    ability.cast(enti,world);
-                }else if (index == 7){
-                    AlchemistAbility ability = new AlchemistAbility("alchemist",0);
-                    ability.cast(enti,world);
-                }else if (index == 8){
-                    DispelAbility ability = new DispelAbility("solar_dispel",400);
-                    ability.cast(enti,world);
-                }
+                Abilities.getAll()[index-1].getAbility().cast(enti,world);
+//                if (index == 1) {
+//                    FireballAbility ability = new FireballAbility();
+//                    ability.cast(enti,world);
+//
+//                } else if (index == 2) {
+//                    LightningAbility ability = new LightningAbility();
+//                    ability.cast(enti,world);
+//
+//                } else if (index == 3) {
+//                    SolarStrikeAbility ability = new SolarStrikeAbility();
+//                    ability.cast(enti,world);
+//
+//                } else if (index == 4) {
+//                    DisarmAbility ability = new DisarmAbility();
+//                    ability.cast(enti,world);
+//
+//                } else if (index == 5) {
+//                    MeteoriteAbility ability = new MeteoriteAbility();
+//                    ability.cast(enti,world);
+//
+//                } else if (index == 6){
+//                    HealAbility ability = new HealAbility();
+//                    ability.cast(enti,world);
+//                }else if (index == 7){
+//                    AlchemistAbility ability = new AlchemistAbility();
+//                    ability.cast(enti,world);
+//                }else if (index == 8){
+//                    DispelAbility ability = new DispelAbility();
+//                    ability.cast(enti,world);
+//                }
 
             //else{
 //                double mana = CapabilitySolarMana.getSolarMana(enti).orElseThrow(RuntimeException::new).getMana();
