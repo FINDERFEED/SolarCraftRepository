@@ -31,9 +31,7 @@
     "item": "solarforge:solar_furnace"
   },
   "time": 500,
-  "requires": "solar_forge_progression_energy_generator_craft",
-  "category": "solar_category.magic_items",
-  "desc": "Furnace that smelts items using solar energy. The smelting speed is 2 times faster than in regular furnace",
+  "fragment": "solar_furnace",
   "energy": 10000
 
 }

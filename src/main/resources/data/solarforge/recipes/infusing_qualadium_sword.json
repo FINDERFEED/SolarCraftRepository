@@ -31,7 +31,5 @@
     "item": "solarforge:qualadium_sword"
   },
   "time": 2000,
-  "requires": "solar_forge_progression_solar_lens_craft",
-  "category": "solar_category.tools",
-  "desc": "Upgraded illidium sword. Has higher chance to restore durability and restores 2 instead of 1. Ability: Disarms nearby mobs. Cooldown: 30."
+  "fragment": "qualadium_sword"
 }

@@ -31,7 +31,5 @@
     "item": "solarforge:medium_solar_reactor"
   },
   "time": 3000,
-  "requires": "solar_forge_progression_energy_generator_craft",
-  "category": "solar_category.materials",
-  "desc": "Upgraded version of the small core"
+  "fragment": "medium_solar_reactor"
 }

@@ -31,7 +31,5 @@
     "item": "solarforge:qualadium_pickaxe"
   },
   "time": 3000,
-  "requires": "solar_forge_progression_solar_lens_craft",
-  "category": "solar_category.tools",
-  "desc": "Upgraded version of illidium pickaxe. Each block will have a chance to drop a random small treasure."
+  "fragment": "qualadium_pickaxe"
 }

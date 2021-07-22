@@ -31,9 +31,7 @@
     "item": "solarforge:solar_crossbow"
   },
   "time": 5000,
-  "requires": "solar_forge_progression_energy_generator_craft",
-  "category": "solar_category.magic_items",
-  "desc": "Powerful ranged weapon. Damage: 0-120, when the damage is higher 30, projectile also causes an explosion on impact.",
+  "fragment": "solar_crossbow",
   "energy": 50000
 
 }

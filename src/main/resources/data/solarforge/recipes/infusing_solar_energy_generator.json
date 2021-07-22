@@ -31,8 +31,6 @@
     "item": "solarforge:solar_energy_generator"
   },
   "time": 1000,
-  "requires": "solar_forge_progression_solar_lens_craft",
-  "category": "solar_category.magic_items",
-  "desc": "Produces pure solar energy. Capacity:50000."
+  "fragment": "solar_energy_generator"
 
 }

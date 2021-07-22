@@ -31,9 +31,7 @@
     "item": "solarforge:radiant_chestplate"
   },
   "time": 1500,
-  "requires": "solar_forge_progression_energy_generator_craft",
-  "category": "solar_category.armor",
-  "desc": "Powerful chestplate that damages all mobs around the player and causes them to miss 17% of their attacks.",
+  "fragment": "radiant_cuirass",
   "energy": 15000
 
 }

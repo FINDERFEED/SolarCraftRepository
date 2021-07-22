@@ -1,5 +1,6 @@
 package com.finderfeed.solarforge.recipe_types;
 
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.AncientFragment;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import net.minecraft.item.ItemStack;
@@ -42,7 +43,7 @@ public class InfusingRecipeSerializer extends ForgeRegistryEntry<IRecipeSerializ
         Ingredient input9 = Ingredient.fromJson(inputElement9);
         ItemStack output = ShapedRecipe.itemFromJson(JSONUtils.getAsJsonObject(file, "result"));
         int infusingTime = JSONUtils.getAsInt(file, "time", 20);
-        String child = JSONUtils.getAsString(file,"requires");
+        AncientFragment child = AncientFragment.getFragmentByID(JSONUtils.getAsString(file,"fragment"));
         String category = JSONUtils.getAsString(file,"category");
         String desc = JSONUtils.getAsString(file,"desc");
         int reqEnergy = JSONUtils.getAsInt(file, "energy", 0);
@@ -65,7 +66,7 @@ public class InfusingRecipeSerializer extends ForgeRegistryEntry<IRecipeSerializ
         Ingredient input9 = Ingredient.fromNetwork(buf);
         ItemStack output = buf.readItem();
         int infusingTime = buf.readInt();
-        String child = buf.readUtf();
+        AncientFragment child = AncientFragment.getFragmentByID(buf.readUtf());
         String category = buf.readUtf();
         String desk = buf.readUtf();
         int reqEnergy = buf.readInt();
@@ -87,7 +88,7 @@ public class InfusingRecipeSerializer extends ForgeRegistryEntry<IRecipeSerializ
         recipeType.input9.toNetwork(buf);
         buf.writeItemStack(recipeType.output, true);
         buf.writeInt(recipeType.infusingTime);
-        buf.writeUtf(recipeType.child);
+        buf.writeUtf(recipeType.child.getId());
         buf.writeUtf(recipeType.category);
         buf.writeUtf(recipeType.description);
         buf.writeInt(recipeType.requriedEnergy);

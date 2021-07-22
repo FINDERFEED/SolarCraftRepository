@@ -31,7 +31,5 @@
     "item": "solarforge:block_boomerang"
   },
   "time": 500,
-  "requires": "solar_forge_progression_solar_infuser_create",
-  "category": "solar_category.tools",
-  "desc": "When you throw it, it takes a block in your offhand slot, places it on collision and then returns back to you."
+  "fragment": "block_boomerang"
 }

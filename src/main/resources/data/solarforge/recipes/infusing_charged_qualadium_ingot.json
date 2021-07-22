@@ -31,8 +31,6 @@
     "item": "solarforge:charged_qualadium_ingot"
   },
   "time": 250,
-  "requires": "solar_forge_progression_energy_generator_craft",
-  "category": "solar_category.materials",
-  "desc": "Pure solar energy can be infused into qualadium ingot to increase its magical properties.",
+  "fragment": "charged_qualadium_ingot"
   "energy": 5000
 }

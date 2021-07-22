@@ -31,7 +31,5 @@
     "item": "solarforge:illidium_sword"
   },
   "time": 1000,
-  "requires": "solar_forge_progression_solar_infuser_create",
-  "category": "solar_category.tools",
-  "desc": "This sword uses the power of the illidium ingots to mend itself and set enemies on fire"
+  "fragment": "illidium_sword"
 }

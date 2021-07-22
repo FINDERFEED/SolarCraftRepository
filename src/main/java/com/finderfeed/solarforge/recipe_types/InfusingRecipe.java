@@ -2,6 +2,7 @@ package com.finderfeed.solarforge.recipe_types;
 
 
 import com.finderfeed.solarforge.SolarForge;
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.AncientFragment;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
@@ -24,7 +25,7 @@ public class InfusingRecipe implements IRecipe<IInventory> {
     public final Ingredient input8;
     public final Ingredient input9;
     public final ItemStack output;
-    public final String child;
+    public final AncientFragment child;
     public final String category;
     public final String description;
     public final int infusingTime;
@@ -33,7 +34,7 @@ public class InfusingRecipe implements IRecipe<IInventory> {
     public final int count;
 
     public static final InfusingRecipeSerializer serializer = new InfusingRecipeSerializer();
-    public InfusingRecipe(ResourceLocation id, Ingredient input1, Ingredient input2, Ingredient input3, Ingredient input4, Ingredient input5, Ingredient input6, Ingredient input7,Ingredient input8,Ingredient input9, ItemStack output, int infusingTime,String child,String category,String description
+    public InfusingRecipe(ResourceLocation id, Ingredient input1, Ingredient input2, Ingredient input3, Ingredient input4, Ingredient input5, Ingredient input6, Ingredient input7,Ingredient input8,Ingredient input9, ItemStack output, int infusingTime,AncientFragment child,String category,String description
     ,int requriedEnergy,String tag,int count) {
         this.id = id;
         this.input1 = input1;

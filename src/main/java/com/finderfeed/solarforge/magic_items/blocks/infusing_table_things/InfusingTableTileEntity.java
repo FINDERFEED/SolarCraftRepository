@@ -4,6 +4,7 @@ package com.finderfeed.solarforge.magic_items.blocks.infusing_table_things;
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.magic_items.blocks.infusing_table_things.infusing_pool.InfusingPoolTileEntity;
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.ProgressionHelper;
 import com.finderfeed.solarforge.misc_things.*;
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
 import com.finderfeed.solarforge.packet_handler.TriggerToastPacket;
@@ -199,7 +200,7 @@ public class InfusingTableTileEntity extends LockableLootTileEntity implements I
     public void triggerCrafting(PlayerEntity playerEntity){
         Optional<InfusingRecipe> recipe = this.level.getRecipeManager().getRecipeFor(SolarForge.INFUSING_RECIPE_TYPE,(IInventory) this,level);
 
-        if (recipe.isPresent() && playerEntity.getPersistentData().getBoolean(recipe.get().child)) {
+        if (recipe.isPresent() && ProgressionHelper.doPlayerHasFragment(playerEntity,recipe.get().child)) {
 
                 if (!RECIPE_IN_PROGRESS) {
                     if (!playerEntity.getPersistentData().getBoolean(Helpers.PROGRESSION + Achievement.USE_SOLAR_INFUSER.getAchievementCode())) {

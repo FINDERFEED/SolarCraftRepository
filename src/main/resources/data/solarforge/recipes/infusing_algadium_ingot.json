@@ -31,7 +31,5 @@
     "item": "solarforge:algadium_ingot"
   },
   "time": 350,
-  "requires": "solar_forge_progression_solar_infuser_create",
-  "category": "solar_category.materials",
-  "desc": "Strong material that is often used in cores"
+  "fragment": "algadium_ingot"
 }

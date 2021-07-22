@@ -31,7 +31,5 @@
     "item": "solarforge:qualadium_hoe"
   },
   "time": 3000,
-  "requires": "solar_forge_progression_solar_lens_craft",
-  "category": "solar_category.tools",
-  "desc": "Upgraded version of illidium hoe. Also affects blocks around"
+  "fragment": "qualadium_hoe"
 }

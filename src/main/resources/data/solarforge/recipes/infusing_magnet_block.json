@@ -31,7 +31,5 @@
     "item": "solarforge:magnet_block"
   },
   "time": 500,
-  "requires": "solar_forge_progression_solar_infuser_create",
-  "category": "solar_category.magic_items",
-  "desc": "When powered by redstone, will pull all items in 10 block radius to it. If an inventory is placed below, will try to put items into it."
+  "fragment": "item_magnet"
 }

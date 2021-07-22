@@ -31,7 +31,5 @@
     "item": "solarforge:miner_item"
   },
   "time": 1000,
-  "requires": "solar_forge_progression_solar_infuser_create",
-  "category": "solar_category.tools",
-  "desc": "This pickaxe is unbreakable, but drains your mana on every block that you break. Can mine all ore vein at once"
+  "fragment": "illidium_pickaxe"
 }

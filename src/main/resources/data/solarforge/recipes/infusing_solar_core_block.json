@@ -31,9 +31,7 @@
     "item": "solarforge:solar_core_block"
   },
   "time": 5000,
-  "requires": "solar_forge_progression_energy_generator_craft",
-  "category": "solar_category.magic_items",
-  "desc": "This is where you can store your solar energy. Maximum capacity: 1000000.",
+  "fragment": "solar_core",
   "energy": 20000
 
 }

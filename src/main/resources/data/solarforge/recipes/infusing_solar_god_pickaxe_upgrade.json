@@ -31,9 +31,7 @@
     "item": "solarforge:solar_god_pickaxe"
   },
   "time": 500,
-  "requires": "solar_forge_progression_energy_generator_craft",
-  "category": "solar_category.upgrade",
-  "desc": "Upgrade for solar god pickaxe",
+  "fragment": "solar_god_pickaxe_upgrade",
   "tag": "yes",
   "energy" : 10000
 }
