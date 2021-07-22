@@ -140,7 +140,7 @@ public class SolarForge
     public static final RegistryObject<EntityType<MeteoriteProjectile>> METEORITE = ENTITY_TYPE_REGISTER.register("solar_forge_meteorite_projectile",()->EntityType.Builder.<MeteoriteProjectile>of(MeteoriteProjectile::new,EntityClassification.MISC).sized(5,5).build("solar_forge_meteorite_projectile"));
     public static  final RegistryObject<Item> TEST_ITEM = ITEMS.register("solar_shard",()-> new Item(new Item.Properties().rarity(Rarity.EPIC).tab(SOLAR_GROUP)));
     public static  final RegistryObject<Item> SOLAR_FORGE_ITEM = ITEMS.register("solar_forge",()-> new SolarForgeBlockItem(SOLAR_FORGE.get().getBlock(),new Item.Properties().rarity(Rarity.EPIC).tab(SOLAR_GROUP_BLOCKS).stacksTo(1)));
-    public static  final RegistryObject<Item> SOLAR_ORE_ITEM = ITEMS.register("solar_ores",()-> new ProgressionBlockItem(SOLAR_ORE.get().getBlock(),new Item.Properties().rarity(Rarity.EPIC).tab(SOLAR_GROUP_BLOCKS)));
+    public static  final RegistryObject<Item> SOLAR_ORE_ITEM = ITEMS.register("solar_ores",()-> new ProgressionBlockItem(SOLAR_ORE.get().getBlock(),new Item.Properties().tab(SOLAR_GROUP_BLOCKS)));
     public static  final RegistryObject<Item> INFUSING_STAND_ITEM = ITEMS.register("solar_infuser",()-> new InfusingTableBlockItem(SOLAR_INFUSER.get().getBlock(),new Item.Properties().rarity(Rarity.EPIC).tab(SOLAR_GROUP_BLOCKS).stacksTo(1)));
     // Directly reference a log4j logger.
     public static final Logger LOGGER = LogManager.getLogger();

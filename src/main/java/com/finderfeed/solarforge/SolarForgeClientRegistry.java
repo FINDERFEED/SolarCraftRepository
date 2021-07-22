@@ -85,6 +85,8 @@ public class SolarForgeClientRegistry {
         ClientRegistry.bindTileEntityRenderer(TileEntitiesRegistry.AURA_HEALER_TILE.get(), AuraHealerRenderer::new);
         ClientRegistry.bindTileEntityRenderer(TileEntitiesRegistry.RAY_TRAP_TILE_ENTITY.get(), RayTrapTileEntityRenderer::new);
 
+
+
         ScreenManager.register(Containers.SOLAR_FURNACE_CONTAINER.get(), SolarFurnaceScreen::new);
         ScreenManager.register(Containers.RUNIC_TABLE_CONTAINER.get(), RunicTableContainerScreen::new);
         ScreenManager.register(Containers.SOLAR_LEXICON_CONTAINER.get(), SolarLexiconContScreen::new);
@@ -98,7 +100,7 @@ public class SolarForgeClientRegistry {
                     return 0;
                 }
             });
-            ItemModelsProperties.register(ItemsRegister.SOLAR_STONE.get(),new ResourceLocation("solarforge","unlocked2"),(stack,world,living)->{
+            ItemModelsProperties.register(ItemsRegister.SOLAR_STONE.get(),new ResourceLocation("solarforge","unlocked"),(stack,world,living)->{
 
                 PlayerEntity playerEntity = Minecraft.getInstance().player;
                 if (playerEntity != null) {
@@ -107,10 +109,11 @@ public class SolarForgeClientRegistry {
                     return 0;
                 }
             });
-            ItemModelsProperties.register(SolarForge.SOLAR_ORE_ITEM.get(),new ResourceLocation("solarforge","unlocked3"),(stack,world,living)->{
+            ItemModelsProperties.register(SolarForge.SOLAR_ORE_ITEM.get(),new ResourceLocation("solarforge","unlocked"),(stack,world,living)->{
 
                 PlayerEntity playerEntity = Minecraft.getInstance().player;
                 if (playerEntity != null) {
+
                     return Helpers.hasPlayerUnlocked(SolarForge.SOLAR_ORE.get().getRequiredProgression(), Minecraft.getInstance().player) ? 1f : 0;
                 }else{
                     return 0;
