@@ -39,10 +39,8 @@ class RetainFragments{
     public static ArgumentBuilder<CommandSource,?> register(){
         return Commands.literal("fragments")
                 .requires(cs->cs.hasPermission(0))
-                .executes((cmd)->{
-
-                    return retainFragments(cmd.getSource());
-                });
+                .then(Commands.literal("retain").executes((cmd)->retainFragments(cmd.getSource())))
+                .then(Commands.literal("unlockall").executes((cmd)->unlockAllFragment(cmd.getSource())));
     }
 
     public static int retainFragments(CommandSource src) throws CommandSyntaxException {

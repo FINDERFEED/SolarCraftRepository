@@ -31,6 +31,6 @@
     "item": "solarforge:solar_god_sword"
   },
   "time": 3000,
-  "requires": "solar_god_sword"
+  "fragment": "solar_god_sword"
 
 }

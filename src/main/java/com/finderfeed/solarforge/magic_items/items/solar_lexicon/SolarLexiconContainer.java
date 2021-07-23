@@ -29,8 +29,9 @@ public class SolarLexiconContainer extends Container {
         int kolvo = 0;
         int row = 1;
         int id = 0;
+
         for (AncientFragment frag : AncientFragment.getAllFragments()){
-            if (kolvo > 9){
+            if (kolvo > 8){
                 kolvo = 0;
                 if (row < 3) {
                     row += 1;

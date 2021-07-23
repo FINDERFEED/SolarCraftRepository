@@ -1,5 +1,7 @@
 package com.finderfeed.solarforge.magic_items.blocks.blockentities;
 
+import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Achievement;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
 import com.finderfeed.solarforge.packet_handler.packets.UpdateTypeOnClientPacket;
@@ -9,6 +11,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraftforge.fml.network.PacketDistributor;
 
 
@@ -41,7 +44,7 @@ public class RuneEnergyPylonTile extends TileEntity implements ITickableTileEnti
             }
 
             if (currentEnergy+energyPerTick <= maxEnergy){
-                currentEnergy+=500;
+                currentEnergy+=energyPerTick;
             }else{
                 currentEnergy = maxEnergy;
             }
@@ -52,6 +55,11 @@ public class RuneEnergyPylonTile extends TileEntity implements ITickableTileEnti
                         new UpdateTypeOnClientPacket(worldPosition, type.id));
                 updateTick = 0;
             }
+
+            AxisAlignedBB box = new AxisAlignedBB(this.worldPosition.offset(-2,-2,-2),this.worldPosition.offset(2,2,2));
+            level.getEntitiesOfClass(PlayerEntity.class,box).forEach((player)->{
+                Helpers.fireProgressionEvent(player, Achievement.RUNE_ENERGY_DEPOSIT);
+            });
         }
 
 

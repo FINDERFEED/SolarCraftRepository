@@ -1,10 +1,13 @@
 package com.finderfeed.solarforge.magic_items.items.solar_lexicon.screen;
 
+import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.AncientFragment;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.RenderHelper;
@@ -13,6 +16,7 @@ import net.minecraft.client.renderer.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.texture.AtlasTexture;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
@@ -43,7 +47,15 @@ public class InformationScreen extends Screen {
         this.relX = (width/scale - 183)/2;
         this.relY = (height - 218*scale)/2/scale;
 
-
+        ItemStackButton button = new ItemStackButton(relX+180,relY+9,16,16,(buttons)->{
+            Minecraft.getInstance().setScreen(screen);
+        }, SolarForge.INFUSING_STAND_ITEM.get().getDefaultInstance(),1,false,(buttons,matrices,b,c)->{
+            renderTooltip(matrices,new StringTextComponent("Craft"),b,c);
+        });
+        if (screen != null){
+            addButton(button);
+        }
+        addButton(new ItemStackButton(relX+185,relY+190,12,12,(buttons)->{minecraft.setScreen(new SolarLexiconRecipesScreen());}, Items.CRAFTING_TABLE.getDefaultInstance(),0.7f,false));
         super.init();
     }
 
@@ -51,7 +63,13 @@ public class InformationScreen extends Screen {
     public void render(MatrixStack matrices, int mousex, int mousey, float partialTicks) {
         Minecraft.getInstance().getTextureManager().bind(LOC);
         blit(matrices,relX,relY,0,0,256,256);
-
+        drawString(matrices,Minecraft.getInstance().font,fragment.getTranslation(), relX+60,relY+35,0xffffff);
+        if (fragment.getType() == AncientFragment.Type.INFORMATION) {
+            Helpers.drawBoundedText(matrices, relX + 10, relY + 80, 28, fragment.getLore().getString());
+        }else{
+            Helpers.drawBoundedText(matrices, relX + 10, relY + 80, 28, fragment.getItemDescription().getString());
+        }
+        renderGuiItem(fragment.getIcon().getDefaultInstance(),relX+32,relY+32,Minecraft.getInstance().getItemRenderer().getModel(fragment.getIcon().getDefaultInstance(),null,null),1.5,1.5,1.5);
         super.render(matrices, mousex, mousey, partialTicks);
     }
 

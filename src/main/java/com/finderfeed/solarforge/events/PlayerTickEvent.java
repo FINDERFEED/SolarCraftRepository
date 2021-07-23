@@ -7,6 +7,8 @@ import com.finderfeed.solarforge.world_generation.features.FeaturesRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.registry.MutableRegistry;
 import net.minecraft.util.registry.Registry;
+import net.minecraft.world.Dimension;
+import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -27,6 +29,10 @@ public class PlayerTickEvent {
 
                 Helpers.fireProgressionEvent(entity,Achievement.FIND_INCINERATED_FOREST);
 
+            }
+
+            if (entity.level.dimension() == World.NETHER){
+                Helpers.fireProgressionEvent(entity,Achievement.ENTER_NETHER);
             }
         }
 

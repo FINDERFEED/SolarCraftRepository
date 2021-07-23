@@ -11,8 +11,8 @@ import java.util.List;
 public enum BookEntry {
     BEGINNING_INFO(tx("solar_category.beginning"),point(20,40),null,null),
     SOLAR_FORGE_BASICS(tx("solar_category.solar_forge"),point(210,40),Achievement.CRAFT_SOLAR_FORGE,null),
-    ARMOR(tx("solar_category.armor"),point(20,40),Achievement.CRAFT_SOLAR_INFUSER,null),
-    STRUCTURES(tx("solar_category.structures"),point(180,260),Achievement.CRAFT_SOLAR_INFUSER,null),
+    ARMOR(tx("solar_category.armor"),point(20,80),Achievement.CRAFT_SOLAR_INFUSER,null),
+    STRUCTURES(tx("solar_category.structures"),point(20,700),Achievement.CRAFT_SOLAR_INFUSER,null),
 
     BEGINNER(tx("solar_category.beginner"),point(20,220),Achievement.CRAFT_SOLAR_INFUSER,null),
     BEGINNER_ITEMS(tx("solar_category.beginner_items"),point(180,260),Achievement.CRAFT_SOLAR_INFUSER,BEGINNER),
@@ -26,7 +26,7 @@ public enum BookEntry {
     MASTER_ENERGY(tx("solar_category.master_energy"),point(180,260),Achievement.CRAFT_SOLAR_ENERGY_GENERATOR,MASTER),
     MASTER_MATERIALS(tx("solar_category.master_materials"),point(180,260),Achievement.CRAFT_SOLAR_ENERGY_GENERATOR,MASTER),
 
-    UPGRADES(tx("solar_category.upgrades"),point(180,40),Achievement.CRAFT_SOLAR_ENERGY_GENERATOR,null)
+    UPGRADES(tx("solar_category.upgrades"),point(300,40),Achievement.CRAFT_SOLAR_ENERGY_GENERATOR,null)
     ;
 
 

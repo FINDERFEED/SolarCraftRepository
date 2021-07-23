@@ -66,6 +66,10 @@ public class SolarLexiconScreen extends Screen implements IScrollable {
 //        this.relY = (this.height - height)/2;
     }
 
+    @Override
+    public boolean isPauseScreen() {
+        return false;
+    }
 
     @Override
     public void performScroll(int keyCode) {

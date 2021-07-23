@@ -5,6 +5,7 @@ import com.finderfeed.solarforge.capabilities.capability_mana.CapabilitySolarMan
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.server.ServerWorld;
 
 import java.util.HashMap;
@@ -35,6 +36,7 @@ public abstract class AbstractAbility {
                 RUNIC_ENERGY_COST.forEach((type,cost)->{
                     if (RunicEnergy.getEnergy(entity,type) < cost){
                         allowed = false;
+                        entity.sendMessage(new StringTextComponent("Not enough rune energy: "+ type.id.toUpperCase()),entity.getUUID());
                     }
                 });
                 if (mana < manacost){

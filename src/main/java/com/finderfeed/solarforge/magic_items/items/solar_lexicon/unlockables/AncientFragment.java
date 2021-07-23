@@ -14,13 +14,13 @@ import java.util.*;
 public enum AncientFragment {
 
     RUNIC_TABLE(tx("solar_fragment.runic_table"),"runic_table",null,BookEntry.BEGINNING_INFO, ItemsRegister.RUNIC_TABLE.get(),tx("runic_table.lore"),true),
-    FRAGMENT(tx("solar_fragment.fragment"),"fragment",null,BookEntry.BEGINNING_INFO, ItemsRegister.SOLAR_LEXICON.get(),tx("fragment.lore"),false),
+    FRAGMENT(tx("solar_fragment.fragment"),"fragment",null,BookEntry.BEGINNING_INFO, ItemsRegister.INFO_FRAGMENT.get(),tx("fragment.lore"),false),
     LEXICON(tx("solar_fragment.lexicon"),"lexicon",null,BookEntry.BEGINNING_INFO, ItemsRegister.SOLAR_LEXICON.get(),tx("lexicon.lore"),false),
     WAND(tx("solar_fragment.wand"),"wand",Achievement.RUNE_ENERGY_DEPOSIT,BookEntry.BEGINNING_INFO, ItemsRegister.SOLAR_WAND.get(),tx("wand.lore"),false),
     SOLAR_DUST(tx("solar_fragment.solar_dust"),"solar_dust",Achievement.CRAFT_SOLAR_FORGE,BookEntry.SOLAR_FORGE_BASICS, ItemsRegister.SOLAR_DUST.get(),tx("solar_dust.lore"),true),
     ENERGY_DUST(tx("solar_fragment.energy_dust"),"energy_dust",null,BookEntry.SOLAR_FORGE_BASICS, ItemsRegister.ENERGY_DUST.get(),tx("energy_dust.lore"),true),
-    SOLAR_INFUSER(tx("solar_fragment.solar_forge"),"solar_forge",Achievement.FIND_SOLAR_STONE,BookEntry.SOLAR_FORGE_BASICS, SolarForge.INFUSING_STAND_ITEM.get(),tx("solar_forge.lore"),true),
-    SOLAR_FORGE(tx("solar_fragment.solar_forge"),"solar_forge",Achievement.RUNE_ENERGY_CLAIM,BookEntry.SOLAR_FORGE_BASICS, SolarForge.SOLAR_FORGE_ITEM.get(),tx("solar_forge.lore"),true),
+    SOLAR_INFUSER(tx("solar_fragment.solar_infuser"),"solar_infuser",Achievement.FIND_SOLAR_STONE,BookEntry.SOLAR_FORGE_BASICS, SolarForge.INFUSING_STAND_ITEM.get(),tx("solar_infuser.lore"),true),
+    SOLAR_FORGE(tx("solar_fragment.solar_forge"),"solar_forge",Achievement.ENTER_NETHER,BookEntry.SOLAR_FORGE_BASICS, SolarForge.SOLAR_FORGE_ITEM.get(),tx("solar_forge.lore"),true),
     SOLAR_HELMET(tx("solar_fragment.solar_helmet"),"solar_helmet",Achievement.CRAFT_SOLAR_INFUSER,BookEntry.ARMOR,ItemsRegister.SOLAR_HELMET.get().getDefaultInstance(),tx("solar_helmet.lore"), SolarForge.INFUSING_RECIPE_TYPE,true),
     SOLAR_CHESTPLATE(tx("solar_fragment.solar_chestplate"),"solar_chestplate",Achievement.CRAFT_SOLAR_INFUSER,BookEntry.ARMOR,ItemsRegister.SOLAR_CHESTPLATE.get().getDefaultInstance(),tx("solar_chestplate.lore"), SolarForge.INFUSING_RECIPE_TYPE,true),
     SOLAR_LEGGINS(tx("solar_fragment.solar_leggings"),"solar_leggings",Achievement.CRAFT_SOLAR_INFUSER,BookEntry.ARMOR,ItemsRegister.SOLAR_LEGGINS.get().getDefaultInstance(),tx("solar_leggings.lore"), SolarForge.INFUSING_RECIPE_TYPE,true),
@@ -33,7 +33,7 @@ public enum AncientFragment {
 
     SMALL_SOLAR_REACTOR(tx("solar_fragment.small_solar_reactor"),"small_solar_reactor",Achievement.CRAFT_SOLAR_INFUSER,BookEntry.BEGINNER_ITEMS,ItemsRegister.SMALL_SOLAR_REACTOR.get().getDefaultInstance(),tx("small_solar_reactor.lore"), SolarForge.INFUSING_RECIPE_TYPE,true),
     ILLIDIUM_INGOT(tx("solar_fragment.illidium_ingot"),"illidium_ingot",Achievement.CRAFT_SOLAR_INFUSER,BookEntry.BEGINNER_ITEMS,ItemsRegister.ILLIDIUM_INGOT.get().getDefaultInstance(),tx("illidium_ingot.lore"), SolarForge.INFUSING_RECIPE_TYPE,true),
-    ALGADIUM_INGOT(tx("solar_fragment.algadium_ingot"),"algadium_ingot",Achievement.CRAFT_SOLAR_INFUSER,BookEntry.BEGINNER_ITEMS,ItemsRegister.SMALL_SOLAR_REACTOR.get().getDefaultInstance(),tx("algadium_ingot.lore"), SolarForge.INFUSING_RECIPE_TYPE,true),
+    ALGADIUM_INGOT(tx("solar_fragment.algadium_ingot"),"algadium_ingot",Achievement.CRAFT_SOLAR_INFUSER,BookEntry.BEGINNER_ITEMS,ItemsRegister.ALGADIUM_INGOT.get().getDefaultInstance(),tx("algadium_ingot.lore"), SolarForge.INFUSING_RECIPE_TYPE,true),
     BLOCK_BOOMERANG(tx("solar_fragment.block_boomerang"),"block_boomerang",Achievement.CRAFT_SOLAR_INFUSER,BookEntry.BEGINNER_ITEMS,ItemsRegister.BLOCK_BOOMERANG.get().getDefaultInstance(),tx("block_boomerang.lore"), SolarForge.INFUSING_RECIPE_TYPE,true),
     ILLIDIUM_SWORD(tx("solar_fragment.illidium_sword"),"illidium_sword",Achievement.CRAFT_SOLAR_INFUSER,BookEntry.BEGINNER_ITEMS,ItemsRegister.ILLIDIUM_SWORD.get().getDefaultInstance(),tx("illidium_sword.lore"), SolarForge.INFUSING_RECIPE_TYPE,true),
     ILLIDIUM_AXE(tx("solar_fragment.illidium_axe"),"illidium_axe",Achievement.CRAFT_SOLAR_INFUSER,BookEntry.BEGINNER_ITEMS,ItemsRegister.ILLIDIUM_AXE.get().getDefaultInstance(),tx("illidium_axe.lore"), SolarForge.INFUSING_RECIPE_TYPE,true),
@@ -74,8 +74,8 @@ public enum AncientFragment {
     SOLAR_CROSSBOW(tx("solar_fragment.solar_crossbow"),"solar_crossbow",Achievement.CRAFT_SOLAR_ENERGY_GENERATOR,BookEntry.MASTER_ITEMS,ItemsRegister.ULTRA_CROSSBOW.get().getDefaultInstance(),tx("solar_crossbow.lore"), SolarForge.INFUSING_RECIPE_TYPE,true),
 
 
-    AURA_HEALER_STRUCTURE(tx("solar_fragment.aura_healer"),"aura_healer",Achievement.USE_SOLAR_INFUSER,BookEntry.STRUCTURES,Multiblocks.AURA_HEALER,true),
-    SOLAR_MORTAR_STRUCTURE(tx("solar_fragment.solar_mortar"),"solar_mortar",SOLAR_MORTAR.neededProgression,BookEntry.STRUCTURES,Multiblocks.SOLAR_MORTAR,true),
+    AURA_HEALER_STRUCTURE(tx("solar_fragment.aura_healer_structure"),"aura_healer_structure",Achievement.USE_SOLAR_INFUSER,BookEntry.STRUCTURES,Multiblocks.AURA_HEALER,true),
+    SOLAR_MORTAR_STRUCTURE(tx("solar_fragment.solar_mortar_structure"),"solar_mortar_structure",SOLAR_MORTAR.neededProgression,BookEntry.STRUCTURES,Multiblocks.SOLAR_MORTAR,true),
     SOLAR_INFUSER_STRUCTURE(tx("solar_fragment.solar_infuser_structure"),"solar_infuser_structure",Achievement.CRAFT_SOLAR_INFUSER,BookEntry.STRUCTURES,Multiblocks.INFUSER,true),
     SOLAR_CORE_STRUCTURE(tx("solar_fragment.solar_core_structure"),"solar_core_structure",SOLAR_CORE.neededProgression,BookEntry.STRUCTURES,Multiblocks.SOLAR_CORE,true),
     SOLAR_ENERGY_GENERATOR_STRUCTURE(tx("solar_fragment.solar_energy_generator_structure"),"solar_energy_generator_structure",SOLAR_ENERGY_GENERATOR.neededProgression,BookEntry.STRUCTURES,Multiblocks.SOLAR_ENERGY_GENERATOR,true),

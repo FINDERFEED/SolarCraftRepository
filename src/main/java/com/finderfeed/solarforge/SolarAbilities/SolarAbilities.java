@@ -1,8 +1,10 @@
 package com.finderfeed.solarforge.SolarAbilities;
 
+import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.SolarAbilities.AbilityClasses.*;
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.capabilities.capability_mana.CapabilitySolarMana;
+import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -27,6 +29,9 @@ public class SolarAbilities {
     public static void castAbility(ServerWorld world, ServerPlayerEntity enti, int index) {
         if (!enti.isSpectator()) {
                 Abilities.getAll()[index-1].getAbility().cast(enti,world);
+                for (RunicEnergy.Type type : RunicEnergy.Type.values()){
+                    Helpers.updateRunicEnergyOnClient(type,RunicEnergy.getEnergy(enti,type),enti);
+                }
 //                if (index == 1) {
 //                    FireballAbility ability = new FireballAbility();
 //                    ability.cast(enti,world);

@@ -8,6 +8,7 @@ import com.finderfeed.solarforge.magic_items.blocks.blockitems.TurretBlockItem;
 import com.finderfeed.solarforge.magic_items.blocks.blockitems.UldoradiumOreBlockitem;
 import com.finderfeed.solarforge.magic_items.item_tiers.SolarCraftToolTiers;
 import com.finderfeed.solarforge.magic_items.items.*;
+import com.finderfeed.solarforge.magic_items.items.isters.EnergyPylonISTER;
 import com.finderfeed.solarforge.magic_items.items.isters.ShieldOfSolarGodISTER;
 import com.finderfeed.solarforge.magic_items.items.solar_disc_gun.SolarDiscGunItem;
 import com.finderfeed.solarforge.magic_items.items.vein_miner.VeinMiner;
@@ -117,7 +118,7 @@ public class ItemsRegister {
     public static final RegistryObject<Item> RUNIC_LOG = ITEMS.register("runic_log",()->new BlockItem(BlocksRegistry.RUNIC_LOG.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
     public static final RegistryObject<Item> RUNIC_PLANKS = ITEMS.register("runic_planks",()->new BlockItem(BlocksRegistry.RUNIC_PLANKS.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
 
-    public static final RegistryObject<Item> RUNE_ENERGY_PYLON = ITEMS.register("rune_energy_pylon",()->new BlockItem(BlocksRegistry.RUNE_ENERGY_PYLON.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
+    public static final RegistryObject<Item> RUNE_ENERGY_PYLON = ITEMS.register("rune_energy_pylon",()->new BlockItem(BlocksRegistry.RUNE_ENERGY_PYLON.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS).setISTER(()->EnergyPylonISTER::new)));
 
 
     //runes

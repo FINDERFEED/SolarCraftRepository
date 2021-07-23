@@ -13,6 +13,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
@@ -50,12 +51,13 @@ public class AncientFragmentItem extends Item {
     public void appendHoverText(ItemStack stack, @Nullable World level, List<ITextComponent> texts, ITooltipFlag p_77624_4_) {
         CompoundNBT nbt = stack.getTagElement(ProgressionHelper.TAG_ELEMENT);
         if (nbt == null){
-            texts.add(new TranslationTextComponent("ancient_frag.no_tag"));
+            texts.add(new TranslationTextComponent("ancient_frag.no_tag").withStyle(TextFormatting.GOLD));
         }else{
             AncientFragment frag = AncientFragment.getFragmentByID(nbt.getString(ProgressionHelper.FRAG_ID));
             if (frag != null){
-                texts.add(frag.getTranslation());
+                texts.add(new TranslationTextComponent("ancient_frag.fragment_active").append(frag.getTranslation().withStyle(TextFormatting.GOLD)));
             }
+            texts.add(new TranslationTextComponent("ancient_frag.has_tag").withStyle(TextFormatting.GOLD));
         }
 
         super.appendHoverText(stack, level, texts, p_77624_4_);

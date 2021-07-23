@@ -22,7 +22,7 @@ public class RunicEnergy {
         CompoundNBT nbt = playerEntity.getPersistentData();
         float maxEnergy = nbt.getFloat(MAX_ENERGY_TAG);
         if (maxEnergy == 0){
-            nbt.putInt(MAX_ENERGY_TAG,100000);
+            nbt.putInt(MAX_ENERGY_TAG,10000);
             maxEnergy = nbt.getFloat(MAX_ENERGY_TAG);
         }
 

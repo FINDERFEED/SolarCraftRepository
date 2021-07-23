@@ -144,7 +144,7 @@ public class RenderingTools {
         AbstractGui.blit(stack,0,0,0,0,10,60,20,60);
         float currentEnergy = RunicEnergy.getEnergy(playerEntity,type);
 //        float maxEnergy = playerEntity.getPersistentData().getFloat(RunicEnergy.MAX_ENERGY_TAG); //TODO:Update max energy on client
-        int tex = Math.round(50*(currentEnergy/100000));
+        int tex = Math.round(50*(currentEnergy/10000));
 
         stack.mulPose(Vector3f.ZN.rotationDegrees(180));
         stack.translate(-10,-55,0);

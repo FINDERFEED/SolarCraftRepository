@@ -31,6 +31,6 @@
     "item": "solarforge:charged_qualadium_ingot"
   },
   "time": 250,
-  "fragment": "charged_qualadium_ingot"
+  "fragment": "charged_qualadium_ingot",
   "energy": 5000
 }
