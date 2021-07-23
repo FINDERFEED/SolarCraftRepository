@@ -58,6 +58,10 @@ public class ProgressionHelper {
         pe.getPersistentData().putBoolean(Helpers.FRAGMENT+frag.getId(),true);
     }
 
+    public static void revokePlayerFragment(AncientFragment frag,PlayerEntity pe){
+        pe.getPersistentData().putBoolean(Helpers.FRAGMENT+frag.getId(),false);
+    }
+
     public static void applyTagToFragment(ItemStack stack,PlayerEntity pe){
         if (stack.getTagElement(TAG_ELEMENT) == null){
             AncientFragment rndFragment = getRandomUnlockableFragment(pe);

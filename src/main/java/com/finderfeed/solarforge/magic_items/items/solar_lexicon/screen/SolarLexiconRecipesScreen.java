@@ -191,11 +191,11 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
 
                             addStructureButton(fragment.getStructure().getM(),
                                     relX + entry.getPlaceInBook().x + (i % 6) * 25,
-                                    relY + entry.getPlaceInBook().y + (int) Math.floor((float) i / 6));
+                                    relY + entry.getPlaceInBook().y + (int) Math.floor((float) i / 6),fragment);
                         } else {
                             addStructureButton(fragment.getStructure().getM(),
                                     relX + parent.getPlaceInBook().x + 10 + (i % 6) * 25 + BookEntry.ENTRY_TREE.get(parent).indexOf(entry) * 200,
-                                    relY + parent.getPlaceInBook().y + 10 + (int) Math.floor((float) i / 6));
+                                    relY + parent.getPlaceInBook().y + 10 + (int) Math.floor((float) i / 6),fragment);
                         }
                     }else if (fragment.getType() == AncientFragment.Type.UPGRADE) {
                         BookEntry parent = entry.getParent();
@@ -247,11 +247,11 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
         }));
     }
 
-    public void addStructureButton(Multiblock structure,int x , int y){
+    public void addStructureButton(Multiblock structure,int x , int y,AncientFragment fragment){
         addButton(new ItemStackButton(x,y,24,24,(button)->{
             minecraft.setScreen(new StructureScreen(structure));
         },structure.getMainBlock().asItem().getDefaultInstance(),1.5f,false, (button,matrices,mx,my)->{
-            renderTooltip(matrices,new StringTextComponent(structure.name),mx,my);
+            renderTooltip(matrices,fragment.getTranslation(),mx,my);
         }));
     }
 

@@ -26,7 +26,7 @@ public enum BookEntry {
     MASTER_ENERGY(tx("solar_category.master_energy"),point(180,260),Achievement.CRAFT_SOLAR_ENERGY_GENERATOR,MASTER),
     MASTER_MATERIALS(tx("solar_category.master_materials"),point(180,260),Achievement.CRAFT_SOLAR_ENERGY_GENERATOR,MASTER),
 
-    UPGRADES(tx("solar_category.upgrades"),point(300,40),Achievement.CRAFT_SOLAR_ENERGY_GENERATOR,null)
+    UPGRADES(tx("solar_category.upgrades"),point(210,80),Achievement.CRAFT_SOLAR_ENERGY_GENERATOR,null)
     ;
 
 

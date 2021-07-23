@@ -194,7 +194,7 @@
   "solar_fragment.energy_dust": "Energy dust",
   "energy_dust.lore": "A good powder that can be used as a catalyst in most crafts. Can be obtained through Sun-flowers in desert.",
   "solar_fragment.solar_forge": "Solar Forge",
-  "solar_forge.lore": "A machinery that ancient civilizations used to produce raw solar energy. Gives its owner the power to destroy down mountains.",
+  "solar_forge.lore": "A machinery that ancient civilizations used to produce raw solar energy. Gives its owner the power to destroy mountains.",
   "solar_fragment.solar_helmet": "Solar Helmet",
   "solar_helmet.lore": "A good set of armor, better than netherite.",
   "solar_fragment.solar_chestplate": "Solar chestplate",
@@ -212,7 +212,7 @@
   "solar_fragment.solar_turret": "Solar turret",
   "solar_turret.lore": "Basic defensive structure that can be upgraded using charged qualadium ingots. Base damage: 5.",
   "solar_fragment.mana_regen_amulet": "Mana Regeneration Amulet",
-  "mana_regen_amulet.lore": "If you need more mana then this could provide you extra 2 mana regen per second while in youw inventory(does not stack).",
+  "mana_regen_amulet.lore": "If you need more mana then this could provide you extra 2 mana regen per second while in your inventory(does not stack).",
   "solar_fragment.small_solar_reactor": "Small solar core",
   "small_solar_reactor.lore": "Can be used in some items that doesnt require a lot of solar energy to function.",
   "solar_fragment.illidium_ingot": "Illidium ingot",
@@ -262,7 +262,7 @@
   "solar_fragment.qualadium_ingot": "Qualadium ingot",
   "qualadium_ingot.lore": "A powerful combination of algadium and illidium.",
   "solar_fragment.solar_core": "Solar core",
-  "solar_core.lore": "Too much solar energy? This is where you can store it! Maximum energy: 1000000",
+  "solar_core.lore": "Too much solar energy? This is where you can store it! Maximum energy: 1000000. Be careful - all energy is lost when broken. Needs structure to function.",
   "solar_fragment.solar_energy_repeater": "Solar energy repeater",
   "solar_energy_repeater.lore": "Can be used to transfer solar energy.",
   "solar_fragment.medium_solar_reactor": "Medium solar core",
@@ -305,7 +305,11 @@
   "block.solarforge.runic_leaves": "Runic leaves",
   "block.solarforge.runic_log": "Runic log",
   "block.solarforge.runic_planks": "Runic planks",
-  "itemGroup.solar_forge_group_fragments": "Fragments"
+  "itemGroup.solar_forge_group_fragments": "Fragments",
+  "item.solarforge.ancient_fragment": "Ancient fragment",
+  "ach.rune_energy_claim": "Rune Energy",
+  "ach.rune_energy_deposit": "Runic Energy Pylon",
+  "ach.solar_rune": "Runes"
 
 
 

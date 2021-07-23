@@ -55,7 +55,7 @@ public class InformationScreen extends Screen {
         if (screen != null){
             addButton(button);
         }
-        addButton(new ItemStackButton(relX+185,relY+190,12,12,(buttons)->{minecraft.setScreen(new SolarLexiconRecipesScreen());}, Items.CRAFTING_TABLE.getDefaultInstance(),0.7f,false));
+        addButton(new ItemStackButton(relX+185,relY+172,12,12,(buttons)->{minecraft.setScreen(new SolarLexiconRecipesScreen());}, Items.CRAFTING_TABLE.getDefaultInstance(),0.7f,false));
         super.init();
     }
 

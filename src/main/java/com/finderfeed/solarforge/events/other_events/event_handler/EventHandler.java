@@ -11,6 +11,7 @@ import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.Pro
 import com.finderfeed.solarforge.registries.items.ItemsRegister;
 import com.finderfeed.solarforge.world_generation.features.FeaturesRegistry;
 import net.minecraft.block.Blocks;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -26,6 +27,7 @@ import net.minecraft.world.gen.GenerationStage;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
+import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import org.apache.logging.log4j.core.tools.picocli.CommandLine;
@@ -57,14 +59,6 @@ public class EventHandler {
             Helpers.updateProgression((ServerPlayerEntity)playerEntity );
             Helpers.forceChunksReload((ServerPlayerEntity) playerEntity);
             Helpers.triggerProgressionShader(playerEntity);
-
-//            if (ach.equals(Achievement.RUNE_ENERGY_DEPOSIT)){
-//                ItemStack frag = ItemsRegister.INFO_FRAGMENT.get().getDefaultInstance();
-//                ProgressionHelper.applyTagToFragment(frag, AncientFragment.WAND);
-//                ItemEntity entity = new ItemEntity(playerEntity.level,playerEntity.getX(),playerEntity.getY()+0.3f,playerEntity.getZ(),frag);
-//                ProgressionHelper.givePlayerFragment(AncientFragment.WAND,playerEntity);
-//                playerEntity.level.addFreshEntity(entity);
-//            }
         }
 
     }
@@ -79,6 +73,24 @@ public class EventHandler {
             }
         }
     }
+
+    @SubscribeEvent
+    public static void cancelCrafting2(BlockEvent.EntityPlaceEvent event){
+        Entity entity = event.getEntity();
+        if (entity instanceof  PlayerEntity){
+            PlayerEntity playerEntity = (PlayerEntity) entity;
+            if (!playerEntity.isCreative()) {
+                if (event.getPlacedBlock().is(SolarForge.SOLAR_FORGE.get()) && !ProgressionHelper.doPlayerHasFragment(playerEntity, AncientFragment.SOLAR_FORGE)) {
+                    event.setCanceled(true);
+
+                } else if (event.getPlacedBlock().is(SolarForge.SOLAR_INFUSER.get()) && !ProgressionHelper.doPlayerHasFragment(playerEntity, AncientFragment.SOLAR_INFUSER)) {
+                    event.setCanceled(true);
+                }
+            }
+        }
+    }
+
+
     public static void deleteSolarForge(PlayerEntity playerEntity){
         int count = playerEntity.inventory.countItem(SolarForge.SOLAR_FORGE_ITEM.get());
 
@@ -122,4 +134,7 @@ public class EventHandler {
     public static ItemEntity createItemEntity(PlayerEntity playerEntity,ItemStack stack){
         return new ItemEntity(playerEntity.level,playerEntity.getX(),playerEntity.getY(),playerEntity.getZ(),stack);
     }
+
+
+
 }

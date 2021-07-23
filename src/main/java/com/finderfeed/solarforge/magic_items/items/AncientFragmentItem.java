@@ -55,7 +55,7 @@ public class AncientFragmentItem extends Item {
         }else{
             AncientFragment frag = AncientFragment.getFragmentByID(nbt.getString(ProgressionHelper.FRAG_ID));
             if (frag != null){
-                texts.add(new TranslationTextComponent("ancient_frag.fragment_active").append(frag.getTranslation().withStyle(TextFormatting.GOLD)));
+                texts.add(new TranslationTextComponent("ancient_frag.fragment_active").withStyle(TextFormatting.GOLD).append(frag.getTranslation()));
             }
             texts.add(new TranslationTextComponent("ancient_frag.has_tag").withStyle(TextFormatting.GOLD));
         }

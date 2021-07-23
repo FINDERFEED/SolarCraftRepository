@@ -67,6 +67,8 @@ public class SolarForgeBlock extends Block {
         return super.use(state, world, pos, user, hand, rayTraceResult);
     }
 
+
+
     @Override
     public boolean hasTileEntity(BlockState state){
         return true;

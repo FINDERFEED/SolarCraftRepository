@@ -40,7 +40,8 @@ class RetainFragments{
         return Commands.literal("fragments")
                 .requires(cs->cs.hasPermission(0))
                 .then(Commands.literal("retain").executes((cmd)->retainFragments(cmd.getSource())))
-                .then(Commands.literal("unlockall").executes((cmd)->unlockAllFragment(cmd.getSource())));
+                .then(Commands.literal("unlockall").executes((cmd)->unlockAllFragments(cmd.getSource())))
+                .then(Commands.literal("refresh").executes((cmd)->refreshFragments(cmd.getSource())));
     }
 
     public static int retainFragments(CommandSource src) throws CommandSyntaxException {
@@ -52,6 +53,21 @@ class RetainFragments{
                 ItemEntity entity = new ItemEntity(playerEntity.level,playerEntity.getX(),playerEntity.getY()+0.3f,playerEntity.getZ(),frag);
                 playerEntity.getLevel().addFreshEntity(entity);
             }
+        }
+        return 0;
+    }
+
+    public static int unlockAllFragments(CommandSource src) throws CommandSyntaxException {
+        ServerPlayerEntity playerEntity  = src.getPlayerOrException();
+        for (AncientFragment fragment : AncientFragment.getAllFragments()){
+            ProgressionHelper.givePlayerFragment(fragment,playerEntity);
+        }
+        return 0;
+    }
+    public static int refreshFragments(CommandSource src) throws CommandSyntaxException {
+        ServerPlayerEntity playerEntity  = src.getPlayerOrException();
+        for (AncientFragment fragment : AncientFragment.getAllFragments()){
+            ProgressionHelper.revokePlayerFragment(fragment,playerEntity);
         }
         return 0;
     }
