@@ -40,6 +40,8 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
 
     private Map<BookEntry,Integer[]> TO_DRAW = new HashMap<>();
 
+    private boolean showNoFragmentsMessage = true;
+
     public IItemHandler handler;
     public final ItemStackButton goBack = new ItemStackButton(0,10,12,12,(button)->{minecraft.setScreen(new SolarLexiconScreen());}, SolarForge.SOLAR_FORGE_ITEM.get().getDefaultInstance(),0.7f,false);
     public final ItemStackButton nothing = new ItemStackButton(0,10,12,12,(button)->{}, Items.CRAFTING_TABLE.getDefaultInstance(),0.7f,false);
@@ -265,6 +267,7 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
         int height = minecraft.getWindow().getHeight();
         int scale = (int)minecraft.getWindow().getGuiScale();
         GL11.glScissor(width/2-(83*scale),height/2-(89*scale),(188*scale),190*scale);
+
         minecraft.getTextureManager().bind(MAIN_SCREEN_SCROLLABLE);
         blit(matrices,relX,relY,0,0,256,256);
         //super.render(matrices,mousex,mousey,partialTicks);
@@ -328,7 +331,9 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
             }
         }));
         super.render(matrices,mousex,mousey,partialTicks);
-
+        if (showNoFragmentsMessage){
+            drawString(matrices,font,"No fragments present :(",relX+20+scrollX,relY+40+scrollY,0xffffff);
+        }
         GL11.glDisable(GL11.GL_SCISSOR_TEST);
 
         minecraft.getTextureManager().bind(MAIN_SCREEN);
@@ -389,6 +394,7 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
             ItemStack stack = handler.getStackInSlot(i);
             if (stack.getItem() == ItemsRegister.INFO_FRAGMENT.get()){
                 if (stack.getTagElement(ProgressionHelper.TAG_ELEMENT) != null) {
+                    showNoFragmentsMessage = false;
                     AncientFragment frag = AncientFragment.getFragmentByID(stack.getTagElement(ProgressionHelper.TAG_ELEMENT).getString(ProgressionHelper.FRAG_ID));
                     if (frag != null){
                         if (map.containsKey(frag.getEntry())){

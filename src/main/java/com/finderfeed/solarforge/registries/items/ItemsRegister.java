@@ -2,6 +2,7 @@ package com.finderfeed.solarforge.registries.items;
 
 import com.finderfeed.solarforge.SolarForge;
 
+import com.finderfeed.solarforge.magic_items.blocks.FuelBlockItem;
 import com.finderfeed.solarforge.magic_items.blocks.infusing_table_things.SolarWandItem;
 import com.finderfeed.solarforge.magic_items.armor.SolarArmorMaterial;
 import com.finderfeed.solarforge.magic_items.blocks.blockitems.TurretBlockItem;
@@ -115,8 +116,8 @@ public class ItemsRegister {
     public static final RegistryObject<Item> RUNIC_TABLE = ITEMS.register("runic_table",()->new BlockItem(BlocksRegistry.RUNIC_TABLE.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
 
     public static final RegistryObject<Item> RUNIC_LEAVES = ITEMS.register("runic_leaves",()->new BlockItem(BlocksRegistry.RUNIC_LEAVES.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
-    public static final RegistryObject<Item> RUNIC_LOG = ITEMS.register("runic_log",()->new BlockItem(BlocksRegistry.RUNIC_LOG.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
-    public static final RegistryObject<Item> RUNIC_PLANKS = ITEMS.register("runic_planks",()->new BlockItem(BlocksRegistry.RUNIC_PLANKS.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
+    public static final RegistryObject<Item> RUNIC_LOG = ITEMS.register("runic_log",()->new FuelBlockItem(BlocksRegistry.RUNIC_LOG.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS),300));
+    public static final RegistryObject<Item> RUNIC_PLANKS = ITEMS.register("runic_planks",()->new FuelBlockItem(BlocksRegistry.RUNIC_PLANKS.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS),300));
 
     public static final RegistryObject<Item> RUNE_ENERGY_PYLON = ITEMS.register("rune_energy_pylon",()->new BlockItem(BlocksRegistry.RUNE_ENERGY_PYLON.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS).setISTER(()->EnergyPylonISTER::new)));
 

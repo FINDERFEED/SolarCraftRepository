@@ -33,6 +33,7 @@ import net.minecraft.util.math.RayTraceContext;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
@@ -119,7 +120,7 @@ public class SolarWandItem extends Item implements ManaConsumer {
             if (!world.isClientSide){
                 RuneEnergyPylonTile tile = (RuneEnergyPylonTile) world.getBlockEntity(res.getBlockPos());
                 tile.givePlayerEnergy(player,5);
-
+                player.displayClientMessage(new StringTextComponent(tile.getEnergyType().id.toUpperCase()+" "+RunicEnergy.getEnergy(player,tile.getEnergyType())).withStyle(TextFormatting.GOLD),true);
                 Helpers.updateRunicEnergyOnClient(tile.getEnergyType(),RunicEnergy.getEnergy(player,tile.getEnergyType()),player);
                 Helpers.fireProgressionEvent(player, Achievement.RUNE_ENERGY_CLAIM);
             }else{

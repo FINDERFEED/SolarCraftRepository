@@ -226,8 +226,12 @@ public class SolarLexiconScreen extends Screen implements IScrollable {
 
             }
 
-            blit(matrices,first.x-8,first.y-8,0,0,16,16,16,16);
+//            blit(matrices,first.x-8,first.y-8,0,0,16,16,16,16);
 
+        }
+        for (Achievement a : tree.ACHIEVEMENT_TREE.keySet()) {
+            Point first = new Point(relX+scrollX+18+map.get(a.getAchievementTier()).indexOf(a)*35,relY+scrollY+18+(a.getAchievementTier()-1)*30);
+            blit(matrices,first.x-8,first.y-8,0,0,16,16,16,16);
         }
         List<Widget> listButtons = this.buttons;
         listButtons.remove(toggleRecipesScreen);

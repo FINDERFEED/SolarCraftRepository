@@ -4,6 +4,7 @@ import com.finderfeed.solarforge.Helpers;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 
 public class RunicEnergy {
@@ -29,12 +30,12 @@ public class RunicEnergy {
         float kolvo = nbt.getFloat(DEFAULT_ENERGY_TAG+type.id) + energyAmount;
         if (kolvo <= maxEnergy){
             nbt.putFloat(DEFAULT_ENERGY_TAG+type.id,kolvo);
-            playerEntity.displayClientMessage(new StringTextComponent(type.id+" "+nbt.getInt(DEFAULT_ENERGY_TAG+type.id)),true);
+
             return 0;
         }else{
             float raznitsa = kolvo - maxEnergy;
             nbt.putFloat(DEFAULT_ENERGY_TAG+type.id,maxEnergy);
-            playerEntity.displayClientMessage(new StringTextComponent(type.id+" "+nbt.getInt(DEFAULT_ENERGY_TAG+type.id)),true);
+
             return raznitsa;
         }
 
