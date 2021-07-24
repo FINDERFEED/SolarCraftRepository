@@ -9,5 +9,26 @@
         "weight": 100
       }
     ]
-  }]
+  },
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "weight": 100,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1.0,
+                "max": 2.0,
+                "type": "minecraft:uniform"
+              }
+            }
+          ],
+          "name": "solarforge:ancient_fragment"
+        }
+      ]
+    }
+  ]
 }

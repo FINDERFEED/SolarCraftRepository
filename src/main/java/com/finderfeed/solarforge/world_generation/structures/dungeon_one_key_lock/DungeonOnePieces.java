@@ -109,7 +109,7 @@ import java.util.Random;
                     world.setBlock(pos, Blocks.AIR.defaultBlockState(),3);
                     TileEntity tile = world.getBlockEntity(pos.below());
                     if (tile instanceof ChestTileEntity){
-                        ((ChestTileEntity) tile).setLootTable(LootTables.ABANDONED_MINESHAFT,rnd.nextLong());
+                        ((ChestTileEntity) tile).setLootTable(new ResourceLocation("solarforge","chest/dungeon_chest_fragments"),rnd.nextLong());
                     }
                 }
                 if ("chest_star_piece".equals(func)){

@@ -309,7 +309,26 @@
   "item.solarforge.ancient_fragment": "Ancient fragment",
   "ach.rune_energy_claim": "Rune Energy",
   "ach.rune_energy_deposit": "Runic Energy Pylon",
-  "ach.solar_rune": "Runes"
+  "ach.solar_rune": "Runes",
+  "ach.enter_nether": "The Nether",
+  "pre.rune_energy_claim": "Rune energy from pylons spreads across the land, maybe there is a way to claim it?",
+  "pre.rune_energy_deposit": "Strange structures scattered around the world.",
+  "pre.solar_rune": "Rune energy from pylons spreads across the land, maybe there is a way to capture it in something?",
+  "pre.enter_nether": "Scary and uncontrollable world hides behind purple veil.",
+  "solar_category.beginning": "Start",
+  "solar_category.solar_forge": "Solar forge basics",
+  "solar_category.upgrades": "Upgrades",
+  "solar_category.beginner": "Beginner",
+  "solar_category.beginner_items": "Beginner items",
+  "solar_category.skilled": "Skilled",
+  "solar_category.skilled_items": "Skilled items",
+  "solar_category.skilled_materials": "Skilled materials",
+  "solar_category.master": "Master",
+  "solar_category.master_items": "Master items",
+  "solar_category.master_energy": "Master energy",
+  "solar_category.master_materials": "Master materials"
+
+
 
 
 

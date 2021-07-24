@@ -1,7 +1,9 @@
 package com.finderfeed.solarforge.magic_items.items;
 
 
+import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.RuneEnergyPylonTile;
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Achievement;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.ProgressionHelper;
 import com.finderfeed.solarforge.registries.items.ItemsRegister;
@@ -38,14 +40,16 @@ public class RuneBase extends Item {
         if (!world.isClientSide && (tileEntity instanceof RuneEnergyPylonTile) && (player != null) ){
 
             RuneEnergyPylonTile tile = (RuneEnergyPylonTile) tileEntity;
-            System.out.println(tile.getEnergyPerTick());
+
             if (tile.getCurrentEnergy() >= energyPerRune){
+                Helpers.fireProgressionEvent(player, Achievement.SOLAR_RUNE);
                 int maximumRunesCount = (int)Math.floor(tile.getCurrentEnergy()/energyPerRune);
                 int count = stack.getCount();
                 if (count <= maximumRunesCount){
                     player.setItemInHand(hand,new ItemStack(ProgressionHelper.RUNES_MAP.get(tile.getEnergyType()),count));
                     tile.setCurrentEnergy(tile.getCurrentEnergy() - energyPerRune*count);
                 }else{
+                    Helpers.fireProgressionEvent(player, Achievement.SOLAR_RUNE);
                     ItemStack stack1 = player.getItemInHand(hand);
                     player.setItemInHand(hand,new ItemStack(stack1.getItem(),stack1.getCount()-maximumRunesCount));
                     ItemStack frag = new ItemStack(ProgressionHelper.RUNES_MAP.get(tile.getEnergyType()),maximumRunesCount);

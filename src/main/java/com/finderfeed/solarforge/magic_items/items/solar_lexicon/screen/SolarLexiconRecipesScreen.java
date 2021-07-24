@@ -267,7 +267,7 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
         GL11.glScissor(width/2-(83*scale),height/2-(89*scale),(188*scale),190*scale);
         minecraft.getTextureManager().bind(MAIN_SCREEN_SCROLLABLE);
         blit(matrices,relX,relY,0,0,256,256);
-        super.render(matrices,mousex,mousey,partialTicks);
+        //super.render(matrices,mousex,mousey,partialTicks);
 
         minecraft.getTextureManager().bind(FRAME);
 
@@ -327,7 +327,7 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
                 drawString(matrices, minecraft.font, bookEntry.getTranslation(), relX + bookEntry.getPlaceInBook().x + scrollX, relY + bookEntry.getPlaceInBook().y - 8 + scrollY, 0xffffff);
             }
         }));
-
+        super.render(matrices,mousex,mousey,partialTicks);
 
         GL11.glDisable(GL11.GL_SCISSOR_TEST);
 

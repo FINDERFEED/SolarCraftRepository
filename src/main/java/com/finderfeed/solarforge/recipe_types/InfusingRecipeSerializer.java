@@ -43,7 +43,7 @@ public class InfusingRecipeSerializer extends ForgeRegistryEntry<IRecipeSerializ
         Ingredient input9 = Ingredient.fromJson(inputElement9);
         ItemStack output = ShapedRecipe.itemFromJson(JSONUtils.getAsJsonObject(file, "result"));
         int infusingTime = JSONUtils.getAsInt(file, "time", 20);
-        AncientFragment child = AncientFragment.getFragmentByID(JSONUtils.getAsString(file,"fragment"));
+        String child = JSONUtils.getAsString(file,"fragment");
         int reqEnergy = JSONUtils.getAsInt(file, "energy", 0);
         String tag = JSONUtils.getAsString(file,"tag","");
         int count = JSONUtils.getAsInt(file, "count", 1);
@@ -64,9 +64,7 @@ public class InfusingRecipeSerializer extends ForgeRegistryEntry<IRecipeSerializ
         Ingredient input9 = Ingredient.fromNetwork(buf);
         ItemStack output = buf.readItem();
         int infusingTime = buf.readInt();
-        AncientFragment child = AncientFragment.getFragmentByID(buf.readUtf());
-        String category = buf.readUtf();
-        String desk = buf.readUtf();
+        String child = buf.readUtf();
         int reqEnergy = buf.readInt();
         String tag = buf.readUtf();
         int count = buf.readInt();
@@ -86,7 +84,7 @@ public class InfusingRecipeSerializer extends ForgeRegistryEntry<IRecipeSerializ
         recipeType.input9.toNetwork(buf);
         buf.writeItemStack(recipeType.output, true);
         buf.writeInt(recipeType.infusingTime);
-        buf.writeUtf(recipeType.child.getId());
+        buf.writeUtf(recipeType.child);
         buf.writeInt(recipeType.requriedEnergy);
         buf.writeUtf(recipeType.tag);
         buf.writeInt(recipeType.count);

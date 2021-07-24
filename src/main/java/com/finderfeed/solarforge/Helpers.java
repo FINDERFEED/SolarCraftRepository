@@ -94,7 +94,11 @@ public class Helpers {
             case TRANSMUTE_GEM: return "My guesses were true, lava in this forest is full of magic energy.";
             case FIND_INCINERATED_FOREST: return "It doesnt seem that this was caused by a natural disaster...";
             case TRADE_FOR_BLUE_GEM: return "What a rude man! At least he loves to share information... For money...";
-            case DIMENSIONAL_SHARD_DUNGEON: return "The ancient civilizations definitely dont want me to reveal their secrets.";
+            case DIMENSIONAL_SHARD_DUNGEON: return "They definitely dont want me to reveal their secrets.";
+            case ENTER_NETHER:return "Despite its evil nature there are still some friendly creatures here, but i still need to be careful.";
+            case SOLAR_RUNE:return "Maybe this runes will help me to decrypt the fragments?";
+            case RUNE_ENERGY_CLAIM:return "Turns out i can collect this energy inside...myself?";
+            case RUNE_ENERGY_DEPOSIT:return "It seems that this pylon contains some sort of energy.";
         }
         return "ERROR:Tell mod author to fix it";
     }

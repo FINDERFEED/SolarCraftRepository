@@ -74,6 +74,7 @@ public class SolarGodSword extends SwordItem implements ITagUser {
     }
 
 
+
     @Override
     public boolean hurtEnemy(ItemStack stack, LivingEntity p_77644_2_, LivingEntity p_77644_3_) {
         if (getSwordLevel(stack) >= 2){

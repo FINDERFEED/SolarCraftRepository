@@ -4,6 +4,7 @@ package com.finderfeed.solarforge.magic_items.blocks.infusing_table_things;
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.magic_items.blocks.infusing_table_things.infusing_pool.InfusingPoolTileEntity;
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.ProgressionHelper;
 import com.finderfeed.solarforge.misc_things.*;
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
@@ -33,6 +34,8 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.fml.network.NetworkDirection;
 import net.minecraftforge.fml.network.PacketDistributor;
@@ -199,8 +202,8 @@ public class InfusingTableTileEntity extends LockableLootTileEntity implements I
 
     public void triggerCrafting(PlayerEntity playerEntity){
         Optional<InfusingRecipe> recipe = this.level.getRecipeManager().getRecipeFor(SolarForge.INFUSING_RECIPE_TYPE,(IInventory) this,level);
-
-        if (recipe.isPresent() && ProgressionHelper.doPlayerHasFragment(playerEntity,recipe.get().child)) {
+        try {
+            if (recipe.isPresent() && ProgressionHelper.doPlayerHasFragment(playerEntity, AncientFragment.getFragmentByID(recipe.get().child))) {
 
                 if (!RECIPE_IN_PROGRESS) {
                     if (!playerEntity.getPersistentData().getBoolean(Helpers.PROGRESSION + Achievement.USE_SOLAR_INFUSER.getAchievementCode())) {
@@ -214,8 +217,24 @@ public class InfusingTableTileEntity extends LockableLootTileEntity implements I
                     this.level.playSound(null, this.worldPosition, SoundEvents.VILLAGER_NO, SoundCategory.AMBIENT, 2, 1);
                 }
 
-        } else {
-            this.level.playSound(null, this.worldPosition, SoundEvents.VILLAGER_NO, SoundCategory.AMBIENT, 2, 1);
+            } else {
+                if (recipe.isPresent()) {
+                    AncientFragment fragment = AncientFragment.getFragmentByID(recipe.get().child);
+                    if (fragment != null){
+                        if (!ProgressionHelper.doPlayerHasFragment(playerEntity,fragment)){
+                            playerEntity.sendMessage(new StringTextComponent("Cant start craft, you dont have "+fragment.getTranslation().getString().toUpperCase()+" fragment unlocked.").withStyle(TextFormatting.RED),
+                                    playerEntity.getUUID());
+                        }
+                    }
+                }else{
+                    playerEntity.sendMessage(new StringTextComponent("Recipe invalid").withStyle(TextFormatting.RED),
+                            playerEntity.getUUID());
+                }
+                this.level.playSound(null, this.worldPosition, SoundEvents.VILLAGER_NO, SoundCategory.AMBIENT, 2, 1);
+            }
+        }catch (NullPointerException e){
+            playerEntity.sendMessage(new StringTextComponent("INCORRECT FRAGMENT IN RECIPE "+ recipe.get().output.getDescriptionId()+" TELL MOD AUTHOR TO FIX IT").withStyle(TextFormatting.RED),
+                    playerEntity.getUUID());
         }
 
     }
