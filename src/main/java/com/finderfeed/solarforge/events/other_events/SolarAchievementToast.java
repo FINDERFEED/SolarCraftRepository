@@ -1,12 +1,17 @@
 package com.finderfeed.solarforge.events.other_events;
 
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Achievement;
+import com.finderfeed.solarforge.registries.sounds.Sounds;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.audio.SimpleSound;
+import net.minecraft.client.audio.SoundHandler;
 import net.minecraft.client.gui.toasts.IToast;
 import net.minecraft.client.gui.toasts.ToastGui;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundEvent;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.text.TranslationTextComponent;
 
 public class SolarAchievementToast implements IToast {
@@ -33,6 +38,8 @@ public class SolarAchievementToast implements IToast {
             return Visibility.HIDE;
         }
     }
+
+
 
     public static void addOrUpdate(ToastGui gui, Achievement ach){
 

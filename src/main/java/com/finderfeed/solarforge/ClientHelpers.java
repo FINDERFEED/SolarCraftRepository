@@ -13,6 +13,7 @@ import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Ac
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.ProgressionHelper;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.audio.SimpleSound;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.entity.player.PlayerEntity;
@@ -194,5 +195,9 @@ public class ClientHelpers {
     }
     public static void triggerProgressionUnlockShader(){
         RenderEventsHandler.triggerProgressionShader();
+    }
+
+    public static void playSound(SoundEvent event,float a, float b){
+        Minecraft.getInstance().getSoundManager().play(SimpleSound.forUI(event,a,b));
     }
 }
