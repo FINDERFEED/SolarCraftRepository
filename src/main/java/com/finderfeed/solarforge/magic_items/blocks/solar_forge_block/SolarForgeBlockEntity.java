@@ -3,39 +3,44 @@ package com.finderfeed.solarforge.magic_items.blocks.solar_forge_block;
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.registries.items.ItemsRegister;
 import com.finderfeed.solarforge.magic_items.blocks.solar_forge_block.solar_forge_screen.SolarForgeContainer;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.ItemStackHelper;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.LockableLootTileEntity;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.IntArray;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.ContainerHelper;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
 
-public class SolarForgeBlockEntity extends LockableLootTileEntity implements ITickableTileEntity {
+import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.inventory.SimpleContainerData;
+import net.minecraft.core.NonNullList;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+
+public class SolarForgeBlockEntity extends RandomizableContainerBlockEntity  {
     public int SOLAR_ENERGY_LEVEL = 0;
-    private IntArray arr = new IntArray(1);
+    private SimpleContainerData arr = new SimpleContainerData(1);
     public NonNullList<ItemStack> items = NonNullList.withSize(2,ItemStack.EMPTY);
-    public SolarForgeBlockEntity(TileEntityType<?> type) {
-        super(type);
+
+    public SolarForgeBlockEntity(BlockPos p_155630_, BlockState p_155631_) {
+        super(SolarForge.SOLAR_FORGE_BLOCKENTITY.get(), p_155630_, p_155631_);
     }
+
 
     public int getCurrentEnergy(){
         return SOLAR_ENERGY_LEVEL;
     }
     @Override
-    protected ITextComponent getDefaultName() {
-        return new TranslationTextComponent("container.solarforge");
+    protected Component getDefaultName() {
+        return new TranslatableComponent("container.solarforge");
     }
 
     @Override
-    protected Container createMenu(int x, PlayerInventory inv) {
+    protected AbstractContainerMenu createMenu(int x, Inventory inv) {
         return new SolarForgeContainer(x,inv,this,arr);
     }
 
@@ -49,57 +54,58 @@ public class SolarForgeBlockEntity extends LockableLootTileEntity implements ITi
         this.items = items;
     }
 
-    public SolarForgeBlockEntity(){
-        this(SolarForge.SOLAR_FORGE_BLOCKENTITY.get());
-    }
+
 
     @Override
     public int getContainerSize() {
         return items.size();
     }
     @Override
-    public CompoundNBT save(CompoundNBT cmp){
+    public CompoundTag save(CompoundTag cmp){
         super.save(cmp);
         cmp.putInt("solar_energy",SOLAR_ENERGY_LEVEL);
         if (!this.trySaveLootTable(cmp)) {
-            ItemStackHelper.saveAllItems(cmp, this.items);
+            ContainerHelper.saveAllItems(cmp, this.items);
         }
     return cmp;
     }
+
+
     @Override
-    public void load(BlockState state, CompoundNBT cmp) {
-        super.load(state,cmp);
+    public void load(CompoundTag cmp) {
+        super.load(cmp);
         SOLAR_ENERGY_LEVEL = cmp.getInt("solar_energy");
         this.items = NonNullList.withSize(getContainerSize(), ItemStack.EMPTY);
         if (!this.tryLoadLootTable(cmp)) {
-            ItemStackHelper.loadAllItems(cmp, this.items);
+            ContainerHelper.loadAllItems(cmp, this.items);
         }
     }
 
-    @Override
-    public void tick() {
-        if (!this.getLevel().isClientSide){
 
-            arr.set(0,SOLAR_ENERGY_LEVEL);
 
-            if ( this.getLevel().getDayTime() % 24000 <= 13000 && SOLAR_ENERGY_LEVEL < 30000 && this.level.canSeeSky(this.getBlockPos().above())){
-                SOLAR_ENERGY_LEVEL++;
+    public static void tick(Level world, BlockPos pos, BlockState blockState, SolarForgeBlockEntity tile) {
+        if (!world.isClientSide){
+
+            tile.arr.set(0,tile.SOLAR_ENERGY_LEVEL);
+
+            if ( world.getDayTime() % 24000 <= 13000 && tile.SOLAR_ENERGY_LEVEL < 30000 && world.canSeeSky(pos.above())){
+                tile.SOLAR_ENERGY_LEVEL++;
 
 
 
             }
-            if (this.getItems().get(0).getItem() == SolarForge.TEST_ITEM.get() && SOLAR_ENERGY_LEVEL+300 <= 30000){
-                this.getItems().get(0).grow(-1);
-                if (this.level.random.nextDouble() > 0.85) {
-                    if (this.getItem(1).isEmpty()) {
-                        this.setItem(1, new ItemStack(ItemsRegister.SOLAR_DUST.get(), 1));
+            if (tile.getItems().get(0).getItem() == SolarForge.TEST_ITEM.get() && tile.SOLAR_ENERGY_LEVEL+300 <= 30000){
+                tile.getItems().get(0).grow(-1);
+                if (world.random.nextDouble() > 0.85) {
+                    if (tile.getItem(1).isEmpty()) {
+                        tile.setItem(1, new ItemStack(ItemsRegister.SOLAR_DUST.get(), 1));
                     } else {
-                        ItemStack stack = this.getItem(1).copy();
+                        ItemStack stack = tile.getItem(1).copy();
                         stack.grow(1);
-                        this.setItem(1, stack);
+                        tile.setItem(1, stack);
                     }
                 }
-                SOLAR_ENERGY_LEVEL+=300;
+                tile.SOLAR_ENERGY_LEVEL+=300;
 
 
             }
@@ -108,8 +114,8 @@ public class SolarForgeBlockEntity extends LockableLootTileEntity implements ITi
     }
 
     @Override
-    public AxisAlignedBB getRenderBoundingBox(){
-        return new AxisAlignedBB(getBlockPos().offset(-1,0,-1),getBlockPos().offset(1,100,1));
+    public AABB getRenderBoundingBox(){
+        return new AABB(getBlockPos().offset(-1,0,-1),getBlockPos().offset(1,100,1));
     }
 
 

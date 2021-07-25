@@ -1,10 +1,10 @@
 package com.finderfeed.solarforge.world_generation.features.flowers.solar_flowers_feature;
 
 import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
-import net.minecraft.block.BlockState;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.gen.blockstateprovider.BlockStateProvider;
-import net.minecraft.world.gen.blockstateprovider.BlockStateProviderType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
+import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProviderType;
 
 import java.util.Random;
 

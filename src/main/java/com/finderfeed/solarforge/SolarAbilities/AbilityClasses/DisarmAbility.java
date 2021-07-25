@@ -3,14 +3,14 @@ package com.finderfeed.solarforge.SolarAbilities.AbilityClasses;
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.capabilities.capability_mana.CapabilitySolarMana;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.server.level.ServerLevel;
 
 import java.util.List;
 
@@ -22,14 +22,14 @@ public class DisarmAbility extends AbstractAbility{
     }
 
     @Override
-    public void cast(ServerPlayerEntity entity, ServerWorld world) {
+    public void cast(ServerPlayer entity, ServerLevel world) {
         super.cast(entity, world);
         if (allowed) {
-            world.playSound(null, entity.getX(), entity.getY(), entity.getZ(), SoundEvents.ZOMBIE_VILLAGER_CURE, SoundCategory.AMBIENT, 1, 1);
-            List<Entity> list = world.getEntities(entity, new AxisAlignedBB(-8, -8, -8, 8, 8, 8).move(entity.position()), x -> x instanceof LivingEntity);
+            world.playSound(null, entity.getX(), entity.getY(), entity.getZ(), SoundEvents.ZOMBIE_VILLAGER_CURE, SoundSource.AMBIENT, 1, 1);
+            List<Entity> list = world.getEntities(entity, new AABB(-8, -8, -8, 8, 8, 8).move(entity.position()), x -> x instanceof LivingEntity);
             for (int i = 0; i < list.size(); i++) {
                 LivingEntity ent = (LivingEntity) list.get(i);
-                ent.addEffect(new EffectInstance(SolarForge.SOLAR_STUN.get(), 100, 0));
+                ent.addEffect(new MobEffectInstance(SolarForge.SOLAR_STUN.get(), 100, 0));
             }
         }
     }

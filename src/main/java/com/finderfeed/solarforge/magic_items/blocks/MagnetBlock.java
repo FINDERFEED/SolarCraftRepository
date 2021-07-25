@@ -1,38 +1,52 @@
 package com.finderfeed.solarforge.magic_items.blocks;
 
+import com.finderfeed.solarforge.magic_items.blocks.blockentities.MagnetBlockTile;
 import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.IBlockReader;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.network.chat.Component;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.BlockGetter;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class MagnetBlock extends Block {
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
+
+public class MagnetBlock extends Block implements EntityBlock {
     public MagnetBlock(Properties p_i48440_1_) {
         super(p_i48440_1_);
     }
 
+
+
     @Override
-    public boolean hasTileEntity(BlockState state) {
-        return true;
+    public void appendHoverText(ItemStack p_190948_1_, @Nullable BlockGetter p_190948_2_, List<Component> p_190948_3_, TooltipFlag p_190948_4_) {
+        p_190948_3_.add(new TranslatableComponent("solarforge.magnet_block").withStyle(ChatFormatting.GOLD));
+        super.appendHoverText(p_190948_1_, p_190948_2_, p_190948_3_, p_190948_4_);
     }
 
     @Nullable
     @Override
-    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-        return TileEntitiesRegistry.MAGNET_BLOCK_TILE.get().create();
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level p_153212_, BlockState p_153213_, BlockEntityType<T> p_153214_) {
+        return ((level, blockPos, blockState, t) -> {
+            MagnetBlockTile.tick(level,blockPos,blockState,(MagnetBlockTile) t);
+        });
+
     }
 
+    @Nullable
     @Override
-    public void appendHoverText(ItemStack p_190948_1_, @Nullable IBlockReader p_190948_2_, List<ITextComponent> p_190948_3_, ITooltipFlag p_190948_4_) {
-        p_190948_3_.add(new TranslationTextComponent("solarforge.magnet_block").withStyle(TextFormatting.GOLD));
-        super.appendHoverText(p_190948_1_, p_190948_2_, p_190948_3_, p_190948_4_);
+    public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
+        return TileEntitiesRegistry.MAGNET_BLOCK_TILE.get().create(blockPos,blockState);
     }
 }

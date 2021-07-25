@@ -2,19 +2,19 @@ package com.finderfeed.solarforge.magic_items.blocks.solar_forge_block.solar_for
 
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
 import com.finderfeed.solarforge.packet_handler.AbilityIndexSetPacket;
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 
 import net.minecraft.client.Minecraft;
 
 
-import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.screens.Screen;
 
-import net.minecraft.client.gui.widget.Widget;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.client.gui.components.AbstractWidget;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 
 import java.util.List;
 
@@ -31,7 +31,7 @@ public class SolarForgeConfigScreenAdditional extends Screen {
 
 
     public SolarForgeConfigScreenAdditional(int index) {
-        super(new TranslationTextComponent("test.screen.thing"));
+        super(new TranslatableComponent("test.screen.thing"));
         this.ids = index;
     }
     @Override
@@ -66,7 +66,7 @@ public class SolarForgeConfigScreenAdditional extends Screen {
     @Override
     public void tick() {
         if (page != previousPage){
-            List<Widget> all = this.buttons;
+            List<AbstractWidget> all = this.buttons;
             if (page > previousPage) {
                 System.out.println(all.get(0).y);
                 for (int i = 0; i < all.size(); i++) {
@@ -89,7 +89,7 @@ public class SolarForgeConfigScreenAdditional extends Screen {
     }
 
     @Override
-    public void render(MatrixStack stack, int rouseX, int rouseY, float partialTicks){
+    public void render(PoseStack stack, int rouseX, int rouseY, float partialTicks){
 
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.minecraft.getTextureManager().bind(GUI);
@@ -109,7 +109,7 @@ public class SolarForgeConfigScreenAdditional extends Screen {
 
 
     public void addSolarButton(int relX, int relY, int offset, int abilityId, String string){
-        addButton(new SolarForgeButton(relX + 6, relY-4+offset, 65, 15, new StringTextComponent(string), button -> {
+        addButton(new SolarForgeButton(relX + 6, relY-4+offset, 65, 15, new TextComponent(string), button -> {
             SolarForgePacketHandler.INSTANCE.sendToServer(new AbilityIndexSetPacket(new int[]{ids,abilityId}));
             Minecraft.getInstance().setScreen(new SolarForgeAbilityConfigScreen());
         }));

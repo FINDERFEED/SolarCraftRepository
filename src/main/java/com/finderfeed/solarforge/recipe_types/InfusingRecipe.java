@@ -3,16 +3,16 @@ package com.finderfeed.solarforge.recipe_types;
 
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.AncientFragment;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
+import net.minecraft.world.Container;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.Level;
 
-public class InfusingRecipe implements IRecipe<IInventory> {
+public class InfusingRecipe implements Recipe<Container> {
 
     public final ResourceLocation id;
     public final Ingredient input1;
@@ -58,7 +58,7 @@ public class InfusingRecipe implements IRecipe<IInventory> {
     }
 
     @Override
-    public boolean matches(IInventory inv, World world) {
+    public boolean matches(Container inv, Level world) {
         return this.input1.test(inv.getItem(0))
                 && this.input2.test(inv.getItem(1))
                 && this.input3.test(inv.getItem(2))
@@ -71,7 +71,7 @@ public class InfusingRecipe implements IRecipe<IInventory> {
     }
 
     @Override
-    public ItemStack assemble(IInventory inv) {
+    public ItemStack assemble(Container inv) {
         return this.output.copy();
     }
 
@@ -91,12 +91,12 @@ public class InfusingRecipe implements IRecipe<IInventory> {
     }
 
     @Override
-    public IRecipeSerializer<?> getSerializer() {
+    public RecipeSerializer<?> getSerializer() {
         return serializer;
     }
 
     @Override
-    public IRecipeType<?> getType() {
+    public RecipeType<?> getType() {
         return SolarForge.INFUSING_RECIPE_TYPE;
     }
 }

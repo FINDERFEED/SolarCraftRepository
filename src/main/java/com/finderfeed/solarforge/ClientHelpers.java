@@ -11,30 +11,34 @@ import com.finderfeed.solarforge.registries.sounds.Sounds;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.SolarLexicon;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Achievement;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.ProgressionHelper;
-import net.minecraft.block.Block;
+import com.mojang.blaze3d.systems.RenderSystem;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.audio.SimpleSound;
-import net.minecraft.client.entity.player.ClientPlayerEntity;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.client.resources.sounds.SimpleSoundInstance;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
+
+
 public class ClientHelpers {
-    public static ClientPlayerEntity getClientPlayer(){
+    public static LocalPlayer getClientPlayer(){
         return Minecraft.getInstance().player;
     }
 
@@ -45,13 +49,13 @@ public class ClientHelpers {
     }
 
 
-    public static void handleSolarWandParticles(Vector3d pos,Vector3d vel){
+    public static void handleSolarWandParticles(Vec3 pos,Vec3 vel){
         SmallSolarStrikeParticle particle = (SmallSolarStrikeParticle) Minecraft.getInstance().particleEngine.createParticle(ParticlesList.SMALL_SOLAR_STRIKE_PARTICLE.get(),pos.x,pos.y,pos.z,vel.normalize().x,vel.normalize().y,vel.normalize().z);
         particle.setLifetime((int)Math.round(vel.length()/vel.normalize().length())*5/2 );
     }
 
     public static void updateEnergyTypeOnClient(BlockPos pos,String id){
-        TileEntity tile = Minecraft.getInstance().level.getBlockEntity(pos);
+        BlockEntity tile = Minecraft.getInstance().level.getBlockEntity(pos);
         if (tile instanceof RuneEnergyPylonTile){
             RuneEnergyPylonTile pylon = (RuneEnergyPylonTile) tile;
             pylon.setType(RunicEnergy.Type.byId(id));
@@ -72,21 +76,21 @@ public class ClientHelpers {
 
 
     public static void playTotemAnimation( ){
-        ClientPlayerEntity ent = Minecraft.getInstance().player;
+        LocalPlayer ent = Minecraft.getInstance().player;
         Minecraft.getInstance().particleEngine.createTrackingEmitter(ent, ParticleTypes.TOTEM_OF_UNDYING, 30);
         Minecraft.getInstance().gameRenderer.displayItemActivation(ItemsRegister.TOTEM_OF_IMMORTALITY.get().getDefaultInstance());
         Minecraft.getInstance().level.playLocalSound(ent.getX(), ent.getY(), ent.getZ(), SoundEvents.TOTEM_USE, ent.getSoundSource(), 1F, 0.6F, false);
     }
 
     public static void updateRepeatersOnClient(BlockPos pos,BlockPos pos2){
-        TileEntity tile = Minecraft.getInstance().level.getBlockEntity(pos);
+        BlockEntity tile = Minecraft.getInstance().level.getBlockEntity(pos);
         if (tile instanceof AbstractSolarNetworkRepeater){
             ((AbstractSolarNetworkRepeater) tile).connectedTo = pos2;
         }
     }
 
     public static void updateGeneratorOnClient(BlockPos pos, BlockPos pos2,int index,boolean remove){
-        TileEntity tile = Minecraft.getInstance().level.getBlockEntity(pos);
+        BlockEntity tile = Minecraft.getInstance().level.getBlockEntity(pos);
         if (tile instanceof AbstractEnergyGeneratorTileEntity){
             if (!remove) {
 
@@ -102,7 +106,7 @@ public class ClientHelpers {
         }
     }
     public static void updateCoreOnClient(BlockPos pos, BlockPos pos2,int index,boolean remove){
-        TileEntity tile = Minecraft.getInstance().level.getBlockEntity(pos);
+        BlockEntity tile = Minecraft.getInstance().level.getBlockEntity(pos);
         if (tile instanceof AbstractSolarCore){
             if (!remove) {
                 if (((AbstractSolarCore) tile).poslist.size()-1 >= index) {
@@ -116,11 +120,11 @@ public class ClientHelpers {
         }
     }
     public static void playSoundAtPos(BlockPos pos,int soundID,float pitch, float volume){
-        World world = Minecraft.getInstance().player.level;
+        Level world = Minecraft.getInstance().player.level;
 
 
         world.playSound(Minecraft.getInstance().player,pos.getX()+0.5,pos.getY()+0.5,pos.getZ()+0.5,getSoundByID(soundID),
-                SoundCategory.BLOCKS,volume,pitch);
+                SoundSource.BLOCKS,volume,pitch);
 
     }
 
@@ -134,9 +138,9 @@ public class ClientHelpers {
     }
 
 
-    public static void reloadProgression(ServerPlayerEntity playerServer){
+    public static void reloadProgression(ServerPlayer playerServer){
 
-        PlayerEntity player = Minecraft.getInstance().player;
+        Player player = Minecraft.getInstance().player;
         for (Achievement a : Achievement.getAllAchievements()){
             Helpers.setAchievementStatus(a,player,Helpers.hasPlayerUnlocked(a,playerServer));
 
@@ -147,7 +151,7 @@ public class ClientHelpers {
      * Updates RayTrapTileEntity client trigger
      */
     public static void updateIntegerLASERTRAP(BlockPos pos, int i){
-        TileEntity tile = Minecraft.getInstance().level.getBlockEntity(pos);
+        BlockEntity tile = Minecraft.getInstance().level.getBlockEntity(pos);
         if (tile instanceof RayTrapTileEntity){
             ((RayTrapTileEntity) tile).CLIENT_TRIGGER_INTEGER = 1;
         }
@@ -160,9 +164,9 @@ public class ClientHelpers {
         Minecraft.getInstance().levelRenderer.allChanged();
     }
 
-    public static ITextComponent getNameBasedOnProgression(ItemStack stack){
+    public static Component getNameBasedOnProgression(ItemStack stack){
         IProgressionBlock block = (IProgressionBlock) ((BlockItem)stack.getItem()).getBlock();
-        PlayerEntity playerEntity = getClientPlayer();
+        Player playerEntity = getClientPlayer();
         if (playerEntity != null) {
             if (Helpers.hasPlayerUnlocked(block.getRequiredProgression(), playerEntity)) {
                 return block.getUnlockedBlock().getName();
@@ -173,9 +177,9 @@ public class ClientHelpers {
         return block.getLockedBlock().asItem().getDefaultInstance().getHoverName();
     }
 
-    public static TranslationTextComponent getTranslationFor(Block block){
+    public static TranslatableComponent getTranslationFor(Block block){
         if (block.equals(BlocksRegistry.ULDORADIUM_ORE.get())){
-            return new TranslationTextComponent("item.solarforge.uldoradium_ore");
+            return new TranslatableComponent("item.solarforge.uldoradium_ore");
         }
         return null;
     }
@@ -198,6 +202,10 @@ public class ClientHelpers {
     }
 
     public static void playSound(SoundEvent event,float a, float b){
-        Minecraft.getInstance().getSoundManager().play(SimpleSound.forUI(event,a,b));
+        Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(event,a,b));
+    }
+
+    public static void bindText(ResourceLocation loc){
+        RenderSystem.setShaderTexture(0,loc);
     }
 }

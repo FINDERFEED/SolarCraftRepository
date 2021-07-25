@@ -3,24 +3,26 @@ package com.finderfeed.solarforge.magic_items.items.render_player_events;
 
 import com.finderfeed.solarforge.magic_items.items.UltraCrossbowItem;
 import com.finderfeed.solarforge.magic_items.items.solar_disc_gun.SolarDiscGunItem;
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
-import net.minecraft.client.MainWindow;
+import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.blaze3d.platform.Window;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.AbstractGui;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
+import net.minecraft.client.gui.GuiComponent;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.entity.model.BipedModel;
+import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.vector.Vector3f;
+import net.minecraft.resources.ResourceLocation;
+import com.mojang.math.Vector3f;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderHandEvent;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+
+import ResourceLocation;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE,modid = "solarforge",value = Dist.CLIENT)
 public class RenderUltraCrossbowPlayer {
@@ -34,26 +36,26 @@ public class RenderUltraCrossbowPlayer {
         Minecraft mc = Minecraft.getInstance();
         if (event.getType() == RenderGameOverlayEvent.ElementType.HOTBAR) {
             if (Minecraft.getInstance().player.getMainHandItem().getItem() instanceof UltraCrossbowItem) {
-                MatrixStack stack = event.getMatrixStack();
-                MainWindow window = event.getWindow();
+                PoseStack stack = event.getMatrixStack();
+                Window window = event.getWindow();
                 mc.getTextureManager().bind(PRICEL);
                 RenderSystem.enableBlend();
                 RenderSystem.color4f(1,1,0.3f,0.5f);
                 int width = (int)((window.getWidth())/2/window.getGuiScale() -21);
                 int height = (int)((window.getHeight())/2/window.getGuiScale() - 20);
 
-                AbstractGui.blit(stack,width,height,0,0,41,41,41,41);
+                GuiComponent.blit(stack,width,height,0,0,41,41,41,41);
 
             }else if( Minecraft.getInstance().player.getOffhandItem().getItem() instanceof UltraCrossbowItem){
-                MatrixStack stack = event.getMatrixStack();
-                MainWindow window = event.getWindow();
+                PoseStack stack = event.getMatrixStack();
+                Window window = event.getWindow();
                 mc.getTextureManager().bind(PRICEL);
                 RenderSystem.enableBlend();
                 RenderSystem.color4f(1,1,0.3f,0.5f);
                 int width = (int)((window.getWidth())/2/window.getGuiScale() -21);
                 int height = (int)((window.getHeight())/2/window.getGuiScale() - 20);
 
-                AbstractGui.blit(stack,width,height,0,0,41,41,41,41);
+                GuiComponent.blit(stack,width,height,0,0,41,41,41,41);
             }
         }
 
@@ -64,8 +66,8 @@ public class RenderUltraCrossbowPlayer {
         if (Minecraft.getInstance().player.getMainHandItem().getItem() instanceof UltraCrossbowItem) {
 
             if (Minecraft.getInstance().player.isUsingItem()) {
-                MatrixStack stack = event.getMatrixStack();
-                IRenderTypeBuffer buffer = event.getBuffers();
+                PoseStack stack = event.getMatrixStack();
+                MultiBufferSource buffer = event.getBuffers();
                 float partialTicks = event.getPartialTicks();
                 int light = event.getLight();
                 stack.pushPose();
@@ -79,8 +81,8 @@ public class RenderUltraCrossbowPlayer {
             }
         }else if ( Minecraft.getInstance().player.getOffhandItem().getItem() instanceof UltraCrossbowItem){
             if (Minecraft.getInstance().player.isUsingItem()) {
-                MatrixStack stack = event.getMatrixStack();
-                IRenderTypeBuffer buffer = event.getBuffers();
+                PoseStack stack = event.getMatrixStack();
+                MultiBufferSource buffer = event.getBuffers();
                 float partialTicks = event.getPartialTicks();
                 int light = event.getLight();
                 stack.pushPose();
@@ -107,14 +109,14 @@ public class RenderUltraCrossbowPlayer {
     @SubscribeEvent
     public static void renderPlayer(final RenderPlayerEvent.Pre event){
         if ((event.getPlayer().getMainHandItem().getItem() instanceof UltraCrossbowItem) || (event.getPlayer().getOffhandItem().getItem() instanceof UltraCrossbowItem)) {
-            event.getRenderer().getModel().rightArmPose = BipedModel.ArmPose.CROSSBOW_HOLD;
+            event.getRenderer().getModel().rightArmPose = HumanoidModel.ArmPose.CROSSBOW_HOLD;
         }
     }
-    public static void drawRing(float partialTicks, MatrixStack stack, IRenderTypeBuffer buffer, float scaleFactor, float angle){
-        IVertexBuilder vertex = buffer.getBuffer(RenderType.text(LOC));
+    public static void drawRing(float partialTicks, PoseStack stack, MultiBufferSource buffer, float scaleFactor, float angle){
+        VertexConsumer vertex = buffer.getBuffer(RenderType.text(LOC));
 
         stack.mulPose(Vector3f.YP.rotationDegrees(angle));
-        MatrixStack.Entry entry = stack.last();
+        PoseStack.Pose entry = stack.last();
         vertex.vertex(entry.pose(),-0.5F*scaleFactor,0,-0.5F*scaleFactor).color(255,255,40,200).uv(1,0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
         vertex.vertex(entry.pose(),0.5F*scaleFactor,0,-0.5F*scaleFactor).color(255,255,40,200).uv(1,1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
         vertex.vertex(entry.pose(),0.5F*scaleFactor,0,0.5F*scaleFactor).color(255,255,40,200).uv(0,1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();

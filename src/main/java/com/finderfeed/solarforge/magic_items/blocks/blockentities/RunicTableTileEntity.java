@@ -3,36 +3,39 @@ package com.finderfeed.solarforge.magic_items.blocks.blockentities;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.containers.RunicTableContainer;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.containers.SolarFurnaceContainer;
 import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.ItemStackHelper;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.LockableLootTileEntity;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.IntArray;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.ContainerHelper;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
 
-public class RunicTableTileEntity extends LockableLootTileEntity {
+import net.minecraft.world.inventory.SimpleContainerData;
+import net.minecraft.core.NonNullList;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+
+public class RunicTableTileEntity extends RandomizableContainerBlockEntity {
 
 
-    private IntArray arr = new IntArray(6);
+    private SimpleContainerData arr = new SimpleContainerData(6);
     public NonNullList<ItemStack> items = NonNullList.withSize(7,ItemStack.EMPTY);
 
-    public RunicTableTileEntity() {
-        super(TileEntitiesRegistry.RUNIC_TABLE_TILE.get());
+    protected RunicTableTileEntity( BlockPos p_155630_, BlockState p_155631_) {
+        super(TileEntitiesRegistry.RUNIC_TABLE_TILE.get(), p_155630_, p_155631_);
+    }
+
+
+    @Override
+    protected Component getDefaultName() {
+        return new TranslatableComponent("container.runictable");
     }
 
     @Override
-    protected ITextComponent getDefaultName() {
-        return new TranslationTextComponent("container.runictable");
-    }
-
-    @Override
-    protected Container createMenu(int x, PlayerInventory inv) {
+    protected AbstractContainerMenu createMenu(int x, Inventory inv) {
         return new RunicTableContainer(x,inv,this,arr);
     }
 
@@ -52,22 +55,22 @@ public class RunicTableTileEntity extends LockableLootTileEntity {
     }
 
     @Override
-    public CompoundNBT save(CompoundNBT cmp){
+    public CompoundTag save(CompoundTag cmp){
         super.save(cmp);
 
         if (!this.trySaveLootTable(cmp)) {
-            ItemStackHelper.saveAllItems(cmp, this.items);
+            ContainerHelper.saveAllItems(cmp, this.items);
         }
         return cmp;
     }
 
     @Override
-    public void load(BlockState state, CompoundNBT cmp) {
-        super.load(state,cmp);
+    public void load( CompoundTag cmp) {
+        super.load(cmp);
 
         this.items = NonNullList.withSize(getContainerSize(), ItemStack.EMPTY);
         if (!this.tryLoadLootTable(cmp)) {
-            ItemStackHelper.loadAllItems(cmp, this.items);
+            ContainerHelper.loadAllItems(cmp, this.items);
         }
     }
 

@@ -9,9 +9,11 @@ import com.finderfeed.solarforge.magic_items.items.solar_lexicon.packets.OpenScr
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.packets.UpdateAllProgressionOnClient;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.packets.UpdateInventoryPacket;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.packets.UpdateProgressionOnClient;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.fml.network.NetworkRegistry;
 import net.minecraftforge.fml.network.simple.SimpleChannel;
+import net.minecraftforge.fmllegacy.network.NetworkRegistry;
+import net.minecraftforge.fmllegacy.network.simple.SimpleChannel;
 
 public class SolarForgePacketHandler {
     private static final String PROTOCOL_VERSION = "1";

@@ -1,7 +1,7 @@
 package com.finderfeed.solarforge.SolarAbilities.AbilityClasses;
 
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.server.level.ServerLevel;
 
 public class AlchemistAbility extends AbstractAbility{
     public AlchemistAbility() {
@@ -9,7 +9,7 @@ public class AlchemistAbility extends AbstractAbility{
     }
 
     @Override
-    public void cast(ServerPlayerEntity player, ServerWorld world) {
+    public void cast(ServerPlayer player, ServerLevel world) {
 
         if (player.getPersistentData().getBoolean("solar_forge_can_player_use_"+id)){
             if (player.getPersistentData().getBoolean("is_alchemist_toggled")){

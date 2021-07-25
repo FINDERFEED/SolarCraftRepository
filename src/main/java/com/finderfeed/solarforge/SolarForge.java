@@ -44,28 +44,28 @@ import com.finderfeed.solarforge.world_generation.BiomesRegister;
 import com.finderfeed.solarforge.world_generation.features.FeaturesRegistry;
 import com.finderfeed.solarforge.world_generation.features.foliage_placers.FoliagePlacerRegistry;
 import com.finderfeed.solarforge.world_generation.features.trunk_placers.TrunkPlacersRegistry;
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.OreBlock;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
-import net.minecraft.client.gui.ScreenManager;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityClassification;
-import net.minecraft.entity.EntityType;
-import net.minecraft.inventory.container.ContainerType;
-import net.minecraft.item.*;
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.potion.Effect;
-import net.minecraft.potion.EffectType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.Block;
+
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.inventory.MenuType;
+
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectCategory;
 
 
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.world.gen.feature.Feature;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.core.Registry;
+import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraftforge.common.BiomeManager;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.ToolType;
@@ -75,42 +75,47 @@ import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.RegistryObject;
+
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
+
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fmllegacy.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 // The value here should match an entry in the META-INF/mods.toml file
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Rarity;
+
 @Mod("solarforge")
 public class SolarForge
 {
-    public  static final DeferredRegister<Effect> EFFECTS = DeferredRegister.create(ForgeRegistries.POTIONS,"solarforge");
+    public  static final DeferredRegister<MobEffect> EFFECTS = DeferredRegister.create(ForgeRegistries.POTIONS,"solarforge");
     public static final DeferredRegister<SoundEvent> SOUND_EVENTS = DeferredRegister.create(ForgeRegistries.SOUND_EVENTS,"solarforge");
-    public static final DeferredRegister<TileEntityType<?>> TILE_ENTITY_TYPE = DeferredRegister.create(ForgeRegistries.TILE_ENTITIES,"solarforge");
-    public static final DeferredRegister<ContainerType<?>> CONTAINER_TYPE = DeferredRegister.create(ForgeRegistries.CONTAINERS,"solarforge");
+    public static final DeferredRegister<BlockEntityType<?>> TILE_ENTITY_TYPE = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITIES,"solarforge");
+    public static final DeferredRegister<MenuType<?>> CONTAINER_TYPE = DeferredRegister.create(ForgeRegistries.CONTAINERS,"solarforge");
     public static final  DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS,"solarforge");
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS,"solarforge");
     public static final DeferredRegister<EntityType<?>> ENTITY_TYPE_REGISTER = DeferredRegister.create(ForgeRegistries.ENTITIES,"solarforge");
 
-    public static final ItemGroup SOLAR_GROUP = new SolarGroup("solar_forge_group");
-    public static final ItemGroup SOLAR_GROUP_BLOCKS = new SolarGroupBlocks("solar_forge_group_blocks");
-    public static final ItemGroup SOLAR_GROUP_TOOLS = new SolarGroupTools("solar_forge_group_tools");
-    public static final ItemGroup SOLAR_GROUP_FRAGMENTS = new SolarGroupFragments("solar_forge_group_fragments");
+    public static final CreativeModeTab SOLAR_GROUP = new SolarGroup("solar_forge_group");
+    public static final CreativeModeTab SOLAR_GROUP_BLOCKS = new SolarGroupBlocks("solar_forge_group_blocks");
+    public static final CreativeModeTab SOLAR_GROUP_TOOLS = new SolarGroupTools("solar_forge_group_tools");
+    public static final CreativeModeTab SOLAR_GROUP_FRAGMENTS = new SolarGroupFragments("solar_forge_group_fragments");
 
     public static final RegistryObject<SoundEvent> SOLAR_STRIKE_SOUND = SOUND_EVENTS.register("solar_ray_sound",()-> new SoundEvent(new ResourceLocation("solarforge","solar_strike_explosion_sound")));
     public static final RegistryObject<SoundEvent> SOLAR_STRIKE_BUILD_SOUND = SOUND_EVENTS.register("solar_ray_buildup_sound",()-> new SoundEvent(new ResourceLocation("solarforge","solar_strike_buildup")));
 
     public static final RegistryObject<EntityType<SolarStrikeEntity>> SOLAR_STRIKE_ENTITY_REG = ENTITY_TYPE_REGISTER.register("solar_strike_entity",
-            ()->EntityType.Builder.of(SolarStrikeEntity::new, EntityClassification.CREATURE).sized(0.5F,0.5F).build("solarforge:solar_strike_entity"));
+            ()->EntityType.Builder.of(SolarStrikeEntity::new, MobCategory.CREATURE).sized(0.5F,0.5F).build("solarforge:solar_strike_entity"));
 
-    public static final RegistryObject<Effect> SOLAR_STUN = EFFECTS.register("solar_stun",()-> new SolarStunEffect(EffectType.HARMFUL,0xd1b515));
-    public  static  final  RegistryObject<SolarForgeBlock> SOLAR_FORGE = BLOCKS.register("solar_forge",()-> new SolarForgeBlock(AbstractBlock.Properties.of(Material.STONE)
+    public static final RegistryObject<MobEffect> SOLAR_STUN = EFFECTS.register("solar_stun",()-> new SolarStunEffect(MobEffectCategory.HARMFUL,0xd1b515));
+    public  static  final  RegistryObject<SolarForgeBlock> SOLAR_FORGE = BLOCKS.register("solar_forge",()-> new SolarForgeBlock(BlockBehaviour.Properties.of(Material.STONE)
             .sound(SoundType.METAL)
             .harvestTool(ToolType.PICKAXE)
             .harvestLevel(1)
@@ -118,14 +123,14 @@ public class SolarForge
             .noOcclusion()
             .strength(3,3)));
 
-    public  static  final  RegistryObject<SolarOreBlock> SOLAR_ORE = BLOCKS.register("solar_ores",()-> new SolarOreBlock(AbstractBlock.Properties.of(Material.STONE)
+    public  static  final  RegistryObject<SolarOreBlock> SOLAR_ORE = BLOCKS.register("solar_ores",()-> new SolarOreBlock(BlockBehaviour.Properties.of(Material.STONE)
             .sound(SoundType.ANCIENT_DEBRIS)
             .harvestTool(ToolType.PICKAXE)
             .harvestLevel(2)
             .requiresCorrectToolForDrops()
             .strength(3,3)));
 
-    public  static  final  RegistryObject<InfusingTableBlock> SOLAR_INFUSER = BLOCKS.register("solar_infuser",()-> new InfusingTableBlock(AbstractBlock.Properties.of(Material.STONE)
+    public  static  final  RegistryObject<InfusingTableBlock> SOLAR_INFUSER = BLOCKS.register("solar_infuser",()-> new InfusingTableBlock(BlockBehaviour.Properties.of(Material.STONE)
             .sound(SoundType.METAL)
             .harvestTool(ToolType.PICKAXE)
             .harvestLevel(1)
@@ -134,23 +139,23 @@ public class SolarForge
             .dynamicShape()
             .strength(3,3)));
 
-    public static final RegistryObject<TileEntityType<InfusingTableTileEntity>> INFUSING_STAND_BLOCKENTITY = TILE_ENTITY_TYPE.register("infusing_stand_blockentity",()->
-            TileEntityType.Builder.of(InfusingTableTileEntity::new,SOLAR_INFUSER.get().getBlock()).build(null));
+    public static final RegistryObject<BlockEntityType<InfusingTableTileEntity>> INFUSING_STAND_BLOCKENTITY = TILE_ENTITY_TYPE.register("infusing_stand_blockentity",()->
+            BlockEntityType.Builder.of(InfusingTableTileEntity::new,SOLAR_INFUSER.get()).build(null));
 
-    public static final RegistryObject<EntityType<MeteoriteProjectile>> METEORITE = ENTITY_TYPE_REGISTER.register("solar_forge_meteorite_projectile",()->EntityType.Builder.<MeteoriteProjectile>of(MeteoriteProjectile::new,EntityClassification.MISC).sized(5,5).build("solar_forge_meteorite_projectile"));
+    public static final RegistryObject<EntityType<MeteoriteProjectile>> METEORITE = ENTITY_TYPE_REGISTER.register("solar_forge_meteorite_projectile",()->EntityType.Builder.<MeteoriteProjectile>of(MeteoriteProjectile::new,MobCategory.MISC).sized(5,5).build("solar_forge_meteorite_projectile"));
     public static  final RegistryObject<Item> TEST_ITEM = ITEMS.register("solar_shard",()-> new Item(new Item.Properties().rarity(Rarity.EPIC).tab(SOLAR_GROUP)));
-    public static  final RegistryObject<Item> SOLAR_FORGE_ITEM = ITEMS.register("solar_forge",()-> new SolarForgeBlockItem(SOLAR_FORGE.get().getBlock(),new Item.Properties().rarity(Rarity.EPIC).tab(SOLAR_GROUP_BLOCKS).stacksTo(1)));
-    public static  final RegistryObject<Item> SOLAR_ORE_ITEM = ITEMS.register("solar_ores",()-> new ProgressionBlockItem(SOLAR_ORE.get().getBlock(),new Item.Properties().tab(SOLAR_GROUP_BLOCKS)));
-    public static  final RegistryObject<Item> INFUSING_STAND_ITEM = ITEMS.register("solar_infuser",()-> new InfusingTableBlockItem(SOLAR_INFUSER.get().getBlock(),new Item.Properties().rarity(Rarity.EPIC).tab(SOLAR_GROUP_BLOCKS).stacksTo(1)));
+    public static  final RegistryObject<Item> SOLAR_FORGE_ITEM = ITEMS.register("solar_forge",()-> new SolarForgeBlockItem(SOLAR_FORGE.get(),new Item.Properties().rarity(Rarity.EPIC).tab(SOLAR_GROUP_BLOCKS).stacksTo(1)));
+    public static  final RegistryObject<Item> SOLAR_ORE_ITEM = ITEMS.register("solar_ores",()-> new ProgressionBlockItem(SOLAR_ORE.get(),new Item.Properties().tab(SOLAR_GROUP_BLOCKS)));
+    public static  final RegistryObject<Item> INFUSING_STAND_ITEM = ITEMS.register("solar_infuser",()-> new InfusingTableBlockItem(SOLAR_INFUSER.get(),new Item.Properties().rarity(Rarity.EPIC).tab(SOLAR_GROUP_BLOCKS).stacksTo(1)));
     // Directly reference a log4j logger.
     public static final Logger LOGGER = LogManager.getLogger();
-    public static final RegistryObject<TileEntityType<SolarForgeBlockEntity>> SOLAR_FORGE_BLOCKENTITY = TILE_ENTITY_TYPE.register("solar_forge_blockentity",()->
-            TileEntityType.Builder.of(SolarForgeBlockEntity::new,SOLAR_FORGE.get().getBlock()).build(null));
-    public static final RegistryObject<ContainerType<SolarForgeContainer>> SOLAR_FORGE_CONTAINER = CONTAINER_TYPE.register("solarforge_container",()-> IForgeContainerType.create(SolarForgeContainer::new));
-    public static final RegistryObject<ContainerType<InfusingTableContainer>> INFUSING_TABLE_CONTAINER = CONTAINER_TYPE.register("infusing_stand_container",()-> IForgeContainerType.create(InfusingTableContainer::new));
+    public static final RegistryObject<BlockEntityType<SolarForgeBlockEntity>> SOLAR_FORGE_BLOCKENTITY = TILE_ENTITY_TYPE.register("solar_forge_blockentity",()->
+            BlockEntityType.Builder.of(SolarForgeBlockEntity::new,SOLAR_FORGE.get()).build(null));
+    public static final RegistryObject<MenuType<SolarForgeContainer>> SOLAR_FORGE_CONTAINER = CONTAINER_TYPE.register("solarforge_container",()-> IForgeContainerType.create(SolarForgeContainer::new));
+    public static final RegistryObject<MenuType<InfusingTableContainer>> INFUSING_TABLE_CONTAINER = CONTAINER_TYPE.register("infusing_stand_container",()-> IForgeContainerType.create(InfusingTableContainer::new));
 
-    public static final IRecipeType<InfusingRecipe> INFUSING_RECIPE_TYPE = new InfusingRecipeType();
-    public static final IRecipeType<SolarSmeltingRecipe> SOLAR_SMELTING = new SolarSmeltingRecipeType();
+    public static final RecipeType<InfusingRecipe> INFUSING_RECIPE_TYPE = new InfusingRecipeType();
+    public static final RecipeType<SolarSmeltingRecipe> SOLAR_SMELTING = new SolarSmeltingRecipeType();
     public SolarForge() {
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
         ParticlesList.PARTICLES.register(bus);
@@ -225,8 +230,8 @@ public class SolarForge
         LOGGER.info("Got game settings {}", event.getMinecraftSupplier().get().options);
         MinecraftForge.EVENT_BUS.register(new TestRenderEvent());
 
-        ScreenManager.register(SOLAR_FORGE_CONTAINER.get(), SolarForgeScreen::new);
-        ScreenManager.register(INFUSING_TABLE_CONTAINER.get(), InfusingTableScreen::new);
+        MenuScreens.register(SOLAR_FORGE_CONTAINER.get(), SolarForgeScreen::new);
+        MenuScreens.register(INFUSING_TABLE_CONTAINER.get(), InfusingTableScreen::new);
     }
     // You can use SubscribeEvent and let the Event Bus discover methods to call
     @SubscribeEvent
@@ -254,13 +259,13 @@ public class SolarForge
         }
 
         @SubscribeEvent
-        public static void registerTE(RegistryEvent.Register<TileEntityType<?>> evt) {
+        public static void registerTE(RegistryEvent.Register<BlockEntityType<?>> evt) {
 
 
 
         }
         @SubscribeEvent
-        public static void registerRecipeSerializers(RegistryEvent.Register<IRecipeSerializer<?>> event) {
+        public static void registerRecipeSerializers(RegistryEvent.Register<RecipeSerializer<?>> event) {
 
             Registry.register(Registry.RECIPE_TYPE, new ResourceLocation(INFUSING_RECIPE_TYPE.toString()), INFUSING_RECIPE_TYPE);
             Registry.register(Registry.RECIPE_TYPE, new ResourceLocation(SOLAR_SMELTING.toString()), SOLAR_SMELTING);

@@ -2,11 +2,10 @@ package com.finderfeed.solarforge.misc_things;
 
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Achievement;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.Property;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.player.Player;
+
 
 public interface IProgressionBlock {
 
@@ -19,7 +18,7 @@ public interface IProgressionBlock {
 
     Achievement getRequiredProgression();
 
-    default BlockState getHarvestState(PlayerEntity playerEntity, BlockState state){
+    default BlockState getHarvestState(Player playerEntity, BlockState state){
         return Helpers.hasPlayerUnlocked(getRequiredProgression(),playerEntity) ? getUnlockedBlock().defaultBlockState():getLockedBlock().defaultBlockState();
     }
 

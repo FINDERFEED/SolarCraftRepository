@@ -2,17 +2,22 @@ package com.finderfeed.solarforge.magic_items.items;
 
 import com.finderfeed.solarforge.registries.items.ItemsRegister;
 import com.finderfeed.solarforge.world_generation.features.FeaturesRegistry;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.registry.MutableRegistry;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.world.World;
-import net.minecraft.world.biome.Biome;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.core.WritableRegistry;
+import net.minecraft.core.Registry;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraftforge.common.BiomeManager;
 
 import java.util.Optional;
+
+import net.minecraft.world.item.Item.Properties;
+import org.lwjgl.system.CallbackI;
 
 public class BlueGemItem extends Item {
 
@@ -23,8 +28,8 @@ public class BlueGemItem extends Item {
     @Override
     public boolean onEntityItemUpdate(ItemStack stack, ItemEntity entity) {
         if (!entity.level.isClientSide){
-            World world = entity.level;
-            Optional<MutableRegistry<Biome>> reg = world.registryAccess().registry(Registry.BIOME_REGISTRY);
+            Level world = entity.level;
+            Optional<? extends Registry<Biome>> reg = world.registryAccess().registry(Registry.BIOME_REGISTRY);
             if (reg.isPresent()) {
                 if ((world.getBiome(entity.blockPosition()).equals(reg.get().get(FeaturesRegistry.MOLTEN_BIOME_KEY)))
                         && entity.level.getBlockState(entity.blockPosition()).is(Blocks.LAVA)) {
@@ -35,7 +40,7 @@ public class BlueGemItem extends Item {
                         for (int i = 0; i < stack.getCount();i++) {
                             world.addFreshEntity(new ItemEntity(world, entity.getX(), entity.getY(), entity.getZ(), new ItemStack(ItemsRegister.BLUE_GEM_ENCHANCED.get(), 1)));
                         }
-                        entity.remove();
+                        entity.remove(Entity.RemovalReason.KILLED);
                     }
 
                 } else {

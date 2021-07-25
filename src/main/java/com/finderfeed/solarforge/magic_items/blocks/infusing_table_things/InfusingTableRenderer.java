@@ -1,25 +1,25 @@
 package com.finderfeed.solarforge.magic_items.blocks.infusing_table_things;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.model.ItemCameraTransforms;
+import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
-import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.vector.Vector3f;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
+import net.minecraft.resources.ResourceLocation;
+import com.mojang.math.Vector3f;
 
-public class InfusingTableRenderer extends TileEntityRenderer<InfusingTableTileEntity> {
+public class InfusingTableRenderer extends BlockEntityRenderer<InfusingTableTileEntity> {
     public final ResourceLocation text = new ResourceLocation("solarforge","textures/misc/solar_infuser_ring.png");
-    public InfusingTableRenderer(TileEntityRendererDispatcher p_i226006_1_) {
+    public InfusingTableRenderer(BlockEntityRenderDispatcher p_i226006_1_) {
         super(p_i226006_1_);
     }
 
     @Override
-    public void render(InfusingTableTileEntity tile, float partialTicks, MatrixStack matrices, IRenderTypeBuffer buffer, int light, int light2) {
+    public void render(InfusingTableTileEntity tile, float partialTicks, PoseStack matrices, MultiBufferSource buffer, int light, int light2) {
         float time = (tile.getLevel().getGameTime()+partialTicks) ;
         if (tile.RECIPE_IN_PROGRESS) {
             matrices.pushPose();
@@ -64,23 +64,23 @@ public class InfusingTableRenderer extends TileEntityRenderer<InfusingTableTileE
             if (tile.getItem(9).isEmpty()) {
                 matrices.translate(0.5, 0.5, 0.5);
                 matrices.mulPose(Vector3f.YP.rotationDegrees((time % 360) * 2f));
-                Minecraft.getInstance().getItemRenderer().render(tile.getItem(0), ItemCameraTransforms.TransformType.GROUND, true,
+                Minecraft.getInstance().getItemRenderer().render(tile.getItem(0), ItemTransforms.TransformType.GROUND, true,
                         matrices, buffer, light, light2, Minecraft.getInstance().getItemRenderer().getModel(tile.getItem(0), null, null));
             }else{
                 matrices.translate(0.5, 0.5, 0.5);
                 matrices.mulPose(Vector3f.YP.rotationDegrees((time % 360) * 2f));
-                Minecraft.getInstance().getItemRenderer().render(tile.getItem(9), ItemCameraTransforms.TransformType.GROUND, true,
+                Minecraft.getInstance().getItemRenderer().render(tile.getItem(9), ItemTransforms.TransformType.GROUND, true,
                         matrices, buffer, light, light2, Minecraft.getInstance().getItemRenderer().getModel(tile.getItem(9), null, null));
             }
         }
         matrices.popPose();
     }
 
-    public void drawRing(float partialTicks,MatrixStack stack,IRenderTypeBuffer buffer,int light,int light2,float scaleFactor,float angle){
-        IVertexBuilder vertex = buffer.getBuffer(RenderType.text(text));
+    public void drawRing(float partialTicks,PoseStack stack,MultiBufferSource buffer,int light,int light2,float scaleFactor,float angle){
+        VertexConsumer vertex = buffer.getBuffer(RenderType.text(text));
         stack.translate(0.5,0.8,0.5);
         stack.mulPose(Vector3f.YP.rotationDegrees(angle));
-        MatrixStack.Entry entry = stack.last();
+        PoseStack.Pose entry = stack.last();
         vertex.vertex(entry.pose(),-0.5F*scaleFactor,0,-0.5F*scaleFactor).color(255,255,255,255).uv(1,0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
         vertex.vertex(entry.pose(),0.5F*scaleFactor,0,-0.5F*scaleFactor).color(255,255,255,255).uv(1,1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
         vertex.vertex(entry.pose(),0.5F*scaleFactor,0,0.5F*scaleFactor).color(255,255,255,255).uv(0,1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();

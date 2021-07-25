@@ -1,19 +1,22 @@
 package com.finderfeed.solarforge.packet_handler.packets;
 
 import com.finderfeed.solarforge.magic_items.blocks.solar_forge_block.SolarForgeBlockEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.core.BlockPos;
+import net.minecraftforge.fmllegacy.network.NetworkEvent;
+
 
 import java.util.function.Supplier;
+
+
 
 public class AbilityBuyPacket {
     private final String str;
     private final BlockPos pos;
     private final int amount;
-    public AbilityBuyPacket(PacketBuffer buf){
+    public AbilityBuyPacket(FriendlyByteBuf buf){
     str = buf.readUtf(20);
     pos = buf.readBlockPos();
     amount = buf.readInt();
@@ -24,15 +27,15 @@ public class AbilityBuyPacket {
         this.amount = amount;
 
     }
-    public void toBytes(PacketBuffer buf){
+    public void toBytes(FriendlyByteBuf buf){
     buf.writeUtf(str);
     buf.writeBlockPos(pos);
     buf.writeInt(amount);
     }
     public void handle(Supplier<NetworkEvent.Context> ctx){
         ctx.get().enqueueWork(()->{
-            ServerPlayerEntity enti = ctx.get().getSender();
-            PlayerEntity entity = (PlayerEntity)enti;
+            ServerPlayer enti = ctx.get().getSender();
+            Player entity = (Player)enti;
 
             if (!enti.getPersistentData().getBoolean("solar_forge_can_player_use_"+str) && enti.level.getBlockEntity(pos) != null && enti.level.getBlockEntity(pos) instanceof SolarForgeBlockEntity) {
                 SolarForgeBlockEntity blockEntity = (SolarForgeBlockEntity) enti.level.getBlockEntity(pos);

@@ -4,13 +4,13 @@ package com.finderfeed.solarforge.baked_models;
 
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.misc_things.IProgressionBlock;
-import net.minecraft.block.BlockState;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.model.BakedQuad;
-import net.minecraft.client.renderer.model.IBakedModel;
-import net.minecraft.client.renderer.model.ItemOverrideList;
+import net.minecraft.client.renderer.block.model.BakedQuad;
+import net.minecraft.client.resources.model.BakedModel;
+import net.minecraft.client.renderer.block.model.ItemOverrides;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.util.Direction;
+import net.minecraft.core.Direction;
 import net.minecraftforge.client.model.data.EmptyModelData;
 import net.minecraftforge.client.model.data.IModelData;
 
@@ -21,16 +21,16 @@ import java.util.List;
 import java.util.Random;
 
 
-public class ProgressionOreModel implements IBakedModel {
+public class ProgressionOreModel implements BakedModel {
 
-    public IBakedModel model;
+    public BakedModel model;
 
-    public ProgressionOreModel(IBakedModel model){
+    public ProgressionOreModel(BakedModel model){
         this.model = model;
     }
 
     @Override
-    public IBakedModel getBakedModel() {
+    public BakedModel getBakedModel() {
         return model;
     }
 
@@ -88,7 +88,7 @@ public class ProgressionOreModel implements IBakedModel {
     }
 
     @Override
-    public ItemOverrideList getOverrides() {
+    public ItemOverrides getOverrides() {
         return model.getOverrides();
     }
 }

@@ -2,7 +2,7 @@ package com.finderfeed.solarforge.rendering.shaders;
 
 import com.finderfeed.solarforge.SolarForge;
 import net.minecraft.client.Minecraft;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import org.apache.logging.log4j.Level;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;

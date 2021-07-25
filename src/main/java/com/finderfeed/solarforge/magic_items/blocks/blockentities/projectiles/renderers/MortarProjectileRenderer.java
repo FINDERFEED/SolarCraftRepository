@@ -1,28 +1,30 @@
 package com.finderfeed.solarforge.magic_items.blocks.blockentities.projectiles.renderers;
 
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.projectiles.MortarProjectile;
-import com.mojang.blaze3d.matrix.MatrixStack;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.culling.ClippingHelper;
+import net.minecraft.client.renderer.culling.Frustum;
 import net.minecraft.client.renderer.entity.EntityRenderer;
-import net.minecraft.client.renderer.entity.EntityRendererManager;
-import net.minecraft.client.renderer.model.ModelRenderer;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
+import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.math.vector.Vector3f;
+import com.mojang.math.Vector3f;
+
+import ResourceLocation;
 
 public class MortarProjectileRenderer extends EntityRenderer<MortarProjectile> {
     public final ResourceLocation RAY = new ResourceLocation("solarforge","textures/misc/crossbow_shot_texture.png");
-    public final ModelRenderer ray = new ModelRenderer(16,16,0,0);
-    public MortarProjectileRenderer(EntityRendererManager p_i46179_1_) {
+    public final ModelPart ray = new ModelPart(16,16,0,0);
+    public MortarProjectileRenderer(EntityRenderDispatcher p_i46179_1_) {
         super(p_i46179_1_);
         ray.addBox(-16,-16,-16,16,16,16);
         ray.setPos(8,8,8);
     }
 
     @Override
-    public void render(MortarProjectile p_225623_1_, float p_225623_2_, float p_225623_3_, MatrixStack p_225623_4_, IRenderTypeBuffer p_225623_5_, int p_225623_6_) {
+    public void render(MortarProjectile p_225623_1_, float p_225623_2_, float p_225623_3_, PoseStack p_225623_4_, MultiBufferSource p_225623_5_, int p_225623_6_) {
 
 
         float time = (p_225623_1_.level.getGameTime() + p_225623_2_);
@@ -34,7 +36,7 @@ public class MortarProjectileRenderer extends EntityRenderer<MortarProjectile> {
     }
 
     @Override
-    public boolean shouldRender(MortarProjectile p_225626_1_, ClippingHelper p_225626_2_, double p_225626_3_, double p_225626_5_, double p_225626_7_) {
+    public boolean shouldRender(MortarProjectile p_225626_1_, Frustum p_225626_2_, double p_225626_3_, double p_225626_5_, double p_225626_7_) {
         return true;
     }
 

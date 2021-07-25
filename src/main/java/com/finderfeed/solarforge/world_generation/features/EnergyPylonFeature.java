@@ -3,48 +3,48 @@ package com.finderfeed.solarforge.world_generation.features;
 import com.finderfeed.solarforge.Helpers;
 import com.mojang.serialization.Codec;
 import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.FlowingFluidBlock;
-import net.minecraft.util.Mirror;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.Rotation;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.LiquidBlock;
+import net.minecraft.world.level.block.Mirror;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.core.BlockPos;
 import net.minecraft.util.math.ChunkPos;
-import net.minecraft.util.math.MutableBoundingBox;
-import net.minecraft.world.ISeedReader;
-import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.Heightmap;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.NoFeatureConfig;
-import net.minecraft.world.gen.feature.template.BlockIgnoreStructureProcessor;
-import net.minecraft.world.gen.feature.template.PlacementSettings;
-import net.minecraft.world.gen.feature.template.Template;
-import net.minecraft.world.gen.feature.template.TemplateManager;
+import net.minecraft.world.level.levelgen.structure.BoundingBox;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import net.minecraft.world.level.levelgen.structure.templatesystem.BlockIgnoreProcessor;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureManager;
 import net.minecraftforge.fluids.IFluidBlock;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class EnergyPylonFeature extends Feature<NoFeatureConfig> {
+public class EnergyPylonFeature extends Feature<NoneFeatureConfiguration> {
     private static final ResourceLocation FEATURE = new ResourceLocation("solarforge:worldgen_features/energy_pylon");
 
-    public EnergyPylonFeature(Codec<NoFeatureConfig> p_i231953_1_) {
+    public EnergyPylonFeature(Codec<NoneFeatureConfiguration> p_i231953_1_) {
         super(p_i231953_1_);
     }
 
     @Override
-    public boolean place(ISeedReader world, ChunkGenerator chunkGenerator, Random random, BlockPos pos, NoFeatureConfig cfg) {
+    public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random, BlockPos pos, NoneFeatureConfiguration cfg) {
 
         Rotation rot = Rotation.getRandom(random);
-        TemplateManager manager = world.getLevel().getStructureManager();
+        StructureManager manager = world.getLevel().getStructureManager();
         List<ResourceLocation> list = new ArrayList<>();
 
-        Template templ = manager.getOrCreate(FEATURE);
+        StructureTemplate templ = manager.getOrCreate(FEATURE);
 
 
 
-        PlacementSettings set = new PlacementSettings().addProcessor(BlockIgnoreStructureProcessor.AIR).setRandom(random).setRotation(rot).setBoundingBox(MutableBoundingBox.infinite());
+        StructurePlaceSettings set = new StructurePlaceSettings().addProcessor(BlockIgnoreProcessor.AIR).setRandom(random).setRotation(rot).setBoundingBox(BoundingBox.infinite());
 
         BlockPos pos1 = findFlatChunkPosition(world,pos,5);
 
@@ -56,12 +56,12 @@ public class EnergyPylonFeature extends Feature<NoFeatureConfig> {
         return true;
     }
 
-    public static BlockPos findFlatChunkPosition(ISeedReader world, BlockPos mainpos, int blockDiameter){
+    public static BlockPos findFlatChunkPosition(WorldGenLevel world, BlockPos mainpos, int blockDiameter){
         int trueDiameter = blockDiameter-1;
 
         for (int i = 0;i <= 16-trueDiameter;i++){
             for (int g = 0;g <= 16-trueDiameter;g++){
-                BlockPos iterator = mainpos.offset(i,world.getHeight(Heightmap.Type.WORLD_SURFACE_WG,mainpos.getX()+i,mainpos.getZ()+g)-1,g);
+                BlockPos iterator = mainpos.offset(i,world.getHeight(Heightmap.Types.WORLD_SURFACE_WG,mainpos.getX()+i,mainpos.getZ()+g)-1,g);
                 if (checkIfFlat(world,iterator,trueDiameter)){
                     return iterator;
                 }
@@ -70,13 +70,13 @@ public class EnergyPylonFeature extends Feature<NoFeatureConfig> {
         return Helpers.NULL_POS;
     }
 
-    public static boolean checkIfFlat(ISeedReader world,BlockPos whereToCheck,int diameter){
+    public static boolean checkIfFlat(WorldGenLevel world,BlockPos whereToCheck,int diameter){
         for (int i = 0;i <= diameter;i++){
             for (int g = 0;g <= diameter;g++){
 
                 if ((world.getBlockState(whereToCheck.offset(i,1,g)).getBlock() != Blocks.AIR) ||
                         (world.getBlockState(whereToCheck.offset(i,0,g)).getBlock() == Blocks.AIR) ||
-                        (world.getBlockState(whereToCheck.offset(i,0,g)).getBlock() instanceof FlowingFluidBlock)){
+                        (world.getBlockState(whereToCheck.offset(i,0,g)).getBlock() instanceof LiquidBlock)){
                     return false;
                 }
             }

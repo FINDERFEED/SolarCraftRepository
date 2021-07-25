@@ -1,8 +1,8 @@
 package com.finderfeed.solarforge.packet_handler;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.network.NetworkEvent;
 
@@ -12,7 +12,7 @@ public class AbilityIndexSetPacket {
     private int index;
     private int whatAbility;
 
-    public AbilityIndexSetPacket(PacketBuffer buf){
+    public AbilityIndexSetPacket(FriendlyByteBuf buf){
     int [] arr = buf.readVarIntArray();
     index = arr[0];
     whatAbility = arr[1];
@@ -21,13 +21,13 @@ public class AbilityIndexSetPacket {
         this.index = arr[0];
         this.whatAbility = arr[1];
     }
-    public void toBytes(PacketBuffer buf){
+    public void toBytes(FriendlyByteBuf buf){
     buf.writeVarIntArray(new int[]{index, whatAbility});
     }
     public void handle(Supplier<NetworkEvent.Context> ctx){
         ctx.get().enqueueWork(()->{
-            ServerPlayerEntity enti = ctx.get().getSender();
-            PlayerEntity entity = (PlayerEntity)enti;
+            ServerPlayer enti = ctx.get().getSender();
+            Player entity = (Player)enti;
             entity.getPersistentData().putInt("solar_forge_ability_binded_"+Integer.toString(index),whatAbility);
             System.out.println("ability set");
         });

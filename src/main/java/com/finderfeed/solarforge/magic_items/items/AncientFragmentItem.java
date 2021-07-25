@@ -1,21 +1,19 @@
 package com.finderfeed.solarforge.magic_items.items;
 
-import com.finderfeed.solarforge.Helpers;
-import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Achievement;
+
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.ProgressionHelper;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.item.TooltipFlag;
+
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.core.NonNullList;
+import net.minecraft.network.chat.Component;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.Level;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -28,13 +26,10 @@ public class AncientFragmentItem extends Item {
 
 
 
-    @Override
-    public boolean verifyTagAfterLoad(CompoundNBT p_179215_1_) {
-        return true;
-    }
+
 
     @Override
-    public void fillItemCategory(ItemGroup p_150895_1_, NonNullList<ItemStack> list) {
+    public void fillItemCategory(CreativeModeTab p_150895_1_, NonNullList<ItemStack> list) {
         super.fillItemCategory(p_150895_1_, list);
         if (this.allowdedIn(p_150895_1_)) {
             for (AncientFragment frag : AncientFragment.getAllFragments()) {
@@ -48,16 +43,16 @@ public class AncientFragmentItem extends Item {
 
 
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable World level, List<ITextComponent> texts, ITooltipFlag p_77624_4_) {
-        CompoundNBT nbt = stack.getTagElement(ProgressionHelper.TAG_ELEMENT);
+    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> texts, TooltipFlag p_77624_4_) {
+        CompoundTag nbt = stack.getTagElement(ProgressionHelper.TAG_ELEMENT);
         if (nbt == null){
-            texts.add(new TranslationTextComponent("ancient_frag.no_tag").withStyle(TextFormatting.GOLD));
+            texts.add(new TranslatableComponent("ancient_frag.no_tag").withStyle(ChatFormatting.GOLD));
         }else{
             AncientFragment frag = AncientFragment.getFragmentByID(nbt.getString(ProgressionHelper.FRAG_ID));
             if (frag != null){
-                texts.add(new TranslationTextComponent("ancient_frag.fragment_active").withStyle(TextFormatting.GOLD).append(frag.getTranslation()));
+                texts.add(new TranslatableComponent("ancient_frag.fragment_active").withStyle(ChatFormatting.GOLD).append(frag.getTranslation()));
             }
-            texts.add(new TranslationTextComponent("ancient_frag.has_tag").withStyle(TextFormatting.GOLD));
+            texts.add(new TranslatableComponent("ancient_frag.has_tag").withStyle(ChatFormatting.GOLD));
         }
 
         super.appendHoverText(stack, level, texts, p_77624_4_);

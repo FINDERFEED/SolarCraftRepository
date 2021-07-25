@@ -1,13 +1,13 @@
 package com.finderfeed.solarforge.particles;
 
 import net.minecraft.client.particle.*;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.particles.BasicParticleType;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.core.particles.SimpleParticleType;
 
 import javax.annotation.Nullable;
 
-public class HealParticle extends SpriteTexturedParticle {
-    protected HealParticle(ClientWorld p_i232448_1_, double p_i232448_2_, double p_i232448_4_, double p_i232448_6_, double x, double y, double z) {
+public class HealParticle extends TextureSheetParticle {
+    protected HealParticle(ClientLevel p_i232448_1_, double p_i232448_2_, double p_i232448_4_, double p_i232448_6_, double x, double y, double z) {
         super(p_i232448_1_, p_i232448_2_, p_i232448_4_, p_i232448_6_, x,y,z);
 
         this.rCol = 255;
@@ -27,8 +27,8 @@ public class HealParticle extends SpriteTexturedParticle {
     }
 
     @Override
-    public IParticleRenderType getRenderType() {
-        return IParticleRenderType.PARTICLE_SHEET_TRANSLUCENT;
+    public ParticleRenderType getRenderType() {
+        return ParticleRenderType.PARTICLE_SHEET_TRANSLUCENT;
     }
 
     @Override
@@ -39,15 +39,15 @@ public class HealParticle extends SpriteTexturedParticle {
         }
     }
 
-    public static class Factory implements IParticleFactory<BasicParticleType> {
-        private final IAnimatedSprite spriteSetl;
-        public Factory(IAnimatedSprite sprite){
+    public static class Factory implements ParticleProvider<SimpleParticleType> {
+        private final SpriteSet spriteSetl;
+        public Factory(SpriteSet sprite){
             this.spriteSetl = sprite;
         }
 
         @Nullable
         @Override
-        public Particle createParticle(BasicParticleType type, ClientWorld world, double x, double y, double z, double xv, double yv, double zv) {
+        public Particle createParticle(SimpleParticleType type, ClientLevel world, double x, double y, double z, double xv, double yv, double zv) {
             HealParticle particle = new HealParticle(world,x,y,z,xv,yv,zv);
             particle.setColor(1,1,1);
             particle.pickSprite(this.spriteSetl);

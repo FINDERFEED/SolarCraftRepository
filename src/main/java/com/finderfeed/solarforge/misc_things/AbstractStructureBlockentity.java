@@ -4,22 +4,22 @@ import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
 import com.finderfeed.solarforge.packet_handler.TriggerToastPacket;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Achievement;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.world.level.block.entity.TickableBlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.phys.AABB;
 import net.minecraftforge.fml.network.NetworkDirection;
 
 import java.util.List;
 
-public abstract class AbstractStructureBlockentity extends TileEntity implements ITickableTileEntity {
+public abstract class AbstractStructureBlockentity extends BlockEntity  {
 
     public final Achievement a;
-    public final AxisAlignedBB box;
+    public final AABB box;
 
-    public AbstractStructureBlockentity(TileEntityType<?> p_i48289_1_, Achievement a, AxisAlignedBB box) {
+    public AbstractStructureBlockentity(BlockEntityType<?> p_i48289_1_, Achievement a, AABB box) {
         super(p_i48289_1_);
         this.a = a;
         this.box = box;
@@ -28,8 +28,8 @@ public abstract class AbstractStructureBlockentity extends TileEntity implements
     @Override
     public void tick() {
         if (!this.level.isClientSide){
-            List<PlayerEntity> list = this.level.getEntitiesOfClass(PlayerEntity.class,box.move(this.worldPosition));
-            for (PlayerEntity a :list){
+            List<Player> list = this.level.getEntitiesOfClass(Player.class,box.move(this.worldPosition));
+            for (Player a :list){
                 Helpers.fireProgressionEvent(a,this.a);
             }
         }

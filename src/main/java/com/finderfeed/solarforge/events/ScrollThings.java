@@ -6,7 +6,7 @@ import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.Anc
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.BookEntry;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.ProgressionHelper;
 import net.minecraft.client.Minecraft;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ClientPlayerNetworkEvent;
 import net.minecraftforge.client.event.InputEvent;
@@ -30,8 +30,8 @@ public class ScrollThings {
         AncientFragment.initFragmentsMap();
         BookEntry.initMap();
         if (event.getPlayer() != null) {
-            event.getPlayer().sendMessage(new TranslationTextComponent("solarcraft.welcome_message"), event.getPlayer().getUUID());
-            event.getPlayer().sendMessage(new TranslationTextComponent("solarcraft.welcome_message2"), event.getPlayer().getUUID());
+            event.getPlayer().sendMessage(new TranslatableComponent("solarcraft.welcome_message"), event.getPlayer().getUUID());
+            event.getPlayer().sendMessage(new TranslatableComponent("solarcraft.welcome_message2"), event.getPlayer().getUUID());
             ProgressionHelper.initInfRecipesMap(event.getPlayer().level);
             ProgressionHelper.initSmeltingRecipesMap(event.getPlayer().level);
         }

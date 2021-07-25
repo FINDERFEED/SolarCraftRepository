@@ -1,22 +1,24 @@
 package com.finderfeed.solarforge.magic_items.items;
 
 import com.finderfeed.solarforge.misc_things.*;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUseContext;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.world.World;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.ChatFormatting;
+import net.minecraft.world.level.Level;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
+
+import net.minecraft.world.item.Item.Properties;
 
 public class SolarNetworkBinder extends Item {
     public BlockPos pos1 = null;
@@ -34,28 +36,28 @@ public class SolarNetworkBinder extends Item {
 //        return super.use(p_77659_1_, p_77659_2_, p_77659_3_);
 //    }
 
-    public ActionResultType useOn(ItemUseContext ctx) {
+    public InteractionResult useOn(UseOnContext ctx) {
         BlockPos pos = ctx.getClickedPos();
-        World world = ctx.getLevel();
+        Level world = ctx.getLevel();
         if (!world.isClientSide){
 
             if (!ctx.getPlayer().isCrouching()) {
                 bindAll(world, ctx.getClickedPos(), ctx.getPlayer());
             }else{
                 setNull();
-                ctx.getPlayer().displayClientMessage(new StringTextComponent("Positions cleared"),true);
+                ctx.getPlayer().displayClientMessage(new TextComponent("Positions cleared"),true);
             }
         }
 
-        return ActionResultType.CONSUME;
+        return InteractionResult.CONSUME;
     }
 
     @Override
-    public void appendHoverText(ItemStack p_77624_1_, @Nullable World p_77624_2_, List<ITextComponent> p_77624_3_, ITooltipFlag p_77624_4_) {
-        p_77624_3_.add(new StringTextComponent("Click on relay,energy generator,energy user or core to set two positions. When two positions exist they are reset and the blocks are connected.").withStyle(TextFormatting.GOLD));
+    public void appendHoverText(ItemStack p_77624_1_, @Nullable Level p_77624_2_, List<Component> p_77624_3_, TooltipFlag p_77624_4_) {
+        p_77624_3_.add(new TextComponent("Click on relay,energy generator,energy user or core to set two positions. When two positions exist they are reset and the blocks are connected.").withStyle(ChatFormatting.GOLD));
         super.appendHoverText(p_77624_1_, p_77624_2_, p_77624_3_, p_77624_4_);
     }
-    public void bindAll(World world,BlockPos clickedPos,PlayerEntity p){
+    public void bindAll(Level world,BlockPos clickedPos,Player p){
                 if (pos1 == null && pos2 == null){
             if (world.getBlockEntity(clickedPos) != null && (world.getBlockEntity(clickedPos) instanceof IBindable)) {
                 pos1 = clickedPos;
@@ -241,7 +243,7 @@ public class SolarNetworkBinder extends Item {
 //        }
 //    }
 
-    public boolean isValid(TileEntity tile,double length){
+    public boolean isValid(BlockEntity tile,double length){
         if (tile instanceof AbstractSolarNetworkRepeater){
             if (((AbstractSolarNetworkRepeater) tile).getRadius() < length){
                 return false;
@@ -268,11 +270,11 @@ public class SolarNetworkBinder extends Item {
         pos1 = null;
         pos2 = null;
     }
-    public void print(boolean a, PlayerEntity playerEntity){
+    public void print(boolean a, Player playerEntity){
         if (a){
-            playerEntity.displayClientMessage(new StringTextComponent("Binding sucesseful"),true);
+            playerEntity.displayClientMessage(new TextComponent("Binding sucesseful"),true);
         }else{
-            playerEntity.displayClientMessage(new StringTextComponent("Binding failed"),true);
+            playerEntity.displayClientMessage(new TextComponent("Binding failed"),true);
         }
     }
 }

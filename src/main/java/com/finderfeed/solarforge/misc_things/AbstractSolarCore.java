@@ -4,48 +4,51 @@ import com.finderfeed.solarforge.Helpers;
 
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
 import com.finderfeed.solarforge.packet_handler.packets.UpdateCoreOnClient;
-import net.minecraft.block.BlockState;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.nbt.CompoundTag;
 
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.fml.network.PacketDistributor;
+
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.core.BlockPos;
+
+import net.minecraftforge.fmllegacy.network.PacketDistributor;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class AbstractSolarCore extends TileEntity implements ITickableTileEntity,IBindable,ISolarEnergyContainer {
+public abstract class AbstractSolarCore extends BlockEntity implements IBindable,ISolarEnergyContainer {
     public int energy = 0;
     public int count = 0;
     public int update_tick=0;
     public List<BlockPos> poslist = new ArrayList<>();
-    public AbstractSolarCore(TileEntityType<?> p_i48289_1_) {
-        super(p_i48289_1_);
+
+    public AbstractSolarCore(BlockEntityType<?> p_155228_, BlockPos p_155229_, BlockState p_155230_) {
+        super(p_155228_, p_155229_, p_155230_);
     }
 
-    @Override
-    public void tick() {
-        if (this.level.isClientSide){
+
+    public static void tick(Level world, BlockPos pos, BlockState blockState, AbstractSolarCore tile) {
+        if (tile.level.isClientSide){
             //System.out.println(poslist);
         }
-        if (!this.level.isClientSide && getConditionToFunction()){
+        if (!tile.level.isClientSide && tile.getConditionToFunction()){
 
 
-            count = poslist.size();
+            tile.count = tile.poslist.size();
             List<BlockPos> toRemove = new ArrayList<>();
 
-            for (BlockPos a :poslist){
+            for (BlockPos a :tile.poslist){
                 boolean b = false;
-                TileEntity tileAtPos = this.level.getBlockEntity(a);
+                BlockEntity tileAtPos = tile.level.getBlockEntity(a);
                 if (tileAtPos instanceof AbstractSolarNetworkRepeater){
                     List<BlockPos > visited = new ArrayList<>();
-                    ((AbstractSolarNetworkRepeater) tileAtPos).tryTransmitEnergyCore(this,getMaxEnergyFlowPerSec(), visited);
+                    ((AbstractSolarNetworkRepeater) tileAtPos).tryTransmitEnergyCore(tile,tile.getMaxEnergyFlowPerSec(), visited);
                 }else if (tileAtPos instanceof IEnergyUser){
-                    if (energy >= getMaxEnergyFlowPerSec() && ((IEnergyUser) tileAtPos).requriesEnergy()  ) {
-                        ((IEnergyUser) tileAtPos).giveEnergy(getMaxEnergyFlowPerSec());
-                        this.energy -= getMaxEnergyFlowPerSec();
+                    if (tile.energy >= tile.getMaxEnergyFlowPerSec() && ((IEnergyUser) tileAtPos).requriesEnergy()  ) {
+                        ((IEnergyUser) tileAtPos).giveEnergy(tile.getMaxEnergyFlowPerSec());
+                        tile.energy -= tile.getMaxEnergyFlowPerSec();
                     }
                 }else {
 
@@ -54,12 +57,12 @@ public abstract class AbstractSolarCore extends TileEntity implements ITickableT
                 }
 
 
-                    SolarForgePacketHandler.INSTANCE.send(PacketDistributor.NEAR.with(PacketDistributor.TargetPoint.p(worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(), 40, level.dimension())),
-                            new UpdateCoreOnClient(worldPosition, a, poslist.indexOf(a), b));
+                    SolarForgePacketHandler.INSTANCE.send(PacketDistributor.NEAR.with(PacketDistributor.TargetPoint.p(tile.worldPosition.getX(), tile.worldPosition.getY(), tile.worldPosition.getZ(), 40, tile.level.dimension())),
+                            new UpdateCoreOnClient(tile.worldPosition, a, tile.poslist.indexOf(a), b));
 
 
             }
-            poslist.removeAll(toRemove);
+            tile.poslist.removeAll(toRemove);
         }
     }
 
@@ -69,17 +72,17 @@ public abstract class AbstractSolarCore extends TileEntity implements ITickableT
     public abstract boolean getConditionToFunction();
 
     @Override
-    public void load(BlockState p_230337_1_, CompoundNBT p_230337_2_) {
+    public void load( CompoundTag p_230337_2_) {
         count = p_230337_2_.getInt("sizepos");
         for (int i = 0;i<count;i++) {
             poslist.add(new BlockPos(p_230337_2_.getInt("xpos"+i), p_230337_2_.getInt("ypos"+i), p_230337_2_.getInt("zpos"+i)));
         }
         energy = p_230337_2_.getInt("energy_level");
-        super.load(p_230337_1_, p_230337_2_);
+        super.load( p_230337_2_);
     }
 
     @Override
-    public CompoundNBT save(CompoundNBT p_189515_1_) {
+    public CompoundTag save(CompoundTag p_189515_1_) {
         p_189515_1_.putInt("sizepos",count);
         for (int i = 0;i<poslist.size();i++) {
             p_189515_1_.putInt("xpos"+i, poslist.get(i).getX());
@@ -102,32 +105,7 @@ public abstract class AbstractSolarCore extends TileEntity implements ITickableT
 
     }
 
-//    @Nullable
-//    @Override
-//    public SUpdateTileEntityPacket getUpdatePacket() {
-//        System.out.println("a");
-//        CompoundNBT cmp = new CompoundNBT();
-//        for (int i = 0;i < poslist.size();i++){
-//            cmp.put("pos"+i,NBTUtil.writeBlockPos(poslist.get(i)));
-//        }
-//        cmp.putInt("pos_count",count);
-//        return new SUpdateTileEntityPacket(worldPosition,1,cmp);
-//    }
-//
-//
-//    @Override
-//    public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
-//        System.out.println("b");
-//
-//        CompoundNBT cmp = pkt.getTag();
-//        int cnt = cmp.getInt("pos_count");
-//        List<BlockPos> posList = new ArrayList<>();
-//        for (int i = 0; i < cnt;i++){
-//            posList.add(NBTUtil.readBlockPos(cmp.getCompound("pos"+i)));
-//        }
-//        this.poslist = posList;
-//        super.onDataPacket(net, pkt);
-//    }
+
     @Override
     public double getEnergy() {
         return energy;

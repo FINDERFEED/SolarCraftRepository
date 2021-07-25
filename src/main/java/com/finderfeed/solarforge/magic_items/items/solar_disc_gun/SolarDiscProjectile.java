@@ -2,66 +2,71 @@ package com.finderfeed.solarforge.magic_items.items.solar_disc_gun;
 
 import com.finderfeed.solarforge.misc_things.ParticlesList;
 import com.finderfeed.solarforge.registries.projectiles.Projectiles;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.projectile.DamagingProjectileEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.IPacket;
-import net.minecraft.particles.IParticleData;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.math.*;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.projectile.AbstractHurtingProjectile;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.world.damagesource.DamageSource;
+
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.level.Level;
+
 
 import java.util.List;
 
-public class SolarDiscProjectile extends DamagingProjectileEntity {
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraftforge.fmllegacy.network.NetworkHooks;
+
+public class SolarDiscProjectile extends AbstractHurtingProjectile {
     public int count = 0;
     public float pitch = 0;
     public float yaw = 0;
-    public SolarDiscProjectile(EntityType<? extends DamagingProjectileEntity> p_i50173_1_, World p_i50173_2_) {
+    public SolarDiscProjectile(EntityType<? extends AbstractHurtingProjectile> p_i50173_1_, Level p_i50173_2_) {
         super(p_i50173_1_, p_i50173_2_);
 
     }
 
-    public SolarDiscProjectile(double p_i50174_2_, double p_i50174_4_, double p_i50174_6_, double p_i50174_8_, double p_i50174_10_, double p_i50174_12_, World p_i50174_14_) {
+    public SolarDiscProjectile(double p_i50174_2_, double p_i50174_4_, double p_i50174_6_, double p_i50174_8_, double p_i50174_10_, double p_i50174_12_, Level p_i50174_14_) {
         super(Projectiles.SOLAR_DISC.get(), p_i50174_2_, p_i50174_4_, p_i50174_6_, p_i50174_8_, p_i50174_10_, p_i50174_12_, p_i50174_14_);
     }
 
-    public SolarDiscProjectile(LivingEntity p_i50175_2_, World p_i50175_9_) {
+    public SolarDiscProjectile(LivingEntity p_i50175_2_, Level p_i50175_9_) {
         super(Projectiles.SOLAR_DISC.get(),  p_i50175_9_);
     }
 
     @Override
-    protected void onHitBlock(BlockRayTraceResult p_230299_1_) {
-        this.remove();
+    protected void onHitBlock(BlockHitResult p_230299_1_) {
+        this.remove(RemovalReason.KILLED);
     }
 
     @Override
-    protected void onHitEntity(EntityRayTraceResult ctx) {
+    protected void onHitEntity(EntityHitResult ctx) {
 
         if (!this.level.isClientSide && ctx.getEntity() instanceof LivingEntity ){
             LivingEntity ent = (LivingEntity) ctx.getEntity();
             ent.hurt(DamageSource.MAGIC,5.0f);
-            AxisAlignedBB box = new AxisAlignedBB(-10,-5,-10,10,5,10).move(this.position().x,this.position().y,this.position().z);
-            List<MobEntity> entities = this.level.getEntitiesOfClass(MobEntity.class,box);
+            AABB box = new AABB(-10,-5,-10,10,5,10).move(this.position().x,this.position().y,this.position().z);
+            List<Mob> entities = this.level.getEntitiesOfClass(Mob.class,box);
             entities.remove(ent);
             entities.removeIf(LivingEntity::isDeadOrDying);
-            Vector3d vectorPos = this.position();
+            Vec3 vectorPos = this.position();
 
             if (entities.size() != 0 ) {
                 int rand = (int)Math.floor(this.level.random.nextFloat()*(entities.size()-1));
-                Vector3d vec = entities.get(rand).position();
-                Vector3d minxVect = new Vector3d(vec.x-vectorPos.x,vec.y-vectorPos.y+this.level.random.nextDouble()+0.4,vec.z-vectorPos.z);
+                Vec3 vec = entities.get(rand).position();
+                Vec3 minxVect = new Vec3(vec.x-vectorPos.x,vec.y-vectorPos.y+this.level.random.nextDouble()+0.4,vec.z-vectorPos.z);
                 count++;
                 this.setDeltaMovement(minxVect.normalize());
                 ctx.getEntity().invulnerableTime = 0;
 
             }
             if (count == 5 || entities.size() == 0){
-                this.remove();
+                this.remove(RemovalReason.KILLED);
             }
 
         }
@@ -78,7 +83,7 @@ public class SolarDiscProjectile extends DamagingProjectileEntity {
         if (!this.level.isClientSide){
             tickCount++;
             if (this.tickCount > 500){
-                this.remove();
+                this.remove(RemovalReason.KILLED);
             }
         }
 
@@ -93,18 +98,18 @@ public class SolarDiscProjectile extends DamagingProjectileEntity {
         return false;
     }
     @Override
-    public IPacket<?> getAddEntityPacket() {
+    public Packet<?> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 
     @Override
-    protected IParticleData getTrailParticle() {
+    protected ParticleOptions getTrailParticle() {
         return ParticlesList.INVISIBLE_PARTICLE.get();
     }
 
 
     @Override
-    public void load(CompoundNBT cmp) {
+    public void load(CompoundTag cmp) {
         tickCount = cmp.getInt("tick");
         count = cmp.getInt("count");
         super.load(cmp);
@@ -116,7 +121,7 @@ public class SolarDiscProjectile extends DamagingProjectileEntity {
     }
 
     @Override
-    public boolean save(CompoundNBT cmp) {
+    public boolean save(CompoundTag cmp) {
         cmp.putInt("tick",tickCount);
         cmp.putInt("count",count);
         return super.save(cmp);

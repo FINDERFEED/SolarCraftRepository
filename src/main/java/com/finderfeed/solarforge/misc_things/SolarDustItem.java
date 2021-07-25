@@ -4,13 +4,15 @@ import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
 import com.finderfeed.solarforge.packet_handler.TriggerToastPacket;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Achievement;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.fml.network.NetworkDirection;
+
+import net.minecraft.world.item.Item.Properties;
 
 public class SolarDustItem extends Item {
 
@@ -19,9 +21,9 @@ public class SolarDustItem extends Item {
     }
 
     @Override
-    public void inventoryTick(ItemStack p_77663_1_, World p_77663_2_, Entity p_77663_3_, int p_77663_4_, boolean p_77663_5_) {
-        if (!p_77663_2_.isClientSide && p_77663_3_ instanceof PlayerEntity){
-            PlayerEntity entity = (PlayerEntity) p_77663_3_;
+    public void inventoryTick(ItemStack p_77663_1_, Level p_77663_2_, Entity p_77663_3_, int p_77663_4_, boolean p_77663_5_) {
+        if (!p_77663_2_.isClientSide && p_77663_3_ instanceof Player){
+            Player entity = (Player) p_77663_3_;
 
             Helpers.fireProgressionEvent(entity,Achievement.ACQUIRE_SOLAR_DUST);
         }

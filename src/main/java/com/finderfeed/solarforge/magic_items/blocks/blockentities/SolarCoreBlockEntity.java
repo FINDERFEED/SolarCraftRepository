@@ -5,10 +5,9 @@ import com.finderfeed.solarforge.misc_things.AbstractSolarCore;
 import com.finderfeed.solarforge.multiblocks.Multiblocks;
 import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
 
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.vector.Vector3d;
+
+import net.minecraft.world.phys.AABB;
+
 
 import java.lang.management.MemoryType;
 
@@ -29,8 +28,8 @@ public class SolarCoreBlockEntity extends AbstractSolarCore {
 
 
     @Override
-    public AxisAlignedBB getRenderBoundingBox(){
-        return new AxisAlignedBB(getBlockPos().offset(-16,-16,-16),getBlockPos().offset(16,16,16));
+    public AABB getRenderBoundingBox(){
+        return new AABB(getBlockPos().offset(-16,-16,-16),getBlockPos().offset(16,16,16));
     }
 
     @Override

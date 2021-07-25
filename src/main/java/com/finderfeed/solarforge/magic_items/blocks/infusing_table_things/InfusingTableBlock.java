@@ -2,48 +2,49 @@ package com.finderfeed.solarforge.magic_items.blocks.infusing_table_things;
 
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.magic_items.items.SolarNetworkBinder;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 
 import java.util.function.Consumer;
 
-public class InfusingTableBlock extends Block {
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
+import net.minecraftforge.fmllegacy.network.NetworkHooks;
+
+import javax.annotation.Nullable;
+
+public class InfusingTableBlock extends Block implements EntityBlock {
     public InfusingTableBlock(Properties prop) {
         super(prop);
     }
 
 
     @Override
-    public VoxelShape getShape(BlockState p_220053_1_, IBlockReader p_220053_2_, BlockPos p_220053_3_, ISelectionContext p_220053_4_) {
+    public VoxelShape getShape(BlockState p_220053_1_, BlockGetter p_220053_2_, BlockPos p_220053_3_, CollisionContext p_220053_4_) {
         return Block.box(0.0D, 0.0D, 0.0D, 16.0D, 9.0D, 16.0D);
     }
-    @Override
-    public boolean hasTileEntity(BlockState state){
-        return true;
-    }
-    @Override
-    public TileEntity createTileEntity(BlockState state, IBlockReader world){
-        return SolarForge.INFUSING_STAND_BLOCKENTITY.get().create();
-    }
+
+
 
     @Override
-    public void onRemove(BlockState p_196243_1_, World p_196243_2_, BlockPos p_196243_3_, BlockState p_196243_4_, boolean p_196243_5_) {
+    public void onRemove(BlockState p_196243_1_, Level p_196243_2_, BlockPos p_196243_3_, BlockState p_196243_4_, boolean p_196243_5_) {
 
-        TileEntity te = p_196243_2_.getBlockEntity(p_196243_3_);
+        BlockEntity te = p_196243_2_.getBlockEntity(p_196243_3_);
 
         if (te instanceof InfusingTableTileEntity){
             InfusingTableTileEntity ent = (InfusingTableTileEntity) te;
@@ -57,17 +58,17 @@ public class InfusingTableBlock extends Block {
 
 
     @Override
-    public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity user, Hand hand, BlockRayTraceResult rayTraceResult) {
+    public InteractionResult use(BlockState state, Level world, BlockPos pos, Player user, InteractionHand hand, BlockHitResult rayTraceResult) {
 
         if (!world.isClientSide()) {
 
-            TileEntity entity = world.getBlockEntity(pos);
+            BlockEntity entity = world.getBlockEntity(pos);
             if (entity instanceof InfusingTableTileEntity) {
                 InfusingTableTileEntity tile = (InfusingTableTileEntity) entity;
                 if (!(user.getMainHandItem().getItem() instanceof SolarWandItem) && !(user.getMainHandItem().getItem() instanceof SolarNetworkBinder)) {
-                    Consumer<PacketBuffer> cons = x -> { x.writeBlockPos(pos);
+                    Consumer<FriendlyByteBuf> cons = x -> { x.writeBlockPos(pos);
                     };
-                    NetworkHooks.openGui((ServerPlayerEntity) user, (InfusingTableTileEntity) entity, cons);
+                    NetworkHooks.openGui((ServerPlayer) user, (InfusingTableTileEntity) entity, cons);
 
                 }
 
@@ -76,8 +77,23 @@ public class InfusingTableBlock extends Block {
         if ((user.getItemInHand(hand).getItem() instanceof  SolarWandItem) || (user.getItemInHand(hand).getItem() instanceof  SolarNetworkBinder) ){
             return super.use(state,world,pos,user,hand,rayTraceResult);
         }else{
-            return ActionResultType.CONSUME;
+            return InteractionResult.CONSUME;
         }
 
+    }
+
+
+    @Nullable
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level p_153212_, BlockState p_153213_, BlockEntityType<T> p_153214_) {
+        return ((level, blockPos, blockState, t) -> {
+            InfusingTableTileEntity.tick(level,blockPos,blockState,(InfusingTableTileEntity) t);
+        });
+    }
+
+    @Nullable
+    @Override
+    public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
+        return SolarForge.INFUSING_STAND_BLOCKENTITY.get().create(blockPos,blockState);
     }
 }

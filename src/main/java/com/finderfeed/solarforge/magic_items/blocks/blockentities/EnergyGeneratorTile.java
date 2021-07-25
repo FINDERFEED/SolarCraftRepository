@@ -4,8 +4,8 @@ import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.misc_things.AbstractEnergyGeneratorTileEntity;
 import com.finderfeed.solarforge.multiblocks.Multiblocks;
 import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.math.AxisAlignedBB;
+
+import net.minecraft.world.phys.AABB;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -51,7 +51,7 @@ public class EnergyGeneratorTile extends AbstractEnergyGeneratorTileEntity {
     }
 
     @Override
-    public AxisAlignedBB getRenderBoundingBox(){
-        return new AxisAlignedBB(getBlockPos().offset(-16,-16,-16),getBlockPos().offset(16,16,16));
+    public AABB getRenderBoundingBox(){
+        return new AABB(getBlockPos().offset(-16,-16,-16),getBlockPos().offset(16,16,16));
     }
 }

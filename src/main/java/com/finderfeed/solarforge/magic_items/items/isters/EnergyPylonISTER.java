@@ -1,27 +1,27 @@
 package com.finderfeed.solarforge.magic_items.items.isters;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.model.ItemCameraTransforms;
+import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.client.renderer.tileentity.ItemStackTileEntityRenderer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.vector.Matrix4f;
+import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.resources.ResourceLocation;
+import com.mojang.math.Matrix4f;
 import net.minecraft.util.math.vector.Quaternion;
-import net.minecraft.util.math.vector.Vector3f;
+import com.mojang.math.Vector3f;
 
-public class EnergyPylonISTER extends ItemStackTileEntityRenderer {
+public class EnergyPylonISTER extends BlockEntityWithoutLevelRenderer {
 
     public final ResourceLocation MAIN = new ResourceLocation("solarforge","textures/misc/tile_energy_pylon.png");
     @Override
-    public void renderByItem(ItemStack p_239207_1_, ItemCameraTransforms.TransformType p_239207_2_, MatrixStack p_239207_3_, IRenderTypeBuffer p_239207_4_, int p_239207_5_, int p_239207_6_) {
-        if (p_239207_2_ == ItemCameraTransforms.TransformType.GUI){
+    public void renderByItem(ItemStack p_239207_1_, ItemTransforms.TransformType p_239207_2_, PoseStack p_239207_3_, MultiBufferSource p_239207_4_, int p_239207_5_, int p_239207_6_) {
+        if (p_239207_2_ == ItemTransforms.TransformType.GUI){
             p_239207_3_.pushPose();
-            IVertexBuilder vertex = p_239207_4_.getBuffer(RenderType.text(MAIN));
+            VertexConsumer vertex = p_239207_4_.getBuffer(RenderType.text(MAIN));
             p_239207_3_.translate(0.5,0.5,0);
             Matrix4f matrix = p_239207_3_.last().pose();
             float time = (Minecraft.getInstance().level.getGameTime() + Minecraft.getInstance().getDeltaFrameTime())*5;

@@ -4,36 +4,36 @@ import com.finderfeed.solarforge.recipe_types.InfusingRecipe;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.item.crafting.ShapedRecipe;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.core.NonNullList;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
 import javax.annotation.Nullable;
 
-public class SolarSmeltingRecipeSerializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<SolarSmeltingRecipe>{
+public class SolarSmeltingRecipeSerializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<SolarSmeltingRecipe>{
     public SolarSmeltingRecipeSerializer(){
         this.setRegistryName(new ResourceLocation("solarforge","solar_smelting"));
     }
 //ShapedRecipe.itemFromJson(
     @Override
     public SolarSmeltingRecipe fromJson(ResourceLocation loc, JsonObject file) {
-        NonNullList<Ingredient> nonnulllist = itemsFromJson(JSONUtils.getAsJsonArray(file, "ingredients"));
-        ItemStack output = JSONUtils.getAsItem(file, "result").getDefaultInstance();
-        int infusingTime = JSONUtils.getAsInt(file, "time", 20);
-        String child = JSONUtils.getAsString(file,"requires");
-        String category = JSONUtils.getAsString(file,"category");
+        NonNullList<Ingredient> nonnulllist = itemsFromJson(GsonHelper.getAsJsonArray(file, "ingredients"));
+        ItemStack output = GsonHelper.getAsItem(file, "result").getDefaultInstance();
+        int infusingTime = GsonHelper.getAsInt(file, "time", 20);
+        String child = GsonHelper.getAsString(file,"requires");
+        String category = GsonHelper.getAsString(file,"category");
         return new SolarSmeltingRecipe(loc,nonnulllist,output,infusingTime,child,category);
     }
 
     @Nullable
     @Override
-    public SolarSmeltingRecipe fromNetwork(ResourceLocation loc, PacketBuffer buf) {
+    public SolarSmeltingRecipe fromNetwork(ResourceLocation loc, FriendlyByteBuf buf) {
         NonNullList<Ingredient> nonnulllist = NonNullList.withSize(4, Ingredient.EMPTY);
 
         for(int j = 0; j < nonnulllist.size(); ++j) {
@@ -47,7 +47,7 @@ public class SolarSmeltingRecipeSerializer extends ForgeRegistryEntry<IRecipeSer
     }
 
     @Override
-    public void toNetwork(PacketBuffer buf, SolarSmeltingRecipe recipeType) {
+    public void toNetwork(FriendlyByteBuf buf, SolarSmeltingRecipe recipeType) {
         for (Ingredient a : recipeType.list){
             a.toNetwork(buf);
         }

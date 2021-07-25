@@ -1,10 +1,9 @@
 package com.finderfeed.solarforge.misc_things;
 
 import com.finderfeed.solarforge.Helpers;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.nbt.CompoundTag;
+
 import net.minecraftforge.event.entity.player.PlayerEvent;
 
 public class RunicEnergy {
@@ -13,14 +12,14 @@ public class RunicEnergy {
     public static String DEFAULT_ENERGY_TAG = "solarcraft.solar_rune_energy_";
 
 
-    public static void setEnergy(PlayerEntity playerEntity,float amount, Type type){
-        CompoundNBT nbt = playerEntity.getPersistentData();
+    public static void setEnergy(Player playerEntity,float amount, Type type){
+        CompoundTag nbt = playerEntity.getPersistentData();
         nbt.putFloat(DEFAULT_ENERGY_TAG+type.id,amount);
     }
 
 
-    public static float givePlayerEnergy(PlayerEntity playerEntity,float energyAmount, Type type){
-        CompoundNBT nbt = playerEntity.getPersistentData();
+    public static float givePlayerEnergy(Player playerEntity,float energyAmount, Type type){
+        CompoundTag nbt = playerEntity.getPersistentData();
         float maxEnergy = nbt.getFloat(MAX_ENERGY_TAG);
         if (maxEnergy == 0){
             nbt.putInt(MAX_ENERGY_TAG,10000);
@@ -43,7 +42,7 @@ public class RunicEnergy {
     }
 
 
-    public static boolean spendEnergy(PlayerEntity playerEntity,float amount,Type type){
+    public static boolean spendEnergy(Player playerEntity,float amount,Type type){
         float currentEnergy = getEnergy(playerEntity,type);
         if ((currentEnergy - amount) >= 0){
             setEnergy(playerEntity,type,currentEnergy-amount);
@@ -54,18 +53,18 @@ public class RunicEnergy {
     }
 
 
-    public static float getEnergy(PlayerEntity playerEntity,Type type){
+    public static float getEnergy(Player playerEntity,Type type){
         return playerEntity.getPersistentData().getFloat(DEFAULT_ENERGY_TAG+type.id);
     }
 
-    public static void setEnergy(PlayerEntity playerEntity,Type type,float amount){
+    public static void setEnergy(Player playerEntity,Type type,float amount){
         playerEntity.getPersistentData().putFloat(DEFAULT_ENERGY_TAG+type.id,amount);
     }
 
 
     public static void handleCloneEvent(PlayerEvent.Clone event){
-        PlayerEntity newP = event.getPlayer();
-        PlayerEntity oldP = event.getOriginal();
+        Player newP = event.getPlayer();
+        Player oldP = event.getOriginal();
 
         for (Type type : Type.values()){
             setEnergy(newP,getEnergy(oldP,type),type);

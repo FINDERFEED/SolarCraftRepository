@@ -3,29 +3,34 @@ package com.finderfeed.solarforge.magic_items.blocks;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.TurretTileEntity;
 import com.finderfeed.solarforge.registries.items.ItemsRegister;
 import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 
 import javax.annotation.Nullable;
 
-public class TurretBlock extends Block {
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
+
+public class TurretBlock extends Block implements EntityBlock {
     protected static final VoxelShape AABB = Block.box(4.0D, 0.0D, 4.0D, 12.0D, 8.0D, 12.0D);
     public static String SUBTAG = "turret";
     public static String LEVEL_TAG = "turret_level";
@@ -35,38 +40,29 @@ public class TurretBlock extends Block {
     }
 
 
-    @Nullable
-    @Override
-    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-        return TileEntitiesRegistry.TURRET_TILE_ENTITY.get().create();
-    }
+
 
     @Override
-    public boolean hasTileEntity(BlockState state) {
-        return true;
-    }
-
-    @Override
-    public ActionResultType use(BlockState p_225533_1_, World world, BlockPos pos, PlayerEntity player, Hand p_225533_5_, BlockRayTraceResult p_225533_6_) {
+    public InteractionResult use(BlockState p_225533_1_, Level world, BlockPos pos, Player player, InteractionHand p_225533_5_, BlockHitResult p_225533_6_) {
             if (!world.isClientSide
                     && world.getBlockEntity(pos) instanceof TurretTileEntity
-                    && p_225533_5_.equals(Hand.MAIN_HAND)
+                    && p_225533_5_.equals(InteractionHand.MAIN_HAND)
                     && (player.getMainHandItem().getItem().equals(((TurretTileEntity) world.getBlockEntity(pos)).getUpgradeItem())
             )){
                 if (((TurretTileEntity) world.getBlockEntity(pos)).upgrade()){
                     player.getMainHandItem().grow(-1);
-                    world.playSound(null,player, SoundEvents.ANVIL_USE, SoundCategory.AMBIENT,1,1);
-                    return ActionResultType.SUCCESS;
+                    world.playSound(null,player, SoundEvents.ANVIL_USE, SoundSource.AMBIENT,1,1);
+                    return InteractionResult.SUCCESS;
                 }
             }
         return super.use(p_225533_1_, world, pos,player, p_225533_5_, p_225533_6_);
     }
 
     @Override
-    public void onRemove(BlockState state, World world, BlockPos pos, BlockState state2, boolean hz) {
+    public void onRemove(BlockState state, Level world, BlockPos pos, BlockState state2, boolean hz) {
         if (!world.isClientSide) {
 
-            TileEntity test = world.getBlockEntity(pos);
+            BlockEntity test = world.getBlockEntity(pos);
             if (test instanceof TurretTileEntity) {
                 TurretTileEntity tile = (TurretTileEntity) test;
                 ItemStack stack = ItemsRegister.TURRET_BLOCK.get().getDefaultInstance();
@@ -79,14 +75,14 @@ public class TurretBlock extends Block {
     }
 
     @Override
-    public void setPlacedBy(World world, BlockPos pos, BlockState p_180633_3_, @Nullable LivingEntity p_180633_4_, ItemStack stack) {
+    public void setPlacedBy(Level world, BlockPos pos, BlockState p_180633_3_, @Nullable LivingEntity p_180633_4_, ItemStack stack) {
 
         if (!world.isClientSide) {
-            TileEntity test = world.getBlockEntity(pos);
+            BlockEntity test = world.getBlockEntity(pos);
            
             if (test instanceof TurretTileEntity) {
                 TurretTileEntity tile = (TurretTileEntity) test;
-                CompoundNBT nbt = stack.getTagElement(TurretBlock.SUBTAG);
+                CompoundTag nbt = stack.getTagElement(TurretBlock.SUBTAG);
                 if (nbt != null) {
                     tile.turretLevel = nbt.getInt(TurretBlock.LEVEL_TAG);
                 }
@@ -96,7 +92,21 @@ public class TurretBlock extends Block {
     }
 
     @Override
-    public VoxelShape getShape(BlockState p_220053_1_, IBlockReader p_220053_2_, BlockPos p_220053_3_, ISelectionContext p_220053_4_) {
+    public VoxelShape getShape(BlockState p_220053_1_, BlockGetter p_220053_2_, BlockPos p_220053_3_, CollisionContext p_220053_4_) {
         return AABB;
+    }
+
+    @Nullable
+    @Override
+    public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
+        return TileEntitiesRegistry.TURRET_TILE_ENTITY.get().create(blockPos,blockState);
+    }
+
+    @Nullable
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level p_153212_, BlockState p_153213_, BlockEntityType<T> p_153214_) {
+        return ((level, blockPos, blockState, t) -> {
+            TurretTileEntity.tick(level,blockPos,blockState,(TurretTileEntity) t);
+        });
     }
 }

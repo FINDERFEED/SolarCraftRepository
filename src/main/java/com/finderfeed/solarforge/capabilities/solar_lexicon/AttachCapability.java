@@ -2,8 +2,8 @@ package com.finderfeed.solarforge.capabilities.solar_lexicon;
 
 
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.SolarLexicon;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;

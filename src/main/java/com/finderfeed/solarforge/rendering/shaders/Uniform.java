@@ -1,10 +1,12 @@
 package com.finderfeed.solarforge.rendering.shaders;
 
-import net.minecraft.util.math.vector.Matrix4f;
+import com.mojang.math.Matrix4f;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL20;
 
 import java.nio.FloatBuffer;
+
+import Matrix4f;
 
 public class Uniform {
 

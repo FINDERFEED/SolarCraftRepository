@@ -12,31 +12,31 @@ import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
 import com.finderfeed.solarforge.packet_handler.packets.UpdateEnergyOnClientPacket;
 import com.finderfeed.solarforge.recipe_types.InfusingRecipe;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.AbstractGui;
-import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.client.gui.GuiComponent;
+import net.minecraft.world.item.TooltipFlag;
 
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUseContext;
-import net.minecraft.item.UseAction;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.RayTraceContext;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.item.UseAnim;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.level.ClipContext;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -48,6 +48,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import net.minecraft.world.item.Item.Properties;
+
 public class SolarWandItem extends Item implements ManaConsumer {
 
 
@@ -57,7 +59,7 @@ public class SolarWandItem extends Item implements ManaConsumer {
 
 
     @Override
-    public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+    public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
 
         player.startUsingItem(hand);
 
@@ -66,29 +68,29 @@ public class SolarWandItem extends Item implements ManaConsumer {
 
     @Override
     public void onUsingTick(ItemStack stack, LivingEntity player, int count) {
-        if (player instanceof  PlayerEntity) {
-            handleEnergyConsumption(player.level, (PlayerEntity) player);
+        if (player instanceof  Player) {
+            handleEnergyConsumption(player.level, (Player) player);
         }
         super.onUsingTick(stack, player, count);
     }
 
     @Override
-    public UseAction getUseAnimation(ItemStack p_77661_1_) {
-        return UseAction.BOW;
+    public UseAnim getUseAnimation(ItemStack p_77661_1_) {
+        return UseAnim.BOW;
     }
 
-    public ActionResultType useOn(ItemUseContext ctx) {
+    public InteractionResult useOn(UseOnContext ctx) {
         BlockPos pos = ctx.getClickedPos();
-        World world = ctx.getLevel();
+        Level world = ctx.getLevel();
         if (!world.isClientSide && world.getBlockEntity(pos) != null
                 && world.getBlockEntity(pos) instanceof InfusingTableTileEntity) {
             InfusingTableTileEntity tile = (InfusingTableTileEntity) world.getBlockEntity(pos);
             tile.triggerCrafting(ctx.getPlayer());
-            return ActionResultType.SUCCESS;
+            return InteractionResult.SUCCESS;
         }
 
 
-        return ActionResultType.FAIL;
+        return InteractionResult.FAIL;
     }
 
     @Override
@@ -97,8 +99,8 @@ public class SolarWandItem extends Item implements ManaConsumer {
     }
 
     @Override
-    public void appendHoverText(ItemStack p_77624_1_, @Nullable World p_77624_2_, List<ITextComponent> p_77624_3_, ITooltipFlag p_77624_4_) {
-        p_77624_3_.add(new TranslationTextComponent("solarcraft.solar_wand").withStyle(TextFormatting.GOLD));
+    public void appendHoverText(ItemStack p_77624_1_, @Nullable Level p_77624_2_, List<Component> p_77624_3_, TooltipFlag p_77624_4_) {
+        p_77624_3_.add(new TranslatableComponent("solarcraft.solar_wand").withStyle(ChatFormatting.GOLD));
         super.appendHoverText(p_77624_1_, p_77624_2_, p_77624_3_, p_77624_4_);
     }
 
@@ -108,24 +110,24 @@ public class SolarWandItem extends Item implements ManaConsumer {
     }
 
 
-    public void handleEnergyConsumption(World world, PlayerEntity player){
+    public void handleEnergyConsumption(Level world, Player player){
 
-        Vector3d from = player.position().add(0,1.4,0);
-        Vector3d look = player.getLookAngle().multiply(30,30,30);
-        Vector3d to = from.add(look);
-        RayTraceContext ctx = new RayTraceContext(from,to, RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.NONE,null);
-        BlockRayTraceResult res = world.clip(ctx);
+        Vec3 from = player.position().add(0,1.4,0);
+        Vec3 look = player.getLookAngle().multiply(30,30,30);
+        Vec3 to = from.add(look);
+        ClipContext ctx = new ClipContext(from,to, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE,null);
+        BlockHitResult res = world.clip(ctx);
 
         if (world.getBlockEntity(res.getBlockPos()) instanceof RuneEnergyPylonTile){
             if (!world.isClientSide){
                 RuneEnergyPylonTile tile = (RuneEnergyPylonTile) world.getBlockEntity(res.getBlockPos());
                 tile.givePlayerEnergy(player,5);
-                player.displayClientMessage(new StringTextComponent(tile.getEnergyType().id.toUpperCase()+" "+RunicEnergy.getEnergy(player,tile.getEnergyType())).withStyle(TextFormatting.GOLD),true);
+                player.displayClientMessage(new TextComponent(tile.getEnergyType().id.toUpperCase()+" "+RunicEnergy.getEnergy(player,tile.getEnergyType())).withStyle(ChatFormatting.GOLD),true);
                 Helpers.updateRunicEnergyOnClient(tile.getEnergyType(),RunicEnergy.getEnergy(player,tile.getEnergyType()),player);
                 Helpers.fireProgressionEvent(player, Achievement.RUNE_ENERGY_CLAIM);
             }else{
-                Vector3d pos = new Vector3d(res.getBlockPos().getX()+0.5,res.getBlockPos().getY()+0.5,res.getBlockPos().getZ()+0.5);
-                Vector3d vel = new Vector3d(from.x-pos.x,from.y-pos.y,from.z-pos.z);
+                Vec3 pos = new Vec3(res.getBlockPos().getX()+0.5,res.getBlockPos().getY()+0.5,res.getBlockPos().getZ()+0.5);
+                Vec3 vel = new Vec3(from.x-pos.x,from.y-pos.y,from.z-pos.z);
                 ClientHelpers.handleSolarWandParticles(pos,vel);
 
             }
@@ -142,16 +144,16 @@ class WandEvents{
 
             if (event.getType() == RenderGameOverlayEvent.ElementType.TEXT) {
                 Minecraft mc = Minecraft.getInstance();
-                PlayerEntity player = mc.player;
+                Player player = mc.player;
                 if (player.getMainHandItem().getItem() instanceof SolarWandItem) {
-                    RayTraceContext ctx = new RayTraceContext(player.position().add(0, 1.5, 0),
+                    ClipContext ctx = new ClipContext(player.position().add(0, 1.5, 0),
                             player.position().add(0, 1.5, 0).add(player.getLookAngle().normalize().multiply(4.5, 4.5, 4.5)),
-                            RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.NONE, player);
-                    BlockRayTraceResult result = player.level.clip(ctx);
+                            ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, player);
+                    BlockHitResult result = player.level.clip(ctx);
 
-                    if (result.getType() == RayTraceResult.Type.BLOCK &&
+                    if (result.getType() == HitResult.Type.BLOCK &&
                             player.level.getBlockState(result.getBlockPos()).getBlock() instanceof InfusingTableBlock) {
-                        TileEntity tile = player.level.getBlockEntity(result.getBlockPos());
+                        BlockEntity tile = player.level.getBlockEntity(result.getBlockPos());
                         if (tile instanceof InfusingTableTileEntity) {
                             InfusingTableTileEntity tileInfusing = (InfusingTableTileEntity) tile;
 
@@ -161,20 +163,20 @@ class WandEvents{
                                 int height = event.getWindow().getGuiScaledHeight();
                                 int width = event.getWindow().getGuiScaledWidth();
 
-                                AbstractGui.blit(event.getMatrixStack(), width / 2 - 20, height / 2 + 11, 0, 9, (int) (40 * percent), 3, 40, 20);
-                                AbstractGui.blit(event.getMatrixStack(), width / 2 - 20, height / 2 + 8, 0, 0, 40, 9, 40, 20);
+                                GuiComponent.blit(event.getMatrixStack(), width / 2 - 20, height / 2 + 11, 0, 9, (int) (40 * percent), 3, 40, 20);
+                                GuiComponent.blit(event.getMatrixStack(), width / 2 - 20, height / 2 + 8, 0, 0, 40, 9, 40, 20);
                             }else{
                                 Optional<InfusingRecipe> recipe = mc.level.getRecipeManager().getRecipeFor(SolarForge.INFUSING_RECIPE_TYPE,tileInfusing,mc.level);
                                 if (recipe.isPresent()) {
                                     int height = event.getWindow().getGuiScaledHeight();
                                     int width = event.getWindow().getGuiScaledWidth();
-                                    AbstractGui.blit(event.getMatrixStack(), width / 2 - 20, height / 2 + 8, 0, 0, 40, 9, 40, 20);
-                                    AbstractGui.blit(event.getMatrixStack(), width / 2 -7, height / 2 + 7, 14, 24, 14, 14, 80, 40);
+                                    GuiComponent.blit(event.getMatrixStack(), width / 2 - 20, height / 2 + 8, 0, 0, 40, 9, 40, 20);
+                                    GuiComponent.blit(event.getMatrixStack(), width / 2 -7, height / 2 + 7, 14, 24, 14, 14, 80, 40);
                                 }else{
                                     int height = event.getWindow().getGuiScaledHeight();
                                     int width = event.getWindow().getGuiScaledWidth();
-                                    AbstractGui.blit(event.getMatrixStack(), width / 2 - 20, height / 2 + 8, 0, 0, 40, 9, 40, 20);
-                                    AbstractGui.blit(event.getMatrixStack(), width / 2 -7, height / 2 + 7, 0, 24, 14, 14, 80, 40);
+                                    GuiComponent.blit(event.getMatrixStack(), width / 2 - 20, height / 2 + 8, 0, 0, 40, 9, 40, 20);
+                                    GuiComponent.blit(event.getMatrixStack(), width / 2 -7, height / 2 + 7, 0, 24, 14, 14, 80, 40);
 
                                 }
                             }

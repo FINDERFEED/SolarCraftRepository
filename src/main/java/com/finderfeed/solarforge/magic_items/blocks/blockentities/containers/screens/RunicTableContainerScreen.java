@@ -5,23 +5,26 @@ import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
 import com.finderfeed.solarforge.packet_handler.packets.RunicTablePacket;
 import com.finderfeed.solarforge.rendering.item_renderers.TransparentItemrenderer;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.ProgressionHelper;
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.gui.screen.inventory.ContainerScreen;
-import net.minecraft.client.gui.widget.button.Button;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.gui.components.Button;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class RunicTableContainerScreen extends ContainerScreen<RunicTableContainer> {
+import net.minecraft.client.gui.components.Button.OnPress;
+import net.minecraft.client.gui.components.Button.OnTooltip;
+
+public class RunicTableContainerScreen extends AbstractContainerScreen<RunicTableContainer> {
     public final ResourceLocation MAIN_SCREEN = new ResourceLocation("solarforge","textures/gui/runic_table_gui.png");
     int relX = 0;
     int relY = 0;
@@ -29,7 +32,7 @@ public class RunicTableContainerScreen extends ContainerScreen<RunicTableContain
     public List<ItemStack> pattern = new ArrayList<>();
 
 
-    public RunicTableContainerScreen(RunicTableContainer p_i51105_1_, PlayerInventory p_i51105_2_, ITextComponent p_i51105_3_) {
+    public RunicTableContainerScreen(RunicTableContainer p_i51105_1_, Inventory p_i51105_2_, Component p_i51105_3_) {
         super(p_i51105_1_, p_i51105_2_, p_i51105_3_);
         this.inventoryLabelY+=2;
         this.titleLabelY-=25;
@@ -51,20 +54,20 @@ public class RunicTableContainerScreen extends ContainerScreen<RunicTableContain
             pattern.add(ProgressionHelper.RUNES[a].getDefaultInstance());
         }
 
-        addButton(new WoodenButton(relX+72,relY+85,40,15,new TranslationTextComponent("solarcraft.runic_table"),(button)->{
+        addButton(new WoodenButton(relX+72,relY+85,40,15,new TranslatableComponent("solarcraft.runic_table"),(button)->{
             SolarForgePacketHandler.INSTANCE.sendToServer(new RunicTablePacket(menu.te.getBlockPos()));
         }));
     }
 
     @Override
-    public void render(MatrixStack stack, int rouseX, int rouseY, float partialTicks) {
+    public void render(PoseStack stack, int rouseX, int rouseY, float partialTicks) {
         this.renderBackground(stack);
         this.renderTooltip(stack,rouseX,rouseY);
         super.render(stack, rouseX, rouseY, partialTicks);
     }
 
     @Override
-    protected void renderBg(MatrixStack matrices, float partialTicks, int mousex, int mousey) {
+    protected void renderBg(PoseStack matrices, float partialTicks, int mousex, int mousey) {
         Minecraft.getInstance().getTextureManager().bind(MAIN_SCREEN);
         int scale = (int) minecraft.getWindow().getGuiScale();
         int a = 1;
@@ -94,25 +97,25 @@ public class RunicTableContainerScreen extends ContainerScreen<RunicTableContain
 
 }
 class WoodenButton extends Button{
-    protected  Button.ITooltip tool;
+    protected  Button.OnTooltip tool;
     public static final ResourceLocation WIDGETS_SOLARFORGE = new ResourceLocation("solarforge","textures/gui/runic_table_buttons.png");
 
-    public WoodenButton(int p_i232255_1_, int p_i232255_2_, int p_i232255_3_, int p_i232255_4_, ITextComponent p_i232255_5_, IPressable p_i232255_6_) {
+    public WoodenButton(int p_i232255_1_, int p_i232255_2_, int p_i232255_3_, int p_i232255_4_, Component p_i232255_5_, OnPress p_i232255_6_) {
         super(p_i232255_1_, p_i232255_2_, p_i232255_3_, p_i232255_4_, p_i232255_5_, p_i232255_6_);
     }
 
-    public WoodenButton(int p_i232256_1_, int p_i232256_2_, int p_i232256_3_, int p_i232256_4_, ITextComponent p_i232256_5_, IPressable p_i232256_6_, ITooltip p_i232256_7_) {
+    public WoodenButton(int p_i232256_1_, int p_i232256_2_, int p_i232256_3_, int p_i232256_4_, Component p_i232256_5_, OnPress p_i232256_6_, OnTooltip p_i232256_7_) {
         super(p_i232256_1_, p_i232256_2_, p_i232256_3_, p_i232256_4_, p_i232256_5_, p_i232256_6_, p_i232256_7_);
     }
 
     @Override
-    public void renderButton(MatrixStack p_230431_1_, int p_230431_2_, int p_230431_3_, float p_230431_4_) {
+    public void renderButton(PoseStack p_230431_1_, int p_230431_2_, int p_230431_3_, float p_230431_4_) {
         if (this.isHovered() && tool != null) {
             this.renderToolTip(p_230431_1_, p_230431_2_, p_230431_3_);
 
         }
         Minecraft minecraft = Minecraft.getInstance();
-        FontRenderer fontrenderer = minecraft.font;
+        Font fontrenderer = minecraft.font;
         minecraft.getTextureManager().bind(WIDGETS_SOLARFORGE);
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, this.alpha);
         int i = this.getYImage(this.isHovered());
@@ -125,11 +128,11 @@ class WoodenButton extends Button{
         int j = getFGColor();
 
 
-        drawCenteredString(p_230431_1_, fontrenderer, this.getMessage(), this.x + this.width / 2, this.y + (this.height - 8) / 2, j | MathHelper.ceil(this.alpha * 255.0F) << 24);
+        drawCenteredString(p_230431_1_, fontrenderer, this.getMessage(), this.x + this.width / 2, this.y + (this.height - 8) / 2, j | Mth.ceil(this.alpha * 255.0F) << 24);
     }
 
     @Override
-    public void renderToolTip(MatrixStack p_230443_1_, int p_230443_2_, int p_230443_3_) {
+    public void renderToolTip(PoseStack p_230443_1_, int p_230443_2_, int p_230443_3_) {
         if (tool != null) {
             this.tool.onTooltip(this, p_230443_1_, p_230443_2_, p_230443_3_);
         }

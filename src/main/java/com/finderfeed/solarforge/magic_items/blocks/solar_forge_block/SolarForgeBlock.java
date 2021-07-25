@@ -2,25 +2,33 @@ package com.finderfeed.solarforge.magic_items.blocks.solar_forge_block;
 
 import com.finderfeed.solarforge.SolarForge;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockRenderType;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+
 
 import java.util.function.Consumer;
 
-public class SolarForgeBlock extends Block {
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
+import net.minecraftforge.fmllegacy.network.NetworkHooks;
+
+import javax.annotation.Nullable;
+
+public class SolarForgeBlock extends Block implements EntityBlock {
 
 
 
@@ -30,9 +38,9 @@ public class SolarForgeBlock extends Block {
     }
 
     @Override
-    public void onRemove(BlockState p_196243_1_, World p_196243_2_, BlockPos p_196243_3_, BlockState p_196243_4_, boolean p_196243_5_) {
+    public void onRemove(BlockState p_196243_1_, Level p_196243_2_, BlockPos p_196243_3_, BlockState p_196243_4_, boolean p_196243_5_) {
 
-        TileEntity te = p_196243_2_.getBlockEntity(p_196243_3_);
+        BlockEntity te = p_196243_2_.getBlockEntity(p_196243_3_);
 
         if (te instanceof SolarForgeBlockEntity){
             SolarForgeBlockEntity ent = (SolarForgeBlockEntity) te;
@@ -49,15 +57,15 @@ public class SolarForgeBlock extends Block {
 
 
     @Override
-    public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity user, Hand hand, BlockRayTraceResult rayTraceResult) {
+    public InteractionResult use(BlockState state, Level world, BlockPos pos, Player user, InteractionHand hand, BlockHitResult rayTraceResult) {
 
         if (!world.isClientSide()) {
 
-            TileEntity entity = world.getBlockEntity(pos);
+            BlockEntity entity = world.getBlockEntity(pos);
             if (entity instanceof SolarForgeBlockEntity) {
-                Consumer<PacketBuffer> cons = x -> { x.writeBlockPos(pos);
+                Consumer<FriendlyByteBuf> cons = x -> { x.writeBlockPos(pos);
                 };
-                NetworkHooks.openGui((ServerPlayerEntity) user, (SolarForgeBlockEntity) entity, cons);
+                NetworkHooks.openGui((ServerPlayer) user, (SolarForgeBlockEntity) entity, cons);
 
 
                      };
@@ -69,17 +77,25 @@ public class SolarForgeBlock extends Block {
 
 
 
+
+
     @Override
-    public boolean hasTileEntity(BlockState state){
-        return true;
+    public RenderShape getRenderShape(BlockState p_149645_1_) {
+        return RenderShape.ENTITYBLOCK_ANIMATED;
     }
+
+    @Nullable
     @Override
-    public TileEntity createTileEntity(BlockState state, IBlockReader world){
-        return SolarForge.SOLAR_FORGE_BLOCKENTITY.get().create();
+    public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
+        return SolarForge.SOLAR_FORGE_BLOCKENTITY.get().create(blockPos,blockState);
     }
+
+    @Nullable
     @Override
-    public BlockRenderType getRenderShape(BlockState p_149645_1_) {
-        return BlockRenderType.ENTITYBLOCK_ANIMATED;
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level p_153212_, BlockState p_153213_, BlockEntityType<T> p_153214_) {
+        return ((level, blockPos, blockState, t) -> {
+            SolarForgeBlockEntity.tick(level,blockPos,blockState,(SolarForgeBlockEntity) t);
+        });
     }
 
 //    @Override

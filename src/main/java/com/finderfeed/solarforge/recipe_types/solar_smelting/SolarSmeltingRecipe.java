@@ -4,20 +4,20 @@ import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.misc_things.PhantomInventory;
 import com.finderfeed.solarforge.recipe_types.InfusingRecipeSerializer;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.core.NonNullList;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.Level;
 
 import java.util.List;
 
-public class SolarSmeltingRecipe implements IRecipe<PhantomInventory> {
+public class SolarSmeltingRecipe implements Recipe<PhantomInventory> {
     public final ResourceLocation id;
     public final NonNullList<Ingredient> list;
     public final ItemStack output;
@@ -39,7 +39,7 @@ public class SolarSmeltingRecipe implements IRecipe<PhantomInventory> {
     }
 
     @Override
-    public boolean matches(PhantomInventory inv, World world) {
+    public boolean matches(PhantomInventory inv, Level world) {
 
         NonNullList<Item> lists = NonNullList.withSize(4, Items.AIR);
         for (int i = 0;i < 4;i++){
@@ -76,12 +76,12 @@ public class SolarSmeltingRecipe implements IRecipe<PhantomInventory> {
     }
 
     @Override
-    public IRecipeSerializer<?> getSerializer() {
+    public RecipeSerializer<?> getSerializer() {
         return serializer;
     }
 
     @Override
-    public IRecipeType<?> getType() {
+    public RecipeType<?> getType() {
         return SolarForge.SOLAR_SMELTING;
     }
 }

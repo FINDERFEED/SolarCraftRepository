@@ -1,10 +1,10 @@
 package com.finderfeed.solarforge.capabilities.capability_mana;
 
 
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.INBT;
-import net.minecraft.util.Direction;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
+import net.minecraft.core.Direction;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.CapabilityManager;
@@ -30,15 +30,15 @@ public class CapabilitySolarMana {
 
         @Nullable
         @Override
-        public INBT writeNBT(Capability<SolarForgeMana> capability, SolarForgeMana instance, Direction side) {
-            CompoundNBT tag = new CompoundNBT();
+        public Tag writeNBT(Capability<SolarForgeMana> capability, SolarForgeMana instance, Direction side) {
+            CompoundTag tag = new CompoundTag();
             tag.putDouble("solar_mana",instance.getMana());
             return tag;
         }
 
         @Override
-        public void readNBT(Capability<SolarForgeMana> capability, SolarForgeMana instance, Direction side, INBT nbt) {
-            double solar_mana = ((CompoundNBT)nbt).getDouble("solar_mana");
+        public void readNBT(Capability<SolarForgeMana> capability, SolarForgeMana instance, Direction side, Tag nbt) {
+            double solar_mana = ((CompoundTag)nbt).getDouble("solar_mana");
             instance.setMana(solar_mana);
         }
     }

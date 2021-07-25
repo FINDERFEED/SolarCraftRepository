@@ -2,20 +2,22 @@ package com.finderfeed.solarforge.magic_items.blocks.infusing_table_things.infus
 
 import com.finderfeed.solarforge.magic_items.blocks.infusing_table_things.SolarWandItem;
 import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.event.world.BlockEvent;
+
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class InfusingPool extends Block {
     public InfusingPool(Properties p_i48440_1_) {
@@ -23,7 +25,7 @@ public class InfusingPool extends Block {
     }
 
     @Override
-    public VoxelShape getShape(BlockState p_220053_1_, IBlockReader p_220053_2_, BlockPos p_220053_3_, ISelectionContext p_220053_4_) {
+    public VoxelShape getShape(BlockState p_220053_1_, BlockGetter p_220053_2_, BlockPos p_220053_3_, CollisionContext p_220053_4_) {
         return Block.box(0.0D, 0.0D, 0.0D, 16.0D, 8.0D, 16.0D);
     }
 
@@ -32,14 +34,14 @@ public class InfusingPool extends Block {
         return true;
     }
     @Override
-    public TileEntity createTileEntity(BlockState state, IBlockReader world){
+    public BlockEntity createTileEntity(BlockState state, BlockGetter world){
         return TileEntitiesRegistry.INFUSING_POOL_BLOCKENTITY.get().create();
     }
 
     @Override
-    public void onRemove(BlockState p_196243_1_, World p_196243_2_, BlockPos p_196243_3_, BlockState p_196243_4_, boolean p_196243_5_) {
+    public void onRemove(BlockState p_196243_1_, Level p_196243_2_, BlockPos p_196243_3_, BlockState p_196243_4_, boolean p_196243_5_) {
 
-        TileEntity te = p_196243_2_.getBlockEntity(p_196243_3_);
+        BlockEntity te = p_196243_2_.getBlockEntity(p_196243_3_);
 
         if (te instanceof InfusingPoolTileEntity){
             InfusingPoolTileEntity ent = (InfusingPoolTileEntity) te;
@@ -50,12 +52,12 @@ public class InfusingPool extends Block {
     }
 
     @Override
-    public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity user, Hand hand, BlockRayTraceResult rayTraceResult) {
+    public InteractionResult use(BlockState state, Level world, BlockPos pos, Player user, InteractionHand hand, BlockHitResult rayTraceResult) {
         if (!world.isClientSide()) {
-            TileEntity entity = world.getBlockEntity(pos);
+            BlockEntity entity = world.getBlockEntity(pos);
             if (entity instanceof InfusingPoolTileEntity) {
                 InfusingPoolTileEntity tile = (InfusingPoolTileEntity) entity;
-                if (!(user.getItemInHand(hand).getItem() instanceof SolarWandItem) && hand == Hand.MAIN_HAND && !user.isCrouching()) {
+                if (!(user.getItemInHand(hand).getItem() instanceof SolarWandItem) && hand == InteractionHand.MAIN_HAND && !user.isCrouching()) {
                     if (tile.isEmpty() ) {
 
                         ItemStack stack = user.getItemInHand(hand);
@@ -64,26 +66,26 @@ public class InfusingPool extends Block {
                         tile.getItems().set(0,stacktoplace);
                         stack.grow(-1);
 
-                        return ActionResultType.SUCCESS;
+                        return InteractionResult.SUCCESS;
                     }else{
                         ItemStack stack = tile.getItem(0);
                         tile.getItems().clear();
                         popResource(world,pos,stack);
 
-                        return ActionResultType.SUCCESS;
+                        return InteractionResult.SUCCESS;
                     }
 
                 }
 
             }
         }
-        return ActionResultType.CONSUME;
+        return InteractionResult.CONSUME;
     }
 
     public static void placeBlockEvent(final BlockEvent.EntityPlaceEvent event){
 
-        if ((event.getPlacedAgainst().getBlock() instanceof InfusingPool) && event.getEntity() instanceof PlayerEntity){
-            if (!((PlayerEntity)(event.getEntity())).isCrouching()) {
+        if ((event.getPlacedAgainst().getBlock() instanceof InfusingPool) && event.getEntity() instanceof Player){
+            if (!((Player)(event.getEntity())).isCrouching()) {
                 event.setCanceled(true);
             }
         }

@@ -1,14 +1,16 @@
 package com.finderfeed.solarforge.magic_items.decoration_blocks;
 
 import com.finderfeed.solarforge.misc_things.ParticlesList;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.DeadBushBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.DeadBushBlock;
 import net.minecraft.particles.ParticleTypes;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 
 import java.util.Random;
+
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class SolarFlower extends DeadBushBlock {
     public SolarFlower(Properties p_i48418_1_) {
@@ -16,7 +18,7 @@ public class SolarFlower extends DeadBushBlock {
     }
 
 
-    public void animateTick(BlockState p_180655_1_, World p_180655_2_, BlockPos p_180655_3_, Random p_180655_4_) {
+    public void animateTick(BlockState p_180655_1_, Level p_180655_2_, BlockPos p_180655_3_, Random p_180655_4_) {
         if (p_180655_4_.nextInt(9) == 0) {
             Direction direction = Direction.getRandom(p_180655_4_);
             if (direction != Direction.UP) {

@@ -3,59 +3,72 @@ package com.finderfeed.solarforge.magic_items.blocks;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.SolarEnergyFurnaceTile;
 import com.finderfeed.solarforge.magic_items.items.SolarNetworkBinder;
 import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.GlazedTerracottaBlock;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.inventory.InventoryHelper;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.network.NetworkHooks;
+
+import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.GlazedTerracottaBlock;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.Containers;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+
 
 import javax.annotation.Nullable;
 
-public class SolarEnergyFurnace extends GlazedTerracottaBlock {
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
+import net.minecraftforge.fmllegacy.network.NetworkHooks;
+
+public class SolarEnergyFurnace extends GlazedTerracottaBlock implements EntityBlock {
 
     public SolarEnergyFurnace(Properties p_i48440_1_) {
         super(p_i48440_1_);
     }
 
-    @Override
-    public boolean hasTileEntity(BlockState state) {
-        return true;
-    }
 
-    @Nullable
-    @Override
-    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-        return TileEntitiesRegistry.SOLAR_FURNACE_TILE_ENTITY.get().create();
-    }
 
     @Override
-    public ActionResultType use(BlockState p_225533_1_, World world, BlockPos p_225533_3_, PlayerEntity p_225533_4_, Hand p_225533_5_, BlockRayTraceResult p_225533_6_) {
+    public InteractionResult use(BlockState p_225533_1_, Level world, BlockPos p_225533_3_, Player p_225533_4_, InteractionHand p_225533_5_, BlockHitResult p_225533_6_) {
             if (!world.isClientSide && (world.getBlockEntity(p_225533_3_) instanceof SolarEnergyFurnaceTile) ){
                 if (!(p_225533_4_.getMainHandItem().getItem() instanceof SolarNetworkBinder)) {
-                    NetworkHooks.openGui((ServerPlayerEntity) p_225533_4_, (SolarEnergyFurnaceTile) world.getBlockEntity(p_225533_3_),
+                    NetworkHooks.openGui((ServerPlayer) p_225533_4_, (SolarEnergyFurnaceTile) world.getBlockEntity(p_225533_3_),
                             (buf) -> buf.writeBlockPos(p_225533_3_)
                     );
-                    return ActionResultType.SUCCESS;
+                    return InteractionResult.SUCCESS;
                 }
             }
         return super.use(p_225533_1_, world, p_225533_3_, p_225533_4_, p_225533_5_, p_225533_6_);
     }
 
     @Override
-    public void onRemove(BlockState state, World world, BlockPos pos, BlockState state2, boolean hz) {
-        TileEntity test = world.getBlockEntity(pos);
+    public void onRemove(BlockState state, Level world, BlockPos pos, BlockState state2, boolean hz) {
+        BlockEntity test = world.getBlockEntity(pos);
         if (!world.isClientSide && (test instanceof SolarEnergyFurnaceTile)){
-            InventoryHelper.dropContents(world,pos,(SolarEnergyFurnaceTile) test);
+            Containers.dropContents(world,pos,(SolarEnergyFurnaceTile) test);
         }
         super.onRemove(state, world, pos, state2, hz);
+    }
+
+    @Nullable
+    @Override
+    public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
+        return TileEntitiesRegistry.SOLAR_FURNACE_TILE_ENTITY.get().create(blockPos,blockState);
+    }
+
+    @Nullable
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level p_153212_, BlockState p_153213_, BlockEntityType<T> p_153214_) {
+        return (((level, blockPos, blockState, t) -> {
+
+                SolarEnergyFurnaceTile.tick(level, blockPos, blockState, (SolarEnergyFurnaceTile) t);
+
+        }));
     }
 }

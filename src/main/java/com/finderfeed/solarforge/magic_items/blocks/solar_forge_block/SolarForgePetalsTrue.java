@@ -3,27 +3,27 @@ package com.finderfeed.solarforge.magic_items.blocks.solar_forge_block;// Made w
 // Paste this class into your mod and generate all required imports
 
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.model.Model;
-import net.minecraft.client.renderer.model.ModelRenderer;
+import net.minecraft.client.model.Model;
+import net.minecraft.client.model.geom.ModelPart;
 
 public class SolarForgePetalsTrue extends Model {
-	private final ModelRenderer bb_main;
-	private final ModelRenderer cube_r1;
-	private final ModelRenderer cube_r2;
+	private final ModelPart bb_main;
+	private final ModelPart cube_r1;
+	private final ModelPart cube_r2;
 
 	public SolarForgePetalsTrue() {
 		super(RenderType::text);
 		this.texWidth = 256;
 		this.texHeight = 256;
 
-		bb_main = new ModelRenderer(this);
+		bb_main = new ModelPart(this);
 		bb_main.setPos(0.0F, 24.0F, 0.0F);
 		
 
-		cube_r1 = new ModelRenderer(this);
+		cube_r1 = new ModelPart(this);
 		cube_r1.setPos(9.5625F, -22.8125F, 0.0F);
 		bb_main.addChild(cube_r1);
 		setRotationAngle(cube_r1, 0.0F, 0.0F, -0.2618F);
@@ -37,7 +37,7 @@ public class SolarForgePetalsTrue extends Model {
 		cube_r1.texOffs(107, 23).addBox(3.4375F, -12.1875F, -4.0F, 2.0F, 5.0F, 8.0F, 0.0F, false);
 		cube_r1.texOffs(184, 20).addBox(4.4375F, -7.1875F, -7.0F, 2.0F, 23.0F, 14.0F, 0.0F, false);
 
-		cube_r2 = new ModelRenderer(this);
+		cube_r2 = new ModelPart(this);
 		cube_r2.setPos(-9.5625F, -22.8125F, 0.0F);
 		bb_main.addChild(cube_r2);
 		setRotationAngle(cube_r2, 0.0F, 0.0F, 0.2618F);
@@ -54,11 +54,11 @@ public class SolarForgePetalsTrue extends Model {
 
 
 	@Override
-	public void renderToBuffer(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha){
+	public void renderToBuffer(PoseStack matrixStack, VertexConsumer buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha){
 		bb_main.render(matrixStack, buffer, packedLight, packedOverlay);
 	}
 
-	public void setRotationAngle(ModelRenderer modelRenderer, float x, float y, float z) {
+	public void setRotationAngle(ModelPart modelRenderer, float x, float y, float z) {
 		modelRenderer.xRot = x;
 		modelRenderer.yRot = y;
 		modelRenderer.zRot = z;

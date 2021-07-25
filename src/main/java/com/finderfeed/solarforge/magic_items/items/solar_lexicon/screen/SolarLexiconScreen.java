@@ -5,17 +5,17 @@ import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.misc_things.IScrollable;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.achievement_tree.AchievementTree;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Achievement;
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.gui.widget.Widget;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.gui.components.AbstractWidget;
 
-import net.minecraft.item.Items;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.world.item.Items;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL11;
 
@@ -35,7 +35,7 @@ public class SolarLexiconScreen extends Screen implements IScrollable {
     public  int relX;
     public  int relY;
     public final AchievementTree tree = AchievementTree.loadTree();
-    public ITextComponent currAch;
+    public Component currAch;
     public Achievement currentAchievement = null;
 
 
@@ -57,7 +57,7 @@ public class SolarLexiconScreen extends Screen implements IScrollable {
     public HashMap<Integer,List<Achievement>> map = new HashMap<>();
 
     public SolarLexiconScreen() {
-        super(new StringTextComponent("screen_solar_lexicon"));
+        super(new TextComponent("screen_solar_lexicon"));
         this.width = 256;
         this.height = 256;
 //        int width = 0;
@@ -83,10 +83,10 @@ public class SolarLexiconScreen extends Screen implements IScrollable {
             scrollX+=4;
         }
         if (this.prevscrollX != scrollX){
-            List<Widget> list = this.buttons;
+            List<AbstractWidget> list = this.buttons;
             list.remove(toggleRecipesScreen);
             list.remove(justForge);
-            for (Widget a : list) {
+            for (AbstractWidget a : list) {
                 if (prevscrollX < scrollX) {
                     a.x += 4;
                 } else {
@@ -97,10 +97,10 @@ public class SolarLexiconScreen extends Screen implements IScrollable {
             this.prevscrollX = scrollX;
         }
         if (this.prevscrollY != scrollY){
-            List<Widget> list = this.buttons;
+            List<AbstractWidget> list = this.buttons;
             list.remove(toggleRecipesScreen);
             list.remove(justForge);
-            for (Widget a : list) {
+            for (AbstractWidget a : list) {
                 if (prevscrollY < scrollY) {
 
                     a.y += 4;
@@ -159,7 +159,7 @@ public class SolarLexiconScreen extends Screen implements IScrollable {
 
         currentText = "Select Progression";
 
-        currAch = new StringTextComponent("");
+        currAch = new TextComponent("");
         int offsetX = 0;
         int offsetY = 0;
 
@@ -198,7 +198,7 @@ public class SolarLexiconScreen extends Screen implements IScrollable {
 
     }
     @Override
-    public void render(MatrixStack matrices, int mousex, int mousey, float partialTicks) {
+    public void render(PoseStack matrices, int mousex, int mousey, float partialTicks) {
 
 
         minecraft.getTextureManager().bind(MAIN_SCREEN_SCROLLABLE);
@@ -233,18 +233,18 @@ public class SolarLexiconScreen extends Screen implements IScrollable {
             Point first = new Point(relX+scrollX+18+map.get(a.getAchievementTier()).indexOf(a)*35,relY+scrollY+18+(a.getAchievementTier()-1)*30);
             blit(matrices,first.x-8,first.y-8,0,0,16,16,16,16);
         }
-        List<Widget> listButtons = this.buttons;
+        List<AbstractWidget> listButtons = this.buttons;
         listButtons.remove(toggleRecipesScreen);
         listButtons.remove(justForge);
 
-        for (Widget a :listButtons){
+        for (AbstractWidget a :listButtons){
             ItemStackButton button = (ItemStackButton) a;
             if (button.qMark){
                 button.render(matrices,mousex,mousey,partialTicks);
             }
         }
         minecraft.getTextureManager().bind(QMARK);
-        for (Widget a :listButtons){
+        for (AbstractWidget a :listButtons){
             ItemStackButton button = (ItemStackButton) a;
             if (!button.qMark){
 

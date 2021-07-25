@@ -7,16 +7,18 @@ import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Ac
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.ProgressionHelper;
 import com.finderfeed.solarforge.registries.items.ItemsRegister;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUseContext;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
+
+import net.minecraft.world.item.Item.Properties;
 
 public class RuneBase extends Item {
 
@@ -27,13 +29,13 @@ public class RuneBase extends Item {
     }
 
     @Override
-    public ActionResultType useOn(ItemUseContext ctx) {
-        World world = ctx.getLevel();
+    public InteractionResult useOn(UseOnContext ctx) {
+        Level world = ctx.getLevel();
         ItemStack stack = ctx.getItemInHand();
         BlockPos blockPos = ctx.getClickedPos();
-        Hand hand = ctx.getHand();
-        PlayerEntity player = ctx.getPlayer();
-        TileEntity tileEntity = world.getBlockEntity(blockPos);
+        InteractionHand hand = ctx.getHand();
+        Player player = ctx.getPlayer();
+        BlockEntity tileEntity = world.getBlockEntity(blockPos);
         if (ProgressionHelper.RUNES_MAP == null){
             ProgressionHelper.initRunesMap();
         }

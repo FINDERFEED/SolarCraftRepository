@@ -2,35 +2,35 @@ package com.finderfeed.solarforge.magic_items.blocks.infusing_table_things.infus
 
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
 import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.ItemStackHelper;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.LockableLootTileEntity;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.ContainerHelper;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.TickableBlockEntity;
+import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.core.NonNullList;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraftforge.fml.network.PacketDistributor;
 
-public class InfusingPoolTileEntity extends LockableLootTileEntity implements ITickableTileEntity {
+public class InfusingPoolTileEntity extends RandomizableContainerBlockEntity implements TickableBlockEntity {
 
     public NonNullList<ItemStack> items = NonNullList.withSize(1,ItemStack.EMPTY);
 
-    public InfusingPoolTileEntity(TileEntityType<?> p_i48289_1_) {
+    public InfusingPoolTileEntity(BlockEntityType<?> p_i48289_1_) {
         super(p_i48289_1_);
     }
 
     @Override
-    protected ITextComponent getDefaultName() {
-        return new TranslationTextComponent("container.solarforge.infusing_pool");
+    protected Component getDefaultName() {
+        return new TranslatableComponent("container.solarforge.infusing_pool");
     }
 
     @Override
-    protected Container createMenu(int x, PlayerInventory inv) {
+    protected AbstractContainerMenu createMenu(int x, Inventory inv) {
         return new InfusingPoolContainer(x,inv,this);
     }
 
@@ -56,22 +56,22 @@ public class InfusingPoolTileEntity extends LockableLootTileEntity implements IT
 
 
     @Override
-    public CompoundNBT save(CompoundNBT cmp){
+    public CompoundTag save(CompoundTag cmp){
         super.save(cmp);
 
         if (!this.trySaveLootTable(cmp)) {
-            ItemStackHelper.saveAllItems(cmp, this.items);
+            ContainerHelper.saveAllItems(cmp, this.items);
         }
         return cmp;
     }
 
     @Override
-    public void load(BlockState state, CompoundNBT cmp) {
+    public void load(BlockState state, CompoundTag cmp) {
         super.load(state,cmp);
 
         this.items = NonNullList.withSize(getContainerSize(), ItemStack.EMPTY);
         if (!this.tryLoadLootTable(cmp)) {
-            ItemStackHelper.loadAllItems(cmp, this.items);
+            ContainerHelper.loadAllItems(cmp, this.items);
         }
     }
 

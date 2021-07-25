@@ -3,33 +3,35 @@ package com.finderfeed.solarforge.magic_items.items;
 import com.finderfeed.solarforge.SolarCraftTags;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.projectiles.AbstractTurretProjectile;
 import com.finderfeed.solarforge.misc_things.ITagUser;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.IItemTier;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.SwordItem;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.Hand;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Tier;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.SwordItem;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.network.chat.Component;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.Level;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
+import net.minecraft.world.item.Item.Properties;
+
 public class SolarGodSword extends SwordItem implements ITagUser {
-    public SolarGodSword(IItemTier p_i48460_1_, int p_i48460_2_, float p_i48460_3_, Properties p_i48460_4_) {
+    public SolarGodSword(Tier p_i48460_1_, int p_i48460_2_, float p_i48460_3_, Properties p_i48460_4_) {
         super(p_i48460_1_, p_i48460_2_, p_i48460_3_, p_i48460_4_);
     }
 
 
     @Override
-    public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean inhand) {
+    public void inventoryTick(ItemStack stack, Level world, Entity entity, int slot, boolean inhand) {
         if (!world.isClientSide){
             if (stack.getTagElement(SolarCraftTags.SOLAR_GOD_SWORD_TAG) == null){
                 stack.getOrCreateTagElement(SolarCraftTags.SOLAR_GOD_SWORD_TAG);
@@ -41,7 +43,7 @@ public class SolarGodSword extends SwordItem implements ITagUser {
     }
 
     @Override
-    public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+    public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
         if (!world.isClientSide) {
             ItemStack inhand = player.getItemInHand(hand);
             if (inhand.getTagElement(SolarCraftTags.SOLAR_GOD_SWORD_TAG) != null) {
@@ -60,7 +62,7 @@ public class SolarGodSword extends SwordItem implements ITagUser {
                     AbstractTurretProjectile proj = new AbstractTurretProjectile(world,constructor);
                     world.addFreshEntity(proj);
                     player.getCooldowns().addCooldown(this,200);
-                    return ActionResult.success(player.getItemInHand(hand));
+                    return InteractionResultHolder.success(player.getItemInHand(hand));
                 }
 
             }
@@ -68,10 +70,7 @@ public class SolarGodSword extends SwordItem implements ITagUser {
         return super.use(world,player,hand);
     }
 
-    @Override
-    public boolean verifyTagAfterLoad(CompoundNBT p_179215_1_) {
-        return true;
-    }
+
 
 
 
@@ -84,36 +83,36 @@ public class SolarGodSword extends SwordItem implements ITagUser {
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> text, ITooltipFlag flag) {
+    public void appendHoverText(ItemStack stack, @Nullable Level world, List<Component> text, TooltipFlag flag) {
         if ((stack.getTagElement(SolarCraftTags.SOLAR_GOD_SWORD_TAG) != null)) {
 
             int level = stack.getTagElement(SolarCraftTags.SOLAR_GOD_SWORD_TAG).getInt(SolarCraftTags.SOLAR_GOD_SWORD_LEVEL_TAG);
-            text.add(new TranslationTextComponent("solarcraft.solar_god_sword_desc").append(String.valueOf(level)).withStyle(TextFormatting.GOLD));
+            text.add(new TranslatableComponent("solarcraft.solar_god_sword_desc").append(String.valueOf(level)).withStyle(ChatFormatting.GOLD));
             if (level >= 2){
-                text.add(new TranslationTextComponent("solarcraft.solar_god_sword_level_2").withStyle(TextFormatting.GOLD).withStyle(TextFormatting.ITALIC));
+                text.add(new TranslatableComponent("solarcraft.solar_god_sword_level_2").withStyle(ChatFormatting.GOLD).withStyle(ChatFormatting.ITALIC));
 
             }else{
-                text.add(new TranslationTextComponent("solarcraft.solar_god_sword_level_2").withStyle(TextFormatting.GOLD).withStyle(TextFormatting.ITALIC).withStyle(TextFormatting.STRIKETHROUGH));
+                text.add(new TranslatableComponent("solarcraft.solar_god_sword_level_2").withStyle(ChatFormatting.GOLD).withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.STRIKETHROUGH));
             }
 
             if (level >= 3){
-                text.add(new TranslationTextComponent("solarcraft.solar_god_sword_level_3").withStyle(TextFormatting.GOLD).withStyle(TextFormatting.ITALIC));
+                text.add(new TranslatableComponent("solarcraft.solar_god_sword_level_3").withStyle(ChatFormatting.GOLD).withStyle(ChatFormatting.ITALIC));
 
             }else{
-                text.add(new TranslationTextComponent("solarcraft.solar_god_sword_level_3").withStyle(TextFormatting.GOLD).withStyle(TextFormatting.ITALIC).withStyle(TextFormatting.STRIKETHROUGH));
+                text.add(new TranslatableComponent("solarcraft.solar_god_sword_level_3").withStyle(ChatFormatting.GOLD).withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.STRIKETHROUGH));
             }
 
             if (level >= 4){
-                text.add(new TranslationTextComponent("solarcraft.solar_god_sword_level_4").withStyle(TextFormatting.GOLD).withStyle(TextFormatting.ITALIC));
+                text.add(new TranslatableComponent("solarcraft.solar_god_sword_level_4").withStyle(ChatFormatting.GOLD).withStyle(ChatFormatting.ITALIC));
 
             }else{
-                text.add(new TranslationTextComponent("solarcraft.solar_god_sword_level_4").withStyle(TextFormatting.GOLD).withStyle(TextFormatting.ITALIC).withStyle(TextFormatting.STRIKETHROUGH));
+                text.add(new TranslatableComponent("solarcraft.solar_god_sword_level_4").withStyle(ChatFormatting.GOLD).withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.STRIKETHROUGH));
             }
 
             if (level >= 5){
-                text.add(new TranslationTextComponent("solarcraft.solar_god_sword_level_5").withStyle(TextFormatting.GOLD).withStyle(TextFormatting.ITALIC));
+                text.add(new TranslatableComponent("solarcraft.solar_god_sword_level_5").withStyle(ChatFormatting.GOLD).withStyle(ChatFormatting.ITALIC));
             }else{
-                text.add(new TranslationTextComponent("solarcraft.solar_god_sword_level_5").withStyle(TextFormatting.GOLD).withStyle(TextFormatting.ITALIC).withStyle(TextFormatting.STRIKETHROUGH));
+                text.add(new TranslatableComponent("solarcraft.solar_god_sword_level_5").withStyle(ChatFormatting.GOLD).withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.STRIKETHROUGH));
             }
 
         }

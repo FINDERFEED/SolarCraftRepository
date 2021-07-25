@@ -2,29 +2,29 @@ package com.finderfeed.solarforge.packet_handler;
 
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Achievement;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.fml.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
 public class ResetAllAbilitiesPacket {
 
-    public ResetAllAbilitiesPacket(PacketBuffer buf){
+    public ResetAllAbilitiesPacket(FriendlyByteBuf buf){
 
 
     }
     public ResetAllAbilitiesPacket(){
 
     }
-    public void toBytes(PacketBuffer buf){
+    public void toBytes(FriendlyByteBuf buf){
 
     }
     public void handle(Supplier<NetworkEvent.Context> ctx){
         ctx.get().enqueueWork(()->{
-            ServerPlayerEntity enti = ctx.get().getSender();
-            PlayerEntity entity = (PlayerEntity)enti;
+            ServerPlayer enti = ctx.get().getSender();
+            Player entity = (Player)enti;
             enti.getPersistentData().putBoolean("solar_forge_can_player_use_fireball",false);
             enti.getPersistentData().putBoolean("solar_forge_can_player_use_lightning",false);
             enti.getPersistentData().putBoolean("solar_forge_can_player_use_solar_strike",false);

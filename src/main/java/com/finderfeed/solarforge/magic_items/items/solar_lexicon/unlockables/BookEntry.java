@@ -1,12 +1,14 @@
 package com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables;
 
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Achievement;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 
 import javax.annotation.Nullable;
 import java.awt.*;
 import java.util.*;
 import java.util.List;
+
+import TranslatableComponent;
 
 public enum BookEntry {
     BEGINNING_INFO(tx("solar_category.beginning"),point(20,40),null,null),
@@ -33,12 +35,12 @@ public enum BookEntry {
     public static Map<BookEntry, List<BookEntry>> ENTRY_TREE = new HashMap<>();
 
 
-    private final TranslationTextComponent translation;
+    private final TranslatableComponent translation;
     private final Point placeInBook;
     private final Achievement toUnlock;
     private final BookEntry child;
 
-    BookEntry(TranslationTextComponent translation, Point placeInBook,@Nullable Achievement toUnlock,@Nullable BookEntry child){
+    BookEntry(TranslatableComponent translation, Point placeInBook,@Nullable Achievement toUnlock,@Nullable BookEntry child){
         this.placeInBook = placeInBook;
         this.translation = translation;
         this.toUnlock = toUnlock;
@@ -46,7 +48,7 @@ public enum BookEntry {
     }
 
 
-    public TranslationTextComponent getTranslation() {
+    public TranslatableComponent getTranslation() {
         return translation;
 
     }
@@ -71,8 +73,8 @@ public enum BookEntry {
         return new Point(a,b);
     }
 
-    public static TranslationTextComponent tx(String a){
-        return new TranslationTextComponent(a);
+    public static TranslatableComponent tx(String a){
+        return new TranslatableComponent(a);
     }
 
     public static List<BookEntry> nonChildEntries(){

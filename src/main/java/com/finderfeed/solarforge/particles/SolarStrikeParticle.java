@@ -1,15 +1,15 @@
 package com.finderfeed.solarforge.particles;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.*;
 import net.minecraft.client.renderer.*;
-import net.minecraft.client.renderer.texture.AtlasTexture;
+import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureManager;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.particles.BasicParticleType;
+import com.mojang.blaze3d.vertex.DefaultVertexFormat;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.core.particles.SimpleParticleType;
 
 import org.lwjgl.opengl.GL11;
 
@@ -19,10 +19,14 @@ import javax.annotation.Nullable;
 import static org.apache.commons.lang3.RandomUtils.nextFloat;
 
 
-public class SolarStrikeParticle extends SpriteTexturedParticle {
+import com.mojang.blaze3d.vertex.BufferBuilder;
+import com.mojang.blaze3d.vertex.Tesselator;
+import net.minecraft.client.Camera;
+
+public class SolarStrikeParticle extends TextureSheetParticle {
 
 
-    public SolarStrikeParticle(ClientWorld p_i232448_1_, double p_i232448_2_, double p_i232448_4_, double p_i232448_6_, double x, double y, double z) {
+    public SolarStrikeParticle(ClientLevel p_i232448_1_, double p_i232448_2_, double p_i232448_4_, double p_i232448_6_, double x, double y, double z) {
         super(p_i232448_1_, p_i232448_2_, p_i232448_4_, p_i232448_6_, x,y,z);
 
         this.rCol = 255;
@@ -44,14 +48,14 @@ public class SolarStrikeParticle extends SpriteTexturedParticle {
 
 
     @Override
-    public IParticleRenderType getRenderType() {
+    public ParticleRenderType getRenderType() {
 
 
         return SOLAR_STRIKE_PARTICLE_RENDER ;
     }
 
     @Override
-    public void render(IVertexBuilder builder, ActiveRenderInfo info, float partialTicks) {
+    public void render(VertexConsumer builder, Camera info, float partialTicks) {
 
 
         super.render(builder, info, partialTicks);
@@ -69,14 +73,14 @@ public class SolarStrikeParticle extends SpriteTexturedParticle {
 
     }
 
-    public static class Factory implements IParticleFactory<BasicParticleType>{
-        private final IAnimatedSprite spriteSetl;
-                public Factory(IAnimatedSprite sprite){
+    public static class Factory implements ParticleProvider<SimpleParticleType>{
+        private final SpriteSet spriteSetl;
+                public Factory(SpriteSet sprite){
             this.spriteSetl = sprite;
                 }
         @Nullable
         @Override
-        public Particle createParticle(BasicParticleType type, ClientWorld world, double x, double y, double z, double xv, double yv, double zv) {
+        public Particle createParticle(SimpleParticleType type, ClientLevel world, double x, double y, double z, double xv, double yv, double zv) {
             SolarStrikeParticle particle = new SolarStrikeParticle(world,x,y,z,xv,yv,zv);
             particle.setColor(1,1,0);
 
@@ -84,7 +88,7 @@ public class SolarStrikeParticle extends SpriteTexturedParticle {
             return particle;
         }
     }
-    private static final IParticleRenderType SOLAR_STRIKE_PARTICLE_RENDER = new IParticleRenderType() {
+    private static final ParticleRenderType SOLAR_STRIKE_PARTICLE_RENDER = new ParticleRenderType() {
         @Override
         public void begin(BufferBuilder bufferBuilder, TextureManager textureManager) {
 
@@ -93,17 +97,17 @@ public class SolarStrikeParticle extends SpriteTexturedParticle {
             RenderSystem.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE);
             RenderSystem.alphaFunc(GL11.GL_GREATER, 0.003921569F);
             RenderSystem.disableLighting();
-            textureManager.bind(AtlasTexture.LOCATION_PARTICLES);
-            textureManager.getTexture(AtlasTexture.LOCATION_PARTICLES).setBlurMipmap(true, false);
-            bufferBuilder.begin(GL11.GL_QUADS, DefaultVertexFormats.PARTICLE);
+            textureManager.bind(TextureAtlas.LOCATION_PARTICLES);
+            textureManager.getTexture(TextureAtlas.LOCATION_PARTICLES).setBlurMipmap(true, false);
+            bufferBuilder.begin(GL11.GL_QUADS, DefaultVertexFormat.PARTICLE);
 
         }
 
         @Override
-        public void end(Tessellator tessellator) {
+        public void end(Tesselator tessellator) {
             tessellator.end();
 
-            Minecraft.getInstance().textureManager.getTexture(AtlasTexture.LOCATION_PARTICLES).restoreLastBlurMipmap();
+            Minecraft.getInstance().textureManager.getTexture(TextureAtlas.LOCATION_PARTICLES).restoreLastBlurMipmap();
             RenderSystem.alphaFunc(GL11.GL_GREATER, 0.1F);
             RenderSystem.disableBlend();
             RenderSystem.depthMask(true);

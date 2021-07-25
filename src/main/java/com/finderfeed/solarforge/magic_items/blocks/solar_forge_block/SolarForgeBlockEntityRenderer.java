@@ -1,17 +1,17 @@
 package com.finderfeed.solarforge.magic_items.blocks.solar_forge_block;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 
-import com.mojang.blaze3d.vertex.IVertexBuilder;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
+import com.mojang.blaze3d.vertex.VertexConsumer;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.model.ModelRenderer;
-import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
-import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.vector.Vector3f;
+import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
+import net.minecraft.resources.ResourceLocation;
+import com.mojang.math.Vector3f;
 
-public class SolarForgeBlockEntityRenderer extends TileEntityRenderer<SolarForgeBlockEntity> {
+public class SolarForgeBlockEntityRenderer extends BlockEntityRenderer<SolarForgeBlockEntity> {
 
     public final ResourceLocation LOC = new ResourceLocation("solarforge","textures/misc/solar_forge_block.png");
     public final ResourceLocation LOCPETALS = new ResourceLocation("solarforge","textures/misc/solar_forge_petals.png");
@@ -19,9 +19,9 @@ public class SolarForgeBlockEntityRenderer extends TileEntityRenderer<SolarForge
     public final SolarForgeBlockModelTrue model = new SolarForgeBlockModelTrue();
     public final SolarForgePetalsTrue petals = new SolarForgePetalsTrue();
     public final SolarForgePetalsTrue petals2 = new SolarForgePetalsTrue();
-    public final ModelRenderer ray = new ModelRenderer(16,16,0,0);
+    public final ModelPart ray = new ModelPart(16,16,0,0);
 
-    public SolarForgeBlockEntityRenderer(TileEntityRendererDispatcher p_i226006_1_) {
+    public SolarForgeBlockEntityRenderer(BlockEntityRenderDispatcher p_i226006_1_) {
         super(p_i226006_1_);
         ray.addBox(-4,0,-4,4,1600,4,1);
 
@@ -33,7 +33,7 @@ public class SolarForgeBlockEntityRenderer extends TileEntityRenderer<SolarForge
     }
 
     @Override
-    public void render(SolarForgeBlockEntity entity, float partialTicks, MatrixStack matrices, IRenderTypeBuffer buffer, int light2, int light) {
+    public void render(SolarForgeBlockEntity entity, float partialTicks, PoseStack matrices, MultiBufferSource buffer, int light2, int light) {
 
         //matrices.mulPose(Vector3f.ZN.rotationDegrees(180));
         if (entity.getLevel().getDayTime() % 24000 <= 13000 && entity.getLevel().canSeeSky(entity.getBlockPos().above())) {
@@ -44,13 +44,13 @@ public class SolarForgeBlockEntityRenderer extends TileEntityRenderer<SolarForge
 
                 matrices.mulPose(Vector3f.YP.rotationDegrees((entity.getLevel().getGameTime() % 360 + partialTicks) * 2));
             }
-            IVertexBuilder vertex = buffer.getBuffer(RenderType.text(RAY));
+            VertexConsumer vertex = buffer.getBuffer(RenderType.text(RAY));
             // vertex = buffer.getBuffer(RenderType.text(RAY));
             ray.render(matrices, vertex, light2, light);
             matrices.popPose();
         }
         matrices.pushPose();
-        IVertexBuilder vertex = buffer.getBuffer(RenderType.text(LOC));
+        VertexConsumer vertex = buffer.getBuffer(RenderType.text(LOC));
 
         matrices.mulPose(Vector3f.ZN.rotationDegrees(180));
         matrices.translate(-0.5f,-1.5,0.5f);

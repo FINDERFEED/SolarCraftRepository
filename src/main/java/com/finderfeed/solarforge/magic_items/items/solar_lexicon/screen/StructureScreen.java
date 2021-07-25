@@ -3,16 +3,16 @@ package com.finderfeed.solarforge.magic_items.items.solar_lexicon.screen;
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.misc_things.Multiblock;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.SolarLexicon;
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.screens.Screen;
 
-import net.minecraft.client.gui.widget.button.ImageButton;
-import net.minecraft.client.renderer.ItemRenderer;
-import net.minecraft.item.Items;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.client.gui.components.ImageButton;
+import net.minecraft.client.renderer.entity.ItemRenderer;
+import net.minecraft.world.item.Items;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 
 
 public class StructureScreen extends Screen {
@@ -27,7 +27,7 @@ public class StructureScreen extends Screen {
     public  int relX;
     public  int relY;
     protected StructureScreen(Multiblock structure) {
-        super(new StringTextComponent(""));
+        super(new TextComponent(""));
         this.structure = structure;
     }
 
@@ -68,14 +68,14 @@ public class StructureScreen extends Screen {
     }
 
     @Override
-    public void render(MatrixStack matrices, int mousex, int mousey, float partialTicks) {
+    public void render(PoseStack matrices, int mousex, int mousey, float partialTicks) {
         minecraft.getTextureManager().bind(STRUCTURE_GUI);
         blit(matrices,relX,relY,0,0,256,256);
 
         String[] struct = structure.struct[currentPage-1];
-        drawCenteredString(matrices, minecraft.font,new StringTextComponent(currentPage+ "/" + structHeightAndPageCount),relX+103,relY+8,0xffffff);
+        drawCenteredString(matrices, minecraft.font,new TextComponent(currentPage+ "/" + structHeightAndPageCount),relX+103,relY+8,0xffffff);
         //drawCenteredString(matrices, minecraft.font,new TranslationTextComponent(structure.getName()),relX+20,relY+10,0xffffff);
-        Helpers.drawBoundedText(matrices,relX+14,relY+10,7,new TranslationTextComponent(structure.getName()).getString());
+        Helpers.drawBoundedText(matrices,relX+14,relY+10,7,new TranslatableComponent(structure.getName()).getString());
 
 
         ItemRenderer ren = Minecraft.getInstance().getItemRenderer();

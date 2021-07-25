@@ -4,10 +4,10 @@ import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.multiblocks.Multiblocks;
 import com.finderfeed.solarforge.registries.items.ItemsRegister;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Achievement;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.network.chat.TranslatableComponent;
 
 import java.util.*;
 
@@ -103,7 +103,7 @@ public enum AncientFragment {
         }
     }
 
-    private final TranslationTextComponent translation;
+    private final TranslatableComponent translation;
     private final String id;
     private final Achievement neededProgression;
     private final Type type;
@@ -111,13 +111,13 @@ public enum AncientFragment {
     private final BookEntry entry;
     private Multiblocks structure;
     private ItemStack item;
-    private TranslationTextComponent lore;
-    private TranslationTextComponent itemLore;
-    private IRecipeType<?> recipeType;
+    private TranslatableComponent lore;
+    private TranslatableComponent itemLore;
+    private RecipeType<?> recipeType;
     private final boolean requiresFragment;
 
 
-    AncientFragment(TranslationTextComponent translation, String id, Achievement neededProgression,BookEntry entry, Type type,Item Icon,boolean requiresFragment){
+    AncientFragment(TranslatableComponent translation, String id, Achievement neededProgression,BookEntry entry, Type type,Item Icon,boolean requiresFragment){
         this.translation = translation;
         this.id = id;
         this.neededProgression = neededProgression;
@@ -127,39 +127,39 @@ public enum AncientFragment {
         this.requiresFragment = requiresFragment;
     }
 
-    AncientFragment(TranslationTextComponent translation, String id, Achievement neededProgression,BookEntry entry, ItemStack item,TranslationTextComponent itemLore,IRecipeType<?> recipeType,boolean requiresFragment){
+    AncientFragment(TranslatableComponent translation, String id, Achievement neededProgression,BookEntry entry, ItemStack item,TranslatableComponent itemLore,RecipeType<?> recipeType,boolean requiresFragment){
         this(translation,id,neededProgression,entry,Type.ITEM,item.getItem(),requiresFragment);
         this.item = item;
         this.itemLore = itemLore;
         this.recipeType = recipeType;
     }
 
-    AncientFragment(TranslationTextComponent translation, String id, Achievement neededProgression,BookEntry entry,  Multiblocks structure,boolean requiresFragment){
+    AncientFragment(TranslatableComponent translation, String id, Achievement neededProgression,BookEntry entry,  Multiblocks structure,boolean requiresFragment){
         this(translation,id,neededProgression,entry,Type.STRUCTURE,structure.getM().mainBlock.asItem(),requiresFragment);
         this.structure = structure;
     }
 
-    AncientFragment(TranslationTextComponent translation, String id, Achievement neededProgression,BookEntry entry, Item Icon, TranslationTextComponent lore,boolean requiresFragment){
+    AncientFragment(TranslatableComponent translation, String id, Achievement neededProgression,BookEntry entry, Item Icon, TranslatableComponent lore,boolean requiresFragment){
         this(translation,id,neededProgression,entry,Type.INFORMATION,Icon,requiresFragment);
         this.lore = lore;
     }
 
-    AncientFragment(TranslationTextComponent translation, String id, Achievement neededProgression,BookEntry entry, ItemStack item,TranslationTextComponent upgradeLore){
+    AncientFragment(TranslatableComponent translation, String id, Achievement neededProgression,BookEntry entry, ItemStack item,TranslatableComponent upgradeLore){
         this(translation,id,neededProgression,entry,Type.UPGRADE,item.getItem(),true);
         this.item = item;
         this.itemLore = upgradeLore;
     }
 
 
-    public IRecipeType<?> getRecipeType() {
+    public RecipeType<?> getRecipeType() {
         return recipeType;
     }
 
-    public TranslationTextComponent getItemDescription(){
+    public TranslatableComponent getItemDescription(){
         return itemLore;
     }
 
-    public TranslationTextComponent getLore() {
+    public TranslatableComponent getLore() {
         return lore;
     }
 
@@ -179,7 +179,7 @@ public enum AncientFragment {
         return icon;
     }
 
-    public TranslationTextComponent getTranslation() {
+    public TranslatableComponent getTranslation() {
         return translation;
     }
 
@@ -209,8 +209,8 @@ public enum AncientFragment {
         return FRAGMENTS_ID_MAP.containsKey(id) ? FRAGMENTS_ID_MAP.get(id) : null;
     }
 
-    public static TranslationTextComponent tx(String a){
-        return new TranslationTextComponent(a);
+    public static TranslatableComponent tx(String a){
+        return new TranslatableComponent(a);
     }
 
     public boolean requiresFragment(){

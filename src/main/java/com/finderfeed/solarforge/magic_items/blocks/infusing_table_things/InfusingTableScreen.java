@@ -2,23 +2,23 @@ package com.finderfeed.solarforge.magic_items.blocks.infusing_table_things;
 
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.recipe_types.InfusingRecipe;
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.minecraft.client.gui.screen.inventory.ContainerScreen;
-import net.minecraft.client.renderer.ItemRenderer;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.vector.Vector3f;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.renderer.entity.ItemRenderer;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.resources.ResourceLocation;
+import com.mojang.math.Vector3f;
+import net.minecraft.network.chat.Component;
 
 import java.util.Optional;
 
-public class InfusingTableScreen extends ContainerScreen<InfusingTableContainer> {
+public class InfusingTableScreen extends AbstractContainerScreen<InfusingTableContainer> {
     public final ResourceLocation REQ_ENERGY = new ResourceLocation("solarforge","textures/gui/energy_bar.png");
     private static final ResourceLocation GUI_TEXT = new ResourceLocation("solarforge","textures/gui/solar_infuser_gui.png");
     public int relX;
     public int relY;
-    public InfusingTableScreen(InfusingTableContainer container, PlayerInventory inv, ITextComponent text) {
+    public InfusingTableScreen(InfusingTableContainer container, Inventory inv, Component text) {
         super(container, inv, text);
         this.leftPos = 60;
         this.topPos = 0;
@@ -45,7 +45,7 @@ public class InfusingTableScreen extends ContainerScreen<InfusingTableContainer>
 
     }
     @Override
-    public void render(MatrixStack stack, int rouseX, int rouseY, float partialTicks){
+    public void render(PoseStack stack, int rouseX, int rouseY, float partialTicks){
 
         this.renderBackground(stack);
 
@@ -56,7 +56,7 @@ public class InfusingTableScreen extends ContainerScreen<InfusingTableContainer>
 
     }
     @Override
-    protected void renderBg(MatrixStack matrices, float partialTicks, int x, int y) {
+    protected void renderBg(PoseStack matrices, float partialTicks, int x, int y) {
         matrices.pushPose();
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.minecraft.getTextureManager().bind(GUI_TEXT);

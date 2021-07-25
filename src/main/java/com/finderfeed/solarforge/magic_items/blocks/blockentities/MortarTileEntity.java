@@ -7,7 +7,7 @@ import com.finderfeed.solarforge.misc_things.AbstractMortarTileEntity;
 import com.finderfeed.solarforge.multiblocks.Multiblocks;
 import com.finderfeed.solarforge.registries.projectiles.Projectiles;
 import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
-import net.minecraft.tileentity.TileEntityType;
+
 
 
 public class MortarTileEntity extends AbstractMortarTileEntity {

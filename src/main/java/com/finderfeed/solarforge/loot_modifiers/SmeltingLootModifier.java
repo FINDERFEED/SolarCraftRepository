@@ -5,15 +5,15 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.FurnaceRecipe;
-import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.loot.LootContext;
+import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.SmeltingRecipe;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.loot.LootParameters;
-import net.minecraft.loot.conditions.ILootCondition;
+import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.loot.functions.ApplyBonus;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.common.loot.LootModifier;
 import net.minecraftforge.items.ItemHandlerHelper;
@@ -29,7 +29,7 @@ public class SmeltingLootModifier extends LootModifier {
      *
      * @param conditionsIn the ILootConditions that need to be matched before the loot is modified.
      */
-    protected SmeltingLootModifier(ILootCondition[] conditionsIn) {
+    protected SmeltingLootModifier(LootItemCondition[] conditionsIn) {
         super(conditionsIn);
     }
 
@@ -47,7 +47,7 @@ public class SmeltingLootModifier extends LootModifier {
 
     public ItemStack getSmeltedStack(ItemStack stack,LootContext ctx){
 
-        Optional<FurnaceRecipe> opt = ctx.getLevel().getRecipeManager().getRecipeFor(IRecipeType.SMELTING,new Inventory(stack),ctx.getLevel());
+        Optional<SmeltingRecipe> opt = ctx.getLevel().getRecipeManager().getRecipeFor(RecipeType.SMELTING,new SimpleContainer(stack),ctx.getLevel());
         if (opt.isPresent()){
             return new ItemStack(opt.get().getResultItem().getItem(),stack.getCount());
         }
@@ -57,7 +57,7 @@ public class SmeltingLootModifier extends LootModifier {
     public static class Serializer extends GlobalLootModifierSerializer<SmeltingLootModifier>{
 
         @Override
-        public SmeltingLootModifier read(ResourceLocation location, JsonObject object, ILootCondition[] ailootcondition) {
+        public SmeltingLootModifier read(ResourceLocation location, JsonObject object, LootItemCondition[] ailootcondition) {
             return new SmeltingLootModifier(ailootcondition);
         }
 

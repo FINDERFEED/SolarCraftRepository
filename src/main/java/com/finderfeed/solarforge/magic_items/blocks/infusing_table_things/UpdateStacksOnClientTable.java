@@ -1,15 +1,18 @@
 package com.finderfeed.solarforge.magic_items.blocks.infusing_table_things;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.core.BlockPos;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.network.NetworkEvent;
 
 import java.util.function.Supplier;
+
+import BlockPos;
+import ItemStack;
 
 public class UpdateStacksOnClientTable {
     public boolean isActive;
@@ -24,7 +27,7 @@ public class UpdateStacksOnClientTable {
     public ItemStack stack7;
     public ItemStack stack8;
     public BlockPos pos;
-    public UpdateStacksOnClientTable(PacketBuffer buf){
+    public UpdateStacksOnClientTable(FriendlyByteBuf buf){
         stack = buf.readItem();
         stack1 = buf.readItem();
         stack2 = buf.readItem();
@@ -52,7 +55,7 @@ public class UpdateStacksOnClientTable {
         this.pos = pos;
         this.isActive = isActive;
     }
-    public void toBytes(PacketBuffer buf){
+    public void toBytes(FriendlyByteBuf buf){
         buf.writeItem(stack);
         buf.writeItem(stack1);
         buf.writeItem(stack2);
@@ -69,7 +72,7 @@ public class UpdateStacksOnClientTable {
     public void handle(Supplier<NetworkEvent.Context> ctx){
         ctx.get().enqueueWork(()->{
             DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> ()-> {
-                ClientWorld world = Minecraft.getInstance().level;
+                ClientLevel world = Minecraft.getInstance().level;
 
                 InfusingTableTileEntity tile = (InfusingTableTileEntity) world.getBlockEntity(pos);
                 if (tile != null) {

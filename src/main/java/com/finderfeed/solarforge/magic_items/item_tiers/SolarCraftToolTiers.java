@@ -1,13 +1,13 @@
 package com.finderfeed.solarforge.magic_items.item_tiers;
 
 import com.finderfeed.solarforge.registries.items.ItemsRegister;
-import net.minecraft.item.IItemTier;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.util.LazyValue;
+import net.minecraft.world.item.Tier;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.util.LazyLoadedValue;
 
 import java.util.function.Supplier;
 
-public enum SolarCraftToolTiers implements IItemTier {
+public enum SolarCraftToolTiers implements Tier {
     ILLIDIUM_TOOLS_TIER(5, 2500, 9.5f, 6.0F, 20,()-> Ingredient.of(ItemsRegister.ILLIDIUM_INGOT.get())),
     QUALADIUM_TOOLS_TIER(5, 4000, 11f, 13.0F, 25,()-> Ingredient.of(ItemsRegister.QUALADIUM_INGOT.get())),
     CHARGED_QUALADIUM_TOOLS_TIER(5, 4200, 11.5f, 13.5F, 40,()-> Ingredient.of(ItemsRegister.QUALADIUM_INGOT.get())),
@@ -19,7 +19,7 @@ public enum SolarCraftToolTiers implements IItemTier {
     private final float speed;
     private final float damage;
     private final int enchantmentValue;
-    private final LazyValue<Ingredient> repairIngredient;
+    private final LazyLoadedValue<Ingredient> repairIngredient;
 
     SolarCraftToolTiers(int p_i48458_3_, int p_i48458_4_, float p_i48458_5_, float p_i48458_6_, int p_i48458_7_, Supplier<Ingredient> p_i48458_8_) {
         this.level = p_i48458_3_;
@@ -27,7 +27,7 @@ public enum SolarCraftToolTiers implements IItemTier {
         this.speed = p_i48458_5_;
         this.damage = p_i48458_6_;
         this.enchantmentValue = p_i48458_7_;
-        this.repairIngredient = new LazyValue<>(p_i48458_8_);
+        this.repairIngredient = new LazyLoadedValue<>(p_i48458_8_);
     }
 
     public int getUses() {

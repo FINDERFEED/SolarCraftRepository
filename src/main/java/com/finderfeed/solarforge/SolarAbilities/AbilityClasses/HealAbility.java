@@ -1,8 +1,8 @@
 package com.finderfeed.solarforge.SolarAbilities.AbilityClasses;
 
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.server.level.ServerLevel;
 
 public class HealAbility extends AbstractAbility{
     public HealAbility() {
@@ -13,7 +13,7 @@ public class HealAbility extends AbstractAbility{
     }
 
     @Override
-    public void cast(ServerPlayerEntity entity, ServerWorld world) {
+    public void cast(ServerPlayer entity, ServerLevel world) {
         super.cast(entity, world);
         if (allowed) {
             entity.heal(4);

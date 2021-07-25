@@ -1,12 +1,12 @@
 package com.finderfeed.solarforge.magic_items.items.solar_lexicon.screen;
 
 import com.finderfeed.solarforge.recipe_types.solar_smelting.SolarSmeltingRecipe;
-import com.mojang.blaze3d.matrix.MatrixStack;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.StringTextComponent;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.chat.TextComponent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +19,7 @@ public class SmeltingRecipeScreen extends Screen {
     public List<ItemStack> stacks ;
 
     protected SmeltingRecipeScreen(SolarSmeltingRecipe a) {
-        super(new StringTextComponent(""));
+        super(new TextComponent(""));
         this.recipe = a;
     }
 
@@ -45,7 +45,7 @@ public class SmeltingRecipeScreen extends Screen {
 
 
     @Override
-    public void render(MatrixStack matrices, int mousex, int mousey, float partialTicks) {
+    public void render(PoseStack matrices, int mousex, int mousey, float partialTicks) {
         minecraft.getTextureManager().bind(MAIN_SCREEN);
         blit(matrices,relX,relY,0,0,256,256);
         minecraft.getItemRenderer().renderGuiItem(stacks.get(0),relX+77,relY+111);

@@ -3,10 +3,10 @@ package com.finderfeed.solarforge.SolarAbilities.AbilityClasses;
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.capabilities.capability_mana.CapabilitySolarMana;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.server.level.ServerLevel;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -25,7 +25,7 @@ public abstract class AbstractAbility {
 
     }
 
-    public void cast(ServerPlayerEntity entity, ServerWorld world){
+    public void cast(ServerPlayer entity, ServerLevel world){
         if (!entity.isDeadOrDying()) {
             allowed = true;
             if (!canUse(entity)){
@@ -36,7 +36,7 @@ public abstract class AbstractAbility {
                 RUNIC_ENERGY_COST.forEach((type,cost)->{
                     if (RunicEnergy.getEnergy(entity,type) < cost){
                         allowed = false;
-                        entity.sendMessage(new StringTextComponent("Not enough rune energy: "+ type.id.toUpperCase()),entity.getUUID());
+                        entity.sendMessage(new TextComponent("Not enough rune energy: "+ type.id.toUpperCase()),entity.getUUID());
                     }
                 });
                 if (mana < manacost){
@@ -53,7 +53,7 @@ public abstract class AbstractAbility {
 
     }
 
-    public void refund(PlayerEntity entity){
+    public void refund(Player entity){
         double mana = CapabilitySolarMana.getSolarMana(entity).orElseThrow(RuntimeException::new).getMana();
         CapabilitySolarMana.getSolarMana(entity).orElseThrow(RuntimeException::new).setMana(mana+manacost);
         RUNIC_ENERGY_COST.forEach((type,cost)->{
@@ -62,7 +62,7 @@ public abstract class AbstractAbility {
     }
 
 
-    public boolean canUse(PlayerEntity playerEntity){
+    public boolean canUse(Player playerEntity){
         return playerEntity.getPersistentData().getBoolean("solar_forge_can_player_use_"+id);
     }
 

@@ -1,41 +1,47 @@
 package com.finderfeed.solarforge.magic_items.blocks.blockentities;
 
 import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.magic_items.blocks.solar_forge_block.SolarForgeBlockEntity;
 import com.finderfeed.solarforge.misc_things.ParticlesList;
 import com.finderfeed.solarforge.multiblocks.Multiblocks;
 import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.nbt.CompoundTag;
+
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.server.level.ServerLevel;
 
 import java.util.List;
 
-public class AuraHealerTile extends TileEntity implements ITickableTileEntity {
+public class AuraHealerTile extends BlockEntity  {
     public int HEAL_TICK = 0;
-    public AuraHealerTile() {
-        super(TileEntitiesRegistry.AURA_HEALER_TILE.get());
+
+    public AuraHealerTile( BlockPos p_155229_, BlockState p_155230_) {
+        super(TileEntitiesRegistry.AURA_HEALER_TILE.get(), p_155229_, p_155230_);
     }
 
-    @Override
-    public void tick() {
-        if  (!this.level.isClientSide){
-            HEAL_TICK++;
 
 
-            if (HEAL_TICK > 400 ) {
-                HEAL_TICK = 0;
+    public static void tick(Level world, BlockPos pos, BlockState blockState, AuraHealerTile tile) {
+        if  (!tile.level.isClientSide){
+            tile.HEAL_TICK++;
 
-                if (Helpers.checkStructure(level,worldPosition.offset(-1,-2,-1), Multiblocks.AURA_HEALER.getM())) {
-                    List<PlayerEntity> players = level.getEntitiesOfClass(PlayerEntity.class, new AxisAlignedBB(-20, -5, -20, 20, 5, 20).move(worldPosition), null);
-                    for (PlayerEntity a : players) {
+
+            if (tile.HEAL_TICK > 400 ) {
+                tile.HEAL_TICK = 0;
+
+                if (Helpers.checkStructure(tile.level,tile.worldPosition.offset(-1,-2,-1), Multiblocks.AURA_HEALER.getM())) {
+                    List<Player> players = tile.level.getEntitiesOfClass(Player.class, new AABB(-20, -5, -20, 20, 5, 20).move(tile.worldPosition), null);
+                    for (Player a : players) {
                         if (a.getHealth() != a.getMaxHealth()) {
                             a.heal(4);
                             for (int i = 10; i < 16; i++) {
-                                ((ServerWorld) level).sendParticles(ParticlesList.HEAL_PARTICLE.get(), a.position().x, a.position().y + 1.35f, a.position().z, 5, 0, 0.3, 0, 0.02);
+                                ((ServerLevel) tile.level).sendParticles(ParticlesList.HEAL_PARTICLE.get(), a.position().x, a.position().y + 1.35f, a.position().z, 5, 0, 0.3, 0, 0.02);
                             }
                         }
                     }
@@ -47,15 +53,15 @@ public class AuraHealerTile extends TileEntity implements ITickableTileEntity {
 
 
     @Override
-    public CompoundNBT save(CompoundNBT p_189515_1_) {
+    public CompoundTag save(CompoundTag p_189515_1_) {
         p_189515_1_.putInt("heal_tick",HEAL_TICK);
         return super.save(p_189515_1_);
     }
 
     @Override
-    public void load(BlockState p_230337_1_, CompoundNBT p_230337_2_) {
+    public void load( CompoundTag p_230337_2_) {
         HEAL_TICK = p_230337_2_.getInt("heal_tick");
-        super.load(p_230337_1_, p_230337_2_);
+        super.load( p_230337_2_);
     }
 
 //    public void spawnParticles(Vector3f position){

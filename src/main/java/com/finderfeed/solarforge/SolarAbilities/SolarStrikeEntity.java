@@ -3,31 +3,31 @@ package com.finderfeed.solarforge.SolarAbilities;
 
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.misc_things.ParticlesList;
-import net.minecraft.block.Blocks;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.Sound;
 import net.minecraft.command.impl.SetBlockCommand;
-import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.ai.attributes.AttributeModifierMap;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.IPacket;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.SoundCategory;
+import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.Vec3;
 import net.minecraft.util.math.vector.Vector3f;
 import net.minecraft.world.Explosion;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fml.network.NetworkHooks;
@@ -35,42 +35,42 @@ import net.minecraftforge.fml.network.NetworkHooks;
 import java.util.List;
 
 
-public class SolarStrikeEntity extends CreatureEntity {
-    public static DataParameter<Integer> LIFE = EntityDataManager.defineId(SolarStrikeEntity.class, DataSerializers.INT);
+public class SolarStrikeEntity extends PathfinderMob {
+    public static EntityDataAccessor<Integer> LIFE = SynchedEntityData.defineId(SolarStrikeEntity.class, EntityDataSerializers.INT);
     public int LIFE_TICKS = 0;
-    public SolarStrikeEntity(EntityType<? extends CreatureEntity> p_i48581_1_, World p_i48581_2_) {
+    public SolarStrikeEntity(EntityType<? extends PathfinderMob> p_i48581_1_, Level p_i48581_2_) {
         super(SolarForge.SOLAR_STRIKE_ENTITY_REG.get(), p_i48581_2_);
     }
 
     @Override
-    public IPacket<?> getAddEntityPacket() {
+    public Packet<?> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 
 
-    public static AttributeModifierMap.MutableAttribute createAttributes() {
+    public static AttributeSupplier.Builder createAttributes() {
         return createLivingAttributes().add(Attributes.FOLLOW_RANGE);
     }
 
     @Override
-    public void deserializeNBT(CompoundNBT nbt) {
+    public void deserializeNBT(CompoundTag nbt) {
         super.deserializeNBT(nbt);
 
     }
 
     @Override
-    public CompoundNBT serializeNBT() {
+    public CompoundTag serializeNBT() {
         return super.serializeNBT();
 
     }
     @Override
-    public void addAdditionalSaveData(CompoundNBT compound) {
+    public void addAdditionalSaveData(CompoundTag compound) {
         super.addAdditionalSaveData(compound);
         compound.putInt("life",LIFE_TICKS);
     }
 
     @Override
-    public void readAdditionalSaveData(CompoundNBT compound) {
+    public void readAdditionalSaveData(CompoundTag compound) {
         super.readAdditionalSaveData(compound);
         LIFE_TICKS = compound.getInt("life");
     }
@@ -86,7 +86,7 @@ public class SolarStrikeEntity extends CreatureEntity {
         doParticles();
         if (!this.level.isClientSide ){
             if (this.entityData.get(LIFE) == 1){
-                this.level.playSound(null,this.getOnPos().offset(0,5,0),SolarForge.SOLAR_STRIKE_BUILD_SOUND.get(),SoundCategory.AMBIENT,10,1F);
+                this.level.playSound(null,this.getOnPos().offset(0,5,0),SolarForge.SOLAR_STRIKE_BUILD_SOUND.get(),SoundSource.AMBIENT,10,1F);
             }
             LIFE_TICKS++;
             this.entityData.set(LIFE,LIFE_TICKS);
@@ -94,11 +94,11 @@ public class SolarStrikeEntity extends CreatureEntity {
             if (this.entityData.get(LIFE) == 60) {
                 doSolarStrikeExplosion(this.getOnPos().offset(0,1,0));
                 //this.level.explode(null,DamageSource.DRAGON_BREATH,null, this.position().x, this.position().y, this.position().z, 10, false, Explosion.Mode.BREAK);
-                List<Entity> list = this.level.getEntities(this,new AxisAlignedBB(-30,-30,-30,30,30,30).move(this.getOnPos()),x -> !(x instanceof PlayerEntity));
+                List<Entity> list = this.level.getEntities(this,new AABB(-30,-30,-30,30,30,30).move(this.getOnPos()),x -> !(x instanceof Player));
                 for (int i = 0; i<list.size();i++){
                     list.get(i).hurt(DamageSource.MAGIC,300);
                 }
-                this.level.playSound(null,this.getOnPos().offset(0,5,0),SolarForge.SOLAR_STRIKE_SOUND.get(),SoundCategory.AMBIENT,10,0.4F);
+                this.level.playSound(null,this.getOnPos().offset(0,5,0),SolarForge.SOLAR_STRIKE_SOUND.get(),SoundSource.AMBIENT,10,0.4F);
 
                 this.remove();
             }
@@ -126,7 +126,7 @@ public class SolarStrikeEntity extends CreatureEntity {
             for (int g = (int) -Math.ceil(randomRadius); g <= (int) Math.ceil(randomRadius); g++) {
                 for (int k = (int) -Math.ceil(randomHeight); k <= (int) Math.ceil(randomHeight); k++) {
                     if (checkTochkaVEllipse(i, k, g, randomRadius, randomHeight, randomRadius)) {
-                        Vector3d vec = new Vector3d(i,0,g);
+                        Vec3 vec = new Vec3(i,0,g);
 
                         if ((this.level.random.nextDouble()*0.5 + 1)*vec.length() < randomRadius) {
 

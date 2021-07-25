@@ -2,27 +2,27 @@ package com.finderfeed.solarforge.magic_items.items.solar_lexicon;
 
 import com.finderfeed.solarforge.registries.containers.Containers;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.AncientFragment;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
 import javax.annotation.Nullable;
 
 
-public class SolarLexiconContainer extends Container {
+public class SolarLexiconContainer extends AbstractContainerMenu {
 
     private final IItemHandler inventory;
     private final ItemStack stack;
 
-    public SolarLexiconContainer(int p_i50105_2_, PlayerInventory inv, ItemStack stack) {
+    public SolarLexiconContainer(int p_i50105_2_, Inventory inv, ItemStack stack) {
         super(Containers.SOLAR_LEXICON_CONTAINER.get(), p_i50105_2_);
         this.stack = stack;
         this.inventory = stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(null);
@@ -60,12 +60,12 @@ public class SolarLexiconContainer extends Container {
     }
 
 
-    public SolarLexiconContainer(int windowId, PlayerInventory inv, PacketBuffer buf){
+    public SolarLexiconContainer(int windowId, Inventory inv, FriendlyByteBuf buf){
         this(windowId,inv,buf.readItem());
     }
 
     @Override
-    public ItemStack quickMoveStack(PlayerEntity p_82846_1_, int index) {
+    public ItemStack quickMoveStack(Player p_82846_1_, int index) {
         ItemStack itemstack = ItemStack.EMPTY;
         Slot slot = this.slots.get(index);
         if (slot != null && slot.hasItem()) {
@@ -90,12 +90,12 @@ public class SolarLexiconContainer extends Container {
     }
 
     @Override
-    public boolean stillValid(PlayerEntity player) {
+    public boolean stillValid(Player player) {
         return !player.isDeadOrDying() && player.inventory.contains(stack);
     }
 
 
-    static class Provider implements INamedContainerProvider{
+    static class Provider implements MenuProvider{
 
 
         private final ItemStack stack;
@@ -106,13 +106,13 @@ public class SolarLexiconContainer extends Container {
 
 
         @Override
-        public ITextComponent getDisplayName() {
-            return new TranslationTextComponent("");
+        public Component getDisplayName() {
+            return new TranslatableComponent("");
         }
 
         @Nullable
         @Override
-        public Container createMenu(int p_createMenu_1_, PlayerInventory p_createMenu_2_, PlayerEntity p_createMenu_3_) {
+        public AbstractContainerMenu createMenu(int p_createMenu_1_, Inventory p_createMenu_2_, Player p_createMenu_3_) {
             return new SolarLexiconContainer(p_createMenu_1_,p_createMenu_2_,stack);
         }
     }

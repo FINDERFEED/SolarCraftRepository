@@ -3,18 +3,18 @@ package com.finderfeed.solarforge.world_generation.structures.blocks.tile_entiti
 import com.finderfeed.solarforge.misc_things.AbstractStructureBlockentity;
 import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Achievement;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.monster.ZombieEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.monster.Zombie;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.core.Direction;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 
 public class KeyDefenderTile extends AbstractStructureBlockentity {
     public boolean activated= false;
     public KeyDefenderTile() {
-        super(TileEntitiesRegistry.KEY_DEFENDER_TILE.get(), Achievement.FIND_KEY_SOURCE,new AxisAlignedBB(-5,-1,-5,5,1,5));
+        super(TileEntitiesRegistry.KEY_DEFENDER_TILE.get(), Achievement.FIND_KEY_SOURCE,new AABB(-5,-1,-5,5,1,5));
     }
 
 
@@ -23,10 +23,10 @@ public class KeyDefenderTile extends AbstractStructureBlockentity {
             this.activated = true;
             for (int i = 0;i<20;i++){
 
-                ZombieEntity entity = new ZombieEntity(EntityType.ZOMBIE,this.level);
-                Vector3d pos;
+                Zombie entity = new Zombie(EntityType.ZOMBIE,this.level);
+                Vec3 pos;
 
-                    pos = new Vector3d(this.worldPosition.getX() + level.random.nextFloat()*8-4, this.worldPosition.getY() + 1, this.worldPosition.getZ() + level.random.nextFloat()*8-4);
+                    pos = new Vec3(this.worldPosition.getX() + level.random.nextFloat()*8-4, this.worldPosition.getY() + 1, this.worldPosition.getZ() + level.random.nextFloat()*8-4);
 
 
                 entity.setPos(pos.x,pos.y,pos.z);
@@ -46,13 +46,13 @@ public class KeyDefenderTile extends AbstractStructureBlockentity {
     }
 
     @Override
-    public CompoundNBT save(CompoundNBT p_189515_1_) {
+    public CompoundTag save(CompoundTag p_189515_1_) {
         p_189515_1_.putBoolean("activated",activated);
         return super.save(p_189515_1_);
     }
 
     @Override
-    public void load(BlockState p_230337_1_, CompoundNBT p_230337_2_) {
+    public void load(BlockState p_230337_1_, CompoundTag p_230337_2_) {
         this.activated = p_230337_2_.getBoolean("activated");
         super.load(p_230337_1_, p_230337_2_);
     }

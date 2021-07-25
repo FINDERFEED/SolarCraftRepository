@@ -3,25 +3,27 @@ package com.finderfeed.solarforge.world_generation.features.foliage_placers;
 import com.finderfeed.solarforge.Helpers;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MutableBoundingBox;
-import net.minecraft.world.gen.IWorldGenerationReader;
-import net.minecraft.world.gen.feature.BaseTreeFeatureConfig;
-import net.minecraft.world.gen.feature.FeatureSpread;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.levelgen.structure.BoundingBox;
+import net.minecraft.world.level.LevelSimulatedRW;
+import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration;
+import net.minecraft.util.UniformInt;
 import net.minecraft.world.gen.foliageplacer.AcaciaFoliagePlacer;
-import net.minecraft.world.gen.foliageplacer.FoliagePlacer;
-import net.minecraft.world.gen.foliageplacer.FoliagePlacerType;
+import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacer;
+import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacerType;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.Random;
 import java.util.Set;
 
+import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacer.FoliageAttachment;
+
 public class BurntTreeFoliagePlacer extends FoliagePlacer {
     public static final Codec<BurntTreeFoliagePlacer> CODEC = RecordCodecBuilder.create((p_236737_0_) -> {
         return foliagePlacerParts(p_236737_0_).apply(p_236737_0_, BurntTreeFoliagePlacer::new);
     });
-    public BurntTreeFoliagePlacer(FeatureSpread p_i241999_1_, FeatureSpread p_i241999_2_) {
+    public BurntTreeFoliagePlacer(UniformInt p_i241999_1_, UniformInt p_i241999_2_) {
         super(p_i241999_1_, p_i241999_2_);
     }
 
@@ -31,16 +33,16 @@ public class BurntTreeFoliagePlacer extends FoliagePlacer {
     }
 
     @Override
-    protected void createFoliage(IWorldGenerationReader reader,
+    protected void createFoliage(LevelSimulatedRW reader,
                                  Random random,
-                                 BaseTreeFeatureConfig cfg,
+                                 TreeConfiguration cfg,
                                  int idk,
-                                 Foliage foliage,
+                                 FoliageAttachment foliage,
                                  int idk1,
                                  int idk2,
                                  Set<BlockPos> setPos,
                                  int idk3,
-                                 MutableBoundingBox box) {
+                                 BoundingBox box) {
 
         BlockPos foliagePos = foliage.foliagePos();
         BlockPos foliagePosBelow = foliagePos.below();
@@ -85,7 +87,7 @@ public class BurntTreeFoliagePlacer extends FoliagePlacer {
     }
 
     @Override
-    public int foliageHeight(Random p_230374_1_, int p_230374_2_, BaseTreeFeatureConfig p_230374_3_) {
+    public int foliageHeight(Random p_230374_1_, int p_230374_2_, TreeConfiguration p_230374_3_) {
         return 0;
     }
 

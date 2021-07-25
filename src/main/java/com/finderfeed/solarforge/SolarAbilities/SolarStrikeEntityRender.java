@@ -1,29 +1,31 @@
 package com.finderfeed.solarforge.SolarAbilities;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.culling.ClippingHelper;
+import net.minecraft.client.renderer.culling.Frustum;
 import net.minecraft.client.renderer.entity.EntityRenderer;
-import net.minecraft.client.renderer.entity.EntityRendererManager;
+import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.vector.Matrix4f;
-import net.minecraft.util.math.vector.Vector3f;
+import net.minecraft.resources.ResourceLocation;
+import com.mojang.math.Matrix4f;
+import com.mojang.math.Vector3f;
+
+import ResourceLocation;
 
 public class SolarStrikeEntityRender extends EntityRenderer<SolarStrikeEntity> {
     private static final ResourceLocation SOLAR_STRIKE = new ResourceLocation("solarforge","textures/misc/solar_strike.png");
     private static final ResourceLocation SOLAR_STRIKE_RAY = new ResourceLocation("solarforge","textures/misc/solar_strike_ray.png");
-    public SolarStrikeEntityRender(EntityRendererManager p_i46179_1_) {
+    public SolarStrikeEntityRender(EntityRenderDispatcher p_i46179_1_) {
         super(p_i46179_1_);
     }
     @Override
-    public void render(SolarStrikeEntity entity, float p_225623_2_, float partialTicks, MatrixStack matrices, IRenderTypeBuffer buffer, int p_225623_6_) {
+    public void render(SolarStrikeEntity entity, float p_225623_2_, float partialTicks, PoseStack matrices, MultiBufferSource buffer, int p_225623_6_) {
         super.render(entity,p_225623_2_,partialTicks,matrices,buffer,p_225623_6_);
         matrices.pushPose();
         matrices.translate(0, 0.1, 0);
-        MatrixStack.Entry ray_entry = matrices.last();
+        PoseStack.Pose ray_entry = matrices.last();
 
         if (entity.getLifeTicks() <= 40) {
 
@@ -34,9 +36,9 @@ public class SolarStrikeEntityRender extends EntityRenderer<SolarStrikeEntity> {
         float time = (entity.level.getGameTime() + partialTicks)*10 % 360;
         matrices.mulPose(Vector3f.YP.rotationDegrees(time));
 
-        MatrixStack.Entry entry = matrices.last();
+        PoseStack.Pose entry = matrices.last();
         Matrix4f matrix = entry.pose();
-        IVertexBuilder vertex = buffer.getBuffer(RenderType.text(SOLAR_STRIKE));
+        VertexConsumer vertex = buffer.getBuffer(RenderType.text(SOLAR_STRIKE));
         int mod = 50;
         vertex.vertex(matrix,-0.5F*mod,0,-0.5F*mod).color(255,255,255,255).uv(1,0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
         vertex.vertex(matrix,0.5F*mod,0,-0.5F*mod).color(255,255,255,255).uv(1,1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
@@ -47,7 +49,7 @@ public class SolarStrikeEntityRender extends EntityRenderer<SolarStrikeEntity> {
         vertex.vertex(matrix,0.5F*mod,0,0.5F*mod).color(255,255,255,255).uv(1,1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
         vertex.vertex(matrix,0.5F*mod,0,-0.5F*mod).color(255,255,255,255).uv(0,1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
         vertex.vertex(matrix,-0.5F*mod,0,-0.5F*mod).color(255,255,255,255).uv(0,0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
-        IVertexBuilder vertexray = buffer.getBuffer(RenderType.textSeeThrough(SOLAR_STRIKE_RAY));
+        VertexConsumer vertexray = buffer.getBuffer(RenderType.textSeeThrough(SOLAR_STRIKE_RAY));
         //if(entity.getLifeTicks() >= 55) {
             Matrix4f matrixray = ray_entry.pose();
             float modray = 3;
@@ -76,7 +78,7 @@ public class SolarStrikeEntityRender extends EntityRenderer<SolarStrikeEntity> {
     }
 
     @Override
-    public boolean shouldRender(SolarStrikeEntity p_225626_1_, ClippingHelper p_225626_2_, double p_225626_3_, double p_225626_5_, double p_225626_7_) {
+    public boolean shouldRender(SolarStrikeEntity p_225626_1_, Frustum p_225626_2_, double p_225626_3_, double p_225626_5_, double p_225626_7_) {
         return true;
     }
 

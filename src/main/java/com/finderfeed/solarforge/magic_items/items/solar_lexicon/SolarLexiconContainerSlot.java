@@ -2,8 +2,8 @@ package com.finderfeed.solarforge.magic_items.items.solar_lexicon;
 
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.ProgressionHelper;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
@@ -21,7 +21,7 @@ public class SolarLexiconContainerSlot extends SlotItemHandler {
     @Override
     public boolean mayPlace(@Nonnull ItemStack stack) {
 
-        CompoundNBT nbt = stack.getTagElement(ProgressionHelper.TAG_ELEMENT);
+        CompoundTag nbt = stack.getTagElement(ProgressionHelper.TAG_ELEMENT);
         if (nbt != null){
             if (AncientFragment.getFragmentByID(nbt.getString(ProgressionHelper.FRAG_ID)) != frag){
                 return false;

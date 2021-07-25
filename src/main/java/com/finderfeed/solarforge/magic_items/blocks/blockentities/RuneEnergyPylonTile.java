@@ -2,21 +2,25 @@ package com.finderfeed.solarforge.magic_items.blocks.blockentities;
 
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Achievement;
+import com.finderfeed.solarforge.misc_things.AbstractEnergyGeneratorTileEntity;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
 import com.finderfeed.solarforge.packet_handler.packets.UpdateTypeOnClientPacket;
 import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraftforge.fml.network.PacketDistributor;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.nbt.CompoundTag;
+
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.phys.AABB;
+
+import net.minecraftforge.fmllegacy.network.PacketDistributor;
 
 
-
-public class RuneEnergyPylonTile extends TileEntity implements ITickableTileEntity {
+public class RuneEnergyPylonTile extends BlockEntity {
 
     private RunicEnergy.Type type = null;
     private float currentEnergy = 0;
@@ -24,40 +28,37 @@ public class RuneEnergyPylonTile extends TileEntity implements ITickableTileEnti
     private float maxEnergy = 100000;
     private int updateTick = 40;
 
-    public RuneEnergyPylonTile() {
-        super(TileEntitiesRegistry.RUNE_ENERGY_PYLON.get());
+    public RuneEnergyPylonTile(BlockPos p_155229_, BlockState p_155230_) {
+        super(TileEntitiesRegistry.RUNE_ENERGY_PYLON.get(), p_155229_, p_155230_);
     }
-
-
-
 
 
     public void setType(RunicEnergy.Type type) {
         this.type = type;
     }
 
-    @Override
-    public void tick() {
-        if (!this.level.isClientSide){
-            if (this.type == null){
-                this.type = RunicEnergy.Type.values()[level.random.nextInt(RunicEnergy.Type.values().length-1)];
+
+    public static void tick(Level world, BlockPos pos, BlockState blockState, RuneEnergyPylonTile tile) {
+        if (!tile.level.isClientSide){
+            if (tile.type == null){
+                tile.type = RunicEnergy.Type.values()[tile.level.random.nextInt(RunicEnergy.Type.values().length-1)];
             }
 
-            if (currentEnergy+energyPerTick <= maxEnergy){
-                currentEnergy+=energyPerTick;
+            if (tile.currentEnergy+tile.energyPerTick <= tile.maxEnergy){
+                tile.currentEnergy+=tile.energyPerTick;
             }else{
-                currentEnergy = maxEnergy;
+                tile.currentEnergy = tile.maxEnergy;
             }
-            updateTick++;
+            tile.updateTick++;
 
-            if (updateTick >= 40){
-                SolarForgePacketHandler.INSTANCE.send(PacketDistributor.NEAR.with(PacketDistributor.TargetPoint.p(worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(), 40, level.dimension())),
-                        new UpdateTypeOnClientPacket(worldPosition, type.id));
-                updateTick = 0;
+            if (tile.updateTick >= 40){
+                SolarForgePacketHandler.INSTANCE.send(PacketDistributor.NEAR.with(PacketDistributor.TargetPoint.p(tile.worldPosition.getX(), tile.worldPosition.getY(), tile.worldPosition.getZ(), 40, tile.level.dimension())),
+                        new UpdateTypeOnClientPacket(tile.worldPosition, tile.type.id));
+                tile.updateTick = 0;
             }
 
-            AxisAlignedBB box = new AxisAlignedBB(this.worldPosition.offset(-2,-2,-2),this.worldPosition.offset(2,2,2));
-            level.getEntitiesOfClass(PlayerEntity.class,box).forEach((player)->{
+            AABB box = new AABB(tile.worldPosition.offset(-2,-2,-2),tile.worldPosition.offset(2,2,2));
+            tile.level.getEntitiesOfClass(Player.class,box).forEach((player)->{
                 Helpers.fireProgressionEvent(player, Achievement.RUNE_ENERGY_DEPOSIT);
             });
         }
@@ -68,7 +69,7 @@ public class RuneEnergyPylonTile extends TileEntity implements ITickableTileEnti
 
 
     @Override
-    public CompoundNBT save(CompoundNBT nbt) {
+    public CompoundTag save(CompoundTag nbt) {
         if (this.type != null) {
             nbt.putString("energy_type", type.id);
         }
@@ -79,16 +80,16 @@ public class RuneEnergyPylonTile extends TileEntity implements ITickableTileEnti
     }
 
     @Override
-    public void load(BlockState p_230337_1_, CompoundNBT nbt) {
+    public void load( CompoundTag nbt) {
 
         this.type = RunicEnergy.Type.byId(nbt.getString("energy_type"));
         currentEnergy = nbt.getFloat("energy");
         energyPerTick = nbt.getFloat("energy_tick");
         maxEnergy = nbt.getFloat("maxenergy");
-        super.load(p_230337_1_, nbt);
+        super.load( nbt);
     }
 
-    public void givePlayerEnergy(PlayerEntity entity,float amount){
+    public void givePlayerEnergy(Player entity,float amount){
         if (amount <= getCurrentEnergy()){
             this.currentEnergy-=amount;
             float flag = RunicEnergy.givePlayerEnergy(entity,amount,type);

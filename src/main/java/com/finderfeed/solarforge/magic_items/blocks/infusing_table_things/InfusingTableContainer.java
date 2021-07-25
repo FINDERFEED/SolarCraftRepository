@@ -2,23 +2,23 @@ package com.finderfeed.solarforge.magic_items.blocks.infusing_table_things;
 
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.custom_slots.OutputSlot;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.Container;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.BlockPos;
 
 import java.util.Objects;
 
-public class InfusingTableContainer extends Container {
+public class InfusingTableContainer extends AbstractContainerMenu {
     public InfusingTableTileEntity te;
 
 
-    public InfusingTableContainer(final int windowId, final PlayerInventory playerInv, final InfusingTableTileEntity te) {
+    public InfusingTableContainer(final int windowId, final Inventory playerInv, final InfusingTableTileEntity te) {
         super(SolarForge.INFUSING_TABLE_CONTAINER.get(), windowId);
         this.te = te;
 
@@ -28,8 +28,8 @@ public class InfusingTableContainer extends Container {
 
         // Tile Entity
         //for (int kj = 0; kj <= te.getContainerSize()-1;kj++){
-            this.addSlot(new InputSlot((IInventory) te, 0, 120, 34,1));
-            this.addSlot(new OutputSlot((IInventory) te, 9, 195, -22));
+            this.addSlot(new InputSlot((Container) te, 0, 120, 34,1));
+            this.addSlot(new OutputSlot((Container) te, 9, 195, -22));
 
         //}
 
@@ -47,7 +47,7 @@ public class InfusingTableContainer extends Container {
 
 
     }
-    public InfusingTableContainer(final int windowId, final PlayerInventory playerInv, final PacketBuffer buf) {
+    public InfusingTableContainer(final int windowId, final Inventory playerInv, final FriendlyByteBuf buf) {
         this(windowId, playerInv, getTileEntity(playerInv, buf.readBlockPos()));
 
     }
@@ -55,11 +55,11 @@ public class InfusingTableContainer extends Container {
 
 
 
-    private static InfusingTableTileEntity getTileEntity(final PlayerInventory playerInv,final BlockPos pos) {
+    private static InfusingTableTileEntity getTileEntity(final Inventory playerInv,final BlockPos pos) {
         Objects.requireNonNull(playerInv, "Player Inventory cannot be null.");
         Objects.requireNonNull(pos, "Pos cannot be null.");
 
-        final TileEntity te = playerInv.player.level.getBlockEntity(pos);
+        final BlockEntity te = playerInv.player.level.getBlockEntity(pos);
 
         if (te instanceof InfusingTableTileEntity) {
             return (InfusingTableTileEntity) te;
@@ -68,7 +68,7 @@ public class InfusingTableContainer extends Container {
     }
 
     @Override
-    public ItemStack quickMoveStack(PlayerEntity playerIn, int index) {
+    public ItemStack quickMoveStack(Player playerIn, int index) {
         ItemStack itemstack = ItemStack.EMPTY;
         Slot slot = this.slots.get(index);
         if (slot != null && slot.hasItem()) {
@@ -95,7 +95,7 @@ public class InfusingTableContainer extends Container {
 
 
     @Override
-    public boolean stillValid(PlayerEntity p_75145_1_) {
+    public boolean stillValid(Player p_75145_1_) {
         return true;
     }
 }

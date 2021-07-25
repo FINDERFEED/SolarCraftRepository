@@ -12,19 +12,19 @@ import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.ArgumentBuilder;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.tree.LiteralCommandNode;
-import net.minecraft.command.CommandSource;
-import net.minecraft.command.Commands;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.commands.Commands;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TranslatableComponent;
 
 public class CommandsSolarCraft {
 
-    public static void register(CommandDispatcher<CommandSource> disp){
-        LiteralCommandNode<CommandSource> cmd = disp.register(
+    public static void register(CommandDispatcher<CommandSourceStack> disp){
+        LiteralCommandNode<CommandSourceStack> cmd = disp.register(
                 Commands.literal("solarcraft")
                         .then(UnlockAchievementsCommand.register())
                         .then(refreshAchievements.register())
@@ -36,7 +36,7 @@ public class CommandsSolarCraft {
 }
 
 class RetainFragments{
-    public static ArgumentBuilder<CommandSource,?> register(){
+    public static ArgumentBuilder<CommandSourceStack,?> register(){
         return Commands.literal("fragments")
                 .requires(cs->cs.hasPermission(0))
                 .then(Commands.literal("retain").executes((cmd)->retainFragments(cmd.getSource())))
@@ -44,8 +44,8 @@ class RetainFragments{
                 .then(Commands.literal("refresh").executes((cmd)->refreshFragments(cmd.getSource())));
     }
 
-    public static int retainFragments(CommandSource src) throws CommandSyntaxException {
-        ServerPlayerEntity playerEntity  = src.getPlayerOrException();
+    public static int retainFragments(CommandSourceStack src) throws CommandSyntaxException {
+        ServerPlayer playerEntity  = src.getPlayerOrException();
         for (AncientFragment fragment : AncientFragment.getAllFragments()){
             if (ProgressionHelper.doPlayerHasFragment(playerEntity,fragment)){
                 ItemStack frag = ItemsRegister.INFO_FRAGMENT.get().getDefaultInstance();
@@ -57,15 +57,15 @@ class RetainFragments{
         return 0;
     }
 
-    public static int unlockAllFragments(CommandSource src) throws CommandSyntaxException {
-        ServerPlayerEntity playerEntity  = src.getPlayerOrException();
+    public static int unlockAllFragments(CommandSourceStack src) throws CommandSyntaxException {
+        ServerPlayer playerEntity  = src.getPlayerOrException();
         for (AncientFragment fragment : AncientFragment.getAllFragments()){
             ProgressionHelper.givePlayerFragment(fragment,playerEntity);
         }
         return 0;
     }
-    public static int refreshFragments(CommandSource src) throws CommandSyntaxException {
-        ServerPlayerEntity playerEntity  = src.getPlayerOrException();
+    public static int refreshFragments(CommandSourceStack src) throws CommandSyntaxException {
+        ServerPlayer playerEntity  = src.getPlayerOrException();
         for (AncientFragment fragment : AncientFragment.getAllFragments()){
             ProgressionHelper.revokePlayerFragment(fragment,playerEntity);
         }
@@ -75,7 +75,7 @@ class RetainFragments{
 
 
 class AchievementsHelp{
-    public static ArgumentBuilder<CommandSource,?> register(){
+    public static ArgumentBuilder<CommandSourceStack,?> register(){
         return Commands.literal("codes")
                 .requires(cs->cs.hasPermission(0))
                 .executes((cmd)->{
@@ -84,23 +84,23 @@ class AchievementsHelp{
                         });
     }
 
-    public static int getHelp(CommandSource src){
-        src.sendSuccess(new TranslationTextComponent("solarcraft.gethelpcommand").withStyle(TextFormatting.GOLD),false);
+    public static int getHelp(CommandSourceStack src){
+        src.sendSuccess(new TranslatableComponent("solarcraft.gethelpcommand").withStyle(ChatFormatting.GOLD),false);
         for (Achievement ach : Achievement.ALL_ACHIEVEMENTS){
 
-            src.sendSuccess(new StringTextComponent(ach.translation.getString()).withStyle(TextFormatting.GOLD)
-                    .append(new StringTextComponent(" -> "+ach.getAchievementCode())).withStyle(TextFormatting.WHITE),false);
+            src.sendSuccess(new TextComponent(ach.translation.getString()).withStyle(ChatFormatting.GOLD)
+                    .append(new TextComponent(" -> "+ach.getAchievementCode())).withStyle(ChatFormatting.WHITE),false);
 
         }
-        src.sendSuccess(new StringTextComponent("all").withStyle(TextFormatting.GOLD)
-                .append(" -> unlocks all").withStyle(TextFormatting.WHITE),false);
+        src.sendSuccess(new TextComponent("all").withStyle(ChatFormatting.GOLD)
+                .append(" -> unlocks all").withStyle(ChatFormatting.WHITE),false);
         return 0;
     }
 }
 
 
 class UnlockAchievementsCommand {
-    public static ArgumentBuilder<CommandSource,?> register(){
+    public static ArgumentBuilder<CommandSourceStack,?> register(){
         return Commands.literal("unlock")
                 .requires(cs->cs.hasPermission(0))
                 .then(Commands.argument("achievement", StringArgumentType.string())
@@ -109,31 +109,31 @@ class UnlockAchievementsCommand {
                     return unlockAchievement(cmd.getSource(),cmd.getArgument("achievement",String.class));
                 }));
     }
-    public static int unlockAchievement(CommandSource src,String code) throws CommandSyntaxException{
+    public static int unlockAchievement(CommandSourceStack src,String code) throws CommandSyntaxException{
             Achievement achievement = Achievement.getAchievementByName(code);
-            ServerPlayerEntity pl = src.getPlayerOrException();
+            ServerPlayer pl = src.getPlayerOrException();
             if (code.equals("all")){
                 for (Achievement a : Achievement.ALL_ACHIEVEMENTS){
                     Helpers.setAchievementStatus(a,src.getPlayerOrException(),true);
-                    src.sendSuccess(new TranslationTextComponent("solarcraft.success_unlock")
-                            .append(new StringTextComponent(" "+a.translation.getString()).withStyle(TextFormatting.GOLD)),false);
+                    src.sendSuccess(new TranslatableComponent("solarcraft.success_unlock")
+                            .append(new TextComponent(" "+a.translation.getString()).withStyle(ChatFormatting.GOLD)),false);
                 }
                 Helpers.updateProgression(src.getPlayerOrException());
 
             }else if (achievement != null){
                 if (Helpers.canPlayerUnlock(achievement,pl)){
                     Helpers.setAchievementStatus(achievement,pl,true);
-                    src.sendSuccess(new TranslationTextComponent("solarcraft.success_unlock")
-                            .append(new StringTextComponent(" "+achievement.getAchievementCode()).withStyle(TextFormatting.GOLD)),false);
+                    src.sendSuccess(new TranslatableComponent("solarcraft.success_unlock")
+                            .append(new TextComponent(" "+achievement.getAchievementCode()).withStyle(ChatFormatting.GOLD)),false);
 
                     Helpers.updateProgression(src.getPlayerOrException());
 
 
                 }else {
-                    src.sendFailure(new TranslationTextComponent("solarcraft.failure_unlock"));
+                    src.sendFailure(new TranslatableComponent("solarcraft.failure_unlock"));
                 }
             }else {
-                src.sendFailure(new TranslationTextComponent("solarcraft.failure_unlock"));
+                src.sendFailure(new TranslatableComponent("solarcraft.failure_unlock"));
             }
         Helpers.forceChunksReload(src.getPlayerOrException());
         return 0;
@@ -142,18 +142,18 @@ class UnlockAchievementsCommand {
 }
 
 class refreshAchievements{
-    public static ArgumentBuilder<CommandSource,?> register(){
+    public static ArgumentBuilder<CommandSourceStack,?> register(){
         return Commands.literal("refresh").requires(cs->cs.hasPermission(0)).executes(
                 (src)->{
                     return refresh(src.getSource());
                 });
     }
 
-    public static int refresh(CommandSource src) throws CommandSyntaxException {
+    public static int refresh(CommandSourceStack src) throws CommandSyntaxException {
             for (Achievement ach : Achievement.ALL_ACHIEVEMENTS){
                 Helpers.setAchievementStatus(ach,src.getPlayerOrException(),false);
             }
-            src.sendSuccess(new StringTextComponent("Successfully refreshed all achievements"),false);
+            src.sendSuccess(new TextComponent("Successfully refreshed all achievements"),false);
         Helpers.updateProgression(src.getPlayerOrException());
         Helpers.forceChunksReload(src.getPlayerOrException());
         return 0;

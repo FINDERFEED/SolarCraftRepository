@@ -6,7 +6,7 @@ import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.ac
 import com.finderfeed.solarforge.registries.sounds.Sounds;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.SimpleSound;
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.network.NetworkEvent;
@@ -17,13 +17,13 @@ public class TriggerToastPacket {
 
     public final int id;
 
-    public TriggerToastPacket(PacketBuffer buf){
+    public TriggerToastPacket(FriendlyByteBuf buf){
         this.id = buf.readInt();
     }
     public TriggerToastPacket(int id){
         this.id = id;
     }
-    public void toBytes(PacketBuffer buf){
+    public void toBytes(FriendlyByteBuf buf){
         buf.writeInt(id);
     }
     public void handle(Supplier<NetworkEvent.Context> ctx){

@@ -1,26 +1,28 @@
 package com.finderfeed.solarforge.magic_items.items;
 
 import com.finderfeed.solarforge.SolarForge;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.IItemTier;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.SwordItem;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Tier;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.SwordItem;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.network.chat.Component;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.Level;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
+import net.minecraft.world.item.Item.Properties;
+
 public class QualadiumSword extends SwordItem {
-    public QualadiumSword(IItemTier tier,Properties p_i48460_4_) {
+    public QualadiumSword(Tier tier,Properties p_i48460_4_) {
         super(tier, 2, -2.4f, p_i48460_4_);
     }
 
@@ -36,11 +38,11 @@ public class QualadiumSword extends SwordItem {
 
 
     @Override
-    public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+    public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
         if (!world.isClientSide){
-            AxisAlignedBB box = new AxisAlignedBB(-4,-1,-4,4,1,4).move(player.position());
+            AABB box = new AABB(-4,-1,-4,4,1,4).move(player.position());
             for (LivingEntity a : world.getEntitiesOfClass(LivingEntity.class,box,(entity) -> !entity.equals(player) )){
-                a.addEffect(new EffectInstance(SolarForge.SOLAR_STUN.get(),160,0));
+                a.addEffect(new MobEffectInstance(SolarForge.SOLAR_STUN.get(),160,0));
 
             }
             player.getCooldowns().addCooldown(this,600);
@@ -49,9 +51,9 @@ public class QualadiumSword extends SwordItem {
     }
 
     @Override
-    public void appendHoverText(ItemStack p_77624_1_, @Nullable World p_77624_2_, List<ITextComponent> p_77624_3_, ITooltipFlag p_77624_4_) {
+    public void appendHoverText(ItemStack p_77624_1_, @Nullable Level p_77624_2_, List<Component> p_77624_3_, TooltipFlag p_77624_4_) {
 
-        p_77624_3_.add(new TranslationTextComponent("solarforge.qualaium_sword").withStyle(TextFormatting.GOLD));
+        p_77624_3_.add(new TranslatableComponent("solarforge.qualaium_sword").withStyle(ChatFormatting.GOLD));
 
 
         super.appendHoverText(p_77624_1_, p_77624_2_, p_77624_3_, p_77624_4_);

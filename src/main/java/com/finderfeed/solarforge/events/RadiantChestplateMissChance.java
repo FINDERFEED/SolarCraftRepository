@@ -2,7 +2,7 @@ package com.finderfeed.solarforge.events;
 
 import com.finderfeed.solarforge.registries.items.ItemsRegister;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;

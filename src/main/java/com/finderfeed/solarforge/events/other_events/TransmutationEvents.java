@@ -7,12 +7,12 @@ import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
 import com.finderfeed.solarforge.packet_handler.TriggerToastPacket;
 import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Achievement;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.item.ExperienceOrbEntity;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -28,10 +28,10 @@ public class TransmutationEvents {
         if (event.getPlayer().getPersistentData().getBoolean("is_alchemist_toggled") && !event.getPlayer().isDeadOrDying() &&
                 event.getPlayer().getPersistentData().getBoolean("solar_forge_can_player_use_alchemist")) {
             if (event.getPlayer().getCapability(CapabilitySolarMana.SOLAR_MANA_PLAYER).orElseThrow(RuntimeException::new).getMana() >= 0.5) {
-                IWorld world = event.getWorld();
+                LevelAccessor world = event.getWorld();
                 BlockPos pos = event.getPos();
                 event.getWorld().setBlock(event.getPos(), Blocks.AIR.defaultBlockState(), Constants.BlockFlags.DEFAULT);
-                world.addFreshEntity(new ExperienceOrbEntity((World) world, pos.getX(), pos.getY(), pos.getZ(), 10));
+                world.addFreshEntity(new ExperienceOrb((Level) world, pos.getX(), pos.getY(), pos.getZ(), 10));
             }
         }
 

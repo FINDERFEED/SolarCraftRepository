@@ -1,28 +1,30 @@
 package com.finderfeed.solarforge;
 
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
-import net.minecraft.client.MainWindow;
+import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.blaze3d.platform.Window;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.AbstractGui;
+import net.minecraft.client.gui.GuiComponent;
 
-import net.minecraft.client.renderer.IRenderTypeBuffer;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.vector.Matrix4f;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
+import com.mojang.math.Matrix4f;
 
-import net.minecraft.util.math.vector.Vector3f;
+import com.mojang.math.Vector3f;
 
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 
 import java.util.List;
+
+
 
 
 public class RenderingTools {
@@ -31,10 +33,10 @@ public class RenderingTools {
     public static final ResourceLocation RAY = new ResourceLocation("solarforge","textures/misc/ray_into_skyy.png");
 
     public static void renderTest(RenderGameOverlayEvent.Pre event,int tick){
-        MatrixStack stack = event.getMatrixStack();
+        PoseStack stack = event.getMatrixStack();
         float partialTicks = event.getPartialTicks();
 
-        MainWindow window = event.getWindow();
+        Window window = event.getWindow();
 
         int width = window.getWidth();
         int height = window.getHeight();
@@ -43,8 +45,8 @@ public class RenderingTools {
         stack.translate(width/4/scale*2,height/2/scale,0);
         stack.mulPose(Vector3f.ZP.rotationDegrees((tick + partialTicks)%360));
 
-        Minecraft.getInstance().getTextureManager().bind(TEST);
-        AbstractGui.blit(stack,-64,-64,0,0,128,128,128,128);
+        Minecraft.getInstance().getTextureManager().bindForSetup(TEST);
+        GuiComponent.blit(stack,-64,-64,0,0,128,128,128,128);
 
         stack.popPose();
         
@@ -54,7 +56,7 @@ public class RenderingTools {
     /**
     *   Renders ray like in solar forge
      */
-    public static void renderRay(MatrixStack stack, IRenderTypeBuffer buffer, float mod, float height, Direction direction,boolean rotate,float rotationModifier,float partialTicks){
+    public static void renderRay(PoseStack stack, MultiBufferSource buffer, float mod, float height, Direction direction,boolean rotate,float rotationModifier,float partialTicks){
         stack.pushPose();
 
         stack.translate(0.5,0.5,0.5);
@@ -78,7 +80,7 @@ public class RenderingTools {
             stack.mulPose(Vector3f.YP.rotationDegrees((Minecraft.getInstance().level.getGameTime() + partialTicks)*rotationModifier%360));
         }
 
-        IVertexBuilder vertex = buffer.getBuffer(RenderType.text(RAY));
+        VertexConsumer vertex = buffer.getBuffer(RenderType.text(RAY));
         Matrix4f matrix = stack.last().pose();
         vertex.vertex(matrix, 0.5F * mod, 0, 0.5F * mod).color(255, 255, 255, 255).uv(1, 0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
         vertex.vertex(matrix, 0.5F * mod, height, 0.5F * mod).color(255, 255, 255, 255).uv(1, 1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
@@ -125,7 +127,7 @@ public class RenderingTools {
 
 
 
-    public static void renderHandManually(MatrixStack matrixStack,float partialTicks){
+    public static void renderHandManually(PoseStack matrixStack,float partialTicks){
         boolean render = Minecraft.getInstance().gameRenderer.renderHand;
 
         if (render){
@@ -136,29 +138,29 @@ public class RenderingTools {
 
 
     private static ResourceLocation runeEnergyOverlay = new ResourceLocation("solarforge","textures/misc/runic_energy_bar.png");
-    public static void renderRuneEnergyOverlay(MatrixStack stack, int x, int y, RunicEnergy.Type type){
+    public static void renderRuneEnergyOverlay(PoseStack stack, int x, int y, RunicEnergy.Type type){
         stack.pushPose();
         stack.translate(x,y,0);
         stack.scale(0.7f,0.7f,0.7f);
 
-        PlayerEntity playerEntity = ClientHelpers.getClientPlayer();
-        Minecraft.getInstance().getTextureManager().bind(runeEnergyOverlay);
-        AbstractGui.blit(stack,0,0,0,0,10,60,20,60);
+        Player playerEntity = ClientHelpers.getClientPlayer();
+        Minecraft.getInstance().getTextureManager().bindForSetup(runeEnergyOverlay);
+        GuiComponent.blit(stack,0,0,0,0,10,60,20,60);
         float currentEnergy = RunicEnergy.getEnergy(playerEntity,type);
 //        float maxEnergy = playerEntity.getPersistentData().getFloat(RunicEnergy.MAX_ENERGY_TAG); //TODO:Update max energy on client
         int tex = Math.round(50*(currentEnergy/10000));
 
         stack.mulPose(Vector3f.ZN.rotationDegrees(180));
         stack.translate(-10,-55,0);
-        AbstractGui.blit(stack,0,0,10,0,10,tex,20,60);
+        GuiComponent.blit(stack,0,0,10,0,10,tex,20,60);
         stack.popPose();
         stack.pushPose();
         stack.translate(x,y,0);
 
         stack.scale(0.7f,0.7f,0.7f);
 
-        Minecraft.getInstance().getTextureManager().bind(new ResourceLocation("solarforge", "textures/misc/tile_energy_pylon_" + type.id + ".png"));
-        AbstractGui.blit(stack,-3,63,0,0,16,16,16,16);
+        Minecraft.getInstance().getTextureManager().bindForSetup(new ResourceLocation("solarforge", "textures/misc/tile_energy_pylon_" + type.id + ".png"));
+        GuiComponent.blit(stack,-3,63,0,0,16,16,16,16);
         stack.popPose();
     }
 }

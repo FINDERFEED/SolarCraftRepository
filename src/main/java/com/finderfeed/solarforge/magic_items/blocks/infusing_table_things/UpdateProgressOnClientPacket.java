@@ -1,14 +1,16 @@
 package com.finderfeed.solarforge.magic_items.blocks.infusing_table_things;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.core.BlockPos;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.network.NetworkEvent;
 
 import java.util.function.Supplier;
+
+import BlockPos;
 
 public class UpdateProgressOnClientPacket {
     public int maxProg;
@@ -16,7 +18,7 @@ public class UpdateProgressOnClientPacket {
     public BlockPos pos;
     public boolean reqEnergy;
     public int energy;
-    public UpdateProgressOnClientPacket(PacketBuffer buf){
+    public UpdateProgressOnClientPacket(FriendlyByteBuf buf){
         this.maxProg = buf.readInt();
         this.progress = buf.readInt();
         this.pos = buf.readBlockPos();
@@ -30,7 +32,7 @@ public class UpdateProgressOnClientPacket {
         this.reqEnergy = reqEnergy;
         this.energy = energy;
     }
-    public void toBytes(PacketBuffer buf){
+    public void toBytes(FriendlyByteBuf buf){
         buf.writeInt(this.maxProg);
         buf.writeInt(progress);
         buf.writeBlockPos(pos);
@@ -40,7 +42,7 @@ public class UpdateProgressOnClientPacket {
     public void handle(Supplier<NetworkEvent.Context> ctx){
         ctx.get().enqueueWork(()->{
             DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> ()->{
-                ClientWorld world = Minecraft.getInstance().level;
+                ClientLevel world = Minecraft.getInstance().level;
                 InfusingTableTileEntity tile = (InfusingTableTileEntity) world.getBlockEntity(pos);
                 if (tile != null) {
                     tile.CURRENT_PROGRESS = progress;

@@ -1,9 +1,9 @@
 package com.finderfeed.solarforge.SolarAbilities.AbilityClasses;
 
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.server.level.ServerLevel;
 
 public class DispelAbility extends AbstractAbility{
     public DispelAbility() {
@@ -14,14 +14,14 @@ public class DispelAbility extends AbstractAbility{
     }
 
     @Override
-    public void cast(ServerPlayerEntity playerEntity, ServerWorld world) {
+    public void cast(ServerPlayer playerEntity, ServerLevel world) {
         super.cast(playerEntity, world);
         if (allowed) {
 
             Object[] arr =  playerEntity.getActiveEffects().toArray();
             for (int i = 0; i < arr.length; i++) {
-                if (!((EffectInstance)arr[i]).getEffect().isBeneficial()) {
-                    playerEntity.removeEffect(((EffectInstance)arr[i]).getEffect());
+                if (!((MobEffectInstance)arr[i]).getEffect().isBeneficial()) {
+                    playerEntity.removeEffect(((MobEffectInstance)arr[i]).getEffect());
                 }
             }
 

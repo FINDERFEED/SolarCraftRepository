@@ -10,22 +10,25 @@ import com.finderfeed.solarforge.magic_items.items.solar_lexicon.packets.OpenScr
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.packets.UpdateInventoryPacket;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.packets.UpdateProgressionOnClient;
 import com.finderfeed.solarforge.registries.items.ItemsRegister;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.network.NetworkDirection;
-import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.level.Level;
+
+import net.minecraftforge.fmllegacy.network.NetworkDirection;
+import net.minecraftforge.fmllegacy.network.NetworkHooks;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import net.minecraft.world.item.Item.Properties;
 
 public class SolarLexicon extends Item {
 
@@ -37,8 +40,8 @@ public class SolarLexicon extends Item {
 
 
     @Override
-    public ActionResult<ItemStack> use(World world, PlayerEntity pe, Hand hand) {
-        if (!world.isClientSide && hand.equals(Hand.MAIN_HAND)){
+    public InteractionResultHolder<ItemStack> use(Level world, Player pe, InteractionHand hand) {
+        if (!world.isClientSide && hand.equals(InteractionHand.MAIN_HAND)){
             if (!ProgressionHelper.doPlayerHasFragment(pe,AncientFragment.LEXICON)) {
                 ItemStack frag = ItemsRegister.INFO_FRAGMENT.get().getDefaultInstance();
                 ProgressionHelper.applyTagToFragment(frag, AncientFragment.LEXICON);
@@ -67,12 +70,12 @@ public class SolarLexicon extends Item {
                 AchievementTree tree = AchievementTree.loadTree();
                 for (Achievement a : tree.ACHIEVEMENT_TREE.keySet()) {
                     SolarForgePacketHandler.INSTANCE.sendTo(new UpdateProgressionOnClient(a.getAchievementCode(), pe.getPersistentData().getBoolean(Helpers.PROGRESSION + a.getAchievementCode())),
-                            ((ServerPlayerEntity) pe).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+                            ((ServerPlayer) pe).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
                 }
-                SolarForgePacketHandler.INSTANCE.sendTo(new OpenScreenPacket(), ((ServerPlayerEntity) pe).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+                SolarForgePacketHandler.INSTANCE.sendTo(new OpenScreenPacket(), ((ServerPlayer) pe).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
                 updateInventory(pe.getMainHandItem(),pe);
             }else{
-                NetworkHooks.openGui((ServerPlayerEntity) pe,new SolarLexiconContainer.Provider(pe.getItemInHand(hand)),(buf)->{
+                NetworkHooks.openGui((ServerPlayer) pe,new SolarLexiconContainer.Provider(pe.getItemInHand(hand)),(buf)->{
                     buf.writeItem(pe.getItemInHand(hand));
                 });
             }
@@ -85,7 +88,7 @@ public class SolarLexicon extends Item {
 
 
 
-    public void updateInventory(ItemStack stack,PlayerEntity ent){
+    public void updateInventory(ItemStack stack,Player ent){
         if (stack.getItem() instanceof SolarLexicon){
             IItemHandler handelr = stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(null);
             if (handelr != null){
@@ -94,7 +97,7 @@ public class SolarLexicon extends Item {
                     stacks.add(handelr.getStackInSlot(i));
                 }
                 ItemStack[] arr = new ItemStack[stacks.size()];
-                SolarForgePacketHandler.INSTANCE.sendTo(new UpdateInventoryPacket(stacks.toArray(arr)), ((ServerPlayerEntity) ent).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+                SolarForgePacketHandler.INSTANCE.sendTo(new UpdateInventoryPacket(stacks.toArray(arr)), ((ServerPlayer) ent).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
             }
         }
     }

@@ -4,53 +4,53 @@ import com.finderfeed.solarforge.SolarAbilities.SolarStrikeEntity;
 import com.finderfeed.solarforge.misc_things.ParticlesList;
 import com.finderfeed.solarforge.registries.items.ItemsRegister;
 import com.finderfeed.solarforge.registries.projectiles.Projectiles;
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.DamagingProjectileEntity;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.AbstractHurtingProjectile;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.IPacket;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.particles.IParticleData;
-import net.minecraft.util.DamageSource;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.EntityRayTraceResult;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fml.network.NetworkHooks;
 
 import java.util.List;
 import java.util.UUID;
 
-public class BlockBoomerangProjectile extends DamagingProjectileEntity {
-    public static DataParameter<Integer> BLOCK_ID = EntityDataManager.defineId(BlockBoomerangProjectile.class, DataSerializers.INT);
+public class BlockBoomerangProjectile extends AbstractHurtingProjectile {
+    public static EntityDataAccessor<Integer> BLOCK_ID = SynchedEntityData.defineId(BlockBoomerangProjectile.class, EntityDataSerializers.INT);
 
     public int livingTicks = 0;
     public Block blockToPlace = null;
     public boolean isReturning = false;
     public UUID owner;
-    public BlockBoomerangProjectile(EntityType<? extends DamagingProjectileEntity> p_i50173_1_, World p_i50173_2_) {
+    public BlockBoomerangProjectile(EntityType<? extends AbstractHurtingProjectile> p_i50173_1_, Level p_i50173_2_) {
         super(p_i50173_1_, p_i50173_2_);
 
     }
 
-    public BlockBoomerangProjectile(double p_i50174_2_, double p_i50174_4_, double p_i50174_6_, double p_i50174_8_, double p_i50174_10_, double p_i50174_12_, World p_i50174_14_) {
+    public BlockBoomerangProjectile(double p_i50174_2_, double p_i50174_4_, double p_i50174_6_, double p_i50174_8_, double p_i50174_10_, double p_i50174_12_, Level p_i50174_14_) {
         super(Projectiles.BLOCK_BOOMERANG.get(), p_i50174_2_, p_i50174_4_, p_i50174_6_, p_i50174_8_, p_i50174_10_, p_i50174_12_, p_i50174_14_);
 
     }
 
-    public BlockBoomerangProjectile(LivingEntity p_i50175_2_, World p_i50175_9_) {
+    public BlockBoomerangProjectile(LivingEntity p_i50175_2_, Level p_i50175_9_) {
         super(Projectiles.BLOCK_BOOMERANG.get(),  p_i50175_9_);
 
     }
@@ -60,10 +60,10 @@ public class BlockBoomerangProjectile extends DamagingProjectileEntity {
     }
 
     @Override
-    protected void onHitEntity(EntityRayTraceResult ctx) {
+    protected void onHitEntity(EntityHitResult ctx) {
         Entity ent = ctx.getEntity();
-        if (ent instanceof PlayerEntity){
-            PlayerEntity player = (PlayerEntity)ent;
+        if (ent instanceof Player){
+            Player player = (Player)ent;
             if (player.getUUID().equals(owner)){
                 if (player.inventory.getFreeSlot() != -1) {
                     player.inventory.add(ItemsRegister.BLOCK_BOOMERANG.get().getDefaultInstance());
@@ -87,7 +87,7 @@ public class BlockBoomerangProjectile extends DamagingProjectileEntity {
     }
 
     @Override
-    protected void onHitBlock(BlockRayTraceResult result) {
+    protected void onHitBlock(BlockHitResult result) {
         BlockPos pos = this.getOnPos();
         if (this.blockToPlace != null && !isReturning){
             isReturning = true;
@@ -131,13 +131,13 @@ public class BlockBoomerangProjectile extends DamagingProjectileEntity {
             }
         }
         if (!this.level.isClientSide && this.isReturning){
-            PlayerEntity player = level.getPlayerByUUID(owner);
+            Player player = level.getPlayerByUUID(owner);
             if (player != null){
-                Vector3d currentVelocity = getDeltaMovement();
+                Vec3 currentVelocity = getDeltaMovement();
                 this.setDeltaMovement(-currentVelocity.x,-currentVelocity.y,-currentVelocity.z);
 
-                Vector3d playerPos = player.position().add(0,1.5,0);
-                Vector3d newVelocity = new Vector3d(-this.getX() + playerPos.x,-this.getY() + playerPos.y,-this.getZ() + playerPos.z).normalize();
+                Vec3 playerPos = player.position().add(0,1.5,0);
+                Vec3 newVelocity = new Vec3(-this.getX() + playerPos.x,-this.getY() + playerPos.y,-this.getZ() + playerPos.z).normalize();
 
                 this.setDeltaMovement(newVelocity);
             }else{
@@ -156,18 +156,18 @@ public class BlockBoomerangProjectile extends DamagingProjectileEntity {
         return false;
     }
     @Override
-    public IPacket<?> getAddEntityPacket() {
+    public Packet<?> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 
     @Override
-    protected IParticleData getTrailParticle() {
+    protected ParticleOptions getTrailParticle() {
         return ParticlesList.INVISIBLE_PARTICLE.get();
     }
 
 
     @Override
-    public void load(CompoundNBT cmp) {
+    public void load(CompoundTag cmp) {
         owner = cmp.getUUID("owner_uuids");
         tickCount = cmp.getInt("get_tick_count");
         isReturning = cmp.getBoolean("returning");
@@ -185,7 +185,7 @@ public class BlockBoomerangProjectile extends DamagingProjectileEntity {
     }
 
     @Override
-    public boolean save(CompoundNBT cmp) {
+    public boolean save(CompoundTag cmp) {
         cmp.putUUID("owner_uuids",owner);
         cmp.putInt("get_tick_count",tickCount);
         if (blockToPlace != null) {

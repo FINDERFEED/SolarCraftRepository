@@ -1,11 +1,13 @@
 package com.finderfeed.solarforge.packet_handler.packets;
 
 import com.finderfeed.solarforge.ClientHelpers;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.core.BlockPos;
 import net.minecraftforge.fml.network.NetworkEvent;
 
 import java.util.function.Supplier;
+
+import BlockPos;
 
 public class PlaySoundPacket {
 
@@ -21,14 +23,14 @@ public class PlaySoundPacket {
         this.pos = pos;
     }
 
-    public PlaySoundPacket(PacketBuffer buf) {
+    public PlaySoundPacket(FriendlyByteBuf buf) {
         this.volume = buf.readFloat();
         this.pitch = buf.readFloat();
         this.id = buf.readInt();
         this.pos = buf.readBlockPos();
     }
 
-    public void toBytes(PacketBuffer buf) {
+    public void toBytes(FriendlyByteBuf buf) {
         buf.writeFloat(volume);
         buf.writeFloat(pitch);
         buf.writeInt(id);

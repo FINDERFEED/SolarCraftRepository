@@ -2,25 +2,27 @@ package com.finderfeed.solarforge.world_generation.structures.dimensional_shard_
 
 import com.finderfeed.solarforge.events.other_events.FeatureInit;
 import com.google.common.collect.ImmutableMap;
-import net.minecraft.block.Blocks;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.ChestTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Mirror;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.Rotation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MutableBoundingBox;
-import net.minecraft.world.IServerWorld;
-import net.minecraft.world.gen.feature.structure.StructurePiece;
-import net.minecraft.world.gen.feature.structure.TemplateStructurePiece;
-import net.minecraft.world.gen.feature.template.PlacementSettings;
-import net.minecraft.world.gen.feature.template.Template;
-import net.minecraft.world.gen.feature.template.TemplateManager;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.ChestBlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.Mirror;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.levelgen.structure.BoundingBox;
+import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.levelgen.structure.StructurePiece;
+import net.minecraft.world.level.levelgen.structure.TemplateStructurePiece;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureManager;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+
+import ResourceLocation;
 
 public class DimStructPieces {
     private static final ResourceLocation DUNGEON_PIECE = new ResourceLocation("solarforge", "dimensional_shard_structure");
@@ -29,7 +31,7 @@ public class DimStructPieces {
     /*
      * Begins assembling your structure and where the pieces needs to go.
      */
-    public static void start(TemplateManager templateManager, BlockPos pos, Rotation rotation, List<StructurePiece> pieceList, Random random) {
+    public static void start(StructureManager templateManager, BlockPos pos, Rotation rotation, List<StructurePiece> pieceList, Random random) {
         int x = pos.getX();
         int z = pos.getZ();
 
@@ -56,7 +58,7 @@ public class DimStructPieces {
         private ResourceLocation resourceLocation;
         private Rotation rotation;
 
-        public Piece(TemplateManager templateManagerIn, ResourceLocation resourceLocationIn, BlockPos pos, Rotation rotationIn) {
+        public Piece(StructureManager templateManagerIn, ResourceLocation resourceLocationIn, BlockPos pos, Rotation rotationIn) {
             super(FeatureInit.DIMENSIONAL_SHARD_STRUCTURE, 0);
             this.resourceLocation = resourceLocationIn;
             BlockPos blockpos = DimStructPieces.OFFSET.get(resourceLocation);
@@ -65,21 +67,21 @@ public class DimStructPieces {
             this.setupPiece(templateManagerIn);
         }
 
-        public Piece(TemplateManager templateManagerIn, CompoundNBT tagCompound) {
+        public Piece(StructureManager templateManagerIn, CompoundTag tagCompound) {
             super(FeatureInit.DIMENSIONAL_SHARD_STRUCTURE, tagCompound);
             this.resourceLocation = new ResourceLocation(tagCompound.getString("Template"));
             this.rotation = Rotation.valueOf(tagCompound.getString("Rot"));
             this.setupPiece(templateManagerIn);
         }
 
-        private void setupPiece(TemplateManager templateManager) {
-            Template template = templateManager.get(this.resourceLocation);
-            PlacementSettings placementsettings = (new PlacementSettings()).setRotation(this.rotation).setMirror(Mirror.NONE);
+        private void setupPiece(StructureManager templateManager) {
+            StructureTemplate template = templateManager.get(this.resourceLocation);
+            StructurePlaceSettings placementsettings = (new StructurePlaceSettings()).setRotation(this.rotation).setMirror(Mirror.NONE);
             this.setup(template, this.templatePosition, placementsettings);
         }
 
         @Override
-        protected void addAdditionalSaveData(CompoundNBT tag) {
+        protected void addAdditionalSaveData(CompoundTag tag) {
             super.addAdditionalSaveData(tag);
             tag.putString("Template", this.resourceLocation.toString());
             tag.putString("Rot", this.rotation.name());
@@ -102,12 +104,12 @@ public class DimStructPieces {
          * randomize what rare block spawns under the floor, or what item an Item Frame will have.
          */
         @Override
-        protected void handleDataMarker(String func, BlockPos pos, IServerWorld world, Random rnd, MutableBoundingBox box) {
+        protected void handleDataMarker(String func, BlockPos pos, ServerLevelAccessor world, Random rnd, BoundingBox box) {
             if ("treasure".equals(func)){
                 world.setBlock(pos, Blocks.AIR.defaultBlockState(),3);
-                TileEntity tile = world.getBlockEntity(pos.below());
-                if (tile instanceof ChestTileEntity){
-                    ((ChestTileEntity) tile).setLootTable(new ResourceLocation("solarforge","chest/dimensional_shard"),rnd.nextLong());
+                BlockEntity tile = world.getBlockEntity(pos.below());
+                if (tile instanceof ChestBlockEntity){
+                    ((ChestBlockEntity) tile).setLootTable(new ResourceLocation("solarforge","chest/dimensional_shard"),rnd.nextLong());
                 }
             }
         }

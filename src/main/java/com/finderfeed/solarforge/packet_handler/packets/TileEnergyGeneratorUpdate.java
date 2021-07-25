@@ -2,11 +2,13 @@ package com.finderfeed.solarforge.packet_handler.packets;
 
 import com.finderfeed.solarforge.ClientHelpers;
 import com.finderfeed.solarforge.misc_things.AbstractPacket;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.core.BlockPos;
 import net.minecraftforge.fml.network.NetworkEvent;
 
 import java.util.function.Supplier;
+
+import BlockPos;
 
 public class TileEnergyGeneratorUpdate extends AbstractPacket {
 
@@ -20,7 +22,7 @@ public class TileEnergyGeneratorUpdate extends AbstractPacket {
         this.index = index;
         this.remove = remove;
     }
-    public TileEnergyGeneratorUpdate(PacketBuffer buf) {
+    public TileEnergyGeneratorUpdate(FriendlyByteBuf buf) {
 
         pos = buf.readBlockPos();
         pos2 = buf.readBlockPos();
@@ -29,7 +31,7 @@ public class TileEnergyGeneratorUpdate extends AbstractPacket {
 
     }
     @Override
-    public void toBytes(PacketBuffer buf) {
+    public void toBytes(FriendlyByteBuf buf) {
 
         buf.writeBlockPos(pos);
         buf.writeBlockPos(pos2);

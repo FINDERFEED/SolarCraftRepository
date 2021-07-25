@@ -6,23 +6,25 @@ import com.finderfeed.solarforge.world_generation.structures.dimensional_shard_s
 import com.finderfeed.solarforge.world_generation.structures.dungeon_one_key_lock.DungeonOnePieces;
 import com.finderfeed.solarforge.world_generation.structures.magician_tower.MagicianTowerPieces;
 import com.finderfeed.solarforge.world_generation.structures.maze_key_keeper.MazeStructurePieces;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.structure.IStructurePieceType;
+import net.minecraft.core.Registry;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.StructurePieceType;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.IForgeRegistry;
 
+import StructurePieceType;
+
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class FeatureInit {
 
 
-    public static IStructurePieceType DUNGEON_ONE_PIECE_TEST = DungeonOnePieces.Piece::new;
-    public static IStructurePieceType DUNGEON_MAZE_PIECE = MazeStructurePieces.Piece::new;
-    public static IStructurePieceType CHARGING_PIECE = ChargingStationPieces.Piece::new;
-    public static IStructurePieceType MAGICIAN_TOWER = MagicianTowerPieces.Piece::new;
-    public static IStructurePieceType DIMENSIONAL_SHARD_STRUCTURE = DimStructPieces.Piece::new;
+    public static StructurePieceType DUNGEON_ONE_PIECE_TEST = DungeonOnePieces.Piece::new;
+    public static StructurePieceType DUNGEON_MAZE_PIECE = MazeStructurePieces.Piece::new;
+    public static StructurePieceType CHARGING_PIECE = ChargingStationPieces.Piece::new;
+    public static StructurePieceType MAGICIAN_TOWER = MagicianTowerPieces.Piece::new;
+    public static StructurePieceType DIMENSIONAL_SHARD_STRUCTURE = DimStructPieces.Piece::new;
     @SubscribeEvent
     public static void registerFeatures(final RegistryEvent.Register<Feature<?>> event){
         IForgeRegistry<Feature<?>> registry = event.getRegistry();

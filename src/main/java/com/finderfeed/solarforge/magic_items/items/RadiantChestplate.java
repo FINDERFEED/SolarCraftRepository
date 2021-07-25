@@ -1,41 +1,42 @@
 package com.finderfeed.solarforge.magic_items.items;
 
-import net.minecraft.client.shader.ShaderInstance;
-import net.minecraft.client.shader.ShaderLoader;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ArmorItem;
-import net.minecraft.item.IArmorMaterial;
-import net.minecraft.item.ItemStack;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.ArmorMaterial;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.network.chat.Component;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
 
 
 import javax.annotation.Nullable;
 import java.util.List;
 
+import net.minecraft.world.item.Item.Properties;
+
 public class RadiantChestplate extends ArmorItem {
-    public RadiantChestplate(IArmorMaterial p_i48534_1_, EquipmentSlotType p_i48534_2_, Properties p_i48534_3_) {
+    public RadiantChestplate(ArmorMaterial p_i48534_1_, EquipmentSlot p_i48534_2_, Properties p_i48534_3_) {
         super(p_i48534_1_, p_i48534_2_, p_i48534_3_);
     }
 
 
     @Override
-    public void onArmorTick(ItemStack stack, World world, PlayerEntity player) {
+    public void onArmorTick(ItemStack stack, Level world, Player player) {
         if (!world.isClientSide){
-            AxisAlignedBB box = new AxisAlignedBB(-6,-3,-6,6,3,6).move(player.position().add(0,1.5,0));
+            AABB box = new AABB(-6,-3,-6,6,3,6).move(player.position().add(0,1.5,0));
             world.getEntitiesOfClass(LivingEntity.class,box,(players)-> !players.equals(player)).forEach((entity)->{
                 if (player.tickCount % 20 == 0) {
 
-                    ((ServerWorld)world).sendParticles(ParticleTypes.FLAME,entity.getX(),entity.getY()+entity.getBbHeight()*0.5,entity.getZ(),5,0,0,0,0.05);
+                    ((ServerLevel)world).sendParticles(ParticleTypes.FLAME,entity.getX(),entity.getY()+entity.getBbHeight()*0.5,entity.getZ(),5,0,0,0,0.05);
                     entity.hurt(DamageSource.MAGIC, 1.5f);
                     entity.setSecondsOnFire(2);
                     entity.invulnerableTime=0;
@@ -48,8 +49,8 @@ public class RadiantChestplate extends ArmorItem {
     }
 
     @Override
-    public void appendHoverText(ItemStack p_77624_1_, @Nullable World p_77624_2_, List<ITextComponent> p_77624_3_, ITooltipFlag p_77624_4_) {
-            p_77624_3_.add(new TranslationTextComponent("solarforge.radiant_chestplate").withStyle(TextFormatting.GOLD));
+    public void appendHoverText(ItemStack p_77624_1_, @Nullable Level p_77624_2_, List<Component> p_77624_3_, TooltipFlag p_77624_4_) {
+            p_77624_3_.add(new TranslatableComponent("solarforge.radiant_chestplate").withStyle(ChatFormatting.GOLD));
         super.appendHoverText(p_77624_1_, p_77624_2_, p_77624_3_, p_77624_4_);
     }
 }

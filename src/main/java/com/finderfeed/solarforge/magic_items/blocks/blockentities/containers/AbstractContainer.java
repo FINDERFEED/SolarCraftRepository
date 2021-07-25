@@ -1,23 +1,25 @@
 package com.finderfeed.solarforge.magic_items.blocks.blockentities.containers;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.ContainerType;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.tileentity.LockableLootTileEntity;
-import net.minecraft.util.IIntArray;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
+import net.minecraft.world.inventory.ContainerData;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class AbstractContainer<T extends LockableLootTileEntity> extends Container {
+import RandomizableContainerBlockEntity;
+
+public abstract class AbstractContainer<T extends RandomizableContainerBlockEntity> extends AbstractContainerMenu {
     public List<ItemStack> list = new ArrayList<>(0);
     public T te;
-    public IIntArray arr;
-    public AbstractContainer(ContainerType<?> type,final int windowId, final PlayerInventory playerInv, final T te, IIntArray array) {
+    public ContainerData arr;
+    public AbstractContainer(MenuType<?> type,final int windowId, final Inventory playerInv, final T te, ContainerData array) {
         super(type, windowId);
         this.te = te;
         this.arr = array;
@@ -33,7 +35,7 @@ public abstract class AbstractContainer<T extends LockableLootTileEntity> extend
 //        addDataSlots(arr);
 
     }
-    public AbstractContainer(ContainerType<?> type,final int windowId, final PlayerInventory playerInv,T te, final PacketBuffer buf,IIntArray array) {
+    public AbstractContainer(MenuType<?> type,final int windowId, final Inventory playerInv,T te, final FriendlyByteBuf buf,ContainerData array) {
         this(type,windowId, playerInv, te,array);
 
     }
@@ -54,7 +56,7 @@ public abstract class AbstractContainer<T extends LockableLootTileEntity> extend
 //    }
 
     @Override
-    public ItemStack quickMoveStack(PlayerEntity playerIn, int index) {
+    public ItemStack quickMoveStack(Player playerIn, int index) {
         ItemStack itemstack = ItemStack.EMPTY;
         Slot slot = this.slots.get(index);
         if (slot != null && slot.hasItem()) {
@@ -81,7 +83,7 @@ public abstract class AbstractContainer<T extends LockableLootTileEntity> extend
 
 
     @Override
-    public boolean stillValid(PlayerEntity p_75145_1_) {
+    public boolean stillValid(Player p_75145_1_) {
         return true;
     }
 }

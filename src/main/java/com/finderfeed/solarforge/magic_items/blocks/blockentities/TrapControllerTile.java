@@ -5,24 +5,26 @@ import com.finderfeed.solarforge.magic_items.blocks.BlueGemDoorBlock;
 import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
 import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Achievement;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.level.Level;
+
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.player.Player;
+
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.Direction;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.core.BlockPos;
 import net.minecraftforge.common.util.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class TrapControllerTile extends TileEntity implements ITickableTileEntity {
+public class TrapControllerTile extends BlockEntity  {
 
-    public final AxisAlignedBB BOX = new AxisAlignedBB(worldPosition.offset(7,-5,3),
+    public final AABB BOX = new AABB(worldPosition.offset(7,-5,3),
             worldPosition.offset(-7,-1,-3));
     public List<BlockPos> TRAP_BLOCK_POSITIONS = new ArrayList<>();
     public List<BlockPos> ENTRANCE_BLOCK_POSITIONS = new ArrayList<>();
@@ -33,10 +35,10 @@ public class TrapControllerTile extends TileEntity implements ITickableTileEntit
     public boolean HAS_ALREADY_RESET = false;
     public int TICKS = 0;
 
-    public TrapControllerTile() {
-        super(TileEntitiesRegistry.TRAP_STRUCT_CONTROLLER.get());
-
+    public TrapControllerTile( BlockPos p_155229_, BlockState p_155230_) {
+        super(TileEntitiesRegistry.TRAP_STRUCT_CONTROLLER.get(), p_155229_, p_155230_);
     }
+
 
     public void fillTrapPositions(){
         for (int x = -7;x < 8;x++){
@@ -63,59 +65,59 @@ public class TrapControllerTile extends TileEntity implements ITickableTileEntit
     }
 
 
-    @Override
-    public void tick() {
-        if (!level.isClientSide && !ALREADY_ACTIVATED){
-            if (!DESTROYED_BLOCKS){
-                fillEntrancePositions();
-                fillResultPositions();
-                fillTrapPositions();
-                DESTROYED_BLOCKS = true;
+
+    public static void tick(Level world, BlockPos post, BlockState blockState, TrapControllerTile tile) {
+        if (!tile.level.isClientSide && !tile.ALREADY_ACTIVATED){
+            if (!tile.DESTROYED_BLOCKS){
+                tile.fillEntrancePositions();
+                tile.fillResultPositions();
+                tile.fillTrapPositions();
+                tile.DESTROYED_BLOCKS = true;
             }
-            AxisAlignedBB box = new AxisAlignedBB(worldPosition.offset(8,-5,4),
-                    worldPosition.offset(-7,-1,-3));
-            List<PlayerEntity> list = level.getEntitiesOfClass(PlayerEntity.class,box);
+            AABB box = new AABB(tile.worldPosition.offset(8,-5,4),
+                    tile.worldPosition.offset(-7,-1,-3));
+            List<Player> list = tile.level.getEntitiesOfClass(Player.class,box);
             list.forEach((player)->{
                 Helpers.fireProgressionEvent(player,Achievement.DIMENSIONAL_SHARD_DUNGEON);
             });
             if (!list.isEmpty()){
-                if (!ALREADY_ACTIVATED) {
-                    IS_ATTACKING_PLAYER = true;
+                if (!tile.ALREADY_ACTIVATED) {
+                    tile.IS_ATTACKING_PLAYER = true;
                 }
 
             //3590   64   105
             }else{
-                reset();
+                tile.reset();
             }
 
-            if (IS_ATTACKING_PLAYER){
-                TICKS++;
+            if (tile.IS_ATTACKING_PLAYER){
+                tile.TICKS++;
 
-                for (BlockPos pos : ENTRANCE_BLOCK_POSITIONS){
+                for (BlockPos pos : tile.ENTRANCE_BLOCK_POSITIONS){
 
-                    if ((level.getBlockState(pos).getBlock() != BlocksRegistry.INVINCIBLE_STONE.get()) || (level.getBlockState(pos).getBlock() != BlocksRegistry.BLUE_GEM_DOOR_BLOCK.get())){
-                        if ((!Helpers.equalsBlockPos(pos,worldPosition.offset(8,-4,-1)))
-                        && (!Helpers.equalsBlockPos(pos,worldPosition.offset(8,-4,1)))) {
-                            level.setBlock(pos, BlocksRegistry.INVINCIBLE_STONE.get().defaultBlockState(), Constants.BlockFlags.DEFAULT);
+                    if ((tile.level.getBlockState(pos).getBlock() != BlocksRegistry.INVINCIBLE_STONE.get()) || (tile.level.getBlockState(pos).getBlock() != BlocksRegistry.BLUE_GEM_DOOR_BLOCK.get())){
+                        if ((!Helpers.equalsBlockPos(pos,tile.worldPosition.offset(8,-4,-1)))
+                        && (!Helpers.equalsBlockPos(pos,tile.worldPosition.offset(8,-4,1)))) {
+                            tile.level.setBlock(pos, BlocksRegistry.INVINCIBLE_STONE.get().defaultBlockState(), Constants.BlockFlags.DEFAULT);
                         }else {
-                            level.setBlock(pos, BlocksRegistry.BLUE_GEM_DOOR_BLOCK.get().defaultBlockState()
+                            tile.level.setBlock(pos, BlocksRegistry.BLUE_GEM_DOOR_BLOCK.get().defaultBlockState()
                                     .setValue(BlockStateProperties.HORIZONTAL_FACING, Direction.EAST)
                                     .setValue(BlueGemDoorBlock.UNLOCKED, false), Constants.BlockFlags.DEFAULT);
                         }
 
                     }
                 }
-                if (TICKS % 80 == 0) {
+                if (tile.TICKS % 80 == 0) {
 
                 List<BlockPos> activateThis = new ArrayList<>();
 
-                    for (int i = 0; i < TRAP_BLOCK_POSITIONS.size() / 1.5; i++) {
-                        BlockPos randompos = TRAP_BLOCK_POSITIONS.get(level.random.nextInt(TRAP_BLOCK_POSITIONS.size()));
+                    for (int i = 0; i < tile.TRAP_BLOCK_POSITIONS.size() / 1.5; i++) {
+                        BlockPos randompos = tile.TRAP_BLOCK_POSITIONS.get(tile.level.random.nextInt(tile.TRAP_BLOCK_POSITIONS.size()));
                         if (!activateThis.contains(randompos)) {
                             activateThis.add(randompos);
                         } else {
                             while (true) {
-                                BlockPos anotherrandompos = TRAP_BLOCK_POSITIONS.get(level.random.nextInt(TRAP_BLOCK_POSITIONS.size()));
+                                BlockPos anotherrandompos = tile.TRAP_BLOCK_POSITIONS.get(tile.level.random.nextInt(tile.TRAP_BLOCK_POSITIONS.size()));
                                 if (!activateThis.contains(anotherrandompos)) {
                                     activateThis.add(anotherrandompos);
                                     break;
@@ -126,19 +128,19 @@ public class TrapControllerTile extends TileEntity implements ITickableTileEntit
 
 
                     activateThis.forEach((pos) -> {
-                        TileEntity test = level.getBlockEntity(pos);
+                        BlockEntity test = tile.level.getBlockEntity(pos);
                         if (test instanceof RayTrapTileEntity) {
-                            RayTrapTileEntity tile = (RayTrapTileEntity) test;
-                            tile.triggerTrap();
+                            RayTrapTileEntity tilex = (RayTrapTileEntity) test;
+                            tilex.triggerTrap();
                         }
                     });
                 }
 
-                if (TICKS >= 1800){
-                    IS_ATTACKING_PLAYER = false;
-                    ALREADY_ACTIVATED = true;
-                    ENTRANCE_BLOCK_POSITIONS.forEach((pos) -> level.destroyBlock(pos, false));
-                    RESULT_BLOCK_POSITIONS.forEach((pos) -> level.destroyBlock(pos, false));
+                if (tile.TICKS >= 1800){
+                    tile.IS_ATTACKING_PLAYER = false;
+                    tile.ALREADY_ACTIVATED = true;
+                    tile.ENTRANCE_BLOCK_POSITIONS.forEach((pos) -> tile.level.destroyBlock(pos, false));
+                    tile.RESULT_BLOCK_POSITIONS.forEach((pos) -> tile.level.destroyBlock(pos, false));
                 }
             }
 
@@ -155,7 +157,7 @@ public class TrapControllerTile extends TileEntity implements ITickableTileEntit
 
 
     @Override
-    public CompoundNBT save(CompoundNBT p_189515_1_) {
+    public CompoundTag save(CompoundTag p_189515_1_) {
         p_189515_1_.putBoolean("activated_",ALREADY_ACTIVATED);
         p_189515_1_.putBoolean("attacking_",IS_ATTACKING_PLAYER);
 
@@ -165,12 +167,12 @@ public class TrapControllerTile extends TileEntity implements ITickableTileEntit
     }
 
     @Override
-    public void load(BlockState p_230337_1_, CompoundNBT c) {
+    public void load( CompoundTag c) {
         ALREADY_ACTIVATED = c.getBoolean("activated_");
         IS_ATTACKING_PLAYER = c.getBoolean("attacking_");
 
         HAS_ALREADY_RESET = c.getBoolean("has_already_reset");
         TICKS = c.getInt("attack_ticks");
-        super.load(p_230337_1_, c);
+        super.load( c);
     }
 }

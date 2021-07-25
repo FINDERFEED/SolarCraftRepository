@@ -3,21 +3,21 @@ package com.finderfeed.solarforge.magic_items.blocks.rendering_models;// Made wi
 // Paste this class into your mod and generate all required imports
 
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.model.Model;
-import net.minecraft.client.renderer.model.ModelRenderer;
+import net.minecraft.client.model.Model;
+import net.minecraft.client.model.geom.ModelPart;
 
 public class AuraHealerModel extends Model {
-	private final ModelRenderer bb_main;
+	private final ModelPart bb_main;
 
 	public AuraHealerModel() {
 		super(RenderType::text);
 		texWidth = 64;
 		texHeight = 64;
 
-		bb_main = new ModelRenderer(this);
+		bb_main = new ModelPart(this);
 		bb_main.setPos(0.0F, 24.0F, 0.0F);
 		bb_main.texOffs(54, 49).addBox(-2.0F, -14.0F, 0.0F, 4.0F, 14.0F, 1.0F, 0.0F, false);
 		bb_main.texOffs(50, 21).addBox(-2.0F, -13.0F, -1.0F, 4.0F, 12.0F, 3.0F, 0.0F, false);
@@ -43,11 +43,11 @@ public class AuraHealerModel extends Model {
 
 
 	@Override
-	public void renderToBuffer(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha){
+	public void renderToBuffer(PoseStack matrixStack, VertexConsumer buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha){
 		bb_main.render(matrixStack, buffer, packedLight, packedOverlay);
 	}
 
-	public void setRotationAngle(ModelRenderer modelRenderer, float x, float y, float z) {
+	public void setRotationAngle(ModelPart modelRenderer, float x, float y, float z) {
 		modelRenderer.xRot = x;
 		modelRenderer.yRot = y;
 		modelRenderer.zRot = z;

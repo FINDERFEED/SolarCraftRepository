@@ -4,71 +4,73 @@ import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.projectiles.AbstractTurretProjectile;
 import com.finderfeed.solarforge.registries.items.ItemsRegister;
 import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.nbt.CompoundTag;
+
+import net.minecraft.world.level.block.entity.BlockEntity;
+
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class TurretTileEntity extends TileEntity implements ITickableTileEntity {
+public class TurretTileEntity extends BlockEntity  {
 
     public int turretLevel = 1;
     public int attackTick = 0;
 
-    public TurretTileEntity() {
-        super(TileEntitiesRegistry.TURRET_TILE_ENTITY.get());
+    public TurretTileEntity( BlockPos p_155229_, BlockState p_155230_) {
+        super(TileEntitiesRegistry.TURRET_TILE_ENTITY.get(), p_155229_, p_155230_);
     }
 
 
-    @Override
-    public void tick() {
-        if (!level.isClientSide){
-            attackTick++;
-            if (attackTick >= getAttackRate()){
-                attackTick = 0;
-                List<LivingEntity> list = level.getEntitiesOfClass(LivingEntity.class,new AxisAlignedBB(-10,-4,-10,10,4,10)
-                        .move(worldPosition),(entity) -> !(entity instanceof PlayerEntity));
 
-                    sortList(list);
+    public static void tick(Level world, BlockPos post, BlockState blockState, TurretTileEntity tile) {
+        if (!tile.level.isClientSide){
+            tile.attackTick++;
+            if (tile.attackTick >= tile.getAttackRate()){
+                tile.attackTick = 0;
+                List<LivingEntity> list = tile.level.getEntitiesOfClass(LivingEntity.class,new AABB(-10,-4,-10,10,4,10)
+                        .move(tile.worldPosition),(entity) -> !(entity instanceof Player));
+
+                    tile.sortList(list);
                 if (!list.isEmpty()) {
 
-                    LivingEntity entity = list.get(level.random.nextInt(list.size()));
-                    Vector3d velocity = Helpers.calculateVelocity(Helpers.getBlockCenter(worldPosition), entity.position().add(0, 0.7f, 0));
-                    AbstractTurretProjectile projectile = new AbstractTurretProjectile(level, new AbstractTurretProjectile.Constructor()
-                            .setDamage(turretLevel * 5)
-                            .setPosition(Helpers.getBlockCenter(worldPosition)
+                    LivingEntity entity = list.get(tile.level.random.nextInt(list.size()));
+                    Vec3 velocity = Helpers.calculateVelocity(Helpers.getBlockCenter(tile.worldPosition), entity.position().add(0, 0.7f, 0));
+                    AbstractTurretProjectile projectile = new AbstractTurretProjectile(tile.level, new AbstractTurretProjectile.Constructor()
+                            .setDamage(tile.turretLevel * 5)
+                            .setPosition(Helpers.getBlockCenter(tile.worldPosition)
                                     .add(velocity.multiply(0.5,0.5,0.5))
                                     .add(0,-0.1,0))
                             .setVelocity(velocity)
                     );
 
-                    level.addFreshEntity(projectile);
+                    tile.level.addFreshEntity(projectile);
                 }
             }
         }
     }
 
     @Override
-    public CompoundNBT save(CompoundNBT p_189515_1_) {
+    public CompoundTag save(CompoundTag p_189515_1_) {
         p_189515_1_.putInt("turretlevel",turretLevel);
         p_189515_1_.putInt("attack_tick",attackTick);
         return super.save(p_189515_1_);
     }
 
     @Override
-    public void load(BlockState p_230337_1_, CompoundNBT p_230337_2_) {
+    public void load( CompoundTag p_230337_2_) {
         attackTick = p_230337_2_.getInt("attack+tick");
         turretLevel = p_230337_2_.getInt("turretlevel");
-        super.load(p_230337_1_, p_230337_2_);
+        super.load( p_230337_2_);
     }
 
     public int getAttackRate(){

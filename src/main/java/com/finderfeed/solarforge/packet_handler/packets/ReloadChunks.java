@@ -1,7 +1,7 @@
 package com.finderfeed.solarforge.packet_handler.packets;
 
 import com.finderfeed.solarforge.ClientHelpers;
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.fml.network.NetworkEvent;
 
 import java.util.function.Supplier;
@@ -12,11 +12,11 @@ public class ReloadChunks {
 
     }
 
-    public ReloadChunks(PacketBuffer buf) {
+    public ReloadChunks(FriendlyByteBuf buf) {
 
     }
 
-    public void toBytes(PacketBuffer buf) {
+    public void toBytes(FriendlyByteBuf buf) {
 
     }
 

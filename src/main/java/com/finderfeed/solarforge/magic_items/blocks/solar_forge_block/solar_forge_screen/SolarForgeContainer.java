@@ -5,33 +5,33 @@ import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.custom_slots.InputSlot;
 import com.finderfeed.solarforge.custom_slots.OutputSlot;
 import com.finderfeed.solarforge.magic_items.blocks.solar_forge_block.SolarForgeBlockEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.IIntArray;
-import net.minecraft.util.IWorldPosCallable;
-import net.minecraft.util.IntArray;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.Container;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.world.inventory.SimpleContainerData;
+import net.minecraft.core.BlockPos;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class SolarForgeContainer extends Container {
+public class SolarForgeContainer extends AbstractContainerMenu {
 
     public List<ItemStack> list = new ArrayList<>(0);
     public SolarForgeBlockEntity te;
-    private IWorldPosCallable canInteractWithCallable;
-    private IIntArray arr;
-    public SolarForgeContainer(final int windowId, final PlayerInventory playerInv, final SolarForgeBlockEntity te, IIntArray array) {
+    private ContainerLevelAccess canInteractWithCallable;
+    private ContainerData arr;
+    public SolarForgeContainer(final int windowId, final Inventory playerInv, final SolarForgeBlockEntity te, ContainerData array) {
         super(SolarForge.SOLAR_FORGE_CONTAINER.get(), windowId);
         this.te = te;
-        this.canInteractWithCallable = IWorldPosCallable.create(te.getLevel(), te.getBlockPos());
+        this.canInteractWithCallable = ContainerLevelAccess.create(te.getLevel(), te.getBlockPos());
         this.arr = array;
 
         int i = (6 - 4) * 18;
@@ -39,8 +39,8 @@ public class SolarForgeContainer extends Container {
         // Tile Entity
 
         list.add(SolarForge.TEST_ITEM.get().getDefaultInstance());
-        this.addSlot(new InputSlot((IInventory) te, 0, 135, 33,list));
-        this.addSlot(new OutputSlot((IInventory) te, 1, 152, 63));
+        this.addSlot(new InputSlot((Container) te, 0, 135, 33,list));
+        this.addSlot(new OutputSlot((Container) te, 1, 152, 63));
 
         for(int l = 0; l < 3; ++l) {
             for(int j1 = 0; j1 < 9; ++j1) {
@@ -54,8 +54,8 @@ public class SolarForgeContainer extends Container {
         addDataSlots(arr);
 
     }
-    public SolarForgeContainer(final int windowId, final PlayerInventory playerInv, final PacketBuffer buf) {
-        this(windowId, playerInv, getTileEntity(playerInv, buf.readBlockPos()),new IntArray(1));
+    public SolarForgeContainer(final int windowId, final Inventory playerInv, final FriendlyByteBuf buf) {
+        this(windowId, playerInv, getTileEntity(playerInv, buf.readBlockPos()),new SimpleContainerData(1));
 
     }
 
@@ -64,11 +64,11 @@ public class SolarForgeContainer extends Container {
     }
 
 
-    private static SolarForgeBlockEntity getTileEntity(final PlayerInventory playerInv,final BlockPos pos) {
+    private static SolarForgeBlockEntity getTileEntity(final Inventory playerInv,final BlockPos pos) {
         Objects.requireNonNull(playerInv, "Player Inventory cannot be null.");
         Objects.requireNonNull(pos, "Pos cannot be null.");
 
-        final TileEntity te = playerInv.player.level.getBlockEntity(pos);
+        final BlockEntity te = playerInv.player.level.getBlockEntity(pos);
 
         if (te instanceof SolarForgeBlockEntity) {
             return (SolarForgeBlockEntity) te;
@@ -77,7 +77,7 @@ public class SolarForgeContainer extends Container {
     }
 
     @Override
-    public ItemStack quickMoveStack(PlayerEntity playerIn, int index) {
+    public ItemStack quickMoveStack(Player playerIn, int index) {
         ItemStack itemstack = ItemStack.EMPTY;
         Slot slot = this.slots.get(index);
         if (slot != null && slot.hasItem()) {
@@ -104,7 +104,7 @@ public class SolarForgeContainer extends Container {
 
 
     @Override
-    public boolean stillValid(PlayerEntity p_75145_1_) {
+    public boolean stillValid(Player p_75145_1_) {
         return true;
     }
 }

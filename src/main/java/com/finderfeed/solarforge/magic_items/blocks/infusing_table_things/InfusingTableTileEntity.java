@@ -4,6 +4,7 @@ package com.finderfeed.solarforge.magic_items.blocks.infusing_table_things;
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.magic_items.blocks.infusing_table_things.infusing_pool.InfusingPoolTileEntity;
+import com.finderfeed.solarforge.magic_items.blocks.solar_forge_block.SolarForgeBlockEntity;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.ProgressionHelper;
 import com.finderfeed.solarforge.misc_things.*;
@@ -12,39 +13,40 @@ import com.finderfeed.solarforge.packet_handler.TriggerToastPacket;
 import com.finderfeed.solarforge.recipe_types.InfusingRecipe;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Achievement;
 import com.finderfeed.solarforge.world_generation.structures.Structures;
-import net.minecraft.block.BlockState;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.ItemStackHelper;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ToolItem;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.LockableLootTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraftforge.fml.network.NetworkDirection;
-import net.minecraftforge.fml.network.PacketDistributor;
+import net.minecraft.client.Minecraft;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.Container;
+import net.minecraft.world.ContainerHelper;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.DiggerItem;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.core.NonNullList;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraftforge.fmllegacy.network.NetworkDirection;
+import net.minecraftforge.fmllegacy.network.PacketDistributor;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-public class InfusingTableTileEntity extends LockableLootTileEntity implements ITickableTileEntity, IEnergyUser, IBindable, ISolarEnergyContainer, OneWay {
+public class InfusingTableTileEntity extends RandomizableContainerBlockEntity implements  IEnergyUser, IBindable, ISolarEnergyContainer, OneWay {
 
     public int energy = 0;
     public int TICKS_TIMER=0;
@@ -54,21 +56,23 @@ public class InfusingTableTileEntity extends LockableLootTileEntity implements I
     public boolean RECIPE_IN_PROGRESS = false;
     public boolean requiresEnergy = false;
     public NonNullList<ItemStack> items = NonNullList.withSize(10,ItemStack.EMPTY);
-    public InfusingTableTileEntity(TileEntityType<?> type) {
-        super(type);
+
+    public InfusingTableTileEntity( BlockPos p_155630_, BlockState p_155631_) {
+        super(SolarForge.INFUSING_STAND_BLOCKENTITY.get(), p_155630_, p_155631_);
     }
+
 
     public int getProgress(){
         return INFUSING_TIME;
     }
 
     @Override
-    protected ITextComponent getDefaultName() {
-        return new TranslationTextComponent("container.solarforge.infusing_stand");
+    protected Component getDefaultName() {
+        return new TranslatableComponent("container.solarforge.infusing_stand");
     }
 
     @Override
-    protected Container createMenu(int x, PlayerInventory inv) {
+    protected AbstractContainerMenu createMenu(int x, Inventory inv) {
         return new InfusingTableContainer(x,inv,this);
     }
 
@@ -82,9 +86,7 @@ public class InfusingTableTileEntity extends LockableLootTileEntity implements I
         this.items = items;
     }
 
-    public InfusingTableTileEntity(){
-        this(SolarForge.INFUSING_STAND_BLOCKENTITY.get());
-    }
+
 
     @Override
     public int getContainerSize() {
@@ -94,62 +96,62 @@ public class InfusingTableTileEntity extends LockableLootTileEntity implements I
 
 
     @Override
-    public CompoundNBT save(CompoundNBT cmp){
+    public CompoundTag save(CompoundTag cmp){
         super.save(cmp);
         cmp.putInt("energy",energy);
         cmp.putInt("infusing_time",INFUSING_TIME );
         cmp.putInt("recipe_progress",CURRENT_PROGRESS );
         cmp.putBoolean("is_recipe_in_progress",RECIPE_IN_PROGRESS );
         if (!this.trySaveLootTable(cmp)) {
-            ItemStackHelper.saveAllItems(cmp, this.items);
+            ContainerHelper.saveAllItems(cmp, this.items);
         }
         return cmp;
     }
 
     @Override
-    public void load(BlockState state, CompoundNBT cmp) {
-        super.load(state,cmp);
+    public void load( CompoundTag cmp) {
+        super.load(cmp);
         energy = cmp.getInt("energy");
         INFUSING_TIME = cmp.getInt("infusing_time");
         CURRENT_PROGRESS = cmp.getInt("recipe_progress");
         RECIPE_IN_PROGRESS = cmp.getBoolean("is_recipe_in_progress");
         this.items = NonNullList.withSize(getContainerSize(), ItemStack.EMPTY);
         if (!this.tryLoadLootTable(cmp)) {
-            ItemStackHelper.loadAllItems(cmp, this.items);
+            ContainerHelper.loadAllItems(cmp, this.items);
         }
     }
 
-    @Override
-    public void tick() {
-        if (!this.level.isClientSide){
 
-            updateStacksInPhantomSlots();
-            Optional<InfusingRecipe> recipe = this.level.getRecipeManager().getRecipeFor(SolarForge.INFUSING_RECIPE_TYPE, this,level);
+    public static void tick(Level world, BlockPos pos, BlockState blockState, InfusingTableTileEntity tile) {
+        if (!world.isClientSide){
+
+            tile.updateStacksInPhantomSlots();
+            Optional<InfusingRecipe> recipe = tile.level.getRecipeManager().getRecipeFor(SolarForge.INFUSING_RECIPE_TYPE, tile,world);
 
                 if (!recipe.isPresent()){
-                    this.RECIPE_IN_PROGRESS = false;
-                    CURRENT_PROGRESS =0;
-                    INFUSING_TIME = 0;
-                    requiresEnergy = false;
+                    tile.RECIPE_IN_PROGRESS = false;
+                    tile.CURRENT_PROGRESS =0;
+                    tile.INFUSING_TIME = 0;
+                    tile.requiresEnergy = false;
 
                 }
 
 
-                if (RECIPE_IN_PROGRESS){
-                    if (energy >= recipe.get().requriedEnergy) {
-                        requiresEnergy = false;
-                        CURRENT_PROGRESS++;
+                if (tile.RECIPE_IN_PROGRESS){
+                    if (tile.energy >= recipe.get().requriedEnergy) {
+                        tile.requiresEnergy = false;
+                        tile.CURRENT_PROGRESS++;
 
-                        this.setChanged();
-                        if (CURRENT_PROGRESS == INFUSING_TIME) {
+                        tile.setChanged();
+                        if (tile.CURRENT_PROGRESS == tile.INFUSING_TIME) {
                             ItemStack result = new ItemStack(recipe.get().output.getItem(),recipe.get().count);
                             if (!recipe.get().tag.equals("")) {
                                 if (result.getItem() instanceof ITagUser){
                                     ITagUser result2 = (ITagUser) result.getItem();
-                                    result2.doThingsWithTag(getItem(0),result,recipe.get().tag);
+                                    result2.doThingsWithTag(tile.getItem(0),result,recipe.get().tag);
                                 }
                             }
-                            ItemStack prev = this.getItem(0);
+                            ItemStack prev = tile.getItem(0);
                             if (prev.isEnchanted()){
                                 Map<Enchantment,Integer> map = EnchantmentHelper.getEnchantments(prev);
 
@@ -158,63 +160,64 @@ public class InfusingTableTileEntity extends LockableLootTileEntity implements I
                                 }
 
                             }
-                            if ((prev.getItem() instanceof ToolItem) && (result.getItem() instanceof ToolItem)) {
-                                result.hurt(prev.getDamageValue(), level.random, null);
+
+                            if ((prev.getItem() instanceof DiggerItem) && (result.getItem() instanceof DiggerItem)) {
+                                result.hurt(prev.getDamageValue(), world.random, null);
                             }
-                            this.getItems().clear();
-                            this.getItems().set(9, result);
-                            RECIPE_IN_PROGRESS = false;
-                            INFUSING_TIME = 0;
-                            CURRENT_PROGRESS = 0;
-                            deleteStacksInPhantomSlots();
-                            this.level.playSound(null, this.worldPosition, SoundEvents.BEACON_DEACTIVATE, SoundCategory.AMBIENT, 2, 1);
-                            this.energy-= recipe.get().requriedEnergy;
+                            tile.getItems().clear();
+                            tile.getItems().set(9, result);
+                            tile.RECIPE_IN_PROGRESS = false;
+                            tile.INFUSING_TIME = 0;
+                            tile.CURRENT_PROGRESS = 0;
+                            tile.deleteStacksInPhantomSlots();
+                            tile.level.playSound(null, tile.worldPosition, SoundEvents.BEACON_DEACTIVATE, SoundSource.AMBIENT, 2, 1);
+                            tile.energy-= recipe.get().requriedEnergy;
                         }
                     }else{
-                        requiresEnergy = true;
+                        tile.requiresEnergy = true;
                     }
                 }
 
-            SolarForgePacketHandler.INSTANCE.send(PacketDistributor.NEAR.with(PacketDistributor.TargetPoint.p(worldPosition.getX(),worldPosition.getY(),worldPosition.getZ(),20,level.dimension())),
-                    new UpdateProgressOnClientPacket(INFUSING_TIME,CURRENT_PROGRESS,this.worldPosition,requiresEnergy,energy));
-                ItemStack[] arr = {this.getItem(0),this.getItem(1),this.getItem(2),this.getItem(3),this.getItem(4),this.getItem(5),this.getItem(6),this.getItem(7),this.getItem(8)};
-            SolarForgePacketHandler.INSTANCE.send(PacketDistributor.NEAR.with(PacketDistributor.TargetPoint.p(worldPosition.getX(),worldPosition.getY(),worldPosition.getZ(),20,level.dimension())),
-                    new UpdateStacksOnClientTable(arr,this.getItem(9),this.worldPosition,RECIPE_IN_PROGRESS));
+            SolarForgePacketHandler.INSTANCE.send(PacketDistributor.NEAR.with(PacketDistributor.TargetPoint.p(tile.worldPosition.getX(),tile.worldPosition.getY(),tile.worldPosition.getZ(),20,tile.level.dimension())),
+                    new UpdateProgressOnClientPacket(tile.INFUSING_TIME,tile.CURRENT_PROGRESS,tile.worldPosition,tile.requiresEnergy,tile.energy));
+                ItemStack[] arr = {tile.getItem(0),tile.getItem(1),tile.getItem(2),tile.getItem(3),tile.getItem(4),tile.getItem(5),tile.getItem(6),tile.getItem(7),tile.getItem(8)};
+            SolarForgePacketHandler.INSTANCE.send(PacketDistributor.NEAR.with(PacketDistributor.TargetPoint.p(tile.worldPosition.getX(),tile.worldPosition.getY(),tile.worldPosition.getZ(),20,tile.level.dimension())),
+                    new UpdateStacksOnClientTable(arr,tile.getItem(9),tile.worldPosition,tile.RECIPE_IN_PROGRESS));
 
         }
 
-        if (RECIPE_IN_PROGRESS){
+        if (tile.RECIPE_IN_PROGRESS){
 
-            spawnParticles(4.7f-TICKS_RADIUS_TIMER,TICKS_TIMER);
-            TICKS_TIMER+=2;
+            tile.spawnParticles(4.7f-tile.TICKS_RADIUS_TIMER,tile.TICKS_TIMER);
+            tile.TICKS_TIMER+=2;
 
-            if ((INFUSING_TIME - CURRENT_PROGRESS) <= 80 ){
-                TICKS_RADIUS_TIMER += 0.05875;
+            if ((tile.INFUSING_TIME - tile.CURRENT_PROGRESS) <= 80 ){
+                tile.TICKS_RADIUS_TIMER += 0.05875;
 
             }
         }else{
-            TICKS_TIMER = 0;
-            TICKS_RADIUS_TIMER = 0;
+            tile.TICKS_TIMER = 0;
+            tile.TICKS_RADIUS_TIMER = 0;
         }
 
     }
 
 
-    public void triggerCrafting(PlayerEntity playerEntity){
-        Optional<InfusingRecipe> recipe = this.level.getRecipeManager().getRecipeFor(SolarForge.INFUSING_RECIPE_TYPE,(IInventory) this,level);
+    public void triggerCrafting(Player playerEntity){
+        Optional<InfusingRecipe> recipe = this.level.getRecipeManager().getRecipeFor(SolarForge.INFUSING_RECIPE_TYPE,(Container) this,level);
         try {
             if (recipe.isPresent() && ProgressionHelper.doPlayerHasFragment(playerEntity, AncientFragment.getFragmentByID(recipe.get().child))) {
 
                 if (!RECIPE_IN_PROGRESS) {
                     if (!playerEntity.getPersistentData().getBoolean(Helpers.PROGRESSION + Achievement.USE_SOLAR_INFUSER.getAchievementCode())) {
                         playerEntity.getPersistentData().putBoolean(Helpers.PROGRESSION + Achievement.USE_SOLAR_INFUSER.getAchievementCode(), true);
-                        SolarForgePacketHandler.INSTANCE.sendTo(new TriggerToastPacket(Achievement.USE_SOLAR_INFUSER.getId()), ((ServerPlayerEntity) playerEntity).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+                        SolarForgePacketHandler.INSTANCE.sendTo(new TriggerToastPacket(Achievement.USE_SOLAR_INFUSER.getId()), ((ServerPlayer) playerEntity).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
                     }
                     this.INFUSING_TIME = recipe.get().infusingTime;
                     this.RECIPE_IN_PROGRESS = true;
-                    this.level.playSound(null, this.worldPosition, SoundEvents.BEACON_ACTIVATE, SoundCategory.AMBIENT, 2, 1);
+                    this.level.playSound(null, this.worldPosition, SoundEvents.BEACON_ACTIVATE, SoundSource.AMBIENT, 2, 1);
                 } else {
-                    this.level.playSound(null, this.worldPosition, SoundEvents.VILLAGER_NO, SoundCategory.AMBIENT, 2, 1);
+                    this.level.playSound(null, this.worldPosition, SoundEvents.VILLAGER_NO, SoundSource.AMBIENT, 2, 1);
                 }
 
             } else {
@@ -222,25 +225,25 @@ public class InfusingTableTileEntity extends LockableLootTileEntity implements I
                     AncientFragment fragment = AncientFragment.getFragmentByID(recipe.get().child);
                     if (fragment != null){
                         if (!ProgressionHelper.doPlayerHasFragment(playerEntity,fragment)){
-                            playerEntity.sendMessage(new StringTextComponent("Cant start craft, you dont have "+fragment.getTranslation().getString().toUpperCase()+" fragment unlocked.").withStyle(TextFormatting.RED),
+                            playerEntity.sendMessage(new TextComponent("Cant start craft, you dont have "+fragment.getTranslation().getString().toUpperCase()+" fragment unlocked.").withStyle(ChatFormatting.RED),
                                     playerEntity.getUUID());
                         }
                     }
                 }else{
-                    playerEntity.sendMessage(new StringTextComponent("Recipe invalid").withStyle(TextFormatting.RED),
+                    playerEntity.sendMessage(new TextComponent("Recipe invalid").withStyle(ChatFormatting.RED),
                             playerEntity.getUUID());
                 }
-                this.level.playSound(null, this.worldPosition, SoundEvents.VILLAGER_NO, SoundCategory.AMBIENT, 2, 1);
+                this.level.playSound(null, this.worldPosition, SoundEvents.VILLAGER_NO, SoundSource.AMBIENT, 2, 1);
             }
         }catch (NullPointerException e){
-            playerEntity.sendMessage(new StringTextComponent("INCORRECT FRAGMENT IN RECIPE "+ recipe.get().output.getDescriptionId()+" TELL MOD AUTHOR TO FIX IT").withStyle(TextFormatting.RED),
+            playerEntity.sendMessage(new TextComponent("INCORRECT FRAGMENT IN RECIPE "+ recipe.get().output.getDescriptionId()+" TELL MOD AUTHOR TO FIX IT").withStyle(ChatFormatting.RED),
                     playerEntity.getUUID());
         }
 
     }
 
     public void updateStacksInPhantomSlots(){
-        List<TileEntity> list = Structures.checkInfusingStandStructure(worldPosition,level);
+        List<BlockEntity> list = Structures.checkInfusingStandStructure(worldPosition,level);
         for (int i = 0;i < list.size();i++){
             if (list.get(i) instanceof InfusingPoolTileEntity){
                 InfusingPoolTileEntity tile = (InfusingPoolTileEntity) list.get(i);
@@ -251,7 +254,7 @@ public class InfusingTableTileEntity extends LockableLootTileEntity implements I
         }
     }
     public void deleteStacksInPhantomSlots(){
-        List<TileEntity> list = Structures.checkInfusingStandStructure(worldPosition,level);
+        List<BlockEntity> list = Structures.checkInfusingStandStructure(worldPosition,level);
         for (int i = 0;i < list.size();i++){
             if (list.get(i) instanceof InfusingPoolTileEntity){
                 InfusingPoolTileEntity tile = (InfusingPoolTileEntity) list.get(i);
@@ -296,7 +299,7 @@ public class InfusingTableTileEntity extends LockableLootTileEntity implements I
 
     @Override
     public void bindPos(BlockPos pos) {
-        TileEntity poss = level.getBlockEntity(pos);
+        BlockEntity poss = level.getBlockEntity(pos);
         if (poss instanceof IBindable && !(poss instanceof IEnergyUser)) {
             ((IBindable) poss).bindPos(worldPosition);
         }

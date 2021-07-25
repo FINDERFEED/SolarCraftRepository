@@ -1,8 +1,13 @@
 package com.finderfeed.solarforge.magic_items.blocks;
 
-import net.minecraft.block.Block;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.ItemStack;
+
+import net.minecraft.world.item.Item.Properties;
+
+import javax.annotation.Nullable;
 
 public class FuelBlockItem extends BlockItem {
 
@@ -13,8 +18,10 @@ public class FuelBlockItem extends BlockItem {
         this.time = time;
     }
 
+
     @Override
-    public int getBurnTime(ItemStack itemStack) {
+    public int getBurnTime(ItemStack itemStack, @Nullable RecipeType<?> recipeType) {
         return time;
     }
+
 }

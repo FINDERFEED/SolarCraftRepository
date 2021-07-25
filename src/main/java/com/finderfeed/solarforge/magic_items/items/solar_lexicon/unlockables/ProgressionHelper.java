@@ -6,10 +6,10 @@ import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import com.finderfeed.solarforge.recipe_types.InfusingRecipe;
 import com.finderfeed.solarforge.recipe_types.solar_smelting.SolarSmeltingRecipe;
 import com.finderfeed.solarforge.registries.items.ItemsRegister;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 
 import java.util.*;
 
@@ -54,15 +54,15 @@ public class ProgressionHelper {
 
 
 
-    public static void givePlayerFragment(AncientFragment frag,PlayerEntity pe){
+    public static void givePlayerFragment(AncientFragment frag,Player pe){
         pe.getPersistentData().putBoolean(Helpers.FRAGMENT+frag.getId(),true);
     }
 
-    public static void revokePlayerFragment(AncientFragment frag,PlayerEntity pe){
+    public static void revokePlayerFragment(AncientFragment frag,Player pe){
         pe.getPersistentData().putBoolean(Helpers.FRAGMENT+frag.getId(),false);
     }
 
-    public static void applyTagToFragment(ItemStack stack,PlayerEntity pe){
+    public static void applyTagToFragment(ItemStack stack,Player pe){
         if (stack.getTagElement(TAG_ELEMENT) == null){
             AncientFragment rndFragment = getRandomUnlockableFragment(pe);
             if (rndFragment != null){
@@ -78,7 +78,7 @@ public class ProgressionHelper {
     }
 
 
-    public static AncientFragment getRandomUnlockableFragment(PlayerEntity pe){
+    public static AncientFragment getRandomUnlockableFragment(Player pe){
         List<AncientFragment> fraglist = getAllUnlockableFragments(pe);
         if (fraglist != null){
             return fraglist.get(pe.level.random.nextInt(fraglist.size()));
@@ -88,7 +88,7 @@ public class ProgressionHelper {
     }
 
 
-    public static List<AncientFragment> getAllUnlockableFragments(PlayerEntity pe){
+    public static List<AncientFragment> getAllUnlockableFragments(Player pe){
         List<AncientFragment> list = new ArrayList<>();
         for (AncientFragment frag : AncientFragment.getAllFragments()){
             if (Helpers.hasPlayerUnlocked(frag.getNeededProgression(),pe) && !doPlayerHasFragment(pe,frag)){
@@ -98,11 +98,11 @@ public class ProgressionHelper {
         return list.isEmpty() ? null : list;
     }
 
-    public static void resetPattern(PlayerEntity pe){
+    public static void resetPattern(Player pe){
         pe.getPersistentData().putIntArray(UNLOCK_PATTERN,NULL_ARRAY);
     }
 
-    public static void generateRandomPatternForPlayer(PlayerEntity pe){
+    public static void generateRandomPatternForPlayer(Player pe){
         if (Arrays.equals(pe.getPersistentData().getIntArray(UNLOCK_PATTERN), new int[0])  || Arrays.equals(pe.getPersistentData().getIntArray(UNLOCK_PATTERN), NULL_ARRAY) ){
             pe.getPersistentData().putIntArray(UNLOCK_PATTERN,new int[]{
                     pe.level.random.nextInt(6),
@@ -116,7 +116,7 @@ public class ProgressionHelper {
     }
 
 
-    public static boolean doPlayerAlreadyHasPattern(PlayerEntity pe){
+    public static boolean doPlayerAlreadyHasPattern(Player pe){
         if (Arrays.equals(pe.getPersistentData().getIntArray(UNLOCK_PATTERN), new int[0])  || Arrays.equals(pe.getPersistentData().getIntArray(UNLOCK_PATTERN), NULL_ARRAY) ){
             return false;
         }
@@ -124,12 +124,12 @@ public class ProgressionHelper {
     }
 
 
-    public static int[] getPlayerPattern(PlayerEntity pe){
+    public static int[] getPlayerPattern(Player pe){
         return pe.getPersistentData().getIntArray(UNLOCK_PATTERN);
     }
 
 
-    public static boolean doPlayerHasFragment(PlayerEntity pe,AncientFragment frag){
+    public static boolean doPlayerHasFragment(Player pe,AncientFragment frag){
         return  pe.getPersistentData().getBoolean(Helpers.FRAGMENT+frag.getId());
     }
 
@@ -142,7 +142,7 @@ public class ProgressionHelper {
     }
 
 
-    public static void initInfRecipesMap(World world){
+    public static void initInfRecipesMap(Level world){
         List<InfusingRecipe> list = world.getRecipeManager().getAllRecipesFor(SolarForge.INFUSING_RECIPE_TYPE);
         list.forEach((recipe)->{
             if (recipe.tag.equals("") && !INFUSING_RECIPE_MAP.containsKey(recipe.output.getItem())) {
@@ -153,7 +153,7 @@ public class ProgressionHelper {
         });
     }
 
-    public static void initSmeltingRecipesMap(World world){
+    public static void initSmeltingRecipesMap(Level world){
         List<SolarSmeltingRecipe> list = world.getRecipeManager().getAllRecipesFor(SolarForge.SOLAR_SMELTING);
         list.forEach((recipe)->{
             if (!SMELTING_RECIPE_MAP.containsKey(recipe.output.getItem())) {

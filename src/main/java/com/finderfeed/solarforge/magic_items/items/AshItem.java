@@ -1,9 +1,14 @@
 package com.finderfeed.solarforge.magic_items.items;
 
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.NonNullList;
+import net.minecraft.world.item.Item;
+
+import net.minecraft.world.item.ItemStack;
+
+
+import net.minecraft.world.item.Item.Properties;
+import net.minecraft.world.item.crafting.RecipeType;
+
+import javax.annotation.Nullable;
 
 public class AshItem extends Item {
     public AshItem(Properties p_i48487_1_) {
@@ -11,11 +16,12 @@ public class AshItem extends Item {
     }
 
 
-
     @Override
-    public int getBurnTime(ItemStack itemStack) {
+    public int getBurnTime(ItemStack itemStack, @Nullable RecipeType<?> recipeType) {
         return 500;
     }
+
+
 
 
 }

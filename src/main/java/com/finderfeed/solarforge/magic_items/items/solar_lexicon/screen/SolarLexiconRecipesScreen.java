@@ -13,15 +13,15 @@ import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Ac
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.BookEntry;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.ProgressionHelper;
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.gui.widget.Widget;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.gui.components.AbstractWidget;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import org.lwjgl.glfw.GLFW;
@@ -70,10 +70,10 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
         }
 
         if (this.prevscrollX != scrollX){
-            List<Widget> list = this.buttons;
+            List<AbstractWidget> list = this.buttons;
             list.remove(goBack);
             list.remove(nothing);
-            for (Widget a : list) {
+            for (AbstractWidget a : list) {
                 if (prevscrollX < scrollX) {
                     a.x += 4;
                 } else {
@@ -84,10 +84,10 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
             this.prevscrollX = scrollX;
         }
         if (this.prevscrollY != scrollY){
-            List<Widget> list = this.buttons;
+            List<AbstractWidget> list = this.buttons;
             list.remove(goBack);
             list.remove(nothing);
-            for (Widget a : list) {
+            for (AbstractWidget a : list) {
                 if (prevscrollY < scrollY) {
 
                     a.y += 4;
@@ -103,7 +103,7 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
     }
 
     protected SolarLexiconRecipesScreen() {
-        super(new StringTextComponent(""));
+        super(new TextComponent(""));
     }
 
 
@@ -261,7 +261,7 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
 
 
     @Override
-    public void render(MatrixStack matrices, int mousex, int mousey, float partialTicks) {
+    public void render(PoseStack matrices, int mousex, int mousey, float partialTicks) {
         GL11.glEnable(GL11.GL_SCISSOR_TEST);
         int width = minecraft.getWindow().getWidth();
         int height = minecraft.getWindow().getHeight();
@@ -364,7 +364,7 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
     }
 
 
-    public void drawRectangle(MatrixStack matrices,int x,int y,Point p){
+    public void drawRectangle(PoseStack matrices,int x,int y,Point p){
         Helpers.drawLine(matrices,p.x+scrollX,p.y+scrollY,p.x+x+scrollX,p.y+scrollY,1,1,1);
         Helpers.drawLine(matrices,p.x+x+scrollX,p.y+scrollY,p.x+x+scrollX,p.y+y+scrollY,1,1,1);
         Helpers.drawLine(matrices,p.x+scrollX,p.y+y+scrollY,p.x+x+scrollX,p.y+y+scrollY,1,1,1);
@@ -372,7 +372,7 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
     }
 
 
-    public void drawCategoryString(MatrixStack matrices,int count,TranslationTextComponent translationTextComponent,Point point){
+    public void drawCategoryString(PoseStack matrices,int count,TranslatableComponent translationTextComponent,Point point){
         int x;
         if (count <= 6) {
             x = (count) * 25;

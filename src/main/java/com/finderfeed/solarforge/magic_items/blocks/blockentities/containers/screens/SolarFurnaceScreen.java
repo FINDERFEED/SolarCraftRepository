@@ -1,21 +1,21 @@
 package com.finderfeed.solarforge.magic_items.blocks.blockentities.containers.screens;
 
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.containers.SolarFurnaceContainer;
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screen.inventory.ContainerScreen;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.vector.Vector3f;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.resources.ResourceLocation;
+import com.mojang.math.Vector3f;
+import net.minecraft.network.chat.Component;
 
-public class SolarFurnaceScreen extends ContainerScreen<SolarFurnaceContainer> {
+public class SolarFurnaceScreen extends AbstractContainerScreen<SolarFurnaceContainer> {
     public final ResourceLocation GUI = new ResourceLocation("solarforge","textures/gui/solar_furnace_gui.png");
     public final ResourceLocation REQ_ENERGY = new ResourceLocation("solarforge","textures/gui/energy_bar.png");
     int relX;
     int relY;
 
-    public SolarFurnaceScreen(SolarFurnaceContainer p_i51105_1_, PlayerInventory p_i51105_2_, ITextComponent p_i51105_3_) {
+    public SolarFurnaceScreen(SolarFurnaceContainer p_i51105_1_, Inventory p_i51105_2_, Component p_i51105_3_) {
         super(p_i51105_1_, p_i51105_2_, p_i51105_3_);
     }
 
@@ -30,7 +30,7 @@ public class SolarFurnaceScreen extends ContainerScreen<SolarFurnaceContainer> {
     }
 
     @Override
-    public void render(MatrixStack stack,int rouseX,int rouseY,float partialTicks){
+    public void render(PoseStack stack,int rouseX,int rouseY,float partialTicks){
         this.renderBackground(stack);
         super.render(stack,rouseX,rouseY,partialTicks);
         this.renderTooltip(stack,rouseX,rouseY);
@@ -38,7 +38,7 @@ public class SolarFurnaceScreen extends ContainerScreen<SolarFurnaceContainer> {
     }
 
     @Override
-    protected void renderBg(MatrixStack matrices, float partialTicks, int mousex, int mousey) {
+    protected void renderBg(PoseStack matrices, float partialTicks, int mousex, int mousey) {
 
         Minecraft.getInstance().getTextureManager().bind(GUI);
         int scale = (int) minecraft.getWindow().getGuiScale();

@@ -1,20 +1,20 @@
 package com.finderfeed.solarforge.magic_items.items.solar_lexicon.packets;
 
 import com.finderfeed.solarforge.ClientHelpers;
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.fml.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
 public class UpdateAllProgressionOnClient {
-    public UpdateAllProgressionOnClient(PacketBuffer buf){
+    public UpdateAllProgressionOnClient(FriendlyByteBuf buf){
 
     }
     public UpdateAllProgressionOnClient(){
 
     }
 
-    public void toBytes(PacketBuffer buf) {
+    public void toBytes(FriendlyByteBuf buf) {
 
     }
 

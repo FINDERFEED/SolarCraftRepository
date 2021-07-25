@@ -3,15 +3,15 @@ package com.finderfeed.solarforge.magic_items.items.solar_lexicon.screen;
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.recipe_types.InfusingRecipe;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.SolarLexicon;
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.vector.Vector3f;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.resources.ResourceLocation;
+import com.mojang.math.Vector3f;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +25,7 @@ public class InfusingRecipeScreen extends Screen {
     public List<ItemStack> stacks ;
 
     protected InfusingRecipeScreen(InfusingRecipe a) {
-        super(new StringTextComponent(""));
+        super(new TextComponent(""));
         this.recipe = a;
     }
 
@@ -62,7 +62,7 @@ public class InfusingRecipeScreen extends Screen {
 
 
     @Override
-    public void render(MatrixStack matrices, int mousex, int mousey, float partialTicks) {
+    public void render(PoseStack matrices, int mousex, int mousey, float partialTicks) {
 
         minecraft.getTextureManager().bind(MAIN_SCREEN);
         blit(matrices,relX,relY,0,0,256,256);
@@ -78,8 +78,8 @@ public class InfusingRecipeScreen extends Screen {
         minecraft.getItemRenderer().renderGuiItem(stacks.get(8),relX+159,relY+108);
         minecraft.getItemRenderer().renderGuiItem(stacks.get(9),relX+23,relY+21);
 
-        drawCenteredString(matrices, minecraft.font,new TranslationTextComponent("solarforge.seconds"),relX+30,relY+120,0xffffff);
-        drawCenteredString(matrices, minecraft.font,new StringTextComponent(recipe.infusingTime / 20 +" ").append(new TranslationTextComponent("solarforge.seconds2")),relX+30,relY+130,0xffffff);
+        drawCenteredString(matrices, minecraft.font,new TranslatableComponent("solarforge.seconds"),relX+30,relY+120,0xffffff);
+        drawCenteredString(matrices, minecraft.font,new TextComponent(recipe.infusingTime / 20 +" ").append(new TranslatableComponent("solarforge.seconds2")),relX+30,relY+130,0xffffff);
 
 //        Helpers.drawBoundedText(matrices,relX+10,relY+152,33,recipe.child.getItemDescription().getString());
 

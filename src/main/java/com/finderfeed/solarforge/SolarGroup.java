@@ -1,11 +1,11 @@
 package com.finderfeed.solarforge;
 
 import com.finderfeed.solarforge.registries.items.ItemsRegister;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.resources.ResourceLocation;
 
-public class SolarGroup extends ItemGroup {
+public class SolarGroup extends CreativeModeTab {
     public SolarGroup(String label) {
         super(label);
         this.setBackgroundImage(new ResourceLocation("solarforge","textures/gui/solar_items_tab.png"));
@@ -22,7 +22,7 @@ public class SolarGroup extends ItemGroup {
     }
 }
 
-class SolarGroupBlocks extends ItemGroup{
+class SolarGroupBlocks extends CreativeModeTab{
 
     public SolarGroupBlocks(String label) {
         super(label);
@@ -40,7 +40,7 @@ class SolarGroupBlocks extends ItemGroup{
     }
 }
 
-class SolarGroupTools extends ItemGroup{
+class SolarGroupTools extends CreativeModeTab{
 
     public SolarGroupTools(String label) {
         super(label);
@@ -58,7 +58,7 @@ class SolarGroupTools extends ItemGroup{
     }
 }
 
-class SolarGroupFragments extends ItemGroup{
+class SolarGroupFragments extends CreativeModeTab{
 
     public SolarGroupFragments(String label) {
         super(label);

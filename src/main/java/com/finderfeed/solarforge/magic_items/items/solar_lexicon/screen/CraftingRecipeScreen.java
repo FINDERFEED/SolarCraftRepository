@@ -1,14 +1,15 @@
 package com.finderfeed.solarforge.magic_items.items.solar_lexicon.screen;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.item.crafting.ShapedRecipe;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.StringTextComponent;
+import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.ShapedRecipe;
+import net.minecraft.core.NonNullList;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.chat.TextComponent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +23,7 @@ public class CraftingRecipeScreen extends Screen {
     public List<ItemStack> stacks ;
 
     protected CraftingRecipeScreen(ShapedRecipe a) {
-        super(new StringTextComponent(""));
+        super(new TextComponent(""));
         this.recipe = a;
     }
 
@@ -40,14 +41,14 @@ public class CraftingRecipeScreen extends Screen {
         NonNullList<Ingredient> list = recipe.getIngredients();
 
 
-        addButton(new ItemStackButton(relX+185,relY+187,12,12,(button)->{minecraft.setScreen(new SolarLexiconRecipesScreen());}, Items.CRAFTING_TABLE.getDefaultInstance(),0.7f,false));
+        addRenderableWidget(new ItemStackButton(relX+185,relY+187,12,12,(button)->{minecraft.setScreen(new SolarLexiconRecipesScreen());}, Items.CRAFTING_TABLE.getDefaultInstance(),0.7f,false));
         super.init();
     }
 
 
     @Override
-    public void render(MatrixStack matrices, int mousex, int mousey, float partialTicks) {
-        minecraft.getTextureManager().bind(MAIN_SCREEN);
+    public void render(PoseStack matrices, int mousex, int mousey, float partialTicks) {
+        RenderSystem.setShaderTexture(0,MAIN_SCREEN);
         blit(matrices,relX,relY,0,0,256,256);
 
         super.render(matrices,mousex,mousey,partialTicks);

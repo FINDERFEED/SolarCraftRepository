@@ -5,15 +5,17 @@ import com.finderfeed.solarforge.misc_things.AbstractPacket;
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.ProgressionHelper;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.fml.network.NetworkDirection;
 import net.minecraftforge.fml.network.NetworkEvent;
 
 import java.util.function.Supplier;
+
+import BlockPos;
 
 public class RunicTablePacket extends AbstractPacket {
 
@@ -23,21 +25,21 @@ public class RunicTablePacket extends AbstractPacket {
         this.pos = pos;
     }
 
-    public RunicTablePacket(PacketBuffer buffer){
+    public RunicTablePacket(FriendlyByteBuf buffer){
         pos = buffer.readBlockPos();
     }
 
     @Override
-    public void toBytes(PacketBuffer buf) {
+    public void toBytes(FriendlyByteBuf buf) {
         buf.writeBlockPos(pos);
     }
 
     @Override
     public void handle(Supplier<NetworkEvent.Context> ctx) {
         ctx.get().enqueueWork(()->{
-            ServerPlayerEntity playerEntity = ctx.get().getSender();
-            World world = playerEntity.getLevel();
-            TileEntity tileEntity = world.getBlockEntity(pos);
+            ServerPlayer playerEntity = ctx.get().getSender();
+            Level world = playerEntity.getLevel();
+            BlockEntity tileEntity = world.getBlockEntity(pos);
             if (tileEntity instanceof RunicTableTileEntity){
                 RunicTableTileEntity tile = (RunicTableTileEntity) tileEntity;
                 boolean a = true;

@@ -2,11 +2,13 @@ package com.finderfeed.solarforge.packet_handler.packets;
 
 import com.finderfeed.solarforge.ClientHelpers;
 import com.finderfeed.solarforge.misc_things.AbstractPacket;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.core.BlockPos;
 import net.minecraftforge.fml.network.NetworkEvent;
 
 import java.util.function.Supplier;
+
+import BlockPos;
 
 public class UpdateTypeOnClientPacket extends AbstractPacket {
 
@@ -19,14 +21,14 @@ public class UpdateTypeOnClientPacket extends AbstractPacket {
     }
 
 
-    public UpdateTypeOnClientPacket(PacketBuffer buf){
+    public UpdateTypeOnClientPacket(FriendlyByteBuf buf){
         id = buf.readUtf();
         pos = buf.readBlockPos();
     }
 
 
     @Override
-    public void toBytes(PacketBuffer buf) {
+    public void toBytes(FriendlyByteBuf buf) {
         buf.writeUtf(id);
         buf.writeBlockPos(pos);
     }

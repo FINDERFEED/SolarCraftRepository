@@ -2,21 +2,21 @@ package com.finderfeed.solarforge.magic_items.blocks.blockentities.containers;
 
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.SolarEnergyFurnaceTile;
 import com.finderfeed.solarforge.registries.containers.Containers;
-import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.inventory.container.ContainerType;
-import net.minecraft.inventory.container.FurnaceResultSlot;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.IIntArray;
-import net.minecraft.util.IntArray;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.inventory.FurnaceResultSlot;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.inventory.SimpleContainerData;
+import net.minecraft.core.BlockPos;
 
 import java.util.Objects;
 
 public class SolarFurnaceContainer extends AbstractContainer<SolarEnergyFurnaceTile>{
 
-    public SolarFurnaceContainer( int windowId, PlayerInventory playerInv, SolarEnergyFurnaceTile te, IIntArray array) {
+    public SolarFurnaceContainer( int windowId, Inventory playerInv, SolarEnergyFurnaceTile te, ContainerData array) {
         super(Containers.SOLAR_FURNACE_CONTAINER.get(), windowId, playerInv, te, array);
         this.addSlot(new Slot(te,0,48,35));
         this.addSlot(new FurnaceResultSlot(playerInv.player,te,1,108,35));
@@ -40,17 +40,17 @@ public class SolarFurnaceContainer extends AbstractContainer<SolarEnergyFurnaceT
     public int getMaxRecipeProgress(){return arr.get(2);}
 
 
-    public SolarFurnaceContainer( int windowId, PlayerInventory playerInv, PacketBuffer buf) {
-        this(windowId, playerInv,getTileEntity(playerInv,buf.readBlockPos()),new IntArray(3));
+    public SolarFurnaceContainer( int windowId, Inventory playerInv, FriendlyByteBuf buf) {
+        this(windowId, playerInv,getTileEntity(playerInv,buf.readBlockPos()),new SimpleContainerData(3));
     }
 
 
 
-    private static SolarEnergyFurnaceTile getTileEntity(final PlayerInventory playerInv, final BlockPos pos) {
+    private static SolarEnergyFurnaceTile getTileEntity(final Inventory playerInv, final BlockPos pos) {
         Objects.requireNonNull(playerInv, "Player Inventory cannot be null.");
         Objects.requireNonNull(pos, "Pos cannot be null.");
 
-        final TileEntity te = playerInv.player.level.getBlockEntity(pos);
+        final BlockEntity te = playerInv.player.level.getBlockEntity(pos);
 
         if (te instanceof SolarEnergyFurnaceTile) {
             return (SolarEnergyFurnaceTile) te;

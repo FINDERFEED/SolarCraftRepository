@@ -1,13 +1,15 @@
 package com.finderfeed.solarforge.magic_items.items.solar_lexicon.packets;
 
 import com.finderfeed.solarforge.ClientHelpers;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.fml.network.NetworkEvent;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
+
+import ItemStack;
 
 public class UpdateInventoryPacket {
 
@@ -19,7 +21,7 @@ public class UpdateInventoryPacket {
         this.length = stacks.length;
     }
 
-    public UpdateInventoryPacket(PacketBuffer buf) {
+    public UpdateInventoryPacket(FriendlyByteBuf buf) {
         this.length = buf.readInt();
 
         List<ItemStack> list = new ArrayList<>();
@@ -30,7 +32,7 @@ public class UpdateInventoryPacket {
         this.stacks = list.toArray(arr);
     }
 
-    public void toBytes(PacketBuffer buf) {
+    public void toBytes(FriendlyByteBuf buf) {
         buf.writeInt(length);
         for (int i = 0; i < length; i++){
             buf.writeItem(stacks[i]);

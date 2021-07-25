@@ -1,13 +1,15 @@
 package com.finderfeed.solarforge.magic_items.items;
 
 import com.finderfeed.solarforge.misc_things.ISolarEnergyContainer;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUseContext;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
+
+import net.minecraft.world.item.Item;
+
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.ChatFormatting;
+
+import net.minecraft.world.item.Item.Properties;
 
 public class EnergyMeter extends Item {
 
@@ -17,10 +19,10 @@ public class EnergyMeter extends Item {
 
 
     @Override
-    public ActionResultType useOn(ItemUseContext ctx) {
+    public InteractionResult useOn(UseOnContext ctx) {
         if (!ctx.getLevel().isClientSide && (ctx.getLevel().getBlockEntity(ctx.getClickedPos()) instanceof ISolarEnergyContainer)){
-            ctx.getPlayer().displayClientMessage(new StringTextComponent(String.format("%.0f",((ISolarEnergyContainer) ctx.getLevel().getBlockEntity(ctx.getClickedPos())).getEnergy())).withStyle(TextFormatting.GOLD),true);
+            ctx.getPlayer().displayClientMessage(new TextComponent(String.format("%.0f",((ISolarEnergyContainer) ctx.getLevel().getBlockEntity(ctx.getClickedPos())).getEnergy())).withStyle(ChatFormatting.GOLD),true);
         }
-        return ActionResultType.CONSUME;
+        return InteractionResult.CONSUME;
     }
 }

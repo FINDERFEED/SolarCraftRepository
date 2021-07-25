@@ -1,7 +1,7 @@
 package com.finderfeed.solarforge.packet_handler.packets;
 
 import com.finderfeed.solarforge.ClientHelpers;
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.fml.network.NetworkEvent;
 
 import java.util.function.Supplier;
@@ -15,11 +15,11 @@ public class UpdatePatternOnScreen {
         this.pattern = pattern;
     }
 
-    public UpdatePatternOnScreen(PacketBuffer buf) {
+    public UpdatePatternOnScreen(FriendlyByteBuf buf) {
         pattern = buf.readVarIntArray();
     }
 
-    public void toBytes(PacketBuffer buf) {
+    public void toBytes(FriendlyByteBuf buf) {
         buf.writeVarIntArray(pattern);
     }
 

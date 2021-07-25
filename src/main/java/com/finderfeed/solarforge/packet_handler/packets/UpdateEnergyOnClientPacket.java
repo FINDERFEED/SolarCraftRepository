@@ -3,7 +3,7 @@ package com.finderfeed.solarforge.packet_handler.packets;
 import com.finderfeed.solarforge.ClientHelpers;
 import com.finderfeed.solarforge.misc_things.AbstractPacket;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.fml.network.NetworkEvent;
 
 import java.util.function.Supplier;
@@ -18,13 +18,13 @@ public class UpdateEnergyOnClientPacket extends AbstractPacket {
         this.set = amount;
     }
 
-    public UpdateEnergyOnClientPacket(PacketBuffer buf){
+    public UpdateEnergyOnClientPacket(FriendlyByteBuf buf){
         this.id = buf.readUtf();
         this.set = buf.readFloat();
     }
 
     @Override
-    public void toBytes(PacketBuffer buf) {
+    public void toBytes(FriendlyByteBuf buf) {
         buf.writeUtf(id);
         buf.writeFloat(set);
     }

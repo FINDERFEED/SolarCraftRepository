@@ -1,12 +1,12 @@
 package com.finderfeed.solarforge.misc_things;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.NonNullList;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.Container;
 
-public class PhantomInventory implements IInventory {
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.core.NonNullList;
+
+public class PhantomInventory implements Container {
 
     public final int size;
     public final NonNullList<ItemStack> INVENTORY;
@@ -52,7 +52,7 @@ public class PhantomInventory implements IInventory {
     }
 
     @Override
-    public boolean stillValid(PlayerEntity p_70300_1_) {
+    public boolean stillValid(Player p_70300_1_) {
         return false;
     }
 

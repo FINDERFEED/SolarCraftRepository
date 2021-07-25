@@ -1,11 +1,13 @@
 package com.finderfeed.solarforge.packet_handler.packets;
 
 import com.finderfeed.solarforge.ClientHelpers;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.core.BlockPos;
 import net.minecraftforge.fml.network.NetworkEvent;
 
 import java.util.function.Supplier;
+
+import BlockPos;
 
 public class UpdateLaserTrapTile {
 
@@ -16,12 +18,12 @@ public class UpdateLaserTrapTile {
         this.pos = pos;
     }
 
-    public UpdateLaserTrapTile(PacketBuffer buf) {
+    public UpdateLaserTrapTile(FriendlyByteBuf buf) {
         updateIt = buf.readInt();
         pos = buf.readBlockPos();
     }
 
-    public void toBytes(PacketBuffer buf) {
+    public void toBytes(FriendlyByteBuf buf) {
         buf.writeInt(updateIt);
         buf.writeBlockPos(pos);
     }

@@ -1,36 +1,38 @@
 package com.finderfeed.solarforge.misc_things;
 
 import com.finderfeed.solarforge.Helpers;
-import net.minecraft.block.BlockState;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.math.BlockPos;
+import com.finderfeed.solarforge.magic_items.blocks.blockentities.SolarEnergyFurnaceTile;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.nbt.CompoundTag;
+
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.core.BlockPos;
 
 
 import java.util.List;
 
-public abstract class AbstractSolarNetworkRepeater extends TileEntity implements IRepeater, ITickableTileEntity,IBindable {
+public abstract class AbstractSolarNetworkRepeater extends BlockEntity implements IRepeater,IBindable {
 
     public BlockPos connectedTo = Helpers.NULL_POS;
 
-    public AbstractSolarNetworkRepeater(TileEntityType<?> p_i48289_1_) {
-        super(p_i48289_1_);
+    public AbstractSolarNetworkRepeater(BlockEntityType<?> p_155228_, BlockPos p_155229_, BlockState p_155230_) {
+        super(p_155228_, p_155229_, p_155230_);
     }
 
-    @Override
-    public void tick() {
-        if (!this.level.isClientSide){
 
-            if (level.getBlockEntity(connectedTo) == null){
+    public static void tick(Level world, BlockPos pos, BlockState blockState, AbstractSolarNetworkRepeater tile) {
+        if (!tile.level.isClientSide){
 
-                this.connectedTo = Helpers.NULL_POS;
-            }else if (!((level.getBlockEntity(connectedTo)) instanceof AbstractSolarNetworkRepeater) &&
-                    !((level.getBlockEntity(connectedTo)) instanceof AbstractSolarCore) &&
-                    !((level.getBlockEntity(connectedTo)) instanceof IEnergyUser)){
+            if (tile.level.getBlockEntity(tile.connectedTo) == null){
 
-                this.connectedTo = Helpers.NULL_POS;
+                tile.connectedTo = Helpers.NULL_POS;
+            }else if (!((tile.level.getBlockEntity(tile.connectedTo)) instanceof AbstractSolarNetworkRepeater) &&
+                    !((tile.level.getBlockEntity(tile.connectedTo)) instanceof AbstractSolarCore) &&
+                    !((tile.level.getBlockEntity(tile.connectedTo)) instanceof IEnergyUser)){
+
+                tile.connectedTo = Helpers.NULL_POS;
             }
 
         }
@@ -38,7 +40,7 @@ public abstract class AbstractSolarNetworkRepeater extends TileEntity implements
 
     public void tryTransmitEnergy(AbstractEnergyGeneratorTileEntity generator, int amount, List<BlockPos> visited){
         if (connectedTo != null){
-            TileEntity tile = this.level.getBlockEntity(connectedTo);
+            BlockEntity tile = this.level.getBlockEntity(connectedTo);
             if (tile != null){
                 if (tile instanceof AbstractSolarNetworkRepeater && !visited.contains(connectedTo)){
                     visited.add(connectedTo);
@@ -60,7 +62,7 @@ public abstract class AbstractSolarNetworkRepeater extends TileEntity implements
     }
     public void tryTransmitEnergyCore(AbstractSolarCore generator,int amount,List<BlockPos> visited){
         if (connectedTo != null){
-            TileEntity tile = this.level.getBlockEntity(connectedTo);
+            BlockEntity tile = this.level.getBlockEntity(connectedTo);
             if (tile != null){
                 if (tile instanceof AbstractSolarNetworkRepeater && !visited.contains(connectedTo)){
                     visited.add(connectedTo);
@@ -77,7 +79,7 @@ public abstract class AbstractSolarNetworkRepeater extends TileEntity implements
     }
 
     @Override
-    public CompoundNBT save(CompoundNBT p_189515_1_) {
+    public CompoundTag save(CompoundTag p_189515_1_) {
 
             p_189515_1_.putInt("xpos", connectedTo.getX());
             p_189515_1_.putInt("ypos", connectedTo.getY());
@@ -88,16 +90,16 @@ public abstract class AbstractSolarNetworkRepeater extends TileEntity implements
 
 
     @Override
-    public void load(BlockState p_230337_1_, CompoundNBT c) {
+    public void load( CompoundTag c) {
         connectedTo = new BlockPos(c.getInt("xpos"),c.getInt("ypos"),c.getInt("zpos"));
-        super.load(p_230337_1_, c);
+        super.load( c);
     }
 
 
     @Override
     public void bindPos(BlockPos pos) {
         if (!connectedTo.equals(pos)){
-            TileEntity tileAtPos = level.getBlockEntity(pos);
+            BlockEntity tileAtPos = level.getBlockEntity(pos);
 
             if (tileAtPos instanceof AbstractSolarNetworkRepeater) {
                 if ((((AbstractSolarNetworkRepeater) tileAtPos).connectedTo != this.worldPosition) && Helpers.isReachable(level,worldPosition,pos,getRadius())) {

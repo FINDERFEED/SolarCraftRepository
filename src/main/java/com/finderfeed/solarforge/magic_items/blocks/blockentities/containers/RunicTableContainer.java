@@ -4,21 +4,21 @@ import com.finderfeed.solarforge.magic_items.blocks.blockentities.RunicTableTile
 import com.finderfeed.solarforge.registries.containers.Containers;
 import com.finderfeed.solarforge.registries.items.ItemsRegister;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.ProgressionHelper;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.IIntArray;
-import net.minecraft.util.IntArray;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.Container;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.inventory.SimpleContainerData;
+import net.minecraft.core.BlockPos;
 
 import java.util.Objects;
 
 public class RunicTableContainer extends AbstractContainer<RunicTableTileEntity>{
-    public RunicTableContainer(int windowId, PlayerInventory playerInv, RunicTableTileEntity te, IIntArray array) {
+    public RunicTableContainer(int windowId, Inventory playerInv, RunicTableTileEntity te, ContainerData array) {
         super(Containers.RUNIC_TABLE_CONTAINER.get(), windowId, playerInv, te, array);
 
 
@@ -64,8 +64,8 @@ public class RunicTableContainer extends AbstractContainer<RunicTableTileEntity>
     }
 
 
-    public RunicTableContainer(int windowId, PlayerInventory playerInv,PacketBuffer buf) {
-        this(windowId, playerInv, getTileEntity(playerInv,buf.readBlockPos()), new IntArray(6));
+    public RunicTableContainer(int windowId, Inventory playerInv,FriendlyByteBuf buf) {
+        this(windowId, playerInv, getTileEntity(playerInv,buf.readBlockPos()), new SimpleContainerData(6));
         this.arr.set(0,buf.readInt());
         this.arr.set(1,buf.readInt());
         this.arr.set(2,buf.readInt());
@@ -74,11 +74,11 @@ public class RunicTableContainer extends AbstractContainer<RunicTableTileEntity>
         this.arr.set(5,buf.readInt());
     }
 
-    private static RunicTableTileEntity getTileEntity(final PlayerInventory playerInv, final BlockPos pos) {
+    private static RunicTableTileEntity getTileEntity(final Inventory playerInv, final BlockPos pos) {
         Objects.requireNonNull(playerInv, "Player Inventory cannot be null.");
         Objects.requireNonNull(pos, "Pos cannot be null.");
 
-        final TileEntity te = playerInv.player.level.getBlockEntity(pos);
+        final BlockEntity te = playerInv.player.level.getBlockEntity(pos);
 
         if (te instanceof RunicTableTileEntity) {
             return (RunicTableTileEntity) te;
@@ -91,7 +91,7 @@ public class RunicTableContainer extends AbstractContainer<RunicTableTileEntity>
 }
 class RuneSlot extends Slot{
 
-    public RuneSlot(IInventory p_i1824_1_, int p_i1824_2_, int p_i1824_3_, int p_i1824_4_) {
+    public RuneSlot(Container p_i1824_1_, int p_i1824_2_, int p_i1824_3_, int p_i1824_4_) {
         super(p_i1824_1_, p_i1824_2_, p_i1824_3_, p_i1824_4_);
     }
 
@@ -109,7 +109,7 @@ class RuneSlot extends Slot{
 }
 class FragmentSlot extends Slot{
 
-    public FragmentSlot(IInventory p_i1824_1_, int p_i1824_2_, int p_i1824_3_, int p_i1824_4_) {
+    public FragmentSlot(Container p_i1824_1_, int p_i1824_2_, int p_i1824_3_, int p_i1824_4_) {
         super(p_i1824_1_, p_i1824_2_, p_i1824_3_, p_i1824_4_);
     }
 

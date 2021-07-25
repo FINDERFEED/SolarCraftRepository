@@ -3,32 +3,32 @@ package com.finderfeed.solarforge.magic_items.blocks.render;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.RuneEnergyPylonTile;
 import com.finderfeed.solarforge.rendering.shaders.Shaders;
 import com.finderfeed.solarforge.rendering.shaders.Uniform;
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
-import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.vector.Matrix4f;
-import net.minecraft.util.math.vector.Quaternion;
+import net.minecraft.resources.ResourceLocation;
+import com.mojang.math.Matrix4f;
+import com.mojang.math.Quaternion;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.math.vector.Vector3f;
+import com.mojang.math.Vector3f;
 
-public class RuneEnergyPylonRenderer extends TileEntityRenderer<RuneEnergyPylonTile> {
+public class RuneEnergyPylonRenderer extends BlockEntityRenderer<RuneEnergyPylonTile> {
     public final ResourceLocation MAIN = new ResourceLocation("solarforge","textures/misc/tile_energy_pylon.png");
-    public RuneEnergyPylonRenderer(TileEntityRendererDispatcher p_i226006_1_) {
+    public RuneEnergyPylonRenderer(BlockEntityRenderDispatcher p_i226006_1_) {
         super(p_i226006_1_);
     }
 
     @Override
-    public void render(RuneEnergyPylonTile tile, float partialTicks, MatrixStack matrices, IRenderTypeBuffer buffer, int light, int overlay) {
+    public void render(RuneEnergyPylonTile tile, float partialTicks, PoseStack matrices, MultiBufferSource buffer, int light, int overlay) {
         if (tile.getEnergyType() != null) {
-            IVertexBuilder vertex = buffer.getBuffer(RenderType.text(new ResourceLocation("solarforge", "textures/misc/tile_energy_pylon_" + tile.getEnergyType().id + ".png")));
+            VertexConsumer vertex = buffer.getBuffer(RenderType.text(new ResourceLocation("solarforge", "textures/misc/tile_energy_pylon_" + tile.getEnergyType().id + ".png")));
             float time = (Minecraft.getInstance().level.getGameTime()+partialTicks);
             for (int i = 0; i < 8; i ++) {
                 matrices.pushPose();
@@ -52,7 +52,7 @@ public class RuneEnergyPylonRenderer extends TileEntityRenderer<RuneEnergyPylonT
 
 
         matrices.pushPose();
-        IVertexBuilder vertex = buffer.getBuffer(RenderType.text(MAIN));
+        VertexConsumer vertex = buffer.getBuffer(RenderType.text(MAIN));
         matrices.translate(0.5,0.5,0.5);
 
 

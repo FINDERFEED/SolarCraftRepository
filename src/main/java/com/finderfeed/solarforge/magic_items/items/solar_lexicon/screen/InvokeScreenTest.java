@@ -2,7 +2,7 @@ package com.finderfeed.solarforge.magic_items.items.solar_lexicon.screen;
 
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.SolarLexicon;
 import net.minecraft.client.Minecraft;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 
 public class InvokeScreenTest {
     public static void openScreen(){

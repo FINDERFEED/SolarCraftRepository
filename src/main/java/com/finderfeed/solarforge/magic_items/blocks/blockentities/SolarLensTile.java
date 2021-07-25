@@ -4,81 +4,85 @@ import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.misc_things.PhantomInventory;
 import com.finderfeed.solarforge.recipe_types.solar_smelting.SolarSmeltingRecipe;
 import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntity;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
 
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.world.level.block.entity.BlockEntity;
+
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 
 
 import java.util.List;
 import java.util.Optional;
 
-public class SolarLensTile extends TileEntity implements ITickableTileEntity {
+public class SolarLensTile extends BlockEntity  {
 
     public PhantomInventory INVENTORY = new PhantomInventory(4);
     public int SMELTING_TIME = 0;
     public int CURRENT_SMELTING_TIME = 0;
     public boolean RECIPE_IN_PROGRESS = false;
-    public SolarLensTile() {
-        super(TileEntitiesRegistry.SOLAR_LENS_TILE.get());
+
+    public SolarLensTile(BlockEntityType<?> p_155228_, BlockPos p_155229_, BlockState p_155230_) {
+        super(p_155228_, p_155229_, p_155230_);
     }
 
 
 
-    @Override
-    public void tick() {
-        if (!this.level.isClientSide){
+    public static void tick(Level world, BlockPos post, BlockState blockState, SolarLensTile tile) {
+        if (!tile.level.isClientSide){
 
-            AxisAlignedBB box = new AxisAlignedBB(-1,-2.5,-1,1,0,1);
-            if (this.level.canSeeSky(worldPosition.above()) && this.getLevel().getDayTime() % 24000 <= 13000){
+            AABB box = new AABB(-1,-2.5,-1,1,0,1);
+            if (tile.level.canSeeSky(tile.worldPosition.above()) && tile.getLevel().getDayTime() % 24000 <= 13000){
 
-                List<ItemEntity> list = level.getEntitiesOfClass(ItemEntity.class,box.move(worldPosition));
+                List<ItemEntity> list = tile.level.getEntitiesOfClass(ItemEntity.class,box.move(tile.worldPosition));
 
                 for (int i = 0;i < 4;i++){
                     if (i > list.size()-1) {
-                        INVENTORY.setItem(i, ItemStack.EMPTY);
+                        tile.INVENTORY.setItem(i, ItemStack.EMPTY);
                     } else {
 
-                        INVENTORY.setItem(i, list.get(i).getItem());
+                        tile.INVENTORY.setItem(i, list.get(i).getItem());
 
                     }
 
 
                 }
 
-                Optional<SolarSmeltingRecipe> recipe = this.level.getRecipeManager().getRecipeFor(SolarForge.SOLAR_SMELTING,INVENTORY,this.level);
+                Optional<SolarSmeltingRecipe> recipe = tile.level.getRecipeManager().getRecipeFor(SolarForge.SOLAR_SMELTING,tile.INVENTORY,tile.level);
                 if (recipe.isPresent() ){
 
-                    RECIPE_IN_PROGRESS = true;
-                    SMELTING_TIME = recipe.get().smeltingTime;
-                    CURRENT_SMELTING_TIME++;
-                    if (CURRENT_SMELTING_TIME == SMELTING_TIME){
+                    tile.RECIPE_IN_PROGRESS = true;
+                    tile.SMELTING_TIME = recipe.get().smeltingTime;
+                    tile.CURRENT_SMELTING_TIME++;
+                    if (tile.CURRENT_SMELTING_TIME == tile.SMELTING_TIME){
                         for (ItemEntity a : list){
-                            a.remove();
+                            a.remove(Entity.RemovalReason.KILLED);
                         }
-                        Vector3d pos = new Vector3d(worldPosition.getX()+0.5d,worldPosition.getY()-1,worldPosition.getZ()+0.5d);
-                        ItemEntity entity = new ItemEntity(this.level,pos.x,pos.y,pos.z,recipe.get().output);
-                        this.level.addFreshEntity(entity);
-                        SMELTING_TIME = 0;
-                        CURRENT_SMELTING_TIME = 0;
-                        RECIPE_IN_PROGRESS = false;
+                        Vec3 pos = new Vec3(tile.worldPosition.getX()+0.5d,tile.worldPosition.getY()-1,tile.worldPosition.getZ()+0.5d);
+                        ItemEntity entity = new ItemEntity(tile.level,pos.x,pos.y,pos.z,recipe.get().output);
+                        tile.level.addFreshEntity(entity);
+                        tile.SMELTING_TIME = 0;
+                        tile.CURRENT_SMELTING_TIME = 0;
+                        tile.RECIPE_IN_PROGRESS = false;
                     }
                 }else{
-                    RECIPE_IN_PROGRESS = false;
-                    CURRENT_SMELTING_TIME = 0;
-                    SMELTING_TIME = 0;
+                    tile.RECIPE_IN_PROGRESS = false;
+                    tile.CURRENT_SMELTING_TIME = 0;
+                    tile.SMELTING_TIME = 0;
                 }
             }
         }
     }
 
     @Override
-    public CompoundNBT save(CompoundNBT cmp) {
+    public CompoundTag save(CompoundTag cmp) {
             cmp.putInt("smelting_time",SMELTING_TIME);
             cmp.putInt("smelting_time_current",CURRENT_SMELTING_TIME);
             cmp.putBoolean("recipe_in_progress",RECIPE_IN_PROGRESS);
@@ -86,10 +90,10 @@ public class SolarLensTile extends TileEntity implements ITickableTileEntity {
     }
 
     @Override
-    public void load(BlockState p_230337_1_, CompoundNBT cmp) {
+    public void load( CompoundTag cmp) {
         SMELTING_TIME = cmp.getInt("smelting_time");
         CURRENT_SMELTING_TIME = cmp.getInt("smelting_time_current");
         RECIPE_IN_PROGRESS = cmp.getBoolean("recipe_in_progress");
-        super.load(p_230337_1_, cmp);
+        super.load( cmp);
     }
 }

@@ -1,13 +1,13 @@
 package com.finderfeed.solarforge.magic_items.items.solar_lexicon;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screen.inventory.ContainerScreen;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.chat.Component;
 
-public class SolarLexiconContScreen extends ContainerScreen<SolarLexiconContainer> {
+public class SolarLexiconContScreen extends AbstractContainerScreen<SolarLexiconContainer> {
 
     public static final ResourceLocation LOC = new ResourceLocation("solarforge","textures/gui/solar_lexicon_inventory.png");
 
@@ -15,7 +15,7 @@ public class SolarLexiconContScreen extends ContainerScreen<SolarLexiconContaine
     public int relY;
 
 
-    public SolarLexiconContScreen(SolarLexiconContainer p_i51105_1_, PlayerInventory p_i51105_2_, ITextComponent p_i51105_3_) {
+    public SolarLexiconContScreen(SolarLexiconContainer p_i51105_1_, Inventory p_i51105_2_, Component p_i51105_3_) {
         super(p_i51105_1_, p_i51105_2_, p_i51105_3_);
     }
 
@@ -32,14 +32,14 @@ public class SolarLexiconContScreen extends ContainerScreen<SolarLexiconContaine
     }
 
     @Override
-    public void render(MatrixStack p_230430_1_, int p_230430_2_, int p_230430_3_, float p_230430_4_) {
+    public void render(PoseStack p_230430_1_, int p_230430_2_, int p_230430_3_, float p_230430_4_) {
         this.renderBackground(p_230430_1_);
         this.renderTooltip(p_230430_1_,p_230430_2_,p_230430_3_);
         super.render(p_230430_1_, p_230430_2_, p_230430_3_, p_230430_4_);
     }
 
     @Override
-    protected void renderBg(MatrixStack matrices, float partialTicks, int mousex, int mousey) {
+    protected void renderBg(PoseStack matrices, float partialTicks, int mousex, int mousey) {
         Minecraft.getInstance().getTextureManager().bind(LOC);
 
         int a = 0;

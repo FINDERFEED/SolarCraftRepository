@@ -1,11 +1,13 @@
 package com.finderfeed.solarforge.packet_handler.packets;
 
 import com.finderfeed.solarforge.ClientHelpers;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.core.BlockPos;
 import net.minecraftforge.fml.network.NetworkEvent;
 
 import java.util.function.Supplier;
+
+import BlockPos;
 
 public class UpdateCoreOnClient {
     public final int index;
@@ -18,7 +20,7 @@ public class UpdateCoreOnClient {
         this.index = index;
         this.remove = remove;
     }
-    public UpdateCoreOnClient(PacketBuffer buf) {
+    public UpdateCoreOnClient(FriendlyByteBuf buf) {
 
         pos = buf.readBlockPos();
         pos2 = buf.readBlockPos();
@@ -27,7 +29,7 @@ public class UpdateCoreOnClient {
 
     }
 
-    public void toBytes(PacketBuffer buf) {
+    public void toBytes(FriendlyByteBuf buf) {
 
         buf.writeBlockPos(pos);
         buf.writeBlockPos(pos2);

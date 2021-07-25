@@ -2,35 +2,37 @@ package com.finderfeed.solarforge.magic_items.items.solar_disc_gun;
 
 import com.finderfeed.solarforge.SolarAbilities.MeteoriteProjectile;
 import com.finderfeed.solarforge.registries.items.ItemsRegister;
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.culling.ClippingHelper;
+import net.minecraft.client.renderer.culling.Frustum;
 import net.minecraft.client.renderer.entity.EntityRenderer;
-import net.minecraft.client.renderer.entity.EntityRendererManager;
+import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.client.renderer.model.IBakedModel;
-import net.minecraft.client.renderer.model.ItemCameraTransforms;
+import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.model.ModelRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.math.vector.Matrix4f;
 import net.minecraft.util.math.vector.Vector2f;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.math.vector.Vector3f;
+import com.mojang.math.Vector3f;
+
+import ResourceLocation;
 
 public class SolarDiscProjectileRenderer extends EntityRenderer<SolarDiscProjectile> {
     public ResourceLocation SOLAR_DISC = new ResourceLocation("solarforge","textures/misc/solar_disc.png");
 
 
-    public SolarDiscProjectileRenderer(EntityRendererManager p_i46179_1_) {
+    public SolarDiscProjectileRenderer(EntityRenderDispatcher p_i46179_1_) {
         super(p_i46179_1_);
 
     }
     @Override
-    public void render(SolarDiscProjectile entity, float p_225623_2_, float partialTicks, MatrixStack matrices, IRenderTypeBuffer buffer, int light) {
+    public void render(SolarDiscProjectile entity, float p_225623_2_, float partialTicks, PoseStack matrices, MultiBufferSource buffer, int light) {
         matrices.pushPose();
         float time = (entity.level.getGameTime() + partialTicks)*30;
 //        Vector3d vec = entity.getDeltaMovement().normalize();
@@ -66,14 +68,14 @@ public class SolarDiscProjectileRenderer extends EntityRenderer<SolarDiscProject
         matrices.mulPose(Vector3f.ZN.rotationDegrees(time));
 
 
-        Minecraft.getInstance().getItemRenderer().render(ItemsRegister.SOLAR_DISC.get().getDefaultInstance(), ItemCameraTransforms.TransformType.FIXED,false,
+        Minecraft.getInstance().getItemRenderer().render(ItemsRegister.SOLAR_DISC.get().getDefaultInstance(), ItemTransforms.TransformType.FIXED,false,
                 matrices,buffer,light,getPackedLightCoords(entity,light),Minecraft.getInstance().getItemRenderer().getModel(ItemsRegister.SOLAR_DISC.get().getDefaultInstance(),null,null));
 
         matrices.popPose();
     }
 
     @Override
-    public boolean shouldRender(SolarDiscProjectile p_225626_1_, ClippingHelper p_225626_2_, double p_225626_3_, double p_225626_5_, double p_225626_7_) {
+    public boolean shouldRender(SolarDiscProjectile p_225626_1_, Frustum p_225626_2_, double p_225626_3_, double p_225626_5_, double p_225626_7_) {
         return true;
     }
 

@@ -1,46 +1,53 @@
 package com.finderfeed.solarforge.magic_items.blocks.blockentities;
 
+import com.finderfeed.solarforge.misc_things.AbstractEnergyGeneratorTileEntity;
 import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.core.BlockPos;
+
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.Container;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+
+import net.minecraft.world.level.block.entity.BlockEntity;
+
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class MagnetBlockTile extends TileEntity implements ITickableTileEntity {
+public class MagnetBlockTile extends BlockEntity  {
 
-    public AxisAlignedBB box;
+    public AABB box;
 
-    public MagnetBlockTile() {
-        super(TileEntitiesRegistry.MAGNET_BLOCK_TILE.get());
+    public MagnetBlockTile(BlockEntityType<?> p_155228_, BlockPos p_155229_, BlockState p_155230_) {
+        super(p_155228_, p_155229_, p_155230_);
     }
 
-    @Override
-    public void tick() {
-        if (!this.level.isClientSide && this.level.hasNeighborSignal(this.worldPosition)){
-            List<ItemEntity> list = this.level.getEntitiesOfClass(ItemEntity.class,getBox());
 
-            List<ItemEntity> listToSuckIn = this.level.getEntitiesOfClass(ItemEntity.class,new AxisAlignedBB(-1,0,-1,1,2,1).move(this.worldPosition));
+
+    public static void tick(Level world, BlockPos pos, BlockState blockState, MagnetBlockTile tile) {
+        if (!tile.level.isClientSide && tile.level.hasNeighborSignal(tile.worldPosition)){
+            List<ItemEntity> list = tile.level.getEntitiesOfClass(ItemEntity.class,tile.getBox());
+
+            List<ItemEntity> listToSuckIn = tile.level.getEntitiesOfClass(ItemEntity.class,new AABB(-1,0,-1,1,2,1).move(tile.worldPosition));
             for (ItemEntity a : list){
 
-                Vector3d movement = new Vector3d(-a.position().x + worldPosition.getX()+0.5d,-a.position().y + worldPosition.getY()+1.5d,-a.position().z + worldPosition.getZ()+0.5d);
+                Vec3 movement = new Vec3(-a.position().x + tile.worldPosition.getX()+0.5d,-a.position().y + tile.worldPosition.getY()+1.5d,-a.position().z + tile.worldPosition.getZ()+0.5d);
                 a.setDeltaMovement(movement.normalize().multiply(0.1,0.1,0.1));
             }
 
             for (ItemEntity b : listToSuckIn){
-                if (this.level.getBlockEntity(worldPosition.below()) instanceof IInventory){
+                if (tile.level.getBlockEntity(tile.worldPosition.below()) instanceof Container){
                     ItemStack stack = b.getItem();
-                    IInventory inventory = (IInventory) this.level.getBlockEntity(worldPosition.below());
+                    Container inventory = (Container) tile.level.getBlockEntity(tile.worldPosition.below());
                     int slot = canPlaceItem(inventory,stack.getItem());
                     if (slot != -1){
 //                        if (inventory.getItem(slot).getItem() == Items.AIR ){
@@ -57,14 +64,14 @@ public class MagnetBlockTile extends TileEntity implements ITickableTileEntity {
                             ItemStack stack1 = stack.copy();
                             stack1.grow(inventory.getItem(slot).getCount());
                             inventory.setItem(slot,stack1);
-                            b.remove();
+                            b.remove(Entity.RemovalReason.KILLED);
                         }else{
                             ItemStack stack1 = stack.copy();
                             stack1.grow(-(inventory.getItem(slot).getMaxStackSize()-inventory.getItem(slot).getCount()));
                             inventory.setItem(slot,new ItemStack(inventory.getItem(slot).getItem(),inventory.getItem(slot).getMaxStackSize()));
-                            b.remove();
-                            ItemEntity ent = new ItemEntity(this.level,worldPosition.getX(),worldPosition.getY()+1.5d,worldPosition.getZ(),stack1);
-                            this.level.addFreshEntity(ent);
+                            b.remove(Entity.RemovalReason.KILLED);
+                            ItemEntity ent = new ItemEntity(tile.level,tile.worldPosition.getX(),tile.worldPosition.getY()+1.5d,tile.worldPosition.getZ(),stack1);
+                            tile.level.addFreshEntity(ent);
                         }
 
                     }
@@ -74,13 +81,13 @@ public class MagnetBlockTile extends TileEntity implements ITickableTileEntity {
         }
     }
 
-    public AxisAlignedBB getBox() {
-        box = new AxisAlignedBB(-20,-10,-20,20,10,20).move(this.worldPosition);
+    public AABB getBox() {
+        box = new AABB(-20,-10,-20,20,10,20).move(this.worldPosition);
         return box;
     }
 
 
-    public static int canPlaceItem(IInventory inventory,Item it){
+    public static int canPlaceItem(Container inventory,Item it){
         for (int i = 0;i < inventory.getContainerSize();i++){
             if (inventory.getItem(i).getItem() == Items.AIR || ((inventory.getItem(i)).getItem() == it && inventory.getItem(i).getCount() != inventory.getItem(i).getMaxStackSize())){
                 return i;

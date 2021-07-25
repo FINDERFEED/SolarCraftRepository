@@ -2,8 +2,8 @@ package com.finderfeed.solarforge.misc_things;
 
 
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Achievement;
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 
 
 import java.util.HashMap;

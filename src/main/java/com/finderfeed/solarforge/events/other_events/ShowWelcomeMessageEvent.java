@@ -6,8 +6,8 @@ import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.Anc
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.BookEntry;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.ProgressionHelper;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -19,13 +19,13 @@ public class ShowWelcomeMessageEvent {
     @SubscribeEvent
     public static void sendMessages(final PlayerEvent.PlayerLoggedInEvent event) {
         if (event.getPlayer() != null) {
-            PlayerEntity player = event.getPlayer();
+            Player player = event.getPlayer();
             for (RunicEnergy.Type type : RunicEnergy.Type.values()){
                 Helpers.updateRunicEnergyOnClient(type,RunicEnergy.getEnergy(event.getPlayer(),type),event.getPlayer());
             }
 
             if (!player.level.isClientSide) {
-                Helpers.updateProgression((ServerPlayerEntity) player);
+                Helpers.updateProgression((ServerPlayer) player);
             }
 
 
