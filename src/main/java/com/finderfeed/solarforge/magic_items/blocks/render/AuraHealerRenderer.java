@@ -9,19 +9,20 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 import com.mojang.math.Vector3f;
 import org.lwjgl.opengl.GL11;
 
-public class AuraHealerRenderer extends BlockEntityRenderer<AuraHealerTile> {
+public class AuraHealerRenderer implements BlockEntityRenderer<AuraHealerTile> {
 
 
 
 
     public final AuraHealerModel model = new AuraHealerModel();
     public final ResourceLocation res = new ResourceLocation("solarforge","textures/block/aura_healer_block.png");
-    public AuraHealerRenderer(BlockEntityRenderDispatcher p_i226006_1_) {
-        super(p_i226006_1_);
+    public AuraHealerRenderer(BlockEntityRendererProvider.Context ctx) {
+
     }
 
     @Override

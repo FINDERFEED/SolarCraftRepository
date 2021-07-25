@@ -8,10 +8,11 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 import com.mojang.math.Vector3f;
 
-public class SolarForgeBlockEntityRenderer extends BlockEntityRenderer<SolarForgeBlockEntity> {
+public class SolarForgeBlockEntityRenderer implements BlockEntityRenderer<SolarForgeBlockEntity> {
 
     public final ResourceLocation LOC = new ResourceLocation("solarforge","textures/misc/solar_forge_block.png");
     public final ResourceLocation LOCPETALS = new ResourceLocation("solarforge","textures/misc/solar_forge_petals.png");
@@ -21,8 +22,8 @@ public class SolarForgeBlockEntityRenderer extends BlockEntityRenderer<SolarForg
     public final SolarForgePetalsTrue petals2 = new SolarForgePetalsTrue();
     public final ModelPart ray = new ModelPart(16,16,0,0);
 
-    public SolarForgeBlockEntityRenderer(BlockEntityRenderDispatcher p_i226006_1_) {
-        super(p_i226006_1_);
+    public SolarForgeBlockEntityRenderer(BlockEntityRendererProvider.Context ctx) {
+
         ray.addBox(-4,0,-4,4,1600,4,1);
 
     }

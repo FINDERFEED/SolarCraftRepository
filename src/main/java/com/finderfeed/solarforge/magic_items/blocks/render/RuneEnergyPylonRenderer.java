@@ -9,20 +9,21 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
-import net.minecraft.entity.player.PlayerEntity;
+
 import net.minecraft.resources.ResourceLocation;
 import com.mojang.math.Matrix4f;
 import com.mojang.math.Quaternion;
-import net.minecraft.util.math.vector.Vector3d;
+
 import com.mojang.math.Vector3f;
 
-public class RuneEnergyPylonRenderer extends BlockEntityRenderer<RuneEnergyPylonTile> {
+public class RuneEnergyPylonRenderer implements BlockEntityRenderer<RuneEnergyPylonTile> {
     public final ResourceLocation MAIN = new ResourceLocation("solarforge","textures/misc/tile_energy_pylon.png");
-    public RuneEnergyPylonRenderer(BlockEntityRenderDispatcher p_i226006_1_) {
-        super(p_i226006_1_);
+    public RuneEnergyPylonRenderer(BlockEntityRendererProvider.Context ctx) {
+
     }
 
     @Override

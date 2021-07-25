@@ -10,7 +10,8 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.model.ModelRenderer;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
@@ -20,15 +21,14 @@ import com.mojang.math.Matrix4f;
 import net.minecraft.world.phys.Vec3;
 import com.mojang.math.Vector3f;
 
-public class EnergyGeneratorTileRender extends BlockEntityRenderer<EnergyGeneratorTile> {
+public class EnergyGeneratorTileRender implements BlockEntityRenderer<EnergyGeneratorTile> {
     public final ResourceLocation RAY = new ResourceLocation("solarforge","textures/misc/ray_into_sky.png");
     public final ResourceLocation BLOCK = new ResourceLocation("solarforge","textures/block/solar_energy_generator.png");
     public final ResourceLocation RAYY = new ResourceLocation("solarforge","textures/misc/ray_into_skyy.png");
     public final SolarEnergyGeneratorModel model = new SolarEnergyGeneratorModel();
 
 
-    public EnergyGeneratorTileRender(BlockEntityRenderDispatcher p_i226006_1_) {
-        super(p_i226006_1_);
+    public EnergyGeneratorTileRender(BlockEntityRendererProvider.Context ctx) {
 
     }
 

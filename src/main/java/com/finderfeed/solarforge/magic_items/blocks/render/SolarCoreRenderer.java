@@ -12,6 +12,7 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 
 import net.minecraft.client.renderer.block.model.BakedQuad;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
@@ -26,11 +27,11 @@ import java.util.List;
 import java.util.Random;
 
 
-public class SolarCoreRenderer extends BlockEntityRenderer<SolarCoreBlockEntity> {
+public class SolarCoreRenderer implements BlockEntityRenderer<SolarCoreBlockEntity> {
 
     public final ResourceLocation RAY = new ResourceLocation("solarforge","textures/misc/ray_into_sky.png");
-    public SolarCoreRenderer(BlockEntityRenderDispatcher p_i226006_1_) {
-        super(p_i226006_1_);
+    public SolarCoreRenderer(BlockEntityRendererProvider.Context ctx) {
+
     }
 
     @Override

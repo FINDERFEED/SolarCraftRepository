@@ -12,13 +12,14 @@ import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
 import com.mojang.math.Vector3f;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 
 
-public class InfusingPoolRenderer extends BlockEntityRenderer<InfusingPoolTileEntity> {
+public class InfusingPoolRenderer implements BlockEntityRenderer<InfusingPoolTileEntity> {
 
 
-    public InfusingPoolRenderer(BlockEntityRenderDispatcher p_i226006_1_) {
-        super(p_i226006_1_);
+    public InfusingPoolRenderer(BlockEntityRendererProvider.Context ctx) {
+
     }
 
     @Override

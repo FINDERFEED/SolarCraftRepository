@@ -10,11 +10,12 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.model.ModelRenderer;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
-import net.minecraft.util.Direction;
+
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.core.BlockPos;
 import com.mojang.math.Matrix4f;
@@ -22,11 +23,11 @@ import net.minecraft.world.phys.Vec3;
 import com.mojang.math.Vector3f;
 import net.minecraftforge.client.model.obj.OBJLoader;
 
-public class SolarRepeaterRenderer extends BlockEntityRenderer<SolarEnergyRepeaterBlockEntity> {
+public class SolarRepeaterRenderer implements BlockEntityRenderer<SolarEnergyRepeaterBlockEntity> {
     public final ResourceLocation RAY = new ResourceLocation("solarforge","textures/misc/ray_into_sky.png");
 
-    public SolarRepeaterRenderer(BlockEntityRenderDispatcher p_i226006_1_) {
-        super(p_i226006_1_);
+    public SolarRepeaterRenderer(BlockEntityRendererProvider.Context ctx) {
+
 
     }
 

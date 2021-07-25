@@ -6,14 +6,15 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.core.Direction;
 
-public class RayTrapTileEntityRenderer extends BlockEntityRenderer<RayTrapTileEntity> {
+public class RayTrapTileEntityRenderer implements BlockEntityRenderer<RayTrapTileEntity> {
 
     public int ticker = 0;
 
-    public RayTrapTileEntityRenderer(BlockEntityRenderDispatcher p_i226006_1_) {
-        super(p_i226006_1_);
+    public RayTrapTileEntityRenderer(BlockEntityRendererProvider.Context ctx) {
+
     }
 
     @Override

@@ -26,6 +26,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.KeyMapping;
 import com.mojang.blaze3d.platform.InputConstants;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
@@ -69,6 +70,9 @@ public class SolarForgeClientRegistry {
         ClientRegistry.registerKeyBinding(OPEN_GUI_ABILITY_KEY);
         ClientRegistry.registerKeyBinding(ADMIN_ABILITY_KEY);
         //ClientRegistry.registerKeyBinding(TOGGLE_MANA_HUD);
+
+
+
         RenderingRegistry.registerEntityRenderingHandler(SolarForge.METEORITE.get(), MeteoriteProjectileRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(SolarForge.SOLAR_STRIKE_ENTITY_REG.get(), SolarStrikeEntityRender::new);
         RenderingRegistry.registerEntityRenderingHandler(Projectiles.SOLAR_DISC.get(), SolarDiscProjectileRenderer::new);
@@ -78,16 +82,17 @@ public class SolarForgeClientRegistry {
         RenderingRegistry.registerEntityRenderingHandler(Projectiles.TURRET_PROJECTILE.get(), AbstractTurretProjectileRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(Projectiles.VILLAGER_SOLAR_MASTER.get(), VillagerSolarMasterRenderer::new);
 
+        //blockentityrenderers.register
 
-        ClientRegistry.bindTileEntityRenderer(TileEntitiesRegistry.RUNE_ENERGY_PYLON.get(), RuneEnergyPylonRenderer::new);
-        ClientRegistry.bindTileEntityRenderer(SolarForge.SOLAR_FORGE_BLOCKENTITY.get(), SolarForgeBlockEntityRenderer::new);
-        ClientRegistry.bindTileEntityRenderer(TileEntitiesRegistry.INFUSING_POOL_BLOCKENTITY.get(), InfusingPoolRenderer::new);
-        ClientRegistry.bindTileEntityRenderer(SolarForge.INFUSING_STAND_BLOCKENTITY.get(), InfusingTableRenderer::new);
-        ClientRegistry.bindTileEntityRenderer(TileEntitiesRegistry.SOLAR_REPEATER.get(), SolarRepeaterRenderer::new);
-        ClientRegistry.bindTileEntityRenderer(TileEntitiesRegistry.ENERGY_GENERATOR_TILE.get(), EnergyGeneratorTileRender::new);
-        ClientRegistry.bindTileEntityRenderer(TileEntitiesRegistry.SOLAR_CORE_TILE.get(), SolarCoreRenderer::new);
-        ClientRegistry.bindTileEntityRenderer(TileEntitiesRegistry.AURA_HEALER_TILE.get(), AuraHealerRenderer::new);
-        ClientRegistry.bindTileEntityRenderer(TileEntitiesRegistry.RAY_TRAP_TILE_ENTITY.get(), RayTrapTileEntityRenderer::new);
+        BlockEntityRenderers.register(TileEntitiesRegistry.RUNE_ENERGY_PYLON.get(), RuneEnergyPylonRenderer::new);
+        BlockEntityRenderers.register(SolarForge.SOLAR_FORGE_BLOCKENTITY.get(), SolarForgeBlockEntityRenderer::new);
+        BlockEntityRenderers.register(TileEntitiesRegistry.INFUSING_POOL_BLOCKENTITY.get(), InfusingPoolRenderer::new);
+        BlockEntityRenderers.register(SolarForge.INFUSING_STAND_BLOCKENTITY.get(), InfusingTableRenderer::new);
+        BlockEntityRenderers.register(TileEntitiesRegistry.SOLAR_REPEATER.get(), SolarRepeaterRenderer::new);
+        BlockEntityRenderers.register(TileEntitiesRegistry.ENERGY_GENERATOR_TILE.get(), EnergyGeneratorTileRender::new);
+        BlockEntityRenderers.register(TileEntitiesRegistry.SOLAR_CORE_TILE.get(), SolarCoreRenderer::new);
+        BlockEntityRenderers.register(TileEntitiesRegistry.AURA_HEALER_TILE.get(), AuraHealerRenderer::new);
+        BlockEntityRenderers.register(TileEntitiesRegistry.RAY_TRAP_TILE_ENTITY.get(), RayTrapTileEntityRenderer::new);
 
 
 
