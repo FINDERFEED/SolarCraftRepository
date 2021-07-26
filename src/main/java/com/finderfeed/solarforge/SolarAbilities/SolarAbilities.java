@@ -15,7 +15,7 @@ import net.minecraft.world.entity.projectile.LargeFireball;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.util.math.*;
+
 import net.minecraft.world.phys.Vec3;
 import com.mojang.math.Vector3f;
 import net.minecraft.world.level.Explosion;
@@ -103,18 +103,18 @@ public class SolarAbilities {
     }
 
     //1
-    public static void SummonFireball(ServerLevel world, Player enti) {
-        if (enti.getPersistentData().getBoolean("solar_forge_can_player_use_fireball")) {
-            if (!enti.isCreative()) {
-                double mana = CapabilitySolarMana.getSolarMana(enti).orElseThrow(RuntimeException::new).getMana();
-                CapabilitySolarMana.getSolarMana(enti).orElseThrow(RuntimeException::new).setMana(mana - 50);
-            }
-            LargeFireball fireball = new LargeFireball(world, enti, enti.getLookAngle().x, enti.getLookAngle().y, enti.getLookAngle().z);
-            fireball.setPos(enti.position().x + enti.getLookAngle().x * 1.5, enti.position().y + enti.getLookAngle().y * 1.5, enti.position().z + enti.getLookAngle().z * 1.5);
-            fireball.explosionPower = 6;
-            world.addFreshEntity(fireball);
-        }
-    }
+//    public static void SummonFireball(ServerLevel world, Player enti) {
+//        if (enti.getPersistentData().getBoolean("solar_forge_can_player_use_fireball")) {
+//            if (!enti.isCreative()) {
+//                double mana = CapabilitySolarMana.getSolarMana(enti).orElseThrow(RuntimeException::new).getMana();
+//                CapabilitySolarMana.getSolarMana(enti).orElseThrow(RuntimeException::new).setMana(mana - 50);
+//            }
+//            LargeFireball fireball = new LargeFireball(world, enti, enti.getLookAngle().x, enti.getLookAngle().y, enti.getLookAngle().z);
+//            fireball.setPos(enti.position().x + enti.getLookAngle().x * 1.5, enti.position().y + enti.getLookAngle().y * 1.5, enti.position().z + enti.getLookAngle().z * 1.5);
+//            fireball.explosionPower = 6;
+//            world.addFreshEntity(fireball);
+//        }
+//    }
 
     //2
     public static void struckLightning(ServerLevel world, Player entity) {

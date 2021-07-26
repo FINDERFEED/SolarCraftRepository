@@ -20,7 +20,8 @@ import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraftforge.fmllegacy.network.NetworkHooks;
+
 
 public class UltraCrossbowProjectile extends AbstractHurtingProjectile {
     public static EntityDataAccessor<Float> PITCH = SynchedEntityData.defineId(UltraCrossbowProjectile.class, EntityDataSerializers.FLOAT);
@@ -64,7 +65,7 @@ public class UltraCrossbowProjectile extends AbstractHurtingProjectile {
             }else if (damage >= 120){
                 level.explode(null,this.getX(),this.getY(),this.getZ(),8,true, Explosion.BlockInteraction.BREAK);
             }
-            this.remove();
+            this.remove(RemovalReason.KILLED);
         }
     }
 
@@ -85,7 +86,7 @@ public class UltraCrossbowProjectile extends AbstractHurtingProjectile {
 
         }
         level.playSound(null,this.getX(),this.getY(),this.getZ(), Sounds.CROSSBOW_SHOT_IMPACT.get(),SoundSource.AMBIENT,5,1);
-        this.remove();
+        this.remove(RemovalReason.KILLED);
     }
 
 
@@ -104,7 +105,7 @@ public class UltraCrossbowProjectile extends AbstractHurtingProjectile {
 
             livingTicks++;
             if (livingTicks >= 600){
-                this.remove();
+                this.remove(RemovalReason.KILLED);
             }
         }
 

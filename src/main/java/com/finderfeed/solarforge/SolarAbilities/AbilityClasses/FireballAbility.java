@@ -18,9 +18,8 @@ public class FireballAbility extends AbstractAbility{
     public void cast(ServerPlayer entity, ServerLevel world) {
         super.cast(entity,world);
         if (allowed) {
-            LargeFireball fireball = new LargeFireball(world, entity, entity.getLookAngle().x, entity.getLookAngle().y, entity.getLookAngle().z);
+            LargeFireball fireball = new LargeFireball(world, entity, entity.getLookAngle().x, entity.getLookAngle().y, entity.getLookAngle().z,6);
             fireball.setPos(entity.position().x + entity.getLookAngle().x * 1.5, entity.position().y + entity.getLookAngle().y * 1.5, entity.position().z + entity.getLookAngle().z * 1.5);
-            fireball.explosionPower = 6;
             world.addFreshEntity(fireball);
 
         }

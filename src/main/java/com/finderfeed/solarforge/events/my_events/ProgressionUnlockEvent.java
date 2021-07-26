@@ -5,7 +5,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.eventbus.api.Event;
 
 
-import Player;
 
 /**
  * Event fires when a progression unlocks.

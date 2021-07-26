@@ -4,28 +4,24 @@ import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.registries.items.ItemsRegister;
 import com.finderfeed.solarforge.registries.projectiles.Projectiles;
 import com.finderfeed.solarforge.registries.sounds.Sounds;
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.Entity;
+
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.player.PlayerEntity;
+
 import net.minecraft.world.entity.projectile.AbstractHurtingProjectile;
 import net.minecraft.network.protocol.Packet;
-import net.minecraft.particles.ParticleTypes;
+
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.phys.AABB;
-import net.minecraft.util.math.BlockPos;
+
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraft.util.math.vector.Vector3f;
+
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.util.Constants;
-import net.minecraftforge.fml.network.NetworkHooks;
-import org.apache.logging.log4j.core.tools.picocli.CommandLine;
+import net.minecraftforge.fmllegacy.network.NetworkHooks;
+
 
 import java.util.List;
 
@@ -60,7 +56,7 @@ public abstract class AbstractMortarProjectile extends AbstractHurtingProjectile
         causeExplosionParticles(result.getLocation());
         level.playSound(null,result.getBlockPos().getX()+0.5,result.getBlockPos().getY()+0.5,result.getBlockPos().getZ()+0.5, Sounds.SOLAR_MORTAR_PROJECTILE.get(), SoundSource.AMBIENT,
                 5,1);
-        this.remove();
+        this.remove(RemovalReason.KILLED);
     }
 
 

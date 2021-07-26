@@ -1,14 +1,13 @@
 package com.finderfeed.solarforge.magic_items.items.projectiles.renderers;
 
-import com.finderfeed.solarforge.magic_items.items.projectiles.BlockBoomerangProjectile;
+
 import com.finderfeed.solarforge.magic_items.items.projectiles.UltraCrossbowProjectile;
 import com.finderfeed.solarforge.registries.ModelLayersRegistry;
-import com.finderfeed.solarforge.registries.items.ItemsRegister;
+
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.systems.RenderSystem;
+
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import net.minecraft.block.Block;
-import net.minecraft.client.Minecraft;
+
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.CubeListBuilder;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
@@ -18,16 +17,15 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.culling.Frustum;
 import net.minecraft.client.renderer.entity.EntityRenderer;
-import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
+
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.client.renderer.model.ItemCameraTransforms;
+
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import com.mojang.math.Matrix4f;
 import com.mojang.math.Vector3f;
 
-import ResourceLocation;
 
 public class UltraCrossbowProjectileRenderer extends EntityRenderer<UltraCrossbowProjectile> {
     public final ResourceLocation LOC = new ResourceLocation("solarforge","textures/misc/ultra_crossbow_projectile_trail.png");

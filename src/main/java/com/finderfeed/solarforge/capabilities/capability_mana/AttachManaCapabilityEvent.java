@@ -9,7 +9,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.fml.network.NetworkDirection;
+import net.minecraftforge.fmllegacy.network.NetworkDirection;
 
 
 public class AttachManaCapabilityEvent {
@@ -32,7 +32,7 @@ public class AttachManaCapabilityEvent {
             double mana = player.getCapability(CapabilitySolarMana.SOLAR_MANA_PLAYER).orElseThrow(RuntimeException::new).getMana();
 
                 mana += 0.10d;
-                if (player.inventory.contains(ItemsRegister.SOLAR_MANA_AMULET.get().getDefaultInstance())){
+                if (player.getInventory().contains(ItemsRegister.SOLAR_MANA_AMULET.get().getDefaultInstance())){
                     mana+=0.10d;
                 }
                 if (!player.isDeadOrDying()) {

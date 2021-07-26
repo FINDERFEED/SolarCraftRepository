@@ -7,7 +7,9 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.core.Registry;
 import net.minecraft.data.BuiltinRegistries;
+import net.minecraft.util.valueproviders.ConstantInt;
 import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.feature.stateproviders.SimpleStateProvider;
 import net.minecraft.world.gen.feature.*;
 import net.minecraft.world.level.levelgen.feature.foliageplacers.BlobFoliagePlacer;
@@ -70,9 +72,10 @@ public class FeaturesRegistry {
             Registry.register(BuiltinRegistries.CONFIGURED_FEATURE,new ResourceLocation("solarforge","energy_pylon"),ENERGY_PYLON_CONFIGURED);
             RUNIC_TREE_FEATURE = Feature.TREE.configured(new TreeConfiguration.TreeConfigurationBuilder(
                     new SimpleStateProvider(BlocksRegistry.RUNIC_LOG.get().defaultBlockState()),
-                    new SimpleStateProvider(BlocksRegistry.RUNIC_LEAVES.get().defaultBlockState()),
-                    new BlobFoliagePlacer(UniformInt.fixed(2), UniformInt.fixed(0), 3),
                     new StraightTrunkPlacer(4, 2, 0),
+                    new SimpleStateProvider(BlocksRegistry.RUNIC_LEAVES.get().defaultBlockState()),
+                    new SimpleStateProvider(Blocks.AIR.defaultBlockState()),
+                    new BlobFoliagePlacer(ConstantInt.of(2), ConstantInt.of(0), 3),
                     new TwoLayersFeatureSize(1, 0, 1))
                     .ignoreVines().build())
                     .decorated(FeatureDecorator.CHANCE.configured(new ChanceDecoratorConfiguration(100)));

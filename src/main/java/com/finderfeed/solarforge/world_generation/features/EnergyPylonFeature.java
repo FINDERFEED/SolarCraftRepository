@@ -2,14 +2,15 @@ package com.finderfeed.solarforge.world_generation.features;
 
 import com.finderfeed.solarforge.Helpers;
 import com.mojang.serialization.Codec;
-import net.minecraft.block.Block;
+
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.Mirror;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.core.BlockPos;
-import net.minecraft.util.math.ChunkPos;
+
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.chunk.ChunkGenerator;
@@ -33,9 +34,14 @@ public class EnergyPylonFeature extends Feature<NoneFeatureConfiguration> {
         super(p_i231953_1_);
     }
 
-    @Override
-    public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random, BlockPos pos, NoneFeatureConfiguration cfg) {
 
+
+    @Override
+    public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> ctx) {
+
+        WorldGenLevel world = ctx.level();
+        Random random = ctx.random();
+        BlockPos pos = ctx.origin();
         Rotation rot = Rotation.getRandom(random);
         StructureManager manager = world.getLevel().getStructureManager();
         List<ResourceLocation> list = new ArrayList<>();

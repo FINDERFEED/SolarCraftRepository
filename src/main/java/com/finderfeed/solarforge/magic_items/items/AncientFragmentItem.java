@@ -2,7 +2,10 @@ package com.finderfeed.solarforge.magic_items.items;
 
 
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.AncientFragment;
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.AncientFragmentISTER;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.ProgressionHelper;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.world.item.TooltipFlag;
 
 import net.minecraft.world.item.Item;
@@ -14,9 +17,12 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.client.IItemRenderProperties;
 
 import javax.annotation.Nullable;
+import java.nio.charset.MalformedInputException;
 import java.util.List;
+import java.util.function.Consumer;
 
 public class AncientFragmentItem extends Item {
     public AncientFragmentItem(Properties p_i48487_1_) {
@@ -56,5 +62,21 @@ public class AncientFragmentItem extends Item {
         }
 
         super.appendHoverText(stack, level, texts, p_77624_4_);
+    }
+
+    @Override
+    public void initializeClient(Consumer<IItemRenderProperties> consumer) {
+        super.initializeClient(consumer);
+        consumer.accept(FragmentRenderProperties.INSTANCE);
+    }
+}
+
+class FragmentRenderProperties implements IItemRenderProperties{
+
+    public static FragmentRenderProperties INSTANCE = new FragmentRenderProperties();
+
+    @Override
+    public BlockEntityWithoutLevelRenderer getItemStackRenderer() {
+        return new AncientFragmentISTER(Minecraft.getInstance().getBlockEntityRenderDispatcher(), Minecraft.getInstance().getEntityModels());
     }
 }

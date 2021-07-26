@@ -82,6 +82,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fmllegacy.RegistryObject;
+import net.minecraftforge.fmlserverevents.FMLServerStartingEvent;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.logging.log4j.LogManager;
@@ -227,7 +228,7 @@ public class SolarForge
     private void doClientStuff(final FMLClientSetupEvent event) {
         // do something that can only be done on the client
         MinecraftForge.EVENT_BUS.register(new RenderEventsHandler());
-        LOGGER.info("Got game settings {}", event.getMinecraftSupplier().get().options);
+
         MinecraftForge.EVENT_BUS.register(new TestRenderEvent());
 
         MenuScreens.register(SOLAR_FORGE_CONTAINER.get(), SolarForgeScreen::new);

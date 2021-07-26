@@ -1,5 +1,6 @@
 package com.finderfeed.solarforge.magic_items.blocks.solar_forge_block.solar_forge_screen;
 
+import com.finderfeed.solarforge.ClientHelpers;
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
 import com.finderfeed.solarforge.packet_handler.AbilityIndexSetPacket;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -9,12 +10,14 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
 
 
+import net.minecraft.client.gui.components.Widget;
 import net.minecraft.client.gui.screens.Screen;
 
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
+import org.lwjgl.opengl.GL11;
 
 import java.util.List;
 
@@ -63,36 +66,13 @@ public class SolarForgeConfigScreenAdditional extends Screen {
 //        addSolarButton(relX,relY,10-this.height,9,"Tornado");
     }
 
-    @Override
-    public void tick() {
-        if (page != previousPage){
-            List<AbstractWidget> all = this.buttons;
-            if (page > previousPage) {
-                System.out.println(all.get(0).y);
-                for (int i = 0; i < all.size(); i++) {
-                    all.get(i).y += this.height;
-                }
 
-                System.out.println(all.get(0).y);
-                previousPage = page;
-            }else {
-                System.out.println(all.get(0).y);
-                for (int i = 0; i < all.size(); i++) {
-                    all.get(i).y -= this.height;
-                }
-                System.out.println(all.get(0).y);
-                previousPage = page;
-            }
-
-        }
-
-    }
 
     @Override
     public void render(PoseStack stack, int rouseX, int rouseY, float partialTicks){
 
-        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-        this.minecraft.getTextureManager().bind(GUI);
+        ClientHelpers.bindText(GUI);
+
         int relX = (this.width - WIDTH) / 2;
         int relY = (this.height - HEIGHT) / 2;
 
@@ -109,7 +89,7 @@ public class SolarForgeConfigScreenAdditional extends Screen {
 
 
     public void addSolarButton(int relX, int relY, int offset, int abilityId, String string){
-        addButton(new SolarForgeButton(relX + 6, relY-4+offset, 65, 15, new TextComponent(string), button -> {
+        addRenderableWidget(new SolarForgeButton(relX + 6, relY-4+offset, 65, 15, new TextComponent(string), button -> {
             SolarForgePacketHandler.INSTANCE.sendToServer(new AbilityIndexSetPacket(new int[]{ids,abilityId}));
             Minecraft.getInstance().setScreen(new SolarForgeAbilityConfigScreen());
         }));

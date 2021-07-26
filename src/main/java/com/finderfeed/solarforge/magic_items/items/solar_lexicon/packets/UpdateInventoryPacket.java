@@ -3,13 +3,14 @@ package com.finderfeed.solarforge.magic_items.items.solar_lexicon.packets;
 import com.finderfeed.solarforge.ClientHelpers;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraftforge.fml.network.NetworkEvent;
+
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 
-import ItemStack;
+
+import net.minecraftforge.fmllegacy.network.NetworkEvent;
 
 public class UpdateInventoryPacket {
 

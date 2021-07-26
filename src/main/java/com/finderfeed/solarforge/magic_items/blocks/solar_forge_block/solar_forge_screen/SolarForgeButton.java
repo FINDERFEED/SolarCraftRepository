@@ -1,5 +1,6 @@
 package com.finderfeed.solarforge.magic_items.blocks.solar_forge_block.solar_forge_screen;
 
+import com.finderfeed.solarforge.ClientHelpers;
 import com.finderfeed.solarforge.registries.sounds.Sounds;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -13,6 +14,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.network.chat.Component;
 
 import net.minecraft.client.gui.components.Button.OnPress;
+import org.lwjgl.opengl.GL11;
 
 public class SolarForgeButton extends Button  {
     protected  Button.OnTooltip tool;
@@ -41,8 +43,9 @@ public class SolarForgeButton extends Button  {
         }
         Minecraft minecraft = Minecraft.getInstance();
         Font fontrenderer = minecraft.font;
-        minecraft.getTextureManager().bind(WIDGETS_SOLARFORGE);
-        RenderSystem.color4f(1.0F, 1.0F, 1.0F, this.alpha);
+
+        ClientHelpers.bindText(WIDGETS_SOLARFORGE);
+        GL11.glColor4f(1,1,1,alpha);
         int i = this.getYImage(this.isHovered());
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();

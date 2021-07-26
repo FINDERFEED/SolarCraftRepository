@@ -1,7 +1,7 @@
 package com.finderfeed.solarforge.magic_items.items.solar_disc_gun;
 
 
-import net.minecraft.client.renderer.entity.PlayerRenderer;
+
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RenderPlayerEvent;

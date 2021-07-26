@@ -29,8 +29,8 @@ public class SolarLensTile extends BlockEntity  {
     public int CURRENT_SMELTING_TIME = 0;
     public boolean RECIPE_IN_PROGRESS = false;
 
-    public SolarLensTile(BlockEntityType<?> p_155228_, BlockPos p_155229_, BlockState p_155230_) {
-        super(p_155228_, p_155229_, p_155230_);
+    public SolarLensTile(BlockPos p_155229_, BlockState p_155230_) {
+        super(TileEntitiesRegistry.SOLAR_LENS_TILE.get(), p_155229_, p_155230_);
     }
 
 

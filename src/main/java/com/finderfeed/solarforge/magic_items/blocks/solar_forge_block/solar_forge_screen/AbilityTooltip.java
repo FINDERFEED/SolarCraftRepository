@@ -1,5 +1,6 @@
 package com.finderfeed.solarforge.magic_items.blocks.solar_forge_block.solar_forge_screen;
 
+import com.finderfeed.solarforge.ClientHelpers;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
@@ -16,7 +17,7 @@ public class AbilityTooltip implements Button.OnTooltip {
 
     @Override
     public void onTooltip(Button button, PoseStack matrices, int x, int y) {
-        Minecraft.getInstance().textureManager.bind(TOOLTIPS);
 
+        ClientHelpers.bindText(TOOLTIPS);
     }
 }

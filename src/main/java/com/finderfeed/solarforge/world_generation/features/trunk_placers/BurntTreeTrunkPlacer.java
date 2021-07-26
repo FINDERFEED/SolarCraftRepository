@@ -4,28 +4,28 @@ import com.finderfeed.solarforge.Helpers;
 import com.google.common.collect.ImmutableList;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import jdk.nashorn.internal.runtime.Property;
+
+import net.minecraft.world.level.LevelSimulatedReader;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.client.Minecraft;
-import net.minecraft.server.MinecraftServer;
+
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.core.Direction;
-import net.minecraft.util.ResourceLocation;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
-import net.minecraft.world.ISeedReader;
+
 import net.minecraft.world.level.LevelSimulatedRW;
 import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration;
-import net.minecraft.world.gen.feature.template.Template;
-import net.minecraft.world.gen.feature.template.TemplateManager;
+
 import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacer;
 import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacer;
-import net.minecraft.world.gen.trunkplacer.StraightTrunkPlacer;
+
 import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacerType;
 
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
+import java.util.function.BiConsumer;
 
 public class BurntTreeTrunkPlacer extends TrunkPlacer {
     public static final Codec<BurntTreeTrunkPlacer> CODEC = RecordCodecBuilder.create((p_236904_0_) -> {
@@ -41,10 +41,12 @@ public class BurntTreeTrunkPlacer extends TrunkPlacer {
         return TrunkPlacersRegistry.BURNT_TREE_TRUNK_PLACER_TRUNK_PLACER_TYPE;
     }
 
+
+
+
     @Override
     public List<FoliagePlacer.FoliageAttachment> placeTrunk(LevelSimulatedRW world, Random rnd, int height, BlockPos pos, Set<BlockPos> set, BoundingBox box, TreeConfiguration cfg) {
         setDirtAt(world,pos.below());
-
         placeLogsInDirection(world,pos,Direction.WEST,4,rnd,0,cfg.trunkProvider.getState(rnd,pos),true,box,true);
         placeLogsInDirection(world,pos,Direction.SOUTH,4,rnd,0,cfg.trunkProvider.getState(rnd,pos),true,box,true);
         placeLogsInDirection(world,pos,Direction.EAST,4,rnd,0,cfg.trunkProvider.getState(rnd,pos),true,box,true);

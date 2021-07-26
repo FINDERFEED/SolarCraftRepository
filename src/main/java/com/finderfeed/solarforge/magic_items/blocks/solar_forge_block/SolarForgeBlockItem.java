@@ -7,14 +7,14 @@ import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Ac
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.entity.player.ServerPlayerEntity;
+
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.ChatFormatting;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.fml.network.NetworkDirection;
+
 
 import javax.annotation.Nullable;
 import java.util.List;

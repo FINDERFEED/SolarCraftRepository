@@ -10,9 +10,10 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.fml.network.NetworkDirection;
+
 
 import net.minecraft.world.item.Item.Properties;
+import net.minecraftforge.fmllegacy.network.NetworkDirection;
 
 public abstract class AbstractUnlockProgressionItem extends Item {
     public Achievement ach;

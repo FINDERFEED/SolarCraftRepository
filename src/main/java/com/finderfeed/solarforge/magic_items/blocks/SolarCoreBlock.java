@@ -1,5 +1,6 @@
 package com.finderfeed.solarforge.magic_items.blocks;
 
+import com.finderfeed.solarforge.magic_items.blocks.blockentities.SolarCoreBlockEntity;
 import com.finderfeed.solarforge.misc_things.AbstractSolarCore;
 import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
 import net.minecraft.core.BlockPos;
@@ -36,7 +37,7 @@ public class SolarCoreBlock extends Block implements EntityBlock {
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level p_153212_, BlockState p_153213_, BlockEntityType<T> p_153214_) {
         return (((level, blockPos, blockState, t) -> {
-            AbstractSolarCore.tick(level,blockPos,blockState,(AbstractSolarCore) t);
+            SolarCoreBlockEntity.tick(level,blockPos,blockState,(AbstractSolarCore) t);
         }));
     }
 }

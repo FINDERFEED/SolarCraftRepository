@@ -8,6 +8,7 @@ import com.finderfeed.solarforge.magic_items.blocks.rendering_models.AuraHealerM
 import com.finderfeed.solarforge.magic_items.blocks.rendering_models.SolarEnergyGeneratorModel;
 import com.finderfeed.solarforge.magic_items.blocks.solar_forge_block.SolarForgeBlockModelTrue;
 import com.finderfeed.solarforge.magic_items.blocks.solar_forge_block.SolarForgePetalsTrue;
+import com.finderfeed.solarforge.magic_items.items.item_models.SolarGodShield;
 import com.finderfeed.solarforge.magic_items.items.projectiles.renderers.UltraCrossbowProjectileRenderer;
 
 import net.minecraft.client.model.geom.ModelLayerLocation;
@@ -44,6 +45,10 @@ public class ModelLayersRegistry {
 
     public static final ModelLayerLocation SOLAR_FORGE_MAIN_MODEL =
             new ModelLayerLocation(new ResourceLocation("solarforge","solar_forge_main_model"), "main");
+
+    public static final ModelLayerLocation SOLAR_GOD_SHIELD_MODEL =
+            new ModelLayerLocation(new ResourceLocation("solarforge","solar_god_shield"), "main");
+
     @SubscribeEvent
     public static void registerModelLayers(EntityRenderersEvent.RegisterLayerDefinitions event){
         event.registerLayerDefinition(METEORITE_LAYER, MeteoriteModel::createLayer);
@@ -54,5 +59,6 @@ public class ModelLayersRegistry {
         event.registerLayerDefinition(SOLAR_ENERGY_GEN_LAYER, SolarEnergyGeneratorModel::createLayers);
         event.registerLayerDefinition(SOLAR_FORGE_PETALS, SolarForgePetalsTrue::createLayer);
         event.registerLayerDefinition(SOLAR_FORGE_MAIN_MODEL, SolarForgeBlockModelTrue::createLayer);
+        event.registerLayerDefinition(SOLAR_GOD_SHIELD_MODEL, SolarGodShield::createLayers);
     }
 }

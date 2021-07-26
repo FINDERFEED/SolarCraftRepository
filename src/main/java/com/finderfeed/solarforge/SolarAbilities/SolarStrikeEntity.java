@@ -4,9 +4,7 @@ package com.finderfeed.solarforge.SolarAbilities;
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.misc_things.ParticlesList;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.audio.Sound;
-import net.minecraft.command.impl.SetBlockCommand;
+
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -20,17 +18,16 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.SoundEvents;
+
 import net.minecraft.world.phys.AABB;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.Vec3;
-import net.minecraft.util.math.vector.Vector3f;
-import net.minecraft.world.Explosion;
+
 import net.minecraft.world.level.Level;
-import net.minecraft.world.server.ServerWorld;
+
 import net.minecraftforge.common.util.Constants;
-import net.minecraftforge.fml.network.NetworkHooks;
+
+import net.minecraftforge.fmllegacy.network.NetworkHooks;
 
 import java.util.List;
 
@@ -100,7 +97,7 @@ public class SolarStrikeEntity extends PathfinderMob {
                 }
                 this.level.playSound(null,this.getOnPos().offset(0,5,0),SolarForge.SOLAR_STRIKE_SOUND.get(),SoundSource.AMBIENT,10,0.4F);
 
-                this.remove();
+                this.remove(RemovalReason.KILLED);
             }
 
         }

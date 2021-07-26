@@ -1,10 +1,12 @@
 package com.finderfeed.solarforge.magic_items.items.isters;
 
 import com.finderfeed.solarforge.magic_items.items.item_models.SolarGodShield;
+import com.finderfeed.solarforge.registries.ModelLayersRegistry;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.geom.EntityModelSet;
+import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.MultiBufferSource;
 
 import net.minecraft.client.renderer.RenderType;
@@ -21,12 +23,13 @@ import com.mojang.math.Vector3f;
 public class ShieldOfSolarGodISTER extends BlockEntityWithoutLevelRenderer {
 
     public final ResourceLocation LOC = new ResourceLocation("solarforge","textures/items/solar_god_shield.png");
-    public SolarGodShield model = new SolarGodShield();
-    public ShieldModel test = new ShieldModel();
+    public SolarGodShield model;
+
     public boolean isBeingUsed = false;
 
     public ShieldOfSolarGodISTER(BlockEntityRenderDispatcher p_172550_, EntityModelSet p_172551_) {
         super(p_172550_, p_172551_);
+        model = new SolarGodShield(p_172551_.bakeLayer(ModelLayersRegistry.SOLAR_GOD_SHIELD_MODEL));
     }
 
     @Override

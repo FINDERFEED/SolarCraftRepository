@@ -2,6 +2,8 @@ package com.finderfeed.solarforge.magic_items.items;
 
 import com.finderfeed.solarforge.magic_items.items.isters.ShieldOfSolarGodISTER;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Font;
+import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.world.item.TooltipFlag;
 
 import net.minecraft.world.entity.LivingEntity;
@@ -19,11 +21,13 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.level.Level;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraftforge.client.IItemRenderProperties;
 import net.minecraftforge.client.model.pipeline.VertexBufferConsumer;
 
 import javax.annotation.Nullable;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -82,9 +86,7 @@ public class ShieldOfSolarGod extends ShieldItem {
            // stack.getTagElement("current_damage").putInt("damage_", 0);
 
         }
-        if (player.level.isClientSide) {
-            ((ShieldOfSolarGodISTER) getItemStackTileEntityRenderer()).setBeingUsed(false);
-        }
+
         super.releaseUsing(stack, world, player, idk);
     }
 
@@ -101,9 +103,7 @@ public class ShieldOfSolarGod extends ShieldItem {
 
     @Override
     public void onUsingTick(ItemStack stack, LivingEntity player, int count) {
-        if (player.level.isClientSide) {
-            ((ShieldOfSolarGodISTER) getItemStackTileEntityRenderer()).setBeingUsed(true);
-        }
+
         float damage = 0;
         int usingTime = (72000 - count)/20;
         if (usingTime >= 5 && usingTime < 10){
@@ -122,9 +122,25 @@ public class ShieldOfSolarGod extends ShieldItem {
     }
 
 
+    @Override
+    public void initializeClient(Consumer<IItemRenderProperties> consumer) {
+        super.initializeClient(consumer);
+        consumer.accept(RenderProp.INSTANCE);
 
+    }
+}
 
+class RenderProp implements IItemRenderProperties{
 
+    public static RenderProp INSTANCE = new RenderProp();
 
+    @Override
+    public Font getFont(ItemStack stack) {
+        return Minecraft.getInstance().font;
+    }
 
+    @Override
+    public BlockEntityWithoutLevelRenderer getItemStackRenderer() {
+        return new ShieldOfSolarGodISTER(Minecraft.getInstance().getBlockEntityRenderDispatcher(),Minecraft.getInstance().getEntityModels());
+    }
 }

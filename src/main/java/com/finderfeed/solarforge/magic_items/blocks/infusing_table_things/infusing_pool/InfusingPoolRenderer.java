@@ -30,7 +30,7 @@ public class InfusingPoolRenderer implements BlockEntityRenderer<InfusingPoolTil
             float time = (tile.getLevel().getGameTime() + partialTicks);
             matrices.mulPose(Vector3f.YP.rotationDegrees((time % 360)*2f));
             Minecraft.getInstance().getItemRenderer().render(tile.getItem(0), ItemTransforms.TransformType.GROUND, true,
-                    matrices, buffer, light1, light2, Minecraft.getInstance().getItemRenderer().getModel(tile.getItem(0), null, null));
+                    matrices, buffer, light1, light2, Minecraft.getInstance().getItemRenderer().getModel(tile.getItem(0), null, null,0));
         }
         matrices.popPose();
 

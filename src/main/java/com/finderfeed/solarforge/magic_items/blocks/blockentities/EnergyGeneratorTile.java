@@ -5,6 +5,8 @@ import com.finderfeed.solarforge.misc_things.AbstractEnergyGeneratorTileEntity;
 import com.finderfeed.solarforge.multiblocks.Multiblocks;
 import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
 
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 
 import java.util.Collection;
@@ -15,14 +17,11 @@ public class EnergyGeneratorTile extends AbstractEnergyGeneratorTileEntity {
 
 
 
-    public EnergyGeneratorTile() {
-        super(TileEntitiesRegistry.ENERGY_GENERATOR_TILE.get());
+    public EnergyGeneratorTile(BlockPos pos, BlockState state) {
+        super(TileEntitiesRegistry.ENERGY_GENERATOR_TILE.get(),pos,state);
     }
 
-    @Override
-    public void tick() {
-        super.tick();
-    }
+
 
     @Override
     public int getEnergyFlowAmount() {

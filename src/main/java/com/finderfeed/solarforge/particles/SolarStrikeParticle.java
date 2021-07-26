@@ -1,13 +1,13 @@
 package com.finderfeed.solarforge.particles;
 
+import com.finderfeed.solarforge.ClientHelpers;
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.blaze3d.vertex.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.*;
 import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureManager;
-import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.particles.SimpleParticleType;
 
@@ -19,8 +19,6 @@ import javax.annotation.Nullable;
 import static org.apache.commons.lang3.RandomUtils.nextFloat;
 
 
-import com.mojang.blaze3d.vertex.BufferBuilder;
-import com.mojang.blaze3d.vertex.Tesselator;
 import net.minecraft.client.Camera;
 
 public class SolarStrikeParticle extends TextureSheetParticle {
@@ -95,11 +93,11 @@ public class SolarStrikeParticle extends TextureSheetParticle {
             RenderSystem.depthMask(false);
             RenderSystem.enableBlend();
             RenderSystem.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE);
-            RenderSystem.alphaFunc(GL11.GL_GREATER, 0.003921569F);
-            RenderSystem.disableLighting();
-            textureManager.bind(TextureAtlas.LOCATION_PARTICLES);
+            GL11.glAlphaFunc(GL11.GL_GREATER,0.003921569F);
+            GL11.glDisable(GL11.GL_LIGHTING);
+            ClientHelpers.bindText(TextureAtlas.LOCATION_PARTICLES);
             textureManager.getTexture(TextureAtlas.LOCATION_PARTICLES).setBlurMipmap(true, false);
-            bufferBuilder.begin(GL11.GL_QUADS, DefaultVertexFormat.PARTICLE);
+            bufferBuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.PARTICLE);
 
         }
 
@@ -108,7 +106,7 @@ public class SolarStrikeParticle extends TextureSheetParticle {
             tessellator.end();
 
             Minecraft.getInstance().textureManager.getTexture(TextureAtlas.LOCATION_PARTICLES).restoreLastBlurMipmap();
-            RenderSystem.alphaFunc(GL11.GL_GREATER, 0.1F);
+            GL11.glAlphaFunc(GL11.GL_GREATER, 0.1F);
             RenderSystem.disableBlend();
             RenderSystem.depthMask(true);
 

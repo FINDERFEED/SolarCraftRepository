@@ -7,7 +7,7 @@ import com.finderfeed.solarforge.world_generation.features.FeaturesRegistry;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.core.WritableRegistry;
 import net.minecraft.core.Registry;
-import net.minecraft.world.Dimension;
+
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraftforge.event.TickEvent;
@@ -24,7 +24,7 @@ public class PlayerTickEvent {
     public void enterIncineratedForest(final TickEvent.PlayerTickEvent event){
         Player entity = event.player;
         if (!entity.level.isClientSide ){
-            Optional<WritableRegistry<Biome>> reg = entity.level.registryAccess().registry(Registry.BIOME_REGISTRY);
+            Optional<? extends Registry<Biome>> reg = entity.level.registryAccess().registry(Registry.BIOME_REGISTRY);
             if ( reg.isPresent() && entity.level.getBiome(entity.blockPosition()).equals(reg.get().get(FeaturesRegistry.MOLTEN_BIOME_KEY))){
 
                 Helpers.fireProgressionEvent(entity,Achievement.FIND_INCINERATED_FOREST);

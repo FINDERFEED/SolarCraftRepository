@@ -6,6 +6,7 @@ import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
 import com.finderfeed.solarforge.packet_handler.packets.TileEnergyGeneratorUpdate;
 import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.nbt.CompoundTag;
 
@@ -25,8 +26,8 @@ public abstract class AbstractEnergyGeneratorTileEntity extends BlockEntity impl
     public List<BlockPos> poslist = new ArrayList<>();
     public int count = 0;
 
-    public AbstractEnergyGeneratorTileEntity( BlockPos p_155229_, BlockState p_155230_) {
-        super(TileEntitiesRegistry.ENERGY_GENERATOR_TILE.get(), p_155229_, p_155230_);
+    public AbstractEnergyGeneratorTileEntity(BlockEntityType<?> type,BlockPos p_155229_, BlockState p_155230_) {
+        super(type, p_155229_, p_155230_);
     }
 
 

@@ -13,7 +13,8 @@ import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.fml.network.NetworkHooks;
+
+import net.minecraftforge.fmllegacy.network.NetworkHooks;
 
 public class AbstractTurretProjectile extends AbstractHurtingProjectile {
 
@@ -51,7 +52,7 @@ public class AbstractTurretProjectile extends AbstractHurtingProjectile {
                 level.explode(null, ctx.getLocation().x, ctx.getLocation().y, ctx.getLocation().z, explosionPower,true, Explosion.BlockInteraction.BREAK);
             }
         }
-        this.remove();
+        this.remove(RemovalReason.KILLED);
     }
 
     @Override
@@ -61,7 +62,7 @@ public class AbstractTurretProjectile extends AbstractHurtingProjectile {
                 level.explode(null, result.getLocation().x, result.getLocation().y, result.getLocation().z, explosionPower,true, Explosion.BlockInteraction.BREAK);
             }
         }
-        this.remove();
+        this.remove(RemovalReason.KILLED);
     }
 
 

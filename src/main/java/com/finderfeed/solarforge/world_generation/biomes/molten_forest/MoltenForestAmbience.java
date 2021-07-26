@@ -4,21 +4,20 @@ import com.finderfeed.solarforge.Helpers;
 import com.mojang.serialization.Codec;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.block.GrassBlock;
+
 import net.minecraft.world.level.block.Mirror;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.WorldGenLevel;
-import net.minecraft.world.level.chunk.ChunkGenerator;
+
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
-import net.minecraft.world.gen.feature.template.*;
-import net.minecraftforge.common.util.Constants;
-import org.apache.logging.log4j.core.tools.picocli.CommandLine;
+
 
 import java.util.*;
 
@@ -34,8 +33,14 @@ public class MoltenForestAmbience extends Feature<NoneFeatureConfiguration> {
         super(p_i231953_1_);
     }
 
+
+
     @Override
-    public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random, BlockPos pos, NoneFeatureConfiguration cfg) {
+    public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> ctx) {
+
+        BlockPos pos = ctx.origin();
+        WorldGenLevel world = ctx.level();
+        Random random = ctx.random();
 
         Rotation rot = Rotation.getRandom(random);
         StructureManager manager = world.getLevel().getStructureManager();

@@ -3,7 +3,7 @@ package com.finderfeed.solarforge.magic_items.blocks.blockentities.containers;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.SolarEnergyFurnaceTile;
 import com.finderfeed.solarforge.registries.containers.Containers;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.inventory.container.ContainerType;
+
 import net.minecraft.world.inventory.FurnaceResultSlot;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.network.FriendlyByteBuf;

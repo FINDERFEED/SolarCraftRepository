@@ -5,9 +5,9 @@ import com.finderfeed.solarforge.misc_things.ParticlesList;
 import com.finderfeed.solarforge.registries.projectiles.Projectiles;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.entity.projectile.DamagingProjectileEntity;
+
 import net.minecraft.core.particles.ParticleOptions;
-import net.minecraft.particles.ParticleTypes;
+
 import net.minecraft.world.level.Level;
 
 public class MortarProjectile extends AbstractMortarProjectile {

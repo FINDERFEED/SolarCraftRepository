@@ -1,5 +1,6 @@
 package com.finderfeed.solarforge.magic_items.blocks;
 
+import com.finderfeed.solarforge.magic_items.blocks.blockentities.MortarTileEntity;
 import com.finderfeed.solarforge.misc_things.AbstractMortarTileEntity;
 import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
 
@@ -37,7 +38,7 @@ public class SolarMortar extends Block implements EntityBlock {
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level p_153212_, BlockState p_153213_, BlockEntityType<T> p_153214_) {
         return ((level, blockPos, blockState, t) -> {
-            AbstractMortarTileEntity.tick(level,blockPos,blockState,(AbstractMortarTileEntity) t);
+            MortarTileEntity.tick(level,blockPos,blockState,(AbstractMortarTileEntity) t);
         });
     }
 }

@@ -3,11 +3,10 @@ package com.finderfeed.solarforge.packet_handler.packets;
 import com.finderfeed.solarforge.ClientHelpers;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.core.BlockPos;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraftforge.fmllegacy.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
-import BlockPos;
 
 public class PlaySoundPacket {
 

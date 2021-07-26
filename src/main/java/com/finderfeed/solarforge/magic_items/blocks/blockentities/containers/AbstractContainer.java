@@ -13,7 +13,7 @@ import net.minecraft.world.inventory.ContainerData;
 import java.util.ArrayList;
 import java.util.List;
 
-import RandomizableContainerBlockEntity;
+
 
 public abstract class AbstractContainer<T extends RandomizableContainerBlockEntity> extends AbstractContainerMenu {
     public List<ItemStack> list = new ArrayList<>(0);
