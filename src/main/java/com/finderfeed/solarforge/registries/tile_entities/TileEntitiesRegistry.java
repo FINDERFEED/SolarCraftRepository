@@ -7,13 +7,13 @@ import com.finderfeed.solarforge.world_generation.structures.blocks.tile_entitie
 import com.finderfeed.solarforge.world_generation.structures.blocks.tile_entities.KeyDefenderTile;
 import com.finderfeed.solarforge.world_generation.structures.blocks.tile_entities.KeyLockStructureTile;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraftforge.fml.RegistryObject;
+
 import net.minecraftforge.fmllegacy.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class TileEntitiesRegistry {
-    public static final DeferredRegister<BlockEntityType<?>> TILE_ENTITY_TYPE = DeferredRegister.create(ForgeRegistries.TILE_ENTITIES,"solarforge");
+    public static final DeferredRegister<BlockEntityType<?>> TILE_ENTITY_TYPE = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITIES,"solarforge");
 
 
 

@@ -29,10 +29,8 @@ public class ProgressionOreModel implements BakedModel {
         this.model = model;
     }
 
-    @Override
-    public BakedModel getBakedModel() {
-        return model;
-    }
+
+
 
     @Nonnull
     @Override
@@ -77,14 +75,14 @@ public class ProgressionOreModel implements BakedModel {
 
     @Override
     public TextureAtlasSprite getParticleIcon() {
-        return getParticleTexture(EmptyModelData.INSTANCE);
+        return getParticleIcon(EmptyModelData.INSTANCE);
     }
 
 
     @Override
-    public TextureAtlasSprite getParticleTexture(@Nonnull IModelData data) {
+    public TextureAtlasSprite getParticleIcon(@Nonnull IModelData data) {
 
-        return model.getParticleTexture(data);
+        return model.getParticleIcon(data);
     }
 
     @Override

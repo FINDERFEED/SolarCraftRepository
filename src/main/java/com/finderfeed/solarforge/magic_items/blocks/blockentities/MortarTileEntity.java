@@ -7,12 +7,13 @@ import com.finderfeed.solarforge.misc_things.AbstractMortarTileEntity;
 import com.finderfeed.solarforge.multiblocks.Multiblocks;
 import com.finderfeed.solarforge.registries.projectiles.Projectiles;
 import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
-
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.block.state.BlockState;
 
 
 public class MortarTileEntity extends AbstractMortarTileEntity {
-    public MortarTileEntity() {
-        super(TileEntitiesRegistry.MORTAR_TILE_ENTITY.get());
+    public MortarTileEntity(BlockPos p_155229_, BlockState p_155230_) {
+        super(TileEntitiesRegistry.MORTAR_TILE_ENTITY.get(),p_155229_,p_155230_);
     }
 
     @Override

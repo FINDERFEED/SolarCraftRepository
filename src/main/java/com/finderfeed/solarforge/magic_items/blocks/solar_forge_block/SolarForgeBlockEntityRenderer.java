@@ -1,5 +1,7 @@
 package com.finderfeed.solarforge.magic_items.blocks.solar_forge_block;
 
+import com.finderfeed.solarforge.RenderingTools;
+import com.finderfeed.solarforge.registries.ModelLayersRegistry;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -9,6 +11,7 @@ import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import com.mojang.math.Vector3f;
 
@@ -17,15 +20,16 @@ public class SolarForgeBlockEntityRenderer implements BlockEntityRenderer<SolarF
     public final ResourceLocation LOC = new ResourceLocation("solarforge","textures/misc/solar_forge_block.png");
     public final ResourceLocation LOCPETALS = new ResourceLocation("solarforge","textures/misc/solar_forge_petals.png");
     public final ResourceLocation RAY = new ResourceLocation("solarforge","textures/misc/ray_into_skyy.png");
-    public final SolarForgeBlockModelTrue model = new SolarForgeBlockModelTrue();
-    public final SolarForgePetalsTrue petals = new SolarForgePetalsTrue();
-    public final SolarForgePetalsTrue petals2 = new SolarForgePetalsTrue();
-    public final ModelPart ray = new ModelPart(16,16,0,0);
+    public final SolarForgeBlockModelTrue model;
+    public final SolarForgePetalsTrue petals;
+    public final SolarForgePetalsTrue petals2;
+
 
     public SolarForgeBlockEntityRenderer(BlockEntityRendererProvider.Context ctx) {
-
-        ray.addBox(-4,0,-4,4,1600,4,1);
-
+        SolarForgePetalsTrue modelp = new SolarForgePetalsTrue(ctx.bakeLayer(ModelLayersRegistry.SOLAR_FORGE_PETALS));
+        petals = modelp;
+        petals2 = modelp;
+        model = new SolarForgeBlockModelTrue(ctx.bakeLayer(ModelLayersRegistry.SOLAR_FORGE_MAIN_MODEL));
     }
 
     @Override
@@ -39,7 +43,7 @@ public class SolarForgeBlockEntityRenderer implements BlockEntityRenderer<SolarF
         //matrices.mulPose(Vector3f.ZN.rotationDegrees(180));
         if (entity.getLevel().getDayTime() % 24000 <= 13000 && entity.getLevel().canSeeSky(entity.getBlockPos().above())) {
             matrices.pushPose();
-            ray.setPos(1.78f, 0, 1.78f);
+
             matrices.translate(0.5f, 0, 0.5f);
             if (entity.getLevel().getDayTime() % 24000 <= 13000) {
 
@@ -47,7 +51,8 @@ public class SolarForgeBlockEntityRenderer implements BlockEntityRenderer<SolarF
             }
             VertexConsumer vertex = buffer.getBuffer(RenderType.text(RAY));
             // vertex = buffer.getBuffer(RenderType.text(RAY));
-            ray.render(matrices, vertex, light2, light);
+
+            RenderingTools.renderRay(matrices,buffer,0.25f,100, Direction.UP,true,2,partialTicks);
             matrices.popPose();
         }
         matrices.pushPose();

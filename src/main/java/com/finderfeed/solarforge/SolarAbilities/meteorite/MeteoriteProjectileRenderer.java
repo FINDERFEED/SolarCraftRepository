@@ -1,26 +1,30 @@
-package com.finderfeed.solarforge.SolarAbilities;
+package com.finderfeed.solarforge.SolarAbilities.meteorite;
 
+import com.finderfeed.solarforge.SolarAbilities.meteorite.MeteoriteProjectile;
+import com.finderfeed.solarforge.SolarForgeClientRegistry;
+import com.finderfeed.solarforge.registries.ModelLayersRegistry;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.Rectangle2d;
+
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.culling.Frustum;
 import net.minecraft.client.renderer.entity.EntityRenderer;
-import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 import com.mojang.math.Vector3f;
 
-import ResourceLocation;
+
 
 public class MeteoriteProjectileRenderer extends EntityRenderer<MeteoriteProjectile> {
     public ResourceLocation METEORITE = new ResourceLocation("solarforge","textures/misc/solar_meteorite.png");
-    public ModelPart meteorite = new ModelPart(64,64,0,0);
+    public MeteoriteModel meteorite;
 
-    public MeteoriteProjectileRenderer(EntityRenderDispatcher p_i46179_1_) {
-        super(p_i46179_1_);
-        meteorite.addBox(-32,-32,-32,64,64,64,1);
+    public MeteoriteProjectileRenderer(EntityRendererProvider.Context ctx) {
+        super(ctx);
+        this.meteorite = new MeteoriteModel(ctx.bakeLayer(ModelLayersRegistry.METEORITE_LAYER));
+
     }
     @Override
     public void render(MeteoriteProjectile entity, float p_225623_2_, float partialTicks, PoseStack matrices, MultiBufferSource buffer, int light) {
@@ -30,7 +34,7 @@ public class MeteoriteProjectileRenderer extends EntityRenderer<MeteoriteProject
     matrices.mulPose(Vector3f.ZN.rotationDegrees(time%360));
 
         VertexConsumer vertex = buffer.getBuffer(RenderType.entityCutout(METEORITE));
-    meteorite.render(matrices,vertex,light,light);
+    meteorite.renderToBuffer(matrices,vertex,light,light,1,1,1,1);
     matrices.popPose();
     }
 
@@ -44,3 +48,4 @@ public class MeteoriteProjectileRenderer extends EntityRenderer<MeteoriteProject
         return METEORITE;
     }
 }
+

@@ -1,7 +1,6 @@
 package com.finderfeed.solarforge.SolarAbilities.AbilityClasses;
 
-import com.finderfeed.solarforge.SolarAbilities.MeteoriteProjectile;
-import com.finderfeed.solarforge.capabilities.capability_mana.CapabilitySolarMana;
+import com.finderfeed.solarforge.SolarAbilities.meteorite.MeteoriteProjectile;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.core.BlockPos;

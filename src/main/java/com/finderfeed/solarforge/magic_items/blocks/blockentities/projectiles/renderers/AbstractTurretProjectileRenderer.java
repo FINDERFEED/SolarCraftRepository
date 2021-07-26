@@ -2,27 +2,42 @@ package com.finderfeed.solarforge.magic_items.blocks.blockentities.projectiles.r
 
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.projectiles.AbstractTurretProjectile;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.projectiles.MortarProjectile;
+import com.finderfeed.solarforge.registries.ModelLayersRegistry;
 import com.finderfeed.solarforge.registries.items.ItemsRegister;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.model.geom.PartPose;
+import net.minecraft.client.model.geom.builders.CubeListBuilder;
+import net.minecraft.client.model.geom.builders.LayerDefinition;
+import net.minecraft.client.model.geom.builders.MeshDefinition;
+import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.culling.Frustum;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
-import net.minecraft.client.renderer.model.ItemCameraTransforms;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
+
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.math.vector.Vector3f;
 
-import ResourceLocation;
+
 
 public class AbstractTurretProjectileRenderer extends EntityRenderer<AbstractTurretProjectile> {
     public final ResourceLocation RAY = new ResourceLocation("solarforge","textures/misc/crossbow_shot_texture.png");
-    public final ModelPart ray = new ModelPart(16,16,0,0);
-    public AbstractTurretProjectileRenderer(EntityRenderDispatcher p_i46179_1_) {
+
+    public final ModelPart ray;
+
+    public static LayerDefinition createLayer(){
+        MeshDefinition meshDefinition = new MeshDefinition();
+        PartDefinition partDefinition = meshDefinition.getRoot();
+        partDefinition.addOrReplaceChild("turret", CubeListBuilder.create().addBox(-4,-4,-4,4,4,4), PartPose.ZERO);
+        return LayerDefinition.create(meshDefinition,16,16);
+    }
+
+    public AbstractTurretProjectileRenderer(EntityRendererProvider.Context p_i46179_1_) {
         super(p_i46179_1_);
-        ray.addBox(-4,-4,-4,4,4,4);
+        ray = p_i46179_1_.bakeLayer(ModelLayersRegistry.TURRET_PROJ_LAYER);
         ray.setPos(2,2,2);
     }
 

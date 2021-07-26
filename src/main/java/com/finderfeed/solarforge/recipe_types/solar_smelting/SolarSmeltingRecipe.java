@@ -3,7 +3,7 @@ package com.finderfeed.solarforge.recipe_types.solar_smelting;
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.misc_things.PhantomInventory;
 import com.finderfeed.solarforge.recipe_types.InfusingRecipeSerializer;
-import net.minecraft.inventory.IInventory;
+
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;

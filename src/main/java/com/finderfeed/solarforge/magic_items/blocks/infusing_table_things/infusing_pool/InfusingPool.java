@@ -3,6 +3,7 @@ package com.finderfeed.solarforge.magic_items.blocks.infusing_table_things.infus
 import com.finderfeed.solarforge.magic_items.blocks.infusing_table_things.SolarWandItem;
 import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -19,7 +20,9 @@ import net.minecraftforge.event.world.BlockEvent;
 
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
-public class InfusingPool extends Block {
+import javax.annotation.Nullable;
+
+public class InfusingPool extends Block implements EntityBlock {
     public InfusingPool(Properties p_i48440_1_) {
         super(p_i48440_1_);
     }
@@ -29,14 +32,7 @@ public class InfusingPool extends Block {
         return Block.box(0.0D, 0.0D, 0.0D, 16.0D, 8.0D, 16.0D);
     }
 
-    @Override
-    public boolean hasTileEntity(BlockState state){
-        return true;
-    }
-    @Override
-    public BlockEntity createTileEntity(BlockState state, BlockGetter world){
-        return TileEntitiesRegistry.INFUSING_POOL_BLOCKENTITY.get().create();
-    }
+
 
     @Override
     public void onRemove(BlockState p_196243_1_, Level p_196243_2_, BlockPos p_196243_3_, BlockState p_196243_4_, boolean p_196243_5_) {
@@ -91,4 +87,9 @@ public class InfusingPool extends Block {
         }
     }
 
+    @Nullable
+    @Override
+    public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
+        return TileEntitiesRegistry.INFUSING_POOL_BLOCKENTITY.get().create(blockPos,blockState);
+    }
 }

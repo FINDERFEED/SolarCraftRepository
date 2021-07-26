@@ -11,6 +11,7 @@ import net.minecraft.world.level.Level;
 
 import net.minecraft.world.level.block.entity.BlockEntity;
 
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
@@ -24,8 +25,8 @@ public abstract class AbstractMortarTileEntity extends BlockEntity  {
 
     public double attackTick = 0;
 
-    public AbstractMortarTileEntity( BlockPos p_155229_, BlockState p_155230_) {
-        super(TileEntitiesRegistry.MORTAR_TILE_ENTITY.get(), p_155229_, p_155230_);
+    public AbstractMortarTileEntity(BlockEntityType<?>type, BlockPos p_155229_, BlockState p_155230_) {
+        super(type, p_155229_, p_155230_);
     }
 
 

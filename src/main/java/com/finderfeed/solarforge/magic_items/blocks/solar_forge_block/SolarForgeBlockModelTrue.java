@@ -5,18 +5,36 @@ package com.finderfeed.solarforge.magic_items.blocks.solar_forge_block;// Made w
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import net.minecraft.client.model.geom.PartPose;
+import net.minecraft.client.model.geom.builders.CubeListBuilder;
+import net.minecraft.client.model.geom.builders.LayerDefinition;
+import net.minecraft.client.model.geom.builders.MeshDefinition;
+import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.model.Model;
 import net.minecraft.client.model.geom.ModelPart;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class SolarForgeBlockModelTrue extends Model {
-	private final ModelPart bb_main;
-	private final ModelPart cube_r1;
+	private final List<ModelPart> bb_main = new ArrayList<>();
+	//private final ModelPart cube_r1;
 
-	public SolarForgeBlockModelTrue() {
+	public SolarForgeBlockModelTrue(ModelPart part) {
 		super(RenderType::text);
+		for (int i = 1;i <= 12;i++){
+			bb_main.add(part.getChild("part"+i));
+			bb_main.get(i-1).setPos(0.0F, 24.0F, 0.0F);
+
+		}
+		for (int i = 13;i <= 14;i++){
+			bb_main.add(part.getChild("part"+i));
+			bb_main.get(i-1).setPos(0.0F, 0.0F, 0.0F);
+			setRotationAngle(bb_main.get(i-1), 0.0F, -0.7854F, 0.0F);
+
+		}
 //		this.texWidth = 256;
 //		this.texHeight = 256;
 //
@@ -43,11 +61,31 @@ public class SolarForgeBlockModelTrue extends Model {
 //		cube_r1.texOffs(0, 234).addBox(-24.0F, -4.0F, -8.0F, 48.0F, 4.0F, 16.0F, 0.0F, false);
 	}
 
+	public static LayerDefinition createLayer(){
+		MeshDefinition mesh = new MeshDefinition();
+		PartDefinition parts = mesh.getRoot();
+		parts.addOrReplaceChild("part1", CubeListBuilder.create(), PartPose.ZERO);
+		parts.addOrReplaceChild("part2", CubeListBuilder.create(), PartPose.ZERO);
+		parts.addOrReplaceChild("part3", CubeListBuilder.create(), PartPose.ZERO);
+		parts.addOrReplaceChild("part4", CubeListBuilder.create(), PartPose.ZERO);
+		parts.addOrReplaceChild("part5", CubeListBuilder.create(), PartPose.ZERO);
+		parts.addOrReplaceChild("part6", CubeListBuilder.create(), PartPose.ZERO);
+		parts.addOrReplaceChild("part7", CubeListBuilder.create(), PartPose.ZERO);
+		parts.addOrReplaceChild("part8", CubeListBuilder.create(), PartPose.ZERO);
+		parts.addOrReplaceChild("part9", CubeListBuilder.create(), PartPose.ZERO);
+		parts.addOrReplaceChild("part10", CubeListBuilder.create(), PartPose.ZERO);
+		parts.addOrReplaceChild("part11", CubeListBuilder.create(), PartPose.ZERO);
+		parts.addOrReplaceChild("part12", CubeListBuilder.create(), PartPose.ZERO);
+
+		parts.addOrReplaceChild("part13", CubeListBuilder.create(), PartPose.ZERO);
+		parts.addOrReplaceChild("part14", CubeListBuilder.create(), PartPose.ZERO);
+		return LayerDefinition.create(mesh,256,256);
+	}
 
 
 	@Override
 	public void renderToBuffer(PoseStack matrixStack, VertexConsumer buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha){
-		bb_main.render(matrixStack, buffer, packedLight, packedOverlay);
+		bb_main.forEach((model)->model.render(matrixStack, buffer, packedLight, packedOverlay));
 	}
 
 	public void setRotationAngle(ModelPart modelRenderer, float x, float y, float z) {

@@ -1,5 +1,6 @@
 package com.finderfeed.solarforge.magic_items.blocks.infusing_table_things;
 
+import com.finderfeed.solarforge.ClientHelpers;
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.recipe_types.InfusingRecipe;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -58,8 +59,7 @@ public class InfusingTableScreen extends AbstractContainerScreen<InfusingTableCo
     @Override
     protected void renderBg(PoseStack matrices, float partialTicks, int x, int y) {
         matrices.pushPose();
-        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-        this.minecraft.getTextureManager().bind(GUI_TEXT);
+        ClientHelpers.bindText(GUI_TEXT);
         int a= 0;
         if ((int)minecraft.getWindow().getGuiScale() == 2){
             a = -1;
@@ -84,7 +84,8 @@ public class InfusingTableScreen extends AbstractContainerScreen<InfusingTableCo
         }
         matrices.popPose();
         matrices.pushPose();
-        minecraft.getTextureManager().bind(REQ_ENERGY);
+        ClientHelpers.bindText(REQ_ENERGY);
+
         matrices.translate(relX+22+a,relY+80,0);
         matrices.mulPose(Vector3f.ZP.rotationDegrees(180));
         float percent = (float)tile.energy / 100000;

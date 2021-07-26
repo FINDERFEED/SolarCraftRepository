@@ -17,7 +17,7 @@ import net.minecraft.world.item.TooltipFlag;
 
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.entity.player.ServerPlayerEntity;
+
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
@@ -41,7 +41,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.network.NetworkDirection;
+
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -139,6 +139,7 @@ public class SolarWandItem extends Item implements ManaConsumer {
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE,modid = "solarforge",value = Dist.CLIENT)
 class WandEvents{
 
+    public static final ResourceLocation LOC = new ResourceLocation("solarforge", "textures/misc/wand_crafting_progress.png");
     @SubscribeEvent
     public static void renderWandOverlays(final RenderGameOverlayEvent event){
 
@@ -156,8 +157,7 @@ class WandEvents{
                         BlockEntity tile = player.level.getBlockEntity(result.getBlockPos());
                         if (tile instanceof InfusingTableTileEntity) {
                             InfusingTableTileEntity tileInfusing = (InfusingTableTileEntity) tile;
-
-                            mc.getTextureManager().bind(new ResourceLocation("solarforge", "textures/misc/wand_crafting_progress.png"));
+                            ClientHelpers.bindText(LOC);
                             if (tileInfusing.RECIPE_IN_PROGRESS) {
                                 double percent = (float) tileInfusing.CURRENT_PROGRESS / tileInfusing.INFUSING_TIME;
                                 int height = event.getWindow().getGuiScaledHeight();

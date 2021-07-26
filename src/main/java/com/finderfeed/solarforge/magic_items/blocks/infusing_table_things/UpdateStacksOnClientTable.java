@@ -7,12 +7,12 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.core.BlockPos;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraftforge.fmllegacy.network.NetworkEvent;
+
 
 import java.util.function.Supplier;
 
-import BlockPos;
-import ItemStack;
+
 
 public class UpdateStacksOnClientTable {
     public boolean isActive;

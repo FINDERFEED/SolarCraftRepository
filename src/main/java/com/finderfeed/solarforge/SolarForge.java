@@ -1,7 +1,7 @@
 package com.finderfeed.solarforge;
 
 
-import com.finderfeed.solarforge.SolarAbilities.MeteoriteProjectile;
+import com.finderfeed.solarforge.SolarAbilities.meteorite.MeteoriteProjectile;
 import com.finderfeed.solarforge.SolarAbilities.SolarStrikeEntity;
 import com.finderfeed.solarforge.SolarAbilities.SolarStunEffect;
 import com.finderfeed.solarforge.capabilities.capability_mana.AttachManaCapabilityEvent;

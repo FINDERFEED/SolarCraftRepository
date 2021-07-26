@@ -7,18 +7,19 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.culling.Frustum;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import com.mojang.math.Matrix4f;
 import com.mojang.math.Vector3f;
 
-import ResourceLocation;
+
 
 public class SolarStrikeEntityRender extends EntityRenderer<SolarStrikeEntity> {
     private static final ResourceLocation SOLAR_STRIKE = new ResourceLocation("solarforge","textures/misc/solar_strike.png");
     private static final ResourceLocation SOLAR_STRIKE_RAY = new ResourceLocation("solarforge","textures/misc/solar_strike_ray.png");
-    public SolarStrikeEntityRender(EntityRenderDispatcher p_i46179_1_) {
-        super(p_i46179_1_);
+    public SolarStrikeEntityRender(EntityRendererProvider.Context ctx) {
+        super(ctx);
     }
     @Override
     public void render(SolarStrikeEntity entity, float p_225623_2_, float partialTicks, PoseStack matrices, MultiBufferSource buffer, int p_225623_6_) {

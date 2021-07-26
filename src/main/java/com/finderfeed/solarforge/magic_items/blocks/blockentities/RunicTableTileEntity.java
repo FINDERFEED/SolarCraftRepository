@@ -24,7 +24,7 @@ public class RunicTableTileEntity extends RandomizableContainerBlockEntity {
     private SimpleContainerData arr = new SimpleContainerData(6);
     public NonNullList<ItemStack> items = NonNullList.withSize(7,ItemStack.EMPTY);
 
-    protected RunicTableTileEntity( BlockPos p_155630_, BlockState p_155631_) {
+    public RunicTableTileEntity( BlockPos p_155630_, BlockState p_155631_) {
         super(TileEntitiesRegistry.RUNIC_TABLE_TILE.get(), p_155630_, p_155631_);
     }
 

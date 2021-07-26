@@ -1,8 +1,9 @@
-package com.finderfeed.solarforge.SolarAbilities;
+package com.finderfeed.solarforge.SolarAbilities.meteorite;
 
+import com.finderfeed.solarforge.SolarAbilities.SolarStrikeEntity;
 import com.finderfeed.solarforge.SolarForge;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.entity.Entity;
+
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractHurtingProjectile;
@@ -11,16 +12,16 @@ import net.minecraft.network.protocol.Packet;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.core.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.EntityRayTraceResult;
+
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraft.util.math.vector.Vector3f;
+
 import net.minecraft.world.level.Explosion;
-import net.minecraft.world.ExplosionContext;
+
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.util.Constants;
-import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraftforge.fmllegacy.network.NetworkHooks;
+
 
 public class MeteoriteProjectile extends AbstractHurtingProjectile {
     public MeteoriteProjectile(EntityType<? extends AbstractHurtingProjectile> p_i50173_1_, Level p_i50173_2_) {
@@ -65,7 +66,7 @@ public class MeteoriteProjectile extends AbstractHurtingProjectile {
                 }
             }
         }
-        this.remove();
+        this.remove(RemovalReason.KILLED);
     }
     @Override
     protected float getInertia() {
@@ -78,7 +79,7 @@ public class MeteoriteProjectile extends AbstractHurtingProjectile {
         if (!this.level.isClientSide){
             tickCount++;
             if (this.tickCount > 500){
-                this.remove();
+                this.remove(RemovalReason.KILLED);
             }
         }
         for (int i = 0;i<24;i++){

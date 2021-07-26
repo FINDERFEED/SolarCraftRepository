@@ -6,6 +6,7 @@ import com.finderfeed.solarforge.magic_items.blocks.rendering_models.SolarEnergy
 import com.finderfeed.solarforge.misc_things.AbstractSolarCore;
 import com.finderfeed.solarforge.misc_things.AbstractSolarNetworkRepeater;
 import com.finderfeed.solarforge.misc_things.IEnergyUser;
+import com.finderfeed.solarforge.registries.ModelLayersRegistry;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -25,11 +26,11 @@ public class EnergyGeneratorTileRender implements BlockEntityRenderer<EnergyGene
     public final ResourceLocation RAY = new ResourceLocation("solarforge","textures/misc/ray_into_sky.png");
     public final ResourceLocation BLOCK = new ResourceLocation("solarforge","textures/block/solar_energy_generator.png");
     public final ResourceLocation RAYY = new ResourceLocation("solarforge","textures/misc/ray_into_skyy.png");
-    public final SolarEnergyGeneratorModel model = new SolarEnergyGeneratorModel();
+    public final SolarEnergyGeneratorModel model;
 
 
     public EnergyGeneratorTileRender(BlockEntityRendererProvider.Context ctx) {
-
+        model = new SolarEnergyGeneratorModel(ctx.bakeLayer(ModelLayersRegistry.SOLAR_ENERGY_GEN_LAYER));
     }
 
     @Override

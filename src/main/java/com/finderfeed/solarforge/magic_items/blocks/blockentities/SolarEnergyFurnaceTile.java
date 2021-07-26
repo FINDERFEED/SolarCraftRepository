@@ -36,7 +36,7 @@ public class SolarEnergyFurnaceTile extends RandomizableContainerBlockEntity imp
     private SimpleContainerData arr = new SimpleContainerData(3);
     public NonNullList<ItemStack> items = NonNullList.withSize(2,ItemStack.EMPTY);
 
-    protected SolarEnergyFurnaceTile( BlockPos p_155630_, BlockState p_155631_) {
+    public SolarEnergyFurnaceTile( BlockPos p_155630_, BlockState p_155631_) {
         super(TileEntitiesRegistry.SOLAR_FURNACE_TILE_ENTITY.get(), p_155630_, p_155631_);
     }
 

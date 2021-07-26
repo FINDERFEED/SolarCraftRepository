@@ -1,7 +1,7 @@
 package com.finderfeed.solarforge.SolarAbilities;
 
 import com.finderfeed.solarforge.Helpers;
-import com.finderfeed.solarforge.SolarAbilities.AbilityClasses.*;
+import com.finderfeed.solarforge.SolarAbilities.meteorite.MeteoriteProjectile;
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.capabilities.capability_mana.CapabilitySolarMana;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;

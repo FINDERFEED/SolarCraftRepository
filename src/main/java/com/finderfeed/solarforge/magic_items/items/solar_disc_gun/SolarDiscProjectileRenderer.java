@@ -1,34 +1,29 @@
 package com.finderfeed.solarforge.magic_items.items.solar_disc_gun;
 
-import com.finderfeed.solarforge.SolarAbilities.MeteoriteProjectile;
 import com.finderfeed.solarforge.registries.items.ItemsRegister;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.culling.Frustum;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
-import net.minecraft.client.renderer.model.IBakedModel;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
+
 import net.minecraft.client.renderer.block.model.ItemTransforms;
-import net.minecraft.client.renderer.model.ModelRenderer;
-import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.item.ItemStack;
+
+
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.math.vector.Matrix4f;
-import net.minecraft.util.math.vector.Vector2f;
-import net.minecraft.util.math.vector.Vector3d;
+
 import com.mojang.math.Vector3f;
 
-import ResourceLocation;
 
 public class SolarDiscProjectileRenderer extends EntityRenderer<SolarDiscProjectile> {
     public ResourceLocation SOLAR_DISC = new ResourceLocation("solarforge","textures/misc/solar_disc.png");
 
 
-    public SolarDiscProjectileRenderer(EntityRenderDispatcher p_i46179_1_) {
-        super(p_i46179_1_);
+    public SolarDiscProjectileRenderer(EntityRendererProvider.Context ctx) {
+        super(ctx);
 
     }
     @Override
@@ -69,7 +64,7 @@ public class SolarDiscProjectileRenderer extends EntityRenderer<SolarDiscProject
 
 
         Minecraft.getInstance().getItemRenderer().render(ItemsRegister.SOLAR_DISC.get().getDefaultInstance(), ItemTransforms.TransformType.FIXED,false,
-                matrices,buffer,light,getPackedLightCoords(entity,light),Minecraft.getInstance().getItemRenderer().getModel(ItemsRegister.SOLAR_DISC.get().getDefaultInstance(),null,null));
+                matrices,buffer,light,getPackedLightCoords(entity,light),Minecraft.getInstance().getItemRenderer().getModel(ItemsRegister.SOLAR_DISC.get().getDefaultInstance(),null,null,0));
 
         matrices.popPose();
     }

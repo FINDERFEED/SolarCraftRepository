@@ -1,25 +1,40 @@
 package com.finderfeed.solarforge.magic_items.blocks.blockentities.projectiles.renderers;
 
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.projectiles.MortarProjectile;
+import com.finderfeed.solarforge.registries.ModelLayersRegistry;
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.model.geom.PartPose;
+import net.minecraft.client.model.geom.builders.CubeListBuilder;
+import net.minecraft.client.model.geom.builders.LayerDefinition;
+import net.minecraft.client.model.geom.builders.MeshDefinition;
+import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.culling.Frustum;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.math.vector.Vector3d;
+
 import com.mojang.math.Vector3f;
 
-import ResourceLocation;
+
 
 public class MortarProjectileRenderer extends EntityRenderer<MortarProjectile> {
     public final ResourceLocation RAY = new ResourceLocation("solarforge","textures/misc/crossbow_shot_texture.png");
-    public final ModelPart ray = new ModelPart(16,16,0,0);
-    public MortarProjectileRenderer(EntityRenderDispatcher p_i46179_1_) {
+    public final ModelPart ray;
+
+    public static LayerDefinition createLayer(){
+        MeshDefinition meshDefinition = new MeshDefinition();
+        PartDefinition partDefinition = meshDefinition.getRoot();
+        partDefinition.addOrReplaceChild("mortar", CubeListBuilder.create().addBox(-16,-16,-16,16,16,16), PartPose.ZERO);
+        return LayerDefinition.create(meshDefinition,16,16);
+    }
+
+    public MortarProjectileRenderer(EntityRendererProvider.Context p_i46179_1_) {
         super(p_i46179_1_);
-        ray.addBox(-16,-16,-16,16,16,16);
+        ray = p_i46179_1_.bakeLayer(ModelLayersRegistry.MORTAR_PROJ_LAYER);
         ray.setPos(8,8,8);
     }
 

@@ -2,6 +2,7 @@ package com.finderfeed.solarforge.magic_items.blocks.render;
 
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.AuraHealerTile;
 import com.finderfeed.solarforge.magic_items.blocks.rendering_models.AuraHealerModel;
+import com.finderfeed.solarforge.registries.ModelLayersRegistry;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -19,10 +20,10 @@ public class AuraHealerRenderer implements BlockEntityRenderer<AuraHealerTile> {
 
 
 
-    public final AuraHealerModel model = new AuraHealerModel();
+    public final AuraHealerModel model;
     public final ResourceLocation res = new ResourceLocation("solarforge","textures/block/aura_healer_block.png");
     public AuraHealerRenderer(BlockEntityRendererProvider.Context ctx) {
-
+        model = new AuraHealerModel(ctx.bakeLayer(ModelLayersRegistry.AURA_HEALER_LAYER));
     }
 
     @Override

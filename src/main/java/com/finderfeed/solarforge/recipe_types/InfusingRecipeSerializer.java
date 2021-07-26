@@ -41,7 +41,7 @@ public class InfusingRecipeSerializer extends ForgeRegistryEntry<RecipeSerialize
         Ingredient input7 = Ingredient.fromJson(inputElement7);
         Ingredient input8 = Ingredient.fromJson(inputElement8);
         Ingredient input9 = Ingredient.fromJson(inputElement9);
-        ItemStack output = ShapedRecipe.itemFromJson(GsonHelper.getAsJsonObject(file, "result"));
+        ItemStack output = ShapedRecipe.itemFromJson(GsonHelper.getAsJsonObject(file, "result")).getDefaultInstance();
         int infusingTime = GsonHelper.getAsInt(file, "time", 20);
         String child = GsonHelper.getAsString(file,"fragment");
         int reqEnergy = GsonHelper.getAsInt(file, "energy", 0);
