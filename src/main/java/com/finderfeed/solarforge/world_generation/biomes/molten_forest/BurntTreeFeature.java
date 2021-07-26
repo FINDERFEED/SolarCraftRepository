@@ -12,6 +12,7 @@ import net.minecraft.world.level.levelgen.feature.stateproviders.SimpleStateProv
 import net.minecraft.world.level.levelgen.feature.foliageplacers.BlobFoliagePlacer;
 
 import net.minecraft.world.level.levelgen.feature.configurations.NoneDecoratorConfiguration;
+import net.minecraft.world.level.levelgen.heightproviders.UniformHeight;
 import net.minecraft.world.level.levelgen.placement.FeatureDecorator;
 import net.minecraft.world.level.levelgen.feature.configurations.RangeDecoratorConfiguration;
 import net.minecraft.world.level.levelgen.placement.NoiseCountFactorDecoratorConfiguration;
@@ -32,17 +33,16 @@ public class BurntTreeFeature {
             new TwoLayersFeatureSize(1, 0, 1))
             .ignoreVines().build())
             .decorated(FeatureDecorator.SQUARE.configured(NoneDecoratorConfiguration.INSTANCE))
-            .decorated(FeatureDecorator.RANGE.configured(new RangeDecoratorConfiguration(20,30,35)))
             .decorated( FeatureDecorator.COUNT_NOISE_BIASED.configured(new NoiseCountFactorDecoratorConfiguration(3,2,3)));
 
 
     public static final ConfiguredFeature<?,?> BURNT_TREE_FEATURE = Feature.TREE.configured(new TreeConfiguration.TreeConfigurationBuilder(
             new SimpleStateProvider(BlocksRegistry.BURNT_LOG.get().defaultBlockState()),
-            new SimpleStateProvider(BlocksRegistry.ASH_LEAVES.get().defaultBlockState()),
-            new BurntTreeFoliagePlacer(ConstantInt.of(0), ConstantInt.of(0)),
             new BurntTreeTrunkPlacer(5, 3, 0),
+            new SimpleStateProvider(BlocksRegistry.ASH_LEAVES.get().defaultBlockState()),
+            new SimpleStateProvider(Blocks.AIR.defaultBlockState()),
+            new BurntTreeFoliagePlacer(ConstantInt.of(0), ConstantInt.of(0)),
             new TwoLayersFeatureSize(1, 0, 1))
             .ignoreVines().build())
-            .decorated(FeatureDecorator.SQUARE.configured(NoneDecoratorConfiguration.INSTANCE))
-            .decorated(FeatureDecorator.RANGE.configured(new RangeDecoratorConfiguration(20,30,35)));
+            .decorated(FeatureDecorator.SQUARE.configured(NoneDecoratorConfiguration.INSTANCE));
 }

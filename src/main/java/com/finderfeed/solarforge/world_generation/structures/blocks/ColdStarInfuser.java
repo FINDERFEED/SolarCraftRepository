@@ -4,7 +4,11 @@ import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Achievement;
 import com.finderfeed.solarforge.registries.items.ItemsRegister;
 import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
+import com.finderfeed.solarforge.world_generation.structures.blocks.tile_entities.ColdStarInfuserTile;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -21,21 +25,12 @@ import javax.annotation.Nullable;
 
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
-public class ColdStarInfuser extends Block {
+public class ColdStarInfuser extends Block implements EntityBlock {
     public ColdStarInfuser(Properties p_i48440_1_) {
         super(p_i48440_1_);
 
     }
-    @Override
-    public boolean hasTileEntity(BlockState state) {
-        return true;
-    }
 
-    @Nullable
-    @Override
-    public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
-        return TileEntitiesRegistry.COLD_STAR_INFUSER.get().create();
-    }
 
     @Override
     public InteractionResult use(BlockState p_225533_1_, Level p_225533_2_, BlockPos p_225533_3_, Player p_225533_4_, InteractionHand p_225533_5_, BlockHitResult p_225533_6_) {
@@ -57,5 +52,19 @@ public class ColdStarInfuser extends Block {
 
 
         return super.use(p_225533_1_, p_225533_2_, p_225533_3_, p_225533_4_, p_225533_5_, p_225533_6_);
+    }
+
+    @Nullable
+    @Override
+    public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
+        return TileEntitiesRegistry.COLD_STAR_INFUSER.get().create(blockPos,blockState);
+    }
+
+    @Nullable
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level p_153212_, BlockState p_153213_, BlockEntityType<T> p_153214_) {
+        return ((level, blockPos, blockState, t) -> {
+            ColdStarInfuserTile.tick(level,blockPos,blockState,(ColdStarInfuserTile)t);
+        });
     }
 }

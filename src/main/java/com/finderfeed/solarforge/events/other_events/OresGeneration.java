@@ -9,7 +9,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.levelgen.FlatLevelSource;
 import net.minecraft.world.level.levelgen.GenerationStep;
-import net.minecraft.world.gen.feature.*;
+
+import net.minecraft.world.level.levelgen.VerticalAnchor;
 import net.minecraft.world.level.levelgen.feature.StructureFeature;
 import net.minecraft.world.level.levelgen.placement.FeatureDecorator;
 import net.minecraft.world.level.levelgen.feature.configurations.RangeDecoratorConfiguration;
@@ -37,11 +38,11 @@ public class OresGeneration {
         if (!event.getCategory().equals(Biome.BiomeCategory.NETHER) && !event.getCategory().equals(Biome.BiomeCategory.THEEND)){
             event.getGeneration().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES,
                     Feature.ORE.configured(new OreConfiguration(OreConfiguration.Predicates.NATURAL_STONE, SolarForge.SOLAR_ORE.get().defaultBlockState(),4))
-                    .decorated(FeatureDecorator.RANGE.configured(new RangeDecoratorConfiguration(0,0,30)).squared().count(10)));
+                            .rangeUniform(VerticalAnchor.bottom(),VerticalAnchor.absolute(30)).squared().count(10));
         }
         if (!event.getCategory().equals(Biome.BiomeCategory.NETHER) && !event.getCategory().equals(Biome.BiomeCategory.THEEND)){
             event.getGeneration().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, Feature.ORE.configured(new OreConfiguration(OreConfiguration.Predicates.NATURAL_STONE, BlocksRegistry.SOLAR_STONE.get().defaultBlockState(),10))
-                    .decorated(FeatureDecorator.RANGE.configured(new RangeDecoratorConfiguration(0,0,80)).squared().count(7)));
+                    .rangeUniform(VerticalAnchor.bottom(),VerticalAnchor.absolute(80)).squared().count(7));
         }
         if (event.getCategory().equals(Biome.BiomeCategory.DESERT)) {
             event.getGeneration().getStructures().add(() -> SolarForgeStructureFeatures.CONF_DUNGEON_ONE);

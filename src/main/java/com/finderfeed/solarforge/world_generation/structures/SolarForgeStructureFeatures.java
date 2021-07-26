@@ -7,7 +7,7 @@ import net.minecraft.world.level.levelgen.flat.FlatLevelGeneratorSettings;
 import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
 import net.minecraft.world.level.levelgen.feature.ConfiguredStructureFeature;
 
-import ConfiguredStructureFeature;
+
 
 public class SolarForgeStructureFeatures {
     public static ConfiguredStructureFeature<?,?> CONF_DUNGEON_ONE = SolarForgeStructures.DUNGEON_ONE_KEY_LOCK.get().configured(FeatureConfiguration.NONE);

@@ -43,28 +43,29 @@ public class BurntTreeTrunkPlacer extends TrunkPlacer {
 
 
 
-
     @Override
-    public List<FoliagePlacer.FoliageAttachment> placeTrunk(LevelSimulatedRW world, Random rnd, int height, BlockPos pos, Set<BlockPos> set, BoundingBox box, TreeConfiguration cfg) {
-        setDirtAt(world,pos.below());
-        placeLogsInDirection(world,pos,Direction.WEST,4,rnd,0,cfg.trunkProvider.getState(rnd,pos),true,box,true);
-        placeLogsInDirection(world,pos,Direction.SOUTH,4,rnd,0,cfg.trunkProvider.getState(rnd,pos),true,box,true);
-        placeLogsInDirection(world,pos,Direction.EAST,4,rnd,0,cfg.trunkProvider.getState(rnd,pos),true,box,true);
-        placeLogsInDirection(world,pos,Direction.NORTH,4,rnd,0,cfg.trunkProvider.getState(rnd,pos),true,box,true);
+    public List<FoliagePlacer.FoliageAttachment> placeTrunk(LevelSimulatedReader levelSimulatedReader, BiConsumer<BlockPos, BlockState> world, Random rnd, int height, BlockPos pos, TreeConfiguration cfg) {
+        setDirtAt(levelSimulatedReader,world,rnd,pos.below(),cfg);
 
-        placeLogsInDirection(world,pos.above(),Direction.WEST,1,rnd,0,cfg.trunkProvider.getState(rnd,pos),false,box,false);
-        placeLogsInDirection(world,pos.above(),Direction.SOUTH,1,rnd,0,cfg.trunkProvider.getState(rnd,pos),false,box,false);
-        placeLogsInDirection(world,pos.above(),Direction.EAST,1,rnd,0,cfg.trunkProvider.getState(rnd,pos),false,box,false);
-        placeLogsInDirection(world,pos.above(),Direction.NORTH,1,rnd,0,cfg.trunkProvider.getState(rnd,pos),false,box,false);
+        placeLogsInDirection(levelSimulatedReader,cfg,world,pos,Direction.WEST,4,rnd,0,cfg.trunkProvider.getState(rnd,pos),true,true);
+        placeLogsInDirection(levelSimulatedReader,cfg,world,pos,Direction.SOUTH,4,rnd,0,cfg.trunkProvider.getState(rnd,pos),true,true);
+        placeLogsInDirection(levelSimulatedReader,cfg,world,pos,Direction.EAST,4,rnd,0,cfg.trunkProvider.getState(rnd,pos),true,true);
+        placeLogsInDirection(levelSimulatedReader,cfg,world,pos,Direction.NORTH,4,rnd,0,cfg.trunkProvider.getState(rnd,pos),true,true);
+
+        placeLogsInDirection(levelSimulatedReader,cfg,world,pos.above(),Direction.WEST,1,rnd,0,cfg.trunkProvider.getState(rnd,pos),false,false);
+        placeLogsInDirection(levelSimulatedReader,cfg,world,pos.above(),Direction.SOUTH,1,rnd,0,cfg.trunkProvider.getState(rnd,pos),false,false);
+        placeLogsInDirection(levelSimulatedReader,cfg,world,pos.above(),Direction.EAST,1,rnd,0,cfg.trunkProvider.getState(rnd,pos),false,false);
+        placeLogsInDirection(levelSimulatedReader,cfg,world,pos.above(),Direction.NORTH,1,rnd,0,cfg.trunkProvider.getState(rnd,pos),false,false);
 
         for (int i = 0;i<= height+1;i++){
-            setBlock(world,pos.above(i),cfg.trunkProvider.getState(rnd,pos.above(i)),box);
+            world.accept(pos.above(i),cfg.trunkProvider.getState(rnd,pos.above(i)));
+
         }
 
         return ImmutableList.of(new FoliagePlacer.FoliageAttachment(pos.above(height), 0, false));
     }
 
-    public void placeLogsInDirection(LevelSimulatedRW world,BlockPos pos,Direction dir, int length, Random rnd, int iterator, BlockState state,boolean rotate,BoundingBox box,boolean placeDirt){
+    public void placeLogsInDirection(LevelSimulatedReader levelSimulatedReader,TreeConfiguration cfg,BiConsumer<BlockPos,BlockState> world,BlockPos pos,Direction dir, int length, Random rnd, int iterator, BlockState state,boolean rotate,boolean placeDirt){
         if (iterator < length){
 
             BlockState stateConf = state.getBlock().defaultBlockState();
@@ -78,13 +79,14 @@ public class BurntTreeTrunkPlacer extends TrunkPlacer {
                 }
 
             if (placeDirt){
-                setDirtAt(world,Helpers.getBlockPositionsByDirection(dir,pos,1).get(1).below());
+
+                setDirtAt(levelSimulatedReader,world,rnd,Helpers.getBlockPositionsByDirection(dir,pos,1).get(1),cfg);
             }
-            setBlock(world,Helpers.getBlockPositionsByDirection(dir,pos,1).get(1),stateConf,box);
+            world.accept(Helpers.getBlockPositionsByDirection(dir,pos,1).get(1),stateConf);
             if (iterator != 0 && iterator%(Math.round(rnd.nextFloat()+1)) == 0) {
-                placeLogsInDirection(world, Helpers.getBlockPositionsByDirection(dir, pos, 1).get(1), Helpers.getRandomHorizontalDirection(true, dir, rnd), length, rnd, iterator + 1, state, rotate, box, placeDirt);
+                placeLogsInDirection(levelSimulatedReader,cfg,world, Helpers.getBlockPositionsByDirection(dir, pos, 1).get(1), Helpers.getRandomHorizontalDirection(true, dir, rnd), length, rnd, iterator + 1, state, rotate, placeDirt);
             }else{
-                placeLogsInDirection(world, Helpers.getBlockPositionsByDirection(dir, pos, 1).get(1), dir, length, rnd, iterator + 1, state, rotate, box, placeDirt);
+                placeLogsInDirection(levelSimulatedReader,cfg,world, Helpers.getBlockPositionsByDirection(dir, pos, 1).get(1), dir, length, rnd, iterator + 1, state, rotate, placeDirt);
             }
         }
     }

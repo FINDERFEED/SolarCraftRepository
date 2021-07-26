@@ -4,11 +4,12 @@ import com.finderfeed.solarforge.ClientHelpers;
 import com.finderfeed.solarforge.misc_things.AbstractPacket;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.core.BlockPos;
-import net.minecraftforge.fml.network.NetworkEvent;
+
 
 import java.util.function.Supplier;
 
-import BlockPos;
+
+import net.minecraftforge.fmllegacy.network.NetworkEvent;
 
 public class UpdateTypeOnClientPacket extends AbstractPacket {
 

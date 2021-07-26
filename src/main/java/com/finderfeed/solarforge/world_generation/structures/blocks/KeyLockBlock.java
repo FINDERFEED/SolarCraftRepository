@@ -2,7 +2,10 @@ package com.finderfeed.solarforge.world_generation.structures.blocks;
 
 import com.finderfeed.solarforge.registries.items.ItemsRegister;
 import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
-import net.minecraft.block.*;
+import com.finderfeed.solarforge.world_generation.structures.blocks.tile_entities.KeyLockStructureTile;
+import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Items;
@@ -21,7 +24,7 @@ import net.minecraft.world.level.block.GlazedTerracottaBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class KeyLockBlock extends GlazedTerracottaBlock  {
+public class KeyLockBlock extends GlazedTerracottaBlock implements EntityBlock {
 
     public KeyLockBlock() {
         super(BlockBehaviour.Properties.copy(Blocks.BEDROCK));
@@ -48,14 +51,18 @@ public class KeyLockBlock extends GlazedTerracottaBlock  {
         return PushReaction.IGNORE;
     }
 
+
+    @Nullable
     @Override
-    public boolean hasTileEntity(BlockState state) {
-        return true;
+    public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
+        return TileEntitiesRegistry.KEY_LOCK_TILE.get().create(blockPos,blockState);
     }
 
     @Nullable
     @Override
-    public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
-        return TileEntitiesRegistry.KEY_LOCK_TILE.get().create();
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level p_153212_, BlockState p_153213_, BlockEntityType<T> p_153214_) {
+        return ((level, blockPos, blockState, t) -> {
+            KeyLockStructureTile.tick(level,blockPos,blockState,(KeyLockStructureTile)t);
+        });
     }
 }

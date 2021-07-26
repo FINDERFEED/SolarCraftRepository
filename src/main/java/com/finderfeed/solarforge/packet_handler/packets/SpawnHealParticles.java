@@ -9,11 +9,11 @@ import net.minecraft.core.BlockPos;
 import com.mojang.math.Vector3f;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.fml.network.NetworkEvent;
+
 
 import java.util.function.Supplier;
 
-import BlockPos;
+import net.minecraftforge.fmllegacy.network.NetworkEvent;
 
 public class SpawnHealParticles extends AbstractPacket {
     public final BlockPos pos1;
