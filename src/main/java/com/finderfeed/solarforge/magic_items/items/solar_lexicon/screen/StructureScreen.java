@@ -1,5 +1,6 @@
 package com.finderfeed.solarforge.magic_items.items.solar_lexicon.screen;
 
+import com.finderfeed.solarforge.ClientHelpers;
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.misc_things.Multiblock;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.SolarLexicon;
@@ -43,19 +44,19 @@ public class StructureScreen extends Screen {
         currentPage = 1;
         structHeightAndPageCount = structure.getStruct().length;
         structWidth = structure.getStruct()[0].length / 2;
-        addButton(new ImageButton(relX+104,relY+16,16,16,0,0,0,BUTTONS,16,32,(button)->{
+        addRenderableWidget(new ImageButton(relX+104,relY+16,16,16,0,0,0,BUTTONS,16,32,(button)->{
             if ((currentPage+1 <= structHeightAndPageCount) ){
                 currentPage+=1;
             }
         }));
-        addButton(new ImageButton(relX+87,relY+16,16,16,0,16,0,BUTTONS,16,32,(button)->{
+        addRenderableWidget(new ImageButton(relX+87,relY+16,16,16,0,16,0,BUTTONS,16,32,(button)->{
             if ((currentPage-1 > 0)){
                 currentPage-=1;
             }
         }));
 
-        addButton(new ItemStackButton(relX+186,relY+9,12,12,(button)->{minecraft.setScreen(new SolarLexiconRecipesScreen());}, Items.CRAFTING_TABLE.getDefaultInstance(),0.7f,false));
-        addButton(new ItemStackButton(relX+174,relY+9,12,12,(button)->{
+        addRenderableWidget(new ItemStackButton(relX+186,relY+9,12,12,(button)->{minecraft.setScreen(new SolarLexiconRecipesScreen());}, Items.CRAFTING_TABLE.getDefaultInstance(),0.7f,false));
+        addRenderableWidget(new ItemStackButton(relX+174,relY+9,12,12,(button)->{
             Minecraft mc = Minecraft.getInstance();
             SolarLexicon lexicon = (SolarLexicon) mc.player.getMainHandItem().getItem();
             lexicon.currentSavedScreen = this;
@@ -69,7 +70,7 @@ public class StructureScreen extends Screen {
 
     @Override
     public void render(PoseStack matrices, int mousex, int mousey, float partialTicks) {
-        minecraft.getTextureManager().bind(STRUCTURE_GUI);
+        ClientHelpers.bindText(STRUCTURE_GUI);
         blit(matrices,relX,relY,0,0,256,256);
 
         String[] struct = structure.struct[currentPage-1];

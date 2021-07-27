@@ -1,5 +1,6 @@
 package com.finderfeed.solarforge.magic_items.items.solar_lexicon.screen;
 
+import com.finderfeed.solarforge.ClientHelpers;
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.misc_things.IScrollable;
@@ -83,7 +84,7 @@ public class SolarLexiconScreen extends Screen implements IScrollable {
             scrollX+=4;
         }
         if (this.prevscrollX != scrollX){
-            List<AbstractWidget> list = this.buttons;
+            List<AbstractWidget> list = ClientHelpers.getScreenButtons(this);
             list.remove(toggleRecipesScreen);
             list.remove(justForge);
             for (AbstractWidget a : list) {
@@ -97,7 +98,7 @@ public class SolarLexiconScreen extends Screen implements IScrollable {
             this.prevscrollX = scrollX;
         }
         if (this.prevscrollY != scrollY){
-            List<AbstractWidget> list = this.buttons;
+            List<AbstractWidget> list = ClientHelpers.getScreenButtons(this);
             list.remove(toggleRecipesScreen);
             list.remove(justForge);
             for (AbstractWidget a : list) {
@@ -171,7 +172,7 @@ public class SolarLexiconScreen extends Screen implements IScrollable {
 
             offsetY = (a.getAchievementTier() -1)* 30;
             boolean c = Helpers.canPlayerUnlock(a,minecraft.player);
-            addButton(new ItemStackButton(relX+10+offsetX,relY+10+offsetY,16,16,(button)->{
+            addRenderableWidget(new ItemStackButton(relX+10+offsetX,relY+10+offsetY,16,16,(button)->{
 
 
                 if (Helpers.hasPlayerUnlocked(a,Minecraft.getInstance().player)){
@@ -189,8 +190,8 @@ public class SolarLexiconScreen extends Screen implements IScrollable {
 
                 },a.getIcon(),1,c));
         }
-        addButton(toggleRecipesScreen);
-        addButton(justForge);
+        addRenderableWidget(toggleRecipesScreen);
+        addRenderableWidget(justForge);
         toggleRecipesScreen.x = relX +207;
         toggleRecipesScreen.y = relY + 184;
         justForge.x = relX +207;
@@ -201,7 +202,7 @@ public class SolarLexiconScreen extends Screen implements IScrollable {
     public void render(PoseStack matrices, int mousex, int mousey, float partialTicks) {
 
 
-        minecraft.getTextureManager().bind(MAIN_SCREEN_SCROLLABLE);
+        ClientHelpers.bindText(MAIN_SCREEN_SCROLLABLE);
         GL11.glEnable(GL11.GL_SCISSOR_TEST);
 
         int width = minecraft.getWindow().getWidth();
@@ -211,7 +212,7 @@ public class SolarLexiconScreen extends Screen implements IScrollable {
         GL11.glScissor(width/2-(83*scale),height/2-(6*scale),(188*scale),107*scale);
         blit(matrices,relX,relY,0,0,256,256);
 
-        minecraft.getTextureManager().bind(FRAME);
+        ClientHelpers.bindText(FRAME);
         for (Achievement a : tree.ACHIEVEMENT_TREE.keySet()) {
             Point first = new Point(relX+scrollX+18+map.get(a.getAchievementTier()).indexOf(a)*35,relY+scrollY+18+(a.getAchievementTier()-1)*30);
             for (Achievement b : tree.getAchievementRequirements(a)){
@@ -233,7 +234,7 @@ public class SolarLexiconScreen extends Screen implements IScrollable {
             Point first = new Point(relX+scrollX+18+map.get(a.getAchievementTier()).indexOf(a)*35,relY+scrollY+18+(a.getAchievementTier()-1)*30);
             blit(matrices,first.x-8,first.y-8,0,0,16,16,16,16);
         }
-        List<AbstractWidget> listButtons = this.buttons;
+        List<AbstractWidget> listButtons = ClientHelpers.getScreenButtons(this);
         listButtons.remove(toggleRecipesScreen);
         listButtons.remove(justForge);
 
@@ -243,7 +244,7 @@ public class SolarLexiconScreen extends Screen implements IScrollable {
                 button.render(matrices,mousex,mousey,partialTicks);
             }
         }
-        minecraft.getTextureManager().bind(QMARK);
+        ClientHelpers.bindText(QMARK);
         for (AbstractWidget a :listButtons){
             ItemStackButton button = (ItemStackButton) a;
             if (!button.qMark){
@@ -252,7 +253,7 @@ public class SolarLexiconScreen extends Screen implements IScrollable {
             }
         }
         GL11.glDisable(GL11.GL_SCISSOR_TEST);
-        minecraft.getTextureManager().bind(MAIN_SCREEN);
+        ClientHelpers.bindText(MAIN_SCREEN);
         blit(matrices,relX,relY,0,0,256,256);
         drawString(matrices,minecraft.font,currAch,relX+10,relY+122,0xffffff);
         Helpers.drawBoundedText(matrices,relX+10,relY+132,32,currentText);

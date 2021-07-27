@@ -43,7 +43,7 @@ public class SolarEnergyGeneratorModel extends Model {
 			base.add(part.getChild("base"+i));
 			base.get(i-1).setPos(0,24,0);
 		}
-		for (int i = 1;i <= 8;i++){
+		for (int i = 1;i <= 5;i++){
 			base.add(part.getChild("cube"+i));
 			base.get(i+7).setPos(0,-9.3f,0);
 			setRotationAngle(base.get(i+7), 0.0F, 0.0F, -3.1416F);

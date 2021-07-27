@@ -7,7 +7,6 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.item.UseAction;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.network.chat.Component;
@@ -33,7 +32,7 @@ public class SolarDiscGunItem extends Item implements ManaConsumer {
             projectile.setPos(p_77659_2_.position().x,p_77659_2_.position().y+1.4,p_77659_2_.position().z);
             projectile.setDeltaMovement(p_77659_2_.getLookAngle().multiply(1.5,1.5,1.5));
 
-            projectile.pitch = p_77659_2_.xRot;
+            projectile.pitch = p_77659_2_.getXRot();
             projectile.yaw = p_77659_2_.yHeadRot;
 
 

@@ -20,7 +20,7 @@ import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-import ResourceLocation;
+
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE,modid = "solarforge",value = Dist.CLIENT)
 public class RenderSolarGodShieldPlayer {
@@ -32,7 +32,7 @@ public class RenderSolarGodShieldPlayer {
         Player playerEntity = Minecraft.getInstance().player;
         if ((playerEntity.getItemInHand(InteractionHand.MAIN_HAND).getItem() instanceof ShieldOfSolarGod) || (playerEntity.getItemInHand(InteractionHand.OFF_HAND).getItem() instanceof ShieldOfSolarGod) ) {
             if  ( playerEntity.getItemInHand(InteractionHand.MAIN_HAND).getItem() instanceof ShieldOfSolarGod &&
-                    ((ShieldOfSolarGodISTER)(playerEntity.getItemInHand(InteractionHand.MAIN_HAND).getItem().getItemStackTileEntityRenderer())).isBeingUsed ){
+                    playerEntity.isUsingItem() ){
                 PoseStack stack = event.getMatrixStack();
                 MultiBufferSource buffer = event.getBuffers();
                 float partialTicks = event.getPartialTicks();
@@ -47,7 +47,7 @@ public class RenderSolarGodShieldPlayer {
                 drawRing(partialTicks, stack, buffer, 1, 0);
                 stack.popPose();
             }else if (playerEntity.getItemInHand(InteractionHand.OFF_HAND).getItem() instanceof ShieldOfSolarGod &&
-                    ((ShieldOfSolarGodISTER)(playerEntity.getItemInHand(InteractionHand.OFF_HAND).getItem().getItemStackTileEntityRenderer())).isBeingUsed) {
+                    playerEntity.isUsingItem() ) {
                 PoseStack stack = event.getMatrixStack();
                 MultiBufferSource buffer = event.getBuffers();
                 float partialTicks = event.getPartialTicks();
@@ -70,7 +70,7 @@ public class RenderSolarGodShieldPlayer {
         Player playerEntity = Minecraft.getInstance().player;
         if ((playerEntity.getItemInHand(InteractionHand.MAIN_HAND).getItem() instanceof ShieldOfSolarGod) || (playerEntity.getItemInHand(InteractionHand.OFF_HAND).getItem() instanceof ShieldOfSolarGod) ) {
             if  ( playerEntity.getItemInHand(InteractionHand.MAIN_HAND).getItem() instanceof ShieldOfSolarGod &&
-                    ((ShieldOfSolarGodISTER)(playerEntity.getItemInHand(InteractionHand.MAIN_HAND).getItem().getItemStackTileEntityRenderer())).isBeingUsed ){
+                    playerEntity.isUsingItem()  ){
                 PoseStack stack = event.getMatrixStack();
                 MultiBufferSource buffer = event.getBuffers();
                 float partialTicks = event.getPartialRenderTick();
@@ -85,7 +85,7 @@ public class RenderSolarGodShieldPlayer {
                 drawRing(partialTicks, stack, buffer, 1, 0);
                 stack.popPose();
             }else if (playerEntity.getItemInHand(InteractionHand.OFF_HAND).getItem() instanceof ShieldOfSolarGod &&
-                    ((ShieldOfSolarGodISTER)(playerEntity.getItemInHand(InteractionHand.OFF_HAND).getItem().getItemStackTileEntityRenderer())).isBeingUsed) {
+                    playerEntity.isUsingItem() ) {
                 PoseStack stack = event.getMatrixStack();
                 MultiBufferSource buffer = event.getBuffers();
                 float partialTicks = event.getPartialRenderTick();

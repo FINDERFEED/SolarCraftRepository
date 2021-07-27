@@ -144,7 +144,7 @@ public class RenderingTools {
         stack.scale(0.7f,0.7f,0.7f);
 
         Player playerEntity = ClientHelpers.getClientPlayer();
-        Minecraft.getInstance().getTextureManager().bindForSetup(runeEnergyOverlay);
+        ClientHelpers.bindText(runeEnergyOverlay);
         GuiComponent.blit(stack,0,0,0,0,10,60,20,60);
         float currentEnergy = RunicEnergy.getEnergy(playerEntity,type);
 //        float maxEnergy = playerEntity.getPersistentData().getFloat(RunicEnergy.MAX_ENERGY_TAG); //TODO:Update max energy on client
@@ -159,7 +159,7 @@ public class RenderingTools {
 
         stack.scale(0.7f,0.7f,0.7f);
 
-        Minecraft.getInstance().getTextureManager().bindForSetup(new ResourceLocation("solarforge", "textures/misc/tile_energy_pylon_" + type.id + ".png"));
+        ClientHelpers.bindText(new ResourceLocation("solarforge", "textures/misc/tile_energy_pylon_" + type.id + ".png"));
         GuiComponent.blit(stack,-3,63,0,0,16,16,16,16);
         stack.popPose();
     }

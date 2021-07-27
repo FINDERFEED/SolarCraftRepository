@@ -1,5 +1,6 @@
 package com.finderfeed.solarforge.magic_items.items.solar_lexicon.screen;
 
+import com.finderfeed.solarforge.ClientHelpers;
 import com.finderfeed.solarforge.recipe_types.solar_smelting.SolarSmeltingRecipe;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.screens.Screen;
@@ -39,14 +40,14 @@ public class SmeltingRecipeScreen extends Screen {
         stacks.add(recipe.output);
 
 
-        addButton(new ItemStackButton(relX+185,relY+187,12,12,(button)->{minecraft.setScreen(new SolarLexiconRecipesScreen());}, Items.CRAFTING_TABLE.getDefaultInstance(),0.7f,false));
+        addRenderableWidget(new ItemStackButton(relX+185,relY+187,12,12,(button)->{minecraft.setScreen(new SolarLexiconRecipesScreen());}, Items.CRAFTING_TABLE.getDefaultInstance(),0.7f,false));
         super.init();
     }
 
 
     @Override
     public void render(PoseStack matrices, int mousex, int mousey, float partialTicks) {
-        minecraft.getTextureManager().bind(MAIN_SCREEN);
+        ClientHelpers.bindText(MAIN_SCREEN);
         blit(matrices,relX,relY,0,0,256,256);
         minecraft.getItemRenderer().renderGuiItem(stacks.get(0),relX+77,relY+111);
         minecraft.getItemRenderer().renderGuiItem(stacks.get(1),relX+94,relY+111);

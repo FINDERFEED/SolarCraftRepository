@@ -8,6 +8,9 @@ import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.model.VillagerModel;
+import net.minecraft.client.renderer.entity.layers.CrossedArmsItemLayer;
+import net.minecraft.client.renderer.entity.layers.CustomHeadLayer;
+import net.minecraft.client.renderer.entity.layers.VillagerProfessionLayer;
 import net.minecraft.resources.ResourceLocation;
 
 public class VillagerSolarMasterRenderer extends MobRenderer<VillagerSolarMaster, VillagerModel<VillagerSolarMaster>> {
@@ -15,7 +18,9 @@ public class VillagerSolarMasterRenderer extends MobRenderer<VillagerSolarMaster
 
     public VillagerSolarMasterRenderer(EntityRendererProvider.Context ctx) {
         super(ctx, new VillagerModel<>(ctx.bakeLayer(ModelLayers.VILLAGER)), 0.5f);
-
+        this.addLayer(new CustomHeadLayer(this, ctx.getModelSet()));
+        this.addLayer(new VillagerProfessionLayer(this, ctx.getResourceManager(), "villager"));
+        this.addLayer(new CrossedArmsItemLayer(this));
     }
 
 

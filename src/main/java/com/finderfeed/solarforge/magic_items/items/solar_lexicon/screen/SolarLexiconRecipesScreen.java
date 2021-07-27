@@ -70,7 +70,7 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
         }
 
         if (this.prevscrollX != scrollX){
-            List<AbstractWidget> list = this.buttons;
+            List<AbstractWidget> list = ClientHelpers.getScreenButtons(this);
             list.remove(goBack);
             list.remove(nothing);
             for (AbstractWidget a : list) {
@@ -84,7 +84,7 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
             this.prevscrollX = scrollX;
         }
         if (this.prevscrollY != scrollY){
-            List<AbstractWidget> list = this.buttons;
+            List<AbstractWidget> list = ClientHelpers.getScreenButtons(this);
             list.remove(goBack);
             list.remove(nothing);
             for (AbstractWidget a : list) {
@@ -132,8 +132,8 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
 
         initButtons();
         //doOldThings();
-        addButton(goBack);
-        addButton(nothing);
+        addRenderableWidget(goBack);
+        addRenderableWidget(nothing);
         nothing.x = relX +207;
         nothing.y = relY + 184;
         goBack.x = relX +207;
@@ -224,7 +224,7 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
     }
 
     public void addInfusingRecipeButton(AncientFragment fragment,InfusingRecipe recipe,int x , int y){
-        addButton(new ItemStackButton(x,y,24,24,(button)->{
+        addRenderableWidget(new ItemStackButton(x,y,24,24,(button)->{
             minecraft.setScreen(new InformationScreen(fragment,new InfusingRecipeScreen(recipe)));
         },fragment.getIcon().getDefaultInstance(),1.5f,false,(button,matrices,mx,my)->{
             renderTooltip(matrices,fragment.getIcon().getDefaultInstance().getHoverName(),mx,my);
@@ -233,7 +233,7 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
 
 
     public void addSmeltingRecipeButton(SolarSmeltingRecipe recipe,int x , int y){
-        addButton(new ItemStackButton(x,y,24,24,(button)->{
+        addRenderableWidget(new ItemStackButton(x,y,24,24,(button)->{
             minecraft.setScreen(new SmeltingRecipeScreen(recipe));
         },recipe.output,1.5f,false,(button,matrices,mx,my)->{
             renderTooltip(matrices,recipe.output.getHoverName(),mx,my);
@@ -242,7 +242,7 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
 
 
     public void addInformationButton(ItemStack logo,int x , int y,AncientFragment fragment){
-        addButton(new ItemStackButton(x,y,24,24,(button)->{
+        addRenderableWidget(new ItemStackButton(x,y,24,24,(button)->{
             minecraft.setScreen(new InformationScreen(fragment,null));
         },logo,1.5f,false, (button,matrices,mx,my)->{
             renderTooltip(matrices,fragment.getTranslation(),mx,my);
@@ -250,7 +250,7 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
     }
 
     public void addStructureButton(Multiblock structure,int x , int y,AncientFragment fragment){
-        addButton(new ItemStackButton(x,y,24,24,(button)->{
+        addRenderableWidget(new ItemStackButton(x,y,24,24,(button)->{
             minecraft.setScreen(new StructureScreen(structure));
         },structure.getMainBlock().asItem().getDefaultInstance(),1.5f,false, (button,matrices,mx,my)->{
             renderTooltip(matrices,fragment.getTranslation(),mx,my);
@@ -268,11 +268,11 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
         int scale = (int)minecraft.getWindow().getGuiScale();
         GL11.glScissor(width/2-(83*scale),height/2-(89*scale),(188*scale),190*scale);
 
-        minecraft.getTextureManager().bind(MAIN_SCREEN_SCROLLABLE);
+        ClientHelpers.bindText(MAIN_SCREEN_SCROLLABLE);
         blit(matrices,relX,relY,0,0,256,256);
         //super.render(matrices,mousex,mousey,partialTicks);
 
-        minecraft.getTextureManager().bind(FRAME);
+        ClientHelpers.bindText(FRAME);
 
         TO_DRAW.clear();
 
@@ -336,7 +336,7 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
         }
         GL11.glDisable(GL11.GL_SCISSOR_TEST);
 
-        minecraft.getTextureManager().bind(MAIN_SCREEN);
+        ClientHelpers.bindText(MAIN_SCREEN);
         blit(matrices,relX,relY,0,0,256,256);
 
         goBack.render(matrices,mousex,mousey,partialTicks);

@@ -1,5 +1,6 @@
 package com.finderfeed.solarforge.magic_items.items.solar_lexicon;
 
+import com.finderfeed.solarforge.ClientHelpers;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -40,7 +41,7 @@ public class SolarLexiconContScreen extends AbstractContainerScreen<SolarLexicon
 
     @Override
     protected void renderBg(PoseStack matrices, float partialTicks, int mousex, int mousey) {
-        Minecraft.getInstance().getTextureManager().bind(LOC);
+        ClientHelpers.bindText(LOC);
 
         int a = 0;
         if (minecraft.getWindow().getGuiScale() != 2){

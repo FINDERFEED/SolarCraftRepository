@@ -1,5 +1,6 @@
 package com.finderfeed.solarforge.magic_items.items.solar_lexicon.screen;
 
+import com.finderfeed.solarforge.ClientHelpers;
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.recipe_types.InfusingRecipe;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.SolarLexicon;
@@ -50,8 +51,8 @@ public class InfusingRecipeScreen extends Screen {
         stacks.add(recipe.output);
 
 
-        addButton(new ItemStackButton(relX+185,relY+190,12,12,(button)->{minecraft.setScreen(new SolarLexiconRecipesScreen());}, Items.CRAFTING_TABLE.getDefaultInstance(),0.7f,false));
-        addButton(new ItemStackButton(relX+172,relY+190,12,12,(button)->{
+        addRenderableWidget(new ItemStackButton(relX+185,relY+190,12,12,(button)->{minecraft.setScreen(new SolarLexiconRecipesScreen());}, Items.CRAFTING_TABLE.getDefaultInstance(),0.7f,false));
+        addRenderableWidget(new ItemStackButton(relX+172,relY+190,12,12,(button)->{
             Minecraft mc = Minecraft.getInstance();
             SolarLexicon lexicon = (SolarLexicon) mc.player.getMainHandItem().getItem();
             lexicon.currentSavedScreen = this;
@@ -64,7 +65,7 @@ public class InfusingRecipeScreen extends Screen {
     @Override
     public void render(PoseStack matrices, int mousex, int mousey, float partialTicks) {
 
-        minecraft.getTextureManager().bind(MAIN_SCREEN);
+        ClientHelpers.bindText(MAIN_SCREEN);
         blit(matrices,relX,relY,0,0,256,256);
 
         minecraft.getItemRenderer().renderGuiItem(stacks.get(0),relX+120,relY+69);
@@ -84,7 +85,7 @@ public class InfusingRecipeScreen extends Screen {
 //        Helpers.drawBoundedText(matrices,relX+10,relY+152,33,recipe.child.getItemDescription().getString());
 
         super.render(matrices,mousex,mousey,partialTicks);
-        minecraft.getTextureManager().bind(REQ_ENERGY);
+        ClientHelpers.bindText(REQ_ENERGY);
         matrices.translate(relX+36,relY+96,0);
         matrices.mulPose(Vector3f.ZP.rotationDegrees(180));
         float percent = (float)recipe.requriedEnergy / 100000;

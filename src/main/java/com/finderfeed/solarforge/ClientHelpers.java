@@ -12,6 +12,8 @@ import com.finderfeed.solarforge.magic_items.items.solar_lexicon.SolarLexicon;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Achievement;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.ProgressionHelper;
 import com.mojang.blaze3d.systems.RenderSystem;
+import net.minecraft.client.gui.components.AbstractWidget;
+import net.minecraft.client.gui.components.Widget;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.client.Minecraft;
@@ -35,6 +37,8 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class ClientHelpers {
@@ -207,5 +211,16 @@ public class ClientHelpers {
 
     public static void bindText(ResourceLocation loc){
         RenderSystem.setShaderTexture(0,loc);
+    }
+
+    public static List<AbstractWidget> getScreenButtons(Screen screen){
+        List<Widget> widgets = screen.renderables;
+        List<AbstractWidget> returnable = new ArrayList<>();
+        widgets.forEach((widget)->{
+            if (widget instanceof AbstractWidget){
+                returnable.add((AbstractWidget) widget);
+            }
+        });
+        return returnable;
     }
 }

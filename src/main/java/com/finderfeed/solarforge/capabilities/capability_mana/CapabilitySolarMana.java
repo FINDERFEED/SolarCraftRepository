@@ -18,7 +18,7 @@ public class CapabilitySolarMana {
     public static Capability<SolarForgeMana> SOLAR_MANA_PLAYER = null;
 
     public static void register(){
-        CapabilityManager.INSTANCE.register(SolarForgeMana.class,new ManaStorage(),SolarManaCapability::new);
+        CapabilityManager.INSTANCE.register(SolarForgeMana.class);
     }
 
     public static LazyOptional<SolarForgeMana> getSolarMana(final LivingEntity ent){
@@ -26,20 +26,4 @@ public class CapabilitySolarMana {
     }
 
 
-    public static class ManaStorage implements Capability.IStorage<SolarForgeMana>{
-
-        @Nullable
-        @Override
-        public Tag writeNBT(Capability<SolarForgeMana> capability, SolarForgeMana instance, Direction side) {
-            CompoundTag tag = new CompoundTag();
-            tag.putDouble("solar_mana",instance.getMana());
-            return tag;
-        }
-
-        @Override
-        public void readNBT(Capability<SolarForgeMana> capability, SolarForgeMana instance, Direction side, Tag nbt) {
-            double solar_mana = ((CompoundTag)nbt).getDouble("solar_mana");
-            instance.setMana(solar_mana);
-        }
-    }
 }

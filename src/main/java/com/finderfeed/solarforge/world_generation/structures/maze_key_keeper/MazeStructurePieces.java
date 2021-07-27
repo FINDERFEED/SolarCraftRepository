@@ -2,6 +2,8 @@ package com.finderfeed.solarforge.world_generation.structures.maze_key_keeper;
 
 import com.finderfeed.solarforge.events.other_events.FeatureInit;
 import com.google.common.collect.ImmutableMap;
+import net.minecraft.core.Vec3i;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.entity.ChestBlockEntity;
@@ -10,19 +12,25 @@ import net.minecraft.world.level.block.Mirror;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.levelgen.feature.StructurePieceType;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.levelgen.structure.IglooPieces;
 import net.minecraft.world.level.levelgen.structure.StructurePiece;
 import net.minecraft.world.level.levelgen.structure.TemplateStructurePiece;
+import net.minecraft.world.level.levelgen.structure.templatesystem.BlockIgnoreProcessor;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureManager;
+import org.lwjgl.system.CallbackI;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Random;
+import java.util.function.Function;
 
-import ResourceLocation;
+
 
 public class MazeStructurePieces {
     private static final ResourceLocation DUNGEON_PIECE = new ResourceLocation("solarforge", "labyrinth");
@@ -45,7 +53,7 @@ public class MazeStructurePieces {
         // Lots of trial and error may be needed to get this right for your structure.
         BlockPos rotationOffSet = new BlockPos(0, 0, 0).rotate(rotation);
         BlockPos blockpos = rotationOffSet.offset(x, pos.getY()-50, z);
-        pieceList.add(new MazeStructurePieces.Piece(templateManager, DUNGEON_PIECE, blockpos, rotation));
+        pieceList.add(new MazeStructurePieces.Piece(templateManager, DUNGEON_PIECE, rotation,blockpos));
     }
 
     /*
@@ -55,54 +63,31 @@ public class MazeStructurePieces {
      * The method you will most likely want to touch is the handleDataMarker method.
      */
     public static class Piece extends TemplateStructurePiece {
-        private ResourceLocation resourceLocation;
-        private Rotation rotation;
 
-        public Piece(StructureManager templateManagerIn, ResourceLocation resourceLocationIn, BlockPos pos, Rotation rotationIn) {
-            super(FeatureInit.DUNGEON_MAZE_PIECE, 0);
-            this.resourceLocation = resourceLocationIn;
-            BlockPos blockpos = MazeStructurePieces.OFFSET.get(resourceLocation);
-            this.templatePosition = pos.offset(blockpos.getX(), blockpos.getY(), blockpos.getZ());
-            this.rotation = rotationIn;
-            this.setupPiece(templateManagerIn);
+        public Piece( StructureManager templateManagerIn, ResourceLocation resourceLocationIn,Rotation rot, BlockPos pos) {
+            super(FeatureInit.DUNGEON_MAZE_PIECE, 0, templateManagerIn, resourceLocationIn, resourceLocationIn.toString(), makeSettings(rot,DUNGEON_PIECE), makePosition(DUNGEON_PIECE,pos,0));
         }
 
-        public Piece(StructureManager templateManagerIn, CompoundTag tagCompound) {
-            super(FeatureInit.DUNGEON_MAZE_PIECE, tagCompound);
-            this.resourceLocation = new ResourceLocation(tagCompound.getString("Template"));
-            this.rotation = Rotation.valueOf(tagCompound.getString("Rot"));
-            this.setupPiece(templateManagerIn);
+        public Piece(  ServerLevel p_163670_,CompoundTag tagCompound) {
+            super(FeatureInit.DUNGEON_MAZE_PIECE, tagCompound, p_163670_, (loc)->{
+                return makeSettings(Rotation.valueOf(tagCompound.getString("Rot")),loc);
+            });
         }
 
-        private void setupPiece(StructureManager templateManager) {
-            StructureTemplate template = templateManager.get(this.resourceLocation);
-            StructurePlaceSettings placementsettings = (new StructurePlaceSettings()).setRotation(this.rotation).setMirror(Mirror.NONE);
-            this.setup(template, this.templatePosition, placementsettings);
+        private static StructurePlaceSettings makeSettings(Rotation p_162447_, ResourceLocation p_162448_) {
+            return (new StructurePlaceSettings()).setRotation(p_162447_).setMirror(Mirror.NONE).setRotationPivot((BlockPos) new BlockPos(3,5,5)).addProcessor(BlockIgnoreProcessor.STRUCTURE_BLOCK);
+        }
+
+        private static BlockPos makePosition(ResourceLocation p_162453_, BlockPos p_162454_, int p_162455_) {
+            return p_162454_.offset((Vec3i)MazeStructurePieces.OFFSET.get(p_162453_)).below(p_162455_);
         }
 
         @Override
-        protected void addAdditionalSaveData(CompoundTag tag) {
-            super.addAdditionalSaveData(tag);
-            tag.putString("Template", this.resourceLocation.toString());
-            tag.putString("Rot", this.rotation.name());
+        protected void addAdditionalSaveData(ServerLevel level,CompoundTag tag) {
+            super.addAdditionalSaveData(level,tag);
+//            tag.putString("Template", this.resourceLocation.toString());
+            tag.putString("Rot", this.placeSettings.getRotation().name());
         }
-
-        /**
-         * (abstract) Helper method to read subclass data from NBT
-         */
-
-
-        /*
-         * If you added any data marker structure blocks to your structure, you can access and modify them here.
-         * In this case, our structure has a data maker with the string "chest" put into it. So we check to see
-         * if the incoming function is "chest" and if it is, we now have that exact position.
-         *
-         * So what is done here is we replace the structure block with
-         * a chest and we can then set the loottable for it.
-         *
-         * You can set other data markers to do other behaviors such as spawn a random mob in a certain spot,
-         * randomize what rare block spawns under the floor, or what item an Item Frame will have.
-         */
         @Override
         protected void handleDataMarker(String func, BlockPos pos, ServerLevelAccessor world, Random rnd, BoundingBox box) {
 
@@ -116,3 +101,24 @@ public class MazeStructurePieces {
         }
     }
 }
+//        public Piece(StructureManager templateManagerIn, ResourceLocation resourceLocationIn, BlockPos pos, Rotation rotationIn) {
+//            super(FeatureInit.DUNGEON_MAZE_PIECE, 0);
+//            this.resourceLocation = resourceLocationIn;
+//            BlockPos blockpos = MazeStructurePieces.OFFSET.get(resourceLocation);
+//            this.templatePosition = pos.offset(blockpos.getX(), blockpos.getY(), blockpos.getZ());
+//            this.rotation = rotationIn;
+//            this.setupPiece(templateManagerIn);
+//        }
+//
+//        public Piece(StructureManager templateManagerIn, CompoundTag tagCompound) {
+//            super(FeatureInit.DUNGEON_MAZE_PIECE, tagCompound);
+//            this.resourceLocation = new ResourceLocation(tagCompound.getString("Template"));
+//            this.rotation = Rotation.valueOf(tagCompound.getString("Rot"));
+//            this.setupPiece(templateManagerIn);
+//        }
+//
+//        private void setupPiece(StructureManager templateManager) {
+//            Optional<StructureTemplate> template = templateManager.get(this.resourceLocation);
+//            StructurePlaceSettings placementsettings = (new StructurePlaceSettings()).setRotation(this.rotation).setMirror(Mirror.NONE);
+//            this.setup(template, this.templatePosition, placementsettings);
+//        }

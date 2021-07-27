@@ -64,21 +64,21 @@ public class SolarForgeBlockModelTrue extends Model {
 	public static LayerDefinition createLayer(){
 		MeshDefinition mesh = new MeshDefinition();
 		PartDefinition parts = mesh.getRoot();
-		parts.addOrReplaceChild("part1", CubeListBuilder.create(), PartPose.ZERO);
-		parts.addOrReplaceChild("part2", CubeListBuilder.create(), PartPose.ZERO);
-		parts.addOrReplaceChild("part3", CubeListBuilder.create(), PartPose.ZERO);
-		parts.addOrReplaceChild("part4", CubeListBuilder.create(), PartPose.ZERO);
-		parts.addOrReplaceChild("part5", CubeListBuilder.create(), PartPose.ZERO);
-		parts.addOrReplaceChild("part6", CubeListBuilder.create(), PartPose.ZERO);
-		parts.addOrReplaceChild("part7", CubeListBuilder.create(), PartPose.ZERO);
-		parts.addOrReplaceChild("part8", CubeListBuilder.create(), PartPose.ZERO);
-		parts.addOrReplaceChild("part9", CubeListBuilder.create(), PartPose.ZERO);
-		parts.addOrReplaceChild("part10", CubeListBuilder.create(), PartPose.ZERO);
-		parts.addOrReplaceChild("part11", CubeListBuilder.create(), PartPose.ZERO);
-		parts.addOrReplaceChild("part12", CubeListBuilder.create(), PartPose.ZERO);
+		parts.addOrReplaceChild("part1", CubeListBuilder.create().texOffs(0, 179).addBox(-16.0F, -7.0F, -16.0F, 32.0F, 3.0F, 32.0F, false), PartPose.ZERO);
+		parts.addOrReplaceChild("part2", CubeListBuilder.create().texOffs(0, 137).addBox(-9.0F, -17.0F, -9.0F, 18.0F, 10.0F, 18.0F, false), PartPose.ZERO);
+		parts.addOrReplaceChild("part3", CubeListBuilder.create().texOffs(199, 10).addBox(-5.0F, -27.0F, -5.0F, 10.0F, 10.0F, 10.0F, false), PartPose.ZERO);
+		parts.addOrReplaceChild("part4", CubeListBuilder.create().texOffs(156, 41).addBox(-12.0F, -35.0F, -12.0F, 24.0F, 8.0F, 24.0F, false), PartPose.ZERO);
+		parts.addOrReplaceChild("part5", CubeListBuilder.create().texOffs(102, 0).addBox(6.0F, -40.0F, -6.0F, 4.0F, 5.0F, 12.0F, false), PartPose.ZERO);
+		parts.addOrReplaceChild("part6", CubeListBuilder.create().texOffs(224, 168).addBox(-10.0F, -40.0F, -6.0F, 4.0F, 5.0F, 12.0F, false), PartPose.ZERO);
+		parts.addOrReplaceChild("part7", CubeListBuilder.create().texOffs(162, 141).addBox(-6.0F, -40.0F, -10.0F, 12.0F, 5.0F, 4.0F, false), PartPose.ZERO);
+		parts.addOrReplaceChild("part8", CubeListBuilder.create().texOffs(105, 26).addBox(-6.0F, -40.0F, 6.0F, 12.0F, 5.0F, 4.0F, false), PartPose.ZERO);
+		parts.addOrReplaceChild("part9", CubeListBuilder.create().texOffs(35, 0).addBox(-8.0F, -52.0F, -4.0F, 4.0F, 12.0F, 8.0F, false), PartPose.ZERO);
+		parts.addOrReplaceChild("part10", CubeListBuilder.create().texOffs(48, 50).addBox(4.0F, -52.0F, -4.0F, 4.0F, 12.0F, 8.0F, false), PartPose.ZERO);
+		parts.addOrReplaceChild("part11", CubeListBuilder.create().texOffs(0, 47).addBox(-4.0F, -52.0F, 4.0F, 8.0F, 12.0F, 4.0F, false), PartPose.ZERO);
+		parts.addOrReplaceChild("part12", CubeListBuilder.create().texOffs(231, 141).addBox(-4.0F, -52.0F, -8.0F, 8.0F, 12.0F, 4.0F, false), PartPose.ZERO);
 
-		parts.addOrReplaceChild("part13", CubeListBuilder.create(), PartPose.ZERO);
-		parts.addOrReplaceChild("part14", CubeListBuilder.create(), PartPose.ZERO);
+		parts.addOrReplaceChild("part13", CubeListBuilder.create().texOffs(125, 200).addBox(-8.0F, -4.0F, -24.0F, 16.0F, 4.0F, 48.0F, false), PartPose.ZERO);
+		parts.addOrReplaceChild("part14", CubeListBuilder.create().texOffs(0, 234).addBox(-24.0F, -4.0F, -8.0F, 48.0F, 4.0F, 16.0F, false), PartPose.ZERO);
 		return LayerDefinition.create(mesh,256,256);
 	}
 

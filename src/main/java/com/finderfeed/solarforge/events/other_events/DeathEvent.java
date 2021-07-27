@@ -15,7 +15,8 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.network.NetworkDirection;
+import net.minecraftforge.fmllegacy.network.NetworkDirection;
+
 
 @Mod.EventBusSubscriber(modid = "solarforge",bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class DeathEvent {
@@ -30,7 +31,7 @@ public class DeathEvent {
                 player.addEffect(new MobEffectInstance(EffectsRegister.IMMORTALITY_EFFECT.get(),400,0));
                 player.setHealth(player.getMaxHealth());
 
-                player.inventory.setItem(slot, ItemStack.EMPTY);
+                player.getInventory().setItem(slot, ItemStack.EMPTY);
                 ServerLevel world = (ServerLevel)player.level;
                 world.playSound(player,player.getX(),player.getY(),player.getZ(), SoundEvents.TOTEM_USE, SoundSource.AMBIENT,0.5f,0.5f);
                 SolarForgePacketHandler.INSTANCE.sendTo(new ProcImmortalityTotemAnimation(),((ServerPlayer)player).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
@@ -44,8 +45,8 @@ public class DeathEvent {
 
     public static int findImmortalityTotem(Player player){
 
-            for (int i = 0; i < player.inventory.getContainerSize(); i++) {
-                if (player.inventory.getItem(i).getItem() instanceof TotemOfImmortality) {
+            for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
+                if (player.getInventory().getItem(i).getItem() instanceof TotemOfImmortality) {
                     return i;
                 }
             }

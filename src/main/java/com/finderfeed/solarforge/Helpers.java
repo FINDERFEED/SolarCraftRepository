@@ -14,6 +14,7 @@ import com.finderfeed.solarforge.registries.items.ItemsRegister;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.achievement_tree.AchievementTree;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Achievement;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.packets.UpdateProgressionOnClient;
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiComponent;
@@ -137,7 +138,8 @@ public class Helpers {
         GL11.glDisable(GL11.GL_TEXTURE_2D);
 
         GL11.glBegin(GL11.GL_LINES);
-        GL11.glColor4f(red,green,blue,255);
+
+        RenderSystem.setShaderColor(red,green,blue,1);
         GL11.glVertex2i(x1, y1);
         GL11.glVertex2i(x2, y2);
 

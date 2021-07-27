@@ -2,6 +2,7 @@ package com.finderfeed.solarforge.capabilities.capability_mana;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.core.Direction;
+import net.minecraft.nbt.Tag;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.common.util.LazyOptional;
@@ -28,15 +29,23 @@ public class PlayerManaProvider implements ICapabilitySerializable<CompoundTag> 
             return new CompoundTag();
 
         }else{
-            return (CompoundTag) CapabilitySolarMana.SOLAR_MANA_PLAYER.writeNBT(solar_mana,null);
+            return (CompoundTag) writeNBT(CapabilitySolarMana.SOLAR_MANA_PLAYER,solar_mana,null);
         }
 
     }
-
     @Override
     public void deserializeNBT(CompoundTag nbt) {
         if (CapabilitySolarMana.SOLAR_MANA_PLAYER !=null){
-            CapabilitySolarMana.SOLAR_MANA_PLAYER.readNBT(solar_mana,null,nbt);
+            readNBT(CapabilitySolarMana.SOLAR_MANA_PLAYER,solar_mana,null,nbt);
         }
+    }
+    public Tag writeNBT(Capability<SolarForgeMana> capability, SolarForgeMana instance, Direction side) {
+        CompoundTag tag = new CompoundTag();
+        tag.putDouble("solar_mana",instance.getMana());
+        return tag;
+    }
+    public void readNBT(Capability<SolarForgeMana> capability, SolarForgeMana instance, Direction side, Tag nbt) {
+        double solar_mana = ((CompoundTag)nbt).getDouble("solar_mana");
+        instance.setMana(solar_mana);
     }
 }

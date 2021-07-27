@@ -43,7 +43,7 @@ public class SmallSolarStrikeParticle extends TextureSheetParticle {
     public ParticleRenderType getRenderType() {
         //setAlphaState(DEFAULT_ALPHA).setTransparencyState(TRANSLUCENT_TRANSPARENCY).setLightmapState(LIGHTMAP).setDepthTestState(NO_DEPTH_TEST).setWriteMaskState(COLOR_WRITE)
 
-        return SOLAR_STRIKE_PARTICLE_RENDER ;
+        return ParticleRenderType.PARTICLE_SHEET_TRANSLUCENT;
     }
 
 

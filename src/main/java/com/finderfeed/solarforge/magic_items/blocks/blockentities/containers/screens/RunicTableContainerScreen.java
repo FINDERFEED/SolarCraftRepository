@@ -1,5 +1,6 @@
 package com.finderfeed.solarforge.magic_items.blocks.blockentities.containers.screens;
 
+import com.finderfeed.solarforge.ClientHelpers;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.containers.RunicTableContainer;
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
 import com.finderfeed.solarforge.packet_handler.packets.RunicTablePacket;
@@ -23,6 +24,7 @@ import java.util.List;
 
 import net.minecraft.client.gui.components.Button.OnPress;
 import net.minecraft.client.gui.components.Button.OnTooltip;
+import org.lwjgl.opengl.GL11;
 
 public class RunicTableContainerScreen extends AbstractContainerScreen<RunicTableContainer> {
     public final ResourceLocation MAIN_SCREEN = new ResourceLocation("solarforge","textures/gui/runic_table_gui.png");
@@ -54,7 +56,7 @@ public class RunicTableContainerScreen extends AbstractContainerScreen<RunicTabl
             pattern.add(ProgressionHelper.RUNES[a].getDefaultInstance());
         }
 
-        addButton(new WoodenButton(relX+72,relY+85,40,15,new TranslatableComponent("solarcraft.runic_table"),(button)->{
+        addRenderableWidget(new WoodenButton(relX+72,relY+85,40,15,new TranslatableComponent("solarcraft.runic_table"),(button)->{
             SolarForgePacketHandler.INSTANCE.sendToServer(new RunicTablePacket(menu.te.getBlockPos()));
         }));
     }
@@ -68,7 +70,8 @@ public class RunicTableContainerScreen extends AbstractContainerScreen<RunicTabl
 
     @Override
     protected void renderBg(PoseStack matrices, float partialTicks, int mousex, int mousey) {
-        Minecraft.getInstance().getTextureManager().bind(MAIN_SCREEN);
+
+        ClientHelpers.bindText(MAIN_SCREEN);
         int scale = (int) minecraft.getWindow().getGuiScale();
         int a = 1;
         if (scale == 2) {
@@ -116,8 +119,8 @@ class WoodenButton extends Button{
         }
         Minecraft minecraft = Minecraft.getInstance();
         Font fontrenderer = minecraft.font;
-        minecraft.getTextureManager().bind(WIDGETS_SOLARFORGE);
-        RenderSystem.color4f(1.0F, 1.0F, 1.0F, this.alpha);
+        ClientHelpers.bindText(WIDGETS_SOLARFORGE);
+        GL11.glColor4f(1.0F, 1.0F, 1.0F, this.alpha);
         int i = this.getYImage(this.isHovered());
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();

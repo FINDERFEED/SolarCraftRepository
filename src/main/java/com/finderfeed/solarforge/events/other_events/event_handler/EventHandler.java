@@ -16,10 +16,9 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.Item;
+
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.item.Items;
+
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.ChatFormatting;
 import net.minecraft.world.level.biome.Biome;
@@ -92,11 +91,11 @@ public class EventHandler {
 
 
     public static void deleteSolarForge(Player playerEntity){
-        int count = playerEntity.inventory.countItem(SolarForge.SOLAR_FORGE_ITEM.get());
+        int count = playerEntity.getInventory().countItem(SolarForge.SOLAR_FORGE_ITEM.get());
 
 
         if ((count > 0) && !ProgressionHelper.doPlayerHasFragment(playerEntity, AncientFragment.SOLAR_FORGE) && !playerEntity.isCreative() && !playerEntity.isSpectator()) {
-            Inventory inventory = playerEntity.inventory;
+            Inventory inventory = playerEntity.getInventory();
             for (int i = 0;i < count;i++){
                 int slot = inventory.findSlotMatchingUnusedItem(SolarForge.SOLAR_FORGE_ITEM.get().getDefaultInstance());
                 inventory.setItem(slot,ItemStack.EMPTY);
@@ -112,11 +111,11 @@ public class EventHandler {
 
     }
     public static void deleteInfuser(Player playerEntity){
-        int count = playerEntity.inventory.countItem(SolarForge.SOLAR_FORGE_ITEM.get());
+        int count = playerEntity.getInventory().countItem(SolarForge.SOLAR_FORGE_ITEM.get());
 
 
         if ((count > 0) && !ProgressionHelper.doPlayerHasFragment(playerEntity, AncientFragment.SOLAR_INFUSER) && !playerEntity.isCreative() && !playerEntity.isSpectator()) {
-            Inventory inventory = playerEntity.inventory;
+            Inventory inventory = playerEntity.getInventory();
             for (int i = 0;i < count;i++){
                 int slot = inventory.findSlotMatchingUnusedItem(SolarForge.INFUSING_STAND_ITEM.get().getDefaultInstance());
                 inventory.setItem(slot,ItemStack.EMPTY);

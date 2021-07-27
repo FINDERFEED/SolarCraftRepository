@@ -1,6 +1,7 @@
 package com.finderfeed.solarforge.magic_items.items.render_player_events;
 
 
+import com.finderfeed.solarforge.ClientHelpers;
 import com.finderfeed.solarforge.magic_items.items.UltraCrossbowItem;
 import com.finderfeed.solarforge.magic_items.items.solar_disc_gun.SolarDiscGunItem;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -21,8 +22,8 @@ import net.minecraftforge.client.event.RenderHandEvent;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import org.lwjgl.opengl.GL11;
 
-import ResourceLocation;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE,modid = "solarforge",value = Dist.CLIENT)
 public class RenderUltraCrossbowPlayer {
@@ -34,13 +35,14 @@ public class RenderUltraCrossbowPlayer {
     @SubscribeEvent
     public static void gameOverlay(final RenderGameOverlayEvent event){
         Minecraft mc = Minecraft.getInstance();
-        if (event.getType() == RenderGameOverlayEvent.ElementType.HOTBAR) {
+        if (event.getType() == RenderGameOverlayEvent.ElementType.TEXT) {
             if (Minecraft.getInstance().player.getMainHandItem().getItem() instanceof UltraCrossbowItem) {
                 PoseStack stack = event.getMatrixStack();
                 Window window = event.getWindow();
-                mc.getTextureManager().bind(PRICEL);
+                ClientHelpers.bindText(PRICEL);
                 RenderSystem.enableBlend();
-                RenderSystem.color4f(1,1,0.3f,0.5f);
+
+                RenderSystem.setShaderColor(1,1,0.3f,0.5f);
                 int width = (int)((window.getWidth())/2/window.getGuiScale() -21);
                 int height = (int)((window.getHeight())/2/window.getGuiScale() - 20);
 
@@ -49,9 +51,10 @@ public class RenderUltraCrossbowPlayer {
             }else if( Minecraft.getInstance().player.getOffhandItem().getItem() instanceof UltraCrossbowItem){
                 PoseStack stack = event.getMatrixStack();
                 Window window = event.getWindow();
-                mc.getTextureManager().bind(PRICEL);
+                ClientHelpers.bindText(PRICEL);
                 RenderSystem.enableBlend();
-                RenderSystem.color4f(1,1,0.3f,0.5f);
+                RenderSystem.setShaderColor(1,1,0.3f,0.5f);
+
                 int width = (int)((window.getWidth())/2/window.getGuiScale() -21);
                 int height = (int)((window.getHeight())/2/window.getGuiScale() - 20);
 

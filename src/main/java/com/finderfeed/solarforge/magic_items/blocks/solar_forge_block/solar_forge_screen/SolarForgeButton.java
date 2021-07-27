@@ -45,7 +45,8 @@ public class SolarForgeButton extends Button  {
         Font fontrenderer = minecraft.font;
 
         ClientHelpers.bindText(WIDGETS_SOLARFORGE);
-        GL11.glColor4f(1,1,1,alpha);
+
+        RenderSystem.setShaderColor(1,1,1,alpha);
         int i = this.getYImage(this.isHovered());
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();

@@ -1,16 +1,21 @@
 package com.finderfeed.solarforge.world_generation.structures.charging_station;
 
 import com.finderfeed.solarforge.events.other_events.FeatureInit;
+import com.finderfeed.solarforge.world_generation.structures.dimensional_shard_structure.DimStructPieces;
 import com.google.common.collect.ImmutableMap;
+import net.minecraft.core.Vec3i;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.block.Mirror;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.levelgen.feature.StructurePieceType;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.levelgen.structure.StructurePiece;
 import net.minecraft.world.level.levelgen.structure.TemplateStructurePiece;
+import net.minecraft.world.level.levelgen.structure.templatesystem.BlockIgnoreProcessor;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureManager;
@@ -42,7 +47,7 @@ public class ChargingStationPieces {
         // Lots of trial and error may be needed to get this right for your structure.
         BlockPos rotationOffSet = new BlockPos(0, 0, 0).rotate(rotation);
         BlockPos blockpos = rotationOffSet.offset(x, pos.getY(), z);
-        pieceList.add(new ChargingStationPieces.Piece(templateManager, DUNGEON_PIECE, blockpos, rotation));
+        pieceList.add(new ChargingStationPieces.Piece(templateManager, DUNGEON_PIECE, rotation,blockpos));
     }
 
     /*
@@ -52,36 +57,33 @@ public class ChargingStationPieces {
      * The method you will most likely want to touch is the handleDataMarker method.
      */
     public static class Piece extends TemplateStructurePiece {
-        private ResourceLocation resourceLocation;
-        private Rotation rotation;
 
-        public Piece(StructureManager templateManagerIn, ResourceLocation resourceLocationIn, BlockPos pos, Rotation rotationIn) {
-            super(FeatureInit.CHARGING_PIECE, 0);
-            this.resourceLocation = resourceLocationIn;
-            BlockPos blockpos = ChargingStationPieces.OFFSET.get(resourceLocation);
-            this.templatePosition = pos.offset(blockpos.getX(), blockpos.getY(), blockpos.getZ());
-            this.rotation = rotationIn;
-            this.setupPiece(templateManagerIn);
+
+        public Piece( StructureManager p_163662_, ResourceLocation p_163663_,Rotation rot, BlockPos p_163666_) {
+            super(FeatureInit.CHARGING_PIECE, 0, p_163662_, p_163663_, p_163663_.toString(), makeSettings(rot,p_163663_), makePosition(p_163663_,p_163666_,0));
         }
 
-        public Piece(StructureManager templateManagerIn, CompoundTag tagCompound) {
-            super(FeatureInit.CHARGING_PIECE, tagCompound);
-            this.resourceLocation = new ResourceLocation(tagCompound.getString("Template"));
-            this.rotation = Rotation.valueOf(tagCompound.getString("Rot"));
-            this.setupPiece(templateManagerIn);
+        public Piece(  ServerLevel p_163670_,CompoundTag tagCompound) {
+            super(FeatureInit.DIMENSIONAL_SHARD_STRUCTURE, tagCompound, p_163670_, (loc)->{
+                return makeSettings(Rotation.valueOf(tagCompound.getString("Rot")),loc);
+            });
         }
 
-        private void setupPiece(StructureManager templateManager) {
-            StructureTemplate template = templateManager.get(this.resourceLocation);
-            StructurePlaceSettings placementsettings = (new StructurePlaceSettings()).setRotation(this.rotation).setMirror(Mirror.NONE);
-            this.setup(template, this.templatePosition, placementsettings);
+
+
+        private static StructurePlaceSettings makeSettings(Rotation p_162447_, ResourceLocation p_162448_) {
+            return (new StructurePlaceSettings()).setRotation(p_162447_).setMirror(Mirror.NONE).setRotationPivot((BlockPos) new BlockPos(3,5,5)).addProcessor(BlockIgnoreProcessor.STRUCTURE_BLOCK);
+        }
+
+        private static BlockPos makePosition(ResourceLocation p_162453_, BlockPos p_162454_, int p_162455_) {
+            return p_162454_.offset((Vec3i) ChargingStationPieces.OFFSET.get(p_162453_)).below(p_162455_);
         }
 
         @Override
-        protected void addAdditionalSaveData(CompoundTag tag) {
-            super.addAdditionalSaveData(tag);
-            tag.putString("Template", this.resourceLocation.toString());
-            tag.putString("Rot", this.rotation.name());
+        protected void addAdditionalSaveData(ServerLevel level,CompoundTag tag) {
+            super.addAdditionalSaveData(level,tag);
+
+            tag.putString("Rot", this.placeSettings.getRotation().name());
         }
 
         @Override
@@ -108,3 +110,24 @@ public class ChargingStationPieces {
 
     }
 }
+//        public Piece(StructureManager templateManagerIn, ResourceLocation resourceLocationIn, BlockPos pos, Rotation rotationIn) {
+//            super(FeatureInit.CHARGING_PIECE, 0);
+//            this.resourceLocation = resourceLocationIn;
+//            BlockPos blockpos = ChargingStationPieces.OFFSET.get(resourceLocation);
+//            this.templatePosition = pos.offset(blockpos.getX(), blockpos.getY(), blockpos.getZ());
+//            this.rotation = rotationIn;
+//            this.setupPiece(templateManagerIn);
+//        }
+//
+//        public Piece(StructureManager templateManagerIn, CompoundTag tagCompound) {
+//            super(FeatureInit.CHARGING_PIECE, tagCompound);
+//            this.resourceLocation = new ResourceLocation(tagCompound.getString("Template"));
+//            this.rotation = Rotation.valueOf(tagCompound.getString("Rot"));
+//            this.setupPiece(templateManagerIn);
+//        }
+//
+//        private void setupPiece(StructureManager templateManager) {
+//            StructureTemplate template = templateManager.get(this.resourceLocation);
+//            StructurePlaceSettings placementsettings = (new StructurePlaceSettings()).setRotation(this.rotation).setMirror(Mirror.NONE);
+//            this.setup(template, this.templatePosition, placementsettings);
+//        }

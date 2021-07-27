@@ -91,7 +91,7 @@ public class SolarLexiconContainer extends AbstractContainerMenu {
 
     @Override
     public boolean stillValid(Player player) {
-        return !player.isDeadOrDying() && player.inventory.contains(stack);
+        return !player.isDeadOrDying() && player.getInventory().contains(stack);
     }
 
 

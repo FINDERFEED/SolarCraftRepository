@@ -1,5 +1,6 @@
 package com.finderfeed.solarforge.events.other_events;
 
+import com.finderfeed.solarforge.ClientHelpers;
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.RenderingTools;
 import com.finderfeed.solarforge.SolarForge;
@@ -19,6 +20,8 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber(modid = "solarforge",bus = Mod.EventBusSubscriber.Bus.FORGE,value = Dist.CLIENT)
 public class HudRenderMana {
 
+    public static ResourceLocation Loc = new ResourceLocation("solarforge","textures/misc/mana_hud.png");
+    public static ResourceLocation Loc2 = new ResourceLocation("solarforge","textures/gui/tooltips_solarforge.png");
     @SubscribeEvent
     public static void gameOverlay(final RenderGameOverlayEvent event){
         Minecraft mc = Minecraft.getInstance();
@@ -32,7 +35,8 @@ public class HudRenderMana {
                int width = event.getWindow().getGuiScaledWidth();
                double mana = CapabilitySolarMana.getSolarMana(mc.player).orElseThrow(RuntimeException::new).getMana();
                double percent = mana / 3000;
-               mc.textureManager.bind(new ResourceLocation("solarforge","textures/misc/mana_hud.png"));
+               ClientHelpers.bindText(Loc);
+
                //1 x 2 y 3 x move 4 y move 5 x cut 6 y cut 7 8 texture size x y
                GuiComponent.blit(event.getMatrixStack(),width-32,height/2-30,100,22,0,10,(int)(22*percent),40,40);
                GuiComponent.blit(event.getMatrixStack(),width-38,height/2-37,100,0,0,22,40,40,40);
@@ -43,7 +47,7 @@ public class HudRenderMana {
             if (mc.player.getPersistentData().getBoolean("is_alchemist_toggled")){
                 int height = event.getWindow().getGuiScaledHeight();
                 int width = event.getWindow().getGuiScaledWidth();
-                mc.textureManager.bind(new ResourceLocation("solarforge","textures/gui/tooltips_solarforge.png"));
+                ClientHelpers.bindText(Loc2);
                 GuiComponent.blit(event.getMatrixStack(),0,height/2-30,100,0,27,27,38,180,185);
             }
 

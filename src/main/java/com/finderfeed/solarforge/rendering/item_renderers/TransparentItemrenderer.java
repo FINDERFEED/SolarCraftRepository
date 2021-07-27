@@ -5,6 +5,8 @@ import java.util.List;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 
+import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
+import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.HalfTransparentBlock;
 import net.minecraft.world.level.block.StainedGlassPaneBlock;
@@ -25,16 +27,17 @@ import net.minecraft.world.item.Items;
 
 
 //thx to Absolem Jackdaw(Subaraki)
-public class TransparentItemrenderer extends ItemEntityRenderer {
+public class TransparentItemrenderer extends ItemRenderer {
 
     public static final TransparentItemrenderer INSTANCE = new TransparentItemrenderer(Minecraft.getInstance().getTextureManager(),
             Minecraft.getInstance().getModelManager(),
-            Minecraft.getInstance().getItemColors(),0.5f);
+            Minecraft.getInstance().getItemColors(),
+            Minecraft.getInstance().getItemRenderer().getBlockEntityRenderer(),0.5f);
 
     private final float transparency;
 
-    public TransparentItemrenderer(TextureManager p_i46552_1_, ModelManager p_i46552_2_, ItemColors p_i46552_3_,float a) {
-        super(p_i46552_1_,p_i46552_2_,p_i46552_3_);
+    public TransparentItemrenderer(TextureManager p_i46552_1_, ModelManager p_i46552_2_, ItemColors p_i46552_3_, BlockEntityWithoutLevelRenderer p_174228_, float a) {
+        super(p_i46552_1_,p_i46552_2_,p_i46552_3_,p_174228_);
         this.transparency = a;
     }
 
@@ -45,7 +48,8 @@ public class TransparentItemrenderer extends ItemEntityRenderer {
 
         for (BakedQuad bakedquad : p_229112_3_)
         {
-            p_229112_2_.addVertexData(matrixstack$entry, bakedquad, 0.5f, 0.5f, 0.5f, transparency, p_229112_5_, p_229112_6_, false);
+
+            p_229112_2_.putBulkData(matrixstack$entry, bakedquad, 0.5f, 0.5f, 0.5f, transparency, p_229112_5_, p_229112_6_, false);
         }
 
     }

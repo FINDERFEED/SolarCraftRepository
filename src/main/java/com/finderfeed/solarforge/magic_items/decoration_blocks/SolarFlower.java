@@ -3,7 +3,6 @@ package com.finderfeed.solarforge.magic_items.decoration_blocks;
 import com.finderfeed.solarforge.misc_things.ParticlesList;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.DeadBushBlock;
-import net.minecraft.particles.ParticleTypes;
 import net.minecraft.core.Direction;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
