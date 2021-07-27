@@ -1,6 +1,7 @@
 package com.finderfeed.solarforge.rendering.shaders;
 
 import com.finderfeed.solarforge.SolarForge;
+import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
 import org.apache.logging.log4j.Level;
@@ -137,8 +138,11 @@ public class SolarShader {
             addUniform("sampler",0);
 
     }
+
+    //unused
     public void setMatrices(){
         FloatBuffer buffer = BufferUtils.createFloatBuffer(16);
+
         GL11.glGetFloatv(GL11.GL_MODELVIEW_MATRIX,buffer);
         buffer.rewind();
         UNIFORMS.add(new Uniform("modelview",buffer,SHADER));

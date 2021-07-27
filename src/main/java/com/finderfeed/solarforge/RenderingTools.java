@@ -1,16 +1,18 @@
 package com.finderfeed.solarforge;
 
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
-import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.pipeline.RenderTarget;
+import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.vertex.*;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.blaze3d.platform.Window;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiComponent;
 
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.ShaderInstance;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 
 import net.minecraft.world.entity.player.Player;
@@ -162,5 +164,43 @@ public class RenderingTools {
         ClientHelpers.bindText(new ResourceLocation("solarforge", "textures/misc/tile_energy_pylon_" + type.id + ".png"));
         GuiComponent.blit(stack,-3,63,0,0,16,16,16,16);
         stack.popPose();
+    }
+    /**
+     *
+     * @param p_83972_ Width
+     * @param p_83973_ Height
+     * @param p_83974_ Disable blend
+     * @param framebuffer  Framebuffer(RenderTarget) to blit.
+     */
+    public static void blitFramebufferToScreen(int p_83972_, int p_83973_, boolean p_83974_, RenderTarget framebuffer) {
+        RenderSystem.assertThread(RenderSystem::isOnRenderThread);
+        GlStateManager._colorMask(true, true, true, false);
+        GlStateManager._disableDepthTest();
+        GlStateManager._depthMask(false);
+        GlStateManager._viewport(0, 0, p_83972_, p_83973_);
+        if (p_83974_) {
+            GlStateManager._disableBlend();
+        }
+
+
+        Matrix4f matrix4f = Matrix4f.orthographic((float)p_83972_, (float)(-p_83973_), 1000.0F, 3000.0F);
+        RenderSystem.setProjectionMatrix(matrix4f);
+
+        float f = (float)p_83972_;
+        float f1 = (float)p_83973_;
+        float f2 = (float)framebuffer.viewWidth / (float)framebuffer.width;
+        float f3 = (float)framebuffer.viewHeight / (float)framebuffer.height;
+        Tesselator tesselator = RenderSystem.renderThreadTesselator();
+        BufferBuilder bufferbuilder = tesselator.getBuilder();
+        bufferbuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX_COLOR);
+        bufferbuilder.vertex(0.0D, (double)f1, 0.0D).uv(0.0F, 0.0F).color(255, 255, 255, 255).endVertex();
+        bufferbuilder.vertex((double)f, (double)f1, 0.0D).uv(f2, 0.0F).color(255, 255, 255, 255).endVertex();
+        bufferbuilder.vertex((double)f, 0.0D, 0.0D).uv(f2, f3).color(255, 255, 255, 255).endVertex();
+        bufferbuilder.vertex(0.0D, 0.0D, 0.0D).uv(0.0F, f3).color(255, 255, 255, 255).endVertex();
+        bufferbuilder.end();
+        BufferUploader._endInternal(bufferbuilder);
+
+        GlStateManager._depthMask(true);
+        GlStateManager._colorMask(true, true, true, true);
     }
 }

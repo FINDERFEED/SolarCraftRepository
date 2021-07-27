@@ -1,6 +1,7 @@
 package com.finderfeed.solarforge.particles;
 
 import com.finderfeed.solarforge.ClientHelpers;
+import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import net.minecraft.client.Minecraft;
@@ -50,7 +51,7 @@ public class SolarStrikeParticle extends TextureSheetParticle {
     public ParticleRenderType getRenderType() {
 
 
-        return ParticleRenderType.PARTICLE_SHEET_TRANSLUCENT ;
+        return SOLAR_STRIKE_PARTICLE_RENDER ;
     }
 
     @Override
@@ -94,8 +95,9 @@ public class SolarStrikeParticle extends TextureSheetParticle {
             RenderSystem.depthMask(false);
             RenderSystem.enableBlend();
             RenderSystem.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE);
-            GL11.glAlphaFunc(GL11.GL_GREATER,0.003921569F);
-            GL11.glDisable(GL11.GL_LIGHTING);
+//            GL11.glAlphaFunc(GL11.GL_GREATER,0.003921569F);
+
+//            GL11.glDisable(GL11.GL_LIGHTING);
             ClientHelpers.bindText(TextureAtlas.LOCATION_PARTICLES);
             textureManager.getTexture(TextureAtlas.LOCATION_PARTICLES).setBlurMipmap(true, false);
             bufferBuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.PARTICLE);
@@ -107,7 +109,7 @@ public class SolarStrikeParticle extends TextureSheetParticle {
             tessellator.end();
 
             Minecraft.getInstance().textureManager.getTexture(TextureAtlas.LOCATION_PARTICLES).restoreLastBlurMipmap();
-            GL11.glAlphaFunc(GL11.GL_GREATER, 0.1F);
+//            GL11.glAlphaFunc(GL11.GL_GREATER, 0.1F);
             RenderSystem.disableBlend();
             RenderSystem.depthMask(true);
 

@@ -43,7 +43,7 @@ public class SmallSolarStrikeParticle extends TextureSheetParticle {
     public ParticleRenderType getRenderType() {
         //setAlphaState(DEFAULT_ALPHA).setTransparencyState(TRANSLUCENT_TRANSPARENCY).setLightmapState(LIGHTMAP).setDepthTestState(NO_DEPTH_TEST).setWriteMaskState(COLOR_WRITE)
 
-        return ParticleRenderType.PARTICLE_SHEET_TRANSLUCENT;
+        return SOLAR_STRIKE_PARTICLE_RENDER;
     }
 
 
@@ -79,9 +79,7 @@ public class SmallSolarStrikeParticle extends TextureSheetParticle {
             RenderSystem.enableBlend();
             RenderSystem.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE);
 
-            GL11.glAlphaFunc(GL11.GL_GREATER,0.003921569F);
 
-            GL11.glDisable(GL11.GL_LIGHTING);
 
 
             ClientHelpers.bindText(TextureAtlas.LOCATION_PARTICLES);
@@ -95,7 +93,7 @@ public class SmallSolarStrikeParticle extends TextureSheetParticle {
 
             Minecraft.getInstance().textureManager.getTexture(TextureAtlas.LOCATION_PARTICLES).restoreLastBlurMipmap();
 
-            GL11.glAlphaFunc(GL11.GL_GREATER,0.1f);
+
             RenderSystem.disableBlend();
             RenderSystem.depthMask(true);
 
