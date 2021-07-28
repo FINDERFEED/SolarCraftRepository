@@ -2,9 +2,7 @@
 
 uniform int screenW;
 uniform int screenH;
-uniform sampler2D sampler;
-uniform mat4 modelview;
-uniform mat4 projection;
+uniform sampler2D DiffuseSampler;
 
 uniform int time;
 uniform float intensity;

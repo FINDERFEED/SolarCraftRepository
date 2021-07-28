@@ -1,0 +1,24 @@
+{
+  "blend":
+  {
+    "func": "add",
+    "srcrgb": "one",
+    "dstrgb": "zero"
+  },
+  "vertex": "solarforge:wave",
+  "fragment": "solarforge:wave",
+  "attributes":
+  [
+
+  ],
+  "samplers":
+  [
+    {
+      "name": "DiffuseSampler"
+    }
+  ],
+  "uniforms":
+  [
+
+  ]
+}
