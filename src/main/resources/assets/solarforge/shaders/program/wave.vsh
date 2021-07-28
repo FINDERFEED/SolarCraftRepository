@@ -19,5 +19,5 @@ out vec2 texCoords;
 void main(){
 
     gl_Position = ProjMat *  Position;
-    texCoords = Position.xy/OutSize.xy;
+    texCoords = Position.xy/OutSize;
 }
