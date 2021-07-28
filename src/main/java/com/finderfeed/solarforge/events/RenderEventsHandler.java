@@ -1,29 +1,16 @@
 package com.finderfeed.solarforge.events;
 
 
-import com.finderfeed.solarforge.RenderingTools;
-import com.finderfeed.solarforge.rendering.shaders.Shaders;
-import com.finderfeed.solarforge.rendering.shaders.Uniform;
+import java.util.Map;
 
 import com.finderfeed.solarforge.rendering.shaders.post_chains.PostChainPlusUltra;
 import com.finderfeed.solarforge.rendering.shaders.post_chains.UniformPlusPlus;
-import com.google.gson.JsonSyntaxException;
-import com.mojang.blaze3d.pipeline.TextureTarget;
-import com.mojang.blaze3d.platform.GlStateManager;
-
 import com.mojang.blaze3d.systems.RenderSystem;
+
 import net.minecraft.client.Minecraft;
-
-import com.mojang.blaze3d.pipeline.RenderTarget;
-import com.mojang.blaze3d.platform.GlConst;
-
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
-
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-
-import java.io.IOException;
-import java.util.Map;
 
 
 public class RenderEventsHandler {
@@ -42,22 +29,18 @@ public class RenderEventsHandler {
     public void renderWorld(RenderWorldLastEvent event){
         if ((Minecraft.getInstance().getWindow().getScreenWidth() != 0) && (Minecraft.getInstance().getWindow().getScreenHeight() != 0)) {
             if ((intensity > 0)  ) {
-
-                int width = Minecraft.getInstance().getWindow().getScreenWidth();
-                int height = Minecraft.getInstance().getWindow().getScreenHeight();
-                int time =(int)Minecraft.getInstance().level.getGameTime();
-                UniformPlusPlus uniforms = new UniformPlusPlus(Map.of(
-                        "intensity",intensity,
-                        "screenH",height,
-                        "screenW",width,
-                        "timeModifier",3f,
-                        "time",time
+              
+                    UniformPlusPlus uniforms = new UniformPlusPlus(Map.of(
+                                    "Intensity", intensity,
+                                    "TimeModifier", 3f,
+                                    "Time", (float) Minecraft.getInstance().level.getGameTime()
                 ));
                 if (PROGRESSION_SHADER == null){
                     PROGRESSION_SHADER = loadProgressionShader(PROGRESSION_SHADER_LOC, uniforms);
                 }else{
                     PROGRESSION_SHADER.updateUniforms(uniforms);
                 }
+             
                 RenderSystem.disableBlend();
                 RenderSystem.disableDepthTest();
                 RenderSystem.enableTexture();
