@@ -1,6 +1,9 @@
 package com.finderfeed.solarforge;
 
+import com.finderfeed.solarforge.events.RenderEventsHandler;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
+import com.finderfeed.solarforge.rendering.shaders.post_chains.PostChainPlusUltra;
+import com.finderfeed.solarforge.rendering.shaders.post_chains.UniformPlusPlus;
 import com.mojang.blaze3d.pipeline.RenderTarget;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.platform.Lighting;
@@ -43,6 +46,10 @@ public class RenderingTools {
 
     public static final ResourceLocation TEST = new ResourceLocation("solarforge","textures/gui/solar_furnace_gui.png");
     public static final ResourceLocation RAY = new ResourceLocation("solarforge","textures/misc/ray_into_skyy.png");
+
+    public static void addActivePostShader(UniformPlusPlus uniformPlusPlus,PostChainPlusUltra shader){
+        RenderEventsHandler.ACTIVE_SHADERS.put(uniformPlusPlus,shader);
+    }
 
     public static void renderTest(RenderGameOverlayEvent.Pre event,int tick){
         PoseStack stack = event.getMatrixStack();

@@ -5,6 +5,12 @@ vec2 getWindowCoordinates(float a,float b,float c){
     return value;
 }
 
+float dist(vec2 dotone,vec2 dottwo){
+    float a = dottwo.x - dotone.x;
+    float b = dottwo.y - dotone.y;
+    return sqrt(a*a + b*b);
+}
+
 
 bool isInCircle(float radius,vec2 dot,vec2 center){
         float a = (dot.x - center.x)*(dot.x - center.x);

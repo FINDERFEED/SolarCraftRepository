@@ -2,6 +2,7 @@ package com.finderfeed.solarforge.events;
 
 
 import com.finderfeed.solarforge.RenderingTools;
+import com.finderfeed.solarforge.magic_items.blocks.render.RuneEnergyPylonRenderer;
 import com.finderfeed.solarforge.rendering.shaders.Shaders;
 import com.finderfeed.solarforge.rendering.shaders.Uniform;
 
@@ -18,24 +19,30 @@ import com.mojang.blaze3d.pipeline.RenderTarget;
 import com.mojang.blaze3d.platform.GlConst;
 
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.phys.Vec2;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
 public class RenderEventsHandler {
 
-
-
-
-
+    //progression shader
     public static float intensity = 0;
-    public static float radius = 0;
     public static final ResourceLocation PROGRESSION_SHADER_LOC = new ResourceLocation("solarforge","shaders/post/wave.json");
-
+    @SubscribeEvent
+    public void clientTickEvent(TickEvent.ClientTickEvent event){
+        if ((intensity > 0) && (event.phase == TickEvent.Phase.START) ){
+            intensity-=0.02;
+        }
+    }
 
     //Thx to DEMON GIRL COLLECTOR (Melonslice) for helping me to fix my shader!
     @SubscribeEvent
@@ -63,18 +70,12 @@ public class RenderEventsHandler {
                 if (PROGRESSION_SHADER != null) {
                     PROGRESSION_SHADER.process(Minecraft.getInstance().getFrameTime());
                 }
-                intensity-=0.02;
             }
         }
     }
     public static void triggerProgressionShader(){
-            intensity = 3;
-            radius = 0;
+        intensity = 3;
     }
-
-
-
-
     public static PostChainPlusUltra PROGRESSION_SHADER = null;
     public static PostChainPlusUltra loadProgressionShader(ResourceLocation name, UniformPlusPlus uniformPlusPlus)
     {
@@ -91,6 +92,34 @@ public class RenderEventsHandler {
         }
         return null;
     }
+
+
+
+
+    //all tile entity shaders are happening here
+    public static Map<UniformPlusPlus,PostChainPlusUltra> ACTIVE_SHADERS = new HashMap<>();
+    public Vec2 resolution;
+    @SubscribeEvent
+    public void renderActiveShaders(RenderWorldLastEvent event){
+        float width = (float)Minecraft.getInstance().getWindow().getScreenWidth();
+        float height = (float)Minecraft.getInstance().getWindow().getScreenHeight();
+        if (resolution == null){
+            resolution = new Vec2(width,height);
+        }
+        if ((Minecraft.getInstance().getWindow().getScreenWidth() != 0) && (Minecraft.getInstance().getWindow().getScreenHeight() != 0)) {
+            RenderingTools.renderHandManually(event.getMatrixStack(),event.getPartialTicks());
+            if ((RuneEnergyPylonRenderer.SHADER != null) && (resolution.x != width || resolution.y != height)){
+                resolution = new Vec2(width,height);
+                RuneEnergyPylonRenderer.SHADER.resize(Minecraft.getInstance().getWindow().getScreenWidth(),Minecraft.getInstance().getWindow().getScreenHeight());
+            }
+            ACTIVE_SHADERS.forEach((uniforms,shader)->{
+                shader.updateUniforms(uniforms);
+                shader.process(Minecraft.getInstance().getFrameTime());
+            });
+            ACTIVE_SHADERS.clear();
+        }
+    }
+
 
 
 }
