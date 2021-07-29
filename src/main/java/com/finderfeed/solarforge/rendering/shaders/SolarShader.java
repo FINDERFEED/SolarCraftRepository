@@ -16,6 +16,7 @@ import java.nio.FloatBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
+@Deprecated
 public class SolarShader {
 
     private int SHADER;

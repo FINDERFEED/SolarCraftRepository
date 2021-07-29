@@ -1,22 +1,14 @@
 package com.finderfeed.solarforge.events;
 
 
-import com.finderfeed.solarforge.RenderingTools;
+import com.finderfeed.solarforge.for_future_library.RenderingTools;
 import com.finderfeed.solarforge.magic_items.blocks.render.RuneEnergyPylonRenderer;
-import com.finderfeed.solarforge.rendering.shaders.Shaders;
-import com.finderfeed.solarforge.rendering.shaders.Uniform;
 
 import com.finderfeed.solarforge.rendering.shaders.post_chains.PostChainPlusUltra;
 import com.finderfeed.solarforge.rendering.shaders.post_chains.UniformPlusPlus;
-import com.google.gson.JsonSyntaxException;
-import com.mojang.blaze3d.pipeline.TextureTarget;
-import com.mojang.blaze3d.platform.GlStateManager;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
-
-import com.mojang.blaze3d.pipeline.RenderTarget;
-import com.mojang.blaze3d.platform.GlConst;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.phys.Vec2;
@@ -25,10 +17,7 @@ import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 
@@ -40,7 +29,7 @@ public class RenderEventsHandler {
     @SubscribeEvent
     public void clientTickEvent(TickEvent.ClientTickEvent event){
         if ((intensity > 0) && (event.phase == TickEvent.Phase.START) ){
-            intensity-=0.02;
+            intensity-=0.03;
         }
     }
 
@@ -110,6 +99,7 @@ public class RenderEventsHandler {
             RenderingTools.renderHandManually(event.getMatrixStack(),event.getPartialTicks());
             if ((RuneEnergyPylonRenderer.SHADER != null) && (resolution.x != width || resolution.y != height)){
                 resolution = new Vec2(width,height);
+
                 RuneEnergyPylonRenderer.SHADER.resize(Minecraft.getInstance().getWindow().getScreenWidth(),Minecraft.getInstance().getWindow().getScreenHeight());
             }
             ACTIVE_SHADERS.forEach((uniforms,shader)->{

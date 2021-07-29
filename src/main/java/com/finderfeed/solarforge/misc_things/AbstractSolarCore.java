@@ -36,7 +36,6 @@ public abstract class AbstractSolarCore extends BlockEntity implements IBindable
         }
         if (!tile.level.isClientSide && tile.getConditionToFunction()){
 
-
             tile.count = tile.poslist.size();
             List<BlockPos> toRemove = new ArrayList<>();
 
@@ -47,9 +46,17 @@ public abstract class AbstractSolarCore extends BlockEntity implements IBindable
                     List<BlockPos > visited = new ArrayList<>();
                     ((AbstractSolarNetworkRepeater) tileAtPos).tryTransmitEnergyCore(tile,tile.getMaxEnergyFlowPerSec(), visited);
                 }else if (tileAtPos instanceof IEnergyUser){
-                    if (tile.energy >= tile.getMaxEnergyFlowPerSec() && ((IEnergyUser) tileAtPos).requriesEnergy()  ) {
-                        ((IEnergyUser) tileAtPos).giveEnergy(tile.getMaxEnergyFlowPerSec());
-                        tile.energy -= tile.getMaxEnergyFlowPerSec();
+                    IEnergyUser user = (IEnergyUser) tileAtPos;
+                    if (user.requriesEnergy()) {
+                        if (tile.getEnergy() >= tile.getMaxEnergyFlowPerSec()) {
+                            int flag = user.giveEnergy(tile.getMaxEnergyFlowPerSec());
+                            tile.energy-= tile.getMaxEnergyFlowPerSec();
+                            tile.giveEnergy(flag);
+                        } else if (tile.getEnergy() > 0) {
+                            int flag = user.giveEnergy((int) tile.getEnergy());
+                            tile.energy-=tile.getEnergy();
+                            tile.giveEnergy(flag);
+                        }
                     }
                 }else {
 
@@ -110,5 +117,16 @@ public abstract class AbstractSolarCore extends BlockEntity implements IBindable
     @Override
     public double getEnergy() {
         return energy;
+    }
+
+    public int giveEnergy(int amount){
+        if (getEnergy() + amount <= getMaxEnergy()){
+            this.energy+=amount;
+            return 0;
+        }else{
+            int raznitsa =(int) getEnergy()+amount - getMaxEnergy();
+            this.energy = getMaxEnergy();
+            return raznitsa;
+        }
     }
 }

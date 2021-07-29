@@ -1,7 +1,6 @@
 package com.finderfeed.solarforge.magic_items.blocks.render;
 
 import com.finderfeed.solarforge.Helpers;
-import com.finderfeed.solarforge.RenderingTools;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.SolarEnergyRepeaterBlockEntity;
 import com.finderfeed.solarforge.misc_things.AbstractSolarCore;
 import com.finderfeed.solarforge.misc_things.AbstractSolarNetworkRepeater;
@@ -14,14 +13,12 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
-import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.core.BlockPos;
 import com.mojang.math.Matrix4f;
 import net.minecraft.world.phys.Vec3;
 import com.mojang.math.Vector3f;
-import net.minecraftforge.client.model.obj.OBJLoader;
 
 public class SolarRepeaterRenderer implements BlockEntityRenderer<SolarEnergyRepeaterBlockEntity> {
     public final ResourceLocation RAY = new ResourceLocation("solarforge","textures/misc/ray_into_sky.png");

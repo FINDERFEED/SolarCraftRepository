@@ -1,5 +1,6 @@
-package com.finderfeed.solarforge;
+package com.finderfeed.solarforge.for_future_library;
 
+import com.finderfeed.solarforge.ClientHelpers;
 import com.finderfeed.solarforge.events.RenderEventsHandler;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import com.finderfeed.solarforge.rendering.shaders.post_chains.PostChainPlusUltra;

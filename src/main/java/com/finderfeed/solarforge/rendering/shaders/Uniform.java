@@ -7,7 +7,7 @@ import org.lwjgl.opengl.GL20;
 import java.nio.FloatBuffer;
 
 
-
+@Deprecated
 public class Uniform {
 
     private int SHADER;

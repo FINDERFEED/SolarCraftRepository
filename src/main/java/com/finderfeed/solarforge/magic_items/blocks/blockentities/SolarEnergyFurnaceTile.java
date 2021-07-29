@@ -103,9 +103,15 @@ public class SolarEnergyFurnaceTile extends RandomizableContainerBlockEntity imp
     }
 
     @Override
-    public void giveEnergy(int a) {
-
+    public int giveEnergy(int a) {
+        if (this.getCurrentEnergy() + a <= getMaxEnergy()) {
             this.SOLAR_ENERGY_LEVEL += a;
+            return 0;
+        }else {
+            int raznitsa =(getCurrentEnergy() + a) - getMaxEnergy();
+            this.SOLAR_ENERGY_LEVEL = getMaxEnergy();
+            return raznitsa;
+        }
 
     }
 

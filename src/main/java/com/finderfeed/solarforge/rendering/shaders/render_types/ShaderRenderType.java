@@ -11,7 +11,7 @@ import net.minecraft.resources.ResourceLocation;
 
 import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
 
-
+@Deprecated
 public class ShaderRenderType extends RenderType {
     public ShaderRenderType(String p_i225992_1_, VertexFormat p_i225992_2_, VertexFormat.Mode mode, int p_i225992_4_, boolean p_i225992_5_, boolean p_i225992_6_,
                             SolarShader shader,

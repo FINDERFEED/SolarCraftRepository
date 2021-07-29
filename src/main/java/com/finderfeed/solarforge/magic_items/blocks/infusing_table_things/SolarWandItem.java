@@ -2,14 +2,10 @@ package com.finderfeed.solarforge.magic_items.blocks.infusing_table_things;
 
 import com.finderfeed.solarforge.ClientHelpers;
 import com.finderfeed.solarforge.Helpers;
-import com.finderfeed.solarforge.RenderingTools;
 import com.finderfeed.solarforge.SolarForge;
-import com.finderfeed.solarforge.events.RenderEventsHandler;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.RuneEnergyPylonTile;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Achievement;
 import com.finderfeed.solarforge.misc_things.*;
-import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
-import com.finderfeed.solarforge.packet_handler.packets.UpdateEnergyOnClientPacket;
 import com.finderfeed.solarforge.recipe_types.InfusingRecipe;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiComponent;
@@ -45,10 +41,7 @@ import net.minecraftforge.fml.common.Mod;
 
 import javax.annotation.Nullable;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
-
-import net.minecraft.world.item.Item.Properties;
 
 public class SolarWandItem extends Item implements ManaConsumer {
 

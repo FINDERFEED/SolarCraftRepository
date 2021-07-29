@@ -1,15 +1,11 @@
 package com.finderfeed.solarforge.magic_items.blocks.render;
 
-import com.finderfeed.solarforge.Helpers;
-import com.finderfeed.solarforge.RenderingTools;
-import com.finderfeed.solarforge.events.RenderEventsHandler;
+import com.finderfeed.solarforge.for_future_library.FinderfeedMathHelper;
+import com.finderfeed.solarforge.for_future_library.RenderingTools;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.RuneEnergyPylonTile;
-import com.finderfeed.solarforge.rendering.shaders.Shaders;
-import com.finderfeed.solarforge.rendering.shaders.Uniform;
 import com.finderfeed.solarforge.rendering.shaders.post_chains.PostChainPlusUltra;
 import com.finderfeed.solarforge.rendering.shaders.post_chains.UniformPlusPlus;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -17,7 +13,6 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
-import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
 
 import net.minecraft.resources.ResourceLocation;
 import com.mojang.math.Matrix4f;
@@ -25,7 +20,6 @@ import com.mojang.math.Quaternion;
 
 import com.mojang.math.Vector3f;
 import net.minecraft.world.phys.Vec3;
-import org.lwjgl.system.CallbackI;
 
 import java.util.Map;
 
@@ -41,8 +35,9 @@ public class RuneEnergyPylonRenderer implements BlockEntityRenderer<RuneEnergyPy
 
     @Override
     public void render(RuneEnergyPylonTile tile, float partialTicks, PoseStack matrices, MultiBufferSource buffer, int light, int overlay) {
-        Vec3 playerPos = Minecraft.getInstance().player.position().add(0,Minecraft.getInstance().player.getBbHeight()/2,0);
-        Vec3 tilePos = new Vec3(tile.getBlockPos().getX()+0.5,tile.getBlockPos().getY()+0.5,tile.getBlockPos().getZ()+0.5);
+        if (FinderfeedMathHelper.canSeeTileEntity(tile,Minecraft.getInstance().player)) {
+            Vec3 playerPos = Minecraft.getInstance().player.position().add(0, Minecraft.getInstance().player.getBbHeight() / 2, 0);
+            Vec3 tilePos = new Vec3(tile.getBlockPos().getX() + 0.5, tile.getBlockPos().getY() + 0.5, tile.getBlockPos().getZ() + 0.5);
             float dist = (float) new Vec3(tilePos.x - playerPos.x, tilePos.y - playerPos.y, tilePos.z - playerPos.z).length() * 50f;
             Matrix4f projection = Minecraft.getInstance().gameRenderer.getProjectionMatrix(Minecraft.getInstance().gameRenderer.getFov(
                     Minecraft.getInstance().gameRenderer.getMainCamera(),
@@ -60,7 +55,7 @@ public class RuneEnergyPylonRenderer implements BlockEntityRenderer<RuneEnergyPy
                     "intensity", 0.5f
             )));
             matrices.popPose();
-
+        }
         if (tile.getEnergyType() != null) {
             VertexConsumer vertex = buffer.getBuffer(RenderType.text(new ResourceLocation("solarforge", "textures/misc/tile_energy_pylon_" + tile.getEnergyType().id + ".png")));
             float time = (Minecraft.getInstance().level.getGameTime()+partialTicks);

@@ -1,11 +1,10 @@
 package com.finderfeed.solarforge.magic_items.blocks.render;
 
-import com.finderfeed.solarforge.RenderingTools;
+import com.finderfeed.solarforge.for_future_library.RenderingTools;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.RayTrapTileEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
-import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.core.Direction;
 

@@ -1,8 +1,7 @@
 package com.finderfeed.solarforge.magic_items.items.solar_lexicon.screen;
 
-import com.finderfeed.solarforge.RenderingTools;
+import com.finderfeed.solarforge.for_future_library.RenderingTools;
 import com.finderfeed.solarforge.registries.sounds.Sounds;
-import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
@@ -12,9 +11,6 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.TextComponent;
-import org.lwjgl.opengl.GL11;
-
-import net.minecraft.client.gui.components.Button.OnPress;
 
 public class ItemStackButton extends Button {
 

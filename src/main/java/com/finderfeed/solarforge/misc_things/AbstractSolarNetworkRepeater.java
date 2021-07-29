@@ -45,16 +45,27 @@ public abstract class AbstractSolarNetworkRepeater extends BlockEntity implement
                 if (tile instanceof AbstractSolarNetworkRepeater && !visited.contains(connectedTo)){
                     visited.add(connectedTo);
                     ((AbstractSolarNetworkRepeater)tile).tryTransmitEnergy(generator,amount,visited);
-                }else if(tile instanceof IEnergyUser){
-                    IEnergyUser user = (IEnergyUser) tile;
-                    if (generator.SOLAR_ENERGY >= amount && user.requriesEnergy()){
-                        user.giveEnergy(amount);
-                        generator.SOLAR_ENERGY-=amount;
+                }else if(tile instanceof IEnergyUser user){
+                    if (user.requriesEnergy()) {
+                        if (generator.getEnergy() >= generator.getEnergyFlowAmount()) {
+                            int flag = user.giveEnergy(generator.getEnergyFlowAmount());
+                            generator.SOLAR_ENERGY-= generator.getEnergyFlowAmount();
+                            generator.SOLAR_ENERGY+=flag;
+                        } else if (generator.getEnergy() > 0) {
+                            int flag = user.giveEnergy((int) generator.getEnergy());
+                            generator.SOLAR_ENERGY-=generator.getEnergy();
+                            generator.SOLAR_ENERGY+=flag;
+                        }
                     }
-                }else if (tile instanceof AbstractSolarCore){
-                    if (generator.SOLAR_ENERGY >= amount && ((AbstractSolarCore) tile).getConditionToFunction() && (((AbstractSolarCore) tile).energy+ amount <= ((AbstractSolarCore) tile).getMaxEnergy())){
-                        ((AbstractSolarCore) tile).energy+=amount;
-                        generator.SOLAR_ENERGY-=amount;
+                }else if (tile instanceof AbstractSolarCore core){
+                    if (generator.getEnergy() >= generator.getEnergyFlowAmount()){
+                        int flag = core.giveEnergy(generator.getEnergyFlowAmount());
+                        generator.SOLAR_ENERGY-=generator.getEnergyFlowAmount();
+                        generator.SOLAR_ENERGY+=flag;
+                    }else if (generator.getEnergy() > 0){
+                        int flag = core.giveEnergy((int)generator.getEnergy());
+                        generator.SOLAR_ENERGY-=generator.SOLAR_ENERGY;
+                        generator.SOLAR_ENERGY+=flag;
                     }
                 }
             }
@@ -69,9 +80,16 @@ public abstract class AbstractSolarNetworkRepeater extends BlockEntity implement
                     ((AbstractSolarNetworkRepeater)tile).tryTransmitEnergyCore(generator,amount,visited);
                 }else if(tile instanceof IEnergyUser){
                     IEnergyUser user = (IEnergyUser) tile;
-                    if (generator.energy >= amount && user.requriesEnergy()){
-                        user.giveEnergy(amount);
-                        generator.energy-=amount;
+                    if (user.requriesEnergy()) {
+                        if (generator.getEnergy() >= generator.getMaxEnergyFlowPerSec()) {
+                            int flag = user.giveEnergy(generator.getMaxEnergyFlowPerSec());
+                            generator.energy-= generator.getMaxEnergyFlowPerSec();
+                            generator.giveEnergy(flag);
+                        } else if (generator.getEnergy() > 0) {
+                            int flag = user.giveEnergy((int) generator.getEnergy());
+                            generator.energy-=generator.getEnergy();
+                            generator.giveEnergy(flag);
+                        }
                     }
                 }
             }

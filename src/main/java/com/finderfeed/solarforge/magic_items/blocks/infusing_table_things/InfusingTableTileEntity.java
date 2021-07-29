@@ -276,9 +276,14 @@ public class InfusingTableTileEntity extends RandomizableContainerBlockEntity im
 
 
     @Override
-    public void giveEnergy(int a) {
-        if (this.energy+a <= getMaxEnergy()){
-            this.energy+=a;
+    public int giveEnergy(int a) {
+        if (getEnergy() + a <= getMaxEnergy()) {
+            this.energy += a;
+            return 0;
+        }else {
+            int raznitsa =((int)getEnergy() + a) - getMaxEnergy();
+            this.energy = getMaxEnergy();
+            return raznitsa;
         }
     }
 

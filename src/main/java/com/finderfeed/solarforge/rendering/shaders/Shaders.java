@@ -2,6 +2,7 @@ package com.finderfeed.solarforge.rendering.shaders;
 
 import org.lwjgl.opengl.GL20;
 
+@Deprecated
 public enum Shaders {
     WAVE(new SolarShader("wave"));
 

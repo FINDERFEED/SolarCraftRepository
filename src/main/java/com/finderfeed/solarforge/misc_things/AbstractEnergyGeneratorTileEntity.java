@@ -56,9 +56,16 @@ public abstract class AbstractEnergyGeneratorTileEntity extends BlockEntity impl
                     if (tile.level.getBlockEntity(CONNECTED_TO) instanceof IEnergyUser) {
                         IEnergyUser user = (IEnergyUser) tile.level.getBlockEntity(CONNECTED_TO);
 
-                        if (tile.SOLAR_ENERGY >= tile.getEnergyFlowAmount() && user.requriesEnergy()) {
-                            user.giveEnergy(tile.getEnergyFlowAmount());
-                            tile.SOLAR_ENERGY -= tile.getEnergyFlowAmount();
+                        if (user.requriesEnergy()) {
+                            if (tile.getEnergy() >= tile.getEnergyFlowAmount()) {
+                                int flag = user.giveEnergy(tile.getEnergyFlowAmount());
+                                tile.SOLAR_ENERGY-= tile.getEnergyFlowAmount();
+                                tile.SOLAR_ENERGY+=flag;
+                            } else if (tile.getEnergy() > 0) {
+                                int flag = user.giveEnergy((int) tile.getEnergy());
+                                tile.SOLAR_ENERGY-=tile.getEnergy();
+                                tile.SOLAR_ENERGY+=flag;
+                            }
                         }
 
                     } else if (tile.level.getBlockEntity(CONNECTED_TO) instanceof AbstractSolarNetworkRepeater) {
@@ -67,9 +74,14 @@ public abstract class AbstractEnergyGeneratorTileEntity extends BlockEntity impl
                         rep.tryTransmitEnergy(tile, tile.getEnergyFlowAmount(),visited);
                     }else if (tile.level.getBlockEntity(CONNECTED_TO) instanceof AbstractSolarCore) {
                         AbstractSolarCore core = (AbstractSolarCore) tile.level.getBlockEntity(CONNECTED_TO);
-                        if (tile.SOLAR_ENERGY >= tile.getEnergyFlowAmount()){
-                            core.energy+=tile.getEnergyFlowAmount();
-                            tile.SOLAR_ENERGY -= tile.getEnergyFlowAmount();
+                        if (tile.getEnergy() >= tile.getEnergyFlowAmount()){
+                            int flag = core.giveEnergy(tile.getEnergyFlowAmount());
+                            tile.SOLAR_ENERGY-=tile.getEnergyFlowAmount();
+                            tile.SOLAR_ENERGY+=flag;
+                        }else if (tile.getEnergy() > 0){
+                            int flag = core.giveEnergy((int)tile.getEnergy());
+                            tile.SOLAR_ENERGY-=tile.SOLAR_ENERGY;
+                            tile.SOLAR_ENERGY+=flag;
                         }
                     }
                 } else {
