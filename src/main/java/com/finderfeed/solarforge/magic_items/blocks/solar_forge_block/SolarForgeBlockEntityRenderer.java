@@ -44,15 +44,7 @@ public class SolarForgeBlockEntityRenderer implements BlockEntityRenderer<SolarF
         if (entity.getLevel().getDayTime() % 24000 <= 13000 && entity.getLevel().canSeeSky(entity.getBlockPos().above())) {
             matrices.pushPose();
 
-            matrices.translate(0.5f, 0, 0.5f);
-            if (entity.getLevel().getDayTime() % 24000 <= 13000) {
-
-                matrices.mulPose(Vector3f.YP.rotationDegrees((entity.getLevel().getGameTime() % 360 + partialTicks) * 2));
-            }
-            VertexConsumer vertex = buffer.getBuffer(RenderType.text(RAY));
-            // vertex = buffer.getBuffer(RenderType.text(RAY));
-
-            RenderingTools.renderRay(matrices,buffer,0.25f,100, Direction.UP,true,2,partialTicks);
+            RenderingTools.renderRay(matrices,buffer,0.4f,100, Direction.UP,true,2,partialTicks);
             matrices.popPose();
         }
         matrices.pushPose();

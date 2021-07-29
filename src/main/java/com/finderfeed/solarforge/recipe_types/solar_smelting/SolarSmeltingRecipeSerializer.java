@@ -15,6 +15,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
 import javax.annotation.Nullable;
+import java.util.Arrays;
 
 public class SolarSmeltingRecipeSerializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<SolarSmeltingRecipe>{
     public SolarSmeltingRecipeSerializer(){
@@ -58,16 +59,28 @@ public class SolarSmeltingRecipeSerializer extends ForgeRegistryEntry<RecipeSeri
 
     }
 
-    private static NonNullList<Ingredient> itemsFromJson(JsonArray p_199568_0_) {
+    private static NonNullList<Ingredient> itemsFromJson(JsonArray arr) {
         NonNullList<Ingredient> nonnulllist = NonNullList.create();
 
-        for(int i = 0; i < p_199568_0_.size(); ++i) {
-            Ingredient ingredient = Ingredient.fromJson(p_199568_0_.get(i));
+        for(int i = 0; i < arr.size(); ++i) {
+
+
+
+            Ingredient ingredient = getIngredient(arr.get(i));
+
             if (!ingredient.isEmpty()) {
                 nonnulllist.add(ingredient);
             }
         }
 
         return nonnulllist;
+    }
+    private static Ingredient getIngredient(JsonElement element){
+        String ingr = GsonHelper.getAsString((JsonObject) element,"item");
+        if (ingr.equals("minecraft:air")){
+            return Ingredient.EMPTY;
+        }else {
+            return Ingredient.fromJson(element);
+        }
     }
 }

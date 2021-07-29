@@ -3,6 +3,7 @@ package com.finderfeed.solarforge.SolarAbilities.meteorite;
 import com.finderfeed.solarforge.SolarAbilities.meteorite.MeteoriteProjectile;
 import com.finderfeed.solarforge.SolarForgeClientRegistry;
 import com.finderfeed.solarforge.registries.ModelLayersRegistry;
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -12,9 +13,10 @@ import net.minecraft.client.renderer.culling.Frustum;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import com.mojang.math.Vector3f;
-
+import net.minecraftforge.client.gui.OverlayRegistry;
 
 
 public class MeteoriteProjectileRenderer extends EntityRenderer<MeteoriteProjectile> {
@@ -23,19 +25,22 @@ public class MeteoriteProjectileRenderer extends EntityRenderer<MeteoriteProject
 
     public MeteoriteProjectileRenderer(EntityRendererProvider.Context ctx) {
         super(ctx);
+
         this.meteorite = new MeteoriteModel(ctx.bakeLayer(ModelLayersRegistry.METEORITE_LAYER));
 
     }
     @Override
     public void render(MeteoriteProjectile entity, float p_225623_2_, float partialTicks, PoseStack matrices, MultiBufferSource buffer, int light) {
     matrices.pushPose();
-    float time = (entity.level.getGameTime() + partialTicks)*2;
-    matrices.mulPose(Vector3f.XN.rotationDegrees(time%360));
-    matrices.mulPose(Vector3f.ZN.rotationDegrees(time%360));
+
+
+        float time = (entity.level.getGameTime() + partialTicks)*2;
+        matrices.mulPose(Vector3f.XN.rotationDegrees(time%360));
+        matrices.mulPose(Vector3f.ZN.rotationDegrees(time%360));
 
         VertexConsumer vertex = buffer.getBuffer(RenderType.entityCutout(METEORITE));
-    meteorite.renderToBuffer(matrices,vertex,light,light,1,1,1,1);
-    matrices.popPose();
+        meteorite.renderToBuffer(matrices,vertex,light, OverlayTexture.NO_OVERLAY,1,1,1,1);
+        matrices.popPose();
     }
 
     @Override

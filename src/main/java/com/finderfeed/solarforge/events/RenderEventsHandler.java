@@ -37,19 +37,16 @@ public class RenderEventsHandler {
     public static final ResourceLocation PROGRESSION_SHADER_LOC = new ResourceLocation("solarforge","shaders/post/wave.json");
 
 
-
+    //Thx to DEMON GIRL COLLECTOR (Melonslice) for helping me to fix my shader!
     @SubscribeEvent
     public void renderWorld(RenderWorldLastEvent event){
         if ((Minecraft.getInstance().getWindow().getScreenWidth() != 0) && (Minecraft.getInstance().getWindow().getScreenHeight() != 0)) {
             if ((intensity > 0)  ) {
+                RenderingTools.renderHandManually(event.getMatrixStack(),event.getPartialTicks());
 
-                int width = Minecraft.getInstance().getWindow().getScreenWidth();
-                int height = Minecraft.getInstance().getWindow().getScreenHeight();
-                int time =(int)Minecraft.getInstance().level.getGameTime();
+                float time =Minecraft.getInstance().level.getGameTime();
                 UniformPlusPlus uniforms = new UniformPlusPlus(Map.of(
                         "intensity",intensity,
-                        "screenH",height,
-                        "screenW",width,
                         "timeModifier",3f,
                         "time",time
                 ));
@@ -57,6 +54,7 @@ public class RenderEventsHandler {
                     PROGRESSION_SHADER = loadProgressionShader(PROGRESSION_SHADER_LOC, uniforms);
                 }else{
                     PROGRESSION_SHADER.updateUniforms(uniforms);
+                    PROGRESSION_SHADER.resize(Minecraft.getInstance().getWindow().getWidth(), Minecraft.getInstance().getWindow().getHeight());
                 }
                 RenderSystem.disableBlend();
                 RenderSystem.disableDepthTest();

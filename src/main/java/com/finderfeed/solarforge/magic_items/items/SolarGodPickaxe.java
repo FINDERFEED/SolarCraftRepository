@@ -4,16 +4,13 @@ import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.SolarCraftTags;
 import com.finderfeed.solarforge.misc_things.ITagUser;
 import com.finderfeed.solarforge.misc_things.PhantomInventory;
+import net.minecraft.core.NonNullList;
+import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ExperienceOrb;
-
-import net.minecraft.world.item.Tier;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.PickaxeItem;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.core.Direction;
@@ -75,6 +72,15 @@ public class SolarGodPickaxe extends PickaxeItem implements ITagUser {
         }else{
             stack.getOrCreateTagElement(SolarCraftTags.SOLAR_GOD_PICKAXE_TAG).putInt(SolarCraftTags.SOLAR_GOD_PICKAXE_LEVEL_TAG,
                     prev.getTagElement(SolarCraftTags.SOLAR_GOD_PICKAXE_TAG).getInt(SolarCraftTags.SOLAR_GOD_PICKAXE_LEVEL_TAG));
+        }
+    }
+    @Override
+    public void fillItemCategory(CreativeModeTab p_41391_, NonNullList<ItemStack> p_41392_) {
+        super.fillItemCategory(p_41391_, p_41392_);
+        if (this.allowdedIn(p_41391_)) {
+            ItemStack sword = new ItemStack(this);
+            sword.getOrCreateTagElement(SolarCraftTags.SOLAR_GOD_PICKAXE_TAG).putInt(SolarCraftTags.SOLAR_GOD_PICKAXE_LEVEL_TAG,4);
+            p_41392_.add(sword);
         }
     }
 

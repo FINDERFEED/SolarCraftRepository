@@ -3,13 +3,11 @@ package com.finderfeed.solarforge.magic_items.items;
 import com.finderfeed.solarforge.SolarCraftTags;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.projectiles.AbstractTurretProjectile;
 import com.finderfeed.solarforge.misc_things.ITagUser;
-import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.core.NonNullList;
+import net.minecraft.world.item.*;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Tier;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.SwordItem;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.damagesource.DamageSource;
@@ -130,6 +128,15 @@ public class SolarGodSword extends SwordItem implements ITagUser {
         }
     }
 
+    @Override
+    public void fillItemCategory(CreativeModeTab p_41391_, NonNullList<ItemStack> p_41392_) {
+        super.fillItemCategory(p_41391_, p_41392_);
+        if (this.allowdedIn(p_41391_)) {
+            ItemStack sword = new ItemStack(this);
+            sword.getOrCreateTagElement(SolarCraftTags.SOLAR_GOD_SWORD_TAG).putInt(SolarCraftTags.SOLAR_GOD_SWORD_LEVEL_TAG,5);
+            p_41392_.add(sword);
+        }
+    }
 
     public int getSwordLevel(ItemStack stack){
         return stack.getTagElement(SolarCraftTags.SOLAR_GOD_SWORD_TAG).getInt(SolarCraftTags.SOLAR_GOD_SWORD_LEVEL_TAG);

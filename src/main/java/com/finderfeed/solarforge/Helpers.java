@@ -14,10 +14,13 @@ import com.finderfeed.solarforge.registries.items.ItemsRegister;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.achievement_tree.AchievementTree;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Achievement;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.packets.UpdateProgressionOnClient;
+import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.*;
+import com.mojang.math.Vector3d;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiComponent;
+import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.Item;
@@ -127,25 +130,7 @@ public class Helpers {
 
 
 
-    public static void drawLine(PoseStack stack,int x1,int y1,int x2,int y2,float red,float green,float blue){
-        GL11.glLineWidth(2F);
 
-        GL11.glPushAttrib(GL11.GL_ALL_ATTRIB_BITS);
-
-        GL11.glDisable(GL11.GL_LIGHTING);
-        GL11.glDisable(GL11.GL_DEPTH_TEST);
-        GL11.glEnable(GL11.GL_BLEND);
-        GL11.glDisable(GL11.GL_TEXTURE_2D);
-
-        GL11.glBegin(GL11.GL_LINES);
-
-        RenderSystem.setShaderColor(red,green,blue,1);
-        GL11.glVertex2i(x1, y1);
-        GL11.glVertex2i(x2, y2);
-
-        GL11.glEnd();
-        GL11.glPopAttrib();
-    }
 
     public static void spendMana(Player playerEntity,double count){
         if (!playerEntity.isDeadOrDying() && playerEntity.getCapability(CapabilitySolarMana.SOLAR_MANA_PLAYER).isPresent() && !playerEntity.isCreative()){

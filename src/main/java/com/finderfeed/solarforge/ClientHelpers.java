@@ -53,6 +53,7 @@ public class ClientHelpers {
     }
 
 
+
     public static void handleSolarWandParticles(Vec3 pos,Vec3 vel){
         SmallSolarStrikeParticle particle = (SmallSolarStrikeParticle) Minecraft.getInstance().particleEngine.createParticle(ParticlesList.SMALL_SOLAR_STRIKE_PARTICLE.get(),pos.x,pos.y,pos.z,vel.normalize().x,vel.normalize().y,vel.normalize().z);
         particle.setLifetime((int)Math.round(vel.length()/vel.normalize().length())*5/2 );

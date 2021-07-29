@@ -3,6 +3,7 @@ package com.finderfeed.solarforge.magic_items.blocks.solar_forge_block;
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.registries.items.ItemsRegister;
 import com.finderfeed.solarforge.magic_items.blocks.solar_forge_block.solar_forge_screen.SolarForgeContainer;
+import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity;
@@ -91,6 +92,17 @@ public class SolarForgeBlockEntity extends RandomizableContainerBlockEntity  {
             if ( world.getDayTime() % 24000 <= 13000 && tile.SOLAR_ENERGY_LEVEL < 30000 && world.canSeeSky(pos.above())){
                 tile.SOLAR_ENERGY_LEVEL++;
 
+                if ((world.getGameTime() % 20 == 1)){
+                    if (world.random.nextDouble() > 0.96) {
+                        if (tile.getItem(1).isEmpty()) {
+                            tile.setItem(1, new ItemStack(ItemsRegister.SOLAR_DUST.get(), 1));
+                        } else {
+                            ItemStack stack = tile.getItem(1).copy();
+                            stack.grow(1);
+                            tile.setItem(1, stack);
+                        }
+                    }
+                }
 
 
             }
@@ -109,6 +121,7 @@ public class SolarForgeBlockEntity extends RandomizableContainerBlockEntity  {
 
 
             }
+
         }
 
     }

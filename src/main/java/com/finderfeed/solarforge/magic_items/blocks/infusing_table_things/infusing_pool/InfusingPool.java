@@ -4,6 +4,8 @@ import com.finderfeed.solarforge.magic_items.blocks.infusing_table_things.SolarW
 import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -91,5 +93,13 @@ public class InfusingPool extends Block implements EntityBlock {
     @Override
     public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
         return TileEntitiesRegistry.INFUSING_POOL_BLOCKENTITY.get().create(blockPos,blockState);
+    }
+
+    @Nullable
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level p_153212_, BlockState p_153213_, BlockEntityType<T> p_153214_) {
+        return (((level, blockPos, blockState, t) -> {
+            InfusingPoolTileEntity.tick(level,blockPos,blockState,(InfusingPoolTileEntity) t);
+        }));
     }
 }

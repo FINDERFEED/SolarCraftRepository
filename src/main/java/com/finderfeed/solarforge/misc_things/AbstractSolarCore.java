@@ -30,6 +30,7 @@ public abstract class AbstractSolarCore extends BlockEntity implements IBindable
 
 
     public static void tick(Level world, BlockPos pos, BlockState blockState, AbstractSolarCore tile) {
+
         if (tile.level.isClientSide){
             //System.out.println(poslist);
         }

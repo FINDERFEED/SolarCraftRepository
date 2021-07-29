@@ -50,7 +50,7 @@ public class SolarStrikeEntityRender extends EntityRenderer<SolarStrikeEntity> {
         vertex.vertex(matrix,0.5F*mod,0,0.5F*mod).color(255,255,255,255).uv(1,1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
         vertex.vertex(matrix,0.5F*mod,0,-0.5F*mod).color(255,255,255,255).uv(0,1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
         vertex.vertex(matrix,-0.5F*mod,0,-0.5F*mod).color(255,255,255,255).uv(0,0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
-        VertexConsumer vertexray = buffer.getBuffer(RenderType.textSeeThrough(SOLAR_STRIKE_RAY));
+        VertexConsumer vertexray = buffer.getBuffer(RenderType.text(SOLAR_STRIKE_RAY));
         //if(entity.getLifeTicks() >= 55) {
             Matrix4f matrixray = ray_entry.pose();
             float modray = 3;

@@ -1,11 +1,10 @@
 {
-  "blend":
-  {
+  "blend": {
     "func": "add",
-    "srcrgb": "one",
-    "dstrgb": "zero"
+    "srcrgb": "srcalpha",
+    "dstrgb": "1-srcalpha"
   },
-  "vertex": "solarforge:wave",
+  "vertex": "blit",
   "fragment": "solarforge:wave",
   "attributes":
   [
@@ -20,17 +19,10 @@
   "uniforms":
   [
 
-    {
-      "name": "ProjMat",
-      "type": "matrix4x4",
-      "count": 16,
-      "values": [ 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0 ]
-    },
-    {
-      "name": "OutSize",
-      "type": "float",
-      "count": 2,
-      "values": [ 1.0, 1.0 ]
-    }
+    { "name": "ProjMat",       "type": "matrix4x4", "count": 16, "values": [ 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0 ] },
+    { "name": "OutSize",       "type": "float",     "count": 2,  "values": [ 1.0, 1.0 ] },
+    { "name": "intensity", "type": "float",     "count": 1,  "values": [ 1.0 ] },
+    { "name": "time", "type": "float",     "count": 1,  "values": [ 1.0 ] },
+    { "name": "timeModifier", "type": "float",     "count": 1,  "values": [ 1.0 ] }
   ]
 }

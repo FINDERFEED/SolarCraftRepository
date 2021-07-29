@@ -26,12 +26,12 @@ public class SolarForgePetalsTrue extends Model {
 		super(RenderType::text);
 		for (int i = 1;i <= 9;i++){
 			bb_main.add(part.getChild("part"+i));
-			bb_main.get(i-1).setPos(9.5625F, -22.8125F, 0.0F);
+			bb_main.get(i-1).setPos(9.5625F, 24-22.8125F, 0.0F);
 			setRotationAngle(bb_main.get(i-1), 0.0F, 0.0F, -0.2618F);
 		}
 		for (int i = 10;i <= 17;i++){
 			bb_main.add(part.getChild("part"+i));
-			bb_main.get(i-1).setPos(-9.5625F, -22.8125F, 0.0F);
+			bb_main.get(i-1).setPos(-9.5625F, 24-22.8125F, 0.0F);
 			setRotationAngle(bb_main.get(i-1), 0.0F, 0.0F, 0.2618F);
 		}
 //		this.texWidth = 256;

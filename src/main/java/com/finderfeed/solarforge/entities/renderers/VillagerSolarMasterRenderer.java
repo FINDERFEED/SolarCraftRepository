@@ -19,7 +19,6 @@ public class VillagerSolarMasterRenderer extends MobRenderer<VillagerSolarMaster
     public VillagerSolarMasterRenderer(EntityRendererProvider.Context ctx) {
         super(ctx, new VillagerModel<>(ctx.bakeLayer(ModelLayers.VILLAGER)), 0.5f);
         this.addLayer(new CustomHeadLayer(this, ctx.getModelSet()));
-        this.addLayer(new VillagerProfessionLayer(this, ctx.getResourceManager(), "villager"));
         this.addLayer(new CrossedArmsItemLayer(this));
     }
 

@@ -2,6 +2,7 @@ package com.finderfeed.solarforge.magic_items.items.solar_lexicon.screen;
 
 import com.finderfeed.solarforge.ClientHelpers;
 import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.RenderingTools;
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.misc_things.IScrollable;
 import com.finderfeed.solarforge.misc_things.Multiblock;
@@ -365,10 +366,10 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
 
 
     public void drawRectangle(PoseStack matrices,int x,int y,Point p){
-        Helpers.drawLine(matrices,p.x+scrollX,p.y+scrollY,p.x+x+scrollX,p.y+scrollY,1,1,1);
-        Helpers.drawLine(matrices,p.x+x+scrollX,p.y+scrollY,p.x+x+scrollX,p.y+y+scrollY,1,1,1);
-        Helpers.drawLine(matrices,p.x+scrollX,p.y+y+scrollY,p.x+x+scrollX,p.y+y+scrollY,1,1,1);
-        Helpers.drawLine(matrices,p.x+scrollX,p.y+scrollY,p.x+scrollX,p.y+y+scrollY,1,1,1);
+        RenderingTools.drawLine(matrices,p.x+scrollX,p.y+scrollY,p.x+x+scrollX,p.y+scrollY,255,255,255);
+        RenderingTools.drawLine(matrices,p.x+x+scrollX,p.y+scrollY,p.x+x+scrollX,p.y+y+scrollY,255,255,255);
+        RenderingTools.drawLine(matrices,p.x+scrollX,p.y+y+scrollY,p.x+x+scrollX,p.y+y+scrollY,255,255,255);
+        RenderingTools.drawLine(matrices,p.x+scrollX,p.y+scrollY,p.x+scrollX,p.y+y+scrollY,255,255,255);
     }
 
 

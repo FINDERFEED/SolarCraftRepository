@@ -31,7 +31,7 @@ public class SolarForgeBlockModelTrue extends Model {
 		}
 		for (int i = 13;i <= 14;i++){
 			bb_main.add(part.getChild("part"+i));
-			bb_main.get(i-1).setPos(0.0F, 0.0F, 0.0F);
+			bb_main.get(i-1).setPos(0.0F, 24.0F, 0.0F);
 			setRotationAngle(bb_main.get(i-1), 0.0F, -0.7854F, 0.0F);
 
 		}

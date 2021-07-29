@@ -80,7 +80,7 @@ public class BurntTreeTrunkPlacer extends TrunkPlacer {
 
             if (placeDirt){
 
-                setDirtAt(levelSimulatedReader,world,rnd,Helpers.getBlockPositionsByDirection(dir,pos,1).get(1),cfg);
+                setDirtAt(levelSimulatedReader,world,rnd,Helpers.getBlockPositionsByDirection(dir,pos,1).get(1).below(),cfg);
             }
             world.accept(Helpers.getBlockPositionsByDirection(dir,pos,1).get(1),stateConf);
             if (iterator != 0 && iterator%(Math.round(rnd.nextFloat()+1)) == 0) {

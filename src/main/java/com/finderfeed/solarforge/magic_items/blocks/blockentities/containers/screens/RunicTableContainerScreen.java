@@ -120,7 +120,7 @@ class WoodenButton extends Button{
         Minecraft minecraft = Minecraft.getInstance();
         Font fontrenderer = minecraft.font;
         ClientHelpers.bindText(WIDGETS_SOLARFORGE);
-        GL11.glColor4f(1.0F, 1.0F, 1.0F, this.alpha);
+        RenderSystem.setShaderColor(1,1,1,this.alpha);
         int i = this.getYImage(this.isHovered());
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();

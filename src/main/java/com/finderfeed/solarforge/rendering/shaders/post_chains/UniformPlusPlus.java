@@ -28,8 +28,6 @@ public class UniformPlusPlus {
                 shader.safeGetUniform(name).set(a);
             }else if (uniform instanceof Vector3f a){
                 shader.safeGetUniform(name).set(a);
-            }else if (uniform instanceof Integer a){
-                shader.safeGetUniform(name).set(a);
             }
         });
     }

@@ -1,6 +1,8 @@
 package com.finderfeed.solarforge.magic_items.items.solar_lexicon.screen;
 
+import com.finderfeed.solarforge.RenderingTools;
 import com.finderfeed.solarforge.registries.sounds.Sounds;
+import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
@@ -51,16 +53,18 @@ public class ItemStackButton extends Button {
             this.renderToolTip(matrices,mousex,mousey);
         }
         matrices.scale(scaleFactor,scaleFactor,scaleFactor);
-        GL11.glScalef(scaleFactor,scaleFactor,scaleFactor);
+//        GL11.glScalef(scaleFactor,scaleFactor,scaleFactor);
+
         //if (!qMark) {
-            mc.getItemRenderer().renderGuiItem(stack, (int) (x / scaleFactor), (int) (y / scaleFactor));
+        RenderingTools.renderScaledGuiItem(stack,(int) x, (int) y,scaleFactor);
+//        mc.getItemRenderer().renderGuiItem(stack, (int) (x / scaleFactor), (int) (y / scaleFactor));
         //}else{
 
 
         //}
 
 
-        GL11.glScalef(1/scaleFactor,1/scaleFactor,1/scaleFactor);
+//        GL11.glScalef(1/scaleFactor,1/scaleFactor,1/scaleFactor);
         RenderSystem.setShaderTexture(0,LOC);
         RenderSystem.enableBlend();
         if (this.isHovered){

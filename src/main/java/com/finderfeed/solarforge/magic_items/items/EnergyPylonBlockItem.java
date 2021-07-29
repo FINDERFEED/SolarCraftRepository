@@ -18,6 +18,7 @@ public class EnergyPylonBlockItem extends BlockItem {
     @Override
     public void initializeClient(Consumer<IItemRenderProperties> consumer) {
         super.initializeClient(consumer);
+        consumer.accept(com.finderfeed.solarforge.magic_items.items.Properties.INSTANCE);
     }
 }
 class Properties implements IItemRenderProperties{

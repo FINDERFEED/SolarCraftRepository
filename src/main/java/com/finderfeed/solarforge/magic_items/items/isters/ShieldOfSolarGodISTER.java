@@ -39,13 +39,13 @@ public class ShieldOfSolarGodISTER extends BlockEntityWithoutLevelRenderer {
         matrices.scale(1.0F, -1.0F, -1.0F);
         matrices.translate(0,-0.6,-0.2);
         
-        if (isBeingUsed && transfrom == ItemTransforms.TransformType.THIRD_PERSON_LEFT_HAND){
+        if (Minecraft.getInstance().player.isUsingItem() && transfrom == ItemTransforms.TransformType.THIRD_PERSON_LEFT_HAND){
             matrices.translate(0,0,0.4);
             matrices.mulPose(Vector3f.YP.rotationDegrees(70));
             matrices.mulPose(Vector3f.XN.rotationDegrees(40));
 
         }
-        if (isBeingUsed && transfrom == ItemTransforms.TransformType.THIRD_PERSON_RIGHT_HAND){
+        if (Minecraft.getInstance().player.isUsingItem() && transfrom == ItemTransforms.TransformType.THIRD_PERSON_RIGHT_HAND){
             matrices.translate(0,0,0.4);
             matrices.mulPose(Vector3f.YN.rotationDegrees(70));
             matrices.mulPose(Vector3f.XN.rotationDegrees(40));
@@ -55,7 +55,7 @@ public class ShieldOfSolarGodISTER extends BlockEntityWithoutLevelRenderer {
             matrices.translate(-0.5,-1.5,-0.5);
             matrices.scale(2.5f,2.5f,2.5f);
         }
-        if (isBeingUsed && ((transfrom == ItemTransforms.TransformType.FIRST_PERSON_LEFT_HAND) ||(transfrom == ItemTransforms.TransformType.FIRST_PERSON_RIGHT_HAND)) ){
+        if (Minecraft.getInstance().player.isUsingItem() && ((transfrom == ItemTransforms.TransformType.FIRST_PERSON_LEFT_HAND) ||(transfrom == ItemTransforms.TransformType.FIRST_PERSON_RIGHT_HAND)) ){
             matrices.translate(0.1,-0.3,-0.3);
         }
 

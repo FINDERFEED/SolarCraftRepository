@@ -10,7 +10,9 @@ import net.minecraft.data.BuiltinRegistries;
 import net.minecraft.util.valueproviders.ConstantInt;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.VerticalAnchor;
+import net.minecraft.world.level.levelgen.feature.configurations.*;
 import net.minecraft.world.level.levelgen.feature.stateproviders.SimpleStateProvider;
 
 import net.minecraft.world.level.levelgen.feature.foliageplacers.BlobFoliagePlacer;
@@ -23,10 +25,6 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
-import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguration;
-import net.minecraft.world.level.levelgen.feature.configurations.RangeDecoratorConfiguration;
-import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration;
 import net.minecraft.world.level.levelgen.feature.featuresize.TwoLayersFeatureSize;
 import net.minecraft.world.level.levelgen.placement.ChanceDecoratorConfiguration;
 import net.minecraft.world.level.levelgen.placement.FeatureDecorator;
@@ -74,10 +72,11 @@ public class FeaturesRegistry {
                     new SimpleStateProvider(BlocksRegistry.RUNIC_LOG.get().defaultBlockState()),
                     new StraightTrunkPlacer(4, 2, 0),
                     new SimpleStateProvider(BlocksRegistry.RUNIC_LEAVES.get().defaultBlockState()),
-                    new SimpleStateProvider(Blocks.AIR.defaultBlockState()),
+                    new SimpleStateProvider(Blocks.OAK_SAPLING.defaultBlockState()),
                     new BlobFoliagePlacer(ConstantInt.of(2), ConstantInt.of(0), 3),
                     new TwoLayersFeatureSize(1, 0, 1))
                     .ignoreVines().build())
+                    .decorated(FeatureDecorator.HEIGHTMAP.configured(new HeightmapConfiguration(Heightmap.Types.WORLD_SURFACE_WG)))
                     .decorated(FeatureDecorator.CHANCE.configured(new ChanceDecoratorConfiguration(100)));
             Registry.register(BuiltinRegistries.CONFIGURED_FEATURE,new ResourceLocation("solarforge","runic_tree"),RUNIC_TREE_FEATURE);
 

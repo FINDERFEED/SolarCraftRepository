@@ -6,17 +6,25 @@ import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.misc_things.IScrollable;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.achievement_tree.AchievementTree;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Achievement;
-import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.platform.GLX;
+import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.*;
 
 
+import com.mojang.math.Vector3d;
+import com.mojang.math.Vector3f;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.components.AbstractWidget;
 
+import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.world.item.Items;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
+import net.minecraftforge.client.model.pipeline.VertexBufferConsumer;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL11;
 
@@ -219,10 +227,10 @@ public class SolarLexiconScreen extends Screen implements IScrollable {
                 Point second = new Point(relX+scrollX+18+map.get(b.getAchievementTier()).indexOf(b)*35,relY+scrollY+18+(b.getAchievementTier()-1)*30);
                 if (currentAchievement != null && (currentAchievement == b || currentAchievement == a) ) {
 
-                    Helpers.drawLine(matrices, first.x, first.y, second.x, second.y,1,1,1);
+                    drawLine(matrices, first.x, first.y, second.x, second.y,255,255,255);
                 }
                 else {
-                    Helpers.drawLine(matrices, first.x, first.y, second.x, second.y,0.3f,0.3f,0.3f);
+                    drawLine(matrices, first.x, first.y, second.x, second.y,127,127,127);
                 }
 
             }
@@ -303,4 +311,27 @@ public class SolarLexiconScreen extends Screen implements IScrollable {
     }
 
 
+
+    private void drawLine(PoseStack stack,int x1,int y1,int x2,int y2,int red,int green,int blue){
+        RenderSystem.assertThread(RenderSystem::isOnRenderThread);
+        GlStateManager._disableTexture();
+        GlStateManager._depthMask(false);
+        GlStateManager._disableCull();
+        RenderSystem.setShader(GameRenderer::getRendertypeLinesShader);
+        Tesselator var4 = RenderSystem.renderThreadTesselator();
+        BufferBuilder var5 = var4.getBuilder();
+        RenderSystem.lineWidth(2.0F);
+        var5.begin(VertexFormat.Mode.LINES, DefaultVertexFormat.POSITION_COLOR_NORMAL);
+        Vector3d vector3f = new Vector3d(x2-x1,y2-y1,0);
+        Vector3d vector3f2 = new Vector3d(x1-x2,y1-y2,0);
+        var5.vertex(x1, y1, 0.0D).color(red,green,blue, 255).normal((float)vector3f.x, (float)vector3f.y, 0.0F).endVertex();
+        var5.vertex((double)x2, y2, 0.0D).color(red, green, blue, 255).normal((float)vector3f2.x, (float)vector3f2.y, 0.0F).endVertex();
+
+
+        var4.end();
+
+        GlStateManager._enableCull();
+        GlStateManager._depthMask(true);
+        GlStateManager._enableTexture();
+    }
 }
