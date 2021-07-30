@@ -11,6 +11,8 @@ import net.minecraft.world.level.block.state.BlockState;
 
 import javax.annotation.Nullable;
 
+
+//TODO:Runic energy network
 public class RunicNetworkRepeater extends Block implements EntityBlock {
     public RunicNetworkRepeater(Properties p_49795_) {
         super(p_49795_);

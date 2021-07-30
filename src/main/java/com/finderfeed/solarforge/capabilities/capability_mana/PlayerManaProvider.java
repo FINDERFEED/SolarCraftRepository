@@ -9,6 +9,7 @@ import net.minecraftforge.common.util.LazyOptional;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.Optional;
 
 public class PlayerManaProvider implements ICapabilitySerializable<CompoundTag> {
 
@@ -20,7 +21,7 @@ public class PlayerManaProvider implements ICapabilitySerializable<CompoundTag> 
     @Nonnull
     @Override
     public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
-        return solar_mana_optional.cast();
+        return cap == CapabilitySolarMana.SOLAR_MANA_PLAYER ? solar_mana_optional.cast() : LazyOptional.empty();
     }
 
     @Override
