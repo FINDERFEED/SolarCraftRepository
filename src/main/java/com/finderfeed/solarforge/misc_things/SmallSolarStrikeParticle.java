@@ -52,6 +52,9 @@ public class SmallSolarStrikeParticle extends TextureSheetParticle {
     @Override
     public void tick() {
         super.tick();
+        if (this.lifetime > 30){
+            this.quadSize-=0.05;
+        }
         if (this.lifetime-- <=0){
             this.remove();
         }
