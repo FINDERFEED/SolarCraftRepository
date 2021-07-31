@@ -96,7 +96,9 @@ public class RenderEventsHandler {
             resolution = new Vec2(width,height);
         }
         if ((Minecraft.getInstance().getWindow().getScreenWidth() != 0) && (Minecraft.getInstance().getWindow().getScreenHeight() != 0)) {
-            RenderingTools.renderHandManually(event.getMatrixStack(),event.getPartialTicks());
+            if (!ACTIVE_SHADERS.isEmpty()) {
+                RenderingTools.renderHandManually(event.getMatrixStack(), event.getPartialTicks());
+            }
             if ((RuneEnergyPylonRenderer.SHADER != null) && (resolution.x != width || resolution.y != height)){
                 resolution = new Vec2(width,height);
 

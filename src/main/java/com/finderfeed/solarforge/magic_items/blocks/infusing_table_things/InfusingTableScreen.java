@@ -11,6 +11,8 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.resources.ResourceLocation;
 import com.mojang.math.Vector3f;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 
 import java.util.Optional;
 
@@ -68,18 +70,18 @@ public class InfusingTableScreen extends AbstractContainerScreen<InfusingTableCo
         ItemRenderer renderd = minecraft.getItemRenderer();
         InfusingTableTileEntity tile = this.menu.te;
 
-        renderd.renderGuiItem(tile.getItem(1),relX+137+a,relY+58);
-        renderd.renderGuiItem(tile.getItem(2),relX+123+a,relY+19);
-        renderd.renderGuiItem(tile.getItem(3),relX+84+a,relY+5);
-        renderd.renderGuiItem(tile.getItem(4),relX+45+a,relY+19);
-        renderd.renderGuiItem(tile.getItem(5),relX+31+a,relY+58);
-        renderd.renderGuiItem(tile.getItem(6),relX+45+a,relY+97);
-        renderd.renderGuiItem(tile.getItem(7),relX+84+a,relY+111);
-        renderd.renderGuiItem(tile.getItem(8),relX+123+a,relY+97);
+        renderItemAndTooltip(tile.getItem(1),relX+137+a,relY+58,x,y,matrices);
+        renderItemAndTooltip(tile.getItem(2),relX+123+a,relY+19,x,y,matrices);
+        renderItemAndTooltip(tile.getItem(3),relX+84+a,relY+5,x,y,matrices);
+        renderItemAndTooltip(tile.getItem(4),relX+45+a,relY+19,x,y,matrices);
+        renderItemAndTooltip(tile.getItem(5),relX+31+a,relY+58,x,y,matrices);
+        renderItemAndTooltip(tile.getItem(6),relX+45+a,relY+97,x,y,matrices);
+        renderItemAndTooltip(tile.getItem(7),relX+84+a,relY+111,x,y,matrices);
+        renderItemAndTooltip(tile.getItem(8),relX+123+a,relY+97,x,y,matrices);
         Optional<InfusingRecipe> recipe = minecraft.level.getRecipeManager().getRecipeFor(SolarForge.INFUSING_RECIPE_TYPE,tile,minecraft.level);
 
         if (recipe.isPresent()){
-            renderd.renderGuiItem(recipe.get().output,relX+159+a,relY+2);
+            renderItemAndTooltip(recipe.get().output,relX+159+a,relY+2,x,y,matrices);
             
         }
         matrices.popPose();
@@ -93,5 +95,12 @@ public class InfusingTableScreen extends AbstractContainerScreen<InfusingTableCo
         blit(matrices,0,0,0,0,16,(int)(percent*33),16,33);
         matrices.popPose();
     }
-
+    private void renderItemAndTooltip(ItemStack toRender, int place1, int place2, int mousex, int mousey, PoseStack matrices){
+        minecraft.getItemRenderer().renderGuiItem(toRender,place1,place2);
+        if (((mousex >= place1) && (mousex <= place1+16)) && ((mousey >= place2) && (mousey <= place2+16)) && !toRender.getItem().equals(Items.AIR)){
+            matrices.pushPose();
+            renderTooltip(matrices,toRender,mousex,mousey);
+            matrices.popPose();
+        }
+    }
 }

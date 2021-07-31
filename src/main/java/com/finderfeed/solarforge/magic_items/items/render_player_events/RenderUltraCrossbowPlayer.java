@@ -47,7 +47,7 @@ public class RenderUltraCrossbowPlayer {
                 int height = (int)((window.getHeight())/2/window.getGuiScale() - 20);
 
                 GuiComponent.blit(stack,width,height,0,0,41,41,41,41);
-
+                RenderSystem.setShaderColor(1,1,1f,1f);
             }else if( Minecraft.getInstance().player.getOffhandItem().getItem() instanceof UltraCrossbowItem){
                 PoseStack stack = event.getMatrixStack();
                 Window window = event.getWindow();
@@ -59,6 +59,7 @@ public class RenderUltraCrossbowPlayer {
                 int height = (int)((window.getHeight())/2/window.getGuiScale() - 20);
 
                 GuiComponent.blit(stack,width,height,0,0,41,41,41,41);
+                RenderSystem.setShaderColor(1,1,1f,1f);
             }
         }
 

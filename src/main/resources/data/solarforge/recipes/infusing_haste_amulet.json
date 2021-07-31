@@ -1,0 +1,35 @@
+{
+  "type":"solarforge:infusing",
+  "input1": {
+    "item": "solarforge:solar_rune_fira"
+  },
+  "input2": {
+    "item": "minecraft:obsidian"
+  },
+  "input3": {
+    "item": "minecraft:glass"
+  },
+  "input4": {
+    "item": "minecraft:string"
+  },
+  "input5": {
+    "item": "minecraft:glass"
+  },
+  "input6": {
+    "item": "minecraft:obsidian"
+  },
+  "input7": {
+    "item": "minecraft:diamond_pickaxe"
+  },
+  "input8": {
+    "item": "minecraft:netherite_ingot"
+  },
+  "input9": {
+    "item": "minecraft:diamond_pickaxe"
+  },
+  "result": {
+    "item": "solarforge:haste_amulet"
+  },
+  "time": 500,
+  "fragment": "amulets"
+}

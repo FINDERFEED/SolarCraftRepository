@@ -190,6 +190,7 @@ public class RenderingTools {
      * @param p_83974_ Disable blend
      * @param framebuffer  Framebuffer(RenderTarget) to blit.
      */
+    @Deprecated
     public static void blitFramebufferToScreen(int p_83972_, int p_83973_, boolean p_83974_, RenderTarget framebuffer) {
         RenderSystem.assertThread(RenderSystem::isOnRenderThread);
         GlStateManager._colorMask(true, true, true, false);

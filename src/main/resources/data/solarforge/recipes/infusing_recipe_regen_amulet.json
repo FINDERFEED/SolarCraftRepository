@@ -1,0 +1,35 @@
+{
+  "type":"solarforge:infusing",
+  "input1": {
+    "item": "solarforge:solar_rune_zeta"
+  },
+  "input2": {
+    "item": "minecraft:obsidian"
+  },
+  "input3": {
+    "item": "minecraft:glass"
+  },
+  "input4": {
+    "item": "minecraft:string"
+  },
+  "input5": {
+    "item": "minecraft:glass"
+  },
+  "input6": {
+    "item": "minecraft:obsidian"
+  },
+  "input7": {
+    "item": "solarforge:qualadium_ingot"
+  },
+  "input8": {
+    "item": "minecraft:netherite_ingot"
+  },
+  "input9": {
+    "item": "solarforge:qualadium_ingot"
+  },
+  "result": {
+    "item": "solarforge:regen_amulet"
+  },
+  "time": 500,
+  "fragment": "amulets"
+}

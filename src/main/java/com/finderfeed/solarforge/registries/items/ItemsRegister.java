@@ -19,6 +19,7 @@ import com.finderfeed.solarforge.misc_things.VoidBlockWand;
 import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.SolarLexicon;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.AncientFragmentISTER;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EquipmentSlot;
 
 import net.minecraftforge.fmllegacy.RegistryObject;
@@ -142,4 +143,11 @@ public class ItemsRegister {
 
     public static final RegistryObject<Item> SOLAR_GOD_BOW = ITEMS.register("solar_god_bow",()->new SolarGodBow(new Item.Properties().tab(SolarForge.SOLAR_GROUP_TOOLS).stacksTo(1).durability(8000)));
 
+
+    public static final RegistryObject<Item> REGEN_AMULET = ITEMS.register("regen_amulet",()->new EffectAmulet(new Item.Properties().tab(SolarForge.SOLAR_GROUP_TOOLS).stacksTo(1), MobEffects.REGENERATION));
+    public static final RegistryObject<Item> STRENGTH_AMULET = ITEMS.register("strength_amulet",()->new EffectAmulet(new Item.Properties().tab(SolarForge.SOLAR_GROUP_TOOLS).stacksTo(1), MobEffects.DAMAGE_BOOST));
+    public static final RegistryObject<Item> NIGHT_VISION_AMULET = ITEMS.register("night_vision_amulet",()->new EffectAmulet(new Item.Properties().tab(SolarForge.SOLAR_GROUP_TOOLS).stacksTo(1), MobEffects.NIGHT_VISION));
+    public static final RegistryObject<Item> SPEED_AMULET = ITEMS.register("speed_amulet",()->new EffectAmulet(new Item.Properties().tab(SolarForge.SOLAR_GROUP_TOOLS).stacksTo(1), MobEffects.MOVEMENT_SPEED));
+    public static final RegistryObject<Item> HASTE_AMULET = ITEMS.register("haste_amulet",()->new EffectAmulet(new Item.Properties().tab(SolarForge.SOLAR_GROUP_TOOLS).stacksTo(1), MobEffects.DIG_SPEED));
+    public static final RegistryObject<Item> JUMP_AMULET = ITEMS.register("jump_amulet",()->new EffectAmulet(new Item.Properties().tab(SolarForge.SOLAR_GROUP_TOOLS).stacksTo(1), MobEffects.JUMP));
 }

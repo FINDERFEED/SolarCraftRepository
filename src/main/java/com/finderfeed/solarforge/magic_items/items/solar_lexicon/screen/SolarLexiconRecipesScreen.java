@@ -214,6 +214,26 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
                                         relY + parent.getPlaceInBook().y + 10 + (int) Math.floor((float) i / 6) * 25);
 
                         }
+                    }else if (fragment.getType() == AncientFragment.Type.ITEMS) {
+                        BookEntry parent = entry.getParent();
+
+                        if (parent == null) {
+
+                            addInfusingRecipeButton(fragment,
+                                    getRecipesForItemList(fragment.getStacks())
+                                    ,
+                                    relX + entry.getPlaceInBook().x  + (i % 6) * 25,
+                                    relY + entry.getPlaceInBook().y  + (int) Math.floor((float) i / 6) * 25);
+
+                        } else {
+
+                            addInfusingRecipeButton(fragment,
+                                    getRecipesForItemList(fragment.getStacks())
+                                    ,
+                                    relX + parent.getPlaceInBook().x + 10 + (i % 6) * 25 + BookEntry.ENTRY_TREE.get(parent).indexOf(entry) * 200,
+                                    relY + parent.getPlaceInBook().y + 10 + (int) Math.floor((float) i / 6) * 25);
+
+                        }
                     }
                 }
 
@@ -221,6 +241,15 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
 
         });
     }
+
+    public void addInfusingRecipeButton(AncientFragment fragment,List<InfusingRecipe> recipe,int x , int y){
+        addRenderableWidget(new ItemStackButton(x,y,24,24,(button)->{
+            minecraft.setScreen(new InformationScreen(fragment,new InfusingRecipeScreen(recipe)));
+        },fragment.getIcon().getDefaultInstance(),1.5f,false,(button,matrices,mx,my)->{
+            renderTooltip(matrices,fragment.getIcon().getDefaultInstance().getHoverName(),mx,my);
+        }));
+    }
+
 
     public void addInfusingRecipeButton(AncientFragment fragment,InfusingRecipe recipe,int x , int y){
         addRenderableWidget(new ItemStackButton(x,y,24,24,(button)->{
@@ -410,7 +439,13 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
     }
 
 
-
+    private List<InfusingRecipe> getRecipesForItemList(List<ItemStack> stacks){
+        List<InfusingRecipe> recipes = new ArrayList<>();
+        stacks.forEach((stack)->{
+            recipes.add(ProgressionHelper.INFUSING_RECIPE_MAP.get(stack.getItem()));
+        });
+        return recipes;
+    }
 
 
 

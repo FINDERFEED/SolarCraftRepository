@@ -1,0 +1,35 @@
+{
+  "type":"solarforge:infusing",
+  "input1": {
+    "item": "solarforge:solar_rune_kelda"
+  },
+  "input2": {
+    "item": "minecraft:obsidian"
+  },
+  "input3": {
+    "item": "minecraft:glass"
+  },
+  "input4": {
+    "item": "minecraft:string"
+  },
+  "input5": {
+    "item": "minecraft:glass"
+  },
+  "input6": {
+    "item": "minecraft:obsidian"
+  },
+  "input7": {
+    "item": "minecraft:lapis_lazuli"
+  },
+  "input8": {
+    "item": "minecraft:netherite_ingot"
+  },
+  "input9": {
+    "item": "minecraft:lapis_lazuli"
+  },
+  "result": {
+    "item": "solarforge:speed_amulet"
+  },
+  "time": 500,
+  "fragment": "amulets"
+}

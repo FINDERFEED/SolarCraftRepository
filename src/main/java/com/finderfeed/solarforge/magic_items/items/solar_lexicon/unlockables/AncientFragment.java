@@ -85,6 +85,11 @@ public enum AncientFragment {
 
     SOLAR_GOD_BOW(tx("solar_fragment.solar_god_bow"),"solar_god_bow",Achievement.CRAFT_SOLAR_ENERGY_GENERATOR,BookEntry.MASTER_ITEMS,ItemsRegister.SOLAR_GOD_BOW.get().getDefaultInstance(),tx("solar_god_bow.lore"), SolarForge.INFUSING_RECIPE_TYPE,true),
     SOLAR_GOD_BOW_UPGRADE(tx("solar_fragment.solar_god_bow_upgrade"),"solar_god_bow_upgrade",Achievement.CRAFT_SOLAR_ENERGY_GENERATOR,BookEntry.UPGRADES,ItemsRegister.SOLAR_GOD_BOW.get().getDefaultInstance(),tx("solar_god_bow_upgrade.lore")),
+    AMULETS(tx("solar_fragment.amulets"),"amulets",Achievement.CRAFT_SOLAR_LENS,BookEntry.SKILLED_ITEMS,List.of(
+            ItemsRegister.REGEN_AMULET.get().getDefaultInstance(),ItemsRegister.JUMP_AMULET.get().getDefaultInstance(),
+            ItemsRegister.SPEED_AMULET.get().getDefaultInstance(),ItemsRegister.HASTE_AMULET.get().getDefaultInstance(),
+            ItemsRegister.NIGHT_VISION_AMULET.get().getDefaultInstance(),ItemsRegister.STRENGTH_AMULET.get().getDefaultInstance()
+    ),tx("amulets.lore"))
     ;
 
     public static Map<String,AncientFragment> FRAGMENTS_ID_MAP = new HashMap<>();
@@ -112,6 +117,7 @@ public enum AncientFragment {
     private final Type type;
     private final Item icon;
     private final BookEntry entry;
+    private List<ItemStack> stacks;
     private Multiblocks structure;
     private ItemStack item;
     private TranslatableComponent lore;
@@ -153,6 +159,15 @@ public enum AncientFragment {
         this.itemLore = upgradeLore;
     }
 
+    AncientFragment(TranslatableComponent translation, String id, Achievement neededProgression,BookEntry entry, List<ItemStack> item,TranslatableComponent upgradeLore){
+        this(translation,id,neededProgression,entry,Type.ITEMS,item.get(0).getItem(),true);
+        this.stacks = item;
+        this.itemLore = upgradeLore;
+    }
+
+    public List<ItemStack> getStacks() {
+        return stacks;
+    }
 
     public RecipeType<?> getRecipeType() {
         return recipeType;
@@ -205,7 +220,8 @@ public enum AncientFragment {
         STRUCTURE,
         ITEM,
         INFORMATION,
-        UPGRADE
+        UPGRADE,
+        ITEMS
     }
 
     public static AncientFragment getFragmentByID(String id){

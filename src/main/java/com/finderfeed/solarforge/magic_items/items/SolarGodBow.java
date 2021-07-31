@@ -131,6 +131,7 @@ public class SolarGodBow extends Item implements ITagUser {
             ItemStack stack2 = new ItemStack(this);
             stack2.getOrCreateTagElement(SolarCraftTags.SOLAR_GOD_BOW_TAG).putInt(SolarCraftTags.SOLAR_GOD_BOW_LEVEL_TAG,6);
             stacks.add(stack2);
+
         }
     }
 

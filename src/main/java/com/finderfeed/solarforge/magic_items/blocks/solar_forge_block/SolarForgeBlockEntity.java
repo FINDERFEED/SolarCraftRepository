@@ -25,6 +25,7 @@ import net.minecraft.network.chat.TranslatableComponent;
 public class SolarForgeBlockEntity extends RandomizableContainerBlockEntity  {
     public int SOLAR_ENERGY_LEVEL = 0;
     private SimpleContainerData arr = new SimpleContainerData(1);
+
     public NonNullList<ItemStack> items = NonNullList.withSize(2,ItemStack.EMPTY);
 
     public SolarForgeBlockEntity(BlockPos p_155630_, BlockState p_155631_) {

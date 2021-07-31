@@ -330,14 +330,25 @@
   "container.runictable": "Runic Table",
 
 
+  "solar_fragment.solar_god_bow": "Solar god bow",
+  "solar_god_bow.lore": "The bow of the god itself. Can be upgraded to reach its maximum power.",
+  "solar_fragment.solar_god_bow_upgrade": "Solar god bow(Upgrade)",
+  "solar_god_bow_upgrade.lore": "Upgrades the solar god bow",
 
   "solarcraft.god_bow_upgrade": "Can be upgraded. Current Level:",
   "solarcraft.god_bow_upgrade_2": "Level 2: Projectile damage +5.",
   "solarcraft.god_bow_upgrade_3": "Level 3: Projectile sets targets on fire for 8 seconds.",
   "solarcraft.god_bow_upgrade_4": "Level 4: Projectile applies slowness.",
   "solarcraft.god_bow_upgrade_5": "Level 5: Projectile is explosive.",
-  "solarcraft.god_bow_upgrade_6": "Level 6: Projectile splinters on impact."
-
+  "solarcraft.god_bow_upgrade_6": "Level 6: Projectile splinters on impact.",
+  "item.solarforge.regen_amulet": "Amulet",
+  "item.solarforge.strength_amulet": "Amulet",
+  "item.solarforge.night_vision_amulet": "Amulet",
+  "item.solarforge.haste_amulet": "Amulet",
+  "item.solarforge.jump_amulet": "Amulet",
+  "item.solarforge.speed_amulet": "Amulet",
+  "solar_fragment.amulets": "Effect amulets",
+  "amulets.lore": "Tired of making potions? Or you are just too lazy to brew them? This amulets can solve this problem, while in your inventory they will give you their effect."
 
 
 
