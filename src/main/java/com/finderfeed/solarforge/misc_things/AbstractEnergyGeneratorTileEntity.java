@@ -35,8 +35,11 @@ public abstract class AbstractEnergyGeneratorTileEntity extends BlockEntity impl
     public static void tick(Level world, BlockPos pos, BlockState blockState, AbstractEnergyGeneratorTileEntity tile) {
 
         if (!world.isClientSide && tile.getConditionToFunction()){
+
             if (tile.SOLAR_ENERGY+tile.getEnergyPerSecond() <= tile.getEnergyCap()) {
                 tile.SOLAR_ENERGY += tile.getEnergyPerSecond();
+            }else{
+                tile.SOLAR_ENERGY = tile.getEnergyCap();
             }
 
 

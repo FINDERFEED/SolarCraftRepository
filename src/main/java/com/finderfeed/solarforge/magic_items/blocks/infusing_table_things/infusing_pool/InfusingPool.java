@@ -99,7 +99,9 @@ public class InfusingPool extends Block implements EntityBlock {
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level p_153212_, BlockState p_153213_, BlockEntityType<T> p_153214_) {
         return (((level, blockPos, blockState, t) -> {
-            InfusingPoolTileEntity.tick(level,blockPos,blockState,(InfusingPoolTileEntity) t);
+            if (level.getGameTime() % 20 == 1) {
+                InfusingPoolTileEntity.tick(level, blockPos, blockState, (InfusingPoolTileEntity) t);
+            }
         }));
     }
 }

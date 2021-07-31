@@ -246,7 +246,7 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
         addRenderableWidget(new ItemStackButton(x,y,24,24,(button)->{
             minecraft.setScreen(new InformationScreen(fragment,new InfusingRecipeScreen(recipe)));
         },fragment.getIcon().getDefaultInstance(),1.5f,false,(button,matrices,mx,my)->{
-            renderTooltip(matrices,fragment.getIcon().getDefaultInstance().getHoverName(),mx,my);
+            renderTooltip(matrices,fragment.getTranslation(),mx,my);
         }));
     }
 
@@ -255,7 +255,7 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
         addRenderableWidget(new ItemStackButton(x,y,24,24,(button)->{
             minecraft.setScreen(new InformationScreen(fragment,new InfusingRecipeScreen(recipe)));
         },fragment.getIcon().getDefaultInstance(),1.5f,false,(button,matrices,mx,my)->{
-            renderTooltip(matrices,fragment.getIcon().getDefaultInstance().getHoverName(),mx,my);
+            renderTooltip(matrices,fragment.getTranslation(),mx,my);
         }));
     }
 
@@ -287,6 +287,12 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
 
 
 
+    private boolean isButtonPressable(int x,int y){
+        if (((x + 24 > relX+7) && (x  < relX+7+190)) && ((y + 24 > relY+7) && (y  < relY+7+193))){
+            return true;
+        }
+        return false;
+    }
 
     @Override
     public void render(PoseStack matrices, int mousex, int mousey, float partialTicks) {
@@ -370,9 +376,16 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
         goBack.render(matrices,mousex,mousey,partialTicks);
         nothing.render(matrices,mousex,mousey,partialTicks);
 
+        this.renderables.forEach((widget)->{
+            if (widget instanceof AbstractWidget button){
+                button.active = isButtonPressable(button.x, button.y);
+            }
+        });
 //        List<Widget> list = this.buttons;
 //        list.remove(goBack);
 //        list.remove(nothing);
+
+
 
     }
 

@@ -36,6 +36,7 @@ import net.minecraft.world.level.levelgen.feature.stateproviders.WeightedStatePr
 import net.minecraft.world.level.levelgen.feature.configurations.RandomPatchConfiguration;
 import net.minecraftforge.common.MinecraftForge;
 
+import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fmllegacy.network.NetworkDirection;
 import org.lwjgl.opengl.GL11;
 
@@ -345,6 +346,23 @@ public class Helpers {
 
 
 
+    public static void constructMultiblock(Player player,Multiblock multiblock){
+        Level w = player.level;
+        BlockPos startingPos = player.getOnPos();
+        for (int i = 0; i < multiblock.struct.length; i++){
+            for (int g = 0; g < multiblock.struct[i].length; g++){
+                String row = multiblock.struct[i][g];
+                    for (int f = 0;f < row.length();f++){
+                        int offsetX = f;
+                        int offsetZ = g;
+                        int offsetY = i;
+//                        w.setBlock(startingPos.offset(offsetX,offsetY,offsetZ),multiblock.blockMap.get(row.charAt(f)).defaultBlockState(), Constants.BlockFlags.DEFAULT);
+                        w.setBlockAndUpdate(startingPos.offset(offsetX,offsetY,offsetZ),multiblock.blockMap.get(row.charAt(f)).defaultBlockState());
+                    }
+
+            }
+        }
+    }
 
 
 

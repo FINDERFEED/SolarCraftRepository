@@ -5,6 +5,8 @@ import com.finderfeed.solarforge.misc_things.Multiblock;
 import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Achievement;
 
+import java.util.Map;
+
 public enum Multiblocks {
     SOLAR_CORE(new Multiblock(new Multiblock.Constructor()
             .addBlock(BlocksRegistry.SOLAR_CORE.get(),'Z')
@@ -60,6 +62,15 @@ public enum Multiblocks {
             .addAchievement(Achievement.CRAFT_SOLAR_INFUSER)
             .setStructName("solarforge_struct.solar_infuser")
     ));
+
+
+    public static Map<String,Multiblock> multiblocks = Map.of(
+            "infuser", INFUSER.a,
+            "generator", SOLAR_ENERGY_GENERATOR.a,
+            "healer", AURA_HEALER.a,
+            "mortar", SOLAR_MORTAR.a,
+            "lesser_core", SOLAR_CORE.a
+    );
 
 
     Multiblock a;

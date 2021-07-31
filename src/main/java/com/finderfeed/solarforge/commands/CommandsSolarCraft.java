@@ -1,6 +1,8 @@
 package com.finderfeed.solarforge.commands;
 
 import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.SolarLexicon;
+import com.finderfeed.solarforge.multiblocks.Multiblocks;
 import com.finderfeed.solarforge.registries.items.ItemsRegister;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Achievement;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.AncientFragment;
@@ -16,10 +18,16 @@ import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
+import org.jline.utils.InfoCmp;
 
 public class CommandsSolarCraft {
 
@@ -30,10 +38,60 @@ public class CommandsSolarCraft {
                         .then(refreshAchievements.register())
                         .then(AchievementsHelp.register())
                         .then(RetainFragments.register())
+                        .then(Commands.literal("structure").then(Commands.literal("construct").then(Commands.argument("structure_code",StringArgumentType.string())
+                                .executes((cmds)-> constructMultiblock(cmds.getSource(),cmds.getArgument("structure_code",String.class))))))
+                        .then(Commands.literal("fillLexicon").executes((cmss)-> fillLexicon(cmss.getSource())))
+
         );
     }
 
+    public static int fillLexicon(CommandSourceStack src) throws CommandSyntaxException {
+        ServerPlayer player = src.getPlayerOrException();
+        if (player.getMainHandItem().getItem() instanceof SolarLexicon){
+            LazyOptional<IItemHandler> cap = player.getMainHandItem().getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY);
+            if (cap.isPresent()){
+                cap.ifPresent((inv)->{
+                    try {
+                        for (int i = 0; i < AncientFragment.getAllFragments().length; i++) {
+
+                            AncientFragment fragment = AncientFragment.getAllFragments()[i];
+                            ItemStack stack = ItemsRegister.INFO_FRAGMENT.get().getDefaultInstance();
+                            ProgressionHelper.applyTagToFragment(stack, fragment);
+                            inv.insertItem(i, stack, false);
+
+
+                        }
+                        src.sendSuccess(new TextComponent("Filled lexicon inventory"),false);
+                    }catch (Exception e){
+                        e.printStackTrace();
+                        src.sendFailure(new TextComponent("CAUGHT FATAL ERROR DURING COMMAND, STACK TRACE PRINTED"));
+                    }
+
+                });
+            }else {
+                src.sendFailure(new TextComponent("Not found inventory"));
+            }
+        }else {
+            src.sendFailure(new TextComponent("Solar lexicon not found in main hand"));
+        }
+        return 1;
+    }
+
+    public static int constructMultiblock(CommandSourceStack src,String id) throws CommandSyntaxException{
+        ServerPlayer player = src.getPlayerOrException();
+        if (Multiblocks.multiblocks.containsKey(id)){
+            Helpers.constructMultiblock(player,Multiblocks.multiblocks.get(id));
+            src.sendSuccess(new TextComponent("Constructed!"),false);
+        }else{
+            src.sendFailure(new TextComponent("Structure doesnt exist"));
+        }
+        return 0;
+    }
 }
+
+
+
+
 
 class RetainFragments{
     public static ArgumentBuilder<CommandSourceStack,?> register(){

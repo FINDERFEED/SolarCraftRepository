@@ -80,6 +80,7 @@ public class InfusingPoolTileEntity extends RandomizableContainerBlockEntity  {
 
     public static void tick(Level world,BlockPos pos,BlockState state,InfusingPoolTileEntity tile) {
         if (!tile.level.isClientSide) {
+
             SolarForgePacketHandler.INSTANCE.send(PacketDistributor.NEAR.with(PacketDistributor.TargetPoint.p(tile.worldPosition.getX(),tile.worldPosition.getY(),tile.worldPosition.getZ(),20,tile.level.dimension())),
                     new UpdateStacksOnClientPacketPool(tile.getItem(0),tile.worldPosition));
 

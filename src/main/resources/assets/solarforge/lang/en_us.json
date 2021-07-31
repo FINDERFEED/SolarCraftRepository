@@ -120,8 +120,8 @@
   "solarforge_struct.solar_infuser": "Solar Infuser",
   "solarcraft.failure_unlock": "You cant unlock this progression or it doesnt exist.",
   "solarcraft.success_unlock": "Successfully unlocked",
-  "solarcraft.welcome_message": "Thanks for downloading SolarCraft!",
-  "solarcraft.welcome_message2": "You can get some help with progressions by typing /solarcraft codes",
+  "solarcraft.welcome_message": "Thanks for downloading SolarCraft! To cheat progression/other you can use /solarcraft commands. If you updated the mod and had a solar lexicon",
+  "solarcraft.welcome_message2": "please delete it and make a new. Use /solarcraft fragments retain to get all the fragments you had. If you open old lexicon it may cause crash.",
   "solarcraft.gethelpcommand": "This codes are used in /solarcraft unlock <code>",
   "solarcraft.solar_wand": "Is used to trigger crafting on the Infuser.",
   "container.solarfurnace": "Solar Furnace",
@@ -348,7 +348,8 @@
   "item.solarforge.jump_amulet": "Amulet",
   "item.solarforge.speed_amulet": "Amulet",
   "solar_fragment.amulets": "Effect amulets",
-  "amulets.lore": "Tired of making potions? Or you are just too lazy to brew them? This amulets can solve this problem, while in your inventory they will give you their effect."
+  "amulets.lore": "Tired of making potions? Or you are just too lazy to brew them? This amulets can solve this problem, while in your inventory they will give you their effect.",
+  "item.solarforge.solar_god_bow": "Solar god bow"
 
 
 

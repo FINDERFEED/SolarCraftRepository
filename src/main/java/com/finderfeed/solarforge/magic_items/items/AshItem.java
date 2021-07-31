@@ -7,6 +7,7 @@ import net.minecraft.world.item.ItemStack;
 
 import net.minecraft.world.item.Item.Properties;
 import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.enchantment.Enchantment;
 
 import javax.annotation.Nullable;
 
@@ -20,7 +21,6 @@ public class AshItem extends Item {
     public int getBurnTime(ItemStack itemStack, @Nullable RecipeType<?> recipeType) {
         return 500;
     }
-
 
 
 
