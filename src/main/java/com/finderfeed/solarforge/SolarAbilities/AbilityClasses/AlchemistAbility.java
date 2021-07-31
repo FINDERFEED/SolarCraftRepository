@@ -5,7 +5,7 @@ import net.minecraft.server.level.ServerLevel;
 
 public class AlchemistAbility extends AbstractAbility{
     public AlchemistAbility() {
-        super("alchemist",0, new RunicEnergyCostConstructor());
+        super("alchemist",0, new RunicEnergyCostConstructor(),25000);
     }
 
     @Override

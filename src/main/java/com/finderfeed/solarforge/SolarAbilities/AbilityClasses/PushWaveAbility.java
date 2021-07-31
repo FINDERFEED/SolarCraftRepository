@@ -5,7 +5,7 @@ import net.minecraft.server.level.ServerLevel;
 
 public class PushWaveAbility extends AbstractAbility{
     public PushWaveAbility(String id, int manacost) {
-        super("",1,new RunicEnergyCostConstructor());
+        super("",1,new RunicEnergyCostConstructor(),1);
     }
 
     @Override

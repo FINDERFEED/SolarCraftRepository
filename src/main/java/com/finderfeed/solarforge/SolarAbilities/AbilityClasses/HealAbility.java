@@ -9,7 +9,7 @@ public class HealAbility extends AbstractAbility{
         super("solar_heal",250,new RunicEnergyCostConstructor()
         .addRunicEnergy(RunicEnergy.Type.ZETA,200)
         .addRunicEnergy(RunicEnergy.Type.URBA,350)
-        .addRunicEnergy(RunicEnergy.Type.ARDO,400));
+        .addRunicEnergy(RunicEnergy.Type.ARDO,400),15000);
     }
 
     @Override

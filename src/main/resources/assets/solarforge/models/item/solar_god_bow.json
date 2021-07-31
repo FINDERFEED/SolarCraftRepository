@@ -204,19 +204,39 @@
 			}
 		}
 	],
+	"overrides": [
+		{
+			"predicate": {
+				"solarforge:pulling": 0.1
+			},
+			"model": "solarforge:item/solar_god_bow_pulling_states/solar_god_bow_pulling_1"
+		},
+		{
+			"predicate": {
+				"solarforge:pulling": 0.65
+			},
+			"model": "solarforge:item/solar_god_bow_pulling_states/solar_god_bow_pulling_2"
+		},
+		{
+			"predicate": {
+				"solarforge:pulling": 0.9
+			},
+			"model": "solarforge:item/solar_god_bow_pulling_states/solar_god_bow_pulling_3"
+		}
+	],
 	"display": {
 		"thirdperson_righthand": {
-			"translation": [0, -11, 1.5]
+			"translation": [0, -11, 1]
 		},
 		"thirdperson_lefthand": {
 			"translation": [0, -11.25, 1.5]
 		},
 		"firstperson_righthand": {
-			"translation": [0, -2.75, 2.25],
+			"translation": [0, -5, 2.25],
 			"scale": [0.7, 0.7, 0.7]
 		},
 		"firstperson_lefthand": {
-			"translation": [0, -2.5, 1.75],
+			"translation": [0, -5.5, 1.75],
 			"scale": [0.7, 0.7, 0.7]
 		},
 		"ground": {

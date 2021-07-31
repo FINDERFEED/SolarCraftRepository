@@ -327,7 +327,16 @@
   "solar_category.master_items": "Master items",
   "solar_category.master_energy": "Master energy",
   "solar_category.master_materials": "Master materials",
-  "container.runictable": "Runic Table"
+  "container.runictable": "Runic Table",
+
+
+
+  "solarcraft.god_bow_upgrade": "Can be upgraded. Current Level:",
+  "solarcraft.god_bow_upgrade_2": "Level 2: Projectile damage +5.",
+  "solarcraft.god_bow_upgrade_3": "Level 3: Projectile sets targets on fire for 8 seconds.",
+  "solarcraft.god_bow_upgrade_4": "Level 4: Projectile applies slowness.",
+  "solarcraft.god_bow_upgrade_5": "Level 5: Projectile is explosive.",
+  "solarcraft.god_bow_upgrade_6": "Level 6: Projectile splinters on impact."
 
 
 

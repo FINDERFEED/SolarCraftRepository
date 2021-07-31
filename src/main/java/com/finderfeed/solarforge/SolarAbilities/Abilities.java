@@ -2,6 +2,8 @@ package com.finderfeed.solarforge.SolarAbilities;
 
 import com.finderfeed.solarforge.SolarAbilities.AbilityClasses.*;
 
+import java.util.Map;
+
 public enum Abilities {
     FIREBALL(new FireballAbility()),
     LIGHTNING(new LightningAbility()),
@@ -28,4 +30,15 @@ public enum Abilities {
         };
         return all;
     }
+
+    public static Map<String,Abilities> BY_IDS = Map.of(
+            FIREBALL.getAbility().id,FIREBALL,
+            LIGHTNING.getAbility().id,LIGHTNING,
+            SOLAR_STRIKE.getAbility().id,SOLAR_STRIKE,
+            DISARM.getAbility().id,DISARM,
+            METEORITE.getAbility().id,METEORITE,
+            HEAL.getAbility().id,HEAL,
+            ALCHEMIST.getAbility().id,ALCHEMIST,
+            DISPEL.getAbility().id,DISPEL
+    );
 }

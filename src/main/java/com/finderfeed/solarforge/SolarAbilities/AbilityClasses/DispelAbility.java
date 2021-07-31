@@ -10,7 +10,7 @@ public class DispelAbility extends AbstractAbility{
         super("solar_dispel",400,new RunicEnergyCostConstructor()
         .addRunicEnergy(RunicEnergy.Type.FIRA,350)
         .addRunicEnergy(RunicEnergy.Type.ZETA,500)
-        .addRunicEnergy(RunicEnergy.Type.KELDA,100));
+        .addRunicEnergy(RunicEnergy.Type.KELDA,100),20000);
     }
 
     @Override

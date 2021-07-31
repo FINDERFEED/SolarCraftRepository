@@ -82,6 +82,9 @@ public enum AncientFragment {
 
     SOLAR_GOD_PICKAXE_UPGRADE(tx("solar_fragment.solar_god_pickaxe_upgrade"),"solar_god_pickaxe_upgrade",Achievement.CRAFT_SOLAR_ENERGY_GENERATOR,BookEntry.UPGRADES,ItemsRegister.SOLAR_GOD_PICKAXE.get().getDefaultInstance(),tx("solar_pickaxe_upgrade.lore")),
     SOLAR_GOD_SWORD_UPGRADE(tx("solar_fragment.solar_god_sword_upgrade"),"solar_god_sword_upgrade",Achievement.CRAFT_SOLAR_ENERGY_GENERATOR,BookEntry.UPGRADES,ItemsRegister.SOLAR_GOD_SWORD.get().getDefaultInstance(),tx("solar_god_sword_upgrade.lore")),
+
+    SOLAR_GOD_BOW(tx("solar_fragment.solar_god_bow"),"solar_god_bow",Achievement.CRAFT_SOLAR_ENERGY_GENERATOR,BookEntry.MASTER_ITEMS,ItemsRegister.SOLAR_GOD_BOW.get().getDefaultInstance(),tx("solar_god_bow.lore"), SolarForge.INFUSING_RECIPE_TYPE,true),
+    SOLAR_GOD_BOW_UPGRADE(tx("solar_fragment.solar_god_bow_upgrade"),"solar_god_bow_upgrade",Achievement.CRAFT_SOLAR_ENERGY_GENERATOR,BookEntry.UPGRADES,ItemsRegister.SOLAR_GOD_BOW.get().getDefaultInstance(),tx("solar_god_bow_upgrade.lore")),
     ;
 
     public static Map<String,AncientFragment> FRAGMENTS_ID_MAP = new HashMap<>();

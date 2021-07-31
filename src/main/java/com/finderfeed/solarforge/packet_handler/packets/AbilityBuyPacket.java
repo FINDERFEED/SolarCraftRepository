@@ -1,5 +1,7 @@
 package com.finderfeed.solarforge.packet_handler.packets;
 
+import com.finderfeed.solarforge.SolarAbilities.Abilities;
+import com.finderfeed.solarforge.SolarAbilities.AbilityClasses.AbstractAbility;
 import com.finderfeed.solarforge.magic_items.blocks.solar_forge_block.SolarForgeBlockEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.level.ServerPlayer;
@@ -39,9 +41,9 @@ public class AbilityBuyPacket {
 
             if (!enti.getPersistentData().getBoolean("solar_forge_can_player_use_"+str) && enti.level.getBlockEntity(pos) != null && enti.level.getBlockEntity(pos) instanceof SolarForgeBlockEntity) {
                 SolarForgeBlockEntity blockEntity = (SolarForgeBlockEntity) enti.level.getBlockEntity(pos);
-                if (blockEntity.getCurrentEnergy() >= amount) {
-                    System.out.println("ability buy");
-                    blockEntity.SOLAR_ENERGY_LEVEL-=amount;
+                AbstractAbility ability = Abilities.BY_IDS.get(str).getAbility();
+                if (blockEntity.getCurrentEnergy() >= ability.buyCost) {
+                    blockEntity.SOLAR_ENERGY_LEVEL-=ability.buyCost;
                     enti.getPersistentData().putBoolean("solar_forge_can_player_use_" + str, true);
                 }
             }

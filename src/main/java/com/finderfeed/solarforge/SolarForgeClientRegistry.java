@@ -125,6 +125,15 @@ public class SolarForgeClientRegistry {
                     return 0;
                 }
             });
+
+            ItemProperties.register(ItemsRegister.SOLAR_GOD_BOW.get(),new ResourceLocation("solarforge","pulling"),(stack,world,living,a)->{
+
+                if (living != null){
+                    return living.getUseItem() != stack ? 0.0F : (float)(stack.getUseDuration() - living.getUseItemRemainingTicks()) / 20.0F;
+                }else{
+                    return 0.0f;
+                }
+            });
         });
     }
 

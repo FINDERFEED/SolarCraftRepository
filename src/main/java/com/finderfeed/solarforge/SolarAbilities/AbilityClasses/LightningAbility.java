@@ -17,7 +17,7 @@ public class LightningAbility extends AbstractAbility{
     public LightningAbility() {
         super("lightning",50,new RunicEnergyCostConstructor()
         .addRunicEnergy(RunicEnergy.Type.KELDA,400)
-        .addRunicEnergy(RunicEnergy.Type.URBA,250));
+        .addRunicEnergy(RunicEnergy.Type.URBA,250),20000);
     }
 
     @Override

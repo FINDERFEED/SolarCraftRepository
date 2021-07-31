@@ -17,7 +17,7 @@ public class SolarStrikeAbility extends AbstractAbility{
         super("solar_strike",1000,new RunicEnergyCostConstructor()
         .addRunicEnergy(RunicEnergy.Type.FIRA,5000)
         .addRunicEnergy(RunicEnergy.Type.ARDO,2000)
-        .addRunicEnergy(RunicEnergy.Type.KELDA,1000));
+        .addRunicEnergy(RunicEnergy.Type.KELDA,1000),30000);
     }
 
     @Override

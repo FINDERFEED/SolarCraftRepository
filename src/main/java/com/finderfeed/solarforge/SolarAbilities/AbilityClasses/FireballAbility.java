@@ -11,7 +11,7 @@ public class FireballAbility extends AbstractAbility{
     public FireballAbility() {
         super("fireball",50, new RunicEnergyCostConstructor()
                 .addRunicEnergy(RunicEnergy.Type.FIRA,200)
-                .addRunicEnergy(RunicEnergy.Type.ARDO,100));
+                .addRunicEnergy(RunicEnergy.Type.ARDO,100),15000);
     }
 
     @Override

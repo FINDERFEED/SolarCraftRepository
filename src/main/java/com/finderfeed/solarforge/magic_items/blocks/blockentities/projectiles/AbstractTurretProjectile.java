@@ -16,10 +16,14 @@ import net.minecraft.world.level.Level;
 
 import net.minecraftforge.fmllegacy.network.NetworkHooks;
 
+import java.util.function.Consumer;
+
 public class AbstractTurretProjectile extends AbstractHurtingProjectile {
 
     public float damage;
     public float explosionPower;
+    public Consumer<EntityHitResult> HIT_EFFECT;
+    public Consumer<BlockHitResult> BLOCK_HIT_EFFECT;
 
     public AbstractTurretProjectile(EntityType<? extends AbstractTurretProjectile> p_i50173_1_, Level p_i50173_2_) {
         super(p_i50173_1_, p_i50173_2_);
@@ -39,7 +43,7 @@ public class AbstractTurretProjectile extends AbstractHurtingProjectile {
         this.setDeltaMovement(cons.velocity);
         this.damage = cons.damage;
         this.explosionPower = cons.explosionPower;
-
+        this.HIT_EFFECT = cons.ON_HIT_ENTITY;
     }
 
 
@@ -52,6 +56,9 @@ public class AbstractTurretProjectile extends AbstractHurtingProjectile {
                 level.explode(null, ctx.getLocation().x, ctx.getLocation().y, ctx.getLocation().z, explosionPower,true, Explosion.BlockInteraction.BREAK);
             }
         }
+        if (HIT_EFFECT != null){
+            HIT_EFFECT.accept(ctx);
+        }
         this.remove(RemovalReason.KILLED);
     }
 
@@ -62,6 +69,10 @@ public class AbstractTurretProjectile extends AbstractHurtingProjectile {
                 level.explode(null, result.getLocation().x, result.getLocation().y, result.getLocation().z, explosionPower,true, Explosion.BlockInteraction.BREAK);
             }
         }
+        if (BLOCK_HIT_EFFECT != null){
+            BLOCK_HIT_EFFECT.accept(result);
+        }
+
         this.remove(RemovalReason.KILLED);
     }
 
@@ -81,6 +92,11 @@ public class AbstractTurretProjectile extends AbstractHurtingProjectile {
         }
         super.tick();
 
+    }
+
+    @Override
+    public boolean ignoreExplosion() {
+        return true;
     }
 
     @Override
@@ -108,6 +124,8 @@ public class AbstractTurretProjectile extends AbstractHurtingProjectile {
         private Vec3 velocity;
         private float damage;
         private DamageSource src;
+        private Consumer<EntityHitResult> ON_HIT_ENTITY;
+        private Consumer<BlockHitResult> ON_HIT_BLOCK;
         public Constructor setDamage(float a){
             damage = a;
             return this;
@@ -177,6 +195,15 @@ public class AbstractTurretProjectile extends AbstractHurtingProjectile {
         public void editExplosionPower(float a){
             this.explosionPower = a;
 
+        }
+
+        public Constructor addOnHitEntityEffect(Consumer<EntityHitResult> method){
+            ON_HIT_ENTITY = method;
+            return this;
+        }
+        public Constructor addOnHitBlockEffect(Consumer<BlockHitResult> method){
+            ON_HIT_BLOCK = method;
+            return this;
         }
     }
 }

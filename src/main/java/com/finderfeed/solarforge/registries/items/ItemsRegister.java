@@ -138,4 +138,8 @@ public class ItemsRegister {
     public static final RegistryObject<Item> SOLAR_RUNE_KELDA = ITEMS.register("solar_rune_kelda",()->new Item(new Item.Properties().tab(SolarForge.SOLAR_GROUP)));
     public static final RegistryObject<Item> SOLAR_RUNE_FIRA = ITEMS.register("solar_rune_fira",()->new Item(new Item.Properties().tab(SolarForge.SOLAR_GROUP)));
     public static final RegistryObject<Item> SOLAR_RUNE_TERA = ITEMS.register("solar_rune_tera",()->new Item(new Item.Properties().tab(SolarForge.SOLAR_GROUP)));
+
+
+    public static final RegistryObject<Item> SOLAR_GOD_BOW = ITEMS.register("solar_god_bow",()->new SolarGodBow(new Item.Properties().tab(SolarForge.SOLAR_GROUP_TOOLS).stacksTo(1).durability(8000)));
+
 }

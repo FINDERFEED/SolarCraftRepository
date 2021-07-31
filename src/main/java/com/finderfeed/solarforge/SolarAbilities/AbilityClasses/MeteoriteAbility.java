@@ -15,7 +15,7 @@ public class MeteoriteAbility extends AbstractAbility{
     public MeteoriteAbility() {
         super("meteorite",500,new RunicEnergyCostConstructor()
         .addRunicEnergy(RunicEnergy.Type.ZETA,500)
-        .addRunicEnergy(RunicEnergy.Type.KELDA,300));
+        .addRunicEnergy(RunicEnergy.Type.KELDA,300),27000);
     }
 
     @Override

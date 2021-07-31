@@ -17,12 +17,13 @@ public abstract class AbstractAbility {
     public Map<RunicEnergy.Type,Float> RUNIC_ENERGY_COST;
     public int manacost;
     public String id;
+    public int buyCost;
 
-    public AbstractAbility(String id, int manacost,RunicEnergyCostConstructor constr) {
+    public AbstractAbility(String id, int manacost,RunicEnergyCostConstructor constr,int buyCost) {
         this.manacost=manacost;
         this.id = id;
         this.RUNIC_ENERGY_COST = constr.COSTS;
-
+        this.buyCost = buyCost;
     }
 
     public void cast(ServerPlayer entity, ServerLevel world){
