@@ -150,4 +150,8 @@ public class ItemsRegister {
     public static final RegistryObject<Item> SPEED_AMULET = ITEMS.register("speed_amulet",()->new EffectAmulet(new Item.Properties().tab(SolarForge.SOLAR_GROUP_TOOLS).stacksTo(1), MobEffects.MOVEMENT_SPEED));
     public static final RegistryObject<Item> HASTE_AMULET = ITEMS.register("haste_amulet",()->new EffectAmulet(new Item.Properties().tab(SolarForge.SOLAR_GROUP_TOOLS).stacksTo(1), MobEffects.DIG_SPEED));
     public static final RegistryObject<Item> JUMP_AMULET = ITEMS.register("jump_amulet",()->new EffectAmulet(new Item.Properties().tab(SolarForge.SOLAR_GROUP_TOOLS).stacksTo(1), MobEffects.JUMP));
+
+    public static final RegistryObject<Item> REPEATER = ITEMS.register("repeater",()->new BlockItem(BlocksRegistry.REPEATER.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
+
+
 }

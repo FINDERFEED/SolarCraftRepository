@@ -1,14 +1,20 @@
 package com.finderfeed.solarforge.magic_items.blocks.render;
 
 import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.for_future_library.FinderfeedMathHelper;
+import com.finderfeed.solarforge.for_future_library.RenderingTools;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.EnergyGeneratorTile;
 import com.finderfeed.solarforge.magic_items.blocks.rendering_models.SolarEnergyGeneratorModel;
 import com.finderfeed.solarforge.misc_things.AbstractSolarCore;
 import com.finderfeed.solarforge.misc_things.AbstractSolarNetworkRepeater;
 import com.finderfeed.solarforge.misc_things.IEnergyUser;
 import com.finderfeed.solarforge.registries.ModelLayersRegistry;
+import com.finderfeed.solarforge.rendering.shaders.post_chains.PostChainPlusUltra;
+import com.finderfeed.solarforge.rendering.shaders.post_chains.UniformPlusPlus;
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
@@ -22,12 +28,15 @@ import com.mojang.math.Matrix4f;
 import net.minecraft.world.phys.Vec3;
 import com.mojang.math.Vector3f;
 
+import java.util.Map;
+
 public class EnergyGeneratorTileRender implements BlockEntityRenderer<EnergyGeneratorTile> {
     public final ResourceLocation RAY = new ResourceLocation("solarforge","textures/misc/ray_into_sky.png");
     public final ResourceLocation BLOCK = new ResourceLocation("solarforge","textures/block/solar_energy_generator.png");
     public final ResourceLocation RAYY = new ResourceLocation("solarforge","textures/misc/ray_into_skyy.png");
     public final SolarEnergyGeneratorModel model;
-
+    private final ResourceLocation SHADER_LOCATION = new ResourceLocation("solarforge","shaders/post/lens.json");
+    public static PostChainPlusUltra SHADER;
 
     public EnergyGeneratorTileRender(BlockEntityRendererProvider.Context ctx) {
         model = new SolarEnergyGeneratorModel(ctx.bakeLayer(ModelLayersRegistry.SOLAR_ENERGY_GEN_LAYER));
@@ -35,6 +44,8 @@ public class EnergyGeneratorTileRender implements BlockEntityRenderer<EnergyGene
 
     @Override
     public void render(EnergyGeneratorTile entity, float partialTicks, PoseStack matrices, MultiBufferSource buffer, int light1, int light2) {
+
+
 
         for (BlockPos a : entity.poslist) {
             if (entity.getLevel().getBlockEntity(a) instanceof AbstractSolarNetworkRepeater ||
@@ -154,6 +165,7 @@ public class EnergyGeneratorTileRender implements BlockEntityRenderer<EnergyGene
         matrices.popPose();
 
         if (entity.getConditionToFunction()) {
+            doShader(matrices,entity);
             matrices.pushPose();
 
             matrices.translate(0.5f, 1.3f, 0.5f);
@@ -209,6 +221,51 @@ public class EnergyGeneratorTileRender implements BlockEntityRenderer<EnergyGene
             matrices.popPose();
         }
 
+    }
+
+
+    private void doShader(PoseStack matrices,EnergyGeneratorTile tile){
+        if (FinderfeedMathHelper.canSeeTileEntity(tile,Minecraft.getInstance().player)) {
+            Vec3 playerPos = Minecraft.getInstance().player.position().add(0, Minecraft.getInstance().player.getBbHeight() / 2, 0);
+            Vec3 tilePos = new Vec3(tile.getBlockPos().getX() + 0.5, tile.getBlockPos().getY() + 0.5, tile.getBlockPos().getZ() + 0.5);
+            float dist = (float) new Vec3(tilePos.x - playerPos.x, tilePos.y - playerPos.y, tilePos.z - playerPos.z).length()*50;
+
+            Matrix4f projection = Minecraft.getInstance().gameRenderer.getProjectionMatrix(Minecraft.getInstance().gameRenderer.getFov(
+                    Minecraft.getInstance().gameRenderer.getMainCamera(),
+                    1,
+                    true
+            ));
+
+            matrices.pushPose();
+            matrices.translate(0.5, 0.6, 0.5);
+            Matrix4f modelview = matrices.last().pose();
+            this.loadShader(SHADER_LOCATION, new UniformPlusPlus(Map.of(
+                    "projection", RenderSystem.getProjectionMatrix(),
+                    "modelview", modelview,
+                    "distance", dist,
+                    "intensity", 1.5f,
+                    "innerControl",4f,
+                    "outerControl",0.045f
+            )));
+            matrices.popPose();
+        }
+    }
+
+
+    private void loadShader(ResourceLocation LOC, UniformPlusPlus uniforms){
+        if (SHADER == null){
+            try {
+                SHADER = new PostChainPlusUltra(LOC,uniforms);
+                SHADER.resize(Minecraft.getInstance().getWindow().getScreenWidth(),Minecraft.getInstance().getWindow().getScreenHeight());
+                RenderingTools.addActivePostShader(uniforms,SHADER);
+            }catch (Exception e){
+                e.printStackTrace();
+                throw new RuntimeException("Failed to load shader in EnergyGeneratorTileRender.java");
+            }
+
+        }else{
+            RenderingTools.addActivePostShader(uniforms,SHADER);
+        }
     }
 
     @Override

@@ -349,7 +349,8 @@
   "item.solarforge.speed_amulet": "Amulet",
   "solar_fragment.amulets": "Effect amulets",
   "amulets.lore": "Tired of making potions? Or you are just too lazy to brew them? This amulets can solve this problem, while in your inventory they will give you their effect.",
-  "item.solarforge.solar_god_bow": "Solar god bow"
+  "item.solarforge.solar_god_bow": "Solar god bow",
+  "block.solarforge.solar_stone_stairs": "Solar stone stairs"
 
 
 

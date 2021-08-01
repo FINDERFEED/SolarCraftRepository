@@ -2,6 +2,7 @@ package com.finderfeed.solarforge.registries.tile_entities;
 
 import com.finderfeed.solarforge.magic_items.blocks.infusing_table_things.infusing_pool.InfusingPoolTileEntity;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.*;
+import com.finderfeed.solarforge.magic_items.runic_network.repeater.BaseRepeaterTile;
 import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
 import com.finderfeed.solarforge.world_generation.structures.blocks.tile_entities.ColdStarInfuserTile;
 import com.finderfeed.solarforge.world_generation.structures.blocks.tile_entities.KeyDefenderTile;
@@ -67,5 +68,8 @@ public class TileEntitiesRegistry {
 
     public static final RegistryObject<BlockEntityType<RuneEnergyPylonTile>> RUNE_ENERGY_PYLON = TILE_ENTITY_TYPE.register("rune_energy_pylon",()->
             BlockEntityType.Builder.of(RuneEnergyPylonTile::new, BlocksRegistry.RUNE_ENERGY_PYLON.get()).build(null));
+
+    public static final RegistryObject<BlockEntityType<BaseRepeaterTile>> REPEATER = TILE_ENTITY_TYPE.register("repeater",()->
+            BlockEntityType.Builder.of(BaseRepeaterTile::new, BlocksRegistry.REPEATER.get()).build(null));
 
 }

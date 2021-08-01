@@ -32,9 +32,11 @@ public class FinderfeedMathHelper {
         Vec3 startPos = new Vec3(start.getBlockPos().getX()+0.5,start.getBlockPos().getY()+0.5,start.getBlockPos().getZ()+0.5);
         Vec3 tileEntityPos = new Vec3(tile.getBlockPos().getX()+0.5,tile.getBlockPos().getY()+0.5,tile.getBlockPos().getZ()+0.5);
 
-        double raznitsa = new Vec3(tileEntityPos.x - startPos.x,tileEntityPos.y - startPos.y,tileEntityPos.z - startPos.z).length();
-        if (raznitsa <= radius) {
-            ClipContext ctx = new ClipContext(startPos, tileEntityPos, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, null);
+        Vec3 between = new Vec3(tileEntityPos.x - startPos.x,tileEntityPos.y - startPos.y,tileEntityPos.z - startPos.z);
+
+
+        if (between.length() <= radius) {
+            ClipContext ctx = new ClipContext(startPos.add(between.normalize().x,between.normalize().y,between.normalize().z), tileEntityPos, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, null);
             BlockHitResult res = start.getLevel().clip(ctx);
             if (equalsBlockPos(tile.getBlockPos(), res.getBlockPos())) {
                 return true;

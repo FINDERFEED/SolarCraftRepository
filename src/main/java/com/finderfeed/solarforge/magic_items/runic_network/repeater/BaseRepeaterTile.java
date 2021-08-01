@@ -1,6 +1,7 @@
 package com.finderfeed.solarforge.magic_items.runic_network.repeater;
 
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
+import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -13,8 +14,8 @@ public class BaseRepeaterTile extends BlockEntity {
     private BlockPos FINAL_POSITION;
     private RunicEnergy.Type ENERGY_TYPE;
 
-    public BaseRepeaterTile(BlockEntityType<?> p_155228_, BlockPos p_155229_, BlockState p_155230_) {
-        super(p_155228_, p_155229_, p_155230_);
+    public BaseRepeaterTile( BlockPos p_155229_, BlockState p_155230_) {
+        super(TileEntitiesRegistry.REPEATER.get(), p_155229_, p_155230_);
     }
 
 
@@ -24,7 +25,9 @@ public class BaseRepeaterTile extends BlockEntity {
     }
 
 
-
+    public double getMaxRange(){
+        return 25;
+    }
 
 
 
@@ -41,7 +44,7 @@ public class BaseRepeaterTile extends BlockEntity {
     }
 
     public RunicEnergy.Type getEnergyType(){
-        return ENERGY_TYPE;
+        return RunicEnergy.Type.ARDO;
     }
     public boolean hasConnection(){
         return FINAL_POSITION != null;

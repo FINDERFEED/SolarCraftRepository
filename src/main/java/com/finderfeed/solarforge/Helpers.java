@@ -365,6 +365,16 @@ public class Helpers {
     }
 
 
+    public static List<LevelChunk> getSurroundingChunks5Radius(BlockPos pos,Level world){
+        List<LevelChunk> chunks = new ArrayList<>();
+        for (int i = -2; i <=2; i++){
+            for (int g = -2; g <=2; g++){
+                chunks.add(world.getChunkAt(pos.offset(i*16,0,g*16)));
+            }
+        }
+        return chunks;
+    }
+
 
     public static class HashMapConstructor<T,E>{
         private Map<T,E> MAP = new HashMap<>();

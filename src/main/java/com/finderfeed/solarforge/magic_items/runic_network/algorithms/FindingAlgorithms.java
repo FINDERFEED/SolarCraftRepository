@@ -21,7 +21,7 @@ public class FindingAlgorithms {
     public static List<BlockPos> findCanConnectPylons(BaseRepeaterTile tile,double range){
         Level world = tile.getLevel();
         BlockPos mainpos = tile.getBlockPos();
-        LevelChunk[] chunks = Helpers.getSurroundingChunks(world,mainpos);
+        List<LevelChunk> chunks = Helpers.getSurroundingChunks5Radius(mainpos,world);
         List<BlockPos> tiles = new ArrayList<>();
         for (LevelChunk chunk : chunks){
             chunk.getBlockEntities().forEach((position,tileentity)->{
@@ -45,7 +45,7 @@ public class FindingAlgorithms {
         return tiles;
     }
 
-    //TODO:Find connection
+
     public static List<BlockPos> findConnectionAStar(Map<BlockPos,List<BlockPos>> pylons,BlockPos start,Level world){
         BlockPos finalPos = null;
 
@@ -56,9 +56,6 @@ public class FindingAlgorithms {
             }
         }
         List<BlockPos> nodes12 = pylons.keySet().stream().toList();
-        int[] arr = new int[nodes12.size()];
-        Arrays.fill(arr, 10000);
-        arr[nodes12.indexOf(start)] = 0;
         List<BlockPos> alreadyVisited = new ArrayList<>();
         alreadyVisited.add(start);
         List<Node> hold = new ArrayList<>();
@@ -72,9 +69,9 @@ public class FindingAlgorithms {
                 if (!alreadyVisited.contains(nodes.get(i))) {
                     alreadyVisited.add(nodes.get(i));
                     Node nd = new Node(nodes.get(i), finalPos, currentNode.g + FinderfeedMathHelper.getDistanceBetween(nodes.get(i), currentNode.pos));
-                    nd.setSavedPath(currentNode.getSavedPath());
+                    nd.setSavedPath(new ArrayList<>(currentNode.getSavedPath()));
                     nd.addToPath(currentNode.pos);
-                    open.add(new Node(nodes.get(i), finalPos, currentNode.g + FinderfeedMathHelper.getDistanceBetween(nodes.get(i), currentNode.pos)));
+                    open.add(nd);
                 }
             }
             if (!open.isEmpty()) {
@@ -88,6 +85,7 @@ public class FindingAlgorithms {
                 currentNode = leastF;
 
                 if (Helpers.equalsBlockPos(finalPos, currentNode.pos)) {
+                    currentNode.addToPath(finalPos);
                     break;
                 }
             }else{
@@ -96,6 +94,7 @@ public class FindingAlgorithms {
                 currentNode = leastF;
 
                 if (Helpers.equalsBlockPos(finalPos, currentNode.pos)) {
+                    currentNode.addToPath(finalPos);
                     break;
                 }
             }
@@ -148,6 +147,20 @@ public class FindingAlgorithms {
         }
         return max;
     }
+
+
+    public static Map<BlockPos,List<BlockPos>> findAllConnectedPylons(BaseRepeaterTile tile,List<BlockPos> visited,Map<BlockPos,List<BlockPos>> toReturn){
+        List<BlockPos> positions = findCanConnectPylons(tile,tile.getMaxRange());
+        toReturn.put(tile.getBlockPos(),positions);
+        visited.add(tile.getBlockPos());
+        positions.forEach((pos)->{
+            if (!visited.contains(pos)){
+                findAllConnectedPylons(getTile(pos,tile.getLevel()),visited,toReturn);
+            }
+        });
+
+        return toReturn;
+    }
 }
 
 class Node{
@@ -162,6 +175,7 @@ class Node{
         this.pos = pos;
         this.heuristic = FinderfeedMathHelper.getDistanceBetween(pos,finalPos);
         this.g = g;
+        this.f = heuristic+g;
     }
 
     public void setSavedPath(List<BlockPos> savedPath) {

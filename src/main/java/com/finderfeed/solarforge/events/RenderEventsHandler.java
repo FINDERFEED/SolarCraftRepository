@@ -2,6 +2,7 @@ package com.finderfeed.solarforge.events;
 
 
 import com.finderfeed.solarforge.for_future_library.RenderingTools;
+import com.finderfeed.solarforge.magic_items.blocks.render.EnergyGeneratorTileRender;
 import com.finderfeed.solarforge.magic_items.blocks.render.RuneEnergyPylonRenderer;
 
 import com.finderfeed.solarforge.rendering.shaders.post_chains.PostChainPlusUltra;
@@ -101,7 +102,7 @@ public class RenderEventsHandler {
             }
             if ((RuneEnergyPylonRenderer.SHADER != null) && (resolution.x != width || resolution.y != height)){
                 resolution = new Vec2(width,height);
-
+                EnergyGeneratorTileRender.SHADER.resize(Minecraft.getInstance().getWindow().getScreenWidth(),Minecraft.getInstance().getWindow().getScreenHeight());
                 RuneEnergyPylonRenderer.SHADER.resize(Minecraft.getInstance().getWindow().getScreenWidth(),Minecraft.getInstance().getWindow().getScreenHeight());
             }
             ACTIVE_SHADERS.forEach((uniforms,shader)->{

@@ -5,6 +5,7 @@ import com.finderfeed.solarforge.for_future_library.RenderingTools;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.RuneEnergyPylonTile;
 import com.finderfeed.solarforge.rendering.shaders.post_chains.PostChainPlusUltra;
 import com.finderfeed.solarforge.rendering.shaders.post_chains.UniformPlusPlus;
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Minecraft;
@@ -49,7 +50,7 @@ public class RuneEnergyPylonRenderer implements BlockEntityRenderer<RuneEnergyPy
             matrices.translate(0.5, 0.5, 0.5);
             Matrix4f modelview = matrices.last().pose();
             this.loadShader(SHADER_LOCATION, new UniformPlusPlus(Map.of(
-                    "projection", projection,
+                    "projection", RenderSystem.getProjectionMatrix(),
                     "modelview", modelview,
                     "distance", dist,
                     "intensity", 0.5f
