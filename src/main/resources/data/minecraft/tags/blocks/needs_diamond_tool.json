@@ -2,6 +2,7 @@
   "replace": false,
   "values": [
     "solarforge:solar_core_block",
-    "solarforge:uldoradium_ore"
+    "solarforge:uldoradium_ore",
+    "solarforge:solar_ores"
   ]
 }

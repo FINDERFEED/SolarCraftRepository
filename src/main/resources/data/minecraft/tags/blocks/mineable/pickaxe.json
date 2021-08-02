@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
+    "solarforge:solar_forge",
     "solarforge:solar_stone",
     "solarforge:chiseled_solar_stone",
     "solarforge:solar_stone_collumn",
@@ -18,7 +19,9 @@
     "solarforge:solar_mortar_block",
     "solarforge:solar_furnace",
     "solarforge:turret_block",
-    "solarforge:uldoradium_ore"
+    "solarforge:uldoradium_ore",
+    "solarforge:solar_ores",
+    "solarforge:solar_infuser",
+    "solarforge:solar_forge_infusion_pool"
   ]
 }
-//TODO:add here solar ore
