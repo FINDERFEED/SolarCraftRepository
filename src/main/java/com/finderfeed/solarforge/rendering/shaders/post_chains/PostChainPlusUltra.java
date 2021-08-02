@@ -33,7 +33,6 @@ public class PostChainPlusUltra extends PostChain {
         this.uniforms = uniform;
     }
 
-
     public void updateUniforms(UniformPlusPlus uniforms){
         this.uniforms = uniforms;
     }

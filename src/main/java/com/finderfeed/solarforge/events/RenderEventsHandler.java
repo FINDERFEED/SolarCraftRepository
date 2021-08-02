@@ -100,11 +100,9 @@ public class RenderEventsHandler {
             if (!ACTIVE_SHADERS.isEmpty()) {
                 RenderingTools.renderHandManually(event.getMatrixStack(), event.getPartialTicks());
             }
-            if ((RuneEnergyPylonRenderer.SHADER != null) && (resolution.x != width || resolution.y != height)){
-                resolution = new Vec2(width,height);
-                EnergyGeneratorTileRender.SHADER.resize(Minecraft.getInstance().getWindow().getScreenWidth(),Minecraft.getInstance().getWindow().getScreenHeight());
-                RuneEnergyPylonRenderer.SHADER.resize(Minecraft.getInstance().getWindow().getScreenWidth(),Minecraft.getInstance().getWindow().getScreenHeight());
-            }
+            resizeShader(width,height,RuneEnergyPylonRenderer.SHADER,EnergyGeneratorTileRender.SHADER);
+
+
             ACTIVE_SHADERS.forEach((uniforms,shader)->{
                 shader.updateUniforms(uniforms);
                 shader.process(Minecraft.getInstance().getFrameTime());
@@ -113,7 +111,16 @@ public class RenderEventsHandler {
         }
     }
 
-
+    private void resizeShader(float width, float height, PostChainPlusUltra... shader){
+        if ((shader != null) && (resolution.x != width || resolution.y != height)){
+            resolution = new Vec2(width,height);
+            for (PostChainPlusUltra shaders : shader) {
+                if (shaders != null) {
+                    shaders.resize(Minecraft.getInstance().getWindow().getScreenWidth(), Minecraft.getInstance().getWindow().getScreenHeight());
+                }
+            }
+        }
+    }
 
 }
 

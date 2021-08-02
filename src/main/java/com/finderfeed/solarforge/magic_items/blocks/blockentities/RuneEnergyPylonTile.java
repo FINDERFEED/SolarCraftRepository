@@ -2,6 +2,8 @@ package com.finderfeed.solarforge.magic_items.blocks.blockentities;
 
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Achievement;
+import com.finderfeed.solarforge.magic_items.runic_network.repeater.IRunicEnergyContainer;
+import com.finderfeed.solarforge.magic_items.runic_network.repeater.IRunicEnergyReciever;
 import com.finderfeed.solarforge.misc_things.AbstractEnergyGeneratorTileEntity;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
@@ -19,8 +21,10 @@ import net.minecraft.world.phys.AABB;
 
 import net.minecraftforge.fmllegacy.network.PacketDistributor;
 
+import javax.annotation.Nullable;
 
-public class RuneEnergyPylonTile extends BlockEntity {
+
+public class RuneEnergyPylonTile extends BlockEntity implements IRunicEnergyContainer {
 
     private RunicEnergy.Type type = null;
     private float currentEnergy = 0;
@@ -127,5 +131,33 @@ public class RuneEnergyPylonTile extends BlockEntity {
 
     public float getMaxEnergy() {
         return maxEnergy;
+    }
+
+    @Override
+    public double extractEnergy(RunicEnergy.Type type, double maxAmount) {
+        if (getCurrentEnergy() >= maxAmount){
+            this.currentEnergy-=maxAmount;
+            return maxAmount;
+        }else{
+         this.currentEnergy = 0;
+         return getCurrentEnergy();
+        }
+    }
+
+    @Override
+    public double addEnergy(@Nullable RunicEnergy.Type type, double amount) {
+        if (amount + getCurrentEnergy() <= getMaxEnergy()){
+            this.currentEnergy += amount;
+            return 0;
+        }else{
+            double raznitsa = (getCurrentEnergy()+amount) - getMaxEnergy();
+            this.currentEnergy = getMaxEnergy();
+            return raznitsa;
+        }
+    }
+
+    @Override
+    public double getRunicEnergyEnergy(@Nullable RunicEnergy.Type amount) {
+        return currentEnergy;
     }
 }

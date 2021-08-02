@@ -8,11 +8,13 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 
+//NEVER GONNA GIVE YOU UP
 public class BaseRepeaterTile extends BlockEntity {
 
     //rune energy pylon position
     private BlockPos FINAL_POSITION;
     private RunicEnergy.Type ENERGY_TYPE;
+    private BlockPos CONNECTED_TO;
 
     public BaseRepeaterTile( BlockPos p_155229_, BlockState p_155230_) {
         super(TileEntitiesRegistry.REPEATER.get(), p_155229_, p_155230_);
@@ -30,6 +32,13 @@ public class BaseRepeaterTile extends BlockEntity {
     }
 
 
+    public BlockPos getRepeaterConnection(){
+        return CONNECTED_TO;
+    }
+
+    public void setRepeaterConnection(BlockPos pos){
+        this.CONNECTED_TO = pos;
+    }
 
     public void setFinalPos(BlockPos FINAL_POSITION) {
         this.FINAL_POSITION = FINAL_POSITION;

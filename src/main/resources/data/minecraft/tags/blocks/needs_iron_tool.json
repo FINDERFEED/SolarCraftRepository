@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "solarforge:solar_lens",
+    "solarforge:magnet_block",
+    "solarforge:solar_energy_generator",
+    "solarforge:solar_energy_repeater",
+    "solarforge:illidium_block",
+    "solarforge:algadium_block"
+  ]
+}

@@ -27,6 +27,7 @@ public class FindingAlgorithms {
             chunk.getBlockEntities().forEach((position,tileentity)->{
                 if ((tileentity instanceof BaseRepeaterTile repeater) && !Helpers.equalsBlockPos(tile.getBlockPos(),position) && repeater.getEnergyType().equals(tile.getEnergyType())){
                     if (FinderfeedMathHelper.canSeeTileEntity(repeater,tile,range)){
+                        repeater.setRepeaterConnection(null);
                         tiles.add(repeater.getBlockPos());
                     }
                 }else if (tileentity instanceof RuneEnergyPylonTile pylon){
@@ -55,13 +56,13 @@ public class FindingAlgorithms {
                 break;
             }
         }
-        List<BlockPos> nodes12 = pylons.keySet().stream().toList();
+
         List<BlockPos> alreadyVisited = new ArrayList<>();
         alreadyVisited.add(start);
         List<Node> hold = new ArrayList<>();
         List<Node> open = new ArrayList<>();
         Node currentNode = new Node(start,finalPos,0);
-        currentNode.addToPath(start);
+
 
         while (true){
             List<BlockPos> nodes = pylons.get(currentNode.pos);
@@ -99,7 +100,9 @@ public class FindingAlgorithms {
                 }
             }
         }
-        return currentNode.getSavedPath();
+        List<BlockPos> savedPath = currentNode.getSavedPath();
+        savedPath.add(getTile(finalPos,world).getFinalPos());
+        return savedPath;
     }
 
     private static Node findLeastFNode(List<Node> nodes){

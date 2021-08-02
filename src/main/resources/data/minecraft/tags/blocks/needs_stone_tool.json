@@ -1,0 +1,12 @@
+{
+  "replace": false,
+  "values": [
+    "solarforge:solar_stone",
+    "solarforge:chiseled_solar_stone",
+    "solarforge:solar_stone_collumn",
+    "solarforge:solar_stone_bricks",
+    "solarforge:solar_stone_stairs",
+    "solarforge:solar_stone_collumn_horizontal",
+    "solarforge:solar_furnace"
+  ]
+}

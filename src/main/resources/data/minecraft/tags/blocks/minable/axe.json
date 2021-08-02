@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "solarforge:burnt_log",
+    "solarforge:runic_table",
+    "solarforge:runic_log",
+    "solarforge:runic_planks"
+  ]
+}

@@ -7,6 +7,7 @@ import com.finderfeed.solarforge.magic_items.blocks.infusing_table_things.infusi
 import com.finderfeed.solarforge.magic_items.blocks.solar_forge_block.SolarForgeBlockEntity;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.ProgressionHelper;
+import com.finderfeed.solarforge.magic_items.runic_network.repeater.IRunicEnergyReciever;
 import com.finderfeed.solarforge.misc_things.*;
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
 import com.finderfeed.solarforge.packet_handler.TriggerToastPacket;
@@ -46,7 +47,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-public class InfusingTableTileEntity extends RandomizableContainerBlockEntity implements  IEnergyUser, IBindable, ISolarEnergyContainer, OneWay {
+public class InfusingTableTileEntity extends RandomizableContainerBlockEntity implements  IEnergyUser, IBindable, ISolarEnergyContainer, OneWay, IRunicEnergyReciever {
+
+
+    public double RUNE_ENERGY_ARDO = 0;
+    public double RUNE_ENERGY_FIRA = 0;
+    public double RUNE_ENERGY_TERA = 0;
+    public double RUNE_ENERGY_URBA = 0;
+    public double RUNE_ENERGY_KELDA = 0;
+    public double RUNE_ENERGY_ZETA = 0;
 
     public int energy = 0;
     public int TICKS_TIMER=0;
@@ -314,4 +323,17 @@ public class InfusingTableTileEntity extends RandomizableContainerBlockEntity im
     public double getEnergy() {
         return energy;
     }
+
+    @Override
+    public void requestEnergy(double amount, RunicEnergy.Type type) {
+
+    }
+
+    @Override
+    public double getMaxRange() {
+        return 20;
+    }
+
+
+
 }

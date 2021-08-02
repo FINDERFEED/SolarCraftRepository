@@ -14,6 +14,7 @@ import com.finderfeed.solarforge.magic_items.blocks.render.*;
 import com.finderfeed.solarforge.magic_items.items.projectiles.renderers.BlockBoomerangProjectileRenderer;
 import com.finderfeed.solarforge.magic_items.items.projectiles.renderers.UltraCrossbowProjectileRenderer;
 import com.finderfeed.solarforge.magic_items.items.solar_disc_gun.SolarDiscProjectileRenderer;
+import com.finderfeed.solarforge.magic_items.runic_network.repeater.RepeaterRenderer;
 import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
 import com.finderfeed.solarforge.registries.containers.Containers;
 import com.finderfeed.solarforge.registries.items.ItemsRegister;
@@ -80,7 +81,7 @@ public class SolarForgeClientRegistry {
 
 
         //blockentityrenderers.register
-
+        BlockEntityRenderers.register(TileEntitiesRegistry.REPEATER.get(), RepeaterRenderer::new);
         BlockEntityRenderers.register(TileEntitiesRegistry.RUNE_ENERGY_PYLON.get(), RuneEnergyPylonRenderer::new);
         BlockEntityRenderers.register(SolarForge.SOLAR_FORGE_BLOCKENTITY.get(), SolarForgeBlockEntityRenderer::new);
         BlockEntityRenderers.register(TileEntitiesRegistry.INFUSING_POOL_BLOCKENTITY.get(), InfusingPoolRenderer::new);

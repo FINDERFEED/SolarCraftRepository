@@ -1,0 +1,24 @@
+{
+  "replace": false,
+  "values": [
+    "solarforge:solar_stone",
+    "solarforge:chiseled_solar_stone",
+    "solarforge:solar_stone_collumn",
+    "solarforge:solar_stone_bricks",
+    "solarforge:solar_stone_stairs",
+    "solarforge:solar_stone_collumn_horizontal",
+    "solarforge:solar_lens",
+    "solarforge:magnet_block",
+    "solarforge:solar_energy_generator",
+    "solarforge:solar_energy_repeater",
+    "solarforge:illidium_block",
+    "solarforge:algadium_block",
+    "solarforge:solar_core_block",
+    "solarforge:aura_healer_block",
+    "solarforge:solar_mortar_block",
+    "solarforge:solar_furnace",
+    "solarforge:turret_block",
+    "solarforge:uldoradium_ore"
+  ]
+}
+//TODO:add here solar ore
