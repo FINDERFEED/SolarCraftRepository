@@ -7,6 +7,9 @@ import com.finderfeed.solarforge.magic_items.blocks.infusing_table_things.infusi
 import com.finderfeed.solarforge.magic_items.blocks.solar_forge_block.SolarForgeBlockEntity;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.ProgressionHelper;
+import com.finderfeed.solarforge.magic_items.runic_network.algorithms.FindingAlgorithms;
+import com.finderfeed.solarforge.magic_items.runic_network.repeater.BaseRepeaterTile;
+import com.finderfeed.solarforge.magic_items.runic_network.repeater.IRunicEnergyContainer;
 import com.finderfeed.solarforge.magic_items.runic_network.repeater.IRunicEnergyReciever;
 import com.finderfeed.solarforge.misc_things.*;
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
@@ -43,9 +46,7 @@ import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraftforge.fmllegacy.network.NetworkDirection;
 import net.minecraftforge.fmllegacy.network.PacketDistributor;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 public class InfusingTableTileEntity extends RandomizableContainerBlockEntity implements  IEnergyUser, IBindable, ISolarEnergyContainer, OneWay, IRunicEnergyReciever {
 
@@ -56,6 +57,8 @@ public class InfusingTableTileEntity extends RandomizableContainerBlockEntity im
     public double RUNE_ENERGY_URBA = 0;
     public double RUNE_ENERGY_KELDA = 0;
     public double RUNE_ENERGY_ZETA = 0;
+    public Map<RunicEnergy.Type,List<BlockPos>> PATH_TO_PYLONS = new HashMap<>();
+
 
     public int energy = 0;
     public int TICKS_TIMER=0;
@@ -326,7 +329,15 @@ public class InfusingTableTileEntity extends RandomizableContainerBlockEntity im
 
     @Override
     public void requestEnergy(double amount, RunicEnergy.Type type) {
-
+        PATH_TO_PYLONS.remove(type);
+        BlockEntity entity = findNearestRepeaterOrPylon(worldPosition,level,type);
+        if (entity instanceof BaseRepeaterTile tile){
+            Map<BlockPos,List<BlockPos>> graph = FindingAlgorithms.findAllConnectedPylons(tile,new ArrayList<>(),new HashMap<>());
+            FindingAlgorithms.sortBestPylon(graph,level);
+            PATH_TO_PYLONS.put(type,FindingAlgorithms.findConnectionAStar(graph,tile.getBlockPos(),level));
+        }else if (entity instanceof IRunicEnergyContainer container){
+            PATH_TO_PYLONS.put(type,List.of(container.getPos()));
+        }
     }
 
     @Override
@@ -336,4 +347,15 @@ public class InfusingTableTileEntity extends RandomizableContainerBlockEntity im
 
 
 
+
+    public void giveEnergy(RunicEnergy.Type type, double amount){
+        switch (type){
+            case ARDO -> RUNE_ENERGY_ARDO+=amount;
+            case FIRA -> RUNE_ENERGY_FIRA+=amount;
+            case TERA -> RUNE_ENERGY_TERA+=amount;
+            case KELDA -> RUNE_ENERGY_KELDA+=amount;
+            case URBA -> RUNE_ENERGY_URBA=amount;
+            case ZETA -> RUNE_ENERGY_ZETA+=amount;
+        }
+    }
 }

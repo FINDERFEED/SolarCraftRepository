@@ -22,6 +22,7 @@ public class FindingAlgorithms {
         Level world = tile.getLevel();
         BlockPos mainpos = tile.getBlockPos();
         List<LevelChunk> chunks = Helpers.getSurroundingChunks5Radius(mainpos,world);
+
         List<BlockPos> tiles = new ArrayList<>();
         for (LevelChunk chunk : chunks){
             chunk.getBlockEntities().forEach((position,tileentity)->{
@@ -63,46 +64,51 @@ public class FindingAlgorithms {
         List<Node> open = new ArrayList<>();
         Node currentNode = new Node(start,finalPos,0);
 
+        if (!Helpers.equalsBlockPos(start,finalPos)) {
 
-        while (true){
-            List<BlockPos> nodes = pylons.get(currentNode.pos);
-            for (int i = 0;i < nodes.size();i++){
-                if (!alreadyVisited.contains(nodes.get(i))) {
-                    alreadyVisited.add(nodes.get(i));
-                    Node nd = new Node(nodes.get(i), finalPos, currentNode.g + FinderfeedMathHelper.getDistanceBetween(nodes.get(i), currentNode.pos));
-                    nd.setSavedPath(new ArrayList<>(currentNode.getSavedPath()));
-                    nd.addToPath(currentNode.pos);
-                    open.add(nd);
-                }
-            }
-            if (!open.isEmpty()) {
-                Node leastF = findLeastFNode(open);
-                open.forEach((node) -> {
-                    if (!node.equals(leastF)) {
-                        hold.add(node);
+            while (true) {
+                List<BlockPos> nodes = pylons.get(currentNode.pos);
+                for (int i = 0; i < nodes.size(); i++) {
+                    if (!alreadyVisited.contains(nodes.get(i))) {
+                        alreadyVisited.add(nodes.get(i));
+                        Node nd = new Node(nodes.get(i), finalPos, currentNode.g + FinderfeedMathHelper.getDistanceBetween(nodes.get(i), currentNode.pos));
+                        nd.setSavedPath(new ArrayList<>(currentNode.getSavedPath()));
+                        nd.addToPath(currentNode.pos);
+                        open.add(nd);
                     }
-                });
-                open.clear();
-                currentNode = leastF;
-
-                if (Helpers.equalsBlockPos(finalPos, currentNode.pos)) {
-                    currentNode.addToPath(finalPos);
-                    break;
                 }
-            }else{
-                Node leastF = findLeastFNode(hold);
-                hold.remove(leastF);
-                currentNode = leastF;
+                if (!open.isEmpty()) {
+                    Node leastF = findLeastFNode(open);
+                    open.forEach((node) -> {
+                        if (!node.equals(leastF)) {
+                            hold.add(node);
+                        }
+                    });
+                    open.clear();
+                    currentNode = leastF;
 
-                if (Helpers.equalsBlockPos(finalPos, currentNode.pos)) {
-                    currentNode.addToPath(finalPos);
-                    break;
+                    if (Helpers.equalsBlockPos(finalPos, currentNode.pos)) {
+                        currentNode.addToPath(finalPos);
+                        break;
+                    }
+                } else {
+                    Node leastF = findLeastFNode(hold);
+                    hold.remove(leastF);
+                    currentNode = leastF;
+
+                    if (Helpers.equalsBlockPos(finalPos, currentNode.pos)) {
+                        currentNode.addToPath(finalPos);
+                        break;
+                    }
                 }
             }
+            List<BlockPos> savedPath = currentNode.getSavedPath();
+            savedPath.add(getTile(finalPos,world).getFinalPos());
+            return savedPath;
+        }else{
+            return List.of(finalPos,getTile(finalPos,world).getFinalPos());
         }
-        List<BlockPos> savedPath = currentNode.getSavedPath();
-        savedPath.add(getTile(finalPos,world).getFinalPos());
-        return savedPath;
+
     }
 
     private static Node findLeastFNode(List<Node> nodes){
@@ -117,6 +123,14 @@ public class FindingAlgorithms {
         return nodes.get(minindex);
     }
 
+    public static boolean hasEndPoint(Map<BlockPos,List<BlockPos>> graph,Level w){
+        for (BlockPos pos : graph.keySet().stream().toList()){
+            if (getTile(pos,w).hasConnection()){
+                return true;
+            }
+        }
+        return false;
+    }
 
     public static void sortBestPylon(Map<BlockPos,List<BlockPos>> pylons,Level w){
         Map<Float,BlockPos> allConnectedPylons = new HashMap<>();

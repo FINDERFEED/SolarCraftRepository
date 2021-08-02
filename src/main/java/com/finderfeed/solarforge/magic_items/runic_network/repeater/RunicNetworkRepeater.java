@@ -52,16 +52,19 @@ public class RunicNetworkRepeater extends Block implements EntityBlock {
         if (hand.equals(InteractionHand.MAIN_HAND)){
             if (level.getBlockEntity(blockPos) instanceof BaseRepeaterTile tile){
                 Map<BlockPos, List<BlockPos>> graph = FindingAlgorithms.findAllConnectedPylons(tile,new ArrayList<>(),new HashMap<>());
-
-                FindingAlgorithms.sortBestPylon(graph,level);
-                List<BlockPos> bestWay = FindingAlgorithms.findConnectionAStar(graph,tile.getBlockPos(),level);
-                for (int i = 0; i < bestWay.size();i++){
-                    if (level.getBlockEntity(bestWay.get(i)) instanceof BaseRepeaterTile repeater ){
-                        repeater.setRepeaterConnection(bestWay.get(i+1));
+                if (FindingAlgorithms.hasEndPoint(graph,level)) {
+                    FindingAlgorithms.sortBestPylon(graph, level);
+                    List<BlockPos> bestWay = FindingAlgorithms.findConnectionAStar(graph, tile.getBlockPos(), level);
+                    for (int i = 0; i < bestWay.size(); i++) {
+                        if (level.getBlockEntity(bestWay.get(i)) instanceof BaseRepeaterTile repeater) {
+                            repeater.setRepeaterConnection(bestWay.get(i + 1));
+                        }
                     }
-                }
 
-                System.out.println(bestWay);
+                    System.out.println(bestWay);
+                }else{
+                    System.out.println("has no end point");
+                }
             }
         }
         return InteractionResult.SUCCESS;

@@ -39,7 +39,8 @@ public class RuneEnergyPylonRenderer implements BlockEntityRenderer<RuneEnergyPy
         if (FinderfeedMathHelper.canSeeTileEntity(tile,Minecraft.getInstance().player)) {
             Vec3 playerPos = Minecraft.getInstance().player.position().add(0, Minecraft.getInstance().player.getBbHeight() / 2, 0);
             Vec3 tilePos = new Vec3(tile.getBlockPos().getX() + 0.5, tile.getBlockPos().getY() + 0.5, tile.getBlockPos().getZ() + 0.5);
-            float dist = (float) new Vec3(tilePos.x - playerPos.x, tilePos.y - playerPos.y, tilePos.z - playerPos.z).length() * 50f;
+            float dist = ((float) new Vec3(tilePos.x - playerPos.x, tilePos.y - playerPos.y, tilePos.z - playerPos.z).length()) * 50f;
+
             Matrix4f projection = Minecraft.getInstance().gameRenderer.getProjectionMatrix(Minecraft.getInstance().gameRenderer.getFov(
                     Minecraft.getInstance().gameRenderer.getMainCamera(),
                     1,

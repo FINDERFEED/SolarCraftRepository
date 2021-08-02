@@ -139,8 +139,9 @@ public class RuneEnergyPylonTile extends BlockEntity implements IRunicEnergyCont
             this.currentEnergy-=maxAmount;
             return maxAmount;
         }else{
-         this.currentEnergy = 0;
-         return getCurrentEnergy();
+            double b = getCurrentEnergy();
+            this.currentEnergy = 0;
+            return b;
         }
     }
 
@@ -159,5 +160,10 @@ public class RuneEnergyPylonTile extends BlockEntity implements IRunicEnergyCont
     @Override
     public double getRunicEnergyEnergy(@Nullable RunicEnergy.Type amount) {
         return currentEnergy;
+    }
+
+    @Override
+    public BlockPos getPos() {
+        return worldPosition;
     }
 }
