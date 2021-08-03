@@ -40,6 +40,8 @@ public class FindingAlgorithms {
                                 tile.setFinalPos(pylon.getBlockPos());
                             }
                         }
+                    }else{
+                        tile.setFinalPos(null);
                     }
                 }
             });
@@ -141,6 +143,7 @@ public class FindingAlgorithms {
                 allConnectedPylons.put(((RuneEnergyPylonTile)w.getBlockEntity(tile.getFinalPos())).getCurrentEnergy(),positions.get(i));
             }
         }
+
         List<Float> floats = allConnectedPylons.keySet().stream().toList();
         float max = getMaxFloat(floats);
         BlockPos best = allConnectedPylons.get(max);
@@ -177,6 +180,17 @@ public class FindingAlgorithms {
         });
 
         return toReturn;
+    }
+
+
+
+    public static void resetRepeaters(List<BlockPos> positions,Level w){
+        positions.forEach((pos)->{
+            if (w.getBlockEntity(pos) instanceof BaseRepeaterTile tile){
+                tile.setFinalPos(null);
+                tile.setRepeaterConnection(null);
+            }
+        });
     }
 }
 

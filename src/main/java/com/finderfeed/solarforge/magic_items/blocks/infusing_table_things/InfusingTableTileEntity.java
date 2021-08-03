@@ -333,8 +333,10 @@ public class InfusingTableTileEntity extends RandomizableContainerBlockEntity im
         BlockEntity entity = findNearestRepeaterOrPylon(worldPosition,level,type);
         if (entity instanceof BaseRepeaterTile tile){
             Map<BlockPos,List<BlockPos>> graph = FindingAlgorithms.findAllConnectedPylons(tile,new ArrayList<>(),new HashMap<>());
-            FindingAlgorithms.sortBestPylon(graph,level);
-            PATH_TO_PYLONS.put(type,FindingAlgorithms.findConnectionAStar(graph,tile.getBlockPos(),level));
+            if (FindingAlgorithms.hasEndPoint(graph,level)) {
+                FindingAlgorithms.sortBestPylon(graph, level);
+                PATH_TO_PYLONS.put(type, FindingAlgorithms.findConnectionAStar(graph, tile.getBlockPos(), level));
+            }
         }else if (entity instanceof IRunicEnergyContainer container){
             PATH_TO_PYLONS.put(type,List.of(container.getPos()));
         }
