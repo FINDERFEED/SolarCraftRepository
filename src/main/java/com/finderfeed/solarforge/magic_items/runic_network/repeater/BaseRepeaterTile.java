@@ -31,15 +31,23 @@ public class BaseRepeaterTile extends BlockEntity {
     public double extractEnergy(double maxAmount,RunicEnergy.Type type){
         if (hasConnection()){
             if (level.getBlockEntity(getFinalPos()) instanceof IRunicEnergyContainer cont){
-                double flag = cont.extractEnergy(type,maxAmount);
-                return flag;
+                if (FinderfeedMathHelper.canSee(cont.getPos(),worldPosition,getMaxRange(),level)) {
+                    double flag = cont.extractEnergy(type, maxAmount);
+                    return flag;
+                }else{
+                    return NULL;
+                }
             }else{
                 return NULL;
             }
         }else {
             if (CONNECTED_TO != null) {
                 if (level.getBlockEntity(CONNECTED_TO) instanceof BaseRepeaterTile tile) {
-                    return tile.extractEnergy(maxAmount,type);
+                    if (FinderfeedMathHelper.canSeeTileEntity(this,tile,getMaxRange())) {
+                        return tile.extractEnergy(maxAmount, type);
+                    }else{
+                        return NULL;
+                    }
                 } else {
                     return NULL;
                 }

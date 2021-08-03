@@ -3,6 +3,7 @@ package com.finderfeed.solarforge.for_future_library;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.ClipContext;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
@@ -39,6 +40,22 @@ public class FinderfeedMathHelper {
             ClipContext ctx = new ClipContext(startPos.add(between.normalize().x,between.normalize().y,between.normalize().z), tileEntityPos, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, null);
             BlockHitResult res = start.getLevel().clip(ctx);
             if (equalsBlockPos(tile.getBlockPos(), res.getBlockPos())) {
+                return true;
+            }
+        }
+        return false;
+    }
+    public static boolean canSee(BlockPos tile, BlockPos start, double radius, Level world){
+        Vec3 startPos = new Vec3(start.getX()+0.5,start.getY()+0.5,start.getZ()+0.5);
+        Vec3 tileEntityPos = new Vec3(tile.getX()+0.5,tile.getY()+0.5,tile.getZ()+0.5);
+
+        Vec3 between = new Vec3(tileEntityPos.x - startPos.x,tileEntityPos.y - startPos.y,tileEntityPos.z - startPos.z);
+
+
+        if (between.length() <= radius) {
+            ClipContext ctx = new ClipContext(startPos.add(between.normalize().x,between.normalize().y,between.normalize().z), tileEntityPos, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, null);
+            BlockHitResult res = world.clip(ctx);
+            if (equalsBlockPos(tile, res.getBlockPos())) {
                 return true;
             }
         }
