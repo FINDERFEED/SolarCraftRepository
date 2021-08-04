@@ -153,5 +153,11 @@ public class ItemsRegister {
 
     public static final RegistryObject<Item> REPEATER = ITEMS.register("repeater",()->new BlockItem(BlocksRegistry.REPEATER.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
 
+    public static final RegistryObject<Item> ARDO_RUNE_BLOCK = ITEMS.register("ardo_rune_block",()->new BlockItem(BlocksRegistry.ARDO_RUNE_BLOCK.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
+    public static final RegistryObject<Item> ZETA_RUNE_BLOCK = ITEMS.register("zeta_rune_block",()->new BlockItem(BlocksRegistry.ZETA_RUNE_BLOCK.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
+    public static final RegistryObject<Item> KELDA_RUNE_BLOCK = ITEMS.register("kelda_rune_block",()->new BlockItem(BlocksRegistry.KELDA_RUNE_BLOCK.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
+    public static final RegistryObject<Item> URBA_RUNE_BLOCK = ITEMS.register("urba_rune_block",()->new BlockItem(BlocksRegistry.URBA_RUNE_BLOCK.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
+    public static final RegistryObject<Item> TERA_RUNE_BLOCK = ITEMS.register("tera_rune_block",()->new BlockItem(BlocksRegistry.TERA_RUNE_BLOCK.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
+    public static final RegistryObject<Item> FIRA_RUNE_BLOCK = ITEMS.register("fira_rune_block",()->new BlockItem(BlocksRegistry.FIRA_RUNE_BLOCK.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
 
 }

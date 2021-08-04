@@ -72,5 +72,13 @@ public class BlocksRegistry {
     public  static  final RegistryObject<LeavesBlock> RUNIC_LEAVES = BLOCKS.register("runic_leaves",()-> new RunicLeavesBlock(BlockBehaviour.Properties.copy(Blocks.OAK_LEAVES).noOcclusion()));
     public  static  final RegistryObject<RotatedPillarBlock> RUNIC_LOG = BLOCKS.register("runic_log",()-> new RotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.OAK_LOG)));
     public  static  final RegistryObject<Block> RUNIC_PLANKS = BLOCKS.register("runic_planks",()-> new Block(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS)));
-   // public  static  final RegistryObject<Block> SOLAR_CHEST = BLOCKS.register("solar_chest",()-> new ChestBlock(AbstractBlock.Properties.copy(Blocks.STONE), ()->TileEntityType.CHEST));
+
+    public  static  final RegistryObject<Block> ARDO_RUNE_BLOCK = BLOCKS.register("ardo_rune_block",()-> new Block(BlockBehaviour.Properties.copy(Blocks.STONE)));
+    public  static  final RegistryObject<Block> ZETA_RUNE_BLOCK = BLOCKS.register("zeta_rune_block",()-> new Block(BlockBehaviour.Properties.copy(Blocks.STONE)));
+    public  static  final RegistryObject<Block> KELDA_RUNE_BLOCK = BLOCKS.register("kelda_rune_block",()-> new Block(BlockBehaviour.Properties.copy(Blocks.STONE)));
+    public  static  final RegistryObject<Block> FIRA_RUNE_BLOCK = BLOCKS.register("fira_rune_block",()-> new Block(BlockBehaviour.Properties.copy(Blocks.STONE)));
+    public  static  final RegistryObject<Block> URBA_RUNE_BLOCK = BLOCKS.register("urba_rune_block",()-> new Block(BlockBehaviour.Properties.copy(Blocks.STONE)));
+    public  static  final RegistryObject<Block> TERA_RUNE_BLOCK = BLOCKS.register("tera_rune_block",()-> new Block(BlockBehaviour.Properties.copy(Blocks.STONE)));
+
+
 }
