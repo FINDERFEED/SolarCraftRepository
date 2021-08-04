@@ -3,6 +3,7 @@ package com.finderfeed.solarforge.recipe_types;
 
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.AncientFragment;
+import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
@@ -11,6 +12,8 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
+
+import java.util.Map;
 
 public class InfusingRecipe implements Recipe<Container> {
 
@@ -30,10 +33,11 @@ public class InfusingRecipe implements Recipe<Container> {
     public final int requriedEnergy;
     public final String tag;
     public final int count;
+    public final Map<RunicEnergy.Type,Double> RUNIC_ENERGY_COST;
 
     public static final InfusingRecipeSerializer serializer = new InfusingRecipeSerializer();
     public InfusingRecipe(ResourceLocation id, Ingredient input1, Ingredient input2, Ingredient input3, Ingredient input4, Ingredient input5, Ingredient input6, Ingredient input7,Ingredient input8,Ingredient input9, ItemStack output, int infusingTime,String child
-    ,int requriedEnergy,String tag,int count) {
+    ,int requriedEnergy,String tag,int count,Map<RunicEnergy.Type,Double> costs) {
         this.id = id;
         this.input1 = input1;
         this.input2 = input2;
@@ -47,7 +51,7 @@ public class InfusingRecipe implements Recipe<Container> {
         this.output = output;
         this.infusingTime = infusingTime;
         this.child = child;
-
+        this.RUNIC_ENERGY_COST = costs;
         this.requriedEnergy = requriedEnergy;
         this.tag = tag;
         this.count = count;
