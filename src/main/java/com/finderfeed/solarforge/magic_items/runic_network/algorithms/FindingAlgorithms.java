@@ -183,6 +183,15 @@ public class FindingAlgorithms {
     }
 
 
+    public static void setRepeatersConnections(List<BlockPos> positions ,Level w){
+        for (int i = 0; i < positions.size()-1;i++){
+            if (w.getBlockEntity(positions.get(i)) instanceof BaseRepeaterTile repeaterTile){
+                repeaterTile.setRepeaterConnection(positions.get(i+1));
+            }
+        }
+
+    }
+
 
     public static void resetRepeaters(List<BlockPos> positions,Level w){
         positions.forEach((pos)->{

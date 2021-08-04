@@ -329,6 +329,36 @@ public class InfusingTableTileEntity extends RandomizableContainerBlockEntity im
 
     @Override
     public void requestEnergy(double amount, RunicEnergy.Type type) {
+
+        if (PATH_TO_PYLONS.containsKey(type) && PATH_TO_PYLONS.get(type) != null){
+            FindingAlgorithms.setRepeatersConnections(PATH_TO_PYLONS.get(type),level);
+            BlockEntity first = level.getBlockEntity(PATH_TO_PYLONS.get(type).get(0));
+            if (first instanceof IRunicEnergyContainer container){
+                double flag = container.extractEnergy(type,amount);
+                this.giveEnergy(type,flag);
+            }else if (first instanceof BaseRepeaterTile repeater){
+                double flag = repeater.extractEnergy(amount,type);
+                if (flag != BaseRepeaterTile.NULL){
+                    this.giveEnergy(type,flag);
+                }else{
+                    FindingAlgorithms.resetRepeaters(PATH_TO_PYLONS.get(type),level);
+                    constructWay(type);
+                }
+            }
+
+        }else{
+            constructWay(type);
+        }
+    }
+
+    @Override
+    public double getMaxRange() {
+        return 20;
+    }
+
+
+
+    public void constructWay(RunicEnergy.Type type){
         PATH_TO_PYLONS.remove(type);
         BlockEntity entity = findNearestRepeaterOrPylon(worldPosition,level,type);
         if (entity instanceof BaseRepeaterTile tile){
@@ -341,14 +371,6 @@ public class InfusingTableTileEntity extends RandomizableContainerBlockEntity im
             PATH_TO_PYLONS.put(type,List.of(container.getPos()));
         }
     }
-
-    @Override
-    public double getMaxRange() {
-        return 20;
-    }
-
-
-
 
     public void giveEnergy(RunicEnergy.Type type, double amount){
         switch (type){

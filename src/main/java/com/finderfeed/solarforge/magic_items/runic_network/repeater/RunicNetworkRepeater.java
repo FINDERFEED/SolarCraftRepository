@@ -49,7 +49,7 @@ public class RunicNetworkRepeater extends Block implements EntityBlock {
 
     @Override
     public InteractionResult use(BlockState state, Level level, BlockPos blockPos, Player player, InteractionHand hand, BlockHitResult res) {
-        if (hand.equals(InteractionHand.MAIN_HAND)){
+        if (!level.isClientSide && hand.equals(InteractionHand.MAIN_HAND)){
 
             if (level.getBlockEntity(blockPos) instanceof BaseRepeaterTile tile){
                 Map<BlockPos, List<BlockPos>> graph = FindingAlgorithms.findAllConnectedPylons(tile,new ArrayList<>(),new HashMap<>());
