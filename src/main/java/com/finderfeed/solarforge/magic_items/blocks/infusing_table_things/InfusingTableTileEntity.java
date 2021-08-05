@@ -47,6 +47,7 @@ import net.minecraftforge.fmllegacy.network.NetworkDirection;
 import net.minecraftforge.fmllegacy.network.PacketDistributor;
 
 import java.util.*;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class InfusingTableTileEntity extends RandomizableContainerBlockEntity implements  IEnergyUser, IBindable, ISolarEnergyContainer, OneWay, IRunicEnergyReciever {
 
@@ -147,57 +148,37 @@ public class InfusingTableTileEntity extends RandomizableContainerBlockEntity im
                     tile.requiresEnergy = false;
 
                 }
-
-
                 if (tile.RECIPE_IN_PROGRESS){
-                    if (tile.energy >= recipe.get().requriedEnergy) {
+                    System.out.println(tile.RUNE_ENERGY_ARDO);
+                    InfusingRecipe recipe1 = recipe.get();
+                    Map<RunicEnergy.Type,Double> costs = recipe1.RUNIC_ENERGY_COST;
+                    boolean check = hasEnoughRunicEnergy(world,tile,costs);
+                    if ((tile.energy >= recipe1.requriedEnergy) && check) {
                         tile.requiresEnergy = false;
                         tile.CURRENT_PROGRESS++;
 
                         tile.setChanged();
+
                         if (tile.CURRENT_PROGRESS == tile.INFUSING_TIME) {
-                            ItemStack result = new ItemStack(recipe.get().output.getItem(),recipe.get().count);
-                            if (!recipe.get().tag.equals("")) {
-                                if (result.getItem() instanceof ITagUser){
-                                    ITagUser result2 = (ITagUser) result.getItem();
-                                    result2.doThingsWithTag(tile.getItem(0),result,recipe.get().tag);
-                                }
-                            }
-                            ItemStack prev = tile.getItem(0);
-                            if (prev.isEnchanted()){
-                                Map<Enchantment,Integer> map = EnchantmentHelper.getEnchantments(prev);
-
-                                for (Enchantment a : map.keySet()){
-                                    result.enchant(a,map.get(a));
-                                }
-
-                            }
-
-                            if ((prev.getItem() instanceof DiggerItem) && (result.getItem() instanceof DiggerItem)) {
-                                result.hurt(prev.getDamageValue(), world.random, null);
-                            }
-                            tile.getItems().clear();
-                            tile.getItems().set(9, result);
-                            tile.RECIPE_IN_PROGRESS = false;
-                            tile.INFUSING_TIME = 0;
-                            tile.CURRENT_PROGRESS = 0;
-                            tile.deleteStacksInPhantomSlots();
-                            tile.level.playSound(null, tile.worldPosition, SoundEvents.BEACON_DEACTIVATE, SoundSource.AMBIENT, 2, 1);
-                            tile.energy-= recipe.get().requriedEnergy;
+                            finishRecipe(world,tile,recipe1);
                         }
                     }else{
+                        costs.forEach((type,cost)->{
+                            if (cost > 0){
+                                tile.requestEnergy(100,type);
+                            }
+                        });
                         tile.requiresEnergy = true;
                     }
                 }
-
-            SolarForgePacketHandler.INSTANCE.send(PacketDistributor.NEAR.with(PacketDistributor.TargetPoint.p(tile.worldPosition.getX(),tile.worldPosition.getY(),tile.worldPosition.getZ(),20,tile.level.dimension())),
-                    new UpdateProgressOnClientPacket(tile.INFUSING_TIME,tile.CURRENT_PROGRESS,tile.worldPosition,tile.requiresEnergy,tile.energy));
-                ItemStack[] arr = {tile.getItem(0),tile.getItem(1),tile.getItem(2),tile.getItem(3),tile.getItem(4),tile.getItem(5),tile.getItem(6),tile.getItem(7),tile.getItem(8)};
-            SolarForgePacketHandler.INSTANCE.send(PacketDistributor.NEAR.with(PacketDistributor.TargetPoint.p(tile.worldPosition.getX(),tile.worldPosition.getY(),tile.worldPosition.getZ(),20,tile.level.dimension())),
-                    new UpdateStacksOnClientTable(arr,tile.getItem(9),tile.worldPosition,tile.RECIPE_IN_PROGRESS));
-
+            sendUpdatePackets(world,tile);
         }
+        doParticlesAnimation(world,tile);
+    }
 
+
+
+    private static void doParticlesAnimation(Level world,InfusingTableTileEntity tile){
         if (tile.RECIPE_IN_PROGRESS){
 
             tile.spawnParticles(4.7f-tile.TICKS_RADIUS_TIMER,tile.TICKS_TIMER);
@@ -211,8 +192,50 @@ public class InfusingTableTileEntity extends RandomizableContainerBlockEntity im
             tile.TICKS_TIMER = 0;
             tile.TICKS_RADIUS_TIMER = 0;
         }
-
     }
+
+
+    private static void sendUpdatePackets(Level world,InfusingTableTileEntity tile){
+        SolarForgePacketHandler.INSTANCE.send(PacketDistributor.NEAR.with(PacketDistributor.TargetPoint.p(tile.worldPosition.getX(),tile.worldPosition.getY(),tile.worldPosition.getZ(),20,tile.level.dimension())),
+                new UpdateProgressOnClientPacket(tile.INFUSING_TIME,tile.CURRENT_PROGRESS,tile.worldPosition,tile.requiresEnergy,tile.energy));
+        ItemStack[] arr = {tile.getItem(0),tile.getItem(1),tile.getItem(2),tile.getItem(3),tile.getItem(4),tile.getItem(5),tile.getItem(6),tile.getItem(7),tile.getItem(8)};
+        SolarForgePacketHandler.INSTANCE.send(PacketDistributor.NEAR.with(PacketDistributor.TargetPoint.p(tile.worldPosition.getX(),tile.worldPosition.getY(),tile.worldPosition.getZ(),20,tile.level.dimension())),
+                new UpdateStacksOnClientTable(arr,tile.getItem(9),tile.worldPosition,tile.RECIPE_IN_PROGRESS));
+    }
+
+
+
+    private static void finishRecipe(Level world,InfusingTableTileEntity tile,InfusingRecipe recipe){
+        ItemStack result = new ItemStack(recipe.output.getItem(),recipe.count);
+        if (!recipe.tag.equals("")) {
+            if (result.getItem() instanceof ITagUser){
+                ITagUser result2 = (ITagUser) result.getItem();
+                result2.doThingsWithTag(tile.getItem(0),result,recipe.tag);
+            }
+        }
+        ItemStack prev = tile.getItem(0);
+        if (prev.isEnchanted()){
+            Map<Enchantment,Integer> map = EnchantmentHelper.getEnchantments(prev);
+
+            for (Enchantment a : map.keySet()){
+                result.enchant(a,map.get(a));
+            }
+
+        }
+
+        if ((prev.getItem() instanceof DiggerItem) && (result.getItem() instanceof DiggerItem)) {
+            result.hurt(prev.getDamageValue(), world.random, null);
+        }
+        tile.getItems().clear();
+        tile.getItems().set(9, result);
+        tile.RECIPE_IN_PROGRESS = false;
+        tile.INFUSING_TIME = 0;
+        tile.CURRENT_PROGRESS = 0;
+        tile.deleteStacksInPhantomSlots();
+        tile.level.playSound(null, tile.worldPosition, SoundEvents.BEACON_DEACTIVATE, SoundSource.AMBIENT, 2, 1);
+        tile.energy-= recipe.requriedEnergy;
+    }
+
 
 
     public void triggerCrafting(Player playerEntity){
@@ -381,5 +404,26 @@ public class InfusingTableTileEntity extends RandomizableContainerBlockEntity im
             case URBA -> RUNE_ENERGY_URBA=amount;
             case ZETA -> RUNE_ENERGY_ZETA+=amount;
         }
+    }
+
+
+
+    private static boolean hasEnoughRunicEnergy(Level world,InfusingTableTileEntity tile,Map<RunicEnergy.Type,Double> costs){
+        AtomicBoolean bool = new AtomicBoolean(true);
+        Map<RunicEnergy.Type,Double> tileEnergy = Map.of(
+                RunicEnergy.Type.ARDO,tile.RUNE_ENERGY_ARDO,
+                RunicEnergy.Type.TERA,tile.RUNE_ENERGY_TERA,
+                RunicEnergy.Type.KELDA,tile.RUNE_ENERGY_KELDA,
+                RunicEnergy.Type.FIRA,tile.RUNE_ENERGY_FIRA,
+                RunicEnergy.Type.ZETA,tile.RUNE_ENERGY_ZETA,
+                RunicEnergy.Type.URBA,tile.RUNE_ENERGY_URBA
+        );
+        costs.forEach((type,cost)->{
+            if (tileEnergy.get(type) <= cost){
+                bool.set(false);
+            }
+        });
+
+        return bool.get();
     }
 }

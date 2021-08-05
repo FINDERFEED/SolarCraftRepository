@@ -26,7 +26,7 @@ public class FindingAlgorithms {
         List<BlockPos> tiles = new ArrayList<>();
         for (LevelChunk chunk : chunks){
             chunk.getBlockEntities().forEach((position,tileentity)->{
-                if ((tileentity instanceof BaseRepeaterTile repeater) && !Helpers.equalsBlockPos(tile.getBlockPos(),position) && repeater.getEnergyType().equals(tile.getEnergyType())){
+                if ((tileentity instanceof BaseRepeaterTile repeater) && !Helpers.equalsBlockPos(tile.getBlockPos(),position) && (repeater.getEnergyType() == tile.getEnergyType())){
                     if (FinderfeedMathHelper.canSeeTileEntity(repeater,tile,range)){
                         repeater.setRepeaterConnection(null);
                         tiles.add(repeater.getBlockPos());
