@@ -128,6 +128,8 @@ public class BaseRepeaterTile extends BlockEntity {
         BlockPos connectedTo = NbtUtils.readBlockPos(tag);
         if (!Helpers.equalsBlockPos(connectedTo,Helpers.NULL_POS)) {
             this.setRepeaterConnection(connectedTo);
+        }else{
+            setRepeaterConnection(null);
         }
         super.onDataPacket(net, pkt);
     }

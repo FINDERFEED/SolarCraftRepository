@@ -5,6 +5,7 @@ import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Ac
 import com.finderfeed.solarforge.magic_items.runic_network.repeater.IRunicEnergyContainer;
 import com.finderfeed.solarforge.magic_items.runic_network.repeater.IRunicEnergyReciever;
 import com.finderfeed.solarforge.misc_things.AbstractEnergyGeneratorTileEntity;
+import com.finderfeed.solarforge.misc_things.DebugTarget;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
 import com.finderfeed.solarforge.packet_handler.packets.UpdateTypeOnClientPacket;
@@ -22,9 +23,10 @@ import net.minecraft.world.phys.AABB;
 import net.minecraftforge.fmllegacy.network.PacketDistributor;
 
 import javax.annotation.Nullable;
+import java.util.List;
 
 
-public class RuneEnergyPylonTile extends BlockEntity implements IRunicEnergyContainer {
+public class RuneEnergyPylonTile extends BlockEntity implements IRunicEnergyContainer, DebugTarget {
 
     private RunicEnergy.Type type = null;
     private float currentEnergy = 0;
@@ -165,5 +167,10 @@ public class RuneEnergyPylonTile extends BlockEntity implements IRunicEnergyCont
     @Override
     public BlockPos getPos() {
         return worldPosition;
+    }
+
+    @Override
+    public List<String> getDebugStrings() {
+        return List.of(getEnergyType().id.toUpperCase()+ " " + getCurrentEnergy());
     }
 }

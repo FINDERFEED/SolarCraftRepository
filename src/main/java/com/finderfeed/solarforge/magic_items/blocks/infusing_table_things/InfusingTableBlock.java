@@ -2,6 +2,7 @@ package com.finderfeed.solarforge.magic_items.blocks.infusing_table_things;
 
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.magic_items.items.SolarNetworkBinder;
+import com.finderfeed.solarforge.misc_things.SolarcraftDebugStick;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
@@ -65,7 +66,7 @@ public class InfusingTableBlock extends Block implements EntityBlock {
             BlockEntity entity = world.getBlockEntity(pos);
             if (entity instanceof InfusingTableTileEntity) {
                 InfusingTableTileEntity tile = (InfusingTableTileEntity) entity;
-                if (!(user.getMainHandItem().getItem() instanceof SolarWandItem) && !(user.getMainHandItem().getItem() instanceof SolarNetworkBinder)) {
+                if (!(user.getMainHandItem().getItem() instanceof SolarWandItem) && !(user.getMainHandItem().getItem() instanceof SolarNetworkBinder) && !(user.getMainHandItem().getItem() instanceof SolarcraftDebugStick)) {
                     Consumer<FriendlyByteBuf> cons = x -> { x.writeBlockPos(pos);
                     };
                     NetworkHooks.openGui((ServerPlayer) user, (InfusingTableTileEntity) entity, cons);
@@ -74,7 +75,7 @@ public class InfusingTableBlock extends Block implements EntityBlock {
 
             };
         }
-        if ((user.getItemInHand(hand).getItem() instanceof  SolarWandItem) || (user.getItemInHand(hand).getItem() instanceof  SolarNetworkBinder) ){
+        if ((user.getItemInHand(hand).getItem() instanceof  SolarWandItem) || (user.getItemInHand(hand).getItem() instanceof  SolarNetworkBinder)  || (user.getItemInHand(hand).getItem() instanceof  SolarcraftDebugStick)){
             return super.use(state,world,pos,user,hand,rayTraceResult);
         }else{
             return InteractionResult.CONSUME;

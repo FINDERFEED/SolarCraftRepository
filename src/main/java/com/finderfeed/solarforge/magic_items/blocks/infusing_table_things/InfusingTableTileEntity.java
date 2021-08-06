@@ -49,7 +49,7 @@ import net.minecraftforge.fmllegacy.network.PacketDistributor;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class InfusingTableTileEntity extends RandomizableContainerBlockEntity implements  IEnergyUser, IBindable, ISolarEnergyContainer, OneWay, IRunicEnergyReciever {
+public class InfusingTableTileEntity extends RandomizableContainerBlockEntity implements  IEnergyUser, IBindable, ISolarEnergyContainer, OneWay, IRunicEnergyReciever,DebugTarget {
 
 
     public double RUNE_ENERGY_ARDO = 0;
@@ -115,6 +115,12 @@ public class InfusingTableTileEntity extends RandomizableContainerBlockEntity im
         cmp.putInt("infusing_time",INFUSING_TIME );
         cmp.putInt("recipe_progress",CURRENT_PROGRESS );
         cmp.putBoolean("is_recipe_in_progress",RECIPE_IN_PROGRESS );
+        cmp.putDouble("ardo",RUNE_ENERGY_ARDO);
+        cmp.putDouble("fira",RUNE_ENERGY_FIRA);
+        cmp.putDouble("tera",RUNE_ENERGY_TERA);
+        cmp.putDouble("zeta",RUNE_ENERGY_ZETA);
+        cmp.putDouble("kelda",RUNE_ENERGY_KELDA);
+        cmp.putDouble("urba",RUNE_ENERGY_URBA);
         if (!this.trySaveLootTable(cmp)) {
             ContainerHelper.saveAllItems(cmp, this.items);
         }
@@ -128,6 +134,12 @@ public class InfusingTableTileEntity extends RandomizableContainerBlockEntity im
         INFUSING_TIME = cmp.getInt("infusing_time");
         CURRENT_PROGRESS = cmp.getInt("recipe_progress");
         RECIPE_IN_PROGRESS = cmp.getBoolean("is_recipe_in_progress");
+        RUNE_ENERGY_ARDO  = cmp.getDouble("ardo");
+        RUNE_ENERGY_FIRA = cmp.getDouble("fira");
+        RUNE_ENERGY_TERA = cmp.getDouble("tera");
+        RUNE_ENERGY_ZETA = cmp.getDouble("zeta");
+        RUNE_ENERGY_KELDA = cmp.getDouble("kelda");
+        RUNE_ENERGY_URBA = cmp.getDouble("urba");
         this.items = NonNullList.withSize(getContainerSize(), ItemStack.EMPTY);
         if (!this.tryLoadLootTable(cmp)) {
             ContainerHelper.loadAllItems(cmp, this.items);
@@ -149,7 +161,7 @@ public class InfusingTableTileEntity extends RandomizableContainerBlockEntity im
 
                 }
                 if (tile.RECIPE_IN_PROGRESS){
-                    System.out.println(tile.RUNE_ENERGY_ARDO);
+
                     InfusingRecipe recipe1 = recipe.get();
                     Map<RunicEnergy.Type,Double> costs = recipe1.RUNIC_ENERGY_COST;
                     boolean check = hasEnoughRunicEnergy(world,tile,costs);
@@ -207,6 +219,9 @@ public class InfusingTableTileEntity extends RandomizableContainerBlockEntity im
 
     private static void finishRecipe(Level world,InfusingTableTileEntity tile,InfusingRecipe recipe){
         ItemStack result = new ItemStack(recipe.output.getItem(),recipe.count);
+        recipe.RUNIC_ENERGY_COST.forEach((type,cost)->{
+            tile.giveEnergy(type,-cost);
+        });
         if (!recipe.tag.equals("")) {
             if (result.getItem() instanceof ITagUser){
                 ITagUser result2 = (ITagUser) result.getItem();
@@ -419,11 +434,26 @@ public class InfusingTableTileEntity extends RandomizableContainerBlockEntity im
                 RunicEnergy.Type.URBA,tile.RUNE_ENERGY_URBA
         );
         costs.forEach((type,cost)->{
-            if (tileEnergy.get(type) <= cost){
+            if (tileEnergy.get(type) < cost){
                 bool.set(false);
             }
         });
 
         return bool.get();
+    }
+
+    @Override
+    public List<String> getDebugStrings() {
+
+
+        return List.of(
+                "ARDO ENERGY "+ RUNE_ENERGY_ARDO,
+                "FIRA ENERGY "+ RUNE_ENERGY_FIRA,
+                "TERA ENERGY "+ RUNE_ENERGY_TERA,
+                "KELDA ENERGY "+ RUNE_ENERGY_KELDA,
+                "URBA ENERGY "+ RUNE_ENERGY_URBA,
+                "ZETA ENERGY "+ RUNE_ENERGY_ZETA,
+                "SOLAR ENERGY "+ energy
+        );
     }
 }

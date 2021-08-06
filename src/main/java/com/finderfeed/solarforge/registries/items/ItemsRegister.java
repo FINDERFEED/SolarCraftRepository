@@ -15,6 +15,7 @@ import com.finderfeed.solarforge.magic_items.items.solar_disc_gun.SolarDiscGunIt
 import com.finderfeed.solarforge.magic_items.items.vein_miner.VeinMiner;
 import com.finderfeed.solarforge.misc_things.ColdStarPieceItem;
 import com.finderfeed.solarforge.misc_things.SolarDustItem;
+import com.finderfeed.solarforge.misc_things.SolarcraftDebugStick;
 import com.finderfeed.solarforge.misc_things.VoidBlockWand;
 import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.SolarLexicon;
@@ -129,7 +130,7 @@ public class ItemsRegister {
 
     public static final RegistryObject<Item> RUNE_ENERGY_PYLON = ITEMS.register("rune_energy_pylon",()->new EnergyPylonBlockItem(BlocksRegistry.RUNE_ENERGY_PYLON.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
 
-
+    public static final RegistryObject<Item> DEBUG_STICK = ITEMS.register("solar_debug_stick",()->new SolarcraftDebugStick(new Item.Properties().tab(SolarForge.SOLAR_GROUP)));
     //runes
     public static final RegistryObject<Item> SOLAR_RUNE_BASE = ITEMS.register("runestone",()->new RuneBase(new Item.Properties().tab(SolarForge.SOLAR_GROUP)));
 
