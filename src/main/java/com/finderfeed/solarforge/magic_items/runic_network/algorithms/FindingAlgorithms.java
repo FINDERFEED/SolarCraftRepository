@@ -193,11 +193,10 @@ public class FindingAlgorithms {
     }
 
 
-    public static void resetRepeaters(List<BlockPos> positions,Level w){
+    public static void resetRepeaters(List<BlockPos> positions,Level w,BlockPos consumer){
         positions.forEach((pos)->{
             if (w.getBlockEntity(pos) instanceof BaseRepeaterTile tile){
-                tile.setFinalPos(null);
-                tile.setRepeaterConnection(null);
+                tile.resetRepeater(consumer);
             }
         });
     }

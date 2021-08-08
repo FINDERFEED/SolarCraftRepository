@@ -17,6 +17,9 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 
 import javax.annotation.Nullable;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 
 //NEVER GONNA GIVE YOU UP
 public class BaseRepeaterTile extends BlockEntity {
@@ -27,6 +30,8 @@ public class BaseRepeaterTile extends BlockEntity {
     private BlockPos FINAL_POSITION;
     private RunicEnergy.Type ENERGY_TYPE;
     private BlockPos CONNECTED_TO;
+    private List<BlockPos> ConnectedEnergyConsumers = new ArrayList<>();
+
 
     public BaseRepeaterTile( BlockPos p_155229_, BlockState p_155230_) {
         super(TileEntitiesRegistry.REPEATER.get(), p_155229_, p_155230_);
@@ -80,7 +85,9 @@ public class BaseRepeaterTile extends BlockEntity {
         }else{
             tile.setEnergyType(null);
         }
+
         if (!world.isClientSide && (world.getGameTime() %20 == 1) ) {
+            tile.checkConsumersValid();
             tile.setChanged();
             world.sendBlockUpdated(pos, state, state, 3);
         }
@@ -121,6 +128,14 @@ public class BaseRepeaterTile extends BlockEntity {
 
 
 
+    public void resetRepeater(BlockPos consumer){
+        this.FINAL_POSITION = null;
+        if ((consumer != null) && ConnectedEnergyConsumers.contains(consumer)) {
+            this.ConnectedEnergyConsumers.remove(consumer);
+        }
+        this.CONNECTED_TO = null;
+    }
+
 
     @Override
     public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
@@ -130,6 +145,15 @@ public class BaseRepeaterTile extends BlockEntity {
             this.setRepeaterConnection(connectedTo);
         }else{
             setRepeaterConnection(null);
+        }
+        List<BlockPos> list = new ArrayList<>();
+
+        for (int i = 0; i < tag.getInt("lengthofconnections"); i++){
+            list.add(new BlockPos(
+                    tag.getInt("positionx"+i),
+                    tag.getInt("positiony"+i),
+                    tag.getInt("positionz"+i)
+            ));
         }
         super.onDataPacket(net, pkt);
     }
@@ -144,9 +168,36 @@ public class BaseRepeaterTile extends BlockEntity {
             nbt = NbtUtils.writeBlockPos(Helpers.NULL_POS);
         }
 
+        for (int i = 0; i < ConnectedEnergyConsumers.size(); i++){
+            nbt.putInt("positionx"+i,ConnectedEnergyConsumers.get(i).getX());
+            nbt.putInt("positiony"+i,ConnectedEnergyConsumers.get(i).getY());
+            nbt.putInt("positionz"+i,ConnectedEnergyConsumers.get(i).getZ());
+        }
+        nbt.putInt("lengthofconnections",ConnectedEnergyConsumers.size());
         return new ClientboundBlockEntityDataPacket(worldPosition,3,nbt);
     }
 
 
+    public void addConsumerConnection(BlockPos pos){
+        if (!ConnectedEnergyConsumers.contains(pos)) {
+            this.ConnectedEnergyConsumers.add(pos);
+        }
+    }
+
+    public void removeConsumerConnection(int index){
+        this.ConnectedEnergyConsumers.remove(index);
+    }
+
+    public void checkConsumersValid(){
+        for (int i = 0; i < ConnectedEnergyConsumers.size();i++){
+            if (level.getBlockEntity(ConnectedEnergyConsumers.get(i)) instanceof IRunicEnergyReciever reciever){
+                if (!reciever.requiresEnergy()){
+                    removeConsumerConnection(i);
+                }
+            }else{
+                removeConsumerConnection(i);
+            }
+        }
+    }
 
 }

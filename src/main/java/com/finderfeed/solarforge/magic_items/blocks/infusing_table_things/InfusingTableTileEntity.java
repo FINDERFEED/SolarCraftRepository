@@ -18,6 +18,9 @@ import com.finderfeed.solarforge.recipe_types.InfusingRecipe;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Achievement;
 import com.finderfeed.solarforge.world_generation.structures.Structures;
 import net.minecraft.client.Minecraft;
+import net.minecraft.network.Connection;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -46,6 +49,7 @@ import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraftforge.fmllegacy.network.NetworkDirection;
 import net.minecraftforge.fmllegacy.network.PacketDistributor;
 
+import javax.annotation.Nullable;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -59,6 +63,7 @@ public class InfusingTableTileEntity extends RandomizableContainerBlockEntity im
     public double RUNE_ENERGY_KELDA = 0;
     public double RUNE_ENERGY_ZETA = 0;
     public Map<RunicEnergy.Type,List<BlockPos>> PATH_TO_PYLONS = new HashMap<>();
+    private boolean NEEDS_RUNIC_ENERGY_FLAG = false;
 
 
     public int energy = 0;
@@ -165,6 +170,7 @@ public class InfusingTableTileEntity extends RandomizableContainerBlockEntity im
                     InfusingRecipe recipe1 = recipe.get();
                     Map<RunicEnergy.Type,Double> costs = recipe1.RUNIC_ENERGY_COST;
                     boolean check = hasEnoughRunicEnergy(world,tile,costs);
+                    tile.NEEDS_RUNIC_ENERGY_FLAG = check;
                     if ((tile.energy >= recipe1.requriedEnergy) && check) {
                         tile.requiresEnergy = false;
                         tile.CURRENT_PROGRESS++;
@@ -249,6 +255,11 @@ public class InfusingTableTileEntity extends RandomizableContainerBlockEntity im
         tile.deleteStacksInPhantomSlots();
         tile.level.playSound(null, tile.worldPosition, SoundEvents.BEACON_DEACTIVATE, SoundSource.AMBIENT, 2, 1);
         tile.energy-= recipe.requriedEnergy;
+        tile.NEEDS_RUNIC_ENERGY_FLAG  =false;
+        tile.PATH_TO_PYLONS.forEach((type,path)->{
+            FindingAlgorithms.resetRepeaters(path,world,tile.worldPosition);
+        });
+
     }
 
 
@@ -366,6 +377,16 @@ public class InfusingTableTileEntity extends RandomizableContainerBlockEntity im
     }
 
     @Override
+    public boolean requiresEnergy() {
+
+        if (RECIPE_IN_PROGRESS && NEEDS_RUNIC_ENERGY_FLAG){
+            return true;
+        }
+
+        return false;
+    }
+
+    @Override
     public void requestEnergy(double amount, RunicEnergy.Type type) {
 
         if (PATH_TO_PYLONS.containsKey(type) && PATH_TO_PYLONS.get(type) != null){
@@ -379,7 +400,7 @@ public class InfusingTableTileEntity extends RandomizableContainerBlockEntity im
                 if (flag != BaseRepeaterTile.NULL){
                     this.giveEnergy(type,flag);
                 }else{
-                    FindingAlgorithms.resetRepeaters(PATH_TO_PYLONS.get(type),level);
+                    FindingAlgorithms.resetRepeaters(PATH_TO_PYLONS.get(type),level,worldPosition);
                     constructWay(type);
                 }
             }
@@ -404,6 +425,7 @@ public class InfusingTableTileEntity extends RandomizableContainerBlockEntity im
             if (FindingAlgorithms.hasEndPoint(graph,level)) {
                 FindingAlgorithms.sortBestPylon(graph, level);
                 PATH_TO_PYLONS.put(type, FindingAlgorithms.findConnectionAStar(graph, tile.getBlockPos(), level));
+
             }
         }else if (entity instanceof IRunicEnergyContainer container){
             PATH_TO_PYLONS.put(type,List.of(container.getPos()));
@@ -456,4 +478,7 @@ public class InfusingTableTileEntity extends RandomizableContainerBlockEntity im
                 "SOLAR ENERGY "+ energy
         );
     }
+
+
+
 }
