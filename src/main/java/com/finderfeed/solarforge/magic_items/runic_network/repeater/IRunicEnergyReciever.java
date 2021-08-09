@@ -33,22 +33,27 @@ public interface IRunicEnergyReciever {
             List<BlockEntity> tiles = chunks.get(i).getBlockEntities().values().stream().toList();
             for (int g = 0; g < tiles.size();g++){
                 if (tiles.get(g) instanceof BaseRepeaterTile repeater){
+
                     if ((repeater.getEnergyType() == type) && !(tile instanceof RuneEnergyPylonTile)) {
-                        double range = FinderfeedMathHelper.getDistanceBetween(repeater.getBlockPos(), pos);
-                        if (range <= getMaxRange()) {
-                            if (range <= minRange) {
-                                minRange = range;
-                                tile = repeater;
+                        if (FinderfeedMathHelper.canSee(repeater.getBlockPos(),pos,getMaxRange(),world)) {
+                            double range = FinderfeedMathHelper.getDistanceBetween(repeater.getBlockPos(), pos);
+                            if (range <= getMaxRange()) {
+                                if (range <= minRange) {
+                                    minRange = range;
+                                    tile = repeater;
+                                }
                             }
                         }
                     }
                 }else if (tiles.get(g) instanceof RuneEnergyPylonTile pylon){
-                    if (pylon.getEnergyType() == type){
-                        double range = FinderfeedMathHelper.getDistanceBetween(pylon.getBlockPos(), pos);
-                        if (range <= getMaxRange()) {
-                            if (range <= minRange) {
-                                minRange = range;
-                                tile = pylon;
+                    if (FinderfeedMathHelper.canSee(pylon.getBlockPos(),pos,getMaxRange(),world)) {
+                        if (pylon.getEnergyType() == type) {
+                            double range = FinderfeedMathHelper.getDistanceBetween(pylon.getBlockPos(), pos);
+                            if (range <= getMaxRange()) {
+                                if (range <= minRange) {
+                                    minRange = range;
+                                    tile = pylon;
+                                }
                             }
                         }
                     }

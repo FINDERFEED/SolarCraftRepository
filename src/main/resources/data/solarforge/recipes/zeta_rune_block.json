@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "FFF",
+    "F#F",
+    "FFF"
+  ],
+  "key": {
+    "#": {
+      "item": "solarforge:solar_rune_zeta"
+    },
+    "F": {
+      "item": "solarforge:chiseled_solar_stone"
+    }
+  },
+  "result": {
+    "item": "solarforge:zeta_rune_block"
+
+  }
+}

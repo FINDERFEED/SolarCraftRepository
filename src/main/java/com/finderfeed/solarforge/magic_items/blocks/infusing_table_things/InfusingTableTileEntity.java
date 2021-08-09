@@ -163,7 +163,8 @@ public class InfusingTableTileEntity extends RandomizableContainerBlockEntity im
                     tile.CURRENT_PROGRESS =0;
                     tile.INFUSING_TIME = 0;
                     tile.requiresEnergy = false;
-
+                    tile.onTileRemove();
+                    tile.PATH_TO_PYLONS.clear();
                 }
                 if (tile.RECIPE_IN_PROGRESS){
 
@@ -396,6 +397,7 @@ public class InfusingTableTileEntity extends RandomizableContainerBlockEntity im
                 double flag = container.extractEnergy(type,amount);
                 this.giveEnergy(type,flag);
             }else if (first instanceof BaseRepeaterTile repeater){
+                repeater.addConsumerConnection(worldPosition);
                 double flag = repeater.extractEnergy(amount,type);
                 if (flag != BaseRepeaterTile.NULL){
                     this.giveEnergy(type,flag);
@@ -479,6 +481,10 @@ public class InfusingTableTileEntity extends RandomizableContainerBlockEntity im
         );
     }
 
-
+    public void onTileRemove(){
+        PATH_TO_PYLONS.forEach((type,way)->{
+            FindingAlgorithms.resetRepeaters(way,level,worldPosition);
+        });
+    }
 
 }

@@ -63,17 +63,20 @@ public class InfusingPool extends Block implements EntityBlock {
                         stacktoplace.setCount(1);
                         tile.getItems().set(0,stacktoplace);
                         stack.grow(-1);
-
+                        tile.setChanged();
+                        world.sendBlockUpdated(pos,state,state,3);
                         return InteractionResult.SUCCESS;
                     }else{
                         ItemStack stack = tile.getItem(0);
                         tile.getItems().clear();
                         popResource(world,pos,stack);
-
+                        tile.setChanged();
+                        world.sendBlockUpdated(pos,state,state,3);
                         return InteractionResult.SUCCESS;
                     }
 
                 }
+
 
             }
         }

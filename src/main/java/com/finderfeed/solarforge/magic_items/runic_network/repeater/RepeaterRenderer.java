@@ -51,6 +51,36 @@ public class RepeaterRenderer implements BlockEntityRenderer<BaseRepeaterTile> {
                     }
                 ,true,1,v);
             poseStack.popPose();
+
+            poseStack.pushPose();
+
+            tile.getConnectedEnergyConsumers().forEach((pos)->{
+                Vec3 tilepos1 = new Vec3(tile.getBlockPos().getX() +0.5,tile.getBlockPos().getY() +0.5,tile.getBlockPos().getZ() +0.5);
+                Vec3 targetPos1 = new Vec3(pos.getX() +0.5,pos.getY() +0.5,pos.getZ() +0.5);
+                Vec3 vector1 = new Vec3((targetPos1.x - tilepos1.x), (targetPos1.y - tilepos1.y), (targetPos1.z - tilepos1.z));
+                Vec3 horizontalVector1 = new Vec3(targetPos1.x - tilepos1.x, 0, targetPos1.z - tilepos1.z);
+
+                float length1 =(float) vector1.length();
+
+                poseStack.pushPose();
+                poseStack.translate(0,0.1,0);
+                RenderingTools.renderRay(poseStack,multiBufferSource,0.25f,length1,
+                        (stack)->{
+                            if (horizontalVector1.x >= 0) {
+                                stack.mulPose(Vector3f.YN.rotationDegrees((float) Math.toDegrees(Math.acos(-horizontalVector1.normalize().z))));
+                            } else {
+                                stack.mulPose(Vector3f.YN.rotationDegrees(180 + (float) Math.toDegrees(Math.acos(horizontalVector1.normalize().z))));
+                            }
+
+                            stack.mulPose(Vector3f.XN.rotationDegrees((float) Math.toDegrees(Math.acos(vector1.normalize().y))));
+
+                        }
+                        ,true,1,v);
+                poseStack.popPose();
+            });
+
+
+            poseStack.popPose();
         }
     }
 }

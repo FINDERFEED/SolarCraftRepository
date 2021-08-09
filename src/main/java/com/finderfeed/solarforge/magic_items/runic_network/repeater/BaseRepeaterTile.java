@@ -155,6 +155,7 @@ public class BaseRepeaterTile extends BlockEntity {
                     tag.getInt("positionz"+i)
             ));
         }
+        this.ConnectedEnergyConsumers = list;
         super.onDataPacket(net, pkt);
     }
 
@@ -200,4 +201,7 @@ public class BaseRepeaterTile extends BlockEntity {
         }
     }
 
+    public List<BlockPos> getConnectedEnergyConsumers() {
+        return ConnectedEnergyConsumers;
+    }
 }

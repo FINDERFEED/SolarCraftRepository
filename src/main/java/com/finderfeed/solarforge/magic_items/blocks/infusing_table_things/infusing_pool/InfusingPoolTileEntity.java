@@ -3,6 +3,8 @@ package com.finderfeed.solarforge.magic_items.blocks.infusing_table_things.infus
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
 import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.Connection;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.player.Inventory;
@@ -17,6 +19,8 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraftforge.fmllegacy.network.PacketDistributor;
+
+import javax.annotation.Nullable;
 
 
 public class InfusingPoolTileEntity extends RandomizableContainerBlockEntity  {
@@ -88,4 +92,20 @@ public class InfusingPoolTileEntity extends RandomizableContainerBlockEntity  {
     }
 
 
+    @Override
+    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
+        super.onDataPacket(net, pkt);
+        this.load(pkt.getTag());
+    }
+
+    @Nullable
+    @Override
+    public ClientboundBlockEntityDataPacket getUpdatePacket() {
+
+        CompoundTag tag = new CompoundTag();
+        this.save(tag);
+
+
+        return new ClientboundBlockEntityDataPacket(worldPosition,3,tag);
+    }
 }

@@ -53,6 +53,7 @@ public class InfusingTableBlock extends Block implements EntityBlock {
             popResource(p_196243_2_,p_196243_3_,stacks);
             stacks = ent.getItems().get(9);
             popResource(p_196243_2_,p_196243_3_,stacks);
+            ent.onTileRemove();
         }
         super.onRemove(p_196243_1_, p_196243_2_, p_196243_3_, p_196243_4_, p_196243_5_);
     }
