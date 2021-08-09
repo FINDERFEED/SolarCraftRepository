@@ -12,6 +12,7 @@ import org.lwjgl.system.CallbackI;
 public class FinderfeedMathHelper {
 
 
+
     public static double getDistanceBetween(Vec3 tile,Vec3 start){
         return new Vec3(tile.x - start.x,tile.y - start.y,tile.z - start.z).length();
     }
@@ -78,4 +79,19 @@ public class FinderfeedMathHelper {
         return (pos1.getX() == pos2.getX()) && (pos1.getY() == pos2.getY()) && (pos1.getZ() == pos2.getZ());
     }
 
+    public static class TileEntityThings{
+        public static Vec3 getTileEntityCenter(BlockEntity entity){
+            return new Vec3(entity.getBlockPos().getX() + 0.5,entity.getBlockPos().getY() + 0.5,entity.getBlockPos().getZ() + 0.5);
+        }
+
+        public static Vec3 getTileEntityCenter(BlockPos entity){
+            return new Vec3(entity.getX() + 0.5,entity.getY() + 0.5,entity.getZ() + 0.5);
+        }
+    }
+
+    public static class PlayerThings{
+        public static Vec3 partialTicksForPosition(Player player){
+            return new Vec3(player.getX() - player.xOld,player.getY() - player.yOld,player.getZ() - player.zOld);
+        }
+    }
 }

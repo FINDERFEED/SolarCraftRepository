@@ -2,6 +2,7 @@ package com.finderfeed.solarforge.magic_items.runic_network.repeater;
 
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.for_future_library.FinderfeedMathHelper;
+import com.finderfeed.solarforge.misc_things.ParticlesList;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
 import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
@@ -15,11 +16,14 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.Nullable;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 //NEVER GONNA GIVE YOU UP
 public class BaseRepeaterTile extends BlockEntity {
@@ -90,6 +94,33 @@ public class BaseRepeaterTile extends BlockEntity {
             tile.checkConsumersValid();
             tile.setChanged();
             world.sendBlockUpdated(pos, state, state, 3);
+        }
+        if (world.isClientSide && (world.getGameTime() % 15 == 1) && (tile.getRepeaterConnection() != null)){
+            tile.handleParticlesBetween(tile.getRepeaterConnection());
+
+            tile.ConnectedEnergyConsumers.forEach(tile::handleParticlesBetween);
+        }
+    }
+
+    private void handleParticlesBetween(BlockPos pos){
+        Vec3 startPos = FinderfeedMathHelper.TileEntityThings.getTileEntityCenter(this);
+        Vec3 endPos = FinderfeedMathHelper.TileEntityThings.getTileEntityCenter(pos);
+        Vec3 vector = endPos.subtract(startPos);
+        double length = vector.length();
+
+        for (int i = 1; i <= Math.floor(length);i++){
+
+            double rndX = level.random.nextDouble()*0.6-0.3;
+            double rndY = level.random.nextDouble()*0.6-0.3;
+            double rndZ = level.random.nextDouble()*0.6-0.3;
+
+            Vec3 basePos = startPos.add(vector.normalize().multiply(i,i,i));
+
+            level.addParticle(ParticlesList.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+                    basePos.x + rndX,
+                    basePos.y + rndY,
+                    basePos.z + rndZ,
+                    rndX*0.01,rndY*0.01,rndZ*0.01);
         }
     }
 
@@ -203,5 +234,10 @@ public class BaseRepeaterTile extends BlockEntity {
 
     public List<BlockPos> getConnectedEnergyConsumers() {
         return ConnectedEnergyConsumers;
+    }
+
+    @Override
+    public AABB getRenderBoundingBox() {
+        return new AABB(worldPosition.offset(-16,-16,-16),worldPosition.offset(16,16,16));
     }
 }

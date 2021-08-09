@@ -173,6 +173,8 @@ public class InfusingTableTileEntity extends RandomizableContainerBlockEntity im
                     boolean check = hasEnoughRunicEnergy(world,tile,costs);
                     tile.NEEDS_RUNIC_ENERGY_FLAG = check;
                     if ((tile.energy >= recipe1.requriedEnergy) && check) {
+                        tile.onTileRemove();
+                        tile.PATH_TO_PYLONS.clear();
                         tile.requiresEnergy = false;
                         tile.CURRENT_PROGRESS++;
 
@@ -184,7 +186,7 @@ public class InfusingTableTileEntity extends RandomizableContainerBlockEntity im
                     }else{
                         costs.forEach((type,cost)->{
                             if (cost > 0){
-                                tile.requestEnergy(100,type);
+                                tile.requestEnergy(10,type);
                             }
                         });
                         tile.requiresEnergy = true;
