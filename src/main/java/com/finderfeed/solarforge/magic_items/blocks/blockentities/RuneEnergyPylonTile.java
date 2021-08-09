@@ -1,16 +1,20 @@
 package com.finderfeed.solarforge.magic_items.blocks.blockentities;
 
 import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.SolarCraftTags;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Achievement;
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.ProgressionHelper;
+import com.finderfeed.solarforge.magic_items.runic_network.repeater.BaseRepeaterTile;
 import com.finderfeed.solarforge.magic_items.runic_network.repeater.IRunicEnergyContainer;
 import com.finderfeed.solarforge.magic_items.runic_network.repeater.IRunicEnergyReciever;
-import com.finderfeed.solarforge.misc_things.AbstractEnergyGeneratorTileEntity;
-import com.finderfeed.solarforge.misc_things.DebugTarget;
-import com.finderfeed.solarforge.misc_things.RunicEnergy;
+import com.finderfeed.solarforge.misc_things.*;
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
 import com.finderfeed.solarforge.packet_handler.packets.UpdateTypeOnClientPacket;
 import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -46,32 +50,96 @@ public class RuneEnergyPylonTile extends BlockEntity implements IRunicEnergyCont
 
     public static void tick(Level world, BlockPos pos, BlockState blockState, RuneEnergyPylonTile tile) {
         if (!tile.level.isClientSide){
-            if (tile.type == null){
-                tile.type = RunicEnergy.Type.values()[tile.level.random.nextInt(RunicEnergy.Type.values().length-1)];
-            }
+            assignEnergyAndGainIt(tile);
+            doUpdate(tile);
+            doProgression(tile);
 
-            if (tile.currentEnergy+tile.energyPerTick <= tile.maxEnergy){
-                tile.currentEnergy+=tile.energyPerTick;
-            }else{
-                tile.currentEnergy = tile.maxEnergy;
-            }
-            tile.updateTick++;
 
-            if (tile.updateTick >= 40){
-                SolarForgePacketHandler.INSTANCE.send(PacketDistributor.NEAR.with(PacketDistributor.TargetPoint.p(tile.worldPosition.getX(), tile.worldPosition.getY(), tile.worldPosition.getZ(), 40, tile.level.dimension())),
-                        new UpdateTypeOnClientPacket(tile.worldPosition, tile.type.id));
-                tile.updateTick = 0;
-            }
 
-            AABB box = new AABB(tile.worldPosition.offset(-2,-2,-2),tile.worldPosition.offset(2,2,2));
-            tile.level.getEntitiesOfClass(Player.class,box).forEach((player)->{
-                Helpers.fireProgressionEvent(player, Achievement.RUNE_ENERGY_DEPOSIT);
-            });
         }
+        imbueItemsNear(tile);
 
 
     }
 
+    public static void imbueItemsNear(RuneEnergyPylonTile tile){
+        AABB bb = new AABB(tile.worldPosition.offset(-8,-10,-8),tile.worldPosition.offset(8,0,8));
+        tile.level.getEntitiesOfClass(ItemEntity.class,bb, (entity)-> entity.getItem().getItem() instanceof IImbuableItem).forEach(entity->{
+            if (!entity.level.isClientSide) {
+                int flag = updateEntityTime(entity);
+                IImbuableItem item = (IImbuableItem) entity.getItem().getItem();
+                int maxTime = item.getImbueTime();
+                double neededEnergy = item.getCost();
+                if (flag >= maxTime) {
+                    if (ProgressionHelper.RUNES_MAP == null) {
+                        ProgressionHelper.initRunesMap();
+                    }
+                    ItemStack stack = entity.getItem();
+                    int maxRunes = (int) Math.floor(tile.getCurrentEnergy() / neededEnergy);
+                    if (maxRunes > stack.getCount()) {
+                        tile.currentEnergy -= stack.getCount() * neededEnergy;
+                        ItemEntity entity1 = new ItemEntity(tile.level, entity.position().x, entity.position().y, entity.position().z,
+                                new ItemStack(ProgressionHelper.RUNES_MAP.get(tile.getEnergyType()), stack.getCount()));
+                        tile.level.addFreshEntity(entity1);
+                        entity.remove(Entity.RemovalReason.DISCARDED);
+                    } else {
+                        tile.currentEnergy -= maxRunes * neededEnergy;
+                        ItemEntity entity1 = new ItemEntity(tile.level, entity.position().x, entity.position().y, entity.position().z,
+                                new ItemStack(ProgressionHelper.RUNES_MAP.get(tile.getEnergyType()), maxRunes));
+                        tile.level.addFreshEntity(entity1);
+                        entity.getItem().setCount(stack.getCount()-maxRunes);
+                        entity.getPersistentData().putInt(SolarCraftTags.IMBUE_TIME_TAG,0);
+                    }
+
+                }
+            }else{
+                if (entity.level.getGameTime()%5 == 1) {
+
+                    double rndX = entity.level.random.nextDouble()*0.6-0.3;
+                    double rndY = entity.level.random.nextDouble()*0.6-0.3;
+                    double rndZ = entity.level.random.nextDouble()*0.6-0.3;
+
+                    entity.level.addParticle(ParticlesList.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+                            entity.position().x+rndX, entity.position().y+rndY, entity.position().z+rndZ, 0, 0.1, 0
+                    );
+                }
+            }
+        });
+    }
+
+    private static int updateEntityTime(ItemEntity entity){
+        int time = entity.getPersistentData().getInt(SolarCraftTags.IMBUE_TIME_TAG);
+        entity.getPersistentData().putInt(SolarCraftTags.IMBUE_TIME_TAG,time+1);
+        return time;
+    }
+
+    public static void assignEnergyAndGainIt(RuneEnergyPylonTile tile){
+        if (tile.type == null){
+            tile.type = RunicEnergy.Type.values()[tile.level.random.nextInt(RunicEnergy.Type.values().length-1)];
+        }
+
+        if (tile.currentEnergy+tile.energyPerTick <= tile.maxEnergy){
+            tile.currentEnergy+=tile.energyPerTick;
+        }else{
+            tile.currentEnergy = tile.maxEnergy;
+        }
+    }
+
+    public static void doUpdate(RuneEnergyPylonTile tile){
+        tile.updateTick++;
+        if (tile.updateTick >= 40){
+            SolarForgePacketHandler.INSTANCE.send(PacketDistributor.NEAR.with(PacketDistributor.TargetPoint.p(tile.worldPosition.getX(), tile.worldPosition.getY(), tile.worldPosition.getZ(), 40, tile.level.dimension())),
+                    new UpdateTypeOnClientPacket(tile.worldPosition, tile.type.id));
+            tile.updateTick = 0;
+        }
+    }
+
+    public static void doProgression(RuneEnergyPylonTile tile){
+        AABB box = new AABB(tile.worldPosition.offset(-2,-2,-2),tile.worldPosition.offset(2,2,2));
+        tile.level.getEntitiesOfClass(Player.class,box).forEach((player)->{
+            Helpers.fireProgressionEvent(player, Achievement.RUNE_ENERGY_DEPOSIT);
+        });
+    }
 
 
     @Override

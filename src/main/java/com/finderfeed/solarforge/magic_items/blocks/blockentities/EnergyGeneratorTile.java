@@ -53,6 +53,6 @@ public class EnergyGeneratorTile extends AbstractEnergyGeneratorTileEntity {
 
     @Override
     public AABB getRenderBoundingBox(){
-        return new AABB(getBlockPos().offset(0,-1,0),getBlockPos().offset(0,16,0));
+        return new AABB(getBlockPos().offset(0,-1,0),getBlockPos().offset(1,16,1));
     }
 }
