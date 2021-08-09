@@ -36,8 +36,8 @@ public class RuneEnergyPylonRenderer implements BlockEntityRenderer<RuneEnergyPy
 
     @Override
     public void render(RuneEnergyPylonTile tile, float partialTicks, PoseStack matrices, MultiBufferSource buffer, int light, int overlay) {
-        if (FinderfeedMathHelper.canSeeTileEntity(tile,Minecraft.getInstance().player)) {
-            Vec3 playerPos = Minecraft.getInstance().player.position().add(0, Minecraft.getInstance().player.getBbHeight() / 2, 0);
+        if (FinderfeedMathHelper.canSeeTileEntity(tile,Minecraft.getInstance().player) && (Minecraft.getInstance().cameraEntity != null) ) {
+            Vec3 playerPos = Minecraft.getInstance().cameraEntity.position();
             Vec3 tilePos = new Vec3(tile.getBlockPos().getX() + 0.5, tile.getBlockPos().getY() + 0.5, tile.getBlockPos().getZ() + 0.5);
 
             float dist = ((float) new Vec3(tilePos.x - playerPos.x, tilePos.y - playerPos.y, tilePos.z - playerPos.z).length()
