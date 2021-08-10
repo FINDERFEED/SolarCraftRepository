@@ -97,6 +97,7 @@ public class InfusingTableScreen extends AbstractContainerScreen<InfusingTableCo
     }
     private void renderItemAndTooltip(ItemStack toRender, int place1, int place2, int mousex, int mousey, PoseStack matrices){
         minecraft.getItemRenderer().renderGuiItem(toRender,place1,place2);
+        minecraft.getItemRenderer().renderGuiItemDecorations(font,toRender,place1,place2);
         if (((mousex >= place1) && (mousex <= place1+16)) && ((mousey >= place2) && (mousey <= place2+16)) && !toRender.getItem().equals(Items.AIR)){
             matrices.pushPose();
             renderTooltip(matrices,toRender,mousex,mousey);

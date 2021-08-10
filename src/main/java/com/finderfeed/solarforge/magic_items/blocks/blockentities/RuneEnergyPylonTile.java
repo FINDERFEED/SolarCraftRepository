@@ -2,6 +2,7 @@ package com.finderfeed.solarforge.magic_items.blocks.blockentities;
 
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.SolarCraftTags;
+import com.finderfeed.solarforge.capabilities.capability_mana.SolarForgeMana;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Achievement;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.ProgressionHelper;
 import com.finderfeed.solarforge.magic_items.runic_network.repeater.BaseRepeaterTile;
@@ -24,6 +25,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.phys.AABB;
 
+import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.fmllegacy.network.PacketDistributor;
 
 import javax.annotation.Nullable;
@@ -61,6 +63,7 @@ public class RuneEnergyPylonTile extends BlockEntity implements IRunicEnergyCont
 
 
     }
+
 
     public static void imbueItemsNear(RuneEnergyPylonTile tile){
         AABB bb = new AABB(tile.worldPosition.offset(-8,-10,-8),tile.worldPosition.offset(8,0,8));

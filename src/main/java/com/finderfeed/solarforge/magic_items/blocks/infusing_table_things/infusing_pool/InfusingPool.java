@@ -56,31 +56,56 @@ public class InfusingPool extends Block implements EntityBlock {
             if (entity instanceof InfusingPoolTileEntity) {
                 InfusingPoolTileEntity tile = (InfusingPoolTileEntity) entity;
                 if (!(user.getItemInHand(hand).getItem() instanceof SolarWandItem) && hand == InteractionHand.MAIN_HAND && !user.isCrouching()) {
-                    if (tile.isEmpty() ) {
 
-                        ItemStack stack = user.getItemInHand(hand);
-                        ItemStack stacktoplace = stack.copy();
-                        stacktoplace.setCount(1);
-                        tile.getItems().set(0,stacktoplace);
-                        stack.grow(-1);
-                        tile.setChanged();
-                        world.sendBlockUpdated(pos,state,state,3);
-                        return InteractionResult.SUCCESS;
-                    }else{
-                        ItemStack stack = tile.getItem(0);
-                        tile.getItems().clear();
-                        popResource(world,pos,stack);
-                        tile.setChanged();
-                        world.sendBlockUpdated(pos,state,state,3);
-                        return InteractionResult.SUCCESS;
-                    }
-
+                    handleContainerClick(state,world,pos,user,hand,tile);
+                    return InteractionResult.SUCCESS;
                 }
 
 
             }
         }
         return InteractionResult.CONSUME;
+    }
+
+
+
+    private static void handleContainerClick(BlockState state, Level world, BlockPos pos, Player user, InteractionHand hand,InfusingPoolTileEntity tile){
+        if (tile.isEmpty()) {
+            ItemStack stack = user.getItemInHand(hand);
+            ItemStack stacktoplace = stack.copy();
+            stacktoplace.setCount(1);
+            tile.getItems().set(0, stacktoplace);
+            stack.grow(-1);
+        }else{
+            ItemStack stack = user.getItemInHand(hand);
+            if (tile.getItem(0).getItem() == stack.getItem()){
+                ItemStack containerStack = tile.getItem(0);
+                if (containerStack.getMaxStackSize() != 1){
+                    if (containerStack.getCount() > 1){
+                        popResource(world,pos,containerStack);
+                        tile.clearContent();
+                    }else{
+                        if (containerStack.getCount() + stack.getCount() <= containerStack.getMaxStackSize()){
+                            containerStack.grow(stack.getCount());
+                            stack.grow(-stack.getCount());
+                        }else{
+                            int raznitsa = containerStack.getMaxStackSize() - containerStack.getCount();
+                            stack.grow(-raznitsa);
+                            containerStack.setCount(containerStack.getMaxStackSize());
+                        }
+                    }
+                }else{
+                    popResource(world,pos,containerStack);
+                    tile.clearContent();
+                }
+            }else{
+                popResource(world,pos,tile.getItem(0));
+                tile.clearContent();
+            }
+
+        }
+        tile.setChanged();
+        world.sendBlockUpdated(pos, state, state, 3);
     }
 
     public static void placeBlockEvent(final BlockEvent.EntityPlaceEvent event){
