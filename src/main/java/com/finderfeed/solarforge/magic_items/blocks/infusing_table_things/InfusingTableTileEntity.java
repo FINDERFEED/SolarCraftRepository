@@ -21,6 +21,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.network.Connection;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -52,6 +53,7 @@ import net.minecraftforge.fmllegacy.network.PacketDistributor;
 import javax.annotation.Nullable;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class InfusingTableTileEntity extends RandomizableContainerBlockEntity implements  IEnergyUser, IBindable, ISolarEnergyContainer, OneWay, IRunicEnergyReciever,DebugTarget {
 
@@ -167,12 +169,13 @@ public class InfusingTableTileEntity extends RandomizableContainerBlockEntity im
                     tile.PATH_TO_PYLONS.clear();
                 }
                 if (tile.RECIPE_IN_PROGRESS){
-
+                    int count = tile.getMinRecipeCountOutput();
                     InfusingRecipe recipe1 = recipe.get();
                     Map<RunicEnergy.Type,Double> costs = recipe1.RUNIC_ENERGY_COST;
-                    boolean check = hasEnoughRunicEnergy(world,tile,costs);
+                    tile.INFUSING_TIME = recipe1.infusingTime*count;
+                    boolean check = hasEnoughRunicEnergy(world,tile,costs,count);
                     tile.NEEDS_RUNIC_ENERGY_FLAG = check;
-                    if ((tile.energy >= recipe1.requriedEnergy) && check) {
+                    if ((tile.energy >= recipe1.requriedEnergy*count) && check) {
                         tile.onTileRemove();
                         tile.PATH_TO_PYLONS.clear();
                         tile.requiresEnergy = false;
@@ -180,7 +183,7 @@ public class InfusingTableTileEntity extends RandomizableContainerBlockEntity im
 
                         tile.setChanged();
 
-                        if (tile.CURRENT_PROGRESS == tile.INFUSING_TIME) {
+                        if (tile.CURRENT_PROGRESS >= tile.INFUSING_TIME) {
                             finishRecipe(world,tile,recipe1);
                         }
                     }else{
@@ -228,8 +231,9 @@ public class InfusingTableTileEntity extends RandomizableContainerBlockEntity im
 
     private static void finishRecipe(Level world,InfusingTableTileEntity tile,InfusingRecipe recipe){
         ItemStack result = new ItemStack(recipe.output.getItem(),recipe.count);
+        int count = tile.getMinRecipeCountOutput();
         recipe.RUNIC_ENERGY_COST.forEach((type,cost)->{
-            tile.giveEnergy(type,-cost);
+            tile.giveEnergy(type,-cost*count);
         });
         if (!recipe.tag.equals("")) {
             if (result.getItem() instanceof ITagUser){
@@ -250,14 +254,16 @@ public class InfusingTableTileEntity extends RandomizableContainerBlockEntity im
         if ((prev.getItem() instanceof DiggerItem) && (result.getItem() instanceof DiggerItem)) {
             result.hurt(prev.getDamageValue(), world.random, null);
         }
-        tile.getItems().clear();
+
+        result.setCount(count);
+        tile.getItem(0).grow(-count);
         tile.getItems().set(9, result);
         tile.RECIPE_IN_PROGRESS = false;
         tile.INFUSING_TIME = 0;
         tile.CURRENT_PROGRESS = 0;
-        tile.deleteStacksInPhantomSlots();
+        tile.deleteStacksInPhantomSlots(count);
         tile.level.playSound(null, tile.worldPosition, SoundEvents.BEACON_DEACTIVATE, SoundSource.AMBIENT, 2, 1);
-        tile.energy-= recipe.requriedEnergy;
+        tile.energy-= recipe.requriedEnergy*count;
         tile.NEEDS_RUNIC_ENERGY_FLAG  =false;
         tile.PATH_TO_PYLONS.forEach((type,path)->{
             FindingAlgorithms.resetRepeaters(path,world,tile.worldPosition);
@@ -300,7 +306,7 @@ public class InfusingTableTileEntity extends RandomizableContainerBlockEntity im
                 this.level.playSound(null, this.worldPosition, SoundEvents.VILLAGER_NO, SoundSource.AMBIENT, 2, 1);
             }
         }catch (NullPointerException e){
-            playerEntity.sendMessage(new TextComponent("INCORRECT FRAGMENT IN RECIPE "+ recipe.get().output.getDescriptionId()+" TELL MOD AUTHOR TO FIX IT").withStyle(ChatFormatting.RED),
+            playerEntity.sendMessage(new TextComponent("INCORRECT FRAGMENT IN RECIPE "+ recipe.get().output.getDisplayName()+" TELL MOD AUTHOR TO FIX IT").withStyle(ChatFormatting.RED),
                     playerEntity.getUUID());
         }
 
@@ -317,12 +323,30 @@ public class InfusingTableTileEntity extends RandomizableContainerBlockEntity im
             }
         }
     }
-    public void deleteStacksInPhantomSlots(){
+
+
+    private int getMinRecipeCountOutput(){
+        AtomicInteger count = new AtomicInteger(99999);
+        Structures.checkInfusingStandStructure(worldPosition,level).forEach((tile)->{
+            if (tile instanceof InfusingPoolTileEntity pool){
+                if ((pool.getItem(0).getItem() != Items.AIR) && pool.getItem(0).getCount() < count.get()){
+                    count.set(pool.getItem(0).getCount());
+                }
+            }
+        });
+        if (this.getItem(0).getCount() < count.get()){
+            count.set(getItem(0).getCount());
+        }
+        return count.get();
+    }
+
+
+    public void deleteStacksInPhantomSlots(int amount){
         List<BlockEntity> list = Structures.checkInfusingStandStructure(worldPosition,level);
         for (int i = 0;i < list.size();i++){
             if (list.get(i) instanceof InfusingPoolTileEntity){
                 InfusingPoolTileEntity tile = (InfusingPoolTileEntity) list.get(i);
-                tile.setItem(0,ItemStack.EMPTY);
+                tile.getItem(0).grow(-amount);
             }
         }
     }
@@ -449,7 +473,7 @@ public class InfusingTableTileEntity extends RandomizableContainerBlockEntity im
 
 
 
-    private static boolean hasEnoughRunicEnergy(Level world,InfusingTableTileEntity tile,Map<RunicEnergy.Type,Double> costs){
+    private static boolean hasEnoughRunicEnergy(Level world,InfusingTableTileEntity tile,Map<RunicEnergy.Type,Double> costs,int multiplier){
         AtomicBoolean bool = new AtomicBoolean(true);
         Map<RunicEnergy.Type,Double> tileEnergy = Map.of(
                 RunicEnergy.Type.ARDO,tile.RUNE_ENERGY_ARDO,
@@ -460,7 +484,7 @@ public class InfusingTableTileEntity extends RandomizableContainerBlockEntity im
                 RunicEnergy.Type.URBA,tile.RUNE_ENERGY_URBA
         );
         costs.forEach((type,cost)->{
-            if (tileEnergy.get(type) < cost){
+            if (tileEnergy.get(type) < cost*multiplier){
                 bool.set(false);
             }
         });

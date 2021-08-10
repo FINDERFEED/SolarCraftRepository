@@ -28,7 +28,7 @@ public class InfusingTableContainer extends AbstractContainerMenu {
 
         // Tile Entity
         //for (int kj = 0; kj <= te.getContainerSize()-1;kj++){
-            this.addSlot(new InputSlot((Container) te, 0, 120, 34,1));
+            this.addSlot(new Slot((Container) te, 0, 120, 34));
             this.addSlot(new OutputSlot((Container) te, 9, 195, -22));
 
         //}

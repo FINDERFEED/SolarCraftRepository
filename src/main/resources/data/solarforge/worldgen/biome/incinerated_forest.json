@@ -38,7 +38,9 @@
     [
       "solarforge:burnt_biome_ambience_1"
     ],
-    [],
+    [
+    "solarforge:configured_ruins"
+    ],
     [],
     [],
     [

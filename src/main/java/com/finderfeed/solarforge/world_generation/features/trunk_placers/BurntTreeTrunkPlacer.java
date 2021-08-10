@@ -6,6 +6,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import net.minecraft.world.level.LevelSimulatedReader;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -77,12 +78,13 @@ public class BurntTreeTrunkPlacer extends TrunkPlacer {
                         stateConf = stateConf.setValue(BlockStateProperties.AXIS, Direction.Axis.Z);
                     }
                 }
+            if (levelSimulatedReader.isStateAtPosition(pos.below(),(state1 -> !state1.is(Blocks.AIR)))) {
+                if (placeDirt) {
 
-            if (placeDirt){
-
-                setDirtAt(levelSimulatedReader,world,rnd,Helpers.getBlockPositionsByDirection(dir,pos,1).get(1).below(),cfg);
+                    setDirtAt(levelSimulatedReader, world, rnd, Helpers.getBlockPositionsByDirection(dir, pos, 1).get(1).below(), cfg);
+                }
+                world.accept(Helpers.getBlockPositionsByDirection(dir, pos, 1).get(1), stateConf);
             }
-            world.accept(Helpers.getBlockPositionsByDirection(dir,pos,1).get(1),stateConf);
             if (iterator != 0 && iterator%(Math.round(rnd.nextFloat()+1)) == 0) {
                 placeLogsInDirection(levelSimulatedReader,cfg,world, Helpers.getBlockPositionsByDirection(dir, pos, 1).get(1), Helpers.getRandomHorizontalDirection(true, dir, rnd), length, rnd, iterator + 1, state, rotate, placeDirt);
             }else{

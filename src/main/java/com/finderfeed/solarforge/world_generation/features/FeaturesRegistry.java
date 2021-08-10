@@ -37,11 +37,14 @@ public class FeaturesRegistry {
 
 
     public static final Feature<NoneFeatureConfiguration> BURNT_BIOME_AMBIENCE_1 = new MoltenForestAmbience(NoneFeatureConfiguration.CODEC);
+    public static final Feature<NoneFeatureConfiguration> BURNT_BIOME_AMBIENCE_2 = new MoltenForestRuins(NoneFeatureConfiguration.CODEC);
     public static final Feature<NoneFeatureConfiguration> ENERGY_PYLON = new EnergyPylonFeature(NoneFeatureConfiguration.CODEC);
 
 
 
     public static ConfiguredFeature<?,?> ENERGY_PYLON_CONFIGURED;
+    public static ConfiguredFeature<?,?> MOLTEN_FOREST_RUINS_CONFIGURED;
+
 
     public static final ConfiguredFeature<?,?> BURNT_BIOME_AMBIENCE_1_CONFIGURED = BURNT_BIOME_AMBIENCE_1
             .configured(NoneFeatureConfiguration.INSTANCE)
@@ -55,8 +58,9 @@ public class FeaturesRegistry {
 
 
     public static void registerFeatures(final RegistryEvent.Register<Feature<?>> event){
-            event.getRegistry().register(BURNT_BIOME_AMBIENCE_1.setRegistryName(BURNT_BIOME_BURNT_TREE));
-            event.getRegistry().register(ENERGY_PYLON.setRegistryName(new ResourceLocation("solarforge","energy_pylon_feature")));
+        event.getRegistry().register(BURNT_BIOME_AMBIENCE_1.setRegistryName(BURNT_BIOME_BURNT_TREE));
+        event.getRegistry().register(BURNT_BIOME_AMBIENCE_2.setRegistryName(new ResourceLocation("solarforge","ruins_feature")));
+        event.getRegistry().register(ENERGY_PYLON.setRegistryName(new ResourceLocation("solarforge","energy_pylon_feature")));
     }
 
 
@@ -80,6 +84,8 @@ public class FeaturesRegistry {
                     .decorated(FeatureDecorator.CHANCE.configured(new ChanceDecoratorConfiguration(100)));
             Registry.register(BuiltinRegistries.CONFIGURED_FEATURE,new ResourceLocation("solarforge","runic_tree"),RUNIC_TREE_FEATURE);
 
+            MOLTEN_FOREST_RUINS_CONFIGURED = BURNT_BIOME_AMBIENCE_2.configured(NoneFeatureConfiguration.INSTANCE).decorated(FeatureDecorator.CHANCE.configured(new ChanceDecoratorConfiguration(60)));
+            Registry.register(BuiltinRegistries.CONFIGURED_FEATURE,new ResourceLocation("solarforge","configured_ruins"),MOLTEN_FOREST_RUINS_CONFIGURED);
         });
     }
 
