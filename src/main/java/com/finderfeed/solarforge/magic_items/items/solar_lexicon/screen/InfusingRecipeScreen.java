@@ -2,6 +2,7 @@ package com.finderfeed.solarforge.magic_items.items.solar_lexicon.screen;
 
 import com.finderfeed.solarforge.ClientHelpers;
 import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import com.finderfeed.solarforge.recipe_types.InfusingRecipe;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.SolarLexicon;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -22,6 +23,8 @@ public class InfusingRecipeScreen extends Screen {
     public final ResourceLocation BUTTONS = new ResourceLocation("solarforge","textures/misc/page_buttons.png");
     public final ResourceLocation MAIN_SCREEN = new ResourceLocation("solarforge","textures/gui/solar_lexicon_infusing_recipe.png");
     public final ResourceLocation REQ_ENERGY = new ResourceLocation("solarforge","textures/gui/energy_bar.png");
+    //60*6
+    public final ResourceLocation RUNIC_ENERGY_BAR = new ResourceLocation("solarforge","textures/gui/runic_energy_bar.png");
     public final List<InfusingRecipe> recipe;
     private int maxPages;
     private int currentPage;
@@ -100,8 +103,8 @@ public class InfusingRecipeScreen extends Screen {
         }
 
 
-        addRenderableWidget(new ItemStackButton(relX+185,relY+190,12,12,(button)->{minecraft.setScreen(new SolarLexiconRecipesScreen());}, Items.CRAFTING_TABLE.getDefaultInstance(),0.7f,false));
-        addRenderableWidget(new ItemStackButton(relX+172,relY+190,12,12,(button)->{
+        addRenderableWidget(new ItemStackButton(relX+185,relY+9,12,12,(button)->{minecraft.setScreen(new SolarLexiconRecipesScreen());}, Items.CRAFTING_TABLE.getDefaultInstance(),0.7f,false));
+        addRenderableWidget(new ItemStackButton(relX+172,relY+9,12,12,(button)->{
             Minecraft mc = Minecraft.getInstance();
             SolarLexicon lexicon = (SolarLexicon) mc.player.getMainHandItem().getItem();
             lexicon.currentSavedScreen = this;
@@ -113,7 +116,7 @@ public class InfusingRecipeScreen extends Screen {
 
     @Override
     public void render(PoseStack matrices, int mousex, int mousey, float partialTicks) {
-
+        matrices.pushPose();
         ClientHelpers.bindText(MAIN_SCREEN);
         blit(matrices,relX,relY,0,0,256,256);
 
@@ -141,6 +144,16 @@ public class InfusingRecipeScreen extends Screen {
         matrices.mulPose(Vector3f.ZP.rotationDegrees(180));
         float percent = (float)recipe.get(currentPage).requriedEnergy / 100000;
         blit(matrices,0,0,0,0,16,(int)(33*percent),16,33);
+        matrices.popPose();
+
+
+        ClientHelpers.bindText(RUNIC_ENERGY_BAR);
+        renderEnergyBar(matrices,39,157, RunicEnergy.Type.ARDO);
+        renderEnergyBar(matrices,39,189, RunicEnergy.Type.URBA);
+        renderEnergyBar(matrices,124,189, RunicEnergy.Type.KELDA);
+        renderEnergyBar(matrices,124,173, RunicEnergy.Type.TERA);
+        renderEnergyBar(matrices,124,157, RunicEnergy.Type.ZETA);
+        renderEnergyBar(matrices,39,173, RunicEnergy.Type.FIRA);
     }
 
 
@@ -151,5 +164,13 @@ public class InfusingRecipeScreen extends Screen {
             renderTooltip(matrices,toRender,mousex,mousey);
             matrices.popPose();
         }
+    }
+
+    private void renderEnergyBar(PoseStack matrices, int offsetx, int offsety, RunicEnergy.Type type){
+        matrices.pushPose();
+        double energyCostPerItem = recipe.get(currentPage).RUNIC_ENERGY_COST.get(type);
+        int xtexture =  ( Math.round( (float)energyCostPerItem/100000*60));
+        blit(matrices,relX+offsetx,relY+offsety,0,0,xtexture,6);
+        matrices.popPose();
     }
 }
