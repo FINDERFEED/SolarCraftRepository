@@ -12,7 +12,7 @@ import com.finderfeed.solarforge.world_generation.structures.blocks.KeyLockBlock
 
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraftforge.common.ToolType;
+
 
 import net.minecraftforge.fmllegacy.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
@@ -32,8 +32,6 @@ public class BlocksRegistry {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS,"solarforge");
     public  static  final RegistryObject<InfusingPool> SOLAR_POOL = BLOCKS.register("solar_forge_infusion_pool",()-> new InfusingPool(BlockBehaviour.Properties.of(Material.STONE)
             .sound(SoundType.METAL)
-            .harvestTool(ToolType.PICKAXE)
-            .harvestLevel(1)
             .requiresCorrectToolForDrops()
             .noOcclusion()
             .strength(3,3)));

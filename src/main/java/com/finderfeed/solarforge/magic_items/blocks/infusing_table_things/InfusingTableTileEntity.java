@@ -17,6 +17,7 @@ import com.finderfeed.solarforge.packet_handler.TriggerToastPacket;
 import com.finderfeed.solarforge.recipe_types.InfusingRecipe;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Achievement;
 import com.finderfeed.solarforge.world_generation.structures.Structures;
+import com.google.common.util.concurrent.AtomicDouble;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.Connection;
 import net.minecraft.network.FriendlyByteBuf;
@@ -169,8 +170,9 @@ public class InfusingTableTileEntity extends RandomizableContainerBlockEntity im
                     tile.PATH_TO_PYLONS.clear();
                 }
                 if (tile.RECIPE_IN_PROGRESS){
-                    int count = tile.getMinRecipeCountOutput();
+
                     InfusingRecipe recipe1 = recipe.get();
+                    int count = tile.getMinRecipeCountOutput(recipe1);
                     Map<RunicEnergy.Type,Double> costs = recipe1.RUNIC_ENERGY_COST;
                     tile.INFUSING_TIME = recipe1.infusingTime*count;
                     boolean check = hasEnoughRunicEnergy(world,tile,costs,count);
@@ -231,7 +233,7 @@ public class InfusingTableTileEntity extends RandomizableContainerBlockEntity im
 
     private static void finishRecipe(Level world,InfusingTableTileEntity tile,InfusingRecipe recipe){
         ItemStack result = new ItemStack(recipe.output.getItem(),recipe.count);
-        int count = tile.getMinRecipeCountOutput();
+        int count = tile.getMinRecipeCountOutput(recipe);
         recipe.RUNIC_ENERGY_COST.forEach((type,cost)->{
             tile.giveEnergy(type,-cost*count);
         });
@@ -325,8 +327,17 @@ public class InfusingTableTileEntity extends RandomizableContainerBlockEntity im
     }
 
 
-    private int getMinRecipeCountOutput(){
-        AtomicInteger count = new AtomicInteger(99999);
+    private int getMinRecipeCountOutput(InfusingRecipe recipe){
+        AtomicInteger count = new AtomicInteger((int)Math.floor(64/(float)recipe.count));
+
+        double maxenergycost = getMaxEnergyCostFromRecipe(recipe);
+        if (maxenergycost != 0){
+            int maxItems = (int)Math.floor(100000/maxenergycost);
+            if (maxItems < count.get()){
+                count.set(maxItems);
+            }
+        }
+
         Structures.checkInfusingStandStructure(worldPosition,level).forEach((tile)->{
             if (tile instanceof InfusingPoolTileEntity pool){
                 if ((pool.getItem(0).getItem() != Items.AIR) && pool.getItem(0).getCount() < count.get()){
@@ -338,6 +349,17 @@ public class InfusingTableTileEntity extends RandomizableContainerBlockEntity im
             count.set(getItem(0).getCount());
         }
         return count.get();
+    }
+
+
+    private double getMaxEnergyCostFromRecipe(InfusingRecipe recipe){
+        AtomicDouble integer = new AtomicDouble(0);
+        recipe.RUNIC_ENERGY_COST.forEach((type,cost)->{
+            if (cost > integer.get()){
+                integer.set(cost);
+            }
+        });
+        return integer.get();
     }
 
 

@@ -17,7 +17,7 @@ public class AttachManaCapabilityEvent {
         if (event.getObject() instanceof Player) {
             PlayerManaProvider provide = new PlayerManaProvider();
             event.addCapability(new ResourceLocation("solarforge", "solar_mana_level"), provide);
-            event.addListener(provide::invalidate);
+            //event.addListener(provide::invalidate);
         }
     }
 
@@ -28,7 +28,7 @@ public class AttachManaCapabilityEvent {
 
     public static void tickEvent(final TickEvent.PlayerTickEvent event){
         Player player = event.player;
-        if (!player.level.isClientSide) {
+        if (!player.level.isClientSide && player.getCapability(CapabilitySolarMana.SOLAR_MANA_PLAYER).isPresent()) {
             double mana = player.getCapability(CapabilitySolarMana.SOLAR_MANA_PLAYER).orElseThrow(RuntimeException::new).getMana();
 
                 mana += 0.10d;

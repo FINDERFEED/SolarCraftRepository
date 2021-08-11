@@ -51,7 +51,16 @@ public class LivingEntityAttackEvent {
         Player peorig = event.getOriginal();
         Player playernew = event.getPlayer();
         if (!event.isWasDeath()){
-            playernew.getCapability(CapabilitySolarMana.SOLAR_MANA_PLAYER).orElseThrow(RuntimeException::new).setMana(peorig.getCapability(CapabilitySolarMana.SOLAR_MANA_PLAYER).orElseThrow(RuntimeException::new).getMana());
+            peorig.reviveCaps();
+            playernew.getCapability(CapabilitySolarMana.SOLAR_MANA_PLAYER)
+                    .orElseThrow(RuntimeException::new)
+                    .setMana(
+                            peorig
+                                    .getCapability(CapabilitySolarMana.SOLAR_MANA_PLAYER)
+                                    .orElseThrow(RuntimeException::new)
+                                    .getMana());
+            peorig.invalidateCaps();
+
             playernew.getPersistentData().putBoolean("solar_forge_can_player_use_fireball",peorig.getPersistentData().getBoolean("solar_forge_can_player_use_fireball"));
             playernew.getPersistentData().putBoolean("solar_forge_can_player_use_lightning",peorig.getPersistentData().getBoolean("solar_forge_can_player_use_lightning"));
             playernew.getPersistentData().putBoolean("solar_forge_can_player_use_solar_strike",peorig.getPersistentData().getBoolean("solar_forge_can_player_use_solar_strike"));

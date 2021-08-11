@@ -68,7 +68,7 @@ import net.minecraft.core.Registry;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraftforge.common.BiomeManager;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.ToolType;
+
 import net.minecraftforge.common.extensions.IForgeContainerType;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
@@ -118,23 +118,17 @@ public class SolarForge
     public static final RegistryObject<MobEffect> SOLAR_STUN = EFFECTS.register("solar_stun",()-> new SolarStunEffect(MobEffectCategory.HARMFUL,0xd1b515));
     public  static  final  RegistryObject<SolarForgeBlock> SOLAR_FORGE = BLOCKS.register("solar_forge",()-> new SolarForgeBlock(BlockBehaviour.Properties.of(Material.STONE)
             .sound(SoundType.METAL)
-            .harvestTool(ToolType.PICKAXE)
-            .harvestLevel(1)
             .requiresCorrectToolForDrops()
             .noOcclusion()
             .strength(3,3)));
 
     public  static  final  RegistryObject<SolarOreBlock> SOLAR_ORE = BLOCKS.register("solar_ores",()-> new SolarOreBlock(BlockBehaviour.Properties.of(Material.STONE)
             .sound(SoundType.ANCIENT_DEBRIS)
-            .harvestTool(ToolType.PICKAXE)
-            .harvestLevel(2)
             .requiresCorrectToolForDrops()
             .strength(3,3)));
 
     public  static  final  RegistryObject<InfusingTableBlock> SOLAR_INFUSER = BLOCKS.register("solar_infuser",()-> new InfusingTableBlock(BlockBehaviour.Properties.of(Material.STONE)
             .sound(SoundType.METAL)
-            .harvestTool(ToolType.PICKAXE)
-            .harvestLevel(1)
             .requiresCorrectToolForDrops()
             .noOcclusion()
             .dynamicShape()

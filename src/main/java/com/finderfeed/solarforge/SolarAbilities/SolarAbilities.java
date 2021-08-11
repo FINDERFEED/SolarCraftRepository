@@ -34,10 +34,12 @@ public class SolarAbilities {
 
     public static void castAbility(ServerLevel world, ServerPlayer enti, int index) {
         if (!enti.isSpectator()) {
-                Abilities.getAll()[index-1].getAbility().cast(enti,world);
-                for (RunicEnergy.Type type : RunicEnergy.Type.values()){
-                    Helpers.updateRunicEnergyOnClient(type,RunicEnergy.getEnergy(enti,type),enti);
+            if (index != 0) {
+                Abilities.getAll()[index - 1].getAbility().cast(enti, world);
+                for (RunicEnergy.Type type : RunicEnergy.Type.values()) {
+                    Helpers.updateRunicEnergyOnClient(type, RunicEnergy.getEnergy(enti, type), enti);
                 }
+            }
 //                if (index == 1) {
 //                    FireballAbility ability = new FireballAbility();
 //                    ability.cast(enti,world);
