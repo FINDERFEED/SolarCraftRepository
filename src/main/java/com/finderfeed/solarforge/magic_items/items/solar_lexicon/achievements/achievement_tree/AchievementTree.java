@@ -56,6 +56,7 @@ public class AchievementTree {
 
         list.add(Achievement.CRAFT_SOLAR_LENS);
         list.add(Achievement.TRANSMUTE_GEM);
+        list.add(Achievement.RUNIC_ENERGY_REPEATER);
         tree.addAchievementRequirements(Achievement.CRAFT_SOLAR_ENERGY_GENERATOR,list);
 
         list.add(Achievement.FIND_INCINERATED_FOREST);
@@ -70,7 +71,7 @@ public class AchievementTree {
         tree.addAchievementRequirements(Achievement.FIND_SOLAR_STONE,Achievement.ENTER_NETHER);
         tree.addAchievementRequirements(Achievement.RUNE_ENERGY_CLAIM,Achievement.RUNE_ENERGY_DEPOSIT);
         tree.addAchievementRequirements(Achievement.SOLAR_RUNE,Achievement.RUNE_ENERGY_DEPOSIT);
-
+        tree.addAchievementRequirements(Achievement.RUNIC_ENERGY_REPEATER,Achievement.RUNE_ENERGY_DEPOSIT,Achievement.USE_SOLAR_INFUSER,Achievement.ACQUIRE_COLD_STAR_ACTIVATED);
         return tree;
     }
 

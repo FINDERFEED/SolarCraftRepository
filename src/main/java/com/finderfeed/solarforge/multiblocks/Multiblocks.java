@@ -53,6 +53,7 @@ public enum Multiblocks {
             .addMainBlock(BlocksRegistry.SOLAR_ENERGY_GENERATOR.get())
             .addAchievement(Achievement.CRAFT_SOLAR_LENS)
             .addStruct(Structures.SOLAR_ENERGY_GENERATOR_STRUCTURE)
+            .setStructName("solarforge.solar_energy_generator")
     )),
     INFUSER(new Multiblock(new Multiblock.Constructor()
             .addBlock(SolarForge.SOLAR_INFUSER.get(),'I')
@@ -62,6 +63,7 @@ public enum Multiblocks {
             .addAchievement(Achievement.CRAFT_SOLAR_INFUSER)
             .setStructName("solarforge_struct.solar_infuser")
     ));
+
 
 
     public static Map<String,Multiblock> multiblocks = Map.of(
@@ -97,6 +99,8 @@ public enum Multiblocks {
 
 }
 class Structures{
+
+
     public static String[][] INFUSER_STRUCTURE = {
             {
                     "    F    ",

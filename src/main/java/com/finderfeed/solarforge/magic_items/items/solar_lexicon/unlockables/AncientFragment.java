@@ -42,6 +42,7 @@ public enum AncientFragment {
     ILLIDIUM_PICKAXE(tx("solar_fragment.illidium_pickaxe"),"illidium_pickaxe",Achievement.CRAFT_SOLAR_INFUSER,BookEntry.BEGINNER_ITEMS,ItemsRegister.VEIN_MINER.get().getDefaultInstance(),tx("illidium_pickaxe.lore"), SolarForge.INFUSING_RECIPE_TYPE,true),
 
     SOLAR_LENS(tx("solar_fragment.solar_lens"),"solar_lens",Achievement.ACQUIRE_COLD_STAR_ACTIVATED,BookEntry.SKILLED_ITEMS,ItemsRegister.SOLAR_LENS.get().getDefaultInstance(),tx("solar_lens.lore"), SolarForge.INFUSING_RECIPE_TYPE,true),
+    RUNIC_ENERGY_REPEATER(tx("solar_fragment.runic_energy_repeater"),"runic_energy_repeater",Achievement.ACQUIRE_COLD_STAR_ACTIVATED,BookEntry.SKILLED_ITEMS,ItemsRegister.REPEATER.get().getDefaultInstance(),tx("runic_energy_repeater.lore"), SolarForge.INFUSING_RECIPE_TYPE,true),
 
     QUALADIUM_INGOT(tx("solar_fragment.qualadium_ingot"),"qualadium_ingot",Achievement.CRAFT_SOLAR_LENS,BookEntry.SKILLED_MATERIALS,ItemsRegister.QUALADIUM_INGOT.get().getDefaultInstance(),tx("qualadium_ingot.lore"), SolarForge.SOLAR_SMELTING,true),
     SOLAR_GOD_SWORD(tx("solar_fragment.solar_god_sword"),"solar_god_sword",Achievement.CRAFT_SOLAR_LENS,BookEntry.SKILLED_ITEMS,ItemsRegister.SOLAR_GOD_SWORD.get().getDefaultInstance(),tx("solar_god_sword.lore"), SolarForge.INFUSING_RECIPE_TYPE,true),

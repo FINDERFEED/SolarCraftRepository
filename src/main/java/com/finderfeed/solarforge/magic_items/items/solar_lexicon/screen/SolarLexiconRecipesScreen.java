@@ -131,8 +131,10 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
 
         initButtons();
         //doOldThings();
+
         addRenderableWidget(goBack);
         addRenderableWidget(nothing);
+
         nothing.x = relX +207;
         nothing.y = relY + 184;
         goBack.x = relX +207;
@@ -377,10 +379,14 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
         nothing.render(matrices,mousex,mousey,partialTicks);
 
         this.renderables.forEach((widget)->{
-            if (widget instanceof AbstractWidget button){
-                button.active = isButtonPressable(button.x, button.y);
-            }
+
+                if (widget instanceof AbstractWidget button) {
+                    button.active = isButtonPressable(button.x, button.y);
+                }
+
         });
+        goBack.active = true;
+        nothing.active = true;
 //        List<Widget> list = this.buttons;
 //        list.remove(goBack);
 //        list.remove(nothing);

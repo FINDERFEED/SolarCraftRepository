@@ -13,6 +13,7 @@ import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
 import com.finderfeed.solarforge.packet_handler.packets.UpdateTypeOnClientPacket;
 import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
@@ -73,6 +74,7 @@ public class RuneEnergyPylonTile extends BlockEntity implements IRunicEnergyCont
                 IImbuableItem item = (IImbuableItem) entity.getItem().getItem();
                 int maxTime = item.getImbueTime();
                 double neededEnergy = item.getCost();
+
                 if (flag >= maxTime) {
                     if (ProgressionHelper.RUNES_MAP == null) {
                         ProgressionHelper.initRunesMap();
@@ -94,7 +96,12 @@ public class RuneEnergyPylonTile extends BlockEntity implements IRunicEnergyCont
                         entity.getItem().setCount(stack.getCount()-maxRunes);
                         entity.getPersistentData().putInt(SolarCraftTags.IMBUE_TIME_TAG,0);
                     }
-
+                    if (entity.getThrower() != null){
+                        Player player =entity.level.getPlayerByUUID(entity.getThrower());
+                        if (player != null){
+                            Helpers.fireProgressionEvent(player,Achievement.SOLAR_RUNE);
+                        }
+                    }
                 }
             }else{
                 if (entity.level.getGameTime()%5 == 1) {

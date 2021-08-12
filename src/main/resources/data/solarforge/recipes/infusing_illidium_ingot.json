@@ -32,5 +32,7 @@
   },
   "time": 200,
   "fragment": "illidium_ingot",
-  "ardo": 100
+  "ardo": 10000,
+  "fira": 20000,
+  "tera": 32000
 }

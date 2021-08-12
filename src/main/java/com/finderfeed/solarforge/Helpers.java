@@ -91,7 +91,7 @@ public class Helpers {
             case CRAFT_SOLAR_FORGE -> "The magical power of this machine allows me to get powerful abilities. Can it do more than just that?";
             case CRAFT_SOLAR_INFUSER -> "So now what? There was no instructions on how to use it...";
             case FIND_SOLAR_STONE -> "This magical stone shines brighter than sun.There should be a way to use it";
-            case USE_SOLAR_INFUSER -> "Oh useful shiny things! I am feeling myself a mage more right  now.";
+            case USE_SOLAR_INFUSER -> "It wasnt as hard as i thought it would be.";
             case ACQUIRE_SOLAR_DUST -> "I have finally acquired solar dust! But where to use it?";
             case ACQUIRE_COLD_STAR -> "The power of this item is very big. According to my experiments it can focus on light.";
             case FIND_INFUSER_DUNGEON -> "Is this some sort of an ancient altar?";
@@ -104,10 +104,11 @@ public class Helpers {
             case FIND_INCINERATED_FOREST -> "It doesnt seem that this was caused by a natural disaster...";
             case TRADE_FOR_BLUE_GEM -> "What a rude man! At least he loves to share information... For money...";
             case DIMENSIONAL_SHARD_DUNGEON -> "They definitely dont want me to reveal their secrets.";
-            case ENTER_NETHER -> "Despite its evil nature there are still some friendly creatures here, but i still need to be careful.";
+            case ENTER_NETHER -> "Despite its evil nature there are still some friendly creatures here, but anyway i need to be careful.";
             case SOLAR_RUNE -> "Maybe this runes will help me to decrypt the fragments?";
             case RUNE_ENERGY_CLAIM -> "Turns out i can collect this energy inside...myself?";
             case RUNE_ENERGY_DEPOSIT -> "It seems that this pylon contains some sort of energy.";
+            case RUNIC_ENERGY_REPEATER -> "Energy from those pylons can be a solution of this problem!";
         };
     }
 

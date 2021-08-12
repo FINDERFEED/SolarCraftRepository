@@ -47,27 +47,31 @@ public class RunicNetworkRepeater extends Block implements EntityBlock {
     }
 
 
-    @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos blockPos, Player player, InteractionHand hand, BlockHitResult res) {
-        if (!level.isClientSide && hand.equals(InteractionHand.MAIN_HAND)){
 
-            if (level.getBlockEntity(blockPos) instanceof BaseRepeaterTile tile){
-                Map<BlockPos, List<BlockPos>> graph = FindingAlgorithms.findAllConnectedPylons(tile,new ArrayList<>(),new HashMap<>());
-                if (FindingAlgorithms.hasEndPoint(graph,level)) {
-                    FindingAlgorithms.sortBestPylon(graph, level);
-                    List<BlockPos> bestWay = FindingAlgorithms.findConnectionAStar(graph, tile.getBlockPos(), level);
-                    for (int i = 0; i < bestWay.size(); i++) {
-                        if (level.getBlockEntity(bestWay.get(i)) instanceof BaseRepeaterTile repeater) {
-                            repeater.setRepeaterConnection(bestWay.get(i + 1));
-                        }
-                    }
 
-                    System.out.println(bestWay);
-                }else{
-                    System.out.println("has no end point");
-                }
-            }
-        }
-        return InteractionResult.SUCCESS;
-    }
+//    @Override
+//    public InteractionResult use(BlockState state, Level level, BlockPos blockPos, Player player, InteractionHand hand, BlockHitResult res) {
+//        if (!level.isClientSide && hand.equals(InteractionHand.MAIN_HAND)){
+//
+//            if (level.getBlockEntity(blockPos) instanceof BaseRepeaterTile tile){
+//                Map<BlockPos, List<BlockPos>> graph = FindingAlgorithms.findAllConnectedPylons(tile,new ArrayList<>(),new HashMap<>());
+//                if (FindingAlgorithms.hasEndPoint(graph,level)) {
+//                    FindingAlgorithms.sortBestPylon(graph, level);
+//                    List<BlockPos> bestWay = FindingAlgorithms.findConnectionAStar(graph, tile.getBlockPos(), level);
+//                    for (int i = 0; i < bestWay.size(); i++) {
+//                        if (level.getBlockEntity(bestWay.get(i)) instanceof BaseRepeaterTile repeater) {
+//                            repeater.setRepeaterConnection(bestWay.get(i + 1));
+//                        }
+//                    }
+//
+//                    System.out.println(bestWay);
+//                }else{
+//                    System.out.println("has no end point");
+//                }
+//            }
+//        }
+//        return InteractionResult.SUCCESS;
+//    }
+
+
 }

@@ -22,6 +22,13 @@
     "solarforge:uldoradium_ore",
     "solarforge:solar_ores",
     "solarforge:solar_infuser",
-    "solarforge:solar_forge_infusion_pool"
+    "solarforge:solar_forge_infusion_pool",
+    "solarforge:repeater",
+    "solarforge:ardo_rune_block",
+    "solarforge:kelda_rune_block",
+    "solarforge:tera_rune_block",
+    "solarforge:urba_rune_block",
+    "solarforge:zeta_rune_block",
+    "solarforge:fira_rune_block"
   ]
 }

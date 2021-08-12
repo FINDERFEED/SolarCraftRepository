@@ -26,7 +26,8 @@ public enum Achievement {
     FIND_INCINERATED_FOREST("find_incinerated_forest",1,ItemsRegister.BURNT_LOG.get().getDefaultInstance(), new TranslatableComponent("ach.find_incinerated_forest"),18,new TranslatableComponent("pre.find_incinerated_forest")),
     TRADE_FOR_BLUE_GEM("blue_gem_trade",1,ItemsRegister.BLUE_GEM.get().getDefaultInstance(), new TranslatableComponent("ach.blue_gem_trade"),19,new TranslatableComponent("pre.blue_gem_trade")),
     TRANSMUTE_GEM("transmute_gem",4,ItemsRegister.BLUE_GEM_ENCHANCED.get().getDefaultInstance(), new TranslatableComponent("ach.transmute_gem"),20,new TranslatableComponent("pre.transmute_gem")),
-    DIMENSIONAL_SHARD_DUNGEON("dim_shard_dungeon",5,ItemsRegister.SOLAR_STONE_CHISELED.get().getDefaultInstance(), new TranslatableComponent("ach.dim_shard_dungeon"),21,new TranslatableComponent("pre.dim_shard_dungeon"));
+    DIMENSIONAL_SHARD_DUNGEON("dim_shard_dungeon",5,ItemsRegister.SOLAR_STONE_CHISELED.get().getDefaultInstance(), new TranslatableComponent("ach.dim_shard_dungeon"),21,new TranslatableComponent("pre.dim_shard_dungeon")),
+    RUNIC_ENERGY_REPEATER("runic_energy_repeater",5,ItemsRegister.REPEATER.get().getDefaultInstance(), new TranslatableComponent("ach.runic_energy_repeater"),22,new TranslatableComponent("pre.runic_energy_repeater"));
 
 
 

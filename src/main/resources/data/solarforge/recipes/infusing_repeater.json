@@ -1,0 +1,36 @@
+{
+  "type":"solarforge:infusing",
+  "input1": {
+    "item": "solarforge:algadium_block"
+  },
+  "input2": {
+    "item": "solarforge:energy_dust"
+  },
+  "input3": {
+    "item": "minecraft:amethyst_shard"
+  },
+  "input4": {
+    "item": "minecraft:amethyst_shard"
+  },
+  "input5": {
+    "item": "minecraft:amethyst_shard"
+  },
+  "input6": {
+    "item": "solarforge:energy_dust"
+  },
+  "input7": {
+    "item": "solarforge:illidium_ingot"
+  },
+  "input8": {
+    "item": "minecraft:iron_block"
+  },
+  "input9": {
+    "item": "solarforge:illidium_ingot"
+  },
+  "result": {
+    "item": "solarforge:repeater"
+  },
+  "time": 1000,
+  "fragment": "runic_energy_repeater",
+  "count": 8
+}

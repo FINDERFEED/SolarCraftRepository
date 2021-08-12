@@ -6,6 +6,7 @@ import com.finderfeed.solarforge.recipe_types.solar_smelting.SolarSmeltingRecipe
 import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.item.crafting.SmeltingRecipe;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -21,6 +22,7 @@ import net.minecraft.world.phys.Vec3;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class SolarLensTile extends BlockEntity  {
 
@@ -61,12 +63,13 @@ public class SolarLensTile extends BlockEntity  {
                     tile.RECIPE_IN_PROGRESS = true;
                     tile.SMELTING_TIME = recipe.get().smeltingTime;
                     tile.CURRENT_SMELTING_TIME++;
-                    if (tile.CURRENT_SMELTING_TIME == tile.SMELTING_TIME){
+                    int count = tile.findLeastItemResultAmount();
+                    if (tile.CURRENT_SMELTING_TIME >= tile.SMELTING_TIME*count){
                         for (ItemEntity a : list){
-                            a.remove(Entity.RemovalReason.KILLED);
+                            a.getItem().grow(-count);
                         }
                         Vec3 pos = new Vec3(tile.worldPosition.getX()+0.5d,tile.worldPosition.getY()-1,tile.worldPosition.getZ()+0.5d);
-                        ItemEntity entity = new ItemEntity(tile.level,pos.x,pos.y,pos.z,recipe.get().output);
+                        ItemEntity entity = new ItemEntity(tile.level,pos.x,pos.y,pos.z,new ItemStack(recipe.get().output.getItem(),count));
                         tile.level.addFreshEntity(entity);
                         tile.SMELTING_TIME = 0;
                         tile.CURRENT_SMELTING_TIME = 0;
@@ -80,6 +83,20 @@ public class SolarLensTile extends BlockEntity  {
             }
         }
     }
+
+    private int findLeastItemResultAmount(){
+        AtomicInteger mod = new AtomicInteger(99999);
+        INVENTORY.INVENTORY.forEach((ingr)->{
+            if (!ingr.isEmpty()){
+                int itemcount = ingr.getCount();
+                if (itemcount < mod.get()){
+                    mod.set(itemcount);
+                }
+            }
+        });
+        return mod.get();
+    }
+
 
     @Override
     public CompoundTag save(CompoundTag cmp) {
