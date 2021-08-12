@@ -31,8 +31,5 @@
     "item": "solarforge:illidium_ingot"
   },
   "time": 200,
-  "fragment": "illidium_ingot",
-  "ardo": 10000,
-  "fira": 20000,
-  "tera": 32000
+  "fragment": "illidium_ingot"
 }
