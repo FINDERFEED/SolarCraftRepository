@@ -17,7 +17,7 @@ import java.util.List;
 public interface IRunicEnergyReciever {
 
 
-    boolean requiresEnergy();
+    boolean requiresRunicEnergy();
     void requestEnergy(double amount,RunicEnergy.Type type);
     double getMaxRange();
 

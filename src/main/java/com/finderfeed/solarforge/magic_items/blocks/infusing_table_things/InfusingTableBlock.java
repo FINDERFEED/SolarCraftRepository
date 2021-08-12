@@ -68,6 +68,8 @@ public class InfusingTableBlock extends Block implements EntityBlock {
             if (entity instanceof InfusingTableTileEntity) {
                 InfusingTableTileEntity tile = (InfusingTableTileEntity) entity;
                 if (!(user.getMainHandItem().getItem() instanceof SolarWandItem) && !(user.getMainHandItem().getItem() instanceof SolarNetworkBinder) && !(user.getMainHandItem().getItem() instanceof SolarcraftDebugStick)) {
+                    entity.setChanged();
+                    world.sendBlockUpdated(pos,state,state,3);
                     Consumer<FriendlyByteBuf> cons = x -> { x.writeBlockPos(pos);
                     };
                     NetworkHooks.openGui((ServerPlayer) user, (InfusingTableTileEntity) entity, cons);

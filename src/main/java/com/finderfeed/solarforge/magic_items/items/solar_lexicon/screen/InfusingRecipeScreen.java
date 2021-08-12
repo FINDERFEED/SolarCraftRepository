@@ -15,6 +15,7 @@ import net.minecraft.resources.ResourceLocation;
 import com.mojang.math.Vector3f;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.item.crafting.Ingredient;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +44,14 @@ public class InfusingRecipeScreen extends Screen {
         maxPages = recipe.size()-1;
     }
 
+    private void addStack(Ingredient ingr, List<ItemStack> stacks){
+        if (!ingr.isEmpty()){
+            stacks.add(ingr.getItems()[0]);
+        }else{
+            stacks.add(ItemStack.EMPTY);
+        }
+    }
+
     @Override
     protected void init() {
         int width = minecraft.getWindow().getWidth();
@@ -52,15 +61,24 @@ public class InfusingRecipeScreen extends Screen {
         this.relY = (height - 218*scale)/2/scale;
         currentPage = 0;
         stacks = new ArrayList<>();
-        stacks.add(recipe.get(0).input1.getItems()[0]);
-        stacks.add(recipe.get(0).input2.getItems()[0]);
-        stacks.add(recipe.get(0).input3.getItems()[0]);
-        stacks.add(recipe.get(0).input4.getItems()[0]);
-        stacks.add(recipe.get(0).input5.getItems()[0]);
-        stacks.add(recipe.get(0).input6.getItems()[0]);
-        stacks.add(recipe.get(0).input7.getItems()[0]);
-        stacks.add(recipe.get(0).input8.getItems()[0]);
-        stacks.add(recipe.get(0).input9.getItems()[0]);
+        addStack(recipe.get(0).input1,stacks);
+        addStack(recipe.get(0).input2,stacks);
+        addStack(recipe.get(0).input3,stacks);
+        addStack(recipe.get(0).input4,stacks);
+        addStack(recipe.get(0).input5,stacks);
+        addStack(recipe.get(0).input6,stacks);
+        addStack(recipe.get(0).input7,stacks);
+        addStack(recipe.get(0).input8,stacks);
+        addStack(recipe.get(0).input9,stacks);
+//        stacks.add(recipe.get(0).input1.getItems()[0]);
+//        stacks.add(recipe.get(0).input2.getItems()[0]);
+//        stacks.add(recipe.get(0).input3.getItems()[0]);
+//        stacks.add(recipe.get(0).input4.getItems()[0]);
+//        stacks.add(recipe.get(0).input5.getItems()[0]);
+//        stacks.add(recipe.get(0).input6.getItems()[0]);
+//        stacks.add(recipe.get(0).input7.getItems()[0]);
+//        stacks.add(recipe.get(0).input8.getItems()[0]);
+//        stacks.add(recipe.get(0).input9.getItems()[0]);
         stacks.add(recipe.get(0).output);
 
         if (maxPages != 0) {
@@ -68,15 +86,24 @@ public class InfusingRecipeScreen extends Screen {
                 if ((currentPage + 1 <= maxPages)) {
                     currentPage += 1;
                     stacks.clear();
-                    stacks.add(recipe.get(currentPage).input1.getItems()[0]);
-                    stacks.add(recipe.get(currentPage).input2.getItems()[0]);
-                    stacks.add(recipe.get(currentPage).input3.getItems()[0]);
-                    stacks.add(recipe.get(currentPage).input4.getItems()[0]);
-                    stacks.add(recipe.get(currentPage).input5.getItems()[0]);
-                    stacks.add(recipe.get(currentPage).input6.getItems()[0]);
-                    stacks.add(recipe.get(currentPage).input7.getItems()[0]);
-                    stacks.add(recipe.get(currentPage).input8.getItems()[0]);
-                    stacks.add(recipe.get(currentPage).input9.getItems()[0]);
+                    addStack(recipe.get(currentPage).input1,stacks);
+                    addStack(recipe.get(currentPage).input2,stacks);
+                    addStack(recipe.get(currentPage).input3,stacks);
+                    addStack(recipe.get(currentPage).input4,stacks);
+                    addStack(recipe.get(currentPage).input5,stacks);
+                    addStack(recipe.get(currentPage).input6,stacks);
+                    addStack(recipe.get(currentPage).input7,stacks);
+                    addStack(recipe.get(currentPage).input8,stacks);
+                    addStack(recipe.get(currentPage).input9,stacks);
+//                    stacks.add(recipe.get(currentPage).input1.getItems()[0]);
+//                    stacks.add(recipe.get(currentPage).input2.getItems()[0]);
+//                    stacks.add(recipe.get(currentPage).input3.getItems()[0]);
+//                    stacks.add(recipe.get(currentPage).input4.getItems()[0]);
+//                    stacks.add(recipe.get(currentPage).input5.getItems()[0]);
+//                    stacks.add(recipe.get(currentPage).input6.getItems()[0]);
+//                    stacks.add(recipe.get(currentPage).input7.getItems()[0]);
+//                    stacks.add(recipe.get(currentPage).input8.getItems()[0]);
+//                    stacks.add(recipe.get(currentPage).input9.getItems()[0]);
                     stacks.add(recipe.get(currentPage).output);
                 }
             },(button,matrices,mousex,mousey)->{
@@ -86,15 +113,24 @@ public class InfusingRecipeScreen extends Screen {
                 if ((currentPage - 1 >= 0)) {
                     currentPage -= 1;
                     stacks.clear();
-                    stacks.add(recipe.get(currentPage).input1.getItems()[0]);
-                    stacks.add(recipe.get(currentPage).input2.getItems()[0]);
-                    stacks.add(recipe.get(currentPage).input3.getItems()[0]);
-                    stacks.add(recipe.get(currentPage).input4.getItems()[0]);
-                    stacks.add(recipe.get(currentPage).input5.getItems()[0]);
-                    stacks.add(recipe.get(currentPage).input6.getItems()[0]);
-                    stacks.add(recipe.get(currentPage).input7.getItems()[0]);
-                    stacks.add(recipe.get(currentPage).input8.getItems()[0]);
-                    stacks.add(recipe.get(currentPage).input9.getItems()[0]);
+                    addStack(recipe.get(currentPage).input1,stacks);
+                    addStack(recipe.get(currentPage).input2,stacks);
+                    addStack(recipe.get(currentPage).input3,stacks);
+                    addStack(recipe.get(currentPage).input4,stacks);
+                    addStack(recipe.get(currentPage).input5,stacks);
+                    addStack(recipe.get(currentPage).input6,stacks);
+                    addStack(recipe.get(currentPage).input7,stacks);
+                    addStack(recipe.get(currentPage).input8,stacks);
+                    addStack(recipe.get(currentPage).input9,stacks);
+//                    stacks.add(recipe.get(currentPage).input1.getItems()[0]);
+//                    stacks.add(recipe.get(currentPage).input2.getItems()[0]);
+//                    stacks.add(recipe.get(currentPage).input3.getItems()[0]);
+//                    stacks.add(recipe.get(currentPage).input4.getItems()[0]);
+//                    stacks.add(recipe.get(currentPage).input5.getItems()[0]);
+//                    stacks.add(recipe.get(currentPage).input6.getItems()[0]);
+//                    stacks.add(recipe.get(currentPage).input7.getItems()[0]);
+//                    stacks.add(recipe.get(currentPage).input8.getItems()[0]);
+//                    stacks.add(recipe.get(currentPage).input9.getItems()[0]);
                     stacks.add(recipe.get(currentPage).output);
                 }
             },(button,matrices,mousex,mousey)->{

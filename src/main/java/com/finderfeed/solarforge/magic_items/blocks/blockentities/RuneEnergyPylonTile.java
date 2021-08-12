@@ -36,7 +36,7 @@ public class RuneEnergyPylonTile extends BlockEntity implements IRunicEnergyCont
 
     private RunicEnergy.Type type = null;
     private float currentEnergy = 0;
-    private float energyPerTick = 0.1f;
+    private float energyPerTick = 0.5f;
     private float maxEnergy = 100000;
     private int updateTick = 40;
 
@@ -85,6 +85,7 @@ public class RuneEnergyPylonTile extends BlockEntity implements IRunicEnergyCont
                                 new ItemStack(ProgressionHelper.RUNES_MAP.get(tile.getEnergyType()), stack.getCount()));
                         tile.level.addFreshEntity(entity1);
                         entity.remove(Entity.RemovalReason.DISCARDED);
+
                     } else {
                         tile.currentEnergy -= maxRunes * neededEnergy;
                         ItemEntity entity1 = new ItemEntity(tile.level, entity.position().x, entity.position().y, entity.position().z,

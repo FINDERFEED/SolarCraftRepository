@@ -8,6 +8,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.TextComponent;
+import net.minecraft.world.item.crafting.Ingredient;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +25,14 @@ public class SmeltingRecipeScreen extends Screen {
         this.recipe = a;
     }
 
+    private void addStack(Ingredient ingr, List<ItemStack> stacks){
+        if (!ingr.isEmpty()){
+            stacks.add(ingr.getItems()[0]);
+        }else{
+            stacks.add(ItemStack.EMPTY);
+        }
+    }
+
 
     @Override
     protected void init() {
@@ -33,10 +42,14 @@ public class SmeltingRecipeScreen extends Screen {
         this.relX = (width/scale - 183)/2;
         this.relY = (height - 218*scale)/2/scale;
         stacks = new ArrayList<>();
-        stacks.add(recipe.list.get(0).getItems()[0]);
-        stacks.add(recipe.list.get(1).getItems()[0]);
-        stacks.add(recipe.list.get(2).getItems()[0]);
-        stacks.add(recipe.list.get(3).getItems()[0]);
+        addStack(recipe.list.get(0),stacks);
+        addStack(recipe.list.get(1),stacks);
+        addStack(recipe.list.get(2),stacks);
+        addStack(recipe.list.get(3),stacks);
+//        stacks.add(recipe.list.get(0).getItems()[0]);
+//        stacks.add(recipe.list.get(1).getItems()[0]);
+//        stacks.add(recipe.list.get(2).getItems()[0]);
+//        stacks.add(recipe.list.get(3).getItems()[0]);
         stacks.add(recipe.output);
 
 

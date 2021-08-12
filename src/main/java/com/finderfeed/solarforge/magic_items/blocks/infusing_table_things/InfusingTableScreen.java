@@ -19,6 +19,9 @@ import java.util.Optional;
 public class InfusingTableScreen extends AbstractContainerScreen<InfusingTableContainer> {
     public final ResourceLocation REQ_ENERGY = new ResourceLocation("solarforge","textures/gui/energy_bar.png");
     private static final ResourceLocation GUI_TEXT = new ResourceLocation("solarforge","textures/gui/solar_infuser_gui.png");
+    private static final ResourceLocation ENERGY_GUI = new ResourceLocation("solarforge","textures/gui/infuser_energy_gui.png");
+    //60*6
+    public final ResourceLocation RUNIC_ENERGY_BAR = new ResourceLocation("solarforge","textures/gui/runic_energy_bar.png");
     public int relX;
     public int relY;
     public InfusingTableScreen(InfusingTableContainer container, Inventory inv, Component text) {
@@ -94,6 +97,26 @@ public class InfusingTableScreen extends AbstractContainerScreen<InfusingTableCo
 
         blit(matrices,0,0,0,0,16,(int)(percent*33),16,33);
         matrices.popPose();
+
+        matrices.pushPose();
+        ClientHelpers.bindText(ENERGY_GUI);
+        blit(matrices,relX+a-54,relY-8,0,0,58,177,58,177);
+        ClientHelpers.bindText(RUNIC_ENERGY_BAR);
+
+
+        renderEnergyBar(matrices,relX+a-12,relY+61,tile.RUNE_ENERGY_KELDA);
+
+        renderEnergyBar(matrices,relX+a-28,relY+61,tile.RUNE_ENERGY_TERA);
+
+        renderEnergyBar(matrices,relX+a-44,relY+61,tile.RUNE_ENERGY_ZETA);
+
+
+        renderEnergyBar(matrices,relX+a-12,relY+145,tile.RUNE_ENERGY_URBA);
+
+        renderEnergyBar(matrices,relX+a-28,relY+145,tile.RUNE_ENERGY_FIRA);
+
+        renderEnergyBar(matrices,relX+a-44,relY+145,tile.RUNE_ENERGY_ARDO);
+        matrices.popPose();
     }
     private void renderItemAndTooltip(ItemStack toRender, int place1, int place2, int mousex, int mousey, PoseStack matrices){
         minecraft.getItemRenderer().renderGuiItem(toRender,place1,place2);
@@ -103,5 +126,16 @@ public class InfusingTableScreen extends AbstractContainerScreen<InfusingTableCo
             renderTooltip(matrices,toRender,mousex,mousey);
             matrices.popPose();
         }
+    }
+
+
+    //runic energy bar texture is binded before it
+    private void renderEnergyBar(PoseStack matrices,int offsetx,int offsety,double energyAmount){
+        matrices.pushPose();
+        int texturex = Math.round((float)energyAmount/100000*60);
+        matrices.translate(offsetx,offsety,0);
+        matrices.mulPose(Vector3f.ZN.rotationDegrees(90));
+        blit(matrices,0,0,0,0,texturex,6);
+        matrices.popPose();
     }
 }

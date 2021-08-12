@@ -31,5 +31,6 @@
     "item": "solarforge:illidium_ingot"
   },
   "time": 200,
-  "fragment": "illidium_ingot"
+  "fragment": "illidium_ingot",
+  "ardo": 100
 }

@@ -170,20 +170,20 @@ public class InfusingTableTileEntity extends RandomizableContainerBlockEntity im
                     tile.PATH_TO_PYLONS.clear();
                 }
                 if (tile.RECIPE_IN_PROGRESS){
-
+                    tile.setChanged();
+                    world.sendBlockUpdated(tile.worldPosition,blockState,blockState,3);
                     InfusingRecipe recipe1 = recipe.get();
                     int count = tile.getMinRecipeCountOutput(recipe1);
                     Map<RunicEnergy.Type,Double> costs = recipe1.RUNIC_ENERGY_COST;
                     tile.INFUSING_TIME = recipe1.infusingTime*count;
                     boolean check = hasEnoughRunicEnergy(world,tile,costs,count);
-                    tile.NEEDS_RUNIC_ENERGY_FLAG = check;
+                    tile.NEEDS_RUNIC_ENERGY_FLAG = !check;
                     if ((tile.energy >= recipe1.requriedEnergy*count) && check) {
                         tile.onTileRemove();
                         tile.PATH_TO_PYLONS.clear();
                         tile.requiresEnergy = false;
                         tile.CURRENT_PROGRESS++;
 
-                        tile.setChanged();
 
                         if (tile.CURRENT_PROGRESS >= tile.INFUSING_TIME) {
                             finishRecipe(world,tile,recipe1);
@@ -197,7 +197,9 @@ public class InfusingTableTileEntity extends RandomizableContainerBlockEntity im
                         tile.requiresEnergy = true;
                     }
                 }
-            sendUpdatePackets(world,tile);
+                if (world.getGameTime() % 5 == 1) {
+                    sendUpdatePackets(world, tile);
+                }
         }
         doParticlesAnimation(world,tile);
     }
@@ -220,8 +222,23 @@ public class InfusingTableTileEntity extends RandomizableContainerBlockEntity im
         }
     }
 
+    @Override
+    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
+        this.load(pkt.getTag());
+        super.onDataPacket(net, pkt);
+    }
 
-    private static void sendUpdatePackets(Level world,InfusingTableTileEntity tile){
+    @Nullable
+    @Override
+    public ClientboundBlockEntityDataPacket getUpdatePacket() {
+
+        CompoundTag tag = new CompoundTag();
+        this.save(tag);
+
+        return new ClientboundBlockEntityDataPacket(worldPosition,3,tag);
+    }
+
+    private static void sendUpdatePackets(Level world, InfusingTableTileEntity tile){
         SolarForgePacketHandler.INSTANCE.send(PacketDistributor.NEAR.with(PacketDistributor.TargetPoint.p(tile.worldPosition.getX(),tile.worldPosition.getY(),tile.worldPosition.getZ(),20,tile.level.dimension())),
                 new UpdateProgressOnClientPacket(tile.INFUSING_TIME,tile.CURRENT_PROGRESS,tile.worldPosition,tile.requiresEnergy,tile.energy));
         ItemStack[] arr = {tile.getItem(0),tile.getItem(1),tile.getItem(2),tile.getItem(3),tile.getItem(4),tile.getItem(5),tile.getItem(6),tile.getItem(7),tile.getItem(8)};
@@ -426,7 +443,7 @@ public class InfusingTableTileEntity extends RandomizableContainerBlockEntity im
     }
 
     @Override
-    public boolean requiresEnergy() {
+    public boolean requiresRunicEnergy() {
 
         if (RECIPE_IN_PROGRESS && NEEDS_RUNIC_ENERGY_FLAG){
             return true;

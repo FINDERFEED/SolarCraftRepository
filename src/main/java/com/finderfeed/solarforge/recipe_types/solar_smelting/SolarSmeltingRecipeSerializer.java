@@ -64,13 +64,8 @@ public class SolarSmeltingRecipeSerializer extends ForgeRegistryEntry<RecipeSeri
 
         for(int i = 0; i < arr.size(); ++i) {
 
-
-
             Ingredient ingredient = getIngredient(arr.get(i));
-
-            if (!ingredient.isEmpty()) {
-                nonnulllist.add(ingredient);
-            }
+            nonnulllist.add(ingredient);
         }
 
         return nonnulllist;

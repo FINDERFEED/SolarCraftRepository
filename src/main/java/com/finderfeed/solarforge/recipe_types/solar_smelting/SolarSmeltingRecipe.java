@@ -45,14 +45,27 @@ public class SolarSmeltingRecipe implements Recipe<PhantomInventory> {
         for (int i = 0;i < 4;i++){
             lists.set(i,inv.INVENTORY.get(i).getItem());
         }
-
-        if (lists.contains(list.get(0).getItems()[0].getItem()) &&
-                lists.contains(list.get(1).getItems()[0].getItem())&&
-                lists.contains(list.get(2).getItems()[0].getItem())&&
-                lists.contains(list.get(3).getItems()[0].getItem())){
+        if (containsOrNot(lists,0) &&
+                containsOrNot(lists,1)&&
+                containsOrNot(lists,2) &&
+                containsOrNot(lists,3)){
             return true;
         }
+//        if (lists.contains(list.get(0).getItems()[0].getItem()) &&
+//                lists.contains(list.get(1).getItems()[0].getItem())&&
+//                lists.contains(list.get(2).getItems()[0].getItem())&&
+//                lists.contains(list.get(3).getItems()[0].getItem())){
+//            return true;
+//        }
         return false;
+    }
+
+    private boolean containsOrNot(List<Item> lists,int index){
+        if (!list.get(index).isEmpty()){
+            return lists.contains(list.get(index).getItems()[0].getItem());
+        }else{
+            return lists.contains(Items.AIR);
+        }
     }
 
     @Override
