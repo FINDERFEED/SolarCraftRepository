@@ -31,5 +31,6 @@
     "item": "solarforge:qualadium_hoe"
   },
   "time": 3000,
-  "fragment": "qualadium_hoe"
+  "fragment": "qualadium_hoe",
+  "tera": 2500
 }

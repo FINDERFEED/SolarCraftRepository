@@ -31,5 +31,6 @@
     "item": "solarforge:qualadium_axe"
   },
   "time": 2500,
-  "fragment": "qualadium_axe"
+  "fragment": "qualadium_axe",
+  "urba": 2500
 }

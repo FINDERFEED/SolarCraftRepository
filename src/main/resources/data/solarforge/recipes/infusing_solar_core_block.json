@@ -32,6 +32,9 @@
   },
   "time": 5000,
   "fragment": "solar_core",
-  "energy": 20000
+  "energy": 20000,
+  "tera": 4000,
+  "urba": 3500,
+  "kelda": 5000
 
 }

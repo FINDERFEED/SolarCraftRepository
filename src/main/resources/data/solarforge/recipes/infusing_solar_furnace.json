@@ -32,6 +32,9 @@
   },
   "time": 500,
   "fragment": "solar_furnace",
-  "energy": 10000
+  "energy": 10000,
+  "fira": 2000,
+  "tera": 1500,
+  "zeta": 1500
 
 }

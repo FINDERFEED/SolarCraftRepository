@@ -32,6 +32,10 @@
   },
   "time": 5000,
   "fragment": "solar_crossbow",
-  "energy": 50000
+  "energy": 50000,
+  "ardo": 1500,
+  "zeta": 2000,
+  "fira": 2000,
+  "urba": 3000
 
 }

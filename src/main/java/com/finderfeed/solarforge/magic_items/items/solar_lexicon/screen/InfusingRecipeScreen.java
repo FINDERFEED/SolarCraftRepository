@@ -138,9 +138,9 @@ public class InfusingRecipeScreen extends Screen {
             },new TextComponent("")));
         }
 
-
-        addRenderableWidget(new ItemStackButton(relX+185,relY+9,12,12,(button)->{minecraft.setScreen(new SolarLexiconRecipesScreen());}, Items.CRAFTING_TABLE.getDefaultInstance(),0.7f,false));
-        addRenderableWidget(new ItemStackButton(relX+172,relY+9,12,12,(button)->{
+        //13
+        addRenderableWidget(new ItemStackButton(relX+74,relY+9,12,12,(button)->{minecraft.setScreen(new SolarLexiconRecipesScreen());}, Items.CRAFTING_TABLE.getDefaultInstance(),0.7f,false));
+        addRenderableWidget(new ItemStackButton(relX+61,relY+9,12,12,(button)->{
             Minecraft mc = Minecraft.getInstance();
             SolarLexicon lexicon = (SolarLexicon) mc.player.getMainHandItem().getItem();
             lexicon.currentSavedScreen = this;
@@ -156,16 +156,16 @@ public class InfusingRecipeScreen extends Screen {
         ClientHelpers.bindText(MAIN_SCREEN);
         blit(matrices,relX,relY,0,0,256,256);
 
-        renderItemAndTooltip(stacks.get(0),relX+120,relY+69,mousex,mousey,matrices);
-        renderItemAndTooltip(stacks.get(1),relX+173,relY+69,mousex,mousey,matrices);
-        renderItemAndTooltip(stacks.get(2),relX+159,relY+30,mousex,mousey,matrices);
-        renderItemAndTooltip(stacks.get(3),relX+120,relY+16,mousex,mousey,matrices);
-        renderItemAndTooltip(stacks.get(4),relX+81,relY+30,mousex,mousey,matrices);
-        renderItemAndTooltip(stacks.get(5),relX+67,relY+69,mousex,mousey,matrices);
-        renderItemAndTooltip(stacks.get(6),relX+81,relY+108,mousex,mousey,matrices);
-        renderItemAndTooltip(stacks.get(7),relX+120,relY+122,mousex,mousey,matrices);
-        renderItemAndTooltip(stacks.get(8),relX+159,relY+108,mousex,mousey,matrices);
-        renderItemAndTooltip(stacks.get(9),relX+23,relY+21,mousex,mousey,matrices);
+        renderItemAndTooltip(stacks.get(0),relX+120,relY+69,mousex,mousey,matrices,false);
+        renderItemAndTooltip(stacks.get(1),relX+173,relY+69,mousex,mousey,matrices,false);
+        renderItemAndTooltip(stacks.get(2),relX+159,relY+30,mousex,mousey,matrices,false);
+        renderItemAndTooltip(stacks.get(3),relX+120,relY+16,mousex,mousey,matrices,false);
+        renderItemAndTooltip(stacks.get(4),relX+81,relY+30,mousex,mousey,matrices,false);
+        renderItemAndTooltip(stacks.get(5),relX+67,relY+69,mousex,mousey,matrices,false);
+        renderItemAndTooltip(stacks.get(6),relX+81,relY+108,mousex,mousey,matrices,false);
+        renderItemAndTooltip(stacks.get(7),relX+120,relY+122,mousex,mousey,matrices,false);
+        renderItemAndTooltip(stacks.get(8),relX+159,relY+108,mousex,mousey,matrices,false);
+        renderItemAndTooltip(stacks.get(9),relX+23,relY+21,mousex,mousey,matrices,true);
 
 
 
@@ -193,8 +193,17 @@ public class InfusingRecipeScreen extends Screen {
     }
 
 
-    private void renderItemAndTooltip(ItemStack toRender,int place1,int place2,int mousex,int mousey,PoseStack matrices){
-        minecraft.getItemRenderer().renderGuiItem(toRender,place1,place2);
+    private void renderItemAndTooltip(ItemStack toRender,int place1,int place2,int mousex,int mousey,PoseStack matrices,boolean last){
+        if (!last) {
+            minecraft.getItemRenderer().renderGuiItem(toRender, place1, place2);
+        }else{
+            ItemStack renderThis = toRender.copy();
+            renderThis.setCount(recipe.get(currentPage).count);
+            minecraft.getItemRenderer().renderGuiItem(renderThis, place1, place2);
+            minecraft.getItemRenderer().renderGuiItemDecorations(font,renderThis,place1,place2);
+        }
+
+
         if (((mousex >= place1) && (mousex <= place1+16)) && ((mousey >= place2) && (mousey <= place2+16)) && !toRender.getItem().equals(Items.AIR)){
             matrices.pushPose();
             renderTooltip(matrices,toRender,mousex,mousey);

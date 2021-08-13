@@ -99,6 +99,14 @@ public class InfusingTableScreen extends AbstractContainerScreen<InfusingTableCo
         matrices.mulPose(Vector3f.ZP.rotationDegrees(180));
         float percent = (float)tile.energy / 100000;
 
+        if (recipe.isPresent()){
+            float percentNeeded = (float)recipe.get().requriedEnergy / 100000;
+            RenderSystem.enableBlend();
+            blitm(matrices, 0, 0, 0, 0, 16, (int)(percentNeeded*33),16,33);
+            RenderSystem.disableBlend();
+        }
+
+
         blit(matrices,0,0,0,0,16,(int)(percent*33),16,33);
         matrices.popPose();
 

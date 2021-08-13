@@ -362,7 +362,9 @@
   "block.solarforge.urba_rune_block": "Urba rune block",
   "block.solarforge.kelda_rune_block": "Kelda rune block",
   "block.solarforge.zeta_rune_block": "Zeta rune block",
-  "block.solarforge.repeater": "Runic energy repeater"
+  "block.solarforge.repeater": "Runic energy repeater",
+  "solar_fragment.solar_god_pickaxe": "Solar God Pickaxe",
+  "solar_god_pickaxe.lore": "A powerful upgradable pickaxe of the god itself."
 
 
 

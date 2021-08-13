@@ -32,5 +32,8 @@
   },
   "time": 2000,
   "fragment": "totem_of_immortality",
-  "energy" : 25000
+  "energy" : 25000,
+  "zeta": 3500,
+  "fira": 7500,
+  "ardo": 4000
 }

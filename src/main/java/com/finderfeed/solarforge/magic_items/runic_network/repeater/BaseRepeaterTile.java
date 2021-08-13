@@ -223,7 +223,7 @@ public class BaseRepeaterTile extends BlockEntity {
     public void checkConsumersValid(){
         for (int i = 0; i < ConnectedEnergyConsumers.size();i++){
             if (level.getBlockEntity(ConnectedEnergyConsumers.get(i)) instanceof IRunicEnergyReciever reciever){
-                if (!reciever.requiresRunicEnergy()){
+                if ((this.getEnergyType() != null) && !reciever.requiresRunicEnergy(this.getEnergyType())){
                     removeConsumerConnection(i);
                 }
             }else{

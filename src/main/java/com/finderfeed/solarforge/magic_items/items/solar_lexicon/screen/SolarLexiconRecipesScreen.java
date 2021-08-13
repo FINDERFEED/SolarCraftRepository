@@ -58,14 +58,21 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
 
     @Override
     public void performScroll(int keyCode) {
-        if (keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_LEFT) && !(scrollX -4 < -700)){
-            scrollX-=4;
-        } else if (keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_UP) && !(scrollY -4 < -700)){
-            scrollY-=4;
-        }else if(keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_DOWN) && !(scrollY +4 > 0)){
-            scrollY+=4;
-        }else if (keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_RIGHT)&& !(scrollX +4 > 0)){
-            scrollX+=4;
+
+        int scroll = 4;
+//        if (Screen.hasShiftDown()){
+//            scroll-=4;
+//        }
+
+
+        if (keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_LEFT) && !(scrollX -scroll < -700)){
+            scrollX-=scroll;
+        } else if (keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_UP) && !(scrollY -scroll < -700)){
+            scrollY-=scroll;
+        }else if(keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_DOWN) && !(scrollY +scroll > 0)){
+            scrollY+=scroll;
+        }else if (keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_RIGHT)&& !(scrollX +scroll > 0)){
+            scrollX+=scroll;
         }
 
         if (this.prevscrollX != scrollX){
@@ -74,9 +81,9 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
             list.remove(nothing);
             for (AbstractWidget a : list) {
                 if (prevscrollX < scrollX) {
-                    a.x += 4;
+                    a.x += scroll;
                 } else {
-                    a.x -= 4;
+                    a.x -= scroll;
                 }
 
             }
@@ -89,10 +96,10 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
             for (AbstractWidget a : list) {
                 if (prevscrollY < scrollY) {
 
-                    a.y += 4;
+                    a.y += scroll;
                 } else {
 
-                    a.y -= 4;
+                    a.y -= scroll;
                 }
 
 

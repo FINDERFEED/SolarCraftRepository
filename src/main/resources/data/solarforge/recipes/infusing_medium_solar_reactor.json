@@ -31,5 +31,8 @@
     "item": "solarforge:medium_solar_reactor"
   },
   "time": 3000,
-  "fragment": "medium_solar_reactor"
+  "fragment": "medium_solar_reactor",
+  "ardo": 2000,
+  "fira": 3000,
+  "kelda": 2000
 }

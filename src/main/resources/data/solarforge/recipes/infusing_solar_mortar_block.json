@@ -32,5 +32,8 @@
   },
   "time": 3000,
   "fragment": "solar_mortar",
-  "energy": 50000
+  "energy": 50000,
+  "zeta": 10000,
+  "kelda": 5000,
+  "fira": 4500
 }

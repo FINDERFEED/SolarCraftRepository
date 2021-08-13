@@ -32,6 +32,10 @@
   },
   "time": 1500,
   "fragment": "solar_god_bow",
-  "energy": 5000
+  "energy": 5000,
+  "ardo": 2000,
+  "tera": 5000,
+  "urba": 1500,
+  "zeta": 3500
 
 }

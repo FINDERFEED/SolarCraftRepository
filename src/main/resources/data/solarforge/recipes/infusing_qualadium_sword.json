@@ -31,5 +31,6 @@
     "item": "solarforge:qualadium_sword"
   },
   "time": 2000,
-  "fragment": "qualadium_sword"
+  "fragment": "qualadium_sword",
+  "zeta": 2500
 }

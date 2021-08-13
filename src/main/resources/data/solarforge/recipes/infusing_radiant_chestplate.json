@@ -32,6 +32,9 @@
   },
   "time": 1500,
   "fragment": "radiant_cuirass",
-  "energy": 15000
+  "energy": 15000,
+  "fira": 1000,
+  "zeta": 1000,
+  "ardo": 1000
 
 }

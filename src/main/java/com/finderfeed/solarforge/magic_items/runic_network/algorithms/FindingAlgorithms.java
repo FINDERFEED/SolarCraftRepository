@@ -32,7 +32,7 @@ public class FindingAlgorithms {
                         tiles.add(repeater.getBlockPos());
                     }
                 }else if (tileentity instanceof RuneEnergyPylonTile pylon){
-                    if (pylon.getEnergyType().equals(tile.getEnergyType()) && FinderfeedMathHelper.canSeeTileEntity(pylon,tile,range)){
+                    if ((pylon.getEnergyType() != null) && pylon.getEnergyType().equals(tile.getEnergyType()) && FinderfeedMathHelper.canSeeTileEntity(pylon,tile,range)){
                         if (tile.getFinalPos() == null){
                             tile.setFinalPos(pylon.getBlockPos());
                         }else{
@@ -40,8 +40,6 @@ public class FindingAlgorithms {
                                 tile.setFinalPos(pylon.getBlockPos());
                             }
                         }
-                    }else{
-                        tile.setFinalPos(null);
                     }
                 }
             });

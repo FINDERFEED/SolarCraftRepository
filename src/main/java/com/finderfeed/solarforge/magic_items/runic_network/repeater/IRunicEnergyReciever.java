@@ -17,7 +17,7 @@ import java.util.List;
 public interface IRunicEnergyReciever {
 
 
-    boolean requiresRunicEnergy();
+    boolean requiresRunicEnergy(RunicEnergy.Type type);
     void requestEnergy(double amount,RunicEnergy.Type type);
     double getMaxRange();
 
@@ -34,7 +34,7 @@ public interface IRunicEnergyReciever {
             for (int g = 0; g < tiles.size();g++){
                 if (tiles.get(g) instanceof BaseRepeaterTile repeater){
 
-                    if ((repeater.getEnergyType() == type) && !(tile instanceof RuneEnergyPylonTile)) {
+                    if ((repeater.getEnergyType() == type) /*&& !(tile instanceof RuneEnergyPylonTile)*/) {
                         if (FinderfeedMathHelper.canSee(repeater.getBlockPos(),pos,getMaxRange(),world)) {
                             double range = FinderfeedMathHelper.getDistanceBetween(repeater.getBlockPos(), pos);
                             if (range <= getMaxRange()) {
@@ -45,19 +45,20 @@ public interface IRunicEnergyReciever {
                             }
                         }
                     }
-                }else if (tiles.get(g) instanceof RuneEnergyPylonTile pylon){
-                    if (FinderfeedMathHelper.canSee(pylon.getBlockPos(),pos,getMaxRange(),world)) {
-                        if (pylon.getEnergyType() == type) {
-                            double range = FinderfeedMathHelper.getDistanceBetween(pylon.getBlockPos(), pos);
-                            if (range <= getMaxRange()) {
-                                if (range <= minRange) {
-                                    minRange = range;
-                                    tile = pylon;
-                                }
-                            }
-                        }
-                    }
                 }
+//                else if (tiles.get(g) instanceof RuneEnergyPylonTile pylon){
+//                    if (FinderfeedMathHelper.canSee(pylon.getBlockPos(),pos,getMaxRange(),world)) {
+//                        if (pylon.getEnergyType() == type) {
+//                            double range = FinderfeedMathHelper.getDistanceBetween(pylon.getBlockPos(), pos);
+//                            if (range <= getMaxRange()) {
+//                                if (range <= minRange) {
+//                                    minRange = range;
+//                                    tile = pylon;
+//                                }
+//                            }
+//                        }
+//                    }
+//                }
             }
         }
         return tile;

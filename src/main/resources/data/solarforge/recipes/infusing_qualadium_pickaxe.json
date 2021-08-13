@@ -31,5 +31,6 @@
     "item": "solarforge:qualadium_pickaxe"
   },
   "time": 3000,
-  "fragment": "qualadium_pickaxe"
+  "fragment": "qualadium_pickaxe",
+  "ardo": 2500
 }

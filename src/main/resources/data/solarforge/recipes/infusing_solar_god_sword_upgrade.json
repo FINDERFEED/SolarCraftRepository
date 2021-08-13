@@ -33,5 +33,7 @@
   "time": 500,
   "fragment": "solar_god_sword_upgrade",
   "tag": "yes",
-  "energy" : 10000
+  "energy" : 10000,
+  "ardo": 2500,
+  "urba": 1500
 }
