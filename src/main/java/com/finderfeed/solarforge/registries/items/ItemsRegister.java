@@ -161,4 +161,5 @@ public class ItemsRegister {
     public static final RegistryObject<Item> TERA_RUNE_BLOCK = ITEMS.register("tera_rune_block",()->new BlockItem(BlocksRegistry.TERA_RUNE_BLOCK.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
     public static final RegistryObject<Item> FIRA_RUNE_BLOCK = ITEMS.register("fira_rune_block",()->new BlockItem(BlocksRegistry.FIRA_RUNE_BLOCK.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
 
+    public static final RegistryObject<Item> EXPERIENCE_CRYSTAL = ITEMS.register("xp_crystal",()->new ExperienceCrystal(new Item.Properties().tab(SolarForge.SOLAR_GROUP_TOOLS).stacksTo(1)));
 }

@@ -364,7 +364,10 @@
   "block.solarforge.zeta_rune_block": "Zeta rune block",
   "block.solarforge.repeater": "Runic energy repeater",
   "solar_fragment.solar_god_pickaxe": "Solar God Pickaxe",
-  "solar_god_pickaxe.lore": "A powerful upgradable pickaxe of the god itself."
+  "solar_god_pickaxe.lore": "A powerful upgradable pickaxe of the god itself.",
+  "item.solarforge.xp_crystal": "Experience Crystal",
+  "solarforge.experience_crystal_lore": "When in your inventory, consumes experience orbs instead of giving them to player. Right click to release experience.",
+  "solarforge.experience_crystal_lore2": "Current XP contained:"
 
 
 

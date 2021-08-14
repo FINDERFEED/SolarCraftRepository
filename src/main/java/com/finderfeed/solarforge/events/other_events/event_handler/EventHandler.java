@@ -5,11 +5,13 @@ import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.events.PlayerTickEvent;
 import com.finderfeed.solarforge.events.my_events.ProgressionUnlockEvent;
+import com.finderfeed.solarforge.magic_items.items.ExperienceCrystal;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Achievement;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.ProgressionHelper;
 import com.finderfeed.solarforge.registries.items.ItemsRegister;
 import com.finderfeed.solarforge.world_generation.features.FeaturesRegistry;
+import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -25,6 +27,7 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.event.entity.player.PlayerXpEvent;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -38,6 +41,20 @@ import java.util.List;
 
 @Mod.EventBusSubscriber(modid = "solarforge",bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class EventHandler {
+
+
+    @SubscribeEvent
+    public static void handleExperienceCrystal(PlayerXpEvent.PickupXp event){
+        ExperienceOrb orb = event.getOrb();
+        Player player = event.getPlayer();
+        if (!player.level.isClientSide){
+            if (ExperienceCrystal.consumeExperience(player,orb.value)) {
+                orb.remove(Entity.RemovalReason.DISCARDED);
+                event.setCanceled(true);
+            }
+        }
+    }
+
 
     @SubscribeEvent
     public static void addFeatures(BiomeLoadingEvent event){
