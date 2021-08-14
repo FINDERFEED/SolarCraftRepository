@@ -6,12 +6,14 @@ import com.finderfeed.solarforge.SolarAbilities.SolarStrikeEntity;
 import com.finderfeed.solarforge.SolarAbilities.SolarStunEffect;
 import com.finderfeed.solarforge.capabilities.capability_mana.AttachManaCapabilityEvent;
 import com.finderfeed.solarforge.capabilities.capability_mana.CapabilitySolarMana;
+import com.finderfeed.solarforge.config.SolarcraftConfig;
 import com.finderfeed.solarforge.entities.VillagerSolarMaster;
 import com.finderfeed.solarforge.events.PlayerTickEvent;
 import com.finderfeed.solarforge.events.RenderEventsHandler;
 import com.finderfeed.solarforge.magic_items.blocks.SolarOreBlock;
 import com.finderfeed.solarforge.magic_items.blocks.infusing_table_things.*;
 import com.finderfeed.solarforge.magic_items.blocks.infusing_table_things.infusing_pool.InfusingPool;
+import com.finderfeed.solarforge.magic_items.item_tiers.SolarCraftToolTiers;
 import com.finderfeed.solarforge.magic_items.items.ProgressionBlockItem;
 import com.finderfeed.solarforge.misc_things.ParticlesList;
 import com.finderfeed.solarforge.rendering.on_screen_rendering.TestRenderEvent;
@@ -44,6 +46,7 @@ import com.finderfeed.solarforge.world_generation.BiomesRegister;
 import com.finderfeed.solarforge.world_generation.features.FeaturesRegistry;
 import com.finderfeed.solarforge.world_generation.features.foliage_placers.FoliagePlacerRegistry;
 import com.finderfeed.solarforge.world_generation.features.trunk_placers.TrunkPlacersRegistry;
+import net.minecraft.world.item.Tiers;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.Block;
 
@@ -69,6 +72,7 @@ import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraftforge.common.BiomeManager;
 import net.minecraftforge.common.MinecraftForge;
 
+import net.minecraftforge.common.TierSortingRegistry;
 import net.minecraftforge.common.extensions.IForgeContainerType;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
@@ -76,7 +80,9 @@ import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 
@@ -92,6 +98,8 @@ import org.apache.logging.log4j.Logger;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
+
+import java.util.List;
 
 @Mod("solarforge")
 public class SolarForge
@@ -187,7 +195,7 @@ public class SolarForge
 //        FMLJavaModLoadingContext.get().getModEventBus().addGenericListener(Biome.class,FeaturesRegistry::registerBiomes);
 
         FMLJavaModLoadingContext.get().getModEventBus().addListener(FeaturesRegistry::registerConfiguredFeatures);
-
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, SolarcraftConfig.SPEC,"solarcraft-config.toml");
 
         // Register the doClientStuff method for modloading
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
@@ -205,7 +213,10 @@ public class SolarForge
     private void setup(final FMLCommonSetupEvent event)
     {
 
-        // some preinit code
+        TierSortingRegistry.registerTier(SolarCraftToolTiers.ILLIDIUM_TOOLS_TIER,new ResourceLocation("illidium"), List.of(Tiers.DIAMOND),List.of());
+        TierSortingRegistry.registerTier(SolarCraftToolTiers.QUALADIUM_TOOLS_TIER,new ResourceLocation("qualadium"), List.of(Tiers.DIAMOND),List.of());
+        TierSortingRegistry.registerTier(SolarCraftToolTiers.CHARGED_QUALADIUM_TOOLS_TIER,new ResourceLocation("charged_qualadium"), List.of(Tiers.DIAMOND),List.of());
+        TierSortingRegistry.registerTier(SolarCraftToolTiers.SOLAR_GOD_TOOL_TIER,new ResourceLocation("solar_god"), List.of(Tiers.DIAMOND),List.of());
         CapabilitySolarMana.register();
         MinecraftForge.EVENT_BUS.addGenericListener(Entity.class,AttachManaCapabilityEvent::attachCapabilities);
         MinecraftForge.EVENT_BUS.addListener(AttachManaCapabilityEvent::tickEvent);
@@ -213,10 +224,13 @@ public class SolarForge
         //MinecraftForge.EVENT_BUS.addListener(SolarWandItem::renderWandOverlays);
         MinecraftForge.EVENT_BUS.addListener(InfusingPool::placeBlockEvent);
         event.enqueueWork(()->{
-        SolarForgeStructures.setupStructures();
-        SolarForgeStructureFeatures.registerConfiguredStructures();
-        BiomeManager.addBiome(BiomeManager.BiomeType.DESERT,new BiomeManager.BiomeEntry(FeaturesRegistry.MOLTEN_BIOME_KEY,4));
+
+
+            SolarForgeStructures.setupStructures();
+            SolarForgeStructureFeatures.registerConfiguredStructures();
+            BiomeManager.addBiome(BiomeManager.BiomeType.DESERT,new BiomeManager.BiomeEntry(FeaturesRegistry.MOLTEN_BIOME_KEY,4));
         });
+
     }
 
     private void doClientStuff(final FMLClientSetupEvent event) {
