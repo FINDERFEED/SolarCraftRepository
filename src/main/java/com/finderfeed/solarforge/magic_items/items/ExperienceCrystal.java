@@ -24,6 +24,7 @@ import net.minecraft.world.level.Level;
 import javax.annotation.Nullable;
 import java.util.List;
 
+//TODO:add recipe and fragment
 public class ExperienceCrystal extends ItemWithGlint{
     public ExperienceCrystal(Properties p_i48487_1_) {
         super(p_i48487_1_);
