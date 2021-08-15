@@ -377,12 +377,14 @@
   "item.solarforge.defence_module_physical_10": "Module",
   "solarcraft_sword_autoheal": "Module effect: Has a chance to restore 2 durability on hit",
   "item.solarforge.sword_heal_module": "Module",
-  "solarcraft_sword_aoe_attack": "Module effect: Ability: Damages all mobs in small AOE around player for the half of sword damage. Cooldown:5 sec.",
+  "solarcraft_sword_aoe_attack": "Module effect: Ability - Damages all mobs in small AOE around player for the half of sword damage. Cooldown:5 sec.",
   "item.solarforge.sword_aoe_module": "Module",
   "solarcraft_smelting_module": "Module effect: Auto-smelting",
   "item.solarforge.pickaxe_auto_smelt_module": "Module",
   "solarcraft_magic_damage_bonus_5": "Module Effect: Magic damage +5",
-  "item.solarforge.magic_damage_5_module": "Module"
+  "item.solarforge.magic_damage_5_module": "Module",
+  "solarcraft_miner_ability_tag": "Module Effect: Ability - gives 20 seconds of Haste II. Manacost: 300/use",
+  "item.solarforge.pickaxe_miner_module": "Module"
 
 
 

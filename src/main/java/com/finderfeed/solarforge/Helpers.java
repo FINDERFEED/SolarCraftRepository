@@ -1,8 +1,8 @@
 package com.finderfeed.solarforge;
 
 import com.finderfeed.solarforge.capabilities.capability_mana.CapabilitySolarMana;
+import com.finderfeed.solarforge.capabilities.capability_mana.SolarForgeMana;
 import com.finderfeed.solarforge.events.my_events.ProgressionUnlockEvent;
-import com.finderfeed.solarforge.magic_items.runic_network.repeater.IRunicEnergyContainer;
 import com.finderfeed.solarforge.misc_things.Multiblock;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
@@ -10,18 +10,13 @@ import com.finderfeed.solarforge.packet_handler.TriggerToastPacket;
 import com.finderfeed.solarforge.packet_handler.packets.ReloadChunks;
 import com.finderfeed.solarforge.packet_handler.packets.TriggerProgressionShaderPacket;
 import com.finderfeed.solarforge.packet_handler.packets.UpdateEnergyOnClientPacket;
-import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
 import com.finderfeed.solarforge.registries.items.ItemsRegister;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.achievement_tree.AchievementTree;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Achievement;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.packets.UpdateProgressionOnClient;
-import com.mojang.blaze3d.platform.GlStateManager;
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
-import com.mojang.math.Vector3d;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiComponent;
-import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.Item;
@@ -32,14 +27,10 @@ import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.chunk.LevelChunk;
-import net.minecraft.world.level.levelgen.feature.blockplacers.SimpleBlockPlacer;
-import net.minecraft.world.level.levelgen.feature.stateproviders.WeightedStateProvider;
-import net.minecraft.world.level.levelgen.feature.configurations.RandomPatchConfiguration;
 import net.minecraftforge.common.MinecraftForge;
 
-import net.minecraftforge.common.util.Constants;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fmllegacy.network.NetworkDirection;
-import org.lwjgl.opengl.GL11;
 
 import java.util.*;
 
@@ -378,8 +369,36 @@ public class Helpers {
     }
 
 
+    public static class ManaHandler{
+        public static boolean spendMana(Player player,double amount){
+            LazyOptional<SolarForgeMana> cap = getCap(player);
+            if (cap.isPresent() ){
+                if (player.isCreative()){
+                    return true;
+                }else{
+                    Optional<SolarForgeMana> op = cap.resolve();
+                    if (op.isPresent()){
+                        SolarForgeMana capability = op.get();
+                        double mana = capability.getMana();
+                        if (mana >= amount){
+                            capability.setMana(mana-amount);
+                            return true;
+                        }else {
+                            return false;
+                        }
+                    }else{
+                        return false;
+                    }
+                }
+            }else{
+                return false;
+            }
+        }
 
-
+        private static LazyOptional<SolarForgeMana> getCap(Player player){
+            return player.getCapability(CapabilitySolarMana.SOLAR_MANA_PLAYER);
+        }
+    }
 
     public static class HashMapConstructor<T,E>{
         private Map<T,E> MAP = new HashMap<>();

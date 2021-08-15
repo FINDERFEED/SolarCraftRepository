@@ -6,6 +6,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
@@ -15,7 +16,6 @@ public class SolarcraftDebugStick extends Item {
     public SolarcraftDebugStick(Properties p_41383_) {
         super(p_41383_);
     }
-
 
 
 
@@ -34,6 +34,7 @@ public class SolarcraftDebugStick extends Item {
                 ctx.getPlayer().sendMessage(new TextComponent(Float.toString(pylon.getCurrentEnergy())),ctx.getPlayer().getUUID());
             }
         }
+
         return InteractionResult.SUCCESS;
     }
 }

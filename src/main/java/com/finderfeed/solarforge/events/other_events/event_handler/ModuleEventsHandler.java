@@ -1,5 +1,6 @@
 package com.finderfeed.solarforge.events.other_events.event_handler;
 
+import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.config.SolarcraftConfig;
 import com.finderfeed.solarforge.magic_items.items.ModuleItem;
 import com.finderfeed.solarforge.registries.items.ItemsRegister;
@@ -12,12 +13,15 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.PickaxeItem;
 import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
@@ -30,6 +34,23 @@ import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid = "solarforge",bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class ModuleEventsHandler {
+
+
+    @SubscribeEvent
+    public static void handleMinerModule(PlayerInteractEvent.RightClickItem event){
+        Player player = event.getPlayer();
+        Level world = player.level;
+        InteractionHand hand = event.getHand();
+        if (!world.isClientSide){
+            ItemStack stack = player.getItemInHand(hand);
+            if ((stack.getItem() instanceof PickaxeItem) && hasModule(ItemsRegister.PICKAXE_MINER_ABILITY_MODULE.get(),stack)){
+                boolean flag = Helpers.ManaHandler.spendMana(player,300);
+                if (flag){
+                    player.addEffect(new MobEffectInstance(MobEffects.DIG_SPEED,400,1));
+                }
+            }
+        }
+    }
 
 
     @SubscribeEvent

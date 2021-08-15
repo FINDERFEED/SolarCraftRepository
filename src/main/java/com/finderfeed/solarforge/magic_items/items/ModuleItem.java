@@ -57,7 +57,8 @@ public class ModuleItem extends Item {
         SWORD_AUTOHEAL_MODULE("solarcraft_sword_autoheal"),
         SWORD_AOE_ATTACK_ABILITY("solarcraft_sword_aoe_attack"),
         SMELTING("solarcraft_smelting_module"),
-        MAGIC_DAMAGE_BONUS_5("solarcraft_magic_damage_bonus_5");
+        MAGIC_DAMAGE_BONUS_5("solarcraft_magic_damage_bonus_5"),
+        MINER("solarcraft_miner_ability_tag");
 
         public String tag;
 
@@ -68,6 +69,7 @@ public class ModuleItem extends Item {
     public static void applyHoverText(ItemStack stack,List<Component> comp){
         for (Tags tag : Tags.values()){
             if (stack.getTagElement(tag.tag) != null){
+
                 comp.add(new TranslatableComponent(tag.tag).withStyle(ChatFormatting.GOLD));
             }
         }

@@ -169,4 +169,5 @@ public class ItemsRegister {
     public static final RegistryObject<ModuleItem> SWORD_AOE_ATTACK = ITEMS.register("sword_aoe_module",()->new ModuleItem(new Item.Properties().tab(SolarForge.SOLAR_GROUP_TOOLS).stacksTo(1), ModuleItem.Type.SWORDS, ModuleItem.Tags.SWORD_AOE_ATTACK_ABILITY));
     public static final RegistryObject<ModuleItem> PICKAXE_AUTO_SMELT = ITEMS.register("pickaxe_auto_smelt_module",()->new ModuleItem(new Item.Properties().tab(SolarForge.SOLAR_GROUP_TOOLS).stacksTo(1), ModuleItem.Type.PICKAXES, ModuleItem.Tags.SMELTING));
     public static final RegistryObject<ModuleItem> MAGIC_DAMAGE_MODULE_5 = ITEMS.register("magic_damage_5_module",()->new ModuleItem(new Item.Properties().tab(SolarForge.SOLAR_GROUP_TOOLS).stacksTo(1), ModuleItem.Type.SWORDS, ModuleItem.Tags.MAGIC_DAMAGE_BONUS_5));
+    public static final RegistryObject<ModuleItem> PICKAXE_MINER_ABILITY_MODULE = ITEMS.register("pickaxe_miner_module",()->new ModuleItem(new Item.Properties().tab(SolarForge.SOLAR_GROUP_TOOLS).stacksTo(1), ModuleItem.Type.PICKAXES, ModuleItem.Tags.MINER));
 }
