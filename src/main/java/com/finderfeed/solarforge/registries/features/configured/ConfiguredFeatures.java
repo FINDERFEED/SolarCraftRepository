@@ -1,6 +1,7 @@
 package com.finderfeed.solarforge.registries.features.configured;
 
 import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.custom_loot_conditions.SolarcraftModulePredicate;
 import com.finderfeed.solarforge.custom_loot_conditions.SolarcraftNBTPredicate;
 import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
 import net.minecraft.advancements.critereon.ItemPredicate;
@@ -41,6 +42,7 @@ public class ConfiguredFeatures {
             Registry.register(BuiltinRegistries.CONFIGURED_FEATURE,new ResourceLocation("solarforge","dead_sprout_feature"),DEAD_SPROUT_FEATURE);
 
             ItemPredicate.register(new ResourceLocation("solarcraft_predicate"), SolarcraftNBTPredicate::fromJson);
+            ItemPredicate.register(new ResourceLocation("solarcraft_module_predicate"), SolarcraftModulePredicate::fromJson);
         });
     }
 }

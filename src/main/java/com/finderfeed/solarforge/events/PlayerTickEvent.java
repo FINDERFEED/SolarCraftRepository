@@ -24,6 +24,7 @@ public class PlayerTickEvent {
     public void enterIncineratedForest(final TickEvent.PlayerTickEvent event){
         Player entity = event.player;
         if (!entity.level.isClientSide ){
+
             Optional<? extends Registry<Biome>> reg = entity.level.registryAccess().registry(Registry.BIOME_REGISTRY);
             if ( reg.isPresent() && entity.level.getBiome(entity.blockPosition()).equals(reg.get().get(FeaturesRegistry.MOLTEN_BIOME_KEY))){
 

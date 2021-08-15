@@ -33,7 +33,8 @@ public class ModuleItem extends Item {
     public enum Type{
         ARMOR,
         SWORDS,
-        TOOLS
+        TOOLS,
+        PICKAXES
     }
 
 
@@ -43,8 +44,8 @@ public class ModuleItem extends Item {
             sacredTexts.add(new TranslatableComponent("solarcraft.module_armor").withStyle(ChatFormatting.GOLD));
         }else if(type == Type.SWORDS){
             sacredTexts.add(new TranslatableComponent("solarcraft.module_swords").withStyle(ChatFormatting.GOLD));
-        }else if (type == Type.TOOLS){
-            sacredTexts.add(new TranslatableComponent("solarcraft.module_tools").withStyle(ChatFormatting.GOLD));
+        }else if (type == Type.PICKAXES){
+            sacredTexts.add(new TranslatableComponent("solarcraft.module_pickaxes").withStyle(ChatFormatting.GOLD));
         }
 
         sacredTexts.add(new TranslatableComponent(subTag).withStyle(ChatFormatting.GOLD));
@@ -54,7 +55,9 @@ public class ModuleItem extends Item {
     public enum Tags{
         DEFENCE_MODULE_PHYSICAL_10("solarcraft_10_percent_defence_physical"),
         SWORD_AUTOHEAL_MODULE("solarcraft_sword_autoheal"),
-        SWORD_AOE_ATTACK_ABILITY("solarcraft_sword_aoe_attack");
+        SWORD_AOE_ATTACK_ABILITY("solarcraft_sword_aoe_attack"),
+        SMELTING("solarcraft_smelting_module"),
+        MAGIC_DAMAGE_BONUS_5("solarcraft_magic_damage_bonus_5");
 
         public String tag;
 

@@ -17,8 +17,8 @@ public class ModuleApplierScreen extends ItemCombinerScreen<ModuleApplierMenu> {
 
     public ModuleApplierScreen(ModuleApplierMenu p_98901_, Inventory p_98902_, Component p_98903_) {
         super(p_98901_, p_98902_, p_98903_, MAIN_SCREEN);
-        this.titleLabelX = 30;
-        this.titleLabelY = 18;
+        this.titleLabelX = 7;
+        this.titleLabelY = 28;
     }
 
     @Override

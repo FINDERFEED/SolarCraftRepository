@@ -1,6 +1,7 @@
 {
   "replace": "false",
   "entries": [
-    "solarforge:solar_god_smelting"
+    "solarforge:solar_god_smelting",
+    "solarforge:module_smelting"
   ]
 }

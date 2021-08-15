@@ -370,15 +370,19 @@
   "solarforge.experience_crystal_lore2": "Current XP contained:",
   "solarcraft.module_armor":"Armor module",
   "solarcraft.module_swords":"Sword module",
-  "solarcraft.module_tools":"Tools module",
+  "solarcraft.module_pickaxes":"Pickaxes module",
   "solarcraft_10_percent_defence_physical": "Module: 10% Physical damage resistance",
   "solarcraft.module_station": "Module Station",
   "block.solarforge.module_table": "Module Station",
   "item.solarforge.defence_module_physical_10": "Module",
-  "solarcraft_sword_autoheal": "Module: Has a chance to restore 1 durability on hit",
+  "solarcraft_sword_autoheal": "Module effect: Has a chance to restore 2 durability on hit",
   "item.solarforge.sword_heal_module": "Module",
-  "solarcraft_sword_aoe_attack": "Module: Ability: Damages all mobs in small AOE around player for the half of sword damage. Cooldown:5 sec.",
-  "item.solarforge.sword_aoe_module": "Module"
+  "solarcraft_sword_aoe_attack": "Module effect: Ability: Damages all mobs in small AOE around player for the half of sword damage. Cooldown:5 sec.",
+  "item.solarforge.sword_aoe_module": "Module",
+  "solarcraft_smelting_module": "Module effect: Auto-smelting",
+  "item.solarforge.pickaxe_auto_smelt_module": "Module",
+  "solarcraft_magic_damage_bonus_5": "Module Effect: Magic damage +5",
+  "item.solarforge.magic_damage_5_module": "Module"
 
 
 

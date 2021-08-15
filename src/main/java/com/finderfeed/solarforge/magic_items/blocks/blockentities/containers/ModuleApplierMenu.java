@@ -10,10 +10,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.ItemCombinerMenu;
 import net.minecraft.world.inventory.MenuType;
-import net.minecraft.world.item.ArmorItem;
-import net.minecraft.world.item.DiggerItem;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.SwordItem;
+import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.fmllegacy.network.IContainerFactory;
 
@@ -89,8 +86,8 @@ public class ModuleApplierMenu extends ItemCombinerMenu {
                 return item.getItem() instanceof ArmorItem;
             } else if (type == ModuleItem.Type.SWORDS) {
                 return item.getItem() instanceof SwordItem;
-            } else if (type == ModuleItem.Type.TOOLS) {
-                return item.getItem() instanceof DiggerItem;
+            }else if (type == ModuleItem.Type.PICKAXES){
+                return item.getItem() instanceof PickaxeItem;
             } else {
                 return false;
             }

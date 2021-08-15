@@ -3,6 +3,7 @@ package com.finderfeed.solarforge.events.other_events.event_handler;
 import com.finderfeed.solarforge.config.SolarcraftConfig;
 import com.finderfeed.solarforge.magic_items.items.ModuleItem;
 import com.finderfeed.solarforge.registries.items.ItemsRegister;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -11,6 +12,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -21,12 +23,32 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
+import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid = "solarforge",bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class ModuleEventsHandler {
+
+
+    @SubscribeEvent
+    public static void handleMagicDamageBonus(AttackEntityEvent event){
+        Player player = event.getPlayer();
+        Entity entity = event.getTarget();
+        if (!player.level.isClientSide){
+            ItemStack stack = player.getMainHandItem();
+            if ((stack.getItem() instanceof SwordItem)  && (entity instanceof LivingEntity target)){
+                if (hasModule(ItemsRegister.MAGIC_DAMAGE_MODULE_5.get(),stack)){
+                    float modifier = player.getAttackStrengthScale(0);
+                    DamageSource src = DamageSource.playerAttack(player).bypassArmor().setMagic();
+                    target.hurt(src, modifier * 5);
+                    target.invulnerableTime = 0;
+                }
+            }
+        }
+    }
+
 
 
     @SubscribeEvent
@@ -56,8 +78,7 @@ public class ModuleEventsHandler {
                 if (!stack.isEmpty()){
                     if (hasModule(ItemsRegister.SWORD_AUTOHEAL_MODULE.get(),stack)){
                         if (player.level.random.nextFloat() <= ((float) SolarcraftConfig.AUTOHEAL_CHANCE.get()/100) ){
-                            stack.hurt(-1,player.level.random,(ServerPlayer) player);
-
+                            stack.hurt(-2,player.level.random,(ServerPlayer) player);
                         }
                     }
                 }
@@ -69,15 +90,16 @@ public class ModuleEventsHandler {
     @SubscribeEvent
     public static void handle10PhysicalDefenceModule(LivingDamageEvent event){
         DamageSource src = event.getSource();
-
-        if (!src.isMagic() && !src.isBypassArmor() ){
-            LivingEntity entity = event.getEntityLiving();
-            entity.getArmorSlots().forEach((stack)->{
-                if (hasModule(ItemsRegister.PHYSICAL_DEFENCE_MODULE_10.get(),stack)){
-                    float amount = event.getAmount();
-                    event.setAmount(amount*0.9f);
-                }
-            });
+        if (!event.getEntityLiving().level.isClientSide) {
+            if (!src.isMagic() && !src.isBypassArmor()) {
+                LivingEntity entity = event.getEntityLiving();
+                entity.getArmorSlots().forEach((stack) -> {
+                    if (hasModule(ItemsRegister.PHYSICAL_DEFENCE_MODULE_10.get(), stack)) {
+                        float amount = event.getAmount();
+                        event.setAmount(amount * 0.9f);
+                    }
+                });
+            }
         }
     }
 
