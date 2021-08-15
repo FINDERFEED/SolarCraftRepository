@@ -1,5 +1,6 @@
 package com.finderfeed.solarforge.registries.containers;
 
+import com.finderfeed.solarforge.magic_items.blocks.blockentities.containers.ModuleApplierMenu;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.containers.RunicTableContainer;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.containers.SolarFurnaceContainer;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.SolarLexiconContainer;
@@ -15,4 +16,5 @@ public class Containers {
     public static final RegistryObject<MenuType<SolarFurnaceContainer>> SOLAR_FURNACE_CONTAINER = CONTAINER_TYPE.register("solar_furnace_container",()-> IForgeContainerType.create(SolarFurnaceContainer::new));
     public static final RegistryObject<MenuType<RunicTableContainer>> RUNIC_TABLE_CONTAINER = CONTAINER_TYPE.register("runic_table_container",()-> IForgeContainerType.create(RunicTableContainer::new));
     public static final RegistryObject<MenuType<SolarLexiconContainer>> SOLAR_LEXICON_CONTAINER = CONTAINER_TYPE.register("solar_lexicon_container",()-> IForgeContainerType.create(SolarLexiconContainer::new));
+    public static final RegistryObject<MenuType<ModuleApplierMenu>> MODULE_APPLIER_CONTAINER = CONTAINER_TYPE.register("module_applier",()->IForgeContainerType.create(ModuleApplierMenu::new));
 }

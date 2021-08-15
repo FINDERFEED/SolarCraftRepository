@@ -28,6 +28,7 @@ public class BlueGemItem extends Item {
     @Override
     public boolean onEntityItemUpdate(ItemStack stack, ItemEntity entity) {
         if (!entity.level.isClientSide){
+
             Level world = entity.level;
             Optional<? extends Registry<Biome>> reg = world.registryAccess().registry(Registry.BIOME_REGISTRY);
             if (reg.isPresent()) {

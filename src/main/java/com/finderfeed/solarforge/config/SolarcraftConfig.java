@@ -22,7 +22,8 @@ public final class SolarcraftConfig {
     public static final ForgeConfigSpec SPEC;
 
     public static final ForgeConfigSpec.ConfigValue<List<String>> PICKAXE_TREASURES;
-    public static final ForgeConfigSpec.ConfigValue<Float> SOLAR_STRIKE_DAMAGE;
+    public static final ForgeConfigSpec.ConfigValue<Double> SOLAR_STRIKE_DAMAGE;
+    public static final ForgeConfigSpec.ConfigValue<Integer> AUTOHEAL_CHANCE;
     static {
         BUILDER.push("SolarCraft config");
 
@@ -32,8 +33,8 @@ public final class SolarcraftConfig {
         PICKAXE_TREASURES = BUILDER.comment("Treasure items for qualadium pickaxe")
                 .define("treasures",DEFAULT);
 
-        SOLAR_STRIKE_DAMAGE = BUILDER.comment("Solar strike ability damage").define("solar_strike_damage",300f);
-
+        SOLAR_STRIKE_DAMAGE = BUILDER.comment("Solar strike ability damage").define("solar_strike_damage",300d);
+        AUTOHEAL_CHANCE = BUILDER.comment("The chance to heal the sword with sword heal module").define("chance",10);
 
         BUILDER.pop();
         SPEC = BUILDER.build();

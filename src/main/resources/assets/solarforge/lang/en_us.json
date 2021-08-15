@@ -367,7 +367,18 @@
   "solar_god_pickaxe.lore": "A powerful upgradable pickaxe of the god itself.",
   "item.solarforge.xp_crystal": "Experience Crystal",
   "solarforge.experience_crystal_lore": "When in your inventory, consumes experience orbs instead of giving them to player. Right click to release experience.",
-  "solarforge.experience_crystal_lore2": "Current XP contained:"
+  "solarforge.experience_crystal_lore2": "Current XP contained:",
+  "solarcraft.module_armor":"Armor module",
+  "solarcraft.module_swords":"Sword module",
+  "solarcraft.module_tools":"Tools module",
+  "solarcraft_10_percent_defence_physical": "Module: 10% Physical damage resistance",
+  "solarcraft.module_station": "Module Station",
+  "block.solarforge.module_table": "Module Station",
+  "item.solarforge.defence_module_physical_10": "Module",
+  "solarcraft_sword_autoheal": "Module: Has a chance to restore 1 durability on hit",
+  "item.solarforge.sword_heal_module": "Module",
+  "solarcraft_sword_aoe_attack": "Module: Ability: Damages all mobs in small AOE around player for the half of sword damage. Cooldown:5 sec.",
+  "item.solarforge.sword_aoe_module": "Module"
 
 
 

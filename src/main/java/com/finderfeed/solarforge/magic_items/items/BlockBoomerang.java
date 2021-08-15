@@ -3,6 +3,7 @@ package com.finderfeed.solarforge.magic_items.items;
 import com.finderfeed.solarforge.magic_items.items.projectiles.BlockBoomerangProjectile;
 import com.finderfeed.solarforge.registries.projectiles.Projectiles;
 
+import cpw.mods.jarhandling.impl.SecureJarVerifier;
 import net.minecraft.world.item.TooltipFlag;
 
 import net.minecraft.world.entity.player.Player;
@@ -31,6 +32,7 @@ public class BlockBoomerang extends Item {
     @Override
     public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
         if (!world.isClientSide){
+
             if (player.getItemInHand(InteractionHand.OFF_HAND).getItem() instanceof BlockItem) {
                 BlockItem item = (BlockItem) player.getItemInHand(InteractionHand.OFF_HAND).getItem();
 

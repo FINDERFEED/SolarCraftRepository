@@ -97,7 +97,7 @@ public class SolarStrikeEntity extends PathfinderMob {
                 //this.level.explode(null,DamageSource.DRAGON_BREATH,null, this.position().x, this.position().y, this.position().z, 10, false, Explosion.Mode.BREAK);
                 List<Entity> list = this.level.getEntities(this,new AABB(-30,-30,-30,30,30,30).move(this.getOnPos()),x -> !(x instanceof Player));
                 for (int i = 0; i<list.size();i++){
-                    list.get(i).hurt(DamageSource.MAGIC, SolarcraftConfig.SOLAR_STRIKE_DAMAGE.get());
+                    list.get(i).hurt(DamageSource.MAGIC, SolarcraftConfig.SOLAR_STRIKE_DAMAGE.get().floatValue());
                 }
                 this.level.playSound(null,this.getOnPos().offset(0,5,0),SolarForge.SOLAR_STRIKE_SOUND.get(),SoundSource.AMBIENT,10,0.4F);
 

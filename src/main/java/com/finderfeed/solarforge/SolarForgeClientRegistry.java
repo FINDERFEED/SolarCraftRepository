@@ -4,6 +4,7 @@ import com.finderfeed.solarforge.SolarAbilities.meteorite.MeteoriteModel;
 import com.finderfeed.solarforge.SolarAbilities.meteorite.MeteoriteProjectileRenderer;
 import com.finderfeed.solarforge.SolarAbilities.SolarStrikeEntityRender;
 import com.finderfeed.solarforge.entities.renderers.VillagerSolarMasterRenderer;
+import com.finderfeed.solarforge.magic_items.blocks.blockentities.containers.screens.ModuleApplierScreen;
 import com.finderfeed.solarforge.magic_items.blocks.infusing_table_things.InfusingTableRenderer;
 import com.finderfeed.solarforge.magic_items.blocks.infusing_table_things.infusing_pool.InfusingPoolRenderer;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.containers.screens.RunicTableContainerScreen;
@@ -97,6 +98,7 @@ public class SolarForgeClientRegistry {
         MenuScreens.register(Containers.SOLAR_FURNACE_CONTAINER.get(), SolarFurnaceScreen::new);
         MenuScreens.register(Containers.RUNIC_TABLE_CONTAINER.get(), RunicTableContainerScreen::new);
         MenuScreens.register(Containers.SOLAR_LEXICON_CONTAINER.get(), SolarLexiconContScreen::new);
+        MenuScreens.register(Containers.MODULE_APPLIER_CONTAINER.get(), ModuleApplierScreen::new);
         event.enqueueWork(()->{
             ItemProperties.register(ItemsRegister.ULDORADIUM_ORE.get(),new ResourceLocation("solarforge","unlocked"),(stack,world,living,a)->{
 
