@@ -1,0 +1,37 @@
+{
+  "type":"solarforge:infusing",
+  "input1": {
+    "item": "solarforge:amethyst_core"
+  },
+  "input2": {
+    "item": "solarforge:solar_rune_zeta"
+  },
+  "input3": {
+    "item": "solarforge:energy_dust"
+  },
+  "input4": {
+    "item": "solarforge:solar_rune_ardo"
+  },
+  "input5": {
+    "item": "solarforge:energy_dust"
+  },
+  "input6": {
+    "item": "solarforge:solar_rune_zeta"
+  },
+  "input7": {
+    "item": "minecraft:iron_sword"
+  },
+  "input8": {
+    "item": "solarforge:solar_rune_ardo"
+  },
+  "input9": {
+    "item": "minecraft:iron_sword"
+  },
+  "result": {
+    "item": "solarforge:sword_aoe_module"
+  },
+  "time": 700,
+  "fragment": "modules",
+  "zeta": 2000,
+  "ardo": 2000
+}

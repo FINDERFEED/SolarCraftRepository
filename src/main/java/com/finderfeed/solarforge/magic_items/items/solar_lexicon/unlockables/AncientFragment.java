@@ -53,7 +53,14 @@ public enum AncientFragment {
     QUALADIUM_SHOVEL(tx("solar_fragment.qualadium_shovel"),"qualadium_shovel",Achievement.CRAFT_SOLAR_LENS,BookEntry.SKILLED_ITEMS,ItemsRegister.QUALADIUM_SHOVEL.get().getDefaultInstance(),tx("qualadium_shovel.lore"), SolarForge.INFUSING_RECIPE_TYPE,true),
     QUALADIUM_HOE(tx("solar_fragment.qualadium_hoe"),"qualadium_hoe",Achievement.CRAFT_SOLAR_LENS,BookEntry.SKILLED_ITEMS,ItemsRegister.QUALADIUM_HOE.get().getDefaultInstance(),tx("qualadium_hoe.lore"), SolarForge.INFUSING_RECIPE_TYPE,true),
     QUALADIUM_PICKAXE(tx("solar_fragment.qualadium_pickaxe"),"qualadium_pickaxe",Achievement.CRAFT_SOLAR_LENS,BookEntry.SKILLED_ITEMS,ItemsRegister.QUALADIUM_PICKAXE.get().getDefaultInstance(),tx("qualadium_pickaxe.lore"), SolarForge.INFUSING_RECIPE_TYPE,true),
-
+    EXPERIENCE_CRYSTAL(tx("solar_fragment.experience_crystal"),"experience_crystal",Achievement.CRAFT_SOLAR_LENS,BookEntry.SKILLED_ITEMS,ItemsRegister.EXPERIENCE_CRYSTAL.get().getDefaultInstance(),tx("experience_crystal.lore"), SolarForge.INFUSING_RECIPE_TYPE,true),
+    AMETHYST_CORE(tx("solar_fragment.amethyst_core"),"amethyst_core",Achievement.CRAFT_SOLAR_LENS,BookEntry.SKILLED_ITEMS,ItemsRegister.AMETHYST_CORE.get().getDefaultInstance(),tx("amethyst_core.lore"), SolarForge.INFUSING_RECIPE_TYPE,true),
+    MODULES(tx("solar_fragment.modules"),"modules",Achievement.CRAFT_SOLAR_LENS,BookEntry.SKILLED_ITEMS,List.of(
+            ItemsRegister.MODULE_APPLIER.get().getDefaultInstance(),ItemsRegister.PICKAXE_MINER_ABILITY_MODULE.get().getDefaultInstance(),
+            ItemsRegister.MAGIC_DAMAGE_MODULE_5.get().getDefaultInstance(),ItemsRegister.SWORD_AUTOHEAL_MODULE.get().getDefaultInstance(),
+            ItemsRegister.PHYSICAL_DEFENCE_MODULE_10.get().getDefaultInstance(),ItemsRegister.DISARMING_THORNS_MODULE.get().getDefaultInstance(),
+            ItemsRegister.SWORD_AOE_ATTACK.get().getDefaultInstance(),ItemsRegister.PICKAXE_AUTO_SMELT.get().getDefaultInstance()
+    ),tx("modules.lore")),
 
     CHARGED_QUALADIUM_SWORD(tx("solar_fragment.charged_qualadium_sword"),"charged_qualadium_sword",Achievement.CRAFT_SOLAR_ENERGY_GENERATOR,BookEntry.MASTER_ITEMS,ItemsRegister.CHARGED_QUALADIUM_SWORD.get().getDefaultInstance(),tx("charged_qualadium_sword.lore"), SolarForge.INFUSING_RECIPE_TYPE,true),
     CHARGED_QUALADIUM_AXE(tx("solar_fragment.charged_qualadium_axe"),"charged_qualadium_axe",Achievement.CRAFT_SOLAR_ENERGY_GENERATOR,BookEntry.MASTER_ITEMS,ItemsRegister.CHARGED_QUALADIUM_AXE.get().getDefaultInstance(),tx("charged_qualadium_axe.lore"), SolarForge.INFUSING_RECIPE_TYPE,true),
@@ -90,8 +97,7 @@ public enum AncientFragment {
             ItemsRegister.REGEN_AMULET.get().getDefaultInstance(),ItemsRegister.JUMP_AMULET.get().getDefaultInstance(),
             ItemsRegister.SPEED_AMULET.get().getDefaultInstance(),ItemsRegister.HASTE_AMULET.get().getDefaultInstance(),
             ItemsRegister.NIGHT_VISION_AMULET.get().getDefaultInstance(),ItemsRegister.STRENGTH_AMULET.get().getDefaultInstance()
-    ),tx("amulets.lore"))
-    ;
+    ),tx("amulets.lore"));
 
     public static Map<String,AncientFragment> FRAGMENTS_ID_MAP = new HashMap<>();
 

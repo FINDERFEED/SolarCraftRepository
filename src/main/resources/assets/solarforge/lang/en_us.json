@@ -371,7 +371,7 @@
   "solarcraft.module_armor":"Armor module",
   "solarcraft.module_swords":"Sword module",
   "solarcraft.module_pickaxes":"Pickaxes module",
-  "solarcraft_10_percent_defence_physical": "Module: 10% Physical damage resistance",
+  "solarcraft_10_percent_defence_physical": "Module effect: 10% Physical damage resistance",
   "solarcraft.module_station": "Module Station",
   "block.solarforge.module_table": "Module Station",
   "item.solarforge.defence_module_physical_10": "Module",
@@ -384,7 +384,16 @@
   "solarcraft_magic_damage_bonus_5": "Module Effect: Magic damage +5",
   "item.solarforge.magic_damage_5_module": "Module",
   "solarcraft_miner_ability_tag": "Module Effect: Ability - gives 20 seconds of Haste II. Manacost: 300/use",
-  "item.solarforge.pickaxe_miner_module": "Module"
+  "item.solarforge.pickaxe_miner_module": "Module",
+  "solarcraft_disarming_thorns": "Module Effect: Has a chance to apply 2 seconds of disarm on the attacker.",
+  "item.solarforge.disarming_thorns_module": "Module",
+  "solar_fragment.experience_crystal": "Experience crystal",
+  "experience_crystal.lore": "When in inventory, consumes the experience orbs to store them. Right click to release kept experience.",
+  "solar_fragment.amethyst_core": "Amethyst core",
+  "amethyst_core.lore": "An upgraded version of the small solar core.",
+  "solar_fragment.modules": "Modules",
+  "modules.lore": "Can be attached to the specified items to give them bonuses. Modules can be attached in module station. An item cant have two modules of the same type.",
+  "item.solarforge.amethyst_core": "Amethyst core"
 
 
 

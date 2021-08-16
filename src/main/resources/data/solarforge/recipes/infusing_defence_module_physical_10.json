@@ -1,0 +1,37 @@
+{
+  "type":"solarforge:infusing",
+  "input1": {
+    "item": "solarforge:amethyst_core"
+  },
+  "input2": {
+    "item": "solarforge:solar_rune_fira"
+  },
+  "input3": {
+    "item": "minecraft:diamond"
+  },
+  "input4": {
+    "item": "solarforge:solar_rune_tera"
+  },
+  "input5": {
+    "item": "minecraft:diamond"
+  },
+  "input6": {
+    "item": "solarforge:solar_rune_fira"
+  },
+  "input7": {
+    "item": "solarforge:algadium_ingot"
+  },
+  "input8": {
+    "item": "solarforge:solar_rune_tera"
+  },
+  "input9": {
+    "item": "solarforge:algadium_ingot"
+  },
+  "result": {
+    "item": "solarforge:defence_module_physical_10"
+  },
+  "time": 700,
+  "fragment": "modules",
+  "fira": 2000,
+  "tera": 2000
+}

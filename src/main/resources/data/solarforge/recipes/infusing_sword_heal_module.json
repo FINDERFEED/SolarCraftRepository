@@ -1,0 +1,37 @@
+{
+  "type":"solarforge:infusing",
+  "input1": {
+    "item": "solarforge:amethyst_core"
+  },
+  "input2": {
+    "item": "solarforge:solar_rune_urba"
+  },
+  "input3": {
+    "item": "minecraft:iron_ingot"
+  },
+  "input4": {
+    "item": "solarforge:solar_rune_kelda"
+  },
+  "input5": {
+    "item": "minecraft:iron_ingot"
+  },
+  "input6": {
+    "item": "solarforge:solar_rune_urba"
+  },
+  "input7": {
+    "item": "solarforge:illidium_ingot"
+  },
+  "input8": {
+    "item": "solarforge:solar_rune_kelda"
+  },
+  "input9": {
+    "item": "solarforge:illidium_ingot"
+  },
+  "result": {
+    "item": "solarforge:sword_heal_module"
+  },
+  "time": 700,
+  "fragment": "modules",
+  "kelda": 2000,
+  "urba": 2000
+}

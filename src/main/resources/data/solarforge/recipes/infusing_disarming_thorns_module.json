@@ -1,0 +1,37 @@
+{
+  "type":"solarforge:infusing",
+  "input1": {
+    "item": "solarforge:amethyst_core"
+  },
+  "input2": {
+    "item": "solarforge:solar_rune_urba"
+  },
+  "input3": {
+    "item": "solarforge:illidium_ingot"
+  },
+  "input4": {
+    "item": "solarforge:solar_rune_fira"
+  },
+  "input5": {
+    "item": "solarforge:illidium_ingot"
+  },
+  "input6": {
+    "item": "solarforge:solar_rune_urba"
+  },
+  "input7": {
+    "item": "minecraft:cactus"
+  },
+  "input8": {
+    "item": "solarforge:solar_rune_fira"
+  },
+  "input9": {
+    "item": "minecraft:cactus"
+  },
+  "result": {
+    "item": "solarforge:disarming_thorns_module"
+  },
+  "time": 700,
+  "fragment": "modules",
+  "urba": 2000,
+  "fira": 2000
+}

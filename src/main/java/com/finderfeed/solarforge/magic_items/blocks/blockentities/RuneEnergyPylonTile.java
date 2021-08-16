@@ -3,6 +3,7 @@ package com.finderfeed.solarforge.magic_items.blocks.blockentities;
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.SolarCraftTags;
 import com.finderfeed.solarforge.capabilities.capability_mana.SolarForgeMana;
+import com.finderfeed.solarforge.config.SolarcraftConfig;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Achievement;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.ProgressionHelper;
 import com.finderfeed.solarforge.magic_items.runic_network.repeater.BaseRepeaterTile;
@@ -26,6 +27,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.phys.AABB;
 
+import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.fmllegacy.network.PacketDistributor;
 
@@ -37,7 +39,7 @@ public class RuneEnergyPylonTile extends BlockEntity implements IRunicEnergyCont
 
     private RunicEnergy.Type type = null;
     private float currentEnergy = 0;
-    private float energyPerTick = 0.5f;
+    private float energyPerTick = 0.0f;
     private float maxEnergy = 100000;
     private int updateTick = 40;
 
@@ -129,8 +131,8 @@ public class RuneEnergyPylonTile extends BlockEntity implements IRunicEnergyCont
             tile.type = RunicEnergy.Type.values()[tile.level.random.nextInt(RunicEnergy.Type.values().length-1)];
         }
 
-        if (tile.currentEnergy+tile.energyPerTick <= tile.maxEnergy){
-            tile.currentEnergy+=tile.energyPerTick;
+        if (tile.currentEnergy+tile.energyPerTick+ SolarcraftConfig.RUNIC_ENERGY_PER_TICK_PYLON.get().floatValue() <= tile.maxEnergy){
+            tile.currentEnergy+=tile.energyPerTick+SolarcraftConfig.RUNIC_ENERGY_PER_TICK_PYLON.get().floatValue();
         }else{
             tile.currentEnergy = tile.maxEnergy;
         }

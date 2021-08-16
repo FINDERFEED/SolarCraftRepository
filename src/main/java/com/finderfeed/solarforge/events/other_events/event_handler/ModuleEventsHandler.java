@@ -1,8 +1,10 @@
 package com.finderfeed.solarforge.events.other_events.event_handler;
 
 import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.config.SolarcraftConfig;
 import com.finderfeed.solarforge.magic_items.items.ModuleItem;
+import com.finderfeed.solarforge.registries.effects.EffectsRegister;
 import com.finderfeed.solarforge.registries.items.ItemsRegister;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
@@ -34,6 +36,22 @@ import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid = "solarforge",bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class ModuleEventsHandler {
+
+
+    @SubscribeEvent
+    public static void handleDisarmingThorns(LivingDamageEvent event){
+        DamageSource src = event.getSource();
+        LivingEntity entity = event.getEntityLiving();
+        if (!entity.level.isClientSide && (src.getEntity() instanceof LivingEntity attacker) ){
+            if (doesArmorHaveModule(ItemsRegister.DISARMING_THORNS_MODULE.get(),entity.getArmorSlots()) != 0){
+                if (entity.level.random.nextFloat() <= (float)SolarcraftConfig.DISARM_CHANCE_MODULE.get()/100){
+                    if (!attacker.hasEffect(SolarForge.SOLAR_STUN.get())){
+                        attacker.addEffect(new MobEffectInstance(SolarForge.SOLAR_STUN.get(),40,0));
+                    }
+                }
+            }
+        }
+    }
 
 
     @SubscribeEvent
@@ -124,6 +142,15 @@ public class ModuleEventsHandler {
         }
     }
 
+    public static int doesArmorHaveModule(ModuleItem item,Iterable<ItemStack> armor){
+        int a = 0;
+        for (ItemStack stack : armor){
+            if (!stack.isEmpty() && hasModule(item,stack)){
+                a++;
+            }
+        }
+        return a;
+    }
 
     public static boolean hasModule(ModuleItem item, ItemStack target){
         return target.getTagElement(item.getSubTag()) != null;

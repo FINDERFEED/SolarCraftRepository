@@ -163,6 +163,7 @@ public class ItemsRegister {
 
     public static final RegistryObject<Item> EXPERIENCE_CRYSTAL = ITEMS.register("xp_crystal",()->new ExperienceCrystal(new Item.Properties().tab(SolarForge.SOLAR_GROUP_TOOLS).stacksTo(1)));
     public static final RegistryObject<Item> MODULE_APPLIER = ITEMS.register("module_table",()->new BlockItem(BlocksRegistry.MODULE_APPLIER.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
+    public static final RegistryObject<Item> AMETHYST_CORE = ITEMS.register("amethyst_core",()->new Item(new Item.Properties().tab(SolarForge.SOLAR_GROUP)));
 
     public static final RegistryObject<ModuleItem> PHYSICAL_DEFENCE_MODULE_10 = ITEMS.register("defence_module_physical_10",()->new ModuleItem(new Item.Properties().tab(SolarForge.SOLAR_GROUP_TOOLS).stacksTo(1), ModuleItem.Type.ARMOR, ModuleItem.Tags.DEFENCE_MODULE_PHYSICAL_10));
     public static final RegistryObject<ModuleItem> SWORD_AUTOHEAL_MODULE = ITEMS.register("sword_heal_module",()->new ModuleItem(new Item.Properties().tab(SolarForge.SOLAR_GROUP_TOOLS).stacksTo(1), ModuleItem.Type.SWORDS, ModuleItem.Tags.SWORD_AUTOHEAL_MODULE));
@@ -170,4 +171,5 @@ public class ItemsRegister {
     public static final RegistryObject<ModuleItem> PICKAXE_AUTO_SMELT = ITEMS.register("pickaxe_auto_smelt_module",()->new ModuleItem(new Item.Properties().tab(SolarForge.SOLAR_GROUP_TOOLS).stacksTo(1), ModuleItem.Type.PICKAXES, ModuleItem.Tags.SMELTING));
     public static final RegistryObject<ModuleItem> MAGIC_DAMAGE_MODULE_5 = ITEMS.register("magic_damage_5_module",()->new ModuleItem(new Item.Properties().tab(SolarForge.SOLAR_GROUP_TOOLS).stacksTo(1), ModuleItem.Type.SWORDS, ModuleItem.Tags.MAGIC_DAMAGE_BONUS_5));
     public static final RegistryObject<ModuleItem> PICKAXE_MINER_ABILITY_MODULE = ITEMS.register("pickaxe_miner_module",()->new ModuleItem(new Item.Properties().tab(SolarForge.SOLAR_GROUP_TOOLS).stacksTo(1), ModuleItem.Type.PICKAXES, ModuleItem.Tags.MINER));
+    public static final RegistryObject<ModuleItem> DISARMING_THORNS_MODULE = ITEMS.register("disarming_thorns_module",()->new ModuleItem(new Item.Properties().tab(SolarForge.SOLAR_GROUP_TOOLS).stacksTo(1), ModuleItem.Type.ARMOR, ModuleItem.Tags.DISARMING_THORNS));
 }

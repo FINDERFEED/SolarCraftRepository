@@ -24,6 +24,8 @@ public final class SolarcraftConfig {
     public static final ForgeConfigSpec.ConfigValue<List<String>> PICKAXE_TREASURES;
     public static final ForgeConfigSpec.ConfigValue<Double> SOLAR_STRIKE_DAMAGE;
     public static final ForgeConfigSpec.ConfigValue<Integer> AUTOHEAL_CHANCE;
+    public static final ForgeConfigSpec.ConfigValue<Integer> DISARM_CHANCE_MODULE;
+    public static final ForgeConfigSpec.ConfigValue<Double> RUNIC_ENERGY_PER_TICK_PYLON;
     static {
         BUILDER.push("SolarCraft config");
 
@@ -35,7 +37,8 @@ public final class SolarcraftConfig {
 
         SOLAR_STRIKE_DAMAGE = BUILDER.comment("Solar strike ability damage").define("solar_strike_damage",300d);
         AUTOHEAL_CHANCE = BUILDER.comment("The chance to heal the sword with sword heal module").define("chance",10);
-
+        DISARM_CHANCE_MODULE = BUILDER.comment("Chance to disarm an entity when having the disarm module on armor").define("chance",10);
+        RUNIC_ENERGY_PER_TICK_PYLON = BUILDER.comment("Base runic energy pylon energy generation").define("per tick",0.5d);
         BUILDER.pop();
         SPEC = BUILDER.build();
     }

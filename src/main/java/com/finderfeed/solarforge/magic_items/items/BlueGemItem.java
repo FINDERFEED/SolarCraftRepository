@@ -1,9 +1,12 @@
 package com.finderfeed.solarforge.magic_items.items;
 
+import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Achievement;
 import com.finderfeed.solarforge.registries.items.ItemsRegister;
 import com.finderfeed.solarforge.world_generation.features.FeaturesRegistry;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.Item;
@@ -40,6 +43,13 @@ public class BlueGemItem extends Item {
                     if (ticks >= 1000){
                         for (int i = 0; i < stack.getCount();i++) {
                             world.addFreshEntity(new ItemEntity(world, entity.getX(), entity.getY(), entity.getZ(), new ItemStack(ItemsRegister.BLUE_GEM_ENCHANCED.get(), 1)));
+                        }
+
+                        if (entity.getThrower() != null ){
+                            Player player = world.getPlayerByUUID(entity.getThrower());
+                            if (player != null){
+                                Helpers.fireProgressionEvent(player, Achievement.TRANSMUTE_GEM);
+                            }
                         }
                         entity.remove(Entity.RemovalReason.KILLED);
                     }
