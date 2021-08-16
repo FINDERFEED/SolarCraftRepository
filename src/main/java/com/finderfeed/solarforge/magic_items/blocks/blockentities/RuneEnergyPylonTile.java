@@ -39,7 +39,7 @@ public class RuneEnergyPylonTile extends BlockEntity implements IRunicEnergyCont
 
     private RunicEnergy.Type type = null;
     private float currentEnergy = 0;
-    private float energyPerTick = 0.0f;
+    private float energyPerTick = 0f;
     private float maxEnergy = 100000;
     private int updateTick = 40;
 
