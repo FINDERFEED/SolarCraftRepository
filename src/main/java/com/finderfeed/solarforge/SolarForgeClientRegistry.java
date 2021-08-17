@@ -40,7 +40,9 @@ import net.minecraftforge.api.distmarker.Dist;
 
 import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.client.event.EntityRenderersEvent;
+import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.client.settings.KeyConflictContext;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 import net.minecraftforge.fml.common.Mod;
@@ -61,6 +63,13 @@ public class SolarForgeClientRegistry {
     public static final KeyMapping ADMIN_ABILITY_KEY = new KeyMapping("key.admin_button_solarforge", KeyConflictContext.UNIVERSAL, InputConstants.Type.SCANCODE, GLFW.GLFW_KEY_D,"key.solarforge.category");
     public static final KeyMapping OPEN_GUI_ABILITY_KEY = new KeyMapping("key.gui_button_solarforge", KeyConflictContext.UNIVERSAL, InputConstants.Type.SCANCODE, GLFW.GLFW_KEY_D,"key.solarforge.category");
   //  public static final KeyBinding TOGGLE_MANA_HUD = new KeyBinding("key.mana_hud.solarforge", KeyConflictContext.UNIVERSAL, InputMappings.Type.SCANCODE, GLFW.GLFW_KEY_D,"key.solarforge.category");
+
+    @SubscribeEvent(priority = EventPriority.HIGHEST)
+    public static void registerTest(TextureStitchEvent.Pre event){
+        MinecraftForgeClient.registerTextureAtlasSpriteLoader(RadiantTextureAtlasSpriteLoader.REGISTRY_ID,RADIANT_TEXTURE_ATLAS_SPRITE_LOADER);
+    }
+
+
     @SubscribeEvent
     public static void registerClientStuff(final FMLClientSetupEvent event){
 
@@ -102,8 +111,9 @@ public class SolarForgeClientRegistry {
         MenuScreens.register(Containers.RUNIC_TABLE_CONTAINER.get(), RunicTableContainerScreen::new);
         MenuScreens.register(Containers.SOLAR_LEXICON_CONTAINER.get(), SolarLexiconContScreen::new);
         MenuScreens.register(Containers.MODULE_APPLIER_CONTAINER.get(), ModuleApplierScreen::new);
+
         event.enqueueWork(()->{
-            MinecraftForgeClient.registerTextureAtlasSpriteLoader(RadiantTextureAtlasSpriteLoader.REGISTRY_ID,RADIANT_TEXTURE_ATLAS_SPRITE_LOADER);
+
             ItemProperties.register(ItemsRegister.ULDORADIUM_ORE.get(),new ResourceLocation("solarforge","unlocked"),(stack,world,living,a)->{
 
                 Player playerEntity = Minecraft.getInstance().player;

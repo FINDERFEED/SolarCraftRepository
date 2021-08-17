@@ -1,5 +1,7 @@
 package com.finderfeed.solarforge.rendering;
 
+import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.for_future_library.FinderfeedMathHelper;
 import com.mojang.blaze3d.platform.NativeImage;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Minecraft;
@@ -8,6 +10,7 @@ import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 
 import java.awt.*;
+import java.util.Arrays;
 
 
 public class RadiantBlocksAtlasSprite extends TextureAtlasSprite {
@@ -27,18 +30,23 @@ public class RadiantBlocksAtlasSprite extends TextureAtlasSprite {
             if (Minecraft.getInstance().level != null){
                 ClientLevel level = Minecraft.getInstance().level;
                 float timeofday = level.getTimeOfDay(Minecraft.getInstance().getDeltaFrameTime());
+                NativeImage image = images[i];
                 if (timeofday >= 0.5f ){
-                    for (int a = 0;a <= getWidth();a++){
-                        for (int b = 0;b <= getHeight();b++){
-                            int color = images[i].getPixelRGBA(a,b);
-                            images[i].setPixelRGBA(a,b,0xffffffff);
+                    for (int a = 0;a < image.getWidth();a++){
+                        for (int b = 0;b < image.getHeight();b++){
+                            int color = image.getPixelRGBA(a,b);
+
+                            //abgr
+                            image.setPixelRGBA(a,b,0xffffffff);
                         }
                     }
                 }else{
-                    for (int a = 0;a <= getWidth();a++){
-                        for (int b = 0;b <= getHeight();b++){
-                            int color = images[i].getPixelRGBA(a,b);
-                            images[i].setPixelRGBA(a,b,0x00ffffff);
+                    for (int a = 0;a < image.getWidth();a++){
+                        for (int b = 0;b < image.getHeight();b++){
+                            int color = image.getPixelRGBA(a,b);
+
+                            //abgr
+                            image.setPixelRGBA(a,b,0xffff00ff);
                         }
                     }
                 }

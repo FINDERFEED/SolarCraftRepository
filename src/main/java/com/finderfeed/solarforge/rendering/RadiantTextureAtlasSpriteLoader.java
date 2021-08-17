@@ -20,9 +20,19 @@ public class RadiantTextureAtlasSpriteLoader implements ITextureAtlasSpriteLoade
 
     @Nonnull
     @Override
-    public TextureAtlasSprite load(TextureAtlas atlas, ResourceManager resourceManager, TextureAtlasSprite.Info textureInfo, Resource resource, int atlasWidth, int atlasHeight, int spriteX, int spriteY, int mipmapLevel, NativeImage image) {
-            RadiantBlocksAtlasSprite sprite = new RadiantBlocksAtlasSprite(atlas,textureInfo,atlasWidth,atlasHeight,spriteX,spriteY,mipmapLevel,image);
+    public TextureAtlasSprite load(TextureAtlas atlas,
+                                   ResourceManager resourceManager,
+                                   TextureAtlasSprite.Info textureInfo,
+                                   Resource resource,
+                                   int atlasWidth,
+                                   int atlasHeight,
+                                   int spriteX,
+                                   int spriteY,
+                                   int mipmapLevel,
+                                   NativeImage image) {
 
+
+        RadiantBlocksAtlasSprite sprite = new RadiantBlocksAtlasSprite(atlas,textureInfo,mipmapLevel,atlasWidth,atlasHeight,spriteX,spriteY,image);
         return sprite;
     }
 }
