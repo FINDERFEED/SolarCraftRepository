@@ -12,11 +12,14 @@ import com.finderfeed.solarforge.magic_items.items.item_models.SolarGodShield;
 import com.finderfeed.solarforge.magic_items.items.projectiles.renderers.UltraCrossbowProjectileRenderer;
 
 import net.minecraft.client.model.geom.ModelLayerLocation;
+import net.minecraft.client.renderer.DimensionSpecialEffects;
+import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.registries.ForgeRegistries;
 
 @Mod.EventBusSubscriber(modid = "solarforge",bus = Mod.EventBusSubscriber.Bus.MOD,value = Dist.CLIENT)
 public class ModelLayersRegistry {
@@ -51,6 +54,7 @@ public class ModelLayersRegistry {
 
     @SubscribeEvent
     public static void registerModelLayers(EntityRenderersEvent.RegisterLayerDefinitions event){
+
         event.registerLayerDefinition(METEORITE_LAYER, MeteoriteModel::createLayer);
         event.registerLayerDefinition(AURA_HEALER_LAYER, AuraHealerModel::createLayer);
         event.registerLayerDefinition(SOLAR_CROSSBOW_LAYER, UltraCrossbowProjectileRenderer::createLayer);

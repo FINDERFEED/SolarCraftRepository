@@ -1,0 +1,52 @@
+{
+  "type": "solarforge:radiant_land",
+  "generator": {
+    "type": "minecraft:noise",
+    "seed": 0,
+    "settings": "solarforge:radiant_land",
+    "biome_source": {
+      "seed": 0,
+      "type": "minecraft:multi_noise",
+      "biomes": [
+        {
+          "biome": "solarforge:incinerated_forest",
+          "parameters": {
+            "altitude": 1,
+            "weirdness": 1,
+            "offset": 0.4,
+            "temperature": 1,
+            "humidity": 1
+          }
+        }
+      ],
+      "temperature_noise": {
+        "firstOctave": -7,
+        "amplitudes": [
+          1.0,
+          1.0
+        ]
+      },
+      "humidity_noise": {
+        "firstOctave": -7,
+        "amplitudes": [
+          1.0,
+          1.0
+        ]
+      },
+      "altitude_noise": {
+        "firstOctave": -7,
+        "amplitudes": [
+          1.0,
+          1.0
+        ]
+      },
+      "weirdness_noise": {
+        "firstOctave": -7,
+        "amplitudes": [
+          1.0,
+          1.0
+        ]
+      }
+    }
+  }
+}
