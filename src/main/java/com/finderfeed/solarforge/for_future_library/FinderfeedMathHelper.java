@@ -11,7 +11,13 @@ import org.lwjgl.system.CallbackI;
 
 public class FinderfeedMathHelper {
 
-
+    public static int[] intToRgba(int color){
+        int r = (color >> 16) & 0xff;
+        int g = (color >>  8) & 0xff;
+        int b = (color      ) & 0xff;
+        int a = (color >> 24) & 0xff;
+        return new int[]{r,g,b,a};
+    }
 
     public static double getDistanceBetween(Vec3 tile,Vec3 start){
         return new Vec3(tile.x - start.x,tile.y - start.y,tile.z - start.z).length();

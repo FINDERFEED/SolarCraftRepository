@@ -3,11 +3,17 @@ package com.finderfeed.solarforge.events.other_events;
 
 
 import com.finderfeed.solarforge.model_loaders.SolarforgeModelLoader;
+import com.finderfeed.solarforge.rendering.RadiantBlocksAtlasSprite;
+import com.finderfeed.solarforge.rendering.RadiantTextureAtlasSpriteLoader;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
+
+import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
+
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 

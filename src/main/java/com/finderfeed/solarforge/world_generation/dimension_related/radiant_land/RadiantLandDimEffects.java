@@ -55,6 +55,13 @@ class RenderSky implements ISkyRenderHandler{
     public void render(int ticks, float partialTicks, PoseStack matrixStack, ClientLevel world, Minecraft mc) {
         Tesselator tes = Tesselator.getInstance();
         BufferBuilder builder = tes.getBuilder();
+        int color = 0xffffff;
+        int R = (color >> 16) & 0xff;
+        int G = (color >>  8) & 0xff;
+        int B = (color      ) & 0xff;
+        System.out.println("r " +R);
+        System.out.println("g "+G);
+        System.out.println("b "+B);
         RenderSystem.enableBlend();
         //0.25 - start of night
         //0.75 - end of night

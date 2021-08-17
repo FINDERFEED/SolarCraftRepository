@@ -23,6 +23,7 @@ import com.finderfeed.solarforge.registries.projectiles.Projectiles;
 import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
 import com.finderfeed.solarforge.magic_items.blocks.solar_forge_block.SolarForgeBlockEntityRenderer;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.SolarLexiconContScreen;
+import com.finderfeed.solarforge.rendering.RadiantTextureAtlasSpriteLoader;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.model.geom.ModelLayerLocation;
@@ -37,6 +38,7 @@ import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 
+import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.settings.KeyConflictContext;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -51,6 +53,7 @@ import org.lwjgl.glfw.GLFW;
 
 @Mod.EventBusSubscriber(modid = "solarforge",bus = Mod.EventBusSubscriber.Bus.MOD,value = Dist.CLIENT)
 public class SolarForgeClientRegistry {
+    public static final RadiantTextureAtlasSpriteLoader RADIANT_TEXTURE_ATLAS_SPRITE_LOADER = new RadiantTextureAtlasSpriteLoader();
     public static final KeyMapping FIRST_ABILITY_KEY = new KeyMapping("key.fire_ability_one", KeyConflictContext.UNIVERSAL, InputConstants.Type.SCANCODE, GLFW.GLFW_KEY_H,"key.solarforge.category");
     public static final KeyMapping SECOND_ABILITY_KEY = new KeyMapping("key.fire_ability_two", KeyConflictContext.UNIVERSAL, InputConstants.Type.SCANCODE, GLFW.GLFW_KEY_J,"key.solarforge.category");
     public static final KeyMapping THIRD_ABILITY_KEY = new KeyMapping("key.fire_ability_three", KeyConflictContext.UNIVERSAL, InputConstants.Type.SCANCODE, GLFW.GLFW_KEY_S,"key.solarforge.category");
@@ -100,6 +103,7 @@ public class SolarForgeClientRegistry {
         MenuScreens.register(Containers.SOLAR_LEXICON_CONTAINER.get(), SolarLexiconContScreen::new);
         MenuScreens.register(Containers.MODULE_APPLIER_CONTAINER.get(), ModuleApplierScreen::new);
         event.enqueueWork(()->{
+            MinecraftForgeClient.registerTextureAtlasSpriteLoader(RadiantTextureAtlasSpriteLoader.REGISTRY_ID,RADIANT_TEXTURE_ATLAS_SPRITE_LOADER);
             ItemProperties.register(ItemsRegister.ULDORADIUM_ORE.get(),new ResourceLocation("solarforge","unlocked"),(stack,world,living,a)->{
 
                 Player playerEntity = Minecraft.getInstance().player;
