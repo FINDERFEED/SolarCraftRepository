@@ -18,6 +18,10 @@ public class FinderfeedMathHelper {
         int a = (color >> 24) & 0xff;
         return new int[]{r,g,b,a};
     }
+    public static int rgbaToInt(int[] rgba){
+        int color = (rgba[3] & 0xff) << 24 | (rgba[2] & 0xff) << 16 | (rgba[1] & 0xff) << 8 | (rgba[0] & 0xff);
+        return color;
+    }
 
     public static double getDistanceBetween(Vec3 tile,Vec3 start){
         return new Vec3(tile.x - start.x,tile.y - start.y,tile.z - start.z).length();
