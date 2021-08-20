@@ -9,7 +9,7 @@
       "type": "minecraft:multi_noise",
       "biomes": [
         {
-          "biome": "solarforge:incinerated_forest",
+          "biome": "solarforge:radiant_land",
           "parameters": {
             "altitude": 1,
             "weirdness": 1,

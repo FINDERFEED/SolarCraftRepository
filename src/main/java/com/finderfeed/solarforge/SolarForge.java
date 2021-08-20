@@ -229,6 +229,7 @@ public class SolarForge
             SolarForgeStructures.setupStructures();
             SolarForgeStructureFeatures.registerConfiguredStructures();
             BiomeManager.addBiome(BiomeManager.BiomeType.DESERT,new BiomeManager.BiomeEntry(FeaturesRegistry.MOLTEN_BIOME_KEY,4));
+
         });
 
     }

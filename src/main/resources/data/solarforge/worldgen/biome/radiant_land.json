@@ -1,0 +1,75 @@
+{
+  "scale": 0.05,
+  "precipitation": "none",
+  "category": "plains",
+  "temperature": 1,
+  "downfall": 0.1,
+  "depth": 0.125,
+  "effects": {
+    "fog_color": 16772662,
+    "folliage_color": 16772662,
+    "grass_color": 16772662,
+    "sky_color": 3570943,
+    "water_color": 16772662,
+    "water_fog_color": 16772662,
+    "grass_color_modifier": "none"
+  },
+  "surface_builder": "solarforge:molten_forest_surface",
+
+
+  "carvers": {
+    "air": [
+      "minecraft:cave",
+      "minecraft:canyon"
+    ]
+  },
+
+  "features": [
+    [],
+    [
+      "minecraft:lake_lava"
+    ],
+    [
+
+    ],
+    [
+
+    ],
+    [],
+    [],
+    [
+      "minecraft:ore_dirt",
+      "minecraft:ore_gravel",
+      "minecraft:ore_granite",
+      "minecraft:ore_diorite",
+      "minecraft:ore_andesite",
+      "minecraft:ore_coal",
+      "minecraft:ore_iron",
+      "minecraft:ore_gold",
+      "minecraft:ore_redstone",
+      "minecraft:ore_diamond",
+      "minecraft:ore_lapis",
+      "minecraft:disk_sand",
+      "minecraft:disk_clay",
+      "minecraft:disk_gravel"
+    ],
+    [
+
+    ],
+    [
+      "minecraft:patch_grass_plain",
+      "solarforge:dead_sprout_feature",
+      "minecraft:spring_lava",
+      "solarforge:radiant_tree"
+    ],
+    []
+  ],
+  "spawners": {
+    "monster":[
+
+    ]
+  },
+  "starts": [],
+  "player_spawn_friendly": true,
+  "spawn_costs": {}
+}

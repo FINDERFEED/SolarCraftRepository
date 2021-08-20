@@ -80,5 +80,5 @@ public class BlocksRegistry {
 
     public static final RegistryObject<Block> MODULE_APPLIER = BLOCKS.register("module_table",()->new ModuleStation(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS)));
 
-    public static final RegistryObject<Block> RADIANT_LEAVES = BLOCKS.register("radiant_leaves",()->new LeavesBlock(BlockBehaviour.Properties.copy(Blocks.OAK_LEAVES)));
+    public static final RegistryObject<Block> RADIANT_LEAVES = BLOCKS.register("radiant_leaves",()->new LeavesBlock(BlockBehaviour.Properties.copy(Blocks.OAK_LEAVES).noOcclusion()));
 }

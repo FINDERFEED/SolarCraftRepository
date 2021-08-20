@@ -3,6 +3,7 @@ package com.finderfeed.solarforge.world_generation.features;
 import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
 import com.finderfeed.solarforge.world_generation.biomes.molten_forest.MoltenForestAmbience;
 import com.finderfeed.solarforge.world_generation.biomes.molten_forest.BurntTreeFeature;
+import com.finderfeed.solarforge.world_generation.dimension_related.radiant_land.RadiantTreeFoliagePlacer;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.core.Registry;
@@ -41,7 +42,7 @@ public class FeaturesRegistry {
     public static final Feature<NoneFeatureConfiguration> ENERGY_PYLON = new EnergyPylonFeature(NoneFeatureConfiguration.CODEC);
 
 
-
+    public static ConfiguredFeature<?,?> RADIANT_TREE_CONFIGURED;
     public static ConfiguredFeature<?,?> ENERGY_PYLON_CONFIGURED;
     public static ConfiguredFeature<?,?> MOLTEN_FOREST_RUINS_CONFIGURED;
 
@@ -86,6 +87,18 @@ public class FeaturesRegistry {
 
             MOLTEN_FOREST_RUINS_CONFIGURED = BURNT_BIOME_AMBIENCE_2.configured(NoneFeatureConfiguration.INSTANCE).decorated(FeatureDecorator.CHANCE.configured(new ChanceDecoratorConfiguration(60)));
             Registry.register(BuiltinRegistries.CONFIGURED_FEATURE,new ResourceLocation("solarforge","configured_ruins"),MOLTEN_FOREST_RUINS_CONFIGURED);
+
+            RADIANT_TREE_CONFIGURED = Feature.TREE.configured(new TreeConfiguration.TreeConfigurationBuilder(
+                    new SimpleStateProvider(Blocks.ACACIA_LOG.defaultBlockState()),
+                    new StraightTrunkPlacer(15, 1, 0),
+                    new SimpleStateProvider(BlocksRegistry.RADIANT_LEAVES.get().defaultBlockState()),
+                    new SimpleStateProvider(Blocks.OAK_SAPLING.defaultBlockState()),
+                    new RadiantTreeFoliagePlacer(ConstantInt.of(2), ConstantInt.of(0)),
+                    new TwoLayersFeatureSize(1, 0, 1)
+            ).build())
+                    .decorated(FeatureDecorator.HEIGHTMAP.configured(new HeightmapConfiguration(Heightmap.Types.WORLD_SURFACE_WG)))
+                    .decorated(FeatureDecorator.SQUARE.configured(NoneDecoratorConfiguration.INSTANCE));
+            Registry.register(BuiltinRegistries.CONFIGURED_FEATURE,new ResourceLocation("solarforge","radiant_tree"),RADIANT_TREE_CONFIGURED);
         });
     }
 

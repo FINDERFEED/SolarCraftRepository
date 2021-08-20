@@ -1,5 +1,6 @@
 package com.finderfeed.solarforge.world_generation.features.foliage_placers;
 
+import com.finderfeed.solarforge.world_generation.dimension_related.radiant_land.RadiantTreeFoliagePlacer;
 import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacerType;
 import net.minecraftforge.fmllegacy.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
@@ -11,4 +12,7 @@ public class FoliagePlacerRegistry {
 
     public static final RegistryObject<FoliagePlacerType<BurntTreeFoliagePlacer>> BURNT_TREE_FOLIAGE_PLACER_FOLIAGE_PLACER_TYPE = DEFERRED_REGISTER.register("burnt_tree_foliage",()->
             new FoliagePlacerType<>(BurntTreeFoliagePlacer.CODEC));
+
+    public static final RegistryObject<FoliagePlacerType<RadiantTreeFoliagePlacer>> RADIANT_TREE_FOLIAGE_PLACER = DEFERRED_REGISTER.register("radiant_tree_foliage",()->
+            new FoliagePlacerType<>(RadiantTreeFoliagePlacer.CODEC));
 }

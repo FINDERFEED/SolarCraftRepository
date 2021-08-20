@@ -1,6 +1,7 @@
 package com.finderfeed.solarforge.magic_items.blocks;
 
 import com.finderfeed.solarforge.misc_things.ParticlesList;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.LeavesBlock;
 
@@ -15,6 +16,14 @@ import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 public class RunicLeavesBlock extends LeavesBlock {
     public RunicLeavesBlock(Properties p_i48370_1_) {
         super(p_i48370_1_);
+    }
+
+
+
+
+    @Override
+    public boolean isFlammable(BlockState state, BlockGetter world, BlockPos pos, Direction face) {
+        return true;
     }
 
     @Override
