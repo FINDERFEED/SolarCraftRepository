@@ -19,7 +19,10 @@ public class RunicLeavesBlock extends LeavesBlock {
     }
 
 
-
+    @Override
+    public int getFlammability(BlockState state, BlockGetter world, BlockPos pos, Direction face) {
+        return 20;
+    }
 
     @Override
     public boolean isFlammable(BlockState state, BlockGetter world, BlockPos pos, Direction face) {

@@ -6,15 +6,15 @@
   "downfall": 0.1,
   "depth": 0.125,
   "effects": {
-    "fog_color": 16772662,
+    "fog_color": 12638463,
     "folliage_color": 16772662,
     "grass_color": 16772662,
-    "sky_color": 3570943,
+    "sky_color": 7907327,
     "water_color": 16772662,
     "water_fog_color": 16772662,
     "grass_color_modifier": "none"
   },
-  "surface_builder": "solarforge:molten_forest_surface",
+  "surface_builder": "solarforge:radiant_land",
 
 
   "carvers": {
