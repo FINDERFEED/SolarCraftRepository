@@ -1,6 +1,7 @@
 package com.finderfeed.solarforge.world_generation.dimension_related.radiant_land;
 
 import com.finderfeed.solarforge.ClientHelpers;
+import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import com.mojang.math.Matrix4f;
@@ -13,6 +14,7 @@ import net.minecraft.resources.ResourceLocation;
 
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.client.ISkyRenderHandler;
+import org.lwjgl.opengl.GL11;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -89,19 +91,19 @@ class RenderSky implements ISkyRenderHandler{
 
         RenderSystem.setShader(GameRenderer::getPositionTexColorShader);
         builder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX_COLOR);
-        builder.vertex(mat,-40,-80,40).uv(0,1).color(255,255,255,255).endVertex();
-        builder.vertex(mat,40,-80,40).uv(1,1).color(255,255,255,255).endVertex();
-        builder.vertex(mat,40,-80,-40).uv(1,0).color(255,255,255,255).endVertex();
-        builder.vertex(mat,-40,-80,-40).uv(0,0).color(255,255,255,255).endVertex();
+        builder.vertex(mat,-25,-80,25).uv(0,1).color(255,255,255,255).endVertex();
+        builder.vertex(mat,25,-80,25).uv(1,1).color(255,255,255,255).endVertex();
+        builder.vertex(mat,25,-80,-25).uv(1,0).color(255,255,255,255).endVertex();
+        builder.vertex(mat,-25,-80,-25).uv(0,0).color(255,255,255,255).endVertex();
         tes.end();
 
         ClientHelpers.bindText(SUNGAZE_TEST);
         RenderSystem.setShader(GameRenderer::getPositionTexColorShader);
         builder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX_COLOR);
-        builder.vertex(mat,-40,80,-40).uv(0,0).color(255,255,255,255).endVertex();
-        builder.vertex(mat,40,80,-40).uv(1,0).color(255,255,255,255).endVertex();
-        builder.vertex(mat,40,80,40).uv(1,1).color(255,255,255,255).endVertex();
-        builder.vertex(mat,-40,80,40).uv(0,1).color(255,255,255,255).endVertex();
+        builder.vertex(mat,-25,80,-25).uv(0,0).color(255,255,255,255).endVertex();
+        builder.vertex(mat,25,80,-25).uv(1,0).color(255,255,255,255).endVertex();
+        builder.vertex(mat,25,80,25).uv(1,1).color(255,255,255,255).endVertex();
+        builder.vertex(mat,-25,80,25).uv(0,1).color(255,255,255,255).endVertex();
         tes.end();
         matrixStack.popPose();
 
