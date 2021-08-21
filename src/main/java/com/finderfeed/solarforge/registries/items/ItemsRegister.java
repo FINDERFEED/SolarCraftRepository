@@ -161,6 +161,7 @@ public class ItemsRegister {
     public static final RegistryObject<Item> TERA_RUNE_BLOCK = ITEMS.register("tera_rune_block",()->new BlockItem(BlocksRegistry.TERA_RUNE_BLOCK.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
     public static final RegistryObject<Item> FIRA_RUNE_BLOCK = ITEMS.register("fira_rune_block",()->new BlockItem(BlocksRegistry.FIRA_RUNE_BLOCK.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
 
+    public static final RegistryObject<Item> RADIANT_CRYSTAL = ITEMS.register("radiant_crystal",()->new BlockItem(BlocksRegistry.RADIANT_CRYSTAL.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
     public static final RegistryObject<Item> RADIANT_LEAVES = ITEMS.register("radiant_leaves",()->new BlockItem(BlocksRegistry.RADIANT_LEAVES.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
     public static final RegistryObject<Item> RADIANT_GRASS = ITEMS.register("radiant_grass",()->new BlockItem(BlocksRegistry.RADIANT_GRASS.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
     public static final RegistryObject<Item> RADIANT_GRASS_NOT_BLOCK = ITEMS.register("radiant_grass_grass",()->new BlockItem(BlocksRegistry.RADIANT_GRASS_NOT_BLOCK.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));

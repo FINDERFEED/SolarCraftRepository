@@ -44,7 +44,6 @@ public class EnergyPylonFeature extends Feature<NoneFeatureConfiguration> {
         BlockPos pos = ctx.origin();
         Rotation rot = Rotation.getRandom(random);
         StructureManager manager = world.getLevel().getStructureManager();
-        List<ResourceLocation> list = new ArrayList<>();
 
         StructureTemplate templ = manager.getOrCreate(FEATURE);
 

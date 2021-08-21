@@ -113,8 +113,8 @@ public class FeaturesRegistry {
             Registry.register(BuiltinRegistries.CONFIGURED_FEATURE,new ResourceLocation("solarforge","radiant_grass_grass"),RANDOM_PATCH_RADIANT_GRASS);
 
             FLOATING_ISLANDS_RADIANT_LAND_CONFIGURED = FLOATING_ISLANDS_RADIANT_LAND.configured(NoneFeatureConfiguration.INSTANCE)
-                    .decorated(FeatureDecorator.CHANCE.configured(new ChanceDecoratorConfiguration(6)))
-                    .decorated(FeatureDecorator.RANGE.configured(new RangeDecoratorConfiguration(UniformHeight.of(VerticalAnchor.absolute(90),VerticalAnchor.absolute(140)))))
+                    .decorated(FeatureDecorator.CHANCE.configured(new ChanceDecoratorConfiguration(10)))
+                    .decorated(FeatureDecorator.RANGE.configured(new RangeDecoratorConfiguration(UniformHeight.of(VerticalAnchor.absolute(100),VerticalAnchor.absolute(140)))))
                     .decorated(FeatureDecorator.SQUARE.configured(NoneDecoratorConfiguration.INSTANCE));
             Registry.register(BuiltinRegistries.CONFIGURED_FEATURE,new ResourceLocation("solarforge","floating_islands"),FLOATING_ISLANDS_RADIANT_LAND_CONFIGURED);
 

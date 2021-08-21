@@ -81,5 +81,6 @@ public class BlocksRegistry {
     public  static  final RegistryObject<Block> RADIANT_PLANKS = BLOCKS.register("radiant_planks",()-> new FlammableBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS),20));
     public  static  final RegistryObject<Block> RADIANT_WOOD_STAIRS = BLOCKS.register("radiant_stairs",()-> new StairBlock(()-> RADIANT_PLANKS.get().defaultBlockState(),BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS)));
     public  static  final RegistryObject<Block> RADIANT_WOOD_SLAB = BLOCKS.register("radiant_slab",()-> new FlammableSlabBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS),20));
+    public static final RegistryObject<Block> RADIANT_CRYSTAL = BLOCKS.register("radiant_crystal",()->new GlassBlock(BlockBehaviour.Properties.copy(Blocks.GLASS)));
 
 }
