@@ -368,6 +368,10 @@ public class Helpers {
         return chunks;
     }
 
+    public static boolean isDay(Level world){
+        return world.getDayTime() % 24000 <= 12000;
+    }
+
 
     public static class ManaHandler{
         public static boolean spendMana(Player player,double amount){

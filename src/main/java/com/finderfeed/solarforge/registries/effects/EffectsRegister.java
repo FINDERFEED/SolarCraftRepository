@@ -12,6 +12,6 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class EffectsRegister {
     public static final DeferredRegister<MobEffect> EFFECTS = DeferredRegister.create(ForgeRegistries.MOB_EFFECTS,"solarforge");
     public static final RegistryObject<MobEffect> IMMORTALITY_EFFECT = EFFECTS.register("immortality",()-> new ImmortalityEffect(MobEffectCategory.BENEFICIAL,0x737373));
-
+    public static final RegistryObject<MobEffect> STAR_GAZE_EFFECT = EFFECTS.register("star_gaze",()-> new ImmortalityEffect(MobEffectCategory.HARMFUL,0x29004a));
 
 }

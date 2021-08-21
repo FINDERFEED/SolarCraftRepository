@@ -35,16 +35,16 @@ public class OresGeneration {
     public static void genOres(final BiomeLoadingEvent event){
 
 
-        if (!event.getCategory().equals(Biome.BiomeCategory.NETHER) && !event.getCategory().equals(Biome.BiomeCategory.THEEND)){
+        if (!event.getCategory().equals(Biome.BiomeCategory.NETHER) && !event.getCategory().equals(Biome.BiomeCategory.THEEND) && notNone(event)){
             event.getGeneration().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES,
                     Feature.ORE.configured(new OreConfiguration(OreConfiguration.Predicates.NATURAL_STONE, SolarForge.SOLAR_ORE.get().defaultBlockState(),4))
                             .rangeUniform(VerticalAnchor.bottom(),VerticalAnchor.absolute(30)).squared().count(10));
         }
-        if (!event.getCategory().equals(Biome.BiomeCategory.NETHER) && !event.getCategory().equals(Biome.BiomeCategory.THEEND)){
+        if (!event.getCategory().equals(Biome.BiomeCategory.NETHER) && !event.getCategory().equals(Biome.BiomeCategory.THEEND) && notNone(event)){
             event.getGeneration().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, Feature.ORE.configured(new OreConfiguration(OreConfiguration.Predicates.NATURAL_STONE, BlocksRegistry.SOLAR_STONE.get().defaultBlockState(),10))
                     .rangeUniform(VerticalAnchor.bottom(),VerticalAnchor.absolute(80)).squared().count(7));
         }
-        if (event.getCategory().equals(Biome.BiomeCategory.DESERT)) {
+        if (event.getCategory().equals(Biome.BiomeCategory.DESERT) ) {
             event.getGeneration().getStructures().add(() -> SolarForgeStructureFeatures.CONF_DUNGEON_ONE);
         }
         if (event.getCategory().equals(Biome.BiomeCategory.SAVANNA) || event.getCategory().equals(Biome.BiomeCategory.MESA)) {
@@ -67,6 +67,9 @@ public class OresGeneration {
         }
     }
 
+    private static boolean notNone(BiomeLoadingEvent event){
+        return event.getCategory() != Biome.BiomeCategory.NONE;
+    }
 
     @SubscribeEvent
     public void addDimensionalSpacing(final WorldEvent.Load event) {

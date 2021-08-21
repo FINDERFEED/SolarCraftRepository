@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "solarforge:runic_planks"
+    "solarforge:runic_planks",
+    "solarforge:radiant_planks"
   ]
 }

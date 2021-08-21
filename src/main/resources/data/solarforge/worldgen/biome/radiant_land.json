@@ -1,7 +1,7 @@
 {
   "scale": 0.05,
   "precipitation": "none",
-  "category": "plains",
+  "category": "none",
   "temperature": 1,
   "downfall": 0.1,
   "depth": 0.125,
@@ -57,8 +57,9 @@
 
     ],
     [
-      "minecraft:patch_grass_plain",
-      "solarforge:dead_sprout_feature",
+      "solarforge:floating_islands",
+      "solarforge:radiant_land_ambient_tree",
+      "solarforge:radiant_grass_grass",
       "minecraft:spring_lava",
       "solarforge:radiant_tree"
     ],

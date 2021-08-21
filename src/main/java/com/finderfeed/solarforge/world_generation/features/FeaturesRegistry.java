@@ -4,6 +4,7 @@ import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
 import com.finderfeed.solarforge.world_generation.biomes.molten_forest.MoltenForestAmbience;
 import com.finderfeed.solarforge.world_generation.biomes.molten_forest.BurntTreeFeature;
 import com.finderfeed.solarforge.world_generation.dimension_related.radiant_land.RadiantTreeFoliagePlacer;
+import net.minecraft.data.worldgen.Features;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.core.Registry;
@@ -13,12 +14,15 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.VerticalAnchor;
+import net.minecraft.world.level.levelgen.feature.blockplacers.SimpleBlockPlacer;
 import net.minecraft.world.level.levelgen.feature.configurations.*;
 import net.minecraft.world.level.levelgen.feature.stateproviders.SimpleStateProvider;
 
 import net.minecraft.world.level.levelgen.feature.foliageplacers.BlobFoliagePlacer;
 
 import net.minecraft.world.level.levelgen.feature.trunkplacers.StraightTrunkPlacer;
+import net.minecraft.world.level.levelgen.heightproviders.UniformHeight;
+import net.minecraft.world.level.levelgen.placement.NoiseCountFactorDecoratorConfiguration;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 
@@ -40,12 +44,14 @@ public class FeaturesRegistry {
     public static final Feature<NoneFeatureConfiguration> BURNT_BIOME_AMBIENCE_1 = new MoltenForestAmbience(NoneFeatureConfiguration.CODEC);
     public static final Feature<NoneFeatureConfiguration> BURNT_BIOME_AMBIENCE_2 = new MoltenForestRuins(NoneFeatureConfiguration.CODEC);
     public static final Feature<NoneFeatureConfiguration> ENERGY_PYLON = new EnergyPylonFeature(NoneFeatureConfiguration.CODEC);
-
+    public static final Feature<NoneFeatureConfiguration> FLOATING_ISLANDS_RADIANT_LAND = new RadiantLandFloatingIslands(NoneFeatureConfiguration.CODEC);
 
     public static ConfiguredFeature<?,?> RADIANT_TREE_CONFIGURED;
     public static ConfiguredFeature<?,?> ENERGY_PYLON_CONFIGURED;
     public static ConfiguredFeature<?,?> MOLTEN_FOREST_RUINS_CONFIGURED;
-
+    public static ConfiguredFeature<?,?> RANDOM_PATCH_RADIANT_GRASS;
+    public static ConfiguredFeature<?,?> FLOATING_ISLANDS_RADIANT_LAND_CONFIGURED;
+    public static ConfiguredFeature<?,?> RADIANT_LAND_AMBIENT_TREE;
 
     public static final ConfiguredFeature<?,?> BURNT_BIOME_AMBIENCE_1_CONFIGURED = BURNT_BIOME_AMBIENCE_1
             .configured(NoneFeatureConfiguration.INSTANCE)
@@ -62,6 +68,7 @@ public class FeaturesRegistry {
         event.getRegistry().register(BURNT_BIOME_AMBIENCE_1.setRegistryName(BURNT_BIOME_BURNT_TREE));
         event.getRegistry().register(BURNT_BIOME_AMBIENCE_2.setRegistryName(new ResourceLocation("solarforge","ruins_feature")));
         event.getRegistry().register(ENERGY_PYLON.setRegistryName(new ResourceLocation("solarforge","energy_pylon_feature")));
+        event.getRegistry().register(FLOATING_ISLANDS_RADIANT_LAND.setRegistryName(new ResourceLocation("solarforge","floating_islands")));
     }
 
 
@@ -89,7 +96,7 @@ public class FeaturesRegistry {
             Registry.register(BuiltinRegistries.CONFIGURED_FEATURE,new ResourceLocation("solarforge","configured_ruins"),MOLTEN_FOREST_RUINS_CONFIGURED);
 
             RADIANT_TREE_CONFIGURED = Feature.TREE.configured(new TreeConfiguration.TreeConfigurationBuilder(
-                    new SimpleStateProvider(Blocks.ACACIA_LOG.defaultBlockState()),
+                    new SimpleStateProvider(BlocksRegistry.RADIANT_LOG.get().defaultBlockState()),
                     new StraightTrunkPlacer(15, 1, 0),
                     new SimpleStateProvider(BlocksRegistry.RADIANT_LEAVES.get().defaultBlockState()),
                     new SimpleStateProvider(Blocks.OAK_SAPLING.defaultBlockState()),
@@ -99,6 +106,32 @@ public class FeaturesRegistry {
                     .decorated(FeatureDecorator.HEIGHTMAP.configured(new HeightmapConfiguration(Heightmap.Types.WORLD_SURFACE_WG)))
                     .decorated(FeatureDecorator.SQUARE.configured(NoneDecoratorConfiguration.INSTANCE));
             Registry.register(BuiltinRegistries.CONFIGURED_FEATURE,new ResourceLocation("solarforge","radiant_tree"),RADIANT_TREE_CONFIGURED);
+
+            RANDOM_PATCH_RADIANT_GRASS = Feature.RANDOM_PATCH.configured(new RandomPatchConfiguration.GrassConfigurationBuilder(new SimpleStateProvider(BlocksRegistry.RADIANT_GRASS_NOT_BLOCK.get().defaultBlockState()),new SimpleBlockPlacer()).build())
+                    .decorated(Features.Decorators.HEIGHTMAP_DOUBLE_SQUARE)
+                    .decorated(FeatureDecorator.COUNT_NOISE.configured(new NoiseDependantDecoratorConfiguration(-0.8D, 5, 10)));
+            Registry.register(BuiltinRegistries.CONFIGURED_FEATURE,new ResourceLocation("solarforge","radiant_grass_grass"),RANDOM_PATCH_RADIANT_GRASS);
+
+            FLOATING_ISLANDS_RADIANT_LAND_CONFIGURED = FLOATING_ISLANDS_RADIANT_LAND.configured(NoneFeatureConfiguration.INSTANCE)
+                    .decorated(FeatureDecorator.CHANCE.configured(new ChanceDecoratorConfiguration(6)))
+                    .decorated(FeatureDecorator.RANGE.configured(new RangeDecoratorConfiguration(UniformHeight.of(VerticalAnchor.absolute(90),VerticalAnchor.absolute(140)))))
+                    .decorated(FeatureDecorator.SQUARE.configured(NoneDecoratorConfiguration.INSTANCE));
+            Registry.register(BuiltinRegistries.CONFIGURED_FEATURE,new ResourceLocation("solarforge","floating_islands"),FLOATING_ISLANDS_RADIANT_LAND_CONFIGURED);
+
+            RADIANT_LAND_AMBIENT_TREE = Feature.TREE.configured(new TreeConfiguration.TreeConfigurationBuilder(
+                    new SimpleStateProvider(BlocksRegistry.RADIANT_LOG.get().defaultBlockState()),
+                    new StraightTrunkPlacer(4, 1, 0),
+                    new SimpleStateProvider(BlocksRegistry.RADIANT_LEAVES.get().defaultBlockState()),
+                    new SimpleStateProvider(Blocks.OAK_SAPLING.defaultBlockState()),
+                    new BlobFoliagePlacer(ConstantInt.of(2), ConstantInt.of(0), 3),
+                    new TwoLayersFeatureSize(1, 0, 1))
+                    .ignoreVines().build())
+                    .decorated(FeatureDecorator.CHANCE.configured(new ChanceDecoratorConfiguration(8)))
+                    .decorated(FeatureDecorator.HEIGHTMAP.configured(new HeightmapConfiguration(Heightmap.Types.WORLD_SURFACE_WG)))
+                    .decorated(FeatureDecorator.SQUARE.configured(NoneDecoratorConfiguration.INSTANCE))
+                    .decorated( FeatureDecorator.COUNT_NOISE_BIASED.configured(new NoiseCountFactorDecoratorConfiguration(14,5,2)));
+            Registry.register(BuiltinRegistries.CONFIGURED_FEATURE,new ResourceLocation("solarforge","radiant_land_ambient_tree"),RADIANT_LAND_AMBIENT_TREE);
+
         });
     }
 

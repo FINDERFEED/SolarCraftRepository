@@ -3,15 +3,22 @@ package com.finderfeed.solarforge.events.other_events.event_handler;
 
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.SolarForge;
-import com.finderfeed.solarforge.events.PlayerTickEvent;
 import com.finderfeed.solarforge.events.my_events.ProgressionUnlockEvent;
 import com.finderfeed.solarforge.magic_items.items.ExperienceCrystal;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Achievement;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.ProgressionHelper;
+import com.finderfeed.solarforge.registries.SolarcraftDamageSources;
+import com.finderfeed.solarforge.registries.effects.EffectsRegister;
 import com.finderfeed.solarforge.registries.items.ItemsRegister;
 import com.finderfeed.solarforge.world_generation.features.FeaturesRegistry;
+import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.ExperienceOrb;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -24,25 +31,40 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.ChatFormatting;
 import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerXpEvent;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import org.apache.logging.log4j.core.tools.picocli.CommandLine;
-import org.lwjgl.system.CallbackI;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Optional;
 
 
 @Mod.EventBusSubscriber(modid = "solarforge",bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class EventHandler {
+    public static final ResourceKey<Level> RADIANT_LAND_KEY = ResourceKey.create(Registry.DIMENSION_REGISTRY,new ResourceLocation("solarforge","radiant_land"));
 
+    @SubscribeEvent
+    public static void playerTickEvent(final TickEvent.PlayerTickEvent event){
+        Player player = event.player;
+        Level world = player.level;
 
+        if (!world.isClientSide && !player.isCreative()){
+            if ((world.getGameTime() % 20 == 1)&& !Helpers.isDay(world) &&  (world.dimension() == RADIANT_LAND_KEY)){
+                player.addEffect(new MobEffectInstance(EffectsRegister.STAR_GAZE_EFFECT.get(),400,0));
+            }
+
+            if (player.hasEffect(EffectsRegister.STAR_GAZE_EFFECT.get())){
+                if (world.getGameTime() % 80 == 1){
+                    DamageSource src = SolarcraftDamageSources.STARGAZE.bypassArmor().setMagic();
+                    player.hurt(src,4);
+                }
+            }
+        }
+    }
 
 
 
@@ -61,13 +83,16 @@ public class EventHandler {
 
     @SubscribeEvent
     public static void addFeatures(BiomeLoadingEvent event){
-        if ( (event.getCategory() != Biome.BiomeCategory.NETHER) && (event.getCategory() != Biome.BiomeCategory.THEEND) )
+        if ( (event.getCategory() != Biome.BiomeCategory.NETHER) && (event.getCategory() != Biome.BiomeCategory.THEEND) && notNone(event))
         event.getGeneration().addFeature(GenerationStep.Decoration.LOCAL_MODIFICATIONS, FeaturesRegistry.ENERGY_PYLON_CONFIGURED);
         if (event.getCategory() == Biome.BiomeCategory.PLAINS){
             event.getGeneration().addFeature(GenerationStep.Decoration.VEGETAL_DECORATION,FeaturesRegistry.RUNIC_TREE_FEATURE);
         }
     }
 
+    private static boolean notNone(BiomeLoadingEvent event){
+        return event.getCategory() != Biome.BiomeCategory.NONE;
+    }
 
     @SubscribeEvent
     public static void progressionUnlockEvent(ProgressionUnlockEvent event){

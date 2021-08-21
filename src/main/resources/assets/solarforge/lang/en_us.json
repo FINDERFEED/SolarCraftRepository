@@ -393,7 +393,8 @@
   "amethyst_core.lore": "An upgraded version of the small solar core.",
   "solar_fragment.modules": "Modules",
   "modules.lore": "Can be attached to the specified items to give them bonuses. Modules can be attached in module station. An item cant have two modules of the same type.",
-  "item.solarforge.amethyst_core": "Amethyst core"
+  "item.solarforge.amethyst_core": "Amethyst core",
+  "death.attack.solarcraft_stargaze": "%s has been reduced to atoms by deadly gaze."
 
 
 

@@ -49,7 +49,7 @@ public class MoltenForestAmbience extends Feature<NoneFeatureConfiguration> {
         list.add(TREE2);
         StructureTemplate templ = manager.getOrCreate(list.get(random.nextInt(2)));
 
-        ChunkPos chunkpos = new ChunkPos(pos);
+
 
         StructurePlaceSettings set = new StructurePlaceSettings().addProcessor(BlockIgnoreProcessor.AIR).setRandom(random).setRotation(rot).setBoundingBox(BoundingBox.infinite());
 
