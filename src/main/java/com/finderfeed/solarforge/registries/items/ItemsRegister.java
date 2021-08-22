@@ -169,6 +169,8 @@ public class ItemsRegister {
     public static final RegistryObject<Item> RADIANT_PLANKS = ITEMS.register("radiant_planks",()->new FuelBlockItem(BlocksRegistry.RADIANT_PLANKS.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS),300));
     public static final RegistryObject<Item> RADIANT_STAIRS = ITEMS.register("radiant_stairs",()->new FuelBlockItem(BlocksRegistry.RADIANT_WOOD_STAIRS.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS),300));
     public static final RegistryObject<Item> RADIANT_SLAB = ITEMS.register("radiant_slab",()->new FuelBlockItem(BlocksRegistry.RADIANT_WOOD_SLAB.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS),300));
+    //TODO:remove .tab() on release
+    public static final RegistryObject<Item> RADIANT_PORTAL = ITEMS.register("radiant_portal",()->new BlockItem(BlocksRegistry.RADIANT_LAND_PORTAL.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
 
     public static final RegistryObject<Item> EXPERIENCE_CRYSTAL = ITEMS.register("xp_crystal",()->new ExperienceCrystal(new Item.Properties().tab(SolarForge.SOLAR_GROUP_TOOLS).stacksTo(1)));
     public static final RegistryObject<Item> MODULE_APPLIER = ITEMS.register("module_table",()->new BlockItem(BlocksRegistry.MODULE_APPLIER.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));

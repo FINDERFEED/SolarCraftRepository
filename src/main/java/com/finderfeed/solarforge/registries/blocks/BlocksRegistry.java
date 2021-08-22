@@ -1,6 +1,7 @@
 package com.finderfeed.solarforge.registries.blocks;
 
 import com.finderfeed.solarforge.for_future_library.*;
+import com.finderfeed.solarforge.magic_items.RadiantPortalBlock;
 import com.finderfeed.solarforge.magic_items.blocks.infusing_table_things.infusing_pool.InfusingPool;
 import com.finderfeed.solarforge.magic_items.blocks.BlueGemDoorBlock;
 import com.finderfeed.solarforge.magic_items.blocks.*;
@@ -82,5 +83,6 @@ public class BlocksRegistry {
     public  static  final RegistryObject<Block> RADIANT_WOOD_STAIRS = BLOCKS.register("radiant_stairs",()-> new StairBlock(()-> RADIANT_PLANKS.get().defaultBlockState(),BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS)));
     public  static  final RegistryObject<Block> RADIANT_WOOD_SLAB = BLOCKS.register("radiant_slab",()-> new FlammableSlabBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS),20));
     public static final RegistryObject<Block> RADIANT_CRYSTAL = BLOCKS.register("radiant_crystal",()->new GlassBlock(BlockBehaviour.Properties.copy(Blocks.GLASS)));
+    public static final RegistryObject<Block> RADIANT_LAND_PORTAL = BLOCKS.register("radiant_portal",()->new RadiantPortalBlock(BlockBehaviour.Properties.copy(Blocks.BEDROCK).isViewBlocking((a, b, c)-> false).noCollission() ));
 
 }

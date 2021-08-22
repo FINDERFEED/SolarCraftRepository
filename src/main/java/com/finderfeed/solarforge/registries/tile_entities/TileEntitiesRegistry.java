@@ -72,4 +72,7 @@ public class TileEntitiesRegistry {
     public static final RegistryObject<BlockEntityType<BaseRepeaterTile>> REPEATER = TILE_ENTITY_TYPE.register("repeater",()->
             BlockEntityType.Builder.of(BaseRepeaterTile::new, BlocksRegistry.REPEATER.get()).build(null));
 
+    public static final RegistryObject<BlockEntityType<RadiantPortalTile>> PORTAL = TILE_ENTITY_TYPE.register("portal",()->
+            BlockEntityType.Builder.of(RadiantPortalTile::new, BlocksRegistry.RADIANT_LAND_PORTAL.get()).build(null));
+
 }

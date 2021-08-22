@@ -27,7 +27,8 @@
   "features": [
     [],
     [
-      "minecraft:lake_lava"
+      "minecraft:lake_lava",
+      "solarforge:crystallized_ore_vein"
     ],
     [
 

@@ -43,7 +43,7 @@ public final class SolarcraftConfig {
 
         List<String> DEFAULT_BLOCKS = new ArrayList<>();
         DEFAULT_BLOCKS.addAll(List.of("minecraft:diamond_ore","minecraft:iron_ore","minecraft:gold_ore","minecraft:lapis_ore"));
-        ISLAND_ORES = BUILDER.comment("Blocks that can generate in island in radiant land dimension")
+        ISLAND_ORES = BUILDER.comment("Blocks that can generate in islands/crystallized ore veins in radiant land dimension")
                 .define("blocks",DEFAULT_BLOCKS);
 
         BUILDER.pop();
