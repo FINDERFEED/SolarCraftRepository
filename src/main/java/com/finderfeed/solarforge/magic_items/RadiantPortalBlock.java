@@ -10,6 +10,7 @@ import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.Heightmap;
@@ -50,6 +51,11 @@ public class RadiantPortalBlock extends Block implements EntityBlock {
         }
 
         super.entityInside(state, world, pos, entity);
+    }
+
+    @Override
+    public RenderShape getRenderShape(BlockState p_60550_) {
+        return RenderShape.ENTITYBLOCK_ANIMATED;
     }
 
     @Nullable
