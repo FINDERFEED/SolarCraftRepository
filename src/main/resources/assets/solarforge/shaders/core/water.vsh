@@ -8,10 +8,9 @@ in vec2 UV2;
 uniform mat4 ModelViewMat;
 uniform mat4 ProjMat;
 uniform mat4 modelview;
-uniform mat4 projection;
 uniform float time;
-
-
+uniform float sinModifier;
+uniform float intensity;
 
 out vec4 vertexColor;
 out vec2 texCoord0;
@@ -28,9 +27,9 @@ float distancesq(vec3 dotone,vec3 dottwo){
 void main() {
 
 
-    float razn = distancesq(Position,vec3(0.0,0.0,0.0))*15 +time;
+    float razn = distancesq(Position,vec3(0.0,0.0,0.0))*intensity +time;
 
-    gl_Position = ProjMat * ModelViewMat * vec4(vec3(Position.x,Position.y,Position.z +sin(razn)*0.25),1.0);
+    gl_Position = ProjMat * modelview * vec4(vec3(Position.x,Position.y,Position.z +sin(razn)*sinModifier),1.0);
 
     vertexColor = Color;
     texCoord0 = UV0;

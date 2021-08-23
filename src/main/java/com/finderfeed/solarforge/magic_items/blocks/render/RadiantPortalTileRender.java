@@ -35,7 +35,8 @@ public class RadiantPortalTileRender implements BlockEntityRenderer<RadiantPorta
 
         RadiantPortalRendertype.WATER_SHADER.safeGetUniform("time").set(time);
         RadiantPortalRendertype.WATER_SHADER.safeGetUniform("modelview").set(mat);
-        RadiantPortalRendertype.WATER_SHADER.safeGetUniform("projection").set(RenderSystem.getProjectionMatrix());
+        RadiantPortalRendertype.WATER_SHADER.safeGetUniform("sinModifier").set(0.05f);
+        RadiantPortalRendertype.WATER_SHADER.safeGetUniform("intensity").set(30f);
         VertexConsumer vertex = buffer.getBuffer(RadiantPortalRendertype.textWithWaterShader(LOC));
 
         float mod = 0.05f;
@@ -46,15 +47,15 @@ public class RadiantPortalTileRender implements BlockEntityRenderer<RadiantPorta
                 float rast = (float)Math.sqrt(i*i + g*g);
 
                 if (rast <= 1.05f) {
-                    vertex.vertex(mat, i, g, 0).color(1, 1, 1, 1f).uv(uvValue, uvValueg).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
-                    vertex.vertex(mat, i, g + mod, 0).color(1, 1, 1, 1f).uv(uvValue, uvValueg + mod * 0.5f).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
-                    vertex.vertex(mat, i + mod, g + mod, 0).color(1, 1, 1, 1f).uv(uvValue + mod * 0.5f, uvValueg + mod * 0.5f).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
-                    vertex.vertex(mat, i + mod, g, 0).color(1, 1, 1, 1f).uv(uvValue + mod * 0.5f, uvValueg).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
+                    vertex.vertex( i, g, 0).color(1, 1, 1, 1f).uv(uvValue, uvValueg).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
+                    vertex.vertex( i, g + mod, 0).color(1, 1, 1, 1f).uv(uvValue, uvValueg + mod * 0.5f).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
+                    vertex.vertex( i + mod, g + mod, 0).color(1, 1, 1, 1f).uv(uvValue + mod * 0.5f, uvValueg + mod * 0.5f).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
+                    vertex.vertex( i + mod, g, 0).color(1, 1, 1, 1f).uv(uvValue + mod * 0.5f, uvValueg).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
 
-                    vertex.vertex(mat, i + mod, g, 0).color(1, 1, 1, 1f).uv(uvValue + mod * 0.5f, uvValueg).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
-                    vertex.vertex(mat, i + mod, g + mod, 0).color(1, 1, 1, 1f).uv(uvValue + mod * 0.5f, uvValueg + mod * 0.5f).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
-                    vertex.vertex(mat, i, g + mod, 0).color(1, 1, 1, 1f).uv(uvValue, uvValueg + mod * 0.5f).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
-                    vertex.vertex(mat, i, g, 0).color(1, 1, 1, 1f).uv(uvValue, uvValueg).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
+                    vertex.vertex( i + mod, g, 0).color(1, 1, 1, 1f).uv(uvValue + mod * 0.5f, uvValueg).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
+                    vertex.vertex( i + mod, g + mod, 0).color(1, 1, 1, 1f).uv(uvValue + mod * 0.5f, uvValueg + mod * 0.5f).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
+                    vertex.vertex( i, g + mod, 0).color(1, 1, 1, 1f).uv(uvValue, uvValueg + mod * 0.5f).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
+                    vertex.vertex( i, g, 0).color(1, 1, 1, 1f).uv(uvValue, uvValueg).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
                 }
             }
 

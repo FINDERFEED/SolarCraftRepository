@@ -84,7 +84,7 @@ class RadiantTeleporter implements ITeleporter{
         }else{
             pos = BlockPos.ZERO;
         }
-        destWorld.getChunkAt(BlockPos.ZERO).markUnsaved();
+        destWorld.getChunkAt(pos).markUnsaved();
         return this.isVanilla() ? defaultPortalInfo.apply(destWorld) :
                 new PortalInfo(new Vec3(pos.getX(),destWorld.getHeight(Heightmap.Types.WORLD_SURFACE,pos.getX(),pos.getZ()),pos.getZ()),
                         Vec3.ZERO,
