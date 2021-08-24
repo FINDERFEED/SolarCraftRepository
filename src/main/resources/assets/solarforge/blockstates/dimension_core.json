@@ -1,0 +1,5 @@
+{
+  "variants": {
+    "": { "model": "solarforge:block/dimension_core" }
+  }
+}

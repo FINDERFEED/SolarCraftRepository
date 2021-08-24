@@ -61,7 +61,7 @@ public class RadiantPortalBlock extends Block implements EntityBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-        return TileEntitiesRegistry.PORTAL.get().create(blockPos,blockState);
+        return null;
     }
 }
 class RadiantTeleporter implements ITeleporter{

@@ -162,6 +162,7 @@ public class ItemsRegister {
     public static final RegistryObject<Item> FIRA_RUNE_BLOCK = ITEMS.register("fira_rune_block",()->new BlockItem(BlocksRegistry.FIRA_RUNE_BLOCK.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
 
     public static final RegistryObject<Item> RADIANT_CRYSTAL = ITEMS.register("radiant_crystal",()->new BlockItem(BlocksRegistry.RADIANT_CRYSTAL.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
+    public static final RegistryObject<Item> DIMENSION_CORE = ITEMS.register("dimension_core",()->new BlockItem(BlocksRegistry.DIMENSION_CORE.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
     public static final RegistryObject<Item> RADIANT_LEAVES = ITEMS.register("radiant_leaves",()->new BlockItem(BlocksRegistry.RADIANT_LEAVES.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
     public static final RegistryObject<Item> RADIANT_GRASS = ITEMS.register("radiant_grass",()->new BlockItem(BlocksRegistry.RADIANT_GRASS.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
     public static final RegistryObject<Item> RADIANT_GRASS_NOT_BLOCK = ITEMS.register("radiant_grass_grass",()->new BlockItem(BlocksRegistry.RADIANT_GRASS_NOT_BLOCK.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
@@ -169,8 +170,8 @@ public class ItemsRegister {
     public static final RegistryObject<Item> RADIANT_PLANKS = ITEMS.register("radiant_planks",()->new FuelBlockItem(BlocksRegistry.RADIANT_PLANKS.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS),300));
     public static final RegistryObject<Item> RADIANT_STAIRS = ITEMS.register("radiant_stairs",()->new FuelBlockItem(BlocksRegistry.RADIANT_WOOD_STAIRS.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS),300));
     public static final RegistryObject<Item> RADIANT_SLAB = ITEMS.register("radiant_slab",()->new FuelBlockItem(BlocksRegistry.RADIANT_WOOD_SLAB.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS),300));
-    //TODO:remove .tab() on release
-    public static final RegistryObject<Item> RADIANT_PORTAL = ITEMS.register("radiant_portal",()->new BlockItem(BlocksRegistry.RADIANT_LAND_PORTAL.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
+
+//    public static final RegistryObject<Item> RADIANT_PORTAL = ITEMS.register("radiant_portal",()->new BlockItem(BlocksRegistry.RADIANT_LAND_PORTAL.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
 
     public static final RegistryObject<Item> RADIANT_PORTAL_CREATOR = ITEMS.register("radiant_portal_creator",()->new PortalCreatorBlockItem(BlocksRegistry.RADIANT_LAND_PORTAL_CREATOR.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
 

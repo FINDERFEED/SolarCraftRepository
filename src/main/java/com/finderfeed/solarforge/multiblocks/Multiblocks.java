@@ -62,6 +62,24 @@ public enum Multiblocks {
             .addStruct(Structures.INFUSER_STRUCTURE)
             .addAchievement(Achievement.CRAFT_SOLAR_INFUSER)
             .setStructName("solarforge_struct.solar_infuser")
+    )),
+    RADIANT_LAND_PORTAL(new Multiblock(new Multiblock.Constructor()
+            .addBlock(BlocksRegistry.DIMENSION_CORE.get(), 'C')
+            .addBlock(BlocksRegistry.SOLAR_STONE_BRICKS.get(),'B')
+            .addBlock(BlocksRegistry.SOLAR_STONE_COLLUMN.get(),'H')
+            .addBlock(BlocksRegistry.SOLAR_STONE_COLLUMN_HORIZONTAL.get(), 'L')
+            .addBlock(BlocksRegistry.TERA_RUNE_BLOCK.get(), 'T')
+            .addBlock(BlocksRegistry.FIRA_RUNE_BLOCK.get(), 'F')
+            .addBlock(BlocksRegistry.KELDA_RUNE_BLOCK.get(), 'K')
+            .addBlock(BlocksRegistry.ARDO_RUNE_BLOCK.get(), 'A')
+            .addBlock(BlocksRegistry.URBA_RUNE_BLOCK.get(), 'U')
+            .addBlock(BlocksRegistry.ZETA_RUNE_BLOCK.get(), 'Z')
+            .addBlock(BlocksRegistry.SOLAR_STONE_STAIRS.get(), 'J')
+            .addMainBlock(BlocksRegistry.DIMENSION_CORE.get())
+            .addStruct(Structures.RADIANT_DIM_PORTAL_STRUCTURE)
+            .setStructName("solarcraft.dimension_portal")
+
+
     ));
 
 
@@ -71,7 +89,8 @@ public enum Multiblocks {
             "generator", SOLAR_ENERGY_GENERATOR.a,
             "healer", AURA_HEALER.a,
             "mortar", SOLAR_MORTAR.a,
-            "lesser_core", SOLAR_CORE.a
+            "lesser_core", SOLAR_CORE.a,
+            "dim_portal",RADIANT_LAND_PORTAL.a
     );
 
 
@@ -90,7 +109,8 @@ public enum Multiblocks {
             AURA_HEALER,
             SOLAR_MORTAR,
             SOLAR_ENERGY_GENERATOR,
-            INFUSER
+            INFUSER,
+            RADIANT_LAND_PORTAL
     };
 
 
@@ -100,6 +120,54 @@ public enum Multiblocks {
 }
 class Structures{
 
+    public static String[][] RADIANT_DIM_PORTAL_STRUCTURE = {
+            {
+                    "BBBBBBB",
+                    "BBBBBBB",
+                    "BBBBBBB",
+                    "BBBCBBB",
+                    "BBBBBBB",
+                    "BBBBBBB",
+                    "BBBBBBB"
+            },
+            {
+                    "H     H",
+                    "       ",
+                    "       ",
+                    " H R H ",
+                    "       ",
+                    "       ",
+                    "H     H"
+            },
+            {
+                    "K     F",
+                    "       ",
+                    "       ",
+                    " Z   U ",
+                    "       ",
+                    "       ",
+                    "T     A"
+            },
+            {
+                    "HJ   JH",
+                    "J     J",
+                    "       ",
+                    " H   H ",
+                    "       ",
+                    "J     J",
+                    "HJ   JH"
+            },
+            {
+                    "ILLLLLI",
+                    "L     L",
+                    "L     L",
+                    "LJ   JL",
+                    "L     L",
+                    "L     L",
+                    "ILLLLLI"
+            },
+
+    };
 
     public static String[][] INFUSER_STRUCTURE = {
             {

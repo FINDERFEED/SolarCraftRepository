@@ -18,11 +18,14 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 import javax.annotation.Nullable;
 
 public class PortalCreatorBlock extends Block implements EntityBlock {
+
+
 
     public static VoxelShape BOTTOM_AABB = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 8.0D, 16.0D);
 
@@ -30,6 +33,12 @@ public class PortalCreatorBlock extends Block implements EntityBlock {
         super(p_49795_);
     }
 
+
+    @Override
+    public VoxelShape getShape(BlockState p_60555_, BlockGetter p_60556_, BlockPos p_60557_, CollisionContext p_60558_) {
+
+        return BOTTOM_AABB;
+    }
 
     @Nullable
     @Override
@@ -41,17 +50,22 @@ public class PortalCreatorBlock extends Block implements EntityBlock {
     @Override
     public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitRes) {
         if (!world.isClientSide){
-            if (world.getBlockEntity(pos) instanceof RadiantPortalCreatorTile tile){
-                tile.activate();
+            if (hand == InteractionHand.MAIN_HAND) {
+                if (world.getBlockEntity(pos) instanceof RadiantPortalCreatorTile tile) {
+                    if (!tile.isActive()) {
+                        tile.activate();
+                    } else {
+                        tile.deactivate();
+                    }
+                    world.sendBlockUpdated(pos, state, state, 3);
+                    return InteractionResult.SUCCESS;
+                }
             }
         }
         return super.use(state, world, pos, player, hand, hitRes);
     }
 
-    @Override
-    public VoxelShape getShape(BlockState p_60555_, BlockGetter p_60556_, BlockPos p_60557_, CollisionContext p_60558_) {
-        return BOTTOM_AABB;
-    }
+
 
     @Override
     public RenderShape getRenderShape(BlockState p_60550_) {

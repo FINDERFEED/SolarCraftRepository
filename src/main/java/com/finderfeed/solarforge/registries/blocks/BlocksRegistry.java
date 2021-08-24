@@ -84,7 +84,7 @@ public class BlocksRegistry {
     public static final RegistryObject<Block> RADIANT_WOOD_STAIRS = BLOCKS.register("radiant_stairs",()-> new StairBlock(()-> RADIANT_PLANKS.get().defaultBlockState(),BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS)));
     public static final RegistryObject<Block> RADIANT_WOOD_SLAB = BLOCKS.register("radiant_slab",()-> new FlammableSlabBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS),20));
     public static final RegistryObject<Block> RADIANT_CRYSTAL = BLOCKS.register("radiant_crystal",()->new GlassBlock(BlockBehaviour.Properties.copy(Blocks.GLASS)));
-    public static final RegistryObject<Block> RADIANT_LAND_PORTAL = BLOCKS.register("radiant_portal",()->new RadiantPortalBlock(BlockBehaviour.Properties.copy(Blocks.BEDROCK).isViewBlocking((a, b, c)-> false).noCollission() ));
+//    public static final RegistryObject<Block> RADIANT_LAND_PORTAL = BLOCKS.register("radiant_portal",()->new RadiantPortalBlock(BlockBehaviour.Properties.copy(Blocks.BEDROCK).isViewBlocking((a, b, c)-> false).noCollission() ));
     public static final RegistryObject<Block> RADIANT_LAND_PORTAL_CREATOR = BLOCKS.register("radiant_portal_creator",()->new PortalCreatorBlock(BlockBehaviour.Properties.copy(Blocks.NETHERITE_BLOCK).isViewBlocking((a, b, c)-> false).noCollission()));
-
+    public  static  final RegistryObject<Block> DIMENSION_CORE = BLOCKS.register("dimension_core",()-> new Block(BlockBehaviour.Properties.copy(Blocks.STONE)));
 }
