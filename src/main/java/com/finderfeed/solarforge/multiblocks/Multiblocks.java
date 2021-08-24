@@ -75,6 +75,8 @@ public enum Multiblocks {
             .addBlock(BlocksRegistry.URBA_RUNE_BLOCK.get(), 'U')
             .addBlock(BlocksRegistry.ZETA_RUNE_BLOCK.get(), 'Z')
             .addBlock(BlocksRegistry.SOLAR_STONE_STAIRS.get(), 'J')
+            .addBlock(BlocksRegistry.RADIANT_LAND_PORTAL_CREATOR.get(), 'R')
+            .addBlock(BlocksRegistry.SOLAR_STONE_CHISELED.get(), 'I')
             .addMainBlock(BlocksRegistry.DIMENSION_CORE.get())
             .addStruct(Structures.RADIANT_DIM_PORTAL_STRUCTURE)
             .setStructName("solarcraft.dimension_portal")

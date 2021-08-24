@@ -217,7 +217,7 @@ public class SolarForge
         TierSortingRegistry.registerTier(SolarCraftToolTiers.QUALADIUM_TOOLS_TIER,new ResourceLocation("qualadium"), List.of(Tiers.DIAMOND),List.of());
         TierSortingRegistry.registerTier(SolarCraftToolTiers.CHARGED_QUALADIUM_TOOLS_TIER,new ResourceLocation("charged_qualadium"), List.of(Tiers.DIAMOND),List.of());
         TierSortingRegistry.registerTier(SolarCraftToolTiers.SOLAR_GOD_TOOL_TIER,new ResourceLocation("solar_god"), List.of(Tiers.DIAMOND),List.of());
-        CapabilitySolarMana.register();
+//        CapabilitySolarMana.register();
         MinecraftForge.EVENT_BUS.addGenericListener(Entity.class,AttachManaCapabilityEvent::attachCapabilities);
         MinecraftForge.EVENT_BUS.addListener(AttachManaCapabilityEvent::tickEvent);
         MinecraftForge.EVENT_BUS.register(new PlayerTickEvent());

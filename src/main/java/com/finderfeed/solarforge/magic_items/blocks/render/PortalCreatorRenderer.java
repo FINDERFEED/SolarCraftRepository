@@ -41,7 +41,7 @@ public class PortalCreatorRenderer implements BlockEntityRenderer<RadiantPortalC
 
         if (tile.isActive()) {
             matrices.pushPose();
-            matrices.translate(0.5f, 1.7f, 0.5f);
+            matrices.translate(0.5f, 1.6f, 0.5f);
             matrices.scale(1.35f, 1.35f, 1.35f);
 
             Matrix4f mat = matrices.last().pose();

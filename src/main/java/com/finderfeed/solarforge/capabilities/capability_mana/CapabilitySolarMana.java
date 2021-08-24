@@ -17,9 +17,9 @@ public class CapabilitySolarMana {
     @CapabilityInject(SolarForgeMana.class)
     public static Capability<SolarForgeMana> SOLAR_MANA_PLAYER = null;
 
-    public static void register(){
-        CapabilityManager.INSTANCE.register(SolarForgeMana.class);
-    }
+//    public static void register(){
+//        CapabilityManager.INSTANCE.register(SolarForgeMana.class);
+//    }
 
     public static LazyOptional<SolarForgeMana> getSolarMana(final LivingEntity ent){
         return ent.getCapability(SOLAR_MANA_PLAYER,null);
@@ -27,3 +27,4 @@ public class CapabilitySolarMana {
 
 
 }
+

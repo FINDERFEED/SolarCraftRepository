@@ -1,6 +1,8 @@
 package com.finderfeed.solarforge.magic_items.blocks.blockentities;
 
+import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.events.other_events.event_handler.EventHandler;
+import com.finderfeed.solarforge.multiblocks.Multiblocks;
 import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
 import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
 import net.minecraft.core.BlockPos;
@@ -28,8 +30,6 @@ public class RadiantPortalCreatorTile extends BlockEntity {
 
     private AABB TP_AABB;
 
-    private int update = 1;
-    private boolean active = false;
 
     public RadiantPortalCreatorTile( BlockPos p_155229_, BlockState p_155230_) {
         super(TileEntitiesRegistry.PORTAL_CREATOR.get(), p_155229_, p_155230_);
@@ -37,16 +37,10 @@ public class RadiantPortalCreatorTile extends BlockEntity {
 
 
     public boolean isActive(){
-        return active;
+        return Helpers.checkStructure(level,worldPosition.offset(-3,-1,-3), Multiblocks.RADIANT_LAND_PORTAL.getM());
     }
 
-    public void activate() {
-        this.active = true;
-    }
 
-    public void deactivate(){
-        this.active = false;
-    }
 
     public static void tick(RadiantPortalCreatorTile tile, BlockState state, BlockPos pos, Level world){
 
@@ -67,39 +61,13 @@ public class RadiantPortalCreatorTile extends BlockEntity {
                     }
                 }
             });
-            if (tile.update < 2){
-                world.sendBlockUpdated(pos,state,state,3);
-                tile.update+=1;
-            }
+
         }
 
     }
 
 
-    @Nullable
-    @Override
-    public ClientboundBlockEntityDataPacket getUpdatePacket() {
-        return new ClientboundBlockEntityDataPacket(worldPosition,3,this.save(new CompoundTag()));
-    }
 
-    @Override
-    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
-        super.onDataPacket(net, pkt);
-        this.load(pkt.getTag());
-    }
-
-    @Override
-    public CompoundTag save(CompoundTag cmp) {
-        cmp.putBoolean("active",active);
-        return super.save(cmp);
-    }
-
-    @Override
-    public void load(CompoundTag cmp) {
-        this.update = 1;
-        this.active = cmp.getBoolean("active");
-        super.load(cmp);
-    }
 }
 class RadiantTeleporter implements ITeleporter {
 

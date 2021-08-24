@@ -243,7 +243,7 @@ public class EnergyGeneratorTileRender implements BlockEntityRenderer<EnergyGene
                     "projection", RenderSystem.getProjectionMatrix(),
                     "modelview", modelview,
                     "distance", dist,
-                    "intensity", 1.5f,
+                    "intensity", 3.5f,
                     "innerControl",4f,
                     "outerControl",0.045f
             )));

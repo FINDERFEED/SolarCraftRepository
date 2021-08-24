@@ -87,6 +87,7 @@ public enum AncientFragment {
     SOLAR_INFUSER_STRUCTURE(tx("solar_fragment.solar_infuser_structure"),"solar_infuser_structure",Achievement.CRAFT_SOLAR_INFUSER,BookEntry.STRUCTURES,Multiblocks.INFUSER,true),
     SOLAR_CORE_STRUCTURE(tx("solar_fragment.solar_core_structure"),"solar_core_structure",SOLAR_CORE.neededProgression,BookEntry.STRUCTURES,Multiblocks.SOLAR_CORE,true),
     SOLAR_ENERGY_GENERATOR_STRUCTURE(tx("solar_fragment.solar_energy_generator_structure"),"solar_energy_generator_structure",SOLAR_ENERGY_GENERATOR.neededProgression,BookEntry.STRUCTURES,Multiblocks.SOLAR_ENERGY_GENERATOR,true),
+    DIMENSION_STRUCTURE(tx("solar_fragment.dimension_structure"),"dimension_structure",Achievement.DIMENSION_CORE,BookEntry.STRUCTURES,Multiblocks.RADIANT_LAND_PORTAL,true),
 
     SOLAR_GOD_PICKAXE_UPGRADE(tx("solar_fragment.solar_god_pickaxe_upgrade"),"solar_god_pickaxe_upgrade",Achievement.CRAFT_SOLAR_ENERGY_GENERATOR,BookEntry.UPGRADES,ItemsRegister.SOLAR_GOD_PICKAXE.get().getDefaultInstance(),tx("solar_pickaxe_upgrade.lore")),
     SOLAR_GOD_SWORD_UPGRADE(tx("solar_fragment.solar_god_sword_upgrade"),"solar_god_sword_upgrade",Achievement.CRAFT_SOLAR_ENERGY_GENERATOR,BookEntry.UPGRADES,ItemsRegister.SOLAR_GOD_SWORD.get().getDefaultInstance(),tx("solar_god_sword_upgrade.lore")),

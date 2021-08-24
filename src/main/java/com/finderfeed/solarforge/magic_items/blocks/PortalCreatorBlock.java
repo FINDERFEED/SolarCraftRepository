@@ -47,23 +47,7 @@ public class PortalCreatorBlock extends Block implements EntityBlock {
     }
 
 
-    @Override
-    public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitRes) {
-        if (!world.isClientSide){
-            if (hand == InteractionHand.MAIN_HAND) {
-                if (world.getBlockEntity(pos) instanceof RadiantPortalCreatorTile tile) {
-                    if (!tile.isActive()) {
-                        tile.activate();
-                    } else {
-                        tile.deactivate();
-                    }
-                    world.sendBlockUpdated(pos, state, state, 3);
-                    return InteractionResult.SUCCESS;
-                }
-            }
-        }
-        return super.use(state, world, pos, player, hand, hitRes);
-    }
+
 
 
 
