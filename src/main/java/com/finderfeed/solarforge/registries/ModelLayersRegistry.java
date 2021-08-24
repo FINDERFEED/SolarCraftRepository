@@ -5,6 +5,7 @@ import com.finderfeed.solarforge.SolarAbilities.meteorite.MeteoriteModel;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.projectiles.renderers.AbstractTurretProjectileRenderer;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.projectiles.renderers.MortarProjectileRenderer;
 import com.finderfeed.solarforge.magic_items.blocks.rendering_models.AuraHealerModel;
+import com.finderfeed.solarforge.magic_items.blocks.rendering_models.RadiantPortal;
 import com.finderfeed.solarforge.magic_items.blocks.rendering_models.SolarEnergyGeneratorModel;
 import com.finderfeed.solarforge.magic_items.blocks.solar_forge_block.SolarForgeBlockModelTrue;
 import com.finderfeed.solarforge.magic_items.blocks.solar_forge_block.SolarForgePetalsTrue;
@@ -52,6 +53,9 @@ public class ModelLayersRegistry {
     public static final ModelLayerLocation SOLAR_GOD_SHIELD_MODEL =
             new ModelLayerLocation(new ResourceLocation("solarforge","solar_god_shield"), "main");
 
+    public static final ModelLayerLocation RADIANT_PORTAL_CREATOR_MODEL =
+            new ModelLayerLocation(new ResourceLocation("solarforge","radiant_model_creator"), "main");
+
     @SubscribeEvent
     public static void registerModelLayers(EntityRenderersEvent.RegisterLayerDefinitions event){
 
@@ -64,5 +68,6 @@ public class ModelLayersRegistry {
         event.registerLayerDefinition(SOLAR_FORGE_PETALS, SolarForgePetalsTrue::createLayer);
         event.registerLayerDefinition(SOLAR_FORGE_MAIN_MODEL, SolarForgeBlockModelTrue::createLayer);
         event.registerLayerDefinition(SOLAR_GOD_SHIELD_MODEL, SolarGodShield::createLayers);
+        event.registerLayerDefinition(RADIANT_PORTAL_CREATOR_MODEL, RadiantPortal::createLayers);
     }
 }

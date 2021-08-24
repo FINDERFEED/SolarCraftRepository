@@ -2,6 +2,7 @@ package com.finderfeed.solarforge.for_future_library;
 
 import com.finderfeed.solarforge.ClientHelpers;
 import com.finderfeed.solarforge.events.RenderEventsHandler;
+import com.finderfeed.solarforge.events.other_events.ModelRegistryEvents;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import com.finderfeed.solarforge.rendering.shaders.post_chains.PostChainPlusUltra;
 import com.finderfeed.solarforge.rendering.shaders.post_chains.UniformPlusPlus;
@@ -17,6 +18,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiComponent;
 
 import net.minecraft.client.renderer.*;
+import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 
@@ -37,9 +39,13 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.HalfTransparentBlock;
 import net.minecraft.world.level.block.StainedGlassPaneBlock;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.client.model.data.ModelDataMap;
 
 import java.util.List;
+import java.util.Random;
 import java.util.function.Consumer;
+
+import static com.ibm.icu.text.PluralRules.Operand.j;
 
 
 public class RenderingTools {
@@ -390,5 +396,19 @@ public class RenderingTools {
         vertex.vertex(matrix, -0.5F * mod, height, -0.5F * mod).color(255, 255, 255, 255).uv(1, 1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
         vertex.vertex(matrix, -0.5F * mod, 0, -0.5F * mod).color(255, 255, 255, 255).uv(1, 0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
         stack.popPose();
+    }
+
+
+
+    public static void renderObjModel(ResourceLocation location,PoseStack matrices,MultiBufferSource buffer,int light,int overlay,Consumer<PoseStack> transforms){
+        List<BakedQuad> list = Minecraft.getInstance().getModelManager().getModel(location)
+                .getQuads(null, null, new Random(), new ModelDataMap.Builder().build());
+
+        for (BakedQuad a : list) {
+            matrices.pushPose();
+            transforms.accept(matrices);
+            buffer.getBuffer(RenderType.solid()).putBulkData(matrices.last(), a, 1f, 1f, 1f, light, overlay);
+            matrices.popPose();
+        }
     }
 }

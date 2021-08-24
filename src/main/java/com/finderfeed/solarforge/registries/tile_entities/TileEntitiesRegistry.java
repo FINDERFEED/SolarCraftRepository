@@ -75,4 +75,7 @@ public class TileEntitiesRegistry {
     public static final RegistryObject<BlockEntityType<RadiantPortalTile>> PORTAL = TILE_ENTITY_TYPE.register("portal",()->
             BlockEntityType.Builder.of(RadiantPortalTile::new, BlocksRegistry.RADIANT_LAND_PORTAL.get()).build(null));
 
+    public static final RegistryObject<BlockEntityType<RadiantPortalCreatorTile>> PORTAL_CREATOR = TILE_ENTITY_TYPE.register("portal_creator",()->
+            BlockEntityType.Builder.of(RadiantPortalCreatorTile::new, BlocksRegistry.RADIANT_LAND_PORTAL_CREATOR.get()).build(null));
+
 }

@@ -172,6 +172,9 @@ public class ItemsRegister {
     //TODO:remove .tab() on release
     public static final RegistryObject<Item> RADIANT_PORTAL = ITEMS.register("radiant_portal",()->new BlockItem(BlocksRegistry.RADIANT_LAND_PORTAL.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
 
+    public static final RegistryObject<Item> RADIANT_PORTAL_CREATOR = ITEMS.register("radiant_portal_creator",()->new PortalCreatorBlockItem(BlocksRegistry.RADIANT_LAND_PORTAL_CREATOR.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
+
+
     public static final RegistryObject<Item> EXPERIENCE_CRYSTAL = ITEMS.register("xp_crystal",()->new ExperienceCrystal(new Item.Properties().tab(SolarForge.SOLAR_GROUP_TOOLS).stacksTo(1)));
     public static final RegistryObject<Item> MODULE_APPLIER = ITEMS.register("module_table",()->new BlockItem(BlocksRegistry.MODULE_APPLIER.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
     public static final RegistryObject<Item> AMETHYST_CORE = ITEMS.register("amethyst_core",()->new Item(new Item.Properties().tab(SolarForge.SOLAR_GROUP)));
