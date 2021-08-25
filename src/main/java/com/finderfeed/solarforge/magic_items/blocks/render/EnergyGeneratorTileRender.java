@@ -230,11 +230,7 @@ public class EnergyGeneratorTileRender implements BlockEntityRenderer<EnergyGene
             Vec3 tilePos = new Vec3(tile.getBlockPos().getX() + 0.5, tile.getBlockPos().getY() + 0.5, tile.getBlockPos().getZ() + 0.5);
             float dist = (float) new Vec3(tilePos.x - playerPos.x, tilePos.y - playerPos.y, tilePos.z - playerPos.z).length()*50;
 
-            Matrix4f projection = Minecraft.getInstance().gameRenderer.getProjectionMatrix(Minecraft.getInstance().gameRenderer.getFov(
-                    Minecraft.getInstance().gameRenderer.getMainCamera(),
-                    1,
-                    true
-            ));
+
 
             matrices.pushPose();
             matrices.translate(0.5, 0.6, 0.5);
@@ -243,7 +239,7 @@ public class EnergyGeneratorTileRender implements BlockEntityRenderer<EnergyGene
                     "projection", RenderSystem.getProjectionMatrix(),
                     "modelview", modelview,
                     "distance", dist,
-                    "intensity", 3.5f,
+                    "intensity", 2f,
                     "innerControl",4f,
                     "outerControl",0.045f
             )));

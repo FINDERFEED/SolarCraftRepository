@@ -5,6 +5,7 @@ import com.finderfeed.solarforge.for_future_library.RenderingTools;
 import com.finderfeed.solarforge.magic_items.blocks.render.EnergyGeneratorTileRender;
 import com.finderfeed.solarforge.magic_items.blocks.render.RuneEnergyPylonRenderer;
 
+import com.finderfeed.solarforge.magic_items.blocks.render.WormholeRenderer;
 import com.finderfeed.solarforge.rendering.shaders.post_chains.PostChainPlusUltra;
 import com.finderfeed.solarforge.rendering.shaders.post_chains.UniformPlusPlus;
 
@@ -100,7 +101,7 @@ public class RenderEventsHandler {
             if (!ACTIVE_SHADERS.isEmpty()) {
                 RenderingTools.renderHandManually(event.getMatrixStack(), event.getPartialTicks());
             }
-            resizeShader(width,height,RuneEnergyPylonRenderer.SHADER,EnergyGeneratorTileRender.SHADER);
+            resizeShader(width,height,RuneEnergyPylonRenderer.SHADER,EnergyGeneratorTileRender.SHADER, WormholeRenderer.SHADER);
 
 
             ACTIVE_SHADERS.forEach((uniforms,shader)->{

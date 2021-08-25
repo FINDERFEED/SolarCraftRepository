@@ -48,5 +48,9 @@ void main() {
 
     offset = focus + offset;
 
-    fragColor = texture(DiffuseSampler,offset);
+    vec4 final =  texture(DiffuseSampler,offset);
+
+
+    fragColor = final;
+
 }
