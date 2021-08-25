@@ -57,7 +57,11 @@ public class RadiantPortalCreatorTile extends BlockEntity {
                         destination = world.getServer().getLevel(Level.OVERWORLD);
                     }
                     if (destination != null){
+
                         entity.changeDimension(destination, RadiantTeleporter.INSTANCE);
+                        if (destination.dimension() == EventHandler.RADIANT_LAND_KEY){
+                            createWormhole(destination);
+                        }
                     }
                 }
             });
@@ -66,6 +70,20 @@ public class RadiantPortalCreatorTile extends BlockEntity {
 
     }
 
+    private static void createWormhole(ServerLevel destination){
+        destination.getChunkAt(BlockPos.ZERO).markUnsaved();
+        int yHeight = destination.getHeight(Heightmap.Types.WORLD_SURFACE,0,0);
+        boolean placed = false;
+        for (int i = yHeight; i <= 255;i++){
+            if (destination.getBlockState(BlockPos.ZERO.above(i)).getBlock() == BlocksRegistry.WORMHOLE.get()){
+                placed = true;
+                break;
+            }
+        }
+        if (!placed){
+            destination.setBlockAndUpdate(BlockPos.ZERO.above(yHeight + 50),BlocksRegistry.WORMHOLE.get().defaultBlockState());
+        }
+    }
 
 
 }
