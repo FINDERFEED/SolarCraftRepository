@@ -399,17 +399,19 @@
   "item.solarforge.geminium_ingot": "Geminium ingot",
   "solar_fragment.dimension_core": "Dimension core",
   "dimension_core.lore": "Its time to see what they have been hiding from the world.",
-  "item.solarforge.dimension_core": "Dimension core",
-  "item.solarforge.radiant_log": "Radiant log",
-  "item.solarforge.radiant_planks": "Radiant planks",
-  "item.solarforge.radiant_leaves": "Radiant leaves",
-  "item.solarforge.radiant_grass": "Radiant grass block",
-  "item.solarforge.radiant_grass_grass": "Radiant grass",
-  "item.solarforge.radiant_stairs": "Radiant stairs",
-  "item.solarforge.radiant_slab": "Radiant slab",
-  "item.solarforge.radiant_portal_creator": "Radiant land portal frame",
+  "block.solarforge.dimension_core": "Dimension core",
+  "block.solarforge.radiant_log": "Radiant log",
+  "block.solarforge.radiant_planks": "Radiant planks",
+  "block.solarforge.radiant_leaves": "Radiant leaves",
+  "block.solarforge.radiant_grass": "Radiant grass block",
+  "block.solarforge.radiant_grass_grass": "Radiant grass",
+  "block.solarforge.radiant_stairs": "Radiant stairs",
+  "block.solarforge.radiant_slab": "Radiant slab",
+  "block.solarforge.radiant_portal_creator": "Radiant land portal frame",
   "solar_fragment.runic_core": "Runic core",
-  "runic_core.lore": "An upgraded version of small solar core"
+  "runic_core.lore": "An upgraded version of small solar core",
+  "block.solarforge.radiant_crystal": "Radiant crystal",
+  "item.solarforge.runic_core": "Runic core"
 
 
 

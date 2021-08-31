@@ -24,6 +24,10 @@ public class CoreShaderRegistry {
                 (instance)->{
             RadiantPortalRendertype.WATER_SHADER = instance;
         });
+        event.registerShader(new ShaderInstance(event.getResourceManager(),new ResourceLocation("solarforge","ray"), DefaultVertexFormat.POSITION_COLOR_TEX_LIGHTMAP),
+                (instance)->{
+                    RadiantPortalRendertype.RAY_SHADER = instance;
+                });
     }
 
 }

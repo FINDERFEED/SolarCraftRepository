@@ -33,6 +33,9 @@ public class PortalCreatorRenderer implements BlockEntityRenderer<RadiantPortalC
 
     @Override
     public void render(RadiantPortalCreatorTile tile, float partialTicks, PoseStack matrices, MultiBufferSource buffer, int light, int i1) {
+
+        RenderingTools.renderShaderedRay(matrices,buffer,0.25f,10,(mat)->{mat.translate(0,5,0);},false,1,partialTicks);
+
         matrices.pushPose();
         matrices.mulPose(Vector3f.ZN.rotationDegrees(180));
         matrices.translate(-0.5f,-1.5f,0.5f);

@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#  ",
+    "## ",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "solarforge:radiant_planks"
+    }
+  },
+  "result": {
+    "item": "solarforge:radiant_stairs",
+    "count": 4
+  }
+}
