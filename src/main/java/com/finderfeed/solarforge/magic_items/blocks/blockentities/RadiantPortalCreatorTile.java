@@ -71,17 +71,17 @@ public class RadiantPortalCreatorTile extends BlockEntity {
     }
 
     private static void createWormhole(ServerLevel destination){
-        destination.getChunkAt(BlockPos.ZERO).markUnsaved();
-        int yHeight = destination.getHeight(Heightmap.Types.WORLD_SURFACE,0,0);
+
+        int yHeight = destination.getHeight(Heightmap.Types.WORLD_SURFACE,1,1);
         boolean placed = false;
-        for (int i = yHeight; i <= 255;i++){
-            if (destination.getBlockState(BlockPos.ZERO.above(i)).getBlock() == BlocksRegistry.WORMHOLE.get()){
+        for (int i = yHeight-10; i <= 255;i++){
+            if (destination.getBlockState(BlockPos.ZERO.offset(1,0,1).above(i)).getBlock() == BlocksRegistry.WORMHOLE.get()){
                 placed = true;
                 break;
             }
         }
         if (!placed){
-            destination.setBlockAndUpdate(BlockPos.ZERO.above(yHeight + 50),BlocksRegistry.WORMHOLE.get().defaultBlockState());
+            destination.setBlockAndUpdate(BlockPos.ZERO.offset(1,0,1).above(yHeight + 50),BlocksRegistry.WORMHOLE.get().defaultBlockState());
         }
     }
 

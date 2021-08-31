@@ -1,0 +1,42 @@
+{
+  "type":"solarforge:infusing",
+  "input1": {
+    "item": "solarforge:first_dimensional_shard"
+  },
+  "input2": {
+    "item": "solarforge:amethyst_core"
+  },
+  "input3": {
+    "item": "solarforge:runic_core"
+  },
+  "input4": {
+    "item": "solarforge:amethyst_core"
+  },
+  "input5": {
+    "item": "solarforge:geminium_ingot"
+  },
+  "input6": {
+    "item": "solarforge:qualadium_ingot"
+  },
+  "input7": {
+    "item": "solarforge:geminium_ingot"
+  },
+  "input8": {
+    "item": "solarforge:chiseled_solar_stone"
+  },
+  "input9": {
+    "item": "solarforge:solar_dust"
+  },
+  "result": {
+    "item": "solarforge:dimension_core"
+  },
+  "time": 5000,
+  "fragment": "dimension_core",
+  "energy": 50000,
+  "zeta": 50000,
+  "kelda": 50000,
+  "fira": 50000,
+  "tera": 50000,
+  "urba": 50000,
+  "ardo": 50000
+}

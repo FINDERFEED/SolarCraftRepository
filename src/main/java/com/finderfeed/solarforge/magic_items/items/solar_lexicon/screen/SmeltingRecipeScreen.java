@@ -62,12 +62,28 @@ public class SmeltingRecipeScreen extends Screen {
     public void render(PoseStack matrices, int mousex, int mousey, float partialTicks) {
         ClientHelpers.bindText(MAIN_SCREEN);
         blit(matrices,relX,relY,0,0,256,256);
-        minecraft.getItemRenderer().renderGuiItem(stacks.get(0),relX+77,relY+111);
-        minecraft.getItemRenderer().renderGuiItem(stacks.get(1),relX+94,relY+111);
-        minecraft.getItemRenderer().renderGuiItem(stacks.get(2),relX+111,relY+111);
-        minecraft.getItemRenderer().renderGuiItem(stacks.get(3),relX+77,relY+128);
+        renderItemAndTooltip(stacks.get(0),relX+77,relY+111,mousex,mousey,matrices,false);
+        renderItemAndTooltip(stacks.get(1),relX+94,relY+111,mousex,mousey,matrices,false);
+        renderItemAndTooltip(stacks.get(2),relX+111,relY+111,mousex,mousey,matrices,false);
+        renderItemAndTooltip(stacks.get(3),relX+77,relY+128,mousex,mousey,matrices,false);
 
-        minecraft.getItemRenderer().renderGuiItem(stacks.get(4),relX+94,relY+161);
+        renderItemAndTooltip(stacks.get(4),relX+94,relY+161,mousex,mousey,matrices,false);
         super.render(matrices,mousex,mousey,partialTicks);
+    }
+    private void renderItemAndTooltip(ItemStack toRender,int place1,int place2,int mousex,int mousey,PoseStack matrices,boolean last){
+        if (!last) {
+            minecraft.getItemRenderer().renderGuiItem(toRender, place1, place2);
+        }else{
+            ItemStack renderThis = toRender.copy();
+            minecraft.getItemRenderer().renderGuiItem(renderThis, place1, place2);
+            minecraft.getItemRenderer().renderGuiItemDecorations(font,renderThis,place1,place2);
+        }
+
+
+        if (((mousex >= place1) && (mousex <= place1+16)) && ((mousey >= place2) && (mousey <= place2+16)) && !toRender.getItem().equals(Items.AIR)){
+            matrices.pushPose();
+            renderTooltip(matrices,toRender,mousex,mousey);
+            matrices.popPose();
+        }
     }
 }

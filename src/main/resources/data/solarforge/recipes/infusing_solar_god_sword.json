@@ -19,13 +19,13 @@
     "item": "solarforge:qualadium_sword"
   },
   "input7": {
-    "item": "solarforge:solar_dust"
+    "item": "solarforge:geminium_ingot"
   },
   "input8": {
     "item": "minecraft:redstone_block"
   },
   "input9": {
-    "item": "solarforge:solar_dust"
+    "item": "solarforge:geminium_ingot"
   },
   "result": {
     "item": "solarforge:solar_god_sword"

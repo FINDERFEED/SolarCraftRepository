@@ -14,7 +14,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
-import net.minecraft.client.renderer.culling.Frustum;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.phys.Vec3;
@@ -78,7 +77,7 @@ public class WormholeRenderer implements BlockEntityRenderer<WormholeTileEntity>
                 RenderingTools.addActivePostShader(uniforms,SHADER);
             }catch (Exception e){
                 e.printStackTrace();
-                throw new RuntimeException("Failed to load shader in EnergyGeneratorTileRender.java");
+                throw new RuntimeException("Failed to load shader in WormholeRenderer.java");
             }
 
         }else{

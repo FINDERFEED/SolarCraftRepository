@@ -19,13 +19,13 @@
     "item": "solarforge:qualadium_ingot"
   },
   "input7": {
-    "item": "solarforge:solar_dust"
+    "item": "solarforge:geminium_ingot"
   },
   "input8": {
-    "item": "solarforge:qualadium_ingot"
+    "item": "solarforge:runic_core"
   },
   "input9": {
-    "item": "solarforge:solar_dust"
+    "item": "solarforge:geminium_ingot"
   },
   "result": {
     "item": "solarforge:radiant_chestplate"

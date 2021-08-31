@@ -163,7 +163,8 @@ public class ItemsRegister {
 
     public static final RegistryObject<Item> RADIANT_CRYSTAL = ITEMS.register("radiant_crystal",()->new BlockItem(BlocksRegistry.RADIANT_CRYSTAL.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
     //TODO:remove tab()
-    public static final RegistryObject<Item> WORMHOLE = ITEMS.register("wormhole",()->new BlockItem(BlocksRegistry.WORMHOLE.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
+    public static final RegistryObject<Item> WORMHOLE = ITEMS.register("wormhole",()->new BlockItem(BlocksRegistry.WORMHOLE.get(),new Item.Properties()));
+
     public static final RegistryObject<Item> DIMENSION_CORE = ITEMS.register("dimension_core",()->new BlockItem(BlocksRegistry.DIMENSION_CORE.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
     public static final RegistryObject<Item> RADIANT_LEAVES = ITEMS.register("radiant_leaves",()->new BlockItem(BlocksRegistry.RADIANT_LEAVES.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
     public static final RegistryObject<Item> RADIANT_GRASS = ITEMS.register("radiant_grass",()->new BlockItem(BlocksRegistry.RADIANT_GRASS.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
@@ -181,6 +182,8 @@ public class ItemsRegister {
     public static final RegistryObject<Item> EXPERIENCE_CRYSTAL = ITEMS.register("xp_crystal",()->new ExperienceCrystal(new Item.Properties().tab(SolarForge.SOLAR_GROUP_TOOLS).stacksTo(1)));
     public static final RegistryObject<Item> MODULE_APPLIER = ITEMS.register("module_table",()->new BlockItem(BlocksRegistry.MODULE_APPLIER.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
     public static final RegistryObject<Item> AMETHYST_CORE = ITEMS.register("amethyst_core",()->new Item(new Item.Properties().tab(SolarForge.SOLAR_GROUP)));
+    public static final RegistryObject<Item> RUNIC_CORE = ITEMS.register("runic_core",()->new Item(new Item.Properties().tab(SolarForge.SOLAR_GROUP)));
+    public static final RegistryObject<Item> GEMINIUM_INGOT = ITEMS.register("geminium_ingot",()->new Item(new Item.Properties().tab(SolarForge.SOLAR_GROUP)));
 
     public static final RegistryObject<ModuleItem> PHYSICAL_DEFENCE_MODULE_10 = ITEMS.register("defence_module_physical_10",()->new ModuleItem(new Item.Properties().tab(SolarForge.SOLAR_GROUP_TOOLS).stacksTo(1), ModuleItem.Type.ARMOR, ModuleItem.Tags.DEFENCE_MODULE_PHYSICAL_10));
     public static final RegistryObject<ModuleItem> SWORD_AUTOHEAL_MODULE = ITEMS.register("sword_heal_module",()->new ModuleItem(new Item.Properties().tab(SolarForge.SOLAR_GROUP_TOOLS).stacksTo(1), ModuleItem.Type.SWORDS, ModuleItem.Tags.SWORD_AUTOHEAL_MODULE));

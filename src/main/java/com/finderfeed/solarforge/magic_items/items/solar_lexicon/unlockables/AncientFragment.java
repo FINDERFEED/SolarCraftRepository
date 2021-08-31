@@ -45,6 +45,7 @@ public enum AncientFragment {
     RUNIC_ENERGY_REPEATER(tx("solar_fragment.runic_energy_repeater"),"runic_energy_repeater",Achievement.ACQUIRE_COLD_STAR_ACTIVATED,BookEntry.SKILLED_ITEMS,ItemsRegister.REPEATER.get().getDefaultInstance(),tx("runic_energy_repeater.lore"), SolarForge.INFUSING_RECIPE_TYPE,true),
 
     QUALADIUM_INGOT(tx("solar_fragment.qualadium_ingot"),"qualadium_ingot",Achievement.CRAFT_SOLAR_LENS,BookEntry.SKILLED_MATERIALS,ItemsRegister.QUALADIUM_INGOT.get().getDefaultInstance(),tx("qualadium_ingot.lore"), SolarForge.SOLAR_SMELTING,true),
+    GEMINIUM_INGOT(tx("solar_fragment.geminium_ingot"),"geminium_ingot",Achievement.TRANSMUTE_GEM,BookEntry.SKILLED_MATERIALS,ItemsRegister.GEMINIUM_INGOT.get().getDefaultInstance(),tx("geminium_ingot.lore"), SolarForge.SOLAR_SMELTING,true),
     SOLAR_GOD_SWORD(tx("solar_fragment.solar_god_sword"),"solar_god_sword",Achievement.CRAFT_SOLAR_LENS,BookEntry.SKILLED_ITEMS,ItemsRegister.SOLAR_GOD_SWORD.get().getDefaultInstance(),tx("solar_god_sword.lore"), SolarForge.INFUSING_RECIPE_TYPE,true),
     SOLAR_GOD_PICKAXE(tx("solar_fragment.solar_god_pickaxe"),"solar_god_pickaxe",Achievement.CRAFT_SOLAR_LENS,BookEntry.SKILLED_ITEMS,ItemsRegister.SOLAR_GOD_PICKAXE.get().getDefaultInstance(),tx("solar_god_pickaxe.lore"), SolarForge.INFUSING_RECIPE_TYPE,true),
     SOLAR_GOD_SHIELD(tx("solar_fragment.solar_god_shield"),"solar_god_shield",Achievement.CRAFT_SOLAR_LENS,BookEntry.SKILLED_ITEMS,ItemsRegister.SOLAR_GOD_SHIELD.get().getDefaultInstance(),tx("solar_god_shield.lore"), SolarForge.INFUSING_RECIPE_TYPE,true),
@@ -54,20 +55,14 @@ public enum AncientFragment {
     QUALADIUM_HOE(tx("solar_fragment.qualadium_hoe"),"qualadium_hoe",Achievement.CRAFT_SOLAR_LENS,BookEntry.SKILLED_ITEMS,ItemsRegister.QUALADIUM_HOE.get().getDefaultInstance(),tx("qualadium_hoe.lore"), SolarForge.INFUSING_RECIPE_TYPE,true),
     QUALADIUM_PICKAXE(tx("solar_fragment.qualadium_pickaxe"),"qualadium_pickaxe",Achievement.CRAFT_SOLAR_LENS,BookEntry.SKILLED_ITEMS,ItemsRegister.QUALADIUM_PICKAXE.get().getDefaultInstance(),tx("qualadium_pickaxe.lore"), SolarForge.INFUSING_RECIPE_TYPE,true),
     EXPERIENCE_CRYSTAL(tx("solar_fragment.experience_crystal"),"experience_crystal",Achievement.CRAFT_SOLAR_LENS,BookEntry.SKILLED_ITEMS,ItemsRegister.EXPERIENCE_CRYSTAL.get().getDefaultInstance(),tx("experience_crystal.lore"), SolarForge.INFUSING_RECIPE_TYPE,true),
-    AMETHYST_CORE(tx("solar_fragment.amethyst_core"),"amethyst_core",Achievement.CRAFT_SOLAR_LENS,BookEntry.SKILLED_ITEMS,ItemsRegister.AMETHYST_CORE.get().getDefaultInstance(),tx("amethyst_core.lore"), SolarForge.INFUSING_RECIPE_TYPE,true),
+    AMETHYST_CORE(tx("solar_fragment.amethyst_core"),"amethyst_core",Achievement.CRAFT_SOLAR_LENS,BookEntry.SKILLED_MATERIALS,ItemsRegister.AMETHYST_CORE.get().getDefaultInstance(),tx("amethyst_core.lore"), SolarForge.INFUSING_RECIPE_TYPE,true),
+    RUNIC_CORE(tx("solar_fragment.runic_core"),"runic_core",Achievement.CRAFT_SOLAR_LENS,BookEntry.SKILLED_MATERIALS,ItemsRegister.RUNIC_CORE.get().getDefaultInstance(),tx("runic_core.lore"), SolarForge.INFUSING_RECIPE_TYPE,true),
     MODULES(tx("solar_fragment.modules"),"modules",Achievement.CRAFT_SOLAR_LENS,BookEntry.SKILLED_ITEMS,List.of(
             ItemsRegister.MODULE_APPLIER.get().getDefaultInstance(),ItemsRegister.PICKAXE_MINER_ABILITY_MODULE.get().getDefaultInstance(),
             ItemsRegister.MAGIC_DAMAGE_MODULE_5.get().getDefaultInstance(),ItemsRegister.SWORD_AUTOHEAL_MODULE.get().getDefaultInstance(),
             ItemsRegister.PHYSICAL_DEFENCE_MODULE_10.get().getDefaultInstance(),ItemsRegister.DISARMING_THORNS_MODULE.get().getDefaultInstance(),
             ItemsRegister.SWORD_AOE_ATTACK.get().getDefaultInstance(),ItemsRegister.PICKAXE_AUTO_SMELT.get().getDefaultInstance()
     ),tx("modules.lore")),
-
-    CHARGED_QUALADIUM_SWORD(tx("solar_fragment.charged_qualadium_sword"),"charged_qualadium_sword",Achievement.CRAFT_SOLAR_ENERGY_GENERATOR,BookEntry.MASTER_ITEMS,ItemsRegister.CHARGED_QUALADIUM_SWORD.get().getDefaultInstance(),tx("charged_qualadium_sword.lore"), SolarForge.INFUSING_RECIPE_TYPE,true),
-    CHARGED_QUALADIUM_AXE(tx("solar_fragment.charged_qualadium_axe"),"charged_qualadium_axe",Achievement.CRAFT_SOLAR_ENERGY_GENERATOR,BookEntry.MASTER_ITEMS,ItemsRegister.CHARGED_QUALADIUM_AXE.get().getDefaultInstance(),tx("charged_qualadium_axe.lore"), SolarForge.INFUSING_RECIPE_TYPE,true),
-    CHARGED_QUALADIUM_SHOVEL(tx("solar_fragment.charged_qualadium_shovel"),"charged_qualadium_shovel",Achievement.CRAFT_SOLAR_ENERGY_GENERATOR,BookEntry.MASTER_ITEMS,ItemsRegister.CHARGED_QUALADIUM_SHOVEL.get().getDefaultInstance(),tx("charged_qualadium_shovel.lore"), SolarForge.INFUSING_RECIPE_TYPE,true),
-    CHARGED_QUALADIUM_HOE(tx("solar_fragment.charged_qualadium_hoe"),"charged_qualadium_hoe",Achievement.CRAFT_SOLAR_ENERGY_GENERATOR,BookEntry.MASTER_ITEMS,ItemsRegister.CHARGED_QUALADIUM_HOE.get().getDefaultInstance(),tx("charged_qualadium_hoe.lore"), SolarForge.INFUSING_RECIPE_TYPE,true),
-    CHARGED_QUALADIUM_PICKAXE(tx("solar_fragment.charged_qualadium_pickaxe"),"charged_qualadium_pickaxe",Achievement.CRAFT_SOLAR_ENERGY_GENERATOR,BookEntry.MASTER_ITEMS,ItemsRegister.CHARGED_QUALADIUM_PICKAXE.get().getDefaultInstance(),tx("charged_qualadium_pickaxe.lore"), SolarForge.INFUSING_RECIPE_TYPE,true),
-
 
     SOLAR_ENERGY_GENERATOR(tx("solar_fragment.solar_energy_generator"),"solar_energy_generator",Achievement.CRAFT_SOLAR_LENS,BookEntry.MASTER_ENERGY,ItemsRegister.ENERGY_GENERATOR_BLOCK.get().getDefaultInstance(),tx("solar_energy_generator.lore"), SolarForge.INFUSING_RECIPE_TYPE,true),
     SOLAR_CORE(tx("solar_fragment.solar_core"),"solar_core",Achievement.CRAFT_SOLAR_ENERGY_GENERATOR,BookEntry.MASTER_ENERGY,ItemsRegister.SOLAR_CORE.get().getDefaultInstance(),tx("solar_core.lore"), SolarForge.INFUSING_RECIPE_TYPE,true),
@@ -80,6 +75,7 @@ public enum AncientFragment {
     SOLAR_FURNACE(tx("solar_fragment.solar_furnace"),"solar_furnace",Achievement.CRAFT_SOLAR_ENERGY_GENERATOR,BookEntry.MASTER_ITEMS,ItemsRegister.SOLAR_FURNACE_BLOCK.get().getDefaultInstance(),tx("solar_furnace.lore"), SolarForge.INFUSING_RECIPE_TYPE,true),
     TOTEM_OF_IMMORTALITY(tx("solar_fragment.totem_of_immortality"),"totem_of_immortality",Achievement.CRAFT_SOLAR_ENERGY_GENERATOR,BookEntry.MASTER_ITEMS,ItemsRegister.TOTEM_OF_IMMORTALITY.get().getDefaultInstance(),tx("totem_of_immortality.lore"), SolarForge.INFUSING_RECIPE_TYPE,true),
     SOLAR_CROSSBOW(tx("solar_fragment.solar_crossbow"),"solar_crossbow",Achievement.CRAFT_SOLAR_ENERGY_GENERATOR,BookEntry.MASTER_ITEMS,ItemsRegister.ULTRA_CROSSBOW.get().getDefaultInstance(),tx("solar_crossbow.lore"), SolarForge.INFUSING_RECIPE_TYPE,true),
+    DIMENSION_CORE(tx("solar_fragment.dimension_core"),"dimension_core",Achievement.CRAFT_SOLAR_ENERGY_GENERATOR,BookEntry.MASTER_ITEMS,ItemsRegister.DIMENSION_CORE.get().getDefaultInstance(),tx("dimension_core.lore"), SolarForge.INFUSING_RECIPE_TYPE,true),
 
 
     AURA_HEALER_STRUCTURE(tx("solar_fragment.aura_healer_structure"),"aura_healer_structure",Achievement.USE_SOLAR_INFUSER,BookEntry.STRUCTURES,Multiblocks.AURA_HEALER,true),
