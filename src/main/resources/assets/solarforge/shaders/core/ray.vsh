@@ -31,8 +31,12 @@ void main() {
     }else{
         z = -1;
     }
-    float xzmod = modifier/Position.y;
-
+    float xzmod;
+    if (Position.y <= heightLimit){
+          xzmod = modifier/Position.y;
+    }else{
+          xzmod = 0;
+    }
     gl_Position = ProjMat *modelview* vec4(vec3(Position.x+xzmod*x,Position.y,Position.z+xzmod*z),1.0);
 
     vertexColor = Color;
