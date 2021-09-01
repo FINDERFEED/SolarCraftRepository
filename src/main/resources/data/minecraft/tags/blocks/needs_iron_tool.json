@@ -8,6 +8,8 @@
     "solarforge:illidium_block",
     "solarforge:algadium_block",
     "solarforge:solar_forge_infusion_pool",
-    "solarforge:repeater"
+    "solarforge:repeater",
+    "solarforge:dimension_core",
+    "solarforge:radiant_portal_creator"
   ]
 }

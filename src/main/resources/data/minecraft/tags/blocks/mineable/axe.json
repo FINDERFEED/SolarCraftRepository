@@ -5,6 +5,10 @@
     "solarforge:runic_table",
     "solarforge:runic_log",
     "solarforge:runic_planks",
-    "solarforge:module_table"
+    "solarforge:module_table",
+    "solarforge:radiant_planks",
+    "solarforge:radiant_log",
+    "solarforge:radiant_stairs",
+    "solarforge:radiant_slab"
   ]
 }

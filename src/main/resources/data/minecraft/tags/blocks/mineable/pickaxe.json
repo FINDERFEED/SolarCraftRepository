@@ -29,6 +29,8 @@
     "solarforge:tera_rune_block",
     "solarforge:urba_rune_block",
     "solarforge:zeta_rune_block",
-    "solarforge:fira_rune_block"
+    "solarforge:fira_rune_block",
+    "solarforge:dimension_core",
+    "solarforge:radiant_portal_creator"
   ]
 }

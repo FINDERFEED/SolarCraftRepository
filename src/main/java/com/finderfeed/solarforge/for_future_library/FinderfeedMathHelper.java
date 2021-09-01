@@ -12,6 +12,11 @@ import org.lwjgl.system.CallbackI;
 
 public class FinderfeedMathHelper {
 
+
+    public static double[] polarToCartesian(double radius,double angle){
+        return new double[]{radius*Math.cos(angle),radius*Math.sin(angle)};
+    }
+
     public static int[] intToRgba(int color){
         int r = (color >> 16) & 0xff;
         int g = (color >>  8) & 0xff;

@@ -41,12 +41,13 @@ import net.minecraft.world.level.block.HalfTransparentBlock;
 import net.minecraft.world.level.block.StainedGlassPaneBlock;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.model.data.ModelDataMap;
+import org.lwjgl.opengl.GL11;
 
 import java.util.List;
 import java.util.Random;
 import java.util.function.Consumer;
 
-import static com.ibm.icu.text.PluralRules.Operand.j;
+
 
 
 public class RenderingTools {
@@ -415,6 +416,7 @@ public class RenderingTools {
     }
 
     public static void renderShaderedRay(PoseStack stack, MultiBufferSource buffer, float mod, float height, Consumer<PoseStack> translations, boolean rotate, float rotationModifier, float partialTicks){
+        RenderSystem.depthMask(false);
         stack.pushPose();
 
         stack.translate(0.5,0.5,0.5);
@@ -425,54 +427,39 @@ public class RenderingTools {
         Matrix4f matrix = stack.last().pose();
 
         RadiantPortalRendertype.RAY_SHADER.safeGetUniform("modelview").set(matrix);
-        RadiantPortalRendertype.RAY_SHADER.safeGetUniform("modifier").set(10f);
-        RadiantPortalRendertype.RAY_SHADER.safeGetUniform("heightLimit").set(10f);
-
-        float modifier = 1f;
-
+        RadiantPortalRendertype.RAY_SHADER.safeGetUniform("modifier").set(3f);
+        RadiantPortalRendertype.RAY_SHADER.safeGetUniform("heightLimit").set(200f);
+        float modifier = 0.4f;
         VertexConsumer vertex = buffer.getBuffer(RadiantPortalRendertype.textWithRayShader(SHADERED_RAY));
-        float shadermod = 1f;
-        for (float i = 0;i < height/shadermod;i+=modifier) {
-            vertex.vertex( 0.5F * mod, i*shadermod, 0.5F * mod).color(255, 255, 255, 255).uv(1, 0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
-            vertex.vertex( 0.5F * mod, i*shadermod+modifier, 0.5F * mod).color(255, 255, 255, 255).uv(1, 1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
-            vertex.vertex( 0.5F * mod, i*shadermod+modifier, -0.5F * mod).color(255, 255, 255, 255).uv(0, 1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
-            vertex.vertex( 0.5F * mod, i*shadermod, -0.5F * mod).color(255, 255, 255, 255).uv(0, 0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
 
-            vertex.vertex( 0.5F * mod, i*shadermod, -0.5F * mod).color(255, 255, 255, 255).uv(0, 0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
-            vertex.vertex( 0.5F * mod, i*shadermod+modifier, -0.5F * mod).color(255, 255, 255, 255).uv(0, 1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
-            vertex.vertex( 0.5F * mod, i*shadermod+modifier, 0.5F * mod).color(255, 255, 255, 255).uv(1, 1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
-            vertex.vertex( 0.5F * mod, i*shadermod, 0.5F * mod).color(255, 255, 255, 255).uv(1, 0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
-            //2
-            vertex.vertex( 0.5F * mod, i*shadermod, 0.5F * mod).color(255, 255, 255, 255).uv(1, 0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
-            vertex.vertex( 0.5F * mod, i*shadermod+modifier, 0.5F * mod).color(255, 255, 255, 255).uv(1, 1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
-            vertex.vertex( -0.5F * mod, i*shadermod+modifier, 0.5F * mod).color(255, 255, 255, 255).uv(0, 1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
-            vertex.vertex( -0.5F * mod, i*shadermod, 0.5F * mod).color(255, 255, 255, 255).uv(0, 0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
-
-            vertex.vertex( -0.5F * mod, i*shadermod, 0.5F * mod).color(255, 255, 255, 255).uv(0, 0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
-            vertex.vertex( -0.5F * mod, i*shadermod+modifier, 0.5F * mod).color(255, 255, 255, 255).uv(0, 1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
-            vertex.vertex( 0.5F * mod, i*shadermod+modifier, 0.5F * mod).color(255, 255, 255, 255).uv(1, 1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
-            vertex.vertex( 0.5F * mod, i*shadermod, 0.5F * mod).color(255, 255, 255, 255).uv(1, 0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
-            //3
-            vertex.vertex( -0.5F * mod, i*shadermod, -0.5F * mod).color(255, 255, 255, 255).uv(1, 0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
-            vertex.vertex( -0.5F * mod, i*shadermod+modifier, -0.5F * mod).color(255, 255, 255, 255).uv(1, 1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
-            vertex.vertex( -0.5F * mod, i*shadermod+modifier, 0.5F * mod).color(255, 255, 255, 255).uv(0, 1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
-            vertex.vertex( -0.5F * mod, i*shadermod, 0.5F * mod).color(255, 255, 255, 255).uv(0, 0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
-
-            vertex.vertex( -0.5F * mod, i*shadermod, 0.5F * mod).color(255, 255, 255, 255).uv(0, 0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
-            vertex.vertex( -0.5F * mod, i*shadermod+modifier, 0.5F * mod).color(255, 255, 255, 255).uv(0, 1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
-            vertex.vertex( -0.5F * mod, i*shadermod+modifier, -0.5F * mod).color(255, 255, 255, 255).uv(1, 1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
-            vertex.vertex( -0.5F * mod, i*shadermod, -0.5F * mod).color(255, 255, 255, 255).uv(1, 0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
-            //4
-            vertex.vertex( -0.5F * mod, i*shadermod, -0.5F * mod).color(255, 255, 255, 255).uv(1, 0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
-            vertex.vertex( -0.5F * mod, i*shadermod+modifier, -0.5F * mod).color(255, 255, 255, 255).uv(1, 1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
-            vertex.vertex( 0.5F * mod, i*shadermod+modifier, -0.5F * mod).color(255, 255, 255, 255).uv(0, 1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
-            vertex.vertex( 0.5F * mod, i*shadermod, -0.5F * mod).color(255, 255, 255, 255).uv(0, 0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
-
-            vertex.vertex( 0.5F * mod, i*shadermod, -0.5F * mod).color(255, 255, 255, 255).uv(0, 0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
-            vertex.vertex( 0.5F * mod, i*shadermod+modifier, -0.5F * mod).color(255, 255, 255, 255).uv(0, 1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
-            vertex.vertex( -0.5F * mod, i*shadermod+modifier, -0.5F * mod).color(255, 255, 255, 255).uv(1, 1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
-            vertex.vertex( -0.5F * mod, i*shadermod, -0.5F * mod).color(255, 255, 255, 255).uv(1, 0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
+        for (float i = 0;i < height;i+=modifier) {
+            renderTube(vertex,mod,24,0.03f,i,modifier,matrix);
         }
         stack.popPose();
+        RenderSystem.depthMask(true);
     }
+
+
+    private static void renderTube(VertexConsumer vertex, float mod,int acurarry,double radius,double height,float secondHeight,Matrix4f mat){
+        float angle = 360f/acurarry;
+        float time  = (Minecraft.getInstance().level.getTimeOfDay(Minecraft.getInstance().getDeltaFrameTime())*2500)%2;
+
+
+        for (int i = 0; i < acurarry;i++){
+            double[] first = FinderfeedMathHelper.polarToCartesian(radius,Math.toRadians(i*angle));
+            double[] second = FinderfeedMathHelper.polarToCartesian(radius,Math.toRadians(i*angle+angle));
+            vertex.vertex((float)first[0],(float)height,(float)first[1]).color(255, 255, 255, 255).uv(1, 0+time).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
+            vertex.vertex((float)first[0],(float)height+secondHeight,(float)first[1]).color(255, 255, 255, 255).uv(1, 1+time).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
+            vertex.vertex((float)second[0],(float)height+secondHeight,(float)second[1]).color(255, 255, 255, 255).uv(0, 1+time).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
+            vertex.vertex((float)second[0],(float)height,(float)second[1]).color(255, 255, 255, 255).uv(0, 0+time).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
+
+            vertex.vertex((float)second[0],(float)height,(float)second[1]).color(255, 255, 255, 255).uv(0, 0+time).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
+            vertex.vertex((float)second[0],(float)height+secondHeight,(float)second[1]).color(255, 255, 255, 255).uv(0, 1+time).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
+            vertex.vertex((float)first[0],(float)height+secondHeight,(float)first[1]).color(255, 255, 255, 255).uv(1, 1+time).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
+            vertex.vertex((float)first[0],(float)height,(float)first[1]).color(255, 255, 255, 255).uv(1, 0+time).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
+        }
+
+
+    }
+
 }

@@ -59,7 +59,8 @@ public class ModuleItem extends Item {
         SMELTING("solarcraft_smelting_module"),
         MAGIC_DAMAGE_BONUS_5("solarcraft_magic_damage_bonus_5"),
         MINER("solarcraft_miner_ability_tag"),
-        DISARMING_THORNS("solarcraft_disarming_thorns");
+        DISARMING_THORNS("solarcraft_disarming_thorns"),
+        BLESSED("solarcraft_module_blessed");
 
         public String tag;
 

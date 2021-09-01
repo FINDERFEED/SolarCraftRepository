@@ -27,10 +27,12 @@ import net.minecraft.world.item.PickaxeItem;
 import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -120,6 +122,25 @@ public class ModuleEventsHandler {
                             stack.hurt(-2,player.level.random,(ServerPlayer) player);
                         }
                     }
+                }
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public static void handleBlessedModule(TickEvent.PlayerTickEvent event){
+        if (event.phase == TickEvent.Phase.START) {
+            if (!event.player.level.isClientSide) {
+                if (event.player.level.getGameTime() % 20 == 1) {
+                    ServerPlayer entity = (ServerPlayer) event.player;
+                    entity.getArmorSlots().forEach((stack) -> {
+                        if (hasModule(ItemsRegister.BLESSED_MODULE.get(), stack)) {
+                            if (entity.level.random.nextFloat() <= SolarcraftConfig.BLESSED_CHANCE.get()){
+                                stack.hurt(-1,entity.level.random,entity);
+                            }
+                        }
+                    });
+
                 }
             }
         }
