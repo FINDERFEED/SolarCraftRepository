@@ -426,6 +426,7 @@ public class RenderingTools {
         }
         Matrix4f matrix = stack.last().pose();
 
+
         RadiantPortalRendertype.RAY_SHADER.safeGetUniform("modelview").set(matrix);
         RadiantPortalRendertype.RAY_SHADER.safeGetUniform("modifier").set(3f);
         RadiantPortalRendertype.RAY_SHADER.safeGetUniform("heightLimit").set(200f);
