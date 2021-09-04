@@ -53,6 +53,7 @@ public abstract class AbstractMortarProjectile extends AbstractHurtingProjectile
     @Override
     protected void onHitBlock(BlockHitResult result) {
         causeExplosion(result.getLocation());
+        System.out.println(level.isClientSide);
         causeExplosionParticles(result.getLocation());
         level.playSound(null,result.getBlockPos().getX()+0.5,result.getBlockPos().getY()+0.5,result.getBlockPos().getZ()+0.5, Sounds.SOLAR_MORTAR_PROJECTILE.get(), SoundSource.AMBIENT,
                 5,1);

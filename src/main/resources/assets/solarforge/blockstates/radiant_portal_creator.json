@@ -1,0 +1,5 @@
+{
+  "variants": {
+    "": { "model": "solarforge:block/radiant_portal_creator" }
+  }
+}

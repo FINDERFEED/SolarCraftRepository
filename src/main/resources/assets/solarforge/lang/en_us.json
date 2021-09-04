@@ -400,7 +400,7 @@
   "effect.solarforge.star_gaze": "Star-Gaze",
   "item.solarforge.geminium_ingot": "Geminium ingot",
   "solar_fragment.dimension_core": "Dimension core",
-  "dimension_core.lore": "Its time to see what they have been hiding from the world.",
+  "dimension_core.lore": "The \"key\" to the new world. Requires a structure to function.",
   "block.solarforge.dimension_core": "Dimension core",
   "block.solarforge.radiant_log": "Radiant log",
   "block.solarforge.radiant_planks": "Radiant planks",
@@ -413,7 +413,14 @@
   "solar_fragment.runic_core": "Runic core",
   "runic_core.lore": "An upgraded version of small solar core",
   "block.solarforge.radiant_crystal": "Radiant crystal",
-  "item.solarforge.runic_core": "Runic core"
+  "item.solarforge.runic_core": "Runic core",
+  "ach.dimension_core": "Another world awaits.",
+  "solarcraft.dimension_portal": "Dim. Core structure",
+  "solar_fragment.dimension_structure": "Dimension core structure",
+  "pre.dimension_core": "Its time to see what they have been hiding from the world.",
+  "block.solarforge.radiant_berry_bush": "Radiant berry bush",
+  "item.solarforge.radiant_berry": "Radiant berry",
+  "solar_fragment.geminium_ingot": "Geminium ingot"
 
 
 

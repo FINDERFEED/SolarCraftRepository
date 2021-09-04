@@ -13,7 +13,12 @@ import com.finderfeed.solarforge.world_generation.structures.blocks.InvincibleSt
 import com.finderfeed.solarforge.world_generation.structures.blocks.KeyDefender;
 import com.finderfeed.solarforge.world_generation.structures.blocks.KeyLockBlock;
 
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.effect.MobEffects;
 
@@ -23,6 +28,8 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import net.minecraft.world.level.block.state.BlockBehaviour;
+
+import java.util.Random;
 
 public class BlocksRegistry {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS,"solarforge");
@@ -77,13 +84,31 @@ public class BlocksRegistry {
     public static final RegistryObject<Block> MODULE_APPLIER = BLOCKS.register("module_table",()->new ModuleStation(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS)));
 
     public static final RegistryObject<Block> RADIANT_LEAVES = BLOCKS.register("radiant_leaves",()->new FlammableLeavesBlock(BlockBehaviour.Properties.copy(Blocks.OAK_LEAVES).noOcclusion(),20));
-    public static final RegistryObject<Block> RADIANT_GRASS = BLOCKS.register("radiant_grass",()->new NormalGrassBlock(BlockBehaviour.Properties.copy(Blocks.GRASS_BLOCK)));
-    public static final RegistryObject<Block> RADIANT_GRASS_NOT_BLOCK = BLOCKS.register("radiant_grass_grass",()->new TallGrassBlock(BlockBehaviour.Properties.copy(Blocks.GRASS)));
+    public static final RegistryObject<Block> RADIANT_GRASS = BLOCKS.register("radiant_grass",()->new RadiantGrass(BlockBehaviour.Properties.copy(Blocks.GRASS_BLOCK)));
+    public static final RegistryObject<Block> RADIANT_GRASS_NOT_BLOCK = BLOCKS.register("radiant_grass_grass",()->new TallGrassBlock(BlockBehaviour.Properties.copy(Blocks.GRASS)){
+        @Override
+        public boolean isValidBonemealTarget(BlockGetter p_57325_, BlockPos p_57326_, BlockState p_57327_, boolean p_57328_) {
+            return false;
+        }
+
+        @Override
+        public boolean isBonemealSuccess(Level p_57330_, Random p_57331_, BlockPos p_57332_, BlockState p_57333_) {
+            return false;
+        }
+
+        @Override
+        public void performBonemeal(ServerLevel p_57320_, Random p_57321_, BlockPos p_57322_, BlockState p_57323_) {
+
+        }
+    });
+
+
     public static final RegistryObject<RotatedPillarBlock> RADIANT_LOG = BLOCKS.register("radiant_log",()-> new RotatedPillarFlammableBlock(BlockBehaviour.Properties.copy(Blocks.OAK_LOG),20));
     public static final RegistryObject<Block> RADIANT_PLANKS = BLOCKS.register("radiant_planks",()-> new FlammableBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS),20));
     public static final RegistryObject<Block> RADIANT_WOOD_STAIRS = BLOCKS.register("radiant_stairs",()-> new StairBlock(()-> RADIANT_PLANKS.get().defaultBlockState(),BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS)));
     public static final RegistryObject<Block> RADIANT_WOOD_SLAB = BLOCKS.register("radiant_slab",()-> new FlammableSlabBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS),20));
     public static final RegistryObject<Block> RADIANT_CRYSTAL = BLOCKS.register("radiant_crystal",()->new GlassBlock(BlockBehaviour.Properties.copy(Blocks.GLASS)));
+    public static final RegistryObject<Block> RADIANT_BERRY_BUSH = BLOCKS.register("radiant_berry_bush",()->new BushBlock(BlockBehaviour.Properties.copy(Blocks.DEAD_BUSH)));
 //    public static final RegistryObject<Block> RADIANT_LAND_PORTAL = BLOCKS.register("radiant_portal",()->new RadiantPortalBlock(BlockBehaviour.Properties.copy(Blocks.BEDROCK).isViewBlocking((a, b, c)-> false).noCollission() ));
     public static final RegistryObject<Block> RADIANT_LAND_PORTAL_CREATOR = BLOCKS.register("radiant_portal_creator",()->new PortalCreatorBlock(BlockBehaviour.Properties.copy(Blocks.NETHERITE_BLOCK).isViewBlocking((a, b, c)-> false).noCollission()));
     public  static  final RegistryObject<Block> DIMENSION_CORE = BLOCKS.register("dimension_core",()-> new Block(BlockBehaviour.Properties.copy(Blocks.STONE)));

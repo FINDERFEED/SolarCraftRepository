@@ -83,6 +83,7 @@ public class SolarForgeClientRegistry {
         ItemBlockRenderTypes.setRenderLayer(BlocksRegistry.RADIANT_LEAVES.get(), RenderType.cutout());
         ItemBlockRenderTypes.setRenderLayer(BlocksRegistry.RADIANT_GRASS_NOT_BLOCK.get(), RenderType.cutout());
         ItemBlockRenderTypes.setRenderLayer(BlocksRegistry.RADIANT_GRASS.get(), RenderType.cutout());
+        ItemBlockRenderTypes.setRenderLayer(BlocksRegistry.RADIANT_BERRY_BUSH.get(), RenderType.cutout());
         ItemBlockRenderTypes.setRenderLayer(BlocksRegistry.RADIANT_CRYSTAL.get(), RenderType.translucent());
 
         ClientRegistry.registerKeyBinding(FIRST_ABILITY_KEY);

@@ -135,8 +135,10 @@ public class ModuleEventsHandler {
                     ServerPlayer entity = (ServerPlayer) event.player;
                     entity.getArmorSlots().forEach((stack) -> {
                         if (hasModule(ItemsRegister.BLESSED_MODULE.get(), stack)) {
-                            if (entity.level.random.nextFloat() <= SolarcraftConfig.BLESSED_CHANCE.get()){
-                                stack.hurt(-1,entity.level.random,entity);
+                            if (Helpers.isDay(event.player.level)) {
+                                if (entity.level.random.nextFloat() <= (float)SolarcraftConfig.BLESSED_CHANCE.get()/100) {
+                                    stack.hurt(-1, entity.level.random, entity);
+                                }
                             }
                         }
                     });

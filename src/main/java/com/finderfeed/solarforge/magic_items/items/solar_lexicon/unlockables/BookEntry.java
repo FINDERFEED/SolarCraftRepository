@@ -12,7 +12,7 @@ import java.util.List;
 
 public enum BookEntry {
     BEGINNING_INFO(tx("solar_category.beginning"),point(20,40),null,null),
-    SOLAR_FORGE_BASICS(tx("solar_category.solar_forge"),point(210,40),Achievement.CRAFT_SOLAR_FORGE,null),
+    SOLAR_FORGE_BASICS(tx("solar_category.solar_forge"),point(210,40),Achievement.ENTER_NETHER,null),
     ARMOR(tx("solar_category.armor"),point(20,80),Achievement.CRAFT_SOLAR_INFUSER,null),
     STRUCTURES(tx("solar_category.structures"),point(20,700),Achievement.CRAFT_SOLAR_INFUSER,null),
 

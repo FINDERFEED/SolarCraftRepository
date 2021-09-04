@@ -7,25 +7,25 @@
     "item": "solarforge:amethyst_core"
   },
   "input3": {
-    "item": "solarforge:runic_core"
-  },
-  "input4": {
     "item": "solarforge:amethyst_core"
   },
+  "input4": {
+    "item": "solarforge:runic_core"
+  },
   "input5": {
-    "item": "solarforge:geminium_ingot"
+    "item": "solarforge:amethyst_core"
   },
   "input6": {
-    "item": "solarforge:qualadium_ingot"
+    "item": "solarforge:geminium_ingot"
   },
   "input7": {
-    "item": "solarforge:geminium_ingot"
+    "item": "solarforge:qualadium_ingot"
   },
   "input8": {
     "item": "solarforge:chiseled_solar_stone"
   },
   "input9": {
-    "item": "solarforge:solar_dust"
+    "item": "solarforge:qualadium_ingot"
   },
   "result": {
     "item": "solarforge:dimension_core"

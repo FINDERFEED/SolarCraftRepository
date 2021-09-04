@@ -35,7 +35,7 @@ public class QualadiumHoe extends IllidiumHoe{
                     if  (ctx.getLevel().getBlockState(pos).getBlock() instanceof BonemealableBlock) {
 
                         BoneMealItem.applyBonemeal(Items.BONE_MEAL.getDefaultInstance(), ctx.getLevel(), pos, ctx.getPlayer());
-
+                        ctx.getLevel().sendBlockUpdated(pos.above(),ctx.getLevel().getBlockState(pos.above()),ctx.getLevel().getBlockState(pos.above()),3);
                     }
                 }
             }

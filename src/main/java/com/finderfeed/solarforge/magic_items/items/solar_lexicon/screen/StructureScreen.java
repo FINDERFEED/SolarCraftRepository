@@ -10,6 +10,7 @@ import net.minecraft.client.gui.screens.Screen;
 
 import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.renderer.entity.ItemRenderer;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.TextComponent;
@@ -82,12 +83,20 @@ public class StructureScreen extends Screen {
         ItemRenderer ren = Minecraft.getInstance().getItemRenderer();
         for (int i = -structWidth; i <= structWidth;i++){
             for (int g = -structWidth; g <= structWidth;g++){
-                ren.renderGuiItem(structure.getBlockByCharacter(struct[i+structWidth].charAt(g+structWidth)).asItem().getDefaultInstance(),relX+95+g*18,relY+109+i*18);
+                renderItemAndTooltip(structure.getBlockByCharacter(struct[i+structWidth].charAt(g+structWidth)).asItem().getDefaultInstance(),relX+95+g*18,relY+109+i*18,mousex,mousey,matrices);
             }
         }
 
 
 
         super.render(matrices, mousex, mousey, partialTicks);
+    }
+    private void renderItemAndTooltip(ItemStack toRender, int place1, int place2, int mousex, int mousey, PoseStack matrices){
+        minecraft.getItemRenderer().renderGuiItem(toRender, place1, place2);
+        if (((mousex >= place1) && (mousex <= place1+16)) && ((mousey >= place2) && (mousey <= place2+16)) && !toRender.getItem().equals(Items.AIR)){
+            matrices.pushPose();
+            renderTooltip(matrices,toRender,mousex,mousey);
+            matrices.popPose();
+        }
     }
 }

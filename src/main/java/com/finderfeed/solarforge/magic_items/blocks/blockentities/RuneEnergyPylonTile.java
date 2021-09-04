@@ -128,7 +128,7 @@ public class RuneEnergyPylonTile extends BlockEntity implements IRunicEnergyCont
 
     public static void assignEnergyAndGainIt(RuneEnergyPylonTile tile){
         if (tile.type == null){
-            tile.type = RunicEnergy.Type.values()[tile.level.random.nextInt(RunicEnergy.Type.values().length-1)];
+            tile.type = RunicEnergy.Type.values()[tile.level.random.nextInt(RunicEnergy.Type.values().length)];
         }
 
         if (tile.currentEnergy+tile.energyPerTick+ SolarcraftConfig.RUNIC_ENERGY_PER_TICK_PYLON.get().floatValue() <= tile.maxEnergy){

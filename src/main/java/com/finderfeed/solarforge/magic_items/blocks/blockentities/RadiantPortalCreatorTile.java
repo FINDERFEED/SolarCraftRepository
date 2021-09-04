@@ -8,6 +8,7 @@ import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
@@ -61,6 +62,7 @@ public class RadiantPortalCreatorTile extends BlockEntity {
                         entity.changeDimension(destination, RadiantTeleporter.INSTANCE);
                         if (destination.dimension() == EventHandler.RADIANT_LAND_KEY){
                             createWormhole(destination);
+                            entity.sendMessage(new TextComponent("Use wormhole on 1,Y(~120),1 coordinates to return back"),entity.getUUID());
                         }
                     }
                 }

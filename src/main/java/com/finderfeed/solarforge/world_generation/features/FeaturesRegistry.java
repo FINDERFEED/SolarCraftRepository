@@ -56,6 +56,7 @@ public class FeaturesRegistry {
     public static ConfiguredFeature<?,?> RANDOM_PATCH_RADIANT_GRASS;
     public static ConfiguredFeature<?,?> FLOATING_ISLANDS_RADIANT_LAND_CONFIGURED;
     public static ConfiguredFeature<?,?> CRYSTALLIZED_ORE_VEIN_CONFIGURED;
+    public static ConfiguredFeature<?,?> RADIANT_BERRY_BUSH;
     //public static ConfiguredFeature<?,?> RADIANT_LAND_AMBIENT_TREE;
 
     public static final ConfiguredFeature<?,?> BURNT_BIOME_AMBIENCE_1_CONFIGURED = BURNT_BIOME_AMBIENCE_1
@@ -144,6 +145,9 @@ public class FeaturesRegistry {
                     .decorated(FeatureDecorator.SQUARE.configured(NoneDecoratorConfiguration.INSTANCE));
             Registry.register(BuiltinRegistries.CONFIGURED_FEATURE,new ResourceLocation("solarforge","crystallized_ore_vein"),CRYSTALLIZED_ORE_VEIN_CONFIGURED);
 
+
+            RADIANT_BERRY_BUSH =  Feature.RANDOM_PATCH.configured((new RandomPatchConfiguration.GrassConfigurationBuilder(new SimpleStateProvider(BlocksRegistry.RADIANT_BERRY_BUSH.get().defaultBlockState()), SimpleBlockPlacer.INSTANCE)).tries(4).build());
+            Registry.register(BuiltinRegistries.CONFIGURED_FEATURE,new ResourceLocation("solarforge","radiant_berry_bush"),RADIANT_BERRY_BUSH);
         });
     }
 

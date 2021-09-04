@@ -23,6 +23,7 @@ import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.Anc
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EquipmentSlot;
 
+import net.minecraft.world.food.FoodProperties;
 import net.minecraftforge.fmllegacy.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -152,6 +153,7 @@ public class ItemsRegister {
     public static final RegistryObject<Item> HASTE_AMULET = ITEMS.register("haste_amulet",()->new EffectAmulet(new Item.Properties().tab(SolarForge.SOLAR_GROUP_TOOLS).stacksTo(1), MobEffects.DIG_SPEED));
     public static final RegistryObject<Item> JUMP_AMULET = ITEMS.register("jump_amulet",()->new EffectAmulet(new Item.Properties().tab(SolarForge.SOLAR_GROUP_TOOLS).stacksTo(1), MobEffects.JUMP));
 
+
     public static final RegistryObject<Item> REPEATER = ITEMS.register("repeater",()->new RunicNetworkRepeaterBlockItem(BlocksRegistry.REPEATER.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
 
     public static final RegistryObject<Item> ARDO_RUNE_BLOCK = ITEMS.register("ardo_rune_block",()->new BlockItem(BlocksRegistry.ARDO_RUNE_BLOCK.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
@@ -165,7 +167,7 @@ public class ItemsRegister {
 
     public static final RegistryObject<Item> WORMHOLE = ITEMS.register("wormhole",()->new BlockItem(BlocksRegistry.WORMHOLE.get(),new Item.Properties()));
 
-    public static final RegistryObject<Item> DIMENSION_CORE = ITEMS.register("dimension_core",()->new BlockItem(BlocksRegistry.DIMENSION_CORE.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
+    public static final RegistryObject<Item> DIMENSION_CORE = ITEMS.register("dimension_core",()->new RadiantCoreBlockItem(BlocksRegistry.DIMENSION_CORE.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
     public static final RegistryObject<Item> RADIANT_LEAVES = ITEMS.register("radiant_leaves",()->new BlockItem(BlocksRegistry.RADIANT_LEAVES.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
     public static final RegistryObject<Item> RADIANT_GRASS = ITEMS.register("radiant_grass",()->new BlockItem(BlocksRegistry.RADIANT_GRASS.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
     public static final RegistryObject<Item> RADIANT_GRASS_NOT_BLOCK = ITEMS.register("radiant_grass_grass",()->new BlockItem(BlocksRegistry.RADIANT_GRASS_NOT_BLOCK.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
@@ -173,7 +175,8 @@ public class ItemsRegister {
     public static final RegistryObject<Item> RADIANT_PLANKS = ITEMS.register("radiant_planks",()->new FuelBlockItem(BlocksRegistry.RADIANT_PLANKS.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS),300));
     public static final RegistryObject<Item> RADIANT_STAIRS = ITEMS.register("radiant_stairs",()->new FuelBlockItem(BlocksRegistry.RADIANT_WOOD_STAIRS.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS),300));
     public static final RegistryObject<Item> RADIANT_SLAB = ITEMS.register("radiant_slab",()->new FuelBlockItem(BlocksRegistry.RADIANT_WOOD_SLAB.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS),300));
-
+    public static final RegistryObject<Item> RADIANT_BERRY = ITEMS.register("radiant_berry",()->new RadiantBerry(new Item.Properties().tab(SolarForge.SOLAR_GROUP).food(new FoodProperties.Builder().alwaysEat().nutrition(5).saturationMod(0.9F).build())));
+    public static final RegistryObject<Item> RADIANT_BERRY_BUSH = ITEMS.register("radiant_berry_bush",()->new BlockItem(BlocksRegistry.RADIANT_BERRY_BUSH.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
 //    public static final RegistryObject<Item> RADIANT_PORTAL = ITEMS.register("radiant_portal",()->new BlockItem(BlocksRegistry.RADIANT_LAND_PORTAL.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
 
     public static final RegistryObject<Item> RADIANT_PORTAL_CREATOR = ITEMS.register("radiant_portal_creator",()->new PortalCreatorBlockItem(BlocksRegistry.RADIANT_LAND_PORTAL_CREATOR.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
