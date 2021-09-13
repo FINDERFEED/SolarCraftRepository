@@ -9,8 +9,7 @@ import com.finderfeed.solarforge.magic_items.blocks.blockitems.TurretBlockItem;
 import com.finderfeed.solarforge.magic_items.blocks.blockitems.UldoradiumOreBlockitem;
 import com.finderfeed.solarforge.magic_items.item_tiers.SolarCraftToolTiers;
 import com.finderfeed.solarforge.magic_items.items.*;
-import com.finderfeed.solarforge.magic_items.items.isters.EnergyPylonISTER;
-import com.finderfeed.solarforge.magic_items.items.isters.ShieldOfSolarGodISTER;
+import com.finderfeed.solarforge.magic_items.items.small_items.*;
 import com.finderfeed.solarforge.magic_items.items.solar_disc_gun.SolarDiscGunItem;
 import com.finderfeed.solarforge.magic_items.items.vein_miner.VeinMiner;
 import com.finderfeed.solarforge.misc_things.ColdStarPieceItem;
@@ -19,7 +18,6 @@ import com.finderfeed.solarforge.misc_things.SolarcraftDebugStick;
 import com.finderfeed.solarforge.misc_things.VoidBlockWand;
 import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.SolarLexicon;
-import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.AncientFragmentISTER;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EquipmentSlot;
 
@@ -177,7 +175,6 @@ public class ItemsRegister {
     public static final RegistryObject<Item> RADIANT_SLAB = ITEMS.register("radiant_slab",()->new FuelBlockItem(BlocksRegistry.RADIANT_WOOD_SLAB.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS),300));
     public static final RegistryObject<Item> RADIANT_BERRY = ITEMS.register("radiant_berry",()->new RadiantBerry(new Item.Properties().tab(SolarForge.SOLAR_GROUP).food(new FoodProperties.Builder().alwaysEat().nutrition(5).saturationMod(0.9F).build())));
     public static final RegistryObject<Item> RADIANT_BERRY_BUSH = ITEMS.register("radiant_berry_bush",()->new BlockItem(BlocksRegistry.RADIANT_BERRY_BUSH.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
-//    public static final RegistryObject<Item> RADIANT_PORTAL = ITEMS.register("radiant_portal",()->new BlockItem(BlocksRegistry.RADIANT_LAND_PORTAL.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
 
     public static final RegistryObject<Item> RADIANT_PORTAL_CREATOR = ITEMS.register("radiant_portal_creator",()->new PortalCreatorBlockItem(BlocksRegistry.RADIANT_LAND_PORTAL_CREATOR.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
 

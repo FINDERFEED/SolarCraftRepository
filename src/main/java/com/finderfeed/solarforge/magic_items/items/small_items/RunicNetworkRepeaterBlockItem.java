@@ -1,4 +1,4 @@
-package com.finderfeed.solarforge.magic_items.items;
+package com.finderfeed.solarforge.magic_items.items.small_items;
 
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Achievement;

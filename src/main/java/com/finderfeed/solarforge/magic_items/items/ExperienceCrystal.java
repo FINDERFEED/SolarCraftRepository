@@ -1,6 +1,7 @@
 package com.finderfeed.solarforge.magic_items.items;
 
 import com.finderfeed.solarforge.SolarCraftTags;
+import com.finderfeed.solarforge.magic_items.items.small_items.ItemWithGlint;
 import com.finderfeed.solarforge.registries.items.ItemsRegister;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
@@ -8,12 +9,10 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -25,7 +24,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 //TODO:add recipe and fragment
-public class ExperienceCrystal extends ItemWithGlint{
+public class ExperienceCrystal extends ItemWithGlint {
     public ExperienceCrystal(Properties p_i48487_1_) {
         super(p_i48487_1_);
     }

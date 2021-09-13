@@ -1,4 +1,4 @@
-package com.finderfeed.solarforge.magic_items.items;
+package com.finderfeed.solarforge.magic_items.items.small_items;
 
 import net.minecraft.world.item.Item;
 

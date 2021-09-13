@@ -1,16 +1,6 @@
-package com.finderfeed.solarforge.magic_items.items;
+package com.finderfeed.solarforge.magic_items.items.small_items;
 
-import com.finderfeed.solarforge.Helpers;
-import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Achievement;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.player.Player;
-
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
-
-import net.minecraft.world.item.Item.Properties;
-
-public class EnchancedBlueGem extends ItemWithGlint{
+public class EnchancedBlueGem extends ItemWithGlint {
 
     public EnchancedBlueGem(Properties p_i48487_1_) {
         super(p_i48487_1_);

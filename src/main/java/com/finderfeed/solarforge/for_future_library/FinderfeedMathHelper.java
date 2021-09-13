@@ -6,9 +6,13 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import org.lwjgl.system.CallbackI;
+
+import java.util.List;
+import java.util.function.Predicate;
 
 public class FinderfeedMathHelper {
 
@@ -108,8 +112,34 @@ public class FinderfeedMathHelper {
     }
 
     public static class PlayerThings{
-        public static Vec3 partialTicksForPosition(Player player){
-            return new Vec3(player.getX() - player.xOld,player.getY() - player.yOld,player.getZ() - player.zOld);
+
+    }
+
+    public static class TargetFinding{
+
+        public static <V extends Entity> List<V> getAllValidTargetsFromBP(Class<V> toFind,double radius,Level world,BlockPos pos,Predicate<V> more){
+            Predicate<V> sort = (entity)->{
+                if (more.test(entity)) {
+                    if (getDistanceBetween(pos, entity.blockPosition()) <= radius) {
+                        return canSee(entity.blockPosition(), pos, radius, world);
+                    }
+                }
+                return false;
+            };
+            return world.getEntitiesOfClass(toFind,new AABB(-radius,-radius,-radius,radius,radius,radius).move(TileEntityThings.getTileEntityCenter(pos)),sort);
+        }
+
+        public static <V extends Entity> List<V> getAllValidTargetsFromVec(Class<V> toFind,double radius,Level world,Vec3 pos,Predicate<V> more){
+            Predicate<V> sort = (entity)->{
+                if (more.test(entity)) {
+                    if (getDistanceBetween(pos, entity.position().add(0, entity.getBbHeight() / 2, 0)) <= radius) {
+                        return canSee(new BlockPos(Math.round(entity.getX()), Math.round(entity.getY() + entity.getBbHeight() / 2), Math.round(entity.getZ())),
+                                new BlockPos(Math.round(pos.x), Math.round(pos.x), Math.round(pos.x)), radius, world);
+                    }
+                }
+                return false;
+            };
+            return world.getEntitiesOfClass(toFind,new AABB(-radius,-radius,-radius,radius,radius,radius).move(pos),sort);
         }
     }
 }

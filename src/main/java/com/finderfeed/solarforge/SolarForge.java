@@ -16,6 +16,7 @@ import com.finderfeed.solarforge.magic_items.blocks.infusing_table_things.infusi
 import com.finderfeed.solarforge.magic_items.item_tiers.SolarCraftToolTiers;
 import com.finderfeed.solarforge.magic_items.items.ProgressionBlockItem;
 import com.finderfeed.solarforge.misc_things.ParticlesList;
+import com.finderfeed.solarforge.registries.abilities.AbilitiesRegistry;
 import com.finderfeed.solarforge.rendering.on_screen_rendering.TestRenderEvent;
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
 import com.finderfeed.solarforge.recipe_types.InfusingRecipe;
@@ -212,7 +213,7 @@ public class SolarForge
 
     private void setup(final FMLCommonSetupEvent event)
     {
-
+        AbilitiesRegistry.ABILITIES.registerAll();
         TierSortingRegistry.registerTier(SolarCraftToolTiers.ILLIDIUM_TOOLS_TIER,new ResourceLocation("illidium"), List.of(Tiers.DIAMOND),List.of());
         TierSortingRegistry.registerTier(SolarCraftToolTiers.QUALADIUM_TOOLS_TIER,new ResourceLocation("qualadium"), List.of(Tiers.DIAMOND),List.of());
         TierSortingRegistry.registerTier(SolarCraftToolTiers.CHARGED_QUALADIUM_TOOLS_TIER,new ResourceLocation("charged_qualadium"), List.of(Tiers.DIAMOND),List.of());
