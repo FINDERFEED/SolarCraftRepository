@@ -165,7 +165,7 @@
   "block.solarforge.ash_leaves": "Ash leaves",
   "block.solarforge.burnt_log": "Burnt log",
   "block.solarforge.dead_sprout": "Dead sprout",
-  "item.solarforge.first_dimensional_shard": "Dimensional Shard(WIP)",
+  "item.solarforge.first_dimensional_shard": "Dimensional Shard",
   "ach.find_incinerated_forest": "Incinerated Forest",
   "pre.find_incinerated_forest": "A place where time has stopped...",
   "ach.blue_gem_trade": "Who is that guy?",
@@ -381,7 +381,7 @@
   "item.solarforge.sword_aoe_module": "Module",
   "solarcraft_smelting_module": "Module effect: Auto-smelting",
   "item.solarforge.pickaxe_auto_smelt_module": "Module",
-  "solarcraft_magic_damage_bonus_5": "Module Effect: Magic damage +5",
+  "solarcraft_magic_damage_bonus_5": "Module Effect: Magic damage +5. Incompatible with poisoning blade module.",
   "item.solarforge.magic_damage_5_module": "Module",
   "solarcraft_miner_ability_tag": "Module Effect: Ability - gives 20 seconds of Haste II. Manacost: 300/use",
   "item.solarforge.pickaxe_miner_module": "Module",
@@ -420,7 +420,11 @@
   "pre.dimension_core": "Its time to see what they have been hiding from the world.",
   "block.solarforge.radiant_berry_bush": "Radiant berry bush",
   "item.solarforge.radiant_berry": "Radiant berry",
-  "solar_fragment.geminium_ingot": "Geminium ingot"
+  "solar_fragment.geminium_ingot": "Geminium ingot",
+  "item.solarforge.gloves_of_reach": "Gloves of Reach",
+  "gloves_of_reach_active": "While in your inventory, increases your reach distance by 2",
+  "solarcraft_poisoning_blade": "Module Effect: Poisoning blade - poisons targets for 8 seconds. Incompatible with magic damage +5 module.",
+  "item.solarforge.poisoning_blade_module": "Module"
 
 
 

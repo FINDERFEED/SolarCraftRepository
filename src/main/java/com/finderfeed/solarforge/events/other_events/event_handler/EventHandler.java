@@ -2,9 +2,11 @@ package com.finderfeed.solarforge.events.other_events.event_handler;
 
 
 import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.SolarCraftAttributeModifiers;
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.capabilities.capability_mana.SolarForgeMana;
 import com.finderfeed.solarforge.events.my_events.ProgressionUnlockEvent;
+import com.finderfeed.solarforge.for_future_library.FinderfeedMathHelper;
 import com.finderfeed.solarforge.magic_items.items.ExperienceCrystal;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Achievement;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.AncientFragment;
@@ -19,6 +21,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.ExperienceOrb;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.entity.Entity;
@@ -34,6 +38,8 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.level.levelgen.GenerationStep;
+import net.minecraftforge.common.ForgeMod;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.PlayerXpEvent;
@@ -57,6 +63,7 @@ public class EventHandler {
         Player player = event.player;
         Level world = player.level;
 
+
         if (!world.isClientSide && !player.isCreative()){
             if ((world.getGameTime() % 20 == 1)&& !Helpers.isDay(world) &&  (world.dimension() == RADIANT_LAND_KEY)){
                 player.addEffect(new MobEffectInstance(EffectsRegister.STAR_GAZE_EFFECT.get(),400,0));
@@ -66,6 +73,22 @@ public class EventHandler {
                 if (world.getGameTime() % 80 == 1){
                     DamageSource src = SolarcraftDamageSources.STARGAZE.bypassArmor().setMagic();
                     player.hurt(src,4);
+                }
+            }
+        }
+
+
+        if (!world.isClientSide && (world.getGameTime() % 20 == 1) ){
+            AttributeInstance attr = player.getAttribute(ForgeMod.REACH_DISTANCE.get());
+            if (attr != null){
+                if (FinderfeedMathHelper.PlayerThings.doPlayerHasItem(player.getInventory(),ItemsRegister.REACH_GLOVES.get())){
+                    if (!attr.hasModifier(SolarCraftAttributeModifiers.REACH_2_MODIFIER)){
+                        attr.addTransientModifier(SolarCraftAttributeModifiers.REACH_2_MODIFIER);
+                    }
+                }else{
+                    if (attr.hasModifier(SolarCraftAttributeModifiers.REACH_2_MODIFIER)){
+                        attr.removeModifier(SolarCraftAttributeModifiers.REACH_2_MODIFIER);
+                    }
                 }
             }
         }
@@ -184,6 +207,7 @@ public class EventHandler {
     public static ItemEntity createItemEntity(Player playerEntity,ItemStack stack){
         return new ItemEntity(playerEntity.level,playerEntity.getX(),playerEntity.getY(),playerEntity.getZ(),stack);
     }
+
 
 
 

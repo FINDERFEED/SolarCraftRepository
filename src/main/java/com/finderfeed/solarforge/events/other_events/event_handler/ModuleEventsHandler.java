@@ -15,6 +15,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -38,6 +39,23 @@ import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid = "solarforge",bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class ModuleEventsHandler {
+
+
+    @SubscribeEvent
+    public static void handlePosioningBlade(AttackEntityEvent event){
+        Player player = event.getPlayer();
+        Entity entity = event.getTarget();
+        if (!player.level.isClientSide){
+            ItemStack stack = player.getMainHandItem();
+            if ((stack.getItem() instanceof SwordItem)  && (entity instanceof LivingEntity target)){
+                if (hasModule(ItemsRegister.POISONING_BLADE_MODULE.get(),stack)){
+                    if (!target.hasEffect(MobEffects.POISON)){
+                        target.addEffect(new MobEffectInstance(MobEffects.POISON,160,1));
+                    }
+                }
+            }
+        }
+    }
 
 
     @SubscribeEvent

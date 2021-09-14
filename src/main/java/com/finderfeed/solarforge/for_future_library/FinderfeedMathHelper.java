@@ -2,7 +2,10 @@ package com.finderfeed.solarforge.for_future_library;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -112,7 +115,23 @@ public class FinderfeedMathHelper {
     }
 
     public static class PlayerThings{
-
+        public static boolean doPlayerHasItem(Inventory inv, ItemStack item){
+            Item item1 = item.getItem();
+            for (int i = 0; i < inv.getContainerSize();i++){
+                if (inv.getItem(i).getItem() == item1){
+                    return true;
+                }
+            }
+            return false;
+        }
+        public static boolean doPlayerHasItem(Inventory inv, Item item1){
+            for (int i = 0; i < inv.getContainerSize();i++){
+                if (inv.getItem(i).getItem() == item1){
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 
     public static class TargetFinding{

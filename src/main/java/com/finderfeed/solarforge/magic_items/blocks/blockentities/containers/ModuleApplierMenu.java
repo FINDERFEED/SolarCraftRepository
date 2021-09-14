@@ -65,19 +65,35 @@ public class ModuleApplierMenu extends ItemCombinerMenu {
         ItemStack module = inputSlots.getItem(1);
         ItemStack item = inputSlots.getItem(0);
         if (module.getItem() instanceof ModuleItem moduleItem){
-            if (isItemCorrectType(moduleItem,moduleItem.getType(),item)){
-                ItemStack result = item.copy();
-                result.getOrCreateTagElement(moduleItem.getSubTag());
-                this.resultSlots.setItem(0,result);
-                return true;
+            if (isCompatibleWithItem(moduleItem,item)) {
+                if (isItemCorrectType(moduleItem, moduleItem.getType(), item)) {
+                    ItemStack result = item.copy();
+                    result.getOrCreateTagElement(moduleItem.getSubTag());
+                    this.resultSlots.setItem(0, result);
+                    return true;
+                } else {
+                    this.resultSlots.setItem(0, ItemStack.EMPTY);
+                    return false;
+                }
             }else{
-                this.resultSlots.setItem(0, ItemStack.EMPTY);
                 return false;
             }
         }else{
             this.resultSlots.setItem(0, ItemStack.EMPTY);
             return false;
         }
+    }
+
+    private boolean isCompatibleWithItem(ModuleItem item,ItemStack stack){
+        ModuleItem.Tags[] incompatible = item.getIncompatibleWith();
+        if (incompatible.length != 0) {
+            for (ModuleItem.Tags tag : incompatible) {
+                if (stack.getTagElement(tag.tag) != null) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     private boolean isItemCorrectType(ModuleItem module,ModuleItem.Type type,ItemStack item){

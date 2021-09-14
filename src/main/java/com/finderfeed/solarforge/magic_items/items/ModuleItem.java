@@ -15,11 +15,20 @@ public class ModuleItem extends Item {
 
     private Type type;
     private String subTag;
+    private ModuleItem.Tags[] incompatibleWith;
 
     public ModuleItem(Properties p_41383_,Type type,Tags subTag) {
         super(p_41383_);
         this.type = type;
         this.subTag = subTag.tag;
+    }
+    public ModuleItem(Properties p_41383_,Type type,Tags subTag,ModuleItem.Tags... incompatibleWith) {
+        this(p_41383_,type,subTag);
+        this.incompatibleWith = incompatibleWith;
+    }
+
+    public Tags[] getIncompatibleWith() {
+        return incompatibleWith;
     }
 
     public Type getType(){
@@ -60,6 +69,7 @@ public class ModuleItem extends Item {
         MAGIC_DAMAGE_BONUS_5("solarcraft_magic_damage_bonus_5"),
         MINER("solarcraft_miner_ability_tag"),
         DISARMING_THORNS("solarcraft_disarming_thorns"),
+        POISONING_BLADE("solarcraft_poisoning_blade"),
         BLESSED("solarcraft_module_blessed");
 
         public String tag;
