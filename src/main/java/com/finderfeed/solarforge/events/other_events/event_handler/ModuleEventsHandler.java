@@ -1,6 +1,7 @@
 package com.finderfeed.solarforge.events.other_events.event_handler;
 
 import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.SolarCraftTags;
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.config.SolarcraftConfig;
 import com.finderfeed.solarforge.magic_items.items.ModuleItem;
@@ -40,6 +41,30 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber(modid = "solarforge",bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class ModuleEventsHandler {
 
+
+    @SubscribeEvent
+    public static void handleFurySwipes(AttackEntityEvent event){
+        Player player = event.getPlayer();
+        Entity entity = event.getTarget();
+        if (!player.level.isClientSide){
+            ItemStack stack = player.getMainHandItem();
+            if ((stack.getItem() instanceof SwordItem)  && (entity instanceof LivingEntity target)){
+                if (hasModule(ItemsRegister.FURY_SWIPES_MODULE.get(),stack)){
+                    if (Helpers.isVulnerable(target)) {
+                    DamageSource src = DamageSource.playerAttack(player);
+
+                        float bonusdmg = target.getPersistentData().getFloat(SolarCraftTags.FURY_SWIPES_DAMAGE);
+                        float percent = player.getAttackStrengthScale(0);
+                        target.hurt(src, bonusdmg * percent);
+                        target.invulnerableTime = 0;
+                        if (bonusdmg < 10) {
+                            target.getPersistentData().putFloat(SolarCraftTags.FURY_SWIPES_DAMAGE, bonusdmg + 0.5f);
+                        }
+                    }
+                }
+            }
+        }
+    }
 
     @SubscribeEvent
     public static void handlePosioningBlade(AttackEntityEvent event){
@@ -99,10 +124,12 @@ public class ModuleEventsHandler {
             ItemStack stack = player.getMainHandItem();
             if ((stack.getItem() instanceof SwordItem)  && (entity instanceof LivingEntity target)){
                 if (hasModule(ItemsRegister.MAGIC_DAMAGE_MODULE_5.get(),stack)){
-                    float modifier = player.getAttackStrengthScale(0);
-                    DamageSource src = DamageSource.playerAttack(player).bypassArmor().setMagic();
-                    target.hurt(src, modifier * 5);
-                    target.invulnerableTime = 0;
+                    if (Helpers.isVulnerable(target)) {
+                        float modifier = player.getAttackStrengthScale(0);
+                        DamageSource src = DamageSource.playerAttack(player).bypassArmor().setMagic();
+                        target.hurt(src, modifier * 5);
+                        target.invulnerableTime = 0;
+                    }
                 }
             }
         }
@@ -165,6 +192,7 @@ public class ModuleEventsHandler {
             }
         }
     }
+
 
 
     @SubscribeEvent

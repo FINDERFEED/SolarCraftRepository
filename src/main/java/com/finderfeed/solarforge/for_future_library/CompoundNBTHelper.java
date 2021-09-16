@@ -7,8 +7,8 @@ public class CompoundNBTHelper {
 
     public static void writeVec3(String id, Vec3 vec, CompoundTag tag){
         tag.putDouble(id+"1",vec.x);
-        tag.putDouble(id+"2",vec.x);
-        tag.putDouble(id+"3",vec.x);
+        tag.putDouble(id+"2",vec.y);
+        tag.putDouble(id+"3",vec.z);
     }
 
     public static Vec3 getVec3(String id,CompoundTag tag){

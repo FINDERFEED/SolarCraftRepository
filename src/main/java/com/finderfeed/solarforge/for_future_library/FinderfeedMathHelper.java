@@ -152,8 +152,8 @@ public class FinderfeedMathHelper {
             Predicate<V> sort = (entity)->{
                 if (more.test(entity)) {
                     if (getDistanceBetween(pos, entity.position().add(0, entity.getBbHeight() / 2, 0)) <= radius) {
-                        return canSee(new BlockPos(Math.round(entity.getX()), Math.round(entity.getY() + entity.getBbHeight() / 2), Math.round(entity.getZ())),
-                                new BlockPos(Math.round(pos.x), Math.round(pos.x), Math.round(pos.x)), radius, world);
+                        return canSee(new BlockPos(Math.floor(entity.getX()), Math.floor(entity.getY() + entity.getBbHeight()*1.1 / 2), Math.floor(entity.getZ())),
+                                new BlockPos(Math.floor(pos.x), Math.floor(pos.y), Math.floor(pos.z)), radius, world);
                     }
                 }
                 return false;

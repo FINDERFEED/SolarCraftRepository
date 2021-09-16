@@ -117,6 +117,7 @@ public class AbstractTurretProjectile extends AbstractHurtingProjectile {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 
+    
 
     public static class Constructor{
         private float explosionPower = 0;

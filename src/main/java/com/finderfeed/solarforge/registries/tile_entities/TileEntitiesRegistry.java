@@ -79,4 +79,7 @@ public class TileEntitiesRegistry {
     public static final RegistryObject<BlockEntityType<RadiantPortalCreatorTile>> PORTAL_CREATOR = TILE_ENTITY_TYPE.register("portal_creator",()->
             BlockEntityType.Builder.of(RadiantPortalCreatorTile::new, BlocksRegistry.RADIANT_LAND_PORTAL_CREATOR.get()).build(null));
 
+    public static final RegistryObject<BlockEntityType<ZapTurretTile>> ZAP_TURRET_TILE = TILE_ENTITY_TYPE.register("zap_turret_tile",()->
+            BlockEntityType.Builder.of(ZapTurretTile::new, BlocksRegistry.ZAP_TURRET_BLOCK.get()).build(null));
+
 }

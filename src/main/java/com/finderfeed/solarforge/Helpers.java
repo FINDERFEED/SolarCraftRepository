@@ -17,6 +17,7 @@ import com.finderfeed.solarforge.magic_items.items.solar_lexicon.packets.UpdateP
 import com.mojang.blaze3d.vertex.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiComponent;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.Item;
@@ -75,6 +76,10 @@ public class Helpers {
             y+=10;
         }
 
+    }
+
+    public static boolean isVulnerable(Entity ent){
+        return ent.invulnerableTime == 0;
     }
 
     public static String getAchievementDescription(Achievement ach){

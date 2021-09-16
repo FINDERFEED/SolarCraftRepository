@@ -70,6 +70,7 @@ public class ModuleItem extends Item {
         MINER("solarcraft_miner_ability_tag"),
         DISARMING_THORNS("solarcraft_disarming_thorns"),
         POISONING_BLADE("solarcraft_poisoning_blade"),
+        FURY_SWIPES("solarcraft_fury_swipes"),
         BLESSED("solarcraft_module_blessed");
 
         public String tag;

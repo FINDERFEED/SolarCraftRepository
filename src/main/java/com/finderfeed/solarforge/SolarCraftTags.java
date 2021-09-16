@@ -25,4 +25,6 @@ public class SolarCraftTags {
 
     public static final String EXPERIENCE_CRYSTAL_SUBTAG = "solarcraft_experience_crystal";
     public static final String EXPERIENCE_CRYSTAL_CONTAINED_XP = "solarcraft_experience_crystal_contained_xp";
+
+    public static final String FURY_SWIPES_DAMAGE = "solarcraft_fury_swipes";
 }

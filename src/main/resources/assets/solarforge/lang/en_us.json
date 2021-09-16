@@ -381,7 +381,7 @@
   "item.solarforge.sword_aoe_module": "Module",
   "solarcraft_smelting_module": "Module effect: Auto-smelting",
   "item.solarforge.pickaxe_auto_smelt_module": "Module",
-  "solarcraft_magic_damage_bonus_5": "Module Effect: Magic damage +5. Incompatible with poisoning blade module.",
+  "solarcraft_magic_damage_bonus_5": "Module Effect: Magic damage +5. Incompatible with poisoning blade/fury swipes.",
   "item.solarforge.magic_damage_5_module": "Module",
   "solarcraft_miner_ability_tag": "Module Effect: Ability - gives 20 seconds of Haste II. Manacost: 300/use",
   "item.solarforge.pickaxe_miner_module": "Module",
@@ -423,8 +423,10 @@
   "solar_fragment.geminium_ingot": "Geminium ingot",
   "item.solarforge.gloves_of_reach": "Gloves of Reach",
   "gloves_of_reach_active": "While in your inventory, increases your reach distance by 2",
-  "solarcraft_poisoning_blade": "Module Effect: Poisoning blade - poisons targets for 8 seconds. Incompatible with magic damage +5 module.",
-  "item.solarforge.poisoning_blade_module": "Module"
+  "solarcraft_poisoning_blade": "Module Effect: Poisoning blade - poisons targets for 8 seconds. Incompatible with magic damage/fury swipes.",
+  "item.solarforge.poisoning_blade_module": "Module",
+  "solarcraft_fury_swipes": "Module Effect: Fury Swipes - each attack increases the damage you deal to the target by 0.5 (Max +10 dmg). Incompatible with magic damage/poisoning blade.",
+  "item.solarforge.fury_swipes_module": "Module"
 
 
 
