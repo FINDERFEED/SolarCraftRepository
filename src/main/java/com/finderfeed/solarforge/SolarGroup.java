@@ -2,8 +2,10 @@ package com.finderfeed.solarforge;
 
 import com.finderfeed.solarforge.registries.items.ItemsRegister;
 import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraftforge.fmllegacy.RegistryObject;
 
 public class SolarGroup extends CreativeModeTab {
     public SolarGroup(String label) {
@@ -54,7 +56,25 @@ class SolarGroupTools extends CreativeModeTab{
     }
     @Override
     public ItemStack makeIcon() {
-        return ItemsRegister.ILLIDIUM_SWORD.get().getDefaultInstance();
+        return ItemsRegister.ILLIDIUM_AXE.get().getDefaultInstance();
+    }
+}
+class SolarGroupThemed extends CreativeModeTab{
+
+    public RegistryObject<Item> icon;
+
+    public SolarGroupThemed(String label,RegistryObject<Item> icon) {
+        super(label);
+        this.icon = icon;
+        this.setBackgroundImage(new ResourceLocation("solarforge","textures/gui/solar_items_tab.png"));
+    }
+    @Override
+    public ResourceLocation getTabsImage() {
+        return new ResourceLocation("solarforge","textures/gui/solar_items_tabs.png");
+    }
+    @Override
+    public ItemStack makeIcon() {
+        return icon.get().getDefaultInstance();
     }
 }
 

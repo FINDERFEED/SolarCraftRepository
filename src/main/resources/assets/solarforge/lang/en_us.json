@@ -12,8 +12,10 @@
   "key.admin_button_solarforge": "Reset Abilities(Dev button)",
   "key.gui_button_solarforge": "Open Hotkey Config",
   "effect.solarforge.solar_stun": "Disarmed",
-  "itemGroup.solar_forge_group": "Solar Craft",
-  "itemGroup.solar_forge_group_tools": "Solar craft tools",
+  "itemGroup.solar_forge_group": "Solar Craft other",
+  "itemGroup.solar_forge_group_tools": "Solar Craft tools",
+  "itemGroup.solar_group_materials": "Solar Craft materials",
+  "itemGroup.solar_group_weapons": "Solar Craft weapons",
   "ach.solar_stone": "Magic Stone",
   "ach.completed": "Completed!",
   "ach.solar_forge_craft": "Solar Forge",
@@ -428,7 +430,13 @@
   "solarcraft_fury_swipes": "Module Effect: Fury Swipes - each attack increases the damage you deal to the target by 0.5 (Max +10 dmg). Incompatible with magic damage/poisoning blade.",
   "item.solarforge.fury_swipes_module": "Module",
   "solarcraft.zap_turret": "Zap Turret",
-  "block.solarforge.zap_turret_block": "Zap Turret"
+  "block.solarforge.zap_turret_block": "Zap Turret",
+  "item.solarforge.turret_radar": "Radar",
+  "solar_fragment.turret_radar": "Radar",
+  "turret_radar.lore": "The main part for all turrets to make them detect enemies.",
+  "solar_fragment.zap_turret": "Zap turret",
+  "zap_turret.lore": "Can damage up to 5 targets at once. Damage: 5 (Magic), Attack radius: 20, Attack rate: 1 shot/3 sec. Requires structure to function.",
+  "solar_fragment.zap_turret_structure": "Zap turret"
 
 
 

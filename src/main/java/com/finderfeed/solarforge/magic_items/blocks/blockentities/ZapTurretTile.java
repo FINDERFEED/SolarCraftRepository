@@ -57,7 +57,7 @@ public class ZapTurretTile extends BlockEntity implements OwnedBlock {
                 );
                 if (targets.size() != 0) {
                     LivingEntity lastTarget = targets.get(world.random.nextInt(targets.size()));
-                    lastTarget.hurt(DamageSource.MAGIC, 4);
+                    lastTarget.hurt(DamageSource.MAGIC, 5);
                     List<LivingEntity> invalidTargets = new ArrayList<>();
                     invalidTargets.add(lastTarget);
                     for (int i = 0; i < 4; i++) {

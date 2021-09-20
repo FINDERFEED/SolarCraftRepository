@@ -116,7 +116,10 @@ public class SolarForge
     public static final CreativeModeTab SOLAR_GROUP = new SolarGroup("solar_forge_group");
     public static final CreativeModeTab SOLAR_GROUP_BLOCKS = new SolarGroupBlocks("solar_forge_group_blocks");
     public static final CreativeModeTab SOLAR_GROUP_TOOLS = new SolarGroupTools("solar_forge_group_tools");
+    public static final CreativeModeTab SOLAR_GROUP_MATERIALS = new SolarGroupThemed("solar_group_materials",ItemsRegister.ILLIDIUM_INGOT);
+    public static final CreativeModeTab SOLAR_GROUP_WEAPONS = new SolarGroupThemed("solar_group_weapons",ItemsRegister.ILLIDIUM_SWORD);
     public static final CreativeModeTab SOLAR_GROUP_FRAGMENTS = new SolarGroupFragments("solar_forge_group_fragments");
+
 
     public static final RegistryObject<SoundEvent> SOLAR_STRIKE_SOUND = SOUND_EVENTS.register("solar_ray_sound",()-> new SoundEvent(new ResourceLocation("solarforge","solar_strike_explosion_sound")));
     public static final RegistryObject<SoundEvent> SOLAR_STRIKE_BUILD_SOUND = SOUND_EVENTS.register("solar_ray_buildup_sound",()-> new SoundEvent(new ResourceLocation("solarforge","solar_strike_buildup")));

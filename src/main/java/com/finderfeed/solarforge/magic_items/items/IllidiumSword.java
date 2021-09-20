@@ -20,7 +20,7 @@ import net.minecraft.world.item.SwordItem;
 
 public class IllidiumSword extends SwordItem {
     public IllidiumSword() {
-        super(SolarCraftToolTiers.ILLIDIUM_TOOLS_TIER, 3, -2.4F, (new Item.Properties()).stacksTo(1).tab(SolarForge.SOLAR_GROUP_TOOLS).rarity(Rarity.RARE).fireResistant());
+        super(SolarCraftToolTiers.ILLIDIUM_TOOLS_TIER, 3, -2.4F, (new Item.Properties()).stacksTo(1).tab(SolarForge.SOLAR_GROUP_WEAPONS).rarity(Rarity.RARE).fireResistant());
     }
 
 

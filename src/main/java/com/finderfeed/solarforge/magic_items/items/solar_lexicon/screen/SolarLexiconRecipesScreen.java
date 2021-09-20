@@ -201,7 +201,7 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
 
                             addStructureButton(fragment.getStructure().getM(),
                                     relX + entry.getPlaceInBook().x + (i % 6) * 25,
-                                    relY + entry.getPlaceInBook().y + (int) Math.floor((float) i / 6),fragment);
+                                    relY + entry.getPlaceInBook().y + (int) Math.floor((float) i / 6)*25,fragment);
                         } else {
                             addStructureButton(fragment.getStructure().getM(),
                                     relX + parent.getPlaceInBook().x + 10 + (i % 6) * 25 + BookEntry.ENTRY_TREE.get(parent).indexOf(entry) * 200,

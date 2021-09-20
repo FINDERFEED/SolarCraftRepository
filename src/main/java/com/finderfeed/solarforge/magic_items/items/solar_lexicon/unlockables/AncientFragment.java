@@ -28,6 +28,7 @@ public enum AncientFragment {
     ITEM_MAGNET(tx("solar_fragment.item_magnet"),"item_magnet",Achievement.CRAFT_SOLAR_INFUSER,BookEntry.BEGINNER_ITEMS,ItemsRegister.MAGNET_BLOCK.get().getDefaultInstance(),tx("item_magnet.lore"), SolarForge.INFUSING_RECIPE_TYPE,true),
     AURA_HEALER(tx("solar_fragment.aura_healer"),"aura_healer",Achievement.USE_SOLAR_INFUSER,BookEntry.BEGINNER_ITEMS,ItemsRegister.AURA_HEALER.get().getDefaultInstance(),tx("aura_healer.lore"), SolarForge.INFUSING_RECIPE_TYPE,true),
     DISC_LAUNCHER(tx("solar_fragment.disc_launcher"),"disc_launcher",Achievement.USE_SOLAR_INFUSER,BookEntry.BEGINNER_ITEMS,ItemsRegister.SOLAR_DISC_LAUNCHER.get().getDefaultInstance(),tx("disc_launcher.lore"), SolarForge.INFUSING_RECIPE_TYPE,true),
+    TURRET_RADAR(tx("solar_fragment.turret_radar"),"turret_radar",Achievement.USE_SOLAR_INFUSER,BookEntry.BEGINNER_ITEMS,ItemsRegister.TURRET_RADAR.get().getDefaultInstance(),tx("turret_radar.lore"), SolarForge.INFUSING_RECIPE_TYPE,true),
     SOLAR_TURRET(tx("solar_fragment.solar_turret"),"solar_turret",Achievement.USE_SOLAR_INFUSER,BookEntry.BEGINNER_ITEMS,ItemsRegister.TURRET_BLOCK.get().getDefaultInstance(),tx("solar_turret.lore"), SolarForge.INFUSING_RECIPE_TYPE,true),
     MANA_REGEN_AMULET(tx("solar_fragment.mana_regen_amulet"),"mana_regen_amulet",Achievement.USE_SOLAR_INFUSER,BookEntry.BEGINNER_ITEMS,ItemsRegister.SOLAR_MANA_AMULET.get().getDefaultInstance(),tx("mana_regen_amulet.lore"), SolarForge.INFUSING_RECIPE_TYPE,true),
 
@@ -62,7 +63,8 @@ public enum AncientFragment {
             ItemsRegister.MAGIC_DAMAGE_MODULE_5.get().getDefaultInstance(),ItemsRegister.SWORD_AUTOHEAL_MODULE.get().getDefaultInstance(),
             ItemsRegister.PHYSICAL_DEFENCE_MODULE_10.get().getDefaultInstance(),ItemsRegister.DISARMING_THORNS_MODULE.get().getDefaultInstance(),
             ItemsRegister.SWORD_AOE_ATTACK.get().getDefaultInstance(),ItemsRegister.PICKAXE_AUTO_SMELT.get().getDefaultInstance(),
-            ItemsRegister.BLESSED_MODULE.get().getDefaultInstance()
+            ItemsRegister.BLESSED_MODULE.get().getDefaultInstance(),ItemsRegister.POISONING_BLADE_MODULE.get().getDefaultInstance(),
+            ItemsRegister.FURY_SWIPES_MODULE.get().getDefaultInstance()
     ),tx("modules.lore")),
 
     SOLAR_ENERGY_GENERATOR(tx("solar_fragment.solar_energy_generator"),"solar_energy_generator",Achievement.CRAFT_SOLAR_LENS,BookEntry.MASTER_ENERGY,ItemsRegister.ENERGY_GENERATOR_BLOCK.get().getDefaultInstance(),tx("solar_energy_generator.lore"), SolarForge.INFUSING_RECIPE_TYPE,true),
@@ -71,6 +73,7 @@ public enum AncientFragment {
 
     RADIANT_CHESTPLATE(tx("solar_fragment.radiant_cuirass"),"radiant_cuirass",Achievement.CRAFT_SOLAR_ENERGY_GENERATOR,BookEntry.ARMOR,ItemsRegister.RADIANT_CHESTPLATE.get().getDefaultInstance(),tx("radiant_cuirass.lore"), SolarForge.INFUSING_RECIPE_TYPE,true),
     MEDIUM_SOLAR_REACTOR(tx("solar_fragment.medium_solar_reactor"),"medium_solar_reactor",Achievement.CRAFT_SOLAR_ENERGY_GENERATOR,BookEntry.MASTER_MATERIALS,ItemsRegister.MEDIUM_SOLAR_REACTOR.get().getDefaultInstance(),tx("medium_solar_reactor.lore"), SolarForge.INFUSING_RECIPE_TYPE,true),
+    ZAP_TURRET(tx("solar_fragment.zap_turret"),"zap_turret",Achievement.CRAFT_SOLAR_ENERGY_GENERATOR,BookEntry.MASTER_ITEMS,ItemsRegister.ZAP_TURRET_BLOCK.get().getDefaultInstance(),tx("zap_turret.lore"), SolarForge.INFUSING_RECIPE_TYPE,true),
     CHARGED_QUALADIUM_INGOT(tx("solar_fragment.charged_qualadium_ingot"),"charged_qualadium_ingot",Achievement.CRAFT_SOLAR_ENERGY_GENERATOR,BookEntry.MASTER_MATERIALS,ItemsRegister.CHARGED_QUALADIUM_INGOT.get().getDefaultInstance(),tx("charged_qualadium_ingot.lore"), SolarForge.INFUSING_RECIPE_TYPE,true),
     SOLAR_MORTAR(tx("solar_fragment.solar_mortar"),"solar_mortar",Achievement.CRAFT_SOLAR_ENERGY_GENERATOR,BookEntry.MASTER_ITEMS,ItemsRegister.SOLAR_MORTAR.get().getDefaultInstance(),tx("solar_mortar.lore"), SolarForge.INFUSING_RECIPE_TYPE,true),
     SOLAR_FURNACE(tx("solar_fragment.solar_furnace"),"solar_furnace",Achievement.CRAFT_SOLAR_ENERGY_GENERATOR,BookEntry.MASTER_ITEMS,ItemsRegister.SOLAR_FURNACE_BLOCK.get().getDefaultInstance(),tx("solar_furnace.lore"), SolarForge.INFUSING_RECIPE_TYPE,true),
@@ -85,6 +88,7 @@ public enum AncientFragment {
     SOLAR_CORE_STRUCTURE(tx("solar_fragment.solar_core_structure"),"solar_core_structure",SOLAR_CORE.neededProgression,BookEntry.STRUCTURES,Multiblocks.SOLAR_CORE,true),
     SOLAR_ENERGY_GENERATOR_STRUCTURE(tx("solar_fragment.solar_energy_generator_structure"),"solar_energy_generator_structure",SOLAR_ENERGY_GENERATOR.neededProgression,BookEntry.STRUCTURES,Multiblocks.SOLAR_ENERGY_GENERATOR,true),
     DIMENSION_STRUCTURE(tx("solar_fragment.dimension_structure"),"dimension_structure",Achievement.DIMENSION_CORE,BookEntry.STRUCTURES,Multiblocks.RADIANT_LAND_PORTAL,true),
+    ZAP_TURRET_STRUCTURE(tx("solar_fragment.zap_turret_structure"),"zap_turret_structure",Achievement.CRAFT_SOLAR_ENERGY_GENERATOR,BookEntry.STRUCTURES,Multiblocks.ZAP_TURRET,true),
 
     SOLAR_GOD_PICKAXE_UPGRADE(tx("solar_fragment.solar_god_pickaxe_upgrade"),"solar_god_pickaxe_upgrade",Achievement.CRAFT_SOLAR_ENERGY_GENERATOR,BookEntry.UPGRADES,ItemsRegister.SOLAR_GOD_PICKAXE.get().getDefaultInstance(),tx("solar_pickaxe_upgrade.lore")),
     SOLAR_GOD_SWORD_UPGRADE(tx("solar_fragment.solar_god_sword_upgrade"),"solar_god_sword_upgrade",Achievement.CRAFT_SOLAR_ENERGY_GENERATOR,BookEntry.UPGRADES,ItemsRegister.SOLAR_GOD_SWORD.get().getDefaultInstance(),tx("solar_god_sword_upgrade.lore")),
@@ -100,12 +104,7 @@ public enum AncientFragment {
     public static Map<String,AncientFragment> FRAGMENTS_ID_MAP = new HashMap<>();
 
 
-    public static AncientFragment[] FRAGMENTS_WITHOUT_TABLE_NEEDED = {
-            RUNIC_TABLE,
-            FRAGMENT,
-            LEXICON,
-            WAND
-    };
+
 
     public static void initFragmentsMap(){
 
