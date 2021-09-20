@@ -4,6 +4,7 @@ import com.finderfeed.solarforge.capabilities.capability_mana.CapabilitySolarMan
 import com.finderfeed.solarforge.capabilities.capability_mana.SolarForgeMana;
 import com.finderfeed.solarforge.events.my_events.ProgressionUnlockEvent;
 import com.finderfeed.solarforge.misc_things.Multiblock;
+import com.finderfeed.solarforge.misc_things.ParticlesList;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
 import com.finderfeed.solarforge.packet_handler.TriggerToastPacket;
@@ -198,13 +199,6 @@ public class Helpers {
         return true;
     }
 
-    public static Item[] ALL_OBJECTS_FOR_CRAFTING = {
-            ItemsRegister.SOLAR_WAND.get(),
-            ItemsRegister.SOLAR_STONE_BRICKS.get(),
-            ItemsRegister.SOLAR_STONE_CHISELED.get(),
-            ItemsRegister.SOLAR_STONE_COLLUMN.get(),
-            ItemsRegister.SOLAR_STONE_COLLUMN_HORIZONTAL.get()
-    };
     public static double blocksPerSecondToVelocity(double a){
         return a*0.05;
     }
@@ -410,6 +404,21 @@ public class Helpers {
         }
     }
 
+
+    public static void createSmallSolarStrikeParticleExplosion(Level world,Vec3 position,int intensity,float speedFactor,float spawnDistanceFactor){
+        for (int x = -intensity; x < intensity+1;x++){
+            for (int y = -intensity; y < intensity+1;y++){
+                for (int z = -intensity; z < intensity+1;z++){
+                    Vec3 offset = new Vec3(x,y,z).normalize().multiply(spawnDistanceFactor,spawnDistanceFactor,spawnDistanceFactor);
+                    Vec3 finalpos = position.add(offset);
+                    world.addParticle(ParticlesList.SMALL_SOLAR_STRIKE_PARTICLE.get(),finalpos.x,finalpos.y,finalpos.z,offset.x*speedFactor,offset.y*speedFactor,offset.z*speedFactor);
+
+                }
+            }
+        }
+    }
+
+
     public static class HashMapConstructor<T,E>{
         private Map<T,E> MAP = new HashMap<>();
 
@@ -425,5 +434,6 @@ public class Helpers {
         }
 
     }
+
 
 }

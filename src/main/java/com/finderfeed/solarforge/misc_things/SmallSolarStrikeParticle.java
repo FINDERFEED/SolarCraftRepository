@@ -8,11 +8,13 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.*;
 import com.mojang.blaze3d.vertex.BufferBuilder;
 import com.mojang.blaze3d.vertex.Tesselator;
+import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureManager;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.particles.SimpleParticleType;
+import net.minecraft.util.Mth;
 import org.lwjgl.opengl.GL11;
 
 import javax.annotation.Nullable;
@@ -37,7 +39,20 @@ public class SmallSolarStrikeParticle extends TextureSheetParticle {
 
     }
 
+    @Override
+    public int getLightColor(float p_172146_) {
+//        float f = 2;
+//        f = Mth.clamp(f, 0.0F, 1.0F);
+//        int i = super.getLightColor(p_172146_);
+//        int j = i & 255;
+//        int k = i >> 16 & 255;
+//        j = j + (int)(f * 15.0F * 16.0F);
+//        if (j > 240) {
+//            j = 240;
+//        }
 
+        return 15728880;
+    }
 
     @Override
     public ParticleRenderType getRenderType() {
@@ -83,7 +98,6 @@ public class SmallSolarStrikeParticle extends TextureSheetParticle {
             RenderSystem.depthMask(false);
             RenderSystem.enableBlend();
             RenderSystem.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE);
-
 
 
 

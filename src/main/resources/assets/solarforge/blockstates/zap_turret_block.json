@@ -1,0 +1,5 @@
+{
+  "variants": {
+    "": { "model": "solarforge:block/zap_turret_block" }
+  }
+}

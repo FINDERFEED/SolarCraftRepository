@@ -82,17 +82,28 @@ public enum Multiblocks {
             .setStructName("solarcraft.dimension_portal")
 
 
+    )),
+    ZAP_TURRET(new Multiblock(new Multiblock.Constructor()
+            .addStruct(Structures.ZAP_TURRET)
+            .addBlock(BlocksRegistry.SOLAR_STONE_BRICKS.get(),'B')
+            .addBlock(BlocksRegistry.SOLAR_STONE_COLLUMN.get(), 'C')
+            .addBlock(BlocksRegistry.SOLAR_STONE_STAIRS.get(), 'S')
+            .addBlock(BlocksRegistry.ZAP_TURRET_BLOCK.get(), 'T')
+            .addMainBlock(BlocksRegistry.ZAP_TURRET_BLOCK.get())
+            .addAchievement(Achievement.CRAFT_SOLAR_LENS)
+            .setStructName("solarcraft.zap_turret")
     ));
 
 
 
-    public static Map<String,Multiblock> multiblocks = Map.of(
+    public static Map<String,Multiblock> MULTIBLOCKS = Map.of(
             "infuser", INFUSER.a,
             "generator", SOLAR_ENERGY_GENERATOR.a,
             "healer", AURA_HEALER.a,
             "mortar", SOLAR_MORTAR.a,
             "lesser_core", SOLAR_CORE.a,
-            "dim_portal",RADIANT_LAND_PORTAL.a
+            "dim_portal",RADIANT_LAND_PORTAL.a,
+            "zap_turret", ZAP_TURRET.a
     );
 
 
@@ -121,6 +132,35 @@ public enum Multiblocks {
 
 }
 class Structures{
+
+    public static String[][] ZAP_TURRET = {
+            {
+                    "BBB",
+                    "BBB",
+                    "BBB"
+
+            },
+            {
+                    " S ",
+                    "SCS",
+                    " S "
+
+            },
+            {
+                    "   ",
+                    " C ",
+                    "   "
+
+            },
+            {
+                    "   ",
+                    " T ",
+                    "   "
+
+            },
+
+    };
+
 
     public static String[][] RADIANT_DIM_PORTAL_STRUCTURE = {
             {

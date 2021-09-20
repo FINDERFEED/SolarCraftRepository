@@ -21,7 +21,7 @@ public class ZapTurretBlock extends Block implements EntityBlock {
 
     @Override
     public RenderShape getRenderShape(BlockState p_60550_) {
-        return RenderShape.ENTITYBLOCK_ANIMATED;
+        return super.getRenderShape(p_60550_);
     }
 
     @Nullable

@@ -18,4 +18,5 @@ public class Sounds {
     public static final RegistryObject<SoundEvent> RAY_TRAP_PROC = SOUND_EVENTS.register("ray_trap_proc",()-> new SoundEvent(new ResourceLocation("solarforge","ray_trap_proc")));
     public static final RegistryObject<SoundEvent> BUTTON_PRESS2 = SOUND_EVENTS.register("button_press2c",()-> new SoundEvent(new ResourceLocation("solarforge","button_press2")));
     public static final RegistryObject<SoundEvent> PROGRESSION_GAIN = SOUND_EVENTS.register("progression_unlock",()-> new SoundEvent(new ResourceLocation("solarforge","progression_unlock")));
+    public static final RegistryObject<SoundEvent> ZAP_TURRET_SHOT = SOUND_EVENTS.register("zap_turret_shot",()-> new SoundEvent(new ResourceLocation("solarforge","zap_turret_shot")));
 }

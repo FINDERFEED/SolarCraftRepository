@@ -426,7 +426,9 @@
   "solarcraft_poisoning_blade": "Module Effect: Poisoning blade - poisons targets for 8 seconds. Incompatible with magic damage/fury swipes.",
   "item.solarforge.poisoning_blade_module": "Module",
   "solarcraft_fury_swipes": "Module Effect: Fury Swipes - each attack increases the damage you deal to the target by 0.5 (Max +10 dmg). Incompatible with magic damage/poisoning blade.",
-  "item.solarforge.fury_swipes_module": "Module"
+  "item.solarforge.fury_swipes_module": "Module",
+  "solarcraft.zap_turret": "Zap Turret",
+  "block.solarforge.zap_turret_block": "Zap Turret"
 
 
 

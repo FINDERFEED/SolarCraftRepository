@@ -31,5 +31,8 @@
   },
   "progression_unlock": {
     "sounds": ["solarforge:progression_unlock"]
+  },
+  "zap_turret_shot": {
+    "sounds": ["solarforge:zap_turret_shot"]
   }
 }

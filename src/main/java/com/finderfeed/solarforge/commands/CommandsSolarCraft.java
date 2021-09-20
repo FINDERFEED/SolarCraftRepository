@@ -79,8 +79,8 @@ public class CommandsSolarCraft {
 
     public static int constructMultiblock(CommandSourceStack src,String id) throws CommandSyntaxException{
         ServerPlayer player = src.getPlayerOrException();
-        if (Multiblocks.multiblocks.containsKey(id)){
-            Helpers.constructMultiblock(player,Multiblocks.multiblocks.get(id));
+        if (Multiblocks.MULTIBLOCKS.containsKey(id)){
+            Helpers.constructMultiblock(player,Multiblocks.MULTIBLOCKS.get(id));
             src.sendSuccess(new TextComponent("Constructed!"),false);
         }else{
             src.sendFailure(new TextComponent("Structure doesnt exist"));

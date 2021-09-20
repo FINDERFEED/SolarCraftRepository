@@ -1,0 +1,7 @@
+{
+  "parent": "block/cube_column",
+  "textures": {
+    "end": "solarforge:block/zap_turret_top",
+    "side": "solarforge:block/zap_turret"
+  }
+}
