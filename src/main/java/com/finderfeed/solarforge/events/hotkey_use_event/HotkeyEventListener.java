@@ -1,6 +1,7 @@
 package com.finderfeed.solarforge.events.hotkey_use_event;
 
 
+import com.finderfeed.solarforge.SolarAbilities.screens.AbilityBuyScreen;
 import com.finderfeed.solarforge.SolarForgeClientRegistry;
 import com.finderfeed.solarforge.packet_handler.ResetAllAbilitiesPacket;
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
@@ -56,6 +57,10 @@ public class HotkeyEventListener {
 
             Minecraft.getInstance().setScreen(new SolarForgeAbilityConfigScreen());
 
+        }
+
+        if (SolarForgeClientRegistry.GUI_ABILITY_BUY_SCREEN.isDown() && event.getAction() == GLFW.GLFW_PRESS){
+            Minecraft.getInstance().setScreen(new AbilityBuyScreen());
         }
 
 

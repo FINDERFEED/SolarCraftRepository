@@ -62,7 +62,7 @@ public class SolarForgeClientRegistry {
     public static final KeyMapping FORTH_ABILITY_KEY = new KeyMapping("key.fire_ability_four", KeyConflictContext.UNIVERSAL, InputConstants.Type.SCANCODE, GLFW.GLFW_KEY_D,"key.solarforge.category");
     public static final KeyMapping ADMIN_ABILITY_KEY = new KeyMapping("key.admin_button_solarforge", KeyConflictContext.UNIVERSAL, InputConstants.Type.SCANCODE, GLFW.GLFW_KEY_D,"key.solarforge.category");
     public static final KeyMapping OPEN_GUI_ABILITY_KEY = new KeyMapping("key.gui_button_solarforge", KeyConflictContext.UNIVERSAL, InputConstants.Type.SCANCODE, GLFW.GLFW_KEY_D,"key.solarforge.category");
-  //  public static final KeyBinding TOGGLE_MANA_HUD = new KeyBinding("key.mana_hud.solarforge", KeyConflictContext.UNIVERSAL, InputMappings.Type.SCANCODE, GLFW.GLFW_KEY_D,"key.solarforge.category");
+    public static final KeyMapping GUI_ABILITY_BUY_SCREEN = new KeyMapping("key.ability_buy_screen.solarforge", KeyConflictContext.UNIVERSAL, InputConstants.Type.SCANCODE, GLFW.GLFW_KEY_D,"key.solarforge.category");
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public static void registerTest(TextureStitchEvent.Pre event){
@@ -92,7 +92,7 @@ public class SolarForgeClientRegistry {
         ClientRegistry.registerKeyBinding(FORTH_ABILITY_KEY);
         ClientRegistry.registerKeyBinding(OPEN_GUI_ABILITY_KEY);
         ClientRegistry.registerKeyBinding(ADMIN_ABILITY_KEY);
-        //ClientRegistry.registerKeyBinding(TOGGLE_MANA_HUD);
+        ClientRegistry.registerKeyBinding(GUI_ABILITY_BUY_SCREEN);
 
 
 

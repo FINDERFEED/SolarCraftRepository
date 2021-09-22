@@ -2,6 +2,7 @@ package com.finderfeed.solarforge.registries.abilities;
 
 import com.finderfeed.solarforge.SolarAbilities.Abilities;
 import com.finderfeed.solarforge.SolarAbilities.AbilityClasses.AbstractAbility;
+import com.finderfeed.solarforge.SolarAbilities.AbilityClasses.FireballAbility;
 import com.finderfeed.solarforge.SolarAbilities.AbilityClasses.LightningAbility;
 import com.finderfeed.solarforge.for_future_library.custom_registries.CustomDeferredRegistry;
 import com.finderfeed.solarforge.for_future_library.custom_registries.CustomRegistryEntry;
@@ -13,6 +14,8 @@ public class AbilitiesRegistry {
 
     public static final CustomDeferredRegistry<AbstractAbility> ABILITIES = CustomDeferredRegistry.create("solarforge", SolarcraftRegistries.ABILITIES);
     public static final LightningAbility LIGHTNING = (LightningAbility) ABILITIES.register("lightning", Abilities.LIGHTNING::getAbility);
+    public static final FireballAbility FIREBALL = (FireballAbility) ABILITIES.register("fireball", Abilities.FIREBALL::getAbility);
+    public static final AbstractAbility SOLAR_STRIKE = ABILITIES.register("solar_strike",Abilities.SOLAR_STRIKE::getAbility);
 
 
 
