@@ -2,18 +2,16 @@ package com.finderfeed.solarforge.SolarAbilities.screens;
 
 import com.finderfeed.solarforge.ClientHelpers;
 import com.finderfeed.solarforge.SolarAbilities.AbilityClasses.AbstractAbility;
-import com.finderfeed.solarforge.for_future_library.FinderfeedMathHelper;
+import com.finderfeed.solarforge.for_future_library.helpers.FinderfeedMathHelper;
 import com.finderfeed.solarforge.for_future_library.custom_registries.RegistryDelegate;
+import com.finderfeed.solarforge.for_future_library.helpers.RenderingTools;
 import com.finderfeed.solarforge.magic_items.blocks.solar_forge_block.solar_forge_screen.SolarForgeButton;
 import com.finderfeed.solarforge.registries.SolarcraftRegistries;
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
-import org.lwjgl.system.CallbackI;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,11 +46,11 @@ public class AbilityBuyScreen extends Screen {
 
         for (AbstractAbility ability : RegistryDelegate.getAllRegisteredEntriesFor(SolarcraftRegistries.ABILITIES)){
 
-            int yOffset = (count%7)*20;
-            int xOffset = ((int)Math.floor((float)count/7))*70;
+            int yOffset = (count%9)*20;
+            int xOffset = ((int)Math.floor((float)count/9))*68;
 
 
-            addRenderableWidget(new SolarForgeButton(relX-10+xOffset,relY+35+yOffset,65,15,new TranslatableComponent("solarcraft_button."+ability.id),
+            addRenderableWidget(new SolarForgeButton(relX-35+xOffset,relY+35+yOffset,65,15,new TranslatableComponent("solarcraft_button."+ability.id),
                     (button)->{
                         this.showText = false;
                         this.ticker = 0;
@@ -66,7 +64,7 @@ public class AbilityBuyScreen extends Screen {
     @Override
     public void tick() {
         if (this.showText) {
-            this.ticker++;
+            this.ticker+=2;
         }else{
             this.ticker = 0;
         }
@@ -78,66 +76,42 @@ public class AbilityBuyScreen extends Screen {
     @Override
     public void render(PoseStack matrices, int mousex, int mousey, float partialTicks) {
         ClientHelpers.bindText(LOC);
-        blit(matrices,relX-20,relY+5+20,0,0,256,256);
+        blit(matrices,relX-40,relY+5+20,0,0,256,256);
         if (currentAbility != null){
             ClientHelpers.bindText(new ResourceLocation("solarforge","textures/abilities/"+currentAbility.id+".png"));
-            blit(matrices,relX+150,relY+30,0,0,38,38,38,38);
-            drawCenteredString(matrices, minecraft.font,new TranslatableComponent("name."+currentAbility.id),relX+119,relY+30,0xffffff);
-            drawCenteredString(matrices, minecraft.font,new TranslatableComponent("cost."+currentAbility.id),relX+119,relY+50,0xffffff);
-            doText(matrices,new TranslatableComponent("desc."+currentAbility.id).getString(),20,relX,relY);
+            blit(matrices,relX+157-20,relY+33,0,0,38,38,38,38);
+            drawCenteredString(matrices, minecraft.font,new TranslatableComponent("name."+currentAbility.id),relX+176-20,relY+72,0xffffff);
+            drawCenteredString(matrices, minecraft.font,new TranslatableComponent("cost."+currentAbility.id),relX+176-20,relY+82,0xffffff);
+
+            doText(matrices,new TranslatableComponent("desc."+currentAbility.id).getString(),17,relX+176-20,relY+92);
         }
         super.render(matrices, mousex, mousey, partialTicks);
     }
 
 
-
     private void doText(PoseStack matrices,String str,int maxlength,int posX,int posY){
         this.showText = true;
-        List<String> strings = new ArrayList<>();
-        StringBuilder builder = new StringBuilder(str);
-        while (true){
-            try {
-                String sub = builder.substring(0,maxlength);
-                if (sub.charAt(sub.length()-1) != ' '){
-                    int index = findNearest_Index(sub,sub.length()-1);
-                    if (index != -1) {
-                        strings.add(sub.substring(0, index));
-                        builder.delete(0, index);
-                    }else{
-                        strings.add(sub);
-                        builder.delete(0,maxlength);
-                    }
-                }else{
-                    strings.add(sub);
-                    builder.delete(0,maxlength);
-                }
-            }catch (IndexOutOfBoundsException exc){
-                strings.add(builder.toString());
-             break;
-            }
-        }
-        int remainingChars = FinderfeedMathHelper.clamp(0,ticker,str.length()-1);
-        int kolvoStrok =0;
+        List<String> strings = RenderingTools.splitString(str,maxlength);
+        int maxSymbols = 0;
         for (String s : strings){
-            if (remainingChars >= maxlength){
-                drawString(matrices,font,s,posX,posY+kolvoStrok*10,0xffffff);
-                kolvoStrok++;
-                remainingChars-=s.length();
+            maxSymbols+=s.length();
+        }
+        int remainingChars = FinderfeedMathHelper.clamp(0,this.ticker,maxSymbols);
+        int count = 0;
+        for (String s : strings){
+            if (remainingChars > s.length()){
+                drawCenteredString(matrices,font,s,posX,posY + count*10,0xffffff);
+                count++;
+                remainingChars -= s.length();
             }else{
-                drawString(matrices,font,s.substring(0,remainingChars),posX,posY+kolvoStrok*10,0xffffff);
+                drawCenteredString(matrices,font,s.substring(0,remainingChars),posX,posY + count*10,0xffffff);
+                count++;
+                remainingChars = 0;
             }
         }
-
     }
 
-    private int findNearest_Index(String origstring,int end){
-        for (int i = end;i > 0;i--){
-            if (origstring.charAt(i) == ' '){
-                return i;
-            }
-        }
-        return -1;
-    }
+
 
 
 

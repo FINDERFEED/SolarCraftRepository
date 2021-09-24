@@ -2,8 +2,7 @@ package com.finderfeed.solarforge.magic_items.runic_network.repeater;
 
 
 import com.finderfeed.solarforge.Helpers;
-import com.finderfeed.solarforge.for_future_library.FinderfeedMathHelper;
-import com.finderfeed.solarforge.magic_items.blocks.blockentities.RuneEnergyPylonTile;
+import com.finderfeed.solarforge.for_future_library.helpers.FinderfeedMathHelper;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;

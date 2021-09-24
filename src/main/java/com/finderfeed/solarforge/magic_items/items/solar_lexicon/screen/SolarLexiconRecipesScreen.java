@@ -2,7 +2,7 @@ package com.finderfeed.solarforge.magic_items.items.solar_lexicon.screen;
 
 import com.finderfeed.solarforge.ClientHelpers;
 import com.finderfeed.solarforge.Helpers;
-import com.finderfeed.solarforge.for_future_library.RenderingTools;
+import com.finderfeed.solarforge.for_future_library.helpers.RenderingTools;
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.misc_things.IScrollable;
 import com.finderfeed.solarforge.misc_things.Multiblock;

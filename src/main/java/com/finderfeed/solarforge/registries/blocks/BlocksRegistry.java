@@ -1,8 +1,9 @@
 package com.finderfeed.solarforge.registries.blocks;
 
-import com.finderfeed.solarforge.for_future_library.*;
-import com.finderfeed.solarforge.magic_items.RadiantPortalBlock;
-import com.finderfeed.solarforge.magic_items.blocks.blockentities.RadiantPortalCreatorTile;
+import com.finderfeed.solarforge.for_future_library.blocks.FlammableBlock;
+import com.finderfeed.solarforge.for_future_library.blocks.FlammableLeavesBlock;
+import com.finderfeed.solarforge.for_future_library.blocks.FlammableSlabBlock;
+import com.finderfeed.solarforge.for_future_library.blocks.RotatedPillarFlammableBlock;
 import com.finderfeed.solarforge.magic_items.blocks.infusing_table_things.infusing_pool.InfusingPool;
 import com.finderfeed.solarforge.magic_items.blocks.BlueGemDoorBlock;
 import com.finderfeed.solarforge.magic_items.blocks.*;

@@ -1,9 +1,8 @@
 package com.finderfeed.solarforge.magic_items.blocks.render;
 
 import com.finderfeed.solarforge.events.other_events.ModelRegistryEvents;
-import com.finderfeed.solarforge.for_future_library.FinderfeedMathHelper;
-import com.finderfeed.solarforge.for_future_library.RenderingTools;
-import com.finderfeed.solarforge.magic_items.blocks.blockentities.EnergyGeneratorTile;
+import com.finderfeed.solarforge.for_future_library.helpers.FinderfeedMathHelper;
+import com.finderfeed.solarforge.for_future_library.helpers.RenderingTools;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.WormholeTileEntity;
 import com.finderfeed.solarforge.rendering.shaders.post_chains.PostChainPlusUltra;
 import com.finderfeed.solarforge.rendering.shaders.post_chains.UniformPlusPlus;

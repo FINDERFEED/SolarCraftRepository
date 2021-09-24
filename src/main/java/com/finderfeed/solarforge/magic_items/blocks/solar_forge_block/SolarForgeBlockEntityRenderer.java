@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.magic_items.blocks.solar_forge_block;
 
-import com.finderfeed.solarforge.for_future_library.RenderingTools;
+import com.finderfeed.solarforge.for_future_library.helpers.RenderingTools;
 import com.finderfeed.solarforge.registries.ModelLayersRegistry;
 import com.mojang.blaze3d.vertex.PoseStack;
 

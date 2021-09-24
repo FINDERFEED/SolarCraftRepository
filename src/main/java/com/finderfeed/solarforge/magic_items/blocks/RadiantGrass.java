@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.magic_items.blocks;
 
-import com.finderfeed.solarforge.for_future_library.NormalGrassBlock;
+import com.finderfeed.solarforge.for_future_library.blocks.NormalGrassBlock;
 import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;

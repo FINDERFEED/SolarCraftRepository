@@ -1,7 +1,7 @@
 package com.finderfeed.solarforge.magic_items.runic_network.repeater;
 
 import com.finderfeed.solarforge.Helpers;
-import com.finderfeed.solarforge.for_future_library.FinderfeedMathHelper;
+import com.finderfeed.solarforge.for_future_library.helpers.FinderfeedMathHelper;
 import com.finderfeed.solarforge.misc_things.ParticlesList;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
@@ -14,16 +14,13 @@ import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.Nullable;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 //NEVER GONNA GIVE YOU UP
 public class BaseRepeaterTile extends BlockEntity {

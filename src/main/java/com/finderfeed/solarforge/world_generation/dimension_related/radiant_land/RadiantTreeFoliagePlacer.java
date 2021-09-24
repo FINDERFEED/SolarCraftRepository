@@ -1,8 +1,6 @@
 package com.finderfeed.solarforge.world_generation.dimension_related.radiant_land;
 
 import com.finderfeed.solarforge.Helpers;
-import com.finderfeed.solarforge.for_future_library.FinderfeedMathHelper;
-import com.finderfeed.solarforge.world_generation.features.foliage_placers.BurntTreeFoliagePlacer;
 import com.finderfeed.solarforge.world_generation.features.foliage_placers.FoliagePlacerRegistry;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -16,7 +14,6 @@ import net.minecraft.world.level.levelgen.feature.configurations.TreeConfigurati
 import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacer;
 import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacerType;
 import net.minecraft.world.phys.Vec3;
-import org.lwjgl.system.CallbackI;
 
 import java.util.Random;
 import java.util.function.BiConsumer;

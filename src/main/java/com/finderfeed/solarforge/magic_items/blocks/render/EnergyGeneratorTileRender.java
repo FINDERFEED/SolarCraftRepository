@@ -1,8 +1,8 @@
 package com.finderfeed.solarforge.magic_items.blocks.render;
 
 import com.finderfeed.solarforge.Helpers;
-import com.finderfeed.solarforge.for_future_library.FinderfeedMathHelper;
-import com.finderfeed.solarforge.for_future_library.RenderingTools;
+import com.finderfeed.solarforge.for_future_library.helpers.FinderfeedMathHelper;
+import com.finderfeed.solarforge.for_future_library.helpers.RenderingTools;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.EnergyGeneratorTile;
 import com.finderfeed.solarforge.magic_items.blocks.rendering_models.SolarEnergyGeneratorModel;
 import com.finderfeed.solarforge.misc_things.AbstractSolarCore;
@@ -21,7 +21,6 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
-import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.core.BlockPos;
 import com.mojang.math.Matrix4f;

@@ -1,8 +1,9 @@
-package com.finderfeed.solarforge.for_future_library;
+package com.finderfeed.solarforge.for_future_library.helpers;
 
+import ca.weblite.objc.Message;
 import com.finderfeed.solarforge.ClientHelpers;
+import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.events.RenderEventsHandler;
-import com.finderfeed.solarforge.events.other_events.ModelRegistryEvents;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import com.finderfeed.solarforge.rendering.rendertypes.RadiantPortalRendertype;
 import com.finderfeed.solarforge.rendering.shaders.post_chains.PostChainPlusUltra;
@@ -25,7 +26,6 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.resources.model.BakedModel;
-import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
@@ -41,10 +41,13 @@ import net.minecraft.world.level.block.HalfTransparentBlock;
 import net.minecraft.world.level.block.StainedGlassPaneBlock;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.model.data.ModelDataMap;
-import org.lwjgl.opengl.GL11;
+import org.apache.logging.log4j.Level;
+import org.lwjgl.system.CallbackI;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 
 
@@ -461,6 +464,65 @@ public class RenderingTools {
         }
 
 
+    }
+
+    public static List<String> splitString(String main,int maxlen){
+        List<String> returnable = new ArrayList<>();
+        StringBuilder builder = new StringBuilder(main);
+        while (true){
+            try{
+                if (builder.length() > maxlen){
+                    String sub = builder.substring(0,maxlen+1);
+                    if (sub.charAt(sub.length()-1) != ' '){
+                        int index = findNearest_Index(sub,sub.length()-1);
+                        if (index != -1){
+                            returnable.add(builder.substring(0,index+1));
+                            builder.delete(0,index+1);
+                        }else{
+                            returnable.add(sub);
+                            builder.delete(0,maxlen+1);
+                        }
+                    }else{
+                        returnable.add(sub);
+                        builder.delete(0,maxlen+1);
+                    }
+                }else {
+                    returnable.add(builder.toString());
+                    break;
+                }
+            }catch (IndexOutOfBoundsException e){
+                SolarForge.LOGGER.log(Level.ERROR, "Exception caught " + RenderingTools.class.toString() + " method splitString()");
+                break;
+            }
+        }
+
+        return deleteStartingProbelsSmbdyTeachHimEnglish(returnable);
+    }
+
+
+    private static List<String> deleteStartingProbelsSmbdyTeachHimEnglish(List<String> strings){
+        List<String> toReturn = new ArrayList<>();
+        for (int i = 0;i < strings.size();i++){
+            StringBuilder builder = new StringBuilder(strings.get(i));
+            while (true){
+                if (builder.charAt(0) == ' '){
+                    builder.delete(0,1);
+                }else{
+                    break;
+                }
+            }
+            toReturn.add(builder.toString());
+        }
+        return toReturn;
+    }
+
+    private static int findNearest_Index(String origstring,int end){
+        for (int i = end;i > 0;i--){
+            if (origstring.charAt(i) == ' '){
+                return i;
+            }
+        }
+        return -1;
     }
 
 }

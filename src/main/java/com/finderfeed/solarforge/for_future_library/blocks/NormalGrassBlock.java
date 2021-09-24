@@ -1,4 +1,4 @@
-package com.finderfeed.solarforge.for_future_library;
+package com.finderfeed.solarforge.for_future_library.blocks;
 
 import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
 import net.minecraft.core.BlockPos;

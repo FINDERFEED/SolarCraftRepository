@@ -1,15 +1,12 @@
 package com.finderfeed.solarforge.magic_items.runic_network.algorithms;
 
 import com.finderfeed.solarforge.Helpers;
-import com.finderfeed.solarforge.for_future_library.FinderfeedMathHelper;
+import com.finderfeed.solarforge.for_future_library.helpers.FinderfeedMathHelper;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.RuneEnergyPylonTile;
 import com.finderfeed.solarforge.magic_items.runic_network.repeater.BaseRepeaterTile;
-import com.mojang.datafixers.util.Pair;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.chunk.LevelChunk;
-import org.apache.logging.log4j.core.tools.picocli.CommandLine;
-import org.lwjgl.system.CallbackI;
 
 import java.util.*;
 

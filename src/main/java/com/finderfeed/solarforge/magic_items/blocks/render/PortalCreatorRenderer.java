@@ -1,8 +1,6 @@
 package com.finderfeed.solarforge.magic_items.blocks.render;
 
 import com.finderfeed.solarforge.Helpers;
-import com.finderfeed.solarforge.events.other_events.ModelRegistryEvents;
-import com.finderfeed.solarforge.for_future_library.RenderingTools;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.RadiantPortalCreatorTile;
 import com.finderfeed.solarforge.magic_items.blocks.rendering_models.RadiantPortal;
 import com.finderfeed.solarforge.registries.ModelLayersRegistry;
@@ -11,8 +9,6 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Matrix4f;
 import com.mojang.math.Vector3f;
-import net.minecraft.client.model.Model;
-import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;

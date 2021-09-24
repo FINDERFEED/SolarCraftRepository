@@ -1,19 +1,14 @@
 package com.finderfeed.solarforge.rendering;
 
-import com.finderfeed.solarforge.Helpers;
-import com.finderfeed.solarforge.for_future_library.FinderfeedMathHelper;
+import com.finderfeed.solarforge.for_future_library.helpers.FinderfeedMathHelper;
 import com.mojang.blaze3d.platform.NativeImage;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.util.Mth;
-import org.lwjgl.system.CallbackI;
 
-import java.awt.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 

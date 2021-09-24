@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.magic_items.blocks.render;
 
-import com.finderfeed.solarforge.for_future_library.RenderingTools;
+import com.finderfeed.solarforge.for_future_library.helpers.RenderingTools;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.RayTrapTileEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.MultiBufferSource;

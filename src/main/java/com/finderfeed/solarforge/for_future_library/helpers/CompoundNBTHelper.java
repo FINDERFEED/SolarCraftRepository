@@ -1,4 +1,4 @@
-package com.finderfeed.solarforge.for_future_library;
+package com.finderfeed.solarforge.for_future_library.helpers;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.phys.Vec3;

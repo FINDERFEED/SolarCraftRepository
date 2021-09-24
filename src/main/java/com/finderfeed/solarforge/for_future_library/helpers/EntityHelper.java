@@ -1,4 +1,4 @@
-package com.finderfeed.solarforge.for_future_library;
+package com.finderfeed.solarforge.for_future_library.helpers;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;

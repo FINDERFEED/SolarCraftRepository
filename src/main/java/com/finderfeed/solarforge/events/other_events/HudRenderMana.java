@@ -1,7 +1,7 @@
 package com.finderfeed.solarforge.events.other_events;
 
 import com.finderfeed.solarforge.ClientHelpers;
-import com.finderfeed.solarforge.for_future_library.RenderingTools;
+import com.finderfeed.solarforge.for_future_library.helpers.RenderingTools;
 import com.finderfeed.solarforge.capabilities.capability_mana.CapabilitySolarMana;
 import com.finderfeed.solarforge.magic_items.blocks.infusing_table_things.SolarWandItem;
 import com.finderfeed.solarforge.misc_things.ManaConsumer;

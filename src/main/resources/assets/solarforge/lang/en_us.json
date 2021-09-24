@@ -438,7 +438,40 @@
   "solar_fragment.zap_turret": "Zap turret",
   "zap_turret.lore": "Can damage up to 5 targets at once. Damage: 5 (Magic), Attack radius: 20, Attack rate: 1 shot/3 sec. Requires structure to function.",
   "solar_fragment.zap_turret_structure": "Zap turret",
-  "desc.fireball": "TEST THING IS IN THE CAR OF TJE IDK WHOEVER STANDS AGAINST ME STANDS BRIEFLY"
+  "name.firball": "Fireball",
+  "cost.fireball": "Cost: 15000",
+  "desc.fireball": "Do you ever wanted to shoot fireballs like this white nether marshmallows? Now you can!",
+  "name.lightning": "Lightning Strike",
+  "cost.lightning": "Cost: 20000",
+  "desc.lightning": "Now you are the true god! Or no... Anyway you will be able to summon lightnings.",
+  "name.solar_strike": "Solar Strike",
+  "cost.solar_strike": "Cost: 100000",
+  "desc.solar_strike": "Do you hate villagers? Or monsters? Well, no one will survive this massive air strike(except you).",
+  "name.alchemist": "Alchemist",
+  "cost.alchemist": "Cost: 30000",
+  "desc.alchemist": "The law of equivalent exchange. You give blocks. I give experience.",
+  "name.solar_heal": "Heal",
+  "cost.solar_heal": "Cost: 15000",
+  "desc.solar_heal": "A quick way to heal yourself in combat. Heals for 2 hearts. No, you dont need to choose what rod.",
+  "name.meteorite": "Meteorite",
+  "cost.meteorite": "Cost: 30000",
+  "desc.meteorite": "Call down a massive pebble from the sky! Does heavy damage upon landing. (WWQ,EEW,QWE)",
+  "name.solar_stun": "Disarm",
+  "cost.solar_stun": "Cost: 35000",
+  "desc.solar_stun": "Say \"NO\" to damage! Disarms mobs in a small radius. Affected foes will not deal any damage to you.",
+  "name.solar_dispel": "Dispel",
+  "cost.solar_dispel": "Cost: 20000",
+  "desc.solar_dispel": "Removes all negative effects from the player(like milk).",
+  "solarcraft_button.meteorite": "Meteorite",
+  "solarcraft_button.solar_heal": "Heal",
+  "solarcraft_button.solar_strike": "Solar Strike",
+  "solarcraft_button.alchemist": "Alchemist",
+  "solarcraft_button.lightning": "Lightning",
+  "solarcraft_button.fireball": "Fireball",
+  "solarcraft_button.solar_stun": "Disarm",
+  "solarcraft_button.solar_dispel": "Dispel"
+
+
 
 
 
