@@ -13,7 +13,7 @@ import net.minecraftforge.fmllegacy.network.NetworkEvent;
 import java.util.function.Supplier;
 
 
-
+@Deprecated
 public class AbilityBuyPacket {
     private final String str;
     private final BlockPos pos;

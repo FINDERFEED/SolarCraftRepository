@@ -8,6 +8,8 @@ import com.finderfeed.solarforge.for_future_library.helpers.RenderingTools;
 import com.finderfeed.solarforge.magic_items.blocks.solar_forge_block.solar_forge_screen.SolarForgeButton;
 import com.finderfeed.solarforge.registries.SolarcraftRegistries;
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -18,7 +20,7 @@ import java.util.List;
 
 public class AbilityBuyScreen extends Screen {
 
-
+    private Button BUY;
     public AbstractAbility currentAbility;
     public boolean showText = false;
     public int ticker;
@@ -43,7 +45,11 @@ public class AbilityBuyScreen extends Screen {
 
         int count = 0;
         int maxPages = 0;
+        Button b = new SolarForgeButton(relX+137,relY+202,65,15,new TranslatableComponent("ability.buy_ability"),(button)->{
 
+        });
+        this.BUY = b;
+        b.active =false;
         for (AbstractAbility ability : RegistryDelegate.getAllRegisteredEntriesFor(SolarcraftRegistries.ABILITIES)){
 
             int yOffset = (count%9)*20;
@@ -55,8 +61,11 @@ public class AbilityBuyScreen extends Screen {
                         this.showText = false;
                         this.ticker = 0;
                         this.currentAbility = ability;
+                        this.BUY.active = true;
                     }
             ));
+
+            addRenderableWidget(b);
             count++;
         }
     }

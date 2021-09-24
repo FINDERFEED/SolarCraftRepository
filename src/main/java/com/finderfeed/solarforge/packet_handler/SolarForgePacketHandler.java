@@ -55,6 +55,7 @@ public class SolarForgePacketHandler {
         INSTANCE.registerMessage(nextID(), UpdateTypeOnClientPacket.class, UpdateTypeOnClientPacket::toBytes, UpdateTypeOnClientPacket::new, UpdateTypeOnClientPacket::handle);
         INSTANCE.registerMessage(nextID(), UpdateEnergyOnClientPacket.class, UpdateEnergyOnClientPacket::toBytes, UpdateEnergyOnClientPacket::new, UpdateEnergyOnClientPacket::handle);
         INSTANCE.registerMessage(nextID(), TriggerProgressionShaderPacket.class, TriggerProgressionShaderPacket::toBytes, TriggerProgressionShaderPacket::new, TriggerProgressionShaderPacket::handle);
+        INSTANCE.registerMessage(nextID(), BuyAbilityPacket.class, BuyAbilityPacket::toBytes, BuyAbilityPacket::new, BuyAbilityPacket::handle);
     }
     //RepeaterParentUpdateOnClient
 }

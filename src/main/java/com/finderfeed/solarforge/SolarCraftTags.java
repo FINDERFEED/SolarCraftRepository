@@ -27,4 +27,8 @@ public class SolarCraftTags {
     public static final String EXPERIENCE_CRYSTAL_CONTAINED_XP = "solarcraft_experience_crystal_contained_xp";
 
     public static final String FURY_SWIPES_DAMAGE = "solarcraft_fury_swipes";
+
+    public static final String RAW_SOLAR_ENERGY = "solarcraft_raw_solar_energy";
+
+    public static final String CAN_PLAYER_USE = "solar_forge_can_player_use_";
 }
