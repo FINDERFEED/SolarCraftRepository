@@ -437,7 +437,8 @@
   "turret_radar.lore": "The main part for all turrets to make them detect enemies.",
   "solar_fragment.zap_turret": "Zap turret",
   "zap_turret.lore": "Can damage up to 5 targets at once. Damage: 5 (Magic), Attack radius: 20, Attack rate: 1 shot/3 sec. Requires structure to function.",
-  "solar_fragment.zap_turret_structure": "Zap turret"
+  "solar_fragment.zap_turret_structure": "Zap turret",
+  "desc.fireball": "TEST THING IS IN THE CAR OF TJE IDK WHOEVER STANDS AGAINST ME STANDS BRIEFLY"
 
 
 

@@ -24,6 +24,14 @@ public class FinderfeedMathHelper {
         return new double[]{radius*Math.cos(angle),radius*Math.sin(angle)};
     }
 
+    public static int clamp(int min,int main, int max){
+        if (main < min){
+            return min;
+        }else {
+            return Math.min(main, max);
+        }
+    }
+
     public static int[] intToRgba(int color){
         int r = (color >> 16) & 0xff;
         int g = (color >>  8) & 0xff;
