@@ -5,6 +5,8 @@ import com.finderfeed.solarforge.misc_things.AbstractPacket;
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.ProgressionHelper;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -47,15 +49,16 @@ public class RunicTablePacket extends AbstractPacket {
                     for (int i = 0;i< 6;i++){
                         if (tile.getItem(i).getItem() != ProgressionHelper.RUNES[ProgressionHelper.getPlayerPattern(playerEntity)[i]]){
                             a = false;
+                            playerEntity.sendMessage(new TextComponent("Pattern invalid.").withStyle(ChatFormatting.RED),playerEntity.getUUID());
                         }
                     }
                 }else{
                     a = false;
+                    playerEntity.sendMessage(new TextComponent("Player doesnt have a pattern in its data.").withStyle(ChatFormatting.RED),playerEntity.getUUID());
                 }
 
 
                 if (a){
-
                     if (ProgressionHelper.getAllUnlockableFragments(playerEntity) != null) {
                         ProgressionHelper.applyTagToFragment(tile.getItem(6),playerEntity);
                         AncientFragment fragment = AncientFragment.getFragmentByID(tile.getItem(6).getTagElement(ProgressionHelper.TAG_ELEMENT).getString(ProgressionHelper.FRAG_ID));
@@ -69,6 +72,8 @@ public class RunicTablePacket extends AbstractPacket {
 
                     }
                 }
+            }else{
+                playerEntity.sendMessage(new TextComponent("Failed to locate runic table during packet handling").withStyle(ChatFormatting.RED),playerEntity.getUUID());
             }
         });
         ctx.get().setPacketHandled(true);
