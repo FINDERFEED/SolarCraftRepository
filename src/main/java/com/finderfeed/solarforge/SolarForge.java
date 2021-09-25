@@ -102,9 +102,12 @@ import net.minecraft.world.item.Rarity;
 
 import java.util.List;
 
-@Mod("solarforge")
+@Mod(SolarForge.MOD_ID)
 public class SolarForge
 {
+
+    public static final String MOD_ID = "solarforge";
+
     public  static final DeferredRegister<MobEffect> EFFECTS = DeferredRegister.create(ForgeRegistries.MOB_EFFECTS,"solarforge");
     public static final DeferredRegister<SoundEvent> SOUND_EVENTS = DeferredRegister.create(ForgeRegistries.SOUND_EVENTS,"solarforge");
     public static final DeferredRegister<BlockEntityType<?>> TILE_ENTITY_TYPE = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITIES,"solarforge");

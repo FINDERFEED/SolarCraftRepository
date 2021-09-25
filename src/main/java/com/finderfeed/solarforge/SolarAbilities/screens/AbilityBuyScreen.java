@@ -15,6 +15,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.main.Main;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
@@ -39,6 +40,7 @@ public class AbilityBuyScreen extends Screen {
 
     @Override
     protected void init() {
+
         super.init();
         this.ticker = 0;
         int width = minecraft.getWindow().getWidth();
