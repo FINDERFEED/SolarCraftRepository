@@ -32,10 +32,10 @@ import net.minecraft.world.phys.HitResult;
 public class SolarAbilities {
 
 
-    public static void castAbility(ServerLevel world, ServerPlayer enti, int index) {
+    public static void castAbility(ServerLevel world, ServerPlayer enti, String id) {
         if (!enti.isSpectator()) {
-            if (index != 0) {
-                Abilities.getAll()[index - 1].getAbility().cast(enti, world);
+            if (Abilities.BY_IDS.containsKey(id)) {
+                Abilities.BY_IDS.get(id).getAbility().cast(enti, world);
                 for (RunicEnergy.Type type : RunicEnergy.Type.values()) {
                     Helpers.updateRunicEnergyOnClient(type, RunicEnergy.getEnergy(enti, type), enti);
                 }

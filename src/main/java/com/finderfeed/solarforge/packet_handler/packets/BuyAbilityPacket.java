@@ -31,8 +31,10 @@ public class BuyAbilityPacket {
                 AbstractAbility ability = Abilities.BY_IDS.get(id).getAbility();
                 int en = getPlayerEnergy(enti);
                 if (en >= ability.buyCost){
-                    spendEnergy(enti,ability.buyCost);
-                    enti.getPersistentData().putBoolean(SolarCraftTags.CAN_PLAYER_USE+id,true);
+                    if (!enti.getPersistentData().getBoolean(SolarCraftTags.CAN_PLAYER_USE+id)) {
+                        spendEnergy(enti, ability.buyCost);
+                        enti.getPersistentData().putBoolean(SolarCraftTags.CAN_PLAYER_USE + id, true);
+                    }
                 }
             }catch (Exception e){
                 System.out.println("Exception caught during BuyAbilityPacket handling.");

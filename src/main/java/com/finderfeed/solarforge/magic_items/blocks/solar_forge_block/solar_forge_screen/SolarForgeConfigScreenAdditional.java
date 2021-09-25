@@ -1,6 +1,7 @@
 package com.finderfeed.solarforge.magic_items.blocks.solar_forge_block.solar_forge_screen;
 
 import com.finderfeed.solarforge.ClientHelpers;
+import com.finderfeed.solarforge.SolarAbilities.Abilities;
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
 import com.finderfeed.solarforge.packet_handler.AbilityIndexSetPacket;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -55,15 +56,14 @@ public class SolarForgeConfigScreenAdditional extends Screen {
         this.page = 1;
         this.maxPages = 1;
         this.previousPage = 1;
-        addSolarButton(relX,relY,10,1,"Fireball");
-        addSolarButton(relX,relY,30,2,"Lightning");
-        addSolarButton(relX,relY,50,4,"Disarm");
-        addSolarButton(relX,relY,70,3,"Solar Strike");
-        addSolarButton(relX,relY,90,5,"Meteorite");
-        addSolarButton(relX,relY,110,6,"Heal");
-        addSolarButton(relX,relY,130,7,"Alchemist");
-        addSolarButton(relX,relY,150,8,"Dispel");
-//        addSolarButton(relX,relY,10-this.height,9,"Tornado");
+        addSolarButton(relX,relY,10, Abilities.FIREBALL.getAbility().id,"Fireball");
+        addSolarButton(relX,relY,30,Abilities.LIGHTNING.getAbility().id,"Lightning");
+        addSolarButton(relX,relY,50,Abilities.DISARM.getAbility().id,"Disarm");
+        addSolarButton(relX,relY,70,Abilities.SOLAR_STRIKE.getAbility().id,"Solar Strike");
+        addSolarButton(relX,relY,90,Abilities.METEORITE.getAbility().id,"Meteorite");
+        addSolarButton(relX,relY,110,Abilities.HEAL.getAbility().id,"Heal");
+        addSolarButton(relX,relY,130,Abilities.ALCHEMIST.getAbility().id,"Alchemist");
+        addSolarButton(relX,relY,150,Abilities.DISPEL.getAbility().id,"Dispel");
     }
 
 
@@ -78,7 +78,7 @@ public class SolarForgeConfigScreenAdditional extends Screen {
 
 
         this.blit(stack, relX, relY, 0, 0, WIDTH, HEIGHT);
-        drawCenteredString(stack,minecraft.font,"Page "+page+"/"+maxPages,relX,relY,0xffffff);
+//        drawCenteredString(stack,minecraft.font,"Page "+page+"/"+maxPages,relX,relY,0xffffff);
 
        // GL11.glScissor((int)(relX*scale), (int)(relY*scale), scissorsWidth, scissorsHeight-120);
 
@@ -88,9 +88,9 @@ public class SolarForgeConfigScreenAdditional extends Screen {
 
 
 
-    public void addSolarButton(int relX, int relY, int offset, int abilityId, String string){
+    public void addSolarButton(int relX, int relY, int offset, String abilityId, String string){
         addRenderableWidget(new SolarForgeButton(relX + 6, relY-4+offset, 65, 15, new TextComponent(string), button -> {
-            SolarForgePacketHandler.INSTANCE.sendToServer(new AbilityIndexSetPacket(new int[]{ids,abilityId}));
+            SolarForgePacketHandler.INSTANCE.sendToServer(new AbilityIndexSetPacket(ids,abilityId));
             Minecraft.getInstance().setScreen(new SolarForgeAbilityConfigScreen());
         }));
     }

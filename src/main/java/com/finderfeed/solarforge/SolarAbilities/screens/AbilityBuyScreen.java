@@ -2,10 +2,14 @@ package com.finderfeed.solarforge.SolarAbilities.screens;
 
 import com.finderfeed.solarforge.ClientHelpers;
 import com.finderfeed.solarforge.SolarAbilities.AbilityClasses.AbstractAbility;
+import com.finderfeed.solarforge.SolarCraftTags;
 import com.finderfeed.solarforge.for_future_library.helpers.FinderfeedMathHelper;
 import com.finderfeed.solarforge.for_future_library.custom_registries.RegistryDelegate;
 import com.finderfeed.solarforge.for_future_library.helpers.RenderingTools;
 import com.finderfeed.solarforge.magic_items.blocks.solar_forge_block.solar_forge_screen.SolarForgeButton;
+import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
+import com.finderfeed.solarforge.packet_handler.packets.BuyAbilityPacket;
+import com.finderfeed.solarforge.packet_handler.packets.RequestAbilityScreen;
 import com.finderfeed.solarforge.registries.SolarcraftRegistries;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
@@ -41,15 +45,18 @@ public class AbilityBuyScreen extends Screen {
         int height = minecraft.getWindow().getHeight();
         int scale = (int) minecraft.getWindow().getGuiScale();
         this.relX = (width/scale - 183)/2;
-        this.relY = (height - 218*scale)/2/scale;
+        this.relY = (height - 218*scale)/2/scale-20;
 
         int count = 0;
         int maxPages = 0;
-        Button b = new SolarForgeButton(relX+137,relY+202,65,15,new TranslatableComponent("ability.buy_ability"),(button)->{
-
+        SolarForgeButton b = new SolarForgeButton(relX+124,relY+192,65,15,new TranslatableComponent("ability.buy_ability"),(button)->{
+            if (currentAbility != null) {
+                SolarForgePacketHandler.INSTANCE.sendToServer(new BuyAbilityPacket(currentAbility.id));
+                SolarForgePacketHandler.INSTANCE.sendToServer(new RequestAbilityScreen(true));
+            }
         });
         this.BUY = b;
-        b.active =false;
+        b.visible =false;
         for (AbstractAbility ability : RegistryDelegate.getAllRegisteredEntriesFor(SolarcraftRegistries.ABILITIES)){
 
             int yOffset = (count%9)*20;
@@ -61,7 +68,7 @@ public class AbilityBuyScreen extends Screen {
                         this.showText = false;
                         this.ticker = 0;
                         this.currentAbility = ability;
-                        this.BUY.active = true;
+                        this.BUY.visible = true;
                     }
             ));
 
@@ -90,10 +97,10 @@ public class AbilityBuyScreen extends Screen {
             ClientHelpers.bindText(new ResourceLocation("solarforge","textures/abilities/"+currentAbility.id+".png"));
             blit(matrices,relX+157-20,relY+33,0,0,38,38,38,38);
             drawCenteredString(matrices, minecraft.font,new TranslatableComponent("name."+currentAbility.id),relX+176-20,relY+72,0xffffff);
-            drawCenteredString(matrices, minecraft.font,new TranslatableComponent("cost."+currentAbility.id),relX+176-20,relY+82,0xffffff);
-
+            drawCenteredString(matrices, minecraft.font,new TranslatableComponent("cost."+currentAbility.id).append(String.valueOf(currentAbility.buyCost)),relX+176-20,relY+82,0xffffff);
             doText(matrices,new TranslatableComponent("desc."+currentAbility.id).getString(),17,relX+176-20,relY+92);
         }
+        drawCenteredString(matrices,font,String.valueOf(minecraft.player.getPersistentData().getInt(SolarCraftTags.RAW_SOLAR_ENERGY)),relX+87,relY+218,0xff0000);
         super.render(matrices, mousex, mousey, partialTicks);
     }
 

@@ -25,7 +25,7 @@ public class CastAbilityPacket {
             ServerPlayer enti = ctx.get().getSender();
             Player entity = (Player)enti;
 
-            SolarAbilities.castAbility(enti.getLevel(),enti,enti.getPersistentData().getInt("solar_forge_ability_binded_"+Integer.toString(index)));
+            SolarAbilities.castAbility(enti.getLevel(),enti,enti.getPersistentData().getString("solar_forge_ability_binded_"+Integer.toString(index)));
         });
         ctx.get().setPacketHandled(true);
     }

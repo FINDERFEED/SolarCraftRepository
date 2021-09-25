@@ -27,7 +27,6 @@ public class SolarForgePacketHandler {
     }
 
     public static void registerMessages(){
-
         INSTANCE.registerMessage(nextID(), CastAbilityPacket.class, CastAbilityPacket::toBytes, CastAbilityPacket::new, CastAbilityPacket::handle);
         INSTANCE.registerMessage(nextID(), AbilityBuyPacket.class, AbilityBuyPacket::toBytes, AbilityBuyPacket::new, AbilityBuyPacket::handle);
         INSTANCE.registerMessage(nextID(), AbilityIndexSetPacket.class, AbilityIndexSetPacket::toBytes, AbilityIndexSetPacket::new, AbilityIndexSetPacket::handle);
@@ -56,6 +55,10 @@ public class SolarForgePacketHandler {
         INSTANCE.registerMessage(nextID(), UpdateEnergyOnClientPacket.class, UpdateEnergyOnClientPacket::toBytes, UpdateEnergyOnClientPacket::new, UpdateEnergyOnClientPacket::handle);
         INSTANCE.registerMessage(nextID(), TriggerProgressionShaderPacket.class, TriggerProgressionShaderPacket::toBytes, TriggerProgressionShaderPacket::new, TriggerProgressionShaderPacket::handle);
         INSTANCE.registerMessage(nextID(), BuyAbilityPacket.class, BuyAbilityPacket::toBytes, BuyAbilityPacket::new, BuyAbilityPacket::handle);
+        INSTANCE.registerMessage(nextID(), RequestAbilityScreen.class, RequestAbilityScreen::toBytes, RequestAbilityScreen::new, RequestAbilityScreen::handle);
+        INSTANCE.registerMessage(nextID(), OpenAbilityScreenPacket.class, OpenAbilityScreenPacket::toBytes, OpenAbilityScreenPacket::new, OpenAbilityScreenPacket::handle);
+        INSTANCE.registerMessage(nextID(), TakeEnergyFromForgePacket.class, TakeEnergyFromForgePacket::toBytes, TakeEnergyFromForgePacket::new, TakeEnergyFromForgePacket::handle);
     }
+//            INSTANCE.registerMessage(nextID(), .class, ::toBytes, ::new, ::handle);
     //RepeaterParentUpdateOnClient
 }

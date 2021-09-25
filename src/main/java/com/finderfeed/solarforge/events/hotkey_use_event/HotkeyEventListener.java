@@ -1,14 +1,12 @@
 package com.finderfeed.solarforge.events.hotkey_use_event;
 
 
-import com.finderfeed.solarforge.SolarAbilities.screens.AbilityBuyScreen;
 import com.finderfeed.solarforge.SolarForgeClientRegistry;
 import com.finderfeed.solarforge.packet_handler.ResetAllAbilitiesPacket;
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
 import com.finderfeed.solarforge.packet_handler.CastAbilityPacket;
 import com.finderfeed.solarforge.magic_items.blocks.solar_forge_block.solar_forge_screen.SolarForgeAbilityConfigScreen;
-import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.achievement_tree.AchievementTree;
-import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Achievement;
+import com.finderfeed.solarforge.packet_handler.packets.RequestAbilityScreen;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.api.distmarker.Dist;
 
@@ -46,7 +44,6 @@ public class HotkeyEventListener {
 
             SolarForgePacketHandler.INSTANCE.sendToServer(new CastAbilityPacket(4));
 
-            System.out.println(AchievementTree.loadTree().getAchievementRequirements(Achievement.USE_SOLAR_INFUSER));
         }
         if (SolarForgeClientRegistry.ADMIN_ABILITY_KEY.isDown() && event.getAction() == GLFW.GLFW_PRESS){
 
@@ -60,7 +57,7 @@ public class HotkeyEventListener {
         }
 
         if (SolarForgeClientRegistry.GUI_ABILITY_BUY_SCREEN.isDown() && event.getAction() == GLFW.GLFW_PRESS){
-            Minecraft.getInstance().setScreen(new AbilityBuyScreen());
+            SolarForgePacketHandler.INSTANCE.sendToServer(new RequestAbilityScreen(false));
         }
 
 

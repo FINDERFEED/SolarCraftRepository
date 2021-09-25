@@ -1,5 +1,6 @@
 package com.finderfeed.solarforge;
 
+import com.finderfeed.solarforge.SolarAbilities.screens.AbilityBuyScreen;
 import com.finderfeed.solarforge.events.RenderEventsHandler;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.RayTrapTileEntity;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.RuneEnergyPylonTile;
@@ -223,5 +224,9 @@ public class ClientHelpers {
             }
         });
         return returnable;
+    }
+
+    public static void openAbilityScreen(){
+        Minecraft.getInstance().setScreen(new AbilityBuyScreen());
     }
 }

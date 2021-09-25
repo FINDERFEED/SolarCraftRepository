@@ -9,26 +9,26 @@ import java.util.function.Supplier;
 
 public class AbilityIndexSetPacket {
     private int index;
-    private int whatAbility;
+    private String whatAbility;
 
     public AbilityIndexSetPacket(FriendlyByteBuf buf){
-    int [] arr = buf.readVarIntArray();
-    index = arr[0];
-    whatAbility = arr[1];
+        index = buf.readInt();
+        whatAbility = buf.readUtf();
     }
-    public AbilityIndexSetPacket(int[] arr){
-        this.index = arr[0];
-        this.whatAbility = arr[1];
+    public AbilityIndexSetPacket(int arr,String id){
+        this.index = arr;
+        this.whatAbility = id;
     }
     public void toBytes(FriendlyByteBuf buf){
-    buf.writeVarIntArray(new int[]{index, whatAbility});
+        buf.writeInt(index);
+        buf.writeUtf(whatAbility);
     }
     public void handle(Supplier<NetworkEvent.Context> ctx){
         ctx.get().enqueueWork(()->{
             ServerPlayer enti = ctx.get().getSender();
             Player entity = (Player)enti;
-            entity.getPersistentData().putInt("solar_forge_ability_binded_"+Integer.toString(index),whatAbility);
-            System.out.println("ability set");
+            entity.getPersistentData().putString("solar_forge_ability_binded_"+Integer.toString(index),whatAbility);
+
         });
         ctx.get().setPacketHandled(true);
     }

@@ -4,11 +4,13 @@ package com.finderfeed.solarforge.magic_items.blocks.solar_forge_block.solar_for
 import com.finderfeed.solarforge.ClientHelpers;
 import com.finderfeed.solarforge.packet_handler.packets.AbilityBuyPacket;
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
+import com.finderfeed.solarforge.packet_handler.packets.TakeEnergyFromForgePacket;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.Component;
@@ -42,7 +44,11 @@ public class SolarForgeScreen extends AbstractContainerScreen<SolarForgeContaine
         int i = (this.width - this.imageWidth) / 2;
         int j = (this.height - this.imageHeight) / 2;
 
-
+        addRenderableWidget(new SolarForgeButton(i + 186, j + 32, 65, 15, new TranslatableComponent("forge.take"),(button)->{
+            SolarForgePacketHandler.INSTANCE.sendToServer(new TakeEnergyFromForgePacket(this.menu.te.getBlockPos()));
+        },(button,matrices,mousex,mousey)->{
+            renderTooltip(matrices,new TranslatableComponent("forge.moved"),mousex,mousey);
+        }));
 //        addRenderableWidget(new SolarForgeButton(i + 186, j + 10, 65, 15, new TextComponent("Fireball"), button -> SolarForgePacketHandler.INSTANCE.sendToServer(new AbilityBuyPacket("fireball",this.menu.te.getBlockPos(),15000)),
 //                (button, matrices, p_onTooltip_3_, p_onTooltip_4_) ->{
 //            ClientHelpers.bindText(new ResourceLocation("solarforge","textures/gui/tooltips_solarforge.png"));
@@ -134,8 +140,6 @@ public class SolarForgeScreen extends AbstractContainerScreen<SolarForgeContaine
         float percent = (float)this.menu.getCurrentCharge()/30000;
 
         this.blit(matrices, i + 14, j + 22, 7, 170, 55, (int) (40 * percent));
-
-
         drawString(matrices, minecraft.font, Integer.toString(this.menu.getCurrentCharge())+"/30000",i+65,j+37,0xff002b);
         matrices.popPose();
     }

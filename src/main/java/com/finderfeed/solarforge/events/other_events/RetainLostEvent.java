@@ -1,6 +1,7 @@
 package com.finderfeed.solarforge.events.other_events;
 
 import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.SolarCraftTags;
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.capabilities.capability_mana.CapabilitySolarMana;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
@@ -26,7 +27,7 @@ import net.minecraftforge.fmllegacy.network.NetworkDirection;
 import java.util.HashMap;
 
 @Mod.EventBusSubscriber(modid = "solarforge",bus = Mod.EventBusSubscriber.Bus.FORGE)
-public class LivingEntityAttackEvent {
+public class RetainLostEvent {
 
     public static HashMap<BlockPos, BlockState> map = new HashMap<>();
 
@@ -61,6 +62,7 @@ public class LivingEntityAttackEvent {
                                     .getMana());
             peorig.invalidateCaps();
 
+            playernew.getPersistentData().putInt(SolarCraftTags.RAW_SOLAR_ENERGY,peorig.getPersistentData().getInt(SolarCraftTags.RAW_SOLAR_ENERGY));
             playernew.getPersistentData().putBoolean("solar_forge_can_player_use_fireball",peorig.getPersistentData().getBoolean("solar_forge_can_player_use_fireball"));
             playernew.getPersistentData().putBoolean("solar_forge_can_player_use_lightning",peorig.getPersistentData().getBoolean("solar_forge_can_player_use_lightning"));
             playernew.getPersistentData().putBoolean("solar_forge_can_player_use_solar_strike",peorig.getPersistentData().getBoolean("solar_forge_can_player_use_solar_strike"));
@@ -73,10 +75,10 @@ public class LivingEntityAttackEvent {
         for (RunicEnergy.Type type : RunicEnergy.Type.values()){
             Helpers.updateRunicEnergyOnClient(type,RunicEnergy.getEnergy(peorig,type),peorig);
         }
-        playernew.getPersistentData().putInt("solar_forge_ability_binded_1",peorig.getPersistentData().getInt("solar_forge_ability_binded_1"));
-        playernew.getPersistentData().putInt("solar_forge_ability_binded_2",peorig.getPersistentData().getInt("solar_forge_ability_binded_2"));
-        playernew.getPersistentData().putInt("solar_forge_ability_binded_3",peorig.getPersistentData().getInt("solar_forge_ability_binded_3"));
-        playernew.getPersistentData().putInt("solar_forge_ability_binded_4",peorig.getPersistentData().getInt("solar_forge_ability_binded_4"));
+        playernew.getPersistentData().putString("solar_forge_ability_binded_1",peorig.getPersistentData().getString("solar_forge_ability_binded_1"));
+        playernew.getPersistentData().putString("solar_forge_ability_binded_2",peorig.getPersistentData().getString("solar_forge_ability_binded_2"));
+        playernew.getPersistentData().putString("solar_forge_ability_binded_3",peorig.getPersistentData().getString("solar_forge_ability_binded_3"));
+        playernew.getPersistentData().putString("solar_forge_ability_binded_4",peorig.getPersistentData().getString("solar_forge_ability_binded_4"));
         playernew.getPersistentData().putBoolean("is_alchemist_toggled",false);
 
 
