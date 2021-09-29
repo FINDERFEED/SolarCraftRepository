@@ -1,8 +1,8 @@
 package com.finderfeed.solarforge;
 
-import com.finderfeed.solarforge.SolarAbilities.meteorite.MeteoriteModel;
 import com.finderfeed.solarforge.SolarAbilities.meteorite.MeteoriteProjectileRenderer;
 import com.finderfeed.solarforge.SolarAbilities.SolarStrikeEntityRender;
+import com.finderfeed.solarforge.entities.renderers.MyFallingBlockEntityRenderer;
 import com.finderfeed.solarforge.entities.renderers.VillagerSolarMasterRenderer;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.containers.screens.ModuleApplierScreen;
 import com.finderfeed.solarforge.magic_items.blocks.infusing_table_things.InfusingTableRenderer;
@@ -26,13 +26,11 @@ import com.finderfeed.solarforge.magic_items.items.solar_lexicon.SolarLexiconCon
 import com.finderfeed.solarforge.rendering.RadiantTextureAtlasSpriteLoader;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
-import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.KeyMapping;
 import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
-import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
@@ -170,6 +168,8 @@ public class SolarForgeClientRegistry {
         event.registerEntityRenderer(Projectiles.MORTAR_PROJECTILE.get(), MortarProjectileRenderer::new);
         event.registerEntityRenderer(Projectiles.TURRET_PROJECTILE.get(), AbstractTurretProjectileRenderer::new);
         event.registerEntityRenderer(Projectiles.VILLAGER_SOLAR_MASTER.get(), VillagerSolarMasterRenderer::new);
+        event.registerEntityRenderer(Projectiles.FALLING_BLOCK.get(), MyFallingBlockEntityRenderer::new);
+
     }
 
 }

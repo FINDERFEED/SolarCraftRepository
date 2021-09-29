@@ -17,7 +17,7 @@ public class SolarStrikeAbility extends AbstractAbility{
         super("solar_strike",1000,new RunicEnergyCostConstructor()
         .addRunicEnergy(RunicEnergy.Type.FIRA,5000)
         .addRunicEnergy(RunicEnergy.Type.ARDO,2000)
-        .addRunicEnergy(RunicEnergy.Type.KELDA,1000),30000);
+        .addRunicEnergy(RunicEnergy.Type.KELDA,1000),100000);
     }
 
     @Override
@@ -37,7 +37,9 @@ public class SolarStrikeAbility extends AbstractAbility{
                     entityBolt.setPos(pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5);
                     world.addFreshEntity(entityBolt);
                 }else{
-                    refund(entity);
+                    if (!entity.isCreative()) {
+                        refund(entity);
+                    }
                 }
             }
 

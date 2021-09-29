@@ -18,7 +18,7 @@ public class DisarmAbility extends AbstractAbility{
     public DisarmAbility() {
         super("solar_stun",300,new RunicEnergyCostConstructor()
         .addRunicEnergy(RunicEnergy.Type.URBA,300)
-        .addRunicEnergy(RunicEnergy.Type.KELDA,450),20000);
+        .addRunicEnergy(RunicEnergy.Type.KELDA,450),45000);
     }
 
     @Override

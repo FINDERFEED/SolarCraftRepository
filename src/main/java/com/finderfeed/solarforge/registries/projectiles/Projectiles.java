@@ -1,6 +1,7 @@
 package com.finderfeed.solarforge.registries.projectiles;
 
 
+import com.finderfeed.solarforge.entities.MyFallingBlockEntity;
 import com.finderfeed.solarforge.entities.VillagerSolarMaster;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.projectiles.AbstractTurretProjectile;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.projectiles.MortarProjectile;
@@ -39,4 +40,7 @@ public class Projectiles {
 
     public static final RegistryObject<EntityType<VillagerSolarMaster>> VILLAGER_SOLAR_MASTER = ENTITY_TYPE_REGISTER.register("solar_master_villager",()->
             EntityType.Builder.of(VillagerSolarMaster::new,MobCategory.CREATURE).sized(1,2).build("solar_master_villager"));
+
+    public static final RegistryObject<EntityType<MyFallingBlockEntity>> FALLING_BLOCK = ENTITY_TYPE_REGISTER.register("my_falling_block",()->
+            EntityType.Builder.<MyFallingBlockEntity>of(MyFallingBlockEntity::new,MobCategory.MISC).sized(0.98F, 0.98F).clientTrackingRange(10).updateInterval(20).build("my_falling_block"));
 }

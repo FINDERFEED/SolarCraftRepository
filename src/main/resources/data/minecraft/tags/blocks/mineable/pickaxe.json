@@ -31,6 +31,7 @@
     "solarforge:zeta_rune_block",
     "solarforge:fira_rune_block",
     "solarforge:dimension_core",
-    "solarforge:radiant_portal_creator"
+    "solarforge:radiant_portal_creator",
+    "solarforge:zap_turret_block"
   ]
 }

@@ -472,7 +472,9 @@
   "solarcraft_button.solar_dispel": "Dispel",
   "ability.buy_ability": "Confirm",
   "forge.take": "Consume",
-  "forge.moved": "Consume the energy(lost on death). (Abilities were moved to separate screen, look into hotkey settings)"
+  "forge.moved": "Consume the energy(lost on death). (Abilities were moved to separate screen, look into hotkey settings)",
+  "solar_fragment.gloves_of_reach": "Reach gloves",
+  "gloves_of_reach.lore": "For those who need bigger hands. While in your inventory increases reach distance by 2."
 
 
 

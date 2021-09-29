@@ -4,6 +4,7 @@ import com.finderfeed.solarforge.SolarAbilities.meteorite.MeteoriteProjectile;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.GameType;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.phys.HitResult;
@@ -15,7 +16,7 @@ public class MeteoriteAbility extends AbstractAbility{
     public MeteoriteAbility() {
         super("meteorite",500,new RunicEnergyCostConstructor()
         .addRunicEnergy(RunicEnergy.Type.ZETA,500)
-        .addRunicEnergy(RunicEnergy.Type.KELDA,300),27000);
+        .addRunicEnergy(RunicEnergy.Type.KELDA,300),50000);
     }
 
     @Override
@@ -39,7 +40,9 @@ public class MeteoriteAbility extends AbstractAbility{
                     proj.setDeltaMovement(velocity.normalize());
                     world.addFreshEntity(proj);
                 }else{
-                    refund(entity);
+                    if (!entity.isCreative()) {
+                        refund(entity);
+                    }
                 }
 
             }
