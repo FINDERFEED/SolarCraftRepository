@@ -31,7 +31,10 @@ public class CrystalBossEntity extends Mob {
     private static EntityDataAccessor<Boolean> ATTACK_IMMUNE = SynchedEntityData.defineId(CrystalBossAttackHoldingMissile.class, EntityDataSerializers.BOOLEAN);
 
     private ServerBossEvent CRYSTAL_BOSS_EVENT = new ServerBossEvent(this.getDisplayName(), BossEvent.BossBarColor.RED, BossEvent.BossBarOverlay.NOTCHED_20);
-    private final BossAttackChain ATTACK_CHAIN = new BossAttackChain.Builder().addAttack(this::holdingMissilesAttack,20).setTimeBetweenAttacks(80).build();
+    private final BossAttackChain ATTACK_CHAIN = new BossAttackChain.Builder()
+            .addAttack("missiles",this::holdingMissilesAttack,20,false)
+            .setTimeBetweenAttacks(80)
+            .build();
     private int ticker = 0;
 
     public CrystalBossEntity(EntityType<? extends Mob> p_21368_, Level p_21369_) {
