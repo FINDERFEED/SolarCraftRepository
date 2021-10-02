@@ -23,6 +23,7 @@ import net.minecraftforge.fml.common.Mod;
 public class ModelRegistryEvents {
 
     public static final ResourceLocation SOLAR_CORE_MODEL = new ResourceLocation("solarforge:objmodels/solar_core_modeljson");
+    public static final ResourceLocation CRYSTAL_BOSS = new ResourceLocation("solarforge:objmodels/crystal_boss");
     public static final ResourceLocation HOLE_MODEL = new ResourceLocation("solarforge:objmodels/hole");
     public static final ResourceLocation ANCIENT_FRAGMENT_MODEL = new ResourceLocation("solarforge:toloadmodels/ancient_fragment");
     public static final ResourceLocation ULDORADIUM_ORE = new ResourceLocation("solarforge:progression_ore_models/uldoradium_ore");
@@ -33,6 +34,7 @@ public class ModelRegistryEvents {
     public static void registerModels(final ModelRegistryEvent event){
         ModelLoaderRegistry.registerLoader(new ResourceLocation("solarforge","progression_ore_loader"),LOADER);
 
+        ModelLoader.addSpecialModel(CRYSTAL_BOSS);
         ModelLoader.addSpecialModel(SOLAR_CORE_MODEL);
         ModelLoader.addSpecialModel(ANCIENT_FRAGMENT_MODEL);
         ModelLoader.addSpecialModel(HOLE_MODEL);

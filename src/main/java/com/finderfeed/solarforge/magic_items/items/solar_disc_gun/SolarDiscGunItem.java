@@ -2,7 +2,7 @@ package com.finderfeed.solarforge.magic_items.items.solar_disc_gun;
 
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.misc_things.ManaConsumer;
-import com.finderfeed.solarforge.registries.projectiles.Projectiles;
+import com.finderfeed.solarforge.registries.entities.Entities;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -17,8 +17,6 @@ import net.minecraft.world.level.Level;
 import javax.annotation.Nullable;
 import java.util.List;
 
-import net.minecraft.world.item.Item.Properties;
-
 public class SolarDiscGunItem extends Item implements ManaConsumer {
     public SolarDiscGunItem(Properties p_i48487_1_) {
         super(p_i48487_1_);
@@ -28,7 +26,7 @@ public class SolarDiscGunItem extends Item implements ManaConsumer {
     public InteractionResultHolder<ItemStack> use(Level p_77659_1_, Player p_77659_2_, InteractionHand p_77659_3_) {
 
         if (!p_77659_1_.isClientSide && Helpers.canCast(p_77659_2_,getManacost())){
-            SolarDiscProjectile projectile = new SolarDiscProjectile(Projectiles.SOLAR_DISC.get(),p_77659_1_);
+            SolarDiscProjectile projectile = new SolarDiscProjectile(Entities.SOLAR_DISC.get(),p_77659_1_);
             projectile.setPos(p_77659_2_.position().x,p_77659_2_.position().y+1.4,p_77659_2_.position().z);
             projectile.setDeltaMovement(p_77659_2_.getLookAngle().multiply(1.5,1.5,1.5));
 

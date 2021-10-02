@@ -1,9 +1,8 @@
 package com.finderfeed.solarforge.magic_items.items.projectiles;
 
-import com.finderfeed.solarforge.SolarAbilities.SolarStrikeEntity;
 import com.finderfeed.solarforge.misc_things.ParticlesList;
 import com.finderfeed.solarforge.registries.items.ItemsRegister;
-import com.finderfeed.solarforge.registries.projectiles.Projectiles;
+import com.finderfeed.solarforge.registries.entities.Entities;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.entity.Entity;
@@ -31,7 +30,6 @@ import net.minecraftforge.common.util.Constants;
 
 import net.minecraftforge.fmllegacy.network.NetworkHooks;
 
-import java.util.List;
 import java.util.UUID;
 
 public class BlockBoomerangProjectile extends AbstractHurtingProjectile {
@@ -47,12 +45,12 @@ public class BlockBoomerangProjectile extends AbstractHurtingProjectile {
     }
 
     public BlockBoomerangProjectile(double p_i50174_2_, double p_i50174_4_, double p_i50174_6_, double p_i50174_8_, double p_i50174_10_, double p_i50174_12_, Level p_i50174_14_) {
-        super(Projectiles.BLOCK_BOOMERANG.get(), p_i50174_2_, p_i50174_4_, p_i50174_6_, p_i50174_8_, p_i50174_10_, p_i50174_12_, p_i50174_14_);
+        super(Entities.BLOCK_BOOMERANG.get(), p_i50174_2_, p_i50174_4_, p_i50174_6_, p_i50174_8_, p_i50174_10_, p_i50174_12_, p_i50174_14_);
 
     }
 
     public BlockBoomerangProjectile(LivingEntity p_i50175_2_, Level p_i50175_9_) {
-        super(Projectiles.BLOCK_BOOMERANG.get(),  p_i50175_9_);
+        super(Entities.BLOCK_BOOMERANG.get(),  p_i50175_9_);
 
     }
 

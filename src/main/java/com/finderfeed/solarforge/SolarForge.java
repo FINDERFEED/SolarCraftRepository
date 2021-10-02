@@ -5,8 +5,8 @@ import com.finderfeed.solarforge.SolarAbilities.meteorite.MeteoriteProjectile;
 import com.finderfeed.solarforge.SolarAbilities.SolarStrikeEntity;
 import com.finderfeed.solarforge.SolarAbilities.SolarStunEffect;
 import com.finderfeed.solarforge.capabilities.capability_mana.AttachManaCapabilityEvent;
-import com.finderfeed.solarforge.capabilities.capability_mana.CapabilitySolarMana;
 import com.finderfeed.solarforge.config.SolarcraftConfig;
+import com.finderfeed.solarforge.entities.CrystalBossEntity;
 import com.finderfeed.solarforge.entities.VillagerSolarMaster;
 import com.finderfeed.solarforge.events.PlayerTickEvent;
 import com.finderfeed.solarforge.events.RenderEventsHandler;
@@ -17,6 +17,7 @@ import com.finderfeed.solarforge.magic_items.item_tiers.SolarCraftToolTiers;
 import com.finderfeed.solarforge.magic_items.items.ProgressionBlockItem;
 import com.finderfeed.solarforge.misc_things.ParticlesList;
 import com.finderfeed.solarforge.registries.abilities.AbilitiesRegistry;
+import com.finderfeed.solarforge.registries.entities.Entities;
 import com.finderfeed.solarforge.rendering.on_screen_rendering.TestRenderEvent;
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
 import com.finderfeed.solarforge.recipe_types.InfusingRecipe;
@@ -29,7 +30,6 @@ import com.finderfeed.solarforge.registries.effects.EffectsRegister;
 import com.finderfeed.solarforge.registries.features.FeaturesSolarforge;
 import com.finderfeed.solarforge.registries.features.configured.ConfiguredFeatures;
 import com.finderfeed.solarforge.registries.items.ItemsRegister;
-import com.finderfeed.solarforge.registries.projectiles.Projectiles;
 import com.finderfeed.solarforge.registries.sounds.Sounds;
 import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
 import com.finderfeed.solarforge.magic_items.blocks.solar_forge_block.SolarForgeBlock;
@@ -179,7 +179,7 @@ public class SolarForge
         ItemsRegister.ITEMS.register(bus);
         BlocksRegistry.BLOCKS.register(bus);
         TileEntitiesRegistry.TILE_ENTITY_TYPE.register(bus);
-        Projectiles.ENTITY_TYPE_REGISTER.register(bus);
+        Entities.ENTITY_TYPE_REGISTER.register(bus);
         EffectsRegister.EFFECTS.register(bus);
         Sounds.SOUND_EVENTS.register(bus);
         FeaturesSolarforge.FEATURES.register(bus);
@@ -266,7 +266,8 @@ public class SolarForge
         @SubscribeEvent
         public static void entityAttributes(EntityAttributeCreationEvent event) {
         event.put(SOLAR_STRIKE_ENTITY_REG.get(),SolarStrikeEntity.createAttributes().build());
-        event.put(Projectiles.VILLAGER_SOLAR_MASTER.get(), VillagerSolarMaster.createAttributes().build());
+        event.put(Entities.VILLAGER_SOLAR_MASTER.get(), VillagerSolarMaster.createAttributes().build());
+        event.put(Entities.CRYSTAL_BOSS.get(), CrystalBossEntity.createAttributes().build());
         }
 
         @SubscribeEvent

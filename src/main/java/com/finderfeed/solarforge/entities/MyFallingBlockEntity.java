@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.entities;
 
-import com.finderfeed.solarforge.registries.projectiles.Projectiles;
+import com.finderfeed.solarforge.registries.entities.Entities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -8,7 +8,6 @@ import net.minecraft.nbt.Tag;
 import net.minecraft.network.protocol.game.ClientboundBlockUpdatePacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.FluidTags;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.entity.item.FallingBlockEntity;
@@ -34,7 +33,7 @@ public class MyFallingBlockEntity extends FallingBlockEntity {
     }
 
     public MyFallingBlockEntity(Level world, double x, double y, double z, BlockState state) {
-        this(Projectiles.FALLING_BLOCK.get(), world);
+        this(Entities.FALLING_BLOCK.get(), world);
         this.blockState = state;
         this.blocksBuilding = true;
         this.setPos(x, y + (double)((1.0F - this.getBbHeight()) / 2.0F), z);

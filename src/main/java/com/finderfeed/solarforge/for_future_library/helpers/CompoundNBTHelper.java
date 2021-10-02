@@ -15,4 +15,5 @@ public class CompoundNBTHelper {
         return new Vec3(tag.getDouble(id+"1"),tag.getDouble(id+"2"),tag.getDouble(id+"3"));
     }
 
+
 }

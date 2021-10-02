@@ -4,7 +4,7 @@ package com.finderfeed.solarforge.magic_items.items;
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.magic_items.items.projectiles.UltraCrossbowProjectile;
 import com.finderfeed.solarforge.misc_things.ManaConsumer;
-import com.finderfeed.solarforge.registries.projectiles.Projectiles;
+import com.finderfeed.solarforge.registries.entities.Entities;
 import com.finderfeed.solarforge.registries.sounds.Sounds;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.entity.LivingEntity;
@@ -23,9 +23,6 @@ import net.minecraft.world.level.Level;
 
 import javax.annotation.Nullable;
 import java.util.List;
-import java.util.function.Predicate;
-
-import net.minecraft.world.item.Item.Properties;
 
 public class UltraCrossbowItem extends Item implements ManaConsumer {
 
@@ -59,7 +56,7 @@ public class UltraCrossbowItem extends Item implements ManaConsumer {
         if (!world.isClientSide){
 
             if (player instanceof Player && (Helpers.canCast((Player) player,200))) {
-            UltraCrossbowProjectile proj = new UltraCrossbowProjectile(Projectiles.ULTRA_CROSSBOW_SHOT.get(),world);
+            UltraCrossbowProjectile proj = new UltraCrossbowProjectile(Entities.ULTRA_CROSSBOW_SHOT.get(),world);
             proj.setPos(player.getX() + player.getLookAngle().x,player.getY()+1.5f+player.getLookAngle().y,player.getZ()+player.getLookAngle().z);
             player.level.playSound(null,player, Sounds.CROSSBOW_SHOOT_SOUND.get(), SoundSource.AMBIENT,1,1);
             proj.setYAW(player.getYRot());

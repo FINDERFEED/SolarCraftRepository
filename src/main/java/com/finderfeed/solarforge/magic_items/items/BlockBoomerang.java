@@ -1,9 +1,8 @@
 package com.finderfeed.solarforge.magic_items.items;
 
 import com.finderfeed.solarforge.magic_items.items.projectiles.BlockBoomerangProjectile;
-import com.finderfeed.solarforge.registries.projectiles.Projectiles;
+import com.finderfeed.solarforge.registries.entities.Entities;
 
-import cpw.mods.jarhandling.impl.SecureJarVerifier;
 import net.minecraft.world.item.TooltipFlag;
 
 import net.minecraft.world.entity.player.Player;
@@ -20,8 +19,6 @@ import net.minecraft.world.level.Level;
 import javax.annotation.Nullable;
 import java.util.List;
 
-import net.minecraft.world.item.Item.Properties;
-
 public class BlockBoomerang extends Item {
 
     public BlockBoomerang(Properties p_i48487_1_) {
@@ -36,7 +33,7 @@ public class BlockBoomerang extends Item {
             if (player.getItemInHand(InteractionHand.OFF_HAND).getItem() instanceof BlockItem) {
                 BlockItem item = (BlockItem) player.getItemInHand(InteractionHand.OFF_HAND).getItem();
 
-                BlockBoomerangProjectile proj = new BlockBoomerangProjectile(Projectiles.BLOCK_BOOMERANG.get(), world);
+                BlockBoomerangProjectile proj = new BlockBoomerangProjectile(Entities.BLOCK_BOOMERANG.get(), world);
                 proj.setPos(player.getX() + player.getLookAngle().x * 2, player.getY()+1.5 + player.getLookAngle().y, player.getZ() + player.getLookAngle().z * 2);
                 proj.setOwner(player.getUUID());
                 proj.setBlockToPlace(item.getBlock());

@@ -163,7 +163,6 @@ public class RenderingTools {
 
     public static void renderHandManually(PoseStack matrixStack,float partialTicks){
         boolean render = Minecraft.getInstance().gameRenderer.renderHand;
-
         if (render){
             RenderSystem.clear(256, Minecraft.ON_OSX);
             Minecraft.getInstance().gameRenderer.renderItemInHand(matrixStack,Minecraft.getInstance().gameRenderer.getMainCamera(),partialTicks);
@@ -410,12 +409,13 @@ public class RenderingTools {
         List<BakedQuad> list = Minecraft.getInstance().getModelManager().getModel(location)
                 .getQuads(null, null, new Random(), new ModelDataMap.Builder().build());
 
+        VertexConsumer cons = buffer.getBuffer(RenderType.entityTranslucent(TextureAtlas.LOCATION_BLOCKS));
+        matrices.pushPose();
+        transforms.accept(matrices);
         for (BakedQuad a : list) {
-            matrices.pushPose();
-            transforms.accept(matrices);
-            buffer.getBuffer(RenderType.solid()).putBulkData(matrices.last(), a, 1f, 1f, 1f, light, overlay);
-            matrices.popPose();
+            cons.putBulkData(matrices.last(), a, 1f, 1f, 1f, light, overlay);
         }
+        matrices.popPose();
     }
 
     public static void renderShaderedRay(PoseStack stack, MultiBufferSource buffer, float mod, float height, Consumer<PoseStack> translations, boolean rotate, float rotationModifier, float partialTicks){

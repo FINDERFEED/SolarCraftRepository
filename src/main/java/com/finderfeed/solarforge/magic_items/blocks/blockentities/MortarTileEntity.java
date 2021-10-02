@@ -5,7 +5,7 @@ import com.finderfeed.solarforge.magic_items.blocks.blockentities.projectiles.Mo
 import com.finderfeed.solarforge.misc_things.AbstractMortarProjectile;
 import com.finderfeed.solarforge.misc_things.AbstractMortarTileEntity;
 import com.finderfeed.solarforge.multiblocks.Multiblocks;
-import com.finderfeed.solarforge.registries.projectiles.Projectiles;
+import com.finderfeed.solarforge.registries.entities.Entities;
 import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
@@ -33,7 +33,7 @@ public class MortarTileEntity extends AbstractMortarTileEntity {
 
     @Override
     public AbstractMortarProjectile getMortarProjectile() {
-        return new MortarProjectile(Projectiles.MORTAR_PROJECTILE.get(),level);
+        return new MortarProjectile(Entities.MORTAR_PROJECTILE.get(),level);
     }
 
 

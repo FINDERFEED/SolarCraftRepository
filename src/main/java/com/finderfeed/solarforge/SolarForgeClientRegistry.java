@@ -2,6 +2,7 @@ package com.finderfeed.solarforge;
 
 import com.finderfeed.solarforge.SolarAbilities.meteorite.MeteoriteProjectileRenderer;
 import com.finderfeed.solarforge.SolarAbilities.SolarStrikeEntityRender;
+import com.finderfeed.solarforge.entities.renderers.CrystalBossRenderer;
 import com.finderfeed.solarforge.entities.renderers.MyFallingBlockEntityRenderer;
 import com.finderfeed.solarforge.entities.renderers.VillagerSolarMasterRenderer;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.containers.screens.ModuleApplierScreen;
@@ -13,13 +14,14 @@ import com.finderfeed.solarforge.magic_items.blocks.blockentities.projectiles.re
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.projectiles.renderers.MortarProjectileRenderer;
 import com.finderfeed.solarforge.magic_items.blocks.render.*;
 import com.finderfeed.solarforge.magic_items.items.projectiles.renderers.BlockBoomerangProjectileRenderer;
+import com.finderfeed.solarforge.magic_items.items.projectiles.renderers.HoldingMissileRenderer;
 import com.finderfeed.solarforge.magic_items.items.projectiles.renderers.UltraCrossbowProjectileRenderer;
 import com.finderfeed.solarforge.magic_items.items.solar_disc_gun.SolarDiscProjectileRenderer;
 import com.finderfeed.solarforge.magic_items.runic_network.repeater.RepeaterRenderer;
 import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
 import com.finderfeed.solarforge.registries.containers.Containers;
 import com.finderfeed.solarforge.registries.items.ItemsRegister;
-import com.finderfeed.solarforge.registries.projectiles.Projectiles;
+import com.finderfeed.solarforge.registries.entities.Entities;
 import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
 import com.finderfeed.solarforge.magic_items.blocks.solar_forge_block.SolarForgeBlockEntityRenderer;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.SolarLexiconContScreen;
@@ -162,14 +164,15 @@ public class SolarForgeClientRegistry {
     public static void registerEntityRendering(EntityRenderersEvent.RegisterRenderers event){
         event.registerEntityRenderer(SolarForge.METEORITE.get(), MeteoriteProjectileRenderer::new);
         event.registerEntityRenderer(SolarForge.SOLAR_STRIKE_ENTITY_REG.get(), SolarStrikeEntityRender::new);
-        event.registerEntityRenderer(Projectiles.SOLAR_DISC.get(), SolarDiscProjectileRenderer::new);
-        event.registerEntityRenderer(Projectiles.BLOCK_BOOMERANG.get(), BlockBoomerangProjectileRenderer::new);
-        event.registerEntityRenderer(Projectiles.ULTRA_CROSSBOW_SHOT.get(), UltraCrossbowProjectileRenderer::new);
-        event.registerEntityRenderer(Projectiles.MORTAR_PROJECTILE.get(), MortarProjectileRenderer::new);
-        event.registerEntityRenderer(Projectiles.TURRET_PROJECTILE.get(), AbstractTurretProjectileRenderer::new);
-        event.registerEntityRenderer(Projectiles.VILLAGER_SOLAR_MASTER.get(), VillagerSolarMasterRenderer::new);
-        event.registerEntityRenderer(Projectiles.FALLING_BLOCK.get(), MyFallingBlockEntityRenderer::new);
-
+        event.registerEntityRenderer(Entities.SOLAR_DISC.get(), SolarDiscProjectileRenderer::new);
+        event.registerEntityRenderer(Entities.BLOCK_BOOMERANG.get(), BlockBoomerangProjectileRenderer::new);
+        event.registerEntityRenderer(Entities.ULTRA_CROSSBOW_SHOT.get(), UltraCrossbowProjectileRenderer::new);
+        event.registerEntityRenderer(Entities.MORTAR_PROJECTILE.get(), MortarProjectileRenderer::new);
+        event.registerEntityRenderer(Entities.TURRET_PROJECTILE.get(), AbstractTurretProjectileRenderer::new);
+        event.registerEntityRenderer(Entities.VILLAGER_SOLAR_MASTER.get(), VillagerSolarMasterRenderer::new);
+        event.registerEntityRenderer(Entities.FALLING_BLOCK.get(), MyFallingBlockEntityRenderer::new);
+        event.registerEntityRenderer(Entities.CRYSTAL_BOSS.get(), CrystalBossRenderer::new);
+        event.registerEntityRenderer(Entities.CRYSTAL_BOSS_ATTACK_HOLDING_MISSILE.get(), HoldingMissileRenderer::new);
     }
 
 }

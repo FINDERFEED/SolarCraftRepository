@@ -1,7 +1,7 @@
 package com.finderfeed.solarforge.magic_items.items.solar_disc_gun;
 
 import com.finderfeed.solarforge.misc_things.ParticlesList;
-import com.finderfeed.solarforge.registries.projectiles.Projectiles;
+import com.finderfeed.solarforge.registries.entities.Entities;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
@@ -32,11 +32,11 @@ public class SolarDiscProjectile extends AbstractHurtingProjectile {
     }
 
     public SolarDiscProjectile(double p_i50174_2_, double p_i50174_4_, double p_i50174_6_, double p_i50174_8_, double p_i50174_10_, double p_i50174_12_, Level p_i50174_14_) {
-        super(Projectiles.SOLAR_DISC.get(), p_i50174_2_, p_i50174_4_, p_i50174_6_, p_i50174_8_, p_i50174_10_, p_i50174_12_, p_i50174_14_);
+        super(Entities.SOLAR_DISC.get(), p_i50174_2_, p_i50174_4_, p_i50174_6_, p_i50174_8_, p_i50174_10_, p_i50174_12_, p_i50174_14_);
     }
 
     public SolarDiscProjectile(LivingEntity p_i50175_2_, Level p_i50175_9_) {
-        super(Projectiles.SOLAR_DISC.get(),  p_i50175_9_);
+        super(Entities.SOLAR_DISC.get(),  p_i50175_9_);
     }
 
     @Override
