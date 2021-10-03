@@ -28,12 +28,12 @@ public class AttachManaCapabilityEvent {
 
     public static void tickEvent(final TickEvent.PlayerTickEvent event){
         Player player = event.player;
-        if (!player.level.isClientSide && player.getCapability(CapabilitySolarMana.SOLAR_MANA_PLAYER).isPresent()) {
+        if (!player.level.isClientSide && player.getCapability(CapabilitySolarMana.SOLAR_MANA_PLAYER).isPresent() && (event.phase == TickEvent.Phase.END)) {
             double mana = player.getCapability(CapabilitySolarMana.SOLAR_MANA_PLAYER).orElseThrow(RuntimeException::new).getMana();
 
-                mana += 0.10d;
+                mana += 0.20d;
                 if (player.getInventory().contains(ItemsRegister.SOLAR_MANA_AMULET.get().getDefaultInstance())){
-                    mana+=0.10d;
+                    mana+=0.20d;
                 }
                 if (!player.isDeadOrDying()) {
                     if (mana <= 3000) {
@@ -42,13 +42,14 @@ public class AttachManaCapabilityEvent {
                         player.getCapability(CapabilitySolarMana.SOLAR_MANA_PLAYER).orElseThrow(RuntimeException::new).setMana(3000);
                     }
                         ServerPlayer playerServer = (ServerPlayer) player;
-
-                    SolarForgePacketHandler.INSTANCE.sendTo(new UpdateManaPacket(mana), playerServer.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+                    if ((event.player.level.getGameTime() % 10 == 0) ) {
+                        SolarForgePacketHandler.INSTANCE.sendTo(new UpdateManaPacket(mana), playerServer.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+                    }
                     if (player.getPersistentData().getBoolean("is_alchemist_toggled") && !player.isCreative() &&
-                            player.getCapability(CapabilitySolarMana.SOLAR_MANA_PLAYER).orElseThrow(RuntimeException::new).getMana() >= 0.5
+                            player.getCapability(CapabilitySolarMana.SOLAR_MANA_PLAYER).orElseThrow(RuntimeException::new).getMana() >= 1
                     && player.getPersistentData().getBoolean("solar_forge_can_player_use_alchemist")){
                         player.getCapability(CapabilitySolarMana.SOLAR_MANA_PLAYER).orElseThrow(RuntimeException::new).setMana(
-                        player.getCapability(CapabilitySolarMana.SOLAR_MANA_PLAYER).orElseThrow(RuntimeException::new).getMana()-0.5
+                        player.getCapability(CapabilitySolarMana.SOLAR_MANA_PLAYER).orElseThrow(RuntimeException::new).getMana()-1
                         );
                     }
                 }

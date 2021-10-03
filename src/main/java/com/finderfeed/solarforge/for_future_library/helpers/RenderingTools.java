@@ -15,6 +15,7 @@ import com.mojang.blaze3d.vertex.*;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.platform.Window;
+import com.mojang.math.Quaternion;
 import com.mojang.math.Vector3d;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiComponent;
@@ -58,6 +59,7 @@ public class RenderingTools {
     public static final ResourceLocation TEST = new ResourceLocation("solarforge","textures/gui/solar_furnace_gui.png");
     public static final ResourceLocation RAY = new ResourceLocation("solarforge","textures/misc/ray_into_skyy.png");
     public static final ResourceLocation SHADERED_RAY = new ResourceLocation("solarforge","textures/misc/shadered_ray.png");
+    public static final ResourceLocation HP_BAR = new ResourceLocation("solarforge","textures/misc/hp_bar.png"); //0.875
 
     public static void addActivePostShader(UniformPlusPlus uniformPlusPlus,PostChainPlusUltra shader){
         RenderEventsHandler.ACTIVE_SHADERS.put(uniformPlusPlus,shader);
@@ -405,7 +407,7 @@ public class RenderingTools {
 
 
 
-    public static void renderObjModel(ResourceLocation location,PoseStack matrices,MultiBufferSource buffer,int light,int overlay,Consumer<PoseStack> transforms){
+    public static void renderObjModel(ResourceLocation location,PoseStack matrices,MultiBufferSource buffer,int light,int overlay, @Deprecated Consumer<PoseStack> transforms){
         List<BakedQuad> list = Minecraft.getInstance().getModelManager().getModel(location)
                 .getQuads(null, null, new Random(), new ModelDataMap.Builder().build());
 
@@ -464,6 +466,41 @@ public class RenderingTools {
         }
 
 
+    }
+
+    //0.875
+    public static void renderHpBar(PoseStack matrices,MultiBufferSource src,float percentage){
+        matrices.pushPose();
+        VertexConsumer vertex = src.getBuffer(RenderType.text(HP_BAR));
+        Quaternion quaternion = Minecraft.getInstance().gameRenderer.getMainCamera().rotation();
+        quaternion.mul(90);
+        matrices.mulPose(quaternion);
+        Matrix4f mat = matrices.last().pose();
+
+
+        basicVertex(mat,vertex,-0.25,0,0,0f,0f);
+        basicVertex(mat,vertex,3.75,0,0,1,0f);
+        basicVertex(mat,vertex,3.75,1,0,1,0.5f);
+        basicVertex(mat,vertex,-0.25,1,0,0,0.5f);
+
+
+        int red = Math.round((1-percentage)*255);
+        int green = Math.round(percentage*255);
+        coloredBasicVertex(mat,vertex,0,0,0,0f,0.5f,red,green,0,255);
+        coloredBasicVertex(mat,vertex,3.5*percentage,0,0,0.875f*percentage,0.5f,red,green,0,255);
+        coloredBasicVertex(mat,vertex,3.5*percentage,1,0,0.875f*percentage,1f,red,green,0,255);
+        coloredBasicVertex(mat,vertex,0,1,0,0,1f,red,green,0,255);
+        matrices.popPose();
+    }
+
+
+
+    public static void basicVertex(Matrix4f mat,VertexConsumer vertex,double x,double y,double z,float u, float v){
+        vertex.vertex(mat,(float)x,(float)y,(float)z).color(255, 255, 255, 255).uv(u, v).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
+    }
+
+    public static void coloredBasicVertex(Matrix4f mat,VertexConsumer vertex,double x,double y,double z,float u, float v,int red,int green,int blue,int alpha){
+        vertex.vertex(mat,(float)x,(float)y,(float)z).color(red, green, blue, alpha).uv(u, v).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
     }
 
     public static List<String> splitString(String main,int maxlen){

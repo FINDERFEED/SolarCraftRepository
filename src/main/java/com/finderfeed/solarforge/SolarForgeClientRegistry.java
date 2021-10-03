@@ -4,6 +4,7 @@ import com.finderfeed.solarforge.SolarAbilities.meteorite.MeteoriteProjectileRen
 import com.finderfeed.solarforge.SolarAbilities.SolarStrikeEntityRender;
 import com.finderfeed.solarforge.entities.renderers.CrystalBossRenderer;
 import com.finderfeed.solarforge.entities.renderers.MyFallingBlockEntityRenderer;
+import com.finderfeed.solarforge.entities.renderers.ShieldingCrystalRenderer;
 import com.finderfeed.solarforge.entities.renderers.VillagerSolarMasterRenderer;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.containers.screens.ModuleApplierScreen;
 import com.finderfeed.solarforge.magic_items.blocks.infusing_table_things.InfusingTableRenderer;
@@ -172,6 +173,7 @@ public class SolarForgeClientRegistry {
         event.registerEntityRenderer(Entities.VILLAGER_SOLAR_MASTER.get(), VillagerSolarMasterRenderer::new);
         event.registerEntityRenderer(Entities.FALLING_BLOCK.get(), MyFallingBlockEntityRenderer::new);
         event.registerEntityRenderer(Entities.CRYSTAL_BOSS.get(), CrystalBossRenderer::new);
+        event.registerEntityRenderer(Entities.CRYSTAL_BOSS_SHIELDING_CRYSTAL.get(), ShieldingCrystalRenderer::new);
         event.registerEntityRenderer(Entities.CRYSTAL_BOSS_ATTACK_HOLDING_MISSILE.get(), HoldingMissileRenderer::new);
     }
 

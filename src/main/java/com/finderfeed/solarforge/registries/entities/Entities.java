@@ -3,6 +3,7 @@ package com.finderfeed.solarforge.registries.entities;
 
 import com.finderfeed.solarforge.entities.CrystalBossEntity;
 import com.finderfeed.solarforge.entities.MyFallingBlockEntity;
+import com.finderfeed.solarforge.entities.ShieldingCrystalCrystalBoss;
 import com.finderfeed.solarforge.entities.VillagerSolarMaster;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.projectiles.AbstractTurretProjectile;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.projectiles.MortarProjectile;
@@ -52,4 +53,7 @@ public class Entities {
     public static final RegistryObject<EntityType<CrystalBossAttackHoldingMissile>> CRYSTAL_BOSS_ATTACK_HOLDING_MISSILE = ENTITY_TYPE_REGISTER.register("holding_missile", () ->
             EntityType.Builder.<CrystalBossAttackHoldingMissile>of(CrystalBossAttackHoldingMissile::new, MobCategory.MISC)
                     .sized(0.2f, 0.2f).updateInterval(5).build("holding_missile"));
+
+    public static final RegistryObject<EntityType<ShieldingCrystalCrystalBoss>> CRYSTAL_BOSS_SHIELDING_CRYSTAL = ENTITY_TYPE_REGISTER.register("crystal_boss_shielding_crystal",()->
+            EntityType.Builder.of(ShieldingCrystalCrystalBoss::new,MobCategory.CREATURE).sized(1,2).build("crystal_boss_shielding_crystal"));
 }

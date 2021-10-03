@@ -2,14 +2,18 @@ package com.finderfeed.solarforge.entities;
 
 
 import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.for_future_library.entities.BossAttackChain;
 import com.finderfeed.solarforge.magic_items.items.projectiles.CrystalBossAttackHoldingMissile;
+import com.finderfeed.solarforge.registries.entities.Entities;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.BossEvent;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.damagesource.DamageSource;
@@ -23,19 +27,25 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 import org.w3c.dom.Attr;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 public class CrystalBossEntity extends Mob {
-    private static EntityDataAccessor<Boolean> ATTACK_IMMUNE = SynchedEntityData.defineId(CrystalBossAttackHoldingMissile.class, EntityDataSerializers.BOOLEAN);
+    private static EntityDataAccessor<Boolean> ATTACK_IMMUNE = SynchedEntityData.defineId(CrystalBossEntity.class, EntityDataSerializers.BOOLEAN);
 
     private ServerBossEvent CRYSTAL_BOSS_EVENT = new ServerBossEvent(this.getDisplayName(), BossEvent.BossBarColor.RED, BossEvent.BossBarOverlay.NOTCHED_20);
     private final BossAttackChain ATTACK_CHAIN = new BossAttackChain.Builder()
             .addAttack("missiles",this::holdingMissilesAttack,20,false)
+            .addAttack("shielding_crystals",this::spawnShieldingCrystals,80,false)
             .setTimeBetweenAttacks(80)
             .build();
     private int ticker = 0;
+    public List<ShieldingCrystalCrystalBoss> entitiesAroundClient = null;
 
     public CrystalBossEntity(EntityType<? extends Mob> p_21368_, Level p_21369_) {
         super(p_21368_, p_21369_);
@@ -49,9 +59,22 @@ public class CrystalBossEntity extends Mob {
             ticker++;
             ATTACK_CHAIN.tick();
         }
+        if (level.isClientSide){
+            this.entitiesAroundClient = level.getEntitiesOfClass(ShieldingCrystalCrystalBoss.class,
+                    new AABB(-16,-16,-16,16,16,16).move(position()),(cr)->{
+                        return (cr.distanceTo(this) <= 16 ) ;
+                    });
+
+        }
 
     }
 
+    public boolean isBlockingDamage(){
+        return !(level.getEntitiesOfClass(ShieldingCrystalCrystalBoss.class,
+                new AABB(-16,-16,-16,16,16,16).move(position()),(cr)->{
+                    return (cr.distanceTo(this) <= 16 ) && !cr.isDeploying();
+                }).isEmpty());
+    }
 
 
     @Override
@@ -78,6 +101,16 @@ public class CrystalBossEntity extends Mob {
     public boolean ignoreExplosion() {
         return true;
     }
+
+    private void spawnShieldingCrystals(){
+        for (int i = 0; i < 3;i++){
+            ShieldingCrystalCrystalBoss crystal = new ShieldingCrystalCrystalBoss(Entities.CRYSTAL_BOSS_SHIELDING_CRYSTAL.get(),level);
+            Vec3 positon = this.position().add(level.random.nextDouble()*3+5,0,level.random.nextDouble()*3+5);
+            crystal.setPos(positon);
+            level.addFreshEntity(crystal);
+        }
+    }
+
 
     private void holdingMissilesAttack(){
         List<Player> possibleTargets = level.getEntitiesOfClass(Player.class,new AABB(this.position().add(-20,-5,-20),this.position().add(20,5,20)));
@@ -162,5 +195,22 @@ public class CrystalBossEntity extends Mob {
     public void knockback(double p_147241_, double p_147242_, double p_147243_) {}
 
 
+    @Nullable
+    @Override
+    protected SoundEvent getHurtSound(DamageSource p_21239_) {
+        return SoundEvents.BLAZE_HURT;
+    }
+}
 
+@Mod.EventBusSubscriber(modid = SolarForge.MOD_ID,bus = Mod.EventBusSubscriber.Bus.FORGE)
+class CancelAttack{
+
+    @SubscribeEvent
+    public static void cancelCrystalBossAttack(LivingHurtEvent event){
+        if (event.getEntityLiving() instanceof CrystalBossEntity boss){
+            if (boss.isBlockingDamage()){
+                event.setCanceled(true);
+            }
+        }
+    }
 }

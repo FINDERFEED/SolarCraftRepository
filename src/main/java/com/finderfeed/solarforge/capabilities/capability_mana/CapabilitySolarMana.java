@@ -6,16 +6,16 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.core.Direction;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.CapabilityManager;
+import net.minecraftforge.common.capabilities.CapabilityToken;
 import net.minecraftforge.common.util.LazyOptional;
 
 import javax.annotation.Nullable;
 
 public class CapabilitySolarMana {
 
-    @CapabilityInject(SolarForgeMana.class)
-    public static Capability<SolarForgeMana> SOLAR_MANA_PLAYER = null;
+
+    public static Capability<SolarForgeMana> SOLAR_MANA_PLAYER = CapabilityManager.get(new CapabilityToken<SolarForgeMana>(){});
 
 //    public static void register(){
 //        CapabilityManager.INSTANCE.register(SolarForgeMana.class);
