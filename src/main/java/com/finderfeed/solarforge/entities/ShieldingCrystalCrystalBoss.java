@@ -51,6 +51,19 @@ public class ShieldingCrystalCrystalBoss extends Mob {
         super.tick();
     }
 
+    @Override
+    protected MovementEmission getMovementEmission() {
+        return MovementEmission.NONE;
+    }
+
+    @Override
+    public boolean isPushable() {
+        return false;
+    }
+
+    @Override
+    protected void doPush(Entity pEntity) {
+    }
 
     public boolean isDeploying(){
         return this.entityData.get(DEPLOYING);
@@ -93,6 +106,12 @@ public class ShieldingCrystalCrystalBoss extends Mob {
         } else {
             this.noActionTime = 0;
         }
+    }
+
+
+    @Override
+    public boolean isNoGravity() {
+        return true;
     }
 
     @Override

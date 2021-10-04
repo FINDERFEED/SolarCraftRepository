@@ -4,7 +4,9 @@ import com.finderfeed.solarforge.entities.ShieldingCrystalCrystalBoss;
 import com.finderfeed.solarforge.events.other_events.ModelRegistryEvents;
 import com.finderfeed.solarforge.for_future_library.helpers.RenderingTools;
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Quaternion;
 import com.mojang.math.Vector3f;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -47,7 +49,10 @@ public class ShieldingCrystalRenderer extends EntityRenderer<ShieldingCrystalCry
                 matrices.popPose();
             }
             matrices.pushPose();
-            matrices.translate(-0.9,2,0);
+
+            matrices.translate(0,2,0);
+            Quaternion quaternion = Minecraft.getInstance().gameRenderer.getMainCamera().rotation();
+            matrices.mulPose(quaternion);
             matrices.scale(0.5f,0.3f,0.5f);
             RenderingTools.renderHpBar(matrices,buffer,crystal.getHealth()/crystal.getMaxHealth());
             matrices.popPose();
@@ -56,6 +61,8 @@ public class ShieldingCrystalRenderer extends EntityRenderer<ShieldingCrystalCry
 
         super.render(crystal, p_114486_, partialTicks, matrices, buffer, light);
     }
+
+
 
     @Override
     public ResourceLocation getTextureLocation(ShieldingCrystalCrystalBoss p_114482_) {

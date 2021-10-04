@@ -31,8 +31,10 @@ public class BossAttackChain {
 
     public void tick(){
         if (attackingInProgress){
-            if ((currentAttack != null) && (currentAttack.shouldRunEveryTick())){
-                currentAttack.run();
+            if ((currentAttack != null) && (currentAttack.getRepeatInterval() != -1)){
+                if (ticker % currentAttack.getRepeatInterval() == 0) {
+                    currentAttack.run();
+                }
             }
             if (currentWaitTime != 0){
                 currentWaitTime--;
@@ -47,6 +49,7 @@ public class BossAttackChain {
                         BossAttack attack = attacksQueue.poll();
                         currentWaitTime = attack.getTime();
                         attack.run();
+                        ticker = 0;
                         currentAttack = attack;
                     }else{
                         attackingInProgress = false;
@@ -67,7 +70,7 @@ public class BossAttackChain {
     private void populateQueue(){
         Random rnd = new Random();
         List<BossAttack> copy = new ArrayList<>(attacks);
-        for (int i =0 ; i <copy.size();i++){
+        for (int i =0 ; i <= copy.size();i++){
             BossAttack attack= copy.get(rnd.nextInt(copy.size()));
             attacksQueue.offer(attack);
             copy.remove(attack);
@@ -90,8 +93,13 @@ public class BossAttackChain {
             return this;
         }
 
-        public Builder addAttack(String name,Runnable attack,int attackTime,boolean everyTick){
-            BossAttack attackToAdd =new BossAttack(attack, attackTime,everyTick,name);
+        public Builder addAttack(String name,Runnable attack,int attackTime,Integer attackInterval){
+            BossAttack attackToAdd;
+            if (attackInterval != null){
+                attackToAdd  =new BossAttack(attack, attackTime,attackInterval,name);
+            }else{
+                attackToAdd = new BossAttack(attack, attackTime,-1,name);
+            }
             this.ID_ATTACKS_MAP.put(name,attackToAdd);
             attacks.add(attackToAdd);
             return this;
@@ -106,17 +114,17 @@ public class BossAttackChain {
 
         private final Runnable attack;
         private final int time;
-        private final boolean everyTick;
+        private final int tick;
         private final String id;
-        private BossAttack(Runnable attack,int time,boolean everyTick,String name){
+        private BossAttack(Runnable attack,int time,int everyTick,String name){
             this.id = name;
-            this.everyTick = everyTick;
+            this.tick = everyTick;
             this.attack =attack;
             this.time = time;
         }
 
-        public boolean shouldRunEveryTick(){
-            return everyTick;
+        public int getRepeatInterval(){
+            return tick;
         }
 
         public String getSerializationId(){

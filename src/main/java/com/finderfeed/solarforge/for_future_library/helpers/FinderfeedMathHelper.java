@@ -15,6 +15,7 @@ import net.minecraft.world.phys.Vec3;
 import org.lwjgl.system.CallbackI;
 
 import java.util.List;
+import java.util.Random;
 import java.util.function.Predicate;
 
 public class FinderfeedMathHelper {
@@ -22,6 +23,11 @@ public class FinderfeedMathHelper {
 
     public static double[] polarToCartesian(double radius,double angle){
         return new double[]{radius*Math.cos(angle),radius*Math.sin(angle)};
+    }
+
+    public static int randomPlusMinus(){
+        Random rnd = new Random();
+        return rnd.nextInt(2) == 0 ? 1 : -1;
     }
 
     public static int clamp(int min,int main, int max){

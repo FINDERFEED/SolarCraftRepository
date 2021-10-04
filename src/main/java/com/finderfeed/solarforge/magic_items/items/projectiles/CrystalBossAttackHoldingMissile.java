@@ -2,6 +2,7 @@ package com.finderfeed.solarforge.magic_items.items.projectiles;
 
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.entities.CrystalBossEntity;
+import com.finderfeed.solarforge.entities.ShieldingCrystalCrystalBoss;
 import com.finderfeed.solarforge.misc_things.ParticlesList;
 import com.finderfeed.solarforge.registries.entities.Entities;
 import net.minecraft.core.particles.ParticleOptions;
@@ -116,7 +117,7 @@ public class CrystalBossAttackHoldingMissile extends AbstractHurtingProjectile {
 
     @Override
     protected void onHitEntity(EntityHitResult ent) {
-        if (!(ent.getEntity() instanceof CrystalBossEntity) && !(ent.getEntity() instanceof CrystalBossAttackHoldingMissile)){
+        if (!(ent.getEntity() instanceof CrystalBossEntity) && !(ent.getEntity() instanceof CrystalBossAttackHoldingMissile) && !(ent.getEntity() instanceof ShieldingCrystalCrystalBoss)){
             if (Helpers.isVulnerable(ent.getEntity())) {
                 ent.getEntity().hurt(DamageSource.MAGIC, 2);
                 ent.getEntity().invulnerableTime = 0;

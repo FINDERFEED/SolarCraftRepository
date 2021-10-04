@@ -4,6 +4,7 @@ package com.finderfeed.solarforge.entities;
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.for_future_library.entities.BossAttackChain;
+import com.finderfeed.solarforge.for_future_library.helpers.FinderfeedMathHelper;
 import com.finderfeed.solarforge.magic_items.items.projectiles.CrystalBossAttackHoldingMissile;
 import com.finderfeed.solarforge.registries.entities.Entities;
 import net.minecraft.nbt.CompoundTag;
@@ -40,8 +41,8 @@ public class CrystalBossEntity extends Mob {
 
     private ServerBossEvent CRYSTAL_BOSS_EVENT = new ServerBossEvent(this.getDisplayName(), BossEvent.BossBarColor.RED, BossEvent.BossBarOverlay.NOTCHED_20);
     private final BossAttackChain ATTACK_CHAIN = new BossAttackChain.Builder()
-            .addAttack("missiles",this::holdingMissilesAttack,20,false)
-            .addAttack("shielding_crystals",this::spawnShieldingCrystals,80,false)
+            .addAttack("missiles",this::holdingMissilesAttack,40,10)
+            .addAttack("shielding_crystals",this::spawnShieldingCrystals,80,null)
             .setTimeBetweenAttacks(80)
             .build();
     private int ticker = 0;
@@ -57,7 +58,9 @@ public class CrystalBossEntity extends Mob {
         super.tick();
         if (!level.isClientSide){
             ticker++;
-            ATTACK_CHAIN.tick();
+            if (this.hasEnemiesNearby()) {
+                ATTACK_CHAIN.tick();
+            }
         }
         if (level.isClientSide){
             this.entitiesAroundClient = level.getEntitiesOfClass(ShieldingCrystalCrystalBoss.class,
@@ -77,6 +80,16 @@ public class CrystalBossEntity extends Mob {
     }
 
 
+
+    @Override
+    protected void doPush(Entity pEntity) {
+    }
+
+    @Override
+    public boolean isPushable() {
+        return false;
+    }
+
     @Override
     public boolean canBeCollidedWith() {
         return false;
@@ -86,6 +99,8 @@ public class CrystalBossEntity extends Mob {
     public boolean canBeAffected(MobEffectInstance p_21197_) {
         return false;
     }
+
+
 
     @Override
     public boolean canChangeDimensions() {
@@ -102,18 +117,23 @@ public class CrystalBossEntity extends Mob {
         return true;
     }
 
-    private void spawnShieldingCrystals(){
+    public void spawnShieldingCrystals(){
         for (int i = 0; i < 3;i++){
-            ShieldingCrystalCrystalBoss crystal = new ShieldingCrystalCrystalBoss(Entities.CRYSTAL_BOSS_SHIELDING_CRYSTAL.get(),level);
-            Vec3 positon = this.position().add(level.random.nextDouble()*3+5,0,level.random.nextDouble()*3+5);
-            crystal.setPos(positon);
-            level.addFreshEntity(crystal);
+            if (this.level.getEntitiesOfClass(ShieldingCrystalCrystalBoss.class,new AABB(-10,-10,-10,10,10,10).move(position())).size() <= 10) {
+                ShieldingCrystalCrystalBoss crystal = new ShieldingCrystalCrystalBoss(Entities.CRYSTAL_BOSS_SHIELDING_CRYSTAL.get(), level);
+                Vec3 positon = this.position().add((level.random.nextDouble() * 5 +3)* FinderfeedMathHelper.randomPlusMinus(), 0, (level.random.nextDouble() * 5 +3)* FinderfeedMathHelper.randomPlusMinus());
+                crystal.setPos(positon);
+                level.addFreshEntity(crystal);
+            }
         }
     }
 
 
-    private void holdingMissilesAttack(){
-        List<Player> possibleTargets = level.getEntitiesOfClass(Player.class,new AABB(this.position().add(-20,-5,-20),this.position().add(20,5,20)));
+    public void holdingMissilesAttack(){
+        List<Player> possibleTargets = level.getEntitiesOfClass(Player.class,new AABB(this.position().add(-20,-8,-20),this.position().add(20,8,20)),
+                (pl)->{
+                    return !pl.isCreative() && !pl.isSpectator();
+                });
         if (!possibleTargets.isEmpty()){
             float timeOffset = 0;
             for (int i = 0; i < 7*possibleTargets.size();i++){
@@ -131,10 +151,21 @@ public class CrystalBossEntity extends Mob {
         }
     }
 
+    public boolean hasEnemiesNearby(){
+        return !level.getEntitiesOfClass(Player.class,new AABB(this.position().add(-20,-8,-20),this.position().add(20,8,20)),
+                (pl)->{
+                    return !pl.isCreative() && !pl.isSpectator();
+                }).isEmpty();
+    }
+
     public static AttributeSupplier.Builder createAttributes(){
         return PathfinderMob.createMobAttributes().add(Attributes.MAX_HEALTH,5000).add(Attributes.ARMOR,10);
     }
 
+    @Override
+    protected MovementEmission getMovementEmission() {
+        return MovementEmission.NONE;
+    }
 
     @Override
     public boolean save(CompoundTag cmp) {
@@ -168,6 +199,13 @@ public class CrystalBossEntity extends Mob {
         } else {
             this.noActionTime = 0;
         }
+    }
+
+
+
+    @Override
+    public boolean isNoGravity() {
+        return true;
     }
 
     @Override
@@ -211,6 +249,11 @@ class CancelAttack{
             if (boss.isBlockingDamage()){
                 event.setCanceled(true);
             }
+        }else if (event.getEntityLiving() instanceof ShieldingCrystalCrystalBoss shield){
+            if (shield.isDeploying()){
+                event.setCanceled(true);
+            }
         }
+
     }
 }

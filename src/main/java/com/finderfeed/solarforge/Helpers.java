@@ -424,6 +424,48 @@ public class Helpers {
     }
 
 
+
+    public static List<Vec3> findRandomGroundPositionsAround(Level world,Vec3 mainpos,int amount,int radius){
+        List<Vec3> toreturn = new ArrayList<>();
+        int remainingAmount = amount;
+        for (int i = 0; i > -7;i++){
+            List<BlockPos> positions = findNormalBlockPositionsOnPlane(world,radius,new BlockPos(mainpos.x,mainpos.y+i,mainpos.z));
+            if (positions.size() >= remainingAmount){
+                for (int g = 0;g < remainingAmount;g++) {
+                    BlockPos random = positions.get(world.random.nextInt(positions.size()));
+                    toreturn.add(getBlockCenter(random).add(0, 0.5, 0));
+                    positions.remove(random);
+                }
+                break;
+            }else{
+                positions.forEach((pos)->{
+                    toreturn.add(getBlockCenter(pos).add(0,0.5,0));
+                });
+                remainingAmount-=positions.size();
+            }
+        }
+
+        return toreturn;
+    }
+
+    private static List<BlockPos> findNormalBlockPositionsOnPlane(Level world,int radius,BlockPos mainpos){
+        List<BlockPos> toReturn = new ArrayList<>();
+        for (int i = -radius; i <= radius;i++){
+            for (int g = -radius; g <= radius;g++){
+                BlockPos check = mainpos.offset(i,0,g);
+                if (isNormal(world,check)){
+                    toReturn.add(check);
+                }
+            }
+        }
+        return toReturn;
+    }
+    private static boolean isNormal(Level world,BlockPos pos){
+        return world.getBlockState(pos).isAir() && !world.getBlockState(pos.below()).isAir();
+    }
+
+
+
     public static class HashMapConstructor<T,E>{
         private Map<T,E> MAP = new HashMap<>();
 

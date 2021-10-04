@@ -1,10 +1,7 @@
 package com.finderfeed.solarforge.registries.entities;
 
 
-import com.finderfeed.solarforge.entities.CrystalBossEntity;
-import com.finderfeed.solarforge.entities.MyFallingBlockEntity;
-import com.finderfeed.solarforge.entities.ShieldingCrystalCrystalBoss;
-import com.finderfeed.solarforge.entities.VillagerSolarMaster;
+import com.finderfeed.solarforge.entities.*;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.projectiles.AbstractTurretProjectile;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.projectiles.MortarProjectile;
 import com.finderfeed.solarforge.magic_items.items.projectiles.BlockBoomerangProjectile;
@@ -56,4 +53,7 @@ public class Entities {
 
     public static final RegistryObject<EntityType<ShieldingCrystalCrystalBoss>> CRYSTAL_BOSS_SHIELDING_CRYSTAL = ENTITY_TYPE_REGISTER.register("crystal_boss_shielding_crystal",()->
             EntityType.Builder.of(ShieldingCrystalCrystalBoss::new,MobCategory.CREATURE).sized(1,2).build("crystal_boss_shielding_crystal"));
+
+    public static final RegistryObject<EntityType<MineEntityCrystalBoss>> CRYSTAL_BOSS_MINE = ENTITY_TYPE_REGISTER.register("crystal_boss_mine",()->
+            EntityType.Builder.of(MineEntityCrystalBoss::new,MobCategory.CREATURE).sized(1,1).build("crystal_boss_mine"));
 }
