@@ -7,6 +7,7 @@ import com.finderfeed.solarforge.SolarAbilities.SolarStunEffect;
 import com.finderfeed.solarforge.capabilities.capability_mana.AttachManaCapabilityEvent;
 import com.finderfeed.solarforge.config.SolarcraftConfig;
 import com.finderfeed.solarforge.entities.CrystalBossEntity;
+import com.finderfeed.solarforge.entities.MineEntityCrystalBoss;
 import com.finderfeed.solarforge.entities.ShieldingCrystalCrystalBoss;
 import com.finderfeed.solarforge.entities.VillagerSolarMaster;
 import com.finderfeed.solarforge.events.PlayerTickEvent;
@@ -270,6 +271,7 @@ public class SolarForge
         event.put(Entities.VILLAGER_SOLAR_MASTER.get(), VillagerSolarMaster.createAttributes().build());
         event.put(Entities.CRYSTAL_BOSS.get(), CrystalBossEntity.createAttributes().build());
         event.put(Entities.CRYSTAL_BOSS_SHIELDING_CRYSTAL.get(), ShieldingCrystalCrystalBoss.createAttributes().build());
+        event.put(Entities.CRYSTAL_BOSS_MINE.get(), MineEntityCrystalBoss.createAttributes().build());
         }
 
         @SubscribeEvent

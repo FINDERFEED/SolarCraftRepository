@@ -6,7 +6,10 @@ import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.for_future_library.entities.BossAttackChain;
 import com.finderfeed.solarforge.for_future_library.helpers.FinderfeedMathHelper;
 import com.finderfeed.solarforge.magic_items.items.projectiles.CrystalBossAttackHoldingMissile;
+import com.finderfeed.solarforge.magic_items.items.projectiles.FallingStarCrystalBoss;
+import com.finderfeed.solarforge.misc_things.CrystalBossBuddy;
 import com.finderfeed.solarforge.registries.entities.Entities;
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -31,17 +34,20 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import org.apache.logging.log4j.core.tools.picocli.CommandLine;
 import org.w3c.dom.Attr;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class CrystalBossEntity extends Mob {
+public class CrystalBossEntity extends Mob implements CrystalBossBuddy {
     private static EntityDataAccessor<Boolean> ATTACK_IMMUNE = SynchedEntityData.defineId(CrystalBossEntity.class, EntityDataSerializers.BOOLEAN);
 
     private ServerBossEvent CRYSTAL_BOSS_EVENT = new ServerBossEvent(this.getDisplayName(), BossEvent.BossBarColor.RED, BossEvent.BossBarOverlay.NOTCHED_20);
     private final BossAttackChain ATTACK_CHAIN = new BossAttackChain.Builder()
             .addAttack("missiles",this::holdingMissilesAttack,40,10)
+            .addAttack("mines",this::spawnMines,200,40)
+            .addAttack("air_strike",this::airStrike,160,10)
             .addAttack("shielding_crystals",this::spawnShieldingCrystals,80,null)
             .setTimeBetweenAttacks(80)
             .build();
@@ -52,6 +58,7 @@ public class CrystalBossEntity extends Mob {
         super(p_21368_, p_21369_);
     }
 
+    
 
     @Override
     public void tick() {
@@ -82,7 +89,8 @@ public class CrystalBossEntity extends Mob {
 
 
     @Override
-    protected void doPush(Entity pEntity) {
+    protected void doPush(Entity entity) {
+        entity.setDeltaMovement(entity.position().add(0,entity.getBbHeight()/2,0).subtract(this.position().add(0,this.getBbHeight()/2,0)).normalize());
     }
 
     @Override
@@ -115,6 +123,28 @@ public class CrystalBossEntity extends Mob {
     @Override
     public boolean ignoreExplosion() {
         return true;
+    }
+
+
+    public void airStrike(){
+
+        for (int i = 0;i < 5;i++){
+            double x = (level.random.nextDouble()*0.2+0.01)*FinderfeedMathHelper.randomPlusMinus();
+            double z = (level.random.nextDouble()*0.2+0.01)*FinderfeedMathHelper.randomPlusMinus();
+            FallingStarCrystalBoss star = new FallingStarCrystalBoss(level,x,1,z);
+            star.setPos(this.position().add(0,this.getBbHeight()*0.7,0));
+            level.addFreshEntity(star);
+        }
+    }
+
+
+    public void spawnMines(){
+        List<Vec3> positions = Helpers.findRandomGroundPositionsAround(level,position(),20,15);
+        for (Vec3 pos : positions){
+            MineEntityCrystalBoss mine = new MineEntityCrystalBoss(Entities.CRYSTAL_BOSS_MINE.get(),level);
+            mine.setPos(pos);
+            level.addFreshEntity(mine);
+        }
     }
 
     public void spawnShieldingCrystals(){

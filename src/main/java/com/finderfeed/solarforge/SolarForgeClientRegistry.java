@@ -12,6 +12,7 @@ import com.finderfeed.solarforge.magic_items.blocks.blockentities.projectiles.re
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.projectiles.renderers.MortarProjectileRenderer;
 import com.finderfeed.solarforge.magic_items.blocks.render.*;
 import com.finderfeed.solarforge.magic_items.items.projectiles.renderers.BlockBoomerangProjectileRenderer;
+import com.finderfeed.solarforge.magic_items.items.projectiles.renderers.FallingStarRenderer;
 import com.finderfeed.solarforge.magic_items.items.projectiles.renderers.HoldingMissileRenderer;
 import com.finderfeed.solarforge.magic_items.items.projectiles.renderers.UltraCrossbowProjectileRenderer;
 import com.finderfeed.solarforge.magic_items.items.solar_disc_gun.SolarDiscProjectileRenderer;
@@ -173,6 +174,7 @@ public class SolarForgeClientRegistry {
         event.registerEntityRenderer(Entities.CRYSTAL_BOSS_SHIELDING_CRYSTAL.get(), ShieldingCrystalRenderer::new);
         event.registerEntityRenderer(Entities.CRYSTAL_BOSS_ATTACK_HOLDING_MISSILE.get(), HoldingMissileRenderer::new);
         event.registerEntityRenderer(Entities.CRYSTAL_BOSS_MINE.get(), MineEntityRenderer::new);
+        event.registerEntityRenderer(Entities.FALLING_STAR_CRYSTAL_BOSS.get(), FallingStarRenderer::new);
     }
 
 }

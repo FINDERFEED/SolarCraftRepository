@@ -70,7 +70,7 @@ public class BossAttackChain {
     private void populateQueue(){
         Random rnd = new Random();
         List<BossAttack> copy = new ArrayList<>(attacks);
-        for (int i =0 ; i <= copy.size();i++){
+        for (int i =0 ; i < attacks.size();i++){
             BossAttack attack= copy.get(rnd.nextInt(copy.size()));
             attacksQueue.offer(attack);
             copy.remove(attack);
@@ -167,7 +167,7 @@ public class BossAttackChain {
         int length = tag.getInt("boss_attack_chain_length");
         if (length != 0){
             this.attacksQueue = new ArrayDeque<>(20);
-            for (int i = 1;i < length;i++){
+            for (int i = 1;i <= length;i++){
                 attacksQueue.offer(BOSS_ATTACK_SERIALIZE_MAP.get(tag.getString("boss_attack_chain_queue_"+i)));
             }
         }

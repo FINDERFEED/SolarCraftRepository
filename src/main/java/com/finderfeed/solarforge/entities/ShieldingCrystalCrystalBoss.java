@@ -3,6 +3,7 @@ package com.finderfeed.solarforge.entities;
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.for_future_library.helpers.FinderfeedMathHelper;
 import com.finderfeed.solarforge.magic_items.items.projectiles.CrystalBossAttackHoldingMissile;
+import com.finderfeed.solarforge.misc_things.CrystalBossBuddy;
 import com.finderfeed.solarforge.registries.entities.Entities;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -23,7 +24,7 @@ import net.minecraft.world.phys.Vec3;
 
 import java.util.List;
 
-public class ShieldingCrystalCrystalBoss extends Mob {
+public class ShieldingCrystalCrystalBoss extends Mob implements CrystalBossBuddy {
 
 
     private static EntityDataAccessor<Boolean> DEPLOYING = SynchedEntityData.defineId(ShieldingCrystalCrystalBoss.class,EntityDataSerializers.BOOLEAN);

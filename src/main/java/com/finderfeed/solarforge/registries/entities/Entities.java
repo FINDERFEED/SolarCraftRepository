@@ -6,6 +6,7 @@ import com.finderfeed.solarforge.magic_items.blocks.blockentities.projectiles.Ab
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.projectiles.MortarProjectile;
 import com.finderfeed.solarforge.magic_items.items.projectiles.BlockBoomerangProjectile;
 import com.finderfeed.solarforge.magic_items.items.projectiles.CrystalBossAttackHoldingMissile;
+import com.finderfeed.solarforge.magic_items.items.projectiles.FallingStarCrystalBoss;
 import com.finderfeed.solarforge.magic_items.items.projectiles.UltraCrossbowProjectile;
 import com.finderfeed.solarforge.magic_items.items.solar_disc_gun.SolarDiscProjectile;
 import net.minecraft.world.entity.MobCategory;
@@ -55,5 +56,9 @@ public class Entities {
             EntityType.Builder.of(ShieldingCrystalCrystalBoss::new,MobCategory.CREATURE).sized(1,2).build("crystal_boss_shielding_crystal"));
 
     public static final RegistryObject<EntityType<MineEntityCrystalBoss>> CRYSTAL_BOSS_MINE = ENTITY_TYPE_REGISTER.register("crystal_boss_mine",()->
-            EntityType.Builder.of(MineEntityCrystalBoss::new,MobCategory.CREATURE).sized(1,1).build("crystal_boss_mine"));
+            EntityType.Builder.of(MineEntityCrystalBoss::new,MobCategory.CREATURE).sized(1,0.3f).build("crystal_boss_mine"));
+
+    public static final RegistryObject<EntityType<FallingStarCrystalBoss>> FALLING_STAR_CRYSTAL_BOSS = ENTITY_TYPE_REGISTER.register("falling_star", () ->
+            EntityType.Builder.<FallingStarCrystalBoss>of(FallingStarCrystalBoss::new, MobCategory.MISC)
+                    .sized(0.2f, 0.2f).updateInterval(5).build("falling_star"));
 }

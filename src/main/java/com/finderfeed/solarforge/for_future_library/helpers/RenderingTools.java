@@ -40,6 +40,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.HalfTransparentBlock;
 import net.minecraft.world.level.block.StainedGlassPaneBlock;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.model.data.ModelDataMap;
 import org.apache.logging.log4j.Level;
@@ -562,4 +563,13 @@ public class RenderingTools {
         return -1;
     }
 
+    /**
+        Render the upper side of the texture to top.
+     */
+    public static void applyMovementMatrixRotations(PoseStack matrices, Vec3 speed){
+        double angleY = Math.toDegrees(Math.atan2(speed.x,speed.z));
+        double angleX = Math.toDegrees(Math.atan2(Math.sqrt(speed.x*speed.x + speed.z*speed.z),speed.y));
+        matrices.mulPose(Vector3f.YP.rotationDegrees((float)angleY));
+        matrices.mulPose(Vector3f.XP.rotationDegrees((float)angleX));
+    }
 }

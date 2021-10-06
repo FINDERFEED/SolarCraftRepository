@@ -3,6 +3,7 @@ package com.finderfeed.solarforge;
 import com.finderfeed.solarforge.capabilities.capability_mana.CapabilitySolarMana;
 import com.finderfeed.solarforge.capabilities.capability_mana.SolarForgeMana;
 import com.finderfeed.solarforge.events.my_events.ProgressionUnlockEvent;
+import com.finderfeed.solarforge.for_future_library.helpers.FinderfeedMathHelper;
 import com.finderfeed.solarforge.misc_things.Multiblock;
 import com.finderfeed.solarforge.misc_things.ParticlesList;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
@@ -427,24 +428,19 @@ public class Helpers {
 
     public static List<Vec3> findRandomGroundPositionsAround(Level world,Vec3 mainpos,int amount,int radius){
         List<Vec3> toreturn = new ArrayList<>();
-        int remainingAmount = amount;
-        for (int i = 0; i > -7;i++){
+        List<BlockPos> pos = new ArrayList<>();
+        for (int i = 0; i > -2;i--){
             List<BlockPos> positions = findNormalBlockPositionsOnPlane(world,radius,new BlockPos(mainpos.x,mainpos.y+i,mainpos.z));
-            if (positions.size() >= remainingAmount){
-                for (int g = 0;g < remainingAmount;g++) {
-                    BlockPos random = positions.get(world.random.nextInt(positions.size()));
-                    toreturn.add(getBlockCenter(random).add(0, 0.5, 0));
-                    positions.remove(random);
-                }
-                break;
-            }else{
-                positions.forEach((pos)->{
-                    toreturn.add(getBlockCenter(pos).add(0,0.5,0));
-                });
-                remainingAmount-=positions.size();
-            }
+            pos.addAll(positions);
         }
-
+        for (int i = 0; i < amount;i++){
+            if (pos.size() == 0){
+                break;
+            }
+            BlockPos toAdd = pos.get(world.random.nextInt(pos.size()));
+            toreturn.add(getBlockCenter(toAdd).add(0,0.5,0));
+            pos.remove(toAdd);
+        }
         return toreturn;
     }
 
@@ -452,16 +448,18 @@ public class Helpers {
         List<BlockPos> toReturn = new ArrayList<>();
         for (int i = -radius; i <= radius;i++){
             for (int g = -radius; g <= radius;g++){
-                BlockPos check = mainpos.offset(i,0,g);
-                if (isNormal(world,check)){
-                    toReturn.add(check);
+                if (FinderfeedMathHelper.isInCircle(i,g,radius)) {
+                    BlockPos check = mainpos.offset(i, 0, g);
+                    if (isNormal(world, check)) {
+                        toReturn.add(check);
+                    }
                 }
             }
         }
         return toReturn;
     }
     private static boolean isNormal(Level world,BlockPos pos){
-        return world.getBlockState(pos).isAir() && !world.getBlockState(pos.below()).isAir();
+        return world.getBlockState(pos.above()).isAir() && !world.getBlockState(pos).isAir();
     }
 
 

@@ -1,36 +1,51 @@
 package com.finderfeed.solarforge.entities;
 
 import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.misc_things.CrystalBossBuddy;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.fmllegacy.network.NetworkHooks;
 
-public class MineEntityCrystalBoss extends Entity {
+public class MineEntityCrystalBoss extends PathfinderMob implements CrystalBossBuddy {
 
     public static EntityDataAccessor<Integer> TICKER = SynchedEntityData.defineId(MineEntityCrystalBoss.class, EntityDataSerializers.INT);
     private int ticker = 0;
 
-    public MineEntityCrystalBoss(EntityType<?> p_19870_, Level p_19871_) {
+
+    public MineEntityCrystalBoss(EntityType<? extends MineEntityCrystalBoss> p_19870_, Level p_19871_) {
         super(p_19870_, p_19871_);
     }
 
+    @Override
+    public boolean isInvulnerable() {
+        return true;
+    }
+
+    public static AttributeSupplier.Builder createAttributes(){
+        return PathfinderMob.createMobAttributes();
+    }
 
     @Override
     public void tick() {
         super.tick();
-        if (this.entityData.get(TICKER) >= 61){
-            this.kill();
+        int tick = this.entityData.get(TICKER);
+        if (tick >= 61){
+            this.discard();
         }
-        if (this.entityData.get(TICKER) >= 60){
+        if (tick == 60){
             blowUp();
         }
 
@@ -45,18 +60,22 @@ public class MineEntityCrystalBoss extends Entity {
 
 
     public void blowUp(){
-        if (!this.level.isClientSide){
-            level.getEntitiesOfClass(LivingEntity.class,new AABB(-1.5,-1.0,-1.5,1.5,2,1.5).move(position())).forEach((living)->{
-                living.hurt(DamageSource.MAGIC,5);
-            });
-        }
-        level.getEntitiesOfClass(LivingEntity.class,new AABB(-1.5,-1.0,-1.5,1.5,2,1.5).move(position())).forEach((living)->{
+        level.getEntitiesOfClass(LivingEntity.class,new AABB(-1.5,-1.0,-1.5,1.5,2,1.5).move(position()),(ent)->{
+            return !(ent instanceof CrystalBossBuddy);
+        }).forEach((living)->{
             living.setDeltaMovement(living.position().subtract(this.position()).normalize().add(0,1,0).multiply(1.5,1.5,1.5));
         });
         if (this.level.isClientSide){
-
             createExplosionParticles();
         }
+        if (!this.level.isClientSide){
+            level.getEntitiesOfClass(LivingEntity.class,new AABB(-1.5,-1.0,-1.5,1.5,2,1.5).move(position()),(ent)->{
+                return !(ent instanceof CrystalBossBuddy);
+            }).forEach((living)->{
+                living.hurt(DamageSource.MAGIC,5);
+            });
+        }
+
     }
 
     private void createExplosionParticles(){
@@ -79,20 +98,53 @@ public class MineEntityCrystalBoss extends Entity {
     @Override
     protected void defineSynchedData() {
         this.entityData.define(TICKER,0);
+        super.defineSynchedData();
     }
 
-    @Override
-    protected void readAdditionalSaveData(CompoundTag tag) {
 
-    }
-
-    @Override
-    protected void addAdditionalSaveData(CompoundTag tag) {
-
-    }
 
     @Override
     public Packet<?> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
+    }
+    @Override
+    protected void doPush(Entity pEntity) {
+    }
+
+    @Override
+    public boolean isPushable() {
+        return false;
+    }
+
+    @Override
+    public boolean canBeCollidedWith() {
+        return false;
+    }
+
+    @Override
+    public boolean canBeAffected(MobEffectInstance p_21197_) {
+        return false;
+    }
+
+
+
+    @Override
+    public boolean canChangeDimensions() {
+        return false;
+    }
+
+    @Override
+    public boolean canCollideWith(Entity p_20303_) {
+        return false;
+    }
+
+    @Override
+    public boolean ignoreExplosion() {
+        return true;
+    }
+
+    @Override
+    public void knockback(double p_147241_, double p_147242_, double p_147243_) {
+
     }
 }

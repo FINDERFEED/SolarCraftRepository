@@ -116,6 +116,9 @@ public class FinderfeedMathHelper {
         return (pos1.getX() == pos2.getX()) && (pos1.getY() == pos2.getY()) && (pos1.getZ() == pos2.getZ());
     }
 
+    public static boolean isInCircle(double x,double y,double radius){
+        return x*x + y*y <= radius*radius;
+    }
 
 
     public static class TileEntityThings{
@@ -127,6 +130,9 @@ public class FinderfeedMathHelper {
             return new Vec3(entity.getX() + 0.5,entity.getY() + 0.5,entity.getZ() + 0.5);
         }
     }
+
+
+
 
     public static class PlayerThings{
         public static boolean doPlayerHasItem(Inventory inv, ItemStack item){
