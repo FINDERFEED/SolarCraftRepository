@@ -40,6 +40,11 @@ public class BossAttackChain {
                 currentWaitTime--;
             }else{
                 if (wasLastActionAnAttack){
+                    if (currentAttack != null) {
+                        if (currentAttack.hasPostEffect()) {
+                            currentAttack.runPostEffect();
+                        }
+                    }
                     wasLastActionAnAttack = false;
                     currentWaitTime = timeBetweenAttacks;
                     currentAttack = null;
@@ -104,6 +109,12 @@ public class BossAttackChain {
             attacks.add(attackToAdd);
             return this;
         }
+
+        public Builder addPostEffectToAttack(String id,Runnable postEffect){
+            this.ID_ATTACKS_MAP.get(id).addPostEffect(postEffect);
+            return this;
+        }
+
         public BossAttackChain build(){
             return new BossAttackChain(this);
         }
@@ -116,11 +127,25 @@ public class BossAttackChain {
         private final int time;
         private final int tick;
         private final String id;
+        private Runnable postEffect = null;
+
         private BossAttack(Runnable attack,int time,int everyTick,String name){
             this.id = name;
             this.tick = everyTick;
             this.attack =attack;
             this.time = time;
+        }
+
+        private void runPostEffect(){
+            postEffect.run();
+        }
+
+        private void addPostEffect(Runnable postEffect) {
+            this.postEffect = postEffect;
+        }
+
+        private boolean hasPostEffect(){
+            return postEffect != null;
         }
 
         public int getRepeatInterval(){

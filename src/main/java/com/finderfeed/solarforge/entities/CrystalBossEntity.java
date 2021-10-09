@@ -8,7 +8,9 @@ import com.finderfeed.solarforge.for_future_library.helpers.FinderfeedMathHelper
 import com.finderfeed.solarforge.magic_items.items.projectiles.CrystalBossAttackHoldingMissile;
 import com.finderfeed.solarforge.magic_items.items.projectiles.FallingStarCrystalBoss;
 import com.finderfeed.solarforge.misc_things.CrystalBossBuddy;
+import com.finderfeed.solarforge.misc_things.ParticlesList;
 import com.finderfeed.solarforge.registries.entities.Entities;
+import net.minecraft.client.particle.Particle;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -30,6 +32,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -42,17 +45,26 @@ import java.util.List;
 
 public class CrystalBossEntity extends Mob implements CrystalBossBuddy {
     private static EntityDataAccessor<Boolean> ATTACK_IMMUNE = SynchedEntityData.defineId(CrystalBossEntity.class, EntityDataSerializers.BOOLEAN);
+    public static EntityDataAccessor<Float> RAY_STATE_FLOAT_OR_ANGLE = SynchedEntityData.defineId(CrystalBossEntity.class,EntityDataSerializers.FLOAT);
+
+
+    public static final int RAY_STOPPED = -3;
+    public static final int RAY_NOT_ACTIVE = -1;
+    public static final int RAY_PREPARING = -2;
 
     private ServerBossEvent CRYSTAL_BOSS_EVENT = new ServerBossEvent(this.getDisplayName(), BossEvent.BossBarColor.RED, BossEvent.BossBarOverlay.NOTCHED_20);
     private final BossAttackChain ATTACK_CHAIN = new BossAttackChain.Builder()
             .addAttack("missiles",this::holdingMissilesAttack,40,10)
             .addAttack("mines",this::spawnMines,200,40)
             .addAttack("air_strike",this::airStrike,160,10)
-            .addAttack("shielding_crystals",this::spawnShieldingCrystals,80,null)
-            .setTimeBetweenAttacks(80)
+            .addAttack("shielding_crystals",this::spawnShieldingCrystals,40,null)
+            .addAttack("ray_attack",this::rayAttack,800,1)
+            .addPostEffectToAttack("ray_attack",this::rayAttackPost)
+            .setTimeBetweenAttacks(40)
             .build();
     private int ticker = 0;
     public List<ShieldingCrystalCrystalBoss> entitiesAroundClient = null;
+    private int rayPreparingTicks = -1;
 
     public CrystalBossEntity(EntityType<? extends Mob> p_21368_, Level p_21369_) {
         super(p_21368_, p_21369_);
@@ -74,7 +86,7 @@ public class CrystalBossEntity extends Mob implements CrystalBossBuddy {
                     new AABB(-16,-16,-16,16,16,16).move(position()),(cr)->{
                         return (cr.distanceTo(this) <= 16 ) ;
                     });
-
+            rayAttackParticles();
         }
 
     }
@@ -87,47 +99,97 @@ public class CrystalBossEntity extends Mob implements CrystalBossBuddy {
     }
 
 
-
-    @Override
-    protected void doPush(Entity entity) {
-        entity.setDeltaMovement(entity.position().add(0,entity.getBbHeight()/2,0).subtract(this.position().add(0,this.getBbHeight()/2,0)).normalize());
+    public void rayAttackPost(){
+        this.entityData.set(RAY_STATE_FLOAT_OR_ANGLE,(float)RAY_NOT_ACTIVE);
     }
 
-    @Override
-    public boolean isPushable() {
-        return false;
+    public void rayAttack(){
+        float state = this.entityData.get(RAY_STATE_FLOAT_OR_ANGLE);
+        int rounded = Math.round(state);
+        if (rounded != RAY_STOPPED) {
+            if (rounded == RAY_NOT_ACTIVE) {
+                this.rayPreparingTicks = 60;
+                this.entityData.set(RAY_STATE_FLOAT_OR_ANGLE, (float) RAY_PREPARING);
+            } else if (rounded == RAY_PREPARING) {
+                if (this.rayPreparingTicks-- <= 0) {
+                    this.entityData.set(RAY_STATE_FLOAT_OR_ANGLE, 0f);
+                }
+            } else {
+                Vec3 firstPos = this.position().add(0, 0.5, 0);
+                Vec3 secondPos = firstPos.add(new Vec3(10, 0, 0).yRot((float) Math.toRadians(state)));
+                EntityHitResult res = Helpers.getHitResult(level, firstPos, secondPos, (entity -> {
+                    return Helpers.isVulnerable(entity) && !(entity instanceof CrystalBossBuddy);
+                }));
+                if (res != null) {
+                    Entity ent = res.getEntity();
+                    ent.hurt(DamageSource.MAGIC, 7);
+                }
+
+                secondPos = firstPos.add(new Vec3(10, 0, 0).yRot((float) Math.toRadians(state+180)));
+                res = Helpers.getHitResult(level, firstPos, secondPos,  (entity -> {
+                    return Helpers.isVulnerable(entity) && !(entity instanceof CrystalBossBuddy);
+                }));
+                if (res != null) {
+                    Entity ent = res.getEntity();
+                    ent.hurt(DamageSource.MAGIC, 7);
+                }
+                if (state <= 2160) {
+                    this.entityData.set(RAY_STATE_FLOAT_OR_ANGLE, state + 3.6f);
+                } else {
+                    this.entityData.set(RAY_STATE_FLOAT_OR_ANGLE, (float) RAY_STOPPED);
+                }
+            }
+        }
     }
 
-    @Override
-    public boolean canBeCollidedWith() {
-        return false;
+    private void rayAttackParticles(){
+        float state = this.entityData.get(RAY_STATE_FLOAT_OR_ANGLE);
+        int rounded = Math.round(state);
+        if (rounded != RAY_STOPPED){
+            if (rounded != RAY_NOT_ACTIVE){
+                if (rounded == RAY_PREPARING){
+                    for (int i = -10;i < 11;i++){
+                        double rndx = level.random.nextDouble()-0.5;
+                        double rndy = level.random.nextDouble()-0.5;
+                        double rndz = level.random.nextDouble()-0.5;
+                        level.addParticle(ParticlesList.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+                                this.position().x+i+rndx,
+                                this.position().y+1.8+rndy,
+                                this.position().z+rndz,
+                                rndx*0.1,rndy*0.1,rndz*0.1);
+                    }
+
+                }else{
+                    Vec3 vec = new Vec3(10,0,0).yRot((float)Math.toRadians(state));
+                    Vec3 vec2 = new Vec3(10,0,0).yRot((float)Math.toRadians(state+180));
+                    for (int i = 0;i < 11;i++){
+                        double rndx = level.random.nextDouble()-0.5;
+                        double rndy = level.random.nextDouble()-0.5;
+                        double rndz = level.random.nextDouble()-0.5;
+                        level.addParticle(ParticlesList.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+                                this.position().x+(vec.x *((float)i/10)) +rndx,
+                                this.position().y+1.8+rndy,
+                                this.position().z+(vec.z *((float)i/10))+rndz,
+                                rndx*0.1,rndy*0.1,rndz*0.1);
+                    }
+                    for (int i = 0;i < 11;i++){
+                        double rndx = level.random.nextDouble()-0.5;
+                        double rndy = level.random.nextDouble()-0.5;
+                        double rndz = level.random.nextDouble()-0.5;
+                        level.addParticle(ParticlesList.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+                                this.position().x+(vec2.x *((float)i/10)) +rndx,
+                                this.position().y+1.8+rndy,
+                                this.position().z+(vec2.z *((float)i/10))+rndz,
+                                rndx*0.1,rndy*0.1,rndz*0.1);
+                    }
+                }
+            }
+        }
     }
 
-    @Override
-    public boolean canBeAffected(MobEffectInstance p_21197_) {
-        return false;
-    }
-
-
-
-    @Override
-    public boolean canChangeDimensions() {
-        return false;
-    }
-
-    @Override
-    public boolean canCollideWith(Entity p_20303_) {
-        return false;
-    }
-
-    @Override
-    public boolean ignoreExplosion() {
-        return true;
-    }
 
 
     public void airStrike(){
-
         for (int i = 0;i < 5;i++){
             double x = (level.random.nextDouble()*0.2+0.01)*FinderfeedMathHelper.randomPlusMinus();
             double z = (level.random.nextDouble()*0.2+0.01)*FinderfeedMathHelper.randomPlusMinus();
@@ -200,7 +262,10 @@ public class CrystalBossEntity extends Mob implements CrystalBossBuddy {
     @Override
     public boolean save(CompoundTag cmp) {
         ATTACK_CHAIN.save(cmp);
+        float state = this.entityData.get(RAY_STATE_FLOAT_OR_ANGLE);
+        cmp.putFloat("ray_state",state);
         cmp.putInt("ticker",ticker);
+        cmp.putInt("ray_preparing",rayPreparingTicks);
         return super.save(cmp);
     }
 
@@ -208,7 +273,20 @@ public class CrystalBossEntity extends Mob implements CrystalBossBuddy {
     public void load(CompoundTag cmp) {
         ATTACK_CHAIN.load(cmp);
         this.ticker = cmp.getInt("ticker");
+        this.rayPreparingTicks = cmp.getInt("ray_preparing");
+        float c = cmp.getFloat("ray_state");
+        if (((c < 1) && (c > -0.1) && (this.tickCount < 5))) {
+            this.entityData.set(RAY_STATE_FLOAT_OR_ANGLE, (float)RAY_NOT_ACTIVE);
+        }else{
+            this.entityData.set(RAY_STATE_FLOAT_OR_ANGLE,c);
+        }
         super.load(cmp);
+    }
+
+    @Override
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        this.entityData.define(RAY_STATE_FLOAT_OR_ANGLE,(float)RAY_NOT_ACTIVE);
     }
 
     @Override
@@ -267,6 +345,43 @@ public class CrystalBossEntity extends Mob implements CrystalBossBuddy {
     @Override
     protected SoundEvent getHurtSound(DamageSource p_21239_) {
         return SoundEvents.BLAZE_HURT;
+    }
+
+    @Override
+    protected void doPush(Entity entity) {
+        entity.setDeltaMovement(entity.position().add(0,entity.getBbHeight()/2,0).subtract(this.position().add(0,this.getBbHeight()/2,0)).normalize());
+    }
+
+    @Override
+    public boolean isPushable() {
+        return false;
+    }
+
+    @Override
+    public boolean canBeCollidedWith() {
+        return false;
+    }
+
+    @Override
+    public boolean canBeAffected(MobEffectInstance p_21197_) {
+        return false;
+    }
+
+
+
+    @Override
+    public boolean canChangeDimensions() {
+        return false;
+    }
+
+    @Override
+    public boolean canCollideWith(Entity p_20303_) {
+        return false;
+    }
+
+    @Override
+    public boolean ignoreExplosion() {
+        return true;
     }
 }
 

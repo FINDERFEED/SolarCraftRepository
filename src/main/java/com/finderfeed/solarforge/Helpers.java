@@ -22,11 +22,14 @@ import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.item.Item;
 import net.minecraft.core.Direction;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.level.ClipContext;
+import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.chunk.LevelChunk;
@@ -36,7 +39,7 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fmllegacy.network.NetworkDirection;
 
 import java.util.*;
-
+import java.util.function.Predicate;
 
 
 public class Helpers {
@@ -461,6 +464,13 @@ public class Helpers {
     private static boolean isNormal(Level world,BlockPos pos){
         return world.getBlockState(pos.above()).isAir() && !world.getBlockState(pos).isAir();
     }
+
+    public static EntityHitResult getHitResult(Level level, Vec3 startPos, Vec3 endPos, Predicate<Entity> pr){
+        double radius = endPos.subtract(startPos).length();
+        AABB bb = new AABB(-radius*1.5f,-radius*1.5f,-radius*1.5f,radius*1.5f,radius*1.5f,radius*1.5f).move(startPos);
+        return ProjectileUtil.getEntityHitResult(level,null,startPos,endPos,bb,pr,1);
+    }
+
 
 
 

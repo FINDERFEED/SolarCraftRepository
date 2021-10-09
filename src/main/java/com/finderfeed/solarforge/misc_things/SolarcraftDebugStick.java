@@ -23,10 +23,12 @@ public class SolarcraftDebugStick extends Item {
 
 
     @Override
-    public void inventoryTick(ItemStack p_41404_, Level p_41405_, Entity player, int p_41407_, boolean p_41408_) {
-        super.inventoryTick(p_41404_, p_41405_, player, p_41407_, p_41408_);
-
-
+    public void inventoryTick(ItemStack item, Level world, Entity player, int slot, boolean held) {
+        super.inventoryTick(item, world, player, slot, held);
+//        System.out.println(ProjectileUtil.getEntityHitResult(world,null,player.position(),player.position().add(player.getLookAngle().multiply(10,10,10)),
+//                new AABB(player.position().add(-10,-10,-10),player.position().add(10,10,10)),(d)->{
+//                    return true;
+//                },1));
     }
 
     @Override

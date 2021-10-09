@@ -17,6 +17,7 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.texture.TextureAtlas;
+import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
@@ -42,7 +43,7 @@ public class CrystalBossRenderer extends EntityRenderer<CrystalBossEntity> {
         matrices.popPose();
         VertexConsumer vertex = buffer.getBuffer(BEAM);
 
-
+        matrices.pushPose();
         if (boss.entitiesAroundClient != null) {
 
             for (ShieldingCrystalCrystalBoss crystal : boss.entitiesAroundClient) {
@@ -53,7 +54,28 @@ public class CrystalBossRenderer extends EntityRenderer<CrystalBossEntity> {
 
             }
         }
+        matrices.popPose();
 
+        float state = boss.getEntityData().get(CrystalBossEntity.RAY_STATE_FLOAT_OR_ANGLE);
+        int rounded = Math.round(state);
+
+        if ((rounded != CrystalBossEntity.RAY_NOT_ACTIVE) && ( rounded != CrystalBossEntity.RAY_STOPPED)) {
+            matrices.pushPose();
+            if (rounded != CrystalBossEntity.RAY_PREPARING){
+                matrices.mulPose(Vector3f.YP.rotationDegrees(state));
+            }
+
+            RenderingTools.renderRay(matrices,buffer,0.25f,11, (matrix)->{
+                matrices.translate(-0.5,1,-0.5);
+                matrices.mulPose(Vector3f.ZN.rotationDegrees(90));
+            },true,0.5f,pticks);
+            RenderingTools.renderRay(matrices,buffer,0.25f,11, (matrix)->{
+                matrices.translate(-0.5,1,-0.5);
+                matrices.mulPose(Vector3f.YP.rotationDegrees(180));
+                matrices.mulPose(Vector3f.ZN.rotationDegrees(90));
+            },true,0.5f,pticks);
+            matrices.popPose();
+        }
         super.render(boss, idk, pticks, matrices, buffer, light);
     }
 
