@@ -1,8 +1,7 @@
 package com.finderfeed.solarforge.registries.shader_registry;
 
 
-import com.finderfeed.solarforge.magic_items.blocks.render.RadiantPortalTileRender;
-import com.finderfeed.solarforge.rendering.rendertypes.RadiantPortalRendertype;
+import com.finderfeed.solarforge.client.rendering.rendertypes.RadiantPortalRendertype;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import net.minecraft.client.renderer.ShaderInstance;
 import net.minecraft.resources.ResourceLocation;

@@ -1,7 +1,7 @@
 package com.finderfeed.solarforge.entities.renderers;
 
 import com.finderfeed.solarforge.entities.ShieldingCrystalCrystalBoss;
-import com.finderfeed.solarforge.events.other_events.ModelRegistryEvents;
+import com.finderfeed.solarforge.events.other_events.OBJModels;
 import com.finderfeed.solarforge.for_future_library.helpers.RenderingTools;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Quaternion;
@@ -30,7 +30,7 @@ public class ShieldingCrystalRenderer extends EntityRenderer<ShieldingCrystalCry
     public void render(ShieldingCrystalCrystalBoss crystal, float p_114486_, float partialTicks, PoseStack matrices, MultiBufferSource buffer, int light) {
         if (!crystal.isDeploying()) {
             float time = (partialTicks + crystal.level.getGameTime()) % 360;
-            RenderingTools.renderObjModel(ModelRegistryEvents.SHIELDING_CRYSTAL, matrices, buffer, light, OverlayTexture.NO_OVERLAY, (matrix) -> {
+            RenderingTools.renderObjModel(OBJModels.SHIELDING_CRYSTAL, matrices, buffer, light, OverlayTexture.NO_OVERLAY, (matrix) -> {
                 matrix.mulPose(Vector3f.YP.rotationDegrees(-time));
                 matrix.translate(0, 1, 0);
                 matrix.scale(0.5f, 0.5f, 0.5f);
@@ -44,7 +44,7 @@ public class ShieldingCrystalRenderer extends EntityRenderer<ShieldingCrystalCry
                 matrices.mulPose(Vector3f.XP.rotationDegrees(60));
                 matrices.scale(0.35f, 0.35f, 0.35f);
 
-                RenderingTools.renderObjModel(ModelRegistryEvents.SHIELDING_CRYSTAL_SHIELD, matrices, buffer, light, OverlayTexture.NO_OVERLAY, (matrix) -> {
+                RenderingTools.renderObjModel(OBJModels.SHIELDING_CRYSTAL_SHIELD, matrices, buffer, light, OverlayTexture.NO_OVERLAY, (matrix) -> {
                 });
                 matrices.popPose();
             }

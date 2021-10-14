@@ -2,14 +2,11 @@ package com.finderfeed.solarforge.magic_items.blocks.render;
 
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.RadiantPortalTile;
-import com.finderfeed.solarforge.rendering.rendertypes.RadiantPortalRendertype;
-import com.mojang.blaze3d.systems.RenderSystem;
+import com.finderfeed.solarforge.client.rendering.rendertypes.RadiantPortalRendertype;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Matrix4f;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;

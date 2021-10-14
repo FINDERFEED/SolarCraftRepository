@@ -1,11 +1,11 @@
 package com.finderfeed.solarforge.magic_items.blocks.render;
 
-import com.finderfeed.solarforge.events.other_events.ModelRegistryEvents;
+import com.finderfeed.solarforge.events.other_events.OBJModels;
 import com.finderfeed.solarforge.for_future_library.helpers.FinderfeedMathHelper;
 import com.finderfeed.solarforge.for_future_library.helpers.RenderingTools;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.WormholeTileEntity;
-import com.finderfeed.solarforge.rendering.shaders.post_chains.PostChainPlusUltra;
-import com.finderfeed.solarforge.rendering.shaders.post_chains.UniformPlusPlus;
+import com.finderfeed.solarforge.client.rendering.shaders.post_chains.PostChainPlusUltra;
+import com.finderfeed.solarforge.client.rendering.shaders.post_chains.UniformPlusPlus;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Matrix4f;
@@ -33,7 +33,7 @@ public class WormholeRenderer implements BlockEntityRenderer<WormholeTileEntity>
     @Override
     public void render(WormholeTileEntity tile, float partialTicks, PoseStack matrices, MultiBufferSource buffer, int light, int light2) {
         matrices.pushPose();
-        RenderingTools.renderObjModel(ModelRegistryEvents.HOLE_MODEL,matrices,buffer,light, OverlayTexture.NO_OVERLAY,(matrix)->{
+        RenderingTools.renderObjModel(OBJModels.HOLE_MODEL,matrices,buffer,light, OverlayTexture.NO_OVERLAY,(matrix)->{
             matrix.translate(0.5f,0.5f,0.5f);
             matrix.scale(0.4f,0.4f,0.4f);
 

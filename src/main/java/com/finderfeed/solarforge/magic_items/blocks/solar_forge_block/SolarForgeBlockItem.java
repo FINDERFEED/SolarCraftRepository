@@ -1,8 +1,6 @@
 package com.finderfeed.solarforge.magic_items.blocks.solar_forge_block;
 
 import com.finderfeed.solarforge.Helpers;
-import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
-import com.finderfeed.solarforge.packet_handler.TriggerToastPacket;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Achievement;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.item.TooltipFlag;
@@ -18,8 +16,6 @@ import net.minecraft.world.level.Level;
 
 import javax.annotation.Nullable;
 import java.util.List;
-
-import net.minecraft.world.item.Item.Properties;
 
 public class SolarForgeBlockItem extends BlockItem {
     public SolarForgeBlockItem(Block p_i48527_1_, Properties p_i48527_2_) {

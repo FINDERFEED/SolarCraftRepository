@@ -20,7 +20,7 @@ import com.finderfeed.solarforge.magic_items.items.ProgressionBlockItem;
 import com.finderfeed.solarforge.misc_things.ParticlesList;
 import com.finderfeed.solarforge.registries.abilities.AbilitiesRegistry;
 import com.finderfeed.solarforge.registries.entities.Entities;
-import com.finderfeed.solarforge.rendering.on_screen_rendering.TestRenderEvent;
+import com.finderfeed.solarforge.client.rendering.on_screen_rendering.TestRenderEvent;
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
 import com.finderfeed.solarforge.recipe_types.InfusingRecipe;
 import com.finderfeed.solarforge.recipe_types.InfusingRecipeType;

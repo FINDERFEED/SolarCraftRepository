@@ -3,24 +3,18 @@ package com.finderfeed.solarforge.magic_items.blocks.solar_forge_block.solar_for
 import com.finderfeed.solarforge.ClientHelpers;
 import com.finderfeed.solarforge.SolarAbilities.Abilities;
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
-import com.finderfeed.solarforge.packet_handler.AbilityIndexSetPacket;
+import com.finderfeed.solarforge.packet_handler.packets.AbilityIndexSetPacket;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.systems.RenderSystem;
 
 
 import net.minecraft.client.Minecraft;
 
 
-import net.minecraft.client.gui.components.Widget;
 import net.minecraft.client.gui.screens.Screen;
 
-import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
-import org.lwjgl.opengl.GL11;
-
-import java.util.List;
 
 
 public class SolarForgeConfigScreenAdditional extends Screen {

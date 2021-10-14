@@ -8,11 +8,7 @@ import com.finderfeed.solarforge.misc_things.Multiblock;
 import com.finderfeed.solarforge.misc_things.ParticlesList;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
-import com.finderfeed.solarforge.packet_handler.TriggerToastPacket;
-import com.finderfeed.solarforge.packet_handler.packets.ReloadChunks;
-import com.finderfeed.solarforge.packet_handler.packets.TriggerProgressionShaderPacket;
-import com.finderfeed.solarforge.packet_handler.packets.UpdateEnergyOnClientPacket;
-import com.finderfeed.solarforge.registries.items.ItemsRegister;
+import com.finderfeed.solarforge.packet_handler.packets.*;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.achievement_tree.AchievementTree;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Achievement;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.packets.UpdateProgressionOnClient;
@@ -23,7 +19,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
-import net.minecraft.world.item.Item;
 import net.minecraft.core.Direction;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.AABB;
@@ -472,6 +467,10 @@ public class Helpers {
     }
 
 
+    public static void setServerPlayerSpeed(ServerPlayer player,Vec3 speed){
+        player.setDeltaMovement(speed);
+        SolarForgePacketHandler.INSTANCE.sendTo(new SetSpeedPacket(speed),player.connection.connection,NetworkDirection.PLAY_TO_CLIENT);
+    }
 
 
     public static class HashMapConstructor<T,E>{

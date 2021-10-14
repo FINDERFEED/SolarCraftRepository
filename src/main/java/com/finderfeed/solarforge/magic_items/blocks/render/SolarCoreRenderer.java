@@ -1,10 +1,10 @@
 package com.finderfeed.solarforge.magic_items.blocks.render;
 
 import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.events.other_events.OBJModels;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.SolarCoreBlockEntity;
 import com.finderfeed.solarforge.misc_things.AbstractSolarNetworkRepeater;
 import com.finderfeed.solarforge.misc_things.IEnergyUser;
-import com.finderfeed.solarforge.events.other_events.ModelRegistryEvents;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Minecraft;
@@ -15,7 +15,6 @@ import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
-import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.core.BlockPos;
 import com.mojang.math.Matrix4f;
@@ -109,7 +108,7 @@ public class SolarCoreRenderer implements BlockEntityRenderer<SolarCoreBlockEnti
             }
         }
         if (entity.getConditionToFunction()) {
-            List<BakedQuad> list = Minecraft.getInstance().getModelManager().getModel(ModelRegistryEvents.SOLAR_CORE_MODEL)
+            List<BakedQuad> list = Minecraft.getInstance().getModelManager().getModel(OBJModels.SOLAR_CORE_MODEL)
                     .getQuads(null, null, new Random(), new ModelDataMap.Builder().build());
             for (BakedQuad a : list) {
                 matrices.pushPose();

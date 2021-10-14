@@ -4,7 +4,7 @@ import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.RadiantPortalCreatorTile;
 import com.finderfeed.solarforge.magic_items.blocks.rendering_models.RadiantPortal;
 import com.finderfeed.solarforge.registries.ModelLayersRegistry;
-import com.finderfeed.solarforge.rendering.rendertypes.RadiantPortalRendertype;
+import com.finderfeed.solarforge.client.rendering.rendertypes.RadiantPortalRendertype;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Matrix4f;

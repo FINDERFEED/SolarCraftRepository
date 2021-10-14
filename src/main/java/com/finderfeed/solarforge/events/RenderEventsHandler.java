@@ -6,8 +6,8 @@ import com.finderfeed.solarforge.magic_items.blocks.render.EnergyGeneratorTileRe
 import com.finderfeed.solarforge.magic_items.blocks.render.RuneEnergyPylonRenderer;
 
 import com.finderfeed.solarforge.magic_items.blocks.render.WormholeRenderer;
-import com.finderfeed.solarforge.rendering.shaders.post_chains.PostChainPlusUltra;
-import com.finderfeed.solarforge.rendering.shaders.post_chains.UniformPlusPlus;
+import com.finderfeed.solarforge.client.rendering.shaders.post_chains.PostChainPlusUltra;
+import com.finderfeed.solarforge.client.rendering.shaders.post_chains.UniformPlusPlus;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;

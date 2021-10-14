@@ -13,6 +13,7 @@ import com.finderfeed.solarforge.registries.entities.Entities;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -37,17 +38,18 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import org.apache.logging.log4j.core.tools.picocli.CommandLine;
-import org.w3c.dom.Attr;
+
 
 import javax.annotation.Nullable;
 import java.util.List;
 
+
+
 public class CrystalBossEntity extends Mob implements CrystalBossBuddy {
-    private static EntityDataAccessor<Boolean> ATTACK_IMMUNE = SynchedEntityData.defineId(CrystalBossEntity.class, EntityDataSerializers.BOOLEAN);
+    private static EntityDataAccessor<Boolean> GET_OFF_ME = SynchedEntityData.defineId(CrystalBossEntity.class, EntityDataSerializers.BOOLEAN);
     public static EntityDataAccessor<Float> RAY_STATE_FLOAT_OR_ANGLE = SynchedEntityData.defineId(CrystalBossEntity.class,EntityDataSerializers.FLOAT);
 
-
+    public int clientGetOffMeTicker = 0;
     public static final int RAY_STOPPED = -3;
     public static final int RAY_NOT_ACTIVE = -1;
     public static final int RAY_PREPARING = -2;
@@ -58,8 +60,9 @@ public class CrystalBossEntity extends Mob implements CrystalBossBuddy {
             .addAttack("mines",this::spawnMines,200,40)
             .addAttack("air_strike",this::airStrike,160,10)
             .addAttack("shielding_crystals",this::spawnShieldingCrystals,40,null)
-            .addAttack("ray_attack",this::rayAttack,800,1)
+            .addAttack("ray_attack",this::rayAttack,650,1)
             .addPostEffectToAttack("ray_attack",this::rayAttackPost)
+            .addAftermathAttack(this::getOffMEEE)
             .setTimeBetweenAttacks(40)
             .build();
     private int ticker = 0;
@@ -76,6 +79,9 @@ public class CrystalBossEntity extends Mob implements CrystalBossBuddy {
     public void tick() {
         super.tick();
         if (!level.isClientSide){
+            if (this.entityData.get(GET_OFF_ME)){
+                this.entityData.set(GET_OFF_ME,false);
+            }
             ticker++;
             if (this.hasEnemiesNearby()) {
                 ATTACK_CHAIN.tick();
@@ -87,8 +93,36 @@ public class CrystalBossEntity extends Mob implements CrystalBossBuddy {
                         return (cr.distanceTo(this) <= 16 ) ;
                     });
             rayAttackParticles();
+            setGetOffMeClient();
         }
 
+    }
+
+    private void setGetOffMeClient(){
+        boolean flagData = this.entityData.get(GET_OFF_ME);
+        boolean flagTicker = clientGetOffMeTicker > 0;
+        if (flagData && !flagTicker){
+            this.clientGetOffMeTicker = 1;
+        }else if (!flagData && flagTicker){
+            this.clientGetOffMeTicker+=4;
+            if (clientGetOffMeTicker > 33){
+                this.clientGetOffMeTicker = 0;
+            }
+        }
+    }
+
+    public void getOffMEEE(){
+        level.getEntitiesOfClass(LivingEntity.class,
+                new AABB(-5,-5,-5,5,5,5).move(position().add(0,this.getBbHeight()/2,0)),
+                (ent)-> !(ent instanceof CrystalBossBuddy)).forEach((entity)->{
+                    Vec3 speed = entity.position().add(0,entity.getBbHeight()/2,0).subtract(this.position()).normalize().add(0,0.3,0);
+                    if (entity instanceof ServerPlayer player){
+                        Helpers.setServerPlayerSpeed(player,speed);
+                    }else{
+                        entity.setDeltaMovement(speed);
+                    }
+        });
+        this.entityData.set(GET_OFF_ME,true);
     }
 
     public boolean isBlockingDamage(){
@@ -131,10 +165,10 @@ public class CrystalBossEntity extends Mob implements CrystalBossBuddy {
                 }));
                 if (res != null) {
                     Entity ent = res.getEntity();
-                    ent.hurt(DamageSource.MAGIC, 7);
+                    ent.hurt(DamageSource.MAGIC, 10);
                 }
-                if (state <= 2160) {
-                    this.entityData.set(RAY_STATE_FLOAT_OR_ANGLE, state + 3.6f);
+                if (state <= 2160*1.5f) {
+                    this.entityData.set(RAY_STATE_FLOAT_OR_ANGLE, state + 3.6f*1.5f);
                 } else {
                     this.entityData.set(RAY_STATE_FLOAT_OR_ANGLE, (float) RAY_STOPPED);
                 }
@@ -149,12 +183,12 @@ public class CrystalBossEntity extends Mob implements CrystalBossBuddy {
             if (rounded != RAY_NOT_ACTIVE){
                 if (rounded == RAY_PREPARING){
                     for (int i = -10;i < 11;i++){
-                        double rndx = level.random.nextDouble()-0.5;
-                        double rndy = level.random.nextDouble()-0.5;
-                        double rndz = level.random.nextDouble()-0.5;
+                        double rndx = level.random.nextDouble()*0.5-0.25;
+                        double rndy = level.random.nextDouble()*0.5-0.25;
+                        double rndz = level.random.nextDouble()*0.5-0.25;
                         level.addParticle(ParticlesList.SMALL_SOLAR_STRIKE_PARTICLE.get(),
                                 this.position().x+i+rndx,
-                                this.position().y+1.8+rndy,
+                                this.position().y+1.6+rndy,
                                 this.position().z+rndz,
                                 rndx*0.1,rndy*0.1,rndz*0.1);
                     }
@@ -163,22 +197,22 @@ public class CrystalBossEntity extends Mob implements CrystalBossBuddy {
                     Vec3 vec = new Vec3(10,0,0).yRot((float)Math.toRadians(state));
                     Vec3 vec2 = new Vec3(10,0,0).yRot((float)Math.toRadians(state+180));
                     for (int i = 0;i < 11;i++){
-                        double rndx = level.random.nextDouble()-0.5;
-                        double rndy = level.random.nextDouble()-0.5;
-                        double rndz = level.random.nextDouble()-0.5;
+                        double rndx = level.random.nextDouble()*0.5-0.25;
+                        double rndy = level.random.nextDouble()*0.5-0.25;
+                        double rndz = level.random.nextDouble()*0.5-0.25;
                         level.addParticle(ParticlesList.SMALL_SOLAR_STRIKE_PARTICLE.get(),
                                 this.position().x+(vec.x *((float)i/10)) +rndx,
-                                this.position().y+1.8+rndy,
+                                this.position().y+1.6+rndy,
                                 this.position().z+(vec.z *((float)i/10))+rndz,
                                 rndx*0.1,rndy*0.1,rndz*0.1);
                     }
                     for (int i = 0;i < 11;i++){
-                        double rndx = level.random.nextDouble()-0.5;
-                        double rndy = level.random.nextDouble()-0.5;
-                        double rndz = level.random.nextDouble()-0.5;
+                        double rndx = level.random.nextDouble()*0.5-0.25;
+                        double rndy = level.random.nextDouble()*0.5-0.25;
+                        double rndz = level.random.nextDouble()*0.5-0.25;
                         level.addParticle(ParticlesList.SMALL_SOLAR_STRIKE_PARTICLE.get(),
                                 this.position().x+(vec2.x *((float)i/10)) +rndx,
-                                this.position().y+1.8+rndy,
+                                this.position().y+1.6+rndy,
                                 this.position().z+(vec2.z *((float)i/10))+rndz,
                                 rndx*0.1,rndy*0.1,rndz*0.1);
                     }
@@ -287,6 +321,7 @@ public class CrystalBossEntity extends Mob implements CrystalBossBuddy {
     protected void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(RAY_STATE_FLOAT_OR_ANGLE,(float)RAY_NOT_ACTIVE);
+        this.entityData.define(GET_OFF_ME,false);
     }
 
     @Override

@@ -1,7 +1,7 @@
 package com.finderfeed.solarforge.capabilities.capability_mana;
 
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
-import com.finderfeed.solarforge.packet_handler.ToggleAlchemistPacket;
+import com.finderfeed.solarforge.packet_handler.packets.ToggleAlchemistPacket;
 import com.finderfeed.solarforge.registries.items.ItemsRegister;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;

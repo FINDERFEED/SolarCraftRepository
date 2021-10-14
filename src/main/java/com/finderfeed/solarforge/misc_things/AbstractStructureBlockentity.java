@@ -1,8 +1,6 @@
 package com.finderfeed.solarforge.misc_things;
 
 import com.finderfeed.solarforge.Helpers;
-import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
-import com.finderfeed.solarforge.packet_handler.TriggerToastPacket;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Achievement;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;

@@ -24,7 +24,7 @@ import com.finderfeed.solarforge.registries.entities.Entities;
 import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
 import com.finderfeed.solarforge.magic_items.blocks.solar_forge_block.SolarForgeBlockEntityRenderer;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.SolarLexiconContScreen;
-import com.finderfeed.solarforge.rendering.RadiantTextureAtlasSpriteLoader;
+import com.finderfeed.solarforge.client.rendering.RadiantTextureAtlasSpriteLoader;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.RenderType;

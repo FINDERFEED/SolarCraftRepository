@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables;
 
-import com.finderfeed.solarforge.events.other_events.ModelRegistryEvents;
+import com.finderfeed.solarforge.events.other_events.OBJModels;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.geom.EntityModelSet;
@@ -88,6 +88,6 @@ public class AncientFragmentISTER extends BlockEntityWithoutLevelRenderer {
 
     public static void renderItem(PoseStack matrices, ItemStack stack, ItemTransforms.TransformType type,MultiBufferSource buffer,int light, int overlay){
         Minecraft.getInstance().getItemRenderer().render(stack,type,false,matrices,buffer,light,overlay,
-                Minecraft.getInstance().getModelManager().getModel(ModelRegistryEvents.ANCIENT_FRAGMENT_MODEL));
+                Minecraft.getInstance().getModelManager().getModel(OBJModels.ANCIENT_FRAGMENT_MODEL));
     }
 }

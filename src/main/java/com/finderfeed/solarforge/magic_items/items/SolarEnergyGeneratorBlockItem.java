@@ -2,8 +2,6 @@ package com.finderfeed.solarforge.magic_items.items;
 
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.SolarForge;
-import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
-import com.finderfeed.solarforge.packet_handler.TriggerToastPacket;
 import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Achievement;
 import net.minecraft.world.entity.Entity;

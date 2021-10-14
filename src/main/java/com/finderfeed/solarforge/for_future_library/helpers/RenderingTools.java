@@ -1,13 +1,12 @@
 package com.finderfeed.solarforge.for_future_library.helpers;
 
-import ca.weblite.objc.Message;
 import com.finderfeed.solarforge.ClientHelpers;
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.events.RenderEventsHandler;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
-import com.finderfeed.solarforge.rendering.rendertypes.RadiantPortalRendertype;
-import com.finderfeed.solarforge.rendering.shaders.post_chains.PostChainPlusUltra;
-import com.finderfeed.solarforge.rendering.shaders.post_chains.UniformPlusPlus;
+import com.finderfeed.solarforge.client.rendering.rendertypes.RadiantPortalRendertype;
+import com.finderfeed.solarforge.client.rendering.shaders.post_chains.PostChainPlusUltra;
+import com.finderfeed.solarforge.client.rendering.shaders.post_chains.UniformPlusPlus;
 import com.mojang.blaze3d.pipeline.RenderTarget;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.platform.Lighting;
@@ -15,7 +14,6 @@ import com.mojang.blaze3d.vertex.*;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.platform.Window;
-import com.mojang.math.Quaternion;
 import com.mojang.math.Vector3d;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiComponent;
@@ -44,12 +42,10 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.model.data.ModelDataMap;
 import org.apache.logging.log4j.Level;
-import org.lwjgl.system.CallbackI;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 
 
@@ -500,8 +496,16 @@ public class RenderingTools {
         vertex.vertex(mat,(float)x,(float)y,(float)z).color(255, 255, 255, 255).uv(u, v).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
     }
 
+    public static void basicVertexNoOverlay(Matrix4f mat,VertexConsumer vertex,double x,double y,double z,float u, float v){
+        vertex.vertex(mat,(float)x,(float)y,(float)z).uv(u, v).color(255, 255, 255, 255).uv2(15728880).endVertex();
+    }
+
     public static void coloredBasicVertex(Matrix4f mat,VertexConsumer vertex,double x,double y,double z,float u, float v,int red,int green,int blue,int alpha){
         vertex.vertex(mat,(float)x,(float)y,(float)z).color(red, green, blue, alpha).uv(u, v).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
+    }
+
+    public static void coloredBasicVertexNoOverlay(Matrix4f mat,VertexConsumer vertex,double x,double y,double z,float u, float v,int red,int green,int blue,int alpha){
+        vertex.vertex(mat,(float)x,(float)y,(float)z).uv(u, v).color(red, green, blue, alpha).uv2(15728880).endVertex();
     }
 
     public static List<String> splitString(String main,int maxlen){

@@ -16,7 +16,7 @@ public class BossAttackChain {
     private boolean attackingInProgress = true;
     private int currentWaitTime = 0;
     private boolean wasLastActionAnAttack = false;
-
+    private final Runnable betweenAttacks;
 
     private BossAttackChain(Builder builder){
         this.attacks = builder.attacks;
@@ -27,6 +27,7 @@ public class BossAttackChain {
         }
         this.maxTimeLength = (attacks.size()-1)*timeBetweenAttacks + attacksTime;
         this.BOSS_ATTACK_SERIALIZE_MAP = builder.ID_ATTACKS_MAP;
+        this.betweenAttacks = builder.betweenAttacks;
     }
 
     public void tick(){
@@ -44,6 +45,9 @@ public class BossAttackChain {
                         if (currentAttack.hasPostEffect()) {
                             currentAttack.runPostEffect();
                         }
+                    }
+                    if (betweenAttacks != null){
+                        betweenAttacks.run();
                     }
                     wasLastActionAnAttack = false;
                     currentWaitTime = timeBetweenAttacks;
@@ -90,6 +94,7 @@ public class BossAttackChain {
         private int timeBetweenAttacks;
         private List<BossAttack> attacks = new ArrayList<>();
         private Map<String,BossAttack> ID_ATTACKS_MAP = new HashMap<>();
+        private Runnable betweenAttacks = null;
 
         public Builder(){}
 
@@ -112,6 +117,11 @@ public class BossAttackChain {
 
         public Builder addPostEffectToAttack(String id,Runnable postEffect){
             this.ID_ATTACKS_MAP.get(id).addPostEffect(postEffect);
+            return this;
+        }
+
+        public Builder addAftermathAttack(Runnable run){
+            this.betweenAttacks = run;
             return this;
         }
 

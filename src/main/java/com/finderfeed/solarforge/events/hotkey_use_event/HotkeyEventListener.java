@@ -2,9 +2,9 @@ package com.finderfeed.solarforge.events.hotkey_use_event;
 
 
 import com.finderfeed.solarforge.SolarForgeClientRegistry;
-import com.finderfeed.solarforge.packet_handler.ResetAllAbilitiesPacket;
+import com.finderfeed.solarforge.packet_handler.packets.ResetAllAbilitiesPacket;
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
-import com.finderfeed.solarforge.packet_handler.CastAbilityPacket;
+import com.finderfeed.solarforge.packet_handler.packets.CastAbilityPacket;
 import com.finderfeed.solarforge.magic_items.blocks.solar_forge_block.solar_forge_screen.SolarForgeAbilityConfigScreen;
 import com.finderfeed.solarforge.packet_handler.packets.RequestAbilityScreen;
 import net.minecraft.client.Minecraft;

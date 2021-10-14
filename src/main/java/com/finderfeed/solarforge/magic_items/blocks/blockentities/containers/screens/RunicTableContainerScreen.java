@@ -4,7 +4,7 @@ import com.finderfeed.solarforge.ClientHelpers;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.containers.RunicTableContainer;
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
 import com.finderfeed.solarforge.packet_handler.packets.RunicTablePacket;
-import com.finderfeed.solarforge.rendering.item_renderers.TransparentItemrenderer;
+import com.finderfeed.solarforge.client.rendering.item_renderers.TransparentItemrenderer;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.ProgressionHelper;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -21,10 +21,6 @@ import net.minecraft.network.chat.TranslatableComponent;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import net.minecraft.client.gui.components.Button.OnPress;
-import net.minecraft.client.gui.components.Button.OnTooltip;
-import org.lwjgl.opengl.GL11;
 
 public class RunicTableContainerScreen extends AbstractContainerScreen<RunicTableContainer> {
     public final ResourceLocation MAIN_SCREEN = new ResourceLocation("solarforge","textures/gui/runic_table_gui.png");

@@ -2,10 +2,9 @@ package com.finderfeed.solarforge.entities.renderers;
 
 import com.finderfeed.solarforge.entities.CrystalBossEntity;
 import com.finderfeed.solarforge.entities.ShieldingCrystalCrystalBoss;
-import com.finderfeed.solarforge.events.other_events.ModelRegistryEvents;
+import com.finderfeed.solarforge.events.other_events.OBJModels;
 import com.finderfeed.solarforge.for_future_library.helpers.FinderfeedMathHelper;
 import com.finderfeed.solarforge.for_future_library.helpers.RenderingTools;
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Matrix4f;
@@ -14,12 +13,9 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.texture.TextureAtlas;
-import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
 public class CrystalBossRenderer extends EntityRenderer<CrystalBossEntity> {
@@ -36,7 +32,7 @@ public class CrystalBossRenderer extends EntityRenderer<CrystalBossEntity> {
     public void render(CrystalBossEntity boss, float idk, float pticks, PoseStack matrices, MultiBufferSource buffer, int light) {
         matrices.pushPose();
         float time = (boss.level.getGameTime() + pticks) % 360;
-        RenderingTools.renderObjModel(ModelRegistryEvents.CRYSTAL_BOSS,matrices,buffer,light, OverlayTexture.NO_OVERLAY,(pose)->{
+        RenderingTools.renderObjModel(OBJModels.CRYSTAL_BOSS,matrices,buffer,light, OverlayTexture.NO_OVERLAY,(pose)->{
             pose.translate(0,3.5f,0);
             pose.mulPose(Vector3f.YN.rotationDegrees(time));
         });
@@ -76,6 +72,14 @@ public class CrystalBossRenderer extends EntityRenderer<CrystalBossEntity> {
             },true,0.5f,pticks);
             matrices.popPose();
         }
+        matrices.pushPose();
+        if (boss.clientGetOffMeTicker > 0){
+            float scaleFactor = ((float)boss.clientGetOffMeTicker/32) *3+1;
+            matrices.translate(0,boss.getBbHeight()/2,0);
+            matrices.scale(scaleFactor,scaleFactor*1.25f,scaleFactor);
+            RenderingTools.renderObjModel(OBJModels.GET_OFF_MEEE,matrices,buffer,light,OverlayTexture.NO_OVERLAY,(t)->{});
+        }
+        matrices.popPose();
         super.render(boss, idk, pticks, matrices, buffer, light);
     }
 
