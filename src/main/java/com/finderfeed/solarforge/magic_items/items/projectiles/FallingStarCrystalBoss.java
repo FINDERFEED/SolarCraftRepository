@@ -79,9 +79,9 @@ public class FallingStarCrystalBoss extends AbstractHurtingProjectile implements
 
     private void explode(){
         if (this.level.isClientSide){
-            Helpers.createSmallSolarStrikeParticleExplosion(level,this.position().add(this.getDeltaMovement().multiply(0.7,0.7,0.7)),2,0.1f,0.5f);
+            Helpers.createSmallSolarStrikeParticleExplosionWithLines(level,this.position().add(this.getDeltaMovement().multiply(0.7,0.7,0.7)),2,0.1f,0.5f);
         }else{
-            this.level.getEntitiesOfClass(LivingEntity.class,new AABB(this.position().add(-1.8,-1.8,-1.8),this.position().add(1.8,1.8,1.8)),(living)->{
+            this.level.getEntitiesOfClass(LivingEntity.class,new AABB(this.position().add(-1.25,-1.25,-1.25),this.position().add(1.25,1.25,1.25)),(living)->{
                 return !(living instanceof CrystalBossBuddy);
             }).forEach((entity)->{
                 if (Helpers.isVulnerable(entity)){

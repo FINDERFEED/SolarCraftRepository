@@ -417,6 +417,20 @@ public class Helpers {
         }
     }
 
+    public static void createSmallSolarStrikeParticleExplosionWithLines(Level world,Vec3 position,int intensity,float speedFactor,float spawnDistanceFactor){
+        for (int x = -intensity; x < intensity+1;x++){
+            for (int y = -intensity; y < intensity+1;y++){
+                for (int z = -intensity; z < intensity+1;z++){
+                    Vec3 offset = new Vec3(x,y,z).normalize().multiply(spawnDistanceFactor,spawnDistanceFactor,spawnDistanceFactor);
+                    Vec3 finalpos = position.add(offset);
+                    world.addParticle(ParticlesList.SMALL_SOLAR_STRIKE_PARTICLE.get(),finalpos.x,finalpos.y,finalpos.z,offset.x*speedFactor,offset.y*speedFactor,offset.z*speedFactor);
+                    world.addParticle(ParticlesList.SOLAR_EXPLOSION_PARTICLE.get(),finalpos.x,finalpos.y,finalpos.z,offset.x*(speedFactor+0.3),offset.y*(speedFactor+0.3),offset.z*(speedFactor+0.3));
+
+                }
+            }
+        }
+    }
+
     public static Vec3 randomVector(){
         Random rnd = new Random();
         return new Vec3(rnd.nextDouble()*2-1,rnd.nextDouble()*2-1,rnd.nextDouble()*2-1);
