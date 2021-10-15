@@ -10,6 +10,7 @@ import com.finderfeed.solarforge.magic_items.items.projectiles.FallingStarCrysta
 import com.finderfeed.solarforge.misc_things.CrystalBossBuddy;
 import com.finderfeed.solarforge.misc_things.ParticlesList;
 import com.finderfeed.solarforge.registries.entities.Entities;
+import com.finderfeed.solarforge.registries.sounds.Sounds;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -27,8 +28,7 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.*;
 
-import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
-import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.attributes.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -42,7 +42,7 @@ import net.minecraftforge.fml.common.Mod;
 
 import javax.annotation.Nullable;
 import java.util.List;
-
+import java.util.UUID;
 
 
 public class CrystalBossEntity extends Mob implements CrystalBossBuddy {
@@ -71,6 +71,10 @@ public class CrystalBossEntity extends Mob implements CrystalBossBuddy {
 
     public CrystalBossEntity(EntityType<? extends Mob> p_21368_, Level p_21369_) {
         super(p_21368_, p_21369_);
+        AttributeInstance attribute = this.getAttribute(Attributes.MAX_HEALTH);
+        if (attribute != null){
+            attribute.addPermanentModifier(new AttributeModifier(UUID.fromString("24ee266e-f591-4c1a-92a6-e2e31b1c716c"),"max_health_mod",5, AttributeModifier.Operation.MULTIPLY_TOTAL));
+        }
     }
 
     
@@ -224,9 +228,9 @@ public class CrystalBossEntity extends Mob implements CrystalBossBuddy {
 
 
     public void airStrike(){
-        for (int i = 0;i < 5;i++){
-            double x = (level.random.nextDouble()*0.2+0.01)*FinderfeedMathHelper.randomPlusMinus();
-            double z = (level.random.nextDouble()*0.2+0.01)*FinderfeedMathHelper.randomPlusMinus();
+        for (int i = 0;i < 6;i++){
+            double x = (level.random.nextDouble()*0.25+0.01)*FinderfeedMathHelper.randomPlusMinus();
+            double z = (level.random.nextDouble()*0.25+0.01)*FinderfeedMathHelper.randomPlusMinus();
             FallingStarCrystalBoss star = new FallingStarCrystalBoss(level,x,1,z);
             star.setPos(this.position().add(0,this.getBbHeight()*0.7,0));
             level.addFreshEntity(star);
@@ -245,7 +249,7 @@ public class CrystalBossEntity extends Mob implements CrystalBossBuddy {
 
     public void spawnShieldingCrystals(){
         for (int i = 0; i < 3;i++){
-            if (this.level.getEntitiesOfClass(ShieldingCrystalCrystalBoss.class,new AABB(-10,-10,-10,10,10,10).move(position())).size() <= 10) {
+            if (this.level.getEntitiesOfClass(ShieldingCrystalCrystalBoss.class,new AABB(-10,-10,-10,10,10,10).move(position())).size() < 9) {
                 ShieldingCrystalCrystalBoss crystal = new ShieldingCrystalCrystalBoss(Entities.CRYSTAL_BOSS_SHIELDING_CRYSTAL.get(), level);
                 Vec3 positon = this.position().add((level.random.nextDouble() * 5 +3)* FinderfeedMathHelper.randomPlusMinus(), 0, (level.random.nextDouble() * 5 +3)* FinderfeedMathHelper.randomPlusMinus());
                 crystal.setPos(positon);
@@ -285,7 +289,7 @@ public class CrystalBossEntity extends Mob implements CrystalBossBuddy {
     }
 
     public static AttributeSupplier.Builder createAttributes(){
-        return PathfinderMob.createMobAttributes().add(Attributes.MAX_HEALTH,5000).add(Attributes.ARMOR,10);
+        return PathfinderMob.createMobAttributes().add(Attributes.MAX_HEALTH,10000).add(Attributes.ARMOR,20);
     }
 
     @Override
@@ -363,6 +367,8 @@ public class CrystalBossEntity extends Mob implements CrystalBossBuddy {
 
     @Override
     public boolean hurt(DamageSource p_21016_, float p_21017_) {
+        System.out.println("current: "+this.getHealth());
+        System.out.println("max: "+this.getMaxHealth());
         return super.hurt(p_21016_, p_21017_);
     }
 
@@ -379,7 +385,7 @@ public class CrystalBossEntity extends Mob implements CrystalBossBuddy {
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource p_21239_) {
-        return SoundEvents.BLAZE_HURT;
+        return Sounds.CRYSTAL_HIT.get();
     }
 
     @Override

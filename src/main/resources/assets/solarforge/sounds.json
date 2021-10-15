@@ -34,5 +34,11 @@
   },
   "zap_turret_shot": {
     "sounds": ["solarforge:zap_turret_shot"]
+  },
+  "crystal_hit": {
+    "sounds": ["solarforge:crystal_hit"]
+  },
+  "solar_explosion": {
+    "sounds": ["solarforge:solar_explosion"]
   }
 }

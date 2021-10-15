@@ -5,12 +5,14 @@ import com.finderfeed.solarforge.for_future_library.helpers.FinderfeedMathHelper
 import com.finderfeed.solarforge.magic_items.items.projectiles.CrystalBossAttackHoldingMissile;
 import com.finderfeed.solarforge.misc_things.CrystalBossBuddy;
 import com.finderfeed.solarforge.registries.entities.Entities;
+import com.finderfeed.solarforge.registries.sounds.Sounds;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -22,6 +24,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 public class ShieldingCrystalCrystalBoss extends Mob implements CrystalBossBuddy {
@@ -153,5 +156,11 @@ public class ShieldingCrystalCrystalBoss extends Mob implements CrystalBossBuddy
     public void load(CompoundTag tag) {
         this.ticker = tag.getInt("ticker");
         super.load(tag);
+    }
+
+    @Nullable
+    @Override
+    protected SoundEvent getHurtSound(DamageSource p_21239_) {
+        return Sounds.CRYSTAL_HIT.get();
     }
 }

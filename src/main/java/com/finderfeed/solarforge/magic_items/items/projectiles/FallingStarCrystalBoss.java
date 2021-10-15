@@ -4,8 +4,10 @@ import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.misc_things.CrystalBossBuddy;
 import com.finderfeed.solarforge.misc_things.ParticlesList;
 import com.finderfeed.solarforge.registries.entities.Entities;
+import com.finderfeed.solarforge.registries.sounds.Sounds;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -51,7 +53,7 @@ public class FallingStarCrystalBoss extends AbstractHurtingProjectile implements
             this.setDeltaMovement(this.getDeltaMovement().add(0,-this.getSpeedDecrementPerTick(),0));
         }
 
-        if (this.level.isClientSide && (this.tickCount % 2 == 0)){
+        if (this.level.isClientSide){
             this.level.addParticle(ParticlesList.SMALL_SOLAR_STRIKE_PARTICLE.get(),this.position().x,this.position().y,this.position().z,0,0,0);
         }
     }
@@ -79,9 +81,10 @@ public class FallingStarCrystalBoss extends AbstractHurtingProjectile implements
 
     private void explode(){
         if (this.level.isClientSide){
+            level.playSound(null,this.getX(),this.getY(),this.getZ(), Sounds.SOLAR_EXPLOSION.get(), SoundSource.AMBIENT,1,1f);
             Helpers.createSmallSolarStrikeParticleExplosionWithLines(level,this.position().add(this.getDeltaMovement().multiply(0.7,0.7,0.7)),2,0.1f,0.5f);
         }else{
-            this.level.getEntitiesOfClass(LivingEntity.class,new AABB(this.position().add(-1.25,-1.25,-1.25),this.position().add(1.25,1.25,1.25)),(living)->{
+            this.level.getEntitiesOfClass(LivingEntity.class,new AABB(this.position().add(-1.5,-1.5,-1.5),this.position().add(1.5,1.5,1.5)),(living)->{
                 return !(living instanceof CrystalBossBuddy);
             }).forEach((entity)->{
                 if (Helpers.isVulnerable(entity)){
@@ -106,7 +109,7 @@ public class FallingStarCrystalBoss extends AbstractHurtingProjectile implements
     }
 
     public double getSpeedDecrementPerTick(){
-        return 0.05;
+        return 0.04;
     }
 
     @Override
