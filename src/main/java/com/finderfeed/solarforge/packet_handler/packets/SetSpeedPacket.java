@@ -35,6 +35,7 @@ public class SetSpeedPacket extends AbstractPacket {
         ctx.get().enqueueWork(()->{
             ClientHelpers.getClientPlayer().setDeltaMovement(speed);
         });
+        ctx.get().setPacketHandled(true);
     }
 
 

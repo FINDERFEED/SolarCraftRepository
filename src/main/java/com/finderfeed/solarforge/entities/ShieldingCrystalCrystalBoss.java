@@ -163,4 +163,9 @@ public class ShieldingCrystalCrystalBoss extends Mob implements CrystalBossBuddy
     protected SoundEvent getHurtSound(DamageSource p_21239_) {
         return Sounds.CRYSTAL_HIT.get();
     }
+    @Nullable
+    @Override
+    protected SoundEvent getDeathSound() {
+        return Sounds.CRYSTAL_HIT.get();
+    }
 }

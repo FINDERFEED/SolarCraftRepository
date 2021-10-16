@@ -11,6 +11,7 @@ import com.mojang.math.Matrix4f;
 import com.mojang.math.Vector3f;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.culling.Frustum;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
@@ -119,5 +120,10 @@ public class CrystalBossRenderer extends EntityRenderer<CrystalBossEntity> {
     @Override
     public ResourceLocation getTextureLocation(CrystalBossEntity p_114482_) {
         return TextureAtlas.LOCATION_BLOCKS;
+    }
+
+    @Override
+    public boolean shouldRender(CrystalBossEntity p_114491_, Frustum p_114492_, double p_114493_, double p_114494_, double p_114495_) {
+        return true;
     }
 }

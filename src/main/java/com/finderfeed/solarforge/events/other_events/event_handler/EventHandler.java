@@ -42,6 +42,7 @@ import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.registries.ForgeRegistries;
 
 
 @Mod.EventBusSubscriber(modid = "solarforge",bus = Mod.EventBusSubscriber.Bus.FORGE)
@@ -69,6 +70,7 @@ public class EventHandler {
                 }
             }
         }
+
 
 
         if (!world.isClientSide && (world.getGameTime() % 20 == 1) ){
