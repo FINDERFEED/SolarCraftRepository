@@ -1,4 +1,4 @@
-package com.finderfeed.solarforge.magic_items.item_tiers;
+package com.finderfeed.solarforge.magic_items.items.item_tiers;
 
 import com.finderfeed.solarforge.SolarCraftTags;
 import com.finderfeed.solarforge.registries.items.ItemsRegister;

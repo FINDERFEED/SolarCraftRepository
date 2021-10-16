@@ -1,9 +1,7 @@
 package com.finderfeed.solarforge.magic_items.items.vein_miner;
 
 import com.finderfeed.solarforge.Helpers;
-import com.finderfeed.solarforge.SolarForge;
 
-import com.finderfeed.solarforge.magic_items.item_tiers.SolarCraftToolTiers;
 import com.finderfeed.solarforge.misc_things.ManaConsumer;
 
 import net.minecraft.world.level.block.Block;
@@ -25,7 +23,6 @@ import net.minecraft.world.level.Level;
 import javax.annotation.Nullable;
 import java.util.*;
 
-import net.minecraft.world.item.Item.Properties;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.PickaxeItem;
 import net.minecraft.world.item.Tier;

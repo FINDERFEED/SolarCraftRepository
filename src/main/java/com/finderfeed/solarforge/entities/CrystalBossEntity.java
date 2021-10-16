@@ -93,13 +93,7 @@ public class CrystalBossEntity extends NoHealthLimitMob implements CrystalBossBu
 
             if (this.hasEnemiesNearby()) {
                 ATTACK_CHAIN.tick();
-                if (level.getGameTime() % 10 == 0) {
-                    getEnemiesNearby().forEach((player) -> {
-                        if (player.hasEffect(EffectsRegister.STAR_GAZE_EFFECT.get())) {
-                            player.removeEffect(EffectsRegister.STAR_GAZE_EFFECT.get());
-                        }
-                    });
-                }
+
             }
         }
         if (level.isClientSide){

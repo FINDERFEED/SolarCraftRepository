@@ -1,8 +1,6 @@
 package com.finderfeed.solarforge.magic_items.items;
 
 import com.finderfeed.solarforge.Helpers;
-import com.finderfeed.solarforge.SolarForge;
-import com.finderfeed.solarforge.magic_items.item_tiers.SolarCraftToolTiers;
 import com.finderfeed.solarforge.misc_things.ManaConsumer;
 import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.item.TooltipFlag;
@@ -18,7 +16,6 @@ import java.util.List;
 
 import net.minecraft.world.item.BoneMealItem;
 import net.minecraft.world.item.HoeItem;
-import net.minecraft.world.item.Item.Properties;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Tier;

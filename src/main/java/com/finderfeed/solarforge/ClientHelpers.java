@@ -2,6 +2,7 @@ package com.finderfeed.solarforge;
 
 import com.finderfeed.solarforge.SolarAbilities.screens.AbilityBuyScreen;
 import com.finderfeed.solarforge.events.RenderEventsHandler;
+import com.finderfeed.solarforge.for_future_library.helpers.FinderfeedMathHelper;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.RayTrapTileEntity;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.RuneEnergyPylonTile;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.containers.screens.RunicTableContainerScreen;
@@ -16,6 +17,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Widget;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
@@ -228,5 +230,12 @@ public class ClientHelpers {
 
     public static void openAbilityScreen(){
         Minecraft.getInstance().setScreen(new AbilityBuyScreen());
+    }
+
+    public static void createEffectParticle(double x, double y, double z,double xs, double ys, double zs, MobEffect effect){
+        SmallSolarStrikeParticle particle = (SmallSolarStrikeParticle) Minecraft.getInstance().particleEngine.
+                createParticle(ParticlesList.SMALL_SOLAR_STRIKE_PARTICLE.get(),x,y,z,xs,ys,zs);
+        int[] rgba = FinderfeedMathHelper.intToRgba(effect.getColor());
+        particle.setColor(rgba[0],rgba[1],rgba[2]);
     }
 }

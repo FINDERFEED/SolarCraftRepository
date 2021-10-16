@@ -2,6 +2,7 @@ package com.finderfeed.solarforge;
 
 import com.finderfeed.solarforge.capabilities.capability_mana.CapabilitySolarMana;
 import com.finderfeed.solarforge.capabilities.capability_mana.SolarForgeMana;
+import com.finderfeed.solarforge.entities.CrystalBossEntity;
 import com.finderfeed.solarforge.events.my_events.ProgressionUnlockEvent;
 import com.finderfeed.solarforge.for_future_library.helpers.FinderfeedMathHelper;
 import com.finderfeed.solarforge.misc_things.Multiblock;
@@ -484,6 +485,10 @@ public class Helpers {
     public static void setServerPlayerSpeed(ServerPlayer player,Vec3 speed){
         player.setDeltaMovement(speed);
         SolarForgePacketHandler.INSTANCE.sendTo(new SetSpeedPacket(speed),player.connection.connection,NetworkDirection.PLAY_TO_CLIENT);
+    }
+
+    public static boolean playerInBossfight(Player pl){
+        return !pl.level.getEntitiesOfClass(CrystalBossEntity.class,new AABB(-20,-20,-20,20,20,20).move(pl.position())).isEmpty();
     }
 
 

@@ -1,7 +1,7 @@
 package com.finderfeed.solarforge.magic_items.items;
 
 import com.finderfeed.solarforge.SolarForge;
-import com.finderfeed.solarforge.magic_items.item_tiers.SolarCraftToolTiers;
+import com.finderfeed.solarforge.magic_items.items.item_tiers.SolarCraftToolTiers;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.entity.LivingEntity;
 

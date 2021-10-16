@@ -7,7 +7,7 @@ import com.finderfeed.solarforge.magic_items.blocks.infusing_table_things.SolarW
 import com.finderfeed.solarforge.magic_items.armor.SolarArmorMaterial;
 import com.finderfeed.solarforge.magic_items.blocks.blockitems.TurretBlockItem;
 import com.finderfeed.solarforge.magic_items.blocks.blockitems.UldoradiumOreBlockitem;
-import com.finderfeed.solarforge.magic_items.item_tiers.SolarCraftToolTiers;
+import com.finderfeed.solarforge.magic_items.items.item_tiers.SolarCraftToolTiers;
 import com.finderfeed.solarforge.magic_items.items.*;
 import com.finderfeed.solarforge.magic_items.items.small_items.*;
 import com.finderfeed.solarforge.magic_items.items.solar_disc_gun.SolarDiscGunItem;

@@ -3,6 +3,7 @@ package com.finderfeed.solarforge.misc_things;
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.registries.sounds.Sounds;
 
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 
@@ -28,6 +29,7 @@ public abstract class AbstractMortarProjectile extends AbstractHurtingProjectile
 
     public double gravity = Helpers.GRAVITY_VELOCITY;       //1 block per second
     public double startingVel = 2;
+    private boolean removeit = false;
 
     protected AbstractMortarProjectile(EntityType<? extends AbstractMortarProjectile> p_i50173_1_, Level p_i50173_2_) {
         super(p_i50173_1_, p_i50173_2_);
@@ -51,11 +53,10 @@ public abstract class AbstractMortarProjectile extends AbstractHurtingProjectile
     @Override
     protected void onHitBlock(BlockHitResult result) {
         causeExplosion(result.getLocation());
-        System.out.println(level.isClientSide);
         causeExplosionParticles(result.getLocation());
         level.playSound(null,result.getBlockPos().getX()+0.5,result.getBlockPos().getY()+0.5,result.getBlockPos().getZ()+0.5, Sounds.SOLAR_MORTAR_PROJECTILE.get(), SoundSource.AMBIENT,
                 5,1);
-        this.remove(RemovalReason.KILLED);
+        this.removeit = true;
     }
 
 
@@ -99,6 +100,9 @@ public abstract class AbstractMortarProjectile extends AbstractHurtingProjectile
 //            }
 //        }
         super.tick();
+        if (!level.isClientSide && removeit){
+            this.kill();
+        }
 
     }
 
@@ -150,5 +154,17 @@ public abstract class AbstractMortarProjectile extends AbstractHurtingProjectile
             }
 
         }
+    }
+
+    @Override
+    public boolean save(CompoundTag p_20224_) {
+        p_20224_.putBoolean("removeit",removeit);
+        return super.save(p_20224_);
+    }
+
+    @Override
+    public void load(CompoundTag p_20259_) {
+        this.removeit = p_20259_.getBoolean("removeit");
+        super.load(p_20259_);
     }
 }

@@ -15,7 +15,7 @@ import com.finderfeed.solarforge.events.RenderEventsHandler;
 import com.finderfeed.solarforge.magic_items.blocks.SolarOreBlock;
 import com.finderfeed.solarforge.magic_items.blocks.infusing_table_things.*;
 import com.finderfeed.solarforge.magic_items.blocks.infusing_table_things.infusing_pool.InfusingPool;
-import com.finderfeed.solarforge.magic_items.item_tiers.SolarCraftToolTiers;
+import com.finderfeed.solarforge.magic_items.items.item_tiers.SolarCraftToolTiers;
 import com.finderfeed.solarforge.magic_items.items.ProgressionBlockItem;
 import com.finderfeed.solarforge.misc_things.ParticlesList;
 import com.finderfeed.solarforge.registries.abilities.AbilitiesRegistry;

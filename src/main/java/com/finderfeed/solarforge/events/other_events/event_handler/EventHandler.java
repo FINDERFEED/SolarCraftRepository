@@ -60,7 +60,9 @@ public class EventHandler {
 
         if (!world.isClientSide && !player.isCreative()){
             if ((world.getGameTime() % 20 == 1)&& !Helpers.isDay(world) &&  (world.dimension() == RADIANT_LAND_KEY)){
-                player.addEffect(new MobEffectInstance(EffectsRegister.STAR_GAZE_EFFECT.get(),400,0));
+                if (!Helpers.playerInBossfight(player)) {
+                    player.addEffect(new MobEffectInstance(EffectsRegister.STAR_GAZE_EFFECT.get(), 400, 0));
+                }
             }
 
             if (player.hasEffect(EffectsRegister.STAR_GAZE_EFFECT.get())){

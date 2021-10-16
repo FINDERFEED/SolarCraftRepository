@@ -4,10 +4,7 @@ package com.finderfeed.solarforge.registries.entities;
 import com.finderfeed.solarforge.entities.*;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.projectiles.AbstractTurretProjectile;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.projectiles.MortarProjectile;
-import com.finderfeed.solarforge.magic_items.items.projectiles.BlockBoomerangProjectile;
-import com.finderfeed.solarforge.magic_items.items.projectiles.CrystalBossAttackHoldingMissile;
-import com.finderfeed.solarforge.magic_items.items.projectiles.FallingStarCrystalBoss;
-import com.finderfeed.solarforge.magic_items.items.projectiles.UltraCrossbowProjectile;
+import com.finderfeed.solarforge.magic_items.items.projectiles.*;
 import com.finderfeed.solarforge.magic_items.items.solar_disc_gun.SolarDiscProjectile;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.EntityType;
@@ -61,4 +58,8 @@ public class Entities {
     public static final RegistryObject<EntityType<FallingStarCrystalBoss>> FALLING_STAR_CRYSTAL_BOSS = ENTITY_TYPE_REGISTER.register("falling_star", () ->
             EntityType.Builder.<FallingStarCrystalBoss>of(FallingStarCrystalBoss::new, MobCategory.MISC)
                     .sized(0.2f, 0.2f).updateInterval(5).build("falling_star"));
+
+    public static final RegistryObject<EntityType<RandomBadEffectProjectile>> RANDOM_BAD_EFFECT_PROJECTILE = ENTITY_TYPE_REGISTER.register("rnd_effect_proj", () ->
+            EntityType.Builder.<RandomBadEffectProjectile>of(RandomBadEffectProjectile::new, MobCategory.MISC)
+                    .sized(0.2f, 0.2f).updateInterval(5).build("rnd_effect_proj"));
 }
