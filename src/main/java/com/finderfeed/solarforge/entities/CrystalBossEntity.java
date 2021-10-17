@@ -7,6 +7,7 @@ import com.finderfeed.solarforge.for_future_library.entities.BossAttackChain;
 import com.finderfeed.solarforge.for_future_library.helpers.FinderfeedMathHelper;
 import com.finderfeed.solarforge.magic_items.items.projectiles.CrystalBossAttackHoldingMissile;
 import com.finderfeed.solarforge.magic_items.items.projectiles.FallingStarCrystalBoss;
+import com.finderfeed.solarforge.magic_items.items.projectiles.RandomBadEffectProjectile;
 import com.finderfeed.solarforge.misc_things.CrystalBossBuddy;
 import com.finderfeed.solarforge.misc_things.NoHealthLimitMob;
 import com.finderfeed.solarforge.misc_things.ParticlesList;
@@ -52,6 +53,9 @@ import java.util.UUID;
 
 
 public class CrystalBossEntity extends NoHealthLimitMob implements CrystalBossBuddy {
+
+    public static int RAY_LENGTH = 13;
+
     private static EntityDataAccessor<Boolean> GET_OFF_ME = SynchedEntityData.defineId(CrystalBossEntity.class, EntityDataSerializers.BOOLEAN);
     public static EntityDataAccessor<Float> RAY_STATE_FLOAT_OR_ANGLE = SynchedEntityData.defineId(CrystalBossEntity.class,EntityDataSerializers.FLOAT);
 
@@ -66,7 +70,8 @@ public class CrystalBossEntity extends NoHealthLimitMob implements CrystalBossBu
             .addAttack("mines",this::spawnMines,200,40)
             .addAttack("air_strike",this::airStrike,200,10)
             .addAttack("shielding_crystals",this::spawnShieldingCrystals,40,null)
-            .addAttack("ray_attack",this::rayAttack,650,1)
+            .addAttack("ray_attack",this::rayAttack,450,1)
+            .addAttack("random_effects",this::throwRandomEffects,300,20)
             .addPostEffectToAttack("ray_attack",this::rayAttackPost)
             .addAftermathAttack(this::getOffMEEE)
             .setTimeBetweenAttacks(40)
@@ -105,6 +110,18 @@ public class CrystalBossEntity extends NoHealthLimitMob implements CrystalBossBu
             setGetOffMeClient();
         }
 
+    }
+
+    public void throwRandomEffects(){
+        for (int i = 0 ; i < 4; i ++){
+            Vec3 vec = new Vec3(16,0,0)
+                    .zRot((float)Math.toRadians(45 + (level.random.nextInt(70)-35)))
+                    .yRot((float)Math.toRadians(level.random.nextInt(360)))
+                    .normalize();
+            RandomBadEffectProjectile proj = new RandomBadEffectProjectile(this.position().x,this.position().y + this.getBbHeight()/2+0.3f,this.position().z,
+                    vec.x,vec.y,vec.z,level);
+            level.addFreshEntity(proj);
+        }
     }
 
     private void setGetOffMeClient(){
@@ -159,7 +176,7 @@ public class CrystalBossEntity extends NoHealthLimitMob implements CrystalBossBu
                 }
             } else {
                 Vec3 firstPos = this.position().add(0, 0.5, 0);
-                Vec3 secondPos = firstPos.add(new Vec3(10, 0, 0).yRot((float) Math.toRadians(state)));
+                Vec3 secondPos = firstPos.add(new Vec3(RAY_LENGTH, 0, 0).yRot((float) Math.toRadians(state)));
                 EntityHitResult res = Helpers.getHitResult(level, firstPos, secondPos, (entity -> {
                     return Helpers.isVulnerable(entity) && !(entity instanceof CrystalBossBuddy);
                 }));
@@ -168,15 +185,15 @@ public class CrystalBossEntity extends NoHealthLimitMob implements CrystalBossBu
                     ent.hurt(DamageSource.MAGIC, 7);
                 }
 
-                secondPos = firstPos.add(new Vec3(10, 0, 0).yRot((float) Math.toRadians(state+180)));
+                secondPos = firstPos.add(new Vec3(RAY_LENGTH, 0, 0).yRot((float) Math.toRadians(state+180)));
                 res = Helpers.getHitResult(level, firstPos, secondPos,  (entity -> {
                     return Helpers.isVulnerable(entity) && !(entity instanceof CrystalBossBuddy);
                 }));
                 if (res != null) {
                     Entity ent = res.getEntity();
-                    ent.hurt(DamageSource.MAGIC, 10);
+                    ent.hurt(DamageSource.MAGIC, 7);
                 }
-                if (state <= 2160*1.5f) {
+                if (state <= 2160) {
                     this.entityData.set(RAY_STATE_FLOAT_OR_ANGLE, state + 3.6f*1.5f);
                 } else {
                     this.entityData.set(RAY_STATE_FLOAT_OR_ANGLE, (float) RAY_STOPPED);
@@ -192,7 +209,7 @@ public class CrystalBossEntity extends NoHealthLimitMob implements CrystalBossBu
         if (rounded != RAY_STOPPED){
             if (rounded != RAY_NOT_ACTIVE){
                 if (rounded == RAY_PREPARING){
-                    for (int i = -10;i < 11;i++){
+                    for (int i = -RAY_LENGTH;i < RAY_LENGTH+1;i++){
                         double rndx = level.random.nextDouble()*0.5-0.25;
                         double rndy = level.random.nextDouble()*0.5-0.25;
                         double rndz = level.random.nextDouble()*0.5-0.25;
@@ -206,7 +223,7 @@ public class CrystalBossEntity extends NoHealthLimitMob implements CrystalBossBu
                 }else{
                     Vec3 vec = new Vec3(10,0,0).yRot((float)Math.toRadians(state));
                     Vec3 vec2 = new Vec3(10,0,0).yRot((float)Math.toRadians(state+180));
-                    for (int i = 0;i < 11;i++){
+                    for (int i = RAY_LENGTH;i < RAY_LENGTH+1;i++){
                         double rndx = level.random.nextDouble()*0.5-0.25;
                         double rndy = level.random.nextDouble()*0.5-0.25;
                         double rndz = level.random.nextDouble()*0.5-0.25;
@@ -216,7 +233,7 @@ public class CrystalBossEntity extends NoHealthLimitMob implements CrystalBossBu
                                 this.position().z+(vec.z *((float)i/10))+rndz,
                                 rndx*0.1,rndy*0.1,rndz*0.1);
                     }
-                    for (int i = 0;i < 11;i++){
+                    for (int i = RAY_LENGTH;i < RAY_LENGTH+1;i++){
                         double rndx = level.random.nextDouble()*0.5-0.25;
                         double rndy = level.random.nextDouble()*0.5-0.25;
                         double rndz = level.random.nextDouble()*0.5-0.25;

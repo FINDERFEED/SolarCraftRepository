@@ -2,6 +2,7 @@ package com.finderfeed.solarforge.magic_items.items.projectiles;
 
 import com.finderfeed.solarforge.ClientHelpers;
 import com.finderfeed.solarforge.for_future_library.helpers.FinderfeedMathHelper;
+import com.finderfeed.solarforge.misc_things.CrystalBossBuddy;
 import com.finderfeed.solarforge.misc_things.ParticlesList;
 import com.finderfeed.solarforge.registries.entities.Entities;
 import net.minecraft.core.particles.ParticleOptions;
@@ -31,19 +32,21 @@ public class RandomBadEffectProjectile extends AbstractHurtingProjectile {
             0,MobEffects.POISON,
             1,MobEffects.MOVEMENT_SLOWDOWN,
             2,MobEffects.WEAKNESS,
-            3,MobEffects.WITHER
+            3,MobEffects.WITHER,
+            4,MobEffects.BLINDNESS
     );
 
     private static Map<MobEffect, Integer> REVERSE_ID = Map.of(
             MobEffects.POISON,0,
             MobEffects.MOVEMENT_SLOWDOWN,1,
             MobEffects.WEAKNESS, 2,
-            MobEffects.WITHER,3
+            MobEffects.WITHER,3,
+            MobEffects.BLINDNESS,4
     );
 
     private  boolean removeit = false;
 
-    private EntityDataAccessor<Integer> POTION_DATA_ID = SynchedEntityData.defineId(RandomBadEffectProjectile.class, EntityDataSerializers.INT);
+    private static EntityDataAccessor<Integer> POTION_DATA_ID = SynchedEntityData.defineId(RandomBadEffectProjectile.class, EntityDataSerializers.INT);
 
     public int potionID = 0;
 
@@ -53,13 +56,13 @@ public class RandomBadEffectProjectile extends AbstractHurtingProjectile {
 
     public RandomBadEffectProjectile(double p_36818_, double p_36819_, double p_36820_, double p_36821_, double p_36822_, double p_36823_, Level p_36824_) {
         super(Entities.RANDOM_BAD_EFFECT_PROJECTILE.get(), p_36818_, p_36819_, p_36820_, p_36821_, p_36822_, p_36823_, p_36824_);
-        MobEffect effect = ID.get(new Random().nextInt(3));
+        MobEffect effect = ID.get(new Random().nextInt(ID.keySet().size()));
         this.potionID = REVERSE_ID.get(effect);
     }
 
     public RandomBadEffectProjectile(LivingEntity p_36827_, double p_36828_, double p_36829_, double p_36830_, Level p_36831_) {
         super(Entities.RANDOM_BAD_EFFECT_PROJECTILE.get(), p_36827_, p_36828_, p_36829_, p_36830_, p_36831_);
-        MobEffect effect = ID.get(new Random().nextInt(3));
+        MobEffect effect = ID.get(new Random().nextInt(ID.keySet().size()));
         this.potionID = REVERSE_ID.get(effect);
     }
 
@@ -81,6 +84,11 @@ public class RandomBadEffectProjectile extends AbstractHurtingProjectile {
     }
 
     @Override
+    public boolean isOnFire() {
+        return false;
+    }
+
+    @Override
     protected void onHitBlock(BlockHitResult p_37258_) {
         super.onHitBlock(p_37258_);
         explode();
@@ -89,7 +97,9 @@ public class RandomBadEffectProjectile extends AbstractHurtingProjectile {
     @Override
     protected void onHitEntity(EntityHitResult p_37259_) {
         super.onHitEntity(p_37259_);
-        explode();
+        if (!(p_37259_.getEntity()  instanceof  RandomBadEffectProjectile) && !(p_37259_.getEntity() instanceof CrystalBossBuddy)) {
+            explode();
+        }
     }
 
     public void explode(){
@@ -122,8 +132,8 @@ public class RandomBadEffectProjectile extends AbstractHurtingProjectile {
 
     @Override
     protected void defineSynchedData() {
-        this.entityData.define(POTION_DATA_ID,0);
         super.defineSynchedData();
+        this.entityData.define(POTION_DATA_ID,0);
     }
 
     @Override

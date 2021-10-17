@@ -236,6 +236,6 @@ public class ClientHelpers {
         SmallSolarStrikeParticle particle = (SmallSolarStrikeParticle) Minecraft.getInstance().particleEngine.
                 createParticle(ParticlesList.SMALL_SOLAR_STRIKE_PARTICLE.get(),x,y,z,xs,ys,zs);
         int[] rgba = FinderfeedMathHelper.intToRgba(effect.getColor());
-        particle.setColor(rgba[0],rgba[1],rgba[2]);
+        particle.setColor((float)rgba[0]/255,(float)rgba[1]/255,(float)rgba[2]/255);
     }
 }

@@ -62,11 +62,11 @@ public class CrystalBossRenderer extends EntityRenderer<CrystalBossEntity> {
                 matrices.mulPose(Vector3f.YP.rotationDegrees(state));
             }
 
-            RenderingTools.renderRay(matrices,buffer,0.25f,11, (matrix)->{
+            RenderingTools.renderRay(matrices,buffer,0.25f,boss.RAY_LENGTH+1, (matrix)->{
                 matrices.translate(-0.5,1,-0.5);
                 matrices.mulPose(Vector3f.ZN.rotationDegrees(90));
             },true,0.5f,pticks);
-            RenderingTools.renderRay(matrices,buffer,0.25f,11, (matrix)->{
+            RenderingTools.renderRay(matrices,buffer,0.25f,boss.RAY_LENGTH+1, (matrix)->{
                 matrices.translate(-0.5,1,-0.5);
                 matrices.mulPose(Vector3f.YP.rotationDegrees(180));
                 matrices.mulPose(Vector3f.ZN.rotationDegrees(90));

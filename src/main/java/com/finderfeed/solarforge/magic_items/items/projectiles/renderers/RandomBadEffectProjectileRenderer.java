@@ -9,7 +9,7 @@ import net.minecraft.resources.ResourceLocation;
 public class RandomBadEffectProjectileRenderer extends EntityRenderer<RandomBadEffectProjectile> {
 
 
-    protected RandomBadEffectProjectileRenderer(EntityRendererProvider.Context p_174008_) {
+    public RandomBadEffectProjectileRenderer(EntityRendererProvider.Context p_174008_) {
         super(p_174008_);
     }
 
