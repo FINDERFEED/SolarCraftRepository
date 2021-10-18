@@ -120,7 +120,7 @@ public class CrystalBossAttackHoldingMissile extends AbstractHurtingProjectile i
     protected void onHitEntity(EntityHitResult ent) {
         if (!(ent.getEntity() instanceof CrystalBossEntity) && !(ent.getEntity() instanceof CrystalBossBuddy)){
             if (Helpers.isVulnerable(ent.getEntity())) {
-                ent.getEntity().hurt(DamageSource.MAGIC, 2);
+                ent.getEntity().hurt(DamageSource.MAGIC, CrystalBossEntity.MISSILE_DAMAGE);
                 ent.getEntity().invulnerableTime = 0;
             }
             this.discard();

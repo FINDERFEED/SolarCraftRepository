@@ -1,6 +1,7 @@
 package com.finderfeed.solarforge.magic_items.items.projectiles;
 
 import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.entities.CrystalBossEntity;
 import com.finderfeed.solarforge.misc_things.CrystalBossBuddy;
 import com.finderfeed.solarforge.misc_things.ParticlesList;
 import com.finderfeed.solarforge.registries.entities.Entities;
@@ -64,7 +65,7 @@ public class FallingStarCrystalBoss extends AbstractHurtingProjectile implements
         super.onHitEntity(hit);
         if (!(hit.getEntity() instanceof CrystalBossBuddy)){
             if (Helpers.isVulnerable(hit.getEntity())){
-                hit.getEntity().hurt(DamageSource.MAGIC,3);
+                hit.getEntity().hurt(DamageSource.MAGIC, CrystalBossEntity.AIR_STRIKE_DAMAGE);
                 hit.getEntity().invulnerableTime = 0;
                 this.kill();
             }

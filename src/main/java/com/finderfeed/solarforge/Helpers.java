@@ -434,7 +434,7 @@ public class Helpers {
 
     public static Vec3 randomVector(){
         Random rnd = new Random();
-        return new Vec3(rnd.nextDouble()*2-1,rnd.nextDouble()*2-1,rnd.nextDouble()*2-1);
+        return new Vec3(rnd.nextDouble()*2-1,rnd.nextDouble()*2-1,rnd.nextDouble()*2-1).normalize();
     }
 
 

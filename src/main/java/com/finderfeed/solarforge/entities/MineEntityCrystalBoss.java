@@ -75,7 +75,7 @@ public class MineEntityCrystalBoss extends PathfinderMob implements CrystalBossB
             level.getEntitiesOfClass(LivingEntity.class,new AABB(-1.5,-1.0,-1.5,1.5,2,1.5).move(position()),(ent)->{
                 return !(ent instanceof CrystalBossBuddy);
             }).forEach((living)->{
-                living.hurt(DamageSource.MAGIC,5);
+                living.hurt(DamageSource.MAGIC,CrystalBossEntity.MINES_DAMAGE);
             });
         }
 

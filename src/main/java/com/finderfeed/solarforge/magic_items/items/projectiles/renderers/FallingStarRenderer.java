@@ -26,6 +26,7 @@ public class FallingStarRenderer extends EntityRenderer<FallingStarCrystalBoss> 
 
         VertexConsumer vertex = buf.getBuffer(RenderType.text(LOC));
         RenderingTools.applyMovementMatrixRotations(matrices,star.getDeltaMovement().normalize());
+        matrices.scale(1.5f,1.5f,1.5f);
         Matrix4f mat = matrices.last().pose();
         RenderingTools.basicVertex(mat,vertex,-0.25,-0.5,0,0,0);
         RenderingTools.basicVertex(mat,vertex,-0.25,0.5,0,1,0);

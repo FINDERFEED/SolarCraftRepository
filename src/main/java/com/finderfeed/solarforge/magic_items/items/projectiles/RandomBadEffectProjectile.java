@@ -119,11 +119,11 @@ public class RandomBadEffectProjectile extends AbstractHurtingProjectile {
                 }
             }
         }else{
-            level.getEntitiesOfClass(LivingEntity.class,new AABB(-3,-1,-3,3,1,3).move(this.position()))
+            level.getEntitiesOfClass(LivingEntity.class,new AABB(-3,-2,-3,3,2,3).move(this.position()))
             .forEach((entity)->{
                 MobEffect effect = ID.get(potionID);
                if (!entity.hasEffect(effect)){
-                   entity.addEffect(new MobEffectInstance(effect,60,1));
+                   entity.addEffect(new MobEffectInstance(effect,300,0));
                }
             });
             this.removeit = true;
