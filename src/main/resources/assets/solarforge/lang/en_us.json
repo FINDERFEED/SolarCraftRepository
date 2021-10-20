@@ -475,7 +475,10 @@
   "forge.moved": "Consume the energy(lost on death). (Abilities were moved to separate screen, look into hotkey settings)",
   "solar_fragment.gloves_of_reach": "Reach gloves",
   "gloves_of_reach.lore": "For those who need bigger hands. While in your inventory increases reach distance by 2.",
-  "entity.solarforge.crystal_boss": "Ancient Defence Crystal"
+  "entity.solarforge.crystal_boss": "Ancient Defence Crystal",
+  "player.boss_cant_break_block": "You cant break blocks near the boss!",
+  "player.boss_cant_place_block": "You cant place blocks near the boss!",
+  "player.boss_cant_explode_blocks": "You cant explode something near the boss!"
 
 
 

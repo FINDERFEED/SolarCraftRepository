@@ -16,10 +16,13 @@ import org.lwjgl.system.CallbackI;
 
 import java.util.List;
 import java.util.Random;
+import java.util.function.Function;
 import java.util.function.Predicate;
 
 public class FinderfeedMathHelper {
 
+    public static final Function<Double,Double> SQUARE = (x)->x*x;
+    public static final Function<Double,Double> FLIP = (x)->1-x;
 
     public static double[] polarToCartesian(double radius,double angle){
         return new double[]{radius*Math.cos(angle),radius*Math.sin(angle)};
@@ -28,6 +31,15 @@ public class FinderfeedMathHelper {
     public static int randomPlusMinus(){
         Random rnd = new Random();
         return rnd.nextInt(2) == 0 ? 1 : -1;
+    }
+
+
+    public static double clamp(double min,double main, double max){
+        if (main < min){
+            return min;
+        }else {
+            return Math.min(main, max);
+        }
     }
 
     public static int clamp(int min,int main, int max){

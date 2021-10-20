@@ -17,6 +17,7 @@ import com.finderfeed.solarforge.registries.attributes.AttributesRegistry;
 import com.finderfeed.solarforge.registries.effects.EffectsRegister;
 import com.finderfeed.solarforge.registries.entities.Entities;
 import com.finderfeed.solarforge.registries.sounds.Sounds;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -49,6 +50,7 @@ import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.world.BlockEvent;
+import net.minecraftforge.event.world.ExplosionEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -367,14 +369,14 @@ public class CrystalBossEntity extends NoHealthLimitMob implements CrystalBossBu
     public boolean hasEnemiesNearby(boolean includeCreative){
         return !level.getEntitiesOfClass(Player.class,new AABB(this.position().add(-13,-8,-13),this.position().add(14,8,14)),
                 (pl)->{
-                    return (!pl.isCreative() || includeCreative) && !pl.isSpectator() && (this.distanceTo(pl) <= 12.5);
+                    return (!pl.isCreative() || includeCreative) && !pl.isSpectator() && (this.distanceTo(pl) <= 12.95);
                 }).isEmpty();
     }
 
     public List<Player> getEnemiesNearby(boolean includeCreative){
         return level.getEntitiesOfClass(Player.class,new AABB(this.position().add(-13,-8,-13),this.position().add(14,8,14)),
                 (pl)->{
-                    return (!pl.isCreative() || includeCreative) && !pl.isSpectator() && (this.distanceTo(pl) <= 12.5);
+                    return (!pl.isCreative() || includeCreative) && !pl.isSpectator() && (this.distanceTo(pl) <= 12.95);
                 });
     }
 
@@ -560,7 +562,7 @@ class AntiCheat{
         Player pl = event.getPlayer();
         if (pl.level.dimension()  == EventHandler.RADIANT_LAND_KEY){
             if (!pl.level.getEntitiesOfClass(CrystalBossEntity.class,CHECK_AABB.move(pl.position())).isEmpty()){
-                pl.sendMessage(new TranslatableComponent("player.boss_cant_break_block"),pl.getUUID());
+                pl.sendMessage(new TranslatableComponent("player.boss_cant_break_block").withStyle(ChatFormatting.RED),pl.getUUID());
                 event.setCanceled(true);
             }
         }
@@ -572,13 +574,27 @@ class AntiCheat{
         if (pl != null) {
             if (pl.level.dimension() == EventHandler.RADIANT_LAND_KEY) {
                 if (!pl.level.getEntitiesOfClass(CrystalBossEntity.class, CHECK_AABB.move(pl.position())).isEmpty()) {
-                    pl.sendMessage(new TranslatableComponent("player.boss_cant_place_block"), pl.getUUID());
+                    pl.sendMessage(new TranslatableComponent("player.boss_cant_place_block").withStyle(ChatFormatting.RED), pl.getUUID());
                     event.setCanceled(true);
                 }
             }
         }
     }
 
+    @SubscribeEvent
+    public static void cancelExplosions(ExplosionEvent.Start event){
 
+            if (event.getWorld().dimension() == EventHandler.RADIANT_LAND_KEY) {
+                if (!event.getWorld().getEntitiesOfClass(CrystalBossEntity.class, CHECK_AABB.move(event.getExplosion().getPosition())).isEmpty()) {
+                    LivingEntity ent = event.getExplosion().getSourceMob();
+                    if (ent != null) {
+                        ent.sendMessage(new TranslatableComponent("player.boss_cant_explode_blocks").withStyle(ChatFormatting.RED), ent.getUUID());
+
+                    }
+                    event.setCanceled(true);
+                }
+            }
+
+    }
 
 }

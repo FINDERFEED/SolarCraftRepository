@@ -6,6 +6,7 @@ import com.finderfeed.solarforge.SolarCraftTags;
 import com.finderfeed.solarforge.for_future_library.helpers.FinderfeedMathHelper;
 import com.finderfeed.solarforge.for_future_library.custom_registries.RegistryDelegate;
 import com.finderfeed.solarforge.for_future_library.helpers.RenderingTools;
+import com.finderfeed.solarforge.for_future_library.other.EaseInOut;
 import com.finderfeed.solarforge.magic_items.blocks.solar_forge_block.solar_forge_screen.SolarForgeButton;
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
 import com.finderfeed.solarforge.packet_handler.packets.BuyAbilityPacket;
@@ -25,6 +26,7 @@ import java.util.List;
 
 public class AbilityBuyScreen extends Screen {
 
+    private EaseInOut test = new EaseInOut(10,6*20,2);
     private Button BUY;
     public AbstractAbility currentAbility;
     public boolean showText = false;
@@ -86,6 +88,11 @@ public class AbilityBuyScreen extends Screen {
         }else{
             this.ticker = 0;
         }
+        if (test.getValue() >=10){
+            test.reset();
+        }
+        test.tick();
+
         super.tick();
     }
 
@@ -94,6 +101,7 @@ public class AbilityBuyScreen extends Screen {
     @Override
     public void render(PoseStack matrices, int mousex, int mousey, float partialTicks) {
         ClientHelpers.bindText(LOC);
+
         blit(matrices,relX-40,relY+5+20,0,0,256,256);
         if (currentAbility != null){
             ClientHelpers.bindText(new ResourceLocation("solarforge","textures/abilities/"+currentAbility.id+".png"));
@@ -103,6 +111,7 @@ public class AbilityBuyScreen extends Screen {
             doText(matrices,new TranslatableComponent("desc."+currentAbility.id).getString(),17,relX+176-20,relY+92);
         }
         drawCenteredString(matrices,font,String.valueOf(minecraft.player.getPersistentData().getInt(SolarCraftTags.RAW_SOLAR_ENERGY)),relX+87,relY+218,0xff0000);
+
         super.render(matrices, mousex, mousey, partialTicks);
     }
 
