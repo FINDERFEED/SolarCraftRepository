@@ -100,7 +100,7 @@ public class ShieldingCrystalCrystalBoss extends Mob implements CrystalBossBuddy
 
 
     public static AttributeSupplier.Builder createAttributes(){
-        return PathfinderMob.createMobAttributes().add(Attributes.MAX_HEALTH,50).add(Attributes.ARMOR,20);
+        return PathfinderMob.createMobAttributes().add(Attributes.MAX_HEALTH,100).add(Attributes.ARMOR,15);
     }
 
     @Override

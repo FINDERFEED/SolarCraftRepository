@@ -67,6 +67,7 @@ public class CrystalBossEntity extends NoHealthLimitMob implements CrystalBossBu
     public static final float MISSILE_DAMAGE = 1.5F;
     public static final float MINES_DAMAGE = 6F;
     public static final float AIR_STRIKE_DAMAGE = 3F;
+    public static final float RIP_RAY_DAMAGE = 3F;
     public static final float UP_SPEED_MULTIPLIER_AIR_STRIKE = 0.9F;
     public static final float SIDE_SPEED_MULTIPLIER_AIR_STRIKE = 0.18F;
 

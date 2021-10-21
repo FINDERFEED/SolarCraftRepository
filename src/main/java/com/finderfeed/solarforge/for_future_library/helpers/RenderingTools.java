@@ -18,6 +18,7 @@ import com.mojang.math.Vector3d;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiComponent;
 
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
@@ -35,13 +36,13 @@ import com.mojang.math.Vector3f;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.HalfTransparentBlock;
 import net.minecraft.world.level.block.StainedGlassPaneBlock;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.model.data.ModelDataMap;
-import org.apache.logging.log4j.Level;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -533,7 +534,7 @@ public class RenderingTools {
                     break;
                 }
             }catch (IndexOutOfBoundsException e){
-                SolarForge.LOGGER.log(Level.ERROR, "Exception caught " + RenderingTools.class.toString() + " method splitString()");
+                SolarForge.LOGGER.log(org.apache.logging.log4j.Level.ERROR, "Exception caught " + RenderingTools.class.toString() + " method splitString()");
                 break;
             }
         }
@@ -575,5 +576,9 @@ public class RenderingTools {
         double angleX = Math.toDegrees(Math.atan2(Math.sqrt(speed.x*speed.x + speed.z*speed.z),speed.y));
         matrices.mulPose(Vector3f.YP.rotationDegrees((float)angleY));
         matrices.mulPose(Vector3f.XP.rotationDegrees((float)angleX));
+    }
+
+    public static float getTime(Level level,float pticks){
+        return level.getGameTime() + pticks;
     }
 }

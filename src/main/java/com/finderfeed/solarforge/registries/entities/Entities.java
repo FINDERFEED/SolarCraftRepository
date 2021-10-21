@@ -62,4 +62,8 @@ public class Entities {
     public static final RegistryObject<EntityType<RandomBadEffectProjectile>> RANDOM_BAD_EFFECT_PROJECTILE = ENTITY_TYPE_REGISTER.register("rnd_effect_proj", () ->
             EntityType.Builder.<RandomBadEffectProjectile>of(RandomBadEffectProjectile::new, MobCategory.MISC)
                     .sized(0.2f, 0.2f).updateInterval(5).build("rnd_effect_proj"));
+
+    public static final RegistryObject<EntityType<RipRayGenerator>> RIP_RAY_GENERATOR = ENTITY_TYPE_REGISTER.register("rip_ray_generator", () ->
+            EntityType.Builder.<RipRayGenerator>of(RipRayGenerator::new, MobCategory.MISC)
+                    .sized(0.8f, 0.45f).updateInterval(5).build("rip_ray_generator"));
 }

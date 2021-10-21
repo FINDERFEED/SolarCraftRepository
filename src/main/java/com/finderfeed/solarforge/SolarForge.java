@@ -6,10 +6,7 @@ import com.finderfeed.solarforge.SolarAbilities.SolarStrikeEntity;
 import com.finderfeed.solarforge.SolarAbilities.SolarStunEffect;
 import com.finderfeed.solarforge.capabilities.capability_mana.AttachManaCapabilityEvent;
 import com.finderfeed.solarforge.config.SolarcraftConfig;
-import com.finderfeed.solarforge.entities.CrystalBossEntity;
-import com.finderfeed.solarforge.entities.MineEntityCrystalBoss;
-import com.finderfeed.solarforge.entities.ShieldingCrystalCrystalBoss;
-import com.finderfeed.solarforge.entities.VillagerSolarMaster;
+import com.finderfeed.solarforge.entities.*;
 import com.finderfeed.solarforge.events.PlayerTickEvent;
 import com.finderfeed.solarforge.events.RenderEventsHandler;
 import com.finderfeed.solarforge.magic_items.blocks.SolarOreBlock;
@@ -269,11 +266,12 @@ public class SolarForge
 
         @SubscribeEvent
         public static void entityAttributes(EntityAttributeCreationEvent event) {
-        event.put(SOLAR_STRIKE_ENTITY_REG.get(),SolarStrikeEntity.createAttributes().build());
-        event.put(Entities.VILLAGER_SOLAR_MASTER.get(), VillagerSolarMaster.createAttributes().build());
-        event.put(Entities.CRYSTAL_BOSS.get(), CrystalBossEntity.createAttributes().build());
-        event.put(Entities.CRYSTAL_BOSS_SHIELDING_CRYSTAL.get(), ShieldingCrystalCrystalBoss.createAttributes().build());
-        event.put(Entities.CRYSTAL_BOSS_MINE.get(), MineEntityCrystalBoss.createAttributes().build());
+            event.put(SOLAR_STRIKE_ENTITY_REG.get(),SolarStrikeEntity.createAttributes().build());
+            event.put(Entities.VILLAGER_SOLAR_MASTER.get(), VillagerSolarMaster.createAttributes().build());
+            event.put(Entities.CRYSTAL_BOSS.get(), CrystalBossEntity.createAttributes().build());
+            event.put(Entities.CRYSTAL_BOSS_SHIELDING_CRYSTAL.get(), ShieldingCrystalCrystalBoss.createAttributes().build());
+            event.put(Entities.CRYSTAL_BOSS_MINE.get(), MineEntityCrystalBoss.createAttributes().build());
+            event.put(Entities.RIP_RAY_GENERATOR.get(), RipRayGenerator.createAttributes().build());
         }
 
         @SubscribeEvent

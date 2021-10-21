@@ -24,6 +24,7 @@ public class OBJModels {
     public static final ResourceLocation SHIELDING_CRYSTAL = new ResourceLocation("solarforge:objmodels/crystal_boss_shielding_crystal");
     public static final ResourceLocation SHIELDING_CRYSTAL_SHIELD = new ResourceLocation("solarforge:objmodels/crystal_boss_shielding_crystal_shield");
     public static final ResourceLocation GET_OFF_MEEE = new ResourceLocation("solarforge:objmodels/crystal_boss_getoffme");
+    public static final ResourceLocation RIP_RAY_GENERATOR = new ResourceLocation("solarforge:objmodels/rip_ray_generator");
 
     public static final ResourceLocation HOLE_MODEL = new ResourceLocation("solarforge:objmodels/hole");
     public static final ResourceLocation ANCIENT_FRAGMENT_MODEL = new ResourceLocation("solarforge:toloadmodels/ancient_fragment");
@@ -44,5 +45,6 @@ public class OBJModels {
         ModelLoader.addSpecialModel(SHIELDING_CRYSTAL_SHIELD);
         ModelLoader.addSpecialModel(SHIELDING_CRYSTAL);
         ModelLoader.addSpecialModel(GET_OFF_MEEE);
+        ModelLoader.addSpecialModel(RIP_RAY_GENERATOR);
     }
 }
