@@ -4,6 +4,7 @@ package com.finderfeed.solarforge.events.other_events.event_handler;
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.SolarCraftAttributeModifiers;
 import com.finderfeed.solarforge.SolarForge;
+import com.finderfeed.solarforge.config.SolarcraftConfig;
 import com.finderfeed.solarforge.events.my_events.ProgressionUnlockEvent;
 import com.finderfeed.solarforge.for_future_library.helpers.FinderfeedMathHelper;
 import com.finderfeed.solarforge.magic_items.items.ExperienceCrystal;
@@ -11,6 +12,7 @@ import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Ac
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.ProgressionHelper;
 import com.finderfeed.solarforge.registries.SolarcraftDamageSources;
+import com.finderfeed.solarforge.registries.attributes.AttributesRegistry;
 import com.finderfeed.solarforge.registries.effects.EffectsRegister;
 import com.finderfeed.solarforge.registries.items.ItemsRegister;
 import com.finderfeed.solarforge.world_generation.features.FeaturesRegistry;
@@ -20,6 +22,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.ExperienceOrb;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
@@ -37,6 +40,7 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.player.PlayerXpEvent;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.event.world.BlockEvent;
@@ -201,6 +205,25 @@ public class EventHandler {
         }
 
     }
+
+    @SubscribeEvent
+    public static void handleMagicResistanceAttribute(LivingDamageEvent event){
+        DamageSource src = event.getSource();
+        LivingEntity entity = event.getEntityLiving();
+        if (!entity.level.isClientSide &&
+                (src.getEntity() instanceof LivingEntity attacker) &&
+                (src.isMagic()) &&
+                (attacker.getAttributes().hasAttribute(AttributesRegistry.MAGIC_RESISTANCE.get()))){
+            AttributeInstance attr = attacker.getAttribute(AttributesRegistry.MAGIC_RESISTANCE.get());
+            if (attr != null){
+                double res = 1-attr.getValue()/100;
+                event.setAmount((float)(event.getAmount()*res));
+            }
+        }
+    }
+
+
+
     public static ItemEntity createItemEntity(Player playerEntity,ItemStack stack){
         return new ItemEntity(playerEntity.level,playerEntity.getX(),playerEntity.getY(),playerEntity.getZ(),stack);
     }

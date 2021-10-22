@@ -3,6 +3,7 @@ package com.finderfeed.solarforge.entities;
 import com.finderfeed.solarforge.for_future_library.helpers.FinderfeedMathHelper;
 import com.finderfeed.solarforge.for_future_library.other.CyclingInterpolatedValue;
 import com.finderfeed.solarforge.misc_things.CrystalBossBuddy;
+import com.finderfeed.solarforge.misc_things.ParticlesList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -23,7 +24,7 @@ import java.util.List;
 public class RipRayGenerator extends PathfinderMob implements CrystalBossBuddy{
 
     public int maxAttackLengthForClient = 0;
-    private CyclingInterpolatedValue particlesValue = new CyclingInterpolatedValue(21,4);
+    private CyclingInterpolatedValue particlesValue = new CyclingInterpolatedValue(21,5*20);
     public static EntityDataAccessor<Boolean> DEPLOYING = SynchedEntityData.defineId(RipRayGenerator.class, EntityDataSerializers.BOOLEAN);
 
     public boolean alreadyDeployed = false;
@@ -48,12 +49,35 @@ public class RipRayGenerator extends PathfinderMob implements CrystalBossBuddy{
             if (ticksalive % 5 == 0){
                 attackWithRay();
             }
+
         }
         if (this.level.isClientSide){
-            particlesValue.tick();
-            particlesValue.setEnd(maxAttackLengthForClient);
-            if (this.level.getGameTime() % 5 == 0){
-                maxAttackLengthForClient = this.getMaxAttackHeight();
+            if (!this.isDeploying()) {
+                particlesValue.setEnd(maxAttackLengthForClient);
+                particlesValue.setDuration(maxAttackLengthForClient*20/2);
+                particlesValue.tick();
+                if (this.level.getGameTime() % 5 == 0) {
+                    maxAttackLengthForClient = this.getMaxAttackHeight();
+                }
+
+
+                doParticles();
+
+            }else{
+                doDeployingParticles();
+            }
+        }
+    }
+
+    public void doDeployingParticles(){
+        if (level.getGameTime() % 2 == 0) {
+            for (int i = 0; i < 6; i++) {
+                double[] coords = FinderfeedMathHelper.polarToCartesian(0.5, Math.toRadians(60 * i));
+                this.level.addParticle(ParticlesList.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+                        this.position().x + coords[0],
+                        this.position().y,
+                        this.position().z + coords[1],
+                        0, -0.05, 0);
             }
         }
     }
@@ -70,17 +94,22 @@ public class RipRayGenerator extends PathfinderMob implements CrystalBossBuddy{
 
 
     public void doParticles(){
-        double[] cart = FinderfeedMathHelper.polarToCartesian(0.5,Math.toRadians(Math.sin(particlesValue.getValue())));
+        double[] coords = FinderfeedMathHelper.polarToCartesian(0.4,Math.toRadians(level.getGameTime()*30));
+        this.level.addParticle(ParticlesList.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+                this.position().x+coords[0],
+                this.position().y-particlesValue.getValue(),
+                this.position().z + coords[1],
+                0,0,0);
 
     }
 
     public int getMaxAttackHeight(){
         for (int i = 0;i <= 20;i++){
            if (!level.getBlockState(blockPosition().below(i)).isAir()){
-               return i+1;
+               return i;
            }
         }
-        return 21;
+        return 20;
     }
 
     public boolean isDeploying(){

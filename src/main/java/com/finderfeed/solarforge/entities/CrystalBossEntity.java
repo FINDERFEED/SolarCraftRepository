@@ -1,7 +1,6 @@
 package com.finderfeed.solarforge.entities;
 
 
-import com.finderfeed.solarforge.ClientHelpers;
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.events.other_events.event_handler.EventHandler;
@@ -14,14 +13,10 @@ import com.finderfeed.solarforge.misc_things.CrystalBossBuddy;
 import com.finderfeed.solarforge.misc_things.NoHealthLimitMob;
 import com.finderfeed.solarforge.misc_things.ParticlesList;
 import com.finderfeed.solarforge.registries.attributes.AttributesRegistry;
-import com.finderfeed.solarforge.registries.effects.EffectsRegister;
 import com.finderfeed.solarforge.registries.entities.Entities;
 import com.finderfeed.solarforge.registries.sounds.Sounds;
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.particle.Particle;
-import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -29,21 +24,19 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.util.Mth;
 import net.minecraft.world.BossEvent;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.*;
-
-import net.minecraft.world.entity.ai.attributes.*;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.EntityHitResult;
@@ -54,10 +47,8 @@ import net.minecraftforge.event.world.ExplosionEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-
 import javax.annotation.Nullable;
 import java.util.List;
-import java.util.UUID;
 
 
 public class CrystalBossEntity extends NoHealthLimitMob implements CrystalBossBuddy {
@@ -68,6 +59,7 @@ public class CrystalBossEntity extends NoHealthLimitMob implements CrystalBossBu
     public static final float MINES_DAMAGE = 6F;
     public static final float AIR_STRIKE_DAMAGE = 3F;
     public static final float RIP_RAY_DAMAGE = 3F;
+    public static final float RIP_RAY_GEN_MOVEMENT = 0.99F;
     public static final float UP_SPEED_MULTIPLIER_AIR_STRIKE = 0.9F;
     public static final float SIDE_SPEED_MULTIPLIER_AIR_STRIKE = 0.18F;
 
@@ -91,6 +83,7 @@ public class CrystalBossEntity extends NoHealthLimitMob implements CrystalBossBu
             .addAttack("ray_attack",this::rayAttack,700,1)
             .addAttack("random_effects",this::throwRandomEffects,300,10)
             .addAttack("charge_up",this::chargeUp,160,10)
+            .addAttack("throw_rrg",this::throwRipRayGenerators,40,null)
             .addPostEffectToAttack("charge_up",this::chargeUpPost)
             .addPostEffectToAttack("ray_attack",this::rayAttackPost)
             .addAftermathAttack(this::getOffMEEE)
@@ -321,6 +314,15 @@ public class CrystalBossEntity extends NoHealthLimitMob implements CrystalBossBu
         }
     }
 
+    public void throwRipRayGenerators(){
+        for (int i = 0; i < 4;i++){
+            Vec3 vec = Helpers.randomVector().multiply(2+level.random.nextDouble()*9,0,1+2+level.random.nextDouble()*9);
+            RipRayGenerator gen = new RipRayGenerator(Entities.RIP_RAY_GENERATOR.get(),level);
+            gen.setPos(this.position().add(vec.x,this.getBbHeight()/2,vec.z));
+
+            level.addFreshEntity(gen);
+        }
+    }
 
     public void spawnMines(){
         List<Vec3> positions = Helpers.findRandomGroundPositionsAround(level,position(),20,15);
@@ -384,7 +386,8 @@ public class CrystalBossEntity extends NoHealthLimitMob implements CrystalBossBu
     public static AttributeSupplier.Builder createAttributes(){
         return NoHealthLimitMob.createEntityAttributes()
                 .add(AttributesRegistry.MAXIMUM_HEALTH_NO_LIMIT.get(),2500)
-                .add(Attributes.ARMOR,10);
+                .add(Attributes.ARMOR,10)
+                .add(AttributesRegistry.MAGIC_RESISTANCE.get(),20);
     }
 
     @Override

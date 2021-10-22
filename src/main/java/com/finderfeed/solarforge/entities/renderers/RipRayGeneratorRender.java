@@ -27,27 +27,30 @@ public class RipRayGeneratorRender extends EntityRenderer<RipRayGenerator> {
         super.render(entity, idk, pticks, matrices, buffer, light);
 
         float time = RenderingTools.getTime(entity.level,pticks);
+        if (!entity.isDeploying()) {
+            matrices.pushPose();
+            matrices.translate(0, 0.25, 0);
+            matrices.scale(0.5f, 0.5f, 0.5f);
+            matrices.mulPose(Vector3f.YN.rotationDegrees(time % 360));
+            RenderingTools.renderObjModel(OBJModels.RIP_RAY_GENERATOR, matrices, buffer, light, OverlayTexture.NO_OVERLAY, (m) -> {
+            });
+            matrices.popPose();
 
-        matrices.pushPose();
-        matrices.translate(0,0.25,0);
-        matrices.scale(0.5f,0.5f,0.5f);
-        matrices.mulPose(Vector3f.YN.rotationDegrees(time % 360));
-        RenderingTools.renderObjModel(OBJModels.RIP_RAY_GENERATOR,matrices,buffer,light, OverlayTexture.NO_OVERLAY,(m)->{});
-        matrices.popPose();
+            matrices.pushPose();
+            matrices.translate(-0.5, -0.25, -0.5);
+            RenderingTools.renderRay(matrices, buffer, 0.25f, entity.maxAttackLengthForClient, Direction.DOWN, true, -1, pticks);
+            matrices.popPose();
 
-        matrices.pushPose();
-        matrices.translate(-0.5,-0.25,-0.5);
-        RenderingTools.renderRay(matrices,buffer,0.25f,entity.maxAttackLengthForClient, Direction.DOWN,true,1,pticks);
-        matrices.popPose();
+            matrices.pushPose();
 
-        matrices.pushPose();
+            matrices.translate(0, 1, 0);
+            Quaternion quaternion = Minecraft.getInstance().gameRenderer.getMainCamera().rotation();
+            matrices.mulPose(quaternion);
+            matrices.scale(0.5f, 0.3f, 0.5f);
+            RenderingTools.renderHpBar(matrices, buffer, entity.getHealth() / entity.getMaxHealth());
+            matrices.popPose();
+        }
 
-        matrices.translate(0,1,0);
-        Quaternion quaternion = Minecraft.getInstance().gameRenderer.getMainCamera().rotation();
-        matrices.mulPose(quaternion);
-        matrices.scale(0.5f,0.3f,0.5f);
-        RenderingTools.renderHpBar(matrices,buffer,entity.getHealth()/entity.getMaxHealth());
-        matrices.popPose();
     }
 
     @Override
