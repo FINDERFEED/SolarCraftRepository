@@ -26,8 +26,6 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.BossEvent;
 import net.minecraft.world.Difficulty;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
@@ -57,18 +55,15 @@ public class CrystalBossEntity extends NoHealthLimitMob implements CrystalBossBu
     public static final int RAY_LENGTH = 13;
     public static final float RAY_DAMAGE = 12;
     public static final float MISSILE_DAMAGE = 1.5F;
-    public static final float MINES_DAMAGE = 6F;
+    public static final float MINES_DAMAGE = 3F;
     public static final float AIR_STRIKE_DAMAGE = 3F;
     public static final float RIP_RAY_DAMAGE = 3F;
-    public static final float RIP_RAY_GEN_MOVEMENT = 0.99F;
     public static final float UP_SPEED_MULTIPLIER_AIR_STRIKE = 0.9F;
     public static final float SIDE_SPEED_MULTIPLIER_AIR_STRIKE = 0.18F;
 
     private static EntityDataAccessor<Boolean> CHARGING_UP = SynchedEntityData.defineId(CrystalBossEntity.class, EntityDataSerializers.BOOLEAN);
     private static EntityDataAccessor<Boolean> GET_OFF_ME = SynchedEntityData.defineId(CrystalBossEntity.class, EntityDataSerializers.BOOLEAN);
     public static EntityDataAccessor<Float> RAY_STATE_FLOAT_OR_ANGLE = SynchedEntityData.defineId(CrystalBossEntity.class,EntityDataSerializers.FLOAT);
-
-    private boolean debug = false;
 
     public int clientGetOffMeTicker = 0;
     public static final int RAY_STOPPED = -3;
@@ -77,14 +72,14 @@ public class CrystalBossEntity extends NoHealthLimitMob implements CrystalBossBu
 
     private ServerBossEvent CRYSTAL_BOSS_EVENT = new ServerBossEvent(this.getDisplayName(), BossEvent.BossBarColor.RED, BossEvent.BossBarOverlay.NOTCHED_20);
     private final BossAttackChain ATTACK_CHAIN = new BossAttackChain.Builder()
-            .addAttack("missiles",this::holdingMissilesAttack,60,10)
-            .addAttack("mines",this::spawnMines,200,20)
-            .addAttack("air_strike",this::airStrike,200,7)
-            .addAttack("shielding_crystals",this::spawnShieldingCrystals,40,null)
-            .addAttack("ray_attack",this::rayAttack,700,1)
-            .addAttack("random_effects",this::throwRandomEffects,300,10)
-            .addAttack("charge_up",this::chargeUp,160,10)
-            .addAttack("throw_rrg",this::throwRipRayGenerators,40,null)
+            .addAttack("missiles",this::holdingMissilesAttack,60,10,1)
+            .addAttack("mines",this::spawnMines,200,20,2)
+            .addAttack("air_strike",this::airStrike,200,7,2)
+            .addAttack("shielding_crystals",this::spawnShieldingCrystals,40,null,2)
+            .addAttack("ray_attack",this::rayAttack,700,1,3)
+            .addAttack("random_effects",this::throwRandomEffects,300,10,3)
+            .addAttack("charge_up",this::chargeUp,160,10,4)
+            .addAttack("throw_rrg",this::throwRipRayGenerators,40,null,1)
             .addPostEffectToAttack("charge_up",this::chargeUpPost)
             .addPostEffectToAttack("ray_attack",this::rayAttackPost)
             .addAftermathAttack(this::getOffMEEE)
@@ -113,6 +108,10 @@ public class CrystalBossEntity extends NoHealthLimitMob implements CrystalBossBu
 
             if (this.hasEnemiesNearby(false)) {
                 ATTACK_CHAIN.tick();
+            }else{
+                if (this.tickCount % 20 == 0){
+                    this.heal(20);
+                }
             }
         }
         if (level.isClientSide){
@@ -174,15 +173,7 @@ public class CrystalBossEntity extends NoHealthLimitMob implements CrystalBossBu
         }
     }
 
-    @Override
-    protected InteractionResult mobInteract(Player player, InteractionHand hand) {
-        if (!level.isClientSide){
-            if (hand == InteractionHand.MAIN_HAND){
-                debug = !debug;
-            }
-        }
-        return super.mobInteract(player, hand);
-    }
+
 
     public void getOffMEEE(){
         level.getEntitiesOfClass(LivingEntity.class,
@@ -251,6 +242,7 @@ public class CrystalBossEntity extends NoHealthLimitMob implements CrystalBossBu
     }
 
     private void rayAttackParticles(){
+
         float state = this.entityData.get(RAY_STATE_FLOAT_OR_ANGLE);
         int rounded = Math.round(state);
         if (rounded != RAY_STOPPED){
@@ -333,7 +325,7 @@ public class CrystalBossEntity extends NoHealthLimitMob implements CrystalBossBu
                 break;
             }
             ShieldingCrystalCrystalBoss crystal = new ShieldingCrystalCrystalBoss(Entities.CRYSTAL_BOSS_SHIELDING_CRYSTAL.get(), level);
-            Vec3 positon = this.position().add((level.random.nextDouble() * 5 +3)* FinderfeedMathHelper.randomPlusMinus(), 0, (level.random.nextDouble() * 5 +3)* FinderfeedMathHelper.randomPlusMinus());
+            Vec3 positon = this.position().add((level.random.nextDouble() * 4.5 +3)* FinderfeedMathHelper.randomPlusMinus(), 0, (level.random.nextDouble() * 4.5 +3)* FinderfeedMathHelper.randomPlusMinus());
             crystal.setPos(positon);
             level.addFreshEntity(crystal);
         }
@@ -365,14 +357,14 @@ public class CrystalBossEntity extends NoHealthLimitMob implements CrystalBossBu
     public boolean hasEnemiesNearby(boolean includeCreative){
         return !level.getEntitiesOfClass(Player.class,new AABB(this.position().add(-13,-8,-13),this.position().add(14,8,14)),
                 (pl)->{
-                    return (!pl.isCreative() || includeCreative) && !pl.isSpectator() && (this.distanceTo(pl) <= 12.9);
+                    return (!pl.isCreative() || includeCreative) && !pl.isSpectator() && (this.distanceTo(pl) <= 13);
                 }).isEmpty();
     }
 
     public List<Player> getEnemiesNearby(boolean includeCreative){
         return level.getEntitiesOfClass(Player.class,new AABB(this.position().add(-13,-8,-13),this.position().add(14,8,14)),
                 (pl)->{
-                    return (!pl.isCreative() || includeCreative) && !pl.isSpectator() && (this.distanceTo(pl) <= 12.9);
+                    return (!pl.isCreative() || includeCreative) && !pl.isSpectator() && (this.distanceTo(pl) <= 13);
                 });
     }
 
@@ -609,5 +601,7 @@ class AntiCheat{
             }
 
     }
+
+
 
 }

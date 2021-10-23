@@ -24,6 +24,7 @@ public class FeatureInit {
     public static StructurePieceType CHARGING_PIECE = ChargingStationPieces.Piece::new;
     public static StructurePieceType MAGICIAN_TOWER = MagicianTowerPieces.Piece::new;
     public static StructurePieceType DIMENSIONAL_SHARD_STRUCTURE = DimStructPieces.Piece::new;
+    public static StructurePieceType CRYSTAL_BOSS_ROOM_PIECE = DimStructPieces.Piece::new;
     @SubscribeEvent
     public static void registerFeatures(final RegistryEvent.Register<Feature<?>> event){
         IForgeRegistry<Feature<?>> registry = event.getRegistry();
@@ -33,5 +34,6 @@ public class FeatureInit {
         Registry.register(Registry.STRUCTURE_PIECE,"solar_forge_charging_piece",CHARGING_PIECE);
         Registry.register(Registry.STRUCTURE_PIECE,"magician_tower_piece",MAGICIAN_TOWER);
         Registry.register(Registry.STRUCTURE_PIECE,"dimensional_shard_structure",DIMENSIONAL_SHARD_STRUCTURE);
+        Registry.register(Registry.STRUCTURE_PIECE,"crystal_boss_room_piece",CRYSTAL_BOSS_ROOM_PIECE);
     }
 }

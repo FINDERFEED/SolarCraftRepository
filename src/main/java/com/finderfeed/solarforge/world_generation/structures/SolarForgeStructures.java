@@ -1,6 +1,7 @@
 package com.finderfeed.solarforge.world_generation.structures;
 
 import com.finderfeed.solarforge.world_generation.structures.charging_station.ChargingStationStructure;
+import com.finderfeed.solarforge.world_generation.structures.crystal_boss_room.CrystalBossRoomStructure;
 import com.finderfeed.solarforge.world_generation.structures.dimensional_shard_structure.DimensionalShardStructure;
 import com.finderfeed.solarforge.world_generation.structures.magician_tower.MagicianTowerStructure;
 import com.finderfeed.solarforge.world_generation.structures.maze_key_keeper.MazeStructure;
@@ -27,6 +28,7 @@ public class SolarForgeStructures {
     public static final RegistryObject<StructureFeature<NoneFeatureConfiguration>> CHARGING_STATION = STRUCTURES.register("cold_star_charging_station",()-> new ChargingStationStructure(NoneFeatureConfiguration.CODEC));
     public static final RegistryObject<StructureFeature<NoneFeatureConfiguration>> MAGICIAN_TOWER = STRUCTURES.register("magician_tower",()-> new MagicianTowerStructure(NoneFeatureConfiguration.CODEC));
     public static final RegistryObject<StructureFeature<NoneFeatureConfiguration>> DIM_SHARD_STRUCTURE = STRUCTURES.register("dimensional_shard_structure",()-> new DimensionalShardStructure(NoneFeatureConfiguration.CODEC));
+    public static final RegistryObject<StructureFeature<NoneFeatureConfiguration>> CRYSTAL_BOSS_ROOM = STRUCTURES.register("crystal_boss_room",()-> new CrystalBossRoomStructure(NoneFeatureConfiguration.CODEC));
     public static void setupStructures() {
         setupMapSpacingAndLand(
                 DUNGEON_ONE_KEY_LOCK.get(),
@@ -58,6 +60,12 @@ public class SolarForgeStructures {
                 new StructureFeatureConfiguration(300 ,
                         250,
                         556143134 ),
+                true);
+        setupMapSpacingAndLand(
+                CRYSTAL_BOSS_ROOM.get(),
+                new StructureFeatureConfiguration(100 ,
+                        80,
+                        956143769 ),
                 true);
         // Add more structures here and so on
     }

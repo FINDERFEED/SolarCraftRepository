@@ -5,7 +5,11 @@
   "disable_mob_generation": true,
   "structures": {
     "structures": {
-
+      "solarforge:crystal_boss_room": {
+        "spacing": 100,
+        "separation": 80,
+        "salt": 956143769
+      }
     }
   },
   "noise": {

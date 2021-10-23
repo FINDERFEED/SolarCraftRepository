@@ -65,14 +65,18 @@
       "solarforge:radiant_tree",
       "solarforge:radiant_berry_bush"
     ],
-    []
+    [
+
+    ]
   ],
   "spawners": {
     "monster":[
 
     ]
   },
-  "starts": [],
+  "starts": [
+    "solarforge:crystal_boss_room"
+  ],
   "player_spawn_friendly": true,
   "spawn_costs": {}
 }

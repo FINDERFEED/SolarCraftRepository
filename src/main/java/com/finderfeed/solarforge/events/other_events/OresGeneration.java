@@ -65,6 +65,8 @@ public class OresGeneration {
         if (event.getCategory().equals(Biome.BiomeCategory.JUNGLE) ) {
             event.getGeneration().getStructures().add(() -> SolarForgeStructureFeatures.CONF_DIM_SHARD_STRUCT);
         }
+
+
     }
 
     private static boolean notNone(BiomeLoadingEvent event){

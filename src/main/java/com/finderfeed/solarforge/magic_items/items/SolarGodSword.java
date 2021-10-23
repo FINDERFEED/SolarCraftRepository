@@ -71,13 +71,13 @@ public class SolarGodSword extends SwordItem implements ITagUser {
 
 
 
-
     @Override
-    public boolean hurtEnemy(ItemStack stack, LivingEntity p_77644_2_, LivingEntity p_77644_3_) {
-        if (getSwordLevel(stack) >= 2){
-            p_77644_2_.hurt(DamageSource.MAGIC,5);
+    public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
+        if ((getSwordLevel(stack) >= 2) && (attacker instanceof Player player)){
+            target.invulnerableTime = 0;
+            target.hurt(DamageSource.playerAttack(player).setMagic().bypassArmor(),5);
         }
-        return super.hurtEnemy(stack, p_77644_2_, p_77644_3_);
+        return super.hurtEnemy(stack, target, attacker);
     }
 
     @Override

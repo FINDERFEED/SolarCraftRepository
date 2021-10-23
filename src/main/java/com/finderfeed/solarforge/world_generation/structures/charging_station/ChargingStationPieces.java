@@ -64,7 +64,7 @@ public class ChargingStationPieces {
         }
 
         public Piece(  ServerLevel p_163670_,CompoundTag tagCompound) {
-            super(FeatureInit.DIMENSIONAL_SHARD_STRUCTURE, tagCompound, p_163670_, (loc)->{
+            super(FeatureInit.CHARGING_PIECE, tagCompound, p_163670_, (loc)->{
                 return makeSettings(Rotation.valueOf(tagCompound.getString("Rot")),loc);
             });
         }

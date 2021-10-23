@@ -117,6 +117,8 @@ public class EventHandler {
         if (event.getCategory() == Biome.BiomeCategory.PLAINS){
             event.getGeneration().addFeature(GenerationStep.Decoration.VEGETAL_DECORATION,FeaturesRegistry.RUNIC_TREE_FEATURE);
         }
+
+
     }
 
     private static boolean notNone(BiomeLoadingEvent event){
@@ -211,10 +213,9 @@ public class EventHandler {
         DamageSource src = event.getSource();
         LivingEntity entity = event.getEntityLiving();
         if (!entity.level.isClientSide &&
-                (src.getEntity() instanceof LivingEntity attacker) &&
                 (src.isMagic()) &&
-                (attacker.getAttributes().hasAttribute(AttributesRegistry.MAGIC_RESISTANCE.get()))){
-            AttributeInstance attr = attacker.getAttribute(AttributesRegistry.MAGIC_RESISTANCE.get());
+                (entity.getAttributes().hasAttribute(AttributesRegistry.MAGIC_RESISTANCE.get()))){
+            AttributeInstance attr = entity.getAttribute(AttributesRegistry.MAGIC_RESISTANCE.get());
             if (attr != null){
                 double res = 1-attr.getValue()/100;
                 event.setAmount((float)(event.getAmount()*res));

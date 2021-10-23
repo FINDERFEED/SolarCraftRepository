@@ -8,6 +8,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.valueproviders.IntProvider;
 import net.minecraft.world.level.LevelSimulatedReader;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration;
@@ -41,7 +42,9 @@ public class RadiantTreeFoliagePlacer extends FoliagePlacer {
                     BlockPos toCheck = new BlockPos(mainpos.getX() + a,mainpos.getY() + h, mainpos.getZ() + b);
                     if (!reader.isStateAtPosition(toCheck,(state)->state.is(BlockTags.LOGS))) {
                         if (isValidPos(mainpos, toCheck)) {
-                            world.accept(toCheck, cfg.foliageProvider.getState(random, toCheck).setValue(BlockStateProperties.DISTANCE, 1));
+                            if (reader.isStateAtPosition(toCheck,(BlockBehaviour.BlockStateBase::isAir))) {
+                                world.accept(toCheck, cfg.foliageProvider.getState(random, toCheck).setValue(BlockStateProperties.DISTANCE, 1));
+                            }
                         }
                     }
                 }

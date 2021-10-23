@@ -30,10 +30,14 @@ public class EffectAmulet extends Item {
     public void inventoryTick(ItemStack p_41404_, Level p_41405_, Entity entity, int p_41407_, boolean p_41408_) {
         if (entity instanceof LivingEntity living){
             if (!living.hasEffect(effect) && !effect.equals(MobEffects.NIGHT_VISION)){
-                living.addEffect(new MobEffectInstance(effect,400,0));
+                if (p_41405_.getGameTime() % 20 == 0) {
+                    living.addEffect(new MobEffectInstance(effect, 400, 0));
+                }
             }
             if (effect.equals(MobEffects.NIGHT_VISION)){
-                living.addEffect(new MobEffectInstance(effect,400,0));
+                if (p_41405_.getGameTime() % 20 == 0) {
+                    living.addEffect(new MobEffectInstance(effect, 400, 0));
+                }
             }
         }
         super.inventoryTick(p_41404_, p_41405_, entity, p_41407_, p_41408_);
