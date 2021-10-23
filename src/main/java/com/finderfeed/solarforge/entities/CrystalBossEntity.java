@@ -36,6 +36,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.player.Abilities;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
@@ -102,6 +103,7 @@ public class CrystalBossEntity extends NoHealthLimitMob implements CrystalBossBu
 
     @Override
     public void tick() {
+        preventFlying();
         super.tick();
         if (!level.isClientSide){
             if (this.entityData.get(GET_OFF_ME)){
@@ -109,17 +111,8 @@ public class CrystalBossEntity extends NoHealthLimitMob implements CrystalBossBu
             }
             ticker++;
 
-            if (debug){
-                if (this.level.getGameTime() % 10 == 0){
-                    this.airStrike();
-                }
-            }else {
-
-                if (this.hasEnemiesNearby(false)) {
-
-                    ATTACK_CHAIN.tick();
-
-                }
+            if (this.hasEnemiesNearby(false)) {
+                ATTACK_CHAIN.tick();
             }
         }
         if (level.isClientSide){
@@ -372,14 +365,14 @@ public class CrystalBossEntity extends NoHealthLimitMob implements CrystalBossBu
     public boolean hasEnemiesNearby(boolean includeCreative){
         return !level.getEntitiesOfClass(Player.class,new AABB(this.position().add(-13,-8,-13),this.position().add(14,8,14)),
                 (pl)->{
-                    return (!pl.isCreative() || includeCreative) && !pl.isSpectator() && (this.distanceTo(pl) <= 12.95);
+                    return (!pl.isCreative() || includeCreative) && !pl.isSpectator() && (this.distanceTo(pl) <= 12.9);
                 }).isEmpty();
     }
 
     public List<Player> getEnemiesNearby(boolean includeCreative){
         return level.getEntitiesOfClass(Player.class,new AABB(this.position().add(-13,-8,-13),this.position().add(14,8,14)),
                 (pl)->{
-                    return (!pl.isCreative() || includeCreative) && !pl.isSpectator() && (this.distanceTo(pl) <= 12.95);
+                    return (!pl.isCreative() || includeCreative) && !pl.isSpectator() && (this.distanceTo(pl) <= 12.9);
                 });
     }
 
@@ -536,6 +529,22 @@ public class CrystalBossEntity extends NoHealthLimitMob implements CrystalBossBu
     public boolean shouldRender(double p_20296_, double p_20297_, double p_20298_) {
         return true;
     }
+
+    private void preventFlying(){
+        if (this.level.getGameTime() % 5 == 0) {
+            for (Player pl : this.getEnemiesNearby(false)){
+                Abilities ab = pl.getAbilities();
+                if (ab.mayfly){
+                    ab.mayfly = false;
+                }
+                if (ab.flying){
+                    ab.flying = false;
+                }
+            }
+        }
+    }
+
+
 }
 
 @Mod.EventBusSubscriber(modid = SolarForge.MOD_ID,bus = Mod.EventBusSubscriber.Bus.FORGE)

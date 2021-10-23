@@ -29,9 +29,10 @@ public class SolarcraftDebugStick extends Item {
 //                new AABB(player.position().add(-10,-10,-10),player.position().add(10,10,10)),(d)->{
 //                    return true;
 //                },1));
-        if (world.getGameTime() % 20 == 0) {
-            world.addParticle(ParticlesList.SOLAR_EXPLOSION_PARTICLE.get(), player.getX(), player.getY()+player.getBbHeight()/2, player.getZ(),
-                    player.getLookAngle().x*0.05, player.getLookAngle().y*0.05, player.getLookAngle().z*0.05);
+        if (player instanceof  Player pl){
+            if (!pl.isCreative() && !pl.isSpectator()){
+                pl.getAbilities().mayfly = true;
+            }
         }
     }
 
