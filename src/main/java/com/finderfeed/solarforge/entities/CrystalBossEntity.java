@@ -6,6 +6,7 @@ import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.events.other_events.event_handler.EventHandler;
 import com.finderfeed.solarforge.for_future_library.entities.BossAttackChain;
 import com.finderfeed.solarforge.for_future_library.helpers.FinderfeedMathHelper;
+import com.finderfeed.solarforge.for_future_library.other.CyclingInterpolatedValue;
 import com.finderfeed.solarforge.magic_items.items.projectiles.CrystalBossAttackHoldingMissile;
 import com.finderfeed.solarforge.magic_items.items.projectiles.FallingStarCrystalBoss;
 import com.finderfeed.solarforge.magic_items.items.projectiles.RandomBadEffectProjectile;
@@ -61,6 +62,10 @@ public class CrystalBossEntity extends NoHealthLimitMob implements CrystalBossBu
     public static final float UP_SPEED_MULTIPLIER_AIR_STRIKE = 0.9F;
     public static final float SIDE_SPEED_MULTIPLIER_AIR_STRIKE = 0.18F;
 
+
+    private CyclingInterpolatedValue rayparticlesvalue = new CyclingInterpolatedValue(RAY_LENGTH,100);
+    private int currentCrystals = 0;
+    private int maxShieldingCrystalsCount;
     private static EntityDataAccessor<Boolean> CHARGING_UP = SynchedEntityData.defineId(CrystalBossEntity.class, EntityDataSerializers.BOOLEAN);
     private static EntityDataAccessor<Boolean> GET_OFF_ME = SynchedEntityData.defineId(CrystalBossEntity.class, EntityDataSerializers.BOOLEAN);
     public static EntityDataAccessor<Float> RAY_STATE_FLOAT_OR_ANGLE = SynchedEntityData.defineId(CrystalBossEntity.class,EntityDataSerializers.FLOAT);
@@ -89,9 +94,14 @@ public class CrystalBossEntity extends NoHealthLimitMob implements CrystalBossBu
     public List<ShieldingCrystalCrystalBoss> entitiesAroundClient = null;
     private int rayPreparingTicks = -1;
 
-    public CrystalBossEntity(EntityType<? extends Mob> p_21368_, Level p_21369_) {
-        super(p_21368_, p_21369_);
-
+    public CrystalBossEntity(EntityType<? extends Mob> p_21368_, Level level) {
+        super(p_21368_, level);
+        switch (level.getDifficulty()){
+            case PEACEFUL -> maxShieldingCrystalsCount = 15;
+            case EASY -> maxShieldingCrystalsCount = 30;
+            case NORMAL -> maxShieldingCrystalsCount = 45;
+            case HARD -> maxShieldingCrystalsCount = 60;
+        }
     }
 
     
@@ -115,6 +125,7 @@ public class CrystalBossEntity extends NoHealthLimitMob implements CrystalBossBu
             }
         }
         if (level.isClientSide){
+            rayparticlesvalue.tick();
             this.entitiesAroundClient = level.getEntitiesOfClass(ShieldingCrystalCrystalBoss.class,
                     new AABB(-16,-16,-16,16,16,16).move(position()),(cr)->{
                         return (cr.distanceTo(this) <= 16 ) ;
@@ -248,40 +259,39 @@ public class CrystalBossEntity extends NoHealthLimitMob implements CrystalBossBu
         if (rounded != RAY_STOPPED){
             if (rounded != RAY_NOT_ACTIVE){
                 if (rounded == RAY_PREPARING){
-                    for (int i = -RAY_LENGTH;i < RAY_LENGTH+1;i++){
-                        double rndx = level.random.nextDouble()*0.5-0.25;
-                        double rndy = level.random.nextDouble()*0.5-0.25;
-                        double rndz = level.random.nextDouble()*0.5-0.25;
-                        level.addParticle(ParticlesList.SMALL_SOLAR_STRIKE_PARTICLE.get(),
-                                this.position().x+i+rndx,
-                                this.position().y+1.6+rndy,
-                                this.position().z+rndz,
-                                rndx*0.1,rndy*0.1,rndz*0.1);
-                    }
 
+                    double[] coords = FinderfeedMathHelper.polarToCartesian(0.4,Math.toRadians(level.getGameTime()*30));
+                    level.addParticle(ParticlesList.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+                            this.position().x+
+                                    rayparticlesvalue.getValue(),
+                            this.position().y+1.6+coords[0],
+                            this.position().z+coords[1],
+                            0,0,0);
+                    level.addParticle(ParticlesList.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+                            this.position().x-
+                                    rayparticlesvalue.getValue(),
+                            this.position().y+1.6+coords[0],
+                            this.position().z+coords[1],
+                            0,0,0);
                 }else{
-                    Vec3 vec = new Vec3(10,0,0).yRot((float)Math.toRadians(state));
-                    Vec3 vec2 = new Vec3(10,0,0).yRot((float)Math.toRadians(state+180));
-                    for (float i = -RAY_LENGTH;i < RAY_LENGTH+1;i+=1.5f){
-                        double rndx = level.random.nextDouble()*0.5-0.25;
-                        double rndy = level.random.nextDouble()*0.5-0.25;
-                        double rndz = level.random.nextDouble()*0.5-0.25;
-                        level.addParticle(ParticlesList.SMALL_SOLAR_STRIKE_PARTICLE.get(),
-                                this.position().x+(vec.x *((float)i/10)) +rndx,
-                                this.position().y+1.6+rndy,
-                                this.position().z+(vec.z *((float)i/10))+rndz,
-                                rndx*0.1,rndy*0.1,rndz*0.1);
-                    }
-                    for (float i = -RAY_LENGTH;i < RAY_LENGTH+1;i+=1.5f){
-                        double rndx = level.random.nextDouble()*0.5-0.25;
-                        double rndy = level.random.nextDouble()*0.5-0.25;
-                        double rndz = level.random.nextDouble()*0.5-0.25;
-                        level.addParticle(ParticlesList.SMALL_SOLAR_STRIKE_PARTICLE.get(),
-                                this.position().x+(vec2.x *((float)i/10)) +rndx,
-                                this.position().y+1.6+rndy,
-                                this.position().z+(vec2.z *((float)i/10))+rndz,
-                                rndx*0.1,rndy*0.1,rndz*0.1);
-                    }
+                    float firstangle = (float)Math.toRadians(state);
+                    float secondangle = (float)Math.toRadians(state+180);
+                    double[] coords = FinderfeedMathHelper.polarToCartesian(0.4,Math.toRadians(level.getGameTime()*30));
+                    Vec3 vec1 = new Vec3(rayparticlesvalue.getValue(),0,coords[0]).yRot(firstangle);
+                    Vec3 vec2 = new Vec3(rayparticlesvalue.getValue(),0,coords[0]).yRot(secondangle);
+
+                    level.addParticle(ParticlesList.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+                                this.position().x +vec1.x,
+                                this.position().y+1.6+coords[1],
+                                this.position().z + vec1.z,
+                                0,0,0);
+
+                    level.addParticle(ParticlesList.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+                                this.position().x  +vec2.x,
+                                this.position().y+1.6 +coords[1],
+                                this.position().z  + vec2.z,
+                                0,0,0);
+
                 }
             }
         }
@@ -319,15 +329,19 @@ public class CrystalBossEntity extends NoHealthLimitMob implements CrystalBossBu
     }
 
     public void spawnShieldingCrystals(){
-        List<ShieldingCrystalCrystalBoss> crystals = this.level.getEntitiesOfClass(ShieldingCrystalCrystalBoss.class,new AABB(-10,-10,-10,10,10,10).move(position()));
-        for (int i = 0; i < 4;i++){
-            if (crystals.size() + i > 12){
-                break;
+        if (currentCrystals < maxShieldingCrystalsCount) {
+            List<ShieldingCrystalCrystalBoss> crystals = this.level.getEntitiesOfClass(ShieldingCrystalCrystalBoss.class, new AABB(-10, -10, -10, 10, 10, 10).move(position()));
+            for (int i = 0; i < 4; i++) {
+                if (crystals.size() + i > 8) {
+                    break;
+                }
+                ShieldingCrystalCrystalBoss crystal = new ShieldingCrystalCrystalBoss(Entities.CRYSTAL_BOSS_SHIELDING_CRYSTAL.get(), level);
+                Vec3 positon = this.position().add((level.random.nextDouble() * 4.5 + 3) * FinderfeedMathHelper.randomPlusMinus(), 0, (level.random.nextDouble() * 4.5 + 3) * FinderfeedMathHelper.randomPlusMinus());
+                crystal.setPos(positon);
+                level.addFreshEntity(crystal);
+                currentCrystals++;
+
             }
-            ShieldingCrystalCrystalBoss crystal = new ShieldingCrystalCrystalBoss(Entities.CRYSTAL_BOSS_SHIELDING_CRYSTAL.get(), level);
-            Vec3 positon = this.position().add((level.random.nextDouble() * 4.5 +3)* FinderfeedMathHelper.randomPlusMinus(), 0, (level.random.nextDouble() * 4.5 +3)* FinderfeedMathHelper.randomPlusMinus());
-            crystal.setPos(positon);
-            level.addFreshEntity(crystal);
         }
     }
 
@@ -392,12 +406,14 @@ public class CrystalBossEntity extends NoHealthLimitMob implements CrystalBossBu
         cmp.putFloat("ray_state",state);
         cmp.putInt("ticker",ticker);
         cmp.putInt("ray_preparing",rayPreparingTicks);
+        cmp.putInt("crystals",currentCrystals);
         return super.save(cmp);
     }
 
     @Override
     public void load(CompoundTag cmp) {
         ATTACK_CHAIN.load(cmp);
+        currentCrystals = cmp.getInt("crystals");
         this.ticker = cmp.getInt("ticker");
         this.rayPreparingTicks = cmp.getInt("ray_preparing");
         float c = cmp.getFloat("ray_state");

@@ -82,6 +82,9 @@ public class ClientHelpers {
         }
     }
 
+    public static void playsoundInEars(SoundEvent event,float volume,float pitch){
+        Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(event,volume,pitch));
+    }
 
     public static void playTotemAnimation( ){
         LocalPlayer ent = Minecraft.getInstance().player;

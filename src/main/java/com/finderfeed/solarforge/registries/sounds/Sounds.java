@@ -21,4 +21,7 @@ public class Sounds {
     public static final RegistryObject<SoundEvent> ZAP_TURRET_SHOT = SOUND_EVENTS.register("zap_turret_shot",()-> new SoundEvent(new ResourceLocation("solarforge","zap_turret_shot")));
     public static final RegistryObject<SoundEvent> CRYSTAL_HIT = SOUND_EVENTS.register("crystal_hit",()-> new SoundEvent(new ResourceLocation("solarforge","crystal_hit")));
     public static final RegistryObject<SoundEvent> SOLAR_EXPLOSION = SOUND_EVENTS.register("solar_explosion",()-> new SoundEvent(new ResourceLocation("solarforge","solar_explosion")));
+    public static final RegistryObject<SoundEvent> NIGHT_DIM = SOUND_EVENTS.register("night_beggining",()-> new SoundEvent(new ResourceLocation("solarforge","night_beggining")));
+    public static final RegistryObject<SoundEvent> AMBIENT_DIM_1 = SOUND_EVENTS.register("ambient_one",()-> new SoundEvent(new ResourceLocation("solarforge","ambient_one")));
+    public static final RegistryObject<SoundEvent> AMBIENT_DIM_2 = SOUND_EVENTS.register("ambient_two",()-> new SoundEvent(new ResourceLocation("solarforge","ambient_two")));
 }

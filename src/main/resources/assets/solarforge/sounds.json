@@ -40,5 +40,14 @@
   },
   "solar_explosion": {
     "sounds": ["solarforge:solar_explosion"]
+  },
+  "ambient_one": {
+    "sounds": ["solarforge:dimension/ambient_one"]
+  },
+  "ambient_two": {
+    "sounds": ["solarforge:dimension/ambient2"]
+  },
+  "night_beggining": {
+    "sounds": ["solarforge:dimension/night_beggining"]
   }
 }

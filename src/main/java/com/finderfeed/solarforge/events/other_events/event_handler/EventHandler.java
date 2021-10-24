@@ -1,6 +1,7 @@
 package com.finderfeed.solarforge.events.other_events.event_handler;
 
 
+import com.finderfeed.solarforge.ClientHelpers;
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.SolarCraftAttributeModifiers;
 import com.finderfeed.solarforge.SolarForge;
@@ -15,8 +16,12 @@ import com.finderfeed.solarforge.registries.SolarcraftDamageSources;
 import com.finderfeed.solarforge.registries.attributes.AttributesRegistry;
 import com.finderfeed.solarforge.registries.effects.EffectsRegister;
 import com.finderfeed.solarforge.registries.items.ItemsRegister;
+import com.finderfeed.solarforge.registries.sounds.Sounds;
 import com.finderfeed.solarforge.world_generation.features.FeaturesRegistry;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.resources.sounds.SoundInstance;
 import net.minecraft.core.Registry;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.damagesource.DamageSource;
@@ -24,6 +29,7 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.item.MapItem;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.entity.Entity;
@@ -58,37 +64,52 @@ public class EventHandler {
 
     @SubscribeEvent
     public static void playerTickEvent(final TickEvent.PlayerTickEvent event){
-        Player player = event.player;
-        Level world = player.level;
+        if (event.phase == TickEvent.Phase.START) {
+            Player player = event.player;
+            Level world = player.level;
+            if (world.isClientSide) {
+                if ((world.dimension() == RADIANT_LAND_KEY)) {
+                    if ((world.getDayTime() % 13001 == 0)) {
+                        player.sendMessage(new TranslatableComponent("radiant_dimension.nightfall").withStyle(ChatFormatting.RED), player.getUUID());
+                        ClientHelpers.playsoundInEars(Sounds.NIGHT_DIM.get(), 1, 1);
+                    } else if ((world.getDayTime() % 14400 == 0)) {
 
-
-        if (!world.isClientSide && !player.isCreative()){
-            if ((world.getGameTime() % 20 == 1)&& !Helpers.isDay(world) &&  (world.dimension() == RADIANT_LAND_KEY)){
-                if (!Helpers.playerInBossfight(player)) {
-                    player.addEffect(new MobEffectInstance(EffectsRegister.STAR_GAZE_EFFECT.get(), 400, 0));
-                }
-            }
-
-            if (player.hasEffect(EffectsRegister.STAR_GAZE_EFFECT.get())){
-                if (world.getGameTime() % 80 == 1){
-                    DamageSource src = SolarcraftDamageSources.STARGAZE.bypassArmor().setMagic();
-                    player.hurt(src,4);
-                }
-            }
-        }
-
-
-
-        if (!world.isClientSide && (world.getGameTime() % 20 == 1) ){
-            AttributeInstance attr = player.getAttribute(ForgeMod.REACH_DISTANCE.get());
-            if (attr != null){
-                if (FinderfeedMathHelper.PlayerThings.doPlayerHasItem(player.getInventory(),ItemsRegister.REACH_GLOVES.get())){
-                    if (!attr.hasModifier(SolarCraftAttributeModifiers.REACH_2_MODIFIER)){
-                        attr.addTransientModifier(SolarCraftAttributeModifiers.REACH_2_MODIFIER);
+                        player.playSound(Sounds.AMBIENT_DIM_1.get(), 100, 1);
+                    } else if ((world.getDayTime() % 16800 == 0)) {
+                        ClientHelpers.playsoundInEars(Sounds.AMBIENT_DIM_2.get(), 1, 1);
+                    } else if ((world.getDayTime() % 20000) == 0) {
+                        ClientHelpers.playsoundInEars(Sounds.AMBIENT_DIM_1.get(), 1, 1);
                     }
-                }else{
-                    if (attr.hasModifier(SolarCraftAttributeModifiers.REACH_2_MODIFIER)){
-                        attr.removeModifier(SolarCraftAttributeModifiers.REACH_2_MODIFIER);
+                }
+            }
+
+            if (!world.isClientSide && !player.isCreative()) {
+                if ((world.getGameTime() % 20 == 1) && !(world.getDayTime() % 24000 <= 13000) && (world.dimension() == RADIANT_LAND_KEY)) {
+                    if (!Helpers.playerInBossfight(player)) {
+                        player.addEffect(new MobEffectInstance(EffectsRegister.STAR_GAZE_EFFECT.get(), 400, 0));
+                    }
+                }
+
+                if (player.hasEffect(EffectsRegister.STAR_GAZE_EFFECT.get())) {
+                    if (world.getGameTime() % 80 == 1) {
+                        DamageSource src = SolarcraftDamageSources.STARGAZE.bypassArmor().setMagic();
+                        player.hurt(src, 4);
+                    }
+                }
+            }
+
+
+            if (!world.isClientSide && (world.getGameTime() % 20 == 1)) {
+                AttributeInstance attr = player.getAttribute(ForgeMod.REACH_DISTANCE.get());
+                if (attr != null) {
+                    if (FinderfeedMathHelper.PlayerThings.doPlayerHasItem(player.getInventory(), ItemsRegister.REACH_GLOVES.get())) {
+                        if (!attr.hasModifier(SolarCraftAttributeModifiers.REACH_2_MODIFIER)) {
+                            attr.addTransientModifier(SolarCraftAttributeModifiers.REACH_2_MODIFIER);
+                        }
+                    } else {
+                        if (attr.hasModifier(SolarCraftAttributeModifiers.REACH_2_MODIFIER)) {
+                            attr.removeModifier(SolarCraftAttributeModifiers.REACH_2_MODIFIER);
+                        }
                     }
                 }
             }
