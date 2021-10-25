@@ -102,6 +102,11 @@ public class RandomBadEffectProjectile extends AbstractHurtingProjectile {
         }
     }
 
+    @Override
+    public boolean isAttackable() {
+        return false;
+    }
+
     public void explode(){
         if (this.level.isClientSide){
             for (int i = 0; i < 12;i++){

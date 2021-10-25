@@ -2,11 +2,13 @@ package com.finderfeed.solarforge.SolarAbilities.AbilityClasses;
 
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.capabilities.capability_mana.CapabilitySolarMana;
+import com.finderfeed.solarforge.events.my_events.AbilityUseEvent;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraftforge.common.MinecraftForge;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -27,6 +29,10 @@ public abstract class AbstractAbility {
     }
 
     public void cast(ServerPlayer entity, ServerLevel world){
+        AbilityUseEvent event = new AbilityUseEvent(this,entity);
+
+        MinecraftForge.EVENT_BUS.post(event);
+        if (event.isCanceled()) return;
         if (!entity.isDeadOrDying()) {
             allowed = true;
             if (!canUse(entity)){

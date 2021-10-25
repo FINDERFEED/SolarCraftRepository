@@ -28,7 +28,8 @@ public enum Achievement {
     TRANSMUTE_GEM("transmute_gem",4,ItemsRegister.BLUE_GEM_ENCHANCED.get().getDefaultInstance(), new TranslatableComponent("ach.transmute_gem"),20,new TranslatableComponent("pre.transmute_gem"),new TranslatableComponent("aft.transmute_gem")),
     DIMENSIONAL_SHARD_DUNGEON("dim_shard_dungeon",5,ItemsRegister.SOLAR_STONE_CHISELED.get().getDefaultInstance(), new TranslatableComponent("ach.dim_shard_dungeon"),21,new TranslatableComponent("pre.dim_shard_dungeon"),new TranslatableComponent("aft.dim_shard_dungeon")),
     RUNIC_ENERGY_REPEATER("runic_energy_repeater",5,ItemsRegister.REPEATER.get().getDefaultInstance(), new TranslatableComponent("ach.runic_energy_repeater"),22,new TranslatableComponent("pre.runic_energy_repeater"),new TranslatableComponent("aft.runic_energy_repeater")),
-    DIMENSION_CORE("dimension_core",7,ItemsRegister.DIMENSION_CORE.get().getDefaultInstance(), new TranslatableComponent("ach.dimension_core"),23,new TranslatableComponent("pre.dimension_core"),new TranslatableComponent("aft.dimension_core"));
+    DIMENSION_CORE("dimension_core",7,ItemsRegister.DIMENSION_CORE.get().getDefaultInstance(), new TranslatableComponent("ach.dimension_core"),23,new TranslatableComponent("pre.dimension_core"),new TranslatableComponent("aft.dimension_core")),
+    KILL_CRYSTAL_BOSS("crystal_boss",8,ItemsRegister.CRYSTALLITE_CORE.get().getDefaultInstance(), new TranslatableComponent("ach.crystal_boss"),24,new TranslatableComponent("pre.crystal_boss"),new TranslatableComponent("aft.crystal_boss"));
 
 
 

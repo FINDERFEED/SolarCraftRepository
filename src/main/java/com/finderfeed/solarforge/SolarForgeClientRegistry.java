@@ -105,7 +105,6 @@ public class SolarForgeClientRegistry {
         BlockEntityRenderers.register(TileEntitiesRegistry.SOLAR_CORE_TILE.get(), SolarCoreRenderer::new);
         BlockEntityRenderers.register(TileEntitiesRegistry.AURA_HEALER_TILE.get(), AuraHealerRenderer::new);
         BlockEntityRenderers.register(TileEntitiesRegistry.RAY_TRAP_TILE_ENTITY.get(), RayTrapTileEntityRenderer::new);
-//        BlockEntityRenderers.register(TileEntitiesRegistry.PORTAL.get(), RadiantPortalTileRender::new);
         BlockEntityRenderers.register(TileEntitiesRegistry.PORTAL_CREATOR.get(), PortalCreatorRenderer::new);
         BlockEntityRenderers.register(TileEntitiesRegistry.WORMHOLE.get(), WormholeRenderer::new);
 

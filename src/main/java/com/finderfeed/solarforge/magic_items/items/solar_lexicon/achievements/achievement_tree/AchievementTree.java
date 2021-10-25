@@ -73,6 +73,7 @@ public class AchievementTree {
         tree.addAchievementRequirements(Achievement.SOLAR_RUNE,Achievement.RUNE_ENERGY_DEPOSIT);
         tree.addAchievementRequirements(Achievement.RUNIC_ENERGY_REPEATER,Achievement.RUNE_ENERGY_DEPOSIT,Achievement.USE_SOLAR_INFUSER,Achievement.ACQUIRE_COLD_STAR_ACTIVATED);
         tree.addAchievementRequirements(Achievement.DIMENSION_CORE,Achievement.CRAFT_SOLAR_ENERGY_GENERATOR);
+        tree.addAchievementRequirements(Achievement.KILL_CRYSTAL_BOSS,Achievement.DIMENSION_CORE);
         return tree;
     }
 

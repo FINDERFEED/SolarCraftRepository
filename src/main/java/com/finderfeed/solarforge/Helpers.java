@@ -107,6 +107,7 @@ public class Helpers {
             case RUNE_ENERGY_DEPOSIT -> "It seems that this pylon contains some sort of energy.";
             case RUNIC_ENERGY_REPEATER -> "Energy from those pylons can be a solution of this problem!";
             case DIMENSION_CORE -> "A cursed world in all its grace.";
+            case KILL_CRYSTAL_BOSS -> "High-tech defensive nightmare with a very valuable core.";
         };
     }
 

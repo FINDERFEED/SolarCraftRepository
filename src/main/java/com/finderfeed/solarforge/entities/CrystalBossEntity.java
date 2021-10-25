@@ -2,7 +2,9 @@ package com.finderfeed.solarforge.entities;
 
 
 import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.SolarAbilities.AbilityClasses.AbstractAbility;
 import com.finderfeed.solarforge.SolarForge;
+import com.finderfeed.solarforge.events.my_events.AbilityUseEvent;
 import com.finderfeed.solarforge.events.other_events.event_handler.EventHandler;
 import com.finderfeed.solarforge.for_future_library.entities.BossAttackChain;
 import com.finderfeed.solarforge.for_future_library.helpers.FinderfeedMathHelper;
@@ -10,6 +12,7 @@ import com.finderfeed.solarforge.for_future_library.other.CyclingInterpolatedVal
 import com.finderfeed.solarforge.magic_items.items.projectiles.CrystalBossAttackHoldingMissile;
 import com.finderfeed.solarforge.magic_items.items.projectiles.FallingStarCrystalBoss;
 import com.finderfeed.solarforge.magic_items.items.projectiles.RandomBadEffectProjectile;
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Achievement;
 import com.finderfeed.solarforge.misc_things.CrystalBossBuddy;
 import com.finderfeed.solarforge.misc_things.NoHealthLimitMob;
 import com.finderfeed.solarforge.misc_things.ParticlesList;
@@ -60,7 +63,7 @@ public class CrystalBossEntity extends NoHealthLimitMob implements CrystalBossBu
     public static final float MISSILE_DAMAGE = 1.5F;
     public static final float MINES_DAMAGE = 3F;
     public static final float AIR_STRIKE_DAMAGE = 3F;
-    public static final float RIP_RAY_DAMAGE = 3F;
+    public static final float RIP_RAY_DAMAGE = 5F;
     public static final float UP_SPEED_MULTIPLIER_AIR_STRIKE = 0.9F;
     public static final float SIDE_SPEED_MULTIPLIER_AIR_STRIKE = 0.18F;
 
@@ -121,9 +124,17 @@ public class CrystalBossEntity extends NoHealthLimitMob implements CrystalBossBu
             if (this.hasEnemiesNearby(false)) {
                 ATTACK_CHAIN.tick();
             }else{
-                if (this.tickCount % 20 == 0){
-                    this.heal(20);
+                if (level.getGameTime() % 20 == 0) {
+                    if (this.tickCount % 20 == 0) {
+                        this.heal(20);
+                    }
+                    getAlliesNearby().forEach((ally) -> {
+                        ally.heal(20);
+                    });
                 }
+            }
+            if (this.isDeadOrDying()){
+                this.getEnemiesNearby(false).forEach((player -> Helpers.fireProgressionEvent(player, Achievement.KILL_CRYSTAL_BOSS)));
             }
         }
         if (level.isClientSide){
@@ -384,6 +395,14 @@ public class CrystalBossEntity extends NoHealthLimitMob implements CrystalBossBu
                 });
     }
 
+
+    public List<LivingEntity> getAlliesNearby(){
+        return level.getEntitiesOfClass(LivingEntity.class,new AABB(this.position().add(-13,-8,-13),this.position().add(14,8,14)),
+                (pl)->{
+            return pl instanceof CrystalBossBuddy;
+                });
+    }
+
     public static AttributeSupplier.Builder createAttributes(){
         return NoHealthLimitMob.createEntityAttributes()
                 .add(AttributesRegistry.MAXIMUM_HEALTH_NO_LIMIT.get(),2500)
@@ -584,8 +603,8 @@ class CancelAttack{
 @Mod.EventBusSubscriber(modid = SolarForge.MOD_ID,bus = Mod.EventBusSubscriber.Bus.FORGE)
 class AntiCheat{
 
-    private static AABB CHECK_AABB = new AABB(-30,-256,-30,30,256,30);
-
+    private static final AABB CHECK_AABB = new AABB(-30,-256,-30,30,256,30);
+    private static final AABB CHECK_AABB_BIGGER = new AABB(-100,-256,-100,100,256,100);
     @SubscribeEvent
     public static void cancelBlockBreak(BlockEvent.BreakEvent event){
         Player pl = event.getPlayer();
@@ -609,7 +628,17 @@ class AntiCheat{
             }
         }
     }
-
+    @SubscribeEvent
+    public static void cancelAbilities(AbilityUseEvent event){
+        ServerPlayer player = event.getPlayer();
+        AbstractAbility ability = event.getAbility();
+        if ((player.level.dimension() == EventHandler.RADIANT_LAND_KEY) && EventHandler.ALLOWED_ABILITIES_DURING_BOSSFIGHT.contains(ability)) {
+            if (!player.level.getEntitiesOfClass(CrystalBossEntity.class, CHECK_AABB_BIGGER.move(player.position())).isEmpty()) {
+                player.sendMessage(new TranslatableComponent("player.cant_use_ability_near_boss").withStyle(ChatFormatting.RED),player.getUUID());
+                event.setCanceled(true);
+            }
+        }
+    }
 
 
     @SubscribeEvent
@@ -627,7 +656,5 @@ class AntiCheat{
             }
 
     }
-
-
 
 }

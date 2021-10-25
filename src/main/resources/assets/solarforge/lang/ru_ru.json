@@ -472,7 +472,19 @@
   "solarcraft_button.solar_dispel": "Очищение",
   "ability.buy_ability": "Подтвердить",
   "forge.take": "Поглотить",
-  "forge.moved": "Поглотить энергию(теряется при смерти). (Способности были передвинуты в другой экран, смотрите настройки горячих клавиш)"
+  "forge.moved": "Поглотить энергию(теряется при смерти). (Способности были передвинуты в другой экран, смотрите настройки горячих клавиш)",
+  "solar_fragment.gloves_of_reach": "Reach gloves",
+  "gloves_of_reach.lore": "For those who need bigger hands. While in your inventory increases reach distance by 2.",
+  "entity.solarforge.crystal_boss": "Древний защитный кристалл",
+  "player.boss_cant_break_block":"Неизвестная сила запрещает вам ломать блоки здесь.",
+  "player.boss_cant_place_block":"Неизвестная сила запрещает вам ставить блоки.",
+  "player.boss_cant_explode_blocks": "Неизвестная сила запрещает вам взрывать что либо здесь.",
+  "radiant_dimension.nightfall": "Ночь приходит и проклятая звезда пронзает землю своим взглядом.",
+  "item.solarforge.crystallite_core": "Кристаллитовое ядро (WIP)",
+  "player.cant_use_ability_near_boss": "Неизвестная сила запрещает вам использовать эту способность.",
+  "ach.crystal_boss": "Древний кристалл",
+  "pre.crystal_boss": "Финальная битва?",
+  "aft.crystal_boss": "Финальная битва?"
 
 
 

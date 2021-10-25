@@ -476,11 +476,15 @@
   "solar_fragment.gloves_of_reach": "Reach gloves",
   "gloves_of_reach.lore": "For those who need bigger hands. While in your inventory increases reach distance by 2.",
   "entity.solarforge.crystal_boss": "Ancient Defence Crystal",
-  "player.boss_cant_break_block": "You cant break blocks near the boss!",
-  "player.boss_cant_place_block": "You cant place blocks near the boss!",
-  "player.boss_cant_explode_blocks": "You cant explode something near the boss!",
+  "player.boss_cant_break_block": "Unknown force restricts you from breaking blocks here.",
+  "player.boss_cant_place_block": "Unknown force restricts you from placing blocks here.",
+  "player.boss_cant_explode_blocks": "Unknown force restricts you from exploding something here.",
   "radiant_dimension.nightfall": "Night comes and the cursed star gazes upon the land.",
-  "item.solarforge.crystallite_core": "Crystallite Core (WIP)"
+  "item.solarforge.crystallite_core": "Crystallite Core (WIP)",
+  "player.cant_use_ability_near_boss": "Unknown force restricts you from casting this ability here.",
+  "ach.crystal_boss": "Ancient Crystal",
+  "pre.crystal_boss": "The final battle?",
+  "aft.crystal_boss": "The final battle?"
 
 
 
