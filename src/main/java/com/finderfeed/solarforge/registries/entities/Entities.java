@@ -66,4 +66,8 @@ public class Entities {
     public static final RegistryObject<EntityType<RipRayGenerator>> RIP_RAY_GENERATOR = ENTITY_TYPE_REGISTER.register("rip_ray_generator", () ->
             EntityType.Builder.<RipRayGenerator>of(RipRayGenerator::new, MobCategory.MISC)
                     .sized(0.8f, 0.45f).updateInterval(5).build("rip_ray_generator"));
+
+    public static final RegistryObject<EntityType<LegendaryItem>> LEGENDARY_ITEM = ENTITY_TYPE_REGISTER.register("legendary_item", () ->
+            EntityType.Builder.<LegendaryItem>of(LegendaryItem::new, MobCategory.MISC)
+                    .sized(0.25F, 0.25F).clientTrackingRange(6).updateInterval(20).build("legendary_item"));
 }

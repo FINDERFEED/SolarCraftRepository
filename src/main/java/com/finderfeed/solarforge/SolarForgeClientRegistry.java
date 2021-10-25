@@ -174,6 +174,7 @@ public class SolarForgeClientRegistry {
         event.registerEntityRenderer(Entities.FALLING_STAR_CRYSTAL_BOSS.get(), FallingStarRenderer::new);
         event.registerEntityRenderer(Entities.RANDOM_BAD_EFFECT_PROJECTILE.get(), RandomBadEffectProjectileRenderer::new);
         event.registerEntityRenderer(Entities.RIP_RAY_GENERATOR.get(), RipRayGeneratorRender::new);
+        event.registerEntityRenderer(Entities.LEGENDARY_ITEM.get(), LegendaryItemRenderer::new);
     }
 
 }

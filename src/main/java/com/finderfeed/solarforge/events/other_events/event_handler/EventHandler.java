@@ -67,24 +67,25 @@ public class EventHandler {
         if (event.phase == TickEvent.Phase.START) {
             Player player = event.player;
             Level world = player.level;
-            if (world.isClientSide) {
+            long actualtime = world.getDayTime()%24000;
+            if (world.isClientSide && !Helpers.isDay(world)) {
                 if ((world.dimension() == RADIANT_LAND_KEY)) {
-                    if ((world.getDayTime() % 13001 == 0)) {
+                    if ((actualtime % 13000 == 0)) {
                         player.sendMessage(new TranslatableComponent("radiant_dimension.nightfall").withStyle(ChatFormatting.RED), player.getUUID());
                         ClientHelpers.playsoundInEars(Sounds.NIGHT_DIM.get(), 1, 1);
-                    } else if ((world.getDayTime() % 14400 == 0)) {
+                    } else if ((actualtime % 14400 == 0)) {
 
-                        player.playSound(Sounds.AMBIENT_DIM_1.get(), 100, 1);
-                    } else if ((world.getDayTime() % 16800 == 0)) {
+                        ClientHelpers.playsoundInEars(Sounds.AMBIENT_DIM_1.get(), 1, 1);
+                    } else if ((actualtime % 16800 == 0)) {
                         ClientHelpers.playsoundInEars(Sounds.AMBIENT_DIM_2.get(), 1, 1);
-                    } else if ((world.getDayTime() % 20000) == 0) {
+                    } else if ((actualtime % 20000) == 0) {
                         ClientHelpers.playsoundInEars(Sounds.AMBIENT_DIM_1.get(), 1, 1);
                     }
                 }
             }
 
             if (!world.isClientSide && !player.isCreative()) {
-                if ((world.getGameTime() % 20 == 1) && !(world.getDayTime() % 24000 <= 13000) && (world.dimension() == RADIANT_LAND_KEY)) {
+                if ((world.getGameTime() % 20 == 1) && !(actualtime % 24000 <= 13000) && (world.dimension() == RADIANT_LAND_KEY)) {
                     if (!Helpers.playerInBossfight(player)) {
                         player.addEffect(new MobEffectInstance(EffectsRegister.STAR_GAZE_EFFECT.get(), 400, 0));
                     }

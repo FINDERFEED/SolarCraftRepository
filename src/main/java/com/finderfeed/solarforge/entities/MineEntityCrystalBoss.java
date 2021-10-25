@@ -104,7 +104,10 @@ public class MineEntityCrystalBoss extends PathfinderMob implements CrystalBossB
         super.defineSynchedData();
     }
 
-
+    @Override
+    public boolean isAttackable() {
+        return false;
+    }
 
     @Override
     public Packet<?> getAddEntityPacket() {

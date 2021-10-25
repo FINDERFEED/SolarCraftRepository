@@ -140,6 +140,9 @@ public class ItemsRegister {
     //runes
     public static final RegistryObject<Item> SOLAR_RUNE_BASE = ITEMS.register("runestone",()->new RuneBase(new Item.Properties().tab(SolarForge.SOLAR_GROUP_MATERIALS)));
 
+    public static final RegistryObject<Item> CRYSTALLITE_CORE = ITEMS.register("crystallite_core",()->new Item(new Item.Properties().tab(SolarForge.SOLAR_GROUP_MATERIALS)));
+
+
     public static final RegistryObject<Item> SOLAR_RUNE_ZETA = ITEMS.register("solar_rune_zeta",()->new Item(new Item.Properties().tab(SolarForge.SOLAR_GROUP_MATERIALS)));
     public static final RegistryObject<Item> SOLAR_RUNE_ARDO = ITEMS.register("solar_rune_ardo",()->new Item(new Item.Properties().tab(SolarForge.SOLAR_GROUP_MATERIALS)));
     public static final RegistryObject<Item> SOLAR_RUNE_URBA = ITEMS.register("solar_rune_urba",()->new Item(new Item.Properties().tab(SolarForge.SOLAR_GROUP_MATERIALS)));

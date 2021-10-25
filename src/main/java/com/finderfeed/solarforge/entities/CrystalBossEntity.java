@@ -15,6 +15,7 @@ import com.finderfeed.solarforge.misc_things.NoHealthLimitMob;
 import com.finderfeed.solarforge.misc_things.ParticlesList;
 import com.finderfeed.solarforge.registries.attributes.AttributesRegistry;
 import com.finderfeed.solarforge.registries.entities.Entities;
+import com.finderfeed.solarforge.registries.items.ItemsRegister;
 import com.finderfeed.solarforge.registries.sounds.Sounds;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
@@ -37,6 +38,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Abilities;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.EntityHitResult;
@@ -552,7 +554,13 @@ public class CrystalBossEntity extends NoHealthLimitMob implements CrystalBossBu
         }
     }
 
-
+    @Override
+    protected void dropAllDeathLoot(DamageSource p_21192_) {
+        super.dropAllDeathLoot(p_21192_);
+        LegendaryItem item = new LegendaryItem(level, new ItemStack(ItemsRegister.CRYSTALLITE_CORE.get(),1));
+        item.setPos(this.position().add(0,this.getBbHeight()/2,0));
+        level.addFreshEntity(item);
+    }
 }
 
 @Mod.EventBusSubscriber(modid = SolarForge.MOD_ID,bus = Mod.EventBusSubscriber.Bus.FORGE)
@@ -601,6 +609,8 @@ class AntiCheat{
             }
         }
     }
+
+
 
     @SubscribeEvent
     public static void cancelExplosions(ExplosionEvent.Start event){
