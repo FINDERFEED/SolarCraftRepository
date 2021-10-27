@@ -60,8 +60,8 @@ public class RunicTableContainerScreen extends AbstractContainerScreen<RunicTabl
     @Override
     public void render(PoseStack stack, int rouseX, int rouseY, float partialTicks) {
         this.renderBackground(stack);
-        this.renderTooltip(stack,rouseX,rouseY);
         super.render(stack, rouseX, rouseY, partialTicks);
+        this.renderTooltip(stack,rouseX,rouseY);
     }
 
     @Override

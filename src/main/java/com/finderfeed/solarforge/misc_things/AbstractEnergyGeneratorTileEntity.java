@@ -2,9 +2,12 @@ package com.finderfeed.solarforge.misc_things;
 
 import com.finderfeed.solarforge.Helpers;
 
+import com.finderfeed.solarforge.for_future_library.helpers.CompoundNBTHelper;
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
 import com.finderfeed.solarforge.packet_handler.packets.TileEnergyGeneratorUpdate;
 import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
+import net.minecraft.network.Connection;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -16,6 +19,7 @@ import net.minecraft.core.BlockPos;
 
 import net.minecraftforge.fmllegacy.network.PacketDistributor;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,24 +45,21 @@ public abstract class AbstractEnergyGeneratorTileEntity extends BlockEntity impl
             }else{
                 tile.SOLAR_ENERGY = tile.getEnergyCap();
             }
-
-
+            if (tile.level.getGameTime() % 20 == 0){
+                tile.setChanged();
+                tile.level.sendBlockUpdated(pos,blockState,blockState,3);
+            }
         }
 
         if (!world.isClientSide){
-
-
             tile.count = tile.poslist.size();
             List<BlockPos> toRemove = new ArrayList<>();
             for (BlockPos CONNECTED_TO : tile.poslist) {
-                boolean a = false;
-
                 if (CONNECTED_TO != Helpers.NULL_POS && (tile.level.getBlockEntity(CONNECTED_TO) instanceof AbstractSolarNetworkRepeater
                         || tile.level.getBlockEntity(CONNECTED_TO) instanceof IEnergyUser
                         || tile.level.getBlockEntity(CONNECTED_TO) instanceof AbstractSolarCore)) {
                     if (tile.level.getBlockEntity(CONNECTED_TO) instanceof IEnergyUser) {
                         IEnergyUser user = (IEnergyUser) tile.level.getBlockEntity(CONNECTED_TO);
-
                         if (user.requriesEnergy()) {
                             if (tile.getEnergy() >= tile.getEnergyFlowAmount()) {
                                 int flag = user.giveEnergy(tile.getEnergyFlowAmount());
@@ -88,15 +89,10 @@ public abstract class AbstractEnergyGeneratorTileEntity extends BlockEntity impl
                         }
                     }
                 } else {
-
                     toRemove.add(CONNECTED_TO);
-                    a = true;
                 }
-
-                    SolarForgePacketHandler.INSTANCE.send(PacketDistributor.NEAR.with(PacketDistributor.TargetPoint.p(pos.getX(), pos.getY(), pos.getZ(), 40, world.dimension())),
-                            new TileEnergyGeneratorUpdate(pos, CONNECTED_TO, tile.poslist.indexOf(CONNECTED_TO), a));
-
-
+//                    SolarForgePacketHandler.INSTANCE.send(PacketDistributor.NEAR.with(PacketDistributor.TargetPoint.p(pos.getX(), pos.getY(), pos.getZ(), 40, world.dimension())),
+//                            new TileEnergyGeneratorUpdate(pos, CONNECTED_TO, tile.poslist.indexOf(CONNECTED_TO), a));
             }
             tile.poslist.removeAll(toRemove);
         }
@@ -108,24 +104,37 @@ public abstract class AbstractEnergyGeneratorTileEntity extends BlockEntity impl
     public abstract int getEnergyPerSecond();
     public abstract boolean getConditionToFunction();
 
+    @Nullable
+    @Override
+    public ClientboundBlockEntityDataPacket getUpdatePacket() {
+        return new ClientboundBlockEntityDataPacket(this.worldPosition,3,this.save(new CompoundTag()));
+    }
+
+    @Override
+    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
+        this.load(pkt.getTag());
+    }
+
     @Override
     public CompoundTag save(CompoundTag p_189515_1_) {
-        p_189515_1_.putInt("sizepos",count);
-        for (int i = 0;i<poslist.size();i++) {
-            p_189515_1_.putInt("xpos"+i, poslist.get(i).getX());
-            p_189515_1_.putInt("ypos"+i, poslist.get(i).getY());
-            p_189515_1_.putInt("zpos"+i, poslist.get(i).getZ());
-        }
+//        p_189515_1_.putInt("sizepos",count);
+//        for (int i = 0;i<poslist.size();i++) {
+//            p_189515_1_.putInt("xpos"+i, poslist.get(i).getX());
+//            p_189515_1_.putInt("ypos"+i, poslist.get(i).getY());
+//            p_189515_1_.putInt("zpos"+i, poslist.get(i).getZ());
+//        }
+        CompoundNBTHelper.writeBlockPosList("positions",poslist,p_189515_1_);
         p_189515_1_.putInt("energy_level",SOLAR_ENERGY);
         return super.save(p_189515_1_);
     }
 
     @Override
     public void load( CompoundTag p_230337_2_) {
-        count = p_230337_2_.getInt("sizepos");
-        for (int i = 0;i<count;i++) {
-            poslist.add(new BlockPos(p_230337_2_.getInt("xpos"+i), p_230337_2_.getInt("ypos"+i), p_230337_2_.getInt("zpos"+i)));
-        }
+//        count = p_230337_2_.getInt("sizepos");
+//        for (int i = 0;i<count;i++) {
+//            poslist.add(new BlockPos(p_230337_2_.getInt("xpos"+i), p_230337_2_.getInt("ypos"+i), p_230337_2_.getInt("zpos"+i)));
+//        }
+        poslist = CompoundNBTHelper.getBlockPosList("positions",p_230337_2_);
         SOLAR_ENERGY = p_230337_2_.getInt("energy_level");
         super.load( p_230337_2_);
     }

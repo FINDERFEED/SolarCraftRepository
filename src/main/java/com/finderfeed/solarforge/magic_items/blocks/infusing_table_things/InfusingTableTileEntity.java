@@ -276,8 +276,7 @@ public class InfusingTableTileEntity extends RandomizableContainerBlockEntity im
             tile.giveEnergy(type,-cost*count);
         });
         if (!recipe.tag.equals("")) {
-            if (result.getItem() instanceof ITagUser){
-                ITagUser result2 = (ITagUser) result.getItem();
+            if (result.getItem() instanceof ITagUser result2){
                 result2.doThingsWithTag(tile.getItem(0),result,recipe.tag);
             }
         }
@@ -502,7 +501,6 @@ public class InfusingTableTileEntity extends RandomizableContainerBlockEntity im
 
     @Override
     public void requestEnergy(double amount, RunicEnergy.Type type) {
-
         if (PATH_TO_PYLONS.containsKey(type) && PATH_TO_PYLONS.get(type) != null){
             FindingAlgorithms.setRepeatersConnections(PATH_TO_PYLONS.get(type),level);
             BlockEntity first = level.getBlockEntity(PATH_TO_PYLONS.get(type).get(0));

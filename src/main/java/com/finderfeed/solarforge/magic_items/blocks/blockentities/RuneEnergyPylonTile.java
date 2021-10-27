@@ -26,9 +26,6 @@ import net.minecraft.nbt.CompoundTag;
 
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.phys.AABB;
-
-import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.fmllegacy.network.PacketDistributor;
 
 import javax.annotation.Nullable;

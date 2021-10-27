@@ -18,7 +18,7 @@ public enum AncientFragment {
     LEXICON(tx("solar_fragment.lexicon"),"lexicon",null,BookEntry.BEGINNING_INFO, ItemsRegister.SOLAR_LEXICON.get(),tx("lexicon.lore"),false),
     WAND(tx("solar_fragment.wand"),"wand",Achievement.RUNE_ENERGY_DEPOSIT,BookEntry.BEGINNING_INFO, ItemsRegister.SOLAR_WAND.get(),tx("wand.lore"),false),
     SOLAR_DUST(tx("solar_fragment.solar_dust"),"solar_dust",Achievement.CRAFT_SOLAR_FORGE,BookEntry.SOLAR_FORGE_BASICS, ItemsRegister.SOLAR_DUST.get(),tx("solar_dust.lore"),true),
-    ENERGY_DUST(tx("solar_fragment.energy_dust"),"energy_dust",null,BookEntry.SOLAR_FORGE_BASICS, ItemsRegister.ENERGY_DUST.get(),tx("energy_dust.lore"),true),
+    ENERGY_DUST(tx("solar_fragment.energy_dust"),"energy_dust",Achievement.CRAFT_SOLAR_FORGE,BookEntry.SOLAR_FORGE_BASICS, ItemsRegister.ENERGY_DUST.get(),tx("energy_dust.lore"),true),
     SOLAR_INFUSER(tx("solar_fragment.solar_infuser"),"solar_infuser",Achievement.FIND_SOLAR_STONE,BookEntry.SOLAR_FORGE_BASICS, SolarForge.INFUSING_STAND_ITEM.get(),tx("solar_infuser.lore"),true),
     SOLAR_FORGE(tx("solar_fragment.solar_forge"),"solar_forge",Achievement.ENTER_NETHER,BookEntry.SOLAR_FORGE_BASICS, SolarForge.SOLAR_FORGE_ITEM.get(),tx("solar_forge.lore"),true),
     SOLAR_HELMET(tx("solar_fragment.solar_helmet"),"solar_helmet",Achievement.CRAFT_SOLAR_INFUSER,BookEntry.ARMOR,ItemsRegister.SOLAR_HELMET.get().getDefaultInstance(),tx("solar_helmet.lore"), SolarForge.INFUSING_RECIPE_TYPE,true),

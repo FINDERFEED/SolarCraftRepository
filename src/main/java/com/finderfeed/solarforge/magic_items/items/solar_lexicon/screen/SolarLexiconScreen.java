@@ -184,7 +184,7 @@ public class SolarLexiconScreen extends Screen implements IScrollable {
 
 
                 if (Helpers.hasPlayerUnlocked(a,Minecraft.getInstance().player)){
-                    currentText = Helpers.getAchievementDescription(a);
+                    currentText = a.afterText.getString();
 
                 }else if (Helpers.canPlayerUnlock(a,Minecraft.getInstance().player)){
                     currentText = a.getPretext().getString();
