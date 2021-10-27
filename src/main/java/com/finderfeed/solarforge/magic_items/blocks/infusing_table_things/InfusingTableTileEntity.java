@@ -282,10 +282,7 @@ public class InfusingTableTileEntity extends AbstractRunicEnergyContainerRCBE im
             if (recipe.isPresent() && ProgressionHelper.doPlayerHasFragment(playerEntity, AncientFragment.getFragmentByID(recipe.get().child))) {
 
                 if (!RECIPE_IN_PROGRESS) {
-                    if (!playerEntity.getPersistentData().getBoolean(Helpers.PROGRESSION + Achievement.USE_SOLAR_INFUSER.getAchievementCode())) {
-                        playerEntity.getPersistentData().putBoolean(Helpers.PROGRESSION + Achievement.USE_SOLAR_INFUSER.getAchievementCode(), true);
-                        SolarForgePacketHandler.INSTANCE.sendTo(new TriggerToastPacket(Achievement.USE_SOLAR_INFUSER.getId()), ((ServerPlayer) playerEntity).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
-                    }
+                    Helpers.fireProgressionEvent(playerEntity,Achievement.USE_SOLAR_INFUSER);
                     this.INFUSING_TIME = recipe.get().infusingTime;
                     this.RECIPE_IN_PROGRESS = true;
                     this.level.playSound(null, this.worldPosition, SoundEvents.BEACON_ACTIVATE, SoundSource.AMBIENT, 2, 1);
