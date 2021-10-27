@@ -28,8 +28,6 @@ public class BaseRepeaterTile extends BlockEntity {
     public static double NULL = -1000000;
 
     //rune energy pylon position
-    private final BlockPos test;
-    private BlockPos FINAL_POSITION;
     private RunicEnergy.Type ENERGY_TYPE;
     private BlockPos CONNECTED_TO;
     private List<BlockPos> ConnectedEnergyConsumers = new ArrayList<>();
