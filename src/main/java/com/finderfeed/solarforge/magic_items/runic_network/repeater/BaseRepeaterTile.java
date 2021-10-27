@@ -1,6 +1,7 @@
 package com.finderfeed.solarforge.magic_items.runic_network.repeater;
 
 import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.for_future_library.helpers.CompoundNBTHelper;
 import com.finderfeed.solarforge.for_future_library.helpers.FinderfeedMathHelper;
 import com.finderfeed.solarforge.misc_things.ParticlesList;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
@@ -29,8 +30,7 @@ public class BaseRepeaterTile extends BlockEntity {
 
     //rune energy pylon position
     private RunicEnergy.Type ENERGY_TYPE;
-    private BlockPos CONNECTED_TO;
-    private List<BlockPos> ConnectedEnergyConsumers = new ArrayList<>();
+    private List<BlockPos> CONNECTIONS = new ArrayList<>();
 
 
     public BaseRepeaterTile( BlockPos p_155229_, BlockState p_155230_) {
@@ -38,34 +38,7 @@ public class BaseRepeaterTile extends BlockEntity {
     }
 
 
-    public double extractEnergy(double maxAmount,RunicEnergy.Type type){
-        if (hasConnection()){
-            if (level.getBlockEntity(getFinalPos()) instanceof IRunicEnergyContainer cont){
-                if (FinderfeedMathHelper.canSee(cont.getPos(),worldPosition,getMaxRange(),level)) {
-                    double flag = cont.extractEnergy(type, maxAmount);
-                    return flag;
-                }else{
-                    return NULL;
-                }
-            }else{
-                return NULL;
-            }
-        }else {
-            if (CONNECTED_TO != null) {
-                if (level.getBlockEntity(CONNECTED_TO) instanceof BaseRepeaterTile tile) {
-                    if (FinderfeedMathHelper.canSeeTileEntity(this,tile,getMaxRange())) {
-                        return tile.extractEnergy(maxAmount, type);
-                    }else{
-                        return NULL;
-                    }
-                } else {
-                    return NULL;
-                }
-            } else {
-                return NULL;
-            }
-        }
-    }
+
 
 
     public static void tick(Level world,BlockPos pos,BlockState state,BaseRepeaterTile tile){
@@ -87,14 +60,11 @@ public class BaseRepeaterTile extends BlockEntity {
         }
 
         if (!world.isClientSide && (world.getGameTime() %20 == 1) ) {
-            tile.checkConsumersValid();
             tile.setChanged();
             world.sendBlockUpdated(pos, state, state, 3);
         }
-        if (world.isClientSide && (world.getGameTime() % 15 == 1) && (tile.getRepeaterConnection() != null)){
-            tile.handleParticlesBetween(tile.getRepeaterConnection());
-
-            tile.ConnectedEnergyConsumers.forEach(tile::handleParticlesBetween);
+        if (world.isClientSide && (world.getGameTime() % 15 == 1)){
+            tile.CONNECTIONS.forEach(tile::handleParticlesBetween);
         }
     }
 
@@ -125,21 +95,8 @@ public class BaseRepeaterTile extends BlockEntity {
         return 25;
     }
 
-
-    public BlockPos getRepeaterConnection(){
-        return CONNECTED_TO;
-    }
-
-    public void setRepeaterConnection(BlockPos pos){
-        this.CONNECTED_TO = pos;
-    }
-
-    public void setFinalPos(BlockPos FINAL_POSITION) {
-        this.FINAL_POSITION = FINAL_POSITION;
-    }
-
-    public BlockPos getFinalPos() {
-        return FINAL_POSITION;
+    public List<BlockPos> getConnections(){
+        return CONNECTIONS;
     }
 
     public void setEnergyType(RunicEnergy.Type type){
@@ -149,88 +106,39 @@ public class BaseRepeaterTile extends BlockEntity {
     public RunicEnergy.Type getEnergyType(){
         return ENERGY_TYPE;
     }
-    public boolean hasConnection(){
-        return FINAL_POSITION != null;
-    }
 
 
 
     public void resetRepeater(BlockPos consumer){
-        this.FINAL_POSITION = null;
-        if ((consumer != null) && ConnectedEnergyConsumers.contains(consumer)) {
-            this.ConnectedEnergyConsumers.remove(consumer);
-        }
-        this.CONNECTED_TO = null;
+
     }
 
 
     @Override
     public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
         CompoundTag tag = pkt.getTag();
-        BlockPos connectedTo = NbtUtils.readBlockPos(tag);
-        if (!Helpers.equalsBlockPos(connectedTo,Helpers.NULL_POS)) {
-            this.setRepeaterConnection(connectedTo);
-        }else{
-            setRepeaterConnection(null);
-        }
-        List<BlockPos> list = new ArrayList<>();
-
-        for (int i = 0; i < tag.getInt("lengthofconnections"); i++){
-            list.add(new BlockPos(
-                    tag.getInt("positionx"+i),
-                    tag.getInt("positiony"+i),
-                    tag.getInt("positionz"+i)
-            ));
-        }
-        this.ConnectedEnergyConsumers = list;
+        this.CONNECTIONS = CompoundNBTHelper.getBlockPosList("connections",tag);
         super.onDataPacket(net, pkt);
     }
 
     @Nullable
     @Override
     public ClientboundBlockEntityDataPacket getUpdatePacket() {
-        CompoundTag nbt;
-        if (getRepeaterConnection() != null){
-            nbt = NbtUtils.writeBlockPos(getRepeaterConnection());
-        }else{
-            nbt = NbtUtils.writeBlockPos(Helpers.NULL_POS);
-        }
-
-        for (int i = 0; i < ConnectedEnergyConsumers.size(); i++){
-            nbt.putInt("positionx"+i,ConnectedEnergyConsumers.get(i).getX());
-            nbt.putInt("positiony"+i,ConnectedEnergyConsumers.get(i).getY());
-            nbt.putInt("positionz"+i,ConnectedEnergyConsumers.get(i).getZ());
-        }
-        nbt.putInt("lengthofconnections",ConnectedEnergyConsumers.size());
-        return new ClientboundBlockEntityDataPacket(worldPosition,3,nbt);
+        CompoundTag tag = new CompoundTag();
+        CompoundNBTHelper.writeBlockPosList("connections",CONNECTIONS,tag);
+        return new ClientboundBlockEntityDataPacket(worldPosition,3,tag);
     }
 
 
-    public void addConsumerConnection(BlockPos pos){
-        if (!ConnectedEnergyConsumers.contains(pos)) {
-            this.ConnectedEnergyConsumers.add(pos);
-        }
+    public void addConnection(BlockPos pos){
+        CONNECTIONS.add(pos);
     }
 
-    public void removeConsumerConnection(int index){
-        this.ConnectedEnergyConsumers.remove(index);
+    public void removeConnection(BlockPos pos){
+        CONNECTIONS.remove(pos);
     }
 
-    public void checkConsumersValid(){
-        for (int i = 0; i < ConnectedEnergyConsumers.size();i++){
-            if (level.getBlockEntity(ConnectedEnergyConsumers.get(i)) instanceof IRunicEnergyReciever reciever){
-                if ((this.getEnergyType() != null) && !reciever.requiresRunicEnergy(this.getEnergyType())){
-                    removeConsumerConnection(i);
-                }
-            }else{
-                removeConsumerConnection(i);
-            }
-        }
-    }
 
-    public List<BlockPos> getConnectedEnergyConsumers() {
-        return ConnectedEnergyConsumers;
-    }
 
     @Override
     public AABB getRenderBoundingBox() {

@@ -14,13 +14,14 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.LevelChunk;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public abstract class AbstractRunicEnergyContainer extends BlockEntity implements OwnedBlock {
+public abstract class AbstractRunicEnergyContainerRCBE extends RandomizableContainerBlockEntity implements OwnedBlock {
 
     private double RUNE_ENERGY_ARDO = 0;
     private double RUNE_ENERGY_FIRA = 0;
@@ -40,7 +41,7 @@ public abstract class AbstractRunicEnergyContainer extends BlockEntity implement
 
     private Map<RunicEnergy.Type,List<BlockPos>> PATH_TO_CONTAINERS = new HashMap<>();
 
-    public AbstractRunicEnergyContainer(BlockEntityType<?> p_155228_, BlockPos p_155229_, BlockState p_155230_) {
+    public AbstractRunicEnergyContainerRCBE(BlockEntityType<?> p_155228_, BlockPos p_155229_, BlockState p_155230_) {
         super(p_155228_, p_155229_, p_155230_);
     }
 
@@ -93,7 +94,7 @@ public abstract class AbstractRunicEnergyContainer extends BlockEntity implement
                 double flag = container.extractEnergy(type,amount);
                 this.giveEnergy(type,flag);
             }else if (first instanceof BaseRepeaterTile repeater){
-                repeater.addConsumerConnection(worldPosition);
+                repeater.addConnection(worldPosition);
                 double flag = repeater.extractEnergy(amount,type);
                 if (flag != BaseRepeaterTile.NULL){
                     this.giveEnergy(type,flag);
@@ -129,7 +130,7 @@ public abstract class AbstractRunicEnergyContainer extends BlockEntity implement
         }
     }
 
-    private boolean isEnough(RunicEnergy.Type type,Map<RunicEnergy.Type,Double> costs,int multiplier){
+    protected boolean isEnough(RunicEnergy.Type type, Map<RunicEnergy.Type, Double> costs, int multiplier){
         boolean a = false;
         switch (type){
             case ARDO -> a =  RUNE_ENERGY_ARDO >= costs.get(RunicEnergy.Type.ARDO)*multiplier;
@@ -142,7 +143,7 @@ public abstract class AbstractRunicEnergyContainer extends BlockEntity implement
         return  a;
     }
 
-    private boolean hasEnoughRunicEnergy(Map<RunicEnergy.Type,Double> costs, int multiplier){
+    public boolean hasEnoughRunicEnergy(Map<RunicEnergy.Type,Double> costs, int multiplier){
         AtomicBoolean bool = new AtomicBoolean(true);
         costs.forEach((type,cost)->{
             if (getRunicEnergy(type) < cost*multiplier){
@@ -240,6 +241,10 @@ public abstract class AbstractRunicEnergyContainer extends BlockEntity implement
             case TERA -> toReturn = RUNE_ENERGY_TERA;
         }
         return toReturn;
+    }
+
+    public Map<RunicEnergy.Type,List<BlockPos>> getWays(){
+        return PATH_TO_CONTAINERS;
     }
 
 }
