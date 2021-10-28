@@ -118,6 +118,8 @@ public abstract class AbstractRunicEnergyContainerRCBE extends RandomizableConta
         }
     }
 
+    public abstract boolean shouldFunction();
+
     public void onRemove(){
         PATH_TO_CONTAINERS.forEach((type,way)->{
 //            FindingAlgorithms.resetRepeaters(way,level,worldPosition);

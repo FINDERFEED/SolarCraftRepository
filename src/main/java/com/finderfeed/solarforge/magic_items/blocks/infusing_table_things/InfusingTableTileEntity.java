@@ -141,6 +141,12 @@ public class InfusingTableTileEntity extends AbstractRunicEnergyContainerRCBE im
         return 100000;
     }
 
+    @Override
+    public boolean shouldFunction() {
+        return true;
+    }
+
+
 
 
     public static void tick(Level world, BlockPos pos, BlockState blockState, InfusingTableTileEntity tile) {
@@ -158,27 +164,35 @@ public class InfusingTableTileEntity extends AbstractRunicEnergyContainerRCBE im
                     tile.clearWays();
                 }
                 if (tile.RECIPE_IN_PROGRESS){
+
                     tile.setChanged();
                     world.sendBlockUpdated(tile.worldPosition,blockState,blockState,3);
                     InfusingRecipe recipe1 = recipe.get();
+
                     int count = tile.getMinRecipeCountOutput(recipe1);
                     Map<RunicEnergy.Type,Double> costs = recipe1.RUNIC_ENERGY_COST;
                     tile.INFUSING_TIME = recipe1.infusingTime*count;
-                    boolean check = tile.hasEnoughRunicEnergy(costs,count);
 
-                    if ((tile.energy >= recipe1.requriedEnergy*count) && check) {
-                        tile.onTileRemove();
-                        tile.clearWays();
-                        tile.requiresEnergy = false;
-                        tile.CURRENT_PROGRESS++;
+                    boolean doOwnerHasRequiredProgression = tile.doRecipeRequiresRunicEnergy(costs);
+                    if (doOwnerHasRequiredProgression){
+                        doOwnerHasRequiredProgression = Helpers.hasPlayerUnlocked(Achievement.RUNIC_ENERGY_REPEATER,world.getPlayerByUUID(tile.getOwner()));
+                    }
+                    if (doOwnerHasRequiredProgression) {
+                        boolean check = tile.hasEnoughRunicEnergy(costs,count);
+                        if ((tile.energy >= recipe1.requriedEnergy * count) && check) {
+                            tile.onTileRemove();
+                            tile.clearWays();
+                            tile.requiresEnergy = false;
+                            tile.CURRENT_PROGRESS++;
 
 
-                        if (tile.CURRENT_PROGRESS >= tile.INFUSING_TIME) {
-                            finishRecipe(world,tile,recipe1);
+                            if (tile.CURRENT_PROGRESS >= tile.INFUSING_TIME) {
+                                finishRecipe(world, tile, recipe1);
+                            }
+                        } else {
+                            tile.requestRunicEnergy(costs, count);
+                            tile.requiresEnergy = !(tile.energy >= recipe1.requriedEnergy * count);
                         }
-                    }else{
-                        tile.requestRunicEnergy(costs,count);
-                        tile.requiresEnergy = !(tile.energy >= recipe1.requriedEnergy*count);
                     }
                 }
                 if (world.getGameTime() % 5 == 1) {
@@ -453,5 +467,16 @@ public class InfusingTableTileEntity extends AbstractRunicEnergyContainerRCBE im
     public void onTileRemove(){
         this.onRemove();
     }
+
+
+    private boolean doRecipeRequiresRunicEnergy(Map<RunicEnergy.Type,Double> costs){
+        for (double cost : costs.values()){
+            if (Math.round(cost) != 0){
+                return true;
+            }
+        }
+        return false;
+    }
+
 
 }
