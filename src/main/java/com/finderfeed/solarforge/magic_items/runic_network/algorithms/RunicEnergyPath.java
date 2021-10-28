@@ -22,10 +22,11 @@ public class RunicEnergyPath {
 
     private final RunicEnergy.Type type;
     private List<PosPair> FINAL_POSITIONS = new ArrayList<>();
+    private final BlockPos startingPos;
 
-
-    public RunicEnergyPath(RunicEnergy.Type type){
+    public RunicEnergyPath(RunicEnergy.Type type,BlockPos startingpos){
         this.type = type;
+        this.startingPos = startingpos;
     }
 
     @Nullable
@@ -60,7 +61,7 @@ public class RunicEnergyPath {
 
 
 
-    private BaseRepeaterTile getTile(BlockPos pos,Level w){
+    private static BaseRepeaterTile getTile(BlockPos pos,Level w){
         BlockEntity be = w.getBlockEntity(pos);
         return  be instanceof BaseRepeaterTile ? (BaseRepeaterTile) be : null;
     }
@@ -126,13 +127,6 @@ public class RunicEnergyPath {
     private List<BlockPos> buildRouteAStar(Map<BlockPos,List<BlockPos>> pylons,BlockPos start,Level world){
         BlockPos finalPos = FINAL_POSITIONS.get(0).getPos1();
 
-//        for (BlockPos pos : pylons.keySet()){
-//            if (getTile(pos,world).hasConnection()){
-//                finalPos = pos;
-//                break;
-//            }
-//        }
-
         List<BlockPos> alreadyVisited = new ArrayList<>();
         alreadyVisited.add(start);
         List<Node> hold = new ArrayList<>();
@@ -178,13 +172,54 @@ public class RunicEnergyPath {
                 }
             }
             List<BlockPos> savedPath = currentNode.getSavedPath();
-//            savedPath.add(getTile(finalPos,world).getFinalPos());
-            return savedPath;
+            savedPath.add(FINAL_POSITIONS.get(0).getPos2());
+            List<BlockPos> returnthis = new ArrayList<>();
+            returnthis.add(startingPos);
+            returnthis.addAll(savedPath);
+            return returnthis;
         }else{
-            return List.of(finalPos/*,getTile(finalPos,world).getFinalPos()*/);
+            return List.of(startingPos,finalPos,FINAL_POSITIONS.get(0).getPos2());
         }
 
     }
+
+    public static boolean isRouteCorrect(List<BlockPos> route,Level world){
+        for (int i = 0; i < route.size()-1;i++){
+            if (i >= 2 ){
+                if (!(world.getBlockEntity(route.get(i)) instanceof BaseRepeaterTile)){
+                    return false;
+                }
+            }
+            if (!FinderfeedMathHelper.canSeeTileEntity(route.get(i),route.get(i+1),10000,world)){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static void resetRepeaterConnections(List<BlockPos> route,Level world){
+        for (int i = 0;i < route.size()-1;i++){
+            if (world.getBlockEntity(route.get(i)) instanceof BaseRepeaterTile repeater){
+                if (i == route.size()-2){
+                    repeater.removeConnection(route.get(route.size()-1));
+                }
+                repeater.removeConnection(route.get(i-1));
+            }
+        }
+    }
+
+    public static void setRepeaterConnections(List<BlockPos> route,Level world){
+        for (int i = 0;i < route.size()-1;i++){
+            if (world.getBlockEntity(route.get(i)) instanceof BaseRepeaterTile repeater){
+                if (i == route.size()-2){
+                    repeater.addConnection(route.get(route.size()-1));
+                }
+                repeater.addConnection(route.get(i-1));
+            }
+        }
+    }
+
+
 }
 
 class PosPair{

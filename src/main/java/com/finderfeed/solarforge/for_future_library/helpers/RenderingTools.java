@@ -571,9 +571,9 @@ public class RenderingTools {
     /**
         Render the upper side of the texture to top.
      */
-    public static void applyMovementMatrixRotations(PoseStack matrices, Vec3 speed){
-        double angleY = Math.toDegrees(Math.atan2(speed.x,speed.z));
-        double angleX = Math.toDegrees(Math.atan2(Math.sqrt(speed.x*speed.x + speed.z*speed.z),speed.y));
+    public static void applyMovementMatrixRotations(PoseStack matrices, Vec3 vec){
+        double angleY = Math.toDegrees(Math.atan2(vec.x,vec.z));
+        double angleX = Math.toDegrees(Math.atan2(Math.sqrt(vec.x*vec.x + vec.z*vec.z),vec.y));
         matrices.mulPose(Vector3f.YP.rotationDegrees((float)angleY));
         matrices.mulPose(Vector3f.XP.rotationDegrees((float)angleX));
     }

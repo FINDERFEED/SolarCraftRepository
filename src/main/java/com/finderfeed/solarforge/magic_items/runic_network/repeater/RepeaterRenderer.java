@@ -1,11 +1,14 @@
 package com.finderfeed.solarforge.magic_items.runic_network.repeater;
 
+import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.for_future_library.helpers.FinderfeedMathHelper;
 import com.finderfeed.solarforge.for_future_library.helpers.RenderingTools;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Vector3f;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.core.Direction;
 import net.minecraft.world.phys.Vec3;
 
 //AND DESERT YOU! NEVER GONNA MAKE YOU CRY, NEVER GONNA SAY GOODBYE, NEVER GONNA TELL A LIE
@@ -17,10 +20,16 @@ public class RepeaterRenderer implements BlockEntityRenderer<BaseRepeaterTile> {
     }
 
     @Override
-    public void render(BaseRepeaterTile tile, float v, PoseStack poseStack, MultiBufferSource multiBufferSource, int i, int i1) {
-//
-//
-//
+    public void render(BaseRepeaterTile tile, float v, PoseStack matrices, MultiBufferSource multiBufferSource, int i, int i1) {
+
+        if (tile.getConnections() != null){
+            tile.getConnections().forEach((pos)->{
+                Vec3 tilepos = new Vec3(tile.getBlockPos().getX() +0.5,tile.getBlockPos().getY() +0.5,tile.getBlockPos().getZ() +0.5);
+                Vec3 vector = Helpers.getBlockCenter(pos).subtract(tilepos);
+                RenderingTools.applyMovementMatrixRotations(matrices,vector.normalize());
+                RenderingTools.renderRay(matrices,multiBufferSource,0.25f,(float)vector.length(), Direction.UP,false,0,v);
+            });
+        }
 //        if (tile.getConnections() != null){
 //            Vec3 tilepos = new Vec3(tile.getBlockPos().getX() +0.5,tile.getBlockPos().getY() +0.5,tile.getBlockPos().getZ() +0.5);
 //            Vec3 targetPos = new Vec3(tile.getRepeaterConnection().getX() +0.5,tile.getRepeaterConnection().getY() +0.5,tile.getRepeaterConnection().getZ() +0.5);
