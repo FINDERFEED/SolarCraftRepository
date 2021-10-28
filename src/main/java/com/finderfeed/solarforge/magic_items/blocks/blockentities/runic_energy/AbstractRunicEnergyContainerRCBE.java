@@ -22,7 +22,7 @@ import net.minecraft.world.level.chunk.LevelChunk;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-//TODO:finish energy transmission
+
 public abstract class AbstractRunicEnergyContainerRCBE extends RandomizableContainerBlockEntity implements OwnedBlock {
 
     private double RUNE_ENERGY_ARDO = 0;
@@ -90,18 +90,22 @@ public abstract class AbstractRunicEnergyContainerRCBE extends RandomizableConta
 
     public void requestSpecificEnergy(RunicEnergy.Type type,double amount){
         if (PATH_TO_CONTAINERS.containsKey(type) && PATH_TO_CONTAINERS.get(type) != null){
+            List<BlockPos> route = PATH_TO_CONTAINERS.get(type);
 //            FindingAlgorithms.setRepeatersConnections(PATH_TO_CONTAINERS.get(type),level);
             RunicEnergyPath.setRepeaterConnections(PATH_TO_CONTAINERS.get(type),level);
             BlockEntity first = level.getBlockEntity(PATH_TO_CONTAINERS.get(type).get(0));
-            if (first instanceof IRunicEnergyContainer container){
+            if (first instanceof RunicEnergyGiver container){
                 double flag = container.extractEnergy(type,amount);
                 this.giveEnergy(type,flag);
             }else if (first instanceof BaseRepeaterTile repeater){
-                repeater.addConnection(worldPosition);
 
-                double flag = repeater.extractEnergy(amount,type);
                 if (RunicEnergyPath.isRouteCorrect(PATH_TO_CONTAINERS.get(type),level)){
-                    this.giveEnergy(type,flag);
+                    if (level.getBlockEntity(route.get(route.size()-1)) instanceof RunicEnergyGiver container){
+                        double flag = container.extractEnergy(type,amount);
+                    }else {
+                        RunicEnergyPath.resetRepeaterConnections(PATH_TO_CONTAINERS.get(type),level);
+                        constructWay(type);
+                    }
                 }else{
 //                    FindingAlgorithms.resetRepeaters(PATH_TO_CONTAINERS.get(type),level,worldPosition);
                     RunicEnergyPath.resetRepeaterConnections(PATH_TO_CONTAINERS.get(type),level);

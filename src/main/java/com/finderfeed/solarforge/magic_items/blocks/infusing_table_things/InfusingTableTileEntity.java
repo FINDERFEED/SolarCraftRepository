@@ -266,7 +266,7 @@ public class InfusingTableTileEntity extends AbstractRunicEnergyContainerRCBE im
         tile.deleteStacksInPhantomSlots(count);
         tile.level.playSound(null, tile.worldPosition, SoundEvents.BEACON_DEACTIVATE, SoundSource.AMBIENT, 2, 1);
         tile.energy-= recipe.requriedEnergy*count;
-
+        tile.onRemove();
 //        tile.getWays().forEach((type,path)->{
 //            FindingAlgorithms.resetRepeaters(path,world,tile.worldPosition);
 //        });
