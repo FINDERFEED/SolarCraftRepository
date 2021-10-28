@@ -21,6 +21,7 @@ import net.minecraft.world.level.chunk.LevelChunk;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+//TODO:finish energy transmission
 public abstract class AbstractRunicEnergyContainerRCBE extends RandomizableContainerBlockEntity implements OwnedBlock {
 
     private double RUNE_ENERGY_ARDO = 0;
@@ -87,32 +88,32 @@ public abstract class AbstractRunicEnergyContainerRCBE extends RandomizableConta
     }
 
     public void requestSpecificEnergy(RunicEnergy.Type type,double amount){
-        if (PATH_TO_CONTAINERS.containsKey(type) && PATH_TO_CONTAINERS.get(type) != null){
-            FindingAlgorithms.setRepeatersConnections(PATH_TO_CONTAINERS.get(type),level);
-            BlockEntity first = level.getBlockEntity(PATH_TO_CONTAINERS.get(type).get(0));
-            if (first instanceof IRunicEnergyContainer container){
-                double flag = container.extractEnergy(type,amount);
-                this.giveEnergy(type,flag);
-            }else if (first instanceof BaseRepeaterTile repeater){
-                repeater.addConnection(worldPosition);
-                double flag = repeater.extractEnergy(amount,type);
-                if (flag != BaseRepeaterTile.NULL){
-                    this.giveEnergy(type,flag);
-                }else{
-                    FindingAlgorithms.resetRepeaters(PATH_TO_CONTAINERS.get(type),level,worldPosition);
-                    constructWay(type);
-                }
-            }
-
-        }else{
-            constructWay(type);
-        }
+//        if (PATH_TO_CONTAINERS.containsKey(type) && PATH_TO_CONTAINERS.get(type) != null){
+//            FindingAlgorithms.setRepeatersConnections(PATH_TO_CONTAINERS.get(type),level);
+//            BlockEntity first = level.getBlockEntity(PATH_TO_CONTAINERS.get(type).get(0));
+//            if (first instanceof IRunicEnergyContainer container){
+//                double flag = container.extractEnergy(type,amount);
+//                this.giveEnergy(type,flag);
+//            }else if (first instanceof BaseRepeaterTile repeater){
+//                repeater.addConnection(worldPosition);
+//                double flag = repeater.extractEnergy(amount,type);
+//                if (flag != BaseRepeaterTile.NULL){
+//                    this.giveEnergy(type,flag);
+//                }else{
+//                    FindingAlgorithms.resetRepeaters(PATH_TO_CONTAINERS.get(type),level,worldPosition);
+//                    constructWay(type);
+//                }
+//            }
+//
+//        }else{
+//            constructWay(type);
+//        }
     }
 
     public void onRemove(){
-        PATH_TO_CONTAINERS.forEach((type,way)->{
-            FindingAlgorithms.resetRepeaters(way,level,worldPosition);
-        });
+//        PATH_TO_CONTAINERS.forEach((type,way)->{
+//            FindingAlgorithms.resetRepeaters(way,level,worldPosition);
+//        });
     }
 
     public void clearWays(){
@@ -173,18 +174,18 @@ public abstract class AbstractRunicEnergyContainerRCBE extends RandomizableConta
     }
 
     public void constructWay(RunicEnergy.Type type){
-        PATH_TO_CONTAINERS.remove(type);
-        BlockEntity entity = findNearestRepeaterOrPylon(worldPosition,level,type);
-        if (entity instanceof BaseRepeaterTile tile){
-            Map<BlockPos,List<BlockPos>> graph = FindingAlgorithms.findAllConnectedPylons(tile,new ArrayList<>(),new HashMap<>());
-            if (FindingAlgorithms.hasEndPoint(graph,level)) {
-                FindingAlgorithms.sortBestPylon(graph, level);
-                PATH_TO_CONTAINERS.put(type, FindingAlgorithms.findConnectionAStar(graph, tile.getBlockPos(), level));
-
-            }
-        }else if (entity instanceof IRunicEnergyContainer container){
-            PATH_TO_CONTAINERS.put(type,List.of(container.getPos()));
-        }
+//        PATH_TO_CONTAINERS.remove(type);
+//        BlockEntity entity = findNearestRepeaterOrPylon(worldPosition,level,type);
+//        if (entity instanceof BaseRepeaterTile tile){
+//            Map<BlockPos,List<BlockPos>> graph = FindingAlgorithms.findAllConnectedPylons(tile,new ArrayList<>(),new HashMap<>());
+//            if (FindingAlgorithms.hasEndPoint(graph,level)) {
+//                FindingAlgorithms.sortBestPylon(graph, level);
+//                PATH_TO_CONTAINERS.put(type, FindingAlgorithms.findConnectionAStar(graph, tile.getBlockPos(), level));
+//
+//            }
+//        }else if (entity instanceof IRunicEnergyContainer container){
+//            PATH_TO_CONTAINERS.put(type,List.of(container.getPos()));
+//        }
     }
 
     public abstract double getMaxRange();

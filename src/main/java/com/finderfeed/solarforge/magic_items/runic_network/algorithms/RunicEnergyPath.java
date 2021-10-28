@@ -12,6 +12,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.chunk.LevelChunk;
 import org.lwjgl.system.CallbackI;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -25,6 +26,17 @@ public class RunicEnergyPath {
 
     public RunicEnergyPath(RunicEnergy.Type type){
         this.type = type;
+    }
+
+    @Nullable
+    public List<BlockPos> build(BaseRepeaterTile beggining){
+        Map<BlockPos,List<BlockPos>> graph = buildGraph(beggining,new ArrayList<>(),new HashMap<>());
+        if (hasEndPoint()){
+            sortBestGiver(beggining.getLevel());
+            return buildRouteAStar(graph,beggining.getBlockPos(),beggining.getLevel());
+        }else{
+            return null;
+        }
     }
 
 
@@ -54,7 +66,7 @@ public class RunicEnergyPath {
     }
 
 
-    public List<BlockPos> findConnectablePylonsAndEnergySources(BaseRepeaterTile start, double range){
+    private List<BlockPos> findConnectablePylonsAndEnergySources(BaseRepeaterTile start, double range){
         Level world = start.getLevel();
         BlockPos mainpos = start.getBlockPos();
         List<LevelChunk> chunks = Helpers.getSurroundingChunks5Radius(mainpos,world);
@@ -73,7 +85,9 @@ public class RunicEnergyPath {
                         (giver.getTypes().contains(start.getEnergyType())) &&
                         (FinderfeedMathHelper.getDistanceBetween(start.getBlockPos(),giver.getPos()) <= range)){
 //                    tiles.add(giver.getPos());
-                    FINAL_POSITIONS.add(giver.getPos());
+                    if (!FINAL_POSITIONS.contains(giver.getPos())) {
+                        FINAL_POSITIONS.add(giver.getPos());
+                    }
                 }
             });
         }
@@ -84,17 +98,94 @@ public class RunicEnergyPath {
         return !FINAL_POSITIONS.isEmpty();
     }
 
-    public void sortBestPylon(Map<BlockPos,List<BlockPos>> graph,Level w){
+    private void sortBestGiver(Level w){
         FINAL_POSITIONS.sort((n1,n2)->{
             return (int)Math.round(gv(w,n1).getRunicEnergy(type)) - (int)Math.round(gv(w,n2).getRunicEnergy(type));
         });
-
+        BlockPos pos = FINAL_POSITIONS.get(0);
+        FINAL_POSITIONS.clear();
+        FINAL_POSITIONS.add(pos);
     }
 
     private RunicEnergyGiver gv(Level w,BlockPos pos){
         return (RunicEnergyGiver) w.getBlockEntity(pos);
     }
 
+
+    private Node findLeastFNode(List<Node> nodes){
+        int minindex = -1;
+        double minf = 10000000;
+        for (int i = 0; i < nodes.size();i++){
+            if (nodes.get(i).f < minf){
+                minf = nodes.get(i).f;
+                minindex = i;
+            }
+        }
+        return nodes.get(minindex);
+    }
+
+    private List<BlockPos> buildRouteAStar(Map<BlockPos,List<BlockPos>> pylons,BlockPos start,Level world){
+        BlockPos finalPos = FINAL_POSITIONS.get(0);
+
+//        for (BlockPos pos : pylons.keySet()){
+//            if (getTile(pos,world).hasConnection()){
+//                finalPos = pos;
+//                break;
+//            }
+//        }
+
+        List<BlockPos> alreadyVisited = new ArrayList<>();
+        alreadyVisited.add(start);
+        List<Node> hold = new ArrayList<>();
+        List<Node> open = new ArrayList<>();
+        Node currentNode = new Node(start,finalPos,0);
+
+        if (!Helpers.equalsBlockPos(start,finalPos)) {
+
+            while (true) {
+                List<BlockPos> nodes = pylons.get(currentNode.pos);
+                for (int i = 0; i < nodes.size(); i++) {
+                    if (!alreadyVisited.contains(nodes.get(i))) {
+                        alreadyVisited.add(nodes.get(i));
+                        Node nd = new Node(nodes.get(i), finalPos, currentNode.g + FinderfeedMathHelper.getDistanceBetween(nodes.get(i), currentNode.pos));
+                        nd.setSavedPath(new ArrayList<>(currentNode.getSavedPath()));
+                        nd.addToPath(currentNode.pos);
+                        open.add(nd);
+                    }
+                }
+                if (!open.isEmpty()) {
+                    Node leastF = findLeastFNode(open);
+                    open.forEach((node) -> {
+                        if (!node.equals(leastF)) {
+                            hold.add(node);
+                        }
+                    });
+                    open.clear();
+                    currentNode = leastF;
+                    //TODO:final position SHOULD BE A REPEATER NOT AN ENERGY GIVER
+                    if (Helpers.equalsBlockPos(finalPos, currentNode.pos)) {
+                        currentNode.addToPath(finalPos);
+                        break;
+                    }
+                } else {
+                    Node leastF = findLeastFNode(hold);
+                    hold.remove(leastF);
+                    currentNode = leastF;
+
+                    if (Helpers.equalsBlockPos(finalPos, currentNode.pos)) {
+                        currentNode.addToPath(finalPos);
+                        break;
+                    }
+                }
+            }
+            List<BlockPos> savedPath = currentNode.getSavedPath();
+//            savedPath.add(getTile(finalPos,world).getFinalPos());
+            return savedPath;
+        }else{
+            return List.of(finalPos/*,getTile(finalPos,world).getFinalPos()*/);
+        }
+
+    }
 }
 
 class Node{

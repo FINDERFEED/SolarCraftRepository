@@ -1,7 +1,11 @@
 package com.finderfeed.solarforge.magic_items.runic_network.repeater;
 
+import com.finderfeed.solarforge.magic_items.runic_network.algorithms.RunicEnergyPath;
 import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
@@ -9,8 +13,10 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
 
 import javax.annotation.Nullable;
+import java.util.List;
 
 
 //AND HURT YOU!(rickroll by a minecraft mod source code, no one expects it :D)
@@ -35,30 +41,17 @@ public class RunicNetworkRepeater extends Block implements EntityBlock {
 
 
 
-
-//    @Override
-//    public InteractionResult use(BlockState state, Level level, BlockPos blockPos, Player player, InteractionHand hand, BlockHitResult res) {
-//        if (!level.isClientSide && hand.equals(InteractionHand.MAIN_HAND)){
-//
-//            if (level.getBlockEntity(blockPos) instanceof BaseRepeaterTile tile){
-//                Map<BlockPos, List<BlockPos>> graph = FindingAlgorithms.findAllConnectedPylons(tile,new ArrayList<>(),new HashMap<>());
-//                if (FindingAlgorithms.hasEndPoint(graph,level)) {
-//                    FindingAlgorithms.sortBestPylon(graph, level);
-//                    List<BlockPos> bestWay = FindingAlgorithms.findConnectionAStar(graph, tile.getBlockPos(), level);
-//                    for (int i = 0; i < bestWay.size(); i++) {
-//                        if (level.getBlockEntity(bestWay.get(i)) instanceof BaseRepeaterTile repeater) {
-//                            repeater.setRepeaterConnection(bestWay.get(i + 1));
-//                        }
-//                    }
-//
-//                    System.out.println(bestWay);
-//                }else{
-//                    System.out.println("has no end point");
-//                }
-//            }
-//        }
-//        return InteractionResult.SUCCESS;
-//    }
+    //TODO:remove
+    @Override
+    public InteractionResult use(BlockState state, Level level, BlockPos blockPos, Player player, InteractionHand hand, BlockHitResult res) {
+        if (!level.isClientSide && hand.equals(InteractionHand.MAIN_HAND)){
+            if (level.getBlockEntity(blockPos) instanceof BaseRepeaterTile repeater) {
+                List<BlockPos> path = new RunicEnergyPath(repeater.getEnergyType()).build(repeater);
+                System.out.println(path);
+            }
+        }
+        return InteractionResult.SUCCESS;
+    }
 
 
 }

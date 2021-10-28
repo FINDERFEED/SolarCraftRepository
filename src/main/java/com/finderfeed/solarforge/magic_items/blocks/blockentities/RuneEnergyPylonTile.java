@@ -66,6 +66,10 @@ public class RuneEnergyPylonTile extends BlockEntity implements  DebugTarget, Ru
 
     }
 
+    public void addEnergy(RunicEnergy.Type type,double amount){
+        this.currentEnergy += amount;
+    }
+
 
     public static void imbueItemsNear(RuneEnergyPylonTile tile){
         AABB bb = new AABB(tile.worldPosition.offset(-8,-10,-8),tile.worldPosition.offset(8,0,8));
