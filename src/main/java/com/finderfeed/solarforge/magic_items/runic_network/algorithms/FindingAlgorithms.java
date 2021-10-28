@@ -3,6 +3,7 @@ package com.finderfeed.solarforge.magic_items.runic_network.algorithms;
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.for_future_library.helpers.FinderfeedMathHelper;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.RuneEnergyPylonTile;
+import com.finderfeed.solarforge.magic_items.blocks.blockentities.runic_energy.RunicEnergyGiver;
 import com.finderfeed.solarforge.magic_items.runic_network.repeater.BaseRepeaterTile;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
@@ -25,15 +26,14 @@ public class FindingAlgorithms {
             chunk.getBlockEntities().forEach((position,tileentity)->{
                 if ((tileentity instanceof BaseRepeaterTile repeater) && !Helpers.equalsBlockPos(tile.getBlockPos(),position) && (repeater.getEnergyType() == tile.getEnergyType())){
                     if (FinderfeedMathHelper.canSeeTileEntity(repeater,tile,range)){
-                        repeater.setRepeaterConnection(null);
                         tiles.add(repeater.getBlockPos());
                     }
-                }else if (tileentity instanceof RuneEnergyPylonTile pylon){
-                    if ((pylon.getEnergyType() != null) && pylon.getEnergyType().equals(tile.getEnergyType()) && FinderfeedMathHelper.canSeeTileEntity(pylon,tile,range)){
+                }else if (tileentity instanceof RunicEnergyGiver pylon){
+                    if ((pylon.getTypes() != null) && pylon.getTypes().contains(tile.getEnergyType()) && FinderfeedMathHelper.canSeeTileEntity(pylon.getPos(),tile.getBlockPos(),range,world)){
                         if (tile.getFinalPos() == null){
                             tile.setFinalPos(pylon.getBlockPos());
                         }else{
-                            if (FinderfeedMathHelper.getDistanceBetween(pylon.getBlockPos(),tile.getBlockPos()) < FinderfeedMathHelper.getDistanceBetween(tile.getBlockPos(),tile.getFinalPos())){
+                            if (FinderfeedMathHelper.getDistanceBetween(pylon.getPos(),tile.getBlockPos()) < FinderfeedMathHelper.getDistanceBetween(tile.getBlockPos(),tile.getFinalPos())){
                                 tile.setFinalPos(pylon.getBlockPos());
                             }
                         }
@@ -197,7 +197,7 @@ public class FindingAlgorithms {
     }
 }
 
-class Node{
+class Nodes{
 
     public BlockPos pos;
     public double f;
@@ -205,7 +205,7 @@ class Node{
     public double heuristic;
     private List<BlockPos> savedPath = new ArrayList<>();
 
-    public Node(BlockPos pos,BlockPos finalPos,double g){
+    public Nodes(BlockPos pos,BlockPos finalPos,double g){
         this.pos = pos;
         this.heuristic = FinderfeedMathHelper.getDistanceBetween(pos,finalPos);
         this.g = g;

@@ -227,16 +227,22 @@ public class RuneEnergyPylonTile extends BlockEntity implements  DebugTarget, Ru
         }
     }
 
-
-
     @Override
-    public double getRunicEnergyEnergy(@Nullable RunicEnergy.Type amount) {
-        return currentEnergy;
+    public List<RunicEnergy.Type> getTypes() {
+        return this.getEnergyType() != null ? List.of(this.getEnergyType()) : null;
     }
+
+
+
 
     @Override
     public BlockPos getPos() {
         return worldPosition;
+    }
+
+    @Override
+    public double getRunicEnergy(RunicEnergy.Type type) {
+        return this.currentEnergy;
     }
 
     @Override
