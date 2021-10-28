@@ -21,7 +21,7 @@ import java.util.Map;
 public class RunicEnergyPath {
 
     private final RunicEnergy.Type type;
-    private List<BlockPos> FINAL_POSITIONS = new ArrayList<>();
+    private List<PosPair> FINAL_POSITIONS = new ArrayList<>();
 
 
     public RunicEnergyPath(RunicEnergy.Type type){
@@ -83,11 +83,10 @@ public class RunicEnergyPath {
                 }else if ((tileentity instanceof RunicEnergyGiver giver) &&
                         (giver.getTypes() != null) &&
                         (giver.getTypes().contains(start.getEnergyType())) &&
-                        (FinderfeedMathHelper.getDistanceBetween(start.getBlockPos(),giver.getPos()) <= range)){
+                        (FinderfeedMathHelper.getDistanceBetween(start.getBlockPos(),giver.getPos()) <= range) &&
+                        (FinderfeedMathHelper.canSeeTileEntity(start.getBlockPos(),giver.getPos(),range,world))){
 //                    tiles.add(giver.getPos());
-                    if (!FINAL_POSITIONS.contains(giver.getPos())) {
-                        FINAL_POSITIONS.add(giver.getPos());
-                    }
+                    FINAL_POSITIONS.add(new PosPair(start.getBlockPos(),giver.getPos()));
                 }
             });
         }
@@ -100,9 +99,9 @@ public class RunicEnergyPath {
 
     private void sortBestGiver(Level w){
         FINAL_POSITIONS.sort((n1,n2)->{
-            return (int)Math.round(gv(w,n1).getRunicEnergy(type)) - (int)Math.round(gv(w,n2).getRunicEnergy(type));
+            return (int)Math.round(gv(w,n1.getPos2()).getRunicEnergy(type)) - (int)Math.round(gv(w,n2.getPos2()).getRunicEnergy(type));
         });
-        BlockPos pos = FINAL_POSITIONS.get(0);
+        PosPair pos = FINAL_POSITIONS.get(0);
         FINAL_POSITIONS.clear();
         FINAL_POSITIONS.add(pos);
     }
@@ -125,7 +124,7 @@ public class RunicEnergyPath {
     }
 
     private List<BlockPos> buildRouteAStar(Map<BlockPos,List<BlockPos>> pylons,BlockPos start,Level world){
-        BlockPos finalPos = FINAL_POSITIONS.get(0);
+        BlockPos finalPos = FINAL_POSITIONS.get(0).getPos1();
 
 //        for (BlockPos pos : pylons.keySet()){
 //            if (getTile(pos,world).hasConnection()){
@@ -162,7 +161,7 @@ public class RunicEnergyPath {
                     });
                     open.clear();
                     currentNode = leastF;
-                    //TODO:final position SHOULD BE A REPEATER NOT AN ENERGY GIVER
+
                     if (Helpers.equalsBlockPos(finalPos, currentNode.pos)) {
                         currentNode.addToPath(finalPos);
                         break;
@@ -185,6 +184,25 @@ public class RunicEnergyPath {
             return List.of(finalPos/*,getTile(finalPos,world).getFinalPos()*/);
         }
 
+    }
+}
+
+class PosPair{
+
+    private final BlockPos pos1;
+    private final BlockPos pos2;
+
+    public PosPair(BlockPos pos1,BlockPos pos2){
+        this.pos1 = pos1;
+        this.pos2 = pos2;
+    }
+
+    public BlockPos getPos1() {
+        return pos1;
+    }
+
+    public BlockPos getPos2() {
+        return pos2;
     }
 }
 
