@@ -108,6 +108,7 @@ public class InfusingTableTileEntity extends AbstractRunicEnergyContainerRCBE im
     @Override
     public CompoundTag save(CompoundTag cmp){
         super.save(cmp);
+
         cmp.putInt("energy",energy);
         cmp.putInt("infusing_time",INFUSING_TIME );
         cmp.putInt("recipe_progress",CURRENT_PROGRESS );
@@ -117,6 +118,8 @@ public class InfusingTableTileEntity extends AbstractRunicEnergyContainerRCBE im
         }
         return cmp;
     }
+
+
 
     @Override
     public void load( CompoundTag cmp) {
@@ -174,8 +177,13 @@ public class InfusingTableTileEntity extends AbstractRunicEnergyContainerRCBE im
                     tile.INFUSING_TIME = recipe1.infusingTime*count;
 
                     boolean doOwnerHasRequiredProgression = tile.doRecipeRequiresRunicEnergy(costs);
-                    if (doOwnerHasRequiredProgression){
-                        doOwnerHasRequiredProgression = Helpers.hasPlayerUnlocked(Achievement.RUNIC_ENERGY_REPEATER,world.getPlayerByUUID(tile.getOwner()));
+                    Player pl = world.getPlayerByUUID(tile.getOwner());
+                    if (pl != null) {
+                        if (doOwnerHasRequiredProgression) {
+                            doOwnerHasRequiredProgression = Helpers.hasPlayerUnlocked(Achievement.RUNIC_ENERGY_REPEATER, world.getPlayerByUUID(tile.getOwner()));
+                        }
+                    }else{
+                        doOwnerHasRequiredProgression = false;
                     }
                     if (doOwnerHasRequiredProgression) {
                         boolean check = tile.hasEnoughRunicEnergy(costs,count);

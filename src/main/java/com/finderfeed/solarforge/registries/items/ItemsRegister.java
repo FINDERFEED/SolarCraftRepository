@@ -38,7 +38,7 @@ public class ItemsRegister {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS,"solarforge");
 
     public static final RegistryObject<SolarWandItem> SOLAR_WAND = ITEMS.register("solar_wand",()-> new SolarWandItem(new Item.Properties().rarity(Rarity.EPIC).tab(SolarForge.SOLAR_GROUP)));
-    public static  final RegistryObject<Item> SOLAR_INFUSION_POOL = ITEMS.register("solar_forge_infusion_pool",()-> new BlockItem(BlocksRegistry.SOLAR_POOL.get(),new Item.Properties().rarity(Rarity.EPIC).tab(SolarForge.SOLAR_GROUP_BLOCKS).stacksTo(1)));
+    public static  final RegistryObject<Item> SOLAR_INFUSION_POOL = ITEMS.register("solar_forge_infusion_pool",()-> new BlockItem(BlocksRegistry.SOLAR_POOL.get(),new Item.Properties().rarity(Rarity.EPIC).tab(SolarForge.SOLAR_GROUP_BLOCKS)));
     public static  final RegistryObject<SolarDustItem> SOLAR_DUST = ITEMS.register("solar_dust",()-> new SolarDustItem(new Item.Properties().rarity(Rarity.RARE).tab(SolarForge.SOLAR_GROUP)));
     public static final RegistryObject<Item> SOLAR_STONE = ITEMS.register("solar_stone",()->new ProgressionBlockItem(BlocksRegistry.SOLAR_STONE.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
     public static final RegistryObject<Item> SOLAR_STONE_CHISELED = ITEMS.register("chiseled_solar_stone",()->new BlockItem(BlocksRegistry.SOLAR_STONE_CHISELED.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));

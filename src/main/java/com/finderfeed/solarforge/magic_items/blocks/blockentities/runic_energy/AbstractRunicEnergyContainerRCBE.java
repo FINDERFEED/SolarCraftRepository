@@ -4,8 +4,6 @@ import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.for_future_library.OwnedBlock;
 import com.finderfeed.solarforge.for_future_library.helpers.FinderfeedMathHelper;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.RuneEnergyPylonTile;
-import com.finderfeed.solarforge.magic_items.blocks.infusing_table_things.InfusingTableTileEntity;
-import com.finderfeed.solarforge.magic_items.runic_network.algorithms.FindingAlgorithms;
 import com.finderfeed.solarforge.magic_items.runic_network.algorithms.RunicEnergyPath;
 import com.finderfeed.solarforge.magic_items.runic_network.repeater.BaseRepeaterTile;
 import com.finderfeed.solarforge.magic_items.runic_network.repeater.IRunicEnergyContainer;
@@ -32,12 +30,12 @@ public abstract class AbstractRunicEnergyContainerRCBE extends RandomizableConta
     private double RUNE_ENERGY_KELDA = 0;
     private double RUNE_ENERGY_ZETA = 0;
 
-    private boolean NEEDS_ARDO = false;
-    private boolean NEEDS_KELDA = false;
-    private boolean NEEDS_TERA = false;
-    private boolean NEEDS_FIRA = false;
-    private boolean NEEDS_URBA = false;
-    private boolean NEEDS_ZETA = false;
+//    private boolean NEEDS_ARDO = false;
+//    private boolean NEEDS_KELDA = false;
+//    private boolean NEEDS_TERA = false;
+//    private boolean NEEDS_FIRA = false;
+//    private boolean NEEDS_URBA = false;
+//    private boolean NEEDS_ZETA = false;
 
     private UUID owner;
 
@@ -50,14 +48,21 @@ public abstract class AbstractRunicEnergyContainerRCBE extends RandomizableConta
     @Override
     public CompoundTag save(CompoundTag tag) {
         saveRunicEnergy(tag);
-        tag.putUUID("owner",getOwner());
+        tag.putUUID("tileowner",getOwner());
         return super.save(tag);
     }
 
     @Override
     public void load(CompoundTag tag) {
         super.load(tag);
-        this.setOwner(tag.getUUID("owner"));
+        if (this.level != null){
+            if (!this.level.isClientSide){
+                this.setOwner(tag.getUUID("tileowner"));
+            }
+        }else{
+            this.setOwner(tag.getUUID("tileowner"));
+        }
+
         loadRunicEnergy(tag);
     }
 
@@ -93,7 +98,7 @@ public abstract class AbstractRunicEnergyContainerRCBE extends RandomizableConta
             List<BlockPos> route = PATH_TO_CONTAINERS.get(type);
 //            FindingAlgorithms.setRepeatersConnections(PATH_TO_CONTAINERS.get(type),level);
             RunicEnergyPath.setRepeaterConnections(PATH_TO_CONTAINERS.get(type),level);
-            BlockEntity first = level.getBlockEntity(PATH_TO_CONTAINERS.get(type).get(0));
+            BlockEntity first = level.getBlockEntity(PATH_TO_CONTAINERS.get(type).get(1));
             if (first instanceof RunicEnergyGiver container){
                 double flag = container.extractEnergy(type,amount);
                 this.giveEnergy(type,flag);
@@ -102,6 +107,7 @@ public abstract class AbstractRunicEnergyContainerRCBE extends RandomizableConta
                 if (RunicEnergyPath.isRouteCorrect(PATH_TO_CONTAINERS.get(type),level)){
                     if (level.getBlockEntity(route.get(route.size()-1)) instanceof RunicEnergyGiver container){
                         double flag = container.extractEnergy(type,amount);
+                        this.giveEnergy(type,flag);
                     }else {
                         RunicEnergyPath.resetRepeaterConnections(PATH_TO_CONTAINERS.get(type),level);
                         constructWay(type);
@@ -111,6 +117,9 @@ public abstract class AbstractRunicEnergyContainerRCBE extends RandomizableConta
                     RunicEnergyPath.resetRepeaterConnections(PATH_TO_CONTAINERS.get(type),level);
                     constructWay(type);
                 }
+            }else{
+                RunicEnergyPath.resetRepeaterConnections(PATH_TO_CONTAINERS.get(type),level);
+                constructWay(type);
             }
 
         }else{
@@ -193,7 +202,7 @@ public abstract class AbstractRunicEnergyContainerRCBE extends RandomizableConta
                 PATH_TO_CONTAINERS.put(type, route);
             }
         }else if (entity instanceof IRunicEnergyContainer container){
-            PATH_TO_CONTAINERS.put(type,List.of(container.getPos()));
+            PATH_TO_CONTAINERS.put(type,List.of(this.worldPosition,container.getPos()));
         }
     }
 

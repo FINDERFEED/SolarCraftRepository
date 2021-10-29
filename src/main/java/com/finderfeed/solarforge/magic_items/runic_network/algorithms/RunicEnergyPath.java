@@ -2,7 +2,6 @@ package com.finderfeed.solarforge.magic_items.runic_network.algorithms;
 
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.for_future_library.helpers.FinderfeedMathHelper;
-import com.finderfeed.solarforge.magic_items.blocks.blockentities.RuneEnergyPylonTile;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.runic_energy.RunicEnergyGiver;
 import com.finderfeed.solarforge.magic_items.runic_network.repeater.BaseRepeaterTile;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
@@ -10,7 +9,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.chunk.LevelChunk;
-import org.lwjgl.system.CallbackI;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -100,7 +98,7 @@ public class RunicEnergyPath {
 
     private void sortBestGiver(Level w){
         FINAL_POSITIONS.sort((n1,n2)->{
-            return (int)Math.round(gv(w,n1.getPos2()).getRunicEnergy(type)) - (int)Math.round(gv(w,n2.getPos2()).getRunicEnergy(type));
+            return (int)Math.round(gv(w,n2.getGiverPos()).getRunicEnergy(type)) - (int)Math.round(gv(w,n1.getGiverPos()).getRunicEnergy(type));
         });
         PosPair pos = FINAL_POSITIONS.get(0);
         FINAL_POSITIONS.clear();
@@ -125,7 +123,7 @@ public class RunicEnergyPath {
     }
 
     private List<BlockPos> buildRouteAStar(Map<BlockPos,List<BlockPos>> pylons,BlockPos start,Level world){
-        BlockPos finalPos = FINAL_POSITIONS.get(0).getPos1();
+        BlockPos finalPos = FINAL_POSITIONS.get(0).getRepeaterPos();
 
         List<BlockPos> alreadyVisited = new ArrayList<>();
         alreadyVisited.add(start);
@@ -172,20 +170,20 @@ public class RunicEnergyPath {
                 }
             }
             List<BlockPos> savedPath = currentNode.getSavedPath();
-            savedPath.add(FINAL_POSITIONS.get(0).getPos2());
+            savedPath.add(FINAL_POSITIONS.get(0).getGiverPos());
             List<BlockPos> returnthis = new ArrayList<>();
             returnthis.add(startingPos);
             returnthis.addAll(savedPath);
             return returnthis;
         }else{
-            return List.of(startingPos,finalPos,FINAL_POSITIONS.get(0).getPos2());
+            return List.of(startingPos,finalPos,FINAL_POSITIONS.get(0).getGiverPos());
         }
 
     }
 
     public static boolean isRouteCorrect(List<BlockPos> route,Level world){
         for (int i = 0; i < route.size()-1;i++){
-            if (i >= 2 ){
+            if (i >= 1 ){
                 if (!(world.getBlockEntity(route.get(i)) instanceof BaseRepeaterTile)){
                     return false;
                 }
@@ -212,9 +210,13 @@ public class RunicEnergyPath {
         for (int i = 0;i < route.size()-1;i++){
             if (world.getBlockEntity(route.get(i)) instanceof BaseRepeaterTile repeater){
                 if (i == route.size()-2){
-                    repeater.addConnection(route.get(route.size()-1));
+                    if (!repeater.getConnections().contains(route.get(route.size()-1))) {
+                        repeater.addConnection(route.get(route.size() - 1));
+                    }
                 }
-                repeater.addConnection(route.get(i-1));
+                if (!repeater.getConnections().contains(route.get(i-1))) {
+                    repeater.addConnection(route.get(i - 1));
+                }
             }
         }
     }
@@ -232,11 +234,11 @@ class PosPair{
         this.pos2 = pos2;
     }
 
-    public BlockPos getPos1() {
+    public BlockPos getRepeaterPos() {
         return pos1;
     }
 
-    public BlockPos getPos2() {
+    public BlockPos getGiverPos() {
         return pos2;
     }
 }

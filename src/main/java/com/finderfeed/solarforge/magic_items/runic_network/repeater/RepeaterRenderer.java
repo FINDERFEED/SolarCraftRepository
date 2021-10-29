@@ -21,15 +21,19 @@ public class RepeaterRenderer implements BlockEntityRenderer<BaseRepeaterTile> {
 
     @Override
     public void render(BaseRepeaterTile tile, float v, PoseStack matrices, MultiBufferSource multiBufferSource, int i, int i1) {
-
+        matrices.pushPose();
         if (tile.getConnections() != null){
             tile.getConnections().forEach((pos)->{
                 Vec3 tilepos = new Vec3(tile.getBlockPos().getX() +0.5,tile.getBlockPos().getY() +0.5,tile.getBlockPos().getZ() +0.5);
                 Vec3 vector = Helpers.getBlockCenter(pos).subtract(tilepos);
-                RenderingTools.applyMovementMatrixRotations(matrices,vector.normalize());
-                RenderingTools.renderRay(matrices,multiBufferSource,0.25f,(float)vector.length(), Direction.UP,false,0,v);
+
+
+                RenderingTools.renderRay(matrices,multiBufferSource,0.25f,(float)vector.length(),(mat)->{
+                    RenderingTools.applyMovementMatrixRotations(mat,vector.normalize());
+                },false,0,v);
             });
         }
+        matrices.popPose();
 //        if (tile.getConnections() != null){
 //            Vec3 tilepos = new Vec3(tile.getBlockPos().getX() +0.5,tile.getBlockPos().getY() +0.5,tile.getBlockPos().getZ() +0.5);
 //            Vec3 targetPos = new Vec3(tile.getRepeaterConnection().getX() +0.5,tile.getRepeaterConnection().getY() +0.5,tile.getRepeaterConnection().getZ() +0.5);

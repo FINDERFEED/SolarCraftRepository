@@ -1,6 +1,7 @@
 package com.finderfeed.solarforge.magic_items.blocks.infusing_table_things;
 
 import com.finderfeed.solarforge.SolarForge;
+import com.finderfeed.solarforge.for_future_library.OwnedBlock;
 import com.finderfeed.solarforge.magic_items.items.SolarNetworkBinder;
 import com.finderfeed.solarforge.misc_things.SolarcraftDebugStick;
 import net.minecraft.world.level.block.Block;
@@ -25,6 +26,9 @@ import net.minecraft.world.level.Level;
 import java.util.function.Consumer;
 
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
+import net.minecraftforge.event.world.BlockEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fmllegacy.network.NetworkHooks;
 
 import javax.annotation.Nullable;
@@ -39,6 +43,9 @@ public class InfusingTableBlock extends Block implements EntityBlock {
     public VoxelShape getShape(BlockState p_220053_1_, BlockGetter p_220053_2_, BlockPos p_220053_3_, CollisionContext p_220053_4_) {
         return Block.box(0.0D, 0.0D, 0.0D, 16.0D, 9.0D, 16.0D);
     }
+
+
+
 
 
 
@@ -57,6 +64,8 @@ public class InfusingTableBlock extends Block implements EntityBlock {
         }
         super.onRemove(p_196243_1_, p_196243_2_, p_196243_3_, p_196243_4_, p_196243_5_);
     }
+
+
 
 
     @Override
@@ -101,3 +110,7 @@ public class InfusingTableBlock extends Block implements EntityBlock {
         return SolarForge.INFUSING_STAND_BLOCKENTITY.get().create(blockPos,blockState);
     }
 }
+
+
+
+
