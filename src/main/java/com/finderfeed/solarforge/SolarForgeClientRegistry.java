@@ -14,6 +14,7 @@ import com.finderfeed.solarforge.magic_items.blocks.render.*;
 import com.finderfeed.solarforge.magic_items.items.projectiles.renderers.*;
 import com.finderfeed.solarforge.magic_items.items.solar_disc_gun.SolarDiscProjectileRenderer;
 import com.finderfeed.solarforge.magic_items.runic_network.repeater.RepeaterRenderer;
+import com.finderfeed.solarforge.registries.ScreenSuppliers;
 import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
 import com.finderfeed.solarforge.registries.containers.Containers;
 import com.finderfeed.solarforge.registries.items.ItemsRegister;
@@ -68,6 +69,8 @@ public class SolarForgeClientRegistry {
 
     @SubscribeEvent
     public static void registerClientStuff(final FMLClientSetupEvent event){
+
+        ScreenSuppliers.SCREEN_REGISTRY.registerAll();
 
         ItemBlockRenderTypes.setRenderLayer(SolarForge.SOLAR_INFUSER.get(), RenderType.solid());
         ItemBlockRenderTypes.setRenderLayer(BlocksRegistry.SOLAR_POOL.get(), RenderType.solid());

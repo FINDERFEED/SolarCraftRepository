@@ -6,6 +6,7 @@ import com.finderfeed.solarforge.magic_items.items.solar_lexicon.structure.subca
 import com.finderfeed.solarforge.multiblocks.Multiblocks;
 import com.finderfeed.solarforge.registries.items.ItemsRegister;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Achievement;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeType;
@@ -137,6 +138,7 @@ public enum AncientFragment {
     private TranslatableComponent lore;
     private TranslatableComponent itemLore;
     private RecipeType<?> recipeType;
+    private String screenID;
     private final boolean requiresFragment;
 
 
@@ -179,6 +181,10 @@ public enum AncientFragment {
         this(translation,id,neededProgression,subBase,catBase,Type.ITEMS,item.get(0).getItem(),true);
         this.stacks = item;
         this.itemLore = upgradeLore;
+    }
+    AncientFragment(TranslatableComponent translation, String id, Achievement neededProgression, SubCategoryBase subBase, CategoryBase catBase, String screenid,ItemStack logo){
+        this(translation,id,neededProgression,subBase,catBase,Type.CUSTOM,logo.getItem(),true);
+        this.screenID = screenid;
     }
 
     public CategoryBase getCategory() {
@@ -246,7 +252,8 @@ public enum AncientFragment {
         ITEM,
         INFORMATION,
         UPGRADE,
-        ITEMS
+        ITEMS,
+        CUSTOM
     }
 
     public static AncientFragment getFragmentByID(String id){

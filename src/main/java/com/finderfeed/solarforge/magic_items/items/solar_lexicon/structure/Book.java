@@ -99,7 +99,10 @@ public class Book {
             if ((a = filtered.size()) > maxCategoryInARow){
                 maxCategoryInARow = a;
             }
-            ROWS_COLLUMNS.add(new ArrayList<>(filtered));
+            filtered.sort((c1,c2)->{
+                return c1.getBase().getWidthPriority() - c2.getBase().getWidthPriority();
+            });
+            ROWS_COLLUMNS.add(filtered);
         }
     }
 
