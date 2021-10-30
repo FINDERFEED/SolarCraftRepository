@@ -14,8 +14,8 @@ public class Category {
     private Map<SubCategoryBase,SubCategory> categories = new HashMap<>();
     private final CategoryBase base;
 
-    int xsize;
-    int ysize;
+    private Integer xsize;
+    private Integer ysize;
 
     public Category(CategoryBase base){
         this.base = base;
@@ -30,6 +30,10 @@ public class Category {
         return this.categories.get(base);
     }
 
+    public CategoryBase getBase(){
+        return this.base;
+    }
+
     public void initAtPos(int x, int y){
 
     }
@@ -39,6 +43,35 @@ public class Category {
     }
 
     public int[] getSize(){
-        return null;
+        if (xsize == null){
+            int x = 0;
+            int y = 0;
+
+            int p = categories.size()*20+10;
+            int m = getMaxSubCategoryYSize();
+            y = m+17;
+
+            for (SubCategory cat : categories.values()){
+                x+=cat.getSize()[0];
+            }
+
+
+            this.xsize = x;
+            this.ysize = y;
+            return new int[]{x,y};
+        }else{
+            return new int[]{xsize,ysize};
+        }
+    }
+
+
+    private int getMaxSubCategoryYSize(){
+        int max = 0;
+        for (SubCategory cat : categories.values()){
+            if (cat.getSize()[1] > max){
+                max = cat.getSize()[1];
+            }
+        }
+        return max;
     }
 }
