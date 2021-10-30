@@ -3,7 +3,11 @@ package com.finderfeed.solarforge.magic_items.items.solar_lexicon.structure;
 import com.finderfeed.solarforge.for_future_library.entities.BossAttackChain;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.structure.category.Category;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.structure.category.CategoryBase;
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.structure.subcategory.SubCategory;
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.structure.subcategory.SubCategoryBase;
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.AncientFragment;
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.gui.components.Button;
 import org.lwjgl.system.CallbackI;
 
 import javax.annotation.Nullable;
@@ -18,13 +22,16 @@ public class Book {
     private int[] yPositions;
     private int[][] xPositions;
     private int maxCategoryInARow = 0;
+    private final int relX;
+    private final int relY;
 
-    public Book(){
 
+    public Book(int relX,int relY){
+        this.relX = relX;
+        this.relY = relY;
     }
 
     public void addCategory(CategoryBase base){
-
         this.categories.put(base,new Category(base));
     }
 
@@ -35,12 +42,22 @@ public class Book {
 
     public void init(){
         initRowsAndCollumns();
-
-
+        calculateInitPositionsForEachCollumnAndRow();
+        for (int i = 0; i < ROWS_COLLUMNS.size();i ++){
+            List<Category> cies;
+            for (int g = 0;g < (cies = ROWS_COLLUMNS.get(i)).size();g++){
+                cies.get(g).initAtPos(relX+xPositions[i][g],relY+yPositions[i]);
+            }
+        }
     }
 
     public void render(PoseStack matrices){
-
+        for (int i = 0; i < ROWS_COLLUMNS.size();i ++){
+            List<Category> cies;
+            for (int g = 0;g < (cies = ROWS_COLLUMNS.get(i)).size();g++){
+                cies.get(g).renderAtPos(matrices,relX+xPositions[i][g],relY+yPositions[i]);
+            }
+        }
     }
 
     private void calculateInitPositionsForEachCollumnAndRow(){
@@ -54,13 +71,20 @@ public class Book {
                 xPositions[i][g] = currentXPos;
                 currentXPos += cies.get(g).getSize()[0] + SPACING_BETWEEN_CATEGORIES;
             }
-            currentYPos += getMaximumHeightInARow();
+            yPositions[i] = currentYPos;
+            currentYPos += getMaximumHeightInARow(i) + SPACING_BETWEEN_CATEGORIES;
         }
     }
 
-    //TODO:getMaximumHeightInARow
-    private void getMaximumHeightInARow(){
 
+    private int getMaximumHeightInARow(int rowID){
+        int maximum = 0;
+        for (Category cat : ROWS_COLLUMNS.get(rowID)){
+            if (cat.getSize()[1] > maximum){
+                maximum = cat.getSize()[1];
+            }
+        }
+        return maximum;
     }
 
 
@@ -77,6 +101,18 @@ public class Book {
             }
             ROWS_COLLUMNS.add(new ArrayList<>(filtered));
         }
+    }
+
+    public List<Button> getButtons(){
+        List<Button> BUTTONS = new ArrayList<>();
+        ROWS_COLLUMNS.forEach((list)->{
+            list.forEach((cat)->{
+                cat.getAllCategories().forEach((subcat)->{
+                    BUTTONS.addAll(subcat.getButtonsToAdd());
+                });
+            });
+        });
+        return BUTTONS;
     }
 
     private List<Category> getNextRow(List<Category> a){
@@ -97,25 +133,37 @@ public class Book {
         return attacksToCopyTo;
     }
 
+
+    public static void initializeBook(Book book,List<AncientFragment> fragments) {
+        for (AncientFragment frag : fragments) {
+            CategoryBase catBase = frag.getCategory();
+            SubCategoryBase subBase = frag.getSubCategory();
+            Category cat;
+            SubCategory subCat;
+            if ((cat = book.getCategory(catBase)) != null) {
+
+                if ((subCat = cat.getSubCategory(subBase)) != null) {
+                    subCat.putAncientFragment(frag);
+                } else {
+                    cat.addSubCategory(subBase);
+                    subCat = cat.getSubCategory(subBase);
+                    subCat.putAncientFragment(frag);
+
+                }
+            } else {
+                book.addCategory(catBase);
+                cat = book.getCategory(catBase);
+                if ((subCat = cat.getSubCategory(subBase)) != null) {
+                    subCat.putAncientFragment(frag);
+                } else {
+                    cat.addSubCategory(subBase);
+                    subCat = cat.getSubCategory(subBase);
+                    subCat.putAncientFragment(frag);
+
+                }
+            }
+        }
+    }
+
 }
-class IntegeredPair<T>{
 
-    private T item;
-    private Integer number = null;
-
-    public IntegeredPair(T item){
-        this.item = item;
-    }
-
-    public T getItem() {
-        return item;
-    }
-
-    public void setNumber(Integer number) {
-        this.number = number;
-    }
-
-    public Integer getNumber() {
-        return number;
-    }
-}

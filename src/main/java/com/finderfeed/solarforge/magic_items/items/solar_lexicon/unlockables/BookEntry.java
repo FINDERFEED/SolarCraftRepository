@@ -9,7 +9,7 @@ import java.util.*;
 import java.util.List;
 
 
-
+@Deprecated
 public enum BookEntry {
     BEGINNING_INFO(tx("solar_category.beginning"),point(20,40),null,null),
     SOLAR_FORGE_BASICS(tx("solar_category.solar_forge"),point(210,40),Achievement.ENTER_NETHER,null),

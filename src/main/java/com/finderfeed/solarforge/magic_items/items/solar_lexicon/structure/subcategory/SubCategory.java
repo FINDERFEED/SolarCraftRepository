@@ -21,6 +21,7 @@ import java.util.List;
 
 public class SubCategory {
 
+    public static final int FONT_HEIGHT = 8;
     public static final int BUTTONS_SIZE = 25;
 
     private List<AncientFragment> fragments = new ArrayList<>();
@@ -43,8 +44,8 @@ public class SubCategory {
     public void initAtPos(int x, int y) {
         for (int i = 0; i < fragments.size(); i++) {
             int buttonPosX = x + (i % 6) * BUTTONS_SIZE;
-            int buttonPosY = y + (int) Math.floor((float) i / 7) * BUTTONS_SIZE;
-            AncientFragment frag = fragments.get(0);
+            int buttonPosY = y + (int)Math.floor((float) i / 6) * BUTTONS_SIZE;
+            AncientFragment frag = fragments.get(i);
             AncientFragment.Type type = frag.getType();
             if (type == AncientFragment.Type.ITEM){
                 if (frag.getRecipeType() == SolarForge.INFUSING_RECIPE_TYPE){
@@ -66,7 +67,13 @@ public class SubCategory {
 
     public void renderAtPos(PoseStack matrices,int x, int y) {
         drawRectangle(matrices,getSize()[0],getSize()[1],new Point(x,y));
-        Gui.drawString(matrices,Minecraft.getInstance().font,base.getTranslation(),x,y-7,0xffffff);
+        int scrollX = 0;
+        int scrollY = 0;
+        if (Minecraft.getInstance().screen instanceof IScrollable scrollable) {
+            scrollX = scrollable.getCurrentScrollX();
+            scrollY = scrollable.getCurrentScrollY();
+        }
+        Gui.drawString(matrices,Minecraft.getInstance().font,base.getTranslation(),x+scrollX,y-FONT_HEIGHT+scrollY,0xffffff);
     }
 
     public void putAncientFragment(AncientFragment frag) {
@@ -86,7 +93,7 @@ public class SubCategory {
             }
 
             if (fragments.size() >= 6) {
-                y = (fragments.size() % 6) * BUTTONS_SIZE;
+                y = (int)Math.ceil((float)fragments.size() / 6) * BUTTONS_SIZE;
             } else {
                 y = BUTTONS_SIZE;
             }
