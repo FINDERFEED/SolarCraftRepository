@@ -2,14 +2,20 @@ package com.finderfeed.solarforge.magic_items.items.solar_lexicon.structure.cate
 
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.structure.subcategory.SubCategory;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.structure.subcategory.SubCategoryBase;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Gui;
 
 import javax.annotation.Nullable;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class Category {
+
+    public static final int SPACING_BETWEEN_CATEGORIES = 20;
 
     private Map<SubCategoryBase,SubCategory> categories = new HashMap<>();
     private final CategoryBase base;
@@ -21,8 +27,8 @@ public class Category {
         this.base = base;
     }
 
-    public void addSubCategory(SubCategory c){
-        this.categories.put(c.getBase(),c);
+    public void addSubCategory(SubCategoryBase c){
+        this.categories.put(c,new SubCategory(c));
     }
 
     @Nullable
@@ -35,25 +41,35 @@ public class Category {
     }
 
     public void initAtPos(int x, int y){
-
+        int index = 0;
+        for (SubCategory cat : categories.values()){
+            int xPos = 5+index*(cat.getSize()[0] + SPACING_BETWEEN_CATEGORIES) ;
+            cat.initAtPos(xPos,y);
+            index++;
+        }
     }
 
-    public void renderAtPos(int x, int y){
-
+    public void renderAtPos(PoseStack matrices,int x, int y){
+        for (SubCategory cat : categories.values()) {
+            cat.renderAtPos(matrices,x+5,y+7);
+        }
+        SubCategory.drawRectangle(matrices,getSize()[0],getSize()[1],new Point(x,y));
+        Gui.drawString(matrices, Minecraft.getInstance().font,base.getTranslation(),x,y-7,0xffffff);
     }
 
     public int[] getSize(){
         if (xsize == null){
             int x = 0;
-            int y = 0;
+            int y;
 
-            int p = categories.size()*20+10;
+            int p = categories.size()*SPACING_BETWEEN_CATEGORIES+10;
             int m = getMaxSubCategoryYSize();
-            y = m+17;
+            y = m+7*3;
 
             for (SubCategory cat : categories.values()){
                 x+=cat.getSize()[0];
             }
+            x+=p;
 
 
             this.xsize = x;

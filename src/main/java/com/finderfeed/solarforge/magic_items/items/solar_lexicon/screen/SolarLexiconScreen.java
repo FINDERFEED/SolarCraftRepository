@@ -124,6 +124,16 @@ public class SolarLexiconScreen extends Screen implements IScrollable {
         }
     }
 
+    @Override
+    public int getCurrentScrollX() {
+        return scrollX;
+    }
+
+    @Override
+    public int getCurrentScrollY() {
+        return scrollY;
+    }
+
 
 //    @Override
 //    public boolean keyPressed(int x, int y, int z) {

@@ -108,6 +108,16 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
         }
     }
 
+    @Override
+    public int getCurrentScrollX() {
+        return scrollX;
+    }
+
+    @Override
+    public int getCurrentScrollY() {
+        return scrollY;
+    }
+
     protected SolarLexiconRecipesScreen() {
         super(new TextComponent(""));
     }
@@ -147,6 +157,7 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
         goBack.x = relX +207;
         goBack.y = relY + 164;
     }
+
 
 
 

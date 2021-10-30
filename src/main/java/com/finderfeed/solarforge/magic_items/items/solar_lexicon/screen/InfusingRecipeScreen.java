@@ -33,12 +33,12 @@ public class InfusingRecipeScreen extends Screen {
     public int relY;
     public List<ItemStack> stacks ;
 
-    protected InfusingRecipeScreen(InfusingRecipe a) {
+    public InfusingRecipeScreen(InfusingRecipe a) {
         super(new TextComponent(""));
         this.recipe = List.of(a);
         maxPages = recipe.size()-1;
     }
-    protected InfusingRecipeScreen(List<InfusingRecipe> a) {
+    public InfusingRecipeScreen(List<InfusingRecipe> a) {
         super(new TextComponent(""));
         this.recipe = a;
         maxPages = recipe.size()-1;
