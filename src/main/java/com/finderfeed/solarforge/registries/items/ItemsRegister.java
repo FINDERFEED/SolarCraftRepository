@@ -45,6 +45,7 @@ public class ItemsRegister {
     public static final RegistryObject<Item> SOLAR_STONE_COLLUMN = ITEMS.register("solar_stone_collumn",()->new BlockItem(BlocksRegistry.SOLAR_STONE_COLLUMN.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
     public static final RegistryObject<Item> SOLAR_STONE_BRICKS = ITEMS.register("solar_stone_bricks",()->new BlockItem(BlocksRegistry.SOLAR_STONE_BRICKS.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
     public static final RegistryObject<Item> SOLAR_STONE_STAIRS = ITEMS.register("solar_stone_stairs",()->new BlockItem(BlocksRegistry.SOLAR_STONE_STAIRS.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
+
     public static final RegistryObject<Item> SOLAR_STONE_COLLUMN_HORIZONTAL = ITEMS.register("solar_stone_collumn_horizontal",()->new BlockItem(BlocksRegistry.SOLAR_STONE_COLLUMN_HORIZONTAL.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
     //solar armor
     public static final RegistryObject<ArmorItem> SOLAR_HELMET = ITEMS.register("solar_helmet",()-> new ArmorItem(SolarArmorMaterial.SOLAR_ARMOR, EquipmentSlot.HEAD,new Item.Properties().rarity(Rarity.EPIC).tab(SolarForge.SOLAR_GROUP)));
@@ -133,6 +134,9 @@ public class ItemsRegister {
     public static final RegistryObject<Item> RUNIC_LEAVES = ITEMS.register("runic_leaves",()->new BlockItem(BlocksRegistry.RUNIC_LEAVES.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
     public static final RegistryObject<Item> RUNIC_LOG = ITEMS.register("runic_log",()->new FuelBlockItem(BlocksRegistry.RUNIC_LOG.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS),600));
     public static final RegistryObject<Item> RUNIC_PLANKS = ITEMS.register("runic_planks",()->new FuelBlockItem(BlocksRegistry.RUNIC_PLANKS.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS),300));
+    public static final RegistryObject<Item> RUNIC_STAIRS = ITEMS.register("runic_stairs",()->new FuelBlockItem(BlocksRegistry.RUNIC_STAIRS.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS),300));
+    public static final RegistryObject<Item> RUNIC_SLAB = ITEMS.register("runic_slab",()->new FuelBlockItem(BlocksRegistry.RUNIC_SLAB.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS),300));
+
 
     public static final RegistryObject<Item> RUNE_ENERGY_PYLON = ITEMS.register("rune_energy_pylon",()->new EnergyPylonBlockItem(BlocksRegistry.RUNE_ENERGY_PYLON.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
 

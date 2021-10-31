@@ -9,6 +9,8 @@
     "solarforge:radiant_planks",
     "solarforge:radiant_log",
     "solarforge:radiant_stairs",
-    "solarforge:radiant_slab"
+    "solarforge:radiant_slab",
+    "solarforge:runic_slab",
+    "solarforge:runic_stairs"
   ]
 }

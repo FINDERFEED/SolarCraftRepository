@@ -484,11 +484,30 @@
   "player.cant_use_ability_near_boss": "Unknown force restricts you from casting this ability here.",
   "ach.crystal_boss": "Ancient Crystal",
   "pre.crystal_boss": "The final battle?",
-  "aft.crystal_boss": "The final battle?"
+  "aft.crystal_boss": "The final battle?",
+  "block.solarforge.runic_stairs": "Runic stairs",
+  "block.solarforge.runic_slab": "Runic slab",
 
-
-
-
-
-
+  "aft.rune_energy_claim": "Turns out i can collect this energy inside...myself?",
+  "aft.rune_energy_deposit": "It seems that this pylon contains some sort of energy.",
+  "aft.solar_rune": "Maybe this runes will help me to decrypt the fragments?",
+  "aft.enter_nether": "Despite its evil nature there are still some friendly creatures here, but anyway i need to be careful.",
+  "aft.dimension_core": "A cursed world in all its grace.",
+  "aft.runic_energy_repeater": "Energy from those pylons can be a solution of this problem!",
+  "aft.solar_stone": "This stone has some sort of magic power in it.There should be a way to use it",
+  "aft.solar_forge_craft": "The power of this machine allows me to get powerful abilities. Can it do more than just that?",
+  "aft.solar_infuser_create": "So now what? There was no instructions on how to use it...",
+  "aft.solar_infuser_use": "It wasnt as hard as i thought it would be.",
+  "aft.acquire_solar_dust": "I have finally acquired solar dust! But where to use it?",
+  "aft.key_lock_dungeon": "A very strange building... There should be more to it...",
+  "aft.infuser_dungeon": "Is this some sort of an ancient altar?",
+  "aft.key_source": "A key? But for what?",
+  "aft.cold_star_piece": "The power of this item is very big. According to my experiments it can focus on light.",
+  "aft.cold_star_piece_activated": "This altar just made it increase the power of the focused light! I need to find a usage for it.",
+  "aft.solar_lens_craft": "With the power of this piece of a star i can create better materials now!",
+  "aft.solar_generator_craft": "This generator is much stronger than the one that i had before!",
+  "aft.find_incinerated_forest": "It doesnt seem that this was caused by a natural disaster...",
+  "aft.blue_gem_trade": "What a rude man! At least he loves to share information... For money...",
+  "aft.transmute_gem": "My guesses were true, lava in this forest is full of magic energy.",
+  "aft.dim_shard_dungeon": "They definitely dont want me to reveal their secrets."
 }

@@ -1,0 +1,8 @@
+{
+  "parent": "block/stairs",
+  "textures": {
+    "bottom": "solarforge:block/runic_planks",
+    "top": "solarforge:block/runic_planks",
+    "side": "solarforge:block/runic_planks"
+  }
+}
