@@ -244,6 +244,10 @@ public enum AncientFragment {
         return type;
     }
 
+    public String getScreenID() {
+        return screenID;
+    }
+
     public static AncientFragment[] getAllFragments(){
         return AncientFragment.class.getEnumConstants();
     }

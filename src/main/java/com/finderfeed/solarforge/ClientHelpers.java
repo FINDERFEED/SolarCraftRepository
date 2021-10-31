@@ -188,12 +188,12 @@ public class ClientHelpers {
         return block.getLockedBlock().asItem().getDefaultInstance().getHoverName();
     }
 
-    public static TranslatableComponent getTranslationFor(Block block){
-        if (block.equals(BlocksRegistry.ULDORADIUM_ORE.get())){
-            return new TranslatableComponent("item.solarforge.uldoradium_ore");
-        }
-        return null;
-    }
+//    public static TranslatableComponent getTranslationFor(Block block){
+//        if (block.equals(BlocksRegistry.ULDORADIUM_ORE.get())){
+//            return new TranslatableComponent("item.solarforge.uldoradium_ore");
+//        }
+//        return null;
+//    }
 
 
     public static void updateLexiconInventory(ItemStack[] stacks){

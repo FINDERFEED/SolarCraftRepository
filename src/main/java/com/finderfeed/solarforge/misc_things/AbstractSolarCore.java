@@ -123,6 +123,7 @@ public abstract class AbstractSolarCore extends BlockEntity implements IBindable
         else if ((level.getBlockEntity(pos) instanceof AbstractEnergyGeneratorTileEntity) && Helpers.isReachable(level,worldPosition,pos,getRadius())){
             ((AbstractEnergyGeneratorTileEntity) level.getBlockEntity(pos)).bindPos(worldPosition);
         }
+        update(this);
 
     }
 

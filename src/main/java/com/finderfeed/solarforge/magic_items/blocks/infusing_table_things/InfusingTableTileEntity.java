@@ -445,6 +445,7 @@ public class InfusingTableTileEntity extends AbstractRunicEnergyContainerRCBE im
         if (poss instanceof IBindable && !(poss instanceof IEnergyUser)) {
             ((IBindable) poss).bindPos(worldPosition);
         }
+        update(this);
     }
 
     @Override

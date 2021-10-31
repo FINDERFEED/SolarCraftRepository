@@ -14,7 +14,7 @@ import java.util.List;
 
 public class Category {
 
-    public static final int SPACING_BETWEEN_CATEGORIES = 20;
+    public static final int SPACING_BETWEEN_CATEGORIES = 30;
 
     private Map<SubCategoryBase,SubCategory> categories = new HashMap<>();
     private final CategoryBase base;
