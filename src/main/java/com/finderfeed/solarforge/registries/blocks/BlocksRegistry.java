@@ -76,6 +76,8 @@ public class BlocksRegistry {
     public  static  final RegistryObject<LeavesBlock> RUNIC_LEAVES = BLOCKS.register("runic_leaves",()-> new RunicLeavesBlock(BlockBehaviour.Properties.copy(Blocks.OAK_LEAVES).noOcclusion()));
     public  static  final RegistryObject<RotatedPillarBlock> RUNIC_LOG = BLOCKS.register("runic_log",()-> new RotatedPillarFlammableBlock(BlockBehaviour.Properties.copy(Blocks.OAK_LOG),20));
     public  static  final RegistryObject<Block> RUNIC_PLANKS = BLOCKS.register("runic_planks",()-> new FlammableBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS),20));
+    public static   final RegistryObject<Block> RUNIC_STAIRS = BLOCKS.register("runic_stairs",()-> new StairBlock(()-> RUNIC_PLANKS.get().defaultBlockState(),BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS)));
+    public static   final RegistryObject<Block> RUNIC_SLAB = BLOCKS.register("runic_slab",()-> new FlammableSlabBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS),20));
 
     public  static  final RegistryObject<Block> ARDO_RUNE_BLOCK = BLOCKS.register("ardo_rune_block",()-> new Block(BlockBehaviour.Properties.copy(Blocks.STONE)));
     public  static  final RegistryObject<Block> ZETA_RUNE_BLOCK = BLOCKS.register("zeta_rune_block",()-> new Block(BlockBehaviour.Properties.copy(Blocks.STONE)));

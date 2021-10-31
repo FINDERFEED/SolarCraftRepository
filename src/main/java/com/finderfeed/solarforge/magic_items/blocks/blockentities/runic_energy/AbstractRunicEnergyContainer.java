@@ -4,8 +4,7 @@ import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.for_future_library.OwnedBlock;
 import com.finderfeed.solarforge.for_future_library.helpers.FinderfeedMathHelper;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.RuneEnergyPylonTile;
-import com.finderfeed.solarforge.magic_items.blocks.infusing_table_things.InfusingTableTileEntity;
-import com.finderfeed.solarforge.magic_items.runic_network.algorithms.FindingAlgorithms;
+import com.finderfeed.solarforge.magic_items.runic_network.algorithms.RunicEnergyPath;
 import com.finderfeed.solarforge.magic_items.runic_network.repeater.BaseRepeaterTile;
 import com.finderfeed.solarforge.magic_items.runic_network.repeater.IRunicEnergyContainer;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
@@ -14,11 +13,13 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.LevelChunk;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
+
 
 public abstract class AbstractRunicEnergyContainer extends BlockEntity implements OwnedBlock {
 
@@ -29,12 +30,12 @@ public abstract class AbstractRunicEnergyContainer extends BlockEntity implement
     private double RUNE_ENERGY_KELDA = 0;
     private double RUNE_ENERGY_ZETA = 0;
 
-    private boolean NEEDS_ARDO = false;
-    private boolean NEEDS_KELDA = false;
-    private boolean NEEDS_TERA = false;
-    private boolean NEEDS_FIRA = false;
-    private boolean NEEDS_URBA = false;
-    private boolean NEEDS_ZETA = false;
+//    private boolean NEEDS_ARDO = false;
+//    private boolean NEEDS_KELDA = false;
+//    private boolean NEEDS_TERA = false;
+//    private boolean NEEDS_FIRA = false;
+//    private boolean NEEDS_URBA = false;
+//    private boolean NEEDS_ZETA = false;
 
     private UUID owner;
 
@@ -47,14 +48,21 @@ public abstract class AbstractRunicEnergyContainer extends BlockEntity implement
     @Override
     public CompoundTag save(CompoundTag tag) {
         saveRunicEnergy(tag);
-        tag.putUUID("owner",getOwner());
+        tag.putUUID("tileowner",getOwner());
         return super.save(tag);
     }
 
     @Override
     public void load(CompoundTag tag) {
         super.load(tag);
-        this.setOwner(tag.getUUID("owner"));
+        if (this.level != null){
+            if (!this.level.isClientSide){
+                this.setOwner(tag.getUUID("tileowner"));
+            }
+        }else{
+            this.setOwner(tag.getUUID("tileowner"));
+        }
+
         loadRunicEnergy(tag);
     }
 
@@ -79,28 +87,39 @@ public abstract class AbstractRunicEnergyContainer extends BlockEntity implement
             if (multiplied >= runicEnergy + getMaxEnergyInput()){
                 requestSpecificEnergy(type,getMaxEnergyInput());
             }else if ((multiplied > runicEnergy) && (multiplied < runicEnergy + getMaxEnergyInput())){
-                 double request = multiplied - getRunicEnergy(type);
-                 requestSpecificEnergy(type,request);
+                double request = multiplied - getRunicEnergy(type);
+                requestSpecificEnergy(type,request);
             }
         });
     }
 
     public void requestSpecificEnergy(RunicEnergy.Type type,double amount){
         if (PATH_TO_CONTAINERS.containsKey(type) && PATH_TO_CONTAINERS.get(type) != null){
-            FindingAlgorithms.setRepeatersConnections(PATH_TO_CONTAINERS.get(type),level);
-            BlockEntity first = level.getBlockEntity(PATH_TO_CONTAINERS.get(type).get(0));
-            if (first instanceof IRunicEnergyContainer container){
+            List<BlockPos> route = PATH_TO_CONTAINERS.get(type);
+//            FindingAlgorithms.setRepeatersConnections(PATH_TO_CONTAINERS.get(type),level);
+            RunicEnergyPath.setRepeaterConnections(PATH_TO_CONTAINERS.get(type),level);
+            BlockEntity first = level.getBlockEntity(PATH_TO_CONTAINERS.get(type).get(1));
+            if (first instanceof RunicEnergyGiver container){
                 double flag = container.extractEnergy(type,amount);
                 this.giveEnergy(type,flag);
             }else if (first instanceof BaseRepeaterTile repeater){
-                repeater.addConsumerConnection(worldPosition);
-                double flag = repeater.extractEnergy(amount,type);
-                if (flag != BaseRepeaterTile.NULL){
-                    this.giveEnergy(type,flag);
+
+                if (RunicEnergyPath.isRouteCorrect(PATH_TO_CONTAINERS.get(type),level)){
+                    if (level.getBlockEntity(route.get(route.size()-1)) instanceof RunicEnergyGiver container){
+                        double flag = container.extractEnergy(type,amount);
+                        this.giveEnergy(type,flag);
+                    }else {
+                        RunicEnergyPath.resetRepeaterConnections(PATH_TO_CONTAINERS.get(type),level);
+                        constructWay(type);
+                    }
                 }else{
-                    FindingAlgorithms.resetRepeaters(PATH_TO_CONTAINERS.get(type),level,worldPosition);
+//                    FindingAlgorithms.resetRepeaters(PATH_TO_CONTAINERS.get(type),level,worldPosition);
+                    RunicEnergyPath.resetRepeaterConnections(PATH_TO_CONTAINERS.get(type),level);
                     constructWay(type);
                 }
+            }else{
+                RunicEnergyPath.resetRepeaterConnections(PATH_TO_CONTAINERS.get(type),level);
+                constructWay(type);
             }
 
         }else{
@@ -108,9 +127,12 @@ public abstract class AbstractRunicEnergyContainer extends BlockEntity implement
         }
     }
 
+    public abstract boolean shouldFunction();
+
     public void onRemove(){
         PATH_TO_CONTAINERS.forEach((type,way)->{
-            FindingAlgorithms.resetRepeaters(way,level,worldPosition);
+//            FindingAlgorithms.resetRepeaters(way,level,worldPosition);
+            RunicEnergyPath.resetRepeaterConnections(PATH_TO_CONTAINERS.get(type),level);
         });
     }
 
@@ -129,7 +151,7 @@ public abstract class AbstractRunicEnergyContainer extends BlockEntity implement
         }
     }
 
-    private boolean isEnough(RunicEnergy.Type type,Map<RunicEnergy.Type,Double> costs,int multiplier){
+    protected boolean isEnough(RunicEnergy.Type type, Map<RunicEnergy.Type, Double> costs, int multiplier){
         boolean a = false;
         switch (type){
             case ARDO -> a =  RUNE_ENERGY_ARDO >= costs.get(RunicEnergy.Type.ARDO)*multiplier;
@@ -142,7 +164,7 @@ public abstract class AbstractRunicEnergyContainer extends BlockEntity implement
         return  a;
     }
 
-    private boolean hasEnoughRunicEnergy(Map<RunicEnergy.Type,Double> costs, int multiplier){
+    public boolean hasEnoughRunicEnergy(Map<RunicEnergy.Type,Double> costs, int multiplier){
         AtomicBoolean bool = new AtomicBoolean(true);
         costs.forEach((type,cost)->{
             if (getRunicEnergy(type) < cost*multiplier){
@@ -175,14 +197,12 @@ public abstract class AbstractRunicEnergyContainer extends BlockEntity implement
         PATH_TO_CONTAINERS.remove(type);
         BlockEntity entity = findNearestRepeaterOrPylon(worldPosition,level,type);
         if (entity instanceof BaseRepeaterTile tile){
-            Map<BlockPos,List<BlockPos>> graph = FindingAlgorithms.findAllConnectedPylons(tile,new ArrayList<>(),new HashMap<>());
-            if (FindingAlgorithms.hasEndPoint(graph,level)) {
-                FindingAlgorithms.sortBestPylon(graph, level);
-                PATH_TO_CONTAINERS.put(type, FindingAlgorithms.findConnectionAStar(graph, tile.getBlockPos(), level));
-
+            List<BlockPos> route = new RunicEnergyPath(type,this.worldPosition).build(tile);
+            if (route != null) {
+                PATH_TO_CONTAINERS.put(type, route);
             }
         }else if (entity instanceof IRunicEnergyContainer container){
-            PATH_TO_CONTAINERS.put(type,List.of(container.getPos()));
+            PATH_TO_CONTAINERS.put(type,List.of(this.worldPosition,container.getPos()));
         }
     }
 
@@ -240,6 +260,10 @@ public abstract class AbstractRunicEnergyContainer extends BlockEntity implement
             case TERA -> toReturn = RUNE_ENERGY_TERA;
         }
         return toReturn;
+    }
+
+    public Map<RunicEnergy.Type,List<BlockPos>> getWays(){
+        return PATH_TO_CONTAINERS;
     }
 
 }

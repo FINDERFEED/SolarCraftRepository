@@ -100,6 +100,7 @@ public class SolarEnergyFurnaceTile extends RandomizableContainerBlockEntity imp
         if ((level.getBlockEntity(pos) instanceof IBindable) && !(level.getBlockEntity(pos) instanceof IEnergyUser)){
             ((IBindable) level.getBlockEntity(pos)).bindPos(pos);
         }
+        update(this);
     }
 
     @Override

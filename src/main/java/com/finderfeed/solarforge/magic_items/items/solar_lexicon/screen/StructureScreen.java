@@ -28,7 +28,7 @@ public class StructureScreen extends Screen {
     public Multiblock structure;
     public  int relX;
     public  int relY;
-    protected StructureScreen(Multiblock structure) {
+    public StructureScreen(Multiblock structure) {
         super(new TextComponent(""));
         this.structure = structure;
     }

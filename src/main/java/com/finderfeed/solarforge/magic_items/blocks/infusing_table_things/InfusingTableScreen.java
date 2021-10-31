@@ -133,18 +133,18 @@ public class InfusingTableScreen extends AbstractContainerScreen<InfusingTableCo
         }
 
 
-        renderEnergyBar(matrices,relX+a-12,relY+61,tile.RUNE_ENERGY_KELDA,false);
+        renderEnergyBar(matrices,relX+a-12,relY+61,tile.getRunicEnergy(RunicEnergy.Type.KELDA),false);
 
-        renderEnergyBar(matrices,relX+a-28,relY+61,tile.RUNE_ENERGY_TERA,false);
+        renderEnergyBar(matrices,relX+a-28,relY+61,tile.getRunicEnergy(RunicEnergy.Type.TERA),false);
 
-        renderEnergyBar(matrices,relX+a-44,relY+61,tile.RUNE_ENERGY_ZETA,false);
+        renderEnergyBar(matrices,relX+a-44,relY+61,tile.getRunicEnergy(RunicEnergy.Type.ZETA),false);
 
 
-        renderEnergyBar(matrices,relX+a-12,relY+145,tile.RUNE_ENERGY_URBA,false);
+        renderEnergyBar(matrices,relX+a-12,relY+145,tile.getRunicEnergy(RunicEnergy.Type.URBA),false);
 
-        renderEnergyBar(matrices,relX+a-28,relY+145,tile.RUNE_ENERGY_FIRA,false);
+        renderEnergyBar(matrices,relX+a-28,relY+145,tile.getRunicEnergy(RunicEnergy.Type.FIRA),false);
 
-        renderEnergyBar(matrices,relX+a-44,relY+145,tile.RUNE_ENERGY_ARDO,false);
+        renderEnergyBar(matrices,relX+a-44,relY+145,tile.getRunicEnergy(RunicEnergy.Type.ARDO),false);
         matrices.popPose();
     }
     private void renderItemAndTooltip(ItemStack toRender, int place1, int place2, int mousex, int mousey, PoseStack matrices){

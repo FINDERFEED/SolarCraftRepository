@@ -9,7 +9,9 @@ import com.finderfeed.solarforge.SolarCraftAttributeModifiers;
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.config.SolarcraftConfig;
 import com.finderfeed.solarforge.events.my_events.ProgressionUnlockEvent;
+import com.finderfeed.solarforge.for_future_library.OwnedBlock;
 import com.finderfeed.solarforge.for_future_library.helpers.FinderfeedMathHelper;
+import com.finderfeed.solarforge.magic_items.blocks.infusing_table_things.InfusingTableBlock;
 import com.finderfeed.solarforge.magic_items.items.ExperienceCrystal;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Achievement;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.AncientFragment;
@@ -167,6 +169,15 @@ public class EventHandler {
             Helpers.triggerProgressionShader(playerEntity);
         }
 
+    }
+
+    @SubscribeEvent
+    public static void assignOwner(BlockEvent.EntityPlaceEvent event){
+        if ((event.getPlacedBlock().getBlock() instanceof InfusingTableBlock)
+                &&  (event.getEntity() instanceof Player player)
+                && (player.level.getBlockEntity(event.getPos()) instanceof OwnedBlock tile)){
+            tile.setOwner(player.getUUID());
+        }
     }
 
     @SubscribeEvent

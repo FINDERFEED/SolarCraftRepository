@@ -10,6 +10,7 @@ import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Ac
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.packets.UpdateProgressionOnClient;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.ProgressionHelper;
+import com.finderfeed.solarforge.registries.abilities.AbilitiesRegistry;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.Entity;
@@ -48,10 +49,10 @@ public class RetainLostEvent {
 
 
     @SubscribeEvent
-    public static void retainAbilities(final PlayerEvent.Clone event){
+    public static void retainAbilities(final PlayerEvent.Clone event) {
         Player peorig = event.getOriginal();
         Player playernew = event.getPlayer();
-        if (!event.isWasDeath()){
+        if (!event.isWasDeath()) {
             peorig.reviveCaps();
             playernew.getCapability(CapabilitySolarMana.SOLAR_MANA_PLAYER)
                     .orElseThrow(RuntimeException::new)
@@ -62,24 +63,27 @@ public class RetainLostEvent {
                                     .getMana());
             peorig.invalidateCaps();
 
-            playernew.getPersistentData().putInt(SolarCraftTags.RAW_SOLAR_ENERGY,peorig.getPersistentData().getInt(SolarCraftTags.RAW_SOLAR_ENERGY));
-            playernew.getPersistentData().putBoolean("solar_forge_can_player_use_fireball",peorig.getPersistentData().getBoolean("solar_forge_can_player_use_fireball"));
-            playernew.getPersistentData().putBoolean("solar_forge_can_player_use_lightning",peorig.getPersistentData().getBoolean("solar_forge_can_player_use_lightning"));
-            playernew.getPersistentData().putBoolean("solar_forge_can_player_use_solar_strike",peorig.getPersistentData().getBoolean("solar_forge_can_player_use_solar_strike"));
-            playernew.getPersistentData().putBoolean("solar_forge_can_player_use_solar_stun",peorig.getPersistentData().getBoolean("solar_forge_can_player_use_solar_stun"));
-            playernew.getPersistentData().putBoolean("solar_forge_can_player_use_meteorite",peorig.getPersistentData().getBoolean("solar_forge_can_player_use_meteorite"));
-            playernew.getPersistentData().putBoolean("solar_forge_can_player_use_solar_heal",peorig.getPersistentData().getBoolean("solar_forge_can_player_use_solar_heal"));
-            playernew.getPersistentData().putBoolean("solar_forge_can_player_use_alchemist",peorig.getPersistentData().getBoolean("solar_forge_can_player_use_alchemist"));
+            playernew.getPersistentData().putInt(SolarCraftTags.RAW_SOLAR_ENERGY, peorig.getPersistentData().getInt(SolarCraftTags.RAW_SOLAR_ENERGY));
+            playernew.getPersistentData().putBoolean("solar_forge_can_player_use_fireball", peorig.getPersistentData().getBoolean("solar_forge_can_player_use_fireball"));
+            playernew.getPersistentData().putBoolean("solar_forge_can_player_use_lightning", peorig.getPersistentData().getBoolean("solar_forge_can_player_use_lightning"));
+            playernew.getPersistentData().putBoolean("solar_forge_can_player_use_solar_strike", peorig.getPersistentData().getBoolean("solar_forge_can_player_use_solar_strike"));
+            playernew.getPersistentData().putBoolean("solar_forge_can_player_use_solar_stun", peorig.getPersistentData().getBoolean("solar_forge_can_player_use_solar_stun"));
+            playernew.getPersistentData().putBoolean("solar_forge_can_player_use_meteorite", peorig.getPersistentData().getBoolean("solar_forge_can_player_use_meteorite"));
+            playernew.getPersistentData().putBoolean("solar_forge_can_player_use_solar_heal", peorig.getPersistentData().getBoolean("solar_forge_can_player_use_solar_heal"));
+            playernew.getPersistentData().putBoolean("solar_forge_can_player_use_alchemist", peorig.getPersistentData().getBoolean("solar_forge_can_player_use_alchemist"));
             RunicEnergy.handleCloneEvent(event);
         }
-        for (RunicEnergy.Type type : RunicEnergy.Type.values()){
-            Helpers.updateRunicEnergyOnClient(type,RunicEnergy.getEnergy(peorig,type),peorig);
+        for (RunicEnergy.Type type : RunicEnergy.Type.values()) {
+            Helpers.updateRunicEnergyOnClient(type, RunicEnergy.getEnergy(peorig, type), peorig);
         }
-        playernew.getPersistentData().putString("solar_forge_ability_binded_1",peorig.getPersistentData().getString("solar_forge_ability_binded_1"));
-        playernew.getPersistentData().putString("solar_forge_ability_binded_2",peorig.getPersistentData().getString("solar_forge_ability_binded_2"));
-        playernew.getPersistentData().putString("solar_forge_ability_binded_3",peorig.getPersistentData().getString("solar_forge_ability_binded_3"));
-        playernew.getPersistentData().putString("solar_forge_ability_binded_4",peorig.getPersistentData().getString("solar_forge_ability_binded_4"));
-        playernew.getPersistentData().putBoolean("is_alchemist_toggled",false);
+        playernew.getPersistentData().putString("solar_forge_ability_binded_1", peorig.getPersistentData().getString("solar_forge_ability_binded_1"));
+        playernew.getPersistentData().putString("solar_forge_ability_binded_2", peorig.getPersistentData().getString("solar_forge_ability_binded_2"));
+        playernew.getPersistentData().putString("solar_forge_ability_binded_3", peorig.getPersistentData().getString("solar_forge_ability_binded_3"));
+        playernew.getPersistentData().putString("solar_forge_ability_binded_4", peorig.getPersistentData().getString("solar_forge_ability_binded_4"));
+        playernew.getPersistentData().putBoolean("is_alchemist_toggled", false);
+        if (playernew instanceof ServerPlayer s){
+            AbilitiesRegistry.ALCHEMIST.setToggled(s, false);
+        }
 
 
         for (Achievement a : Achievement.ALL_ACHIEVEMENTS){

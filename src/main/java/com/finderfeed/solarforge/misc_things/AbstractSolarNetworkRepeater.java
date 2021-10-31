@@ -136,5 +136,6 @@ public abstract class AbstractSolarNetworkRepeater extends BlockEntity implement
                 }
             }
         }
+        update(this);
     }
 }

@@ -20,7 +20,7 @@ public class SmeltingRecipeScreen extends Screen {
     public int relY;
     public List<ItemStack> stacks ;
 
-    protected SmeltingRecipeScreen(SolarSmeltingRecipe a) {
+    public SmeltingRecipeScreen(SolarSmeltingRecipe a) {
         super(new TextComponent(""));
         this.recipe = a;
     }

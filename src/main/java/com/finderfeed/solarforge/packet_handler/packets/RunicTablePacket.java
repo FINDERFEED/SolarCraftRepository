@@ -49,8 +49,11 @@ public class RunicTablePacket extends AbstractPacket {
                     for (int i = 0;i< 6;i++){
                         if (tile.getItem(i).getItem() != ProgressionHelper.RUNES[ProgressionHelper.getPlayerPattern(playerEntity)[i]]){
                             a = false;
-                            playerEntity.sendMessage(new TextComponent("Pattern invalid.").withStyle(ChatFormatting.RED),playerEntity.getUUID());
+
                         }
+                    }
+                    if (!a){
+                        playerEntity.sendMessage(new TextComponent("Pattern invalid.").withStyle(ChatFormatting.RED),playerEntity.getUUID());
                     }
                 }else{
                     a = false;

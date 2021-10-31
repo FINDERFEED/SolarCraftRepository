@@ -161,10 +161,10 @@ class UnlockAchievementsCommand {
     public static ArgumentBuilder<CommandSourceStack,?> register(){
         return Commands.literal("unlock")
                 .requires(cs->cs.hasPermission(0))
-                .then(Commands.argument("achievement", StringArgumentType.string())
+                .then(Commands.argument("progression", StringArgumentType.string())
                         .executes((cmd)->{
 
-                    return unlockAchievement(cmd.getSource(),cmd.getArgument("achievement",String.class));
+                    return unlockAchievement(cmd.getSource(),cmd.getArgument("progression",String.class));
                 }));
     }
     public static int unlockAchievement(CommandSourceStack src,String code) throws CommandSyntaxException{
@@ -211,7 +211,7 @@ class refreshAchievements{
             for (Achievement ach : Achievement.ALL_ACHIEVEMENTS){
                 Helpers.setAchievementStatus(ach,src.getPlayerOrException(),false);
             }
-            src.sendSuccess(new TextComponent("Successfully refreshed all achievements"),false);
+            src.sendSuccess(new TextComponent("Successfully refreshed all progressions"),false);
         Helpers.updateProgression(src.getPlayerOrException());
         Helpers.forceChunksReload(src.getPlayerOrException());
         return 0;

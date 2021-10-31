@@ -41,6 +41,7 @@ public class SolarLexiconScreen extends Screen implements IScrollable {
     public final ResourceLocation QMARK = new ResourceLocation("solarforge","textures/misc/question_mark.png");
     public final ResourceLocation MAIN_SCREEN_SCROLLABLE = new ResourceLocation("solarforge","textures/gui/solar_lexicon_main_page_scrollablet.png");
     public String currentText = "";
+    private String afterTxt = "";
     public  int relX;
     public  int relY;
     public final AchievementTree tree = AchievementTree.loadTree();
@@ -49,12 +50,12 @@ public class SolarLexiconScreen extends Screen implements IScrollable {
 
 
 
-    public List<Achievement> firstTier;
-    public List<Achievement> secondTier;
-    public List<Achievement> thirdTier;
-    public List<Achievement> forthTier;
-    public List<Achievement> fifthTier;
-    public List<Achievement> sixthTier;
+//    public List<Achievement> firstTier;
+//    public List<Achievement> secondTier;
+//    public List<Achievement> thirdTier;
+//    public List<Achievement> forthTier;
+//    public List<Achievement> fifthTier;
+//    public List<Achievement> sixthTier;
     public int prevscrollX = 0;
     public int prevscrollY = 0;
     public int scrollX = 0;
@@ -124,6 +125,16 @@ public class SolarLexiconScreen extends Screen implements IScrollable {
         }
     }
 
+    @Override
+    public int getCurrentScrollX() {
+        return scrollX;
+    }
+
+    @Override
+    public int getCurrentScrollY() {
+        return scrollY;
+    }
+
 
 //    @Override
 //    public boolean keyPressed(int x, int y, int z) {
@@ -184,13 +195,14 @@ public class SolarLexiconScreen extends Screen implements IScrollable {
 
 
                 if (Helpers.hasPlayerUnlocked(a,Minecraft.getInstance().player)){
-                    currentText = a.afterText.getString();
-
+                    currentText = a.getPretext().getString();
+                    afterTxt = a.afterText.getString();
                 }else if (Helpers.canPlayerUnlock(a,Minecraft.getInstance().player)){
                     currentText = a.getPretext().getString();
+                    afterTxt = "???";
                 }
                 else{
-
+                    afterTxt = "???";
                     currentText = "???";
                 }
                 currAch = a.getTranslation();
@@ -265,6 +277,7 @@ public class SolarLexiconScreen extends Screen implements IScrollable {
         blit(matrices,relX,relY,0,0,256,256);
         drawString(matrices,minecraft.font,currAch,relX+10,relY+122,0xffffff);
         Helpers.drawBoundedText(matrices,relX+10,relY+132,32,currentText);
+        Helpers.drawBoundedText(matrices,relX+10,relY+162,32,afterTxt);
         //super.render(matrices, mousex, mousey, partialTicks);
 
 

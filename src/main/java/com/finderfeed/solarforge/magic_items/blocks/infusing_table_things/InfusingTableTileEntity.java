@@ -3,6 +3,7 @@ package com.finderfeed.solarforge.magic_items.blocks.infusing_table_things;
 
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.SolarForge;
+import com.finderfeed.solarforge.magic_items.blocks.blockentities.runic_energy.AbstractRunicEnergyContainerRCBE;
 import com.finderfeed.solarforge.magic_items.blocks.infusing_table_things.infusing_pool.InfusingPoolTileEntity;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.ProgressionHelper;
@@ -52,24 +53,8 @@ import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class InfusingTableTileEntity extends RandomizableContainerBlockEntity implements  IEnergyUser, IBindable, ISolarEnergyContainer, OneWay, IRunicEnergyReciever,DebugTarget {
+public class InfusingTableTileEntity extends AbstractRunicEnergyContainerRCBE implements  IEnergyUser, IBindable, ISolarEnergyContainer, OneWay,DebugTarget {
 
-
-    public double RUNE_ENERGY_ARDO = 0;
-    public double RUNE_ENERGY_FIRA = 0;
-    public double RUNE_ENERGY_TERA = 0;
-    public double RUNE_ENERGY_URBA = 0;
-    public double RUNE_ENERGY_KELDA = 0;
-    public double RUNE_ENERGY_ZETA = 0;
-
-    private boolean NEEDS_ARDO = false;
-    private boolean NEEDS_KELDA = false;
-    private boolean NEEDS_TERA = false;
-    private boolean NEEDS_FIRA = false;
-    private boolean NEEDS_URBA = false;
-    private boolean NEEDS_ZETA = false;
-
-    public Map<RunicEnergy.Type,List<BlockPos>> PATH_TO_PYLONS = new HashMap<>();
 
 
 
@@ -123,21 +108,18 @@ public class InfusingTableTileEntity extends RandomizableContainerBlockEntity im
     @Override
     public CompoundTag save(CompoundTag cmp){
         super.save(cmp);
+
         cmp.putInt("energy",energy);
         cmp.putInt("infusing_time",INFUSING_TIME );
         cmp.putInt("recipe_progress",CURRENT_PROGRESS );
         cmp.putBoolean("is_recipe_in_progress",RECIPE_IN_PROGRESS );
-        cmp.putDouble("ardo",RUNE_ENERGY_ARDO);
-        cmp.putDouble("fira",RUNE_ENERGY_FIRA);
-        cmp.putDouble("tera",RUNE_ENERGY_TERA);
-        cmp.putDouble("zeta",RUNE_ENERGY_ZETA);
-        cmp.putDouble("kelda",RUNE_ENERGY_KELDA);
-        cmp.putDouble("urba",RUNE_ENERGY_URBA);
         if (!this.trySaveLootTable(cmp)) {
             ContainerHelper.saveAllItems(cmp, this.items);
         }
         return cmp;
     }
+
+
 
     @Override
     public void load( CompoundTag cmp) {
@@ -146,26 +128,29 @@ public class InfusingTableTileEntity extends RandomizableContainerBlockEntity im
         INFUSING_TIME = cmp.getInt("infusing_time");
         CURRENT_PROGRESS = cmp.getInt("recipe_progress");
         RECIPE_IN_PROGRESS = cmp.getBoolean("is_recipe_in_progress");
-        RUNE_ENERGY_ARDO  = cmp.getDouble("ardo");
-        RUNE_ENERGY_FIRA = cmp.getDouble("fira");
-        RUNE_ENERGY_TERA = cmp.getDouble("tera");
-        RUNE_ENERGY_ZETA = cmp.getDouble("zeta");
-        RUNE_ENERGY_KELDA = cmp.getDouble("kelda");
-        RUNE_ENERGY_URBA = cmp.getDouble("urba");
         this.items = NonNullList.withSize(getContainerSize(), ItemStack.EMPTY);
         if (!this.tryLoadLootTable(cmp)) {
             ContainerHelper.loadAllItems(cmp, this.items);
         }
     }
 
-    private void setNeedsOrNotEnergy(Map<RunicEnergy.Type,Double> costs,int multiplier){
-        NEEDS_FIRA = isEnough(RunicEnergy.Type.FIRA,costs,multiplier);
-        NEEDS_TERA = isEnough(RunicEnergy.Type.TERA,costs,multiplier);
-        NEEDS_URBA = isEnough(RunicEnergy.Type.URBA,costs,multiplier);
-        NEEDS_ARDO = isEnough(RunicEnergy.Type.ARDO,costs,multiplier);
-        NEEDS_ZETA = isEnough(RunicEnergy.Type.ZETA,costs,multiplier);
-        NEEDS_KELDA = isEnough(RunicEnergy.Type.KELDA,costs,multiplier);
+    @Override
+    public double getMaxEnergyInput() {
+        return 10;
     }
+
+    @Override
+    public double getRunicEnergyLimit() {
+        return 100000;
+    }
+
+    @Override
+    public boolean shouldFunction() {
+        return true;
+    }
+
+
+
 
     public static void tick(Level world, BlockPos pos, BlockState blockState, InfusingTableTileEntity tile) {
         if (!world.isClientSide){
@@ -179,43 +164,43 @@ public class InfusingTableTileEntity extends RandomizableContainerBlockEntity im
                     tile.INFUSING_TIME = 0;
                     tile.requiresEnergy = false;
                     tile.onTileRemove();
-                    tile.PATH_TO_PYLONS.clear();
+                    tile.clearWays();
                 }
                 if (tile.RECIPE_IN_PROGRESS){
+
                     tile.setChanged();
                     world.sendBlockUpdated(tile.worldPosition,blockState,blockState,3);
                     InfusingRecipe recipe1 = recipe.get();
+
                     int count = tile.getMinRecipeCountOutput(recipe1);
                     Map<RunicEnergy.Type,Double> costs = recipe1.RUNIC_ENERGY_COST;
                     tile.INFUSING_TIME = recipe1.infusingTime*count;
-                    boolean check = hasEnoughRunicEnergy(world,tile,costs,count);
-                    tile.setNeedsOrNotEnergy(costs,count);
 
-
-                    if ((tile.energy >= recipe1.requriedEnergy*count) && check) {
-                        tile.onTileRemove();
-                        tile.PATH_TO_PYLONS.clear();
-                        tile.requiresEnergy = false;
-                        tile.CURRENT_PROGRESS++;
-
-
-                        if (tile.CURRENT_PROGRESS >= tile.INFUSING_TIME) {
-                            finishRecipe(world,tile,recipe1);
+                    boolean doOwnerHasRequiredProgression = tile.doRecipeRequiresRunicEnergy(costs);
+                    Player pl = world.getPlayerByUUID(tile.getOwner());
+                    if (pl != null) {
+                        if (doOwnerHasRequiredProgression) {
+                            doOwnerHasRequiredProgression = Helpers.hasPlayerUnlocked(Achievement.RUNIC_ENERGY_REPEATER, world.getPlayerByUUID(tile.getOwner()));
                         }
                     }else{
-                        costs.forEach((type,cost)->{
-                            if (!tile.isEnough(type,costs,count)) {
-                                if (cost > 0) {
-                                    tile.requestEnergy(10, type);
-                                }
-                            }else{
-                                if (tile.PATH_TO_PYLONS.containsKey(type)){
-                                    FindingAlgorithms.resetRepeaters(tile.PATH_TO_PYLONS.get(type),world,tile.worldPosition);
-                                    tile.PATH_TO_PYLONS.remove(type);
-                                }
+                        doOwnerHasRequiredProgression = false;
+                    }
+                    if (doOwnerHasRequiredProgression) {
+                        boolean check = tile.hasEnoughRunicEnergy(costs,count);
+                        if ((tile.energy >= recipe1.requriedEnergy * count) && check) {
+                            tile.onTileRemove();
+                            tile.clearWays();
+                            tile.requiresEnergy = false;
+                            tile.CURRENT_PROGRESS++;
+
+
+                            if (tile.CURRENT_PROGRESS >= tile.INFUSING_TIME) {
+                                finishRecipe(world, tile, recipe1);
                             }
-                        });
-                        tile.requiresEnergy = !(tile.energy >= recipe1.requriedEnergy*count);
+                        } else {
+                            tile.requestRunicEnergy(costs, count);
+                            tile.requiresEnergy = !(tile.energy >= recipe1.requriedEnergy * count);
+                        }
                     }
                 }
                 if (world.getGameTime() % 5 == 1) {
@@ -303,17 +288,11 @@ public class InfusingTableTileEntity extends RandomizableContainerBlockEntity im
         tile.deleteStacksInPhantomSlots(count);
         tile.level.playSound(null, tile.worldPosition, SoundEvents.BEACON_DEACTIVATE, SoundSource.AMBIENT, 2, 1);
         tile.energy-= recipe.requriedEnergy*count;
-        tile.NEEDS_ARDO =false;
-        tile.NEEDS_FIRA =false;
-        tile.NEEDS_ZETA =false;
-        tile.NEEDS_URBA =false;
-        tile.NEEDS_TERA =false;
-        tile.NEEDS_KELDA =false;
-
-        tile.PATH_TO_PYLONS.forEach((type,path)->{
-            FindingAlgorithms.resetRepeaters(path,world,tile.worldPosition);
-        });
-        tile.PATH_TO_PYLONS.clear();
+        tile.onRemove();
+//        tile.getWays().forEach((type,path)->{
+//            FindingAlgorithms.resetRepeaters(path,world,tile.worldPosition);
+//        });
+        tile.clearWays();
 
     }
 
@@ -325,10 +304,7 @@ public class InfusingTableTileEntity extends RandomizableContainerBlockEntity im
             if (recipe.isPresent() && ProgressionHelper.doPlayerHasFragment(playerEntity, AncientFragment.getFragmentByID(recipe.get().child))) {
 
                 if (!RECIPE_IN_PROGRESS) {
-                    if (!playerEntity.getPersistentData().getBoolean(Helpers.PROGRESSION + Achievement.USE_SOLAR_INFUSER.getAchievementCode())) {
-                        playerEntity.getPersistentData().putBoolean(Helpers.PROGRESSION + Achievement.USE_SOLAR_INFUSER.getAchievementCode(), true);
-                        SolarForgePacketHandler.INSTANCE.sendTo(new TriggerToastPacket(Achievement.USE_SOLAR_INFUSER.getId()), ((ServerPlayer) playerEntity).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
-                    }
+                    Helpers.fireProgressionEvent(playerEntity,Achievement.USE_SOLAR_INFUSER);
                     this.INFUSING_TIME = recipe.get().infusingTime;
                     this.RECIPE_IN_PROGRESS = true;
                     this.level.playSound(null, this.worldPosition, SoundEvents.BEACON_ACTIVATE, SoundSource.AMBIENT, 2, 1);
@@ -469,6 +445,7 @@ public class InfusingTableTileEntity extends RandomizableContainerBlockEntity im
         if (poss instanceof IBindable && !(poss instanceof IEnergyUser)) {
             ((IBindable) poss).bindPos(worldPosition);
         }
+        update(this);
     }
 
     @Override
@@ -477,115 +454,8 @@ public class InfusingTableTileEntity extends RandomizableContainerBlockEntity im
     }
 
     @Override
-    public boolean requiresRunicEnergy(RunicEnergy.Type type) {
-
-        if (RECIPE_IN_PROGRESS ){
-            if (type == RunicEnergy.Type.ARDO){
-                return NEEDS_ARDO;
-            }else if (type == RunicEnergy.Type.FIRA){
-                return NEEDS_FIRA;
-            }else if (type == RunicEnergy.Type.TERA){
-                return NEEDS_TERA;
-            }else if (type == RunicEnergy.Type.ZETA){
-                return NEEDS_ZETA;
-            }else if (type == RunicEnergy.Type.URBA){
-                return NEEDS_URBA;
-            }else if (type == RunicEnergy.Type.KELDA){
-                return NEEDS_KELDA;
-            }
-
-        }
-
-        return false;
-    }
-
-    @Override
-    public void requestEnergy(double amount, RunicEnergy.Type type) {
-        if (PATH_TO_PYLONS.containsKey(type) && PATH_TO_PYLONS.get(type) != null){
-            FindingAlgorithms.setRepeatersConnections(PATH_TO_PYLONS.get(type),level);
-            BlockEntity first = level.getBlockEntity(PATH_TO_PYLONS.get(type).get(0));
-            if (first instanceof IRunicEnergyContainer container){
-                double flag = container.extractEnergy(type,amount);
-                this.giveEnergy(type,flag);
-            }else if (first instanceof BaseRepeaterTile repeater){
-                repeater.addConsumerConnection(worldPosition);
-                double flag = repeater.extractEnergy(amount,type);
-                if (flag != BaseRepeaterTile.NULL){
-                    this.giveEnergy(type,flag);
-                }else{
-                    FindingAlgorithms.resetRepeaters(PATH_TO_PYLONS.get(type),level,worldPosition);
-                    constructWay(type);
-                }
-            }
-
-        }else{
-            constructWay(type);
-        }
-    }
-
-    @Override
     public double getMaxRange() {
         return 20;
-    }
-
-
-
-    public void constructWay(RunicEnergy.Type type){
-        PATH_TO_PYLONS.remove(type);
-        BlockEntity entity = findNearestRepeaterOrPylon(worldPosition,level,type);
-        if (entity instanceof BaseRepeaterTile tile){
-            Map<BlockPos,List<BlockPos>> graph = FindingAlgorithms.findAllConnectedPylons(tile,new ArrayList<>(),new HashMap<>());
-            if (FindingAlgorithms.hasEndPoint(graph,level)) {
-                FindingAlgorithms.sortBestPylon(graph, level);
-                PATH_TO_PYLONS.put(type, FindingAlgorithms.findConnectionAStar(graph, tile.getBlockPos(), level));
-
-            }
-        }else if (entity instanceof IRunicEnergyContainer container){
-            PATH_TO_PYLONS.put(type,List.of(container.getPos()));
-        }
-    }
-
-    public void giveEnergy(RunicEnergy.Type type, double amount){
-        switch (type){
-            case ARDO -> RUNE_ENERGY_ARDO+=amount;
-            case FIRA -> RUNE_ENERGY_FIRA+=amount;
-            case TERA -> RUNE_ENERGY_TERA+=amount;
-            case KELDA -> RUNE_ENERGY_KELDA+=amount;
-            case URBA -> RUNE_ENERGY_URBA=amount;
-            case ZETA -> RUNE_ENERGY_ZETA+=amount;
-        }
-    }
-
-    private boolean isEnough(RunicEnergy.Type type,Map<RunicEnergy.Type,Double> costs,int multiplier){
-        boolean a = false;
-        switch (type){
-            case ARDO -> a =  RUNE_ENERGY_ARDO >= costs.get(RunicEnergy.Type.ARDO)*multiplier;
-            case FIRA-> a =  RUNE_ENERGY_FIRA >= costs.get(RunicEnergy.Type.FIRA)*multiplier;
-            case TERA-> a =  RUNE_ENERGY_TERA >= costs.get(RunicEnergy.Type.TERA)*multiplier;
-            case URBA-> a =  RUNE_ENERGY_URBA >= costs.get(RunicEnergy.Type.URBA)*multiplier;
-            case ZETA-> a =  RUNE_ENERGY_ZETA >= costs.get(RunicEnergy.Type.ZETA)*multiplier;
-            case KELDA-> a =  RUNE_ENERGY_KELDA >= costs.get(RunicEnergy.Type.KELDA)*multiplier;
-        }
-        return  a;
-    }
-
-    private static boolean hasEnoughRunicEnergy(Level world,InfusingTableTileEntity tile,Map<RunicEnergy.Type,Double> costs,int multiplier){
-        AtomicBoolean bool = new AtomicBoolean(true);
-        Map<RunicEnergy.Type,Double> tileEnergy = Map.of(
-                RunicEnergy.Type.ARDO,tile.RUNE_ENERGY_ARDO,
-                RunicEnergy.Type.TERA,tile.RUNE_ENERGY_TERA,
-                RunicEnergy.Type.KELDA,tile.RUNE_ENERGY_KELDA,
-                RunicEnergy.Type.FIRA,tile.RUNE_ENERGY_FIRA,
-                RunicEnergy.Type.ZETA,tile.RUNE_ENERGY_ZETA,
-                RunicEnergy.Type.URBA,tile.RUNE_ENERGY_URBA
-        );
-        costs.forEach((type,cost)->{
-            if (tileEnergy.get(type) < cost*multiplier){
-                bool.set(false);
-            }
-        });
-
-        return bool.get();
     }
 
     @Override
@@ -593,20 +463,29 @@ public class InfusingTableTileEntity extends RandomizableContainerBlockEntity im
 
 
         return List.of(
-                "ARDO ENERGY "+ RUNE_ENERGY_ARDO,
-                "FIRA ENERGY "+ RUNE_ENERGY_FIRA,
-                "TERA ENERGY "+ RUNE_ENERGY_TERA,
-                "KELDA ENERGY "+ RUNE_ENERGY_KELDA,
-                "URBA ENERGY "+ RUNE_ENERGY_URBA,
-                "ZETA ENERGY "+ RUNE_ENERGY_ZETA,
+                "ARDO ENERGY "+ this.getRunicEnergy(RunicEnergy.Type.ARDO),
+                "FIRA ENERGY "+ this.getRunicEnergy(RunicEnergy.Type.FIRA),
+                "TERA ENERGY "+ this.getRunicEnergy(RunicEnergy.Type.TERA),
+                "KELDA ENERGY "+ this.getRunicEnergy(RunicEnergy.Type.KELDA),
+                "URBA ENERGY "+ this.getRunicEnergy(RunicEnergy.Type.URBA),
+                "ZETA ENERGY "+ this.getRunicEnergy(RunicEnergy.Type.ZETA),
                 "SOLAR ENERGY "+ energy
         );
     }
 
     public void onTileRemove(){
-        PATH_TO_PYLONS.forEach((type,way)->{
-            FindingAlgorithms.resetRepeaters(way,level,worldPosition);
-        });
+        this.onRemove();
     }
+
+
+    private boolean doRecipeRequiresRunicEnergy(Map<RunicEnergy.Type,Double> costs){
+        for (double cost : costs.values()){
+            if (Math.round(cost) != 0){
+                return true;
+            }
+        }
+        return false;
+    }
+
 
 }
