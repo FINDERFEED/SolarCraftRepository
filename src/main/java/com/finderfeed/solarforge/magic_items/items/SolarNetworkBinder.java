@@ -1,6 +1,9 @@
 package com.finderfeed.solarforge.magic_items.items;
 
+import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.for_future_library.helpers.CompoundNBTHelper;
 import com.finderfeed.solarforge.misc_things.*;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -39,12 +42,13 @@ public class SolarNetworkBinder extends Item {
     public InteractionResult useOn(UseOnContext ctx) {
         BlockPos pos = ctx.getClickedPos();
         Level world = ctx.getLevel();
-        if (!world.isClientSide){
+        ItemStack stack = ctx.getItemInHand();
+        if (!world.isClientSide && ctx.getHand() == InteractionHand.MAIN_HAND){
 
             if (!ctx.getPlayer().isCrouching()) {
-                bindAll(world, ctx.getClickedPos(), ctx.getPlayer());
+                bindAll(world, ctx.getClickedPos(), ctx.getPlayer(),getPos1(stack),getPos2(stack), stack);
             }else{
-                setNull();
+                setNull(ctx.getItemInHand());
                 ctx.getPlayer().displayClientMessage(new TextComponent("Positions cleared"),true);
             }
         }
@@ -55,26 +59,27 @@ public class SolarNetworkBinder extends Item {
     @Override
     public void appendHoverText(ItemStack p_77624_1_, @Nullable Level p_77624_2_, List<Component> p_77624_3_, TooltipFlag p_77624_4_) {
         p_77624_3_.add(new TextComponent("Click on relay,energy generator,energy user or core to set two positions. When two positions exist they are reset and the blocks are connected.").withStyle(ChatFormatting.GOLD));
+
         super.appendHoverText(p_77624_1_, p_77624_2_, p_77624_3_, p_77624_4_);
     }
-    public void bindAll(Level world,BlockPos clickedPos,Player p){
-                if (pos1 == null && pos2 == null){
+    public void bindAll(Level world,BlockPos clickedPos,Player p,BlockPos pos1,BlockPos pos2,ItemStack stack){
+        if (pos1 == null && pos2 == null){
             if (world.getBlockEntity(clickedPos) != null && (world.getBlockEntity(clickedPos) instanceof IBindable)) {
-                pos1 = clickedPos;
+                setPos1(stack,clickedPos);
             }
         }else if (pos1 != null && pos2 == null) {
             if (world.getBlockEntity(clickedPos) != null && (world.getBlockEntity(clickedPos) instanceof IBindable)) {
-                pos2 = clickedPos;
+                setPos2(stack,clickedPos);
             }
         }
 
-        if (pos1 != null && pos2 != null ) {
-            IBindable tile1 = (IBindable) world.getBlockEntity(pos1);
-            IBindable tile2 = (IBindable) world.getBlockEntity(pos2);
+        if (getPos1(stack) != null && getPos2(stack) != null ) {
+            IBindable tile1 = (IBindable) world.getBlockEntity(getPos1(stack));
+            IBindable tile2 = (IBindable) world.getBlockEntity(getPos2(stack));
             if (tile1 != null) {
-                tile1.bindPos(pos2);
+                tile1.bindPos(getPos2(stack));
             }
-            setNull();
+            setNull(stack);
         }
     }
 
@@ -266,10 +271,27 @@ public class SolarNetworkBinder extends Item {
     }
 
 
-    public void setNull(){
-        pos1 = null;
-        pos2 = null;
+    public void setNull(ItemStack stack){
+        CompoundNBTHelper.writeBlockPos("pos",BlockPos.ZERO,stack.getOrCreateTagElement("positionone"));
+        CompoundNBTHelper.writeBlockPos("pos",BlockPos.ZERO,stack.getOrCreateTagElement("positiontwo"));
     }
+
+    private BlockPos getPos1(ItemStack stack){
+        BlockPos pos =  CompoundNBTHelper.getBlockPos("pos",stack.getOrCreateTagElement("positionone"));
+        return Helpers.equalsBlockPos(pos,BlockPos.ZERO) ? null : pos;
+    }
+    private BlockPos getPos2(ItemStack stack){
+        BlockPos pos =  CompoundNBTHelper.getBlockPos("pos",stack.getOrCreateTagElement("positiontwo"));
+        return Helpers.equalsBlockPos(pos,BlockPos.ZERO) ? null : pos;
+    }
+
+    private void setPos1(ItemStack stack,BlockPos set){
+        CompoundNBTHelper.writeBlockPos("pos",set,stack.getOrCreateTagElement("positionone"));
+    }
+    private void setPos2(ItemStack stack,BlockPos set){
+       CompoundNBTHelper.writeBlockPos("pos",set,stack.getOrCreateTagElement("positiontwo"));
+    }
+
     public void print(boolean a, Player playerEntity){
         if (a){
             playerEntity.displayClientMessage(new TextComponent("Binding sucesseful"),true);

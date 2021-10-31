@@ -89,6 +89,11 @@ public abstract class AbstractRunicEnergyContainerRCBE extends RandomizableConta
             }else if ((multiplied > runicEnergy) && (multiplied < runicEnergy + getMaxEnergyInput())){
                  double request = multiplied - getRunicEnergy(type);
                  requestSpecificEnergy(type,request);
+            }else {
+                if (PATH_TO_CONTAINERS.containsKey(type)) {
+                    RunicEnergyPath.resetRepeaterConnections(PATH_TO_CONTAINERS.get(type),level);
+                    PATH_TO_CONTAINERS.remove(type);
+                }
             }
         });
     }

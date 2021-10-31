@@ -77,20 +77,20 @@ public class InfusingTableScreen extends AbstractContainerScreen<InfusingTableCo
         ItemRenderer renderd = minecraft.getItemRenderer();
         InfusingTableTileEntity tile = this.menu.te;
 
-        renderItemAndTooltip(tile.getItem(1),relX+137+a,relY+58,x,y,matrices);
-        renderItemAndTooltip(tile.getItem(2),relX+123+a,relY+19,x,y,matrices);
-        renderItemAndTooltip(tile.getItem(3),relX+84+a,relY+5,x,y,matrices);
-        renderItemAndTooltip(tile.getItem(4),relX+45+a,relY+19,x,y,matrices);
-        renderItemAndTooltip(tile.getItem(5),relX+31+a,relY+58,x,y,matrices);
-        renderItemAndTooltip(tile.getItem(6),relX+45+a,relY+97,x,y,matrices);
-        renderItemAndTooltip(tile.getItem(7),relX+84+a,relY+111,x,y,matrices);
-        renderItemAndTooltip(tile.getItem(8),relX+123+a,relY+97,x,y,matrices);
+//        renderItemAndTooltip(tile.getItem(1),relX+137+a,relY+58,x,y,matrices);
+//        renderItemAndTooltip(tile.getItem(2),relX+123+a,relY+19,x,y,matrices);
+//        renderItemAndTooltip(tile.getItem(3),relX+84+a,relY+5,x,y,matrices);
+//        renderItemAndTooltip(tile.getItem(4),relX+45+a,relY+19,x,y,matrices);
+//        renderItemAndTooltip(tile.getItem(5),relX+31+a,relY+58,x,y,matrices);
+//        renderItemAndTooltip(tile.getItem(6),relX+45+a,relY+97,x,y,matrices);
+//        renderItemAndTooltip(tile.getItem(7),relX+84+a,relY+111,x,y,matrices);
+//        renderItemAndTooltip(tile.getItem(8),relX+123+a,relY+97,x,y,matrices);
         Optional<InfusingRecipe> recipe = minecraft.level.getRecipeManager().getRecipeFor(SolarForge.INFUSING_RECIPE_TYPE,tile,minecraft.level);
 
-        if (recipe.isPresent()){
-            renderItemAndTooltip(recipe.get().output,relX+159+a,relY+2,x,y,matrices);
-            
-        }
+//        if (recipe.isPresent()){
+//            renderItemAndTooltip(recipe.get().output,relX+159+a,relY+2,x,y,matrices);
+//
+//        }
         matrices.popPose();
         matrices.pushPose();
         ClientHelpers.bindText(REQ_ENERGY);
@@ -145,6 +145,21 @@ public class InfusingTableScreen extends AbstractContainerScreen<InfusingTableCo
         renderEnergyBar(matrices,relX+a-28,relY+145,tile.getRunicEnergy(RunicEnergy.Type.FIRA),false);
 
         renderEnergyBar(matrices,relX+a-44,relY+145,tile.getRunicEnergy(RunicEnergy.Type.ARDO),false);
+
+
+        renderItemAndTooltip(tile.getItem(1),relX+137+a,relY+58,x,y,matrices);
+        renderItemAndTooltip(tile.getItem(2),relX+123+a,relY+19,x,y,matrices);
+        renderItemAndTooltip(tile.getItem(3),relX+84+a,relY+5,x,y,matrices);
+        renderItemAndTooltip(tile.getItem(4),relX+45+a,relY+19,x,y,matrices);
+        renderItemAndTooltip(tile.getItem(5),relX+31+a,relY+58,x,y,matrices);
+        renderItemAndTooltip(tile.getItem(6),relX+45+a,relY+97,x,y,matrices);
+        renderItemAndTooltip(tile.getItem(7),relX+84+a,relY+111,x,y,matrices);
+        renderItemAndTooltip(tile.getItem(8),relX+123+a,relY+97,x,y,matrices);
+
+        if (recipe.isPresent()){
+            renderItemAndTooltip(recipe.get().output,relX+159+a,relY+2,x,y,matrices);
+
+        }
         matrices.popPose();
     }
     private void renderItemAndTooltip(ItemStack toRender, int place1, int place2, int mousex, int mousey, PoseStack matrices){

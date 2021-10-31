@@ -171,9 +171,15 @@ public class Helpers {
         Vec3 vector = new Vec3(vec2.x - vec1.x,vec2.y - vec1.y,vec2.z - vec1.z);
         ClipContext ctx = new ClipContext(vec1.add(vector.normalize()),vec2, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE,null);
         BlockHitResult result = world.clip(ctx);
+        System.out.println(pos1);
+        System.out.println(pos2);
+        System.out.println(result.getBlockPos());
+        boolean first = world.getBlockState(result.getBlockPos()).getBlock() == world.getBlockState(pos2).getBlock();
+        boolean second = Helpers.equalsBlockPos(result.getBlockPos(),pos2);
+//        result.getBlockPos().equals(pos2);
+        boolean third = vector.length() <= radius;
 
-
-        if (world.getBlockState(result.getBlockPos()).getBlock() == world.getBlockState(pos2).getBlock() && result.getBlockPos().equals(pos2) && vector.length() <= radius){
+        if (first && second && third){
             return true;
         }
         return false;
