@@ -145,6 +145,11 @@ public class InfusingTableTileEntity extends AbstractRunicEnergyContainerRCBE im
     }
 
     @Override
+    public int getSeekingCooldown() {
+        return -1;
+    }
+
+    @Override
     public boolean shouldFunction() {
         return true;
     }

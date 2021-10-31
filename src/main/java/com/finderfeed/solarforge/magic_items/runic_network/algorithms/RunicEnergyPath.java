@@ -8,6 +8,7 @@ import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.LevelChunk;
 
 import javax.annotation.Nullable;
@@ -202,6 +203,7 @@ public class RunicEnergyPath {
                     repeater.removeConnection(route.get(route.size()-1));
                 }
                 repeater.removeConnection(route.get(i-1));
+                Helpers.updateTile(repeater);
             }
         }
     }
@@ -217,6 +219,7 @@ public class RunicEnergyPath {
                 if (!repeater.getConnections().contains(route.get(i-1))) {
                     repeater.addConnection(route.get(i - 1));
                 }
+                Helpers.updateTile(repeater);
             }
         }
     }

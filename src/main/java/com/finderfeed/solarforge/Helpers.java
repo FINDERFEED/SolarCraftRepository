@@ -22,6 +22,8 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.core.Direction;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.level.ClipContext;
@@ -488,6 +490,12 @@ public class Helpers {
         return ProjectileUtil.getEntityHitResult(level,null,startPos,endPos,bb,pr,1);
     }
 
+    public static void updateTile(BlockEntity tile){
+        tile.setChanged();
+        BlockState state = tile.getLevel().getBlockState(tile.getBlockPos());
+        tile.getLevel().sendBlockUpdated(tile.getBlockPos(),state,state,3);
+    }
+
 
     public static void setServerPlayerSpeed(ServerPlayer player,Vec3 speed){
         player.setDeltaMovement(speed);
@@ -496,6 +504,22 @@ public class Helpers {
 
     public static boolean playerInBossfight(Player pl){
         return !pl.level.getEntitiesOfClass(CrystalBossEntity.class,new AABB(-20,-20,-20,20,20,20).move(pl.position())).isEmpty();
+    }
+
+
+
+    public static class RunicEnergyRequestConstructor{
+
+        private Map<RunicEnergy.Type,Double> costs = new HashMap<>();
+
+        public RunicEnergyRequestConstructor add(RunicEnergy.Type type,double request){
+            this.costs.put(type,request);
+            return this;
+        }
+
+        public Map<RunicEnergy.Type,Double> build(){
+            return costs;
+        }
     }
 
 

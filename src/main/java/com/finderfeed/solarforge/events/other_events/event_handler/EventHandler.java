@@ -173,8 +173,7 @@ public class EventHandler {
 
     @SubscribeEvent
     public static void assignOwner(BlockEvent.EntityPlaceEvent event){
-        if ((event.getPlacedBlock().getBlock() instanceof InfusingTableBlock)
-                &&  (event.getEntity() instanceof Player player)
+        if ((event.getEntity() instanceof Player player)
                 && (player.level.getBlockEntity(event.getPos()) instanceof OwnedBlock tile)){
             tile.setOwner(player.getUUID());
         }

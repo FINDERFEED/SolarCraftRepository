@@ -2,6 +2,7 @@ package com.finderfeed.solarforge.magic_items.blocks.blockentities.runic_energy;
 
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.for_future_library.OwnedBlock;
+import com.finderfeed.solarforge.for_future_library.helpers.CompoundNBTHelper;
 import com.finderfeed.solarforge.for_future_library.helpers.FinderfeedMathHelper;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.RuneEnergyPylonTile;
 import com.finderfeed.solarforge.magic_items.runic_network.algorithms.RunicEnergyPath;
@@ -10,18 +11,24 @@ import com.finderfeed.solarforge.magic_items.runic_network.repeater.IRunicEnergy
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.Connection;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.LevelChunk;
+import org.apache.logging.log4j.core.tools.picocli.CommandLine;
 
+import javax.annotation.Nullable;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 
 public abstract class AbstractRunicEnergyContainerRCBE extends RandomizableContainerBlockEntity implements OwnedBlock {
+
+    private int seekingCooldown = 0;
 
     private double RUNE_ENERGY_ARDO = 0;
     private double RUNE_ENERGY_FIRA = 0;
@@ -29,6 +36,8 @@ public abstract class AbstractRunicEnergyContainerRCBE extends RandomizableConta
     private double RUNE_ENERGY_URBA = 0;
     private double RUNE_ENERGY_KELDA = 0;
     private double RUNE_ENERGY_ZETA = 0;
+
+    public BlockPos nullOrGiverPositionForClient = BlockPos.ZERO;
 
 //    private boolean NEEDS_ARDO = false;
 //    private boolean NEEDS_KELDA = false;
@@ -78,7 +87,7 @@ public abstract class AbstractRunicEnergyContainerRCBE extends RandomizableConta
 
     public abstract double getMaxEnergyInput();
     public abstract double getRunicEnergyLimit();
-
+    public abstract int getSeekingCooldown();
 
     public void requestRunicEnergy(Map<RunicEnergy.Type,Double> costs,int multiplier){
         costs.forEach((type,cost)->{
@@ -87,8 +96,8 @@ public abstract class AbstractRunicEnergyContainerRCBE extends RandomizableConta
             if (multiplied >= runicEnergy + getMaxEnergyInput()){
                 requestSpecificEnergy(type,getMaxEnergyInput());
             }else if ((multiplied > runicEnergy) && (multiplied < runicEnergy + getMaxEnergyInput())){
-                 double request = multiplied - getRunicEnergy(type);
-                 requestSpecificEnergy(type,request);
+                double request = multiplied - getRunicEnergy(type);
+                requestSpecificEnergy(type,request);
             }else {
                 if (PATH_TO_CONTAINERS.containsKey(type)) {
                     RunicEnergyPath.resetRepeaterConnections(PATH_TO_CONTAINERS.get(type),level);
@@ -123,11 +132,18 @@ public abstract class AbstractRunicEnergyContainerRCBE extends RandomizableConta
                     constructWay(type);
                 }
             }else{
+                if (!Helpers.equalsBlockPos(nullOrGiverPositionForClient,BlockPos.ZERO)){
+                    nullOrGiverPositionForClient = BlockPos.ZERO;
+                    BlockState state = level.getBlockState(worldPosition);
+                    this.setChanged();
+                    this.level.sendBlockUpdated(worldPosition,state,state,3);
+                }
                 RunicEnergyPath.resetRepeaterConnections(PATH_TO_CONTAINERS.get(type),level);
                 constructWay(type);
             }
 
         }else{
+
             constructWay(type);
         }
     }
@@ -139,6 +155,24 @@ public abstract class AbstractRunicEnergyContainerRCBE extends RandomizableConta
 //            FindingAlgorithms.resetRepeaters(way,level,worldPosition);
             RunicEnergyPath.resetRepeaterConnections(PATH_TO_CONTAINERS.get(type),level);
         });
+    }
+
+    @Nullable
+    @Override
+    public ClientboundBlockEntityDataPacket getUpdatePacket() {
+        CompoundTag cmp = new CompoundTag();
+        CompoundNBTHelper.writeBlockPos("posclient",nullOrGiverPositionForClient,cmp);
+        return new ClientboundBlockEntityDataPacket(worldPosition,3,cmp);
+    }
+
+    @Override
+    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
+        BlockPos pos = CompoundNBTHelper.getBlockPos("posclient",pkt.getTag());
+        if (Helpers.equalsBlockPos(pos,BlockPos.ZERO)){
+            nullOrGiverPositionForClient = null;
+        }else{
+            nullOrGiverPositionForClient = pos;
+        }
     }
 
     public void clearWays(){
@@ -200,14 +234,22 @@ public abstract class AbstractRunicEnergyContainerRCBE extends RandomizableConta
 
     public void constructWay(RunicEnergy.Type type){
         PATH_TO_CONTAINERS.remove(type);
-        BlockEntity entity = findNearestRepeaterOrPylon(worldPosition,level,type);
-        if (entity instanceof BaseRepeaterTile tile){
-            List<BlockPos> route = new RunicEnergyPath(type,this.worldPosition).build(tile);
-            if (route != null) {
-                PATH_TO_CONTAINERS.put(type, route);
+        if (seekingCooldown > getSeekingCooldown()) {
+            BlockEntity entity = findNearestRepeaterOrPylon(worldPosition, level, type);
+            if (entity instanceof BaseRepeaterTile tile) {
+                List<BlockPos> route = new RunicEnergyPath(type, this.worldPosition).build(tile);
+                if (route != null) {
+                    PATH_TO_CONTAINERS.put(type, route);
+                }
+            } else if (entity instanceof RunicEnergyGiver container) {
+                nullOrGiverPositionForClient = container.getPos();
+                BlockState state = level.getBlockState(worldPosition);
+                this.setChanged();
+                this.level.sendBlockUpdated(worldPosition,state,state,3);
+                PATH_TO_CONTAINERS.put(type, List.of(this.worldPosition, container.getPos()));
             }
-        }else if (entity instanceof IRunicEnergyContainer container){
-            PATH_TO_CONTAINERS.put(type,List.of(this.worldPosition,container.getPos()));
+        }else{
+            seekingCooldown++;
         }
     }
 
@@ -235,18 +277,19 @@ public abstract class AbstractRunicEnergyContainerRCBE extends RandomizableConta
                         }
                     }
                 }
-                else if (tiles.get(g) instanceof RuneEnergyPylonTile pylon){
-                    if (FinderfeedMathHelper.canSee(pylon.getBlockPos(),pos,getMaxRange(),world)) {
-                        if (pylon.getEnergyType() == type) {
-                            double range = FinderfeedMathHelper.getDistanceBetween(pylon.getBlockPos(), pos);
+                else if (tiles.get(g) instanceof RunicEnergyGiver pylon){
+                    if (FinderfeedMathHelper.canSee(pylon.getPos(),pos,getMaxRange(),world)) {
+                        if (pylon.getTypes() != null && pylon.getTypes().contains(type)) {
+                            double range = FinderfeedMathHelper.getDistanceBetween(pylon.getPos(), pos);
                             if (range <= getMaxRange()) {
                                 if (range <= minRange) {
                                     minRange = range;
-                                    tile = pylon;
+                                    tile = (BlockEntity) pylon;
                                 }
                             }
                         }
                     }
+
                 }
             }
         }

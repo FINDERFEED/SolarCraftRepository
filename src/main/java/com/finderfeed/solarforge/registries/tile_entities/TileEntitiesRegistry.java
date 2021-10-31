@@ -82,4 +82,7 @@ public class TileEntitiesRegistry {
     public static final RegistryObject<BlockEntityType<ZapTurretTile>> ZAP_TURRET_TILE = TILE_ENTITY_TYPE.register("zap_turret_tile",()->
             BlockEntityType.Builder.of(ZapTurretTile::new, BlocksRegistry.ZAP_TURRET_BLOCK.get()).build(null));
 
+    public static final RegistryObject<BlockEntityType<BonemealerTileEntity>> BONEMEALER = TILE_ENTITY_TYPE.register("bonemealer",()->
+            BlockEntityType.Builder.of(BonemealerTileEntity::new, BlocksRegistry.BONEMEALER.get()).build(null));
+
 }
