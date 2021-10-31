@@ -2,12 +2,13 @@ package com.finderfeed.solarforge.SolarAbilities.AbilityClasses;
 
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.player.Player;
 
 public class ToggleableAbility extends AbstractAbility{
 
     private final String TOGGLE_STRING;
 
-    public ToggleableAbility(String id, int manacost, RunicEnergyCostConstructor constr, int buyCost) {
+    public ToggleableAbility(String id, double manacost, RunicEnergyCostConstructor constr, int buyCost) {
         super(id, manacost, constr, buyCost);
         this.TOGGLE_STRING = "solarcraft_ability_toggle_"+id;
     }
@@ -33,7 +34,9 @@ public class ToggleableAbility extends AbstractAbility{
         player.getPersistentData().putBoolean(TOGGLE_STRING,a);
     }
 
-    public boolean isToggled(ServerPlayer player){
+    public boolean isToggled(Player player){
         return player.getPersistentData().getBoolean(TOGGLE_STRING);
     }
+
+
 }

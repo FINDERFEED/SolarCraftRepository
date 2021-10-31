@@ -1,7 +1,9 @@
 package com.finderfeed.solarforge.capabilities.capability_mana;
 
+import com.finderfeed.solarforge.SolarAbilities.Abilities;
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
 import com.finderfeed.solarforge.packet_handler.packets.ToggleAlchemistPacket;
+import com.finderfeed.solarforge.registries.abilities.AbilitiesRegistry;
 import com.finderfeed.solarforge.registries.items.ItemsRegister;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
@@ -45,24 +47,22 @@ public class AttachManaCapabilityEvent {
                     if ((event.player.level.getGameTime() % 10 == 0) ) {
                         SolarForgePacketHandler.INSTANCE.sendTo(new UpdateManaPacket(mana), playerServer.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
                     }
-                    if (player.getPersistentData().getBoolean("is_alchemist_toggled") && !player.isCreative() &&
-                            player.getCapability(CapabilitySolarMana.SOLAR_MANA_PLAYER).orElseThrow(RuntimeException::new).getMana() >= 1
-                    && player.getPersistentData().getBoolean("solar_forge_can_player_use_alchemist")){
-                        player.getCapability(CapabilitySolarMana.SOLAR_MANA_PLAYER).orElseThrow(RuntimeException::new).setMana(
-                        player.getCapability(CapabilitySolarMana.SOLAR_MANA_PLAYER).orElseThrow(RuntimeException::new).getMana()-1
-                        );
+                    if (AbilitiesRegistry.ALCHEMIST.isToggled(playerServer) && !player.isCreative() && mana >= AbilitiesRegistry.ALCHEMIST.manacost){
+                        player.getCapability(CapabilitySolarMana.SOLAR_MANA_PLAYER).orElseThrow(RuntimeException::new).setMana(mana-AbilitiesRegistry.ALCHEMIST.manacost);
                     }
                 }
-
-
-
-
-
-            if (player.getPersistentData().getBoolean("is_alchemist_toggled") && player.getPersistentData().getBoolean("solar_forge_can_player_use_alchemist")) {
-                SolarForgePacketHandler.INSTANCE.sendTo(new ToggleAlchemistPacket(true), ((ServerPlayer)event.player).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
-            } else {
-                SolarForgePacketHandler.INSTANCE.sendTo(new ToggleAlchemistPacket(false), ((ServerPlayer)event.player).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+            ServerPlayer playerServer = (ServerPlayer) player;
+            if (player.level.getGameTime() % 5 == 0) {
+                SolarForgePacketHandler.INSTANCE.sendTo(new ToggleAlchemistPacket(AbilitiesRegistry.ALCHEMIST.isToggled(playerServer)), playerServer.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
             }
+
+
+
+//            if (player.getPersistentData().getBoolean("is_alchemist_toggled") && player.getPersistentData().getBoolean("solar_forge_can_player_use_alchemist")) {
+//                SolarForgePacketHandler.INSTANCE.sendTo(new ToggleAlchemistPacket(true), ((ServerPlayer)event.player).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+//            } else {
+//                SolarForgePacketHandler.INSTANCE.sendTo(new ToggleAlchemistPacket(false), ((ServerPlayer)event.player).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+//            }
 
         }
     }

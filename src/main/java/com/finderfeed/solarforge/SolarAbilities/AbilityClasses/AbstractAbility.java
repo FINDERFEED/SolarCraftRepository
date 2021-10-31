@@ -17,11 +17,11 @@ public abstract class AbstractAbility {
 
     public boolean allowed;
     public Map<RunicEnergy.Type,Float> RUNIC_ENERGY_COST;
-    public int manacost;
+    public double manacost;
     public String id;
     public int buyCost;
 
-    public AbstractAbility(String id, int manacost,RunicEnergyCostConstructor constr,int buyCost) {
+    public AbstractAbility(String id, double manacost,RunicEnergyCostConstructor constr,int buyCost) {
         this.manacost=manacost;
         this.id = id;
         this.RUNIC_ENERGY_COST = constr.COSTS;
