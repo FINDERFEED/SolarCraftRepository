@@ -13,7 +13,8 @@ public enum SubCategoryBase {
     MASTER_ITEMS(tx("solar_category.master_items")),
     MASTER_ENERGY(tx("solar_category.master_energy")),
     MASTER_MATERIALS(tx("solar_category.master_materials")),
-    UPGRADES(tx("solar_category.upgrades"))
+    UPGRADES(tx("solar_category.upgrades")),
+    RADIANT_LAND(tx("solar_category.radiant_land"))
     ;
 //    BEGINNING_INFO(tx("solar_category.beginning"),point(20,40),null,null),
 //    SOLAR_FORGE_BASICS(tx("solar_category.solar_forge"),point(210,40),Achievement.ENTER_NETHER,null),

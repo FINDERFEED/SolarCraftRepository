@@ -11,6 +11,7 @@ public enum CategoryBase {
     BEGINNER(tx("solar_category.beginner"),1,2),
     SKILLED(tx("solar_category.skilled"),1,3),
     MASTER(tx("solar_category.master"),1,4),
+    MIDGAME(tx("solar_category.midgame"),1,5);
     ;
 
     private final TranslatableComponent translation;

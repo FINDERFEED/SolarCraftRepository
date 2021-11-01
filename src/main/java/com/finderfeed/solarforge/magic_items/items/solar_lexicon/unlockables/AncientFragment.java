@@ -104,7 +104,9 @@ public enum AncientFragment {
             ItemsRegister.REGEN_AMULET.get().getDefaultInstance(),ItemsRegister.JUMP_AMULET.get().getDefaultInstance(),
             ItemsRegister.SPEED_AMULET.get().getDefaultInstance(),ItemsRegister.HASTE_AMULET.get().getDefaultInstance(),
             ItemsRegister.NIGHT_VISION_AMULET.get().getDefaultInstance(),ItemsRegister.STRENGTH_AMULET.get().getDefaultInstance()
-    ),tx("amulets.lore"));
+    ),tx("amulets.lore")),
+    RADIANT_LAND_LORE(tx("solar_fragment.radiant_land"),"radiant_land",Achievement.DIMENSION_CORE,SubCategoryBase.RADIANT_LAND,CategoryBase.MIDGAME,"radiant_land_lore",ItemsRegister.DIMENSION_CORE.get().getDefaultInstance())
+    ;
 
     public static Map<String,AncientFragment> FRAGMENTS_ID_MAP = new HashMap<>();
 

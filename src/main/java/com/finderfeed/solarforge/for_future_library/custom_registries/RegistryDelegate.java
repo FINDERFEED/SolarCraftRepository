@@ -13,6 +13,14 @@ public class RegistryDelegate {
         return (Collection<T>)(Collection<?>)REGISTRY_ENTRIES.get(entry).values();
     }
 
+    public static <T> T getObject(CustomRegistryEntry<T> entry,ResourceLocation location){
+        T toReturn = (T)REGISTRY_ENTRIES.get(entry).get(location.toString());
+        if (toReturn == null){
+            throw new RuntimeException("No such registered element: "+ location.toString());
+        }
+        return toReturn;
+    }
+
 
     public static void register(CustomRegistryEntry<?> entry, ResourceLocation loc, Object reg){
         if (!REGISTRY_ENTRIES.containsKey(entry)){

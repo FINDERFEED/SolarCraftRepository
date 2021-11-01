@@ -1,6 +1,7 @@
 package com.finderfeed.solarforge.magic_items.items.solar_lexicon.structure.subcategory;
 
 import com.finderfeed.solarforge.SolarForge;
+import com.finderfeed.solarforge.for_future_library.custom_registries.RegistryDelegate;
 import com.finderfeed.solarforge.for_future_library.helpers.RenderingTools;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.screen.*;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.AncientFragment;
@@ -9,15 +10,19 @@ import com.finderfeed.solarforge.misc_things.IScrollable;
 import com.finderfeed.solarforge.misc_things.Multiblock;
 import com.finderfeed.solarforge.recipe_types.InfusingRecipe;
 import com.finderfeed.solarforge.recipe_types.solar_smelting.SolarSmeltingRecipe;
+import com.finderfeed.solarforge.registries.SolarCraftClientRegistries;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Supplier;
 
 public class SubCategory {
 
@@ -61,6 +66,8 @@ public class SubCategory {
                 buttonsToAdd.add(constructStructureButton(frag.getStructure().getM(),buttonPosX,buttonPosY,frag));
             }else if (type == AncientFragment.Type.UPGRADE){
                 buttonsToAdd.add(constructInfusingRecipeButton(frag,ProgressionHelper.UPGRADES_INFUSING_RECIPE_MAP.get(frag.getItem().getItem()),buttonPosX,buttonPosY));
+            }else if (type == AncientFragment.Type.CUSTOM){
+                buttonsToAdd.add(constructCustomButton(buttonPosX,buttonPosY,frag));
             }
         }
     }
@@ -151,6 +158,18 @@ public class SubCategory {
             Minecraft.getInstance().screen.renderTooltip(matrices,fragment.getTranslation(),mx,my);
         });
     }
+
+    private ItemStackButton constructCustomButton(int x,int y,AncientFragment fragment){
+
+        Supplier<Screen> sp = RegistryDelegate.getObject(SolarCraftClientRegistries.SCREENS,new ResourceLocation("solarforge",fragment.getScreenID()));
+
+        return new ItemStackButton(x,y,24,24,(button)->{
+            Minecraft.getInstance().setScreen(sp.get());
+        },fragment.getIcon().getDefaultInstance(),1.5f,false,(button,matrices,mx,my)->{
+            Minecraft.getInstance().screen.renderTooltip(matrices,fragment.getTranslation(),mx,my);
+        });
+    }
+
     private List<InfusingRecipe> getRecipesForItemList(List<ItemStack> stacks){
         List<InfusingRecipe> recipes = new ArrayList<>();
         stacks.forEach((stack)->{

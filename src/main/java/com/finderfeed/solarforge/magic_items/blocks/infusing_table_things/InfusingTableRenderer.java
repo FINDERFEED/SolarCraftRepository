@@ -1,5 +1,6 @@
 package com.finderfeed.solarforge.magic_items.blocks.infusing_table_things;
 
+import com.finderfeed.solarforge.magic_items.blocks.render.abstracts.AbstractRunicEnergyContainerRCBERenderer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Minecraft;
@@ -13,7 +14,7 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
 import net.minecraft.resources.ResourceLocation;
 import com.mojang.math.Vector3f;
 
-public class InfusingTableRenderer implements BlockEntityRenderer<InfusingTableTileEntity> {
+public class InfusingTableRenderer extends AbstractRunicEnergyContainerRCBERenderer<InfusingTableTileEntity> {
     public final ResourceLocation text = new ResourceLocation("solarforge","textures/misc/solar_infuser_ring.png");
     public InfusingTableRenderer(BlockEntityRendererProvider.Context ctx) {
 
@@ -21,6 +22,7 @@ public class InfusingTableRenderer implements BlockEntityRenderer<InfusingTableT
 
     @Override
     public void render(InfusingTableTileEntity tile, float partialTicks, PoseStack matrices, MultiBufferSource buffer, int light, int light2) {
+        super.render(tile,partialTicks,matrices,buffer,light,light2);
         float time = (tile.getLevel().getGameTime()+partialTicks) ;
         if (tile.RECIPE_IN_PROGRESS) {
             matrices.pushPose();
