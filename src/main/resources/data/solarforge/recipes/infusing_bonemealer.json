@@ -1,0 +1,36 @@
+{
+  "type":"solarforge:infusing",
+  "input1": {
+    "item": "solarforge:runic_core"
+  },
+  "input2": {
+    "item": "solarforge:geminium_ingot"
+  },
+  "input3": {
+    "item": "minecraft:oak_sapling"
+  },
+  "input4": {
+    "item": "minecraft:bone_meal"
+  },
+  "input5": {
+    "item": "minecraft:oak_sapling"
+  },
+  "input6": {
+    "item": "solarforge:geminium_ingot"
+  },
+  "input7": {
+    "item": "solarforge:illidium_ingot"
+  },
+  "input8": {
+    "item": "minecraft:iron_block"
+  },
+  "input9": {
+    "item": "solarforge:illidium_ingot"
+  },
+  "result": {
+    "item": "solarforge:bonemealer"
+  },
+  "time": 1200,
+  "fragment": "bonemealer",
+  "tera": 5000
+}

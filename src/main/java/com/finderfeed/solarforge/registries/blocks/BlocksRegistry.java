@@ -119,5 +119,5 @@ public class BlocksRegistry {
     public static final RegistryObject<Block> RADIANT_LAND_PORTAL_CREATOR = BLOCKS.register("radiant_portal_creator",()->new PortalCreatorBlock(BlockBehaviour.Properties.copy(Blocks.NETHERITE_BLOCK).isViewBlocking((a, b, c)-> false).noCollission()));
     public  static  final RegistryObject<Block> DIMENSION_CORE = BLOCKS.register("dimension_core",()-> new Block(BlockBehaviour.Properties.copy(Blocks.STONE)));
     public  static  final RegistryObject<Block> WORMHOLE = BLOCKS.register("wormhole",()-> new WormholeBlock(BlockBehaviour.Properties.copy(Blocks.BEDROCK).noCollission()));
-    public  static  final RegistryObject<Block> BONEMEALER = BLOCKS.register("bonemealer",()-> new BonemealerBlock(BlockBehaviour.Properties.copy(Blocks.STONE)));
+    public  static  final RegistryObject<Block> BONEMEALER = BLOCKS.register("bonemealer",()-> new BonemealerBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).sound(SoundType.NETHERITE_BLOCK).noOcclusion()));
 }

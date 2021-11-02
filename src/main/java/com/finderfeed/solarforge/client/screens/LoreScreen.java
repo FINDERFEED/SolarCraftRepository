@@ -3,6 +3,9 @@ package com.finderfeed.solarforge.client.screens;
 
 import com.finderfeed.solarforge.ClientHelpers;
 import com.finderfeed.solarforge.for_future_library.helpers.RenderingTools;
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.SolarLexicon;
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.screen.ItemStackButton;
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.screen.SolarLexiconRecipesScreen;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Minecraft;
@@ -17,6 +20,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
@@ -45,8 +49,19 @@ public class LoreScreen extends Screen {
         int scale = (int) minecraft.getWindow().getGuiScale();
         this.relX = (width/scale - 183)/2;
         this.relY = (height - 218*scale)/2/scale;
+        addRenderableWidget(new ItemStackButton(relX+74+72,relY+9,12,12,(button)->{minecraft.setScreen(new SolarLexiconRecipesScreen());}, Items.CRAFTING_TABLE.getDefaultInstance(),0.7f,false));
+        addRenderableWidget(new ItemStackButton(relX+61+72,relY+9,12,12,(button)->{
+            Minecraft mc = Minecraft.getInstance();
+            SolarLexicon lexicon = (SolarLexicon) mc.player.getMainHandItem().getItem();
+            lexicon.currentSavedScreen = this;
+            minecraft.setScreen(null);
+        }, Items.WRITABLE_BOOK.getDefaultInstance(),0.7f,false));
     }
 
+    @Override
+    public boolean isPauseScreen() {
+        return false;
+    }
 
     @Override
     public void render(PoseStack matrices, int mousex, int mousey, float partialTicks) {
@@ -69,11 +84,11 @@ public class LoreScreen extends Screen {
         ClientHelpers.bindText(MAIN);
         blit(matrices,relX,relY,0,0,256,256,256,256);
         ClientHelpers.bindText(IMAGE_LOCATION);
-        blit(matrices,relX+111,relY+24,0,0,70,70,70,70);
+        blit(matrices,relX+111,relY+25,0,0,70,70,70,70);
 
 
         int posX = relX+18;
-        int posY = relY+19;
+        int posY = relY+20;
 
         for (String str : RenderingTools.splitString(lore.getString(),13)){
             drawString(matrices,font,str,posX,posY,0xffffff);

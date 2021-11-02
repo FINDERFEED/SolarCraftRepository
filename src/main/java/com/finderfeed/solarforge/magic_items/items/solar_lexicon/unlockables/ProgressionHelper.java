@@ -2,6 +2,7 @@ package com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables;
 
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.SolarForge;
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Achievement;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import com.finderfeed.solarforge.recipe_types.InfusingRecipe;
 import com.finderfeed.solarforge.recipe_types.solar_smelting.SolarSmeltingRecipe;
@@ -91,11 +92,28 @@ public class ProgressionHelper {
     public static List<AncientFragment> getAllUnlockableFragments(Player pe){
         List<AncientFragment> list = new ArrayList<>();
         for (AncientFragment frag : AncientFragment.getAllFragments()){
-            if (Helpers.hasPlayerUnlocked(frag.getNeededProgression(),pe) && !doPlayerHasFragment(pe,frag)){
+            if (canBeUnlocked(pe,frag)){
                 list.add(frag);
             }
         }
         return list.isEmpty() ? null : list;
+    }
+
+    private static boolean canBeUnlocked(Player pe,AncientFragment frag){
+        if (!doPlayerHasFragment(pe,frag)){
+            if (!(frag.getNeededProgression() == null)) {
+                for (Achievement a : frag.getNeededProgression()) {
+                    if (!Helpers.hasPlayerUnlocked(a, pe)) {
+                        return false;
+                    }
+                }
+            }else{
+                return true;
+            }
+        }else{
+            return false;
+        }
+        return true;
     }
 
     public static void resetPattern(Player pe){

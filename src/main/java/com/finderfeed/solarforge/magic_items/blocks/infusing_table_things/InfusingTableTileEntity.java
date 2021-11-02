@@ -243,7 +243,8 @@ public class InfusingTableTileEntity extends AbstractRunicEnergyContainerRCBE im
     @Override
     public ClientboundBlockEntityDataPacket getUpdatePacket() {
 
-        CompoundTag tag = new CompoundTag();
+        ClientboundBlockEntityDataPacket pkt = super.getUpdatePacket();
+        CompoundTag tag = pkt.getTag();
         this.save(tag);
 
         return new ClientboundBlockEntityDataPacket(worldPosition,3,tag);

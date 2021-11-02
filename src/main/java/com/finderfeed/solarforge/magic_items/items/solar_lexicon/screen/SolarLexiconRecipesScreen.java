@@ -121,7 +121,7 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
         return scrollY;
     }
 
-    protected SolarLexiconRecipesScreen() {
+    public SolarLexiconRecipesScreen() {
         super(new TextComponent(""));
     }
 
@@ -183,9 +183,11 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
         }
     }
 
-
-
-//    public void initButtons(){
+    @Override
+    public boolean isPauseScreen() {
+        return false;
+    }
+    //    public void initButtons(){
 //        map.forEach((entry,list)->{
 //            for (int i = 0;i < list.size();i++){
 //                AncientFragment fragment = list.get(i);
