@@ -18,7 +18,7 @@ public class MortarTileEntity extends AbstractMortarTileEntity {
 
     @Override
     public boolean getConditionToFunction() {
-        return Helpers.checkStructure(level,worldPosition.offset(-2,-12,-2), Multiblocks.SOLAR_MORTAR.getM());
+        return Helpers.checkStructure(level,worldPosition.offset(-2,-12,-2), Multiblocks.SOLAR_MORTAR.getM(),true);
     }
 
     @Override

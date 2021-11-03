@@ -7,13 +7,11 @@ import com.finderfeed.solarforge.SolarAbilities.Abilities;
 import com.finderfeed.solarforge.SolarAbilities.AbilityClasses.AbstractAbility;
 import com.finderfeed.solarforge.SolarCraftAttributeModifiers;
 import com.finderfeed.solarforge.SolarForge;
-import com.finderfeed.solarforge.config.SolarcraftConfig;
 import com.finderfeed.solarforge.events.my_events.ProgressionUnlockEvent;
 import com.finderfeed.solarforge.for_future_library.OwnedBlock;
 import com.finderfeed.solarforge.for_future_library.helpers.FinderfeedMathHelper;
-import com.finderfeed.solarforge.magic_items.blocks.infusing_table_things.InfusingTableBlock;
 import com.finderfeed.solarforge.magic_items.items.ExperienceCrystal;
-import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Achievement;
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Progression;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.ProgressionHelper;
 import com.finderfeed.solarforge.registries.SolarcraftDamageSources;
@@ -22,8 +20,6 @@ import com.finderfeed.solarforge.registries.effects.EffectsRegister;
 import com.finderfeed.solarforge.registries.items.ItemsRegister;
 import com.finderfeed.solarforge.registries.sounds.Sounds;
 import com.finderfeed.solarforge.world_generation.features.FeaturesRegistry;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.resources.sounds.SoundInstance;
 import net.minecraft.core.Registry;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceKey;
@@ -33,7 +29,6 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
-import net.minecraft.world.item.MapItem;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.entity.Entity;
@@ -56,7 +51,6 @@ import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.List;
 
@@ -159,7 +153,7 @@ public class EventHandler {
 
     @SubscribeEvent
     public static void progressionUnlockEvent(ProgressionUnlockEvent event){
-        Achievement ach = event.getProgression();
+        Progression ach = event.getProgression();
         Player playerEntity = event.getPlayer();
         if (!Helpers.hasPlayerUnlocked(ach,playerEntity) && Helpers.canPlayerUnlock(ach,playerEntity)){
             Helpers.setAchievementStatus(ach, playerEntity,true);

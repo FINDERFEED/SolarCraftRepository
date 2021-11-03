@@ -2,26 +2,19 @@ package com.finderfeed.solarforge.magic_items.blocks.blockentities;
 
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.SolarCraftTags;
-import com.finderfeed.solarforge.capabilities.capability_mana.SolarForgeMana;
 import com.finderfeed.solarforge.config.SolarcraftConfig;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.runic_energy.RunicEnergyGiver;
-import com.finderfeed.solarforge.magic_items.blocks.blockentities.runic_energy.RunicEnergyReciever;
-import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Achievement;
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Progression;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.ProgressionHelper;
-import com.finderfeed.solarforge.magic_items.runic_network.repeater.BaseRepeaterTile;
-import com.finderfeed.solarforge.magic_items.runic_network.repeater.IRunicEnergyContainer;
-import com.finderfeed.solarforge.magic_items.runic_network.repeater.IRunicEnergyReciever;
 import com.finderfeed.solarforge.misc_things.*;
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
 import com.finderfeed.solarforge.packet_handler.packets.UpdateTypeOnClientPacket;
 import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
 import net.minecraft.core.BlockPos;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.nbt.CompoundTag;
@@ -30,7 +23,6 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.fmllegacy.network.PacketDistributor;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 
@@ -104,7 +96,7 @@ public class RuneEnergyPylonTile extends BlockEntity implements  DebugTarget, Ru
                     if (entity.getThrower() != null){
                         Player player =entity.level.getPlayerByUUID(entity.getThrower());
                         if (player != null){
-                            Helpers.fireProgressionEvent(player,Achievement.SOLAR_RUNE);
+                            Helpers.fireProgressionEvent(player, Progression.SOLAR_RUNE);
                         }
                     }
                 }
@@ -153,7 +145,7 @@ public class RuneEnergyPylonTile extends BlockEntity implements  DebugTarget, Ru
     public static void doProgression(RuneEnergyPylonTile tile){
         AABB box = new AABB(tile.worldPosition.offset(-2,-2,-2),tile.worldPosition.offset(2,2,2));
         tile.level.getEntitiesOfClass(Player.class,box).forEach((player)->{
-            Helpers.fireProgressionEvent(player, Achievement.RUNE_ENERGY_DEPOSIT);
+            Helpers.fireProgressionEvent(player, Progression.RUNE_ENERGY_DEPOSIT);
         });
     }
 

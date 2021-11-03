@@ -2,9 +2,9 @@ package com.finderfeed.solarforge.magic_items.blocks.blockentities;
 
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.magic_items.blocks.BlueGemDoorBlock;
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Progression;
 import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
 import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
-import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Achievement;
 import net.minecraft.world.level.Level;
 
 import net.minecraft.world.level.block.state.BlockState;
@@ -78,7 +78,7 @@ public class TrapControllerTile extends BlockEntity  {
                     tile.worldPosition.offset(-7,-1,-3));
             List<Player> list = tile.level.getEntitiesOfClass(Player.class,box);
             list.forEach((player)->{
-                Helpers.fireProgressionEvent(player,Achievement.DIMENSIONAL_SHARD_DUNGEON);
+                Helpers.fireProgressionEvent(player, Progression.DIMENSIONAL_SHARD_DUNGEON);
             });
             if (!list.isEmpty()){
                 if (!tile.ALREADY_ACTIVATED) {

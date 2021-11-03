@@ -1,7 +1,7 @@
 package com.finderfeed.solarforge.misc_things;
 
 import com.finderfeed.solarforge.Helpers;
-import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Achievement;
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Progression;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 
@@ -20,7 +20,7 @@ public class SolarDustItem extends Item {
         if (!p_77663_2_.isClientSide && p_77663_3_ instanceof Player){
             Player entity = (Player) p_77663_3_;
 
-            Helpers.fireProgressionEvent(entity,Achievement.ACQUIRE_SOLAR_DUST);
+            Helpers.fireProgressionEvent(entity, Progression.ACQUIRE_SOLAR_DUST);
         }
         super.inventoryTick(p_77663_1_, p_77663_2_, p_77663_3_, p_77663_4_, p_77663_5_);
     }

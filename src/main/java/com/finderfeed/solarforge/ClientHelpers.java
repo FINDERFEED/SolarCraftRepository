@@ -7,18 +7,16 @@ import com.finderfeed.solarforge.magic_items.blocks.blockentities.RayTrapTileEnt
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.RuneEnergyPylonTile;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.containers.screens.RunicTableContainerScreen;
 import com.finderfeed.solarforge.misc_things.*;
-import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
 import com.finderfeed.solarforge.registries.items.ItemsRegister;
 import com.finderfeed.solarforge.registries.sounds.Sounds;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.SolarLexicon;
-import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Achievement;
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Progression;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.ProgressionHelper;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Widget;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffect;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.player.LocalPlayer;
@@ -35,7 +33,6 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
@@ -152,7 +149,7 @@ public class ClientHelpers {
     public static void reloadProgression(ServerPlayer playerServer){
 
         Player player = Minecraft.getInstance().player;
-        for (Achievement a : Achievement.getAllAchievements()){
+        for (Progression a : Progression.getAllAchievements()){
             Helpers.setAchievementStatus(a,player,Helpers.hasPlayerUnlocked(a,playerServer));
 
         }

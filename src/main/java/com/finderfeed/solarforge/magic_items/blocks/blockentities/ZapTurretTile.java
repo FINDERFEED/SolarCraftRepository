@@ -157,7 +157,7 @@ public class ZapTurretTile extends BlockEntity implements OwnedBlock {
     }
 
     public boolean isWorking(){
-        return Helpers.checkStructure(level,worldPosition.offset(-1,-3,-1), Multiblocks.ZAP_TURRET.getM());
+        return Helpers.checkStructure(level,worldPosition.offset(-1,-3,-1), Multiblocks.ZAP_TURRET.getM(),true);
     }
 
 }

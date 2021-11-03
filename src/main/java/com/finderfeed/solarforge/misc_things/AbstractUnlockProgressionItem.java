@@ -3,7 +3,7 @@ package com.finderfeed.solarforge.misc_things;
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
 import com.finderfeed.solarforge.packet_handler.packets.TriggerToastPacket;
-import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Achievement;
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Progression;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.level.ServerPlayer;
@@ -15,7 +15,7 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.fmllegacy.network.NetworkDirection;
 
 public abstract class AbstractUnlockProgressionItem extends Item {
-    public Achievement ach;
+    public Progression ach;
     public AbstractUnlockProgressionItem(Properties p_i48487_1_) {
         super(p_i48487_1_);
     }
@@ -34,5 +34,5 @@ public abstract class AbstractUnlockProgressionItem extends Item {
         super.inventoryTick(p_77663_1_, p_77663_2_, p_77663_3_, p_77663_4_, p_77663_5_);
     }
 
-    public abstract Achievement getAchivement();
+    public abstract Progression getAchivement();
 }

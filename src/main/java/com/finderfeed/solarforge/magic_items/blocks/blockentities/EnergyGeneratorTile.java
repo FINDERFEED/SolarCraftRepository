@@ -43,7 +43,7 @@ public class EnergyGeneratorTile extends AbstractEnergyGeneratorTileEntity {
 
     @Override
     public boolean getConditionToFunction() {
-        return Helpers.checkStructure(level,worldPosition.offset(-2,-2,-2), Multiblocks.SOLAR_ENERGY_GENERATOR.getM()) && level.canSeeSky(worldPosition.above()) && (level.getDayTime() % 24000 <= 13000);
+        return Helpers.checkStructure(level,worldPosition.offset(-2,-2,-2), Multiblocks.SOLAR_ENERGY_GENERATOR.getM(),true) && level.canSeeSky(worldPosition.above()) && (level.getDayTime() % 24000 <= 13000);
 
     }
 

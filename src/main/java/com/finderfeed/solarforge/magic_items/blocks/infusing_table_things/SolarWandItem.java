@@ -4,7 +4,7 @@ import com.finderfeed.solarforge.ClientHelpers;
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.RuneEnergyPylonTile;
-import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Achievement;
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Progression;
 import com.finderfeed.solarforge.misc_things.*;
 import com.finderfeed.solarforge.recipe_types.InfusingRecipe;
 import net.minecraft.client.Minecraft;
@@ -117,7 +117,7 @@ public class SolarWandItem extends Item implements ManaConsumer {
                 tile.givePlayerEnergy(player,5);
                 player.displayClientMessage(new TextComponent(tile.getEnergyType().id.toUpperCase()+" "+RunicEnergy.getEnergy(player,tile.getEnergyType())).withStyle(ChatFormatting.GOLD),true);
                 Helpers.updateRunicEnergyOnClient(tile.getEnergyType(),RunicEnergy.getEnergy(player,tile.getEnergyType()),player);
-                Helpers.fireProgressionEvent(player, Achievement.RUNE_ENERGY_CLAIM);
+                Helpers.fireProgressionEvent(player, Progression.RUNE_ENERGY_CLAIM);
             }else{
                 Vec3 pos = new Vec3(res.getBlockPos().getX()+0.5,res.getBlockPos().getY()+0.5,res.getBlockPos().getZ()+0.5);
                 Vec3 vel = new Vec3(from.x-pos.x,from.y-pos.y,from.z-pos.z);

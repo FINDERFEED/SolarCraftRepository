@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables;
 
-import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Achievement;
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Progression;
 import net.minecraft.network.chat.TranslatableComponent;
 
 import javax.annotation.Nullable;
@@ -12,23 +12,23 @@ import java.util.List;
 @Deprecated
 public enum BookEntry {
     BEGINNING_INFO(tx("solar_category.beginning"),point(20,40),null,null),
-    SOLAR_FORGE_BASICS(tx("solar_category.solar_forge"),point(210,40),Achievement.ENTER_NETHER,null),
-    ARMOR(tx("solar_category.armor"),point(20,80),Achievement.CRAFT_SOLAR_INFUSER,null),
-    STRUCTURES(tx("solar_category.structures"),point(20,700),Achievement.CRAFT_SOLAR_INFUSER,null),
+    SOLAR_FORGE_BASICS(tx("solar_category.solar_forge"),point(210,40), Progression.ENTER_NETHER,null),
+    ARMOR(tx("solar_category.armor"),point(20,80), Progression.CRAFT_SOLAR_INFUSER,null),
+    STRUCTURES(tx("solar_category.structures"),point(20,700), Progression.CRAFT_SOLAR_INFUSER,null),
 
-    BEGINNER(tx("solar_category.beginner"),point(20,220),Achievement.CRAFT_SOLAR_INFUSER,null),
-    BEGINNER_ITEMS(tx("solar_category.beginner_items"),point(180,260),Achievement.CRAFT_SOLAR_INFUSER,BEGINNER),
+    BEGINNER(tx("solar_category.beginner"),point(20,220), Progression.CRAFT_SOLAR_INFUSER,null),
+    BEGINNER_ITEMS(tx("solar_category.beginner_items"),point(180,260), Progression.CRAFT_SOLAR_INFUSER,BEGINNER),
 
-    SKILLED(tx("solar_category.skilled"),point(20,400),Achievement.ACQUIRE_COLD_STAR_ACTIVATED,null),
-    SKILLED_ITEMS(tx("solar_category.skilled_items"),point(180,260),Achievement.ACQUIRE_COLD_STAR_ACTIVATED,SKILLED),
-    SKILLED_MATERIALS(tx("solar_category.skilled_materials"),point(180,260),Achievement.ACQUIRE_COLD_STAR_ACTIVATED,SKILLED),
+    SKILLED(tx("solar_category.skilled"),point(20,400), Progression.ACQUIRE_COLD_STAR_ACTIVATED,null),
+    SKILLED_ITEMS(tx("solar_category.skilled_items"),point(180,260), Progression.ACQUIRE_COLD_STAR_ACTIVATED,SKILLED),
+    SKILLED_MATERIALS(tx("solar_category.skilled_materials"),point(180,260), Progression.ACQUIRE_COLD_STAR_ACTIVATED,SKILLED),
 
-    MASTER(tx("solar_category.master"),point(20,560),Achievement.CRAFT_SOLAR_LENS,null),
-    MASTER_ITEMS(tx("solar_category.master_items"),point(180,260),Achievement.CRAFT_SOLAR_ENERGY_GENERATOR,MASTER),
-    MASTER_ENERGY(tx("solar_category.master_energy"),point(180,260),Achievement.CRAFT_SOLAR_ENERGY_GENERATOR,MASTER),
-    MASTER_MATERIALS(tx("solar_category.master_materials"),point(180,260),Achievement.CRAFT_SOLAR_ENERGY_GENERATOR,MASTER),
+    MASTER(tx("solar_category.master"),point(20,560), Progression.CRAFT_SOLAR_LENS,null),
+    MASTER_ITEMS(tx("solar_category.master_items"),point(180,260), Progression.CRAFT_SOLAR_ENERGY_GENERATOR,MASTER),
+    MASTER_ENERGY(tx("solar_category.master_energy"),point(180,260), Progression.CRAFT_SOLAR_ENERGY_GENERATOR,MASTER),
+    MASTER_MATERIALS(tx("solar_category.master_materials"),point(180,260), Progression.CRAFT_SOLAR_ENERGY_GENERATOR,MASTER),
 
-    UPGRADES(tx("solar_category.upgrades"),point(210,80),Achievement.CRAFT_SOLAR_ENERGY_GENERATOR,null)
+    UPGRADES(tx("solar_category.upgrades"),point(210,80), Progression.CRAFT_SOLAR_ENERGY_GENERATOR,null)
     ;
 
 
@@ -37,10 +37,10 @@ public enum BookEntry {
 
     private final TranslatableComponent translation;
     private final Point placeInBook;
-    private final Achievement toUnlock;
+    private final Progression toUnlock;
     private final BookEntry child;
 
-    BookEntry(TranslatableComponent translation, Point placeInBook,@Nullable Achievement toUnlock,@Nullable BookEntry child){
+    BookEntry(TranslatableComponent translation, Point placeInBook, @Nullable Progression toUnlock, @Nullable BookEntry child){
         this.placeInBook = placeInBook;
         this.translation = translation;
         this.toUnlock = toUnlock;
@@ -65,7 +65,7 @@ public enum BookEntry {
         return BookEntry.class.getEnumConstants();
     }
 
-    public Achievement toUnlock() {
+    public Progression toUnlock() {
         return toUnlock;
     }
 

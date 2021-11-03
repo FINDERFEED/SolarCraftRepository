@@ -12,7 +12,7 @@ import com.finderfeed.solarforge.for_future_library.other.CyclingInterpolatedVal
 import com.finderfeed.solarforge.magic_items.items.projectiles.CrystalBossAttackHoldingMissile;
 import com.finderfeed.solarforge.magic_items.items.projectiles.FallingStarCrystalBoss;
 import com.finderfeed.solarforge.magic_items.items.projectiles.RandomBadEffectProjectile;
-import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Achievement;
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Progression;
 import com.finderfeed.solarforge.misc_things.CrystalBossBuddy;
 import com.finderfeed.solarforge.misc_things.NoHealthLimitMob;
 import com.finderfeed.solarforge.misc_things.ParticlesList;
@@ -134,7 +134,7 @@ public class CrystalBossEntity extends NoHealthLimitMob implements CrystalBossBu
                 }
             }
             if (this.isDeadOrDying()){
-                this.getEnemiesNearby(false).forEach((player -> Helpers.fireProgressionEvent(player, Achievement.KILL_CRYSTAL_BOSS)));
+                this.getEnemiesNearby(false).forEach((player -> Helpers.fireProgressionEvent(player, Progression.KILL_CRYSTAL_BOSS)));
             }
         }
         if (level.isClientSide){

@@ -1,6 +1,7 @@
 package com.finderfeed.solarforge.misc_things;
 
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.RuneEnergyPylonTile;
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -38,6 +39,8 @@ public class SolarcraftDebugStick extends Item {
 
     @Override
     public InteractionResult useOn(UseOnContext ctx) {
+        Level world = ctx.getLevel();
+        BlockPos pos = ctx.getClickedPos();
 
         if (!ctx.getLevel().isClientSide && (ctx.getLevel().getBlockEntity(ctx.getClickedPos()) instanceof DebugTarget target) && ctx.getPlayer() != null && !ctx.getPlayer().isCrouching()){
             target.getDebugStrings().forEach((string)->{
@@ -50,6 +53,10 @@ public class SolarcraftDebugStick extends Item {
                 pylon.addEnergy(pylon.getEnergyType(),200);
                 ctx.getPlayer().sendMessage(new TextComponent(Float.toString(pylon.getCurrentEnergy())),ctx.getPlayer().getUUID());
             }
+        }
+
+        if (!world.isClientSide){
+            System.out.println(world.getBlockState(pos));
         }
 
 

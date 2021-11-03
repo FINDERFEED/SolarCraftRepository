@@ -4,15 +4,14 @@ import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.SolarCraftTags;
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.capabilities.capability_mana.CapabilitySolarMana;
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Progression;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
-import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Achievement;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.packets.UpdateProgressionOnClient;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.ProgressionHelper;
 import com.finderfeed.solarforge.registries.abilities.AbilitiesRegistry;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -86,13 +85,13 @@ public class RetainLostEvent {
         }
 
 
-        for (Achievement a : Achievement.ALL_ACHIEVEMENTS){
+        for (Progression a : Progression.allProgressions){
             Helpers.setAchievementStatus(a,playernew,Helpers.hasPlayerUnlocked(a,peorig));
 
         }
         if (!playernew.level.isClientSide) {
 
-            for (Achievement a : Achievement.ALL_ACHIEVEMENTS) {
+            for (Progression a : Progression.allProgressions) {
 
 
 

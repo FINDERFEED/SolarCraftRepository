@@ -44,7 +44,7 @@ public class BlocksRegistry {
     public  static  final RegistryObject<SolarStoneBlock> SOLAR_STONE = BLOCKS.register("solar_stone",()-> new SolarStoneBlock(BlockBehaviour.Properties.copy(Blocks.ANDESITE)));
     public  static  final RegistryObject<Block> SOLAR_STONE_CHISELED = BLOCKS.register("chiseled_solar_stone",()-> new Block(BlockBehaviour.Properties.copy(Blocks.STONE)));
     public  static  final RegistryObject<Block> SOLAR_STONE_COLLUMN = BLOCKS.register("solar_stone_collumn",()-> new Block(BlockBehaviour.Properties.copy(Blocks.STONE)));
-    public  static  final RegistryObject<Block> SOLAR_STONE_BRICKS = BLOCKS.register("solar_stone_bricks",()-> new RotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.STONE)));
+    public  static  final RegistryObject<Block> SOLAR_STONE_BRICKS = BLOCKS.register("solar_stone_bricks",()-> new Block(BlockBehaviour.Properties.copy(Blocks.STONE)));
     public  static  final RegistryObject<Block> SOLAR_STONE_STAIRS = BLOCKS.register("solar_stone_stairs",()-> new StairBlock(()-> SOLAR_STONE_BRICKS.get().defaultBlockState(),BlockBehaviour.Properties.copy(Blocks.STONE)));
     public  static  final RegistryObject<Block> SOLAR_STONE_COLLUMN_HORIZONTAL = BLOCKS.register("solar_stone_collumn_horizontal",()-> new GlazedTerracottaBlock(BlockBehaviour.Properties.copy(Blocks.STONE)));
     public  static  final RegistryObject<Block> KEY_LOCK_BLOCK = BLOCKS.register("key_lock_block",()-> new KeyLockBlock());

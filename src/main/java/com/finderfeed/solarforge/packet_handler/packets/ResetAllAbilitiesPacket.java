@@ -1,7 +1,5 @@
 package com.finderfeed.solarforge.packet_handler.packets;
 
-import com.finderfeed.solarforge.Helpers;
-import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Achievement;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.level.ServerPlayer;

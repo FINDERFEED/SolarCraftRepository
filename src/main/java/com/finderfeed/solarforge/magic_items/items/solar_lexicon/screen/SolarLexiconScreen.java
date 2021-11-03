@@ -3,17 +3,15 @@ package com.finderfeed.solarforge.magic_items.items.solar_lexicon.screen;
 import com.finderfeed.solarforge.ClientHelpers;
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.SolarForge;
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Progression;
 import com.finderfeed.solarforge.misc_things.IScrollable;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.achievement_tree.AchievementTree;
-import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Achievement;
-import com.mojang.blaze3d.platform.GLX;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 
 
 import com.mojang.math.Vector3d;
-import com.mojang.math.Vector3f;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.components.AbstractWidget;
@@ -23,8 +21,6 @@ import net.minecraft.world.item.Items;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
-import net.minecraftforge.client.model.pipeline.VertexBufferConsumer;
-import net.minecraftforge.registries.ForgeRegistries;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL11;
 
@@ -46,7 +42,7 @@ public class SolarLexiconScreen extends Screen implements IScrollable {
     public  int relY;
     public final AchievementTree tree = AchievementTree.loadTree();
     public Component currAch;
-    public Achievement currentAchievement = null;
+    public Progression currentProgression = null;
 
 
 
@@ -64,7 +60,7 @@ public class SolarLexiconScreen extends Screen implements IScrollable {
     public ItemStackButton toggleRecipesScreen = new ItemStackButton(relX+100,relY+100,12,12,(button)->{minecraft.setScreen(new SolarLexiconRecipesScreen());}, Items.CRAFTING_TABLE.getDefaultInstance(),0.7f,false);
     public ItemStackButton justForge = new ItemStackButton(relX+100,relY+100,12,12,(button)->{}, SolarForge.SOLAR_FORGE_ITEM.get().getDefaultInstance(),0.7f,false);
 
-    public HashMap<Integer,List<Achievement>> map = new HashMap<>();
+    public HashMap<Integer,List<Progression>> map = new HashMap<>();
 
     public SolarLexiconScreen() {
         super(new TextComponent("screen_solar_lexicon"));
@@ -183,7 +179,7 @@ public class SolarLexiconScreen extends Screen implements IScrollable {
         int offsetX = 0;
         int offsetY = 0;
 
-        for (Achievement a : tree.ACHIEVEMENT_TREE.keySet()){
+        for (Progression a : tree.ACHIEVEMENT_TREE.keySet()){
             int tier = a.getAchievementTier();
             map.get(tier).add(a);
             offsetX = (map.get(tier).size()-1) * 35;
@@ -206,7 +202,7 @@ public class SolarLexiconScreen extends Screen implements IScrollable {
                     currentText = "???";
                 }
                 currAch = a.getTranslation();
-                currentAchievement = a;
+                currentProgression = a;
 
                 },a.getIcon(),1,c));
         }
@@ -233,11 +229,11 @@ public class SolarLexiconScreen extends Screen implements IScrollable {
         blit(matrices,relX,relY,0,0,256,256);
 
         ClientHelpers.bindText(FRAME);
-        for (Achievement a : tree.ACHIEVEMENT_TREE.keySet()) {
+        for (Progression a : tree.ACHIEVEMENT_TREE.keySet()) {
             Point first = new Point(relX+scrollX+18+map.get(a.getAchievementTier()).indexOf(a)*35,relY+scrollY+18+(a.getAchievementTier()-1)*30);
-            for (Achievement b : tree.getAchievementRequirements(a)){
+            for (Progression b : tree.getAchievementRequirements(a)){
                 Point second = new Point(relX+scrollX+18+map.get(b.getAchievementTier()).indexOf(b)*35,relY+scrollY+18+(b.getAchievementTier()-1)*30);
-                if (currentAchievement != null && (currentAchievement == b || currentAchievement == a) ) {
+                if (currentProgression != null && (currentProgression == b || currentProgression == a) ) {
 
                     drawLine(matrices, first.x, first.y, second.x, second.y,255,255,255);
                 }
@@ -250,7 +246,7 @@ public class SolarLexiconScreen extends Screen implements IScrollable {
 //            blit(matrices,first.x-8,first.y-8,0,0,16,16,16,16);
 
         }
-        for (Achievement a : tree.ACHIEVEMENT_TREE.keySet()) {
+        for (Progression a : tree.ACHIEVEMENT_TREE.keySet()) {
             Point first = new Point(relX+scrollX+18+map.get(a.getAchievementTier()).indexOf(a)*35,relY+scrollY+18+(a.getAchievementTier()-1)*30);
             blit(matrices,first.x-8,first.y-8,0,0,16,16,16,16);
         }

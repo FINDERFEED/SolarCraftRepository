@@ -1,8 +1,8 @@
 package com.finderfeed.solarforge.magic_items.blocks;
 
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Progression;
 import com.finderfeed.solarforge.misc_things.IProgressionBlock;
 import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
-import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Achievement;
 
 
 import net.minecraft.world.entity.player.Player;
@@ -23,7 +23,6 @@ import javax.annotation.Nullable;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.OreBlock;
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class UldoradiumOre extends OreBlock implements IProgressionBlock {
@@ -43,8 +42,8 @@ public class UldoradiumOre extends OreBlock implements IProgressionBlock {
     }
 
     @Override
-    public Achievement getRequiredProgression() {
-        return Achievement.TRANSMUTE_GEM;
+    public Progression getRequiredProgression() {
+        return Progression.TRANSMUTE_GEM;
     }
 
     @Override

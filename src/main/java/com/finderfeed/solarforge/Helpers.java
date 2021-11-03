@@ -5,13 +5,13 @@ import com.finderfeed.solarforge.capabilities.capability_mana.SolarForgeMana;
 import com.finderfeed.solarforge.entities.CrystalBossEntity;
 import com.finderfeed.solarforge.events.my_events.ProgressionUnlockEvent;
 import com.finderfeed.solarforge.for_future_library.helpers.FinderfeedMathHelper;
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Progression;
 import com.finderfeed.solarforge.misc_things.Multiblock;
 import com.finderfeed.solarforge.misc_things.ParticlesList;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
 import com.finderfeed.solarforge.packet_handler.packets.*;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.achievement_tree.AchievementTree;
-import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Achievement;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.packets.UpdateProgressionOnClient;
 import com.mojang.blaze3d.vertex.*;
 import net.minecraft.client.Minecraft;
@@ -85,7 +85,7 @@ public class Helpers {
         return ent.invulnerableTime == 0;
     }
 
-    public static String getAchievementDescription(Achievement ach){
+    public static String getAchievementDescription(Progression ach){
         return switch (ach) {
             case CRAFT_SOLAR_FORGE -> "The magical power of this machine allows me to get powerful abilities. Can it do more than just that?";
             case CRAFT_SOLAR_INFUSER -> "So now what? There was no instructions on how to use it...";
@@ -113,14 +113,14 @@ public class Helpers {
         };
     }
 
-    public static boolean hasPlayerUnlocked(Achievement ach, Player entity){
+    public static boolean hasPlayerUnlocked(Progression ach, Player entity){
 
         return ach == null ? true : entity.getPersistentData().getBoolean("solar_forge_progression_"+ach.getAchievementCode());
     }
 
-    public static boolean canPlayerUnlock(Achievement ach, Player entity){
+    public static boolean canPlayerUnlock(Progression ach, Player entity){
         AchievementTree tree = AchievementTree.loadTree();
-        for (Achievement a : tree.getAchievementRequirements(ach)){
+        for (Progression a : tree.getAchievementRequirements(ach)){
             if (!entity.getPersistentData().getBoolean("solar_forge_progression_"+a.getAchievementCode())){
                 return false;
             }
@@ -128,7 +128,7 @@ public class Helpers {
         return true;
     }
 
-    public static void setAchievementStatus(Achievement ach, Player pe, boolean a){
+    public static void setAchievementStatus(Progression ach, Player pe, boolean a){
         pe.getPersistentData().putBoolean("solar_forge_progression_"+ach.getAchievementCode(),a);
     }
 
@@ -173,9 +173,6 @@ public class Helpers {
         Vec3 vector = new Vec3(vec2.x - vec1.x,vec2.y - vec1.y,vec2.z - vec1.z);
         ClipContext ctx = new ClipContext(vec1.add(vector.normalize()),vec2, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE,null);
         BlockHitResult result = world.clip(ctx);
-        System.out.println(pos1);
-        System.out.println(pos2);
-        System.out.println(result.getBlockPos());
         boolean first = world.getBlockState(result.getBlockPos()).getBlock() == world.getBlockState(pos2).getBlock();
         boolean second = Helpers.equalsBlockPos(result.getBlockPos(),pos2);
 //        result.getBlockPos().equals(pos2);
@@ -190,7 +187,7 @@ public class Helpers {
 
     //structure towards north, initPos is the pos at the lowest by y lowest by z left corner
 
-    public static boolean checkStructure(Level world,BlockPos initPos,Multiblock struct){
+    public static boolean checkStructure(Level world,BlockPos initPos,Multiblock struct,boolean ignoreOtherBlocks){
         BlockPos pos = initPos;
         String[][] structure = struct.struct;
         for (int i = 0;i < structure.length;i++){
@@ -198,7 +195,7 @@ public class Helpers {
                 String line = structure[i][g];
                     for (int k = 0;k < line.length();k++){
                         //here the checking begins
-                        if (world.getBlockState(initPos.offset(k,i,g)).getBlock() != struct.blockMap.get(line.charAt(k))){
+                        if (world.getBlockState(initPos.offset(k,i,g)) != struct.blockMap.get(line.charAt(k))){
                             return false;
                         }
                         //here ends
@@ -278,7 +275,7 @@ public class Helpers {
 
 
     public static void updateProgression(ServerPlayer player){
-        for (Achievement a : Achievement.ALL_ACHIEVEMENTS) {
+        for (Progression a : Progression.allProgressions) {
 
             SolarForgePacketHandler.INSTANCE.sendTo(new UpdateProgressionOnClient(a.getAchievementCode(),hasPlayerUnlocked(a,player)),
                     ((ServerPlayer) player).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
@@ -327,11 +324,11 @@ public class Helpers {
         return horizontal[rnd.nextInt(4)];
     }
 
-    public static void triggerToast(Achievement ach, Player player){
+    public static void triggerToast(Progression ach, Player player){
         SolarForgePacketHandler.INSTANCE.sendTo(new TriggerToastPacket(ach.getId()), ((ServerPlayer)player).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
     }
 
-    public static void fireProgressionEvent(Player playerEntity, Achievement ach){
+    public static void fireProgressionEvent(Player playerEntity, Progression ach){
         MinecraftForge.EVENT_BUS.post(new ProgressionUnlockEvent(playerEntity,ach));
     }
 
@@ -359,7 +356,7 @@ public class Helpers {
                         int offsetZ = g;
                         int offsetY = i;
 //                        w.setBlock(startingPos.offset(offsetX,offsetY,offsetZ),multiblock.blockMap.get(row.charAt(f)).defaultBlockState(), Constants.BlockFlags.DEFAULT);
-                        w.setBlockAndUpdate(startingPos.offset(offsetX,offsetY,offsetZ),multiblock.blockMap.get(row.charAt(f)).defaultBlockState());
+                        w.setBlockAndUpdate(startingPos.offset(offsetX,offsetY,offsetZ),multiblock.blockMap.get(row.charAt(f)));
                     }
 
             }

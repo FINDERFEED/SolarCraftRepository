@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.magic_items.blocks;
 
-import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Achievement;
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Progression;
 import com.finderfeed.solarforge.misc_things.IProgressionBlock;
 import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
 import net.minecraft.world.level.block.Block;
@@ -15,8 +15,6 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 
 import javax.annotation.Nullable;
-
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class SolarStoneBlock extends Block implements IProgressionBlock {
     public SolarStoneBlock(Properties p_i48440_1_) {
@@ -36,8 +34,8 @@ public class SolarStoneBlock extends Block implements IProgressionBlock {
 
 
     @Override
-    public Achievement getRequiredProgression() {
-        return Achievement.ENTER_NETHER;
+    public Progression getRequiredProgression() {
+        return Progression.ENTER_NETHER;
     }
     @Override
     public void playerDestroy(Level p_180657_1_, Player p_180657_2_, BlockPos p_180657_3_, BlockState p_180657_4_, @Nullable BlockEntity p_180657_5_, ItemStack p_180657_6_) {

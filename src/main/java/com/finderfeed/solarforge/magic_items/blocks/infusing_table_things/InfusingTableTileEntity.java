@@ -7,15 +7,10 @@ import com.finderfeed.solarforge.magic_items.blocks.blockentities.runic_energy.A
 import com.finderfeed.solarforge.magic_items.blocks.infusing_table_things.infusing_pool.InfusingPoolTileEntity;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.ProgressionHelper;
-import com.finderfeed.solarforge.magic_items.runic_network.algorithms.FindingAlgorithms;
-import com.finderfeed.solarforge.magic_items.runic_network.repeater.BaseRepeaterTile;
-import com.finderfeed.solarforge.magic_items.runic_network.repeater.IRunicEnergyContainer;
-import com.finderfeed.solarforge.magic_items.runic_network.repeater.IRunicEnergyReciever;
 import com.finderfeed.solarforge.misc_things.*;
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
-import com.finderfeed.solarforge.packet_handler.packets.TriggerToastPacket;
 import com.finderfeed.solarforge.recipe_types.InfusingRecipe;
-import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Achievement;
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Progression;
 import com.finderfeed.solarforge.world_generation.structures.Structures;
 import com.google.common.util.concurrent.AtomicDouble;
 import net.minecraft.network.Connection;
@@ -27,7 +22,6 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Container;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -35,7 +29,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.DiggerItem;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.core.NonNullList;
 import net.minecraft.sounds.SoundSource;
@@ -45,12 +38,10 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraftforge.fmllegacy.network.NetworkDirection;
 import net.minecraftforge.fmllegacy.network.PacketDistributor;
 
 import javax.annotation.Nullable;
 import java.util.*;
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class InfusingTableTileEntity extends AbstractRunicEnergyContainerRCBE implements  IEnergyUser, IBindable, ISolarEnergyContainer, OneWay,DebugTarget {
@@ -185,7 +176,7 @@ public class InfusingTableTileEntity extends AbstractRunicEnergyContainerRCBE im
                     Player pl = world.getPlayerByUUID(tile.getOwner());
                     if (pl != null) {
                         if (doOwnerHasRequiredProgression) {
-                            doOwnerHasRequiredProgression = Helpers.hasPlayerUnlocked(Achievement.RUNIC_ENERGY_REPEATER, world.getPlayerByUUID(tile.getOwner()));
+                            doOwnerHasRequiredProgression = Helpers.hasPlayerUnlocked(Progression.RUNIC_ENERGY_REPEATER, world.getPlayerByUUID(tile.getOwner()));
                         }
                     }else{
                         doOwnerHasRequiredProgression = false;
@@ -310,7 +301,7 @@ public class InfusingTableTileEntity extends AbstractRunicEnergyContainerRCBE im
             if (recipe.isPresent() && ProgressionHelper.doPlayerHasFragment(playerEntity, AncientFragment.getFragmentByID(recipe.get().child))) {
 
                 if (!RECIPE_IN_PROGRESS) {
-                    Helpers.fireProgressionEvent(playerEntity,Achievement.USE_SOLAR_INFUSER);
+                    Helpers.fireProgressionEvent(playerEntity, Progression.USE_SOLAR_INFUSER);
                     this.INFUSING_TIME = recipe.get().infusingTime;
                     this.RECIPE_IN_PROGRESS = true;
                     this.level.playSound(null, this.worldPosition, SoundEvents.BEACON_ACTIVATE, SoundSource.AMBIENT, 2, 1);

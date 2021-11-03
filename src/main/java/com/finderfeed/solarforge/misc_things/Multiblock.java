@@ -1,9 +1,10 @@
 package com.finderfeed.solarforge.misc_things;
 
 
-import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Achievement;
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Progression;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 
 
 import java.util.HashMap;
@@ -13,16 +14,16 @@ import java.util.Set;
 public class Multiblock {
 
 
-    public HashMap<Character,Block> blockMap;
+    public HashMap<Character, BlockState> blockMap;
     public String[][] struct;
-    public Achievement reqAchievement;
-    public Block mainBlock;
+    public Progression reqProgression;
+    public BlockState mainBlock;
     public String name;
     public Multiblock(Multiblock.Constructor cons){
             this.blockMap = cons.blockMap;
-            blockMap.put(' ', Blocks.AIR);
+            blockMap.put(' ', Blocks.AIR.defaultBlockState());
             this.struct = cons.structure;
-            this.reqAchievement = cons.ach;
+            this.reqProgression = cons.ach;
             this.mainBlock = cons.mainBlock;
             this.name = cons.name;
     }
@@ -31,19 +32,19 @@ public class Multiblock {
         return name;
     }
 
-    public Block getMainBlock() {
+    public BlockState getMainBlock() {
         return mainBlock;
     }
 
-    public Achievement getReqAchievement() {
-        return reqAchievement;
+    public Progression getReqAchievement() {
+        return reqProgression;
     }
 
     public String[][] getStruct() {
         return struct;
     }
 
-    public HashMap<Character, Block> getBlockMap() {
+    public HashMap<Character, BlockState> getBlockMap() {
         return blockMap;
     }
 
@@ -51,10 +52,10 @@ public class Multiblock {
         return blockMap.keySet();
     }
 
-    public Block getBlockByCharacter(Character a){
+    public BlockState getBlockByCharacter(Character a){
         return blockMap.get(a);
     }
-    public Character getCharacterByBlock(Block a){
+    public Character getCharacterByBlock(BlockState a){
         for (Character f : blockMap.keySet()){
             if (blockMap.get(f) == a){
                 return f;
@@ -65,12 +66,12 @@ public class Multiblock {
 
 
     public static class Constructor{
-        public HashMap<Character, Block> blockMap = new HashMap<>();
+        public HashMap<Character, BlockState> blockMap = new HashMap<>();
         public String[][] structure;
-        public Achievement ach;
-        public Block mainBlock;
+        public Progression ach;
+        public BlockState mainBlock;
         public String name = "";
-        public Multiblock.Constructor addBlock(Block a,Character b){
+        public Multiblock.Constructor addBlock(BlockState a,Character b){
             blockMap.put(b,a);
             return this;
         }
@@ -80,12 +81,12 @@ public class Multiblock {
             return this;
         }
 
-        public Multiblock.Constructor addAchievement(Achievement ach){
+        public Multiblock.Constructor addAchievement(Progression ach){
             this.ach = ach;
             return this;
         }
 
-        public Multiblock.Constructor addMainBlock(Block ach){
+        public Multiblock.Constructor addMainBlock(BlockState ach){
             this.mainBlock = ach;
             return this;
         }

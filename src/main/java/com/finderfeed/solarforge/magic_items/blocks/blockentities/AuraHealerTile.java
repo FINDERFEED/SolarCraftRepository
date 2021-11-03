@@ -35,7 +35,7 @@ public class AuraHealerTile extends BlockEntity  {
             if (tile.HEAL_TICK > 400 ) {
                 tile.HEAL_TICK = 0;
 
-                if (Helpers.checkStructure(tile.level,tile.worldPosition.offset(-1,-2,-1), Multiblocks.AURA_HEALER.getM())) {
+                if (Helpers.checkStructure(tile.level,tile.worldPosition.offset(-1,-2,-1), Multiblocks.AURA_HEALER.getM(),true)) {
                     List<Player> players = tile.level.getEntitiesOfClass(Player.class, new AABB(-20, -5, -20, 20, 5, 20).move(tile.worldPosition), null);
                     for (Player a : players) {
                         if (a.getHealth() != a.getMaxHealth()) {

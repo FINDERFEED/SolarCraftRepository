@@ -6,7 +6,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.network.chat.TranslatableComponent;
 
-public enum Achievement {
+public enum Progression {
     RUNE_ENERGY_CLAIM("rune_energy_claim",2, ItemsRegister.SOLAR_WAND.get().getDefaultInstance(),new TranslatableComponent("ach.rune_energy_claim"),2,new TranslatableComponent("pre.rune_energy_claim"),new TranslatableComponent("aft.rune_energy_claim")),
     RUNE_ENERGY_DEPOSIT("rune_energy_deposit",1, ItemsRegister.RUNE_ENERGY_PYLON.get().getDefaultInstance(),new TranslatableComponent("ach.rune_energy_deposit"),3,new TranslatableComponent("pre.rune_energy_deposit"),new TranslatableComponent("aft.rune_energy_deposit")),
     SOLAR_RUNE("solar_rune",2, ItemsRegister.SOLAR_RUNE_ZETA.get().getDefaultInstance(),new TranslatableComponent("ach.solar_rune"),4,new TranslatableComponent("pre.solar_rune"),new TranslatableComponent("aft.solar_rune")),
@@ -33,14 +33,14 @@ public enum Achievement {
 
 
 
-    public static Achievement[] ALL_ACHIEVEMENTS = Achievement.class.getEnumConstants();
+    public static Progression[] allProgressions = Progression.class.getEnumConstants();
 
-    public static Achievement[] getAllAchievements(){
-        return Achievement.class.getEnumConstants();
+    public static Progression[] getAllAchievements(){
+        return Progression.class.getEnumConstants();
     }
 
-    public static Achievement getAchievementByName(String name){
-        for (Achievement a : ALL_ACHIEVEMENTS){
+    public static Progression getAchievementByName(String name){
+        for (Progression a : allProgressions){
             if (a.str.equals(name)){
                 return a;
             }
@@ -55,7 +55,7 @@ public enum Achievement {
     public final int id;
     public final TranslatableComponent pretext;
     public final TranslatableComponent afterText;
-    Achievement(String str, int tier, ItemStack icon, TranslatableComponent translation, int id, TranslatableComponent pretext,TranslatableComponent after) {
+    Progression(String str, int tier, ItemStack icon, TranslatableComponent translation, int id, TranslatableComponent pretext, TranslatableComponent after) {
         this.str = str;
         this.tier = tier;
         this.icon = icon;

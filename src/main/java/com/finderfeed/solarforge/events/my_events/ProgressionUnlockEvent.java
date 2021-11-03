@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.events.my_events;
 
-import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Achievement;
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Progression;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.eventbus.api.Event;
 
@@ -12,15 +12,15 @@ import net.minecraftforge.eventbus.api.Event;
 public class ProgressionUnlockEvent extends Event {
 
     private final Player player;
-    private final Achievement ach;
+    private final Progression ach;
 
 
-    public ProgressionUnlockEvent(Player player, Achievement ach){
+    public ProgressionUnlockEvent(Player player, Progression ach){
         this.player = player;
         this.ach = ach;
     }
 
-    public Achievement getProgression(){
+    public Progression getProgression(){
         return ach;
     }
 

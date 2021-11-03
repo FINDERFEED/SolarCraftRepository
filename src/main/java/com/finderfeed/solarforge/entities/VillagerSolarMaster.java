@@ -1,8 +1,8 @@
 package com.finderfeed.solarforge.entities;
 
 import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Progression;
 import com.finderfeed.solarforge.registries.items.ItemsRegister;
-import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Achievement;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -13,7 +13,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.util.*;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.level.Level;
 
@@ -58,14 +57,14 @@ public class VillagerSolarMaster extends PathfinderMob {
             stack.setCount(64);
 
 
-            if (Helpers.hasPlayerUnlocked(Achievement.CRAFT_SOLAR_LENS, player) &&
+            if (Helpers.hasPlayerUnlocked(Progression.CRAFT_SOLAR_LENS, player) &&
                     ((player.getMainHandItem().getItem() == Items.EMERALD) && (player.getMainHandItem().getCount() == player.getMainHandItem().getMaxStackSize()))) {
                 if (TRADED_WITH.contains(player.getUUID())) {
                     player.sendMessage(new TranslatableComponent("solarcraft.already_traded"), player.getUUID());
                     playSound(SoundEvents.VILLAGER_NO,1,1);
                 } else {
                     player.sendMessage(new TranslatableComponent("solarcraft.use_villager_success"), player.getUUID());
-                    Helpers.fireProgressionEvent(player,Achievement.TRADE_FOR_BLUE_GEM);
+                    Helpers.fireProgressionEvent(player, Progression.TRADE_FOR_BLUE_GEM);
 
                     playSound(SoundEvents.VILLAGER_YES,1,1);
                     TRADED_WITH.add(player.getUUID());
@@ -73,7 +72,7 @@ public class VillagerSolarMaster extends PathfinderMob {
                     player.addItem(new ItemStack(ItemsRegister.BLUE_GEM.get(),30));
                 }
 
-            } else if (Helpers.hasPlayerUnlocked(Achievement.CRAFT_SOLAR_LENS, player)) {
+            } else if (Helpers.hasPlayerUnlocked(Progression.CRAFT_SOLAR_LENS, player)) {
                 if (TRADED_WITH.contains(player.getUUID())) {
                     player.sendMessage(new TranslatableComponent("solarcraft.already_traded"), player.getUUID());
                     playSound(SoundEvents.VILLAGER_NO,1,1);

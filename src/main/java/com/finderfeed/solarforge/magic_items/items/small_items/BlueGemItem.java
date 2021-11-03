@@ -1,26 +1,20 @@
 package com.finderfeed.solarforge.magic_items.items.small_items;
 
 import com.finderfeed.solarforge.Helpers;
-import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Achievement;
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Progression;
 import com.finderfeed.solarforge.registries.items.ItemsRegister;
 import com.finderfeed.solarforge.world_generation.features.FeaturesRegistry;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.core.WritableRegistry;
 import net.minecraft.core.Registry;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
-import net.minecraftforge.common.BiomeManager;
 
 import java.util.Optional;
-
-import net.minecraft.world.item.Item.Properties;
-import org.lwjgl.system.CallbackI;
 
 public class BlueGemItem extends Item {
 
@@ -48,7 +42,7 @@ public class BlueGemItem extends Item {
                         if (entity.getThrower() != null ){
                             Player player = world.getPlayerByUUID(entity.getThrower());
                             if (player != null){
-                                Helpers.fireProgressionEvent(player, Achievement.TRANSMUTE_GEM);
+                                Helpers.fireProgressionEvent(player, Progression.TRANSMUTE_GEM);
                             }
                         }
                         entity.remove(Entity.RemovalReason.KILLED);

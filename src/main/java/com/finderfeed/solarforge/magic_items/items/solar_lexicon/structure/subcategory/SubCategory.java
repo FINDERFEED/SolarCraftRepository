@@ -154,7 +154,7 @@ public class SubCategory {
     public ItemStackButton constructStructureButton(Multiblock structure, int x , int y, AncientFragment fragment){
         return new ItemStackButton(x,y,24,24,(button)->{
             Minecraft.getInstance().setScreen(new StructureScreen(structure));
-        },structure.getMainBlock().asItem().getDefaultInstance(),1.5f,false, (button,matrices,mx,my)->{
+        },structure.getMainBlock().getBlock().asItem().getDefaultInstance(),1.5f,false, (button,matrices,mx,my)->{
             Minecraft.getInstance().screen.renderTooltip(matrices,fragment.getTranslation(),mx,my);
         });
     }

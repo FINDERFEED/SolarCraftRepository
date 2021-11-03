@@ -2,10 +2,9 @@ package com.finderfeed.solarforge.events;
 
 
 import com.finderfeed.solarforge.Helpers;
-import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Achievement;
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Progression;
 import com.finderfeed.solarforge.world_generation.features.FeaturesRegistry;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.core.WritableRegistry;
 import net.minecraft.core.Registry;
 
 import net.minecraft.world.level.Level;
@@ -28,12 +27,12 @@ public class PlayerTickEvent {
             Optional<? extends Registry<Biome>> reg = entity.level.registryAccess().registry(Registry.BIOME_REGISTRY);
             if ( reg.isPresent() && entity.level.getBiome(entity.blockPosition()).equals(reg.get().get(FeaturesRegistry.MOLTEN_BIOME_KEY))){
 
-                Helpers.fireProgressionEvent(entity,Achievement.FIND_INCINERATED_FOREST);
+                Helpers.fireProgressionEvent(entity, Progression.FIND_INCINERATED_FOREST);
 
             }
 
             if (entity.level.dimension() == Level.NETHER){
-                Helpers.fireProgressionEvent(entity,Achievement.ENTER_NETHER);
+                Helpers.fireProgressionEvent(entity, Progression.ENTER_NETHER);
             }
         }
 

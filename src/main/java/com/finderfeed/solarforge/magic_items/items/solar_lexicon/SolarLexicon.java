@@ -5,7 +5,7 @@ import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.Anc
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.ProgressionHelper;
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.achievement_tree.AchievementTree;
-import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Achievement;
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Progression;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.packets.OpenScreenPacket;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.packets.UpdateInventoryPacket;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.packets.UpdateProgressionOnClient;
@@ -27,8 +27,6 @@ import net.minecraftforge.items.IItemHandler;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import net.minecraft.world.item.Item.Properties;
 
 public class SolarLexicon extends Item {
 
@@ -68,7 +66,7 @@ public class SolarLexicon extends Item {
             }
             if (!pe.isCrouching()) {
                 AchievementTree tree = AchievementTree.loadTree();
-                for (Achievement a : tree.ACHIEVEMENT_TREE.keySet()) {
+                for (Progression a : tree.ACHIEVEMENT_TREE.keySet()) {
                     SolarForgePacketHandler.INSTANCE.sendTo(new UpdateProgressionOnClient(a.getAchievementCode(), pe.getPersistentData().getBoolean(Helpers.PROGRESSION + a.getAchievementCode())),
                             ((ServerPlayer) pe).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
                 }

@@ -27,7 +27,7 @@ public class SolarCoreBlockEntity extends AbstractSolarCore {
 
     public static void tick(Level world, BlockPos pos, BlockState blockState, SolarCoreBlockEntity tile) {
         AbstractSolarCore.tick(world,pos,blockState,tile);
-        tile.IS_STRUCT_CORRECT = Helpers.checkStructure(tile.level,tile.worldPosition.offset(-2,-4,-2), Multiblocks.SOLAR_CORE.getM());
+        tile.IS_STRUCT_CORRECT = Helpers.checkStructure(tile.level,tile.worldPosition.offset(-2,-4,-2), Multiblocks.SOLAR_CORE.getM(),true);
     }
 
 

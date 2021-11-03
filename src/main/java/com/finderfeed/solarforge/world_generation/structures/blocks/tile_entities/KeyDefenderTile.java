@@ -1,9 +1,8 @@
 package com.finderfeed.solarforge.world_generation.structures.blocks.tile_entities;
 
-import com.finderfeed.solarforge.misc_things.AbstractMortarTileEntity;
 import com.finderfeed.solarforge.misc_things.AbstractStructureBlockentity;
 import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
-import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Achievement;
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Progression;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -17,7 +16,7 @@ import net.minecraft.world.phys.Vec3;
 public class KeyDefenderTile extends AbstractStructureBlockentity {
     public boolean activated= false;
     public KeyDefenderTile(BlockPos pos,BlockState state) {
-        super(TileEntitiesRegistry.KEY_DEFENDER_TILE.get(),pos,state, Achievement.FIND_KEY_SOURCE,new AABB(-5,-1,-5,5,1,5));
+        super(TileEntitiesRegistry.KEY_DEFENDER_TILE.get(),pos,state, Progression.FIND_KEY_SOURCE,new AABB(-5,-1,-5,5,1,5));
     }
 
 

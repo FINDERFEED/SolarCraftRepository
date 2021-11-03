@@ -2,9 +2,9 @@ package com.finderfeed.solarforge.commands;
 
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.SolarLexicon;
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Progression;
 import com.finderfeed.solarforge.multiblocks.Multiblocks;
 import com.finderfeed.solarforge.registries.items.ItemsRegister;
-import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Achievement;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.ProgressionHelper;
 import com.mojang.brigadier.CommandDispatcher;
@@ -18,16 +18,13 @@ import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
-import org.jline.utils.InfoCmp;
 
 public class CommandsSolarCraft {
 
@@ -144,7 +141,7 @@ class AchievementsHelp{
 
     public static int getHelp(CommandSourceStack src){
         src.sendSuccess(new TranslatableComponent("solarcraft.gethelpcommand").withStyle(ChatFormatting.GOLD),false);
-        for (Achievement ach : Achievement.ALL_ACHIEVEMENTS){
+        for (Progression ach : Progression.allProgressions){
 
             src.sendSuccess(new TextComponent(ach.translation.getString()).withStyle(ChatFormatting.GOLD)
                     .append(new TextComponent(" -> "+ach.getAchievementCode())).withStyle(ChatFormatting.WHITE),false);
@@ -168,21 +165,21 @@ class UnlockAchievementsCommand {
                 }));
     }
     public static int unlockAchievement(CommandSourceStack src,String code) throws CommandSyntaxException{
-            Achievement achievement = Achievement.getAchievementByName(code);
+            Progression progression = Progression.getAchievementByName(code);
             ServerPlayer pl = src.getPlayerOrException();
             if (code.equals("all")){
-                for (Achievement a : Achievement.ALL_ACHIEVEMENTS){
+                for (Progression a : Progression.allProgressions){
                     Helpers.setAchievementStatus(a,src.getPlayerOrException(),true);
                     src.sendSuccess(new TranslatableComponent("solarcraft.success_unlock")
                             .append(new TextComponent(" "+a.translation.getString()).withStyle(ChatFormatting.GOLD)),false);
                 }
                 Helpers.updateProgression(src.getPlayerOrException());
 
-            }else if (achievement != null){
-                if (Helpers.canPlayerUnlock(achievement,pl)){
-                    Helpers.setAchievementStatus(achievement,pl,true);
+            }else if (progression != null){
+                if (Helpers.canPlayerUnlock(progression,pl)){
+                    Helpers.setAchievementStatus(progression,pl,true);
                     src.sendSuccess(new TranslatableComponent("solarcraft.success_unlock")
-                            .append(new TextComponent(" "+achievement.getAchievementCode()).withStyle(ChatFormatting.GOLD)),false);
+                            .append(new TextComponent(" "+ progression.getAchievementCode()).withStyle(ChatFormatting.GOLD)),false);
 
                     Helpers.updateProgression(src.getPlayerOrException());
 
@@ -208,7 +205,7 @@ class refreshAchievements{
     }
 
     public static int refresh(CommandSourceStack src) throws CommandSyntaxException {
-            for (Achievement ach : Achievement.ALL_ACHIEVEMENTS){
+            for (Progression ach : Progression.allProgressions){
                 Helpers.setAchievementStatus(ach,src.getPlayerOrException(),false);
             }
             src.sendSuccess(new TextComponent("Successfully refreshed all progressions"),false);
