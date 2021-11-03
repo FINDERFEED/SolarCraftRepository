@@ -56,7 +56,12 @@ public enum Multiblocks {
     SOLAR_ENERGY_GENERATOR(new Multiblock(new Multiblock.Constructor()
             .addBlock(BlocksRegistry.SOLAR_STONE_BRICKS.get().defaultBlockState(),'B')
             .addBlock(BlocksRegistry.SOLAR_MORTAR_BLOCK.get().defaultBlockState(), 'M')
-            .addBlock(BlocksRegistry.SOLAR_STONE_COLLUMN_HORIZONTAL.get().defaultBlockState(), 'H')
+
+            .addBlock(Structures.BlockStates.HORIZONTAL_COLLUMN_FACING_EAST, 'H')
+            .addBlock(Structures.BlockStates.HORIZONTAL_COLLUMN_FACING_WEST, 'F')
+            .addBlock(Structures.BlockStates.HORIZONTAL_COLLUMN_FACING_NORTH, 'h')
+            .addBlock(Structures.BlockStates.HORIZONTAL_COLLUMN_FACING_SOUTH, 'f')
+
             .addBlock(BlocksRegistry.SOLAR_STONE_COLLUMN.get().defaultBlockState(),'C')
             .addBlock(BlocksRegistry.SOLAR_STONE_CHISELED.get().defaultBlockState(),'L')
             .addBlock(BlocksRegistry.SOLAR_ENERGY_GENERATOR.get().defaultBlockState(),'G')
@@ -249,11 +254,11 @@ class Structures{
     public static String[][] SOLAR_ENERGY_GENERATOR_STRUCTURE =
     {
             {
-                    "LHHHL",
-                    "HBBBH",
-                    "HBBBH",
-                    "HBBBH",
-                    "LHHHL"
+                    "LhhhL",
+                    "FBBBH",
+                    "FBBBH",
+                    "FBBBH",
+                    "LfffL"
             },
             {
                     "  C  ",

@@ -195,8 +195,17 @@ public class Helpers {
                 String line = structure[i][g];
                     for (int k = 0;k < line.length();k++){
                         //here the checking begins
-                        if (world.getBlockState(initPos.offset(k,i,g)) != struct.blockMap.get(line.charAt(k))){
-                            return false;
+                        char c = line.charAt(k);
+                        if (c != ' ') {
+                            if (world.getBlockState(initPos.offset(k, i, g)) != struct.blockMap.get(c)) {
+                                return false;
+                            }
+                        }else{
+                            if (!ignoreOtherBlocks){
+                                if (world.getBlockState(initPos.offset(k, i, g)) != struct.blockMap.get(c)) {
+                                    return false;
+                                }
+                            }
                         }
                         //here ends
                     }

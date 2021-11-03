@@ -38,7 +38,7 @@ public class RadiantPortalCreatorTile extends BlockEntity {
 
 
     public boolean isActive(){
-        return Helpers.checkStructure(level,worldPosition.offset(-3,-1,-3), Multiblocks.RADIANT_LAND_PORTAL.getM(),true);
+        return Helpers.checkStructure(level,worldPosition.offset(-3,-1,-3), Multiblocks.RADIANT_LAND_PORTAL.getM(),false);
     }
 
 
