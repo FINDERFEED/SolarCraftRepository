@@ -7,6 +7,7 @@ import com.finderfeed.solarforge.magic_items.blocks.blockentities.runic_energy.R
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Progression;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.ProgressionHelper;
 import com.finderfeed.solarforge.misc_things.*;
+import com.finderfeed.solarforge.multiblocks.Multiblocks;
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
 import com.finderfeed.solarforge.packet_handler.packets.UpdateTypeOnClientPacket;
 import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
@@ -64,55 +65,57 @@ public class RuneEnergyPylonTile extends BlockEntity implements  DebugTarget, Ru
 
 
     public static void imbueItemsNear(RuneEnergyPylonTile tile){
-        AABB bb = new AABB(tile.worldPosition.offset(-8,-10,-8),tile.worldPosition.offset(8,0,8));
-        tile.level.getEntitiesOfClass(ItemEntity.class,bb, (entity)-> entity.getItem().getItem() instanceof IImbuableItem).forEach(entity->{
-            if (!entity.level.isClientSide) {
-                int flag = updateEntityTime(entity);
-                IImbuableItem item = (IImbuableItem) entity.getItem().getItem();
-                int maxTime = item.getImbueTime();
-                double neededEnergy = item.getCost();
+        if (tile.getEnergyType() != null) {
+            AABB bb = new AABB(tile.worldPosition.offset(-8, -10, -8), tile.worldPosition.offset(8, 0, 8));
+            tile.level.getEntitiesOfClass(ItemEntity.class, bb, (entity) -> entity.getItem().getItem() instanceof IImbuableItem).forEach(entity -> {
+                if (!entity.level.isClientSide) {
+                    int flag = updateEntityTime(entity);
+                    IImbuableItem item = (IImbuableItem) entity.getItem().getItem();
+                    int maxTime = item.getImbueTime();
+                    double neededEnergy = item.getCost();
 
-                if (flag >= maxTime) {
-                    if (ProgressionHelper.RUNES_MAP == null) {
-                        ProgressionHelper.initRunesMap();
-                    }
-                    ItemStack stack = entity.getItem();
-                    int maxRunes = (int) Math.floor(tile.getCurrentEnergy() / neededEnergy);
-                    if (maxRunes > stack.getCount()) {
-                        tile.currentEnergy -= stack.getCount() * neededEnergy;
-                        ItemEntity entity1 = new ItemEntity(tile.level, entity.position().x, entity.position().y, entity.position().z,
-                                new ItemStack(ProgressionHelper.RUNES_MAP.get(tile.getEnergyType()), stack.getCount()));
-                        tile.level.addFreshEntity(entity1);
-                        entity.remove(Entity.RemovalReason.DISCARDED);
+                    if (flag >= maxTime) {
+                        if (ProgressionHelper.RUNES_MAP == null) {
+                            ProgressionHelper.initRunesMap();
+                        }
+                        ItemStack stack = entity.getItem();
+                        int maxRunes = (int) Math.floor(tile.getCurrentEnergy() / neededEnergy);
+                        if (maxRunes > stack.getCount()) {
+                            tile.currentEnergy -= stack.getCount() * neededEnergy;
+                            ItemEntity entity1 = new ItemEntity(tile.level, entity.position().x, entity.position().y, entity.position().z,
+                                    new ItemStack(ProgressionHelper.RUNES_MAP.get(tile.getEnergyType()), stack.getCount()));
+                            tile.level.addFreshEntity(entity1);
+                            entity.remove(Entity.RemovalReason.DISCARDED);
 
-                    } else {
-                        tile.currentEnergy -= maxRunes * neededEnergy;
-                        ItemEntity entity1 = new ItemEntity(tile.level, entity.position().x, entity.position().y, entity.position().z,
-                                new ItemStack(ProgressionHelper.RUNES_MAP.get(tile.getEnergyType()), maxRunes));
-                        tile.level.addFreshEntity(entity1);
-                        entity.getItem().setCount(stack.getCount()-maxRunes);
-                        entity.getPersistentData().putInt(SolarCraftTags.IMBUE_TIME_TAG,0);
-                    }
-                    if (entity.getThrower() != null){
-                        Player player =entity.level.getPlayerByUUID(entity.getThrower());
-                        if (player != null){
-                            Helpers.fireProgressionEvent(player, Progression.SOLAR_RUNE);
+                        } else {
+                            tile.currentEnergy -= maxRunes * neededEnergy;
+                            ItemEntity entity1 = new ItemEntity(tile.level, entity.position().x, entity.position().y, entity.position().z,
+                                    new ItemStack(ProgressionHelper.RUNES_MAP.get(tile.getEnergyType()), maxRunes));
+                            tile.level.addFreshEntity(entity1);
+                            entity.getItem().setCount(stack.getCount() - maxRunes);
+                            entity.getPersistentData().putInt(SolarCraftTags.IMBUE_TIME_TAG, 0);
+                        }
+                        if (entity.getThrower() != null) {
+                            Player player = entity.level.getPlayerByUUID(entity.getThrower());
+                            if (player != null) {
+                                Helpers.fireProgressionEvent(player, Progression.SOLAR_RUNE);
+                            }
                         }
                     }
-                }
-            }else{
-                if (entity.level.getGameTime()%5 == 1) {
+                } else {
+                    if (entity.level.getGameTime() % 5 == 1) {
 
-                    double rndX = entity.level.random.nextDouble()*0.6-0.3;
-                    double rndY = entity.level.random.nextDouble()*0.6-0.3;
-                    double rndZ = entity.level.random.nextDouble()*0.6-0.3;
+                        double rndX = entity.level.random.nextDouble() * 0.6 - 0.3;
+                        double rndY = entity.level.random.nextDouble() * 0.6 - 0.3;
+                        double rndZ = entity.level.random.nextDouble() * 0.6 - 0.3;
 
-                    entity.level.addParticle(ParticlesList.SMALL_SOLAR_STRIKE_PARTICLE.get(),
-                            entity.position().x+rndX, entity.position().y+rndY, entity.position().z+rndZ, 0, 0.1, 0
-                    );
+                        entity.level.addParticle(ParticlesList.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+                                entity.position().x + rndX, entity.position().y + rndY, entity.position().z + rndZ, 0, 0.1, 0
+                        );
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 
     private static int updateEntityTime(ItemEntity entity){
@@ -122,15 +125,22 @@ public class RuneEnergyPylonTile extends BlockEntity implements  DebugTarget, Ru
     }
 
     public static void assignEnergyAndGainIt(RuneEnergyPylonTile tile){
-        if (tile.type == null){
-            tile.type = RunicEnergy.Type.values()[tile.level.random.nextInt(RunicEnergy.Type.values().length)];
-        }
 
-        if (tile.currentEnergy+tile.energyPerTick+ SolarcraftConfig.RUNIC_ENERGY_PER_TICK_PYLON.get().floatValue() <= tile.maxEnergy){
-            tile.currentEnergy+=tile.energyPerTick+SolarcraftConfig.RUNIC_ENERGY_PER_TICK_PYLON.get().floatValue();
-        }else{
-            tile.currentEnergy = tile.maxEnergy;
+            if (tile.type == null) {
+                tile.type = RunicEnergy.Type.values()[tile.level.random.nextInt(RunicEnergy.Type.values().length)];
+            }
+        if (isStructCorrect(tile)) {
+
+            if (tile.currentEnergy + tile.energyPerTick + SolarcraftConfig.RUNIC_ENERGY_PER_TICK_PYLON.get().floatValue() <= tile.maxEnergy) {
+                tile.currentEnergy += tile.energyPerTick + SolarcraftConfig.RUNIC_ENERGY_PER_TICK_PYLON.get().floatValue();
+            } else {
+                tile.currentEnergy = tile.maxEnergy;
+            }
         }
+    }
+
+    public static boolean isStructCorrect(RuneEnergyPylonTile tile){
+        return Helpers.checkStructure(tile.level,tile.worldPosition.below(8).north(2).west(2), Multiblocks.RUNIC_ENERGY_PYLON.getM(), true);
     }
 
     public static void doUpdate(RuneEnergyPylonTile tile){

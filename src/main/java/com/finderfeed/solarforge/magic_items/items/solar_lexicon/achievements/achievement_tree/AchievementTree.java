@@ -29,8 +29,8 @@ public class AchievementTree {
 
 
         List<Progression> list = new ArrayList<>(0);
-        list.add(Progression.FIND_SOLAR_STONE);
-        tree.addAchievementRequirements(Progression.CRAFT_SOLAR_INFUSER,list);
+//        list.add(Progression.FIND_SOLAR_STONE);
+//        tree.addAchievementRequirements(Progression.CRAFT_SOLAR_INFUSER,list);
 
 
         list.add(Progression.ACQUIRE_SOLAR_DUST);
@@ -68,7 +68,7 @@ public class AchievementTree {
         tree.addAchievementRequirements(Progression.DIMENSIONAL_SHARD_DUNGEON,list);
 
         tree.addAchievementRequirements(Progression.CRAFT_SOLAR_FORGE, Progression.ENTER_NETHER);
-        tree.addAchievementRequirements(Progression.FIND_SOLAR_STONE, Progression.ENTER_NETHER);
+//        tree.addAchievementRequirements(Progression.FIND_SOLAR_STONE, Progression.ENTER_NETHER);
         tree.addAchievementRequirements(Progression.RUNE_ENERGY_CLAIM, Progression.RUNE_ENERGY_DEPOSIT);
         tree.addAchievementRequirements(Progression.SOLAR_RUNE, Progression.RUNE_ENERGY_DEPOSIT);
         tree.addAchievementRequirements(Progression.RUNIC_ENERGY_REPEATER, Progression.RUNE_ENERGY_DEPOSIT, Progression.USE_SOLAR_INFUSER, Progression.ACQUIRE_COLD_STAR_ACTIVATED);

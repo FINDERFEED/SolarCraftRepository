@@ -35,9 +35,9 @@ public class TransmutationEvents {
             }
         }
 
-        if (event.getState().getBlock() == BlocksRegistry.SOLAR_STONE.get() ){
-            Helpers.fireProgressionEvent(event.getPlayer(), Progression.FIND_SOLAR_STONE);
-        }
+//        if (event.getState().getBlock() == BlocksRegistry.SOLAR_STONE.get() ){
+//            Helpers.fireProgressionEvent(event.getPlayer(), Progression.FIND_SOLAR_STONE);
+//        }
 
         if (event.getPlayer().getMainHandItem().getItem() instanceof IllidiumPickaxe){
             if (!Helpers.canCast(event.getPlayer(),((IllidiumPickaxe) event.getPlayer().getMainHandItem().getItem()).getManacost())){

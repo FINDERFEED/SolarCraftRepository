@@ -142,6 +142,7 @@ public class ItemsRegister {
 
 
     public static final RegistryObject<Item> RUNE_ENERGY_PYLON = ITEMS.register("rune_energy_pylon",()->new EnergyPylonBlockItem(BlocksRegistry.RUNE_ENERGY_PYLON.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
+    public static final RegistryObject<Item> INSCRIPTION_STONE = ITEMS.register("inscription_stone",()->new BlockItem(BlocksRegistry.INSCRIPTION_STONE.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
 
     public static final RegistryObject<Item> DEBUG_STICK = ITEMS.register("solar_debug_stick",()->new SolarcraftDebugStick(new Item.Properties()));
     //runes

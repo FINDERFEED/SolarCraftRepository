@@ -129,7 +129,32 @@ public enum Multiblocks {
             .addMainBlock(BlocksRegistry.ZAP_TURRET_BLOCK.get().defaultBlockState())
             .addAchievement(Progression.CRAFT_SOLAR_LENS)
             .setStructName("solarcraft.zap_turret")
-    ));
+    )),
+    RUNIC_ENERGY_PYLON(new Multiblock(new Multiblock.Constructor()
+            .addBlock(Structures.BlockStates.SOLAR_STONE_STAIRS_TOP_EAST_STRAIGHT,'T')
+            .addBlock(Structures.BlockStates.SOLAR_STONE_STAIRS_TOP_WEST_STRAIGHT,'D')
+            .addBlock(Structures.BlockStates.SOLAR_STONE_STAIRS_TOP_NORTH_STRAIGHT,'G')
+            .addBlock(Structures.BlockStates.SOLAR_STONE_STAIRS_TOP_SOUTH_STRAIGHT,'H')
+            .addBlock(Structures.BlockStates.SOLAR_STONE_STAIRS_BOTTOM_EAST_STRAIGHT,'t')
+            .addBlock(Structures.BlockStates.SOLAR_STONE_STAIRS_BOTTOM_WEST_STRAIGHT,'d')
+            .addBlock(Structures.BlockStates.SOLAR_STONE_STAIRS_BOTTOM_NORTH_STRAIGHT,'g')
+            .addBlock(Structures.BlockStates.SOLAR_STONE_STAIRS_BOTTOM_SOUTH_STRAIGHT,'h')
+
+            .addBlock(Structures.BlockStates.HORIZONTAL_COLLUMN_FACING_EAST,'Y')
+            .addBlock(Structures.BlockStates.HORIZONTAL_COLLUMN_FACING_WEST,'U')
+            .addBlock(Structures.BlockStates.HORIZONTAL_COLLUMN_FACING_SOUTH,'I')
+            .addBlock(Structures.BlockStates.HORIZONTAL_COLLUMN_FACING_NORTH,'O')
+
+            .addBlock(BlocksRegistry.SOLAR_STONE_CHISELED.get().defaultBlockState(),'A')
+            .addBlock(BlocksRegistry.SOLAR_STONE_BRICKS.get().defaultBlockState(),'B')
+            .addBlock(BlocksRegistry.SOLAR_STONE_COLLUMN.get().defaultBlockState(),'N')
+            .addMainBlock(BlocksRegistry.RUNE_ENERGY_PYLON.get().defaultBlockState())
+            .addStruct(Structures.PYLON)
+            .setStructName("structure.energy_pylon")
+            .addAchievement(Progression.RUNE_ENERGY_DEPOSIT)
+
+    ))
+    ;
 
 
 
@@ -140,7 +165,8 @@ public enum Multiblocks {
             "mortar", SOLAR_MORTAR.a,
             "lesser_core", SOLAR_CORE.a,
             "dim_portal",RADIANT_LAND_PORTAL.a,
-            "zap_turret", ZAP_TURRET.a
+            "zap_turret", ZAP_TURRET.a,
+            "pylon", RUNIC_ENERGY_PYLON.a
     );
 
 
@@ -169,6 +195,59 @@ public enum Multiblocks {
 
 }
 class Structures{
+
+    public static String[][] PYLON = {
+            {
+                    " BBB ",
+                    "BBBBB",
+                    "BBABB",
+                    "BBBBB",
+                    " BBB "
+            },
+            {
+                    "  N  ",
+                    "     ",
+                    "N   N",
+                    "     ",
+                    "  N  "
+            },
+            {
+                    "     ",
+                    "     ",
+                    "     ",
+                    "     ",
+                    "     "
+            },
+            {
+                    "  N  ",
+                    "     ",
+                    "N   N",
+                    "     ",
+                    "  N  "
+            },
+            {
+                    " TAD ",
+                    "H   H",
+                    "A   A",
+                    "G   G",
+                    " TAD "
+            },
+            {
+                    "  h  ",
+                    "  Y  ",
+                    "tOAId",
+                    "  Y  ",
+                    "  g  "
+            },
+            {
+                    "     ",
+                    "  h  ",
+                    " tAd ",
+                    "  g  ",
+                    "     "
+            }
+
+    };
 
     public static String[][] ZAP_TURRET = {
             {

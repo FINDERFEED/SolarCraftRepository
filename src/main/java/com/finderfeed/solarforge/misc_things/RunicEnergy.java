@@ -78,7 +78,9 @@ public class RunicEnergy {
         URBA("urba"),
         KELDA("kelda"),
         FIRA("fira"),
-        TERA("tera");
+        TERA("tera"),
+        NONE("none")
+        ;
 
 
         public String id;

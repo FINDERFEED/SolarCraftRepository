@@ -8,6 +8,7 @@ import com.finderfeed.solarforge.magic_items.blocks.infusing_table_things.infusi
 import com.finderfeed.solarforge.magic_items.blocks.BlueGemDoorBlock;
 import com.finderfeed.solarforge.magic_items.blocks.*;
 import com.finderfeed.solarforge.magic_items.blocks.primitive.BonemealerBlock;
+import com.finderfeed.solarforge.magic_items.blocks.primitive.InscriptionStone;
 import com.finderfeed.solarforge.magic_items.blocks.primitive.ZapTurretBlock;
 import com.finderfeed.solarforge.magic_items.decoration_blocks.SolarFlower;
 import com.finderfeed.solarforge.magic_items.runic_network.repeater.RunicNetworkRepeater;
@@ -41,6 +42,7 @@ public class BlocksRegistry {
             .requiresCorrectToolForDrops()
             .noOcclusion()
             .strength(3,3)));
+
     public  static  final RegistryObject<SolarStoneBlock> SOLAR_STONE = BLOCKS.register("solar_stone",()-> new SolarStoneBlock(BlockBehaviour.Properties.copy(Blocks.ANDESITE)));
     public  static  final RegistryObject<Block> SOLAR_STONE_CHISELED = BLOCKS.register("chiseled_solar_stone",()-> new Block(BlockBehaviour.Properties.copy(Blocks.STONE)));
     public  static  final RegistryObject<Block> SOLAR_STONE_COLLUMN = BLOCKS.register("solar_stone_collumn",()-> new Block(BlockBehaviour.Properties.copy(Blocks.STONE)));
@@ -72,6 +74,7 @@ public class BlocksRegistry {
     public  static  final RegistryObject<LeavesBlock> ASH_LEAVES = BLOCKS.register("ash_leaves",()-> new FlammableLeavesBlock(BlockBehaviour.Properties.copy(Blocks.OAK_LEAVES).noOcclusion(),20));
     public  static  final RegistryObject<RotatedPillarBlock> BURNT_LOG = BLOCKS.register("burnt_log",()-> new RotatedPillarFlammableBlock(BlockBehaviour.Properties.copy(Blocks.OAK_LOG),20));
     public  static  final RegistryObject<Block> RUNE_ENERGY_PYLON = BLOCKS.register("rune_energy_pylon",()-> new RuneEnergyPylonBlock(BlockBehaviour.Properties.copy(Blocks.BEDROCK).noOcclusion()));
+    public  static  final RegistryObject<Block> INSCRIPTION_STONE = BLOCKS.register("inscription_stone",()-> new InscriptionStone(BlockBehaviour.Properties.copy(Blocks.STONE)));
     public  static  final RegistryObject<Block> REPEATER = BLOCKS.register("repeater",()-> new RunicNetworkRepeater(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).noOcclusion()));
     public  static  final RegistryObject<Block> RUNIC_TABLE = BLOCKS.register("runic_table",()-> new RunicTableBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).noOcclusion()));
     public  static  final RegistryObject<LeavesBlock> RUNIC_LEAVES = BLOCKS.register("runic_leaves",()-> new RunicLeavesBlock(BlockBehaviour.Properties.copy(Blocks.OAK_LEAVES).noOcclusion()));
