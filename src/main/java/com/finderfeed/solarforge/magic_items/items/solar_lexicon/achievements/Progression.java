@@ -1,6 +1,7 @@
 package com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements;
 
 import com.finderfeed.solarforge.SolarForge;
+import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
 import com.finderfeed.solarforge.registries.items.ItemsRegister;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.item.ItemStack;
@@ -13,7 +14,7 @@ public enum Progression {
     SOLAR_RUNE("solar_rune",2, ItemsRegister.SOLAR_RUNE_ZETA.get().getDefaultInstance(),new TranslatableComponent("ach.solar_rune"),nextID(),new TranslatableComponent("pre.solar_rune"),new TranslatableComponent("aft.solar_rune")),
     ENTER_NETHER("enter_nether",1, Blocks.NETHERRACK.asItem().getDefaultInstance(),new TranslatableComponent("ach.enter_nether"),nextID(),new TranslatableComponent("pre.enter_nether"),new TranslatableComponent("aft.enter_nether")),
     CRAFT_SOLAR_FORGE("solar_forge_craft",2, SolarForge.SOLAR_FORGE_ITEM.get().getDefaultInstance(),new TranslatableComponent("ach.solar_forge_craft"),nextID(),new TranslatableComponent("pre.solar_forge_craft"),new TranslatableComponent("aft.solar_forge_craft")),
-
+    PYLON_INSCRIPTION("pylon_inscription",2, BlocksRegistry.INSCRIPTION_STONE.get().asItem().getDefaultInstance(),new TranslatableComponent("ach.pylon_inscription"),nextID(),new TranslatableComponent("pre.pylon_inscription"),new TranslatableComponent("aft.pylon_inscription")),
     //FIND_SOLAR_STONE("solar_stone",2, ItemsRegister.SOLAR_STONE.get().getDefaultInstance(),new TranslatableComponent("ach.solar_stone"),7,new TranslatableComponent("pre.solar_stone"),new TranslatableComponent("aft.solar_stone")),
     CRAFT_SOLAR_INFUSER("solar_infuser_create",3,SolarForge.INFUSING_STAND_ITEM.get().getDefaultInstance(),new TranslatableComponent("ach.solar_infuser_create"),nextID(),new TranslatableComponent("pre.solar_infuser_create"),new TranslatableComponent("aft.solar_infuser_create")),
     USE_SOLAR_INFUSER("solar_infuser_use",4,ItemsRegister.SOLAR_WAND.get().getDefaultInstance(),new TranslatableComponent("ach.solar_infuser_use"),nextID(),new TranslatableComponent("pre.solar_infuser_use"),new TranslatableComponent("aft.solar_infuser_use")),

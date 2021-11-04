@@ -3,6 +3,7 @@ package com.finderfeed.solarforge.magic_items.items;
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.for_future_library.helpers.CompoundNBTHelper;
 import com.finderfeed.solarforge.magic_items.blocks.primitive.InscriptionStone;
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Progression;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
 import net.minecraft.core.BlockPos;
@@ -59,6 +60,7 @@ public class RuneItem extends Item {
                                     world.playSound(null,pos.getX(),pos.getY(),pos.getZ(), SoundEvents.STONE_BREAK, SoundSource.BLOCKS,1,1);
                                 }
                             }else{
+                                Helpers.fireProgressionEvent(pl, Progression.PYLON_INSCRIPTION);
                                 world.playSound(null,pos.getX(),pos.getY(),pos.getZ(), SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.BLOCKS,1,1);
                                 world.setBlock(pos, BlocksRegistry.INSCRIPTION_STONE.get().defaultBlockState().setValue(InscriptionStone.PROP,type), Constants.BlockFlags.DEFAULT);
                                 pl.setItemInHand(hand,ItemStack.EMPTY);
