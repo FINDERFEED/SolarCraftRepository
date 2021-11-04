@@ -9,6 +9,7 @@ import com.finderfeed.solarforge.magic_items.blocks.blockitems.TurretBlockItem;
 import com.finderfeed.solarforge.magic_items.blocks.blockitems.UldoradiumOreBlockitem;
 import com.finderfeed.solarforge.magic_items.items.item_tiers.SolarCraftToolTiers;
 import com.finderfeed.solarforge.magic_items.items.*;
+import com.finderfeed.solarforge.magic_items.items.primitive.RareSolarcraftItem;
 import com.finderfeed.solarforge.magic_items.items.small_items.*;
 import com.finderfeed.solarforge.magic_items.items.solar_disc_gun.SolarDiscGunItem;
 import com.finderfeed.solarforge.magic_items.items.vein_miner.VeinMiner;
@@ -59,7 +60,7 @@ public class ItemsRegister {
     public static  final RegistryObject<SolarLexicon> SOLAR_LEXICON = ITEMS.register("solar_lexicon",()-> new SolarLexicon(new Item.Properties().tab(SolarForge.SOLAR_GROUP).stacksTo(1)));
 
     public static final RegistryObject<VoidBlockWand> VOID_BLOCK_WAND = ITEMS.register("void_block_wand",()-> new VoidBlockWand(new Item.Properties().rarity(Rarity.EPIC)));
-    public static final RegistryObject<Item> SOLAR_KEY = ITEMS.register("solar_key",()-> new Item(new Item.Properties().rarity(Rarity.EPIC).tab(SolarForge.SOLAR_GROUP)));
+    public static final RegistryObject<Item> SOLAR_KEY = ITEMS.register("solar_key",()-> new RareSolarcraftItem(new Item.Properties().rarity(Rarity.EPIC).tab(SolarForge.SOLAR_GROUP)));
     public static final RegistryObject<Item> COLD_STAR_PIECE = ITEMS.register("cold_star_piece",()-> new ColdStarPieceItem(new Item.Properties().rarity(Rarity.EPIC).tab(SolarForge.SOLAR_GROUP_MATERIALS).stacksTo(1)));
     public static final RegistryObject<Item> COLD_STAR_PIECE_ACTIVATED = ITEMS.register("cold_star_piece_activated",()-> new ChargedColdStar(new Item.Properties().rarity(Rarity.EPIC).tab(SolarForge.SOLAR_GROUP_MATERIALS)));
     public static final RegistryObject<Item> KEY_LOCK_BLOCK = ITEMS.register("key_lock_block",()->new BlockItem(BlocksRegistry.KEY_LOCK_BLOCK.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));

@@ -2,7 +2,10 @@ package com.finderfeed.solarforge.for_future_library.helpers;
 
 import com.finderfeed.solarforge.ClientHelpers;
 import com.finderfeed.solarforge.SolarForge;
+import com.finderfeed.solarforge.client.custom_tooltips.CustomTooltip;
 import com.finderfeed.solarforge.events.RenderEventsHandler;
+import com.finderfeed.solarforge.events.my_events.MyColorEvent;
+import com.finderfeed.solarforge.events.my_events.PostColorEvent;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import com.finderfeed.solarforge.client.rendering.rendertypes.RadiantPortalRendertype;
 import com.finderfeed.solarforge.client.rendering.shaders.post_chains.PostChainPlusUltra;
@@ -18,7 +21,7 @@ import com.mojang.math.Vector3d;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiComponent;
 
-import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
 import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
@@ -42,7 +45,9 @@ import net.minecraft.world.level.block.HalfTransparentBlock;
 import net.minecraft.world.level.block.StainedGlassPaneBlock;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.client.event.RenderTooltipEvent;
 import net.minecraftforge.client.model.data.ModelDataMap;
+import net.minecraftforge.common.MinecraftForge;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -631,6 +636,113 @@ public class RenderingTools {
         private static void vertex4(VertexConsumer p_114229_, Matrix4f p_114230_, float p_114231_, float p_114232_) {
             p_114229_.vertex(p_114230_, 0.0F, p_114231_, 1.0F * p_114232_).color(255, 255, 0, 0).endVertex();
         }
+    }
+
+    //using my render tooltip thing because currently post events are removed. (copied from screen class and a bit modified with events)
+    public static void renderTooltipInternal(PoseStack p_169384_, List<ClientTooltipComponent> p_169385_, int mousex, int mousey, CustomTooltip tooltip) {
+        if (!p_169385_.isEmpty()) {
+
+            int i = 0;
+            int j = p_169385_.size() == 1 ? -2 : 0;
+
+            for(ClientTooltipComponent clienttooltipcomponent : p_169385_) {
+                int k = clienttooltipcomponent.getWidth(Minecraft.getInstance().font);
+                if (k > i) {
+                    i = k;
+                }
+
+                j += clienttooltipcomponent.getHeight();
+            }
+
+            int j2 = mousex + 12;
+            int k2 = mousey - 12;
+            if (j2 + i > Minecraft.getInstance().screen.width) {
+                j2 -= 28 + i;
+            }
+
+            if (k2 + j + 6 > Minecraft.getInstance().screen.height) {
+                k2 = Minecraft.getInstance().screen.height - j - 6;
+            }
+
+            p_169384_.pushPose();
+            int l = -267386864;
+            int i1 = 1347420415;
+            int j1 = 1344798847;
+            int k1 = 400;
+            float f = Minecraft.getInstance().getItemRenderer().blitOffset;
+            Minecraft.getInstance().getItemRenderer().blitOffset = 400.0F;
+            Tesselator tesselator = Tesselator.getInstance();
+            BufferBuilder bufferbuilder = tesselator.getBuilder();
+            RenderSystem.setShader(GameRenderer::getPositionColorShader);
+            bufferbuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_COLOR);
+            Matrix4f matrix4f = p_169384_.last().pose();
+            RenderTooltipEvent.Color colorEvent = new MyColorEvent(Items.AIR.getDefaultInstance(), p_169384_, j2, k2, Minecraft.getInstance().font,p_169385_,tooltip);
+            MinecraftForge.EVENT_BUS.post(colorEvent);
+
+            fillGradient(matrix4f, bufferbuilder, j2 - 3, k2 - 4, j2 + i + 3, k2 - 3, 400, colorEvent.getBackgroundStart(), colorEvent.getBackgroundStart());
+            fillGradient(matrix4f, bufferbuilder, j2 - 3, k2 + j + 3, j2 + i + 3, k2 + j + 4, 400, colorEvent.getBackgroundEnd(), colorEvent.getBackgroundEnd());
+            fillGradient(matrix4f, bufferbuilder, j2 - 3, k2 - 3, j2 + i + 3, k2 + j + 3, 400, colorEvent.getBackgroundStart(), colorEvent.getBackgroundEnd());
+            fillGradient(matrix4f, bufferbuilder, j2 - 4, k2 - 3, j2 - 3, k2 + j + 3, 400, colorEvent.getBackgroundStart(), colorEvent.getBackgroundEnd());
+            fillGradient(matrix4f, bufferbuilder, j2 + i + 3, k2 - 3, j2 + i + 4, k2 + j + 3, 400, colorEvent.getBackgroundStart(), colorEvent.getBackgroundEnd());
+            fillGradient(matrix4f, bufferbuilder, j2 - 3, k2 - 3 + 1, j2 - 3 + 1, k2 + j + 3 - 1, 400, colorEvent.getBorderStart(), colorEvent.getBorderEnd());
+            fillGradient(matrix4f, bufferbuilder, j2 + i + 2, k2 - 3 + 1, j2 + i + 3, k2 + j + 3 - 1, 400, colorEvent.getBorderStart(), colorEvent.getBorderEnd());
+            fillGradient(matrix4f, bufferbuilder, j2 - 3, k2 - 3, j2 + i + 3, k2 - 3 + 1, 400, colorEvent.getBorderStart(), colorEvent.getBorderStart());
+            fillGradient(matrix4f, bufferbuilder, j2 - 3, k2 + j + 2, j2 + i + 3, k2 + j + 3, 400, colorEvent.getBorderEnd(), colorEvent.getBorderEnd());
+            RenderSystem.enableDepthTest();
+            RenderSystem.disableTexture();
+            RenderSystem.enableBlend();
+            RenderSystem.defaultBlendFunc();
+            bufferbuilder.end();
+            BufferUploader.end(bufferbuilder);
+            RenderSystem.disableBlend();
+            RenderSystem.enableTexture();
+
+
+
+            MultiBufferSource.BufferSource multibuffersource$buffersource = MultiBufferSource.immediate(Tesselator.getInstance().getBuilder());
+            p_169384_.translate(0.0D, 0.0D, 400.0D);
+            int l1 = k2;
+
+            for(int i2 = 0; i2 < p_169385_.size(); ++i2) {
+                ClientTooltipComponent clienttooltipcomponent1 = p_169385_.get(i2);
+                clienttooltipcomponent1.renderText(Minecraft.getInstance().font, j2, l1, matrix4f, multibuffersource$buffersource);
+                l1 += clienttooltipcomponent1.getHeight() + (i2 == 0 ? 2 : 0);
+            }
+
+            multibuffersource$buffersource.endBatch();
+
+
+
+            p_169384_.popPose();
+
+            l1 = k2;
+
+            for(int l2 = 0; l2 < p_169385_.size(); ++l2) {
+                ClientTooltipComponent clienttooltipcomponent2 = p_169385_.get(l2);
+                clienttooltipcomponent2.renderImage(Minecraft.getInstance().font, j2, l1, p_169384_, Minecraft.getInstance().getItemRenderer(), 400, Minecraft.getInstance().getTextureManager());
+                l1 += clienttooltipcomponent2.getHeight() + (l2 == 0 ? 2 : 0);
+            }
+
+            Minecraft.getInstance().getItemRenderer().blitOffset = f;
+            PostColorEvent event = new PostColorEvent(p_169384_, j2, k2, Minecraft.getInstance().font,p_169385_,i,j,tooltip);
+            MinecraftForge.EVENT_BUS.post(event);
+        }
+
+
+    }
+    protected static void fillGradient(Matrix4f p_93124_, BufferBuilder p_93125_, int p_93126_, int p_93127_, int p_93128_, int p_93129_, int p_93130_, int p_93131_, int p_93132_) {
+        float f = (float)(p_93131_ >> 24 & 255) / 255.0F;
+        float f1 = (float)(p_93131_ >> 16 & 255) / 255.0F;
+        float f2 = (float)(p_93131_ >> 8 & 255) / 255.0F;
+        float f3 = (float)(p_93131_ & 255) / 255.0F;
+        float f4 = (float)(p_93132_ >> 24 & 255) / 255.0F;
+        float f5 = (float)(p_93132_ >> 16 & 255) / 255.0F;
+        float f6 = (float)(p_93132_ >> 8 & 255) / 255.0F;
+        float f7 = (float)(p_93132_ & 255) / 255.0F;
+        p_93125_.vertex(p_93124_, (float)p_93128_, (float)p_93127_, (float)p_93130_).color(f1, f2, f3, f).endVertex();
+        p_93125_.vertex(p_93124_, (float)p_93126_, (float)p_93127_, (float)p_93130_).color(f1, f2, f3, f).endVertex();
+        p_93125_.vertex(p_93124_, (float)p_93126_, (float)p_93129_, (float)p_93130_).color(f5, f6, f7, f4).endVertex();
+        p_93125_.vertex(p_93124_, (float)p_93128_, (float)p_93129_, (float)p_93130_).color(f5, f6, f7, f4).endVertex();
     }
 
 }

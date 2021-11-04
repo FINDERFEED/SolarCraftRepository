@@ -45,7 +45,12 @@ public enum Multiblocks {
     SOLAR_MORTAR(new Multiblock(new Multiblock.Constructor()
             .addBlock(BlocksRegistry.SOLAR_STONE_BRICKS.get().defaultBlockState(),'B')
             .addBlock(BlocksRegistry.SOLAR_MORTAR_BLOCK.get().defaultBlockState(), 'M')
-            .addBlock(BlocksRegistry.SOLAR_STONE_COLLUMN_HORIZONTAL.get().defaultBlockState(), 'H')
+
+            .addBlock(Structures.BlockStates.HORIZONTAL_COLLUMN_FACING_EAST, 'H')
+            .addBlock(Structures.BlockStates.HORIZONTAL_COLLUMN_FACING_WEST, 'K')
+            .addBlock(Structures.BlockStates.HORIZONTAL_COLLUMN_FACING_SOUTH, 'h')
+            .addBlock(Structures.BlockStates.HORIZONTAL_COLLUMN_FACING_NORTH, 'k')
+
             .addBlock(BlocksRegistry.SOLAR_STONE_COLLUMN.get().defaultBlockState(),'C')
             .addBlock(BlocksRegistry.SOLAR_STONE_CHISELED.get().defaultBlockState(),'L')
             .addAchievement(Progression.CRAFT_SOLAR_ENERGY_GENERATOR)
@@ -114,7 +119,12 @@ public enum Multiblocks {
             .addStruct(Structures.ZAP_TURRET)
             .addBlock(BlocksRegistry.SOLAR_STONE_BRICKS.get().defaultBlockState(),'B')
             .addBlock(BlocksRegistry.SOLAR_STONE_COLLUMN.get().defaultBlockState(), 'C')
-            .addBlock(BlocksRegistry.SOLAR_STONE_STAIRS.get().defaultBlockState(), 'S')
+
+            .addBlock(Structures.BlockStates.SOLAR_STONE_STAIRS_BOTTOM_WEST_STRAIGHT, 'S')
+            .addBlock(Structures.BlockStates.SOLAR_STONE_STAIRS_BOTTOM_EAST_STRAIGHT, 'D')
+            .addBlock(Structures.BlockStates.SOLAR_STONE_STAIRS_BOTTOM_NORTH_STRAIGHT, 's')
+            .addBlock(Structures.BlockStates.SOLAR_STONE_STAIRS_BOTTOM_SOUTH_STRAIGHT, 'd')
+
             .addBlock(BlocksRegistry.ZAP_TURRET_BLOCK.get().defaultBlockState(), 'T')
             .addMainBlock(BlocksRegistry.ZAP_TURRET_BLOCK.get().defaultBlockState())
             .addAchievement(Progression.CRAFT_SOLAR_LENS)
@@ -168,9 +178,9 @@ class Structures{
 
             },
             {
-                    " S ",
-                    "SCS",
-                    " S "
+                    " s ",
+                    "SCD",
+                    " d "
 
             },
             {
@@ -302,11 +312,11 @@ class Structures{
                             "BBBBB"
                     },
                     {
-                            "LHHHL",
-                            "H   H",
-                            "H   H",
-                            "H   H",
-                            "LHHHL"
+                            "LkkkL",
+                            "K   H",
+                            "K   H",
+                            "K   H",
+                            "LhhhL"
                     },
                     {
                             "CB  C",
@@ -330,11 +340,11 @@ class Structures{
                             "CB  C"
                     },
                     {
-                            "LHHHL",
-                            "H   H",
-                            "H   H",
-                            "H   H",
-                            "LHHHL"
+                            "LkkkL",
+                            "K   H",
+                            "K   H",
+                            "K   H",
+                            "LhhhL"
                     },
                     {
                             "CB  C",
@@ -358,11 +368,11 @@ class Structures{
                             "CB  C"
                     },
                     {
-                            "LHHHL",
-                            "H   H",
-                            "H   H",
-                            "H   H",
-                            "LHHHL"
+                            "LkkkL",
+                            "K   H",
+                            "K   H",
+                            "K   H",
+                            "LhhhL"
                     },
                     {
                             " BBB ",
