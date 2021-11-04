@@ -2,6 +2,7 @@ package com.finderfeed.solarforge.magic_items.items;
 
 import com.finderfeed.solarforge.SolarCraftTags;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.projectiles.AbstractTurretProjectile;
+import com.finderfeed.solarforge.magic_items.items.primitive.RareSolarcraftSword;
 import com.finderfeed.solarforge.misc_things.ITagUser;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.item.*;
@@ -22,7 +23,7 @@ import java.util.List;
 
 import net.minecraft.world.item.Item.Properties;
 
-public class SolarGodSword extends SwordItem implements ITagUser {
+public class SolarGodSword extends RareSolarcraftSword implements ITagUser {
     public SolarGodSword(Tier p_i48460_1_, int p_i48460_2_, float p_i48460_3_, Properties p_i48460_4_) {
         super(p_i48460_1_, p_i48460_2_, p_i48460_3_, p_i48460_4_);
     }

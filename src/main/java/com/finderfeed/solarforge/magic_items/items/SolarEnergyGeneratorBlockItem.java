@@ -2,6 +2,7 @@ package com.finderfeed.solarforge.magic_items.items;
 
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.SolarForge;
+import com.finderfeed.solarforge.magic_items.items.primitive.RareSolarcraftBlockItem;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Progression;
 import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
 import net.minecraft.world.entity.Entity;
@@ -13,7 +14,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
 
-public class SolarEnergyGeneratorBlockItem extends BlockItem {
+public class SolarEnergyGeneratorBlockItem extends RareSolarcraftBlockItem {
 
     public SolarEnergyGeneratorBlockItem() {
         super(BlocksRegistry.SOLAR_ENERGY_GENERATOR.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS));

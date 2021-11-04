@@ -2,6 +2,7 @@ package com.finderfeed.solarforge.magic_items.items.vein_miner;
 
 import com.finderfeed.solarforge.Helpers;
 
+import com.finderfeed.solarforge.magic_items.items.primitive.RareSolarcraftPickaxe;
 import com.finderfeed.solarforge.misc_things.ManaConsumer;
 
 import net.minecraft.world.level.block.Block;
@@ -27,11 +28,11 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.PickaxeItem;
 import net.minecraft.world.item.Tier;
 
-public class VeinMiner extends PickaxeItem implements ManaConsumer {
+public class IllidiumPickaxe extends RareSolarcraftPickaxe implements ManaConsumer {
 
 
 
-    public VeinMiner(Tier p_i48478_1_, int p_i48478_2_, float p_i48478_3_, Properties p_i48478_4_) {
+    public IllidiumPickaxe(Tier p_i48478_1_, int p_i48478_2_, float p_i48478_3_, Properties p_i48478_4_) {
         super(p_i48478_1_, p_i48478_2_, p_i48478_3_, p_i48478_4_);
 
     }

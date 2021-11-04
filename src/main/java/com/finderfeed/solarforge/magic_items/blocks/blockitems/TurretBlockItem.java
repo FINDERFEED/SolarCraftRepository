@@ -2,6 +2,7 @@ package com.finderfeed.solarforge.magic_items.blocks.blockitems;
 
 import com.finderfeed.solarforge.magic_items.blocks.TurretBlock;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.TurretTileEntity;
+import com.finderfeed.solarforge.magic_items.items.primitive.RareSolarcraftBlockItem;
 import net.minecraft.world.level.block.Block;
 
 import net.minecraft.world.item.TooltipFlag;
@@ -21,7 +22,7 @@ import java.util.List;
 
 import net.minecraft.world.item.Item.Properties;
 
-public class TurretBlockItem extends BlockItem {
+public class TurretBlockItem extends RareSolarcraftBlockItem {
 
     public TurretBlockItem(Block p_i48527_1_, Properties p_i48527_2_) {
         super(p_i48527_1_, p_i48527_2_);

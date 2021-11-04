@@ -15,6 +15,8 @@ public class CustomTooltip{
     private final int bottomTextureWidth;
     private final int bottomTextureHeight;
     private final int cornerDimensions;
+    private int yOffsetTop = 0;
+    private int yOffsetBottom = 0;
 
     private final int backgroundColor;
     private final int borderColorStart;
@@ -77,4 +79,22 @@ public class CustomTooltip{
         ClientHelpers.bindText(CORNER_LOCATION);
     }
 
+
+    public CustomTooltip setyOffsetBottom(int yOffsetBottom) {
+        this.yOffsetBottom = yOffsetBottom;
+        return this;
+    }
+
+    public CustomTooltip setyOffsetTop(int yOffsetTop) {
+        this.yOffsetTop = yOffsetTop;
+        return this;
+    }
+
+    public int getyOffsetBottom() {
+        return yOffsetBottom;
+    }
+
+    public int getyOffsetTop() {
+        return yOffsetTop;
+    }
 }

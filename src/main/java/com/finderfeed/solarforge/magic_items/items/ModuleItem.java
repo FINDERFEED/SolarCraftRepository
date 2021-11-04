@@ -1,5 +1,7 @@
 package com.finderfeed.solarforge.magic_items.items;
 
+import com.finderfeed.solarforge.client.custom_tooltips.CustomTooltip;
+import com.finderfeed.solarforge.client.custom_tooltips.ICustomTooltip;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -11,7 +13,12 @@ import net.minecraft.world.level.Level;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class ModuleItem extends Item {
+public class ModuleItem extends Item implements ICustomTooltip {
+    public static final CustomTooltip MODULE = new CustomTooltip("module",
+            Math.round(40*1.5f),Math.round(9*1.5f),
+            Math.round(40*1.5f),Math.round(9*1.5f),
+            6,
+            0xFF561100, 0xFF330300,0xf0100010).setyOffsetTop(1);
 
     private Type type;
     private String subTag;
@@ -37,6 +44,11 @@ public class ModuleItem extends Item {
 
     public String getSubTag() {
         return subTag;
+    }
+
+    @Override
+    public CustomTooltip getTooltip() {
+        return MODULE;
     }
 
     public enum Type{

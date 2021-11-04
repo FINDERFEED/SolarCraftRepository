@@ -1,6 +1,7 @@
 package com.finderfeed.solarforge.magic_items.items;
 
 import com.finderfeed.solarforge.magic_items.items.isters.ShieldOfSolarGodISTER;
+import com.finderfeed.solarforge.magic_items.items.primitive.RareSolarcraftShieldItem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
@@ -34,7 +35,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.item.Item.Properties;
 
-public class ShieldOfSolarGod extends ShieldItem {
+public class ShieldOfSolarGod extends RareSolarcraftShieldItem {
 
 
 

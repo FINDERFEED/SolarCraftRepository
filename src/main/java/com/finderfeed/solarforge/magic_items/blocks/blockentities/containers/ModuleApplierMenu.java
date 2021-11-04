@@ -86,10 +86,12 @@ public class ModuleApplierMenu extends ItemCombinerMenu {
 
     private boolean isCompatibleWithItem(ModuleItem item,ItemStack stack){
         ModuleItem.Tags[] incompatible = item.getIncompatibleWith();
-        if (incompatible.length != 0) {
-            for (ModuleItem.Tags tag : incompatible) {
-                if (stack.getTagElement(tag.tag) != null) {
-                    return false;
+        if (incompatible != null) {
+            if (incompatible.length != 0) {
+                for (ModuleItem.Tags tag : incompatible) {
+                    if (stack.getTagElement(tag.tag) != null) {
+                        return false;
+                    }
                 }
             }
         }

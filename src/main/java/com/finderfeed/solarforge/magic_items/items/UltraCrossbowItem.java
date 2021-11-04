@@ -2,6 +2,7 @@ package com.finderfeed.solarforge.magic_items.items;
 
 
 import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.magic_items.items.primitive.RareSolarcraftItem;
 import com.finderfeed.solarforge.magic_items.items.projectiles.UltraCrossbowProjectile;
 import com.finderfeed.solarforge.misc_things.ManaConsumer;
 import com.finderfeed.solarforge.registries.entities.Entities;
@@ -24,7 +25,7 @@ import net.minecraft.world.level.Level;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class UltraCrossbowItem extends Item implements ManaConsumer {
+public class UltraCrossbowItem extends RareSolarcraftItem implements ManaConsumer {
 
     public boolean isBeingUsed = false;
 

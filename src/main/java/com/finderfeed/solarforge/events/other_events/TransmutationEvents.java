@@ -2,7 +2,7 @@ package com.finderfeed.solarforge.events.other_events;
 
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.capabilities.capability_mana.CapabilitySolarMana;
-import com.finderfeed.solarforge.magic_items.items.vein_miner.VeinMiner;
+import com.finderfeed.solarforge.magic_items.items.vein_miner.IllidiumPickaxe;
 import com.finderfeed.solarforge.registries.abilities.AbilitiesRegistry;
 import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Progression;
@@ -39,8 +39,8 @@ public class TransmutationEvents {
             Helpers.fireProgressionEvent(event.getPlayer(), Progression.FIND_SOLAR_STONE);
         }
 
-        if (event.getPlayer().getMainHandItem().getItem() instanceof VeinMiner){
-            if (!Helpers.canCast(event.getPlayer(),((VeinMiner) event.getPlayer().getMainHandItem().getItem()).getManacost())){
+        if (event.getPlayer().getMainHandItem().getItem() instanceof IllidiumPickaxe){
+            if (!Helpers.canCast(event.getPlayer(),((IllidiumPickaxe) event.getPlayer().getMainHandItem().getItem()).getManacost())){
                 event.setCanceled(true);
             }
         }

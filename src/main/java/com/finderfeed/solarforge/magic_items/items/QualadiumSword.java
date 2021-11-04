@@ -1,6 +1,7 @@
 package com.finderfeed.solarforge.magic_items.items;
 
 import com.finderfeed.solarforge.SolarForge;
+import com.finderfeed.solarforge.magic_items.items.primitive.RareSolarcraftSword;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -21,7 +22,7 @@ import java.util.List;
 
 import net.minecraft.world.item.Item.Properties;
 
-public class QualadiumSword extends SwordItem {
+public class QualadiumSword extends RareSolarcraftSword {
     public QualadiumSword(Tier tier,Properties p_i48460_4_) {
         super(tier, 2, -2.4f, p_i48460_4_);
     }

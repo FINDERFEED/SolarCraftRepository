@@ -1,7 +1,7 @@
 package com.finderfeed.solarforge.magic_items.items;
 
 import com.finderfeed.solarforge.config.SolarcraftConfig;
-import com.finderfeed.solarforge.magic_items.items.vein_miner.VeinMiner;
+import com.finderfeed.solarforge.magic_items.items.vein_miner.IllidiumPickaxe;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.state.BlockState;
@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Optional;
 
 
-public class QualadiumPickaxe extends VeinMiner {
+public class QualadiumPickaxe extends IllidiumPickaxe {
 
     public List<Item> REWARDS_LIST;
 

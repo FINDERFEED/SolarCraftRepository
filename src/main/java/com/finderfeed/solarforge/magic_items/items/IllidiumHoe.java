@@ -1,6 +1,7 @@
 package com.finderfeed.solarforge.magic_items.items;
 
 import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.magic_items.items.primitive.RareSolarcraftHoe;
 import com.finderfeed.solarforge.misc_things.ManaConsumer;
 import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.item.TooltipFlag;
@@ -21,7 +22,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.context.UseOnContext;
 
-public class IllidiumHoe extends HoeItem implements ManaConsumer {
+public class IllidiumHoe extends RareSolarcraftHoe implements ManaConsumer {
 
 
     public IllidiumHoe(Tier p_i231595_1_, int p_i231595_2_, float p_i231595_3_, Properties p_i231595_4_) {

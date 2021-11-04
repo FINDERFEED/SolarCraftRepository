@@ -52,8 +52,10 @@ public abstract class AbstractMortarProjectile extends AbstractHurtingProjectile
 
     @Override
     protected void onHitBlock(BlockHitResult result) {
-        causeExplosion(result.getLocation());
-        causeExplosionParticles(result.getLocation());
+        if (!removeit){
+            causeExplosion(result.getLocation());
+            causeExplosionParticles(result.getLocation());
+        }
         level.playSound(null,result.getBlockPos().getX()+0.5,result.getBlockPos().getY()+0.5,result.getBlockPos().getZ()+0.5, Sounds.SOLAR_MORTAR_PROJECTILE.get(), SoundSource.AMBIENT,
                 5,1);
         this.removeit = true;
@@ -99,10 +101,11 @@ public abstract class AbstractMortarProjectile extends AbstractHurtingProjectile
 //                this.level.addParticle(ParticlesList.SMALL_SOLAR_STRIKE_PARTICLE.get(),this.position().x+offsetx,this.position().y,this.position().z,0,0,0);
 //            }
 //        }
-        super.tick();
         if (!level.isClientSide && removeit){
             this.kill();
         }
+        super.tick();
+
 
     }
 

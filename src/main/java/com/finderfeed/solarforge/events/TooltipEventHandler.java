@@ -50,7 +50,7 @@ public class TooltipEventHandler {
         tooltip.bindTop();
         int posX = calculateXTopRenderPosition(relX,relX+sizeX,tooltip.getTopTextureWidth());
         int posY = calculateYTopRenderPosition(relY,tooltip.getTopTextureHeight());
-        Gui.blit(matrices,posX,posY,0,0,tooltip.getTopTextureWidth(),tooltip.getTopTextureHeight(),tooltip.getTopTextureWidth(),tooltip.getTopTextureHeight());
+        Gui.blit(matrices,posX,posY+tooltip.getyOffsetTop(),0,0,tooltip.getTopTextureWidth(),tooltip.getTopTextureHeight(),tooltip.getTopTextureWidth(),tooltip.getTopTextureHeight());
         matrices.popPose();
     }
 
@@ -59,7 +59,7 @@ public class TooltipEventHandler {
         tooltip.bindBottom();
         int posX = calculateXBottomRenderPosition(relX,relX+sizeX,tooltip.getBottomTextureWidth());
         int posY = calculateYBottomRenderPosition(relY,sizeY,tooltip.getBottomTextureHeight());
-        Gui.blit(matrices,posX,posY,0,0,tooltip.getBottomTextureWidth(),tooltip.getBottomTextureHeight(),tooltip.getBottomTextureWidth(),tooltip.getBottomTextureHeight());
+        Gui.blit(matrices,posX,posY+tooltip.getyOffsetBottom(),0,0,tooltip.getBottomTextureWidth(),tooltip.getBottomTextureHeight(),tooltip.getBottomTextureWidth(),tooltip.getBottomTextureHeight());
         matrices.popPose();
     }
     //in blit first matrix second/third position, 4 5 sdvig, 5 6 skolko vzyat ot teksturi, 7 8 razmer etoy teksturi
@@ -103,15 +103,15 @@ public class TooltipEventHandler {
     }
 
     private static int[] calculateLeftBottomCornerPos(int relX,int relY,int sizeY,int cornerDimensions){
-        return new int[]{relX-cornerDimensions/2,relY+sizeY};
+        return new int[]{relX-cornerDimensions/2,relY+sizeY+1};
     }
 
     private static int[] calculateRightTopCornerPos(int relX,int relY,int sizeX,int cornerDimensions){
-        return new int[]{relX+sizeX,relY-cornerDimensions/2};
+        return new int[]{relX+sizeX +1 ,relY-cornerDimensions/2};
     }
 
     private static int[] calculateRightBottomCornerPos(int relX,int relY,int sizeX,int sizeY,int cornerDimensions){
-        return new int[]{relX+sizeX,relY+sizeY};
+        return new int[]{relX+sizeX+1,relY+sizeY+1};
     }
 
 

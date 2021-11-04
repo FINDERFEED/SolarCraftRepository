@@ -2,6 +2,7 @@ package com.finderfeed.solarforge.magic_items.items;
 
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.SolarCraftTags;
+import com.finderfeed.solarforge.magic_items.items.primitive.RareSolarcraftPickaxe;
 import com.finderfeed.solarforge.misc_things.ITagUser;
 import com.finderfeed.solarforge.misc_things.PhantomInventory;
 import net.minecraft.core.NonNullList;
@@ -31,7 +32,7 @@ import java.util.Optional;
 
 import net.minecraft.world.item.Item.Properties;
 
-public class SolarGodPickaxe extends PickaxeItem implements ITagUser {
+public class SolarGodPickaxe extends RareSolarcraftPickaxe implements ITagUser {
     public SolarGodPickaxe(Tier p_i48478_1_, int p_i48478_2_, float p_i48478_3_, Properties p_i48478_4_) {
         super(p_i48478_1_, p_i48478_2_, p_i48478_3_, p_i48478_4_);
     }
