@@ -15,10 +15,7 @@ import com.finderfeed.solarforge.magic_items.items.primitive.RareSolarcraftShove
 import com.finderfeed.solarforge.magic_items.items.small_items.*;
 import com.finderfeed.solarforge.magic_items.items.solar_disc_gun.SolarDiscGunItem;
 import com.finderfeed.solarforge.magic_items.items.vein_miner.IllidiumPickaxe;
-import com.finderfeed.solarforge.misc_things.ColdStarPieceItem;
-import com.finderfeed.solarforge.misc_things.SolarDustItem;
-import com.finderfeed.solarforge.misc_things.SolarcraftDebugStick;
-import com.finderfeed.solarforge.misc_things.VoidBlockWand;
+import com.finderfeed.solarforge.misc_things.*;
 import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.SolarLexicon;
 import net.minecraft.ChatFormatting;
@@ -151,12 +148,12 @@ public class ItemsRegister {
     public static final RegistryObject<Item> CRYSTALLITE_CORE = ITEMS.register("crystallite_core",()->new RareSolarcraftItem(new Item.Properties().tab(SolarForge.SOLAR_GROUP_MATERIALS)));
 
 
-    public static final RegistryObject<Item> SOLAR_RUNE_ZETA = ITEMS.register("solar_rune_zeta",()->new Item(new Item.Properties().tab(SolarForge.SOLAR_GROUP_MATERIALS)));
-    public static final RegistryObject<Item> SOLAR_RUNE_ARDO = ITEMS.register("solar_rune_ardo",()->new Item(new Item.Properties().tab(SolarForge.SOLAR_GROUP_MATERIALS)));
-    public static final RegistryObject<Item> SOLAR_RUNE_URBA = ITEMS.register("solar_rune_urba",()->new Item(new Item.Properties().tab(SolarForge.SOLAR_GROUP_MATERIALS)));
-    public static final RegistryObject<Item> SOLAR_RUNE_KELDA = ITEMS.register("solar_rune_kelda",()->new Item(new Item.Properties().tab(SolarForge.SOLAR_GROUP_MATERIALS)));
-    public static final RegistryObject<Item> SOLAR_RUNE_FIRA = ITEMS.register("solar_rune_fira",()->new Item(new Item.Properties().tab(SolarForge.SOLAR_GROUP_MATERIALS)));
-    public static final RegistryObject<Item> SOLAR_RUNE_TERA = ITEMS.register("solar_rune_tera",()->new Item(new Item.Properties().tab(SolarForge.SOLAR_GROUP_MATERIALS)));
+    public static final RegistryObject<Item> SOLAR_RUNE_ZETA = ITEMS.register("solar_rune_zeta",()->new RuneItem(new Item.Properties().tab(SolarForge.SOLAR_GROUP_MATERIALS), RunicEnergy.Type.ZETA));
+    public static final RegistryObject<Item> SOLAR_RUNE_ARDO = ITEMS.register("solar_rune_ardo",()->new RuneItem(new Item.Properties().tab(SolarForge.SOLAR_GROUP_MATERIALS), RunicEnergy.Type.ARDO));
+    public static final RegistryObject<Item> SOLAR_RUNE_URBA = ITEMS.register("solar_rune_urba",()->new RuneItem(new Item.Properties().tab(SolarForge.SOLAR_GROUP_MATERIALS), RunicEnergy.Type.URBA));
+    public static final RegistryObject<Item> SOLAR_RUNE_KELDA = ITEMS.register("solar_rune_kelda",()->new RuneItem(new Item.Properties().tab(SolarForge.SOLAR_GROUP_MATERIALS), RunicEnergy.Type.KELDA));
+    public static final RegistryObject<Item> SOLAR_RUNE_FIRA = ITEMS.register("solar_rune_fira",()->new RuneItem(new Item.Properties().tab(SolarForge.SOLAR_GROUP_MATERIALS), RunicEnergy.Type.FIRA));
+    public static final RegistryObject<Item> SOLAR_RUNE_TERA = ITEMS.register("solar_rune_tera",()->new RuneItem(new Item.Properties().tab(SolarForge.SOLAR_GROUP_MATERIALS), RunicEnergy.Type.TERA));
 
 
     public static final RegistryObject<Item> SOLAR_GOD_BOW = ITEMS.register("solar_god_bow",()->new SolarGodBow(new Item.Properties().tab(SolarForge.SOLAR_GROUP_WEAPONS).stacksTo(1).durability(8000)));

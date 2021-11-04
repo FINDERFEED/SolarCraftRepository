@@ -4,6 +4,7 @@ import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.SolarCraftTags;
 import com.finderfeed.solarforge.config.SolarcraftConfig;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.runic_energy.RunicEnergyGiver;
+import com.finderfeed.solarforge.magic_items.blocks.primitive.InscriptionStone;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Progression;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.ProgressionHelper;
 import com.finderfeed.solarforge.misc_things.*;
@@ -130,14 +131,46 @@ public class RuneEnergyPylonTile extends BlockEntity implements  DebugTarget, Ru
                 tile.type = RunicEnergy.Type.values()[tile.level.random.nextInt(RunicEnergy.Type.values().length)];
             }
         if (isStructCorrect(tile)) {
-
-            if (tile.currentEnergy + tile.energyPerTick + SolarcraftConfig.RUNIC_ENERGY_PER_TICK_PYLON.get().floatValue() <= tile.maxEnergy) {
-                tile.currentEnergy += tile.energyPerTick + SolarcraftConfig.RUNIC_ENERGY_PER_TICK_PYLON.get().floatValue();
+            float bonus = getPerTickEnergyBonus(tile);
+            if (bonus+tile.currentEnergy  + SolarcraftConfig.RUNIC_ENERGY_PER_TICK_PYLON.get().floatValue() <= tile.maxEnergy) {
+                tile.currentEnergy += tile.energyPerTick + SolarcraftConfig.RUNIC_ENERGY_PER_TICK_PYLON.get().floatValue() +bonus;
             } else {
                 tile.currentEnergy = tile.maxEnergy;
             }
         }
     }
+
+    public static float getPerTickEnergyBonus(RuneEnergyPylonTile tile){
+        BlockState state = tile.level.getBlockState(tile.worldPosition.below(6).north(2));
+        BlockState state1 = tile.level.getBlockState(tile.worldPosition.below(6).north(-2));
+        BlockState state2 = tile.level.getBlockState(tile.worldPosition.below(6).west(-2));
+        BlockState state3 = tile.level.getBlockState(tile.worldPosition.below(6).west(2));
+        float r = 0;
+        float d = SolarcraftConfig.RUNIC_ENERGY_PER_TICK_UPGRADE.get().floatValue();
+        if (validState(state,tile)){
+            r+=d;
+        }
+        if (validState(state1,tile)){
+            r+=d;
+        }
+        if (validState(state2,tile)){
+            r+=d;
+        }
+        if (validState(state3,tile)){
+            r+=d;
+        }
+        return r;
+    }
+
+    private static boolean validState(BlockState state,RuneEnergyPylonTile tile){
+        if (state.hasProperty(InscriptionStone.PROP)){
+            return state.getValue(InscriptionStone.PROP) == tile.getEnergyType();
+        }else {
+            return false;
+        }
+    }
+
+
 
     public static boolean isStructCorrect(RuneEnergyPylonTile tile){
         return Helpers.checkStructure(tile.level,tile.worldPosition.below(8).north(2).west(2), Multiblocks.RUNIC_ENERGY_PYLON.getM(), true);

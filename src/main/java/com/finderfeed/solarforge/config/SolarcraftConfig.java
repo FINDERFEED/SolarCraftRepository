@@ -27,6 +27,7 @@ public final class SolarcraftConfig {
     public static final ForgeConfigSpec.ConfigValue<Integer> BLESSED_CHANCE;
     public static final ForgeConfigSpec.ConfigValue<Integer> DISARM_CHANCE_MODULE;
     public static final ForgeConfigSpec.ConfigValue<Double> RUNIC_ENERGY_PER_TICK_PYLON;
+    public static final ForgeConfigSpec.ConfigValue<Double> RUNIC_ENERGY_PER_TICK_UPGRADE;
     public static final ForgeConfigSpec.ConfigValue<List<String>> ISLAND_ORES;
     static {
         BUILDER.push("SolarCraft config");
@@ -42,6 +43,7 @@ public final class SolarcraftConfig {
         BLESSED_CHANCE = BUILDER.comment("The chance to restore durability with blessed module").define("chance",5);
         DISARM_CHANCE_MODULE = BUILDER.comment("Chance to disarm an entity when having the disarm module on armor").define("chance",10);
         RUNIC_ENERGY_PER_TICK_PYLON = BUILDER.comment("Base runic energy pylon energy generation").define("per tick",0.5d);
+        RUNIC_ENERGY_PER_TICK_UPGRADE = BUILDER.comment("Runic energy regen increment per each inscripted stone").define("per tick upgrade",0.05d);
 
         List<String> DEFAULT_BLOCKS = new ArrayList<>();
         DEFAULT_BLOCKS.addAll(List.of("minecraft:diamond_ore","minecraft:iron_ore","minecraft:gold_ore","minecraft:lapis_ore"));
