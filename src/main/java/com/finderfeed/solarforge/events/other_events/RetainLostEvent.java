@@ -72,7 +72,12 @@ public class RetainLostEvent {
             playernew.getPersistentData().putBoolean("solar_forge_can_player_use_alchemist", peorig.getPersistentData().getBoolean("solar_forge_can_player_use_alchemist"));
             RunicEnergy.handleCloneEvent(event);
         }
-        for (RunicEnergy.Type type : RunicEnergy.Type.values()) {
+
+
+        for (RunicEnergy.Type type : RunicEnergy.Type.getAll()) {
+            if (RunicEnergy.hasFoundType(peorig,type)) {
+                RunicEnergy.setFound(playernew, type);
+            }
             Helpers.updateRunicEnergyOnClient(type, RunicEnergy.getEnergy(peorig, type), peorig);
         }
         playernew.getPersistentData().putString("solar_forge_ability_binded_1", peorig.getPersistentData().getString("solar_forge_ability_binded_1"));

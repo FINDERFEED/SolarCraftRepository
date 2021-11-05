@@ -2,7 +2,9 @@ package com.finderfeed.solarforge.packet_handler.packets;
 
 import com.finderfeed.solarforge.ClientHelpers;
 import com.finderfeed.solarforge.client.toasts.SolarAchievementToast;
+import com.finderfeed.solarforge.client.toasts.UnlockedEnergyTypeToast;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.achievement_tree.AchievementTree;
+import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import com.finderfeed.solarforge.registries.sounds.Sounds;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
@@ -12,27 +14,21 @@ import net.minecraftforge.fmllegacy.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
-public class TriggerToastPacket {
+public class TriggerEnergyTypeToast {
+    public final String id;
 
-    public final int id;
-
-    public TriggerToastPacket(FriendlyByteBuf buf){
-        this.id = buf.readInt();
+    public TriggerEnergyTypeToast(FriendlyByteBuf buf){
+        this.id = buf.readUtf();
     }
-    public TriggerToastPacket(int id){
+    public TriggerEnergyTypeToast(String id){
         this.id = id;
     }
     public void toBytes(FriendlyByteBuf buf){
-        buf.writeInt(id);
+        buf.writeUtf(id);
     }
     public void handle(Supplier<NetworkEvent.Context> ctx){
         ctx.get().enqueueWork(()->{
-            DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> ()-> {
-                AchievementTree tree = AchievementTree.loadTree();
-                ClientHelpers.playSound(Sounds.PROGRESSION_GAIN.get(),1,1);
-                SolarAchievementToast.addOrUpdate(Minecraft.getInstance().getToasts(), tree.getAchievementById(id));
-            });
-
+            ClientHelpers.addEnergyTypeToast(id);
         });
         ctx.get().setPacketHandled(true);
     }

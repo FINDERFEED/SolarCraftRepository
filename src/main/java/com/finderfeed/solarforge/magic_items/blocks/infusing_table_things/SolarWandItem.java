@@ -9,6 +9,7 @@ import com.finderfeed.solarforge.misc_things.*;
 import com.finderfeed.solarforge.recipe_types.InfusingRecipe;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiComponent;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.TooltipFlag;
 
 import net.minecraft.world.entity.LivingEntity;
@@ -111,13 +112,26 @@ public class SolarWandItem extends Item implements ManaConsumer {
         ClipContext ctx = new ClipContext(from,to, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE,null);
         BlockHitResult res = world.clip(ctx);
 
-        if (world.getBlockEntity(res.getBlockPos()) instanceof RuneEnergyPylonTile){
+        if (world.getBlockEntity(res.getBlockPos()) instanceof RuneEnergyPylonTile tile){
             if (!world.isClientSide){
-                RuneEnergyPylonTile tile = (RuneEnergyPylonTile) world.getBlockEntity(res.getBlockPos());
                 tile.givePlayerEnergy(player,5);
-                player.displayClientMessage(new TextComponent(tile.getEnergyType().id.toUpperCase()+" "+RunicEnergy.getEnergy(player,tile.getEnergyType())).withStyle(ChatFormatting.GOLD),true);
-                Helpers.updateRunicEnergyOnClient(tile.getEnergyType(),RunicEnergy.getEnergy(player,tile.getEnergyType()),player);
+                RunicEnergy.Type type = tile.getEnergyType();
+                player.displayClientMessage(new TextComponent(type.id.toUpperCase()+" "+RunicEnergy.getEnergy(player,tile.getEnergyType())).withStyle(ChatFormatting.GOLD),true);
+                Helpers.updateRunicEnergyOnClient(type,RunicEnergy.getEnergy(player,type),player);
                 Helpers.fireProgressionEvent(player, Progression.RUNE_ENERGY_CLAIM);
+                if (!RunicEnergy.hasFoundType(player,type)) {
+                    Helpers.sendEnergyTypeToast((ServerPlayer) player, type);
+                    RunicEnergy.setFound(player,type);
+                }
+                if (!Helpers.hasPlayerUnlocked(Progression.ALL_ENERGY_TYPES,player)){
+                    boolean f = true;
+                    for (RunicEnergy.Type t : RunicEnergy.Type.getAll()){
+                        f = RunicEnergy.hasFoundType(player,t);
+                    }
+                    if (f){
+                        Helpers.fireProgressionEvent(player,Progression.ALL_ENERGY_TYPES);
+                    }
+                }
             }else{
                 Vec3 pos = new Vec3(res.getBlockPos().getX()+0.5,res.getBlockPos().getY()+0.5,res.getBlockPos().getZ()+0.5);
                 Vec3 vel = new Vec3(from.x-pos.x,from.y-pos.y,from.z-pos.z);

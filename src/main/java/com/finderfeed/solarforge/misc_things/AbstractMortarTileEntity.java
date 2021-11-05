@@ -36,7 +36,8 @@ public abstract class AbstractMortarTileEntity extends BlockEntity  {
             if (tile.attackTick >= tile.getAttackInterval() ) {
                 if (tile.getConditionToFunction()){
                     AABB box = new AABB(-tile.getAttackRadius(), -20, -tile.getAttackRadius(), tile.getAttackRadius(), 0, tile.getAttackRadius()).move(tile.worldPosition);
-                    List<LivingEntity> list = tile.level.getEntitiesOfClass(LivingEntity.class, box, (entity) -> (entity instanceof Monster));
+                    List<LivingEntity> list = tile.level.getEntitiesOfClass(LivingEntity.class, box,
+                            (entity) -> (entity instanceof Monster && world.canSeeSky(entity.blockPosition().above(3))));
                     if (!list.isEmpty()) {
                         LivingEntity attackThis = list.get(tile.level.random.nextInt(list.size()));
                         Vec3 position = attackThis.position();

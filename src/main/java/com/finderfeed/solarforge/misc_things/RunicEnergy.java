@@ -72,6 +72,15 @@ public class RunicEnergy {
 
     }
 
+    public static boolean hasFoundType(Player player,Type type){
+        return player.getPersistentData().getBoolean(type.id+"_is_unlocked");
+    }
+
+    public static void setFound(Player pl,Type type){
+        pl.getPersistentData().putBoolean(type.id+"_is_unlocked",true);
+    }
+
+
     public enum Type{
         ZETA("zeta"),
         ARDO("ardo"),
@@ -89,6 +98,9 @@ public class RunicEnergy {
             this.id = id;
         }
 
+        public static Type[] getAll(){
+            return new Type[]{ZETA,KELDA,URBA,TERA,FIRA,ARDO};
+        }
 
         public static Type byId(String id){
             for (Type type : values()){

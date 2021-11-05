@@ -472,6 +472,10 @@ public class Helpers {
         return toreturn;
     }
 
+    public static void sendEnergyTypeToast(ServerPlayer player,RunicEnergy.Type type){
+        SolarForgePacketHandler.INSTANCE.sendTo(new TriggerEnergyTypeToast(type.id),player.connection.connection,NetworkDirection.PLAY_TO_CLIENT);
+    }
+
     private static List<BlockPos> findNormalBlockPositionsOnPlane(Level world,int radius,BlockPos mainpos){
         List<BlockPos> toReturn = new ArrayList<>();
         for (int i = -radius; i <= radius;i++){

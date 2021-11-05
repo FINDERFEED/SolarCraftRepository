@@ -29,6 +29,8 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.boss.enderdragon.EnderDragon;
+import net.minecraft.world.entity.boss.wither.WitherBoss;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.entity.Entity;
@@ -46,11 +48,13 @@ import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.player.PlayerXpEvent;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import org.apache.logging.log4j.core.tools.picocli.CommandLine;
 
 import java.util.List;
 
@@ -74,6 +78,7 @@ public class EventHandler {
             long actualtime = world.getDayTime()%24000;
             if (world.isClientSide && !Helpers.isDay(world)) {
                 if ((world.dimension() == RADIANT_LAND_KEY)) {
+
                     if ((actualtime % 13000 == 0)) {
                         player.sendMessage(new TranslatableComponent("radiant_dimension.nightfall").withStyle(ChatFormatting.RED), player.getUUID());
                         ClientHelpers.playsoundInEars(Sounds.NIGHT_DIM.get(), 1, 1);
@@ -89,6 +94,7 @@ public class EventHandler {
             }
 
             if (!world.isClientSide && !player.isCreative()) {
+
                 if ((world.getGameTime() % 20 == 1) && !(actualtime % 24000 <= 13000) && (world.dimension() == RADIANT_LAND_KEY)) {
                     if (!Helpers.playerInBossfight(player)) {
                         player.addEffect(new MobEffectInstance(EffectsRegister.STAR_GAZE_EFFECT.get(), 400, 0));
@@ -105,6 +111,11 @@ public class EventHandler {
 
 
             if (!world.isClientSide && (world.getGameTime() % 20 == 1)) {
+                if (world.dimension() == Level.END){
+                    Helpers.fireProgressionEvent(player,Progression.ENTER_END);
+                }
+
+
                 AttributeInstance attr = player.getAttribute(ForgeMod.REACH_DISTANCE.get());
                 if (attr != null) {
                     if (FinderfeedMathHelper.PlayerThings.doPlayerHasItem(player.getInventory(), ItemsRegister.REACH_GLOVES.get())) {
@@ -253,6 +264,25 @@ public class EventHandler {
             if (attr != null){
                 double res = 1-attr.getValue()/100;
                 event.setAmount((float)(event.getAmount()*res));
+            }
+        }
+    }
+
+
+    @SubscribeEvent
+    public static void killEvent(LivingDeathEvent event){
+        DamageSource src = event.getSource();
+        Entity killer = src.getEntity();
+        LivingEntity deadEntity = event.getEntityLiving();
+        Level world = event.getEntityLiving().level;
+        if (!world.isClientSide && killer != null){
+            if (killer instanceof  Player pl){
+                if (deadEntity instanceof WitherBoss){
+                    Helpers.fireProgressionEvent(pl,Progression.KILL_WITHER);
+                }
+                if (deadEntity instanceof EnderDragon){
+                    Helpers.fireProgressionEvent(pl,Progression.KILL_DRAGON);
+                }
             }
         }
     }

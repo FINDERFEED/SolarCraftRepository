@@ -1,6 +1,7 @@
 package com.finderfeed.solarforge;
 
 import com.finderfeed.solarforge.SolarAbilities.screens.AbilityBuyScreen;
+import com.finderfeed.solarforge.client.toasts.UnlockedEnergyTypeToast;
 import com.finderfeed.solarforge.events.RenderEventsHandler;
 import com.finderfeed.solarforge.for_future_library.helpers.FinderfeedMathHelper;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.RayTrapTileEntity;
@@ -52,6 +53,10 @@ public class ClientHelpers {
         RunicEnergy.setEnergy(getClientPlayer(),amount,type);
     }
 
+    public static void addEnergyTypeToast(String id){
+        playSound(Sounds.PROGRESSION_GAIN.get(),1,1);
+        UnlockedEnergyTypeToast.addOrUpdate(Minecraft.getInstance().getToasts(), RunicEnergy.Type.byId(id));
+    }
 
 
     public static void handleSolarWandParticles(Vec3 pos,Vec3 vel){

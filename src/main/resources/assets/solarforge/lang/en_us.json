@@ -526,5 +526,7 @@
   "solar_category.radiant_land": "Radiant Land",
   "blockstate_solarforge.properties": "BlockState properties:",
   "defence_crystal.lore": "One of the main defensive structures that ancestors would have used if they didn't die during first night. Those who left alive have added a defensive field that protects from cursing gaze but still weren't able to survive due to food shortage.",
-  "block.solarforge.inscription_stone": "Inscription stone"
+
+  "block.solarforge.inscription_stone": "Inscription stone",
+  "solarcraft.energy_type_unlocked": "New energy type"
 }

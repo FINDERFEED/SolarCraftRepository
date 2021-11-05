@@ -75,7 +75,7 @@ public class ShieldOfSolarGod extends RareSolarcraftShieldItem {
                     ent.push(velocity.x*4,velocity.y*4,velocity.z*4);
                 }
 
-                ent.hurt(DamageSource.MAGIC, damage);
+                ent.hurt(DamageSource.mobAttack(player).bypassArmor().setMagic(), damage);
                 ent.setSecondsOnFire(5);
                 ((ServerLevel)world).sendParticles(ParticleTypes.FLAME,ent.getX(),ent.getY()+0.5f,ent.getZ(),20,0,0.02,0,0.1);
 

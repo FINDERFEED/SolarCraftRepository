@@ -59,6 +59,7 @@ public class SolarForgePacketHandler {
         INSTANCE.registerMessage(nextID(), OpenAbilityScreenPacket.class, OpenAbilityScreenPacket::toBytes, OpenAbilityScreenPacket::new, OpenAbilityScreenPacket::handle);
         INSTANCE.registerMessage(nextID(), TakeEnergyFromForgePacket.class, TakeEnergyFromForgePacket::toBytes, TakeEnergyFromForgePacket::new, TakeEnergyFromForgePacket::handle);
         INSTANCE.registerMessage(nextID(), SetSpeedPacket.class, SetSpeedPacket::toBytes, SetSpeedPacket::new, SetSpeedPacket::handle);
+        INSTANCE.registerMessage(nextID(), TriggerEnergyTypeToast.class, TriggerEnergyTypeToast::toBytes, TriggerEnergyTypeToast::new, TriggerEnergyTypeToast::handle);
     }
 //            INSTANCE.registerMessage(nextID(), .class, ::toBytes, ::new, ::handle);
     //RepeaterParentUpdateOnClient
