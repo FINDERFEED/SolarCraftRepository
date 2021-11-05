@@ -43,7 +43,7 @@ public class SolarLexiconScreen extends Screen implements IScrollable {
     public final AchievementTree tree = AchievementTree.loadTree();
     public Component currAch;
     public Progression currentProgression = null;
-
+    private List<Runnable> postLinesRender = new ArrayList<>();
 
 
 //    public List<Achievement> firstTier;
@@ -234,9 +234,9 @@ public class SolarLexiconScreen extends Screen implements IScrollable {
             for (Progression b : tree.getAchievementRequirements(a)){
                 Point second = new Point(relX+scrollX+18+map.get(b.getAchievementTier()).indexOf(b)*35,relY+scrollY+18+(b.getAchievementTier()-1)*30);
                 if (currentProgression != null && (currentProgression == b || currentProgression == a) ) {
-
-                    drawLine(matrices, first.x, first.y, second.x, second.y,255,255,255);
-
+                    postLinesRender.add(()->{
+                        drawLine(matrices, first.x, first.y, second.x, second.y,255,255,255);
+                    });
                 }
                 else {
                     drawLine(matrices, first.x, first.y, second.x, second.y,127,127,127);
@@ -247,6 +247,9 @@ public class SolarLexiconScreen extends Screen implements IScrollable {
 //            blit(matrices,first.x-8,first.y-8,0,0,16,16,16,16);
 
         }
+
+        postLinesRender.forEach(Runnable::run);
+        postLinesRender.clear();
         for (Progression a : tree.ACHIEVEMENT_TREE.keySet()) {
             Point first = new Point(relX+scrollX+18+map.get(a.getAchievementTier()).indexOf(a)*35,relY+scrollY+18+(a.getAchievementTier()-1)*30);
             blit(matrices,first.x-8,first.y-8,0,0,16,16,16,16);
