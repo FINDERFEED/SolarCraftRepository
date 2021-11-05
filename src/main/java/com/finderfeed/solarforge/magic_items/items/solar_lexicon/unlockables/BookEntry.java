@@ -13,15 +13,15 @@ import java.util.List;
 public enum BookEntry {
     BEGINNING_INFO(tx("solar_category.beginning"),point(20,40),null,null),
     SOLAR_FORGE_BASICS(tx("solar_category.solar_forge"),point(210,40), Progression.ENTER_NETHER,null),
-    ARMOR(tx("solar_category.armor"),point(20,80), Progression.CRAFT_SOLAR_INFUSER,null),
-    STRUCTURES(tx("solar_category.structures"),point(20,700), Progression.CRAFT_SOLAR_INFUSER,null),
+    ARMOR(tx("solar_category.armor"),point(20,80), Progression.SOLAR_INFUSER,null),
+    STRUCTURES(tx("solar_category.structures"),point(20,700), Progression.SOLAR_INFUSER,null),
 
-    BEGINNER(tx("solar_category.beginner"),point(20,220), Progression.CRAFT_SOLAR_INFUSER,null),
-    BEGINNER_ITEMS(tx("solar_category.beginner_items"),point(180,260), Progression.CRAFT_SOLAR_INFUSER,BEGINNER),
+    BEGINNER(tx("solar_category.beginner"),point(20,220), Progression.SOLAR_INFUSER,null),
+    BEGINNER_ITEMS(tx("solar_category.beginner_items"),point(180,260), Progression.SOLAR_INFUSER,BEGINNER),
 
-    SKILLED(tx("solar_category.skilled"),point(20,400), Progression.ACQUIRE_COLD_STAR_ACTIVATED,null),
-    SKILLED_ITEMS(tx("solar_category.skilled_items"),point(180,260), Progression.ACQUIRE_COLD_STAR_ACTIVATED,SKILLED),
-    SKILLED_MATERIALS(tx("solar_category.skilled_materials"),point(180,260), Progression.ACQUIRE_COLD_STAR_ACTIVATED,SKILLED),
+    SKILLED(tx("solar_category.skilled"),point(20,400), Progression.IMBUED_COLD_STAR,null),
+    SKILLED_ITEMS(tx("solar_category.skilled_items"),point(180,260), Progression.IMBUED_COLD_STAR,SKILLED),
+    SKILLED_MATERIALS(tx("solar_category.skilled_materials"),point(180,260), Progression.IMBUED_COLD_STAR,SKILLED),
 
     MASTER(tx("solar_category.master"),point(20,560), Progression.CRAFT_SOLAR_LENS,null),
     MASTER_ITEMS(tx("solar_category.master_items"),point(180,260), Progression.CRAFT_SOLAR_ENERGY_GENERATOR,MASTER),

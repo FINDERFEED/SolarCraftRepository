@@ -18,7 +18,7 @@ public class InfusingTableBlockItem extends BlockItem {
     @Override
     public void onCraftedBy(ItemStack stack, Level world, Player pe) {
         if (!world.isClientSide){
-            Helpers.fireProgressionEvent(pe, Progression.CRAFT_SOLAR_INFUSER);
+            Helpers.fireProgressionEvent(pe, Progression.SOLAR_INFUSER);
         }
         super.onCraftedBy(stack,world,pe);
     }

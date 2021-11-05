@@ -4,18 +4,14 @@ import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.misc_things.Multiblock;
 import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Progression;
-import com.finderfeed.solarforge.registries.items.ItemsRegister;
 import net.minecraft.core.Direction;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.StairBlock;
-import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.Half;
 import net.minecraft.world.level.block.state.properties.StairsShape;
 
 import java.util.Map;
-import java.util.Properties;
 
 public enum Multiblocks {
     SOLAR_CORE(new Multiblock(new Multiblock.Constructor()
@@ -39,7 +35,7 @@ public enum Multiblocks {
             .addBlock(BlocksRegistry.AURA_HEALER_BLOCK.get().defaultBlockState(), 'H')
             .addStruct(Structures.AURA_HEALER_STRUCTURE)
             .addMainBlock(BlocksRegistry.AURA_HEALER_BLOCK.get().defaultBlockState())
-            .addAchievement(Progression.USE_SOLAR_INFUSER)
+            .addAchievement(Progression.SOLAR_INFUSER)
             .setStructName("solarforge.aura_healer_structure")
         )),
     SOLAR_MORTAR(new Multiblock(new Multiblock.Constructor()
@@ -80,7 +76,7 @@ public enum Multiblocks {
             .addBlock(BlocksRegistry.SOLAR_POOL.get().defaultBlockState(),'F')
             .addMainBlock(SolarForge.SOLAR_INFUSER.get().defaultBlockState())
             .addStruct(Structures.INFUSER_STRUCTURE)
-            .addAchievement(Progression.CRAFT_SOLAR_INFUSER)
+            .addAchievement(Progression.SOLAR_INFUSER)
             .setStructName("solarforge_struct.solar_infuser")
     )),
     RADIANT_LAND_PORTAL(new Multiblock(new Multiblock.Constructor()
@@ -151,7 +147,7 @@ public enum Multiblocks {
             .addMainBlock(BlocksRegistry.RUNE_ENERGY_PYLON.get().defaultBlockState())
             .addStruct(Structures.PYLON)
             .setStructName("structure.energy_pylon")
-            .addAchievement(Progression.RUNE_ENERGY_DEPOSIT)
+            .addAchievement(Progression.RUNE_ENERGY_PYLON)
 
     ))
     ;

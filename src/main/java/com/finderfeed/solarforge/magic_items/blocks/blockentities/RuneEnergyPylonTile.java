@@ -190,7 +190,7 @@ public class RuneEnergyPylonTile extends BlockEntity implements  DebugTarget, Ru
     public static void doProgression(RuneEnergyPylonTile tile){
         AABB box = new AABB(tile.worldPosition.offset(-2,-2,-2),tile.worldPosition.offset(2,2,2));
         tile.level.getEntitiesOfClass(Player.class,box).forEach((player)->{
-            Helpers.fireProgressionEvent(player, Progression.RUNE_ENERGY_DEPOSIT);
+            Helpers.fireProgressionEvent(player, Progression.RUNE_ENERGY_PYLON);
         });
     }
 

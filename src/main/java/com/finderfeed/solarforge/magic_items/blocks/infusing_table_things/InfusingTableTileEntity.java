@@ -301,7 +301,7 @@ public class InfusingTableTileEntity extends AbstractRunicEnergyContainerRCBE im
             if (recipe.isPresent() && ProgressionHelper.doPlayerHasFragment(playerEntity, AncientFragment.getFragmentByID(recipe.get().child))) {
 
                 if (!RECIPE_IN_PROGRESS) {
-                    Helpers.fireProgressionEvent(playerEntity, Progression.USE_SOLAR_INFUSER);
+                    Helpers.fireProgressionEvent(playerEntity, Progression.SOLAR_INFUSER);
                     this.INFUSING_TIME = recipe.get().infusingTime;
                     this.RECIPE_IN_PROGRESS = true;
                     this.level.playSound(null, this.worldPosition, SoundEvents.BEACON_ACTIVATE, SoundSource.AMBIENT, 2, 1);

@@ -17,63 +17,75 @@ public class AchievementTree {
 
     public static AchievementTree loadTree(){
         AchievementTree tree = new AchievementTree();
-//        tree.addGeneralAchievement(Achievements.CRAFT_SOLAR_FORGE);
-//        tree.addGeneralAchievement(Achievements.CRAFT_SOLAR_INFUSER);
-//        tree.addGeneralAchievement(Achievements.FIND_SOLAR_STONE);
-//        tree.addGeneralAchievement(Achievements.USE_SOLAR_INFUSER);
-//        tree.addGeneralAchievement(Achievements.ACQUIRE_SOLAR_DUST);
-
         for (Progression a : Progression.allProgressions){
             tree.addGeneralAchievement(a);
         }
+        tree.addAchievementRequirements(Progression.ENTER_END,Progression.ENTER_NETHER);
+        tree.addAchievementRequirements(Progression.KILL_WITHER,Progression.ENTER_NETHER);
+        tree.addAchievementRequirements(Progression.ACQUIRE_COLD_STAR,Progression.FIND_KEY_LOCK_DUNGEON,Progression.FIND_KEY_SOURCE);
+        tree.addAchievementRequirements(Progression.RUNE_ENERGY_CLAIM,Progression.RUNE_ENERGY_PYLON);
+        tree.addAchievementRequirements(Progression.SOLAR_RUNE,Progression.RUNE_ENERGY_PYLON);
+        tree.addAchievementRequirements(Progression.KILL_DRAGON,Progression.ENTER_END);
+        tree.addAchievementRequirements(Progression.IMBUED_COLD_STAR,Progression.KILL_WITHER,Progression.ACQUIRE_COLD_STAR,Progression.FIND_INFUSER_DUNGEON);
+        tree.addAchievementRequirements(Progression.PYLON_INSCRIPTION,Progression.SOLAR_RUNE);
+        tree.addAchievementRequirements(Progression.ALL_ENERGY_TYPES,Progression.RUNE_ENERGY_CLAIM,Progression.SOLAR_RUNE);
+        tree.addAchievementRequirements(Progression.CRAFT_SOLAR_FORGE,Progression.RUNE_ENERGY_CLAIM,Progression.KILL_DRAGON);
+        tree.addAchievementRequirements(Progression.TRANSMUTE_GEM,Progression.FIND_INCINERATED_FOREST,Progression.IMBUED_COLD_STAR,Progression.TRADE_FOR_BLUE_GEM);
+        tree.addAchievementRequirements(Progression.SOLAR_INFUSER,Progression.CRAFT_SOLAR_FORGE);
+        tree.addAchievementRequirements(Progression.DIMENSIONAL_SHARD_DUNGEON,Progression.TRANSMUTE_GEM);
+        tree.addAchievementRequirements(Progression.CRAFT_SOLAR_LENS,Progression.IMBUED_COLD_STAR,Progression.SOLAR_INFUSER);
+        tree.addAchievementRequirements(Progression.RUNIC_ENERGY_REPEATER,Progression.SOLAR_INFUSER,Progression.ALL_ENERGY_TYPES,Progression.RUNE_ENERGY_PYLON);
+        tree.addAchievementRequirements(Progression.CRAFT_SOLAR_ENERGY_GENERATOR,Progression.CRAFT_SOLAR_LENS,Progression.RUNIC_ENERGY_REPEATER);
+        tree.addAchievementRequirements(Progression.RADIANT_LAND,Progression.DIMENSIONAL_SHARD_DUNGEON,Progression.TRADE_FOR_BLUE_GEM,Progression.CRAFT_SOLAR_ENERGY_GENERATOR);
+        tree.addAchievementRequirements(Progression.KILL_CRYSTAL_BOSS,Progression.RADIANT_LAND);
 
-
-        List<Progression> list = new ArrayList<>(0);
-//        list.add(Progression.FIND_SOLAR_STONE);
-//        tree.addAchievementRequirements(Progression.CRAFT_SOLAR_INFUSER,list);
-
-
-        list.add(Progression.ACQUIRE_SOLAR_DUST);
-        list.add(Progression.CRAFT_SOLAR_INFUSER);
-        tree.addAchievementRequirements(Progression.USE_SOLAR_INFUSER,list);
-
-
-        list.add(Progression.CRAFT_SOLAR_FORGE);
-        tree.addAchievementRequirements(Progression.ACQUIRE_SOLAR_DUST,list);
-
-        list.add(Progression.FIND_KEY_SOURCE);
-        list.add(Progression.FIND_INFUSER_DUNGEON);
-        list.add(Progression.FIND_KEY_LOCK_DUNGEON);
-        tree.addAchievementRequirements(Progression.ACQUIRE_COLD_STAR,list);
-
-        list.add(Progression.ACQUIRE_COLD_STAR);
-        list.add(Progression.FIND_INFUSER_DUNGEON);
-        tree.addAchievementRequirements(Progression.ACQUIRE_COLD_STAR_ACTIVATED,list);
-
-        list.add(Progression.ACQUIRE_COLD_STAR_ACTIVATED);
-        list.add(Progression.USE_SOLAR_INFUSER);
-        tree.addAchievementRequirements(Progression.CRAFT_SOLAR_LENS,list);
-
-        list.add(Progression.CRAFT_SOLAR_LENS);
-        list.add(Progression.TRANSMUTE_GEM);
-        list.add(Progression.RUNIC_ENERGY_REPEATER);
-        tree.addAchievementRequirements(Progression.CRAFT_SOLAR_ENERGY_GENERATOR,list);
-
-        list.add(Progression.FIND_INCINERATED_FOREST);
-        list.add(Progression.TRADE_FOR_BLUE_GEM);
-        tree.addAchievementRequirements(Progression.TRANSMUTE_GEM,list);
-
-
-        list.add(Progression.TRANSMUTE_GEM);
-        tree.addAchievementRequirements(Progression.DIMENSIONAL_SHARD_DUNGEON,list);
-
-        tree.addAchievementRequirements(Progression.CRAFT_SOLAR_FORGE, Progression.ENTER_NETHER);
-//        tree.addAchievementRequirements(Progression.FIND_SOLAR_STONE, Progression.ENTER_NETHER);
-        tree.addAchievementRequirements(Progression.RUNE_ENERGY_CLAIM, Progression.RUNE_ENERGY_DEPOSIT);
-        tree.addAchievementRequirements(Progression.SOLAR_RUNE, Progression.RUNE_ENERGY_DEPOSIT);
-        tree.addAchievementRequirements(Progression.RUNIC_ENERGY_REPEATER, Progression.RUNE_ENERGY_DEPOSIT, Progression.USE_SOLAR_INFUSER, Progression.ACQUIRE_COLD_STAR_ACTIVATED);
-        tree.addAchievementRequirements(Progression.DIMENSION_CORE, Progression.CRAFT_SOLAR_ENERGY_GENERATOR, Progression.DIMENSIONAL_SHARD_DUNGEON);
-        tree.addAchievementRequirements(Progression.KILL_CRYSTAL_BOSS, Progression.DIMENSION_CORE);
+//
+//        List<Progression> list = new ArrayList<>(0);
+////        list.add(Progression.FIND_SOLAR_STONE);
+////        tree.addAchievementRequirements(Progression.CRAFT_SOLAR_INFUSER,list);
+//
+//
+//        list.add(Progression.ACQUIRE_SOLAR_DUST);
+//        list.add(Progression.CRAFT_SOLAR_INFUSER);
+//        tree.addAchievementRequirements(Progression.USE_SOLAR_INFUSER,list);
+//
+//
+//        list.add(Progression.CRAFT_SOLAR_FORGE);
+//        tree.addAchievementRequirements(Progression.ACQUIRE_SOLAR_DUST,list);
+//
+//        list.add(Progression.FIND_KEY_SOURCE);
+//        list.add(Progression.FIND_INFUSER_DUNGEON);
+//        list.add(Progression.FIND_KEY_LOCK_DUNGEON);
+//        tree.addAchievementRequirements(Progression.ACQUIRE_COLD_STAR,list);
+//
+//        list.add(Progression.ACQUIRE_COLD_STAR);
+//        list.add(Progression.FIND_INFUSER_DUNGEON);
+//        tree.addAchievementRequirements(Progression.ACQUIRE_COLD_STAR_ACTIVATED,list);
+//
+//        list.add(Progression.ACQUIRE_COLD_STAR_ACTIVATED);
+//        list.add(Progression.USE_SOLAR_INFUSER);
+//        tree.addAchievementRequirements(Progression.CRAFT_SOLAR_LENS,list);
+//
+//        list.add(Progression.CRAFT_SOLAR_LENS);
+//        list.add(Progression.TRANSMUTE_GEM);
+//        list.add(Progression.RUNIC_ENERGY_REPEATER);
+//        tree.addAchievementRequirements(Progression.CRAFT_SOLAR_ENERGY_GENERATOR,list);
+//
+//        list.add(Progression.FIND_INCINERATED_FOREST);
+//        list.add(Progression.TRADE_FOR_BLUE_GEM);
+//        tree.addAchievementRequirements(Progression.TRANSMUTE_GEM,list);
+//
+//
+//        list.add(Progression.TRANSMUTE_GEM);
+//        tree.addAchievementRequirements(Progression.DIMENSIONAL_SHARD_DUNGEON,list);
+//
+//        tree.addAchievementRequirements(Progression.CRAFT_SOLAR_FORGE, Progression.ENTER_NETHER);
+////        tree.addAchievementRequirements(Progression.FIND_SOLAR_STONE, Progression.ENTER_NETHER);
+//        tree.addAchievementRequirements(Progression.RUNE_ENERGY_CLAIM, Progression.RUNE_ENERGY_DEPOSIT);
+//        tree.addAchievementRequirements(Progression.SOLAR_RUNE, Progression.RUNE_ENERGY_DEPOSIT);
+//        tree.addAchievementRequirements(Progression.RUNIC_ENERGY_REPEATER, Progression.RUNE_ENERGY_DEPOSIT, Progression.USE_SOLAR_INFUSER, Progression.ACQUIRE_COLD_STAR_ACTIVATED);
+//        tree.addAchievementRequirements(Progression.DIMENSION_CORE, Progression.CRAFT_SOLAR_ENERGY_GENERATOR, Progression.DIMENSIONAL_SHARD_DUNGEON);
+//        tree.addAchievementRequirements(Progression.KILL_CRYSTAL_BOSS, Progression.DIMENSION_CORE);
         return tree;
     }
 
@@ -125,7 +137,7 @@ public class AchievementTree {
                 return a;
             }
         }
-        return Progression.CRAFT_SOLAR_INFUSER;
+        return Progression.SOLAR_INFUSER;
     }
 
 
