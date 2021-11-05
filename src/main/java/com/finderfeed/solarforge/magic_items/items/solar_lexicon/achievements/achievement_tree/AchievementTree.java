@@ -28,7 +28,7 @@ public class AchievementTree {
         tree.addAchievementRequirements(Progression.KILL_DRAGON,Progression.ENTER_END);
         tree.addAchievementRequirements(Progression.IMBUED_COLD_STAR,Progression.KILL_WITHER,Progression.ACQUIRE_COLD_STAR,Progression.FIND_INFUSER_DUNGEON);
         tree.addAchievementRequirements(Progression.PYLON_INSCRIPTION,Progression.SOLAR_RUNE);
-        tree.addAchievementRequirements(Progression.ALL_ENERGY_TYPES,Progression.RUNE_ENERGY_CLAIM,Progression.SOLAR_RUNE);
+        tree.addAchievementRequirements(Progression.ALL_ENERGY_TYPES,Progression.RUNE_ENERGY_PYLON);
         tree.addAchievementRequirements(Progression.CRAFT_SOLAR_FORGE,Progression.RUNE_ENERGY_CLAIM,Progression.KILL_DRAGON);
         tree.addAchievementRequirements(Progression.TRANSMUTE_GEM,Progression.FIND_INCINERATED_FOREST,Progression.IMBUED_COLD_STAR,Progression.TRADE_FOR_BLUE_GEM);
         tree.addAchievementRequirements(Progression.SOLAR_INFUSER,Progression.CRAFT_SOLAR_FORGE);

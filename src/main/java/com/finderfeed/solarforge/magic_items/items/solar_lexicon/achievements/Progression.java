@@ -21,11 +21,12 @@ public enum Progression {
     ACQUIRE_COLD_STAR("cold_star_piece",2,ItemsRegister.COLD_STAR_PIECE.get().getDefaultInstance(), new TranslatableComponent("ach.cold_star_piece"),nextID(),new TranslatableComponent("pre.cold_star_piece"),new TranslatableComponent("aft.cold_star_piece")),
     RUNE_ENERGY_CLAIM("rune_energy_claim",2, ItemsRegister.SOLAR_WAND.get().getDefaultInstance(),new TranslatableComponent("ach.rune_energy_claim"),nextID(),new TranslatableComponent("pre.rune_energy_claim"),new TranslatableComponent("aft.rune_energy_claim")),
     SOLAR_RUNE("solar_rune",2, ItemsRegister.SOLAR_RUNE_ZETA.get().getDefaultInstance(),new TranslatableComponent("ach.solar_rune"),nextID(),new TranslatableComponent("pre.solar_rune"),new TranslatableComponent("aft.solar_rune")),
+    ALL_ENERGY_TYPES("all_energy_types",2, ItemsRegister.RUNE_ENERGY_PYLON.get().getDefaultInstance(),new TranslatableComponent("ach.all_energy_types"),nextID(),new TranslatableComponent("pre.all_energy_types"),new TranslatableComponent("aft.all_energy_types")),
+
 
     KILL_DRAGON("kill_dragon",3, Blocks.DRAGON_HEAD.asItem().getDefaultInstance(),new TranslatableComponent("ach.kill_dragon"),nextID(),new TranslatableComponent("pre.kill_dragon"),new TranslatableComponent("aft.kill_dragon")),
     IMBUED_COLD_STAR("cold_star_piece_activated",3,ItemsRegister.COLD_STAR_PIECE_ACTIVATED.get().getDefaultInstance(), new TranslatableComponent("ach.cold_star_piece_activated"),nextID(),new TranslatableComponent("pre.cold_star_piece_activated"),new TranslatableComponent("aft.cold_star_piece_activated")),
     PYLON_INSCRIPTION("pylon_inscription",3, BlocksRegistry.INSCRIPTION_STONE.get().asItem().getDefaultInstance(),new TranslatableComponent("ach.pylon_inscription"),nextID(),new TranslatableComponent("pre.pylon_inscription"),new TranslatableComponent("aft.pylon_inscription")),
-    ALL_ENERGY_TYPES("all_energy_types",3, ItemsRegister.RUNE_ENERGY_PYLON.get().getDefaultInstance(),new TranslatableComponent("ach.all_energy_types"),nextID(),new TranslatableComponent("pre.all_energy_types"),new TranslatableComponent("aft.all_energy_types")),
 
     CRAFT_SOLAR_FORGE("solar_forge_craft",4, SolarForge.SOLAR_FORGE_ITEM.get().getDefaultInstance(),new TranslatableComponent("ach.solar_forge_craft"),nextID(),new TranslatableComponent("pre.solar_forge_craft"),new TranslatableComponent("aft.solar_forge_craft")),
     TRANSMUTE_GEM("transmute_gem",4,ItemsRegister.BLUE_GEM_ENCHANCED.get().getDefaultInstance(), new TranslatableComponent("ach.transmute_gem"),nextID(),new TranslatableComponent("pre.transmute_gem"),new TranslatableComponent("aft.transmute_gem")),

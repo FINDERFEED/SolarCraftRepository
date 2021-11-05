@@ -132,6 +132,7 @@ public abstract class AbstractMortarProjectile extends AbstractHurtingProjectile
             List<LivingEntity> entities = level.getEntitiesOfClass(LivingEntity.class,box.move(pos));
             for (LivingEntity a : entities){
                 a.hurt(DamageSource.MAGIC,(float)getMDamage());
+                a.invulnerableTime=0;
             }
         }
     }

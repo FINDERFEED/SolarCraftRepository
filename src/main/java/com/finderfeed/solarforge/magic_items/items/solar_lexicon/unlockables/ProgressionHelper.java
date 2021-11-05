@@ -2,6 +2,7 @@ package com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables;
 
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.SolarForge;
+import com.finderfeed.solarforge.for_future_library.entities.BossAttackChain;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Progression;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import com.finderfeed.solarforge.recipe_types.InfusingRecipe;
@@ -82,12 +83,37 @@ public class ProgressionHelper {
     public static AncientFragment getRandomUnlockableFragment(Player pe){
         List<AncientFragment> fraglist = getAllUnlockableFragments(pe);
         if (fraglist != null){
-            return fraglist.get(pe.level.random.nextInt(fraglist.size()));
+            fraglist.sort((f1,f2)->{
+                return f1.getPriority() - f2.getPriority();
+            });
+            List<AncientFragment> h = getNextFragmentsForRandoming(fraglist);
+            if (h != null) {
+                return h.get(pe.level.random.nextInt(h.size()));
+            }else{
+                SolarForge.LOGGER.log(org.apache.logging.log4j.Level.ERROR,"Maybe something went wrong but i am not sure.");
+                return null;
+            }
         }else{
             return null;
         }
     }
 
+    private static List<AncientFragment> getNextFragmentsForRandoming(List<AncientFragment> a){
+        List<AncientFragment> attacksToCopyTo = new ArrayList<>();
+        if (a.size() != 0) {
+            int intToSeek = a.get(0).getPriority();
+            for (AncientFragment h : a) {
+                if (h.getPriority() == intToSeek) {
+                    attacksToCopyTo.add(h);
+                }else{
+                    break;
+                }
+            }
+        }else{
+            return null;
+        }
+        return attacksToCopyTo;
+    }
 
     public static List<AncientFragment> getAllUnlockableFragments(Player pe){
         List<AncientFragment> list = new ArrayList<>();
