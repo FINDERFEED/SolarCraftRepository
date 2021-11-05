@@ -78,12 +78,13 @@ public class BurntTreeTrunkPlacer extends TrunkPlacer {
                         stateConf = stateConf.setValue(BlockStateProperties.AXIS, Direction.Axis.Z);
                     }
                 }
-            if (levelSimulatedReader.isStateAtPosition(pos.below(),(state1 -> !state1.is(Blocks.AIR)))) {
+                BlockPos poss = Helpers.getBlockPositionsByDirection(dir, pos, 1).get(1);
+            if (levelSimulatedReader.isStateAtPosition(poss.below(),(state1 -> !state1.is(Blocks.AIR)))) {
                 if (placeDirt) {
 
-                    setDirtAt(levelSimulatedReader, world, rnd, Helpers.getBlockPositionsByDirection(dir, pos, 1).get(1).below(), cfg);
+                    setDirtAt(levelSimulatedReader, world, rnd, poss.below(), cfg);
                 }
-                world.accept(Helpers.getBlockPositionsByDirection(dir, pos, 1).get(1), stateConf);
+                world.accept(poss, stateConf);
             }
             if (iterator != 0 && iterator%(Math.round(rnd.nextFloat()+1)) == 0) {
                 placeLogsInDirection(levelSimulatedReader,cfg,world, Helpers.getBlockPositionsByDirection(dir, pos, 1).get(1), Helpers.getRandomHorizontalDirection(true, dir, rnd), length, rnd, iterator + 1, state, rotate, placeDirt);

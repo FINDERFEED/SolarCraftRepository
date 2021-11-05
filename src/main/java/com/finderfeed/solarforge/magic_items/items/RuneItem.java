@@ -53,7 +53,11 @@ public class RuneItem extends Item {
                         int progress = tag.getInt(TAG_PROGRESS);
                         BlockPos position = CompoundNBTHelper.getBlockPos(TAG_POSITION,tag);
                         if (Helpers.equalsBlockPos(pos,position)){
-                            if (progress <= 300){
+                            int time = 200;
+                            if (pl.isCreative()){
+                                time = 1;
+                            }
+                            if (progress <= time){
                                 tag.putInt(TAG_PROGRESS,progress+1);
                                 if (progress % 5 == 0){
                                     world.levelEvent(null, 2001, pos, Block.getId(state));

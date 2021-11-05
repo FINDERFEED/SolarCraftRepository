@@ -1,6 +1,8 @@
 package com.finderfeed.solarforge.magic_items.items;
 
 
+import com.finderfeed.solarforge.client.custom_tooltips.CustomTooltip;
+import com.finderfeed.solarforge.client.custom_tooltips.ICustomTooltip;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.AncientFragmentISTER;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.ProgressionHelper;
@@ -24,7 +26,14 @@ import java.nio.charset.MalformedInputException;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class AncientFragmentItem extends Item {
+public class AncientFragmentItem extends Item implements ICustomTooltip {
+
+    public static final CustomTooltip FRAGMENT = new CustomTooltip("fragment",
+            50,14,
+            34,7,
+            6,
+            0xFF491E00, 0xFF280A00,0xf0100010);
+
     public AncientFragmentItem(Properties p_i48487_1_) {
         super(p_i48487_1_);
     }
@@ -68,6 +77,11 @@ public class AncientFragmentItem extends Item {
     public void initializeClient(Consumer<IItemRenderProperties> consumer) {
         super.initializeClient(consumer);
         consumer.accept(FragmentRenderProperties.INSTANCE);
+    }
+
+    @Override
+    public CustomTooltip getTooltip() {
+        return FRAGMENT;
     }
 }
 

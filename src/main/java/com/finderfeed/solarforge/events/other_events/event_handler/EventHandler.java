@@ -114,6 +114,9 @@ public class EventHandler {
                 if (world.dimension() == Level.END){
                     Helpers.fireProgressionEvent(player,Progression.ENTER_END);
                 }
+                if (world.dimension() == RADIANT_LAND_KEY){
+                    Helpers.fireProgressionEvent(player,Progression.RADIANT_LAND);
+                }
 
 
                 AttributeInstance attr = player.getAttribute(ForgeMod.REACH_DISTANCE.get());

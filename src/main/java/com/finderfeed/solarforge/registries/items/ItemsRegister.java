@@ -35,6 +35,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class ItemsRegister {
+    //reminder for myself: do a rune crafting like in chromaticraft but add something yourself to it!
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS,"solarforge");
 
     public static final RegistryObject<SolarWandItem> SOLAR_WAND = ITEMS.register("solar_wand",()-> new SolarWandItem(new Item.Properties().rarity(Rarity.EPIC).tab(SolarForge.SOLAR_GROUP)));

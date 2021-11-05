@@ -2,12 +2,15 @@ package com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables;
 
 import com.finderfeed.solarforge.events.other_events.OBJModels;
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Vector3f;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.geom.EntityModelSet;
+import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
+import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 
@@ -21,52 +24,55 @@ public class AncientFragmentISTER extends BlockEntityWithoutLevelRenderer {
 
     @Override
     public void renderByItem(ItemStack stack, ItemTransforms.TransformType transformType, PoseStack matrices, MultiBufferSource buffer, int light, int overlay) {
+
         if (transformType == ItemTransforms.TransformType.NONE){
             matrices.pushPose();
             matrices.translate(0.5,0.5,0.5);
-            renderItem(matrices,stack, ItemTransforms.TransformType.NONE,buffer,light,overlay);
+
+            renderItem(matrices,stack, ItemTransforms.TransformType.NONE,buffer, light,OverlayTexture.NO_OVERLAY);
             matrices.popPose();
         }
         if (transformType == ItemTransforms.TransformType.FIXED){
             matrices.pushPose();
             matrices.translate(0.5,0.5,0.5);
-            renderItem(matrices,stack, ItemTransforms.TransformType.FIXED,buffer,light,overlay);
+            renderItem(matrices,stack, ItemTransforms.TransformType.FIXED,buffer,light,OverlayTexture.NO_OVERLAY);
             matrices.popPose();
         }
         if (transformType == ItemTransforms.TransformType.FIRST_PERSON_LEFT_HAND){
             matrices.pushPose();
             matrices.translate(0.5,0.5,0.5);
-            renderItem(matrices,stack, ItemTransforms.TransformType.FIRST_PERSON_LEFT_HAND,buffer,light,overlay);
+            renderItem(matrices,stack, ItemTransforms.TransformType.FIRST_PERSON_LEFT_HAND,buffer,light,OverlayTexture.NO_OVERLAY);
             matrices.popPose();
         }
         if (transformType == ItemTransforms.TransformType.FIRST_PERSON_RIGHT_HAND){
             matrices.pushPose();
             matrices.translate(0.5,0.5,0.5);
-            renderItem(matrices,stack, ItemTransforms.TransformType.FIRST_PERSON_RIGHT_HAND,buffer,light,overlay);
+            renderItem(matrices,stack, ItemTransforms.TransformType.FIRST_PERSON_RIGHT_HAND,buffer,light,OverlayTexture.NO_OVERLAY);
             matrices.popPose();
         }
         if (transformType == ItemTransforms.TransformType.GROUND){
             matrices.pushPose();
             matrices.translate(0.5,0.5,0.5);
-            renderItem(matrices,stack, ItemTransforms.TransformType.GROUND,buffer,light,overlay);
+            renderItem(matrices,stack, ItemTransforms.TransformType.GROUND,buffer,light,OverlayTexture.NO_OVERLAY);
             matrices.popPose();
         }
         if (transformType == ItemTransforms.TransformType.THIRD_PERSON_RIGHT_HAND){
             matrices.pushPose();
             matrices.translate(0.5,0.5,0.5);
-            renderItem(matrices,stack, ItemTransforms.TransformType.THIRD_PERSON_RIGHT_HAND,buffer,light,overlay);
+            renderItem(matrices,stack, ItemTransforms.TransformType.THIRD_PERSON_RIGHT_HAND,buffer,light,OverlayTexture.NO_OVERLAY);
             matrices.popPose();
         }
         if (transformType == ItemTransforms.TransformType.THIRD_PERSON_LEFT_HAND){
             matrices.pushPose();
             matrices.translate(0.5,0.5,0.5);
-            renderItem(matrices,stack, ItemTransforms.TransformType.THIRD_PERSON_LEFT_HAND,buffer,light,overlay);
+            renderItem(matrices,stack, ItemTransforms.TransformType.THIRD_PERSON_LEFT_HAND,buffer,light,OverlayTexture.NO_OVERLAY);
             matrices.popPose();
         }
         if (transformType == ItemTransforms.TransformType.GUI){
             matrices.pushPose();
             matrices.translate(0.5,0.5,0);
-            renderItem(matrices,stack, ItemTransforms.TransformType.GUI,buffer,light,overlay);
+
+            renderItem(matrices,stack, ItemTransforms.TransformType.GUI,buffer,light,OverlayTexture.NO_OVERLAY);
             matrices.popPose();
 
             CompoundTag nbt = stack.getTagElement(ProgressionHelper.TAG_ELEMENT);
@@ -77,8 +83,8 @@ public class AncientFragmentISTER extends BlockEntityWithoutLevelRenderer {
                     matrices.pushPose();
                     matrices.scale(0.5f,0.5f,0.5f);
                     matrices.translate(1.5,0.5,2);
-
-                    Minecraft.getInstance().getItemRenderer().render(frag.getIcon().getDefaultInstance(), ItemTransforms.TransformType.GUI,false,matrices,buffer,light,overlay,
+                    Minecraft.getInstance().getItemRenderer().render(frag.getIcon().getDefaultInstance(), ItemTransforms.TransformType.GUI,false,matrices,buffer,light,
+                            OverlayTexture.NO_OVERLAY,
                             Minecraft.getInstance().getItemRenderer().getModel(frag.getIcon().getDefaultInstance(),null,null,0));
                     matrices.popPose();
                 }
