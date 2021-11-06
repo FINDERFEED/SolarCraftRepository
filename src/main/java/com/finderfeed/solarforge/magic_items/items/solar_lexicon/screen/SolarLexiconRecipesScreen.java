@@ -140,7 +140,7 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
         int width = minecraft.getWindow().getWidth();
         int height = minecraft.getWindow().getHeight();
         int scale = (int) minecraft.getWindow().getGuiScale();
-        this.relX = (width/scale - 183)/2;
+        this.relX = (width/scale - 183)/2-30;
         this.relY = (height - 218*scale)/2/scale;
         scrollX = 0;
         scrollY = 0;
@@ -162,9 +162,9 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
         addRenderableWidget(goBack);
         addRenderableWidget(nothing);
 
-        nothing.x = relX +207;
+        nothing.x = relX +207+35;
         nothing.y = relY + 184;
-        goBack.x = relX +207;
+        goBack.x = relX +207+35;
         goBack.y = relY + 164;
     }
 
@@ -334,7 +334,7 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
 
 
     private boolean isButtonPressable(int x,int y){
-        if (((x + 24 > relX+7) && (x  < relX+7+190)) && ((y + 24 > relY+7) && (y  < relY+7+193))){
+        if (((x + 24 > relX+7) && (x  < relX+7+220)) && ((y + 24 > relY+7) && (y  < relY+7+193))){
             return true;
         }
         return false;
@@ -346,7 +346,7 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
         int width = minecraft.getWindow().getWidth();
         int height = minecraft.getWindow().getHeight();
         int scale = (int)minecraft.getWindow().getGuiScale();
-        GL11.glScissor(width/2-(83*scale),height/2-(89*scale),(188*scale),190*scale);
+        GL11.glScissor(width/2-((113)*scale),height/2-(89*scale),(223*scale),190*scale);
 
         ClientHelpers.bindText(MAIN_SCREEN_SCROLLABLE);
         blit(matrices,relX,relY,0,0,256,256);

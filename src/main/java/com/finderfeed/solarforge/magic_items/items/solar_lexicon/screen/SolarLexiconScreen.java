@@ -3,6 +3,7 @@ package com.finderfeed.solarforge.magic_items.items.solar_lexicon.screen;
 import com.finderfeed.solarforge.ClientHelpers;
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.SolarForge;
+import com.finderfeed.solarforge.for_future_library.helpers.RenderingTools;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Progression;
 import com.finderfeed.solarforge.misc_things.IScrollable;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.achievement_tree.AchievementTree;
@@ -168,7 +169,7 @@ public class SolarLexiconScreen extends Screen implements IScrollable {
         int width = minecraft.getWindow().getWidth();
         int height = minecraft.getWindow().getHeight();
         int scale = (int) minecraft.getWindow().getGuiScale();
-        this.relX = (width/scale - 183)/2;
+        this.relX = (width/scale - 183)/2 - 30;
         this.relY = (height - 218*scale)/2/scale;
         initMap(15);
 
@@ -208,9 +209,9 @@ public class SolarLexiconScreen extends Screen implements IScrollable {
         }
         addRenderableWidget(toggleRecipesScreen);
         addRenderableWidget(justForge);
-        toggleRecipesScreen.x = relX +207;
+        toggleRecipesScreen.x = relX +207+35;
         toggleRecipesScreen.y = relY + 184;
-        justForge.x = relX +207;
+        justForge.x = relX +207+35;
         justForge.y = relY + 164;
 
     }
@@ -225,7 +226,7 @@ public class SolarLexiconScreen extends Screen implements IScrollable {
         int height = minecraft.getWindow().getHeight();
         int scale = (int)minecraft.getWindow().getGuiScale();
 
-        GL11.glScissor(width/2-(83*scale),height/2-(6*scale),(188*scale),107*scale);
+        GL11.glScissor(width/2-((30+83)*scale),height/2-(6*scale),((188+35)*scale),107*scale);
         blit(matrices,relX,relY,0,0,256,256);
 
         ClientHelpers.bindText(FRAME);
@@ -276,8 +277,24 @@ public class SolarLexiconScreen extends Screen implements IScrollable {
         ClientHelpers.bindText(MAIN_SCREEN);
         blit(matrices,relX,relY,0,0,256,256);
         drawString(matrices,minecraft.font,currAch,relX+10,relY+122,0xffffff);
-        Helpers.drawBoundedText(matrices,relX+10,relY+132,32,currentText);
-        Helpers.drawBoundedText(matrices,relX+10,relY+162,32,afterTxt);
+        if (currentText != null && (currentText.length() != 0)) {
+            List<String> toRender1 = RenderingTools.splitString(currentText, 40);
+            int y = 0;
+            for (String s : toRender1) {
+                drawString(matrices, font, s, relX + 10, relY + 132 + y, 0xffffff);
+                y += 8;
+            }
+        }if ((afterTxt != null) && (afterTxt.length() != 0)) {
+            List<String> toRender2 = RenderingTools.splitString(afterTxt, 40);
+            int y = 0;
+            for (String s : toRender2) {
+                drawString(matrices, font, s, relX + 10, relY + 162 + y, 0xffffff);
+                y += 8;
+            }
+        }
+
+//        Helpers.drawBoundedText(matrices,relX+10,relY+132,40,currentText);
+//        Helpers.drawBoundedText(matrices,relX+10,relY+162,40,afterTxt);
         //super.render(matrices, mousex, mousey, partialTicks);
 
 
