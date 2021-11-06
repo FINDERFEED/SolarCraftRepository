@@ -3,13 +3,16 @@ package com.finderfeed.solarforge.for_future_library.helpers;
 import com.finderfeed.solarforge.ClientHelpers;
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.client.custom_tooltips.CustomTooltip;
+import com.finderfeed.solarforge.client.screens.PositionBlockStateTileEntity;
 import com.finderfeed.solarforge.events.RenderEventsHandler;
 import com.finderfeed.solarforge.events.my_events.MyColorEvent;
 import com.finderfeed.solarforge.events.my_events.PostColorEvent;
+import com.finderfeed.solarforge.misc_things.Multiblock;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import com.finderfeed.solarforge.client.rendering.rendertypes.RadiantPortalRendertype;
 import com.finderfeed.solarforge.client.rendering.shaders.post_chains.PostChainPlusUltra;
 import com.finderfeed.solarforge.client.rendering.shaders.post_chains.UniformPlusPlus;
+import com.finderfeed.solarforge.multiblocks.Multiblocks;
 import com.mojang.blaze3d.pipeline.RenderTarget;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.platform.Lighting;
@@ -23,12 +26,16 @@ import net.minecraft.client.gui.GuiComponent;
 
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
 import net.minecraft.client.renderer.*;
+import net.minecraft.client.renderer.block.BlockRenderDispatcher;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.resources.model.BakedModel;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
@@ -39,15 +46,20 @@ import com.mojang.math.Vector3f;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.HalfTransparentBlock;
 import net.minecraft.world.level.block.StainedGlassPaneBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderTooltipEvent;
+import net.minecraftforge.client.model.data.EmptyModelData;
 import net.minecraftforge.client.model.data.ModelDataMap;
 import net.minecraftforge.common.MinecraftForge;
+import org.lwjgl.system.CallbackI;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -745,4 +757,43 @@ public class RenderingTools {
         p_93125_.vertex(p_93124_, (float)p_93128_, (float)p_93129_, (float)p_93130_).color(f5, f6, f7, f4).endVertex();
     }
 
+
+    public static class StructureRenderer{
+        public static List<PositionBlockStateTileEntity> prepareList(Multiblock m){
+
+            List<PositionBlockStateTileEntity> toReturn = new ArrayList<>();
+            String[][] struct = m.struct;
+            double heightOffset = (float)struct.length/2;
+            double xzoffset = (float)struct[0].length/2;
+            for (int i = 0;i < struct.length;i++){
+                String[] layer = struct[i];
+                for (int g = 0;g < layer.length;g++){
+                    String row = layer[g];
+                    for (int d = 0;d < row.length();d++){
+                        char c = row.charAt(d);
+                        if (c != ' '){
+                            BlockState state = m.getBlockByCharacter(c);
+                            toReturn.add(new PositionBlockStateTileEntity(new Vec3(d-xzoffset,i-heightOffset,g-xzoffset),state));
+                        }
+                    }
+                }
+            }
+            return toReturn;
+        }
+
+        public static void render(PoseStack matrices, List<PositionBlockStateTileEntity> list,float partialTicks,BlockAndTintGetter getter){
+            matrices.pushPose();
+            MultiBufferSource src = Minecraft.getInstance().renderBuffers().bufferSource();
+            BlockEntityRenderDispatcher d = Minecraft.getInstance().getBlockEntityRenderDispatcher();
+            list.forEach((box)->{
+                box.render(matrices, partialTicks, getter, src, d);
+            });
+            list.forEach((box)->{
+                box.renderTile(matrices, partialTicks, getter, src, d);
+            });
+            matrices.popPose();
+        }
+
+
+    }
 }

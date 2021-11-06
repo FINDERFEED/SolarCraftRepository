@@ -35,6 +35,8 @@ public class RenderEventsHandler {
         }
     }
 
+
+
     //Thx to DEMON GIRL COLLECTOR (Melonslice) for helping me to fix my shader!
     @SubscribeEvent
     public void renderWorld(RenderWorldLastEvent event){

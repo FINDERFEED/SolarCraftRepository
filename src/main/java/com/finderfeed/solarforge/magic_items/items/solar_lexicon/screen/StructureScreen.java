@@ -2,8 +2,13 @@ package com.finderfeed.solarforge.magic_items.items.solar_lexicon.screen;
 
 import com.finderfeed.solarforge.ClientHelpers;
 import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.client.screens.PositionBlockStateTileEntity;
+import com.finderfeed.solarforge.client.screens.ThreeDStructureViewScreen;
+import com.finderfeed.solarforge.for_future_library.helpers.RenderingTools;
 import com.finderfeed.solarforge.misc_things.Multiblock;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.SolarLexicon;
+import com.finderfeed.solarforge.multiblocks.Multiblocks;
+import com.finderfeed.solarforge.registries.sounds.Sounds;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Vector3f;
@@ -16,6 +21,8 @@ import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.block.BlockRenderDispatcher;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.client.resources.sounds.SimpleSoundInstance;
+import net.minecraft.client.sounds.SoundManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.data.worldgen.biome.Biomes;
@@ -47,6 +54,7 @@ public class StructureScreen extends Screen {
 
     public final ResourceLocation STRUCTURE_GUI = new ResourceLocation("solarforge","textures/gui/structure_screen.png");
     public final ResourceLocation BUTTONS = new ResourceLocation("solarforge","textures/misc/page_buttons.png");
+    public final ResourceLocation THREEDSCREENBTN = new ResourceLocation("solarforge","textures/misc/button.png");
     public int currentPage;
 
     private BlockAndTintGetter getter = new Getter();
@@ -77,12 +85,32 @@ public class StructureScreen extends Screen {
             if ((currentPage+1 <= structHeightAndPageCount) ){
                 currentPage+=1;
             }
-        }));
+        }){
+            @Override
+            public void playDownSound(SoundManager p_93665_) {
+                p_93665_.play(SimpleSoundInstance.forUI(Sounds.BUTTON_PRESS2.get(),1,1));
+            }
+        });
         addRenderableWidget(new ImageButton(relX+87,relY+16,16,16,0,16,0,BUTTONS,16,32,(button)->{
             if ((currentPage-1 > 0)){
                 currentPage-=1;
             }
-        }));
+        }){
+            @Override
+            public void playDownSound(SoundManager p_93665_) {
+                p_93665_.play(SimpleSoundInstance.forUI(Sounds.BUTTON_PRESS2.get(),1,1));
+            }
+        });
+        addRenderableWidget(new ImageButton(relX+127,relY+16,16,16,0,0,0,THREEDSCREENBTN,16,16,(button)->{
+            Minecraft.getInstance().setScreen(new ThreeDStructureViewScreen(structure));
+        },(btn,poseStack,mx,my)->{
+            renderTooltip(poseStack,new TextComponent("3D View"),mx,my);
+        },new TextComponent("3D")) {
+            @Override
+            public void playDownSound(SoundManager p_93665_) {
+                p_93665_.play(SimpleSoundInstance.forUI(Sounds.BUTTON_PRESS2.get(), 1, 1));
+            }
+        });
 
         addRenderableWidget(new ItemStackButton(relX+186,relY+9,12,12,(button)->{minecraft.setScreen(new SolarLexiconRecipesScreen());}, Items.CRAFTING_TABLE.getDefaultInstance(),0.7f,false));
         addRenderableWidget(new ItemStackButton(relX+174,relY+9,12,12,(button)->{
@@ -101,7 +129,7 @@ public class StructureScreen extends Screen {
     public void render(PoseStack matrices, int mousex, int mousey, float partialTicks) {
 
 
-
+        matrices.pushPose();
         ClientHelpers.bindText(STRUCTURE_GUI);
         blit(matrices,relX,relY,0,0,256,256);
 
@@ -117,7 +145,9 @@ public class StructureScreen extends Screen {
                 renderItemAndTooltip(structure.getBlockByCharacter(struct[i+structWidth].charAt(g+structWidth)),relX+95+g*18,relY+109+i*18,mousex,mousey,matrices);
             }
         }
-
+//        matrices.mulPose(Vector3f.YN.rotationDegrees(45));
+//        List<PositionBlockStateTileEntity> t = RenderingTools.StructureRenderer.prepareList(Multiblocks.ZAP_TURRET.getM());
+//        RenderingTools.StructureRenderer.render(matrices,t,partialTicks,getter);
 //        BlockState state = Blocks.ACACIA_LOG.defaultBlockState();
 //        BlockRenderDispatcher disp = Minecraft.getInstance().getBlockRenderer();
 //        VertexConsumer consumer = Minecraft.getInstance().renderBuffers().bufferSource()
@@ -125,10 +155,11 @@ public class StructureScreen extends Screen {
 //        matrices.pushPose();
 //
 //
-//        matrices.translate(-20,0,0);
+//        matrices.translate(0,0,0);
 //        disp.renderBatched(state,BlockPos.ZERO,getter,matrices,consumer,false,Minecraft.getInstance().level.random,EmptyModelData.INSTANCE);
-//
-//        matrices.popPose();
+
+        matrices.popPose();
+
         super.render(matrices, mousex, mousey, partialTicks);
     }
 

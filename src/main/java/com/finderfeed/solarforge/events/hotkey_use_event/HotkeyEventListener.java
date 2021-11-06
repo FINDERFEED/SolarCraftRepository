@@ -2,12 +2,16 @@ package com.finderfeed.solarforge.events.hotkey_use_event;
 
 
 import com.finderfeed.solarforge.SolarForgeClientRegistry;
+
+import com.finderfeed.solarforge.client.screens.ThreeDStructureViewScreen;
+import com.finderfeed.solarforge.multiblocks.Multiblocks;
 import com.finderfeed.solarforge.packet_handler.packets.ResetAllAbilitiesPacket;
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
 import com.finderfeed.solarforge.packet_handler.packets.CastAbilityPacket;
 import com.finderfeed.solarforge.magic_items.blocks.solar_forge_block.solar_forge_screen.SolarForgeAbilityConfigScreen;
 import com.finderfeed.solarforge.packet_handler.packets.RequestAbilityScreen;
 import net.minecraft.client.Minecraft;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraftforge.api.distmarker.Dist;
 
 import net.minecraftforge.client.event.InputEvent;
@@ -26,6 +30,7 @@ public class HotkeyEventListener {
     public static void ListenToEvent(final InputEvent.KeyInputEvent event){
 
         if (SolarForgeClientRegistry.FIRST_ABILITY_KEY.isDown() && event.getAction() == GLFW.GLFW_PRESS){
+
 
             SolarForgePacketHandler.INSTANCE.sendToServer(new CastAbilityPacket(1));
 

@@ -20,7 +20,9 @@ public class ScrollThings {
     public static void listenToHotkeys(final InputEvent.KeyInputEvent event){
         if (Minecraft.getInstance().screen instanceof IScrollable){
             ((IScrollable) Minecraft.getInstance().screen).performScroll(event.getScanCode());
+
         }
+
     }
 
     @SubscribeEvent
