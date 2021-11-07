@@ -24,6 +24,8 @@ public enum AncientFragment {
     ENERGY_DUST(tx("solar_fragment.energy_dust"),"energy_dust",ProgressionStage.BEGGINING_2.ALL_PROGRESSIONS,SubCategoryBase.FORGE,CategoryBase.SOLAR_FORGE_BASICS, ItemsRegister.ENERGY_DUST.get(),tx("energy_dust.lore"),1),
     SOLAR_INFUSER(tx("solar_fragment.solar_infuser"),"solar_infuser",ProgressionStage.FORGE.ALL_PROGRESSIONS,SubCategoryBase.BEGINNER_ITEMS,CategoryBase.BEGINNER, SolarForge.INFUSING_STAND_ITEM.get(),tx("solar_infuser.lore"),1),
     SOLAR_FORGE(tx("solar_fragment.solar_forge"),"solar_forge",ProgressionStage.PRE_FORGE.ALL_PROGRESSIONS,SubCategoryBase.FORGE,CategoryBase.SOLAR_FORGE_BASICS, SolarForge.SOLAR_FORGE_ITEM.get(),tx("solar_forge.lore"),1),
+
+    ENDER_RADAR(tx("solar_fragment.ender_radar"),"ender_radar",ProgressionStage.PRE_FORGE.ALL_PROGRESSIONS,SubCategoryBase.BEGINNER_ITEMS,CategoryBase.BEGINNER, ItemsRegister.ENDER_RADAR.get(),tx("ender_radar.lore"),2),
     SOLAR_HELMET(tx("solar_fragment.solar_helmet"),"solar_helmet",ProgressionStage.FORGE.ALL_PROGRESSIONS,SubCategoryBase.ARMOR,CategoryBase.ARMOR,ItemsRegister.SOLAR_HELMET.get().getDefaultInstance(),tx("solar_helmet.lore"), SolarForge.INFUSING_RECIPE_TYPE,2),
     SOLAR_CHESTPLATE(tx("solar_fragment.solar_chestplate"),"solar_chestplate",ProgressionStage.FORGE.ALL_PROGRESSIONS,SubCategoryBase.ARMOR,CategoryBase.ARMOR,ItemsRegister.SOLAR_CHESTPLATE.get().getDefaultInstance(),tx("solar_chestplate.lore"), SolarForge.INFUSING_RECIPE_TYPE,2),
     SOLAR_LEGGINS(tx("solar_fragment.solar_leggings"),"solar_leggings",ProgressionStage.FORGE.ALL_PROGRESSIONS,SubCategoryBase.ARMOR,CategoryBase.ARMOR,ItemsRegister.SOLAR_LEGGINS.get().getDefaultInstance(),tx("solar_leggings.lore"), SolarForge.INFUSING_RECIPE_TYPE,2),

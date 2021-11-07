@@ -45,6 +45,7 @@ import net.minecraft.network.chat.TextComponent;
 import net.minecraft.ChatFormatting;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.levelgen.GenerationStep;
+import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
@@ -157,6 +158,9 @@ public class EventHandler {
         if (event.getCategory() == Biome.BiomeCategory.PLAINS){
             event.getGeneration().addFeature(GenerationStep.Decoration.VEGETAL_DECORATION,FeaturesRegistry.RUNIC_TREE_FEATURE);
         }
+        if (event.getCategory() == Biome.BiomeCategory.THEEND){
+            event.getGeneration().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, FeaturesRegistry.ENDER_CRACKS);
+        }
 
 
     }
@@ -195,6 +199,7 @@ public class EventHandler {
                 deleteSolarForge(playerEntity);
                 deleteInfuser(playerEntity);
             }
+
         }
     }
 

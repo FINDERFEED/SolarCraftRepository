@@ -9,8 +9,10 @@ import com.finderfeed.solarforge.magic_items.blocks.BlueGemDoorBlock;
 import com.finderfeed.solarforge.magic_items.blocks.*;
 import com.finderfeed.solarforge.magic_items.blocks.primitive.BonemealerBlock;
 import com.finderfeed.solarforge.magic_items.blocks.primitive.InscriptionStone;
+import com.finderfeed.solarforge.magic_items.blocks.primitive.ProgressionBlock;
 import com.finderfeed.solarforge.magic_items.blocks.primitive.ZapTurretBlock;
 import com.finderfeed.solarforge.magic_items.decoration_blocks.SolarFlower;
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Progression;
 import com.finderfeed.solarforge.magic_items.runic_network.repeater.RunicNetworkRepeater;
 import com.finderfeed.solarforge.world_generation.structures.blocks.ColdStarInfuser;
 import com.finderfeed.solarforge.world_generation.structures.blocks.InvincibleStone;
@@ -45,6 +47,8 @@ public class BlocksRegistry {
 
     public  static  final RegistryObject<SolarStoneBlock> SOLAR_STONE = BLOCKS.register("solar_stone",()-> new SolarStoneBlock(BlockBehaviour.Properties.copy(Blocks.ANDESITE)));
     public  static  final RegistryObject<Block> SOLAR_STONE_CHISELED = BLOCKS.register("chiseled_solar_stone",()-> new Block(BlockBehaviour.Properties.copy(Blocks.STONE)));
+    public  static  final RegistryObject<ProgressionBlock> ENDER_CRACKS = BLOCKS.register("ender_cracks",()-> new ProgressionBlock(BlockBehaviour.Properties.copy(Blocks.END_STONE),()-> Progression.KILL_DRAGON,Blocks.END_STONE));
+
     public  static  final RegistryObject<Block> SOLAR_STONE_COLLUMN = BLOCKS.register("solar_stone_collumn",()-> new Block(BlockBehaviour.Properties.copy(Blocks.STONE)));
     public  static  final RegistryObject<Block> SOLAR_STONE_BRICKS = BLOCKS.register("solar_stone_bricks",()-> new Block(BlockBehaviour.Properties.copy(Blocks.STONE)));
     public  static  final RegistryObject<Block> SOLAR_STONE_STAIRS = BLOCKS.register("solar_stone_stairs",()-> new StairBlock(()-> SOLAR_STONE_BRICKS.get().defaultBlockState(),BlockBehaviour.Properties.copy(Blocks.STONE)));

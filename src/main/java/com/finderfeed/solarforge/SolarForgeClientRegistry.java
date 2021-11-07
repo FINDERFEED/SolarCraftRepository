@@ -138,6 +138,15 @@ public class SolarForgeClientRegistry {
                     return 0;
                 }
             });
+            ItemProperties.register(ItemsRegister.ENDER_CRACKS.get(),new ResourceLocation("solarforge","unlocked"),(stack,world,living,a)->{
+
+                Player playerEntity = Minecraft.getInstance().player;
+                if (playerEntity != null) {
+                    return Helpers.hasPlayerUnlocked(BlocksRegistry.ENDER_CRACKS.get().getRequiredProgression(), Minecraft.getInstance().player) ? 1f : 0;
+                }else{
+                    return 0;
+                }
+            });
             ItemProperties.register(SolarForge.SOLAR_ORE_ITEM.get(),new ResourceLocation("solarforge","unlocked"),(stack,world,living,a)->{
 
                 Player playerEntity = Minecraft.getInstance().player;

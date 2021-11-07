@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#S#",
+    "SPS",
+    "#S#"
+  ],
+  "key": {
+    "#": {
+      "item": "solarforge:enderite_essence"
+    },
+    "P": {
+      "item": "minecraft:ender_pearl"
+    },
+    "S": {
+      "item": "minecraft:diamond"
+    }
+  },
+  "result": {
+    "item": "solarforge:ender_radar"
+  }
+}

@@ -543,5 +543,10 @@
   "aft.kill_wither": "They said it couldn't be done. I did it, and i regret it.",
   "ach.pylon_inscription": "Natural amplification",
   "pre.pylon_inscription": "Those strange stones in columns surely do something.",
-  "aft.pylon_inscription": "Engraving correct symbols amplifies pylon energy gain."
+  "aft.pylon_inscription": "Engraving correct symbols amplifies pylon energy gain.",
+  "item.solarforge.enderite_essence": "Enderite essence",
+  "block.solarforge.ender_cracks": "Ender cracks",
+  "item.solarforge.ender_radar": "Ender Radar",
+  "solar_fragment.ender_radar": "Ender radar",
+  "ender_radar.lore": "A useful item for mining in caves. While in your inventory, will light up all ores around the player in a small radius."
 }

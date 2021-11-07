@@ -11,6 +11,7 @@
     "solarforge:repeater",
     "solarforge:dimension_core",
     "solarforge:radiant_portal_creator",
-    "solarforge:zap_turret_block"
+    "solarforge:zap_turret_block",
+    "solarforge:ender_cracks"
   ]
 }

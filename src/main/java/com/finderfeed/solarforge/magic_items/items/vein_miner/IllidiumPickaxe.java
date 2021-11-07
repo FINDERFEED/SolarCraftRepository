@@ -27,6 +27,7 @@ import java.util.*;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.PickaxeItem;
 import net.minecraft.world.item.Tier;
+import net.minecraftforge.common.Tags;
 
 public class IllidiumPickaxe extends RareSolarcraftPickaxe implements ManaConsumer {
 
@@ -75,7 +76,8 @@ public class IllidiumPickaxe extends RareSolarcraftPickaxe implements ManaConsum
             posList.add(pos);
             poslis.removeIf(posList::contains);
             for (BlockPos a : poslis) {
-                if (world.getBlockState(a).getBlock() instanceof OreBlock) {
+                BlockState state = world.getBlockState(a);
+                if (state.getBlock() instanceof OreBlock || state.is(Tags.Blocks.ORES)) {
                     posList.add(a);
                     populateList(a, world, posList, depth + 1);
                 }

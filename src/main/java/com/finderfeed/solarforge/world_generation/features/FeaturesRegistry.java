@@ -1,5 +1,6 @@
 package com.finderfeed.solarforge.world_generation.features;
 
+import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
 import com.finderfeed.solarforge.world_generation.biomes.molten_forest.MoltenForestAmbience;
 import com.finderfeed.solarforge.world_generation.biomes.molten_forest.BurntTreeFeature;
@@ -11,6 +12,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.core.Registry;
 import net.minecraft.data.BuiltinRegistries;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.valueproviders.ConstantInt;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Blocks;
@@ -25,6 +27,12 @@ import net.minecraft.world.level.levelgen.feature.foliageplacers.BlobFoliagePlac
 import net.minecraft.world.level.levelgen.feature.trunkplacers.StraightTrunkPlacer;
 import net.minecraft.world.level.levelgen.heightproviders.UniformHeight;
 import net.minecraft.world.level.levelgen.placement.NoiseCountFactorDecoratorConfiguration;
+import net.minecraft.world.level.levelgen.structure.templatesystem.RuleTest;
+import net.minecraft.world.level.levelgen.structure.templatesystem.TagMatchTest;
+import net.minecraftforge.common.ForgeMod;
+import net.minecraftforge.common.ForgeTagHandler;
+import net.minecraftforge.common.Tags;
+import net.minecraftforge.common.data.ForgeBlockTagsProvider;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 
@@ -38,6 +46,9 @@ import net.minecraft.world.level.levelgen.placement.FeatureDecorator;
 
 
 public class FeaturesRegistry {
+
+    public static final RuleTest END_STONE = new TagMatchTest(Tags.Blocks.END_STONES);
+
     public static final ResourceLocation BURNT_BIOME_BURNT_TREE = new ResourceLocation("solarforge","burnt_biome_tree");
     public static final ResourceLocation MOLTEN_FOREST_BIOME = new ResourceLocation("solarforge","incinerated_forest");
     public static final ResourceKey<Biome> MOLTEN_BIOME_KEY = ResourceKey.create(Registry.BIOME_REGISTRY,MOLTEN_FOREST_BIOME);
@@ -57,7 +68,10 @@ public class FeaturesRegistry {
     public static ConfiguredFeature<?,?> FLOATING_ISLANDS_RADIANT_LAND_CONFIGURED;
     public static ConfiguredFeature<?,?> CRYSTALLIZED_ORE_VEIN_CONFIGURED;
     public static ConfiguredFeature<?,?> RADIANT_BERRY_BUSH;
+    public static ConfiguredFeature<?,?> ENDER_CRACKS;
     //public static ConfiguredFeature<?,?> RADIANT_LAND_AMBIENT_TREE;
+
+
 
     public static final ConfiguredFeature<?,?> BURNT_BIOME_AMBIENCE_1_CONFIGURED = BURNT_BIOME_AMBIENCE_1
             .configured(NoneFeatureConfiguration.INSTANCE)
@@ -148,6 +162,11 @@ public class FeaturesRegistry {
 
             RADIANT_BERRY_BUSH =  Feature.RANDOM_PATCH.configured((new RandomPatchConfiguration.GrassConfigurationBuilder(new SimpleStateProvider(BlocksRegistry.RADIANT_BERRY_BUSH.get().defaultBlockState()), SimpleBlockPlacer.INSTANCE)).tries(4).build());
             Registry.register(BuiltinRegistries.CONFIGURED_FEATURE,new ResourceLocation("solarforge","radiant_berry_bush"),RADIANT_BERRY_BUSH);
+
+
+            ENDER_CRACKS = Feature.ORE.configured(new OreConfiguration(END_STONE, BlocksRegistry.ENDER_CRACKS.get().defaultBlockState(),4))
+                    .rangeUniform(VerticalAnchor.bottom(),VerticalAnchor.absolute(200)).squared().count(15);
+            Registry.register(BuiltinRegistries.CONFIGURED_FEATURE,new ResourceLocation("solarforge","ender_cracks"),ENDER_CRACKS);
         });
     }
 
