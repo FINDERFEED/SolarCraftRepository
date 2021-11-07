@@ -182,7 +182,13 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
             }
         }
     }
-
+    @Override
+    public void tick() {
+        super.tick();
+        if (this.BOOK != null){
+            this.BOOK.tick();
+        }
+    }
     @Override
     public boolean isPauseScreen() {
         return false;

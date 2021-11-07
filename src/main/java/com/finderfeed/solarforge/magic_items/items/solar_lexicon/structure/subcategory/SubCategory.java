@@ -4,6 +4,7 @@ import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.for_future_library.custom_registries.RegistryDelegate;
 import com.finderfeed.solarforge.for_future_library.helpers.RenderingTools;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.screen.*;
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.structure.category.Category;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.ProgressionHelper;
 import com.finderfeed.solarforge.misc_things.IScrollable;
@@ -18,7 +19,9 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
+import org.lwjgl.system.CallbackI;
 
+import javax.annotation.Nullable;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +29,7 @@ import java.util.function.Supplier;
 
 public class SubCategory {
 
+    private Category category;
     public static final int FONT_HEIGHT = 8;
     public static final int BUTTONS_SIZE = 25;
 
@@ -33,6 +37,7 @@ public class SubCategory {
     private List<Button> buttonsToAdd = new ArrayList<>();
 
     private final SubCategoryBase base;
+
 
     private Integer sizeX;
     private Integer sizeY;
@@ -73,7 +78,14 @@ public class SubCategory {
     }
 
     public void renderAtPos(PoseStack matrices,int x, int y) {
-        drawRectangle(matrices,getSize()[0],getSize()[1],new Point(x,y));
+        if (this.category != null) {
+            int r = this.getCategory().getLinesRGB()[0];
+            int g = this.getCategory().getLinesRGB()[1];
+            int b = this.getCategory().getLinesRGB()[2];
+            drawRectangle(matrices, getSize()[0], getSize()[1], new Point(x, y), r, g, b);
+        }else{
+            drawRectangle(matrices, getSize()[0], getSize()[1], new Point(x, y), 255, 255, 255);
+        }
         int scrollX = 0;
         int scrollY = 0;
         if (Minecraft.getInstance().screen instanceof IScrollable scrollable) {
@@ -120,6 +132,9 @@ public class SubCategory {
         return new ItemStackButton(x,y,24,24,(button)->{
             Minecraft.getInstance().setScreen(new InformationScreen(fragment,new InfusingRecipeScreen(recipe)));
         },fragment.getIcon().getDefaultInstance(),1.5f,false,(button,matrices,mx,my)->{
+//            if (button.isHovered()){
+//                this.onHovered();
+//            }
             Minecraft.getInstance().screen.renderTooltip(matrices,fragment.getTranslation(),mx,my);
         });
     }
@@ -129,6 +144,9 @@ public class SubCategory {
         return new ItemStackButton(x,y,24,24,(button)->{
             Minecraft.getInstance().setScreen(new InformationScreen(fragment,new InfusingRecipeScreen(recipe)));
         },fragment.getIcon().getDefaultInstance(),1.5f,false,(button,matrices,mx,my)->{
+//            if (button.isHovered()){
+//                this.onHovered();
+//            }
             Minecraft.getInstance().screen.renderTooltip(matrices,fragment.getTranslation(),mx,my);
         });
     }
@@ -138,6 +156,9 @@ public class SubCategory {
         return new ItemStackButton(x,y,24,24,(button)->{
             Minecraft.getInstance().setScreen(new SmeltingRecipeScreen(recipe));
         },recipe.output,1.5f,false,(button,matrices,mx,my)->{
+//            if (button.isHovered()){
+//                this.onHovered();
+//            }
             Minecraft.getInstance().screen.renderTooltip(matrices,recipe.output.getHoverName(),mx,my);
         });
     }
@@ -147,6 +168,9 @@ public class SubCategory {
         return new ItemStackButton(x,y,24,24,(button)->{
             Minecraft.getInstance().setScreen(new InformationScreen(fragment,null));
         },logo,1.5f,false, (button,matrices,mx,my)->{
+//            if (button.isHovered()){
+//                this.onHovered();
+//            }
             Minecraft.getInstance().screen.renderTooltip(matrices,fragment.getTranslation(),mx,my);
         });
     }
@@ -155,6 +179,9 @@ public class SubCategory {
         return new ItemStackButton(x,y,24,24,(button)->{
             Minecraft.getInstance().setScreen(new StructureScreen(structure));
         },structure.getMainBlock().getBlock().asItem().getDefaultInstance(),1.5f,false, (button,matrices,mx,my)->{
+//            if (button.isHovered()){
+//                this.onHovered();
+//            }
             Minecraft.getInstance().screen.renderTooltip(matrices,fragment.getTranslation(),mx,my);
         });
     }
@@ -166,6 +193,9 @@ public class SubCategory {
         return new ItemStackButton(x,y,24,24,(button)->{
             Minecraft.getInstance().setScreen(sp.get());
         },fragment.getIcon().getDefaultInstance(),1.5f,false,(button,matrices,mx,my)->{
+//            if (button.isHovered()){
+//                this.onHovered();
+//            }
             Minecraft.getInstance().screen.renderTooltip(matrices,fragment.getTranslation(),mx,my);
         });
     }
@@ -185,19 +215,34 @@ public class SubCategory {
      * @param p initial point
      */
 
-    public static void drawRectangle(PoseStack matrices, int x, int y, Point p){
+    public static void drawRectangle(PoseStack matrices, int x, int y, Point p,int r,int g,int b){
         if (Minecraft.getInstance().screen instanceof IScrollable scrollable) {
             int scrollX = scrollable.getCurrentScrollX();
             int scrollY = scrollable.getCurrentScrollY();
-            RenderingTools.drawLine(matrices, p.x + scrollX, p.y + scrollY, p.x + x + scrollX, p.y + scrollY, 255, 255, 255);
-            RenderingTools.drawLine(matrices, p.x + x + scrollX, p.y + scrollY, p.x + x + scrollX, p.y + y + scrollY, 255, 255, 255);
-            RenderingTools.drawLine(matrices, p.x + scrollX, p.y + y + scrollY, p.x + x + scrollX, p.y + y + scrollY, 255, 255, 255);
-            RenderingTools.drawLine(matrices, p.x + scrollX, p.y + scrollY, p.x + scrollX, p.y + y + scrollY, 255, 255, 255);
+            RenderingTools.drawLine(matrices, p.x + scrollX, p.y + scrollY, p.x + x + scrollX, p.y + scrollY, r, g, b);
+            RenderingTools.drawLine(matrices, p.x + x + scrollX, p.y + scrollY, p.x + x + scrollX, p.y + y + scrollY, r, g, b);
+            RenderingTools.drawLine(matrices, p.x + scrollX, p.y + y + scrollY, p.x + x + scrollX, p.y + y + scrollY, r, g, b);
+            RenderingTools.drawLine(matrices, p.x + scrollX, p.y + scrollY, p.x + scrollX, p.y + y + scrollY, r, g, b);
         }else{
-            RenderingTools.drawLine(matrices, p.x , p.y , p.x + x , p.y , 255, 255, 255);
-            RenderingTools.drawLine(matrices, p.x + x , p.y , p.x + x , p.y + y , 255, 255, 255);
-            RenderingTools.drawLine(matrices, p.x , p.y + y , p.x + x , p.y + y , 255, 255, 255);
-            RenderingTools.drawLine(matrices, p.x , p.y, p.x , p.y + y , 255, 255, 255);
+            RenderingTools.drawLine(matrices, p.x , p.y , p.x + x , p.y , r, g, b);
+            RenderingTools.drawLine(matrices, p.x + x , p.y , p.x + x , p.y + y , r, g, b);
+            RenderingTools.drawLine(matrices, p.x , p.y + y , p.x + x , p.y + y , r, g, b);
+            RenderingTools.drawLine(matrices, p.x , p.y, p.x , p.y + y , r, g, b);
         }
+    }
+
+
+
+    public void tick(){
+
+    }
+
+    @Nullable
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 }

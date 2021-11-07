@@ -26,7 +26,7 @@ import java.util.List;
 
 public class AbilityBuyScreen extends Screen {
 
-    private EaseInOut test = new EaseInOut(10,6*20,2);
+    private EaseInOut test = new EaseInOut(0,10,6*20,2);
     private Button BUY;
     public AbstractAbility currentAbility;
     public boolean showText = false;

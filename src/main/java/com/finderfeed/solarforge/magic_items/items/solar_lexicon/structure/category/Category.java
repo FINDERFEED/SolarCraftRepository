@@ -1,11 +1,14 @@
 package com.finderfeed.solarforge.magic_items.items.solar_lexicon.structure.category;
 
+import com.finderfeed.solarforge.for_future_library.helpers.FinderfeedMathHelper;
+import com.finderfeed.solarforge.for_future_library.other.EaseInOut;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.structure.subcategory.SubCategory;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.structure.subcategory.SubCategoryBase;
 import com.finderfeed.solarforge.misc_things.IScrollable;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.components.Button;
 
 import javax.annotation.Nullable;
 import java.awt.*;
@@ -14,6 +17,11 @@ import java.util.List;
 
 public class Category {
 
+    private int[] linesRGB = new int[]{70,70,70};
+
+
+    private EaseInOut VALUE = new EaseInOut(0.3,1,12,2);
+    private boolean isHovered = false;
     public static final int SPACING_BETWEEN_CATEGORIES = 30;
 
     private Map<SubCategoryBase,SubCategory> categories = new HashMap<>();
@@ -47,15 +55,51 @@ public class Category {
         int index = 0;
         int prevSize = 0;
         for (SubCategory cat : categories.values()){
+            cat.setCategory(this);
             int xPos = x+5+index*(SPACING_BETWEEN_CATEGORIES) + prevSize;
-
             cat.initAtPos(xPos,y+SubCategory.FONT_HEIGHT);
             prevSize += cat.getSize()[0];
             index++;
         }
     }
 
-    public void renderAtPos(PoseStack matrices,int x, int y){
+    public void tick(){
+        for (SubCategory c : categories.values()){
+            boolean hovered = false;
+            List<Button> buttonsToAdd = c.getButtonsToAdd();
+            for (Button b : buttonsToAdd){
+                if (b.isHovered()) {
+                    hovered = true;
+                    break;
+                }
+            }
+            if (hovered) {
+                this.setHovered(true);
+                break;
+            }else{
+                this.setHovered(false);
+            }
+        }
+        if (isHovered){
+            VALUE.tick();
+        }else{
+            VALUE.tickBackwards();
+        }
+        double val = FinderfeedMathHelper.clamp(0.3,VALUE.getValue(),1);
+        this.linesRGB[0] = (int)Math.round(val*255);
+        this.linesRGB[1] = (int)Math.round(val*255);
+        this.linesRGB[2] = (int)Math.round(val*255);
+    }
+
+    public void setHovered(boolean b){
+        this.isHovered  = b;
+    }
+
+    public int[] getLinesRGB() {
+        return linesRGB;
+    }
+
+    public void renderAtPos(PoseStack matrices, int x, int y){
         int index = 0;
         int prevSize = 0;
         for (SubCategory cat : categories.values()) {
@@ -64,7 +108,7 @@ public class Category {
             prevSize += cat.getSize()[0];
             index++;
         }
-        SubCategory.drawRectangle(matrices,getSize()[0],getSize()[1],new Point(x,y));
+        SubCategory.drawRectangle(matrices,getSize()[0],getSize()[1],new Point(x,y),getLinesRGB()[0],getLinesRGB()[1],getLinesRGB()[2]);
         int scrollX = 0;
         int scrollY = 0;
         if (Minecraft.getInstance().screen instanceof IScrollable scrollable) {

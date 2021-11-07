@@ -9,7 +9,8 @@ public class EaseInOut implements CanTick{
     private double start = 0;
     private double end;
     private final double modifier;
-    public EaseInOut(double end, double duration,double modifier){
+    public EaseInOut(double start,double end, double duration,double modifier){
+        this.start = start;
         this.duration = duration;
         this.end = end;
         this.modifier = modifier;
@@ -33,7 +34,15 @@ public class EaseInOut implements CanTick{
 
     @Override
     public void tick(){
-        this.ticker+=1;
+        if (this.ticker + 1 <= duration) {
+            this.ticker += 1;
+        }
+    }
+
+    public void tickBackwards(){
+        if (this.ticker -1 >= 0) {
+            this.ticker -= 1;
+        }
     }
 
     public void reset(){

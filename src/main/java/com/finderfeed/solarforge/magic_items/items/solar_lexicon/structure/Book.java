@@ -51,6 +51,12 @@ public class Book {
         }
     }
 
+    public void tick(){
+        categories.forEach((s,cat)->{
+            cat.tick();
+        });
+    }
+
     public void render(PoseStack matrices){
         for (int i = 0; i < ROWS_COLLUMNS.size();i ++){
             List<Category> cies;

@@ -215,6 +215,9 @@ public class SolarLexiconScreen extends Screen implements IScrollable {
         justForge.y = relY + 164;
 
     }
+
+
+
     @Override
     public void render(PoseStack matrices, int mousex, int mousey, float partialTicks) {
 
