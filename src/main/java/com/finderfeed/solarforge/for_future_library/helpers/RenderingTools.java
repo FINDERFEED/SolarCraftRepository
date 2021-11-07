@@ -781,7 +781,7 @@ public class RenderingTools {
             return toReturn;
         }
 
-        public static void render(PoseStack matrices, List<PositionBlockStateTileEntity> list,float partialTicks,BlockAndTintGetter getter){
+        public static void render(PoseStack matrices, List<PositionBlockStateTileEntity> list,float partialTicks,BlockAndTintGetter getter,double relX,double relY){
             matrices.pushPose();
             MultiBufferSource src = Minecraft.getInstance().renderBuffers().bufferSource();
             BlockEntityRenderDispatcher d = Minecraft.getInstance().getBlockEntityRenderDispatcher();
@@ -792,6 +792,17 @@ public class RenderingTools {
                 box.renderTile(matrices, partialTicks, getter, src, d);
             });
             matrices.popPose();
+            PoseStack stack = RenderSystem.getModelViewStack();
+            stack.pushPose();
+            stack.translate(relX,relY,100);
+            stack.scale(8,8,8);
+            stack.scale(1,-1,1);
+            RenderSystem.applyModelViewMatrix();
+            Minecraft.getInstance().renderBuffers().bufferSource().endBatch();
+            stack.popPose();
+            RenderSystem.applyModelViewMatrix();
+
+
         }
 
 

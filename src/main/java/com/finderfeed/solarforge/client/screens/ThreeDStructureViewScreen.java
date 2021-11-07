@@ -97,7 +97,7 @@ public class ThreeDStructureViewScreen extends Screen implements IScrollable {
         this.relX = (width/scale - 183)/2-12;
         this.relY = (height - 218*scale)/2/scale;
         POS_STATE_TILEENTITY.clear();
-        structScale = 1-0.025f*struct.getStruct().length;
+        structScale = 10f/Math.max(struct.getStruct().length,struct.getStruct()[0].length);
         this.POS_STATE_TILEENTITY = RenderingTools.StructureRenderer.prepareList(struct);
         addRenderableWidget(new ImageButton(relX+97,relY+16,16,16,0,0,0,THREEDSCREENBTN,16,16,(button)->{
             Minecraft.getInstance().setScreen(new StructureScreen(struct));
@@ -119,6 +119,16 @@ public class ThreeDStructureViewScreen extends Screen implements IScrollable {
     }
 
     @Override
+    public boolean mouseScrolled(double p_94686_, double p_94687_, double delta) {
+        double d = Math.ceil(delta);
+        if (structScale + d*0.05  >= 0) {
+            this.structScale += d * 0.05;
+        }
+
+        return super.mouseScrolled(p_94686_, p_94687_, delta);
+    }
+
+    @Override
     public boolean isPauseScreen() {
         return false;
     }
@@ -129,7 +139,7 @@ public class ThreeDStructureViewScreen extends Screen implements IScrollable {
         xDragPos = xPos;
         yDragPos = yPos;
         this.dragLeftRight+=dragLeftRight/3;
-        this.dragUpDown+=dragUpDown/3;
+        this.dragUpDown-=dragUpDown/3;
         return super.mouseDragged(xPos, yPos, button, dragLeftRight, dragUpDown);
     }
 
@@ -143,23 +153,22 @@ public class ThreeDStructureViewScreen extends Screen implements IScrollable {
     public void render(PoseStack matrices, int p_96563_, int p_96564_, float partialTicks) {
 
         matrices.pushPose();
-        matrices.translate(0,0,-100);
-        setBlitOffset(0);
         ClientHelpers.bindText(STRUCTURE_GUI);
         blit(matrices,relX,relY,0,0,256,256);
         super.render(matrices, p_96563_, p_96564_, partialTicks);
         matrices.popPose();
-//        matrices.scale(0.01f,0.01f,0.01f);
-//        matrices.translate(-7.7,-8,0);
-        matrices.pushPose();
 
+        matrices.pushPose();
         matrices.mulPose(Vector3f.XN.rotationDegrees(-45+(int)this.dragUpDown));
         matrices.mulPose(Vector3f.YP.rotationDegrees(45+(int)this.dragLeftRight));
         matrices.scale(structScale,structScale,structScale);
         //this renders the structure
-        RenderingTools.StructureRenderer.render(matrices,POS_STATE_TILEENTITY,partialTicks,getter);
+
+        RenderingTools.StructureRenderer.render(matrices,POS_STATE_TILEENTITY,partialTicks,getter,relX+105,relY+100);
+
         matrices.popPose();
-        minecraft.getItemRenderer().renderGuiItem(Items.BONE.getDefaultInstance(),relX,relY);
+
+
 
     }
 
