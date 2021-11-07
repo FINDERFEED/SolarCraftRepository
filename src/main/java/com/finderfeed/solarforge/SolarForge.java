@@ -142,28 +142,28 @@ public class SolarForge
             .requiresCorrectToolForDrops()
             .strength(3,3)));
 
-    public  static  final  RegistryObject<InfusingTableBlock> SOLAR_INFUSER = BLOCKS.register("solar_infuser",
-            ()-> new InfusingTableBlock(BlockBehaviour.Properties.of(Material.STONE)
+    public  static  final  RegistryObject<InfuserBlock> SOLAR_INFUSER = BLOCKS.register("solar_infuser",
+            ()-> new InfuserBlock(BlockBehaviour.Properties.of(Material.STONE)
             .sound(SoundType.METAL)
             .requiresCorrectToolForDrops()
             .noOcclusion()
             .dynamicShape()
             .strength(3,3)));
 
-    public static final RegistryObject<BlockEntityType<InfusingTableTileEntity>> INFUSING_STAND_BLOCKENTITY = TILE_ENTITY_TYPE.register("infusing_stand_blockentity",()->
-            BlockEntityType.Builder.of(InfusingTableTileEntity::new,SOLAR_INFUSER.get()).build(null));
+    public static final RegistryObject<BlockEntityType<InfuserTileEntity>> INFUSING_STAND_BLOCKENTITY = TILE_ENTITY_TYPE.register("infusing_stand_blockentity",()->
+            BlockEntityType.Builder.of(InfuserTileEntity::new,SOLAR_INFUSER.get()).build(null));
 
     public static final RegistryObject<EntityType<MeteoriteProjectile>> METEORITE = ENTITY_TYPE_REGISTER.register("solar_forge_meteorite_projectile",()->EntityType.Builder.<MeteoriteProjectile>of(MeteoriteProjectile::new,MobCategory.MISC).sized(5,5).build("solar_forge_meteorite_projectile"));
     public static  final RegistryObject<Item> TEST_ITEM = ITEMS.register("solar_shard",()-> new Item(new Item.Properties().rarity(Rarity.EPIC).tab(SOLAR_GROUP)));
     public static  final RegistryObject<Item> SOLAR_FORGE_ITEM = ITEMS.register("solar_forge",()-> new SolarForgeBlockItem(SOLAR_FORGE.get(),new Item.Properties().rarity(Rarity.EPIC).tab(SOLAR_GROUP_BLOCKS).stacksTo(1)));
     public static  final RegistryObject<Item> SOLAR_ORE_ITEM = ITEMS.register("solar_ores",()-> new ProgressionBlockItem(SOLAR_ORE.get(),new Item.Properties().tab(SOLAR_GROUP_BLOCKS)));
-    public static  final RegistryObject<Item> INFUSING_STAND_ITEM = ITEMS.register("solar_infuser",()-> new InfusingTableBlockItem(SOLAR_INFUSER.get(),new Item.Properties().rarity(Rarity.EPIC).tab(SOLAR_GROUP_BLOCKS).stacksTo(1)));
+    public static  final RegistryObject<Item> INFUSING_STAND_ITEM = ITEMS.register("solar_infuser",()-> new InfuserBlockItem(SOLAR_INFUSER.get(),new Item.Properties().rarity(Rarity.EPIC).tab(SOLAR_GROUP_BLOCKS).stacksTo(1)));
     // Directly reference a log4j logger.
     public static final Logger LOGGER = LogManager.getLogger();
     public static final RegistryObject<BlockEntityType<SolarForgeBlockEntity>> SOLAR_FORGE_BLOCKENTITY = TILE_ENTITY_TYPE.register("solar_forge_blockentity",()->
             BlockEntityType.Builder.of(SolarForgeBlockEntity::new,SOLAR_FORGE.get()).build(null));
     public static final RegistryObject<MenuType<SolarForgeContainer>> SOLAR_FORGE_CONTAINER = CONTAINER_TYPE.register("solarforge_container",()-> IForgeContainerType.create(SolarForgeContainer::new));
-    public static final RegistryObject<MenuType<InfusingTableContainer>> INFUSING_TABLE_CONTAINER = CONTAINER_TYPE.register("infusing_stand_container",()-> IForgeContainerType.create(InfusingTableContainer::new));
+    public static final RegistryObject<MenuType<InfuserContainer>> INFUSING_TABLE_CONTAINER = CONTAINER_TYPE.register("infusing_stand_container",()-> IForgeContainerType.create(InfuserContainer::new));
 
     public static final RecipeType<InfusingRecipe> INFUSING_RECIPE_TYPE = new InfusingRecipeType();
     public static final RecipeType<SolarSmeltingRecipe> SOLAR_SMELTING = new SolarSmeltingRecipeType();
@@ -249,7 +249,7 @@ public class SolarForge
         MinecraftForge.EVENT_BUS.register(new TestRenderEvent());
 
         MenuScreens.register(SOLAR_FORGE_CONTAINER.get(), SolarForgeScreen::new);
-        MenuScreens.register(INFUSING_TABLE_CONTAINER.get(), InfusingTableScreen::new);
+        MenuScreens.register(INFUSING_TABLE_CONTAINER.get(), InfuserScreen::new);
     }
     // You can use SubscribeEvent and let the Event Bus discover methods to call
     @SubscribeEvent

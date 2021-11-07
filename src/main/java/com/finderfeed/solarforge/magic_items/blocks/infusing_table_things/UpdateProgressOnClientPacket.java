@@ -44,7 +44,7 @@ public class UpdateProgressOnClientPacket {
         ctx.get().enqueueWork(()->{
             DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> ()->{
                 ClientLevel world = Minecraft.getInstance().level;
-                InfusingTableTileEntity tile = (InfusingTableTileEntity) world.getBlockEntity(pos);
+                InfuserTileEntity tile = (InfuserTileEntity) world.getBlockEntity(pos);
                 if (tile != null) {
                     tile.CURRENT_PROGRESS = progress;
                     tile.INFUSING_TIME = maxProg;

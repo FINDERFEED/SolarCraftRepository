@@ -4,7 +4,7 @@ import com.finderfeed.solarforge.SolarAbilities.meteorite.MeteoriteProjectileRen
 import com.finderfeed.solarforge.SolarAbilities.SolarStrikeEntityRender;
 import com.finderfeed.solarforge.entities.renderers.*;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.containers.screens.ModuleApplierScreen;
-import com.finderfeed.solarforge.magic_items.blocks.infusing_table_things.InfusingTableRenderer;
+import com.finderfeed.solarforge.magic_items.blocks.infusing_table_things.InfuserRenderer;
 import com.finderfeed.solarforge.magic_items.blocks.infusing_table_things.infusing_pool.InfusingPoolRenderer;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.containers.screens.RunicTableContainerScreen;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.containers.screens.SolarFurnaceScreen;
@@ -103,7 +103,7 @@ public class SolarForgeClientRegistry {
         BlockEntityRenderers.register(TileEntitiesRegistry.RUNE_ENERGY_PYLON.get(), RuneEnergyPylonRenderer::new);
         BlockEntityRenderers.register(SolarForge.SOLAR_FORGE_BLOCKENTITY.get(), SolarForgeBlockEntityRenderer::new);
         BlockEntityRenderers.register(TileEntitiesRegistry.INFUSING_POOL_BLOCKENTITY.get(), InfusingPoolRenderer::new);
-        BlockEntityRenderers.register(SolarForge.INFUSING_STAND_BLOCKENTITY.get(), InfusingTableRenderer::new);
+        BlockEntityRenderers.register(SolarForge.INFUSING_STAND_BLOCKENTITY.get(), InfuserRenderer::new);
         BlockEntityRenderers.register(TileEntitiesRegistry.SOLAR_REPEATER.get(), SolarRepeaterRenderer::new);
         BlockEntityRenderers.register(TileEntitiesRegistry.ENERGY_GENERATOR_TILE.get(), EnergyGeneratorTileRender::new);
         BlockEntityRenderers.register(TileEntitiesRegistry.SOLAR_CORE_TILE.get(), SolarCoreRenderer::new);

@@ -14,11 +14,11 @@ import net.minecraft.core.BlockPos;
 
 import java.util.Objects;
 
-public class InfusingTableContainer extends AbstractContainerMenu {
-    public InfusingTableTileEntity te;
+public class InfuserContainer extends AbstractContainerMenu {
+    public InfuserTileEntity te;
 
 
-    public InfusingTableContainer(final int windowId, final Inventory playerInv, final InfusingTableTileEntity te) {
+    public InfuserContainer(final int windowId, final Inventory playerInv, final InfuserTileEntity te) {
         super(SolarForge.INFUSING_TABLE_CONTAINER.get(), windowId);
         this.te = te;
 
@@ -47,7 +47,7 @@ public class InfusingTableContainer extends AbstractContainerMenu {
 
 
     }
-    public InfusingTableContainer(final int windowId, final Inventory playerInv, final FriendlyByteBuf buf) {
+    public InfuserContainer(final int windowId, final Inventory playerInv, final FriendlyByteBuf buf) {
         this(windowId, playerInv, getTileEntity(playerInv, buf.readBlockPos()));
 
     }
@@ -55,14 +55,14 @@ public class InfusingTableContainer extends AbstractContainerMenu {
 
 
 
-    private static InfusingTableTileEntity getTileEntity(final Inventory playerInv,final BlockPos pos) {
+    private static InfuserTileEntity getTileEntity(final Inventory playerInv, final BlockPos pos) {
         Objects.requireNonNull(playerInv, "Player Inventory cannot be null.");
         Objects.requireNonNull(pos, "Pos cannot be null.");
 
         final BlockEntity te = playerInv.player.level.getBlockEntity(pos);
 
-        if (te instanceof InfusingTableTileEntity) {
-            return (InfusingTableTileEntity) te;
+        if (te instanceof InfuserTileEntity) {
+            return (InfuserTileEntity) te;
         }
         throw new IllegalStateException("Tile Entity Is Not Correct");
     }

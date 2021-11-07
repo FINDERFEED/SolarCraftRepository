@@ -19,7 +19,7 @@ import net.minecraft.world.item.Items;
 
 import java.util.Optional;
 
-public class InfusingTableScreen extends AbstractContainerScreen<InfusingTableContainer> {
+public class InfuserScreen extends AbstractContainerScreen<InfuserContainer> {
     public final ResourceLocation REQ_ENERGY = new ResourceLocation("solarforge","textures/gui/energy_bar.png");
     private static final ResourceLocation GUI_TEXT = new ResourceLocation("solarforge","textures/gui/solar_infuser_gui.png");
     private static final ResourceLocation ENERGY_GUI = new ResourceLocation("solarforge","textures/gui/infuser_energy_gui.png");
@@ -28,7 +28,7 @@ public class InfusingTableScreen extends AbstractContainerScreen<InfusingTableCo
     public final ResourceLocation RUNIC_ENERGY_BAR_T = new ResourceLocation("solarforge","textures/gui/runic_energy_bar_t.png");
     public int relX;
     public int relY;
-    public InfusingTableScreen(InfusingTableContainer container, Inventory inv, Component text) {
+    public InfuserScreen(InfuserContainer container, Inventory inv, Component text) {
         super(container, inv, text);
         this.leftPos = 60;
         this.topPos = 0;
@@ -75,7 +75,7 @@ public class InfusingTableScreen extends AbstractContainerScreen<InfusingTableCo
         }
         this.blit(matrices, relX+4+a, relY-8, 0, 0, 190, 230);
         ItemRenderer renderd = minecraft.getItemRenderer();
-        InfusingTableTileEntity tile = this.menu.te;
+        InfuserTileEntity tile = this.menu.te;
 
 //        renderItemAndTooltip(tile.getItem(1),relX+137+a,relY+58,x,y,matrices);
 //        renderItemAndTooltip(tile.getItem(2),relX+123+a,relY+19,x,y,matrices);

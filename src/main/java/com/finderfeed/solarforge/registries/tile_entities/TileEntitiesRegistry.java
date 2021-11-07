@@ -85,4 +85,6 @@ public class TileEntitiesRegistry {
     public static final RegistryObject<BlockEntityType<BonemealerTileEntity>> BONEMEALER = TILE_ENTITY_TYPE.register("bonemealer",()->
             BlockEntityType.Builder.of(BonemealerTileEntity::new, BlocksRegistry.BONEMEALER.get()).build(null));
 
+    public static final RegistryObject<BlockEntityType<InfusingTableTile>> INFUSING_CRAFTING_TABLE = TILE_ENTITY_TYPE.register("infusing_crafting_table",()->
+            BlockEntityType.Builder.of(InfusingTableTile::new, BlocksRegistry.INFUSING_CRAFTING_TABLE_BLOCK.get()).build(null));
 }

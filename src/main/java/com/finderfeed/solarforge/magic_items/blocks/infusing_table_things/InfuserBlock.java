@@ -1,7 +1,6 @@
 package com.finderfeed.solarforge.magic_items.blocks.infusing_table_things;
 
 import com.finderfeed.solarforge.SolarForge;
-import com.finderfeed.solarforge.for_future_library.OwnedBlock;
 import com.finderfeed.solarforge.magic_items.items.SolarNetworkBinder;
 import com.finderfeed.solarforge.misc_things.SolarcraftDebugStick;
 import net.minecraft.world.level.block.Block;
@@ -25,16 +24,12 @@ import net.minecraft.world.level.Level;
 
 import java.util.function.Consumer;
 
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
-import net.minecraftforge.event.world.BlockEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fmllegacy.network.NetworkHooks;
 
 import javax.annotation.Nullable;
 
-public class InfusingTableBlock extends Block implements EntityBlock {
-    public InfusingTableBlock(Properties prop) {
+public class InfuserBlock extends Block implements EntityBlock {
+    public InfuserBlock(Properties prop) {
         super(prop);
     }
 
@@ -54,8 +49,8 @@ public class InfusingTableBlock extends Block implements EntityBlock {
 
         BlockEntity te = p_196243_2_.getBlockEntity(p_196243_3_);
 
-        if (te instanceof InfusingTableTileEntity){
-            InfusingTableTileEntity ent = (InfusingTableTileEntity) te;
+        if (te instanceof InfuserTileEntity){
+            InfuserTileEntity ent = (InfuserTileEntity) te;
             ItemStack stacks = ent.getItems().get(0);
             popResource(p_196243_2_,p_196243_3_,stacks);
             stacks = ent.getItems().get(9);
@@ -74,14 +69,14 @@ public class InfusingTableBlock extends Block implements EntityBlock {
         if (!world.isClientSide()) {
 
             BlockEntity entity = world.getBlockEntity(pos);
-            if (entity instanceof InfusingTableTileEntity) {
-                InfusingTableTileEntity tile = (InfusingTableTileEntity) entity;
+            if (entity instanceof InfuserTileEntity) {
+                InfuserTileEntity tile = (InfuserTileEntity) entity;
                 if (!(user.getMainHandItem().getItem() instanceof SolarWandItem) && !(user.getMainHandItem().getItem() instanceof SolarNetworkBinder) && !(user.getMainHandItem().getItem() instanceof SolarcraftDebugStick)) {
                     entity.setChanged();
                     world.sendBlockUpdated(pos,state,state,3);
                     Consumer<FriendlyByteBuf> cons = x -> { x.writeBlockPos(pos);
                     };
-                    NetworkHooks.openGui((ServerPlayer) user, (InfusingTableTileEntity) entity, cons);
+                    NetworkHooks.openGui((ServerPlayer) user, (InfuserTileEntity) entity, cons);
 
                 }
 
@@ -100,7 +95,7 @@ public class InfusingTableBlock extends Block implements EntityBlock {
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level p_153212_, BlockState p_153213_, BlockEntityType<T> p_153214_) {
         return ((level, blockPos, blockState, t) -> {
-            InfusingTableTileEntity.tick(level,blockPos,blockState,(InfusingTableTileEntity) t);
+            InfuserTileEntity.tick(level,blockPos,blockState,(InfuserTileEntity) t);
         });
     }
 

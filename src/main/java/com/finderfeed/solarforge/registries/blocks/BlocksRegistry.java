@@ -45,6 +45,7 @@ public class BlocksRegistry {
             .noOcclusion()
             .strength(3,3)));
 
+    public  static  final RegistryObject<Block> INFUSING_CRAFTING_TABLE_BLOCK = BLOCKS.register("infusing_crafting_table",()-> new InfusingTableBlock(BlockBehaviour.Properties.copy(Blocks.STONE)));
     public  static  final RegistryObject<SolarStoneBlock> SOLAR_STONE = BLOCKS.register("solar_stone",()-> new SolarStoneBlock(BlockBehaviour.Properties.copy(Blocks.ANDESITE)));
     public  static  final RegistryObject<Block> SOLAR_STONE_CHISELED = BLOCKS.register("chiseled_solar_stone",()-> new Block(BlockBehaviour.Properties.copy(Blocks.STONE)));
     public  static  final RegistryObject<ProgressionBlock> ENDER_CRACKS = BLOCKS.register("ender_cracks",()-> new ProgressionBlock(BlockBehaviour.Properties.copy(Blocks.END_STONE),()-> Progression.KILL_DRAGON,Blocks.END_STONE));

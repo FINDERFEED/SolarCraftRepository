@@ -9,19 +9,17 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
-import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
 import net.minecraft.resources.ResourceLocation;
 import com.mojang.math.Vector3f;
 
-public class InfusingTableRenderer extends AbstractRunicEnergyContainerRCBERenderer<InfusingTableTileEntity> {
+public class InfuserRenderer extends AbstractRunicEnergyContainerRCBERenderer<InfuserTileEntity> {
     public final ResourceLocation text = new ResourceLocation("solarforge","textures/misc/solar_infuser_ring.png");
-    public InfusingTableRenderer(BlockEntityRendererProvider.Context ctx) {
+    public InfuserRenderer(BlockEntityRendererProvider.Context ctx) {
 
     }
 
     @Override
-    public void render(InfusingTableTileEntity tile, float partialTicks, PoseStack matrices, MultiBufferSource buffer, int light, int light2) {
+    public void render(InfuserTileEntity tile, float partialTicks, PoseStack matrices, MultiBufferSource buffer, int light, int light2) {
         super.render(tile,partialTicks,matrices,buffer,light,light2);
         float time = (tile.getLevel().getGameTime()+partialTicks) ;
         if (tile.RECIPE_IN_PROGRESS) {

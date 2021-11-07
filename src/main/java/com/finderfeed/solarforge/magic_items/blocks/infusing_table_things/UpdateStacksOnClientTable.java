@@ -74,7 +74,7 @@ public class UpdateStacksOnClientTable {
             DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> ()-> {
                 ClientLevel world = Minecraft.getInstance().level;
 
-                InfusingTableTileEntity tile = (InfusingTableTileEntity) world.getBlockEntity(pos);
+                InfuserTileEntity tile = (InfuserTileEntity) world.getBlockEntity(pos);
                 if (tile != null) {
                     tile.setItem(0, stack);
                     tile.setItem(1, stack1);

@@ -77,8 +77,8 @@ public class SolarWandItem extends Item implements ManaConsumer {
         BlockPos pos = ctx.getClickedPos();
         Level world = ctx.getLevel();
         if (!world.isClientSide && world.getBlockEntity(pos) != null
-                && world.getBlockEntity(pos) instanceof InfusingTableTileEntity) {
-            InfusingTableTileEntity tile = (InfusingTableTileEntity) world.getBlockEntity(pos);
+                && world.getBlockEntity(pos) instanceof InfuserTileEntity) {
+            InfuserTileEntity tile = (InfuserTileEntity) world.getBlockEntity(pos);
             tile.triggerCrafting(ctx.getPlayer());
             return InteractionResult.SUCCESS;
         }
@@ -160,10 +160,10 @@ class WandEvents{
                     BlockHitResult result = player.level.clip(ctx);
 
                     if (result.getType() == HitResult.Type.BLOCK &&
-                            player.level.getBlockState(result.getBlockPos()).getBlock() instanceof InfusingTableBlock) {
+                            player.level.getBlockState(result.getBlockPos()).getBlock() instanceof InfuserBlock) {
                         BlockEntity tile = player.level.getBlockEntity(result.getBlockPos());
-                        if (tile instanceof InfusingTableTileEntity) {
-                            InfusingTableTileEntity tileInfusing = (InfusingTableTileEntity) tile;
+                        if (tile instanceof InfuserTileEntity) {
+                            InfuserTileEntity tileInfusing = (InfuserTileEntity) tile;
                             ClientHelpers.bindText(LOC);
                             if (tileInfusing.RECIPE_IN_PROGRESS) {
                                 double percent = (float) tileInfusing.CURRENT_PROGRESS / tileInfusing.INFUSING_TIME;

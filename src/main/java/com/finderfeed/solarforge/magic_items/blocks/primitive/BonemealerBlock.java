@@ -1,11 +1,8 @@
 package com.finderfeed.solarforge.magic_items.blocks.primitive;
 
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.BonemealerTileEntity;
-import com.finderfeed.solarforge.magic_items.blocks.blockentities.ZapTurretTile;
-import com.finderfeed.solarforge.magic_items.blocks.infusing_table_things.InfusingTableTileEntity;
 import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;

@@ -9,8 +9,8 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
-public class InfusingTableBlockItem extends BlockItem {
-    public InfusingTableBlockItem(Block p_i48527_1_, Properties p_i48527_2_) {
+public class InfuserBlockItem extends BlockItem {
+    public InfuserBlockItem(Block p_i48527_1_, Properties p_i48527_2_) {
         super(p_i48527_1_, p_i48527_2_);
     }
 

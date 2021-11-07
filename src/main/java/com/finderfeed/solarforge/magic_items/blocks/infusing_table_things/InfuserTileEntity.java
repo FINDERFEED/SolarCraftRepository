@@ -44,7 +44,7 @@ import javax.annotation.Nullable;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class InfusingTableTileEntity extends AbstractRunicEnergyContainerRCBE implements  IEnergyUser, IBindable, ISolarEnergyContainer, OneWay,DebugTarget {
+public class InfuserTileEntity extends AbstractRunicEnergyContainerRCBE implements  IEnergyUser, IBindable, ISolarEnergyContainer, OneWay,DebugTarget {
 
 
 
@@ -58,7 +58,7 @@ public class InfusingTableTileEntity extends AbstractRunicEnergyContainerRCBE im
     public boolean requiresEnergy = false;
     public NonNullList<ItemStack> items = NonNullList.withSize(10,ItemStack.EMPTY);
 
-    public InfusingTableTileEntity( BlockPos p_155630_, BlockState p_155631_) {
+    public InfuserTileEntity(BlockPos p_155630_, BlockState p_155631_) {
         super(SolarForge.INFUSING_STAND_BLOCKENTITY.get(), p_155630_, p_155631_);
     }
 
@@ -74,7 +74,7 @@ public class InfusingTableTileEntity extends AbstractRunicEnergyContainerRCBE im
 
     @Override
     protected AbstractContainerMenu createMenu(int x, Inventory inv) {
-        return new InfusingTableContainer(x,inv,this);
+        return new InfuserContainer(x,inv,this);
     }
 
     @Override
@@ -148,7 +148,7 @@ public class InfusingTableTileEntity extends AbstractRunicEnergyContainerRCBE im
 
 
 
-    public static void tick(Level world, BlockPos pos, BlockState blockState, InfusingTableTileEntity tile) {
+    public static void tick(Level world, BlockPos pos, BlockState blockState, InfuserTileEntity tile) {
         if (!world.isClientSide){
 
             tile.updateStacksInPhantomSlots();
@@ -208,7 +208,7 @@ public class InfusingTableTileEntity extends AbstractRunicEnergyContainerRCBE im
 
 
 
-    private static void doParticlesAnimation(Level world,InfusingTableTileEntity tile){
+    private static void doParticlesAnimation(Level world, InfuserTileEntity tile){
         if (tile.RECIPE_IN_PROGRESS){
 
             tile.spawnParticles(4.7f-tile.TICKS_RADIUS_TIMER,tile.TICKS_TIMER);
@@ -241,7 +241,7 @@ public class InfusingTableTileEntity extends AbstractRunicEnergyContainerRCBE im
         return new ClientboundBlockEntityDataPacket(worldPosition,3,tag);
     }
 
-    private static void sendUpdatePackets(Level world, InfusingTableTileEntity tile){
+    private static void sendUpdatePackets(Level world, InfuserTileEntity tile){
         SolarForgePacketHandler.INSTANCE.send(PacketDistributor.NEAR.with(PacketDistributor.TargetPoint.p(tile.worldPosition.getX(),tile.worldPosition.getY(),tile.worldPosition.getZ(),20,tile.level.dimension())),
                 new UpdateProgressOnClientPacket(tile.INFUSING_TIME,tile.CURRENT_PROGRESS,tile.worldPosition,tile.requiresEnergy,tile.energy));
         ItemStack[] arr = {tile.getItem(0),tile.getItem(1),tile.getItem(2),tile.getItem(3),tile.getItem(4),tile.getItem(5),tile.getItem(6),tile.getItem(7),tile.getItem(8)};
@@ -251,7 +251,7 @@ public class InfusingTableTileEntity extends AbstractRunicEnergyContainerRCBE im
 
 
 
-    private static void finishRecipe(Level world,InfusingTableTileEntity tile,InfusingRecipe recipe){
+    private static void finishRecipe(Level world, InfuserTileEntity tile, InfusingRecipe recipe){
         ItemStack result = new ItemStack(recipe.output.getItem(),recipe.count);
         int count = tile.getMinRecipeCountOutput(recipe);
         recipe.RUNIC_ENERGY_COST.forEach((type,cost)->{
