@@ -13,13 +13,13 @@ public class Structures {
 
     public static List<BlockEntity> checkInfusingStandStructure(BlockPos pos, Level world){
         List<BlockEntity> list = new ArrayList<>(0);
-                    list.add(blockGet(pos.offset(4,0,0),world));
+                    list.add(blockGet(pos.offset(4,1,0),world));
                     list.add(blockGet(pos.offset(3,0,-3),world));
-                    list.add(blockGet(pos.offset(0,0,-4),world)) ;
+                    list.add(blockGet(pos.offset(0,1,-4),world)) ;
                     list.add(blockGet(pos.offset(-3,0,-3),world)) ;
-                    list.add(blockGet(pos.offset(-4,0,0),world));
+                    list.add(blockGet(pos.offset(-4,1,0),world));
                     list.add(blockGet(pos.offset(-3,0,3),world));
-                    list.add(blockGet(pos.offset(0,0,4),world));
+                    list.add(blockGet(pos.offset(0,1,4),world));
                     list.add(blockGet(pos.offset(3,0,3),world));
 
                     /*

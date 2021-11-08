@@ -38,12 +38,14 @@ public class ProgressionHelper {
             ItemsRegister.SOLAR_RUNE_TERA.get(),
             ItemsRegister.SOLAR_RUNE_URBA.get(),
             ItemsRegister.SOLAR_RUNE_ZETA.get(),
+            ItemsRegister.SOLAR_RUNE_GIRO.get(),
+            ItemsRegister.SOLAR_RUNE_ULTIMA.get()
     };
 
-    public static Map<RunicEnergy.Type,Item> RUNES_MAP = null;
+    public static Map<RunicEnergy.Type,Item> RUNES_MAP = initRunesMap();
 
 
-    public static void initRunesMap(){
+    public static Map<RunicEnergy.Type,Item> initRunesMap(){
         RUNES_MAP = new HashMap<>();
         RUNES_MAP.put(RunicEnergy.Type.ARDO,ItemsRegister.SOLAR_RUNE_ARDO.get());
         RUNES_MAP.put(RunicEnergy.Type.FIRA,ItemsRegister.SOLAR_RUNE_FIRA.get());
@@ -51,7 +53,9 @@ public class ProgressionHelper {
         RUNES_MAP.put(RunicEnergy.Type.KELDA,ItemsRegister.SOLAR_RUNE_KELDA.get());
         RUNES_MAP.put(RunicEnergy.Type.URBA,ItemsRegister.SOLAR_RUNE_URBA.get());
         RUNES_MAP.put(RunicEnergy.Type.TERA,ItemsRegister.SOLAR_RUNE_TERA.get());
-
+        RUNES_MAP.put(RunicEnergy.Type.GIRO,ItemsRegister.SOLAR_RUNE_GIRO.get());
+        RUNES_MAP.put(RunicEnergy.Type.ULTIMA,ItemsRegister.SOLAR_RUNE_ULTIMA.get());
+        return RUNES_MAP;
     }
 
 
@@ -149,12 +153,12 @@ public class ProgressionHelper {
     public static void generateRandomPatternForPlayer(Player pe){
         if (Arrays.equals(pe.getPersistentData().getIntArray(UNLOCK_PATTERN), new int[0])  || Arrays.equals(pe.getPersistentData().getIntArray(UNLOCK_PATTERN), NULL_ARRAY) ){
             pe.getPersistentData().putIntArray(UNLOCK_PATTERN,new int[]{
-                    pe.level.random.nextInt(6),
-                    pe.level.random.nextInt(6),
-                    pe.level.random.nextInt(6),
-                    pe.level.random.nextInt(6),
-                    pe.level.random.nextInt(6),
-                    pe.level.random.nextInt(6),
+                    pe.level.random.nextInt(8),
+                    pe.level.random.nextInt(8),
+                    pe.level.random.nextInt(8),
+                    pe.level.random.nextInt(8),
+                    pe.level.random.nextInt(8),
+                    pe.level.random.nextInt(8),
             });
         }
     }

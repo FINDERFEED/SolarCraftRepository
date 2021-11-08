@@ -16,7 +16,8 @@ public class RuneEnergyTypeProperty extends Property<RunicEnergy.Type> {
     @Override
     public Collection<RunicEnergy.Type> getPossibleValues() {
 
-        return List.of(RunicEnergy.Type.NONE,RunicEnergy.Type.ARDO, RunicEnergy.Type.FIRA, RunicEnergy.Type.TERA, RunicEnergy.Type.ZETA, RunicEnergy.Type.KELDA, RunicEnergy.Type.URBA);
+        return List.of(RunicEnergy.Type.NONE,RunicEnergy.Type.ARDO, RunicEnergy.Type.FIRA, RunicEnergy.Type.TERA, RunicEnergy.Type.ZETA, RunicEnergy.Type.KELDA, RunicEnergy.Type.URBA
+        , RunicEnergy.Type.ULTIMA, RunicEnergy.Type.GIRO);
     }
 
     @Override

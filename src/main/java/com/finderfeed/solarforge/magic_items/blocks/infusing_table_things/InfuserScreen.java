@@ -112,39 +112,48 @@ public class InfuserScreen extends AbstractContainerScreen<InfuserContainer> {
 
         matrices.pushPose();
         ClientHelpers.bindText(ENERGY_GUI);
-        blit(matrices,relX+a-54,relY-8,0,0,58,177,58,177);
+        int old = 58;
+        blit(matrices,relX+a-73+4,relY-8,0,0,73,177,58,177);
         ClientHelpers.bindText(RUNIC_ENERGY_BAR);
         if (recipe.isPresent()){
             InfusingRecipe recipe1 = recipe.get();
             RenderSystem.enableBlend();
-            renderEnergyBar(matrices,relX+a-12,relY+61,recipe1.RUNIC_ENERGY_COST.get(RunicEnergy.Type.KELDA),true);
+            renderEnergyBar(matrices,relX+a-12-16,relY+61,recipe1.RUNIC_ENERGY_COST.get(RunicEnergy.Type.KELDA),true);
 
-            renderEnergyBar(matrices,relX+a-28,relY+61,recipe1.RUNIC_ENERGY_COST.get(RunicEnergy.Type.TERA),true);
+            renderEnergyBar(matrices,relX+a-28-16,relY+61,recipe1.RUNIC_ENERGY_COST.get(RunicEnergy.Type.TERA),true);
 
-            renderEnergyBar(matrices,relX+a-44,relY+61,recipe1.RUNIC_ENERGY_COST.get(RunicEnergy.Type.ZETA),true);
+            renderEnergyBar(matrices,relX+a-44-16,relY+61,recipe1.RUNIC_ENERGY_COST.get(RunicEnergy.Type.ZETA),true);
 
 
-            renderEnergyBar(matrices,relX+a-12,relY+145,recipe1.RUNIC_ENERGY_COST.get(RunicEnergy.Type.URBA),true);
+            renderEnergyBar(matrices,relX+a-12-16,relY+145,recipe1.RUNIC_ENERGY_COST.get(RunicEnergy.Type.URBA),true);
 
-            renderEnergyBar(matrices,relX+a-28,relY+145,recipe1.RUNIC_ENERGY_COST.get(RunicEnergy.Type.FIRA),true);
+            renderEnergyBar(matrices,relX+a-28-16,relY+145,recipe1.RUNIC_ENERGY_COST.get(RunicEnergy.Type.FIRA),true);
 
-            renderEnergyBar(matrices,relX+a-44,relY+145,recipe1.RUNIC_ENERGY_COST.get(RunicEnergy.Type.ARDO),true);
+            renderEnergyBar(matrices,relX+a-44-16,relY+145,recipe1.RUNIC_ENERGY_COST.get(RunicEnergy.Type.ARDO),true);
+
+            renderEnergyBar(matrices,relX+a-12,relY+61,recipe1.RUNIC_ENERGY_COST.get(RunicEnergy.Type.GIRO),true);
+
+            renderEnergyBar(matrices,relX+a-12,relY+145,recipe1.RUNIC_ENERGY_COST.get(RunicEnergy.Type.ULTIMA),true);
             RenderSystem.disableBlend();
         }
 
 
-        renderEnergyBar(matrices,relX+a-12,relY+61,tile.getRunicEnergy(RunicEnergy.Type.KELDA),false);
+        renderEnergyBar(matrices,relX+a-12-16,relY+61,tile.getRunicEnergy(RunicEnergy.Type.KELDA),false);
 
-        renderEnergyBar(matrices,relX+a-28,relY+61,tile.getRunicEnergy(RunicEnergy.Type.TERA),false);
+        renderEnergyBar(matrices,relX+a-28-16,relY+61,tile.getRunicEnergy(RunicEnergy.Type.TERA),false);
 
-        renderEnergyBar(matrices,relX+a-44,relY+61,tile.getRunicEnergy(RunicEnergy.Type.ZETA),false);
+        renderEnergyBar(matrices,relX+a-44-16,relY+61,tile.getRunicEnergy(RunicEnergy.Type.ZETA),false);
 
 
-        renderEnergyBar(matrices,relX+a-12,relY+145,tile.getRunicEnergy(RunicEnergy.Type.URBA),false);
+        renderEnergyBar(matrices,relX+a-12-16,relY+145,tile.getRunicEnergy(RunicEnergy.Type.URBA),false);
 
-        renderEnergyBar(matrices,relX+a-28,relY+145,tile.getRunicEnergy(RunicEnergy.Type.FIRA),false);
+        renderEnergyBar(matrices,relX+a-28-16,relY+145,tile.getRunicEnergy(RunicEnergy.Type.FIRA),false);
 
-        renderEnergyBar(matrices,relX+a-44,relY+145,tile.getRunicEnergy(RunicEnergy.Type.ARDO),false);
+        renderEnergyBar(matrices,relX+a-44-16,relY+145,tile.getRunicEnergy(RunicEnergy.Type.ARDO),false);
+
+        renderEnergyBar(matrices,relX+a-12,relY+61,tile.getRunicEnergy(RunicEnergy.Type.GIRO),false);
+
+        renderEnergyBar(matrices,relX+a-12,relY+145,tile.getRunicEnergy(RunicEnergy.Type.ULTIMA),false);
 
 
         renderItemAndTooltip(tile.getItem(1),relX+137+a,relY+58,x,y,matrices);

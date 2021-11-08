@@ -39,9 +39,11 @@ public class InfusingTableBlock extends Block implements EntityBlock {
         if (!level.isClientSide && hand == InteractionHand.MAIN_HAND){
             BlockEntity e = level.getBlockEntity(pos);
             if (e instanceof  InfusingTableTile tile) {
-                NetworkHooks.openGui((ServerPlayer) player, new InfusingTableTileContainer.Provider(tile),(buf ->
-                        buf.writeBlockPos(pos)
-                        ));
+                if (tile.getOwner() != null && (level.getPlayerByUUID(tile.getOwner()) == player)) {
+                    NetworkHooks.openGui((ServerPlayer) player, new InfusingTableTileContainer.Provider(tile), (buf ->
+                            buf.writeBlockPos(pos)
+                    ));
+                }
             }
         }
         return InteractionResult.SUCCESS;

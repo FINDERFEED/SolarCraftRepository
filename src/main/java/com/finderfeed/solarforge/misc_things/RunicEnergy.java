@@ -88,6 +88,8 @@ public class RunicEnergy {
         KELDA("kelda"),
         FIRA("fira"),
         TERA("tera"),
+        GIRO("giro"),
+        ULTIMA("ultima"),
         NONE("none")
         ;
 
@@ -99,7 +101,7 @@ public class RunicEnergy {
         }
 
         public static Type[] getAll(){
-            return new Type[]{ZETA,KELDA,URBA,TERA,FIRA,ARDO};
+            return new Type[]{ZETA,KELDA,URBA,TERA,FIRA,ARDO,GIRO,ULTIMA};
         }
 
         public static Type byId(String id){

@@ -71,13 +71,16 @@ public class InfuserBlock extends Block implements EntityBlock {
             BlockEntity entity = world.getBlockEntity(pos);
             if (entity instanceof InfuserTileEntity) {
                 InfuserTileEntity tile = (InfuserTileEntity) entity;
-                if (!(user.getMainHandItem().getItem() instanceof SolarWandItem) && !(user.getMainHandItem().getItem() instanceof SolarNetworkBinder) && !(user.getMainHandItem().getItem() instanceof SolarcraftDebugStick)) {
-                    entity.setChanged();
-                    world.sendBlockUpdated(pos,state,state,3);
-                    Consumer<FriendlyByteBuf> cons = x -> { x.writeBlockPos(pos);
-                    };
-                    NetworkHooks.openGui((ServerPlayer) user, (InfuserTileEntity) entity, cons);
+                if (tile.getOwner() != null && (world.getPlayerByUUID(tile.getOwner()) == user)) {
+                    if (!(user.getMainHandItem().getItem() instanceof SolarWandItem) && !(user.getMainHandItem().getItem() instanceof SolarNetworkBinder) && !(user.getMainHandItem().getItem() instanceof SolarcraftDebugStick)) {
+                        entity.setChanged();
+                        world.sendBlockUpdated(pos, state, state, 3);
+                        Consumer<FriendlyByteBuf> cons = x -> {
+                            x.writeBlockPos(pos);
+                        };
+                        NetworkHooks.openGui((ServerPlayer) user, (InfuserTileEntity) entity, cons);
 
+                    }
                 }
 
             };
@@ -85,7 +88,7 @@ public class InfuserBlock extends Block implements EntityBlock {
         if ((user.getItemInHand(hand).getItem() instanceof  SolarWandItem) || (user.getItemInHand(hand).getItem() instanceof  SolarNetworkBinder)  || (user.getItemInHand(hand).getItem() instanceof  SolarcraftDebugStick)){
             return super.use(state,world,pos,user,hand,rayTraceResult);
         }else{
-            return InteractionResult.CONSUME;
+            return InteractionResult.SUCCESS;
         }
 
     }

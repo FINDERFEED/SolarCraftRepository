@@ -2,6 +2,7 @@ package com.finderfeed.solarforge.recipe_types;
 
 
 import com.finderfeed.solarforge.SolarForge;
+import com.finderfeed.solarforge.magic_items.blocks.infusing_table_things.InfuserTileEntity;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import net.minecraft.world.Container;
@@ -17,6 +18,7 @@ import java.util.Map;
 
 public class InfusingRecipe implements Recipe<Container> {
 
+    private final InfuserTileEntity.Tier tier;
     public final ResourceLocation id;
     public final Ingredient input1;
     public final Ingredient input2;
@@ -55,6 +57,13 @@ public class InfusingRecipe implements Recipe<Container> {
         this.requriedEnergy = requriedEnergy;
         this.tag = tag;
         this.count = count;
+        if (doRecipeRequiresRunicEnergy(costs)){
+            this.tier = InfuserTileEntity.Tier.RUNIC_ENERGY;
+        }else if (requriedEnergy > 0){
+            this.tier = InfuserTileEntity.Tier.SOLAR_ENERGY;
+        }else{
+            this.tier = InfuserTileEntity.Tier.FIRST;
+        }
     }
 
     public int getInfusingTime(){
@@ -102,5 +111,18 @@ public class InfusingRecipe implements Recipe<Container> {
     @Override
     public RecipeType<?> getType() {
         return SolarForge.INFUSING_RECIPE_TYPE;
+    }
+
+    public InfuserTileEntity.Tier getTier() {
+        return tier;
+    }
+
+    private boolean doRecipeRequiresRunicEnergy(Map<RunicEnergy.Type,Double> costs){
+        for (double cost : costs.values()){
+            if (Math.round(cost) != 0){
+                return true;
+            }
+        }
+        return false;
     }
 }

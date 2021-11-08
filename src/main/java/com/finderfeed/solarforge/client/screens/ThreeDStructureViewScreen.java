@@ -1,6 +1,7 @@
 package com.finderfeed.solarforge.client.screens;
 
 import com.finderfeed.solarforge.ClientHelpers;
+import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.for_future_library.helpers.RenderingTools;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.SolarLexicon;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.screen.ItemStackButton;
@@ -35,6 +36,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.data.worldgen.biome.Biomes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.BlockAndTintGetter;
@@ -68,7 +70,7 @@ public class ThreeDStructureViewScreen extends Screen implements IScrollable {
         minecraft.setScreen(null);
     }, Items.WRITABLE_BOOK.getDefaultInstance(),0.7f,false);
     public final ResourceLocation THREEDSCREENBTN = new ResourceLocation("solarforge","textures/misc/button.png");
-    public final ResourceLocation STRUCTURE_GUI = new ResourceLocation("solarforge","textures/gui/structure_screen_three_d.png");
+    public final ResourceLocation STRUCTURE_GUI = new ResourceLocation("solarforge","textures/gui/structure_screen.png");
     private double xDragPos=0;
     private double yDragPos=0;
     private float structScale = 1;
@@ -94,12 +96,12 @@ public class ThreeDStructureViewScreen extends Screen implements IScrollable {
         int width = minecraft.getWindow().getWidth();
         int height = minecraft.getWindow().getHeight();
         int scale = (int) minecraft.getWindow().getGuiScale();
-        this.relX = (width/scale - 183)/2-12;
+        this.relX = (width/scale - 183)/2-15;
         this.relY = (height - 218*scale)/2/scale;
         POS_STATE_TILEENTITY.clear();
         structScale = 10f/Math.max(struct.getStruct().length,struct.getStruct()[0].length);
         this.POS_STATE_TILEENTITY = RenderingTools.StructureRenderer.prepareList(struct);
-        addRenderableWidget(new ImageButton(relX+97,relY+16,16,16,0,0,0,THREEDSCREENBTN,16,16,(button)->{
+        addRenderableWidget(new ImageButton(relX+127+55-15,relY+10,16,16,0,0,0,THREEDSCREENBTN,16,16,(button)->{
             Minecraft.getInstance().setScreen(new StructureScreen(struct));
         },(btn,poseStack,mx,my)->{
             renderTooltip(poseStack,new TextComponent("2D View"),mx,my);
@@ -112,9 +114,9 @@ public class ThreeDStructureViewScreen extends Screen implements IScrollable {
 
         addRenderableWidget(b);
         addRenderableWidget(c);
-        b.x = relX+186;
+        b.x = relX+186+10;
         b.y = relY+9;
-        c.x = relX+174;
+        c.x = relX+174+10;
         c.y = relY + 9;
     }
 
@@ -156,6 +158,7 @@ public class ThreeDStructureViewScreen extends Screen implements IScrollable {
         ClientHelpers.bindText(STRUCTURE_GUI);
         blit(matrices,relX,relY,0,0,256,256);
         super.render(matrices, p_96563_, p_96564_, partialTicks);
+        Helpers.drawBoundedText(matrices,relX+14,relY+10,7,new TranslatableComponent(struct.getName()).getString());
         matrices.popPose();
 
         matrices.pushPose();

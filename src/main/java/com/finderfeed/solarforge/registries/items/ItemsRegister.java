@@ -158,6 +158,8 @@ public class ItemsRegister {
     public static final RegistryObject<Item> SOLAR_RUNE_KELDA = ITEMS.register("solar_rune_kelda",()->new RuneItem(new Item.Properties().tab(SolarForge.SOLAR_GROUP_MATERIALS), RunicEnergy.Type.KELDA));
     public static final RegistryObject<Item> SOLAR_RUNE_FIRA = ITEMS.register("solar_rune_fira",()->new RuneItem(new Item.Properties().tab(SolarForge.SOLAR_GROUP_MATERIALS), RunicEnergy.Type.FIRA));
     public static final RegistryObject<Item> SOLAR_RUNE_TERA = ITEMS.register("solar_rune_tera",()->new RuneItem(new Item.Properties().tab(SolarForge.SOLAR_GROUP_MATERIALS), RunicEnergy.Type.TERA));
+    public static final RegistryObject<Item> SOLAR_RUNE_GIRO = ITEMS.register("solar_rune_giro",()->new RuneItem(new Item.Properties().tab(SolarForge.SOLAR_GROUP_MATERIALS), RunicEnergy.Type.GIRO));
+    public static final RegistryObject<Item> SOLAR_RUNE_ULTIMA = ITEMS.register("solar_rune_ultima",()->new RuneItem(new Item.Properties().tab(SolarForge.SOLAR_GROUP_MATERIALS), RunicEnergy.Type.ULTIMA));
 
 
     public static final RegistryObject<Item> SOLAR_GOD_BOW = ITEMS.register("solar_god_bow",()->new SolarGodBow(new Item.Properties().tab(SolarForge.SOLAR_GROUP_WEAPONS).stacksTo(1).durability(8000)));
@@ -179,6 +181,9 @@ public class ItemsRegister {
     public static final RegistryObject<Item> URBA_RUNE_BLOCK = ITEMS.register("urba_rune_block",()->new BlockItem(BlocksRegistry.URBA_RUNE_BLOCK.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
     public static final RegistryObject<Item> TERA_RUNE_BLOCK = ITEMS.register("tera_rune_block",()->new BlockItem(BlocksRegistry.TERA_RUNE_BLOCK.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
     public static final RegistryObject<Item> FIRA_RUNE_BLOCK = ITEMS.register("fira_rune_block",()->new BlockItem(BlocksRegistry.FIRA_RUNE_BLOCK.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
+    public static final RegistryObject<Item> GIRO_RUNE_BLOCK = ITEMS.register("giro_rune_block",()->new BlockItem(BlocksRegistry.GIRO_RUNE_BLOCK.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
+    public static final RegistryObject<Item> ULTIMA_RUNE_BLOCK = ITEMS.register("ultima_rune_block",()->new BlockItem(BlocksRegistry.ULTIMA_RUNE_BLOCK.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
+
 
     public static final RegistryObject<Item> RADIANT_CRYSTAL = ITEMS.register("radiant_crystal",()->new BlockItem(BlocksRegistry.RADIANT_CRYSTAL.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
 

@@ -4,11 +4,13 @@ import com.finderfeed.solarforge.capabilities.capability_mana.CapabilitySolarMan
 import com.finderfeed.solarforge.capabilities.capability_mana.SolarForgeMana;
 import com.finderfeed.solarforge.entities.CrystalBossEntity;
 import com.finderfeed.solarforge.events.my_events.ProgressionUnlockEvent;
+import com.finderfeed.solarforge.for_future_library.OwnedBlock;
 import com.finderfeed.solarforge.for_future_library.helpers.FinderfeedMathHelper;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Progression;
 import com.finderfeed.solarforge.misc_things.Multiblock;
 import com.finderfeed.solarforge.misc_things.ParticlesList;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
+import com.finderfeed.solarforge.misc_things.StateAndTag;
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
 import com.finderfeed.solarforge.packet_handler.packets.*;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.achievement_tree.AchievementTree;
@@ -16,12 +18,15 @@ import com.finderfeed.solarforge.magic_items.items.solar_lexicon.packets.UpdateP
 import com.mojang.blaze3d.vertex.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiComponent;
+import net.minecraft.tags.Tag;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.core.Direction;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
@@ -196,13 +201,14 @@ public class Helpers {
                     for (int k = 0;k < line.length();k++){
                         //here the checking begins
                         char c = line.charAt(k);
+                        //TODO:
                         if (c != ' ') {
-                            if (world.getBlockState(initPos.offset(k, i, g)) != struct.blockMap.get(c)) {
-                                return false;
-                            }
+                                if (!checkBlock(world,pos.offset(k,i,g),struct.getStateAndTag(c))){
+                                    return false;
+                                }
                         }else{
                             if (!ignoreOtherBlocks){
-                                if (world.getBlockState(initPos.offset(k, i, g)) != struct.blockMap.get(c)) {
+                                if (!checkBlock(world,pos.offset(k,i,g),struct.getStateAndTag(c))){
                                     return false;
                                 }
                             }
@@ -212,6 +218,15 @@ public class Helpers {
             }
         }
         return true;
+    }
+//    world.getBlockState(initPos.offset(k, i, g))
+    private static boolean checkBlock(Level world,BlockPos pos, StateAndTag stateAndTag){
+        Tag.Named<Block> tag;
+        if ((tag = stateAndTag.getTag()) == null){
+            return StateAndTag.checkBlockState(world.getBlockState(pos),stateAndTag.getState(),stateAndTag.isIgnoreFacing());
+        }else{
+            return world.getBlockState(pos).is(tag);
+        }
     }
 
     public static double blocksPerSecondToVelocity(double a){
@@ -365,7 +380,12 @@ public class Helpers {
                         int offsetZ = g;
                         int offsetY = i;
 //                        w.setBlock(startingPos.offset(offsetX,offsetY,offsetZ),multiblock.blockMap.get(row.charAt(f)).defaultBlockState(), Constants.BlockFlags.DEFAULT);
-                        w.setBlockAndUpdate(startingPos.offset(offsetX,offsetY,offsetZ),multiblock.blockMap.get(row.charAt(f)));
+                        BlockState state = multiblock.blockMap.get(row.charAt(f)).getState();
+                        BlockPos pos = startingPos.offset(offsetX,offsetY,offsetZ);
+                        w.setBlockAndUpdate(pos,state);
+                        if (player.level.getBlockEntity(pos) instanceof OwnedBlock bl){
+                            bl.setOwner(player.getUUID());
+                        }
                     }
 
             }

@@ -38,6 +38,5 @@ public class InventoryProvider implements ICapabilitySerializable<CompoundTag> {
     @Override
     public void deserializeNBT(CompoundTag nbt) {
         lexicon_inv.deserializeNBT(nbt);
-        lexicon_inv.setSize(AncientFragment.getAllFragments().length);
     }
 }

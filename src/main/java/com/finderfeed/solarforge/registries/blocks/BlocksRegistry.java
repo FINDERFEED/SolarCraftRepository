@@ -94,6 +94,8 @@ public class BlocksRegistry {
     public  static  final RegistryObject<Block> FIRA_RUNE_BLOCK = BLOCKS.register("fira_rune_block",()-> new Block(BlockBehaviour.Properties.copy(Blocks.STONE)));
     public  static  final RegistryObject<Block> URBA_RUNE_BLOCK = BLOCKS.register("urba_rune_block",()-> new Block(BlockBehaviour.Properties.copy(Blocks.STONE)));
     public  static  final RegistryObject<Block> TERA_RUNE_BLOCK = BLOCKS.register("tera_rune_block",()-> new Block(BlockBehaviour.Properties.copy(Blocks.STONE)));
+    public  static  final RegistryObject<Block> GIRO_RUNE_BLOCK = BLOCKS.register("giro_rune_block",()-> new Block(BlockBehaviour.Properties.copy(Blocks.STONE)));
+    public  static  final RegistryObject<Block> ULTIMA_RUNE_BLOCK = BLOCKS.register("ultima_rune_block",()-> new Block(BlockBehaviour.Properties.copy(Blocks.STONE)));
 
     public static final RegistryObject<Block> MODULE_APPLIER = BLOCKS.register("module_table",()->new ModuleStation(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS)));
 

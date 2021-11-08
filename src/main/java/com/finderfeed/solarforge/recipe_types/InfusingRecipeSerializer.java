@@ -62,13 +62,17 @@ public class InfusingRecipeSerializer extends ForgeRegistryEntry<RecipeSerialize
         double TERA = GsonHelper.getAsDouble(file, "tera", 0);
         double ZETA = GsonHelper.getAsDouble(file, "zeta", 0);
         double URBA = GsonHelper.getAsDouble(file, "urba", 0);
+        double GIRO = GsonHelper.getAsDouble(file, "giro", 0);
+        double ULTIMA = GsonHelper.getAsDouble(file, "ultima", 0);
         Map<RunicEnergy.Type,Double> costs = Map.of(
                 RunicEnergy.Type.URBA,URBA,
                 RunicEnergy.Type.KELDA,KELDA,
                 RunicEnergy.Type.ZETA,ZETA,
                 RunicEnergy.Type.TERA,TERA,
                 RunicEnergy.Type.ARDO,ARDO,
-                RunicEnergy.Type.FIRA,FIRA
+                RunicEnergy.Type.FIRA,FIRA,
+                RunicEnergy.Type.GIRO,GIRO,
+                RunicEnergy.Type.ULTIMA,ULTIMA
         );
         return new InfusingRecipe(loc,input1,input2,input3,input4,input5,input6,input7,input8,input9,output,infusingTime,child,reqEnergy,tag,count,costs);
     }
@@ -106,13 +110,17 @@ public class InfusingRecipeSerializer extends ForgeRegistryEntry<RecipeSerialize
         double TERA =buf.readDouble();
         double ZETA =buf.readDouble();
         double URBA =buf.readDouble();
+        double GIRO =buf.readDouble();
+        double ULTIMA =buf.readDouble();
         Map<RunicEnergy.Type,Double> costs = Map.of(
                 RunicEnergy.Type.URBA,URBA,
                 RunicEnergy.Type.KELDA,KELDA,
                 RunicEnergy.Type.ZETA,ZETA,
                 RunicEnergy.Type.TERA,TERA,
                 RunicEnergy.Type.ARDO,ARDO,
-                RunicEnergy.Type.FIRA,FIRA
+                RunicEnergy.Type.FIRA,FIRA,
+                RunicEnergy.Type.GIRO,GIRO,
+                RunicEnergy.Type.ULTIMA,ULTIMA
         );
 
         return new InfusingRecipe(loc,input1,input2,input3,input4,input5,input6,input7,input8,input9,output,infusingTime,child,reqEnergy,tag,count,costs);
@@ -141,5 +149,7 @@ public class InfusingRecipeSerializer extends ForgeRegistryEntry<RecipeSerialize
         buf.writeDouble(recipeType.RUNIC_ENERGY_COST.get(RunicEnergy.Type.TERA));
         buf.writeDouble(recipeType.RUNIC_ENERGY_COST.get(RunicEnergy.Type.ZETA));
         buf.writeDouble(recipeType.RUNIC_ENERGY_COST.get(RunicEnergy.Type.URBA));
+        buf.writeDouble(recipeType.RUNIC_ENERGY_COST.get(RunicEnergy.Type.GIRO));
+        buf.writeDouble(recipeType.RUNIC_ENERGY_COST.get(RunicEnergy.Type.ULTIMA));
     }
 }

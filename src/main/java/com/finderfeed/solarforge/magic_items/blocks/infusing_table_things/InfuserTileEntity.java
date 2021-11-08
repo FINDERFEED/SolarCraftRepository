@@ -8,6 +8,7 @@ import com.finderfeed.solarforge.magic_items.blocks.infusing_table_things.infusi
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.ProgressionHelper;
 import com.finderfeed.solarforge.misc_things.*;
+import com.finderfeed.solarforge.multiblocks.Multiblocks;
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
 import com.finderfeed.solarforge.recipe_types.InfusingRecipe;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Progression;
@@ -39,6 +40,7 @@ import net.minecraft.network.chat.TextComponent;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraftforge.fmllegacy.network.PacketDistributor;
+import org.apache.logging.log4j.core.tools.picocli.CommandLine;
 
 import javax.annotation.Nullable;
 import java.util.*;
@@ -48,7 +50,7 @@ public class InfuserTileEntity extends AbstractRunicEnergyContainerRCBE implemen
 
 
 
-
+    private Tier tier = Tier.FIRST;
     public int energy = 0;
     public int TICKS_TIMER=0;
     public float TICKS_RADIUS_TIMER = 0;
@@ -149,7 +151,11 @@ public class InfuserTileEntity extends AbstractRunicEnergyContainerRCBE implemen
 
 
     public static void tick(Level world, BlockPos pos, BlockState blockState, InfuserTileEntity tile) {
+        if (world.getGameTime() % 10 == 0){
+            tile.assignTier();
+        }
         if (!world.isClientSide){
+
 
             tile.updateStacksInPhantomSlots();
             Optional<InfusingRecipe> recipe = tile.level.getRecipeManager().getRecipeFor(SolarForge.INFUSING_RECIPE_TYPE, tile,world);
@@ -172,7 +178,7 @@ public class InfuserTileEntity extends AbstractRunicEnergyContainerRCBE implemen
                     Map<RunicEnergy.Type,Double> costs = recipe1.RUNIC_ENERGY_COST;
                     tile.INFUSING_TIME = recipe1.infusingTime*count;
 
-                    boolean doOwnerHasRequiredProgression = tile.doRecipeRequiresRunicEnergy(costs);
+                    boolean doOwnerHasRequiredProgression = recipe1.getTier() == Tier.RUNIC_ENERGY;
                     Player pl = world.getPlayerByUUID(tile.getOwner());
                     if (pl != null) {
                         if (doOwnerHasRequiredProgression) {
@@ -249,6 +255,11 @@ public class InfuserTileEntity extends AbstractRunicEnergyContainerRCBE implemen
                 new UpdateStacksOnClientTable(arr,tile.getItem(9),tile.worldPosition,tile.RECIPE_IN_PROGRESS));
     }
 
+    private void assignTier(){
+        if (Helpers.checkStructure(level,worldPosition.below().north(6).west(6),Multiblocks.INFUSER_TIER_FIRST.getM(),true)){
+            tier = Tier.FIRST;
+        }
+    }
 
 
     private static void finishRecipe(Level world, InfuserTileEntity tile, InfusingRecipe recipe){
@@ -482,6 +493,23 @@ public class InfuserTileEntity extends AbstractRunicEnergyContainerRCBE implemen
             }
         }
         return false;
+    }
+
+
+    public enum Tier{
+        FIRST("first"),
+        RUNIC_ENERGY("runic_energy"),
+        SOLAR_ENERGY("solar_energy")
+        ;
+        private String id;
+        Tier(String id){
+            this.id = id;
+
+        }
+
+        public String getId() {
+            return id;
+        }
     }
 
 

@@ -76,9 +76,6 @@ public class RuneEnergyPylonTile extends BlockEntity implements  DebugTarget, Ru
                     double neededEnergy = item.getCost();
 
                     if (flag >= maxTime) {
-                        if (ProgressionHelper.RUNES_MAP == null) {
-                            ProgressionHelper.initRunesMap();
-                        }
                         ItemStack stack = entity.getItem();
                         int maxRunes = (int) Math.floor(tile.getCurrentEnergy() / neededEnergy);
                         if (maxRunes > stack.getCount()) {
@@ -128,7 +125,7 @@ public class RuneEnergyPylonTile extends BlockEntity implements  DebugTarget, Ru
     public static void assignEnergyAndGainIt(RuneEnergyPylonTile tile){
             if (tile.type == null) {
                 RunicEnergy.Type[] types = {
-                  RunicEnergy.Type.ARDO, RunicEnergy.Type.TERA, RunicEnergy.Type.FIRA, RunicEnergy.Type.URBA, RunicEnergy.Type.KELDA, RunicEnergy.Type.ZETA
+                  RunicEnergy.Type.ARDO, RunicEnergy.Type.TERA, RunicEnergy.Type.FIRA, RunicEnergy.Type.URBA, RunicEnergy.Type.KELDA, RunicEnergy.Type.ZETA, RunicEnergy.Type.GIRO, RunicEnergy.Type.ULTIMA
                 };
                 tile.type = types[tile.level.random.nextInt(types.length)];
             }

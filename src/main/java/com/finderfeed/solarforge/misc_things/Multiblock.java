@@ -2,6 +2,8 @@ package com.finderfeed.solarforge.misc_things;
 
 
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Progression;
+
+import net.minecraft.tags.Tag;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
@@ -14,18 +16,19 @@ import java.util.Set;
 public class Multiblock {
 
 
-    public HashMap<Character, BlockState> blockMap;
+    public HashMap<Character, StateAndTag> blockMap;
     public String[][] struct;
     public Progression reqProgression;
     public BlockState mainBlock;
     public String name;
     public Multiblock(Multiblock.Constructor cons){
             this.blockMap = cons.blockMap;
-            blockMap.put(' ', Blocks.AIR.defaultBlockState());
+            blockMap.put(' ', new StateAndTag(Blocks.AIR.defaultBlockState(),null,false));
             this.struct = cons.structure;
             this.reqProgression = cons.ach;
             this.mainBlock = cons.mainBlock;
             this.name = cons.name;
+
     }
 
     public String getName() {
@@ -44,7 +47,7 @@ public class Multiblock {
         return struct;
     }
 
-    public HashMap<Character, BlockState> getBlockMap() {
+    public HashMap<Character, StateAndTag> getBlockMap() {
         return blockMap;
     }
 
@@ -53,11 +56,14 @@ public class Multiblock {
     }
 
     public BlockState getBlockByCharacter(Character a){
+        return blockMap.get(a).getState();
+    }
+    public StateAndTag getStateAndTag(Character a){
         return blockMap.get(a);
     }
     public Character getCharacterByBlock(BlockState a){
         for (Character f : blockMap.keySet()){
-            if (blockMap.get(f) == a){
+            if (blockMap.get(f).getState() == a){
                 return f;
             }
         }
@@ -65,16 +71,25 @@ public class Multiblock {
     }
 
 
+
+
     public static class Constructor{
-        public HashMap<Character, BlockState> blockMap = new HashMap<>();
+        public HashMap<Character, StateAndTag> blockMap = new HashMap<>();
+
         public String[][] structure;
         public Progression ach;
         public BlockState mainBlock;
         public String name = "";
-        public Multiblock.Constructor addBlock(BlockState a,Character b){
-            blockMap.put(b,a);
+        public Multiblock.Constructor addBlock(BlockState a,Character b,boolean ignoreFacing){
+            blockMap.put(b,new StateAndTag(a,null,ignoreFacing));
             return this;
         }
+
+        public Multiblock.Constructor addBlockAndTag(BlockState a,Tag.Named<Block> tag,Character b,boolean ignoreFacing){
+            blockMap.put(b,new StateAndTag(a,tag,ignoreFacing));
+            return this;
+        }
+
 
         public Multiblock.Constructor addStruct(String[][] a){
             structure = a;

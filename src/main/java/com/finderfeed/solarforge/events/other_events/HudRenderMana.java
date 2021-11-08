@@ -42,6 +42,7 @@ public class HudRenderMana {
                GuiComponent.drawCenteredString(event.getMatrixStack(), mc.gui.getFont(), Integer.toString((int)mana), width-25,height/2, 0xff002b);
                GuiComponent.drawString(event.getMatrixStack(), mc.gui.getFont(), "/3000", width-43,height/2+10, 0xff002b);
            }
+           //TODO:Toggleable abilities overlay
             if (mc.player.getPersistentData().getBoolean("is_alchemist_toggled")){
                 int height = event.getWindow().getGuiScaledHeight();
                 int width = event.getWindow().getGuiScaledWidth();
@@ -58,6 +59,8 @@ public class HudRenderMana {
                 RenderingTools.renderRuneEnergyOverlay(event.getMatrixStack(),2,height/2+15, RunicEnergy.Type.FIRA);
                 RenderingTools.renderRuneEnergyOverlay(event.getMatrixStack(),14,height/2+15, RunicEnergy.Type.TERA);
                 RenderingTools.renderRuneEnergyOverlay(event.getMatrixStack(),26,height/2+15, RunicEnergy.Type.URBA);
+                RenderingTools.renderRuneEnergyOverlay(event.getMatrixStack(),38,height/2-43, RunicEnergy.Type.GIRO);
+                RenderingTools.renderRuneEnergyOverlay(event.getMatrixStack(),50,height/2+15, RunicEnergy.Type.ULTIMA);
             }
             
         }
