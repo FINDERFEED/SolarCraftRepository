@@ -35,6 +35,9 @@
     "solarforge:zap_turret_block",
     "solarforge:bonemealer",
     "solarforge:inscription_stone",
-    "solarforge:ender_cracks"
+    "solarforge:ender_cracks",
+    "solarforge:giro_rune_block",
+    "solarforge:ultima_rune_block",
+    "solarforge:energized_stone"
   ]
 }

@@ -83,7 +83,7 @@ public class StructureScreen extends Screen {
         currentPage = 1;
         structHeightAndPageCount = structure.getStruct().length;
         structWidth = structure.getStruct()[0].length / 2;
-        addRenderableWidget(new ImageButton(relX+104+60-15,relY+10,16,16,0,0,0,BUTTONS,16,32,(button)->{
+        addRenderableWidget(new ImageButton(relX+216,relY+16,16,16,0,0,0,BUTTONS,16,32,(button)->{
             if ((currentPage+1 <= structHeightAndPageCount) ){
                 currentPage+=1;
             }
@@ -93,7 +93,7 @@ public class StructureScreen extends Screen {
                 p_93665_.play(SimpleSoundInstance.forUI(Sounds.BUTTON_PRESS2.get(),1,1));
             }
         });
-        addRenderableWidget(new ImageButton(relX+87+60-15,relY+10,16,16,0,16,0,BUTTONS,16,32,(button)->{
+        addRenderableWidget(new ImageButton(relX+216,relY+32,16,16,0,16,0,BUTTONS,16,32,(button)->{
             if ((currentPage-1 > 0)){
                 currentPage-=1;
             }
@@ -103,7 +103,7 @@ public class StructureScreen extends Screen {
                 p_93665_.play(SimpleSoundInstance.forUI(Sounds.BUTTON_PRESS2.get(),1,1));
             }
         });
-        addRenderableWidget(new ImageButton(relX+127+55-15,relY+10,16,16,0,0,0,THREEDSCREENBTN,16,16,(button)->{
+        addRenderableWidget(new ImageButton(relX+216,relY,16,16,0,0,0,THREEDSCREENBTN,16,16,(button)->{
             Minecraft.getInstance().setScreen(new ThreeDStructureViewScreen(structure));
         },(btn,poseStack,mx,my)->{
             renderTooltip(poseStack,new TextComponent("3D View"),mx,my);
@@ -136,7 +136,11 @@ public class StructureScreen extends Screen {
         blit(matrices,relX,relY,0,0,256,256);
 
         String[] struct = structure.struct[currentPage-1];
-        drawCenteredString(matrices, minecraft.font,new TextComponent(currentPage+ "/" + structHeightAndPageCount),relX+116,relY+14,0xffffff);
+        int a = 0;
+        if (structWidth*2 > 16){
+            a = structWidth*2-16;
+        }
+        drawCenteredString(matrices, minecraft.font,new TextComponent(currentPage+ "/" + structHeightAndPageCount),relX+108,relY+14,0xffffff);
         //drawCenteredString(matrices, minecraft.font,new TranslationTextComponent(structure.getName()),relX+20,relY+10,0xffffff);
         Helpers.drawBoundedText(matrices,relX+14,relY+10,7,new TranslatableComponent(structure.getName()).getString());
 
@@ -144,7 +148,8 @@ public class StructureScreen extends Screen {
         ItemRenderer ren = Minecraft.getInstance().getItemRenderer();
         for (int i = -structWidth; i <= structWidth;i++){
             for (int g = -structWidth; g <= structWidth;g++){
-                renderItemAndTooltip(structure.getBlockByCharacter(struct[i+structWidth].charAt(g+structWidth)),relX+100+g*13,relY+105+i*13,mousex,mousey,matrices);
+
+                renderItemAndTooltip(structure.getBlockByCharacter(struct[i+structWidth].charAt(g+structWidth)),relX+100+g*(13-a),relY+100+i*(14-a),mousex,mousey,matrices);
             }
         }
 

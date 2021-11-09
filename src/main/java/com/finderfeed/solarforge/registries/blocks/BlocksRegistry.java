@@ -54,6 +54,7 @@ public class BlocksRegistry {
     public  static  final RegistryObject<Block> SOLAR_STONE_BRICKS = BLOCKS.register("solar_stone_bricks",()-> new Block(BlockBehaviour.Properties.copy(Blocks.STONE)));
     public  static  final RegistryObject<Block> SOLAR_STONE_STAIRS = BLOCKS.register("solar_stone_stairs",()-> new StairBlock(()-> SOLAR_STONE_BRICKS.get().defaultBlockState(),BlockBehaviour.Properties.copy(Blocks.STONE)));
     public  static  final RegistryObject<Block> SOLAR_STONE_COLLUMN_HORIZONTAL = BLOCKS.register("solar_stone_collumn_horizontal",()-> new GlazedTerracottaBlock(BlockBehaviour.Properties.copy(Blocks.STONE)));
+    public  static  final RegistryObject<Block> ENERGIZED_STONE = BLOCKS.register("energized_stone",()-> new Block(BlockBehaviour.Properties.copy(Blocks.STONE)));
     public  static  final RegistryObject<Block> KEY_LOCK_BLOCK = BLOCKS.register("key_lock_block",()-> new KeyLockBlock());
     public  static  final RegistryObject<Block> INVINCIBLE_STONE = BLOCKS.register("invincible_solar_stone",()-> new InvincibleStone());
     public  static  final RegistryObject<Block> COLD_STAR_INFUSER = BLOCKS.register("cold_star_charger",()-> new ColdStarInfuser(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)));

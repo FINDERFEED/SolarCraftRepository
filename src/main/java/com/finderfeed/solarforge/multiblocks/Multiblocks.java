@@ -25,7 +25,6 @@ public enum Multiblocks {
             .addBlock(BlocksRegistry.SOLAR_STONE_BRICKS.get().defaultBlockState(),'B',false)
             .addBlock(BlocksRegistry.SOLAR_STONE_COLLUMN.get().defaultBlockState(),'J',false)
             .addBlock(BlocksRegistry.SOLAR_STONE_CHISELED.get().defaultBlockState(),'N',false)
-            .addBlock(BlocksRegistry.ALGADIUM_BLOCK.get().defaultBlockState(),'H',false)
             .addStruct(Structures.CORE_STRUCTURE)
             .addMainBlock(BlocksRegistry.SOLAR_CORE.get().defaultBlockState())
             .addAchievement(Progression.CRAFT_SOLAR_ENERGY_GENERATOR)
@@ -94,8 +93,28 @@ public enum Multiblocks {
 
 
             .addMainBlock(SolarForge.SOLAR_INFUSER.get().defaultBlockState())
-            .addStruct(Structures.INFUSER_STRUCTURE)
+            .addStruct(Structures.INFUSER_TIER_1)
             .addAchievement(Progression.SOLAR_INFUSER)
+            .setStructName("solarforge_struct.solar_infuser")
+    )),
+    INFUSER_TIER_RUNIC_ENERGY(new Multiblock(new Multiblock.Constructor()
+            .extend(INFUSER_TIER_FIRST.getM())
+            .addBlock(Structures.BlockStates.SOLAR_STONE_STAIRS_BOTTOM_EAST_STRAIGHT,'a',false)
+            .addBlock(Structures.BlockStates.SOLAR_STONE_STAIRS_BOTTOM_WEST_STRAIGHT,'b',false)
+            .addBlock(Structures.BlockStates.SOLAR_STONE_STAIRS_BOTTOM_NORTH_STRAIGHT,'c',false)
+            .addBlock(Structures.BlockStates.SOLAR_STONE_STAIRS_BOTTOM_SOUTH_STRAIGHT,'d',false)
+
+            .addBlock(BlocksRegistry.ARDO_RUNE_BLOCK.get().defaultBlockState(),'f',false)
+            .addBlock(BlocksRegistry.KELDA_RUNE_BLOCK.get().defaultBlockState(),'g',false)
+            .addBlock(BlocksRegistry.ZETA_RUNE_BLOCK.get().defaultBlockState(),'h',false)
+            .addBlock(BlocksRegistry.URBA_RUNE_BLOCK.get().defaultBlockState(),'j',false)
+            .addBlock(BlocksRegistry.FIRA_RUNE_BLOCK.get().defaultBlockState(),'k',false)
+            .addBlock(BlocksRegistry.TERA_RUNE_BLOCK.get().defaultBlockState(),'l',false)
+            .addBlock(BlocksRegistry.ULTIMA_RUNE_BLOCK.get().defaultBlockState(),'z',false)
+            .addBlock(BlocksRegistry.GIRO_RUNE_BLOCK.get().defaultBlockState(),'x',false)
+            .addBlock(BlocksRegistry.REPEATER.get().defaultBlockState(),'o',false)
+            .addBlock(Blocks.DIAMOND_BLOCK.defaultBlockState(),'v',false)
+            .addStruct(Structures.INFUSER_TIER_2)
             .setStructName("solarforge_struct.solar_infuser")
     )),
     RADIANT_LAND_PORTAL(new Multiblock(new Multiblock.Constructor()
@@ -160,9 +179,13 @@ public enum Multiblocks {
             .addBlock(Structures.BlockStates.HORIZONTAL_COLLUMN_FACING_SOUTH,'I',false)
             .addBlock(Structures.BlockStates.HORIZONTAL_COLLUMN_FACING_NORTH,'O',false)
 
+            .addBlockAndTag(BlocksRegistry.SOLAR_STONE_COLLUMN.get().defaultBlockState(),Tags.INSCRIPTION_STONE,'c',false)
+
             .addBlock(BlocksRegistry.SOLAR_STONE_CHISELED.get().defaultBlockState(),'A',false)
             .addBlock(BlocksRegistry.SOLAR_STONE_BRICKS.get().defaultBlockState(),'B',false)
             .addBlock(BlocksRegistry.SOLAR_STONE_COLLUMN.get().defaultBlockState(),'N',false)
+            .addBlock(BlocksRegistry.RUNE_ENERGY_PYLON.get().defaultBlockState(),'p',false)
+
             .addMainBlock(BlocksRegistry.RUNE_ENERGY_PYLON.get().defaultBlockState())
             .addStruct(Structures.PYLON)
             .setStructName("structure.energy_pylon")
@@ -227,11 +250,11 @@ class Structures{
                     "  N  "
             },
             {
+                    "  c  ",
                     "     ",
+                    "c   c",
                     "     ",
-                    "     ",
-                    "     ",
-                    "     "
+                    "  c  "
             },
             {
                     "  N  ",
@@ -259,6 +282,20 @@ class Structures{
                     "  h  ",
                     " tAd ",
                     "  g  ",
+                    "     "
+            },
+            {
+                    "     ",
+                    "     ",
+                    "     ",
+                    "     ",
+                    "     "
+            },
+            {
+                    "     ",
+                    "     ",
+                    "  p  ",
+                    "     ",
                     "     "
             }
 
@@ -342,7 +379,7 @@ class Structures{
 
     };
 
-    public static String[][] INFUSER_STRUCTURE = {
+    public static String[][] INFUSER_TIER_1 = {
             {
                     "BBBBBBBBBBBBB",
                     "BBBBBBBBBBBBB",
@@ -447,6 +484,178 @@ class Structures{
                     "K           H",
                     "K           H",
                     "CJJC     CJJC",
+            },
+
+    };
+
+    public static String[][] INFUSER_TIER_2 = {
+            {
+                    "      B     B      ",
+                    "     BBB   BBB     ",
+                    "    BBBBB BBBBB    ",
+                    "   BBBBBBBBBBBBB   ",
+                    "  BBBBBBBBBBBBBBB  ",
+                    " BBBBBBBBBBBBBBBBB ",
+                    "BBBBBBBBBBBBBBBBBBB",
+                    " BBBBBBBBBBBBBBBBB ",
+                    "  BBBBBBBBBBBBBBB  ",
+                    "   BBBBBBBBBBBBB   ",
+                    "  BBBBBBBBBBBBBBB  ",
+                    " BBBBBBBBBBBBBBBBB ",
+                    "BBBBBBBBBBBBBBBBBBB",
+                    " BBBBBBBBBBBBBBBBB ",
+                    "  BBBBBBBBBBBBBBB  ",
+                    "   BBBBBBBBBBBBB   ",
+                    "    BBBBB BBBBB    ",
+                    "     BBB   BBB     ",
+                    "      B     B      ",
+            },
+            {
+                    "     BCB   BCB     ",
+                    "     BcB   BcB     ",
+                    "                   ",
+                    "   D  D  D  D  D   ",
+                    "                   ",
+                    "BB       B       BB",
+                    "Cb D  F     F  D aC",
+                    "BB               BB",
+                    "                   ",
+                    "   D B   I   B D   ",
+                    "                   ",
+                    "BB               BB",
+                    "Cb D  F     F  D aC",
+                    "BB       B       BB",
+                    "                   ",
+                    "   D  D  D  D  D   ",
+                    "                   ",
+                    "     BdB   BdB     ",
+                    "     BCB   BCB     ",
+            },
+            {
+                    "      D     D      ",
+                    "                   ",
+                    "                   ",
+                    "   D  M  D  M  D   ",
+                    "                   ",
+                    "         F         ",
+                    "D  M           M  D",
+                    "                   ",
+                    "                   ",
+                    "   D F       F D   ",
+                    "                   ",
+                    "                   ",
+                    "D  M           M  D",
+                    "         F         ",
+                    "                   ",
+                    "   D  M  D  M  D   ",
+                    "                   ",
+                    "                   ",
+                    "      D      D     ",
+            },
+            {
+                    "      l     k      ",
+                    "                   ",
+                    "                   ",
+                    "   D  D  D  D  D   ",
+                    "                   ",
+                    "                   ",
+                    "z  D           D  j",
+                    "                   ",
+                    "                   ",
+                    "   D           D   ",
+                    "                   ",
+                    "                   ",
+                    "x  D           D  h",
+                    "                   ",
+                    "                   ",
+                    "   D  D  D  D  D   ",
+                    "                   ",
+                    "                   ",
+                    "      f     g      ",
+            },
+            {
+                    "      o     o      ",
+                    "                   ",
+                    "                   ",
+                    "   D  D  D  D  D   ",
+                    "                   ",
+                    "                   ",
+                    "o  D           D  o",
+                    "                   ",
+                    "                   ",
+                    "   D           D   ",
+                    "                   ",
+                    "                   ",
+                    "o  D           D  o",
+                    "                   ",
+                    "                   ",
+                    "   D  D  D  D  D   ",
+                    "                   ",
+                    "                   ",
+                    "      o     o      ",
+            },
+            {
+                    "                   ",
+                    "                   ",
+                    "                   ",
+                    "   D  GLLCLLG  D   ",
+                    "                   ",
+                    "                   ",
+                    "   G           G   ",
+                    "   K           H   ",
+                    "   K           H   ",
+                    "   C           C   ",
+                    "   K           H   ",
+                    "   K           H   ",
+                    "   G           G   ",
+                    "                   ",
+                    "                   ",
+                    "   D  GJJCJJG  D   ",
+                    "                   ",
+                    "                   ",
+                    "                   ",
+            },
+            {
+                    "                   ",
+                    "                   ",
+                    "                   ",
+                    "   CLLC     CLLC   ",
+                    "   K           H   ",
+                    "   K           H   ",
+                    "   C           C   ",
+                    "                   ",
+                    "                   ",
+                    "                   ",
+                    "                   ",
+                    "                   ",
+                    "   C           C   ",
+                    "   K           H   ",
+                    "   K           H   ",
+                    "   CJJC     CJJC   ",
+                    "                   ",
+                    "                   ",
+                    "                   ",
+            },
+            {
+                    "                   ",
+                    "                   ",
+                    "                   ",
+                    "   vb         av   ",
+                    "   c           c   ",
+                    "                   ",
+                    "                   ",
+                    "                   ",
+                    "                   ",
+                    "                   ",
+                    "                   ",
+                    "                   ",
+                    "                   ",
+                    "                   ",
+                    "   d           d   ",
+                    "   vb         av   ",
+                    "                   ",
+                    "                   ",
+                    "                   ",
             },
 
     };

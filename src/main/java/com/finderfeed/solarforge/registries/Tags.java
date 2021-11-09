@@ -14,5 +14,7 @@ public class Tags {
 
     public static final Tag.Named<Block> CATALYST = BlockTags.createOptional(new ResourceLocation("solarforge","catalyst"));
 
+    public static final Tag.Named<Block> INSCRIPTION_STONE = BlockTags.createOptional(new ResourceLocation("solarforge","inscription_stone"));
+
 
 }

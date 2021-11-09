@@ -92,7 +92,10 @@ public enum AncientFragment {
 
     AURA_HEALER_STRUCTURE(tx("solar_fragment.aura_healer_structure"),"aura_healer_structure",AURA_HEALER.neededProgression,SubCategoryBase.STRUCTURES,CategoryBase.STRUCTURES,Multiblocks.AURA_HEALER, AURA_HEALER.priority),
     SOLAR_MORTAR_STRUCTURE(tx("solar_fragment.solar_mortar_structure"),"solar_mortar_structure",SOLAR_MORTAR.neededProgression,SubCategoryBase.STRUCTURES,CategoryBase.STRUCTURES,Multiblocks.SOLAR_MORTAR, SOLAR_MORTAR.priority),
-    SOLAR_INFUSER_STRUCTURE(tx("solar_fragment.solar_infuser_structure"),"solar_infuser_structure",SOLAR_INFUSER.neededProgression,SubCategoryBase.STRUCTURES,CategoryBase.STRUCTURES,Multiblocks.INFUSER_TIER_FIRST, SOLAR_INFUSER.priority),
+    INFUSER_TIER_BEGINNER(tx("solar_fragment.solar_infuser_structure"),"solar_infuser_structure",SOLAR_INFUSER.neededProgression,SubCategoryBase.STRUCTURES,CategoryBase.STRUCTURES,Multiblocks.INFUSER_TIER_FIRST, SOLAR_INFUSER.priority),
+    //TODO:
+    INFUSER_TIER_RUNIC_ENERGY(tx("solar_fragment.solar_infuser_structure"),"solar_infuser_structure_2",SOLAR_INFUSER.neededProgression,SubCategoryBase.STRUCTURES,CategoryBase.STRUCTURES,Multiblocks.INFUSER_TIER_RUNIC_ENERGY, SOLAR_INFUSER.priority),
+
     SOLAR_CORE_STRUCTURE(tx("solar_fragment.solar_core_structure"),"solar_core_structure",SOLAR_CORE.neededProgression,SubCategoryBase.STRUCTURES,CategoryBase.STRUCTURES,Multiblocks.SOLAR_CORE, SOLAR_CORE.priority),
     SOLAR_ENERGY_GENERATOR_STRUCTURE(tx("solar_fragment.solar_energy_generator_structure"),"solar_energy_generator_structure",SOLAR_ENERGY_GENERATOR.neededProgression,SubCategoryBase.STRUCTURES,CategoryBase.STRUCTURES,Multiblocks.SOLAR_ENERGY_GENERATOR, SOLAR_ENERGY_GENERATOR.priority),
     DIMENSION_STRUCTURE(tx("solar_fragment.dimension_structure"),"dimension_structure",ProgressionStage.SOLAR_ENERGY.ALL_PROGRESSIONS,SubCategoryBase.STRUCTURES,CategoryBase.STRUCTURES,Multiblocks.RADIANT_LAND_PORTAL, DIMENSION_CORE.priority),

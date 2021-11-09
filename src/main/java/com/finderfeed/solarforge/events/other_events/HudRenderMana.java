@@ -60,7 +60,7 @@ public class HudRenderMana {
                 RenderingTools.renderRuneEnergyOverlay(event.getMatrixStack(),14,height/2+15, RunicEnergy.Type.TERA);
                 RenderingTools.renderRuneEnergyOverlay(event.getMatrixStack(),26,height/2+15, RunicEnergy.Type.URBA);
                 RenderingTools.renderRuneEnergyOverlay(event.getMatrixStack(),38,height/2-43, RunicEnergy.Type.GIRO);
-                RenderingTools.renderRuneEnergyOverlay(event.getMatrixStack(),50,height/2+15, RunicEnergy.Type.ULTIMA);
+                RenderingTools.renderRuneEnergyOverlay(event.getMatrixStack(),38,height/2+15, RunicEnergy.Type.ULTIMA);
             }
             
         }

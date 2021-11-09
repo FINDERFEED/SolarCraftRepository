@@ -81,11 +81,17 @@ public class Multiblock {
         public BlockState mainBlock;
         public String name = "";
         public Multiblock.Constructor addBlock(BlockState a,Character b,boolean ignoreFacing){
+            if (blockMap.containsKey(b)){
+                throw new RuntimeException("Duplicate character in structure");
+            }
             blockMap.put(b,new StateAndTag(a,null,ignoreFacing));
             return this;
         }
 
         public Multiblock.Constructor addBlockAndTag(BlockState a,Tag.Named<Block> tag,Character b,boolean ignoreFacing){
+            if (blockMap.containsKey(b)){
+                throw new RuntimeException("Duplicate character in structure");
+            }
             blockMap.put(b,new StateAndTag(a,tag,ignoreFacing));
             return this;
         }
@@ -110,6 +116,11 @@ public class Multiblock {
             return this;
         }
 
+        public Multiblock.Constructor extend(Multiblock structure){
+            this.mainBlock = structure.mainBlock;
+            this.blockMap = new HashMap<>(structure.getBlockMap());
+            return this;
+        }
     }
 
 

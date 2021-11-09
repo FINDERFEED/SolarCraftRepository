@@ -101,7 +101,7 @@ public class ThreeDStructureViewScreen extends Screen implements IScrollable {
         POS_STATE_TILEENTITY.clear();
         structScale = 10f/Math.max(struct.getStruct().length,struct.getStruct()[0].length);
         this.POS_STATE_TILEENTITY = RenderingTools.StructureRenderer.prepareList(struct);
-        addRenderableWidget(new ImageButton(relX+127+55-15,relY+10,16,16,0,0,0,THREEDSCREENBTN,16,16,(button)->{
+        addRenderableWidget(new ImageButton(relX+216,relY,16,16,0,0,0,THREEDSCREENBTN,16,16,(button)->{
             Minecraft.getInstance().setScreen(new StructureScreen(struct));
         },(btn,poseStack,mx,my)->{
             renderTooltip(poseStack,new TextComponent("2D View"),mx,my);
@@ -140,8 +140,8 @@ public class ThreeDStructureViewScreen extends Screen implements IScrollable {
     public boolean mouseDragged(double xPos, double yPos, int button, double dragLeftRight, double dragUpDown) {
         xDragPos = xPos;
         yDragPos = yPos;
-        this.dragLeftRight+=dragLeftRight/3;
-        this.dragUpDown-=dragUpDown/3;
+        this.dragLeftRight+=dragLeftRight/2;
+        this.dragUpDown-=dragUpDown/2;
         return super.mouseDragged(xPos, yPos, button, dragLeftRight, dragUpDown);
     }
 
