@@ -171,6 +171,9 @@ public class ThreeDStructureViewScreen extends Screen implements IScrollable {
 
         matrices.popPose();
 
+        matrices.pushPose();
+
+        matrices.popPose();
 
 
     }

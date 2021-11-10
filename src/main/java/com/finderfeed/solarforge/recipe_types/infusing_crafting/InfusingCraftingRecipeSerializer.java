@@ -8,9 +8,12 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.level.levelgen.surfacebuilders.SurfaceBuilderBaseConfiguration;
+import net.minecraft.world.level.levelgen.surfacebuilders.SurfaceBuilderConfiguration;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
 import javax.annotation.Nullable;
@@ -38,9 +41,9 @@ public class InfusingCraftingRecipeSerializer extends ForgeRegistryEntry<RecipeS
         };
 
         JsonObject keys = json.getAsJsonObject("keys");
-        Map<Character, Ingredient> ingredientMap = new HashMap<>();
+        Map<Character, Item> ingredientMap = new HashMap<>();
         keys.entrySet().forEach((entry)->{
-            ingredientMap.put(entry.getKey().charAt(0),getIngredient(entry.getValue()));
+            ingredientMap.put(entry.getKey().charAt(0),GsonHelper.getAsItem(entry.getValue().getAsJsonObject(),"item"));
         });
 
         ItemStack output = GsonHelper.getAsItem(json.getAsJsonObject("output"),"item").getDefaultInstance();
@@ -61,15 +64,15 @@ public class InfusingCraftingRecipeSerializer extends ForgeRegistryEntry<RecipeS
     @Override
     public InfusingCraftingRecipe fromNetwork(ResourceLocation rl, FriendlyByteBuf buf) {
         int size = buf.readInt();
-        List<Ingredient> ingrs = new ArrayList<>();
+        List<Item> ingrs = new ArrayList<>();
         List<Character> chars = new ArrayList<>();
         for (int i = 0;i < size;i++){
-            ingrs.add(Ingredient.fromNetwork(buf));
+            ingrs.add(buf.readItem().getItem());
         }
         for (int i = 0;i < size;i++){
             chars.add(buf.readChar());
         }
-        Map<Character, Ingredient> ingredientMap = new HashMap<>();
+        Map<Character, Item> ingredientMap = new HashMap<>();
         for (int i = 0;i < ingrs.size();i++){
             ingredientMap.put(chars.get(i),ingrs.get(i));
         }
@@ -93,11 +96,11 @@ public class InfusingCraftingRecipeSerializer extends ForgeRegistryEntry<RecipeS
 
     @Override
     public void toNetwork(FriendlyByteBuf buf, InfusingCraftingRecipe recipe) {
-        Map<Character, Ingredient> ingredientMap = recipe.getDefinitions();
+        Map<Character, Item> ingredientMap = recipe.getDefinitions();
         String[] pattern = recipe.getPattern();
 
         buf.writeInt(ingredientMap.values().size());
-        ingredientMap.values().forEach((ingre)->ingre.toNetwork(buf));
+        ingredientMap.values().forEach((ingre)->buf.writeItem(ingre.getDefaultInstance()));
         ingredientMap.keySet().forEach(buf::writeChar);
 
         for (String s : pattern){
