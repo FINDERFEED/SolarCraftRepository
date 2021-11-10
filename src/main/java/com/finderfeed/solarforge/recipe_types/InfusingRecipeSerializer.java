@@ -23,6 +23,7 @@ import java.util.Map;
 public class InfusingRecipeSerializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<InfusingRecipe> {
 
 
+
     public InfusingRecipeSerializer(){
         this.setRegistryName(new ResourceLocation("solarforge","infusing"));
     }

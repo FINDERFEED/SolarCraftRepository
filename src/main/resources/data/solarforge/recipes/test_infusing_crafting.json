@@ -1,0 +1,20 @@
+{
+  "type": "solarforge:infusing_crafting",
+  "pattern": [
+    "FFF",
+    "F#F",
+    "FFF"
+  ],
+  "keys": {
+    "#": {
+      "item": "solarforge:solar_rune_tera"
+    },
+    "F": {
+      "item": "solarforge:chiseled_solar_stone"
+    }
+  },
+  "output": {
+    "item": "solarforge:tera_rune_block"
+  },
+  "time": 200
+}

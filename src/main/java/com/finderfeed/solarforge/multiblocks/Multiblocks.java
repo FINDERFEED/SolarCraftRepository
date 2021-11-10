@@ -179,7 +179,7 @@ public enum Multiblocks {
             .addBlock(Structures.BlockStates.HORIZONTAL_COLLUMN_FACING_SOUTH,'I',false)
             .addBlock(Structures.BlockStates.HORIZONTAL_COLLUMN_FACING_NORTH,'O',false)
 
-            .addBlockAndTag(BlocksRegistry.SOLAR_STONE_COLLUMN.get().defaultBlockState(),Tags.INSCRIPTION_STONE,'c',false)
+            .addBlockAndTag(BlocksRegistry.INSCRIPTION_STONE.get().defaultBlockState(),Tags.INSCRIPTION_STONE,'c',false)
 
             .addBlock(BlocksRegistry.SOLAR_STONE_CHISELED.get().defaultBlockState(),'A',false)
             .addBlock(BlocksRegistry.SOLAR_STONE_BRICKS.get().defaultBlockState(),'B',false)

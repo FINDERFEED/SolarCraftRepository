@@ -433,12 +433,16 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
         this.renderables.forEach((widget)->{
 
                 if (widget instanceof AbstractWidget button) {
-                    button.active = isButtonPressable(button.x, button.y);
+                    boolean a = isButtonPressable(button.x, button.y);
+                    button.active = a;
+                    button.visible = a;
                 }
 
         });
         goBack.active = true;
         nothing.active = true;
+        goBack.visible = true;
+        nothing.visible = true;
 //        List<Widget> list = this.buttons;
 //        list.remove(goBack);
 //        list.remove(nothing);
