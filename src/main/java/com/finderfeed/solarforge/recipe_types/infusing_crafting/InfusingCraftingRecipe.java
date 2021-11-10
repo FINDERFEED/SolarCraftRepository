@@ -19,15 +19,21 @@ public class InfusingCraftingRecipe implements Recipe<Container> {
 
     private final ItemStack output;
     private final String[] pattern;
-    private final Map<Character, Ingredient> DEFINITIONS = new HashMap<>();
-
-    public InfusingCraftingRecipe(String[] pattern,Map<Character, Ingredient> defs,ItemStack out){
+    private final Map<Character, Ingredient> DEFINITIONS;
+    private final int time;
+    public InfusingCraftingRecipe(String[] pattern,Map<Character, Ingredient> defs,ItemStack out,int time){
         this.pattern = pattern;
+        this.DEFINITIONS = defs;
         this.output = out;
+        this.time = time;
     }
 
     public ItemStack getOutput() {
         return output;
+    }
+
+    public int getTime() {
+        return time;
     }
 
     public String[] getPattern() {
@@ -46,7 +52,7 @@ public class InfusingCraftingRecipe implements Recipe<Container> {
 
     @Override
     public ItemStack assemble(Container c) {
-        return null;
+        return output;
     }
 
     @Override
@@ -56,12 +62,12 @@ public class InfusingCraftingRecipe implements Recipe<Container> {
 
     @Override
     public ItemStack getResultItem() {
-        return null;
+        return output;
     }
 
     @Override
     public ResourceLocation getId() {
-        return null;
+        return new ResourceLocation(SolarForge.MOD_ID,"infusing_crafting");
     }
 
     @Override

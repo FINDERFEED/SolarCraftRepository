@@ -52,6 +52,8 @@ public class InfusingTableBlock extends Block implements EntityBlock {
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level p_153212_, BlockState p_153213_, BlockEntityType<T> p_153214_) {
-        return EntityBlock.super.getTicker(p_153212_, p_153213_, p_153214_);
+        return (level,pos,state,tile)->{
+            InfusingTableTile.tick(level,pos,state,(InfusingTableTile) tile);
+        };
     }
 }
