@@ -3,6 +3,7 @@ package com.finderfeed.solarforge;
 import com.finderfeed.solarforge.SolarAbilities.meteorite.MeteoriteProjectileRenderer;
 import com.finderfeed.solarforge.SolarAbilities.SolarStrikeEntityRender;
 import com.finderfeed.solarforge.entities.renderers.*;
+import com.finderfeed.solarforge.magic_items.blocks.blockentities.containers.screens.InfusingTableScreen;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.containers.screens.ModuleApplierScreen;
 import com.finderfeed.solarforge.magic_items.blocks.infusing_table_things.InfuserRenderer;
 import com.finderfeed.solarforge.magic_items.blocks.infusing_table_things.infusing_pool.InfusingPoolRenderer;
@@ -117,6 +118,7 @@ public class SolarForgeClientRegistry {
         MenuScreens.register(Containers.RUNIC_TABLE_CONTAINER.get(), RunicTableContainerScreen::new);
         MenuScreens.register(Containers.SOLAR_LEXICON_CONTAINER.get(), SolarLexiconContScreen::new);
         MenuScreens.register(Containers.MODULE_APPLIER_CONTAINER.get(), ModuleApplierScreen::new);
+        MenuScreens.register(Containers.INFUSING_TABLE_TILE.get(), InfusingTableScreen::new);
 
         event.enqueueWork(()->{
 

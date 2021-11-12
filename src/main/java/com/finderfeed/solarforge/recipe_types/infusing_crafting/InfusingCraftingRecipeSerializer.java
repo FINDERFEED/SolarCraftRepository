@@ -34,11 +34,12 @@ public class InfusingCraftingRecipeSerializer extends ForgeRegistryEntry<RecipeS
     public InfusingCraftingRecipe fromJson(ResourceLocation rl, JsonObject json) {
 
         JsonArray arr = json.getAsJsonArray("pattern");
-        String[] pattern = {
-                arr.get(0).getAsString(),
-                arr.get(1).getAsString(),
-                arr.get(2).getAsString(),
-        };
+        int arrsize = arr.size();
+        String[] pattern = new String[arrsize];
+        for (int i = 0; i < arrsize;i++){
+            pattern[i] = arr.get(i).getAsString();
+        }
+
 
         JsonObject keys = json.getAsJsonObject("keys");
         Map<Character, Item> ingredientMap = new HashMap<>();
@@ -49,15 +50,6 @@ public class InfusingCraftingRecipeSerializer extends ForgeRegistryEntry<RecipeS
         ItemStack output = GsonHelper.getAsItem(json.getAsJsonObject("output"),"item").getDefaultInstance();
         int time = json.getAsJsonPrimitive("time").getAsInt();
         return new InfusingCraftingRecipe(pattern,ingredientMap,output,time);
-    }
-
-    private Ingredient getIngredient(JsonElement element){
-        String ingr = GsonHelper.getAsString((JsonObject) element,"item");
-        if (ingr.equals("minecraft:air")){
-            return Ingredient.EMPTY;
-        }else {
-            return Ingredient.fromJson(element);
-        }
     }
 
     @Nullable

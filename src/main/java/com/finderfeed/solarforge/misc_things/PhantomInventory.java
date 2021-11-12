@@ -5,6 +5,8 @@ import net.minecraft.world.Container;
 
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.core.NonNullList;
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.ItemStackHandler;
 
 public class PhantomInventory implements Container {
 
@@ -14,6 +16,13 @@ public class PhantomInventory implements Container {
     public PhantomInventory(int size){
         this.size = size;
         INVENTORY = NonNullList.withSize(size,ItemStack.EMPTY);
+    }
+    public PhantomInventory(IItemHandler handler){
+        this.size = handler.getSlots();
+        this.INVENTORY = NonNullList.withSize(size,ItemStack.EMPTY);
+        for (int i = 0;i < size;i++){
+            this.INVENTORY.set(i,handler.getStackInSlot(i));
+        }
     }
 
     @Override

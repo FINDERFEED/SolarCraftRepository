@@ -6,13 +6,17 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
+import org.lwjgl.system.CallbackI;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,15 +26,11 @@ public class InfusingCraftingRecipe implements Recipe<Container> {
     private final ItemStack output;
     private final String[] pattern;
     private final Map<Character, Item> DEFINITIONS;
-    private final Map<Item, Character> DEFINITIONS_REVERTED;
     private final int time;
     public InfusingCraftingRecipe(String[] pattern,Map<Character, Item> defs,ItemStack out,int time){
         this.pattern = pattern;
         this.DEFINITIONS = defs;
-        this.DEFINITIONS_REVERTED = new HashMap<>();
-        DEFINITIONS.forEach((c,item)->{
-            DEFINITIONS_REVERTED.put(item,c);
-        });
+
         this.output = out;
         this.time = time;
     }
@@ -53,16 +53,103 @@ public class InfusingCraftingRecipe implements Recipe<Container> {
 
     @Override
     public boolean matches(Container c, Level world) {
-        ArrayList<String> s = new ArrayList<>();
-        for (int row = 1;row <= 3;row++){
-            StringBuilder builder = new StringBuilder();
-            for (int collumn = 1;collumn <= 3;collumn++){
-                char h = DEFINITIONS_REVERTED.get(c.getItem(collumn-1).getItem());
-                builder.append(h);
+        Item[][] arr = new Item[3][3];
+        int iterator = 0;
+        for (int i =0;i < 3;i++){
+            for (int g = 0; g < 3;g++){
+                arr[i][g] = c.getItem(iterator).getItem();
+                iterator++;
             }
         }
-        return false;
+
+
+
+        return patternEquals(arr);
     }
+
+    private boolean patternEquals(Item[][] craftingPattern){
+        int rows = pattern.length;
+        int cols = pattern[0].length();
+        Item[][] recipePattern = new Item[rows][cols];
+        for (int i =0;i < rows;i++){
+            for (int g = 0; g < cols;g++){
+                char c = pattern[i].charAt(g);
+                if (c != ' ') {
+                    Item item = DEFINITIONS.get(c);
+                    recipePattern[i][g] = item;
+                }else{
+                    recipePattern[i][g] = Items.AIR;
+                }
+            }
+        }
+
+
+
+        int raznRows = 3 - rows;
+        int raznCols = 3 - cols;
+
+        boolean c = false;
+        int rowSaved = -1;
+        int colSaved = -1;
+        for (int row = 0;row <= raznRows;row++ ){
+            for (int col = 0;col <= raznCols;col++ ){
+                if (check(craftingPattern, recipePattern, row, col, rows, cols)) {
+                    c = true;
+                    rowSaved = row;
+                    colSaved = col;
+                    break;
+                }
+            }
+            if (c){
+                break;
+            }
+        }
+
+        if (c){
+            for (int i = 0; i < 3;i++){
+                for (int g = 0; g < 3;g++){
+                    if ((i < rowSaved) || (i > rowSaved-1+rows)){
+                        if (craftingPattern[i][g] != Items.AIR){
+                            c = false;
+                            break;
+                        }
+                    }else{
+                        if (g < colSaved || (g > colSaved-1+cols)){
+                            if (craftingPattern[i][g] != Items.AIR){
+                                c = false;
+                                break;
+                            }
+                        }
+                    }
+                }
+                if (!c){
+                    break;
+                }
+            }
+        }
+
+        return c;
+    }
+
+    private boolean check(Item[][] craftingPattern,Item[][] recipePattern,int startRowPos,int startColPos,int sizeRows,int sizeCols){
+        Item[][] arr = new Item[sizeRows][sizeCols];
+        int itRows = 0;
+        int itCols = 0;
+        for (int row = startRowPos; row < startRowPos + sizeRows;row++){
+            for (int col = startColPos; col < startColPos + sizeRows;col++){
+                arr[itRows][itCols] = craftingPattern[row][col];
+                itCols++;
+            }
+            itCols = 0;
+            itRows++;
+        }
+
+
+
+        return Arrays.deepEquals(arr, recipePattern);
+    }
+
+
 
     @Override
     public ItemStack assemble(Container c) {

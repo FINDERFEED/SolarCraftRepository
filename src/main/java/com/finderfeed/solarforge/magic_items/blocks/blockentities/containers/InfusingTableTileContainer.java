@@ -18,7 +18,10 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.ItemStackHandler;
+import net.minecraftforge.items.SlotItemHandler;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class InfusingTableTileContainer extends AbstractContainerMenu {
@@ -33,6 +36,19 @@ public class InfusingTableTileContainer extends AbstractContainerMenu {
         this.inventory = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(null);
 
 
+        for(int i = 0; i < 3; ++i) {
+            for(int j = 0; j < 3; ++j) {
+                this.addSlot(new SlotItemHandler(this.inventory, j + i * 3, 64 + j * 18, 17 + i * 18));
+            }
+        }
+        this.addSlot(new SlotItemHandler(inventory,9,150,10){
+            @Override
+            public boolean mayPlace(@Nonnull ItemStack stack) {
+                return false;
+            }
+        });
+
+
         for(int l = 0; l < 3; ++l) {
             for(int j1 = 0; j1 < 9; ++j1) {
                 this.addSlot(new Slot(inv, j1 + l * 9 + 9,   8+j1 * 18, 103 + l * 18 -19));
@@ -43,6 +59,7 @@ public class InfusingTableTileContainer extends AbstractContainerMenu {
             this.addSlot(new Slot(inv, i1,  8+ i1 * 18, 161 -19));
         }
     }
+
 
     public IItemHandler getInventory() {
         return inventory;
@@ -64,6 +81,31 @@ public class InfusingTableTileContainer extends AbstractContainerMenu {
             return false;
         }
         return player.distanceToSqr(tile.getBlockPos().getX(),tile.getBlockPos().getY(),tile.getBlockPos().getZ()) <= 100;
+    }
+
+    @Override
+    public ItemStack quickMoveStack(Player playerIn, int index) {
+        ItemStack itemstack = ItemStack.EMPTY;
+        Slot slot = this.slots.get(index);
+        if (slot != null && slot.hasItem()) {
+            ItemStack itemstack1 = slot.getItem();
+            itemstack = itemstack1.copy();
+            if (index < inventory.getSlots()) {
+                if (!this.moveItemStackTo(itemstack1, inventory.getSlots(), this.slots.size(), true)) {
+                    return ItemStack.EMPTY;
+                }
+            } else if (!this.moveItemStackTo(itemstack1, 0, inventory.getSlots(), false)) {
+                return ItemStack.EMPTY;
+            }
+
+            if (itemstack1.isEmpty()) {
+                slot.set(ItemStack.EMPTY);
+            } else {
+                slot.setChanged();
+            }
+        }
+
+        return itemstack;
     }
 
 

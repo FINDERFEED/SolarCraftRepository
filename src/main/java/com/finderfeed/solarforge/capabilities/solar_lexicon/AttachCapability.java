@@ -1,6 +1,9 @@
 package com.finderfeed.solarforge.capabilities.solar_lexicon;
 
 
+import com.finderfeed.solarforge.SolarForge;
+import com.finderfeed.solarforge.capabilities.InfusingTableInventory;
+import com.finderfeed.solarforge.magic_items.blocks.blockentities.InfusingTableTile;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.SolarLexicon;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.resources.ResourceLocation;
@@ -24,6 +27,10 @@ public class AttachCapability {
 
     @SubscribeEvent
     public static void attachTileCapabilities(final AttachCapabilitiesEvent<BlockEntity> event){
-
+        if (event.getObject() instanceof InfusingTableTile tile){
+            InfusingTableInventory inv = new InfusingTableInventory();
+            event.addCapability(new ResourceLocation(SolarForge.MOD_ID,"crafting_table_infuser"),inv);
+            event.addListener(inv::invalidate);
+        }
     }
 }

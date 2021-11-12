@@ -1,8 +1,9 @@
 {
   "type": "solarforge:infusing_crafting",
   "pattern": [
-    "FF",
-    "F#"
+    "FFF",
+    "F##",
+    "###"
   ],
   "keys": {
     "#": {
