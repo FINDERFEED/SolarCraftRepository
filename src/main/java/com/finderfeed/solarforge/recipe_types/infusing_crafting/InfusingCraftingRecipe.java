@@ -23,17 +23,19 @@ import java.util.Map;
 public class InfusingCraftingRecipe implements Recipe<Container> {
     public static final InfusingCraftingRecipeSerializer serializer = new InfusingCraftingRecipeSerializer();
 
+    private final ResourceLocation id;
     private final ItemStack output;
     private final String[] pattern;
     private final Map<Character, Item> DEFINITIONS;
     private final int time;
     private final int outputCount;
-    public InfusingCraftingRecipe(String[] pattern,Map<Character, Item> defs,ItemStack out,int time,int outputCount){
+    public InfusingCraftingRecipe(ResourceLocation loc,String[] pattern,Map<Character, Item> defs,ItemStack out,int time,int outputCount){
         this.pattern = pattern;
         this.DEFINITIONS = defs;
         this.outputCount = outputCount;
         this.output = out;
         this.time = time;
+        this.id = loc;
     }
 
     public int getOutputCount() {
@@ -192,7 +194,7 @@ public class InfusingCraftingRecipe implements Recipe<Container> {
 
     @Override
     public ResourceLocation getId() {
-        return new ResourceLocation(SolarForge.MOD_ID,"infusing_crafting");
+        return id;
     }
 
     @Override

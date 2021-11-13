@@ -25,6 +25,13 @@ public class PhantomInventory implements Container {
         }
     }
 
+    public PhantomInventory(NonNullList<ItemStack> handler){
+        this.size = handler.size();
+        this.INVENTORY = handler;
+
+    }
+
+
     public PhantomInventory set(IItemHandler handler){
         this.size = handler.getSlots();
         this.INVENTORY = NonNullList.withSize(size,ItemStack.EMPTY);

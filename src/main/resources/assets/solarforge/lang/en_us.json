@@ -553,5 +553,6 @@
   "item.solarforge.ender_radar": "Ender Radar",
   "solar_fragment.ender_radar": "Ender radar",
   "ender_radar.lore": "A useful item for mining in caves. While in your inventory, will light up all ores around the player in a small radius.",
-  "block.solarforge.energized_stone": "Energized stone"
+  "block.solarforge.energized_stone": "Energized stone",
+  "block.solarforge.infusing_crafting_table": "Infusing crafting table"
 }

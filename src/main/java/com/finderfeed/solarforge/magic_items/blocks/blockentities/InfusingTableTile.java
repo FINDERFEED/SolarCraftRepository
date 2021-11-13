@@ -32,11 +32,12 @@ import java.util.Optional;
 import java.util.UUID;
 
 public class InfusingTableTile extends BlockEntity implements OwnedBlock {
-
+    public static final int ANIM_TIME = 80;
     private PhantomInventory phantomInv = new PhantomInventory(10);
     private UUID owner;
     private boolean recipeTrigerred = false;
     private int recipeTime = 0;
+    private int animationTime = -1;
     public InfusingTableTile( BlockPos p_155229_, BlockState p_155230_) {
         super(TileEntitiesRegistry.INFUSING_CRAFTING_TABLE.get(), p_155229_, p_155230_);
     }
@@ -44,6 +45,7 @@ public class InfusingTableTile extends BlockEntity implements OwnedBlock {
 
     public static void tick(Level world,BlockPos pos,BlockState state,InfusingTableTile tile){
         if (!world.isClientSide){
+            int updateTime = 40;
             if (tile.isRecipeInProgress()){
                 IItemHandler handler = tile.getInventory();
                 Optional<InfusingCraftingRecipe> optional = world.getRecipeManager().getRecipeFor(SolarForge.INFUSING_CRAFTING_RECIPE_TYPE, tile.phantomInv.set(handler), world);
@@ -52,6 +54,12 @@ public class InfusingTableTile extends BlockEntity implements OwnedBlock {
                     int recipeTime = recipe.getTime();
 
                     if (tile.getCurrentTime() < recipeTime){
+                        if (recipeTime - tile.getCurrentTime() <= ANIM_TIME){
+                            tile.animationTime =ANIM_TIME - (recipeTime-tile.getCurrentTime());
+                            updateTime = 1;
+                        }else{
+                            tile.animationTime = -1;
+                        }
                         tile.recipeTime++;
                     }else{
                         ItemStack stack = recipe.getOutput().copy();
@@ -63,20 +71,31 @@ public class InfusingTableTile extends BlockEntity implements OwnedBlock {
                         handler.insertItem(9,stack,false);
                         tile.recipeTrigerred = false;
                         tile.recipeTime = 0;
+                        tile.update();
                     }
                 }else{
                     tile.recipeTrigerred = false;
                 }
 
             }else{
+                tile.animationTime = -1;
                 tile.recipeTime = 0;
             }
 
 
-            if (world.getGameTime() % 40 == 0){
+            if (world.getGameTime() % updateTime == 0){
                 tile.update();
             }
         }
+
+
+    }
+
+
+
+
+    public int getAnimationTime() {
+        return animationTime;
     }
 
     public int getCurrentTime(){
@@ -101,7 +120,7 @@ public class InfusingTableTile extends BlockEntity implements OwnedBlock {
         }
     }
 
-    private int calculateMaximumRecipeOutput(){
+    public int calculateMaximumRecipeOutput(){
         int max = -1;
         IItemHandler inv = getInventory();
         for (int i = 0; i < 9;i++){
@@ -144,9 +163,8 @@ public class InfusingTableTile extends BlockEntity implements OwnedBlock {
     public CompoundTag save(CompoundTag tag) {
         tag.putBoolean("recipe",recipeTrigerred);
         tag.putInt("time",recipeTime);
-        if (owner != null) {
-            tag.putUUID("owner", owner);
-        }
+        tag.putUUID("tileowner", owner);
+
         return super.save(tag);
     }
 
@@ -154,16 +172,24 @@ public class InfusingTableTile extends BlockEntity implements OwnedBlock {
     public void load(CompoundTag tag) {
         this.recipeTrigerred = tag.getBoolean("recipe");
         this.recipeTime = tag.getInt("time");
-        this.owner = tag.getUUID("owner");
+        if (this.level != null){
+            if (!this.level.isClientSide){
+                this.setOwner(tag.getUUID("tileowner"));
+            }
+        }else{
+            this.setOwner(tag.getUUID("tileowner"));
+        }
         super.load(tag);
     }
     public CompoundTag saveW(CompoundTag tag) {
+        tag.putInt("anim",animationTime);
         tag.putBoolean("recipe",recipeTrigerred);
         tag.putInt("time",recipeTime);
         return super.save(tag);
     }
 
     public void loadW(CompoundTag tag) {
+        this.animationTime = tag.getInt("anim");
         this.recipeTrigerred = tag.getBoolean("recipe");
         this.recipeTime = tag.getInt("time");
         super.load(tag);

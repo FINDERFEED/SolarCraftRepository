@@ -8,10 +8,13 @@ import com.finderfeed.solarforge.recipe_types.infusing_crafting.InfusingCrafting
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.items.IItemHandler;
 
@@ -60,12 +63,26 @@ public class InfusingTableScreen extends AbstractContainerScreen<InfusingTableTi
         blit(matrices, relX + 3+a, relY+26, 0, 0, 256, 256);
 
         Level world = Minecraft.getInstance().level;
-        IItemHandler handler = menu.inventory;
-        Optional<InfusingCraftingRecipe> opt = world.getRecipeManager().getRecipeFor(SolarForge.INFUSING_CRAFTING_RECIPE_TYPE,new PhantomInventory(handler),world);
-        opt.ifPresent(infusingCraftingRecipe -> result = infusingCraftingRecipe.getResultItem().getItem());
-        if (result != null){
-            minecraft.getItemRenderer().renderGuiItem(result.getDefaultInstance(),relX+150,relY+10);
+        IItemHandler stacks = menu.getInventory();
+        Optional<InfusingCraftingRecipe> opt = world.getRecipeManager().getRecipeFor(SolarForge.INFUSING_CRAFTING_RECIPE_TYPE,new PhantomInventory(stacks),world);
+        if (opt.isPresent()){
+            result = opt.get().getResultItem().getItem();
+            renderItemAndTooltip(result.getDefaultInstance(),relX+153,relY+36,mousex,mousey,matrices,menu.tile.calculateMaximumRecipeOutput());
+        }else{
+            result = null;
         }
 
+    }
+    private void renderItemAndTooltip(ItemStack toRender, int place1, int place2, int mousex, int mousey, PoseStack matrices,int count){
+
+        ItemStack renderThis = toRender.copy();
+        renderThis.setCount(count);
+        minecraft.getItemRenderer().renderGuiItem(renderThis, place1, place2);
+        minecraft.getItemRenderer().renderGuiItemDecorations(font,renderThis,place1,place2);
+        if (((mousex >= place1) && (mousex <= place1+16)) && ((mousey >= place2) && (mousey <= place2+16)) && !toRender.getItem().equals(Items.AIR)){
+            matrices.pushPose();
+            renderTooltip(matrices,toRender,mousex,mousey);
+            matrices.popPose();
+        }
     }
 }
