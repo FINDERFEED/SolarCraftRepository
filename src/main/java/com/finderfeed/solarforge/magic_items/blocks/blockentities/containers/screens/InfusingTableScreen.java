@@ -13,6 +13,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.items.IItemHandler;
 
 import java.util.Optional;
 
@@ -59,10 +60,11 @@ public class InfusingTableScreen extends AbstractContainerScreen<InfusingTableTi
         blit(matrices, relX + 3+a, relY+26, 0, 0, 256, 256);
 
         Level world = Minecraft.getInstance().level;
-        Optional<InfusingCraftingRecipe> opt = world.getRecipeManager().getRecipeFor(SolarForge.INFUSING_CRAFTING_RECIPE_TYPE,new PhantomInventory(menu.getInventory()),world);
+        IItemHandler handler = menu.inventory;
+        Optional<InfusingCraftingRecipe> opt = world.getRecipeManager().getRecipeFor(SolarForge.INFUSING_CRAFTING_RECIPE_TYPE,new PhantomInventory(handler),world);
         opt.ifPresent(infusingCraftingRecipe -> result = infusingCraftingRecipe.getResultItem().getItem());
         if (result != null){
-            minecraft.getItemRenderer().renderGuiItem(result.getDefaultInstance(),150,10);
+            minecraft.getItemRenderer().renderGuiItem(result.getDefaultInstance(),relX+150,relY+10);
         }
 
     }

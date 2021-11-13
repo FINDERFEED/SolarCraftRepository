@@ -27,12 +27,17 @@ public class InfusingCraftingRecipe implements Recipe<Container> {
     private final String[] pattern;
     private final Map<Character, Item> DEFINITIONS;
     private final int time;
-    public InfusingCraftingRecipe(String[] pattern,Map<Character, Item> defs,ItemStack out,int time){
+    private final int outputCount;
+    public InfusingCraftingRecipe(String[] pattern,Map<Character, Item> defs,ItemStack out,int time,int outputCount){
         this.pattern = pattern;
         this.DEFINITIONS = defs;
-
+        this.outputCount = outputCount;
         this.output = out;
         this.time = time;
+    }
+
+    public int getOutputCount() {
+        return outputCount;
     }
 
     public ItemStack getOutput() {
@@ -105,25 +110,19 @@ public class InfusingCraftingRecipe implements Recipe<Container> {
             }
         }
 
+
+
         if (c){
-            for (int i = 0; i < 3;i++){
-                for (int g = 0; g < 3;g++){
-                    if ((i < rowSaved) || (i > rowSaved-1+rows)){
+            int[][] savedArray = new int[rows*cols][2];
+            fillArray(savedArray,rowSaved,colSaved,rows,cols);
+            for (int i = 0 ; i < 3;i++){
+                for(int g = 0; g < 3;g++){
+                    if (!arrayContains(savedArray,i,true) || !arrayContains(savedArray,g,false)){
                         if (craftingPattern[i][g] != Items.AIR){
-                            c = false;
-                            break;
-                        }
-                    }else{
-                        if (g < colSaved || (g > colSaved-1+cols)){
-                            if (craftingPattern[i][g] != Items.AIR){
-                                c = false;
-                                break;
-                            }
+                            return false;
                         }
                     }
-                }
-                if (!c){
-                    break;
+
                 }
             }
         }
@@ -131,12 +130,37 @@ public class InfusingCraftingRecipe implements Recipe<Container> {
         return c;
     }
 
+    private boolean arrayContains(int[][] arr,int num,boolean left){
+        for (int i = 0; i < arr.length;i++){
+            if (left){
+                if (arr[i][0] == num){
+                    return true;
+                }
+            }else{
+                if (arr[i][1] == num){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private void fillArray(int[][] savedArray,int rowSaved,int colSaved,int rows,int cols){
+        int iterator = 0;
+        for (int i = rowSaved; i < rowSaved+rows;i++){
+            for (int g = colSaved;g < colSaved+cols;g++){
+                savedArray[iterator] = new int[]{i,g};
+                iterator++;
+            }
+        }
+    }
+
     private boolean check(Item[][] craftingPattern,Item[][] recipePattern,int startRowPos,int startColPos,int sizeRows,int sizeCols){
         Item[][] arr = new Item[sizeRows][sizeCols];
         int itRows = 0;
         int itCols = 0;
         for (int row = startRowPos; row < startRowPos + sizeRows;row++){
-            for (int col = startColPos; col < startColPos + sizeRows;col++){
+            for (int col = startColPos; col < startColPos + sizeCols;col++){
                 arr[itRows][itCols] = craftingPattern[row][col];
                 itCols++;
             }
@@ -181,3 +205,23 @@ public class InfusingCraftingRecipe implements Recipe<Container> {
         return SolarForge.INFUSING_CRAFTING_RECIPE_TYPE;
     }
 }
+//            for (int i = 0; i < 3;i++){
+//                for (int g = 0; g < 3;g++){
+//                    if ((i < rowSaved) || (i > rowSaved-1+rows)){
+//                        if (craftingPattern[i][g] != Items.AIR){
+//                            c = false;
+//                            break;
+//                        }
+//                    }else{
+//                        if (g < colSaved || (g > colSaved-1+cols)){
+//                            if (craftingPattern[i][g] != Items.AIR){
+//                                c = false;
+//                                break;
+//                            }
+//                        }
+//                    }
+//                }
+//                if (!c){
+//                    break;
+//                }
+//            }

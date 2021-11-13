@@ -113,6 +113,7 @@ public class SolarForgeClientRegistry {
         BlockEntityRenderers.register(TileEntitiesRegistry.PORTAL_CREATOR.get(), PortalCreatorRenderer::new);
         BlockEntityRenderers.register(TileEntitiesRegistry.WORMHOLE.get(), WormholeRenderer::new);
         BlockEntityRenderers.register(TileEntitiesRegistry.BONEMEALER.get(), BonemealerRenderer::new);
+        BlockEntityRenderers.register(TileEntitiesRegistry.INFUSING_CRAFTING_TABLE.get(), InfusingTableTileRenderer::new);
 
         MenuScreens.register(Containers.SOLAR_FURNACE_CONTAINER.get(), SolarFurnaceScreen::new);
         MenuScreens.register(Containers.RUNIC_TABLE_CONTAINER.get(), RunicTableContainerScreen::new);

@@ -49,7 +49,8 @@ public class InfusingCraftingRecipeSerializer extends ForgeRegistryEntry<RecipeS
 
         ItemStack output = GsonHelper.getAsItem(json.getAsJsonObject("output"),"item").getDefaultInstance();
         int time = json.getAsJsonPrimitive("time").getAsInt();
-        return new InfusingCraftingRecipe(pattern,ingredientMap,output,time);
+        int c = GsonHelper.getAsInt(json,"count",1);
+        return new InfusingCraftingRecipe(pattern,ingredientMap,output,time,c);
     }
 
     @Nullable
@@ -82,8 +83,8 @@ public class InfusingCraftingRecipeSerializer extends ForgeRegistryEntry<RecipeS
 
         ItemStack output = buf.readItem();
         int time = buf.readInt();
-
-        return new InfusingCraftingRecipe(pattern,ingredientMap,output,time);
+        int count = buf.readInt();
+        return new InfusingCraftingRecipe(pattern,ingredientMap,output,time,count);
     }
 
     @Override
@@ -101,5 +102,6 @@ public class InfusingCraftingRecipeSerializer extends ForgeRegistryEntry<RecipeS
 
         buf.writeItem(recipe.getOutput());
         buf.writeInt(recipe.getTime());
+        buf.writeInt(recipe.getOutputCount());
     }
 }

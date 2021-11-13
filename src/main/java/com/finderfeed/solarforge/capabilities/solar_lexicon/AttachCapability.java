@@ -30,7 +30,6 @@ public class AttachCapability {
         if (event.getObject() instanceof InfusingTableTile tile){
             InfusingTableInventory inv = new InfusingTableInventory();
             event.addCapability(new ResourceLocation(SolarForge.MOD_ID,"crafting_table_infuser"),inv);
-            event.addListener(inv::invalidate);
         }
     }
 }

@@ -66,8 +66,10 @@ public class InfusingTableTileContainer extends AbstractContainerMenu {
     }
 
 
+
     @Override
     public void slotsChanged(Container container) {
+
         super.slotsChanged(container);
     }
 

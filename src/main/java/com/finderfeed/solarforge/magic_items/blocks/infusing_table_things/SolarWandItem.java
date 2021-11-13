@@ -3,6 +3,7 @@ package com.finderfeed.solarforge.magic_items.blocks.infusing_table_things;
 import com.finderfeed.solarforge.ClientHelpers;
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.SolarForge;
+import com.finderfeed.solarforge.magic_items.blocks.blockentities.InfusingTableTile;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.RuneEnergyPylonTile;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Progression;
 import com.finderfeed.solarforge.misc_things.*;
@@ -76,11 +77,15 @@ public class SolarWandItem extends Item implements ManaConsumer {
     public InteractionResult useOn(UseOnContext ctx) {
         BlockPos pos = ctx.getClickedPos();
         Level world = ctx.getLevel();
-        if (!world.isClientSide && world.getBlockEntity(pos) != null
-                && world.getBlockEntity(pos) instanceof InfuserTileEntity) {
-            InfuserTileEntity tile = (InfuserTileEntity) world.getBlockEntity(pos);
-            tile.triggerCrafting(ctx.getPlayer());
-            return InteractionResult.SUCCESS;
+        if (!world.isClientSide && world.getBlockEntity(pos) != null ) {
+            BlockEntity entity = world.getBlockEntity(pos);
+            if (entity instanceof InfuserTileEntity infuserTileEntity){
+                infuserTileEntity.triggerCrafting(ctx.getPlayer());
+                return InteractionResult.SUCCESS;
+            }else if (entity instanceof InfusingTableTile craftingTable){
+                craftingTable.triggerRecipe(ctx.getPlayer());
+                return InteractionResult.SUCCESS;
+            }
         }
 
 

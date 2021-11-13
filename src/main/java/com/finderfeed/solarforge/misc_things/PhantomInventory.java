@@ -10,8 +10,8 @@ import net.minecraftforge.items.ItemStackHandler;
 
 public class PhantomInventory implements Container {
 
-    public final int size;
-    public final NonNullList<ItemStack> INVENTORY;
+    public int size;
+    public NonNullList<ItemStack> INVENTORY;
 
     public PhantomInventory(int size){
         this.size = size;
@@ -23,6 +23,15 @@ public class PhantomInventory implements Container {
         for (int i = 0;i < size;i++){
             this.INVENTORY.set(i,handler.getStackInSlot(i));
         }
+    }
+
+    public PhantomInventory set(IItemHandler handler){
+        this.size = handler.getSlots();
+        this.INVENTORY = NonNullList.withSize(size,ItemStack.EMPTY);
+        for (int i = 0;i < size;i++){
+            this.INVENTORY.set(i,handler.getStackInSlot(i));
+        }
+        return this;
     }
 
     @Override

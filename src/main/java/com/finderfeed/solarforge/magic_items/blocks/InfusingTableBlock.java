@@ -2,8 +2,11 @@ package com.finderfeed.solarforge.magic_items.blocks;
 
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.InfusingTableTile;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.containers.InfusingTableTileContainer;
+import com.finderfeed.solarforge.registries.items.ItemsRegister;
 import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -20,6 +23,7 @@ import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.fmllegacy.network.NetworkHooks;
 
 import javax.annotation.Nullable;
+import java.util.Random;
 
 public class InfusingTableBlock extends Block implements EntityBlock {
     public InfusingTableBlock(Properties p_49795_) {
@@ -36,18 +40,29 @@ public class InfusingTableBlock extends Block implements EntityBlock {
     @Override
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult result) {
 
-        if (!level.isClientSide && hand == InteractionHand.MAIN_HAND){
+        if (!level.isClientSide
+                && hand == InteractionHand.MAIN_HAND
+                && !player.getItemInHand(hand).is(ItemsRegister.SOLAR_WAND.get())){
             BlockEntity e = level.getBlockEntity(pos);
             if (e instanceof  InfusingTableTile tile) {
                 if (tile.getOwner() != null && (level.getPlayerByUUID(tile.getOwner()) == player)) {
                     NetworkHooks.openGui((ServerPlayer) player, new InfusingTableTileContainer.Provider(tile), (buf ->
                             buf.writeBlockPos(pos)
                     ));
+                }else {
+                    player.sendMessage(new TextComponent("You are not the owner!").withStyle(ChatFormatting.RED),player.getUUID());
                 }
             }
         }
-        return InteractionResult.SUCCESS;
+        if (player.getItemInHand(hand).is(ItemsRegister.SOLAR_WAND.get())){
+               return InteractionResult.FAIL;
+        }else {
+            return InteractionResult.SUCCESS;
+        }
     }
+
+
+
 
     @Nullable
     @Override
