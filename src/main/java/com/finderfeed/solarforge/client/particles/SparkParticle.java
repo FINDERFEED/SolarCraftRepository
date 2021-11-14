@@ -1,14 +1,13 @@
-package com.finderfeed.solarforge.misc_things;
+package com.finderfeed.solarforge.client.particles;
 
 import com.finderfeed.solarforge.ClientHelpers;
-import com.mojang.blaze3d.platform.GlStateManager;
+import com.finderfeed.solarforge.for_future_library.other.EaseIn;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.VertexFormat;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.*;
 import com.mojang.blaze3d.vertex.BufferBuilder;
 import com.mojang.blaze3d.vertex.Tesselator;
-import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureManager;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
@@ -19,13 +18,14 @@ import org.lwjgl.opengl.GL11;
 
 import javax.annotation.Nullable;
 
-public class SmallSolarStrikeParticle extends TextureSheetParticle {
-    public SmallSolarStrikeParticle(ClientLevel p_i232448_1_, double p_i232448_2_, double p_i232448_4_, double p_i232448_6_, double x, double y, double z) {
+public class SparkParticle extends TextureSheetParticle {
+
+    private EaseIn value = new EaseIn(0,0.25,30);
+
+    public SparkParticle(ClientLevel p_i232448_1_, double p_i232448_2_, double p_i232448_4_, double p_i232448_6_, double x, double y, double z) {
         super(p_i232448_1_, p_i232448_2_, p_i232448_4_, p_i232448_6_, x,y,z);
 
-        this.rCol = 255;
-        this.gCol = 255;
-        this.bCol = 40;
+
 
         this.xd =x;
         this.yd =y;
@@ -33,8 +33,8 @@ public class SmallSolarStrikeParticle extends TextureSheetParticle {
         this.x = p_i232448_2_;
         this.y = p_i232448_4_;
         this.z = p_i232448_6_;
-        this.lifetime = 60 + (int)(p_i232448_1_.random.nextFloat()*6);
-        this.quadSize = 0.5f;
+        this.lifetime = 60;
+        this.quadSize = 0.01f;
 
 
     }
@@ -67,14 +67,12 @@ public class SmallSolarStrikeParticle extends TextureSheetParticle {
     @Override
     public void tick() {
         super.tick();
-        if (this.lifetime > 30){
-            if (this.quadSize > 0) {
-                this.quadSize -= 0.015;
-            }
+        if (this.age <= 30){
+            value.tick();
+        }else{
+            value.tickBackwards();
         }
-        if (this.lifetime-- <=0){
-            this.remove();
-        }
+        this.quadSize = (float)value.getValue();
     }
 
     public static class Factory implements ParticleProvider<SimpleParticleType> {
@@ -85,9 +83,7 @@ public class SmallSolarStrikeParticle extends TextureSheetParticle {
         @Nullable
         @Override
         public Particle createParticle(SimpleParticleType type, ClientLevel world, double x, double y, double z, double xv, double yv, double zv) {
-            SmallSolarStrikeParticle particle = new SmallSolarStrikeParticle(world,x,y,z,xv,yv,zv);
-            particle.setColor(1,1,0);
-
+            SparkParticle particle = new SparkParticle(world,x,y,z,xv,yv,zv);
             particle.pickSprite(this.spriteSetl);
             return particle;
         }
@@ -125,3 +121,4 @@ public class SmallSolarStrikeParticle extends TextureSheetParticle {
         }
     };
 }
+

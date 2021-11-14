@@ -12,7 +12,8 @@ public class EaseIn implements CanTick{
     private double start = 0;
     private double end;
 
-    public EaseIn(double end, double duration){
+    public EaseIn(double start,double end, double duration){
+        this.start = start;
         this.duration = duration;
         this.end = end;
     }
@@ -34,7 +35,14 @@ public class EaseIn implements CanTick{
 
     @Override
     public void tick(){
-        this.ticker+=1;
+        if (ticker+1 <= duration){
+            ticker++;
+        }
+    }
+    public void tickBackwards(){
+        if (ticker-1 >= 0){
+            ticker--;
+        }
     }
 
     public void reset(){

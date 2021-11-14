@@ -1,7 +1,6 @@
 package com.finderfeed.solarforge.client.particles;
 
 import com.finderfeed.solarforge.misc_things.ParticlesList;
-import com.finderfeed.solarforge.misc_things.SmallSolarStrikeParticle;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
@@ -19,6 +18,7 @@ public class ParticleRegister {
         Minecraft.getInstance().particleEngine.register(ParticlesList.SMALL_SOLAR_STRIKE_PARTICLE.get(), SmallSolarStrikeParticle.Factory::new);
         Minecraft.getInstance().particleEngine.register(ParticlesList.RUNE_PARTICLE.get(), RuneParticle.Factory::new);
         Minecraft.getInstance().particleEngine.register(ParticlesList.SOLAR_EXPLOSION_PARTICLE.get(), SolarExplosionParticle.Factory::new);
+        Minecraft.getInstance().particleEngine.register(ParticlesList.SPARK_PARTICLE.get(), SparkParticle.Factory::new);
     }
 
 }

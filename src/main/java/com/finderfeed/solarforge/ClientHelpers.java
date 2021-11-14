@@ -1,6 +1,7 @@
 package com.finderfeed.solarforge;
 
 import com.finderfeed.solarforge.SolarAbilities.screens.AbilityBuyScreen;
+import com.finderfeed.solarforge.client.particles.SmallSolarStrikeParticle;
 import com.finderfeed.solarforge.client.toasts.UnlockedEnergyTypeToast;
 import com.finderfeed.solarforge.events.RenderEventsHandler;
 import com.finderfeed.solarforge.for_future_library.helpers.FinderfeedMathHelper;
@@ -16,6 +17,9 @@ import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.Pro
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Widget;
+import net.minecraft.client.particle.Particle;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.particles.ParticleType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.client.Minecraft;
@@ -242,5 +246,25 @@ public class ClientHelpers {
                 createParticle(ParticlesList.SMALL_SOLAR_STRIKE_PARTICLE.get(),x,y,z,xs,ys,zs);
         int[] rgba = FinderfeedMathHelper.intToRgba(effect.getColor());
         particle.setColor((float)rgba[0]/255,(float)rgba[1]/255,(float)rgba[2]/255);
+    }
+
+    public static class ParticleConstructor{
+
+        private final Particle particle;
+
+        public ParticleConstructor(ParticleOptions opt,double posx,double posy,double posz,double speedx,double speedy,double speedz){
+            particle = Minecraft.getInstance().particleEngine.createParticle(opt,posx,posy,posz,speedx,speedy,speedz);
+        }
+
+        public ParticleConstructor setColor(int r,int g,int b){
+            particle.setColor((float)r/255,(float)g/255,(float)b/255);
+            return this;
+        }
+
+        public ParticleConstructor setLifetime(int lifetime){
+            particle.setLifetime(lifetime);
+            return this;
+        }
+
     }
 }

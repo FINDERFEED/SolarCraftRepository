@@ -4,6 +4,7 @@ package com.finderfeed.solarforge.events.other_events.event_handler;
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.client.custom_tooltips.CustomTooltip;
 import com.finderfeed.solarforge.client.custom_tooltips.ICustomTooltip;
+import com.finderfeed.solarforge.events.misc.ClientTicker;
 import com.finderfeed.solarforge.events.my_events.MyColorEvent;
 import com.finderfeed.solarforge.events.my_events.PostColorEvent;
 import com.finderfeed.solarforge.for_future_library.helpers.RenderingTools;
@@ -33,16 +34,53 @@ import net.minecraftforge.common.Tags;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.common.Mod;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Mod.EventBusSubscriber(modid = "solarforge",bus = Mod.EventBusSubscriber.Bus.FORGE,value = Dist.CLIENT)
 public class ClientEventsHandler {
 
-
+    private static Map<String, ClientTicker> TICKERS = new HashMap<>();
+    private static ArrayList<String> TICKERS_TO_REMOVE = new ArrayList<>();
     private static List<BlockPos> RENDER_POSITIONS = new ArrayList<>();
+    private static int testField = 0;
+
+    @SubscribeEvent
+    public static void manageTickers(TickEvent.WorldTickEvent event) {
+        if (event.phase == TickEvent.Phase.START)  {
+            TICKERS.values().forEach((ticker)->{
+
+                if (ticker.shouldBeRemoved()){
+                    TICKERS_TO_REMOVE.add(ticker.getId());
+                }
+                ticker.tick();
+            });
+            TICKERS_TO_REMOVE.forEach((id)->{
+                TICKERS.remove(id);
+            });
+            TICKERS_TO_REMOVE.clear();
+        }
+    }
+
+    public static int getTickerValueOrAddANewOne(String id,int maxval){
+        if (TICKERS.containsKey(id)){
+            return TICKERS.get(id).getCurrentValue();
+        }else{
+            ClientTicker ticker = new ClientTicker(id,maxval);
+            TICKERS.put(id,ticker);
+            return 0;
+        }
+    }
+
+
+    public static void removeTicker(String id){
+        TICKERS.remove(id);
+    }
 
     @SubscribeEvent
     public static void renderModules(ItemTooltipEvent event){

@@ -1,6 +1,7 @@
 package com.finderfeed.solarforge.magic_items.blocks.render;
 
 import com.finderfeed.solarforge.ClientHelpers;
+import com.finderfeed.solarforge.events.other_events.event_handler.ClientEventsHandler;
 import com.finderfeed.solarforge.for_future_library.helpers.RenderingTools;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.InfusingTableTile;
 import com.finderfeed.solarforge.magic_items.blocks.render.abstracts.TileEntityRenderer;
@@ -37,25 +38,22 @@ public class InfusingTableTileRenderer extends TileEntityRenderer<InfusingTableT
             ArrayList<ItemStack> items = getItemsToRender(handler);
             if (!items.isEmpty()){
                 float rotationModifier = 1;
-                float distanceModifirer = 0;
-                int t = tile.getAnimationTime();
-                //TODO:normal animation
-                if (t != -1) {
-                    float d = (float) (t)/ (InfusingTableTile.ANIM_TIME + pticks);
-                    rotationModifier = Mth.lerp(d, 1, 10f);
-                    distanceModifirer = Mth.lerp(d,0,1);
+                float distanceModifier = 0;
+                if (tile.getRemainingRecipeTime() != -1){
+                    int t = tile.getRemainingRecipeTime();
+                    rotationModifier = 1 + ((float)t/InfusingTableTile.ANIM_TIME)*4;
+//                            Mth.lerp((float)t/(InfusingTableTile.ANIM_TIME),1,5);
+                    distanceModifier = Mth.lerp((float)t/(InfusingTableTile.ANIM_TIME+pticks),0,1);
                 }
-
-
                 int count = items.size();
                 matrices.pushPose();
                 matrices.translate(0.5,1.4,0.5);
-                matrices.mulPose(Vector3f.YN.rotationDegrees(((time)%360)*rotationModifier));
+                matrices.mulPose(Vector3f.YN.rotationDegrees((time%360)*(float)rotationModifier));
                 matrices.scale(0.4f,0.4f,0.4f);
                 for (int i = 0 ;i < count;i++){
                     double h = i*(360f/count);
-                    double x = (radius-distanceModifirer)*Math.sin(Math.toRadians(h));
-                    double z = (radius-distanceModifirer)*Math.cos(Math.toRadians(h));
+                    double x = (radius-distanceModifier)*Math.sin(Math.toRadians(h));
+                    double z = (radius-distanceModifier)*Math.cos(Math.toRadians(h));
 
                     matrices.pushPose();
                     matrices.translate(x,0,z);

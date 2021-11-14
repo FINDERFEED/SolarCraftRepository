@@ -11,6 +11,7 @@ import java.util.function.Supplier;
 public class CastAbilityPacket {
     private final int index;
     public CastAbilityPacket(FriendlyByteBuf buf){
+
         index = buf.readInt();
 
     }
