@@ -17,6 +17,7 @@ import com.finderfeed.solarforge.magic_items.items.ProgressionBlockItem;
 import com.finderfeed.solarforge.misc_things.ParticlesList;
 import com.finderfeed.solarforge.multiblocks.Multiblocks;
 import com.finderfeed.solarforge.recipe_types.infusing_crafting.InfusingCraftingRecipe;
+import com.finderfeed.solarforge.recipe_types.infusing_crafting.InfusingCraftingRecipeType;
 import com.finderfeed.solarforge.registries.Tags;
 import com.finderfeed.solarforge.registries.abilities.AbilitiesRegistry;
 import com.finderfeed.solarforge.registries.attributes.AttributesRegistry;
@@ -168,7 +169,7 @@ public class SolarForge
     public static final RegistryObject<MenuType<SolarForgeContainer>> SOLAR_FORGE_CONTAINER = CONTAINER_TYPE.register("solarforge_container",()-> IForgeContainerType.create(SolarForgeContainer::new));
     public static final RegistryObject<MenuType<InfuserContainer>> INFUSING_TABLE_CONTAINER = CONTAINER_TYPE.register("infusing_stand_container",()-> IForgeContainerType.create(InfuserContainer::new));
 
-    public static final RecipeType<InfusingCraftingRecipe> INFUSING_CRAFTING_RECIPE_TYPE = new RecipeType<InfusingCraftingRecipe>() {};
+    public static final RecipeType<InfusingCraftingRecipe> INFUSING_CRAFTING_RECIPE_TYPE = new InfusingCraftingRecipeType();
     public static final RecipeType<InfusingRecipe> INFUSING_RECIPE_TYPE = new InfusingRecipeType();
     public static final RecipeType<SolarSmeltingRecipe> SOLAR_SMELTING = new SolarSmeltingRecipeType();
     public SolarForge() {
@@ -293,7 +294,7 @@ public class SolarForge
         }
         @SubscribeEvent
         public static void registerRecipeSerializers(RegistryEvent.Register<RecipeSerializer<?>> event) {
-            Registry.register(Registry.RECIPE_TYPE, new ResourceLocation(MOD_ID,"infusing_crafting"), INFUSING_CRAFTING_RECIPE_TYPE);
+            Registry.register(Registry.RECIPE_TYPE, new ResourceLocation(INFUSING_CRAFTING_RECIPE_TYPE.toString()), INFUSING_CRAFTING_RECIPE_TYPE);
             Registry.register(Registry.RECIPE_TYPE, new ResourceLocation(INFUSING_RECIPE_TYPE.toString()), INFUSING_RECIPE_TYPE);
             Registry.register(Registry.RECIPE_TYPE, new ResourceLocation(SOLAR_SMELTING.toString()), SOLAR_SMELTING);
 

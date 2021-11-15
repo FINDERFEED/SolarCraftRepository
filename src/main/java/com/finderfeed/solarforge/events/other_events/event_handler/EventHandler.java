@@ -50,6 +50,7 @@ import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerXpEvent;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.event.world.BlockEvent;
@@ -69,6 +70,17 @@ public class EventHandler {
             Abilities.DISPEL.getAbility()
     );
 
+    @SubscribeEvent
+    public static void playerHarvestCheck(PlayerEvent.BreakSpeed event){
+        Player pla = event.getPlayer();
+        if (!pla.level.isClientSide){
+            if (pla.level.getBlockEntity(event.getPos()) instanceof OwnedBlock block){
+                if (!pla.getUUID().equals(block.getOwner())){
+                     event.setCanceled(true);
+                }
+            }
+        }
+    }
 
 
     @SubscribeEvent

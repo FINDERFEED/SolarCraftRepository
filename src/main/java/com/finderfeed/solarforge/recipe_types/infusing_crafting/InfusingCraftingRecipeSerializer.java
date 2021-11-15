@@ -72,13 +72,7 @@ public class InfusingCraftingRecipeSerializer extends ForgeRegistryEntry<RecipeS
         String[] pattern = {
                 buf.readUtf(),
                 buf.readUtf(),
-                buf.readUtf(),
-                buf.readUtf(),
-                buf.readUtf(),
-                buf.readUtf(),
-                buf.readUtf(),
-                buf.readUtf(),
-                buf.readUtf(),
+                buf.readUtf()
         };
 
         ItemStack output = buf.readItem();

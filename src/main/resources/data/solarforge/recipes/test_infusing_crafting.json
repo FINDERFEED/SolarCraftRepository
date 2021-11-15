@@ -2,7 +2,7 @@
   "type": "solarforge:infusing_crafting",
   "pattern": [
     "FFF",
-    "F# ",
+    "F#F",
     "FFF"
   ],
   "keys": {
@@ -14,7 +14,8 @@
     }
   },
   "output": {
-    "item": "solarforge:solar_wand"
+    "item": "solarforge:tera_rune_block"
   },
   "time": 200
+
 }

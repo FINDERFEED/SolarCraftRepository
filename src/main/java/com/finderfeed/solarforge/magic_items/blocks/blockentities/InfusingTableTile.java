@@ -97,7 +97,7 @@ public class InfusingTableTile extends BlockEntity implements OwnedBlock {
 
     public void clientTick(){
         if (isRecipeInProgress()){
-            float time = level.getGameTime();
+            float time = level.getGameTime()*4;
             Vec3 pos = Helpers.getBlockCenter(worldPosition);
             for (int i = 0; i <= 1;i++){
                 double a = Math.toRadians(i * 180 + time % 360);
@@ -136,6 +136,7 @@ public class InfusingTableTile extends BlockEntity implements OwnedBlock {
                 Optional<InfusingCraftingRecipe> recipe = level.getRecipeManager().getRecipeFor(SolarForge.INFUSING_CRAFTING_RECIPE_TYPE, phantomInv.set(handler), level);
                 if (recipe.isPresent()) {
                     this.recipeTrigerred = true;
+
                 }
             }
         }else{

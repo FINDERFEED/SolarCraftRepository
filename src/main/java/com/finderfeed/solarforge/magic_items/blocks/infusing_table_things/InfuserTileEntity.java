@@ -1,8 +1,10 @@
 package com.finderfeed.solarforge.magic_items.blocks.infusing_table_things;
 
 
+import com.finderfeed.solarforge.ClientHelpers;
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.SolarForge;
+import com.finderfeed.solarforge.for_future_library.helpers.RenderingTools;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.runic_energy.AbstractRunicEnergyContainerRCBE;
 import com.finderfeed.solarforge.magic_items.blocks.infusing_table_things.infusing_pool.InfusingPoolTileEntity;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.AncientFragment;
@@ -39,6 +41,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.fmllegacy.network.PacketDistributor;
 import org.apache.logging.log4j.core.tools.picocli.CommandLine;
 
@@ -50,7 +53,8 @@ public class InfuserTileEntity extends AbstractRunicEnergyContainerRCBE implemen
 
 
 
-    private Tier tier = Tier.FIRST;
+    private Tier tier = null;
+
     public int energy = 0;
     public int TICKS_TIMER=0;
     public float TICKS_RADIUS_TIMER = 0;
@@ -106,6 +110,11 @@ public class InfuserTileEntity extends AbstractRunicEnergyContainerRCBE implemen
         cmp.putInt("infusing_time",INFUSING_TIME );
         cmp.putInt("recipe_progress",CURRENT_PROGRESS );
         cmp.putBoolean("is_recipe_in_progress",RECIPE_IN_PROGRESS );
+        if (this.tier != null) {
+            cmp.putString("tierid", this.tier.id);
+        }else{
+            cmp.putString("tierid", "null");
+        }
         if (!this.trySaveLootTable(cmp)) {
             ContainerHelper.saveAllItems(cmp, this.items);
         }
@@ -117,6 +126,7 @@ public class InfuserTileEntity extends AbstractRunicEnergyContainerRCBE implemen
     @Override
     public void load( CompoundTag cmp) {
         super.load(cmp);
+        tier = Tier.byId(cmp.getString("tierid"));
         energy = cmp.getInt("energy");
         INFUSING_TIME = cmp.getInt("infusing_time");
         CURRENT_PROGRESS = cmp.getInt("recipe_progress");
@@ -147,13 +157,12 @@ public class InfuserTileEntity extends AbstractRunicEnergyContainerRCBE implemen
         return true;
     }
 
-
-
+    public Tier getTier() {
+        return tier;
+    }
 
     public static void tick(Level world, BlockPos pos, BlockState blockState, InfuserTileEntity tile) {
-        if (world.getGameTime() % 10 == 0){
-            tile.assignTier();
-        }
+
         if (!world.isClientSide){
 
 
@@ -168,7 +177,7 @@ public class InfuserTileEntity extends AbstractRunicEnergyContainerRCBE implemen
                     tile.onTileRemove();
                     tile.clearWays();
                 }
-                if (tile.RECIPE_IN_PROGRESS){
+                if (tile.RECIPE_IN_PROGRESS && tile.isStructureCorrect()){
 
                     tile.setChanged();
                     world.sendBlockUpdated(tile.worldPosition,blockState,blockState,3);
@@ -178,33 +187,29 @@ public class InfuserTileEntity extends AbstractRunicEnergyContainerRCBE implemen
                     Map<RunicEnergy.Type,Double> costs = recipe1.RUNIC_ENERGY_COST;
                     tile.INFUSING_TIME = recipe1.infusingTime*count;
 
-                    boolean doOwnerHasRequiredProgression = recipe1.getTier() == Tier.RUNIC_ENERGY;
-                    Player pl = world.getPlayerByUUID(tile.getOwner());
-                    if (pl != null) {
-                        if (doOwnerHasRequiredProgression) {
-                            doOwnerHasRequiredProgression = Helpers.hasPlayerUnlocked(Progression.RUNIC_ENERGY_REPEATER, world.getPlayerByUUID(tile.getOwner()));
+                    boolean check = tile.hasEnoughRunicEnergy(costs,count);
+                    if ((tile.energy >= recipe1.requriedEnergy * count) && check) {
+                        tile.onTileRemove();
+                        tile.clearWays();
+                        tile.requiresEnergy = false;
+                        tile.CURRENT_PROGRESS++;
+                        if (tile.CURRENT_PROGRESS >= tile.INFUSING_TIME) {
+                            finishRecipe(world, tile, recipe1);
                         }
-                    }else{
-                        doOwnerHasRequiredProgression = false;
+                    } else {
+                        tile.requestRunicEnergy(costs, count);
+                        tile.requiresEnergy = !(tile.energy >= recipe1.requriedEnergy * count);
                     }
-                    if (doOwnerHasRequiredProgression) {
-                        boolean check = tile.hasEnoughRunicEnergy(costs,count);
-                        if ((tile.energy >= recipe1.requriedEnergy * count) && check) {
-                            tile.onTileRemove();
-                            tile.clearWays();
-                            tile.requiresEnergy = false;
-                            tile.CURRENT_PROGRESS++;
 
-
-                            if (tile.CURRENT_PROGRESS >= tile.INFUSING_TIME) {
-                                finishRecipe(world, tile, recipe1);
-                            }
-                        } else {
-                            tile.requestRunicEnergy(costs, count);
-                            tile.requiresEnergy = !(tile.energy >= recipe1.requriedEnergy * count);
-                        }
-                    }
+                }else{
+                    tile.RECIPE_IN_PROGRESS = false;
+                    tile.CURRENT_PROGRESS =0;
+                    tile.INFUSING_TIME = 0;
+                    tile.requiresEnergy = false;
+                    tile.onTileRemove();
+                    tile.clearWays();
                 }
+
                 if (world.getGameTime() % 5 == 1) {
                     sendUpdatePackets(world, tile);
                 }
@@ -214,19 +219,12 @@ public class InfuserTileEntity extends AbstractRunicEnergyContainerRCBE implemen
 
 
 
+
     private static void doParticlesAnimation(Level world, InfuserTileEntity tile){
         if (tile.RECIPE_IN_PROGRESS){
-
-            tile.spawnParticles(4.7f-tile.TICKS_RADIUS_TIMER,tile.TICKS_TIMER);
-            tile.TICKS_TIMER+=2;
-
-            if ((tile.INFUSING_TIME - tile.CURRENT_PROGRESS) <= 80 ){
-                tile.TICKS_RADIUS_TIMER += 0.05875;
-
-            }
-        }else{
-            tile.TICKS_TIMER = 0;
-            tile.TICKS_RADIUS_TIMER = 0;
+            Vec3 center = Helpers.getBlockCenter(tile.worldPosition);
+            ClientHelpers.ParticleAnimationHelper.line(ParticlesList.SPARK_PARTICLE.get(),center,center.add(3,3,3),
+                    0.5f,()->255,()->255,()->50+world.random.nextInt(128));
         }
     }
 
@@ -255,11 +253,7 @@ public class InfuserTileEntity extends AbstractRunicEnergyContainerRCBE implemen
                 new UpdateStacksOnClientTable(arr,tile.getItem(9),tile.worldPosition,tile.RECIPE_IN_PROGRESS));
     }
 
-    private void assignTier(){
-        if (Helpers.checkStructure(level,worldPosition.below().north(6).west(6),Multiblocks.INFUSER_TIER_FIRST.getM(),true)){
-            tier = Tier.FIRST;
-        }
-    }
+
 
 
     private static void finishRecipe(Level world, InfuserTileEntity tile, InfusingRecipe recipe){
@@ -304,20 +298,48 @@ public class InfuserTileEntity extends AbstractRunicEnergyContainerRCBE implemen
 
     }
 
+    public void calculateTier(){
+        boolean tier1 = Helpers.checkStructure(level,worldPosition.below(1).north(6).west(6),Multiblocks.INFUSER_TIER_FIRST.getM(), true);
+        boolean tier2 = Helpers.checkStructure(level,worldPosition.below(1).north(9).west(9),Multiblocks.INFUSER_TIER_RUNIC_ENERGY.getM(), true);
+        boolean tier3 = Helpers.checkStructure(level,worldPosition.below(1).north(9).west(9),Multiblocks.INFUSER_TIER_SOLAR_ENERGY.getM(), true);
+        if (tier3){
+            this.tier = Tier.SOLAR_ENERGY;
+        }else if (tier2){
+            this.tier = Tier.RUNIC_ENERGY;
+        }else if (tier1){
+            this.tier = Tier.FIRST;
+        }else{
+            this.tier = null;
+        }
+    }
 
+    private boolean tierEquals(Tier other){
+        if (other == Tier.FIRST){
+            return this.tier == Tier.SOLAR_ENERGY || this.tier == Tier.FIRST || this.tier == Tier.RUNIC_ENERGY;
+        }else if (other == Tier.RUNIC_ENERGY){
+            return this.tier == Tier.SOLAR_ENERGY ||  this.tier == Tier.RUNIC_ENERGY;
+        }else{
+            return this.tier == Tier.SOLAR_ENERGY;
+        }
+    }
 
     public void triggerCrafting(Player playerEntity){
         Optional<InfusingRecipe> recipe = this.level.getRecipeManager().getRecipeFor(SolarForge.INFUSING_RECIPE_TYPE,(Container) this,level);
         try {
             if (recipe.isPresent() && ProgressionHelper.doPlayerHasFragment(playerEntity, AncientFragment.getFragmentByID(recipe.get().child))) {
-
-                if (!RECIPE_IN_PROGRESS) {
-                    Helpers.fireProgressionEvent(playerEntity, Progression.SOLAR_INFUSER);
-                    this.INFUSING_TIME = recipe.get().infusingTime;
-                    this.RECIPE_IN_PROGRESS = true;
-                    this.level.playSound(null, this.worldPosition, SoundEvents.BEACON_ACTIVATE, SoundSource.AMBIENT, 2, 1);
-                } else {
-                    this.level.playSound(null, this.worldPosition, SoundEvents.VILLAGER_NO, SoundSource.AMBIENT, 2, 1);
+                calculateTier();
+                if (tierEquals(recipe.get().getTier())) {
+                    if (!RECIPE_IN_PROGRESS) {
+                        Helpers.fireProgressionEvent(playerEntity, Progression.SOLAR_INFUSER);
+                        this.INFUSING_TIME = recipe.get().infusingTime;
+                        this.RECIPE_IN_PROGRESS = true;
+                        this.level.playSound(null, this.worldPosition, SoundEvents.BEACON_ACTIVATE, SoundSource.AMBIENT, 2, 1);
+                    } else {
+                        this.level.playSound(null, this.worldPosition, SoundEvents.VILLAGER_NO, SoundSource.AMBIENT, 2, 1);
+                    }
+                }else{
+                    playerEntity.sendMessage(new TextComponent("Structure invalid.").withStyle(ChatFormatting.RED),
+                            playerEntity.getUUID());
                 }
 
             } else {
@@ -341,6 +363,9 @@ public class InfuserTileEntity extends AbstractRunicEnergyContainerRCBE implemen
         }
 
     }
+
+
+
 
     public void updateStacksInPhantomSlots(){
         List<BlockEntity> list = Structures.checkInfusingStandStructure(worldPosition,level);
@@ -432,6 +457,10 @@ public class InfuserTileEntity extends AbstractRunicEnergyContainerRCBE implemen
         }
     }
 
+    private boolean isStructureCorrect(){
+        return tier != null && Helpers.checkStructure(level, worldPosition.below().north(tier.offsetPos).west(tier.offsetPos), this.tier.structure, true);
+    }
+
     @Override
     public int getMaxEnergy() {
         return 100000;
@@ -497,18 +526,39 @@ public class InfuserTileEntity extends AbstractRunicEnergyContainerRCBE implemen
 
 
     public enum Tier{
-        FIRST("first"),
-        RUNIC_ENERGY("runic_energy"),
-        SOLAR_ENERGY("solar_energy")
+        FIRST("first",Multiblocks.INFUSER_TIER_FIRST.getM(), 6),
+        RUNIC_ENERGY("runic_energy",Multiblocks.INFUSER_TIER_RUNIC_ENERGY.getM(), 9),
+        SOLAR_ENERGY("solar_energy",Multiblocks.INFUSER_TIER_SOLAR_ENERGY.getM(), 9)
         ;
         private String id;
-        Tier(String id){
+        private Multiblock structure;
+        private int offsetPos;
+        Tier(String id,Multiblock struct,int offsetPos){
             this.id = id;
+            this.structure = struct;
+            this.offsetPos = offsetPos;
 
+        }
+
+        public Multiblock getStructure() {
+            return structure;
+        }
+
+        public int getOffsetPos() {
+            return offsetPos;
         }
 
         public String getId() {
             return id;
+        }
+
+        public static Tier byId(String id){
+            for (Tier t : Tier.class.getEnumConstants()){
+                if (t.id.equals(id)){
+                    return t;
+                }
+            }
+            return null;
         }
     }
 

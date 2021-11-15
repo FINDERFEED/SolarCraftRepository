@@ -3,6 +3,8 @@ package com.finderfeed.solarforge.magic_items.blocks.infusing_table_things;
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.magic_items.items.SolarNetworkBinder;
 import com.finderfeed.solarforge.misc_things.SolarcraftDebugStick;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
@@ -81,10 +83,19 @@ public class InfuserBlock extends Block implements EntityBlock {
                         NetworkHooks.openGui((ServerPlayer) user, (InfuserTileEntity) entity, cons);
 
                     }
+                }else{
+                    user.sendMessage(new TextComponent("You are not the owner!").withStyle(ChatFormatting.RED),user.getUUID());
                 }
 
             };
+        }else{
+            BlockEntity entity = world.getBlockEntity(pos);
+            if (entity instanceof InfuserTileEntity tile) {
+                tile.calculateTier();
+            }
         }
+
+
         if ((user.getItemInHand(hand).getItem() instanceof  SolarWandItem) || (user.getItemInHand(hand).getItem() instanceof  SolarNetworkBinder)  || (user.getItemInHand(hand).getItem() instanceof  SolarcraftDebugStick)){
             return super.use(state,world,pos,user,hand,rayTraceResult);
         }else{
@@ -92,6 +103,7 @@ public class InfuserBlock extends Block implements EntityBlock {
         }
 
     }
+
 
 
     @Nullable

@@ -5,6 +5,7 @@ import com.finderfeed.solarforge.client.particles.SmallSolarStrikeParticle;
 import com.finderfeed.solarforge.client.toasts.UnlockedEnergyTypeToast;
 import com.finderfeed.solarforge.events.RenderEventsHandler;
 import com.finderfeed.solarforge.for_future_library.helpers.FinderfeedMathHelper;
+import com.finderfeed.solarforge.for_future_library.helpers.RenderingTools;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.RayTrapTileEntity;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.RuneEnergyPylonTile;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.containers.screens.RunicTableContainerScreen;
@@ -44,6 +45,7 @@ import net.minecraftforge.items.IItemHandler;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Supplier;
 
 
 public class ClientHelpers {
@@ -264,6 +266,60 @@ public class ClientHelpers {
         public ParticleConstructor setLifetime(int lifetime){
             particle.setLifetime(lifetime);
             return this;
+        }
+
+    }
+
+
+    public static class ParticleAnimationHelper{
+
+        public static void line(ParticleOptions particle, Vec3 from, Vec3 to, double intensity, Supplier<Integer> red,Supplier<Integer> green,Supplier<Integer> blue){
+            Vec3 between = to.subtract(from);
+            double l = between.length();
+            for (double i = 0; i <= l;i+=intensity){
+                Vec3 pos = from.add(between.multiply(i/l,i/l,i/l));
+                Particle p = Minecraft.getInstance().particleEngine.createParticle(particle,pos.x,pos.y,pos.z,0,0,0);
+                p.setColor((float)red.get()/255,(float)green.get()/255,(float)blue.get()/255);
+            }
+        }
+        public static void verticalCircle(ParticleOptions particle, Vec3 center,double radius, int count,float[] speed, Supplier<Integer> red,Supplier<Integer> green,Supplier<Integer> blue){
+            float gametime = Minecraft.getInstance().level.getGameTime();
+            double angle = 360d/count;
+            for (int i = 0; i < count;i+=1){
+                double a = Math.toRadians(i * angle + gametime);
+                double x = radius*Math.sin(a);
+                double z = radius*Math.cos(a);
+
+
+                Particle p = Minecraft.getInstance().particleEngine.createParticle(particle,center.x+x,center.y,center.z+z,speed[0],speed[1],speed[2]);
+                p.setColor((float)red.get()/255,(float)green.get()/255,(float)blue.get()/255);
+            }
+        }
+
+        public static void horizontalXCircle(ParticleOptions particle, Vec3 center,double radius, int count,float[] speed, Supplier<Integer> red,Supplier<Integer> green,Supplier<Integer> blue){
+            float gametime = Minecraft.getInstance().level.getGameTime();
+            double angle = 360d/count;
+            for (int i = 0; i < count;i+=1){
+                double a = Math.toRadians(i * angle + gametime);
+                double x = radius*Math.sin(a);
+                double y = radius*Math.cos(a);
+
+
+                Particle p = Minecraft.getInstance().particleEngine.createParticle(particle,center.x+x,center.y+y,center.z,speed[0],speed[1],speed[2]);
+                p.setColor((float)red.get()/255,(float)green.get()/255,(float)blue.get()/255);
+            }
+        }
+        public static void horizontalZCircle(ParticleOptions particle, Vec3 center,double radius, int count,float[] speed, Supplier<Integer> red,Supplier<Integer> green,Supplier<Integer> blue){
+            float gametime = Minecraft.getInstance().level.getGameTime();
+            double angle = 360d/count;
+            for (int i = 0; i < count;i+=1){
+                double a = Math.toRadians(i * angle + gametime);
+                double z = radius*Math.sin(a);
+                double y = radius*Math.cos(a);
+
+                Particle p = Minecraft.getInstance().particleEngine.createParticle(particle,center.x,center.y+y,center.z+z,speed[0],speed[1],speed[2]);
+                p.setColor((float)red.get()/255,(float)green.get()/255,(float)blue.get()/255);
+            }
         }
 
     }

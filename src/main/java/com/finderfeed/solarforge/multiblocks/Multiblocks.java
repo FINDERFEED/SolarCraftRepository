@@ -210,7 +210,9 @@ public enum Multiblocks {
 
 
     public static Map<String,Multiblock> MULTIBLOCKS = Map.of(
-            "infuser", INFUSER_TIER_FIRST.a,
+            "infuser_tier_one", INFUSER_TIER_FIRST.a,
+            "infuser_tier_two", INFUSER_TIER_RUNIC_ENERGY.a,
+            "infuser_tier_three", INFUSER_TIER_SOLAR_ENERGY.a,
             "generator", SOLAR_ENERGY_GENERATOR.a,
             "healer", AURA_HEALER.a,
             "mortar", SOLAR_MORTAR.a,
@@ -411,7 +413,7 @@ class Structures{
             {
                     "D  D  D  D  D",
                     "             ",
-                    "  D   B    D ",
+                    "  D   B   D  ",
                     "D  F     F  D",
                     "             ",
                     "             ",
@@ -825,8 +827,8 @@ class Structures{
                     "                   ",
                     "                   ",
                     "                   ",
-                    "                   ",
-                    "        BqB        ",
+                    "   vb         av   ",
+                    "   c    BqB    c   ",
                     "        BqB        ",
                     "                   ",
                     "         V         ",
@@ -836,8 +838,8 @@ class Structures{
                     "         u         ",
                     "                   ",
                     "        BqB        ",
-                    "        BqB        ",
-                    "                   ",
+                    "   d    BqB    d   ",
+                    "   vb         av   ",
                     "                   ",
                     "                   ",
                     "                   ",
