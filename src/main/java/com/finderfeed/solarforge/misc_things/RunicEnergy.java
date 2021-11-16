@@ -1,16 +1,31 @@
 package com.finderfeed.solarforge.misc_things;
 
 import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.nbt.CompoundTag;
 
+import net.minecraft.world.level.block.Block;
 import net.minecraftforge.event.entity.player.PlayerEvent;
+
+import java.util.Map;
 
 public class RunicEnergy {
 
     public static String MAX_ENERGY_TAG = "solarcraft.max_player_runic_energy";
     public static String DEFAULT_ENERGY_TAG = "solarcraft.solar_rune_energy_";
 
+    public static Map<Block, Type> BLOCK_TO_RUNE_ENERGY_TYPE = Map.of(
+            BlocksRegistry.TERA_RUNE_BLOCK.get(), RunicEnergy.Type.TERA,
+            BlocksRegistry.FIRA_RUNE_BLOCK.get(), RunicEnergy.Type.FIRA,
+            BlocksRegistry.ZETA_RUNE_BLOCK.get(), RunicEnergy.Type.ZETA,
+            BlocksRegistry.KELDA_RUNE_BLOCK.get(), RunicEnergy.Type.KELDA,
+            BlocksRegistry.URBA_RUNE_BLOCK.get(), RunicEnergy.Type.URBA,
+            BlocksRegistry.ARDO_RUNE_BLOCK.get(), RunicEnergy.Type.ARDO,
+            BlocksRegistry.ULTIMA_RUNE_BLOCK.get(), RunicEnergy.Type.ULTIMA,
+            BlocksRegistry.GIRO_RUNE_BLOCK.get(), RunicEnergy.Type.GIRO
+
+    );
 
     public static void setEnergy(Player playerEntity,float amount, Type type){
         CompoundTag nbt = playerEntity.getPersistentData();

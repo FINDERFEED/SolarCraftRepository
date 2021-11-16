@@ -75,7 +75,11 @@ public class InfusingRecipeSerializer extends ForgeRegistryEntry<RecipeSerialize
                 RunicEnergy.Type.GIRO,GIRO,
                 RunicEnergy.Type.ULTIMA,ULTIMA
         );
-        return new InfusingRecipe(loc,input1,input2,input3,input4,input5,input6,input7,input8,input9,output,infusingTime,child,reqEnergy,tag,count,costs);
+        String catalysts = GsonHelper.getAsString(file,"catalysts","            ");
+        if (catalysts.length() != 12){
+            throw new IllegalStateException("Catalysts length cant be != 12, recipe: " + loc.toString());
+        }
+        return new InfusingRecipe(loc,catalysts,input1,input2,input3,input4,input5,input6,input7,input8,input9,output,infusingTime,child,reqEnergy,tag,count,costs);
     }
 
     private Ingredient getIngredient(JsonElement element,int i){
@@ -123,8 +127,8 @@ public class InfusingRecipeSerializer extends ForgeRegistryEntry<RecipeSerialize
                 RunicEnergy.Type.GIRO,GIRO,
                 RunicEnergy.Type.ULTIMA,ULTIMA
         );
-
-        return new InfusingRecipe(loc,input1,input2,input3,input4,input5,input6,input7,input8,input9,output,infusingTime,child,reqEnergy,tag,count,costs);
+        String cat = buf.readUtf();
+        return new InfusingRecipe(loc,cat,input1,input2,input3,input4,input5,input6,input7,input8,input9,output,infusingTime,child,reqEnergy,tag,count,costs);
     }
 
     @Override
@@ -152,5 +156,6 @@ public class InfusingRecipeSerializer extends ForgeRegistryEntry<RecipeSerialize
         buf.writeDouble(recipeType.RUNIC_ENERGY_COST.get(RunicEnergy.Type.URBA));
         buf.writeDouble(recipeType.RUNIC_ENERGY_COST.get(RunicEnergy.Type.GIRO));
         buf.writeDouble(recipeType.RUNIC_ENERGY_COST.get(RunicEnergy.Type.ULTIMA));
+        buf.writeUtf(recipeType.getCatalysts());
     }
 }

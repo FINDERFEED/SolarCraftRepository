@@ -7,11 +7,13 @@ import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Pr
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import com.finderfeed.solarforge.recipe_types.InfusingRecipe;
 import com.finderfeed.solarforge.recipe_types.solar_smelting.SolarSmeltingRecipe;
+import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
 import com.finderfeed.solarforge.registries.items.ItemsRegister;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 
 import java.util.*;
 
@@ -21,6 +23,10 @@ import java.util.*;
  */
 public class ProgressionHelper {
 
+
+
+
+
     public static Map<Item, InfusingRecipe> INFUSING_RECIPE_MAP = new HashMap<>();
     public static Map<Item, InfusingRecipe> UPGRADES_INFUSING_RECIPE_MAP = new HashMap<>();
     public static Map<Item, SolarSmeltingRecipe> SMELTING_RECIPE_MAP = new HashMap<>();
@@ -29,6 +35,7 @@ public class ProgressionHelper {
     public static final String FRAG_ID = "fragmentid";
 
     public static final int[] NULL_ARRAY = {-1,-1,-1,-1,-1,-1};
+
 
     //they have weird names didnt they?
     public static final Item[] RUNES = {

@@ -434,15 +434,7 @@ public class InfuserTileEntity extends AbstractRunicEnergyContainerRCBE implemen
     }
 
 
-    public void spawnParticles(float radius,float angle){
 
-        for (int i = 0;i<4;i++){
-            double offsetx = radius*Math.cos(Math.toRadians(i*90+angle));
-            double offsetz = radius*Math.sin(Math.toRadians(i*90+angle));
-            level.addParticle(ParticleTypes.FLAME,worldPosition.getX()+offsetx+0.5f,worldPosition.getY()+0.5,worldPosition.getZ()+offsetz+0.5f,0,0,0);
-
-        }
-    }
 
 
     @Override

@@ -5,6 +5,7 @@ import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.magic_items.blocks.infusing_table_things.InfuserTileEntity;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
+import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
@@ -13,10 +14,13 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 
 import java.util.Map;
 
 public class InfusingRecipe implements Recipe<Container> {
+
+
 
     private final InfuserTileEntity.Tier tier;
     public final ResourceLocation id;
@@ -36,11 +40,14 @@ public class InfusingRecipe implements Recipe<Container> {
     public final String tag;
     public final int count;
     public final Map<RunicEnergy.Type,Double> RUNIC_ENERGY_COST;
-
+    private final String catalysts;
+    private final Block[] deserializedCatalysts;
     public static final InfusingRecipeSerializer serializer = new InfusingRecipeSerializer();
-    public InfusingRecipe(ResourceLocation id, Ingredient input1, Ingredient input2, Ingredient input3, Ingredient input4, Ingredient input5, Ingredient input6, Ingredient input7,Ingredient input8,Ingredient input9, ItemStack output, int infusingTime,String child
+    public InfusingRecipe(ResourceLocation id,String catalysts, Ingredient input1, Ingredient input2, Ingredient input3, Ingredient input4, Ingredient input5, Ingredient input6, Ingredient input7,Ingredient input8,Ingredient input9, ItemStack output, int infusingTime,String child
     ,int requriedEnergy,String tag,int count,Map<RunicEnergy.Type,Double> costs) {
         this.id = id;
+        this.catalysts = catalysts;
+        this.deserializedCatalysts = deserializeCatalysts();
         this.input1 = input1;
         this.input2 = input2;
         this.input3 = input3;
@@ -57,13 +64,17 @@ public class InfusingRecipe implements Recipe<Container> {
         this.requriedEnergy = requriedEnergy;
         this.tag = tag;
         this.count = count;
-        if (doRecipeRequiresRunicEnergy(costs)){
-            this.tier = InfuserTileEntity.Tier.RUNIC_ENERGY;
-        }else if (requriedEnergy > 0){
+        if (requriedEnergy > 0){
             this.tier = InfuserTileEntity.Tier.SOLAR_ENERGY;
+        }else if (doRecipeRequiresRunicEnergy(costs)){
+            this.tier = InfuserTileEntity.Tier.RUNIC_ENERGY;
         }else{
             this.tier = InfuserTileEntity.Tier.FIRST;
         }
+    }
+
+    public Block[] getDeserializedCatalysts() {
+        return deserializedCatalysts;
     }
 
     public int getInfusingTime(){
@@ -124,5 +135,38 @@ public class InfusingRecipe implements Recipe<Container> {
             }
         }
         return false;
+    }
+
+    public String getCatalysts() {
+        return catalysts;
+    }
+
+    private Map<Character,Block> DESERIALIZATOR = Map.of(
+            'T', BlocksRegistry.TERA_RUNE_BLOCK.get(),
+            'Z', BlocksRegistry.ZETA_RUNE_BLOCK.get(),
+            'K', BlocksRegistry.KELDA_RUNE_BLOCK.get(),
+            'R', BlocksRegistry.URBA_RUNE_BLOCK.get(),
+            'F', BlocksRegistry.FIRA_RUNE_BLOCK.get(),
+            'A', BlocksRegistry.ARDO_RUNE_BLOCK.get(),
+            'U', BlocksRegistry.ULTIMA_RUNE_BLOCK.get(),
+            'G', BlocksRegistry.GIRO_RUNE_BLOCK.get()
+    );
+
+
+    public Block[] deserializeCatalysts(){
+        if (!catalysts.equals("            ")) {
+            Block[] bl = new Block[12];
+            for (int i = 0; i < 12; i++) {
+                Block block;
+                if ((block = DESERIALIZATOR.get(catalysts.charAt(i))) != null) {
+                    bl[i] = block;
+                } else {
+                    bl[i] = null;
+                }
+            }
+            return bl;
+        }else{
+            return null;
+        }
     }
 }
