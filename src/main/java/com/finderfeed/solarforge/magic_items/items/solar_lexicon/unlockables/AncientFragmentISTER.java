@@ -1,6 +1,7 @@
 package com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables;
 
 import com.finderfeed.solarforge.events.other_events.OBJModels;
+import com.mojang.blaze3d.platform.Lighting;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Vector3f;
 import net.minecraft.client.Minecraft;
@@ -69,6 +70,7 @@ public class AncientFragmentISTER extends BlockEntityWithoutLevelRenderer {
             matrices.popPose();
         }
         if (transformType == ItemTransforms.TransformType.GUI){
+            Lighting.setupForFlatItems();
             matrices.pushPose();
             matrices.translate(0.5,0.5,0);
 

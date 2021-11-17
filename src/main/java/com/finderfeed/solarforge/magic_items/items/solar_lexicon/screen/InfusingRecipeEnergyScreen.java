@@ -6,6 +6,7 @@ import com.finderfeed.solarforge.magic_items.items.solar_lexicon.SolarLexicon;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import com.finderfeed.solarforge.recipe_types.InfusingRecipe;
 import com.finderfeed.solarforge.registries.items.ItemsRegister;
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.ImageButton;
@@ -24,7 +25,10 @@ public class InfusingRecipeEnergyScreen extends Screen {
     private int currentPage = 0;
     private final int maxPages;
     private final List<InfusingRecipe> recipes;
-
+    private final RunicEnergy.Type[] ORDERED_TYPES = {
+      RunicEnergy.Type.GIRO, RunicEnergy.Type.ULTIMA, RunicEnergy.Type.ZETA, RunicEnergy.Type.ARDO, RunicEnergy.Type.TERA, RunicEnergy.Type.FIRA, RunicEnergy.Type.URBA
+      , RunicEnergy.Type.KELDA
+    };
     private int relX;
     private int relY;
 
@@ -105,15 +109,36 @@ public class InfusingRecipeEnergyScreen extends Screen {
         matrices.pushPose();
         drawCenteredString(matrices,font,new TranslatableComponent("solarcraft.total_energy"),relX+102,relY+126,0xff0000);
         matrices.popPose();
+        matrices.pushPose();
+        int iter = 0;
+
+        for (RunicEnergy.Type type : ORDERED_TYPES){
+            renderEnergyBar(matrices,relX+64+iter*17,relY+90,type,recipe);
+            iter++;
+        }
+        int solaren = Math.round((float)recipe.requriedEnergy / 100000 * 64);
+        fill(matrices,relX+15,relY+94-solaren,relX+25,relY+94,0xddffff00);
+        double totalEnergy = recipe.requriedEnergy;
+        for (double cost : recipe.RUNIC_ENERGY_COST.values()){
+            totalEnergy+=cost;
+        }
+        int totaltext = Math.round((float)totalEnergy / 900000 * 175);
+        fill(matrices,relX+15,relY+145,relX+15+totaltext,relY+145+6,0xddffff00);
+        drawString(matrices,font,new TranslatableComponent("solarcraft.total_solar_energy"),relX+16,relY+160,0xff0000);
+        drawCenteredString(matrices,font,""+recipe.requriedEnergy,relX+160,relY+161,0xff0000);
+
+        drawString(matrices,font,new TranslatableComponent("solarcraft.total_runic_energy"),relX+16,relY+160+21,0xff0000);
+        drawCenteredString(matrices,font,""+(int)totalEnergy,relX+160,relY+161+21,0xff0000);
+        matrices.popPose();
         super.render(matrices, mousex, mousey, partialTicks);
     }
 
 
-//    private void renderEnergyBar(PoseStack matrices, int offsetx, int offsety, RunicEnergy.Type type){
-//        matrices.pushPose();
-//        double energyCostPerItem = recipe.get(currentPage).RUNIC_ENERGY_COST.get(type);
-//        int xtexture =  ( Math.round( (float)energyCostPerItem/100000*60));
-//        blit(matrices,relX+offsetx,relY+offsety,0,0,xtexture,6);
-//        matrices.popPose();
-//    }
+    private void renderEnergyBar(PoseStack matrices, int offsetx, int offsety, RunicEnergy.Type type,InfusingRecipe recipe){
+        matrices.pushPose();
+        double energyCostPerItem = recipe.RUNIC_ENERGY_COST.get(type);
+        int xtexture =  ( Math.round( (float)energyCostPerItem/100000*60));
+        fill(matrices,offsetx,offsety-xtexture,offsetx+6,offsety,0xddffff00);
+        matrices.popPose();
+    }
 }

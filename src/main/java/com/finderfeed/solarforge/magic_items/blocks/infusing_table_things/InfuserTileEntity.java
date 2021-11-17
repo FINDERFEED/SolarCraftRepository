@@ -20,6 +20,7 @@ import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
@@ -177,7 +178,7 @@ public class InfuserTileEntity extends AbstractRunicEnergyContainerRCBE implemen
                     tile.onTileRemove();
                     tile.clearWays();
                 }
-                if (tile.RECIPE_IN_PROGRESS && tile.isStructureCorrect()){
+                if (tile.RECIPE_IN_PROGRESS && tile.catalystsMatch(recipe.get()) && tile.isStructureCorrect()){
 
                     tile.setChanged();
                     world.sendBlockUpdated(tile.worldPosition,blockState,blockState,3);
@@ -329,13 +330,18 @@ public class InfuserTileEntity extends AbstractRunicEnergyContainerRCBE implemen
             if (recipe.isPresent() && ProgressionHelper.doPlayerHasFragment(playerEntity, AncientFragment.getFragmentByID(recipe.get().child))) {
                 calculateTier();
                 if (tierEquals(recipe.get().getTier())) {
-                    if (!RECIPE_IN_PROGRESS) {
-                        Helpers.fireProgressionEvent(playerEntity, Progression.SOLAR_INFUSER);
-                        this.INFUSING_TIME = recipe.get().infusingTime;
-                        this.RECIPE_IN_PROGRESS = true;
-                        this.level.playSound(null, this.worldPosition, SoundEvents.BEACON_ACTIVATE, SoundSource.AMBIENT, 2, 1);
-                    } else {
-                        this.level.playSound(null, this.worldPosition, SoundEvents.VILLAGER_NO, SoundSource.AMBIENT, 2, 1);
+                    if (catalystsMatch(recipe.get())) {
+                        if (!RECIPE_IN_PROGRESS) {
+                            Helpers.fireProgressionEvent(playerEntity, Progression.SOLAR_INFUSER);
+                            this.INFUSING_TIME = recipe.get().infusingTime;
+                            this.RECIPE_IN_PROGRESS = true;
+                            this.level.playSound(null, this.worldPosition, SoundEvents.BEACON_ACTIVATE, SoundSource.AMBIENT, 2, 1);
+                        } else {
+                            this.level.playSound(null, this.worldPosition, SoundEvents.VILLAGER_NO, SoundSource.AMBIENT, 2, 1);
+                        }
+                    }else{
+                        playerEntity.sendMessage(new TextComponent("Catalysts don't match the recipe.").withStyle(ChatFormatting.RED),
+                                playerEntity.getUUID());
                     }
                 }else{
                     playerEntity.sendMessage(new TextComponent("Structure invalid.").withStyle(ChatFormatting.RED),
@@ -435,7 +441,27 @@ public class InfuserTileEntity extends AbstractRunicEnergyContainerRCBE implemen
 
 
 
+    public Block[] getCurrentCatalystPattern(){
+        Block[] block = {
+                level.getBlockState(worldPosition.above().west(6).north(3)).getBlock(),
+                level.getBlockState(worldPosition.above().west(4).north(4)).getBlock(),
+                level.getBlockState(worldPosition.above().west(3).north(6)).getBlock(),
 
+                level.getBlockState(worldPosition.above().east(3).north(6)).getBlock(),
+                level.getBlockState(worldPosition.above().east(4).north(4)).getBlock(),
+                level.getBlockState(worldPosition.above().east(6).north(4)).getBlock(),
+
+                level.getBlockState(worldPosition.above().east(6).south(3)).getBlock(),
+                level.getBlockState(worldPosition.above().east(4).south(4)).getBlock(),
+                level.getBlockState(worldPosition.above().east(3).south(6)).getBlock(),
+
+                level.getBlockState(worldPosition.above().west(3).south(6)).getBlock(),
+                level.getBlockState(worldPosition.above().west(4).south(4)).getBlock(),
+                level.getBlockState(worldPosition.above().west(6).south(3)).getBlock()
+        };
+
+        return block;
+    }
 
     @Override
     public int giveEnergy(int a) {
@@ -506,6 +532,23 @@ public class InfuserTileEntity extends AbstractRunicEnergyContainerRCBE implemen
         this.onRemove();
     }
 
+
+    public boolean catalystsMatch(InfusingRecipe recipe){
+        if (recipe.getDeserializedCatalysts() != null) {
+            Block[] c = getCurrentCatalystPattern();
+            for (int i = 0 ; i < 12;i++){
+                Block bl;
+                if ((bl = recipe.getDeserializedCatalysts()[i]) != null){
+                    if (bl != c[i]){
+                        return false;
+                    }
+                }
+            }
+        }else{
+            return true;
+        }
+        return true;
+    }
 
     private boolean doRecipeRequiresRunicEnergy(Map<RunicEnergy.Type,Double> costs){
         for (double cost : costs.values()){

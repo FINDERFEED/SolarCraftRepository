@@ -16,12 +16,14 @@ public enum Progression {
     RUNE_ENERGY_PYLON("rune_energy_deposit",1, ItemsRegister.RUNE_ENERGY_PYLON.get().getDefaultInstance(),new TranslatableComponent("ach.rune_energy_deposit"),nextID(),new TranslatableComponent("pre.rune_energy_deposit"),new TranslatableComponent("aft.rune_energy_deposit")),
     TRADE_FOR_BLUE_GEM("blue_gem_trade",1,ItemsRegister.BLUE_GEM.get().getDefaultInstance(), new TranslatableComponent("ach.blue_gem_trade"),nextID(),new TranslatableComponent("pre.blue_gem_trade"),new TranslatableComponent("aft.blue_gem_trade")),
 
+
     ENTER_END("enter_end",2, Blocks.END_STONE.asItem().getDefaultInstance(),new TranslatableComponent("ach.enter_end"),nextID(),new TranslatableComponent("pre.enter_end"),new TranslatableComponent("aft.enter_end")),
     KILL_WITHER("kill_wither",2, Blocks.WITHER_SKELETON_SKULL.asItem().getDefaultInstance(),new TranslatableComponent("ach.kill_wither"),nextID(),new TranslatableComponent("pre.kill_wither"),new TranslatableComponent("aft.kill_wither")),
     ACQUIRE_COLD_STAR("cold_star_piece",2,ItemsRegister.COLD_STAR_PIECE.get().getDefaultInstance(), new TranslatableComponent("ach.cold_star_piece"),nextID(),new TranslatableComponent("pre.cold_star_piece"),new TranslatableComponent("aft.cold_star_piece")),
     RUNE_ENERGY_CLAIM("rune_energy_claim",2, ItemsRegister.SOLAR_WAND.get().getDefaultInstance(),new TranslatableComponent("ach.rune_energy_claim"),nextID(),new TranslatableComponent("pre.rune_energy_claim"),new TranslatableComponent("aft.rune_energy_claim")),
     SOLAR_RUNE("solar_rune",2, ItemsRegister.SOLAR_RUNE_ZETA.get().getDefaultInstance(),new TranslatableComponent("ach.solar_rune"),nextID(),new TranslatableComponent("pre.solar_rune"),new TranslatableComponent("aft.solar_rune")),
     ALL_ENERGY_TYPES("all_energy_types",2, ItemsRegister.RUNE_ENERGY_PYLON.get().getDefaultInstance(),new TranslatableComponent("ach.all_energy_types"),nextID(),new TranslatableComponent("pre.all_energy_types"),new TranslatableComponent("aft.all_energy_types")),
+    INFUSING_CRAFTING_TABLE("infusing_crafting_table",2,ItemsRegister.INFUSING_TABLE.get().getDefaultInstance(), new TranslatableComponent("ach.infusing_crafting_table"),nextID(),new TranslatableComponent("pre.infusing_crafting_table"),new TranslatableComponent("aft.infusing_crafting_table")),
 
 
     KILL_DRAGON("kill_dragon",3, Blocks.DRAGON_HEAD.asItem().getDefaultInstance(),new TranslatableComponent("ach.kill_dragon"),nextID(),new TranslatableComponent("pre.kill_dragon"),new TranslatableComponent("aft.kill_dragon")),
@@ -34,14 +36,17 @@ public enum Progression {
     SOLAR_INFUSER("solar_infuser_create",5,SolarForge.INFUSING_STAND_ITEM.get().getDefaultInstance(),new TranslatableComponent("ach.solar_infuser_create"),nextID(),new TranslatableComponent("pre.solar_infuser_create"),new TranslatableComponent("aft.solar_infuser_create")),
     DIMENSIONAL_SHARD_DUNGEON("dim_shard_dungeon",5,ItemsRegister.SOLAR_STONE_CHISELED.get().getDefaultInstance(), new TranslatableComponent("ach.dim_shard_dungeon"),nextID(),new TranslatableComponent("pre.dim_shard_dungeon"),new TranslatableComponent("aft.dim_shard_dungeon")),
 
-    CRAFT_SOLAR_LENS("solar_lens_craft",6,ItemsRegister.SOLAR_LENS.get().getDefaultInstance(), new TranslatableComponent("ach.solar_lens_craft"),nextID(),new TranslatableComponent("pre.solar_lens_craft"),new TranslatableComponent("aft.solar_lens_craft")),
-    RUNIC_ENERGY_REPEATER("runic_energy_repeater",6,ItemsRegister.REPEATER.get().getDefaultInstance(), new TranslatableComponent("ach.runic_energy_repeater"),nextID(),new TranslatableComponent("pre.runic_energy_repeater"),new TranslatableComponent("aft.runic_energy_repeater")),
+    CATALYSTS("catalysts",6,ItemsRegister.ARDO_RUNE_BLOCK.get().getDefaultInstance(), new TranslatableComponent("ach.catalysts"),nextID(),new TranslatableComponent("pre.catalysts"),new TranslatableComponent("aft.catalysts")),
 
-    CRAFT_SOLAR_ENERGY_GENERATOR("energy_generator_craft",7,ItemsRegister.ENERGY_GENERATOR_BLOCK.get().getDefaultInstance(), new TranslatableComponent("ach.solar_generator_craft"),nextID(),new TranslatableComponent("pre.solar_generator_craft"),new TranslatableComponent("aft.solar_generator_craft")),
 
-    RADIANT_LAND("dimension_core",8,ItemsRegister.DIMENSION_CORE.get().getDefaultInstance(), new TranslatableComponent("ach.dimension_core"),nextID(),new TranslatableComponent("pre.dimension_core"),new TranslatableComponent("aft.dimension_core")),
+    CRAFT_SOLAR_LENS("solar_lens_craft",7,ItemsRegister.SOLAR_LENS.get().getDefaultInstance(), new TranslatableComponent("ach.solar_lens_craft"),nextID(),new TranslatableComponent("pre.solar_lens_craft"),new TranslatableComponent("aft.solar_lens_craft")),
+    RUNIC_ENERGY_REPEATER("runic_energy_repeater",7,ItemsRegister.REPEATER.get().getDefaultInstance(), new TranslatableComponent("ach.runic_energy_repeater"),nextID(),new TranslatableComponent("pre.runic_energy_repeater"),new TranslatableComponent("aft.runic_energy_repeater")),
 
-    KILL_CRYSTAL_BOSS("crystal_boss",9,ItemsRegister.CRYSTALLITE_CORE.get().getDefaultInstance(), new TranslatableComponent("ach.crystal_boss"),nextID(),new TranslatableComponent("pre.crystal_boss"),new TranslatableComponent("aft.crystal_boss"));
+    CRAFT_SOLAR_ENERGY_GENERATOR("energy_generator_craft",8,ItemsRegister.ENERGY_GENERATOR_BLOCK.get().getDefaultInstance(), new TranslatableComponent("ach.solar_generator_craft"),nextID(),new TranslatableComponent("pre.solar_generator_craft"),new TranslatableComponent("aft.solar_generator_craft")),
+
+    RADIANT_LAND("dimension_core",9,ItemsRegister.DIMENSION_CORE.get().getDefaultInstance(), new TranslatableComponent("ach.dimension_core"),nextID(),new TranslatableComponent("pre.dimension_core"),new TranslatableComponent("aft.dimension_core")),
+
+    KILL_CRYSTAL_BOSS("crystal_boss",10,ItemsRegister.CRYSTALLITE_CORE.get().getDefaultInstance(), new TranslatableComponent("ach.crystal_boss"),nextID(),new TranslatableComponent("pre.crystal_boss"),new TranslatableComponent("aft.crystal_boss"));
 
 
     //FIND_SOLAR_STONE("solar_stone",2, ItemsRegister.SOLAR_STONE.get().getDefaultInstance(),new TranslatableComponent("ach.solar_stone"),7,new TranslatableComponent("pre.solar_stone"),new TranslatableComponent("aft.solar_stone")),

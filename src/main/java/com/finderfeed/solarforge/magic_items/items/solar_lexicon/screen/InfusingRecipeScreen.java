@@ -9,6 +9,7 @@ import com.finderfeed.solarforge.recipe_types.InfusingRecipe;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.SolarLexicon;
 import com.finderfeed.solarforge.registries.items.ItemsRegister;
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.screens.Screen;
@@ -76,8 +77,7 @@ public class InfusingRecipeScreen extends Screen {
         fillArray();
         stacks = new ArrayList<>();
         InfusingRecipe currentRecipe = recipe.get(currentPage);
-        //TODO:
-//        this.catalystsUnlocked = Helpers.hasPlayerUnlocked(Progression.CATALYSTS,Minecraft.getInstance().player);
+        this.catalystsUnlocked = Helpers.hasPlayerUnlocked(Progression.CATALYSTS,Minecraft.getInstance().player);
         addStack(currentRecipe.input1,stacks);
         addStack(currentRecipe.input2,stacks);
         addStack(currentRecipe.input3,stacks);
@@ -187,7 +187,7 @@ public class InfusingRecipeScreen extends Screen {
 
 
 //        drawCenteredString(matrices, minecraft.font,new TranslatableComponent("solarforge.seconds"),relX+30,relY+120,0xffffff);
-//        drawCenteredString(matrices, minecraft.font,new TextComponent(recipe.get(currentPage).infusingTime / 20 +" ").append(new TranslatableComponent("solarforge.seconds2")),relX+30,relY+130,0xffffff);
+        drawCenteredString(matrices, minecraft.font,new TextComponent(recipe.get(currentPage).infusingTime / 20 +" ").append(new TranslatableComponent("solarforge.seconds2")),relX+104,relY+28,0xff0000);
 
 //        Helpers.drawBoundedText(matrices,relX+10,relY+152,33,recipe.child.getItemDescription().getString());
 
@@ -207,24 +207,28 @@ public class InfusingRecipeScreen extends Screen {
 //        renderEnergyBar(matrices,124,173, RunicEnergy.Type.TERA);
 //        renderEnergyBar(matrices,124,157, RunicEnergy.Type.ZETA);
 //        renderEnergyBar(matrices,39,173, RunicEnergy.Type.FIRA);
-        matrices.pushPose();
-        InfusingRecipe r = recipe.get(currentPage);
-        if (r.getDeserializedCatalysts() != null){
-            int iterator = 0;
-            for (int[] pos : runicEnergySymbolsRenderPositions){
-                Block block = r.getDeserializedCatalysts()[iterator];
-                if (block != null){
-                    matrices.pushPose();
-                    RunicEnergy.Type type = RunicEnergy.BLOCK_TO_RUNE_ENERGY_TYPE.get(block);
-                    bindTypeTexture(type);
-                    blit(matrices,pos[0],pos[1],0,0,16,16,16,16);
-                    matrices.popPose();
-                }
 
-                iterator++;
+        if (catalystsUnlocked) {
+            matrices.pushPose();
+            InfusingRecipe r = recipe.get(currentPage);
+            if (r.getDeserializedCatalysts() != null) {
+                int iterator = 0;
+                for (int[] pos : runicEnergySymbolsRenderPositions) {
+                    Block block = r.getDeserializedCatalysts()[iterator];
+                    if (block != null) {
+                        matrices.pushPose();
+                        RunicEnergy.Type type = RunicEnergy.BLOCK_TO_RUNE_ENERGY_TYPE.get(block);
+                        bindTypeTexture(type);
+                        blit(matrices, pos[0], pos[1], 0, 0, 16, 16, 16, 16);
+                        matrices.popPose();
+                    }
+
+                    iterator++;
+                }
             }
+            matrices.popPose();
         }
-        matrices.popPose();
+
     }
 
 

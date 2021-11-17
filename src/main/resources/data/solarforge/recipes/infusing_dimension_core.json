@@ -4,7 +4,7 @@
     "item": "solarforge:first_dimensional_shard"
   },
   "input2": {
-    "item": "solarforge:amethyst_core"
+    "item": "solarforge:geminium_ingot"
   },
   "input3": {
     "item": "solarforge:amethyst_core"
@@ -38,5 +38,7 @@
   "fira": 50000,
   "tera": 50000,
   "urba": 50000,
-  "ardo": 50000
+  "ardo": 50000,
+  "giro": 50000,
+  "ultima": 50000
 }
