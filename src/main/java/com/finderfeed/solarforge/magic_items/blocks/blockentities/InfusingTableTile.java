@@ -98,8 +98,8 @@ public class InfusingTableTile extends BlockEntity implements OwnedBlock {
     }
 
     public void clientTick(){
-        if (isRecipeInProgress()){
-            float time = level.getGameTime()*4;
+        if (isRecipeInProgress() && (level.getGameTime() % 2 == 0) ){
+            float time = -level.getGameTime()*4;
             Vec3 pos = Helpers.getBlockCenter(worldPosition);
             for (int i = 0; i <= 1;i++){
                 double a = Math.toRadians(i * 180 + time % 360);
@@ -138,13 +138,21 @@ public class InfusingTableTile extends BlockEntity implements OwnedBlock {
             if (handler.getStackInSlot(9).is(Items.AIR)) {
                 Optional<InfusingCraftingRecipe> recipe = level.getRecipeManager().getRecipeFor(SolarForge.INFUSING_CRAFTING_RECIPE_TYPE, phantomInv.set(handler), level);
                     if (recipe.isPresent()) {
-                        if (ProgressionHelper.doPlayerHasFragment(pl,recipe.get().getFragment())) {
-
-                            this.recipeTrigerred = true;
-                        }else {
-                            pl.sendMessage(new TextComponent("Cant start craft, you don't have " + recipe.get().getFragment().getId().toUpperCase(Locale.ROOT) +
-                                    " fragment unlocked.").withStyle(ChatFormatting.RED),pl.getUUID());
+                        try {
+                            if (ProgressionHelper.doPlayerHasFragment(pl, recipe.get().getFragment())) {
+                                this.recipeTrigerred = true;
+                                update();
+                            } else {
+                                pl.sendMessage(new TextComponent("Cant start craft, you don't have " + recipe.get().getFragment().getId().toUpperCase(Locale.ROOT) +
+                                        " fragment unlocked.").withStyle(ChatFormatting.RED), pl.getUUID());
+                            }
+                        }catch (Exception e){
+                            pl.sendMessage(new TextComponent("INCORRECT FRAGMENT IN RECIPE "+ recipe.get().getOutput().getDisplayName()+" TELL MOD AUTHOR TO FIX IT").withStyle(ChatFormatting.RED),
+                                    pl.getUUID());
                         }
+                    }else{
+                        pl.sendMessage(new TextComponent("Recipe invalid.").withStyle(ChatFormatting.RED),
+                                pl.getUUID());
                     }
 
             }

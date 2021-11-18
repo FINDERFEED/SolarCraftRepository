@@ -30,8 +30,9 @@ public class InfusingCraftingRecipe implements Recipe<Container> {
     private final Map<Character, Item> DEFINITIONS;
     private final int time;
     private final int outputCount;
-    private final AncientFragment fragment;
-    public InfusingCraftingRecipe(ResourceLocation loc,String[] pattern,Map<Character, Item> defs,ItemStack out,int time,int outputCount,AncientFragment fragment){
+    private AncientFragment desFragment;
+    private final String fragment;
+    public InfusingCraftingRecipe(ResourceLocation loc,String[] pattern,Map<Character, Item> defs,ItemStack out,int time,int outputCount,String fragment){
         this.pattern = pattern;
         this.DEFINITIONS = defs;
         this.outputCount = outputCount;
@@ -41,9 +42,16 @@ public class InfusingCraftingRecipe implements Recipe<Container> {
         this.fragment = fragment;
     }
 
+    public  String getFragmentID(){
+        return fragment;
+    }
 
     public AncientFragment getFragment() {
-        return fragment;
+        if (desFragment == null) {
+            desFragment = AncientFragment.getFragmentByID(fragment);
+        }
+
+        return desFragment;
     }
 
     public int getOutputCount() {

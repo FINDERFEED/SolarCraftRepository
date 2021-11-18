@@ -1,20 +1,13 @@
 package com.finderfeed.solarforge.recipe_types.infusing_crafting;
 
-import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.AncientFragment;
-import com.finderfeed.solarforge.recipe_types.InfusingRecipe;
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.level.levelgen.surfacebuilders.SurfaceBuilderBaseConfiguration;
-import net.minecraft.world.level.levelgen.surfacebuilders.SurfaceBuilderConfiguration;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
 import javax.annotation.Nullable;
@@ -52,12 +45,9 @@ public class InfusingCraftingRecipeSerializer extends ForgeRegistryEntry<RecipeS
         int time = json.getAsJsonPrimitive("time").getAsInt();
         int c = GsonHelper.getAsInt(json,"count",1);
         String s = json.getAsJsonPrimitive("fragment").getAsString();
-        AncientFragment fragment = AncientFragment.getFragmentByID(s);
-        if (fragment == null){
-            throw new RuntimeException("Incorrect fragment in recipe " + rl.toString());
-        }
 
-        return new InfusingCraftingRecipe(rl,pattern,ingredientMap,output,time,c, fragment);
+
+        return new InfusingCraftingRecipe(rl,pattern,ingredientMap,output,time,c,s);
     }
 
     @Nullable
@@ -86,7 +76,7 @@ public class InfusingCraftingRecipeSerializer extends ForgeRegistryEntry<RecipeS
         int time = buf.readInt();
         int count = buf.readInt();
         String s = buf.readUtf();
-        return new InfusingCraftingRecipe(rl,pattern,ingredientMap,output,time,count,AncientFragment.getFragmentByID(s));
+        return new InfusingCraftingRecipe(rl,pattern,ingredientMap,output,time,count,s);
     }
 
     @Override
@@ -105,6 +95,6 @@ public class InfusingCraftingRecipeSerializer extends ForgeRegistryEntry<RecipeS
         buf.writeItem(recipe.getOutput());
         buf.writeInt(recipe.getTime());
         buf.writeInt(recipe.getOutputCount());
-        buf.writeUtf(recipe.getFragment().getId());
+        buf.writeUtf(recipe.getFragmentID());
     }
 }
