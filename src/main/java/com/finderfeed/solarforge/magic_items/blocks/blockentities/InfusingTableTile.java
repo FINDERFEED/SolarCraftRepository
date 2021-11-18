@@ -5,6 +5,7 @@ import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.for_future_library.OwnedBlock;
 import com.finderfeed.solarforge.for_future_library.helpers.FinderfeedMathHelper;
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.ProgressionHelper;
 import com.finderfeed.solarforge.misc_things.ParticlesList;
 import com.finderfeed.solarforge.misc_things.PhantomInventory;
 import com.finderfeed.solarforge.recipe_types.infusing_crafting.InfusingCraftingRecipe;
@@ -26,6 +27,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
 import javax.annotation.Nullable;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -130,14 +132,21 @@ public class InfusingTableTile extends BlockEntity implements OwnedBlock {
     }
 
     public void triggerRecipe(Player pl){
+
         if (level.getPlayerByUUID(owner) == pl){
             IItemHandler handler = getInventory();
             if (handler.getStackInSlot(9).is(Items.AIR)) {
                 Optional<InfusingCraftingRecipe> recipe = level.getRecipeManager().getRecipeFor(SolarForge.INFUSING_CRAFTING_RECIPE_TYPE, phantomInv.set(handler), level);
-                if (recipe.isPresent()) {
-                    this.recipeTrigerred = true;
+                    if (recipe.isPresent()) {
+                        if (ProgressionHelper.doPlayerHasFragment(pl,recipe.get().getFragment())) {
 
-                }
+                            this.recipeTrigerred = true;
+                        }else {
+                            pl.sendMessage(new TextComponent("Cant start craft, you don't have " + recipe.get().getFragment().getId().toUpperCase(Locale.ROOT) +
+                                    " fragment unlocked.").withStyle(ChatFormatting.RED),pl.getUUID());
+                        }
+                    }
+
             }
         }else{
             pl.sendMessage(new TextComponent("You are not the owner!").withStyle(ChatFormatting.RED),pl.getUUID());

@@ -36,8 +36,10 @@ public abstract class AbstractRunicEnergyContainer extends BlockEntity implement
     private double RUNE_ENERGY_URBA = 0;
     private double RUNE_ENERGY_KELDA = 0;
     private double RUNE_ENERGY_ZETA = 0;
+    private double RUNE_ENERGY_GIRO = 0;
+    private double RUNE_ENERGY_ULTIMA = 0;
 
-    public BlockPos nullOrGiverPositionForClient = BlockPos.ZERO;
+    public List<BlockPos> nullOrGiverPositionForClient = new ArrayList<>();
 
 //    private boolean NEEDS_ARDO = false;
 //    private boolean NEEDS_KELDA = false;
@@ -132,8 +134,8 @@ public abstract class AbstractRunicEnergyContainer extends BlockEntity implement
                     constructWay(type);
                 }
             }else{
-                if (!Helpers.equalsBlockPos(nullOrGiverPositionForClient,BlockPos.ZERO)){
-                    nullOrGiverPositionForClient = BlockPos.ZERO;
+                if (nullOrGiverPositionForClient.contains(first.getBlockPos())){
+                    nullOrGiverPositionForClient.remove(first.getBlockPos());
                     BlockState state = level.getBlockState(worldPosition);
                     this.setChanged();
                     this.level.sendBlockUpdated(worldPosition,state,state,3);
@@ -161,18 +163,14 @@ public abstract class AbstractRunicEnergyContainer extends BlockEntity implement
     @Override
     public ClientboundBlockEntityDataPacket getUpdatePacket() {
         CompoundTag cmp = new CompoundTag();
-        CompoundNBTHelper.writeBlockPos("posclient",nullOrGiverPositionForClient,cmp);
+        CompoundNBTHelper.writeBlockPosList("posclient",nullOrGiverPositionForClient,cmp);
         return new ClientboundBlockEntityDataPacket(worldPosition,3,cmp);
     }
 
     @Override
     public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
-        BlockPos pos = CompoundNBTHelper.getBlockPos("posclient",pkt.getTag());
-        if (Helpers.equalsBlockPos(pos,BlockPos.ZERO)){
-            nullOrGiverPositionForClient = null;
-        }else{
-            nullOrGiverPositionForClient = pos;
-        }
+        nullOrGiverPositionForClient = CompoundNBTHelper.getBlockPosList("posclient",pkt.getTag());
+
     }
 
     public void clearWays(){
@@ -187,6 +185,8 @@ public abstract class AbstractRunicEnergyContainer extends BlockEntity implement
             case KELDA -> RUNE_ENERGY_KELDA+=amount;
             case URBA -> RUNE_ENERGY_URBA=amount;
             case ZETA -> RUNE_ENERGY_ZETA+=amount;
+            case ULTIMA -> RUNE_ENERGY_ULTIMA+=amount;
+            case GIRO -> RUNE_ENERGY_GIRO+=amount;
         }
     }
 
@@ -199,6 +199,8 @@ public abstract class AbstractRunicEnergyContainer extends BlockEntity implement
             case URBA-> a =  RUNE_ENERGY_URBA >= costs.get(RunicEnergy.Type.URBA)*multiplier;
             case ZETA-> a =  RUNE_ENERGY_ZETA >= costs.get(RunicEnergy.Type.ZETA)*multiplier;
             case KELDA-> a =  RUNE_ENERGY_KELDA >= costs.get(RunicEnergy.Type.KELDA)*multiplier;
+            case ULTIMA-> a =  RUNE_ENERGY_ULTIMA >= costs.get(RunicEnergy.Type.ULTIMA)*multiplier;
+            case GIRO-> a =  RUNE_ENERGY_GIRO >= costs.get(RunicEnergy.Type.GIRO)*multiplier;
         }
         return  a;
     }
@@ -222,6 +224,8 @@ public abstract class AbstractRunicEnergyContainer extends BlockEntity implement
         tag.putDouble("urba",RUNE_ENERGY_URBA);
         tag.putDouble("tera",RUNE_ENERGY_TERA);
         tag.putDouble("zeta",RUNE_ENERGY_ZETA);
+        tag.putDouble("giro",RUNE_ENERGY_GIRO);
+        tag.putDouble("ultima",RUNE_ENERGY_ULTIMA);
     }
     private void loadRunicEnergy(CompoundTag tag){
         RUNE_ENERGY_ARDO  = tag.getDouble("ardo");
@@ -230,6 +234,8 @@ public abstract class AbstractRunicEnergyContainer extends BlockEntity implement
         RUNE_ENERGY_URBA = tag.getDouble("urba");
         RUNE_ENERGY_TERA = tag.getDouble("tera");
         RUNE_ENERGY_ZETA = tag.getDouble("zeta");
+        RUNE_ENERGY_GIRO = tag.getDouble("giro");
+        RUNE_ENERGY_ULTIMA = tag.getDouble("ultima");
     }
 
     public void constructWay(RunicEnergy.Type type){
@@ -242,7 +248,7 @@ public abstract class AbstractRunicEnergyContainer extends BlockEntity implement
                     PATH_TO_CONTAINERS.put(type, route);
                 }
             } else if (entity instanceof RunicEnergyGiver container) {
-                nullOrGiverPositionForClient = container.getPos();
+                nullOrGiverPositionForClient.add(container.getPos());
                 BlockState state = level.getBlockState(worldPosition);
                 this.setChanged();
                 this.level.sendBlockUpdated(worldPosition,state,state,3);
@@ -306,6 +312,9 @@ public abstract class AbstractRunicEnergyContainer extends BlockEntity implement
             case FIRA -> toReturn = RUNE_ENERGY_FIRA;
             case ARDO -> toReturn = RUNE_ENERGY_ARDO;
             case TERA -> toReturn = RUNE_ENERGY_TERA;
+            case GIRO -> toReturn = RUNE_ENERGY_GIRO;
+            case ULTIMA -> toReturn = RUNE_ENERGY_ULTIMA;
+
         }
         return toReturn;
     }

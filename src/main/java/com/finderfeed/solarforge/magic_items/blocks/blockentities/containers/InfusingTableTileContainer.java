@@ -7,6 +7,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.Container;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
@@ -68,6 +69,7 @@ public class InfusingTableTileContainer extends AbstractContainerMenu {
 
 
 
+
     @Override
     public void slotsChanged(Container container) {
 
@@ -122,7 +124,7 @@ public class InfusingTableTileContainer extends AbstractContainerMenu {
 
         @Override
         public Component getDisplayName() {
-            return new TextComponent("");
+            return new TranslatableComponent("solarcraft.infusing_crafting_table");
         }
 
         @Nullable

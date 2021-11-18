@@ -1,5 +1,6 @@
 package com.finderfeed.solarforge.recipe_types.infusing_crafting;
 
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarforge.recipe_types.InfusingRecipe;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -50,7 +51,13 @@ public class InfusingCraftingRecipeSerializer extends ForgeRegistryEntry<RecipeS
         ItemStack output = GsonHelper.getAsItem(json.getAsJsonObject("output"),"item").getDefaultInstance();
         int time = json.getAsJsonPrimitive("time").getAsInt();
         int c = GsonHelper.getAsInt(json,"count",1);
-        return new InfusingCraftingRecipe(rl,pattern,ingredientMap,output,time,c);
+        String s = json.getAsJsonPrimitive("fragment").getAsString();
+        AncientFragment fragment = AncientFragment.getFragmentByID(s);
+        if (fragment == null){
+            throw new RuntimeException("Incorrect fragment in recipe " + rl.toString());
+        }
+
+        return new InfusingCraftingRecipe(rl,pattern,ingredientMap,output,time,c, fragment);
     }
 
     @Nullable
@@ -78,7 +85,8 @@ public class InfusingCraftingRecipeSerializer extends ForgeRegistryEntry<RecipeS
         ItemStack output = buf.readItem();
         int time = buf.readInt();
         int count = buf.readInt();
-        return new InfusingCraftingRecipe(rl,pattern,ingredientMap,output,time,count);
+        String s = buf.readUtf();
+        return new InfusingCraftingRecipe(rl,pattern,ingredientMap,output,time,count,AncientFragment.getFragmentByID(s));
     }
 
     @Override
@@ -97,5 +105,6 @@ public class InfusingCraftingRecipeSerializer extends ForgeRegistryEntry<RecipeS
         buf.writeItem(recipe.getOutput());
         buf.writeInt(recipe.getTime());
         buf.writeInt(recipe.getOutputCount());
+        buf.writeUtf(recipe.getFragment().getId());
     }
 }

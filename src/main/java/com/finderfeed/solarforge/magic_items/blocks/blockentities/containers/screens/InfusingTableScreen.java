@@ -42,6 +42,9 @@ public class InfusingTableScreen extends AbstractContainerScreen<InfusingTableTi
         this.relX = (width/scale - 183)/2;
         this.relY = (height - 218*scale)/2/scale;
 
+        this.inventoryLabelX = relX+5;
+        this.inventoryLabelY = relY+5;
+
     }
 
     @Override
@@ -61,6 +64,7 @@ public class InfusingTableScreen extends AbstractContainerScreen<InfusingTableTi
             a = 0;
         }
         blit(matrices, relX + 3+a, relY+26, 0, 0, 256, 256);
+
 
         Level world = Minecraft.getInstance().level;
         IItemHandler stacks = menu.getInventory();

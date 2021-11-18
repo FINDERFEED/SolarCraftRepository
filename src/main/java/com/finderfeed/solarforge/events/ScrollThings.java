@@ -36,6 +36,7 @@ public class ScrollThings {
             event.getPlayer().sendMessage(new TranslatableComponent("solarcraft.welcome_message2"), event.getPlayer().getUUID());
             ProgressionHelper.initInfRecipesMap(event.getPlayer().level);
             ProgressionHelper.initSmeltingRecipesMap(event.getPlayer().level);
+            ProgressionHelper.initInfusingCraftingRecipes(event.getPlayer().level);
         }
     }
 }

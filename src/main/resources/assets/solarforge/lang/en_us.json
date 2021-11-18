@@ -557,5 +557,6 @@
   "block.solarforge.infusing_crafting_table": "Infusing crafting table",
   "solarcraft.total_energy": "Total energy",
   "solarcraft.total_solar_energy": "Solar energy:",
-  "solarcraft.total_runic_energy": "Runic energy:"
+  "solarcraft.total_runic_energy": "Runic energy:",
+  "solarcraft.infusing_crafting_table": "Infusing crafting"
 }

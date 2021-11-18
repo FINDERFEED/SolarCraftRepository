@@ -13,12 +13,11 @@ import net.minecraft.world.phys.Vec3;
 public abstract class AbstractRunicEnergyContainerRCBERenderer<T extends AbstractRunicEnergyContainerRCBE> implements BlockEntityRenderer<T> {
     @Override
     public void render(T tile, float pticks, PoseStack matrices, MultiBufferSource buffer, int light, int overlay) {
-        if ((tile.nullOrGiverPositionForClient != null) && (!Helpers.equalsBlockPos(BlockPos.ZERO,tile.nullOrGiverPositionForClient))){
-            Vec3 tilepos = new Vec3(tile.getBlockPos().getX() +0.5,tile.getBlockPos().getY() +0.5,tile.getBlockPos().getZ() +0.5);
-            Vec3 vector = Helpers.getBlockCenter(tile.nullOrGiverPositionForClient).subtract(tilepos);
-            RenderingTools.renderRay(matrices,buffer,0.25f,(float)vector.length(),(mat)->{
-                RenderingTools.applyMovementMatrixRotations(mat,vector.normalize());
-            },false,0,pticks);
+        for (BlockPos pos : tile.nullOrGiverPositionForClient) {
+            Vec3 tilepos = new Vec3(tile.getBlockPos().getX() + 0.5, tile.getBlockPos().getY() + 0.5, tile.getBlockPos().getZ() + 0.5);
+            Vec3 vector = Helpers.getBlockCenter(pos).subtract(tilepos);
+            RenderingTools.renderRay(matrices, buffer, 0.25f, (float) vector.length(), (mat) -> {
+                RenderingTools.applyMovementMatrixRotations(mat, vector.normalize()); }, false, 0, pticks);
         }
     }
 }

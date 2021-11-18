@@ -1,11 +1,11 @@
 {
-  "type": "minecraft:crafting_shaped",
+  "type": "solarforge:infusing_crafting",
   "pattern": [
     "#X#",
     "XFX",
     "#X#"
   ],
-  "key": {
+  "keys": {
     "#": {
       "item": "minecraft:iron_block"
     },
@@ -16,8 +16,9 @@
       "item": "solarforge:solar_shard"
     }
   },
-  "result": {
+  "output": {
     "item": "solarforge:solar_forge"
-
-  }
+  },
+  "fragment": "solar_forge",
+  "time": 500
 }

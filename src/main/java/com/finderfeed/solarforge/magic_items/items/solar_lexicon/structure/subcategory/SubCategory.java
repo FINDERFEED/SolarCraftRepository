@@ -10,6 +10,7 @@ import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.Pro
 import com.finderfeed.solarforge.misc_things.IScrollable;
 import com.finderfeed.solarforge.misc_things.Multiblock;
 import com.finderfeed.solarforge.recipe_types.InfusingRecipe;
+import com.finderfeed.solarforge.recipe_types.infusing_crafting.InfusingCraftingRecipe;
 import com.finderfeed.solarforge.recipe_types.solar_smelting.SolarSmeltingRecipe;
 import com.finderfeed.solarforge.registries.SolarCraftClientRegistries;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -19,7 +20,6 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-import org.lwjgl.system.CallbackI;
 
 import javax.annotation.Nullable;
 import java.awt.*;
@@ -62,11 +62,18 @@ public class SubCategory {
                     buttonsToAdd.add(constructInfusingRecipeButton(frag, ProgressionHelper.getInfusingRecipeForItem(frag.getItem().getItem()),buttonPosX,buttonPosY));
                 }else if (frag.getRecipeType() == SolarForge.SOLAR_SMELTING){
                     buttonsToAdd.add(constructSmeltingRecipeButton(ProgressionHelper.getSolarSmeltingRecipeForItem(frag.getItem().getItem()),buttonPosX,buttonPosY));
+                }else if (frag.getRecipeType() == SolarForge.INFUSING_CRAFTING_RECIPE_TYPE){
+                    buttonsToAdd.add(constructInfusingCraftingRecipeButton(frag,ProgressionHelper.getInfusingCraftingRecipeForItem(frag.getItem().getItem()),buttonPosX,buttonPosY));
+
                 }
             }else if (type == AncientFragment.Type.INFORMATION){
                 buttonsToAdd.add(constructInformationButton(frag.getIcon().getDefaultInstance(),buttonPosX,buttonPosY,frag));
             }else if (type == AncientFragment.Type.ITEMS){
-                buttonsToAdd.add(constructInfusingRecipeButton(frag,getRecipesForItemList(frag.getStacks()),buttonPosX,buttonPosY));
+                if (frag.getRecipeType() == SolarForge.INFUSING_RECIPE_TYPE) {
+                    buttonsToAdd.add(constructInfusingRecipeButton(frag, getInfusingRecipesForItemList(frag.getStacks()), buttonPosX, buttonPosY));
+                }else{
+                    buttonsToAdd.add(constructInfusingCraftingRecipeButton(frag, getInfusingCraftingRecipesForItemList(frag.getStacks()), buttonPosX, buttonPosY));
+                }
             }else if (type == AncientFragment.Type.STRUCTURE){
                 buttonsToAdd.add(constructStructureButton(frag.getStructure().getM(),buttonPosX,buttonPosY,frag));
             }else if (type == AncientFragment.Type.UPGRADE){
@@ -151,6 +158,29 @@ public class SubCategory {
         });
     }
 
+    public ItemStackButton constructInfusingCraftingRecipeButton(AncientFragment fragment, List<InfusingCraftingRecipe> recipe, int x , int y){
+        return new ItemStackButton(x,y,24,24,(button)->{
+            Minecraft.getInstance().setScreen(new InformationScreen(fragment,new InfusingCraftingRecipeScreen(recipe)));
+        },fragment.getIcon().getDefaultInstance(),1.5f,false,(button,matrices,mx,my)->{
+//            if (button.isHovered()){
+//                this.onHovered();
+//            }
+            Minecraft.getInstance().screen.renderTooltip(matrices,fragment.getTranslation(),mx,my);
+        });
+    }
+
+
+    public ItemStackButton constructInfusingCraftingRecipeButton(AncientFragment fragment, InfusingCraftingRecipe recipe, int x , int y){
+        return new ItemStackButton(x,y,24,24,(button)->{
+            Minecraft.getInstance().setScreen(new InformationScreen(fragment,new InfusingCraftingRecipeScreen(recipe)));
+        },fragment.getIcon().getDefaultInstance(),1.5f,false,(button,matrices,mx,my)->{
+//            if (button.isHovered()){
+//                this.onHovered();
+//            }
+            Minecraft.getInstance().screen.renderTooltip(matrices,fragment.getTranslation(),mx,my);
+        });
+    }
+
 
     public ItemStackButton constructSmeltingRecipeButton(SolarSmeltingRecipe recipe, int x , int y){
         return new ItemStackButton(x,y,24,24,(button)->{
@@ -166,7 +196,7 @@ public class SubCategory {
 
     public ItemStackButton constructInformationButton(ItemStack logo, int x , int y, AncientFragment fragment){
         return new ItemStackButton(x,y,24,24,(button)->{
-            Minecraft.getInstance().setScreen(new InformationScreen(fragment,null));
+            Minecraft.getInstance().setScreen(new InformationScreen(fragment, (InfusingRecipeScreen) null));
         },logo,1.5f,false, (button,matrices,mx,my)->{
 //            if (button.isHovered()){
 //                this.onHovered();
@@ -200,10 +230,18 @@ public class SubCategory {
         });
     }
 
-    private List<InfusingRecipe> getRecipesForItemList(List<ItemStack> stacks){
+    private List<InfusingRecipe> getInfusingRecipesForItemList(List<ItemStack> stacks){
         List<InfusingRecipe> recipes = new ArrayList<>();
         stacks.forEach((stack)->{
             recipes.add(ProgressionHelper.INFUSING_RECIPE_MAP.get(stack.getItem()));
+        });
+        return recipes;
+    }
+
+    private List<InfusingCraftingRecipe> getInfusingCraftingRecipesForItemList(List<ItemStack> stacks){
+        List<InfusingCraftingRecipe> recipes = new ArrayList<>();
+        stacks.forEach((stack)->{
+            recipes.add(ProgressionHelper.INFUSING_CRAFTING_RECIPE_MAP.get(stack.getItem()));
         });
         return recipes;
     }

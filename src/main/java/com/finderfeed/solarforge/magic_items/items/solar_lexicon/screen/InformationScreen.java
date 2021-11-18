@@ -4,6 +4,7 @@ import com.finderfeed.solarforge.ClientHelpers;
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.AncientFragment;
+import com.finderfeed.solarforge.registries.items.ItemsRegister;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -16,6 +17,7 @@ import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.resources.ResourceLocation;
@@ -31,6 +33,7 @@ public class InformationScreen extends Screen {
     public int relY;
     private final ResourceLocation LOC = new ResourceLocation("solarforge","textures/gui/solar_lexicon_info_screen.png");
     private InfusingRecipeScreen screen;
+    private InfusingCraftingRecipeScreen screenCrafting;
     private AncientFragment fragment;
 
     public InformationScreen(AncientFragment fragment,InfusingRecipeScreen screen) {
@@ -39,6 +42,11 @@ public class InformationScreen extends Screen {
         this.fragment = fragment;
     }
 
+    public InformationScreen(AncientFragment fragment,InfusingCraftingRecipeScreen screen) {
+        super(new TextComponent(""));
+        this.screenCrafting = screen;
+        this.fragment = fragment;
+    }
 
     @Override
     protected void init() {
@@ -48,12 +56,18 @@ public class InformationScreen extends Screen {
         this.relX = (width/scale - 183)/2;
         this.relY = (height - 218*scale)/2/scale;
 
+        Item i = screen != null ? SolarForge.INFUSING_STAND_ITEM.get() : ItemsRegister.INFUSING_TABLE.get();
+
         ItemStackButton button = new ItemStackButton(relX+180,relY+9,16,16,(buttons)->{
-            Minecraft.getInstance().setScreen(screen);
-        }, SolarForge.INFUSING_STAND_ITEM.get().getDefaultInstance(),1,false,(buttons,matrices,b,c)->{
+            if (screen != null) {
+                Minecraft.getInstance().setScreen(screen);
+            }else{
+                Minecraft.getInstance().setScreen(screenCrafting);
+            }
+        }, i.getDefaultInstance(),1,false,(buttons,matrices,b,c)->{
             renderTooltip(matrices,new TextComponent("Craft"),b,c);
         });
-        if (screen != null){
+        if (screen != null || screenCrafting != null){
             addRenderableWidget(button);
         }
         addRenderableWidget(new ItemStackButton(relX+185,relY+172,12,12,(buttons)->{minecraft.setScreen(new SolarLexiconRecipesScreen());}, Items.CRAFTING_TABLE.getDefaultInstance(),0.7f,false));

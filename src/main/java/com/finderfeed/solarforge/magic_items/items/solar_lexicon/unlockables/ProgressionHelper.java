@@ -6,6 +6,7 @@ import com.finderfeed.solarforge.for_future_library.entities.BossAttackChain;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Progression;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import com.finderfeed.solarforge.recipe_types.InfusingRecipe;
+import com.finderfeed.solarforge.recipe_types.infusing_crafting.InfusingCraftingRecipe;
 import com.finderfeed.solarforge.recipe_types.solar_smelting.SolarSmeltingRecipe;
 import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
 import com.finderfeed.solarforge.registries.items.ItemsRegister;
@@ -30,6 +31,7 @@ public class ProgressionHelper {
     public static Map<Item, InfusingRecipe> INFUSING_RECIPE_MAP = new HashMap<>();
     public static Map<Item, InfusingRecipe> UPGRADES_INFUSING_RECIPE_MAP = new HashMap<>();
     public static Map<Item, SolarSmeltingRecipe> SMELTING_RECIPE_MAP = new HashMap<>();
+    public static Map<Item, InfusingCraftingRecipe> INFUSING_CRAFTING_RECIPE_MAP = new HashMap<>();
     public static final String UNLOCK_PATTERN = "solar_forge_player_pattern";
     public static final String TAG_ELEMENT = "fragment";
     public static final String FRAG_ID = "fragmentid";
@@ -37,7 +39,7 @@ public class ProgressionHelper {
     public static final int[] NULL_ARRAY = {-1,-1,-1,-1,-1,-1};
 
 
-    //they have weird names didnt they?
+    //they have weird names didn't they?
     public static final Item[] RUNES = {
             ItemsRegister.SOLAR_RUNE_ARDO.get(),
             ItemsRegister.SOLAR_RUNE_FIRA.get(),
@@ -191,6 +193,9 @@ public class ProgressionHelper {
     public static InfusingRecipe getInfusingRecipeForItem(Item item){
         return INFUSING_RECIPE_MAP.get(item);
     }
+    public static InfusingCraftingRecipe getInfusingCraftingRecipeForItem(Item item){
+        return INFUSING_CRAFTING_RECIPE_MAP.get(item);
+    }
 
     public static SolarSmeltingRecipe getSolarSmeltingRecipeForItem(Item item){
         return SMELTING_RECIPE_MAP.get(item);
@@ -213,6 +218,15 @@ public class ProgressionHelper {
         list.forEach((recipe)->{
             if (!SMELTING_RECIPE_MAP.containsKey(recipe.output.getItem())) {
                 SMELTING_RECIPE_MAP.put(recipe.output.getItem(),recipe);
+            }
+        });
+    }
+
+    public static void initInfusingCraftingRecipes(Level world){
+        List<InfusingCraftingRecipe> list = world.getRecipeManager().getAllRecipesFor(SolarForge.INFUSING_CRAFTING_RECIPE_TYPE);
+        list.forEach((recipe)->{
+            if (!INFUSING_CRAFTING_RECIPE_MAP.containsKey(recipe.getOutput().getItem())) {
+                INFUSING_CRAFTING_RECIPE_MAP.put(recipe.getOutput().getItem(),recipe);
             }
         });
     }

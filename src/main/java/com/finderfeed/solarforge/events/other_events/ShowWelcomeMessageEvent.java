@@ -33,6 +33,7 @@ public class ShowWelcomeMessageEvent {
             BookEntry.initMap();
             ProgressionHelper.initInfRecipesMap(event.getPlayer().level);
             ProgressionHelper.initSmeltingRecipesMap(event.getPlayer().level);
+            ProgressionHelper.initInfusingCraftingRecipes(event.getPlayer().level);
         }
     }
 }

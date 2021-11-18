@@ -1,6 +1,7 @@
 package com.finderfeed.solarforge.recipe_types.infusing_crafting;
 
 import com.finderfeed.solarforge.SolarForge;
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarforge.recipe_types.InfusingRecipeSerializer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
@@ -29,13 +30,20 @@ public class InfusingCraftingRecipe implements Recipe<Container> {
     private final Map<Character, Item> DEFINITIONS;
     private final int time;
     private final int outputCount;
-    public InfusingCraftingRecipe(ResourceLocation loc,String[] pattern,Map<Character, Item> defs,ItemStack out,int time,int outputCount){
+    private final AncientFragment fragment;
+    public InfusingCraftingRecipe(ResourceLocation loc,String[] pattern,Map<Character, Item> defs,ItemStack out,int time,int outputCount,AncientFragment fragment){
         this.pattern = pattern;
         this.DEFINITIONS = defs;
         this.outputCount = outputCount;
         this.output = out;
         this.time = time;
         this.id = loc;
+        this.fragment = fragment;
+    }
+
+
+    public AncientFragment getFragment() {
+        return fragment;
     }
 
     public int getOutputCount() {
