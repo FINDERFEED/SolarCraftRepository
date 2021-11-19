@@ -40,7 +40,7 @@ public class InfusingTableTileRenderer extends TileEntityRenderer<InfusingTableT
                 float rotationModifier = 1;
                 float distanceModifier = 0;
                 if (tile.getRemainingRecipeTime() != -1){
-                    int t = tile.getRemainingRecipeTime();
+                    int t = ClientEventsHandler.getTickerValueOrAddANewOne("ticker_animation"+tile.toString(),100);
                     rotationModifier = 1 + ((float)t/InfusingTableTile.ANIM_TIME)*4;
 //                            Mth.lerp((float)t/(InfusingTableTile.ANIM_TIME),1,5);
                     distanceModifier = Mth.lerp((float)t/(InfusingTableTile.ANIM_TIME+pticks),0,1);
@@ -77,6 +77,8 @@ public class InfusingTableTileRenderer extends TileEntityRenderer<InfusingTableT
                     renderer.getModel(stack,null,null,0));
             matrices.popPose();
         }
+
+
     }
 
     private ArrayList<ItemStack> getItemsToRender(IItemHandler handler){

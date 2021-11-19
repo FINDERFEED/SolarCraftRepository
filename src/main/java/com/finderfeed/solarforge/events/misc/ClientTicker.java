@@ -28,7 +28,7 @@ public class ClientTicker implements CanTick {
 
     @Override
     public void tick() {
-        if (currentValue++ <= max){
+        if (currentValue+1 <= max){
             currentValue++;
         }else{
             shouldBeRemoved = true;

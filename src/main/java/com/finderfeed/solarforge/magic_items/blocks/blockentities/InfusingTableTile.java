@@ -115,7 +115,6 @@ public class InfusingTableTile extends BlockEntity implements OwnedBlock {
                     .setColor(255,255,Math.round(40+level.random.nextFloat()*120));
 
         }
-
     }
 
 

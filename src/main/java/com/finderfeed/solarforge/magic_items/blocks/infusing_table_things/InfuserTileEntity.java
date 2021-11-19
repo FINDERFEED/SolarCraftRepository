@@ -4,6 +4,7 @@ package com.finderfeed.solarforge.magic_items.blocks.infusing_table_things;
 import com.finderfeed.solarforge.ClientHelpers;
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.SolarForge;
+import com.finderfeed.solarforge.for_future_library.helpers.FinderfeedMathHelper;
 import com.finderfeed.solarforge.for_future_library.helpers.RenderingTools;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.runic_energy.AbstractRunicEnergyContainerRCBE;
 import com.finderfeed.solarforge.magic_items.blocks.infusing_table_things.infusing_pool.InfusingPoolTileEntity;
@@ -223,11 +224,57 @@ public class InfuserTileEntity extends AbstractRunicEnergyContainerRCBE implemen
 
     private static void doParticlesAnimation(Level world, InfuserTileEntity tile){
         if (tile.RECIPE_IN_PROGRESS){
-            Vec3 center = Helpers.getBlockCenter(tile.worldPosition);
-            ClientHelpers.ParticleAnimationHelper.line(ParticlesList.SPARK_PARTICLE.get(),center,center.add(3,3,3),
-                    0.5f,()->255,()->255,()->50+world.random.nextInt(128));
+            if (tile.tier == null){
+                tile.calculateTier();
+            }
+            if (tile.tier == Tier.FIRST) {
+                firstTierAnimation(tile,world);
+            }else if (tile.tier == Tier.RUNIC_ENERGY){
+                secondTierAnimation(tile,world);
+            }else if (tile.tier == Tier.SOLAR_ENERGY){
+                thirdTierAnimation(tile,world);
+            }
         }
     }
+    public static void firstTierAnimation(InfuserTileEntity tile,Level world){
+        if (world.getGameTime() % 2 == 0) {
+            int r = Math.round(world.random.nextFloat() * 40);
+            Vec3 center = Helpers.getBlockCenter(tile.getBlockPos());
+            for (int i = 1; i <= 4; i++) {
+                double h = Math.toRadians(i * 90 + 30);
+                double[] xz = FinderfeedMathHelper.rotatePointRadians(7,0,h);
+                double x = xz[0];
+                double z = xz[1];
+                ClientHelpers.ParticleAnimationHelper.timedLine(ParticlesList.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+                        center.add(x, 4, z), center, 100, () -> 255, () -> 255, () -> r, 0.25f);
+            }
+            for (int i = 1; i <= 4; i++) {
+                double h = Math.toRadians(i * 90 + 60);
+                double[] xz = FinderfeedMathHelper.rotatePointRadians(7,0,h);
+                double x = xz[0];
+                double z = xz[1];
+                ClientHelpers.ParticleAnimationHelper.timedLine(ParticlesList.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+                        center.add(x, 4, z), center, 100, () -> 255, () -> 255, () -> r, 0.25f);
+            }
+            ClientHelpers.ParticleAnimationHelper.verticalCircle(ParticlesList.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+                    center.add(0, -0.5, 0), 3, 4, new float[]{0, 0, 0}, () -> 255, () -> 255, () -> r, 0.25f);
+        }
+    }
+    public static void secondTierAnimation(InfuserTileEntity tile,Level world){
+        firstTierAnimation(tile,world);
+        if (world.getGameTime() % 2 == 0) {
+            for (BlockPos pos : Structures.infusingPoolsPositions(tile.worldPosition)) {
+                Vec3 center = Helpers.getBlockCenter(pos);
+                ClientHelpers.ParticleAnimationHelper.verticalCircle(ParticlesList.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+                        center, 1, 3, new float[]{0, 0, 0}, () -> 255, () -> 255, () -> Math.round(world.random.nextFloat() * 128) + 40, 0.25f);
+            }
+        }
+    }
+
+    public static void thirdTierAnimation(InfuserTileEntity tile,Level world){
+
+    }
+
 
     @Override
     public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {

@@ -2,10 +2,10 @@ package com.finderfeed.solarforge;
 
 import com.finderfeed.solarforge.SolarAbilities.screens.AbilityBuyScreen;
 import com.finderfeed.solarforge.client.particles.SmallSolarStrikeParticle;
+import com.finderfeed.solarforge.client.particles.SolarcraftParticle;
 import com.finderfeed.solarforge.client.toasts.UnlockedEnergyTypeToast;
 import com.finderfeed.solarforge.events.RenderEventsHandler;
 import com.finderfeed.solarforge.for_future_library.helpers.FinderfeedMathHelper;
-import com.finderfeed.solarforge.for_future_library.helpers.RenderingTools;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.RayTrapTileEntity;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.RuneEnergyPylonTile;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.containers.screens.RunicTableContainerScreen;
@@ -20,7 +20,6 @@ import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Widget;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.core.particles.ParticleOptions;
-import net.minecraft.core.particles.ParticleType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.client.Minecraft;
@@ -273,43 +272,60 @@ public class ClientHelpers {
 
     public static class ParticleAnimationHelper{
 
-        public static void line(ParticleOptions particle, Vec3 from, Vec3 to, double intensity, Supplier<Integer> red,Supplier<Integer> green,Supplier<Integer> blue){
+        public static void line(ParticleOptions particle, Vec3 from, Vec3 to, double intensity, Supplier<Integer> red,Supplier<Integer> green,Supplier<Integer> blue,float maxSize){
             Vec3 between = to.subtract(from);
             double l = between.length();
             for (double i = 0; i <= l;i+=intensity){
                 Vec3 pos = from.add(between.multiply(i/l,i/l,i/l));
                 Particle p = Minecraft.getInstance().particleEngine.createParticle(particle,pos.x,pos.y,pos.z,0,0,0);
                 p.setColor((float)red.get()/255,(float)green.get()/255,(float)blue.get()/255);
+                if (p instanceof SolarcraftParticle pd){
+                    pd.setMaxSize(maxSize);
+                }
             }
         }
-        public static void verticalCircle(ParticleOptions particle, Vec3 center,double radius, int count,float[] speed, Supplier<Integer> red,Supplier<Integer> green,Supplier<Integer> blue){
+
+        public static void timedLine(ParticleOptions particle, Vec3 from, Vec3 to,int duration, Supplier<Integer> red,Supplier<Integer> green,Supplier<Integer> blue,float maxSize){
+            Vec3 between = to.subtract(from);
+            float percentage = ((float)Minecraft.getInstance().level.getGameTime() % duration) / duration;
+            Vec3 pos = from.add(between.multiply(percentage,percentage,percentage));
+            Particle p = Minecraft.getInstance().particleEngine.createParticle(particle,pos.x,pos.y,pos.z,0,0,0);
+            p.setColor((float)red.get()/255,(float)green.get()/255,(float)blue.get()/255);
+            if (p instanceof SolarcraftParticle pd){
+                pd.setMaxSize(maxSize);
+            }
+
+        }
+        public static void verticalCircle(ParticleOptions particle, Vec3 center,double radius, int count,float[] speed, Supplier<Integer> red,Supplier<Integer> green,Supplier<Integer> blue,float maxSize){
             float gametime = Minecraft.getInstance().level.getGameTime();
             double angle = 360d/count;
             for (int i = 0; i < count;i+=1){
                 double a = Math.toRadians(i * angle + gametime);
                 double x = radius*Math.sin(a);
                 double z = radius*Math.cos(a);
-
-
                 Particle p = Minecraft.getInstance().particleEngine.createParticle(particle,center.x+x,center.y,center.z+z,speed[0],speed[1],speed[2]);
                 p.setColor((float)red.get()/255,(float)green.get()/255,(float)blue.get()/255);
+                if (p instanceof SolarcraftParticle pd){
+                    pd.setMaxSize(maxSize);
+                }
             }
         }
 
-        public static void horizontalXCircle(ParticleOptions particle, Vec3 center,double radius, int count,float[] speed, Supplier<Integer> red,Supplier<Integer> green,Supplier<Integer> blue){
+        public static void horizontalXCircle(ParticleOptions particle, Vec3 center,double radius, int count,float[] speed, Supplier<Integer> red,Supplier<Integer> green,Supplier<Integer> blue,float maxSize){
             float gametime = Minecraft.getInstance().level.getGameTime();
             double angle = 360d/count;
             for (int i = 0; i < count;i+=1){
                 double a = Math.toRadians(i * angle + gametime);
                 double x = radius*Math.sin(a);
                 double y = radius*Math.cos(a);
-
-
                 Particle p = Minecraft.getInstance().particleEngine.createParticle(particle,center.x+x,center.y+y,center.z,speed[0],speed[1],speed[2]);
                 p.setColor((float)red.get()/255,(float)green.get()/255,(float)blue.get()/255);
+                if (p instanceof SolarcraftParticle pd){
+                    pd.setMaxSize(maxSize);
+                }
             }
         }
-        public static void horizontalZCircle(ParticleOptions particle, Vec3 center,double radius, int count,float[] speed, Supplier<Integer> red,Supplier<Integer> green,Supplier<Integer> blue){
+        public static void horizontalZCircle(ParticleOptions particle, Vec3 center,double radius, int count,float[] speed, Supplier<Integer> red,Supplier<Integer> green,Supplier<Integer> blue,float maxSize){
             float gametime = Minecraft.getInstance().level.getGameTime();
             double angle = 360d/count;
             for (int i = 0; i < count;i+=1){
@@ -319,8 +335,33 @@ public class ClientHelpers {
 
                 Particle p = Minecraft.getInstance().particleEngine.createParticle(particle,center.x,center.y+y,center.z+z,speed[0],speed[1],speed[2]);
                 p.setColor((float)red.get()/255,(float)green.get()/255,(float)blue.get()/255);
+                if (p instanceof SolarcraftParticle pd){
+                    pd.setMaxSize(maxSize);
+                }
+            }
+        }
+
+        public static void horizontalRotatedCircle(ParticleOptions particle, Vec3 center,double radius,double rotAngle, int count,float[] speed, Supplier<Integer> red,Supplier<Integer> green,Supplier<Integer> blue,float maxSize){
+            float gametime = Minecraft.getInstance().level.getGameTime();
+            double angle = 360d/count;
+            for (int i = 0; i < count;i+=1){
+                double a = Math.toRadians(i * angle + gametime);
+                double x = radius*Math.sin(a);
+                double y = radius*Math.cos(a);
+                double[] rotatedXZ = FinderfeedMathHelper.rotatePointDegrees(x,0,rotAngle);
+                x = rotatedXZ[0];
+                double z = rotatedXZ[1];
+
+                Particle p = Minecraft.getInstance().particleEngine.createParticle(particle,center.x+x,center.y+y,center.z+z,speed[0],speed[1],speed[2]);
+                p.setColor((float)red.get()/255,(float)green.get()/255,(float)blue.get()/255);
+                if (p instanceof SolarcraftParticle pd){
+                    pd.setMaxSize(maxSize);
+                }
             }
         }
 
     }
+
+
+
 }

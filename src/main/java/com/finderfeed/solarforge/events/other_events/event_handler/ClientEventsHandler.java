@@ -51,8 +51,9 @@ public class ClientEventsHandler {
     private static int testField = 0;
 
     @SubscribeEvent
-    public static void manageTickers(TickEvent.WorldTickEvent event) {
-        if (event.phase == TickEvent.Phase.START)  {
+    public static void manageTickers(TickEvent.ClientTickEvent event) {
+
+        if (event.phase == TickEvent.Phase.START && !Minecraft.getInstance().isPaused())  {
             TICKERS.values().forEach((ticker)->{
 
                 if (ticker.shouldBeRemoved()){

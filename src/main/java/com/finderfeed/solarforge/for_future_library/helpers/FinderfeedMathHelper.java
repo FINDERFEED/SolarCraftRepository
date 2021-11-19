@@ -28,6 +28,22 @@ public class FinderfeedMathHelper {
         return new double[]{radius*Math.cos(angle),radius*Math.sin(angle)};
     }
 
+
+    public static double[] rotatePointRadians(double x, double y, double angle){
+        return new double[]{
+                x * Math.cos(angle) - y * Math.sin(angle),
+                x * Math.sin(angle) + y * Math.cos(angle)
+        };
+    }
+    public static double[] rotatePointDegrees(double x, double y, double angle){
+        double g = Math.toRadians(angle);
+        return new double[]{
+                x * Math.cos(g) - y * Math.sin(g),
+                x * Math.sin(g) + y * Math.cos(g)
+        };
+    }
+
+
     public static int randomPlusMinus(){
         Random rnd = new Random();
         return rnd.nextInt(2) == 0 ? 1 : -1;

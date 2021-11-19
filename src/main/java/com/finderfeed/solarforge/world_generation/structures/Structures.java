@@ -15,8 +15,8 @@ public class Structures {
         List<BlockEntity> list = new ArrayList<>(0);
                     list.add(blockGet(pos.offset(4,1,0),world));
                     list.add(blockGet(pos.offset(3,0,-3),world));
-                    list.add(blockGet(pos.offset(0,1,-4),world)) ;
-                    list.add(blockGet(pos.offset(-3,0,-3),world)) ;
+                    list.add(blockGet(pos.offset(0,1,-4),world));
+                    list.add(blockGet(pos.offset(-3,0,-3),world));
                     list.add(blockGet(pos.offset(-4,1,0),world));
                     list.add(blockGet(pos.offset(-3,0,3),world));
                     list.add(blockGet(pos.offset(0,1,4),world));
@@ -34,6 +34,18 @@ public class Structures {
                      */
         return list;
 
+    }
+    public static BlockPos[] infusingPoolsPositions(BlockPos pos){
+        return new BlockPos[]{
+                pos.offset(4,1,0),
+                pos.offset(3,0,-3),
+                pos.offset(0,1,-4),
+                pos.offset(-3,0,-3),
+                pos.offset(-4,1,0),
+                pos.offset(-3,0,3),
+                pos.offset(0,1,4),
+                pos.offset(3,0,3)
+        };
     }
     public static BlockEntity blockGet(BlockPos pos,Level world){
         return world.getBlockEntity(pos);

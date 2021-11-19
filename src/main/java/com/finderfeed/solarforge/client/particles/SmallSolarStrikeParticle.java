@@ -16,9 +16,9 @@ import org.lwjgl.opengl.GL11;
 
 import javax.annotation.Nullable;
 
-public class SmallSolarStrikeParticle extends TextureSheetParticle {
+public class SmallSolarStrikeParticle extends SolarcraftParticle {
     public SmallSolarStrikeParticle(ClientLevel p_i232448_1_, double p_i232448_2_, double p_i232448_4_, double p_i232448_6_, double x, double y, double z) {
-        super(p_i232448_1_, p_i232448_2_, p_i232448_4_, p_i232448_6_, x,y,z);
+        super(p_i232448_1_, p_i232448_2_, p_i232448_4_, p_i232448_6_, x,y,z,0.5f);
 
         this.rCol = 255;
         this.gCol = 255;
@@ -31,7 +31,6 @@ public class SmallSolarStrikeParticle extends TextureSheetParticle {
         this.y = p_i232448_4_;
         this.z = p_i232448_6_;
         this.lifetime = 60 + (int)(p_i232448_1_.random.nextFloat()*6);
-        this.quadSize = 0.5f;
 
 
     }
@@ -64,14 +63,12 @@ public class SmallSolarStrikeParticle extends TextureSheetParticle {
     @Override
     public void tick() {
         super.tick();
-        if (this.lifetime > 30){
-            if (this.quadSize > 0) {
-                this.quadSize -= 0.015;
+        if (this.age > 30){
+            if (quadSize >= 0) {
+                this.quadSize -= this.maxSize / 30;
             }
         }
-        if (this.lifetime-- <=0){
-            this.remove();
-        }
+
     }
 
     public static class Factory implements ParticleProvider<SimpleParticleType> {
