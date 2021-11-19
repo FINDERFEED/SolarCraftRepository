@@ -1,20 +1,25 @@
 {
-  "type": "minecraft:crafting_shaped",
+  "type": "solarforge:infusing_crafting",
   "pattern": [
-    "FFF",
-    "F#F",
-    "FFF"
+    "FHF",
+    "H#H",
+    "FHF"
   ],
   "key": {
     "#": {
       "item": "solarforge:solar_rune_ardo"
     },
     "F": {
-      "item": "solarforge:chiseled_solar_stone"
+      "item": "solarforge:enderite_essence"
+    },
+    "H": {
+      "item": "solarforge:catalyst_base"
     }
   },
   "result": {
     "item": "solarforge:ardo_rune_block"
 
-  }
+  },
+  "fragment": "catalysts",
+  "time": 20
 }

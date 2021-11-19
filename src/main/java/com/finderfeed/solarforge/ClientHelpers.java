@@ -44,6 +44,7 @@ import net.minecraftforge.items.IItemHandler;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 
@@ -271,6 +272,23 @@ public class ClientHelpers {
 
 
     public static class ParticleAnimationHelper{
+
+        @Deprecated
+        public static void cyclingTimedFunctionAnimation(ParticleOptions particle, Vec3 from, Vec3 to, int duration
+                ,Supplier<Integer> red, Supplier<Integer> green, Supplier<Integer> blue, float maxSize
+                ,Function<Double,Double> func) {
+            Vec3 between = to.subtract(from);
+            double l = between.length();
+            double value = Minecraft.getInstance().level.getGameTime() % (duration * 2L) - duration;
+            double percentage;
+            if (value >= 0){
+                percentage = value/duration;
+            }else{
+                percentage = 1 + value/duration;
+            }
+
+
+        }
 
         public static void line(ParticleOptions particle, Vec3 from, Vec3 to, double intensity, Supplier<Integer> red,Supplier<Integer> green,Supplier<Integer> blue,float maxSize){
             Vec3 between = to.subtract(from);

@@ -1,0 +1,22 @@
+{
+  "type": "solarforge:infusing_crafting",
+  "pattern": [
+    " F ",
+    "F#F",
+    " F "
+  ],
+  "keys": {
+    "#": {
+      "item": "solarforge:rune_base"
+    },
+    "F": {
+      "item": "solarforge:chiseled_solar_stone"
+    }
+  },
+  "output": {
+    "item": "solarforge:solar_forge"
+  },
+  "fragment": "catalysts",
+  "time": 30,
+  "count": 4
+}

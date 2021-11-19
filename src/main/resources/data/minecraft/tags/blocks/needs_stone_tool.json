@@ -18,6 +18,7 @@
     "solarforge:inscription_stone",
     "solarforge:giro_rune_block",
     "solarforge:ultima_rune_block",
-    "solarforge:energized_stone"
+    "solarforge:energized_stone",
+    "solarforge:catalyst_base"
   ]
 }

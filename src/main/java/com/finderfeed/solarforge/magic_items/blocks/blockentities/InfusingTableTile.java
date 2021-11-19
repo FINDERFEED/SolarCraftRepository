@@ -53,9 +53,8 @@ public class InfusingTableTile extends BlockEntity implements OwnedBlock {
                 if (optional.isPresent()) {
                     InfusingCraftingRecipe recipe = optional.get();
                     int recipeTime = recipe.getTime();
-
-
-                    if (tile.getCurrentTime() < recipeTime){
+                    int maxOutput = tile.calculateMaximumRecipeOutput(recipe);
+                    if (tile.getCurrentTime() < recipeTime*maxOutput){
                         if (recipeTime - tile.getCurrentTime() <= ANIM_TIME){
                             updateTime = 1;
                             tile.remainingRecipeTime = ANIM_TIME - (recipeTime - tile.getCurrentTime());
@@ -63,7 +62,7 @@ public class InfusingTableTile extends BlockEntity implements OwnedBlock {
                         tile.recipeTime++;
                     }else{
                         ItemStack stack = recipe.getOutput().copy();
-                        int maxOutput = tile.calculateMaximumRecipeOutput(recipe);
+
                         for (int i = 0; i < 9;i++){
                             handler.extractItem(i,maxOutput,false);
                         }

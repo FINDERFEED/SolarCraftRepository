@@ -58,8 +58,6 @@ public class InfuserTileEntity extends AbstractRunicEnergyContainerRCBE implemen
     private Tier tier = null;
 
     public int energy = 0;
-    public int TICKS_TIMER=0;
-    public float TICKS_RADIUS_TIMER = 0;
     public int INFUSING_TIME;
     public int CURRENT_PROGRESS;
     public boolean RECIPE_IN_PROGRESS = false;
@@ -107,7 +105,7 @@ public class InfuserTileEntity extends AbstractRunicEnergyContainerRCBE implemen
     @Override
     public CompoundTag save(CompoundTag cmp){
         super.save(cmp);
-
+        cmp.putBoolean("reqenergy",requiresEnergy);
         cmp.putInt("energy",energy);
         cmp.putInt("infusing_time",INFUSING_TIME );
         cmp.putInt("recipe_progress",CURRENT_PROGRESS );
@@ -128,6 +126,7 @@ public class InfuserTileEntity extends AbstractRunicEnergyContainerRCBE implemen
     @Override
     public void load( CompoundTag cmp) {
         super.load(cmp);
+        requiresEnergy = cmp.getBoolean("reqenergy");
         tier = Tier.byId(cmp.getString("tierid"));
         energy = cmp.getInt("energy");
         INFUSING_TIME = cmp.getInt("infusing_time");
@@ -236,8 +235,8 @@ public class InfuserTileEntity extends AbstractRunicEnergyContainerRCBE implemen
             }
         }
     }
-    public static void firstTierAnimation(InfuserTileEntity tile,Level world){
-        if (world.getGameTime() % 2 == 0) {
+    public static boolean firstTierAnimation(InfuserTileEntity tile,Level world){
+        if (world.getGameTime() % 3 == 0) {
             int r = Math.round(world.random.nextFloat() * 40);
             Vec3 center = Helpers.getBlockCenter(tile.getBlockPos());
             for (int i = 1; i <= 4; i++) {
@@ -250,7 +249,7 @@ public class InfuserTileEntity extends AbstractRunicEnergyContainerRCBE implemen
             }
             for (int i = 1; i <= 4; i++) {
                 double h = Math.toRadians(i * 90 + 60);
-                double[] xz = FinderfeedMathHelper.rotatePointRadians(7,0,h);
+                double[] xz = FinderfeedMathHelper.rotatePointRadians(6.5f,0,h);
                 double x = xz[0];
                 double z = xz[1];
                 ClientHelpers.ParticleAnimationHelper.timedLine(ParticlesList.SMALL_SOLAR_STRIKE_PARTICLE.get(),
@@ -258,21 +257,33 @@ public class InfuserTileEntity extends AbstractRunicEnergyContainerRCBE implemen
             }
             ClientHelpers.ParticleAnimationHelper.verticalCircle(ParticlesList.SMALL_SOLAR_STRIKE_PARTICLE.get(),
                     center.add(0, -0.5, 0), 3, 4, new float[]{0, 0, 0}, () -> 255, () -> 255, () -> r, 0.25f);
+            return true;
+        }else{
+            return false;
         }
     }
-    public static void secondTierAnimation(InfuserTileEntity tile,Level world){
-        firstTierAnimation(tile,world);
-        if (world.getGameTime() % 2 == 0) {
+    public static boolean secondTierAnimation(InfuserTileEntity tile,Level world){
+
+        if (firstTierAnimation(tile,world)) {
             for (BlockPos pos : Structures.infusingPoolsPositions(tile.worldPosition)) {
                 Vec3 center = Helpers.getBlockCenter(pos);
                 ClientHelpers.ParticleAnimationHelper.verticalCircle(ParticlesList.SMALL_SOLAR_STRIKE_PARTICLE.get(),
                         center, 1, 3, new float[]{0, 0, 0}, () -> 255, () -> 255, () -> Math.round(world.random.nextFloat() * 128) + 40, 0.25f);
             }
+            return true;
+        }else{
+            return false;
         }
     }
 
     public static void thirdTierAnimation(InfuserTileEntity tile,Level world){
-
+        if (secondTierAnimation(tile,world)) {
+            Vec3 center = Helpers.getBlockCenter(tile.getBlockPos());
+            ClientHelpers.ParticleAnimationHelper.verticalCircle(ParticlesList.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+                    center.add(0, 6, 0), 3, 4, new float[]{0, 0, 0}, () -> 255, () -> 255, ()->40, 0.25f);
+            ClientHelpers.ParticleAnimationHelper.verticalCircle(ParticlesList.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+                    center.add(0, 8, 0), 3, 4, new float[]{0, 0, 0}, () -> 255, () -> 255, ()->40, 0.25f);
+        }
     }
 
 
@@ -294,8 +305,8 @@ public class InfuserTileEntity extends AbstractRunicEnergyContainerRCBE implemen
     }
 
     private static void sendUpdatePackets(Level world, InfuserTileEntity tile){
-        SolarForgePacketHandler.INSTANCE.send(PacketDistributor.NEAR.with(PacketDistributor.TargetPoint.p(tile.worldPosition.getX(),tile.worldPosition.getY(),tile.worldPosition.getZ(),20,tile.level.dimension())),
-                new UpdateProgressOnClientPacket(tile.INFUSING_TIME,tile.CURRENT_PROGRESS,tile.worldPosition,tile.requiresEnergy,tile.energy));
+//        SolarForgePacketHandler.INSTANCE.send(PacketDistributor.NEAR.with(PacketDistributor.TargetPoint.p(tile.worldPosition.getX(),tile.worldPosition.getY(),tile.worldPosition.getZ(),20,tile.level.dimension())),
+//                new UpdateProgressOnClientPacket(tile.INFUSING_TIME,tile.CURRENT_PROGRESS,tile.worldPosition,tile.requiresEnergy,tile.energy));
         ItemStack[] arr = {tile.getItem(0),tile.getItem(1),tile.getItem(2),tile.getItem(3),tile.getItem(4),tile.getItem(5),tile.getItem(6),tile.getItem(7),tile.getItem(8)};
         SolarForgePacketHandler.INSTANCE.send(PacketDistributor.NEAR.with(PacketDistributor.TargetPoint.p(tile.worldPosition.getX(),tile.worldPosition.getY(),tile.worldPosition.getZ(),20,tile.level.dimension())),
                 new UpdateStacksOnClientTable(arr,tile.getItem(9),tile.worldPosition,tile.RECIPE_IN_PROGRESS));

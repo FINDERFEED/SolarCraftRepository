@@ -7,7 +7,7 @@
   ],
   "key": {
     "#": {
-      "item": "solarforge:solar_rune_urba"
+      "item": "solarforge:solar_rune_giro"
     },
     "F": {
       "item": "solarforge:enderite_essence"
@@ -17,7 +17,7 @@
     }
   },
   "result": {
-    "item": "solarforge:urba_rune_block"
+    "item": "solarforge:giro_rune_block"
 
   },
   "fragment": "catalysts",
