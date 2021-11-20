@@ -161,6 +161,7 @@ public class RuneEnergyPylonTile extends BlockEntity implements  DebugTarget, Ru
         return r;
     }
 
+
     private static boolean validState(BlockState state,RuneEnergyPylonTile tile){
         if (state.hasProperty(InscriptionStone.PROP)){
             return state.getValue(InscriptionStone.PROP) == tile.getEnergyType();
@@ -172,6 +173,17 @@ public class RuneEnergyPylonTile extends BlockEntity implements  DebugTarget, Ru
 
 
     public static boolean isStructCorrect(RuneEnergyPylonTile tile){
+        BlockPos[] positions = {
+          tile.worldPosition.below(4).west(2),
+                tile.worldPosition.below(4).east(2),
+                tile.worldPosition.below(4).north(2),
+                tile.worldPosition.below(4).south(2)
+        };
+        for (BlockPos p : positions){
+            if (RunicEnergy.BLOCK_TO_RUNE_ENERGY_TYPE.get(tile.level.getBlockState(p).getBlock()) != tile.getEnergyType()){
+                return false;
+            }
+        }
         return Helpers.checkStructure(tile.level,tile.worldPosition.below(8).north(2).west(2), Multiblocks.RUNIC_ENERGY_PYLON.getM(), true);
     }
 

@@ -12,6 +12,8 @@ import com.finderfeed.solarforge.magic_items.blocks.solar_forge_block.solar_forg
 import com.finderfeed.solarforge.packet_handler.packets.RequestAbilityScreen;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraftforge.api.distmarker.Dist;
 
 import net.minecraftforge.client.event.InputEvent;
@@ -20,6 +22,8 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import org.lwjgl.glfw.GLFW;
+
+import java.util.List;
 
 @Mod.EventBusSubscriber(modid = "solarforge",bus = Mod.EventBusSubscriber.Bus.FORGE,value = Dist.CLIENT)
 public class HotkeyEventListener {
@@ -30,7 +34,10 @@ public class HotkeyEventListener {
     public static void ListenToEvent(final InputEvent.KeyInputEvent event){
 
         if (SolarForgeClientRegistry.FIRST_ABILITY_KEY.isDown() && event.getAction() == GLFW.GLFW_PRESS){
-
+            List<Ingredient> d = Minecraft.getInstance().level.getRecipeManager().getAllRecipesFor(RecipeType.CRAFTING).get(0).getIngredients();
+            for (Ingredient n : d){
+                System.out.println(n.getItems()[0].getItem());
+            }
 
             SolarForgePacketHandler.INSTANCE.sendToServer(new CastAbilityPacket(1));
 

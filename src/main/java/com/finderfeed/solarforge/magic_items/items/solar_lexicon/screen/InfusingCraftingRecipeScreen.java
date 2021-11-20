@@ -3,9 +3,11 @@ package com.finderfeed.solarforge.magic_items.items.solar_lexicon.screen;
 import com.finderfeed.solarforge.ClientHelpers;
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.SolarLexicon;
+import com.finderfeed.solarforge.recipe_types.InfusingRecipe;
 import com.finderfeed.solarforge.recipe_types.infusing_crafting.InfusingCraftingRecipe;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
@@ -18,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class InfusingCraftingRecipeScreen extends Screen {
+    public final ResourceLocation BUTTONS = new ResourceLocation("solarforge","textures/misc/page_buttons.png");
 
     private static final ResourceLocation MAIN_SCREEN = new ResourceLocation(SolarForge.MOD_ID,"textures/gui/solar_lexicon_crafting_recipe_screen.png");
 
@@ -45,9 +48,25 @@ public class InfusingCraftingRecipeScreen extends Screen {
         int width = minecraft.getWindow().getWidth();
         int height = minecraft.getWindow().getHeight();
         int scale = (int) minecraft.getWindow().getGuiScale();
-        this.relX = (width/scale - 183)/2;
+        this.relX = (width/scale - 183)/2-12;
         this.relY = (height - 218*scale)/2/scale;
         int xoffs = 111;
+        if (maxPages != 0) {
+            addRenderableWidget(new ImageButton(relX + 180, relY + 33, 16, 16, 0, 0, 0, BUTTONS, 16, 32, (button) -> {
+                if ((currentPage + 1 <= maxPages)) {
+                    currentPage += 1;
+                }
+            },(button,matrices,mousex,mousey)->{
+                renderTooltip(matrices,new TextComponent("Next recipe"),mousex,mousey);
+            },new TextComponent("")));
+            addRenderableWidget(new ImageButton(relX + 164, relY + 33, 16, 16, 0, 16, 0, BUTTONS, 16, 32, (button) -> {
+                if ((currentPage - 1 >= 0)) {
+                    currentPage -= 1;
+                }
+            },(button,matrices,mousex,mousey)->{
+                renderTooltip(matrices,new TextComponent("Previous recipe"),mousex,mousey);
+            },new TextComponent("")));
+        }
         addRenderableWidget(new ItemStackButton(relX+74+xoffs,relY+9,12,12,(button)->{minecraft.setScreen(new SolarLexiconRecipesScreen());}, Items.CRAFTING_TABLE.getDefaultInstance(),0.7f,false));
         addRenderableWidget(new ItemStackButton(relX+61+xoffs,relY+9,12,12,(button)->{
             Minecraft mc = Minecraft.getInstance();
@@ -70,7 +89,9 @@ public class InfusingCraftingRecipeScreen extends Screen {
             for (Item[] arr : r){
                 int iteratorLength = 0;
                 for (Item item : arr){
-                    renderItemAndTooltip(item.getDefaultInstance(),relX+iteratorLength * 18+15,relY + iteratorHeight * 18+15,mousex,mousey,matrices,false);
+                    if (item != null) {
+                        renderItemAndTooltip(item.getDefaultInstance(), relX + iteratorLength * 18 + 15, relY + iteratorHeight * 18 + 15, mousex, mousey, matrices, false);
+                    }
                     iteratorLength++;
                 }
                 iteratorHeight++;
@@ -83,13 +104,15 @@ public class InfusingCraftingRecipeScreen extends Screen {
             for (int i = 0 ; i < 3; i ++){
                 for (int g = 0 ; g < 3; g ++){
                     Item t = r[i][g];
-                    if (t != Items.AIR && !uniqueItems.contains(t)) {
-                        uniqueItems.add(t);
-                        int index = uniqueItems.indexOf(t);
-                        counts[index] = 1;
-                    }else if (uniqueItems.contains(t)){
-                        int index = uniqueItems.indexOf(t);
-                        counts[index]++;
+                    if (t != null) {
+                        if (t != Items.AIR && !uniqueItems.contains(t)) {
+                            uniqueItems.add(t);
+                            int index = uniqueItems.indexOf(t);
+                            counts[index] = 1;
+                        } else if (uniqueItems.contains(t)) {
+                            int index = uniqueItems.indexOf(t);
+                            counts[index]++;
+                        }
                     }
 
                 }

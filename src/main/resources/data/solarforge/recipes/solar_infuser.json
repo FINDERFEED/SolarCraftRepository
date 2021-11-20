@@ -1,23 +1,27 @@
 {
-  "type": "minecraft:crafting_shaped",
+  "type": "solarforge:infusing_crafting",
   "pattern": [
-    " J ",
-    "JFJ",
-    "###"
+    "Z#Z",
+    "XFX",
+    "Z#Z"
   ],
-  "key": {
+  "keys": {
     "#": {
       "item": "minecraft:iron_block"
     },
-    "F": {
-      "item": "solarforge:solar_shard"
+    "X": {
+      "item": "minecraft:obsidian"
     },
-    "J": {
-      "item": "solarforge:solar_stone"
+    "F": {
+      "item": "solarforge:infusing_crafting_table"
+    },
+    "Z": {
+      "item": "solarforge:energy_dust"
     }
   },
-  "result": {
+  "output": {
     "item": "solarforge:solar_infuser"
-
-  }
+  },
+  "fragment": "solar_infuser",
+  "time": 700
 }

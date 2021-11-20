@@ -10,12 +10,15 @@ import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.events.my_events.ProgressionUnlockEvent;
 import com.finderfeed.solarforge.for_future_library.OwnedBlock;
 import com.finderfeed.solarforge.for_future_library.helpers.FinderfeedMathHelper;
+import com.finderfeed.solarforge.magic_items.blocks.infusing_table_things.InfuserBlock;
 import com.finderfeed.solarforge.magic_items.items.ExperienceCrystal;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Progression;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.ProgressionHelper;
 import com.finderfeed.solarforge.registries.SolarcraftDamageSources;
+import com.finderfeed.solarforge.registries.Tags;
 import com.finderfeed.solarforge.registries.attributes.AttributesRegistry;
+import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
 import com.finderfeed.solarforge.registries.effects.EffectsRegister;
 import com.finderfeed.solarforge.registries.items.ItemsRegister;
 import com.finderfeed.solarforge.registries.sounds.Sounds;
@@ -253,7 +256,7 @@ public class EventHandler {
 
     }
     public static void deleteInfuser(Player playerEntity){
-        int count = playerEntity.getInventory().countItem(SolarForge.SOLAR_FORGE_ITEM.get());
+        int count = playerEntity.getInventory().countItem(SolarForge.INFUSING_STAND_ITEM.get());
 
 
         if ((count > 0) && !ProgressionHelper.doPlayerHasFragment(playerEntity, AncientFragment.SOLAR_INFUSER) && !playerEntity.isCreative() && !playerEntity.isSpectator()) {
@@ -313,6 +316,24 @@ public class EventHandler {
         return new ItemEntity(playerEntity.level,playerEntity.getX(),playerEntity.getY(),playerEntity.getZ(),stack);
     }
 
+    @SubscribeEvent
+    public static void catalystsProgression(BlockEvent.EntityPlaceEvent event){
+        if (event.getEntity() instanceof Player pl){
+            if (event.getPlacedBlock().is(Tags.CATALYST) && event.getPlacedBlock().getBlock() != BlocksRegistry.SOLAR_STONE_COLLUMN.get()) {
+                if (!Helpers.hasPlayerUnlocked(Progression.CATALYSTS, pl)) {
+                    for (int x = -10; x < 10;x++){
+                        for (int z = -10; z < 10;z++){
+                            for (int height = 2; height > -5;height--){
+                                if (event.getWorld().getBlockState(event.getPos().offset(x,height,z)).getBlock() instanceof InfuserBlock){
+                                    Helpers.fireProgressionEvent(pl,Progression.CATALYSTS);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 
 
 

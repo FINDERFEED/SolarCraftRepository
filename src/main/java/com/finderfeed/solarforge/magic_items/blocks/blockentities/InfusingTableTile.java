@@ -166,9 +166,12 @@ public class InfusingTableTile extends BlockEntity implements OwnedBlock {
             int max = Math.floorDiv(maxSize,outputcount);
             IItemHandler g = getInventory();
             for (int i = 0;i < 9;i++){
-                int count = g.getStackInSlot(i).getCount();
-                if (count < max){
-                    max = count;
+                ItemStack stack = g.getStackInSlot(i);
+                if (!stack.isEmpty()) {
+                    int count = stack.getCount();
+                    if (count < max) {
+                        max = count;
+                    }
                 }
             }
             return max;

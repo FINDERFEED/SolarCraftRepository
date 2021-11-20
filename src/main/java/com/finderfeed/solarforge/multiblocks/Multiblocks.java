@@ -193,6 +193,7 @@ public enum Multiblocks {
             .addBlock(Structures.BlockStates.HORIZONTAL_COLLUMN_FACING_NORTH,'O',false)
 
             .addBlockAndTag(BlocksRegistry.INSCRIPTION_STONE.get().defaultBlockState(),Tags.INSCRIPTION_STONE,'c',false)
+            .addBlockAndTag(BlocksRegistry.ARDO_RUNE_BLOCK.get().defaultBlockState(),Tags.CATALYST,'l',false)
 
             .addBlock(BlocksRegistry.SOLAR_STONE_CHISELED.get().defaultBlockState(),'A',false)
             .addBlock(BlocksRegistry.SOLAR_STONE_BRICKS.get().defaultBlockState(),'B',false)
@@ -279,11 +280,11 @@ class Structures{
                     "  N  "
             },
             {
-                    " TAD ",
+                    " TlD ",
                     "H   H",
-                    "A   A",
+                    "l   l",
                     "G   G",
-                    " TAD "
+                    " TlD "
             },
             {
                     "  h  ",

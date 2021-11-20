@@ -236,7 +236,7 @@ public class InfuserTileEntity extends AbstractRunicEnergyContainerRCBE implemen
         }
     }
     public static boolean firstTierAnimation(InfuserTileEntity tile,Level world){
-        if (world.getGameTime() % 3 == 0) {
+        if (world.getGameTime() % 2 == 0) {
             int r = Math.round(world.random.nextFloat() * 40);
             Vec3 center = Helpers.getBlockCenter(tile.getBlockPos());
             for (int i = 1; i <= 4; i++) {

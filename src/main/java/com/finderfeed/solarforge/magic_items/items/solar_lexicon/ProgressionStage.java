@@ -13,7 +13,8 @@ public enum ProgressionStage {
     PRE_FORGE(BEGGINING_2,"pre_forge",Progression.KILL_DRAGON,Progression.ALL_ENERGY_TYPES,Progression.RUNE_ENERGY_CLAIM),
     FORGE(PRE_FORGE,"pre_infuser",Progression.CRAFT_SOLAR_FORGE),
     AFTER_INFUSER(FORGE,"after_infuser",Progression.SOLAR_INFUSER),
-    PRE_LENS(AFTER_INFUSER,"pre_lens",Progression.IMBUED_COLD_STAR),
+    AFTER_CATALYSTS(AFTER_INFUSER,"after_catalysts",Progression.CATALYSTS),
+    PRE_LENS(AFTER_CATALYSTS,"pre_lens",Progression.IMBUED_COLD_STAR),
     AFTER_LENS(PRE_LENS,"after_lens",Progression.RUNIC_ENERGY_REPEATER,Progression.CRAFT_SOLAR_LENS,Progression.TRANSMUTE_GEM),
     SOLAR_ENERGY(AFTER_LENS,"solar_energy",Progression.CRAFT_SOLAR_ENERGY_GENERATOR),
     DIMENSION(SOLAR_ENERGY,"dimension",Progression.DIMENSIONAL_SHARD_DUNGEON)

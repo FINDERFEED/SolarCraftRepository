@@ -7,14 +7,14 @@
   ],
   "keys": {
     "#": {
-      "item": "solarforge:rune_base"
+      "item": "solarforge:runestone"
     },
     "F": {
       "item": "solarforge:chiseled_solar_stone"
     }
   },
   "output": {
-    "item": "solarforge:solar_forge"
+    "item": "solarforge:catalyst_base"
   },
   "fragment": "catalysts",
   "time": 30,

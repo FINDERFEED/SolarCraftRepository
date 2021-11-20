@@ -82,7 +82,7 @@ public class SolarLexiconScreen extends Screen implements IScrollable {
     public void performScroll(int keyCode) {
         if (keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_LEFT) && !(scrollX -4 < -80)){
             scrollX-=4;
-        } else if (keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_UP) && !(scrollY -4 < -160)){
+        } else if (keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_UP) && !(scrollY -4 < -200)){
             scrollY-=4;
         }else if(keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_DOWN) && !(scrollY +4 > 0)){
             scrollY+=4;

@@ -5,7 +5,7 @@
     "H#H",
     "FHF"
   ],
-  "key": {
+  "keys": {
     "#": {
       "item": "solarforge:solar_rune_kelda"
     },
@@ -16,7 +16,7 @@
       "item": "solarforge:catalyst_base"
     }
   },
-  "result": {
+  "output": {
     "item": "solarforge:kelda_rune_block"
 
   },

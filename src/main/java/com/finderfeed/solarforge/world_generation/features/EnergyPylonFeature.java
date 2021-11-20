@@ -29,6 +29,16 @@ import java.util.Random;
 
 public class EnergyPylonFeature extends Feature<NoneFeatureConfiguration> {
     private static final ResourceLocation FEATURE = new ResourceLocation("solarforge:worldgen_features/energy_pylon");
+    private static final ResourceLocation[] LOCATIONS = {
+      new ResourceLocation("solarforge:worldgen_features/energy_pylon_ardo"),
+            new ResourceLocation("solarforge:worldgen_features/energy_pylon_fira"),
+            new ResourceLocation("solarforge:worldgen_features/energy_pylon_tera"),
+            new ResourceLocation("solarforge:worldgen_features/energy_pylon_zeta"),
+            new ResourceLocation("solarforge:worldgen_features/energy_pylon_kelda"),
+            new ResourceLocation("solarforge:worldgen_features/energy_pylon_urba"),
+            new ResourceLocation("solarforge:worldgen_features/energy_pylon_giro"),
+            new ResourceLocation("solarforge:worldgen_features/energy_pylon_ultima"),
+    };
 
     public EnergyPylonFeature(Codec<NoneFeatureConfiguration> p_i231953_1_) {
         super(p_i231953_1_);
@@ -45,7 +55,7 @@ public class EnergyPylonFeature extends Feature<NoneFeatureConfiguration> {
         Rotation rot = Rotation.NONE;
         StructureManager manager = world.getLevel().getStructureManager();
 
-        StructureTemplate templ = manager.getOrCreate(FEATURE);
+        StructureTemplate templ = manager.getOrCreate(LOCATIONS[world.getRandom().nextInt(LOCATIONS.length)]);
 
 
 
