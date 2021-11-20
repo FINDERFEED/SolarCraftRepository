@@ -940,4 +940,31 @@ public class RenderingTools {
     }
 
 
+    public static class LineRenderer{
+
+        public static BufferBuilder preparePositionColorNormal(){
+            RenderSystem.disableDepthTest();
+            RenderSystem.disableTexture();
+            RenderSystem.disableCull();
+            PoseStack posestack = RenderSystem.getModelViewStack();
+            posestack.pushPose();
+            RenderSystem.applyModelViewMatrix();
+
+            RenderSystem.setShader(GameRenderer::getRendertypeLinesShader);
+            BufferBuilder bufferBuilder = Tesselator.getInstance().getBuilder();
+            RenderSystem.lineWidth(3f);
+            bufferBuilder.begin(VertexFormat.Mode.LINES, DefaultVertexFormat.POSITION_COLOR_NORMAL);
+            return bufferBuilder;
+        }
+
+        public static void end(){
+            PoseStack posestack = RenderSystem.getModelViewStack();
+            Tesselator.getInstance().end();
+            posestack.popPose();
+
+            RenderSystem.applyModelViewMatrix();
+        }
+    }
+
+
 }

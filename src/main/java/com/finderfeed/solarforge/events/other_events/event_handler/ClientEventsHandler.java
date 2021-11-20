@@ -2,52 +2,44 @@ package com.finderfeed.solarforge.events.other_events.event_handler;
 
 
 import com.finderfeed.solarforge.Helpers;
-import com.finderfeed.solarforge.client.custom_tooltips.CustomTooltip;
-import com.finderfeed.solarforge.client.custom_tooltips.ICustomTooltip;
 import com.finderfeed.solarforge.events.misc.ClientTicker;
-import com.finderfeed.solarforge.events.my_events.MyColorEvent;
-import com.finderfeed.solarforge.events.my_events.PostColorEvent;
-import com.finderfeed.solarforge.for_future_library.helpers.RenderingTools;
+import com.finderfeed.solarforge.magic_items.blocks.infusing_table_things.InfuserTileEntity;
 import com.finderfeed.solarforge.magic_items.items.ModuleItem;
+import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
 import com.finderfeed.solarforge.registries.items.ItemsRegister;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
-import com.mojang.math.Matrix4f;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Gui;
-import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.GameRenderer;
-import net.minecraft.client.renderer.LevelRenderer;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.OreBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.RenderTooltipEvent;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.common.Mod;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Mod.EventBusSubscriber(modid = "solarforge",bus = Mod.EventBusSubscriber.Bus.FORGE,value = Dist.CLIENT)
 public class ClientEventsHandler {
 
     private static Map<String, ClientTicker> TICKERS = new HashMap<>();
     private static ArrayList<String> TICKERS_TO_REMOVE = new ArrayList<>();
-    private static List<BlockPos> RENDER_POSITIONS = new ArrayList<>();
+    private static List<BlockPos> ORES_RENDER_POSITIONS = new ArrayList<>();
+    private static List<BlockPos> CATALYST_RENDER_POSITIONS = new ArrayList<>();
     private static int testField = 0;
 
     @SubscribeEvent
@@ -98,17 +90,22 @@ public class ClientEventsHandler {
                 if (player.getInventory().countItem(ItemsRegister.ENDER_RADAR.get()) > 0){
                         fillList(player.getOnPos().above(),player.level);
                 }else{
-                    RENDER_POSITIONS.clear();
+                    ORES_RENDER_POSITIONS.clear();
                 }
+            }
+
+            if (player.level.getGameTime() % 20 == 0){
+                fillCatalystRenderPositions();
             }
         }
     }
 
 
+
     @SubscribeEvent
     public static void renderList(RenderWorldLastEvent event){
         PoseStack stack = event.getMatrixStack();
-        if (!RENDER_POSITIONS.isEmpty()){
+        if (!ORES_RENDER_POSITIONS.isEmpty()){
             Camera cam = Minecraft.getInstance().gameRenderer.getMainCamera();
 
             VoxelShape shape = Block.box(0,0,0,16,16,16);
@@ -126,12 +123,12 @@ public class ClientEventsHandler {
             RenderSystem.lineWidth(3f);
             bufferBuilder.begin(VertexFormat.Mode.LINES, DefaultVertexFormat.POSITION_COLOR_NORMAL);
 
-            for (BlockPos pos : RENDER_POSITIONS){
+            for (BlockPos pos : ORES_RENDER_POSITIONS){
                 double posx = pos.getX()-cam.getPosition().x;
                 double posy = pos.getY()-cam.getPosition().y;
                 double posz = pos.getZ()-cam.getPosition().z;
 
-                renderBox(posestack,bufferBuilder,posx,posy,posz);
+                renderBox(bufferBuilder,posx,posy,posz);
 
             }
             Tesselator.getInstance().end();
@@ -141,9 +138,40 @@ public class ClientEventsHandler {
 
 
         }
+        if (!CATALYST_RENDER_POSITIONS.isEmpty()){
+            Camera cam = Minecraft.getInstance().gameRenderer.getMainCamera();
+
+            VoxelShape shape = Block.box(0,0,0,16,16,16);
+//            VertexConsumer c = Minecraft.getInstance().renderBuffers().bufferSource().getBuffer(RenderType.lines());
+            RenderSystem.disableDepthTest();
+            RenderSystem.disableTexture();
+            RenderSystem.disableCull();
+            PoseStack posestack = RenderSystem.getModelViewStack();
+            posestack.pushPose();
+            posestack.mulPoseMatrix(stack.last().pose());
+            RenderSystem.applyModelViewMatrix();
+
+            RenderSystem.setShader(GameRenderer::getRendertypeLinesShader);
+            BufferBuilder bufferBuilder = Tesselator.getInstance().getBuilder();
+            RenderSystem.lineWidth(3f);
+            bufferBuilder.begin(VertexFormat.Mode.LINES, DefaultVertexFormat.POSITION_COLOR_NORMAL);
+
+            for (BlockPos pos : CATALYST_RENDER_POSITIONS){
+                double posx = pos.getX()-cam.getPosition().x;
+                double posy = pos.getY()-cam.getPosition().y;
+                double posz = pos.getZ()-cam.getPosition().z;
+
+                renderBox(bufferBuilder,posx,posy,posz);
+
+            }
+            Tesselator.getInstance().end();
+            posestack.popPose();
+
+            RenderSystem.applyModelViewMatrix();
+        }
     }
 
-    private static void renderBox(PoseStack matrices,BufferBuilder builder,double posx,double posy,double posz){
+    public static void renderBox(BufferBuilder builder,double posx,double posy,double posz){
         builder.vertex(posx+0,posy+0,posz+0).color(255,255,255,255).normal(0,1,0).endVertex();
         builder.vertex(posx+0,posy+1,posz+0).color(255,255,255,255).normal(0,-1,0).endVertex();
 
@@ -182,8 +210,9 @@ public class ClientEventsHandler {
     }
 
 
+
     private static void fillList(BlockPos mainpos,Level level){
-        RENDER_POSITIONS.clear();
+        ORES_RENDER_POSITIONS.clear();
         int radius = 3;
         for (int x = -radius;x <= radius;x++){
             for (int y = -radius;y <= radius;y++){
@@ -191,14 +220,30 @@ public class ClientEventsHandler {
                     BlockPos pos = mainpos.offset(x,y,z);
                     BlockState state = level.getBlockState(pos);
                     if (state.is(Tags.Blocks.ORES) || (state.getBlock() instanceof OreBlock)){
-                        RENDER_POSITIONS.add(pos);
+                        ORES_RENDER_POSITIONS.add(pos);
                     }
                 }
             }
         }
     }
 
-
+    private static void fillCatalystRenderPositions(){
+        CATALYST_RENDER_POSITIONS.clear();
+        Player pl = Minecraft.getInstance().player;
+        if (pl.getMainHandItem().getItem() instanceof BlockItem t) {
+            if ((t.getBlock().defaultBlockState().is(com.finderfeed.solarforge.registries.Tags.CATALYST)) && (t.getBlock() != BlocksRegistry.SOLAR_STONE_COLLUMN.get())) {
+                for (LevelChunk c : Helpers.getSurroundingChunks(Minecraft.getInstance().level, Minecraft.getInstance().player.getOnPos())) {
+                    for (BlockEntity e : c.getBlockEntities().values()) {
+                        if (e instanceof InfuserTileEntity tile) {
+                            if (tile.getTier() != null) {
+                                CATALYST_RENDER_POSITIONS.addAll(Arrays.asList(tile.getCatalystsPositions()));
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 
 
 }

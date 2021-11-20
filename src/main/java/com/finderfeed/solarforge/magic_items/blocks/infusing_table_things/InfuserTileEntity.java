@@ -15,6 +15,7 @@ import com.finderfeed.solarforge.multiblocks.Multiblocks;
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
 import com.finderfeed.solarforge.recipe_types.InfusingRecipe;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Progression;
+import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
 import com.finderfeed.solarforge.world_generation.structures.Structures;
 import com.google.common.util.concurrent.AtomicDouble;
 import net.minecraft.network.Connection;
@@ -44,6 +45,7 @@ import net.minecraft.network.chat.TextComponent;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fmllegacy.network.PacketDistributor;
 import org.apache.logging.log4j.core.tools.picocli.CommandLine;
 
@@ -287,6 +289,7 @@ public class InfuserTileEntity extends AbstractRunicEnergyContainerRCBE implemen
     }
 
 
+
     @Override
     public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
         this.load(pkt.getTag());
@@ -313,9 +316,22 @@ public class InfuserTileEntity extends AbstractRunicEnergyContainerRCBE implemen
     }
 
 
+    private void resetCatalysts(InfusingRecipe recipe){
+        if (recipe.getDeserializedCatalysts() != null){
+            int iterator = 0;
+            for (BlockPos pos : getCatalystsPositions()){
+                Block c = recipe.getDeserializedCatalysts()[iterator];
+                if (c != null){
+                    level.setBlock(pos, BlocksRegistry.CATALYST_BASE.get().defaultBlockState(), Constants.BlockFlags.DEFAULT);
+                }
+                iterator++;
+            }
+        }
+    }
 
 
     private static void finishRecipe(Level world, InfuserTileEntity tile, InfusingRecipe recipe){
+        tile.resetCatalysts(recipe);
         ItemStack result = new ItemStack(recipe.output.getItem(),recipe.count);
         int count = tile.getMinRecipeCountOutput(recipe);
         recipe.RUNIC_ENERGY_COST.forEach((type,cost)->{
@@ -507,7 +523,7 @@ public class InfuserTileEntity extends AbstractRunicEnergyContainerRCBE implemen
 
                 level.getBlockState(worldPosition.above().east(3).north(6)).getBlock(),
                 level.getBlockState(worldPosition.above().east(4).north(4)).getBlock(),
-                level.getBlockState(worldPosition.above().east(6).north(4)).getBlock(),
+                level.getBlockState(worldPosition.above().east(6).north(3)).getBlock(),
 
                 level.getBlockState(worldPosition.above().east(6).south(3)).getBlock(),
                 level.getBlockState(worldPosition.above().east(4).south(4)).getBlock(),
@@ -519,6 +535,23 @@ public class InfuserTileEntity extends AbstractRunicEnergyContainerRCBE implemen
         };
 
         return block;
+    }
+
+    public BlockPos[] getCatalystsPositions(){
+        return new BlockPos[]{
+                worldPosition.above().west(6).north(3),
+                worldPosition.above().west(4).north(4),
+                worldPosition.above().west(3).north(6),
+                worldPosition.above().east(3).north(6),
+                worldPosition.above().east(4).north(4),
+                worldPosition.above().east(6).north(3),
+                worldPosition.above().east(6).south(3),
+                worldPosition.above().east(4).south(4),
+                worldPosition.above().east(3).south(6),
+                worldPosition.above().west(3).south(6),
+                worldPosition.above().west(4).south(4),
+                worldPosition.above().west(6).south(3)
+        };
     }
 
     @Override

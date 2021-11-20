@@ -31,10 +31,11 @@ public class AchievementTree {
         tree.addAchievementRequirements(Progression.ALL_ENERGY_TYPES,Progression.RUNE_ENERGY_PYLON);
         tree.addAchievementRequirements(Progression.CRAFT_SOLAR_FORGE,Progression.RUNE_ENERGY_CLAIM,Progression.KILL_DRAGON);
         tree.addAchievementRequirements(Progression.TRANSMUTE_GEM,Progression.FIND_INCINERATED_FOREST,Progression.IMBUED_COLD_STAR,Progression.TRADE_FOR_BLUE_GEM);
-        tree.addAchievementRequirements(Progression.SOLAR_INFUSER,Progression.CRAFT_SOLAR_FORGE);
+        tree.addAchievementRequirements(Progression.SOLAR_INFUSER,Progression.CRAFT_SOLAR_FORGE,Progression.INFUSING_CRAFTING_TABLE);
         tree.addAchievementRequirements(Progression.DIMENSIONAL_SHARD_DUNGEON,Progression.TRANSMUTE_GEM);
-        tree.addAchievementRequirements(Progression.CRAFT_SOLAR_LENS,Progression.IMBUED_COLD_STAR,Progression.SOLAR_INFUSER);
-        tree.addAchievementRequirements(Progression.RUNIC_ENERGY_REPEATER,Progression.SOLAR_INFUSER,Progression.ALL_ENERGY_TYPES,Progression.RUNE_ENERGY_PYLON);
+        tree.addAchievementRequirements(Progression.CRAFT_SOLAR_LENS,Progression.IMBUED_COLD_STAR,Progression.SOLAR_INFUSER,Progression.CATALYSTS);
+        tree.addAchievementRequirements(Progression.CATALYSTS,Progression.SOLAR_INFUSER);
+        tree.addAchievementRequirements(Progression.RUNIC_ENERGY_REPEATER,Progression.SOLAR_INFUSER,Progression.ALL_ENERGY_TYPES,Progression.RUNE_ENERGY_PYLON,Progression.CATALYSTS);
         tree.addAchievementRequirements(Progression.CRAFT_SOLAR_ENERGY_GENERATOR,Progression.CRAFT_SOLAR_LENS,Progression.RUNIC_ENERGY_REPEATER);
         tree.addAchievementRequirements(Progression.RADIANT_LAND,Progression.DIMENSIONAL_SHARD_DUNGEON,Progression.TRADE_FOR_BLUE_GEM,Progression.CRAFT_SOLAR_ENERGY_GENERATOR);
         tree.addAchievementRequirements(Progression.KILL_CRYSTAL_BOSS,Progression.RADIANT_LAND);

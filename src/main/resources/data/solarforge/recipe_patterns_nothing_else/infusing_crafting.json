@@ -1,0 +1,17 @@
+{
+  "type": "solarforge:infusing_crafting",
+  "pattern": [
+    "   ",
+    "   ",
+    "   "
+  ],
+  "keys": {
+
+  },
+  "output": {
+    "item": ""
+
+  },
+  "fragment": "",
+  "time": 1
+}

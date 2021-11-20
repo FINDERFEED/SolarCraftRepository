@@ -561,9 +561,14 @@
   "solarcraft.infusing_crafting_table": "Infusing crafting",
   "block.solarforge.catalyst_base": "Catalyst base",
   "solar_fragment.catalysts": "Catalysts",
-  "catalysts.lore": "",
+  "catalysts.lore": "An alternative to runic energy. Consumed during crafting. Should be placed in columns 1 block above infuser.",
   "solar_category.beginner_materials": "Materials",
   "ach.catalysts": "Catalysts",
   "pre.catalysts": "To craft more valuable items pylon energy is needed but it cant be harvested now. Is there an alternative?",
-  "aft.catalysts": "Stones imbued with small amount of energy is the solution."
+  "aft.catalysts": "Stones imbued with small amount of energy is the solution.",
+  "solar_fragment.infusing_crafting_table": "Infusing crafting table",
+  "infusing_crafting_table.lore": "An advanced crafting table that imbues items with small amount of energy. All crafting is triggered via solar wand.",
+  "ach.infusing_crafting_table": "Advanced crafting",
+  "pre.infusing_crafting_table": "A wooden crafting table is too primitive to fulfill all your crafting needs.",
+  "aft.infusing_crafting_table": "An upgraded version but not the best."
 }

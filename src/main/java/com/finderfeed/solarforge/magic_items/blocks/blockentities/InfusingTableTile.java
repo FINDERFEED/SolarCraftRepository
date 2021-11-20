@@ -5,6 +5,7 @@ import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.for_future_library.OwnedBlock;
 import com.finderfeed.solarforge.for_future_library.helpers.FinderfeedMathHelper;
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Progression;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.ProgressionHelper;
 import com.finderfeed.solarforge.misc_things.ParticlesList;
 import com.finderfeed.solarforge.misc_things.PhantomInventory;
@@ -25,6 +26,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
+import org.apache.logging.log4j.core.tools.picocli.CommandLine;
 
 import javax.annotation.Nullable;
 import java.util.Locale;
@@ -138,6 +140,7 @@ public class InfusingTableTile extends BlockEntity implements OwnedBlock {
                     if (recipe.isPresent()) {
                         try {
                             if (ProgressionHelper.doPlayerHasFragment(pl, recipe.get().getFragment())) {
+                                Helpers.fireProgressionEvent(pl, Progression.INFUSING_CRAFTING_TABLE);
                                 this.recipeTrigerred = true;
                                 update();
                             } else {

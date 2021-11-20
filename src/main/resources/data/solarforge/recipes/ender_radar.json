@@ -1,11 +1,11 @@
 {
-  "type": "minecraft:crafting_shaped",
+  "type": "solarforge:infusing_crafting",
   "pattern": [
     "#S#",
     "SPS",
     "#S#"
   ],
-  "key": {
+  "keys": {
     "#": {
       "item": "solarforge:enderite_essence"
     },
@@ -16,7 +16,10 @@
       "item": "minecraft:diamond"
     }
   },
-  "result": {
+  "output": {
     "item": "solarforge:ender_radar"
-  }
+
+  },
+  "fragment": "ender_radar",
+  "time": 300
 }

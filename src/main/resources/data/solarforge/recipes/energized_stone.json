@@ -1,15 +1,20 @@
 {
   "type": "solarforge:infusing_crafting",
   "pattern": [
-    "##"
+    "###",
+    "FFF",
+    "###"
   ],
   "keys": {
     "#": {
       "item": "solarforge:solar_stone_bricks"
+    },
+    "F": {
+      "item": "solarforge:energy_dust"
     }
   },
   "output": {
-    "item": "solarforge:solar_stone_collumn_horizontal"
+    "item": "solarforge:energized_stone"
   },
   "fragment": "solar_stones",
   "time": 5,

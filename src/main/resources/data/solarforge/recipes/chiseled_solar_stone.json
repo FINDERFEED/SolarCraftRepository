@@ -1,18 +1,18 @@
 {
-  "type": "minecraft:crafting_shaped",
+  "type": "solarforge:infusing_crafting",
   "pattern": [
-    "## ",
-    "## ",
-    "   "
+    "##",
+    "##"
   ],
-  "key": {
+  "keys": {
     "#": {
       "item": "solarforge:solar_stone_bricks"
     }
   },
-  "result": {
-    "item": "solarforge:chiseled_solar_stone",
-    "count": 4
-
-  }
+  "output": {
+    "item": "solarforge:chiseled_solar_stone"
+  },
+  "fragment": "solar_stones",
+  "time": 5,
+  "count": 4
 }
