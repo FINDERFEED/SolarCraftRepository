@@ -31,5 +31,6 @@
     "item": "solarforge:turret_block"
   },
   "time": 250,
-  "fragment": "solar_turret"
+  "fragment": "solar_turret",
+  "catalysts": "   ZKZ   ZKZ"
 }

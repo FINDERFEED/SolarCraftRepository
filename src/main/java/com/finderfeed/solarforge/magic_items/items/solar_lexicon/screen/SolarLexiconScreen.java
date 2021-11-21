@@ -287,11 +287,13 @@ public class SolarLexiconScreen extends Screen implements IScrollable {
                 drawString(matrices, font, s, relX + 10, relY + 132 + y, 0xffffff);
                 y += 8;
             }
-        }if ((afterTxt != null) && (afterTxt.length() != 0)) {
+        }
+        if ((afterTxt != null) && (afterTxt.length() != 0)) {
             List<String> toRender2 = RenderingTools.splitString(afterTxt, 40);
+            int yOffset = (toRender2.size()-1)*8;
             int y = 0;
             for (String s : toRender2) {
-                drawString(matrices, font, s, relX + 10, relY + 162 + y, 0xffffff);
+                drawString(matrices, font, s, relX + 10, relY + 187 + y - yOffset, 0xffffff);
                 y += 8;
             }
         }

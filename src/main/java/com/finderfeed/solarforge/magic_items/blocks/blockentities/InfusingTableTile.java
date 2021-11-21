@@ -68,7 +68,7 @@ public class InfusingTableTile extends BlockEntity implements OwnedBlock {
                         for (int i = 0; i < 9;i++){
                             handler.extractItem(i,maxOutput,false);
                         }
-                        stack.setCount(maxOutput);
+                        stack.setCount(maxOutput*recipe.getOutputCount());
                         handler.insertItem(9,stack,false);
                         tile.recipeTrigerred = false;
                         tile.recipeTime = 0;

@@ -30,6 +30,7 @@
   "result": {
     "item": "solarforge:solar_disc_launcher"
   },
-  "time": 3000,
-  "fragment": "disc_launcher"
+  "time": 1500,
+  "fragment": "disc_launcher",
+  "catalysts": "TFT   TFT   "
 }

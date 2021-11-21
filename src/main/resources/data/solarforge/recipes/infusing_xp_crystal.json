@@ -31,5 +31,7 @@
     "item": "solarforge:xp_crystal"
   },
   "time": 400,
-  "fragment": "experience_crystal"
+  "fragment": "experience_crystal",
+  "catalysts": "RARRARKAKKAK"
+
 }

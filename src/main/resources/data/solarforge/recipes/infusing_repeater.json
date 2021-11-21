@@ -32,5 +32,6 @@
   },
   "time": 1000,
   "fragment": "runic_energy_repeater",
-  "count": 8
+  "count": 8,
+  "catalysts": "K KF FZ ZU U"
 }

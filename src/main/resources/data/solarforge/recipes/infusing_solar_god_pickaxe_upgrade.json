@@ -35,5 +35,6 @@
   "tag": "yes",
   "energy" : 10000,
   "ardo": 2500,
-  "urba": 1500
+  "urba": 1500,
+  "catalysts":"K    KK    K"
 }

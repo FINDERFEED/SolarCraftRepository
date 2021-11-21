@@ -2,12 +2,15 @@ package com.finderfeed.solarforge.magic_items.blocks;
 
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.InfusingTableTile;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.containers.InfusingTableTileContainer;
+import com.finderfeed.solarforge.misc_things.PhantomInventory;
 import com.finderfeed.solarforge.registries.items.ItemsRegister;
 import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.Container;
+import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -62,7 +65,15 @@ public class InfusingTableBlock extends Block implements EntityBlock {
     }
 
 
-
+    @Override
+    public void onRemove(BlockState state, Level world, BlockPos pos, BlockState state2, boolean p_51542_) {
+        BlockEntity blockentity = world.getBlockEntity(pos);
+        if (blockentity instanceof InfusingTableTile tile) {
+            Containers.dropContents(world, pos,new PhantomInventory(tile.getInventory()));
+            world.updateNeighbourForOutputSignal(pos, this);
+        }
+        super.onRemove(state, world, pos, state2, p_51542_);
+    }
 
     @Nullable
     @Override

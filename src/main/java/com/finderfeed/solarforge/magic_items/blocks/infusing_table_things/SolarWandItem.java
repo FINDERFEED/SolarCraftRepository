@@ -132,6 +132,9 @@ public class SolarWandItem extends Item implements ManaConsumer {
                     boolean f = true;
                     for (RunicEnergy.Type t : RunicEnergy.Type.getAll()){
                         f = RunicEnergy.hasFoundType(player,t);
+                        if (!f){
+                            break;
+                        }
                     }
                     if (f){
                         Helpers.fireProgressionEvent(player,Progression.ALL_ENERGY_TYPES);

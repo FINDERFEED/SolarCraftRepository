@@ -23,7 +23,7 @@ public enum Progression {
     RUNE_ENERGY_CLAIM("rune_energy_claim",2, ItemsRegister.SOLAR_WAND.get().getDefaultInstance(),new TranslatableComponent("ach.rune_energy_claim"),nextID(),new TranslatableComponent("pre.rune_energy_claim"),new TranslatableComponent("aft.rune_energy_claim")),
     SOLAR_RUNE("solar_rune",2, ItemsRegister.SOLAR_RUNE_ZETA.get().getDefaultInstance(),new TranslatableComponent("ach.solar_rune"),nextID(),new TranslatableComponent("pre.solar_rune"),new TranslatableComponent("aft.solar_rune")),
     ALL_ENERGY_TYPES("all_energy_types",2, ItemsRegister.RUNE_ENERGY_PYLON.get().getDefaultInstance(),new TranslatableComponent("ach.all_energy_types"),nextID(),new TranslatableComponent("pre.all_energy_types"),new TranslatableComponent("aft.all_energy_types")),
-    INFUSING_CRAFTING_TABLE("infusing_crafting_table",2,ItemsRegister.INFUSING_TABLE.get().getDefaultInstance(), new TranslatableComponent("ach.infusing_crafting_table"),nextID(),new TranslatableComponent("pre.infusing_crafting_table"),new TranslatableComponent("aft.infusing_crafting_table")),
+    INFUSING_CRAFTING_TABLE("infusing_crafting_table",1,ItemsRegister.INFUSING_TABLE.get().getDefaultInstance(), new TranslatableComponent("ach.infusing_crafting_table"),nextID(),new TranslatableComponent("pre.infusing_crafting_table"),new TranslatableComponent("aft.infusing_crafting_table")),
 
 
     KILL_DRAGON("kill_dragon",3, Blocks.DRAGON_HEAD.asItem().getDefaultInstance(),new TranslatableComponent("ach.kill_dragon"),nextID(),new TranslatableComponent("pre.kill_dragon"),new TranslatableComponent("aft.kill_dragon")),
@@ -33,7 +33,7 @@ public enum Progression {
     CRAFT_SOLAR_FORGE("solar_forge_craft",4, SolarForge.SOLAR_FORGE_ITEM.get().getDefaultInstance(),new TranslatableComponent("ach.solar_forge_craft"),nextID(),new TranslatableComponent("pre.solar_forge_craft"),new TranslatableComponent("aft.solar_forge_craft")),
     TRANSMUTE_GEM("transmute_gem",4,ItemsRegister.BLUE_GEM_ENCHANCED.get().getDefaultInstance(), new TranslatableComponent("ach.transmute_gem"),nextID(),new TranslatableComponent("pre.transmute_gem"),new TranslatableComponent("aft.transmute_gem")),
 
-    SOLAR_INFUSER("solar_infuser_create",5,SolarForge.INFUSING_STAND_ITEM.get().getDefaultInstance(),new TranslatableComponent("ach.solar_infuser_create"),nextID(),new TranslatableComponent("pre.solar_infuser_create"),new TranslatableComponent("aft.solar_infuser_create")),
+    SOLAR_INFUSER("solar_infuser_create",5,SolarForge.INFUSER_ITEM.get().getDefaultInstance(),new TranslatableComponent("ach.solar_infuser_create"),nextID(),new TranslatableComponent("pre.solar_infuser_create"),new TranslatableComponent("aft.solar_infuser_create")),
     DIMENSIONAL_SHARD_DUNGEON("dim_shard_dungeon",5,ItemsRegister.SOLAR_STONE_CHISELED.get().getDefaultInstance(), new TranslatableComponent("ach.dim_shard_dungeon"),nextID(),new TranslatableComponent("pre.dim_shard_dungeon"),new TranslatableComponent("aft.dim_shard_dungeon")),
 
     CATALYSTS("catalysts",6,ItemsRegister.ARDO_RUNE_BLOCK.get().getDefaultInstance(), new TranslatableComponent("ach.catalysts"),nextID(),new TranslatableComponent("pre.catalysts"),new TranslatableComponent("aft.catalysts")),

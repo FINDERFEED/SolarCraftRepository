@@ -31,5 +31,6 @@
     "item": "solarforge:regen_amulet"
   },
   "time": 500,
-  "fragment": "amulets"
+  "fragment": "amulets",
+  "catalysts": " U  U  U  U "
 }

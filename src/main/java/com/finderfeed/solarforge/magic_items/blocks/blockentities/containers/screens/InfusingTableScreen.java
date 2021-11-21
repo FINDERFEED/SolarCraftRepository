@@ -11,6 +11,7 @@ import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -69,10 +70,11 @@ public class InfusingTableScreen extends AbstractContainerScreen<InfusingTableTi
         Optional<InfusingCraftingRecipe> opt = world.getRecipeManager().getRecipeFor(SolarForge.INFUSING_CRAFTING_RECIPE_TYPE,new PhantomInventory(stacks),world);
         if (opt.isPresent()){
             result = opt.get().getResultItem().getItem();
-            renderItemAndTooltip(result.getDefaultInstance(),relX+154,relY+36,mousex,mousey,matrices,menu.tile.calculateMaximumRecipeOutput(opt.get()));
+            renderItemAndTooltip(result.getDefaultInstance(),relX+154+a,relY+36,mousex,mousey,matrices,menu.tile.calculateMaximumRecipeOutput(opt.get())*opt.get().getOutputCount());
         }else{
             result = null;
         }
+
 
     }
     private void renderItemAndTooltip(ItemStack toRender, int place1, int place2, int mousex, int mousey, PoseStack matrices,int count){

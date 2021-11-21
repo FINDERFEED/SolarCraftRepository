@@ -76,7 +76,7 @@ public enum Multiblocks {
     )),
     INFUSER_TIER_FIRST(new Multiblock(new Multiblock.Constructor()
             .addBlock(SolarForge.SOLAR_INFUSER.get().defaultBlockState(),'I',false)
-            .addBlock(BlocksRegistry.SOLAR_POOL.get().defaultBlockState(),'F',false)
+            .addBlock(BlocksRegistry.INFUSING_POOL.get().defaultBlockState(),'F',false)
             .addBlock(BlocksRegistry.SOLAR_STONE_BRICKS.get().defaultBlockState(),'B',false)
             .addBlock(BlocksRegistry.SOLAR_STONE_CHISELED.get().defaultBlockState(),'C',false)
             .addBlock(Blocks.GOLD_BLOCK.defaultBlockState(),'G',false)

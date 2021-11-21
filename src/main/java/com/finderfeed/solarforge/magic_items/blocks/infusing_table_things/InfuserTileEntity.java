@@ -400,9 +400,10 @@ public class InfuserTileEntity extends AbstractRunicEnergyContainerRCBE implemen
 
     public void triggerCrafting(Player playerEntity){
         Optional<InfusingRecipe> recipe = this.level.getRecipeManager().getRecipeFor(SolarForge.INFUSING_RECIPE_TYPE,(Container) this,level);
+        calculateTier();
         try {
             if (recipe.isPresent() && ProgressionHelper.doPlayerHasFragment(playerEntity, AncientFragment.getFragmentByID(recipe.get().child))) {
-                calculateTier();
+
                 if (tierEquals(recipe.get().getTier())) {
                     if (catalystsMatch(recipe.get())) {
                         if (!RECIPE_IN_PROGRESS) {
@@ -628,8 +629,8 @@ public class InfuserTileEntity extends AbstractRunicEnergyContainerRCBE implemen
         if (recipe.getDeserializedCatalysts() != null) {
             Block[] c = getCurrentCatalystPattern();
             for (int i = 0 ; i < 12;i++){
-                Block bl;
-                if ((bl = recipe.getDeserializedCatalysts()[i]) != null){
+                Block bl = recipe.getDeserializedCatalysts()[i];
+                if (bl != null){
                     if (bl != c[i]){
                         return false;
                     }
@@ -641,7 +642,7 @@ public class InfuserTileEntity extends AbstractRunicEnergyContainerRCBE implemen
         return true;
     }
 
-    private boolean doRecipeRequiresRunicEnergy(Map<RunicEnergy.Type,Double> costs){
+    public static boolean doRecipeRequiresRunicEnergy(Map<RunicEnergy.Type,Double> costs){
         for (double cost : costs.values()){
             if (Math.round(cost) != 0){
                 return true;

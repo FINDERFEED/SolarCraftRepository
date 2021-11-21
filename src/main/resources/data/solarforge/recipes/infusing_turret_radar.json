@@ -31,5 +31,6 @@
     "item": "solarforge:turret_radar"
   },
   "time": 400,
-  "fragment": "turret_radar"
+  "fragment": "turret_radar",
+  "catalysts": " U  U  U  U "
 }

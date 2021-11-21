@@ -9,6 +9,7 @@
     "solarforge:ardo_rune_block",
     "solarforge:giro_rune_block",
     "solarforge:ultima_rune_block",
-    "solarforge:zeta_rune_block"
+    "solarforge:zeta_rune_block",
+    "solarforge:catalyst_base"
   ]
 }

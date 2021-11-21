@@ -34,5 +34,7 @@
   "fragment": "zap_turret",
   "tera": 2000,
   "kelda": 2000,
-  "energy": 7500
+  "energy": 7500,
+  "catalysts": " T     T    "
+
 }

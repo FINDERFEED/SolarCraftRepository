@@ -1,6 +1,5 @@
 package com.finderfeed.solarforge.registries.tile_entities;
 
-import com.finderfeed.solarforge.magic_items.blocks.WormholeBlock;
 import com.finderfeed.solarforge.magic_items.blocks.infusing_table_things.infusing_pool.InfusingPoolTileEntity;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.*;
 import com.finderfeed.solarforge.magic_items.runic_network.repeater.BaseRepeaterTile;
@@ -20,7 +19,7 @@ public class TileEntitiesRegistry {
 
 
     public static final RegistryObject<BlockEntityType<InfusingPoolTileEntity>> INFUSING_POOL_BLOCKENTITY = TILE_ENTITY_TYPE.register("infusing_pool_blockentity",()->
-            BlockEntityType.Builder.of(InfusingPoolTileEntity::new, BlocksRegistry.SOLAR_POOL.get()).build(null));
+            BlockEntityType.Builder.of(InfusingPoolTileEntity::new, BlocksRegistry.INFUSING_POOL.get()).build(null));
 
     public static final RegistryObject<BlockEntityType<KeyLockStructureTile>> KEY_LOCK_TILE = TILE_ENTITY_TYPE.register("key_lock_tile",()->
             BlockEntityType.Builder.of(KeyLockStructureTile::new, BlocksRegistry.KEY_LOCK_BLOCK.get()).build(null));

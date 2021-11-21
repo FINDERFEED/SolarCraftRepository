@@ -31,6 +31,7 @@
     "item": "solarforge:solar_god_pickaxe"
   },
   "time": 3000,
-  "fragment": "solar_god_pickaxe"
+  "fragment": "solar_god_pickaxe",
+  "catalysts":"Z    ZZ    Z"
 
 }

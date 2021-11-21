@@ -39,7 +39,7 @@ import java.util.Random;
 
 public class BlocksRegistry {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS,"solarforge");
-    public  static  final RegistryObject<InfusingPool> SOLAR_POOL = BLOCKS.register("solar_forge_infusion_pool",()-> new InfusingPool(BlockBehaviour.Properties.of(Material.STONE)
+    public  static  final RegistryObject<InfusingPool> INFUSING_POOL = BLOCKS.register("solar_forge_infusion_pool",()-> new InfusingPool(BlockBehaviour.Properties.of(Material.STONE)
             .sound(SoundType.METAL)
             .requiresCorrectToolForDrops()
             .noOcclusion()

@@ -20,18 +20,22 @@ public enum AncientFragment {
     RUNIC_TABLE(tx("solar_fragment.runic_table"),"runic_table",null,SubCategoryBase.BEGGINING,CategoryBase.BEGGINING_INFO, ItemsRegister.RUNIC_TABLE.get(),tx("runic_table.lore"),1),
     FRAGMENT(tx("solar_fragment.fragment"),"fragment",null,SubCategoryBase.BEGGINING,CategoryBase.BEGGINING_INFO, ItemsRegister.INFO_FRAGMENT.get(),tx("fragment.lore"),1),
     LEXICON(tx("solar_fragment.lexicon"),"lexicon",null,SubCategoryBase.BEGGINING,CategoryBase.BEGGINING_INFO, ItemsRegister.SOLAR_LEXICON.get(),tx("lexicon.lore"),1),
-
-    INFUSING_CRAFTING_TABLE(tx("solar_fragment.infusing_crafting_table"),"infusing_crafting_table",ProgressionStage.BEGGINING.ALL_PROGRESSIONS,SubCategoryBase.BEGGINING,CategoryBase.BEGGINING_INFO, ItemsRegister.INFUSING_TABLE.get(),tx("infusing_crafting_table.lore"),1),
-    WAND(tx("solar_fragment.wand"),"wand", ProgressionStage.BEGGINING.ALL_PROGRESSIONS,SubCategoryBase.BEGGINING,CategoryBase.BEGGINING_INFO, ItemsRegister.SOLAR_WAND.get(),tx("wand.lore"),1),
-    SOLAR_DUST(tx("solar_fragment.solar_dust"),"solar_dust",ProgressionStage.BEGGINING_2.ALL_PROGRESSIONS,SubCategoryBase.FORGE,CategoryBase.SOLAR_FORGE_BASICS, ItemsRegister.SOLAR_DUST.get(),tx("solar_dust.lore"),1),
-    ENERGY_DUST(tx("solar_fragment.energy_dust"),"energy_dust",ProgressionStage.BEGGINING_2.ALL_PROGRESSIONS,SubCategoryBase.FORGE,CategoryBase.SOLAR_FORGE_BASICS, ItemsRegister.ENERGY_DUST.get(),tx("energy_dust.lore"),1),
-    SOLAR_INFUSER(tx("solar_fragment.solar_infuser"),"solar_infuser",ProgressionStage.FORGE.ALL_PROGRESSIONS,SubCategoryBase.BEGINNER_ITEMS,CategoryBase.BEGINNER, SolarForge.INFUSING_STAND_ITEM.get().getDefaultInstance(),tx("solar_infuser.lore"),SolarForge.INFUSING_CRAFTING_RECIPE_TYPE,1),
-    SOLAR_FORGE(tx("solar_fragment.solar_forge"),"solar_forge",ProgressionStage.PRE_FORGE.ALL_PROGRESSIONS,SubCategoryBase.FORGE,CategoryBase.SOLAR_FORGE_BASICS, SolarForge.SOLAR_FORGE_ITEM.get().getDefaultInstance(),tx("solar_forge.lore"),SolarForge.INFUSING_CRAFTING_RECIPE_TYPE,1),
-    SOLAR_STONES(tx("solar_fragment.solar_stones"),"solar_stones", ProgressionStage.BEGGINING.ALL_PROGRESSIONS,SubCategoryBase.BEGGINING,CategoryBase.BEGGINING_INFO, List.of(
+    ENERGY_DUST(tx("solar_fragment.energy_dust"),"energy_dust",null,SubCategoryBase.FORGE,CategoryBase.SOLAR_FORGE_BASICS, ItemsRegister.ENERGY_DUST.get(),tx("energy_dust.lore"),1),
+    INFUSING_CRAFTING_TABLE(tx("solar_fragment.infusing_crafting_table"),"infusing_crafting_table",null,SubCategoryBase.BEGGINING,CategoryBase.BEGGINING_INFO, ItemsRegister.INFUSING_TABLE.get(),tx("infusing_crafting_table.lore"),1),
+    WAND(tx("solar_fragment.wand"),"wand",null,SubCategoryBase.BEGGINING,CategoryBase.BEGGINING_INFO, ItemsRegister.SOLAR_WAND.get(),tx("wand.lore"),1),
+    SOLAR_STONES(tx("solar_fragment.solar_stones"),"solar_stones", null,SubCategoryBase.BEGGINING,CategoryBase.BEGGINING_INFO, List.of(
             ItemsRegister.SOLAR_STONE_BRICKS.get().getDefaultInstance(),ItemsRegister.SOLAR_STONE_COLLUMN.get().getDefaultInstance(),
             ItemsRegister.SOLAR_STONE_COLLUMN_HORIZONTAL.get().getDefaultInstance(),ItemsRegister.SOLAR_STONE_STAIRS.get().getDefaultInstance(),
             ItemsRegister.SOLAR_STONE_CHISELED.get().getDefaultInstance(),ItemsRegister.ENERGIZED_STONE.get().getDefaultInstance()
     ),SolarForge.INFUSING_CRAFTING_RECIPE_TYPE,tx("solar_stones.lore"),1),
+
+    SOLAR_DUST(tx("solar_fragment.solar_dust"),"solar_dust",ProgressionStage.BEGGINING_2.ALL_PROGRESSIONS,SubCategoryBase.FORGE,CategoryBase.SOLAR_FORGE_BASICS, ItemsRegister.SOLAR_DUST.get(),tx("solar_dust.lore"),1),
+    SOLAR_INFUSER(tx("solar_fragment.solar_infuser"),"solar_infuser",ProgressionStage.FORGE.ALL_PROGRESSIONS,SubCategoryBase.BEGINNER_ITEMS,CategoryBase.BEGINNER, List.of(
+            SolarForge.INFUSER_ITEM.get().getDefaultInstance(),
+            ItemsRegister.SOLAR_INFUSION_POOL.get().getDefaultInstance()
+    ),SolarForge.INFUSING_CRAFTING_RECIPE_TYPE,tx("solar_infuser.lore"),1),
+    SOLAR_FORGE(tx("solar_fragment.solar_forge"),"solar_forge",ProgressionStage.PRE_FORGE.ALL_PROGRESSIONS,SubCategoryBase.FORGE,CategoryBase.SOLAR_FORGE_BASICS, SolarForge.SOLAR_FORGE_ITEM.get().getDefaultInstance(),tx("solar_forge.lore"),SolarForge.INFUSING_CRAFTING_RECIPE_TYPE,1),
+
 
 
     ENDER_RADAR(tx("solar_fragment.ender_radar"),"ender_radar",ProgressionStage.PRE_FORGE.SELF_PROGRESSIONS,SubCategoryBase.BEGINNER_ITEMS,CategoryBase.BEGINNER, ItemsRegister.ENDER_RADAR.get().getDefaultInstance(),tx("ender_radar.lore"),SolarForge.INFUSING_CRAFTING_RECIPE_TYPE,2),
@@ -111,8 +115,8 @@ public enum AncientFragment {
     AURA_HEALER_STRUCTURE(tx("solar_fragment.aura_healer_structure"),"aura_healer_structure",AURA_HEALER.neededProgression,SubCategoryBase.STRUCTURES,CategoryBase.STRUCTURES,Multiblocks.AURA_HEALER, AURA_HEALER.priority),
     SOLAR_MORTAR_STRUCTURE(tx("solar_fragment.solar_mortar_structure"),"solar_mortar_structure",SOLAR_MORTAR.neededProgression,SubCategoryBase.STRUCTURES,CategoryBase.STRUCTURES,Multiblocks.SOLAR_MORTAR, SOLAR_MORTAR.priority),
     INFUSER_TIER_BEGINNER(tx("solar_fragment.solar_infuser_structure"),"solar_infuser_structure",SOLAR_INFUSER.neededProgression,SubCategoryBase.STRUCTURES,CategoryBase.STRUCTURES,Multiblocks.INFUSER_TIER_FIRST, SOLAR_INFUSER.priority),
-    INFUSER_TIER_RUNIC_ENERGY(tx("solar_fragment.solar_infuser_structure"),"solar_infuser_structure_2",ProgressionStage.AFTER_LENS.ALL_PROGRESSIONS, SubCategoryBase.STRUCTURES,CategoryBase.STRUCTURES,Multiblocks.INFUSER_TIER_RUNIC_ENERGY, SOLAR_INFUSER.priority),
-    INFUSER_TIER_SOLAR_ENERGY(tx("solar_fragment.solar_infuser_structure"),"solar_infuser_structure_3",ProgressionStage.SOLAR_ENERGY.ALL_PROGRESSIONS,SubCategoryBase.STRUCTURES,CategoryBase.STRUCTURES,Multiblocks.INFUSER_TIER_SOLAR_ENERGY, SOLAR_INFUSER.priority),
+    INFUSER_TIER_RUNIC_ENERGY(tx("solar_fragment.solar_infuser_structure_2"),"solar_infuser_structure_2",ProgressionStage.AFTER_LENS.ALL_PROGRESSIONS, SubCategoryBase.STRUCTURES,CategoryBase.STRUCTURES,Multiblocks.INFUSER_TIER_RUNIC_ENERGY, SOLAR_INFUSER.priority),
+    INFUSER_TIER_SOLAR_ENERGY(tx("solar_fragment.solar_infuser_structure_3"),"solar_infuser_structure_3",ProgressionStage.SOLAR_ENERGY.ALL_PROGRESSIONS,SubCategoryBase.STRUCTURES,CategoryBase.STRUCTURES,Multiblocks.INFUSER_TIER_SOLAR_ENERGY, SOLAR_INFUSER.priority),
 
 
     SOLAR_CORE_STRUCTURE(tx("solar_fragment.solar_core_structure"),"solar_core_structure",SOLAR_CORE.neededProgression,SubCategoryBase.STRUCTURES,CategoryBase.STRUCTURES,Multiblocks.SOLAR_CORE, SOLAR_CORE.priority),

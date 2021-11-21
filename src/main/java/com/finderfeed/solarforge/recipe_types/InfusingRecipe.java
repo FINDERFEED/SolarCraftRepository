@@ -157,10 +157,14 @@ public class InfusingRecipe implements Recipe<Container> {
         if (!catalysts.equals("            ")) {
             Block[] bl = new Block[12];
             for (int i = 0; i < 12; i++) {
-                Block block;
-                if ((block = DESERIALIZATOR.get(catalysts.charAt(i))) != null) {
+                char c = catalysts.charAt(i);
+                Block block = DESERIALIZATOR.get(c);
+                if (block != null) {
                     bl[i] = block;
                 } else {
+                    if (c != ' '){
+                        throw new RuntimeException("Incorrect symbol: "+ c + " in catalysts. Recipe: " + this.id);
+                    }
                     bl[i] = null;
                 }
             }

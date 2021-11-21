@@ -74,7 +74,7 @@ public class SolarForgeClientRegistry {
         ScreenSuppliers.SCREEN_REGISTRY.registerAll();
 
         ItemBlockRenderTypes.setRenderLayer(SolarForge.SOLAR_INFUSER.get(), RenderType.solid());
-        ItemBlockRenderTypes.setRenderLayer(BlocksRegistry.SOLAR_POOL.get(), RenderType.solid());
+        ItemBlockRenderTypes.setRenderLayer(BlocksRegistry.INFUSING_POOL.get(), RenderType.solid());
         ItemBlockRenderTypes.setRenderLayer(BlocksRegistry.SOLAR_LENS.get(), RenderType.translucent());
         ItemBlockRenderTypes.setRenderLayer(BlocksRegistry.BONEMEALER.get(), RenderType.translucent());
         ItemBlockRenderTypes.setRenderLayer(BlocksRegistry.SOLAR_FLOWER.get(), RenderType.cutout());

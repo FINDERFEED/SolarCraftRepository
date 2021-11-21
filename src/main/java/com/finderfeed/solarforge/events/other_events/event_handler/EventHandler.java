@@ -48,7 +48,6 @@ import net.minecraft.network.chat.TextComponent;
 import net.minecraft.ChatFormatting;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.levelgen.GenerationStep;
-import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
@@ -59,7 +58,6 @@ import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import org.apache.logging.log4j.core.tools.picocli.CommandLine;
 
 import java.util.List;
 
@@ -256,13 +254,13 @@ public class EventHandler {
 
     }
     public static void deleteInfuser(Player playerEntity){
-        int count = playerEntity.getInventory().countItem(SolarForge.INFUSING_STAND_ITEM.get());
+        int count = playerEntity.getInventory().countItem(SolarForge.INFUSER_ITEM.get());
 
 
         if ((count > 0) && !ProgressionHelper.doPlayerHasFragment(playerEntity, AncientFragment.SOLAR_INFUSER) && !playerEntity.isCreative() && !playerEntity.isSpectator()) {
             Inventory inventory = playerEntity.getInventory();
             for (int i = 0;i < count;i++){
-                int slot = inventory.findSlotMatchingUnusedItem(SolarForge.INFUSING_STAND_ITEM.get().getDefaultInstance());
+                int slot = inventory.findSlotMatchingUnusedItem(SolarForge.INFUSER_ITEM.get().getDefaultInstance());
                 inventory.setItem(slot,ItemStack.EMPTY);
                 playerEntity.level.addFreshEntity(createItemEntity(playerEntity,new ItemStack(Blocks.IRON_BLOCK,3)));
                 playerEntity.level.addFreshEntity(createItemEntity(playerEntity,new ItemStack(ItemsRegister.SOLAR_STONE.get(),3)));

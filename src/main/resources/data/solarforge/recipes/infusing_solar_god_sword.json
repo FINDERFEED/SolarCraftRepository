@@ -31,6 +31,7 @@
     "item": "solarforge:solar_god_sword"
   },
   "time": 3000,
-  "fragment": "solar_god_sword"
+  "fragment": "solar_god_sword",
+  "catalysts":"A    AA    A"
 
 }

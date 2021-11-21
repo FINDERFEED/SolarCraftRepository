@@ -32,5 +32,6 @@
   },
   "time": 250,
   "fragment": "charged_qualadium_ingot",
-  "energy": 5000
+  "energy": 5000,
+  "catalysts": " G  G  G  G "
 }

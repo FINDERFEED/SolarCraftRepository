@@ -31,5 +31,6 @@
     "item": "solarforge:jump_amulet"
   },
   "time": 500,
-  "fragment": "amulets"
+  "fragment": "amulets",
+  "catalysts": " G  G  G  G "
 }

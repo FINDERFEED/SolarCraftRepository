@@ -31,5 +31,6 @@
     "item": "solarforge:gloves_of_reach"
   },
   "time": 1000,
-  "fragment": "gloves_of_reach"
+  "fragment": "gloves_of_reach",
+  "catalysts": "A G F G A F "
 }

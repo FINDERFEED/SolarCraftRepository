@@ -56,7 +56,7 @@ public class InformationScreen extends Screen {
         this.relX = (width/scale - 183)/2;
         this.relY = (height - 218*scale)/2/scale;
 
-        Item i = screen != null ? SolarForge.INFUSING_STAND_ITEM.get() : ItemsRegister.INFUSING_TABLE.get();
+        Item i = screen != null ? SolarForge.INFUSER_ITEM.get() : ItemsRegister.INFUSING_TABLE.get();
 
         ItemStackButton button = new ItemStackButton(relX+180,relY+9,16,16,(buttons)->{
             if (screen != null) {

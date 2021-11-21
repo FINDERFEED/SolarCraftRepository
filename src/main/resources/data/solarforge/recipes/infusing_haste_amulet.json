@@ -31,5 +31,6 @@
     "item": "solarforge:haste_amulet"
   },
   "time": 500,
-  "fragment": "amulets"
+  "fragment": "amulets",
+  "catalysts": " R  R  R  R "
 }
