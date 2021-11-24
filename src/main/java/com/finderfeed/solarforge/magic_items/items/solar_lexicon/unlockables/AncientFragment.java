@@ -28,12 +28,16 @@ public enum AncientFragment {
             ItemsRegister.SOLAR_STONE_COLLUMN_HORIZONTAL.get().getDefaultInstance(),ItemsRegister.SOLAR_STONE_STAIRS.get().getDefaultInstance(),
             ItemsRegister.SOLAR_STONE_CHISELED.get().getDefaultInstance(),ItemsRegister.ENERGIZED_STONE.get().getDefaultInstance()
     ),SolarForge.INFUSING_CRAFTING_RECIPE_TYPE,tx("solar_stones.lore"),1),
+    SPEED_ROAD(tx("solar_fragment.speed_road"),"speed_road",null,SubCategoryBase.FORGE,CategoryBase.SOLAR_FORGE_BASICS, ItemsRegister.SPEED_ROAD.get().getDefaultInstance(),tx("speed_road.lore"),SolarForge.INFUSING_CRAFTING_RECIPE_TYPE,2),
 
-    SOLAR_DUST(tx("solar_fragment.solar_dust"),"solar_dust",ProgressionStage.BEGGINING_2.ALL_PROGRESSIONS,SubCategoryBase.FORGE,CategoryBase.SOLAR_FORGE_BASICS, ItemsRegister.SOLAR_DUST.get(),tx("solar_dust.lore"),1),
+
     SOLAR_INFUSER(tx("solar_fragment.solar_infuser"),"solar_infuser",ProgressionStage.FORGE.ALL_PROGRESSIONS,SubCategoryBase.BEGINNER_ITEMS,CategoryBase.BEGINNER, List.of(
             SolarForge.INFUSER_ITEM.get().getDefaultInstance(),
             ItemsRegister.SOLAR_INFUSION_POOL.get().getDefaultInstance()
     ),SolarForge.INFUSING_CRAFTING_RECIPE_TYPE,tx("solar_infuser.lore"),1),
+
+
+    SOLAR_DUST(tx("solar_fragment.solar_dust"),"solar_dust",ProgressionStage.PRE_FORGE.ALL_PROGRESSIONS,SubCategoryBase.FORGE,CategoryBase.SOLAR_FORGE_BASICS, ItemsRegister.SOLAR_DUST.get(),tx("solar_dust.lore"),1),
     SOLAR_FORGE(tx("solar_fragment.solar_forge"),"solar_forge",ProgressionStage.PRE_FORGE.ALL_PROGRESSIONS,SubCategoryBase.FORGE,CategoryBase.SOLAR_FORGE_BASICS, SolarForge.SOLAR_FORGE_ITEM.get().getDefaultInstance(),tx("solar_forge.lore"),SolarForge.INFUSING_CRAFTING_RECIPE_TYPE,1),
 
 

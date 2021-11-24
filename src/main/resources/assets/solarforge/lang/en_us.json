@@ -574,5 +574,8 @@
   "solar_fragment.solar_stones": "Stones",
   "solar_stones.lore": "Bricks, and other stones variations made of solar stone contain small amounts of magic in them.",
   "solar_fragment.solar_infuser_structure_2": "Infuser structure 2",
-  "solar_fragment.solar_infuser_structure_3": "Infuser structure 3"
+  "solar_fragment.solar_infuser_structure_3": "Infuser structure 3",
+  "block.solarforge.speed_road": "Speed road",
+  "solar_fragment.speed_road": "Speed road",
+  "speed_road.lore": "Running between your chests and crafting tables can take a lot of time. Well this won't teleport your items but it will speed you up instead! Gives speed I when stepping on."
 }

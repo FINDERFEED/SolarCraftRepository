@@ -60,6 +60,7 @@ public class BlocksRegistry {
     public  static  final RegistryObject<Block> INVINCIBLE_STONE = BLOCKS.register("invincible_solar_stone",()-> new InvincibleStone());
     public  static  final RegistryObject<Block> COLD_STAR_INFUSER = BLOCKS.register("cold_star_charger",()-> new ColdStarInfuser(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)));
     public  static  final RegistryObject<Block> KEY_DEFENDER = BLOCKS.register("defence_trap_block",()-> new KeyDefender(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)));
+    public  static  final RegistryObject<Block> SPEED_ROAD = BLOCKS.register("speed_road",()-> new SpeedRoadBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)));
     public  static  final RegistryObject<Block> SOLAR_LENS = BLOCKS.register("solar_lens",()-> new SolarLensBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).sound(SoundType.GLASS).noOcclusion()));
     public  static  final RegistryObject<Block> MAGNET_BLOCK = BLOCKS.register("magnet_block",()-> new MagnetBlock(BlockBehaviour.Properties.copy(Blocks.NETHERITE_BLOCK)));
     public  static  final RegistryObject<Block> SOLAR_ENERGY_GENERATOR = BLOCKS.register("solar_energy_generator",()-> new SolarEnergyGenerator(BlockBehaviour.Properties.copy(Blocks.ANDESITE).noOcclusion()));
