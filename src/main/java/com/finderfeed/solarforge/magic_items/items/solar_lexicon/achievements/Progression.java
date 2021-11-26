@@ -15,6 +15,7 @@ public enum Progression {
     FIND_KEY_SOURCE("find_key_source",1,ItemsRegister.SOLAR_STONE_COLLUMN_HORIZONTAL.get().getDefaultInstance(), new TranslatableComponent("ach.key_source"),nextID(),new TranslatableComponent("pre.key_source"),new TranslatableComponent("aft.key_source")),
     RUNE_ENERGY_PYLON("rune_energy_deposit",1, ItemsRegister.RUNE_ENERGY_PYLON.get().getDefaultInstance(),new TranslatableComponent("ach.rune_energy_deposit"),nextID(),new TranslatableComponent("pre.rune_energy_deposit"),new TranslatableComponent("aft.rune_energy_deposit")),
     TRADE_FOR_BLUE_GEM("blue_gem_trade",1,ItemsRegister.BLUE_GEM.get().getDefaultInstance(), new TranslatableComponent("ach.blue_gem_trade"),nextID(),new TranslatableComponent("pre.blue_gem_trade"),new TranslatableComponent("aft.blue_gem_trade")),
+    INFUSING_CRAFTING_TABLE("infusing_crafting_table",1,ItemsRegister.INFUSING_TABLE.get().getDefaultInstance(), new TranslatableComponent("ach.infusing_crafting_table"),nextID(),new TranslatableComponent("pre.infusing_crafting_table"),new TranslatableComponent("aft.infusing_crafting_table")),
 
 
     ENTER_END("enter_end",2, Blocks.END_STONE.asItem().getDefaultInstance(),new TranslatableComponent("ach.enter_end"),nextID(),new TranslatableComponent("pre.enter_end"),new TranslatableComponent("aft.enter_end")),
@@ -23,7 +24,6 @@ public enum Progression {
     RUNE_ENERGY_CLAIM("rune_energy_claim",2, ItemsRegister.SOLAR_WAND.get().getDefaultInstance(),new TranslatableComponent("ach.rune_energy_claim"),nextID(),new TranslatableComponent("pre.rune_energy_claim"),new TranslatableComponent("aft.rune_energy_claim")),
     SOLAR_RUNE("solar_rune",2, ItemsRegister.SOLAR_RUNE_ZETA.get().getDefaultInstance(),new TranslatableComponent("ach.solar_rune"),nextID(),new TranslatableComponent("pre.solar_rune"),new TranslatableComponent("aft.solar_rune")),
     ALL_ENERGY_TYPES("all_energy_types",2, ItemsRegister.RUNE_ENERGY_PYLON.get().getDefaultInstance(),new TranslatableComponent("ach.all_energy_types"),nextID(),new TranslatableComponent("pre.all_energy_types"),new TranslatableComponent("aft.all_energy_types")),
-    INFUSING_CRAFTING_TABLE("infusing_crafting_table",1,ItemsRegister.INFUSING_TABLE.get().getDefaultInstance(), new TranslatableComponent("ach.infusing_crafting_table"),nextID(),new TranslatableComponent("pre.infusing_crafting_table"),new TranslatableComponent("aft.infusing_crafting_table")),
 
 
     KILL_DRAGON("kill_dragon",3, Blocks.DRAGON_HEAD.asItem().getDefaultInstance(),new TranslatableComponent("ach.kill_dragon"),nextID(),new TranslatableComponent("pre.kill_dragon"),new TranslatableComponent("aft.kill_dragon")),

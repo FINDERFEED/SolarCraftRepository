@@ -189,7 +189,7 @@
   "solar_fragment.fragment": "Ancient Fragment",
   "fragment.lore": "Across the world where ancient civilizations lived their notes can still be found. Can be used to acquire hidden information.",
   "solar_fragment.lexicon": "Solar Lexicon",
-  "lexicon.lore": "This book is a \"guide\" to SolarCraft mod. Collect fragments and put them inside to open new information. If you have lost the book somehow, you can use /solarcraft fragments command to retrieve the lost fragments. ",
+  "lexicon.lore": "This book is a \"guide\" to SolarCraft mod. Collect fragments and put them inside to open new information. If you have lost the book somehow, you can use /solarcraft fragments command to retrieve the lost fragments. To move inside use arrows.",
   "solar_fragment.wand": "Solar Wand",
   "wand.lore": "This the main tool in your adventures. Can be used in various situations.",
   "solar_fragment.solar_dust": "Solar dust",

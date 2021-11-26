@@ -104,7 +104,9 @@ class RuneSlot extends Slot{
                 (item == ItemsRegister.SOLAR_RUNE_TERA.get()) ||
                 (item == ItemsRegister.SOLAR_RUNE_URBA.get()) ||
                 (item == ItemsRegister.SOLAR_RUNE_KELDA.get()) ||
-                (item == ItemsRegister.SOLAR_RUNE_FIRA.get());
+                (item == ItemsRegister.SOLAR_RUNE_FIRA.get()) ||
+                (item == ItemsRegister.SOLAR_RUNE_GIRO.get()) ||
+                (item == ItemsRegister.SOLAR_RUNE_ULTIMA.get());
     }
 }
 class FragmentSlot extends Slot{

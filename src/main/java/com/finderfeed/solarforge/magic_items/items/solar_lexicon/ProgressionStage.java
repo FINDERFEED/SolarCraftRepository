@@ -8,7 +8,8 @@ import javax.annotation.Nullable;
 
 
 public enum ProgressionStage {
-    BEGGINING(null,"beggining",Progression.ENTER_NETHER,Progression.RUNE_ENERGY_PYLON,Progression.FIND_INCINERATED_FOREST),
+    PRE_BEGGINING(null,"pre_beggining",Progression.ENTER_NETHER),
+    BEGGINING(PRE_BEGGINING,"beggining",Progression.RUNE_ENERGY_PYLON,Progression.FIND_INCINERATED_FOREST),
     BEGGINING_2(BEGGINING,"beggining_2",Progression.ENTER_END,Progression.INFUSING_CRAFTING_TABLE),
     PRE_FORGE(BEGGINING_2,"pre_forge",Progression.KILL_DRAGON,Progression.ALL_ENERGY_TYPES,Progression.RUNE_ENERGY_CLAIM),
     FORGE(PRE_FORGE,"pre_infuser",Progression.CRAFT_SOLAR_FORGE),
