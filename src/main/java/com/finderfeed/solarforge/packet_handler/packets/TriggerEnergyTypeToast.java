@@ -1,16 +1,7 @@
 package com.finderfeed.solarforge.packet_handler.packets;
-
 import com.finderfeed.solarforge.ClientHelpers;
-import com.finderfeed.solarforge.client.toasts.SolarAchievementToast;
-import com.finderfeed.solarforge.client.toasts.UnlockedEnergyTypeToast;
-import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.achievement_tree.AchievementTree;
-import com.finderfeed.solarforge.misc_things.RunicEnergy;
-import com.finderfeed.solarforge.registries.sounds.Sounds;
-import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.fmllegacy.network.NetworkEvent;
+import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;
 

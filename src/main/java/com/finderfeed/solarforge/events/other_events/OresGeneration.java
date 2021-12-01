@@ -7,16 +7,21 @@ import com.finderfeed.solarforge.world_generation.structures.SolarForgeStructure
 import com.finderfeed.solarforge.world_generation.structures.SolarForgeStructures;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.FlatLevelSource;
 import net.minecraft.world.level.levelgen.GenerationStep;
 
 import net.minecraft.world.level.levelgen.VerticalAnchor;
 import net.minecraft.world.level.levelgen.feature.StructureFeature;
-import net.minecraft.world.level.levelgen.placement.FeatureDecorator;
-import net.minecraft.world.level.levelgen.feature.configurations.RangeDecoratorConfiguration;
+
+
 import net.minecraft.world.level.levelgen.StructureSettings;
 import net.minecraft.world.level.levelgen.feature.configurations.StructureFeatureConfiguration;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.levelgen.placement.HeightRangePlacement;
+import net.minecraft.world.level.levelgen.structure.templatesystem.RuleTest;
+import net.minecraft.world.level.levelgen.structure.templatesystem.TagMatchTest;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -34,15 +39,18 @@ public class OresGeneration {
     @SubscribeEvent
     public static void genOres(final BiomeLoadingEvent event){
 
-
+//.rangeUniform(VerticalAnchor.bottom(),VerticalAnchor.absolute(30)).squared().count(10)
         if (!event.getCategory().equals(Biome.BiomeCategory.NETHER) && !event.getCategory().equals(Biome.BiomeCategory.THEEND) && notNone(event)){
             event.getGeneration().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES,
-                    Feature.ORE.configured(new OreConfiguration(OreConfiguration.Predicates.NATURAL_STONE, SolarForge.SOLAR_ORE.get().defaultBlockState(),4))
-                            .rangeUniform(VerticalAnchor.bottom(),VerticalAnchor.absolute(30)).squared().count(10));
+                    Feature.ORE.configured(new OreConfiguration(new TagMatchTest(Tags.Blocks.STONE), SolarForge.SOLAR_ORE.get().defaultBlockState(),4)).placed(
+                            HeightRangePlacement.uniform(VerticalAnchor.absolute(5),VerticalAnchor.absolute(30))
+                    ));
         }
+//        .rangeUniform(VerticalAnchor.bottom(),VerticalAnchor.absolute(80)).squared().count(7)
         if (!event.getCategory().equals(Biome.BiomeCategory.NETHER) && !event.getCategory().equals(Biome.BiomeCategory.THEEND) && notNone(event)){
-            event.getGeneration().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, Feature.ORE.configured(new OreConfiguration(OreConfiguration.Predicates.NATURAL_STONE, BlocksRegistry.SOLAR_STONE.get().defaultBlockState(),10))
-                    .rangeUniform(VerticalAnchor.bottom(),VerticalAnchor.absolute(80)).squared().count(7));
+            event.getGeneration().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, Feature.ORE.configured(new OreConfiguration(new TagMatchTest(Tags.Blocks.STONE), BlocksRegistry.SOLAR_STONE.get().defaultBlockState(),10))
+                    .placed(HeightRangePlacement.uniform(VerticalAnchor.bottom(),VerticalAnchor.absolute(80)))
+            );
         }
         if (event.getCategory().equals(Biome.BiomeCategory.DESERT) ) {
             event.getGeneration().getStructures().add(() -> SolarForgeStructureFeatures.CONF_DUNGEON_ONE);
@@ -104,9 +112,9 @@ public class OresGeneration {
              * already added your default structure spacing to some dimensions. You would need to override the spacing with .put(...)
              * And if you want to do dimension blacklisting, you need to remove the spacing entry entirely from the map below to prevent generation safely.
              */
-            Map<StructureFeature<?>, StructureFeatureConfiguration> tempMap = new HashMap<>(serverWorld.getChunkSource().generator.getSettings().structureConfig());
+            Map<StructureFeature<?>, StructureFeatureConfiguration> tempMap = new HashMap<>(serverWorld.getChunkSource().getGenerator().getSettings().structureConfig());
             tempMap.putIfAbsent(SolarForgeStructures.DUNGEON_ONE_KEY_LOCK.get(), StructureSettings.DEFAULTS.get(SolarForgeStructures.DUNGEON_ONE_KEY_LOCK.get()));
-            serverWorld.getChunkSource().generator.getSettings().structureConfig = tempMap;
+            serverWorld.getChunkSource().getGenerator().getSettings().structureConfig = tempMap;
         }
     }
 }

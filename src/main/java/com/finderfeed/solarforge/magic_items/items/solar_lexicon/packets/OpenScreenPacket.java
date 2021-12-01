@@ -3,7 +3,7 @@ package com.finderfeed.solarforge.magic_items.items.solar_lexicon.packets;
 import com.finderfeed.solarforge.misc_things.AbstractPacket;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.screen.InvokeScreenTest;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraftforge.fmllegacy.network.NetworkEvent;
+import net.minecraftforge.network.NetworkEvent;
 
 
 import java.util.function.Supplier;

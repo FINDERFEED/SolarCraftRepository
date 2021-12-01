@@ -2,6 +2,7 @@ package com.finderfeed.solarforge.events.other_events;
 
 
 import com.finderfeed.solarforge.world_generation.structures.charging_station.ChargingStationPieces;
+import com.finderfeed.solarforge.world_generation.structures.crystal_boss_room.CrystalBossRoomStructurePieces;
 import com.finderfeed.solarforge.world_generation.structures.dimensional_shard_structure.DimStructPieces;
 import com.finderfeed.solarforge.world_generation.structures.dungeon_one_key_lock.DungeonOnePieces;
 import com.finderfeed.solarforge.world_generation.structures.magician_tower.MagicianTowerPieces;
@@ -19,12 +20,13 @@ import net.minecraftforge.registries.IForgeRegistry;
 public class FeatureInit {
 
 
+
     public static StructurePieceType DUNGEON_ONE_PIECE_TEST = DungeonOnePieces.Piece::new;
     public static StructurePieceType DUNGEON_MAZE_PIECE = MazeStructurePieces.Piece::new;
     public static StructurePieceType CHARGING_PIECE = ChargingStationPieces.Piece::new;
     public static StructurePieceType MAGICIAN_TOWER = MagicianTowerPieces.Piece::new;
     public static StructurePieceType DIMENSIONAL_SHARD_STRUCTURE = DimStructPieces.Piece::new;
-    public static StructurePieceType CRYSTAL_BOSS_ROOM_PIECE = DimStructPieces.Piece::new;
+    public static StructurePieceType CRYSTAL_BOSS_ROOM_PIECE = CrystalBossRoomStructurePieces.Piece::new;
     @SubscribeEvent
     public static void registerFeatures(final RegistryEvent.Register<Feature<?>> event){
         IForgeRegistry<Feature<?>> registry = event.getRegistry();

@@ -17,6 +17,9 @@ public class SolarForgeStructureFeatures {
    public static ConfiguredStructureFeature<?,?> CONF_MAGICIAN_TOWER = SolarForgeStructures.MAGICIAN_TOWER.get().configured(FeatureConfiguration.NONE);
     public static ConfiguredStructureFeature<?,?> CONF_DIM_SHARD_STRUCT = SolarForgeStructures.DIM_SHARD_STRUCTURE.get().configured(FeatureConfiguration.NONE);
     public static ConfiguredStructureFeature<?,?> CONF_CRYSTAL_BOSS_ROOM = SolarForgeStructures.CRYSTAL_BOSS_ROOM.get().configured(FeatureConfiguration.NONE);
+
+
+
     public static void registerConfiguredStructures() {
         Registry<ConfiguredStructureFeature<?, ?>> registry = BuiltinRegistries.CONFIGURED_STRUCTURE_FEATURE;
         Registry.register(registry, new ResourceLocation("solarforge", "configured_dungeon_one"), CONF_DUNGEON_ONE);

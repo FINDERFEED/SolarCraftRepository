@@ -15,6 +15,7 @@ import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.levelgen.structure.StructurePiece;
 import net.minecraft.world.level.levelgen.structure.TemplateStructurePiece;
+import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext;
 import net.minecraft.world.level.levelgen.structure.templatesystem.BlockIgnoreProcessor;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
@@ -63,11 +64,14 @@ public class MagicianTowerPieces {
             super(FeatureInit.MAGICIAN_TOWER, 0, p_163662_, p_163663_, p_163663_.toString(), makeSettings(rot,DUNGEON_PIECE), makePosition(DUNGEON_PIECE,p_163666_,0));
         }
 
-        public Piece( ServerLevel p_163670_, CompoundTag tagCompound) {
-            super(FeatureInit.MAGICIAN_TOWER, tagCompound, p_163670_, (loc)->{
+        public Piece( StructurePieceSerializationContext p_163670_, CompoundTag tagCompound) {
+            super(FeatureInit.MAGICIAN_TOWER, tagCompound, p_163670_.structureManager(), (loc)->{
                 return makeSettings(Rotation.valueOf(tagCompound.getString("Rot")),loc);
             });
         }
+
+
+
         private static StructurePlaceSettings makeSettings(Rotation p_162447_, ResourceLocation p_162448_) {
             return (new StructurePlaceSettings()).setRotation(p_162447_).setMirror(Mirror.NONE).setRotationPivot((BlockPos) new BlockPos(3,5,5)).addProcessor(BlockIgnoreProcessor.STRUCTURE_BLOCK);
         }
@@ -77,7 +81,7 @@ public class MagicianTowerPieces {
         }
 
         @Override
-        protected void addAdditionalSaveData(ServerLevel level,CompoundTag tag) {
+        protected void addAdditionalSaveData(StructurePieceSerializationContext level,CompoundTag tag) {
             super.addAdditionalSaveData(level,tag);
             tag.putString("Rot", this.placeSettings.getRotation().name());
         }

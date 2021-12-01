@@ -7,7 +7,7 @@ import com.finderfeed.solarforge.world_generation.biomes.molten_forest.BurntTree
 import com.finderfeed.solarforge.world_generation.dimension_related.radiant_land.CrystallizedOreVeinFeature;
 import com.finderfeed.solarforge.world_generation.dimension_related.radiant_land.RadiantSmallTreeFoliagePlacer;
 import com.finderfeed.solarforge.world_generation.dimension_related.radiant_land.RadiantTreeFoliagePlacer;
-import net.minecraft.data.worldgen.Features;
+
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.core.Registry;
@@ -18,15 +18,16 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.VerticalAnchor;
-import net.minecraft.world.level.levelgen.feature.blockplacers.SimpleBlockPlacer;
+
 import net.minecraft.world.level.levelgen.feature.configurations.*;
+import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
 import net.minecraft.world.level.levelgen.feature.stateproviders.SimpleStateProvider;
 
 import net.minecraft.world.level.levelgen.feature.foliageplacers.BlobFoliagePlacer;
 
 import net.minecraft.world.level.levelgen.feature.trunkplacers.StraightTrunkPlacer;
 import net.minecraft.world.level.levelgen.heightproviders.UniformHeight;
-import net.minecraft.world.level.levelgen.placement.NoiseCountFactorDecoratorConfiguration;
+
 import net.minecraft.world.level.levelgen.structure.templatesystem.RuleTest;
 import net.minecraft.world.level.levelgen.structure.templatesystem.TagMatchTest;
 import net.minecraftforge.common.ForgeMod;
@@ -41,10 +42,10 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.featuresize.TwoLayersFeatureSize;
-import net.minecraft.world.level.levelgen.placement.ChanceDecoratorConfiguration;
-import net.minecraft.world.level.levelgen.placement.FeatureDecorator;
 
 
+
+//i hate you with every ounce of being mojang!
 public class FeaturesRegistry {
 
     public static final RuleTest END_STONE = new TagMatchTest(Tags.Blocks.END_STONES);
@@ -74,8 +75,10 @@ public class FeaturesRegistry {
 
 
     public static final ConfiguredFeature<?,?> BURNT_BIOME_AMBIENCE_1_CONFIGURED = BURNT_BIOME_AMBIENCE_1
-            .configured(NoneFeatureConfiguration.INSTANCE)
-            .decorated(FeatureDecorator.CHANCE.configured(new ChanceDecoratorConfiguration(4)));
+            .configured(NoneFeatureConfiguration.INSTANCE);
+//            .decorated(FeatureDecorator.CHANCE.configured(new ChanceDecoratorConfiguration(4)
+
+
 
     public static final ConfiguredFeature<?,?> ULDORADIUM_ORE =
             Feature.ORE.configured(new OreConfiguration(OreConfiguration.Predicates.NATURAL_STONE, BlocksRegistry.ULDORADIUM_ORE.get().defaultBlockState(),7))
@@ -102,15 +105,15 @@ public class FeaturesRegistry {
             ENERGY_PYLON_CONFIGURED = ENERGY_PYLON.configured(NoneFeatureConfiguration.INSTANCE).decorated(FeatureDecorator.CHANCE.configured(new ChanceDecoratorConfiguration(200)));
             Registry.register(BuiltinRegistries.CONFIGURED_FEATURE,new ResourceLocation("solarforge","energy_pylon"),ENERGY_PYLON_CONFIGURED);
             RUNIC_TREE_FEATURE = Feature.TREE.configured(new TreeConfiguration.TreeConfigurationBuilder(
-                    new SimpleStateProvider(BlocksRegistry.RUNIC_LOG.get().defaultBlockState()),
+                    BlockStateProvider.simple(BlocksRegistry.RUNIC_LOG.get().defaultBlockState()),
                     new StraightTrunkPlacer(4, 2, 0),
-                    new SimpleStateProvider(BlocksRegistry.RUNIC_LEAVES.get().defaultBlockState()),
-                    new SimpleStateProvider(Blocks.OAK_SAPLING.defaultBlockState()),
+                    BlockStateProvider.simple(BlocksRegistry.RUNIC_LEAVES.get().defaultBlockState()),),
                     new BlobFoliagePlacer(ConstantInt.of(2), ConstantInt.of(0), 3),
                     new TwoLayersFeatureSize(1, 0, 1))
-                    .ignoreVines().build())
-                    .decorated(FeatureDecorator.HEIGHTMAP.configured(new HeightmapConfiguration(Heightmap.Types.WORLD_SURFACE_WG)))
-                    .decorated(FeatureDecorator.CHANCE.configured(new ChanceDecoratorConfiguration(100)));
+                    .ignoreVines().build();
+
+//                    .decorated(FeatureDecorator.HEIGHTMAP.configured(new HeightmapConfiguration(Heightmap.Types.WORLD_SURFACE_WG)))
+//                    .decorated(FeatureDecorator.CHANCE.configured(new ChanceDecoratorConfiguration(100)));
             Registry.register(BuiltinRegistries.CONFIGURED_FEATURE,new ResourceLocation("solarforge","runic_tree"),RUNIC_TREE_FEATURE);
 
             MOLTEN_FOREST_RUINS_CONFIGURED = BURNT_BIOME_AMBIENCE_2.configured(NoneFeatureConfiguration.INSTANCE).decorated(FeatureDecorator.CHANCE.configured(new ChanceDecoratorConfiguration(60)));

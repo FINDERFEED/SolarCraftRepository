@@ -18,7 +18,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.client.model.data.EmptyModelData;
-import net.minecraftforge.fmllegacy.util.ThreeConsumer;
+
 
 import javax.annotation.Nullable;
 

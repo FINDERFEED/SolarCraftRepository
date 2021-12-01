@@ -18,6 +18,7 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.levelgen.structure.IglooPieces;
 import net.minecraft.world.level.levelgen.structure.StructurePiece;
 import net.minecraft.world.level.levelgen.structure.TemplateStructurePiece;
+import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext;
 import net.minecraft.world.level.levelgen.structure.templatesystem.BlockIgnoreProcessor;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
@@ -68,11 +69,13 @@ public class MazeStructurePieces {
             super(FeatureInit.DUNGEON_MAZE_PIECE, 0, templateManagerIn, resourceLocationIn, resourceLocationIn.toString(), makeSettings(rot,DUNGEON_PIECE), makePosition(DUNGEON_PIECE,pos,0));
         }
 
-        public Piece(  ServerLevel p_163670_,CompoundTag tagCompound) {
-            super(FeatureInit.DUNGEON_MAZE_PIECE, tagCompound, p_163670_, (loc)->{
+        public Piece(  StructurePieceSerializationContext p_163670_,CompoundTag tagCompound) {
+            super(FeatureInit.DUNGEON_MAZE_PIECE, tagCompound, p_163670_.structureManager(), (loc)->{
                 return makeSettings(Rotation.valueOf(tagCompound.getString("Rot")),loc);
             });
         }
+
+
 
         private static StructurePlaceSettings makeSettings(Rotation p_162447_, ResourceLocation p_162448_) {
             return (new StructurePlaceSettings()).setRotation(p_162447_).setMirror(Mirror.NONE).setRotationPivot((BlockPos) new BlockPos(3,5,5)).addProcessor(BlockIgnoreProcessor.STRUCTURE_BLOCK);
@@ -83,7 +86,7 @@ public class MazeStructurePieces {
         }
 
         @Override
-        protected void addAdditionalSaveData(ServerLevel level,CompoundTag tag) {
+        protected void addAdditionalSaveData(StructurePieceSerializationContext level,CompoundTag tag) {
             super.addAdditionalSaveData(level,tag);
 //            tag.putString("Template", this.resourceLocation.toString());
             tag.putString("Rot", this.placeSettings.getRotation().name());

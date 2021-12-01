@@ -15,6 +15,7 @@ import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.levelgen.structure.StructurePiece;
 import net.minecraft.world.level.levelgen.structure.TemplateStructurePiece;
+import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext;
 import net.minecraft.world.level.levelgen.structure.templatesystem.BlockIgnoreProcessor;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
@@ -63,11 +64,12 @@ public class ChargingStationPieces {
             super(FeatureInit.CHARGING_PIECE, 0, p_163662_, p_163663_, p_163663_.toString(), makeSettings(rot,p_163663_), makePosition(p_163663_,p_163666_,0));
         }
 
-        public Piece(  ServerLevel p_163670_,CompoundTag tagCompound) {
-            super(FeatureInit.CHARGING_PIECE, tagCompound, p_163670_, (loc)->{
+        public Piece( StructurePieceSerializationContext p_163670_,CompoundTag tagCompound) {
+            super(FeatureInit.CHARGING_PIECE, tagCompound, p_163670_.structureManager(), (loc)->{
                 return makeSettings(Rotation.valueOf(tagCompound.getString("Rot")),loc);
             });
         }
+
 
 
 
@@ -80,7 +82,7 @@ public class ChargingStationPieces {
         }
 
         @Override
-        protected void addAdditionalSaveData(ServerLevel level,CompoundTag tag) {
+        protected void addAdditionalSaveData(StructurePieceSerializationContext level,CompoundTag tag) {
             super.addAdditionalSaveData(level,tag);
 
             tag.putString("Rot", this.placeSettings.getRotation().name());

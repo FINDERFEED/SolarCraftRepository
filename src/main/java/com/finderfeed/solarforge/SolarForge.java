@@ -78,9 +78,11 @@ import net.minecraftforge.common.BiomeManager;
 import net.minecraftforge.common.MinecraftForge;
 
 import net.minecraftforge.common.TierSortingRegistry;
-import net.minecraftforge.common.extensions.IForgeContainerType;
+
+import net.minecraftforge.common.extensions.IForgeMenuType;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
+import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -92,8 +94,8 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.fmllegacy.RegistryObject;
-import net.minecraftforge.fmlserverevents.FMLServerStartingEvent;
+import net.minecraftforge.registries.RegistryObject;
+
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.logging.log4j.LogManager;
@@ -166,8 +168,8 @@ public class SolarForge
     public static final Logger LOGGER = LogManager.getLogger();
     public static final RegistryObject<BlockEntityType<SolarForgeBlockEntity>> SOLAR_FORGE_BLOCKENTITY = TILE_ENTITY_TYPE.register("solar_forge_blockentity",()->
             BlockEntityType.Builder.of(SolarForgeBlockEntity::new,SOLAR_FORGE.get()).build(null));
-    public static final RegistryObject<MenuType<SolarForgeContainer>> SOLAR_FORGE_CONTAINER = CONTAINER_TYPE.register("solarforge_container",()-> IForgeContainerType.create(SolarForgeContainer::new));
-    public static final RegistryObject<MenuType<InfuserContainer>> INFUSING_TABLE_CONTAINER = CONTAINER_TYPE.register("infusing_stand_container",()-> IForgeContainerType.create(InfuserContainer::new));
+    public static final RegistryObject<MenuType<SolarForgeContainer>> SOLAR_FORGE_CONTAINER = CONTAINER_TYPE.register("solarforge_container",()-> IForgeMenuType.create(SolarForgeContainer::new));
+    public static final RegistryObject<MenuType<InfuserContainer>> INFUSING_TABLE_CONTAINER = CONTAINER_TYPE.register("infusing_stand_container",()-> IForgeMenuType.create(InfuserContainer::new));
 
     public static final RecipeType<InfusingCraftingRecipe> INFUSING_CRAFTING_RECIPE_TYPE = new InfusingCraftingRecipeType();
     public static final RecipeType<InfusingRecipe> INFUSING_RECIPE_TYPE = new InfusingRecipeType();
@@ -259,7 +261,7 @@ public class SolarForge
     }
     // You can use SubscribeEvent and let the Event Bus discover methods to call
     @SubscribeEvent
-    public void onServerStarting(FMLServerStartingEvent event) {
+    public void onServerStarting(ServerStartingEvent event) {
         // do something when the server starts
 
     }

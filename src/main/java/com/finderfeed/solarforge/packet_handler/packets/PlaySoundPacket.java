@@ -3,7 +3,8 @@ package com.finderfeed.solarforge.packet_handler.packets;
 import com.finderfeed.solarforge.ClientHelpers;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.core.BlockPos;
-import net.minecraftforge.fmllegacy.network.NetworkEvent;
+
+import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;
 

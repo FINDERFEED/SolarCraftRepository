@@ -4,12 +4,13 @@ import com.finderfeed.solarforge.ClientHelpers;
 import com.finderfeed.solarforge.misc_things.AbstractPacket;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.core.BlockPos;
+import net.minecraftforge.network.NetworkEvent;
 
 
 import java.util.function.Supplier;
 
 
-import net.minecraftforge.fmllegacy.network.NetworkEvent;
+
 
 public class TileEnergyGeneratorUpdate extends AbstractPacket {
 

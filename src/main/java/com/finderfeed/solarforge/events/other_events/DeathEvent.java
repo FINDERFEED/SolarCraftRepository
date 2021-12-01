@@ -15,7 +15,8 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fmllegacy.network.NetworkDirection;
+
+import net.minecraftforge.network.NetworkDirection;
 
 
 @Mod.EventBusSubscriber(modid = "solarforge",bus = Mod.EventBusSubscriber.Bus.FORGE)

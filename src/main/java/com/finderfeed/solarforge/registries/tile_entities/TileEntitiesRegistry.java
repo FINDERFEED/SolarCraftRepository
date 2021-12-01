@@ -9,7 +9,7 @@ import com.finderfeed.solarforge.world_generation.structures.blocks.tile_entitie
 import com.finderfeed.solarforge.world_generation.structures.blocks.tile_entities.KeyLockStructureTile;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 
-import net.minecraftforge.fmllegacy.RegistryObject;
+import net.minecraftforge.registries.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 

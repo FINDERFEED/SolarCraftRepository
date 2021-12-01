@@ -7,7 +7,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 
 import net.minecraftforge.client.event.ModelRegistryEvent;
-import net.minecraftforge.client.model.ModelLoader;
+
+import net.minecraftforge.client.model.ForgeModelBakery;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
 
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -38,13 +39,13 @@ public class OBJModels {
     public static void registerModels(final ModelRegistryEvent event){
         ModelLoaderRegistry.registerLoader(new ResourceLocation("solarforge","progression_ore_loader"),LOADER);
 
-        ModelLoader.addSpecialModel(CRYSTAL_BOSS);
-        ModelLoader.addSpecialModel(SOLAR_CORE_MODEL);
-        ModelLoader.addSpecialModel(ANCIENT_FRAGMENT_MODEL);
-        ModelLoader.addSpecialModel(HOLE_MODEL);
-        ModelLoader.addSpecialModel(SHIELDING_CRYSTAL_SHIELD);
-        ModelLoader.addSpecialModel(SHIELDING_CRYSTAL);
-        ModelLoader.addSpecialModel(GET_OFF_MEEE);
-        ModelLoader.addSpecialModel(RIP_RAY_GENERATOR);
+        ForgeModelBakery.addSpecialModel(CRYSTAL_BOSS);
+        ForgeModelBakery.addSpecialModel(SOLAR_CORE_MODEL);
+        ForgeModelBakery.addSpecialModel(ANCIENT_FRAGMENT_MODEL);
+        ForgeModelBakery.addSpecialModel(HOLE_MODEL);
+        ForgeModelBakery.addSpecialModel(SHIELDING_CRYSTAL_SHIELD);
+        ForgeModelBakery.addSpecialModel(SHIELDING_CRYSTAL);
+        ForgeModelBakery.addSpecialModel(GET_OFF_MEEE);
+        ForgeModelBakery.addSpecialModel(RIP_RAY_GENERATOR);
     }
 }

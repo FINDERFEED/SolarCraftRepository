@@ -39,7 +39,8 @@ import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraftforge.common.MinecraftForge;
 
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.fmllegacy.network.NetworkDirection;
+
+import net.minecraftforge.network.NetworkDirection;
 
 import java.util.*;
 import java.util.function.Predicate;
