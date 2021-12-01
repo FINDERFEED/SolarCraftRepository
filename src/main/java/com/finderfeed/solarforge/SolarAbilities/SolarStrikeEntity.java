@@ -4,6 +4,7 @@ package com.finderfeed.solarforge.SolarAbilities;
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.config.SolarcraftConfig;
 import com.finderfeed.solarforge.misc_things.ParticlesList;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 
 import net.minecraft.world.entity.PathfinderMob;
@@ -26,9 +27,10 @@ import net.minecraft.world.phys.Vec3;
 
 import net.minecraft.world.level.Level;
 
-import net.minecraftforge.common.util.Constants;
 
-import net.minecraftforge.fmllegacy.network.NetworkHooks;
+
+
+import net.minecraftforge.network.NetworkHooks;
 
 import java.util.List;
 
@@ -133,7 +135,7 @@ public class SolarStrikeEntity extends PathfinderMob {
 
                             if (this.level.getBlockState(pos.offset((int) Math.floor(i), (int) Math.floor(k), (int) Math.floor(g))).getDestroySpeed(this.level,pos.offset((int) Math.floor(i), (int) Math.floor(k), (int) Math.floor(g))) >= 0
                                     && this.level.getBlockState(pos.offset((int) Math.floor(i), (int) Math.floor(k), (int) Math.floor(g))).getDestroySpeed(this.level,pos.offset((int) Math.floor(i), (int) Math.floor(k), (int) Math.floor(g))) <= 100) {
-                                this.level.setBlock(pos.offset((int) Math.floor(i), (int) Math.floor(k), (int) Math.floor(g)), Blocks.AIR.defaultBlockState(), Constants.BlockFlags.DEFAULT);
+                                this.level.setBlock(pos.offset((int) Math.floor(i), (int) Math.floor(k), (int) Math.floor(g)), Blocks.AIR.defaultBlockState(), Block.UPDATE_ALL);
                             }
 
 

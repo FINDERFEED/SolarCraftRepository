@@ -45,8 +45,8 @@ import net.minecraft.network.chat.TextComponent;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.util.Constants;
-import net.minecraftforge.fmllegacy.network.PacketDistributor;
+
+import net.minecraftforge.network.PacketDistributor;
 import org.apache.logging.log4j.core.tools.picocli.CommandLine;
 
 import javax.annotation.Nullable;

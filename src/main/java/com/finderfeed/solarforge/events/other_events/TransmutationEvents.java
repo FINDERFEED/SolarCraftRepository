@@ -13,7 +13,7 @@ import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.util.Constants;
+
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -29,7 +29,7 @@ public class TransmutationEvents {
                 if (event.getPlayer().getCapability(CapabilitySolarMana.SOLAR_MANA_PLAYER).orElseThrow(RuntimeException::new).getMana() >= 0.5) {
                     LevelAccessor world = event.getWorld();
                     BlockPos pos = event.getPos();
-                    event.getWorld().setBlock(event.getPos(), Blocks.AIR.defaultBlockState(), Constants.BlockFlags.DEFAULT);
+                    event.getWorld().setBlock(event.getPos(), Blocks.AIR.defaultBlockState(), 3);
                     world.addFreshEntity(new ExperienceOrb((Level) world, pos.getX(), pos.getY(), pos.getZ(), 10));
                 }
             }

@@ -3,6 +3,7 @@ package com.finderfeed.solarforge.world_generation.structures;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.core.Registry;
 import net.minecraft.data.BuiltinRegistries;
+import net.minecraft.world.level.levelgen.feature.structures.StructureTemplatePool;
 import net.minecraft.world.level.levelgen.flat.FlatLevelGeneratorSettings;
 import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
 import net.minecraft.world.level.levelgen.feature.ConfiguredStructureFeature;
@@ -31,11 +32,11 @@ public class SolarForgeStructureFeatures {
       //  Registry.register(WorldGenRegistries.CONFIGURED_FEATURE,new ResourceLocation("solarforge","flowers"),CONF_FEATURE_TEST.delegate.get());
 
 
-        FlatLevelGeneratorSettings.STRUCTURE_FEATURES.put(SolarForgeStructures.DUNGEON_ONE_KEY_LOCK.get(), CONF_DUNGEON_ONE);
-        FlatLevelGeneratorSettings.STRUCTURE_FEATURES.put(SolarForgeStructures.DUNGEON_MAZE.get(), CONF_DUNGEON_MAZE);
-        FlatLevelGeneratorSettings.STRUCTURE_FEATURES.put(SolarForgeStructures.CHARGING_STATION.get(), CONF_DUNGEON_CHARGING_STATION);
-        FlatLevelGeneratorSettings.STRUCTURE_FEATURES.put(SolarForgeStructures.MAGICIAN_TOWER.get(), CONF_MAGICIAN_TOWER);
-        FlatLevelGeneratorSettings.STRUCTURE_FEATURES.put(SolarForgeStructures.DIM_SHARD_STRUCTURE.get(), CONF_DIM_SHARD_STRUCT);
-        FlatLevelGeneratorSettings.STRUCTURE_FEATURES.put(SolarForgeStructures.CRYSTAL_BOSS_ROOM.get(), CONF_CRYSTAL_BOSS_ROOM);
+//        FlatLevelGeneratorSettings.STRUCTURE_FEATURES.put(SolarForgeStructures.DUNGEON_ONE_KEY_LOCK.get(), CONF_DUNGEON_ONE);
+//        FlatLevelGeneratorSettings.STRUCTURE_FEATURES.put(SolarForgeStructures.DUNGEON_MAZE.get(), CONF_DUNGEON_MAZE);
+//        FlatLevelGeneratorSettings.STRUCTURE_FEATURES.put(SolarForgeStructures.CHARGING_STATION.get(), CONF_DUNGEON_CHARGING_STATION);
+//        FlatLevelGeneratorSettings.STRUCTURE_FEATURES.put(SolarForgeStructures.MAGICIAN_TOWER.get(), CONF_MAGICIAN_TOWER);
+//        FlatLevelGeneratorSettings.STRUCTURE_FEATURES.put(SolarForgeStructures.DIM_SHARD_STRUCTURE.get(), CONF_DIM_SHARD_STRUCT);
+//        FlatLevelGeneratorSettings.STRUCTURE_FEATURES.put(SolarForgeStructures.CRYSTAL_BOSS_ROOM.get(), CONF_CRYSTAL_BOSS_ROOM);
     }
 }

@@ -167,12 +167,12 @@ public class EventHandler {
     @SubscribeEvent
     public static void addFeatures(BiomeLoadingEvent event){
         if ( (event.getCategory() != Biome.BiomeCategory.NETHER) && (event.getCategory() != Biome.BiomeCategory.THEEND) && notNone(event))
-        event.getGeneration().addFeature(GenerationStep.Decoration.LOCAL_MODIFICATIONS, FeaturesRegistry.ENERGY_PYLON_CONFIGURED);
+        event.getGeneration().addFeature(GenerationStep.Decoration.LOCAL_MODIFICATIONS, FeaturesRegistry.ENERGY_PYLON_CONFIGURED_CONF);
         if (event.getCategory() == Biome.BiomeCategory.PLAINS){
             event.getGeneration().addFeature(GenerationStep.Decoration.VEGETAL_DECORATION,FeaturesRegistry.RUNIC_TREE_FEATURE);
         }
         if (event.getCategory() == Biome.BiomeCategory.THEEND){
-            event.getGeneration().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, FeaturesRegistry.ENDER_CRACKS);
+            event.getGeneration().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, FeaturesRegistry.ENDER_CRACKS_CONF);
         }
 
 
