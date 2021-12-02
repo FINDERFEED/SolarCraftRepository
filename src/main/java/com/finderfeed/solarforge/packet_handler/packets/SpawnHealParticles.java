@@ -13,7 +13,8 @@ import net.minecraftforge.fml.DistExecutor;
 
 import java.util.function.Supplier;
 
-import net.minecraftforge.fmllegacy.network.NetworkEvent;
+
+import net.minecraftforge.network.NetworkEvent;
 
 public class SpawnHealParticles extends AbstractPacket {
     public final BlockPos pos1;

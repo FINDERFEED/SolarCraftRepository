@@ -1,13 +1,11 @@
 package com.finderfeed.solarforge.magic_items.blocks.blockentities;
 
 import com.finderfeed.solarforge.Helpers;
-import com.finderfeed.solarforge.magic_items.blocks.solar_forge_block.SolarForgeBlockEntity;
 import com.finderfeed.solarforge.misc_things.ParticlesList;
 import com.finderfeed.solarforge.multiblocks.Multiblocks;
 import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.nbt.CompoundTag;
@@ -52,10 +50,11 @@ public class AuraHealerTile extends BlockEntity  {
     }
 
 
+
     @Override
-    public CompoundTag save(CompoundTag p_189515_1_) {
+    public void saveAdditional(CompoundTag p_189515_1_) {
         p_189515_1_.putInt("heal_tick",HEAL_TICK);
-        return super.save(p_189515_1_);
+
     }
 
     @Override

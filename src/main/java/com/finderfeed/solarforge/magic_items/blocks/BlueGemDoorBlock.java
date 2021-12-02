@@ -15,7 +15,7 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.util.Constants;
+
 
 
 
@@ -43,7 +43,7 @@ public class BlueGemDoorBlock extends GlazedTerracottaBlock {
                 if (!world.getBlockState(pos).getValue(UNLOCKED)) {
                     player.getMainHandItem().grow(-1);
                 }
-                world.setBlock(pos,state.setValue(UNLOCKED,true), Constants.BlockFlags.DEFAULT);
+                world.setBlock(pos,state.setValue(UNLOCKED,true), 3);
                 world.playSound(null,player,Sounds.GEM_INSERT.get(), SoundSource.AMBIENT,1,1);
 
 

@@ -23,7 +23,8 @@ import net.minecraft.nbt.CompoundTag;
 
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.phys.AABB;
-import net.minecraftforge.fmllegacy.network.PacketDistributor;
+import net.minecraftforge.network.PacketDistributor;
+
 
 import java.util.List;
 
@@ -205,14 +206,14 @@ public class RuneEnergyPylonTile extends BlockEntity implements  DebugTarget, Ru
 
 
     @Override
-    public CompoundTag save(CompoundTag nbt) {
+    public void saveAdditional(CompoundTag nbt) {
         if (this.type != null) {
             nbt.putString("energy_type", type.id);
         }
         nbt.putFloat("energy",currentEnergy);
         nbt.putFloat("energy_tick",energyPerTick);
         nbt.putFloat("maxenergy",maxEnergy);
-        return super.save(nbt);
+        super.saveAdditional(nbt);
     }
 
     @Override

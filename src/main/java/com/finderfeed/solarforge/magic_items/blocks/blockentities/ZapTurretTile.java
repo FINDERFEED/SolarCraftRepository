@@ -115,7 +115,9 @@ public class ZapTurretTile extends BlockEntity implements OwnedBlock {
     @Nullable
     @Override
     public ClientboundBlockEntityDataPacket getUpdatePacket() {
-        return new ClientboundBlockEntityDataPacket(worldPosition,3,this.save(new CompoundTag()));
+        CompoundTag tag = new CompoundTag();
+        this.saveAdditional(tag);
+        return Helpers.createTilePacket(this,tag);
     }
 
     @Override
@@ -136,14 +138,14 @@ public class ZapTurretTile extends BlockEntity implements OwnedBlock {
     }
 
     @Override
-    public CompoundTag save(CompoundTag cmp) {
+    public void saveAdditional(CompoundTag cmp) {
         cmp.putInt("list_length",targets.size());
         for (int i = 0;i < targets.size();i++){
             CompoundNBTHelper.writeVec3("vec"+i,targets.get(i),cmp);
         }
         cmp.putBoolean("attack",attack);
         cmp.putInt("attackTick",attackTick);
-        return super.save(cmp);
+        super.saveAdditional(cmp);
     }
 
     @Override

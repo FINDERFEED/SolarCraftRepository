@@ -23,10 +23,11 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.network.NetworkHooks;
 
 import java.util.function.Consumer;
 
-import net.minecraftforge.fmllegacy.network.NetworkHooks;
+
 
 import javax.annotation.Nullable;
 

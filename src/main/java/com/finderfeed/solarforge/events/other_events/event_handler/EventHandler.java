@@ -7,6 +7,7 @@ import com.finderfeed.solarforge.SolarAbilities.Abilities;
 import com.finderfeed.solarforge.SolarAbilities.AbilityClasses.AbstractAbility;
 import com.finderfeed.solarforge.SolarCraftAttributeModifiers;
 import com.finderfeed.solarforge.SolarForge;
+import com.finderfeed.solarforge.commands.ServerStartEvent;
 import com.finderfeed.solarforge.events.my_events.ProgressionUnlockEvent;
 import com.finderfeed.solarforge.for_future_library.OwnedBlock;
 import com.finderfeed.solarforge.for_future_library.helpers.FinderfeedMathHelper;
@@ -23,6 +24,10 @@ import com.finderfeed.solarforge.registries.effects.EffectsRegister;
 import com.finderfeed.solarforge.registries.items.ItemsRegister;
 import com.finderfeed.solarforge.registries.sounds.Sounds;
 import com.finderfeed.solarforge.world_generation.features.FeaturesRegistry;
+import com.finderfeed.solarforge.world_generation.structures.SolarForgeStructureFeatures;
+import com.finderfeed.solarforge.world_generation.structures.SolarForgeStructures;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableMultimap;
 import net.minecraft.core.Registry;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceKey;
@@ -35,6 +40,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.boss.enderdragon.EnderDragon;
 import net.minecraft.world.entity.boss.wither.WitherBoss;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -48,18 +54,23 @@ import net.minecraft.network.chat.TextComponent;
 import net.minecraft.ChatFormatting;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.levelgen.GenerationStep;
+import net.minecraft.world.level.levelgen.StructureSettings;
+import net.minecraft.world.level.levelgen.feature.ConfiguredStructureFeature;
+import net.minecraft.world.level.levelgen.feature.StructureFeature;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerXpEvent;
+import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import java.util.List;
+import java.util.Set;
 
 
 @Mod.EventBusSubscriber(modid = "solarforge",bus = Mod.EventBusSubscriber.Bus.FORGE)
@@ -81,6 +92,29 @@ public class EventHandler {
                 }
             }
         }
+    }
+
+    //TODO:do all structures
+    @SubscribeEvent
+    public static void addStructures(ServerStartingEvent event){
+        StructureSettings s = event.getServer().getLevel(Level.OVERWORLD).getChunkSource().getGenerator().getSettings();
+        ImmutableMap.Builder<StructureFeature<?>, ImmutableMultimap<ConfiguredStructureFeature<?, ?>, ResourceKey<Biome>>> map = ImmutableMap.builder();
+        s.configuredStructures.forEach(map::put);
+        addStructureToBiomes(SolarForgeStructures.DIM_SHARD_STRUCTURE.get(),SolarForgeStructureFeatures.CONF_DIM_SHARD_STRUCT,map, Biomes.JUNGLE);
+
+        s.configuredStructures = map.build();
+    }
+
+    private static void addStructureToBiomes(StructureFeature<?> feature,
+                                             ConfiguredStructureFeature<?,?> configuredStruct,
+                                             ImmutableMap.Builder<StructureFeature<?>, ImmutableMultimap<ConfiguredStructureFeature<?, ?>, ResourceKey<Biome>>> map,
+                                             ResourceKey<Biome>... biomes){
+
+        ImmutableMultimap.Builder<ConfiguredStructureFeature<?,?>,ResourceKey<Biome>> secondMap = ImmutableMultimap.builder();
+        for (ResourceKey<Biome> key : biomes){
+            secondMap.put(configuredStruct,key);
+        }
+        map.put(feature,secondMap.build());
     }
 
 
@@ -167,12 +201,12 @@ public class EventHandler {
     @SubscribeEvent
     public static void addFeatures(BiomeLoadingEvent event){
         if ( (event.getCategory() != Biome.BiomeCategory.NETHER) && (event.getCategory() != Biome.BiomeCategory.THEEND) && notNone(event))
-        event.getGeneration().addFeature(GenerationStep.Decoration.LOCAL_MODIFICATIONS, FeaturesRegistry.ENERGY_PYLON_CONFIGURED_CONF);
+        event.getGeneration().addFeature(GenerationStep.Decoration.LOCAL_MODIFICATIONS, FeaturesRegistry.ENERGY_PYLON_CONFIGURED);
         if (event.getCategory() == Biome.BiomeCategory.PLAINS){
             event.getGeneration().addFeature(GenerationStep.Decoration.VEGETAL_DECORATION,FeaturesRegistry.RUNIC_TREE_FEATURE);
         }
         if (event.getCategory() == Biome.BiomeCategory.THEEND){
-            event.getGeneration().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, FeaturesRegistry.ENDER_CRACKS_CONF);
+            event.getGeneration().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, FeaturesRegistry.ENDER_CRACKS);
         }
 
 

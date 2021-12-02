@@ -202,7 +202,7 @@ public class InfusingTableTile extends BlockEntity implements OwnedBlock {
     @Nullable
     @Override
     public ClientboundBlockEntityDataPacket getUpdatePacket() {
-        return new ClientboundBlockEntityDataPacket(worldPosition,3,this.saveW(new CompoundTag()));
+        return Helpers.createTilePacket(this,this.saveW(new CompoundTag()));
     }
 
     @Override
@@ -211,12 +211,12 @@ public class InfusingTableTile extends BlockEntity implements OwnedBlock {
     }
 
     @Override
-    public CompoundTag save(CompoundTag tag) {
+    public void saveAdditional(CompoundTag tag) {
         tag.putBoolean("recipe",recipeTrigerred);
         tag.putInt("time",recipeTime);
         tag.putUUID("tileowner", owner);
 
-        return super.save(tag);
+
     }
 
     @Override
@@ -236,7 +236,8 @@ public class InfusingTableTile extends BlockEntity implements OwnedBlock {
         tag.putInt("remainingRecipeTime", remainingRecipeTime);
         tag.putBoolean("recipe",recipeTrigerred);
         tag.putInt("time",recipeTime);
-        return super.save(tag);
+        super.saveAdditional(tag);
+        return tag;
     }
 
     public void loadW(CompoundTag tag) {

@@ -55,13 +55,13 @@ public class RunicTableTileEntity extends RandomizableContainerBlockEntity {
     }
 
     @Override
-    public CompoundTag save(CompoundTag cmp){
-        super.save(cmp);
+    public void saveAdditional(CompoundTag cmp){
+        super.saveAdditional(cmp);
 
         if (!this.trySaveLootTable(cmp)) {
             ContainerHelper.saveAllItems(cmp, this.items);
         }
-        return cmp;
+
     }
 
     @Override

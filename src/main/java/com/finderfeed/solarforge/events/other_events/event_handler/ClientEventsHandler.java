@@ -24,7 +24,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.RenderWorldLastEvent;
+import net.minecraftforge.client.event.RenderLevelLastEvent;
+
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
@@ -103,8 +104,8 @@ public class ClientEventsHandler {
 
 
     @SubscribeEvent
-    public static void renderList(RenderWorldLastEvent event){
-        PoseStack stack = event.getMatrixStack();
+    public static void renderList(RenderLevelLastEvent event){
+        PoseStack stack = event.getPoseStack();
         if (!ORES_RENDER_POSITIONS.isEmpty()){
             Camera cam = Minecraft.getInstance().gameRenderer.getMainCamera();
 

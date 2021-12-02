@@ -57,10 +57,10 @@ public abstract class AbstractRunicEnergyContainer extends BlockEntity implement
     }
 
     @Override
-    public CompoundTag save(CompoundTag tag) {
+    public void saveAdditional(CompoundTag tag) {
         saveRunicEnergy(tag);
         tag.putUUID("tileowner",getOwner());
-        return super.save(tag);
+        super.saveAdditional(tag);
     }
 
     @Override
@@ -164,7 +164,8 @@ public abstract class AbstractRunicEnergyContainer extends BlockEntity implement
     public ClientboundBlockEntityDataPacket getUpdatePacket() {
         CompoundTag cmp = new CompoundTag();
         CompoundNBTHelper.writeBlockPosList("posclient",nullOrGiverPositionForClient,cmp);
-        return new ClientboundBlockEntityDataPacket(worldPosition,3,cmp);
+
+        return ClientboundBlockEntityDataPacket.create(this,(tile)->{return cmp;});
     }
 
     @Override

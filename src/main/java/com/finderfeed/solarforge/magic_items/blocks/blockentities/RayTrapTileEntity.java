@@ -20,8 +20,8 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.core.Direction;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraftforge.network.PacketDistributor;
 
-import net.minecraftforge.fmllegacy.network.PacketDistributor;
 
 import java.util.List;
 

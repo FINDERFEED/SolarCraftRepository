@@ -48,9 +48,9 @@ public class KeyDefenderTile extends AbstractStructureBlockentity {
     }
 
     @Override
-    public CompoundTag save(CompoundTag p_189515_1_) {
+    public void saveAdditional(CompoundTag p_189515_1_) {
         p_189515_1_.putBoolean("activated",activated);
-        return super.save(p_189515_1_);
+        super.saveAdditional(p_189515_1_);
     }
 
     @Override

@@ -24,7 +24,8 @@ import net.minecraft.world.level.Level;
 import javax.annotation.Nullable;
 
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
-import net.minecraftforge.fmllegacy.network.NetworkHooks;
+import net.minecraftforge.network.NetworkHooks;
+
 
 public class SolarEnergyFurnace extends GlazedTerracottaBlock implements EntityBlock {
 

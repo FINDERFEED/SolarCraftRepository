@@ -26,7 +26,7 @@ import net.minecraft.world.level.Level;
 
 import javax.annotation.Nullable;
 
-import net.minecraftforge.common.util.Constants;
+
 
 public class ColdStarInfuser extends Block implements EntityBlock {
 
@@ -54,7 +54,7 @@ public class ColdStarInfuser extends Block implements EntityBlock {
                 if (state != starredState) {
                     if (player.getItemInHand(hand).getItem() == Items.NETHER_STAR){
                         player.getItemInHand(hand).grow(-1);
-                        world.setBlock(pos,starredState, Constants.BlockFlags.DEFAULT);
+                        world.setBlock(pos,starredState,3);
                     }
                 } else {
                     if (player.getItemInHand(hand).getItem() == ItemsRegister.COLD_STAR_PIECE.get()){

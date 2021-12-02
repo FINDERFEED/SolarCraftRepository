@@ -13,8 +13,8 @@ import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.network.NetworkHooks;
 
-import net.minecraftforge.fmllegacy.network.NetworkHooks;
 
 import java.util.function.Consumer;
 

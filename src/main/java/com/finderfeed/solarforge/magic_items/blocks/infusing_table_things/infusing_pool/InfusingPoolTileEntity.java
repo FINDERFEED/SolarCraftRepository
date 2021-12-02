@@ -1,5 +1,6 @@
 package com.finderfeed.solarforge.magic_items.blocks.infusing_table_things.infusing_pool;
 
+import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
 import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
 import net.minecraft.core.BlockPos;
@@ -18,7 +19,8 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraftforge.fmllegacy.network.PacketDistributor;
+import net.minecraftforge.network.PacketDistributor;
+
 
 import javax.annotation.Nullable;
 
@@ -62,13 +64,13 @@ public class InfusingPoolTileEntity extends RandomizableContainerBlockEntity  {
 
 
     @Override
-    public CompoundTag save(CompoundTag cmp){
-        super.save(cmp);
+    public void saveAdditional(CompoundTag cmp){
+        super.saveAdditional(cmp);
 
         if (!this.trySaveLootTable(cmp)) {
             ContainerHelper.saveAllItems(cmp, this.items);
         }
-        return cmp;
+
     }
 
     @Override
@@ -103,9 +105,9 @@ public class InfusingPoolTileEntity extends RandomizableContainerBlockEntity  {
     public ClientboundBlockEntityDataPacket getUpdatePacket() {
 
         CompoundTag tag = new CompoundTag();
-        this.save(tag);
+        this.saveAdditional(tag);
 
 
-        return new ClientboundBlockEntityDataPacket(worldPosition,3,tag);
+        return Helpers.createTilePacket(this,tag);
     }
 }

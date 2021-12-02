@@ -24,7 +24,8 @@ import net.minecraft.world.level.Level;
 import java.util.function.Consumer;
 
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
-import net.minecraftforge.fmllegacy.network.NetworkHooks;
+import net.minecraftforge.network.NetworkHooks;
+
 
 import javax.annotation.Nullable;
 
@@ -68,8 +69,8 @@ public class SolarForgeBlock extends Block implements EntityBlock {
                 NetworkHooks.openGui((ServerPlayer) user, (SolarForgeBlockEntity) entity, cons);
 
 
-                     };
-            }
+            };
+        }
 
 
         return super.use(state, world, pos, user, hand, rayTraceResult);

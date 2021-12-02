@@ -8,7 +8,8 @@ import net.minecraft.core.BlockPos;
 
 import java.util.function.Supplier;
 
-import net.minecraftforge.fmllegacy.network.NetworkEvent;
+
+import net.minecraftforge.network.NetworkEvent;
 
 public class RepeaterParentUpdateOnClient extends AbstractPacket {
 

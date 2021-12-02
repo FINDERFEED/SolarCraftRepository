@@ -8,7 +8,7 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.util.Constants;
+
 
 import net.minecraft.world.item.Item.Properties;
 
@@ -53,7 +53,7 @@ public class VoidBlockWand extends Item {
                         for (int z = zm; z <= zmax; z++) {
                             if (mode == 1) {
                                 if (world.getBlockState(new BlockPos(x, y, z)).getBlock() == Blocks.AIR) {
-                                    world.setBlock(new BlockPos(x, y, z), Blocks.STRUCTURE_VOID.defaultBlockState(), Constants.BlockFlags.DEFAULT);
+                                    world.setBlock(new BlockPos(x, y, z), Blocks.STRUCTURE_VOID.defaultBlockState(), 3);
 
                                 }
                             } else if (mode == 2) {
@@ -62,7 +62,7 @@ public class VoidBlockWand extends Item {
 
                                 //}
                             }else if (mode == 3){
-                                    world.setBlock(new BlockPos(x, y, z), state, Constants.BlockFlags.DEFAULT);
+                                    world.setBlock(new BlockPos(x, y, z), state, 3);
 
 
 

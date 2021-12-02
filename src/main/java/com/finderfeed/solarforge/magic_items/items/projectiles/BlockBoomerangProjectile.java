@@ -26,9 +26,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.util.Constants;
 
-import net.minecraftforge.fmllegacy.network.NetworkHooks;
 
 import java.util.UUID;
 
@@ -93,9 +91,9 @@ public class BlockBoomerangProjectile extends AbstractHurtingProjectile {
             this.noPhysics = true;
 
             if (level.getBlockState(pos).getBlock() == Blocks.AIR){
-                level.setBlock(pos,blockToPlace.defaultBlockState(), Constants.BlockFlags.DEFAULT);
+                level.setBlock(pos,blockToPlace.defaultBlockState(), 3);
             }else{
-                level.setBlock(pos.above(),blockToPlace.defaultBlockState(), Constants.BlockFlags.DEFAULT);
+                level.setBlock(pos.above(),blockToPlace.defaultBlockState(), 3);
             }
 
 

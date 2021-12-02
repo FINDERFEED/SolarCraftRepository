@@ -71,8 +71,8 @@ public class SolarEnergyFurnaceTile extends RandomizableContainerBlockEntity imp
         return items.size();
     }
     @Override
-    public CompoundTag save(CompoundTag cmp){
-        super.save(cmp);
+    public void saveAdditional(CompoundTag cmp){
+        super.saveAdditional(cmp);
         cmp.putInt("solar_energy",SOLAR_ENERGY_LEVEL);
         cmp.putInt("recipe_time",RECIPE_PROGRESS);
         cmp.putInt("max_recipe_time",MAX_RECIPE_TIME);
@@ -80,7 +80,7 @@ public class SolarEnergyFurnaceTile extends RandomizableContainerBlockEntity imp
         if (!this.trySaveLootTable(cmp)) {
             ContainerHelper.saveAllItems(cmp, this.items);
         }
-        return cmp;
+
     }
     @Override
     public void load( CompoundTag cmp) {

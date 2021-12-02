@@ -16,7 +16,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.core.BlockPos;
 
-import net.minecraftforge.fmllegacy.network.PacketDistributor;
+
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -82,7 +82,11 @@ public abstract class AbstractSolarCore extends BlockEntity implements IBindable
     @Nullable
     @Override
     public ClientboundBlockEntityDataPacket getUpdatePacket() {
-        return new ClientboundBlockEntityDataPacket(this.worldPosition,3,this.save(new CompoundTag()));
+
+        CompoundTag tag = new CompoundTag();
+        saveAdditional(tag);
+
+        return Helpers.createTilePacket(this,tag);
     }
 
     @Override
@@ -102,7 +106,7 @@ public abstract class AbstractSolarCore extends BlockEntity implements IBindable
     }
 
     @Override
-    public CompoundTag save(CompoundTag p_189515_1_) {
+    public void saveAdditional(CompoundTag p_189515_1_) {
 //        p_189515_1_.putInt("sizepos",count);
 //        for (int i = 0;i<poslist.size();i++) {
 //            p_189515_1_.putInt("xpos"+i, poslist.get(i).getX());
@@ -111,7 +115,7 @@ public abstract class AbstractSolarCore extends BlockEntity implements IBindable
 //        }
         this.poslist = CompoundNBTHelper.getBlockPosList("positions",p_189515_1_);
         p_189515_1_.putInt("energy_level",energy);
-        return super.save(p_189515_1_);
+        super.saveAdditional(p_189515_1_);
     }
 
 

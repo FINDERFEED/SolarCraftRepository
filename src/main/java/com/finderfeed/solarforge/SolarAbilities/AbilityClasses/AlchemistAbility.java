@@ -5,7 +5,8 @@ import com.finderfeed.solarforge.packet_handler.packets.ToggleAlchemistPacket;
 import com.finderfeed.solarforge.registries.abilities.AbilitiesRegistry;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraftforge.fmllegacy.network.NetworkDirection;
+import net.minecraftforge.network.NetworkDirection;
+
 
 public class AlchemistAbility extends ToggleableAbility{
     public AlchemistAbility() {

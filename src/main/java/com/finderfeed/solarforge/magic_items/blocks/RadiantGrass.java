@@ -6,7 +6,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.levelgen.feature.AbstractFlowerFeature;
+
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
 
@@ -58,8 +58,8 @@ public class RadiantGrass extends NormalGrassBlock {
             }
         }
     }
-    private static <U extends FeatureConfiguration> BlockState getBlockStatem(Random p_153318_, BlockPos p_153319_, ConfiguredFeature<U, ?> p_153320_) {
-        AbstractFlowerFeature<U> var3 = (AbstractFlowerFeature)p_153320_.feature;
-        return var3.getRandomFlower(p_153318_, p_153319_, p_153320_.config());
-    }
+//    private static <U extends FeatureConfiguration> BlockState getBlockStatem(Random p_153318_, BlockPos p_153319_, ConfiguredFeature<U, ?> p_153320_) {
+//        AbstractFlowerFeature<U> var3 = (AbstractFlowerFeature)p_153320_.feature;
+//        return var3.getRandomFlower(p_153318_, p_153319_, p_153320_.config());
+//    }
 }

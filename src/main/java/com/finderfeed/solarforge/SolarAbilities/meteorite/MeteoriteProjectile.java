@@ -19,8 +19,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.level.Explosion;
 
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.util.Constants;
-import net.minecraftforge.fmllegacy.network.NetworkHooks;
+import net.minecraftforge.network.NetworkHooks;
 
 
 public class MeteoriteProjectile extends AbstractHurtingProjectile {
@@ -54,11 +53,11 @@ public class MeteoriteProjectile extends AbstractHurtingProjectile {
                             if (this.level.random.nextFloat() < 0.8){
 
                                     if (this.level.getBlockState(pos).getDestroySpeed(this.level,pos) >= 0 && this.level.getBlockState(pos).getDestroySpeed(this.level,pos) <= 100){
-                                        this.level.setBlock(pos,Blocks.OBSIDIAN.defaultBlockState(), Constants.BlockFlags.DEFAULT);
+                                        this.level.setBlock(pos,Blocks.OBSIDIAN.defaultBlockState(), 3);
                                     }
                                 }else{
                                 if (this.level.getBlockState(pos).getDestroySpeed(this.level,pos) >= 0 && this.level.getBlockState(pos).getDestroySpeed(this.level,pos) <= 100){
-                                    this.level.setBlock(pos,Blocks.MAGMA_BLOCK.defaultBlockState(), Constants.BlockFlags.DEFAULT);
+                                    this.level.setBlock(pos,Blocks.MAGMA_BLOCK.defaultBlockState(), 3);
                                 }
                             }
                         }

@@ -13,11 +13,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.levelgen.feature.StructurePieceType;
-import net.minecraft.world.level.levelgen.structure.BoundingBox;
+import net.minecraft.world.level.levelgen.structure.*;
 import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraft.world.level.levelgen.structure.IglooPieces;
-import net.minecraft.world.level.levelgen.structure.StructurePiece;
-import net.minecraft.world.level.levelgen.structure.TemplateStructurePiece;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext;
 import net.minecraft.world.level.levelgen.structure.templatesystem.BlockIgnoreProcessor;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
@@ -40,7 +37,7 @@ public class MazeStructurePieces {
     /*
      * Begins assembling your structure and where the pieces needs to go.
      */
-    public static void start(StructureManager templateManager, BlockPos pos, Rotation rotation, List<StructurePiece> pieceList, Random random) {
+    public static void start(StructureManager templateManager, BlockPos pos, Rotation rotation, StructurePieceAccessor pieceList, Random random) {
         int x = pos.getX();
         int z = pos.getZ();
 
@@ -54,7 +51,7 @@ public class MazeStructurePieces {
         // Lots of trial and error may be needed to get this right for your structure.
         BlockPos rotationOffSet = new BlockPos(0, 0, 0).rotate(rotation);
         BlockPos blockpos = rotationOffSet.offset(x, pos.getY()-50, z);
-        pieceList.add(new MazeStructurePieces.Piece(templateManager, DUNGEON_PIECE, rotation,blockpos));
+        pieceList.addPiece(new MazeStructurePieces.Piece(templateManager, DUNGEON_PIECE, rotation,blockpos));
     }
 
     /*

@@ -57,10 +57,10 @@ public abstract class AbstractRunicEnergyContainerRCBE extends RandomizableConta
     }
 
     @Override
-    public CompoundTag save(CompoundTag tag) {
+    public void saveAdditional(CompoundTag tag) {
         saveRunicEnergy(tag);
         tag.putUUID("tileowner",getOwner());
-        return super.save(tag);
+        super.saveAdditional(tag);
     }
 
     @Override
@@ -165,7 +165,7 @@ public abstract class AbstractRunicEnergyContainerRCBE extends RandomizableConta
     public ClientboundBlockEntityDataPacket getUpdatePacket() {
         CompoundTag cmp = new CompoundTag();
         CompoundNBTHelper.writeBlockPosList("posclient",nullOrGiverPositionForClient,cmp);
-        return new ClientboundBlockEntityDataPacket(worldPosition,3,cmp);
+        return Helpers.createTilePacket(this,cmp);
     }
 
     @Override

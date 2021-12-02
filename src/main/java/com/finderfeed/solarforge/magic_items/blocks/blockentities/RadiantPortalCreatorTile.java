@@ -21,7 +21,7 @@ import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.portal.PortalInfo;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.util.Constants;
+
 import net.minecraftforge.common.util.ITeleporter;
 
 import javax.annotation.Nullable;
@@ -109,7 +109,7 @@ class RadiantTeleporter implements ITeleporter {
         }else{
             pos = BlockPos.ZERO;
         }
-        destWorld.getChunkAt(pos).markUnsaved();
+        destWorld.getChunkAt(pos).setUnsaved(true);
         return this.isVanilla() ? defaultPortalInfo.apply(destWorld) :
                 new PortalInfo(new Vec3(pos.getX(),destWorld.getHeight(Heightmap.Types.WORLD_SURFACE,pos.getX(),pos.getZ()),pos.getZ()),
                         Vec3.ZERO,

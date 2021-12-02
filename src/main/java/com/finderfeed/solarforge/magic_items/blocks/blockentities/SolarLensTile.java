@@ -99,11 +99,11 @@ public class SolarLensTile extends BlockEntity  {
 
 
     @Override
-    public CompoundTag save(CompoundTag cmp) {
+    public void saveAdditional(CompoundTag cmp) {
             cmp.putInt("smelting_time",SMELTING_TIME);
             cmp.putInt("smelting_time_current",CURRENT_SMELTING_TIME);
             cmp.putBoolean("recipe_in_progress",RECIPE_IN_PROGRESS);
-        return super.save(cmp);
+            super.saveAdditional(cmp);
     }
 
     @Override

@@ -52,27 +52,27 @@ public class OresGeneration {
                     .placed(HeightRangePlacement.uniform(VerticalAnchor.bottom(),VerticalAnchor.absolute(80)))
             );
         }
-        if (event.getCategory().equals(Biome.BiomeCategory.DESERT) ) {
-            event.getGeneration().getStructures().add(() -> SolarForgeStructureFeatures.CONF_DUNGEON_ONE);
-        }
-        if (event.getCategory().equals(Biome.BiomeCategory.SAVANNA) || event.getCategory().equals(Biome.BiomeCategory.MESA)) {
-            event.getGeneration().getStructures().add(() -> SolarForgeStructureFeatures.CONF_DUNGEON_MAZE);
-        }
-
-        if (event.getCategory().equals(Biome.BiomeCategory.PLAINS) || event.getCategory().equals(Biome.BiomeCategory.EXTREME_HILLS)) {
-            event.getGeneration().getStructures().add(() -> SolarForgeStructureFeatures.CONF_DUNGEON_CHARGING_STATION);
-        }
-
-        if (event.getCategory().equals(Biome.BiomeCategory.DESERT)) {
-            event.getGeneration().addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ConfiguredFeatures.SOLAR_FLOWER_FEATURE);
-        }
-        if (event.getCategory().equals(Biome.BiomeCategory.EXTREME_HILLS) ) {
-            event.getGeneration().getStructures().add(() -> SolarForgeStructureFeatures.CONF_MAGICIAN_TOWER);
-        }
-
-        if (event.getCategory().equals(Biome.BiomeCategory.JUNGLE) ) {
-            event.getGeneration().getStructures().add(() -> SolarForgeStructureFeatures.CONF_DIM_SHARD_STRUCT);
-        }
+//        if (event.getCategory().equals(Biome.BiomeCategory.DESERT) ) {
+//            event.getGeneration().getStructures().add(() -> SolarForgeStructureFeatures.CONF_DUNGEON_ONE);
+//        }
+//        if (event.getCategory().equals(Biome.BiomeCategory.SAVANNA) || event.getCategory().equals(Biome.BiomeCategory.MESA)) {
+//            event.getGeneration().getStructures().add(() -> SolarForgeStructureFeatures.CONF_DUNGEON_MAZE);
+//        }
+//
+//        if (event.getCategory().equals(Biome.BiomeCategory.PLAINS) || event.getCategory().equals(Biome.BiomeCategory.EXTREME_HILLS)) {
+//            event.getGeneration().getStructures().add(() -> SolarForgeStructureFeatures.CONF_DUNGEON_CHARGING_STATION);
+//        }
+//
+//        if (event.getCategory().equals(Biome.BiomeCategory.DESERT)) {
+//            event.getGeneration().addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ConfiguredFeatures.SOLAR_FLOWER_FEATURE);
+//        }
+//        if (event.getCategory().equals(Biome.BiomeCategory.EXTREME_HILLS) ) {
+//            event.getGeneration().getStructures().add(() -> SolarForgeStructureFeatures.CONF_MAGICIAN_TOWER);
+//        }
+//
+//        if (event.getCategory().equals(Biome.BiomeCategory.JUNGLE) ) {
+//            event.getGeneration().getStructures().add(() -> SolarForgeStructureFeatures.CONF_DIM_SHARD_STRUCT);
+//        }
 
 
     }

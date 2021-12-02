@@ -18,6 +18,8 @@ import com.finderfeed.solarforge.magic_items.items.solar_lexicon.packets.UpdateP
 import com.mojang.blaze3d.vertex.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiComponent;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.tags.Tag;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
@@ -570,6 +572,10 @@ public class Helpers {
             return MAP;
         }
 
+    }
+
+    public static ClientboundBlockEntityDataPacket createTilePacket(BlockEntity tile, CompoundTag tag){
+        return ClientboundBlockEntityDataPacket.create(tile,(til)-> tag);
     }
 
 

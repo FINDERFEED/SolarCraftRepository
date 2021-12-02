@@ -60,10 +60,10 @@ public class TurretTileEntity extends BlockEntity  {
     }
 
     @Override
-    public CompoundTag save(CompoundTag p_189515_1_) {
+    public void saveAdditional(CompoundTag p_189515_1_) {
         p_189515_1_.putInt("turretlevel",turretLevel);
         p_189515_1_.putInt("attack_tick",attackTick);
-        return super.save(p_189515_1_);
+        super.saveAdditional(p_189515_1_);
     }
 
     @Override

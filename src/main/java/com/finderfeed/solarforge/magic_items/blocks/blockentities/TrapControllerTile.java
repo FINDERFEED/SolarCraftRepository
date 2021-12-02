@@ -17,7 +17,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.core.Direction;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.core.BlockPos;
-import net.minecraftforge.common.util.Constants;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -98,11 +98,11 @@ public class TrapControllerTile extends BlockEntity  {
                     if ((tile.level.getBlockState(pos).getBlock() != BlocksRegistry.INVINCIBLE_STONE.get()) || (tile.level.getBlockState(pos).getBlock() != BlocksRegistry.BLUE_GEM_DOOR_BLOCK.get())){
                         if ((!Helpers.equalsBlockPos(pos,tile.worldPosition.offset(8,-4,-1)))
                         && (!Helpers.equalsBlockPos(pos,tile.worldPosition.offset(8,-4,1)))) {
-                            tile.level.setBlock(pos, BlocksRegistry.INVINCIBLE_STONE.get().defaultBlockState(), Constants.BlockFlags.DEFAULT);
+                            tile.level.setBlock(pos, BlocksRegistry.INVINCIBLE_STONE.get().defaultBlockState(), 3);
                         }else {
                             tile.level.setBlock(pos, BlocksRegistry.BLUE_GEM_DOOR_BLOCK.get().defaultBlockState()
                                     .setValue(BlockStateProperties.HORIZONTAL_FACING, Direction.EAST)
-                                    .setValue(BlueGemDoorBlock.UNLOCKED, false), Constants.BlockFlags.DEFAULT);
+                                    .setValue(BlueGemDoorBlock.UNLOCKED, false), 3);
                         }
 
                     }
@@ -157,13 +157,13 @@ public class TrapControllerTile extends BlockEntity  {
 
 
     @Override
-    public CompoundTag save(CompoundTag p_189515_1_) {
+    public void saveAdditional(CompoundTag p_189515_1_) {
         p_189515_1_.putBoolean("activated_",ALREADY_ACTIVATED);
         p_189515_1_.putBoolean("attacking_",IS_ATTACKING_PLAYER);
 
         p_189515_1_.putBoolean("has_already_reset",HAS_ALREADY_RESET);
         p_189515_1_.putInt("attack_ticks",TICKS);
-        return super.save(p_189515_1_);
+        super.saveAdditional(p_189515_1_);
     }
 
     @Override
