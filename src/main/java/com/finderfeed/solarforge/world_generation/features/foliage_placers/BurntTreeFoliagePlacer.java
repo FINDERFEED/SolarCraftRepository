@@ -33,7 +33,7 @@ public class BurntTreeFoliagePlacer extends FoliagePlacer {
 
     @Override
     protected FoliagePlacerType<?> type() {
-        return FoliagePlacerRegistry.BURNT_TREE_FOLIAGE_PLACER_FOLIAGE_PLACER_TYPE.get();
+        return FoliagePlacerRegistry.BURNT_TREE_PLACER;
     }
 
 
@@ -81,6 +81,8 @@ public class BurntTreeFoliagePlacer extends FoliagePlacer {
         }
 
     }
+
+
 
     @Override
     public int foliageHeight(Random p_230374_1_, int p_230374_2_, TreeConfiguration p_230374_3_) {

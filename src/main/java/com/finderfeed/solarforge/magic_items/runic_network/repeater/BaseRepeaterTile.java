@@ -126,7 +126,7 @@ public class BaseRepeaterTile extends BlockEntity {
     public ClientboundBlockEntityDataPacket getUpdatePacket() {
         CompoundTag tag = new CompoundTag();
         CompoundNBTHelper.writeBlockPosList("connections",CONNECTIONS,tag);
-        return new ClientboundBlockEntityDataPacket(worldPosition,3,tag);
+        return Helpers.createTilePacket(this,tag);
     }
 
 

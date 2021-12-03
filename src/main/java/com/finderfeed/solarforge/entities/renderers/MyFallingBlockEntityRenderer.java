@@ -45,7 +45,7 @@ public class MyFallingBlockEntityRenderer extends EntityRenderer<FallingBlockEnt
                 BlockRenderDispatcher blockrenderdispatcher = Minecraft.getInstance().getBlockRenderer();
                 for (net.minecraft.client.renderer.RenderType type : net.minecraft.client.renderer.RenderType.chunkBufferLayers()) {
                     if (ItemBlockRenderTypes.canRenderInLayer(blockstate, type)) {
-                        net.minecraftforge.client.ForgeHooksClient.setRenderLayer(type);
+                        net.minecraftforge.client.ForgeHooksClient.setRenderType(type);
                         blockrenderdispatcher.getModelRenderer().tesselateBlock(level,
                                 blockrenderdispatcher.getBlockModel(blockstate), blockstate, blockpos, matrices, p_114638_.getBuffer(type),
                                 false, new Random(),
@@ -54,7 +54,7 @@ public class MyFallingBlockEntityRenderer extends EntityRenderer<FallingBlockEnt
 
                     }
                 }
-                net.minecraftforge.client.ForgeHooksClient.setRenderLayer(null);
+                net.minecraftforge.client.ForgeHooksClient.setRenderType(null);
                 matrices.popPose();
                 super.render(entity, p_114635_, p_114636_, matrices, p_114638_, p_114639_);
             }

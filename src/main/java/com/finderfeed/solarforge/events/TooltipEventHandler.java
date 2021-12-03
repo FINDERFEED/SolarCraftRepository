@@ -19,8 +19,8 @@ public class TooltipEventHandler {
 
     @SubscribeEvent
     public static void renderTooltips(RenderTooltipEvent.Pre event){
-        if (event.getStack().getItem() instanceof ICustomTooltip tooltip) {
-            RenderingTools.renderTooltipInternal(event.getMatrixStack(), event.getComponents(), event.getX(), event.getY(),tooltip.getTooltip());
+        if (event.getItemStack().getItem() instanceof ICustomTooltip tooltip) {
+            RenderingTools.renderTooltipInternal(event.getPoseStack(), event.getComponents(), event.getX(), event.getY(),tooltip.getTooltip());
             event.setCanceled(true);
         }
     }
@@ -38,7 +38,7 @@ public class TooltipEventHandler {
         int relY = event.getY()-4;
         int sizeX = event.getSizeX()+4;
         int sizeY = event.getSizeY()+4;
-        PoseStack stack = event.getMatrixStack();
+        PoseStack stack = event.getPoseStack();
         CustomTooltip tooltip = event.getTooltip();
         renderTop(stack,tooltip,relX,relY,sizeX,sizeY);
         renderBottom(stack,tooltip,relX,relY,sizeX,sizeY);

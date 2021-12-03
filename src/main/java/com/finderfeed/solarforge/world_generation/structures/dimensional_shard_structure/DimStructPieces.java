@@ -19,6 +19,7 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.levelgen.structure.StructurePiece;
 import net.minecraft.world.level.levelgen.structure.TemplateStructurePiece;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext;
+import net.minecraft.world.level.levelgen.structure.pieces.StructurePiecesBuilder;
 import net.minecraft.world.level.levelgen.structure.templatesystem.BlockIgnoreProcessor;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
@@ -38,7 +39,7 @@ public class DimStructPieces {
     /*
      * Begins assembling your structure and where the pieces needs to go.
      */
-    public static void start(StructureManager templateManager, BlockPos pos, Rotation rotation, List<StructurePiece> pieceList, Random random) {
+    public static void start(StructureManager templateManager, BlockPos pos, Rotation rotation, StructurePiecesBuilder pieceList, Random random) {
         int x = pos.getX();
         int z = pos.getZ();
 
@@ -52,7 +53,7 @@ public class DimStructPieces {
         // Lots of trial and error may be needed to get this right for your structure.
         BlockPos rotationOffSet = new BlockPos(0, 0, 0).rotate(rotation);
         BlockPos blockpos = rotationOffSet.offset(x, pos.getY(), z);
-        pieceList.add(new DimStructPieces.Piece(templateManager, DUNGEON_PIECE, rotation, blockpos));
+        pieceList.addPiece(new DimStructPieces.Piece(templateManager, DUNGEON_PIECE, rotation, blockpos));
     }
 
     /*

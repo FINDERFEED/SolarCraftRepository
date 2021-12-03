@@ -29,7 +29,7 @@ public class MyColorEvent extends RenderTooltipEvent.Color {
 
     @Nonnull
     @Override
-    public ItemStack getStack() {
+    public ItemStack getItemStack() {
         throw new RuntimeException("MUDA MUDA MUDA MUDA MUDA");
     }
 }

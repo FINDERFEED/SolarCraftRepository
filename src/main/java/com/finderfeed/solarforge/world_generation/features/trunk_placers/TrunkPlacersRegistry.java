@@ -20,7 +20,7 @@ public class TrunkPlacersRegistry {
         try {
             CONSTRUCTOR = TrunkPlacerType.class.getDeclaredConstructor(Codec.class);
             CONSTRUCTOR.setAccessible(true);
-        } catch (NoSuchMethodException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException();
         }
@@ -31,13 +31,7 @@ public class TrunkPlacersRegistry {
     static {
         try {
             BURNT_TREE_TRUNK_PLACER_TRUNK_PLACER_TYPE = CONSTRUCTOR.newInstance(BurntTreeTrunkPlacer.CODEC);
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-            throw new RuntimeException();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-            throw new RuntimeException();
-        } catch (InvocationTargetException e) {
+        } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
             throw new RuntimeException();
         }

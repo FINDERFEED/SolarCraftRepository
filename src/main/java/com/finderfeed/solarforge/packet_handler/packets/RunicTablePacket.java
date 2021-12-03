@@ -16,6 +16,7 @@ import net.minecraft.world.level.Level;
 
 import java.util.function.Supplier;
 
+import net.minecraftforge.network.NetworkDirection;
 import net.minecraftforge.network.NetworkEvent;
 
 public class RunicTablePacket extends AbstractPacket {

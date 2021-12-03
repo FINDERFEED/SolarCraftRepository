@@ -109,7 +109,7 @@ class WoodenButton extends Button{
 
     @Override
     public void renderButton(PoseStack p_230431_1_, int p_230431_2_, int p_230431_3_, float p_230431_4_) {
-        if (this.isHovered() && tool != null) {
+        if (this.isHovered && tool != null) {
             this.renderToolTip(p_230431_1_, p_230431_2_, p_230431_3_);
 
         }
@@ -117,7 +117,7 @@ class WoodenButton extends Button{
         Font fontrenderer = minecraft.font;
         ClientHelpers.bindText(WIDGETS_SOLARFORGE);
         RenderSystem.setShaderColor(1,1,1,this.alpha);
-        int i = this.getYImage(this.isHovered());
+        int i = this.getYImage(this.isHovered);
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
         RenderSystem.enableDepthTest();

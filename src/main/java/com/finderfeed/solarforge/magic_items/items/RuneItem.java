@@ -20,7 +20,7 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.util.Constants;
+
 
 
 public class RuneItem extends Item {
@@ -66,7 +66,7 @@ public class RuneItem extends Item {
                             }else{
                                 Helpers.fireProgressionEvent(pl, Progression.PYLON_INSCRIPTION);
                                 world.playSound(null,pos.getX(),pos.getY(),pos.getZ(), SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.BLOCKS,1,1);
-                                world.setBlock(pos, BlocksRegistry.INSCRIPTION_STONE.get().defaultBlockState().setValue(InscriptionStone.PROP,type), Constants.BlockFlags.DEFAULT);
+                                world.setBlock(pos, BlocksRegistry.INSCRIPTION_STONE.get().defaultBlockState().setValue(InscriptionStone.PROP,type), 3);
                                 pl.setItemInHand(hand,ItemStack.EMPTY);
                             }
                         }else{

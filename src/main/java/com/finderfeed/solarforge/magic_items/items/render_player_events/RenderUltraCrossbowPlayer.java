@@ -71,10 +71,10 @@ public class RenderUltraCrossbowPlayer {
         if (Minecraft.getInstance().player.getMainHandItem().getItem() instanceof UltraCrossbowItem) {
 
             if (Minecraft.getInstance().player.isUsingItem()) {
-                PoseStack stack = event.getMatrixStack();
-                MultiBufferSource buffer = event.getBuffers();
+                PoseStack stack = event.getPoseStack();
+                MultiBufferSource buffer = event.getMultiBufferSource();
                 float partialTicks = event.getPartialTicks();
-                int light = event.getLight();
+
                 stack.pushPose();
                 stack.translate(-0.02, -0.4, -1.7);
                 stack.mulPose(Vector3f.ZP.rotationDegrees((Minecraft.getInstance().level.getGameTime() + partialTicks) * 30 % 360));
@@ -86,10 +86,10 @@ public class RenderUltraCrossbowPlayer {
             }
         }else if ( Minecraft.getInstance().player.getOffhandItem().getItem() instanceof UltraCrossbowItem){
             if (Minecraft.getInstance().player.isUsingItem()) {
-                PoseStack stack = event.getMatrixStack();
-                MultiBufferSource buffer = event.getBuffers();
+                PoseStack stack = event.getPoseStack();
+                MultiBufferSource buffer = event.getMultiBufferSource();
                 float partialTicks = event.getPartialTicks();
-                int light = event.getLight();
+
                 stack.pushPose();
                 stack.translate(-0.02, -0.4, -1.7);
                 stack.mulPose(Vector3f.ZP.rotationDegrees((Minecraft.getInstance().level.getGameTime() + partialTicks) * 30 % 360));

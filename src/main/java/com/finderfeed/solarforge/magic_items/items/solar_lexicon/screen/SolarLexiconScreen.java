@@ -348,7 +348,7 @@ public class SolarLexiconScreen extends Screen implements IScrollable {
 
 
     private void drawLine(PoseStack stack,int x1,int y1,int x2,int y2,int red,int green,int blue){
-        RenderSystem.assertThread(RenderSystem::isOnRenderThread);
+
         GlStateManager._disableTexture();
         GlStateManager._depthMask(false);
         GlStateManager._disableCull();

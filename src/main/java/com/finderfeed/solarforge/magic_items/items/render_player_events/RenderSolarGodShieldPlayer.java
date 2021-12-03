@@ -33,10 +33,10 @@ public class RenderSolarGodShieldPlayer {
         if ((playerEntity.getItemInHand(InteractionHand.MAIN_HAND).getItem() instanceof ShieldOfSolarGod) || (playerEntity.getItemInHand(InteractionHand.OFF_HAND).getItem() instanceof ShieldOfSolarGod) ) {
             if  ( playerEntity.getItemInHand(InteractionHand.MAIN_HAND).getItem() instanceof ShieldOfSolarGod &&
                     playerEntity.isUsingItem() ){
-                PoseStack stack = event.getMatrixStack();
-                MultiBufferSource buffer = event.getBuffers();
+                PoseStack stack = event.getPoseStack();
+                MultiBufferSource buffer = event.getMultiBufferSource();
                 float partialTicks = event.getPartialTicks();
-                int light = event.getLight();
+                int light = event.getPackedLight();
                 stack.pushPose();
                 float time = (Minecraft.getInstance().level.getGameTime() + partialTicks);
                 stack.translate(0, -0.4, -0.4);
@@ -48,10 +48,10 @@ public class RenderSolarGodShieldPlayer {
                 stack.popPose();
             }else if (playerEntity.getItemInHand(InteractionHand.OFF_HAND).getItem() instanceof ShieldOfSolarGod &&
                     playerEntity.isUsingItem() ) {
-                PoseStack stack = event.getMatrixStack();
-                MultiBufferSource buffer = event.getBuffers();
+                PoseStack stack = event.getPoseStack();
+                MultiBufferSource buffer = event.getMultiBufferSource();
                 float partialTicks = event.getPartialTicks();
-                int light = event.getLight();
+                int light = event.getPackedLight();
                 stack.pushPose();
                 float time = (Minecraft.getInstance().level.getGameTime() + partialTicks);
                 stack.translate(0, -0.4, -0.4);
@@ -71,10 +71,10 @@ public class RenderSolarGodShieldPlayer {
         if ((playerEntity.getItemInHand(InteractionHand.MAIN_HAND).getItem() instanceof ShieldOfSolarGod) || (playerEntity.getItemInHand(InteractionHand.OFF_HAND).getItem() instanceof ShieldOfSolarGod) ) {
             if  ( playerEntity.getItemInHand(InteractionHand.MAIN_HAND).getItem() instanceof ShieldOfSolarGod &&
                     playerEntity.isUsingItem()  ){
-                PoseStack stack = event.getMatrixStack();
-                MultiBufferSource buffer = event.getBuffers();
-                float partialTicks = event.getPartialRenderTick();
-                int light = event.getLight();
+                PoseStack stack = event.getPoseStack();
+                MultiBufferSource buffer = event.getMultiBufferSource();
+                float partialTicks = event.getPartialTick();
+                int light = event.getPackedLight();
                 stack.pushPose();
                 float time = (Minecraft.getInstance().level.getGameTime() + partialTicks);
                 stack.translate(0, 1, 0);
@@ -86,10 +86,10 @@ public class RenderSolarGodShieldPlayer {
                 stack.popPose();
             }else if (playerEntity.getItemInHand(InteractionHand.OFF_HAND).getItem() instanceof ShieldOfSolarGod &&
                     playerEntity.isUsingItem() ) {
-                PoseStack stack = event.getMatrixStack();
-                MultiBufferSource buffer = event.getBuffers();
-                float partialTicks = event.getPartialRenderTick();
-                int light = event.getLight();
+                PoseStack stack = event.getPoseStack();
+                MultiBufferSource buffer = event.getMultiBufferSource();
+                float partialTicks = event.getPartialTick();
+                int light = event.getPackedLight();
                 stack.pushPose();
                 float time = (Minecraft.getInstance().level.getGameTime() + partialTicks);
                 stack.translate(0, 1,0 );

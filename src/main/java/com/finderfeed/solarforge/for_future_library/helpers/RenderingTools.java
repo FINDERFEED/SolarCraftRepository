@@ -223,7 +223,7 @@ public class RenderingTools {
      */
     @Deprecated
     public static void blitFramebufferToScreen(int p_83972_, int p_83973_, boolean p_83974_, RenderTarget framebuffer) {
-        RenderSystem.assertThread(RenderSystem::isOnRenderThread);
+
         GlStateManager._colorMask(true, true, true, false);
         GlStateManager._disableDepthTest();
         GlStateManager._depthMask(false);
@@ -255,7 +255,7 @@ public class RenderingTools {
     }
 
     public static void drawLine(PoseStack stack,int x1,int y1,int x2,int y2,int red,int green,int blue){
-        RenderSystem.assertThread(RenderSystem::isOnRenderThread);
+
         GlStateManager._disableTexture();
         GlStateManager._depthMask(false);
         GlStateManager._disableCull();
@@ -732,7 +732,7 @@ public class RenderingTools {
 
             for(int l2 = 0; l2 < p_169385_.size(); ++l2) {
                 ClientTooltipComponent clienttooltipcomponent2 = p_169385_.get(l2);
-                clienttooltipcomponent2.renderImage(Minecraft.getInstance().font, j2, l1, p_169384_, Minecraft.getInstance().getItemRenderer(), 400, Minecraft.getInstance().getTextureManager());
+                clienttooltipcomponent2.renderImage(Minecraft.getInstance().font, j2, l1, p_169384_, Minecraft.getInstance().getItemRenderer(), 400);
                 l1 += clienttooltipcomponent2.getHeight() + (l2 == 0 ? 2 : 0);
             }
 

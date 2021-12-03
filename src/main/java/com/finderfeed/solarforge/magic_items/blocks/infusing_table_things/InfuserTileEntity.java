@@ -105,8 +105,8 @@ public class InfuserTileEntity extends AbstractRunicEnergyContainerRCBE implemen
 
 
     @Override
-    public CompoundTag save(CompoundTag cmp){
-        super.save(cmp);
+    public void saveAdditional(CompoundTag cmp){
+        super.saveAdditional(cmp);
         cmp.putBoolean("reqenergy",requiresEnergy);
         cmp.putInt("energy",energy);
         cmp.putInt("infusing_time",INFUSING_TIME );
@@ -120,7 +120,7 @@ public class InfuserTileEntity extends AbstractRunicEnergyContainerRCBE implemen
         if (!this.trySaveLootTable(cmp)) {
             ContainerHelper.saveAllItems(cmp, this.items);
         }
-        return cmp;
+
     }
 
 
@@ -302,9 +302,9 @@ public class InfuserTileEntity extends AbstractRunicEnergyContainerRCBE implemen
 
         ClientboundBlockEntityDataPacket pkt = super.getUpdatePacket();
         CompoundTag tag = pkt.getTag();
-        this.save(tag);
+        this.saveAdditional(tag);
 
-        return new ClientboundBlockEntityDataPacket(worldPosition,3,tag);
+        return Helpers.createTilePacket(this,tag);
     }
 
     private static void sendUpdatePackets(Level world, InfuserTileEntity tile){
@@ -322,7 +322,7 @@ public class InfuserTileEntity extends AbstractRunicEnergyContainerRCBE implemen
             for (BlockPos pos : getCatalystsPositions()){
                 Block c = recipe.getDeserializedCatalysts()[iterator];
                 if (c != null){
-                    level.setBlock(pos, BlocksRegistry.CATALYST_BASE.get().defaultBlockState(), Constants.BlockFlags.DEFAULT);
+                    level.setBlock(pos, BlocksRegistry.CATALYST_BASE.get().defaultBlockState(), 3);
                 }
                 iterator++;
             }

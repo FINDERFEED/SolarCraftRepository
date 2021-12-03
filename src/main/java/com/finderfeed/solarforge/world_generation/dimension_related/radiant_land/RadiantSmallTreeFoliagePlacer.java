@@ -29,7 +29,7 @@ public class RadiantSmallTreeFoliagePlacer extends FoliagePlacer {
 
     @Override
     protected FoliagePlacerType<?> type() {
-        return FoliagePlacerRegistry.RADIANT_TREE_SMALL_FOLIAGE_PLACER.get();
+        return FoliagePlacerRegistry.RADIANT_SMALL_PLACER;
     }
 
     @Override
