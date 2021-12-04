@@ -41,6 +41,11 @@ public class MagicianTowerStructure extends StructureFeature<NoneFeatureConfigur
         MagicianTowerPieces.start(ctx.structureManager(), blockpos, rotation, p_197089_, ctx.random());
     }
 
+    @Override
+    public GenerationStep.Decoration step() {
+        return GenerationStep.Decoration.SURFACE_STRUCTURES;
+    }
+
 //    public MagicianTowerStructure(Codec<NoneFeatureConfiguration> codec){
 //        super(codec);
 //    }

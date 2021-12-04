@@ -32,6 +32,7 @@ import net.minecraft.core.Registry;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.ExperienceOrb;
@@ -66,6 +67,7 @@ import net.minecraftforge.event.entity.player.PlayerXpEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.event.world.BlockEvent;
+import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -96,13 +98,15 @@ public class EventHandler {
 
     //TODO:do all structures
     @SubscribeEvent
-    public static void addStructures(ServerStartingEvent event){
-        StructureSettings s = event.getServer().getLevel(Level.OVERWORLD).getChunkSource().getGenerator().getSettings();
-        ImmutableMap.Builder<StructureFeature<?>, ImmutableMultimap<ConfiguredStructureFeature<?, ?>, ResourceKey<Biome>>> map = ImmutableMap.builder();
-        s.configuredStructures.forEach(map::put);
-        addStructureToBiomes(SolarForgeStructures.DIM_SHARD_STRUCTURE.get(),SolarForgeStructureFeatures.CONF_DIM_SHARD_STRUCT,map, Biomes.JUNGLE);
+    public static void addStructures(WorldEvent.Load event){
+        if (event.getWorld() instanceof ServerLevel serverLevel) {
+            StructureSettings s = serverLevel.getChunkSource().getGenerator().getSettings();
+            ImmutableMap.Builder<StructureFeature<?>, ImmutableMultimap<ConfiguredStructureFeature<?, ?>, ResourceKey<Biome>>> map = ImmutableMap.builder();
+            s.configuredStructures.forEach(map::put);
+            addStructureToBiomes(SolarForgeStructures.DIM_SHARD_STRUCTURE.get(), SolarForgeStructureFeatures.CONF_DIM_SHARD_STRUCT, map, Biomes.JUNGLE);
 
-        s.configuredStructures = map.build();
+            s.configuredStructures = map.build();
+        }
     }
 
     private static void addStructureToBiomes(StructureFeature<?> feature,

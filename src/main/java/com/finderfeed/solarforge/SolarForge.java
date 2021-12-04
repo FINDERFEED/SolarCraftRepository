@@ -244,7 +244,8 @@ public class SolarForge
 
             SolarForgeStructures.setupStructures();
             SolarForgeStructureFeatures.registerConfiguredStructures();
-            BiomeManager.addBiome(BiomeManager.BiomeType.DESERT,new BiomeManager.BiomeEntry(FeaturesRegistry.MOLTEN_BIOME_KEY,4));
+            //TODO: was temporarily removed since mojang biome system cardinally changed, meaning i need to wait for forge to do something
+//            BiomeManager.addBiome(BiomeManager.BiomeType.DESERT,new BiomeManager.BiomeEntry(FeaturesRegistry.MOLTEN_BIOME_KEY,4));
 
         });
 

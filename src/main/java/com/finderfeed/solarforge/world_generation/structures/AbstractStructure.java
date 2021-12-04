@@ -45,6 +45,10 @@ public class AbstractStructure extends StructureFeature<NoneFeatureConfiguration
         Rotation rotation = Rotation.getRandom(ctx.random());
         DungeonOnePieces.start(ctx.structureManager(), blockpos, rotation, p_197089_, ctx.random());
     }
+    @Override
+    public GenerationStep.Decoration step() {
+        return GenerationStep.Decoration.SURFACE_STRUCTURES;
+    }
 //    public AbstractStructure(Codec<NoneFeatureConfiguration> codec){
 //        super(codec);
 //    }

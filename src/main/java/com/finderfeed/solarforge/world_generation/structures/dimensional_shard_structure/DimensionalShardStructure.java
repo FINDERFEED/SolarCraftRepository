@@ -33,6 +33,7 @@ public class DimensionalShardStructure extends StructureFeature<NoneFeatureConfi
 
 
 
+
     private static void generatePieces(StructurePiecesBuilder p_197089_, PieceGenerator.Context<NoneFeatureConfiguration> ctx) {
         int x = (ctx.chunkPos().x << 4) + 7;
         int z = (ctx.chunkPos().z << 4) + 7;
@@ -41,7 +42,15 @@ public class DimensionalShardStructure extends StructureFeature<NoneFeatureConfi
         Rotation rotation = Rotation.NONE;
         DimStructPieces.start(ctx.structureManager(), blockpos, rotation, p_197089_, ctx.random());
     }
-//    public DimensionalShardStructure(Codec<NoneFeatureConfiguration> codec){
+
+    @Override
+    public GenerationStep.Decoration step() {
+        return GenerationStep.Decoration.SURFACE_STRUCTURES;
+    }
+
+
+
+    //    public DimensionalShardStructure(Codec<NoneFeatureConfiguration> codec){
 //        super(codec);
 //    }
 //

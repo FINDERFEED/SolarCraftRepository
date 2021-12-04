@@ -10,6 +10,7 @@ import com.finderfeed.solarforge.world_generation.dimension_related.radiant_land
 import com.finderfeed.solarforge.world_generation.features.foliage_placers.BurntTreeFoliagePlacer;
 import com.finderfeed.solarforge.world_generation.features.foliage_placers.FoliagePlacerRegistry;
 import com.finderfeed.solarforge.world_generation.features.trunk_placers.BurntTreeTrunkPlacer;
+import net.minecraft.core.BlockPos;
 import net.minecraft.data.worldgen.features.FeatureUtils;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.resources.ResourceKey;
@@ -20,9 +21,12 @@ import net.minecraft.util.valueproviders.ConstantInt;
 
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Blocks;
+
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.VerticalAnchor;
 
+
+import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate;
 import net.minecraft.world.level.levelgen.feature.configurations.*;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
 import net.minecraft.world.level.levelgen.feature.stateproviders.SimpleStateProvider;
@@ -139,9 +143,12 @@ public class FeaturesRegistry {
 //                    .decorated(FeatureDecorator.SQUARE.configured(NoneDecoratorConfiguration.INSTANCE))
 //                    .decorated( FeatureDecorator.COUNT_NOISE_BIASED.configured(new NoiseCountFactorDecoratorConfiguration(3,2,3)));
 
-            BURNT_TREE_2 = BURNT_TREE_FEATURE_2_CONF.placed(HeightmapPlacement.onHeightmap(Heightmap.Types.WORLD_SURFACE_WG),
+            BURNT_TREE_2 = BURNT_TREE_FEATURE_2_CONF.placed(
+                    PlacementUtils.countExtra(10,0.1f,1),
+                    HeightmapPlacement.onHeightmap(Heightmap.Types.WORLD_SURFACE_WG),
                     InSquarePlacement.spread(),
-                    NoiseBasedCountPlacement.of(3,2,3));
+                    NoiseBasedCountPlacement.of(3,2,3),
+                    BlockPredicateFilter.forPredicate(BlockPredicate.wouldSurvive(Blocks.OAK_SAPLING.defaultBlockState(), BlockPos.ZERO)));
 
 
             Registry.register(BuiltinRegistries.CONFIGURED_FEATURE,new ResourceLocation("solarforge","burnt_tree_feature2_configured"), BURNT_TREE_FEATURE_2_CONF);
@@ -158,7 +165,8 @@ public class FeaturesRegistry {
 //                    .decorated(FeatureDecorator.SQUARE.configured(NoneDecoratorConfiguration.INSTANCE));
 
             BURNT_TREE_1 = BURNT_TREE_FEATURE_CONF.placed(HeightmapPlacement.onHeightmap(Heightmap.Types.WORLD_SURFACE_WG),
-                    InSquarePlacement.spread());
+                    InSquarePlacement.spread(),
+                    BlockPredicateFilter.forPredicate(BlockPredicate.wouldSurvive(Blocks.OAK_SAPLING.defaultBlockState(), BlockPos.ZERO)));
             Registry.register(BuiltinRegistries.CONFIGURED_FEATURE,new ResourceLocation("solarforge","burnt_tree_feature_configured"),BURNT_TREE_FEATURE_CONF);
             registerPlacedFeature(BURNT_TREE_1,"burnt_tree_feature");
 
@@ -192,7 +200,10 @@ public class FeaturesRegistry {
 
 //                    .decorated(FeatureDecorator.HEIGHTMAP.configured(new HeightmapConfiguration(Heightmap.Types.WORLD_SURFACE_WG)))
 //                    .decorated(FeatureDecorator.CHANCE.configured(new ChanceDecoratorConfiguration(100)));
-            RUNIC_TREE_FEATURE = RUNIC_TREE_FEATURE_CONF.placed(HeightmapPlacement.onHeightmap(Heightmap.Types.WORLD_SURFACE_WG),RarityFilter.onAverageOnceEvery(100));
+            RUNIC_TREE_FEATURE = RUNIC_TREE_FEATURE_CONF.placed(HeightmapPlacement.onHeightmap(Heightmap.Types.WORLD_SURFACE_WG),
+                    RarityFilter.onAverageOnceEvery(100),
+                    InSquarePlacement.spread(),
+                    BlockPredicateFilter.forPredicate(BlockPredicate.wouldSurvive(Blocks.OAK_SAPLING.defaultBlockState(), BlockPos.ZERO)));
 
             Registry.register(BuiltinRegistries.CONFIGURED_FEATURE,new ResourceLocation("solarforge","runic_tree_configured"),RUNIC_TREE_FEATURE_CONF);
             registerPlacedFeature(RUNIC_TREE_FEATURE,"runic_tree");
@@ -214,18 +225,25 @@ public class FeaturesRegistry {
             ).build());
 //                    .decorated(FeatureDecorator.HEIGHTMAP.configured(new HeightmapConfiguration(Heightmap.Types.WORLD_SURFACE_WG)))
 //                    .decorated(FeatureDecorator.SQUARE.configured(NoneDecoratorConfiguration.INSTANCE));
-            RADIANT_TREE_CONFIGURED = RADIANT_TREE_CONFIGURED_CONF.placed(HeightmapPlacement.onHeightmap(Heightmap.Types.WORLD_SURFACE_WG), InSquarePlacement.spread());
+            RADIANT_TREE_CONFIGURED = RADIANT_TREE_CONFIGURED_CONF.placed(
+                    PlacementUtils.countExtra(3,0.1f,2),
+                    HeightmapPlacement.onHeightmap(Heightmap.Types.WORLD_SURFACE_WG),
+                    InSquarePlacement.spread(),
+                    BlockPredicateFilter.forPredicate(BlockPredicate.wouldSurvive(Blocks.OAK_SAPLING.defaultBlockState(), BlockPos.ZERO)));
 
             Registry.register(BuiltinRegistries.CONFIGURED_FEATURE,new ResourceLocation("solarforge","radiant_tree_configured"), RADIANT_TREE_CONFIGURED_CONF);
             registerPlacedFeature(RADIANT_TREE_CONFIGURED,"radiant_tree");
 
             RANDOM_PATCH_RADIANT_GRASS_CONF = Feature.RANDOM_PATCH.configured(
-                    FeatureUtils.simpleRandomPatchConfiguration(1,Feature.SIMPLE_BLOCK.configured(
+                    FeatureUtils.simpleRandomPatchConfiguration(1,
+                            Feature.SIMPLE_BLOCK.configured(
                             new SimpleBlockConfiguration(BlockStateProvider.simple(BlocksRegistry.RADIANT_GRASS_NOT_BLOCK.get()))).onlyWhenEmpty()));
 //                    .decorated(Features.Decorators.HEIGHTMAP_DOUBLE_SQUARE)
 //                    .decorated(FeatureDecorator.COUNT_NOISE.configured(new NoiseDependantDecoratorConfiguration(-0.8D, 5, 10)));
 
-            RANDOM_PATCH_RADIANT_GRASS = RANDOM_PATCH_RADIANT_GRASS_CONF.placed(NoiseThresholdCountPlacement.of(-0.8D, 5, 10), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE);
+            RANDOM_PATCH_RADIANT_GRASS = RANDOM_PATCH_RADIANT_GRASS_CONF.placed(
+                    NoiseThresholdCountPlacement.of(-0.8D, 5, 10),
+                    InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE);
 
             Registry.register(BuiltinRegistries.CONFIGURED_FEATURE,new ResourceLocation("solarforge","radiant_grass_grass_configured"), RANDOM_PATCH_RADIANT_GRASS_CONF);
             registerPlacedFeature(RANDOM_PATCH_RADIANT_GRASS,"radiant_grass_grass");
@@ -255,10 +273,10 @@ public class FeaturesRegistry {
 
 
 
-            RADIANT_SMALL_TREE_CONFIGURED = RADIANT_SMALL_TREE_CONFIGURED_CONF.placed(RarityFilter.onAverageOnceEvery(8),
+            RADIANT_SMALL_TREE_CONFIGURED = RADIANT_SMALL_TREE_CONFIGURED_CONF.placed(
+                    RarityFilter.onAverageOnceEvery(8),
                     HeightmapPlacement.onHeightmap(Heightmap.Types.WORLD_SURFACE_WG),
-                    InSquarePlacement.spread(),
-                    NoiseBasedCountPlacement.of(14,5,2));
+                    InSquarePlacement.spread());
 
             Registry.register(BuiltinRegistries.CONFIGURED_FEATURE,new ResourceLocation("solarforge","radiant_land_ambient_tree_configured"), RADIANT_SMALL_TREE_CONFIGURED_CONF);
             registerPlacedFeature(RADIANT_SMALL_TREE_CONFIGURED,"radiant_land_ambient_tree");
