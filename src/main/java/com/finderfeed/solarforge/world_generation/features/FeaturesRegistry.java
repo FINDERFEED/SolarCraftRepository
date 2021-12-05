@@ -10,6 +10,7 @@ import com.finderfeed.solarforge.world_generation.dimension_related.radiant_land
 import com.finderfeed.solarforge.world_generation.features.foliage_placers.BurntTreeFoliagePlacer;
 import com.finderfeed.solarforge.world_generation.features.foliage_placers.FoliagePlacerRegistry;
 import com.finderfeed.solarforge.world_generation.features.trunk_placers.BurntTreeTrunkPlacer;
+import com.google.common.collect.ImmutableSet;
 import net.minecraft.core.BlockPos;
 import net.minecraft.data.worldgen.features.FeatureUtils;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
@@ -20,6 +21,7 @@ import net.minecraft.data.BuiltinRegistries;
 import net.minecraft.util.valueproviders.ConstantInt;
 
 import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 
 import net.minecraft.world.level.levelgen.Heightmap;
@@ -27,6 +29,7 @@ import net.minecraft.world.level.levelgen.VerticalAnchor;
 
 
 import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate;
+import net.minecraft.world.level.levelgen.carver.WorldCarver;
 import net.minecraft.world.level.levelgen.feature.configurations.*;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
 import net.minecraft.world.level.levelgen.feature.stateproviders.SimpleStateProvider;
@@ -40,6 +43,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.RuleTest;
 import net.minecraft.world.level.levelgen.structure.templatesystem.TagMatchTest;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 
 
@@ -47,7 +51,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.featuresize.TwoLayersFeatureSize;
-
+import net.minecraftforge.registries.ForgeRegistries;
 
 
 //i hate you with every ounce of being mojang!
@@ -125,6 +129,18 @@ public class FeaturesRegistry {
         event.getRegistry().register(CRYSTALLIZED_ORE_VEIN_RADIANT_LAND.setRegistryName(new ResourceLocation("solarforge","crystallized_ore_vein")));
     }
 
+
+    public static void addCarvableBlocks(FMLCommonSetupEvent event){
+        event.enqueueWork(()-> {
+            WorldCarver<?> carver = ForgeRegistries.WORLD_CARVERS.getValue(new ResourceLocation("minecraft", "cave"));
+            if (carver != null) {
+                ImmutableSet.Builder<Block> builder = new ImmutableSet.Builder<>();
+                builder.addAll(carver.replaceableBlocks);
+                builder.add(BlocksRegistry.RADIANT_GRASS.get());
+                carver.replaceableBlocks = builder.build();
+            }
+        });
+    }
 
     public static void registerConfiguredFeatures(final FMLCommonSetupEvent event){
         event.enqueueWork(()->{
@@ -242,8 +258,7 @@ public class FeaturesRegistry {
 //                    .decorated(FeatureDecorator.COUNT_NOISE.configured(new NoiseDependantDecoratorConfiguration(-0.8D, 5, 10)));
 
             RANDOM_PATCH_RADIANT_GRASS = RANDOM_PATCH_RADIANT_GRASS_CONF.placed(
-                    NoiseThresholdCountPlacement.of(-0.8D, 5, 10),
-                    InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE);
+                    CountPlacement.of(60), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE);
 
             Registry.register(BuiltinRegistries.CONFIGURED_FEATURE,new ResourceLocation("solarforge","radiant_grass_grass_configured"), RANDOM_PATCH_RADIANT_GRASS_CONF);
             registerPlacedFeature(RANDOM_PATCH_RADIANT_GRASS,"radiant_grass_grass");
@@ -274,7 +289,7 @@ public class FeaturesRegistry {
 
 
             RADIANT_SMALL_TREE_CONFIGURED = RADIANT_SMALL_TREE_CONFIGURED_CONF.placed(
-                    RarityFilter.onAverageOnceEvery(8),
+                    RarityFilter.onAverageOnceEvery(3),
                     HeightmapPlacement.onHeightmap(Heightmap.Types.WORLD_SURFACE_WG),
                     InSquarePlacement.spread());
 
@@ -294,7 +309,7 @@ public class FeaturesRegistry {
             registerPlacedFeature(CRYSTALLIZED_ORE_VEIN_CONFIGURED,"crystallized_ore_vein");
 //            (new RandomPatchConfiguration.GrassConfigurationBuilder(new SimpleStateProvider(BlocksRegistry.RADIANT_BERRY_BUSH.get().defaultBlockState()), SimpleBlockPlacer.INSTANCE)).tries(4).build()
             RADIANT_BERRY_BUSH_CONF =  Feature.RANDOM_PATCH.configured(FeatureUtils.simpleRandomPatchConfiguration(4,Feature.SIMPLE_BLOCK.configured(new SimpleBlockConfiguration(BlockStateProvider.simple(BlocksRegistry.RADIANT_BERRY_BUSH.get()))).onlyWhenEmpty()));
-            RADIANT_BERRY_BUSH = RADIANT_BERRY_BUSH_CONF.placed();
+            RADIANT_BERRY_BUSH = RADIANT_BERRY_BUSH_CONF.placed(InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE);
 
             Registry.register(BuiltinRegistries.CONFIGURED_FEATURE,new ResourceLocation("solarforge","radiant_berry_bush_configured"), RADIANT_BERRY_BUSH_CONF);
             registerPlacedFeature(RADIANT_BERRY_BUSH,"radiant_berry_bush");

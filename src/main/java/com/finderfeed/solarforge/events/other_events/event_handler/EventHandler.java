@@ -7,7 +7,6 @@ import com.finderfeed.solarforge.SolarAbilities.Abilities;
 import com.finderfeed.solarforge.SolarAbilities.AbilityClasses.AbstractAbility;
 import com.finderfeed.solarforge.SolarCraftAttributeModifiers;
 import com.finderfeed.solarforge.SolarForge;
-import com.finderfeed.solarforge.commands.ServerStartEvent;
 import com.finderfeed.solarforge.events.my_events.ProgressionUnlockEvent;
 import com.finderfeed.solarforge.for_future_library.OwnedBlock;
 import com.finderfeed.solarforge.for_future_library.helpers.FinderfeedMathHelper;
@@ -28,6 +27,7 @@ import com.finderfeed.solarforge.world_generation.structures.SolarForgeStructure
 import com.finderfeed.solarforge.world_generation.structures.SolarForgeStructures;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableMultimap;
+import com.google.common.collect.ImmutableSet;
 import net.minecraft.core.Registry;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceKey;
@@ -42,6 +42,7 @@ import net.minecraft.world.entity.boss.enderdragon.EnderDragon;
 import net.minecraft.world.entity.boss.wither.WitherBoss;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biomes;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -56,6 +57,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.StructureSettings;
+import net.minecraft.world.level.levelgen.carver.WorldCarver;
 import net.minecraft.world.level.levelgen.feature.ConfiguredStructureFeature;
 import net.minecraft.world.level.levelgen.feature.StructureFeature;
 import net.minecraftforge.common.ForgeMod;
@@ -64,21 +66,21 @@ import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerXpEvent;
-import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.List;
-import java.util.Set;
 
 
 @Mod.EventBusSubscriber(modid = "solarforge",bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class EventHandler {
     public static final ResourceKey<Level> RADIANT_LAND_KEY = ResourceKey.create(Registry.DIMENSION_REGISTRY,new ResourceLocation("solarforge","radiant_land"));
-
+    public static final ResourceKey<Biome> RADIANT_LAND_BIOME_KEY = ResourceKey.create(Registry.BIOME_REGISTRY,new ResourceLocation("solarforge","radiant_land"));
     public static List<AbstractAbility> ALLOWED_ABILITIES_DURING_BOSSFIGHT = List.of(
             Abilities.HEAL.getAbility(),
             Abilities.DISPEL.getAbility()
@@ -96,29 +98,37 @@ public class EventHandler {
         }
     }
 
-    //TODO:do all structures
+
     @SubscribeEvent
     public static void addStructures(WorldEvent.Load event){
         if (event.getWorld() instanceof ServerLevel serverLevel) {
             StructureSettings s = serverLevel.getChunkSource().getGenerator().getSettings();
-            ImmutableMap.Builder<StructureFeature<?>, ImmutableMultimap<ConfiguredStructureFeature<?, ?>, ResourceKey<Biome>>> map = ImmutableMap.builder();
-            s.configuredStructures.forEach(map::put);
-            addStructureToBiomes(SolarForgeStructures.DIM_SHARD_STRUCTURE.get(), SolarForgeStructureFeatures.CONF_DIM_SHARD_STRUCT, map, Biomes.JUNGLE);
 
-            s.configuredStructures = map.build();
+                ImmutableMap.Builder<StructureFeature<?>, ImmutableMultimap<ConfiguredStructureFeature<?, ?>, ResourceKey<Biome>>> map = ImmutableMap.builder();
+                s.configuredStructures.forEach(map::put);
+                addStructureToBiomes(s,SolarForgeStructures.DIM_SHARD_STRUCTURE.get(), SolarForgeStructureFeatures.CONF_DIM_SHARD_STRUCT, map, Biomes.JUNGLE);
+                addStructureToBiomes(s,SolarForgeStructures.DUNGEON_ONE_KEY_LOCK.get(), SolarForgeStructureFeatures.CONF_DUNGEON_ONE, map, Biomes.DESERT);
+                addStructureToBiomes(s,SolarForgeStructures.CHARGING_STATION.get(), SolarForgeStructureFeatures.CONF_DUNGEON_CHARGING_STATION, map, Biomes.PLAINS);
+                addStructureToBiomes(s,SolarForgeStructures.DUNGEON_MAZE.get(), SolarForgeStructureFeatures.CONF_DUNGEON_MAZE, map, Biomes.SAVANNA);
+                addStructureToBiomes(s,SolarForgeStructures.MAGICIAN_TOWER.get(), SolarForgeStructureFeatures.CONF_MAGICIAN_TOWER, map,Biomes.JAGGED_PEAKS,Biomes.STONY_PEAKS);
+                addStructureToBiomes(s,SolarForgeStructures.CRYSTAL_BOSS_ROOM.get(), SolarForgeStructureFeatures.CONF_CRYSTAL_BOSS_ROOM, map, RADIANT_LAND_BIOME_KEY);
+
+                s.configuredStructures = map.build();
+
         }
     }
 
-    private static void addStructureToBiomes(StructureFeature<?> feature,
+    private static void addStructureToBiomes(StructureSettings s,StructureFeature<?> feature,
                                              ConfiguredStructureFeature<?,?> configuredStruct,
                                              ImmutableMap.Builder<StructureFeature<?>, ImmutableMultimap<ConfiguredStructureFeature<?, ?>, ResourceKey<Biome>>> map,
                                              ResourceKey<Biome>... biomes){
-
-        ImmutableMultimap.Builder<ConfiguredStructureFeature<?,?>,ResourceKey<Biome>> secondMap = ImmutableMultimap.builder();
-        for (ResourceKey<Biome> key : biomes){
-            secondMap.put(configuredStruct,key);
+        if (!s.configuredStructures.containsKey(feature)) {
+            ImmutableMultimap.Builder<ConfiguredStructureFeature<?, ?>, ResourceKey<Biome>> secondMap = ImmutableMultimap.builder();
+            for (ResourceKey<Biome> key : biomes) {
+                secondMap.put(configuredStruct, key);
+            }
+            map.put(feature, secondMap.build());
         }
-        map.put(feature,secondMap.build());
     }
 
 
@@ -370,6 +380,7 @@ public class EventHandler {
             }
         }
     }
+
 
 
 

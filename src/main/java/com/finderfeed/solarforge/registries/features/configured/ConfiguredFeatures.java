@@ -53,6 +53,8 @@ public class ConfiguredFeatures {
             Registry.register(BuiltinRegistries.CONFIGURED_FEATURE,new ResourceLocation("solarforge","solar_flower_feature"),SOLAR_FLOWER_FEATURE_CONF);
             Registry.register(BuiltinRegistries.CONFIGURED_FEATURE,new ResourceLocation("solarforge","dead_sprout_feature"),DEAD_SPROUT_FEATURE_CONF);
 
+            Registry.register(BuiltinRegistries.PLACED_FEATURE,new ResourceLocation("solarforge","dead_sprout_feature"),DEAD_SPROUT_FEATURE);
+            Registry.register(BuiltinRegistries.PLACED_FEATURE,new ResourceLocation("solarforge","solar_flower_feature"),SOLAR_FLOWER_FEATURE);
             ItemPredicate.register(new ResourceLocation("solarcraft_predicate"), SolarcraftNBTPredicate::fromJson);
             ItemPredicate.register(new ResourceLocation("solarcraft_module_predicate"), SolarcraftModulePredicate::fromJson);
         });

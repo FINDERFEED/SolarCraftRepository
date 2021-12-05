@@ -29,8 +29,9 @@ public class BlueGemItem extends Item {
             Level world = entity.level;
             Optional<? extends Registry<Biome>> reg = world.registryAccess().registry(Registry.BIOME_REGISTRY);
             if (reg.isPresent()) {
-                if ((world.getBiome(entity.blockPosition()).equals(reg.get().get(FeaturesRegistry.MOLTEN_BIOME_KEY)))
-                        && entity.level.getBlockState(entity.blockPosition()).is(Blocks.LAVA)) {
+                //TODO:return this when biome can be added to overworld
+                /*(world.getBiome(entity.blockPosition()).equals(reg.get().get(FeaturesRegistry.MOLTEN_BIOME_KEY))*/
+                if (entity.level.getBlockState(entity.blockPosition()).is(Blocks.LAVA)) {
                     int ticks = entity.getPersistentData().getInt("transmutation_ticks")+1;
                     entity.getPersistentData().putInt("transmutation_ticks", ticks);
 

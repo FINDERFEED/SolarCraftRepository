@@ -66,16 +66,17 @@ public class InfusingTableTileRenderer extends TileEntityRenderer<InfusingTableT
                 matrices.popPose();
             }
         }
-
-        ItemStack stack = tile.getInventory().getStackInSlot(9);
-        if (!stack.isEmpty()){
-            matrices.pushPose();
-            matrices.translate(0.5,1.4,0.5);
-            matrices.scale(0.4f,0.4f,0.4f);
-            matrices.mulPose(Vector3f.YN.rotationDegrees(time%360));
-            renderer.render(stack, ItemTransforms.TransformType.FIXED,false,matrices,src, LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY,
-                    renderer.getModel(stack,null,null,0));
-            matrices.popPose();
+        if (handler != null) {
+            ItemStack stack =handler.getStackInSlot(9);
+            if (!stack.isEmpty()) {
+                matrices.pushPose();
+                matrices.translate(0.5, 1.4, 0.5);
+                matrices.scale(0.4f, 0.4f, 0.4f);
+                matrices.mulPose(Vector3f.YN.rotationDegrees(time % 360));
+                renderer.render(stack, ItemTransforms.TransformType.FIXED, false, matrices, src, LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY,
+                        renderer.getModel(stack, null, null, 0));
+                matrices.popPose();
+            }
         }
 
 

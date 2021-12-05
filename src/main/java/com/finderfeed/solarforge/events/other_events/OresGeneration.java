@@ -3,6 +3,7 @@ package com.finderfeed.solarforge.events.other_events;
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
 import com.finderfeed.solarforge.registries.features.configured.ConfiguredFeatures;
+import com.finderfeed.solarforge.world_generation.features.FeaturesRegistry;
 import com.finderfeed.solarforge.world_generation.structures.SolarForgeStructureFeatures;
 import com.finderfeed.solarforge.world_generation.structures.SolarForgeStructures;
 import net.minecraft.world.level.Level;
@@ -51,7 +52,10 @@ public class OresGeneration {
             event.getGeneration().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, Feature.ORE.configured(new OreConfiguration(new TagMatchTest(Tags.Blocks.STONE), BlocksRegistry.SOLAR_STONE.get().defaultBlockState(),10))
                     .placed(HeightRangePlacement.uniform(VerticalAnchor.bottom(),VerticalAnchor.absolute(80)))
             );
+            //TODO:remove when adding overworld biomes will be possible
+            event.getGeneration().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, FeaturesRegistry.ULDORADIUM_ORE_PLACED_FEATURE);
         }
+
 //        if (event.getCategory().equals(Biome.BiomeCategory.DESERT) ) {
 //            event.getGeneration().getStructures().add(() -> SolarForgeStructureFeatures.CONF_DUNGEON_ONE);
 //        }
