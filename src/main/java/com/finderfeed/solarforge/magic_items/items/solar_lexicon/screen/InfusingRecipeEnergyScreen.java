@@ -125,7 +125,7 @@ public class InfusingRecipeEnergyScreen extends Screen {
         drawCenteredString(matrices,font,""+recipe.requriedEnergy,relX+160,relY+161,0xff0000);
 
         drawString(matrices,font,new TranslatableComponent("solarcraft.total_runic_energy"),relX+16,relY+160+21,0xff0000);
-        drawCenteredString(matrices,font,""+(int)totalEnergy,relX+160,relY+161+21,0xff0000);
+        drawCenteredString(matrices,font,""+(int)(totalEnergy-recipe.requriedEnergy),relX+160,relY+161+21,0xff0000);
         matrices.popPose();
         super.render(matrices, mousex, mousey, partialTicks);
     }

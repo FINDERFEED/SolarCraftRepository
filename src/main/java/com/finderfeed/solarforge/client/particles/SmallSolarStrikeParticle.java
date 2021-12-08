@@ -17,8 +17,8 @@ import org.lwjgl.opengl.GL11;
 import javax.annotation.Nullable;
 
 public class SmallSolarStrikeParticle extends SolarcraftParticle {
-    public SmallSolarStrikeParticle(ClientLevel p_i232448_1_, double p_i232448_2_, double p_i232448_4_, double p_i232448_6_, double x, double y, double z) {
-        super(p_i232448_1_, p_i232448_2_, p_i232448_4_, p_i232448_6_, x,y,z,0.5f);
+    public SmallSolarStrikeParticle(ClientLevel level, double p_i232448_2_, double p_i232448_4_, double p_i232448_6_, double x, double y, double z) {
+        super(level, p_i232448_2_, p_i232448_4_, p_i232448_6_, x,y,z,0.5f);
 
         this.rCol = 255;
         this.gCol = 255;
@@ -30,8 +30,11 @@ public class SmallSolarStrikeParticle extends SolarcraftParticle {
         this.x = p_i232448_2_;
         this.y = p_i232448_4_;
         this.z = p_i232448_6_;
-        this.lifetime = 60 + (int)(p_i232448_1_.random.nextFloat()*6);
-
+        if (level != null) {
+            this.lifetime = 60 + (int) (level.random.nextFloat() * 6);
+        }else{
+            this.lifetime = 60;
+        }
 
     }
 

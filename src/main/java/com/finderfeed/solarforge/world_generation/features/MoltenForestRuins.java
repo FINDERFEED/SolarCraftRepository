@@ -61,7 +61,8 @@ public class MoltenForestRuins extends Feature<NoneFeatureConfiguration> {
 
         for (int i = 0;i <= 16-trueDiameter;i++){
             for (int g = 0;g <= 16-trueDiameter;g++){
-                BlockPos iterator = mainpos.offset(i,world.getHeight(Heightmap.Types.WORLD_SURFACE_WG,mainpos.getX()+i,mainpos.getZ()+g)-1,g);
+                BlockPos iteratorf = mainpos.offset(i,0,g);
+                BlockPos iterator = new BlockPos(iteratorf.getX(),world.getHeight(Heightmap.Types.WORLD_SURFACE_WG,mainpos.getX()+i,mainpos.getZ()+g)-1,iteratorf.getZ());
                 if (checkIfFlat(world,iterator,block,trueDiameter)){
                     return iterator;
                 }

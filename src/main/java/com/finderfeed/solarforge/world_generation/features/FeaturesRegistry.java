@@ -13,6 +13,7 @@ import com.finderfeed.solarforge.world_generation.features.trunk_placers.BurntTr
 import com.google.common.collect.ImmutableSet;
 import net.minecraft.core.BlockPos;
 import net.minecraft.data.worldgen.features.FeatureUtils;
+import net.minecraft.data.worldgen.features.OreFeatures;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -112,7 +113,7 @@ public class FeaturesRegistry {
     public static PlacedFeature BURNT_BIOME_AMBIENECE_PLACED_FEATURE;
 
     public static final ConfiguredFeature<?,?> ULDORADIUM_ORE =
-            Feature.ORE.configured(new OreConfiguration(new TagMatchTest(Tags.Blocks.STONE), BlocksRegistry.ULDORADIUM_ORE.get().defaultBlockState(),6));
+            Feature.ORE.configured(new OreConfiguration(OreFeatures.NATURAL_STONE, BlocksRegistry.ULDORADIUM_ORE.get().defaultBlockState(),6));
 //            .rangeUniform(VerticalAnchor.bottom(),VerticalAnchor.absolute(60)).squared().count(6);
 
     public static PlacedFeature ULDORADIUM_ORE_PLACED_FEATURE;
@@ -226,8 +227,8 @@ public class FeaturesRegistry {
 
             MOLTEN_FOREST_RUINS_CONFIGURED_CONF = BURNT_BIOME_AMBIENCE_2.configured(NoneFeatureConfiguration.INSTANCE);
 //                    .decorated(FeatureDecorator.CHANCE.configured(new ChanceDecoratorConfiguration(60)));
-
-            MOLTEN_FOREST_RUINS_CONFIGURED = MOLTEN_FOREST_RUINS_CONFIGURED_CONF.placed(RarityFilter.onAverageOnceEvery(60));
+            //TODO:switch back to 60 when incinerated forest returns
+            MOLTEN_FOREST_RUINS_CONFIGURED = MOLTEN_FOREST_RUINS_CONFIGURED_CONF.placed(RarityFilter.onAverageOnceEvery(120));
 
             Registry.register(BuiltinRegistries.CONFIGURED_FEATURE,new ResourceLocation("solarforge","configured_ruins_configured"), MOLTEN_FOREST_RUINS_CONFIGURED_CONF);
             registerPlacedFeature(MOLTEN_FOREST_RUINS_CONFIGURED,"configured_ruins");
@@ -314,9 +315,9 @@ public class FeaturesRegistry {
             Registry.register(BuiltinRegistries.CONFIGURED_FEATURE,new ResourceLocation("solarforge","radiant_berry_bush_configured"), RADIANT_BERRY_BUSH_CONF);
             registerPlacedFeature(RADIANT_BERRY_BUSH,"radiant_berry_bush");
 
-            ENDER_CRACKS_CONF = Feature.ORE.configured(new OreConfiguration(END_STONE, BlocksRegistry.ENDER_CRACKS.get().defaultBlockState(),4));
+            ENDER_CRACKS_CONF = Feature.ORE.configured(new OreConfiguration(END_STONE, BlocksRegistry.ENDER_CRACKS.get().defaultBlockState(),5));
 //                    .rangeUniform(VerticalAnchor.bottom(),VerticalAnchor.absolute(200)).squared().count(15);
-            ENDER_CRACKS = ENDER_CRACKS_CONF.placed(HeightRangePlacement.uniform(VerticalAnchor.bottom(),VerticalAnchor.absolute(200)));
+            ENDER_CRACKS = ENDER_CRACKS_CONF.placed(HeightRangePlacement.uniform(VerticalAnchor.absolute(30),VerticalAnchor.absolute(100)));
 
             Registry.register(BuiltinRegistries.CONFIGURED_FEATURE,new ResourceLocation("solarforge","ender_cracks_configured"), ENDER_CRACKS_CONF);
             registerPlacedFeature(ENDER_CRACKS,"ender_cracks");

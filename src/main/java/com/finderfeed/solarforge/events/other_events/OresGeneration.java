@@ -6,6 +6,7 @@ import com.finderfeed.solarforge.registries.features.configured.ConfiguredFeatur
 import com.finderfeed.solarforge.world_generation.features.FeaturesRegistry;
 import com.finderfeed.solarforge.world_generation.structures.SolarForgeStructureFeatures;
 import com.finderfeed.solarforge.world_generation.structures.SolarForgeStructures;
+import net.minecraft.data.worldgen.features.OreFeatures;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Blocks;
@@ -43,13 +44,13 @@ public class OresGeneration {
 //.rangeUniform(VerticalAnchor.bottom(),VerticalAnchor.absolute(30)).squared().count(10)
         if (!event.getCategory().equals(Biome.BiomeCategory.NETHER) && !event.getCategory().equals(Biome.BiomeCategory.THEEND) && notNone(event)){
             event.getGeneration().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES,
-                    Feature.ORE.configured(new OreConfiguration(new TagMatchTest(Tags.Blocks.STONE), SolarForge.SOLAR_ORE.get().defaultBlockState(),4)).placed(
+                    Feature.ORE.configured(new OreConfiguration(OreFeatures.NATURAL_STONE, SolarForge.SOLAR_ORE.get().defaultBlockState(),4)).placed(
                             HeightRangePlacement.uniform(VerticalAnchor.absolute(5),VerticalAnchor.absolute(30))
                     ));
         }
 //        .rangeUniform(VerticalAnchor.bottom(),VerticalAnchor.absolute(80)).squared().count(7)
         if (!event.getCategory().equals(Biome.BiomeCategory.NETHER) && !event.getCategory().equals(Biome.BiomeCategory.THEEND) && notNone(event)){
-            event.getGeneration().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, Feature.ORE.configured(new OreConfiguration(new TagMatchTest(Tags.Blocks.STONE), BlocksRegistry.SOLAR_STONE.get().defaultBlockState(),10))
+            event.getGeneration().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, Feature.ORE.configured(new OreConfiguration(OreFeatures.NATURAL_STONE, BlocksRegistry.SOLAR_STONE.get().defaultBlockState(),10))
                     .placed(HeightRangePlacement.uniform(VerticalAnchor.bottom(),VerticalAnchor.absolute(80)))
             );
             //TODO:remove when adding overworld biomes will be possible

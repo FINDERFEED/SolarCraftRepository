@@ -53,6 +53,7 @@ public class InfusingCraftingRecipeSerializer extends ForgeRegistryEntry<RecipeS
     @Nullable
     @Override
     public InfusingCraftingRecipe fromNetwork(ResourceLocation rl, FriendlyByteBuf buf) {
+
         int size = buf.readInt();
         List<Item> ingrs = new ArrayList<>();
         List<Character> chars = new ArrayList<>();
@@ -66,11 +67,24 @@ public class InfusingCraftingRecipeSerializer extends ForgeRegistryEntry<RecipeS
         for (int i = 0;i < ingrs.size();i++){
             ingredientMap.put(chars.get(i),ingrs.get(i));
         }
-        String[] pattern = {
-                buf.readUtf(),
-                buf.readUtf(),
-                buf.readUtf()
-        };
+        int patternlength = buf.readInt();
+        String[] pattern;
+        if (patternlength == 1) {
+            pattern = new String[]{
+                    buf.readUtf()
+            };
+        }else if (patternlength == 2){
+            pattern = new String[]{
+                    buf.readUtf(),
+                    buf.readUtf()
+            };
+        }else{
+            pattern = new String[]{
+                    buf.readUtf(),
+                    buf.readUtf(),
+                    buf.readUtf()
+            };
+        }
 
         ItemStack output = buf.readItem();
         int time = buf.readInt();
@@ -88,6 +102,7 @@ public class InfusingCraftingRecipeSerializer extends ForgeRegistryEntry<RecipeS
         ingredientMap.values().forEach((ingre)->buf.writeItem(ingre.getDefaultInstance()));
         ingredientMap.keySet().forEach(buf::writeChar);
 
+        buf.writeInt(pattern.length);
         for (String s : pattern){
             buf.writeUtf(s);
         }

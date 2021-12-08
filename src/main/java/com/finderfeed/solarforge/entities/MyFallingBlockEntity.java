@@ -109,7 +109,7 @@ public class MyFallingBlockEntity extends FallingBlockEntity {
                                     if (this.blockData != null && this.blockState.hasBlockEntity()) {
                                         BlockEntity blockentity = this.level.getBlockEntity(blockpos1);
                                         if (blockentity != null) {
-                                            CompoundTag compoundtag = blockentity.save(new CompoundTag());
+                                            CompoundTag compoundtag = blockentity.saveWithoutMetadata();
 
                                             for(String s : this.blockData.getAllKeys()) {
                                                 Tag tag = this.blockData.get(s);

@@ -689,7 +689,7 @@ public class RenderingTools {
             RenderSystem.setShader(GameRenderer::getPositionColorShader);
             bufferbuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_COLOR);
             Matrix4f matrix4f = p_169384_.last().pose();
-            RenderTooltipEvent.Color colorEvent = new MyColorEvent(Items.AIR.getDefaultInstance(), p_169384_, j2, k2, Minecraft.getInstance().font,p_169385_,tooltip);
+            MyColorEvent colorEvent = new MyColorEvent(Items.AIR.getDefaultInstance(), p_169384_, j2, k2, Minecraft.getInstance().font,p_169385_,tooltip);
             MinecraftForge.EVENT_BUS.post(colorEvent);
 
             fillGradient(matrix4f, bufferbuilder, j2 - 3, k2 - 4, j2 + i + 3, k2 - 3, 400, colorEvent.getBackgroundStart(), colorEvent.getBackgroundStart());

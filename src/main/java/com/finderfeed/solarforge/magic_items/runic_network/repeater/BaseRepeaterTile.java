@@ -43,20 +43,22 @@ public class BaseRepeaterTile extends BlockEntity {
 
     public static void tick(Level world,BlockPos pos,BlockState state,BaseRepeaterTile tile){
         Block block = world.getBlockState(pos.below()).getBlock();
-        if (block == BlocksRegistry.ZETA_RUNE_BLOCK.get()){
-            tile.setEnergyType(RunicEnergy.Type.ZETA);
-        }else if (block == BlocksRegistry.URBA_RUNE_BLOCK.get()){
-            tile.setEnergyType(RunicEnergy.Type.URBA);
-        }else if (block == BlocksRegistry.KELDA_RUNE_BLOCK.get()){
-            tile.setEnergyType(RunicEnergy.Type.KELDA);
-        }else if (block == BlocksRegistry.FIRA_RUNE_BLOCK.get()){
-            tile.setEnergyType(RunicEnergy.Type.FIRA);
-        }else if (block == BlocksRegistry.ARDO_RUNE_BLOCK.get()){
-            tile.setEnergyType(RunicEnergy.Type.ARDO);
-        }else if (block == BlocksRegistry.TERA_RUNE_BLOCK.get()){
-            tile.setEnergyType(RunicEnergy.Type.TERA);
-        }else{
-            tile.setEnergyType(null);
+        if (tile.getEnergyType() == null) {
+            if (block == BlocksRegistry.ZETA_RUNE_BLOCK.get()) {
+                tile.setEnergyType(RunicEnergy.Type.ZETA);
+            } else if (block == BlocksRegistry.URBA_RUNE_BLOCK.get()) {
+                tile.setEnergyType(RunicEnergy.Type.URBA);
+            } else if (block == BlocksRegistry.KELDA_RUNE_BLOCK.get()) {
+                tile.setEnergyType(RunicEnergy.Type.KELDA);
+            } else if (block == BlocksRegistry.FIRA_RUNE_BLOCK.get()) {
+                tile.setEnergyType(RunicEnergy.Type.FIRA);
+            } else if (block == BlocksRegistry.ARDO_RUNE_BLOCK.get()) {
+                tile.setEnergyType(RunicEnergy.Type.ARDO);
+            } else if (block == BlocksRegistry.TERA_RUNE_BLOCK.get()) {
+                tile.setEnergyType(RunicEnergy.Type.TERA);
+            } else {
+                tile.setEnergyType(null);
+            }
         }
 
         if (!world.isClientSide && (world.getGameTime() %20 == 1) ) {

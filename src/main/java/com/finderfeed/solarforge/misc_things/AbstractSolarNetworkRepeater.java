@@ -97,13 +97,13 @@ public abstract class AbstractSolarNetworkRepeater extends BlockEntity implement
     }
 
     @Override
-    public CompoundTag save(CompoundTag p_189515_1_) {
+    public void saveAdditional(CompoundTag p_189515_1_) {
 
             p_189515_1_.putInt("xpos", connectedTo.getX());
             p_189515_1_.putInt("ypos", connectedTo.getY());
             p_189515_1_.putInt("zpos", connectedTo.getZ());
 
-        return super.save(p_189515_1_);
+         super.saveAdditional(p_189515_1_);
     }
 
 

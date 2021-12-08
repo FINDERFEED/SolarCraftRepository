@@ -63,13 +63,13 @@ public class SolarForgeBlockEntity extends RandomizableContainerBlockEntity  {
         return items.size();
     }
     @Override
-    public CompoundTag save(CompoundTag cmp){
-        super.save(cmp);
+    public void saveAdditional(CompoundTag cmp){
+        super.saveAdditional(cmp);
         cmp.putInt("solar_energy",SOLAR_ENERGY_LEVEL);
         if (!this.trySaveLootTable(cmp)) {
             ContainerHelper.saveAllItems(cmp, this.items);
         }
-    return cmp;
+
     }
 
 

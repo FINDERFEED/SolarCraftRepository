@@ -7,8 +7,8 @@ import net.minecraft.core.particles.SimpleParticleType;
 import javax.annotation.Nullable;
 
 public class HealParticle extends TextureSheetParticle {
-    protected HealParticle(ClientLevel p_i232448_1_, double p_i232448_2_, double p_i232448_4_, double p_i232448_6_, double x, double y, double z) {
-        super(p_i232448_1_, p_i232448_2_, p_i232448_4_, p_i232448_6_, x,y,z);
+    protected HealParticle(ClientLevel level, double p_i232448_2_, double p_i232448_4_, double p_i232448_6_, double x, double y, double z) {
+        super(level, p_i232448_2_, p_i232448_4_, p_i232448_6_, x,y,z);
 
         this.rCol = 255;
         this.gCol = 255;
@@ -20,7 +20,12 @@ public class HealParticle extends TextureSheetParticle {
         this.x = p_i232448_2_;
         this.y = p_i232448_4_;
         this.z = p_i232448_6_;
-        this.lifetime = 60 + (int)Math.floor(p_i232448_1_.random.nextFloat()*50);
+        if (level != null) {
+            this.lifetime = 60 + (int)Math.floor(level.random.nextFloat()*50);
+        }else{
+            this.lifetime = 60;
+        }
+
         this.quadSize = 0.2f;
 
 

@@ -222,6 +222,10 @@ public class EventHandler {
         if (event.getCategory() == Biome.BiomeCategory.THEEND){
             event.getGeneration().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, FeaturesRegistry.ENDER_CRACKS);
         }
+        //TODO:delete when incinerated forest returns
+        if (event.getCategory() == Biome.BiomeCategory.PLAINS){
+            event.getGeneration().addFeature(GenerationStep.Decoration.LOCAL_MODIFICATIONS,FeaturesRegistry.MOLTEN_FOREST_RUINS_CONFIGURED);
+        }
 
 
     }

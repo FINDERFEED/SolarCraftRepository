@@ -123,10 +123,10 @@ public class RayTrapTileEntity extends BlockEntity  {
     }
 
     @Override
-    public CompoundTag save(CompoundTag p_189515_1_) {
+    public void saveAdditional(CompoundTag p_189515_1_) {
         p_189515_1_.putInt("attack_tick",attackTick);
         p_189515_1_.putBoolean("activated_or_not",activated);
-        return super.save(p_189515_1_);
+         super.saveAdditional(p_189515_1_);
     }
 
     @Override
