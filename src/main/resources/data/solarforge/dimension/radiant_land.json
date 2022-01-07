@@ -13,7 +13,7 @@
           "parameters": {
             "altitude": 1,
             "weirdness": 1,
-            "offset": 0.4,
+            "offset": 0.0,
             "temperature": 1,
             "humidity": 1,
             "erosion": [
@@ -26,36 +26,57 @@
               -1.05
             ]
           }
+        },
+        {
+          "biome": "solarforge:radiant_land",
+          "parameters": {
+            "altitude": 1,
+            "weirdness": 1,
+            "offset": 0.0,
+            "temperature": 1,
+            "humidity": 1,
+            "erosion": [
+              -1.0,
+              1.0
+            ],
+            "depth": 0.0,
+            "continentalness": [
+              -1.2,
+              -1.05
+            ]
+          }
+        },
+        {
+          "parameters": {
+            "erosion": [
+              -1.0,
+              1.0
+            ],
+            "depth": [
+              0.2,
+              0.9
+            ],
+            "weirdness": [
+              -1.0,
+              1.0
+            ],
+            "offset": 0.0,
+            "temperature": [
+              -1.0,
+              1.0
+            ],
+            "humidity": [
+              0.7,
+              1.0
+            ],
+            "continentalness": [
+              -1.0,
+              1.0
+            ]
+          },
+          "biome": "solarforge:crystal_caves"
         }
-      ],
-      "temperature_noise": {
-        "firstOctave": -7,
-        "amplitudes": [
-          1.0,
-          1.0
-        ]
-      },
-      "humidity_noise": {
-        "firstOctave": -7,
-        "amplitudes": [
-          1.0,
-          1.0
-        ]
-      },
-      "altitude_noise": {
-        "firstOctave": -7,
-        "amplitudes": [
-          1.0,
-          1.0
-        ]
-      },
-      "weirdness_noise": {
-        "firstOctave": -7,
-        "amplitudes": [
-          1.0,
-          1.0
-        ]
-      }
+      ]
     }
   }
 }

@@ -217,7 +217,7 @@ class Getter implements BlockAndTintGetter {
 
     @Override
     public float getShade(Direction p_45522_, boolean p_45523_) {
-        return 1f;
+        return 100f;
     }
 
     @Override
@@ -227,7 +227,7 @@ class Getter implements BlockAndTintGetter {
 
     @Override
     public int getBlockTint(BlockPos pos, ColorResolver resolver) {
-        return  resolver.getColor(Biomes.PLAINS,pos.getX(),pos.getZ());
+        return  resolver.getColor(Minecraft.getInstance().level.getBiome(pos),pos.getX(),pos.getZ());
     }
 
     @Nullable
