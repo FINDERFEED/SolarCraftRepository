@@ -2,6 +2,7 @@ package com.finderfeed.solarforge;
 
 import com.finderfeed.solarforge.SolarAbilities.meteorite.MeteoriteProjectileRenderer;
 import com.finderfeed.solarforge.SolarAbilities.SolarStrikeEntityRender;
+import com.finderfeed.solarforge.client.rendering.rendertypes.SolarCraftRenderTypes;
 import com.finderfeed.solarforge.entities.renderers.*;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.containers.screens.InfusingTableScreen;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.containers.screens.ModuleApplierScreen;
@@ -87,6 +88,7 @@ public class SolarForgeClientRegistry {
         ItemBlockRenderTypes.setRenderLayer(BlocksRegistry.RADIANT_GRASS.get(), RenderType.cutout());
         ItemBlockRenderTypes.setRenderLayer(BlocksRegistry.RADIANT_BERRY_BUSH.get(), RenderType.cutout());
         ItemBlockRenderTypes.setRenderLayer(BlocksRegistry.RADIANT_CRYSTAL.get(), RenderType.translucent());
+        ItemBlockRenderTypes.setRenderLayer(BlocksRegistry.CRYSTAL_FLOWER.get(), RenderType.cutout());
 
         ClientRegistry.registerKeyBinding(FIRST_ABILITY_KEY);
         ClientRegistry.registerKeyBinding(SECOND_ABILITY_KEY);

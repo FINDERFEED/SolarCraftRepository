@@ -17,7 +17,7 @@ import net.minecraftforge.registries.IForgeRegistry;
 
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
-public class FeatureInit {
+public class StructurePieces {
 
 
 

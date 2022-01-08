@@ -9,8 +9,8 @@
     },
     "sky_color": 8103167,
     "fog_color": 12638463,
-    "water_color": 4159204,
-    "water_fog_color": 329011
+    "water_color": 16772662,
+    "water_fog_color": 16772662
   },
   "carvers": {
     "air": [
@@ -26,7 +26,8 @@
       "minecraft:lake_lava_surface"
     ],
     [
-      "minecraft:amethyst_geode"
+      "minecraft:amethyst_geode",
+      "solarforge:ceiling_floor_crystals"
     ],
     [
 
@@ -37,11 +38,8 @@
       "minecraft:ore_dirt",
       "minecraft:ore_gravel",
       "minecraft:ore_granite_upper",
-      "minecraft:ore_granite_lower",
       "minecraft:ore_diorite_upper",
-      "minecraft:ore_diorite_lower",
       "minecraft:ore_andesite_upper",
-      "minecraft:ore_andesite_lower",
       "minecraft:ore_tuff",
       "minecraft:ore_coal_upper",
       "minecraft:ore_coal_lower",
@@ -62,9 +60,13 @@
       "minecraft:ore_clay",
       "minecraft:disk_sand",
       "minecraft:disk_clay",
-      "minecraft:disk_gravel"
+      "minecraft:disk_gravel",
+      "solarforge:crystal_cave_ore_crystal",
+      "solarforge:ceiling_dripstonelike_crystals"
     ],
-    [],
+    [
+      "solarforge:crystal_flower"
+    ],
     [
       "minecraft:spring_water",
       "minecraft:spring_lava"

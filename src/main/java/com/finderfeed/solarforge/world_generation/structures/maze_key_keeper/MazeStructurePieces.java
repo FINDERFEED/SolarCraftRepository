@@ -1,9 +1,8 @@
 package com.finderfeed.solarforge.world_generation.structures.maze_key_keeper;
 
-import com.finderfeed.solarforge.events.other_events.FeatureInit;
+import com.finderfeed.solarforge.events.other_events.StructurePieces;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.core.Vec3i;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.entity.ChestBlockEntity;
@@ -12,22 +11,15 @@ import net.minecraft.world.level.block.Mirror;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.level.levelgen.feature.StructurePieceType;
 import net.minecraft.world.level.levelgen.structure.*;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext;
 import net.minecraft.world.level.levelgen.structure.templatesystem.BlockIgnoreProcessor;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
-import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureManager;
-import org.lwjgl.system.CallbackI;
 
-import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Random;
-import java.util.function.Function;
-
 
 
 public class MazeStructurePieces {
@@ -63,11 +55,11 @@ public class MazeStructurePieces {
     public static class Piece extends TemplateStructurePiece {
 
         public Piece( StructureManager templateManagerIn, ResourceLocation resourceLocationIn,Rotation rot, BlockPos pos) {
-            super(FeatureInit.DUNGEON_MAZE_PIECE, 0, templateManagerIn, resourceLocationIn, resourceLocationIn.toString(), makeSettings(rot,DUNGEON_PIECE), makePosition(DUNGEON_PIECE,pos,0));
+            super(StructurePieces.DUNGEON_MAZE_PIECE, 0, templateManagerIn, resourceLocationIn, resourceLocationIn.toString(), makeSettings(rot,DUNGEON_PIECE), makePosition(DUNGEON_PIECE,pos,0));
         }
 
         public Piece(  StructurePieceSerializationContext p_163670_,CompoundTag tagCompound) {
-            super(FeatureInit.DUNGEON_MAZE_PIECE, tagCompound, p_163670_.structureManager(), (loc)->{
+            super(StructurePieces.DUNGEON_MAZE_PIECE, tagCompound, p_163670_.structureManager(), (loc)->{
                 return makeSettings(Rotation.valueOf(tagCompound.getString("Rot")),loc);
             });
         }

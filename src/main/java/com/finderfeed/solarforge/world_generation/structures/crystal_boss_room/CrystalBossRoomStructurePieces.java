@@ -1,18 +1,15 @@
 package com.finderfeed.solarforge.world_generation.structures.crystal_boss_room;
 
-import com.finderfeed.solarforge.events.other_events.FeatureInit;
-import com.finderfeed.solarforge.world_generation.structures.charging_station.ChargingStationPieces;
+import com.finderfeed.solarforge.events.other_events.StructurePieces;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
-import net.minecraft.world.level.levelgen.structure.StructurePiece;
 import net.minecraft.world.level.levelgen.structure.TemplateStructurePiece;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePiecesBuilder;
@@ -20,7 +17,6 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.BlockIgnorePr
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureManager;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -42,11 +38,11 @@ public class CrystalBossRoomStructurePieces {
 
 
         public Piece( StructureManager p_163662_, ResourceLocation p_163663_,Rotation rot, BlockPos p_163666_) {
-            super(FeatureInit.CRYSTAL_BOSS_ROOM_PIECE, 0, p_163662_, p_163663_, p_163663_.toString(), makeSettings(rot,p_163663_), makePosition(p_163663_,p_163666_,0));
+            super(StructurePieces.CRYSTAL_BOSS_ROOM_PIECE, 0, p_163662_, p_163663_, p_163663_.toString(), makeSettings(rot,p_163663_), makePosition(p_163663_,p_163666_,0));
         }
 
         public Piece(StructurePieceSerializationContext p_163670_, CompoundTag tagCompound) {
-            super(FeatureInit.CRYSTAL_BOSS_ROOM_PIECE, tagCompound, p_163670_.structureManager(), (loc)->{
+            super(StructurePieces.CRYSTAL_BOSS_ROOM_PIECE, tagCompound, p_163670_.structureManager(), (loc)->{
                 return makeSettings(Rotation.valueOf(tagCompound.getString("Rot")),loc);
             });
         }

@@ -1,19 +1,19 @@
 package com.finderfeed.solarforge.world_generation.features;
 
-import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.config.SolarcraftConfig;
+import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
 import com.mojang.serialization.Codec;
-import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.Column;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
@@ -29,19 +29,14 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
-public class RadiantLandFloatingIslands extends Feature<NoneFeatureConfiguration> {
+public class CrystalCaveOreCrystal extends Feature<NoneFeatureConfiguration> {
 
     private List<Block> AVAILABLE_TO_SPAWN;
+    private static final ResourceLocation ORE_CRYSTAL = new ResourceLocation("solarforge:worldgen_features/crystal_cave_ore_crystal");
 
-    private static final ResourceLocation ISLAND1 = new ResourceLocation("solarforge:worldgen_features/floating_island_1");
-    private static final ResourceLocation ISLAND2 = new ResourceLocation("solarforge:worldgen_features/floating_island_2");
-    private static final ResourceLocation ISLAND3 = new ResourceLocation("solarforge:worldgen_features/floating_island_3");
-    private static final ResourceLocation ISLAND4 = new ResourceLocation("solarforge:worldgen_features/floating_island_4");
-    public RadiantLandFloatingIslands(Codec<NoneFeatureConfiguration> p_i231953_1_) {
-        super(p_i231953_1_);
+    public CrystalCaveOreCrystal(Codec<NoneFeatureConfiguration> p_65786_) {
+        super(p_65786_);
     }
-
-
 
     @Override
     public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> ctx) {
@@ -52,19 +47,27 @@ public class RadiantLandFloatingIslands extends Feature<NoneFeatureConfiguration
         BlockPos pos = ctx.origin();
 
         Random random = ctx.random();
+        BlockState stateAtPos = world.getBlockState(pos);
+        if (!(stateAtPos.isAir())){
+            return false;
+        }
+        Optional<Column> column = Column.scan(world,pos,30,(state)->state.is(Blocks.AIR) || state.is(Blocks.CAVE_AIR),(state)->state.is(Blocks.STONE));
+        if (column.isPresent() && column.get().getFloor().isPresent()) {
 
+            Rotation rot = Rotation.getRandom(random);
+            StructureManager manager = world.getLevel().getStructureManager();
+            StructureTemplate templ = manager.getOrCreate(ORE_CRYSTAL);
+            StructurePlaceSettings set = new StructurePlaceSettings().addProcessor(BlockIgnoreProcessor.AIR).setRandom(random).setRotation(rot).setBoundingBox(BoundingBox.infinite());
+            BlockPos blockpos1 = templ.getZeroPositionWithTransform(pos.offset(-templ.getSize().getX() / 2, 0, -templ.getSize().getZ() / 2), Mirror.NONE, rot);
+            blockpos1 = new BlockPos(blockpos1.getX(),column.get().getFloor().getAsInt()-2,blockpos1.getZ());
 
-        Rotation rot = Rotation.getRandom(random);
-        StructureManager manager = world.getLevel().getStructureManager();
-        StructureTemplate templ = manager.getOrCreate(List.of(ISLAND1,ISLAND2,ISLAND3,ISLAND4).get(random.nextInt(4)));
-        StructurePlaceSettings set = new StructurePlaceSettings().addProcessor(BlockIgnoreProcessor.AIR).setRandom(random).setRotation(rot).setBoundingBox(BoundingBox.infinite());
-        BlockPos blockpos1 = templ.getZeroPositionWithTransform(pos.offset(0,1,0), Mirror.NONE, rot);
-
-        templ.placeInWorld(world, blockpos1, blockpos1, set, random, 4);
-        templ.filterBlocks(blockpos1,set,Blocks.SEA_LANTERN).forEach((info)->{
-            setBlock(world,info.pos,AVAILABLE_TO_SPAWN.get(world.getRandom().nextInt(AVAILABLE_TO_SPAWN.size())).defaultBlockState());
-        });
-
+            templ.placeInWorld(world, blockpos1, blockpos1, set, random, 4);
+            templ.filterBlocks(blockpos1, set, Blocks.SEA_LANTERN).forEach((info) -> {
+                setBlock(world, info.pos, AVAILABLE_TO_SPAWN.get(world.getRandom().nextInt(AVAILABLE_TO_SPAWN.size())).defaultBlockState());
+            });
+        }else{
+            return false;
+        }
         return true;
     }
 

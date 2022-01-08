@@ -7,10 +7,7 @@ import com.finderfeed.solarforge.for_future_library.blocks.RotatedPillarFlammabl
 import com.finderfeed.solarforge.magic_items.blocks.infusing_table_things.infusing_pool.InfusingPool;
 import com.finderfeed.solarforge.magic_items.blocks.BlueGemDoorBlock;
 import com.finderfeed.solarforge.magic_items.blocks.*;
-import com.finderfeed.solarforge.magic_items.blocks.primitive.BonemealerBlock;
-import com.finderfeed.solarforge.magic_items.blocks.primitive.InscriptionStone;
-import com.finderfeed.solarforge.magic_items.blocks.primitive.ProgressionBlock;
-import com.finderfeed.solarforge.magic_items.blocks.primitive.ZapTurretBlock;
+import com.finderfeed.solarforge.magic_items.blocks.primitive.*;
 import com.finderfeed.solarforge.magic_items.decoration_blocks.SolarFlower;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Progression;
 import com.finderfeed.solarforge.magic_items.runic_network.repeater.RunicNetworkRepeater;
@@ -20,6 +17,7 @@ import com.finderfeed.solarforge.world_generation.structures.blocks.KeyDefender;
 import com.finderfeed.solarforge.world_generation.structures.blocks.KeyLockBlock;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -29,7 +27,7 @@ import net.minecraft.world.level.material.Material;
 import net.minecraft.world.effect.MobEffects;
 
 
-
+import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -128,6 +126,7 @@ public class BlocksRegistry {
     public static final RegistryObject<Block> RADIANT_WOOD_STAIRS = BLOCKS.register("radiant_stairs",()-> new StairBlock(()-> RADIANT_PLANKS.get().defaultBlockState(),BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS)));
     public static final RegistryObject<Block> RADIANT_WOOD_SLAB = BLOCKS.register("radiant_slab",()-> new FlammableSlabBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS),20));
     public static final RegistryObject<Block> RADIANT_CRYSTAL = BLOCKS.register("radiant_crystal",()->new GlassBlock(BlockBehaviour.Properties.copy(Blocks.GLASS)));
+    public  static  final RegistryObject<Block> CRYSTAL_FLOWER = BLOCKS.register("crystal_flower",()-> new CrystalFlower(BlockBehaviour.Properties.copy(Blocks.DEAD_BUSH).lightLevel((i)->6)));
     public static final RegistryObject<Block> RADIANT_BERRY_BUSH = BLOCKS.register("radiant_berry_bush",()->new BushBlock(BlockBehaviour.Properties.copy(Blocks.DEAD_BUSH)));
 //    public static final RegistryObject<Block> RADIANT_LAND_PORTAL = BLOCKS.register("radiant_portal",()->new RadiantPortalBlock(BlockBehaviour.Properties.copy(Blocks.BEDROCK).isViewBlocking((a, b, c)-> false).noCollission() ));
     public static final RegistryObject<Block> RADIANT_LAND_PORTAL_CREATOR = BLOCKS.register("radiant_portal_creator",()->new PortalCreatorBlock(BlockBehaviour.Properties.copy(Blocks.NETHERITE_BLOCK).isViewBlocking((a, b, c)-> false).noCollission()));

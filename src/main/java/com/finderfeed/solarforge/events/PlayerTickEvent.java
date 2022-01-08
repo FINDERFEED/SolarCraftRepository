@@ -40,6 +40,7 @@ public class PlayerTickEvent {
 //
 //            }
             if (entity.level.getGameTime() % 20 == 0) {
+
                 if (entity.level.dimension() == Level.NETHER) {
                     Helpers.fireProgressionEvent(entity, Progression.ENTER_NETHER);
                 }

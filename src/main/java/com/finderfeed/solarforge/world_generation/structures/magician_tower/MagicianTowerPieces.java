@@ -1,28 +1,22 @@
 package com.finderfeed.solarforge.world_generation.structures.magician_tower;
 
-import com.finderfeed.solarforge.events.other_events.FeatureInit;
-import com.finderfeed.solarforge.world_generation.structures.maze_key_keeper.MazeStructurePieces;
+import com.finderfeed.solarforge.events.other_events.StructurePieces;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.core.Vec3i;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.block.Mirror;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.level.levelgen.feature.StructurePieceType;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraft.world.level.levelgen.structure.StructurePiece;
 import net.minecraft.world.level.levelgen.structure.TemplateStructurePiece;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePiecesBuilder;
 import net.minecraft.world.level.levelgen.structure.templatesystem.BlockIgnoreProcessor;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
-import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureManager;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -62,11 +56,11 @@ public class MagicianTowerPieces {
 
 
         public Piece( StructureManager p_163662_, ResourceLocation p_163663_, Rotation rot, BlockPos p_163666_) {
-            super(FeatureInit.MAGICIAN_TOWER, 0, p_163662_, p_163663_, p_163663_.toString(), makeSettings(rot,DUNGEON_PIECE), makePosition(DUNGEON_PIECE,p_163666_,0));
+            super(StructurePieces.MAGICIAN_TOWER, 0, p_163662_, p_163663_, p_163663_.toString(), makeSettings(rot,DUNGEON_PIECE), makePosition(DUNGEON_PIECE,p_163666_,0));
         }
 
         public Piece( StructurePieceSerializationContext p_163670_, CompoundTag tagCompound) {
-            super(FeatureInit.MAGICIAN_TOWER, tagCompound, p_163670_.structureManager(), (loc)->{
+            super(StructurePieces.MAGICIAN_TOWER, tagCompound, p_163670_.structureManager(), (loc)->{
                 return makeSettings(Rotation.valueOf(tagCompound.getString("Rot")),loc);
             });
         }

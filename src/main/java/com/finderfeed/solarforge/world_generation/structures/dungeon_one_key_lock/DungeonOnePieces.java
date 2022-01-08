@@ -1,10 +1,8 @@
 package com.finderfeed.solarforge.world_generation.structures.dungeon_one_key_lock;
 
-import com.finderfeed.solarforge.events.other_events.FeatureInit;
-import com.finderfeed.solarforge.world_generation.structures.magician_tower.MagicianTowerPieces;
+import com.finderfeed.solarforge.events.other_events.StructurePieces;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.core.Vec3i;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.block.Blocks;
 
 import net.minecraft.nbt.CompoundTag;
@@ -14,22 +12,17 @@ import net.minecraft.world.level.block.Mirror;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.level.levelgen.feature.StructurePieceType;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraft.world.level.levelgen.structure.StructurePiece;
 import net.minecraft.world.level.levelgen.structure.TemplateStructurePiece;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePiecesBuilder;
 import net.minecraft.world.level.levelgen.structure.templatesystem.BlockIgnoreProcessor;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
-import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureManager;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import java.util.function.Function;
 
 
 public class DungeonOnePieces {
@@ -65,11 +58,11 @@ public class DungeonOnePieces {
          */
         public static class Piece extends TemplateStructurePiece {
             public Piece( StructureManager p_163662_, ResourceLocation p_163663_,  Rotation rot, BlockPos p_163666_) {
-                super(FeatureInit.DUNGEON_ONE_PIECE_TEST, 0, p_163662_, p_163663_, p_163663_.toString(), makeSettings(rot,p_163663_), makePosition(p_163663_,p_163666_,0));
+                super(StructurePieces.DUNGEON_ONE_PIECE_TEST, 0, p_163662_, p_163663_, p_163663_.toString(), makeSettings(rot,p_163663_), makePosition(p_163663_,p_163666_,0));
             }
 
             public Piece(  StructurePieceSerializationContext p_163670_,CompoundTag tagCompound) {
-                super(FeatureInit.DUNGEON_ONE_PIECE_TEST, tagCompound, p_163670_.structureManager(), (loc)->{
+                super(StructurePieces.DUNGEON_ONE_PIECE_TEST, tagCompound, p_163670_.structureManager(), (loc)->{
                     return makeSettings(Rotation.valueOf(tagCompound.getString("Rot")),loc);
                 });
             }
