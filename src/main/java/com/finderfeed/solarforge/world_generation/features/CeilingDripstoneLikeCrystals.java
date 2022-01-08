@@ -57,6 +57,7 @@ public class CeilingDripstoneLikeCrystals extends Feature<NoneFeatureConfigurati
                                        fillPositions.add(above);
                                    }
                                    if (end){
+                                       fillPositions.clear();
                                        return false;
                                    }
                                }

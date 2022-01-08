@@ -134,11 +134,13 @@ public abstract class AbstractRunicEnergyContainer extends BlockEntity implement
                     constructWay(type);
                 }
             }else{
-                if (nullOrGiverPositionForClient.contains(first.getBlockPos())){
-                    nullOrGiverPositionForClient.remove(first.getBlockPos());
-                    BlockState state = level.getBlockState(worldPosition);
-                    this.setChanged();
-                    this.level.sendBlockUpdated(worldPosition,state,state,3);
+                if (first != null) {
+                    if (nullOrGiverPositionForClient.contains(first.getBlockPos())) {
+                        nullOrGiverPositionForClient.remove(first.getBlockPos());
+                        BlockState state = level.getBlockState(worldPosition);
+                        this.setChanged();
+                        this.level.sendBlockUpdated(worldPosition, state, state, 3);
+                    }
                 }
                 RunicEnergyPath.resetRepeaterConnections(PATH_TO_CONTAINERS.get(type),level);
                 constructWay(type);

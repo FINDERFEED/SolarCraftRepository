@@ -68,14 +68,24 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
 //        }
 
 
-        if (keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_LEFT) && !(scrollX -scroll < -700)){
-            scrollX-=scroll;
-        } else if (keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_UP) && !(scrollY -scroll < -700)){
-            scrollY-=scroll;
-        }else if(keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_DOWN) && !(scrollY +scroll > 0)){
-            scrollY+=scroll;
-        }else if (keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_RIGHT)&& !(scrollX +scroll > 0)){
+//        if (keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_LEFT) && !(scrollX -scroll < -700)){
+//            scrollX-=scroll;
+//        } else if (keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_UP) && !(scrollY -scroll < -700)){
+//            scrollY-=scroll;
+//        }else if(keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_DOWN) && !(scrollY +scroll > 0)){
+//            scrollY+=scroll;
+//        }else if (keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_RIGHT)&& !(scrollX +scroll > 0)){
+//            scrollX+=scroll;
+//        }
+        if ((keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_LEFT) || keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_A))
+                && !(scrollX +scroll > 0)){
             scrollX+=scroll;
+        } else if ((keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_UP) || keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_W)) && !(scrollY +scroll > 0)){
+            scrollY+=scroll;
+        }else if((keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_DOWN) || keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_S)) && !(scrollY -scroll < -700)){
+            scrollY-=scroll;
+        }else if ((keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_RIGHT) || keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_D)) && !(scrollX -scroll < -700)){
+            scrollX-=scroll;
         }
 
         if (this.prevscrollX != scrollX){
