@@ -341,14 +341,14 @@ public class FeaturesRegistry {
             CRYSTAL_FLOWER_CONF =
                     Feature.FLOWER.configured(FeatureUtils.simpleRandomPatchConfiguration(7,STONE_FLOWERS.configured(new SimpleBlockConfiguration(BlockStateProvider.simple(BlocksRegistry.CRYSTAL_FLOWER.get()))).onlyWhenEmpty()));
             CRYSTAL_FLOWER_PLACEMENT = CRYSTAL_FLOWER_CONF.placed(
-              CountPlacement.of(UniformInt.of(70,80)),PlacementUtils.RANGE_BOTTOM_TO_MAX_TERRAIN_HEIGHT,BiomeFilter.biome()
+              CountPlacement.of(UniformInt.of(50,60)),PlacementUtils.RANGE_BOTTOM_TO_MAX_TERRAIN_HEIGHT,BiomeFilter.biome()
             );
             registerConfiguredFeature(CRYSTAL_FLOWER_CONF,"crystal_flower");
             registerPlacedFeature(CRYSTAL_FLOWER_PLACEMENT,"crystal_flower");
 
             CEILING_DRIPSTONE_LIKE_CRYSTALS_CONF = CEILING_DRIPSTONE_LIKE_CRYSTALS.configured(NoneFeatureConfiguration.INSTANCE);
             CEILING_DRIPSTONE_LIKE_CRYSTALS_PLACEMENT = CEILING_DRIPSTONE_LIKE_CRYSTALS_CONF.placed(
-                    CountPlacement.of(UniformInt.of(5,10)),PlacementUtils.RANGE_BOTTOM_TO_MAX_TERRAIN_HEIGHT,BiomeFilter.biome()
+                    CountPlacement.of(UniformInt.of(20,30)),InSquarePlacement.spread(),PlacementUtils.RANGE_BOTTOM_TO_MAX_TERRAIN_HEIGHT,BiomeFilter.biome()
             );
 
             registerPlacedFeature(CEILING_DRIPSTONE_LIKE_CRYSTALS_PLACEMENT,"ceiling_dripstonelike_crystals");
