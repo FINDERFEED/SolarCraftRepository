@@ -1,7 +1,5 @@
-package com.finderfeed.solarforge.custom_loot_conditions;
+package com.finderfeed.solarforge.loot_modifiers.custom_loot_conditions;
 
-import com.finderfeed.solarforge.events.other_events.event_handler.ModuleEventsHandler;
-import com.finderfeed.solarforge.registries.items.ItemsRegister;
 import com.google.gson.JsonObject;
 import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.util.GsonHelper;

@@ -1,4 +1,4 @@
-package com.finderfeed.solarforge.custom_loot_conditions;
+package com.finderfeed.solarforge.loot_modifiers.custom_loot_conditions;
 
 import com.google.gson.JsonObject;
 import net.minecraft.advancements.critereon.ItemPredicate;

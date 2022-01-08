@@ -1,8 +1,7 @@
 package com.finderfeed.solarforge.registries.features.configured;
 
-import com.finderfeed.solarforge.Helpers;
-import com.finderfeed.solarforge.custom_loot_conditions.SolarcraftModulePredicate;
-import com.finderfeed.solarforge.custom_loot_conditions.SolarcraftNBTPredicate;
+import com.finderfeed.solarforge.loot_modifiers.custom_loot_conditions.SolarcraftModulePredicate;
+import com.finderfeed.solarforge.loot_modifiers.custom_loot_conditions.SolarcraftNBTPredicate;
 import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
 import net.minecraft.advancements.critereon.ItemPredicate;
 
@@ -22,7 +21,6 @@ import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.placement.HeightmapPlacement;
 import net.minecraft.world.level.levelgen.placement.InSquarePlacement;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
-import net.minecraft.world.level.levelgen.placement.PlacementModifier;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 
 

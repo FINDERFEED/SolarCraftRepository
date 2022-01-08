@@ -13,5 +13,7 @@ public class RegistryLootModifiers {
     @SubscribeEvent
     public static void registerThemAll(final RegistryEvent.Register<GlobalLootModifierSerializer<?>> event){
         event.getRegistry().register(new SmeltingLootModifier.Serializer().setRegistryName(new ResourceLocation("solarforge","smelting")));
+        event.getRegistry().register(new AddRandomAncientFragmentToChests.Serializer().setRegistryName(new ResourceLocation("solarforge","add_fragments")));
+
     }
 }

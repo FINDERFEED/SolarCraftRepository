@@ -158,7 +158,7 @@ public class EventHandler {
             if (!world.isClientSide && !player.isCreative()) {
 
                 if ((world.getGameTime() % 20 == 1) && !(actualtime % 24000 <= 13000) && (world.dimension() == RADIANT_LAND_KEY)) {
-                    if (!Helpers.playerInBossfight(player)) {
+                    if (world.canSeeSky(player.getOnPos()) && !Helpers.playerInBossfight(player)) {
                         player.addEffect(new MobEffectInstance(EffectsRegister.STAR_GAZE_EFFECT.get(), 400, 0));
                     }
                 }
@@ -166,7 +166,7 @@ public class EventHandler {
                 if (player.hasEffect(EffectsRegister.STAR_GAZE_EFFECT.get())) {
                     if (world.getGameTime() % 80 == 1) {
                         DamageSource src = SolarcraftDamageSources.STARGAZE.bypassArmor().setMagic();
-                        player.hurt(src, 4);
+                        player.hurt(src, 6);
                     }
                 }
             }
