@@ -8,14 +8,16 @@
       "item": "solarforge:blue_gem_enriched"
     },
     {
-      "item": "solarforge:energy_dust"
+      "item": "solarforge:energy_dust",
+      "count": 16
     },
     {
-      "item": "solarforge:solar_dust"
+      "item": "solarforge:solar_dust",
+      "count": 8
     }
   ],
   "result": "solarforge:geminium_ingot",
-  "time": 500,
+  "time": 200,
   "requires": "solar_forge_progression_solar_lens_craft",
   "category": "solar_category.smelting"
 }

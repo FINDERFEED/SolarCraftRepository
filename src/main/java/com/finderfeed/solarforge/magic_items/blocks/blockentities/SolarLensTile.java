@@ -5,10 +5,7 @@ import com.finderfeed.solarforge.misc_things.PhantomInventory;
 import com.finderfeed.solarforge.recipe_types.solar_smelting.SolarSmeltingRecipe;
 import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.item.crafting.SmeltingRecipe;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
@@ -20,13 +17,14 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class SolarLensTile extends BlockEntity  {
 
-    public PhantomInventory INVENTORY = new PhantomInventory(4);
+    public PhantomInventory INVENTORY = new PhantomInventory(6);
     public int SMELTING_TIME = 0;
     public int CURRENT_SMELTING_TIME = 0;
     public boolean RECIPE_IN_PROGRESS = false;
@@ -40,7 +38,7 @@ public class SolarLensTile extends BlockEntity  {
     public static void tick(Level world, BlockPos post, BlockState blockState, SolarLensTile tile) {
         if (!tile.level.isClientSide){
 
-            AABB box = new AABB(-1,-2.5,-1,1,0,1);
+            AABB box = new AABB(-1,-4,-1,1,0,1);
             if (tile.level.canSeeSky(tile.worldPosition.above()) && tile.getLevel().getDayTime() % 24000 <= 13000){
 
                 List<ItemEntity> list = tile.level.getEntitiesOfClass(ItemEntity.class,box.move(tile.worldPosition));
@@ -59,14 +57,19 @@ public class SolarLensTile extends BlockEntity  {
 
                 Optional<SolarSmeltingRecipe> recipe = tile.level.getRecipeManager().getRecipeFor(SolarForge.SOLAR_SMELTING,tile.INVENTORY,tile.level);
                 if (recipe.isPresent() ){
-
+                    SolarSmeltingRecipe actualRecipe = recipe.get();
                     tile.RECIPE_IN_PROGRESS = true;
                     tile.SMELTING_TIME = recipe.get().smeltingTime;
                     tile.CURRENT_SMELTING_TIME++;
-                    int count = tile.findLeastItemResultAmount();
+                    int count = tile.getMinRecipeOutput(actualRecipe);
                     if (tile.CURRENT_SMELTING_TIME >= tile.SMELTING_TIME*count){
                         for (ItemEntity a : list){
-                            a.getItem().grow(-count);
+                            for (ItemStack item : actualRecipe.getStacks()){
+                                if (a.getItem().getItem() == item.getItem()){
+                                    a.getItem().shrink(item.getCount()*count);
+                                }
+                            }
+
                         }
                         Vec3 pos = new Vec3(tile.worldPosition.getX()+0.5d,tile.worldPosition.getY()-1,tile.worldPosition.getZ()+0.5d);
                         ItemEntity entity = new ItemEntity(tile.level,pos.x,pos.y,pos.z,new ItemStack(recipe.get().output.getItem(),count));
@@ -84,17 +87,41 @@ public class SolarLensTile extends BlockEntity  {
         }
     }
 
-    private int findLeastItemResultAmount(){
-        AtomicInteger mod = new AtomicInteger(99999);
-        INVENTORY.INVENTORY.forEach((ingr)->{
-            if (!ingr.isEmpty()){
-                int itemcount = ingr.getCount();
-                if (itemcount < mod.get()){
-                    mod.set(itemcount);
+    private int getMinRecipeOutput(SolarSmeltingRecipe recipe){
+//        AtomicInteger mod = new AtomicInteger(99999);
+//        INVENTORY.INVENTORY.forEach((ingr)->{
+//            if (!ingr.isEmpty()){
+//                int itemcount = ingr.getCount();
+//                if (itemcount < mod.get()){
+//                    mod.set(itemcount);
+//                }
+//            }
+//        });
+        List<ItemStack> recipeItems = new ArrayList<>(recipe.getStacks());
+        ItemStack output = recipe.getResultItem();
+        int outputSize = output.getMaxStackSize();
+        if (outputSize == 1){
+            return  1;
+        }
+        int minRecipesAmount = Integer.MAX_VALUE;
+
+        for (ItemStack item : INVENTORY){
+            for (ItemStack recipeItem : recipeItems){
+                if (recipeItem.getItem() == item.getItem()){
+                    int invItemCount = item.getCount();
+                    int recipeItemCount = recipeItem.getCount();
+
+                    int minOutput = invItemCount / recipeItemCount;
+                    if (minOutput < minRecipesAmount){
+                        minRecipesAmount = minOutput;
+                    }
+                    break;
                 }
             }
-        });
-        return mod.get();
+        }
+
+
+        return Math.min(outputSize, minRecipesAmount);
     }
 
 

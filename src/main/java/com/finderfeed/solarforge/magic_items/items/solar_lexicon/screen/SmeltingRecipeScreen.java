@@ -42,10 +42,7 @@ public class SmeltingRecipeScreen extends Screen {
         this.relX = (width/scale - 183)/2;
         this.relY = (height - 218*scale)/2/scale;
         stacks = new ArrayList<>();
-        addStack(recipe.list.get(0),stacks);
-        addStack(recipe.list.get(1),stacks);
-        addStack(recipe.list.get(2),stacks);
-        addStack(recipe.list.get(3),stacks);
+
 //        stacks.add(recipe.list.get(0).getItems()[0]);
 //        stacks.add(recipe.list.get(1).getItems()[0]);
 //        stacks.add(recipe.list.get(2).getItems()[0]);
@@ -62,22 +59,35 @@ public class SmeltingRecipeScreen extends Screen {
     public void render(PoseStack matrices, int mousex, int mousey, float partialTicks) {
         ClientHelpers.bindText(MAIN_SCREEN);
         blit(matrices,relX,relY,0,0,256,256);
-        renderItemAndTooltip(stacks.get(0),relX+77,relY+111,mousex,mousey,matrices,false);
-        renderItemAndTooltip(stacks.get(1),relX+94,relY+111,mousex,mousey,matrices,false);
-        renderItemAndTooltip(stacks.get(2),relX+111,relY+111,mousex,mousey,matrices,false);
-        renderItemAndTooltip(stacks.get(3),relX+77,relY+128,mousex,mousey,matrices,false);
+//        renderItemAndTooltip(stacks.get(0),relX+77,relY+111,mousex,mousey,matrices,false);
+//        renderItemAndTooltip(stacks.get(1),relX+94,relY+111,mousex,mousey,matrices,false);
+//        renderItemAndTooltip(stacks.get(2),relX+111,relY+111,mousex,mousey,matrices,false);
+//        renderItemAndTooltip(stacks.get(3),relX+77,relY+128,mousex,mousey,matrices,false);
 
-        renderItemAndTooltip(stacks.get(4),relX+94,relY+161,mousex,mousey,matrices,false);
+        int iter = 0;
+
+        for (ItemStack item : recipe.getStacks()){
+
+            int posX = (iter % 3) * 16;
+            int posY = (int)Math.floor((float)iter / 3) * 16;
+
+            renderItemAndTooltip(item,relX + 77 + posX , relY + 111 + posY,mousex,mousey,matrices,false);
+
+            iter++;
+        }
+
+
+        renderItemAndTooltip(recipe.getResultItem(),relX+94,relY+161,mousex,mousey,matrices,false);
         super.render(matrices,mousex,mousey,partialTicks);
     }
     private void renderItemAndTooltip(ItemStack toRender,int place1,int place2,int mousex,int mousey,PoseStack matrices,boolean last){
+        ItemStack renderThis = toRender.copy();
         if (!last) {
             minecraft.getItemRenderer().renderGuiItem(toRender, place1, place2);
         }else{
-            ItemStack renderThis = toRender.copy();
             minecraft.getItemRenderer().renderGuiItem(renderThis, place1, place2);
-            minecraft.getItemRenderer().renderGuiItemDecorations(font,renderThis,place1,place2);
         }
+        minecraft.getItemRenderer().renderGuiItemDecorations(font,renderThis,place1,place2);
 
 
         if (((mousex >= place1) && (mousex <= place1+16)) && ((mousey >= place2) && (mousey <= place2+16)) && !toRender.getItem().equals(Items.AIR)){

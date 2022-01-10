@@ -8,7 +8,10 @@ import net.minecraft.core.NonNullList;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class PhantomInventory implements Container {
+import javax.annotation.Nonnull;
+import java.util.Iterator;
+
+public class PhantomInventory implements Container,Iterable<ItemStack>{
 
     public int size;
     public NonNullList<ItemStack> INVENTORY;
@@ -84,5 +87,11 @@ public class PhantomInventory implements Container {
     @Override
     public void clearContent() {
         INVENTORY.clear();
+    }
+
+    @Nonnull
+    @Override
+    public Iterator<ItemStack> iterator() {
+        return INVENTORY.iterator();
     }
 }
