@@ -85,6 +85,7 @@ public class FeaturesRegistry {
     public static final Feature<NoneFeatureConfiguration> CEILING_FLOOR_CRYSTALS = new WallCrystalsCrystalCave(NoneFeatureConfiguration.CODEC);
     public static final Feature<SimpleBlockConfiguration> STONE_FLOWERS = new StoneFlowersFeature(SimpleBlockConfiguration.CODEC);
     public static final Feature<NoneFeatureConfiguration> CEILING_DRIPSTONE_LIKE_CRYSTALS = new CeilingDripstoneLikeCrystals(NoneFeatureConfiguration.CODEC);
+    public static final Feature<NoneFeatureConfiguration> CRYSTALLIZED_RUNIC_ENERGY_CRYSTALS = new CrystallizedRunicEnergyCrystalsFeature(NoneFeatureConfiguration.CODEC);
 
     public static ConfiguredFeature<?,?> RADIANT_TREE_CONFIGURED_CONF;
     public static ConfiguredFeature<?,?> RADIANT_SMALL_TREE_CONFIGURED_CONF;
@@ -99,6 +100,7 @@ public class FeaturesRegistry {
     public static ConfiguredFeature<?,?> CEILING_FLOOR_CRYSTALS_CONF;
     public static ConfiguredFeature<?,?> CRYSTAL_FLOWER_CONF;
     public static ConfiguredFeature<?,?> CEILING_DRIPSTONE_LIKE_CRYSTALS_CONF;
+    public static ConfiguredFeature<?,?> CRYSTALLIZED_RUNIC_ENERGY_CRYSTALS_CONF;
 
     public static PlacedFeature BURNT_TREE_2;
     public static PlacedFeature BURNT_TREE_1;
@@ -115,6 +117,7 @@ public class FeaturesRegistry {
     public static PlacedFeature CEILING_FLOOR_CRYSTALS_PLACEMENT;
     public static PlacedFeature CRYSTAL_FLOWER_PLACEMENT;
     public static PlacedFeature CEILING_DRIPSTONE_LIKE_CRYSTALS_PLACEMENT;
+    public static PlacedFeature CRYSTALLIZED_RUNIC_ENERGY_CRYSTALS_PLACEMENT;
     //public static ConfiguredFeature<?,?> RADIANT_LAND_AMBIENT_TREE;
 
 
@@ -145,6 +148,11 @@ public class FeaturesRegistry {
         event.getRegistry().register(CEILING_FLOOR_CRYSTALS.setRegistryName(new ResourceLocation(SolarForge.MOD_ID,"ceiling_floor_crystals")));
         event.getRegistry().register(STONE_FLOWERS.setRegistryName(new ResourceLocation(SolarForge.MOD_ID,"stone_flowers")));
         event.getRegistry().register(CEILING_DRIPSTONE_LIKE_CRYSTALS.setRegistryName(new ResourceLocation(SolarForge.MOD_ID,"ceiling_dripstonelike_crystals")));
+        registerFeature(event,CRYSTALLIZED_RUNIC_ENERGY_CRYSTALS,"crystallized_runic_energy");
+    }
+    private static void registerFeature(RegistryEvent.Register<Feature<?>> event,Feature<?> f,String name){
+        event.getRegistry().register(f.setRegistryName(new ResourceLocation(SolarForge.MOD_ID,name)));
+
     }
 
 
@@ -353,6 +361,14 @@ public class FeaturesRegistry {
 
             registerPlacedFeature(CEILING_DRIPSTONE_LIKE_CRYSTALS_PLACEMENT,"ceiling_dripstonelike_crystals");
             registerConfiguredFeature(CEILING_DRIPSTONE_LIKE_CRYSTALS_CONF,"ceiling_dripstonelike_crystals");
+
+            CRYSTALLIZED_RUNIC_ENERGY_CRYSTALS_CONF = CRYSTALLIZED_RUNIC_ENERGY_CRYSTALS.configured(NoneFeatureConfiguration.INSTANCE);
+            CRYSTALLIZED_RUNIC_ENERGY_CRYSTALS_PLACEMENT = CRYSTALLIZED_RUNIC_ENERGY_CRYSTALS_CONF.placed(
+                    CountPlacement.of(UniformInt.of(60,100)),InSquarePlacement.spread(),HeightRangePlacement.uniform(VerticalAnchor.bottom(),VerticalAnchor.absolute(100)),BiomeFilter.biome()
+            );
+
+            registerConfiguredFeature(CRYSTALLIZED_RUNIC_ENERGY_CRYSTALS_CONF,"crystallized_runic_energy");
+            registerPlacedFeature(CRYSTALLIZED_RUNIC_ENERGY_CRYSTALS_PLACEMENT,"crystallized_runic_energy");
         });
     }
     private static void registerConfiguredFeature(ConfiguredFeature<?,?> feature,String registryid){

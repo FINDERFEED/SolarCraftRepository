@@ -9,6 +9,7 @@ public class AchievementTree {
     public static final AchievementTree INSTANCE = loadTree();
 
     public HashMap<Progression,TreePart<Progression>> ACHIEVEMENT_TREE = new HashMap<>();
+    public List<Progression> PROGRESSIONS = new ArrayList<>();
 
     public AchievementTree(){
 
@@ -17,6 +18,7 @@ public class AchievementTree {
 
     public static AchievementTree loadTree(){
         AchievementTree tree = new AchievementTree();
+
         for (Progression a : Progression.allProgressions){
             tree.addGeneralAchievement(a);
         }
@@ -40,53 +42,6 @@ public class AchievementTree {
         tree.addAchievementRequirements(Progression.RADIANT_LAND,Progression.DIMENSIONAL_SHARD_DUNGEON,Progression.TRADE_FOR_BLUE_GEM,Progression.CRAFT_SOLAR_ENERGY_GENERATOR);
         tree.addAchievementRequirements(Progression.KILL_CRYSTAL_BOSS,Progression.RADIANT_LAND);
 
-//
-//        List<Progression> list = new ArrayList<>(0);
-////        list.add(Progression.FIND_SOLAR_STONE);
-////        tree.addAchievementRequirements(Progression.CRAFT_SOLAR_INFUSER,list);
-//
-//
-//        list.add(Progression.ACQUIRE_SOLAR_DUST);
-//        list.add(Progression.CRAFT_SOLAR_INFUSER);
-//        tree.addAchievementRequirements(Progression.USE_SOLAR_INFUSER,list);
-//
-//
-//        list.add(Progression.CRAFT_SOLAR_FORGE);
-//        tree.addAchievementRequirements(Progression.ACQUIRE_SOLAR_DUST,list);
-//
-//        list.add(Progression.FIND_KEY_SOURCE);
-//        list.add(Progression.FIND_INFUSER_DUNGEON);
-//        list.add(Progression.FIND_KEY_LOCK_DUNGEON);
-//        tree.addAchievementRequirements(Progression.ACQUIRE_COLD_STAR,list);
-//
-//        list.add(Progression.ACQUIRE_COLD_STAR);
-//        list.add(Progression.FIND_INFUSER_DUNGEON);
-//        tree.addAchievementRequirements(Progression.ACQUIRE_COLD_STAR_ACTIVATED,list);
-//
-//        list.add(Progression.ACQUIRE_COLD_STAR_ACTIVATED);
-//        list.add(Progression.USE_SOLAR_INFUSER);
-//        tree.addAchievementRequirements(Progression.CRAFT_SOLAR_LENS,list);
-//
-//        list.add(Progression.CRAFT_SOLAR_LENS);
-//        list.add(Progression.TRANSMUTE_GEM);
-//        list.add(Progression.RUNIC_ENERGY_REPEATER);
-//        tree.addAchievementRequirements(Progression.CRAFT_SOLAR_ENERGY_GENERATOR,list);
-//
-//        list.add(Progression.FIND_INCINERATED_FOREST);
-//        list.add(Progression.TRADE_FOR_BLUE_GEM);
-//        tree.addAchievementRequirements(Progression.TRANSMUTE_GEM,list);
-//
-//
-//        list.add(Progression.TRANSMUTE_GEM);
-//        tree.addAchievementRequirements(Progression.DIMENSIONAL_SHARD_DUNGEON,list);
-//
-//        tree.addAchievementRequirements(Progression.CRAFT_SOLAR_FORGE, Progression.ENTER_NETHER);
-////        tree.addAchievementRequirements(Progression.FIND_SOLAR_STONE, Progression.ENTER_NETHER);
-//        tree.addAchievementRequirements(Progression.RUNE_ENERGY_CLAIM, Progression.RUNE_ENERGY_DEPOSIT);
-//        tree.addAchievementRequirements(Progression.SOLAR_RUNE, Progression.RUNE_ENERGY_DEPOSIT);
-//        tree.addAchievementRequirements(Progression.RUNIC_ENERGY_REPEATER, Progression.RUNE_ENERGY_DEPOSIT, Progression.USE_SOLAR_INFUSER, Progression.ACQUIRE_COLD_STAR_ACTIVATED);
-//        tree.addAchievementRequirements(Progression.DIMENSION_CORE, Progression.CRAFT_SOLAR_ENERGY_GENERATOR, Progression.DIMENSIONAL_SHARD_DUNGEON);
-//        tree.addAchievementRequirements(Progression.KILL_CRYSTAL_BOSS, Progression.DIMENSION_CORE);
         return tree;
     }
 

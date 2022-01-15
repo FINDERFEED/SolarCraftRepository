@@ -29,7 +29,7 @@ public class TriggerToastPacket {
     public void handle(Supplier<NetworkEvent.Context> ctx){
         ctx.get().enqueueWork(()->{
             DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> ()-> {
-                AchievementTree tree = AchievementTree.loadTree();
+                AchievementTree tree = AchievementTree.INSTANCE;
                 ClientHelpers.playSound(Sounds.PROGRESSION_GAIN.get(),1,1);
                 SolarAchievementToast.addOrUpdate(Minecraft.getInstance().getToasts(), tree.getAchievementById(id));
             });

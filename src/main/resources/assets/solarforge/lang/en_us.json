@@ -317,9 +317,9 @@
   "ach.rune_energy_deposit": "Yellow beacons",
   "ach.solar_rune": "Runes",
   "ach.enter_nether": "The Nether",
-  "pre.rune_energy_claim": "Pylons radiates with strange energy, maybe you can collect it?",
+  "pre.rune_energy_claim": "Pylons radiate with strange energy, maybe you can collect it?",
   "pre.rune_energy_deposit": "Strange structures scattered around the world.",
-  "pre.solar_rune": "Pylons radiates with strange energy, maybe you can store it in something?",
+  "pre.solar_rune": "Pylons radiate with strange energy, maybe you can store it in something?",
   "pre.enter_nether": "Scary and uncontrollable world hides behind purple veil.",
   "solar_category.beginning": "Start",
   "solar_category.solar_forge": "Solar forge basics",
@@ -578,5 +578,10 @@
   "solar_fragment.solar_infuser_structure_3": "Infuser structure 3",
   "block.solarforge.speed_road": "Speed road",
   "solar_fragment.speed_road": "Speed road",
-  "speed_road.lore": "Running between your chests and crafting tables can take a lot of time. Well this won't teleport your items but it will speed you up instead! Gives speed I when stepping on."
+  "speed_road.lore": "Running between your chests and crafting tables can take a lot of time. Well this won't teleport your items but it will speed you up instead! Gives speed I when stepping on.",
+  "solarcraft.stages": "These are progression stages (each row is a progression stage). When you have completed the stage and ALL stages before it you will be able to unlock new fragments.",
+  "solarcraft.completed": "Status: Completed",
+  "solarcraft.not_completed": "Status: Not completed",
+  "solarcraft.cannot_be_completed": "Status: Cannot be completed",
+  "block.solarforge.crystallized_runic_energy": "Crystallized runic energy"
 }

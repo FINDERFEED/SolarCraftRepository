@@ -17,7 +17,6 @@ import com.finderfeed.solarforge.world_generation.structures.blocks.KeyDefender;
 import com.finderfeed.solarforge.world_generation.structures.blocks.KeyLockBlock;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -27,7 +26,8 @@ import net.minecraft.world.level.material.Material;
 import net.minecraft.world.effect.MobEffects;
 
 
-import net.minecraftforge.common.IPlantable;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -133,4 +133,25 @@ public class BlocksRegistry {
     public  static  final RegistryObject<Block> DIMENSION_CORE = BLOCKS.register("dimension_core",()-> new Block(BlockBehaviour.Properties.copy(Blocks.STONE)));
     public  static  final RegistryObject<Block> WORMHOLE = BLOCKS.register("wormhole",()-> new WormholeBlock(BlockBehaviour.Properties.copy(Blocks.BEDROCK).noCollission()));
     public  static  final RegistryObject<Block> BONEMEALER = BLOCKS.register("bonemealer",()-> new BonemealerBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).sound(SoundType.NETHERITE_BLOCK).noOcclusion()));
+    public  static  final RegistryObject<Block> CRYSTALLIZED_RUNIC_ENERGY = BLOCKS.register("crystallized_runic_energy",()-> new DirectionBlock(BlockBehaviour.Properties.copy(Blocks.STONE).sound(SoundType.GLASS).noOcclusion()){
+
+        private VoxelShape shape_up = Block.box(5,0,5,11,12,11);
+        private VoxelShape shape_down = Block.box(5,4,5,11,16,11);
+        private VoxelShape shape_south = Block.box(5,5,0,11,11,12);
+        private VoxelShape shape_north = Block.box(5,5,4,11,11,16);
+        private VoxelShape shape_east = Block.box(0,5,5,12,11,11);
+        private VoxelShape shape_west = Block.box(4,5,5,16,11,11);
+
+        @Override
+        public VoxelShape getShape(BlockState p_60555_, BlockGetter p_60556_, BlockPos p_60557_, CollisionContext p_60558_) {
+            return switch (p_60555_.getValue(DirectionBlock.PROP)){
+                case UP -> shape_up;
+                case DOWN -> shape_down;
+                case SOUTH -> shape_south;
+                case NORTH -> shape_north;
+                case EAST -> shape_east;
+                case WEST -> shape_west;
+            };
+        }
+    });
 }

@@ -129,7 +129,7 @@ public class Helpers {
     }
 
     public static boolean canPlayerUnlock(Progression ach, Player entity){
-        AchievementTree tree = AchievementTree.loadTree();
+        AchievementTree tree = AchievementTree.INSTANCE;
         for (Progression a : tree.getAchievementRequirements(ach)){
             if (!entity.getPersistentData().getBoolean("solar_forge_progression_"+a.getAchievementCode())){
                 return false;

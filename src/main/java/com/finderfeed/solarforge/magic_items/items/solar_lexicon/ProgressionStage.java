@@ -4,10 +4,13 @@ import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Pr
 import org.apache.commons.lang3.ArrayUtils;
 
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.Arrays;
+import java.util.Iterator;
 
 
-public enum ProgressionStage {
+public enum ProgressionStage implements Iterable<Progression>{
     PRE_BEGGINING(null,"pre_beggining",Progression.ENTER_NETHER),
     BEGGINING(PRE_BEGGINING,"beggining",Progression.RUNE_ENERGY_PYLON,Progression.FIND_INCINERATED_FOREST),
     BEGGINING_2(BEGGINING,"beggining_2",Progression.ENTER_END,Progression.INFUSING_CRAFTING_TABLE),
@@ -38,5 +41,13 @@ public enum ProgressionStage {
         }
     }
 
+    public static ProgressionStage[] STAGES_IN_ORDER = {
+      PRE_BEGGINING,BEGGINING,BEGGINING_2,PRE_FORGE,FORGE,AFTER_INFUSER,AFTER_CATALYSTS,PRE_LENS,AFTER_LENS,SOLAR_ENERGY,DIMENSION
+    };
 
+    @Nonnull
+    @Override
+    public Iterator<Progression> iterator() {
+        return Arrays.stream(SELF_PROGRESSIONS).iterator();
+    }
 }

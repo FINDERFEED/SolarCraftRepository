@@ -230,5 +230,6 @@ public class ItemsRegister {
     public static final RegistryObject<ModuleItem> POISONING_BLADE_MODULE = ITEMS.register("poisoning_blade_module",()->new ModuleItem(new Item.Properties().tab(SolarForge.SOLAR_GROUP_TOOLS).stacksTo(1), ModuleItem.Type.SWORDS, ModuleItem.Tags.POISONING_BLADE,ModuleItem.Tags.MAGIC_DAMAGE_BONUS_5, ModuleItem.Tags.FURY_SWIPES));
     public static final RegistryObject<ModuleItem> FURY_SWIPES_MODULE = ITEMS.register("fury_swipes_module",()->new ModuleItem(new Item.Properties().tab(SolarForge.SOLAR_GROUP_TOOLS).stacksTo(1), ModuleItem.Type.SWORDS, ModuleItem.Tags.FURY_SWIPES,ModuleItem.Tags.MAGIC_DAMAGE_BONUS_5, ModuleItem.Tags.POISONING_BLADE));
     public static final RegistryObject<Item> BONEMEALER = ITEMS.register("bonemealer",()->new BlockItem(BlocksRegistry.BONEMEALER.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
+    public static final RegistryObject<Item> CRYSTALLIZED_RUNIC_ENERGY = ITEMS.register("crystallized_runic_energy",()->new BlockItem(BlocksRegistry.CRYSTALLIZED_RUNIC_ENERGY.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
 
 }

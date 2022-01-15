@@ -33,6 +33,9 @@ import java.util.List;
 
 public class SolarLexiconScreen extends Screen implements IScrollable {
 
+    private int OFFSET_X = 40;
+    private int OFFSET_Y = 40;
+
     public final ResourceLocation MAIN_SCREEN = new ResourceLocation("solarforge","textures/gui/solar_lexicon_main_page.png");
     public final ResourceLocation FRAME = new ResourceLocation("solarforge","textures/misc/frame.png");
     public final ResourceLocation QMARK = new ResourceLocation("solarforge","textures/misc/question_mark.png");
@@ -41,7 +44,7 @@ public class SolarLexiconScreen extends Screen implements IScrollable {
     private String afterTxt = "";
     public  int relX;
     public  int relY;
-    public final AchievementTree tree = AchievementTree.loadTree();
+    public final AchievementTree tree = AchievementTree.INSTANCE;
     public Component currAch;
     public Progression currentProgression = null;
     private List<Runnable> postLinesRender = new ArrayList<>();
@@ -57,6 +60,8 @@ public class SolarLexiconScreen extends Screen implements IScrollable {
     public int prevscrollY = 0;
     public int scrollX = 0;
     public int scrollY = 0;
+
+    public ItemStackButton stagesPage = new ItemStackButton(relX+100,relY + 20,12,12,(button)->{minecraft.setScreen(new StagesScreen());},Items.BEACON.getDefaultInstance(),0.7f,false);
 
     public ItemStackButton toggleRecipesScreen = new ItemStackButton(relX+100,relY+100,12,12,(button)->{minecraft.setScreen(new SolarLexiconRecipesScreen());}, Items.CRAFTING_TABLE.getDefaultInstance(),0.7f,false);
     public ItemStackButton justForge = new ItemStackButton(relX+100,relY+100,12,12,(button)->{}, SolarForge.SOLAR_FORGE_ITEM.get().getDefaultInstance(),0.7f,false);
@@ -86,7 +91,7 @@ public class SolarLexiconScreen extends Screen implements IScrollable {
             scrollX+=4;
         } else if ((keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_UP) || keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_W)) && !(scrollY +4 > 0)){
             scrollY+=4;
-        }else if((keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_DOWN) || keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_S)) && !(scrollY -4 < -200)){
+        }else if((keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_DOWN) || keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_S)) && !(scrollY -4 < -300)){
             scrollY-=4;
         }else if ((keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_RIGHT) || keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_D)) && !(scrollX -4 < -80)){
             scrollX-=4;
@@ -95,6 +100,7 @@ public class SolarLexiconScreen extends Screen implements IScrollable {
             List<AbstractWidget> list = ClientHelpers.getScreenButtons(this);
             list.remove(toggleRecipesScreen);
             list.remove(justForge);
+            list.remove(stagesPage);
             for (AbstractWidget a : list) {
                 if (prevscrollX < scrollX) {
                     a.x += 4;
@@ -109,6 +115,7 @@ public class SolarLexiconScreen extends Screen implements IScrollable {
             List<AbstractWidget> list = ClientHelpers.getScreenButtons(this);
             list.remove(toggleRecipesScreen);
             list.remove(justForge);
+            list.remove(stagesPage);
             for (AbstractWidget a : list) {
                 if (prevscrollY < scrollY) {
 
@@ -164,6 +171,7 @@ public class SolarLexiconScreen extends Screen implements IScrollable {
     @Override
     protected void init() {
         super.init();
+
         this.prevscrollX = 0;
         this.prevscrollY = 0;
         this.scrollX = 0;
@@ -182,15 +190,15 @@ public class SolarLexiconScreen extends Screen implements IScrollable {
         int offsetX = 0;
         int offsetY = 0;
 
-        for (Progression a : tree.ACHIEVEMENT_TREE.keySet()){
+        for (Progression a : Progression.allProgressions){
             int tier = a.getAchievementTier();
             map.get(tier).add(a);
-            offsetX = (map.get(tier).size()-1) * 35;
+            offsetX = (map.get(tier).size()-1) * OFFSET_X;
 
 
-            offsetY = (a.getAchievementTier() -1)* 30;
+            offsetY = (a.getAchievementTier() -1)* OFFSET_Y;
             boolean c = Helpers.canPlayerUnlock(a,minecraft.player);
-            addRenderableWidget(new ItemStackButton(relX+10+offsetX,relY+10+offsetY,16,16,(button)->{
+            addRenderableWidget(new ItemStackButton(relX+12+offsetX,relY+12+offsetY,16,16,(button)->{
 
 
                 if (Helpers.hasPlayerUnlocked(a,Minecraft.getInstance().player)){
@@ -211,18 +219,20 @@ public class SolarLexiconScreen extends Screen implements IScrollable {
         }
         addRenderableWidget(toggleRecipesScreen);
         addRenderableWidget(justForge);
+        addRenderableWidget(stagesPage);
         toggleRecipesScreen.x = relX +207+35;
         toggleRecipesScreen.y = relY + 184;
         justForge.x = relX +207+35;
         justForge.y = relY + 164;
-
+        stagesPage.x = relX + 207 + 35;
+        stagesPage.y = relY + 13;
     }
 
 
 
     @Override
     public void render(PoseStack matrices, int mousex, int mousey, float partialTicks) {
-
+        int stringColor = 0xee2222;
 
         ClientHelpers.bindText(MAIN_SCREEN_SCROLLABLE);
         GL11.glEnable(GL11.GL_SCISSOR_TEST);
@@ -236,16 +246,16 @@ public class SolarLexiconScreen extends Screen implements IScrollable {
 
         ClientHelpers.bindText(FRAME);
         for (Progression a : tree.ACHIEVEMENT_TREE.keySet()) {
-            Point first = new Point(relX+scrollX+18+map.get(a.getAchievementTier()).indexOf(a)*35,relY+scrollY+18+(a.getAchievementTier()-1)*30);
+            Point first = new Point(relX+scrollX+21+map.get(a.getAchievementTier()).indexOf(a)*OFFSET_X,relY+scrollY+21+(a.getAchievementTier()-1)*OFFSET_Y);
             for (Progression b : tree.getAchievementRequirements(a)){
-                Point second = new Point(relX+scrollX+18+map.get(b.getAchievementTier()).indexOf(b)*35,relY+scrollY+18+(b.getAchievementTier()-1)*30);
+                Point second = new Point(relX+scrollX+21+map.get(b.getAchievementTier()).indexOf(b)*OFFSET_X,relY+scrollY+21+(b.getAchievementTier()-1)*OFFSET_Y);
                 if (currentProgression != null && (currentProgression == b || currentProgression == a) ) {
                     postLinesRender.add(()->{
                         drawLine(matrices, first.x, first.y, second.x, second.y,255,255,255);
                     });
                 }
                 else {
-                    drawLine(matrices, first.x, first.y, second.x, second.y,127,127,127);
+                    drawLine(matrices, first.x, first.y, second.x, second.y,50,50,50);
                 }
 
             }
@@ -257,12 +267,13 @@ public class SolarLexiconScreen extends Screen implements IScrollable {
         postLinesRender.forEach(Runnable::run);
         postLinesRender.clear();
         for (Progression a : tree.ACHIEVEMENT_TREE.keySet()) {
-            Point first = new Point(relX+scrollX+18+map.get(a.getAchievementTier()).indexOf(a)*35,relY+scrollY+18+(a.getAchievementTier()-1)*30);
-            blit(matrices,first.x-8,first.y-8,0,0,16,16,16,16);
+            Point first = new Point(relX+scrollX+18+map.get(a.getAchievementTier()).indexOf(a)*OFFSET_X,relY+scrollY+18+(a.getAchievementTier()-1)*OFFSET_Y);
+            blit(matrices,first.x-8,first.y-8,0,0,20,20,20,20);
         }
         List<AbstractWidget> listButtons = ClientHelpers.getScreenButtons(this);
         listButtons.remove(toggleRecipesScreen);
         listButtons.remove(justForge);
+        listButtons.remove(stagesPage);
 
         for (AbstractWidget a :listButtons){
             ItemStackButton button = (ItemStackButton) a;
@@ -281,12 +292,12 @@ public class SolarLexiconScreen extends Screen implements IScrollable {
         GL11.glDisable(GL11.GL_SCISSOR_TEST);
         ClientHelpers.bindText(MAIN_SCREEN);
         blit(matrices,relX,relY,0,0,256,256);
-        drawString(matrices,minecraft.font,currAch,relX+10,relY+122,0xffffff);
+        drawString(matrices,minecraft.font,currAch,relX+12,relY+124,stringColor);
         if (currentText != null && (currentText.length() != 0)) {
             List<String> toRender1 = RenderingTools.splitString(currentText, 40);
             int y = 0;
             for (String s : toRender1) {
-                drawString(matrices, font, s, relX + 10, relY + 132 + y, 0xffffff);
+                drawString(matrices, font, s, relX + 12, relY + 134 + y, stringColor);
                 y += 8;
             }
         }
@@ -295,7 +306,7 @@ public class SolarLexiconScreen extends Screen implements IScrollable {
             int yOffset = (toRender2.size()-1)*8;
             int y = 0;
             for (String s : toRender2) {
-                drawString(matrices, font, s, relX + 10, relY + 187 + y - yOffset, 0xffffff);
+                drawString(matrices, font, s, relX + 12, relY + 187 + y - yOffset, stringColor);
                 y += 8;
             }
         }
@@ -342,7 +353,7 @@ public class SolarLexiconScreen extends Screen implements IScrollable {
 
         toggleRecipesScreen.render(matrices,mousex,mousey,partialTicks);
         justForge.render(matrices,mousex,mousey,partialTicks);
-
+        stagesPage.render(matrices,mousex,mousey,partialTicks);
 
 
     }
@@ -357,7 +368,7 @@ public class SolarLexiconScreen extends Screen implements IScrollable {
         RenderSystem.setShader(GameRenderer::getRendertypeLinesShader);
         Tesselator var4 = RenderSystem.renderThreadTesselator();
         BufferBuilder var5 = var4.getBuilder();
-        RenderSystem.lineWidth(2.0F);
+        RenderSystem.lineWidth(2.5F);
         var5.begin(VertexFormat.Mode.LINES, DefaultVertexFormat.POSITION_COLOR_NORMAL);
         Vector3d vector3f = new Vector3d(x2-x1,y2-y1,0);
         Vector3d vector3f2 = new Vector3d(x1-x2,y1-y2,0);

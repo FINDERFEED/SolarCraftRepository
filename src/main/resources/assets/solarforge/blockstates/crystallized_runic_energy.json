@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "dir=down": {  "model": "solarforge:block/crystallized_runic_energy", "x": 180 },
+    "dir=up": {  "model": "solarforge:block/crystallized_runic_energy" },
+    "dir=north": { "model": "solarforge:block/crystallized_runic_energy", "x": 90  },
+    "dir=south": { "model": "solarforge:block/crystallized_runic_energy", "x": 90, "y": 180  },
+    "dir=west": {  "model": "solarforge:block/crystallized_runic_energy", "x": 90, "y": 270  },
+    "dir=east": {  "model": "solarforge:block/crystallized_runic_energy", "x": 90, "y": 90 }
+  }
+}
