@@ -4,7 +4,7 @@
     "item": "minecraft:bowl"
   },
   "input2": {
-    "item": "minecraft:deepslate"
+    "item": "solarforge:enderium_ingot"
   },
   "input3": {
     "item": "minecraft:amethyst_shard"
@@ -16,7 +16,7 @@
     "item": "minecraft:amethyst_shard"
   },
   "input6": {
-    "item": "minecraft:deepslate"
+    "item": "solarforge:enderium_ingot"
   },
   "input7": {
     "item": "solarforge:illidium_ingot"

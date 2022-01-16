@@ -4,7 +4,7 @@ import net.minecraft.network.chat.TranslatableComponent;
 
 public enum SubCategoryBase {
     BEGGINING(tx("solar_category.beginning")),
-    FORGE(tx("solar_category.solar_forge")),
+    BASIC_DUSTS(tx("solar_category.basic_dusts")),
     ARMOR(tx("solar_category.armor")),
     STRUCTURES(tx("solar_category.structures")),
     BEGINNER_ITEMS(tx("solar_category.beginner_items")),

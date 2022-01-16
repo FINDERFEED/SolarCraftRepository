@@ -1,5 +1,7 @@
 package com.finderfeed.solarforge.magic_items.items.solar_disc_gun;
 
+import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.for_future_library.helpers.RenderingTools;
 import com.finderfeed.solarforge.registries.items.ItemsRegister;
 import com.mojang.blaze3d.vertex.PoseStack;
 
@@ -52,16 +54,17 @@ public class SolarDiscProjectileRenderer extends EntityRenderer<SolarDiscProject
 //        System.out.println(Math.toDegrees(Math.acos(entity.getDeltaMovement().normalize().x)));
 
 
-        matrices.mulPose(Vector3f.YN.rotationDegrees(90));
-        matrices.mulPose(Vector3f.YP.rotationDegrees((float) -Math.toDegrees(Math.atan(entity.getDeltaMovement().normalize().z/entity.getDeltaMovement().normalize().x))));
-
-        if (entity.getDeltaMovement().normalize().x >= 0) {
-            matrices.mulPose(Vector3f.XN.rotationDegrees((float) Math.toDegrees(Math.acos(entity.getDeltaMovement().normalize().y))));
-        }else{
-            matrices.mulPose(Vector3f.XP.rotationDegrees((float) Math.toDegrees(Math.acos(entity.getDeltaMovement().normalize().y))));
-        }
-        matrices.mulPose(Vector3f.ZN.rotationDegrees(time));
-
+//        matrices.mulPose(Vector3f.YN.rotationDegrees(90));
+//        matrices.mulPose(Vector3f.YP.rotationDegrees((float) -Math.toDegrees(Math.atan(entity.getDeltaMovement().normalize().z/entity.getDeltaMovement().normalize().x))));
+//
+//        if (entity.getDeltaMovement().normalize().x >= 0) {
+//            matrices.mulPose(Vector3f.XN.rotationDegrees((float) Math.toDegrees(Math.acos(entity.getDeltaMovement().normalize().y))));
+//        }else{
+//            matrices.mulPose(Vector3f.XP.rotationDegrees((float) Math.toDegrees(Math.acos(entity.getDeltaMovement().normalize().y))));
+//        }
+//        matrices.mulPose(Vector3f.ZN.rotationDegrees(time));
+        RenderingTools.applyMovementMatrixRotations(matrices,entity.getDeltaMovement());
+        matrices.mulPose(Vector3f.ZP.rotationDegrees(time % 360));
 
         Minecraft.getInstance().getItemRenderer().render(ItemsRegister.SOLAR_DISC.get().getDefaultInstance(), ItemTransforms.TransformType.FIXED,false,
                 matrices,buffer,light,getPackedLightCoords(entity,light),Minecraft.getInstance().getItemRenderer().getModel(ItemsRegister.SOLAR_DISC.get().getDefaultInstance(),null,null,0));

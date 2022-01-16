@@ -158,7 +158,7 @@ public class ThreeDStructureViewScreen extends Screen implements IScrollable {
         ClientHelpers.bindText(STRUCTURE_GUI);
         blit(matrices,relX,relY,0,0,256,256);
         super.render(matrices, p_96563_, p_96564_, partialTicks);
-        Helpers.drawBoundedText(matrices,relX+14,relY+10,7,new TranslatableComponent(struct.getName()).getString());
+        Helpers.drawBoundedText(matrices,relX+14,relY+10,7,new TranslatableComponent(struct.getName()).getString(),0xffffff);
         matrices.popPose();
 
         matrices.pushPose();

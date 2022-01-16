@@ -158,7 +158,7 @@ public class EventHandler {
             if (!world.isClientSide && !player.isCreative()) {
 
                 if ((world.getGameTime() % 20 == 1) && !(actualtime % 24000 <= 13000) && (world.dimension() == RADIANT_LAND_KEY)) {
-                    if (world.canSeeSky(player.getOnPos()) && !Helpers.playerInBossfight(player)) {
+                    if (world.canSeeSky(player.getOnPos().above())) {
                         player.addEffect(new MobEffectInstance(EffectsRegister.STAR_GAZE_EFFECT.get(), 400, 0));
                     }
                 }

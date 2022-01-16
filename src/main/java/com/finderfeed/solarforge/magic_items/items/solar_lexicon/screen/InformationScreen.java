@@ -53,7 +53,7 @@ public class InformationScreen extends Screen {
         int width = minecraft.getWindow().getWidth();
         int height = minecraft.getWindow().getHeight();
         int scale = (int) minecraft.getWindow().getGuiScale();
-        this.relX = (width/scale - 183)/2;
+        this.relX = (width/scale - 183)/2 - 10;
         this.relY = (height - 218*scale)/2/scale;
 
         Item i = screen != null ? SolarForge.INFUSER_ITEM.get() : ItemsRegister.INFUSING_TABLE.get();
@@ -76,13 +76,14 @@ public class InformationScreen extends Screen {
 
     @Override
     public void render(PoseStack matrices, int mousex, int mousey, float partialTicks) {
+        int stringColor = 0xee2222;
         ClientHelpers.bindText(LOC);
         blit(matrices,relX,relY,0,0,256,256);
         drawString(matrices,Minecraft.getInstance().font,fragment.getTranslation(), relX+60,relY+35,0xffffff);
         if (fragment.getType() == AncientFragment.Type.INFORMATION) {
-            Helpers.drawBoundedText(matrices, relX + 10, relY + 80, 28, fragment.getLore().getString());
+            Helpers.drawBoundedText(matrices, relX + 12, relY + 80, 28, fragment.getLore().getString(),stringColor);
         }else{
-            Helpers.drawBoundedText(matrices, relX + 10, relY + 80, 28, fragment.getItemDescription().getString());
+            Helpers.drawBoundedText(matrices, relX + 12, relY + 80, 28, fragment.getItemDescription().getString(),stringColor);
         }
         renderGuiItem(fragment.getIcon().getDefaultInstance(),relX+32,relY+32,Minecraft.getInstance().getItemRenderer().getModel(fragment.getIcon().getDefaultInstance(),null,null,0),1.5,1.5,1.5);
         super.render(matrices, mousex, mousey, partialTicks);
@@ -90,7 +91,7 @@ public class InformationScreen extends Screen {
 
 
 
-    protected void renderGuiItem(ItemStack p_191962_1_, int p_191962_2_, int p_191962_3_, BakedModel p_191962_4_,double x,double y,double z) {
+    protected void renderGuiItem(ItemStack stack, int tx, int ty, BakedModel model,double x,double y,double z) {
         Minecraft.getInstance().getTextureManager().getTexture(TextureAtlas.LOCATION_BLOCKS).setFilter(false, false);
         RenderSystem.setShaderTexture(0, TextureAtlas.LOCATION_BLOCKS);
         RenderSystem.enableBlend();
@@ -98,7 +99,7 @@ public class InformationScreen extends Screen {
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         PoseStack posestack = RenderSystem.getModelViewStack();
         posestack.pushPose();
-        posestack.translate((double)p_191962_2_, (double)p_191962_3_, (double)(100.0F + Minecraft.getInstance().getItemRenderer().blitOffset));
+        posestack.translate((double)tx, (double)ty, (double)(100.0F + Minecraft.getInstance().getItemRenderer().blitOffset));
         posestack.translate(8.0D, 8.0D, 0.0D);
         posestack.scale(1.0F, -1.0F, 1.0F);
         posestack.scale(16.0F, 16.0F, 16.0F);
@@ -106,12 +107,12 @@ public class InformationScreen extends Screen {
         PoseStack posestack1 = new PoseStack();
         posestack1.scale((float)x,(float)y,(float)z);
         MultiBufferSource.BufferSource multibuffersource$buffersource = Minecraft.getInstance().renderBuffers().bufferSource();
-        boolean flag = !p_191962_4_.usesBlockLight();
+        boolean flag = !model.usesBlockLight();
         if (flag) {
             Lighting.setupForFlatItems();
         }
 
-        Minecraft.getInstance().getItemRenderer().render(p_191962_1_, ItemTransforms.TransformType.GUI, false, posestack1, multibuffersource$buffersource, 15728880, OverlayTexture.NO_OVERLAY, p_191962_4_);
+        Minecraft.getInstance().getItemRenderer().render(stack, ItemTransforms.TransformType.GUI, false, posestack1, multibuffersource$buffersource, 15728880, OverlayTexture.NO_OVERLAY, model);
         multibuffersource$buffersource.endBatch();
         RenderSystem.enableDepthTest();
         if (flag) {

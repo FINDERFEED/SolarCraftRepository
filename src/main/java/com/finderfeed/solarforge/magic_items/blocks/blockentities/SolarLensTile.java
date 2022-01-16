@@ -50,7 +50,7 @@ public class SolarLensTile extends BlockEntity  {
 
                 List<ItemEntity> list = tile.level.getEntitiesOfClass(ItemEntity.class,box.move(tile.worldPosition));
 
-                for (int i = 0;i < 4;i++){
+                for (int i = 0;i < 6;i++){
                     if (i > list.size()-1) {
                         tile.INVENTORY.setItem(i, ItemStack.EMPTY);
                     } else {
@@ -74,10 +74,11 @@ public class SolarLensTile extends BlockEntity  {
                     }
                     int count = tile.getMinRecipeOutput(actualRecipe);
                     if (tile.CURRENT_SMELTING_TIME >= tile.SMELTING_TIME*count){
+
                         for (ItemEntity a : list){
                             for (ItemStack item : actualRecipe.getStacks()){
                                 if (a.getItem().getItem() == item.getItem()){
-                                    a.getItem().shrink(item.getCount()*count);
+                                    a.getItem().shrink(item.getCount() * count);
                                 }
                             }
 
@@ -88,6 +89,8 @@ public class SolarLensTile extends BlockEntity  {
                         tile.SMELTING_TIME = 0;
                         tile.CURRENT_SMELTING_TIME = 0;
                         tile.RECIPE_IN_PROGRESS = false;
+                        tile.setChanged();
+                        world.sendBlockUpdated(post,blockState,blockState,3);
                     }
                 }else{
                     tile.RECIPE_IN_PROGRESS = false;
@@ -97,7 +100,7 @@ public class SolarLensTile extends BlockEntity  {
             }
         }else{
             if (tile.RECIPE_IN_PROGRESS){
-                if (world.getGameTime() % 3 == 0) {
+                if (world.getGameTime() % 3 == 0 && Helpers.isDay(world)) {
                     Vec3 v = Helpers.getBlockCenter(post.offset(0, -2, 0));
                     Vec3 offs = Helpers.randomVector().normalize().multiply(0.5, 0.5, 0.5);
                     world.addParticle(ParticlesList.SMALL_SOLAR_STRIKE_PARTICLE.get(), v.x + offs.x, v.y + offs.y, v.z + offs.z, 0, 0.05, 0);

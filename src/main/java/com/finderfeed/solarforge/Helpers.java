@@ -58,7 +58,7 @@ public class Helpers {
     public static double GRAVITY_VELOCITY = 0.05;
     public static String PROGRESSION = "solar_forge_progression_";
     public static BlockPos NULL_POS = new BlockPos(0,-100,0);
-    public static void drawBoundedText(PoseStack matrices,int posx,int posy,int bound,String s){
+    public static void drawBoundedText(PoseStack matrices,int posx,int posy,int bound,String s,int color){
         StringBuilder str = new StringBuilder(s);
         for (int a = 0;a < s.length();a++) {
             if (a % bound == 0 ){
@@ -85,7 +85,7 @@ public class Helpers {
 
         int y = 0;
         for (String strings : string){
-            GuiComponent.drawString(matrices, Minecraft.getInstance().font, strings,posx,posy+y,0xffffff);
+            GuiComponent.drawString(matrices, Minecraft.getInstance().font, strings,posx,posy+y,color);
             y+=10;
         }
 

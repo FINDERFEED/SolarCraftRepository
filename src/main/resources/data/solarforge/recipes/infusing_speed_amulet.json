@@ -19,13 +19,13 @@
     "item": "minecraft:obsidian"
   },
   "input7": {
-    "item": "minecraft:lapis_lazuli"
+    "item": "solarforge:enderium_ingot"
   },
   "input8": {
     "item": "minecraft:netherite_ingot"
   },
   "input9": {
-    "item": "minecraft:lapis_lazuli"
+    "item": "solarforge:enderium_ingot"
   },
   "result": {
     "item": "solarforge:speed_amulet"

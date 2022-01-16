@@ -80,7 +80,7 @@ public class LoreScreen extends Screen {
 //        matrices.popPose();
 
 
-
+        int stringColor = 0xee2222;
         ClientHelpers.bindText(MAIN);
         blit(matrices,relX,relY,0,0,256,256,256,256);
         ClientHelpers.bindText(IMAGE_LOCATION);
@@ -91,7 +91,7 @@ public class LoreScreen extends Screen {
         int posY = relY+20;
 
         for (String str : RenderingTools.splitString(lore.getString(),13)){
-            drawString(matrices,font,str,posX,posY,0xffffff);
+            drawString(matrices,font,str,posX,posY,stringColor);
             posY+=8;
             if (posY >= 195){
                 posY=relY+110;

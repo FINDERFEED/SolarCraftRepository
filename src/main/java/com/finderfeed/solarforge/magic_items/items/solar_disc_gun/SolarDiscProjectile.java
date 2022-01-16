@@ -42,7 +42,9 @@ public class SolarDiscProjectile extends AbstractHurtingProjectile {
 
     @Override
     protected void onHitBlock(BlockHitResult p_230299_1_) {
-        this.remove(RemovalReason.KILLED);
+        if (!level.isClientSide) {
+            this.remove(RemovalReason.KILLED);
+        }
     }
 
     @Override
