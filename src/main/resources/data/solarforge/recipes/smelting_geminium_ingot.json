@@ -5,11 +5,8 @@
       "item": "solarforge:illidium_ingot"
     },
     {
-      "item": "solarforge:blue_gem_enriched"
-    },
-    {
-      "item": "solarforge:energy_dust",
-      "count": 16
+      "item": "solarforge:blue_gem_enriched",
+      "count": 4
     },
     {
       "item": "solarforge:solar_dust",

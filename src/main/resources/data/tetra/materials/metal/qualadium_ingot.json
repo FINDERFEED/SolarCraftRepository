@@ -1,0 +1,26 @@
+{
+  "key": "qualadium_ingot",
+  "category": "metal",
+  "primary": 9,
+  "secondary": 2.9,
+  "tertiary": 3.5,
+  "durability": 3000,
+  "integrityCost": 2,
+  "integrityGain": 8,
+  "magicCapacity": 90,
+  "toolLevel": "minecraft:netherite",
+  "toolEfficiency": 12,
+  "tints": {
+    "glyph": "140F60",
+    "texture": "140F60"
+  },
+  "textures": [
+    "metal"
+  ],
+  "material": {
+    "items": [ "solarforge:qualadium_ingot" ]
+  },
+  "requiredTools": {
+    "hammer_dig": "minecraft:iron"
+  }
+}

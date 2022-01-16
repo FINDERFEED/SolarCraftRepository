@@ -2,17 +2,18 @@ package com.finderfeed.solarforge;
 
 import com.finderfeed.solarforge.SolarAbilities.meteorite.MeteoriteProjectileRenderer;
 import com.finderfeed.solarforge.SolarAbilities.SolarStrikeEntityRender;
-import com.finderfeed.solarforge.client.rendering.rendertypes.SolarCraftRenderTypes;
 import com.finderfeed.solarforge.entities.renderers.*;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.containers.screens.InfusingTableScreen;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.containers.screens.ModuleApplierScreen;
 import com.finderfeed.solarforge.magic_items.blocks.infusing_table_things.InfuserRenderer;
-import com.finderfeed.solarforge.magic_items.blocks.infusing_table_things.infusing_pool.InfusingPoolRenderer;
+import com.finderfeed.solarforge.magic_items.blocks.infusing_table_things.infusing_pool.InfusingStandRenderer;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.containers.screens.RunicTableContainerScreen;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.containers.screens.SolarFurnaceScreen;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.projectiles.renderers.AbstractTurretProjectileRenderer;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.projectiles.renderers.MortarProjectileRenderer;
+import com.finderfeed.solarforge.magic_items.blocks.primitive.ProgressionBlock;
 import com.finderfeed.solarforge.magic_items.blocks.render.*;
+import com.finderfeed.solarforge.magic_items.items.ProgressionBlockItem;
 import com.finderfeed.solarforge.magic_items.items.projectiles.renderers.*;
 import com.finderfeed.solarforge.magic_items.items.solar_disc_gun.SolarDiscProjectileRenderer;
 import com.finderfeed.solarforge.magic_items.runic_network.repeater.RepeaterRenderer;
@@ -35,6 +36,7 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
 import net.minecraftforge.api.distmarker.Dist;
 
 import net.minecraftforge.client.ClientRegistry;
@@ -106,7 +108,7 @@ public class SolarForgeClientRegistry {
         BlockEntityRenderers.register(TileEntitiesRegistry.REPEATER.get(), RepeaterRenderer::new);
         BlockEntityRenderers.register(TileEntitiesRegistry.RUNE_ENERGY_PYLON.get(), RuneEnergyPylonRenderer::new);
         BlockEntityRenderers.register(SolarForge.SOLAR_FORGE_BLOCKENTITY.get(), SolarForgeBlockEntityRenderer::new);
-        BlockEntityRenderers.register(TileEntitiesRegistry.INFUSING_POOL_BLOCKENTITY.get(), InfusingPoolRenderer::new);
+        BlockEntityRenderers.register(TileEntitiesRegistry.INFUSING_POOL_BLOCKENTITY.get(), InfusingStandRenderer::new);
         BlockEntityRenderers.register(SolarForge.INFUSING_STAND_BLOCKENTITY.get(), InfuserRenderer::new);
         BlockEntityRenderers.register(TileEntitiesRegistry.SOLAR_REPEATER.get(), SolarRepeaterRenderer::new);
         BlockEntityRenderers.register(TileEntitiesRegistry.ENERGY_GENERATOR_TILE.get(), EnergyGeneratorTileRender::new);
@@ -173,6 +175,22 @@ public class SolarForgeClientRegistry {
                 }
             });
         });
+        registerDefaultUnknownBlockItemPredicate(ItemsRegister.LENSING_CRYSTAL_ORE.get());
+
+    }
+
+    private static void registerDefaultUnknownBlockItemPredicate(ProgressionBlockItem item){
+        ItemProperties.register(item,new ResourceLocation("solarforge","unlocked"),(stack,world,living,a)->{
+
+            Player playerEntity = Minecraft.getInstance().player;
+            if (playerEntity != null) {
+
+                return Helpers.hasPlayerUnlocked( ((ProgressionBlock)item.getBlock()).getRequiredProgression(), Minecraft.getInstance().player) ? 1f : 0;
+            }else{
+                return 0;
+            }
+        });
+
     }
 
     @SubscribeEvent

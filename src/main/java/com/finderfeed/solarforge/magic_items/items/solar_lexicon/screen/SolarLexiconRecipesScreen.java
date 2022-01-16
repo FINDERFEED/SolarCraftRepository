@@ -46,7 +46,7 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
     public IItemHandler handler;
     public final ItemStackButton goBack = new ItemStackButton(0,10,12,12,(button)->{minecraft.setScreen(new SolarLexiconScreen());}, SolarForge.SOLAR_FORGE_ITEM.get().getDefaultInstance(),0.7f,false);
     public final ItemStackButton nothing = new ItemStackButton(0,10,12,12,(button)->{}, Items.CRAFTING_TABLE.getDefaultInstance(),0.7f,false);
-
+    public List<Runnable> postRender = new ArrayList<>();
 
 
 
@@ -139,6 +139,7 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
     @Override
     protected void init() {
         super.init();
+
 
         FRAGMENTS.clear();
         handler = getLexiconInventory();
@@ -457,7 +458,10 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
 //        list.remove(goBack);
 //        list.remove(nothing);
 
-
+        for (Runnable r : postRender){
+            r.run();
+        }
+        postRender.clear();
 
     }
 

@@ -1,0 +1,11 @@
+{
+  "parent": "block/stone",
+  "overrides": [
+    {
+      "predicate": {
+        "solarforge:unlocked": 1
+      },
+      "model": "solarforge:item/unlocked_states/lensing_crystal_ore"
+    }
+  ]
+}

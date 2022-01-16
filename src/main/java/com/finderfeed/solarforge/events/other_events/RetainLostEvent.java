@@ -41,8 +41,20 @@ public class RetainLostEvent {
                   event.setCanceled(true);
               }
 
+
           }
       }
+    }
+
+
+    @SubscribeEvent
+    public static void respawn(PlayerEvent.PlayerRespawnEvent event){
+        if (event.getPlayer() instanceof ServerPlayer player){
+            Helpers.updateProgression(player);
+            for (RunicEnergy.Type type : RunicEnergy.Type.getAll()) {
+                Helpers.updateRunicEnergyOnClient(type, RunicEnergy.getEnergy(player, type), player);
+            }
+        }
     }
 
 
@@ -97,9 +109,6 @@ public class RetainLostEvent {
         if (!playernew.level.isClientSide) {
 
             for (Progression a : Progression.allProgressions) {
-
-
-
                 SolarForgePacketHandler.INSTANCE.sendTo(new UpdateProgressionOnClient(a.getAchievementCode(),playernew.getPersistentData().getBoolean(Helpers.PROGRESSION+a.getAchievementCode())),
                         ((ServerPlayer) playernew).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
             }
@@ -110,7 +119,6 @@ public class RetainLostEvent {
                 ProgressionHelper.givePlayerFragment(fragment,playernew);
             }
         }
-
 
 
     }

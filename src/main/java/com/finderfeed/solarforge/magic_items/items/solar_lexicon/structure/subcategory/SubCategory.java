@@ -143,7 +143,12 @@ public class SubCategory {
 //            if (button.isHovered()){
 //                this.onHovered();
 //            }
-            Minecraft.getInstance().screen.renderTooltip(matrices,fragment.getTranslation(),mx,my);
+            if (Minecraft.getInstance().screen instanceof SolarLexiconRecipesScreen screen) {
+                screen.postRender.add(()->screen.renderTooltip(matrices, fragment.getTranslation(), mx, my));
+
+            }else{
+                Minecraft.getInstance().screen.renderTooltip(matrices, fragment.getTranslation(), mx, my);
+            }
         });
     }
 
@@ -155,7 +160,12 @@ public class SubCategory {
 //            if (button.isHovered()){
 //                this.onHovered();
 //            }
-            Minecraft.getInstance().screen.renderTooltip(matrices,fragment.getTranslation(),mx,my);
+            if (Minecraft.getInstance().screen instanceof SolarLexiconRecipesScreen screen) {
+                screen.postRender.add(()->screen.renderTooltip(matrices, fragment.getTranslation(), mx, my));
+
+            }else{
+                Minecraft.getInstance().screen.renderTooltip(matrices, fragment.getTranslation(), mx, my);
+            }
         });
     }
 
@@ -166,7 +176,12 @@ public class SubCategory {
 //            if (button.isHovered()){
 //                this.onHovered();
 //            }
-            Minecraft.getInstance().screen.renderTooltip(matrices,fragment.getTranslation(),mx,my);
+            if (Minecraft.getInstance().screen instanceof SolarLexiconRecipesScreen screen) {
+                screen.postRender.add(()->screen.renderTooltip(matrices, fragment.getTranslation(), mx, my));
+
+            }else{
+                Minecraft.getInstance().screen.renderTooltip(matrices, fragment.getTranslation(), mx, my);
+            }
         });
     }
 
@@ -178,7 +193,12 @@ public class SubCategory {
 //            if (button.isHovered()){
 //                this.onHovered();
 //            }
-            Minecraft.getInstance().screen.renderTooltip(matrices,fragment.getTranslation(),mx,my);
+            if (Minecraft.getInstance().screen instanceof SolarLexiconRecipesScreen screen) {
+                screen.postRender.add(()->screen.renderTooltip(matrices, fragment.getTranslation(), mx, my));
+
+            }else{
+                Minecraft.getInstance().screen.renderTooltip(matrices, fragment.getTranslation(), mx, my);
+            }
         });
     }
 
@@ -190,7 +210,13 @@ public class SubCategory {
 //            if (button.isHovered()){
 //                this.onHovered();
 //            }
-            Minecraft.getInstance().screen.renderTooltip(matrices,recipe.output.getHoverName(),mx,my);
+
+            if (Minecraft.getInstance().screen instanceof SolarLexiconRecipesScreen screen) {
+                screen.postRender.add(()->screen.renderTooltip(matrices, recipe.output.getHoverName(), mx, my));
+
+            }else{
+                Minecraft.getInstance().screen.renderTooltip(matrices, recipe.output.getHoverName(), mx, my);
+            }
         });
     }
 
@@ -202,7 +228,12 @@ public class SubCategory {
 //            if (button.isHovered()){
 //                this.onHovered();
 //            }
-            Minecraft.getInstance().screen.renderTooltip(matrices,fragment.getTranslation(),mx,my);
+            if (Minecraft.getInstance().screen instanceof SolarLexiconRecipesScreen screen) {
+                screen.postRender.add(()->screen.renderTooltip(matrices, fragment.getTranslation(), mx, my));
+
+            }else{
+                Minecraft.getInstance().screen.renderTooltip(matrices, fragment.getTranslation(), mx, my);
+            }
         });
     }
 
@@ -213,7 +244,12 @@ public class SubCategory {
 //            if (button.isHovered()){
 //                this.onHovered();
 //            }
-            Minecraft.getInstance().screen.renderTooltip(matrices,fragment.getTranslation(),mx,my);
+            if (Minecraft.getInstance().screen instanceof SolarLexiconRecipesScreen screen) {
+                screen.postRender.add(()->screen.renderTooltip(matrices, fragment.getTranslation(), mx, my));
+
+            }else{
+                Minecraft.getInstance().screen.renderTooltip(matrices, fragment.getTranslation(), mx, my);
+            }
         });
     }
 
@@ -227,7 +263,12 @@ public class SubCategory {
 //            if (button.isHovered()){
 //                this.onHovered();
 //            }
-            Minecraft.getInstance().screen.renderTooltip(matrices,fragment.getTranslation(),mx,my);
+            if (Minecraft.getInstance().screen instanceof SolarLexiconRecipesScreen screen) {
+                screen.postRender.add(()->screen.renderTooltip(matrices, fragment.getTranslation(), mx, my));
+
+            }else{
+                Minecraft.getInstance().screen.renderTooltip(matrices, fragment.getTranslation(), mx, my);
+            }
         });
     }
 

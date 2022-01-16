@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "solarforge:solar_ores",
+    "solarforge:lensing_crystal_ore",
+    "solarforge:ender_cracks"
+  ]
+}

@@ -42,6 +42,7 @@
     "solarforge:catalyst_base",
     "solarforge:speed_road",
     "solarforge:infusing_crafting_table",
-    "solarforge:crystallized_runic_energy"
+    "solarforge:crystallized_runic_energy",
+    "solarforge:lensing_crystal_ore"
   ]
 }

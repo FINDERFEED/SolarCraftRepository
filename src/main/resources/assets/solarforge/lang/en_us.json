@@ -583,5 +583,17 @@
   "solarcraft.completed": "Status: Completed",
   "solarcraft.not_completed": "Status: Not completed",
   "solarcraft.cannot_be_completed": "Status: Cannot be completed",
-  "block.solarforge.crystallized_runic_energy": "Crystallized runic energy"
+  "block.solarforge.crystallized_runic_energy": "Crystallized runic energy",
+  "item.solarforge.enderium_ingot": "Enderium ingot",
+  "item.solarforge.energetic_ingot": "Energetic ingot",
+  "item.solarforge.lensing_crystal": "Lensing crystal",
+  "block.solarforge.lensing_crystal_ore": "Lensing crystal ore",
+  "solar_fragment.energetic_ingot": "Energetic ingot",
+  "solar_fragment.enderim_ingot": "Enderium ingot",
+  "tetra.material.algadium_ingot.prefix": "Algadium",
+  "tetra.material.illidium_ingot.prefix": "Illidium",
+  "tetra.material.qualadium_ingot.prefix": "Qualadium"
+
+
+
 }

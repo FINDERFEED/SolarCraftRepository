@@ -1,0 +1,20 @@
+{
+  "type":"solarforge:solar_smelting",
+  "ingredients": [
+    {
+      "item": "minecraft:iron_ingot"
+    },
+    {
+      "item": "solarforge:enderite_essence",
+      "count": 16
+    },
+    {
+      "item": "minecraft:ender_pearl",
+      "count": 4
+    }
+  ],
+  "result": "solarforge:enderium_ingot",
+  "time": 400,
+  "requires": "solar_forge_progression_solar_lens_craft",
+  "category": "solar_category.smelting"
+}

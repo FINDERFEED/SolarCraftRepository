@@ -23,6 +23,7 @@ import net.minecraft.world.item.BlockItem;
 
 public class InfuserRenderer extends AbstractRunicEnergyContainerRCBERenderer<InfuserTileEntity> {
     public final ResourceLocation text = new ResourceLocation("solarforge","textures/misc/solar_infuser_ring.png");
+    public final ResourceLocation fancyRing = new ResourceLocation("solarforge","textures/misc/fancy_ring_1.png");
     public InfuserRenderer(BlockEntityRendererProvider.Context ctx) {
 
     }
@@ -67,6 +68,36 @@ public class InfuserRenderer extends AbstractRunicEnergyContainerRCBERenderer<In
             }
             drawRing(partialTicks, matrices, buffer, light, light2, 0.30f,time*2+270);
             matrices.popPose();
+            matrices.pushPose();
+
+            VertexConsumer vertex = buffer.getBuffer(RenderType.text(fancyRing));
+            matrices.translate(0.5,0.001,0.5);
+            matrices.mulPose(Vector3f.YP.rotationDegrees(time % 360));
+            PoseStack.Pose entry = matrices.last();
+            vertex.vertex(entry.pose(),-1.5F,0,-1.5F).color(255,255,255,255).uv(1,0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
+            vertex.vertex(entry.pose(), 1.5F,0,-1.5F).color(255,255,255,255).uv(1,1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
+            vertex.vertex(entry.pose(), 1.5F,0, 1.5F).color(255,255,255,255).uv(0,1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
+            vertex.vertex(entry.pose(),-1.5F,0, 1.5F).color(255,255,255,255).uv(0,0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
+
+            vertex.vertex(entry.pose(),-1.5F,0, 1.5F).color(255,255,255,255).uv(1,0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
+            vertex.vertex(entry.pose(), 1.5F,0, 1.5F).color(255,255,255,255).uv(1,1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
+            vertex.vertex(entry.pose(), 1.5F,0,-1.5F).color(255,255,255,255).uv(0,1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
+            vertex.vertex(entry.pose(),-1.5F,0,-1.5F).color(255,255,255,255).uv(0,0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
+
+
+            matrices.mulPose(Vector3f.YP.rotationDegrees(-(time % 360)*2));
+            vertex.vertex(entry.pose(),-3F,0,-3F).color(255,255,255,255).uv(1,0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
+            vertex.vertex(entry.pose(), 3F,0,-3F).color(255,255,255,255).uv(1,1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
+            vertex.vertex(entry.pose(), 3F,0, 3F).color(255,255,255,255).uv(0,1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
+            vertex.vertex(entry.pose(),-3F,0, 3F).color(255,255,255,255).uv(0,0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
+
+            vertex.vertex(entry.pose(),-3F,0, 3F).color(255,255,255,255).uv(1,0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
+            vertex.vertex(entry.pose(), 3F,0, 3F).color(255,255,255,255).uv(1,1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
+            vertex.vertex(entry.pose(), 3F,0,-3F).color(255,255,255,255).uv(0,1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
+            vertex.vertex(entry.pose(),-3F,0,-3F).color(255,255,255,255).uv(0,0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
+
+            matrices.popPose();
+
         }
         matrices.pushPose();
         if (!tile.isEmpty() ) {

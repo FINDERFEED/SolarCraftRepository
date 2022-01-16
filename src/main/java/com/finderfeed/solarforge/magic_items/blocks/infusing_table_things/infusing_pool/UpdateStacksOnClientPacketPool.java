@@ -34,7 +34,7 @@ public class UpdateStacksOnClientPacketPool {
             DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> ()->{
                 ClientLevel world = Minecraft.getInstance().level;
 
-                InfusingPoolTileEntity tile = (InfusingPoolTileEntity) world.getBlockEntity(pos);
+                InfusingStandTileEntity tile = (InfusingStandTileEntity) world.getBlockEntity(pos);
                 if (tile != null) {
                     tile.setItem(0, stack);
                 }

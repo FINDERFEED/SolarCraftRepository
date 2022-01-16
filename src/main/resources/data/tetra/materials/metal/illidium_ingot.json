@@ -1,0 +1,26 @@
+{
+  "key": "illidium_ingot",
+  "category": "metal",
+  "primary": 7,
+  "secondary": 2.9,
+  "tertiary": 3.5,
+  "durability": 2231,
+  "integrityCost": 2,
+  "integrityGain": 8,
+  "magicCapacity": 90,
+  "toolLevel": "minecraft:netherite",
+  "toolEfficiency":10,
+  "tints": {
+    "glyph": "FF5A19",
+    "texture": "FF5A19"
+  },
+  "textures": [
+    "metal"
+  ],
+  "material": {
+    "items": [ "solarforge:illidium_ingot" ]
+  },
+  "requiredTools": {
+    "hammer_dig": "minecraft:iron"
+  }
+}

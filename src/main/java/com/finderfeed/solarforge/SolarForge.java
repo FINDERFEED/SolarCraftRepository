@@ -11,11 +11,10 @@ import com.finderfeed.solarforge.events.PlayerTickEvent;
 import com.finderfeed.solarforge.events.RenderEventsHandler;
 import com.finderfeed.solarforge.magic_items.blocks.SolarOreBlock;
 import com.finderfeed.solarforge.magic_items.blocks.infusing_table_things.*;
-import com.finderfeed.solarforge.magic_items.blocks.infusing_table_things.infusing_pool.InfusingPool;
+import com.finderfeed.solarforge.magic_items.blocks.infusing_table_things.infusing_pool.InfusingStand;
 import com.finderfeed.solarforge.magic_items.items.item_tiers.SolarCraftToolTiers;
 import com.finderfeed.solarforge.magic_items.items.ProgressionBlockItem;
 import com.finderfeed.solarforge.misc_things.ParticlesList;
-import com.finderfeed.solarforge.multiblocks.Multiblocks;
 import com.finderfeed.solarforge.recipe_types.infusing_crafting.InfusingCraftingRecipe;
 import com.finderfeed.solarforge.recipe_types.infusing_crafting.InfusingCraftingRecipeType;
 import com.finderfeed.solarforge.registries.Tags;
@@ -74,7 +73,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.core.Registry;
 import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraftforge.common.BiomeManager;
 import net.minecraftforge.common.MinecraftForge;
 
 import net.minecraftforge.common.TierSortingRegistry;
@@ -238,7 +236,7 @@ public class SolarForge
         MinecraftForge.EVENT_BUS.addListener(AttachManaCapabilityEvent::tickEvent);
         MinecraftForge.EVENT_BUS.register(new PlayerTickEvent());
         //MinecraftForge.EVENT_BUS.addListener(SolarWandItem::renderWandOverlays);
-        MinecraftForge.EVENT_BUS.addListener(InfusingPool::placeBlockEvent);
+        MinecraftForge.EVENT_BUS.addListener(InfusingStand::placeBlockEvent);
         event.enqueueWork(()->{
 
 

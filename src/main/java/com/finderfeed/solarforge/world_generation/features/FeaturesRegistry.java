@@ -14,6 +14,7 @@ import com.google.common.collect.ImmutableSet;
 import net.minecraft.core.BlockPos;
 import net.minecraft.data.worldgen.features.FeatureUtils;
 import net.minecraft.data.worldgen.features.OreFeatures;
+import net.minecraft.data.worldgen.placement.OrePlacements;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -96,6 +97,7 @@ public class FeaturesRegistry {
     public static ConfiguredFeature<?,?> CRYSTALLIZED_ORE_VEIN_CONFIGURED_CONF;
     public static ConfiguredFeature<?,?> RADIANT_BERRY_BUSH_CONF;
     public static ConfiguredFeature<?,?> ENDER_CRACKS_CONF;
+    public static ConfiguredFeature<?,?> LENSING_CRYSTAL_ORE_CONF;
     public static ConfiguredFeature<?,?> CRYSTAL_CAVE_ORE_CRYSTAL_CONF;
     public static ConfiguredFeature<?,?> CEILING_FLOOR_CRYSTALS_CONF;
     public static ConfiguredFeature<?,?> CRYSTAL_FLOWER_CONF;
@@ -113,6 +115,7 @@ public class FeaturesRegistry {
     public static PlacedFeature CRYSTALLIZED_ORE_VEIN_CONFIGURED;
     public static PlacedFeature RADIANT_BERRY_BUSH;
     public static PlacedFeature ENDER_CRACKS;
+    public static PlacedFeature LENSING_CRYSTAL_ORE_PLACEMENT;
     public static PlacedFeature CRYSTAL_CAVE_ORE_CRYSTAL_PLACEMENT;
     public static PlacedFeature CEILING_FLOOR_CRYSTALS_PLACEMENT;
     public static PlacedFeature CRYSTAL_FLOWER_PLACEMENT;
@@ -369,8 +372,19 @@ public class FeaturesRegistry {
 
             registerConfiguredFeature(CRYSTALLIZED_RUNIC_ENERGY_CRYSTALS_CONF,"crystallized_runic_energy");
             registerPlacedFeature(CRYSTALLIZED_RUNIC_ENERGY_CRYSTALS_PLACEMENT,"crystallized_runic_energy");
+
+            LENSING_CRYSTAL_ORE_CONF = Feature.ORE.configured(new OreConfiguration(OreFeatures.NATURAL_STONE,BlocksRegistry.LENSING_CRYSTAL_ORE.get().defaultBlockState(),4));
+            LENSING_CRYSTAL_ORE_PLACEMENT = LENSING_CRYSTAL_ORE_CONF.placed(
+              CountPlacement.of(UniformInt.of(4,6)),InSquarePlacement.spread(),HeightRangePlacement.uniform(VerticalAnchor.absolute(10),VerticalAnchor.absolute(50))
+            );
+
+            registerConfiguredFeature(LENSING_CRYSTAL_ORE_CONF,"lensing_crystal_ore");
+            registerPlacedFeature(LENSING_CRYSTAL_ORE_PLACEMENT,"lensing_crystal_ore");
         });
     }
+
+
+
     private static void registerConfiguredFeature(ConfiguredFeature<?,?> feature,String registryid){
         Registry.register(BuiltinRegistries.CONFIGURED_FEATURE,new ResourceLocation(SolarForge.MOD_ID,registryid),feature);
     }

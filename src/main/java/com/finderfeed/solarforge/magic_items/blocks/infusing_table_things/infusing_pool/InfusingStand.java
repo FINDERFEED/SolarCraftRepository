@@ -20,12 +20,10 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.event.world.BlockEvent;
 
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
-
 import javax.annotation.Nullable;
 
-public class InfusingPool extends Block implements EntityBlock {
-    public InfusingPool(Properties p_i48440_1_) {
+public class InfusingStand extends Block implements EntityBlock {
+    public InfusingStand(Properties p_i48440_1_) {
         super(p_i48440_1_);
     }
 
@@ -41,8 +39,8 @@ public class InfusingPool extends Block implements EntityBlock {
 
         BlockEntity te = p_196243_2_.getBlockEntity(p_196243_3_);
 
-        if (te instanceof InfusingPoolTileEntity){
-            InfusingPoolTileEntity ent = (InfusingPoolTileEntity) te;
+        if (te instanceof InfusingStandTileEntity){
+            InfusingStandTileEntity ent = (InfusingStandTileEntity) te;
             ItemStack stacks = ent.getItems().get(0);
             popResource(p_196243_2_,p_196243_3_,stacks);
         }
@@ -53,8 +51,8 @@ public class InfusingPool extends Block implements EntityBlock {
     public InteractionResult use(BlockState state, Level world, BlockPos pos, Player user, InteractionHand hand, BlockHitResult rayTraceResult) {
         if (!world.isClientSide()) {
             BlockEntity entity = world.getBlockEntity(pos);
-            if (entity instanceof InfusingPoolTileEntity) {
-                InfusingPoolTileEntity tile = (InfusingPoolTileEntity) entity;
+            if (entity instanceof InfusingStandTileEntity) {
+                InfusingStandTileEntity tile = (InfusingStandTileEntity) entity;
                 if (!(user.getItemInHand(hand).getItem() instanceof SolarWandItem) && hand == InteractionHand.MAIN_HAND && !user.isCrouching()) {
 
                     handleContainerClick(state,world,pos,user,hand,tile);
@@ -69,7 +67,7 @@ public class InfusingPool extends Block implements EntityBlock {
 
 
 
-    private static void handleContainerClick(BlockState state, Level world, BlockPos pos, Player user, InteractionHand hand,InfusingPoolTileEntity tile){
+    private static void handleContainerClick(BlockState state, Level world, BlockPos pos, Player user, InteractionHand hand, InfusingStandTileEntity tile){
         if (tile.isEmpty()) {
             ItemStack stack = user.getItemInHand(hand);
             ItemStack stacktoplace = stack.copy();
@@ -110,7 +108,7 @@ public class InfusingPool extends Block implements EntityBlock {
 
     public static void placeBlockEvent(final BlockEvent.EntityPlaceEvent event){
 
-        if ((event.getPlacedAgainst().getBlock() instanceof InfusingPool) && event.getEntity() instanceof Player){
+        if ((event.getPlacedAgainst().getBlock() instanceof InfusingStand) && event.getEntity() instanceof Player){
             if (!((Player)(event.getEntity())).isCrouching()) {
                 event.setCanceled(true);
             }
@@ -128,7 +126,7 @@ public class InfusingPool extends Block implements EntityBlock {
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level p_153212_, BlockState p_153213_, BlockEntityType<T> p_153214_) {
         return (((level, blockPos, blockState, t) -> {
             if (level.getGameTime() % 20 == 1) {
-                InfusingPoolTileEntity.tick(level, blockPos, blockState, (InfusingPoolTileEntity) t);
+                InfusingStandTileEntity.tick(level, blockPos, blockState, (InfusingStandTileEntity) t);
             }
         }));
     }

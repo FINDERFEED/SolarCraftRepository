@@ -1,16 +1,18 @@
 package com.finderfeed.solarforge.registries.blocks;
 
+import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.for_future_library.blocks.FlammableBlock;
 import com.finderfeed.solarforge.for_future_library.blocks.FlammableLeavesBlock;
 import com.finderfeed.solarforge.for_future_library.blocks.FlammableSlabBlock;
 import com.finderfeed.solarforge.for_future_library.blocks.RotatedPillarFlammableBlock;
-import com.finderfeed.solarforge.magic_items.blocks.infusing_table_things.infusing_pool.InfusingPool;
+import com.finderfeed.solarforge.magic_items.blocks.infusing_table_things.infusing_pool.InfusingStand;
 import com.finderfeed.solarforge.magic_items.blocks.BlueGemDoorBlock;
 import com.finderfeed.solarforge.magic_items.blocks.*;
 import com.finderfeed.solarforge.magic_items.blocks.primitive.*;
 import com.finderfeed.solarforge.magic_items.decoration_blocks.SolarFlower;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Progression;
 import com.finderfeed.solarforge.magic_items.runic_network.repeater.RunicNetworkRepeater;
+import com.finderfeed.solarforge.misc_things.ParticlesList;
 import com.finderfeed.solarforge.world_generation.structures.blocks.ColdStarInfuser;
 import com.finderfeed.solarforge.world_generation.structures.blocks.InvincibleStone;
 import com.finderfeed.solarforge.world_generation.structures.blocks.KeyDefender;
@@ -26,6 +28,7 @@ import net.minecraft.world.level.material.Material;
 import net.minecraft.world.effect.MobEffects;
 
 
+import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.registries.DeferredRegister;
@@ -38,7 +41,7 @@ import java.util.Random;
 
 public class BlocksRegistry {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS,"solarforge");
-    public  static  final RegistryObject<InfusingPool> INFUSING_POOL = BLOCKS.register("solar_forge_infusion_pool",()-> new InfusingPool(BlockBehaviour.Properties.of(Material.STONE)
+    public  static  final RegistryObject<InfusingStand> INFUSING_POOL = BLOCKS.register("solar_forge_infusion_pool",()-> new InfusingStand(BlockBehaviour.Properties.of(Material.STONE)
             .sound(SoundType.METAL)
             .requiresCorrectToolForDrops()
             .noOcclusion()
@@ -48,6 +51,7 @@ public class BlocksRegistry {
     public  static  final RegistryObject<SolarStoneBlock> SOLAR_STONE = BLOCKS.register("solar_stone",()-> new SolarStoneBlock(BlockBehaviour.Properties.copy(Blocks.ANDESITE)));
     public  static  final RegistryObject<Block> SOLAR_STONE_CHISELED = BLOCKS.register("chiseled_solar_stone",()-> new Block(BlockBehaviour.Properties.copy(Blocks.STONE)));
     public  static  final RegistryObject<ProgressionBlock> ENDER_CRACKS = BLOCKS.register("ender_cracks",()-> new ProgressionBlock(BlockBehaviour.Properties.copy(Blocks.END_STONE),()-> Progression.KILL_DRAGON,Blocks.END_STONE));
+    public  static  final RegistryObject<ProgressionBlock> LENSING_CRYSTAL_ORE = BLOCKS.register("lensing_crystal_ore",()-> new ProgressionBlock(BlockBehaviour.Properties.copy(Blocks.STONE),()-> Progression.KILL_WITHER,Blocks.STONE));
 
     public  static  final RegistryObject<Block> SOLAR_STONE_COLLUMN = BLOCKS.register("solar_stone_collumn",()-> new Block(BlockBehaviour.Properties.copy(Blocks.STONE)));
     public  static  final RegistryObject<Block> CATALYST_BASE = BLOCKS.register("catalyst_base",()-> new Block(BlockBehaviour.Properties.copy(Blocks.STONE)));
@@ -152,6 +156,13 @@ public class BlocksRegistry {
                 case EAST -> shape_east;
                 case WEST -> shape_west;
             };
+        }
+        @Override
+        public void animateTick(BlockState state, Level world, BlockPos pos, Random random) {
+            if (random.nextInt(5) == 0) {
+                Vec3 vec = Helpers.randomVector().normalize().multiply(0.5,0.5,0.5);
+                world.addParticle(ParticlesList.CRYSTAL_SPARK_PARTICLE.get(),pos.getX() + 0.5 + vec.x,pos.getY() + 0.5 + vec.y,pos.getZ() + 0.5 + vec.z,0,0,0);
+            }
         }
     });
 }

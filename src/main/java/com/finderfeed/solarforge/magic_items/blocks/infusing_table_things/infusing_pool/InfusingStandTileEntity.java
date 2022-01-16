@@ -15,7 +15,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 
 import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -25,11 +24,11 @@ import net.minecraftforge.network.PacketDistributor;
 import javax.annotation.Nullable;
 
 
-public class InfusingPoolTileEntity extends RandomizableContainerBlockEntity  {
+public class InfusingStandTileEntity extends RandomizableContainerBlockEntity  {
 
     public NonNullList<ItemStack> items = NonNullList.withSize(1,ItemStack.EMPTY);
 
-    public InfusingPoolTileEntity(BlockPos p_155630_, BlockState p_155631_) {
+    public InfusingStandTileEntity(BlockPos p_155630_, BlockState p_155631_) {
         super(TileEntitiesRegistry.INFUSING_POOL_BLOCKENTITY.get(), p_155630_, p_155631_);
     }
 
@@ -41,7 +40,7 @@ public class InfusingPoolTileEntity extends RandomizableContainerBlockEntity  {
 
     @Override
     protected AbstractContainerMenu createMenu(int x, Inventory inv) {
-        return new InfusingPoolContainer(x,inv,this);
+        return new InfusingStandContainer(x,inv,this);
     }
 
     @Override
@@ -84,7 +83,7 @@ public class InfusingPoolTileEntity extends RandomizableContainerBlockEntity  {
     }
 
 
-    public static void tick(Level world,BlockPos pos,BlockState state,InfusingPoolTileEntity tile) {
+    public static void tick(Level world, BlockPos pos, BlockState state, InfusingStandTileEntity tile) {
         if (!tile.level.isClientSide) {
 
             SolarForgePacketHandler.INSTANCE.send(PacketDistributor.NEAR.with(PacketDistributor.TargetPoint.p(tile.worldPosition.getX(),tile.worldPosition.getY(),tile.worldPosition.getZ(),20,tile.level.dimension())),

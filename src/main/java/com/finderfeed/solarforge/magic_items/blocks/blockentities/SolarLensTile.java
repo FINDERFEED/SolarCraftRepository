@@ -1,10 +1,16 @@
 package com.finderfeed.solarforge.magic_items.blocks.blockentities;
 
+import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.SolarForge;
+import com.finderfeed.solarforge.misc_things.ParticlesList;
 import com.finderfeed.solarforge.misc_things.PhantomInventory;
 import com.finderfeed.solarforge.recipe_types.solar_smelting.SolarSmeltingRecipe;
 import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.Connection;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -15,6 +21,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.Nullable;
 
 
 import java.util.ArrayList;
@@ -61,6 +68,10 @@ public class SolarLensTile extends BlockEntity  {
                     tile.RECIPE_IN_PROGRESS = true;
                     tile.SMELTING_TIME = recipe.get().smeltingTime;
                     tile.CURRENT_SMELTING_TIME++;
+                    if (tile.CURRENT_SMELTING_TIME % 5 == 0){
+                        tile.setChanged();
+                        world.sendBlockUpdated(post,blockState,blockState,3);
+                    }
                     int count = tile.getMinRecipeOutput(actualRecipe);
                     if (tile.CURRENT_SMELTING_TIME >= tile.SMELTING_TIME*count){
                         for (ItemEntity a : list){
@@ -82,6 +93,14 @@ public class SolarLensTile extends BlockEntity  {
                     tile.RECIPE_IN_PROGRESS = false;
                     tile.CURRENT_SMELTING_TIME = 0;
                     tile.SMELTING_TIME = 0;
+                }
+            }
+        }else{
+            if (tile.RECIPE_IN_PROGRESS){
+                if (world.getGameTime() % 3 == 0) {
+                    Vec3 v = Helpers.getBlockCenter(post.offset(0, -2, 0));
+                    Vec3 offs = Helpers.randomVector().normalize().multiply(0.5, 0.5, 0.5);
+                    world.addParticle(ParticlesList.SMALL_SOLAR_STRIKE_PARTICLE.get(), v.x + offs.x, v.y + offs.y, v.z + offs.z, 0, 0.05, 0);
                 }
             }
         }
@@ -124,6 +143,19 @@ public class SolarLensTile extends BlockEntity  {
         return Math.min(outputSize, minRecipesAmount);
     }
 
+    @Nullable
+    @Override
+    public Packet<ClientGamePacketListener> getUpdatePacket() {
+        CompoundTag tag = new CompoundTag();
+        saveAdditional(tag);
+        return Helpers.createTilePacket(this,tag);
+    }
+
+    @Override
+    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
+        this.load(pkt.getTag());
+        super.onDataPacket(net, pkt);
+    }
 
     @Override
     public void saveAdditional(CompoundTag cmp) {

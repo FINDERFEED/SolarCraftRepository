@@ -10,20 +10,19 @@ import net.minecraft.client.renderer.*;
 
 import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
-import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
 import com.mojang.math.Vector3f;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 
 
-public class InfusingPoolRenderer implements BlockEntityRenderer<InfusingPoolTileEntity> {
+public class InfusingStandRenderer implements BlockEntityRenderer<InfusingStandTileEntity> {
 
 
-    public InfusingPoolRenderer(BlockEntityRendererProvider.Context ctx) {
+    public InfusingStandRenderer(BlockEntityRendererProvider.Context ctx) {
 
     }
 
     @Override
-    public void render(InfusingPoolTileEntity tile, float partialTicks, PoseStack matrices, MultiBufferSource buffer, int light1, int light2) {
+    public void render(InfusingStandTileEntity tile, float partialTicks, PoseStack matrices, MultiBufferSource buffer, int light1, int light2) {
         matrices.pushPose();
         if (!tile.isEmpty()) {
             matrices.translate(0.5, 0.4, 0.5);

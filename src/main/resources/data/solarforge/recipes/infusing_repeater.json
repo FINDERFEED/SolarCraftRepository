@@ -7,30 +7,30 @@
     "item": "solarforge:energy_dust"
   },
   "input3": {
-    "item": "minecraft:amethyst_shard"
+    "item": "solarforge:lensing_crystal"
   },
   "input4": {
-    "item": "minecraft:amethyst_shard"
+    "item": "solarforge:lensing_crystal"
   },
   "input5": {
-    "item": "minecraft:amethyst_shard"
+    "item": "solarforge:lensing_crystal"
   },
   "input6": {
     "item": "solarforge:energy_dust"
   },
   "input7": {
-    "item": "solarforge:illidium_ingot"
+    "item": "solarforge:energetic_ingot"
   },
   "input8": {
     "item": "minecraft:iron_block"
   },
   "input9": {
-    "item": "solarforge:illidium_ingot"
+    "item": "solarforge:energetic_ingot"
   },
   "result": {
     "item": "solarforge:repeater"
   },
-  "time": 1000,
+  "time": 300,
   "fragment": "runic_energy_repeater",
   "count": 8,
   "catalysts": "K KF FZ ZU U"

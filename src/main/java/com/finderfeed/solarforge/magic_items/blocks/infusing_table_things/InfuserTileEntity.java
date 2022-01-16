@@ -5,9 +5,8 @@ import com.finderfeed.solarforge.ClientHelpers;
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.for_future_library.helpers.FinderfeedMathHelper;
-import com.finderfeed.solarforge.for_future_library.helpers.RenderingTools;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.runic_energy.AbstractRunicEnergyContainerRCBE;
-import com.finderfeed.solarforge.magic_items.blocks.infusing_table_things.infusing_pool.InfusingPoolTileEntity;
+import com.finderfeed.solarforge.magic_items.blocks.infusing_table_things.infusing_pool.InfusingStandTileEntity;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.ProgressionHelper;
 import com.finderfeed.solarforge.misc_things.*;
@@ -34,7 +33,6 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.DiggerItem;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.core.NonNullList;
 import net.minecraft.sounds.SoundSource;
@@ -47,7 +45,6 @@ import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.phys.Vec3;
 
 import net.minecraftforge.network.PacketDistributor;
-import org.apache.logging.log4j.core.tools.picocli.CommandLine;
 
 import javax.annotation.Nullable;
 import java.util.*;
@@ -451,8 +448,8 @@ public class InfuserTileEntity extends AbstractRunicEnergyContainerRCBE implemen
     public void updateStacksInPhantomSlots(){
         List<BlockEntity> list = Structures.checkInfusingStandStructure(worldPosition,level);
         for (int i = 0;i < list.size();i++){
-            if (list.get(i) instanceof InfusingPoolTileEntity){
-                InfusingPoolTileEntity tile = (InfusingPoolTileEntity) list.get(i);
+            if (list.get(i) instanceof InfusingStandTileEntity){
+                InfusingStandTileEntity tile = (InfusingStandTileEntity) list.get(i);
                 this.setItem(i+1,tile.getItem(0));
             }else{
                 this.setItem(i+1, ItemStack.EMPTY);
@@ -480,7 +477,7 @@ public class InfuserTileEntity extends AbstractRunicEnergyContainerRCBE implemen
         }
 
         Structures.checkInfusingStandStructure(worldPosition,level).forEach((tile)->{
-            if (tile instanceof InfusingPoolTileEntity pool){
+            if (tile instanceof InfusingStandTileEntity pool){
                 if ((pool.getItem(0).getItem() != Items.AIR) && pool.getItem(0).getCount() < count.get()){
                     count.set(pool.getItem(0).getCount());
                 }
@@ -507,8 +504,8 @@ public class InfuserTileEntity extends AbstractRunicEnergyContainerRCBE implemen
     public void deleteStacksInPhantomSlots(int amount){
         List<BlockEntity> list = Structures.checkInfusingStandStructure(worldPosition,level);
         for (int i = 0;i < list.size();i++){
-            if (list.get(i) instanceof InfusingPoolTileEntity){
-                InfusingPoolTileEntity tile = (InfusingPoolTileEntity) list.get(i);
+            if (list.get(i) instanceof InfusingStandTileEntity){
+                InfusingStandTileEntity tile = (InfusingStandTileEntity) list.get(i);
                 tile.getItem(0).grow(-amount);
             }
         }

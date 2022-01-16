@@ -19,6 +19,7 @@ public class ParticleRegister {
         Minecraft.getInstance().particleEngine.register(ParticlesList.RUNE_PARTICLE.get(), RuneParticle.Factory::new);
         Minecraft.getInstance().particleEngine.register(ParticlesList.SOLAR_EXPLOSION_PARTICLE.get(), SolarExplosionParticle.Factory::new);
         Minecraft.getInstance().particleEngine.register(ParticlesList.SPARK_PARTICLE.get(), SparkParticle.Factory::new);
+        Minecraft.getInstance().particleEngine.register(ParticlesList.CRYSTAL_SPARK_PARTICLE.get(), CrystalSparkParticle.Provider::new);
     }
 
 }
