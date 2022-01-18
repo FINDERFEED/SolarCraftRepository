@@ -3,13 +3,12 @@ package com.finderfeed.solarforge.for_future_library.other;
 import com.finderfeed.solarforge.for_future_library.helpers.FinderfeedMathHelper;
 import net.minecraft.util.Mth;
 
-public class EaseInOut implements CanTick{
-    private int ticker = 0;
-    private double duration;
-    private double start = 0;
-    private double end;
+public class EaseInOut extends InterpolatedValue implements CanTick{
+
+
     private final double modifier;
     public EaseInOut(double start,double end, double duration,double modifier){
+        super(start,end,duration);
         this.start = start;
         this.duration = duration;
         this.end = end;
@@ -24,13 +23,6 @@ public class EaseInOut implements CanTick{
         return Mth.lerp(Mth.lerp(time/duration,easein,easeout),start,end);
     }
 
-    public void setDuration(double duration) {
-        this.duration = duration;
-    }
-
-    public void setEnd(double end) {
-        this.end = end;
-    }
 
     @Override
     public void tick(){

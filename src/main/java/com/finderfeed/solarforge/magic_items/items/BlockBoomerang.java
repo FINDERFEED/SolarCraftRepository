@@ -1,6 +1,8 @@
 package com.finderfeed.solarforge.magic_items.items;
 
+import com.finderfeed.solarforge.magic_items.items.primitive.solacraft_item_classes.SolarcraftItem;
 import com.finderfeed.solarforge.magic_items.items.projectiles.BlockBoomerangProjectile;
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarforge.registries.entities.Entities;
 
 import net.minecraft.world.item.TooltipFlag;
@@ -18,11 +20,12 @@ import net.minecraft.world.level.Level;
 
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.function.Supplier;
 
-public class BlockBoomerang extends Item {
+public class BlockBoomerang extends SolarcraftItem {
 
-    public BlockBoomerang(Properties p_i48487_1_) {
-        super(p_i48487_1_);
+    public BlockBoomerang(Properties p_i48487_1_, Supplier<AncientFragment> fragmentSupplier) {
+        super(p_i48487_1_,fragmentSupplier);
     }
 
 

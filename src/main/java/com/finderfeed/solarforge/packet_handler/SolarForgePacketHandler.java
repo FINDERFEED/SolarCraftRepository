@@ -61,6 +61,8 @@ public class SolarForgePacketHandler {
         INSTANCE.registerMessage(nextID(), TakeEnergyFromForgePacket.class, TakeEnergyFromForgePacket::toBytes, TakeEnergyFromForgePacket::new, TakeEnergyFromForgePacket::handle);
         INSTANCE.registerMessage(nextID(), SetSpeedPacket.class, SetSpeedPacket::toBytes, SetSpeedPacket::new, SetSpeedPacket::handle);
         INSTANCE.registerMessage(nextID(), TriggerEnergyTypeToast.class, TriggerEnergyTypeToast::toBytes, TriggerEnergyTypeToast::new, TriggerEnergyTypeToast::handle);
+        INSTANCE.registerMessage(nextID(), SolarStrikeEntityDoExplosion.class, SolarStrikeEntityDoExplosion::toBytes, SolarStrikeEntityDoExplosion::new, SolarStrikeEntityDoExplosion::handle);
+        INSTANCE.registerMessage(nextID(), UpdateFragmentsOnClient.class, UpdateFragmentsOnClient::toBytes, UpdateFragmentsOnClient::new, UpdateFragmentsOnClient::handle);
     }
 //            INSTANCE.registerMessage(nextID(), .class, ::toBytes, ::new, ::handle);
     //RepeaterParentUpdateOnClient

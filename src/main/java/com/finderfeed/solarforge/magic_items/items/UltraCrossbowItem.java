@@ -4,6 +4,7 @@ package com.finderfeed.solarforge.magic_items.items;
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.magic_items.items.primitive.RareSolarcraftItem;
 import com.finderfeed.solarforge.magic_items.items.projectiles.UltraCrossbowProjectile;
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarforge.misc_things.ManaConsumer;
 import com.finderfeed.solarforge.registries.entities.Entities;
 import com.finderfeed.solarforge.registries.sounds.Sounds;
@@ -24,13 +25,14 @@ import net.minecraft.world.level.Level;
 
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.function.Supplier;
 
 public class UltraCrossbowItem extends RareSolarcraftItem implements ManaConsumer {
 
     public boolean isBeingUsed = false;
 
-    public UltraCrossbowItem(Properties p_i50040_1_) {
-        super(p_i50040_1_);
+    public UltraCrossbowItem(Properties p_i50040_1_, Supplier<AncientFragment> fragmentSupplier) {
+        super(p_i50040_1_,fragmentSupplier);
     }
 
     @Override

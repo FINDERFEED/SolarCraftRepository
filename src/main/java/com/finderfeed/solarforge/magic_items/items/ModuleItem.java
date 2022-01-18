@@ -2,6 +2,8 @@ package com.finderfeed.solarforge.magic_items.items;
 
 import com.finderfeed.solarforge.client.custom_tooltips.CustomTooltip;
 import com.finderfeed.solarforge.client.custom_tooltips.ICustomTooltip;
+import com.finderfeed.solarforge.magic_items.items.primitive.solacraft_item_classes.SolarcraftItem;
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.AncientFragment;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -12,8 +14,9 @@ import net.minecraft.world.level.Level;
 
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.function.Supplier;
 
-public class ModuleItem extends Item implements ICustomTooltip {
+public class ModuleItem extends SolarcraftItem implements ICustomTooltip {
     public static final CustomTooltip MODULE = new CustomTooltip("module",
             Math.round(40*1.5f),Math.round(9*1.5f),
             Math.round(40*1.5f),Math.round(9*1.5f),
@@ -24,13 +27,13 @@ public class ModuleItem extends Item implements ICustomTooltip {
     private String subTag;
     private ModuleItem.Tags[] incompatibleWith;
 
-    public ModuleItem(Properties p_41383_,Type type,Tags subTag) {
-        super(p_41383_);
+    public ModuleItem(Properties p_41383_,Type type,Tags subTag, Supplier<AncientFragment> fragmentSupplier) {
+        super(p_41383_,fragmentSupplier);
         this.type = type;
         this.subTag = subTag.tag;
     }
-    public ModuleItem(Properties p_41383_,Type type,Tags subTag,ModuleItem.Tags... incompatibleWith) {
-        this(p_41383_,type,subTag);
+    public ModuleItem(Properties p_41383_,Type type,Tags subTag, Supplier<AncientFragment> fragmentSupplier,ModuleItem.Tags... incompatibleWith) {
+        this(p_41383_,type,subTag,fragmentSupplier);
         this.incompatibleWith = incompatibleWith;
     }
 

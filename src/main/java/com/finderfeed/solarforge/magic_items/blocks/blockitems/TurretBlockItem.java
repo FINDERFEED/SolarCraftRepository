@@ -3,6 +3,7 @@ package com.finderfeed.solarforge.magic_items.blocks.blockitems;
 import com.finderfeed.solarforge.magic_items.blocks.TurretBlock;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.TurretTileEntity;
 import com.finderfeed.solarforge.magic_items.items.primitive.RareSolarcraftBlockItem;
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.AncientFragment;
 import net.minecraft.world.level.block.Block;
 
 import net.minecraft.world.item.TooltipFlag;
@@ -19,13 +20,14 @@ import net.minecraft.world.level.Level;
 
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.function.Supplier;
 
 import net.minecraft.world.item.Item.Properties;
 
 public class TurretBlockItem extends RareSolarcraftBlockItem {
 
-    public TurretBlockItem(Block p_i48527_1_, Properties p_i48527_2_) {
-        super(p_i48527_1_, p_i48527_2_);
+    public TurretBlockItem(Block p_i48527_1_, Properties p_i48527_2_, Supplier<AncientFragment> fragmentSupplier) {
+        super(p_i48527_1_, p_i48527_2_,fragmentSupplier);
     }
 
 

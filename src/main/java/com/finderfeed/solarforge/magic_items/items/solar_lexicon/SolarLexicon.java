@@ -41,6 +41,7 @@ public class SolarLexicon extends Item {
     @Override
     public InteractionResultHolder<ItemStack> use(Level world, Player pe, InteractionHand hand) {
         if (!world.isClientSide && hand.equals(InteractionHand.MAIN_HAND)){
+
             if (!ProgressionHelper.doPlayerHasFragment(pe,AncientFragment.LEXICON)) {
                 ItemStack frag = ItemsRegister.INFO_FRAGMENT.get().getDefaultInstance();
                 ProgressionHelper.applyTagToFragment(frag, AncientFragment.LEXICON);
@@ -65,6 +66,8 @@ public class SolarLexicon extends Item {
                 ProgressionHelper.givePlayerFragment(AncientFragment.RUNIC_TABLE,pe);
                 pe.level.addFreshEntity(entity);
             }
+            Helpers.updateFragmentsOnClient((ServerPlayer) pe);
+
             if (!pe.isCrouching()) {
                 AchievementTree tree = AchievementTree.INSTANCE;
                 for (Progression a : tree.ACHIEVEMENT_TREE.keySet()) {

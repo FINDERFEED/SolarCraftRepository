@@ -5,6 +5,9 @@ import com.finderfeed.solarforge.ClientHelpers;
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.for_future_library.helpers.FinderfeedMathHelper;
+import com.finderfeed.solarforge.for_future_library.helpers.RenderingTools;
+import com.finderfeed.solarforge.for_future_library.other.EaseIn;
+import com.finderfeed.solarforge.for_future_library.other.EaseOut;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.runic_energy.AbstractRunicEnergyContainerRCBE;
 import com.finderfeed.solarforge.magic_items.blocks.infusing_table_things.infusing_pool.InfusingStandTileEntity;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.AncientFragment;
@@ -17,6 +20,9 @@ import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Pr
 import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
 import com.finderfeed.solarforge.world_generation.structures.Structures;
 import com.google.common.util.concurrent.AtomicDouble;
+import com.mojang.math.Vector3f;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.item.Items;
@@ -42,6 +48,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
 import net.minecraftforge.network.PacketDistributor;
@@ -53,6 +60,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class InfuserTileEntity extends AbstractRunicEnergyContainerRCBE implements  IEnergyUser, IBindable, ISolarEnergyContainer, OneWay,DebugTarget {
 
 
+    private EaseIn rotationValue = new EaseIn(0,1,100);
 
     private Tier tier = null;
 
@@ -210,15 +218,45 @@ public class InfuserTileEntity extends AbstractRunicEnergyContainerRCBE implemen
                     tile.clearWays();
                 }
 
-                if (world.getGameTime() % 5 == 1) {
+                if (world.getGameTime() % 5 == 0) {
                     sendUpdatePackets(world, tile);
                 }
+        }else{
+
+            if (tile.RECIPE_IN_PROGRESS && (tile.INFUSING_TIME - tile.CURRENT_PROGRESS <= 100)){
+                tile.getRotationValue().tick();
+
+                BlockPos[] offsets = Structures.infusingPoolsPositions(BlockPos.ZERO);
+//                if (world.getGameTime() % 2 == 0) {
+                    float rotValue = (float) tile.getRotationValue().getValue();
+                    for (int i = 0; i < offsets.length; i++) {
+                        BlockPos p = offsets[i];
+                        Vec3 v = new Vec3(p.getX(), p.getY(), p.getZ()).multiply(1 - rotValue, 1 - rotValue, 1 - rotValue).yRot(-(float) Math.toRadians(rotValue * 360));
+                        Vec3 ps = Helpers.getBlockCenter(pos).add(v);
+                        ClientHelpers.ParticleAnimationHelper.createParticle(ParticlesList.SMALL_SOLAR_STRIKE_PARTICLE.get(),ps.x,ps.y,ps.z,
+                                0,0,0,()->255,()->255,()->0,0.25f);
+                        world.addParticle(ParticlesList.SMALL_SOLAR_STRIKE_PARTICLE.get(), ps.x, ps.y, ps.z, 0, 0, 0);
+                    }
+//                }
+
+                if (world.getGameTime() % 5 == 0) {
+                    tile.infusingStandsRendering(false);
+                }
+
+            }else {
+                tile.getRotationValue().reset();
+                if (world.getGameTime() % 5 == 0) {
+                    tile.infusingStandsRendering(true);
+                }
+            }
+
         }
         doParticlesAnimation(world,tile);
     }
 
-
-
+    public EaseIn getRotationValue() {
+        return rotationValue;
+    }
 
     private static void doParticlesAnimation(Level world, InfuserTileEntity tile){
         if (tile.RECIPE_IN_PROGRESS){
@@ -236,26 +274,26 @@ public class InfuserTileEntity extends AbstractRunicEnergyContainerRCBE implemen
     }
     public static boolean firstTierAnimation(InfuserTileEntity tile,Level world){
         if (world.getGameTime() % 2 == 0) {
-            int r = Math.round(world.random.nextFloat() * 40);
+            int r = Math.round(world.random.nextFloat() * 100);
             Vec3 center = Helpers.getBlockCenter(tile.getBlockPos());
             for (int i = 1; i <= 4; i++) {
                 double h = Math.toRadians(i * 90 + 30);
                 double[] xz = FinderfeedMathHelper.rotatePointRadians(7,0,h);
                 double x = xz[0];
                 double z = xz[1];
-                ClientHelpers.ParticleAnimationHelper.timedLine(ParticlesList.SMALL_SOLAR_STRIKE_PARTICLE.get(),
-                        center.add(x, 4, z), center, 100, () -> 255, () -> 255, () -> r, 0.25f);
+                ClientHelpers.ParticleAnimationHelper.randomline(ParticlesList.SPARK_PARTICLE.get(),
+                        center.add(x, 4, z), center, 0.5, () -> 255, () -> 255, () -> r, 0.4f,0.05f);
             }
             for (int i = 1; i <= 4; i++) {
                 double h = Math.toRadians(i * 90 + 60);
                 double[] xz = FinderfeedMathHelper.rotatePointRadians(6.5f,0,h);
                 double x = xz[0];
                 double z = xz[1];
-                ClientHelpers.ParticleAnimationHelper.timedLine(ParticlesList.SMALL_SOLAR_STRIKE_PARTICLE.get(),
-                        center.add(x, 4, z), center, 100, () -> 255, () -> 255, () -> r, 0.25f);
+                ClientHelpers.ParticleAnimationHelper.randomline(ParticlesList.SPARK_PARTICLE.get(),
+                        center.add(x, 4, z), center, 0.5, () -> 255, () -> 255, () -> r, 0.4f,0.05f);
             }
             ClientHelpers.ParticleAnimationHelper.verticalCircle(ParticlesList.SMALL_SOLAR_STRIKE_PARTICLE.get(),
-                    center.add(0, -0.5, 0), 3, 4, new float[]{0, 0, 0}, () -> 255, () -> 255, () -> r, 0.25f);
+                    center.add(0, -0.5, 0), 3, 4, new float[]{0, 0, 0}, () -> 255, () -> 255, () -> r, 0.35f);
             return true;
         }else{
             return false;
@@ -456,7 +494,14 @@ public class InfuserTileEntity extends AbstractRunicEnergyContainerRCBE implemen
             }
         }
     }
-
+    public void infusingStandsRendering(boolean e){
+        List<BlockEntity> list = Structures.checkInfusingStandStructure(worldPosition,level);
+        for (int i = 0;i < list.size();i++){
+            if (list.get(i) instanceof InfusingStandTileEntity stand){
+               stand.shouldRenderItem(e);
+            }
+        }
+    }
 
     private int getMinRecipeCountOutput(InfusingRecipe recipe){
         AtomicInteger count = new AtomicInteger((int)Math.floor(64/(float)recipe.count));
@@ -686,5 +731,8 @@ public class InfuserTileEntity extends AbstractRunicEnergyContainerRCBE implemen
         }
     }
 
-
+    @Override
+    public AABB getRenderBoundingBox() {
+        return new AABB(-5,-5,-5,5,5,5).move(Helpers.getBlockCenter(getBlockPos()));
+    }
 }

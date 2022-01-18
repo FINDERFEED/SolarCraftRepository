@@ -1,10 +1,12 @@
 package com.finderfeed.solarforge.magic_items.blocks.infusing_table_things;
 
+import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.events.other_events.event_handler.ClientEventsHandler;
 import com.finderfeed.solarforge.for_future_library.helpers.RenderingTools;
 import com.finderfeed.solarforge.magic_items.blocks.render.abstracts.AbstractRunicEnergyContainerRCBERenderer;
 import com.finderfeed.solarforge.registries.Tags;
 import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
+import com.finderfeed.solarforge.world_generation.structures.Structures;
 import com.mojang.blaze3d.vertex.BufferBuilder;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -20,6 +22,11 @@ import net.minecraft.resources.ResourceLocation;
 import com.mojang.math.Vector3f;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.phys.Vec3;
+
+import java.util.List;
 
 public class InfuserRenderer extends AbstractRunicEnergyContainerRCBERenderer<InfuserTileEntity> {
     public final ResourceLocation text = new ResourceLocation("solarforge","textures/misc/solar_infuser_ring.png");
@@ -74,27 +81,27 @@ public class InfuserRenderer extends AbstractRunicEnergyContainerRCBERenderer<In
             matrices.translate(0.5,0.001,0.5);
             matrices.mulPose(Vector3f.YP.rotationDegrees(time % 360));
             PoseStack.Pose entry = matrices.last();
-            vertex.vertex(entry.pose(),-1.5F,0,-1.5F).color(255,255,255,255).uv(1,0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
-            vertex.vertex(entry.pose(), 1.5F,0,-1.5F).color(255,255,255,255).uv(1,1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
-            vertex.vertex(entry.pose(), 1.5F,0, 1.5F).color(255,255,255,255).uv(0,1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
-            vertex.vertex(entry.pose(),-1.5F,0, 1.5F).color(255,255,255,255).uv(0,0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
+            vertex.vertex(entry.pose(),-1.25F,0,-1.25F).color(255,255,255,255).uv(1,0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
+            vertex.vertex(entry.pose(), 1.25F,0,-1.25F).color(255,255,255,255).uv(1,1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
+            vertex.vertex(entry.pose(), 1.25F,0, 1.25F).color(255,255,255,255).uv(0,1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
+            vertex.vertex(entry.pose(),-1.25F,0, 1.25F).color(255,255,255,255).uv(0,0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
 
-            vertex.vertex(entry.pose(),-1.5F,0, 1.5F).color(255,255,255,255).uv(1,0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
-            vertex.vertex(entry.pose(), 1.5F,0, 1.5F).color(255,255,255,255).uv(1,1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
-            vertex.vertex(entry.pose(), 1.5F,0,-1.5F).color(255,255,255,255).uv(0,1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
-            vertex.vertex(entry.pose(),-1.5F,0,-1.5F).color(255,255,255,255).uv(0,0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
+            vertex.vertex(entry.pose(),-1.25F,0, 1.25F).color(255,255,255,255).uv(1,0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
+            vertex.vertex(entry.pose(), 1.25F,0, 1.25F).color(255,255,255,255).uv(1,1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
+            vertex.vertex(entry.pose(), 1.25F,0,-1.25F).color(255,255,255,255).uv(0,1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
+            vertex.vertex(entry.pose(),-1.25F,0,-1.25F).color(255,255,255,255).uv(0,0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
 
 
             matrices.mulPose(Vector3f.YP.rotationDegrees(-(time % 360)*2));
-            vertex.vertex(entry.pose(),-3F,0,-3F).color(255,255,255,255).uv(1,0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
-            vertex.vertex(entry.pose(), 3F,0,-3F).color(255,255,255,255).uv(1,1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
-            vertex.vertex(entry.pose(), 3F,0, 3F).color(255,255,255,255).uv(0,1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
-            vertex.vertex(entry.pose(),-3F,0, 3F).color(255,255,255,255).uv(0,0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
+            vertex.vertex(entry.pose(),-2.8F,0,-2.8F).color(255,255,255,255).uv(1,0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
+            vertex.vertex(entry.pose(), 2.8F,0,-2.8F).color(255,255,255,255).uv(1,1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
+            vertex.vertex(entry.pose(), 2.8F,0, 2.8F).color(255,255,255,255).uv(0,1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
+            vertex.vertex(entry.pose(),-2.8F,0, 2.8F).color(255,255,255,255).uv(0,0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
 
-            vertex.vertex(entry.pose(),-3F,0, 3F).color(255,255,255,255).uv(1,0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
-            vertex.vertex(entry.pose(), 3F,0, 3F).color(255,255,255,255).uv(1,1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
-            vertex.vertex(entry.pose(), 3F,0,-3F).color(255,255,255,255).uv(0,1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
-            vertex.vertex(entry.pose(),-3F,0,-3F).color(255,255,255,255).uv(0,0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
+            vertex.vertex(entry.pose(),-2.8F,0, 2.8F).color(255,255,255,255).uv(1,0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
+            vertex.vertex(entry.pose(), 2.8F,0, 2.8F).color(255,255,255,255).uv(1,1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
+            vertex.vertex(entry.pose(), 2.8F,0,-2.8F).color(255,255,255,255).uv(0,1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
+            vertex.vertex(entry.pose(),-2.8F,0,-2.8F).color(255,255,255,255).uv(0,0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
 
             matrices.popPose();
 
@@ -115,6 +122,32 @@ public class InfuserRenderer extends AbstractRunicEnergyContainerRCBERenderer<In
             }
         }
         matrices.popPose();
+
+
+        float razn = tile.INFUSING_TIME - tile.CURRENT_PROGRESS;
+        if (tile.RECIPE_IN_PROGRESS && (razn <= 100)) {
+            matrices.pushPose();
+            List<ItemStack> stacks = tile.getItems();
+            BlockPos[] offsets = Structures.infusingPoolsPositions(BlockPos.ZERO);
+
+            float rotValue = (float)tile.getRotationValue().getValue() ;
+
+            matrices.translate(0.5,0.5,0.5);
+            matrices.mulPose(Vector3f.YN.rotationDegrees(rotValue * 360));
+            for (int i = 1; i < 9; i++) {
+                ItemStack item = stacks.get(i);
+                BlockPos p = offsets[i-1];
+                Vec3 v = new Vec3(p.getX(),p.getY(),p.getZ()).multiply(1-rotValue,1-rotValue,1-rotValue);
+                matrices.pushPose();
+
+                matrices.translate(v.x, v.y, v.z);
+                RenderingTools.applyMovementMatrixRotations(matrices,v.normalize().reverse());
+                Minecraft.getInstance().getItemRenderer().render(item, ItemTransforms.TransformType.GROUND, true,
+                        matrices, buffer, light, light2, Minecraft.getInstance().getItemRenderer().getModel(item, null, null, 0));
+                matrices.popPose();
+            }
+            matrices.popPose();
+        }
     }
 
     public void drawRing(float partialTicks,PoseStack stack,MultiBufferSource buffer,int light,int light2,float scaleFactor,float angle){

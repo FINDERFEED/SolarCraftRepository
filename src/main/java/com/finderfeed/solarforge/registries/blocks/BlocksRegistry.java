@@ -87,6 +87,7 @@ public class BlocksRegistry {
     public  static  final RegistryObject<Block> RUNE_ENERGY_PYLON = BLOCKS.register("rune_energy_pylon",()-> new RuneEnergyPylonBlock(BlockBehaviour.Properties.copy(Blocks.BEDROCK).noOcclusion()));
     public  static  final RegistryObject<Block> INSCRIPTION_STONE = BLOCKS.register("inscription_stone",()-> new InscriptionStone(BlockBehaviour.Properties.copy(Blocks.STONE)));
     public  static  final RegistryObject<Block> REPEATER = BLOCKS.register("repeater",()-> new RunicNetworkRepeater(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).noOcclusion()));
+    public  static  final RegistryObject<Block> EXPLOSION_BLOCKER = BLOCKS.register("explosion_blocker",()-> new ExplosionBlocker(BlockBehaviour.Properties.copy(Blocks.STONE).noOcclusion()));
     public  static  final RegistryObject<Block> RUNIC_TABLE = BLOCKS.register("runic_table",()-> new RunicTableBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).noOcclusion()));
     public  static  final RegistryObject<LeavesBlock> RUNIC_LEAVES = BLOCKS.register("runic_leaves",()-> new RunicLeavesBlock(BlockBehaviour.Properties.copy(Blocks.OAK_LEAVES).noOcclusion()));
     public  static  final RegistryObject<RotatedPillarBlock> RUNIC_LOG = BLOCKS.register("runic_log",()-> new RotatedPillarFlammableBlock(BlockBehaviour.Properties.copy(Blocks.OAK_LOG),20));
@@ -104,6 +105,8 @@ public class BlocksRegistry {
     public  static  final RegistryObject<Block> ULTIMA_RUNE_BLOCK = BLOCKS.register("ultima_rune_block",()-> new Block(BlockBehaviour.Properties.copy(Blocks.STONE)));
 
     public static final RegistryObject<Block> MODULE_APPLIER = BLOCKS.register("module_table",()->new ModuleStation(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS)));
+
+
 
     public static final RegistryObject<Block> RADIANT_LEAVES = BLOCKS.register("radiant_leaves",()->new FlammableLeavesBlock(BlockBehaviour.Properties.copy(Blocks.OAK_LEAVES).noOcclusion(),20));
     public static final RegistryObject<Block> RADIANT_GRASS = BLOCKS.register("radiant_grass",()->new RadiantGrass(BlockBehaviour.Properties.copy(Blocks.GRASS_BLOCK)));

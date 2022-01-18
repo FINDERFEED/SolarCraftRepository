@@ -1,7 +1,9 @@
 package com.finderfeed.solarforge.magic_items.items.small_items;
 
 import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.magic_items.items.primitive.solacraft_item_classes.SolarcraftBlockItem;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Progression;
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.AncientFragment;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
@@ -9,9 +11,11 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 
-public class RunicNetworkRepeaterBlockItem extends BlockItem {
-    public RunicNetworkRepeaterBlockItem(Block p_40565_, Properties p_40566_) {
-        super(p_40565_, p_40566_);
+import java.util.function.Supplier;
+
+public class RunicNetworkRepeaterBlockItem extends SolarcraftBlockItem {
+    public RunicNetworkRepeaterBlockItem(Block p_40565_, Properties p_40566_, Supplier<AncientFragment> fragmentSupplier) {
+        super(p_40565_, p_40566_,fragmentSupplier);
     }
 
     @Override

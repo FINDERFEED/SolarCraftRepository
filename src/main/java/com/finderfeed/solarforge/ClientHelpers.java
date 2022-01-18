@@ -9,6 +9,7 @@ import com.finderfeed.solarforge.for_future_library.helpers.FinderfeedMathHelper
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.RayTrapTileEntity;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.RuneEnergyPylonTile;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.containers.screens.RunicTableContainerScreen;
+import com.finderfeed.solarforge.magic_items.items.primitive.solacraft_item_classes.FragmentItem;
 import com.finderfeed.solarforge.misc_things.*;
 import com.finderfeed.solarforge.registries.items.ItemsRegister;
 import com.finderfeed.solarforge.registries.sounds.Sounds;
@@ -16,10 +17,12 @@ import com.finderfeed.solarforge.magic_items.items.solar_lexicon.SolarLexicon;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Progression;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.ProgressionHelper;
 import com.mojang.blaze3d.systems.RenderSystem;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Widget;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.client.Minecraft;
@@ -49,6 +52,72 @@ import java.util.function.Supplier;
 
 
 public class ClientHelpers {
+
+
+    public static void updatePlayerFragments(CompoundTag fragmentData){
+        if (getClientPlayer() != null){
+            getClientPlayer().getPersistentData().put(ProgressionHelper.COMPOUND_TAG_FRAGMENTS,fragmentData);
+
+        }
+    }
+
+    public static boolean isComponentObfuscated(ItemStack stack){
+        if (stack.getItem() instanceof FragmentItem r) {
+            if (r.getNeededFragment() == null) return false;
+            Player player = ClientHelpers.getClientPlayer();
+            if (player != null) {
+                return !ProgressionHelper.doPlayerHasFragment(player, r.getNeededFragment());
+            } else {
+                return false;
+            }
+        }else {
+            return false;
+        }
+    }
+
+    public static void doSolarStrikeExplosion(Vec3 pos){
+        Level level = Minecraft.getInstance().level;
+        if (level != null){
+
+            for (int i = 0;i <48;i++){
+
+                float length = 34;
+                double offsetx = length * Math.cos(Math.toRadians(i*7.5));
+                double offsetz = length * Math.sin(Math.toRadians(i*7.5));
+                level.addParticle(ParticlesList.SOLAR_STRIKE_PARTICLE.get(),pos.x +offsetx,pos.y,pos.z +offsetz,0,0.05,0);
+
+
+
+            }
+            for (int i = 0;i <24;i++){
+                for (int g = 0; g < 10;g++){
+                    float length = 34;
+                    double offsetx = level.random.nextFloat()*length * Math.cos(Math.toRadians(i*15));
+                    double offsetz = level.random.nextFloat()*length * Math.sin(Math.toRadians(i*15));
+                    level.addParticle(ParticlesList.SOLAR_STRIKE_PARTICLE.get(),pos.x +offsetx,pos.y,pos.z +offsetz,0,0.05,0);
+
+                }
+
+            }
+            for (int h = 0;h <25;h++){
+
+                for (int i = 0; i < 6; i++) {
+                    for (int g = 0; g < 1; g++) {
+                        float length = 3;
+                        double offsetx = level.random.nextFloat() * length * Math.cos(Math.toRadians(i * 60));
+                        double offsetz = level.random.nextFloat() * length * Math.sin(Math.toRadians(i * 60));
+                        double offsety = level.random.nextFloat() * length + h*8;
+                        level.addParticle(ParticlesList.SOLAR_STRIKE_PARTICLE.get(), pos.x + offsetx, pos.y +offsety, pos.z + offsetz, 0, 0.05, 0);
+
+                    }
+
+                }
+            }
+
+        }
+    }
+
+
     public static LocalPlayer getClientPlayer(){
         return Minecraft.getInstance().player;
     }
@@ -244,6 +313,7 @@ public class ClientHelpers {
     }
 
     public static void createEffectParticle(double x, double y, double z,double xs, double ys, double zs, MobEffect effect){
+
         SmallSolarStrikeParticle particle = (SmallSolarStrikeParticle) Minecraft.getInstance().particleEngine.
                 createParticle(ParticlesList.SMALL_SOLAR_STRIKE_PARTICLE.get(),x,y,z,xs,ys,zs);
         int[] rgba = FinderfeedMathHelper.intToRgba(effect.getColor());
@@ -273,6 +343,20 @@ public class ClientHelpers {
 
     public static class ParticleAnimationHelper{
 
+        public static void createParticle(ParticleOptions options,double x,double y,double z,double xd,double yd,double zd,
+                                          Supplier<Integer> red,Supplier<Integer> green,Supplier<Integer> blue,float maxsize){
+            if (Minecraft.getInstance().level == null) return;
+            Particle particle = Minecraft.getInstance().particleEngine.createParticle(options,x,y,z,xd,yd,zd);
+            if (particle != null) {
+                particle.setColor(red.get(), green.get(), blue.get());
+                if (particle instanceof SolarcraftParticle solarcraftParticle) {
+                    solarcraftParticle.setMaxSize(maxsize);
+
+                }
+            }
+        }
+
+
         @Deprecated
         public static void cyclingTimedFunctionAnimation(ParticleOptions particle, Vec3 from, Vec3 to, int duration
                 ,Supplier<Integer> red, Supplier<Integer> green, Supplier<Integer> blue, float maxSize
@@ -299,6 +383,24 @@ public class ClientHelpers {
                 p.setColor((float)red.get()/255,(float)green.get()/255,(float)blue.get()/255);
                 if (p instanceof SolarcraftParticle pd){
                     pd.setMaxSize(maxSize);
+                }
+            }
+        }
+
+        public static void randomline(ParticleOptions particle, Vec3 from, Vec3 to, double intensity, Supplier<Integer> red,Supplier<Integer> green,Supplier<Integer> blue,float maxSize,float chance){
+            Level wrl = Minecraft.getInstance().level;
+            if (wrl == null) return;
+
+            Vec3 between = to.subtract(from);
+            double l = between.length();
+            for (double i = 0; i <= l;i+=intensity){
+                if (wrl.random.nextFloat() <= chance) {
+                    Vec3 pos = from.add(between.multiply(i / l, i / l, i / l));
+                    Particle p = Minecraft.getInstance().particleEngine.createParticle(particle, pos.x, pos.y, pos.z, 0, 0, 0);
+                    p.setColor((float) red.get() / 255, (float) green.get() / 255, (float) blue.get() / 255);
+                    if (p instanceof SolarcraftParticle pd) {
+                        pd.setMaxSize(maxSize);
+                    }
                 }
             }
         }

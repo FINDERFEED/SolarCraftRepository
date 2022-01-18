@@ -1,5 +1,7 @@
 package com.finderfeed.solarforge.magic_items.items;
 
+import com.finderfeed.solarforge.magic_items.items.primitive.solacraft_item_classes.SolarcraftItem;
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.AncientFragment;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -15,13 +17,14 @@ import net.minecraft.world.level.Level;
 
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.function.Supplier;
 
-public class EffectAmulet extends Item {
+public class EffectAmulet extends SolarcraftItem {
 
     private MobEffect effect;
 
-    public EffectAmulet(Properties p_41383_, MobEffect effect) {
-        super(p_41383_);
+    public EffectAmulet(Properties p_41383_, MobEffect effect, Supplier<AncientFragment> fragmentSupplier) {
+        super(p_41383_,fragmentSupplier);
         this.effect= effect;
     }
 

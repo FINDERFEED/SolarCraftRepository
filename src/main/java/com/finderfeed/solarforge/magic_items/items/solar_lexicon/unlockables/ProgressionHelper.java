@@ -10,6 +10,7 @@ import com.finderfeed.solarforge.recipe_types.infusing_crafting.InfusingCrafting
 import com.finderfeed.solarforge.recipe_types.solar_smelting.SolarSmeltingRecipe;
 import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
 import com.finderfeed.solarforge.registries.items.ItemsRegister;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -27,7 +28,7 @@ public class ProgressionHelper {
 
 
 
-
+    public static final String COMPOUND_TAG_FRAGMENTS = "fragments";
     public static Map<Item, InfusingRecipe> INFUSING_RECIPE_MAP = new HashMap<>();
     public static Map<Item, InfusingRecipe> UPGRADES_INFUSING_RECIPE_MAP = new HashMap<>();
     public static Map<Item, SolarSmeltingRecipe> SMELTING_RECIPE_MAP = new HashMap<>();
@@ -70,10 +71,28 @@ public class ProgressionHelper {
 
 
     public static void givePlayerFragment(AncientFragment frag,Player pe){
-        pe.getPersistentData().putBoolean(Helpers.FRAGMENT+frag.getId(),true);
+        if (pe.getPersistentData().get(COMPOUND_TAG_FRAGMENTS) == null){
+            pe.getPersistentData().put(COMPOUND_TAG_FRAGMENTS,new CompoundTag());
+        }
+
+        pe.getPersistentData().getCompound(COMPOUND_TAG_FRAGMENTS).putBoolean(Helpers.FRAGMENT+frag.getId(),true);
     }
 
     public static void revokePlayerFragment(AncientFragment frag,Player pe){
+        if (pe.getPersistentData().get(COMPOUND_TAG_FRAGMENTS) == null){
+            pe.getPersistentData().put(COMPOUND_TAG_FRAGMENTS,new CompoundTag());
+        }
+        pe.getPersistentData().getCompound(COMPOUND_TAG_FRAGMENTS).putBoolean(Helpers.FRAGMENT+frag.getId(),false);
+    }
+
+    public static void givePlayerFragmentOld(AncientFragment frag,Player pe){
+
+
+        pe.getPersistentData().putBoolean(Helpers.FRAGMENT+frag.getId(),true);
+    }
+
+    public static void revokePlayerFragmentOld(AncientFragment frag,Player pe){
+
         pe.getPersistentData().putBoolean(Helpers.FRAGMENT+frag.getId(),false);
     }
 
@@ -180,6 +199,9 @@ public class ProgressionHelper {
         return true;
     }
 
+    public static String getFragIdString(AncientFragment frag){
+        return Helpers.FRAGMENT+frag.getId();
+    }
 
     public static int[] getPlayerPattern(Player pe){
         return pe.getPersistentData().getIntArray(UNLOCK_PATTERN);
@@ -187,6 +209,14 @@ public class ProgressionHelper {
 
 
     public static boolean doPlayerHasFragment(Player pe,AncientFragment frag){
+        if (pe.getPersistentData().get(COMPOUND_TAG_FRAGMENTS) == null){
+            pe.getPersistentData().put(COMPOUND_TAG_FRAGMENTS,new CompoundTag());
+        }
+        return  pe.getPersistentData().getCompound(COMPOUND_TAG_FRAGMENTS).getBoolean(Helpers.FRAGMENT+frag.getId());
+    }
+
+    public static boolean doPlayerHasFragmentOld(Player pe,AncientFragment frag){
+
         return  pe.getPersistentData().getBoolean(Helpers.FRAGMENT+frag.getId());
     }
 

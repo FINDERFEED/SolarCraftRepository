@@ -70,6 +70,8 @@ public class SolarStrikeParticle extends TextureSheetParticle {
 
     }
 
+
+
     public static class Factory implements ParticleProvider<SimpleParticleType>{
         private final SpriteSet spriteSetl;
                 public Factory(SpriteSet sprite){

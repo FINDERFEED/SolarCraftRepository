@@ -3,6 +3,7 @@ package com.finderfeed.solarforge.magic_items.items;
 import com.finderfeed.solarforge.SolarCraftTags;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.projectiles.AbstractTurretProjectile;
 import com.finderfeed.solarforge.magic_items.items.primitive.RareSolarcraftItem;
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarforge.misc_things.ITagUser;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.ChatFormatting;
@@ -30,13 +31,14 @@ import net.minecraft.world.phys.Vec3;
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 public class SolarGodBow extends RareSolarcraftItem implements ITagUser {
 
     private static AABB aoe = new AABB(-15,-5,-15,15,5,15);
 
-    public SolarGodBow(Properties p_41383_) {
-        super(p_41383_);
+    public SolarGodBow(Properties p_41383_, Supplier<AncientFragment> fragmentSupplier) {
+        super(p_41383_,fragmentSupplier);
     }
 
     @Override

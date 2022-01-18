@@ -29,11 +29,15 @@ public class ShowWelcomeMessageEvent {
             }
 
 
+
             AncientFragment.initFragmentsMap();
             BookEntry.initMap();
             ProgressionHelper.initInfRecipesMap(event.getPlayer().level);
             ProgressionHelper.initSmeltingRecipesMap(event.getPlayer().level);
             ProgressionHelper.initInfusingCraftingRecipes(event.getPlayer().level);
+            if (!player.level.isClientSide){
+                Helpers.updateFragmentsOnClient((ServerPlayer) player);
+            }
         }
     }
 }

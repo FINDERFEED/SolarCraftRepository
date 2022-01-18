@@ -1,7 +1,9 @@
 package com.finderfeed.solarforge.magic_items.blocks.infusing_table_things;
 
 import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.magic_items.items.primitive.solacraft_item_classes.SolarcraftBlockItem;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Progression;
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.AncientFragment;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.entity.player.Player;
 
@@ -9,9 +11,11 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
-public class InfuserBlockItem extends BlockItem {
-    public InfuserBlockItem(Block p_i48527_1_, Properties p_i48527_2_) {
-        super(p_i48527_1_, p_i48527_2_);
+import java.util.function.Supplier;
+
+public class InfuserBlockItem extends SolarcraftBlockItem {
+    public InfuserBlockItem(Block p_i48527_1_, Properties p_i48527_2_, Supplier<AncientFragment> fragmentSupplier) {
+        super(p_i48527_1_, p_i48527_2_,fragmentSupplier);
     }
 
 

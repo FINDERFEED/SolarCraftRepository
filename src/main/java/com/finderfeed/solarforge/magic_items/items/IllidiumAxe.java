@@ -1,6 +1,7 @@
 package com.finderfeed.solarforge.magic_items.items;
 
 import com.finderfeed.solarforge.magic_items.items.primitive.RareSolarcraftAxe;
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.AncientFragment;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.entity.LivingEntity;
@@ -22,12 +23,13 @@ import net.minecraftforge.common.Tags;
 
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.function.Supplier;
 
 import net.minecraft.world.item.Item.Properties;
 
 public class IllidiumAxe extends RareSolarcraftAxe {
-    public IllidiumAxe(Tier p_i48530_1_, float p_i48530_2_, float p_i48530_3_, Properties p_i48530_4_) {
-        super(p_i48530_1_, p_i48530_2_, p_i48530_3_, p_i48530_4_);
+    public IllidiumAxe(Tier p_i48530_1_, float p_i48530_2_, float p_i48530_3_, Properties p_i48530_4_, Supplier<AncientFragment> fragmentSupplier) {
+        super(p_i48530_1_, p_i48530_2_, p_i48530_3_, p_i48530_4_,fragmentSupplier);
     }
 
     @Override

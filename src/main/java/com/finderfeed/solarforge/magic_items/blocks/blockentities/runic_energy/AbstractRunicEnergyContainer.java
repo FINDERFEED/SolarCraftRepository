@@ -5,6 +5,7 @@ import com.finderfeed.solarforge.for_future_library.OwnedBlock;
 import com.finderfeed.solarforge.for_future_library.helpers.CompoundNBTHelper;
 import com.finderfeed.solarforge.for_future_library.helpers.FinderfeedMathHelper;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.RuneEnergyPylonTile;
+import com.finderfeed.solarforge.magic_items.blocks.blockentities.SolarcraftBlockEntity;
 import com.finderfeed.solarforge.magic_items.runic_network.algorithms.RunicEnergyPath;
 import com.finderfeed.solarforge.magic_items.runic_network.repeater.BaseRepeaterTile;
 import com.finderfeed.solarforge.magic_items.runic_network.repeater.IRunicEnergyContainer;
@@ -26,7 +27,7 @@ import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 
-public abstract class AbstractRunicEnergyContainer extends BlockEntity implements OwnedBlock {
+public abstract class AbstractRunicEnergyContainer extends SolarcraftBlockEntity implements OwnedBlock {
 
     private int seekingCooldown = 0;
 

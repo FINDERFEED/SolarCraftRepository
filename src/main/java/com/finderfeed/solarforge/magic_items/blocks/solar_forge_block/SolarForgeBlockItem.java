@@ -1,7 +1,9 @@
 package com.finderfeed.solarforge.magic_items.blocks.solar_forge_block;
 
 import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.magic_items.items.primitive.solacraft_item_classes.SolarcraftBlockItem;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Progression;
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.AncientFragment;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.entity.player.Player;
@@ -17,9 +19,9 @@ import net.minecraft.world.level.Level;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class SolarForgeBlockItem extends BlockItem {
+public class SolarForgeBlockItem extends SolarcraftBlockItem {
     public SolarForgeBlockItem(Block p_i48527_1_, Properties p_i48527_2_) {
-        super(p_i48527_1_, p_i48527_2_);
+        super(p_i48527_1_, p_i48527_2_,()-> AncientFragment.SOLAR_FORGE);
     }
 
 

@@ -3,6 +3,7 @@ package com.finderfeed.solarforge.magic_items.items.vein_miner;
 import com.finderfeed.solarforge.Helpers;
 
 import com.finderfeed.solarforge.magic_items.items.primitive.RareSolarcraftPickaxe;
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarforge.misc_things.ManaConsumer;
 
 import net.minecraft.world.level.block.Block;
@@ -23,6 +24,7 @@ import net.minecraft.world.level.Level;
 
 import javax.annotation.Nullable;
 import java.util.*;
+import java.util.function.Supplier;
 
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.PickaxeItem;
@@ -33,8 +35,8 @@ public class IllidiumPickaxe extends RareSolarcraftPickaxe implements ManaConsum
 
 
 
-    public IllidiumPickaxe(Tier p_i48478_1_, int p_i48478_2_, float p_i48478_3_, Properties p_i48478_4_) {
-        super(p_i48478_1_, p_i48478_2_, p_i48478_3_, p_i48478_4_);
+    public IllidiumPickaxe(Tier p_i48478_1_, int p_i48478_2_, float p_i48478_3_, Properties p_i48478_4_, Supplier<AncientFragment> fragmentSupplier) {
+        super(p_i48478_1_, p_i48478_2_, p_i48478_3_, p_i48478_4_,fragmentSupplier);
 
     }
 

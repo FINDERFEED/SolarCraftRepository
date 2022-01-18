@@ -5,14 +5,10 @@ import net.minecraft.util.Mth;
 
 import java.util.function.Function;
 
-public class EaseIn implements CanTick{
-
-    private int ticker = 0;
-    private double duration;
-    private double start = 0;
-    private double end;
+public class EaseIn extends InterpolatedValue{
 
     public EaseIn(double start,double end, double duration){
+        super(start,end,duration);
         this.start = start;
         this.duration = duration;
         this.end = end;
@@ -21,7 +17,7 @@ public class EaseIn implements CanTick{
 
 
     public double getValue(){
-        double time = FinderfeedMathHelper.clamp(start,ticker,duration);
+        double time = FinderfeedMathHelper.clamp(0,ticker,duration);
         return Mth.lerp(FinderfeedMathHelper.SQUARE.apply(time/duration),start,end);
     }
 

@@ -1,5 +1,6 @@
 package com.finderfeed.solarforge.packet_handler.packets;
 
+import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.RunicTableTileEntity;
 import com.finderfeed.solarforge.misc_things.AbstractPacket;
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
@@ -72,7 +73,7 @@ public class RunicTablePacket extends AbstractPacket {
                             tile.getItem(i).grow(-1);
                         }
                         SolarForgePacketHandler.INSTANCE.sendTo(new UpdatePatternOnScreen(ProgressionHelper.getPlayerPattern(playerEntity)),playerEntity.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
-
+                        Helpers.updateFragmentsOnClient(playerEntity);
                     }
                 }
             }else{

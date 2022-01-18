@@ -86,4 +86,9 @@ public class TileEntitiesRegistry {
 
     public static final RegistryObject<BlockEntityType<InfusingTableTile>> INFUSING_CRAFTING_TABLE = TILE_ENTITY_TYPE.register("infusing_crafting_table",()->
             BlockEntityType.Builder.of(InfusingTableTile::new, BlocksRegistry.INFUSING_CRAFTING_TABLE_BLOCK.get()).build(null));
+
+    public static final RegistryObject<BlockEntityType<ExplosionBlockerBlockEntity>> EXPLOSTION_BLOCKER = TILE_ENTITY_TYPE.register("explosion_blocker",()->
+            BlockEntityType.Builder.of(ExplosionBlockerBlockEntity::new, BlocksRegistry.EXPLOSION_BLOCKER.get()).build(null));
+
+
 }

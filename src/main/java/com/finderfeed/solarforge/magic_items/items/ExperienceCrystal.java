@@ -1,7 +1,9 @@
 package com.finderfeed.solarforge.magic_items.items;
 
 import com.finderfeed.solarforge.SolarCraftTags;
+import com.finderfeed.solarforge.magic_items.items.primitive.solacraft_item_classes.SolarcraftItem;
 import com.finderfeed.solarforge.magic_items.items.small_items.ItemWithGlint;
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarforge.registries.items.ItemsRegister;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
@@ -22,11 +24,12 @@ import net.minecraft.world.level.Level;
 
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.function.Supplier;
 
-//TODO:add recipe and fragment
-public class ExperienceCrystal extends ItemWithGlint {
-    public ExperienceCrystal(Properties p_i48487_1_) {
-        super(p_i48487_1_);
+
+public class ExperienceCrystal extends SolarcraftItem {
+    public ExperienceCrystal(Properties p_i48487_1_, Supplier<AncientFragment> fragmentSupplier) {
+        super(p_i48487_1_,fragmentSupplier);
     }
 
     public static boolean consumeExperience(Player player,int value){
@@ -53,6 +56,11 @@ public class ExperienceCrystal extends ItemWithGlint {
             }
         }
         return -1;
+    }
+
+    @Override
+    public boolean isFoil(ItemStack p_41453_) {
+        return true;
     }
 
     @Override

@@ -3,7 +3,9 @@ package com.finderfeed.solarforge.magic_items.items;
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.for_future_library.helpers.CompoundNBTHelper;
 import com.finderfeed.solarforge.magic_items.blocks.primitive.InscriptionStone;
+import com.finderfeed.solarforge.magic_items.items.primitive.solacraft_item_classes.SolarcraftItem;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Progression;
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
 import net.minecraft.core.BlockPos;
@@ -21,16 +23,17 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 
+import java.util.function.Supplier;
 
 
-public class RuneItem extends Item {
+public class RuneItem extends SolarcraftItem {
 
     private static final String TAG_PROGRESS = "progress";
     private static final String TAG_POSITION = "progress";
     private static final String TAG = "progress";
     public final RunicEnergy.Type type;
-    public RuneItem(Properties p_41383_,RunicEnergy.Type type) {
-        super(p_41383_);
+    public RuneItem(Properties p_41383_,RunicEnergy.Type type, Supplier<AncientFragment> fragmentSupplier) {
+        super(p_41383_,fragmentSupplier);
         this.type = type;
     }
 

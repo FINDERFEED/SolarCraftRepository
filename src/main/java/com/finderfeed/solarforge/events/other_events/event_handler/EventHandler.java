@@ -10,6 +10,7 @@ import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.events.my_events.ProgressionUnlockEvent;
 import com.finderfeed.solarforge.for_future_library.OwnedBlock;
 import com.finderfeed.solarforge.for_future_library.helpers.FinderfeedMathHelper;
+import com.finderfeed.solarforge.magic_items.blocks.blockentities.ExplosionBlockerBlockEntity;
 import com.finderfeed.solarforge.magic_items.blocks.infusing_table_things.InfuserBlock;
 import com.finderfeed.solarforge.magic_items.items.ExperienceCrystal;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Progression;
@@ -28,6 +29,7 @@ import com.finderfeed.solarforge.world_generation.structures.SolarForgeStructure
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.ImmutableSet;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceKey;
@@ -55,11 +57,14 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.ChatFormatting;
 import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.StructureSettings;
 import net.minecraft.world.level.levelgen.carver.WorldCarver;
 import net.minecraft.world.level.levelgen.feature.ConfiguredStructureFeature;
 import net.minecraft.world.level.levelgen.feature.StructureFeature;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
@@ -68,6 +73,7 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerXpEvent;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.event.world.BlockEvent;
+import net.minecraftforge.event.world.ExplosionEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -388,6 +394,31 @@ public class EventHandler {
                 }
             }
         }
+    }
+
+    @SubscribeEvent
+    public static void cancelExplosionsInRangeOfExplosionBlocker(ExplosionEvent.Detonate event){
+        Vec3 pos = event.getExplosion().getPosition();
+        if (!event.getWorld().isClientSide) {
+            if (isExplosionBlockerAround(event.getWorld(),pos)){
+                event.getAffectedBlocks().clear();
+            }
+        }
+    }
+    public static boolean isExplosionBlockerAround(Level world,Vec3 pos){
+        if (!world.isClientSide) {
+            for (LevelChunk chunk : Helpers.getChunksInRadius(world, new BlockPos(pos), 2)) {
+                for (BlockEntity e : chunk.getBlockEntities().values()) {
+                    if (e instanceof ExplosionBlockerBlockEntity blocker) {
+                        if (Helpers.getBlockCenter(blocker.getBlockPos()).subtract(pos).multiply(1,0,1).length() <= ExplosionBlockerBlockEntity.DEFENDING_RADIUS+1){
+                            return true;
+                        }
+                    }
+                }
+
+            }
+        }
+        return false;
     }
 
 

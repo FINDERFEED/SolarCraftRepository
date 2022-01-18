@@ -26,6 +26,8 @@ import javax.annotation.Nullable;
 
 public class InfusingStandTileEntity extends RandomizableContainerBlockEntity  {
 
+
+    private boolean shouldRenderItem = true;
     public NonNullList<ItemStack> items = NonNullList.withSize(1,ItemStack.EMPTY);
 
     public InfusingStandTileEntity(BlockPos p_155630_, BlockState p_155631_) {
@@ -60,7 +62,13 @@ public class InfusingStandTileEntity extends RandomizableContainerBlockEntity  {
         return this.items.size();
     }
 
+    public void shouldRenderItem(boolean e){
+        this.shouldRenderItem = e;
+    }
 
+    public boolean isRenderingItem() {
+        return shouldRenderItem;
+    }
 
     @Override
     public void saveAdditional(CompoundTag cmp){

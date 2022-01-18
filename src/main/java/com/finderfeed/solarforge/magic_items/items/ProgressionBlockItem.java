@@ -1,6 +1,8 @@
 package com.finderfeed.solarforge.magic_items.items;
 
 import com.finderfeed.solarforge.ClientHelpers;
+import com.finderfeed.solarforge.Helpers;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
@@ -17,6 +19,7 @@ public class ProgressionBlockItem extends BlockItem {
     @Override
     public Component getName(ItemStack stack) {
         if (EffectiveSide.get().isClient()){
+
             return ClientHelpers.getNameBasedOnProgression(stack);
         }
         return super.getName(stack);

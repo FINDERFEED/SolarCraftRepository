@@ -28,7 +28,7 @@ import java.util.List;
 public class RipRayGenerator extends PathfinderMob implements CrystalBossBuddy{
 
     public int maxAttackLengthForClient = 0;
-    private CyclingInterpolatedValue particlesValue = new CyclingInterpolatedValue(21,5*20);
+    private CyclingInterpolatedValue particlesValue = new CyclingInterpolatedValue(0,21,5*20);
     public static EntityDataAccessor<Boolean> DEPLOYING = SynchedEntityData.defineId(RipRayGenerator.class, EntityDataSerializers.BOOLEAN);
 
     public boolean alreadyDeployed = false;

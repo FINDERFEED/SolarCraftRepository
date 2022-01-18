@@ -1,7 +1,9 @@
 package com.finderfeed.solarforge.misc_things;
 
 import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.magic_items.items.primitive.solacraft_item_classes.SolarcraftItem;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Progression;
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.AncientFragment;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 
@@ -9,10 +11,12 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
-public class SolarDustItem extends Item {
+import java.util.function.Supplier;
 
-    public SolarDustItem(Properties p_i48487_1_) {
-        super(p_i48487_1_);
+public class SolarDustItem extends SolarcraftItem {
+
+    public SolarDustItem(Properties p_i48487_1_, Supplier<AncientFragment> fragmentSupplier) {
+        super(p_i48487_1_,fragmentSupplier);
     }
 
 //    @Override

@@ -2,6 +2,7 @@ package com.finderfeed.solarforge.magic_items.items;
 
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.magic_items.items.primitive.RareSolarcraftSword;
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.AncientFragment;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -19,12 +20,13 @@ import net.minecraft.world.level.Level;
 
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.function.Supplier;
 
 import net.minecraft.world.item.Item.Properties;
 
 public class QualadiumSword extends RareSolarcraftSword {
-    public QualadiumSword(Tier tier,Properties p_i48460_4_) {
-        super(tier, 2, -2.4f, p_i48460_4_);
+    public QualadiumSword(Tier tier, Properties p_i48460_4_, Supplier<AncientFragment> fragmentSupplier) {
+        super(tier, 2, -2.4f, p_i48460_4_,fragmentSupplier);
     }
 
     @Override

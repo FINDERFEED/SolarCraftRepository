@@ -3,6 +3,7 @@ package com.finderfeed.solarforge.magic_items.items;
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.magic_items.items.item_tiers.SolarCraftToolTiers;
 import com.finderfeed.solarforge.magic_items.items.primitive.RareSolarcraftSword;
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.AncientFragment;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.TooltipFlag;
@@ -25,7 +26,7 @@ import net.minecraft.world.phys.AABB;
 
 public class IllidiumSword extends RareSolarcraftSword {
     public IllidiumSword() {
-        super(SolarCraftToolTiers.ILLIDIUM_TOOLS_TIER, 3, -2.4F, (new Item.Properties()).stacksTo(1).tab(SolarForge.SOLAR_GROUP_WEAPONS).rarity(Rarity.RARE).fireResistant());
+        super(SolarCraftToolTiers.ILLIDIUM_TOOLS_TIER, 3, -2.4F, (new Item.Properties()).stacksTo(1).tab(SolarForge.SOLAR_GROUP_WEAPONS).rarity(Rarity.RARE).fireResistant(),()-> AncientFragment.ILLIDIUM_SWORD);
     }
 
     @Nonnull

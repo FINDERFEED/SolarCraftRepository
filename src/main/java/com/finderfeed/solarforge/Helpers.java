@@ -7,6 +7,7 @@ import com.finderfeed.solarforge.events.my_events.ProgressionUnlockEvent;
 import com.finderfeed.solarforge.for_future_library.OwnedBlock;
 import com.finderfeed.solarforge.for_future_library.helpers.FinderfeedMathHelper;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Progression;
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.ProgressionHelper;
 import com.finderfeed.solarforge.misc_things.Multiblock;
 import com.finderfeed.solarforge.misc_things.ParticlesList;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
@@ -89,6 +90,16 @@ public class Helpers {
             y+=10;
         }
 
+    }
+
+    public static List<LevelChunk> getChunksInRadius(Level level,BlockPos pos,int radius){
+        List<LevelChunk> chunks = new ArrayList<>();
+        for (int i = -radius;i <= radius;i++){
+            for (int g = -radius;g <= radius;g++){
+                chunks.add(level.getChunkAt(pos.offset(i*16,0,g*16)));
+            }
+        }
+        return chunks;
     }
 
     public static boolean isVulnerable(Entity ent){
@@ -311,6 +322,10 @@ public class Helpers {
         }
     }
 
+    public static void updateFragmentsOnClient(ServerPlayer player){
+        SolarForgePacketHandler.INSTANCE.sendTo(new UpdateFragmentsOnClient(player),
+                player.connection.connection,NetworkDirection.PLAY_TO_CLIENT);
+    }
     public static void forceChunksReload(ServerPlayer playerEntity){
 
         SolarForgePacketHandler.INSTANCE.sendTo(new ReloadChunks(),playerEntity.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
@@ -534,6 +549,7 @@ public class Helpers {
 
     public static void setServerPlayerSpeed(ServerPlayer player,Vec3 speed){
         player.setDeltaMovement(speed);
+
         SolarForgePacketHandler.INSTANCE.sendTo(new SetSpeedPacket(speed),player.connection.connection,NetworkDirection.PLAY_TO_CLIENT);
     }
 

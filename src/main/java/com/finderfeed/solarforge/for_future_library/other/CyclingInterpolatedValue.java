@@ -3,7 +3,7 @@ package com.finderfeed.solarforge.for_future_library.other;
 import com.finderfeed.solarforge.for_future_library.helpers.FinderfeedMathHelper;
 import net.minecraft.util.Mth;
 
-public class CyclingInterpolatedValue implements CanTick{
+public class CyclingInterpolatedValue extends InterpolatedValue{
 
     public int ticker = 0;
     public double end;
@@ -11,7 +11,8 @@ public class CyclingInterpolatedValue implements CanTick{
     public int duration = 0;
 
 
-    public CyclingInterpolatedValue(double end,int duration){
+    public CyclingInterpolatedValue(double start,double end,int duration){
+        super(start,end,duration);
         this.end = end;
         this.duration = duration;
     }
@@ -19,7 +20,7 @@ public class CyclingInterpolatedValue implements CanTick{
 
     public double getValue(){
 
-        double lerped = Mth.lerp((float)ticker/duration, 0,end);
+        double lerped = Mth.lerp((float)ticker/duration, start,end);
 
         return FinderfeedMathHelper.clamp(0,
                 lerped,

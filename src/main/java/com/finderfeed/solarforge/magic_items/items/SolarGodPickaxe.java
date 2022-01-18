@@ -3,6 +3,7 @@ package com.finderfeed.solarforge.magic_items.items;
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.SolarCraftTags;
 import com.finderfeed.solarforge.magic_items.items.primitive.RareSolarcraftPickaxe;
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarforge.misc_things.ITagUser;
 import com.finderfeed.solarforge.misc_things.PhantomInventory;
 import net.minecraft.core.NonNullList;
@@ -29,12 +30,13 @@ import org.lwjgl.system.CallbackI;
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Supplier;
 
 import net.minecraft.world.item.Item.Properties;
 
 public class SolarGodPickaxe extends RareSolarcraftPickaxe implements ITagUser {
-    public SolarGodPickaxe(Tier p_i48478_1_, int p_i48478_2_, float p_i48478_3_, Properties p_i48478_4_) {
-        super(p_i48478_1_, p_i48478_2_, p_i48478_3_, p_i48478_4_);
+    public SolarGodPickaxe(Tier p_i48478_1_, int p_i48478_2_, float p_i48478_3_, Properties p_i48478_4_, Supplier<AncientFragment> fragmentSupplier) {
+        super(p_i48478_1_, p_i48478_2_, p_i48478_3_, p_i48478_4_,fragmentSupplier);
     }
 
 

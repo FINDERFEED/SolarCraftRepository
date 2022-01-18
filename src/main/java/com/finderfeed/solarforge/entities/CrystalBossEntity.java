@@ -62,13 +62,13 @@ public class CrystalBossEntity extends NoHealthLimitMob implements CrystalBossBu
     public static final float RAY_DAMAGE = 12;
     public static final float MISSILE_DAMAGE = 1.5F;
     public static final float MINES_DAMAGE = 3F;
-    public static final float AIR_STRIKE_DAMAGE = 3F;
+    public static final float AIR_STRIKE_DAMAGE = 4.5F;
     public static final float RIP_RAY_DAMAGE = 5F;
     public static final float UP_SPEED_MULTIPLIER_AIR_STRIKE = 0.9F;
     public static final float SIDE_SPEED_MULTIPLIER_AIR_STRIKE = 0.18F;
 
 
-    private CyclingInterpolatedValue rayparticlesvalue = new CyclingInterpolatedValue(RAY_LENGTH,100);
+    private CyclingInterpolatedValue rayparticlesvalue = new CyclingInterpolatedValue(0,RAY_LENGTH,100);
     private int currentCrystals = 0;
     private int maxShieldingCrystalsCount;
     private static EntityDataAccessor<Boolean> CHARGING_UP = SynchedEntityData.defineId(CrystalBossEntity.class, EntityDataSerializers.BOOLEAN);
@@ -84,7 +84,7 @@ public class CrystalBossEntity extends NoHealthLimitMob implements CrystalBossBu
     private final BossAttackChain ATTACK_CHAIN = new BossAttackChain.Builder()
             .addAttack("missiles",this::holdingMissilesAttack,60,10,1)
             .addAttack("mines",this::spawnMines,200,20,2)
-            .addAttack("air_strike",this::airStrike,200,7,2)
+            .addAttack("air_strike",this::airStrike,200,10,2)
             .addAttack("shielding_crystals",this::spawnShieldingCrystals,40,null,2)
             .addAttack("ray_attack",this::rayAttack,700,1,3)
             .addAttack("random_effects",this::throwRandomEffects,300,10,3)
@@ -313,7 +313,7 @@ public class CrystalBossEntity extends NoHealthLimitMob implements CrystalBossBu
 
 
     public void airStrike(){
-        for (int i = 0;i < 8;i++){
+        for (int i = 0;i < 6;i++){
             double x = (level.random.nextDouble()*SIDE_SPEED_MULTIPLIER_AIR_STRIKE+0.01)*FinderfeedMathHelper.randomPlusMinus();
             double z = (level.random.nextDouble()*SIDE_SPEED_MULTIPLIER_AIR_STRIKE+0.01)*FinderfeedMathHelper.randomPlusMinus();
             FallingStarCrystalBoss star = new FallingStarCrystalBoss(level,x,UP_SPEED_MULTIPLIER_AIR_STRIKE,z);

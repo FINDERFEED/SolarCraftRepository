@@ -2,6 +2,7 @@ package com.finderfeed.solarforge.magic_items.items;
 
 import com.finderfeed.solarforge.magic_items.items.isters.ShieldOfSolarGodISTER;
 import com.finderfeed.solarforge.magic_items.items.primitive.RareSolarcraftShieldItem;
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.AncientFragment;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
@@ -29,6 +30,7 @@ import javax.annotation.Nullable;
 
 import java.util.List;
 import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -39,8 +41,8 @@ public class ShieldOfSolarGod extends RareSolarcraftShieldItem {
 
 
 
-    public ShieldOfSolarGod(Properties p_i48470_1_) {
-        super(p_i48470_1_);
+    public ShieldOfSolarGod(Properties p_i48470_1_, Supplier<AncientFragment> fragmentSupplier) {
+        super(p_i48470_1_,fragmentSupplier);
     }
 
 

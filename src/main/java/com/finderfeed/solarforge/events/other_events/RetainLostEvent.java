@@ -54,6 +54,7 @@ public class RetainLostEvent {
             for (RunicEnergy.Type type : RunicEnergy.Type.getAll()) {
                 Helpers.updateRunicEnergyOnClient(type, RunicEnergy.getEnergy(player, type), player);
             }
+            Helpers.updateFragmentsOnClient(player);
         }
     }
 
@@ -118,7 +119,11 @@ public class RetainLostEvent {
             if (ProgressionHelper.doPlayerHasFragment(peorig,fragment)){
                 ProgressionHelper.givePlayerFragment(fragment,playernew);
             }
+            if (ProgressionHelper.doPlayerHasFragmentOld(peorig,fragment)){
+                ProgressionHelper.givePlayerFragmentOld(fragment,playernew);
+            }
         }
+
 
 
     }

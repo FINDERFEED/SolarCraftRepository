@@ -1,6 +1,7 @@
 package com.finderfeed.solarforge.magic_items.items;
 
 
+import com.finderfeed.solarforge.ClientHelpers;
 import com.finderfeed.solarforge.client.custom_tooltips.CustomTooltip;
 import com.finderfeed.solarforge.client.custom_tooltips.ICustomTooltip;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.AncientFragment;
@@ -65,7 +66,12 @@ public class AncientFragmentItem extends Item implements ICustomTooltip {
         }else{
             AncientFragment frag = AncientFragment.getFragmentByID(nbt.getString(ProgressionHelper.FRAG_ID));
             if (frag != null){
-                texts.add(new TranslatableComponent("ancient_frag.fragment_active").withStyle(ChatFormatting.GOLD).append(frag.getTranslation()));
+                if (ProgressionHelper.doPlayerHasFragment(ClientHelpers.getClientPlayer(),frag)) {
+                    texts.add(new TranslatableComponent("ancient_frag.fragment_active").withStyle(ChatFormatting.GOLD).append(frag.getTranslation()));
+                }else{
+                    texts.add(new TranslatableComponent("ancient_frag.fragment_active").withStyle(ChatFormatting.GOLD).append(frag.getTranslation().withStyle(ChatFormatting.OBFUSCATED)));
+
+                }
             }
             texts.add(new TranslatableComponent("ancient_frag.has_tag").withStyle(ChatFormatting.GOLD));
         }

@@ -96,7 +96,19 @@ class RetainFragments{
                 .requires(cs->cs.hasPermission(0))
                 .then(Commands.literal("retain").executes((cmd)->retainFragments(cmd.getSource())))
                 .then(Commands.literal("unlockall").executes((cmd)->unlockAllFragments(cmd.getSource())))
+                .then(Commands.literal("transferFromOldDataToNew").executes((cmd)->transferFromOldToNew(cmd.getSource())))
                 .then(Commands.literal("refresh").executes((cmd)->refreshFragments(cmd.getSource())));
+    }
+    
+    public static int transferFromOldToNew(CommandSourceStack src) throws CommandSyntaxException{
+        ServerPlayer player = src.getPlayerOrException();
+        for (AncientFragment fragment : AncientFragment.getAllFragments()){
+            if (player.getPersistentData().getBoolean(ProgressionHelper.getFragIdString(fragment))){
+                ProgressionHelper.givePlayerFragment(fragment,player);
+            }
+        }
+        src.sendSuccess(new TextComponent("Fragments successfully translated from old data to new"),true);
+        return 1;
     }
 
     public static int retainFragments(CommandSourceStack src) throws CommandSyntaxException {
@@ -117,6 +129,7 @@ class RetainFragments{
         for (AncientFragment fragment : AncientFragment.getAllFragments()){
             ProgressionHelper.givePlayerFragment(fragment,playerEntity);
         }
+        Helpers.updateFragmentsOnClient(playerEntity);
         return 0;
     }
     public static int refreshFragments(CommandSourceStack src) throws CommandSyntaxException {
@@ -124,6 +137,7 @@ class RetainFragments{
         for (AncientFragment fragment : AncientFragment.getAllFragments()){
             ProgressionHelper.revokePlayerFragment(fragment,playerEntity);
         }
+        Helpers.updateFragmentsOnClient(playerEntity);
         return 0;
     }
 }

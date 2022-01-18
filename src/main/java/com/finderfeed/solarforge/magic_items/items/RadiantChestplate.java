@@ -1,6 +1,8 @@
 package com.finderfeed.solarforge.magic_items.items;
 
 
+import com.finderfeed.solarforge.magic_items.items.primitive.solacraft_item_classes.SolarcraftArmorItem;
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.AncientFragment;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -20,12 +22,14 @@ import net.minecraft.server.level.ServerLevel;
 
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.function.Supplier;
 
 import net.minecraft.world.item.Item.Properties;
 
-public class RadiantChestplate extends ArmorItem {
-    public RadiantChestplate(ArmorMaterial p_i48534_1_, EquipmentSlot p_i48534_2_, Properties p_i48534_3_) {
-        super(p_i48534_1_, p_i48534_2_, p_i48534_3_);
+public class RadiantChestplate extends SolarcraftArmorItem {
+    public RadiantChestplate(ArmorMaterial p_i48534_1_, EquipmentSlot p_i48534_2_, Properties p_i48534_3_, Supplier<AncientFragment> fragmentSupplier) {
+        super(p_i48534_1_, p_i48534_2_, p_i48534_3_,fragmentSupplier);
+
     }
 
 

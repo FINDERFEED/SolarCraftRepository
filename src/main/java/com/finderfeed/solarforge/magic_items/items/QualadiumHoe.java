@@ -1,6 +1,7 @@
 package com.finderfeed.solarforge.magic_items.items;
 
 import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.AncientFragment;
 import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.item.TooltipFlag;
 
@@ -14,6 +15,7 @@ import net.minecraft.world.level.Level;
 
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.function.Supplier;
 
 import net.minecraft.world.item.BoneMealItem;
 import net.minecraft.world.item.Item.Properties;
@@ -23,8 +25,8 @@ import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.context.UseOnContext;
 
 public class QualadiumHoe extends IllidiumHoe{
-    public QualadiumHoe(Tier p_i231595_1_, int p_i231595_2_, float p_i231595_3_, Properties p_i231595_4_) {
-        super(p_i231595_1_, p_i231595_2_, p_i231595_3_, p_i231595_4_);
+    public QualadiumHoe(Tier p_i231595_1_, int p_i231595_2_, float p_i231595_3_, Properties p_i231595_4_, Supplier<AncientFragment> fragmentSupplier) {
+        super(p_i231595_1_, p_i231595_2_, p_i231595_3_, p_i231595_4_,fragmentSupplier);
     }
 
     @Override
