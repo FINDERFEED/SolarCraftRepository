@@ -65,7 +65,8 @@ public class ClientHelpers {
         if (stack.getItem() instanceof FragmentItem r) {
             if (r.getNeededFragment() == null) return false;
             Player player = ClientHelpers.getClientPlayer();
-            if (player != null) {
+
+            if (player != null && !player.isCreative()) {
                 return !ProgressionHelper.doPlayerHasFragment(player, r.getNeededFragment());
             } else {
                 return false;

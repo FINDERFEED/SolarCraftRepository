@@ -13,6 +13,7 @@ import com.finderfeed.solarforge.for_future_library.helpers.FinderfeedMathHelper
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.ExplosionBlockerBlockEntity;
 import com.finderfeed.solarforge.magic_items.blocks.infusing_table_things.InfuserBlock;
 import com.finderfeed.solarforge.magic_items.items.ExperienceCrystal;
+import com.finderfeed.solarforge.magic_items.items.primitive.solacraft_item_classes.FragmentItem;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Progression;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.ProgressionHelper;
@@ -70,6 +71,7 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerXpEvent;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.event.world.BlockEvent;
@@ -421,7 +423,49 @@ public class EventHandler {
         return false;
     }
 
+    @SubscribeEvent
+    public static void preventBreakingBlocks(BlockEvent.BreakEvent event){
+        if ((event.getPlayer().getMainHandItem().getItem() instanceof FragmentItem fragmentItem) && !event.getPlayer().level.isClientSide){
+            if (event.getPlayer().isCreative()) return;
 
+            if (fragmentItem.getNeededFragment() != null) {
+                if (!ProgressionHelper.doPlayerHasFragment(event.getPlayer(), fragmentItem.getNeededFragment())) {
+                    event.getPlayer().sendMessage(new TranslatableComponent("solarcraft.item_unknown").withStyle(ChatFormatting.RED),event.getPlayer().getUUID());
+                    event.setCanceled(true);
+                }
+            }
+        }
+    }
+
+
+    @SubscribeEvent
+    public static void preventItemUsing(PlayerInteractEvent.RightClickItem event) {
+        if (event.getItemStack().getItem() instanceof FragmentItem fragmentItem && !event.getPlayer().level.isClientSide) {
+            if (event.getPlayer().isCreative()) return;
+
+            if (fragmentItem.getNeededFragment() != null) {
+                if (!ProgressionHelper.doPlayerHasFragment(event.getPlayer(), fragmentItem.getNeededFragment())) {
+                    event.getPlayer().sendMessage(new TranslatableComponent("solarcraft.item_unknown").withStyle(ChatFormatting.RED), event.getPlayer().getUUID());
+                    event.setCanceled(true);
+                }
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public static void preventBlockPlacing(BlockEvent.EntityPlaceEvent event){
+        Entity e = event.getEntity();
+        if (event.getPlacedBlock().getBlock().asItem() instanceof FragmentItem fragmentItem && e instanceof Player player){
+            if (player.isCreative()) return;
+
+            if (fragmentItem.getNeededFragment() != null) {
+                if (!ProgressionHelper.doPlayerHasFragment(player, fragmentItem.getNeededFragment())) {
+                    player.sendMessage(new TranslatableComponent("solarcraft.item_unknown").withStyle(ChatFormatting.RED), player.getUUID());
+                    event.setCanceled(true);
+                }
+            }
+        }
+    }
 
 
 }

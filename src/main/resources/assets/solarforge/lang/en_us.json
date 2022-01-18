@@ -594,7 +594,8 @@
   "tetra.material.illidium_ingot.prefix": "Illidium",
   "tetra.material.qualadium_ingot.prefix": "Qualadium",
   "solar_category.exploration": "Exploration",
-  "solar_category.basic_dusts": "Basic dusts"
+  "solar_category.basic_dusts": "Basic dusts",
+  "solarcraft.item_unknown": "Unknown item"
 
 
 
