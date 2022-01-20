@@ -51,7 +51,7 @@ public class SolarForgePacketHandler {
         INSTANCE.registerMessage(nextID(), ReloadChunks.class, ReloadChunks::toBytes, ReloadChunks::new, ReloadChunks::handle);
         INSTANCE.registerMessage(nextID(), UpdateInventoryPacket.class, UpdateInventoryPacket::toBytes, UpdateInventoryPacket::new, UpdateInventoryPacket::handle);
         INSTANCE.registerMessage(nextID(), RunicTablePacket.class, RunicTablePacket::toBytes, RunicTablePacket::new, RunicTablePacket::handle);
-        INSTANCE.registerMessage(nextID(), UpdatePatternOnScreen.class, UpdatePatternOnScreen::toBytes, UpdatePatternOnScreen::new, UpdatePatternOnScreen::handle);
+
         INSTANCE.registerMessage(nextID(), UpdateTypeOnClientPacket.class, UpdateTypeOnClientPacket::toBytes, UpdateTypeOnClientPacket::new, UpdateTypeOnClientPacket::handle);
         INSTANCE.registerMessage(nextID(), UpdateEnergyOnClientPacket.class, UpdateEnergyOnClientPacket::toBytes, UpdateEnergyOnClientPacket::new, UpdateEnergyOnClientPacket::handle);
         INSTANCE.registerMessage(nextID(), TriggerProgressionShaderPacket.class, TriggerProgressionShaderPacket::toBytes, TriggerProgressionShaderPacket::new, TriggerProgressionShaderPacket::handle);
@@ -63,6 +63,7 @@ public class SolarForgePacketHandler {
         INSTANCE.registerMessage(nextID(), TriggerEnergyTypeToast.class, TriggerEnergyTypeToast::toBytes, TriggerEnergyTypeToast::new, TriggerEnergyTypeToast::handle);
         INSTANCE.registerMessage(nextID(), SolarStrikeEntityDoExplosion.class, SolarStrikeEntityDoExplosion::toBytes, SolarStrikeEntityDoExplosion::new, SolarStrikeEntityDoExplosion::handle);
         INSTANCE.registerMessage(nextID(), UpdateFragmentsOnClient.class, UpdateFragmentsOnClient::toBytes, UpdateFragmentsOnClient::new, UpdateFragmentsOnClient::handle);
+        INSTANCE.registerMessage(nextID(), UpdateRunePattern.class, UpdateRunePattern::toBytes, UpdateRunePattern::new, UpdateRunePattern::handle);
     }
 //            INSTANCE.registerMessage(nextID(), .class, ::toBytes, ::new, ::handle);
     //RepeaterParentUpdateOnClient

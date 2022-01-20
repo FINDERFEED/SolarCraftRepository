@@ -52,7 +52,7 @@ import java.util.function.Predicate;
 public class Helpers {
 
 
-
+    public static final Random RANDOM = new Random();
     public static final String FRAGMENT = "solar_forge_fragment_";
 //    public static final RandomPatchConfiguration SOLAR_FLOWER_CONFIG = (new RandomPatchConfiguration.GrassConfigurationBuilder((new WeightedStateProvider()).add(BlocksRegistry.ALGADIUM_BLOCK.get().defaultBlockState(), 2), SimpleBlockPlacer.INSTANCE)).tries(64).build();
     public static double GRAVITY_METRES_PER_SEC = 20;
@@ -217,7 +217,7 @@ public class Helpers {
                     for (int k = 0;k < line.length();k++){
                         //here the checking begins
                         char c = line.charAt(k);
-                        //TODO:
+
                         if (c != ' ') {
                                 if (!checkBlock(world,pos.offset(k,i,g),struct.getStateAndTag(c))){
                                     return false;

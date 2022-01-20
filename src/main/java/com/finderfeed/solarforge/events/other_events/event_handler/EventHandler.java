@@ -412,8 +412,10 @@ public class EventHandler {
             for (LevelChunk chunk : Helpers.getChunksInRadius(world, new BlockPos(pos), 2)) {
                 for (BlockEntity e : chunk.getBlockEntities().values()) {
                     if (e instanceof ExplosionBlockerBlockEntity blocker) {
-                        if (Helpers.getBlockCenter(blocker.getBlockPos()).subtract(pos).multiply(1,0,1).length() <= ExplosionBlockerBlockEntity.DEFENDING_RADIUS+1){
-                            return true;
+                        if (blocker.isFunctioning()) {
+                            if (Helpers.getBlockCenter(blocker.getBlockPos()).subtract(pos).multiply(1, 0, 1).length() <= ExplosionBlockerBlockEntity.DEFENDING_RADIUS + 1) {
+                                return true;
+                            }
                         }
                     }
                 }

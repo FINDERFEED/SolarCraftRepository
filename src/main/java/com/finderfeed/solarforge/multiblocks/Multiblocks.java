@@ -205,22 +205,44 @@ public enum Multiblocks {
             .setStructName("structure.energy_pylon")
             .addAchievement(Progression.RUNE_ENERGY_PYLON)
 
-    ))
+    )),
+    EXPLOSION_BLOCKER(new Multiblock(new Multiblock.Constructor()
+            .addBlock(BlocksRegistry.SOLAR_STONE_CHISELED.get().defaultBlockState(),'q',false)
+            .addBlock(BlocksRegistry.ENERGIZED_STONE.get().defaultBlockState(),'e',false)
+            .addBlock(BlocksRegistry.SOLAR_STONE_COLLUMN.get().defaultBlockState(),'g',false)
+            .addBlock(Structures.BlockStates.SOLAR_STONE_STAIRS_BOTTOM_EAST_STRAIGHT,'m',false)
+            .addBlock(Structures.BlockStates.SOLAR_STONE_STAIRS_BOTTOM_WEST_STRAIGHT,'n',false)
+            .addBlock(Structures.BlockStates.SOLAR_STONE_STAIRS_BOTTOM_NORTH_STRAIGHT,'u',false)
+            .addBlock(Structures.BlockStates.SOLAR_STONE_STAIRS_BOTTOM_SOUTH_STRAIGHT,'v',false)
+
+            .addBlock(Structures.BlockStates.SOLAR_STONE_STAIRS_TOP_EAST_STRAIGHT,'M',false)
+            .addBlock(Structures.BlockStates.SOLAR_STONE_STAIRS_TOP_WEST_STRAIGHT,'N',false)
+            .addBlock(Structures.BlockStates.SOLAR_STONE_STAIRS_TOP_NORTH_STRAIGHT,'U',false)
+            .addBlock(Structures.BlockStates.SOLAR_STONE_STAIRS_TOP_SOUTH_STRAIGHT,'V',false)
+
+            .addBlock(BlocksRegistry.SOLAR_STONE_BRICKS.get().defaultBlockState(),'f',false)
+            .addBlock(BlocksRegistry.EXPLOSION_BLOCKER.get().defaultBlockState(),'b',false)
+
+            .addStruct(Structures.EXPLOSION_BLOCKER)
+            .addMainBlock(BlocksRegistry.EXPLOSION_BLOCKER.get().defaultBlockState())
+            .setStructName("solarforge_struct.explosion_blocker")
+    )),
     ;
 
 
 
-    public static Map<String,Multiblock> MULTIBLOCKS = Map.of(
-            "infuser_tier_one", INFUSER_TIER_FIRST.a,
-            "infuser_tier_two", INFUSER_TIER_RUNIC_ENERGY.a,
-            "infuser_tier_three", INFUSER_TIER_SOLAR_ENERGY.a,
-            "generator", SOLAR_ENERGY_GENERATOR.a,
-            "healer", AURA_HEALER.a,
-            "mortar", SOLAR_MORTAR.a,
-            "lesser_core", SOLAR_CORE.a,
-            "dim_portal",RADIANT_LAND_PORTAL.a,
-            "zap_turret", ZAP_TURRET.a,
-            "pylon", RUNIC_ENERGY_PYLON.a
+    public static Map<String,Multiblock> MULTIBLOCKS = Map.ofEntries(
+            Map.entry("infuser_tier_one", INFUSER_TIER_FIRST.a),
+            Map.entry("infuser_tier_two", INFUSER_TIER_RUNIC_ENERGY.a),
+            Map.entry("infuser_tier_three", INFUSER_TIER_SOLAR_ENERGY.a),
+            Map.entry("generator", SOLAR_ENERGY_GENERATOR.a),
+            Map.entry("healer", AURA_HEALER.a),
+            Map.entry("mortar", SOLAR_MORTAR.a),
+            Map.entry("lesser_core", SOLAR_CORE.a),
+            Map.entry("dim_portal",RADIANT_LAND_PORTAL.a),
+            Map.entry("zap_turret", ZAP_TURRET.a),
+            Map.entry("pylon", RUNIC_ENERGY_PYLON.a),
+            Map.entry("explosion_blocker", EXPLOSION_BLOCKER.a)
     );
 
 
@@ -240,7 +262,7 @@ public enum Multiblocks {
             SOLAR_MORTAR,
             SOLAR_ENERGY_GENERATOR,
             INFUSER_TIER_FIRST,
-            RADIANT_LAND_PORTAL
+            RADIANT_LAND_PORTAL,
     };
 
 
@@ -249,6 +271,65 @@ public enum Multiblocks {
 
 }
 class Structures{
+
+    public static String[][] EXPLOSION_BLOCKER = {
+            {
+                    " fff ",
+                    "fffff",
+                    "fffff",
+                    "fffff",
+                    " fff "
+            },
+            {
+                    " v v ",
+                    "mg gn",
+                    "     ",
+                    "mg gn",
+                    " u u "
+            },
+            {
+                    "     ",
+                    " g g ",
+                    "     ",
+                    " g g ",
+                    "     "
+            },
+            {
+                    "     ",
+                    " gVg ",
+                    " MfN ",
+                    " gUg ",
+                    "     "
+            },
+            {
+                    "     ",
+                    " qeq ",
+                    " efe ",
+                    " qeq ",
+                    "     "
+            },
+            {
+                    "     ",
+                    " g g ",
+                    "  b  ",
+                    " g g ",
+                    "     "
+            },
+            {
+                    "     ",
+                    " qeq ",
+                    " efe ",
+                    " qeq ",
+                    "     "
+            },
+            {
+                    "     ",
+                    "  v  ",
+                    " mfn ",
+                    "  u  ",
+                    "     "
+            },
+    };
 
     public static String[][] PYLON = {
             {

@@ -1,18 +1,28 @@
 package com.finderfeed.solarforge.magic_items.blocks.blockentities.containers.screens;
 
 import com.finderfeed.solarforge.ClientHelpers;
+import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.client.screens.buttons.RuneButtonRunicTable;
+import com.finderfeed.solarforge.events.other_events.event_handler.EventHandler;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.containers.RunicTableContainer;
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.RunePattern;
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
 import com.finderfeed.solarforge.packet_handler.packets.RunicTablePacket;
 import com.finderfeed.solarforge.client.rendering.item_renderers.TransparentItemrenderer;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.ProgressionHelper;
+import com.finderfeed.solarforge.registries.items.ItemsRegister;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.components.AbstractWidget;
+import net.minecraft.client.gui.components.Widget;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.components.Button;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.ClickType;
+import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
@@ -23,11 +33,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RunicTableContainerScreen extends AbstractContainerScreen<RunicTableContainer> {
-    public final ResourceLocation MAIN_SCREEN = new ResourceLocation("solarforge","textures/gui/runic_table_gui.png");
+    public final ResourceLocation MAIN_SCREEN = new ResourceLocation("solarforge","textures/gui/runic_table_gui_new.png");
+    public final ResourceLocation WIN_POS = new ResourceLocation("solarforge","textures/misc/win_positions.png");
     int relX = 0;
     int relY = 0;
 
-    public List<ItemStack> pattern = new ArrayList<>();
+
+    public RunePattern pattern;
 
 
     public RunicTableContainerScreen(RunicTableContainer p_i51105_1_, Inventory p_i51105_2_, Component p_i51105_3_) {
@@ -46,15 +58,129 @@ public class RunicTableContainerScreen extends AbstractContainerScreen<RunicTabl
         this.relX = (width/scale - 183)/2;
         this.relY = (height - 218*scale)/2/scale;
         super.init();
-        pattern.clear();
-
-        for (int a : menu.getPlayerPattern()){
-            pattern.add(ProgressionHelper.RUNES[a].getDefaultInstance());
+        RunePattern ptrn = new RunePattern(Minecraft.getInstance().player);
+        this.pattern = ptrn;
+        ItemStack stack =menu.inventory.getStackInSlot(0);
+        if (!stack.isEmpty() && stack.getTagElement(ProgressionHelper.TAG_ELEMENT) == null) {
+            initPattern();
         }
 
-        addRenderableWidget(new WoodenButton(relX+72,relY+85,40,15,new TranslatableComponent("solarcraft.runic_table"),(button)->{
-            SolarForgePacketHandler.INSTANCE.sendToServer(new RunicTablePacket(menu.te.getBlockPos()));
-        }));
+    }
+
+    private void initPattern(){
+        if (!menu.hideRuneButtons ) {
+            this.pattern = new RunePattern(ClientHelpers.getClientPlayer());
+            int[][] pattern = this.pattern.getPattern();
+
+            for (int h = 0; h < pattern.length; h++) {
+                for (int l = 0; l < pattern[h].length; l++) {
+                    int finalH = h;
+                    int finalL = l;
+                    int rune = pattern[finalH][finalL];
+                    if (rune != RunePattern.OPENED) {
+                        this.addRenderableWidget(new RuneButtonRunicTable(relX + 98 + l * 15, relY + 11 + h * 15, 15, 15,
+                                (button) -> {
+                                    SolarForgePacketHandler.INSTANCE.sendToServer(new RunicTablePacket(finalL, finalH, menu.tile.getBlockPos()));
+                                    RuneButtonRunicTable v = ((RuneButtonRunicTable) button);
+
+                                    hideButton(this.pattern, v, rune, finalL, finalH);
+                                    if (this.pattern.isCompleted()){
+                                        this.pattern = new RunePattern(ClientHelpers.getClientPlayer());
+                                        List<Widget> toRemove = new ArrayList<>();
+                                        for (Widget w : this.renderables){
+                                            if (w instanceof RuneButtonRunicTable){
+                                                toRemove.add(w);
+                                            }
+                                        }
+                                        for (Widget w : toRemove){
+                                            this.removeWidget(((RuneButtonRunicTable)w));
+                                        }
+
+                                    }
+                                }, (button, matrices, mousex, mousey) -> {
+                        }, pattern[h][l]));
+                    }
+                }
+            }
+
+
+        }
+    }
+
+    private void hideButton(RunePattern pattern,RuneButtonRunicTable v,int rune,int x,int y){
+        for (int i = 0; i < menu.inventory.getSlots(); i++) {
+            if (menu.inventory.getStackInSlot(i).getItem() == ProgressionHelper.RUNES[rune]) {
+                v.turnedOff = true;
+                if (pattern.isWinPosition(x,y)){
+                    ClientHelpers.playsoundInEars(SoundEvents.EXPERIENCE_ORB_PICKUP,1,1);
+                }
+                this.pattern.setOpened(x,y);
+                break;
+            }
+        }
+        if (!v.turnedOff) {
+            if (ClientHelpers.getClientPlayer().getInventory().contains(ProgressionHelper.RUNES[rune].getDefaultInstance())) {
+                if (pattern.isWinPosition(x,y)){
+                    ClientHelpers.playsoundInEars(SoundEvents.EXPERIENCE_ORB_PICKUP,1,1);
+                }
+                v.turnedOff = true;
+                this.pattern.setOpened(x,y);
+            }
+        }
+        if (v.turnedOff) {
+            v.active = false;
+            v.visible = false;
+        }
+
+    }
+
+    public void forceUpdate(RunePattern pattern,boolean s){
+//        this.pattern = pattern;
+        menu.hideRuneButtons = s;
+//        List<Widget> toRemove = new ArrayList<>();
+
+//        for (Widget w : this.renderables){
+//            if (w instanceof RuneButtonRunicTable){
+//                toRemove.add(w);
+//            }
+//        }
+//        for (Widget w : toRemove){
+//            this.removeWidget(((RuneButtonRunicTable)w));
+//        }
+//        ItemStack stack =menu.inventory.getStackInSlot(0);
+//        if (!stack.isEmpty() && stack.getTagElement(ProgressionHelper.TAG_ELEMENT) == null) {
+//            initPattern();
+//        }
+    }
+
+    @Override
+    protected void slotClicked(Slot p_97778_, int p_97779_, int p_97780_, ClickType p_97781_) {
+        super.slotClicked(p_97778_, p_97779_, p_97780_, p_97781_);
+        ItemStack stack = menu.inventory.getStackInSlot(0);
+        if (!stack.isEmpty() && stack.getTagElement(ProgressionHelper.TAG_ELEMENT) == null){
+            int count = 0;
+            for (AbstractWidget b : ClientHelpers.getScreenButtons(this)){
+
+                if (b instanceof RuneButtonRunicTable v){
+                    if (!v.turnedOff) {
+                        b.active = true;
+                        b.visible = true;
+                        count++;
+                    }
+                }
+
+            }
+            if (count == 0){
+                initPattern();
+            }
+        }else{
+            for (AbstractWidget b : ClientHelpers.getScreenButtons(this)){
+                if (b instanceof RuneButtonRunicTable){
+                    b.active = false;
+                    b.visible = false;
+                }
+            }
+        }
     }
 
     @Override
@@ -74,16 +200,26 @@ public class RunicTableContainerScreen extends AbstractContainerScreen<RunicTabl
             a = 0;
         }
         blit(matrices,relX+a+3,relY+4,0,0,256,256,256,256);
+        if (menu.hideRuneButtons){
+            drawCenteredString(matrices,font,new TranslatableComponent("solarcraft.no_fragments_available"),relX+135,relY+40,0xffffff);
+            drawCenteredString(matrices,font,new TranslatableComponent("solarcraft.no_fragments_available2"),relX+135,relY+48,0xffffff);
 
+        }else{
+            ItemStack stack = menu.inventory.getStackInSlot(0);
+            if (pattern != null && !menu.inventory.getStackInSlot(0).isEmpty() && stack.getTagElement(ProgressionHelper.TAG_ELEMENT) == null){
+                int[] winPos = pattern.getXyWinPositions();
+                ClientHelpers.bindText(WIN_POS);
+                matrices.pushPose();
+                for (int i = 0; i < winPos.length;i+=2){
+                    int x = relX + 98 + winPos[i]*15;
+                    int y = relY + 11 + winPos[i+1]*15;
 
-        renderItem(pattern.get(0),48+a,14);
-        renderItem(pattern.get(1),37+a,49);
-        renderItem(pattern.get(2),48+a,84);
-        renderItem(pattern.get(3),118+a,14);
-        renderItem(pattern.get(4),129+a,49);
-        renderItem(pattern.get(5),118+a,84);
+                    blit(matrices,x,y,0,0,15,15,15,15);
 
-
+                }
+                matrices.popPose();
+            }
+        }
 
     }
 
@@ -94,46 +230,4 @@ public class RunicTableContainerScreen extends AbstractContainerScreen<RunicTabl
     }
 
 
-}
-class WoodenButton extends Button{
-    protected  Button.OnTooltip tool;
-    public static final ResourceLocation WIDGETS_SOLARFORGE = new ResourceLocation("solarforge","textures/gui/runic_table_buttons.png");
-
-    public WoodenButton(int p_i232255_1_, int p_i232255_2_, int p_i232255_3_, int p_i232255_4_, Component p_i232255_5_, OnPress p_i232255_6_) {
-        super(p_i232255_1_, p_i232255_2_, p_i232255_3_, p_i232255_4_, p_i232255_5_, p_i232255_6_);
-    }
-
-    public WoodenButton(int p_i232256_1_, int p_i232256_2_, int p_i232256_3_, int p_i232256_4_, Component p_i232256_5_, OnPress p_i232256_6_, OnTooltip p_i232256_7_) {
-        super(p_i232256_1_, p_i232256_2_, p_i232256_3_, p_i232256_4_, p_i232256_5_, p_i232256_6_, p_i232256_7_);
-    }
-
-    @Override
-    public void renderButton(PoseStack p_230431_1_, int p_230431_2_, int p_230431_3_, float p_230431_4_) {
-        if (this.isHovered && tool != null) {
-            this.renderToolTip(p_230431_1_, p_230431_2_, p_230431_3_);
-
-        }
-        Minecraft minecraft = Minecraft.getInstance();
-        Font fontrenderer = minecraft.font;
-        ClientHelpers.bindText(WIDGETS_SOLARFORGE);
-        RenderSystem.setShaderColor(1,1,1,this.alpha);
-        int i = this.getYImage(this.isHovered);
-        RenderSystem.enableBlend();
-        RenderSystem.defaultBlendFunc();
-        RenderSystem.enableDepthTest();
-        this.blit(p_230431_1_, this.x, this.y, 0, 46 + i * 20, this.width / 2, this.height);
-        this.blit(p_230431_1_, this.x + this.width / 2, this.y, 200 - this.width / 2, 46 + i * 20, this.width / 2, this.height);
-        this.renderBg(p_230431_1_, minecraft, p_230431_2_, p_230431_3_);
-        int j = getFGColor();
-
-
-        drawCenteredString(p_230431_1_, fontrenderer, this.getMessage(), this.x + this.width / 2, this.y + (this.height - 8) / 2, j | Mth.ceil(this.alpha * 255.0F) << 24);
-    }
-
-    @Override
-    public void renderToolTip(PoseStack p_230443_1_, int p_230443_2_, int p_230443_3_) {
-        if (tool != null) {
-            this.tool.onTooltip(this, p_230443_1_, p_230443_2_, p_230443_3_);
-        }
-    }
 }

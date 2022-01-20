@@ -595,7 +595,12 @@
   "tetra.material.qualadium_ingot.prefix": "Qualadium",
   "solar_category.exploration": "Exploration",
   "solar_category.basic_dusts": "Basic dusts",
-  "solarcraft.item_unknown": "Unknown item"
+  "solarcraft.item_unknown": "Unknown item",
+  "explosion_blocker.lore": "Your base - is what you should worry about the most,i am sure you don't want your chests or structures be blown up by creepers. This will protect a 30X30 area around it preventing explosions from destroying blocks (but they will still do damage). Requires a structure.",
+  "solarcraft.no_fragments_available": "No fragments",
+  "solarcraft.no_fragments_available2": "available.",
+  "block.solarforge.explosion_blocker": "Explosion blocker",
+  "solar_fragment.explosion_blocker": "Explosion blocker"
 
 
 

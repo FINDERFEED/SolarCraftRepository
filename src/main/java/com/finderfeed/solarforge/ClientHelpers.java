@@ -10,6 +10,7 @@ import com.finderfeed.solarforge.magic_items.blocks.blockentities.RayTrapTileEnt
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.RuneEnergyPylonTile;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.containers.screens.RunicTableContainerScreen;
 import com.finderfeed.solarforge.magic_items.items.primitive.solacraft_item_classes.FragmentItem;
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.RunePattern;
 import com.finderfeed.solarforge.misc_things.*;
 import com.finderfeed.solarforge.registries.items.ItemsRegister;
 import com.finderfeed.solarforge.registries.sounds.Sounds;
@@ -46,12 +47,25 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
 
 public class ClientHelpers {
+
+    public static void updatePlayerPattern(CompoundTag patternData,boolean shouldHideButtons){
+        if (getClientPlayer() != null){
+
+
+            getClientPlayer().getPersistentData().put(RunePattern.PATTERN_SAVE_ID,patternData);
+
+            if (Minecraft.getInstance().screen instanceof RunicTableContainerScreen screen){
+                screen.forceUpdate(new RunePattern(getClientPlayer()),shouldHideButtons);
+            }
+        }
+    }
 
 
     public static void updatePlayerFragments(CompoundTag fragmentData){
@@ -149,16 +163,6 @@ public class ClientHelpers {
     }
 
 
-    public static void updatePatternOnScreen(int[] pattern){
-        Screen screen = Minecraft.getInstance().screen;
-        if (screen instanceof RunicTableContainerScreen){
-            RunicTableContainerScreen screen1 = (RunicTableContainerScreen) screen;
-            screen1.pattern.clear();
-            for (int a : pattern){
-                screen1.pattern.add(ProgressionHelper.RUNES[a].getDefaultInstance());
-            }
-        }
-    }
 
     public static void playsoundInEars(SoundEvent event,float volume,float pitch){
         Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(event,volume,pitch));
@@ -436,12 +440,12 @@ public class ClientHelpers {
             }
         }
 
-        public static void horizontalXCircle(ParticleOptions particle, Vec3 center,double radius, int count,float[] speed, Supplier<Integer> red,Supplier<Integer> green,Supplier<Integer> blue,float maxSize){
+        public static void horizontalXCircle(ParticleOptions particle, Vec3 center,double radius, int count,float[] speed, Supplier<Integer> red,Supplier<Integer> green,Supplier<Integer> blue,float maxSize,float timeMod,float offset){
             if (Minecraft.getInstance().level != null) {
-                float gametime = Minecraft.getInstance().level.getGameTime();
+                float gametime = Minecraft.getInstance().level.getGameTime()*timeMod;
                 double angle = 360d / count;
                 for (int i = 0; i < count; i += 1) {
-                    double a = Math.toRadians(i * angle + gametime);
+                    double a = Math.toRadians(i * angle + gametime + offset);
                     double x = radius * Math.sin(a);
                     double y = radius * Math.cos(a);
                     Particle p = Minecraft.getInstance().particleEngine.createParticle(particle, center.x + x, center.y + y, center.z, speed[0], speed[1], speed[2]);
@@ -452,12 +456,12 @@ public class ClientHelpers {
                 }
             }
         }
-        public static void horizontalZCircle(ParticleOptions particle, Vec3 center,double radius, int count,float[] speed, Supplier<Integer> red,Supplier<Integer> green,Supplier<Integer> blue,float maxSize){
+        public static void horizontalZCircle(ParticleOptions particle, Vec3 center,double radius, int count,float[] speed, Supplier<Integer> red,Supplier<Integer> green,Supplier<Integer> blue,float maxSize,float timeMod,float offset){
             if (Minecraft.getInstance().level != null) {
-                float gametime = Minecraft.getInstance().level.getGameTime();
+                float gametime = Minecraft.getInstance().level.getGameTime() * timeMod;
                 double angle = 360d / count;
                 for (int i = 0; i < count; i += 1) {
-                    double a = Math.toRadians(i * angle + gametime);
+                    double a = Math.toRadians(i * angle + gametime + offset);
                     double z = radius * Math.sin(a);
                     double y = radius * Math.cos(a);
 
