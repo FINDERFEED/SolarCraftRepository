@@ -1,5 +1,6 @@
 package com.finderfeed.solarforge.client.screens;
 
+import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Minecraft;
@@ -66,7 +67,7 @@ public class PositionBlockStateTileEntity {
         matrices.pushPose();
         matrices.translate(translatex,translatey,translatez);
         BlockRenderDispatcher d = Minecraft.getInstance().getBlockRenderer();
-        VertexConsumer c = Minecraft.getInstance().renderBuffers().bufferSource().getBuffer(ItemBlockRenderTypes.getRenderType(state,false));
+        VertexConsumer c = Minecraft.getInstance().renderBuffers().bufferSource().getBuffer(ItemBlockRenderTypes.getRenderType(state,true));
         d.renderBatched(state, BlockPos.ZERO,getter,matrices,c,false,Minecraft.getInstance().level.random, EmptyModelData.INSTANCE);
         matrices.popPose();
     }

@@ -32,9 +32,9 @@ public class ShowWelcomeMessageEvent {
 
             AncientFragment.initFragmentsMap();
             BookEntry.initMap();
-            ProgressionHelper.initInfRecipesMap(event.getPlayer().level);
-            ProgressionHelper.initSmeltingRecipesMap(event.getPlayer().level);
-            ProgressionHelper.initInfusingCraftingRecipes(event.getPlayer().level);
+            ProgressionHelper.initInfRecipesMap(event.getPlayer().level.getRecipeManager());
+            ProgressionHelper.initSmeltingRecipesMap(event.getPlayer().level.getRecipeManager());
+            ProgressionHelper.initInfusingCraftingRecipes(event.getPlayer().level.getRecipeManager());
             if (!player.level.isClientSide){
                 Helpers.updateFragmentsOnClient((ServerPlayer) player);
             }

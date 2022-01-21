@@ -14,6 +14,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 
@@ -232,8 +233,8 @@ public class ProgressionHelper {
     }
 
 
-    public static void initInfRecipesMap(Level world){
-        List<InfusingRecipe> list = world.getRecipeManager().getAllRecipesFor(SolarForge.INFUSING_RECIPE_TYPE);
+    public static void initInfRecipesMap(RecipeManager manager){
+        List<InfusingRecipe> list = manager.getAllRecipesFor(SolarForge.INFUSING_RECIPE_TYPE);
         list.forEach((recipe)->{
             if (recipe.tag.equals("") && !INFUSING_RECIPE_MAP.containsKey(recipe.output.getItem())) {
                 INFUSING_RECIPE_MAP.put(recipe.output.getItem(),recipe);
@@ -243,8 +244,8 @@ public class ProgressionHelper {
         });
     }
 
-    public static void initSmeltingRecipesMap(Level world){
-        List<SolarSmeltingRecipe> list = world.getRecipeManager().getAllRecipesFor(SolarForge.SOLAR_SMELTING);
+    public static void initSmeltingRecipesMap(RecipeManager manager){
+        List<SolarSmeltingRecipe> list = manager.getAllRecipesFor(SolarForge.SOLAR_SMELTING);
         list.forEach((recipe)->{
             if (!SMELTING_RECIPE_MAP.containsKey(recipe.output.getItem())) {
                 SMELTING_RECIPE_MAP.put(recipe.output.getItem(),recipe);
@@ -252,8 +253,8 @@ public class ProgressionHelper {
         });
     }
 
-    public static void initInfusingCraftingRecipes(Level world){
-        List<InfusingCraftingRecipe> list = world.getRecipeManager().getAllRecipesFor(SolarForge.INFUSING_CRAFTING_RECIPE_TYPE);
+    public static void initInfusingCraftingRecipes(RecipeManager manager){
+        List<InfusingCraftingRecipe> list = manager.getAllRecipesFor(SolarForge.INFUSING_CRAFTING_RECIPE_TYPE);
         list.forEach((recipe)->{
             if (!INFUSING_CRAFTING_RECIPE_MAP.containsKey(recipe.getOutput().getItem())) {
                 INFUSING_CRAFTING_RECIPE_MAP.put(recipe.getOutput().getItem(),recipe);

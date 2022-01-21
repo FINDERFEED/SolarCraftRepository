@@ -600,7 +600,9 @@
   "solarcraft.no_fragments_available": "No fragments",
   "solarcraft.no_fragments_available2": "available.",
   "block.solarforge.explosion_blocker": "Explosion blocker",
-  "solar_fragment.explosion_blocker": "Explosion blocker"
+  "solar_fragment.explosion_blocker": "Explosion blocker",
+  "solar_fragment.explosion_blocker_structure": "Explosion blocker"
+
 
 
 

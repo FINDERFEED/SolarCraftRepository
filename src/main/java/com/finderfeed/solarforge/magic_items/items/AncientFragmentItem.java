@@ -66,7 +66,7 @@ public class AncientFragmentItem extends Item implements ICustomTooltip {
         }else{
             AncientFragment frag = AncientFragment.getFragmentByID(nbt.getString(ProgressionHelper.FRAG_ID));
             if (frag != null){
-                if (ProgressionHelper.doPlayerHasFragment(ClientHelpers.getClientPlayer(),frag)) {
+                if (ClientHelpers.doClientPlayerHasFragment(frag)) {
                     texts.add(new TranslatableComponent("ancient_frag.fragment_active").withStyle(ChatFormatting.GOLD).append(frag.getTranslation()));
                 }else{
                     texts.add(new TranslatableComponent("ancient_frag.fragment_active").withStyle(ChatFormatting.GOLD).append(frag.getTranslation().withStyle(ChatFormatting.OBFUSCATED)));

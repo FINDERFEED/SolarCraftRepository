@@ -217,7 +217,7 @@ class Getter implements BlockAndTintGetter {
 
     @Override
     public float getShade(Direction p_45522_, boolean p_45523_) {
-        return 100f;
+        return 50f;
     }
 
     @Override

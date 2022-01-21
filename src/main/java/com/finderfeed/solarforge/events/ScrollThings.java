@@ -10,6 +10,7 @@ import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ClientPlayerNetworkEvent;
 import net.minecraftforge.client.event.InputEvent;
+import net.minecraftforge.client.event.RecipesUpdatedEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -34,9 +35,15 @@ public class ScrollThings {
         if (event.getPlayer() != null) {
             event.getPlayer().sendMessage(new TranslatableComponent("solarcraft.welcome_message"), event.getPlayer().getUUID());
             event.getPlayer().sendMessage(new TranslatableComponent("solarcraft.welcome_message2"), event.getPlayer().getUUID());
-            ProgressionHelper.initInfRecipesMap(event.getPlayer().level);
-            ProgressionHelper.initSmeltingRecipesMap(event.getPlayer().level);
-            ProgressionHelper.initInfusingCraftingRecipes(event.getPlayer().level);
+
         }
     }
+
+    @SubscribeEvent
+    public static void initRecipes(final RecipesUpdatedEvent event){
+        ProgressionHelper.initInfRecipesMap(event.getRecipeManager());
+        ProgressionHelper.initSmeltingRecipesMap(event.getRecipeManager());
+        ProgressionHelper.initInfusingCraftingRecipes(event.getRecipeManager());
+    }
+
 }

@@ -10,6 +10,7 @@ import com.finderfeed.solarforge.magic_items.blocks.blockentities.RayTrapTileEnt
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.RuneEnergyPylonTile;
 import com.finderfeed.solarforge.magic_items.blocks.blockentities.containers.screens.RunicTableContainerScreen;
 import com.finderfeed.solarforge.magic_items.items.primitive.solacraft_item_classes.FragmentItem;
+import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.RunePattern;
 import com.finderfeed.solarforge.misc_things.*;
 import com.finderfeed.solarforge.registries.items.ItemsRegister;
@@ -54,6 +55,11 @@ import java.util.function.Supplier;
 
 
 public class ClientHelpers {
+
+
+    public static boolean doClientPlayerHasFragment(AncientFragment fragment){
+        return ProgressionHelper.doPlayerHasFragment(getClientPlayer(),fragment);
+    }
 
     public static void updatePlayerPattern(CompoundTag patternData,boolean shouldHideButtons){
         if (getClientPlayer() != null){

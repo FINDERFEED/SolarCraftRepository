@@ -79,9 +79,11 @@ public class ZapTurretTile extends BlockEntity implements OwnedBlock {
                     }
 
                     tile.targets.add(FinderfeedMathHelper.TileEntityThings.getTileEntityCenter(pos));
+
                     invalidTargets.forEach((trg) -> {
                         tile.targets.add(trg.position().add(0, trg.getBbHeight() / 2, 0));
                     });
+
                     world.playSound(null,pos.getX()+0.5f,pos.getY()+0.5f,pos.getZ()+0.5f, Sounds.ZAP_TURRET_SHOT.get(), SoundSource.AMBIENT,1f,0.7f);
                     tile.attack = true;
                     world.sendBlockUpdated(pos, state, state, 3);
@@ -92,6 +94,7 @@ public class ZapTurretTile extends BlockEntity implements OwnedBlock {
             if (world.isClientSide) {
                 if (tile.attack) {
                     tile.attack = false;
+
                     for (int i = 0; i < tile.targets.size() - 1; i++) {
                         Vec3 between = tile.targets.get(i + 1).subtract(tile.targets.get(i));
                         float multiplier = 3;
@@ -123,7 +126,7 @@ public class ZapTurretTile extends BlockEntity implements OwnedBlock {
     @Override
     public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
         this.load(pkt.getTag());
-        super.onDataPacket(net, pkt);
+
     }
 
     @Override

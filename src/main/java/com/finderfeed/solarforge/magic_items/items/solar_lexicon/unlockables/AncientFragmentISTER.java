@@ -71,6 +71,7 @@ public class AncientFragmentISTER extends BlockEntityWithoutLevelRenderer {
         }
         if (transformType == ItemTransforms.TransformType.GUI){
             Lighting.setupForFlatItems();
+
             matrices.pushPose();
             matrices.translate(0.5,0.5,0);
 
@@ -85,12 +86,15 @@ public class AncientFragmentISTER extends BlockEntityWithoutLevelRenderer {
                     matrices.pushPose();
                     matrices.scale(0.5f,0.5f,0.5f);
                     matrices.translate(1.5,0.5,2);
+
                     Minecraft.getInstance().getItemRenderer().render(frag.getIcon().getDefaultInstance(), ItemTransforms.TransformType.GUI,false,matrices,buffer,light,
                             OverlayTexture.NO_OVERLAY,
                             Minecraft.getInstance().getItemRenderer().getModel(frag.getIcon().getDefaultInstance(),null,null,0));
+
                     matrices.popPose();
                 }
             }
+
         }
     }
 
