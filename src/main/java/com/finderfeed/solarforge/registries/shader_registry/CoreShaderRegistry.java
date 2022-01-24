@@ -2,6 +2,7 @@ package com.finderfeed.solarforge.registries.shader_registry;
 
 
 import com.finderfeed.solarforge.client.rendering.rendertypes.RadiantPortalRendertype;
+import com.finderfeed.solarforge.client.rendering.rendertypes.SolarCraftRenderTypes;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import net.minecraft.client.renderer.ShaderInstance;
 import net.minecraft.resources.ResourceLocation;
@@ -26,7 +27,11 @@ public class CoreShaderRegistry {
         event.registerShader(new ShaderInstance(event.getResourceManager(),new ResourceLocation("solarforge","ray"), DefaultVertexFormat.POSITION_COLOR_TEX_LIGHTMAP),
                 (instance)->{
                     RadiantPortalRendertype.RAY_SHADER = instance;
-                });
+        });
+        event.registerShader(new ShaderInstance(event.getResourceManager(),new ResourceLocation("solarforge","test"), DefaultVertexFormat.POSITION),
+                (instance)->{
+                    SolarCraftRenderTypes.TEST_SHADER_FOR_PARTICLE = instance;
+        });
     }
 
 }

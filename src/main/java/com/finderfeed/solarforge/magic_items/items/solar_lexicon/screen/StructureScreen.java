@@ -58,7 +58,7 @@ import java.util.Optional;
 public class StructureScreen extends Screen {
 
     public final ResourceLocation STRUCTURE_GUI = new ResourceLocation("solarforge","textures/gui/structure_screen.png");
-    public final ResourceLocation BUTTONS = new ResourceLocation("solarforge","textures/misc/page_buttons.png");
+    public static final ResourceLocation BUTTONS = new ResourceLocation("solarforge","textures/misc/page_buttons.png");
     public final ResourceLocation THREEDSCREENBTN = new ResourceLocation("solarforge","textures/misc/button.png");
     public int currentPage;
     private List<List<BlockAndRelxRely>> structureBlocks = new ArrayList<>();

@@ -22,6 +22,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.platform.Window;
 import com.mojang.math.Vector3d;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiComponent;
 
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
@@ -37,6 +38,7 @@ import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.core.Direction;
@@ -76,6 +78,14 @@ public class RenderingTools {
     public static final ResourceLocation RAY = new ResourceLocation("solarforge","textures/misc/ray_into_skyy.png");
     public static final ResourceLocation SHADERED_RAY = new ResourceLocation("solarforge","textures/misc/shadered_ray.png");
     public static final ResourceLocation HP_BAR = new ResourceLocation("solarforge","textures/misc/hp_bar.png"); //0.875
+
+    public static void drawBoundedText(PoseStack matrices,int posx,int posy,int bound,String s,int color){
+        int iter = 0;
+        for (String str : RenderingTools.splitString(s,bound)){
+            Gui.drawString(matrices,Minecraft.getInstance().font,str,posx,posy + iter * 8,color);
+            iter++;
+        }
+    }
 
     public static void addActivePostShader(UniformPlusPlus uniformPlusPlus,PostChainPlusUltra shader){
         RenderEventsHandler.ACTIVE_SHADERS.put(uniformPlusPlus,shader);

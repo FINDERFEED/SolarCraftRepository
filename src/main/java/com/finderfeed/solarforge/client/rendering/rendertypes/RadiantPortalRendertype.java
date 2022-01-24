@@ -24,6 +24,9 @@ public class RadiantPortalRendertype extends RenderType {
         super(p_173178_, p_173179_, p_173180_, p_173181_, p_173182_, p_173183_, one, two);
     }
 
+
+
+
     public static RenderType textWithWaterShader(ResourceLocation loc){
         RenderType.CompositeState state = RenderType.CompositeState.builder()
                 .setShaderState(RENDERTYPE_WATER_SHADER)

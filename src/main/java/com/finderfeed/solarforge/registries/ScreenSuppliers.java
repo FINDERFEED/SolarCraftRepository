@@ -1,6 +1,7 @@
 package com.finderfeed.solarforge.registries;
 
 import com.finderfeed.solarforge.SolarForge;
+import com.finderfeed.solarforge.client.screens.EightElementsFragmentScreen;
 import com.finderfeed.solarforge.client.screens.LoreScreen;
 import com.finderfeed.solarforge.for_future_library.custom_registries.CustomDeferredRegistry;
 import com.finderfeed.solarforge.for_future_library.custom_registries.CustomRegistryEntry;
@@ -20,4 +21,6 @@ public class ScreenSuppliers {
             new LoreScreen(new TranslatableComponent("runic_energy.lore"),"runic_energy"));
     public static final Supplier<Screen> DEFENCE_CRYSTAL = SCREEN_REGISTRY.register("defence_crystal_lore",()->()->
             new LoreScreen(new TranslatableComponent("defence_crystal.lore"),"defence_crystal"));
+    public static final Supplier<Screen> EIGHT_ELEMENTS = SCREEN_REGISTRY.register("eight_elements_lore",()->
+            EightElementsFragmentScreen::new);
 }

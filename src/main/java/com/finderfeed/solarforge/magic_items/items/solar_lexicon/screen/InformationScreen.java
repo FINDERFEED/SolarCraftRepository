@@ -3,6 +3,7 @@ package com.finderfeed.solarforge.magic_items.items.solar_lexicon.screen;
 import com.finderfeed.solarforge.ClientHelpers;
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.SolarForge;
+import com.finderfeed.solarforge.for_future_library.helpers.RenderingTools;
 import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarforge.registries.items.ItemsRegister;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -31,7 +32,7 @@ public class InformationScreen extends Screen {
 
     public int relX;
     public int relY;
-    private final ResourceLocation LOC = new ResourceLocation("solarforge","textures/gui/solar_lexicon_info_screen.png");
+    private final ResourceLocation LOC = new ResourceLocation("solarforge","textures/gui/solar_lexicon_info_screen_new.png");
     private InfusingRecipeScreen screen;
     private InfusingCraftingRecipeScreen screenCrafting;
     private AncientFragment fragment;
@@ -50,15 +51,16 @@ public class InformationScreen extends Screen {
 
     @Override
     protected void init() {
+
         int width = minecraft.getWindow().getWidth();
         int height = minecraft.getWindow().getHeight();
         int scale = (int) minecraft.getWindow().getGuiScale();
-        this.relX = (width/scale - 183)/2 - 10;
+        this.relX = (width/scale - 183)/2 - 40;
         this.relY = (height - 218*scale)/2/scale;
 
         Item i = screen != null ? SolarForge.INFUSER_ITEM.get() : ItemsRegister.INFUSING_TABLE.get();
 
-        ItemStackButton button = new ItemStackButton(relX+180,relY+9,16,16,(buttons)->{
+        ItemStackButton button = new ItemStackButton(relX+232,relY+9,16,16,(buttons)->{
             if (screen != null) {
                 Minecraft.getInstance().setScreen(screen);
             }else{
@@ -70,7 +72,7 @@ public class InformationScreen extends Screen {
         if (screen != null || screenCrafting != null){
             addRenderableWidget(button);
         }
-        addRenderableWidget(new ItemStackButton(relX+185,relY+172,12,12,(buttons)->{minecraft.setScreen(new SolarLexiconRecipesScreen());}, Items.CRAFTING_TABLE.getDefaultInstance(),0.7f,false));
+        addRenderableWidget(new ItemStackButton(relX+236,relY+187,12,12,(buttons)->{minecraft.setScreen(new SolarLexiconRecipesScreen());}, Items.CRAFTING_TABLE.getDefaultInstance(),0.7f,false));
         super.init();
     }
 
@@ -81,9 +83,11 @@ public class InformationScreen extends Screen {
         blit(matrices,relX,relY,0,0,256,256);
         drawString(matrices,Minecraft.getInstance().font,fragment.getTranslation(), relX+60,relY+35,0xffffff);
         if (fragment.getType() == AncientFragment.Type.INFORMATION) {
-            Helpers.drawBoundedText(matrices, relX + 12, relY + 80, 28, fragment.getLore().getString(),stringColor);
+            RenderingTools.drawBoundedText(matrices, relX + 12, relY + 80, 45, fragment.getLore().getString(),stringColor);
+//            Helpers.drawBoundedText(matrices, relX + 12, relY + 80, 28, fragment.getLore().getString(),stringColor);
         }else{
-            Helpers.drawBoundedText(matrices, relX + 12, relY + 80, 28, fragment.getItemDescription().getString(),stringColor);
+            RenderingTools.drawBoundedText(matrices, relX + 12, relY + 80, 45, fragment.getItemDescription().getString(),stringColor);
+//            Helpers.drawBoundedText(matrices, relX + 12, relY + 80, 28, fragment.getItemDescription().getString(),stringColor);
         }
         renderGuiItem(fragment.getIcon().getDefaultInstance(),relX+32,relY+32,Minecraft.getInstance().getItemRenderer().getModel(fragment.getIcon().getDefaultInstance(),null,null,0),1.5,1.5,1.5);
         super.render(matrices, mousex, mousey, partialTicks);

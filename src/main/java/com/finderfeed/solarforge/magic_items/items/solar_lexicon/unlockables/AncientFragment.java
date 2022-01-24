@@ -29,6 +29,7 @@ public enum AncientFragment {
             ItemsRegister.SOLAR_STONE_CHISELED.get().getDefaultInstance(),ItemsRegister.ENERGIZED_STONE.get().getDefaultInstance()
     ),SolarForge.INFUSING_CRAFTING_RECIPE_TYPE,tx("solar_stones.lore"),1),
     SPEED_ROAD(tx("solar_fragment.speed_road"),"speed_road",ProgressionStage.PRE_BEGGINING.ALL_PROGRESSIONS,SubCategoryBase.BEGINNER_ITEMS,CategoryBase.BEGINNER, ItemsRegister.SPEED_ROAD.get().getDefaultInstance(),tx("speed_road.lore"),SolarForge.INFUSING_CRAFTING_RECIPE_TYPE,2),
+    EIGHT_ELEMENTS(tx("solar_fragment.eight_elements"),"eight_elements",ProgressionStage.BEGGINING_2.ALL_PROGRESSIONS,SubCategoryBase.BASIC_DUSTS,CategoryBase.EXPLORATION,"eight_elements_lore",ItemsRegister.DIMENSION_CORE.get().getDefaultInstance(),9),
 
 
     SOLAR_INFUSER(tx("solar_fragment.solar_infuser"),"solar_infuser",ProgressionStage.FORGE.ALL_PROGRESSIONS,SubCategoryBase.BEGINNER_ITEMS,CategoryBase.BEGINNER, List.of(
@@ -146,6 +147,7 @@ public enum AncientFragment {
     ),SolarForge.INFUSING_RECIPE_TYPE,tx("amulets.lore"),5),
     RADIANT_LAND_LORE(tx("solar_fragment.radiant_land"),"radiant_land",ProgressionStage.DIMENSION.ALL_PROGRESSIONS,SubCategoryBase.RADIANT_LAND,CategoryBase.MIDGAME,"radiant_land_lore",ItemsRegister.DIMENSION_CORE.get().getDefaultInstance(),9),
     DEFENCE_CRYSTAL(tx("solar_fragment.defence_crystal"),"defence_crystal",ProgressionStage.DIMENSION.ALL_PROGRESSIONS,SubCategoryBase.RADIANT_LAND,CategoryBase.MIDGAME,"defence_crystal_lore",ItemsRegister.CRYSTALLITE_CORE.get().getDefaultInstance(),9),
+
     ;
 
     public static Map<String,AncientFragment> FRAGMENTS_ID_MAP = new HashMap<>();

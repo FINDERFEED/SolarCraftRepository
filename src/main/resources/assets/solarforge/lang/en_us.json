@@ -361,7 +361,7 @@
   "pre.runic_energy_repeater": "If pylons contain some sort of energy, it means they can be used?",
   "solarforge.solar_energy_generator": "Solar Energy Generator",
   "solar_fragment.runic_energy_repeater": "Runic Energy Repeater",
-  "runic_energy_repeater.lore": "The only way to connect the source of runic energy to the consumers. Radius - 25 blocks. Place a rune blocks under it to assign which energy it should transmit.",
+  "runic_energy_repeater.lore": "The only way to connect the source of runic energy to the consumers. Radius - 25 blocks. Place a catalyst block under it to assign which energy it should transmit.",
   "block.solarforge.ardo_rune_block": "Ardo rune catalyst",
   "block.solarforge.fira_rune_block": "Fira rune catalyst",
   "block.solarforge.tera_rune_block": "Tera rune catalyst",
@@ -524,7 +524,7 @@
   "solar_category.runic_energy_exploration": "Exploration",
   "solar_category.runic_energy_transmitting": "Transmitting",
   "solar_category.runic_energy": "Runic energy",
-  "runic_energy.lore": "Runic energy is a combination of electricity and magic which makes it usable for both machines and spells. The huge advantage of this energy type is that it can be transmitted through air without any losses and that's why you need special repeaters to transmit it.",
+  "runic_energy.lore": "Runic energy remains unknown and mysterious but you have identified some of its usages. The main purpose of it - reality cloth, a force that created everything you see and touch. Regardless of its power you should be able to begin harnessing it for your own purposes, just like how you were extracting energy from coal or generating it with different machines.",
   "solar_fragment.defence_crystal": "Defence crystal",
   "solar_fragment.runic_energy": "Runic Energy",
   "solar_category.midgame": "Midgame",
@@ -601,7 +601,18 @@
   "solarcraft.no_fragments_available2": "available.",
   "block.solarforge.explosion_blocker": "Explosion blocker",
   "solar_fragment.explosion_blocker": "Explosion blocker",
-  "solar_fragment.explosion_blocker_structure": "Explosion blocker"
+  "solar_fragment.explosion_blocker_structure": "Explosion blocker",
+  "solar_fragment.eight_elements": "Eight elements",
+  "eight_elements.lore": "Eight different symbols - eight different nature fundamental elements, each one corresponds to different energies. It is unknown where they came from, but while standing near pylons you feel that this energies come from a faraway unreachable world.",
+  "solarcraft.rune_element_1": "Ardo: ",
+  "solarcraft.rune_element_2": "Fira: ",
+  "solarcraft.rune_element_3": "Kelda: ",
+  "solarcraft.rune_element_4": "Tera: ",
+  "solarcraft.rune_element_5": "Urba: ",
+  "solarcraft.rune_element_6": "Zeta: ",
+  "solarcraft.rune_element_7": "Giro: ",
+  "solarcraft.rune_element_8": "Ultima: "
+
 
 
 

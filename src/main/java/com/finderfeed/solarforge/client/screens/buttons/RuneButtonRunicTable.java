@@ -10,6 +10,7 @@ import net.minecraft.client.sounds.SoundManager;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvents;
 
 public class RuneButtonRunicTable extends Button {
     public boolean turnedOff = false;
@@ -35,6 +36,6 @@ public class RuneButtonRunicTable extends Button {
 
     @Override
     public void playDownSound(SoundManager manager) {
-        manager.play(SimpleSoundInstance.forUI(Sounds.BUTTON_PRESS2.get(),1,1));
+        manager.play(SimpleSoundInstance.forUI(SoundEvents.DEEPSLATE_BREAK,1,1));
     }
 }
