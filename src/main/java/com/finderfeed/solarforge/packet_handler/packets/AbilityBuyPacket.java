@@ -2,7 +2,7 @@ package com.finderfeed.solarforge.packet_handler.packets;
 
 import com.finderfeed.solarforge.SolarAbilities.Abilities;
 import com.finderfeed.solarforge.SolarAbilities.AbilityClasses.AbstractAbility;
-import com.finderfeed.solarforge.magic_items.blocks.solar_forge_block.SolarForgeBlockEntity;
+import com.finderfeed.solarforge.magic.blocks.solar_forge_block.SolarForgeBlockEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.network.FriendlyByteBuf;

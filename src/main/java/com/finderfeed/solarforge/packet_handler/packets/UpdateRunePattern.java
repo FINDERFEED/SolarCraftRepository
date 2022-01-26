@@ -1,7 +1,7 @@
 package com.finderfeed.solarforge.packet_handler.packets;
 
 import com.finderfeed.solarforge.ClientHelpers;
-import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.RunePattern;
+import com.finderfeed.solarforge.magic.items.solar_lexicon.unlockables.RunePattern;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Player;

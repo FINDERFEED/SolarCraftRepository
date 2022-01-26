@@ -1,25 +1,27 @@
 package com.finderfeed.solarforge;
 
 import com.finderfeed.solarforge.SolarAbilities.screens.AbilityBuyScreen;
+import com.finderfeed.solarforge.client.particles.ParticleTypesRegistry;
 import com.finderfeed.solarforge.client.particles.SmallSolarStrikeParticle;
 import com.finderfeed.solarforge.client.particles.SolarcraftParticle;
 import com.finderfeed.solarforge.client.toasts.UnlockedEnergyTypeToast;
+import com.finderfeed.solarforge.entities.BallLightningProjectile;
 import com.finderfeed.solarforge.events.RenderEventsHandler;
-import com.finderfeed.solarforge.for_future_library.helpers.FinderfeedMathHelper;
-import com.finderfeed.solarforge.magic_items.blocks.blockentities.RayTrapTileEntity;
-import com.finderfeed.solarforge.magic_items.blocks.blockentities.RuneEnergyPylonTile;
-import com.finderfeed.solarforge.magic_items.blocks.blockentities.containers.screens.RunicTableContainerScreen;
-import com.finderfeed.solarforge.magic_items.items.primitive.solacraft_item_classes.FragmentItem;
-import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.AncientFragment;
-import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.RunePattern;
+import com.finderfeed.solarforge.local_library.effects.LightningBoltPath;
+import com.finderfeed.solarforge.local_library.helpers.FinderfeedMathHelper;
+import com.finderfeed.solarforge.magic.blocks.blockentities.RayTrapTileEntity;
+import com.finderfeed.solarforge.magic.blocks.blockentities.RuneEnergyPylonTile;
+import com.finderfeed.solarforge.magic.blocks.blockentities.containers.screens.RunicTableContainerScreen;
+import com.finderfeed.solarforge.magic.items.primitive.solacraft_item_classes.FragmentItem;
+import com.finderfeed.solarforge.magic.items.solar_lexicon.unlockables.AncientFragment;
+import com.finderfeed.solarforge.magic.items.solar_lexicon.unlockables.RunePattern;
 import com.finderfeed.solarforge.misc_things.*;
 import com.finderfeed.solarforge.registries.items.ItemsRegister;
 import com.finderfeed.solarforge.registries.sounds.Sounds;
-import com.finderfeed.solarforge.magic_items.items.solar_lexicon.SolarLexicon;
-import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Progression;
-import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.ProgressionHelper;
+import com.finderfeed.solarforge.magic.items.solar_lexicon.SolarLexicon;
+import com.finderfeed.solarforge.magic.items.solar_lexicon.achievements.Progression;
+import com.finderfeed.solarforge.magic.items.solar_lexicon.unlockables.ProgressionHelper;
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Widget;
 import net.minecraft.client.particle.Particle;
@@ -31,6 +33,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.BlockItem;
@@ -48,7 +51,6 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -56,6 +58,27 @@ import java.util.function.Supplier;
 
 public class ClientHelpers {
 
+
+    public static void handleBallLightningProjectileParticles(Vec3 pos){
+        Level level = Minecraft.getInstance().level;
+        if (level != null) {
+            List<LivingEntity> living = level.getEntitiesOfClass(LivingEntity.class, BallLightningProjectile.BOX.move(pos), (l) -> !(l instanceof Player));
+            for (LivingEntity ent : living) {
+                double vecLen = ent.position().subtract(pos).length();
+                if (vecLen <= 10) {
+                    int maxDots = (int) Math.floor(vecLen / 1.5) + 2;
+                    LightningBoltPath path = LightningBoltPath.create(pos, ent.position().add(0,ent.getBbHeight()/2,0), maxDots);
+                    path.setMaxOffset(0.75);
+                    for (int i = 0; i < maxDots - 1; i++) {
+                        Vec3 iPos = path.getPos(i);
+                        Vec3 ePos = path.getPos(i + 1);
+                        ParticleAnimationHelper.line(ParticleTypesRegistry.SMALL_SOLAR_STRIKE_PARTICLE.get(), iPos, ePos,
+                                0.20, () -> 255, () -> 0, () -> 0, 0.25f);
+                    }
+                }
+            }
+        }
+    }
 
     public static boolean doClientPlayerHasFragment(AncientFragment fragment){
         return ProgressionHelper.doPlayerHasFragment(getClientPlayer(),fragment);
@@ -105,7 +128,7 @@ public class ClientHelpers {
                 float length = 34;
                 double offsetx = length * Math.cos(Math.toRadians(i*7.5));
                 double offsetz = length * Math.sin(Math.toRadians(i*7.5));
-                level.addParticle(ParticlesList.SOLAR_STRIKE_PARTICLE.get(),pos.x +offsetx,pos.y,pos.z +offsetz,0,0.05,0);
+                level.addParticle(ParticleTypesRegistry.SOLAR_STRIKE_PARTICLE.get(),pos.x +offsetx,pos.y,pos.z +offsetz,0,0.05,0);
 
 
 
@@ -115,7 +138,7 @@ public class ClientHelpers {
                     float length = 34;
                     double offsetx = level.random.nextFloat()*length * Math.cos(Math.toRadians(i*15));
                     double offsetz = level.random.nextFloat()*length * Math.sin(Math.toRadians(i*15));
-                    level.addParticle(ParticlesList.SOLAR_STRIKE_PARTICLE.get(),pos.x +offsetx,pos.y,pos.z +offsetz,0,0.05,0);
+                    level.addParticle(ParticleTypesRegistry.SOLAR_STRIKE_PARTICLE.get(),pos.x +offsetx,pos.y,pos.z +offsetz,0,0.05,0);
 
                 }
 
@@ -128,7 +151,7 @@ public class ClientHelpers {
                         double offsetx = level.random.nextFloat() * length * Math.cos(Math.toRadians(i * 60));
                         double offsetz = level.random.nextFloat() * length * Math.sin(Math.toRadians(i * 60));
                         double offsety = level.random.nextFloat() * length + h*8;
-                        level.addParticle(ParticlesList.SOLAR_STRIKE_PARTICLE.get(), pos.x + offsetx, pos.y +offsety, pos.z + offsetz, 0, 0.05, 0);
+                        level.addParticle(ParticleTypesRegistry.SOLAR_STRIKE_PARTICLE.get(), pos.x + offsetx, pos.y +offsety, pos.z + offsetz, 0, 0.05, 0);
 
                     }
 
@@ -156,7 +179,7 @@ public class ClientHelpers {
 
 
     public static void handleSolarWandParticles(Vec3 pos,Vec3 vel){
-        SmallSolarStrikeParticle particle = (SmallSolarStrikeParticle) Minecraft.getInstance().particleEngine.createParticle(ParticlesList.SMALL_SOLAR_STRIKE_PARTICLE.get(),pos.x,pos.y,pos.z,vel.normalize().x,vel.normalize().y,vel.normalize().z);
+        SmallSolarStrikeParticle particle = (SmallSolarStrikeParticle) Minecraft.getInstance().particleEngine.createParticle(ParticleTypesRegistry.SMALL_SOLAR_STRIKE_PARTICLE.get(),pos.x,pos.y,pos.z,vel.normalize().x,vel.normalize().y,vel.normalize().z);
         particle.setLifetime((int)Math.round(vel.length()/vel.normalize().length())*5/2 );
     }
 
@@ -326,7 +349,7 @@ public class ClientHelpers {
     public static void createEffectParticle(double x, double y, double z,double xs, double ys, double zs, MobEffect effect){
 
         SmallSolarStrikeParticle particle = (SmallSolarStrikeParticle) Minecraft.getInstance().particleEngine.
-                createParticle(ParticlesList.SMALL_SOLAR_STRIKE_PARTICLE.get(),x,y,z,xs,ys,zs);
+                createParticle(ParticleTypesRegistry.SMALL_SOLAR_STRIKE_PARTICLE.get(),x,y,z,xs,ys,zs);
         int[] rgba = FinderfeedMathHelper.intToRgba(effect.getColor());
         particle.setColor((float)rgba[0]/255,(float)rgba[1]/255,(float)rgba[2]/255);
     }

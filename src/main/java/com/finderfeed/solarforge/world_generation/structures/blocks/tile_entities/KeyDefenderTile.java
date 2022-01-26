@@ -2,7 +2,7 @@ package com.finderfeed.solarforge.world_generation.structures.blocks.tile_entiti
 
 import com.finderfeed.solarforge.misc_things.AbstractStructureBlockentity;
 import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
-import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Progression;
+import com.finderfeed.solarforge.magic.items.solar_lexicon.achievements.Progression;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;

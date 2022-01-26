@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.world_generation.features;
 
-import com.finderfeed.solarforge.magic_items.blocks.primitive.DirectionBlock;
+import com.finderfeed.solarforge.magic.blocks.primitive.DirectionBlock;
 import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;

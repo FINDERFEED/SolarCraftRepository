@@ -2,25 +2,22 @@ package com.finderfeed.solarforge.registries;
 
 
 import com.finderfeed.solarforge.SolarAbilities.meteorite.MeteoriteModel;
-import com.finderfeed.solarforge.magic_items.blocks.blockentities.projectiles.renderers.AbstractTurretProjectileRenderer;
-import com.finderfeed.solarforge.magic_items.blocks.blockentities.projectiles.renderers.MortarProjectileRenderer;
-import com.finderfeed.solarforge.magic_items.blocks.rendering_models.AuraHealerModel;
-import com.finderfeed.solarforge.magic_items.blocks.rendering_models.RadiantPortal;
-import com.finderfeed.solarforge.magic_items.blocks.rendering_models.SolarEnergyGeneratorModel;
-import com.finderfeed.solarforge.magic_items.blocks.solar_forge_block.SolarForgeBlockModelTrue;
-import com.finderfeed.solarforge.magic_items.blocks.solar_forge_block.SolarForgePetalsTrue;
-import com.finderfeed.solarforge.magic_items.items.item_models.SolarGodShield;
-import com.finderfeed.solarforge.magic_items.items.projectiles.renderers.UltraCrossbowProjectileRenderer;
+import com.finderfeed.solarforge.magic.blocks.blockentities.projectiles.renderers.AbstractTurretProjectileRenderer;
+import com.finderfeed.solarforge.magic.blocks.blockentities.projectiles.renderers.MortarProjectileRenderer;
+import com.finderfeed.solarforge.magic.blocks.rendering_models.AuraHealerModel;
+import com.finderfeed.solarforge.magic.blocks.rendering_models.RadiantPortal;
+import com.finderfeed.solarforge.magic.blocks.rendering_models.SolarEnergyGeneratorModel;
+import com.finderfeed.solarforge.magic.blocks.solar_forge_block.SolarForgeBlockModelTrue;
+import com.finderfeed.solarforge.magic.blocks.solar_forge_block.SolarForgePetalsTrue;
+import com.finderfeed.solarforge.magic.items.item_models.SolarGodShield;
+import com.finderfeed.solarforge.magic.projectiles.renderers.UltraCrossbowProjectileRenderer;
 
 import net.minecraft.client.model.geom.ModelLayerLocation;
-import net.minecraft.client.renderer.DimensionSpecialEffects;
-import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.registries.ForgeRegistries;
 
 @Mod.EventBusSubscriber(modid = "solarforge",bus = Mod.EventBusSubscriber.Bus.MOD,value = Dist.CLIENT)
 public class ModelLayersRegistry {

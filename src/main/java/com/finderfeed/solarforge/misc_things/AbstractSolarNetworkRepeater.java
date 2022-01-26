@@ -1,7 +1,6 @@
 package com.finderfeed.solarforge.misc_things;
 
 import com.finderfeed.solarforge.Helpers;
-import com.finderfeed.solarforge.magic_items.blocks.blockentities.SolarEnergyFurnaceTile;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.nbt.CompoundTag;

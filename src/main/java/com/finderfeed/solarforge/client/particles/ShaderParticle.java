@@ -4,16 +4,13 @@ import com.finderfeed.solarforge.client.rendering.rendertypes.SolarCraftRenderTy
 import com.mojang.blaze3d.vertex.*;
 import com.mojang.math.Matrix4f;
 import com.mojang.math.Quaternion;
-import com.mojang.math.Vector3f;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleRenderType;
-import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderStateShard;
-import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.util.Mth;
 import net.minecraft.world.phys.Vec3;
 
@@ -39,12 +36,7 @@ public abstract class ShaderParticle extends Particle {
     @Override
     public void render(VertexConsumer useless, Camera cam, float pticks) {
         MultiBufferSource src = Minecraft.getInstance().renderBuffers().bufferSource();
-        SolarCraftRenderTypes.TEST_SHADER_FOR_PARTICLE.safeGetUniform("particleSize").set(1f,1f);
-        SolarCraftRenderTypes.TEST_SHADER_FOR_PARTICLE.safeGetUniform("test").set(5f);
-        SolarCraftRenderTypes.TEST_SHADER_FOR_PARTICLE.safeGetUniform("definedColor").set(1f,0f,0f);
-        if (Minecraft.getInstance().level != null) {
-            SolarCraftRenderTypes.TEST_SHADER_FOR_PARTICLE.safeGetUniform("time").set((Minecraft.getInstance().level.getGameTime() + pticks)/10f);
-        }
+
         VertexConsumer vertex = src.getBuffer(SolarCraftRenderTypes.shaderRendertype(shaderStateShard));
 
         PoseStack matrices = new PoseStack();

@@ -2,10 +2,8 @@ package com.finderfeed.solarforge.events.other_events;
 
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.capabilities.capability_mana.CapabilitySolarMana;
-import com.finderfeed.solarforge.magic_items.items.vein_miner.IllidiumPickaxe;
+import com.finderfeed.solarforge.magic.items.vein_miner.IllidiumPickaxe;
 import com.finderfeed.solarforge.registries.abilities.AbilitiesRegistry;
-import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
-import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Progression;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.entity.ExperienceOrb;

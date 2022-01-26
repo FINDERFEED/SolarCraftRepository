@@ -1,8 +1,7 @@
 package com.finderfeed.solarforge.entities.renderers;
 
-import com.finderfeed.solarforge.ClientHelpers;
 import com.finderfeed.solarforge.entities.LegendaryItem;
-import com.finderfeed.solarforge.for_future_library.helpers.RenderingTools;
+import com.finderfeed.solarforge.local_library.helpers.RenderingTools;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Vector3f;
 import net.minecraft.client.Minecraft;

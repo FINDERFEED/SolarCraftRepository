@@ -1,10 +1,10 @@
 package com.finderfeed.solarforge.registries.containers;
 
-import com.finderfeed.solarforge.magic_items.blocks.blockentities.containers.InfusingTableTileContainer;
-import com.finderfeed.solarforge.magic_items.blocks.blockentities.containers.ModuleApplierMenu;
-import com.finderfeed.solarforge.magic_items.blocks.blockentities.containers.RunicTableContainer;
-import com.finderfeed.solarforge.magic_items.blocks.blockentities.containers.SolarFurnaceContainer;
-import com.finderfeed.solarforge.magic_items.items.solar_lexicon.SolarLexiconContainer;
+import com.finderfeed.solarforge.magic.blocks.blockentities.containers.InfusingTableTileContainer;
+import com.finderfeed.solarforge.magic.blocks.blockentities.containers.ModuleApplierMenu;
+import com.finderfeed.solarforge.magic.blocks.blockentities.containers.RunicTableContainer;
+import com.finderfeed.solarforge.magic.blocks.blockentities.containers.SolarFurnaceContainer;
+import com.finderfeed.solarforge.magic.items.solar_lexicon.SolarLexiconContainer;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraftforge.common.extensions.IForgeMenuType;
 

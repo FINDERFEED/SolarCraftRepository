@@ -1,22 +1,19 @@
 package com.finderfeed.solarforge.packet_handler.packets;
 
 import com.finderfeed.solarforge.Helpers;
-import com.finderfeed.solarforge.SolarForge;
-import com.finderfeed.solarforge.magic_items.blocks.blockentities.RunicTableTileEntity;
-import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.RunePattern;
+import com.finderfeed.solarforge.magic.blocks.blockentities.RunicTableTileEntity;
+import com.finderfeed.solarforge.magic.items.solar_lexicon.unlockables.RunePattern;
 import com.finderfeed.solarforge.misc_things.AbstractPacket;
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
-import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.AncientFragment;
-import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.ProgressionHelper;
+import com.finderfeed.solarforge.magic.items.solar_lexicon.unlockables.AncientFragment;
+import com.finderfeed.solarforge.magic.items.solar_lexicon.unlockables.ProgressionHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.level.Level;
 
 
 import java.util.function.Supplier;

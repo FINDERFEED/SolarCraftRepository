@@ -1,14 +1,16 @@
 package com.finderfeed.solarforge.packet_handler;
 
 import com.finderfeed.solarforge.capabilities.capability_mana.UpdateManaPacket;
-import com.finderfeed.solarforge.magic_items.blocks.infusing_table_things.UpdateProgressOnClientPacket;
-import com.finderfeed.solarforge.magic_items.blocks.infusing_table_things.UpdateStacksOnClientTable;
-import com.finderfeed.solarforge.magic_items.blocks.infusing_table_things.infusing_pool.UpdateStacksOnClientPacketPool;
+import com.finderfeed.solarforge.magic.blocks.infusing_table_things.UpdateProgressOnClientPacket;
+import com.finderfeed.solarforge.magic.blocks.infusing_table_things.UpdateStacksOnClientTable;
+import com.finderfeed.solarforge.magic.blocks.infusing_table_things.infusing_pool.UpdateStacksOnClientPacketPool;
 import com.finderfeed.solarforge.packet_handler.packets.*;
-import com.finderfeed.solarforge.magic_items.items.solar_lexicon.packets.OpenScreenPacket;
-import com.finderfeed.solarforge.magic_items.items.solar_lexicon.packets.UpdateAllProgressionOnClient;
-import com.finderfeed.solarforge.magic_items.items.solar_lexicon.packets.UpdateInventoryPacket;
-import com.finderfeed.solarforge.magic_items.items.solar_lexicon.packets.UpdateProgressionOnClient;
+import com.finderfeed.solarforge.magic.items.solar_lexicon.packets.OpenScreenPacket;
+import com.finderfeed.solarforge.magic.items.solar_lexicon.packets.UpdateAllProgressionOnClient;
+import com.finderfeed.solarforge.magic.items.solar_lexicon.packets.UpdateInventoryPacket;
+import com.finderfeed.solarforge.magic.items.solar_lexicon.packets.UpdateProgressionOnClient;
+import com.finderfeed.solarforge.packet_handler.packets.misc_packets.BallLightningSpawnLightningParticles;
+import com.finderfeed.solarforge.packet_handler.packets.misc_packets.SolarStrikeEntityDoExplosion;
 import net.minecraft.resources.ResourceLocation;
 
 import net.minecraftforge.network.NetworkRegistry;
@@ -64,6 +66,7 @@ public class SolarForgePacketHandler {
         INSTANCE.registerMessage(nextID(), SolarStrikeEntityDoExplosion.class, SolarStrikeEntityDoExplosion::toBytes, SolarStrikeEntityDoExplosion::new, SolarStrikeEntityDoExplosion::handle);
         INSTANCE.registerMessage(nextID(), UpdateFragmentsOnClient.class, UpdateFragmentsOnClient::toBytes, UpdateFragmentsOnClient::new, UpdateFragmentsOnClient::handle);
         INSTANCE.registerMessage(nextID(), UpdateRunePattern.class, UpdateRunePattern::toBytes, UpdateRunePattern::new, UpdateRunePattern::handle);
+        INSTANCE.registerMessage(nextID(), BallLightningSpawnLightningParticles.class, BallLightningSpawnLightningParticles::toBytes, BallLightningSpawnLightningParticles::new, BallLightningSpawnLightningParticles::handle);
     }
 //            INSTANCE.registerMessage(nextID(), .class, ::toBytes, ::new, ::handle);
     //RepeaterParentUpdateOnClient

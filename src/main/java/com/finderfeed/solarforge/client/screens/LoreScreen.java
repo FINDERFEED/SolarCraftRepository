@@ -2,10 +2,10 @@ package com.finderfeed.solarforge.client.screens;
 
 
 import com.finderfeed.solarforge.ClientHelpers;
-import com.finderfeed.solarforge.for_future_library.helpers.RenderingTools;
-import com.finderfeed.solarforge.magic_items.items.solar_lexicon.SolarLexicon;
-import com.finderfeed.solarforge.magic_items.items.solar_lexicon.screen.ItemStackButton;
-import com.finderfeed.solarforge.magic_items.items.solar_lexicon.screen.SolarLexiconRecipesScreen;
+import com.finderfeed.solarforge.local_library.helpers.RenderingTools;
+import com.finderfeed.solarforge.magic.items.solar_lexicon.SolarLexicon;
+import com.finderfeed.solarforge.magic.items.solar_lexicon.screen.ItemStackButton;
+import com.finderfeed.solarforge.magic.items.solar_lexicon.screen.SolarLexiconRecipesScreen;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;

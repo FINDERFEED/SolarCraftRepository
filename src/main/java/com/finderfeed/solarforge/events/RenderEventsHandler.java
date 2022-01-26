@@ -1,13 +1,13 @@
 package com.finderfeed.solarforge.events;
 
 
-import com.finderfeed.solarforge.for_future_library.helpers.RenderingTools;
-import com.finderfeed.solarforge.magic_items.blocks.render.EnergyGeneratorTileRender;
-import com.finderfeed.solarforge.magic_items.blocks.render.RuneEnergyPylonRenderer;
+import com.finderfeed.solarforge.local_library.helpers.RenderingTools;
+import com.finderfeed.solarforge.magic.blocks.render.EnergyGeneratorTileRender;
+import com.finderfeed.solarforge.magic.blocks.render.RuneEnergyPylonRenderer;
 
-import com.finderfeed.solarforge.magic_items.blocks.render.WormholeRenderer;
-import com.finderfeed.solarforge.client.rendering.shaders.post_chains.PostChainPlusUltra;
-import com.finderfeed.solarforge.client.rendering.shaders.post_chains.UniformPlusPlus;
+import com.finderfeed.solarforge.magic.blocks.render.WormholeRenderer;
+import com.finderfeed.solarforge.client.rendering.deprecated_shaders.post_chains.PostChainPlusUltra;
+import com.finderfeed.solarforge.client.rendering.deprecated_shaders.post_chains.UniformPlusPlus;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;

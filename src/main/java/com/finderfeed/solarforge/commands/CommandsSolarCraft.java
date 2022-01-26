@@ -1,12 +1,12 @@
 package com.finderfeed.solarforge.commands;
 
 import com.finderfeed.solarforge.Helpers;
-import com.finderfeed.solarforge.magic_items.items.solar_lexicon.SolarLexicon;
-import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Progression;
+import com.finderfeed.solarforge.magic.items.solar_lexicon.SolarLexicon;
+import com.finderfeed.solarforge.magic.items.solar_lexicon.achievements.Progression;
 import com.finderfeed.solarforge.multiblocks.Multiblocks;
 import com.finderfeed.solarforge.registries.items.ItemsRegister;
-import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.AncientFragment;
-import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.ProgressionHelper;
+import com.finderfeed.solarforge.magic.items.solar_lexicon.unlockables.AncientFragment;
+import com.finderfeed.solarforge.magic.items.solar_lexicon.unlockables.ProgressionHelper;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.arguments.ArgumentType;

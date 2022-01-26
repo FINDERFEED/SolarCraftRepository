@@ -2,7 +2,7 @@ package com.finderfeed.solarforge.entities.renderers;
 
 import com.finderfeed.solarforge.entities.ShieldingCrystalCrystalBoss;
 import com.finderfeed.solarforge.events.other_events.OBJModels;
-import com.finderfeed.solarforge.for_future_library.helpers.RenderingTools;
+import com.finderfeed.solarforge.local_library.helpers.RenderingTools;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Quaternion;
 import com.mojang.math.Vector3f;

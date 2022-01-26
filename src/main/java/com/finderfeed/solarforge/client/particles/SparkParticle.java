@@ -1,7 +1,7 @@
 package com.finderfeed.solarforge.client.particles;
 
 import com.finderfeed.solarforge.ClientHelpers;
-import com.finderfeed.solarforge.for_future_library.other.EaseIn;
+import com.finderfeed.solarforge.local_library.other.EaseIn;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.VertexFormat;
 import net.minecraft.client.Minecraft;
@@ -13,7 +13,6 @@ import net.minecraft.client.renderer.texture.TextureManager;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.particles.SimpleParticleType;
-import net.minecraft.util.Mth;
 import org.lwjgl.opengl.GL11;
 
 import javax.annotation.Nullable;

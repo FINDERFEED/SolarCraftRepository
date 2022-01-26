@@ -1,8 +1,7 @@
 package com.finderfeed.solarforge.packet_handler.packets;
 
 import com.finderfeed.solarforge.SolarCraftTags;
-import com.finderfeed.solarforge.magic_items.blocks.solar_forge_block.SolarForgeBlockEntity;
-import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
+import com.finderfeed.solarforge.magic.blocks.solar_forge_block.SolarForgeBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerLevel;

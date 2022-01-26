@@ -9,20 +9,20 @@ import com.finderfeed.solarforge.config.SolarcraftConfig;
 import com.finderfeed.solarforge.entities.*;
 import com.finderfeed.solarforge.events.PlayerTickEvent;
 import com.finderfeed.solarforge.events.RenderEventsHandler;
-import com.finderfeed.solarforge.magic_items.blocks.SolarOreBlock;
-import com.finderfeed.solarforge.magic_items.blocks.infusing_table_things.*;
-import com.finderfeed.solarforge.magic_items.blocks.infusing_table_things.infusing_pool.InfusingStand;
-import com.finderfeed.solarforge.magic_items.items.item_tiers.SolarCraftToolTiers;
-import com.finderfeed.solarforge.magic_items.items.ProgressionBlockItem;
-import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.AncientFragment;
-import com.finderfeed.solarforge.misc_things.ParticlesList;
+import com.finderfeed.solarforge.magic.blocks.SolarOreBlock;
+import com.finderfeed.solarforge.magic.blocks.infusing_table_things.*;
+import com.finderfeed.solarforge.magic.blocks.infusing_table_things.infusing_pool.InfusingStand;
+import com.finderfeed.solarforge.magic.items.item_tiers.SolarCraftToolTiers;
+import com.finderfeed.solarforge.magic.items.ProgressionBlockItem;
+import com.finderfeed.solarforge.magic.items.solar_lexicon.unlockables.AncientFragment;
+import com.finderfeed.solarforge.client.particles.ParticleTypesRegistry;
 import com.finderfeed.solarforge.recipe_types.infusing_crafting.InfusingCraftingRecipe;
 import com.finderfeed.solarforge.recipe_types.infusing_crafting.InfusingCraftingRecipeType;
 import com.finderfeed.solarforge.registries.Tags;
 import com.finderfeed.solarforge.registries.abilities.AbilitiesRegistry;
 import com.finderfeed.solarforge.registries.attributes.AttributesRegistry;
 import com.finderfeed.solarforge.registries.entities.Entities;
-import com.finderfeed.solarforge.client.rendering.on_screen_rendering.TestRenderEvent;
+
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
 import com.finderfeed.solarforge.recipe_types.InfusingRecipe;
 import com.finderfeed.solarforge.recipe_types.InfusingRecipeType;
@@ -36,13 +36,13 @@ import com.finderfeed.solarforge.registries.features.configured.ConfiguredFeatur
 import com.finderfeed.solarforge.registries.items.ItemsRegister;
 import com.finderfeed.solarforge.registries.sounds.Sounds;
 import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
-import com.finderfeed.solarforge.magic_items.blocks.solar_forge_block.SolarForgeBlock;
-import com.finderfeed.solarforge.magic_items.blocks.solar_forge_block.SolarForgeBlockEntity;
+import com.finderfeed.solarforge.magic.blocks.solar_forge_block.SolarForgeBlock;
+import com.finderfeed.solarforge.magic.blocks.solar_forge_block.SolarForgeBlockEntity;
 
 
-import com.finderfeed.solarforge.magic_items.blocks.solar_forge_block.SolarForgeBlockItem;
-import com.finderfeed.solarforge.magic_items.blocks.solar_forge_block.solar_forge_screen.SolarForgeContainer;
-import com.finderfeed.solarforge.magic_items.blocks.solar_forge_block.solar_forge_screen.SolarForgeScreen;
+import com.finderfeed.solarforge.magic.blocks.solar_forge_block.SolarForgeBlockItem;
+import com.finderfeed.solarforge.magic.blocks.solar_forge_block.solar_forge_screen.SolarForgeContainer;
+import com.finderfeed.solarforge.magic.blocks.solar_forge_block.solar_forge_screen.SolarForgeScreen;
 
 
 import com.finderfeed.solarforge.world_generation.structures.SolarForgeStructureFeatures;
@@ -175,7 +175,7 @@ public class SolarForge
     public static final RecipeType<SolarSmeltingRecipe> SOLAR_SMELTING = new SolarSmeltingRecipeType();
     public SolarForge() {
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
-        ParticlesList.PARTICLES.register(bus);
+        ParticleTypesRegistry.PARTICLES.register(bus);
         EFFECTS.register(bus);
         SOUND_EVENTS.register(bus);
         ENTITY_TYPE_REGISTER.register(bus);
@@ -254,7 +254,6 @@ public class SolarForge
         // do something that can only be done on the client
         MinecraftForge.EVENT_BUS.register(new RenderEventsHandler());
 
-        MinecraftForge.EVENT_BUS.register(new TestRenderEvent());
 
         MenuScreens.register(SOLAR_FORGE_CONTAINER.get(), SolarForgeScreen::new);
         MenuScreens.register(INFUSING_TABLE_CONTAINER.get(), InfuserScreen::new);

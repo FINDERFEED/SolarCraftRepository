@@ -1,7 +1,7 @@
 package com.finderfeed.solarforge.entities.renderers;
 
 import com.finderfeed.solarforge.entities.MineEntityCrystalBoss;
-import com.finderfeed.solarforge.for_future_library.helpers.RenderingTools;
+import com.finderfeed.solarforge.local_library.helpers.RenderingTools;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Matrix4f;

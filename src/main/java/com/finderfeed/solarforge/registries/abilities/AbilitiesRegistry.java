@@ -5,8 +5,7 @@ import com.finderfeed.solarforge.SolarAbilities.AbilityClasses.AbstractAbility;
 import com.finderfeed.solarforge.SolarAbilities.AbilityClasses.FireballAbility;
 import com.finderfeed.solarforge.SolarAbilities.AbilityClasses.LightningAbility;
 import com.finderfeed.solarforge.SolarAbilities.AbilityClasses.ToggleableAbility;
-import com.finderfeed.solarforge.for_future_library.custom_registries.CustomDeferredRegistry;
-import com.finderfeed.solarforge.for_future_library.custom_registries.CustomRegistryEntry;
+import com.finderfeed.solarforge.local_library.custom_registries.CustomDeferredRegistry;
 import com.finderfeed.solarforge.registries.SolarcraftRegistries;
 
 

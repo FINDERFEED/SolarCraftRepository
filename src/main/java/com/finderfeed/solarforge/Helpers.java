@@ -4,18 +4,17 @@ import com.finderfeed.solarforge.capabilities.capability_mana.CapabilitySolarMan
 import com.finderfeed.solarforge.capabilities.capability_mana.SolarForgeMana;
 import com.finderfeed.solarforge.entities.CrystalBossEntity;
 import com.finderfeed.solarforge.events.my_events.ProgressionUnlockEvent;
-import com.finderfeed.solarforge.for_future_library.OwnedBlock;
-import com.finderfeed.solarforge.for_future_library.helpers.FinderfeedMathHelper;
-import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Progression;
-import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.ProgressionHelper;
+import com.finderfeed.solarforge.local_library.OwnedBlock;
+import com.finderfeed.solarforge.local_library.helpers.FinderfeedMathHelper;
+import com.finderfeed.solarforge.magic.items.solar_lexicon.achievements.Progression;
 import com.finderfeed.solarforge.misc_things.Multiblock;
-import com.finderfeed.solarforge.misc_things.ParticlesList;
+import com.finderfeed.solarforge.client.particles.ParticleTypesRegistry;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import com.finderfeed.solarforge.misc_things.StateAndTag;
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
 import com.finderfeed.solarforge.packet_handler.packets.*;
-import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.achievement_tree.AchievementTree;
-import com.finderfeed.solarforge.magic_items.items.solar_lexicon.packets.UpdateProgressionOnClient;
+import com.finderfeed.solarforge.magic.items.solar_lexicon.achievements.achievement_tree.AchievementTree;
+import com.finderfeed.solarforge.magic.items.solar_lexicon.packets.UpdateProgressionOnClient;
 import com.mojang.blaze3d.vertex.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiComponent;
@@ -29,7 +28,6 @@ import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.core.Direction;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
@@ -466,7 +464,7 @@ public class Helpers {
                 for (int z = -intensity; z < intensity+1;z++){
                     Vec3 offset = new Vec3(x,y,z).normalize().multiply(spawnDistanceFactor,spawnDistanceFactor,spawnDistanceFactor);
                     Vec3 finalpos = position.add(offset);
-                    world.addParticle(ParticlesList.SMALL_SOLAR_STRIKE_PARTICLE.get(),finalpos.x,finalpos.y,finalpos.z,offset.x*speedFactor,offset.y*speedFactor,offset.z*speedFactor);
+                    world.addParticle(ParticleTypesRegistry.SMALL_SOLAR_STRIKE_PARTICLE.get(),finalpos.x,finalpos.y,finalpos.z,offset.x*speedFactor,offset.y*speedFactor,offset.z*speedFactor);
 
                 }
             }
@@ -479,8 +477,8 @@ public class Helpers {
                 for (int z = -intensity; z < intensity+1;z++){
                     Vec3 offset = new Vec3(x,y,z).normalize().multiply(spawnDistanceFactor,spawnDistanceFactor,spawnDistanceFactor);
                     Vec3 finalpos = position.add(offset);
-                    world.addParticle(ParticlesList.SMALL_SOLAR_STRIKE_PARTICLE.get(),finalpos.x,finalpos.y,finalpos.z,offset.x*speedFactor,offset.y*speedFactor,offset.z*speedFactor);
-                    world.addParticle(ParticlesList.SOLAR_EXPLOSION_PARTICLE.get(),finalpos.x,finalpos.y,finalpos.z,offset.x*(speedFactor+0.3),offset.y*(speedFactor+0.3),offset.z*(speedFactor+0.3));
+                    world.addParticle(ParticleTypesRegistry.SMALL_SOLAR_STRIKE_PARTICLE.get(),finalpos.x,finalpos.y,finalpos.z,offset.x*speedFactor,offset.y*speedFactor,offset.z*speedFactor);
+                    world.addParticle(ParticleTypesRegistry.SOLAR_EXPLOSION_PARTICLE.get(),finalpos.x,finalpos.y,finalpos.z,offset.x*(speedFactor+0.3),offset.y*(speedFactor+0.3),offset.z*(speedFactor+0.3));
 
                 }
             }

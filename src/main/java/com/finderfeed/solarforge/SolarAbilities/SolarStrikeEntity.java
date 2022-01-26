@@ -5,9 +5,8 @@ import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.config.SolarcraftConfig;
 import com.finderfeed.solarforge.events.other_events.event_handler.EventHandler;
-import com.finderfeed.solarforge.misc_things.ParticlesList;
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
-import com.finderfeed.solarforge.packet_handler.packets.SolarStrikeEntityDoExplosion;
+import com.finderfeed.solarforge.packet_handler.packets.misc_packets.SolarStrikeEntityDoExplosion;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 

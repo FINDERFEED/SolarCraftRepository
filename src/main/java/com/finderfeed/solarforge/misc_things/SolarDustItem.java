@@ -1,15 +1,7 @@
 package com.finderfeed.solarforge.misc_things;
 
-import com.finderfeed.solarforge.Helpers;
-import com.finderfeed.solarforge.magic_items.items.primitive.solacraft_item_classes.SolarcraftItem;
-import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Progression;
-import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.AncientFragment;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.player.Player;
-
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
+import com.finderfeed.solarforge.magic.items.primitive.solacraft_item_classes.SolarcraftItem;
+import com.finderfeed.solarforge.magic.items.solar_lexicon.unlockables.AncientFragment;
 
 import java.util.function.Supplier;
 

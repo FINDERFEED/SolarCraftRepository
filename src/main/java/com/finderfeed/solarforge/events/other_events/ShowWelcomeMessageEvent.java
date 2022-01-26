@@ -2,9 +2,9 @@ package com.finderfeed.solarforge.events.other_events;
 
 
 import com.finderfeed.solarforge.Helpers;
-import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.AncientFragment;
-import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.BookEntry;
-import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.ProgressionHelper;
+import com.finderfeed.solarforge.magic.items.solar_lexicon.unlockables.AncientFragment;
+import com.finderfeed.solarforge.magic.items.solar_lexicon.unlockables.BookEntry;
+import com.finderfeed.solarforge.magic.items.solar_lexicon.unlockables.ProgressionHelper;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.level.ServerPlayer;

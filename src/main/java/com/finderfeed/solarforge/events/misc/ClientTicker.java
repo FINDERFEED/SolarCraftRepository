@@ -1,7 +1,6 @@
 package com.finderfeed.solarforge.events.misc;
 
-import com.finderfeed.solarforge.events.other_events.event_handler.ClientEventsHandler;
-import com.finderfeed.solarforge.for_future_library.other.CanTick;
+import com.finderfeed.solarforge.local_library.other.CanTick;
 
 public class ClientTicker implements CanTick {
 

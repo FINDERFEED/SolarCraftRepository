@@ -2,10 +2,10 @@ package com.finderfeed.solarforge.registries.entities;
 
 
 import com.finderfeed.solarforge.entities.*;
-import com.finderfeed.solarforge.magic_items.blocks.blockentities.projectiles.AbstractTurretProjectile;
-import com.finderfeed.solarforge.magic_items.blocks.blockentities.projectiles.MortarProjectile;
-import com.finderfeed.solarforge.magic_items.items.projectiles.*;
-import com.finderfeed.solarforge.magic_items.items.solar_disc_gun.SolarDiscProjectile;
+import com.finderfeed.solarforge.magic.blocks.blockentities.projectiles.AbstractTurretProjectile;
+import com.finderfeed.solarforge.magic.blocks.blockentities.projectiles.MortarProjectile;
+import com.finderfeed.solarforge.magic.projectiles.*;
+import com.finderfeed.solarforge.magic.items.solar_disc_gun.SolarDiscProjectile;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.EntityType;
 
@@ -31,6 +31,10 @@ public class Entities {
     public static final RegistryObject<EntityType<MortarProjectile>> MORTAR_PROJECTILE = ENTITY_TYPE_REGISTER.register("mortar_projectile", () ->
             EntityType.Builder.<MortarProjectile>of(MortarProjectile::new, MobCategory.MISC)
                     .sized(0.25f, 0.25f).build("mortar_projectile"));
+
+    public static final RegistryObject<EntityType<BallLightningProjectile>> BALL_LIGHTNING = ENTITY_TYPE_REGISTER.register("ball_lightning", () ->
+            EntityType.Builder.<BallLightningProjectile>of(BallLightningProjectile::new, MobCategory.MISC)
+                    .sized(0.4f, 0.4f).build("ball_lightning"));
 
     public static final RegistryObject<EntityType<AbstractTurretProjectile>> TURRET_PROJECTILE = ENTITY_TYPE_REGISTER.register("turret_projectile", () ->
             EntityType.Builder.<AbstractTurretProjectile>of(AbstractTurretProjectile::new, MobCategory.MISC)

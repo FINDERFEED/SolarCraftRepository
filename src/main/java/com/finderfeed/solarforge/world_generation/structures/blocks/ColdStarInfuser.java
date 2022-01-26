@@ -1,7 +1,7 @@
 package com.finderfeed.solarforge.world_generation.structures.blocks;
 
 import com.finderfeed.solarforge.Helpers;
-import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Progression;
+import com.finderfeed.solarforge.magic.items.solar_lexicon.achievements.Progression;
 import com.finderfeed.solarforge.registries.items.ItemsRegister;
 import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
 import com.finderfeed.solarforge.world_generation.structures.blocks.tile_entities.ColdStarInfuserTile;

@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.client.rendering;
 
-import com.finderfeed.solarforge.for_future_library.helpers.FinderfeedMathHelper;
+import com.finderfeed.solarforge.local_library.helpers.FinderfeedMathHelper;
 import com.mojang.blaze3d.platform.NativeImage;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;

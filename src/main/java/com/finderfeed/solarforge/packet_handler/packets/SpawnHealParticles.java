@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.packet_handler.packets;
 
-import com.finderfeed.solarforge.magic_items.blocks.blockentities.AuraHealerTile;
+import com.finderfeed.solarforge.magic.blocks.blockentities.AuraHealerTile;
 import com.finderfeed.solarforge.misc_things.AbstractPacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;

@@ -1,8 +1,8 @@
 package com.finderfeed.solarforge.registries.tile_entities;
 
-import com.finderfeed.solarforge.magic_items.blocks.infusing_table_things.infusing_pool.InfusingStandTileEntity;
-import com.finderfeed.solarforge.magic_items.blocks.blockentities.*;
-import com.finderfeed.solarforge.magic_items.runic_network.repeater.BaseRepeaterTile;
+import com.finderfeed.solarforge.magic.blocks.infusing_table_things.infusing_pool.InfusingStandTileEntity;
+import com.finderfeed.solarforge.magic.blocks.blockentities.*;
+import com.finderfeed.solarforge.magic.runic_network.repeater.BaseRepeaterTile;
 import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
 import com.finderfeed.solarforge.world_generation.structures.blocks.tile_entities.ColdStarInfuserTile;
 import com.finderfeed.solarforge.world_generation.structures.blocks.tile_entities.KeyDefenderTile;

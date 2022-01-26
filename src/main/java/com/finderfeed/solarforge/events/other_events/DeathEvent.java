@@ -1,7 +1,7 @@
 package com.finderfeed.solarforge.events.other_events;
 
 
-import com.finderfeed.solarforge.magic_items.items.TotemOfImmortality;
+import com.finderfeed.solarforge.magic.items.TotemOfImmortality;
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
 import com.finderfeed.solarforge.packet_handler.packets.ProcImmortalityTotemAnimation;
 import com.finderfeed.solarforge.registries.effects.EffectsRegister;

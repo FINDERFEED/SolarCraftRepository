@@ -1,6 +1,7 @@
 package com.finderfeed.solarforge.registries.shader_registry;
 
 
+import com.finderfeed.solarforge.client.rendering.Shaders;
 import com.finderfeed.solarforge.client.rendering.rendertypes.RadiantPortalRendertype;
 import com.finderfeed.solarforge.client.rendering.rendertypes.SolarCraftRenderTypes;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
@@ -28,9 +29,9 @@ public class CoreShaderRegistry {
                 (instance)->{
                     RadiantPortalRendertype.RAY_SHADER = instance;
         });
-        event.registerShader(new ShaderInstance(event.getResourceManager(),new ResourceLocation("solarforge","test"), DefaultVertexFormat.POSITION),
+        event.registerShader(new ShaderInstance(event.getResourceManager(),new ResourceLocation("solarforge","aoe_gun_projectile"), DefaultVertexFormat.POSITION),
                 (instance)->{
-                    SolarCraftRenderTypes.TEST_SHADER_FOR_PARTICLE = instance;
+                    Shaders.AOE_GUN_PROJECTILE_SHADER = instance;
         });
     }
 

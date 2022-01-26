@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.capabilities.solar_lexicon;
 
-import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.AncientFragment;
+import com.finderfeed.solarforge.magic.items.solar_lexicon.unlockables.AncientFragment;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.core.Direction;
 import net.minecraftforge.common.capabilities.Capability;

@@ -2,10 +2,7 @@ package com.finderfeed.solarforge.misc_things;
 
 import com.finderfeed.solarforge.Helpers;
 
-import com.finderfeed.solarforge.for_future_library.helpers.CompoundNBTHelper;
-import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
-import com.finderfeed.solarforge.packet_handler.packets.TileEnergyGeneratorUpdate;
-import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
+import com.finderfeed.solarforge.local_library.helpers.CompoundNBTHelper;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.level.Level;

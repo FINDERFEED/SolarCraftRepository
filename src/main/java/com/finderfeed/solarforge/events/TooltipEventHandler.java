@@ -4,7 +4,7 @@ import com.finderfeed.solarforge.client.custom_tooltips.CustomTooltip;
 import com.finderfeed.solarforge.client.custom_tooltips.ICustomTooltip;
 import com.finderfeed.solarforge.events.my_events.MyColorEvent;
 import com.finderfeed.solarforge.events.my_events.PostColorEvent;
-import com.finderfeed.solarforge.for_future_library.helpers.RenderingTools;
+import com.finderfeed.solarforge.local_library.helpers.RenderingTools;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.Gui;
 import net.minecraftforge.api.distmarker.Dist;

@@ -3,25 +3,22 @@ package com.finderfeed.solarforge.SolarAbilities.screens;
 import com.finderfeed.solarforge.ClientHelpers;
 import com.finderfeed.solarforge.SolarAbilities.AbilityClasses.AbstractAbility;
 import com.finderfeed.solarforge.SolarCraftTags;
-import com.finderfeed.solarforge.for_future_library.helpers.FinderfeedMathHelper;
-import com.finderfeed.solarforge.for_future_library.custom_registries.RegistryDelegate;
-import com.finderfeed.solarforge.for_future_library.helpers.RenderingTools;
-import com.finderfeed.solarforge.for_future_library.other.EaseInOut;
-import com.finderfeed.solarforge.magic_items.blocks.solar_forge_block.solar_forge_screen.SolarForgeButton;
+import com.finderfeed.solarforge.local_library.helpers.FinderfeedMathHelper;
+import com.finderfeed.solarforge.local_library.custom_registries.RegistryDelegate;
+import com.finderfeed.solarforge.local_library.helpers.RenderingTools;
+import com.finderfeed.solarforge.local_library.other.EaseInOut;
+import com.finderfeed.solarforge.magic.blocks.solar_forge_block.solar_forge_screen.SolarForgeButton;
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
 import com.finderfeed.solarforge.packet_handler.packets.BuyAbilityPacket;
 import com.finderfeed.solarforge.packet_handler.packets.RequestAbilityScreen;
 import com.finderfeed.solarforge.registries.SolarcraftRegistries;
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.main.Main;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class AbilityBuyScreen extends Screen {

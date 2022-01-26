@@ -1,7 +1,7 @@
 package com.finderfeed.solarforge.client.toasts;
 
 import com.finderfeed.solarforge.ClientHelpers;
-import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Progression;
+import com.finderfeed.solarforge.magic.items.solar_lexicon.achievements.Progression;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 

@@ -1,9 +1,8 @@
 package com.finderfeed.solarforge.packet_handler.packets;
 
 import com.finderfeed.solarforge.ClientHelpers;
-import com.finderfeed.solarforge.magic_items.items.solar_lexicon.unlockables.ProgressionHelper;
+import com.finderfeed.solarforge.magic.items.solar_lexicon.unlockables.ProgressionHelper;
 import com.finderfeed.solarforge.misc_things.AbstractPacket;
-import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Player;

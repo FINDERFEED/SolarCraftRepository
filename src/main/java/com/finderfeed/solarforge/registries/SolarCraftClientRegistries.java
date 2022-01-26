@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.registries;
 
-import com.finderfeed.solarforge.for_future_library.custom_registries.CustomRegistryEntry;
+import com.finderfeed.solarforge.local_library.custom_registries.CustomRegistryEntry;
 import net.minecraft.client.gui.screens.Screen;
 
 import java.util.function.Supplier;

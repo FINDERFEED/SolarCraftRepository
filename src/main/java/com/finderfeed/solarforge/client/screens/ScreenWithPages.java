@@ -1,6 +1,7 @@
 package com.finderfeed.solarforge.client.screens;
 
-import com.finderfeed.solarforge.magic_items.items.solar_lexicon.screen.StructureScreen;
+
+import com.finderfeed.solarforge.magic.items.solar_lexicon.screen.StructureScreen;
 import com.finderfeed.solarforge.registries.sounds.Sounds;
 import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;

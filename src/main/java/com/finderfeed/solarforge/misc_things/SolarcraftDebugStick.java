@@ -1,21 +1,15 @@
 package com.finderfeed.solarforge.misc_things;
 
-import com.finderfeed.solarforge.magic_items.blocks.blockentities.RuneEnergyPylonTile;
+import com.finderfeed.solarforge.magic.blocks.blockentities.RuneEnergyPylonTile;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.TextComponent;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.ProjectileUtil;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.AABB;
-import net.minecraft.world.phys.EntityHitResult;
 
 public class SolarcraftDebugStick extends Item {
     public SolarcraftDebugStick(Properties p_41383_) {

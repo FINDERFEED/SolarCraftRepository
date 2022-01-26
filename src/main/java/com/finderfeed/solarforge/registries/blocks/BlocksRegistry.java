@@ -1,18 +1,18 @@
 package com.finderfeed.solarforge.registries.blocks;
 
 import com.finderfeed.solarforge.Helpers;
-import com.finderfeed.solarforge.for_future_library.blocks.FlammableBlock;
-import com.finderfeed.solarforge.for_future_library.blocks.FlammableLeavesBlock;
-import com.finderfeed.solarforge.for_future_library.blocks.FlammableSlabBlock;
-import com.finderfeed.solarforge.for_future_library.blocks.RotatedPillarFlammableBlock;
-import com.finderfeed.solarforge.magic_items.blocks.infusing_table_things.infusing_pool.InfusingStand;
-import com.finderfeed.solarforge.magic_items.blocks.BlueGemDoorBlock;
-import com.finderfeed.solarforge.magic_items.blocks.*;
-import com.finderfeed.solarforge.magic_items.blocks.primitive.*;
-import com.finderfeed.solarforge.magic_items.decoration_blocks.SolarFlower;
-import com.finderfeed.solarforge.magic_items.items.solar_lexicon.achievements.Progression;
-import com.finderfeed.solarforge.magic_items.runic_network.repeater.RunicNetworkRepeater;
-import com.finderfeed.solarforge.misc_things.ParticlesList;
+import com.finderfeed.solarforge.local_library.blocks.FlammableBlock;
+import com.finderfeed.solarforge.local_library.blocks.FlammableLeavesBlock;
+import com.finderfeed.solarforge.local_library.blocks.FlammableSlabBlock;
+import com.finderfeed.solarforge.local_library.blocks.RotatedPillarFlammableBlock;
+import com.finderfeed.solarforge.magic.blocks.infusing_table_things.infusing_pool.InfusingStand;
+import com.finderfeed.solarforge.magic.blocks.BlueGemDoorBlock;
+import com.finderfeed.solarforge.magic.blocks.*;
+import com.finderfeed.solarforge.magic.blocks.primitive.*;
+import com.finderfeed.solarforge.magic.decoration_blocks.SolarFlower;
+import com.finderfeed.solarforge.magic.items.solar_lexicon.achievements.Progression;
+import com.finderfeed.solarforge.magic.runic_network.repeater.RunicNetworkRepeater;
+import com.finderfeed.solarforge.client.particles.ParticleTypesRegistry;
 import com.finderfeed.solarforge.world_generation.structures.blocks.ColdStarInfuser;
 import com.finderfeed.solarforge.world_generation.structures.blocks.InvincibleStone;
 import com.finderfeed.solarforge.world_generation.structures.blocks.KeyDefender;
@@ -164,7 +164,7 @@ public class BlocksRegistry {
         public void animateTick(BlockState state, Level world, BlockPos pos, Random random) {
             if (random.nextInt(5) == 0) {
                 Vec3 vec = Helpers.randomVector().normalize().multiply(0.5,0.5,0.5);
-                world.addParticle(ParticlesList.CRYSTAL_SPARK_PARTICLE.get(),pos.getX() + 0.5 + vec.x,pos.getY() + 0.5 + vec.y,pos.getZ() + 0.5 + vec.z,0,0,0);
+                world.addParticle(ParticleTypesRegistry.CRYSTAL_SPARK_PARTICLE.get(),pos.getX() + 0.5 + vec.x,pos.getY() + 0.5 + vec.y,pos.getZ() + 0.5 + vec.z,0,0,0);
             }
         }
     });

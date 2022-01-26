@@ -3,8 +3,8 @@ package com.finderfeed.solarforge.events.other_events.event_handler;
 
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.events.misc.ClientTicker;
-import com.finderfeed.solarforge.magic_items.blocks.infusing_table_things.InfuserTileEntity;
-import com.finderfeed.solarforge.magic_items.items.ModuleItem;
+import com.finderfeed.solarforge.magic.blocks.infusing_table_things.InfuserTileEntity;
+import com.finderfeed.solarforge.magic.items.ModuleItem;
 import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
 import com.finderfeed.solarforge.registries.items.ItemsRegister;
 import com.mojang.blaze3d.systems.RenderSystem;
