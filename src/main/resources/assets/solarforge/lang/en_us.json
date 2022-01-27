@@ -611,8 +611,10 @@
   "solarcraft.rune_element_5": "Urba: ",
   "solarcraft.rune_element_6": "Zeta: ",
   "solarcraft.rune_element_7": "Giro: ",
-  "solarcraft.rune_element_8": "Ultima: "
-
+  "solarcraft.rune_element_8": "Ultima: ",
+  "block.solarforge.lunar_lily": "Lunar lily",
+  "item.solarforge.lunar_dust": "Lunar dust",
+  "item.solarforge.lunar_ingot": "Lunar ingot"
 
 
 

@@ -45,6 +45,8 @@ public class ItemsRegister {
     public static final RegistryObject<SolarWandItem> SOLAR_WAND = ITEMS.register("solar_wand",()-> new SolarWandItem(new Item.Properties().rarity(Rarity.EPIC).tab(SolarForge.SOLAR_GROUP).stacksTo(1)));
     public static  final RegistryObject<Item> SOLAR_INFUSION_POOL = ITEMS.register("solar_forge_infusion_pool",()-> new SolarcraftBlockItem(BlocksRegistry.INFUSING_POOL.get(),new Item.Properties().rarity(Rarity.EPIC).tab(SolarForge.SOLAR_GROUP_BLOCKS),()->AncientFragment.SOLAR_INFUSER));
     public static  final RegistryObject<SolarDustItem> SOLAR_DUST = ITEMS.register("solar_dust",()-> new SolarDustItem(new Item.Properties().tab(SolarForge.SOLAR_GROUP),()->AncientFragment.SOLAR_DUST));
+    public static  final RegistryObject<Item> LUNAR_DUST = ITEMS.register("lunar_dust",()-> new Item(new Item.Properties().tab(SolarForge.SOLAR_GROUP)));
+    public static final RegistryObject<Item> ENERGY_DUST = ITEMS.register("energy_dust",()->new SolarcraftItem(new Item.Properties().tab(SolarForge.SOLAR_GROUP_MATERIALS),()->AncientFragment.ENERGY_DUST));
     public static  final RegistryObject<Item> ENDERITE_ESSENCE = ITEMS.register("enderite_essence",()-> new Item(new Item.Properties().rarity(Rarity.RARE).tab(SolarForge.SOLAR_GROUP)));
     public static final RegistryObject<Item> SOLAR_STONE = ITEMS.register("solar_stone",()->new ProgressionBlockItem(BlocksRegistry.SOLAR_STONE.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
     public static final RegistryObject<ProgressionBlockItem> LENSING_CRYSTAL_ORE = ITEMS.register("lensing_crystal_ore",()->new ProgressionBlockItem(BlocksRegistry.LENSING_CRYSTAL_ORE.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
@@ -87,6 +89,7 @@ public class ItemsRegister {
     public static final RegistryObject<Item> QUALADIUM_INGOT = ITEMS.register("qualadium_ingot",()-> new SolarcraftItem(new Item.Properties().rarity(Rarity.UNCOMMON).tab(SolarForge.SOLAR_GROUP_MATERIALS),()->AncientFragment.QUALADIUM_INGOT));
     public static final RegistryObject<Item> ENERGETIC_INGOT = ITEMS.register("energetic_ingot",()-> new SolarcraftItem(new Item.Properties().rarity(Rarity.UNCOMMON).tab(SolarForge.SOLAR_GROUP_MATERIALS),()->AncientFragment.ENERGETIC_INGOT));
     public static final RegistryObject<Item> ENDERIUM_INGOT = ITEMS.register("enderium_ingot",()-> new SolarcraftItem(new Item.Properties().rarity(Rarity.UNCOMMON).tab(SolarForge.SOLAR_GROUP_MATERIALS),()->AncientFragment.ENDERIUM_INGOT));
+    public static final RegistryObject<Item> LUNAR_INGOT = ITEMS.register("lunar_ingot",()-> new SolarcraftItem(new Item.Properties().rarity(Rarity.UNCOMMON).tab(SolarForge.SOLAR_GROUP_MATERIALS),()->AncientFragment.LUNAR_INGOT));
     public static final RegistryObject<Item> LENSING_CRYSTAL = ITEMS.register("lensing_crystal",()-> new Item(new Item.Properties().rarity(Rarity.UNCOMMON).tab(SolarForge.SOLAR_GROUP_MATERIALS)));
 
     public static final RegistryObject<Item> ENDER_RADAR = ITEMS.register("ender_radar",()-> new SolarcraftItem(new Item.Properties().rarity(Rarity.UNCOMMON).tab(SolarForge.SOLAR_GROUP_TOOLS),()->AncientFragment.ENDER_RADAR){
@@ -137,7 +140,7 @@ public class ItemsRegister {
     public static final RegistryObject<Item> ENERGY_METER = ITEMS.register("energy_meter",()->new EnergyMeter(new Item.Properties().tab(SolarForge.SOLAR_GROUP).stacksTo(1)));
     public static final RegistryObject<Item> SOLAR_FLOWER = ITEMS.register("solar_flower",()->new BlockItem(BlocksRegistry.SOLAR_FLOWER.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
     public static final RegistryObject<Item> CRYSTAL_FLOWER = ITEMS.register("crystal_flower",()->new BlockItem(BlocksRegistry.CRYSTAL_FLOWER.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
-    public static final RegistryObject<Item> ENERGY_DUST = ITEMS.register("energy_dust",()->new SolarcraftItem(new Item.Properties().tab(SolarForge.SOLAR_GROUP_MATERIALS),()->AncientFragment.ENERGY_DUST));
+
     public static final RegistryObject<Item> SOLAR_FURNACE_BLOCK = ITEMS.register("solar_furnace",()->new RareSolarcraftBlockItem(BlocksRegistry.SOLAR_FURNACE.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS),()->AncientFragment.SOLAR_FURNACE));
     public static final RegistryObject<Item> TURRET_BLOCK = ITEMS.register("turret_block",()->new TurretBlockItem(BlocksRegistry.TURRET_BLOCK.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS),()->AncientFragment.SOLAR_TURRET));
     public static final RegistryObject<Item> ZAP_TURRET_BLOCK = ITEMS.register("zap_turret_block",()->new RareSolarcraftBlockItem(BlocksRegistry.ZAP_TURRET_BLOCK.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS),()->AncientFragment.ZAP_TURRET));

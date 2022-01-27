@@ -74,6 +74,7 @@ public class BlocksRegistry {
     public  static  final RegistryObject<Block> AURA_HEALER_BLOCK = BLOCKS.register("aura_healer_block",()-> new AuraHealerBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).noOcclusion()));
     public  static  final RegistryObject<Block> SOLAR_MORTAR_BLOCK = BLOCKS.register("solar_mortar_block",()-> new SolarMortar(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).noOcclusion()));
     public  static  final RegistryObject<Block> SOLAR_FLOWER = BLOCKS.register("solar_flower",()-> new SolarFlower(BlockBehaviour.Properties.copy(Blocks.DEAD_BUSH)));
+    public  static  final RegistryObject<Block> LUNAR_LILY = BLOCKS.register("lunar_lily",()-> new SolarFlower(BlockBehaviour.Properties.copy(Blocks.DEAD_BUSH)));
     public  static  final RegistryObject<Block> DEAD_SPROUT = BLOCKS.register("dead_sprout",()-> new FlowerBlock(MobEffects.BLINDNESS,2,BlockBehaviour.Properties.copy(Blocks.POPPY)));
     public  static  final RegistryObject<Block> SOLAR_FURNACE = BLOCKS.register("solar_furnace",()-> new SolarEnergyFurnace(BlockBehaviour.Properties.copy(Blocks.STONE)));
     public  static  final RegistryObject<Block> TURRET_BLOCK = BLOCKS.register("turret_block",()-> new TurretBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).noOcclusion()));

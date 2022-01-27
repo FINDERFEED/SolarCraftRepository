@@ -14,6 +14,7 @@ import com.google.common.collect.ImmutableSet;
 import net.minecraft.core.BlockPos;
 import net.minecraft.data.worldgen.features.FeatureUtils;
 import net.minecraft.data.worldgen.features.OreFeatures;
+import net.minecraft.data.worldgen.features.VegetationFeatures;
 import net.minecraft.data.worldgen.placement.OrePlacements;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.resources.ResourceKey;
@@ -103,6 +104,7 @@ public class FeaturesRegistry {
     public static ConfiguredFeature<?,?> CRYSTAL_FLOWER_CONF;
     public static ConfiguredFeature<?,?> CEILING_DRIPSTONE_LIKE_CRYSTALS_CONF;
     public static ConfiguredFeature<?,?> CRYSTALLIZED_RUNIC_ENERGY_CRYSTALS_CONF;
+    public static ConfiguredFeature<?,?> LUNAR_LILY_FEATURE_CONF;
 
     public static PlacedFeature BURNT_TREE_2;
     public static PlacedFeature BURNT_TREE_1;
@@ -121,6 +123,7 @@ public class FeaturesRegistry {
     public static PlacedFeature CRYSTAL_FLOWER_PLACEMENT;
     public static PlacedFeature CEILING_DRIPSTONE_LIKE_CRYSTALS_PLACEMENT;
     public static PlacedFeature CRYSTALLIZED_RUNIC_ENERGY_CRYSTALS_PLACEMENT;
+    public static PlacedFeature LUNAR_LILY_FEATURE_PLACEMENT;
     //public static ConfiguredFeature<?,?> RADIANT_LAND_AMBIENT_TREE;
 
 
@@ -380,6 +383,12 @@ public class FeaturesRegistry {
 
             registerConfiguredFeature(LENSING_CRYSTAL_ORE_CONF,"lensing_crystal_ore");
             registerPlacedFeature(LENSING_CRYSTAL_ORE_PLACEMENT,"lensing_crystal_ore");
+
+            LUNAR_LILY_FEATURE_CONF = Feature.FLOWER.configured(FeatureUtils.simpleRandomPatchConfiguration(3,Feature.SIMPLE_BLOCK.configured(new SimpleBlockConfiguration(BlockStateProvider.simple(BlocksRegistry.LUNAR_LILY.get()))).onlyWhenEmpty()));
+            LUNAR_LILY_FEATURE_PLACEMENT = LUNAR_LILY_FEATURE_CONF.placed(NoiseThresholdCountPlacement.of(-0.8D, 15, 4), RarityFilter.onAverageOnceEvery(32), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP);
+
+            registerConfiguredFeature(LUNAR_LILY_FEATURE_CONF,"lunar_lily");
+            registerPlacedFeature(LUNAR_LILY_FEATURE_PLACEMENT,"lunar_lily");
         });
     }
 

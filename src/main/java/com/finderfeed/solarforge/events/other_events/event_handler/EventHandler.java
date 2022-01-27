@@ -64,6 +64,7 @@ import net.minecraft.world.level.levelgen.feature.ConfiguredStructureFeature;
 import net.minecraft.world.level.levelgen.feature.StructureFeature;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
+import net.minecraftforge.common.world.BiomeGenerationSettingsBuilder;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
@@ -217,7 +218,7 @@ public class EventHandler {
 
     @SubscribeEvent
     public static void addFeatures(BiomeLoadingEvent event){
-
+        BiomeGenerationSettingsBuilder b = event.getGeneration();
         if ( (event.getCategory() != Biome.BiomeCategory.NETHER) && (event.getCategory() != Biome.BiomeCategory.THEEND) && notNone(event)) {
             event.getGeneration().addFeature(GenerationStep.Decoration.LOCAL_MODIFICATIONS, FeaturesRegistry.ENERGY_PYLON_CONFIGURED);
         }
@@ -233,6 +234,7 @@ public class EventHandler {
         //TODO:delete when incinerated forest returns
         if (event.getCategory() == Biome.BiomeCategory.PLAINS){
             event.getGeneration().addFeature(GenerationStep.Decoration.LOCAL_MODIFICATIONS,FeaturesRegistry.MOLTEN_FOREST_RUINS_CONFIGURED);
+            b.addFeature(GenerationStep.Decoration.TOP_LAYER_MODIFICATION,FeaturesRegistry.LUNAR_LILY_FEATURE_PLACEMENT);
         }
 
 
