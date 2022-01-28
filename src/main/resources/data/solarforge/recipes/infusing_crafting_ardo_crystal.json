@@ -1,0 +1,21 @@
+{
+  "type": "solarforge:infusing_crafting",
+  "pattern": [
+    " F ",
+    "F#F",
+    " F "
+  ],
+  "keys": {
+    "#": {
+      "item": "solarforge:empty_crystal"
+    },
+    "F": {
+      "item": "solarforge:solar_rune_ardo"
+    }
+  },
+  "output": {
+    "item": "solarforge:ardo_crystal"
+  },
+  "fragment": "crystals",
+  "time": 20
+}

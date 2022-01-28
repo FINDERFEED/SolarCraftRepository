@@ -11,19 +11,20 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import net.minecraft.world.level.levelgen.feature.configurations.SimpleBlockConfiguration;
 import net.minecraftforge.common.Tags;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CrystallizedRunicEnergyCrystalsFeature extends Feature<NoneFeatureConfiguration> {
-    public CrystallizedRunicEnergyCrystalsFeature(Codec<NoneFeatureConfiguration> p_65786_) {
+public class CrystallizedRunicEnergyCrystalsFeature extends Feature<SimpleBlockConfiguration> {
+    public CrystallizedRunicEnergyCrystalsFeature(Codec<SimpleBlockConfiguration> p_65786_) {
         super(p_65786_);
     }
 
     @Override
-    public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> ctx) {
+    public boolean place(FeaturePlaceContext<SimpleBlockConfiguration> ctx) {
         WorldGenLevel level = ctx.level();
         BlockState origin = level.getBlockState(ctx.origin());
         if (!origin.is(Blocks.AIR) ){
@@ -34,7 +35,7 @@ public class CrystallizedRunicEnergyCrystalsFeature extends Feature<NoneFeatureC
             return false;
         }
 
-        BlockState state = BlocksRegistry.CRYSTALLIZED_RUNIC_ENERGY.get().defaultBlockState().setValue(DirectionBlock.PROP,direction.getOpposite());
+        BlockState state = ctx.config().toPlace().getState(level.getRandom(),ctx.origin()).setValue(DirectionBlock.PROP,direction.getOpposite());
         level.setBlock(ctx.origin(),state,2);
         return true;
     }

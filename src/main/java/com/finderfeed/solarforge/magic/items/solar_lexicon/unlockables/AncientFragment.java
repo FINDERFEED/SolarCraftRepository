@@ -29,7 +29,13 @@ public enum AncientFragment {
             ItemsRegister.SOLAR_STONE_CHISELED.get().getDefaultInstance(),ItemsRegister.ENERGIZED_STONE.get().getDefaultInstance()
     ),SolarForge.INFUSING_CRAFTING_RECIPE_TYPE,tx("solar_stones.lore"),1),
     SPEED_ROAD(tx("solar_fragment.speed_road"),"speed_road",ProgressionStage.PRE_BEGGINING.ALL_PROGRESSIONS,SubCategoryBase.BEGINNER_ITEMS,CategoryBase.BEGINNER, ItemsRegister.SPEED_ROAD.get().getDefaultInstance(),tx("speed_road.lore"),SolarForge.INFUSING_CRAFTING_RECIPE_TYPE,2),
-    EIGHT_ELEMENTS(tx("solar_fragment.eight_elements"),"eight_elements",ProgressionStage.BEGGINING_2.ALL_PROGRESSIONS,SubCategoryBase.BASIC_DUSTS,CategoryBase.EXPLORATION,"eight_elements_lore",ItemsRegister.DIMENSION_CORE.get().getDefaultInstance(),9),
+    EIGHT_ELEMENTS(tx("solar_fragment.eight_elements"),"eight_elements",ProgressionStage.BEGGINING_2.ALL_PROGRESSIONS,SubCategoryBase.BASIC_DUSTS,CategoryBase.EXPLORATION,"eight_elements_lore",ItemsRegister.DIMENSION_CORE.get().getDefaultInstance(),1),
+    INFUSED_CRYSTALS(tx("solar_fragment.crystals"),"crystals", ProgressionStage.BEGGINING_2.ALL_PROGRESSIONS,SubCategoryBase.BEGINNER_ITEMS,CategoryBase.BEGINNER, List.of(
+            ItemsRegister.ARDO_CRYSTAL.get().getDefaultInstance(),ItemsRegister.FIRA_CRYSTAL.get().getDefaultInstance(),
+            ItemsRegister.TERA_CRYSTAL.get().getDefaultInstance(),ItemsRegister.URBA_CRYSTAL.get().getDefaultInstance(),
+            ItemsRegister.GIRO_CRYSTAL.get().getDefaultInstance(),ItemsRegister.ULTIMA_CRYSTAL.get().getDefaultInstance(),
+            ItemsRegister.KELDA_CRYSTAL.get().getDefaultInstance(),ItemsRegister.ZETA_CRYSTAL.get().getDefaultInstance()
+    ),SolarForge.INFUSING_CRAFTING_RECIPE_TYPE,tx("crystals.lore"),2),
 
 
     SOLAR_INFUSER(tx("solar_fragment.solar_infuser"),"solar_infuser",ProgressionStage.FORGE.ALL_PROGRESSIONS,SubCategoryBase.BEGINNER_ITEMS,CategoryBase.BEGINNER, List.of(

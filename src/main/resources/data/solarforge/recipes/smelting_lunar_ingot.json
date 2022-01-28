@@ -1,0 +1,24 @@
+{
+  "type":"solarforge:solar_smelting",
+  "ingredients": [
+    {
+      "item": "minecraft:gold_ingot"
+    },
+    {
+      "item": "solarforge:lunar_dust",
+      "count": 16
+    },
+    {
+      "item": "minecraft:amethyst_shard",
+      "count": 2
+    },
+    {
+      "item": "minecraft:glowstone",
+      "count": 32
+    }
+  ],
+  "result": "solarforge:lunar_ingot",
+  "time": 200,
+  "requires": "solar_forge_progression_solar_lens_craft",
+  "category": "solar_category.smelting"
+}

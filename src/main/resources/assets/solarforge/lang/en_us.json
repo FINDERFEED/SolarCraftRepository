@@ -614,7 +614,27 @@
   "solarcraft.rune_element_8": "Ultima: ",
   "block.solarforge.lunar_lily": "Lunar lily",
   "item.solarforge.lunar_dust": "Lunar dust",
-  "item.solarforge.lunar_ingot": "Lunar ingot"
+  "item.solarforge.lunar_ingot": "Lunar ingot",
+  "block.solarforge.crystal": "Crystal",
+  "item.solarforge.empty_crystal": "Empty crystal",
+  "item.solarforge.zeta_crystal":   "Zeta infused crystal",
+  "item.solarforge.kelda_crystal":  "Kelda infused crystal",
+  "item.solarforge.fira_crystal":   "Fira infused crystal",
+  "item.solarforge.tera_crystal":   "Tera infused crystal",
+  "item.solarforge.urba_crystal":   "Urba infused crystal",
+  "item.solarforge.ardo_crystal":   "Ardo infused crystal",
+  "item.solarforge.ultima_crystal": "Ultima infused crystal",
+  "item.solarforge.giro_crystal":   "Giro infused crystal",
+  "solar_fragment.crystals": "Infused crystals",
+  "crystals.lore": "Runes are useful for decrypting the fragments but almost nothing can be made out of them. Perhaps crystals, that i have found in caves, infused with their energy can be used somehow. "
+
+
+
+
+
+
+
+
 
 
 

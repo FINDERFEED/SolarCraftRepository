@@ -74,7 +74,7 @@ public class BlocksRegistry {
     public  static  final RegistryObject<Block> AURA_HEALER_BLOCK = BLOCKS.register("aura_healer_block",()-> new AuraHealerBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).noOcclusion()));
     public  static  final RegistryObject<Block> SOLAR_MORTAR_BLOCK = BLOCKS.register("solar_mortar_block",()-> new SolarMortar(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).noOcclusion()));
     public  static  final RegistryObject<Block> SOLAR_FLOWER = BLOCKS.register("solar_flower",()-> new SolarFlower(BlockBehaviour.Properties.copy(Blocks.DEAD_BUSH)));
-    public  static  final RegistryObject<Block> LUNAR_LILY = BLOCKS.register("lunar_lily",()-> new SolarFlower(BlockBehaviour.Properties.copy(Blocks.DEAD_BUSH)));
+    public  static  final RegistryObject<Block> LUNAR_LILY = BLOCKS.register("lunar_lily",()-> new LunarLily(BlockBehaviour.Properties.copy(Blocks.DEAD_BUSH)));
     public  static  final RegistryObject<Block> DEAD_SPROUT = BLOCKS.register("dead_sprout",()-> new FlowerBlock(MobEffects.BLINDNESS,2,BlockBehaviour.Properties.copy(Blocks.POPPY)));
     public  static  final RegistryObject<Block> SOLAR_FURNACE = BLOCKS.register("solar_furnace",()-> new SolarEnergyFurnace(BlockBehaviour.Properties.copy(Blocks.STONE)));
     public  static  final RegistryObject<Block> TURRET_BLOCK = BLOCKS.register("turret_block",()-> new TurretBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).noOcclusion()));
@@ -141,26 +141,7 @@ public class BlocksRegistry {
     public  static  final RegistryObject<Block> DIMENSION_CORE = BLOCKS.register("dimension_core",()-> new Block(BlockBehaviour.Properties.copy(Blocks.STONE)));
     public  static  final RegistryObject<Block> WORMHOLE = BLOCKS.register("wormhole",()-> new WormholeBlock(BlockBehaviour.Properties.copy(Blocks.BEDROCK).noCollission()));
     public  static  final RegistryObject<Block> BONEMEALER = BLOCKS.register("bonemealer",()-> new BonemealerBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).sound(SoundType.NETHERITE_BLOCK).noOcclusion()));
-    public  static  final RegistryObject<Block> CRYSTALLIZED_RUNIC_ENERGY = BLOCKS.register("crystallized_runic_energy",()-> new DirectionBlock(BlockBehaviour.Properties.copy(Blocks.STONE).sound(SoundType.GLASS).noOcclusion()){
-
-        private VoxelShape shape_up = Block.box(5,0,5,11,12,11);
-        private VoxelShape shape_down = Block.box(5,4,5,11,16,11);
-        private VoxelShape shape_south = Block.box(5,5,0,11,11,12);
-        private VoxelShape shape_north = Block.box(5,5,4,11,11,16);
-        private VoxelShape shape_east = Block.box(0,5,5,12,11,11);
-        private VoxelShape shape_west = Block.box(4,5,5,16,11,11);
-
-        @Override
-        public VoxelShape getShape(BlockState p_60555_, BlockGetter p_60556_, BlockPos p_60557_, CollisionContext p_60558_) {
-            return switch (p_60555_.getValue(DirectionBlock.PROP)){
-                case UP -> shape_up;
-                case DOWN -> shape_down;
-                case SOUTH -> shape_south;
-                case NORTH -> shape_north;
-                case EAST -> shape_east;
-                case WEST -> shape_west;
-            };
-        }
+    public  static  final RegistryObject<Block> CRYSTALLIZED_RUNIC_ENERGY = BLOCKS.register("crystallized_runic_energy",()-> new CrystalBlock(BlockBehaviour.Properties.copy(Blocks.STONE).sound(SoundType.GLASS).noOcclusion()){
         @Override
         public void animateTick(BlockState state, Level world, BlockPos pos, Random random) {
             if (random.nextInt(5) == 0) {
@@ -169,4 +150,5 @@ public class BlocksRegistry {
             }
         }
     });
+    public  static  final RegistryObject<Block> CRYSTAL = BLOCKS.register("crystal",()-> new CrystalBlock(BlockBehaviour.Properties.copy(Blocks.STONE).sound(SoundType.GLASS).noOcclusion()));
 }

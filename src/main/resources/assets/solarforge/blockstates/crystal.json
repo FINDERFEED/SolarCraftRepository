@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "dir=down": {  "model": "solarforge:block/crystal", "x": 180 },
+    "dir=up": {  "model": "solarforge:block/crystal" },
+    "dir=north": { "model": "solarforge:block/crystal", "x": 90  },
+    "dir=south": { "model": "solarforge:block/crystal", "x": 90, "y": 180  },
+    "dir=west": {  "model": "solarforge:block/crystal", "x": 90, "y": 270  },
+    "dir=east": {  "model": "solarforge:block/crystal", "x": 90, "y": 90 }
+  }
+}

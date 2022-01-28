@@ -139,6 +139,7 @@ public class ItemsRegister {
     public static final RegistryObject<Item> SOLAR_MORTAR = ITEMS.register("solar_mortar_block",()->new RareSolarcraftBlockItem(BlocksRegistry.SOLAR_MORTAR_BLOCK.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS),()->AncientFragment.SOLAR_MORTAR));
     public static final RegistryObject<Item> ENERGY_METER = ITEMS.register("energy_meter",()->new EnergyMeter(new Item.Properties().tab(SolarForge.SOLAR_GROUP).stacksTo(1)));
     public static final RegistryObject<Item> SOLAR_FLOWER = ITEMS.register("solar_flower",()->new BlockItem(BlocksRegistry.SOLAR_FLOWER.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
+    public static final RegistryObject<Item> LUNAR_LILY = ITEMS.register("lunar_lily",()->new BlockItem(BlocksRegistry.LUNAR_LILY.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
     public static final RegistryObject<Item> CRYSTAL_FLOWER = ITEMS.register("crystal_flower",()->new BlockItem(BlocksRegistry.CRYSTAL_FLOWER.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
 
     public static final RegistryObject<Item> SOLAR_FURNACE_BLOCK = ITEMS.register("solar_furnace",()->new RareSolarcraftBlockItem(BlocksRegistry.SOLAR_FURNACE.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS),()->AncientFragment.SOLAR_FURNACE));
@@ -186,6 +187,16 @@ public class ItemsRegister {
     public static final RegistryObject<Item> SOLAR_RUNE_TERA = ITEMS.register("solar_rune_tera",()->new RuneItem(new Item.Properties().tab(SolarForge.SOLAR_GROUP_MATERIALS), RunicEnergy.Type.TERA,()->null));
     public static final RegistryObject<Item> SOLAR_RUNE_GIRO = ITEMS.register("solar_rune_giro",()->new RuneItem(new Item.Properties().tab(SolarForge.SOLAR_GROUP_MATERIALS), RunicEnergy.Type.GIRO,()->null));
     public static final RegistryObject<Item> SOLAR_RUNE_ULTIMA = ITEMS.register("solar_rune_ultima",()->new RuneItem(new Item.Properties().tab(SolarForge.SOLAR_GROUP_MATERIALS), RunicEnergy.Type.ULTIMA,()->null));
+
+    public static final RegistryObject<Item> EMPTY_CRYSTAL = ITEMS.register("empty_crystal",()->new SolarcraftItem(new Item.Properties().tab(SolarForge.SOLAR_GROUP_MATERIALS),()->AncientFragment.INFUSED_CRYSTALS));
+    public static final RegistryObject<Item> ZETA_CRYSTAL = ITEMS.register("zeta_crystal",()->new SolarcraftItem(new Item.Properties().tab(SolarForge.SOLAR_GROUP_MATERIALS),()->AncientFragment.INFUSED_CRYSTALS));
+    public static final RegistryObject<Item> ARDO_CRYSTAL = ITEMS.register("ardo_crystal",()->new SolarcraftItem(new Item.Properties().tab(SolarForge.SOLAR_GROUP_MATERIALS),()->AncientFragment.INFUSED_CRYSTALS));
+    public static final RegistryObject<Item> URBA_CRYSTAL = ITEMS.register("urba_crystal",()->new SolarcraftItem(new Item.Properties().tab(SolarForge.SOLAR_GROUP_MATERIALS),()->AncientFragment.INFUSED_CRYSTALS));
+    public static final RegistryObject<Item> KELDA_CRYSTAL = ITEMS.register("kelda_crystal",()->new SolarcraftItem(new Item.Properties().tab(SolarForge.SOLAR_GROUP_MATERIALS),()->AncientFragment.INFUSED_CRYSTALS));
+    public static final RegistryObject<Item> FIRA_CRYSTAL = ITEMS.register("fira_crystal",()->new SolarcraftItem(new Item.Properties().tab(SolarForge.SOLAR_GROUP_MATERIALS),()->AncientFragment.INFUSED_CRYSTALS));
+    public static final RegistryObject<Item> TERA_CRYSTAL = ITEMS.register("tera_crystal",()->new SolarcraftItem(new Item.Properties().tab(SolarForge.SOLAR_GROUP_MATERIALS),()->AncientFragment.INFUSED_CRYSTALS));
+    public static final RegistryObject<Item> GIRO_CRYSTAL = ITEMS.register("giro_crystal",()->new SolarcraftItem(new Item.Properties().tab(SolarForge.SOLAR_GROUP_MATERIALS),()->AncientFragment.INFUSED_CRYSTALS));
+    public static final RegistryObject<Item> ULTIMA_CRYSTAL = ITEMS.register("ultima_crystal",()->new SolarcraftItem(new Item.Properties().tab(SolarForge.SOLAR_GROUP_MATERIALS),()->AncientFragment.INFUSED_CRYSTALS));
 
 
     public static final RegistryObject<Item> SOLAR_GOD_BOW = ITEMS.register("solar_god_bow",()->new SolarGodBow(new Item.Properties().tab(SolarForge.SOLAR_GROUP_WEAPONS).stacksTo(1).durability(8000),()->AncientFragment.SOLAR_GOD_BOW));
@@ -251,5 +262,6 @@ public class ItemsRegister {
     public static final RegistryObject<ModuleItem> FURY_SWIPES_MODULE = ITEMS.register("fury_swipes_module",()->new ModuleItem(new Item.Properties().tab(SolarForge.SOLAR_GROUP_TOOLS).stacksTo(1), ModuleItem.Type.SWORDS, ModuleItem.Tags.FURY_SWIPES,()->AncientFragment.MODULES,ModuleItem.Tags.MAGIC_DAMAGE_BONUS_5, ModuleItem.Tags.POISONING_BLADE));
     public static final RegistryObject<Item> BONEMEALER = ITEMS.register("bonemealer",()->new SolarcraftBlockItem(BlocksRegistry.BONEMEALER.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS),()->AncientFragment.BONEMEALER));
     public static final RegistryObject<Item> CRYSTALLIZED_RUNIC_ENERGY = ITEMS.register("crystallized_runic_energy",()->new BlockItem(BlocksRegistry.CRYSTALLIZED_RUNIC_ENERGY.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
+    public static final RegistryObject<Item> CRYSTAL = ITEMS.register("crystal",()->new BlockItem(BlocksRegistry.CRYSTAL.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
 
 }
