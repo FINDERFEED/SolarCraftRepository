@@ -656,7 +656,7 @@ public class InfuserTileEntity extends AbstractRunicEnergyContainerRCBE implemen
 
             float rotValue = (float) tile.getRotationValue().getValue();
             for (int i = 0; i < offsets.length; i++) {
-                if (tile.getItem(i).isEmpty()) {
+                if (!tile.getItem(i+1).isEmpty()) {
                     BlockPos p = offsets[i];
                     Vec3 v = new Vec3(p.getX(), p.getY(), p.getZ()).multiply(1 - rotValue, 1 - rotValue, 1 - rotValue).yRot(-(float) Math.toRadians(rotValue * 360));
                     Vec3 ps = Helpers.getBlockCenter(pos).add(v);
