@@ -612,9 +612,8 @@
   "solarcraft.rune_element_6": "Zeta: ",
   "solarcraft.rune_element_7": "Giro: ",
   "solarcraft.rune_element_8": "Ultima: ",
-  "block.solarforge.lunar_lily": "Lunar lily",
-  "item.solarforge.lunar_dust": "Lunar dust",
-  "item.solarforge.lunar_ingot": "Lunar ingot",
+  "block.solarforge.void_lily": "Void lily",
+  "item.solarforge.void_dust": "Void dust",
   "block.solarforge.crystal": "Crystal",
   "item.solarforge.empty_crystal": "Empty crystal",
   "item.solarforge.zeta_crystal":   "Zeta infused crystal",
@@ -626,8 +625,15 @@
   "item.solarforge.ultima_crystal": "Ultima infused crystal",
   "item.solarforge.giro_crystal":   "Giro infused crystal",
   "solar_fragment.crystals": "Infused crystals",
-  "crystals.lore": "Runes are useful for decrypting the fragments but almost nothing can be made out of them. Perhaps crystals, that i have found in caves, infused with their energy can be used somehow. "
-
+  "crystals.lore": "Runes are useful for decrypting the fragments but almost nothing can be made out of them. Perhaps crystals, that i have found in caves, infused with their energy can be used somehow. ",
+  "item.solarforge.crystal_core": "Crystal core",
+  "item.solarforge.crystal_star": "Crystal star",
+  "item.solarforge.void_core": "Void core",
+  "item.solarforge.energy_core": "Energy core",
+  "item.solarforge.materialization_core": "Materialization core",
+  "solar_category.world": "World",
+  "solar_fragment.void_dust": "Void dust",
+  "void_dust.lore": "Just by holding it in hands, you feel emptiness. The same feeling was when you first dug your way down to bedrock."
 
 
 

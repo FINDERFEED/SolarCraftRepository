@@ -103,15 +103,6 @@ public class InfusingRecipeScreen extends Screen {
                     addStack(newRecipe.input7,stacks);
                     addStack(newRecipe.input8,stacks);
                     addStack(newRecipe.input9,stacks);
-//                    stacks.add(recipe.get(currentPage).input1.getItems()[0]);
-//                    stacks.add(recipe.get(currentPage).input2.getItems()[0]);
-//                    stacks.add(recipe.get(currentPage).input3.getItems()[0]);
-//                    stacks.add(recipe.get(currentPage).input4.getItems()[0]);
-//                    stacks.add(recipe.get(currentPage).input5.getItems()[0]);
-//                    stacks.add(recipe.get(currentPage).input6.getItems()[0]);
-//                    stacks.add(recipe.get(currentPage).input7.getItems()[0]);
-//                    stacks.add(recipe.get(currentPage).input8.getItems()[0]);
-//                    stacks.add(recipe.get(currentPage).input9.getItems()[0]);
                     stacks.add(newRecipe.output);
                 }
             },(button,matrices,mousex,mousey)->{
@@ -131,15 +122,6 @@ public class InfusingRecipeScreen extends Screen {
                     addStack(newRecipe.input7,stacks);
                     addStack(newRecipe.input8,stacks);
                     addStack(newRecipe.input9,stacks);
-//                    stacks.add(recipe.get(currentPage).input1.getItems()[0]);
-//                    stacks.add(recipe.get(currentPage).input2.getItems()[0]);
-//                    stacks.add(recipe.get(currentPage).input3.getItems()[0]);
-//                    stacks.add(recipe.get(currentPage).input4.getItems()[0]);
-//                    stacks.add(recipe.get(currentPage).input5.getItems()[0]);
-//                    stacks.add(recipe.get(currentPage).input6.getItems()[0]);
-//                    stacks.add(recipe.get(currentPage).input7.getItems()[0]);
-//                    stacks.add(recipe.get(currentPage).input8.getItems()[0]);
-//                    stacks.add(recipe.get(currentPage).input9.getItems()[0]);
                     stacks.add(newRecipe.output);
                 }
             },(button,matrices,mousex,mousey)->{
@@ -196,28 +178,13 @@ public class InfusingRecipeScreen extends Screen {
         renderItemAndTooltip(stacks.get(9),relX+120+xOffset ,relY+180 ,mousex,mousey,matrices,true);
 
 
-
-//        drawCenteredString(matrices, minecraft.font,new TranslatableComponent("solarforge.seconds"),relX+30,relY+120,0xffffff);
         drawCenteredString(matrices, minecraft.font,new TextComponent(recipe.get(currentPage).infusingTime / 20 +" ").append(new TranslatableComponent("solarforge.seconds2")),relX+104,relY+28,0xff0000);
 
-//        Helpers.drawBoundedText(matrices,relX+10,relY+152,33,recipe.child.getItemDescription().getString());
 
         super.render(matrices,mousex,mousey,partialTicks);
-//        ClientHelpers.bindText(REQ_ENERGY);
-//        matrices.translate(relX+36,relY+96,0);
-//        matrices.mulPose(Vector3f.ZP.rotationDegrees(180));
-//        float percent = (float)recipe.get(currentPage).requriedEnergy / 100000;
-//        blit(matrices,0,0,0,0,16,(int)(33*percent),16,33);
         matrices.popPose();
 
 
-//        ClientHelpers.bindText(RUNIC_ENERGY_BAR);
-//        renderEnergyBar(matrices,39,157, RunicEnergy.Type.ARDO);
-//        renderEnergyBar(matrices,39,189, RunicEnergy.Type.URBA);
-//        renderEnergyBar(matrices,124,189, RunicEnergy.Type.KELDA);
-//        renderEnergyBar(matrices,124,173, RunicEnergy.Type.TERA);
-//        renderEnergyBar(matrices,124,157, RunicEnergy.Type.ZETA);
-//        renderEnergyBar(matrices,39,173, RunicEnergy.Type.FIRA);
 
         if (catalystsUnlocked) {
             matrices.pushPose();

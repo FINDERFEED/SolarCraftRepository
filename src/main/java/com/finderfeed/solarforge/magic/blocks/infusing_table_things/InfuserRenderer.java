@@ -46,11 +46,11 @@ public class InfuserRenderer extends AbstractRunicEnergyContainerRCBERenderer<In
             matrices.pushPose();
 
             matrices.translate(0, -0.30, 0);
-            float centerTing = 33 - (time + 30) % 67;
-            if (centerTing >= 0) {
-                matrices.translate(0, centerTing / 100, 0);
+            float centerRing = 33 - (time + 30) % 67;
+            if (centerRing >= 0) {
+                matrices.translate(0, centerRing / 100, 0);
             } else {
-                matrices.translate(0, -centerTing / 100, 0);
+                matrices.translate(0, -centerRing / 100, 0);
             }
             drawRing(partialTicks, matrices, buffer, light, light2, 0.525f,time*2+90);
             matrices.popPose();
@@ -58,11 +58,11 @@ public class InfuserRenderer extends AbstractRunicEnergyContainerRCBERenderer<In
             matrices.pushPose();
 
             matrices.translate(0, -0.30, 0);
-            float smallTing = 33 - (time + 45) % 67;
-            if (smallTing >= 0) {
-                matrices.translate(0, smallTing / 100, 0);
+            float smallRing = 33 - (time + 45) % 67;
+            if (smallRing >= 0) {
+                matrices.translate(0, smallRing / 100, 0);
             } else {
-                matrices.translate(0, -smallTing / 100, 0);
+                matrices.translate(0, -smallRing / 100, 0);
             }
             drawRing(partialTicks, matrices, buffer, light, light2, 0.30f,time*2+270);
             matrices.popPose();
@@ -127,15 +127,17 @@ public class InfuserRenderer extends AbstractRunicEnergyContainerRCBERenderer<In
             matrices.mulPose(Vector3f.YN.rotationDegrees(rotValue * 360));
             for (int i = 1; i < 9; i++) {
                 ItemStack item = stacks.get(i);
-                BlockPos p = offsets[i-1];
-                Vec3 v = new Vec3(p.getX(),p.getY(),p.getZ()).multiply(1-rotValue,1-rotValue,1-rotValue);
-                matrices.pushPose();
+                if (!item.isEmpty()) {
+                    BlockPos p = offsets[i - 1];
+                    Vec3 v = new Vec3(p.getX(), p.getY(), p.getZ()).multiply(1 - rotValue, 1 - rotValue, 1 - rotValue);
+                    matrices.pushPose();
 
-                matrices.translate(v.x, v.y, v.z);
-                RenderingTools.applyMovementMatrixRotations(matrices,v.normalize().reverse());
-                Minecraft.getInstance().getItemRenderer().render(item, ItemTransforms.TransformType.GROUND, true,
-                        matrices, buffer, light, light2, Minecraft.getInstance().getItemRenderer().getModel(item, null, null, 0));
-                matrices.popPose();
+                    matrices.translate(v.x, v.y, v.z);
+                    RenderingTools.applyMovementMatrixRotations(matrices, v.normalize().reverse());
+                    Minecraft.getInstance().getItemRenderer().render(item, ItemTransforms.TransformType.GROUND, true,
+                            matrices, buffer, light, light2, Minecraft.getInstance().getItemRenderer().getModel(item, null, null, 0));
+                    matrices.popPose();
+                }
             }
             matrices.popPose();
         }

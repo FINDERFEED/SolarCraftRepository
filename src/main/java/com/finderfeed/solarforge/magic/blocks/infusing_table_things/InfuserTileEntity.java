@@ -71,11 +71,6 @@ public class InfuserTileEntity extends AbstractRunicEnergyContainerRCBE implemen
         super(SolarForge.INFUSING_STAND_BLOCKENTITY.get(), p_155630_, p_155631_);
     }
 
-
-    public int getProgress(){
-        return INFUSING_TIME;
-    }
-
     @Override
     protected Component getDefaultName() {
         return new TranslatableComponent("container.solarforge.infusing_stand");
@@ -166,14 +161,11 @@ public class InfuserTileEntity extends AbstractRunicEnergyContainerRCBE implemen
     }
 
     public static void tick(Level world, BlockPos pos, BlockState blockState, InfuserTileEntity tile) {
-
         if (!world.isClientSide){
-
-
             tile.updateStacksInPhantomSlots();
             Optional<InfusingRecipe> recipe = tile.level.getRecipeManager().getRecipeFor(SolarForge.INFUSING_RECIPE_TYPE, tile,world);
 
-                if (!recipe.isPresent()){
+                if (recipe.isEmpty()){
                     tile.RECIPE_IN_PROGRESS = false;
                     tile.CURRENT_PROGRESS =0;
                     tile.INFUSING_TIME = 0;
@@ -218,34 +210,7 @@ public class InfuserTileEntity extends AbstractRunicEnergyContainerRCBE implemen
                     sendUpdatePackets(world, tile);
                 }
         }else{
-
-            if (tile.RECIPE_IN_PROGRESS && (tile.INFUSING_TIME - tile.CURRENT_PROGRESS <= 100)){
-                tile.getRotationValue().tick();
-
-                BlockPos[] offsets = Structures.infusingPoolsPositions(BlockPos.ZERO);
-//                if (world.getGameTime() % 2 == 0) {
-                    float rotValue = (float) tile.getRotationValue().getValue();
-                    for (int i = 0; i < offsets.length; i++) {
-                        BlockPos p = offsets[i];
-                        Vec3 v = new Vec3(p.getX(), p.getY(), p.getZ()).multiply(1 - rotValue, 1 - rotValue, 1 - rotValue).yRot(-(float) Math.toRadians(rotValue * 360));
-                        Vec3 ps = Helpers.getBlockCenter(pos).add(v);
-                        ClientHelpers.ParticleAnimationHelper.createParticle(ParticleTypesRegistry.SMALL_SOLAR_STRIKE_PARTICLE.get(),ps.x,ps.y,ps.z,
-                                0,0,0,()->255,()->255,()->0,0.25f);
-                        world.addParticle(ParticleTypesRegistry.SMALL_SOLAR_STRIKE_PARTICLE.get(), ps.x, ps.y, ps.z, 0, 0, 0);
-                    }
-//                }
-
-                if (world.getGameTime() % 5 == 0) {
-                    tile.infusingStandsRendering(false);
-                }
-
-            }else {
-                tile.getRotationValue().reset();
-                if (world.getGameTime() % 5 == 0) {
-                    tile.infusingStandsRendering(true);
-                }
-            }
-
+            recipeFinalizationParticles(tile,pos,world);
         }
         doParticlesAnimation(world,tile);
     }
@@ -339,8 +304,6 @@ public class InfuserTileEntity extends AbstractRunicEnergyContainerRCBE implemen
     }
 
     private static void sendUpdatePackets(Level world, InfuserTileEntity tile){
-//        SolarForgePacketHandler.INSTANCE.send(PacketDistributor.NEAR.with(PacketDistributor.TargetPoint.p(tile.worldPosition.getX(),tile.worldPosition.getY(),tile.worldPosition.getZ(),20,tile.level.dimension())),
-//                new UpdateProgressOnClientPacket(tile.INFUSING_TIME,tile.CURRENT_PROGRESS,tile.worldPosition,tile.requiresEnergy,tile.energy));
         ItemStack[] arr = {tile.getItem(0),tile.getItem(1),tile.getItem(2),tile.getItem(3),tile.getItem(4),tile.getItem(5),tile.getItem(6),tile.getItem(7),tile.getItem(8)};
         SolarForgePacketHandler.INSTANCE.send(PacketDistributor.NEAR.with(PacketDistributor.TargetPoint.p(tile.worldPosition.getX(),tile.worldPosition.getY(),tile.worldPosition.getZ(),20,tile.level.dimension())),
                 new UpdateStacksOnClientTable(arr,tile.getItem(9),tile.worldPosition,tile.RECIPE_IN_PROGRESS));
@@ -397,9 +360,6 @@ public class InfuserTileEntity extends AbstractRunicEnergyContainerRCBE implemen
         tile.level.playSound(null, tile.worldPosition, SoundEvents.BEACON_DEACTIVATE, SoundSource.AMBIENT, 2, 1);
         tile.energy-= recipe.requriedEnergy*count;
         tile.onRemove();
-//        tile.getWays().forEach((type,path)->{
-//            FindingAlgorithms.resetRepeaters(path,world,tile.worldPosition);
-//        });
         tile.clearWays();
 
     }
@@ -645,8 +605,6 @@ public class InfuserTileEntity extends AbstractRunicEnergyContainerRCBE implemen
 
     @Override
     public List<String> getDebugStrings() {
-
-
         return List.of(
                 "ARDO ENERGY "+ this.getRunicEnergy(RunicEnergy.Type.ARDO),
                 "FIRA ENERGY "+ this.getRunicEnergy(RunicEnergy.Type.FIRA),
@@ -687,6 +645,37 @@ public class InfuserTileEntity extends AbstractRunicEnergyContainerRCBE implemen
             }
         }
         return false;
+    }
+
+
+    private static void recipeFinalizationParticles(InfuserTileEntity tile,BlockPos pos,Level world){
+        if (tile.RECIPE_IN_PROGRESS && (tile.INFUSING_TIME - tile.CURRENT_PROGRESS <= 100)){
+            tile.getRotationValue().tick();
+
+            BlockPos[] offsets = Structures.infusingPoolsPositions(BlockPos.ZERO);
+
+            float rotValue = (float) tile.getRotationValue().getValue();
+            for (int i = 0; i < offsets.length; i++) {
+                if (tile.getItem(i).isEmpty()) {
+                    BlockPos p = offsets[i];
+                    Vec3 v = new Vec3(p.getX(), p.getY(), p.getZ()).multiply(1 - rotValue, 1 - rotValue, 1 - rotValue).yRot(-(float) Math.toRadians(rotValue * 360));
+                    Vec3 ps = Helpers.getBlockCenter(pos).add(v);
+                    ClientHelpers.ParticleAnimationHelper.createParticle(ParticleTypesRegistry.SMALL_SOLAR_STRIKE_PARTICLE.get(), ps.x, ps.y, ps.z,
+                            0, 0, 0, () -> 255, () -> 255, () -> 0, 0.25f);
+                    world.addParticle(ParticleTypesRegistry.SMALL_SOLAR_STRIKE_PARTICLE.get(), ps.x, ps.y, ps.z, 0, 0, 0);
+                }
+            }
+
+            if (world.getGameTime() % 5 == 0) {
+                tile.infusingStandsRendering(false);
+            }
+
+        }else {
+            tile.getRotationValue().reset();
+            if (world.getGameTime() % 5 == 0) {
+                tile.infusingStandsRendering(true);
+            }
+        }
     }
 
 

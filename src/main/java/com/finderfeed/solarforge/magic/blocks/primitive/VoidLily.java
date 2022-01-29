@@ -12,9 +12,9 @@ import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.Random;
 
-public class LunarLily extends DeadBushBlock {
+public class VoidLily extends DeadBushBlock {
 
-    public LunarLily(Properties p_52417_) {
+    public VoidLily(Properties p_52417_) {
         super(p_52417_);
     }
 

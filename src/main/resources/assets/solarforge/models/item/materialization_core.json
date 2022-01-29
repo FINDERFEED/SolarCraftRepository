@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures" : {
-    "layer0": "solarforge:items/lunar_ingot"
+    "layer0": "solarforge:items/materialization_core"
   }
 }

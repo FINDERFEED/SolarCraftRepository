@@ -21,6 +21,7 @@ public enum AncientFragment {
     FRAGMENT(tx("solar_fragment.fragment"),"fragment",null,SubCategoryBase.BEGGINING,CategoryBase.BEGGINING_INFO, ItemsRegister.INFO_FRAGMENT.get(),tx("fragment.lore"),1),
     LEXICON(tx("solar_fragment.lexicon"),"lexicon",null,SubCategoryBase.BEGGINING,CategoryBase.BEGGINING_INFO, ItemsRegister.SOLAR_LEXICON.get(),tx("lexicon.lore"),1),
     ENERGY_DUST(tx("solar_fragment.energy_dust"),"energy_dust",null,SubCategoryBase.BASIC_DUSTS,CategoryBase.EXPLORATION, ItemsRegister.ENERGY_DUST.get(),tx("energy_dust.lore"),1),
+    VOID_DUST(tx("solar_fragment.void_dust"),"void_dust",null,SubCategoryBase.BASIC_DUSTS,CategoryBase.EXPLORATION, ItemsRegister.VOID_DUST.get(),tx("void_dust.lore"),1),
     INFUSING_CRAFTING_TABLE(tx("solar_fragment.infusing_crafting_table"),"infusing_crafting_table",null,SubCategoryBase.BEGINNER_ITEMS,CategoryBase.BEGINNER, ItemsRegister.INFUSING_TABLE.get(),tx("infusing_crafting_table.lore"),1),
     WAND(tx("solar_fragment.wand"),"wand",null,SubCategoryBase.BEGGINING,CategoryBase.BEGGINING_INFO, ItemsRegister.SOLAR_WAND.get(),tx("wand.lore"),1),
     SOLAR_STONES(tx("solar_fragment.solar_stones"),"solar_stones", ProgressionStage.PRE_BEGGINING.ALL_PROGRESSIONS,SubCategoryBase.BEGINNER_ITEMS,CategoryBase.BEGINNER, List.of(
@@ -29,7 +30,7 @@ public enum AncientFragment {
             ItemsRegister.SOLAR_STONE_CHISELED.get().getDefaultInstance(),ItemsRegister.ENERGIZED_STONE.get().getDefaultInstance()
     ),SolarForge.INFUSING_CRAFTING_RECIPE_TYPE,tx("solar_stones.lore"),1),
     SPEED_ROAD(tx("solar_fragment.speed_road"),"speed_road",ProgressionStage.PRE_BEGGINING.ALL_PROGRESSIONS,SubCategoryBase.BEGINNER_ITEMS,CategoryBase.BEGINNER, ItemsRegister.SPEED_ROAD.get().getDefaultInstance(),tx("speed_road.lore"),SolarForge.INFUSING_CRAFTING_RECIPE_TYPE,2),
-    EIGHT_ELEMENTS(tx("solar_fragment.eight_elements"),"eight_elements",ProgressionStage.BEGGINING_2.ALL_PROGRESSIONS,SubCategoryBase.BASIC_DUSTS,CategoryBase.EXPLORATION,"eight_elements_lore",ItemsRegister.DIMENSION_CORE.get().getDefaultInstance(),1),
+    EIGHT_ELEMENTS(tx("solar_fragment.eight_elements"),"eight_elements",ProgressionStage.BEGGINING_2.ALL_PROGRESSIONS,SubCategoryBase.WORLD,CategoryBase.EXPLORATION,"eight_elements_lore",ItemsRegister.SOLAR_RUNE_ARDO.get().getDefaultInstance(),1),
     INFUSED_CRYSTALS(tx("solar_fragment.crystals"),"crystals", ProgressionStage.BEGGINING_2.ALL_PROGRESSIONS,SubCategoryBase.BEGINNER_ITEMS,CategoryBase.BEGINNER, List.of(
             ItemsRegister.ARDO_CRYSTAL.get().getDefaultInstance(),ItemsRegister.FIRA_CRYSTAL.get().getDefaultInstance(),
             ItemsRegister.TERA_CRYSTAL.get().getDefaultInstance(),ItemsRegister.URBA_CRYSTAL.get().getDefaultInstance(),
@@ -89,7 +90,6 @@ public enum AncientFragment {
     GEMINIUM_INGOT(tx("solar_fragment.geminium_ingot"),"geminium_ingot",ProgressionStage.AFTER_LENS.ALL_PROGRESSIONS,SubCategoryBase.SKILLED_MATERIALS,CategoryBase.SKILLED,ItemsRegister.GEMINIUM_INGOT.get().getDefaultInstance(),tx("geminium_ingot.lore"), SolarForge.SOLAR_SMELTING,4),
     ENDERIUM_INGOT(tx("solar_fragment.enderium_ingot"),"enderium_ingot",ProgressionStage.AFTER_LENS.ALL_PROGRESSIONS,SubCategoryBase.SKILLED_MATERIALS,CategoryBase.SKILLED,ItemsRegister.ENDERIUM_INGOT.get().getDefaultInstance(),tx("enderium_ingot.lore"), SolarForge.SOLAR_SMELTING,4),
     ENERGETIC_INGOT(tx("solar_fragment.energetic_ingot"),"energetic_ingot",ProgressionStage.AFTER_LENS.ALL_PROGRESSIONS,SubCategoryBase.SKILLED_MATERIALS,CategoryBase.SKILLED,ItemsRegister.ENERGETIC_INGOT.get().getDefaultInstance(),tx("energetic_ingot.lore"), SolarForge.SOLAR_SMELTING,4),
-    LUNAR_INGOT(tx("solar_fragment.lunar_ingot"),"lunar_ingot",ProgressionStage.AFTER_LENS.ALL_PROGRESSIONS,SubCategoryBase.SKILLED_MATERIALS,CategoryBase.SKILLED,ItemsRegister.LUNAR_INGOT.get().getDefaultInstance(),tx("lunar_ingot.lore"), SolarForge.SOLAR_SMELTING,4),
 
     SOLAR_GOD_SWORD(tx("solar_fragment.solar_god_sword"),"solar_god_sword",ProgressionStage.AFTER_LENS.ALL_PROGRESSIONS,SubCategoryBase.SKILLED_ITEMS,CategoryBase.SKILLED,ItemsRegister.SOLAR_GOD_SWORD.get().getDefaultInstance(),tx("solar_god_sword.lore"), SolarForge.INFUSING_RECIPE_TYPE,5),
     SOLAR_GOD_PICKAXE(tx("solar_fragment.solar_god_pickaxe"),"solar_god_pickaxe",ProgressionStage.AFTER_LENS.ALL_PROGRESSIONS,SubCategoryBase.SKILLED_ITEMS,CategoryBase.SKILLED,ItemsRegister.SOLAR_GOD_PICKAXE.get().getDefaultInstance(),tx("solar_god_pickaxe.lore"), SolarForge.INFUSING_RECIPE_TYPE,5),

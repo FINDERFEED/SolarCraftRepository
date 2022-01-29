@@ -17,7 +17,7 @@
                   }
                 }
               ],
-              "name": "solarforge:lunar_lily"
+              "name": "solarforge:void_lily"
             },
             {
               "type": "minecraft:item",
@@ -34,7 +34,7 @@
                   "function": "minecraft:explosion_decay"
                 }
               ],
-              "name": "solarforge:lunar_dust"
+              "name": "solarforge:void_dust"
             }
           ]
         }
