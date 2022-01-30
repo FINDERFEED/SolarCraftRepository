@@ -1,6 +1,7 @@
 package com.finderfeed.solarforge.client.particles;
 
 import com.finderfeed.solarforge.ClientHelpers;
+import com.finderfeed.solarforge.client.rendering.rendertypes.SolarCraftRenderTypes;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import net.minecraft.client.Minecraft;
@@ -48,7 +49,7 @@ public class SolarStrikeParticle extends TextureSheetParticle {
     public ParticleRenderType getRenderType() {
 
 
-        return SOLAR_STRIKE_PARTICLE_RENDER ;
+        return SolarCraftRenderTypes.ParticleRenderTypes.SOLAR_STRIKE_PARTICLE_RENDER ;
     }
 
     @Override

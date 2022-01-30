@@ -4,7 +4,7 @@ import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.magic.items.primitive.solacraft_item_classes.SolarcraftItem;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarforge.misc_things.ManaConsumer;
-import com.finderfeed.solarforge.registries.entities.Entities;
+import com.finderfeed.solarforge.registries.entities.EntityTypes;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -28,7 +28,7 @@ public class SolarDiscGunItem extends SolarcraftItem implements ManaConsumer {
     public InteractionResultHolder<ItemStack> use(Level p_77659_1_, Player p_77659_2_, InteractionHand p_77659_3_) {
 
         if (!p_77659_1_.isClientSide && Helpers.canCast(p_77659_2_,getManacost())){
-            SolarDiscProjectile projectile = new SolarDiscProjectile(Entities.SOLAR_DISC.get(),p_77659_1_);
+            SolarDiscProjectile projectile = new SolarDiscProjectile(EntityTypes.SOLAR_DISC.get(),p_77659_1_);
             projectile.setPos(p_77659_2_.position().x,p_77659_2_.position().y+1.4,p_77659_2_.position().z);
             projectile.setDeltaMovement(p_77659_2_.getLookAngle().multiply(1.5,1.5,1.5));
 

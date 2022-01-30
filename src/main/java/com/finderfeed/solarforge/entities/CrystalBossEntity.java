@@ -17,7 +17,7 @@ import com.finderfeed.solarforge.misc_things.CrystalBossBuddy;
 import com.finderfeed.solarforge.misc_things.NoHealthLimitMob;
 import com.finderfeed.solarforge.client.particles.ParticleTypesRegistry;
 import com.finderfeed.solarforge.registries.attributes.AttributesRegistry;
-import com.finderfeed.solarforge.registries.entities.Entities;
+import com.finderfeed.solarforge.registries.entities.EntityTypes;
 import com.finderfeed.solarforge.registries.items.ItemsRegister;
 import com.finderfeed.solarforge.registries.sounds.Sounds;
 import net.minecraft.ChatFormatting;
@@ -325,7 +325,7 @@ public class CrystalBossEntity extends NoHealthLimitMob implements CrystalBossBu
     public void throwRipRayGenerators(){
         for (int i = 0; i < 4;i++){
             Vec3 vec = Helpers.randomVector().multiply(2+level.random.nextDouble()*9,0,1+2+level.random.nextDouble()*9);
-            RipRayGenerator gen = new RipRayGenerator(Entities.RIP_RAY_GENERATOR.get(),level);
+            RipRayGenerator gen = new RipRayGenerator(EntityTypes.RIP_RAY_GENERATOR.get(),level);
             gen.setPos(this.position().add(vec.x,this.getBbHeight()/2,vec.z));
 
             level.addFreshEntity(gen);
@@ -335,7 +335,7 @@ public class CrystalBossEntity extends NoHealthLimitMob implements CrystalBossBu
     public void spawnMines(){
         List<Vec3> positions = Helpers.findRandomGroundPositionsAround(level,position(),20,15);
         for (Vec3 pos : positions){
-            MineEntityCrystalBoss mine = new MineEntityCrystalBoss(Entities.CRYSTAL_BOSS_MINE.get(),level);
+            MineEntityCrystalBoss mine = new MineEntityCrystalBoss(EntityTypes.CRYSTAL_BOSS_MINE.get(),level);
             mine.setPos(pos);
             level.addFreshEntity(mine);
         }
@@ -348,7 +348,7 @@ public class CrystalBossEntity extends NoHealthLimitMob implements CrystalBossBu
                 if (crystals.size() + i > 8) {
                     break;
                 }
-                ShieldingCrystalCrystalBoss crystal = new ShieldingCrystalCrystalBoss(Entities.CRYSTAL_BOSS_SHIELDING_CRYSTAL.get(), level);
+                ShieldingCrystalCrystalBoss crystal = new ShieldingCrystalCrystalBoss(EntityTypes.CRYSTAL_BOSS_SHIELDING_CRYSTAL.get(), level);
                 Vec3 positon = this.position().add((level.random.nextDouble() * 4.5 + 3) * FinderfeedMathHelper.randomPlusMinus(), 0, (level.random.nextDouble() * 4.5 + 3) * FinderfeedMathHelper.randomPlusMinus());
                 crystal.setPos(positon);
                 level.addFreshEntity(crystal);

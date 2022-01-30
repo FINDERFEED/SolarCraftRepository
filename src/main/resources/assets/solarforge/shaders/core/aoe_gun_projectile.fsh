@@ -81,6 +81,10 @@ void main() {
     col += max(mix(col,voronoicircle,abs(length(uv)*2.0)),col);
     col = col*mixedTime;
 
+    if (col < 0.05){
+        discard;
+    }
+
     float deltaR = 1-definedColor.r;
     float deltaG = 1-definedColor.g;
     float deltaB = 1-definedColor.b;

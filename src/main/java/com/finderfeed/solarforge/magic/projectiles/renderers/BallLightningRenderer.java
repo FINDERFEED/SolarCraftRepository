@@ -26,7 +26,7 @@ public class BallLightningRenderer extends EntityRenderer<BallLightningProjectil
         if (Minecraft.getInstance().level != null) {
             Shaders.AOE_GUN_PROJECTILE_SHADER.safeGetUniform("time").set(RenderingTools.getTime(Minecraft.getInstance().level, pticks)/10f);
         }
-        Shaders.AOE_GUN_PROJECTILE_SHADER.safeGetUniform("definedColor").set(1f,0f,0f);
+        Shaders.AOE_GUN_PROJECTILE_SHADER.safeGetUniform("definedColor").set(1f,1f,0f);
 
 
         VertexConsumer vertex = src.getBuffer(SolarCraftRenderTypes.shaderRendertype(Shaders.AOE_GUN_PROJECTILE_STATE_SHARD));

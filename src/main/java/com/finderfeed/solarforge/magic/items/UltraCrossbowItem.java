@@ -6,7 +6,7 @@ import com.finderfeed.solarforge.magic.items.primitive.RareSolarcraftItem;
 import com.finderfeed.solarforge.magic.projectiles.UltraCrossbowProjectile;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarforge.misc_things.ManaConsumer;
-import com.finderfeed.solarforge.registries.entities.Entities;
+import com.finderfeed.solarforge.registries.entities.EntityTypes;
 import com.finderfeed.solarforge.registries.sounds.Sounds;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.entity.LivingEntity;
@@ -58,7 +58,7 @@ public class UltraCrossbowItem extends RareSolarcraftItem implements ManaConsume
         if (!world.isClientSide){
 
             if (player instanceof Player && (Helpers.canCast((Player) player,200))) {
-            UltraCrossbowProjectile proj = new UltraCrossbowProjectile(Entities.ULTRA_CROSSBOW_SHOT.get(),world);
+            UltraCrossbowProjectile proj = new UltraCrossbowProjectile(EntityTypes.ULTRA_CROSSBOW_SHOT.get(),world);
             proj.setPos(player.getX() + player.getLookAngle().x,player.getY()+1.5f+player.getLookAngle().y,player.getZ()+player.getLookAngle().z);
             player.level.playSound(null,player, Sounds.CROSSBOW_SHOOT_SOUND.get(), SoundSource.AMBIENT,1,1);
             proj.setYAW(player.getYRot());

@@ -49,5 +49,11 @@
   },
   "night_beggining": {
     "sounds": ["solarforge:dimension/night_beggining"]
+  },
+  "ball_lightning_blow": {
+    "sounds": ["solarforge:ball_lightning_blow"]
+  },
+  "lightning_gun_shot": {
+    "sounds": ["solarforge:lightning_gun_shot"]
   }
 }

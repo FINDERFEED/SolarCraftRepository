@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.entities;
 
-import com.finderfeed.solarforge.registries.entities.Entities;
+import com.finderfeed.solarforge.registries.entities.EntityTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -31,7 +31,7 @@ public class LegendaryItem extends Entity {
     }
 
     public LegendaryItem(Level world,ItemStack stack){
-        super(Entities.LEGENDARY_ITEM.get(),world);
+        super(EntityTypes.LEGENDARY_ITEM.get(),world);
         this.setItem(stack);
     }
 

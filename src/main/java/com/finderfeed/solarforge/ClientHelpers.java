@@ -62,6 +62,16 @@ public class ClientHelpers {
     public static void handleBallLightningProjectileParticles(Vec3 pos){
         Level level = Minecraft.getInstance().level;
         if (level != null) {
+
+            for (int i = 0;i <= 8;i++){
+                Vec3 speed = Helpers.randomVector().normalize().multiply(0.05,0.05,0.05);
+                ParticleAnimationHelper.createParticle(ParticleTypesRegistry.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+                        pos.x,pos.y,pos.z,speed.x,speed.y,speed.z,
+                        () -> 220+level.random.nextInt(36), () -> 220+level.random.nextInt(36),()->0,
+                        0.3f + level.random.nextFloat()*0.2f);
+            }
+
+
             List<LivingEntity> living = level.getEntitiesOfClass(LivingEntity.class, BallLightningProjectile.BOX.move(pos), (l) -> !(l instanceof Player));
             for (LivingEntity ent : living) {
                 double vecLen = ent.position().subtract(pos).length();
@@ -73,7 +83,7 @@ public class ClientHelpers {
                         Vec3 iPos = path.getPos(i);
                         Vec3 ePos = path.getPos(i + 1);
                         ParticleAnimationHelper.line(ParticleTypesRegistry.SMALL_SOLAR_STRIKE_PARTICLE.get(), iPos, ePos,
-                                0.20, () -> 255, () -> 0, () -> 0, 0.25f);
+                                0.20, () -> 220+level.random.nextInt(36), () -> 220+level.random.nextInt(36), () -> 0, 0.25f);
                     }
                 }
             }

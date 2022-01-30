@@ -1,6 +1,7 @@
 package com.finderfeed.solarforge.client.particles;
 
 import com.finderfeed.solarforge.ClientHelpers;
+import com.finderfeed.solarforge.client.rendering.rendertypes.SolarCraftRenderTypes;
 import com.finderfeed.solarforge.local_library.other.EaseIn;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.VertexFormat;
@@ -57,7 +58,7 @@ public class SparkParticle extends TextureSheetParticle {
     public ParticleRenderType getRenderType() {
         //setAlphaState(DEFAULT_ALPHA).setTransparencyState(TRANSLUCENT_TRANSPARENCY).setLightmapState(LIGHTMAP).setDepthTestState(NO_DEPTH_TEST).setWriteMaskState(COLOR_WRITE)
 
-        return SOLAR_STRIKE_PARTICLE_RENDER;
+        return SolarCraftRenderTypes.ParticleRenderTypes.SOLAR_STRIKE_PARTICLE_RENDER;
     }
 
 

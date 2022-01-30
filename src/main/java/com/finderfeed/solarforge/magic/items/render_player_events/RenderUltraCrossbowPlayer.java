@@ -2,6 +2,7 @@ package com.finderfeed.solarforge.magic.items.render_player_events;
 
 
 import com.finderfeed.solarforge.ClientHelpers;
+import com.finderfeed.solarforge.magic.items.LightningGun;
 import com.finderfeed.solarforge.magic.items.UltraCrossbowItem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -111,6 +112,9 @@ public class RenderUltraCrossbowPlayer {
     @SubscribeEvent
     public static void renderPlayer(final RenderPlayerEvent.Pre event){
         if ((event.getPlayer().getMainHandItem().getItem() instanceof UltraCrossbowItem) || (event.getPlayer().getOffhandItem().getItem() instanceof UltraCrossbowItem)) {
+            event.getRenderer().getModel().rightArmPose = HumanoidModel.ArmPose.CROSSBOW_HOLD;
+        }
+        if ((event.getPlayer().getMainHandItem().getItem() instanceof LightningGun) || (event.getPlayer().getOffhandItem().getItem() instanceof LightningGun)) {
             event.getRenderer().getModel().rightArmPose = HumanoidModel.ArmPose.CROSSBOW_HOLD;
         }
     }

@@ -4,7 +4,7 @@ import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.entities.CrystalBossEntity;
 import com.finderfeed.solarforge.misc_things.CrystalBossBuddy;
 import com.finderfeed.solarforge.client.particles.ParticleTypesRegistry;
-import com.finderfeed.solarforge.registries.entities.Entities;
+import com.finderfeed.solarforge.registries.entities.EntityTypes;
 import com.finderfeed.solarforge.registries.sounds.Sounds;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.nbt.CompoundTag;
@@ -29,12 +29,12 @@ public class FallingStarCrystalBoss extends AbstractHurtingProjectile implements
 
 
     public FallingStarCrystalBoss( Level p_36834_,double x,double y,double z) {
-        super(Entities.FALLING_STAR_CRYSTAL_BOSS.get(), p_36834_);
+        super(EntityTypes.FALLING_STAR_CRYSTAL_BOSS.get(), p_36834_);
         this.setDeltaMovement(x,y,z);
     }
 
     public FallingStarCrystalBoss(Level p_36834_, Vec3 speed) {
-        super(Entities.FALLING_STAR_CRYSTAL_BOSS.get(), p_36834_);
+        super(EntityTypes.FALLING_STAR_CRYSTAL_BOSS.get(), p_36834_);
         this.setDeltaMovement(speed);
     }
 

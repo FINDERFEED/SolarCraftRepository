@@ -21,7 +21,7 @@ import com.finderfeed.solarforge.recipe_types.infusing_crafting.InfusingCrafting
 import com.finderfeed.solarforge.registries.Tags;
 import com.finderfeed.solarforge.registries.abilities.AbilitiesRegistry;
 import com.finderfeed.solarforge.registries.attributes.AttributesRegistry;
-import com.finderfeed.solarforge.registries.entities.Entities;
+import com.finderfeed.solarforge.registries.entities.EntityTypes;
 
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
 import com.finderfeed.solarforge.recipe_types.InfusingRecipe;
@@ -186,7 +186,7 @@ public class SolarForge
         ItemsRegister.ITEMS.register(bus);
         BlocksRegistry.BLOCKS.register(bus);
         TileEntitiesRegistry.TILE_ENTITY_TYPE.register(bus);
-        Entities.ENTITY_TYPE_REGISTER.register(bus);
+        EntityTypes.ENTITY_TYPE_REGISTER.register(bus);
         EffectsRegister.EFFECTS.register(bus);
         Sounds.SOUND_EVENTS.register(bus);
         FeaturesSolarforge.FEATURES.register(bus);
@@ -274,11 +274,11 @@ public class SolarForge
         @SubscribeEvent
         public static void entityAttributes(EntityAttributeCreationEvent event) {
             event.put(SOLAR_STRIKE_ENTITY_REG.get(),SolarStrikeEntity.createAttributes().build());
-            event.put(Entities.VILLAGER_SOLAR_MASTER.get(), VillagerSolarMaster.createAttributes().build());
-            event.put(Entities.CRYSTAL_BOSS.get(), CrystalBossEntity.createAttributes().build());
-            event.put(Entities.CRYSTAL_BOSS_SHIELDING_CRYSTAL.get(), ShieldingCrystalCrystalBoss.createAttributes().build());
-            event.put(Entities.CRYSTAL_BOSS_MINE.get(), MineEntityCrystalBoss.createAttributes().build());
-            event.put(Entities.RIP_RAY_GENERATOR.get(), RipRayGenerator.createAttributes().build());
+            event.put(EntityTypes.VILLAGER_SOLAR_MASTER.get(), VillagerSolarMaster.createAttributes().build());
+            event.put(EntityTypes.CRYSTAL_BOSS.get(), CrystalBossEntity.createAttributes().build());
+            event.put(EntityTypes.CRYSTAL_BOSS_SHIELDING_CRYSTAL.get(), ShieldingCrystalCrystalBoss.createAttributes().build());
+            event.put(EntityTypes.CRYSTAL_BOSS_MINE.get(), MineEntityCrystalBoss.createAttributes().build());
+            event.put(EntityTypes.RIP_RAY_GENERATOR.get(), RipRayGenerator.createAttributes().build());
         }
 
         @SubscribeEvent

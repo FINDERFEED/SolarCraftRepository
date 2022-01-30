@@ -20,8 +20,8 @@ import com.finderfeed.solarforge.magic.runic_network.repeater.RepeaterRenderer;
 import com.finderfeed.solarforge.registries.ScreenSuppliers;
 import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
 import com.finderfeed.solarforge.registries.containers.Containers;
+import com.finderfeed.solarforge.registries.entities.EntityTypes;
 import com.finderfeed.solarforge.registries.items.ItemsRegister;
-import com.finderfeed.solarforge.registries.entities.Entities;
 import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
 import com.finderfeed.solarforge.magic.blocks.solar_forge_block.SolarForgeBlockEntityRenderer;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.SolarLexiconContScreen;
@@ -200,22 +200,22 @@ public class SolarForgeClientRegistry {
     public static void registerEntityRendering(EntityRenderersEvent.RegisterRenderers event){
         event.registerEntityRenderer(SolarForge.METEORITE.get(), MeteoriteProjectileRenderer::new);
         event.registerEntityRenderer(SolarForge.SOLAR_STRIKE_ENTITY_REG.get(), SolarStrikeEntityRender::new);
-        event.registerEntityRenderer(Entities.SOLAR_DISC.get(), SolarDiscProjectileRenderer::new);
-        event.registerEntityRenderer(Entities.BLOCK_BOOMERANG.get(), BlockBoomerangProjectileRenderer::new);
-        event.registerEntityRenderer(Entities.ULTRA_CROSSBOW_SHOT.get(), UltraCrossbowProjectileRenderer::new);
-        event.registerEntityRenderer(Entities.MORTAR_PROJECTILE.get(), MortarProjectileRenderer::new);
-        event.registerEntityRenderer(Entities.TURRET_PROJECTILE.get(), AbstractTurretProjectileRenderer::new);
-        event.registerEntityRenderer(Entities.VILLAGER_SOLAR_MASTER.get(), VillagerSolarMasterRenderer::new);
-        event.registerEntityRenderer(Entities.FALLING_BLOCK.get(), MyFallingBlockEntityRenderer::new);
-        event.registerEntityRenderer(Entities.CRYSTAL_BOSS.get(), CrystalBossRenderer::new);
-        event.registerEntityRenderer(Entities.CRYSTAL_BOSS_SHIELDING_CRYSTAL.get(), ShieldingCrystalRenderer::new);
-        event.registerEntityRenderer(Entities.CRYSTAL_BOSS_ATTACK_HOLDING_MISSILE.get(), HoldingMissileRenderer::new);
-        event.registerEntityRenderer(Entities.CRYSTAL_BOSS_MINE.get(), MineEntityRenderer::new);
-        event.registerEntityRenderer(Entities.FALLING_STAR_CRYSTAL_BOSS.get(), FallingStarRenderer::new);
-        event.registerEntityRenderer(Entities.RANDOM_BAD_EFFECT_PROJECTILE.get(), RandomBadEffectProjectileRenderer::new);
-        event.registerEntityRenderer(Entities.RIP_RAY_GENERATOR.get(), RipRayGeneratorRender::new);
-        event.registerEntityRenderer(Entities.LEGENDARY_ITEM.get(), LegendaryItemRenderer::new);
-        event.registerEntityRenderer(Entities.BALL_LIGHTNING.get(), BallLightningRenderer::new);
+        event.registerEntityRenderer(EntityTypes.SOLAR_DISC.get(), SolarDiscProjectileRenderer::new);
+        event.registerEntityRenderer(EntityTypes.BLOCK_BOOMERANG.get(), BlockBoomerangProjectileRenderer::new);
+        event.registerEntityRenderer(EntityTypes.ULTRA_CROSSBOW_SHOT.get(), UltraCrossbowProjectileRenderer::new);
+        event.registerEntityRenderer(EntityTypes.MORTAR_PROJECTILE.get(), MortarProjectileRenderer::new);
+        event.registerEntityRenderer(EntityTypes.TURRET_PROJECTILE.get(), AbstractTurretProjectileRenderer::new);
+        event.registerEntityRenderer(EntityTypes.VILLAGER_SOLAR_MASTER.get(), VillagerSolarMasterRenderer::new);
+        event.registerEntityRenderer(EntityTypes.FALLING_BLOCK.get(), MyFallingBlockEntityRenderer::new);
+        event.registerEntityRenderer(EntityTypes.CRYSTAL_BOSS.get(), CrystalBossRenderer::new);
+        event.registerEntityRenderer(EntityTypes.CRYSTAL_BOSS_SHIELDING_CRYSTAL.get(), ShieldingCrystalRenderer::new);
+        event.registerEntityRenderer(EntityTypes.CRYSTAL_BOSS_ATTACK_HOLDING_MISSILE.get(), HoldingMissileRenderer::new);
+        event.registerEntityRenderer(EntityTypes.CRYSTAL_BOSS_MINE.get(), MineEntityRenderer::new);
+        event.registerEntityRenderer(EntityTypes.FALLING_STAR_CRYSTAL_BOSS.get(), FallingStarRenderer::new);
+        event.registerEntityRenderer(EntityTypes.RANDOM_BAD_EFFECT_PROJECTILE.get(), RandomBadEffectProjectileRenderer::new);
+        event.registerEntityRenderer(EntityTypes.RIP_RAY_GENERATOR.get(), RipRayGeneratorRender::new);
+        event.registerEntityRenderer(EntityTypes.LEGENDARY_ITEM.get(), LegendaryItemRenderer::new);
+        event.registerEntityRenderer(EntityTypes.BALL_LIGHTNING.get(), BallLightningRenderer::new);
     }
 
 }

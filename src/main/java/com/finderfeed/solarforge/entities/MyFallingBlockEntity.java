@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.entities;
 
-import com.finderfeed.solarforge.registries.entities.Entities;
+import com.finderfeed.solarforge.registries.entities.EntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -33,7 +33,7 @@ public class MyFallingBlockEntity extends FallingBlockEntity {
     }
 
     public MyFallingBlockEntity(Level world, double x, double y, double z, BlockState state) {
-        this(Entities.FALLING_BLOCK.get(), world);
+        this(EntityTypes.FALLING_BLOCK.get(), world);
         this.blockState = state;
         this.blocksBuilding = true;
         this.setPos(x, y + (double)((1.0F - this.getBbHeight()) / 2.0F), z);

@@ -11,6 +11,9 @@ public class ParticleFactoryRegistry {
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void registerParticles(ParticleFactoryRegisterEvent event){
+
+
+
         Minecraft.getInstance().particleEngine.register(ParticleTypesRegistry.SOLAR_STRIKE_PARTICLE.get(), SolarStrikeParticle.Factory::new);
         Minecraft.getInstance().particleEngine.register(ParticleTypesRegistry.INVISIBLE_PARTICLE.get(), InvisibleParticle.Factory::new);
         Minecraft.getInstance().particleEngine.register(ParticleTypesRegistry.HEAL_PARTICLE.get(), HealParticle.Factory::new);
