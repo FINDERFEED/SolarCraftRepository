@@ -1,9 +1,8 @@
 package com.finderfeed.solarforge.registries.shader_registry;
 
 
-import com.finderfeed.solarforge.client.rendering.Shaders;
+import com.finderfeed.solarforge.client.rendering.CoreShaders;
 import com.finderfeed.solarforge.client.rendering.rendertypes.RadiantPortalRendertype;
-import com.finderfeed.solarforge.client.rendering.rendertypes.SolarCraftRenderTypes;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import net.minecraft.client.renderer.ShaderInstance;
 import net.minecraft.resources.ResourceLocation;
@@ -31,7 +30,7 @@ public class CoreShaderRegistry {
         });
         event.registerShader(new ShaderInstance(event.getResourceManager(),new ResourceLocation("solarforge","aoe_gun_projectile"), DefaultVertexFormat.POSITION),
                 (instance)->{
-                    Shaders.AOE_GUN_PROJECTILE_SHADER = instance;
+                    CoreShaders.AOE_GUN_PROJECTILE_SHADER = instance;
         });
     }
 

@@ -62,16 +62,9 @@ public class ClientHelpers {
     public static void handleBallLightningProjectileParticles(Vec3 pos){
         Level level = Minecraft.getInstance().level;
         if (level != null) {
-
-            for (int i = 0;i <= 8;i++){
-                Vec3 speed = Helpers.randomVector().normalize().multiply(0.05,0.05,0.05);
-                ParticleAnimationHelper.createParticle(ParticleTypesRegistry.SMALL_SOLAR_STRIKE_PARTICLE.get(),
-                        pos.x,pos.y,pos.z,speed.x,speed.y,speed.z,
-                        () -> 220+level.random.nextInt(36), () -> 220+level.random.nextInt(36),()->0,
-                        0.3f + level.random.nextFloat()*0.2f);
-            }
-
-
+            Helpers.createSmallSolarStrikeParticleExplosion(
+                    level,pos,2,0.07f,1.0f
+            );
             List<LivingEntity> living = level.getEntitiesOfClass(LivingEntity.class, BallLightningProjectile.BOX.move(pos), (l) -> !(l instanceof Player));
             for (LivingEntity ent : living) {
                 double vecLen = ent.position().subtract(pos).length();
@@ -392,7 +385,7 @@ public class ClientHelpers {
             if (Minecraft.getInstance().level == null) return;
             Particle particle = Minecraft.getInstance().particleEngine.createParticle(options,x,y,z,xd,yd,zd);
             if (particle != null) {
-                particle.setColor(red.get(), green.get(), blue.get());
+                particle.setColor(red.get()/255f, green.get()/255f, blue.get()/255f);
                 if (particle instanceof SolarcraftParticle solarcraftParticle) {
                     solarcraftParticle.setMaxSize(maxsize);
 

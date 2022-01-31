@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.magic.projectiles.renderers;
 
-import com.finderfeed.solarforge.client.rendering.Shaders;
+import com.finderfeed.solarforge.client.rendering.CoreShaders;
 import com.finderfeed.solarforge.client.rendering.rendertypes.SolarCraftRenderTypes;
 import com.finderfeed.solarforge.entities.BallLightningProjectile;
 import com.finderfeed.solarforge.local_library.helpers.RenderingTools;
@@ -24,12 +24,12 @@ public class BallLightningRenderer extends EntityRenderer<BallLightningProjectil
     @Override
     public void render(BallLightningProjectile projectile, float smth, float pticks, PoseStack matrices, MultiBufferSource src, int light) {
         if (Minecraft.getInstance().level != null) {
-            Shaders.AOE_GUN_PROJECTILE_SHADER.safeGetUniform("time").set(RenderingTools.getTime(Minecraft.getInstance().level, pticks)/10f);
+            CoreShaders.AOE_GUN_PROJECTILE_SHADER.safeGetUniform("time").set(RenderingTools.getTime(Minecraft.getInstance().level, pticks)/10f);
         }
-        Shaders.AOE_GUN_PROJECTILE_SHADER.safeGetUniform("definedColor").set(1f,1f,0f);
+        CoreShaders.AOE_GUN_PROJECTILE_SHADER.safeGetUniform("definedColor").set(1f,1f,0f);
 
 
-        VertexConsumer vertex = src.getBuffer(SolarCraftRenderTypes.shaderRendertype(Shaders.AOE_GUN_PROJECTILE_STATE_SHARD));
+        VertexConsumer vertex = src.getBuffer(SolarCraftRenderTypes.shaderRendertype(CoreShaders.AOE_GUN_PROJECTILE_STATE_SHARD));
         Camera cam = Minecraft.getInstance().gameRenderer.getMainCamera();
         matrices.pushPose();
         Quaternion quaternion = cam.rotation();
