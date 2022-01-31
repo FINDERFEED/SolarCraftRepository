@@ -394,7 +394,11 @@ public class InfuserTileEntity extends AbstractRunicEnergyContainerRCBE implemen
         calculateTier();
         try {
             if (recipe.isPresent() && ProgressionHelper.doPlayerHasFragment(playerEntity, AncientFragment.getFragmentByID(recipe.get().child))) {
-
+                if (!this.getItem(0).isEmpty()){
+                    playerEntity.sendMessage(new TextComponent("Clear the output slot").withStyle(ChatFormatting.RED),
+                            playerEntity.getUUID());
+                    return;
+                }
                 if (tierEquals(recipe.get().getTier())) {
                     if (catalystsMatch(recipe.get())) {
                         if (!RECIPE_IN_PROGRESS) {

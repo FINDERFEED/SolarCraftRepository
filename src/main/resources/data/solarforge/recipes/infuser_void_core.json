@@ -1,0 +1,36 @@
+{
+  "type":"solarforge:infusing",
+  "input1": {
+    "item": "solarforge:crystal_core"
+  },
+  "input2": {
+    "item": "solarforge:void_dust"
+  },
+  "input3": {
+    "item": "minecraft:obsidian"
+  },
+  "input4": {
+    "item": "solarforge:void_dust"
+  },
+  "input5": {
+    "item": "minecraft:obsidian"
+  },
+  "input6": {
+    "item": "solarforge:void_dust"
+  },
+  "input7": {
+    "item": "minecraft:obsidian"
+  },
+  "input8": {
+    "item": "solarforge:void_dust"
+  },
+  "input9": {
+    "item": "minecraft:obsidian"
+  },
+  "result": {
+    "item": "solarforge:void_core"
+  },
+  "time": 200,
+  "fragment": "crystal_cores",
+  "catalysts": "T TT TT TT T"
+}

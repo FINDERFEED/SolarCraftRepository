@@ -1,0 +1,37 @@
+{
+  "type":"solarforge:infusing",
+  "input1": {
+    "item": "solarforge:nether_star"
+  },
+  "input2": {
+    "item": "solarforge:crystal_core"
+  },
+  "input3": {
+    "item": "minecraft:"
+  },
+  "input4": {
+    "item": "solarforge:crystal_core"
+  },
+  "input5": {
+    "item": "minecraft:"
+  },
+  "input6": {
+    "item": "solarforge:crystal_core"
+  },
+  "input7": {
+    "item": "minecraft:"
+  },
+  "input8": {
+    "item": "solarforge:crystal_core"
+  },
+  "input9": {
+    "item": "minecraft:"
+  },
+  "result": {
+    "item": "solarforge:crystal_star"
+  },
+  "time": 350,
+  "count": 4,
+  "fragment": "crystal_cores",
+  "catalysts": "F FF FF FF F"
+}

@@ -14,8 +14,6 @@ import com.google.common.collect.ImmutableSet;
 import net.minecraft.core.BlockPos;
 import net.minecraft.data.worldgen.features.FeatureUtils;
 import net.minecraft.data.worldgen.features.OreFeatures;
-import net.minecraft.data.worldgen.features.VegetationFeatures;
-import net.minecraft.data.worldgen.placement.OrePlacements;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -36,7 +34,6 @@ import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate;
 import net.minecraft.world.level.levelgen.carver.WorldCarver;
 import net.minecraft.world.level.levelgen.feature.configurations.*;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
-import net.minecraft.world.level.levelgen.feature.stateproviders.SimpleStateProvider;
 
 import net.minecraft.world.level.levelgen.feature.foliageplacers.BlobFoliagePlacer;
 
@@ -47,7 +44,6 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.RuleTest;
 import net.minecraft.world.level.levelgen.structure.templatesystem.TagMatchTest;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 
 
@@ -87,7 +83,7 @@ public class FeaturesRegistry {
     public static final Feature<NoneFeatureConfiguration> CEILING_FLOOR_CRYSTALS = new WallCrystalsCrystalCave(NoneFeatureConfiguration.CODEC);
     public static final Feature<SimpleBlockConfiguration> STONE_FLOWERS = new StoneFlowersFeature(SimpleBlockConfiguration.CODEC);
     public static final Feature<NoneFeatureConfiguration> CEILING_DRIPSTONE_LIKE_CRYSTALS = new CeilingDripstoneLikeCrystals(NoneFeatureConfiguration.CODEC);
-    public static final Feature<SimpleBlockConfiguration> CRYSTALLIZED_RUNIC_ENERGY_CRYSTALS = new CrystallizedRunicEnergyCrystalsFeature(SimpleBlockConfiguration.CODEC);
+    public static final Feature<SimpleBlockConfiguration> CRYSTALS_ORE = new CrystalsOreFeature(SimpleBlockConfiguration.CODEC);
 
     public static ConfiguredFeature<?,?> RADIANT_TREE_CONFIGURED_CONF;
     public static ConfiguredFeature<?,?> RADIANT_SMALL_TREE_CONFIGURED_CONF;
@@ -105,6 +101,7 @@ public class FeaturesRegistry {
     public static ConfiguredFeature<?,?> CEILING_DRIPSTONE_LIKE_CRYSTALS_CONF;
     public static ConfiguredFeature<?,?> CRYSTALLIZED_RUNIC_ENERGY_CRYSTALS_CONF;
     public static ConfiguredFeature<?,?> LUNAR_LILY_FEATURE_CONF;
+    public static ConfiguredFeature<?,?> EMPTY_CRYSTALS_CONF;
 
     public static PlacedFeature BURNT_TREE_2;
     public static PlacedFeature BURNT_TREE_1;
@@ -124,6 +121,7 @@ public class FeaturesRegistry {
     public static PlacedFeature CEILING_DRIPSTONE_LIKE_CRYSTALS_PLACEMENT;
     public static PlacedFeature CRYSTALLIZED_RUNIC_ENERGY_CRYSTALS_PLACEMENT;
     public static PlacedFeature LUNAR_LILY_FEATURE_PLACEMENT;
+    public static PlacedFeature EMPTY_CRYSTALS_PLACEMENT;
     //public static ConfiguredFeature<?,?> RADIANT_LAND_AMBIENT_TREE;
 
 
@@ -154,7 +152,7 @@ public class FeaturesRegistry {
         event.getRegistry().register(CEILING_FLOOR_CRYSTALS.setRegistryName(new ResourceLocation(SolarForge.MOD_ID,"ceiling_floor_crystals")));
         event.getRegistry().register(STONE_FLOWERS.setRegistryName(new ResourceLocation(SolarForge.MOD_ID,"stone_flowers")));
         event.getRegistry().register(CEILING_DRIPSTONE_LIKE_CRYSTALS.setRegistryName(new ResourceLocation(SolarForge.MOD_ID,"ceiling_dripstonelike_crystals")));
-        registerFeature(event,CRYSTALLIZED_RUNIC_ENERGY_CRYSTALS,"crystallized_runic_energy");
+        registerFeature(event, CRYSTALS_ORE,"crystallized_runic_energy");
     }
     private static void registerFeature(RegistryEvent.Register<Feature<?>> event,Feature<?> f,String name){
         event.getRegistry().register(f.setRegistryName(new ResourceLocation(SolarForge.MOD_ID,name)));
@@ -368,7 +366,7 @@ public class FeaturesRegistry {
             registerPlacedFeature(CEILING_DRIPSTONE_LIKE_CRYSTALS_PLACEMENT,"ceiling_dripstonelike_crystals");
             registerConfiguredFeature(CEILING_DRIPSTONE_LIKE_CRYSTALS_CONF,"ceiling_dripstonelike_crystals");
 
-            CRYSTALLIZED_RUNIC_ENERGY_CRYSTALS_CONF = CRYSTALLIZED_RUNIC_ENERGY_CRYSTALS.configured(new SimpleBlockConfiguration(BlockStateProvider.simple(BlocksRegistry.CRYSTALLIZED_RUNIC_ENERGY.get())));
+            CRYSTALLIZED_RUNIC_ENERGY_CRYSTALS_CONF = CRYSTALS_ORE.configured(new SimpleBlockConfiguration(BlockStateProvider.simple(BlocksRegistry.CRYSTALLIZED_RUNIC_ENERGY.get())));
             CRYSTALLIZED_RUNIC_ENERGY_CRYSTALS_PLACEMENT = CRYSTALLIZED_RUNIC_ENERGY_CRYSTALS_CONF.placed(
                     CountPlacement.of(UniformInt.of(60,100)),InSquarePlacement.spread(),HeightRangePlacement.uniform(VerticalAnchor.bottom(),VerticalAnchor.absolute(100)),BiomeFilter.biome()
             );
@@ -389,6 +387,12 @@ public class FeaturesRegistry {
 
             registerConfiguredFeature(LUNAR_LILY_FEATURE_CONF,"lunar_lily");
             registerPlacedFeature(LUNAR_LILY_FEATURE_PLACEMENT,"lunar_lily");
+
+            EMPTY_CRYSTALS_CONF = CRYSTALS_ORE.configured(new SimpleBlockConfiguration(BlockStateProvider.simple(BlocksRegistry.CRYSTAL.get())));
+            EMPTY_CRYSTALS_PLACEMENT = EMPTY_CRYSTALS_CONF.placed(
+                    CountPlacement.of(UniformInt.of(15,30)),
+                    InSquarePlacement.spread(),HeightRangePlacement.uniform(VerticalAnchor.bottom(),VerticalAnchor.absolute(100)),BiomeFilter.biome()
+            );
         });
     }
 

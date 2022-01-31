@@ -145,7 +145,7 @@
   "pre.solar_infuser_create": "Solar stone and shards are a good combination...",
   "pre.solar_infuser_use": "The beginning magician",
   "pre.acquire_solar_dust": "Useful solar shard remains.",
-  "pre.key_lock_dungeon": "A strange magic aura comes from desert.",
+  "pre.key_lock_dungeon": "A magic aura comes from desert.",
   "pre.infuser_dungeon": "Plains secrets",
   "pre.key_source": "Evil savanna caves can bring you only death... Or not only death?",
   "pre.cold_star_piece": "The item with strong lensing properties is a myth. Or is it?",
@@ -635,7 +635,9 @@
   "solar_fragment.void_dust": "Void dust",
   "void_dust.lore": "Just by holding it in hands, you feel emptiness. The same feeling was when you first dug your way down to bedrock.",
   "solarcraft.lightning_gun": "Releases a ball lightning which damages every mob in 10 radius on impact. Manacost: 50/shot",
-  "item.solarforge.lightning_gun": "Lightning gun"
+  "item.solarforge.lightning_gun": "Lightning gun",
+  "solar_fragment.crystal_cores": "Crystal cores",
+  "crystal_cores.lore": " "
 
 
 

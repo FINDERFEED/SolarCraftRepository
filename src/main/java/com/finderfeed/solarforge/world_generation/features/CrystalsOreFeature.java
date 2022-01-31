@@ -18,8 +18,8 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CrystallizedRunicEnergyCrystalsFeature extends Feature<SimpleBlockConfiguration> {
-    public CrystallizedRunicEnergyCrystalsFeature(Codec<SimpleBlockConfiguration> p_65786_) {
+public class CrystalsOreFeature extends Feature<SimpleBlockConfiguration> {
+    public CrystalsOreFeature(Codec<SimpleBlockConfiguration> p_65786_) {
         super(p_65786_);
     }
 

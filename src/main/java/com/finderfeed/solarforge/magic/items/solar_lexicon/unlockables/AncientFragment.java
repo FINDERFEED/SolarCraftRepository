@@ -80,7 +80,12 @@ public enum AncientFragment {
             ItemsRegister.FIRA_RUNE_BLOCK.get().getDefaultInstance(),ItemsRegister.ULTIMA_RUNE_BLOCK.get().getDefaultInstance(),
             ItemsRegister.GIRO_RUNE_BLOCK.get().getDefaultInstance()
     ),SolarForge.INFUSING_CRAFTING_RECIPE_TYPE,tx("catalysts.lore"),1),
-    SMALL_SOLAR_REACTOR(tx("solar_fragment.small_solar_reactor"),"small_solar_reactor",ProgressionStage.AFTER_CATALYSTS.ALL_PROGRESSIONS,SubCategoryBase.BEGINNER_ITEMS,CategoryBase.BEGINNER,ItemsRegister.SMALL_SOLAR_REACTOR.get().getDefaultInstance(),tx("small_solar_reactor.lore"), SolarForge.INFUSING_RECIPE_TYPE,2),
+    CRYSTAL_CORES(tx("solar_fragment.crystal_cores"),"crystal_cores",ProgressionStage.AFTER_CATALYSTS.ALL_PROGRESSIONS,SubCategoryBase.SKILLED_MATERIALS,CategoryBase.SKILLED,List.of(
+            ItemsRegister.CRYSTAL_CORE.get().getDefaultInstance(),ItemsRegister.ENERGY_CORE.get().getDefaultInstance(),
+            ItemsRegister.VOID_CORE.get().getDefaultInstance(),ItemsRegister.MATERIALIZATION_CORE.get().getDefaultInstance(),
+            ItemsRegister.CRYSTAL_STAR.get().getDefaultInstance()
+    ),SolarForge.INFUSING_CRAFTING_RECIPE_TYPE,tx("crystal_cores.lore"),2),
+    SMALL_SOLAR_REACTOR(tx("solar_fragment.small_solar_reactor"),"small_solar_reactor",ProgressionStage.AFTER_CATALYSTS.ALL_PROGRESSIONS,SubCategoryBase.BEGINNER_MATERIALS,CategoryBase.BEGINNER,ItemsRegister.SMALL_SOLAR_REACTOR.get().getDefaultInstance(),tx("small_solar_reactor.lore"), SolarForge.INFUSING_RECIPE_TYPE,2),
 
     SOLAR_LENS(tx("solar_fragment.solar_lens"),"solar_lens",ProgressionStage.PRE_LENS.ALL_PROGRESSIONS,SubCategoryBase.SKILLED_ITEMS,CategoryBase.SKILLED,ItemsRegister.SOLAR_LENS.get().getDefaultInstance(),tx("solar_lens.lore"), SolarForge.INFUSING_RECIPE_TYPE,3),
     RUNIC_ENERGY_REPEATER(tx("solar_fragment.runic_energy_repeater"),"runic_energy_repeater",ProgressionStage.PRE_LENS.ALL_PROGRESSIONS,SubCategoryBase.RUNIC_ENERGY_TRANSMITTING,CategoryBase.RUNIC_ENERGY,ItemsRegister.REPEATER.get().getDefaultInstance(),tx("runic_energy_repeater.lore"), SolarForge.INFUSING_RECIPE_TYPE,3),

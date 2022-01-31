@@ -19,13 +19,13 @@
     "item": "solarforge:energetic_ingot"
   },
   "input7": {
-    "item": "solarforge:enderium_ingot"
+    "item": "solarforge:energy_core"
   },
   "input8": {
     "item": "minecraft:iron_block"
   },
   "input9": {
-    "item": "solarforge:enderium_ingot"
+    "item": "solarforge:energy_core"
   },
   "result": {
     "item": "solarforge:solar_energy_generator"
