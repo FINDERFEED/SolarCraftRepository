@@ -1,6 +1,6 @@
 {
   "parent": "block/cross",
   "textures": {
-    "cross": "solarforge:block/lunar_lily"
+    "cross": "solarforge:block/void_lily"
   }
 }

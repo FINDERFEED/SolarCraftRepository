@@ -62,7 +62,7 @@ public class LoreScreen extends Screen {
 
         int posX = relX+14;
         int posY = relY+100;
-        RenderingTools.drawBoundedText(matrices,posX,posY,45,lore.getString(),stringColor);
+        RenderingTools.drawBoundedText(matrices,posX,posY,43,lore.getString(),stringColor);
 
 
 

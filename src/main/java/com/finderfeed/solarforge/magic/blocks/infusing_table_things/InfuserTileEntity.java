@@ -653,7 +653,9 @@ public class InfuserTileEntity extends AbstractRunicEnergyContainerRCBE implemen
 
 
     private static void recipeFinalizationParticles(InfuserTileEntity tile,BlockPos pos,Level world){
-        if (tile.RECIPE_IN_PROGRESS && (tile.INFUSING_TIME - tile.CURRENT_PROGRESS <= 100)){
+        int maxTime = Math.min(tile.INFUSING_TIME, 100);
+        if (tile.RECIPE_IN_PROGRESS && (tile.INFUSING_TIME - tile.CURRENT_PROGRESS <= maxTime)){
+            tile.getRotationValue().setDuration(maxTime);
             tile.getRotationValue().tick();
 
             BlockPos[] offsets = Structures.infusingPoolsPositions(BlockPos.ZERO);

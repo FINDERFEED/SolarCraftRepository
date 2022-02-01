@@ -22,6 +22,8 @@
     "solarforge:catalyst_base",
     "solarforge:speed_road",
     "solarforge:crystallized_runic_energy",
-    "solarforge:lensing_crystal_ore"
+    "solarforge:lensing_crystal_ore",
+    "solarforge:explosion_blocker",
+    "solarforge:crystal"
   ]
 }

@@ -1,7 +1,7 @@
 {
   "type":"solarforge:infusing",
   "input1": {
-    "item": "solarforge:solar_rune_fira"
+    "item": "solarforge:fira_crystal"
   },
   "input2": {
     "item": "minecraft:obsidian"

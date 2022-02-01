@@ -1,31 +1,31 @@
 {
   "type":"solarforge:infusing",
   "input1": {
-    "item": "solarforge:nether_star"
+    "item": "minecraft:nether_star"
   },
   "input2": {
     "item": "solarforge:crystal_core"
   },
   "input3": {
-    "item": "minecraft:"
+    "item": "minecraft:diamond"
   },
   "input4": {
     "item": "solarforge:crystal_core"
   },
   "input5": {
-    "item": "minecraft:"
+    "item": "minecraft:diamond"
   },
   "input6": {
     "item": "solarforge:crystal_core"
   },
   "input7": {
-    "item": "minecraft:"
+    "item": "minecraft:diamond"
   },
   "input8": {
     "item": "solarforge:crystal_core"
   },
   "input9": {
-    "item": "minecraft:"
+    "item": "minecraft:diamond"
   },
   "result": {
     "item": "solarforge:crystal_star"

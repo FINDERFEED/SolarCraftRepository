@@ -83,9 +83,9 @@ public class InformationScreen extends Screen {
         blit(matrices,relX,relY,0,0,256,256);
         drawString(matrices,Minecraft.getInstance().font,fragment.getTranslation(), relX+60,relY+35,0xffffff);
         if (fragment.getType() == AncientFragment.Type.INFORMATION) {
-            RenderingTools.drawBoundedText(matrices, relX + 12, relY + 80, 45, fragment.getLore().getString(),stringColor);
+            RenderingTools.drawBoundedText(matrices, relX + 12, relY + 80, 43, fragment.getLore().getString(),stringColor);
         }else{
-            RenderingTools.drawBoundedText(matrices, relX + 12, relY + 80, 45, fragment.getItemDescription().getString(),stringColor);
+            RenderingTools.drawBoundedText(matrices, relX + 12, relY + 80, 43, fragment.getItemDescription().getString(),stringColor);
         }
         renderGuiItem(fragment.getIcon().getDefaultInstance(),relX+32,relY+32,Minecraft.getInstance().getItemRenderer().getModel(fragment.getIcon().getDefaultInstance(),null,null,0),1.5,1.5,1.5);
         super.render(matrices, mousex, mousey, partialTicks);

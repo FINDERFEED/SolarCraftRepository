@@ -70,7 +70,7 @@ void main() {
 
     vec2 uv = texCoord0.xy;
     uv -= 0.5;
-    float voronoiValue = voronoi(uv,5.0);
+    float voronoiValue = voronoi(uv,5.0)*1.2;
 
     vec3 finalCol = definedColor;
 

@@ -627,7 +627,7 @@
   "solar_fragment.crystals": "Infused crystals",
   "crystals.lore": "Runes are useful for decrypting the fragments but almost nothing can be made out of them. Perhaps crystals, that i have found in caves, infused with their energy can be used somehow. ",
   "item.solarforge.crystal_core": "Crystal core",
-  "item.solarforge.crystal_star": "Crystal star",
+  "item.solarforge.crystal_star": "Crystal star (WIP)",
   "item.solarforge.void_core": "Void core",
   "item.solarforge.energy_core": "Energy core",
   "item.solarforge.materialization_core": "Materialization core",
@@ -635,9 +635,11 @@
   "solar_fragment.void_dust": "Void dust",
   "void_dust.lore": "Just by holding it in hands, you feel emptiness. The same feeling was when you first dug your way down to bedrock.",
   "solarcraft.lightning_gun": "Releases a ball lightning which damages every mob in 10 radius on impact. Manacost: 50/shot",
-  "item.solarforge.lightning_gun": "Lightning gun",
+  "item.solarforge.lightning_gun": "Lightning Emitter",
   "solar_fragment.crystal_cores": "Crystal cores",
-  "crystal_cores.lore": " "
+  "crystal_cores.lore": " ",
+  "lightning_gun.lore": "A powerful weapon that fires a ball lightning on use. Ball lightning damages all mobs in 10 radius on impact (Damage: 10). Manacost: 50/shot.",
+  "solar_fragment.lightning_gun": "Lightning Emitter"
 
 
 
