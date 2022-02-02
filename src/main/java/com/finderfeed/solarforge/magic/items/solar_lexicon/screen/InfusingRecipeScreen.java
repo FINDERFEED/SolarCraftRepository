@@ -71,7 +71,7 @@ public class InfusingRecipeScreen extends Screen {
         int width = minecraft.getWindow().getWidth();
         int height = minecraft.getWindow().getHeight();
         int scale = (int) minecraft.getWindow().getGuiScale();
-        this.relX = (width/scale - 183)/2;
+        this.relX = (width/scale - 183)/2 - 12;
         this.relY = (height - 218*scale)/2/scale;
         fillArray();
         stacks = new ArrayList<>();

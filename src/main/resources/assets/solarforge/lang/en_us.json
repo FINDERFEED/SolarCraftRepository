@@ -124,7 +124,7 @@
   "solarforge_struct.solar_infuser": "Solar Infuser",
   "solarcraft.failure_unlock": "You cant unlock this progression or it doesnt exist.",
   "solarcraft.success_unlock": "Successfully unlocked",
-  "solarcraft.welcome_message": "Thanks for downloading SolarCraft! If you were playing before 2.3 mod version use /solarcraft fragments transfer (ONLY ONCE!). If you updated the mod and had a solar lexicon",
+  "solarcraft.welcome_message": "Thanks for downloading SolarCraft! If you were playing before 2.3 mod version use /solarcraft fragments transfer (ONLY ONCE PER WORLD!). If you updated the mod and had a solar lexicon",
   "solarcraft.welcome_message2": "delete it and make new. Use /solarcraft fragments retain to get all the fragments you had. If you open old lexicon it may cause crash.",
   "solarcraft.gethelpcommand": "This codes are used in /solarcraft unlock <code>",
   "solarcraft.solar_wand": "Is used to trigger crafting on the Infuser.",
@@ -639,7 +639,8 @@
   "solar_fragment.crystal_cores": "Crystal cores",
   "crystal_cores.lore": "A cores made from infused crystals can serve as a good crafting material with unique properties.",
   "lightning_gun.lore": "A powerful weapon that fires a ball lightning on use. Ball lightning damages all mobs in 10 radius on impact (Damage: 10). Manacost: 50/shot.",
-  "solar_fragment.lightning_gun": "Lightning Emitter"
+  "solar_fragment.lightning_gun": "Lightning Emitter",
+  "solar_category.beginner_blocks": "Blocks"
 
 
 

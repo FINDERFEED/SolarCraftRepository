@@ -211,8 +211,9 @@ public class InfuserTileEntity extends AbstractRunicEnergyContainerRCBE implemen
                 }
         }else{
             recipeFinalizationParticles(tile,pos,world);
+            doParticlesAnimation(world,tile);
         }
-        doParticlesAnimation(world,tile);
+
     }
 
     public EaseIn getRotationValue() {

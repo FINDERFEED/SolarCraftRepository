@@ -9,6 +9,7 @@ public enum SubCategoryBase {
     ARMOR(tx("solar_category.armor")),
     STRUCTURES(tx("solar_category.structures")),
     BEGINNER_ITEMS(tx("solar_category.beginner_items")),
+    BEGINNER_BLOCKS(tx("solar_category.beginner_blocks")),
     BEGINNER_MATERIALS(tx("solar_category.beginner_materials")),
     RUNIC_ENERGY_EXPLORATION(tx("solar_category.runic_energy_exploration")),
     RUNIC_ENERGY_TRANSMITTING(tx("solar_category.runic_energy_transmitting")),
