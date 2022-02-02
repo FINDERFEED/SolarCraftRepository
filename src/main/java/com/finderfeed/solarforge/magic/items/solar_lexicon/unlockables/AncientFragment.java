@@ -69,7 +69,7 @@ public enum AncientFragment {
 
     AURA_HEALER(tx("solar_fragment.aura_healer"),"aura_healer",ProgressionStage.AFTER_CATALYSTS.ALL_PROGRESSIONS,SubCategoryBase.BEGINNER_ITEMS,CategoryBase.BEGINNER,ItemsRegister.AURA_HEALER.get().getDefaultInstance(),tx("aura_healer.lore"), SolarForge.INFUSING_RECIPE_TYPE,2),
     DISC_LAUNCHER(tx("solar_fragment.disc_launcher"),"disc_launcher",ProgressionStage.AFTER_CATALYSTS.ALL_PROGRESSIONS,SubCategoryBase.BEGINNER_ITEMS,CategoryBase.BEGINNER,ItemsRegister.SOLAR_DISC_LAUNCHER.get().getDefaultInstance(),tx("disc_launcher.lore"), SolarForge.INFUSING_RECIPE_TYPE,2),
-    TURRET_RADAR(tx("solar_fragment.turret_radar"),"turret_radar",ProgressionStage.AFTER_CATALYSTS.ALL_PROGRESSIONS,SubCategoryBase.BEGINNER_ITEMS,CategoryBase.BEGINNER,ItemsRegister.TURRET_RADAR.get().getDefaultInstance(),tx("turret_radar.lore"), SolarForge.INFUSING_RECIPE_TYPE,2),
+    TURRET_RADAR(tx("solar_fragment.turret_radar"),"turret_radar",ProgressionStage.AFTER_CATALYSTS.ALL_PROGRESSIONS,SubCategoryBase.BEGINNER_MATERIALS,CategoryBase.BEGINNER,ItemsRegister.TURRET_RADAR.get().getDefaultInstance(),tx("turret_radar.lore"), SolarForge.INFUSING_RECIPE_TYPE,2),
     SOLAR_TURRET(tx("solar_fragment.solar_turret"),"solar_turret",ProgressionStage.AFTER_CATALYSTS.ALL_PROGRESSIONS,SubCategoryBase.BEGINNER_ITEMS,CategoryBase.BEGINNER,ItemsRegister.TURRET_BLOCK.get().getDefaultInstance(),tx("solar_turret.lore"), SolarForge.INFUSING_RECIPE_TYPE,2),
     GLOVES_OF_REACH(tx("solar_fragment.gloves_of_reach"),"gloves_of_reach",ProgressionStage.AFTER_CATALYSTS.ALL_PROGRESSIONS,SubCategoryBase.BEGINNER_ITEMS,CategoryBase.BEGINNER,ItemsRegister.REACH_GLOVES.get().getDefaultInstance(),tx("gloves_of_reach.lore"), SolarForge.INFUSING_RECIPE_TYPE,2),
     MANA_REGEN_AMULET(tx("solar_fragment.mana_regen_amulet"),"mana_regen_amulet",ProgressionStage.AFTER_INFUSER.ALL_PROGRESSIONS,SubCategoryBase.BEGINNER_ITEMS,CategoryBase.BEGINNER,ItemsRegister.SOLAR_MANA_AMULET.get().getDefaultInstance(),tx("mana_regen_amulet.lore"), SolarForge.INFUSING_RECIPE_TYPE,2),
@@ -84,7 +84,7 @@ public enum AncientFragment {
             ItemsRegister.CRYSTAL_CORE.get().getDefaultInstance(),ItemsRegister.ENERGY_CORE.get().getDefaultInstance(),
             ItemsRegister.VOID_CORE.get().getDefaultInstance(),ItemsRegister.MATERIALIZATION_CORE.get().getDefaultInstance(),
             ItemsRegister.CRYSTAL_STAR.get().getDefaultInstance()
-    ),SolarForge.INFUSING_CRAFTING_RECIPE_TYPE,tx("crystal_cores.lore"),2),
+    ),SolarForge.INFUSING_RECIPE_TYPE,tx("crystal_cores.lore"),2),
     SMALL_SOLAR_REACTOR(tx("solar_fragment.small_solar_reactor"),"small_solar_reactor",ProgressionStage.AFTER_CATALYSTS.ALL_PROGRESSIONS,SubCategoryBase.BEGINNER_MATERIALS,CategoryBase.BEGINNER,ItemsRegister.SMALL_SOLAR_REACTOR.get().getDefaultInstance(),tx("small_solar_reactor.lore"), SolarForge.INFUSING_RECIPE_TYPE,2),
 
     SOLAR_LENS(tx("solar_fragment.solar_lens"),"solar_lens",ProgressionStage.PRE_LENS.ALL_PROGRESSIONS,SubCategoryBase.SKILLED_ITEMS,CategoryBase.SKILLED,ItemsRegister.SOLAR_LENS.get().getDefaultInstance(),tx("solar_lens.lore"), SolarForge.INFUSING_RECIPE_TYPE,3),
