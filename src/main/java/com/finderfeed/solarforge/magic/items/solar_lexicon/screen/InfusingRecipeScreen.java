@@ -6,8 +6,9 @@ import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.magic.blocks.infusing_table_things.InfuserTileEntity;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.achievements.Progression;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
-import com.finderfeed.solarforge.recipe_types.InfusingRecipe;
+
 import com.finderfeed.solarforge.magic.items.solar_lexicon.SolarLexicon;
+import com.finderfeed.solarforge.recipe_types.infusing_new.InfusingRecipe;
 import com.finderfeed.solarforge.registries.items.ItemsRegister;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
@@ -77,33 +78,33 @@ public class InfusingRecipeScreen extends Screen {
         stacks = new ArrayList<>();
         InfusingRecipe currentRecipe = recipe.get(currentPage);
         this.catalystsUnlocked = Helpers.hasPlayerUnlocked(Progression.CATALYSTS,Minecraft.getInstance().player);
-        addStack(currentRecipe.input1,stacks);
-        addStack(currentRecipe.input2,stacks);
-        addStack(currentRecipe.input3,stacks);
-        addStack(currentRecipe.input4,stacks);
-        addStack(currentRecipe.input5,stacks);
-        addStack(currentRecipe.input6,stacks);
-        addStack(currentRecipe.input7,stacks);
-        addStack(currentRecipe.input8,stacks);
-        addStack(currentRecipe.input9,stacks);
-        stacks.add(currentRecipe.output);
+//        addStack(currentRecipe.input1,stacks);
+//        addStack(currentRecipe.input2,stacks);
+//        addStack(currentRecipe.input3,stacks);
+//        addStack(currentRecipe.input4,stacks);
+//        addStack(currentRecipe.input5,stacks);
+//        addStack(currentRecipe.input6,stacks);
+//        addStack(currentRecipe.input7,stacks);
+//        addStack(currentRecipe.input8,stacks);
+//        addStack(currentRecipe.input9,stacks);
+//        stacks.add(currentRecipe.output);
 
         if (maxPages != 0) {
             addRenderableWidget(new ImageButton(relX + 180, relY + 9, 16, 16, 0, 0, 0, BUTTONS, 16, 32, (button) -> {
                 if ((currentPage + 1 <= maxPages)) {
                     currentPage += 1;
                     InfusingRecipe newRecipe = recipe.get(currentPage);
-                    stacks.clear();
-                    addStack(newRecipe.input1,stacks);
-                    addStack(newRecipe.input2,stacks);
-                    addStack(newRecipe.input3,stacks);
-                    addStack(newRecipe.input4,stacks);
-                    addStack(newRecipe.input5,stacks);
-                    addStack(newRecipe.input6,stacks);
-                    addStack(newRecipe.input7,stacks);
-                    addStack(newRecipe.input8,stacks);
-                    addStack(newRecipe.input9,stacks);
-                    stacks.add(newRecipe.output);
+//                    stacks.clear();
+//                    addStack(newRecipe.input1,stacks);
+//                    addStack(newRecipe.input2,stacks);
+//                    addStack(newRecipe.input3,stacks);
+//                    addStack(newRecipe.input4,stacks);
+//                    addStack(newRecipe.input5,stacks);
+//                    addStack(newRecipe.input6,stacks);
+//                    addStack(newRecipe.input7,stacks);
+//                    addStack(newRecipe.input8,stacks);
+//                    addStack(newRecipe.input9,stacks);
+//                    stacks.add(newRecipe.output);
                 }
             },(button,matrices,mousex,mousey)->{
                 renderTooltip(matrices,new TextComponent("Next recipe"),mousex,mousey);
@@ -111,18 +112,18 @@ public class InfusingRecipeScreen extends Screen {
             addRenderableWidget(new ImageButton(relX + 164, relY + 9, 16, 16, 0, 16, 0, BUTTONS, 16, 32, (button) -> {
                 if ((currentPage - 1 >= 0)) {
                     currentPage -= 1;
-                    InfusingRecipe newRecipe = recipe.get(currentPage);
-                    stacks.clear();
-                    addStack(newRecipe.input1,stacks);
-                    addStack(newRecipe.input2,stacks);
-                    addStack(newRecipe.input3,stacks);
-                    addStack(newRecipe.input4,stacks);
-                    addStack(newRecipe.input5,stacks);
-                    addStack(newRecipe.input6,stacks);
-                    addStack(newRecipe.input7,stacks);
-                    addStack(newRecipe.input8,stacks);
-                    addStack(newRecipe.input9,stacks);
-                    stacks.add(newRecipe.output);
+//                    InfusingRecipe newRecipe = recipe.get(currentPage);
+//                    stacks.clear();
+//                    addStack(newRecipe.input1,stacks);
+//                    addStack(newRecipe.input2,stacks);
+//                    addStack(newRecipe.input3,stacks);
+//                    addStack(newRecipe.input4,stacks);
+//                    addStack(newRecipe.input5,stacks);
+//                    addStack(newRecipe.input6,stacks);
+//                    addStack(newRecipe.input7,stacks);
+//                    addStack(newRecipe.input8,stacks);
+//                    addStack(newRecipe.input9,stacks);
+//                    stacks.add(newRecipe.output);
                 }
             },(button,matrices,mousex,mousey)->{
                 renderTooltip(matrices,new TextComponent("Previous recipe"),mousex,mousey);
@@ -166,16 +167,18 @@ public class InfusingRecipeScreen extends Screen {
         blit(matrices,relX,relY,0,0,256,256);
         int xOffset = -25;
         int yOffset = 27;
-        renderItemAndTooltip(stacks.get(0),relX+120 + xOffset,relY+69 + yOffset,mousex,mousey,matrices,false);
-        renderItemAndTooltip(stacks.get(1),relX+173 + xOffset,relY+69 + yOffset,mousex,mousey,matrices,false);
-        renderItemAndTooltip(stacks.get(2),relX+159 + xOffset,relY+30 + yOffset,mousex,mousey,matrices,false);
-        renderItemAndTooltip(stacks.get(3),relX+120 + xOffset,relY+16 + yOffset,mousex,mousey,matrices,false);
-        renderItemAndTooltip(stacks.get(4),relX+81 + xOffset,relY+30 + yOffset,mousex,mousey,matrices,false);
-        renderItemAndTooltip(stacks.get(5),relX+67 + xOffset,relY+69 + yOffset,mousex,mousey,matrices,false);
-        renderItemAndTooltip(stacks.get(6),relX+81 + xOffset,relY+108 + yOffset,mousex,mousey,matrices,false);
-        renderItemAndTooltip(stacks.get(7),relX+120 + xOffset,relY+122 + yOffset,mousex,mousey,matrices,false);
-        renderItemAndTooltip(stacks.get(8),relX+159 + xOffset,relY+108 + yOffset,mousex,mousey,matrices,false);
-        renderItemAndTooltip(stacks.get(9),relX+120+xOffset ,relY+180 ,mousex,mousey,matrices,true);
+
+
+//        renderItemAndTooltip(stacks.get(0),relX+120 + xOffset,relY+69 + yOffset,mousex,mousey,matrices,false);
+//        renderItemAndTooltip(stacks.get(1),relX+173 + xOffset,relY+69 + yOffset,mousex,mousey,matrices,false);
+//        renderItemAndTooltip(stacks.get(2),relX+159 + xOffset,relY+30 + yOffset,mousex,mousey,matrices,false);
+//        renderItemAndTooltip(stacks.get(3),relX+120 + xOffset,relY+16 + yOffset,mousex,mousey,matrices,false);
+//        renderItemAndTooltip(stacks.get(4),relX+81 + xOffset,relY+30 + yOffset,mousex,mousey,matrices,false);
+//        renderItemAndTooltip(stacks.get(5),relX+67 + xOffset,relY+69 + yOffset,mousex,mousey,matrices,false);
+//        renderItemAndTooltip(stacks.get(6),relX+81 + xOffset,relY+108 + yOffset,mousex,mousey,matrices,false);
+//        renderItemAndTooltip(stacks.get(7),relX+120 + xOffset,relY+122 + yOffset,mousex,mousey,matrices,false);
+//        renderItemAndTooltip(stacks.get(8),relX+159 + xOffset,relY+108 + yOffset,mousex,mousey,matrices,false);
+//        renderItemAndTooltip(stacks.get(9),relX+120+xOffset ,relY+180 ,mousex,mousey,matrices,true);
 
 
         drawCenteredString(matrices, minecraft.font,new TextComponent(recipe.get(currentPage).infusingTime / 20 +" ").append(new TranslatableComponent("solarforge.seconds2")),relX+104,relY+28,0xff0000);
@@ -241,40 +244,40 @@ public class InfusingRecipeScreen extends Screen {
     }
 
     private void fillArray(){
-        runicEnergySymbolsRenderPositions[0][0] = relX+15;
-        runicEnergySymbolsRenderPositions[0][1] = relY+54;
+        runicEnergySymbolsRenderPositions[0][0] = relX+67;
+        runicEnergySymbolsRenderPositions[0][1] = relY+22;
 
-        runicEnergySymbolsRenderPositions[1][0] = relX+34;
-        runicEnergySymbolsRenderPositions[1][1] = relY+35;
+        runicEnergySymbolsRenderPositions[1][0] = relX+96;
+        runicEnergySymbolsRenderPositions[1][1] = relY+22;
 
-        runicEnergySymbolsRenderPositions[2][0] = relX+34+19;
-        runicEnergySymbolsRenderPositions[2][1] = relY+16;
+        runicEnergySymbolsRenderPositions[2][0] = relX+125;
+        runicEnergySymbolsRenderPositions[2][1] = relY+22;
 
-        runicEnergySymbolsRenderPositions[3][0] = relX+100+37;
-        runicEnergySymbolsRenderPositions[3][1] = relY+16;
+        runicEnergySymbolsRenderPositions[3][0] = relX+171;
+        runicEnergySymbolsRenderPositions[3][1] = relY+68;
 
-        runicEnergySymbolsRenderPositions[4][0] = relX+119+37;
-        runicEnergySymbolsRenderPositions[4][1] = relY+35;
+        runicEnergySymbolsRenderPositions[4][0] = relX+171;
+        runicEnergySymbolsRenderPositions[4][1] = relY+97;
 
-        runicEnergySymbolsRenderPositions[5][0] = relX+138+37;
-        runicEnergySymbolsRenderPositions[5][1] = relY+54;
+        runicEnergySymbolsRenderPositions[5][0] = relX+171;
+        runicEnergySymbolsRenderPositions[5][1] = relY+126;
 
-        runicEnergySymbolsRenderPositions[6][0] = relX+138+37;
-        runicEnergySymbolsRenderPositions[6][1] = relY+150-12;
+        runicEnergySymbolsRenderPositions[6][0] = relX+125;
+        runicEnergySymbolsRenderPositions[6][1] = relY+172;
 
-        runicEnergySymbolsRenderPositions[7][0] = relX+119+37;
-        runicEnergySymbolsRenderPositions[7][1] = relY+169-12;
+        runicEnergySymbolsRenderPositions[7][0] = relX+96;
+        runicEnergySymbolsRenderPositions[7][1] = relY+172;
 
-        runicEnergySymbolsRenderPositions[8][0] = relX+100+37;
-        runicEnergySymbolsRenderPositions[8][1] = relY+188-12;
+        runicEnergySymbolsRenderPositions[8][0] = relX+67;
+        runicEnergySymbolsRenderPositions[8][1] = relY+172;
 
-        runicEnergySymbolsRenderPositions[9][0] = relX+34+19;
-        runicEnergySymbolsRenderPositions[9][1] = relY+188-12;
+        runicEnergySymbolsRenderPositions[9][0] = relX+21;
+        runicEnergySymbolsRenderPositions[9][1] = relY+126;
 
-        runicEnergySymbolsRenderPositions[10][0] = relX+34;
-        runicEnergySymbolsRenderPositions[10][1] = relY+169-12;
+        runicEnergySymbolsRenderPositions[10][0] = relX+21;
+        runicEnergySymbolsRenderPositions[10][1] = relY+97;
 
-        runicEnergySymbolsRenderPositions[11][0] = relX+15;
-        runicEnergySymbolsRenderPositions[11][1] = relY+150-12;
+        runicEnergySymbolsRenderPositions[11][0] = relX+21;
+        runicEnergySymbolsRenderPositions[11][1] = relY+68;
     }
 }

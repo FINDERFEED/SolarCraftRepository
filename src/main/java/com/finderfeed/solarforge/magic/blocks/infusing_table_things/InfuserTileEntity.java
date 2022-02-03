@@ -13,7 +13,7 @@ import com.finderfeed.solarforge.magic.items.solar_lexicon.unlockables.AncientFr
 import com.finderfeed.solarforge.magic.items.solar_lexicon.unlockables.ProgressionHelper;
 import com.finderfeed.solarforge.misc_things.*;
 import com.finderfeed.solarforge.multiblocks.Multiblocks;
-import com.finderfeed.solarforge.recipe_types.InfusingRecipe;
+import com.finderfeed.solarforge.recipe_types.infusing_new.InfusingRecipe;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.achievements.Progression;
 import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
 import com.finderfeed.solarforge.world_generation.structures.Structures;
@@ -422,7 +422,7 @@ public class InfuserTileEntity extends AbstractRunicEnergyContainer implements  
         calculateTier();
         try {
             if (recipe.isPresent() && ProgressionHelper.doPlayerHasFragment(playerEntity, AncientFragment.getFragmentByID(recipe.get().child))) {
-                if (!this.getItem(9).isEmpty()){
+                if (!this.getItem(outputSlot()).isEmpty()){
                     playerEntity.sendMessage(new TextComponent("Clear the output slot").withStyle(ChatFormatting.RED),
                             playerEntity.getUUID());
                     return;
@@ -516,8 +516,8 @@ public class InfuserTileEntity extends AbstractRunicEnergyContainer implements  
                 }
             }
         });
-        if (this.getItem(0).getCount() < count.get()){
-            count.set(getItem(0).getCount());
+        if (this.getItem(inputSlot()).getCount() < count.get()){
+            count.set(getItem(inputSlot()).getCount());
         }
         return count.get();
     }

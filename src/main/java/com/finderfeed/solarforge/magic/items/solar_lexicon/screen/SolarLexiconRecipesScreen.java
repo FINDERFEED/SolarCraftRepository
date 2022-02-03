@@ -5,7 +5,7 @@ import com.finderfeed.solarforge.local_library.helpers.RenderingTools;
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.structure.Book;
 import com.finderfeed.solarforge.misc_things.IScrollable;
-import com.finderfeed.solarforge.recipe_types.InfusingRecipe;
+import com.finderfeed.solarforge.recipe_types.infusing_new.InfusingRecipe;
 import com.finderfeed.solarforge.registries.items.ItemsRegister;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.unlockables.ProgressionHelper;

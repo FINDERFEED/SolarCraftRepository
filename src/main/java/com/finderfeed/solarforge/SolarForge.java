@@ -18,14 +18,14 @@ import com.finderfeed.solarforge.magic.items.solar_lexicon.unlockables.AncientFr
 import com.finderfeed.solarforge.client.particles.ParticleTypesRegistry;
 import com.finderfeed.solarforge.recipe_types.infusing_crafting.InfusingCraftingRecipe;
 import com.finderfeed.solarforge.recipe_types.infusing_crafting.InfusingCraftingRecipeType;
+import com.finderfeed.solarforge.recipe_types.infusing_new.InfusingRecipeType;
 import com.finderfeed.solarforge.registries.Tags;
 import com.finderfeed.solarforge.registries.abilities.AbilitiesRegistry;
 import com.finderfeed.solarforge.registries.attributes.AttributesRegistry;
 import com.finderfeed.solarforge.registries.entities.EntityTypes;
 
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
-import com.finderfeed.solarforge.recipe_types.InfusingRecipe;
-import com.finderfeed.solarforge.recipe_types.InfusingRecipeType;
+import com.finderfeed.solarforge.recipe_types.infusing_new.InfusingRecipe;
 import com.finderfeed.solarforge.recipe_types.solar_smelting.SolarSmeltingRecipe;
 import com.finderfeed.solarforge.recipe_types.solar_smelting.SolarSmeltingRecipeType;
 import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;

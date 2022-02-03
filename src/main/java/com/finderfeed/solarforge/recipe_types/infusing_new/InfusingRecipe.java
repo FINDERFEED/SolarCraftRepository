@@ -3,7 +3,6 @@ package com.finderfeed.solarforge.recipe_types.infusing_new;
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.magic.blocks.infusing_table_things.InfuserTileEntity;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
-import com.finderfeed.solarforge.recipe_types.InfusingRecipeSerializer;
 import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;

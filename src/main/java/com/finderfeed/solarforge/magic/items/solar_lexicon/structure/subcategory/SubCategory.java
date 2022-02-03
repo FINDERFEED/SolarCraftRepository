@@ -9,7 +9,7 @@ import com.finderfeed.solarforge.magic.items.solar_lexicon.unlockables.AncientFr
 import com.finderfeed.solarforge.magic.items.solar_lexicon.unlockables.ProgressionHelper;
 import com.finderfeed.solarforge.misc_things.IScrollable;
 import com.finderfeed.solarforge.misc_things.Multiblock;
-import com.finderfeed.solarforge.recipe_types.InfusingRecipe;
+import com.finderfeed.solarforge.recipe_types.infusing_new.InfusingRecipe;
 import com.finderfeed.solarforge.recipe_types.infusing_crafting.InfusingCraftingRecipe;
 import com.finderfeed.solarforge.recipe_types.solar_smelting.SolarSmeltingRecipe;
 import com.finderfeed.solarforge.registries.SolarCraftClientRegistries;

@@ -7,7 +7,7 @@ import com.finderfeed.solarforge.magic.blocks.blockentities.InfusingTableTile;
 import com.finderfeed.solarforge.magic.blocks.blockentities.RuneEnergyPylonTile;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.achievements.Progression;
 import com.finderfeed.solarforge.misc_things.*;
-import com.finderfeed.solarforge.recipe_types.InfusingRecipe;
+import com.finderfeed.solarforge.recipe_types.infusing_new.InfusingRecipe;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.server.level.ServerPlayer;
