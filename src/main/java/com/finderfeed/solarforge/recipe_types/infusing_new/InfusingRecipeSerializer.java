@@ -25,13 +25,14 @@ public class InfusingRecipeSerializer extends ForgeRegistryEntry<RecipeSerialize
 
 
     public InfusingRecipeSerializer(){
-        this.setRegistryName(new ResourceLocation("solarforge","infusing"));
+        this.setRegistryName(new ResourceLocation("solarforge","infusing_new"));
     }
 
     @Override
     public InfusingRecipe fromJson(ResourceLocation loc, JsonObject file) {
         JsonArray pattern = file.getAsJsonArray("pattern");
         JsonObject items = file.getAsJsonObject("items");
+
 
         Map<Character,Ingredient> ingredientMap = new HashMap<>();
 

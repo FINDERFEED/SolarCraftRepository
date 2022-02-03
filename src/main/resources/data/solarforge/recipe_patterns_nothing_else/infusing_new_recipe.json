@@ -1,18 +1,23 @@
 {
 
   "items": {
-    "X": "solarforge:imagine_something_here",
-    "Z": "minecraft:imagine_something_again"
+    "X": {
+      "item": "solarforge:"
+    }
   },
 
 
   "pattern": [
-    "XZX",
+    "X X",
     "XX",
-    "XZX",
+    "X X",
     "XX",
-    "XZX"
+    "X X"
   ],
+
+  "result": {
+    "item": "solarforge:"
+  },
   "time": "OVER NINE THOUSAAAAND",
   "fragment": "lolkekcheburek",
   "catalysts": "  RR    UU  "
