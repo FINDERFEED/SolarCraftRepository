@@ -12,39 +12,37 @@ import java.util.List;
 public class Structures {
 
     public static List<BlockEntity> checkInfusingStandStructure(BlockPos pos, Level world){
-        List<BlockEntity> list = new ArrayList<>(0);
-                    list.add(blockGet(pos.offset(4,1,0),world));
-                    list.add(blockGet(pos.offset(3,0,-3),world));
-                    list.add(blockGet(pos.offset(0,1,-4),world));
-                    list.add(blockGet(pos.offset(-3,0,-3),world));
-                    list.add(blockGet(pos.offset(-4,1,0),world));
-                    list.add(blockGet(pos.offset(-3,0,3),world));
-                    list.add(blockGet(pos.offset(0,1,4),world));
-                    list.add(blockGet(pos.offset(3,0,3),world));
+        List<BlockEntity> toReturn = new ArrayList<>();
+        toReturn.add(blockGet(pos.offset(-4,0,-4 ),world));
+        toReturn.add(blockGet(pos.offset(0,0,-4  ),world));
+        toReturn.add(blockGet(pos.offset(4,0,-4  ),world));
+        toReturn.add(blockGet(pos.offset(-2,0,-2 ),world));
+        toReturn.add(blockGet(pos.offset(2,0,-2  ),world));
+        toReturn.add(blockGet(pos.offset(-4,0,0  ),world));
+        toReturn.add(blockGet(pos.offset(4,0,0   ),world));
+        toReturn.add(blockGet(pos.offset(-2,0,2  ),world));
+        toReturn.add(blockGet(pos.offset(2,0,2   ),world));
+        toReturn.add(blockGet(pos.offset(-4,0,4  ),world));
+        toReturn.add(blockGet(pos.offset(0,0,4   ),world));
+        toReturn.add(blockGet(pos.offset(4,0,4   ),world));
 
-                    /*
-                    Recipe:
-                              N
-                              *
-                            *   *
-                          *       *^
-                            *   *
-                              *
-                              S
-                     */
-        return list;
+        return toReturn;
 
     }
     public static BlockPos[] infusingPoolsPositions(BlockPos pos){
         return new BlockPos[]{
-                pos.offset(4,1,0),
-                pos.offset(3,0,-3),
-                pos.offset(0,1,-4),
-                pos.offset(-3,0,-3),
-                pos.offset(-4,1,0),
-                pos.offset(-3,0,3),
-                pos.offset(0,1,4),
-                pos.offset(3,0,3)
+                pos.offset(-4,0,-4 ),
+                pos.offset(0,0,-4  ),
+                pos.offset(4,0,-4  ),
+                pos.offset(-2,0,-2 ),
+                pos.offset(2,0,-2  ),
+                pos.offset(-4,0,0  ),
+                pos.offset(4,0,0   ),
+                pos.offset(-2,0,2  ),
+                pos.offset(2,0,2   ),
+                pos.offset(-4,0,4  ),
+                pos.offset(0,0,4   ),
+                pos.offset(4,0,4   )
         };
     }
     public static BlockEntity blockGet(BlockPos pos,Level world){

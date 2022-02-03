@@ -2,6 +2,7 @@ package com.finderfeed.solarforge.magic.blocks.infusing_table_things;
 
 import com.finderfeed.solarforge.ClientHelpers;
 import com.finderfeed.solarforge.SolarForge;
+import com.finderfeed.solarforge.misc_things.PhantomInventory;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import com.finderfeed.solarforge.recipe_types.InfusingRecipe;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -93,7 +94,7 @@ public class InfuserScreen extends AbstractContainerScreen<InfuserContainer> {
 //        renderItemAndTooltip(tile.getItem(6),relX+45+a,relY+97,x,y,matrices);
 //        renderItemAndTooltip(tile.getItem(7),relX+84+a,relY+111,x,y,matrices);
 //        renderItemAndTooltip(tile.getItem(8),relX+123+a,relY+97,x,y,matrices);
-        Optional<InfusingRecipe> recipe = minecraft.level.getRecipeManager().getRecipeFor(SolarForge.INFUSING_RECIPE_TYPE,tile,minecraft.level);
+        Optional<InfusingRecipe> recipe = minecraft.level.getRecipeManager().getRecipeFor(SolarForge.INFUSING_RECIPE_TYPE,new PhantomInventory(tile.getInventory()),minecraft.level);
 
 //        if (recipe.isPresent()){
 //            renderItemAndTooltip(recipe.get().output,relX+159+a,relY+2,x,y,matrices);
@@ -107,7 +108,7 @@ public class InfuserScreen extends AbstractContainerScreen<InfuserContainer> {
 
             matrices.translate(relX + 22 + a, relY + 80, 0);
             matrices.mulPose(Vector3f.ZP.rotationDegrees(180));
-            float percent = (float) tile.energy / 100000;
+            float percent = (float) tile.energy / tile.getMaxEnergy();
 
             if (recipe.isPresent()) {
                 float percentNeeded = (float) recipe.get().requriedEnergy / 100000;

@@ -181,7 +181,7 @@ class WandEvents{
                                 GuiComponent.blit(event.getMatrixStack(), width / 2 - 20, height / 2 + 11, 0, 9, (int) (40 * percent), 3, 40, 20);
                                 GuiComponent.blit(event.getMatrixStack(), width / 2 - 20, height / 2 + 8, 0, 0, 40, 9, 40, 20);
                             }else{
-                                Optional<InfusingRecipe> recipe = mc.level.getRecipeManager().getRecipeFor(SolarForge.INFUSING_RECIPE_TYPE,tileInfusing,mc.level);
+                                Optional<InfusingRecipe> recipe = mc.level.getRecipeManager().getRecipeFor(SolarForge.INFUSING_RECIPE_TYPE,new PhantomInventory(tileInfusing.getInventory()),mc.level);
                                 if (recipe.isPresent()) {
                                     int height = event.getWindow().getGuiScaledHeight();
                                     int width = event.getWindow().getGuiScaledWidth();

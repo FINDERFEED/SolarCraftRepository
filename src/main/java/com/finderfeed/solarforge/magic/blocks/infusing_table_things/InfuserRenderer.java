@@ -2,6 +2,7 @@ package com.finderfeed.solarforge.magic.blocks.infusing_table_things;
 
 import com.finderfeed.solarforge.local_library.helpers.RenderingTools;
 import com.finderfeed.solarforge.magic.blocks.render.abstracts.AbstractRunicEnergyContainerRCBERenderer;
+import com.finderfeed.solarforge.magic.blocks.render.abstracts.AbstractRunicEnergyContainerRenderer;
 import com.finderfeed.solarforge.world_generation.structures.Structures;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -19,7 +20,7 @@ import net.minecraft.world.phys.Vec3;
 
 import java.util.List;
 
-public class InfuserRenderer extends AbstractRunicEnergyContainerRCBERenderer<InfuserTileEntity> {
+public class InfuserRenderer extends AbstractRunicEnergyContainerRenderer<InfuserTileEntity> {
     public final ResourceLocation text = new ResourceLocation("solarforge","textures/misc/solar_infuser_ring.png");
     public final ResourceLocation fancyRing = new ResourceLocation("solarforge","textures/misc/fancy_ring_1.png");
     public InfuserRenderer(BlockEntityRendererProvider.Context ctx) {
@@ -98,20 +99,20 @@ public class InfuserRenderer extends AbstractRunicEnergyContainerRCBERenderer<In
 
         }
         matrices.pushPose();
-        if (!tile.isEmpty() ) {
 
-            if (tile.getItem(9).isEmpty()) {
-                matrices.translate(0.5, 0.5, 0.5);
-                matrices.mulPose(Vector3f.YP.rotationDegrees((time % 360) * 2f));
-                Minecraft.getInstance().getItemRenderer().render(tile.getItem(0), ItemTransforms.TransformType.GROUND, true,
-                        matrices, buffer, light, light2, Minecraft.getInstance().getItemRenderer().getModel(tile.getItem(0), null, null,0));
-            }else{
-                matrices.translate(0.5, 0.5, 0.5);
-                matrices.mulPose(Vector3f.YP.rotationDegrees((time % 360) * 2f));
-                Minecraft.getInstance().getItemRenderer().render(tile.getItem(9), ItemTransforms.TransformType.GROUND, true,
-                        matrices, buffer, light, light2, Minecraft.getInstance().getItemRenderer().getModel(tile.getItem(9), null, null,0));
-            }
+
+        if (tile.getItem(tile.outputSlot()).isEmpty()) {
+            matrices.translate(0.5, 0.5, 0.5);
+            matrices.mulPose(Vector3f.YP.rotationDegrees((time % 360) * 2f));
+            Minecraft.getInstance().getItemRenderer().render(tile.getItem(0), ItemTransforms.TransformType.GROUND, true,
+                    matrices, buffer, light, light2, Minecraft.getInstance().getItemRenderer().getModel(tile.getItem(0), null, null,0));
+        }else{
+            matrices.translate(0.5, 0.5, 0.5);
+            matrices.mulPose(Vector3f.YP.rotationDegrees((time % 360) * 2f));
+            Minecraft.getInstance().getItemRenderer().render(tile.getItem(9), ItemTransforms.TransformType.GROUND, true,
+                    matrices, buffer, light, light2, Minecraft.getInstance().getItemRenderer().getModel(tile.getItem(9), null, null,0));
         }
+
         matrices.popPose();
 
 

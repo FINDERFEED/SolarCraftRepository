@@ -2,6 +2,9 @@ package com.finderfeed.solarforge.magic.blocks.infusing_table_things;
 
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.custom_slots.OutputSlot;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.Container;
@@ -11,25 +14,28 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.core.BlockPos;
+import net.minecraftforge.items.ItemStackHandler;
+import net.minecraftforge.items.SlotItemHandler;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 
 public class InfuserContainer extends AbstractContainerMenu {
     public InfuserTileEntity te;
-
+    public ItemStackHandler inventory;
 
     public InfuserContainer(final int windowId, final Inventory playerInv, final InfuserTileEntity te) {
         super(SolarForge.INFUSING_TABLE_CONTAINER.get(), windowId);
         this.te = te;
-
+        this.inventory = te.getInventory();
 
 
         int i = (6 - 4) * 18;
 
         // Tile Entity
         //for (int kj = 0; kj <= te.getContainerSize()-1;kj++){
-            this.addSlot(new Slot((Container) te, 0, 120, 34));
-            this.addSlot(new OutputSlot((Container) te, 9, 195, -22));
+            this.addSlot(new SlotItemHandler(inventory, te.inputSlot(), 120, 34));
+            this.addSlot(new OutputSlot.ItemHandler(inventory, te.outputSlot(), 195, -22));
 
         //}
 
@@ -97,5 +103,26 @@ public class InfuserContainer extends AbstractContainerMenu {
     @Override
     public boolean stillValid(Player p_75145_1_) {
         return true;
+    }
+
+    public static class Provider implements MenuProvider{
+
+        private BlockPos pos;
+
+        public Provider(BlockPos pos){
+            this.pos = pos;
+        }
+
+
+        @Override
+        public Component getDisplayName() {
+            return new TextComponent("");
+        }
+
+        @Nullable
+        @Override
+        public AbstractContainerMenu createMenu(int id, Inventory playerinv, Player player) {
+            return new InfuserContainer(id,playerinv,(InfuserTileEntity) player.getLevel().getBlockEntity(pos));
+        }
     }
 }

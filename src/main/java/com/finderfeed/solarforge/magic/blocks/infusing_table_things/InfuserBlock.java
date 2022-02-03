@@ -54,9 +54,9 @@ public class InfuserBlock extends Block implements EntityBlock {
 
         if (te instanceof InfuserTileEntity){
             InfuserTileEntity ent = (InfuserTileEntity) te;
-            ItemStack stacks = ent.getItems().get(0);
+            ItemStack stacks = ent.getItem(ent.inputSlot());
             popResource(p_196243_2_,p_196243_3_,stacks);
-            stacks = ent.getItems().get(9);
+            stacks = ent.getItem(ent.outputSlot());
             popResource(p_196243_2_,p_196243_3_,stacks);
             ent.onTileRemove();
         }
@@ -74,6 +74,9 @@ public class InfuserBlock extends Block implements EntityBlock {
             BlockEntity entity = world.getBlockEntity(pos);
             if (entity instanceof InfuserTileEntity) {
                 InfuserTileEntity tile = (InfuserTileEntity) entity;
+
+                if (tile.getTier() == null){tile.calculateTier();}
+
                 if (tile.getOwner() != null && (world.getPlayerByUUID(tile.getOwner()) == user)) {
                     if (!(user.getMainHandItem().getItem() instanceof SolarWandItem) && !(user.getMainHandItem().getItem() instanceof SolarNetworkBinder) && !(user.getMainHandItem().getItem() instanceof SolarcraftDebugStick)) {
                         entity.setChanged();
@@ -81,7 +84,7 @@ public class InfuserBlock extends Block implements EntityBlock {
                         Consumer<FriendlyByteBuf> cons = x -> {
                             x.writeBlockPos(pos);
                         };
-                        NetworkHooks.openGui((ServerPlayer) user, (InfuserTileEntity) entity, cons);
+                        NetworkHooks.openGui((ServerPlayer) user, new InfuserContainer.Provider(pos), cons);
 
                     }
                 }else{
