@@ -1,5 +1,6 @@
 package com.finderfeed.solarforge.magic.items.solar_lexicon.structure.subcategory;
 
+import com.finderfeed.solarforge.magic.items.solar_lexicon.structure.category.CategoryBase;
 import net.minecraft.network.chat.TranslatableComponent;
 
 public enum SubCategoryBase {
@@ -37,5 +38,13 @@ public enum SubCategoryBase {
 
     public static TranslatableComponent tx(String a){
         return new TranslatableComponent(a);
+    }
+    public SubCategoryBase getByID(String id){
+        for (SubCategoryBase v : SubCategoryBase.class.getEnumConstants()){
+            if (v.name().equals(id)){
+                return v;
+            }
+        }
+        return null;
     }
 }

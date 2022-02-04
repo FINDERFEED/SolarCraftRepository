@@ -1,16 +1,23 @@
 package com.finderfeed.solarforge.magic.items.solar_lexicon.unlockables;
 
 import com.finderfeed.solarforge.SolarForge;
+import com.finderfeed.solarforge.config.JsonFragmentsHelper;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.ProgressionStage;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.achievements.Progression;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.structure.category.CategoryBase;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.structure.subcategory.SubCategoryBase;
 import com.finderfeed.solarforge.multiblocks.Multiblocks;
 import com.finderfeed.solarforge.registries.items.ItemsRegister;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import net.minecraft.util.GsonHelper;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.Level;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.*;
 
@@ -332,7 +339,16 @@ public class AncientFragment {
         INFORMATION,
         UPGRADE,
         ITEMS,
-        CUSTOM
+        CUSTOM;
+
+        public static Type byID(String id){
+            for (Type t : Type.class.getEnumConstants()){
+                if (t.name().equals(id)){
+                    return t;
+                }
+            }
+            return null;
+        }
     }
 
     public int getPriority() {
@@ -351,6 +367,53 @@ public class AncientFragment {
 
     private static Progression[] r(Progression... a){
         return a;
+    }
+
+
+
+    public static void addFragmentsFromJSON(){
+        List<JsonObject> serializedFragments = JsonFragmentsHelper.readFragments();
+        if (serializedFragments == null) return;
+
+        for (JsonObject jFragment : serializedFragments){
+            Type type = Type.valueOf(GsonHelper.getAsString(jFragment,"type").toUpperCase(Locale.ROOT));
+            RecipeType<?> recipeType = typeById(GsonHelper.getAsString(jFragment,"recipe_type"));
+            if (recipeType == null) continue;
+
+            TranslatableComponent translation = new TranslatableComponent(GsonHelper.getAsString(jFragment,"translation_id"));
+            TranslatableComponent lore = new TranslatableComponent(GsonHelper.getAsString(jFragment,"translation_id_lore"));
+            String id = GsonHelper.getAsString(jFragment,"unique_id");
+            CategoryBase catBase = CategoryBase.valueOf(GsonHelper.getAsString(jFragment,"category_base").toUpperCase(Locale.ROOT));
+            SubCategoryBase subBase = SubCategoryBase.valueOf(GsonHelper.getAsString(jFragment,"sub_category_base").toUpperCase(Locale.ROOT));
+            ProgressionStage stage = ProgressionStage.valueOf(GsonHelper.getAsString(jFragment,"progression_stage").toUpperCase(Locale.ROOT));
+            int priority = GsonHelper.getAsInt(jFragment,"priority");
+
+            if (type == Type.ITEMS){
+                List<ItemStack> items = getItemsFromJSON(jFragment.getAsJsonArray("items"));
+                if (items.isEmpty()) continue;
+                AncientFragment fragment = new AncientFragment(translation,id,stage.ALL_PROGRESSIONS,subBase,catBase,items,recipeType,lore,priority);
+                ALL_FRAGMENTS.add(fragment);
+            }else if (type == Type.INFORMATION){
+
+            }else if (type == Type.ITEM){
+
+            }
+        }
+    }
+
+    private static RecipeType<?> typeById(String id){
+        if (id.equals("infusing")) return SolarForge.INFUSING_RECIPE_TYPE;
+        if (id.equals("infusing_crafting")) return SolarForge.INFUSING_CRAFTING_RECIPE_TYPE;
+        return null;
+    }
+
+    private static List<ItemStack> getItemsFromJSON(JsonArray array){
+        List<ItemStack> items = new ArrayList<>();
+        for (JsonElement f : array){
+            ItemStack item = GsonHelper.getAsItem(f.getAsJsonObject(),"item").getDefaultInstance();
+            items.add(item);
+        }
+        return items;
     }
 
 }

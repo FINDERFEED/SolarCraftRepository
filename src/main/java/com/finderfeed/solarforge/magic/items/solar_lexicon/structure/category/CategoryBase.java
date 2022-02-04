@@ -40,4 +40,12 @@ public enum CategoryBase {
     public static TranslatableComponent tx(String a){
         return new TranslatableComponent(a);
     }
+    public static CategoryBase getByID(String id){
+        for (CategoryBase v : CategoryBase.class.getEnumConstants()){
+            if (v.name().equals(id)){
+                return v;
+            }
+        }
+        return null;
+    }
 }

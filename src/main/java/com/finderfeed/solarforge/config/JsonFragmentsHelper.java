@@ -1,16 +1,17 @@
 package com.finderfeed.solarforge.config;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
+import com.google.gson.*;
 import net.minecraftforge.fml.loading.FMLPaths;
 
+import javax.annotation.Nullable;
 import java.io.IOException;
+import java.io.Reader;
 import java.io.Writer;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class JsonFragmentsHelper {
@@ -35,6 +36,29 @@ public class JsonFragmentsHelper {
         }
     }
 
+    @Nullable
+    public static List<JsonObject> readFragments(){
+        Path filePath = PATH_TO_FRAGMENTS_JSON.resolve("custom_fragments.json");
+        if (Files.exists(filePath)){
+            try {
+                Reader reader = Files.newBufferedReader(filePath);
+                JsonObject object = SERIALIZER.fromJson(reader,JsonObject.class);
+                reader.close();
+
+                JsonArray array = object.getAsJsonArray("fragments");
+                List<JsonObject> l = new ArrayList<>();
+                for (JsonElement e : array){
+                    l.add(e.getAsJsonObject());
+                }
+                return l;
+            }catch (IOException e){
+                e.printStackTrace();
+                return null;
+            }
+        }else{
+            return null;
+        }
+    }
 
 
 

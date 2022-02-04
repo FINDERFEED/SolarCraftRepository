@@ -13,4 +13,5 @@ public class ModEventHandler {
     public static void registerCaps(RegisterCapabilitiesEvent event){
         event.register(SolarForgeMana.class);
     }
+
 }

@@ -9,7 +9,9 @@ public class ItemRator {
     private int iterator = 0;
 
     public ItemRator(Ingredient ingr){
-        this.stacks = ingr.getItems();
+        if (!ingr.isEmpty()) {
+            this.stacks = ingr.getItems();
+        }
     }
 
     public void next(){
@@ -21,6 +23,7 @@ public class ItemRator {
     }
 
     public ItemStack getCurrentStack(){
+        if (stacks == null) return ItemStack.EMPTY;
         return stacks[iterator];
     }
 
