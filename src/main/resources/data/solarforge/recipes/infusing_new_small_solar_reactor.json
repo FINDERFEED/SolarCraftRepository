@@ -1,0 +1,21 @@
+{
+  "type": "solarforge:infusing_new",
+  "items": {
+    "A": {"item": "solarforge:energy_core"},
+    "B": {"item": "solarforge:algadium_ingot"},
+    "C": {"item": "solarforge:solar_dust"},
+    "D": {"item": "solarforge:illidium_ingot"}
+  },
+  "pattern": [
+    " B ",
+    "CC",
+    "BAB",
+    "DD",
+    " B "
+  ],
+  "result": {
+    "item": "solarforge:small_solar_reactor"
+  },
+  "time": 1000,
+  "fragment": "small_solar_reactor"
+}

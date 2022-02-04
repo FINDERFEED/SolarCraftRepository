@@ -1,0 +1,23 @@
+{
+  "type": "solarforge:infusing_new",
+  "items": {
+    "F": {"item": "solarforge:solar_dust"},
+    "G": {"item": "solarforge:qualadium_ingot"},
+    "Q": {"item": "solarforge:energy_dust"}
+  },
+  "pattern": [
+    " Q ",
+    "FF",
+    "QGQ",
+    "FF",
+    " Q "
+  ],
+
+  "result": {
+    "item": "solarforge:charged_qualadium_ingot"
+  },
+  "time": 250,
+  "fragment": "charged_qualadium_ingot",
+  "energy": 5000,
+  "catalysts": " G  G  G  G "
+}

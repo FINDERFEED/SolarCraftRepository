@@ -1,0 +1,25 @@
+{
+  "type": "solarforge:infusing_new",
+  "items": {
+    "C": {"item": "solarforge:amethyst_core"},
+    "D": {"item": "solarforge:ardo_crystal"},
+    "F": {"item": "solarforge:urba_crystal"},
+    "G": {"item": "solarforge:blue_gem_enriched"},
+    "Q": {"item": "solarforge:qualadium_ingot"}
+  },
+  "pattern": [
+    " F ",
+    "GG",
+    "DCD",
+    "QQ",
+    " F "
+  ],
+  "result": {
+    "item": "solarforge:magic_damage_5_module"
+  },
+  "time": 700,
+  "fragment": "modules",
+  "ardo": 2000,
+  "urba": 2000,
+  "catalysts": "A AA AR RR R"
+}

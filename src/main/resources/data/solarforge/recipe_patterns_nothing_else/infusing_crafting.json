@@ -1,17 +1,24 @@
 {
-  "type": "solarforge:infusing_crafting",
+  "type": "solarforge:infusing_new",
+  "items": {
+    "A": {"item": ""},
+    "B": {"item": ""},
+    "C": {"item": ""},
+    "D": {"item": ""},
+    "E": {"item": ""},
+    "F": {"item": ""},
+    "G": {"item": ""}
+  },
   "pattern": [
     "   ",
+    "  ",
     "   ",
+    "  ",
     "   "
   ],
-  "keys": {
-
+  "result": {
+    "item": "solarforge:"
   },
-  "output": {
-    "item": ""
-
-  },
-  "fragment": "",
-  "time": 1
+  "time": 1000,
+  "fragment": "fragment"
 }

@@ -1,0 +1,22 @@
+{
+  "type": "solarforge:infusing_new",
+  "items": {
+    "A": {"item": "solarforge:illidium_axe"},
+    "B": {"item": "solarforge:geminium_ingot"},
+    "C": {"item": "solarforge:qualadium_ingot"}
+  },
+  "pattern": [
+    " B ",
+    "CC",
+    "BAB",
+    "CC",
+    " B "
+  ],
+  "result": {
+    "item": "solarforge:qualadium_axe"
+  },
+  "time": 2500,
+  "fragment": "qualadium_axe",
+  "urba": 2500,
+  "catalysts": "R R   R R   "
+}

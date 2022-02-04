@@ -325,8 +325,8 @@ public class InfuserTileEntity extends AbstractRunicEnergyContainer implements  
     public ClientboundBlockEntityDataPacket getUpdatePacket() {
 
         ClientboundBlockEntityDataPacket pkt = super.getUpdatePacket();
-        CompoundTag tag = pkt.getTag();
-        this.saveAdditional(tag);
+        CompoundTag tag = saveWithFullMetadata();
+        tag.merge(pkt.getTag());
 
         return Helpers.createTilePacket(this,tag);
     }
@@ -474,11 +474,15 @@ public class InfuserTileEntity extends AbstractRunicEnergyContainer implements  
     public void updateStacksInPhantomSlots(){
         List<BlockEntity> list = Structures.checkInfusingStandStructure(worldPosition,level);
         for (int i = 0;i < list.size();i++){
+            int iter = i;
+            if (i >= 6){
+                iter++;
+            }
             if (list.get(i) instanceof InfusingStandTileEntity){
                 InfusingStandTileEntity tile = (InfusingStandTileEntity) list.get(i);
-                this.setItem(i+1,tile.getItem(0));
+                this.setItem(iter,tile.getItem(0));
             }else{
-                this.setItem(i+1, ItemStack.EMPTY);
+                this.setItem(iter, ItemStack.EMPTY);
             }
         }
     }

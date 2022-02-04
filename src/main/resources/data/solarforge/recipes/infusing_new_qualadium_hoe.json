@@ -1,0 +1,22 @@
+{
+  "type": "solarforge:infusing_new",
+  "items": {
+    "A": {"item": "solarforge:illidium_hoe"},
+    "B": {"item": "solarforge:geminium_ingot"},
+    "C": {"item": "solarforge:qualadium_ingot"}
+  },
+  "pattern": [
+    " B ",
+    "CC",
+    "BAB",
+    "CC",
+    " B "
+  ],
+  "result": {
+    "item": "solarforge:qualadium_hoe"
+  },
+  "time": 3000,
+  "fragment": "qualadium_hoe",
+  "tera": 2500,
+  "catalysts": "   T T   T T"
+}

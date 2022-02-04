@@ -1,0 +1,26 @@
+{
+  "type": "solarforge:infusing_new",
+  "items": {
+    "C": {"item": "solarforge:amethyst_core"},
+    "D": {"item": "solarforge:urba_crystal"},
+    "F": {"item": "solarforge:fira_crystal"},
+    "G": {"item": "solarforge:illdium_ingot"},
+    "Q": {"item": "minecraft:cactus"}
+  },
+  "pattern": [
+    " F ",
+    "GG",
+    "DCD",
+    "QQ",
+    " F "
+  ],
+
+  "result": {
+    "item": "solarforge:disarming_thorns_module"
+  },
+  "time": 700,
+  "fragment": "modules",
+  "urba": 2000,
+  "fira": 2000,
+  "catalysts": "R RR RF FF F"
+}

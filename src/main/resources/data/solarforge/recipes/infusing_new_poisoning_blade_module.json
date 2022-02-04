@@ -1,0 +1,25 @@
+{
+  "type": "solarforge:infusing_new",
+  "items": {
+    "C": {"item": "solarforge:amethyst_core"},
+    "D": {"item": "solarforge:fira_crystal"},
+    "F": {"item": "solarforge:urba_crystal"},
+    "G": {"item": "minecraft:spider_eye"},
+    "Q": {"item": "minecraft:illidium_ingot"}
+  },
+  "pattern": [
+    " F ",
+    "GG",
+    "DCD",
+    "QQ",
+    " F "
+  ],
+  "result": {
+    "item": "solarforge:poisoning_blade_module"
+  },
+  "time": 700,
+  "fragment": "modules",
+  "fira": 2000,
+  "urba": 2000,
+  "catalysts": "F FF FR RR R"
+}

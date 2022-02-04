@@ -1,0 +1,25 @@
+{
+  "type": "solarforge:infusing_new",
+  "items": {
+    "A": {"item": "solarforge:medium_solar_reactor"},
+    "B": {"item": "minecraft:iron_block"},
+    "C": {"item": "solarforge:energetic_ingot"},
+    "D": {"item": "solarforge:energy_core"}
+  },
+  "pattern": [
+    "CBC",
+    "DD",
+    "BAB",
+    "DD",
+    "CBC"
+  ],
+  "result": {
+    "item": "solarforge:solar_core_block"
+  },
+  "time": 5000,
+  "fragment": "solar_core",
+  "energy": 20000,
+  "tera": 4000,
+  "urba": 3500,
+  "kelda": 5000
+}

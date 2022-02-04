@@ -1,0 +1,26 @@
+{
+  "type": "solarforge:infusing_new",
+  "items": {
+    "B": {"item": "minecraft:iron_block"},
+    "C": {"item": "solarforge:amethyst_core"},
+    "D": {"item": "solarforge:kelda_crystal"},
+    "F": {"item": "solarforge:urba_crystal"},
+    "G": {"item": "minecraft:diamond"},
+    "Q": {"item": "solarforge:illidium_block"}
+  },
+  "pattern": [
+    " F ",
+    "GG",
+    "DCD",
+    "QQ",
+    " F "
+  ],
+
+  "result": {
+    "item": "solarforge:blessed_module"
+  },
+  "time": 700,
+  "fragment": "modules",
+  "urba": 2000,
+  "kelda": 2000
+}

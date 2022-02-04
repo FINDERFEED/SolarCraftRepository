@@ -24,7 +24,7 @@ public class InfusingStandRenderer implements BlockEntityRenderer<InfusingStandT
     @Override
     public void render(InfusingStandTileEntity tile, float partialTicks, PoseStack matrices, MultiBufferSource buffer, int light1, int light2) {
         matrices.pushPose();
-        if (!tile.isEmpty() && tile.isRenderingItem()) {
+        if (!tile.getItem(0).isEmpty() && tile.isRenderingItem()) {
             matrices.translate(0.5, 0.4, 0.5);
             float time = (tile.getLevel().getGameTime() + partialTicks);
             matrices.mulPose(Vector3f.YP.rotationDegrees((time % 360)*2f));

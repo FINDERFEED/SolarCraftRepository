@@ -41,7 +41,7 @@ public class InfusingStand extends Block implements EntityBlock {
 
         if (te instanceof InfusingStandTileEntity){
             InfusingStandTileEntity ent = (InfusingStandTileEntity) te;
-            ItemStack stacks = ent.getItems().get(0);
+            ItemStack stacks = ent.getItem(0);
             popResource(p_196243_2_,p_196243_3_,stacks);
         }
         super.onRemove(p_196243_1_, p_196243_2_, p_196243_3_, p_196243_4_, p_196243_5_);
@@ -68,11 +68,11 @@ public class InfusingStand extends Block implements EntityBlock {
 
 
     private static void handleContainerClick(BlockState state, Level world, BlockPos pos, Player user, InteractionHand hand, InfusingStandTileEntity tile){
-        if (tile.isEmpty()) {
+        if (tile.getItem(0).isEmpty()) {
             ItemStack stack = user.getItemInHand(hand);
             ItemStack stacktoplace = stack.copy();
             stacktoplace.setCount(1);
-            tile.getItems().set(0, stacktoplace);
+            tile.setItem(0,stacktoplace);
             stack.grow(-1);
         }else{
             ItemStack stack = user.getItemInHand(hand);
@@ -81,7 +81,7 @@ public class InfusingStand extends Block implements EntityBlock {
                 if (containerStack.getMaxStackSize() != 1){
                     if (containerStack.getCount() > 1){
                         popResource(world,pos,containerStack);
-                        tile.clearContent();
+                        tile.setItem(0,ItemStack.EMPTY);
                     }else{
                         if (containerStack.getCount() + stack.getCount() <= containerStack.getMaxStackSize()){
                             containerStack.grow(stack.getCount());
@@ -94,11 +94,11 @@ public class InfusingStand extends Block implements EntityBlock {
                     }
                 }else{
                     popResource(world,pos,containerStack);
-                    tile.clearContent();
+                    tile.setItem(0,ItemStack.EMPTY);
                 }
             }else{
                 popResource(world,pos,tile.getItem(0));
-                tile.clearContent();
+                tile.setItem(0,ItemStack.EMPTY);
             }
 
         }

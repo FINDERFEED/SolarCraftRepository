@@ -104,12 +104,12 @@ public class InfuserRenderer extends AbstractRunicEnergyContainerRenderer<Infuse
         if (tile.getItem(tile.outputSlot()).isEmpty()) {
             matrices.translate(0.5, 0.5, 0.5);
             matrices.mulPose(Vector3f.YP.rotationDegrees((time % 360) * 2f));
-            Minecraft.getInstance().getItemRenderer().render(tile.getItem(0), ItemTransforms.TransformType.GROUND, true,
+            Minecraft.getInstance().getItemRenderer().render(tile.getItem(tile.outputSlot()), ItemTransforms.TransformType.GROUND, true,
                     matrices, buffer, light, light2, Minecraft.getInstance().getItemRenderer().getModel(tile.getItem(0), null, null,0));
         }else{
             matrices.translate(0.5, 0.5, 0.5);
             matrices.mulPose(Vector3f.YP.rotationDegrees((time % 360) * 2f));
-            Minecraft.getInstance().getItemRenderer().render(tile.getItem(9), ItemTransforms.TransformType.GROUND, true,
+            Minecraft.getInstance().getItemRenderer().render(tile.getItem(tile.inputSlot()), ItemTransforms.TransformType.GROUND, true,
                     matrices, buffer, light, light2, Minecraft.getInstance().getItemRenderer().getModel(tile.getItem(9), null, null,0));
         }
 

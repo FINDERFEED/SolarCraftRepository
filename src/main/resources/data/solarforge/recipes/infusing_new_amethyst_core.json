@@ -1,0 +1,21 @@
+{
+  "type": "solarforge:infusing_new",
+  "items": {
+    "B": {"item": "solarforge:small_solar_reactor"},
+    "C": {"item": "solarforge:blue_gem_enriched"},
+    "D": {"item": "minecraft:amethyst_shard"}
+  },
+  "pattern": [
+    " C ",
+    "DD",
+    "CBC",
+    "DD",
+    " C "
+  ],
+
+  "result": {
+    "item": "solarforge:amethyst_core"
+  },
+  "time": 500,
+  "fragment": "amethyst_core"
+}

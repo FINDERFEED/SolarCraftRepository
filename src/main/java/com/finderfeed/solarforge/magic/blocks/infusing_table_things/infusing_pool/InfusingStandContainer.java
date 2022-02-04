@@ -26,7 +26,7 @@ public class InfusingStandContainer extends AbstractContainerMenu {
         int i = (6 - 4) * 18;
 
         // Tile Entity
-        for (int kj = 0; kj <= te.getContainerSize()-1;kj++){
+        for (int kj = 0; kj <= 0;kj++){
             this.addSlot(new Slot((Container) te, kj, 60+kj*22, 33));
         }
 
@@ -71,13 +71,13 @@ public class InfusingStandContainer extends AbstractContainerMenu {
         if (slot != null && slot.hasItem()) {
             ItemStack itemstack1 = slot.getItem();
             itemstack = itemstack1.copy();
-            if (index < this.te.getContainerSize()) {
-                if (!this.moveItemStackTo(itemstack1, this.te.getContainerSize(), this.slots.size(), true)) {
-                    return ItemStack.EMPTY;
-                }
-            } else if (!this.moveItemStackTo(itemstack1, 0, this.te.getContainerSize(), false)) {
-                return ItemStack.EMPTY;
-            }
+//            if (index < this.te.getContainerSize()) {
+//                if (!this.moveItemStackTo(itemstack1, this.te.getContainerSize(), this.slots.size(), true)) {
+//                    return ItemStack.EMPTY;
+//                }
+//            } else if (!this.moveItemStackTo(itemstack1, 0, this.te.getContainerSize(), false)) {
+//                return ItemStack.EMPTY;
+//            }
 
             if (itemstack1.isEmpty()) {
                 slot.set(ItemStack.EMPTY);

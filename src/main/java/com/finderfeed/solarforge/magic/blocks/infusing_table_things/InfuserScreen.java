@@ -167,14 +167,18 @@ public class InfuserScreen extends AbstractContainerScreen<InfuserContainer> {
             renderEnergyBar(matrices, relX + a - 12+1, relY + 145, tile.getRunicEnergy(RunicEnergy.Type.ULTIMA), false);
         }
 
-        renderItemAndTooltip(tile.getItem(1),relX+137+a,relY+58,x,y,matrices);
-        renderItemAndTooltip(tile.getItem(2),relX+123+a,relY+19,x,y,matrices);
-        renderItemAndTooltip(tile.getItem(3),relX+84+a,relY+5,x,y,matrices);
-        renderItemAndTooltip(tile.getItem(4),relX+45+a,relY+19,x,y,matrices);
-        renderItemAndTooltip(tile.getItem(5),relX+31+a,relY+58,x,y,matrices);
-        renderItemAndTooltip(tile.getItem(6),relX+45+a,relY+97,x,y,matrices);
-        renderItemAndTooltip(tile.getItem(7),relX+84+a,relY+111,x,y,matrices);
-        renderItemAndTooltip(tile.getItem(8),relX+123+a,relY+97,x,y,matrices);
+        renderItemAndTooltip(tile.getItem(0), relX + 4 + a + 34,    relY - 8 + a + 20,x,y,matrices);
+        renderItemAndTooltip(tile.getItem(1), relX + 4 + a + 80,    relY - 8 + a + 13,x,y,matrices);
+        renderItemAndTooltip(tile.getItem(2), relX + 4 + a + 126,   relY - 8 + a + 20,x,y,matrices);
+        renderItemAndTooltip(tile.getItem(3), relX + 4 + a + 54,    relY - 8 + a + 40,x,y,matrices);
+        renderItemAndTooltip(tile.getItem(4), relX + 4 + a + 106,   relY - 8 + a + 40,x,y,matrices);
+        renderItemAndTooltip(tile.getItem(5), relX + 4 + a + 27,    relY - 8 + a + 66,x,y,matrices);
+        renderItemAndTooltip(tile.getItem(7), relX + 4 + a + 133,   relY - 8 + a + 66,x,y,matrices);
+        renderItemAndTooltip(tile.getItem(8), relX + 4 + a + 54,    relY - 8 + a + 92,x,y,matrices);
+        renderItemAndTooltip(tile.getItem(9), relX + 4 + a + 106,   relY - 8 + a + 92,x,y,matrices);
+        renderItemAndTooltip(tile.getItem(10),relX + 4 + a + 34,    relY - 8 + a + 112,x,y,matrices);
+        renderItemAndTooltip(tile.getItem(11),relX + 4 + a + 80,    relY - 8 + a + 119,x,y,matrices);
+        renderItemAndTooltip(tile.getItem(12),relX + 4 + a + 126,   relY - 8 + a + 112,x,y,matrices);
 
         if (recipe.isPresent()){
             renderItemAndTooltip(recipe.get().output,relX+159+a,relY+2,x,y,matrices);
