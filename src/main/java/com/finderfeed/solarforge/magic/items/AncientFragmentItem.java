@@ -46,6 +46,7 @@ public class AncientFragmentItem extends Item implements ICustomTooltip {
     @Override
     public void fillItemCategory(CreativeModeTab p_150895_1_, NonNullList<ItemStack> list) {
         super.fillItemCategory(p_150895_1_, list);
+
         if (this.allowdedIn(p_150895_1_)) {
             for (AncientFragment frag : AncientFragment.getAllFragments()) {
                 ItemStack stack = new ItemStack(this, 1);

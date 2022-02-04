@@ -5,7 +5,7 @@
     "D": {"item": "solarforge:fira_crystal"},
     "F": {"item": "solarforge:urba_crystal"},
     "G": {"item": "minecraft:spider_eye"},
-    "Q": {"item": "minecraft:illidium_ingot"}
+    "Q": {"item": "solarforge:illidium_ingot"}
   },
   "pattern": [
     " F ",

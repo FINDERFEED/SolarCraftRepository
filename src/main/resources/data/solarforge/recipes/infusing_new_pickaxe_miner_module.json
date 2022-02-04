@@ -4,7 +4,7 @@
     "C": {"item": "solarforge:amethyst_core"},
     "D": {"item": "solarforge:kelda_crystal"},
     "F": {"item": "solarforge:zeta_crystal"},
-    "G": {"item": "solarforge:iron_pickaxe"},
+    "G": {"item": "minecraft:iron_pickaxe"},
     "Q": {"item": "minecraft:gold_block"}
   },
   "pattern": [

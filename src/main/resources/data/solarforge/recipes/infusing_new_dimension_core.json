@@ -5,7 +5,7 @@
     "C": {"item": "solarforge:first_dimensional_shard"},
     "D": {"item": "solarforge:geminium_ingot"},
     "F": {"item": "solarforge:amethyst_core"},
-    "G": {"item": "minecraft:chiseled_solar_stone"},
+    "G": {"item": "solarforge:chiseled_solar_stone"},
     "Q": {"item": "solarforge:runic_core"},
     "N": {"item": "solarforge:qualadium_ingot"},
     "V": {"item": "solarforge:void_core"}

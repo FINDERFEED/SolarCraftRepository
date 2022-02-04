@@ -1,8 +1,8 @@
 {
   "type": "solarforge:infusing_new",
   "items": {
-    "A": {"item": "solarforge:diamond_boots"},
-    "B": {"item": "solarforge:gold_ingot"},
+    "A": {"item": "minecraft:diamond_boots"},
+    "B": {"item": "minecraft:gold_ingot"},
     "C": {"item": "solarforge:solar_dust"}
   },
   "pattern": [
