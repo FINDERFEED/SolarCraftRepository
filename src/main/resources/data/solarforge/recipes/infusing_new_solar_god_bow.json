@@ -1,0 +1,29 @@
+{
+  "type": "solarforge:infusing_new",
+  "items": {
+    "A": {"item": "minecraft:bow"},
+    "B": {"item": "solarforge:qualadium_ingot"},
+    "C": {"item": "minecraft:glass"},
+    "D": {"item": "solarforge:medium_solar_reactor"},
+    "E": {"item": "solarforge:algadium_ingot"},
+    "F": {"item": "solarforge:materialization_core"}
+  },
+  "pattern": [
+    " D ",
+    "CC",
+    "BAB",
+    "EE",
+    " F "
+  ],
+  "result": {
+    "item": "solarforge:solar_god_bow"
+  },
+  "time": 1500,
+  "fragment": "solar_god_bow",
+  "energy": 5000,
+  "ardo": 2000,
+  "tera": 5000,
+  "urba": 1500,
+  "zeta": 3500,
+  "catalysts":"F    FF    F"
+}

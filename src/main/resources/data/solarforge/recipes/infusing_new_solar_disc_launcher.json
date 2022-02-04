@@ -1,0 +1,24 @@
+{
+  "type": "solarforge:infusing_new",
+  "items": {
+    "A": {"item": "solarforge:small_solar_reactor"},
+    "B": {"item": "solarforge:energy_dust"},
+    "C": {"item": "minecraft:iron_block"},
+    "D": {"item": "minecraft:glass"},
+    "E": {"item": "minecraft:leather"},
+    "F": {"item": "minecraft:iron_ingot"}
+  },
+  "pattern": [
+    " D ",
+    "CC",
+    "BAB",
+    "FF",
+    " E "
+  ],
+  "result": {
+    "item": "solarforge:solar_disc_launcher"
+  },
+  "time": 1500,
+  "fragment": "disc_launcher",
+  "catalysts": "TFT   TFT   "
+}

@@ -1,0 +1,23 @@
+{
+  "type": "solarforge:infusing_new",
+  "items": {
+    "A": {"item": "solarforge:amethyst_core"},
+    "B": {"item": "solarforge:energetic_ingot"},
+    "C": {"item": "solarforge:blue_gem_enriched"},
+    "D": {"item": "solarforge:lensing_crystal"},
+    "E": {"item": "solarforge:energy_core"},
+    "F": {"item": "minecraft:iron_block"}
+  },
+  "pattern": [
+    " D ",
+    "CC",
+    "BAB",
+    "EE",
+    " F "
+  ],
+  "result": {
+    "item": "solarforge:solar_energy_generator"
+  },
+  "time": 1000,
+  "fragment": "solar_energy_generator"
+}

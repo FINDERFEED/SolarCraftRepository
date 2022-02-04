@@ -1,0 +1,23 @@
+{
+  "type": "solarforge:infusing_new",
+  "items": {
+    "A": {"item": "minecraft:compass"},
+    "B": {"item": "solarforge:solar_dust"},
+    "C": {"item": "minecraft:diamond"},
+    "D": {"item": "solarforge:energy_dust"},
+    "E": {"item": "solarforge:illidium_ingot"}
+  },
+  "pattern": [
+    " D ",
+    "CC",
+    "BAB",
+    "EE",
+    " D "
+  ],
+  "result": {
+    "item": "solarforge:turret_radar"
+  },
+  "time": 400,
+  "fragment": "turret_radar",
+  "catalysts": " U  U  U  U "
+}

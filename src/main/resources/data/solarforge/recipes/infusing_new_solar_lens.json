@@ -1,0 +1,21 @@
+{
+  "type": "solarforge:infusing_new",
+  "items": {
+    "A": {"item": "solarforge:cold_star_piece_activated"},
+    "B": {"item": "solarforge:lensing_crystal"},
+    "C": {"item": "minecraft:iron_block"}
+  },
+  "pattern": [
+    " B ",
+    "CC",
+    "BAB",
+    "CC",
+    " B "
+  ],
+  "result": {
+    "item": "solarforge:solar_lens"
+  },
+  "time": 2000,
+  "fragment": "solar_lens",
+  "catalysts": "ZKZZKZZFZZFZ"
+}

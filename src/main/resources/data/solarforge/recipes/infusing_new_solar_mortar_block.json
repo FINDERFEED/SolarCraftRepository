@@ -1,0 +1,29 @@
+{
+  "type": "solarforge:infusing_new",
+  "items": {
+    "A": {"item": "solarforge:algadium_block"},
+    "B": {"item": "solarforge:qualadium_ingot"},
+    "C": {"item": "solarforge:amethyst_core"},
+    "D": {"item": "solarforge:turret_radar"},
+    "E": {"item": "solarforge:materialization_core"},
+    "F": {"item": "solarforge:geminium_ingot"},
+    "K": {"item": "solarforge:ardo_crystal"}
+  },
+  "pattern": [
+    "KDK",
+    "CC",
+    "BAB",
+    "FF",
+    "KEK"
+  ],
+  "result": {
+    "item": "solarforge:solar_mortar_block"
+  },
+  "time": 3000,
+  "fragment": "solar_mortar",
+  "energy": 50000,
+  "zeta": 10000,
+  "kelda": 5000,
+  "fira": 4500,
+  "catalysts": "U KK UU KK U"
+}

@@ -1,0 +1,20 @@
+{
+  "type": "solarforge:infusing_new",
+  "items": {
+    "A": {"item": "solarforge:diamond_leggings"},
+    "B": {"item": "solarforge:gold_ingot"},
+    "C": {"item": "solarforge:solar_dust"}
+  },
+  "pattern": [
+    " B ",
+    "CC",
+    "BAB",
+    "CC",
+    " B "
+  ],
+  "result": {
+    "item": "solarforge:solar_leggins"
+  },
+  "time": 500,
+  "fragment": "solar_leggings"
+}

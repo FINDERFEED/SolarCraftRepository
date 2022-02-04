@@ -164,7 +164,7 @@ public enum AncientFragment {
     ;
 
     public static Map<String,AncientFragment> FRAGMENTS_ID_MAP = new HashMap<>();
-
+    public static List<AncientFragment> ALL_FRAGMENTS = new ArrayList<>();
 
 
 
@@ -210,6 +210,7 @@ public enum AncientFragment {
         this.category = catBase;
         this.subCategory = subBase;
         this.priority = priority;
+
     }
 
     AncientFragment(TranslatableComponent translation, String id, Progression[] neededProgression, SubCategoryBase subBase, CategoryBase catBase, ItemStack item, TranslatableComponent itemLore, RecipeType<?> recipeType, int priority){
@@ -217,22 +218,26 @@ public enum AncientFragment {
         this.item = item;
         this.itemLore = itemLore;
         this.recipeType = recipeType;
+
     }
 
     AncientFragment(TranslatableComponent translation, String id, Progression[] neededProgression, SubCategoryBase subBase, CategoryBase catBase, Multiblocks structure, int priority){
         this(translation,id,neededProgression,subBase,catBase,Type.STRUCTURE,structure.getM().mainBlock.getBlock().asItem(),priority);
         this.structure = structure;
+
     }
 
     AncientFragment(TranslatableComponent translation, String id, Progression[] neededProgression, SubCategoryBase subBase, CategoryBase catBase, Item Icon, TranslatableComponent lore, int priority){
         this(translation,id,neededProgression,subBase,catBase,Type.INFORMATION,Icon,priority);
         this.lore = lore;
+
     }
 
     AncientFragment(TranslatableComponent translation, String id, Progression[] neededProgression, SubCategoryBase subBase, CategoryBase catBase, ItemStack item, TranslatableComponent upgradeLore, int priority){
         this(translation,id,neededProgression,subBase,catBase,Type.UPGRADE,item.getItem(),priority);
         this.item = item;
         this.itemLore = upgradeLore;
+
     }
 
     AncientFragment(TranslatableComponent translation, String id, Progression[] neededProgression, SubCategoryBase subBase, CategoryBase catBase, List<ItemStack> item,RecipeType<?> type, TranslatableComponent upgradeLore, int priority){
@@ -241,10 +246,12 @@ public enum AncientFragment {
         this.itemLore = upgradeLore;
         this.recipeType = type;
 
+
     }
     AncientFragment(TranslatableComponent translation, String id, Progression[] neededProgression, SubCategoryBase subBase, CategoryBase catBase, String screenid, ItemStack logo, int priority){
         this(translation,id,neededProgression,subBase,catBase,Type.CUSTOM,logo.getItem(),priority);
         this.screenID = screenid;
+
     }
 
 

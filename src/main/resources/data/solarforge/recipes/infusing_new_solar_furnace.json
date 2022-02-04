@@ -1,0 +1,26 @@
+{
+  "type": "solarforge:infusing_new",
+  "items": {
+    "A": {"item": "solarforge:illidium_block"},
+    "B": {"item": "solarforge:solar_dust"},
+    "C": {"item": "solarforge:solar_stone_bricks"},
+    "D": {"item": "solarforge:blue_gem_enriched"},
+    "E": {"item": "solarforge:solar_energy_repeater"}
+  },
+  "pattern": [
+    " D ",
+    "CC",
+    "BAB",
+    "CC",
+    " E "
+  ],
+  "result": {
+    "item": "solarforge:solar_furnace"
+  },
+  "time": 500,
+  "fragment": "solar_furnace",
+  "energy": 10000,
+  "fira": 2000,
+  "tera": 1500,
+  "zeta": 1500
+}

@@ -1,0 +1,21 @@
+{
+  "type": "solarforge:infusing_new",
+  "items": {
+    "A": {"item": "minecraft:glass"},
+    "B": {"item": "minecraft:gold_ingot"},
+    "C": {"item": "solarforge:energy_dust"}
+  },
+  "pattern": [
+    " B ",
+    "CC",
+    "BAB",
+    "CC",
+    " B "
+  ],
+  "result": {
+    "item": "solarforge:solar_mana_amulet"
+  },
+  "time": 250,
+  "fragment": "mana_regen_amulet",
+  "catalysts": "   KKK   KKK"
+}

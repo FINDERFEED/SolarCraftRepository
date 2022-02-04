@@ -1,0 +1,27 @@
+{
+  "type": "solarforge:infusing_new",
+  "items": {
+    "A": {"item": "solarforge:solar_god_pickaxe"},
+    "B": {"item": "solarforge:enderium_ingot"},
+    "C": {"item": "solarforge:energetic_ingot"},
+    "D": {"item": "solarforge:charged_qualadium_ingot"},
+    "E": {"item": "solarforge:blue_gem_enriched"}
+  },
+  "pattern": [
+    " D ",
+    "CC",
+    "BAB",
+    "EE",
+    " D "
+  ],
+  "result": {
+    "item": "solarforge:solar_god_pickaxe"
+  },
+  "time": 500,
+  "fragment": "solar_god_pickaxe_upgrade",
+  "tag": "yes",
+  "energy" : 10000,
+  "ardo": 2500,
+  "urba": 1500,
+  "catalysts":"K    KK    K"
+}

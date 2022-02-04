@@ -1,0 +1,26 @@
+{
+  "type": "solarforge:infusing_new",
+  "items": {
+    "A": {"item": "solarforge:solar_god_bow"},
+    "B": {"item": "solarforge:charged_qualadium_ingot"},
+    "C": {"item": "solarforge:energy_dust"},
+    "D": {"item": "solarforge:blue_gem_enriched"}
+  },
+  "pattern": [
+    " B ",
+    "CC",
+    "BAB",
+    "DD",
+    " B "
+  ],
+  "result": {
+    "item": "solarforge:solar_god_bow"
+  },
+  "time": 500,
+  "fragment": "solar_god_bow_upgrade",
+  "tag": "yes",
+  "energy" : 10000,
+  "ardo": 2500,
+  "urba": 1500,
+  "catalysts":"G    GG    G"
+}
