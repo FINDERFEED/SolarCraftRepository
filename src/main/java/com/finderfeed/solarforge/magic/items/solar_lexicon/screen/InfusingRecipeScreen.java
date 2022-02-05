@@ -100,43 +100,20 @@ public class InfusingRecipeScreen extends Screen {
 //        stacks.add(currentRecipe.output);
 
         if (maxPages != 0) {
-            addRenderableWidget(new ImageButton(relX + 180, relY + 9, 16, 16, 0, 0, 0, BUTTONS, 16, 32, (button) -> {
+            addRenderableWidget(new ImageButton(relX + 180, relY + 28, 16, 16, 0, 0, 0, BUTTONS, 16, 32, (button) -> {
                 if ((currentPage + 1 <= maxPages)) {
                     currentPage += 1;
                     this.itemRators.clear();
                     fillItemRators();
-//                    stacks.clear();
-//                    addStack(newRecipe.input1,stacks);
-//                    addStack(newRecipe.input2,stacks);
-//                    addStack(newRecipe.input3,stacks);
-//                    addStack(newRecipe.input4,stacks);
-//                    addStack(newRecipe.input5,stacks);
-//                    addStack(newRecipe.input6,stacks);
-//                    addStack(newRecipe.input7,stacks);
-//                    addStack(newRecipe.input8,stacks);
-//                    addStack(newRecipe.input9,stacks);
-//                    stacks.add(newRecipe.output);
                 }
             },(button,matrices,mousex,mousey)->{
                 renderTooltip(matrices,new TextComponent("Next recipe"),mousex,mousey);
             },new TextComponent("")));
-            addRenderableWidget(new ImageButton(relX + 164, relY + 9, 16, 16, 0, 16, 0, BUTTONS, 16, 32, (button) -> {
+            addRenderableWidget(new ImageButton(relX + 164, relY + 28, 16, 16, 0, 16, 0, BUTTONS, 16, 32, (button) -> {
                 if ((currentPage - 1 >= 0)) {
                     currentPage -= 1;
                     this.itemRators.clear();
                     fillItemRators();
-//                    InfusingRecipe newRecipe = recipe.get(currentPage);
-//                    stacks.clear();
-//                    addStack(newRecipe.input1,stacks);
-//                    addStack(newRecipe.input2,stacks);
-//                    addStack(newRecipe.input3,stacks);
-//                    addStack(newRecipe.input4,stacks);
-//                    addStack(newRecipe.input5,stacks);
-//                    addStack(newRecipe.input6,stacks);
-//                    addStack(newRecipe.input7,stacks);
-//                    addStack(newRecipe.input8,stacks);
-//                    addStack(newRecipe.input9,stacks);
-//                    stacks.add(newRecipe.output);
                 }
             },(button,matrices,mousex,mousey)->{
                 renderTooltip(matrices,new TextComponent("Previous recipe"),mousex,mousey);

@@ -14,6 +14,8 @@ import net.minecraftforge.client.event.RecipesUpdatedEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
+import java.util.Locale;
+
 @Mod.EventBusSubscriber(modid = "solarforge",bus = Mod.EventBusSubscriber.Bus.FORGE,value = Dist.CLIENT)
 public class ScrollThings {
 
@@ -24,13 +26,12 @@ public class ScrollThings {
 
         }
 
+
     }
 
     @SubscribeEvent
     public static void initMaps(final ClientPlayerNetworkEvent.LoggedInEvent event){
 
-
-        AncientFragment.initFragmentsMap();
         BookEntry.initMap();
         if (event.getPlayer() != null) {
             event.getPlayer().sendMessage(new TranslatableComponent("solarcraft.welcome_message"), event.getPlayer().getUUID());

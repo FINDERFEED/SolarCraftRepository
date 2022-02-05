@@ -1,6 +1,7 @@
 package com.finderfeed.solarforge.events.other_events.event_handler;
 
 
+import com.finderfeed.solarforge.ClientHelpers;
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.events.misc.ClientTicker;
 import com.finderfeed.solarforge.magic.blocks.infusing_table_things.InfuserTileEntity;
@@ -24,6 +25,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.ClientPlayerNetworkEvent;
 import net.minecraftforge.client.event.RenderLevelLastEvent;
 
 import net.minecraftforge.common.Tags;
@@ -41,7 +43,12 @@ public class ClientEventsHandler {
     private static ArrayList<String> TICKERS_TO_REMOVE = new ArrayList<>();
     private static List<BlockPos> ORES_RENDER_POSITIONS = new ArrayList<>();
     private static List<BlockPos> CATALYST_RENDER_POSITIONS = new ArrayList<>();
-    private static int testField = 0;
+
+
+    @SubscribeEvent
+    public static void onPlayerLogout(final ClientPlayerNetworkEvent.LoggedOutEvent event){
+        ClientHelpers.deleteCachedFragments();
+    }
 
     @SubscribeEvent
     public static void manageTickers(TickEvent.ClientTickEvent event) {

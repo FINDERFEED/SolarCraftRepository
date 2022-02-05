@@ -15,6 +15,7 @@ public class ItemRator {
     }
 
     public void next(){
+        if (stacks == null) return;
         if (iterator + 1 >= stacks.length){
             iterator = 0;
         }else{

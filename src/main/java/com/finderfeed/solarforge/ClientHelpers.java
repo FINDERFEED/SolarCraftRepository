@@ -5,6 +5,7 @@ import com.finderfeed.solarforge.client.particles.ParticleTypesRegistry;
 import com.finderfeed.solarforge.client.particles.SmallSolarStrikeParticle;
 import com.finderfeed.solarforge.client.particles.SolarcraftParticle;
 import com.finderfeed.solarforge.client.toasts.UnlockedEnergyTypeToast;
+import com.finderfeed.solarforge.config.JsonFragmentsHelper;
 import com.finderfeed.solarforge.entities.BallLightningProjectile;
 import com.finderfeed.solarforge.events.RenderEventsHandler;
 import com.finderfeed.solarforge.local_library.effects.LightningBoltPath;
@@ -21,6 +22,7 @@ import com.finderfeed.solarforge.registries.sounds.Sounds;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.SolarLexicon;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.achievements.Progression;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.unlockables.ProgressionHelper;
+import com.google.gson.JsonObject;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Widget;
@@ -52,12 +54,27 @@ import net.minecraftforge.items.IItemHandler;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
 
 public class ClientHelpers {
 
+
+    public static void deserializeServersideFragmentsAndPutThemInList(JsonObject object){
+        List<AncientFragment> fragments = AncientFragment.deserializeFragments(JsonFragmentsHelper.serializedFragmentsArray(object));
+        AncientFragment.CLIENTSIDE_FRAGMENTS_CACHE.addAll(fragments);
+        AncientFragment.ALL_FRAGMENTS.addAll(fragments);
+
+        AncientFragment.initFragmentsMap();
+    }
+
+    public static void deleteCachedFragments(){
+        AncientFragment.ALL_FRAGMENTS.removeAll(AncientFragment.CLIENTSIDE_FRAGMENTS_CACHE);
+        AncientFragment.CLIENTSIDE_FRAGMENTS_CACHE.clear();
+        AncientFragment.FRAGMENTS_ID_MAP.clear();
+    }
 
     public static void handleBallLightningProjectileParticles(Vec3 pos){
         Level level = Minecraft.getInstance().level;

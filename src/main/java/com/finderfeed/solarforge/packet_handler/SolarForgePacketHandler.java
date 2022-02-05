@@ -67,6 +67,7 @@ public class SolarForgePacketHandler {
         INSTANCE.registerMessage(nextID(), UpdateFragmentsOnClient.class, UpdateFragmentsOnClient::toBytes, UpdateFragmentsOnClient::new, UpdateFragmentsOnClient::handle);
         INSTANCE.registerMessage(nextID(), UpdateRunePattern.class, UpdateRunePattern::toBytes, UpdateRunePattern::new, UpdateRunePattern::handle);
         INSTANCE.registerMessage(nextID(), BallLightningSpawnLightningParticles.class, BallLightningSpawnLightningParticles::toBytes, BallLightningSpawnLightningParticles::new, BallLightningSpawnLightningParticles::handle);
+        INSTANCE.registerMessage(nextID(), SendFragmentsToClientPacket.class, SendFragmentsToClientPacket::toBytes, SendFragmentsToClientPacket::new, SendFragmentsToClientPacket::handle);
     }
 //            INSTANCE.registerMessage(nextID(), .class, ::toBytes, ::new, ::handle);
     //RepeaterParentUpdateOnClient

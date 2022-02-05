@@ -3,6 +3,7 @@ package com.finderfeed.solarforge.capabilities.solar_lexicon;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.unlockables.AncientFragment;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.core.Direction;
+import net.minecraft.nbt.Tag;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.common.util.LazyOptional;
@@ -37,6 +38,9 @@ public class InventoryProvider implements ICapabilitySerializable<CompoundTag> {
 
     @Override
     public void deserializeNBT(CompoundTag nbt) {
+        if (nbt.contains("Size", Tag.TAG_INT)){
+            nbt.putInt("Size",AncientFragment.getAllFragments().length);
+        }
         lexicon_inv.deserializeNBT(nbt);
     }
 }

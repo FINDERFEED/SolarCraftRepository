@@ -228,7 +228,6 @@ public class SolarForge
     private void setup(final FMLCommonSetupEvent event)
     {
         JsonFragmentsHelper.setupJSON();
-        AncientFragment.addFragmentsFromJSON();
         Tags.init();
         AbilitiesRegistry.ABILITIES.registerAll();
         TierSortingRegistry.registerTier(SolarCraftToolTiers.ILLIDIUM_TOOLS_TIER,new ResourceLocation("illidium"), List.of(Tiers.DIAMOND),List.of());

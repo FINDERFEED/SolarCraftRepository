@@ -28,6 +28,7 @@ import net.minecraftforge.network.NetworkHooks;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class SolarLexicon extends Item {
 
