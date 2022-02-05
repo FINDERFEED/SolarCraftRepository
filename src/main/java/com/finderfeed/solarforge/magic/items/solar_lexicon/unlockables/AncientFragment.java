@@ -11,6 +11,7 @@ import com.finderfeed.solarforge.registries.items.ItemsRegister;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -18,6 +19,7 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistries;
+import static com.finderfeed.solarforge.registries.items.ItemsRegister.*;
 
 import java.util.*;
 
@@ -162,9 +164,9 @@ public class AncientFragment {
     public static final AncientFragment SOLAR_GOD_BOW = new AncientFragment(tx("solar_fragment.solar_god_bow"),"solar_god_bow",ProgressionStage.SOLAR_ENERGY.ALL_PROGRESSIONS,SubCategoryBase.MASTER_ITEMS,CategoryBase.MASTER,ItemsRegister.SOLAR_GOD_BOW.get().getDefaultInstance(),tx("solar_god_bow.lore"), SolarForge.INFUSING_RECIPE_TYPE,8);
     public static final AncientFragment SOLAR_GOD_BOW_UPGRADE = new AncientFragment(tx("solar_fragment.solar_god_bow_upgrade"),"solar_god_bow_upgrade",ProgressionStage.SOLAR_ENERGY.ALL_PROGRESSIONS,SubCategoryBase.UPGRADES,CategoryBase.UPGRADES,ItemsRegister.SOLAR_GOD_BOW.get().getDefaultInstance(),tx("solar_god_bow_upgrade.lore"),8);
     public static final AncientFragment AMULETS = new AncientFragment(tx("solar_fragment.amulets"),"amulets",ProgressionStage.AFTER_LENS.ALL_PROGRESSIONS,SubCategoryBase.SKILLED_ITEMS,CategoryBase.SKILLED,List.of(
-            ItemsRegister.REGEN_AMULET.get().getDefaultInstance(),ItemsRegister.JUMP_AMULET.get().getDefaultInstance(),
-            ItemsRegister.SPEED_AMULET.get().getDefaultInstance(),ItemsRegister.HASTE_AMULET.get().getDefaultInstance(),
-            ItemsRegister.NIGHT_VISION_AMULET.get().getDefaultInstance(),ItemsRegister.STRENGTH_AMULET.get().getDefaultInstance()
+            ItemWithRecipe.of(REGEN_AMULET.get().getDefaultInstance(),"infusing_new_regen_amulet"),ItemsRegister.JUMP_AMULET.get().getDefaultInstance(),
+            ItemWithRecipe.of(SPEED_AMULET.get().getDefaultInstance(),"infusing_new_speed_amulet"),ItemsRegister.HASTE_AMULET.get().getDefaultInstance(),
+            ItemWithRecipe.of(NIGHT_VISION_AMULET.get().getDefaultInstance(),"infusing_new_night_vision_amulet"),ItemsRegister.STRENGTH_AMULET.get().getDefaultInstance()
     ),SolarForge.INFUSING_RECIPE_TYPE,tx("amulets.lore"),5);
     public static final AncientFragment RADIANT_LAND_LORE = new AncientFragment(tx("solar_fragment.radiant_land"),"radiant_land",ProgressionStage.DIMENSION.ALL_PROGRESSIONS,SubCategoryBase.RADIANT_LAND,CategoryBase.MIDGAME,"radiant_land_lore",ItemsRegister.DIMENSION_CORE.get().getDefaultInstance(),9);
     public static final AncientFragment DEFENCE_CRYSTAL = new AncientFragment(tx("solar_fragment.defence_crystal"),"defence_crystal",ProgressionStage.DIMENSION.ALL_PROGRESSIONS,SubCategoryBase.RADIANT_LAND,CategoryBase.MIDGAME,"defence_crystal_lore",ItemsRegister.CRYSTALLITE_CORE.get().getDefaultInstance(),9);
@@ -198,9 +200,9 @@ public class AncientFragment {
     private final CategoryBase category;
 
     private final int priority;
-    private List<ItemStack> stacks;
+    private List<ItemWithRecipe> stacks;
     private Multiblocks structure;
-    private ItemStack item;
+    private ItemWithRecipe item;
     private TranslatableComponent lore;
     private TranslatableComponent itemLore;
     private RecipeType<?> recipeType;
@@ -223,8 +225,8 @@ public class AncientFragment {
         }
     }
 
-    AncientFragment(TranslatableComponent translation, String id, Progression[] neededProgression, SubCategoryBase subBase, CategoryBase catBase, ItemStack item, TranslatableComponent itemLore, RecipeType<?> recipeType, int priority){
-        this(translation,id,neededProgression,subBase,catBase,Type.ITEM,item.getItem(),priority,false);
+    AncientFragment(TranslatableComponent translation, String id, Progression[] neededProgression, SubCategoryBase subBase, CategoryBase catBase, ItemWithRecipe item, TranslatableComponent itemLore, RecipeType<?> recipeType, int priority){
+        this(translation,id,neededProgression,subBase,catBase,Type.ITEM,item.getItem().getItem(),priority,false);
         this.item = item;
         this.itemLore = itemLore;
         this.recipeType = recipeType;
@@ -243,15 +245,15 @@ public class AncientFragment {
 
     }
 
-    AncientFragment(TranslatableComponent translation, String id, Progression[] neededProgression, SubCategoryBase subBase, CategoryBase catBase, ItemStack item, TranslatableComponent upgradeLore, int priority){
-        this(translation,id,neededProgression,subBase,catBase,Type.UPGRADE,item.getItem(),priority,false);
+    AncientFragment(TranslatableComponent translation, String id, Progression[] neededProgression, SubCategoryBase subBase, CategoryBase catBase, ItemWithRecipe item, TranslatableComponent upgradeLore, int priority){
+        this(translation,id,neededProgression,subBase,catBase,Type.UPGRADE,item.getItem().getItem(),priority,false);
         this.item = item;
         this.itemLore = upgradeLore;
 
     }
 
-    AncientFragment(TranslatableComponent translation, String id, Progression[] neededProgression, SubCategoryBase subBase, CategoryBase catBase, List<ItemStack> item,RecipeType<?> type, TranslatableComponent upgradeLore, int priority){
-        this(translation,id,neededProgression,subBase,catBase,Type.ITEMS,item.get(0).getItem(),priority,false);
+    AncientFragment(TranslatableComponent translation, String id, Progression[] neededProgression, SubCategoryBase subBase, CategoryBase catBase, List<ItemWithRecipe> item,RecipeType<?> type, TranslatableComponent upgradeLore, int priority){
+        this(translation,id,neededProgression,subBase,catBase,Type.ITEMS,item.get(0).getItem().getItem(),priority,false);
         this.stacks = item;
         this.itemLore = upgradeLore;
         this.recipeType = type;
@@ -271,21 +273,23 @@ public class AncientFragment {
         this.lore = lore;
 
     }
-    AncientFragment(TranslatableComponent translation, String id, Progression[] neededProgression, SubCategoryBase subBase, CategoryBase catBase, ItemStack item, TranslatableComponent itemLore, RecipeType<?> recipeType, int priority,boolean jsonInit){
-        this(translation,id,neededProgression,subBase,catBase,Type.ITEM,item.getItem(),priority,jsonInit);
+    AncientFragment(TranslatableComponent translation, String id, Progression[] neededProgression, SubCategoryBase subBase, CategoryBase catBase, ItemWithRecipe item, TranslatableComponent itemLore, RecipeType<?> recipeType, int priority,boolean jsonInit){
+        this(translation,id,neededProgression,subBase,catBase,Type.ITEM,item.getItem().getItem(),priority,jsonInit);
         this.item = item;
         this.itemLore = itemLore;
         this.recipeType = recipeType;
 
     }
 
-    AncientFragment(TranslatableComponent translation, String id, Progression[] neededProgression, SubCategoryBase subBase, CategoryBase catBase, List<ItemStack> item,RecipeType<?> type, TranslatableComponent upgradeLore, int priority,boolean jsonInit){
-        this(translation,id,neededProgression,subBase,catBase,Type.ITEMS,item.get(0).getItem(),priority,jsonInit);
+    AncientFragment(TranslatableComponent translation, String id, Progression[] neededProgression, SubCategoryBase subBase, CategoryBase catBase, List<ItemWithRecipe> item,RecipeType<?> type, TranslatableComponent upgradeLore, int priority,boolean jsonInit){
+        this(translation,id,neededProgression,subBase,catBase,Type.ITEMS,item.get(0).getItem().getItem(),priority,jsonInit);
         this.stacks = item;
         this.itemLore = upgradeLore;
         this.recipeType = type;
     }
     //json constructors end
+
+
 
     private void addFragToList(){
 
@@ -305,7 +309,7 @@ public class AncientFragment {
         return subCategory;
     }
 
-    public List<ItemStack> getStacks() {
+    public List<ItemWithRecipe> getStacks() {
         return stacks;
     }
 
@@ -330,7 +334,7 @@ public class AncientFragment {
         return structure;
     }
 
-    public ItemStack getItem() {
+    public ItemWithRecipe getItem() {
         return item;
     }
 
@@ -416,7 +420,7 @@ public class AncientFragment {
             if (type == Type.ITEMS){
                 RecipeType<?> recipeType = typeById(GsonHelper.getAsString(jFragment,"recipe_type"));
                 if (recipeType == null || recipeType == SolarForge.SOLAR_SMELTING) continue;
-                List<ItemStack> items = getItemsFromJSON(jFragment.getAsJsonArray("items"));
+                List<ItemWithRecipe> items = getItemsFromJSON(jFragment.getAsJsonArray("items"));
                 if (items.isEmpty()) continue;
                 AncientFragment fragment = new AncientFragment(translation,id,stage.ALL_PROGRESSIONS,subBase,catBase,items,recipeType,lore,priority,true);
                 fragments.add(fragment);
@@ -427,7 +431,8 @@ public class AncientFragment {
             }else if (type == Type.ITEM){
                 RecipeType<?> recipeType = typeById(GsonHelper.getAsString(jFragment,"recipe_type"));
                 ItemStack item = GsonHelper.getAsItem(jFragment.getAsJsonObject("recipe_item"),"item").getDefaultInstance();
-                AncientFragment fragment = new AncientFragment(translation,id,stage.ALL_PROGRESSIONS,subBase,catBase,item,lore,recipeType,priority,true);
+                ResourceLocation location = new ResourceLocation(GsonHelper.getAsString(jFragment.getAsJsonObject("recipe_item"),"recipe_id"));
+                AncientFragment fragment = new AncientFragment(translation,id,stage.ALL_PROGRESSIONS,subBase,catBase,new ItemWithRecipe(item,location),lore,recipeType,priority,true);
                 fragments.add(fragment);
             }
         }
@@ -441,13 +446,36 @@ public class AncientFragment {
         return null;
     }
 
-    private static List<ItemStack> getItemsFromJSON(JsonArray array){
-        List<ItemStack> items = new ArrayList<>();
+    private static List<ItemWithRecipe> getItemsFromJSON(JsonArray array){
+        List<ItemWithRecipe> items = new ArrayList<>();
         for (JsonElement f : array){
             ItemStack item = GsonHelper.getAsItem(f.getAsJsonObject(),"item").getDefaultInstance();
-            items.add(item);
+            ResourceLocation location = new ResourceLocation(GsonHelper.getAsString(f.getAsJsonObject(),"recipe_id"));
+            items.add(new ItemWithRecipe(item,location));
         }
         return items;
     }
 
+    private static class ItemWithRecipe{
+
+        private final ResourceLocation RECIPE_LOCATION;
+        private final ItemStack ITEM;
+
+        private ItemWithRecipe(ItemStack stack,ResourceLocation resourceLocation){
+            this.RECIPE_LOCATION = resourceLocation;
+            this.ITEM = stack;
+        }
+
+        private static ItemWithRecipe of(ItemStack stack,String recipeID){
+            return new ItemWithRecipe(stack,new ResourceLocation(SolarForge.MOD_ID,recipeID));
+        }
+
+        public ItemStack getItem() {
+            return ITEM;
+        }
+
+        public ResourceLocation getRecipeLocation() {
+            return RECIPE_LOCATION;
+        }
+    }
 }
