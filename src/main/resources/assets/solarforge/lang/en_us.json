@@ -640,7 +640,9 @@
   "crystal_cores.lore": "A cores made from infused crystals can serve as a good crafting material with unique properties.",
   "lightning_gun.lore": "A powerful weapon that fires a ball lightning on use. Ball lightning damages all mobs in 10 radius on impact (Damage: 10). Manacost: 50/shot.",
   "solar_fragment.lightning_gun": "Lightning Emitter",
-  "solar_category.beginner_blocks": "Blocks"
+  "solar_category.beginner_blocks": "Blocks",
+  "testlore_info": "A cool block of dirt out there!",
+  "testlore_item": "Here is the craft for this dirt block!"
 
 
 

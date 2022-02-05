@@ -35,11 +35,11 @@ public class InfuserRenderer extends AbstractRunicEnergyContainerRenderer<Infuse
             matrices.pushPose();
 
             matrices.translate(0, -0.30, 0);
-            float bigTing = 33 - (time + 15) % 67;
-            if (bigTing >= 0) {
-                matrices.translate(0, bigTing / 100, 0);
+            float bigRing = 33 - (time + 15) % 67;
+            if (bigRing >= 0) {
+                matrices.translate(0, bigRing / 100, 0);
             } else {
-                matrices.translate(0, -bigTing / 100, 0);
+                matrices.translate(0, -bigRing / 100, 0);
             }
             drawRing(partialTicks, matrices, buffer, light, light2, 0.75f,time*2);
             matrices.popPose();
@@ -105,12 +105,12 @@ public class InfuserRenderer extends AbstractRunicEnergyContainerRenderer<Infuse
             matrices.translate(0.5, 0.5, 0.5);
             matrices.mulPose(Vector3f.YP.rotationDegrees((time % 360) * 2f));
             Minecraft.getInstance().getItemRenderer().render(tile.getItem(tile.outputSlot()), ItemTransforms.TransformType.GROUND, true,
-                    matrices, buffer, light, light2, Minecraft.getInstance().getItemRenderer().getModel(tile.getItem(0), null, null,0));
+                    matrices, buffer, light, light2, Minecraft.getInstance().getItemRenderer().getModel(tile.getItem(tile.outputSlot()), null, null,0));
         }else{
             matrices.translate(0.5, 0.5, 0.5);
             matrices.mulPose(Vector3f.YP.rotationDegrees((time % 360) * 2f));
             Minecraft.getInstance().getItemRenderer().render(tile.getItem(tile.inputSlot()), ItemTransforms.TransformType.GROUND, true,
-                    matrices, buffer, light, light2, Minecraft.getInstance().getItemRenderer().getModel(tile.getItem(9), null, null,0));
+                    matrices, buffer, light, light2, Minecraft.getInstance().getItemRenderer().getModel(tile.getItem(tile.inputSlot()), null, null,0));
         }
 
         matrices.popPose();
@@ -126,7 +126,8 @@ public class InfuserRenderer extends AbstractRunicEnergyContainerRenderer<Infuse
 
             matrices.translate(0.5,0.5,0.5);
             matrices.mulPose(Vector3f.YN.rotationDegrees(rotValue * 360));
-            for (int i = 1; i < 9; i++) {
+            for (int i = 0; i < 14; i++) {
+                if (i == 6) continue;
                 ItemStack item = stacks.get(i);
                 if (!item.isEmpty()) {
                     BlockPos p = offsets[i - 1];

@@ -421,11 +421,14 @@ public class AncientFragment {
                 AncientFragment fragment = new AncientFragment(translation,id,stage.ALL_PROGRESSIONS,subBase,catBase,items,recipeType,lore,priority,true);
                 fragments.add(fragment);
             }else if (type == Type.INFORMATION){
-
-
-
+                ItemStack item = GsonHelper.getAsItem(jFragment.getAsJsonObject("icon"),"item").getDefaultInstance();
+                AncientFragment fragment = new AncientFragment(translation,id,stage.ALL_PROGRESSIONS,subBase,catBase,item.getItem(),lore,priority,true);
+                fragments.add(fragment);
             }else if (type == Type.ITEM){
-
+                RecipeType<?> recipeType = typeById(GsonHelper.getAsString(jFragment,"recipe_type"));
+                ItemStack item = GsonHelper.getAsItem(jFragment.getAsJsonObject("recipe_item"),"item").getDefaultInstance();
+                AncientFragment fragment = new AncientFragment(translation,id,stage.ALL_PROGRESSIONS,subBase,catBase,item,lore,recipeType,priority,true);
+                fragments.add(fragment);
             }
         }
         return fragments;

@@ -190,27 +190,28 @@ public class InfuserTileEntity extends AbstractRunicEnergyContainer implements  
             IItemHandler inv = tile.getInventory();
             if (inv == null) return;
             tile.updateStacksInPhantomSlots();
-            Optional<InfusingRecipe> recipe = tile.level.getRecipeManager().getRecipeFor(SolarForge.INFUSING_RECIPE_TYPE, new PhantomInventory(inv),world);
+            if (tile.RECIPE_IN_PROGRESS) {
+                Optional<InfusingRecipe> recipe = tile.level.getRecipeManager().getRecipeFor(SolarForge.INFUSING_RECIPE_TYPE, new PhantomInventory(inv), world);
 
-                if (recipe.isEmpty()){
+                if (recipe.isEmpty()) {
                     tile.RECIPE_IN_PROGRESS = false;
-                    tile.CURRENT_PROGRESS =0;
+                    tile.CURRENT_PROGRESS = 0;
                     tile.INFUSING_TIME = 0;
                     tile.requiresEnergy = false;
                     tile.onTileRemove();
                     tile.clearWays();
                 }
-                if (tile.RECIPE_IN_PROGRESS && tile.catalystsMatch(recipe.get()) && tile.isStructureCorrect()){
+                if (tile.RECIPE_IN_PROGRESS && tile.catalystsMatch(recipe.get()) && tile.isStructureCorrect()) {
 
                     tile.setChanged();
-                    world.sendBlockUpdated(tile.worldPosition,blockState,blockState,3);
+                    world.sendBlockUpdated(tile.worldPosition, blockState, blockState, 3);
                     InfusingRecipe recipe1 = recipe.get();
 
                     int count = tile.getMinRecipeCountOutput(recipe1);
-                    Map<RunicEnergy.Type,Double> costs = recipe1.RUNIC_ENERGY_COST;
-                    tile.INFUSING_TIME = recipe1.infusingTime*count;
+                    Map<RunicEnergy.Type, Double> costs = recipe1.RUNIC_ENERGY_COST;
+                    tile.INFUSING_TIME = recipe1.infusingTime * count;
 
-                    boolean check = tile.hasEnoughRunicEnergy(costs,count);
+                    boolean check = tile.hasEnoughRunicEnergy(costs, count);
                     if ((tile.energy >= recipe1.requriedEnergy * count) && check) {
                         tile.onTileRemove();
                         tile.clearWays();
@@ -224,14 +225,15 @@ public class InfuserTileEntity extends AbstractRunicEnergyContainer implements  
                         tile.requiresEnergy = !(tile.energy >= recipe1.requriedEnergy * count);
                     }
 
-                }else{
+                } else {
                     tile.RECIPE_IN_PROGRESS = false;
-                    tile.CURRENT_PROGRESS =0;
+                    tile.CURRENT_PROGRESS = 0;
                     tile.INFUSING_TIME = 0;
                     tile.requiresEnergy = false;
                     tile.onTileRemove();
                     tile.clearWays();
                 }
+            }
 
 //                if (world.getGameTime() % 5 == 0) {
 //                    sendUpdatePackets(world, tile);
@@ -418,7 +420,12 @@ public class InfuserTileEntity extends AbstractRunicEnergyContainer implements  
     }
 
     public void triggerCrafting(Player playerEntity){
-        Optional<InfusingRecipe> recipe = this.level.getRecipeManager().getRecipeFor(SolarForge.INFUSING_RECIPE_TYPE,(Container) this,level);
+        if (getInventory() == null) {
+            playerEntity.sendMessage(new TextComponent("Cant access inventory").withStyle(ChatFormatting.RED),
+                    playerEntity.getUUID());
+            return;
+        }
+        Optional<InfusingRecipe> recipe = this.level.getRecipeManager().getRecipeFor(SolarForge.INFUSING_RECIPE_TYPE,new PhantomInventory(getInventory()),level);
         calculateTier();
         try {
             if (recipe.isPresent() && ProgressionHelper.doPlayerHasFragment(playerEntity, AncientFragment.getFragmentByID(recipe.get().child))) {
