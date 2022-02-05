@@ -64,10 +64,30 @@ public class ClientHelpers {
 
     public static void deserializeServersideFragmentsAndPutThemInList(JsonObject object){
         List<AncientFragment> fragments = AncientFragment.deserializeFragments(JsonFragmentsHelper.serializedFragmentsArray(object));
-        AncientFragment.CLIENTSIDE_FRAGMENTS_CACHE.addAll(fragments);
-        AncientFragment.ALL_FRAGMENTS.addAll(fragments);
-
+        for (AncientFragment fragment : fragments) {
+            AncientFragment check = listAlreadyContainsThatFragment(fragment);
+            if (check == null) {
+                AncientFragment.CLIENTSIDE_FRAGMENTS_CACHE.add(fragment);
+                AncientFragment.ALL_FRAGMENTS.add(fragment);
+            }else{
+                AncientFragment.CLIENTSIDE_FRAGMENTS_CACHE.add(check);
+            }
+        }
         AncientFragment.initFragmentsMap();
+    }
+
+
+    /**
+     * Method to fix that singleplayer client-server shit
+     */
+    private static AncientFragment listAlreadyContainsThatFragment(AncientFragment jsonFragment){
+        for (int i = AncientFragment.ALL_FRAGMENTS.size() - 1;i >= 0;i--){
+            AncientFragment f = AncientFragment.ALL_FRAGMENTS.get(i);
+            if (f.getId().equals(jsonFragment.getId())){
+                return f;
+            }
+        }
+        return null;
     }
 
     public static void deleteCachedFragments(){

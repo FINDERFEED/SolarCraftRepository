@@ -33,7 +33,7 @@ public class OnPlayerJoin {
 
             if (JsonFragmentsHelper.fragmentsShouldBeRead()){
                 List<AncientFragment> fragsDes = AncientFragment.deserializeFragments(JsonFragmentsHelper.readFragments());
-                System.out.println("object on server " + fragsDes);
+
                 if (fragsDes != null) {
                     AncientFragment.ALL_FRAGMENTS.addAll(fragsDes);
                 }
