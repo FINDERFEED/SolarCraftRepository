@@ -42,9 +42,9 @@ public class ScrollThings {
 
     @SubscribeEvent
     public static void initRecipes(final RecipesUpdatedEvent event){
-        ProgressionHelper.initInfRecipesMap(event.getRecipeManager());
-        ProgressionHelper.initSmeltingRecipesMap(event.getRecipeManager());
-        ProgressionHelper.initInfusingCraftingRecipes(event.getRecipeManager());
+//        ProgressionHelper.initInfRecipesMap(event.getRecipeManager());
+//        ProgressionHelper.initSmeltingRecipesMap(event.getRecipeManager());
+//        ProgressionHelper.initInfusingCraftingRecipes(event.getRecipeManager());
     }
 
 }

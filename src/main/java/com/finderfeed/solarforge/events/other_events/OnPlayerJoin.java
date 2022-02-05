@@ -8,8 +8,10 @@ import com.finderfeed.solarforge.magic.items.solar_lexicon.unlockables.BookEntry
 import com.finderfeed.solarforge.magic.items.solar_lexicon.unlockables.ProgressionHelper;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import com.google.gson.JsonObject;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraftforge.client.event.ClientPlayerNetworkEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -17,6 +19,7 @@ import net.minecraftforge.fml.common.Mod;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE,modid = "solarforge")
@@ -46,11 +49,9 @@ public class OnPlayerJoin {
 
             AncientFragment.initFragmentsMap();
             BookEntry.initMap();
-            ProgressionHelper.initInfRecipesMap(event.getPlayer().level.getRecipeManager());
-            ProgressionHelper.initSmeltingRecipesMap(event.getPlayer().level.getRecipeManager());
-            ProgressionHelper.initInfusingCraftingRecipes(event.getPlayer().level.getRecipeManager());
-
-
+//            ProgressionHelper.initInfRecipesMap(event.getPlayer().level.getRecipeManager());
+//            ProgressionHelper.initSmeltingRecipesMap(event.getPlayer().level.getRecipeManager());
+//            ProgressionHelper.initInfusingCraftingRecipes(event.getPlayer().level.getRecipeManager());
 
         }
     }

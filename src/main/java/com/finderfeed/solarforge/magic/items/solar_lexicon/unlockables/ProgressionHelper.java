@@ -26,10 +26,10 @@ public class ProgressionHelper {
 
 
     public static final String COMPOUND_TAG_FRAGMENTS = "fragments";
-    public static Map<Item, InfusingRecipe> INFUSING_RECIPE_MAP = new HashMap<>();
-    public static Map<Item, InfusingRecipe> UPGRADES_INFUSING_RECIPE_MAP = new HashMap<>();
-    public static Map<Item, SolarSmeltingRecipe> SMELTING_RECIPE_MAP = new HashMap<>();
-    public static Map<Item, InfusingCraftingRecipe> INFUSING_CRAFTING_RECIPE_MAP = new HashMap<>();
+//    public static Map<Item, InfusingRecipe> INFUSING_RECIPE_MAP = new HashMap<>();
+//    public static Map<Item, InfusingRecipe> UPGRADES_INFUSING_RECIPE_MAP = new HashMap<>();
+//    public static Map<Item, SolarSmeltingRecipe> SMELTING_RECIPE_MAP = new HashMap<>();
+//    public static Map<Item, InfusingCraftingRecipe> INFUSING_CRAFTING_RECIPE_MAP = new HashMap<>();
     public static final String UNLOCK_PATTERN = "solar_forge_player_pattern";
     public static final String TAG_ELEMENT = "fragment";
     public static final String FRAG_ID = "fragmentid";
@@ -217,44 +217,44 @@ public class ProgressionHelper {
         return  pe.getPersistentData().getBoolean(Helpers.FRAGMENT+frag.getId());
     }
 
-    public static InfusingRecipe getInfusingRecipeForItem(Item item){
-        return INFUSING_RECIPE_MAP.get(item);
-    }
-    public static InfusingCraftingRecipe getInfusingCraftingRecipeForItem(Item item){
-        return INFUSING_CRAFTING_RECIPE_MAP.get(item);
-    }
-
-    public static SolarSmeltingRecipe getSolarSmeltingRecipeForItem(Item item){
-        return SMELTING_RECIPE_MAP.get(item);
-    }
-
-
-    public static void initInfRecipesMap(RecipeManager manager){
-        List<InfusingRecipe> list = manager.getAllRecipesFor(SolarForge.INFUSING_RECIPE_TYPE);
-        list.forEach((recipe)->{
-            if (recipe.tag.equals("") && !INFUSING_RECIPE_MAP.containsKey(recipe.output.getItem())) {
-                INFUSING_RECIPE_MAP.put(recipe.output.getItem(),recipe);
-            }else if (!recipe.tag.equals("") && !UPGRADES_INFUSING_RECIPE_MAP.containsKey(recipe.output.getItem())){
-                UPGRADES_INFUSING_RECIPE_MAP.put(recipe.output.getItem(),recipe);
-            }
-        });
-    }
-
-    public static void initSmeltingRecipesMap(RecipeManager manager){
-        List<SolarSmeltingRecipe> list = manager.getAllRecipesFor(SolarForge.SOLAR_SMELTING);
-        list.forEach((recipe)->{
-            if (!SMELTING_RECIPE_MAP.containsKey(recipe.output.getItem())) {
-                SMELTING_RECIPE_MAP.put(recipe.output.getItem(),recipe);
-            }
-        });
-    }
-
-    public static void initInfusingCraftingRecipes(RecipeManager manager){
-        List<InfusingCraftingRecipe> list = manager.getAllRecipesFor(SolarForge.INFUSING_CRAFTING_RECIPE_TYPE);
-        list.forEach((recipe)->{
-            if (!INFUSING_CRAFTING_RECIPE_MAP.containsKey(recipe.getOutput().getItem())) {
-                INFUSING_CRAFTING_RECIPE_MAP.put(recipe.getOutput().getItem(),recipe);
-            }
-        });
-    }
+//    public static InfusingRecipe getInfusingRecipeForItem(Item item){
+//        return INFUSING_RECIPE_MAP.get(item);
+//    }
+//    public static InfusingCraftingRecipe getInfusingCraftingRecipeForItem(Item item){
+//        return INFUSING_CRAFTING_RECIPE_MAP.get(item);
+//    }
+//
+//    public static SolarSmeltingRecipe getSolarSmeltingRecipeForItem(Item item){
+//        return SMELTING_RECIPE_MAP.get(item);
+//    }
+//
+//
+//    public static void initInfRecipesMap(RecipeManager manager){
+//        List<InfusingRecipe> list = manager.getAllRecipesFor(SolarForge.INFUSING_RECIPE_TYPE);
+//        list.forEach((recipe)->{
+//            if (recipe.tag.equals("") && !INFUSING_RECIPE_MAP.containsKey(recipe.output.getItem())) {
+//                INFUSING_RECIPE_MAP.put(recipe.output.getItem(),recipe);
+//            }else if (!recipe.tag.equals("") && !UPGRADES_INFUSING_RECIPE_MAP.containsKey(recipe.output.getItem())){
+//                UPGRADES_INFUSING_RECIPE_MAP.put(recipe.output.getItem(),recipe);
+//            }
+//        });
+//    }
+//
+//    public static void initSmeltingRecipesMap(RecipeManager manager){
+//        List<SolarSmeltingRecipe> list = manager.getAllRecipesFor(SolarForge.SOLAR_SMELTING);
+//        list.forEach((recipe)->{
+//            if (!SMELTING_RECIPE_MAP.containsKey(recipe.output.getItem())) {
+//                SMELTING_RECIPE_MAP.put(recipe.output.getItem(),recipe);
+//            }
+//        });
+//    }
+//
+//    public static void initInfusingCraftingRecipes(RecipeManager manager){
+//        List<InfusingCraftingRecipe> list = manager.getAllRecipesFor(SolarForge.INFUSING_CRAFTING_RECIPE_TYPE);
+//        list.forEach((recipe)->{
+//            if (!INFUSING_CRAFTING_RECIPE_MAP.containsKey(recipe.getOutput().getItem())) {
+//                INFUSING_CRAFTING_RECIPE_MAP.put(recipe.getOutput().getItem(),recipe);
+//            }
+//        });
+//    }
 }
