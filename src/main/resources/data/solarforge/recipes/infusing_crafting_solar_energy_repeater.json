@@ -17,7 +17,7 @@
     }
   },
   "output": {
-    "item": "solarforge:kelda_crystal"
+    "item": "solarforge:solar_energy_repeater"
   },
   "fragment": "solar_energy_repeater",
   "count": 4,

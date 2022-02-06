@@ -16,9 +16,24 @@ import net.minecraft.network.chat.Component;
 public class SolarForgeButton extends Button  {
     protected  Button.OnTooltip tool;
     public static final ResourceLocation WIDGETS_SOLARFORGE = new ResourceLocation("solarforge","textures/gui/widgets_solarforge.png");
-    public SolarForgeButton(int p_i232255_1_, int p_i232255_2_, int p_i232255_3_, int p_i232255_4_, Component p_i232255_5_, OnPress p_i232255_6_) {
-      super(p_i232255_1_, p_i232255_2_, p_i232255_3_, p_i232255_4_, p_i232255_5_, p_i232255_6_);
+    public SolarForgeButton(int posx, int posy, int sizeX, int sizeY, Component component, OnPress onPress) {
+      super(posx, posy, sizeX, sizeY, component, onPress);
 
+    }
+
+    public SolarForgeButton(int p_i232255_1_, int p_i232255_2_, Component p_i232255_5_, OnPress p_i232255_6_) {
+        super(p_i232255_1_, p_i232255_2_, 65,15, p_i232255_5_, p_i232255_6_);
+
+    }
+
+    public SolarForgeButton(int p_i232256_1_, int p_i232256_2_, int p_i232256_3_, int p_i232256_4_, Component p_i232256_5_, OnPress p_i232256_6_, Button.OnTooltip onTooltip) {
+        super(p_i232256_1_, p_i232256_2_, p_i232256_3_, p_i232256_4_, p_i232256_5_, p_i232256_6_,onTooltip);
+    this.tool = onTooltip;
+    }
+
+    public SolarForgeButton(int p_i232256_1_, int p_i232256_2_, Component p_i232256_5_, OnPress p_i232256_6_, Button.OnTooltip onTooltip) {
+        super(p_i232256_1_, p_i232256_2_,65,15, p_i232256_5_, p_i232256_6_,onTooltip);
+        this.tool = onTooltip;
     }
 
     @Override
@@ -26,12 +41,6 @@ public class SolarForgeButton extends Button  {
         p_230988_1_.play(SimpleSoundInstance.forUI(Sounds.BUTTON_PRESS2.get(),1,1));
     }
 
-
-
-    public SolarForgeButton(int p_i232256_1_, int p_i232256_2_, int p_i232256_3_, int p_i232256_4_, Component p_i232256_5_, OnPress p_i232256_6_, Button.OnTooltip onTooltip) {
-        super(p_i232256_1_, p_i232256_2_, p_i232256_3_, p_i232256_4_, p_i232256_5_, p_i232256_6_,onTooltip);
-    this.tool = onTooltip;
-    }
     @Override
     public void renderButton(PoseStack p_230431_1_, int p_230431_2_, int p_230431_3_, float p_230431_4_) {
         if (this.isHovered && tool != null) {

@@ -5,6 +5,7 @@ import com.finderfeed.solarforge.SolarAbilities.meteorite.MeteoriteProjectile;
 import com.finderfeed.solarforge.SolarAbilities.SolarStrikeEntity;
 import com.finderfeed.solarforge.SolarAbilities.SolarStunEffect;
 import com.finderfeed.solarforge.capabilities.capability_mana.AttachManaCapabilityEvent;
+import com.finderfeed.solarforge.config.EnchantmentsConfig;
 import com.finderfeed.solarforge.config.JsonFragmentsHelper;
 import com.finderfeed.solarforge.config.SolarcraftConfig;
 import com.finderfeed.solarforge.entities.*;
@@ -228,6 +229,7 @@ public class SolarForge
     private void setup(final FMLCommonSetupEvent event)
     {
         JsonFragmentsHelper.setupJSON();
+        EnchantmentsConfig.setupJSON();
         Tags.init();
         AbilitiesRegistry.ABILITIES.registerAll();
         TierSortingRegistry.registerTier(SolarCraftToolTiers.ILLIDIUM_TOOLS_TIER,new ResourceLocation("illidium"), List.of(Tiers.DIAMOND),List.of());

@@ -3,12 +3,9 @@ package com.finderfeed.solarforge;
 import com.finderfeed.solarforge.SolarAbilities.meteorite.MeteoriteProjectileRenderer;
 import com.finderfeed.solarforge.SolarAbilities.SolarStrikeEntityRender;
 import com.finderfeed.solarforge.entities.renderers.*;
-import com.finderfeed.solarforge.magic.blocks.blockentities.containers.screens.InfusingTableScreen;
-import com.finderfeed.solarforge.magic.blocks.blockentities.containers.screens.ModuleApplierScreen;
+import com.finderfeed.solarforge.magic.blocks.blockentities.containers.screens.*;
 import com.finderfeed.solarforge.magic.blocks.infusing_table_things.InfuserRenderer;
 import com.finderfeed.solarforge.magic.blocks.infusing_table_things.infusing_pool.InfusingStandRenderer;
-import com.finderfeed.solarforge.magic.blocks.blockentities.containers.screens.RunicTableContainerScreen;
-import com.finderfeed.solarforge.magic.blocks.blockentities.containers.screens.SolarFurnaceScreen;
 import com.finderfeed.solarforge.magic.blocks.blockentities.projectiles.renderers.AbstractTurretProjectileRenderer;
 import com.finderfeed.solarforge.magic.blocks.blockentities.projectiles.renderers.MortarProjectileRenderer;
 import com.finderfeed.solarforge.magic.blocks.primitive.ProgressionBlock;
@@ -128,6 +125,7 @@ public class SolarForgeClientRegistry {
         MenuScreens.register(Containers.SOLAR_LEXICON_CONTAINER.get(), SolarLexiconContScreen::new);
         MenuScreens.register(Containers.MODULE_APPLIER_CONTAINER.get(), ModuleApplierScreen::new);
         MenuScreens.register(Containers.INFUSING_TABLE_TILE.get(), InfusingTableScreen::new);
+        MenuScreens.register(Containers.ENCHANTER.get(), EnchanterContainerScreen::new);
 
         event.enqueueWork(()->{
 

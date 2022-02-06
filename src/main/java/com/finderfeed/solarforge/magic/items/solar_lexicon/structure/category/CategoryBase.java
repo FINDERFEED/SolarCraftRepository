@@ -6,7 +6,7 @@ public enum CategoryBase {
     BEGGINING_INFO(tx("solar_category.beginning"),1,1),
     EXPLORATION(tx("solar_category.exploration"),2,1),
     ARMOR(tx("solar_category.armor"),3,1),
-    STRUCTURES(tx("solar_category.structures"),1,5),
+    STRUCTURES(tx("solar_category.structures"),1,6),
     UPGRADES(tx("solar_category.upgrades"),2,2),
     RUNIC_ENERGY(tx("solar_category.runic_energy"),2,2),
     BEGINNER(tx("solar_category.beginner"),1,3),

@@ -91,7 +91,7 @@
   "item.solarforge.block_boomerang": "Block Boomerang",
   "item.solarforge.solar_mana_amulet": "Mana Regeneration Amulet",
   "solarforge.mana_amulet": "Increases mana regeneration by 2 per second",
-  "solarforge.ultra_crossbow": "When you are using it, the damage increases by 3 per each second. If damage is more than 30 causes an explosion on impact. Manacost:200/shot.",
+  "solarforge.ultra_crossbow": "When you are using it, the damage increases by 3.5 per each second. If damage is more than 30 causes an explosion on impact. Manacost:200/shot.",
   "item.solarforge.solar_crossbow": "Solar Crossbow",
   "block.solarforge.solar_mortar_block": "Solar Mortar",
   "item.solarforge.energy_meter": "Energy Meter",

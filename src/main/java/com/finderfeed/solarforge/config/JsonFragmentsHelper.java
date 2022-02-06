@@ -27,8 +27,9 @@ public class JsonFragmentsHelper {
 
     private static final Gson SERIALIZER = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
     public static final Path PATH_TO_FRAGMENTS_JSON = FMLPaths.CONFIGDIR.get()
-            .resolve("solarcraft_custom_fragments");
+            .resolve(SolarcraftConfig.CUSTOM_CONFIGS_FOLDER);
     public static void setupJSON(){
+        SolarForge.LOGGER.log(Level.INFO,"Creating custom fragments JSON");
         Path filePath = PATH_TO_FRAGMENTS_JSON.resolve("custom_fragments.json");
         Path guidePath = PATH_TO_FRAGMENTS_JSON.resolve("how_to_create_fragment.txt");
         try {
@@ -201,7 +202,7 @@ public class JsonFragmentsHelper {
             writer.close();
         }
 
-
+            SolarForge.LOGGER.log(Level.INFO,"Creating fragments JSON completed.");
         }catch (IOException e){
             e.printStackTrace();
         }

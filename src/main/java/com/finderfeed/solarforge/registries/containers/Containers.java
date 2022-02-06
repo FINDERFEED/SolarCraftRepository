@@ -1,9 +1,6 @@
 package com.finderfeed.solarforge.registries.containers;
 
-import com.finderfeed.solarforge.magic.blocks.blockentities.containers.InfusingTableTileContainer;
-import com.finderfeed.solarforge.magic.blocks.blockentities.containers.ModuleApplierMenu;
-import com.finderfeed.solarforge.magic.blocks.blockentities.containers.RunicTableContainer;
-import com.finderfeed.solarforge.magic.blocks.blockentities.containers.SolarFurnaceContainer;
+import com.finderfeed.solarforge.magic.blocks.blockentities.containers.*;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.SolarLexiconContainer;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraftforge.common.extensions.IForgeMenuType;
@@ -19,4 +16,5 @@ public class Containers {
     public static final RegistryObject<MenuType<SolarLexiconContainer>> SOLAR_LEXICON_CONTAINER = CONTAINER_TYPE.register("solar_lexicon_container",()-> IForgeMenuType.create(SolarLexiconContainer::new));
     public static final RegistryObject<MenuType<ModuleApplierMenu>> MODULE_APPLIER_CONTAINER = CONTAINER_TYPE.register("module_applier",()->IForgeMenuType.create(ModuleApplierMenu::new));
     public static final RegistryObject<MenuType<InfusingTableTileContainer>> INFUSING_TABLE_TILE = CONTAINER_TYPE.register("infusing_crafting_table_container",()-> IForgeMenuType.create(InfusingTableTileContainer::new));
+    public static final RegistryObject<MenuType<EnchanterContainer>> ENCHANTER = CONTAINER_TYPE.register("enchanter_container",()-> IForgeMenuType.create(EnchanterContainer::new));
 }

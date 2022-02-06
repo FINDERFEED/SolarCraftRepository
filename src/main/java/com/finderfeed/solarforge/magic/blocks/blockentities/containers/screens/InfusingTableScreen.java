@@ -68,7 +68,7 @@ public class InfusingTableScreen extends AbstractContainerScreen<InfusingTableTi
         Optional<InfusingCraftingRecipe> opt = world.getRecipeManager().getRecipeFor(SolarForge.INFUSING_CRAFTING_RECIPE_TYPE,new PhantomInventory(stacks),world);
         if (opt.isPresent()){
             result = opt.get().getResultItem().getItem();
-            renderItemAndTooltip(result.getDefaultInstance(),relX+154+a,relY+36,mousex,mousey,matrices,menu.tile.calculateMaximumRecipeOutput(opt.get())*opt.get().getOutputCount());
+            renderItemAndTooltip(result.getDefaultInstance(),relX+153+a,relY+36,mousex,mousey,matrices,menu.tile.calculateMaximumRecipeOutput(opt.get())*opt.get().getOutputCount());
         }else{
             result = null;
         }

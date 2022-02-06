@@ -90,5 +90,9 @@ public class TileEntitiesRegistry {
     public static final RegistryObject<BlockEntityType<ExplosionBlockerBlockEntity>> EXPLOSTION_BLOCKER = TILE_ENTITY_TYPE.register("explosion_blocker",()->
             BlockEntityType.Builder.of(ExplosionBlockerBlockEntity::new, BlocksRegistry.EXPLOSION_BLOCKER.get()).build(null));
 
+    public static final RegistryObject<BlockEntityType<EnchanterBlockEntity>> ENCHANTER = TILE_ENTITY_TYPE.register("explosion_blocker",()->
+            BlockEntityType.Builder.of(EnchanterBlockEntity::new, BlocksRegistry.ENCHANTER.get()).build(null));
+
+
 
 }

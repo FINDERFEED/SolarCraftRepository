@@ -8,6 +8,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
+import net.minecraftforge.fml.loading.moddiscovery.NightConfigWrapper;
 import org.apache.logging.log4j.Level;
 import org.lwjgl.system.CallbackI;
 
@@ -18,6 +19,9 @@ import java.util.List;
 
 
 public final class SolarcraftConfig {
+    public static final String CUSTOM_CONFIGS_FOLDER = "solarcraft_custom_configs";
+    public static final String CUSTOM_BLOCKS_CONFIGS = "block_configs";
+
     public static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
     public static final ForgeConfigSpec SPEC;
 
@@ -31,7 +35,6 @@ public final class SolarcraftConfig {
     public static final ForgeConfigSpec.ConfigValue<List<String>> ISLAND_ORES;
     static {
         BUILDER.push("SolarCraft config");
-
 
         List<String> DEFAULT_TREASURES = new ArrayList<>();
         DEFAULT_TREASURES.addAll(List.of("minecraft:diamond", "minecraft:coal", "minecraft:gold_nugget", "minecraft:iron_nugget"));

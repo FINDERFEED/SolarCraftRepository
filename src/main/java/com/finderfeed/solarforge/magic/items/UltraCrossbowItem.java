@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.function.Supplier;
 
 public class UltraCrossbowItem extends RareSolarcraftItem implements ManaConsumer {
-
+    public static double DAMAGE_PER_SECOND = 3.5d;
     public boolean isBeingUsed = false;
 
     public UltraCrossbowItem(Properties p_i50040_1_, Supplier<AncientFragment> fragmentSupplier) {
@@ -42,8 +42,8 @@ public class UltraCrossbowItem extends RareSolarcraftItem implements ManaConsume
                 player.level.playSound(null,player, Sounds.CROSSBOW_CHARGING.get(), SoundSource.AMBIENT,1f,1f);
             }
 
-            if ((float)(72000-count)/20*3 < 120) {
-                ((Player) player).displayClientMessage(new TextComponent("-" + String.format("%.1f", (float) (72000 - count) / 20 * 3) + "-").withStyle(ChatFormatting.GOLD), true);
+            if ((float)(72000-count)/20*DAMAGE_PER_SECOND < 120) {
+                ((Player) player).displayClientMessage(new TextComponent("-" + String.format("%.1f", (float) (72000 - count) / 20 * DAMAGE_PER_SECOND) + "-").withStyle(ChatFormatting.GOLD), true);
             }else{
                 ((Player) player).displayClientMessage(new TextComponent("-" + 120.0 + "-").withStyle(ChatFormatting.GOLD), true);
             }
@@ -63,8 +63,8 @@ public class UltraCrossbowItem extends RareSolarcraftItem implements ManaConsume
             player.level.playSound(null,player, Sounds.CROSSBOW_SHOOT_SOUND.get(), SoundSource.AMBIENT,1,1);
             proj.setYAW(player.getYRot());
             proj.setPITCH(player.getXRot());
-            if ((float)(72000 - remainingSeconds)/20*3 < 120) {
-                proj.setDamage((float) (72000 - remainingSeconds) / 20 * 3);
+            if ((float)(72000 - remainingSeconds)/20*DAMAGE_PER_SECOND < 120) {
+                proj.setDamage((float) (72000 - remainingSeconds) / 20 * DAMAGE_PER_SECOND);
             }else {
                 proj.setDamage(120);
             }

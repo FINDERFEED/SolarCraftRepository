@@ -150,11 +150,16 @@ public abstract class AbstractRunicEnergyContainer extends SolarcraftBlockEntity
         }
     }
 
+    public void spendEnergy(Map<RunicEnergy.Type,Double> costs,int multiplier){
+        costs.forEach((type,cost)->{
+            this.giveEnergy(type,-cost*multiplier);
+        });
+    }
+
     public abstract boolean shouldFunction();
 
     public void onRemove(){
         PATH_TO_CONTAINERS.forEach((type,way)->{
-//            FindingAlgorithms.resetRepeaters(way,level,worldPosition);
             RunicEnergyPath.resetRepeaterConnections(PATH_TO_CONTAINERS.get(type),level);
         });
     }
@@ -184,7 +189,7 @@ public abstract class AbstractRunicEnergyContainer extends SolarcraftBlockEntity
             case FIRA -> RUNE_ENERGY_FIRA+=amount;
             case TERA -> RUNE_ENERGY_TERA+=amount;
             case KELDA -> RUNE_ENERGY_KELDA+=amount;
-            case URBA -> RUNE_ENERGY_URBA=amount;
+            case URBA -> RUNE_ENERGY_URBA+=amount;
             case ZETA -> RUNE_ENERGY_ZETA+=amount;
             case ULTIMA -> RUNE_ENERGY_ULTIMA+=amount;
             case GIRO -> RUNE_ENERGY_GIRO+=amount;
@@ -255,6 +260,7 @@ public abstract class AbstractRunicEnergyContainer extends SolarcraftBlockEntity
                 this.level.sendBlockUpdated(worldPosition,state,state,3);
                 PATH_TO_CONTAINERS.put(type, List.of(this.worldPosition, container.getPos()));
             }
+            seekingCooldown = 0;
         }else{
             seekingCooldown++;
         }

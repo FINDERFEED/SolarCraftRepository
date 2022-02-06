@@ -2,6 +2,7 @@ package com.finderfeed.solarforge.events.other_events;
 
 
 import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.config.EnchantmentsConfig;
 import com.finderfeed.solarforge.config.JsonFragmentsHelper;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.unlockables.BookEntry;
@@ -43,6 +44,10 @@ public class OnPlayerJoin {
             }
 
             JsonFragmentsHelper.sendUpdatePacketToClient((ServerPlayer) player);
+
+            if (EnchantmentsConfig.shouldBeRead()){
+                EnchantmentsConfig.readJson();
+            }
 
             Helpers.updateFragmentsOnClient((ServerPlayer) player);
 

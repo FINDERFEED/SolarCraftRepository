@@ -123,7 +123,6 @@ public class InfuserScreen extends AbstractContainerScreen<InfuserContainer> {
         if (tier == InfuserTileEntity.Tier.RUNIC_ENERGY || tier == InfuserTileEntity.Tier.SOLAR_ENERGY) {
             matrices.pushPose();
             ClientHelpers.bindText(ENERGY_GUI);
-            int old = 58;
             blit(matrices, relX + a - 73 + 4, relY - 8, 0, 0, 73, 177, 73, 177);
             ClientHelpers.bindText(RUNIC_ENERGY_BAR);
             if (recipe.isPresent()) {

@@ -100,8 +100,7 @@ public class InfuserRenderer extends AbstractRunicEnergyContainerRenderer<Infuse
         }
         matrices.pushPose();
 
-
-        if (tile.getItem(tile.outputSlot()).isEmpty()) {
+        if (!tile.getItem(tile.outputSlot()).isEmpty()) {
             matrices.translate(0.5, 0.5, 0.5);
             matrices.mulPose(Vector3f.YP.rotationDegrees((time % 360) * 2f));
             Minecraft.getInstance().getItemRenderer().render(tile.getItem(tile.outputSlot()), ItemTransforms.TransformType.GROUND, true,
@@ -127,10 +126,13 @@ public class InfuserRenderer extends AbstractRunicEnergyContainerRenderer<Infuse
             matrices.translate(0.5,0.5,0.5);
             matrices.mulPose(Vector3f.YN.rotationDegrees(rotValue * 360));
             for (int i = 0; i < 14; i++) {
+                int iter = i;
+                //kostyli nashe vse!
                 if (i == 6) continue;
+                if (i > 6) iter--;
                 ItemStack item = stacks.get(i);
                 if (!item.isEmpty()) {
-                    BlockPos p = offsets[i - 1];
+                    BlockPos p = offsets[iter];
                     Vec3 v = new Vec3(p.getX(), p.getY(), p.getZ()).multiply(1 - rotValue, 1 - rotValue, 1 - rotValue);
                     matrices.pushPose();
 
