@@ -1,0 +1,26 @@
+{
+  "type": "solarforge:infusing_new",
+  "items": {
+    "A": {"item": "solarforge:materialization_core"},
+    "B": {"item": "solarforge:enderium_ingot"},
+    "C": {"item": "solarforge:energetic_ingot"},
+    "D": {"item": "solarforge:medium_solar_reactor"},
+    "E": {"item": "solarforge:lensing_crystal"},
+    "F": {"item": "solarforge:urba_crystal"}
+  },
+  "pattern": [
+    "FEF",
+    "EE",
+    "BDB",
+    "CC",
+    "FAF"
+  ],
+  "result": {
+    "item": "solarforge:lightning_gun"
+  },
+  "time": 1500,
+  "fragment": "lightning_gun",
+  "catalysts": "U UU UU UU U",
+  "urba": 10000,
+  "energy": 5000
+}

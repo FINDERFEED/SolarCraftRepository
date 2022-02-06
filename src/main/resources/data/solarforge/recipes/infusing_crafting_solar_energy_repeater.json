@@ -1,0 +1,25 @@
+{
+  "type": "solarforge:infusing_crafting",
+  "pattern": [
+    "#",
+    "F",
+    "Z"
+  ],
+  "keys": {
+    "#": {
+      "item": "solarforge:energy_dust"
+    },
+    "F": {
+      "item": "minecraft:iron_ingot"
+    },
+    "Z": {
+      "item": "minecraft:redstone"
+    }
+  },
+  "output": {
+    "item": "solarforge:kelda_crystal"
+  },
+  "fragment": "solar_energy_repeater",
+  "count": 4,
+  "time": 10
+}

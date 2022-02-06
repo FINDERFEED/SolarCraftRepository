@@ -80,10 +80,9 @@ public class JsonFragmentsHelper {
                         "recipe_type": "",                  //Recipe type to use (Possible values: "infusing","infusing_crafting") (String)
                                                             //For datapack makers: Note that you cant add more than 1 infusing/infusing crafting/solar smelting recipe for a single item
                         "items": [                          //An array of items to show inside the fragment. Icon for this fragment will be the first item in array
-                                                            //(recipes for them will be searched automatically, if recipe for an item doesn't exist, your minecraft will crash if you open a page)
-                          {"item": ""},
-                          {"item": ""},
-                          {"item": ""}
+                          {"item": "", "recipe_id": "" },   //item is an item name (for ex: minecraft:diamond), recipe_id is a recipe to show inside the fragment(SHOULD MATCH THE RECIPE TYPE!).
+                          {"item": "", "recipe_id": "" },
+                          {"item": "", "recipe_id": "" }
                         ],
                         "priority": 1                       //Priority to unlock this fragment (for example if there are a fragment with priority 1 and 2, the 1 will be opened first) (Integer)
                     }
@@ -97,10 +96,9 @@ public class JsonFragmentsHelper {
                         "progression_stage": "",            //Defines what progression stage is needed to be completed to unlock this fragment. (Possible values: scroll down)
                         "translation_id_lore": "",          //Translation id that needs to be translated in lang files. Defines the lore inside the fragment. (String)
                         "recipe_type": "",                  //Recipe type to use (Possible values: "infusing","smelting","infusing_crafting") (String)
-                                                            //For datapack makers: Note that you cant add more than 1 infusing/infusing crafting/solar smelting recipe for a single item
-                        "recipe_item": {                    //An item to show inside the fragment. Will be set as icon too.
-                                                            //(recipe for it will be searched automatically, if recipe doesn't exist, your minecraft will crash if you open a page)
-                          "item": ""
+                        "recipe_item": {                    //An item to show inside the fragment (for ex: minecraft:diamond). Will be set as icon too.
+                          "item": "",
+                          "recipe_id": ""                   // recipe_id is a recipe to show inside the fragment(SHOULD MATCH THE RECIPE TYPE!).
                         },
                         "priority": 1                       //Priority to unlock this fragment (for example if there are a fragment with priority 1 and 2, the 1 will be opened first) (Integer)
                     }
@@ -151,53 +149,53 @@ public class JsonFragmentsHelper {
                     RADIANT_LAND
                     
                     An example of fragments json:
-                    {
-                      "fragments": [
-                        {
-                          "type": "items",
-                          "translation_id": "test_fragment.items",
-                          "unique_id": "test_fragment_items",
-                          "category_base": "exploration",
-                          "sub_category_base": "beggining",
-                          "progression_stage": "pre_beggining",
-                          "recipe_type": "infusing",
-                          "items": [
-                            {"item": "solarforge:illidium_sword"},
-                            {"item": "solarforge:qualadium_sword"},
-                            {"item": "solarforge:turret_radar"}
-                          ],
-                          "translation_id_lore": "testlore",
-                          "priority": 1
-                        },
-                        {
-                          "type": "information",
-                          "translation_id": "test_fragment.info",
-                          "unique_id": "test_fragment_info",
-                          "category_base": "exploration",
-                          "sub_category_base": "beggining",
-                          "progression_stage": "pre_beggining",
-                          "translation_id_lore": "testlore_info",
-                          "icon": {
-                            "item": "minecraft:dirt"
-                          },
-                          "priority": 1
-                        },
-                        {
-                          "type": "item",
-                          "translation_id": "test_fragment.item",
-                          "unique_id": "dirt_block",
-                          "category_base": "exploration",
-                          "sub_category_base": "beggining",
-                          "progression_stage": "pre_beggining",
-                          "recipe_type": "infusing",
-                          "recipe_item": {
-                            "item": "minecraft:dirt"
-                          },
-                          "translation_id_lore": "testlore_item",
-                          "priority": 1
-                        }
-                      ]
-                    }
+                     {
+                       "fragments": [
+                         {
+                           "type": "items",
+                           "translation_id": "test_fragment.items",
+                           "unique_id": "test_fragment_items",
+                           "category_base": "exploration",
+                           "sub_category_base": "beggining",
+                           "progression_stage": "pre_beggining",
+                           "recipe_type": "infusing",
+                           "items": [
+                             {"item": "solarforge:illidium_sword", "recipe_id": "solarforge:infusing_new_illidium_sword"},
+                             {"item": "solarforge:qualadium_sword", "recipe_id": "solarforge:infusing_new_qualadium_sword"}
+                           ],
+                           "translation_id_lore": "testlore",
+                           "priority": 1
+                         },
+                         {
+                           "type": "information",
+                           "translation_id": "test_fragment.info",
+                           "unique_id": "test_fragment_info",
+                           "category_base": "exploration",
+                           "sub_category_base": "beggining",
+                           "progression_stage": "pre_beggining",
+                           "translation_id_lore": "testlore_info",
+                           "icon": {
+                             "item": "minecraft:dirt"
+                           },
+                           "priority": 1
+                         },
+                         {
+                           "type": "item",
+                           "translation_id": "test_fragment.item",
+                           "unique_id": "dirt_block",
+                           "category_base": "exploration",
+                           "sub_category_base": "beggining",
+                           "progression_stage": "pre_beggining",
+                           "recipe_type": "infusing",
+                           "recipe_item": {
+                             "item": "solarforge:solar_mortar_block",
+                             "recipe_id": "solarforge:infusing_new_solar_mortar_block"
+                           },
+                           "translation_id_lore": "testlore_item",
+                           "priority": 1
+                         }
+                       ]
+                     }
                     """);
             writer.flush();
             writer.close();
