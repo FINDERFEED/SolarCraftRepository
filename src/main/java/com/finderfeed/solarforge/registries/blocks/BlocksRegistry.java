@@ -87,7 +87,7 @@ public class BlocksRegistry {
     public  static  final RegistryObject<Block> INSCRIPTION_STONE = BLOCKS.register("inscription_stone",()-> new InscriptionStone(BlockBehaviour.Properties.copy(Blocks.STONE)));
     public  static  final RegistryObject<Block> REPEATER = BLOCKS.register("repeater",()-> new RunicNetworkRepeater(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).noOcclusion()));
     public  static  final RegistryObject<Block> EXPLOSION_BLOCKER = BLOCKS.register("explosion_blocker",()-> new ExplosionBlocker(BlockBehaviour.Properties.copy(Blocks.STONE).noOcclusion()));
-    public  static  final RegistryObject<Block> ENCHANTER = BLOCKS.register("enchanter",()-> new EnchanterBlock(BlockBehaviour.Properties.copy(Blocks.STONE).noOcclusion()));
+    public  static  final RegistryObject<Block> ENCHANTER = BLOCKS.register("elemental_enchanter",()-> new EnchanterBlock(BlockBehaviour.Properties.copy(Blocks.STONE).noOcclusion()));
     public  static  final RegistryObject<Block> RUNIC_TABLE = BLOCKS.register("runic_table",()-> new RunicTableBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).noOcclusion()));
     public  static  final RegistryObject<LeavesBlock> RUNIC_LEAVES = BLOCKS.register("runic_leaves",()-> new RunicLeavesBlock(BlockBehaviour.Properties.copy(Blocks.OAK_LEAVES).noOcclusion()));
     public  static  final RegistryObject<RotatedPillarBlock> RUNIC_LOG = BLOCKS.register("runic_log",()-> new RotatedPillarFlammableBlock(BlockBehaviour.Properties.copy(Blocks.OAK_LOG),20));

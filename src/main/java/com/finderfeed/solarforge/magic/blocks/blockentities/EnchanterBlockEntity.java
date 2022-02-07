@@ -1,8 +1,11 @@
 package com.finderfeed.solarforge.magic.blocks.blockentities;
 
 
+import com.finderfeed.solarforge.ClientHelpers;
 import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.client.particles.ParticleTypesRegistry;
 import com.finderfeed.solarforge.config.EnchantmentsConfig;
+import com.finderfeed.solarforge.local_library.helpers.FinderfeedMathHelper;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
 import com.google.gson.JsonArray;
@@ -19,6 +22,7 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.Nullable;
 
@@ -76,7 +80,19 @@ public class EnchanterBlockEntity extends REItemHandlerBlockEntity {
                 enchanter.reset();
             }
         }else{
+            if (enchanter.enchantingInProgress()) {
+                Vec3 center = Helpers.getBlockCenter(pos);
+                ClientHelpers.ParticleAnimationHelper.verticalCircle(
+                        ParticleTypesRegistry.SMALL_SOLAR_STRIKE_PARTICLE.get(), center, 0.75, 3, new float[]{0, 0, 0},
+                        () -> 255, () -> 255, () -> 0, 0.25f
+                );
 
+                for (int i = 0; i < 3; i++) {
+                    double[] xz = FinderfeedMathHelper.rotatePointDegrees(0.5, 0, i * 120 + 120 * Math.sin(world.getGameTime() / 20f));
+                    ClientHelpers.ParticleAnimationHelper.createParticle(ParticleTypesRegistry.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+                            center.x + xz[0], center.y + 0.4, center.z + xz[1], 0, 0.1, 0, () -> 255, () -> 255, () -> 0, 0.25f);
+                }
+            }
         }
     }
 

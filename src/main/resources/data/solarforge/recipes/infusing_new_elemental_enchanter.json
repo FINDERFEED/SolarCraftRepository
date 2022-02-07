@@ -1,0 +1,23 @@
+{
+  "type": "solarforge:infusing_new",
+  "items": {
+    "A": {"item": "solarforge:void_core"},
+    "B": {"item": "solarforge:ardo_crystal"},
+    "C": {"item": "solarforge:enderium_ingot"},
+    "D": {"item": "solarforge:energetic_ingot"}
+  },
+  "pattern": [
+    "DBD",
+    "CC",
+    "BAB",
+    "CC",
+    "DBD"
+  ],
+  "result": {
+    "item": "solarforge:elemental_enchanter"
+  },
+  "time": 1000,
+  "fragment": "elemental_enchanter",
+  "catalysts": "F FG GK KA A",
+  "ardo": 5000
+}

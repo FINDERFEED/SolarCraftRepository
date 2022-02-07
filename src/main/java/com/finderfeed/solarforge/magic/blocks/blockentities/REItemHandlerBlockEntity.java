@@ -26,18 +26,26 @@ public abstract class REItemHandlerBlockEntity extends AbstractRunicEnergyContai
 
 
     public void setStackInSlot(int i, ItemStack stack){
+        ItemStackHandler handler = getInventory();
+        if (handler == null) return;
         this.getInventory().setStackInSlot(i,stack);
     }
 
     public Container wrapInContainer(){
-        return new PhantomInventory(this.getInventory());
+        ItemStackHandler handler = getInventory();
+        if (handler == null) return null;
+        return new PhantomInventory(handler);
     }
 
     public ItemStack getStackInSlot(int i){
-        return this.getInventory().getStackInSlot(i);
+        ItemStackHandler handler = getInventory();
+        if (handler == null) return null;
+        return handler.getStackInSlot(i);
     }
 
     public int getSize(){
-        return this.getInventory().getSlots();
+        ItemStackHandler handler = getInventory();
+        if (handler == null) return 0;
+        return  handler.getSlots();
     }
 }

@@ -640,7 +640,10 @@
   "crystal_cores.lore": "A cores made from infused crystals can serve as a good crafting material with unique properties.",
   "lightning_gun.lore": "A powerful weapon that fires a ball lightning on use. Ball lightning damages all mobs in 10 radius on impact (Damage: 10). Manacost: 50/shot.",
   "solar_fragment.lightning_gun": "Lightning Emitter",
-  "solar_category.beginner_blocks": "Blocks"
+  "solar_category.beginner_blocks": "Blocks",
+  "solar_fragment.elemental_enchanter": "Elemental enchanter",
+  "block.solarforge.elemental_enchanter": "Elemental enchanter",
+  "elemental_enchanter.lore": "Trying to catch needed enchantments in enchantment table and searching for old books left in some dungeons may become a tedious task, luckily you have discovered that element powers can be used to empower your gear as same as enchantments do."
 
 
 

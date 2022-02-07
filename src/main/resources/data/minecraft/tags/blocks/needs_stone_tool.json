@@ -24,6 +24,7 @@
     "solarforge:crystallized_runic_energy",
     "solarforge:lensing_crystal_ore",
     "solarforge:explosion_blocker",
-    "solarforge:crystal"
+    "solarforge:crystal",
+    "solarforge:elemental_enchanter"
   ]
 }

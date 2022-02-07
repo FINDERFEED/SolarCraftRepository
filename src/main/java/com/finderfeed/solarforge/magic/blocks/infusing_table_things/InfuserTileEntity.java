@@ -163,7 +163,7 @@ public class InfuserTileEntity extends AbstractRunicEnergyContainer implements  
 
     @Override
     public double getMaxEnergyInput() {
-        return 10;
+        return 30;
     }
 
     @Override
