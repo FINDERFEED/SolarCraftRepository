@@ -38,6 +38,142 @@ public class EnchantmentsConfig {
                                 {
                                     "enchantment_id": "minecraft:protection",
                                     "tera": 10000
+                                },
+                                {
+                                    "enchantment_id": "minecraft:aqua_affinity",
+                                    "tera": 10000
+                                },
+                                {
+                                    "enchantment_id": "minecraft:bane_of_arthropods",
+                                    "tera": 10000
+                                },
+                                {
+                                    "enchantment_id": "minecraft:blast_protection",
+                                    "tera": 10000
+                                },
+                                {
+                                    "enchantment_id": "minecraft:channeling",
+                                    "tera": 10000
+                                },
+                                {
+                                    "enchantment_id": "minecraft:depth_strider",
+                                    "tera": 10000
+                                },
+                                {
+                                    "enchantment_id": "minecraft:efficiency",
+                                    "tera": 10000
+                                },
+                                {
+                                    "enchantment_id": "minecraft:feather_falling",
+                                    "tera": 10000
+                                },
+                                {
+                                    "enchantment_id": "minecraft:fire_aspect",
+                                    "tera": 10000
+                                },
+                                {
+                                    "enchantment_id": "minecraft:fire_protection",
+                                    "tera": 10000
+                                },
+                                {
+                                    "enchantment_id": "minecraft:flame",
+                                    "tera": 10000
+                                },
+                                {
+                                    "enchantment_id": "minecraft:fortune",
+                                    "tera": 10000
+                                },
+                                {
+                                    "enchantment_id": "minecraft:frost_walker",
+                                    "tera": 10000
+                                },
+                                {
+                                    "enchantment_id": "minecraft:impaling",
+                                    "tera": 10000
+                                },
+                                {
+                                    "enchantment_id": "minecraft:infinity",
+                                    "tera": 10000
+                                },
+                                {
+                                    "enchantment_id": "minecraft:knockback",
+                                    "tera": 10000
+                                },
+                                {
+                                    "enchantment_id": "minecraft:looting",
+                                    "tera": 10000
+                                },
+                                {
+                                    "enchantment_id": "minecraft:loyalty",
+                                    "tera": 10000
+                                },
+                                {
+                                    "enchantment_id": "minecraft:luck_of_the_sea",
+                                    "tera": 10000
+                                },
+                                {
+                                    "enchantment_id": "minecraft:lure",
+                                    "tera": 10000
+                                },
+                                {
+                                    "enchantment_id": "minecraft:mending",
+                                    "tera": 10000
+                                },
+                                {
+                                    "enchantment_id": "minecraft:multishot",
+                                    "tera": 10000
+                                },
+                                {
+                                    "enchantment_id": "minecraft:piercing",
+                                    "tera": 10000
+                                },
+                                {
+                                    "enchantment_id": "minecraft:power",
+                                    "tera": 10000
+                                },
+                                {
+                                    "enchantment_id": "minecraft:projectile_protection",
+                                    "tera": 10000
+                                },
+                                {
+                                    "enchantment_id": "minecraft:punch",
+                                    "tera": 10000
+                                },
+                                {
+                                    "enchantment_id": "minecraft:quick_charge",
+                                    "tera": 10000
+                                },
+                                {
+                                    "enchantment_id": "minecraft:respiration",
+                                    "tera": 10000
+                                },
+                                {
+                                    "enchantment_id": "minecraft:riptide",
+                                    "tera": 10000
+                                },
+                                {
+                                    "enchantment_id": "minecraft:silk_touch",
+                                    "tera": 10000
+                                },
+                                {
+                                    "enchantment_id": "minecraft:smite",
+                                    "tera": 10000
+                                },
+                                {
+                                    "enchantment_id": "minecraft:soul_speed",
+                                    "tera": 10000
+                                },
+                                {
+                                    "enchantment_id": "minecraft:sweeping",
+                                    "tera": 10000
+                                },
+                                {
+                                    "enchantment_id": "minecraft:thorns",
+                                    "tera": 10000
+                                },
+                                {
+                                    "enchantment_id": "minecraft:unbreaking",
+                                    "tera": 10000
                                 }
                             ]
                         }

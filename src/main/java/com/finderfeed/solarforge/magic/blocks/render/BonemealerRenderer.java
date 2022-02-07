@@ -7,6 +7,7 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 public class BonemealerRenderer extends AbstractRunicEnergyContainerRenderer<BonemealerTileEntity> {
 
     public BonemealerRenderer(BlockEntityRendererProvider.Context ctx){
+        super(ctx);
 
     }
 

@@ -24,6 +24,7 @@ public class InfuserRenderer extends AbstractRunicEnergyContainerRenderer<Infuse
     public final ResourceLocation text = new ResourceLocation("solarforge","textures/misc/solar_infuser_ring.png");
     public final ResourceLocation fancyRing = new ResourceLocation("solarforge","textures/misc/fancy_ring_1.png");
     public InfuserRenderer(BlockEntityRendererProvider.Context ctx) {
+        super(ctx);
 
     }
 

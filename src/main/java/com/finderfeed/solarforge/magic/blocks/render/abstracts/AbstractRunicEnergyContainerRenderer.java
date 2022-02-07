@@ -6,12 +6,15 @@ import com.finderfeed.solarforge.magic.blocks.blockentities.runic_energy.Abstrac
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.Vec3;
 
 public abstract class AbstractRunicEnergyContainerRenderer<T extends AbstractRunicEnergyContainer> implements BlockEntityRenderer<T> {
 
+    public AbstractRunicEnergyContainerRenderer(BlockEntityRendererProvider.Context ctx){
 
+    }
     @Override
     public void render(T tile, float pticks, PoseStack matrices, MultiBufferSource buffer, int light, int overlay) {
         for (BlockPos pos : tile.nullOrGiverPositionForClient) {

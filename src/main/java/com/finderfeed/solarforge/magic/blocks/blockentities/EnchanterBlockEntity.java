@@ -1,6 +1,7 @@
 package com.finderfeed.solarforge.magic.blocks.blockentities;
 
 
+import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.config.EnchantmentsConfig;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
@@ -9,13 +10,17 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.Connection;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.registries.ForgeRegistries;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -39,17 +44,28 @@ public class EnchanterBlockEntity extends REItemHandlerBlockEntity {
         if (!world.isClientSide){
             if (enchanter.enchantingInProgress()){
                 ItemStack stack = enchanter.getStackInSlot(0);
-                if (!stack.isEmpty() && stack.canApplyAtEnchantingTable(enchanter.processingEnchantment)){
+                int enchLevelCurrent = EnchantmentHelper.getItemEnchantmentLevel(enchanter.processingEnchantment,stack);
+                if (!stack.isEmpty() && stack.canApplyAtEnchantingTable(enchanter.processingEnchantment)
+                        && enchLevelCurrent < enchanter.procesingEnchantmentLevel){
                     enchanter.setChanged();
                     world.sendBlockUpdated(pos,state,state,3);
-
+                    if (SERVERSIDE_CONFIG == null) SERVERSIDE_CONFIG = parseJson(EnchantmentsConfig.SERVERSIDE_JSON);
                     Map<RunicEnergy.Type,Double> defaultCosts = SERVERSIDE_CONFIG.get(enchanter.processingEnchantment);
                     if (enchanter.hasEnoughRunicEnergy(defaultCosts,enchanter.procesingEnchantmentLevel)){
                         if (enchanter.enchantingTicks++ > MAX_ENCHANTING_TICKS){
-                            stack.enchant(enchanter.processingEnchantment,enchanter.procesingEnchantmentLevel);
+                            Map<Enchantment,Integer> enchs = new HashMap<>(EnchantmentHelper.getEnchantments(stack));
+                            if (enchs.containsKey(enchanter.processingEnchantment)){
+                                enchs.remove(enchanter.processingEnchantment);
+                                enchs.put(enchanter.processingEnchantment,enchanter.procesingEnchantmentLevel);
+                                EnchantmentHelper.setEnchantments(enchs,stack);
+                            }else{
+                                stack.enchant(enchanter.processingEnchantment,enchanter.procesingEnchantmentLevel);
+                            }
                             enchanter.spendEnergy(defaultCosts, enchanter.procesingEnchantmentLevel);
                             enchanter.reset();
                         }
+                        enchanter.onRemove();
+                        enchanter.clearWays();
                     }else{
                         enchanter.requestRunicEnergy(defaultCosts, enchanter.procesingEnchantmentLevel);
                     }
@@ -62,6 +78,14 @@ public class EnchanterBlockEntity extends REItemHandlerBlockEntity {
         }else{
 
         }
+    }
+
+    public Enchantment getProcessingEnchantment() {
+        return processingEnchantment;
+    }
+
+    public int getProcesingEnchantmentLevel() {
+        return procesingEnchantmentLevel;
     }
 
     public int getEnchantingTicks() {
@@ -118,11 +142,23 @@ public class EnchanterBlockEntity extends REItemHandlerBlockEntity {
         }
     }
 
+    @Nullable
+    @Override
+    public ClientboundBlockEntityDataPacket getUpdatePacket() {
+        CompoundTag tag = super.getUpdatePacket().getTag();
+        saveAdditional(tag);
+        return Helpers.createTilePacket(this,tag);
+    }
 
+    @Override
+    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
+        super.onDataPacket(net, pkt);
+        this.load(pkt.getTag());
+    }
 
     @Override
     public double getMaxEnergyInput() {
-        return 10;
+        return 25;
     }
 
     @Override
