@@ -1,5 +1,6 @@
 package com.finderfeed.solarforge.magic.blocks.primitive;
 
+import com.finderfeed.solarforge.config.EnchantmentsConfig;
 import com.finderfeed.solarforge.magic.blocks.blockentities.EnchanterBlockEntity;
 import com.finderfeed.solarforge.magic.blocks.blockentities.containers.EnchanterContainer;
 import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
@@ -32,14 +33,15 @@ public class EnchanterBlock extends Block implements EntityBlock {
     @Override
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult res) {
         if (!level.isClientSide){
-            if (level.getBlockEntity(pos) instanceof EnchanterBlockEntity enchanter){
+            if (level.getBlockEntity(pos) instanceof EnchanterBlockEntity enchanter && hand == InteractionHand.MAIN_HAND){
 
 
                 if (player.getUUID().equals(enchanter.getOwner())){
 
                     enchanter.setChanged();
                     level.sendBlockUpdated(pos,state,state,3);
-                    String configString = EnchanterBlockEntity.SERVERSIDE_CONFIG.toString();
+                    if (EnchanterBlockEntity.SERVERSIDE_CONFIG == null) EnchanterBlockEntity.SERVERSIDE_CONFIG = EnchanterBlockEntity.parseJson(EnchantmentsConfig.SERVERSIDE_JSON);
+                    String configString = EnchantmentsConfig.SERVERSIDE_JSON.toString();
                     NetworkHooks.openGui((ServerPlayer) player,new EnchanterContainer.Provider(pos,configString),(buf)->{
                         buf.writeBlockPos(pos);
                         buf.writeUtf(configString);
@@ -47,6 +49,7 @@ public class EnchanterBlock extends Block implements EntityBlock {
                 }else {
                     player.sendMessage(new TextComponent("You are not the owner!").withStyle(ChatFormatting.RED),player.getUUID());
                 }
+                return InteractionResult.SUCCESS;
             }
         }
         return super.use(state, level, pos, player, hand, res);

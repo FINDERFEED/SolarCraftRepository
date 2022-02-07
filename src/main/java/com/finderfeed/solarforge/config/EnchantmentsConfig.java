@@ -15,7 +15,7 @@ import java.nio.file.StandardOpenOption;
 
 public class EnchantmentsConfig {
 
-    public static final Gson SERIALIZER = new Gson();
+    public static final Gson SERIALIZER = new Gson().newBuilder().disableHtmlEscaping().setPrettyPrinting().create();
 
     public static JsonObject SERVERSIDE_JSON;
     public static final Path configDir = FMLPaths.CONFIGDIR.get().resolve(SolarcraftConfig.CUSTOM_CONFIGS_FOLDER).resolve(SolarcraftConfig.CUSTOM_BLOCKS_CONFIGS);
@@ -31,7 +31,13 @@ public class EnchantmentsConfig {
                         {
                             "enchantments": [
                                 {
-                                    "enchantment_id": "minecraft:sharpness"
+                                    "enchantment_id": "minecraft:sharpness",
+                                    "urba": 2000,
+                                    "tera": 5000
+                                },
+                                {
+                                    "enchantment_id": "minecraft:protection",
+                                    "tera": 10000
                                 }
                             ]
                         }

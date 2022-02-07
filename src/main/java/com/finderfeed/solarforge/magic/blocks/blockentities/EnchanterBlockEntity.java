@@ -113,7 +113,7 @@ public class EnchanterBlockEntity extends REItemHandlerBlockEntity {
         }else{
             processingEnchantment = null;
         }
-        if (level != null && !level.isClientSide){
+        if (level != null && !level.isClientSide && SERVERSIDE_CONFIG == null){
             SERVERSIDE_CONFIG = parseJson(EnchantmentsConfig.SERVERSIDE_JSON);
         }
     }

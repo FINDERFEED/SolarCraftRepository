@@ -7,10 +7,13 @@ import com.finderfeed.solarforge.magic.blocks.blockentities.containers.Enchanter
 import com.finderfeed.solarforge.magic.blocks.infusing_table_things.InfuserScreen;
 import com.finderfeed.solarforge.magic.blocks.solar_forge_block.solar_forge_screen.SolarForgeButton;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
+import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
+import com.finderfeed.solarforge.packet_handler.packets.EnchanterPacket;
 import com.finderfeed.solarforge.recipe_types.infusing_new.InfusingRecipe;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Vector3f;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
@@ -37,6 +40,9 @@ public class EnchanterContainerScreen extends AbstractScrollableContainerScreen<
     @Override
     public void init() {
         super.init();
+        this.inventoryLabelX = 10000;
+        relX+=50;
+        relY+=22;
         Map<Enchantment,Map<RunicEnergy.Type,Double>> defaultCosts = menu.costsAndAvailableEnchantments;
         int iter = 0;
 
@@ -64,7 +70,11 @@ public class EnchanterContainerScreen extends AbstractScrollableContainerScreen<
         });
 
         Button button = new SolarForgeButton(relX+ 112,relY + 71,new TextComponent("Enchant"),(btn)->{
-
+            if (selectedEnchantment != null && menu.tile.getStackInSlot(0).canApplyAtEnchantingTable(selectedEnchantment)) {
+                SolarForgePacketHandler.INSTANCE.sendToServer(new EnchanterPacket(menu.tile.getBlockPos(),selectedEnchantment,selectedLevel));
+            }else{
+                Minecraft.getInstance().player.displayClientMessage(new TextComponent("Enchantment cannot be applied to this item"),false);
+            }
         });
         addRenderableWidget(button);
         addRenderableWidget(buttonMinus);
@@ -73,11 +83,6 @@ public class EnchanterContainerScreen extends AbstractScrollableContainerScreen<
         setAsStaticWidget(buttonPlus);
         setAsStaticWidget(buttonMinus);
     }
-
-
-
-
-
 
     @Override
     protected void renderBg(PoseStack matrices, float pticks, int mousex, int mousey) {

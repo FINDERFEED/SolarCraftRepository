@@ -3,6 +3,7 @@ package com.finderfeed.solarforge.magic.blocks.blockentities.containers;
 import com.finderfeed.solarforge.magic.blocks.blockentities.EnchanterBlockEntity;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import com.finderfeed.solarforge.registries.containers.Containers;
+import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
@@ -40,16 +41,16 @@ public class EnchanterContainer extends AbstractContainerMenu {
         this.tile = (EnchanterBlockEntity) world.getBlockEntity(tilepos);
         this.inventory = tile.getInventory();
 
-        this.addSlot(new SlotItemHandler(this.inventory, 0, 64, 17));
+        this.addSlot(new SlotItemHandler(this.inventory, 0, 134 + 20, 17));
 
         for(int l = 0; l < 3; ++l) {
             for(int j1 = 0; j1 < 9; ++j1) {
-                this.addSlot(new Slot(inv, j1 + l * 9 + 9,   8+j1 * 18, 103 + l * 18 -19));
+                this.addSlot(new Slot(inv, j1 + l * 9 + 9,   8+j1 * 18 + 20, 103 + l * 18 -19));
             }
         }
 
         for(int i1 = 0; i1 < 9; ++i1) {
-            this.addSlot(new Slot(inv, i1,  8+ i1 * 18, 161 -19));
+            this.addSlot(new Slot(inv, i1,  8+ i1 * 18 + 20, 161 -19));
         }
     }
 
