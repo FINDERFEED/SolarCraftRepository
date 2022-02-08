@@ -37,79 +37,107 @@ public class EnchantmentsConfig {
                                 },
                                 {
                                     "enchantment_id": "minecraft:protection",
-                                    "tera": 10000
+                                    "ardo": 10000,
+                                    "kelda": 1000
                                 },
                                 {
                                     "enchantment_id": "minecraft:aqua_affinity",
-                                    "tera": 10000
+                                    "urba": 1500,
+                                    "zeta":1000
+                               
                                 },
                                 {
                                     "enchantment_id": "minecraft:bane_of_arthropods",
-                                    "tera": 10000
+                                    "fira": 3500,
+                                    "ultima": 2000
+                                    
                                 },
                                 {
                                     "enchantment_id": "minecraft:blast_protection",
-                                    "tera": 10000
+                                    "tera": 5000,
+                                    "giro": 3000
                                 },
                                 {
                                     "enchantment_id": "minecraft:channeling",
-                                    "tera": 10000
+                                    "ultima": 2500,
+                                    "urba": 2500
                                 },
                                 {
                                     "enchantment_id": "minecraft:depth_strider",
-                                    "tera": 10000
+                                    "tera": 1500,
+                                    "zeta": 2500
                                 },
                                 {
                                     "enchantment_id": "minecraft:efficiency",
-                                    "tera": 10000
+                                    "urba": 1000,
+                                    "tera": 4000,
+                                    "giro": 3000
                                 },
                                 {
                                     "enchantment_id": "minecraft:feather_falling",
-                                    "tera": 10000
+                                    "kelda": 2000,
+                                    "zeta": 1500
                                 },
                                 {
                                     "enchantment_id": "minecraft:fire_aspect",
-                                    "tera": 10000
+                                    "ultima": 5000,
+                                    "fira": 5000
                                 },
                                 {
                                     "enchantment_id": "minecraft:fire_protection",
-                                    "tera": 10000
+                                    "tera": 4000,
+                                    "giro": 3500,
+                                    "urba": 1000
+                                  
                                 },
                                 {
                                     "enchantment_id": "minecraft:flame",
-                                    "tera": 10000
+                                    "ultima": 5000,
+                                    "fira": 5000
                                 },
                                 {
                                     "enchantment_id": "minecraft:fortune",
-                                    "tera": 10000
+                                    "ultima": 5000,
+                                    "fira": 5000,
+                                    "kelda": 5000
                                 },
                                 {
                                     "enchantment_id": "minecraft:frost_walker",
-                                    "tera": 10000
+                                    "tera": 2000,
+                                    "fira": 3500
                                 },
                                 {
                                     "enchantment_id": "minecraft:impaling",
-                                    "tera": 10000
+                                    "zeta": 3000,
+                                    "ardo": 2500
                                 },
                                 {
                                     "enchantment_id": "minecraft:infinity",
-                                    "tera": 10000
+                                    "tera": 10000,
+                                    "ardo": 7500,
+                                    "kelda": 4000
                                 },
                                 {
                                     "enchantment_id": "minecraft:knockback",
-                                    "tera": 10000
+                                    "tera": 2000,
+                                    "fira": 3000,
+                                    "ardo": 2500
                                 },
                                 {
                                     "enchantment_id": "minecraft:looting",
-                                    "tera": 10000
+                                    "ultima": 5000,
+                                    "fira": 5000,
+                                    "kelda": 5000
                                 },
                                 {
                                     "enchantment_id": "minecraft:loyalty",
-                                    "tera": 10000
+                                    "zeta": 3500,
+                                    "fira": 4000
                                 },
                                 {
                                     "enchantment_id": "minecraft:luck_of_the_sea",
-                                    "tera": 10000
+                                    "tera": 2000,
+                                    "urba": 1500
                                 },
                                 {
                                     "enchantment_id": "minecraft:lure",
@@ -117,63 +145,84 @@ public class EnchantmentsConfig {
                                 },
                                 {
                                     "enchantment_id": "minecraft:mending",
-                                    "tera": 10000
+                                    "tera": 10000,
+                                    "kelda": 10000,
+                                    "fira": 10000,
+                                    "zeta": 10000,
+                                    "urba": 10000,
+                                    "ardo": 10000,
+                                    "ultima": 10000,
+                                    "giro": 10000
                                 },
                                 {
                                     "enchantment_id": "minecraft:multishot",
-                                    "tera": 10000
+                                    "ardo": 2500,
+                                    "tera": 3000
                                 },
                                 {
                                     "enchantment_id": "minecraft:piercing",
-                                    "tera": 10000
+                                    "zeta": 2000,
+                                    "ardo": 3500
                                 },
                                 {
                                     "enchantment_id": "minecraft:power",
-                                    "tera": 10000
+                                    "tera": 5000,
+                                    "ardo": 4500,
+                                    "kelda": 2500
                                 },
                                 {
                                     "enchantment_id": "minecraft:projectile_protection",
-                                    "tera": 10000
+                                    "tera": 5000,
+                                    "giro": 3000
                                 },
                                 {
                                     "enchantment_id": "minecraft:punch",
-                                    "tera": 10000
+                                    "ultima": 2500,
+                                    "giro": 1500
                                 },
                                 {
                                     "enchantment_id": "minecraft:quick_charge",
-                                    "tera": 10000
+                                    "fira": 3500,
+                                    "kelda": 4000
                                 },
                                 {
                                     "enchantment_id": "minecraft:respiration",
-                                    "tera": 10000
+                                    "tera": 2000,
+                                    "urba": 1000
                                 },
                                 {
                                     "enchantment_id": "minecraft:riptide",
-                                    "tera": 10000
+                                    "tera": 3500,
+                                    "kelda": 8000
                                 },
                                 {
                                     "enchantment_id": "minecraft:silk_touch",
-                                    "tera": 10000
+                                    "tera": 7500
                                 },
                                 {
                                     "enchantment_id": "minecraft:smite",
-                                    "tera": 10000
+                                    "tera": 2500,
+                                    "kelda": 4000
                                 },
                                 {
                                     "enchantment_id": "minecraft:soul_speed",
-                                    "tera": 10000
+                                    "tera": 2000
                                 },
                                 {
                                     "enchantment_id": "minecraft:sweeping",
-                                    "tera": 10000
+                                    "zeta": 4000,
+                                    "ardo": 3000,
+                                    "fira": 2500
                                 },
                                 {
                                     "enchantment_id": "minecraft:thorns",
-                                    "tera": 10000
+                                    "tera": 3500,
+                                    "kelda": 2000,
+                                    "ardo": 3000
                                 },
                                 {
                                     "enchantment_id": "minecraft:unbreaking",
-                                    "tera": 10000
+                                    "ultima": 3500
                                 }
                             ]
                         }
