@@ -80,19 +80,20 @@ public class EnchanterBlockEntity extends REItemHandlerBlockEntity {
                 enchanter.reset();
             }
         }else{
-            if (enchanter.enchantingInProgress()) {
+            if (enchanter.enchantingInProgress() ) {
                 Vec3 center = Helpers.getBlockCenter(pos);
                 ClientHelpers.ParticleAnimationHelper.verticalCircle(
-                        ParticleTypesRegistry.SMALL_SOLAR_STRIKE_PARTICLE.get(), center, 0.75, 3, new float[]{0, 0, 0},
+                        ParticleTypesRegistry.SMALL_SOLAR_STRIKE_PARTICLE.get(), center.add(0,-0.25,0), 0.75, 3, new float[]{0, 0, 0},
                         () -> 255, () -> 255, () -> 0, 0.25f
                 );
 
                 for (int i = 0; i < 3; i++) {
                     double[] xz = FinderfeedMathHelper.rotatePointDegrees(0.5, 0, i * 120 + 120 * Math.sin(world.getGameTime() / 20f));
                     ClientHelpers.ParticleAnimationHelper.createParticle(ParticleTypesRegistry.SMALL_SOLAR_STRIKE_PARTICLE.get(),
-                            center.x + xz[0], center.y + 0.4, center.z + xz[1], 0, 0.1, 0, () -> 255, () -> 255, () -> 0, 0.25f);
+                            center.x + xz[0], center.y - 0.2, center.z + xz[1], 0, 0.07, 0, () -> 255, () -> 255, () -> 0, 0.25f);
                 }
             }
+
         }
     }
 

@@ -112,10 +112,11 @@ public abstract class AbstractRunicEnergyContainer extends SolarcraftBlockEntity
             List<BlockPos> route = PATH_TO_CONTAINERS.get(type);
 //            FindingAlgorithms.setRepeatersConnections(PATH_TO_CONTAINERS.get(type),level);
             RunicEnergyPath.setRepeaterConnections(PATH_TO_CONTAINERS.get(type),level);
-            BlockEntity first = level.getBlockEntity(PATH_TO_CONTAINERS.get(type).get(1));
+            BlockPos firstPos = PATH_TO_CONTAINERS.get(type).get(1);
+            BlockEntity first = level.getBlockEntity(firstPos);
             if (first instanceof RunicEnergyGiver container){
-                double flag = container.extractEnergy(type,amount);
-                this.giveEnergy(type,flag);
+                double flag = container.extractEnergy(type, amount);
+                this.giveEnergy(type, flag);
             }else if (first instanceof BaseRepeaterTile repeater){
 
                 if (RunicEnergyPath.isRouteCorrect(PATH_TO_CONTAINERS.get(type),level)){
@@ -132,13 +133,12 @@ public abstract class AbstractRunicEnergyContainer extends SolarcraftBlockEntity
                     constructWay(type);
                 }
             }else{
-                if (first != null) {
-                    if (nullOrGiverPositionForClient.contains(first.getBlockPos())) {
-                        nullOrGiverPositionForClient.remove(first.getBlockPos());
-                        BlockState state = level.getBlockState(worldPosition);
-                        this.setChanged();
-                        this.level.sendBlockUpdated(worldPosition, state, state, 3);
-                    }
+
+                if (nullOrGiverPositionForClient.contains(firstPos)) {
+                    nullOrGiverPositionForClient.remove(firstPos);
+                    BlockState state = level.getBlockState(worldPosition);
+                    this.setChanged();
+                    this.level.sendBlockUpdated(worldPosition, state, state, 3);
                 }
                 RunicEnergyPath.resetRepeaterConnections(PATH_TO_CONTAINERS.get(type),level);
                 constructWay(type);

@@ -68,11 +68,7 @@ public class RetainLostEvent {
             peorig.reviveCaps();
             playernew.getCapability(CapabilitySolarMana.SOLAR_MANA_PLAYER)
                     .orElseThrow(RuntimeException::new)
-                    .setMana(
-                            peorig
-                                    .getCapability(CapabilitySolarMana.SOLAR_MANA_PLAYER)
-                                    .orElseThrow(RuntimeException::new)
-                                    .getMana());
+                    .setMana(peorig.getCapability(CapabilitySolarMana.SOLAR_MANA_PLAYER).orElseThrow(RuntimeException::new).getMana());
             peorig.invalidateCaps();
 
             playernew.getPersistentData().putInt(SolarCraftTags.RAW_SOLAR_ENERGY, peorig.getPersistentData().getInt(SolarCraftTags.RAW_SOLAR_ENERGY));
@@ -129,27 +125,5 @@ public class RetainLostEvent {
     }
 
 
-//    @SubscribeEvent
-//    public static void testEvent(final BlockEvent.EntityPlaceEvent event) {
-//        if (event.getEntity() instanceof PlayerEntity){
-//            if (event.getEntity().isCrouching()){
-//                LivingEntityAttackEvent.map.put(event.getPos(), Blocks.AIR.defaultBlockState());
-//            }else {
-//                System.out.println("a");
-//                try(FileWriter write = new FileWriter(,true)){
-//                    BlockPos pos = event.getPos();
-//                    String str = "new BlockPos(0,0,0).offset(pos.x )";
-//                    write.write(str);
-//                    write.flush();
-//                    System.out.println("b");
-//                }
-//                catch (IOException ex){
-//                    System.out.println("c");
-//                }
-//
-//            }
-//        }
-//
-//
-//    }
+
 }

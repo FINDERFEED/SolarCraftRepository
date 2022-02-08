@@ -27,6 +27,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraftforge.registries.ForgeRegistries;
+import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -208,6 +209,23 @@ public class EnchanterContainerScreen extends AbstractScrollableContainerScreen<
             currentMouseScroll += delta * getScrollValue();
         }
         return super.mouseScrolled(p_94686_, p_94687_, delta);
+    }
+
+    @Override
+    public void performScroll(int keyCode) {
+        int delta = getScrollValue();
+        if ((keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_UP)
+                || keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_W)) ){
+            if (currentMouseScroll + delta*getScrollValue() >= -getMaxYDownScrollValue() && currentMouseScroll + delta*getScrollValue() <= 0) {
+                currentMouseScroll += delta * getScrollValue();
+            }
+        }else if((keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_DOWN)
+                || keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_S)) ){
+            if (currentMouseScroll - delta*getScrollValue() >= -getMaxYDownScrollValue() && currentMouseScroll - delta*getScrollValue() <= 0) {
+                currentMouseScroll -= delta * getScrollValue();
+            }
+        }
+        super.performScroll(keyCode);
     }
 
     private void renderEnergyBar(PoseStack matrices, int offsetx, int offsety, double energyAmount, boolean simulate){

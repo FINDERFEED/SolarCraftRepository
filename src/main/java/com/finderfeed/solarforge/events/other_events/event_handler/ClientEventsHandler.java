@@ -115,9 +115,6 @@ public class ClientEventsHandler {
         PoseStack stack = event.getPoseStack();
         if (!ORES_RENDER_POSITIONS.isEmpty()){
             Camera cam = Minecraft.getInstance().gameRenderer.getMainCamera();
-
-            VoxelShape shape = Block.box(0,0,0,16,16,16);
-//            VertexConsumer c = Minecraft.getInstance().renderBuffers().bufferSource().getBuffer(RenderType.lines());
             RenderSystem.disableDepthTest();
             RenderSystem.disableTexture();
             RenderSystem.disableCull();
@@ -149,8 +146,6 @@ public class ClientEventsHandler {
         if (!CATALYST_RENDER_POSITIONS.isEmpty()){
             Camera cam = Minecraft.getInstance().gameRenderer.getMainCamera();
 
-            VoxelShape shape = Block.box(0,0,0,16,16,16);
-//            VertexConsumer c = Minecraft.getInstance().renderBuffers().bufferSource().getBuffer(RenderType.lines());
             RenderSystem.disableDepthTest();
             RenderSystem.disableTexture();
             RenderSystem.disableCull();
