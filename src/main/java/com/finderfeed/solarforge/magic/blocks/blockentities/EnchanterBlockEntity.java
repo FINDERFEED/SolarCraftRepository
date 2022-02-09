@@ -22,6 +22,7 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.Nullable;
@@ -68,6 +69,7 @@ public class EnchanterBlockEntity extends REItemHandlerBlockEntity {
                             enchanter.spendEnergy(defaultCosts, enchanter.procesingEnchantmentLevel);
                             enchanter.reset();
                         }
+                        enchanter.nullOrGiverPositionForClient.clear();
                         enchanter.onRemove();
                         enchanter.clearWays();
                     }else{
@@ -75,6 +77,8 @@ public class EnchanterBlockEntity extends REItemHandlerBlockEntity {
                     }
                 }else{
                     enchanter.reset();
+                    enchanter.setChanged();
+                    world.sendBlockUpdated(pos,state,state,3);
                 }
             }else{
                 enchanter.reset();
@@ -116,6 +120,7 @@ public class EnchanterBlockEntity extends REItemHandlerBlockEntity {
         this.enchantingTicks = -1;
         this.onRemove();
         this.clearWays();
+        nullOrGiverPositionForClient.clear();
     }
 
 
@@ -162,9 +167,10 @@ public class EnchanterBlockEntity extends REItemHandlerBlockEntity {
     @Nullable
     @Override
     public ClientboundBlockEntityDataPacket getUpdatePacket() {
+        CompoundTag tag1 = saveWithFullMetadata();
         CompoundTag tag = super.getUpdatePacket().getTag();
-        saveAdditional(tag);
-        return Helpers.createTilePacket(this,tag);
+        tag1.merge(tag);
+        return Helpers.createTilePacket(this,tag1);
     }
 
     @Override
@@ -229,6 +235,10 @@ public class EnchanterBlockEntity extends REItemHandlerBlockEntity {
         return costs;
     }
 
+    @Override
+    public AABB getRenderBoundingBox() {
+        return new AABB(-getMaxRange(),-getMaxRange(),-getMaxRange(),getMaxRange(),getMaxRange(),getMaxRange()).move(worldPosition);
+    }
 
     public static class RunicEnergyCostConstructor{
 

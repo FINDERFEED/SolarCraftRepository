@@ -90,21 +90,26 @@ public abstract class AbstractRunicEnergyContainer extends SolarcraftBlockEntity
     public abstract int getSeekingCooldown();
 
     public void requestRunicEnergy(Map<RunicEnergy.Type,Double> costs,int multiplier){
-        costs.forEach((type,cost)->{
-            double multiplied = cost*multiplier;
-            double runicEnergy = getRunicEnergy(type);
-            if (multiplied >= runicEnergy + getMaxEnergyInput()){
-                requestSpecificEnergy(type,getMaxEnergyInput());
-            }else if ((multiplied > runicEnergy) && (multiplied < runicEnergy + getMaxEnergyInput())){
-                double request = multiplied - getRunicEnergy(type);
-                requestSpecificEnergy(type,request);
-            }else {
-                if (PATH_TO_CONTAINERS.containsKey(type)) {
-                    RunicEnergyPath.resetRepeaterConnections(PATH_TO_CONTAINERS.get(type),level);
-                    PATH_TO_CONTAINERS.remove(type);
+        if (seekingCooldown > getSeekingCooldown()) {
+            costs.forEach((type, cost) -> {
+                double multiplied = cost * multiplier;
+                double runicEnergy = getRunicEnergy(type);
+                if (multiplied >= runicEnergy + getMaxEnergyInput()) {
+                    requestSpecificEnergy(type, getMaxEnergyInput());
+                } else if ((multiplied > runicEnergy) && (multiplied < runicEnergy + getMaxEnergyInput())) {
+                    double request = multiplied - getRunicEnergy(type);
+                    requestSpecificEnergy(type, request);
+                } else {
+                    if (PATH_TO_CONTAINERS.containsKey(type)) {
+                        RunicEnergyPath.resetRepeaterConnections(PATH_TO_CONTAINERS.get(type), level);
+                        PATH_TO_CONTAINERS.remove(type);
+                    }
                 }
-            }
-        });
+            });
+            seekingCooldown = 0;
+        }else{
+            seekingCooldown++;
+        }
     }
 
     public void requestSpecificEnergy(RunicEnergy.Type type,double amount){
@@ -246,24 +251,20 @@ public abstract class AbstractRunicEnergyContainer extends SolarcraftBlockEntity
 
     public void constructWay(RunicEnergy.Type type){
         PATH_TO_CONTAINERS.remove(type);
-        if (seekingCooldown > getSeekingCooldown()) {
-            BlockEntity entity = findNearestRepeaterOrPylon(worldPosition, level, type);
-            if (entity instanceof BaseRepeaterTile tile) {
-                List<BlockPos> route = new RunicEnergyPath(type, this.worldPosition).build(tile);
-                if (route != null) {
-                    PATH_TO_CONTAINERS.put(type, route);
-                }
-            } else if (entity instanceof RunicEnergyGiver container) {
-                nullOrGiverPositionForClient.add(container.getPos());
-                BlockState state = level.getBlockState(worldPosition);
-                this.setChanged();
-                this.level.sendBlockUpdated(worldPosition,state,state,3);
-                PATH_TO_CONTAINERS.put(type, List.of(this.worldPosition, container.getPos()));
+        BlockEntity entity = findNearestRepeaterOrPylon(worldPosition, level, type);
+        if (entity instanceof BaseRepeaterTile tile) {
+            List<BlockPos> route = new RunicEnergyPath(type, this.worldPosition).build(tile);
+            if (route != null) {
+                PATH_TO_CONTAINERS.put(type, route);
             }
-            seekingCooldown = 0;
-        }else{
-            seekingCooldown++;
+        } else if (entity instanceof RunicEnergyGiver container) {
+            nullOrGiverPositionForClient.add(container.getPos());
+            BlockState state = level.getBlockState(worldPosition);
+            this.setChanged();
+            this.level.sendBlockUpdated(worldPosition,state,state,3);
+            PATH_TO_CONTAINERS.put(type, List.of(this.worldPosition, container.getPos()));
         }
+
     }
 
     public abstract double getMaxRange();

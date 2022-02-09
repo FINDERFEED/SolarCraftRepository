@@ -148,8 +148,8 @@ public class EnchanterContainerScreen extends AbstractScrollableContainerScreen<
             renderEnergyBar(matrices, relX + a - 12 - 16 + 1, relY + 145 + y, menu.costsAndAvailableEnchantments.get(selectedEnchantment).get(RunicEnergy.Type.URBA) * selectedLevel, true);
             renderEnergyBar(matrices, relX + a - 28 - 16 + 1, relY + 145 + y, menu.costsAndAvailableEnchantments.get(selectedEnchantment).get(RunicEnergy.Type.FIRA) * selectedLevel, true);
             renderEnergyBar(matrices, relX + a - 44 - 16 + 1, relY + 145 + y, menu.costsAndAvailableEnchantments.get(selectedEnchantment).get(RunicEnergy.Type.ARDO) * selectedLevel, true);
-            renderEnergyBar(matrices, relX + a - 12 + 1, relY + 61 + y, menu.costsAndAvailableEnchantments.get(selectedEnchantment).get(RunicEnergy.Type.GIRO) * selectedLevel, true);
-            renderEnergyBar(matrices, relX + a - 12 + 1, relY + 145 + y, menu.costsAndAvailableEnchantments.get(selectedEnchantment).get(RunicEnergy.Type.ULTIMA) * selectedLevel, true);
+            renderEnergyBar(matrices, relX + a - 12 , relY + 61 + y, menu.costsAndAvailableEnchantments.get(selectedEnchantment).get(RunicEnergy.Type.GIRO) * selectedLevel, true);
+            renderEnergyBar(matrices, relX + a - 12 , relY + 145 + y, menu.costsAndAvailableEnchantments.get(selectedEnchantment).get(RunicEnergy.Type.ULTIMA) * selectedLevel, true);
             RenderSystem.disableBlend();
 
 
@@ -159,8 +159,8 @@ public class EnchanterContainerScreen extends AbstractScrollableContainerScreen<
             renderEnergyBar(matrices, relX + a - 12 - 16 + 1, relY + 145 + y,menu.tile.getRunicEnergy(RunicEnergy.Type.URBA), false);
             renderEnergyBar(matrices, relX + a - 28 - 16 + 1, relY + 145 + y,menu.tile.getRunicEnergy(RunicEnergy.Type.FIRA), false);
             renderEnergyBar(matrices, relX + a - 44 - 16 + 1, relY + 145 + y,menu.tile.getRunicEnergy(RunicEnergy.Type.ARDO), false);
-            renderEnergyBar(matrices, relX + a - 12 + 1, relY + 61 + y, menu.tile.getRunicEnergy(RunicEnergy.Type.GIRO), false);
-            renderEnergyBar(matrices, relX + a - 12 + 1, relY + 145 + y, menu.tile.getRunicEnergy(RunicEnergy.Type.ULTIMA), false);
+            renderEnergyBar(matrices, relX + a - 12 , relY + 61 + y, menu.tile.getRunicEnergy(RunicEnergy.Type.GIRO), false);
+            renderEnergyBar(matrices, relX + a - 12 , relY + 145 + y, menu.tile.getRunicEnergy(RunicEnergy.Type.ULTIMA), false);
 
             drawCenteredString(matrices,font,""+selectedLevel,relX + 94,relY + 45,0xffffff);
             drawCenteredString(matrices,font,selectedEnchantment.getFullname(selectedLevel).getString(),relX + 89,relY + 184,0xff0000);

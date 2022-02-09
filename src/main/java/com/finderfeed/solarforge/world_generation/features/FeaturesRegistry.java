@@ -174,10 +174,10 @@ public class FeaturesRegistry {
 
     public static void registerConfiguredFeatures(final FMLCommonSetupEvent event){
         event.enqueueWork(()->{
-
-            Registry.register(Registry.FOLIAGE_PLACER_TYPES,new ResourceLocation("solarforge","burnt_tree_foliage"), FoliagePlacerRegistry.BURNT_TREE_PLACER);
-            Registry.register(Registry.FOLIAGE_PLACER_TYPES,new ResourceLocation("solarforge","radiant_tree_foliage"), FoliagePlacerRegistry.RADIANT_PLACER);
-            Registry.register(Registry.FOLIAGE_PLACER_TYPES,new ResourceLocation("solarforge","radiant_tree_small_foliage"), FoliagePlacerRegistry.RADIANT_SMALL_PLACER);
+//
+//            Registry.register(Registry.FOLIAGE_PLACER_TYPES,new ResourceLocation("solarforge","burnt_tree_foliage"), FoliagePlacerRegistry.BURNT_TREE_PLACER);
+//            Registry.register(Registry.FOLIAGE_PLACER_TYPES,new ResourceLocation("solarforge","radiant_tree_foliage"), FoliagePlacerRegistry.RADIANT_PLACER);
+//            Registry.register(Registry.FOLIAGE_PLACER_TYPES,new ResourceLocation("solarforge","radiant_tree_small_foliage"), FoliagePlacerRegistry.RADIANT_SMALL_PLACER);
             BURNT_TREE_FEATURE_2_CONF = Feature.TREE.configured(new TreeConfiguration.TreeConfigurationBuilder(
                     BlockStateProvider.simple(BlocksRegistry.BURNT_LOG.get().defaultBlockState()),
                     new StraightTrunkPlacer(4, 2, 0),

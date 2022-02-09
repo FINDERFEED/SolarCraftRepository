@@ -38,38 +38,39 @@ public class EnchanterRenderer extends AbstractRunicEnergyContainerRenderer<Ench
                     renderer.getModel(stack,Minecraft.getInstance().level, Minecraft.getInstance().player,0));
             matrices.popPose();
         }
+        if (tile.enchantingInProgress()) {
+            ResourceLocation fancyRing = new ResourceLocation("solarforge", "textures/misc/fancy_ring_1.png");
+            matrices.pushPose();
 
-        ResourceLocation fancyRing = new ResourceLocation("solarforge","textures/misc/fancy_ring_1.png");
-        matrices.pushPose();
+            VertexConsumer vertex = buffer.getBuffer(RenderType.text(fancyRing));
+            matrices.translate(0.5, 0.001, 0.5);
+            matrices.mulPose(Vector3f.YP.rotationDegrees(time % 360));
+            matrices.scale(0.25f, 0, 0.25f);
+            PoseStack.Pose entry = matrices.last();
+            vertex.vertex(entry.pose(), -1.25F, 0, -1.25F).color(255, 255, 255, 255).uv(1, 0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
+            vertex.vertex(entry.pose(), 1.25F, 0, -1.25F).color(255, 255, 255, 255).uv(1, 1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
+            vertex.vertex(entry.pose(), 1.25F, 0, 1.25F).color(255, 255, 255, 255).uv(0, 1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
+            vertex.vertex(entry.pose(), -1.25F, 0, 1.25F).color(255, 255, 255, 255).uv(0, 0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
 
-        VertexConsumer vertex = buffer.getBuffer(RenderType.text(fancyRing));
-        matrices.translate(0.5,0.001,0.5);
-        matrices.mulPose(Vector3f.YP.rotationDegrees(time % 360));
-        matrices.scale(0.25f,0,0.25f);
-        PoseStack.Pose entry = matrices.last();
-        vertex.vertex(entry.pose(),-1.25F,0,-1.25F).color(255,255,255,255).uv(1,0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
-        vertex.vertex(entry.pose(), 1.25F,0,-1.25F).color(255,255,255,255).uv(1,1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
-        vertex.vertex(entry.pose(), 1.25F,0, 1.25F).color(255,255,255,255).uv(0,1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
-        vertex.vertex(entry.pose(),-1.25F,0, 1.25F).color(255,255,255,255).uv(0,0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
-
-        vertex.vertex(entry.pose(),-1.25F,0, 1.25F).color(255,255,255,255).uv(1,0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
-        vertex.vertex(entry.pose(), 1.25F,0, 1.25F).color(255,255,255,255).uv(1,1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
-        vertex.vertex(entry.pose(), 1.25F,0,-1.25F).color(255,255,255,255).uv(0,1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
-        vertex.vertex(entry.pose(),-1.25F,0,-1.25F).color(255,255,255,255).uv(0,0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
+            vertex.vertex(entry.pose(), -1.25F, 0, 1.25F).color(255, 255, 255, 255).uv(1, 0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
+            vertex.vertex(entry.pose(), 1.25F, 0, 1.25F).color(255, 255, 255, 255).uv(1, 1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
+            vertex.vertex(entry.pose(), 1.25F, 0, -1.25F).color(255, 255, 255, 255).uv(0, 1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
+            vertex.vertex(entry.pose(), -1.25F, 0, -1.25F).color(255, 255, 255, 255).uv(0, 0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
 
 
-        matrices.mulPose(Vector3f.YP.rotationDegrees(-(time % 360)*2));
-        vertex.vertex(entry.pose(),-2.8F,0,-2.8F).color(255,255,255,255).uv(1,0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
-        vertex.vertex(entry.pose(), 2.8F,0,-2.8F).color(255,255,255,255).uv(1,1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
-        vertex.vertex(entry.pose(), 2.8F,0, 2.8F).color(255,255,255,255).uv(0,1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
-        vertex.vertex(entry.pose(),-2.8F,0, 2.8F).color(255,255,255,255).uv(0,0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
+            matrices.mulPose(Vector3f.YP.rotationDegrees(-(time % 360) * 2));
+            vertex.vertex(entry.pose(), -2.8F, 0, -2.8F).color(255, 255, 255, 255).uv(1, 0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
+            vertex.vertex(entry.pose(), 2.8F, 0, -2.8F).color(255, 255, 255, 255).uv(1, 1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
+            vertex.vertex(entry.pose(), 2.8F, 0, 2.8F).color(255, 255, 255, 255).uv(0, 1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
+            vertex.vertex(entry.pose(), -2.8F, 0, 2.8F).color(255, 255, 255, 255).uv(0, 0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
 
-        vertex.vertex(entry.pose(),-2.8F,0, 2.8F).color(255,255,255,255).uv(1,0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
-        vertex.vertex(entry.pose(), 2.8F,0, 2.8F).color(255,255,255,255).uv(1,1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
-        vertex.vertex(entry.pose(), 2.8F,0,-2.8F).color(255,255,255,255).uv(0,1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
-        vertex.vertex(entry.pose(),-2.8F,0,-2.8F).color(255,255,255,255).uv(0,0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
+            vertex.vertex(entry.pose(), -2.8F, 0, 2.8F).color(255, 255, 255, 255).uv(1, 0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
+            vertex.vertex(entry.pose(), 2.8F, 0, 2.8F).color(255, 255, 255, 255).uv(1, 1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
+            vertex.vertex(entry.pose(), 2.8F, 0, -2.8F).color(255, 255, 255, 255).uv(0, 1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
+            vertex.vertex(entry.pose(), -2.8F, 0, -2.8F).color(255, 255, 255, 255).uv(0, 0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
 
-        matrices.popPose();
+            matrices.popPose();
+        }
         super.render(tile, pticks, matrices, buffer, light, overlay);
     }
 }

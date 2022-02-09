@@ -33,7 +33,7 @@ public class BurntTreeFoliagePlacer extends FoliagePlacer {
 
     @Override
     protected FoliagePlacerType<?> type() {
-        return FoliagePlacerRegistry.BURNT_TREE_PLACER;
+        return FoliagePlacerRegistry.BURNT_TREE_PLACER.get();
     }
 
 

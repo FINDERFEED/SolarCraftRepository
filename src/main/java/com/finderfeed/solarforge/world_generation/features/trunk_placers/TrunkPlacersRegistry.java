@@ -14,6 +14,8 @@ import java.lang.reflect.InvocationTargetException;
 
 public class TrunkPlacersRegistry {
 
+
+
     public static Constructor<TrunkPlacerType> CONSTRUCTOR = null;
 
     static {
