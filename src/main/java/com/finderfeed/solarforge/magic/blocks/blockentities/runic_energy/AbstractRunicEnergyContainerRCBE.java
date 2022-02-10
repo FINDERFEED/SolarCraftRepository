@@ -23,7 +23,7 @@ import javax.annotation.Nullable;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-
+@Deprecated
 public abstract class AbstractRunicEnergyContainerRCBE extends RandomizableContainerBlockEntity implements OwnedBlock {
 
     private int seekingCooldown = 0;

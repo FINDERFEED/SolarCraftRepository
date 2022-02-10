@@ -16,6 +16,8 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -68,6 +70,9 @@ public class EnchanterBlockEntity extends REItemHandlerBlockEntity {
                             }
                             enchanter.spendEnergy(defaultCosts, enchanter.procesingEnchantmentLevel);
                             enchanter.reset();
+                            enchanter.level.playSound(null,enchanter.worldPosition.getX(),enchanter.worldPosition.getY(),enchanter.worldPosition.getZ(),
+                                    SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.BLOCKS,
+                                    1,1);
                         }
                         enchanter.nullOrGiverPositionForClient.clear();
                         enchanter.onRemove();
@@ -126,6 +131,8 @@ public class EnchanterBlockEntity extends REItemHandlerBlockEntity {
 
 
     public void triggerEnchanting(Enchantment enchantment, int level){
+        this.level.playSound(null,worldPosition.getX(),worldPosition.getY(),worldPosition.getZ(), SoundEvents.BEACON_ACTIVATE, SoundSource.BLOCKS,
+                1,1);
         this.processingEnchantment = enchantment;
         this.procesingEnchantmentLevel = level;
         this.enchantingInProgress = true;
@@ -181,7 +188,7 @@ public class EnchanterBlockEntity extends REItemHandlerBlockEntity {
 
     @Override
     public double getMaxEnergyInput() {
-        return 25;
+        return 10;
     }
 
     @Override

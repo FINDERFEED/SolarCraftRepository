@@ -9,6 +9,7 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.Vec3;
 
+@Deprecated
 public abstract class AbstractRunicEnergyContainerRCBERenderer<T extends AbstractRunicEnergyContainerRCBE> implements BlockEntityRenderer<T> {
     @Override
     public void render(T tile, float pticks, PoseStack matrices, MultiBufferSource buffer, int light, int overlay) {

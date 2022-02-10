@@ -163,7 +163,7 @@ public class EnchanterContainerScreen extends AbstractScrollableContainerScreen<
             renderEnergyBar(matrices, relX + a - 12 , relY + 145 + y, menu.tile.getRunicEnergy(RunicEnergy.Type.ULTIMA), false);
 
             drawCenteredString(matrices,font,""+selectedLevel,relX + 94,relY + 45,0xffffff);
-            drawCenteredString(matrices,font,selectedEnchantment.getFullname(selectedLevel).getString(),relX + 89,relY + 184,0xff0000);
+            drawCenteredString(matrices,font,selectedEnchantment.getFullname(selectedLevel).getString(),relX + 93,relY + 184,0xff0000);
             matrices.popPose();
 
 
@@ -213,14 +213,26 @@ public class EnchanterContainerScreen extends AbstractScrollableContainerScreen<
 
     @Override
     public void performScroll(int keyCode) {
-        int delta = getScrollValue();
+        int delta = getScrollValue()/2;
         if ((keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_UP)
                 || keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_W)) ){
+            for (SolarForgeButton b : postRender){
+                if (currentMouseScroll + delta*getScrollValue() >= -getMaxYDownScrollValue() && currentMouseScroll + delta*getScrollValue() <= 0) {
+                    b.y = b.y + (int) delta * getScrollValue();
+
+                }
+            }
             if (currentMouseScroll + delta*getScrollValue() >= -getMaxYDownScrollValue() && currentMouseScroll + delta*getScrollValue() <= 0) {
                 currentMouseScroll += delta * getScrollValue();
             }
         }else if((keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_DOWN)
                 || keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_S)) ){
+            for (SolarForgeButton b : postRender){
+                if (currentMouseScroll - delta*getScrollValue() >= -getMaxYDownScrollValue() && currentMouseScroll - delta*getScrollValue() <= 0) {
+                    b.y = b.y - (int) delta * getScrollValue();
+
+                }
+            }
             if (currentMouseScroll - delta*getScrollValue() >= -getMaxYDownScrollValue() && currentMouseScroll - delta*getScrollValue() <= 0) {
                 currentMouseScroll -= delta * getScrollValue();
             }

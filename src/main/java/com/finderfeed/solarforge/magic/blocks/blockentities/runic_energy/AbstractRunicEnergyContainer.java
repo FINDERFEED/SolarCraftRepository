@@ -90,7 +90,7 @@ public abstract class AbstractRunicEnergyContainer extends SolarcraftBlockEntity
     public abstract int getSeekingCooldown();
 
     public void requestRunicEnergy(Map<RunicEnergy.Type,Double> costs,int multiplier){
-        if (seekingCooldown > getSeekingCooldown()) {
+
             costs.forEach((type, cost) -> {
                 double multiplied = cost * multiplier;
                 double runicEnergy = getRunicEnergy(type);
@@ -106,16 +106,13 @@ public abstract class AbstractRunicEnergyContainer extends SolarcraftBlockEntity
                     }
                 }
             });
-            seekingCooldown = 0;
-        }else{
-            seekingCooldown++;
-        }
+
+
     }
 
     public void requestSpecificEnergy(RunicEnergy.Type type,double amount){
         if (PATH_TO_CONTAINERS.containsKey(type) && PATH_TO_CONTAINERS.get(type) != null){
             List<BlockPos> route = PATH_TO_CONTAINERS.get(type);
-//            FindingAlgorithms.setRepeatersConnections(PATH_TO_CONTAINERS.get(type),level);
             RunicEnergyPath.setRepeaterConnections(PATH_TO_CONTAINERS.get(type),level);
             BlockPos firstPos = PATH_TO_CONTAINERS.get(type).get(1);
             BlockEntity first = level.getBlockEntity(firstPos);

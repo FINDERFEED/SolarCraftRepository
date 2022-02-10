@@ -21,6 +21,7 @@ import net.minecraft.world.phys.Vec3;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 //NEVER GONNA GIVE YOU UP
 public class BaseRepeaterTile extends BlockEntity {
@@ -42,7 +43,7 @@ public class BaseRepeaterTile extends BlockEntity {
 
     public static void tick(Level world,BlockPos pos,BlockState state,BaseRepeaterTile tile){
         Block block = world.getBlockState(pos.below()).getBlock();
-        if (tile.getEnergyType() == null) {
+        if (tile.getEnergyType() == null && world.getGameTime() % 20 == 0) {
             if (block == BlocksRegistry.ZETA_RUNE_BLOCK.get()) {
                 tile.setEnergyType(RunicEnergy.Type.ZETA);
             } else if (block == BlocksRegistry.URBA_RUNE_BLOCK.get()) {
@@ -55,6 +56,10 @@ public class BaseRepeaterTile extends BlockEntity {
                 tile.setEnergyType(RunicEnergy.Type.ARDO);
             } else if (block == BlocksRegistry.TERA_RUNE_BLOCK.get()) {
                 tile.setEnergyType(RunicEnergy.Type.TERA);
+            } else if (block == BlocksRegistry.GIRO_RUNE_BLOCK.get()) {
+                tile.setEnergyType(RunicEnergy.Type.GIRO);
+            } else if (block == BlocksRegistry.ULTIMA_RUNE_BLOCK.get()) {
+                tile.setEnergyType(RunicEnergy.Type.ULTIMA);
             } else {
                 tile.setEnergyType(null);
             }

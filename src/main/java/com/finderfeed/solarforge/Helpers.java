@@ -52,7 +52,6 @@ public class Helpers {
 
     public static final Random RANDOM = new Random();
     public static final String FRAGMENT = "solar_forge_fragment_";
-//    public static final RandomPatchConfiguration SOLAR_FLOWER_CONFIG = (new RandomPatchConfiguration.GrassConfigurationBuilder((new WeightedStateProvider()).add(BlocksRegistry.ALGADIUM_BLOCK.get().defaultBlockState(), 2), SimpleBlockPlacer.INSTANCE)).tries(64).build();
     public static double GRAVITY_METRES_PER_SEC = 20;
     public static double GRAVITY_VELOCITY = 0.05;
     public static String PROGRESSION = "solar_forge_progression_";

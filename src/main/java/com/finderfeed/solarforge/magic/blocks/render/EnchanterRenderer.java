@@ -17,7 +17,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 
 public class EnchanterRenderer extends AbstractRunicEnergyContainerRenderer<EnchanterBlockEntity> {
-
+    public static final ResourceLocation fancyRing = new ResourceLocation("solarforge", "textures/misc/fancy_ring_1.png");
 
     public EnchanterRenderer(BlockEntityRendererProvider.Context ctx) {
         super(ctx);
@@ -39,7 +39,7 @@ public class EnchanterRenderer extends AbstractRunicEnergyContainerRenderer<Ench
             matrices.popPose();
         }
         if (tile.enchantingInProgress()) {
-            ResourceLocation fancyRing = new ResourceLocation("solarforge", "textures/misc/fancy_ring_1.png");
+
             matrices.pushPose();
 
             VertexConsumer vertex = buffer.getBuffer(RenderType.text(fancyRing));
