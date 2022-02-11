@@ -79,7 +79,6 @@ public class JsonFragmentsHelper {
                         "progression_stage": "",            //Defines what progression stage is needed to be completed to unlock this fragment. (Possible values: scroll down)
                         "translation_id_lore": "",          //Translation id that needs to be translated in lang files. Defines the lore inside the fragment. (String)
                         "recipe_type": "",                  //Recipe type to use (Possible values: "infusing","infusing_crafting") (String)
-                                                            //For datapack makers: Note that you cant add more than 1 infusing/infusing crafting/solar smelting recipe for a single item
                         "items": [                          //An array of items to show inside the fragment. Icon for this fragment will be the first item in array
                           {"item": "", "recipe_id": "" },   //item is an item name (for ex: minecraft:diamond), recipe_id is a recipe to show inside the fragment(SHOULD MATCH THE RECIPE TYPE!).
                           {"item": "", "recipe_id": "" },
