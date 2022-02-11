@@ -71,7 +71,7 @@ public class JsonFragmentsHelper {
                     }
                     Items type format:
                     {
-                        "type": "information",
+                        "type": "items",
                         "translation_id": "",               //Translation id that needs to be translated in lang files. Defines the name of the fragment. (String)
                         "unique_id": "",                    //Unique id is the unique identifier of the fragment(ah yes logic). Should be different than all other fragments. (String)
                         "category_base": "",                //Defines the category in solar lexicon where that fragment will be located. (Possible values: scroll down)
@@ -89,7 +89,7 @@ public class JsonFragmentsHelper {
                     }
                     Item type format:
                     {
-                        "type": "information",
+                        "type": "item",
                         "translation_id": "",               //Translation id that needs to be translated in lang files. Defines the name of the fragment. (String)
                         "unique_id": "",                    //Unique id is the unique identifier of the fragment(ah yes logic). Should be different than all other fragments. (String)
                         "category_base": "",                //Defines the category in solar lexicon where that fragment will be located. (Possible values: scroll down)
