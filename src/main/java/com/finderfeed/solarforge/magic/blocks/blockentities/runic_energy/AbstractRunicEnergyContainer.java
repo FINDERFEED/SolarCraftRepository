@@ -39,13 +39,6 @@ public abstract class AbstractRunicEnergyContainer extends SolarcraftBlockEntity
 
     public List<BlockPos> nullOrGiverPositionForClient = new ArrayList<>();
 
-//    private boolean NEEDS_ARDO = false;
-//    private boolean NEEDS_KELDA = false;
-//    private boolean NEEDS_TERA = false;
-//    private boolean NEEDS_FIRA = false;
-//    private boolean NEEDS_URBA = false;
-//    private boolean NEEDS_ZETA = false;
-
     private UUID owner;
 
     private Map<RunicEnergy.Type,List<BlockPos>> PATH_TO_CONTAINERS = new HashMap<>();
@@ -88,27 +81,98 @@ public abstract class AbstractRunicEnergyContainer extends SolarcraftBlockEntity
     public abstract double getMaxEnergyInput();
     public abstract double getRunicEnergyLimit();
     public abstract int getSeekingCooldown();
+    public abstract double getMaxRange();
 
     public void requestRunicEnergy(Map<RunicEnergy.Type,Double> costs,int multiplier){
+        if (seekingCooldown > getSeekingCooldown()){
+            tryConstructWays(costs.keySet());
+        }else{
+            seekingCooldown++;
+        }
 
-            costs.forEach((type, cost) -> {
-                double multiplied = cost * multiplier;
-                double runicEnergy = getRunicEnergy(type);
-                if (multiplied >= runicEnergy + getMaxEnergyInput()) {
-                    requestSpecificEnergy(type, getMaxEnergyInput());
-                } else if ((multiplied > runicEnergy) && (multiplied < runicEnergy + getMaxEnergyInput())) {
-                    double request = multiplied - getRunicEnergy(type);
-                    requestSpecificEnergy(type, request);
-                } else {
-                    if (PATH_TO_CONTAINERS.containsKey(type)) {
-                        RunicEnergyPath.resetRepeaterConnections(PATH_TO_CONTAINERS.get(type), level);
-                        PATH_TO_CONTAINERS.remove(type);
-                    }
+
+        for (Map.Entry<RunicEnergy.Type,Double> entry : costs.entrySet()){
+
+
+            double cost  =entry.getValue();
+            RunicEnergy.Type type = entry.getKey();
+            if (!PATH_TO_CONTAINERS.containsKey(type)) continue;
+
+            double multiplied = cost * multiplier;
+            double runicEnergy = getRunicEnergy(type);
+            if (multiplied >= runicEnergy + getMaxEnergyInput()) {
+                requestSpecificEnergyNew(type, getMaxEnergyInput());
+            } else if ((multiplied > runicEnergy) && (multiplied < runicEnergy + getMaxEnergyInput())) {
+                double request = multiplied - getRunicEnergy(type);
+                requestSpecificEnergyNew(type, request);
+            } else {
+                BlockPos firstPos = PATH_TO_CONTAINERS.get(type).get(1);
+                if (nullOrGiverPositionForClient.contains(firstPos)) {
+                    nullOrGiverPositionForClient.remove(firstPos);
+                    BlockState state = level.getBlockState(worldPosition);
+                    this.setChanged();
+                    this.level.sendBlockUpdated(worldPosition, state, state, 3);
                 }
-            });
+                RunicEnergyPath.resetRepeaterConnections(PATH_TO_CONTAINERS.get(type), level);
+                PATH_TO_CONTAINERS.remove(type);
+            }
+        }
 
 
     }
+
+
+    public void requestSpecificEnergyNew(RunicEnergy.Type type,double amount){
+            List<BlockPos> route = PATH_TO_CONTAINERS.get(type);
+            RunicEnergyPath.setRepeaterConnections(PATH_TO_CONTAINERS.get(type),level);
+            BlockPos firstPos = PATH_TO_CONTAINERS.get(type).get(1);
+            BlockEntity first = level.getBlockEntity(firstPos);
+            if (first instanceof RunicEnergyGiver container){
+                if (FinderfeedMathHelper.canSee(firstPos,worldPosition,getMaxRange(),level)) {
+                    if (!nullOrGiverPositionForClient.contains(firstPos)){
+                        nullOrGiverPositionForClient.add(firstPos);
+                        BlockState state = level.getBlockState(worldPosition);
+                        this.setChanged();
+                        this.level.sendBlockUpdated(worldPosition, state, state, 3);
+                    }
+                    double flag = container.extractEnergy(type, amount);
+                    this.giveEnergy(type, flag);
+                }else{
+                    if (nullOrGiverPositionForClient.contains(firstPos)) {
+                        nullOrGiverPositionForClient.remove(firstPos);
+                        BlockState state = level.getBlockState(worldPosition);
+                        this.setChanged();
+                        this.level.sendBlockUpdated(worldPosition, state, state, 3);
+                    }
+                    PATH_TO_CONTAINERS.remove(type);
+                }
+            }else if (first instanceof BaseRepeaterTile repeater){
+                if (RunicEnergyPath.isRouteCorrect(PATH_TO_CONTAINERS.get(type),level)){
+                    if (level.getBlockEntity(route.get(route.size()-1)) instanceof RunicEnergyGiver container){
+                        double flag = container.extractEnergy(type,amount);
+                        this.giveEnergy(type,flag);
+                    }else {
+                        RunicEnergyPath.resetRepeaterConnections(PATH_TO_CONTAINERS.get(type),level);
+                        PATH_TO_CONTAINERS.remove(type);
+                    }
+                }else{
+                    RunicEnergyPath.resetRepeaterConnections(PATH_TO_CONTAINERS.get(type),level);
+                    PATH_TO_CONTAINERS.remove(type);
+                }
+            }else{
+                if (nullOrGiverPositionForClient.contains(firstPos)) {
+                    nullOrGiverPositionForClient.remove(firstPos);
+                    BlockState state = level.getBlockState(worldPosition);
+                    this.setChanged();
+                    this.level.sendBlockUpdated(worldPosition, state, state, 3);
+                }
+                RunicEnergyPath.resetRepeaterConnections(PATH_TO_CONTAINERS.get(type),level);
+                PATH_TO_CONTAINERS.remove(type);
+            }
+
+
+    }
+
 
     public void requestSpecificEnergy(RunicEnergy.Type type,double amount){
         if (PATH_TO_CONTAINERS.containsKey(type) && PATH_TO_CONTAINERS.get(type) != null){
@@ -127,12 +191,13 @@ public abstract class AbstractRunicEnergyContainer extends SolarcraftBlockEntity
                         this.giveEnergy(type,flag);
                     }else {
                         RunicEnergyPath.resetRepeaterConnections(PATH_TO_CONTAINERS.get(type),level);
-                        constructWay(type);
+                        PATH_TO_CONTAINERS.remove(type);
+//                        constructWay(type);
                     }
                 }else{
-//                    FindingAlgorithms.resetRepeaters(PATH_TO_CONTAINERS.get(type),level,worldPosition);
                     RunicEnergyPath.resetRepeaterConnections(PATH_TO_CONTAINERS.get(type),level);
-                    constructWay(type);
+                    PATH_TO_CONTAINERS.remove(type);
+//                    constructWay(type);
                 }
             }else{
 
@@ -143,13 +208,15 @@ public abstract class AbstractRunicEnergyContainer extends SolarcraftBlockEntity
                     this.level.sendBlockUpdated(worldPosition, state, state, 3);
                 }
                 RunicEnergyPath.resetRepeaterConnections(PATH_TO_CONTAINERS.get(type),level);
-                constructWay(type);
+                PATH_TO_CONTAINERS.remove(type);
+//                constructWay(type);
             }
 
-        }else{
-
-            constructWay(type);
         }
+//        else{
+//
+//            constructWay(type);
+//        }
     }
 
     public void spendEnergy(Map<RunicEnergy.Type,Double> costs,int multiplier){
@@ -225,25 +292,30 @@ public abstract class AbstractRunicEnergyContainer extends SolarcraftBlockEntity
 
 
 
-    private void saveRunicEnergy(CompoundTag tag){
-        tag.putDouble("ardo",RUNE_ENERGY_ARDO);
-        tag.putDouble("fira",RUNE_ENERGY_FIRA);
-        tag.putDouble("kelda",RUNE_ENERGY_KELDA);
-        tag.putDouble("urba",RUNE_ENERGY_URBA);
-        tag.putDouble("tera",RUNE_ENERGY_TERA);
-        tag.putDouble("zeta",RUNE_ENERGY_ZETA);
-        tag.putDouble("giro",RUNE_ENERGY_GIRO);
-        tag.putDouble("ultima",RUNE_ENERGY_ULTIMA);
-    }
-    private void loadRunicEnergy(CompoundTag tag){
-        RUNE_ENERGY_ARDO  = tag.getDouble("ardo");
-        RUNE_ENERGY_FIRA = tag.getDouble("fira");
-        RUNE_ENERGY_KELDA = tag.getDouble("kelda");
-        RUNE_ENERGY_URBA = tag.getDouble("urba");
-        RUNE_ENERGY_TERA = tag.getDouble("tera");
-        RUNE_ENERGY_ZETA = tag.getDouble("zeta");
-        RUNE_ENERGY_GIRO = tag.getDouble("giro");
-        RUNE_ENERGY_ULTIMA = tag.getDouble("ultima");
+
+
+    public void tryConstructWays(Set<RunicEnergy.Type> types){
+        List<BlockEntity> entities = findNearestRepeatersOrPylons(worldPosition, level);
+        for (RunicEnergy.Type type : types) {
+            List<BlockPos> oldRoute = PATH_TO_CONTAINERS.get(type);
+            if (oldRoute != null && (level.getBlockEntity(oldRoute.get(1)) instanceof RunicEnergyGiver giver ?
+                    FinderfeedMathHelper.canSee(giver.getPos(),worldPosition,getMaxRange(),level) :
+                    RunicEnergyPath.isRouteCorrect(PATH_TO_CONTAINERS.get(type),level))) continue;
+
+            PATH_TO_CONTAINERS.remove(type);
+            for (BlockEntity entity : entities) {
+                if (entity instanceof BaseRepeaterTile tile && tile.getEnergyType() == type) {
+                    List<BlockPos> route = new RunicEnergyPath(type, this.worldPosition).build(tile);
+                    if (route != null) {
+                        PATH_TO_CONTAINERS.put(type, route);
+                    }
+                } else if (entity instanceof RunicEnergyGiver container && container.getTypes().contains(type)) {
+
+                    PATH_TO_CONTAINERS.put(type, List.of(this.worldPosition, container.getPos()));
+                }
+            }
+        }
+
     }
 
     public void constructWay(RunicEnergy.Type type){
@@ -264,7 +336,7 @@ public abstract class AbstractRunicEnergyContainer extends SolarcraftBlockEntity
 
     }
 
-    public abstract double getMaxRange();
+
 
     private BlockEntity findNearestRepeaterOrPylon(BlockPos pos, Level world, RunicEnergy.Type type){
         List<LevelChunk> chunks = Helpers.getSurroundingChunks5Radius(pos,world);
@@ -308,6 +380,51 @@ public abstract class AbstractRunicEnergyContainer extends SolarcraftBlockEntity
     }
 
 
+    private List<BlockEntity> findNearestRepeatersOrPylons(BlockPos pos, Level world){
+        List<BlockEntity> toReturn = new ArrayList<>();
+        List<LevelChunk> chunks = Helpers.getSurroundingChunks5Radius(pos,world);
+        for (RunicEnergy.Type type : RunicEnergy.Type.getAll()) {
+            double minRange = getMaxRange()+1;
+            BlockEntity tile = null;
+            for (LevelChunk chunk : chunks) {
+                for (BlockEntity entity : chunk.getBlockEntities().values()) {
+                    if (entity instanceof BaseRepeaterTile repeater) {
+
+                        if ((repeater.getEnergyType() == type) && !(tile instanceof RuneEnergyPylonTile)) {
+                            if (FinderfeedMathHelper.canSee(repeater.getBlockPos(), pos, getMaxRange(), world)) {
+                                double range = FinderfeedMathHelper.getDistanceBetween(repeater.getBlockPos(), pos);
+                                if (range <= getMaxRange()) {
+                                    if (range <= minRange) {
+                                        minRange = range;
+                                        tile = repeater;
+                                    }
+                                }
+                            }
+                        }
+                    } else if (entity instanceof RunicEnergyGiver pylon) {
+                        if (FinderfeedMathHelper.canSee(pylon.getPos(), pos, getMaxRange(), world)) {
+                            if (pylon.getTypes() != null && pylon.getTypes().contains(type)) {
+                                double range = FinderfeedMathHelper.getDistanceBetween(pylon.getPos(), pos);
+                                if (range <= getMaxRange()) {
+                                    if (range <= minRange) {
+                                        minRange = range;
+                                        tile = (BlockEntity) pylon;
+                                    }
+                                }
+                            }
+                        }
+
+                    }
+                }
+            }
+            if (tile != null) {
+                toReturn.add(tile);
+            }
+        }
+        return toReturn;
+    }
+
+
     public double getRunicEnergy(RunicEnergy.Type type){
         double toReturn = 0;
         switch (type){
@@ -322,6 +439,27 @@ public abstract class AbstractRunicEnergyContainer extends SolarcraftBlockEntity
 
         }
         return toReturn;
+    }
+
+    private void saveRunicEnergy(CompoundTag tag){
+        tag.putDouble("ardo",RUNE_ENERGY_ARDO);
+        tag.putDouble("fira",RUNE_ENERGY_FIRA);
+        tag.putDouble("kelda",RUNE_ENERGY_KELDA);
+        tag.putDouble("urba",RUNE_ENERGY_URBA);
+        tag.putDouble("tera",RUNE_ENERGY_TERA);
+        tag.putDouble("zeta",RUNE_ENERGY_ZETA);
+        tag.putDouble("giro",RUNE_ENERGY_GIRO);
+        tag.putDouble("ultima",RUNE_ENERGY_ULTIMA);
+    }
+    private void loadRunicEnergy(CompoundTag tag){
+        RUNE_ENERGY_ARDO  = tag.getDouble("ardo");
+        RUNE_ENERGY_FIRA = tag.getDouble("fira");
+        RUNE_ENERGY_KELDA = tag.getDouble("kelda");
+        RUNE_ENERGY_URBA = tag.getDouble("urba");
+        RUNE_ENERGY_TERA = tag.getDouble("tera");
+        RUNE_ENERGY_ZETA = tag.getDouble("zeta");
+        RUNE_ENERGY_GIRO = tag.getDouble("giro");
+        RUNE_ENERGY_ULTIMA = tag.getDouble("ultima");
     }
 
     public Map<RunicEnergy.Type,List<BlockPos>> getWays(){

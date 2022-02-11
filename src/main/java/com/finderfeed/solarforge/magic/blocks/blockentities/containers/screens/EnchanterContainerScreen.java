@@ -30,6 +30,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -96,14 +97,27 @@ public class EnchanterContainerScreen extends AbstractScrollableContainerScreen<
 
         Button button = new SolarForgeButton(relX+ 110,relY + 80,new TextComponent("Enchant"),(btn)->{
             ItemStack stack = menu.tile.getStackInSlot(0);
+
             if (selectedEnchantment != null && stack.canApplyAtEnchantingTable(selectedEnchantment)
                     && EnchantmentHelper.getItemEnchantmentLevel(selectedEnchantment,stack) < selectedLevel) {
-                if (!menu.tile.enchantingInProgress()) {
-                    SolarForgePacketHandler.INSTANCE.sendToServer(new EnchanterPacket(menu.tile.getBlockPos(), selectedEnchantment, selectedLevel));
+                boolean compatible = true;
+                Map<Enchantment,Integer> enchs = new HashMap<>(EnchantmentHelper.getEnchantments(stack));
+                for (Enchantment e : enchs.keySet()){
+                    if (!e.isCompatibleWith(selectedEnchantment)){
+                        compatible = false;
+                    }
+                }
+                if (compatible) {
+                    if (!menu.tile.enchantingInProgress()) {
+                        SolarForgePacketHandler.INSTANCE.sendToServer(new EnchanterPacket(menu.tile.getBlockPos(), selectedEnchantment, selectedLevel));
+                    } else {
+                        Minecraft.getInstance().player.displayClientMessage(new TextComponent("Enchanting is already in progress!"), false);
+                    }
                 }else{
-                    Minecraft.getInstance().player.displayClientMessage(new TextComponent("Enchanting is already in progress!"),false);
+                    Minecraft.getInstance().player.displayClientMessage(new TextComponent("Enchantment is incompatible with other enchantments on this item"),false);
                 }
             }else{
+
                 Minecraft.getInstance().player.displayClientMessage(new TextComponent("Enchantment cannot be applied to this item"),false);
             }
         });

@@ -131,6 +131,15 @@ public class EnchanterBlockEntity extends REItemHandlerBlockEntity {
 
 
     public void triggerEnchanting(Enchantment enchantment, int level){
+        if (!SERVERSIDE_CONFIG.containsKey(enchantment)) return;
+
+        Map<Enchantment,Integer> enchs = new HashMap<>(EnchantmentHelper.getEnchantments(getStackInSlot(0)));
+        for (Enchantment e : enchs.keySet()){
+            if (!e.isCompatibleWith(enchantment)){
+                return;
+            }
+        }
+
         this.level.playSound(null,worldPosition.getX(),worldPosition.getY(),worldPosition.getZ(), SoundEvents.BEACON_ACTIVATE, SoundSource.BLOCKS,
                 1,1);
         this.processingEnchantment = enchantment;

@@ -173,7 +173,7 @@ public class InfuserTileEntity extends AbstractRunicEnergyContainer implements  
 
     @Override
     public int getSeekingCooldown() {
-        return -1;
+        return 10;
     }
 
     @Override
@@ -700,9 +700,13 @@ public class InfuserTileEntity extends AbstractRunicEnergyContainer implements  
             BlockPos[] offsets = Structures.infusingPoolsPositions(BlockPos.ZERO);
 
             float rotValue = (float) tile.getRotationValue().getValue();
-            for (int i = 0; i < offsets.length; i++) {
-                if (!tile.getItem(i+1).isEmpty()) {
-                    BlockPos p = offsets[i];
+            for (int i = 0; i < 14; i++) {
+                int iter = i;
+                //kostyli nashe vse!
+                if (i == 6) continue;
+                if (i > 6) iter--;
+                if (!tile.getItem(i).isEmpty()) {
+                    BlockPos p = offsets[iter];
                     Vec3 v = new Vec3(p.getX(), p.getY(), p.getZ()).multiply(1 - rotValue, 1 - rotValue, 1 - rotValue).yRot(-(float) Math.toRadians(rotValue * 360));
                     Vec3 ps = Helpers.getBlockCenter(pos).add(v);
                     ClientHelpers.ParticleAnimationHelper.createParticle(ParticleTypesRegistry.SMALL_SOLAR_STRIKE_PARTICLE.get(), ps.x, ps.y, ps.z,

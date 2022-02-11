@@ -199,10 +199,15 @@ public class RunicEnergyPath {
         for (int i = 0;i < route.size()-1;i++){
             if (world.getBlockEntity(route.get(i)) instanceof BaseRepeaterTile repeater){
                 if (i == route.size()-2){
-                    repeater.removeConnection(route.get(route.size()-1));
+                    if (repeater.getConnections().contains(route.get(route.size()-1))) {
+                        repeater.removeConnection(route.get(route.size() - 1));
+                        Helpers.updateTile(repeater);
+                    }
                 }
-                repeater.removeConnection(route.get(i-1));
-                Helpers.updateTile(repeater);
+                if (repeater.getConnections().contains(route.get(i-1))) {
+                    repeater.removeConnection(route.get(i - 1));
+                    Helpers.updateTile(repeater);
+                }
             }
         }
     }
@@ -213,12 +218,13 @@ public class RunicEnergyPath {
                 if (i == route.size()-2){
                     if (!repeater.getConnections().contains(route.get(route.size()-1))) {
                         repeater.addConnection(route.get(route.size() - 1));
+                        Helpers.updateTile(repeater);
                     }
                 }
                 if (!repeater.getConnections().contains(route.get(i-1))) {
                     repeater.addConnection(route.get(i - 1));
+                    Helpers.updateTile(repeater);
                 }
-                Helpers.updateTile(repeater);
             }
         }
     }

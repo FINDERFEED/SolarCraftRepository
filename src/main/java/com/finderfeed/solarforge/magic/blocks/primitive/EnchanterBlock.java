@@ -13,6 +13,7 @@ import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
@@ -21,11 +22,17 @@ import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.Nullable;
 
 public class EnchanterBlock extends Block implements EntityBlock {
+
+    private static final VoxelShape shape = Block.box(3,0,3,13,16,13);
+
     public EnchanterBlock(Properties props) {
         super(props);
     }
@@ -52,9 +59,13 @@ public class EnchanterBlock extends Block implements EntityBlock {
                 return InteractionResult.SUCCESS;
             }
         }
-        return super.use(state, level, pos, player, hand, res);
+        return InteractionResult.SUCCESS;
     }
 
+    @Override
+    public VoxelShape getShape(BlockState p_60555_, BlockGetter p_60556_, BlockPos p_60557_, CollisionContext p_60558_) {
+        return shape;
+    }
 
     @Override
     public void onRemove(BlockState state, Level world, BlockPos pos, BlockState state2, boolean smth) {
