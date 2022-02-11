@@ -48,7 +48,7 @@ public class JsonFragmentsHelper {
             writer.write("""
                     How to create a fragment. (This thing is experimental and may contain bugs)
                     Fragments json IS NOT RELOADABLE!
-                    Restart mc or server to append changes.
+                    Restart mc or server to apply changes.
                     Also if you removed or added a fragment delete your solar lexicon and make new (or tell player to do it).
                     First of all start by
                     (// - those are comments, don't write them in json file)
