@@ -1,6 +1,7 @@
 package com.finderfeed.solarforge.events;
 
 
+import com.finderfeed.solarforge.ClientHelpers;
 import com.finderfeed.solarforge.local_library.helpers.RenderingTools;
 import com.finderfeed.solarforge.magic.blocks.render.EnergyGeneratorTileRender;
 import com.finderfeed.solarforge.magic.blocks.render.RuneEnergyPylonRenderer;
@@ -41,28 +42,30 @@ public class RenderEventsHandler {
     //Thx to DEMON GIRL COLLECTOR (Melonslice) for helping me to fix my shader!
     @SubscribeEvent
     public void renderWorld(RenderLevelLastEvent event){
-        if ((Minecraft.getInstance().getWindow().getScreenWidth() != 0) && (Minecraft.getInstance().getWindow().getScreenHeight() != 0)) {
-            if ((intensity > 0)  ) {
-                RenderingTools.renderHandManually(event.getPoseStack(),event.getPartialTick());
+        if (ClientHelpers.isShadersEnabled()) {
+            if ((Minecraft.getInstance().getWindow().getScreenWidth() != 0) && (Minecraft.getInstance().getWindow().getScreenHeight() != 0)) {
+                if ((intensity > 0)) {
+                    RenderingTools.renderHandManually(event.getPoseStack(), event.getPartialTick());
 
-                float time =Minecraft.getInstance().level.getGameTime();
-                UniformPlusPlus uniforms = new UniformPlusPlus(Map.of(
-                        "intensity",intensity,
-                        "timeModifier",3f,
-                        "time",time
-                ));
-                if (PROGRESSION_SHADER == null){
-                    PROGRESSION_SHADER = loadProgressionShader(PROGRESSION_SHADER_LOC, uniforms);
-                }else{
-                    PROGRESSION_SHADER.updateUniforms(uniforms);
-                    PROGRESSION_SHADER.resize(Minecraft.getInstance().getWindow().getWidth(), Minecraft.getInstance().getWindow().getHeight());
-                }
-                RenderSystem.disableBlend();
-                RenderSystem.disableDepthTest();
-                RenderSystem.enableTexture();
-                RenderSystem.resetTextureMatrix();
-                if (PROGRESSION_SHADER != null) {
-                    PROGRESSION_SHADER.process(Minecraft.getInstance().getFrameTime());
+                    float time = Minecraft.getInstance().level.getGameTime();
+                    UniformPlusPlus uniforms = new UniformPlusPlus(Map.of(
+                            "intensity", intensity,
+                            "timeModifier", 3f,
+                            "time", time
+                    ));
+                    if (PROGRESSION_SHADER == null) {
+                        PROGRESSION_SHADER = loadProgressionShader(PROGRESSION_SHADER_LOC, uniforms);
+                    } else {
+                        PROGRESSION_SHADER.updateUniforms(uniforms);
+                        PROGRESSION_SHADER.resize(Minecraft.getInstance().getWindow().getWidth(), Minecraft.getInstance().getWindow().getHeight());
+                    }
+                    RenderSystem.disableBlend();
+                    RenderSystem.disableDepthTest();
+                    RenderSystem.enableTexture();
+                    RenderSystem.resetTextureMatrix();
+                    if (PROGRESSION_SHADER != null) {
+                        PROGRESSION_SHADER.process(Minecraft.getInstance().getFrameTime());
+                    }
                 }
             }
         }
@@ -127,24 +130,3 @@ public class RenderEventsHandler {
     }
 
 }
-
-
-
-//                int width = Minecraft.getInstance().getWindow().getScreenWidth();
-//                int height = Minecraft.getInstance().getWindow().getScreenHeight();
-//                RenderingTools.renderHandManually(event.getMatrixStack(),event.getPartialTicks());
-//                RenderTarget buffer = Minecraft.getInstance().getMainRenderTarget();
-//                Framebuffers.buffer2.resize(width, height, false);
-//                GlStateManager._glBindFramebuffer(GlConst.GL_FRAMEBUFFER, Framebuffers.buffer2.frameBufferId);
-//                int shader = Shaders.WAVE.getShader().getSHADER();
-//                int time =(int)Minecraft.getInstance().level.getGameTime();
-//                Shaders.WAVE.getShader().addUniform(new Uniform("intensity", intensity, shader));
-//                Shaders.WAVE.getShader().addUniform(new Uniform("timeModifier", 3f, shader));
-//                Shaders.WAVE.getShader().addUniform(new Uniform("time", time, shader));
-//                Shaders.WAVE.getShader().setMatrices();
-//                Shaders.WAVE.getShader().process();
-//                RenderingTools.blitFramebufferToScreen(width, height,false,buffer);
-//                Shaders.close();
-//                GlStateManager._glBindFramebuffer(GlConst.GL_FRAMEBUFFER, buffer.frameBufferId);
-//                RenderingTools.blitFramebufferToScreen(width, height,false,Framebuffers.buffer2);
-//                GlStateManager._glBindFramebuffer(GlConst.GL_FRAMEBUFFER, 0);

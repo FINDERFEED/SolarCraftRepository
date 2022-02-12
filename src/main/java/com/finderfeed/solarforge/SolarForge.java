@@ -7,6 +7,7 @@ import com.finderfeed.solarforge.SolarAbilities.SolarStunEffect;
 import com.finderfeed.solarforge.capabilities.capability_mana.AttachManaCapabilityEvent;
 import com.finderfeed.solarforge.config.EnchantmentsConfig;
 import com.finderfeed.solarforge.config.JsonFragmentsHelper;
+import com.finderfeed.solarforge.config.SolarcraftClientConfig;
 import com.finderfeed.solarforge.config.SolarcraftConfig;
 import com.finderfeed.solarforge.entities.*;
 import com.finderfeed.solarforge.events.PlayerTickEvent;
@@ -212,7 +213,7 @@ public class SolarForge
         FMLJavaModLoadingContext.get().getModEventBus().addListener(FeaturesRegistry::addCarvableBlocks);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(FeaturesRegistry::registerConfiguredFeatures);
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, SolarcraftConfig.SPEC,"solarcraft-config.toml");
-
+        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, SolarcraftClientConfig.SPEC,"solarcraft-client-config.toml");
         // Register the doClientStuff method for modloading
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
 //        BiomesRegister.BIOMES.register(bus);

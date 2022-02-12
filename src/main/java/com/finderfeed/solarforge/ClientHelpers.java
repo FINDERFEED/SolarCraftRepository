@@ -6,6 +6,7 @@ import com.finderfeed.solarforge.client.particles.SmallSolarStrikeParticle;
 import com.finderfeed.solarforge.client.particles.SolarcraftParticle;
 import com.finderfeed.solarforge.client.toasts.UnlockedEnergyTypeToast;
 import com.finderfeed.solarforge.config.JsonFragmentsHelper;
+import com.finderfeed.solarforge.config.SolarcraftClientConfig;
 import com.finderfeed.solarforge.entities.BallLightningProjectile;
 import com.finderfeed.solarforge.events.RenderEventsHandler;
 import com.finderfeed.solarforge.local_library.effects.LightningBoltPath;
@@ -94,6 +95,10 @@ public class ClientHelpers {
         AncientFragment.ALL_FRAGMENTS.removeAll(AncientFragment.CLIENTSIDE_FRAGMENTS_CACHE);
         AncientFragment.CLIENTSIDE_FRAGMENTS_CACHE.clear();
         AncientFragment.FRAGMENTS_ID_MAP.clear();
+    }
+
+    public static boolean isShadersEnabled(){
+        return SolarcraftClientConfig.SHADERS_ENABLED.get();
     }
 
     public static void handleBallLightningProjectileParticles(Vec3 pos){

@@ -80,7 +80,9 @@ public class RenderingTools {
     }
 
     public static void addActivePostShader(UniformPlusPlus uniformPlusPlus,PostChainPlusUltra shader){
-        RenderEventsHandler.ACTIVE_SHADERS.put(uniformPlusPlus,shader);
+        if (ClientHelpers.isShadersEnabled()) {
+            RenderEventsHandler.ACTIVE_SHADERS.put(uniformPlusPlus, shader);
+        }
     }
 
     public static void renderTest(RenderGameOverlayEvent.Pre event,int tick){

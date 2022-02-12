@@ -380,7 +380,7 @@ public class InfuserTileEntity extends AbstractRunicEnergyContainer implements  
             result.hurt(prev.getDamageValue(), world.random, null);
         }
 
-        result.setCount(count);
+        result.setCount(count*recipe.count);
         tile.getItem(tile.inputSlot()).grow(-count);
         tile.getInventory().setStackInSlot(tile.outputSlot(), result);
         tile.RECIPE_IN_PROGRESS = false;
