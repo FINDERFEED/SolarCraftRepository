@@ -215,6 +215,7 @@ public class SolarForgeClientRegistry {
         event.registerEntityRenderer(EntityTypes.RIP_RAY_GENERATOR.get(), RipRayGeneratorRender::new);
         event.registerEntityRenderer(EntityTypes.LEGENDARY_ITEM.get(), LegendaryItemRenderer::new);
         event.registerEntityRenderer(EntityTypes.BALL_LIGHTNING.get(), BallLightningRenderer::new);
+        event.registerEntityRenderer(EntityTypes.RUNIC_ELEMENTAL_BOSS.get(), RunicElementalRenderer::new);
     }
 
 }

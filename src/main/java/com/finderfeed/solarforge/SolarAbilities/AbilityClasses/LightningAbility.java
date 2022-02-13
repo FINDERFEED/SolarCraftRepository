@@ -62,22 +62,23 @@ public class LightningAbility extends AbstractAbility{
 
     public void spawnFallingBlocks(Level world,BlockPos mainpos,Explosion expl){
         Vec3 center = Helpers.getBlockCenter(mainpos);
-        for (int i = 0;i < 20;i++){
-            int rndX = world.random.nextInt(7)-3;
-            int rndZ = world.random.nextInt(7)-3;
-            int rndY = 0;
 
-            double rndSpeed = world.random.nextDouble()*0.3+0.2;
-            BlockPos offsettedPos = mainpos.offset(rndX,rndY,rndZ);
-            Vec3 position = Helpers.getBlockCenter(offsettedPos);
-            Vec3 speed = position.subtract(center).normalize().multiply(rndSpeed,0.5,rndSpeed).add(0,1,0);
-            BlockState state = world.getBlockState(offsettedPos);
-            if (state.getExplosionResistance(world,mainpos,expl) <= 6) {
-                MyFallingBlockEntity fallingBlock = new MyFallingBlockEntity(world, position.x, position.y + 3, position.z, state);
-                fallingBlock.setDeltaMovement(speed);
-                world.addFreshEntity(fallingBlock);
+        for (int x = -2; x <= 2;x++){
+            for (int y = -2; y <= 2;y++){
+                for (int z = -2; z <= 2;z++){
+                    BlockPos offsettedPos = mainpos.offset(x,y,z);
+                    Vec3 position = Helpers.getBlockCenter(offsettedPos);
+                    Vec3 speed = position.subtract(center).multiply(0.3*world.random.nextDouble(),0.1*world.random.nextDouble(),0.3*world.random.nextDouble()).add(0,1.5,0);
+                    BlockState state = world.getBlockState(offsettedPos);
+                    if (state.getExplosionResistance(world,mainpos,expl) <= 6) {
+                        MyFallingBlockEntity fallingBlock = new MyFallingBlockEntity(world, position.x, position.y + 3, position.z, state);
+                        fallingBlock.setDeltaMovement(speed);
+                        world.addFreshEntity(fallingBlock);
+                    }
+                }
             }
         }
+
     }
 }
 

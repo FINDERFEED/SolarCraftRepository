@@ -117,11 +117,13 @@ public class BossAttackChain {
         return attacksToCopyTo;
     }
 
+    public BossAttack getAttackByID(String id){
+        return BOSS_ATTACK_SERIALIZE_MAP.get(id);
+    }
 
-
-
-
-
+    public List<BossAttack> getAttacks() {
+        return attacks;
+    }
 
     public static class Builder{
 

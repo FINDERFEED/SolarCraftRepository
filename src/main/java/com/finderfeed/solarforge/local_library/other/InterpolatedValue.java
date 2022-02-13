@@ -37,4 +37,8 @@ public abstract class InterpolatedValue implements CanTick{
     public void setDuration(double duration) {
         this.duration = duration;
     }
+
+    public boolean canBeDeleted(){
+        return ticker == duration;
+    }
 }

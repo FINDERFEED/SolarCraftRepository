@@ -74,4 +74,8 @@ public class EntityTypes {
     public static final RegistryObject<EntityType<LegendaryItem>> LEGENDARY_ITEM = ENTITY_TYPE_REGISTER.register("legendary_item", () ->
             EntityType.Builder.<LegendaryItem>of(LegendaryItem::new, MobCategory.MISC)
                     .sized(0.25F, 0.25F).clientTrackingRange(6).updateInterval(20).build("legendary_item"));
+
+    public static final RegistryObject<EntityType<RunicElementalBoss>> RUNIC_ELEMENTAL_BOSS = ENTITY_TYPE_REGISTER.register("runic_elemental_boss", () ->
+            EntityType.Builder.<RunicElementalBoss>of(RunicElementalBoss::new, MobCategory.CREATURE)
+                    .sized(0.2f, 0.2f).updateInterval(5).build("runic_elemental_boss"));
 }

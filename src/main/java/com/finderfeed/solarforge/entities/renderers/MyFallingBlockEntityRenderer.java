@@ -1,5 +1,6 @@
 package com.finderfeed.solarforge.entities.renderers;
 
+import com.finderfeed.solarforge.entities.MyFallingBlockEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Vector3f;
 import net.minecraft.client.Minecraft;
@@ -20,13 +21,13 @@ import net.minecraft.world.phys.Vec3;
 
 import java.util.Random;
 
-public class MyFallingBlockEntityRenderer extends EntityRenderer<FallingBlockEntity> {
+public class MyFallingBlockEntityRenderer extends EntityRenderer<MyFallingBlockEntity> {
     public MyFallingBlockEntityRenderer(EntityRendererProvider.Context p_174112_) {
         super(p_174112_);
         this.shadowRadius = 0.5F;
     }
 
-    public void render(FallingBlockEntity entity, float p_114635_, float p_114636_, PoseStack matrices, MultiBufferSource p_114638_, int p_114639_) {
+    public void render(MyFallingBlockEntity entity, float p_114635_, float p_114636_, PoseStack matrices, MultiBufferSource p_114638_, int p_114639_) {
         BlockState blockstate = entity.getBlockState();
         if (blockstate.getRenderShape() == RenderShape.MODEL) {
             Level level = entity.getLevel();
@@ -48,7 +49,7 @@ public class MyFallingBlockEntityRenderer extends EntityRenderer<FallingBlockEnt
                         net.minecraftforge.client.ForgeHooksClient.setRenderType(type);
                         blockrenderdispatcher.getModelRenderer().tesselateBlock(level,
                                 blockrenderdispatcher.getBlockModel(blockstate), blockstate, blockpos, matrices, p_114638_.getBuffer(type),
-                                false, new Random(),
+                                true, new Random(),
                                 blockstate.getSeed(entity.getStartPos()), OverlayTexture.NO_OVERLAY);
 
 
@@ -61,7 +62,7 @@ public class MyFallingBlockEntityRenderer extends EntityRenderer<FallingBlockEnt
         }
     }
     @Override
-    public ResourceLocation getTextureLocation(FallingBlockEntity p_114482_) {
+    public ResourceLocation getTextureLocation(MyFallingBlockEntity p_114482_) {
         return TextureAtlas.LOCATION_BLOCKS;
     }
 }

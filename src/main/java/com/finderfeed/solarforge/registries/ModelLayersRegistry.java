@@ -2,6 +2,7 @@ package com.finderfeed.solarforge.registries;
 
 
 import com.finderfeed.solarforge.SolarAbilities.meteorite.MeteoriteModel;
+import com.finderfeed.solarforge.entities.models.RunicElementalModel;
 import com.finderfeed.solarforge.magic.blocks.blockentities.projectiles.renderers.AbstractTurretProjectileRenderer;
 import com.finderfeed.solarforge.magic.blocks.blockentities.projectiles.renderers.MortarProjectileRenderer;
 import com.finderfeed.solarforge.magic.blocks.rendering_models.AuraHealerModel;
@@ -66,5 +67,6 @@ public class ModelLayersRegistry {
         event.registerLayerDefinition(SOLAR_FORGE_MAIN_MODEL, SolarForgeBlockModelTrue::createLayer);
         event.registerLayerDefinition(SOLAR_GOD_SHIELD_MODEL, SolarGodShield::createLayers);
         event.registerLayerDefinition(RADIANT_PORTAL_CREATOR_MODEL, RadiantPortal::createLayers);
+        event.registerLayerDefinition(RunicElementalModel.LAYER_LOCATION, RunicElementalModel::createBodyLayer);
     }
 }
