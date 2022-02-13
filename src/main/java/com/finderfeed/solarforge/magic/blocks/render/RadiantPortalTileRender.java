@@ -1,5 +1,6 @@
 package com.finderfeed.solarforge.magic.blocks.render;
 
+import com.finderfeed.solarforge.ClientHelpers;
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.magic.blocks.blockentities.RadiantPortalTile;
 import com.finderfeed.solarforge.client.rendering.rendertypes.RadiantPortalRendertype;
@@ -7,6 +8,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Matrix4f;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
@@ -30,15 +32,22 @@ public class RadiantPortalTileRender implements BlockEntityRenderer<RadiantPorta
 
 
         Matrix4f mat = matrices.last().pose();
-        float time = (tile.getLevel().getGameTime() +partialTicks)/10;
 
 
 
-        RadiantPortalRendertype.WATER_SHADER.safeGetUniform("time").set(time);
-        RadiantPortalRendertype.WATER_SHADER.safeGetUniform("modelview").set(mat);
-        RadiantPortalRendertype.WATER_SHADER.safeGetUniform("sinModifier").set(0.04f);
-        RadiantPortalRendertype.WATER_SHADER.safeGetUniform("intensity").set(30f);
-        VertexConsumer vertex = buffer.getBuffer(RadiantPortalRendertype.textWithWaterShader(LOC));
+
+
+        VertexConsumer vertex;
+        if (ClientHelpers.isShadersEnabled()){
+            float time = (tile.getLevel().getGameTime() +partialTicks)/10;
+            RadiantPortalRendertype.WATER_SHADER.safeGetUniform("time").set(time);
+            RadiantPortalRendertype.WATER_SHADER.safeGetUniform("modelview").set(mat);
+            RadiantPortalRendertype.WATER_SHADER.safeGetUniform("sinModifier").set(0.04f);
+            RadiantPortalRendertype.WATER_SHADER.safeGetUniform("intensity").set(30f);
+            vertex = buffer.getBuffer(RadiantPortalRendertype.textWithWaterShader(LOC));
+        }else{
+            vertex = buffer.getBuffer(RenderType.text(LOC));
+        }
 
         float r;
         float gr;
