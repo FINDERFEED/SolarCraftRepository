@@ -114,12 +114,8 @@ public class RunicElementalModel extends EntityModel<RunicElementalBoss> {
 	@Override
 	public void setupAnim(RunicElementalBoss boss, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 		float time = RenderingTools.getTime(boss.level, Minecraft.getInstance().getDeltaFrameTime());
-		InterpolatedValue value = boss.getOrCreateAnimationValue("swingHandsUp",new EaseInOut(0,1,25,2));
-		double val = value.getValue();
-		righthand.xRot = mrighthand.getInitRotX() - (float)Math.toRadians(val*180);
-		lefthand.xRot = mlefthand.getInitRotX() - (float)Math.toRadians(val*180);
-		lefthand.zRot = mlefthand.getInitRotZ() - (float)Math.toRadians(val*10);
-		righthand.zRot = mrighthand.getInitRotZ() + (float)Math.toRadians(val*10);
+		RunicElementalAnimations.IDLE.animate(boss,this);
+
 
 	}
 
@@ -134,7 +130,7 @@ public class RunicElementalModel extends EntityModel<RunicElementalBoss> {
 		head.render(poseStack, buffer, packedLight, packedOverlay);
 		lefthand.render(poseStack, buffer, packedLight, packedOverlay);
 		righthand.render(poseStack, buffer, packedLight, packedOverlay);
-		legsrow1.render(poseStack, buffer, packedLight, packedOverlay);
+//		legsrow1.render(poseStack, buffer, packedLight, packedOverlay);
 		legsrow12.render(poseStack, buffer, packedLight, packedOverlay);
 		legsrow2.render(poseStack, buffer, packedLight, packedOverlay);
 		legsrow3.render(poseStack, buffer, packedLight, packedOverlay);
