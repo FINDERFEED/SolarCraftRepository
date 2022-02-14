@@ -50,4 +50,13 @@ public class MemorizedModelPart {
     public float getInitZ() {
         return initZ;
     }
+
+    public void reset(){
+        part.x = getInitX();
+        part.y = getInitY();
+        part.z = getInitZ();
+        part.zRot = getInitRotZ();
+        part.xRot = getInitRotX();
+        part.yRot = getInitRotY();
+    }
 }

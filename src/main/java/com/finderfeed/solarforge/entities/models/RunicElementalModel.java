@@ -114,9 +114,10 @@ public class RunicElementalModel extends EntityModel<RunicElementalBoss> {
 	@Override
 	public void setupAnim(RunicElementalBoss boss, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 		float time = RenderingTools.getTime(boss.level, Minecraft.getInstance().getDeltaFrameTime());
-		RunicElementalAnimations.IDLE.animate(boss,this);
-
-
+		RunicElementalAnimations.RESET_EVERYTHING.animate(boss,this,limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
+		head.yRot = (float)Math.toRadians(netHeadYaw);
+		head.xRot = (float)Math.toRadians(headPitch);
+		RunicElementalAnimations.IDLE.animate(boss,this,limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
 	}
 
 	@Override
