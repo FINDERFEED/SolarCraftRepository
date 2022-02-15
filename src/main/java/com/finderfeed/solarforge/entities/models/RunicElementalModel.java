@@ -5,6 +5,7 @@ package com.finderfeed.solarforge.entities.models;// Made with Blockbench 4.1.5
 
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.entities.RunicElementalBoss;
+import com.finderfeed.solarforge.local_library.helpers.FinderfeedMathHelper;
 import com.finderfeed.solarforge.local_library.helpers.RenderingTools;
 import com.finderfeed.solarforge.local_library.other.EaseInOut;
 import com.finderfeed.solarforge.local_library.other.InterpolatedValue;
@@ -114,10 +115,19 @@ public class RunicElementalModel extends EntityModel<RunicElementalBoss> {
 	@Override
 	public void setupAnim(RunicElementalBoss boss, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 		float time = RenderingTools.getTime(boss.level, Minecraft.getInstance().getDeltaFrameTime());
+
 		RunicElementalAnimations.RESET_EVERYTHING.animate(boss,this,limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
+		RunicElementalAnimations.IDLE.animate(boss,this,limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
 		head.yRot = (float)Math.toRadians(netHeadYaw);
 		head.xRot = (float)Math.toRadians(headPitch);
-		RunicElementalAnimations.IDLE.animate(boss,this,limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
+
+		double v = Math.toRadians(25 + 20 * Math.sin(time/5));
+		double f = Math.toRadians(20 * Math.sin((time + Math.PI)/5));
+
+		righthand.zRot = mrighthand.getInitRotZ() + (float) v;
+		lefthand.zRot = mlefthand.getInitRotZ() - (float) v;
+		righthand.xRot = mrighthand.getInitRotX() + (float) f;
+		lefthand.xRot = mlefthand.getInitRotX() + (float) f;
 	}
 
 	@Override
