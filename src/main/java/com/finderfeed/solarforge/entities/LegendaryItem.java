@@ -21,7 +21,7 @@ import net.minecraftforge.network.NetworkHooks;
 
 public class LegendaryItem extends Entity {
 
-    private static final EntityDataAccessor<ItemStack> DATA_ITEM = SynchedEntityData.defineId(ItemEntity.class, EntityDataSerializers.ITEM_STACK);
+    private static final EntityDataAccessor<ItemStack> DATA_ITEM = SynchedEntityData.defineId(LegendaryItem.class, EntityDataSerializers.ITEM_STACK);
 
 
 

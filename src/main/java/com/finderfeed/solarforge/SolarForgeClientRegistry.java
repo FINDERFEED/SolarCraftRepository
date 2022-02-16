@@ -210,7 +210,7 @@ public class SolarForgeClientRegistry {
         event.registerEntityRenderer(EntityTypes.CRYSTAL_BOSS_SHIELDING_CRYSTAL.get(), ShieldingCrystalRenderer::new);
         event.registerEntityRenderer(EntityTypes.CRYSTAL_BOSS_ATTACK_HOLDING_MISSILE.get(), HoldingMissileRenderer::new);
         event.registerEntityRenderer(EntityTypes.CRYSTAL_BOSS_MINE.get(), MineEntityRenderer::new);
-        event.registerEntityRenderer(EntityTypes.FALLING_STAR_CRYSTAL_BOSS.get(), FallingStarRenderer::new);
+        event.registerEntityRenderer(EntityTypes.FALLING_MAGIC_MISSILE.get(), FallingMagicMissileRenderer::new);
         event.registerEntityRenderer(EntityTypes.RANDOM_BAD_EFFECT_PROJECTILE.get(), RandomBadEffectProjectileRenderer::new);
         event.registerEntityRenderer(EntityTypes.RIP_RAY_GENERATOR.get(), RipRayGeneratorRender::new);
         event.registerEntityRenderer(EntityTypes.LEGENDARY_ITEM.get(), LegendaryItemRenderer::new);
