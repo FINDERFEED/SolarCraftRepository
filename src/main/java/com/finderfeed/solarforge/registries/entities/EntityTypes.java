@@ -77,5 +77,9 @@ public class EntityTypes {
 
     public static final RegistryObject<EntityType<RunicElementalBoss>> RUNIC_ELEMENTAL_BOSS = ENTITY_TYPE_REGISTER.register("runic_elemental_boss", () ->
             EntityType.Builder.<RunicElementalBoss>of(RunicElementalBoss::new, MobCategory.CREATURE)
-                    .sized(1f, 1.75f).build("runic_elemental_boss"));
+                    .sized(1f, 2.5f).build("runic_elemental_boss"));
+
+    public static final RegistryObject<EntityType<SunstrikeEntity>> SUNSTRIKE = ENTITY_TYPE_REGISTER.register("sunstrike", () ->
+            EntityType.Builder.<SunstrikeEntity>of(SunstrikeEntity::new, MobCategory.MISC)
+                    .sized(0.2f, 0.2f).build("sunstrike"));
 }

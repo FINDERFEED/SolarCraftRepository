@@ -10,6 +10,7 @@ import com.finderfeed.solarforge.magic.items.solar_lexicon.packets.UpdateAllProg
 import com.finderfeed.solarforge.magic.items.solar_lexicon.packets.UpdateInventoryPacket;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.packets.UpdateProgressionOnClient;
 import com.finderfeed.solarforge.packet_handler.packets.misc_packets.BallLightningSpawnLightningParticles;
+import com.finderfeed.solarforge.packet_handler.packets.misc_packets.ExplosionParticlesPacket;
 import com.finderfeed.solarforge.packet_handler.packets.misc_packets.SolarStrikeEntityDoExplosion;
 import net.minecraft.resources.ResourceLocation;
 
@@ -69,6 +70,7 @@ public class SolarForgePacketHandler {
         INSTANCE.registerMessage(nextID(), BallLightningSpawnLightningParticles.class, BallLightningSpawnLightningParticles::toBytes, BallLightningSpawnLightningParticles::new, BallLightningSpawnLightningParticles::handle);
         INSTANCE.registerMessage(nextID(), SendFragmentsToClientPacket.class, SendFragmentsToClientPacket::toBytes, SendFragmentsToClientPacket::new, SendFragmentsToClientPacket::handle);
         INSTANCE.registerMessage(nextID(), EnchanterPacket.class, EnchanterPacket::toBytes, EnchanterPacket::new, EnchanterPacket::handle);
+        INSTANCE.registerMessage(nextID(), ExplosionParticlesPacket.class, ExplosionParticlesPacket::toBytes, ExplosionParticlesPacket::new, ExplosionParticlesPacket::handle);
 
     }
 //            INSTANCE.registerMessage(nextID(), .class, ::toBytes, ::new, ::handle);

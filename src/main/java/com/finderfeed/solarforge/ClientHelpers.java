@@ -101,6 +101,13 @@ public class ClientHelpers {
         return SolarcraftClientConfig.SHADERS_ENABLED.get();
     }
 
+
+    public static void doExplosionParticles(Vec3 pos){
+        Helpers.createSmallSolarStrikeParticleExplosionWithLines(
+            Minecraft.getInstance().level,pos,2,0.1f,0.5f
+        );
+    }
+
     public static void handleBallLightningProjectileParticles(Vec3 pos){
         Level level = Minecraft.getInstance().level;
         if (level != null) {
