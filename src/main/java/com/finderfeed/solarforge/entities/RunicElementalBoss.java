@@ -1,18 +1,23 @@
 package com.finderfeed.solarforge.entities;
 
+import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.local_library.entities.BossAttackChain;
 import com.finderfeed.solarforge.local_library.other.InterpolatedValue;
-import net.minecraft.commands.arguments.EntityAnchorArgument;
+import com.finderfeed.solarforge.magic.projectiles.FallingMagicMissile;
+import com.finderfeed.solarforge.misc_things.CrystalBossBuddy;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
-import net.minecraft.world.entity.Entity;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.LargeFireball;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.NetworkHooks;
 
 import java.util.ArrayList;
@@ -20,10 +25,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class RunicElementalBoss extends Mob {
+public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
+
+    public static final String MAGIC_MISSILES_ATTACK = "magic_missiles";
 
     private Map<String,InterpolatedValue> ANIMATION_VALUES = new HashMap<>();
-    public BossAttackChain BOSS_ATTACK_CHAIN = new BossAttackChain.Builder().build();
+    public BossAttackChain BOSS_ATTACK_CHAIN = new BossAttackChain.Builder()
+            .addAttack(MAGIC_MISSILES_ATTACK,this::magicMissilesAttack,220,10,1)
+            .addAttack("fireballs",this::flyUpAndThrowFireballs,200,1,2)
+            .addAftermathAttack(this::resetAttackTypeAndTicker)
+            .setTimeBetweenAttacks(10)
+            .build();
+
+    public static final EntityDataAccessor<Integer> ATTACK_TICK = SynchedEntityData.defineId(RunicElementalBoss.class, EntityDataSerializers.INT);
+    public static final EntityDataAccessor<Integer> ATTACK_TYPE = SynchedEntityData.defineId(RunicElementalBoss.class, EntityDataSerializers.INT);
 
     public RunicElementalBoss(EntityType<? extends Mob> p_21368_, Level p_21369_) {
         super(p_21368_, p_21369_);
@@ -34,11 +49,15 @@ public class RunicElementalBoss extends Mob {
     public void tick() {
 
         if (!level.isClientSide){
-//            BOSS_ATTACK_CHAIN.tick();
             LivingEntity target = getTarget();
             if (target != null){
+                BOSS_ATTACK_CHAIN.tick();
+                this.setAttackTick(BOSS_ATTACK_CHAIN.getTicker());
                 this.lookControl.setLookAt(target.position().add(0,target.getBbHeight()/2,0));
-//                this.lookAt(EntityAnchorArgument.Anchor.EYES,target.position());
+            }else{
+                if (getAttackTick() != 0 && getAttackType() != 0){
+                    resetAttackTypeAndTicker();
+                }
             }
         }
         if (level.isClientSide){
@@ -56,7 +75,86 @@ public class RunicElementalBoss extends Mob {
         super.tick();
     }
 
+    public void magicMissilesAttack(){
+        this.setAttackType(AttackType.MAGIC_MISSILES);
+        if (BOSS_ATTACK_CHAIN.getTicker() > 20 && BOSS_ATTACK_CHAIN.getTicker() < 205) {
+            LivingEntity target = getTarget();
+            Vec3 between = target.position().add(0,target.getEyeHeight(target.getPose())*0.8,0).subtract(position().add(0, 2, 0));
+            FallingMagicMissile missile = new FallingMagicMissile(level,between.normalize());
+            missile.setSpeedDecrement(0);
+            missile.setDamage(10f);
+            missile.setPos(this.position().add(0,2,0).add(between.normalize().multiply(0.5,0.5,0.5)));
+            level.addFreshEntity(missile);
+        }
+    }
 
+    public void flyUpAndThrowFireballs(){
+        this.setAttackType(AttackType.FIREBALLS);
+        if (BOSS_ATTACK_CHAIN.getTicker() < 60){
+            this.setDeltaMovement(0,8f/60,0);
+        }else{
+            this.setDeltaMovement(0,0,0);
+            if (BOSS_ATTACK_CHAIN.getTicker() % 20 == 0){
+
+                Vec3 vec = Helpers.randomVector().normalize();
+                if (vec.y > 0){
+                    vec = vec.multiply(0,-1,0);
+                }
+                LargeFireball fireball = new LargeFireball(level,this,vec.x,vec.y,vec.z,0);
+                fireball.setPos(this.position().add(0,2,0).add(vec));
+                level.addFreshEntity(fireball);
+            }
+        }
+
+    }
+
+    @Override
+    public boolean isNoGravity() {
+        return this.getAttackType() == AttackType.FIREBALLS;
+    }
+
+    @Override
+    protected int calculateFallDamage(float p_21237_, float p_21238_) {
+        return 0;
+    }
+
+    @Override
+    public boolean fireImmune() {
+        return true;
+    }
+
+    @Override
+    public boolean ignoreExplosion() {
+        return true;
+    }
+
+    public void resetAttackTypeAndTicker(){
+        setAttackType(0);
+        setAttackTick(0);
+    }
+
+    public void setAttackTick(int t){
+        this.entityData.set(ATTACK_TICK,t);
+    }
+
+    public void setAttackType(int type){
+        this.entityData.set(ATTACK_TYPE,type);
+    }
+
+    public int getAttackTick(){
+        return this.entityData.get(ATTACK_TICK);
+    }
+    public int getAttackType(){
+        return this.entityData.get(ATTACK_TYPE);
+    }
+
+
+    @Override
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        this.entityData.define(ATTACK_TICK,0);
+        this.entityData.define(ATTACK_TYPE,0);
+    }
 
     @Override
     protected void registerGoals() {
@@ -87,6 +185,8 @@ public class RunicElementalBoss extends Mob {
     }
 
     public static class AttackType{
+        public static final int MAGIC_MISSILES = 1;
+        public static final int FIREBALLS = 2;
 
     }
 }
