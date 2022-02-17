@@ -19,22 +19,24 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
 
-public class FallingStarCrystalBoss extends AbstractHurtingProjectile implements CrystalBossBuddy {
+public class FallingMagicMissile extends AbstractHurtingProjectile implements CrystalBossBuddy {
 
     private boolean removeIT = false;
+    private double speedDecrement = 0.04;
+    private Float damage;
 
-    public FallingStarCrystalBoss(EntityType<? extends AbstractHurtingProjectile> p_36833_, Level p_36834_) {
+    public FallingMagicMissile(EntityType<? extends AbstractHurtingProjectile> p_36833_, Level p_36834_) {
         super(p_36833_, p_36834_);
     }
 
 
-    public FallingStarCrystalBoss( Level p_36834_,double x,double y,double z) {
-        super(EntityTypes.FALLING_STAR_CRYSTAL_BOSS.get(), p_36834_);
+    public FallingMagicMissile(Level p_36834_, double x, double y, double z) {
+        super(EntityTypes.FALLING_MAGIC_MISSILE.get(), p_36834_);
         this.setDeltaMovement(x,y,z);
     }
 
-    public FallingStarCrystalBoss(Level p_36834_, Vec3 speed) {
-        super(EntityTypes.FALLING_STAR_CRYSTAL_BOSS.get(), p_36834_);
+    public FallingMagicMissile(Level p_36834_, Vec3 speed) {
+        super(EntityTypes.FALLING_MAGIC_MISSILE.get(), p_36834_);
         this.setDeltaMovement(speed);
     }
 
@@ -64,9 +66,14 @@ public class FallingStarCrystalBoss extends AbstractHurtingProjectile implements
         super.onHitEntity(hit);
         if (!(hit.getEntity() instanceof CrystalBossBuddy)){
             if (Helpers.isVulnerable(hit.getEntity())){
-                hit.getEntity().hurt(DamageSource.MAGIC, CrystalBossEntity.AIR_STRIKE_DAMAGE);
-                hit.getEntity().invulnerableTime = 0;
-                this.kill();
+                if (damage == null) {
+                    hit.getEntity().hurt(DamageSource.MAGIC,CrystalBossEntity.AIR_STRIKE_DAMAGE);
+                    hit.getEntity().invulnerableTime = 0;
+                    this.kill();
+                }else{
+                    explode();
+                }
+
             }
 
         }
@@ -90,7 +97,7 @@ public class FallingStarCrystalBoss extends AbstractHurtingProjectile implements
                 return !(living instanceof CrystalBossBuddy);
             }).forEach((entity)->{
                 if (Helpers.isVulnerable(entity)){
-                    entity.hurt(DamageSource.MAGIC,3);
+                    entity.hurt(DamageSource.MAGIC,damage != null ? damage : 3);
                     entity.invulnerableTime = 0;
                 }
             });
@@ -99,19 +106,31 @@ public class FallingStarCrystalBoss extends AbstractHurtingProjectile implements
     }
 
     @Override
-    public boolean save(CompoundTag p_20224_) {
-        p_20224_.putBoolean("removeit",this.removeIT);
-        return super.save(p_20224_);
+    public boolean save(CompoundTag tag) {
+        tag.putBoolean("removeit",this.removeIT);
+        tag.putDouble("speedD",speedDecrement);
+        tag.putFloat("dam",damage);
+        return super.save(tag);
     }
 
     @Override
-    public void load(CompoundTag p_20259_) {
-        this.removeIT= p_20259_.getBoolean("removeit");
-        super.load(p_20259_);
+    public void load(CompoundTag tag) {
+        this.removeIT= tag.getBoolean("removeit");
+        this.speedDecrement = tag.getDouble("speedD");
+        this.damage = tag.getFloat("dam");
+        super.load(tag);
     }
 
     public double getSpeedDecrementPerTick(){
-        return 0.04;
+        return speedDecrement;
+    }
+
+    public void setSpeedDecrement(double speedDecrement) {
+        this.speedDecrement = speedDecrement;
+    }
+
+    public void setDamage(Float damage) {
+        this.damage = damage;
     }
 
     @Override

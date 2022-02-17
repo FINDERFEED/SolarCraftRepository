@@ -82,6 +82,28 @@ public class RunicElementalAnimations {
         model.lefthand.xRot = (float)Math.toRadians(headPitch-90);
     };
 
+    public static final RunicElementalModelAnimation PREPARE_DIRECT_ATTACK = (boss,model,limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch)->{
+        InterpolatedValue val = boss.getOrCreateAnimationValue("prepareDirectAttack",new EaseInOut(0,1,15,2));
+        double v = val.getValue();
+        model.righthand.z = model.mrighthand.getInitZ() - 2f*(float)v;
+        model.lefthand.z = model.mlefthand.getInitZ() - 2f*(float)v;
+        model.righthand.xRot = model.mrighthand.getInitRotX() + (float)((Math.toRadians(headPitch - 90) - model.mrighthand.getInitRotX())*v) ;
+        model.lefthand.xRot = model.mlefthand.getInitRotX() + (float)((Math.toRadians(headPitch - 90) - model.mlefthand.getInitRotX())*v) ;
+        model.righthand.yRot = model.mrighthand.getInitRotY() - (float)Math.toRadians(20*v);
+        model.lefthand.yRot = model.mlefthand.getInitRotY() + (float)Math.toRadians(20*v);
+    };
+
+    public static final RunicElementalModelAnimation PUT_DOWN_DIRECT_ATTACK = (boss,model,limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch)->{
+        InterpolatedValue val = boss.getOrCreateAnimationValue("putDownDirectAttack",new EaseInOut(0,1,16,2));
+        double v = 1-val.getValue();
+        model.righthand.z = model.mrighthand.getInitZ() - 2f*(float)v;
+        model.lefthand.z = model.mlefthand.getInitZ() - 2f*(float)v;
+        model.righthand.xRot = model.mrighthand.getInitRotX() + (float)((Math.toRadians(headPitch - 90) - model.mrighthand.getInitRotX())*v) ;
+        model.lefthand.xRot = model.mlefthand.getInitRotX() + (float)((Math.toRadians(headPitch - 90) - model.mlefthand.getInitRotX())*v) ;
+        model.righthand.yRot = model.mrighthand.getInitRotY() - (float)Math.toRadians(20*v);
+        model.lefthand.yRot = model.mlefthand.getInitRotY() + (float)Math.toRadians(20*v);
+    };
+
     public static final RunicElementalModelAnimation RESET_EVERYTHING = (boss,model,limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch)->{
         model.mrighthand.reset();
         model.mlefthand.reset();

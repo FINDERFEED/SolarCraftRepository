@@ -37,7 +37,7 @@ public class BossAttackChain {
                     currentAttack.run();
                 }
             }
-            if (currentWaitTime != 0){
+            if (currentWaitTime > 0){
                 currentWaitTime--;
             }else{
                 if (wasLastActionAnAttack){
@@ -74,6 +74,14 @@ public class BossAttackChain {
             attackingInProgress = true;
             wasLastActionAnAttack = false;
         }
+    }
+
+    public int getCurrentWaitTime() {
+        return currentWaitTime;
+    }
+
+    public int getTicker() {
+        return ticker;
     }
 
     private void populateQueue(){
