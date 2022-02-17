@@ -4,6 +4,7 @@ import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.entities.CrystalBossEntity;
 import com.finderfeed.solarforge.misc_things.CrystalBossBuddy;
 import com.finderfeed.solarforge.client.particles.ParticleTypesRegistry;
+import com.finderfeed.solarforge.packet_handler.packets.misc_packets.ExplosionParticlesPacket;
 import com.finderfeed.solarforge.registries.entities.EntityTypes;
 import com.finderfeed.solarforge.registries.sounds.Sounds;
 import net.minecraft.core.particles.ParticleOptions;
@@ -71,7 +72,13 @@ public class FallingMagicMissile extends AbstractHurtingProjectile implements Cr
                     hit.getEntity().invulnerableTime = 0;
                     this.kill();
                 }else{
-                    explode();
+                    if (!level.isClientSide) {
+                        ExplosionParticlesPacket.send(level, position().add(getDeltaMovement()));
+                        if (Helpers.isVulnerable(hit.getEntity())){
+                            hit.getEntity().hurt(DamageSource.MAGIC,damage != null ? damage : 3);
+                            hit.getEntity().invulnerableTime = 0;
+                        }
+                    }
                 }
 
             }

@@ -135,6 +135,14 @@ public class RunicElementalModel extends EntityModel<RunicElementalBoss> {
 			}else {
 				RunicElementalAnimations.SWING_HANDS.animate(boss,this,limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
 			}
+		}else if (boss.getAttackType() == RunicElementalBoss.AttackType.SUNSTRIKES){
+			if (tick <= 15){
+				RunicElementalAnimations.SWING_HANDS_UP.animate(boss,this,limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
+			}else if (tick > 115){
+				RunicElementalAnimations.SWING_HANDS_DOWN.animate(boss,this,limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
+			}else{
+				RunicElementalAnimations.CAST_ELEMENT.animate(boss,this,limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
+			}
 		}
 	}
 

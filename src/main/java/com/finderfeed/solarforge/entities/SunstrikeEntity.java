@@ -19,7 +19,7 @@ import net.minecraftforge.network.NetworkHooks;
 
 public class SunstrikeEntity extends Entity {
 
-    public static final int FALLING_TIME = 40;
+    public static final int FALLING_TIME = 25;
     private float damage = 0;
 
     public SunstrikeEntity(EntityType<?> p_19870_, Level p_19871_) {
@@ -34,6 +34,9 @@ public class SunstrikeEntity extends Entity {
 
     @Override
     public void tick() {
+        if (!level.isClientSide && tickCount == 1){
+            level.playSound(null,this.getX(),this.getY(),this.getZ(), Sounds.SUNSTRIKE.get(), SoundSource.AMBIENT,1,1f);
+        }
         if (!level.isClientSide && tickCount > FALLING_TIME){
             explode();
         }
@@ -41,7 +44,7 @@ public class SunstrikeEntity extends Entity {
     }
 
     public void explode(){
-        for (LivingEntity entity : this.level.getEntitiesOfClass(LivingEntity.class,new AABB(-1.5,-1.5,-1.5,1.5,1.5,1.5)
+        for (LivingEntity entity : this.level.getEntitiesOfClass(LivingEntity.class,new AABB(-2,-2,-2,2,2,2)
                 .move(position()),(e)-> !(e instanceof CrystalBossBuddy)) ){
             if (Helpers.isVulnerable(entity)){
                 entity.hurt(DamageSource.MAGIC,damage);

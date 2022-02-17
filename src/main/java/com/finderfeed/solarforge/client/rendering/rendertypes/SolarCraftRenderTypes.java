@@ -13,6 +13,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.ShaderInstance;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureManager;
+import net.minecraft.resources.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
 
@@ -45,6 +46,16 @@ public class SolarCraftRenderTypes extends RenderType{
                 .setTransparencyState(RenderType.TRANSLUCENT_TRANSPARENCY)
                 .createCompositeState(false);
         return RenderType.create("shaderRendertype", DefaultVertexFormat.POSITION_TEX, VertexFormat.Mode.QUADS, 256, false, true,state);
+    }
+
+    public static RenderType depthMaskedTextSeeThrough(ResourceLocation loc){
+        return create("text_see_through", DefaultVertexFormat.POSITION_COLOR_TEX_LIGHTMAP, VertexFormat.Mode.QUADS, 256, false, true,
+                RenderType.CompositeState.builder().setShaderState(RENDERTYPE_TEXT_SEE_THROUGH_SHADER)
+                .setTextureState(new RenderStateShard.TextureStateShard(loc, false, false))
+                .setTransparencyState(TRANSLUCENT_TRANSPARENCY)
+                .setLightmapState(LIGHTMAP)
+                .setWriteMaskState(COLOR_WRITE)
+                .createCompositeState(false));
     }
 
     public static class ParticleRenderTypes {

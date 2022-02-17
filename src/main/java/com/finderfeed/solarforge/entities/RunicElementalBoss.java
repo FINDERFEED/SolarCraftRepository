@@ -5,6 +5,7 @@ import com.finderfeed.solarforge.local_library.entities.BossAttackChain;
 import com.finderfeed.solarforge.local_library.other.InterpolatedValue;
 import com.finderfeed.solarforge.magic.projectiles.FallingMagicMissile;
 import com.finderfeed.solarforge.misc_things.CrystalBossBuddy;
+import com.finderfeed.solarforge.registries.entities.EntityTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -17,6 +18,7 @@ import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.LargeFireball;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.NetworkHooks;
 
@@ -32,9 +34,9 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
     private Map<String,InterpolatedValue> ANIMATION_VALUES = new HashMap<>();
     public BossAttackChain BOSS_ATTACK_CHAIN = new BossAttackChain.Builder()
             .addAttack(MAGIC_MISSILES_ATTACK,this::magicMissilesAttack,220,10,1)
-            .addAttack("fireballs",this::flyUpAndThrowFireballs,200,1,2)
+            .addAttack("sunstrikes",this::sunstrikes,130,1,2)
             .addAftermathAttack(this::resetAttackTypeAndTicker)
-            .setTimeBetweenAttacks(10)
+            .setTimeBetweenAttacks(20)
             .build();
 
     public static final EntityDataAccessor<Integer> ATTACK_TICK = SynchedEntityData.defineId(RunicElementalBoss.class, EntityDataSerializers.INT);
@@ -53,7 +55,7 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
             if (target != null){
                 BOSS_ATTACK_CHAIN.tick();
                 this.setAttackTick(BOSS_ATTACK_CHAIN.getTicker());
-                this.lookControl.setLookAt(target.position().add(0,target.getBbHeight()/2,0));
+                this.lookControl.setLookAt(target.position().add(0,target.getEyeHeight(target.getPose())*0.8,0));
             }else{
                 if (getAttackTick() != 0 && getAttackType() != 0){
                     resetAttackTypeAndTicker();
@@ -80,11 +82,26 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
         if (BOSS_ATTACK_CHAIN.getTicker() > 20 && BOSS_ATTACK_CHAIN.getTicker() < 205) {
             LivingEntity target = getTarget();
             Vec3 between = target.position().add(0,target.getEyeHeight(target.getPose())*0.8,0).subtract(position().add(0, 2, 0));
-            FallingMagicMissile missile = new FallingMagicMissile(level,between.normalize());
+            FallingMagicMissile missile = new FallingMagicMissile(level,between.normalize().multiply(2,2,2));
             missile.setSpeedDecrement(0);
             missile.setDamage(10f);
             missile.setPos(this.position().add(0,2,0).add(between.normalize().multiply(0.5,0.5,0.5)));
             level.addFreshEntity(missile);
+        }
+    }
+
+    public void sunstrikes(){
+        this.setAttackType(AttackType.SUNSTRIKES);
+        if (BOSS_ATTACK_CHAIN.getTicker() >= 15 && BOSS_ATTACK_CHAIN.getTicker() <= 115){
+            if (BOSS_ATTACK_CHAIN.getTicker() % 9 == 0){
+                for (Player player : level.getEntitiesOfClass(Player.class,new AABB(-16,-8,-16,16,8,16).move(position()))){
+                    SunstrikeEntity sunstrike = new SunstrikeEntity(EntityTypes.SUNSTRIKE.get(),level);
+                    Vec3 playerSpeed = player.getLookAngle().multiply(1f,0,1f).normalize().multiply(0.5,0,0.5);
+                    sunstrike.setDamage(20);
+                    sunstrike.setPos(player.position().add(playerSpeed));
+                    level.addFreshEntity(sunstrike);
+                }
+            }
         }
     }
 
@@ -187,6 +204,7 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
     public static class AttackType{
         public static final int MAGIC_MISSILES = 1;
         public static final int FIREBALLS = 2;
+        public static final int SUNSTRIKES = 3;
 
     }
 }

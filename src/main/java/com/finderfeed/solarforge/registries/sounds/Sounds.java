@@ -26,6 +26,7 @@ public class Sounds {
     public static final RegistryObject<SoundEvent> AMBIENT_DIM_1 = SOUND_EVENTS.register("ambient_one",()-> new SoundEvent(new ResourceLocation(SolarForge.MOD_ID,"ambient_one")));
     public static final RegistryObject<SoundEvent> AMBIENT_DIM_2 = SOUND_EVENTS.register("ambient_two",()-> new SoundEvent(new ResourceLocation(SolarForge.MOD_ID,"ambient_two")));
     public static final RegistryObject<SoundEvent> LIGHTNING_GUN_SHOT = SOUND_EVENTS.register("lightning_gun_shot",()-> new SoundEvent(new ResourceLocation(SolarForge.MOD_ID,"lightning_gun_shot")));
+    public static final RegistryObject<SoundEvent> SUNSTRIKE = SOUND_EVENTS.register("sunstrike",()-> new SoundEvent(new ResourceLocation(SolarForge.MOD_ID,"sunstrike")));
 
     //original author: https://freesound.org/people/ejfortin/
     public static final RegistryObject<SoundEvent> BALL_LIGHTNING_BLOW = SOUND_EVENTS.register("ball_lightning_blow",()-> new SoundEvent(new ResourceLocation(SolarForge.MOD_ID,"ball_lightning_blow")));

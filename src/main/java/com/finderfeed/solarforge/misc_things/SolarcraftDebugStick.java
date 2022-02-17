@@ -24,8 +24,10 @@ public class SolarcraftDebugStick extends Item {
 //                new AABB(player.position().add(-10,-10,-10),player.position().add(10,10,10)),(d)->{
 //                    return true;
 //                },1));
+
         if (player instanceof  Player pl){
             if (!pl.isCreative() && !pl.isSpectator()){
+
                 pl.getAbilities().mayfly = true;
             }
         }

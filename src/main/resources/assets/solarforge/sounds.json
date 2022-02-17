@@ -55,5 +55,8 @@
   },
   "lightning_gun_shot": {
     "sounds": ["solarforge:lightning_gun_shot"]
+  },
+  "sunstrike": {
+    "sounds": ["solarforge:sunstrike"]
   }
 }
