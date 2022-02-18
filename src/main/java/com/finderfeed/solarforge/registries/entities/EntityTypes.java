@@ -82,4 +82,8 @@ public class EntityTypes {
     public static final RegistryObject<EntityType<SunstrikeEntity>> SUNSTRIKE = ENTITY_TYPE_REGISTER.register("sunstrike", () ->
             EntityType.Builder.<SunstrikeEntity>of(SunstrikeEntity::new, MobCategory.MISC)
                     .sized(0.2f, 0.2f).build("sunstrike"));
+
+    public static final RegistryObject<EntityType<SolarFireballProjectile>> SOLAR_FIREBALL = ENTITY_TYPE_REGISTER.register("solar_fireball", () ->
+            EntityType.Builder.<SolarFireballProjectile>of(SolarFireballProjectile::new, MobCategory.MISC)
+                    .sized(0.2f, 0.2f).build("solar_fireball"));
 }

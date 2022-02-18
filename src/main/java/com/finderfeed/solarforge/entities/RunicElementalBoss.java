@@ -107,21 +107,6 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
 
     public void flyUpAndThrowFireballs(){
         this.setAttackType(AttackType.FIREBALLS);
-        if (BOSS_ATTACK_CHAIN.getTicker() < 60){
-            this.setDeltaMovement(0,8f/60,0);
-        }else{
-            this.setDeltaMovement(0,0,0);
-            if (BOSS_ATTACK_CHAIN.getTicker() % 20 == 0){
-
-                Vec3 vec = Helpers.randomVector().normalize();
-                if (vec.y > 0){
-                    vec = vec.multiply(0,-1,0);
-                }
-                LargeFireball fireball = new LargeFireball(level,this,vec.x,vec.y,vec.z,0);
-                fireball.setPos(this.position().add(0,2,0).add(vec));
-                level.addFreshEntity(fireball);
-            }
-        }
 
     }
 
