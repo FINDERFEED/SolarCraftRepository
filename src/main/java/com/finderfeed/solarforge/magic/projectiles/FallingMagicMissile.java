@@ -73,6 +73,7 @@ public class FallingMagicMissile extends AbstractHurtingProjectile implements Cr
                     this.kill();
                 }else{
                     if (!level.isClientSide) {
+                        level.playSound(null,this.getX(),this.getY(),this.getZ(), Sounds.SOLAR_EXPLOSION.get(), SoundSource.AMBIENT,level.random.nextFloat()*0.5f+0.5f,1f);
                         ExplosionParticlesPacket.send(level, position().add(getDeltaMovement()));
                         if (Helpers.isVulnerable(hit.getEntity())){
                             hit.getEntity().hurt(DamageSource.MAGIC,damage != null ? damage : 3);

@@ -58,6 +58,7 @@ public class SolarCraftRenderTypes extends RenderType{
                 .createCompositeState(false));
     }
 
+
     public static class ParticleRenderTypes {
         public static final ParticleRenderType SOLAR_STRIKE_PARTICLE_RENDER = new ParticleRenderType() {
             @Override

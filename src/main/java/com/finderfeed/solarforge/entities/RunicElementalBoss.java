@@ -33,8 +33,9 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
 
     private Map<String,InterpolatedValue> ANIMATION_VALUES = new HashMap<>();
     public BossAttackChain BOSS_ATTACK_CHAIN = new BossAttackChain.Builder()
-            .addAttack(MAGIC_MISSILES_ATTACK,this::magicMissilesAttack,220,10,1)
-            .addAttack("sunstrikes",this::sunstrikes,130,1,2)
+//            .addAttack(MAGIC_MISSILES_ATTACK,this::magicMissilesAttack,220,10,1)
+//            .addAttack("sunstrikes",this::sunstrikes,130,1,2)
+            .addAttack("earthquake",this::earthquake,200,20,3)
             .addAftermathAttack(this::resetAttackTypeAndTicker)
             .setTimeBetweenAttacks(20)
             .build();
@@ -102,6 +103,18 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
                     level.addFreshEntity(sunstrike);
                 }
             }
+        }
+    }
+
+    public void earthquake(){
+        this.setAttackType(AttackType.EARTHQUAKE);
+        for (int i = 0; i < 4 ;i++){
+            Vec3 dir = new Vec3(level.random.nextDouble()*2-1,0,level.random.nextDouble()*2-1).normalize();
+            Vec3 pos = position().add(dir);
+            EarthquakeEntity earthquake = new EarthquakeEntity(level,dir,10);
+            earthquake.setPos(pos);
+            earthquake.setDamage(20);
+            level.addFreshEntity(earthquake);
         }
     }
 
@@ -190,6 +203,7 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
         public static final int MAGIC_MISSILES = 1;
         public static final int FIREBALLS = 2;
         public static final int SUNSTRIKES = 3;
+        public static final int EARTHQUAKE = 4;
 
     }
 }

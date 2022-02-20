@@ -86,4 +86,8 @@ public class EntityTypes {
     public static final RegistryObject<EntityType<SolarFireballProjectile>> SOLAR_FIREBALL = ENTITY_TYPE_REGISTER.register("solar_fireball", () ->
             EntityType.Builder.<SolarFireballProjectile>of(SolarFireballProjectile::new, MobCategory.MISC)
                     .sized(0.2f, 0.2f).build("solar_fireball"));
+
+    public static final RegistryObject<EntityType<EarthquakeEntity>> EARTHQUAKE = ENTITY_TYPE_REGISTER.register("earthquake", () ->
+            EntityType.Builder.<EarthquakeEntity>of(EarthquakeEntity::new, MobCategory.MISC)
+                    .sized(0.2f, 0.2f).build("earthquake"));
 }

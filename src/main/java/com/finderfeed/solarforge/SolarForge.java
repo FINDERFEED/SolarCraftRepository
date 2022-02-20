@@ -25,6 +25,7 @@ import com.finderfeed.solarforge.recipe_types.infusing_new.InfusingRecipeType;
 import com.finderfeed.solarforge.registries.Tags;
 import com.finderfeed.solarforge.registries.abilities.AbilitiesRegistry;
 import com.finderfeed.solarforge.registries.attributes.AttributesRegistry;
+import com.finderfeed.solarforge.registries.data_serializers.FDEntityDataSerializers;
 import com.finderfeed.solarforge.registries.entities.EntityTypes;
 
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
@@ -197,6 +198,7 @@ public class SolarForge
         Containers.CONTAINER_TYPE.register(bus);
         FoliagePlacerRegistry.DEFERRED_REGISTER.register(bus);
         AttributesRegistry.DEF_REG.register(bus);
+        FDEntityDataSerializers.DEF_REG.register(bus);
 //        FeaturesRegistry.FEATURE_DEFERRED_REGISTER.register(bus);
         BiomesRegister.BIOMES.register(bus);
         // Register the setup method for modloading
