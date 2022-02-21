@@ -148,4 +148,17 @@ public class RunicElementalAnimations {
         model.righthand.xRot = model.mrighthand.getInitRotX() + (float) f;
         model.lefthand.xRot = model.mlefthand.getInitRotX() + (float) f;
     };
+
+    public static final RunicElementalModelAnimation CAST = (boss,model,limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch)->{
+        float time = RenderingTools.getTime(boss.level, Minecraft.getInstance().getDeltaFrameTime());
+        double v = 10*Math.cos(time/2.5);
+        model.righthand.xRot = model.mrighthand.getInitRotX() - (float)Math.toRadians(180);
+        model.lefthand.xRot = model.mlefthand.getInitRotX() - (float)Math.toRadians(180);
+
+        model.lefthand.zRot = model.mlefthand.getInitRotZ() - (float)Math.toRadians(5-v);
+        model.righthand.zRot = model.mrighthand.getInitRotZ() + (float)Math.toRadians(5-v);
+//        model.lefthand.yRot = model.mlefthand.getInitRotY() - (float)Math.toRadians(v*3);
+//        model.righthand.yRot = model.mrighthand.getInitRotY() + (float)Math.toRadians(v*3);
+    };
+
 }

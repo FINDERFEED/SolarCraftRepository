@@ -6,6 +6,8 @@ package com.finderfeed.solarforge.entities.models;// Made with Blockbench 4.1.5
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.entities.RunicElementalBoss;
 import com.finderfeed.solarforge.local_library.helpers.RenderingTools;
+import com.finderfeed.solarforge.local_library.other.EaseInOut;
+import com.finderfeed.solarforge.local_library.other.InterpolatedValue;
 import com.finderfeed.solarforge.local_library.other.MemorizedModelPart;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -142,6 +144,14 @@ public class RunicElementalModel extends EntityModel<RunicElementalBoss> {
 				RunicElementalAnimations.SWING_HANDS_DOWN.animate(boss,this,limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
 			}else{
 				RunicElementalAnimations.CAST_ELEMENT.animate(boss,this,limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
+			}
+		}else if (boss.getAttackType() == RunicElementalBoss.AttackType.EARTHQUAKE){
+			if (tick <= 15){
+				RunicElementalAnimations.SWING_HANDS_UP.animate(boss,this,limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
+			}else if (tick > 105){
+				RunicElementalAnimations.SWING_HANDS_DOWN.animate(boss,this,limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
+			}else{
+				RunicElementalAnimations.CAST.animate(boss,this,limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
 			}
 		}
 	}

@@ -29,13 +29,14 @@ import java.util.Map;
 
 public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
 
+
     public static final String MAGIC_MISSILES_ATTACK = "magic_missiles";
 
     private Map<String,InterpolatedValue> ANIMATION_VALUES = new HashMap<>();
     public BossAttackChain BOSS_ATTACK_CHAIN = new BossAttackChain.Builder()
 //            .addAttack(MAGIC_MISSILES_ATTACK,this::magicMissilesAttack,220,10,1)
 //            .addAttack("sunstrikes",this::sunstrikes,130,1,2)
-            .addAttack("earthquake",this::earthquake,200,20,3)
+            .addAttack("earthquake",this::earthquake,120,30,3)
             .addAftermathAttack(this::resetAttackTypeAndTicker)
             .setTimeBetweenAttacks(20)
             .build();
@@ -74,6 +75,10 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
             for (String s : delete){
                 ANIMATION_VALUES.remove(s);
             }
+
+
+
+
         }
         super.tick();
     }
@@ -108,14 +113,15 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
 
     public void earthquake(){
         this.setAttackType(AttackType.EARTHQUAKE);
-        for (int i = 0; i < 4 ;i++){
-            Vec3 dir = new Vec3(level.random.nextDouble()*2-1,0,level.random.nextDouble()*2-1).normalize();
-            Vec3 pos = position().add(dir);
-            EarthquakeEntity earthquake = new EarthquakeEntity(level,dir,10);
-            earthquake.setPos(pos);
-            earthquake.setDamage(20);
-            level.addFreshEntity(earthquake);
-        }
+            for (int i = 0; i < 4; i++) {
+                Vec3 dir = new Vec3(level.random.nextDouble() * 2 - 1, 0, level.random.nextDouble() * 2 - 1).normalize();
+                Vec3 pos = position().add(dir);
+                EarthquakeEntity earthquake = new EarthquakeEntity(level, dir, 10);
+                earthquake.setPos(pos);
+                earthquake.setDamage(20);
+                level.addFreshEntity(earthquake);
+            }
+
     }
 
     public void flyUpAndThrowFireballs(){
