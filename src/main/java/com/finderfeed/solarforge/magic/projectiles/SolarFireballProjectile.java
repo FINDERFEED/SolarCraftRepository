@@ -1,5 +1,7 @@
 package com.finderfeed.solarforge.magic.projectiles;
 
+import com.finderfeed.solarforge.ClientHelpers;
+import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.client.particles.ParticleTypesRegistry;
 import com.finderfeed.solarforge.registries.entities.EntityTypes;
 import net.minecraft.core.particles.ParticleOptions;
@@ -13,6 +15,7 @@ import net.minecraft.world.entity.projectile.AbstractHurtingProjectile;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.NetworkHooks;
 
 public class SolarFireballProjectile extends AbstractHurtingProjectile {
@@ -34,6 +37,14 @@ public class SolarFireballProjectile extends AbstractHurtingProjectile {
 
     @Override
     public void tick() {
+        if (level.isClientSide ){
+            for (int i = 0;i < 2;i++) {
+                Vec3 vec = Helpers.randomVector().normalize().multiply(0.2, 0.2, 0.2);
+                ClientHelpers.ParticleAnimationHelper.createParticle(ParticleTypesRegistry.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+                        position().x + vec.x, position().y + vec.y, position().z + vec.z, 0, 0, 0, () -> 200 + level.random.nextInt(55),
+                        () -> 200 + level.random.nextInt(55), () -> 0, 0.4f);
+            }
+        }
         super.tick();
     }
 
@@ -58,7 +69,7 @@ public class SolarFireballProjectile extends AbstractHurtingProjectile {
 
     @Override
     protected float getInertia() {
-        return 0;
+        return 1;
     }
 
     public void setDamage(float damage) {
@@ -85,6 +96,16 @@ public class SolarFireballProjectile extends AbstractHurtingProjectile {
     @Override
     protected ParticleOptions getTrailParticle() {
         return ParticleTypesRegistry.INVISIBLE_PARTICLE.get();
+    }
+
+    @Override
+    public boolean isOnFire() {
+        return false;
+    }
+
+    @Override
+    public boolean isAttackable() {
+        return false;
     }
 
     @Override

@@ -2,9 +2,13 @@ package com.finderfeed.solarforge.misc_things;
 
 import com.finderfeed.solarforge.entities.EarthquakeEntity;
 import com.finderfeed.solarforge.magic.blocks.blockentities.RuneEnergyPylonTile;
+import com.finderfeed.solarforge.magic.projectiles.SolarFireballProjectile;
+import com.finderfeed.solarforge.registries.entities.EntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.TextComponent;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -67,5 +71,20 @@ public class SolarcraftDebugStick extends Item {
 
 
         return InteractionResult.SUCCESS;
+    }
+
+    @Override
+    public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
+        if (!world.isClientSide){
+            Vec3 lookVec = player.getLookAngle();
+            Vec3 pos = player.position().add(0,2,0).add(lookVec);
+            SolarFireballProjectile p = new SolarFireballProjectile(EntityTypes.SOLAR_FIREBALL.get(),world);
+            p.setPos(pos);
+            p.setDeltaMovement(lookVec);
+            world.addFreshEntity(p);
+        }
+
+
+        return super.use(world, player, hand);
     }
 }

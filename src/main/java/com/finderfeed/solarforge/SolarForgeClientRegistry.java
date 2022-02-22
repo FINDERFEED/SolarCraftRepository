@@ -218,6 +218,7 @@ public class SolarForgeClientRegistry {
         event.registerEntityRenderer(EntityTypes.RUNIC_ELEMENTAL_BOSS.get(), RunicElementalRenderer::new);
         event.registerEntityRenderer(EntityTypes.SUNSTRIKE.get(), SunstrikeRenderer::new);
         event.registerEntityRenderer(EntityTypes.EARTHQUAKE.get(), EarthquakeRenderer::new);
+        event.registerEntityRenderer(EntityTypes.SOLAR_FIREBALL.get(), SolarFireballRenderer::new);
     }
 
 }

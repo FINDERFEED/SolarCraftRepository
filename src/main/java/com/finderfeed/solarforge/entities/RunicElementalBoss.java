@@ -34,8 +34,8 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
 
     private Map<String,InterpolatedValue> ANIMATION_VALUES = new HashMap<>();
     public BossAttackChain BOSS_ATTACK_CHAIN = new BossAttackChain.Builder()
-//            .addAttack(MAGIC_MISSILES_ATTACK,this::magicMissilesAttack,220,10,1)
-//            .addAttack("sunstrikes",this::sunstrikes,130,1,2)
+            .addAttack(MAGIC_MISSILES_ATTACK,this::magicMissilesAttack,220,10,1)
+            .addAttack("sunstrikes",this::sunstrikes,130,1,2)
             .addAttack("earthquake",this::earthquake,120,30,3)
             .addAftermathAttack(this::resetAttackTypeAndTicker)
             .setTimeBetweenAttacks(20)
@@ -126,7 +126,11 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
 
     public void flyUpAndThrowFireballs(){
         this.setAttackType(AttackType.FIREBALLS);
+        if (BOSS_ATTACK_CHAIN.getTicker() < 20){
+            this.setDeltaMovement(0,5/20f,0);
+        }else{
 
+        }
     }
 
     @Override
