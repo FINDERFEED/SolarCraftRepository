@@ -59,7 +59,8 @@ public class EarthquakeEntity extends Entity {
                 Vec3 initPos = position();
                 Vec3 endPos = initPos.add(dir.normalize().multiply(getLength() + 1,0,getLength() + 1));
                 Vec3 beetween = initPos.subtract(endPos).normalize();
-                AABB box = new AABB(initPos.x + beetween.x,initPos.y,initPos.z + beetween.z,endPos.x,endPos.y + 6,endPos.z);
+                AABB box = new AABB(initPos.x + beetween.x,initPos.y,initPos.z + beetween.z,
+                        endPos.x + beetween.reverse().x,endPos.y + 6,endPos.z+ beetween.reverse().z);
                 for (LivingEntity e : level.getEntitiesOfClass(LivingEntity.class,box,(l)-> !(l instanceof CrystalBossBuddy))){
                     Vec3 vec = endPos.subtract(initPos).multiply(1,0,1);
                     Vec3 ePos = e.position().subtract(initPos).multiply(1,0,1);

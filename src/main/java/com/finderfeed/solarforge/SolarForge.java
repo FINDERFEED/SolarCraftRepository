@@ -288,6 +288,7 @@ public class SolarForge
             event.put(EntityTypes.CRYSTAL_BOSS_SHIELDING_CRYSTAL.get(), ShieldingCrystalCrystalBoss.createAttributes().build());
             event.put(EntityTypes.CRYSTAL_BOSS_MINE.get(), MineEntityCrystalBoss.createAttributes().build());
             event.put(EntityTypes.RIP_RAY_GENERATOR.get(), RipRayGenerator.createAttributes().build());
+            event.put(EntityTypes.REFRACTION_CRYSTAL.get(), RefractionCrystal.createMobAttributes().build());
         }
 
         @SubscribeEvent

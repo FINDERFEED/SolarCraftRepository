@@ -2,6 +2,7 @@ package com.finderfeed.solarforge.events.other_events;
 
 
 
+import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.client.model_loaders.SolarforgeModelLoader;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
@@ -18,6 +19,8 @@ import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid = "solarforge",bus = Mod.EventBusSubscriber.Bus.MOD,value = Dist.CLIENT)
 public class OBJModels {
+
+    public static final ResourceLocation CRYSTAL_1 = new ResourceLocation(SolarForge.MOD_ID,"objmodels/crystal_1");
 
     public static final ResourceLocation SOLAR_CORE_MODEL = new ResourceLocation("solarforge:objmodels/solar_core_modeljson");
     public static final ResourceLocation CRYSTAL_BOSS = new ResourceLocation("solarforge:objmodels/crystal_boss");
@@ -37,8 +40,7 @@ public class OBJModels {
 
     @SubscribeEvent
     public static void registerModels(final ModelRegistryEvent event){
-        ModelLoaderRegistry.registerLoader(new ResourceLocation("solarforge","progression_ore_loader"),LOADER);
-
+        ModelLoaderRegistry.registerLoader(new ResourceLocation(SolarForge.MOD_ID,"progression_ore_loader"),LOADER);
         ForgeModelBakery.addSpecialModel(CRYSTAL_BOSS);
         ForgeModelBakery.addSpecialModel(SOLAR_CORE_MODEL);
         ForgeModelBakery.addSpecialModel(ANCIENT_FRAGMENT_MODEL);
@@ -47,5 +49,6 @@ public class OBJModels {
         ForgeModelBakery.addSpecialModel(SHIELDING_CRYSTAL);
         ForgeModelBakery.addSpecialModel(GET_OFF_MEEE);
         ForgeModelBakery.addSpecialModel(RIP_RAY_GENERATOR);
+        ForgeModelBakery.addSpecialModel(CRYSTAL_1);
     }
 }

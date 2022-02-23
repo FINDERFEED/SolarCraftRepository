@@ -30,11 +30,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.AABB;
-import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.*;
 import net.minecraft.world.level.ClipContext;
-import net.minecraft.world.phys.EntityHitResult;
-import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraftforge.common.MinecraftForge;
@@ -591,5 +588,38 @@ public class Helpers {
         return ClientboundBlockEntityDataPacket.create(tile,(til)-> tag);
     }
 
+
+    public static List<BlockPos> getValidSpawningPositionsAround(Level world,BlockPos initPos,double radius,int maxHeightCheck,int maxYCheck){
+        int rad = (int)Math.round(radius);
+        List<BlockPos> candidates = new ArrayList<>();
+        byte[][] xz = new byte[rad*2+1][rad*2+1];
+        for (int x = -rad; x <= rad;x++){
+            for (int z = -rad; z <= rad;z++) {
+                for (int y = -maxYCheck;y <= maxYCheck;y++) {
+                    if (xz[x + rad][z + rad] == 1) break;
+                    if (x * x + z * z <= radius * radius) {
+                        BlockPos checkPos = initPos.offset(x, y, z);
+                        if (!world.getBlockState(checkPos).isAir()) {
+                            if (isValidSpawnPos(world, checkPos, maxHeightCheck)) {
+                                xz[x + rad][z + rad] = 1;
+                                candidates.add(checkPos);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        candidates.remove(initPos);
+        return candidates;
+    }
+
+    public static boolean isValidSpawnPos(Level world,BlockPos pos,int heightCheck){
+        for (int i = 0; i < heightCheck;i++){
+            if (!world.getBlockState(pos.above(i+1)).isAir()){
+                return false;
+            }
+        }
+        return true;
+    }
 
 }

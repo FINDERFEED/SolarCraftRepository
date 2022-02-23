@@ -65,7 +65,7 @@ public class FallingMagicMissile extends AbstractHurtingProjectile implements Cr
     @Override
     protected void onHitEntity(EntityHitResult hit) {
         super.onHitEntity(hit);
-        if (!(hit.getEntity() instanceof CrystalBossBuddy)){
+        if (!(hit.getEntity() instanceof CrystalBossBuddy) && !(hit.getEntity() instanceof FallingMagicMissile)){
             if (Helpers.isVulnerable(hit.getEntity())){
                 if (damage == null) {
                     hit.getEntity().hurt(DamageSource.MAGIC,CrystalBossEntity.AIR_STRIKE_DAMAGE);
@@ -80,6 +80,7 @@ public class FallingMagicMissile extends AbstractHurtingProjectile implements Cr
                             hit.getEntity().invulnerableTime = 0;
                         }
                     }
+                    this.kill();
                 }
 
             }

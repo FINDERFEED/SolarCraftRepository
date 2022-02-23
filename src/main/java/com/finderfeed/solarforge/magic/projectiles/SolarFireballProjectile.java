@@ -58,7 +58,7 @@ public class SolarFireballProjectile extends AbstractHurtingProjectile {
     protected void onHitEntity(EntityHitResult res) {
         super.onHitEntity(res);
         Entity e = res.getEntity();
-        if (!level.isClientSide && e instanceof LivingEntity living){
+        if (!level.isClientSide && e instanceof LivingEntity living && living != getOwner()){
             living.hurt(DamageSource.MAGIC,damage);
             living.setSecondsOnFire(6);
             this.discard();

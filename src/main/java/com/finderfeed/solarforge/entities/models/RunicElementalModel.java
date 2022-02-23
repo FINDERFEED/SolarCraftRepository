@@ -6,8 +6,6 @@ package com.finderfeed.solarforge.entities.models;// Made with Blockbench 4.1.5
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.entities.RunicElementalBoss;
 import com.finderfeed.solarforge.local_library.helpers.RenderingTools;
-import com.finderfeed.solarforge.local_library.other.EaseInOut;
-import com.finderfeed.solarforge.local_library.other.InterpolatedValue;
 import com.finderfeed.solarforge.local_library.other.MemorizedModelPart;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -118,42 +116,54 @@ public class RunicElementalModel extends EntityModel<RunicElementalBoss> {
 		float time = RenderingTools.getTime(boss.level, Minecraft.getInstance().getDeltaFrameTime());
 		this.headPitch = headPitch;
 		this.headYaw = netHeadYaw;
-		RunicElementalAnimations.RESET_EVERYTHING.animate(boss,this,limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
-		RunicElementalAnimations.IDLE.animate(boss,this,limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
+		RunicElementalAnimations.RESET_EVERYTHING.animate(boss,this,limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch,0);
+		RunicElementalAnimations.IDLE.animate(boss,this,limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch,0);
 		head.yRot = (float)Math.toRadians(netHeadYaw);
 		head.xRot = (float)Math.toRadians(headPitch);
 		int tick = boss.getAttackTick();
-		if (boss.getAttackType() == RunicElementalBoss.AttackType.MAGIC_MISSILES){
-			if (tick <= 15){
-				RunicElementalAnimations.PREPARE_DIRECT_ATTACK.animate(boss,this,limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
-			}else if (tick <= 205){
-				RunicElementalAnimations.DIRECT_ATTACK.animate(boss,this,limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
-			}else{
-				RunicElementalAnimations.PUT_DOWN_DIRECT_ATTACK.animate(boss,this,limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
-			}
-		}else if (boss.getAttackType() == RunicElementalBoss.AttackType.FIREBALLS){
-			if (tick <= 60){
-				RunicElementalAnimations.FLY_UP.animate(boss,this,limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
-			}else {
-				RunicElementalAnimations.SWING_HANDS.animate(boss,this,limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
-			}
-		}else if (boss.getAttackType() == RunicElementalBoss.AttackType.SUNSTRIKES){
-			if (tick <= 15){
-				RunicElementalAnimations.SWING_HANDS_UP.animate(boss,this,limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
-			}else if (tick > 115){
-				RunicElementalAnimations.SWING_HANDS_DOWN.animate(boss,this,limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
-			}else{
-				RunicElementalAnimations.CAST_ELEMENT.animate(boss,this,limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
-			}
-		}else if (boss.getAttackType() == RunicElementalBoss.AttackType.EARTHQUAKE){
-			if (tick <= 15){
-				RunicElementalAnimations.SWING_HANDS_UP.animate(boss,this,limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
-			}else if (tick > 105){
-				RunicElementalAnimations.SWING_HANDS_DOWN.animate(boss,this,limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
-			}else{
-				RunicElementalAnimations.CAST.animate(boss,this,limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
-			}
+		int attackType = boss.getAttackType();
+		if (attackType != 0) {
+			RunicElementalAnimations.ANIMATIONS_IN_ORDER[boss.getAttackType() - 1].animate(boss, this, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, tick);
 		}
+//		if (boss.getAttackType() == RunicElementalBoss.AttackType.MAGIC_MISSILES){
+//			if (tick <= 15){
+//				RunicElementalAnimations.PREPARE_DIRECT_ATTACK.animate(boss,this,limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch,tick);
+//			}else if (tick <= 205){
+//				RunicElementalAnimations.DIRECT_ATTACK.animate(boss,this,limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch,tick);
+//			}else{
+//				RunicElementalAnimations.PUT_DOWN_DIRECT_ATTACK.animate(boss,this,limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch,tick);
+//			}
+//		}else if (boss.getAttackType() == RunicElementalBoss.AttackType.FIREBALLS){
+//			if (tick <= 60){
+//				RunicElementalAnimations.FLY_UP.animate(boss,this,limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch,tick);
+//			}else {
+//				RunicElementalAnimations.SWING_HANDS.animate(boss,this,limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch,tick);
+//			}
+//		}else if (boss.getAttackType() == RunicElementalBoss.AttackType.SUNSTRIKES){
+//			if (tick <= 15){
+//				RunicElementalAnimations.SWING_HANDS_UP.animate(boss,this,limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch,tick);
+//			}else if (tick > 115){
+//				RunicElementalAnimations.SWING_HANDS_DOWN.animate(boss,this,limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch,tick);
+//			}else{
+//				RunicElementalAnimations.CAST_ELEMENT.animate(boss,this,limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch,tick);
+//			}
+//		}else if (boss.getAttackType() == RunicElementalBoss.AttackType.EARTHQUAKE){
+//			if (tick <= 15){
+//				RunicElementalAnimations.SWING_HANDS_UP.animate(boss,this,limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch,tick);
+//			}else if (tick > 105){
+//				RunicElementalAnimations.SWING_HANDS_DOWN.animate(boss,this,limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch,tick);
+//			}else{
+//				RunicElementalAnimations.CAST.animate(boss,this,limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch,tick);
+//			}
+//		}else if (boss.getAttackType() == RunicElementalBoss.AttackType.VARTH_DADER){
+//			if (tick <= 10){
+//				RunicElementalAnimations.PREPARE_DIRECT_ATTACK.animate(boss,this,limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch,tick);
+//			}else if (tick >= 105){
+//				RunicElementalAnimations.PUT_DOWN_DIRECT_ATTACK.animate(boss,this,limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch,tick);
+//			}else{
+//				RunicElementalAnimations.DIRECT_ATTACK.animate(boss,this,limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch,tick);
+//			}
+//		}
 	}
 
 	@Override

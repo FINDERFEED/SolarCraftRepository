@@ -1,6 +1,7 @@
 package com.finderfeed.solarforge.magic.projectiles.renderers;
 
 import com.finderfeed.solarforge.SolarForge;
+import com.finderfeed.solarforge.client.rendering.rendertypes.SolarCraftRenderTypes;
 import com.finderfeed.solarforge.local_library.helpers.RenderingTools;
 import com.finderfeed.solarforge.magic.projectiles.SolarFireballProjectile;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -31,7 +32,7 @@ public class SolarFireballRenderer extends EntityRenderer<SolarFireballProjectil
         matrices.scale(1.5f,1.5f,1.5f);
         Quaternion q = Minecraft.getInstance().gameRenderer.getMainCamera().rotation();
 
-        VertexConsumer vertex = src.getBuffer(RenderType.text(LOC));
+        VertexConsumer vertex = src.getBuffer(SolarCraftRenderTypes.depthMaskedTextSeeThrough(LOC));
         matrices.mulPose(q);
         Matrix4f mat = matrices.last().pose();
         RenderingTools.coloredBasicVertex(mat,vertex,-0.5,-0.5,0,0,0,255,255,0,255);
