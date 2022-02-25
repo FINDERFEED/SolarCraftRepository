@@ -56,7 +56,7 @@ public class ExplosiveCrystal extends Mob implements CrystalBossBuddy {
             }
         }else{
             int seconds = getRemainingActivationSeconds();
-            if (seconds >= 0){
+            if (seconds <= 0){
                 for (LivingEntity living : level.getEntitiesOfClass(LivingEntity.class,new AABB(-16,-16,-16,16,16,16).move(position()))){
                     living.invulnerableTime = 0;
                     living.hurt(DamageSource.MAGIC,40);

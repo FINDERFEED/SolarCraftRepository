@@ -24,10 +24,12 @@ public class ExplosiveCrystalRenderer extends EntityRenderer<ExplosiveCrystal> {
         matrices.pushPose();
         if (!crystal.isDeploying()) {
             matrices.pushPose();
+            matrices.translate(0,3.5,0);
+            matrices.scale(0.05f,0.05f,0.05f);
             matrices.mulPose(Minecraft.getInstance().gameRenderer.getMainCamera().rotation());
-            matrices.translate(0,3,0);
+            matrices.mulPose(Vector3f.ZN.rotationDegrees(180));
             GuiComponent.drawCenteredString(matrices,Minecraft.getInstance().font,
-                    String.valueOf(crystal.getRemainingActivationSeconds()),0,0,0xffaaaa);
+                    String.valueOf(crystal.getRemainingActivationSeconds()),0,0,0xff1111);
 
             matrices.popPose();
             matrices.pushPose();
