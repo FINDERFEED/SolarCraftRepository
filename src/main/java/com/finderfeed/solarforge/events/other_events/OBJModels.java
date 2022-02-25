@@ -21,6 +21,7 @@ import net.minecraftforge.fml.common.Mod;
 public class OBJModels {
 
     public static final ResourceLocation CRYSTAL_1 = new ResourceLocation(SolarForge.MOD_ID,"objmodels/crystal_1");
+    public static final ResourceLocation EXPLOSIVE_CRYSTAL = new ResourceLocation(SolarForge.MOD_ID,"objmodels/explosive_crystal");
 
     public static final ResourceLocation SOLAR_CORE_MODEL = new ResourceLocation("solarforge:objmodels/solar_core_modeljson");
     public static final ResourceLocation CRYSTAL_BOSS = new ResourceLocation("solarforge:objmodels/crystal_boss");
@@ -50,5 +51,6 @@ public class OBJModels {
         ForgeModelBakery.addSpecialModel(GET_OFF_MEEE);
         ForgeModelBakery.addSpecialModel(RIP_RAY_GENERATOR);
         ForgeModelBakery.addSpecialModel(CRYSTAL_1);
+        ForgeModelBakery.addSpecialModel(EXPLOSIVE_CRYSTAL);
     }
 }

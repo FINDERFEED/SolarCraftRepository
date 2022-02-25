@@ -21,6 +21,7 @@ import com.finderfeed.solarforge.registries.Tags;
 import com.finderfeed.solarforge.registries.attributes.AttributesRegistry;
 import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
 import com.finderfeed.solarforge.registries.effects.EffectsRegister;
+import com.finderfeed.solarforge.registries.features.configured.ConfiguredFeatures;
 import com.finderfeed.solarforge.registries.items.ItemsRegister;
 import com.finderfeed.solarforge.registries.sounds.Sounds;
 import com.finderfeed.solarforge.world_generation.features.FeaturesRegistry;
@@ -236,7 +237,9 @@ public class EventHandler {
             b.addFeature(GenerationStep.Decoration.TOP_LAYER_MODIFICATION,FeaturesRegistry.LUNAR_LILY_FEATURE_PLACEMENT);
         }
 
-
+        if (event.getCategory() == Biome.BiomeCategory.DESERT){
+            event.getGeneration().addFeature(GenerationStep.Decoration.TOP_LAYER_MODIFICATION, ConfiguredFeatures.SOLAR_FLOWER_FEATURE);
+        }
 
     }
 

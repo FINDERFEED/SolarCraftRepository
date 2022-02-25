@@ -59,6 +59,9 @@ public class EntityTypes {
     public static final RegistryObject<EntityType<RefractionCrystal>> REFRACTION_CRYSTAL = ENTITY_TYPE_REGISTER.register("refraction_crystal",()->
             EntityType.Builder.of(RefractionCrystal::new,MobCategory.CREATURE).sized(1,2.7f).build("refraction_crystal"));
 
+    public static final RegistryObject<EntityType<ExplosiveCrystal>> EXPLOSIVE_CRYSTAL = ENTITY_TYPE_REGISTER.register("explosive_crystal",()->
+            EntityType.Builder.of(ExplosiveCrystal::new,MobCategory.CREATURE).sized(1,2.7f).build("explosive_crystal"));
+
     public static final RegistryObject<EntityType<MineEntityCrystalBoss>> CRYSTAL_BOSS_MINE = ENTITY_TYPE_REGISTER.register("crystal_boss_mine",()->
             EntityType.Builder.of(MineEntityCrystalBoss::new,MobCategory.CREATURE).sized(1,0.3f).build("crystal_boss_mine"));
 
