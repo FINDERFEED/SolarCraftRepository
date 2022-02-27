@@ -29,7 +29,7 @@ public class RefractionCrystal extends Mob implements CrystalBossBuddy {
     }
 
 
-    public static AttributeSupplier.Builder createMobAttributes() {
+    public static AttributeSupplier.Builder createAttributes() {
         return LivingEntity.createLivingAttributes().add(Attributes.MAX_HEALTH,120).add(Attributes.ARMOR,10).add(Attributes.FOLLOW_RANGE);
     }
 
@@ -59,8 +59,11 @@ public class RefractionCrystal extends Mob implements CrystalBossBuddy {
         return false;
     }
 
+
+
     @Override
-    protected void doPush(Entity pEntity) {
+    protected void doPush(Entity entity) {
+        entity.setDeltaMovement(entity.position().add(0,entity.getBbHeight()/2,0).subtract(this.position().add(0,this.getBbHeight()/2,0)).normalize());
     }
 
     public boolean isDeploying(){

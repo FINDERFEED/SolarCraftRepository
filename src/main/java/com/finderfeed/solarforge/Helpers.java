@@ -3,6 +3,7 @@ package com.finderfeed.solarforge;
 import com.finderfeed.solarforge.capabilities.capability_mana.CapabilitySolarMana;
 import com.finderfeed.solarforge.capabilities.capability_mana.SolarForgeMana;
 import com.finderfeed.solarforge.entities.CrystalBossEntity;
+import com.finderfeed.solarforge.entities.RunicElementalBoss;
 import com.finderfeed.solarforge.events.my_events.ProgressionUnlockEvent;
 import com.finderfeed.solarforge.local_library.OwnedBlock;
 import com.finderfeed.solarforge.local_library.helpers.FinderfeedMathHelper;
@@ -22,6 +23,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.tags.Tag;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
@@ -548,7 +550,8 @@ public class Helpers {
     }
 
     public static boolean playerInBossfight(Player pl){
-        return !pl.level.getEntitiesOfClass(CrystalBossEntity.class,new AABB(-20,-20,-20,20,20,20).move(pl.position())).isEmpty();
+        return !pl.level.getEntitiesOfClass(LivingEntity.class,new AABB(-20,-20,-20,20,20,20)
+                .move(pl.position()),(l)-> l instanceof CrystalBossEntity || l instanceof RunicElementalBoss).isEmpty();
     }
 
 

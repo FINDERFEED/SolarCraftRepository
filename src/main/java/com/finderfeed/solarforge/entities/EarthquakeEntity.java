@@ -29,6 +29,7 @@ public class EarthquakeEntity extends Entity {
 
     public static final int ACTIVATION_TIME = 30;
     public static final int DEATH_TIME = 60;
+    public static final float MAX_LENGTH = 20;
     private float damage;
 
     public static final EntityDataAccessor<Vec3> DIRECTION_VECTOR = SynchedEntityData.defineId(EarthquakeEntity.class,
@@ -128,7 +129,7 @@ public class EarthquakeEntity extends Entity {
     @Override
     protected void defineSynchedData() {
         this.entityData.define(DIRECTION_VECTOR,new Vec3(1,0,1));
-        this.entityData.define(LENGTH,10f);
+        this.entityData.define(LENGTH,MAX_LENGTH);
     }
 
     @Override

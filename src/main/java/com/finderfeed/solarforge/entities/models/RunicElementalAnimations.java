@@ -53,6 +53,15 @@ public class RunicElementalAnimations {
         model.righthand.zRot = model.mrighthand.getInitRotZ() + (float)Math.toRadians(val*10);
     };
 
+    public static final RunicElementalModelAnimation SWING_HANDS_UP_FASTER = (boss,model,limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch,ticker)->{
+        InterpolatedValue value = boss.getOrCreateAnimationValue("swingHandsUp",new EaseInOut(0,1,8,2));
+        double val = value.getValue();
+        model.righthand.xRot = model.mrighthand.getInitRotX() - (float)Math.toRadians(val*180);
+        model.lefthand.xRot = model.mlefthand.getInitRotX() - (float)Math.toRadians(val*180);
+        model.lefthand.zRot = model.mlefthand.getInitRotZ() - (float)Math.toRadians(val*10);
+        model.righthand.zRot = model.mrighthand.getInitRotZ() + (float)Math.toRadians(val*10);
+    };
+
     public static final RunicElementalModelAnimation CAST_ELEMENT = (boss,model,limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch,ticker)->{
         float time = RenderingTools.getTime(boss.level, Minecraft.getInstance().getDeltaFrameTime());
         double v = 10*Math.cos(time/5);
@@ -162,9 +171,7 @@ public class RunicElementalAnimations {
 
 
     //ready to use animations
-    public static final RunicElementalModelAnimation REFRACTION_CRYSTALS = (boss, model, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, tick)->{
-        RunicElementalAnimations.FLY_UP.animate(boss,model,limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch,tick);
-    };
+    public static final RunicElementalModelAnimation REFRACTION_CRYSTALS = RunicElementalAnimations.FLY_UP::animate;
 
     public static final RunicElementalModelAnimation MAGIC_MISSILES = (boss,model,limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch,tick)->{
         if (tick <= 15){
@@ -203,7 +210,16 @@ public class RunicElementalAnimations {
             RunicElementalAnimations.DIRECT_ATTACK.animate(boss,model,limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch,tick);
         }
     };
-    public static final RunicElementalModelAnimation[] ANIMATIONS_IN_ORDER = {MAGIC_MISSILES, REFRACTION_CRYSTALS,SUNSTRIKES,EARTHQUAKES,VARTH_DADER};
+
+    public static final RunicElementalModelAnimation THROW_SUMMONING_ROCKETS = (boss,model,limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch,tick)-> {
+        if (tick <= 8){
+            RunicElementalAnimations.SWING_HANDS_UP_FASTER.animate(boss,model,limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch,tick);
+        }else{
+            RunicElementalAnimations.SWING_HANDS_DOWN.animate(boss,model,limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch,tick);
+        }
+    };
+
+    public static final RunicElementalModelAnimation[] ANIMATIONS_IN_ORDER = {MAGIC_MISSILES, REFRACTION_CRYSTALS,SUNSTRIKES,EARTHQUAKES,VARTH_DADER,THROW_SUMMONING_ROCKETS};
 
 
 }

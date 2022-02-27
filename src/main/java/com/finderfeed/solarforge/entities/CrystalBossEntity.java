@@ -609,7 +609,8 @@ class AntiCheat{
     public static void cancelBlockBreak(BlockEvent.BreakEvent event){
         Player pl = event.getPlayer();
         if (pl.level.dimension()  == EventHandler.RADIANT_LAND_KEY){
-            if (!pl.level.getEntitiesOfClass(CrystalBossEntity.class,CHECK_AABB.move(pl.position())).isEmpty()){
+            if (!pl.level.getEntitiesOfClass(LivingEntity.class,CHECK_AABB.move(pl.position()),
+                    (l)-> l instanceof CrystalBossEntity || l instanceof RunicElementalBoss).isEmpty()){
                 pl.sendMessage(new TranslatableComponent("player.boss_cant_break_block").withStyle(ChatFormatting.RED),pl.getUUID());
                 event.setCanceled(true);
             }
@@ -621,7 +622,8 @@ class AntiCheat{
         Entity pl = event.getEntity();
         if (pl != null) {
             if (pl.level.dimension() == EventHandler.RADIANT_LAND_KEY) {
-                if (!pl.level.getEntitiesOfClass(CrystalBossEntity.class, CHECK_AABB.move(pl.position())).isEmpty()) {
+                if (!pl.level.getEntitiesOfClass(LivingEntity.class, CHECK_AABB.move(pl.position()),
+                        (l)-> l instanceof CrystalBossEntity || l instanceof RunicElementalBoss).isEmpty()) {
                     pl.sendMessage(new TranslatableComponent("player.boss_cant_place_block").withStyle(ChatFormatting.RED), pl.getUUID());
                     event.setCanceled(true);
                 }
@@ -633,7 +635,8 @@ class AntiCheat{
         ServerPlayer player = event.getPlayer();
         AbstractAbility ability = event.getAbility();
         if ((player.level.dimension() == EventHandler.RADIANT_LAND_KEY) && EventHandler.ALLOWED_ABILITIES_DURING_BOSSFIGHT.contains(ability)) {
-            if (!player.level.getEntitiesOfClass(CrystalBossEntity.class, CHECK_AABB_BIGGER.move(player.position())).isEmpty()) {
+            if (!player.level.getEntitiesOfClass(LivingEntity.class, CHECK_AABB_BIGGER.move(player.position()),
+                    (l)-> l instanceof CrystalBossEntity || l instanceof RunicElementalBoss).isEmpty()) {
                 player.sendMessage(new TranslatableComponent("player.cant_use_ability_near_boss").withStyle(ChatFormatting.RED),player.getUUID());
                 event.setCanceled(true);
             }
@@ -645,13 +648,14 @@ class AntiCheat{
     public static void cancelExplosions(ExplosionEvent.Start event){
 
             if (event.getWorld().dimension() == EventHandler.RADIANT_LAND_KEY) {
-                if (!event.getWorld().getEntitiesOfClass(CrystalBossEntity.class, CHECK_AABB.move(event.getExplosion().getPosition())).isEmpty()) {
+                if (!event.getWorld().getEntitiesOfClass(LivingEntity.class, CHECK_AABB.move(event.getExplosion().getPosition()),
+                        (l)-> l instanceof CrystalBossEntity || l instanceof RunicElementalBoss).isEmpty()) {
                     LivingEntity ent = event.getExplosion().getSourceMob();
-                    if (ent != null) {
-                        ent.sendMessage(new TranslatableComponent("player.boss_cant_explode_blocks").withStyle(ChatFormatting.RED), ent.getUUID());
-
-                    }
-                    event.setCanceled(true);
+//                    if (ent != null) {
+//                        ent.sendMessage(new TranslatableComponent("player.boss_cant_explode_blocks").withStyle(ChatFormatting.RED), ent.getUUID());
+//
+//                    }
+                    event.getExplosion().getToBlow().clear();
                 }
             }
 

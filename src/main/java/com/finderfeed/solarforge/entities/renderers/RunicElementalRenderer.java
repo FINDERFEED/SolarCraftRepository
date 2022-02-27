@@ -4,8 +4,10 @@ import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.entities.CrystalBossEntity;
 import com.finderfeed.solarforge.entities.RunicElementalBoss;
 import com.finderfeed.solarforge.entities.models.RunicElementalModel;
+import com.finderfeed.solarforge.events.other_events.OBJModels;
 import com.finderfeed.solarforge.local_library.helpers.FinderfeedMathHelper;
 import com.finderfeed.solarforge.local_library.helpers.RenderingTools;
+import com.finderfeed.solarforge.local_library.other.EaseIn;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Matrix4f;
@@ -68,6 +70,17 @@ public class RunicElementalRenderer extends MobRenderer<RunicElementalBoss, Runi
                 renderRay(matrices, buffer.getBuffer(BEAM), RenderingTools.getTime(boss.level, pticks) / 60, boss.position().add(0, 1.75, 0),
                         entity.position().add(0, entity.getEyeHeight(entity.getPose()) * 0.8, 0), boss);
             }
+            matrices.popPose();
+        }
+
+        if (boss.getEntityData().get(RunicElementalBoss.UPDATE_PUSH_WAVE_TICKER) == 1){
+            float percent = 1-(float)(boss.getOrCreateAnimationValue("pushwave",new EaseIn(0,8,8)).getValue() + pticks)/8;
+            matrices.pushPose();
+            matrices.translate(0,1.5,0);
+            matrices.scale(2,2,2);
+            matrices.scale(1-percent,1-percent,1-percent);
+            RenderingTools.renderObjModel(OBJModels.GET_OFF_MEEE,matrices,buffer,light,OverlayTexture.NO_OVERLAY,(d)->{});
+
             matrices.popPose();
         }
         matrices.pushPose();

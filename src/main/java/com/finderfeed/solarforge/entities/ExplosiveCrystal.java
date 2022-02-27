@@ -5,12 +5,16 @@ import com.finderfeed.solarforge.client.particles.ParticleTypesRegistry;
 import com.finderfeed.solarforge.local_library.helpers.FinderfeedMathHelper;
 import com.finderfeed.solarforge.misc_things.CrystalBossBuddy;
 import com.finderfeed.solarforge.registries.sounds.Sounds;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -21,6 +25,7 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.network.NetworkHooks;
@@ -37,7 +42,7 @@ public class ExplosiveCrystal extends Mob implements CrystalBossBuddy {
     }
 
 
-    public static AttributeSupplier.Builder createMobAttributes() {
+    public static AttributeSupplier.Builder createAttributes() {
         return LivingEntity.createLivingAttributes().add(Attributes.MAX_HEALTH,200).add(Attributes.ARMOR,10).add(Attributes.FOLLOW_RANGE);
     }
 
@@ -51,22 +56,29 @@ public class ExplosiveCrystal extends Mob implements CrystalBossBuddy {
                     double[] xz = FinderfeedMathHelper.rotatePointDegrees(1.5*(1-(float)tickCount / DEPLOYING_TIME),0,i*60 + tickCount*5);
                     ClientHelpers.ParticleAnimationHelper.createParticle(ParticleTypesRegistry.SMALL_SOLAR_STRIKE_PARTICLE.get(),
                             position().x + xz[0],position().y + 1.5,position().z + xz[1],0,0,0,()->200 + level.random.nextInt(55),
-                            ()->200 + level.random.nextInt(55),()->0,0.3f);
+                            ()->0,()->0,0.3f);
                 }
             }
         }else{
             int seconds = getRemainingActivationSeconds();
-            if (seconds <= 0){
-                for (LivingEntity living : level.getEntitiesOfClass(LivingEntity.class,new AABB(-16,-16,-16,16,16,16).move(position()))){
-                    living.invulnerableTime = 0;
-                    living.hurt(DamageSource.MAGIC,40);
-                }
-                this.kill();
-            }else {
-                if (tickCount % 20 == 0 && !isDeploying()) {
-                    if (!level.getEntitiesOfClass(Player.class,
-                            new AABB(-16,-16,-16,16,16,16).move(position())).isEmpty()) {
-                        setActivationSecondsRemaining(getRemainingActivationSeconds() - 1);
+            if (!this.isDeadOrDying()) {
+                if (seconds <= 0) {
+                    for (LivingEntity living : level.getEntitiesOfClass(LivingEntity.class, new AABB(-32, -32, -32, 32, 32, 32).move(position()),
+                            (l)->!(l instanceof CrystalBossBuddy))) {
+                        living.invulnerableTime = 0;
+                        living.hurt(DamageSource.MAGIC, 40);
+
+                    }
+                    level.playSound(null,position().x,position().y + this.getBbHeight()/2,position().z, SoundEvents.GENERIC_EXPLODE, SoundSource.HOSTILE,1,1);
+                    level.addParticle(ParticleTypes.EXPLOSION_EMITTER,position().x,position().y + this.getBbHeight()/2,position().z,0,0,0);
+                    ((ServerLevel)level).sendParticles(ParticleTypes.EXPLOSION_EMITTER,position().x,position().y + this.getBbHeight()/2,position().z,1,0,0,0,0);
+                    this.kill();
+                } else {
+                    if (tickCount % 20 == 0 && !isDeploying()) {
+                        if (!level.getEntitiesOfClass(Player.class,
+                                new AABB(-32, -32, -32, 32, 32, 32).move(position())).isEmpty()) {
+                            setActivationSecondsRemaining(getRemainingActivationSeconds() - 1);
+                        }
                     }
                 }
             }
@@ -92,7 +104,8 @@ public class ExplosiveCrystal extends Mob implements CrystalBossBuddy {
     }
 
     @Override
-    protected void doPush(Entity pEntity) {
+    protected void doPush(Entity entity) {
+        entity.setDeltaMovement(entity.position().add(0,entity.getBbHeight()/2,0).subtract(this.position().add(0,this.getBbHeight()/2,0)).normalize());
     }
 
     public boolean isDeploying(){
@@ -164,7 +177,7 @@ public class ExplosiveCrystal extends Mob implements CrystalBossBuddy {
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
-        this.entityData.define(ACTIVATION_SECONDS_REMAINING,(byte)90);
+        this.entityData.define(ACTIVATION_SECONDS_REMAINING,(byte)30);
     }
 
     @Override

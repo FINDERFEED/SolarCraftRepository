@@ -125,45 +125,6 @@ public class RunicElementalModel extends EntityModel<RunicElementalBoss> {
 		if (attackType != 0) {
 			RunicElementalAnimations.ANIMATIONS_IN_ORDER[boss.getAttackType() - 1].animate(boss, this, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, tick);
 		}
-//		if (boss.getAttackType() == RunicElementalBoss.AttackType.MAGIC_MISSILES){
-//			if (tick <= 15){
-//				RunicElementalAnimations.PREPARE_DIRECT_ATTACK.animate(boss,this,limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch,tick);
-//			}else if (tick <= 205){
-//				RunicElementalAnimations.DIRECT_ATTACK.animate(boss,this,limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch,tick);
-//			}else{
-//				RunicElementalAnimations.PUT_DOWN_DIRECT_ATTACK.animate(boss,this,limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch,tick);
-//			}
-//		}else if (boss.getAttackType() == RunicElementalBoss.AttackType.FIREBALLS){
-//			if (tick <= 60){
-//				RunicElementalAnimations.FLY_UP.animate(boss,this,limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch,tick);
-//			}else {
-//				RunicElementalAnimations.SWING_HANDS.animate(boss,this,limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch,tick);
-//			}
-//		}else if (boss.getAttackType() == RunicElementalBoss.AttackType.SUNSTRIKES){
-//			if (tick <= 15){
-//				RunicElementalAnimations.SWING_HANDS_UP.animate(boss,this,limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch,tick);
-//			}else if (tick > 115){
-//				RunicElementalAnimations.SWING_HANDS_DOWN.animate(boss,this,limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch,tick);
-//			}else{
-//				RunicElementalAnimations.CAST_ELEMENT.animate(boss,this,limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch,tick);
-//			}
-//		}else if (boss.getAttackType() == RunicElementalBoss.AttackType.EARTHQUAKE){
-//			if (tick <= 15){
-//				RunicElementalAnimations.SWING_HANDS_UP.animate(boss,this,limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch,tick);
-//			}else if (tick > 105){
-//				RunicElementalAnimations.SWING_HANDS_DOWN.animate(boss,this,limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch,tick);
-//			}else{
-//				RunicElementalAnimations.CAST.animate(boss,this,limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch,tick);
-//			}
-//		}else if (boss.getAttackType() == RunicElementalBoss.AttackType.VARTH_DADER){
-//			if (tick <= 10){
-//				RunicElementalAnimations.PREPARE_DIRECT_ATTACK.animate(boss,this,limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch,tick);
-//			}else if (tick >= 105){
-//				RunicElementalAnimations.PUT_DOWN_DIRECT_ATTACK.animate(boss,this,limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch,tick);
-//			}else{
-//				RunicElementalAnimations.DIRECT_ATTACK.animate(boss,this,limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch,tick);
-//			}
-//		}
 	}
 
 	@Override

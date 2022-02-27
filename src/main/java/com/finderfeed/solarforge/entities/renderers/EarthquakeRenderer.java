@@ -33,17 +33,17 @@ public class EarthquakeRenderer extends EntityRenderer<EarthquakeEntity> {
         matrices.translate(0,0.01,0);
         RenderingTools.applyMovementMatrixRotations(matrices,entity.getDir());
         Matrix4f m = matrices.last().pose();
-        float percent = entity.getLength()/10;
+        float percent = entity.getLength()/EarthquakeEntity.MAX_LENGTH;
         int yellow = (int)Math.round(FinderfeedMathHelper.clamp(0,230*((entity.tickCount + pticks) /EarthquakeEntity.ACTIVATION_TIME),230));
-        RenderingTools.coloredBasicVertex(m,vertex,-0.5,0,0,0,1,255,255,255-yellow,255);
-        RenderingTools.coloredBasicVertex(m,vertex,-0.5,10*percent,0,1*percent,1,255,255,255-yellow,255);
-        RenderingTools.coloredBasicVertex(m,vertex,0.5,10*percent,0,1*percent,0,255,255,255-yellow,255);
-        RenderingTools.coloredBasicVertex(m,vertex,0.5,0,0,0,0,255,255,255-yellow,255);
+        RenderingTools.coloredBasicVertex(m,vertex,-0.5*(percent*2),0,0,0,1,255,255,255-yellow,255);
+        RenderingTools.coloredBasicVertex(m,vertex,-0.5*(percent*2),EarthquakeEntity.MAX_LENGTH*percent,0,1/*percent*/,1,255,255,255-yellow,255);
+        RenderingTools.coloredBasicVertex(m,vertex,0.5*(percent*2),EarthquakeEntity.MAX_LENGTH*percent,0,1/*percent*/,0,255,255,255-yellow,255);
+        RenderingTools.coloredBasicVertex(m,vertex,0.5*(percent*2),0,0,0,0,255,255,255-yellow,255);
 
-        RenderingTools.coloredBasicVertex(m,vertex,0.5,0,0,0,0,255,255,255-yellow,255);
-        RenderingTools.coloredBasicVertex(m,vertex,0.5,10*percent,0,1*percent,0,255,255,255-yellow,255);
-        RenderingTools.coloredBasicVertex(m,vertex,-0.5,10*percent,0,1*percent,1,255,255,255-yellow,255);
-        RenderingTools.coloredBasicVertex(m,vertex,-0.5,0,0,0,1,255,255,255-yellow,255);
+        RenderingTools.coloredBasicVertex(m,vertex,0.5*(percent*2),0,0,0,0,255,255,255-yellow,255);
+        RenderingTools.coloredBasicVertex(m,vertex,0.5*(percent*2),EarthquakeEntity.MAX_LENGTH*percent,0,1/*percent*/,0,255,255,255-yellow,255);
+        RenderingTools.coloredBasicVertex(m,vertex,-0.5*(percent*2),EarthquakeEntity.MAX_LENGTH*percent,0,1/*percent*/,1,255,255,255-yellow,255);
+        RenderingTools.coloredBasicVertex(m,vertex,-0.5*(percent*2),0,0,0,1,255,255,255-yellow,255);
         matrices.popPose();
         int delta = EarthquakeEntity.ACTIVATION_TIME - 3;
         if (entity.tickCount > delta) {
@@ -69,13 +69,13 @@ public class EarthquakeRenderer extends EntityRenderer<EarthquakeEntity> {
 //            vertex.vertex(m,0, 0, 0)            .color(255,255,0,alpha).endVertex();
             float t = alpha / 255f;
             RenderingTools.coloredBasicVertex(m, vertex, 0, 0, 0, 0, 1, 255, 255, 0, 217);
-            RenderingTools.coloredBasicVertex(m, vertex, 0, 10 * percent, 0, 1 * percent, 1, 255, 255, 0, 217);
-            RenderingTools.coloredBasicVertex(m, vertex,0, 10 * percent,  -3*t, 1 * percent, 0, 255, 255, 0, 217);
+            RenderingTools.coloredBasicVertex(m, vertex, 0, EarthquakeEntity.MAX_LENGTH * percent, 0, 1 * percent, 1, 255, 255, 0, 217);
+            RenderingTools.coloredBasicVertex(m, vertex,0, EarthquakeEntity.MAX_LENGTH * percent,  -3*t, 1 * percent, 0, 255, 255, 0, 217);
             RenderingTools.coloredBasicVertex(m, vertex,0, 0,  -3*t, 0, 0, 255, 255, 0, 255);
 
             RenderingTools.coloredBasicVertex(m, vertex,0, 0,  -3*t, 0, 0, 255, 255, 0, 217);
-            RenderingTools.coloredBasicVertex(m, vertex,0, 10 * percent,  -3*t, 1 * percent, 0, 255, 255, 0, 217);
-            RenderingTools.coloredBasicVertex(m, vertex, 0, 10 * percent, 0, 1 * percent, 1, 255, 255, 0, 217);
+            RenderingTools.coloredBasicVertex(m, vertex,0, EarthquakeEntity.MAX_LENGTH * percent,  -3*t, 1 * percent, 0, 255, 255, 0, 217);
+            RenderingTools.coloredBasicVertex(m, vertex, 0, EarthquakeEntity.MAX_LENGTH * percent, 0, 1 * percent, 1, 255, 255, 0, 217);
             RenderingTools.coloredBasicVertex(m, vertex, 0, 0, 0, 0, 1, 255, 255, 0, 217);
             matrices.popPose();
         }

@@ -55,7 +55,6 @@ import com.finderfeed.solarforge.world_generation.BiomesRegister;
 import com.finderfeed.solarforge.world_generation.features.FeaturesRegistry;
 import com.finderfeed.solarforge.world_generation.features.foliage_placers.FoliagePlacerRegistry;
 import com.finderfeed.solarforge.world_generation.features.trunk_placers.TrunkPlacersRegistry;
-import net.minecraft.world.entity.Mob;
 import net.minecraft.world.item.Tiers;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.Block;
@@ -284,12 +283,13 @@ public class SolarForge
             event.put(SOLAR_STRIKE_ENTITY_REG.get(),SolarStrikeEntity.createAttributes().build());
             event.put(EntityTypes.VILLAGER_SOLAR_MASTER.get(), VillagerSolarMaster.createAttributes().build());
             event.put(EntityTypes.CRYSTAL_BOSS.get(), CrystalBossEntity.createAttributes().build());
-            event.put(EntityTypes.RUNIC_ELEMENTAL_BOSS.get(), Mob.createMobAttributes().build());
+            event.put(EntityTypes.RUNIC_ELEMENTAL_BOSS.get(), RunicElementalBoss.createAttributes().build());
             event.put(EntityTypes.CRYSTAL_BOSS_SHIELDING_CRYSTAL.get(), ShieldingCrystalCrystalBoss.createAttributes().build());
             event.put(EntityTypes.CRYSTAL_BOSS_MINE.get(), MineEntityCrystalBoss.createAttributes().build());
             event.put(EntityTypes.RIP_RAY_GENERATOR.get(), RipRayGenerator.createAttributes().build());
-            event.put(EntityTypes.REFRACTION_CRYSTAL.get(), RefractionCrystal.createMobAttributes().build());
-            event.put(EntityTypes.EXPLOSIVE_CRYSTAL.get(), ExplosiveCrystal.createMobAttributes().build());
+            event.put(EntityTypes.REFRACTION_CRYSTAL.get(), RefractionCrystal.createAttributes().build());
+            event.put(EntityTypes.EXPLOSIVE_CRYSTAL.get(), ExplosiveCrystal.createAttributes().build());
+            event.put(EntityTypes.RUNIC_WARRIOR.get(), RunicWarrior.createAttributes().build());
         }
 
         @SubscribeEvent
