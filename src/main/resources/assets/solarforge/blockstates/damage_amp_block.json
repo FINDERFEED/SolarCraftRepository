@@ -1,0 +1,5 @@
+{
+  "variants": {
+    "": { "model": "solarforge:block/damage_amp_block" }
+  }
+}

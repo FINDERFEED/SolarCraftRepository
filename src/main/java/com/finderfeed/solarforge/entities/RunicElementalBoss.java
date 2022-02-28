@@ -2,6 +2,7 @@ package com.finderfeed.solarforge.entities;
 
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.local_library.entities.BossAttackChain;
+import com.finderfeed.solarforge.local_library.helpers.CompoundNBTHelper;
 import com.finderfeed.solarforge.local_library.other.InterpolatedValue;
 import com.finderfeed.solarforge.magic.projectiles.FallingMagicMissile;
 import com.finderfeed.solarforge.magic.projectiles.RunicWarriorSummoningRocket;
@@ -59,6 +60,8 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
     public static final EntityDataAccessor<Byte> UPDATE_PUSH_WAVE_TICKER = SynchedEntityData.defineId(RunicElementalBoss.class, EntityDataSerializers.BYTE);
     public int pushWaveTicker = 0;
     public boolean isWaitingForPlayerToDestroyExplosiveCrystals = false;
+
+    private BlockPos summoningPos = null;
 
     public RunicElementalBoss(EntityType<? extends Mob> p_21368_, Level p_21369_) {
         super(p_21368_, p_21369_);
@@ -357,7 +360,7 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
     @Override
     public boolean save(CompoundTag tag) {
         BOSS_ATTACK_CHAIN.save(tag);
-
+        CompoundNBTHelper.writeBlockPos("sumPos",summoningPos,tag);
         tag.putBoolean("waiting",isWaitingForPlayerToDestroyExplosiveCrystals);
         return super.save(tag);
     }
@@ -367,6 +370,7 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
     public void load(CompoundTag tag) {
         BOSS_ATTACK_CHAIN.load(tag);
         this.isWaitingForPlayerToDestroyExplosiveCrystals = tag.getBoolean("waiting");
+        this.summoningPos = CompoundNBTHelper.getBlockPos("sumPos",tag);
         super.load(tag);
     }
 
@@ -404,7 +408,13 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
         });
     }
 
+    public void setSummoningPos(BlockPos summoningPos) {
+        this.summoningPos = summoningPos;
+    }
 
+    public BlockPos getSummoningPos() {
+        return summoningPos;
+    }
 
     public static class AttackType{
         public static final int MAGIC_MISSILES = 1;
