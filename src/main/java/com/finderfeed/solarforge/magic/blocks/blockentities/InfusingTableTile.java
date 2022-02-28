@@ -62,7 +62,18 @@ public class InfusingTableTile extends BlockEntity implements OwnedBlock {
                         tile.recipeTime++;
                     }else{
                         ItemStack stack = recipe.getOutput().copy();
-
+                        if (stack.is(SolarForge.SOLAR_FORGE_ITEM.get()) || stack.is(SolarForge.INFUSER_ITEM.get())) {
+                            if (tile.getOwner() != null) {
+                                Player player = world.getPlayerByUUID(tile.getOwner());
+                                if (player != null) {
+                                    if (stack.is(SolarForge.SOLAR_FORGE_ITEM.get())) {
+                                        Helpers.fireProgressionEvent(player, Progression.CRAFT_SOLAR_FORGE);
+                                    }else if (stack.is(SolarForge.INFUSER_ITEM.get())){
+                                        Helpers.fireProgressionEvent(player,Progression.SOLAR_INFUSER);
+                                    }
+                                }
+                            }
+                        }
                         for (int i = 0; i < 9;i++){
                             handler.extractItem(i,maxOutput,false);
                         }
@@ -95,6 +106,7 @@ public class InfusingTableTile extends BlockEntity implements OwnedBlock {
         }
 
     }
+
 
     public void clientTick(){
         if (isRecipeInProgress() && (level.getGameTime() % 2 == 0) ){

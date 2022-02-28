@@ -1,5 +1,7 @@
 package com.finderfeed.solarforge.misc_things;
 
+import com.finderfeed.solarforge.ClientHelpers;
+import com.finderfeed.solarforge.client.particles.ParticleTypesRegistry;
 import com.finderfeed.solarforge.entities.EarthquakeEntity;
 import com.finderfeed.solarforge.magic.blocks.blockentities.RuneEnergyPylonTile;
 import com.finderfeed.solarforge.magic.projectiles.SolarFireballProjectile;
@@ -44,14 +46,7 @@ public class SolarcraftDebugStick extends Item {
         Level world = ctx.getLevel();
         BlockPos pos = ctx.getClickedPos();
 
-        if (!world.isClientSide){
-            Vec3 dir = ctx.getPlayer().getLookAngle().multiply(1,0,1).normalize();
-            Vec3 po = ctx.getPlayer().position().add(dir);
-            EarthquakeEntity earthquake = new EarthquakeEntity(world,dir,10);
-            earthquake.setPos(po);
-            earthquake.setDamage(20);
-            world.addFreshEntity(earthquake);
-        }
+
         if (!ctx.getLevel().isClientSide && (ctx.getLevel().getBlockEntity(ctx.getClickedPos()) instanceof DebugTarget target) && ctx.getPlayer() != null && !ctx.getPlayer().isCrouching()){
             target.getDebugStrings().forEach((string)->{
                 ctx.getPlayer().sendMessage(new TextComponent(string),ctx.getPlayer().getUUID());

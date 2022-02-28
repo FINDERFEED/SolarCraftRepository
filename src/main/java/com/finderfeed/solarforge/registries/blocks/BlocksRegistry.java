@@ -128,6 +128,14 @@ public class BlocksRegistry {
     });
 
 
+    public static final RegistryObject<Block> DAMAGE_AMPLIFICATION_BLOCK = BLOCKS.register("damage_amp_block",
+            ()->new AmplificationBlock(BlockBehaviour.Properties.copy(Blocks.STONE),()->MobEffects.DAMAGE_BOOST));
+    public static final RegistryObject<Block> ARMOR_AMPLIFICATION_BLOCK = BLOCKS.register("armor_amp_block",
+            ()->new AmplificationBlock(BlockBehaviour.Properties.copy(Blocks.STONE),()->MobEffects.DAMAGE_BOOST));
+    public static final RegistryObject<Block> REGENERATION_AMPLIFICATION_BLOCK = BLOCKS.register("regen_amp_block",
+            ()->new AmplificationBlock(BlockBehaviour.Properties.copy(Blocks.STONE),()->MobEffects.DAMAGE_BOOST));
+
+
     public static final RegistryObject<RotatedPillarBlock> RADIANT_LOG = BLOCKS.register("radiant_log",()-> new RotatedPillarFlammableBlock(BlockBehaviour.Properties.copy(Blocks.OAK_LOG),20));
     public static final RegistryObject<Block> RADIANT_PLANKS = BLOCKS.register("radiant_planks",()-> new FlammableBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS),20));
     public static final RegistryObject<Block> RADIANT_WOOD_STAIRS = BLOCKS.register("radiant_stairs",()-> new StairBlock(()-> RADIANT_PLANKS.get().defaultBlockState(),BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS)));
