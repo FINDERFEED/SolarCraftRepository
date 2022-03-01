@@ -66,7 +66,7 @@ public class ExplosiveCrystal extends Mob implements CrystalBossBuddy {
                     for (LivingEntity living : level.getEntitiesOfClass(LivingEntity.class, new AABB(-32, -32, -32, 32, 32, 32).move(position()),
                             (l)->!(l instanceof CrystalBossBuddy))) {
                         living.invulnerableTime = 0;
-                        living.hurt(DamageSource.MAGIC, 40);
+                        living.hurt(DamageSource.MAGIC, 60);
 
                     }
                     level.playSound(null,position().x,position().y + this.getBbHeight()/2,position().z, SoundEvents.GENERIC_EXPLODE, SoundSource.HOSTILE,1,1);

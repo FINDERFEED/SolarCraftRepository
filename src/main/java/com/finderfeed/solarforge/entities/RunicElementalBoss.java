@@ -10,17 +10,23 @@ import com.finderfeed.solarforge.misc_things.CrystalBossBuddy;
 import com.finderfeed.solarforge.registries.attributes.AttributesRegistry;
 import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
 import com.finderfeed.solarforge.registries.entities.EntityTypes;
+import com.finderfeed.solarforge.registries.sounds.Sounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.BossEvent;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
@@ -34,6 +40,7 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.NetworkHooks;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -42,6 +49,7 @@ import java.util.Map;
 public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
 
 
+    public ServerBossEvent BOSS_INFO = new ServerBossEvent(this.getDisplayName(), BossEvent.BossBarColor.RED, BossEvent.BossBarOverlay.NOTCHED_20);
     public static final String MAGIC_MISSILES_ATTACK = "magic_missiles";
 
     private Map<String,InterpolatedValue> ANIMATION_VALUES = new HashMap<>();
@@ -194,7 +202,7 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
             Vec3 pos = position().add(dir);
             EarthquakeEntity earthquake = new EarthquakeEntity(level, dir, EarthquakeEntity.MAX_LENGTH);
             earthquake.setPos(pos);
-            earthquake.setDamage(20 + damageBonus);
+            earthquake.setDamage(30 + damageBonus);
             level.addFreshEntity(earthquake);
 
         }
@@ -204,7 +212,7 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
                 Vec3 p = crystal.position().add(d);
                 EarthquakeEntity e = new EarthquakeEntity(level, d, EarthquakeEntity.MAX_LENGTH);
                 e.setPos(p);
-                e.setDamage(10 + damageBonus);
+                e.setDamage(20 + damageBonus);
                 level.addFreshEntity(e);
             }
         }
@@ -305,7 +313,7 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
     }
 
     public float getDamageBonus(){
-        return level.getBlockState(getOnPos().below()).is(BlocksRegistry.DAMAGE_AMPLIFICATION_BLOCK.get()) ? 7 : 0;
+        return level.getBlockState(getOnPos().below()).is(BlocksRegistry.DAMAGE_AMPLIFICATION_BLOCK.get()) ? 10 : 0;
     }
 
     private void removeDuplicatePositions(List<BlockPos> positions){
@@ -325,6 +333,64 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
         return this.entityData.get(DATA_ID_ATTACK_TARGET);
     }
 
+
+    @Override
+    protected void doPush(Entity entity) {
+        entity.setDeltaMovement(entity.position().add(0,entity.getBbHeight()/2,0).subtract(this.position().add(0,this.getBbHeight()/2,0)).normalize());
+    }
+
+    @Override
+    public boolean isPushable() {
+        return false;
+    }
+
+    @Override
+    public boolean canBeCollidedWith() {
+        return false;
+    }
+
+    @Override
+    public void knockback(double p_147241_, double p_147242_, double p_147243_) {}
+
+    @Override
+    protected void customServerAiStep() {
+        super.customServerAiStep();
+        BOSS_INFO.setProgress(this.getHealth()/this.getMaxHealth());
+    }
+
+    @Override
+    public void stopSeenByPlayer(ServerPlayer pl) {
+        BOSS_INFO.removePlayer(pl);
+        super.stopSeenByPlayer(pl);
+    }
+
+    @Override
+    public void startSeenByPlayer(ServerPlayer pl) {
+        BOSS_INFO.addPlayer(pl);
+        super.startSeenByPlayer(pl);
+    }
+
+    @Override
+    public boolean canBeAffected(MobEffectInstance effect) {
+        return effect.getEffect() == MobEffects.DAMAGE_RESISTANCE;
+    }
+
+
+    @Nullable
+    @Override
+    protected SoundEvent getDeathSound() {
+        return Sounds.CRYSTAL_HIT.get();
+    }
+
+    @Override
+    public boolean canChangeDimensions() {
+        return false;
+    }
+
+    @Override
+    public boolean canCollideWith(Entity p_20303_) {
+        return false;
+    }
 
 
     @Override

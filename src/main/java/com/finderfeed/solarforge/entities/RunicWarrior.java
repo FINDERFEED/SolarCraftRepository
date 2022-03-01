@@ -20,7 +20,7 @@ public class RunicWarrior extends PathfinderMob implements CrystalBossBuddy {
 
     public static AttributeSupplier.Builder createAttributes() {
         return LivingEntity.createLivingAttributes().add(Attributes.FOLLOW_RANGE, 30.0D).add(Attributes.ATTACK_KNOCKBACK)
-                .add(Attributes.ATTACK_DAMAGE,10).add(Attributes.MAX_HEALTH,50);
+                .add(Attributes.ATTACK_DAMAGE,20).add(Attributes.MAX_HEALTH,50).add(Attributes.ARMOR,5);
     }
 
 
@@ -36,5 +36,10 @@ public class RunicWarrior extends PathfinderMob implements CrystalBossBuddy {
     @Override
     public boolean causeFallDamage(float p_147187_, float p_147188_, DamageSource p_147189_) {
         return false;
+    }
+
+    @Override
+    public boolean fireImmune() {
+        return true;
     }
 }

@@ -62,31 +62,13 @@ public class InfuserTileEntity extends AbstractRunicEnergyContainer implements  
     public int CURRENT_PROGRESS;
     public boolean RECIPE_IN_PROGRESS = false;
     public boolean requiresEnergy = false;
-//    public NonNullList<ItemStack> items = NonNullList.withSize(10,ItemStack.EMPTY);
+    private InfusingRecipe currentRecipe;
+
 
     public InfuserTileEntity(BlockPos p_155630_, BlockState p_155631_) {
         super(SolarForge.INFUSING_STAND_BLOCKENTITY.get(), p_155630_, p_155631_);
     }
 
-//    @Override
-//    protected Component getDefaultName() {
-//        return new TranslatableComponent("container.solarforge.infusing_stand");
-//    }
-//
-//    @Override
-//    protected AbstractContainerMenu createMenu(int x, Inventory inv) {
-//        return new InfuserContainer(x,inv,this);
-//    }
-//
-//    @Override
-//    protected NonNullList<ItemStack> getItems() {
-//        return this.items;
-//    }
-//
-//    @Override
-//    protected void setItems(NonNullList<ItemStack> items) {
-//        this.items = items;
-//    }
 
     @Nullable
     public ItemStackHandler getInventory(){
@@ -155,10 +137,7 @@ public class InfuserTileEntity extends AbstractRunicEnergyContainer implements  
         INFUSING_TIME = cmp.getInt("infusing_time");
         CURRENT_PROGRESS = cmp.getInt("recipe_progress");
         RECIPE_IN_PROGRESS = cmp.getBoolean("is_recipe_in_progress");
-//        this.items = NonNullList.withSize(getContainerSize(), ItemStack.EMPTY);
-//        if (!this.tryLoadLootTable(cmp)) {
-//            ContainerHelper.loadAllItems(cmp, this.items);
-//        }
+
     }
 
     @Override
@@ -191,13 +170,25 @@ public class InfuserTileEntity extends AbstractRunicEnergyContainer implements  
             if (inv == null) return;
             tile.updateStacksInPhantomSlots();
             if (tile.RECIPE_IN_PROGRESS) {
-                Optional<InfusingRecipe> recipe = tile.level.getRecipeManager().getRecipeFor(SolarForge.INFUSING_RECIPE_TYPE, new PhantomInventory(inv), world);
+                Optional<InfusingRecipe> recipe;
+                if (tile.currentRecipe == null){
+                    recipe = tile.level.getRecipeManager().getRecipeFor(SolarForge.INFUSING_RECIPE_TYPE, new PhantomInventory(inv), world);
+                    recipe.ifPresent(infusingRecipe -> tile.currentRecipe = infusingRecipe);
+                }else{
+                    if (!tile.currentRecipe.matches(new PhantomInventory(inv),world)){
+                        recipe = Optional.empty();
+                    }else{
+                        recipe = Optional.of(tile.currentRecipe);
+                    }
+                }
+
 
                 if (recipe.isEmpty()) {
                     tile.RECIPE_IN_PROGRESS = false;
                     tile.CURRENT_PROGRESS = 0;
                     tile.INFUSING_TIME = 0;
                     tile.requiresEnergy = false;
+                    tile.currentRecipe = null;
                     tile.onTileRemove();
                     tile.clearWays();
                 }
@@ -226,18 +217,17 @@ public class InfuserTileEntity extends AbstractRunicEnergyContainer implements  
                     }
 
                 } else {
+                    tile.currentRecipe = null;
                     tile.RECIPE_IN_PROGRESS = false;
                     tile.CURRENT_PROGRESS = 0;
                     tile.INFUSING_TIME = 0;
                     tile.requiresEnergy = false;
+                    tile.currentRecipe = null;
                     tile.onTileRemove();
                     tile.clearWays();
                 }
             }
 
-//                if (world.getGameTime() % 5 == 0) {
-//                    sendUpdatePackets(world, tile);
-//                }
         }else{
             recipeFinalizationParticles(tile,pos,world);
             doParticlesAnimation(world,tile);
@@ -333,11 +323,6 @@ public class InfuserTileEntity extends AbstractRunicEnergyContainer implements  
         return Helpers.createTilePacket(this,tag);
     }
 
-//    private static void sendUpdatePackets(Level world, InfuserTileEntity tile){
-//        ItemStack[] arr = {tile.getItem(0),tile.getItem(1),tile.getItem(2),tile.getItem(3),tile.getItem(4),tile.getItem(5),tile.getItem(6),tile.getItem(7),tile.getItem(8)};
-//        SolarForgePacketHandler.INSTANCE.send(PacketDistributor.NEAR.with(PacketDistributor.TargetPoint.p(tile.worldPosition.getX(),tile.worldPosition.getY(),tile.worldPosition.getZ(),20,tile.level.dimension())),
-//                new UpdateStacksOnClientTable(arr,tile.getItem(9),tile.worldPosition,tile.RECIPE_IN_PROGRESS));
-//    }
 
 
     private void resetCatalysts(InfusingRecipe recipe){
@@ -384,6 +369,7 @@ public class InfuserTileEntity extends AbstractRunicEnergyContainer implements  
         tile.getItem(tile.inputSlot()).grow(-count);
         tile.getInventory().setStackInSlot(tile.outputSlot(), result);
         tile.RECIPE_IN_PROGRESS = false;
+        tile.currentRecipe = null;
         tile.INFUSING_TIME = 0;
         tile.CURRENT_PROGRESS = 0;
         tile.deleteStacksInPhantomSlots(count);
