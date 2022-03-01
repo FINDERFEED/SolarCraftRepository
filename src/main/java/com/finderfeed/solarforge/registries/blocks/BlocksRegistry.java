@@ -117,7 +117,7 @@ public class BlocksRegistry {
         }
 
         @Override
-        public boolean isBonemealSuccess(Level p_57330_, Random p_57331_, BlockPos p_57332_, BlockState p_57333_) {
+        public boolean isBonemealSuccess(Level level, Random p_57331_, BlockPos p_57332_, BlockState p_57333_) {
             return false;
         }
 

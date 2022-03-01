@@ -8,6 +8,7 @@ import com.finderfeed.solarforge.magic.projectiles.FallingMagicMissile;
 import com.finderfeed.solarforge.magic.projectiles.RunicWarriorSummoningRocket;
 import com.finderfeed.solarforge.misc_things.CrystalBossBuddy;
 import com.finderfeed.solarforge.registries.attributes.AttributesRegistry;
+import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
 import com.finderfeed.solarforge.registries.entities.EntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -18,6 +19,8 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
@@ -26,6 +29,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.NetworkHooks;
@@ -104,6 +108,15 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
                     pushWaveTicker = 8;
                 }
             }
+
+            if (level.getGameTime() % 20 == 0){
+                Block b = getBlockBelow();
+                if (b == BlocksRegistry.REGENERATION_AMPLIFICATION_BLOCK.get()){
+                    this.heal(3);
+                }else if(b == BlocksRegistry.ARMOR_AMPLIFICATION_BLOCK.get()){
+                    this.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE,100,0));
+                }
+            }
         }
         if (level.isClientSide){
 
@@ -150,10 +163,11 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
         this.setAttackType(AttackType.SUNSTRIKES);
         if (BOSS_ATTACK_CHAIN.getTicker() >= 15 && BOSS_ATTACK_CHAIN.getTicker() <= 115){
             if (BOSS_ATTACK_CHAIN.getTicker() % 9 == 0){
+                float damageBonus = getDamageBonus();
                 for (Player player : level.getEntitiesOfClass(Player.class,new AABB(-16,-8,-16,16,8,16).move(position()))){
                     SunstrikeEntity sunstrike = new SunstrikeEntity(EntityTypes.SUNSTRIKE.get(),level);
                     Vec3 playerSpeed = player.getLookAngle().multiply(1f,0,1f).normalize().multiply(0.5,0,0.5);
-                    sunstrike.setDamage(20);
+                    sunstrike.setDamage(20 + damageBonus);
                     sunstrike.setPos(player.position().add(playerSpeed));
                     level.addFreshEntity(sunstrike);
 
@@ -162,7 +176,7 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
                         List<BlockPos> positions = Helpers.getValidSpawningPositionsAround(level,this.getOnPos(),12,2,2);
                         for (RefractionCrystal crystal : crystals){
                             SunstrikeEntity s = new SunstrikeEntity(EntityTypes.SUNSTRIKE.get(),level);
-                            s.setDamage(10);
+                            s.setDamage(10 + damageBonus);
                             s.setPos(Helpers.getBlockCenter(positions.get(level.random.nextInt(positions.size())).above()).add(0,-0.5,0));
                             level.addFreshEntity(s);
                         }
@@ -174,12 +188,13 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
 
     public void earthquake(){
         this.setAttackType(AttackType.EARTHQUAKE);
+        float damageBonus = getDamageBonus();
         for (int i = 0; i < 4; i++) {
             Vec3 dir = new Vec3(level.random.nextDouble() * 2 - 1, 0, level.random.nextDouble() * 2 - 1).normalize();
             Vec3 pos = position().add(dir);
             EarthquakeEntity earthquake = new EarthquakeEntity(level, dir, EarthquakeEntity.MAX_LENGTH);
             earthquake.setPos(pos);
-            earthquake.setDamage(20);
+            earthquake.setDamage(20 + damageBonus);
             level.addFreshEntity(earthquake);
 
         }
@@ -189,7 +204,7 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
                 Vec3 p = crystal.position().add(d);
                 EarthquakeEntity e = new EarthquakeEntity(level, d, EarthquakeEntity.MAX_LENGTH);
                 e.setPos(p);
-                e.setDamage(10);
+                e.setDamage(10 + damageBonus);
                 level.addFreshEntity(e);
             }
         }
@@ -204,7 +219,7 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
             this.setVarthDaderTarget(player.getId());
             Helpers.setServerPlayerSpeed((ServerPlayer) player, new Vec3(0, 4 / 90f, 0));
             if (BOSS_ATTACK_CHAIN.getTicker() % 10 == 0) {
-                player.hurt(DamageSource.MAGIC, 3);
+                player.hurt(DamageSource.MAGIC, 3 + getDamageBonus() / 2f);
             }
         }
     }
@@ -270,6 +285,29 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
         }
     }
 
+    public void teleport(){
+        List<BlockPos> positions = getTeleportPositions();
+
+    }
+
+    public List<BlockPos> getTeleportPositions(){
+        ArrayList<BlockPos> p = new ArrayList<>();
+        BlockPos initPos = summoningPos != null ? summoningPos : getOnPos();
+        p.add(initPos.north(5));
+        p.add(initPos.south(3).east(4));
+        p.add(initPos.south(3).west(4));
+        p.remove(getOnPos());
+        return p;
+    }
+
+    public Block getBlockBelow(){
+        return level.getBlockState(getOnPos().below()).getBlock();
+    }
+
+    public float getDamageBonus(){
+        return level.getBlockState(getOnPos().below()).is(BlocksRegistry.DAMAGE_AMPLIFICATION_BLOCK.get()) ? 7 : 0;
+    }
+
     private void removeDuplicatePositions(List<BlockPos> positions){
         for (RefractionCrystal crystal : getRefractionCrystalsAround()){
             positions.remove(crystal.getOnPos());
@@ -309,7 +347,6 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
         this.setAttackTick(0);
         this.setVarthDaderTarget(0);
         AABB box = new AABB(-3,-3,-3,3,3,3).move(position());
-
         this.entityData.set(UPDATE_PUSH_WAVE_TICKER,(byte)1);
         for (LivingEntity living : level.getEntitiesOfClass(LivingEntity.class,box,(l)->!(l instanceof CrystalBossBuddy))){
             Vec3 speed = position().subtract(living.position()).normalize().reverse().multiply(2,2,2).add(0,0.2,0);

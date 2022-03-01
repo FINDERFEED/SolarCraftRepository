@@ -645,12 +645,12 @@ class AntiCheat{
 
 
     @SubscribeEvent
-    public static void cancelExplosions(ExplosionEvent.Start event){
+    public static void cancelExplosions(ExplosionEvent.Detonate event){
 
             if (event.getWorld().dimension() == EventHandler.RADIANT_LAND_KEY) {
                 if (!event.getWorld().getEntitiesOfClass(LivingEntity.class, CHECK_AABB.move(event.getExplosion().getPosition()),
                         (l)-> l instanceof CrystalBossEntity || l instanceof RunicElementalBoss).isEmpty()) {
-                    LivingEntity ent = event.getExplosion().getSourceMob();
+
 //                    if (ent != null) {
 //                        ent.sendMessage(new TranslatableComponent("player.boss_cant_explode_blocks").withStyle(ChatFormatting.RED), ent.getUUID());
 //
