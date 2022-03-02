@@ -54,7 +54,7 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
 
     private Map<String,InterpolatedValue> ANIMATION_VALUES = new HashMap<>();
     public BossAttackChain BOSS_ATTACK_CHAIN = new BossAttackChain.Builder()
-            .addAttack("teleport",this::teleport,1,1,0)
+            .addAttack("teleport",this::teleport,5,1,0)
             .addAttack(MAGIC_MISSILES_ATTACK,this::magicMissilesAttack,220,10,1)
             .addAttack("sunstrikes",this::sunstrikes,130,1,3)
             .addAttack("earthquake",this::earthquake,120,30,4)
@@ -295,15 +295,16 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
     }
 
     public void teleport(){
-        List<BlockPos> positions = getTeleportPositions();
-        BlockPos rnd = positions.get(level.random.nextInt(positions.size()));
-        this.setPos(Helpers.getBlockCenter(rnd).add(0,-0.5,0));
-
+        if (BOSS_ATTACK_CHAIN.getTicker() == 3) {
+            List<BlockPos> positions = getTeleportPositions();
+            BlockPos rnd = positions.get(level.random.nextInt(positions.size()));
+            this.setPos(rnd.getX() + 0.5,rnd.getY(),rnd.getZ() + 0.5);
+        }
     }
 
     public List<BlockPos> getTeleportPositions(){
         ArrayList<BlockPos> p = new ArrayList<>();
-        BlockPos initPos = summoningPos != null ? summoningPos : getOnPos();
+        BlockPos initPos = summoningPos != null ? summoningPos : getOnPos().above();
         p.add(initPos.north(5));
         p.add(initPos.south(3).east(4));
         p.add(initPos.south(3).west(4));
@@ -312,11 +313,11 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
     }
 
     public Block getBlockBelow(){
-        return level.getBlockState(getOnPos().below()).getBlock();
+        return level.getBlockState(getOnPos()).getBlock();
     }
 
     public float getDamageBonus(){
-        return level.getBlockState(getOnPos().below()).is(BlocksRegistry.DAMAGE_AMPLIFICATION_BLOCK.get()) ? 10 : 0;
+        return level.getBlockState(getOnPos()).is(BlocksRegistry.DAMAGE_AMPLIFICATION_BLOCK.get()) ? 10 : 0;
     }
 
     private void removeDuplicatePositions(List<BlockPos> positions){
@@ -476,7 +477,9 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
     public void load(CompoundTag tag) {
         BOSS_ATTACK_CHAIN.load(tag);
         this.isWaitingForPlayerToDestroyExplosiveCrystals = tag.getBoolean("waiting");
-        this.summoningPos = CompoundNBTHelper.getBlockPos("sumPos",tag);
+        if (tag.contains("sumPos1")) {
+            this.summoningPos = CompoundNBTHelper.getBlockPos("sumPos", tag);
+        }
         super.load(tag);
     }
 
