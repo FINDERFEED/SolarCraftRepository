@@ -298,7 +298,7 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
         if (BOSS_ATTACK_CHAIN.getTicker() == 3) {
             List<BlockPos> positions = getTeleportPositions();
             BlockPos rnd = positions.get(level.random.nextInt(positions.size()));
-            this.setPos(rnd.getX() + 0.5,rnd.getY(),rnd.getZ() + 0.5);
+            this.teleportTo(rnd.getX() + 0.5,rnd.getY(),rnd.getZ() + 0.5);
         }
     }
 
@@ -467,7 +467,9 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
     @Override
     public boolean save(CompoundTag tag) {
         BOSS_ATTACK_CHAIN.save(tag);
-        CompoundNBTHelper.writeBlockPos("sumPos",summoningPos,tag);
+        if (summoningPos != null) {
+            CompoundNBTHelper.writeBlockPos("sumPos", summoningPos, tag);
+        }
         tag.putBoolean("waiting",isWaitingForPlayerToDestroyExplosiveCrystals);
         return super.save(tag);
     }

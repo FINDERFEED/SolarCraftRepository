@@ -77,7 +77,7 @@ public class RunicElementalModel extends EntityModel<RunicElementalBoss> {
 		.texOffs(22, 10).addBox(-3.505F, -0.8366F, -2.6734F, 7.0F, 3.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offset(0.005F, -4.1634F, 0.6484F));
 
 		PartDefinition cube_r2 = head.addOrReplaceChild("cube_r2", CubeListBuilder.create().texOffs(9, 18).addBox(0.025F, -0.75F, -2.25F, 0.0F, 2.0F, 4.0F, new CubeDeformation(0.0F))
-		.texOffs(22, 13).addBox(-5.0F, -0.75F, -2.25F, 0.0F, 2.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(2.495F, -2.8366F, 1.3266F, 0.5236F, 0.0F, 0.0F));
+		.texOffs(22, 13).addBox(-5.025F, -0.75F, -2.25F, 0.0F, 2.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(2.495F, -2.8366F, 1.3266F, 0.5236F, 0.0F, 0.0F));
 
 		PartDefinition lefthand = partdefinition.addOrReplaceChild("lefthand", CubeListBuilder.create().texOffs(0, 22).addBox(-1.5F, -4.5F, -1.5F, 3.0F, 17.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offset(9.5F, 5.5F, -0.5F));
 
