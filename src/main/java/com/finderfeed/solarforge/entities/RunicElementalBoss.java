@@ -54,6 +54,7 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
 
     private Map<String,InterpolatedValue> ANIMATION_VALUES = new HashMap<>();
     public BossAttackChain BOSS_ATTACK_CHAIN = new BossAttackChain.Builder()
+            .addAttack("teleport",this::teleport,1,1,0)
             .addAttack(MAGIC_MISSILES_ATTACK,this::magicMissilesAttack,220,10,1)
             .addAttack("sunstrikes",this::sunstrikes,130,1,3)
             .addAttack("earthquake",this::earthquake,120,30,4)
@@ -295,6 +296,8 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
 
     public void teleport(){
         List<BlockPos> positions = getTeleportPositions();
+        BlockPos rnd = positions.get(level.random.nextInt(positions.size()));
+        this.setPos(Helpers.getBlockCenter(rnd).add(0,-0.5,0));
 
     }
 

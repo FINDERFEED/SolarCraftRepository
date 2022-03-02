@@ -645,5 +645,6 @@
   "block.solarforge.elemental_enchanter": "Elemental enchanter",
   "elemental_enchanter.lore": "Trying to catch needed enchantments in enchantment table and searching for old books left in some dungeons may become a tedious task, luckily you have discovered that element powers can be used to empower your gear as same as enchantments do.",
   "solarforge_struct.explosion_blocker": "Explosion blocker",
-  "solarcraft.cant_save_energy": "Energy is not saved when broken!"
+  "solarcraft.cant_save_energy": "Energy is not saved when broken!",
+  "entity.solarforge.runic_elemental_boss": "Runic Elemental"
 }
