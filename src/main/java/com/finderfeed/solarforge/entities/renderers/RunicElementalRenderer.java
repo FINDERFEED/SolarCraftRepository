@@ -27,6 +27,7 @@ import net.minecraft.world.phys.Vec3;
 public class RunicElementalRenderer extends MobRenderer<RunicElementalBoss, RunicElementalModel> {
     private static final ResourceLocation SOLAR_STRIKE = new ResourceLocation("solarforge","textures/misc/solar_strike.png");
     public static final ResourceLocation LOC = new ResourceLocation(SolarForge.MOD_ID,"textures/entities/runic_elemental.png");
+    public static final ResourceLocation LOC_ASLEEP = new ResourceLocation(SolarForge.MOD_ID,"textures/entities/runic_elemental_asleep.png");
     public static final ResourceLocation RAY = new ResourceLocation("solarforge","textures/misc/shielding_ray.png");
     private static final RenderType BEAM = RenderType.text(RAY);
     public RunicElementalRenderer(EntityRendererProvider.Context ctx) {
@@ -123,8 +124,8 @@ public class RunicElementalRenderer extends MobRenderer<RunicElementalBoss, Runi
 
 
     @Override
-    public ResourceLocation getTextureLocation(RunicElementalBoss p_114482_) {
-        return LOC;
+    public ResourceLocation getTextureLocation(RunicElementalBoss boss) {
+        return boss.wasAlreadySummoned() ? LOC : LOC_ASLEEP;
     }
 
     @Override

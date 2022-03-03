@@ -10,6 +10,7 @@ import com.finderfeed.solarforge.misc_things.CrystalBossBuddy;
 import com.finderfeed.solarforge.registries.attributes.AttributesRegistry;
 import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
 import com.finderfeed.solarforge.registries.entities.EntityTypes;
+import com.finderfeed.solarforge.registries.items.ItemsRegister;
 import com.finderfeed.solarforge.registries.sounds.Sounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -22,8 +23,9 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.BossEvent;
 import net.minecraft.world.Difficulty;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -34,6 +36,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.phys.AABB;
@@ -71,10 +74,14 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
     public static final EntityDataAccessor<Integer> ATTACK_TYPE = SynchedEntityData.defineId(RunicElementalBoss.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> DATA_ID_ATTACK_TARGET = SynchedEntityData.defineId(RunicElementalBoss.class, EntityDataSerializers.INT);
     public static final EntityDataAccessor<Byte> UPDATE_PUSH_WAVE_TICKER = SynchedEntityData.defineId(RunicElementalBoss.class, EntityDataSerializers.BYTE);
+    public static final EntityDataAccessor<Boolean> IS_ALREADY_SUMMONED = SynchedEntityData.defineId(RunicElementalBoss.class,EntityDataSerializers.BOOLEAN);
+
+    public int summoningTicks = 0;
     public int pushWaveTicker = 0;
     public boolean isWaitingForPlayerToDestroyExplosiveCrystals = false;
 
     private BlockPos summoningPos = null;
+
 
     public RunicElementalBoss(EntityType<? extends Mob> p_21368_, Level p_21369_) {
         super(p_21368_, p_21369_);
@@ -89,42 +96,12 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
 
     @Override
     public void tick() {
+        if (summoningTicks > 0){
+            summoningTicks--;
+        }
         if (!level.isClientSide){
-            LivingEntity target = getTarget();
-            if (target != null){
-                if (isWaitingForPlayerToDestroyExplosiveCrystals && tickCount % 20 == 0){
-                    isWaitingForPlayerToDestroyExplosiveCrystals = !getExplosiveCrystalsAround().isEmpty();
-                }
-                if (!isWaitingForPlayerToDestroyExplosiveCrystals) {
-                    BOSS_ATTACK_CHAIN.tick();
-                    this.setAttackTick(BOSS_ATTACK_CHAIN.getTicker());
-                }
-                this.lookControl.setLookAt(target.position().add(0,target.getEyeHeight(target.getPose())*0.8,0));
-            }else{
-                if (getAttackTick() != 0 && getAttackType() != 0){
-                    setAttackTick(0);
-                    setAttackType(0);
-                }
-            }
-
-            if (pushWaveTicker > 0){
-                pushWaveTicker--;
-                if (pushWaveTicker <= 0){
-                    this.entityData.set(UPDATE_PUSH_WAVE_TICKER,(byte)0);
-                }
-            }else{
-                if (this.entityData.get(UPDATE_PUSH_WAVE_TICKER) == 1){
-                    pushWaveTicker = 8;
-                }
-            }
-
-            if (level.getGameTime() % 20 == 0){
-                Block b = getBlockBelow();
-                if (b == BlocksRegistry.REGENERATION_AMPLIFICATION_BLOCK.get()){
-                    this.heal(3);
-                }else if(b == BlocksRegistry.ARMOR_AMPLIFICATION_BLOCK.get()){
-                    this.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE,100,0));
-                }
+            if (wasAlreadySummoned() && summoningTicks <= 0) {
+                this.bossActivity();
             }
         }
         if (level.isClientSide){
@@ -145,6 +122,45 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
 
         }
         super.tick();
+    }
+
+    private void bossActivity(){
+        LivingEntity target = getTarget();
+        if (target != null){
+            if (isWaitingForPlayerToDestroyExplosiveCrystals && tickCount % 20 == 0){
+                isWaitingForPlayerToDestroyExplosiveCrystals = !getExplosiveCrystalsAround().isEmpty();
+            }
+            if (!isWaitingForPlayerToDestroyExplosiveCrystals) {
+                BOSS_ATTACK_CHAIN.tick();
+                this.setAttackTick(BOSS_ATTACK_CHAIN.getTicker());
+            }
+            this.lookControl.setLookAt(target.position().add(0,target.getEyeHeight(target.getPose())*0.8,0));
+        }else{
+            if (getAttackTick() != 0 && getAttackType() != 0){
+                setAttackTick(0);
+                setAttackType(0);
+            }
+        }
+
+        if (pushWaveTicker > 0){
+            pushWaveTicker--;
+            if (pushWaveTicker <= 0){
+                this.entityData.set(UPDATE_PUSH_WAVE_TICKER,(byte)0);
+            }
+        }else{
+            if (this.entityData.get(UPDATE_PUSH_WAVE_TICKER) == 1){
+                pushWaveTicker = 8;
+            }
+        }
+
+        if (level.getGameTime() % 20 == 0){
+            Block b = getBlockBelow();
+            if (b == BlocksRegistry.REGENERATION_AMPLIFICATION_BLOCK.get()){
+                this.heal(3);
+            }else if(b == BlocksRegistry.ARMOR_AMPLIFICATION_BLOCK.get()){
+                this.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE,100,0));
+            }
+        }
     }
 
     public void magicMissilesAttack(){
@@ -337,6 +353,18 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
         return this.entityData.get(DATA_ID_ATTACK_TARGET);
     }
 
+    @Override
+    public InteractionResult interactAt(Player player, Vec3 vec, InteractionHand hand) {
+        if (!level.isClientSide && hand == InteractionHand.MAIN_HAND && !wasAlreadySummoned()) {
+            ItemStack item = player.getItemInHand(hand);
+            if (item.is(ItemsRegister.CRYSTALLITE_CORE.get())){
+                setSummoned(true);
+                item.shrink(1);
+                player.swing(hand);
+            }
+        }
+        return super.interactAt(player, vec, hand);
+    }
 
     @Override
     protected void doPush(Entity entity) {
@@ -452,6 +480,16 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
         this.entityData.define(ATTACK_TYPE,0);
         this.entityData.define(DATA_ID_ATTACK_TARGET,0);
         this.entityData.define(UPDATE_PUSH_WAVE_TICKER,(byte)0);
+        this.entityData.define(IS_ALREADY_SUMMONED,false);
+    }
+
+    @Override
+    public void onSyncedDataUpdated(EntityDataAccessor<?> dataParameter) {
+        if (dataParameter == IS_ALREADY_SUMMONED && wasAlreadySummoned()){
+            this.summoningTicks = 20;
+            System.out.println("abobus PAM PAM PAM PAM PAM PAM PAM...PAMPAMPAM...PUMPUM");
+        }
+        super.onSyncedDataUpdated(dataParameter);
     }
 
     @Override
@@ -471,12 +509,16 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
             CompoundNBTHelper.writeBlockPos("sumPos", summoningPos, tag);
         }
         tag.putBoolean("waiting",isWaitingForPlayerToDestroyExplosiveCrystals);
+        tag.putBoolean("summoned",wasAlreadySummoned());
         return super.save(tag);
     }
 
 
     @Override
     public void load(CompoundTag tag) {
+        if (tag.contains("summoned")){
+            setSummoned(tag.getBoolean("summoned"));
+        }
         BOSS_ATTACK_CHAIN.load(tag);
         this.isWaitingForPlayerToDestroyExplosiveCrystals = tag.getBoolean("waiting");
         if (tag.contains("sumPos1")) {
@@ -525,6 +567,14 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
 
     public BlockPos getSummoningPos() {
         return summoningPos;
+    }
+
+    public boolean wasAlreadySummoned(){
+        return this.entityData.get(IS_ALREADY_SUMMONED);
+    }
+
+    public void setSummoned(boolean b){
+        this.entityData.set(IS_ALREADY_SUMMONED,b);
     }
 
     public static class AttackType{
