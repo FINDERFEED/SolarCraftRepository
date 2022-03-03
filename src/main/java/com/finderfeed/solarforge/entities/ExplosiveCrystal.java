@@ -198,4 +198,9 @@ public class ExplosiveCrystal extends Mob implements CrystalBossBuddy {
         tag.putByte("remainingSeconds",(byte)getRemainingActivationSeconds());
         return super.save(tag);
     }
+
+    @Override
+    public boolean canBeLeashed(Player player) {
+        return false;
+    }
 }

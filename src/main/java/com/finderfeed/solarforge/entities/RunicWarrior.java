@@ -1,6 +1,7 @@
 package com.finderfeed.solarforge.entities;
 
 import com.finderfeed.solarforge.misc_things.CrystalBossBuddy;
+import com.finderfeed.solarforge.registries.attributes.AttributesRegistry;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -20,7 +21,8 @@ public class RunicWarrior extends PathfinderMob implements CrystalBossBuddy {
 
     public static AttributeSupplier.Builder createAttributes() {
         return LivingEntity.createLivingAttributes().add(Attributes.FOLLOW_RANGE, 30.0D).add(Attributes.ATTACK_KNOCKBACK)
-                .add(Attributes.ATTACK_DAMAGE,20).add(Attributes.MAX_HEALTH,50).add(Attributes.ARMOR,5);
+                .add(Attributes.ATTACK_DAMAGE,20).add(Attributes.MAX_HEALTH,50).add(Attributes.ARMOR,5)
+                .add(AttributesRegistry.MAGIC_RESISTANCE.get(),40);
     }
 
 
@@ -41,5 +43,10 @@ public class RunicWarrior extends PathfinderMob implements CrystalBossBuddy {
     @Override
     public boolean fireImmune() {
         return true;
+    }
+
+    @Override
+    public boolean canBeLeashed(Player player) {
+        return false;
     }
 }

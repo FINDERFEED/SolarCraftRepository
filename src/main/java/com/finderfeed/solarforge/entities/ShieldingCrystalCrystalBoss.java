@@ -15,6 +15,7 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 
 import javax.annotation.Nullable;
@@ -159,5 +160,10 @@ public class ShieldingCrystalCrystalBoss extends Mob implements CrystalBossBuddy
     @Override
     protected SoundEvent getDeathSound() {
         return Sounds.CRYSTAL_HIT.get();
+    }
+
+    @Override
+    public boolean canBeLeashed(Player player) {
+        return false;
     }
 }

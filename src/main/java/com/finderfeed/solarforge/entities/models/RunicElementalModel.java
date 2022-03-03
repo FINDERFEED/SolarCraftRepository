@@ -126,7 +126,7 @@ public class RunicElementalModel extends EntityModel<RunicElementalBoss> {
 			if (attackType != 0) {
 				RunicElementalAnimations.ANIMATIONS_IN_ORDER[boss.getAttackType() - 1].animate(boss, this, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, tick);
 			}
-		}else if (boss.summoningTicks < 0){
+		}else if (boss.summoningTicks <= 0){
 			head.y = mhead.getInitY() + 4f;
 			head.xRot = mhead.getInitRotX() + (float)Math.toRadians(45);
 			head.z = mhead.getInitZ() - 2f;
@@ -137,7 +137,7 @@ public class RunicElementalModel extends EntityModel<RunicElementalBoss> {
 			legsrow12.y = mlegsrow12.getInitY() + 4f;
 			legsrow2.y = mlegsrow2.getInitY() + 2f;
 		}else{
-			float percent = 1-boss.summoningTicks / 20f;
+			float percent = boss.summoningTicks / 20f;
 			head.y = mhead.getInitY() + 4f*percent;
 			head.xRot = mhead.getInitRotX() + (float)Math.toRadians(45*percent);
 			head.z = mhead.getInitZ() - 2f*percent;

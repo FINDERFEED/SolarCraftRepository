@@ -574,6 +574,11 @@ public class CrystalBossEntity extends NoHealthLimitMob implements CrystalBossBu
     }
 
     @Override
+    public boolean canBeLeashed(Player player) {
+        return false;
+    }
+
+    @Override
     protected void dropAllDeathLoot(DamageSource p_21192_) {
         super.dropAllDeathLoot(p_21192_);
         LegendaryItem item = new LegendaryItem(level, new ItemStack(ItemsRegister.CRYSTALLITE_CORE.get(),1));
@@ -660,5 +665,7 @@ class AntiCheat{
             }
 
     }
+
+
 
 }

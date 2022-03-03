@@ -487,7 +487,6 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
     public void onSyncedDataUpdated(EntityDataAccessor<?> dataParameter) {
         if (dataParameter == IS_ALREADY_SUMMONED && wasAlreadySummoned()){
             this.summoningTicks = 20;
-            System.out.println("abobus PAM PAM PAM PAM PAM PAM PAM...PAMPAMPAM...PUMPUM");
         }
         super.onSyncedDataUpdated(dataParameter);
     }
@@ -577,6 +576,11 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
         this.entityData.set(IS_ALREADY_SUMMONED,b);
     }
 
+    @Override
+    public boolean canBeLeashed(Player player) {
+        return false;
+    }
+
     public static class AttackType{
         public static final int MAGIC_MISSILES = 1;
         public static final int REFRACTION_CRYSTALS = 2;
@@ -585,24 +589,4 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
         public static final int VARTH_DADER = 5;
         public static final int SUMMONING_ROCKETS = 6;
     }
-//    public void flyUpAndThrowFireballs(){
-//        this.setAttackType(AttackType.FIREBALLS);
-//        if (BOSS_ATTACK_CHAIN.getTicker() <= 60){
-//            this.setDeltaMovement(0,7/60f,0);
-//        }else{
-//            this.setDeltaMovement(0,0,0);
-//            if (BOSS_ATTACK_CHAIN.getTicker() % 7 == 0) {
-//                for (int i = 0; i < 3; i++) {
-//                    Vec3 speed = new Vec3(level.random.nextDouble() * 2 - 1, level.random.nextDouble() * -0.6, level.random.nextDouble() * 2 - 1).normalize();
-//                    SolarFireballProjectile fireball = new SolarFireballProjectile(EntityTypes.SOLAR_FIREBALL.get(), level);
-//                    fireball.setDamage(10);
-//                    fireball.setPos(this.position());
-//                    fireball.setOwner(this);
-//                    fireball.setDeltaMovement(speed.multiply(0.4,0.4,0.4));
-//                    level.addFreshEntity(fireball);
-//                }
-//            }
-//
-//        }
-//    }
 }

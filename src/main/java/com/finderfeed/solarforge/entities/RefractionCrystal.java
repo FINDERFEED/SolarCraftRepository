@@ -4,6 +4,7 @@ import com.finderfeed.solarforge.ClientHelpers;
 import com.finderfeed.solarforge.client.particles.ParticleTypesRegistry;
 import com.finderfeed.solarforge.local_library.helpers.FinderfeedMathHelper;
 import com.finderfeed.solarforge.misc_things.CrystalBossBuddy;
+import com.finderfeed.solarforge.registries.attributes.AttributesRegistry;
 import com.finderfeed.solarforge.registries.sounds.Sounds;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.sounds.SoundEvent;
@@ -16,6 +17,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.network.NetworkHooks;
 
@@ -30,7 +32,8 @@ public class RefractionCrystal extends Mob implements CrystalBossBuddy {
 
 
     public static AttributeSupplier.Builder createAttributes() {
-        return LivingEntity.createLivingAttributes().add(Attributes.MAX_HEALTH,120).add(Attributes.ARMOR,10).add(Attributes.FOLLOW_RANGE);
+        return LivingEntity.createLivingAttributes().add(Attributes.MAX_HEALTH,120).add(Attributes.ARMOR,10)
+                .add(Attributes.FOLLOW_RANGE).add(AttributesRegistry.MAGIC_RESISTANCE.get(),30);
     }
 
 
@@ -137,5 +140,8 @@ public class RefractionCrystal extends Mob implements CrystalBossBuddy {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 
-
+    @Override
+    public boolean canBeLeashed(Player player) {
+        return false;
+    }
 }
