@@ -581,6 +581,11 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
         return false;
     }
 
+    @Override
+    public boolean isAttackable() {
+        return wasAlreadySummoned();
+    }
+
     public static class AttackType{
         public static final int MAGIC_MISSILES = 1;
         public static final int REFRACTION_CRYSTALS = 2;
