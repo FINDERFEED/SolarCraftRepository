@@ -3,6 +3,7 @@ package com.finderfeed.solarforge.entities.models;// Made with Blockbench 4.1.5
 // Paste this class into your mod and generate all required imports
 
 
+import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.entities.RunicWarrior;
 import com.finderfeed.solarforge.local_library.other.MemorizedModelPart;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -17,7 +18,7 @@ import net.minecraft.world.entity.Entity;
 
 public class RunicWarriorModel extends EntityModel<RunicWarrior> {
 	// This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
-	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation("modid", "custom_model"), "main");
+	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(SolarForge.MOD_ID, "runic_warrior"), "main");
 	private final ModelPart head;
 	private final ModelPart hands;
 

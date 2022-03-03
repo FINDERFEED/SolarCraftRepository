@@ -14,6 +14,7 @@ import com.finderfeed.solarforge.magic.blocks.solar_forge_block.SolarForgePetals
 import com.finderfeed.solarforge.magic.items.item_models.SolarGodShield;
 import com.finderfeed.solarforge.magic.projectiles.renderers.UltraCrossbowProjectileRenderer;
 
+import com.finderfeed.solarforge.magic.projectiles.renderers.models.RunicHammerModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
@@ -69,5 +70,6 @@ public class ModelLayersRegistry {
         event.registerLayerDefinition(RADIANT_PORTAL_CREATOR_MODEL, RadiantPortal::createLayers);
         event.registerLayerDefinition(RunicElementalModel.LAYER_LOCATION, RunicElementalModel::createBodyLayer);
         event.registerLayerDefinition(RunicWarriorModel.LAYER_LOCATION, RunicWarriorModel::createBodyLayer);
+        event.registerLayerDefinition(RunicHammerModel.LAYER_LOCATION, RunicHammerModel::createBodyLayer);
     }
 }

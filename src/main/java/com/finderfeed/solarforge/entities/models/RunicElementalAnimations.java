@@ -169,6 +169,33 @@ public class RunicElementalAnimations {
         model.righthand.zRot = model.mrighthand.getInitRotZ() + (float)Math.toRadians(5-v);
     };
 
+    public static final RunicElementalModelAnimation SWING_HAMMER = (boss,model,limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch,ticker)->{
+        model.head.xRot = model.mhead.getInitRotX() + (float)Math.toRadians(20);
+        model.body.xRot = model.mbody.getInitRotX() + (float)Math.toRadians(10);
+
+        float mod = 80;
+        model.head.z = model.mhead.getInitZ() - 2f;
+
+        double[] xz = FinderfeedMathHelper.rotatePointDegrees(9,0,mod);
+        double[] xzf = FinderfeedMathHelper.rotatePointDegrees(0,3,mod);
+        model.righthand.z = model.mrighthand.getInitZ() - (float)xz[1] - (float)xzf[1];
+        model.righthand.x = model.mrighthand.getInitX() + 9 -(float)xz[0] - (float)xzf[0];
+
+        double[] xz2 = FinderfeedMathHelper.rotatePointDegrees(-9,0,mod);
+        double[] xzf2 = FinderfeedMathHelper.rotatePointDegrees(0,-3,mod);
+        model.lefthand.z = model.mlefthand.getInitZ() - (float)xz2[1] - (float)xzf[1];
+        model.lefthand.x = model.mlefthand.getInitX() - 9 - (float)xz2[0] - (float)xzf[0];
+
+        model.righthand.xRot = model.mrighthand.getInitRotX() - (float)Math.toRadians(80);
+        model.righthand.yRot = model.mrighthand.getInitRotY() - (float)Math.toRadians(mod + 20);
+
+
+        model.lefthand.xRot = model.mlefthand.getInitRotX() - (float)Math.toRadians(80);
+        model.lefthand.yRot = model.mlefthand.getInitRotY() - (float)Math.toRadians(mod - 20);
+
+        model.body.yRot = model.mbody.getInitRotY() - (float)Math.toRadians(mod);
+    };
+
 
     //ready to use animations
     public static final RunicElementalModelAnimation REFRACTION_CRYSTALS = RunicElementalAnimations.FLY_UP::animate;

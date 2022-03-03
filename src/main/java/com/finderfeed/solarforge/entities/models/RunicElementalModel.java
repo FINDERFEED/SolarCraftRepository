@@ -19,7 +19,7 @@ import net.minecraft.resources.ResourceLocation;
 
 public class RunicElementalModel extends EntityModel<RunicElementalBoss> {
 	// This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
-	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(SolarForge.MOD_ID, "runicelementalmodel"), "main");
+	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(SolarForge.MOD_ID, "runic_elemental_model"), "main");
 	public final ModelPart body;
 	public final ModelPart head;
 	public final ModelPart lefthand;
@@ -117,36 +117,41 @@ public class RunicElementalModel extends EntityModel<RunicElementalBoss> {
 		this.headPitch = headPitch;
 		this.headYaw = netHeadYaw;
 		RunicElementalAnimations.RESET_EVERYTHING.animate(boss,this,limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch,0);
-		if (boss.wasAlreadySummoned() && boss.summoningTicks <= 0) {
-			RunicElementalAnimations.IDLE.animate(boss, this, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, 0);
-			head.yRot = (float) Math.toRadians(netHeadYaw);
-			head.xRot = (float) Math.toRadians(headPitch);
-			int tick = boss.getAttackTick();
-			int attackType = boss.getAttackType();
-			if (attackType != 0) {
-				RunicElementalAnimations.ANIMATIONS_IN_ORDER[boss.getAttackType() - 1].animate(boss, this, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, tick);
+
+
+		RunicElementalAnimations.SWING_HAMMER.animate(boss,this,limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch,0);
+		if (false) {
+			if (boss.wasAlreadySummoned() && boss.summoningTicks <= 0) {
+				RunicElementalAnimations.IDLE.animate(boss, this, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, 0);
+				head.yRot = (float) Math.toRadians(netHeadYaw);
+				head.xRot = (float) Math.toRadians(headPitch);
+				int tick = boss.getAttackTick();
+				int attackType = boss.getAttackType();
+				if (attackType != 0) {
+					RunicElementalAnimations.ANIMATIONS_IN_ORDER[boss.getAttackType() - 1].animate(boss, this, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, tick);
+				}
+			} else if (boss.summoningTicks <= 0) {
+				head.y = mhead.getInitY() + 4f;
+				head.xRot = mhead.getInitRotX() + (float) Math.toRadians(45);
+				head.z = mhead.getInitZ() - 2f;
+				body.y = mbody.getInitY() + 4f;
+				lefthand.y = mlefthand.getInitY() + 4f;
+				righthand.y = mrighthand.getInitY() + 4f;
+				legsrow12.yRot = mlegsrow12.getInitRotY() + (float) Math.toRadians(45 / 4f);
+				legsrow12.y = mlegsrow12.getInitY() + 4f;
+				legsrow2.y = mlegsrow2.getInitY() + 2f;
+			} else {
+				float percent = boss.summoningTicks / 20f;
+				head.y = mhead.getInitY() + 4f * percent;
+				head.xRot = mhead.getInitRotX() + (float) Math.toRadians(45 * percent);
+				head.z = mhead.getInitZ() - 2f * percent;
+				body.y = mbody.getInitY() + 4f * percent;
+				lefthand.y = mlefthand.getInitY() + 4f * percent;
+				righthand.y = mrighthand.getInitY() + 4f * percent;
+				legsrow12.yRot = mlegsrow12.getInitRotY() + (float) Math.toRadians((45 / 4f) * percent);
+				legsrow12.y = mlegsrow12.getInitY() + 4f * percent;
+				legsrow2.y = mlegsrow2.getInitY() + 2f * percent;
 			}
-		}else if (boss.summoningTicks <= 0){
-			head.y = mhead.getInitY() + 4f;
-			head.xRot = mhead.getInitRotX() + (float)Math.toRadians(45);
-			head.z = mhead.getInitZ() - 2f;
-			body.y = mbody.getInitY() + 4f;
-			lefthand.y = mlefthand.getInitY() + 4f;
-			righthand.y = mrighthand.getInitY() + 4f;
-			legsrow12.yRot = mlegsrow12.getInitRotY() + (float)Math.toRadians(45/4f);
-			legsrow12.y = mlegsrow12.getInitY() + 4f;
-			legsrow2.y = mlegsrow2.getInitY() + 2f;
-		}else{
-			float percent = boss.summoningTicks / 20f;
-			head.y = mhead.getInitY() + 4f*percent;
-			head.xRot = mhead.getInitRotX() + (float)Math.toRadians(45*percent);
-			head.z = mhead.getInitZ() - 2f*percent;
-			body.y = mbody.getInitY() + 4f*percent;
-			lefthand.y = mlefthand.getInitY() + 4f*percent;
-			righthand.y = mrighthand.getInitY() + 4f*percent;
-			legsrow12.yRot = mlegsrow12.getInitRotY() + (float)Math.toRadians((45/4f)*percent);
-			legsrow12.y = mlegsrow12.getInitY() + 4f*percent;
-			legsrow2.y = mlegsrow2.getInitY() + 2f*percent;
 		}
 	}
 
