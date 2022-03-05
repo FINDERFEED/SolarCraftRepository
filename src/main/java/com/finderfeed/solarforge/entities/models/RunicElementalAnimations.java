@@ -172,28 +172,29 @@ public class RunicElementalAnimations {
     public static final RunicElementalModelAnimation SWING_HAMMER = (boss,model,limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch,ticker)->{
         model.head.xRot = model.mhead.getInitRotX() + (float)Math.toRadians(20);
         model.body.xRot = model.mbody.getInitRotX() + (float)Math.toRadians(10);
-
-        float mod = 80;
+        float time = RenderingTools.getTime(Minecraft.getInstance().level,Minecraft.getInstance().getFrameTime())/20;
+        float mod = (float)Math.sin(time);
+        float percent = (float)(Math.cos(time)+1)/2f;
         model.head.z = model.mhead.getInitZ() - 2f;
 
-        double[] xz = FinderfeedMathHelper.rotatePointDegrees(9,0,mod);
-        double[] xzf = FinderfeedMathHelper.rotatePointDegrees(0,3,mod);
+        double[] xz = FinderfeedMathHelper.rotatePointDegrees(9,0,mod*80);
+        double[] xzf = FinderfeedMathHelper.rotatePointDegrees(0,5*percent,mod*80);
         model.righthand.z = model.mrighthand.getInitZ() - (float)xz[1] - (float)xzf[1];
         model.righthand.x = model.mrighthand.getInitX() + 9 -(float)xz[0] - (float)xzf[0];
 
-        double[] xz2 = FinderfeedMathHelper.rotatePointDegrees(-9,0,mod);
-        double[] xzf2 = FinderfeedMathHelper.rotatePointDegrees(0,-3,mod);
-        model.lefthand.z = model.mlefthand.getInitZ() - (float)xz2[1] - (float)xzf[1];
-        model.lefthand.x = model.mlefthand.getInitX() - 9 - (float)xz2[0] - (float)xzf[0];
+        double[] xz2 = FinderfeedMathHelper.rotatePointDegrees(-9,0,mod*80);
+        double[] xzf2 = FinderfeedMathHelper.rotatePointDegrees(0,5*(1-percent),mod*80);
+        model.lefthand.z = model.mlefthand.getInitZ() - (float)xz2[1] - (float)xzf2[1];
+        model.lefthand.x = model.mlefthand.getInitX() - 9 - (float)xz2[0] - (float)xzf2[0];
 
         model.righthand.xRot = model.mrighthand.getInitRotX() - (float)Math.toRadians(80);
-        model.righthand.yRot = model.mrighthand.getInitRotY() - (float)Math.toRadians(mod + 20);
+        model.righthand.yRot = model.mrighthand.getInitRotY() - (float)Math.toRadians(mod*80 + 30);
 
 
         model.lefthand.xRot = model.mlefthand.getInitRotX() - (float)Math.toRadians(80);
-        model.lefthand.yRot = model.mlefthand.getInitRotY() - (float)Math.toRadians(mod - 20);
+        model.lefthand.yRot = model.mlefthand.getInitRotY() - (float)Math.toRadians(mod*80 - 30);
 
-        model.body.yRot = model.mbody.getInitRotY() - (float)Math.toRadians(mod);
+        model.body.yRot = model.mbody.getInitRotY() - (float)Math.toRadians(mod*60);
     };
 
 
