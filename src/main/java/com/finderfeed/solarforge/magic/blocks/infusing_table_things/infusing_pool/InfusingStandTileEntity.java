@@ -70,10 +70,14 @@ public class InfusingStandTileEntity extends BlockEntity {
     }
 
     public ItemStack getItem(int i){
-        return getInventory().getStackInSlot(i);
+        ItemStackHandler inv = getInventory();
+        if (inv == null) return ItemStack.EMPTY;
+        return inv.getStackInSlot(i);
     }
     public void setItem(int i,ItemStack stack){
-        this.getInventory().setStackInSlot(i,stack);
+        ItemStackHandler inv = getInventory();
+        if (inv == null)return;
+        inv.setStackInSlot(i,stack);
     }
 
     public void shouldRenderItem(boolean e){

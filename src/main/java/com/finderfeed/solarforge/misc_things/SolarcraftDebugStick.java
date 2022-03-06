@@ -34,6 +34,10 @@ public class SolarcraftDebugStick extends Item {
 //                },1));
 
         if (player instanceof  Player pl){
+            if (!world.isClientSide){
+//                Vec3 vec = player.getLookAngle().multiply(1,0,1).normalize();
+//                System.out.println(Math.toDegrees(Math.atan2(vec.z,vec.x))+180);
+            }
             if (!pl.isCreative() && !pl.isSpectator()){
 
                 pl.getAbilities().mayfly = true;

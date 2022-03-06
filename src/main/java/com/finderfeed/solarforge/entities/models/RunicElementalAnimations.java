@@ -169,34 +169,85 @@ public class RunicElementalAnimations {
         model.righthand.zRot = model.mrighthand.getInitRotZ() + (float)Math.toRadians(5-v);
     };
 
-    public static final RunicElementalModelAnimation SWING_HAMMER = (boss,model,limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch,ticker)->{
-        float value = (float)boss.getOrCreateAnimationValue("swing_hammer",new EaseInOut(0,2,100,3)).getValue()-1;
+    public static final RunicElementalModelAnimation PREPARE_SWING_HAMMER = (boss,model,limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch,ticker)->{
+        float value = (float)boss.getOrCreateAnimationValue("prepare_swing_hammer",new EaseInOut(0,1,20,3)).getValue();
+        float angle = value*-80;
+        model.head.xRot = model.mhead.getInitRotX() + (float)Math.toRadians(20*value);
+        model.body.xRot = model.mbody.getInitRotX() + (float)Math.toRadians(10*value);
 
-        model.head.xRot = model.mhead.getInitRotX() + (float)Math.toRadians(20);
-        model.body.xRot = model.mbody.getInitRotX() + (float)Math.toRadians(10);
-        float time = RenderingTools.getTime(Minecraft.getInstance().level,Minecraft.getInstance().getFrameTime())/20;
-        float mod = value;
-        float percent = value;
-        model.head.z = model.mhead.getInitZ() - 2f;
+        model.body.yRot = model.mbody.getInitRotY() - (float)Math.toRadians(-60*value);
 
-        double[] xz = FinderfeedMathHelper.rotatePointDegrees(9,0,mod*80);
-        double[] xzf = FinderfeedMathHelper.rotatePointDegrees(0,5*percent,mod*80);
+        model.head.z = model.mhead.getInitZ() - 2f*value;
+
+        double[] xz = FinderfeedMathHelper.rotatePointDegrees(9,0,angle);
+        double[] xzf = FinderfeedMathHelper.rotatePointDegrees(0,-5*value,angle);
         model.righthand.z = model.mrighthand.getInitZ() - (float)xz[1] - (float)xzf[1];
         model.righthand.x = model.mrighthand.getInitX() + 9 -(float)xz[0] - (float)xzf[0];
 
-        double[] xz2 = FinderfeedMathHelper.rotatePointDegrees(-9,0,mod*80);
-        double[] xzf2 = FinderfeedMathHelper.rotatePointDegrees(0,5*(1-percent),mod*80);
+        double[] xz2 = FinderfeedMathHelper.rotatePointDegrees(-9,0,angle);
+        double[] xzf2 = FinderfeedMathHelper.rotatePointDegrees(0,5*value,angle);
+        model.lefthand.z = model.mlefthand.getInitZ() - (float)xz2[1] - (float)xzf2[1];
+        model.lefthand.x = model.mlefthand.getInitX() - 9 - (float)xz2[0] - (float)xzf2[0];
+
+        model.righthand.xRot = model.mrighthand.getInitRotX() - (float)Math.toRadians(80*value);
+        model.righthand.yRot = model.mrighthand.getInitRotY() - (float)Math.toRadians((-80 + 30)*value);
+
+        model.lefthand.xRot = model.mlefthand.getInitRotX() - (float)Math.toRadians(80*value);
+        model.lefthand.yRot = model.mlefthand.getInitRotY() - (float)Math.toRadians((-80 - 30)*value);
+    };
+
+    public static final RunicElementalModelAnimation END_SWING_HAMMER = (boss,model,limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch,ticker)->{
+        float value = 1-(float)boss.getOrCreateAnimationValue("end_swing_hammer",new EaseInOut(0,1,20,3)).getValue();
+
+        model.head.xRot = model.mhead.getInitRotX() + (float)Math.toRadians(20*value);
+        model.body.xRot = model.mbody.getInitRotX() + (float)Math.toRadians(10*value);
+        float angle = value*80;
+        model.head.z = model.mhead.getInitZ() - 2f*value;
+
+        double[] xz = FinderfeedMathHelper.rotatePointDegrees(9,0,angle);
+        double[] xzf = FinderfeedMathHelper.rotatePointDegrees(0,5*value,angle);
+        model.righthand.z = model.mrighthand.getInitZ() - (float)xz[1] - (float)xzf[1];
+        model.righthand.x = model.mrighthand.getInitX() + 9 -(float)xz[0] - (float)xzf[0];
+
+        double[] xz2 = FinderfeedMathHelper.rotatePointDegrees(-9,0,angle);
+        double[] xzf2 = FinderfeedMathHelper.rotatePointDegrees(0,-5*value,angle);
+        model.lefthand.z = model.mlefthand.getInitZ() - (float)xz2[1] - (float)xzf2[1];
+        model.lefthand.x = model.mlefthand.getInitX() - 9 - (float)xz2[0] - (float)xzf2[0];
+
+        model.righthand.xRot = model.mrighthand.getInitRotX() - (float)Math.toRadians(angle);
+        model.righthand.yRot = model.mrighthand.getInitRotY() - (float)Math.toRadians(angle + 30*value);
+
+        model.lefthand.xRot = model.mlefthand.getInitRotX() - (float)Math.toRadians(angle);
+        model.lefthand.yRot = model.mlefthand.getInitRotY() - (float)Math.toRadians(angle - 30*value);
+
+        model.body.yRot = model.mbody.getInitRotY() - (float)Math.toRadians(value*60);
+    };
+
+    public static final RunicElementalModelAnimation SWING_HAMMER = (boss,model,limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch,ticker)->{
+        float value = (float)boss.getOrCreateAnimationValue("swing_hammer",new EaseInOut(0,2,15,3)).getValue()-1;
+
+        model.head.xRot = model.mhead.getInitRotX() + (float)Math.toRadians(20);
+        model.body.xRot = model.mbody.getInitRotX() + (float)Math.toRadians(10);
+        float angle = value*80;
+        model.head.z = model.mhead.getInitZ() - 2f;
+
+        double[] xz = FinderfeedMathHelper.rotatePointDegrees(9,0,angle);
+        double[] xzf = FinderfeedMathHelper.rotatePointDegrees(0,5*value,angle);
+        model.righthand.z = model.mrighthand.getInitZ() - (float)xz[1] - (float)xzf[1];
+        model.righthand.x = model.mrighthand.getInitX() + 9 -(float)xz[0] - (float)xzf[0];
+
+        double[] xz2 = FinderfeedMathHelper.rotatePointDegrees(-9,0,angle);
+        double[] xzf2 = FinderfeedMathHelper.rotatePointDegrees(0,-5*value,angle);
         model.lefthand.z = model.mlefthand.getInitZ() - (float)xz2[1] - (float)xzf2[1];
         model.lefthand.x = model.mlefthand.getInitX() - 9 - (float)xz2[0] - (float)xzf2[0];
 
         model.righthand.xRot = model.mrighthand.getInitRotX() - (float)Math.toRadians(80);
-        model.righthand.yRot = model.mrighthand.getInitRotY() - (float)Math.toRadians(mod*80 + 30);
-
+        model.righthand.yRot = model.mrighthand.getInitRotY() - (float)Math.toRadians(angle + 30);
 
         model.lefthand.xRot = model.mlefthand.getInitRotX() - (float)Math.toRadians(80);
-        model.lefthand.yRot = model.mlefthand.getInitRotY() - (float)Math.toRadians(mod*80 - 30);
+        model.lefthand.yRot = model.mlefthand.getInitRotY() - (float)Math.toRadians(angle - 30);
 
-        model.body.yRot = model.mbody.getInitRotY() - (float)Math.toRadians(mod*60);
+        model.body.yRot = model.mbody.getInitRotY() - (float)Math.toRadians(value*60);
     };
 
 
@@ -249,7 +300,18 @@ public class RunicElementalAnimations {
         }
     };
 
-    public static final RunicElementalModelAnimation[] ANIMATIONS_IN_ORDER = {MAGIC_MISSILES, REFRACTION_CRYSTALS,SUNSTRIKES,EARTHQUAKES,VARTH_DADER,THROW_SUMMONING_ROCKETS};
+    public static final RunicElementalModelAnimation HAMMER_ATTACK = (boss,model,limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch,tick)-> {
+        int realTick = tick % 56;
+        if (realTick <= 20){
+            RunicElementalAnimations.PREPARE_SWING_HAMMER.animate(boss,model,limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch,tick);
+        }else if (realTick <= 35){
+            RunicElementalAnimations.SWING_HAMMER.animate(boss,model,limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch,tick);
+        }else {
+            RunicElementalAnimations.END_SWING_HAMMER.animate(boss,model,limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch,tick);
+        }
+    };
+
+    public static final RunicElementalModelAnimation[] ANIMATIONS_IN_ORDER = {MAGIC_MISSILES, REFRACTION_CRYSTALS,SUNSTRIKES,EARTHQUAKES,VARTH_DADER,THROW_SUMMONING_ROCKETS,HAMMER_ATTACK};
 
 
 }
