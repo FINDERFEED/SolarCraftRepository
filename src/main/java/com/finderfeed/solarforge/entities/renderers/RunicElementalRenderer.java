@@ -8,6 +8,8 @@ import com.finderfeed.solarforge.events.other_events.OBJModels;
 import com.finderfeed.solarforge.local_library.helpers.FinderfeedMathHelper;
 import com.finderfeed.solarforge.local_library.helpers.RenderingTools;
 import com.finderfeed.solarforge.local_library.other.EaseIn;
+import com.finderfeed.solarforge.local_library.other.EaseInOut;
+import com.finderfeed.solarforge.magic.projectiles.renderers.models.RunicHammerModel;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Matrix4f;
@@ -30,8 +32,12 @@ public class RunicElementalRenderer extends MobRenderer<RunicElementalBoss, Runi
     public static final ResourceLocation LOC_ASLEEP = new ResourceLocation(SolarForge.MOD_ID,"textures/entities/runic_elemental_asleep.png");
     public static final ResourceLocation RAY = new ResourceLocation("solarforge","textures/misc/shielding_ray.png");
     private static final RenderType BEAM = RenderType.text(RAY);
+
+    private RunicHammerModel HAMMER;
+
     public RunicElementalRenderer(EntityRendererProvider.Context ctx) {
         super(ctx, new RunicElementalModel(ctx.bakeLayer(RunicElementalModel.LAYER_LOCATION)), 0.3f);
+        this.HAMMER = new RunicHammerModel(ctx.bakeLayer(RunicHammerModel.LAYER_LOCATION));
     }
 
 
@@ -84,6 +90,21 @@ public class RunicElementalRenderer extends MobRenderer<RunicElementalBoss, Runi
 
             matrices.popPose();
         }
+//        float value = (float)boss.getOrCreateAnimationValue("swing_hammer",new EaseInOut(0,2,100,3)).getValue()-1;
+//        Vec3 vec = new Vec3(Math.sin(Math.toRadians(boss.yHeadRot + value*80)),0,
+//                Math.cos(Math.toRadians(boss.yHeadRot + value*80)));
+
+//        matrices.pushPose();
+//
+//        matrices.translate(0,1.75,0);
+//        RenderingTools.applyMovementMatrixRotations(matrices,vec);
+//        matrices.mulPose(Vector3f.XP.rotationDegrees(180));
+//        matrices.mulPose(Vector3f.YP.rotationDegrees(90));
+//        matrices.translate(0,-8.5,0);
+//        matrices.scale(2,3,3);
+//        HAMMER.renderToBuffer(matrices,buffer.getBuffer(RenderType.text(RunicHammerModel.TEXTURE_LOCATION)),
+//                light,OverlayTexture.NO_OVERLAY,1,1,1,1f-(float)Math.abs(FinderfeedMathHelper.clamp(0,value*2,1)));
+//        matrices.popPose();
         matrices.pushPose();
         super.render(boss, something, pticks, matrices, buffer, light);
         matrices.popPose();

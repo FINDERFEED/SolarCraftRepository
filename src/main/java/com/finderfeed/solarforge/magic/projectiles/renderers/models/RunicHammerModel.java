@@ -13,7 +13,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
 
 public class RunicHammerModel extends Model {
-
+	public static final ResourceLocation TEXTURE_LOCATION = new ResourceLocation(SolarForge.MOD_ID,"textures/entities/runic_hammer.png");
 	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(SolarForge.MOD_ID, "runic_axe"), "main");
 	private final ModelPart bb_main;
 

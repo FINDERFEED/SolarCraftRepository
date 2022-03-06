@@ -170,11 +170,13 @@ public class RunicElementalAnimations {
     };
 
     public static final RunicElementalModelAnimation SWING_HAMMER = (boss,model,limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch,ticker)->{
+        float value = (float)boss.getOrCreateAnimationValue("swing_hammer",new EaseInOut(0,2,100,3)).getValue()-1;
+
         model.head.xRot = model.mhead.getInitRotX() + (float)Math.toRadians(20);
         model.body.xRot = model.mbody.getInitRotX() + (float)Math.toRadians(10);
         float time = RenderingTools.getTime(Minecraft.getInstance().level,Minecraft.getInstance().getFrameTime())/20;
-        float mod = (float)Math.sin(time);
-        float percent = (float)(Math.cos(time)+1)/2f;
+        float mod = value;
+        float percent = value;
         model.head.z = model.mhead.getInitZ() - 2f;
 
         double[] xz = FinderfeedMathHelper.rotatePointDegrees(9,0,mod*80);
