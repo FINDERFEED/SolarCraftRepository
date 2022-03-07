@@ -9,6 +9,7 @@ import com.finderfeed.solarforge.magic.projectiles.RunicWarriorSummoningRocket;
 import com.finderfeed.solarforge.misc_things.CrystalBossBuddy;
 import com.finderfeed.solarforge.registries.attributes.AttributesRegistry;
 import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
+import com.finderfeed.solarforge.registries.data_serializers.FDEntityDataSerializers;
 import com.finderfeed.solarforge.registries.effects.EffectsRegister;
 import com.finderfeed.solarforge.registries.entities.EntityTypes;
 import com.finderfeed.solarforge.registries.items.ItemsRegister;
@@ -17,11 +18,13 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializer;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.util.Mth;
 import net.minecraft.world.BossEvent;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.InteractionHand;
@@ -59,32 +62,34 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
 
     private Map<String,InterpolatedValue> ANIMATION_VALUES = new HashMap<>();
     public BossAttackChain BOSS_ATTACK_CHAIN = new BossAttackChain.Builder()
-//            .addAttack("teleport",this::teleport,5,1,0)
-//            .addAttack(MAGIC_MISSILES_ATTACK,this::magicMissilesAttack,220,10,1)
-//            .addAttack("sunstrikes",this::sunstrikes,130,1,3)
-//            .addAttack("earthquake",this::earthquake,120,30,4)
-//            .addAttack("vartDader",this::varthDader,120,1,4)
-//            .addAttack("deployRefractionCrystals",this::deployRefractionCrystals,40,1,2)
-//            .addAttack("deployExplosiveCrystals",this::deployExplosiveCrystals,40,1,5)
-//            .addAttack("throwSummoningRockets",this::throwSummoningRockets,23,1,6)
-            .addAttack("hammerAttack",this::hammerAttack,55*3,1,7)
-//            .addPostEffectToAttack("throwSummoningRockets",()->isWaitingForPlayerToDestroyExplosiveCrystals = true)
-            .addPostEffectToAttack("hammerAttack",()->lookingAtPlayer = true)
+            .addAttack("teleport",this::teleport,5,1,0)
+            .addAttack(MAGIC_MISSILES_ATTACK,this::magicMissilesAttack,220,10,1)
+            .addAttack("sunstrikes",this::sunstrikes,130,1,3)
+            .addAttack("earthquake",this::earthquake,120,30,4)
+            .addAttack("vartDader",this::varthDader,120,1,4)
+            .addAttack("deployRefractionCrystals",this::deployRefractionCrystals,40,1,2)
+            .addAttack("deployExplosiveCrystals",this::deployExplosiveCrystals,40,1,5)
+            .addAttack("throwSummoningRockets",this::throwSummoningRockets,23,1,6)
+            .addAttack("hammerAttack",this::hammerAttack,51*3,1,7)
+            .addPostEffectToAttack("hammerAttack",()->rotating = false)
+            .addPostEffectToAttack("throwSummoningRockets",()->isWaitingForPlayerToDestroyExplosiveCrystals = true)
             .addAftermathAttack(this::postAttack)
             .setTimeBetweenAttacks(30)
             .build();
-    private boolean lookingAtPlayer = true;
+
 
     public static final EntityDataAccessor<Integer> ATTACK_TICK = SynchedEntityData.defineId(RunicElementalBoss.class, EntityDataSerializers.INT);
     public static final EntityDataAccessor<Integer> ATTACK_TYPE = SynchedEntityData.defineId(RunicElementalBoss.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> DATA_ID_ATTACK_TARGET = SynchedEntityData.defineId(RunicElementalBoss.class, EntityDataSerializers.INT);
     public static final EntityDataAccessor<Byte> UPDATE_PUSH_WAVE_TICKER = SynchedEntityData.defineId(RunicElementalBoss.class, EntityDataSerializers.BYTE);
     public static final EntityDataAccessor<Boolean> IS_ALREADY_SUMMONED = SynchedEntityData.defineId(RunicElementalBoss.class,EntityDataSerializers.BOOLEAN);
-
+    public static final EntityDataAccessor<Vec3> HAMMER_ATTACK_DIRECTION = SynchedEntityData.defineId(RunicElementalBoss.class,
+            (EntityDataSerializer<Vec3>)FDEntityDataSerializers.VEC3.get().getSerializer());
     public int summoningTicks = 0;
     public int pushWaveTicker = 0;
     public boolean isWaitingForPlayerToDestroyExplosiveCrystals = false;
 
+    private boolean rotating = false;
     private BlockPos summoningPos = null;
 
 
@@ -135,13 +140,23 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
             if (isWaitingForPlayerToDestroyExplosiveCrystals && tickCount % 20 == 0){
                 isWaitingForPlayerToDestroyExplosiveCrystals = !getExplosiveCrystalsAround().isEmpty();
             }
-            if (!isWaitingForPlayerToDestroyExplosiveCrystals) {
+            if (!isWaitingForPlayerToDestroyExplosiveCrystals && !rotating) {
                 BOSS_ATTACK_CHAIN.tick();
                 this.setAttackTick(BOSS_ATTACK_CHAIN.getTicker());
             }
-            if (lookingAtPlayer) {
+
+            int attackType = getAttackType();
+            if (attackType != AttackType.HAMMER_SWING) {
                 this.lookControl.setLookAt(target.position().add(0, target.getEyeHeight(target.getPose()) * 0.8, 0));
+            }else{
+                Vec3 attackVec = this.position().add(getHammerAttackDirection());
+                if (!finishedRotation()) {
+                    this.lookControl.setLookAt(attackVec.x, attackVec.y + this.getBbHeight()*0.8, attackVec.z, 20, this.getMaxHeadXRot());
+                }else{
+                    rotating = false;
+                }
             }
+
         }else{
             if (getAttackTick() != 0 && getAttackType() != 0){
                 setAttackTick(0);
@@ -177,14 +192,14 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
             Vec3 between = target.position().add(0,target.getEyeHeight(target.getPose())*0.8,0).subtract(position().add(0, 2, 0));
             FallingMagicMissile missile = new FallingMagicMissile(level,between.normalize().multiply(2,2,2));
             missile.setSpeedDecrement(0);
-            missile.setDamage(10f);
+            missile.setDamage(10f + getDamageBonus());
             missile.setPos(this.position().add(0,2,0).add(between.normalize().multiply(0.5,0.5,0.5)));
             level.addFreshEntity(missile);
             for (RefractionCrystal crystal : getRefractionCrystalsAround()){
                 between = target.position().add(0,target.getEyeHeight(target.getPose())*0.8,0).subtract(crystal.position().add(0, crystal.getBbHeight()/2, 0));
                 FallingMagicMissile m = new FallingMagicMissile(level,between.normalize().multiply(2,2,2));
                 m.setSpeedDecrement(0);
-                m.setDamage(10f);
+                m.setDamage(10f + getDamageBonus());
                 m.setPos(crystal.position().add(0,crystal.getBbHeight()/2,0).add(between.normalize().multiply(0.5,0.5,0.5)));
                 level.addFreshEntity(m);
             }
@@ -323,17 +338,20 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
     }
     public void hammerAttack(){
         this.setAttackType(AttackType.HAMMER_SWING);
-        int ticker = BOSS_ATTACK_CHAIN.getTicker() % 56;
-        this.lookingAtPlayer = ticker < 10 || ticker > 45;
-        if (ticker == 28){
+        int ticker = BOSS_ATTACK_CHAIN.getTicker() % 52;
+        if (ticker == 1){
+            rotating = true;
+            this.setHammerAttackDirection(new Vec3(random.nextDouble()*2-1,0,random.nextDouble()*2-1).normalize());
+        }
+        if (ticker == 26){
             for (Player player : getPlayersAround(false)){
                 Vec3 vec = player.position().subtract(this.position()).multiply(1,0,1).normalize();
-                double angle = Math.atan2(vec.x,vec.y) + 180;
-                double attackAngle = yHeadRot % 360;
-                if (Math.abs(attackAngle - angle) <= 90){
-                    player.hurt(DamageSource.MAGIC,40);
+                Vec3 attackDir = getHammerAttackDirection();
+                double angleVec = Math.toDegrees(Math.atan2(vec.x,vec.z));
+                double attackDirAngle = Math.toDegrees(Math.atan2(attackDir.x,attackDir.z));
+                if (Math.abs(attackDirAngle - angleVec) <= 110){
+                    player.hurt(DamageSource.mobAttack(this),40 + getDamageBonus());
                 }
-
             }
 
         }
@@ -500,7 +518,13 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
         return this.entityData.get(ATTACK_TYPE);
     }
 
+    public Vec3 getHammerAttackDirection(){
+        return this.entityData.get(HAMMER_ATTACK_DIRECTION);
+    }
 
+    public void setHammerAttackDirection(Vec3 vec){
+        this.entityData.set(HAMMER_ATTACK_DIRECTION,vec);
+    }
 
     @Override
     protected void defineSynchedData() {
@@ -510,6 +534,7 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
         this.entityData.define(DATA_ID_ATTACK_TARGET,0);
         this.entityData.define(UPDATE_PUSH_WAVE_TICKER,(byte)0);
         this.entityData.define(IS_ALREADY_SUMMONED,false);
+        this.entityData.define(HAMMER_ATTACK_DIRECTION,Vec3.ZERO);
     }
 
     @Override
@@ -536,7 +561,7 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
         if (summoningPos != null) {
             CompoundNBTHelper.writeBlockPos("sumPos", summoningPos, tag);
         }
-        tag.putBoolean("look",lookingAtPlayer);
+        CompoundNBTHelper.writeVec3("hammerAttack",getHammerAttackDirection(),tag);
         tag.putBoolean("waiting",isWaitingForPlayerToDestroyExplosiveCrystals);
         tag.putBoolean("summoned",wasAlreadySummoned());
         return super.save(tag);
@@ -548,9 +573,10 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
         if (tag.contains("summoned")){
             setSummoned(tag.getBoolean("summoned"));
         }
-        if (tag.contains("look")){
-            this.lookingAtPlayer = tag.getBoolean("look");
+        if (tag.contains("hammerAttack1")){
+            this.setHammerAttackDirection(CompoundNBTHelper.getVec3("hammerAttack",tag));
         }
+
         BOSS_ATTACK_CHAIN.load(tag);
         this.isWaitingForPlayerToDestroyExplosiveCrystals = tag.getBoolean("waiting");
         if (tag.contains("sumPos1")) {
@@ -607,6 +633,14 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
 
     public void setSummoned(boolean b){
         this.entityData.set(IS_ALREADY_SUMMONED,b);
+    }
+
+    private boolean finishedRotation(){
+        Vec3 hammerAttackVec = getHammerAttackDirection();
+        double angle = -1*Math.toDegrees(Math.atan2(hammerAttackVec.x,hammerAttackVec.z));
+        double otherAngle = yBodyRot % 180;
+        double result = Math.abs(Mth.degreesDifference(Math.round(angle),Math.round(otherAngle)));
+        return result <= 10 || result >= 170;
     }
 
     @Override

@@ -81,7 +81,14 @@ public class RunicElementalRenderer extends MobRenderer<RunicElementalBoss, Runi
             }
             matrices.popPose();
         }else if (boss.getAttackType() == RunicElementalBoss.AttackType.HAMMER_SWING){
-            this.handleHammerRender(boss,something,pticks,matrices,buffer,light,tick % 56);
+            this.handleHammerRender(boss,something,pticks,matrices,buffer,light,tick % 52);
+//            matrices.pushPose();
+//
+//            RenderingTools.applyMovementMatrixRotations(matrices,boss.getHammerAttackDirection());
+//            HAMMER.renderToBuffer(matrices,buffer.getBuffer(RenderType.entityTranslucent(RunicHammerModel.TEXTURE_LOCATION)),
+//                    light,OverlayTexture.NO_OVERLAY,1,1,1,1);
+//
+//            matrices.popPose();
         }
 
         if (boss.getEntityData().get(RunicElementalBoss.UPDATE_PUSH_WAVE_TICKER) == 1){
@@ -105,49 +112,52 @@ public class RunicElementalRenderer extends MobRenderer<RunicElementalBoss, Runi
     }
 
     private void handleHammerRender(RunicElementalBoss boss, float something, float pticks, PoseStack matrices, MultiBufferSource buffer, int light,int attackTick){
-        float scaleMod = 4;
-        if (attackTick <= 20){
+        float scaleMod = 5;
+        if (attackTick <= 2) return;
+        if (attackTick < 21){
             float value = (float)boss.getOrCreateAnimationValue("prepare_swing_hammer",new EaseInOut(0,1,20,3)).getValue();
-            double val = Math.toRadians(Mth.lerp(pticks,boss.yHeadRotO,boss.yHeadRot) + -1*80);
-            Vec3 vec = new Vec3(Math.sin(val),0,Math.cos(val));
+            Vec3 dirVec = boss.getHammerAttackDirection();
+
+//            double val = Math.toRadians(Mth.lerp(pticks,boss.yHeadRotO,boss.yHeadRot) + -1*80);
+//            Vec3 vec = new Vec3(Math.sin(val),0,Math.cos(val));
             matrices.pushPose();
             matrices.translate(0,1.75,0);
-            RenderingTools.applyMovementMatrixRotations(matrices,vec);
+            RenderingTools.applyMovementMatrixRotations(matrices,dirVec.yRot((float)Math.toRadians(-80)));
             matrices.mulPose(Vector3f.XP.rotationDegrees(180));
             matrices.mulPose(Vector3f.YP.rotationDegrees(90));
-            matrices.mulPose(Vector3f.ZP.rotationDegrees(10));
+            matrices.mulPose(Vector3f.ZP.rotationDegrees(5));
             matrices.translate(0,-3*scaleMod+0.5,0);
             matrices.scale(2,scaleMod,scaleMod);
             HAMMER.renderToBuffer(matrices,buffer.getBuffer(RenderType.entityTranslucent(RunicHammerModel.TEXTURE_LOCATION)),
                     light,OverlayTexture.NO_OVERLAY,1,1,1,(float)FinderfeedMathHelper.clamp(0,value*2,1));
             matrices.popPose();
-        }else if (attackTick <= 35){
-            float value = (float)boss.getOrCreateAnimationValue("swing_hammer",new EaseInOut(0,2,15,3)).getValue()-1;
-            double val = Math.toRadians(Mth.lerp(pticks,boss.yHeadRotO,boss.yHeadRot) + value*80);
-            Vec3 vec = new Vec3(Math.sin(val),0,Math.cos(val));
-
+        }else if (attackTick < 31){
+            float value = (float)boss.getOrCreateAnimationValue("swing_hammer",new EaseInOut(0,2,10,3)).getValue()-1;
+//            double val = Math.toRadians(Mth.lerp(pticks,boss.yHeadRotO,boss.yHeadRot) + value*80);
+//            Vec3 vec = new Vec3(Math.sin(val),0,Math.cos(val));
+            Vec3 dirVec = boss.getHammerAttackDirection();
             matrices.pushPose();
             matrices.translate(0,1.75,0);
-            RenderingTools.applyMovementMatrixRotations(matrices,vec);
+            RenderingTools.applyMovementMatrixRotations(matrices,dirVec.yRot((float)Math.toRadians((value)*80 + pticks)));
             matrices.mulPose(Vector3f.XP.rotationDegrees(180));
             matrices.mulPose(Vector3f.YP.rotationDegrees(90));
-            matrices.mulPose(Vector3f.ZP.rotationDegrees(10));
+            matrices.mulPose(Vector3f.ZP.rotationDegrees(5));
             matrices.translate(0,-3*scaleMod+0.5,0);
             matrices.scale(2,scaleMod,scaleMod);
             HAMMER.renderToBuffer(matrices,buffer.getBuffer(RenderType.entityTranslucent(RunicHammerModel.TEXTURE_LOCATION)),
                     light,OverlayTexture.NO_OVERLAY,1,1,1,1);
             matrices.popPose();
-        }else if (attackTick <= 55){
+        }else if (attackTick < 51){
             float value = 1-(float)boss.getOrCreateAnimationValue("end_swing_hammer",new EaseInOut(0,1,20,3)).getValue();
-            double val = Math.toRadians(Mth.lerp(pticks,boss.yHeadRotO,boss.yHeadRot) + 80);
-            Vec3 vec = new Vec3(Math.sin(val),0,Math.cos(val));
-
+//            double val = Math.toRadians(Mth.lerp(pticks,boss.yHeadRotO,boss.yHeadRot) + 80);
+//            Vec3 vec = new Vec3(Math.sin(val),0,Math.cos(val));
+            Vec3 dirVec = boss.getHammerAttackDirection();
             matrices.pushPose();
             matrices.translate(0,1.75,0);
-            RenderingTools.applyMovementMatrixRotations(matrices,vec);
+            RenderingTools.applyMovementMatrixRotations(matrices,dirVec.yRot((float)Math.toRadians(80)));
             matrices.mulPose(Vector3f.XP.rotationDegrees(180));
             matrices.mulPose(Vector3f.YP.rotationDegrees(90));
-            matrices.mulPose(Vector3f.ZP.rotationDegrees(10));
+            matrices.mulPose(Vector3f.ZP.rotationDegrees(5));
             matrices.translate(0,-3*scaleMod+0.5,0);
             matrices.scale(2,scaleMod,scaleMod);
             HAMMER.renderToBuffer(matrices,buffer.getBuffer(RenderType.entityTranslucent(RunicHammerModel.TEXTURE_LOCATION)),

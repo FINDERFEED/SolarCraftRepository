@@ -194,6 +194,7 @@ public class RunicElementalAnimations {
 
         model.lefthand.xRot = model.mlefthand.getInitRotX() - (float)Math.toRadians(80*value);
         model.lefthand.yRot = model.mlefthand.getInitRotY() - (float)Math.toRadians((-80 - 30)*value);
+
     };
 
     public static final RunicElementalModelAnimation END_SWING_HAMMER = (boss,model,limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch,ticker)->{
@@ -221,10 +222,12 @@ public class RunicElementalAnimations {
         model.lefthand.yRot = model.mlefthand.getInitRotY() - (float)Math.toRadians(angle - 30*value);
 
         model.body.yRot = model.mbody.getInitRotY() - (float)Math.toRadians(value*60);
+
+
     };
 
     public static final RunicElementalModelAnimation SWING_HAMMER = (boss,model,limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch,ticker)->{
-        float value = (float)boss.getOrCreateAnimationValue("swing_hammer",new EaseInOut(0,2,15,3)).getValue()-1;
+        float value = (float)boss.getOrCreateAnimationValue("swing_hammer",new EaseInOut(0,2,10,3)).getValue()-1;
 
         model.head.xRot = model.mhead.getInitRotX() + (float)Math.toRadians(20);
         model.body.xRot = model.mbody.getInitRotX() + (float)Math.toRadians(10);
@@ -248,6 +251,8 @@ public class RunicElementalAnimations {
         model.lefthand.yRot = model.mlefthand.getInitRotY() - (float)Math.toRadians(angle - 30);
 
         model.body.yRot = model.mbody.getInitRotY() - (float)Math.toRadians(value*60);
+
+
     };
 
 
@@ -301,12 +306,12 @@ public class RunicElementalAnimations {
     };
 
     public static final RunicElementalModelAnimation HAMMER_ATTACK = (boss,model,limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch,tick)-> {
-        int realTick = tick % 56;
-        if (realTick <= 20){
+        int realTick = tick % 52;
+        if (realTick > 2 && realTick < 21){
             RunicElementalAnimations.PREPARE_SWING_HAMMER.animate(boss,model,limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch,tick);
-        }else if (realTick <= 35){
+        }else if (realTick > 2 && realTick < 31){
             RunicElementalAnimations.SWING_HAMMER.animate(boss,model,limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch,tick);
-        }else {
+        }else if (realTick > 2 && realTick < 51){
             RunicElementalAnimations.END_SWING_HAMMER.animate(boss,model,limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch,tick);
         }
     };

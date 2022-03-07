@@ -35,8 +35,11 @@ public class SolarcraftDebugStick extends Item {
 
         if (player instanceof  Player pl){
             if (!world.isClientSide){
-//                Vec3 vec = player.getLookAngle().multiply(1,0,1).normalize();
-//                System.out.println(Math.toDegrees(Math.atan2(vec.z,vec.x))+180);
+                if (world.getGameTime() % 20 == 0) {
+//                    Vec3 vec = player.getLookAngle().multiply(1, 0, 1).normalize();
+//                    System.out.println("vector " + -1*Math.toDegrees(Math.atan2(vec.x, vec.z)));
+//                    System.out.println("head " + pl.yBodyRot % 180);
+                }
             }
             if (!pl.isCreative() && !pl.isSpectator()){
 

@@ -41,6 +41,7 @@ public class RunicElementalModel extends EntityModel<RunicElementalBoss> {
 	public float headPitch = 0;
 	public float headYaw = 0;
 
+
 	private RunicElementalBoss boss;
 
 	public RunicElementalModel(ModelPart root) {
