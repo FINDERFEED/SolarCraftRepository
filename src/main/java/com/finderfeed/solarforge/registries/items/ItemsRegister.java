@@ -179,6 +179,7 @@ public class ItemsRegister {
     public static final RegistryObject<Item> DAMAGE_AMPLIFICATION_BLOCK = ITEMS.register("damage_amp_block",()->new BlockItem(BlocksRegistry.DAMAGE_AMPLIFICATION_BLOCK.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
     public static final RegistryObject<Item> ARMOR_AMPLIFICATION_BLOCK = ITEMS.register("armor_amp_block",()->new BlockItem(BlocksRegistry.ARMOR_AMPLIFICATION_BLOCK.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
     public static final RegistryObject<Item> REGEN_AMPLIFICATION_BLOCK = ITEMS.register("regen_amp_block",()->new BlockItem(BlocksRegistry.REGENERATION_AMPLIFICATION_BLOCK.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
+    public static final RegistryObject<Item> EVASION_AMPLIFICATION_BLOCK = ITEMS.register("evasion_amp_block",()->new BlockItem(BlocksRegistry.EVASION_AMPLIFICATION_BLOCK.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
 
     public static final RegistryObject<Item> RUNIC_LEAVES = ITEMS.register("runic_leaves",()->new BlockItem(BlocksRegistry.RUNIC_LEAVES.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
     public static final RegistryObject<Item> RUNIC_LOG = ITEMS.register("runic_log",()->new FuelBlockItem(BlocksRegistry.RUNIC_LOG.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS),600));

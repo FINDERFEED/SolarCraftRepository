@@ -3,6 +3,7 @@ package com.finderfeed.solarforge.events;
 
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.achievements.Progression;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
 
 import net.minecraft.world.level.Level;
@@ -26,6 +27,7 @@ public class PlayerTickEvent {
     public void enterIncineratedForest(final TickEvent.PlayerTickEvent event){
         Player entity = event.player;
         if (!entity.level.isClientSide ){
+
                 //TODO:return this when adding biomes to overworld will be possible and also correct things in en_ru.json
 //            Optional<? extends Registry<Biome>> reg = entity.level.registryAccess().registry(Registry.BIOME_REGISTRY);
 //            if ( reg.isPresent() && entity.level.getBiome(entity.blockPosition()).equals(reg.get().get(FeaturesRegistry.MOLTEN_BIOME_KEY))){

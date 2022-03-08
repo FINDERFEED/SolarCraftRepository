@@ -46,6 +46,10 @@ public class RunicWarriorSummoningRocket extends AbstractHurtingProjectile {
         }
     }
 
+    @Override
+    public boolean isOnFire() {
+        return false;
+    }
 
     @Override
     protected float getInertia() {

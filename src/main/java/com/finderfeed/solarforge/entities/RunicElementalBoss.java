@@ -59,6 +59,8 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
 
     public ServerBossEvent BOSS_INFO = new ServerBossEvent(this.getDisplayName(), BossEvent.BossBarColor.RED, BossEvent.BossBarOverlay.NOTCHED_20);
     public static final String MAGIC_MISSILES_ATTACK = "magic_missiles";
+    private BlockPos summoningPos = null;
+
 
     private Map<String,InterpolatedValue> ANIMATION_VALUES = new HashMap<>();
     public BossAttackChain BOSS_ATTACK_CHAIN = new BossAttackChain.Builder()
@@ -70,11 +72,16 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
             .addAttack("deployRefractionCrystals",this::deployRefractionCrystals,40,1,2)
             .addAttack("deployExplosiveCrystals",this::deployExplosiveCrystals,40,1,5)
             .addAttack("throwSummoningRockets",this::throwSummoningRockets,23,1,6)
-            .addAttack("hammerAttack",this::hammerAttack,51*3,1,7)
+            .addAttack("hammerAttack",this::hammerAttack,41*3,1,7)
             .addPostEffectToAttack("hammerAttack",()->rotating = false)
-            .addPostEffectToAttack("throwSummoningRockets",()->isWaitingForPlayerToDestroyExplosiveCrystals = true)
+            .addPostEffectToAttack("throwSummoningRockets",()->{
+                if (summoningPos != null) {
+                    Vec3 pos = Helpers.getBlockCenter(summoningPos);
+                    this.teleportTo(pos.x,pos.y-0.5,pos.z);
+                }
+                isWaitingForPlayerToDestroyExplosiveCrystals = true;})
             .addAftermathAttack(this::postAttack)
-            .setTimeBetweenAttacks(30)
+            .setTimeBetweenAttacks(20)
             .build();
 
 
@@ -90,7 +97,7 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
     public boolean isWaitingForPlayerToDestroyExplosiveCrystals = false;
 
     private boolean rotating = false;
-    private BlockPos summoningPos = null;
+
 
 
     public RunicElementalBoss(EntityType<? extends Mob> p_21368_, Level p_21369_) {
@@ -128,8 +135,10 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
             }
 
 
-
-
+            if (this.getAttackType() == AttackType.HAMMER_SWING && getAttackTick() <= 2){
+                Vec3 attackVec = this.position().add(getHammerAttackDirection());
+                this.lookControl.setLookAt(attackVec.x, attackVec.y + this.getBbHeight()*0.8, attackVec.z, 30, this.getMaxHeadXRot());
+            }
         }
         super.tick();
     }
@@ -149,9 +158,9 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
             if (attackType != AttackType.HAMMER_SWING) {
                 this.lookControl.setLookAt(target.position().add(0, target.getEyeHeight(target.getPose()) * 0.8, 0));
             }else{
-                Vec3 attackVec = this.position().add(getHammerAttackDirection());
                 if (!finishedRotation()) {
-                    this.lookControl.setLookAt(attackVec.x, attackVec.y + this.getBbHeight()*0.8, attackVec.z, 20, this.getMaxHeadXRot());
+                    Vec3 attackVec = this.position().add(getHammerAttackDirection());
+                    this.lookControl.setLookAt(attackVec.x, attackVec.y + this.getBbHeight()*0.8, attackVec.z, 30, this.getMaxHeadXRot());
                 }else{
                     rotating = false;
                 }
@@ -181,6 +190,8 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
                 this.heal(3);
             }else if(b == BlocksRegistry.ARMOR_AMPLIFICATION_BLOCK.get()){
                 this.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE,100,0));
+            }else if (b == BlocksRegistry.EVASION_AMPLIFICATION_BLOCK.get()){
+                this.addEffect(new MobEffectInstance(EffectsRegister.EVASION.get(),100,1));
             }
         }
     }
@@ -281,7 +292,7 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
         if (BOSS_ATTACK_CHAIN.getTicker() == 30){
             int c =getRefractionCrystalsAround().size();
             if (c >= 4) return;
-            List<BlockPos> positions = Helpers.getValidSpawningPositionsAround(level,this.getOnPos(),12,2,2);
+            List<BlockPos> positions = Helpers.getValidSpawningPositionsAround(level,this.getSummoningPos(),12,2,2);
             this.removeDuplicatePositions(positions);
             if (!positions.isEmpty()) {
                 BlockPos randomPos1 = positions.get(level.random.nextInt(positions.size()));
@@ -305,7 +316,7 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
         if (BOSS_ATTACK_CHAIN.getTicker() == 30){
             int c =getExplosiveCrystalsAround().size();
             if (c >= 2) return;
-            List<BlockPos> positions = Helpers.getValidSpawningPositionsAround(level,this.getOnPos(),12,2,2);
+            List<BlockPos> positions = Helpers.getValidSpawningPositionsAround(level,this.getSummoningPos(),12,2,2);
             this.removeDuplicatePositions(positions);
             if (!positions.isEmpty()) {
                 BlockPos randomPos1 = positions.get(level.random.nextInt(positions.size()));
@@ -329,7 +340,7 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
             int playersAround = getPlayersAround(false).size();
             for (int i = 0; i < 3 * playersAround; i++) {
                 RunicWarriorSummoningRocket rocket = new RunicWarriorSummoningRocket(EntityTypes.RUNIC_WARRIOR_ROCKET.get(),level);
-                Vec3 rnd = new Vec3(level.random.nextDouble()*0.5f - 0.25f,1f,level.random.nextDouble()*0.5f - 0.25f);
+                Vec3 rnd = new Vec3(level.random.nextDouble()*0.5f - 0.25f,0.4f,level.random.nextDouble()*0.5f - 0.25f);
                 rocket.setDeltaMovement(rnd);
                 rocket.setPos(this.position().add(0,this.getBbHeight()/2,0));
                 level.addFreshEntity(rocket);
@@ -338,12 +349,15 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
     }
     public void hammerAttack(){
         this.setAttackType(AttackType.HAMMER_SWING);
-        int ticker = BOSS_ATTACK_CHAIN.getTicker() % 52;
+        int ticker = BOSS_ATTACK_CHAIN.getTicker() % 42;
         if (ticker == 1){
+
             rotating = true;
-            this.setHammerAttackDirection(new Vec3(random.nextDouble()*2-1,0,random.nextDouble()*2-1).normalize());
+            List<Player> players = getPlayersAround(false);
+            Vec3 vec = Helpers.getBlockCenter(players.get(level.random.nextInt(players.size())).getOnPos().above()).subtract(this.position()).multiply(1,0,1).normalize();
+            this.setHammerAttackDirection(vec);
         }
-        if (ticker == 26){
+        if (ticker == 21){
             for (Player player : getPlayersAround(false)){
                 Vec3 vec = player.position().subtract(this.position()).multiply(1,0,1).normalize();
                 Vec3 attackDir = getHammerAttackDirection();
@@ -366,11 +380,13 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
     }
 
     public List<BlockPos> getTeleportPositions(){
+        if (summoningPos == null) return List.of(getOnPos());
         ArrayList<BlockPos> p = new ArrayList<>();
-        BlockPos initPos = summoningPos != null ? summoningPos : getOnPos().above();
+        BlockPos initPos = summoningPos;
         p.add(initPos.north(5));
-        p.add(initPos.south(3).east(4));
-        p.add(initPos.south(3).west(4));
+        p.add(initPos.south(5));
+        p.add(initPos.west(5));
+        p.add(initPos.east(5));
         p.remove(getOnPos());
         return p;
     }
@@ -417,6 +433,7 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
     protected void doPush(Entity entity) {
         entity.setDeltaMovement(entity.position().add(0,entity.getBbHeight()/2,0).subtract(this.position().add(0,this.getBbHeight()/2,0)).normalize());
     }
+
 
     @Override
     public boolean isPushable() {
@@ -624,7 +641,17 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
     }
 
     public BlockPos getSummoningPos() {
-        return summoningPos;
+        if (summoningPos != null){
+            Vec3 sumPos = Helpers.getBlockCenter(summoningPos);
+            Vec3 onPos = Helpers.getBlockCenter(getOnPos());
+            if (sumPos.multiply(1,0,1).subtract(onPos.multiply(1,0,1)).length() < 30){
+                return summoningPos;
+            }else{
+                return getOnPos();
+            }
+        }else{
+            return getOnPos();
+        }
     }
 
     public boolean wasAlreadySummoned(){

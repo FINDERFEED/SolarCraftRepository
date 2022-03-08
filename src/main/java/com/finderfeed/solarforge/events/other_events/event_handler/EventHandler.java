@@ -400,6 +400,18 @@ public class EventHandler {
         }
     }
 
+    @SubscribeEvent
+    public static void handleEvasion(LivingDamageEvent event){
+        LivingEntity living = event.getEntityLiving();
+        if (!living.level.isClientSide){
+            if (living.hasEffect(EffectsRegister.EVASION.get())){
+                int level = living.getActiveEffectsMap().get(EffectsRegister.EVASION.get()).getAmplifier();
+                if (living.level.random.nextDouble() <= 0.2 * (level + 1)){
+                    event.setCanceled(true);
+                }
+            }
+        }
+    }
 
 
 
