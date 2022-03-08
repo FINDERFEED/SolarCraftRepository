@@ -81,7 +81,7 @@ public class RunicElementalRenderer extends MobRenderer<RunicElementalBoss, Runi
             }
             matrices.popPose();
         }else if (boss.getAttackType() == RunicElementalBoss.AttackType.HAMMER_SWING){
-            this.handleHammerRender(boss,something,pticks,matrices,buffer,light,tick % 52);
+            this.handleHammerRender(boss,something,pticks,matrices,buffer,light,tick % 42);
 //            matrices.pushPose();
 //
 //            RenderingTools.applyMovementMatrixRotations(matrices,boss.getHammerAttackDirection());
@@ -115,7 +115,7 @@ public class RunicElementalRenderer extends MobRenderer<RunicElementalBoss, Runi
         float scaleMod = 5;
         if (attackTick <= 2) return;
         if (attackTick < 16){
-            float value = (float)boss.getOrCreateAnimationValue("prepare_swing_hammer",new EaseInOut(0,1,20,3)).getValue();
+            float value = (float)boss.getOrCreateAnimationValue("prepare_swing_hammer",new EaseInOut(0,1,15,3)).getValue();
             Vec3 dirVec = boss.getHammerAttackDirection();
             matrices.pushPose();
             matrices.translate(0,1.75,0);
@@ -143,7 +143,7 @@ public class RunicElementalRenderer extends MobRenderer<RunicElementalBoss, Runi
                     light,OverlayTexture.NO_OVERLAY,1,1,1,1);
             matrices.popPose();
         }else if (attackTick < 41){
-            float value = 1-(float)boss.getOrCreateAnimationValue("end_swing_hammer",new EaseInOut(0,1,20,3)).getValue();
+            float value = 1-(float)boss.getOrCreateAnimationValue("end_swing_hammer",new EaseInOut(0,1,15,3)).getValue();
             Vec3 dirVec = boss.getHammerAttackDirection();
             matrices.pushPose();
             matrices.translate(0,1.75,0);
