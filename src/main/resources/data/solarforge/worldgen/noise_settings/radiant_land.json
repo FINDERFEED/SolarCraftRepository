@@ -10,6 +10,11 @@
         "spacing": 100,
         "separation": 80,
         "salt": 956143769
+      },
+      "solarforge:runic_elemental_arena": {
+        "spacing": 200,
+        "separation": 150,
+        "salt": 442382084
       }
     }
   },

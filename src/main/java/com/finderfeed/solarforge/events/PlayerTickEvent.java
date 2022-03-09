@@ -4,6 +4,7 @@ package com.finderfeed.solarforge.events;
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.achievements.Progression;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.player.Player;
 
 import net.minecraft.world.level.Level;
@@ -36,7 +37,6 @@ public class PlayerTickEvent {
 //
 //            }
             if (entity.level.getGameTime() % 20 == 0) {
-
                 if (entity.level.dimension() == Level.NETHER) {
                     Helpers.fireProgressionEvent(entity, Progression.ENTER_NETHER);
                 }

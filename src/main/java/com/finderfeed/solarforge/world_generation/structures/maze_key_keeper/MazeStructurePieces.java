@@ -26,32 +26,17 @@ public class MazeStructurePieces {
     private static final ResourceLocation DUNGEON_PIECE = new ResourceLocation("solarforge", "labyrinth");
     private static final Map<ResourceLocation, BlockPos> OFFSET = ImmutableMap.of(DUNGEON_PIECE, new BlockPos(0, 1, 0));
 
-    /*
-     * Begins assembling your structure and where the pieces needs to go.
-     */
+
     public static void start(StructureManager templateManager, BlockPos pos, Rotation rotation, StructurePieceAccessor pieceList, Random random) {
         int x = pos.getX();
         int z = pos.getZ();
 
-        // This is how we factor in rotation for multi-piece structures.
-        //
-        // I would recommend using the OFFSET map above to have each piece at correct height relative of each other
-        // and keep the X and Z equal to 0. And then in rotations, have the centermost piece have a rotation
-        // of 0, 0, 0 and then have all other pieces' rotation be based off of the bottommost left corner of
-        // that piece (the corner that is smallest in X and Z).
-        //
-        // Lots of trial and error may be needed to get this right for your structure.
+
         BlockPos rotationOffSet = new BlockPos(0, 0, 0).rotate(rotation);
         BlockPos blockpos = rotationOffSet.offset(x, pos.getY()-50, z);
         pieceList.addPiece(new MazeStructurePieces.Piece(templateManager, DUNGEON_PIECE, rotation,blockpos));
     }
 
-    /*
-     * Here's where some voodoo happens. Most of this doesn't need to be touched but you do
-     * have to pass in the IStructurePieceType you registered into the super constructors.
-     *
-     * The method you will most likely want to touch is the handleDataMarker method.
-     */
     public static class Piece extends TemplateStructurePiece {
 
         public Piece( StructureManager templateManagerIn, ResourceLocation resourceLocationIn,Rotation rot, BlockPos pos) {
@@ -93,24 +78,3 @@ public class MazeStructurePieces {
         }
     }
 }
-//        public Piece(StructureManager templateManagerIn, ResourceLocation resourceLocationIn, BlockPos pos, Rotation rotationIn) {
-//            super(FeatureInit.DUNGEON_MAZE_PIECE, 0);
-//            this.resourceLocation = resourceLocationIn;
-//            BlockPos blockpos = MazeStructurePieces.OFFSET.get(resourceLocation);
-//            this.templatePosition = pos.offset(blockpos.getX(), blockpos.getY(), blockpos.getZ());
-//            this.rotation = rotationIn;
-//            this.setupPiece(templateManagerIn);
-//        }
-//
-//        public Piece(StructureManager templateManagerIn, CompoundTag tagCompound) {
-//            super(FeatureInit.DUNGEON_MAZE_PIECE, tagCompound);
-//            this.resourceLocation = new ResourceLocation(tagCompound.getString("Template"));
-//            this.rotation = Rotation.valueOf(tagCompound.getString("Rot"));
-//            this.setupPiece(templateManagerIn);
-//        }
-//
-//        private void setupPiece(StructureManager templateManager) {
-//            Optional<StructureTemplate> template = templateManager.get(this.resourceLocation);
-//            StructurePlaceSettings placementsettings = (new StructurePlaceSettings()).setRotation(this.rotation).setMirror(Mirror.NONE);
-//            this.setup(template, this.templatePosition, placementsettings);
-//        }

@@ -7,6 +7,7 @@ import com.finderfeed.solarforge.world_generation.structures.dimensional_shard_s
 import com.finderfeed.solarforge.world_generation.structures.dungeon_one_key_lock.DungeonOnePieces;
 import com.finderfeed.solarforge.world_generation.structures.magician_tower.MagicianTowerPieces;
 import com.finderfeed.solarforge.world_generation.structures.maze_key_keeper.MazeStructurePieces;
+import com.finderfeed.solarforge.world_generation.structures.runic_elemental_arena.RunicElementalArenaStructurePieces;
 import net.minecraft.core.Registry;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.StructurePieceType;
@@ -27,6 +28,7 @@ public class StructurePieces {
     public static StructurePieceType MAGICIAN_TOWER = MagicianTowerPieces.Piece::new;
     public static StructurePieceType DIMENSIONAL_SHARD_STRUCTURE = DimStructPieces.Piece::new;
     public static StructurePieceType CRYSTAL_BOSS_ROOM_PIECE = CrystalBossRoomStructurePieces.Piece::new;
+    public static StructurePieceType RUNIC_ELEMENTAL_ARENA_PIECE = RunicElementalArenaStructurePieces.Piece::new;
     @SubscribeEvent
     public static void registerFeatures(final RegistryEvent.Register<Feature<?>> event){
         IForgeRegistry<Feature<?>> registry = event.getRegistry();
@@ -37,5 +39,6 @@ public class StructurePieces {
         Registry.register(Registry.STRUCTURE_PIECE,"magician_tower_piece",MAGICIAN_TOWER);
         Registry.register(Registry.STRUCTURE_PIECE,"dimensional_shard_structure",DIMENSIONAL_SHARD_STRUCTURE);
         Registry.register(Registry.STRUCTURE_PIECE,"crystal_boss_room_piece",CRYSTAL_BOSS_ROOM_PIECE);
+        Registry.register(Registry.STRUCTURE_PIECE,"runic_elemental_arena_piece",RUNIC_ELEMENTAL_ARENA_PIECE);
     }
 }

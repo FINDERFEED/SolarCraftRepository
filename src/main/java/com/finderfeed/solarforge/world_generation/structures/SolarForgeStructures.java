@@ -5,6 +5,7 @@ import com.finderfeed.solarforge.world_generation.structures.crystal_boss_room.C
 import com.finderfeed.solarforge.world_generation.structures.dimensional_shard_structure.DimensionalShardStructure;
 import com.finderfeed.solarforge.world_generation.structures.magician_tower.MagicianTowerStructure;
 import com.finderfeed.solarforge.world_generation.structures.maze_key_keeper.MazeStructure;
+import com.finderfeed.solarforge.world_generation.structures.runic_elemental_arena.RunicElementalArenaStructure;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.data.BuiltinRegistries;
@@ -29,6 +30,7 @@ public class SolarForgeStructures {
     public static final RegistryObject<StructureFeature<NoneFeatureConfiguration>> MAGICIAN_TOWER = STRUCTURES.register("magician_tower",()-> new MagicianTowerStructure(NoneFeatureConfiguration.CODEC));
     public static final RegistryObject<StructureFeature<NoneFeatureConfiguration>> DIM_SHARD_STRUCTURE = STRUCTURES.register("dimensional_shard_structure",()-> new DimensionalShardStructure(NoneFeatureConfiguration.CODEC));
     public static final RegistryObject<StructureFeature<NoneFeatureConfiguration>> CRYSTAL_BOSS_ROOM = STRUCTURES.register("crystal_boss_room",()-> new CrystalBossRoomStructure(NoneFeatureConfiguration.CODEC));
+    public static final RegistryObject<StructureFeature<NoneFeatureConfiguration>> RUNIC_ELEMENTAL_ARENA = STRUCTURES.register("runic_elemental_arena",()-> new RunicElementalArenaStructure(NoneFeatureConfiguration.CODEC));
     public static void setupStructures() {
         setupMapSpacingAndLand(
                 DUNGEON_ONE_KEY_LOCK.get(),
@@ -66,6 +68,13 @@ public class SolarForgeStructures {
                 new StructureFeatureConfiguration(100 ,
                         80,
                         956143769 ),
+                true);
+
+        setupMapSpacingAndLand(
+                RUNIC_ELEMENTAL_ARENA.get(),
+                new StructureFeatureConfiguration(200 ,
+                        150,
+                        442382084 ),
                 true);
         // Add more structures here and so on
     }

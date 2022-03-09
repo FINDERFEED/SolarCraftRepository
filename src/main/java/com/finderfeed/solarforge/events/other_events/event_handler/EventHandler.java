@@ -115,6 +115,7 @@ public class EventHandler {
                 addStructureToBiomes(s,SolarForgeStructures.DUNGEON_MAZE.get(), SolarForgeStructureFeatures.CONF_DUNGEON_MAZE, map, Biomes.SAVANNA);
                 addStructureToBiomes(s,SolarForgeStructures.MAGICIAN_TOWER.get(), SolarForgeStructureFeatures.CONF_MAGICIAN_TOWER, map,Biomes.JAGGED_PEAKS,Biomes.STONY_PEAKS);
                 addStructureToBiomes(s,SolarForgeStructures.CRYSTAL_BOSS_ROOM.get(), SolarForgeStructureFeatures.CONF_CRYSTAL_BOSS_ROOM, map, RADIANT_LAND_BIOME_KEY);
+                addStructureToBiomes(s,SolarForgeStructures.RUNIC_ELEMENTAL_ARENA.get(), SolarForgeStructureFeatures.RUNIC_ELEMENTAL_ARENA, map, RADIANT_LAND_BIOME_KEY);
 
                 s.configuredStructures = map.build();
 

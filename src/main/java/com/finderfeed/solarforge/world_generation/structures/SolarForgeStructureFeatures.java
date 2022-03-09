@@ -1,5 +1,6 @@
 package com.finderfeed.solarforge.world_generation.structures;
 
+import com.finderfeed.solarforge.SolarForge;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.core.Registry;
 import net.minecraft.data.BuiltinRegistries;
@@ -18,17 +19,19 @@ public class SolarForgeStructureFeatures {
    public static ConfiguredStructureFeature<?,?> CONF_MAGICIAN_TOWER = SolarForgeStructures.MAGICIAN_TOWER.get().configured(FeatureConfiguration.NONE);
     public static ConfiguredStructureFeature<?,?> CONF_DIM_SHARD_STRUCT = SolarForgeStructures.DIM_SHARD_STRUCTURE.get().configured(FeatureConfiguration.NONE);
     public static ConfiguredStructureFeature<?,?> CONF_CRYSTAL_BOSS_ROOM = SolarForgeStructures.CRYSTAL_BOSS_ROOM.get().configured(FeatureConfiguration.NONE);
+    public static ConfiguredStructureFeature<?,?> RUNIC_ELEMENTAL_ARENA = SolarForgeStructures.RUNIC_ELEMENTAL_ARENA.get().configured(FeatureConfiguration.NONE);
 
 
 
     public static void registerConfiguredStructures() {
         Registry<ConfiguredStructureFeature<?, ?>> registry = BuiltinRegistries.CONFIGURED_STRUCTURE_FEATURE;
-        Registry.register(registry, new ResourceLocation("solarforge", "configured_dungeon_one"), CONF_DUNGEON_ONE);
-        Registry.register(registry, new ResourceLocation("solarforge", "cold_star_charging_station"), CONF_DUNGEON_CHARGING_STATION);
-        Registry.register(registry, new ResourceLocation("solarforge", "labyrinth"), CONF_DUNGEON_MAZE);
-        Registry.register(registry, new ResourceLocation("solarforge", "magician_tower"), CONF_MAGICIAN_TOWER);
-        Registry.register(registry, new ResourceLocation("solarforge", "dimensional_shard_structure"), CONF_DIM_SHARD_STRUCT);
-        Registry.register(registry, new ResourceLocation("solarforge", "crystal_boss_room"), CONF_CRYSTAL_BOSS_ROOM);
+        Registry.register(registry, new ResourceLocation(SolarForge.MOD_ID, "configured_dungeon_one"), CONF_DUNGEON_ONE);
+        Registry.register(registry, new ResourceLocation(SolarForge.MOD_ID, "cold_star_charging_station"), CONF_DUNGEON_CHARGING_STATION);
+        Registry.register(registry, new ResourceLocation(SolarForge.MOD_ID, "labyrinth"), CONF_DUNGEON_MAZE);
+        Registry.register(registry, new ResourceLocation(SolarForge.MOD_ID, "magician_tower"), CONF_MAGICIAN_TOWER);
+        Registry.register(registry, new ResourceLocation(SolarForge.MOD_ID, "dimensional_shard_structure"), CONF_DIM_SHARD_STRUCT);
+        Registry.register(registry, new ResourceLocation(SolarForge.MOD_ID, "crystal_boss_room"), CONF_CRYSTAL_BOSS_ROOM);
+        Registry.register(registry, new ResourceLocation(SolarForge.MOD_ID, "runic_elemental_arena"), RUNIC_ELEMENTAL_ARENA);
       //  Registry.register(WorldGenRegistries.CONFIGURED_FEATURE,new ResourceLocation("solarforge","flowers"),CONF_FEATURE_TEST.delegate.get());
 
 

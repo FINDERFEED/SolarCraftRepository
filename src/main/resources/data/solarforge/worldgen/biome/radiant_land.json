@@ -89,7 +89,8 @@
     ]
   },
   "starts": [
-    "solarforge:crystal_boss_room"
+    "solarforge:crystal_boss_room",
+    "solarforge:runic_elemental_arena"
   ],
   "player_spawn_friendly": true,
   "spawn_costs": {}
