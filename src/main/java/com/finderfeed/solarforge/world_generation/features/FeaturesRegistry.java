@@ -12,6 +12,7 @@ import com.finderfeed.solarforge.world_generation.features.foliage_placers.Folia
 import com.finderfeed.solarforge.world_generation.features.trunk_placers.BurntTreeTrunkPlacer;
 import com.google.common.collect.ImmutableSet;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.data.worldgen.features.FeatureUtils;
 import net.minecraft.data.worldgen.features.OreFeatures;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
@@ -53,13 +54,15 @@ import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.featuresize.TwoLayersFeatureSize;
 import net.minecraftforge.registries.ForgeRegistries;
 
+import java.util.List;
+
 
 //i hate you with every ounce of being mojang!
 public class FeaturesRegistry {
 
 
 
-    public static ConfiguredFeature<?,?> BURNT_TREE_FEATURE_2_CONF;
+    public static ConfiguredFeature<TreeConfiguration,?> BURNT_TREE_FEATURE_2_CONF;
 
 
     public static ConfiguredFeature<?,?> BURNT_TREE_FEATURE_CONF;
@@ -103,25 +106,28 @@ public class FeaturesRegistry {
     public static ConfiguredFeature<?,?> LUNAR_LILY_FEATURE_CONF;
     public static ConfiguredFeature<?,?> EMPTY_CRYSTALS_CONF;
 
-    public static PlacedFeature BURNT_TREE_2;
-    public static PlacedFeature BURNT_TREE_1;
-    public static PlacedFeature RADIANT_TREE_CONFIGURED;
-    public static PlacedFeature RADIANT_SMALL_TREE_CONFIGURED;
-    public static PlacedFeature ENERGY_PYLON_CONFIGURED;
-    public static PlacedFeature MOLTEN_FOREST_RUINS_CONFIGURED;
-    public static PlacedFeature RANDOM_PATCH_RADIANT_GRASS;
-    public static PlacedFeature FLOATING_ISLANDS_RADIANT_LAND_CONFIGURED;
-    public static PlacedFeature CRYSTALLIZED_ORE_VEIN_CONFIGURED;
-    public static PlacedFeature RADIANT_BERRY_BUSH;
-    public static PlacedFeature ENDER_CRACKS;
-    public static PlacedFeature LENSING_CRYSTAL_ORE_PLACEMENT;
-    public static PlacedFeature CRYSTAL_CAVE_ORE_CRYSTAL_PLACEMENT;
-    public static PlacedFeature CEILING_FLOOR_CRYSTALS_PLACEMENT;
-    public static PlacedFeature CRYSTAL_FLOWER_PLACEMENT;
-    public static PlacedFeature CEILING_DRIPSTONE_LIKE_CRYSTALS_PLACEMENT;
-    public static PlacedFeature CRYSTALLIZED_RUNIC_ENERGY_CRYSTALS_PLACEMENT;
-    public static PlacedFeature LUNAR_LILY_FEATURE_PLACEMENT;
-    public static PlacedFeature EMPTY_CRYSTALS_PLACEMENT;
+    public static Holder<PlacedFeature> BURNT_TREE_2;
+    public static Holder<PlacedFeature> BURNT_TREE_1;
+    public static Holder<PlacedFeature> RADIANT_TREE_CONFIGURED;
+    public static Holder<PlacedFeature> RADIANT_SMALL_TREE_CONFIGURED;
+    public static Holder<PlacedFeature> ENERGY_PYLON_CONFIGURED;
+    public static Holder<PlacedFeature> MOLTEN_FOREST_RUINS_CONFIGURED;
+    public static Holder<PlacedFeature> RANDOM_PATCH_RADIANT_GRASS;
+    public static Holder<PlacedFeature> FLOATING_ISLANDS_RADIANT_LAND_CONFIGURED;
+    public static Holder<PlacedFeature> CRYSTALLIZED_ORE_VEIN_CONFIGURED;
+    public static Holder<PlacedFeature> RADIANT_BERRY_BUSH;
+    public static Holder<PlacedFeature> ENDER_CRACKS;
+    public static Holder<PlacedFeature> LENSING_CRYSTAL_ORE_PLACEMENT;
+    public static Holder<PlacedFeature> CRYSTAL_CAVE_ORE_CRYSTAL_PLACEMENT;
+    public static Holder<PlacedFeature> CEILING_FLOOR_CRYSTALS_PLACEMENT;
+    public static Holder<PlacedFeature> CRYSTAL_FLOWER_PLACEMENT;
+    public static Holder<PlacedFeature> CEILING_DRIPSTONE_LIKE_CRYSTALS_PLACEMENT;
+    public static Holder<PlacedFeature> CRYSTALLIZED_RUNIC_ENERGY_CRYSTALS_PLACEMENT;
+    public static Holder<PlacedFeature> LUNAR_LILY_FEATURE_PLACEMENT;
+    public static Holder<PlacedFeature> EMPTY_CRYSTALS_PLACEMENT;
+    public static Holder<PlacedFeature> RUNIC_TREE_FEATURE;
+    public static Holder<PlacedFeature> ULDORADIUM_ORE_PLACED_FEATURE;
+    public static Holder<PlacedFeature> BURNT_BIOME_AMBIENECE_PLACED_FEATURE;
     //public static ConfiguredFeature<?,?> RADIANT_LAND_AMBIENT_TREE;
 
 
@@ -130,17 +136,17 @@ public class FeaturesRegistry {
             .configured(NoneFeatureConfiguration.INSTANCE);
 //            .decorated(FeatureDecorator.CHANCE.configured(new ChanceDecoratorConfiguration(4)
 
-    public static PlacedFeature BURNT_BIOME_AMBIENECE_PLACED_FEATURE;
 
-    public static final ConfiguredFeature<?,?> ULDORADIUM_ORE =
-            Feature.ORE.configured(new OreConfiguration(OreFeatures.NATURAL_STONE, BlocksRegistry.ULDORADIUM_ORE.get().defaultBlockState(),6));
+
+    public static final ConfiguredFeature<OreConfiguration,?> ULDORADIUM_ORE =
+            new ConfiguredFeature<>(Feature.ORE,new OreConfiguration(OreFeatures.NATURAL_STONE, BlocksRegistry.ULDORADIUM_ORE.get().defaultBlockState(),6));
 //            .rangeUniform(VerticalAnchor.bottom(),VerticalAnchor.absolute(60)).squared().count(6);
 
-    public static PlacedFeature ULDORADIUM_ORE_PLACED_FEATURE;
 
-    public static ConfiguredFeature<?,?> RUNIC_TREE_FEATURE_CONF;
 
-    public static PlacedFeature RUNIC_TREE_FEATURE;
+    public static ConfiguredFeature<TreeConfiguration,?> RUNIC_TREE_FEATURE_CONF;
+
+
 
     public static void registerFeatures(final RegistryEvent.Register<Feature<?>> event){
         event.getRegistry().register(BURNT_BIOME_AMBIENCE_1.setRegistryName(BURNT_BIOME_BURNT_TREE));
@@ -174,17 +180,18 @@ public class FeaturesRegistry {
 
     public static void registerConfiguredFeatures(final FMLCommonSetupEvent event){
         event.enqueueWork(()->{
-//
-//            Registry.register(Registry.FOLIAGE_PLACER_TYPES,new ResourceLocation("solarforge","burnt_tree_foliage"), FoliagePlacerRegistry.BURNT_TREE_PLACER);
-//            Registry.register(Registry.FOLIAGE_PLACER_TYPES,new ResourceLocation("solarforge","radiant_tree_foliage"), FoliagePlacerRegistry.RADIANT_PLACER);
-//            Registry.register(Registry.FOLIAGE_PLACER_TYPES,new ResourceLocation("solarforge","radiant_tree_small_foliage"), FoliagePlacerRegistry.RADIANT_SMALL_PLACER);
-            BURNT_TREE_FEATURE_2_CONF = Feature.TREE.configured(new TreeConfiguration.TreeConfigurationBuilder(
+            BURNT_TREE_FEATURE_2_CONF = new ConfiguredFeature<>(Feature.TREE,new TreeConfiguration.TreeConfigurationBuilder(
                     BlockStateProvider.simple(BlocksRegistry.BURNT_LOG.get().defaultBlockState()),
                     new StraightTrunkPlacer(4, 2, 0),
                     BlockStateProvider.simple(BlocksRegistry.ASH_LEAVES.get().defaultBlockState()),
                     new BlobFoliagePlacer(ConstantInt.of(2), ConstantInt.of(0), 3),
                     new TwoLayersFeatureSize(1, 0, 1))
                     .ignoreVines().build());
+//
+//            Registry.register(Registry.FOLIAGE_PLACER_TYPES,new ResourceLocation("solarforge","burnt_tree_foliage"), FoliagePlacerRegistry.BURNT_TREE_PLACER);
+//            Registry.register(Registry.FOLIAGE_PLACER_TYPES,new ResourceLocation("solarforge","radiant_tree_foliage"), FoliagePlacerRegistry.RADIANT_PLACER);
+//            Registry.register(Registry.FOLIAGE_PLACER_TYPES,new ResourceLocation("solarforge","radiant_tree_small_foliage"), FoliagePlacerRegistry.RADIANT_SMALL_PLACER);
+
 
             BURNT_TREE_2 = BURNT_TREE_FEATURE_2_CONF.placed(
                     PlacementUtils.countExtra(10,0.1f,1),
@@ -249,7 +256,7 @@ public class FeaturesRegistry {
             MOLTEN_FOREST_RUINS_CONFIGURED_CONF = BURNT_BIOME_AMBIENCE_2.configured(NoneFeatureConfiguration.INSTANCE);
 
             //TODO:switch back to 60 when incinerated forest returns
-            MOLTEN_FOREST_RUINS_CONFIGURED = MOLTEN_FOREST_RUINS_CONFIGURED_CONF.placed(RarityFilter.onAverageOnceEvery(120));
+            MOLTEN_FOREST_RUINS_CONFIGURED = new PlacedFeature(Holder.direct(MOLTEN_FOREST_RUINS_CONFIGURED_CONF), List.of(RarityFilter.onAverageOnceEvery(120)));
 
             Registry.register(BuiltinRegistries.CONFIGURED_FEATURE,new ResourceLocation("solarforge","configured_ruins_configured"), MOLTEN_FOREST_RUINS_CONFIGURED_CONF);
             registerPlacedFeature(MOLTEN_FOREST_RUINS_CONFIGURED,"configured_ruins");
@@ -405,5 +412,6 @@ public class FeaturesRegistry {
     private static void registerPlacedFeature(PlacedFeature feature,String registryid){
         Registry.register(BuiltinRegistries.PLACED_FEATURE,new ResourceLocation(SolarForge.MOD_ID,registryid),feature);
     }
+
 
 }

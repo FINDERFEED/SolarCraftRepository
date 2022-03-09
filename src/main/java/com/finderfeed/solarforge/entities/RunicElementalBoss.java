@@ -7,6 +7,7 @@ import com.finderfeed.solarforge.local_library.other.InterpolatedValue;
 import com.finderfeed.solarforge.magic.projectiles.FallingMagicMissile;
 import com.finderfeed.solarforge.magic.projectiles.RunicWarriorSummoningRocket;
 import com.finderfeed.solarforge.misc_things.CrystalBossBuddy;
+import com.finderfeed.solarforge.packet_handler.packets.TeleportEntityPacket;
 import com.finderfeed.solarforge.registries.attributes.AttributesRegistry;
 import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
 import com.finderfeed.solarforge.registries.data_serializers.FDEntityDataSerializers;
@@ -22,6 +23,7 @@ import net.minecraft.network.syncher.EntityDataSerializer;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerBossEvent;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.Mth;
@@ -70,11 +72,11 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
     private Map<String,InterpolatedValue> ANIMATION_VALUES = new HashMap<>();
     public BossAttackChain BOSS_ATTACK_CHAIN = new BossAttackChain.Builder()
             .addAttack("teleport",this::teleport,5,1,0)
-            .addAttack(MAGIC_MISSILES_ATTACK,this::magicMissilesAttack,220,10,1)
-            .addAttack("sunstrikes",this::sunstrikes,130,1,3)
-            .addAttack("earthquake",this::earthquake,120,30,3)
+            .addAttack(MAGIC_MISSILES_ATTACK,this::magicMissilesAttack,220,10,3)
+            .addAttack("sunstrikes",this::sunstrikes,130,1,2)
+            .addAttack("earthquake",this::earthquake,120,30,2)
             .addAttack("vartDader",this::varthDader,120,1,4)
-            .addAttack("deployRefractionCrystals",this::deployRefractionCrystals,40,1,2)
+            .addAttack("deployRefractionCrystals",this::deployRefractionCrystals,40,1,1)
             .addAttack("deployExplosiveCrystals",this::deployExplosiveCrystals,40,1,5)
             .addAttack("throwSummoningRockets",this::throwSummoningRockets,23,1,6)
             .addAttack("hammerAttack",this::hammerAttack,41*3,1,7)
@@ -212,6 +214,7 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
         this.setAttackType(AttackType.MAGIC_MISSILES);
         if (BOSS_ATTACK_CHAIN.getTicker() > 30 && BOSS_ATTACK_CHAIN.getTicker() < 205) {
             LivingEntity target = getTarget();
+            if (target == null) return;
             Vec3 between = target.position().add(0,target.getEyeHeight(target.getPose())*0.8,0).subtract(position().add(0, 2, 0));
             FallingMagicMissile missile = new FallingMagicMissile(level,between.normalize().multiply(2,2,2));
             missile.setSpeedDecrement(0);
@@ -286,6 +289,7 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
         this.setAttackType(AttackType.VARTH_DADER);
         if (BOSS_ATTACK_CHAIN.getTicker() > 15 && BOSS_ATTACK_CHAIN.getTicker() < 105) {
             Player player = (Player) getTarget();
+            if (player == null) return;
             this.setVarthDaderTarget(player.getId());
             Helpers.setServerPlayerSpeed((ServerPlayer) player, new Vec3(0, 4 / 90f, 0));
             if (BOSS_ATTACK_CHAIN.getTicker() % 10 == 0) {
@@ -391,6 +395,7 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
             List<BlockPos> positions = getTeleportPositions();
             BlockPos rnd = positions.get(level.random.nextInt(positions.size()));
             this.teleportTo(rnd.getX() + 0.5,rnd.getY(),rnd.getZ() + 0.5);
+            TeleportEntityPacket.sendPacket((ServerLevel)level,this,new Vec3(rnd.getX() + 0.5,rnd.getY(),rnd.getZ() + 0.5));
         }
     }
 
@@ -421,6 +426,7 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
         for (ExplosiveCrystal crystal : getExplosiveCrystalsAround()){
             positions.remove(crystal.getOnPos());
         }
+        positions.remove(getOnPos().above());
     }
 
     public void setVarthDaderTarget(int eID){
@@ -452,6 +458,7 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
 
     @Override
     protected void doPush(Entity entity) {
+        if (!(entity instanceof Player)) return;
         entity.setDeltaMovement(entity.position().add(0,entity.getBbHeight()/2,0).subtract(this.position().add(0,this.getBbHeight()/2,0)).normalize());
     }
 
@@ -693,6 +700,12 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
             if (checkTargetInterval > 0) return target;
             checkTargetInterval = 5;
             Vec3 vec = target.position().subtract(this.position());
+            if (target instanceof Player player && (player.isCreative() || player.isSpectator())) {
+                setTarget(null);
+                seekTargetCooldown = 20;
+                return null;
+            }
+
             if (vec.length() <= 16 && this.getSensing().hasLineOfSight(target)){
                 return target;
             }else{

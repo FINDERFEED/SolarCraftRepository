@@ -33,7 +33,7 @@ public class MazeStructurePieces {
 
 
         BlockPos rotationOffSet = new BlockPos(0, 0, 0).rotate(rotation);
-        BlockPos blockpos = rotationOffSet.offset(x, pos.getY()-50, z);
+        BlockPos blockpos = rotationOffSet.offset(x-7, pos.getY()-50, z-20);
         pieceList.addPiece(new MazeStructurePieces.Piece(templateManager, DUNGEON_PIECE, rotation,blockpos));
     }
 

@@ -36,6 +36,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.level.ServerPlayer;
@@ -77,6 +78,12 @@ public class ClientHelpers {
         AncientFragment.initFragmentsMap();
     }
 
+    public static void handleTeleportEntityPacket(int eID,Vec3 pos){
+        Entity e = Minecraft.getInstance().level.getEntity(eID);
+        if (e != null){
+            e.teleportTo(pos.x,pos.y,pos.z);
+        }
+    }
 
     /**
      * Method to fix that singleplayer client-server shit

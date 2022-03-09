@@ -1,40 +1,23 @@
 package com.finderfeed.solarforge.world_generation.structures;
 
 import com.finderfeed.solarforge.world_generation.structures.dungeon_one_key_lock.DungeonOnePieces;
-import com.finderfeed.solarforge.world_generation.structures.maze_key_keeper.MazeStructure;
-import com.finderfeed.solarforge.world_generation.structures.maze_key_keeper.MazeStructurePieces;
 import com.mojang.serialization.Codec;
-import net.minecraft.world.level.LevelHeightAccessor;
-import net.minecraft.world.level.NoiseColumn;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.Rotation;
-import net.minecraft.world.level.levelgen.WorldgenRandom;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.level.ChunkPos;
-import net.minecraft.world.level.levelgen.structure.BoundingBox;
-import net.minecraft.core.RegistryAccess;
-import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.biome.Biome;
-import net.minecraft.world.level.biome.BiomeSource;
-import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.levelgen.feature.StructureFeature;
-import net.minecraft.world.level.levelgen.structure.PostPlacementProcessor;
-import net.minecraft.world.level.levelgen.structure.StructureStart;
 import net.minecraft.world.level.levelgen.structure.pieces.PieceGenerator;
 import net.minecraft.world.level.levelgen.structure.pieces.PieceGeneratorSupplier;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePiecesBuilder;
-import net.minecraft.world.level.levelgen.structure.templatesystem.StructureManager;
 
 
+public class DungeonOne extends StructureFeature<NoneFeatureConfiguration> {
 
-public class AbstractStructure extends StructureFeature<NoneFeatureConfiguration> {
 
-
-    public AbstractStructure(Codec<NoneFeatureConfiguration> p_197168_) {
-        super(p_197168_, PieceGeneratorSupplier.simple(PieceGeneratorSupplier.checkForBiomeOnTop(Heightmap.Types.WORLD_SURFACE_WG), AbstractStructure::generatePieces));
+    public DungeonOne(Codec<NoneFeatureConfiguration> p_197168_) {
+        super(p_197168_, PieceGeneratorSupplier.simple(PieceGeneratorSupplier.checkForBiomeOnTop(Heightmap.Types.WORLD_SURFACE_WG), DungeonOne::generatePieces));
     }
 
     private static void generatePieces(StructurePiecesBuilder p_197089_, PieceGenerator.Context<NoneFeatureConfiguration> ctx) {

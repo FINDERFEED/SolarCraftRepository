@@ -102,38 +102,38 @@ public class EventHandler {
     }
 
 
-    @SubscribeEvent
-    public static void addStructures(WorldEvent.Load event){
-        if (event.getWorld() instanceof ServerLevel serverLevel) {
-            StructureSettings s = serverLevel.getChunkSource().getGenerator().getSettings();
-
-                ImmutableMap.Builder<StructureFeature<?>, ImmutableMultimap<ConfiguredStructureFeature<?, ?>, ResourceKey<Biome>>> map = ImmutableMap.builder();
-                s.configuredStructures.forEach(map::put);
-                addStructureToBiomes(s,SolarForgeStructures.DIM_SHARD_STRUCTURE.get(), SolarForgeStructureFeatures.CONF_DIM_SHARD_STRUCT, map, Biomes.JUNGLE);
-                addStructureToBiomes(s,SolarForgeStructures.DUNGEON_ONE_KEY_LOCK.get(), SolarForgeStructureFeatures.CONF_DUNGEON_ONE, map, Biomes.DESERT);
-                addStructureToBiomes(s,SolarForgeStructures.CHARGING_STATION.get(), SolarForgeStructureFeatures.CONF_DUNGEON_CHARGING_STATION, map, Biomes.PLAINS);
-                addStructureToBiomes(s,SolarForgeStructures.DUNGEON_MAZE.get(), SolarForgeStructureFeatures.CONF_DUNGEON_MAZE, map, Biomes.SAVANNA);
-                addStructureToBiomes(s,SolarForgeStructures.MAGICIAN_TOWER.get(), SolarForgeStructureFeatures.CONF_MAGICIAN_TOWER, map,Biomes.JAGGED_PEAKS,Biomes.STONY_PEAKS);
-                addStructureToBiomes(s,SolarForgeStructures.CRYSTAL_BOSS_ROOM.get(), SolarForgeStructureFeatures.CONF_CRYSTAL_BOSS_ROOM, map, RADIANT_LAND_BIOME_KEY);
-                addStructureToBiomes(s,SolarForgeStructures.RUNIC_ELEMENTAL_ARENA.get(), SolarForgeStructureFeatures.RUNIC_ELEMENTAL_ARENA, map, RADIANT_LAND_BIOME_KEY);
-
-                s.configuredStructures = map.build();
-
-        }
-    }
-
-    private static void addStructureToBiomes(StructureSettings s,StructureFeature<?> feature,
-                                             ConfiguredStructureFeature<?,?> configuredStruct,
-                                             ImmutableMap.Builder<StructureFeature<?>, ImmutableMultimap<ConfiguredStructureFeature<?, ?>, ResourceKey<Biome>>> map,
-                                             ResourceKey<Biome>... biomes){
-        if (!s.configuredStructures.containsKey(feature)) {
-            ImmutableMultimap.Builder<ConfiguredStructureFeature<?, ?>, ResourceKey<Biome>> secondMap = ImmutableMultimap.builder();
-            for (ResourceKey<Biome> key : biomes) {
-                secondMap.put(configuredStruct, key);
-            }
-            map.put(feature, secondMap.build());
-        }
-    }
+//    @SubscribeEvent
+//    public static void addStructures(WorldEvent.Load event){
+//        if (event.getWorld() instanceof ServerLevel serverLevel) {
+//            StructureSettings s = serverLevel.getChunkSource().getGenerator().getSettings();
+//
+//                ImmutableMap.Builder<StructureFeature<?>, ImmutableMultimap<ConfiguredStructureFeature<?, ?>, ResourceKey<Biome>>> map = ImmutableMap.builder();
+//                s.configuredStructures.forEach(map::put);
+//                addStructureToBiomes(s,SolarForgeStructures.DIM_SHARD_STRUCTURE.get(), SolarForgeStructureFeatures.CONF_DIM_SHARD_STRUCT, map, Biomes.JUNGLE);
+//                addStructureToBiomes(s,SolarForgeStructures.DUNGEON_ONE_KEY_LOCK.get(), SolarForgeStructureFeatures.CONF_DUNGEON_ONE, map, Biomes.DESERT);
+//                addStructureToBiomes(s,SolarForgeStructures.CHARGING_STATION.get(), SolarForgeStructureFeatures.CONF_DUNGEON_CHARGING_STATION, map, Biomes.PLAINS);
+//                addStructureToBiomes(s,SolarForgeStructures.DUNGEON_MAZE.get(), SolarForgeStructureFeatures.CONF_DUNGEON_MAZE, map, Biomes.SAVANNA);
+//                addStructureToBiomes(s,SolarForgeStructures.MAGICIAN_TOWER.get(), SolarForgeStructureFeatures.CONF_MAGICIAN_TOWER, map,Biomes.JAGGED_PEAKS,Biomes.STONY_PEAKS);
+//                addStructureToBiomes(s,SolarForgeStructures.CRYSTAL_BOSS_ROOM.get(), SolarForgeStructureFeatures.CONF_CRYSTAL_BOSS_ROOM, map, RADIANT_LAND_BIOME_KEY);
+//                addStructureToBiomes(s,SolarForgeStructures.RUNIC_ELEMENTAL_ARENA.get(), SolarForgeStructureFeatures.RUNIC_ELEMENTAL_ARENA, map, RADIANT_LAND_BIOME_KEY);
+//
+//                s.configuredStructures = map.build();
+//
+//        }
+//    }
+//
+//    private static void addStructureToBiomes(StructureSettings s,StructureFeature<?> feature,
+//                                             ConfiguredStructureFeature<?,?> configuredStruct,
+//                                             ImmutableMap.Builder<StructureFeature<?>, ImmutableMultimap<ConfiguredStructureFeature<?, ?>, ResourceKey<Biome>>> map,
+//                                             ResourceKey<Biome>... biomes){
+//        if (!s.configuredStructures.containsKey(feature)) {
+//            ImmutableMultimap.Builder<ConfiguredStructureFeature<?, ?>, ResourceKey<Biome>> secondMap = ImmutableMultimap.builder();
+//            for (ResourceKey<Biome> key : biomes) {
+//                secondMap.put(configuredStruct, key);
+//            }
+//            map.put(feature, secondMap.build());
+//        }
+//    }
 
 
     @SubscribeEvent

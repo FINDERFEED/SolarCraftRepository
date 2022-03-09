@@ -46,7 +46,7 @@ public class DungeonOnePieces {
             //
             // Lots of trial and error may be needed to get this right for your structure.
             BlockPos rotationOffSet = new BlockPos(0, 0, 0).rotate(rotation);
-            BlockPos blockpos = rotationOffSet.offset(x, pos.getY()-14, z);
+            BlockPos blockpos = rotationOffSet.offset(x-20, pos.getY()-14, z-20);
             pieceList.addPiece(new DungeonOnePieces.Piece(templateManager, DUNGEON_PIECE, rotation,blockpos));
         }
 

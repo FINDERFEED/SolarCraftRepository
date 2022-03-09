@@ -29,7 +29,7 @@ public class CrystalBossRoomStructurePieces {
         int x = pos.getX();
         int z = pos.getZ();
         BlockPos rotationOffSet = new BlockPos(0, 0, 0).rotate(rotation);
-        BlockPos blockpos = rotationOffSet.offset(x, pos.getY(), z);
+        BlockPos blockpos = rotationOffSet.offset(x-20, pos.getY(), z-20);
         pieceList.addPiece(new CrystalBossRoomStructurePieces.Piece(templateManager, DUNGEON_PIECE, rotation,blockpos));
     }
 

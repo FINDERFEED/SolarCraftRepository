@@ -24,7 +24,7 @@ import java.util.Map;
 public class SolarForgeStructures {
     public static final DeferredRegister<StructureFeature<?>> STRUCTURES = DeferredRegister.create(ForgeRegistries.STRUCTURE_FEATURES,"solarforge");
 
-    public static final RegistryObject<StructureFeature<NoneFeatureConfiguration>> DUNGEON_ONE_KEY_LOCK = STRUCTURES.register("solarforge_dungeon_one",()-> new AbstractStructure(NoneFeatureConfiguration.CODEC));
+    public static final RegistryObject<StructureFeature<NoneFeatureConfiguration>> DUNGEON_ONE_KEY_LOCK = STRUCTURES.register("solarforge_dungeon_one",()-> new DungeonOne(NoneFeatureConfiguration.CODEC));
     public static final RegistryObject<StructureFeature<NoneFeatureConfiguration>> DUNGEON_MAZE = STRUCTURES.register("labyrinth",()-> new MazeStructure(NoneFeatureConfiguration.CODEC));
     public static final RegistryObject<StructureFeature<NoneFeatureConfiguration>> CHARGING_STATION = STRUCTURES.register("cold_star_charging_station",()-> new ChargingStationStructure(NoneFeatureConfiguration.CODEC));
     public static final RegistryObject<StructureFeature<NoneFeatureConfiguration>> MAGICIAN_TOWER = STRUCTURES.register("magician_tower",()-> new MagicianTowerStructure(NoneFeatureConfiguration.CODEC));

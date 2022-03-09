@@ -3,6 +3,7 @@ package com.finderfeed.solarforge.magic.items.item_tiers;
 import com.finderfeed.solarforge.SolarCraftTags;
 import com.finderfeed.solarforge.registries.items.ItemsRegister;
 import net.minecraft.tags.Tag;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.util.LazyLoadedValue;
@@ -23,10 +24,10 @@ public enum SolarCraftToolTiers implements Tier {
     private final float speed;
     private final float damage;
     private final int enchantmentValue;
-    private final Tag<Block> blockTag;
+    private final TagKey<Block> blockTag;
     private final LazyLoadedValue<Ingredient> repairIngredient;
 
-    SolarCraftToolTiers(int p_i48458_3_, int p_i48458_4_, float p_i48458_5_, float p_i48458_6_, int p_i48458_7_, Supplier<Ingredient> p_i48458_8_,Tag<Block> tag) {
+    SolarCraftToolTiers(int p_i48458_3_, int p_i48458_4_, float p_i48458_5_, float p_i48458_6_, int p_i48458_7_, Supplier<Ingredient> p_i48458_8_,TagKey<Block> tag) {
         this.level = p_i48458_3_;
         this.uses = p_i48458_4_;
         this.speed = p_i48458_5_;
@@ -63,7 +64,7 @@ public enum SolarCraftToolTiers implements Tier {
 
     @Nullable
     @Override
-    public Tag<Block> getTag() {
+    public TagKey<Block> getTag() {
         return blockTag;
     }
 }

@@ -3,14 +3,15 @@ package com.finderfeed.solarforge;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.Tag;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;
 
 public class SolarCraftTags {
 
-    public static final Tag.Named<Block> ILLIDIUM_TAG = BlockTags.createOptional(new ResourceLocation(SolarForge.MOD_ID,"illidium"));
-    public static final Tag.Named<Block> QUALADIUM_TAG = BlockTags.createOptional(new ResourceLocation(SolarForge.MOD_ID,"qualadium"));
-    public static final Tag.Named<Block> CHARGED_QUALADIUM_TAG = BlockTags.createOptional(new ResourceLocation(SolarForge.MOD_ID,"charged_qualadium"));
-    public static final Tag.Named<Block> SOLAR_GOD_TAG = BlockTags.createOptional(new ResourceLocation(SolarForge.MOD_ID,"solar_god"));
+    public static final TagKey<Block> ILLIDIUM_TAG = BlockTags.create(new ResourceLocation(SolarForge.MOD_ID,"illidium"));
+    public static final TagKey<Block> QUALADIUM_TAG = BlockTags.create(new ResourceLocation(SolarForge.MOD_ID,"qualadium"));
+    public static final TagKey<Block> CHARGED_QUALADIUM_TAG = BlockTags.create(new ResourceLocation(SolarForge.MOD_ID,"charged_qualadium"));
+    public static final TagKey<Block> SOLAR_GOD_TAG = BlockTags.create(new ResourceLocation(SolarForge.MOD_ID,"solar_god"));
 
     public static final String SOLAR_GOD_SWORD_TAG = "solarcraft_solar_god_sword";
     public static final String SOLAR_GOD_SWORD_LEVEL_TAG = "solarcraft_solar_god_sword_level";

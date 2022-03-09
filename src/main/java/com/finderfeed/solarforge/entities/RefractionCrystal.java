@@ -66,6 +66,7 @@ public class RefractionCrystal extends Mob implements CrystalBossBuddy {
 
     @Override
     protected void doPush(Entity entity) {
+        if (!(entity instanceof Player)) return;
         entity.setDeltaMovement(entity.position().add(0,entity.getBbHeight()/2,0).subtract(this.position().add(0,this.getBbHeight()/2,0)).normalize());
     }
 
