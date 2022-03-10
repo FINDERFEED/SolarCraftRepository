@@ -4,6 +4,7 @@ import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 
 public class SolarCraftTags {
@@ -34,19 +35,19 @@ public class SolarCraftTags {
     public static final String CAN_PLAYER_USE = "solar_forge_can_player_use_";
 
     public static class SBiomes {
-        public static final TagKey<net.minecraft.world.level.biome.Biome> IS_DESERT =
+        public static final TagKey<Biome> IS_DESERT =
                 TagKey.create(Registry.BIOME_REGISTRY,
                 new ResourceLocation(SolarForge.MOD_ID,"is_desert"));
 
-        public static final TagKey<net.minecraft.world.level.biome.Biome> IS_SAVANNA =
+        public static final TagKey<Biome> IS_SAVANNA =
                 TagKey.create(Registry.BIOME_REGISTRY,
                         new ResourceLocation(SolarForge.MOD_ID,"is_savanna"));
 
-        public static final TagKey<net.minecraft.world.level.biome.Biome> IS_PLAINS =
+        public static final TagKey<Biome> IS_PLAINS =
                 TagKey.create(Registry.BIOME_REGISTRY,
                         new ResourceLocation(SolarForge.MOD_ID,"is_plains"));
 
-        public static final TagKey<net.minecraft.world.level.biome.Biome> IS_RADIANT_LAND =
+        public static final TagKey<Biome> IS_RADIANT_LAND =
                 TagKey.create(Registry.BIOME_REGISTRY,
                         new ResourceLocation(SolarForge.MOD_ID,"is_radiant_land"));
 
