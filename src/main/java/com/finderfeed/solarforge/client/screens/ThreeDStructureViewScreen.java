@@ -206,7 +206,7 @@ class Getter implements BlockAndTintGetter {
 
     @Override
     public int getBlockTint(BlockPos pos, ColorResolver resolver) {
-        return  resolver.getColor(Minecraft.getInstance().level.getBiome(pos),pos.getX(),pos.getZ());
+        return  resolver.getColor(Minecraft.getInstance().level.getBiome(pos).value(),pos.getX(),pos.getZ());
     }
 
     @Nullable

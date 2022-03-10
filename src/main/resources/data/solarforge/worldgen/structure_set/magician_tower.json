@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "solarforge:magician_tower",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "salt": 31157935,
+    "spacing": 200,
+    "separation": 150,
+    "type": "minecraft:random_spread"
+  }
+}

@@ -41,7 +41,7 @@ public class RadiantGrass extends NormalGrassBlock {
             if (var12.isAir()) {
                 BlockState var10;
                 if (p_53688_.nextInt(8) == 0) {
-                    List<ConfiguredFeature<?, ?>> var11 = p_53687_.getBiome(var8).getGenerationSettings().getFlowerFeatures();
+                    List<ConfiguredFeature<?, ?>> var11 = p_53687_.getBiome(var8).value().getGenerationSettings().getFlowerFeatures();
                     if (var11.isEmpty()) {
                         continue;
                     }

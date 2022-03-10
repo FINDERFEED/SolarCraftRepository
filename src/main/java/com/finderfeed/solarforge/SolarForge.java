@@ -248,7 +248,7 @@ public class SolarForge
         event.enqueueWork(()->{
 
 
-            SolarForgeStructures.setupStructures();
+//            SolarForgeStructures.setupStructures();
             SolarForgeConfiguredStructures.registerConfiguredStructures();
             //TODO: was temporarily removed since mojang biome system cardinally changed, meaning i need to wait for forge to do something
 //            BiomeManager.addBiome(BiomeManager.BiomeType.DESERT,new BiomeManager.BiomeEntry(FeaturesRegistry.MOLTEN_BIOME_KEY,4));

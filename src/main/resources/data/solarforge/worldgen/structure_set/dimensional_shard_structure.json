@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "solarforge:dimensional_shard_structure",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "salt": 556143134,
+    "spacing": 300,
+    "separation": 250,
+    "type": "minecraft:random_spread"
+  }
+}

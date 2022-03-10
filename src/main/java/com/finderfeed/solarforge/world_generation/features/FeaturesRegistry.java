@@ -2,6 +2,7 @@ package com.finderfeed.solarforge.world_generation.features;
 
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
+import com.finderfeed.solarforge.registries.features.configured.ConfiguredFeatures;
 import com.finderfeed.solarforge.world_generation.biomes.molten_forest.MoltenForestAmbience;
 import com.finderfeed.solarforge.world_generation.dimension_related.radiant_land.CrystallizedOreVeinFeature;
 import com.finderfeed.solarforge.world_generation.dimension_related.radiant_land.RadiantSmallTreeFoliagePlacer;
@@ -453,6 +454,22 @@ public class FeaturesRegistry {
             SOLAR_STONE = registerPlacedFeature("solar_stone",Holder.direct(SOLAR_STONE_CONF),
                     CountPlacement.of(UniformInt.of(3,4)), InSquarePlacement.spread(),
                     HeightRangePlacement.uniform(VerticalAnchor.bottom(),VerticalAnchor.absolute(80)));
+
+
+            ConfiguredFeatures.SOLAR_FLOWER_FEATURE_CONF = new ConfiguredFeature<>(Feature.RANDOM_PATCH,FeatureUtils.simpleRandomPatchConfiguration(2,
+                    PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK,new SimpleBlockConfiguration(BlockStateProvider.simple(BlocksRegistry.SOLAR_FLOWER.get())))));
+            registerConfiguredFeature(ConfiguredFeatures.SOLAR_FLOWER_FEATURE_CONF,"solar_flower_feature");
+            ConfiguredFeatures.SOLAR_FLOWER_FEATURE = registerPlacedFeature("solar_flower_feature",Holder.direct(ConfiguredFeatures.SOLAR_FLOWER_FEATURE_CONF),
+                    HeightmapPlacement.onHeightmap(Heightmap.Types.MOTION_BLOCKING),InSquarePlacement.spread());
+
+
+            ConfiguredFeatures.DEAD_SPROUT_FEATURE_CONF = new ConfiguredFeature<>(Feature.RANDOM_PATCH,
+                    FeatureUtils.simpleRandomPatchConfiguration(7,PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK,
+                            new SimpleBlockConfiguration(BlockStateProvider.simple(BlocksRegistry.DEAD_SPROUT.get())))));
+            registerConfiguredFeature(ConfiguredFeatures.DEAD_SPROUT_FEATURE_CONF,"dead_sprout_feature");
+            ConfiguredFeatures.DEAD_SPROUT_FEATURE = registerPlacedFeature("dead_sprout_feature",Holder.direct(ConfiguredFeatures.DEAD_SPROUT_FEATURE_CONF),
+                    HeightmapPlacement.onHeightmap(Heightmap.Types.MOTION_BLOCKING),InSquarePlacement.spread());
+
         });
     }
 

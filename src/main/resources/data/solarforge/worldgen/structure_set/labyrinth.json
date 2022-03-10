@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "solarforge:labyrinth",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "salt": 4234252,
+    "spacing": 50,
+    "separation": 40,
+    "type": "minecraft:random_spread"
+  }
+}

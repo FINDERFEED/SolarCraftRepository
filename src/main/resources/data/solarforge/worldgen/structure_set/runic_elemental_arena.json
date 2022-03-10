@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "solarforge:runic_elemental_arena",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "salt": 442382084,
+    "spacing": 200,
+    "separation": 150,
+    "type": "minecraft:random_spread"
+  }
+}

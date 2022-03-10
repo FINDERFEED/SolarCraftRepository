@@ -22,6 +22,7 @@ import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.tags.Tag;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -233,7 +234,7 @@ public class Helpers {
     }
 //    world.getBlockState(initPos.offset(k, i, g))
     private static boolean checkBlock(Level world,BlockPos pos, StateAndTag stateAndTag){
-        Tag.Named<Block> tag;
+        TagKey<Block> tag;
         if ((tag = stateAndTag.getTag()) == null){
             return StateAndTag.checkBlockState(world.getBlockState(pos),stateAndTag.getState(),stateAndTag.isIgnoreFacing());
         }else{

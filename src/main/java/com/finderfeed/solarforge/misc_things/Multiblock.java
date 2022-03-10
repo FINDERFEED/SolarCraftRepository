@@ -4,6 +4,7 @@ package com.finderfeed.solarforge.misc_things;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.achievements.Progression;
 
 import net.minecraft.tags.Tag;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
@@ -88,7 +89,7 @@ public class Multiblock {
             return this;
         }
 
-        public Multiblock.Constructor addBlockAndTag(BlockState a,Tag.Named<Block> tag,Character b,boolean ignoreFacing){
+        public Multiblock.Constructor addBlockAndTag(BlockState a, TagKey<Block> tag, Character b, boolean ignoreFacing){
             if (blockMap.containsKey(b)){
                 throw new RuntimeException("Duplicate character in structure: " + b);
             }
