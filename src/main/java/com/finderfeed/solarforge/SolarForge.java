@@ -49,7 +49,7 @@ import com.finderfeed.solarforge.magic.blocks.solar_forge_block.solar_forge_scre
 import com.finderfeed.solarforge.magic.blocks.solar_forge_block.solar_forge_screen.SolarForgeScreen;
 
 
-import com.finderfeed.solarforge.world_generation.structures.SolarForgeStructureFeatures;
+import com.finderfeed.solarforge.world_generation.structures.SolarForgeConfiguredStructures;
 import com.finderfeed.solarforge.world_generation.structures.SolarForgeStructures;
 import com.finderfeed.solarforge.world_generation.BiomesRegister;
 import com.finderfeed.solarforge.world_generation.features.FeaturesRegistry;
@@ -249,7 +249,7 @@ public class SolarForge
 
 
             SolarForgeStructures.setupStructures();
-            SolarForgeStructureFeatures.registerConfiguredStructures();
+            SolarForgeConfiguredStructures.registerConfiguredStructures();
             //TODO: was temporarily removed since mojang biome system cardinally changed, meaning i need to wait for forge to do something
 //            BiomeManager.addBiome(BiomeManager.BiomeType.DESERT,new BiomeManager.BiomeEntry(FeaturesRegistry.MOLTEN_BIOME_KEY,4));
 

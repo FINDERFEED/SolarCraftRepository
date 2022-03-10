@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "solarforge:configured_solarforge_dungeon_one",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "salt": 23423542,
+    "spacing": 50,
+    "separation": 40,
+    "type": "minecraft:random_spread"
+  }
+}

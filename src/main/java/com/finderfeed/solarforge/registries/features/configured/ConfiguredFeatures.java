@@ -31,19 +31,23 @@ public class ConfiguredFeatures {
     public static final RandomPatchConfiguration DEFAULT_FLOWER_CONFIG =
         FeatureUtils.simpleRandomPatchConfiguration(2,Feature.SIMPLE_BLOCK.configured(new SimpleBlockConfiguration(BlockStateProvider.simple(BlocksRegistry.SOLAR_FLOWER.get()))).onlyWhenEmpty());
 
-    public static final ConfiguredFeature<?,?> SOLAR_FLOWER_FEATURE_CONF = Feature.RANDOM_PATCH.configured(DEFAULT_FLOWER_CONFIG);
+    public static ConfiguredFeature<?,?> SOLAR_FLOWER_FEATURE_CONF;
+//    Feature.RANDOM_PATCH.configured(DEFAULT_FLOWER_CONFIG);
 
-    public static final PlacedFeature SOLAR_FLOWER_FEATURE = SOLAR_FLOWER_FEATURE_CONF.placed(HeightmapPlacement.onHeightmap(Heightmap.Types.MOTION_BLOCKING),
-            InSquarePlacement.spread());
-//(new RandomPatchConfiguration.GrassConfigurationBuilder(new SimpleStateProvider(BlocksRegistry.DEAD_SPROUT.get().defaultBlockState()),
-//    SimpleBlockPlacer.INSTANCE)).tries(7).build())
+    public static PlacedFeature SOLAR_FLOWER_FEATURE;
 
-//            .decorated(FeatureDecorator.HEIGHTMAP_SPREAD_DOUBLE.configured(new HeightmapConfiguration(Heightmap.Types.MOTION_BLOCKING)).squared())
-    public static final ConfiguredFeature<?,?> DEAD_SPROUT_FEATURE_CONF =
-            Feature.RANDOM_PATCH.configured(FeatureUtils.simpleRandomPatchConfiguration(7,Feature.SIMPLE_BLOCK.configured(new SimpleBlockConfiguration(BlockStateProvider.simple(BlocksRegistry.DEAD_SPROUT.get()))).onlyWhenEmpty()));
+//     = SOLAR_FLOWER_FEATURE_CONF.placed(HeightmapPlacement.onHeightmap(Heightmap.Types.MOTION_BLOCKING),
+//            InSquarePlacement.spread());
 
-   public static final PlacedFeature DEAD_SPROUT_FEATURE = DEAD_SPROUT_FEATURE_CONF.placed(HeightmapPlacement.onHeightmap(Heightmap.Types.MOTION_BLOCKING),
-           InSquarePlacement.spread());
+
+    public static ConfiguredFeature<?,?> DEAD_SPROUT_FEATURE_CONF;
+
+//
+//     Feature.RANDOM_PATCH.configured(FeatureUtils.simpleRandomPatchConfiguration(7,Feature.SIMPLE_BLOCK.configured(new SimpleBlockConfiguration(BlockStateProvider.simple(BlocksRegistry.DEAD_SPROUT.get()))).onlyWhenEmpty()));
+
+   public static PlacedFeature DEAD_SPROUT_FEATURE;
+//   DEAD_SPROUT_FEATURE_CONF.placed(HeightmapPlacement.onHeightmap(Heightmap.Types.MOTION_BLOCKING),
+//            InSquarePlacement.spread());
 
 
     public static void registerConfiguredFeatures(final FMLCommonSetupEvent event){

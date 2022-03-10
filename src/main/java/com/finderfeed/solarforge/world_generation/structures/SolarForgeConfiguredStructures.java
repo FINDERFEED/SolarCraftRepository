@@ -1,25 +1,34 @@
 package com.finderfeed.solarforge.world_generation.structures;
 
+import com.finderfeed.solarforge.SolarCraftTags;
 import com.finderfeed.solarforge.SolarForge;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.core.Registry;
 import net.minecraft.data.BuiltinRegistries;
-import net.minecraft.world.level.levelgen.feature.structures.StructureTemplatePool;
-import net.minecraft.world.level.levelgen.flat.FlatLevelGeneratorSettings;
+import net.minecraft.tags.BiomeTags;
 import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
 import net.minecraft.world.level.levelgen.feature.ConfiguredStructureFeature;
 
 
 
-public class SolarForgeStructureFeatures {
-    public static ConfiguredStructureFeature<?,?> CONF_DUNGEON_ONE = SolarForgeStructures.DUNGEON_ONE_KEY_LOCK.get().configured(FeatureConfiguration.NONE);
-    public static ConfiguredStructureFeature<?,?> CONF_DUNGEON_MAZE = SolarForgeStructures.DUNGEON_MAZE.get().configured(FeatureConfiguration.NONE);
-    public static ConfiguredStructureFeature<?,?> CONF_DUNGEON_CHARGING_STATION = SolarForgeStructures.CHARGING_STATION.get().configured(FeatureConfiguration.NONE);
-   // public static FlowersFeature<?> CONF_FEATURE_TEST = new SolarFlowerFeature(BlockClusterFeatureConfig.CODEC);
-   public static ConfiguredStructureFeature<?,?> CONF_MAGICIAN_TOWER = SolarForgeStructures.MAGICIAN_TOWER.get().configured(FeatureConfiguration.NONE);
-    public static ConfiguredStructureFeature<?,?> CONF_DIM_SHARD_STRUCT = SolarForgeStructures.DIM_SHARD_STRUCTURE.get().configured(FeatureConfiguration.NONE);
-    public static ConfiguredStructureFeature<?,?> CONF_CRYSTAL_BOSS_ROOM = SolarForgeStructures.CRYSTAL_BOSS_ROOM.get().configured(FeatureConfiguration.NONE);
-    public static ConfiguredStructureFeature<?,?> RUNIC_ELEMENTAL_ARENA = SolarForgeStructures.RUNIC_ELEMENTAL_ARENA.get().configured(FeatureConfiguration.NONE);
+public class SolarForgeConfiguredStructures {
+
+
+    public static ConfiguredStructureFeature<?,?> CONF_DUNGEON_ONE = SolarForgeStructures.DUNGEON_ONE_KEY_LOCK.get()
+            .configured(FeatureConfiguration.NONE, SolarCraftTags.SBiomes.IS_DESERT,true);
+    public static ConfiguredStructureFeature<?,?> CONF_DUNGEON_MAZE = SolarForgeStructures.DUNGEON_MAZE.get()
+            .configured(FeatureConfiguration.NONE,SolarCraftTags.SBiomes.IS_SAVANNA,true);
+    public static ConfiguredStructureFeature<?,?> CONF_DUNGEON_CHARGING_STATION = SolarForgeStructures.CHARGING_STATION.get()
+            .configured(FeatureConfiguration.NONE, SolarCraftTags.SBiomes.IS_PLAINS,true);
+
+   public static ConfiguredStructureFeature<?,?> CONF_MAGICIAN_TOWER = SolarForgeStructures.MAGICIAN_TOWER.get()
+           .configured(FeatureConfiguration.NONE,BiomeTags.IS_MOUNTAIN,true);
+    public static ConfiguredStructureFeature<?,?> CONF_DIM_SHARD_STRUCT = SolarForgeStructures.DIM_SHARD_STRUCTURE.get()
+            .configured(FeatureConfiguration.NONE,BiomeTags.IS_JUNGLE);
+    public static ConfiguredStructureFeature<?,?> CONF_CRYSTAL_BOSS_ROOM = SolarForgeStructures.CRYSTAL_BOSS_ROOM.get()
+            .configured(FeatureConfiguration.NONE,SolarCraftTags.SBiomes.IS_RADIANT_LAND,true);
+    public static ConfiguredStructureFeature<?,?> RUNIC_ELEMENTAL_ARENA = SolarForgeStructures.RUNIC_ELEMENTAL_ARENA.get()
+            .configured(FeatureConfiguration.NONE,SolarCraftTags.SBiomes.IS_RADIANT_LAND,true);
 
 
 

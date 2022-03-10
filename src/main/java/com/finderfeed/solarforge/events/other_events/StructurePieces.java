@@ -10,7 +10,7 @@ import com.finderfeed.solarforge.world_generation.structures.maze_key_keeper.Maz
 import com.finderfeed.solarforge.world_generation.structures.runic_elemental_arena.RunicElementalArenaStructurePieces;
 import net.minecraft.core.Registry;
 import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.StructurePieceType;
+import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceType;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -22,7 +22,7 @@ public class StructurePieces {
 
 
 
-    public static StructurePieceType DUNGEON_ONE_PIECE_TEST = DungeonOnePieces.Piece::new;
+    public static StructurePieceType DUNGEON_ONE_PIECE = DungeonOnePieces.Piece::new;
     public static StructurePieceType DUNGEON_MAZE_PIECE = MazeStructurePieces.Piece::new;
     public static StructurePieceType CHARGING_PIECE = ChargingStationPieces.Piece::new;
     public static StructurePieceType MAGICIAN_TOWER = MagicianTowerPieces.Piece::new;
@@ -33,7 +33,7 @@ public class StructurePieces {
     public static void registerFeatures(final RegistryEvent.Register<Feature<?>> event){
         IForgeRegistry<Feature<?>> registry = event.getRegistry();
 
-        Registry.register(Registry.STRUCTURE_PIECE,"solar_forge_dungeon_one_piece_test",DUNGEON_ONE_PIECE_TEST);
+        Registry.register(Registry.STRUCTURE_PIECE,"solar_forge_dungeon_one_piece_test", DUNGEON_ONE_PIECE);
         Registry.register(Registry.STRUCTURE_PIECE,"solar_forge_dungeon_maze_piece",DUNGEON_MAZE_PIECE);
         Registry.register(Registry.STRUCTURE_PIECE,"solar_forge_charging_piece",CHARGING_PIECE);
         Registry.register(Registry.STRUCTURE_PIECE,"magician_tower_piece",MAGICIAN_TOWER);
