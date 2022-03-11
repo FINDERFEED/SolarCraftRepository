@@ -15,20 +15,19 @@ public class SolarForgeConfiguredStructures {
 
 
     public static ConfiguredStructureFeature<?,?> CONF_DUNGEON_ONE = SolarForgeStructures.DUNGEON_ONE_KEY_LOCK.get()
-            .configured(FeatureConfiguration.NONE, SolarCraftTags.SBiomes.IS_DESERT,true);
+            .configured(FeatureConfiguration.NONE, SolarCraftTags.SStructures.HAS_DUNGEON_ONE,true);
     public static ConfiguredStructureFeature<?,?> CONF_DUNGEON_MAZE = SolarForgeStructures.DUNGEON_MAZE.get()
-            .configured(FeatureConfiguration.NONE,SolarCraftTags.SBiomes.IS_SAVANNA,true);
+            .configured(FeatureConfiguration.NONE,SolarCraftTags.SStructures.HAS_LABYRINTH,true);
     public static ConfiguredStructureFeature<?,?> CONF_DUNGEON_CHARGING_STATION = SolarForgeStructures.CHARGING_STATION.get()
-            .configured(FeatureConfiguration.NONE, SolarCraftTags.SBiomes.IS_PLAINS,true);
-
+            .configured(FeatureConfiguration.NONE, SolarCraftTags.SStructures.HAS_CHARGING_STATION,true);
    public static ConfiguredStructureFeature<?,?> CONF_MAGICIAN_TOWER = SolarForgeStructures.MAGICIAN_TOWER.get()
-           .configured(FeatureConfiguration.NONE,BiomeTags.IS_MOUNTAIN,true);
+           .configured(FeatureConfiguration.NONE,SolarCraftTags.SStructures.HAS_MAGICIAN_TOWER,true);
     public static ConfiguredStructureFeature<?,?> CONF_DIM_SHARD_STRUCT = SolarForgeStructures.DIM_SHARD_STRUCTURE.get()
-            .configured(FeatureConfiguration.NONE,BiomeTags.IS_JUNGLE);
+            .configured(FeatureConfiguration.NONE,SolarCraftTags.SStructures.HAS_DIM_SHARD_DUNGEON);
     public static ConfiguredStructureFeature<?,?> CONF_CRYSTAL_BOSS_ROOM = SolarForgeStructures.CRYSTAL_BOSS_ROOM.get()
-            .configured(FeatureConfiguration.NONE,SolarCraftTags.SBiomes.IS_RADIANT_LAND,true);
+            .configured(FeatureConfiguration.NONE,SolarCraftTags.SStructures.HAS_CRYSTAL_BOSS_ROOM,true);
     public static ConfiguredStructureFeature<?,?> RUNIC_ELEMENTAL_ARENA = SolarForgeStructures.RUNIC_ELEMENTAL_ARENA.get()
-            .configured(FeatureConfiguration.NONE,SolarCraftTags.SBiomes.IS_RADIANT_LAND,true);
+            .configured(FeatureConfiguration.NONE,SolarCraftTags.SStructures.HAS_RUNIC_ELEMENTAL_ARENA,true);
 
 
 
