@@ -27,7 +27,7 @@ public class PlayerTickEvent {
     @SubscribeEvent
     public void enterIncineratedForest(final TickEvent.PlayerTickEvent event){
         Player entity = event.player;
-        if (!entity.level.isClientSide ){
+        if (!entity.level.isClientSide && event.phase == TickEvent.Phase.START){
 
                 //TODO:return this when adding biomes to overworld will be possible and also correct things in en_ru.json
 //            Optional<? extends Registry<Biome>> reg = entity.level.registryAccess().registry(Registry.BIOME_REGISTRY);

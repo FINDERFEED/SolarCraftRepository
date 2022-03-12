@@ -175,6 +175,9 @@ public class ExplosiveCrystal extends Mob implements CrystalBossBuddy {
         }
     }
 
+
+
+
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();

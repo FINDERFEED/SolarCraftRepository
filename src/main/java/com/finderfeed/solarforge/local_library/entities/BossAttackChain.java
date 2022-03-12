@@ -57,8 +57,8 @@ public class BossAttackChain {
                     if (!attacksQueue.isEmpty()) {
                         BossAttack attack = attacksQueue.poll();
                         currentWaitTime = attack.getTime();
-                        attack.run();
                         ticker = 0;
+                        attack.run();
                         currentAttack = attack;
                     }else{
                         attackingInProgress = false;

@@ -485,7 +485,7 @@
   "player.boss_cant_place_block": "Unknown force restricts you from placing blocks here.",
   "player.boss_cant_explode_blocks": "Unknown force restricts you from exploding something here.",
   "radiant_dimension.nightfall": "Night comes and the cursed star gazes upon the land.",
-  "item.solarforge.crystallite_core": "Crystallite Core (WIP)",
+  "item.solarforge.crystallite_core": "Crystallite Core",
   "player.cant_use_ability_near_boss": "Unknown force restricts you from casting this ability here.",
   "ach.crystal_boss": "Ancient Crystal",
   "pre.crystal_boss": "The final battle?",
@@ -651,5 +651,6 @@
   "block.solarforge.regen_amp_block": "Regen amplification block",
   "block.solarforge.armor_amp_block": "Armor amplification block",
   "block.solarforge.evasion_amp_block": "Evasion amplification block",
-  "effect.solarforge.evasion": "Evasion"
+  "effect.solarforge.evasion": "Evasion",
+  "entity.solarforge.runic_warrior": "Runic Warrior"
 }

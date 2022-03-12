@@ -36,7 +36,7 @@ public class RunicElementalArenaStructurePieces {
 
 
         BlockPos rotationOffSet = new BlockPos(0, 0, 0).rotate(rotation);
-        BlockPos blockpos = rotationOffSet.offset(x- 8, pos.getY(), z- 8);
+        BlockPos blockpos = rotationOffSet.offset(x- 8, pos.getY()-1, z- 8);
         pieceList.addPiece(new RunicElementalArenaStructurePieces.Piece(templateManager, DUNGEON_PIECE, rotation,blockpos));
     }
 
@@ -45,7 +45,7 @@ public class RunicElementalArenaStructurePieces {
         public Piece( StructureManager templateManagerIn, ResourceLocation resourceLocationIn,Rotation rot, BlockPos pos) {
             super(StructurePieces.RUNIC_ELEMENTAL_ARENA_PIECE, 0, templateManagerIn, resourceLocationIn, resourceLocationIn.toString(),
                     makeSettings(rot,DUNGEON_PIECE),
-                    makePosition(DUNGEON_PIECE,pos,0));
+                    makePosition(DUNGEON_PIECE,pos,1));
         }
 
         public Piece(StructurePieceSerializationContext p_163670_, CompoundTag tagCompound) {

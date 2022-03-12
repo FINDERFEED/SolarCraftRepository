@@ -24,7 +24,7 @@ public class RunicElementalArenaStructure extends StructureFeature<NoneFeatureCo
         int x = (ctx.chunkPos().x << 4) + 7;
         int z = (ctx.chunkPos().z << 4) + 7;
         int surfaceY = ctx.chunkGenerator().getBaseHeight(x,z, Heightmap.Types.WORLD_SURFACE_WG,ctx.heightAccessor());
-        BlockPos blockpos = new BlockPos(x-9, surfaceY-1, z-9);
+        BlockPos blockpos = new BlockPos(x-9, surfaceY, z-9);
         Rotation rotation = Rotation.getRandom(ctx.random());
         RunicElementalArenaStructurePieces.start(ctx.structureManager(), blockpos, rotation, p_197089_, ctx.random());
     }

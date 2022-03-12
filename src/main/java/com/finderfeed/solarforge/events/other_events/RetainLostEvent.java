@@ -109,17 +109,20 @@ public class RetainLostEvent {
                 SolarForgePacketHandler.INSTANCE.sendTo(new UpdateProgressionOnClient(a.getAchievementCode(),playernew.getPersistentData().getBoolean(Helpers.PROGRESSION+a.getAchievementCode())),
                         ((ServerPlayer) playernew).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
             }
-        }
 
-        for (AncientFragment fragment : AncientFragment.getAllFragments()){
-            if (ProgressionHelper.doPlayerHasFragment(peorig,fragment)){
-                ProgressionHelper.givePlayerFragment(fragment,playernew);
-            }
-            if (ProgressionHelper.doPlayerHasFragmentOld(peorig,fragment)){
-                ProgressionHelper.givePlayerFragmentOld(fragment,playernew);
-            }
-        }
 
+        }
+        if (playernew instanceof ServerPlayer player) {
+            for (AncientFragment fragment : AncientFragment.getAllFragments()) {
+                if (ProgressionHelper.doPlayerHasFragment(peorig, fragment)) {
+                    ProgressionHelper.givePlayerFragment(fragment, playernew);
+                }
+                if (ProgressionHelper.doPlayerHasFragmentOld(peorig, fragment)) {
+                    ProgressionHelper.givePlayerFragmentOld(fragment, playernew);
+                }
+            }
+            Helpers.updateFragmentsOnClient(player);
+        }
 
 
     }
