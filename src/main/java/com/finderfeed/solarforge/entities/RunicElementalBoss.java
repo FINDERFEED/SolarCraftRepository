@@ -246,7 +246,8 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
         this.setAttackType(AttackType.SUNSTRIKES);
         if (BOSS_ATTACK_CHAIN.getTicker() >= 15 && BOSS_ATTACK_CHAIN.getTicker() <= 115){
             if (BOSS_ATTACK_CHAIN.getTicker() % 9 == 0){
-                for (Player player : level.getEntitiesOfClass(Player.class,new AABB(-16,-8,-16,16,8,16).move(position()))){
+                //TODO:switch to player
+                for (LivingEntity player : getLivingEntitiesAround()){
                     SunstrikeEntity sunstrike = new SunstrikeEntity(EntityTypes.SUNSTRIKE.get(),level);
                     Vec3 playerSpeed = player.getLookAngle().multiply(1f,0,1f).normalize().multiply(0.5,0,0.5);
                     float damage = (SUNTRIKES_DAMAGE + getDamageBonus()) * getDamageModifier();
@@ -299,21 +300,26 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
     public void varthDader(){
         this.setAttackType(AttackType.VARTH_DADER);
         if (BOSS_ATTACK_CHAIN.getTicker() > 15 && BOSS_ATTACK_CHAIN.getTicker() < 105) {
-            Player player = (Player) getTarget();
-            if (player == null) return;
-            this.setVarthDaderTarget(player.getId());
-            Helpers.setServerPlayerSpeed((ServerPlayer) player, new Vec3(0, 4 / 90f, 0));
+            //TODO:set to player targeting
+            LivingEntity living =  getTarget();
+            if (living == null) return;
+            this.setVarthDaderTarget(living.getId());
+            if (living instanceof Player player1) {
+                Helpers.setServerPlayerSpeed((ServerPlayer) living, new Vec3(0, 4 / 90f, 0));
+            }else{
+                living.setDeltaMovement(new Vec3(0, 4 / 90f, 0));
+            }
             if (BOSS_ATTACK_CHAIN.getTicker() % 10 == 0) {
                 List<MobEffect> toRemove = new ArrayList<>();
                 float damage = (VARTH_DADER_DAMAGE + getDamageBonus()/4f) * getDamageModifier();
-                player.hurt(DamageSource.mobAttack(this).setMagic().bypassArmor(), damage);
-                for (MobEffectInstance effect : player.getActiveEffects()){
+                living.hurt(DamageSource.mobAttack(this).setMagic().bypassArmor(), damage);
+                for (MobEffectInstance effect : living.getActiveEffects()){
                     if (effect.getEffect().isBeneficial() && effect.getEffect() != EffectsRegister.IMMORTALITY_EFFECT.get()){
                         toRemove.add(effect.getEffect());
                     }
                 }
                 for (MobEffect effect : toRemove){
-                    player.removeEffect(effect);
+                    living.removeEffect(effect);
                 }
             }
         }
@@ -369,7 +375,8 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
     public void throwSummoningRockets(){
         this.setAttackType(AttackType.SUMMONING_ROCKETS);
         if (BOSS_ATTACK_CHAIN.getTicker() == 8) {
-            int playersAround = getPlayersAround(false).size();
+            //TODO:switch to player
+            int playersAround = getLivingEntitiesAround().size();
             for (int i = 0; i < 3 * playersAround; i++) {
                 RunicWarriorSummoningRocket rocket = new RunicWarriorSummoningRocket(EntityTypes.RUNIC_WARRIOR_ROCKET.get(),level);
                 Vec3 rnd = new Vec3(level.random.nextDouble()*0.5f - 0.25f,0.4f,level.random.nextDouble()*0.5f - 0.25f);
@@ -384,17 +391,18 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
         int ticker = BOSS_ATTACK_CHAIN.getTicker() % 42;
         if (ticker == 1){
             rotating = true;
-            List<Player> players = getPlayersAround(false);
+            //TODO:switch to player targeting
+            List<LivingEntity> players = getLivingEntitiesAround();
             Vec3 vec = Helpers.getBlockCenter(players.get(level.random.nextInt(players.size())).getOnPos().above()).subtract(this.position()).multiply(1,0,1).normalize();
             this.setHammerAttackDirection(vec);
         }
         if (ticker == 21){
-            for (Player player : getPlayersAround(false)){
+            for (LivingEntity player : getLivingEntitiesAround()){
                 Vec3 vec = player.position().subtract(this.position()).multiply(1,0,1).normalize();
                 Vec3 attackDir = getHammerAttackDirection();
                 double angleVec = Math.toDegrees(Math.atan2(vec.x,vec.z));
                 double attackDirAngle = Math.toDegrees(Math.atan2(attackDir.x,attackDir.z));
-                if (Math.abs(attackDirAngle - angleVec) <= 110){
+                if (Math.abs(attackDirAngle - angleVec) <= 110 && vec.length() <= 16){
                     float damage = (HAMMER_ATTACK_DAMAGE + getDamageBonus()) * getDamageModifier();
                     player.hurt(DamageSource.mobAttack(this),damage);
                 }
@@ -674,21 +682,31 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
 
 
     private List<RefractionCrystal> getRefractionCrystalsAround(){
-        return level.getEntitiesOfClass(RefractionCrystal.class,new AABB(-16,-4,-16,16,4,16).move(position()),(c)->{
+        return level.getEntitiesOfClass(RefractionCrystal.class,new AABB(-32,-4,-32,16,4,32).move(position()),(c)->{
             return !c.isDeploying();
         });
     }
 
 
     private List<ExplosiveCrystal> getExplosiveCrystalsAround(){
-        return level.getEntitiesOfClass(ExplosiveCrystal.class,new AABB(-16,-4,-16,16,4,16).move(position()),(c)->{
+        return level.getEntitiesOfClass(ExplosiveCrystal.class,new AABB(-32,-4,-32,32,4,32).move(position()),(c)->{
             return !c.isDeploying();
         });
     }
 
     private List<Player> getPlayersAround(boolean includeCreative){
-        return level.getEntitiesOfClass(Player.class,new AABB(-16,-16,-16,16,16,16).move(position()),(c)->{
+        return level.getEntitiesOfClass(Player.class,new AABB(-32,-32,-32,32,32,32).move(position()),(c)->{
             return !c.isSpectator() && (includeCreative || !c.isCreative());
+        });
+    }
+
+    private List<LivingEntity> getLivingEntitiesAround(){
+        return level.getEntitiesOfClass(LivingEntity.class,new AABB(-32,-32,-32,32,32,32).move(position()),(c)->{
+            if (c instanceof CrystalBossBuddy) return false;
+            if (c instanceof Player pl){
+                return !(pl.isSpectator() || pl.isCreative());
+            }
+            return true;
         });
     }
 
@@ -716,10 +734,16 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
         LivingEntity target = super.getTarget();
         if (target == null) {
             if (this.seekTargetCooldown > 0) return null;
-            this.seekTargetCooldown = 20;
-            List<Player> players = level.getEntitiesOfClass(Player.class,new AABB(-21,-21,-21,21,21,21).move(this.position()),(pl)->{
-                return !pl.isCreative() && !pl.isSpectator() && pl.position().subtract(this.position()).multiply(1,0,1).length() <= 21 && this.getSensing().hasLineOfSight(pl);
+            this.seekTargetCooldown = 20;//TODO:set it to player targeting again on release
+            List<LivingEntity> players = level.getEntitiesOfClass(LivingEntity.class,new AABB(-21,-21,-21,21,21,21).move(this.position()),(pl)->{
+                if (pl instanceof CrystalBossBuddy) return false;
+                if (pl instanceof Player player){
+                    if (player.isCreative() || player.isSpectator()) return false;
+                }
+                return /*!pl.isCreative() && !pl.isSpectator() && */pl.position().subtract(this.position()).multiply(1,0,1).length() <= 21 && this.getSensing().hasLineOfSight(pl);
             });
+
+
             if (players.isEmpty()) return null;
             LivingEntity t = players.get(level.random.nextInt(players.size()));
             this.setTarget(t);
@@ -734,7 +758,7 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
                 return null;
             }
 
-            if (vec.length() <= 21 && this.getSensing().hasLineOfSight(target)){
+            if (vec.length() <= 21 && this.getSensing().hasLineOfSight(target) && !target.isDeadOrDying()){
                 return target;
             }else{
                 this.seekTargetCooldown = 20;

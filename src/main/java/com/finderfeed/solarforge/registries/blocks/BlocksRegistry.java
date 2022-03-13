@@ -105,6 +105,7 @@ public class BlocksRegistry {
     public  static  final RegistryObject<Block> GIRO_RUNE_BLOCK = BLOCKS.register("giro_rune_block",()-> new Block(BlockBehaviour.Properties.copy(Blocks.STONE)));
     public  static  final RegistryObject<Block> ULTIMA_RUNE_BLOCK = BLOCKS.register("ultima_rune_block",()-> new Block(BlockBehaviour.Properties.copy(Blocks.STONE)));
 
+
     public static final RegistryObject<Block> MODULE_APPLIER = BLOCKS.register("module_table",()->new ModuleStation(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS)));
 
 
@@ -160,4 +161,7 @@ public class BlocksRegistry {
         }
     });
     public  static  final RegistryObject<Block> CRYSTAL = BLOCKS.register("crystal",()-> new CrystalBlock(BlockBehaviour.Properties.copy(Blocks.STONE).sound(SoundType.GLASS).noOcclusion()));
+    public  static  final RegistryObject<Block> CORRUPTED_STONE = BLOCKS.register("corrupted_stone",()-> new Block(BlockBehaviour.Properties.copy(Blocks.STONE)));
+    public  static  final RegistryObject<Block> ULDERA_RUNE_BLOCK = BLOCKS.register("uldera_rune_block",()-> new Block(BlockBehaviour.Properties.copy(Blocks.STONE)));
+
 }

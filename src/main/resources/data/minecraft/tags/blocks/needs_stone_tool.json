@@ -25,6 +25,12 @@
     "solarforge:lensing_crystal_ore",
     "solarforge:explosion_blocker",
     "solarforge:crystal",
-    "solarforge:elemental_enchanter"
+    "solarforge:elemental_enchanter",
+    "solarforge:corrupted_stone",
+    "solarforge:uldera_rune_block",
+    "solarforge:regen_amp_block",
+    "solarforge:damage_amp_block",
+    "solarforge:armor_amp_block",
+    "solarforge:evasion_amp_block"
   ]
 }

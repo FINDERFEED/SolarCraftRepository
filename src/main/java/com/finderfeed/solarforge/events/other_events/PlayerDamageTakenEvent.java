@@ -12,11 +12,8 @@ public class PlayerDamageTakenEvent {
 
     @SubscribeEvent
     public static void damageTaken(final LivingDamageEvent event){
-        if (event.getEntityLiving() instanceof Player){
-            if (((Player)event.getEntityLiving()).hasEffect(EffectsRegister.IMMORTALITY_EFFECT.get()) ){
-                event.setCanceled(true);
-            }
+        if ((event.getEntityLiving()).hasEffect(EffectsRegister.IMMORTALITY_EFFECT.get()) ){
+            event.setCanceled(true);
         }
-
     }
 }

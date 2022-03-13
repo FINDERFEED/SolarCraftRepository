@@ -9,7 +9,6 @@ import com.finderfeed.solarforge.world_generation.dimension_related.radiant_land
 import com.finderfeed.solarforge.world_generation.dimension_related.radiant_land.RadiantTreeFoliagePlacer;
 
 import com.finderfeed.solarforge.world_generation.features.foliage_placers.BurntTreeFoliagePlacer;
-import com.finderfeed.solarforge.world_generation.features.foliage_placers.FoliagePlacerRegistry;
 import com.finderfeed.solarforge.world_generation.features.trunk_placers.BurntTreeTrunkPlacer;
 import com.google.common.collect.ImmutableSet;
 import net.minecraft.core.BlockPos;
@@ -88,6 +87,7 @@ public class FeaturesRegistry {
     public static final Feature<SimpleBlockConfiguration> STONE_FLOWERS = new StoneFlowersFeature(SimpleBlockConfiguration.CODEC);
     public static final Feature<NoneFeatureConfiguration> CEILING_DRIPSTONE_LIKE_CRYSTALS = new CeilingDripstoneLikeCrystals(NoneFeatureConfiguration.CODEC);
     public static final Feature<SimpleBlockConfiguration> CRYSTALS_ORE = new CrystalsOreFeature(SimpleBlockConfiguration.CODEC);
+    public static final Feature<NoneFeatureConfiguration> ULDERA_OBELISK = new UlderaObeliskFeature(NoneFeatureConfiguration.CODEC);
 
     public static ConfiguredFeature<?,?> RADIANT_TREE_CONFIGURED_CONF;
     public static ConfiguredFeature<?,?> RADIANT_SMALL_TREE_CONFIGURED_CONF;
@@ -108,15 +108,17 @@ public class FeaturesRegistry {
     public static ConfiguredFeature<?,?> EMPTY_CRYSTALS_CONF;
     public static ConfiguredFeature<?,?> SOLAR_ORE_CONF;
     public static ConfiguredFeature<?,?> SOLAR_STONE_CONF;
+    public static ConfiguredFeature<?,?> ULDERA_OBELISK_CONFIGURED;
 
+    public static Holder<PlacedFeature> ULDERA_OBELISK_PLACEMENT;
     public static Holder<PlacedFeature> BURNT_TREE_2;
     public static Holder<PlacedFeature> BURNT_TREE_1;
-    public static Holder<PlacedFeature> RADIANT_TREE_CONFIGURED;
-    public static Holder<PlacedFeature> RADIANT_SMALL_TREE_CONFIGURED;
-    public static Holder<PlacedFeature> ENERGY_PYLON_CONFIGURED;
-    public static Holder<PlacedFeature> MOLTEN_FOREST_RUINS_CONFIGURED;
+    public static Holder<PlacedFeature> RADIANT_TREE_PLACEMENT;
+    public static Holder<PlacedFeature> RADIANT_SMALL_TREE_PLACEMENT;
+    public static Holder<PlacedFeature> ENERGY_PYLON_PLACEMENT;
+    public static Holder<PlacedFeature> MOLTEN_FOREST_RUINS_PLACEMENT;
     public static Holder<PlacedFeature> RANDOM_PATCH_RADIANT_GRASS;
-    public static Holder<PlacedFeature> FLOATING_ISLANDS_RADIANT_LAND_CONFIGURED;
+    public static Holder<PlacedFeature> FLOATING_ISLANDS_RADIANT_LAND_PLACEMENT;
     public static Holder<PlacedFeature> CRYSTALLIZED_ORE_VEIN_CONFIGURED;
     public static Holder<PlacedFeature> RADIANT_BERRY_BUSH;
     public static Holder<PlacedFeature> ENDER_CRACKS;
@@ -162,6 +164,7 @@ public class FeaturesRegistry {
         event.getRegistry().register(STONE_FLOWERS.setRegistryName(new ResourceLocation(SolarForge.MOD_ID,"stone_flowers")));
         event.getRegistry().register(CEILING_DRIPSTONE_LIKE_CRYSTALS.setRegistryName(new ResourceLocation(SolarForge.MOD_ID,"ceiling_dripstonelike_crystals")));
         registerFeature(event, CRYSTALS_ORE,"crystallized_runic_energy");
+        registerFeature(event,ULDERA_OBELISK,"uldera_obelisk");
     }
     private static void registerFeature(RegistryEvent.Register<Feature<?>> event,Feature<?> f,String name){
         event.getRegistry().register(f.setRegistryName(new ResourceLocation(SolarForge.MOD_ID,name)));
@@ -262,7 +265,7 @@ public class FeaturesRegistry {
             Registry.register(BuiltinRegistries.CONFIGURED_FEATURE,new ResourceLocation("solarforge","energy_pylon_configured"),
                     ENERGY_PYLON_CONFIGURED_CONF);
 
-            ENERGY_PYLON_CONFIGURED = registerPlacedFeature("energy_pylon",Holder.direct(ENERGY_PYLON_CONFIGURED_CONF),
+            ENERGY_PYLON_PLACEMENT = registerPlacedFeature("energy_pylon",Holder.direct(ENERGY_PYLON_CONFIGURED_CONF),
                     RarityFilter.onAverageOnceEvery(200));
 
 
@@ -288,7 +291,7 @@ public class FeaturesRegistry {
             Registry.register(BuiltinRegistries.CONFIGURED_FEATURE,new ResourceLocation("solarforge","configured_ruins_configured"),
                     MOLTEN_FOREST_RUINS_CONFIGURED_CONF);
 
-            MOLTEN_FOREST_RUINS_CONFIGURED = registerPlacedFeature("configured_ruins",Holder.direct(MOLTEN_FOREST_RUINS_CONFIGURED_CONF),
+            MOLTEN_FOREST_RUINS_PLACEMENT = registerPlacedFeature("configured_ruins",Holder.direct(MOLTEN_FOREST_RUINS_CONFIGURED_CONF),
                     RarityFilter.onAverageOnceEvery(120));
 
 
@@ -302,7 +305,7 @@ public class FeaturesRegistry {
                     ).build());
             Registry.register(BuiltinRegistries.CONFIGURED_FEATURE,new ResourceLocation("solarforge","radiant_tree_configured"), RADIANT_TREE_CONFIGURED_CONF);
 
-            RADIANT_TREE_CONFIGURED = registerPlacedFeature("radiant_tree",Holder.direct(RADIANT_TREE_CONFIGURED_CONF),
+            RADIANT_TREE_PLACEMENT = registerPlacedFeature("radiant_tree",Holder.direct(RADIANT_TREE_CONFIGURED_CONF),
                     PlacementUtils.countExtra(3,0.1f,2),
                     HeightmapPlacement.onHeightmap(Heightmap.Types.WORLD_SURFACE_WG),
                     InSquarePlacement.spread(),
@@ -328,7 +331,7 @@ public class FeaturesRegistry {
             FLOATING_ISLANDS_RADIANT_LAND_CONFIGURED_CONF = new ConfiguredFeature<>(FLOATING_ISLANDS_RADIANT_LAND,NoneFeatureConfiguration.INSTANCE);
             Registry.register(BuiltinRegistries.CONFIGURED_FEATURE,new ResourceLocation("solarforge","floating_islands_configured"), FLOATING_ISLANDS_RADIANT_LAND_CONFIGURED_CONF);
 
-            FLOATING_ISLANDS_RADIANT_LAND_CONFIGURED = registerPlacedFeature("floating_islands",Holder.direct(FLOATING_ISLANDS_RADIANT_LAND_CONFIGURED_CONF),
+            FLOATING_ISLANDS_RADIANT_LAND_PLACEMENT = registerPlacedFeature("floating_islands",Holder.direct(FLOATING_ISLANDS_RADIANT_LAND_CONFIGURED_CONF),
                     RarityFilter.onAverageOnceEvery(10),
                     HeightRangePlacement.triangle(VerticalAnchor.absolute(100),VerticalAnchor.absolute(130)),
                     InSquarePlacement.spread());
@@ -345,11 +348,11 @@ public class FeaturesRegistry {
                             .ignoreVines().build());
             Registry.register(BuiltinRegistries.CONFIGURED_FEATURE,new ResourceLocation("solarforge","radiant_land_ambient_tree_configured"), RADIANT_SMALL_TREE_CONFIGURED_CONF);
 
-            RADIANT_SMALL_TREE_CONFIGURED = registerPlacedFeature("radiant_land_ambient_tree",Holder.direct(RADIANT_SMALL_TREE_CONFIGURED_CONF),
+            RADIANT_SMALL_TREE_PLACEMENT = registerPlacedFeature("radiant_land_ambient_tree",Holder.direct(RADIANT_SMALL_TREE_CONFIGURED_CONF),
                     RarityFilter.onAverageOnceEvery(3),
-                    BlockPredicateFilter.forPredicate(BlockPredicate.wouldSurvive(Blocks.OAK_SAPLING.defaultBlockState(), BlockPos.ZERO)),
                     HeightmapPlacement.onHeightmap(Heightmap.Types.WORLD_SURFACE_WG),
-                    InSquarePlacement.spread());
+                    InSquarePlacement.spread(),
+                    BlockPredicateFilter.forPredicate(BlockPredicate.wouldSurvive(Blocks.OAK_SAPLING.defaultBlockState(), BlockPos.ZERO)));
 
 
 
@@ -469,6 +472,14 @@ public class FeaturesRegistry {
             registerConfiguredFeature(ConfiguredFeatures.DEAD_SPROUT_FEATURE_CONF,"dead_sprout_feature");
             ConfiguredFeatures.DEAD_SPROUT_FEATURE = registerPlacedFeature("dead_sprout_feature",Holder.direct(ConfiguredFeatures.DEAD_SPROUT_FEATURE_CONF),
                     HeightmapPlacement.onHeightmap(Heightmap.Types.MOTION_BLOCKING),InSquarePlacement.spread());
+
+            ULDERA_OBELISK_CONFIGURED = new ConfiguredFeature<>(ULDERA_OBELISK,NoneFeatureConfiguration.INSTANCE);
+            registerConfiguredFeature(ULDERA_OBELISK_CONFIGURED,"uldera_obelisk");
+
+            ULDERA_OBELISK_PLACEMENT = registerPlacedFeature("uldera_obelisk",Holder.direct(ULDERA_OBELISK_CONFIGURED),
+                    RarityFilter.onAverageOnceEvery(100),
+                    HeightRangePlacement.triangle(VerticalAnchor.absolute(75),VerticalAnchor.absolute(90)),
+                    InSquarePlacement.spread());
 
         });
     }

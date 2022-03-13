@@ -73,6 +73,7 @@
     ],
     [
       "solarforge:floating_islands",
+      "solarforge:uldera_obelisk",
       "solarforge:radiant_land_ambient_tree",
       "solarforge:radiant_grass_grass",
       "minecraft:spring_lava",

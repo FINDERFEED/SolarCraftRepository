@@ -652,5 +652,7 @@
   "block.solarforge.armor_amp_block": "Armor amplification block",
   "block.solarforge.evasion_amp_block": "Evasion amplification block",
   "effect.solarforge.evasion": "Evasion",
-  "entity.solarforge.runic_warrior": "Runic Warrior"
+  "entity.solarforge.runic_warrior": "Runic Warrior",
+  "block.solarforge.uldera_rune_block": "Uldera rune block",
+  "block.solarforge.corrupted_stone": "Corrupted stone"
 }

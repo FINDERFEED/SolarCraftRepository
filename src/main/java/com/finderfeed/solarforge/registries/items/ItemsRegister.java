@@ -283,4 +283,7 @@ public class ItemsRegister {
     public static final RegistryObject<Item> CRYSTALLIZED_RUNIC_ENERGY = ITEMS.register("crystallized_runic_energy",()->new BlockItem(BlocksRegistry.CRYSTALLIZED_RUNIC_ENERGY.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
     public static final RegistryObject<Item> CRYSTAL = ITEMS.register("crystal",()->new BlockItem(BlocksRegistry.CRYSTAL.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
 
+    public static final RegistryObject<Item> CORRUPTED_STONE = ITEMS.register("corrupted_stone",()->new BlockItem(BlocksRegistry.CORRUPTED_STONE.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
+    public static final RegistryObject<Item> ULDERA_RUNE_BLOCK = ITEMS.register("uldera_rune_block",()->new BlockItem(BlocksRegistry.ULDERA_RUNE_BLOCK.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
+
 }

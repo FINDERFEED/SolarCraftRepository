@@ -207,7 +207,7 @@ public class EventHandler {
     public static void addFeatures(BiomeLoadingEvent event){
         BiomeGenerationSettingsBuilder b = event.getGeneration();
         if ( (event.getCategory() != Biome.BiomeCategory.NETHER) && (event.getCategory() != Biome.BiomeCategory.THEEND) && notNone(event)) {
-            event.getGeneration().addFeature(GenerationStep.Decoration.LOCAL_MODIFICATIONS, FeaturesRegistry.ENERGY_PYLON_CONFIGURED);
+            event.getGeneration().addFeature(GenerationStep.Decoration.LOCAL_MODIFICATIONS, FeaturesRegistry.ENERGY_PYLON_PLACEMENT);
             event.getGeneration().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES,FeaturesRegistry.EMPTY_CRYSTALS_PLACEMENT);
         }
         if (event.getCategory() == Biome.BiomeCategory.PLAINS){
@@ -221,7 +221,7 @@ public class EventHandler {
         }
         //TODO:delete when incinerated forest returns
         if (event.getCategory() == Biome.BiomeCategory.PLAINS){
-            event.getGeneration().addFeature(GenerationStep.Decoration.LOCAL_MODIFICATIONS,FeaturesRegistry.MOLTEN_FOREST_RUINS_CONFIGURED);
+            event.getGeneration().addFeature(GenerationStep.Decoration.LOCAL_MODIFICATIONS,FeaturesRegistry.MOLTEN_FOREST_RUINS_PLACEMENT);
             b.addFeature(GenerationStep.Decoration.TOP_LAYER_MODIFICATION,FeaturesRegistry.LUNAR_LILY_FEATURE_PLACEMENT);
         }
 
