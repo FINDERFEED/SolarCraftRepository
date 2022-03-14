@@ -3,6 +3,8 @@
   "values": [
     "solarforge:solar_core_block",
     "solarforge:uldoradium_ore",
-    "solarforge:solar_ores"
+    "solarforge:solar_ores",
+    "solarforge:uldera_rune_block",
+    "solarforge:corrupted_stone"
   ]
 }

@@ -58,6 +58,7 @@ public class ItemsRegister {
     public static final RegistryObject<Item> CATALYST_BASE = ITEMS.register("catalyst_base",()->new SolarcraftBlockItem(BlocksRegistry.CATALYST_BASE.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS),()->AncientFragment.CATALYSTS));
     public static final RegistryObject<Item> ENERGIZED_STONE = ITEMS.register("energized_stone",()->new BlockItem(BlocksRegistry.ENERGIZED_STONE.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
     public static final RegistryObject<Item> SOLAR_STONE_STAIRS = ITEMS.register("solar_stone_stairs",()->new BlockItem(BlocksRegistry.SOLAR_STONE_STAIRS.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
+    public static final RegistryObject<Item> SOLAR_STONE_SLAB = ITEMS.register("solar_stone_slab",()->new BlockItem(BlocksRegistry.SOLAR_STONE_SLAB.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
     public static final RegistryObject<Item> INFUSING_TABLE = ITEMS.register("infusing_crafting_table",()->new BlockItem(BlocksRegistry.INFUSING_CRAFTING_TABLE_BLOCK.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
     public static final RegistryObject<Item> SPEED_ROAD = ITEMS.register("speed_road",()->new SolarcraftBlockItem(BlocksRegistry.SPEED_ROAD.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS),()->AncientFragment.SPEED_ROAD));
 

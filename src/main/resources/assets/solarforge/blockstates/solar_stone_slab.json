@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "solarforge:block/solar_stone_slab"
+    },
+    "type=double": {
+      "model": "solarforge:block/solar_stone_bricks"
+    },
+    "type=top": {
+      "model": "solarforge:block/solar_stone_slab_top"
+    }
+  }
+}

@@ -654,5 +654,6 @@
   "effect.solarforge.evasion": "Evasion",
   "entity.solarforge.runic_warrior": "Runic Warrior",
   "block.solarforge.uldera_rune_block": "Uldera rune block",
-  "block.solarforge.corrupted_stone": "Corrupted stone"
+  "block.solarforge.corrupted_stone": "Corrupted stone",
+  "block.solarforge.solar_stone_slab": "Solar stone slab"
 }

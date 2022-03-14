@@ -169,7 +169,9 @@ public class InfuserTileEntity extends AbstractRunicEnergyContainer implements  
             IItemHandler inv = tile.getInventory();
             if (inv == null) return;
             tile.updateStacksInPhantomSlots();
+            boolean forceUpdate = false;
             if (tile.RECIPE_IN_PROGRESS) {
+
                 Optional<InfusingRecipe> recipe;
                 if (tile.currentRecipe == null){
                     recipe = tile.level.getRecipeManager().getRecipeFor(SolarForge.INFUSING_RECIPE_TYPE, new PhantomInventory(inv), world);
@@ -177,11 +179,11 @@ public class InfuserTileEntity extends AbstractRunicEnergyContainer implements  
                 }else{
                     if (!tile.currentRecipe.matches(new PhantomInventory(inv),world)){
                         recipe = Optional.empty();
+                        forceUpdate = true;
                     }else{
                         recipe = Optional.of(tile.currentRecipe);
                     }
                 }
-
 
                 if (recipe.isEmpty()) {
                     tile.RECIPE_IN_PROGRESS = false;
@@ -193,9 +195,7 @@ public class InfuserTileEntity extends AbstractRunicEnergyContainer implements  
                     tile.clearWays();
                 }
                 if (tile.RECIPE_IN_PROGRESS && tile.catalystsMatch(recipe.get()) && tile.isStructureCorrect()) {
-
-                    tile.setChanged();
-                    world.sendBlockUpdated(tile.worldPosition, blockState, blockState, 3);
+                    forceUpdate = true;
                     InfusingRecipe recipe1 = recipe.get();
 
                     int count = tile.getMinRecipeCountOutput(recipe1);
@@ -225,6 +225,14 @@ public class InfuserTileEntity extends AbstractRunicEnergyContainer implements  
                     tile.currentRecipe = null;
                     tile.onTileRemove();
                     tile.clearWays();
+                }
+
+            }
+            if (world.getGameTime() % 40 == 0){
+                Helpers.updateTile(tile);
+            }else{
+                if (forceUpdate) {
+                    Helpers.updateTile(tile);
                 }
             }
 

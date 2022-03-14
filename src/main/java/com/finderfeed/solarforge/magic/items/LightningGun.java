@@ -5,6 +5,7 @@ import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.entities.BallLightningProjectile;
 import com.finderfeed.solarforge.magic.items.primitive.RareSolarcraftItem;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.unlockables.AncientFragment;
+import com.finderfeed.solarforge.misc_things.ManaConsumer;
 import com.finderfeed.solarforge.registries.entities.EntityTypes;
 import com.finderfeed.solarforge.registries.sounds.Sounds;
 import net.minecraft.ChatFormatting;
@@ -22,7 +23,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 import java.util.function.Supplier;
 
-public class LightningGun extends RareSolarcraftItem {
+public class LightningGun extends RareSolarcraftItem implements ManaConsumer {
 
     private static int MANA_COST = 50;
 
@@ -59,5 +60,10 @@ public class LightningGun extends RareSolarcraftItem {
 
         components.add(new TranslatableComponent("solarcraft.lightning_gun").withStyle(ChatFormatting.GOLD));
         super.appendHoverText(p_41421_, p_41422_, components, p_41424_);
+    }
+
+    @Override
+    public double getManacost() {
+        return MANA_COST;
     }
 }

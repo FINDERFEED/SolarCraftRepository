@@ -52,6 +52,9 @@
     "solarforge:regen_amp_block",
     "solarforge:damage_amp_block",
     "solarforge:armor_amp_block",
-    "solarforge:evasion_amp_block"
+    "solarforge:evasion_amp_block",
+    "solarforge:solar_stone_slab",
+    "solarforge:corrupted_stone",
+    "solarforge:uldera_rune_block"
   ]
 }
