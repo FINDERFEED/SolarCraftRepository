@@ -57,7 +57,7 @@ public class UltraCrossbowProjectile extends AbstractHurtingProjectile {
 
             Entity ent = ctx.getEntity();
 
-            ent.hurt(DamageSource.MAGIC,(float)damage);
+            ent.hurt(DamageSource.MAGIC.setProjectile(),(float)damage);
 
             ((ServerLevel)level).sendParticles(ParticleTypesRegistry.SOLAR_STRIKE_PARTICLE.get(),ent.getX(),ent.getY()+1.2,ent.getZ(),2,0,0.02,0,0.02);
             if (damage >= 30 && (damage < 120) ){
@@ -73,14 +73,13 @@ public class UltraCrossbowProjectile extends AbstractHurtingProjectile {
     protected void onHitBlock(BlockHitResult result) {
 
         if (!level.isClientSide){
+            if (damage >= 30 && (damage < 120)){
+                level.explode(null,this.getX(),this.getY(),this.getZ(),5,true, Explosion.BlockInteraction.BREAK);
+            }else if (damage >= 120){
+                level.explode(null,this.getX(),this.getY(),this.getZ(),8,true, Explosion.BlockInteraction.BREAK);
+            }
             if ((level.getBlockState(result.getBlockPos()).getDestroySpeed(level,result.getBlockPos()) >= 0) &&
                     level.getBlockState(result.getBlockPos()).getDestroySpeed(level,result.getBlockPos()) <= 100) {
-
-                if (damage >= 30 && (damage < 120)){
-                    level.explode(null,this.getX(),this.getY(),this.getZ(),5,true, Explosion.BlockInteraction.BREAK);
-                }else if (damage >= 120){
-                    level.explode(null,this.getX(),this.getY(),this.getZ(),8,true, Explosion.BlockInteraction.BREAK);
-                }
                 level.destroyBlock(result.getBlockPos(), true);
             }
 

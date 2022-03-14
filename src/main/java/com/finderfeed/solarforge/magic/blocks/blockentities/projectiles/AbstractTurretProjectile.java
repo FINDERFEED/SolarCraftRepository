@@ -51,7 +51,7 @@ public class AbstractTurretProjectile extends AbstractHurtingProjectile {
     @Override
     protected void onHitEntity(EntityHitResult ctx) {
         if (!level.isClientSide) {
-            ctx.getEntity().hurt(DamageSource.MAGIC, damage);
+            ctx.getEntity().hurt(DamageSource.MAGIC.setProjectile(), damage);
             if (explosionPower > 0) {
                 level.explode(null, ctx.getLocation().x, ctx.getLocation().y, ctx.getLocation().z, explosionPower,true, Explosion.BlockInteraction.BREAK);
             }
