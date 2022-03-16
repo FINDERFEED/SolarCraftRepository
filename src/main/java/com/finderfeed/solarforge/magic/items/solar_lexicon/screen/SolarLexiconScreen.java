@@ -6,7 +6,7 @@ import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.local_library.helpers.RenderingTools;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.achievements.Progression;
 import com.finderfeed.solarforge.misc_things.IScrollable;
-import com.finderfeed.solarforge.magic.items.solar_lexicon.achievements.achievement_tree.AchievementTree;
+import com.finderfeed.solarforge.magic.items.solar_lexicon.achievements.achievement_tree.ProgressionTree;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
@@ -44,7 +44,7 @@ public class SolarLexiconScreen extends Screen implements IScrollable {
     private String afterTxt = "";
     public  int relX;
     public  int relY;
-    public final AchievementTree tree = AchievementTree.INSTANCE;
+    public final ProgressionTree tree = ProgressionTree.INSTANCE;
     public Component currAch;
     public Progression currentProgression = null;
     private List<Runnable> postLinesRender = new ArrayList<>();
@@ -89,11 +89,14 @@ public class SolarLexiconScreen extends Screen implements IScrollable {
         if ((keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_LEFT) || keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_A))
                 && !(scrollX +4 > 0)){
             scrollX+=4;
-        } else if ((keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_UP) || keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_W)) && !(scrollY +4 > 0)){
+        } else if ((keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_UP) || keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_W))
+                && !(scrollY +4 > 0)){
             scrollY+=4;
-        }else if((keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_DOWN) || keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_S)) && !(scrollY -4 < -300)){
+        }else if((keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_DOWN) || keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_S))
+                && !(scrollY -4 < -340)){
             scrollY-=4;
-        }else if ((keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_RIGHT) || keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_D)) && !(scrollX -4 < -80)){
+        }else if ((keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_RIGHT) || keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_D))
+                && !(scrollX -4 < -80)){
             scrollX-=4;
         }
         if (this.prevscrollX != scrollX){
@@ -245,7 +248,7 @@ public class SolarLexiconScreen extends Screen implements IScrollable {
         blit(matrices,relX,relY,0,0,256,256);
 
         ClientHelpers.bindText(FRAME);
-        for (Progression a : tree.ACHIEVEMENT_TREE.keySet()) {
+        for (Progression a : tree.PROGRESSION_TREE.keySet()) {
             Point first = new Point(relX+scrollX+21+map.get(a.getAchievementTier()).indexOf(a)*OFFSET_X,relY+scrollY+21+(a.getAchievementTier()-1)*OFFSET_Y);
             for (Progression b : tree.getAchievementRequirements(a)){
                 Point second = new Point(relX+scrollX+21+map.get(b.getAchievementTier()).indexOf(b)*OFFSET_X,relY+scrollY+21+(b.getAchievementTier()-1)*OFFSET_Y);
@@ -266,7 +269,7 @@ public class SolarLexiconScreen extends Screen implements IScrollable {
 
         postLinesRender.forEach(Runnable::run);
         postLinesRender.clear();
-        for (Progression a : tree.ACHIEVEMENT_TREE.keySet()) {
+        for (Progression a : tree.PROGRESSION_TREE.keySet()) {
             Point first = new Point(relX+scrollX+18+map.get(a.getAchievementTier()).indexOf(a)*OFFSET_X,relY+scrollY+18+(a.getAchievementTier()-1)*OFFSET_Y);
             blit(matrices,first.x-8,first.y-8,0,0,20,20,20,20);
         }

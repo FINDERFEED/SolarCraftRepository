@@ -46,7 +46,8 @@ public enum Progression {
 
     RADIANT_LAND("dimension_core",9,ItemsRegister.DIMENSION_CORE.get().getDefaultInstance(), new TranslatableComponent("ach.dimension_core"),nextID(),new TranslatableComponent("pre.dimension_core"),new TranslatableComponent("aft.dimension_core")),
 
-    KILL_CRYSTAL_BOSS("crystal_boss",10,ItemsRegister.CRYSTALLITE_CORE.get().getDefaultInstance(), new TranslatableComponent("ach.crystal_boss"),nextID(),new TranslatableComponent("pre.crystal_boss"),new TranslatableComponent("aft.crystal_boss"));
+    KILL_CRYSTAL_BOSS("crystal_boss",10,ItemsRegister.CRYSTALLITE_CORE.get().getDefaultInstance(), new TranslatableComponent("ach.crystal_boss"),nextID(),new TranslatableComponent("pre.crystal_boss"),new TranslatableComponent("aft.crystal_boss")),
+    KILL_RUNIC_ELEMENTAL("runic_elemental",11,ItemsRegister.CRYSTAL_HEART.get().getDefaultInstance(), new TranslatableComponent("ach.runic_elemental"),nextID(),new TranslatableComponent("pre.runic_elemental"),new TranslatableComponent("aft.runic_elemental"));
 
 
     //FIND_SOLAR_STONE("solar_stone",2, ItemsRegister.SOLAR_STONE.get().getDefaultInstance(),new TranslatableComponent("ach.solar_stone"),7,new TranslatableComponent("pre.solar_stone"),new TranslatableComponent("aft.solar_stone")),

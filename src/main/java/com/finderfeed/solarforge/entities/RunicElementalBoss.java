@@ -4,9 +4,11 @@ import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.local_library.entities.BossAttackChain;
 import com.finderfeed.solarforge.local_library.helpers.CompoundNBTHelper;
 import com.finderfeed.solarforge.local_library.other.InterpolatedValue;
+import com.finderfeed.solarforge.magic.items.solar_lexicon.achievements.Progression;
 import com.finderfeed.solarforge.magic.projectiles.FallingMagicMissile;
 import com.finderfeed.solarforge.magic.projectiles.RunicWarriorSummoningRocket;
 import com.finderfeed.solarforge.misc_things.CrystalBossBuddy;
+import com.finderfeed.solarforge.packet_handler.packets.DisablePlayerFlightPacket;
 import com.finderfeed.solarforge.packet_handler.packets.TeleportEntityPacket;
 import com.finderfeed.solarforge.registries.attributes.AttributesRegistry;
 import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
@@ -167,6 +169,13 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
     private void bossActivity(){
         LivingEntity target = getTarget();
         if (target != null){
+            if (level.getGameTime() % 10 == 0){
+                for (Player player : getPlayersAround(false)){
+                    if (player.getAbilities().flying) {
+                        DisablePlayerFlightPacket.send((ServerPlayer) player, true);
+                    }
+                }
+            }
             if (isWaitingForPlayerToDestroyExplosiveCrystals && tickCount % 20 == 0){
                 isWaitingForPlayerToDestroyExplosiveCrystals = !getExplosiveCrystalsAround().isEmpty();
             }
@@ -696,6 +705,7 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
         });
     }
 
+
     private List<LivingEntity> getLivingEntitiesAround(){
         return level.getEntitiesOfClass(LivingEntity.class,new AABB(-32,-32,-32,32,32,32).move(position()),(c)->{
             if (c instanceof CrystalBossBuddy) return false;
@@ -801,6 +811,19 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
             }
         }
         return super.hurt(src, amount);
+    }
+
+    @Override
+    protected void dropAllDeathLoot(DamageSource src) {
+        super.dropAllDeathLoot(src);
+        LegendaryItem item = new LegendaryItem(level, new ItemStack(ItemsRegister.CRYSTAL_HEART.get(),1));
+        item.setPos(this.position().add(0,this.getBbHeight()/2,0));
+        level.addFreshEntity(item);
+        if (!level.isClientSide) {
+            for (Player player : getPlayersAround(false)) {
+                Helpers.fireProgressionEvent(player, Progression.KILL_RUNIC_ELEMENTAL);
+            }
+        }
     }
 
     @Override

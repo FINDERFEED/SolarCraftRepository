@@ -64,6 +64,12 @@ import java.util.function.Supplier;
 public class ClientHelpers {
 
 
+    public static void disableFlight(boolean disable){
+        getClientPlayer().getAbilities().flying = !disable;
+//        getClientPlayer().getAbilities().mayfly = !disable;
+    }
+
+
     public static void deserializeServersideFragmentsAndPutThemInList(JsonObject object){
         List<AncientFragment> fragments = AncientFragment.deserializeFragments(JsonFragmentsHelper.serializedFragmentsArray(object));
         for (AncientFragment fragment : fragments) {

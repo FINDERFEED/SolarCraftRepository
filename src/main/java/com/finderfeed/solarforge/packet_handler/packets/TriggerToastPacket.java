@@ -2,7 +2,7 @@ package com.finderfeed.solarforge.packet_handler.packets;
 
 import com.finderfeed.solarforge.ClientHelpers;
 import com.finderfeed.solarforge.client.toasts.SolarAchievementToast;
-import com.finderfeed.solarforge.magic.items.solar_lexicon.achievements.achievement_tree.AchievementTree;
+import com.finderfeed.solarforge.magic.items.solar_lexicon.achievements.achievement_tree.ProgressionTree;
 import com.finderfeed.solarforge.registries.sounds.Sounds;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
@@ -29,7 +29,7 @@ public class TriggerToastPacket {
     public void handle(Supplier<NetworkEvent.Context> ctx){
         ctx.get().enqueueWork(()->{
             DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> ()-> {
-                AchievementTree tree = AchievementTree.INSTANCE;
+                ProgressionTree tree = ProgressionTree.INSTANCE;
                 ClientHelpers.playSound(Sounds.PROGRESSION_GAIN.get(),1,1);
                 SolarAchievementToast.addOrUpdate(Minecraft.getInstance().getToasts(), tree.getAchievementById(id));
             });

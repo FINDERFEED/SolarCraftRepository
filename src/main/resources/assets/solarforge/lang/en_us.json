@@ -489,7 +489,7 @@
   "player.cant_use_ability_near_boss": "Unknown force restricts you from casting this ability here.",
   "ach.crystal_boss": "Ancient Crystal",
   "pre.crystal_boss": "The final battle?",
-  "aft.crystal_boss": "The final battle?",
+  "aft.crystal_boss": "A core of this crystal doesn't seem very useful...",
   "block.solarforge.runic_stairs": "Runic stairs",
   "block.solarforge.runic_slab": "Runic slab",
 
@@ -531,7 +531,6 @@
   "solar_category.radiant_land": "Radiant Land",
   "blockstate_solarforge.properties": "BlockState properties:",
   "defence_crystal.lore": "This world is full of crystals and its not surprising that some of that crystals will defend themselves. Since this world is not a place to live due to its curse, killing one of those will not harm anything. ",
-
   "block.solarforge.inscription_stone": "Inscription stone",
   "solarcraft.energy_type_unlocked": "New energy type",
   "ach.enter_end": "Floating islands realm",
@@ -655,5 +654,9 @@
   "entity.solarforge.runic_warrior": "Runic Warrior",
   "block.solarforge.uldera_rune_block": "Uldera rune block",
   "block.solarforge.corrupted_stone": "Corrupted stone",
-  "block.solarforge.solar_stone_slab": "Solar stone slab"
+  "block.solarforge.solar_stone_slab": "Solar stone slab",
+  "item.solarforge.crystal_heart": "Crystal heart(WIP)",
+  "ach.runic_elemental": "Nature Mage",
+  "pre.runic_elemental": "A powerful magic creature in an eternal slumber. Is there a way to awaken it?",
+  "aft.runic_elemental": "He was nearly impossible to beat, but his heart definitely very valuable."
 }

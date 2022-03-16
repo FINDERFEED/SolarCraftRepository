@@ -35,7 +35,6 @@ import com.finderfeed.solarforge.recipe_types.solar_smelting.SolarSmeltingRecipe
 import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
 import com.finderfeed.solarforge.registries.containers.Containers;
 import com.finderfeed.solarforge.registries.effects.EffectsRegister;
-import com.finderfeed.solarforge.registries.features.FeaturesSolarforge;
 import com.finderfeed.solarforge.registries.features.configured.ConfiguredFeatures;
 import com.finderfeed.solarforge.registries.items.ItemsRegister;
 import com.finderfeed.solarforge.registries.sounds.Sounds;
@@ -193,12 +192,10 @@ public class SolarForge
         EntityTypes.ENTITY_TYPE_REGISTER.register(bus);
         EffectsRegister.EFFECTS.register(bus);
         Sounds.SOUND_EVENTS.register(bus);
-        FeaturesSolarforge.FEATURES.register(bus);
         Containers.CONTAINER_TYPE.register(bus);
         FoliagePlacerRegistry.DEFERRED_REGISTER.register(bus);
         AttributesRegistry.DEF_REG.register(bus);
         FDEntityDataSerializers.DEF_REG.register(bus);
-//        FeaturesRegistry.FEATURE_DEFERRED_REGISTER.register(bus);
         BiomesRegister.BIOMES.register(bus);
         // Register the setup method for modloading
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
@@ -266,14 +263,7 @@ public class SolarForge
         MenuScreens.register(INFUSING_TABLE_CONTAINER.get(), InfuserScreen::new);
     }
     // You can use SubscribeEvent and let the Event Bus discover methods to call
-    @SubscribeEvent
-    public void onServerStarting(ServerStartingEvent event) {
-        // do something when the server starts
 
-    }
-
-    // You can use EventBusSubscriber to automatically subscribe events on the contained class (this is subscribing to the MOD
-    // Event bus for receiving Registry Events)
     @Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.MOD)
     public static class RegistryEvents {
 
@@ -292,18 +282,6 @@ public class SolarForge
             event.put(EntityTypes.RUNIC_WARRIOR.get(), RunicWarrior.createAttributes().build());
         }
 
-        @SubscribeEvent
-        public static void onBlocksRegistry(final RegistryEvent.Register<Block> blockRegistryEvent) {
-            // register a new block here
-
-        }
-
-        @SubscribeEvent
-        public static void registerTE(RegistryEvent.Register<BlockEntityType<?>> evt) {
-
-
-
-        }
         @SubscribeEvent
         public static void registerRecipeSerializers(RegistryEvent.Register<RecipeSerializer<?>> event) {
             Registry.register(Registry.RECIPE_TYPE, new ResourceLocation(INFUSING_CRAFTING_RECIPE_TYPE.toString()), INFUSING_CRAFTING_RECIPE_TYPE);

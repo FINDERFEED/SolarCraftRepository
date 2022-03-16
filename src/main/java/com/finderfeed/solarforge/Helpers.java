@@ -14,14 +14,13 @@ import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import com.finderfeed.solarforge.misc_things.StateAndTag;
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
 import com.finderfeed.solarforge.packet_handler.packets.*;
-import com.finderfeed.solarforge.magic.items.solar_lexicon.achievements.achievement_tree.AchievementTree;
+import com.finderfeed.solarforge.magic.items.solar_lexicon.achievements.achievement_tree.ProgressionTree;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.packets.UpdateProgressionOnClient;
 import com.mojang.blaze3d.vertex.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
-import net.minecraft.tags.Tag;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -103,41 +102,13 @@ public class Helpers {
         return ent.invulnerableTime == 0;
     }
 
-//    public static String getAchievementDescription(Progression ach){
-//        return switch (ach) {
-//            case CRAFT_SOLAR_FORGE -> "The magical power of this machine allows me to get powerful abilities. Can it do more than just that?";
-//            case CRAFT_SOLAR_INFUSER -> "So now what? There was no instructions on how to use it...";
-//            case FIND_SOLAR_STONE -> "This magical stone shines brighter than sun.There should be a way to use it";
-//            case USE_SOLAR_INFUSER -> "It wasnt as hard as i thought it would be.";
-//            case ACQUIRE_SOLAR_DUST -> "I have finally acquired solar dust! But where to use it?";
-//            case ACQUIRE_COLD_STAR -> "The power of this item is very big. According to my experiments it can focus on light.";
-//            case FIND_INFUSER_DUNGEON -> "Is this some sort of an ancient altar?";
-//            case FIND_KEY_LOCK_DUNGEON -> "A very strange building... There should be more to it...";
-//            case FIND_KEY_SOURCE -> "A key? But for what?";
-//            case CRAFT_SOLAR_LENS -> "With the power of this magic piece of a star i can create better materials now!";
-//            case ACQUIRE_COLD_STAR_ACTIVATED -> "This altar just made it increase the power of the focused light! I need to find a usage for it.";
-//            case CRAFT_SOLAR_ENERGY_GENERATOR -> "This generator is much stronger than the one that i had before!";
-//            case TRANSMUTE_GEM -> "My guesses were true, lava in this forest is full of magic energy.";
-//            case FIND_INCINERATED_FOREST -> "It doesnt seem that this was caused by a natural disaster...";
-//            case TRADE_FOR_BLUE_GEM -> "What a rude man! At least he loves to share information... For money...";
-//            case DIMENSIONAL_SHARD_DUNGEON -> "They definitely dont want me to reveal their secrets.";
-//            case ENTER_NETHER -> "Despite its evil nature there are still some friendly creatures here, but anyway i need to be careful.";
-//            case SOLAR_RUNE -> "Maybe this runes will help me to decrypt the fragments?";
-//            case RUNE_ENERGY_CLAIM -> "Turns out i can collect this energy inside...myself?";
-//            case RUNE_ENERGY_DEPOSIT -> "It seems that this pylon contains some sort of energy.";
-//            case RUNIC_ENERGY_REPEATER -> "Energy from those pylons can be a solution of this problem!";
-//            case DIMENSION_CORE -> "A cursed world in all its grace.";
-//            case KILL_CRYSTAL_BOSS -> "High-tech defensive nightmare with a very valuable core.";
-//        };
-//    }
-
     public static boolean hasPlayerUnlocked(Progression ach, Player entity){
 
         return ach == null ? true : entity.getPersistentData().getBoolean("solar_forge_progression_"+ach.getAchievementCode());
     }
 
     public static boolean canPlayerUnlock(Progression ach, Player entity){
-        AchievementTree tree = AchievementTree.INSTANCE;
+        ProgressionTree tree = ProgressionTree.INSTANCE;
         for (Progression a : tree.getAchievementRequirements(ach)){
             if (!entity.getPersistentData().getBoolean("solar_forge_progression_"+a.getAchievementCode())){
                 return false;
@@ -288,7 +259,6 @@ public class Helpers {
     public static boolean isEntityReachable(Level world, BlockPos pos1, BlockPos pos2){
         Vec3 vec1 = new Vec3(pos1.getX()+0.5f,pos1.getY()+0.5f,pos1.getZ()+0.5f);
         Vec3 vec2 = new Vec3(pos2.getX()+0.5f,pos2.getY()+1.25f,pos2.getZ()+0.5f);
-        Vec3 vector = new Vec3(vec2.x - vec1.x,vec2.y - vec1.y,vec2.z - vec1.z);
         ClipContext ctx = new ClipContext(vec2,vec1, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE,null);
         BlockHitResult result = world.clip(ctx);
 

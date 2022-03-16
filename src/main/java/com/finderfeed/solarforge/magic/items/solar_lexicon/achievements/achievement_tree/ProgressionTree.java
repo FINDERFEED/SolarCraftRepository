@@ -4,20 +4,20 @@ import com.finderfeed.solarforge.magic.items.solar_lexicon.achievements.Progress
 
 import java.util.*;
 
-public class AchievementTree {
+public class ProgressionTree {
 
-    public static final AchievementTree INSTANCE = loadTree();
+    public static final ProgressionTree INSTANCE = loadTree();
 
-    public HashMap<Progression,TreePart<Progression>> ACHIEVEMENT_TREE = new HashMap<>();
+    public HashMap<Progression,TreePart<Progression>> PROGRESSION_TREE = new HashMap<>();
     public List<Progression> PROGRESSIONS = new ArrayList<>();
 
-    public AchievementTree(){
+    public ProgressionTree(){
 
     }
 
 
-    public static AchievementTree loadTree(){
-        AchievementTree tree = new AchievementTree();
+    public static ProgressionTree loadTree(){
+        ProgressionTree tree = new ProgressionTree();
 
         for (Progression a : Progression.allProgressions){
             tree.addGeneralAchievement(a);
@@ -41,6 +41,7 @@ public class AchievementTree {
         tree.addAchievementRequirements(Progression.CRAFT_SOLAR_ENERGY_GENERATOR,Progression.CRAFT_SOLAR_LENS,Progression.RUNIC_ENERGY_REPEATER);
         tree.addAchievementRequirements(Progression.RADIANT_LAND,Progression.DIMENSIONAL_SHARD_DUNGEON,Progression.TRADE_FOR_BLUE_GEM,Progression.CRAFT_SOLAR_ENERGY_GENERATOR);
         tree.addAchievementRequirements(Progression.KILL_CRYSTAL_BOSS,Progression.RADIANT_LAND);
+        tree.addAchievementRequirements(Progression.KILL_RUNIC_ELEMENTAL,Progression.KILL_CRYSTAL_BOSS);
 
         return tree;
     }
@@ -48,16 +49,16 @@ public class AchievementTree {
 
 
     public Collection<Progression> getAchievementRequirements(Progression ach){
-        if (ACHIEVEMENT_TREE.containsKey(ach)){
-            return ACHIEVEMENT_TREE.get(ach).TO_UNLOCK_GENERAL_ACHIEVEMENT;
+        if (PROGRESSION_TREE.containsKey(ach)){
+            return PROGRESSION_TREE.get(ach).TO_UNLOCK_GENERAL_ACHIEVEMENT;
         } else {
             return null;
         }
     }
 
     private void addAchievementRequirements(Progression ach, List<Progression> requires) {
-        if (ACHIEVEMENT_TREE.containsKey(ach)){
-            ACHIEVEMENT_TREE.get(ach).TO_UNLOCK_GENERAL_ACHIEVEMENT.addAll(requires);
+        if (PROGRESSION_TREE.containsKey(ach)){
+            PROGRESSION_TREE.get(ach).TO_UNLOCK_GENERAL_ACHIEVEMENT.addAll(requires);
             requires.clear();
         }else{
             requires.clear();
@@ -66,9 +67,9 @@ public class AchievementTree {
     }
 
     private void addAchievementRequirements(Progression ach, Progression... progressions) {
-        if (ACHIEVEMENT_TREE.containsKey(ach)){
+        if (PROGRESSION_TREE.containsKey(ach)){
             for (Progression achi : progressions) {
-                ACHIEVEMENT_TREE.get(ach).TO_UNLOCK_GENERAL_ACHIEVEMENT.add(achi);
+                PROGRESSION_TREE.get(ach).TO_UNLOCK_GENERAL_ACHIEVEMENT.add(achi);
             }
 
         }else{
@@ -82,13 +83,13 @@ public class AchievementTree {
 
 
     private void addGeneralAchievement(Progression progression){
-        if (!ACHIEVEMENT_TREE.containsKey(progression)){
-            ACHIEVEMENT_TREE.put(progression,new TreePart<>());
+        if (!PROGRESSION_TREE.containsKey(progression)){
+            PROGRESSION_TREE.put(progression,new TreePart<>());
         }
     }
 
     public Progression getAchievementById(int id){
-        for (Progression a : ACHIEVEMENT_TREE.keySet()){
+        for (Progression a : PROGRESSION_TREE.keySet()){
             if (a.getId() == id){
                 return a;
             }
