@@ -35,7 +35,7 @@ import com.finderfeed.solarforge.recipe_types.solar_smelting.SolarSmeltingRecipe
 import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
 import com.finderfeed.solarforge.registries.containers.Containers;
 import com.finderfeed.solarforge.registries.effects.EffectsRegister;
-import com.finderfeed.solarforge.registries.features.configured.ConfiguredFeatures;
+import com.finderfeed.solarforge.registries.worldgen.configured.ConfiguredFeatures;
 import com.finderfeed.solarforge.registries.items.ItemsRegister;
 import com.finderfeed.solarforge.registries.sounds.Sounds;
 import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
@@ -84,7 +84,6 @@ import net.minecraftforge.common.TierSortingRegistry;
 import net.minecraftforge.common.extensions.IForgeMenuType;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
-import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;

@@ -165,6 +165,12 @@ public class FinderfeedMathHelper {
         return x*x + y*y <= radius*radius;
     }
 
+    public static boolean isInCone(double x,double y,double z,double coneRadius,double coneHeight){
+        if (y > coneHeight) return false;
+        double rad = (coneRadius*(1-y/coneHeight));
+        return x*x + z*z <= rad*rad;
+    }
+
 
     public static class TileEntityThings{
         public static Vec3 getTileEntityCenter(BlockEntity entity){

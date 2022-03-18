@@ -6,7 +6,7 @@ import com.finderfeed.solarforge.registries.items.ItemsRegister;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.network.chat.TranslatableComponent;
-
+//TODO: some progressions lack context!
 public enum Progression {
     ENTER_NETHER("enter_nether",1, Blocks.NETHERRACK.asItem().getDefaultInstance(),new TranslatableComponent("ach.enter_nether"),nextID(),new TranslatableComponent("pre.enter_nether"),new TranslatableComponent("aft.enter_nether")),
     FIND_INCINERATED_FOREST("find_incinerated_forest",1,ItemsRegister.BURNT_LOG.get().getDefaultInstance(), new TranslatableComponent("ach.find_incinerated_forest"),nextID(),new TranslatableComponent("pre.find_incinerated_forest"),new TranslatableComponent("aft.find_incinerated_forest")),

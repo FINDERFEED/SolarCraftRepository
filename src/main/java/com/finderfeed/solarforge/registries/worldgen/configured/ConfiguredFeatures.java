@@ -1,26 +1,14 @@
-package com.finderfeed.solarforge.registries.features.configured;
+package com.finderfeed.solarforge.registries.worldgen.configured;
 
 import com.finderfeed.solarforge.loot_modifiers.custom_loot_conditions.SolarcraftModulePredicate;
 import com.finderfeed.solarforge.loot_modifiers.custom_loot_conditions.SolarcraftNBTPredicate;
-import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
 import net.minecraft.advancements.critereon.ItemPredicate;
 
 import net.minecraft.core.Holder;
-import net.minecraft.data.worldgen.features.FeatureUtils;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.core.Registry;
-import net.minecraft.data.BuiltinRegistries;
-import net.minecraft.world.level.levelgen.Heightmap;
 
-import net.minecraft.world.level.levelgen.feature.configurations.SimpleBlockConfiguration;
-import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
-
-import net.minecraft.world.level.levelgen.feature.configurations.RandomPatchConfiguration;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
-import net.minecraft.world.level.levelgen.feature.Feature;
 
-import net.minecraft.world.level.levelgen.placement.HeightmapPlacement;
-import net.minecraft.world.level.levelgen.placement.InSquarePlacement;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 

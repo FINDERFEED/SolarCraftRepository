@@ -20,7 +20,7 @@ import com.finderfeed.solarforge.registries.Tags;
 import com.finderfeed.solarforge.registries.attributes.AttributesRegistry;
 import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
 import com.finderfeed.solarforge.registries.effects.EffectsRegister;
-import com.finderfeed.solarforge.registries.features.configured.ConfiguredFeatures;
+import com.finderfeed.solarforge.registries.worldgen.configured.ConfiguredFeatures;
 import com.finderfeed.solarforge.registries.items.ItemsRegister;
 import com.finderfeed.solarforge.registries.sounds.Sounds;
 import com.finderfeed.solarforge.world_generation.features.FeaturesRegistry;

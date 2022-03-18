@@ -2,7 +2,7 @@ package com.finderfeed.solarforge.world_generation.features;
 
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
-import com.finderfeed.solarforge.registries.features.configured.ConfiguredFeatures;
+import com.finderfeed.solarforge.registries.worldgen.configured.ConfiguredFeatures;
 import com.finderfeed.solarforge.world_generation.biomes.molten_forest.MoltenForestAmbience;
 import com.finderfeed.solarforge.world_generation.dimension_related.radiant_land.CrystallizedOreVeinFeature;
 import com.finderfeed.solarforge.world_generation.dimension_related.radiant_land.RadiantSmallTreeFoliagePlacer;
@@ -88,6 +88,8 @@ public class FeaturesRegistry {
     public static final Feature<NoneFeatureConfiguration> CEILING_DRIPSTONE_LIKE_CRYSTALS = new CeilingDripstoneLikeCrystals(NoneFeatureConfiguration.CODEC);
     public static final Feature<SimpleBlockConfiguration> CRYSTALS_ORE = new CrystalsOreFeature(SimpleBlockConfiguration.CODEC);
     public static final Feature<NoneFeatureConfiguration> ULDERA_OBELISK = new UlderaObeliskFeature(NoneFeatureConfiguration.CODEC);
+    public static final Feature<NoneFeatureConfiguration> CORRUPTED_CAVES = new CorruptedCavesFeature();
+
 
     public static ConfiguredFeature<?,?> RADIANT_TREE_CONFIGURED_CONF;
     public static ConfiguredFeature<?,?> RADIANT_SMALL_TREE_CONFIGURED_CONF;
@@ -109,6 +111,8 @@ public class FeaturesRegistry {
     public static ConfiguredFeature<?,?> SOLAR_ORE_CONF;
     public static ConfiguredFeature<?,?> SOLAR_STONE_CONF;
     public static ConfiguredFeature<?,?> ULDERA_OBELISK_CONFIGURED;
+    public static ConfiguredFeature<?,?> CORRUPTED_CAVES_CONFIGURED;
+
 
     public static Holder<PlacedFeature> ULDERA_OBELISK_PLACEMENT;
     public static Holder<PlacedFeature> BURNT_TREE_2;
@@ -135,6 +139,8 @@ public class FeaturesRegistry {
     public static Holder<PlacedFeature> BURNT_BIOME_AMBIENECE_PLACED_FEATURE;
     public static Holder<PlacedFeature> SOLAR_ORE;
     public static Holder<PlacedFeature> SOLAR_STONE;
+    public static Holder<PlacedFeature> CORRUPTED_CAVES_PLACEMENT;
+
     //public static ConfiguredFeature<?,?> RADIANT_LAND_AMBIENT_TREE;
 
 
@@ -165,6 +171,8 @@ public class FeaturesRegistry {
         event.getRegistry().register(CEILING_DRIPSTONE_LIKE_CRYSTALS.setRegistryName(new ResourceLocation(SolarForge.MOD_ID,"ceiling_dripstonelike_crystals")));
         registerFeature(event, CRYSTALS_ORE,"crystallized_runic_energy");
         registerFeature(event,ULDERA_OBELISK,"uldera_obelisk");
+        registerFeature(event,CORRUPTED_CAVES,"corrupted_caves");
+
     }
     private static void registerFeature(RegistryEvent.Register<Feature<?>> event,Feature<?> f,String name){
         event.getRegistry().register(f.setRegistryName(new ResourceLocation(SolarForge.MOD_ID,name)));
@@ -480,6 +488,14 @@ public class FeaturesRegistry {
                     RarityFilter.onAverageOnceEvery(100),
                     HeightRangePlacement.triangle(VerticalAnchor.absolute(75),VerticalAnchor.absolute(90)),
                     InSquarePlacement.spread());
+
+            CORRUPTED_CAVES_CONFIGURED = new ConfiguredFeature<>(CORRUPTED_CAVES,NoneFeatureConfiguration.INSTANCE);
+            registerConfiguredFeature(CORRUPTED_CAVES_CONFIGURED,"corrupted_caves");
+            CORRUPTED_CAVES_PLACEMENT = registerPlacedFeature("corrupted_caves",Holder.direct(CORRUPTED_CAVES_CONFIGURED),
+                    RarityFilter.onAverageOnceEvery(100),
+                    InSquarePlacement.spread(),
+                    HeightmapPlacement.onHeightmap(Heightmap.Types.WORLD_SURFACE_WG)
+            );
 
         });
     }
