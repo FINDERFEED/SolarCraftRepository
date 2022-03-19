@@ -34,6 +34,46 @@ public class CorruptedCavesFeature extends Feature<NoneFeatureConfiguration> {
         int yHeight = world.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,xcpos,zcpos);
         int coneRad = 7;
         double coneHeight = 40+world.getRandom().nextInt(30);
+        this.generateMainCone(world,coneRad,coneHeight,xcpos,zcpos,yHeight);
+        this.generateRotatedCone(world,(1-10/coneHeight)*coneRad,6,15,90,new BlockPos(xcpos,yHeight-10,zcpos));
+
+
+        return true;
+    }
+
+
+
+    private void generateChildrenCones(WorldGenLevel world,int coneRad,double coneHeight,int xcpos,int zcpos,int yHeight){
+
+    }
+
+    private void generateRotatedCone(WorldGenLevel world,double currentConeRadius,int radius,int height,double yRot,BlockPos initialPos){
+        for (int x = -radius;x <= radius;x++){
+            for (int y = -radius;y <= radius;y++){
+                for (int z = 0;z <= height;z++){
+                    if (FinderfeedMathHelper.isInCone(x,z,y,radius,height)){
+                        double[] xzCoords = FinderfeedMathHelper.rotatePointDegrees(x,z,yRot);
+                        int[] xyz = {(int)xzCoords[0], y,(int)xzCoords[1]};
+                        BlockPos genPos = initialPos.offset(xyz[0],xyz[1],xyz[2]);
+                        if (world.getBlockState(genPos).isAir()) continue;
+                        if (!isOnConeBorderChildrenCaves(x,z,y,radius,height)){
+                            world.setBlock(genPos, Blocks.CAVE_AIR.defaultBlockState(), 2);
+                        }else{
+                            if (world.getRandom().nextDouble() < 0.1){
+                                world.setBlock(genPos, BlocksRegistry.CORRUPTED_STONE.get().defaultBlockState(),2);
+                            }else{
+                                world.setBlock(genPos, Blocks.OBSIDIAN.defaultBlockState(),2);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+
+
+    private void generateMainCone(WorldGenLevel world,int coneRad,double coneHeight,int xcpos,int zcpos,int yHeight){
         for (int x = -coneRad-7;x <= coneRad + 7;x++ ){
             for (int z = -coneRad-7;z <= coneRad + 7;z++ ){
                 if (world.getRandom().nextDouble() < 0.25){
@@ -48,8 +88,6 @@ public class CorruptedCavesFeature extends Feature<NoneFeatureConfiguration> {
                 }
             }
         }
-
-
         for (int x = -coneRad;x <= coneRad;x++){
             for (int z = -coneRad;z <= coneRad;z++){
                 for (double y = 0;y <= coneHeight;y++){
@@ -69,10 +107,6 @@ public class CorruptedCavesFeature extends Feature<NoneFeatureConfiguration> {
                 }
             }
         }
-
-
-
-        return true;
     }
 
 
@@ -86,7 +120,12 @@ public class CorruptedCavesFeature extends Feature<NoneFeatureConfiguration> {
     }
 
 
-
+    private boolean isOnConeBorderChildrenCaves(double x,double y,double z,double coneRadius,double coneHeight){
+        double rad = Math.ceil(coneRadius*(1-y/coneHeight));
+        double len = Math.sqrt(x*x + z*z);
+        int sm = (int)Math.ceil(len);
+        return Math.abs(sm - (int)(rad)) < 2f;
+    }
 
 
 }
