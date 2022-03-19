@@ -35,7 +35,7 @@ public class CorruptedCavesFeature extends Feature<NoneFeatureConfiguration> {
         int coneRad = 7;
         double coneHeight = 40+world.getRandom().nextInt(30);
         this.generateMainCone(world,coneRad,coneHeight,xcpos,zcpos,yHeight);
-        this.generateRotatedCone(world,(1-10/coneHeight)*coneRad,6,15,90,new BlockPos(xcpos,yHeight-10,zcpos));
+        this.generateRotatedCone(world,6,15,90,new BlockPos(xcpos,yHeight-10,zcpos));
 
 
         return true;
@@ -47,7 +47,7 @@ public class CorruptedCavesFeature extends Feature<NoneFeatureConfiguration> {
 
     }
 
-    private void generateRotatedCone(WorldGenLevel world,double currentConeRadius,int radius,int height,double yRot,BlockPos initialPos){
+    private void generateRotatedCone(WorldGenLevel world,int radius,int height,double yRot,BlockPos initialPos){
         for (int x = -radius;x <= radius;x++){
             for (int y = -radius;y <= radius;y++){
                 for (int z = 0;z <= height;z++){
