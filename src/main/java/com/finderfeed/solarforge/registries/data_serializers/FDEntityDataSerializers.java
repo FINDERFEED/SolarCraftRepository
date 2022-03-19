@@ -12,7 +12,7 @@ import net.minecraftforge.registries.RegistryObject;
 public class FDEntityDataSerializers {
 
 
-    public static final DeferredRegister<DataSerializerEntry> DEF_REG = DeferredRegister.create(ForgeRegistries.DATA_SERIALIZERS, SolarForge.MOD_ID);
+    public static final DeferredRegister<DataSerializerEntry> DEF_REG = DeferredRegister.create(ForgeRegistries.Keys.DATA_SERIALIZERS, SolarForge.MOD_ID);
 
     public static final RegistryObject<DataSerializerEntry> VEC3 = DEF_REG.register("vec3",()->{
         return new DataSerializerEntry(new EntityDataSerializer<Vec3>() {
