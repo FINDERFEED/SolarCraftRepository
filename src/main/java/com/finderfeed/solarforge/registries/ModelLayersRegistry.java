@@ -2,6 +2,7 @@ package com.finderfeed.solarforge.registries;
 
 
 import com.finderfeed.solarforge.SolarAbilities.meteorite.MeteoriteModel;
+import com.finderfeed.solarforge.client.models.DivineArmorModel;
 import com.finderfeed.solarforge.entities.models.RunicElementalModel;
 import com.finderfeed.solarforge.entities.models.RunicWarriorModel;
 import com.finderfeed.solarforge.magic.blocks.blockentities.projectiles.renderers.AbstractTurretProjectileRenderer;
@@ -71,5 +72,6 @@ public class ModelLayersRegistry {
         event.registerLayerDefinition(RunicElementalModel.LAYER_LOCATION, RunicElementalModel::createBodyLayer);
         event.registerLayerDefinition(RunicWarriorModel.LAYER_LOCATION, RunicWarriorModel::createBodyLayer);
         event.registerLayerDefinition(RunicHammerModel.LAYER_LOCATION, RunicHammerModel::createBodyLayer);
+        event.registerLayerDefinition(DivineArmorModel.LAYER_LOCATION, DivineArmorModel::createBodyLayer);
     }
 }

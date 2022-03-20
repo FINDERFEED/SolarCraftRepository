@@ -13,6 +13,7 @@ public class SolarCraftTags {
     public static final TagKey<Block> QUALADIUM_TAG = BlockTags.create(new ResourceLocation(SolarForge.MOD_ID,"qualadium"));
     public static final TagKey<Block> CHARGED_QUALADIUM_TAG = BlockTags.create(new ResourceLocation(SolarForge.MOD_ID,"charged_qualadium"));
     public static final TagKey<Block> SOLAR_GOD_TAG = BlockTags.create(new ResourceLocation(SolarForge.MOD_ID,"solar_god"));
+    public static final TagKey<Block> DIVINE = BlockTags.create(new ResourceLocation(SolarForge.MOD_ID,"divine"));
 
     public static final String SOLAR_GOD_SWORD_TAG = "solarcraft_solar_god_sword";
     public static final String SOLAR_GOD_SWORD_LEVEL_TAG = "solarcraft_solar_god_sword_level";
@@ -33,6 +34,10 @@ public class SolarCraftTags {
     public static final String RAW_SOLAR_ENERGY = "solarcraft_raw_solar_energy";
 
     public static final String CAN_PLAYER_USE = "solar_forge_can_player_use_";
+
+    public static final String DIVINE_RAPIER_NBT = "divine_rapier_tag";
+
+    public static final String DIVINE_ARMOR_TAG = "divine_armor_tag";
 
     public static class SBiomes {
         public static final TagKey<Biome> IS_DESERT =

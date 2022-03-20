@@ -7,6 +7,7 @@ import com.finderfeed.solarforge.magic.blocks.infusing_table_things.SolarWandIte
 import com.finderfeed.solarforge.magic.armor.SolarArmorMaterial;
 import com.finderfeed.solarforge.magic.blocks.blockitems.TurretBlockItem;
 import com.finderfeed.solarforge.magic.blocks.blockitems.UldoradiumOreBlockitem;
+import com.finderfeed.solarforge.magic.items.divine_armor.BaseDivineArmor;
 import com.finderfeed.solarforge.magic.items.item_tiers.SolarCraftToolTiers;
 import com.finderfeed.solarforge.magic.items.*;
 import com.finderfeed.solarforge.magic.items.primitive.RareSolarcraftBlockItem;
@@ -69,6 +70,11 @@ public class ItemsRegister {
     public static final RegistryObject<ArmorItem> SOLAR_CHESTPLATE = ITEMS.register("solar_chestplate",()-> new SolarcraftArmorItem(SolarArmorMaterial.SOLAR_ARMOR, EquipmentSlot.CHEST,new Item.Properties().rarity(Rarity.EPIC).tab(SolarForge.SOLAR_GROUP),()->AncientFragment.SOLAR_CHESTPLATE));
     public static final RegistryObject<ArmorItem> SOLAR_LEGGINS = ITEMS.register("solar_leggins",()-> new SolarcraftArmorItem(SolarArmorMaterial.SOLAR_ARMOR, EquipmentSlot.LEGS,new Item.Properties().rarity(Rarity.EPIC).tab(SolarForge.SOLAR_GROUP),()->AncientFragment.SOLAR_LEGGINS));
     public static final RegistryObject<ArmorItem> SOLAR_BOOTS = ITEMS.register("solar_boots",()-> new SolarcraftArmorItem(SolarArmorMaterial.SOLAR_ARMOR, EquipmentSlot.FEET,new Item.Properties().rarity(Rarity.EPIC).tab(SolarForge.SOLAR_GROUP),()->AncientFragment.SOLAR_BOOTS));
+
+    public static final RegistryObject<ArmorItem> DIVINE_HELMET = ITEMS.register("divine_helmet",()-> new BaseDivineArmor(SolarArmorMaterial.DIVINE_ARMOR, EquipmentSlot.HEAD,new Item.Properties().rarity(Rarity.EPIC).tab(SolarForge.SOLAR_GROUP),()->AncientFragment.SOLAR_BOOTS));
+    public static final RegistryObject<ArmorItem> DIVINE_CHESTPLATE = ITEMS.register("divine_chestplate",()-> new BaseDivineArmor(SolarArmorMaterial.DIVINE_ARMOR, EquipmentSlot.CHEST,new Item.Properties().rarity(Rarity.EPIC).tab(SolarForge.SOLAR_GROUP),()->AncientFragment.SOLAR_BOOTS));
+    public static final RegistryObject<ArmorItem> DIVINE_LEGGINGS = ITEMS.register("divine_leggings",()-> new BaseDivineArmor(SolarArmorMaterial.DIVINE_ARMOR, EquipmentSlot.LEGS,new Item.Properties().rarity(Rarity.EPIC).tab(SolarForge.SOLAR_GROUP),()->AncientFragment.SOLAR_BOOTS));
+    public static final RegistryObject<ArmorItem> DIVINE_BOOTS = ITEMS.register("divine_boots",()-> new BaseDivineArmor(SolarArmorMaterial.DIVINE_ARMOR, EquipmentSlot.FEET,new Item.Properties().rarity(Rarity.EPIC).tab(SolarForge.SOLAR_GROUP),()->AncientFragment.SOLAR_BOOTS));
 
     //radiant armor
     public static final RegistryObject<RadiantChestplate> RADIANT_CHESTPLATE = ITEMS.register("radiant_chestplate",()-> new RadiantChestplate(SolarArmorMaterial.RADIANT_ARMOR, EquipmentSlot.CHEST,new Item.Properties().rarity(Rarity.EPIC).tab(SolarForge.SOLAR_GROUP),()->AncientFragment.RADIANT_CHESTPLATE));

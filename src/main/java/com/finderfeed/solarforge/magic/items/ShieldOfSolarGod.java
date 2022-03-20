@@ -5,7 +5,9 @@ import com.finderfeed.solarforge.magic.items.primitive.RareSolarcraftShieldItem;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.unlockables.AncientFragment;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
+import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.TooltipFlag;
 
 import net.minecraft.world.entity.LivingEntity;
@@ -141,5 +143,11 @@ class RenderProp implements IItemRenderProperties{
     @Override
     public BlockEntityWithoutLevelRenderer getItemStackRenderer() {
         return new ShieldOfSolarGodISTER(Minecraft.getInstance().getBlockEntityRenderDispatcher(),Minecraft.getInstance().getEntityModels());
+    }
+
+    @org.jetbrains.annotations.Nullable
+    @Override
+    public HumanoidModel<?> getArmorModel(LivingEntity entityLiving, ItemStack itemStack, EquipmentSlot armorSlot, HumanoidModel<?> _default) {
+        return IItemRenderProperties.super.getArmorModel(entityLiving, itemStack, armorSlot, _default);
     }
 }
