@@ -1,8 +1,12 @@
 package com.finderfeed.solarforge.magic.items.divine_armor;
 
-import com.finderfeed.solarforge.client.models.DivineArmorModel;
+import com.finderfeed.solarforge.client.models.divine_armor.DivineBootsModel;
+import com.finderfeed.solarforge.client.models.divine_armor.DivineChestplateModel;
+import com.finderfeed.solarforge.client.models.divine_armor.DivineHelmetModel;
+import com.finderfeed.solarforge.client.models.divine_armor.DivineLeggingsModel;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HumanoidModel;
+import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -14,13 +18,36 @@ public class DivineArmorRenderProperties implements IItemRenderProperties {
 
     public static DivineArmorRenderProperties INSTANCE = new DivineArmorRenderProperties();
 
-    public static ModelPart MODEL_PART;
+    public static ModelPart MODEL_PART_HELMET;
+    public static ModelPart MODEL_PART_CHESTPLATE;
+    public static ModelPart MODEL_PART_LEGGINGS;
+    public static ModelPart MODEL_PART_BOOTS;
+
 
     @Nullable
     @Override
     public HumanoidModel<?> getArmorModel(LivingEntity entityLiving, ItemStack itemStack, EquipmentSlot armorSlot, HumanoidModel<?> _default) {
-        if (MODEL_PART == null) MODEL_PART = Minecraft.getInstance().getEntityModels().bakeLayer(DivineArmorModel.LAYER_LOCATION);
-        DivineArmorModel model = new DivineArmorModel(MODEL_PART,itemStack);
+        HumanoidModel<?> model = _default;
+        EntityModelSet set = Minecraft.getInstance().getEntityModels();
+        switch (armorSlot) {
+            case HEAD -> {
+                if (MODEL_PART_HELMET == null) MODEL_PART_HELMET = set.bakeLayer(DivineHelmetModel.LAYER_LOCATION);
+                model = new DivineHelmetModel(MODEL_PART_HELMET);
+            }
+            case CHEST -> {
+                if (MODEL_PART_CHESTPLATE == null) MODEL_PART_CHESTPLATE = set.bakeLayer(DivineChestplateModel.LAYER_LOCATION);
+                model = new DivineChestplateModel(MODEL_PART_CHESTPLATE,itemStack);
+            }
+            case LEGS -> {
+                if (MODEL_PART_LEGGINGS == null) MODEL_PART_LEGGINGS = set.bakeLayer(DivineLeggingsModel.LAYER_LOCATION);
+                model = new DivineLeggingsModel(MODEL_PART_LEGGINGS);
+            }
+            case FEET -> {
+                if (MODEL_PART_BOOTS == null) MODEL_PART_BOOTS = set.bakeLayer(DivineBootsModel.LAYER_LOCATION);
+                model = new DivineBootsModel(MODEL_PART_BOOTS);
+            }
+        }
+
         return model;
     }
 }

@@ -2,7 +2,10 @@ package com.finderfeed.solarforge.registries;
 
 
 import com.finderfeed.solarforge.SolarAbilities.meteorite.MeteoriteModel;
-import com.finderfeed.solarforge.client.models.DivineArmorModel;
+import com.finderfeed.solarforge.client.models.divine_armor.DivineBootsModel;
+import com.finderfeed.solarforge.client.models.divine_armor.DivineChestplateModel;
+import com.finderfeed.solarforge.client.models.divine_armor.DivineHelmetModel;
+import com.finderfeed.solarforge.client.models.divine_armor.DivineLeggingsModel;
 import com.finderfeed.solarforge.entities.models.RunicElementalModel;
 import com.finderfeed.solarforge.entities.models.RunicWarriorModel;
 import com.finderfeed.solarforge.magic.blocks.blockentities.projectiles.renderers.AbstractTurretProjectileRenderer;
@@ -72,6 +75,9 @@ public class ModelLayersRegistry {
         event.registerLayerDefinition(RunicElementalModel.LAYER_LOCATION, RunicElementalModel::createBodyLayer);
         event.registerLayerDefinition(RunicWarriorModel.LAYER_LOCATION, RunicWarriorModel::createBodyLayer);
         event.registerLayerDefinition(RunicHammerModel.LAYER_LOCATION, RunicHammerModel::createBodyLayer);
-        event.registerLayerDefinition(DivineArmorModel.LAYER_LOCATION, DivineArmorModel::createBodyLayer);
+        event.registerLayerDefinition(DivineChestplateModel.LAYER_LOCATION, DivineChestplateModel::createBodyLayer);
+        event.registerLayerDefinition(DivineLeggingsModel.LAYER_LOCATION, DivineLeggingsModel::createBodyLayer);
+        event.registerLayerDefinition(DivineHelmetModel.LAYER_LOCATION, DivineHelmetModel::createBodyLayer);
+        event.registerLayerDefinition(DivineBootsModel.LAYER_LOCATION, DivineBootsModel::createBodyLayer);
     }
 }
