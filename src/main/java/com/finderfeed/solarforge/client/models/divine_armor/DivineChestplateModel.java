@@ -1,6 +1,7 @@
 package com.finderfeed.solarforge.client.models.divine_armor;
 
 
+import com.finderfeed.solarforge.SolarCraftTags;
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.local_library.other.MemorizedModelPart;
 import com.finderfeed.solarforge.magic.items.divine_armor.BaseDivineArmor;
@@ -16,6 +17,7 @@ import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -153,7 +155,9 @@ public class DivineChestplateModel extends HumanoidModel<LivingEntity> {
     public void renderToBuffer(PoseStack matrices, VertexConsumer vConsumer, int p_102036_, int p_102037_, float p_102038_, float p_102039_, float p_102040_, float p_102041_) {
         if (stack.getItem() instanceof BaseDivineArmor armor) {
             int tick = armor.getTick(stack);
-            float percent = (tick) / 20f;
+            int step = stack.getOrCreateTagElement(SolarCraftTags.DIVINE_ARMOR_TAG).getBoolean("direction") ? 1 : -1;
+            float pTick = Minecraft.getInstance().isPaused() || (tick == 10 || tick == 0) ? 0 : Minecraft.getInstance().getFrameTime();
+            float percent = Mth.lerp(pTick,tick,tick+step) / 20f;
             for (int i = 1; i <= 8; i++) {
                 int idx = i - 1;
                 float d = 0.05f;

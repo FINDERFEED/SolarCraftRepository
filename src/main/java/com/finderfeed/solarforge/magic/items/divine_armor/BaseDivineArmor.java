@@ -50,6 +50,7 @@ public class BaseDivineArmor extends SolarcraftArmorItem {
     public void tick(ItemStack stack){
         int tick = getTick(stack);
         if (tick < 10){
+            stack.getOrCreateTagElement(SolarCraftTags.DIVINE_ARMOR_TAG).putBoolean("direction",true);
             stack.getOrCreateTagElement(SolarCraftTags.DIVINE_ARMOR_TAG).putInt("tick",tick+1);
         }
     }
@@ -57,6 +58,7 @@ public class BaseDivineArmor extends SolarcraftArmorItem {
     public void tickBackwards(ItemStack stack){
         int tick = getTick(stack);
         if (tick > 0){
+            stack.getOrCreateTagElement(SolarCraftTags.DIVINE_ARMOR_TAG).putBoolean("direction",false);
             stack.getOrCreateTagElement(SolarCraftTags.DIVINE_ARMOR_TAG).putInt("tick",tick-1);
         }
     }
@@ -64,6 +66,7 @@ public class BaseDivineArmor extends SolarcraftArmorItem {
     @Nullable
     @Override
     public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
+
         return "solarforge:textures/models/armor/divine_armor.png";
     }
 }
