@@ -65,8 +65,11 @@ public class ClientHelpers {
 
 
     public static void disableFlight(boolean disable){
-        getClientPlayer().getAbilities().flying = !disable;
-//        getClientPlayer().getAbilities().mayfly = !disable;
+        if (disable) {
+            getClientPlayer().getAbilities().flying = !disable;
+        }
+        getClientPlayer().getAbilities().mayfly = !disable;
+
     }
 
 

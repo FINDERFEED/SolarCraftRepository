@@ -58,7 +58,6 @@ public class SolarForgeClientRegistry {
     public static final KeyMapping SECOND_ABILITY_KEY = new KeyMapping("key.fire_ability_two", KeyConflictContext.UNIVERSAL, InputConstants.Type.SCANCODE, GLFW.GLFW_KEY_J,"key.solarforge.category");
     public static final KeyMapping THIRD_ABILITY_KEY = new KeyMapping("key.fire_ability_three", KeyConflictContext.UNIVERSAL, InputConstants.Type.SCANCODE, GLFW.GLFW_KEY_S,"key.solarforge.category");
     public static final KeyMapping FORTH_ABILITY_KEY = new KeyMapping("key.fire_ability_four", KeyConflictContext.UNIVERSAL, InputConstants.Type.SCANCODE, GLFW.GLFW_KEY_D,"key.solarforge.category");
-    public static final KeyMapping ADMIN_ABILITY_KEY = new KeyMapping("key.admin_button_solarforge", KeyConflictContext.UNIVERSAL, InputConstants.Type.SCANCODE, GLFW.GLFW_KEY_D,"key.solarforge.category");
     public static final KeyMapping OPEN_GUI_ABILITY_KEY = new KeyMapping("key.gui_button_solarforge", KeyConflictContext.UNIVERSAL, InputConstants.Type.SCANCODE, GLFW.GLFW_KEY_D,"key.solarforge.category");
     public static final KeyMapping GUI_ABILITY_BUY_SCREEN = new KeyMapping("key.ability_buy_screen.solarforge", KeyConflictContext.UNIVERSAL, InputConstants.Type.SCANCODE, GLFW.GLFW_KEY_D,"key.solarforge.category");
 
@@ -96,7 +95,6 @@ public class SolarForgeClientRegistry {
         ClientRegistry.registerKeyBinding(THIRD_ABILITY_KEY);
         ClientRegistry.registerKeyBinding(FORTH_ABILITY_KEY);
         ClientRegistry.registerKeyBinding(OPEN_GUI_ABILITY_KEY);
-        ClientRegistry.registerKeyBinding(ADMIN_ABILITY_KEY);
         ClientRegistry.registerKeyBinding(GUI_ABILITY_BUY_SCREEN);
 
 

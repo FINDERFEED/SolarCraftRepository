@@ -47,11 +47,6 @@ public class HotkeyEventListener {
             SolarForgePacketHandler.INSTANCE.sendToServer(new CastAbilityPacket(4));
 
         }
-        if (SolarForgeClientRegistry.ADMIN_ABILITY_KEY.isDown() && event.getAction() == GLFW.GLFW_PRESS){
-
-            SolarForgePacketHandler.INSTANCE.sendToServer(new ResetAllAbilitiesPacket());
-
-        }
         if (SolarForgeClientRegistry.OPEN_GUI_ABILITY_KEY.isDown() && event.getAction() == GLFW.GLFW_PRESS){
 
             Minecraft.getInstance().setScreen(new SolarForgeAbilityConfigScreen());

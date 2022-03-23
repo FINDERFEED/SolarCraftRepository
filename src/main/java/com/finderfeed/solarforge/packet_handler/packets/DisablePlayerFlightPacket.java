@@ -41,7 +41,9 @@ public class DisablePlayerFlightPacket {
 
     public static void send(ServerPlayer player,boolean disable){
         player.getAbilities().mayfly = !disable;
-//        player.getAbilities().flying = !disable;
+        if (disable) {
+            player.getAbilities().flying = false;
+        }
         SolarForgePacketHandler.INSTANCE.sendTo(new DisablePlayerFlightPacket(disable),player.connection.connection,
                 NetworkDirection.PLAY_TO_CLIENT);
     }

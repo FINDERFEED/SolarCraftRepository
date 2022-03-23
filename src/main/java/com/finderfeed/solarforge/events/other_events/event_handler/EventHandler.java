@@ -15,6 +15,7 @@ import com.finderfeed.solarforge.magic.items.ExperienceCrystal;
 import com.finderfeed.solarforge.magic.items.primitive.solacraft_item_classes.FragmentItem;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.achievements.Progression;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.unlockables.ProgressionHelper;
+import com.finderfeed.solarforge.packet_handler.packets.DisablePlayerFlightPacket;
 import com.finderfeed.solarforge.registries.SolarcraftDamageSources;
 import com.finderfeed.solarforge.registries.Tags;
 import com.finderfeed.solarforge.registries.attributes.AttributesRegistry;
@@ -31,6 +32,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
@@ -55,6 +57,8 @@ import net.minecraftforge.common.world.BiomeGenerationSettingsBuilder;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.event.entity.living.LivingEquipmentChangeEvent;
+import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerXpEvent;
@@ -160,6 +164,8 @@ public class EventHandler {
                         player.hurt(src, 6);
                     }
                 }
+
+
             }
 
 
@@ -402,5 +408,35 @@ public class EventHandler {
     }
 
 
+    @SubscribeEvent
+    public static void cancelFallDamage(LivingFallEvent event){
+        if (event.getEntityLiving() instanceof Player player){
+            if (player.level.isClientSide) return;
+            if (player.getItemBySlot(EquipmentSlot.CHEST).is(ItemsRegister.DIVINE_CHESTPLATE.get())){
+                event.setDamageMultiplier(0);
+            }
+        }
+    }
+
+
+    @SubscribeEvent
+    public static void equipmentChangedEvent(LivingEquipmentChangeEvent event){
+        if (event.getEntityLiving() instanceof ServerPlayer player){
+            if (player.isCreative() || player.isSpectator()) return;
+            if (event.getSlot() == EquipmentSlot.CHEST){
+                if (player.getItemBySlot(EquipmentSlot.CHEST).is(ItemsRegister.DIVINE_CHESTPLATE.get())){
+                    DisablePlayerFlightPacket.send(player,false);
+                    if (player.getAbilities().getFlyingSpeed() < 0.1f) {
+                        player.getAbilities().setFlyingSpeed(0.10f);
+                    }
+                }else{
+                    DisablePlayerFlightPacket.send(player,true);
+                    if (player.getAbilities().getFlyingSpeed() == 0.1f) {
+                        player.getAbilities().setFlyingSpeed(0.05f);
+                    }
+                }
+            }
+        }
+    }
 
 }

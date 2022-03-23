@@ -24,18 +24,7 @@ public class BaseDivineArmor extends SolarcraftArmorItem {
     }
 
 
-    @Override
-    public void inventoryTick(ItemStack stack, Level p_41405_, Entity e, int p_41407_, boolean p_41408_) {
-        super.inventoryTick(stack, p_41405_, e, p_41407_, p_41408_);
-        if (stack.getItem() instanceof SolarcraftArmorItem armor) if (armor.getSlot() != EquipmentSlot.CHEST) return;
-        if (e instanceof Player player){
-            if (player.getAbilities().flying){
-                tick(stack);
-            }else {
-                tickBackwards(stack);
-            }
-        }
-    }
+
 
     @Override
     public void initializeClient(Consumer<IItemRenderProperties> props) {

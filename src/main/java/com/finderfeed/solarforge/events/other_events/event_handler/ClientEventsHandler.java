@@ -9,6 +9,7 @@ import com.finderfeed.solarforge.magic.blocks.infusing_table_things.InfuserTileE
 import com.finderfeed.solarforge.magic.items.ModuleItem;
 import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
 import com.finderfeed.solarforge.registries.items.ItemsRegister;
+import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import net.minecraft.client.Camera;
@@ -27,11 +28,13 @@ import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ClientPlayerNetworkEvent;
+import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderLevelLastEvent;
 
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -246,6 +249,16 @@ public class ClientEventsHandler {
                     }
                 }
             }
+        }
+    }
+
+
+    @SubscribeEvent(priority = EventPriority.LOWEST)
+    public static void renderOverlay(RenderGameOverlayEvent event){
+        if (event.getType() == RenderGameOverlayEvent.ElementType.TEXT){
+            PoseStack matrices = event.getMatrixStack();
+            Window window = event.getWindow();
+
         }
     }
 

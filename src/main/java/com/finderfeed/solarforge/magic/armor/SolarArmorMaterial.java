@@ -16,7 +16,7 @@ import java.util.function.Supplier;
 public enum SolarArmorMaterial implements ArmorMaterial {
     SOLAR_ARMOR("solarforge:solar_armor",40,new int[]{5, 8, 9, 5},20, SoundEvents.ARMOR_EQUIP_NETHERITE,3.5f,0.2f,()->Ingredient.of(SolarForge.TEST_ITEM.get())),
     RADIANT_ARMOR("solarforge:radiant_armor",80,new int[]{8, 10, 11, 8},40, SoundEvents.ARMOR_EQUIP_NETHERITE,4f,0.3f,()->Ingredient.of(ItemsRegister.BLUE_GEM_ENCHANCED.get())),
-    DIVINE_ARMOR("solarforge:divine_armor",200,new int[]{10, 15, 11, 8},60, SoundEvents.ARMOR_EQUIP_NETHERITE,7f,0.5f,()->Ingredient.EMPTY);
+    DIVINE_ARMOR("solarforge:divine_armor",200,new int[]{10, 13, 15, 8},60, SoundEvents.ARMOR_EQUIP_NETHERITE,7f,0.5f,()->Ingredient.EMPTY);
 
 
     private static final int[] HEALTH_PER_SLOT = new int[]{13, 15, 16, 11};
