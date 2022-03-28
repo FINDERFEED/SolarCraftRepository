@@ -65,11 +65,11 @@ public class RetainLostEvent {
         Player peorig = event.getOriginal();
         Player playernew = event.getPlayer();
         if (!event.isWasDeath()) {
-            peorig.reviveCaps();
-            playernew.getCapability(CapabilitySolarMana.SOLAR_MANA_PLAYER)
-                    .orElseThrow(RuntimeException::new)
-                    .setMana(peorig.getCapability(CapabilitySolarMana.SOLAR_MANA_PLAYER).orElseThrow(RuntimeException::new).getMana());
-            peorig.invalidateCaps();
+//            peorig.reviveCaps();
+//            playernew.getCapability(CapabilitySolarMana.SOLAR_MANA_PLAYER)
+//                    .orElseThrow(RuntimeException::new)
+//                    .setMana(peorig.getCapability(CapabilitySolarMana.SOLAR_MANA_PLAYER).orElseThrow(RuntimeException::new).getMana());
+//            peorig.invalidateCaps();
 
             playernew.getPersistentData().putInt(SolarCraftTags.RAW_SOLAR_ENERGY, peorig.getPersistentData().getInt(SolarCraftTags.RAW_SOLAR_ENERGY));
             playernew.getPersistentData().putBoolean("solar_forge_can_player_use_fireball", peorig.getPersistentData().getBoolean("solar_forge_can_player_use_fireball"));

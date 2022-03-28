@@ -9,7 +9,7 @@ import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;
-
+@Deprecated
 public class UpdateManaPacket {
 
     private final double mana;

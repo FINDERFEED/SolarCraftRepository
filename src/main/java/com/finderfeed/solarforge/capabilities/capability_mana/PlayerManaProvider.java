@@ -10,7 +10,7 @@ import net.minecraftforge.common.util.LazyOptional;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Optional;
-
+@Deprecated
 public class PlayerManaProvider implements ICapabilitySerializable<CompoundTag> {
 
     private final SolarManaCapability solar_mana = new SolarManaCapability();

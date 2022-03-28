@@ -1,5 +1,5 @@
 package com.finderfeed.solarforge.capabilities.capability_mana;
-
+@Deprecated
 public class SolarManaCapability implements SolarForgeMana{
     public double mana;
 
