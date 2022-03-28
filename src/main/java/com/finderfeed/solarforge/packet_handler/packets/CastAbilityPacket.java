@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.packet_handler.packets;
 
-import com.finderfeed.solarforge.SolarAbilities.SolarAbilities;
+import com.finderfeed.solarforge.abilities.SolarAbilities;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.network.FriendlyByteBuf;
@@ -25,7 +25,6 @@ public class CastAbilityPacket {
     public void handle(Supplier<NetworkEvent.Context> ctx){
         ctx.get().enqueueWork(()->{
             ServerPlayer enti = ctx.get().getSender();
-            Player entity = (Player)enti;
 
             SolarAbilities.castAbility(enti.getLevel(),enti,enti.getPersistentData().getString("solar_forge_ability_binded_"+Integer.toString(index)));
         });

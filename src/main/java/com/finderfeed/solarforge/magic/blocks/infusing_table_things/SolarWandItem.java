@@ -5,6 +5,8 @@ import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.magic.blocks.blockentities.InfusingTableTile;
 import com.finderfeed.solarforge.magic.blocks.blockentities.RuneEnergyPylonTile;
+import com.finderfeed.solarforge.magic.items.runic_energy.IRunicEnergyUser;
+import com.finderfeed.solarforge.magic.items.runic_energy.RunicEnergyCost;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.achievements.Progression;
 import com.finderfeed.solarforge.misc_things.*;
 import com.finderfeed.solarforge.recipe_types.infusing_new.InfusingRecipe;
@@ -45,7 +47,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Optional;
 
-public class SolarWandItem extends Item implements ManaConsumer {
+public class SolarWandItem extends Item implements IRunicEnergyUser {
 
 
     public SolarWandItem(Properties p_i48487_1_) {
@@ -103,11 +105,6 @@ public class SolarWandItem extends Item implements ManaConsumer {
         super.appendHoverText(p_77624_1_, p_77624_2_, p_77624_3_, p_77624_4_);
     }
 
-    @Override
-    public double getManacost() {
-        return 0;
-    }
-
 
     public void handleEnergyConsumption(Level world, Player player){
 
@@ -149,6 +146,20 @@ public class SolarWandItem extends Item implements ManaConsumer {
         }
     }
 
+    @Override
+    public float getMaxRunicEnergyCapacity() {
+        return 0;
+    }
+
+    @Override
+    public List<RunicEnergy.Type> allowedInputs() {
+        return List.of();
+    }
+
+    @Override
+    public RunicEnergyCost getCost() {
+        return RunicEnergyCost.EMPTY;
+    }
 }
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE,modid = "solarforge",value = Dist.CLIENT)

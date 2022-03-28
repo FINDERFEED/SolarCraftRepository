@@ -57,9 +57,9 @@ public class QualadiumPickaxe extends IllidiumPickaxe {
 
 
     @Override
-    public void appendHoverText(ItemStack p_77624_1_, @Nullable Level p_77624_2_, List<Component> p_77624_3_, TooltipFlag p_77624_4_) {
-        p_77624_3_.add(new TranslatableComponent("solarforge.qualadium_pickaxe").withStyle(ChatFormatting.GOLD));
-        super.appendHoverText(p_77624_1_, p_77624_2_, p_77624_3_, p_77624_4_);
+    public void appendHoverText(ItemStack stack, @Nullable Level world, List<Component> components, TooltipFlag p_77624_4_) {
+        components.add(new TranslatableComponent("solarforge.qualadium_pickaxe").withStyle(ChatFormatting.GOLD));
+        super.appendHoverText(stack, world, components, p_77624_4_);
     }
 
 

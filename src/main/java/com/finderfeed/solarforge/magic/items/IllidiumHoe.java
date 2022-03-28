@@ -2,8 +2,12 @@ package com.finderfeed.solarforge.magic.items;
 
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.magic.items.primitive.RareSolarcraftHoe;
+import com.finderfeed.solarforge.magic.items.runic_energy.IRunicEnergyUser;
+import com.finderfeed.solarforge.magic.items.runic_energy.ItemRunicEnergy;
+import com.finderfeed.solarforge.magic.items.runic_energy.RunicEnergyCost;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarforge.misc_things.ManaConsumer;
+import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.item.TooltipFlag;
 
@@ -23,8 +27,10 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.context.UseOnContext;
 
-public class IllidiumHoe extends RareSolarcraftHoe implements ManaConsumer {
+public class IllidiumHoe extends RareSolarcraftHoe implements IRunicEnergyUser {
 
+
+    public static final RunicEnergyCost COST = new RunicEnergyCost().set(RunicEnergy.Type.FIRA,75);
 
     public IllidiumHoe(Tier p_i231595_1_, int p_i231595_2_, float p_i231595_3_, Properties p_i231595_4_, Supplier<AncientFragment> fragmentSupplier) {
         super(p_i231595_1_, p_i231595_2_, p_i231595_3_, p_i231595_4_,fragmentSupplier);
@@ -33,22 +39,33 @@ public class IllidiumHoe extends RareSolarcraftHoe implements ManaConsumer {
     @Override
     public InteractionResult useOn(UseOnContext ctx) {
         if (!ctx.getLevel().isClientSide &&  ctx.getPlayer().isCrouching()){
-            if (ctx.getLevel().getBlockState(ctx.getClickedPos()).getBlock() instanceof BonemealableBlock && Helpers.canCast(ctx.getPlayer(), getManacost())){
+            if (ctx.getLevel().getBlockState(ctx.getClickedPos()).getBlock() instanceof BonemealableBlock &&
+                    ItemRunicEnergy.spendEnergy(this.getCost(),ctx.getItemInHand(),this,ctx.getPlayer())){
                 BoneMealItem.applyBonemeal(Items.BONE_MEAL.getDefaultInstance(),ctx.getLevel(),ctx.getClickedPos(),ctx.getPlayer());
-                Helpers.spendMana(ctx.getPlayer(), getManacost());
             }
         }
         return super.useOn(ctx);
     }
 
     @Override
-    public void appendHoverText(ItemStack p_77624_1_, @Nullable Level p_77624_2_, List<Component> p_77624_3_, TooltipFlag p_77624_4_) {
-        p_77624_3_.add(new TranslatableComponent("solarforge.illidium_hoe").withStyle(ChatFormatting.GOLD));
-        super.appendHoverText(p_77624_1_, p_77624_2_, p_77624_3_, p_77624_4_);
+    public void appendHoverText(ItemStack item, @Nullable Level world, List<Component> components, TooltipFlag p_77624_4_) {
+        components.add(new TranslatableComponent("solarforge.illidium_hoe").withStyle(ChatFormatting.GOLD));
+        super.appendHoverText(item, world, components, p_77624_4_);
+    }
+
+
+    @Override
+    public float getMaxRunicEnergyCapacity() {
+        return 3000;
     }
 
     @Override
-    public double getManacost() {
-        return 200;
+    public List<RunicEnergy.Type> allowedInputs() {
+        return List.of(RunicEnergy.Type.FIRA);
+    }
+
+    @Override
+    public RunicEnergyCost getCost() {
+        return COST;
     }
 }

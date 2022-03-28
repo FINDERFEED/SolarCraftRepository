@@ -3,8 +3,8 @@ package com.finderfeed.solarforge.events.other_events.event_handler;
 
 import com.finderfeed.solarforge.ClientHelpers;
 import com.finderfeed.solarforge.Helpers;
-import com.finderfeed.solarforge.SolarAbilities.Abilities;
-import com.finderfeed.solarforge.SolarAbilities.AbilityClasses.AbstractAbility;
+import com.finderfeed.solarforge.abilities.Abilities;
+import com.finderfeed.solarforge.abilities.ability_classes.AbstractAbility;
 import com.finderfeed.solarforge.SolarCraftAttributeModifiers;
 import com.finderfeed.solarforge.events.my_events.ProgressionUnlockEvent;
 import com.finderfeed.solarforge.local_library.OwnedBlock;
@@ -422,15 +422,19 @@ public class EventHandler {
     @SubscribeEvent
     public static void equipmentChangedEvent(LivingEquipmentChangeEvent event){
         if (event.getEntityLiving() instanceof ServerPlayer player){
-            if (player.isCreative() || player.isSpectator()) return;
+
             if (event.getSlot() == EquipmentSlot.CHEST){
                 if (player.getItemBySlot(EquipmentSlot.CHEST).is(ItemsRegister.DIVINE_CHESTPLATE.get())){
-                    DisablePlayerFlightPacket.send(player,false);
+                    if (!player.isCreative() && !player.isSpectator()) {
+                        DisablePlayerFlightPacket.send(player, false);
+                    }
                     if (player.getAbilities().getFlyingSpeed() < 0.1f) {
                         player.getAbilities().setFlyingSpeed(0.10f);
                     }
                 }else{
-                    DisablePlayerFlightPacket.send(player,true);
+                    if (!player.isCreative() && !player.isSpectator()) {
+                        DisablePlayerFlightPacket.send(player, true);
+                    }
                     if (player.getAbilities().getFlyingSpeed() == 0.1f) {
                         player.getAbilities().setFlyingSpeed(0.05f);
                     }

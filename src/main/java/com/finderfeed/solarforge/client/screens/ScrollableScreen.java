@@ -19,7 +19,7 @@ public abstract class ScrollableScreen extends Screen implements IScrollable {
     public int scrollX = 0;
     public int scrollY = 0;
     private List<AbstractWidget> staticWidgets = new ArrayList<>();
-
+    private List<Runnable> postRenderEntries = new ArrayList<>();
 
     public ScrollableScreen() {
         super(new TextComponent(""));
@@ -115,4 +115,14 @@ public abstract class ScrollableScreen extends Screen implements IScrollable {
     protected abstract int getMaxXRightScrollValue();
     protected abstract int getMaxYUpScrollValue();
     protected abstract int getMaxXLeftScrollValue();
+    protected void runPostEntries(){
+        if (!postRenderEntries.isEmpty()){
+            postRenderEntries.forEach(Runnable::run);
+            postRenderEntries.clear();
+        }
+    }
+
+    protected void addPostRenderEntry(Runnable post){
+        this.postRenderEntries.add(post);
+    }
 }

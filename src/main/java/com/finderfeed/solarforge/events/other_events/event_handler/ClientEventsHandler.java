@@ -17,6 +17,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.level.Level;
@@ -25,6 +26,7 @@ import net.minecraft.world.level.block.OreBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.LevelChunk;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ClientPlayerNetworkEvent;
@@ -47,6 +49,7 @@ public class ClientEventsHandler {
     private static ArrayList<String> TICKERS_TO_REMOVE = new ArrayList<>();
     private static List<BlockPos> ORES_RENDER_POSITIONS = new ArrayList<>();
     private static List<BlockPos> CATALYST_RENDER_POSITIONS = new ArrayList<>();
+    
 
 
     @SubscribeEvent
@@ -108,6 +111,7 @@ public class ClientEventsHandler {
 
             if (player.level.getGameTime() % 20 == 0){
                 fillCatalystRenderPositions();
+
             }
         }
     }
@@ -253,14 +257,8 @@ public class ClientEventsHandler {
     }
 
 
-    @SubscribeEvent(priority = EventPriority.LOWEST)
-    public static void renderOverlay(RenderGameOverlayEvent event){
-        if (event.getType() == RenderGameOverlayEvent.ElementType.TEXT){
-            PoseStack matrices = event.getMatrixStack();
-            Window window = event.getWindow();
 
-        }
-    }
+
 
 
 }

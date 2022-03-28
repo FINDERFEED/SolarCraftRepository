@@ -1,7 +1,7 @@
 package com.finderfeed.solarforge.magic.blocks.solar_forge_block.solar_forge_screen;
 
 import com.finderfeed.solarforge.ClientHelpers;
-import com.finderfeed.solarforge.SolarAbilities.Abilities;
+import com.finderfeed.solarforge.abilities.Abilities;
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
 import com.finderfeed.solarforge.packet_handler.packets.AbilityIndexSetPacket;
 import com.mojang.blaze3d.vertex.PoseStack;

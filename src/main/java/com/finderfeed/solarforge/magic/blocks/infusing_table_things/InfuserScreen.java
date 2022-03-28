@@ -18,6 +18,8 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class InfuserScreen extends AbstractContainerScreen<InfuserContainer> {
@@ -32,6 +34,7 @@ public class InfuserScreen extends AbstractContainerScreen<InfuserContainer> {
     public final ResourceLocation RUNIC_ENERGY_BAR_T = new ResourceLocation("solarforge","textures/gui/runic_energy_bar_t.png");
     public int relX;
     public int relY;
+    private List<Runnable> postRender = new ArrayList<>();
     public InfuserScreen(InfuserContainer container, Inventory inv, Component text) {
         super(container, inv, text);
         this.leftPos = 60;
@@ -185,6 +188,10 @@ public class InfuserScreen extends AbstractContainerScreen<InfuserContainer> {
 
         }
         matrices.popPose();
+        if (!postRender.isEmpty()){
+            postRender.forEach(Runnable::run);
+            postRender.clear();
+        }
     }
     private void renderItemAndTooltip(ItemStack toRender, int place1, int place2, int mousex, int mousey, PoseStack matrices){
         minecraft.getItemRenderer().renderGuiItem(toRender,place1,place2);
@@ -202,15 +209,20 @@ public class InfuserScreen extends AbstractContainerScreen<InfuserContainer> {
 
         matrices.pushPose();
 
-        int texturex = Math.round((float)energyAmount/100000*60);
+        int texturex = Math.round((float)energyAmount/(float)menu.te.getRunicEnergyLimit()*60);
         matrices.translate(offsetx,offsety,0);
         matrices.mulPose(Vector3f.ZN.rotationDegrees(90));
         if (!simulate) {
             blit(matrices, 0, 0, 0, 0, texturex, 6);
+            if (mousex > offsetx && mousex < offsetx + 6 && mousey > offsety-60 && mousey < offsety){
+                postRender.add(()->{
+                    renderTooltip(matrices,new TextComponent((float) energyAmount + "/" + menu.te.getRunicEnergyLimit()),mousex-3,mousey+3);
+                });
+            }
         }else{
+
             blitm(matrices, 0, 0, 0, 0, texturex, 6,60,6);
         }
-
         matrices.popPose();
     }
 

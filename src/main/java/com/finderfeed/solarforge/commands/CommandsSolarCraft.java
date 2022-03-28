@@ -30,8 +30,8 @@ public class CommandsSolarCraft {
 
     public static void register(CommandDispatcher<CommandSourceStack> disp){
         LiteralCommandNode<CommandSourceStack> cmd = disp.register(
-                Commands.literal("solarcraft")
-                        .then(UnlockAchievementsCommand.register())
+                Commands.literal("solarcraft").requires((p)-> p.hasPermission(2))
+                        .then(UnlockProgressionsCommand.register())
                         .then(refreshAchievements.register())
                         .then(AchievementsHelp.register())
                         .then(RetainFragments.register())
@@ -168,7 +168,7 @@ class AchievementsHelp{
 }
 
 
-class UnlockAchievementsCommand {
+class UnlockProgressionsCommand {
     public static ArgumentBuilder<CommandSourceStack,?> register(){
         return Commands.literal("unlock")
                 .requires(cs->cs.hasPermission(0))

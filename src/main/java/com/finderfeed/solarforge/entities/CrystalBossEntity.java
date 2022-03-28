@@ -2,7 +2,7 @@ package com.finderfeed.solarforge.entities;
 
 
 import com.finderfeed.solarforge.Helpers;
-import com.finderfeed.solarforge.SolarAbilities.AbilityClasses.AbstractAbility;
+import com.finderfeed.solarforge.abilities.ability_classes.AbstractAbility;
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.events.my_events.AbilityUseEvent;
 import com.finderfeed.solarforge.events.other_events.event_handler.EventHandler;

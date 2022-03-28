@@ -28,14 +28,14 @@ public abstract class AbstractRunicEnergyContainer extends SolarcraftBlockEntity
 
     private int seekingCooldown = 0;
 
-    private double RUNE_ENERGY_ARDO = 0;
-    private double RUNE_ENERGY_FIRA = 0;
-    private double RUNE_ENERGY_TERA = 0;
-    private double RUNE_ENERGY_URBA = 0;
-    private double RUNE_ENERGY_KELDA = 0;
-    private double RUNE_ENERGY_ZETA = 0;
-    private double RUNE_ENERGY_GIRO = 0;
-    private double RUNE_ENERGY_ULTIMA = 0;
+    private float RUNE_ENERGY_ARDO = 0;
+    private float RUNE_ENERGY_FIRA = 0;
+    private float RUNE_ENERGY_TERA = 0;
+    private float RUNE_ENERGY_URBA = 0;
+    private float RUNE_ENERGY_KELDA = 0;
+    private float RUNE_ENERGY_ZETA = 0;
+    private float RUNE_ENERGY_GIRO = 0;
+    private float RUNE_ENERGY_ULTIMA = 0;
 
     public List<BlockPos> nullOrGiverPositionForClient = new ArrayList<>();
 
@@ -57,14 +57,9 @@ public abstract class AbstractRunicEnergyContainer extends SolarcraftBlockEntity
     @Override
     public void load(CompoundTag tag) {
         super.load(tag);
-        if (this.level != null){
-            if (!this.level.isClientSide){
-                this.setOwner(tag.getUUID("tileowner"));
-            }
-        }else{
+        if (tag.contains("tileowner")){
             this.setOwner(tag.getUUID("tileowner"));
         }
-
         loadRunicEnergy(tag);
     }
 
@@ -442,24 +437,24 @@ public abstract class AbstractRunicEnergyContainer extends SolarcraftBlockEntity
     }
 
     private void saveRunicEnergy(CompoundTag tag){
-        tag.putDouble("ardo",RUNE_ENERGY_ARDO);
-        tag.putDouble("fira",RUNE_ENERGY_FIRA);
-        tag.putDouble("kelda",RUNE_ENERGY_KELDA);
-        tag.putDouble("urba",RUNE_ENERGY_URBA);
-        tag.putDouble("tera",RUNE_ENERGY_TERA);
-        tag.putDouble("zeta",RUNE_ENERGY_ZETA);
-        tag.putDouble("giro",RUNE_ENERGY_GIRO);
-        tag.putDouble("ultima",RUNE_ENERGY_ULTIMA);
+        tag.putFloat("ardo",RUNE_ENERGY_ARDO);
+        tag.putFloat("fira",RUNE_ENERGY_FIRA);
+        tag.putFloat("kelda",RUNE_ENERGY_KELDA);
+        tag.putFloat("urba",RUNE_ENERGY_URBA);
+        tag.putFloat("tera",RUNE_ENERGY_TERA);
+        tag.putFloat("zeta",RUNE_ENERGY_ZETA);
+        tag.putFloat("giro",RUNE_ENERGY_GIRO);
+        tag.putFloat("ultima",RUNE_ENERGY_ULTIMA);
     }
     private void loadRunicEnergy(CompoundTag tag){
-        RUNE_ENERGY_ARDO  = tag.getDouble("ardo");
-        RUNE_ENERGY_FIRA = tag.getDouble("fira");
-        RUNE_ENERGY_KELDA = tag.getDouble("kelda");
-        RUNE_ENERGY_URBA = tag.getDouble("urba");
-        RUNE_ENERGY_TERA = tag.getDouble("tera");
-        RUNE_ENERGY_ZETA = tag.getDouble("zeta");
-        RUNE_ENERGY_GIRO = tag.getDouble("giro");
-        RUNE_ENERGY_ULTIMA = tag.getDouble("ultima");
+        RUNE_ENERGY_ARDO  = tag.getFloat("ardo");
+        RUNE_ENERGY_FIRA = tag.getFloat("fira");
+        RUNE_ENERGY_KELDA = tag.getFloat("kelda");
+        RUNE_ENERGY_URBA = tag.getFloat("urba");
+        RUNE_ENERGY_TERA = tag.getFloat("tera");
+        RUNE_ENERGY_ZETA = tag.getFloat("zeta");
+        RUNE_ENERGY_GIRO = tag.getFloat("giro");
+        RUNE_ENERGY_ULTIMA = tag.getFloat("ultima");
     }
 
     public Map<RunicEnergy.Type,List<BlockPos>> getWays(){

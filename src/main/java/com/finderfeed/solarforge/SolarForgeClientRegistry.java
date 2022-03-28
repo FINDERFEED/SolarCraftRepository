@@ -1,7 +1,7 @@
 package com.finderfeed.solarforge;
 
-import com.finderfeed.solarforge.SolarAbilities.meteorite.MeteoriteProjectileRenderer;
-import com.finderfeed.solarforge.SolarAbilities.SolarStrikeEntityRender;
+import com.finderfeed.solarforge.abilities.meteorite.MeteoriteProjectileRenderer;
+import com.finderfeed.solarforge.abilities.solar_strike.SolarStrikeRenderer;
 import com.finderfeed.solarforge.entities.renderers.*;
 import com.finderfeed.solarforge.magic.blocks.blockentities.containers.screens.*;
 import com.finderfeed.solarforge.magic.blocks.infusing_table_things.InfuserRenderer;
@@ -196,7 +196,7 @@ public class SolarForgeClientRegistry {
     @SubscribeEvent
     public static void registerEntityRendering(EntityRenderersEvent.RegisterRenderers event){
         event.registerEntityRenderer(SolarForge.METEORITE.get(), MeteoriteProjectileRenderer::new);
-        event.registerEntityRenderer(SolarForge.SOLAR_STRIKE_ENTITY_REG.get(), SolarStrikeEntityRender::new);
+        event.registerEntityRenderer(SolarForge.SOLAR_STRIKE_ENTITY_REG.get(), SolarStrikeRenderer::new);
         event.registerEntityRenderer(EntityTypes.SOLAR_DISC.get(), SolarDiscProjectileRenderer::new);
         event.registerEntityRenderer(EntityTypes.BLOCK_BOOMERANG.get(), BlockBoomerangProjectileRenderer::new);
         event.registerEntityRenderer(EntityTypes.ULTRA_CROSSBOW_SHOT.get(), UltraCrossbowProjectileRenderer::new);

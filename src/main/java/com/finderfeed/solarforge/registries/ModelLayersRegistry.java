@@ -1,7 +1,7 @@
 package com.finderfeed.solarforge.registries;
 
 
-import com.finderfeed.solarforge.SolarAbilities.meteorite.MeteoriteModel;
+import com.finderfeed.solarforge.abilities.meteorite.MeteoriteModel;
 import com.finderfeed.solarforge.client.models.divine_armor.DivineBootsModel;
 import com.finderfeed.solarforge.client.models.divine_armor.DivineChestplateModel;
 import com.finderfeed.solarforge.client.models.divine_armor.DivineHelmetModel;

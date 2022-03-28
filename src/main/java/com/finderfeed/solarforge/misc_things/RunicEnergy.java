@@ -97,26 +97,34 @@ public class RunicEnergy {
 
 
     public enum Type{
-        ZETA("zeta"),
-        ARDO("ardo"),
-        URBA("urba"),
-        KELDA("kelda"),
-        FIRA("fira"),
-        TERA("tera"),
-        GIRO("giro"),
-        ULTIMA("ultima"),
-        NONE("none")
+        ZETA("zeta",0),
+        ARDO("ardo",1),
+        URBA("urba",2),
+        KELDA("kelda",3),
+        FIRA("fira",4),
+        TERA("tera",5),
+        GIRO("giro",6),
+        ULTIMA("ultima",7),
+        NONE("none",Integer.MAX_VALUE)
         ;
 
 
+        private static final Type[] ALL = new Type[]{ZETA,ARDO,URBA,KELDA,FIRA,TERA,GIRO,ULTIMA};
         public String id;
+        private int index;
 
-        Type(String id){
+        Type(String id,int index){
             this.id = id;
+            this.index = index;
         }
 
+
         public static Type[] getAll(){
-            return new Type[]{ZETA,KELDA,URBA,TERA,FIRA,ARDO,GIRO,ULTIMA};
+            return ALL;
+        }
+
+        public static Type byIndex(int id){
+            return getAll()[id];
         }
 
         public static Type byId(String id){
@@ -128,6 +136,9 @@ public class RunicEnergy {
             return null;
         }
 
+        public int getIndex() {
+            return index;
+        }
 
     }
 }

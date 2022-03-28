@@ -125,24 +125,24 @@ public class Helpers {
 
 
 
-    public static void spendMana(Player playerEntity,double count){
-        if (!playerEntity.isDeadOrDying() && playerEntity.getCapability(CapabilitySolarMana.SOLAR_MANA_PLAYER).isPresent() && !playerEntity.isCreative()){
-            if (count < playerEntity.getCapability(CapabilitySolarMana.SOLAR_MANA_PLAYER).orElseThrow(Error::new).getMana()) {
-                playerEntity.getCapability(CapabilitySolarMana.SOLAR_MANA_PLAYER).orElseThrow(Error::new).setMana(playerEntity.getCapability(CapabilitySolarMana.SOLAR_MANA_PLAYER).orElseThrow(Error::new).getMana() - count);
-            }
-        }
-    }
-    public static boolean canCast(Player playerEntity,double count){
-        if (!playerEntity.isDeadOrDying() && playerEntity.getCapability(CapabilitySolarMana.SOLAR_MANA_PLAYER).isPresent() && !playerEntity.isCreative()) {
-            if (count < playerEntity.getCapability(CapabilitySolarMana.SOLAR_MANA_PLAYER).orElseThrow(Error::new).getMana()) {
-                return true;
-            }
-        }else if (playerEntity.isCreative()){
-            return true;
-
-        }
-        return false;
-    }
+//    public static void spendMana(Player playerEntity,double count){
+//        if (!playerEntity.isDeadOrDying() && playerEntity.getCapability(CapabilitySolarMana.SOLAR_MANA_PLAYER).isPresent() && !playerEntity.isCreative()){
+//            if (count < playerEntity.getCapability(CapabilitySolarMana.SOLAR_MANA_PLAYER).orElseThrow(Error::new).getMana()) {
+//                playerEntity.getCapability(CapabilitySolarMana.SOLAR_MANA_PLAYER).orElseThrow(Error::new).setMana(playerEntity.getCapability(CapabilitySolarMana.SOLAR_MANA_PLAYER).orElseThrow(Error::new).getMana() - count);
+//            }
+//        }
+//    }
+//    public static boolean canCast(Player playerEntity,double count){
+//        if (!playerEntity.isDeadOrDying() && playerEntity.getCapability(CapabilitySolarMana.SOLAR_MANA_PLAYER).isPresent() && !playerEntity.isCreative()) {
+//            if (count < playerEntity.getCapability(CapabilitySolarMana.SOLAR_MANA_PLAYER).orElseThrow(Error::new).getMana()) {
+//                return true;
+//            }
+//        }else if (playerEntity.isCreative()){
+//            return true;
+//
+//        }
+//        return false;
+//    }
 
 
     public static LevelChunk[] getSurroundingChunks(Level level,BlockPos worldPosition){
@@ -395,36 +395,36 @@ public class Helpers {
     }
 
 
-    public static class ManaHandler{
-        public static boolean spendMana(Player player,double amount){
-            LazyOptional<SolarForgeMana> cap = getCap(player);
-            if (cap.isPresent() ){
-                if (player.isCreative()){
-                    return true;
-                }else{
-                    Optional<SolarForgeMana> op = cap.resolve();
-                    if (op.isPresent()){
-                        SolarForgeMana capability = op.get();
-                        double mana = capability.getMana();
-                        if (mana >= amount){
-                            capability.setMana(mana-amount);
-                            return true;
-                        }else {
-                            return false;
-                        }
-                    }else{
-                        return false;
-                    }
-                }
-            }else{
-                return false;
-            }
-        }
-
-        private static LazyOptional<SolarForgeMana> getCap(Player player){
-            return player.getCapability(CapabilitySolarMana.SOLAR_MANA_PLAYER);
-        }
-    }
+//    public static class ManaHandler{
+//        public static boolean spendMana(Player player,double amount){
+//            LazyOptional<SolarForgeMana> cap = getCap(player);
+//            if (cap.isPresent() ){
+//                if (player.isCreative()){
+//                    return true;
+//                }else{
+//                    Optional<SolarForgeMana> op = cap.resolve();
+//                    if (op.isPresent()){
+//                        SolarForgeMana capability = op.get();
+//                        double mana = capability.getMana();
+//                        if (mana >= amount){
+//                            capability.setMana(mana-amount);
+//                            return true;
+//                        }else {
+//                            return false;
+//                        }
+//                    }else{
+//                        return false;
+//                    }
+//                }
+//            }else{
+//                return false;
+//            }
+//        }
+//
+//        private static LazyOptional<SolarForgeMana> getCap(Player player){
+//            return player.getCapability(CapabilitySolarMana.SOLAR_MANA_PLAYER);
+//        }
+//    }
 
 
     public static void createSmallSolarStrikeParticleExplosion(Level world,Vec3 position,int intensity,float speedFactor,float spawnDistanceFactor){

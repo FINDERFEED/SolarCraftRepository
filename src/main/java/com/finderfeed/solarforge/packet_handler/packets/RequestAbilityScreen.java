@@ -1,7 +1,5 @@
 package com.finderfeed.solarforge.packet_handler.packets;
 
-import com.finderfeed.solarforge.SolarAbilities.Abilities;
-import com.finderfeed.solarforge.SolarAbilities.AbilityClasses.AbstractAbility;
 import com.finderfeed.solarforge.SolarCraftTags;
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
 import net.minecraft.network.FriendlyByteBuf;

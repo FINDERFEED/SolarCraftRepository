@@ -1,6 +1,7 @@
 package com.finderfeed.solarforge.magic.items;
 
 import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.magic.items.runic_energy.ItemRunicEnergy;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.unlockables.AncientFragment;
 import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.item.TooltipFlag;
@@ -31,7 +32,8 @@ public class QualadiumHoe extends IllidiumHoe{
     @Override
     public InteractionResult useOn(UseOnContext ctx) {
         if (ctx.getPlayer().isCrouching()){
-            if (ctx.getLevel().getBlockState(ctx.getClickedPos()).getBlock() instanceof BonemealableBlock && Helpers.canCast(ctx.getPlayer(), getManacost())){
+            if (ctx.getLevel().getBlockState(ctx.getClickedPos()).getBlock() instanceof BonemealableBlock &&
+                    ItemRunicEnergy.isEnough(this.getCost(),ctx.getItemInHand(),this,ctx.getPlayer())){
                 for (BlockPos pos : Helpers.getSurroundingBlockPositionsHorizontal(ctx.getClickedPos())) {
                     if  (ctx.getLevel().getBlockState(pos).getBlock() instanceof BonemealableBlock) {
 
@@ -45,8 +47,8 @@ public class QualadiumHoe extends IllidiumHoe{
     }
 
     @Override
-    public void appendHoverText(ItemStack p_77624_1_, @Nullable Level p_77624_2_, List<Component> p_77624_3_, TooltipFlag p_77624_4_) {
-        p_77624_3_.add(new TranslatableComponent("solarforge.qualadium_hoe").withStyle(ChatFormatting.GOLD));
-        super.appendHoverText(p_77624_1_, p_77624_2_, p_77624_3_, p_77624_4_);
+    public void appendHoverText(ItemStack item, @Nullable Level world, List<Component> components, TooltipFlag p_77624_4_) {
+        components.add(new TranslatableComponent("solarforge.qualadium_hoe").withStyle(ChatFormatting.GOLD));
+        super.appendHoverText(item, world, components, p_77624_4_);
     }
 }

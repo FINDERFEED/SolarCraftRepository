@@ -23,4 +23,9 @@ public class DivineBoots extends BaseDivineArmor{
         if (level.isClientSide || level.getGameTime() % 20 != 0) return;
         player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED,40,2,false,false));
     }
+
+    @Override
+    public float getMaxRunicEnergyCapacity() {
+        return 300;
+    }
 }

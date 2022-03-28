@@ -1,10 +1,10 @@
 package com.finderfeed.solarforge.registries.abilities;
 
-import com.finderfeed.solarforge.SolarAbilities.Abilities;
-import com.finderfeed.solarforge.SolarAbilities.AbilityClasses.AbstractAbility;
-import com.finderfeed.solarforge.SolarAbilities.AbilityClasses.FireballAbility;
-import com.finderfeed.solarforge.SolarAbilities.AbilityClasses.LightningAbility;
-import com.finderfeed.solarforge.SolarAbilities.AbilityClasses.ToggleableAbility;
+import com.finderfeed.solarforge.abilities.Abilities;
+import com.finderfeed.solarforge.abilities.ability_classes.AbstractAbility;
+import com.finderfeed.solarforge.abilities.ability_classes.FireballAbility;
+import com.finderfeed.solarforge.abilities.ability_classes.LightningAbility;
+import com.finderfeed.solarforge.abilities.ability_classes.ToggleableAbility;
 import com.finderfeed.solarforge.local_library.custom_registries.CustomDeferredRegistry;
 import com.finderfeed.solarforge.registries.SolarcraftRegistries;
 

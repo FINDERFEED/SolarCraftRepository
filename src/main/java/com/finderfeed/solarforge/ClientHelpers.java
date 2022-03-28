@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge;
 
-import com.finderfeed.solarforge.SolarAbilities.screens.AbilityBuyScreen;
+import com.finderfeed.solarforge.abilities.screens.AbilityBuyScreen;
 import com.finderfeed.solarforge.client.particles.ParticleTypesRegistry;
 import com.finderfeed.solarforge.client.particles.SmallSolarStrikeParticle;
 import com.finderfeed.solarforge.client.particles.SolarcraftParticle;
@@ -56,7 +56,6 @@ import net.minecraftforge.items.IItemHandler;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.function.Function;
 import java.util.function.Supplier;
 

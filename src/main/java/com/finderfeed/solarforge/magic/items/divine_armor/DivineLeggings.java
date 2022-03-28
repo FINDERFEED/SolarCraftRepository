@@ -27,4 +27,6 @@ public class DivineLeggings extends BaseDivineArmor{
         if (level.isClientSide || level.getGameTime() % 20 != 0) return;
         player.addEffect(new MobEffectInstance(MobEffects.JUMP,40,2,false,false));
     }
+
+
 }

@@ -1,9 +1,9 @@
 package com.finderfeed.solarforge;
 
 
-import com.finderfeed.solarforge.SolarAbilities.meteorite.MeteoriteProjectile;
-import com.finderfeed.solarforge.SolarAbilities.SolarStrikeEntity;
-import com.finderfeed.solarforge.SolarAbilities.SolarStunEffect;
+import com.finderfeed.solarforge.abilities.meteorite.MeteoriteProjectile;
+import com.finderfeed.solarforge.abilities.solar_strike.SolarStrikeEntity;
+import com.finderfeed.solarforge.abilities.SolarStunEffect;
 import com.finderfeed.solarforge.capabilities.capability_mana.AttachManaCapabilityEvent;
 import com.finderfeed.solarforge.config.EnchantmentsConfig;
 import com.finderfeed.solarforge.config.JsonFragmentsHelper;

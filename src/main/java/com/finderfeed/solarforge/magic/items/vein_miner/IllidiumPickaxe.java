@@ -3,9 +3,13 @@ package com.finderfeed.solarforge.magic.items.vein_miner;
 import com.finderfeed.solarforge.Helpers;
 
 import com.finderfeed.solarforge.magic.items.primitive.RareSolarcraftPickaxe;
+import com.finderfeed.solarforge.magic.items.runic_energy.IRunicEnergyUser;
+import com.finderfeed.solarforge.magic.items.runic_energy.ItemRunicEnergy;
+import com.finderfeed.solarforge.magic.items.runic_energy.RunicEnergyCost;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarforge.misc_things.ManaConsumer;
 
+import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.OreBlock;
@@ -30,8 +34,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Tier;
 import net.minecraftforge.common.Tags;
 
-public class IllidiumPickaxe extends RareSolarcraftPickaxe implements ManaConsumer {
+public class IllidiumPickaxe extends RareSolarcraftPickaxe implements IRunicEnergyUser {
 
+    public static final RunicEnergyCost COST = new RunicEnergyCost().set(RunicEnergy.Type.TERA,2);
 
 
     public IllidiumPickaxe(Tier p_i48478_1_, int p_i48478_2_, float p_i48478_3_, Properties p_i48478_4_, Supplier<AncientFragment> fragmentSupplier) {
@@ -42,23 +47,19 @@ public class IllidiumPickaxe extends RareSolarcraftPickaxe implements ManaConsum
     @Override
     public boolean mineBlock(ItemStack stack, Level world, BlockState state, BlockPos pos, LivingEntity entity) {
 
-        if (!world.isClientSide && entity.isCrouching() && entity instanceof Player) {
+        if (!world.isClientSide && entity.isCrouching() && entity instanceof Player player) {
             List<BlockPos> posList = new ArrayList<>();
             populateList(pos, world, posList,0);
             for (BlockPos a : posList) {
-                if (Helpers.canCast((Player) entity,getManacost())) {
-                    Helpers.spendMana((Player) entity,getManacost());
+                if (ItemRunicEnergy.spendEnergy(this.getCost(),stack,this,player)) {
                     Block.dropResources(world.getBlockState(a), world, a, world.getBlockEntity(a), entity, stack);
                     world.destroyBlock(a, false);
                 }
 
             }
-        }else if(!world.isClientSide && !entity.isCrouching() && entity instanceof Player) {
-            if (Helpers.canCast((Player) entity,getManacost())){
-                Helpers.spendMana((Player) entity,getManacost());
-            }
+        }else if(!world.isClientSide && !entity.isCrouching() && entity instanceof Player player) {
+            ItemRunicEnergy.spendEnergy(this.getCost(),stack,this,player);
         }
-//        stack.setDamageValue(-stack.getMaxDamage());
 
         return super.mineBlock(stack,world,state,pos,entity);
     }
@@ -88,52 +89,30 @@ public class IllidiumPickaxe extends RareSolarcraftPickaxe implements ManaConsum
 
 
     @Override
-    public double getManacost() {
-        return 3.5f;
-    }
-
-    @Override
-    public void appendHoverText(ItemStack p_77624_1_, @Nullable Level p_77624_2_, List<Component> p_77624_3_, TooltipFlag p_77624_4_) {
-        p_77624_3_.add(new TranslatableComponent("solarforge.veinminer").withStyle(ChatFormatting.GOLD));
-        super.appendHoverText(p_77624_1_, p_77624_2_, p_77624_3_, p_77624_4_);
+    public void appendHoverText(ItemStack stack, @Nullable Level world, List<Component> components, TooltipFlag p_77624_4_) {
+        components.add(new TranslatableComponent("solarforge.veinminer").withStyle(ChatFormatting.GOLD));
+        ItemRunicEnergy.addRunicEnergyTextComponents(stack,this,components);
+        super.appendHoverText(stack, world, components, p_77624_4_);
     }
 
     @Override
     public boolean isEnchantable(ItemStack p_77616_1_) {
         return true;
     }
+
+    @Override
+    public float getMaxRunicEnergyCapacity() {
+        return 5000;
+    }
+
+    @Override
+    public List<RunicEnergy.Type> allowedInputs() {
+        return List.of(RunicEnergy.Type.TERA);
+    }
+
+    @Override
+    public RunicEnergyCost getCost() {
+        return COST;
+    }
 }
-//@Mod.EventBusSubscriber(modid = "solarforge",bus = Mod.EventBusSubscriber.Bus.FORGE,value = Dist.CLIENT)
-//class RenderHighlight{
-//
-//    @SubscribeEvent
-//    public static void renderHighlight(final DrawHighlightEvent.HighlightBlock event){
-//        BlockPos pos = event.getTarget().getBlockPos();
-//        ClientPlayerEntity entity = Minecraft.getInstance().player;
-//        if (entity.getMainHandItem().getItem() instanceof  VeinMiner){
-//            if (entity.level.getBlockState(pos).getBlock() instanceof OreBlock){
-//                List<BlockPos> posList = new ArrayList<>();
-//                VeinMiner.populateList(pos,entity.level,posList,15);
-//                GL11.glPushMatrix();
-//                GL11.glPushAttrib(GL11.GL_ALL_ATTRIB_BITS);
-//                GL11.glTranslated(pos.getX(),pos.getY(),pos.getZ());
-//                GL11.glLineWidth(2);
-//
-//
-//                GL11.glBegin(GL11.GL_LINES);
-//                GL11.glColor4f(1,1,1,1);
-//                GL11.glVertex3d(0,0,0);
-//                GL11.glVertex3d(1,0,0);
-//                GL11.glVertex3d(1,1,0);
-//                GL11.glVertex3d(0,1,0);
-//
-//                GL11.glEnd();
-//                GL11.glPopAttrib();
-//                GL11.glPopMatrix();
-//                for (BlockPos a : posList){
-//
-//                }
-//            }
-//        }
-//    }
-//}
+

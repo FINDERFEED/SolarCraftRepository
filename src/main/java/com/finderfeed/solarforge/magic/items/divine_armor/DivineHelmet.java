@@ -28,4 +28,9 @@ public class DivineHelmet extends BaseDivineArmor{
         player.addEffect(new MobEffectInstance(MobEffects.NIGHT_VISION,400,2,false,false));
 
     }
+
+    @Override
+    public float getMaxRunicEnergyCapacity() {
+        return 300;
+    }
 }

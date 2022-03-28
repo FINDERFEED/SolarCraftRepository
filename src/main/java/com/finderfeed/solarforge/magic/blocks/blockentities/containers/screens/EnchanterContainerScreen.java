@@ -2,7 +2,6 @@ package com.finderfeed.solarforge.magic.blocks.blockentities.containers.screens;
 
 import com.finderfeed.solarforge.ClientHelpers;
 import com.finderfeed.solarforge.SolarForge;
-import com.finderfeed.solarforge.local_library.helpers.FinderfeedMathHelper;
 import com.finderfeed.solarforge.magic.blocks.blockentities.EnchanterBlockEntity;
 import com.finderfeed.solarforge.magic.blocks.blockentities.containers.EnchanterContainer;
 import com.finderfeed.solarforge.magic.blocks.infusing_table_things.InfuserScreen;
@@ -10,14 +9,11 @@ import com.finderfeed.solarforge.magic.blocks.solar_forge_block.solar_forge_scre
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
 import com.finderfeed.solarforge.packet_handler.packets.EnchanterPacket;
-import com.finderfeed.solarforge.recipe_types.infusing_new.InfusingRecipe;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Vector3f;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Button;
-import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -26,7 +22,6 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraftforge.registries.ForgeRegistries;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
@@ -42,7 +37,7 @@ public class EnchanterContainerScreen extends AbstractScrollableContainerScreen<
     private int selectedLevel = 0;
     private final List<SolarForgeButton> postRender = new ArrayList<>();
     private int currentMouseScroll = 0;
-    private List<Runnable> postTooltipRender = new ArrayList<>();
+    private List<Runnable> postRunRender = new ArrayList<>();
 
 
     public EnchanterContainerScreen(EnchanterContainer container, Inventory inventory, Component component) {
@@ -75,7 +70,7 @@ public class EnchanterContainerScreen extends AbstractScrollableContainerScreen<
                     this.selectedLevel = 1;
                 }
             },(btn,matrices,mousex,mousey)->{
-                postTooltipRender.add(()->{
+                postRunRender.add(()->{
                     renderTooltip(matrices,new TranslatableComponent(e.getDescriptionId()),mousex,mousey);
                 });
             });
@@ -156,25 +151,25 @@ public class EnchanterContainerScreen extends AbstractScrollableContainerScreen<
             ClientHelpers.bindText(RUNIC_ENERGY_BAR);
 
             RenderSystem.enableBlend();
-            renderEnergyBar(matrices, relX + a - 12 - 16 + 1, relY + 61 + y, menu.costsAndAvailableEnchantments.get(selectedEnchantment).get(RunicEnergy.Type.KELDA) * selectedLevel, true);
-            renderEnergyBar(matrices, relX + a - 28 - 16 + 1, relY + 61 + y, menu.costsAndAvailableEnchantments.get(selectedEnchantment).get(RunicEnergy.Type.TERA) * selectedLevel, true);
-            renderEnergyBar(matrices, relX + a - 44 - 16 + 1, relY + 61 + y, menu.costsAndAvailableEnchantments.get(selectedEnchantment).get(RunicEnergy.Type.ZETA) * selectedLevel, true);
-            renderEnergyBar(matrices, relX + a - 12 - 16 + 1, relY + 145 + y, menu.costsAndAvailableEnchantments.get(selectedEnchantment).get(RunicEnergy.Type.URBA) * selectedLevel, true);
-            renderEnergyBar(matrices, relX + a - 28 - 16 + 1, relY + 145 + y, menu.costsAndAvailableEnchantments.get(selectedEnchantment).get(RunicEnergy.Type.FIRA) * selectedLevel, true);
-            renderEnergyBar(matrices, relX + a - 44 - 16 + 1, relY + 145 + y, menu.costsAndAvailableEnchantments.get(selectedEnchantment).get(RunicEnergy.Type.ARDO) * selectedLevel, true);
-            renderEnergyBar(matrices, relX + a - 12 , relY + 61 + y, menu.costsAndAvailableEnchantments.get(selectedEnchantment).get(RunicEnergy.Type.GIRO) * selectedLevel, true);
-            renderEnergyBar(matrices, relX + a - 12 , relY + 145 + y, menu.costsAndAvailableEnchantments.get(selectedEnchantment).get(RunicEnergy.Type.ULTIMA) * selectedLevel, true);
+            renderEnergyBar(matrices, relX + a - 12 - 16 + 1, relY + 61 + y, menu.costsAndAvailableEnchantments.get(selectedEnchantment).get(RunicEnergy.Type.KELDA) * selectedLevel, true,mousex,mousey);
+            renderEnergyBar(matrices, relX + a - 28 - 16 + 1, relY + 61 + y, menu.costsAndAvailableEnchantments.get(selectedEnchantment).get(RunicEnergy.Type.TERA) * selectedLevel, true,mousex,mousey);
+            renderEnergyBar(matrices, relX + a - 44 - 16 + 1, relY + 61 + y, menu.costsAndAvailableEnchantments.get(selectedEnchantment).get(RunicEnergy.Type.ZETA) * selectedLevel, true,mousex,mousey);
+            renderEnergyBar(matrices, relX + a - 12 - 16 + 1, relY + 145 + y, menu.costsAndAvailableEnchantments.get(selectedEnchantment).get(RunicEnergy.Type.URBA) * selectedLevel, true,mousex,mousey);
+            renderEnergyBar(matrices, relX + a - 28 - 16 + 1, relY + 145 + y, menu.costsAndAvailableEnchantments.get(selectedEnchantment).get(RunicEnergy.Type.FIRA) * selectedLevel, true,mousex,mousey);
+            renderEnergyBar(matrices, relX + a - 44 - 16 + 1, relY + 145 + y, menu.costsAndAvailableEnchantments.get(selectedEnchantment).get(RunicEnergy.Type.ARDO) * selectedLevel, true,mousex,mousey);
+            renderEnergyBar(matrices, relX + a - 12 , relY + 61 + y, menu.costsAndAvailableEnchantments.get(selectedEnchantment).get(RunicEnergy.Type.GIRO) * selectedLevel, true,mousex,mousey);
+            renderEnergyBar(matrices, relX + a - 12 , relY + 145 + y, menu.costsAndAvailableEnchantments.get(selectedEnchantment).get(RunicEnergy.Type.ULTIMA) * selectedLevel, true,mousex,mousey);
             RenderSystem.disableBlend();
 
 
-            renderEnergyBar(matrices, relX + a - 12 - 16 + 1, relY + 61 + y, menu.tile.getRunicEnergy(RunicEnergy.Type.KELDA), false);
-            renderEnergyBar(matrices, relX + a - 28 - 16 + 1, relY + 61 + y, menu.tile.getRunicEnergy(RunicEnergy.Type.TERA), false);
-            renderEnergyBar(matrices, relX + a - 44 - 16 + 1, relY + 61 + y, menu.tile.getRunicEnergy(RunicEnergy.Type.ZETA), false);
-            renderEnergyBar(matrices, relX + a - 12 - 16 + 1, relY + 145 + y,menu.tile.getRunicEnergy(RunicEnergy.Type.URBA), false);
-            renderEnergyBar(matrices, relX + a - 28 - 16 + 1, relY + 145 + y,menu.tile.getRunicEnergy(RunicEnergy.Type.FIRA), false);
-            renderEnergyBar(matrices, relX + a - 44 - 16 + 1, relY + 145 + y,menu.tile.getRunicEnergy(RunicEnergy.Type.ARDO), false);
-            renderEnergyBar(matrices, relX + a - 12 , relY + 61 + y, menu.tile.getRunicEnergy(RunicEnergy.Type.GIRO), false);
-            renderEnergyBar(matrices, relX + a - 12 , relY + 145 + y, menu.tile.getRunicEnergy(RunicEnergy.Type.ULTIMA), false);
+            renderEnergyBar(matrices, relX + a - 12 - 16 + 1, relY + 61 + y, menu.tile.getRunicEnergy(RunicEnergy.Type.KELDA), false,mousex,mousey);
+            renderEnergyBar(matrices, relX + a - 28 - 16 + 1, relY + 61 + y, menu.tile.getRunicEnergy(RunicEnergy.Type.TERA), false,mousex,mousey);
+            renderEnergyBar(matrices, relX + a - 44 - 16 + 1, relY + 61 + y, menu.tile.getRunicEnergy(RunicEnergy.Type.ZETA), false,mousex,mousey);
+            renderEnergyBar(matrices, relX + a - 12 - 16 + 1, relY + 145 + y,menu.tile.getRunicEnergy(RunicEnergy.Type.URBA), false,mousex,mousey);
+            renderEnergyBar(matrices, relX + a - 28 - 16 + 1, relY + 145 + y,menu.tile.getRunicEnergy(RunicEnergy.Type.FIRA), false,mousex,mousey);
+            renderEnergyBar(matrices, relX + a - 44 - 16 + 1, relY + 145 + y,menu.tile.getRunicEnergy(RunicEnergy.Type.ARDO), false,mousex,mousey);
+            renderEnergyBar(matrices, relX + a - 12 , relY + 61 + y, menu.tile.getRunicEnergy(RunicEnergy.Type.GIRO), false,mousex,mousey);
+            renderEnergyBar(matrices, relX + a - 12 , relY + 145 + y, menu.tile.getRunicEnergy(RunicEnergy.Type.ULTIMA), false,mousex,mousey);
 
             drawCenteredString(matrices,font,""+selectedLevel,relX + 94,relY + 45,0xffffff);
             drawCenteredString(matrices,font,selectedEnchantment.getFullname(selectedLevel).getString(),relX + 93,relY + 184,0xff0000);
@@ -189,8 +184,8 @@ public class EnchanterContainerScreen extends AbstractScrollableContainerScreen<
             b.render(matrices,mousex,mousey,pticks);
         }
         RenderSystem.disableScissor();
-        postTooltipRender.forEach(Runnable::run);
-        postTooltipRender.clear();
+        postRunRender.forEach(Runnable::run);
+        postRunRender.clear();
         super.renderTooltip(matrices,mousex,mousey);
 
     }
@@ -254,17 +249,25 @@ public class EnchanterContainerScreen extends AbstractScrollableContainerScreen<
         super.performScroll(keyCode);
     }
 
-    private void renderEnergyBar(PoseStack matrices, int offsetx, int offsety, double energyAmount, boolean simulate){
+    private void renderEnergyBar(PoseStack matrices, int offsetx, int offsety, double energyAmount, boolean simulate,int mousex,int mousey){
         matrices.pushPose();
 
-        int texturex = Math.round((float)energyAmount/100000*60);
+        int texturex = Math.round((float)energyAmount/(float)menu.tile.getRunicEnergyLimit()*60);
         matrices.translate(offsetx,offsety,0);
         matrices.mulPose(Vector3f.ZN.rotationDegrees(90));
         if (!simulate) {
             blit(matrices, 0, 0, 0, 0, texturex, 6);
+            if (mousex > offsetx && mousex < offsetx + 6 && mousey > offsety-60 && mousey < offsety){
+                postRunRender.add(()->{
+                    renderTooltip(matrices,new TextComponent((float) energyAmount + "/" + menu.tile.getRunicEnergyLimit()),mousex-3,mousey+3);
+                });
+            }
         }else{
+
             InfuserScreen.blitm(matrices, 0, 0, 0, 0, texturex, 6,60,6);
         }
+
+
 
         matrices.popPose();
     }

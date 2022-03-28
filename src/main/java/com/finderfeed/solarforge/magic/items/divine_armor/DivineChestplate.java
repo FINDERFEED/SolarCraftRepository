@@ -45,4 +45,9 @@ public class DivineChestplate extends BaseDivineArmor{
         player.addEffect(new MobEffectInstance(MobEffects.DIG_SPEED, 40, 1, false, false));
 
     }
+
+    @Override
+    public float getMaxRunicEnergyCapacity() {
+        return 500;
+    }
 }

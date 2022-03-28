@@ -89,7 +89,7 @@
   "item.solarforge.solar_god_shield": "Solar God Shield",
   "solarforge.block_boomerang": "Takes a block in offhand slot and places it on collision, then returns to player",
   "item.solarforge.block_boomerang": "Block Boomerang",
-  "item.solarforge.solar_mana_amulet": "Mana Regeneration Amulet",
+  "item.solarforge.solar_mana_amulet": "REMOVED",
   "solarforge.mana_amulet": "Increases mana regeneration by 2 per second",
   "solarforge.ultra_crossbow": "When you are using it, the damage increases by 3.5 per each second. If damage is more than 30 causes an explosion on impact. Manacost:200/shot.",
   "item.solarforge.solar_crossbow": "Solar Crossbow",
@@ -658,5 +658,12 @@
   "item.solarforge.crystal_heart": "Crystal heart(WIP)",
   "ach.runic_elemental": "Nature Mage",
   "pre.runic_elemental": "A powerful magic creature in an eternal slumber. Is there a way to awaken it?",
-  "aft.runic_elemental": "He was nearly impossible to beat, but his heart definitely very valuable."
+  "aft.runic_elemental": "He was nearly impossible to beat, but his heart definitely very valuable.",
+  "item.solarforge.divine_helmet": "Divine helmet",
+  "item.solarforge.divine_chestplate": "Divine chestplate",
+  "item.solarforge.divine_leggings": "Divine leggings",
+  "item.solarforge.divine_boots": "Divine boots",
+  "solarcraft.runic_shield": "Runic shield: "
+
+
 }

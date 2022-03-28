@@ -10,13 +10,10 @@ import com.finderfeed.solarforge.magic.blocks.blockitems.UldoradiumOreBlockitem;
 import com.finderfeed.solarforge.magic.items.divine_armor.*;
 import com.finderfeed.solarforge.magic.items.item_tiers.SolarCraftToolTiers;
 import com.finderfeed.solarforge.magic.items.*;
-import com.finderfeed.solarforge.magic.items.primitive.RareSolarcraftBlockItem;
-import com.finderfeed.solarforge.magic.items.primitive.RareSolarcraftItem;
-import com.finderfeed.solarforge.magic.items.primitive.RareSolarcraftShovelItem;
+import com.finderfeed.solarforge.magic.items.primitive.*;
 import com.finderfeed.solarforge.magic.items.primitive.solacraft_item_classes.SolarcraftArmorItem;
 import com.finderfeed.solarforge.magic.items.primitive.solacraft_item_classes.SolarcraftBlockItem;
 import com.finderfeed.solarforge.magic.items.primitive.solacraft_item_classes.SolarcraftItem;
-import com.finderfeed.solarforge.magic.items.small_items.*;
 import com.finderfeed.solarforge.magic.items.solar_disc_gun.SolarDiscGunItem;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarforge.magic.items.vein_miner.IllidiumPickaxe;
@@ -99,7 +96,7 @@ public class ItemsRegister {
 
     public static final RegistryObject<Item> LENSING_CRYSTAL = ITEMS.register("lensing_crystal",()-> new Item(new Item.Properties().rarity(Rarity.UNCOMMON).tab(SolarForge.SOLAR_GROUP_MATERIALS)));
 
-    public static final RegistryObject<Item> ENDER_RADAR = ITEMS.register("ender_radar",()-> new SolarcraftItem(new Item.Properties().rarity(Rarity.UNCOMMON).tab(SolarForge.SOLAR_GROUP_TOOLS),()->AncientFragment.ENDER_RADAR){
+    public static final RegistryObject<Item> ENDER_RADAR = ITEMS.register("ender_radar",()-> new SolarcraftItem(new Item.Properties().rarity(Rarity.UNCOMMON).tab(SolarForge.SOLAR_GROUP_TOOLS).stacksTo(1),()->AncientFragment.ENDER_RADAR){
         @Override
         public boolean isFoil(ItemStack p_41453_) {
             return true;
@@ -155,7 +152,7 @@ public class ItemsRegister {
     public static  final RegistryObject<TotemOfImmortality> TOTEM_OF_IMMORTALITY = ITEMS.register("totem_of_immortality",()-> new TotemOfImmortality(new Item.Properties().rarity(Rarity.RARE).tab(SolarForge.SOLAR_GROUP).stacksTo(1),()->AncientFragment.TOTEM_OF_IMMORTALITY));
     public static  final RegistryObject<ShieldOfSolarGod> SOLAR_GOD_SHIELD = ITEMS.register("solar_god_shield",()-> new ShieldOfSolarGod(new Item.Properties().rarity(Rarity.EPIC).tab(SolarForge.SOLAR_GROUP_WEAPONS).durability(3000),()->AncientFragment.SOLAR_GOD_SHIELD));
     public static final RegistryObject<BlockBoomerang> BLOCK_BOOMERANG = ITEMS.register("block_boomerang",()-> new BlockBoomerang(new Item.Properties().stacksTo(1).tab(SolarForge.SOLAR_GROUP).rarity(Rarity.UNCOMMON),()->AncientFragment.BLOCK_BOOMERANG));
-    public static final RegistryObject<ManaAmulet> SOLAR_MANA_AMULET = ITEMS.register("solar_mana_amulet",()-> new ManaAmulet(new Item.Properties().stacksTo(1).tab(SolarForge.SOLAR_GROUP).rarity(Rarity.UNCOMMON),()->AncientFragment.MANA_REGEN_AMULET));
+    public static final RegistryObject<ManaAmulet> SOLAR_MANA_AMULET = ITEMS.register("solar_mana_amulet",()-> new ManaAmulet(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON),()->null));
     public static final RegistryObject<UltraCrossbowItem> ULTRA_CROSSBOW = ITEMS.register("solar_crossbow",()-> new UltraCrossbowItem(new Item.Properties().stacksTo(1).tab(SolarForge.SOLAR_GROUP_WEAPONS).rarity(Rarity.UNCOMMON),()->AncientFragment.SOLAR_CROSSBOW));
     public static final RegistryObject<LightningGun> LIGHTNING_GUN = ITEMS.register("lightning_gun",()-> new LightningGun(new Item.Properties().stacksTo(1).tab(SolarForge.SOLAR_GROUP_WEAPONS).rarity(Rarity.UNCOMMON),()->AncientFragment.LIGHTNING_GUN));
     public static final RegistryObject<Item> SOLAR_MORTAR = ITEMS.register("solar_mortar_block",()->new RareSolarcraftBlockItem(BlocksRegistry.SOLAR_MORTAR_BLOCK.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS),()->AncientFragment.SOLAR_MORTAR));

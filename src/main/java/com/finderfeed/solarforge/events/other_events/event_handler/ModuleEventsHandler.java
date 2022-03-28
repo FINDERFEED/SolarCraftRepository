@@ -5,6 +5,8 @@ import com.finderfeed.solarforge.SolarCraftTags;
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.config.SolarcraftConfig;
 import com.finderfeed.solarforge.magic.items.ModuleItem;
+import com.finderfeed.solarforge.magic.items.runic_energy.RunicEnergyCost;
+import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import com.finderfeed.solarforge.registries.items.ItemsRegister;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -99,8 +101,7 @@ public class ModuleEventsHandler {
         if (!world.isClientSide){
             ItemStack stack = player.getItemInHand(hand);
             if ((stack.getItem() instanceof PickaxeItem) && hasModule(ItemsRegister.PICKAXE_MINER_ABILITY_MODULE.get(),stack)){
-                boolean flag = Helpers.ManaHandler.spendMana(player,300);
-                if (flag){
+                if (RunicEnergy.spendEnergy(player,300, RunicEnergy.Type.URBA)){
                     player.addEffect(new MobEffectInstance(MobEffects.DIG_SPEED,400,1));
                 }
             }
