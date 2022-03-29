@@ -144,6 +144,15 @@ public class ItemsRegister {
             super.appendHoverText(stack, world, cmps, flag);
         }
     });
+
+    public static final RegistryObject<Item> RUNIC_ENERGY_CHARGER = ITEMS.register("runic_energy_charger",()->new SolarcraftBlockItem(BlocksRegistry.RUNIC_ENERGY_CHARGER.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS),()->null){
+        @Override
+        public void appendHoverText(ItemStack stack, @org.jetbrains.annotations.Nullable Level world, List<Component> cmps, TooltipFlag flag) {
+            cmps.add(new TranslatableComponent("solarcraft.cant_save_energy").withStyle(ChatFormatting.RED));
+            super.appendHoverText(stack, world, cmps, flag);
+        }
+    });
+
     public static final RegistryObject<Item> SOLAR_NETWORK_BINDER = ITEMS.register("solar_network_binder",()-> new SolarNetworkBinder(new Item.Properties().rarity(Rarity.EPIC).tab(SolarForge.SOLAR_GROUP).stacksTo(1)));
     public static final RegistryObject<Item> ILLIDIUM_BLOCK = ITEMS.register("illidium_block",()->new SolarcraftBlockItem(BlocksRegistry.ILLIDIUM_BLOCK.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS),()->AncientFragment.ILLIDIUM_INGOT));
     public static final RegistryObject<Item> ALGADIUM_BLOCK = ITEMS.register("algadium_block",()->new SolarcraftBlockItem(BlocksRegistry.ALGADIUM_BLOCK.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS),()->AncientFragment.ALGADIUM_INGOT));

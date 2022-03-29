@@ -93,6 +93,8 @@ public class TileEntitiesRegistry {
     public static final RegistryObject<BlockEntityType<EnchanterBlockEntity>> ENCHANTER = TILE_ENTITY_TYPE.register("enchanter",()->
             BlockEntityType.Builder.of(EnchanterBlockEntity::new, BlocksRegistry.ENCHANTER.get()).build(null));
 
+    public static final RegistryObject<BlockEntityType<RunicEnergyChargerTileEntity>> RUNIC_ENERGY_CHARGER = TILE_ENTITY_TYPE.register("runic_energy_charger",()->
+            BlockEntityType.Builder.of(RunicEnergyChargerTileEntity::new, BlocksRegistry.RUNIC_ENERGY_CHARGER.get()).build(null));
 
 
 }

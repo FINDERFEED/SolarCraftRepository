@@ -6,6 +6,7 @@ import com.finderfeed.solarforge.capabilities.InfusingTableInventory;
 import com.finderfeed.solarforge.capabilities.ItemHandlerInventory;
 import com.finderfeed.solarforge.magic.blocks.blockentities.EnchanterBlockEntity;
 import com.finderfeed.solarforge.magic.blocks.blockentities.InfusingTableTile;
+import com.finderfeed.solarforge.magic.blocks.blockentities.RunicEnergyChargerTileEntity;
 import com.finderfeed.solarforge.magic.blocks.blockentities.RunicTableTileEntity;
 import com.finderfeed.solarforge.magic.blocks.infusing_table_things.InfuserTileEntity;
 import com.finderfeed.solarforge.magic.blocks.infusing_table_things.infusing_pool.InfusingStand;
@@ -48,6 +49,8 @@ public class AttachCapability {
         }else if (event.getObject() instanceof EnchanterBlockEntity tileEntity){
             ItemHandlerInventory inventory = new ItemHandlerInventory(1);
             event.addCapability(new ResourceLocation(SolarForge.MOD_ID,"enchanter_inventory"),inventory);
+        }else if (event.getObject() instanceof RunicEnergyChargerTileEntity tile){
+            event.addCapability(new ResourceLocation(SolarForge.MOD_ID,"charger_inventory"),new ItemHandlerInventory(2));
         }
     }
 }
