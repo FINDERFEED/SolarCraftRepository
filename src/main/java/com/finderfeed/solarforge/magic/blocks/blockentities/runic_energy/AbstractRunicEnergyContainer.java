@@ -14,6 +14,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -223,6 +224,12 @@ public abstract class AbstractRunicEnergyContainer extends SolarcraftBlockEntity
     public abstract boolean shouldFunction();
 
     public void onRemove(){
+        PATH_TO_CONTAINERS.forEach((type,way)->{
+            RunicEnergyPath.resetRepeaterConnections(PATH_TO_CONTAINERS.get(type),level);
+        });
+    }
+
+    public void resetAllRepeaters(){
         PATH_TO_CONTAINERS.forEach((type,way)->{
             RunicEnergyPath.resetRepeaterConnections(PATH_TO_CONTAINERS.get(type),level);
         });
@@ -455,6 +462,12 @@ public abstract class AbstractRunicEnergyContainer extends SolarcraftBlockEntity
         RUNE_ENERGY_ZETA = tag.getFloat("zeta");
         RUNE_ENERGY_GIRO = tag.getFloat("giro");
         RUNE_ENERGY_ULTIMA = tag.getFloat("ultima");
+    }
+
+    public void breakWay(RunicEnergy.Type type){
+        List<BlockPos> path = PATH_TO_CONTAINERS.remove(type);
+        if (path == null) return;
+        RunicEnergyPath.resetRepeaterConnections(path,level);
     }
 
     public Map<RunicEnergy.Type,List<BlockPos>> getWays(){

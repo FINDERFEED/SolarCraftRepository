@@ -7,6 +7,8 @@ import com.finderfeed.solarforge.client.screens.PositionBlockStateTileEntity;
 import com.finderfeed.solarforge.events.RenderEventsHandler;
 import com.finderfeed.solarforge.events.my_events.MyColorEvent;
 import com.finderfeed.solarforge.events.my_events.PostColorEvent;
+import com.finderfeed.solarforge.magic.blocks.infusing_table_things.InfuserScreen;
+import com.finderfeed.solarforge.magic.items.runic_energy.RunicEnergyContainer;
 import com.finderfeed.solarforge.misc_things.Multiblock;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import com.finderfeed.solarforge.client.rendering.rendertypes.RadiantPortalRendertype;
@@ -34,6 +36,8 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.ModelResourceLocation;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.core.Direction;
@@ -70,6 +74,8 @@ public class RenderingTools {
     public static final ResourceLocation RAY = new ResourceLocation("solarforge","textures/misc/ray_into_skyy.png");
     public static final ResourceLocation SHADERED_RAY = new ResourceLocation("solarforge","textures/misc/shadered_ray.png");
     public static final ResourceLocation HP_BAR = new ResourceLocation("solarforge","textures/misc/hp_bar.png"); //0.875
+    public static final ResourceLocation RUNIC_ENERGY_BARS_GUI = new ResourceLocation(SolarForge.MOD_ID,"textures/gui/infuser_energy_gui.png");
+    public static final ResourceLocation RUNIC_ENERGY_BAR = new ResourceLocation(SolarForge.MOD_ID,"textures/gui/runic_energy_bar.png");
 
     public static void drawBoundedText(PoseStack matrices,int posx,int posy,int bound,String s,int color){
         int iter = 0;
@@ -85,25 +91,55 @@ public class RenderingTools {
         }
     }
 
-    public static void renderTest(RenderGameOverlayEvent.Pre event,int tick){
-        PoseStack stack = event.getMatrixStack();
-        float partialTicks = event.getPartialTicks();
 
-        Window window = event.getWindow();
+    public static List<Component> renderRunicEnergyGui(PoseStack matrices, int x, int y, int mousex, int mousey, RunicEnergyContainer current,RunicEnergyContainer simulate,float maximum){
+        if (Minecraft.getInstance().screen == null) return List.of();
+        ClientHelpers.bindText(RUNIC_ENERGY_BARS_GUI);
+        Gui.blit(matrices, x, y, 0, 0, 73, 177, 73, 177);
+        ClientHelpers.bindText(RUNIC_ENERGY_BAR);
+        List<Component> tooltips = new ArrayList<>();
+        if (simulate != null) {
+            RenderSystem.enableBlend();
+            renderEnergyBar(matrices, x - 12 - 16 + 1, y + 61 + 12, simulate.get(RunicEnergy.Type.KELDA), true, mousex, mousey,maximum,tooltips);
+            renderEnergyBar(matrices, x - 28 - 16 + 1, y + 61 + 12, simulate.get(RunicEnergy.Type.TERA), true, mousex, mousey,maximum,tooltips);
+            renderEnergyBar(matrices, x - 44 - 16 + 1, y + 61 + 12, simulate.get(RunicEnergy.Type.ZETA), true, mousex, mousey,maximum,tooltips);
+            renderEnergyBar(matrices, x - 12 - 16 + 1, y + 145 + 12, simulate.get(RunicEnergy.Type.URBA), true, mousex, mousey,maximum,tooltips);
+            renderEnergyBar(matrices, x - 28 - 16 + 1, y + 145 + 12, simulate.get(RunicEnergy.Type.FIRA), true, mousex, mousey,maximum,tooltips);
+            renderEnergyBar(matrices, x - 44 - 16 + 1, y + 145 + 12, simulate.get(RunicEnergy.Type.ARDO), true, mousex, mousey,maximum,tooltips);
+            renderEnergyBar(matrices, x - 12, y + 61 + 12, simulate.get(RunicEnergy.Type.GIRO), true, mousex, mousey,maximum,tooltips);
+            renderEnergyBar(matrices, x - 12, y + 145 + 12, simulate.get(RunicEnergy.Type.ULTIMA), true, mousex, mousey,maximum,tooltips);
+            RenderSystem.disableBlend();
+        }
 
-        int width = window.getWidth();
-        int height = window.getHeight();
-        stack.pushPose();
-        double scale = window.getGuiScale();
-        stack.translate(width/4/scale*2,height/2/scale,0);
-        stack.mulPose(Vector3f.ZP.rotationDegrees((tick + partialTicks)%360));
+        renderEnergyBar(matrices, x - 12 - 16 + 1, y + 61 + 12, current.get(RunicEnergy.Type.KELDA), false,mousex,mousey,maximum,tooltips);
+        renderEnergyBar(matrices, x - 28 - 16 + 1, y + 61 + 12, current.get(RunicEnergy.Type.TERA), false,mousex,mousey,maximum,tooltips);
+        renderEnergyBar(matrices, x - 44 - 16 + 1, y + 61 + 12, current.get(RunicEnergy.Type.ZETA), false,mousex,mousey,maximum,tooltips);
+        renderEnergyBar(matrices, x - 12 - 16 + 1, y + 145 + 12,current.get(RunicEnergy.Type.URBA), false,mousex,mousey,maximum,tooltips);
+        renderEnergyBar(matrices, x - 28 - 16 + 1, y + 145 + 12,current.get(RunicEnergy.Type.FIRA), false,mousex,mousey,maximum,tooltips);
+        renderEnergyBar(matrices, x - 44 - 16 + 1, y + 145 + 12,current.get(RunicEnergy.Type.ARDO), false,mousex,mousey,maximum,tooltips);
+        renderEnergyBar(matrices, x - 12 , y + 61 + 12, current.get(RunicEnergy.Type.GIRO), false,mousex,mousey,maximum,tooltips);
+        renderEnergyBar(matrices, x - 12 , y + 145 + 12, current.get(RunicEnergy.Type.ULTIMA), false,mousex,mousey,maximum,tooltips);
+        return tooltips;
+    }
 
-        Minecraft.getInstance().getTextureManager().bindForSetup(TEST);
-        GuiComponent.blit(stack,-64,-64,0,0,128,128,128,128);
+    private static void renderEnergyBar(PoseStack matrices, int offsetx, int offsety, float energyAmount, boolean simulate,int mousex,int mousey,float maxEnergy,List<Component> tooltips){
+        matrices.pushPose();
 
-        stack.popPose();
-        
+        int texturex = Math.round(energyAmount/maxEnergy*60);
+        matrices.translate(offsetx,offsety,0);
+        matrices.mulPose(Vector3f.ZN.rotationDegrees(90));
+        if (!simulate) {
+            Minecraft.getInstance().screen.blit(matrices, 0, 0, 0, 0, texturex, 6);
+        }else{
+            if (mousex > offsetx && mousex < offsetx + 6 && mousey > offsety-60 && mousey < offsety){
+                tooltips.add(new TextComponent(energyAmount + "/" + maxEnergy));
+            }
+            InfuserScreen.blitm(matrices, 0, 0, 0, 0, texturex, 6,60,6);
+        }
 
+
+
+        matrices.popPose();
     }
 
     /**
@@ -218,45 +254,7 @@ public class RenderingTools {
         GuiComponent.blit(stack,-3,63,0,0,16,16,16,16);
         stack.popPose();
     }
-    /**
-     *
-     * @param p_83972_ Width
-     * @param p_83973_ Height
-     * @param p_83974_ Disable blend
-     * @param framebuffer  Framebuffer(RenderTarget) to blit.
-     */
-    @Deprecated
-    public static void blitFramebufferToScreen(int p_83972_, int p_83973_, boolean p_83974_, RenderTarget framebuffer) {
 
-        GlStateManager._colorMask(true, true, true, false);
-        GlStateManager._disableDepthTest();
-        GlStateManager._depthMask(false);
-        GlStateManager._viewport(0, 0, p_83972_, p_83973_);
-        if (p_83974_) {
-            GlStateManager._disableBlend();
-        }
-
-
-        Matrix4f matrix4f = Matrix4f.orthographic((float)p_83972_, (float)(-p_83973_), 1000.0F, 3000.0F);
-        RenderSystem.setProjectionMatrix(matrix4f);
-
-        float f = (float)p_83972_;
-        float f1 = (float)p_83973_;
-        float f2 = (float)framebuffer.viewWidth / (float)framebuffer.width;
-        float f3 = (float)framebuffer.viewHeight / (float)framebuffer.height;
-        Tesselator tesselator = RenderSystem.renderThreadTesselator();
-        BufferBuilder bufferbuilder = tesselator.getBuilder();
-        bufferbuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX_COLOR);
-        bufferbuilder.vertex(0.0D, (double)f1, 0.0D).uv(0.0F, 0.0F).color(255, 255, 255, 255).endVertex();
-        bufferbuilder.vertex((double)f, (double)f1, 0.0D).uv(f2, 0.0F).color(255, 255, 255, 255).endVertex();
-        bufferbuilder.vertex((double)f, 0.0D, 0.0D).uv(f2, f3).color(255, 255, 255, 255).endVertex();
-        bufferbuilder.vertex(0.0D, 0.0D, 0.0D).uv(0.0F, f3).color(255, 255, 255, 255).endVertex();
-        bufferbuilder.end();
-        BufferUploader._endInternal(bufferbuilder);
-
-        GlStateManager._depthMask(true);
-        GlStateManager._colorMask(true, true, true, true);
-    }
 
     public static void drawLine(PoseStack stack,int x1,int y1,int x2,int y2,int red,int green,int blue){
 
@@ -279,7 +277,7 @@ public class RenderingTools {
     }
 
 
-    public static void renderScaledGuiItem(ItemStack p_115128_, int p_115129_, int p_115130_,float scale) {
+    public static void renderScaledGuiItem(ItemStack stack, int x, int y,float scale) {
         Minecraft.getInstance().textureManager.getTexture(TextureAtlas.LOCATION_BLOCKS).setFilter(false, false);
         RenderSystem.setShaderTexture(0, TextureAtlas.LOCATION_BLOCKS);
         RenderSystem.enableBlend();
@@ -287,7 +285,7 @@ public class RenderingTools {
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         PoseStack posestack = RenderSystem.getModelViewStack();
         posestack.pushPose();
-        posestack.translate((double)p_115129_, (double)p_115130_, (double)(100.0F + Minecraft.getInstance().getItemRenderer().blitOffset));
+        posestack.translate((double)x, (double)y, (double)(100.0F + Minecraft.getInstance().getItemRenderer().blitOffset));
         posestack.translate(8.0D*scale, 8.0D*scale, 0.0D);
         posestack.scale(1.0F, -1.0F, 1.0F);
         posestack.scale(16.0F*scale, 16.0F*scale, 16.0F*scale);
@@ -296,13 +294,13 @@ public class RenderingTools {
         PoseStack posestack1 = new PoseStack();
 
         MultiBufferSource.BufferSource multibuffersource$buffersource = Minecraft.getInstance().renderBuffers().bufferSource();
-        BakedModel p_115131_ = Minecraft.getInstance().getItemRenderer().getModel(p_115128_,null,null,0);
+        BakedModel p_115131_ = Minecraft.getInstance().getItemRenderer().getModel(stack,null,null,0);
         boolean flag = !p_115131_.usesBlockLight();
         if (flag) {
             Lighting.setupForFlatItems();
         }
 
-        render(p_115128_, ItemTransforms.TransformType.GUI, false, posestack1, multibuffersource$buffersource, 15728880, OverlayTexture.NO_OVERLAY, p_115131_,scale);
+        render(stack, ItemTransforms.TransformType.GUI, false, posestack1, multibuffersource$buffersource, 15728880, OverlayTexture.NO_OVERLAY, p_115131_,scale);
         multibuffersource$buffersource.endBatch();
         RenderSystem.enableDepthTest();
         if (flag) {
@@ -312,58 +310,59 @@ public class RenderingTools {
         posestack.popPose();
         RenderSystem.applyModelViewMatrix();
     }
-    private static void render(ItemStack p_115144_, ItemTransforms.TransformType p_115145_, boolean p_115146_, PoseStack p_115147_, MultiBufferSource p_115148_, int p_115149_, int p_115150_, BakedModel p_115151_,float scale) {
-        if (!p_115144_.isEmpty()) {
-            p_115147_.pushPose();
-            boolean flag = p_115145_ == ItemTransforms.TransformType.GUI || p_115145_ == ItemTransforms.TransformType.GROUND || p_115145_ == ItemTransforms.TransformType.FIXED;
+    private static void render(ItemStack stack, ItemTransforms.TransformType transforms, boolean idk, PoseStack matrices, MultiBufferSource src, int light, int overlay, BakedModel model,float scale) {
+        if (!stack.isEmpty()) {
+            matrices.pushPose();
+            boolean flag = transforms == ItemTransforms.TransformType.GUI || transforms == ItemTransforms.TransformType.GROUND || transforms == ItemTransforms.TransformType.FIXED;
 
 
-            p_115151_ = net.minecraftforge.client.ForgeHooksClient.handleCameraTransforms(p_115147_, p_115151_, p_115145_, p_115146_);
-            p_115147_.translate(-0.5D, -0.5D, -0.5D);
+            model = net.minecraftforge.client.ForgeHooksClient.handleCameraTransforms(matrices, model, transforms, idk);
+            matrices.translate(-0.5D, -0.5D, -0.5D);
 
-            if (!p_115151_.isCustomRenderer() && (!p_115144_.is(Items.TRIDENT) || flag)) {
+            if (!model.isCustomRenderer() && (!stack.is(Items.TRIDENT) || flag)) {
                 boolean flag1;
-                if (p_115145_ != ItemTransforms.TransformType.GUI && !p_115145_.firstPerson() && p_115144_.getItem() instanceof BlockItem) {
-                    Block block = ((BlockItem)p_115144_.getItem()).getBlock();
+                if (transforms != ItemTransforms.TransformType.GUI && !transforms.firstPerson() && stack.getItem() instanceof BlockItem) {
+                    Block block = ((BlockItem)stack.getItem()).getBlock();
                     flag1 = !(block instanceof HalfTransparentBlock) && !(block instanceof StainedGlassPaneBlock);
                 } else {
                     flag1 = true;
                 }
-                if (p_115151_.isLayered()) { net.minecraftforge.client.ForgeHooksClient.drawItemLayered(Minecraft.getInstance().getItemRenderer(), p_115151_, p_115144_, p_115147_, p_115148_, p_115149_, p_115150_, flag1); }
+                if (model.isLayered()) { net.minecraftforge.client.ForgeHooksClient.drawItemLayered(Minecraft.getInstance().getItemRenderer(), model, stack, matrices, src, light, overlay, flag1); }
                 else {
-                    RenderType rendertype = ItemBlockRenderTypes.getRenderType(p_115144_, flag1);
+                    RenderType rendertype = ItemBlockRenderTypes.getRenderType(stack, flag1);
                     VertexConsumer vertexconsumer;
-                    if (p_115144_.is(Items.COMPASS) && p_115144_.hasFoil()) {
-                        p_115147_.pushPose();
-                        PoseStack.Pose posestack$pose = p_115147_.last();
-                        if (p_115145_ == ItemTransforms.TransformType.GUI) {
+                    if (stack.is(Items.COMPASS) && stack.hasFoil()) {
+                        matrices.pushPose();
+                        PoseStack.Pose posestack$pose = matrices.last();
+                        if (transforms == ItemTransforms.TransformType.GUI) {
                             posestack$pose.pose().multiply(0.5F);
-                        } else if (p_115145_.firstPerson()) {
+                        } else if (transforms.firstPerson()) {
                             posestack$pose.pose().multiply(0.75F);
                         }
 
                         if (flag1) {
-                            vertexconsumer = Minecraft.getInstance().getItemRenderer().getCompassFoilBufferDirect(p_115148_, rendertype, posestack$pose);
+                            vertexconsumer = Minecraft.getInstance().getItemRenderer().getCompassFoilBufferDirect(src, rendertype, posestack$pose);
                         } else {
-                            vertexconsumer = Minecraft.getInstance().getItemRenderer().getCompassFoilBuffer(p_115148_, rendertype, posestack$pose);
+                            vertexconsumer = Minecraft.getInstance().getItemRenderer().getCompassFoilBuffer(src, rendertype, posestack$pose);
                         }
 
-                        p_115147_.popPose();
+                        matrices.popPose();
                     } else if (flag1) {
-                        vertexconsumer = Minecraft.getInstance().getItemRenderer().getFoilBufferDirect(p_115148_, rendertype, true, p_115144_.hasFoil());
+                        vertexconsumer = Minecraft.getInstance().getItemRenderer().getFoilBufferDirect(src, rendertype, true, stack.hasFoil());
                     } else {
-                        vertexconsumer = Minecraft.getInstance().getItemRenderer().getFoilBuffer(p_115148_, rendertype, true, p_115144_.hasFoil());
+                        vertexconsumer = Minecraft.getInstance().getItemRenderer().getFoilBuffer(src, rendertype, true, stack.hasFoil());
                     }
 
-                    Minecraft.getInstance().getItemRenderer().renderModelLists(p_115151_, p_115144_, p_115149_, p_115150_, p_115147_, vertexconsumer);
+                    Minecraft.getInstance().getItemRenderer().renderModelLists(model, stack, light, overlay, matrices, vertexconsumer);
                 }
             } else {
-                net.minecraftforge.client.RenderProperties.get(p_115144_).getItemStackRenderer().renderByItem(p_115144_, p_115145_, p_115147_, p_115148_, p_115149_, p_115150_);
+                net.minecraftforge.client.RenderProperties.get(stack).getItemStackRenderer().renderByItem(stack, transforms, matrices, src, light, overlay);
             }
 
-            p_115147_.popPose();
+            matrices.popPose();
         }
     }
+
 
 
     /**

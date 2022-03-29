@@ -12,7 +12,7 @@ import java.util.Locale;
 
 public class ItemRunicEnergy {
 
-    public static final String RUNIC_ENERGY_TAG = "solarcraft_player_runic_shield";
+    public static final String RUNIC_ENERGY_TAG = "solarcraft_runic_energy";
 
 
     public static float getRunicEnergyFromItem(ItemStack item, RunicEnergy.Type type){
@@ -44,6 +44,19 @@ public class ItemRunicEnergy {
         return Math.abs(Math.min(0,delta));
     }
 
+    public static boolean isFullyCharged(ItemStack stack,IRunicEnergyUser user){
+        for (RunicEnergy.Type type : user.allowedInputs()){
+            float m = getRunicEnergyFromItem(stack,type);
+            if (m != user.getMaxRunicEnergyCapacity()){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static boolean hasChargedEnergy(ItemStack stack,IRunicEnergyUser user,RunicEnergy.Type type){
+        return getRunicEnergyFromItem(stack,type) == user.getMaxRunicEnergyCapacity();
+    }
 
     public static boolean isEnough(RunicEnergyCost cost,ItemStack stack,IRunicEnergyUser user,Player player){
         if (player.isCreative()) return true;
