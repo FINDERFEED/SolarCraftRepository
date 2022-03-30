@@ -1,7 +1,7 @@
 package com.finderfeed.solarforge.magic.blocks.blockentities;
 
 import com.finderfeed.solarforge.Helpers;
-import com.finderfeed.solarforge.abilities.ability_classes.AbstractAbility;
+import com.finderfeed.solarforge.magic.items.RuneItem;
 import com.finderfeed.solarforge.magic.items.runic_energy.IRunicEnergyUser;
 import com.finderfeed.solarforge.magic.items.runic_energy.ItemRunicEnergy;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
@@ -9,8 +9,6 @@ import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.items.ItemStackHandler;
 
@@ -25,13 +23,21 @@ public class RunicEnergyChargerTileEntity extends REItemHandlerBlockEntity {
     public RunicEnergyChargerTileEntity( BlockPos pos, BlockState state) {
         super(TileEntitiesRegistry.RUNIC_ENERGY_CHARGER.get(), pos, state);
     }
-//TODO:dodelat
     public static void tick(RunicEnergyChargerTileEntity tile, Level world,BlockState state,BlockPos pos){
         if (!world.isClientSide){
             ItemStackHandler inventory = tile.getInventory();
             if (inventory != null){
                 manageItemCharging(tile);
+                chargeWithRunes(tile);
             }
+        }
+    }
+
+    private static void chargeWithRunes(RunicEnergyChargerTileEntity tile){
+        ItemStack rune = tile.runeSlot();
+        if (rune.getItem() instanceof RuneItem item){
+            rune.shrink(1);
+            tile.giveEnergy(item.type,2);
         }
     }
 
@@ -74,7 +80,7 @@ public class RunicEnergyChargerTileEntity extends REItemHandlerBlockEntity {
         return inv.getStackInSlot(0);
     }
 
-    public ItemStack catalystSlot(){
+    public ItemStack runeSlot(){
         ItemStackHandler inv = this.getInventory();
         if (inv == null) return ItemStack.EMPTY;
         return inv.getStackInSlot(1);

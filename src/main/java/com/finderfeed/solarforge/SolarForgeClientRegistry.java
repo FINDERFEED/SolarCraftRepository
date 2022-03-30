@@ -125,6 +125,7 @@ public class SolarForgeClientRegistry {
         MenuScreens.register(Containers.MODULE_APPLIER_CONTAINER.get(), ModuleApplierScreen::new);
         MenuScreens.register(Containers.INFUSING_TABLE_TILE.get(), InfusingTableScreen::new);
         MenuScreens.register(Containers.ENCHANTER.get(), EnchanterContainerScreen::new);
+        MenuScreens.register(Containers.RUNIC_ENERGY_CHARGER.get(), RunicEnergyChargerScreen::new);
 
         event.enqueueWork(()->{
 

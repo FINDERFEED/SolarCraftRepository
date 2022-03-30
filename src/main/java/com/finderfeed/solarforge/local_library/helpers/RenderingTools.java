@@ -100,25 +100,25 @@ public class RenderingTools {
         List<Component> tooltips = new ArrayList<>();
         if (simulate != null) {
             RenderSystem.enableBlend();
-            renderEnergyBar(matrices, x - 12 - 16 + 1, y + 61 + 12, simulate.get(RunicEnergy.Type.KELDA), true, mousex, mousey,maximum,tooltips);
-            renderEnergyBar(matrices, x - 28 - 16 + 1, y + 61 + 12, simulate.get(RunicEnergy.Type.TERA), true, mousex, mousey,maximum,tooltips);
-            renderEnergyBar(matrices, x - 44 - 16 + 1, y + 61 + 12, simulate.get(RunicEnergy.Type.ZETA), true, mousex, mousey,maximum,tooltips);
-            renderEnergyBar(matrices, x - 12 - 16 + 1, y + 145 + 12, simulate.get(RunicEnergy.Type.URBA), true, mousex, mousey,maximum,tooltips);
-            renderEnergyBar(matrices, x - 28 - 16 + 1, y + 145 + 12, simulate.get(RunicEnergy.Type.FIRA), true, mousex, mousey,maximum,tooltips);
-            renderEnergyBar(matrices, x - 44 - 16 + 1, y + 145 + 12, simulate.get(RunicEnergy.Type.ARDO), true, mousex, mousey,maximum,tooltips);
-            renderEnergyBar(matrices, x - 12, y + 61 + 12, simulate.get(RunicEnergy.Type.GIRO), true, mousex, mousey,maximum,tooltips);
-            renderEnergyBar(matrices, x - 12, y + 145 + 12, simulate.get(RunicEnergy.Type.ULTIMA), true, mousex, mousey,maximum,tooltips);
+            renderEnergyBar(matrices, x - 12 - 16 + 1 + 69, y + 61 +8, simulate.get(RunicEnergy.Type.KELDA), true, mousex, mousey,maximum,tooltips);
+            renderEnergyBar(matrices, x - 28 - 16 + 1 + 69, y + 61 +8, simulate.get(RunicEnergy.Type.TERA), true, mousex, mousey,maximum,tooltips);
+            renderEnergyBar(matrices, x - 44 - 16 + 1 + 69, y + 61 +8, simulate.get(RunicEnergy.Type.ZETA), true, mousex, mousey,maximum,tooltips);
+            renderEnergyBar(matrices, x - 12 - 16 + 1 + 69, y + 145 +8, simulate.get(RunicEnergy.Type.URBA), true, mousex, mousey,maximum,tooltips);
+            renderEnergyBar(matrices, x - 28 - 16 + 1 + 69, y + 145 +8, simulate.get(RunicEnergy.Type.FIRA), true, mousex, mousey,maximum,tooltips);
+            renderEnergyBar(matrices, x - 44 - 16 + 1 + 69, y + 145 +8, simulate.get(RunicEnergy.Type.ARDO), true, mousex, mousey,maximum,tooltips);
+            renderEnergyBar(matrices, x - 12 + 69, y + 61 +8, simulate.get(RunicEnergy.Type.GIRO), true, mousex, mousey,maximum,tooltips);
+            renderEnergyBar(matrices, x - 12 + 69, y + 145 +8, simulate.get(RunicEnergy.Type.ULTIMA), true, mousex, mousey,maximum,tooltips);
             RenderSystem.disableBlend();
         }
 
-        renderEnergyBar(matrices, x - 12 - 16 + 1, y + 61 + 12, current.get(RunicEnergy.Type.KELDA), false,mousex,mousey,maximum,tooltips);
-        renderEnergyBar(matrices, x - 28 - 16 + 1, y + 61 + 12, current.get(RunicEnergy.Type.TERA), false,mousex,mousey,maximum,tooltips);
-        renderEnergyBar(matrices, x - 44 - 16 + 1, y + 61 + 12, current.get(RunicEnergy.Type.ZETA), false,mousex,mousey,maximum,tooltips);
-        renderEnergyBar(matrices, x - 12 - 16 + 1, y + 145 + 12,current.get(RunicEnergy.Type.URBA), false,mousex,mousey,maximum,tooltips);
-        renderEnergyBar(matrices, x - 28 - 16 + 1, y + 145 + 12,current.get(RunicEnergy.Type.FIRA), false,mousex,mousey,maximum,tooltips);
-        renderEnergyBar(matrices, x - 44 - 16 + 1, y + 145 + 12,current.get(RunicEnergy.Type.ARDO), false,mousex,mousey,maximum,tooltips);
-        renderEnergyBar(matrices, x - 12 , y + 61 + 12, current.get(RunicEnergy.Type.GIRO), false,mousex,mousey,maximum,tooltips);
-        renderEnergyBar(matrices, x - 12 , y + 145 + 12, current.get(RunicEnergy.Type.ULTIMA), false,mousex,mousey,maximum,tooltips);
+        renderEnergyBar(matrices, x - 12 - 16 + 1 + 69, y + 61 +8, current.get(RunicEnergy.Type.KELDA), false,mousex,mousey,maximum,tooltips);
+        renderEnergyBar(matrices, x - 28 - 16 + 1 + 69, y + 61 +8, current.get(RunicEnergy.Type.TERA), false,mousex,mousey,maximum,tooltips);
+        renderEnergyBar(matrices, x - 44 - 16 + 1 + 69, y + 61 +8, current.get(RunicEnergy.Type.ZETA), false,mousex,mousey,maximum,tooltips);
+        renderEnergyBar(matrices, x - 12 - 16 + 1 + 69, y + 145 +8,current.get(RunicEnergy.Type.URBA), false,mousex,mousey,maximum,tooltips);
+        renderEnergyBar(matrices, x - 28 - 16 + 1 + 69, y + 145 +8,current.get(RunicEnergy.Type.FIRA), false,mousex,mousey,maximum,tooltips);
+        renderEnergyBar(matrices, x - 44 - 16 + 1 + 69, y + 145 +8,current.get(RunicEnergy.Type.ARDO), false,mousex,mousey,maximum,tooltips);
+        renderEnergyBar(matrices, x - 12 + 69 , y + 61 +8, current.get(RunicEnergy.Type.GIRO), false,mousex,mousey,maximum,tooltips);
+        renderEnergyBar(matrices, x - 12 + 69 , y + 145 +8, current.get(RunicEnergy.Type.ULTIMA), false,mousex,mousey,maximum,tooltips);
         return tooltips;
     }
 
@@ -129,11 +129,11 @@ public class RenderingTools {
         matrices.translate(offsetx,offsety,0);
         matrices.mulPose(Vector3f.ZN.rotationDegrees(90));
         if (!simulate) {
-            Minecraft.getInstance().screen.blit(matrices, 0, 0, 0, 0, texturex, 6);
-        }else{
             if (mousex > offsetx && mousex < offsetx + 6 && mousey > offsety-60 && mousey < offsety){
                 tooltips.add(new TextComponent(energyAmount + "/" + maxEnergy));
             }
+            Minecraft.getInstance().screen.blit(matrices, 0, 0, 0, 0, texturex, 6);
+        }else{
             InfuserScreen.blitm(matrices, 0, 0, 0, 0, texturex, 6,60,6);
         }
 

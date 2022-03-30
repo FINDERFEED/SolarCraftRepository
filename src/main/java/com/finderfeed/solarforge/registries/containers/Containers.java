@@ -17,4 +17,5 @@ public class Containers {
     public static final RegistryObject<MenuType<ModuleApplierMenu>> MODULE_APPLIER_CONTAINER = CONTAINER_TYPE.register("module_applier",()->IForgeMenuType.create(ModuleApplierMenu::new));
     public static final RegistryObject<MenuType<InfusingTableTileContainer>> INFUSING_TABLE_TILE = CONTAINER_TYPE.register("infusing_crafting_table_container",()-> IForgeMenuType.create(InfusingTableTileContainer::new));
     public static final RegistryObject<MenuType<EnchanterContainer>> ENCHANTER = CONTAINER_TYPE.register("enchanter_container",()-> IForgeMenuType.create(EnchanterContainer::new));
+    public static final RegistryObject<MenuType<RunicEnergyChargerContainer>> RUNIC_ENERGY_CHARGER = CONTAINER_TYPE.register("runic_energy_charger_container",()-> IForgeMenuType.create(RunicEnergyChargerContainer::new));
 }
