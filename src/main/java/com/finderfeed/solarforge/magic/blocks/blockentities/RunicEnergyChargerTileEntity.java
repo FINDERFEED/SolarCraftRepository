@@ -37,7 +37,7 @@ public class RunicEnergyChargerTileEntity extends REItemHandlerBlockEntity {
         ItemStack rune = tile.runeSlot();
         if (rune.getItem() instanceof RuneItem item){
             rune.shrink(1);
-            tile.giveEnergy(item.type,2);
+            tile.giveEnergy(item.type,0.25);
         }
     }
 

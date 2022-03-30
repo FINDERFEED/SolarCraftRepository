@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "solarforge:regen_amulet",
+    "solarforge:strength_amulet",
+    "solarforge:night_vision_amulet",
+    "solarforge:speed_amulet",
+    "solarforge:haste_amulet",
+    "solarforge:jump_amulet"
+  ]
+}

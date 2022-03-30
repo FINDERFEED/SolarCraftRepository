@@ -42,8 +42,8 @@ minecraft {
     runs {
         client {
             workingDirectory project.file('run')
-//            property 'mixin.env.remapRefMap', 'true'
-//            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
 //            arg "-mixin.debug=true"
 //            arg "-mixin.checks.interfaces=true"
             // Recommended logging data for a userdev environment
@@ -67,8 +67,8 @@ minecraft {
 
         server {
             workingDirectory project.file('run')
-//            property 'mixin.env.remapRefMap', 'true'
-//            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
             // Recommended logging data for a userdev environment
             // The markers can be changed as needed. 
             // "SCAN": For mods scan.
@@ -144,6 +144,7 @@ dependencies {
     // For more info...
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
+//    runtimeOnly fg.deobf("curse.maven:curios-309927:3670447")
 //    runtimeOnly fg.deobf("curse.maven:cyanide-541676:3545771")
 //    runtimeOnly fg.deobf("curse.maven:iceberg-520110:3553159")
 //    runtimeOnly fg.deobf("curse.maven:legendarytooltips-532127:3549889")
@@ -194,4 +195,14 @@ publishing {
             url "file:///${project.projectDir}/mcmodsrepo"
         }
     }
+}
+repositories {
+    maven {
+        url = "https://maven.theillusivec4.top/"
+    }
+}
+
+dependencies {
+    runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:1.18.2-5.0.6.3")
+    compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:1.18.2-5.0.6.3:api")
 }
