@@ -5,7 +5,7 @@ import com.finderfeed.solarforge.abilities.meteorite.MeteoriteProjectile;
 import com.finderfeed.solarforge.abilities.solar_strike.SolarStrikeEntity;
 import com.finderfeed.solarforge.abilities.SolarStunEffect;
 import com.finderfeed.solarforge.capabilities.capability_mana.AttachManaCapabilityEvent;
-import com.finderfeed.solarforge.config.EnchantmentsConfig;
+import com.finderfeed.solarforge.config.enchanter_config.EnchanterConfigInit;
 import com.finderfeed.solarforge.config.JsonFragmentsHelper;
 import com.finderfeed.solarforge.config.SolarcraftClientConfig;
 import com.finderfeed.solarforge.config.SolarcraftConfig;
@@ -88,7 +88,6 @@ import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
@@ -113,6 +112,8 @@ import java.util.List;
 @Mod(SolarForge.MOD_ID)
 public class SolarForge
 {
+
+    public static final int ENCHANTER_CONFIG_VERSION = 1;
 
     public static final String MOD_ID = "solarforge";
 
@@ -229,7 +230,7 @@ public class SolarForge
     private void setup(final FMLCommonSetupEvent event)
     {
         JsonFragmentsHelper.setupJSON();
-        EnchantmentsConfig.setupJSON();
+        EnchanterConfigInit.setupJSON();
         Tags.init();
         AbilitiesRegistry.ABILITIES.registerAll();
         TierSortingRegistry.registerTier(SolarCraftToolTiers.ILLIDIUM_TOOLS_TIER,new ResourceLocation("illidium"), List.of(Tiers.DIAMOND),List.of());

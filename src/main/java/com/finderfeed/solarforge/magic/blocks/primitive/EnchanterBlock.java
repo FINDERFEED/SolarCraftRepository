@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.magic.blocks.primitive;
 
-import com.finderfeed.solarforge.config.EnchantmentsConfig;
+import com.finderfeed.solarforge.config.enchanter_config.EnchanterConfigInit;
 import com.finderfeed.solarforge.magic.blocks.blockentities.EnchanterBlockEntity;
 import com.finderfeed.solarforge.magic.blocks.blockentities.containers.EnchanterContainer;
 import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
@@ -8,7 +8,6 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -23,9 +22,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
-import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.Nullable;
 
@@ -47,8 +44,8 @@ public class EnchanterBlock extends Block implements EntityBlock {
 
                     enchanter.setChanged();
                     level.sendBlockUpdated(pos,state,state,3);
-                    if (EnchanterBlockEntity.SERVERSIDE_CONFIG == null) EnchanterBlockEntity.SERVERSIDE_CONFIG = EnchanterBlockEntity.parseJson(EnchantmentsConfig.SERVERSIDE_JSON);
-                    String configString = EnchantmentsConfig.SERVERSIDE_JSON.toString();
+                    if (EnchanterBlockEntity.SERVERSIDE_CONFIG == null) EnchanterBlockEntity.SERVERSIDE_CONFIG = EnchanterBlockEntity.parseJson(EnchanterConfigInit.SERVERSIDE_JSON);
+                    String configString = EnchanterConfigInit.SERVERSIDE_JSON.toString();
                     NetworkHooks.openGui((ServerPlayer) player,new EnchanterContainer.Provider(pos,configString),(buf)->{
                         buf.writeBlockPos(pos);
                         buf.writeUtf(configString);

@@ -4,7 +4,7 @@ package com.finderfeed.solarforge.magic.blocks.blockentities;
 import com.finderfeed.solarforge.ClientHelpers;
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.client.particles.ParticleTypesRegistry;
-import com.finderfeed.solarforge.config.EnchantmentsConfig;
+import com.finderfeed.solarforge.config.enchanter_config.EnchanterConfigInit;
 import com.finderfeed.solarforge.local_library.helpers.FinderfeedMathHelper;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
@@ -56,7 +56,7 @@ public class EnchanterBlockEntity extends REItemHandlerBlockEntity {
                         && enchLevelCurrent < enchanter.procesingEnchantmentLevel){
                     enchanter.setChanged();
                     world.sendBlockUpdated(pos,state,state,3);
-                    if (SERVERSIDE_CONFIG == null) SERVERSIDE_CONFIG = parseJson(EnchantmentsConfig.SERVERSIDE_JSON);
+                    if (SERVERSIDE_CONFIG == null) SERVERSIDE_CONFIG = parseJson(EnchanterConfigInit.SERVERSIDE_JSON);
                     Map<RunicEnergy.Type,Double> defaultCosts = SERVERSIDE_CONFIG.get(enchanter.processingEnchantment);
                     if (enchanter.hasEnoughRunicEnergy(defaultCosts,enchanter.procesingEnchantmentLevel)){
                         if (enchanter.enchantingTicks++ > MAX_ENCHANTING_TICKS){
@@ -176,7 +176,7 @@ public class EnchanterBlockEntity extends REItemHandlerBlockEntity {
             processingEnchantment = null;
         }
         if (level != null && !level.isClientSide && SERVERSIDE_CONFIG == null){
-            SERVERSIDE_CONFIG = parseJson(EnchantmentsConfig.SERVERSIDE_JSON);
+            SERVERSIDE_CONFIG = parseJson(EnchanterConfigInit.SERVERSIDE_JSON);
         }
     }
 

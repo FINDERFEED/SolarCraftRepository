@@ -1,11 +1,16 @@
-package com.finderfeed.solarforge.config;
+package com.finderfeed.solarforge.config.enchanter_config;
 
 import com.finderfeed.solarforge.SolarForge;
+import com.finderfeed.solarforge.config.SolarcraftConfig;
+import com.finderfeed.solarforge.magic.items.runic_energy.RunicEnergyCost;
+import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import com.google.gson.*;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraftforge.fml.loading.FMLPaths;
 import org.apache.logging.log4j.Level;
 
 import javax.annotation.Nullable;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
@@ -13,12 +18,34 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 
-public class EnchantmentsConfig {
+public class EnchanterConfigInit {
+
+
 
     public static final Gson SERIALIZER = new Gson().newBuilder().disableHtmlEscaping().setPrettyPrinting().create();
-
     public static JsonObject SERVERSIDE_JSON;
     public static final Path configDir = FMLPaths.CONFIGDIR.get().resolve(SolarcraftConfig.CUSTOM_CONFIGS_FOLDER).resolve(SolarcraftConfig.CUSTOM_BLOCKS_CONFIGS);
+
+
+    private static boolean checkVersionAndApplyChanges(JsonObject object){
+        boolean changesWereMade = false;
+        if (!object.has(EnchanterConfig.VERSION)){
+            object.addProperty(EnchanterConfig.VERSION,0);
+            changesWereMade = true;
+        }
+        int version = object.get(EnchanterConfig.VERSION).getAsInt();
+        if (version < SolarForge.ENCHANTER_CONFIG_VERSION) {
+            changesWereMade = true;
+            SolarForge.LOGGER.log(Level.INFO,"Detected outdated enchanter config. Applying changes using default values.");
+            for (int i = version+1; i <= SolarForge.ENCHANTER_CONFIG_VERSION; i++) {
+                EnchanterConfigChanges.CHANGES_IN_ORDER[i].applyChanges(object);
+            }
+            object.remove(EnchanterConfig.VERSION);
+            object.addProperty(EnchanterConfig.VERSION,SolarForge.ENCHANTER_CONFIG_VERSION);
+        }
+        return changesWereMade;
+    }
+
 
     public static void setupJSON(){
         SolarForge.LOGGER.log(Level.INFO,"Creating enchanter config");
@@ -27,6 +54,16 @@ public class EnchantmentsConfig {
             if (!Files.exists(filePath)){
                 Files.createDirectories(filePath.getParent());
                 Writer writer = Files.newBufferedWriter(filePath, StandardOpenOption.CREATE);
+                //TODO:finish this
+                JsonObject obj = new EnchanterConfig.JsonBuilder()
+                        .setMode(EnchanterConfig.Mode.STATIC)
+                        .setVersion(SolarForge.ENCHANTER_CONFIG_VERSION)
+                        .beginEnchantments()
+                        .addEnchantment(Enchantments.SHARPNESS, Enchantments.SHARPNESS.getMaxLevel(),new RunicEnergyCost().set(RunicEnergy.Type.URBA,2000).set(RunicEnergy.Type.TERA,5000))
+
+
+                        .end()
+                        .build();
                 JsonElement object = JsonParser.parseString("""
                         {
                             "enchantments": [
@@ -247,6 +284,13 @@ public class EnchantmentsConfig {
                 Reader reader = Files.newBufferedReader(filePath);
                 JsonObject object = SERIALIZER.fromJson(reader,JsonObject.class);
                 reader.close();
+                boolean flag = checkVersionAndApplyChanges(object);
+                if (flag){
+                    Writer writer = Files.newBufferedWriter(filePath);
+                    SERIALIZER.toJson(object,writer);
+                    writer.flush();
+                    writer.close();
+                }
                 SERVERSIDE_JSON = object;
                 SolarForge.LOGGER.log(Level.INFO,"Enchanter config reading complete");
             }catch (IOException e){
