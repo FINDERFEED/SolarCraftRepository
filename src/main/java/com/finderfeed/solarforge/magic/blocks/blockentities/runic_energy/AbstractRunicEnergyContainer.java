@@ -6,6 +6,8 @@ import com.finderfeed.solarforge.local_library.helpers.CompoundNBTHelper;
 import com.finderfeed.solarforge.local_library.helpers.FinderfeedMathHelper;
 import com.finderfeed.solarforge.magic.blocks.blockentities.RuneEnergyPylonTile;
 import com.finderfeed.solarforge.magic.blocks.blockentities.SolarcraftBlockEntity;
+import com.finderfeed.solarforge.magic.items.runic_energy.RunicEnergyContainer;
+import com.finderfeed.solarforge.magic.items.runic_energy.RunicEnergyCost;
 import com.finderfeed.solarforge.magic.runic_network.algorithms.RunicEnergyPath;
 import com.finderfeed.solarforge.magic.runic_network.repeater.BaseRepeaterTile;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
@@ -28,6 +30,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public abstract class AbstractRunicEnergyContainer extends SolarcraftBlockEntity implements OwnedBlock {
 
     private int seekingCooldown = 0;
+
+    private RunicEnergyContainer container = new RunicEnergyContainer();
 
     private float RUNE_ENERGY_ARDO = 0;
     private float RUNE_ENERGY_FIRA = 0;
@@ -116,6 +120,44 @@ public abstract class AbstractRunicEnergyContainer extends SolarcraftBlockEntity
 
 
     }
+
+    public void requestRunicEnergy(RunicEnergyCost costs,int multiplier){
+        if (seekingCooldown > getSeekingCooldown()){
+            tryConstructWays(costs.getSetTypes());
+        }else{
+            seekingCooldown++;
+        }
+
+
+        for (RunicEnergy.Type type : RunicEnergy.Type.getAll()){
+
+            float cost = costs.get(type);
+            if (cost == 0) continue;
+            if (!PATH_TO_CONTAINERS.containsKey(type)) continue;
+
+            double multiplied = cost * multiplier;
+            double runicEnergy = getRunicEnergy(type);
+            if (multiplied >= runicEnergy + getMaxEnergyInput()) {
+                requestSpecificEnergyNew(type, getMaxEnergyInput());
+            } else if ((multiplied > runicEnergy) && (multiplied < runicEnergy + getMaxEnergyInput())) {
+                double request = multiplied - getRunicEnergy(type);
+                requestSpecificEnergyNew(type, request);
+            } else {
+                BlockPos firstPos = PATH_TO_CONTAINERS.get(type).get(1);
+                if (nullOrGiverPositionForClient.contains(firstPos)) {
+                    nullOrGiverPositionForClient.remove(firstPos);
+                    BlockState state = level.getBlockState(worldPosition);
+                    this.setChanged();
+                    this.level.sendBlockUpdated(worldPosition, state, state, 3);
+                }
+                RunicEnergyPath.resetRepeaterConnections(PATH_TO_CONTAINERS.get(type), level);
+                PATH_TO_CONTAINERS.remove(type);
+            }
+        }
+
+
+    }
+
 
 
     public void requestSpecificEnergyNew(RunicEnergy.Type type,double amount){
@@ -255,31 +297,43 @@ public abstract class AbstractRunicEnergyContainer extends SolarcraftBlockEntity
     }
 
     public void giveEnergy(RunicEnergy.Type type, double amount){
-        switch (type){
-            case ARDO -> RUNE_ENERGY_ARDO+=amount;
-            case FIRA -> RUNE_ENERGY_FIRA+=amount;
-            case TERA -> RUNE_ENERGY_TERA+=amount;
-            case KELDA -> RUNE_ENERGY_KELDA+=amount;
-            case URBA -> RUNE_ENERGY_URBA+=amount;
-            case ZETA -> RUNE_ENERGY_ZETA+=amount;
-            case ULTIMA -> RUNE_ENERGY_ULTIMA+=amount;
-            case GIRO -> RUNE_ENERGY_GIRO+=amount;
-        }
+//        switch (type){
+//            case ARDO -> RUNE_ENERGY_ARDO+=amount;
+//            case FIRA -> RUNE_ENERGY_FIRA+=amount;
+//            case TERA -> RUNE_ENERGY_TERA+=amount;
+//            case KELDA -> RUNE_ENERGY_KELDA+=amount;
+//            case URBA -> RUNE_ENERGY_URBA+=amount;
+//            case ZETA -> RUNE_ENERGY_ZETA+=amount;
+//            case ULTIMA -> RUNE_ENERGY_ULTIMA+=amount;
+//            case GIRO -> RUNE_ENERGY_GIRO+=amount;
+//        }
+        container.set(type,container.get(type)+(float)amount);
     }
 
-    protected boolean isEnough(RunicEnergy.Type type, Map<RunicEnergy.Type, Double> costs, int multiplier){
-        boolean a = false;
-        switch (type){
-            case ARDO -> a =  RUNE_ENERGY_ARDO >= costs.get(RunicEnergy.Type.ARDO)*multiplier;
-            case FIRA-> a =  RUNE_ENERGY_FIRA >= costs.get(RunicEnergy.Type.FIRA)*multiplier;
-            case TERA-> a =  RUNE_ENERGY_TERA >= costs.get(RunicEnergy.Type.TERA)*multiplier;
-            case URBA-> a =  RUNE_ENERGY_URBA >= costs.get(RunicEnergy.Type.URBA)*multiplier;
-            case ZETA-> a =  RUNE_ENERGY_ZETA >= costs.get(RunicEnergy.Type.ZETA)*multiplier;
-            case KELDA-> a =  RUNE_ENERGY_KELDA >= costs.get(RunicEnergy.Type.KELDA)*multiplier;
-            case ULTIMA-> a =  RUNE_ENERGY_ULTIMA >= costs.get(RunicEnergy.Type.ULTIMA)*multiplier;
-            case GIRO-> a =  RUNE_ENERGY_GIRO >= costs.get(RunicEnergy.Type.GIRO)*multiplier;
+    protected boolean isEnough(RunicEnergy.Type type, RunicEnergyCost cost, int multiplier){
+//        boolean a = false;
+//        switch (type){
+//            case ARDO -> a =  RUNE_ENERGY_ARDO >= costs.get(RunicEnergy.Type.ARDO)*multiplier;
+//            case FIRA-> a =  RUNE_ENERGY_FIRA >= costs.get(RunicEnergy.Type.FIRA)*multiplier;
+//            case TERA-> a =  RUNE_ENERGY_TERA >= costs.get(RunicEnergy.Type.TERA)*multiplier;
+//            case URBA-> a =  RUNE_ENERGY_URBA >= costs.get(RunicEnergy.Type.URBA)*multiplier;
+//            case ZETA-> a =  RUNE_ENERGY_ZETA >= costs.get(RunicEnergy.Type.ZETA)*multiplier;
+//            case KELDA-> a =  RUNE_ENERGY_KELDA >= costs.get(RunicEnergy.Type.KELDA)*multiplier;
+//            case ULTIMA-> a =  RUNE_ENERGY_ULTIMA >= costs.get(RunicEnergy.Type.ULTIMA)*multiplier;
+//            case GIRO-> a =  RUNE_ENERGY_GIRO >= costs.get(RunicEnergy.Type.GIRO)*multiplier;
+//        }
+        return  container.get(type) >= cost.get(type)*multiplier;
+    }
+
+    public boolean hasEnoughRunicEnergy(RunicEnergyCost cost,int multiplier){
+        for (RunicEnergy.Type type : RunicEnergy.Type.getAll()){
+            float c = cost.get(type);
+            if (c == 0) continue;
+            if (c < getRunicEnergy(type)){
+                return false;
+            }
         }
-        return  a;
+        return true;
     }
 
     public boolean hasEnoughRunicEnergy(Map<RunicEnergy.Type,Double> costs, int multiplier){
@@ -294,15 +348,17 @@ public abstract class AbstractRunicEnergyContainer extends SolarcraftBlockEntity
 
 
 
-
+    private boolean checkRoute(List<BlockPos> route,RunicEnergy.Type type){
+        return route != null && (level.getBlockEntity(route.get(1)) instanceof RunicEnergyGiver giver ?
+                FinderfeedMathHelper.canSee(giver.getPos(),worldPosition,getMaxRange(),level) :
+                RunicEnergyPath.isRouteCorrect(PATH_TO_CONTAINERS.get(type),level));
+    }
 
     public void tryConstructWays(Set<RunicEnergy.Type> types){
         List<BlockEntity> entities = findNearestRepeatersOrPylons(worldPosition, level);
         for (RunicEnergy.Type type : types) {
             List<BlockPos> oldRoute = PATH_TO_CONTAINERS.get(type);
-            if (oldRoute != null && (level.getBlockEntity(oldRoute.get(1)) instanceof RunicEnergyGiver giver ?
-                    FinderfeedMathHelper.canSee(giver.getPos(),worldPosition,getMaxRange(),level) :
-                    RunicEnergyPath.isRouteCorrect(PATH_TO_CONTAINERS.get(type),level))) continue;
+            if (checkRoute(oldRoute,type)) continue;
 
             PATH_TO_CONTAINERS.remove(type);
             for (BlockEntity entity : entities) {
@@ -427,41 +483,44 @@ public abstract class AbstractRunicEnergyContainer extends SolarcraftBlockEntity
     }
 
 
-    public double getRunicEnergy(RunicEnergy.Type type){
-        double toReturn = 0;
-        switch (type){
-            case ZETA -> toReturn = RUNE_ENERGY_ZETA;
-            case URBA -> toReturn = RUNE_ENERGY_URBA;
-            case KELDA -> toReturn = RUNE_ENERGY_KELDA;
-            case FIRA -> toReturn = RUNE_ENERGY_FIRA;
-            case ARDO -> toReturn = RUNE_ENERGY_ARDO;
-            case TERA -> toReturn = RUNE_ENERGY_TERA;
-            case GIRO -> toReturn = RUNE_ENERGY_GIRO;
-            case ULTIMA -> toReturn = RUNE_ENERGY_ULTIMA;
+    public float getRunicEnergy(RunicEnergy.Type type){
+//        double toReturn = 0;
+//        switch (type){
+//            case ZETA -> toReturn = RUNE_ENERGY_ZETA;
+//            case URBA -> toReturn = RUNE_ENERGY_URBA;
+//            case KELDA -> toReturn = RUNE_ENERGY_KELDA;
+//            case FIRA -> toReturn = RUNE_ENERGY_FIRA;
+//            case ARDO -> toReturn = RUNE_ENERGY_ARDO;
+//            case TERA -> toReturn = RUNE_ENERGY_TERA;
+//            case GIRO -> toReturn = RUNE_ENERGY_GIRO;
+//            case ULTIMA -> toReturn = RUNE_ENERGY_ULTIMA;
+//
+//        }
 
-        }
-        return toReturn;
+        return container.get(type);
     }
 
     private void saveRunicEnergy(CompoundTag tag){
-        tag.putFloat("ardo",RUNE_ENERGY_ARDO);
-        tag.putFloat("fira",RUNE_ENERGY_FIRA);
-        tag.putFloat("kelda",RUNE_ENERGY_KELDA);
-        tag.putFloat("urba",RUNE_ENERGY_URBA);
-        tag.putFloat("tera",RUNE_ENERGY_TERA);
-        tag.putFloat("zeta",RUNE_ENERGY_ZETA);
-        tag.putFloat("giro",RUNE_ENERGY_GIRO);
-        tag.putFloat("ultima",RUNE_ENERGY_ULTIMA);
+//        tag.putFloat("ardo",RUNE_ENERGY_ARDO);
+//        tag.putFloat("fira",RUNE_ENERGY_FIRA);
+//        tag.putFloat("kelda",RUNE_ENERGY_KELDA);
+//        tag.putFloat("urba",RUNE_ENERGY_URBA);
+//        tag.putFloat("tera",RUNE_ENERGY_TERA);
+//        tag.putFloat("zeta",RUNE_ENERGY_ZETA);
+//        tag.putFloat("giro",RUNE_ENERGY_GIRO);
+//        tag.putFloat("ultima",RUNE_ENERGY_ULTIMA);
+        container.saveToTag(tag);
     }
     private void loadRunicEnergy(CompoundTag tag){
-        RUNE_ENERGY_ARDO  = tag.getFloat("ardo");
-        RUNE_ENERGY_FIRA = tag.getFloat("fira");
-        RUNE_ENERGY_KELDA = tag.getFloat("kelda");
-        RUNE_ENERGY_URBA = tag.getFloat("urba");
-        RUNE_ENERGY_TERA = tag.getFloat("tera");
-        RUNE_ENERGY_ZETA = tag.getFloat("zeta");
-        RUNE_ENERGY_GIRO = tag.getFloat("giro");
-        RUNE_ENERGY_ULTIMA = tag.getFloat("ultima");
+//        RUNE_ENERGY_ARDO  = tag.getFloat("ardo");
+//        RUNE_ENERGY_FIRA = tag.getFloat("fira");
+//        RUNE_ENERGY_KELDA = tag.getFloat("kelda");
+//        RUNE_ENERGY_URBA = tag.getFloat("urba");
+//        RUNE_ENERGY_TERA = tag.getFloat("tera");
+//        RUNE_ENERGY_ZETA = tag.getFloat("zeta");
+//        RUNE_ENERGY_GIRO = tag.getFloat("giro");
+//        RUNE_ENERGY_ULTIMA = tag.getFloat("ultima");
+        container.loadFromTag(tag);
     }
 
     public void breakWay(RunicEnergy.Type type){

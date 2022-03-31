@@ -48,6 +48,6 @@ public class DivineChestplate extends BaseDivineArmor{
 
     @Override
     public float getMaxRunicEnergyCapacity() {
-        return 500;
+        return 2000;
     }
 }

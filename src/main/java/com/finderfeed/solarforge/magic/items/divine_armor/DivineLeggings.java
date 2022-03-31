@@ -29,4 +29,8 @@ public class DivineLeggings extends BaseDivineArmor{
     }
 
 
+    @Override
+    public float getMaxRunicEnergyCapacity() {
+        return 1500;
+    }
 }

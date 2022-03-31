@@ -15,6 +15,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -38,6 +39,16 @@ public class RunicEnergyChargerContainer extends AbstractContainerMenu {
             public boolean mayPlace(@NotNull ItemStack stack) {
                 return stack.getItem() instanceof IRunicEnergyUser;
             }
+
+            @Override
+            public void onTake(Player player, ItemStack stack) {
+                if (!player.level.isClientSide){
+                    tile.resetAllRepeaters();
+                    tile.clearWays();
+                    Helpers.updateTile(tile);
+                }
+                super.onTake(player, stack);
+            }
         });
 
         for(int l = 0; l < 3; ++l) {
@@ -55,7 +66,31 @@ public class RunicEnergyChargerContainer extends AbstractContainerMenu {
         this(windowid,inv,buf.readBlockPos());
     }
 
+    @Override
+    public ItemStack quickMoveStack(Player playerIn, int index) {
+        ItemStack itemstack = ItemStack.EMPTY;
+        Slot slot = this.slots.get(index);
+        if (slot != null && slot.hasItem()) {
+            ItemStack itemstack1 = slot.getItem();
+            itemstack = itemstack1.copy();
+            IItemHandler inv = tile.getInventory();
+            if (index < inv.getSlots()) {
+                if (!this.moveItemStackTo(itemstack1, inv.getSlots(), this.slots.size(), true)) {
+                    return ItemStack.EMPTY;
+                }
+            } else if (!this.moveItemStackTo(itemstack1, 0, inv.getSlots(), false)) {
+                return ItemStack.EMPTY;
+            }
 
+            if (itemstack1.isEmpty()) {
+                slot.set(ItemStack.EMPTY);
+            } else {
+                slot.setChanged();
+            }
+        }
+
+        return itemstack;
+    }
 
     @Override
     public boolean stillValid(Player player) {

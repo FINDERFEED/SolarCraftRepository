@@ -15,17 +15,17 @@ public class RunicEnergyContainer {
         return costs[type.getIndex()];
     }
 
-    public static void saveToTag(RunicEnergyContainer c,CompoundTag tag){
+    public void saveToTag(CompoundTag tag){
         for (RunicEnergy.Type type : RunicEnergy.Type.getAll()){
-            tag.putFloat(type.id,c.costs[type.getIndex()]);
+            tag.putFloat(type.id,this.costs[type.getIndex()]);
         }
     }
 
-    public static RunicEnergyContainer loadFromTag(CompoundTag tag){
-        RunicEnergyContainer container = new RunicEnergyContainer();
+    public void loadFromTag(CompoundTag tag){
         for (RunicEnergy.Type type : RunicEnergy.Type.getAll()){
-            container.set(type,tag.getFloat(type.id));
+            this.set(type,tag.getFloat(type.id));
         }
-        return container;
     }
+
+
 }

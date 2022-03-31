@@ -26,6 +26,6 @@ public class DivineBoots extends BaseDivineArmor{
 
     @Override
     public float getMaxRunicEnergyCapacity() {
-        return 300;
+        return 1000;
     }
 }

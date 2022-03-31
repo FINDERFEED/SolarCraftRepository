@@ -37,7 +37,7 @@ public class ItemRunicEnergy {
 
     public static float removeRunicEnergy(ItemStack stack, IRunicEnergyUser runicEnergyUser, RunicEnergy.Type type, float amount){
         if (!runicEnergyUser.allowedInputs().contains(type)) throw new IllegalStateException("Item " + stack.getItem() + " doesn't allow " + type.id + " runic energy type!");
-        if (amount > 0) throw new IllegalStateException("Should not be above zero!");
+        if (amount < 0) throw new IllegalStateException("Should not be below zero!");
         float currentEnergy = getRunicEnergyFromItem(stack,type);
         float delta = currentEnergy - amount;
         setRunicEnergyOnItem(stack,type,Math.max(0,currentEnergy - amount));

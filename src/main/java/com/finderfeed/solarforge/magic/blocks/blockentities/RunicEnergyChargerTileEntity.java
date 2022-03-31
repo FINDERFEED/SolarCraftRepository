@@ -52,7 +52,7 @@ public class RunicEnergyChargerTileEntity extends REItemHandlerBlockEntity {
                     if (currentEnergy > 0){
                         float toAddToItem = (float)Math.max(0,Math.min(CHARGE_RATE_PER_TICK,currentEnergy));
                         float delta = ItemRunicEnergy.addRunicEnergy(chargeItem,user,type,toAddToItem);
-                        tile.giveEnergy(type,delta);
+                        tile.giveEnergy(type,delta-toAddToItem);
                     }
                 }else{
                     tile.breakWay(type);
@@ -77,13 +77,13 @@ public class RunicEnergyChargerTileEntity extends REItemHandlerBlockEntity {
     public ItemStack chargeSlot(){
         ItemStackHandler inv = this.getInventory();
         if (inv == null) return ItemStack.EMPTY;
-        return inv.getStackInSlot(0);
+        return inv.getStackInSlot(1);
     }
 
     public ItemStack runeSlot(){
         ItemStackHandler inv = this.getInventory();
         if (inv == null) return ItemStack.EMPTY;
-        return inv.getStackInSlot(1);
+        return inv.getStackInSlot(0);
     }
 
     @Override

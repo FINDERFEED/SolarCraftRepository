@@ -12,9 +12,12 @@ import com.finderfeed.solarforge.local_library.helpers.FinderfeedMathHelper;
 import com.finderfeed.solarforge.magic.blocks.blockentities.ExplosionBlockerBlockEntity;
 import com.finderfeed.solarforge.magic.blocks.infusing_table_things.InfuserBlock;
 import com.finderfeed.solarforge.magic.items.ExperienceCrystal;
+import com.finderfeed.solarforge.magic.items.divine_armor.BaseDivineArmor;
 import com.finderfeed.solarforge.magic.items.primitive.solacraft_item_classes.FragmentItem;
+import com.finderfeed.solarforge.magic.items.runic_energy.ItemRunicEnergy;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.achievements.Progression;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.unlockables.ProgressionHelper;
+import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import com.finderfeed.solarforge.packet_handler.packets.DisablePlayerFlightPacket;
 import com.finderfeed.solarforge.registries.SolarcraftDamageSources;
 import com.finderfeed.solarforge.registries.Tags;
@@ -55,16 +58,14 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.common.world.BiomeGenerationSettingsBuilder;
 import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.entity.living.LivingDamageEvent;
-import net.minecraftforge.event.entity.living.LivingDeathEvent;
-import net.minecraftforge.event.entity.living.LivingEquipmentChangeEvent;
-import net.minecraftforge.event.entity.living.LivingFallEvent;
+import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerXpEvent;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.event.world.ExplosionEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -423,6 +424,7 @@ public class EventHandler {
     public static void equipmentChangedEvent(LivingEquipmentChangeEvent event){
         if (event.getEntityLiving() instanceof ServerPlayer player){
 
+
             if (event.getSlot() == EquipmentSlot.CHEST){
                 if (player.getItemBySlot(EquipmentSlot.CHEST).is(ItemsRegister.DIVINE_CHESTPLATE.get())){
                     if (!player.isCreative() && !player.isSpectator()) {
@@ -440,6 +442,27 @@ public class EventHandler {
                     }
                 }
             }
+        }
+    }
+
+
+    @SubscribeEvent(priority = EventPriority.LOW)
+    public static void manageDivineArmorShields(LivingHurtEvent event){
+        LivingEntity entity = event.getEntityLiving();
+        if (entity instanceof Player player && !player.isCreative() && !player.isSpectator()){
+            float damageAmount = event.getAmount();
+            for (ItemStack stack : player.getArmorSlots()){
+                if (damageAmount <= 0) break;
+                if (stack.getItem() instanceof BaseDivineArmor armor){
+                    float maxBlockedDamage = ItemRunicEnergy.getRunicEnergyFromItem(stack, RunicEnergy.Type.ARDO)/
+                            armor.getCost().get(RunicEnergy.Type.ARDO);
+                    float m = Math.min(maxBlockedDamage,damageAmount);
+                    ItemRunicEnergy.removeRunicEnergy(stack,armor, RunicEnergy.Type.ARDO,m*armor.getCost()
+                            .get(RunicEnergy.Type.ARDO));
+                    damageAmount -= maxBlockedDamage;
+                }
+            }
+            event.setAmount(Math.max(0,damageAmount));
         }
     }
 
