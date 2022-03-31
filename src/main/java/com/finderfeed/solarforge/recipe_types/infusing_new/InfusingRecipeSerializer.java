@@ -1,5 +1,6 @@
 package com.finderfeed.solarforge.recipe_types.infusing_new;
 
+import com.finderfeed.solarforge.magic.items.runic_energy.RunicEnergyCost;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
 
 import com.google.gson.JsonArray;
@@ -57,24 +58,32 @@ public class InfusingRecipeSerializer extends ForgeRegistryEntry<RecipeSerialize
         String tag = GsonHelper.getAsString(file,"tag","");
         int count = GsonHelper.getAsInt(file, "count", 1);
 
-        double ARDO = GsonHelper.getAsDouble(file, "ardo", 0);
-        double KELDA = GsonHelper.getAsDouble(file, "kelda", 0);
-        double FIRA = GsonHelper.getAsDouble(file, "fira", 0);
-        double TERA = GsonHelper.getAsDouble(file, "tera", 0);
-        double ZETA = GsonHelper.getAsDouble(file, "zeta", 0);
-        double URBA = GsonHelper.getAsDouble(file, "urba", 0);
-        double GIRO = GsonHelper.getAsDouble(file, "giro", 0);
-        double ULTIMA = GsonHelper.getAsDouble(file, "ultima", 0);
-        Map<RunicEnergy.Type,Double> costs = Map.of(
-                RunicEnergy.Type.URBA,URBA,
-                RunicEnergy.Type.KELDA,KELDA,
-                RunicEnergy.Type.ZETA,ZETA,
-                RunicEnergy.Type.TERA,TERA,
-                RunicEnergy.Type.ARDO,ARDO,
-                RunicEnergy.Type.FIRA,FIRA,
-                RunicEnergy.Type.GIRO,GIRO,
-                RunicEnergy.Type.ULTIMA,ULTIMA
-        );
+        float ARDO = GsonHelper.getAsFloat(file, "ardo", 0);
+        float KELDA = GsonHelper.getAsFloat(file, "kelda", 0);
+        float FIRA = GsonHelper.getAsFloat(file, "fira", 0);
+        float TERA = GsonHelper.getAsFloat(file, "tera", 0);
+        float ZETA = GsonHelper.getAsFloat(file, "zeta", 0);
+        float URBA = GsonHelper.getAsFloat(file, "urba", 0);
+        float GIRO = GsonHelper.getAsFloat(file, "giro", 0);
+        float ULTIMA = GsonHelper.getAsFloat(file, "ultima", 0);
+//        Map<RunicEnergy.Type,Double> costs = Map.of(
+//                RunicEnergy.Type.URBA,URBA,
+//                RunicEnergy.Type.KELDA,KELDA,
+//                RunicEnergy.Type.ZETA,ZETA,
+//                RunicEnergy.Type.TERA,TERA,
+//                RunicEnergy.Type.ARDO,ARDO,
+//                RunicEnergy.Type.FIRA,FIRA,
+//                RunicEnergy.Type.GIRO,GIRO,
+//                RunicEnergy.Type.ULTIMA,ULTIMA
+//        );
+        RunicEnergyCost costs = new RunicEnergyCost().set(RunicEnergy.Type.URBA,URBA)
+                .set(RunicEnergy.Type.KELDA,KELDA)
+                .set(RunicEnergy.Type.TERA,TERA)
+                .set(RunicEnergy.Type.ZETA,ZETA)
+                .set(RunicEnergy.Type.FIRA,FIRA)
+                .set(RunicEnergy.Type.ULTIMA,ULTIMA)
+                .set(RunicEnergy.Type.GIRO,GIRO)
+                .set(RunicEnergy.Type.ARDO,ARDO);
         String catalysts = GsonHelper.getAsString(file,"catalysts","            ");
         if (catalysts.length() != 12){
             throw new IllegalStateException("Catalysts length cant be != 12, recipe: " + loc.toString());
@@ -113,24 +122,32 @@ public class InfusingRecipeSerializer extends ForgeRegistryEntry<RecipeSerialize
         int reqEnergy = buf.readInt();
         String tag = buf.readUtf();
         int count = buf.readInt();
-        double ARDO =buf.readDouble();
-        double KELDA = buf.readDouble();
-        double FIRA =buf.readDouble();
-        double TERA =buf.readDouble();
-        double ZETA =buf.readDouble();
-        double URBA =buf.readDouble();
-        double GIRO =buf.readDouble();
-        double ULTIMA =buf.readDouble();
-        Map<RunicEnergy.Type,Double> costs = Map.of(
-                RunicEnergy.Type.URBA,URBA,
-                RunicEnergy.Type.KELDA,KELDA,
-                RunicEnergy.Type.ZETA,ZETA,
-                RunicEnergy.Type.TERA,TERA,
-                RunicEnergy.Type.ARDO,ARDO,
-                RunicEnergy.Type.FIRA,FIRA,
-                RunicEnergy.Type.GIRO,GIRO,
-                RunicEnergy.Type.ULTIMA,ULTIMA
-        );
+        float ARDO =buf.readFloat();
+        float KELDA = buf.readFloat();
+        float FIRA =buf.readFloat();
+        float TERA =buf.readFloat();
+        float ZETA =buf.readFloat();
+        float URBA =buf.readFloat();
+        float GIRO =buf.readFloat();
+        float ULTIMA =buf.readFloat();
+//        Map<RunicEnergy.Type,Double> costs = Map.of(
+//                RunicEnergy.Type.URBA,URBA,
+//                RunicEnergy.Type.KELDA,KELDA,
+//                RunicEnergy.Type.ZETA,ZETA,
+//                RunicEnergy.Type.TERA,TERA,
+//                RunicEnergy.Type.ARDO,ARDO,
+//                RunicEnergy.Type.FIRA,FIRA,
+//                RunicEnergy.Type.GIRO,GIRO,
+//                RunicEnergy.Type.ULTIMA,ULTIMA
+//        );
+        RunicEnergyCost costs = new RunicEnergyCost().set(RunicEnergy.Type.URBA,URBA)
+                .set(RunicEnergy.Type.KELDA,KELDA)
+                .set(RunicEnergy.Type.TERA,TERA)
+                .set(RunicEnergy.Type.ZETA,ZETA)
+                .set(RunicEnergy.Type.FIRA,FIRA)
+                .set(RunicEnergy.Type.ULTIMA,ULTIMA)
+                .set(RunicEnergy.Type.GIRO,GIRO)
+                .set(RunicEnergy.Type.ARDO,ARDO);
         String cat = buf.readUtf();
         return new InfusingRecipe(loc,ingredientMap,pattern,cat,output,infusingTime,child,reqEnergy,tag,count,costs);
     }
@@ -161,14 +178,14 @@ public class InfusingRecipeSerializer extends ForgeRegistryEntry<RecipeSerialize
         buf.writeInt(recipeType.requriedEnergy);
         buf.writeUtf(recipeType.tag);
         buf.writeInt(recipeType.count);
-        buf.writeDouble(recipeType.RUNIC_ENERGY_COST.get(RunicEnergy.Type.ARDO));
-        buf.writeDouble(recipeType.RUNIC_ENERGY_COST.get(RunicEnergy.Type.KELDA));
-        buf.writeDouble(recipeType.RUNIC_ENERGY_COST.get(RunicEnergy.Type.FIRA));
-        buf.writeDouble(recipeType.RUNIC_ENERGY_COST.get(RunicEnergy.Type.TERA));
-        buf.writeDouble(recipeType.RUNIC_ENERGY_COST.get(RunicEnergy.Type.ZETA));
-        buf.writeDouble(recipeType.RUNIC_ENERGY_COST.get(RunicEnergy.Type.URBA));
-        buf.writeDouble(recipeType.RUNIC_ENERGY_COST.get(RunicEnergy.Type.GIRO));
-        buf.writeDouble(recipeType.RUNIC_ENERGY_COST.get(RunicEnergy.Type.ULTIMA));
+        buf.writeFloat(recipeType.RUNIC_ENERGY_COST.get(RunicEnergy.Type.ARDO));
+        buf.writeFloat(recipeType.RUNIC_ENERGY_COST.get(RunicEnergy.Type.KELDA));
+        buf.writeFloat(recipeType.RUNIC_ENERGY_COST.get(RunicEnergy.Type.FIRA));
+        buf.writeFloat(recipeType.RUNIC_ENERGY_COST.get(RunicEnergy.Type.TERA));
+        buf.writeFloat(recipeType.RUNIC_ENERGY_COST.get(RunicEnergy.Type.ZETA));
+        buf.writeFloat(recipeType.RUNIC_ENERGY_COST.get(RunicEnergy.Type.URBA));
+        buf.writeFloat(recipeType.RUNIC_ENERGY_COST.get(RunicEnergy.Type.GIRO));
+        buf.writeFloat(recipeType.RUNIC_ENERGY_COST.get(RunicEnergy.Type.ULTIMA));
         buf.writeUtf(recipeType.getCatalysts());
     }
 }

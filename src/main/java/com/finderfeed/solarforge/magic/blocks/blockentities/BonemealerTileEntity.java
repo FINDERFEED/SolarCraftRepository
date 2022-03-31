@@ -2,6 +2,7 @@ package com.finderfeed.solarforge.magic.blocks.blockentities;
 
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.magic.blocks.blockentities.runic_energy.AbstractRunicEnergyContainer;
+import com.finderfeed.solarforge.magic.items.runic_energy.RunicEnergyCost;
 import com.finderfeed.solarforge.misc_things.DebugTarget;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
@@ -17,12 +18,15 @@ import java.util.Map;
 
 public class BonemealerTileEntity extends AbstractRunicEnergyContainer implements DebugTarget {
 
-    private final Map<RunicEnergy.Type,Double> REQUEST =
-            new Helpers.RunicEnergyRequestConstructor().add(RunicEnergy.Type.TERA,getRunicEnergyLimit()).build();
+//    private final Map<RunicEnergy.Type,Double> REQUEST =
+//            new Helpers.RunicEnergyRequestConstructor().add(RunicEnergy.Type.TERA,getRunicEnergyLimit()).build();
 
-    private final Map<RunicEnergy.Type,Double> COST =
-            new Helpers.RunicEnergyRequestConstructor().add(RunicEnergy.Type.TERA,200).build();
+    private final RunicEnergyCost REQUEST = new RunicEnergyCost().set(RunicEnergy.Type.TERA, (float) getRunicEnergyLimit());
 
+//    private final Map<RunicEnergy.Type,Double> COST =
+//            new Helpers.RunicEnergyRequestConstructor().add(RunicEnergy.Type.TERA,200).build();
+
+    private final RunicEnergyCost COST = new RunicEnergyCost().set(RunicEnergy.Type.TERA,200);
 
     public BonemealerTileEntity( BlockPos p_155229_, BlockState p_155230_) {
         super(TileEntitiesRegistry.BONEMEALER.get(), p_155229_, p_155230_);
@@ -38,8 +42,11 @@ public class BonemealerTileEntity extends AbstractRunicEnergyContainer implement
                     List<BlockPos> positons = tile.getGrowablePositons();
                     tile.performBonemealing(positons);
                     if (!positons.isEmpty()) {
-                        tile.COST.forEach((type, cost) -> {
-                            tile.giveEnergy(type, -cost);
+//                        tile.COST.forEach((type, cost) -> {
+//                            tile.giveEnergy(type, -cost);
+//                        });
+                        tile.COST.getSetTypes().forEach((type)->{
+                            tile.giveEnergy(type,tile.COST.get(type));
                         });
                     }
                 }

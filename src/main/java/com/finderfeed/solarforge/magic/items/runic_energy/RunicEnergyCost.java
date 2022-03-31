@@ -24,4 +24,8 @@ public class RunicEnergyCost {
     public List<RunicEnergy.Type> getSetTypes() {
         return setTypes;
     }
+
+    public float[] getCosts() {
+        return costs;
+    }
 }

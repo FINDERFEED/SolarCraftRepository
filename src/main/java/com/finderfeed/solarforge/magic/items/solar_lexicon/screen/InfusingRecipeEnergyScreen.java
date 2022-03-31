@@ -117,7 +117,7 @@ public class InfusingRecipeEnergyScreen extends Screen {
         int solaren = Math.round((float)recipe.requriedEnergy / 100000 * 64);
         fill(matrices,relX+15,relY+94-solaren,relX+25,relY+94,0xddffff00);
         double totalEnergy = recipe.requriedEnergy;
-        for (double cost : recipe.RUNIC_ENERGY_COST.values()){
+        for (double cost : recipe.RUNIC_ENERGY_COST.getCosts()){
             totalEnergy+=cost;
         }
         int totaltext = Math.round((float)totalEnergy / 900000 * 175);

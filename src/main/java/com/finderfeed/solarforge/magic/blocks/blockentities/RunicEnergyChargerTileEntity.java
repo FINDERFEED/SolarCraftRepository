@@ -4,6 +4,7 @@ import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.magic.items.RuneItem;
 import com.finderfeed.solarforge.magic.items.runic_energy.IRunicEnergyUser;
 import com.finderfeed.solarforge.magic.items.runic_energy.ItemRunicEnergy;
+import com.finderfeed.solarforge.magic.items.runic_energy.RunicEnergyCost;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
 import net.minecraft.core.BlockPos;
@@ -44,10 +45,11 @@ public class RunicEnergyChargerTileEntity extends REItemHandlerBlockEntity {
     private static void manageItemCharging(RunicEnergyChargerTileEntity tile){
         ItemStack chargeItem = tile.chargeSlot();
         if (chargeItem.getItem() instanceof IRunicEnergyUser user && !ItemRunicEnergy.isFullyCharged(chargeItem,user)){
-            Map<RunicEnergy.Type,Double> request = new HashMap<>();
+//            Map<RunicEnergy.Type,Double> request = new HashMap<>();
+            RunicEnergyCost request = new RunicEnergyCost();
             for (RunicEnergy.Type type : user.allowedInputs()){
                 if (!ItemRunicEnergy.hasChargedEnergy(chargeItem,user,type)) {
-                    request.put(type, tile.getRunicEnergyLimit());
+                    request.set(type, (float) tile.getRunicEnergyLimit());
                     double currentEnergy = tile.getRunicEnergy(type);
                     if (currentEnergy > 0){
                         float toAddToItem = (float)Math.max(0,Math.min(CHARGE_RATE_PER_TICK,currentEnergy));

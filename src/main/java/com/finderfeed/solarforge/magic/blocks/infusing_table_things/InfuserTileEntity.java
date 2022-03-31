@@ -9,6 +9,7 @@ import com.finderfeed.solarforge.local_library.helpers.FinderfeedMathHelper;
 import com.finderfeed.solarforge.local_library.other.EaseIn;
 import com.finderfeed.solarforge.magic.blocks.blockentities.runic_energy.AbstractRunicEnergyContainer;
 import com.finderfeed.solarforge.magic.blocks.infusing_table_things.infusing_pool.InfusingStandTileEntity;
+import com.finderfeed.solarforge.magic.items.runic_energy.RunicEnergyCost;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.unlockables.ProgressionHelper;
 import com.finderfeed.solarforge.misc_things.*;
@@ -199,7 +200,7 @@ public class InfuserTileEntity extends AbstractRunicEnergyContainer implements  
                     InfusingRecipe recipe1 = recipe.get();
 
                     int count = tile.getMinRecipeCountOutput(recipe1);
-                    Map<RunicEnergy.Type, Double> costs = recipe1.RUNIC_ENERGY_COST;
+                    RunicEnergyCost costs = recipe1.RUNIC_ENERGY_COST;
                     tile.INFUSING_TIME = recipe1.infusingTime * count;
 
                     boolean check = tile.hasEnoughRunicEnergy(costs, count);
@@ -351,9 +352,12 @@ public class InfuserTileEntity extends AbstractRunicEnergyContainer implements  
         tile.resetCatalysts(recipe);
         ItemStack result = new ItemStack(recipe.output.getItem(),recipe.count);
         int count = tile.getMinRecipeCountOutput(recipe);
-        recipe.RUNIC_ENERGY_COST.forEach((type,cost)->{
-            tile.giveEnergy(type,-cost*count);
-        });
+//        recipe.RUNIC_ENERGY_COST.forEach((type,cost)->{
+//            tile.giveEnergy(type,-cost*count);
+//        });
+        for (RunicEnergy.Type type : recipe.RUNIC_ENERGY_COST.getSetTypes()){
+            tile.giveEnergy(type,-recipe.RUNIC_ENERGY_COST.get(type)*count);
+        }
         if (!recipe.tag.equals("")) {
             if (result.getItem() instanceof ITagUser result2){
                 result2.doThingsWithTag(tile.getItem(0),result,recipe.tag);
@@ -528,14 +532,22 @@ public class InfuserTileEntity extends AbstractRunicEnergyContainer implements  
     }
 
 
-    private double getMaxEnergyCostFromRecipe(InfusingRecipe recipe){
-        AtomicDouble integer = new AtomicDouble(0);
-        recipe.RUNIC_ENERGY_COST.forEach((type,cost)->{
-            if (cost > integer.get()){
-                integer.set(cost);
+    private float getMaxEnergyCostFromRecipe(InfusingRecipe recipe){
+//        AtomicDouble integer = new AtomicDouble(0);
+//        recipe.RUNIC_ENERGY_COST.forEach((type,cost)->{
+//            if (cost > integer.get()){
+//                integer.set(cost);
+//            }
+//        });
+        float max = 0;
+        RunicEnergyCost cost = recipe.RUNIC_ENERGY_COST;
+        for (RunicEnergy.Type type : cost.getSetTypes()){
+            float energy = cost.get(type);
+            if (energy > max){
+                max = energy;
             }
-        });
-        return integer.get();
+        }
+        return energy;
     }
 
 
@@ -675,8 +687,8 @@ public class InfuserTileEntity extends AbstractRunicEnergyContainer implements  
         return true;
     }
 
-    public static boolean doRecipeRequiresRunicEnergy(Map<RunicEnergy.Type,Double> costs){
-        for (double cost : costs.values()){
+    public static boolean doRecipeRequiresRunicEnergy(RunicEnergyCost costs){
+        for (double cost : costs.getCosts()){
             if (Math.round(cost) != 0){
                 return true;
             }

@@ -129,12 +129,11 @@ public abstract class AbstractRunicEnergyContainer extends SolarcraftBlockEntity
         }
 
 
-        for (RunicEnergy.Type type : RunicEnergy.Type.getAll()){
+        for (RunicEnergy.Type type : costs.getSetTypes()){
 
-            float cost = costs.get(type);
-            if (cost == 0) continue;
+
             if (!PATH_TO_CONTAINERS.containsKey(type)) continue;
-
+            float cost = costs.get(type);
             double multiplied = cost * multiplier;
             double runicEnergy = getRunicEnergy(type);
             if (multiplied >= runicEnergy + getMaxEnergyInput()) {
@@ -352,6 +351,28 @@ public abstract class AbstractRunicEnergyContainer extends SolarcraftBlockEntity
         return route != null && (level.getBlockEntity(route.get(1)) instanceof RunicEnergyGiver giver ?
                 FinderfeedMathHelper.canSee(giver.getPos(),worldPosition,getMaxRange(),level) :
                 RunicEnergyPath.isRouteCorrect(PATH_TO_CONTAINERS.get(type),level));
+    }
+
+    public void tryConstructWays(List<RunicEnergy.Type> types){
+        List<BlockEntity> entities = findNearestRepeatersOrPylons(worldPosition, level);
+        for (RunicEnergy.Type type : types) {
+            List<BlockPos> oldRoute = PATH_TO_CONTAINERS.get(type);
+            if (checkRoute(oldRoute,type)) continue;
+
+            PATH_TO_CONTAINERS.remove(type);
+            for (BlockEntity entity : entities) {
+                if (entity instanceof BaseRepeaterTile tile && tile.getEnergyType() == type) {
+                    List<BlockPos> route = new RunicEnergyPath(type, this.worldPosition).build(tile);
+                    if (route != null) {
+                        PATH_TO_CONTAINERS.put(type, route);
+                    }
+                } else if (entity instanceof RunicEnergyGiver container && container.getTypes().contains(type)) {
+
+                    PATH_TO_CONTAINERS.put(type, List.of(this.worldPosition, container.getPos()));
+                }
+            }
+        }
+
     }
 
     public void tryConstructWays(Set<RunicEnergy.Type> types){

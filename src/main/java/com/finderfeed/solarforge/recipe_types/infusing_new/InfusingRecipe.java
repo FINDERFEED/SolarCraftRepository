@@ -2,6 +2,7 @@ package com.finderfeed.solarforge.recipe_types.infusing_new;
 
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.magic.blocks.infusing_table_things.InfuserTileEntity;
+import com.finderfeed.solarforge.magic.items.runic_energy.RunicEnergyCost;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
 import net.minecraft.resources.ResourceLocation;
@@ -31,12 +32,12 @@ public class InfusingRecipe implements Recipe<Container> {
     public final int requriedEnergy;
     public final String tag;
     public final int count;
-    public final Map<RunicEnergy.Type,Double> RUNIC_ENERGY_COST;
+    public final RunicEnergyCost RUNIC_ENERGY_COST;
     private final String catalysts;
     private final Block[] deserializedCatalysts;
     public static final InfusingRecipeSerializer serializer = new InfusingRecipeSerializer();
     public InfusingRecipe(ResourceLocation id,Map<Character,Ingredient> ingredientMap,String[] fiveRowPattern,String catalysts, ItemStack output, int infusingTime,String fragmentID
-            ,int requriedEnergy,String tag,int count,Map<RunicEnergy.Type,Double> costs) {
+            ,int requriedEnergy,String tag,int count,RunicEnergyCost costs) {
         this.INGR_MAP = ingredientMap;
         this.fiveRowPattern = fiveRowPattern;
         this.oneRowPattern = fiveRowPattern[0] + fiveRowPattern[1] + fiveRowPattern[2] + fiveRowPattern[3] + fiveRowPattern[4];
@@ -112,8 +113,8 @@ public class InfusingRecipe implements Recipe<Container> {
         return tier;
     }
 
-    private boolean doRecipeRequiresRunicEnergy(Map<RunicEnergy.Type,Double> costs){
-        for (double cost : costs.values()){
+    private boolean doRecipeRequiresRunicEnergy(RunicEnergyCost costs){
+        for (float cost : costs.getCosts()){
             if (Math.round(cost) != 0){
                 return true;
             }
