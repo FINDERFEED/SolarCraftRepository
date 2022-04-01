@@ -34,7 +34,7 @@ public class EnchanterContainerScreen extends AbstractScrollableContainerScreen<
     public static final ResourceLocation MAIN_SCREEN = new ResourceLocation(SolarForge.MOD_ID,"textures/gui/enchanter_gui.png");
     private static final ResourceLocation ENERGY_GUI = new ResourceLocation("solarforge","textures/gui/infuser_energy_gui.png");
     public final ResourceLocation RUNIC_ENERGY_BAR = new ResourceLocation("solarforge","textures/gui/runic_energy_bar.png");
-    private Enchantment selectedEnchantment = null;
+    private EnchanterConfig.ConfigEnchantmentInstance selectedEnchantment = null;
     private int selectedLevel = 0;
     private final List<SolarForgeButton> postRender = new ArrayList<>();
     private int currentMouseScroll = 0;
@@ -58,16 +58,16 @@ public class EnchanterContainerScreen extends AbstractScrollableContainerScreen<
         for (EnchanterConfig.ConfigEnchantmentInstance e : defaultCosts.getEnchantments()){
             if (iter == 0){
                 if (!menu.tile.enchantingInProgress()) {
-                    this.selectedEnchantment = e.enchantment();
+                    this.selectedEnchantment = e;
                     this.selectedLevel = 1;
                 }else{
-                    this.selectedEnchantment = menu.tile.getProcessingEnchantment();
+                    this.selectedEnchantment = defaultCosts.getConfigEntryByEnchantment(menu.tile.getProcessingEnchantment());
                     this.selectedLevel = menu.tile.getProcesingEnchantmentLevel();
                 }
             }
             SolarForgeButton b = new SolarForgeButton(relX + 15 ,relY + 12 + iter*16,new TranslatableComponent(e.enchantment().getDescriptionId()),(button)->{
                 if (!menu.tile.enchantingInProgress()) {
-                    this.selectedEnchantment = e.enchantment();
+                    this.selectedEnchantment = e;
                     this.selectedLevel = 1;
                 }
             },(btn,matrices,mousex,mousey)->{
@@ -81,7 +81,7 @@ public class EnchanterContainerScreen extends AbstractScrollableContainerScreen<
         }
 
         Button buttonPlus = new SolarForgeButton(relX+ 87,relY + 22,15,16,new TextComponent("+"),(btn)->{
-            if (!(selectedLevel + 1 > selectedEnchantment.getMaxLevel()) && !menu.tile.enchantingInProgress()){
+            if (!(selectedLevel + 1 > selectedEnchantment.maxLevel()) && !menu.tile.enchantingInProgress()){
                 selectedLevel++;
             }
         });
@@ -94,18 +94,18 @@ public class EnchanterContainerScreen extends AbstractScrollableContainerScreen<
         Button button = new SolarForgeButton(relX+ 110,relY + 80,new TextComponent("Enchant"),(btn)->{
             ItemStack stack = menu.tile.getStackInSlot(0);
 
-            if (selectedEnchantment != null && stack.canApplyAtEnchantingTable(selectedEnchantment)
-                    && EnchantmentHelper.getItemEnchantmentLevel(selectedEnchantment,stack) < selectedLevel) {
+            if (selectedEnchantment != null && stack.canApplyAtEnchantingTable(selectedEnchantment.enchantment())
+                    && EnchantmentHelper.getItemEnchantmentLevel(selectedEnchantment.enchantment(),stack) < selectedLevel) {
                 boolean compatible = true;
                 Map<Enchantment,Integer> enchs = new HashMap<>(EnchantmentHelper.getEnchantments(stack));
                 for (Enchantment e : enchs.keySet()){
-                    if (!e.isCompatibleWith(selectedEnchantment)){
+                    if (!e.isCompatibleWith(selectedEnchantment.enchantment())){
                         compatible = false;
                     }
                 }
                 if (compatible) {
                     if (!menu.tile.enchantingInProgress()) {
-                        SolarForgePacketHandler.INSTANCE.sendToServer(new EnchanterPacket(menu.tile.getBlockPos(), selectedEnchantment, selectedLevel));
+                        SolarForgePacketHandler.INSTANCE.sendToServer(new EnchanterPacket(menu.tile.getBlockPos(), selectedEnchantment.enchantment(), selectedLevel));
                     } else {
                         Minecraft.getInstance().player.displayClientMessage(new TextComponent("Enchanting is already in progress!"), false);
                     }
@@ -152,14 +152,14 @@ public class EnchanterContainerScreen extends AbstractScrollableContainerScreen<
             ClientHelpers.bindText(RUNIC_ENERGY_BAR);
 
             RenderSystem.enableBlend();
-            renderEnergyBar(matrices, relX + a - 12 - 16 + 1, relY + 61 + y, menu.config.getConfigEntryByEnchantment(selectedEnchantment).cost().get(RunicEnergy.Type.KELDA) * selectedLevel, true,mousex,mousey);
-            renderEnergyBar(matrices, relX + a - 28 - 16 + 1, relY + 61 + y, menu.config.getConfigEntryByEnchantment(selectedEnchantment).cost().get(RunicEnergy.Type.TERA) * selectedLevel, true,mousex,mousey);
-            renderEnergyBar(matrices, relX + a - 44 - 16 + 1, relY + 61 + y, menu.config.getConfigEntryByEnchantment(selectedEnchantment).cost().get(RunicEnergy.Type.ZETA) * selectedLevel, true,mousex,mousey);
-            renderEnergyBar(matrices, relX + a - 12 - 16 + 1, relY + 145 + y, menu.config.getConfigEntryByEnchantment(selectedEnchantment).cost().get(RunicEnergy.Type.URBA) * selectedLevel, true,mousex,mousey);
-            renderEnergyBar(matrices, relX + a - 28 - 16 + 1, relY + 145 + y, menu.config.getConfigEntryByEnchantment(selectedEnchantment).cost().get(RunicEnergy.Type.FIRA) * selectedLevel, true,mousex,mousey);
-            renderEnergyBar(matrices, relX + a - 44 - 16 + 1, relY + 145 + y, menu.config.getConfigEntryByEnchantment(selectedEnchantment).cost().get(RunicEnergy.Type.ARDO) * selectedLevel, true,mousex,mousey);
-            renderEnergyBar(matrices, relX + a - 12 , relY + 61 + y, menu.config.getConfigEntryByEnchantment(selectedEnchantment).cost().get(RunicEnergy.Type.GIRO) * selectedLevel, true,mousex,mousey);
-            renderEnergyBar(matrices, relX + a - 12 , relY + 145 + y, menu.config.getConfigEntryByEnchantment(selectedEnchantment).cost().get(RunicEnergy.Type.ULTIMA) * selectedLevel, true,mousex,mousey);
+            renderEnergyBar(matrices, relX + a - 12 - 16 + 1, relY + 61 + y, selectedEnchantment.cost().get(RunicEnergy.Type.KELDA) * selectedLevel, true,mousex,mousey);
+            renderEnergyBar(matrices, relX + a - 28 - 16 + 1, relY + 61 + y, selectedEnchantment.cost().get(RunicEnergy.Type.TERA) * selectedLevel, true,mousex,mousey);
+            renderEnergyBar(matrices, relX + a - 44 - 16 + 1, relY + 61 + y, selectedEnchantment.cost().get(RunicEnergy.Type.ZETA) * selectedLevel, true,mousex,mousey);
+            renderEnergyBar(matrices, relX + a - 12 - 16 + 1, relY + 145 + y, selectedEnchantment.cost().get(RunicEnergy.Type.URBA) * selectedLevel, true,mousex,mousey);
+            renderEnergyBar(matrices, relX + a - 28 - 16 + 1, relY + 145 + y, selectedEnchantment.cost().get(RunicEnergy.Type.FIRA) * selectedLevel, true,mousex,mousey);
+            renderEnergyBar(matrices, relX + a - 44 - 16 + 1, relY + 145 + y, selectedEnchantment.cost().get(RunicEnergy.Type.ARDO) * selectedLevel, true,mousex,mousey);
+            renderEnergyBar(matrices, relX + a - 12 , relY + 61 + y, selectedEnchantment.cost().get(RunicEnergy.Type.GIRO) * selectedLevel, true,mousex,mousey);
+            renderEnergyBar(matrices, relX + a - 12 , relY + 145 + y, selectedEnchantment.cost().get(RunicEnergy.Type.ULTIMA) * selectedLevel, true,mousex,mousey);
             RenderSystem.disableBlend();
 
 
@@ -173,7 +173,7 @@ public class EnchanterContainerScreen extends AbstractScrollableContainerScreen<
             renderEnergyBar(matrices, relX + a - 12 , relY + 145 + y, menu.tile.getRunicEnergy(RunicEnergy.Type.ULTIMA), false,mousex,mousey);
 
             drawCenteredString(matrices,font,""+selectedLevel,relX + 94,relY + 45,0xffffff);
-            drawCenteredString(matrices,font,selectedEnchantment.getFullname(selectedLevel).getString(),relX + 93,relY + 184,0xff0000);
+            drawCenteredString(matrices,font,selectedEnchantment.enchantment().getFullname(selectedLevel).getString(),relX + 93,relY + 184,0xff0000);
             matrices.popPose();
 
 

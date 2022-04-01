@@ -134,7 +134,7 @@ public class EnchanterBlockEntity extends REItemHandlerBlockEntity {
 
 
     public void triggerEnchanting(Enchantment enchantment, int level){
-        if (!SERVERSIDE_CONFIG.getEnchantments().contains(enchantment)) return;
+        if (SERVERSIDE_CONFIG.getConfigEntryByEnchantment(enchantment) != null) return;
         Map<Enchantment,Integer> enchs = new HashMap<>(EnchantmentHelper.getEnchantments(getStackInSlot(0)));
         for (Enchantment e : enchs.keySet()){
             if (!e.isCompatibleWith(enchantment)){

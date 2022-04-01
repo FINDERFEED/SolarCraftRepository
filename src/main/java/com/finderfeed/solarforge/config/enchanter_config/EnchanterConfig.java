@@ -183,6 +183,7 @@ public class EnchanterConfig {
     }
 
 
+
     @FunctionalInterface
     public interface Changes{
         void applyChanges(JsonObject object);
