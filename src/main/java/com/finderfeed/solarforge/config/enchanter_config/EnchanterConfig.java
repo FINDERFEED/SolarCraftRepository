@@ -27,6 +27,7 @@ public class EnchanterConfig {
     private List<ConfigEnchantmentInstance> CONFIG_ENCHANTMENTS;
     private Map<String,ConfigEnchantmentInstance> CONFIG_ENCHANTMENTS_MAP;
     private Mode mode;
+    private float maxEnchanterRunicEnergyCapacity;
 
     /**
      * Should only be called when all registries happened!
@@ -35,6 +36,7 @@ public class EnchanterConfig {
     public EnchanterConfig(JsonObject file){
         CONFIG_ENCHANTMENTS = new ArrayList<>();
         CONFIG_ENCHANTMENTS_MAP = new HashMap<>();
+        float max = 0;
         Mode mode = Mode.byId(file.get(MODE).getAsString());
         if (mode != null){
             this.mode = mode;
@@ -56,7 +58,9 @@ public class EnchanterConfig {
                 RunicEnergyCost cost = new RunicEnergyCost();
                 for (RunicEnergy.Type type : RunicEnergy.Type.getAll()){
                     if (object.has(type.id)){
-                        cost.set(type,object.get(type.id).getAsFloat());
+                        float c = object.get(type.id).getAsFloat();
+                        if (c*maxLevel > max) max = c*maxLevel;
+                        cost.set(type,c);
                     }
                 }
                 if (cost.getSetTypes().isEmpty()){
@@ -66,6 +70,7 @@ public class EnchanterConfig {
                 CONFIG_ENCHANTMENTS.add(instance);
                 CONFIG_ENCHANTMENTS_MAP.put(enchantmentID,instance);
             }
+            this.maxEnchanterRunicEnergyCapacity = max;
         }catch (JsonParseException e){
             SolarForge.LOGGER.log(Level.ERROR,"Error reading enchantments array in enchanter config");
             e.printStackTrace();
@@ -84,6 +89,14 @@ public class EnchanterConfig {
 
     public ConfigEnchantmentInstance getEnchantmentById(String id){
         return CONFIG_ENCHANTMENTS_MAP.get(id);
+    }
+
+    public ConfigEnchantmentInstance getConfigEntryByEnchantment(Enchantment enchantment) {
+        return CONFIG_ENCHANTMENTS_MAP.get(enchantment.getRegistryName().toString());
+    }
+
+    public float getMaxEnchanterRunicEnergyCapacity() {
+        return maxEnchanterRunicEnergyCapacity;
     }
 
     public static class JsonBuilder{

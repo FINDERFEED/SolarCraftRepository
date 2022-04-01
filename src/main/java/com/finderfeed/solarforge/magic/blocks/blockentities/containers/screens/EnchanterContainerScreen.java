@@ -2,6 +2,7 @@ package com.finderfeed.solarforge.magic.blocks.blockentities.containers.screens;
 
 import com.finderfeed.solarforge.ClientHelpers;
 import com.finderfeed.solarforge.SolarForge;
+import com.finderfeed.solarforge.config.enchanter_config.EnchanterConfig;
 import com.finderfeed.solarforge.magic.blocks.blockentities.EnchanterBlockEntity;
 import com.finderfeed.solarforge.magic.blocks.blockentities.containers.EnchanterContainer;
 import com.finderfeed.solarforge.magic.blocks.infusing_table_things.InfuserScreen;
@@ -51,27 +52,27 @@ public class EnchanterContainerScreen extends AbstractScrollableContainerScreen<
         this.inventoryLabelX = 10000;
         relX+=60;
         relY+=10;
-        Map<Enchantment,Map<RunicEnergy.Type,Double>> defaultCosts = menu.costsAndAvailableEnchantments;
+        EnchanterConfig defaultCosts = menu.config;
         int iter = 0;
         postRender.clear();
-        for (Enchantment e : defaultCosts.keySet()){
+        for (EnchanterConfig.ConfigEnchantmentInstance e : defaultCosts.getEnchantments()){
             if (iter == 0){
                 if (!menu.tile.enchantingInProgress()) {
-                    this.selectedEnchantment = e;
+                    this.selectedEnchantment = e.enchantment();
                     this.selectedLevel = 1;
                 }else{
                     this.selectedEnchantment = menu.tile.getProcessingEnchantment();
                     this.selectedLevel = menu.tile.getProcesingEnchantmentLevel();
                 }
             }
-            SolarForgeButton b = new SolarForgeButton(relX + 15 ,relY + 12 + iter*16,new TranslatableComponent(e.getDescriptionId()),(button)->{
+            SolarForgeButton b = new SolarForgeButton(relX + 15 ,relY + 12 + iter*16,new TranslatableComponent(e.enchantment().getDescriptionId()),(button)->{
                 if (!menu.tile.enchantingInProgress()) {
-                    this.selectedEnchantment = e;
+                    this.selectedEnchantment = e.enchantment();
                     this.selectedLevel = 1;
                 }
             },(btn,matrices,mousex,mousey)->{
                 postRunRender.add(()->{
-                    renderTooltip(matrices,new TranslatableComponent(e.getDescriptionId()),mousex,mousey);
+                    renderTooltip(matrices,new TranslatableComponent(e.enchantment().getDescriptionId()),mousex,mousey);
                 });
             });
             postRender.add(b);
@@ -151,14 +152,14 @@ public class EnchanterContainerScreen extends AbstractScrollableContainerScreen<
             ClientHelpers.bindText(RUNIC_ENERGY_BAR);
 
             RenderSystem.enableBlend();
-            renderEnergyBar(matrices, relX + a - 12 - 16 + 1, relY + 61 + y, menu.costsAndAvailableEnchantments.get(selectedEnchantment).get(RunicEnergy.Type.KELDA) * selectedLevel, true,mousex,mousey);
-            renderEnergyBar(matrices, relX + a - 28 - 16 + 1, relY + 61 + y, menu.costsAndAvailableEnchantments.get(selectedEnchantment).get(RunicEnergy.Type.TERA) * selectedLevel, true,mousex,mousey);
-            renderEnergyBar(matrices, relX + a - 44 - 16 + 1, relY + 61 + y, menu.costsAndAvailableEnchantments.get(selectedEnchantment).get(RunicEnergy.Type.ZETA) * selectedLevel, true,mousex,mousey);
-            renderEnergyBar(matrices, relX + a - 12 - 16 + 1, relY + 145 + y, menu.costsAndAvailableEnchantments.get(selectedEnchantment).get(RunicEnergy.Type.URBA) * selectedLevel, true,mousex,mousey);
-            renderEnergyBar(matrices, relX + a - 28 - 16 + 1, relY + 145 + y, menu.costsAndAvailableEnchantments.get(selectedEnchantment).get(RunicEnergy.Type.FIRA) * selectedLevel, true,mousex,mousey);
-            renderEnergyBar(matrices, relX + a - 44 - 16 + 1, relY + 145 + y, menu.costsAndAvailableEnchantments.get(selectedEnchantment).get(RunicEnergy.Type.ARDO) * selectedLevel, true,mousex,mousey);
-            renderEnergyBar(matrices, relX + a - 12 , relY + 61 + y, menu.costsAndAvailableEnchantments.get(selectedEnchantment).get(RunicEnergy.Type.GIRO) * selectedLevel, true,mousex,mousey);
-            renderEnergyBar(matrices, relX + a - 12 , relY + 145 + y, menu.costsAndAvailableEnchantments.get(selectedEnchantment).get(RunicEnergy.Type.ULTIMA) * selectedLevel, true,mousex,mousey);
+            renderEnergyBar(matrices, relX + a - 12 - 16 + 1, relY + 61 + y, menu.config.getConfigEntryByEnchantment(selectedEnchantment).cost().get(RunicEnergy.Type.KELDA) * selectedLevel, true,mousex,mousey);
+            renderEnergyBar(matrices, relX + a - 28 - 16 + 1, relY + 61 + y, menu.config.getConfigEntryByEnchantment(selectedEnchantment).cost().get(RunicEnergy.Type.TERA) * selectedLevel, true,mousex,mousey);
+            renderEnergyBar(matrices, relX + a - 44 - 16 + 1, relY + 61 + y, menu.config.getConfigEntryByEnchantment(selectedEnchantment).cost().get(RunicEnergy.Type.ZETA) * selectedLevel, true,mousex,mousey);
+            renderEnergyBar(matrices, relX + a - 12 - 16 + 1, relY + 145 + y, menu.config.getConfigEntryByEnchantment(selectedEnchantment).cost().get(RunicEnergy.Type.URBA) * selectedLevel, true,mousex,mousey);
+            renderEnergyBar(matrices, relX + a - 28 - 16 + 1, relY + 145 + y, menu.config.getConfigEntryByEnchantment(selectedEnchantment).cost().get(RunicEnergy.Type.FIRA) * selectedLevel, true,mousex,mousey);
+            renderEnergyBar(matrices, relX + a - 44 - 16 + 1, relY + 145 + y, menu.config.getConfigEntryByEnchantment(selectedEnchantment).cost().get(RunicEnergy.Type.ARDO) * selectedLevel, true,mousex,mousey);
+            renderEnergyBar(matrices, relX + a - 12 , relY + 61 + y, menu.config.getConfigEntryByEnchantment(selectedEnchantment).cost().get(RunicEnergy.Type.GIRO) * selectedLevel, true,mousex,mousey);
+            renderEnergyBar(matrices, relX + a - 12 , relY + 145 + y, menu.config.getConfigEntryByEnchantment(selectedEnchantment).cost().get(RunicEnergy.Type.ULTIMA) * selectedLevel, true,mousex,mousey);
             RenderSystem.disableBlend();
 
 

@@ -1,9 +1,9 @@
 package com.finderfeed.solarforge.magic.blocks.blockentities.containers;
 
+import com.finderfeed.solarforge.config.enchanter_config.EnchanterConfig;
 import com.finderfeed.solarforge.magic.blocks.blockentities.EnchanterBlockEntity;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import com.finderfeed.solarforge.registries.containers.Containers;
-import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
@@ -28,15 +28,15 @@ public class EnchanterContainer extends AbstractContainerMenu {
 
     public final EnchanterBlockEntity tile;
     public final ItemStackHandler inventory;
-    public final Map<Enchantment, Map<RunicEnergy.Type,Double>> costsAndAvailableEnchantments;
+    public final EnchanterConfig config;
 
     public EnchanterContainer( int p_38852_,Inventory inv, BlockPos tilepos,String json) {
         super(Containers.ENCHANTER.get(), p_38852_);
         Level world= inv.player.level;
         if (world.isClientSide){
-            costsAndAvailableEnchantments = EnchanterBlockEntity.parseJson(JsonParser.parseString(json).getAsJsonObject());
+            config = new EnchanterConfig(JsonParser.parseString(json).getAsJsonObject());
         }else{
-            costsAndAvailableEnchantments = EnchanterBlockEntity.SERVERSIDE_CONFIG;
+            config = EnchanterBlockEntity.SERVERSIDE_CONFIG;
         }
         this.tile = (EnchanterBlockEntity) world.getBlockEntity(tilepos);
         this.inventory = tile.getInventory();

@@ -44,7 +44,7 @@ public class EnchanterBlock extends Block implements EntityBlock {
 
                     enchanter.setChanged();
                     level.sendBlockUpdated(pos,state,state,3);
-                    if (EnchanterBlockEntity.SERVERSIDE_CONFIG == null) EnchanterBlockEntity.SERVERSIDE_CONFIG = EnchanterBlockEntity.parseJson(EnchanterConfigInit.SERVERSIDE_JSON);
+                    enchanter.loadConfigIfNecessary();
                     String configString = EnchanterConfigInit.SERVERSIDE_JSON.toString();
                     NetworkHooks.openGui((ServerPlayer) player,new EnchanterContainer.Provider(pos,configString),(buf)->{
                         buf.writeBlockPos(pos);

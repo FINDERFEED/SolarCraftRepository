@@ -4,8 +4,10 @@ package com.finderfeed.solarforge.magic.blocks.blockentities;
 import com.finderfeed.solarforge.ClientHelpers;
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.client.particles.ParticleTypesRegistry;
+import com.finderfeed.solarforge.config.enchanter_config.EnchanterConfig;
 import com.finderfeed.solarforge.config.enchanter_config.EnchanterConfigInit;
 import com.finderfeed.solarforge.local_library.helpers.FinderfeedMathHelper;
+import com.finderfeed.solarforge.magic.items.runic_energy.RunicEnergyCost;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
 import com.google.gson.JsonArray;
@@ -34,7 +36,7 @@ import java.util.Map;
 
 public class EnchanterBlockEntity extends REItemHandlerBlockEntity {
 
-    public static Map<Enchantment, Map<RunicEnergy.Type,Double>> SERVERSIDE_CONFIG = null;
+    public static EnchanterConfig SERVERSIDE_CONFIG = null;
     public static int RUNIC_ENERGY_LIMIT = 300000;
     public static final int MAX_ENCHANTING_TICKS = 500;
     private int enchantingTicks = 0;
@@ -56,8 +58,9 @@ public class EnchanterBlockEntity extends REItemHandlerBlockEntity {
                         && enchLevelCurrent < enchanter.procesingEnchantmentLevel){
                     enchanter.setChanged();
                     world.sendBlockUpdated(pos,state,state,3);
-                    if (SERVERSIDE_CONFIG == null) SERVERSIDE_CONFIG = parseJson(EnchanterConfigInit.SERVERSIDE_JSON);
-                    Map<RunicEnergy.Type,Double> defaultCosts = SERVERSIDE_CONFIG.get(enchanter.processingEnchantment);
+                    enchanter.loadConfigIfNecessary();
+//                        SERVERSIDE_CONFIG = parseJson(EnchanterConfigInit.SERVERSIDE_JSON);
+                    RunicEnergyCost defaultCosts = SERVERSIDE_CONFIG.getEnchantmentById(enchanter.processingEnchantment.getRegistryName().toString()).cost();
                     if (enchanter.hasEnoughRunicEnergy(defaultCosts,enchanter.procesingEnchantmentLevel)){
                         if (enchanter.enchantingTicks++ > MAX_ENCHANTING_TICKS){
                             Map<Enchantment,Integer> enchs = new HashMap<>(EnchantmentHelper.getEnchantments(stack));
@@ -131,8 +134,7 @@ public class EnchanterBlockEntity extends REItemHandlerBlockEntity {
 
 
     public void triggerEnchanting(Enchantment enchantment, int level){
-        if (!SERVERSIDE_CONFIG.containsKey(enchantment)) return;
-
+        if (!SERVERSIDE_CONFIG.getEnchantments().contains(enchantment)) return;
         Map<Enchantment,Integer> enchs = new HashMap<>(EnchantmentHelper.getEnchantments(getStackInSlot(0)));
         for (Enchantment e : enchs.keySet()){
             if (!e.isCompatibleWith(enchantment)){
@@ -176,7 +178,8 @@ public class EnchanterBlockEntity extends REItemHandlerBlockEntity {
             processingEnchantment = null;
         }
         if (level != null && !level.isClientSide && SERVERSIDE_CONFIG == null){
-            SERVERSIDE_CONFIG = parseJson(EnchanterConfigInit.SERVERSIDE_JSON);
+//            SERVERSIDE_CONFIG = parseJson(EnchanterConfigInit.SERVERSIDE_JSON);
+            SERVERSIDE_CONFIG = new EnchanterConfig(EnchanterConfigInit.SERVERSIDE_JSON);
         }
     }
 
@@ -202,7 +205,8 @@ public class EnchanterBlockEntity extends REItemHandlerBlockEntity {
 
     @Override
     public double getRunicEnergyLimit() {
-        return RUNIC_ENERGY_LIMIT;
+        this.loadConfigIfNecessary();
+        return SERVERSIDE_CONFIG.getMaxEnchanterRunicEnergyCapacity();
     }
 
     @Override
@@ -221,34 +225,39 @@ public class EnchanterBlockEntity extends REItemHandlerBlockEntity {
     }
 
 
-    public static Map<Enchantment, Map<RunicEnergy.Type,Double>> parseJson(JsonObject object){
-        Map<Enchantment, Map<RunicEnergy.Type,Double>> costs = new HashMap<>();
-        JsonArray array = object.getAsJsonArray("enchantments");
-        for (JsonElement enchantmentElement : array){
-            JsonObject enchantmentJSON = enchantmentElement.getAsJsonObject();
-            Enchantment enchantment = ForgeRegistries.ENCHANTMENTS.getValue(new ResourceLocation(GsonHelper.getAsString(enchantmentJSON,"enchantment_id")));
-            float ardo    = GsonHelper.getAsFloat(enchantmentJSON,"ardo",0 );
-            float zeta = GsonHelper.getAsFloat(enchantmentJSON,"zeta",0 );
-            float tera = GsonHelper.getAsFloat(enchantmentJSON,"tera",0 );
-            float kelda = GsonHelper.getAsFloat(enchantmentJSON,"kelda",0);
-            float urba = GsonHelper.getAsFloat(enchantmentJSON,"urba",0);
-            float fira = GsonHelper.getAsFloat(enchantmentJSON,"fira",0);
-            float giro = GsonHelper.getAsFloat(enchantmentJSON,"giro",0);
-            float ultima = GsonHelper.getAsFloat(enchantmentJSON,"ultima",0);
+//    public static Map<Enchantment, Map<RunicEnergy.Type,Double>> parseJson(JsonObject object){
+//        Map<Enchantment, Map<RunicEnergy.Type,Double>> costs = new HashMap<>();
+//        JsonArray array = object.getAsJsonArray("enchantments");
+//        for (JsonElement enchantmentElement : array){
+//            JsonObject enchantmentJSON = enchantmentElement.getAsJsonObject();
+//            Enchantment enchantment = ForgeRegistries.ENCHANTMENTS.getValue(new ResourceLocation(GsonHelper.getAsString(enchantmentJSON,"enchantment_id")));
+//            float ardo    = GsonHelper.getAsFloat(enchantmentJSON,"ardo",0 );
+//            float zeta = GsonHelper.getAsFloat(enchantmentJSON,"zeta",0 );
+//            float tera = GsonHelper.getAsFloat(enchantmentJSON,"tera",0 );
+//            float kelda = GsonHelper.getAsFloat(enchantmentJSON,"kelda",0);
+//            float urba = GsonHelper.getAsFloat(enchantmentJSON,"urba",0);
+//            float fira = GsonHelper.getAsFloat(enchantmentJSON,"fira",0);
+//            float giro = GsonHelper.getAsFloat(enchantmentJSON,"giro",0);
+//            float ultima = GsonHelper.getAsFloat(enchantmentJSON,"ultima",0);
+//
+//            Map<RunicEnergy.Type,Double> runicCosts = new RunicEnergyCostConstructor()
+//                    .addRunicEnergy(RunicEnergy.Type.ARDO,  ardo)
+//                    .addRunicEnergy(RunicEnergy.Type.ZETA,  zeta)
+//                    .addRunicEnergy(RunicEnergy.Type.TERA,  tera)
+//                    .addRunicEnergy(RunicEnergy.Type.KELDA, kelda)
+//                    .addRunicEnergy(RunicEnergy.Type.URBA,  urba)
+//                    .addRunicEnergy(RunicEnergy.Type.FIRA,  fira)
+//                    .addRunicEnergy(RunicEnergy.Type.GIRO,  giro)
+//                    .addRunicEnergy(RunicEnergy.Type.ULTIMA,ultima)
+//                    .COSTS;
+//            costs.put(enchantment,runicCosts);
+//        }
+//        return costs;
+//    }
 
-            Map<RunicEnergy.Type,Double> runicCosts = new RunicEnergyCostConstructor()
-                    .addRunicEnergy(RunicEnergy.Type.ARDO,  ardo)
-                    .addRunicEnergy(RunicEnergy.Type.ZETA,  zeta)
-                    .addRunicEnergy(RunicEnergy.Type.TERA,  tera)
-                    .addRunicEnergy(RunicEnergy.Type.KELDA, kelda)
-                    .addRunicEnergy(RunicEnergy.Type.URBA,  urba)
-                    .addRunicEnergy(RunicEnergy.Type.FIRA,  fira)
-                    .addRunicEnergy(RunicEnergy.Type.GIRO,  giro)
-                    .addRunicEnergy(RunicEnergy.Type.ULTIMA,ultima)
-                    .COSTS;
-            costs.put(enchantment,runicCosts);
-        }
-        return costs;
+    public void loadConfigIfNecessary(){
+        if (level.isClientSide) return;
+        if (SERVERSIDE_CONFIG == null) SERVERSIDE_CONFIG = new EnchanterConfig(EnchanterConfigInit.SERVERSIDE_JSON);
     }
 
     @Override

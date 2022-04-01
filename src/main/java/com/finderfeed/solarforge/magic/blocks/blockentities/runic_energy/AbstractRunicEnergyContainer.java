@@ -262,6 +262,12 @@ public abstract class AbstractRunicEnergyContainer extends SolarcraftBlockEntity
         });
     }
 
+    public void spendEnergy(RunicEnergyCost costs,int multiplier){
+        for (RunicEnergy.Type type : costs.getSetTypes()){
+            this.giveEnergy(type,-costs.get(type)*multiplier);
+        }
+    }
+
     public abstract boolean shouldFunction();
 
     public void onRemove(){
