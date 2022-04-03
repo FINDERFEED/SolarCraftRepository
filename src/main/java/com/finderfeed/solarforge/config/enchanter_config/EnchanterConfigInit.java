@@ -62,8 +62,7 @@ public class EnchanterConfigInit {
                         .setVersion(SolarForge.ENCHANTER_CONFIG_VERSION)
                         .beginEnchantments()
                         .addEnchantment(Enchantments.SHARPNESS, Enchantments.SHARPNESS.getMaxLevel(),new RunicEnergyCost().set(RunicEnergy.Type.URBA,2000).set(RunicEnergy.Type.TERA,5000))
-                        .addEnchantment(Enchantments.ALL_DAMAGE_PROTECTION,Enchantments.ALL_DAMAGE_PROTECTION.getMaxLevel(),
-                                new RunicEnergyCost().set(RunicEnergy.Type.ARDO,10000).set(RunicEnergy.Type.KELDA,1000))
+                        .addEnchantment(Enchantments.ALL_DAMAGE_PROTECTION,Enchantments.ALL_DAMAGE_PROTECTION.getMaxLevel(), new RunicEnergyCost().set(RunicEnergy.Type.ARDO,10000).set(RunicEnergy.Type.KELDA,1000))
                         .addEnchantment(Enchantments.AQUA_AFFINITY,Enchantments.AQUA_AFFINITY.getMaxLevel(),new RunicEnergyCost().set(RunicEnergy.Type.URBA,1500).set(RunicEnergy.Type.ZETA,1000))
                         .addEnchantment(Enchantments.BANE_OF_ARTHROPODS,Enchantments.BANE_OF_ARTHROPODS.getMaxLevel(),new RunicEnergyCost().set(RunicEnergy.Type.FIRA,3500).set(RunicEnergy.Type.ULTIMA,2000))
                         .addEnchantment(Enchantments.BLAST_PROTECTION,Enchantments.BANE_OF_ARTHROPODS.getMaxLevel(),new RunicEnergyCost().set(RunicEnergy.Type.TERA,5000).set(RunicEnergy.Type.GIRO,3000))

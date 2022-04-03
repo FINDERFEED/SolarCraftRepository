@@ -156,7 +156,7 @@ public class EnchanterConfig {
         }
 
     }
-
+    //TODO:implement exponental cost increasing
     public enum Mode{
         EXPONENT("exponent"),
         STATIC("static");

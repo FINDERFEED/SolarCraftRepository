@@ -1,6 +1,7 @@
 package com.finderfeed.solarforge.registries.shader_registry;
 
 
+import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.client.rendering.CoreShaders;
 import com.finderfeed.solarforge.client.rendering.rendertypes.RadiantPortalRendertype;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
@@ -32,6 +33,10 @@ public class CoreShaderRegistry {
                 (instance)->{
                     CoreShaders.AOE_GUN_PROJECTILE_SHADER = instance;
         });
+        event.registerShader(new ShaderInstance(event.getResourceManager(),new ResourceLocation(SolarForge.MOD_ID,"runic_energy_flow"), DefaultVertexFormat.POSITION),
+                (instance)->{
+                    CoreShaders.RUNIC_ENERGY_FLOW_SHADER = instance;
+                });
     }
 
 }
