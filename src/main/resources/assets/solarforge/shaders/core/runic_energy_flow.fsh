@@ -33,6 +33,9 @@ void main(){
     col += sing(uv,0.,pi,1.);
     col += cosg(uv,pi*1.5,pi*3.,3.);
 
+    if (col < 0.0){
+        discard;
+    }
 
 
     fragColor = vec4(definedColor,col);
