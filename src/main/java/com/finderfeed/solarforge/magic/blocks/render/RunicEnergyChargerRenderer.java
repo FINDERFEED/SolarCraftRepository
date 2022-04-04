@@ -24,8 +24,8 @@ public class RunicEnergyChargerRenderer extends AbstractRunicEnergyContainerRend
         VertexConsumer vertex = buffer.getBuffer(SolarCraftRenderTypes.shaderRendertype(CoreShaders.RUNIC_ENERGY_FLOW_STATE_SHARD));
         matrices.translate(0,2,0);
 
-        CoreShaders.RUNIC_ENERGY_FLOW_SHADER.safeGetUniform("time").set((tile.getLevel().getDayTime() + pticks)/5f );
-        CoreShaders.RUNIC_ENERGY_FLOW_SHADER.safeGetUniform("definedColor").set(1f,1f,0.0f);
+        CoreShaders.RUNIC_ENERGY_FLOW_SHADER.safeGetUniform("time").set((tile.getLevel().getGameTime() + pticks)/5f );
+        CoreShaders.RUNIC_ENERGY_FLOW_SHADER.safeGetUniform("definedColor").set(1f,1f,0.3f);
 
 
         Matrix4f mat = matrices.last().pose();
