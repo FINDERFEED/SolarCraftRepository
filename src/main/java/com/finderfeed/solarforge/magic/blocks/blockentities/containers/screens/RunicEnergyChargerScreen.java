@@ -51,7 +51,7 @@ public class RunicEnergyChargerScreen extends AbstractScrollableContainerScreen<
             a = 0;
         }
         int xOffset = 63 + a;
-        int yOffset = 14 + a;
+        int yOffset = 14 ;
         blit(matrices,relX + xOffset,relY + yOffset,0,0,256,256,256,256);
         List<Component> cmps = RenderingTools.renderRunicEnergyGui(matrices,relX-72 + xOffset,relY + yOffset,
                 mousex,mousey,R_CONTAINER,null,(float)menu.tile.getRunicEnergyLimit());

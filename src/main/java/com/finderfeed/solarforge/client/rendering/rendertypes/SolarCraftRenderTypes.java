@@ -1,6 +1,7 @@
 package com.finderfeed.solarforge.client.rendering.rendertypes;
 
 import com.finderfeed.solarforge.ClientHelpers;
+import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.BufferBuilder;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
@@ -40,12 +41,29 @@ public class SolarCraftRenderTypes extends RenderType{
             new RenderStateShard.TransparencyStateShard("translucent", RenderSystem::enableBlend, RenderSystem::disableBlend);
 
 
+    protected static final RenderStateShard.TransparencyStateShard TRANSLUCENT_T = new RenderStateShard.TransparencyStateShard("translucent_transparency", () -> {
+        RenderSystem.enableBlend();
+        RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+    }, () -> {
+        RenderSystem.disableBlend();
+        RenderSystem.defaultBlendFunc();
+    });
+
     public static RenderType shaderRendertype(ShaderStateShard shaderStateShard){
         RenderType.CompositeState state = RenderType.CompositeState.builder()
                 .setShaderState(shaderStateShard)
-                .setTransparencyState(RenderType.TRANSLUCENT_TRANSPARENCY)
+                .setTransparencyState(RenderStateShard.TRANSLUCENT_TRANSPARENCY)
                 .createCompositeState(false);
         return RenderType.create("shaderRendertype", DefaultVertexFormat.POSITION_TEX, VertexFormat.Mode.QUADS, 256, false, true,state);
+    }
+
+
+    public static RenderType shaderRendertypetest(ShaderStateShard shaderStateShard){
+        RenderType.CompositeState state = RenderType.CompositeState.builder()
+                .setShaderState(shaderStateShard)
+                .setTransparencyState(RenderStateShard.TRANSLUCENT_TRANSPARENCY)
+                .createCompositeState(false);
+        return RenderType.create("shaderRendertypetest", DefaultVertexFormat.POSITION_TEX_COLOR, VertexFormat.Mode.QUADS, 256, true, true,state);
     }
 
     public static RenderType depthMaskedTextSeeThrough(ResourceLocation loc){

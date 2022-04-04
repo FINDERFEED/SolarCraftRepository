@@ -40,10 +40,11 @@ public class RunicEnergyChargerBlock extends Block implements EntityBlock {
                 NetworkHooks.openGui((ServerPlayer) player, new RunicEnergyChargerContainer.Provider(pos), (buf) -> {
                     buf.writeBlockPos(pos);
                 });
+                return InteractionResult.CONSUME;
             }
 
        }
-        return super.use(state, world, pos, player, hand, res);
+        return InteractionResult.CONSUME;
     }
 
     @Nullable

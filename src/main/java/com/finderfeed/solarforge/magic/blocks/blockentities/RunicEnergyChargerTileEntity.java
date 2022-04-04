@@ -8,10 +8,13 @@ import com.finderfeed.solarforge.magic.items.runic_energy.RunicEnergyCost;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.Connection;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.items.ItemStackHandler;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -36,9 +39,10 @@ public class RunicEnergyChargerTileEntity extends REItemHandlerBlockEntity {
 
     private static void chargeWithRunes(RunicEnergyChargerTileEntity tile){
         ItemStack rune = tile.runeSlot();
-        if (rune.getItem() instanceof RuneItem item){
+        if (rune.getItem() instanceof RuneItem item && tile.getRunicEnergy(item.type) < tile.getRunicEnergyLimit()){
             rune.shrink(1);
-            tile.giveEnergy(item.type,0.25);
+            tile.giveEnergy(item.type,Math.min(0.25,tile.getRunicEnergyLimit() - tile.getRunicEnergy(item.type)));
+            Helpers.updateTile(tile);
         }
     }
 
@@ -73,6 +77,20 @@ public class RunicEnergyChargerTileEntity extends REItemHandlerBlockEntity {
                 tile.updateTicker = 0;
             }
         }
+    }
+
+    @Nullable
+    @Override
+    public ClientboundBlockEntityDataPacket getUpdatePacket() {
+        ClientboundBlockEntityDataPacket packet = super.getUpdatePacket();
+        this.saveAdditional(packet.getTag());
+        return packet;
+    }
+
+    @Override
+    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
+        this.load(pkt.getTag());
+
     }
 
 
