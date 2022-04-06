@@ -62,8 +62,19 @@ public class SolarCraftRenderTypes extends RenderType{
         RenderType.CompositeState state = RenderType.CompositeState.builder()
                 .setShaderState(shaderStateShard)
                 .setTransparencyState(RenderStateShard.TRANSLUCENT_TRANSPARENCY)
+                .setCullState(RenderStateShard.CULL)
+                .setOutputState(RenderStateShard.ITEM_ENTITY_TARGET)
                 .createCompositeState(false);
         return RenderType.create("shaderRendertypetest", DefaultVertexFormat.POSITION_TEX_COLOR, VertexFormat.Mode.QUADS, 256, true, true,state);
+    }
+
+    public static RenderType test(ResourceLocation loc){
+        RenderType.CompositeState state = RenderType.CompositeState.builder().setShaderState(RENDERTYPE_ITEM_ENTITY_TRANSLUCENT_CULL_SHADER)
+                .setTextureState(new RenderStateShard.TextureStateShard(loc, false, false)).setTransparencyState(TRANSLUCENT_TRANSPARENCY)
+                .setOutputState(MAIN_TARGET).setLightmapState(LIGHTMAP).setOverlayState(OVERLAY).setWriteMaskState(RenderStateShard.COLOR_DEPTH_WRITE)
+                .createCompositeState(true);
+        return RenderType.create("test", DefaultVertexFormat.NEW_ENTITY, VertexFormat.Mode.QUADS, 256, true, true,state);
+
     }
 
     public static RenderType depthMaskedTextSeeThrough(ResourceLocation loc){
