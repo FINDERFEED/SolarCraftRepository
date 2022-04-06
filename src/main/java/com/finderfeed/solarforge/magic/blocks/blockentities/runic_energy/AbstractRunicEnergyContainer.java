@@ -16,7 +16,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -31,16 +30,9 @@ public abstract class AbstractRunicEnergyContainer extends SolarcraftBlockEntity
 
     private int seekingCooldown = 0;
 
-    private RunicEnergyContainer container = new RunicEnergyContainer();
+    private RunicEnergyContainer container = new RunicEnergyContainer((float) getRunicEnergyLimit());
 
-    private float RUNE_ENERGY_ARDO = 0;
-    private float RUNE_ENERGY_FIRA = 0;
-    private float RUNE_ENERGY_TERA = 0;
-    private float RUNE_ENERGY_URBA = 0;
-    private float RUNE_ENERGY_KELDA = 0;
-    private float RUNE_ENERGY_ZETA = 0;
-    private float RUNE_ENERGY_GIRO = 0;
-    private float RUNE_ENERGY_ULTIMA = 0;
+
 
     public List<BlockPos> nullOrGiverPositionForClient = new ArrayList<>();
 
@@ -330,11 +322,11 @@ public abstract class AbstractRunicEnergyContainer extends SolarcraftBlockEntity
         return  container.get(type) >= cost.get(type)*multiplier;
     }
 
-    public boolean hasEnoughRunicEnergy(RunicEnergyCost cost,int multiplier){
+    public boolean hasEnoughRunicEnergy(RunicEnergyCost cost,double multiplier){
         for (RunicEnergy.Type type : RunicEnergy.Type.getAll()){
             float c = cost.get(type);
             if (c == 0) continue;
-            if (c < getRunicEnergy(type)){
+            if (c*multiplier > getRunicEnergy(type)){
                 return false;
             }
         }
@@ -560,5 +552,8 @@ public abstract class AbstractRunicEnergyContainer extends SolarcraftBlockEntity
         return PATH_TO_CONTAINERS;
     }
 
+    public RunicEnergyContainer getRunicEnergyContainer() {
+        return container;
+    }
 }
 

@@ -1,11 +1,13 @@
 package com.finderfeed.solarforge.magic.blocks.blockentities;
 
 import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.magic.blocks.blockentities.runic_energy.IRunicEnergySaver;
 import com.finderfeed.solarforge.magic.items.RuneItem;
 import com.finderfeed.solarforge.magic.items.runic_energy.IRunicEnergyUser;
 import com.finderfeed.solarforge.magic.items.runic_energy.ItemRunicEnergy;
 import com.finderfeed.solarforge.magic.items.runic_energy.RunicEnergyCost;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
+import com.finderfeed.solarforge.registries.items.ItemsRegister;
 import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.Connection;
@@ -19,7 +21,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class RunicEnergyChargerTileEntity extends REItemHandlerBlockEntity {
+public class RunicEnergyChargerTileEntity extends REItemHandlerBlockEntity implements IRunicEnergySaver {
 
     private int updateTicker = 0;
     private static final float CHARGE_RATE_PER_TICK = 2.5f;
@@ -41,7 +43,7 @@ public class RunicEnergyChargerTileEntity extends REItemHandlerBlockEntity {
         ItemStack rune = tile.runeSlot();
         if (rune.getItem() instanceof RuneItem item && tile.getRunicEnergy(item.type) < tile.getRunicEnergyLimit()){
             rune.shrink(1);
-            tile.giveEnergy(item.type,Math.min(0.25,tile.getRunicEnergyLimit() - tile.getRunicEnergy(item.type)));
+            tile.giveEnergy(item.type,Math.min(100,tile.getRunicEnergyLimit() - tile.getRunicEnergy(item.type)));
             Helpers.updateTile(tile);
         }
     }
@@ -129,5 +131,10 @@ public class RunicEnergyChargerTileEntity extends REItemHandlerBlockEntity {
     @Override
     public boolean shouldFunction() {
         return true;
+    }
+
+    @Override
+    public ItemStack droppedStack() {
+        return IRunicEnergySaver.defaultSave(ItemsRegister.RUNIC_ENERGY_CHARGER.get().getDefaultInstance(),this);
     }
 }

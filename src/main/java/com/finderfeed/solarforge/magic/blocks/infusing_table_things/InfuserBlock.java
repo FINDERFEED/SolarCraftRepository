@@ -1,6 +1,7 @@
 package com.finderfeed.solarforge.magic.blocks.infusing_table_things;
 
 import com.finderfeed.solarforge.SolarForge;
+import com.finderfeed.solarforge.magic.blocks.primitive.RunicEnergySaverBlock;
 import com.finderfeed.solarforge.magic.items.SolarNetworkBinder;
 import com.finderfeed.solarforge.misc_things.SolarcraftDebugStick;
 import net.minecraft.ChatFormatting;
@@ -31,7 +32,7 @@ import java.util.function.Consumer;
 
 import javax.annotation.Nullable;
 
-public class InfuserBlock extends Block implements EntityBlock {
+public class InfuserBlock extends RunicEnergySaverBlock implements EntityBlock {
     public InfuserBlock(Properties prop) {
         super(prop);
     }

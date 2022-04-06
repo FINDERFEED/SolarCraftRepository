@@ -663,7 +663,8 @@
   "item.solarforge.divine_chestplate": "Divine chestplate",
   "item.solarforge.divine_leggings": "Divine leggings",
   "item.solarforge.divine_boots": "Divine boots",
-  "solarcraft.runic_shield": "Runic shield: "
+  "solarcraft.runic_shield": "Runic shield: ",
+  "block.solarforge.runic_energy_charger": "Runic energy charger"
 
 
 }
