@@ -2,10 +2,10 @@ package com.finderfeed.solarforge.magic.blocks.primitive;
 
 import com.finderfeed.solarforge.magic.blocks.blockentities.runic_energy.AbstractRunicEnergyContainer;
 import com.finderfeed.solarforge.magic.blocks.blockentities.runic_energy.IRunicEnergySaver;
+import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.BlockGetter;
@@ -19,6 +19,17 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 public abstract class RunicEnergySaverBlock extends Block {
+
+    private static final List<RunicEnergy.Type> ALL = List.of(
+            RunicEnergy.Type.ARDO,
+            RunicEnergy.Type.KELDA,
+            RunicEnergy.Type.URBA,
+            RunicEnergy.Type.ZETA,
+            RunicEnergy.Type.TERA,
+            RunicEnergy.Type.FIRA,
+            RunicEnergy.Type.ULTIMA,
+            RunicEnergy.Type.GIRO
+    );
 
     public RunicEnergySaverBlock(Properties p_49795_) {
         super(p_49795_);
@@ -56,7 +67,11 @@ public abstract class RunicEnergySaverBlock extends Block {
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable BlockGetter getter, List<Component> components, TooltipFlag p_49819_) {
-        IRunicEnergySaver.addHoverText(stack,components);
+        IRunicEnergySaver.addHoverText(stack,components,getTooltipEnergies());
         super.appendHoverText(stack, getter, components, p_49819_);
+    }
+
+    public List<RunicEnergy.Type> getTooltipEnergies(){
+        return ALL;
     }
 }

@@ -1,6 +1,7 @@
 package com.finderfeed.solarforge.client.rendering.rendertypes;
 
 import com.finderfeed.solarforge.ClientHelpers;
+import com.finderfeed.solarforge.SolarForge;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.BufferBuilder;
@@ -64,6 +65,8 @@ public class SolarCraftRenderTypes extends RenderType{
                 .setTransparencyState(RenderStateShard.TRANSLUCENT_TRANSPARENCY)
                 .setCullState(RenderStateShard.CULL)
                 .setOutputState(RenderStateShard.ITEM_ENTITY_TARGET)
+                .setLayeringState(RenderType.VIEW_OFFSET_Z_LAYERING)
+                .setWriteMaskState(RenderType.COLOR_DEPTH_WRITE)
                 .createCompositeState(false);
         return RenderType.create("shaderRendertypetest", DefaultVertexFormat.POSITION_TEX_COLOR, VertexFormat.Mode.QUADS, 256, true, true,state);
     }

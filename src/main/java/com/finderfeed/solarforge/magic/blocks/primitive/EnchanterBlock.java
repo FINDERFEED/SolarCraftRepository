@@ -26,7 +26,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.Nullable;
 
-public class EnchanterBlock extends Block implements EntityBlock {
+public class EnchanterBlock extends RunicEnergySaverBlock implements EntityBlock {
 
     private static final VoxelShape shape = Block.box(3,0,3,13,16,13);
 

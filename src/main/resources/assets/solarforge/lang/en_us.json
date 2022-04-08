@@ -664,7 +664,7 @@
   "item.solarforge.divine_leggings": "Divine leggings",
   "item.solarforge.divine_boots": "Divine boots",
   "solarcraft.runic_shield": "Runic shield: ",
-  "block.solarforge.runic_energy_charger": "Runic energy charger"
-
+  "block.solarforge.runic_energy_charger": "Runic energy charger",
+  "solarcraft.contained_energy": "Runic Energy:"
 
 }

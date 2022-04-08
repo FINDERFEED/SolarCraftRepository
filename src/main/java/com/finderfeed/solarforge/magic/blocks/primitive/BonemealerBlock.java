@@ -1,6 +1,7 @@
 package com.finderfeed.solarforge.magic.blocks.primitive;
 
 import com.finderfeed.solarforge.magic.blocks.blockentities.BonemealerTileEntity;
+import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
@@ -13,8 +14,9 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 
 import javax.annotation.Nullable;
+import java.util.List;
 
-public class BonemealerBlock extends Block implements EntityBlock {
+public class BonemealerBlock extends RunicEnergySaverBlock implements EntityBlock {
     public BonemealerBlock(Properties p_49795_) {
         super(p_49795_);
     }
@@ -45,5 +47,10 @@ public class BonemealerBlock extends Block implements EntityBlock {
         return (level,blockpos,blockstate,tile)->{
             BonemealerTileEntity.tick(level,blockpos,blockstate,(BonemealerTileEntity) tile);
         };
+    }
+
+    @Override
+    public List<RunicEnergy.Type> getTooltipEnergies() {
+        return List.of(RunicEnergy.Type.TERA);
     }
 }

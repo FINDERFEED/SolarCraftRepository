@@ -10,7 +10,7 @@ import net.minecraft.world.item.ItemStack;
 
 import java.util.List;
 import java.util.Locale;
-
+//idk why its an interface. dont even ask me, or i will grief your base.
 public interface IRunicEnergySaver {
 
     String ITEM_STACK_TAG = "solarcraft_runic_energy";
@@ -31,6 +31,16 @@ public interface IRunicEnergySaver {
         container.loadFromTag(stack.getOrCreateTagElement(ITEM_STACK_TAG));
         components.add(new TranslatableComponent("solarcraft.contained_energy"));
         for (RunicEnergy.Type type : RunicEnergy.Type.getAll()){
+            components.add(new TextComponent(type.id.toUpperCase(Locale.ROOT)).withStyle(ChatFormatting.GOLD)
+                    .append(new TextComponent(" " + container.get(type) + "/" + container.getMaxEnergy()).withStyle(ChatFormatting.WHITE)));
+        }
+    }
+
+    static void addHoverText(ItemStack stack, List<Component> components,List<RunicEnergy.Type> types){
+        RunicEnergyContainer container = new RunicEnergyContainer();
+        container.loadFromTag(stack.getOrCreateTagElement(ITEM_STACK_TAG));
+        components.add(new TranslatableComponent("solarcraft.contained_energy"));
+        for (RunicEnergy.Type type : types){
             components.add(new TextComponent(type.id.toUpperCase(Locale.ROOT)).withStyle(ChatFormatting.GOLD)
                     .append(new TextComponent(" " + container.get(type) + "/" + container.getMaxEnergy()).withStyle(ChatFormatting.WHITE)));
         }
