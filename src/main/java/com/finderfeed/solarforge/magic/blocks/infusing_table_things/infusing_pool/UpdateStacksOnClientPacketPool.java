@@ -36,7 +36,7 @@ public class UpdateStacksOnClientPacketPool {
 
                 InfusingStandTileEntity tile = (InfusingStandTileEntity) world.getBlockEntity(pos);
                 if (tile != null) {
-                    tile.setItem(0, stack);
+                    tile.setStackInSlot(0, stack);
                 }
 
             });

@@ -7,7 +7,7 @@ import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.client.particles.ParticleTypesRegistry;
 import com.finderfeed.solarforge.local_library.helpers.FinderfeedMathHelper;
 import com.finderfeed.solarforge.local_library.other.EaseIn;
-import com.finderfeed.solarforge.magic.blocks.blockentities.runic_energy.AbstractRunicEnergyContainer;
+import com.finderfeed.solarforge.magic.blocks.blockentities.REItemHandlerBlockEntity;
 import com.finderfeed.solarforge.magic.blocks.infusing_table_things.infusing_pool.InfusingStandTileEntity;
 import com.finderfeed.solarforge.magic.items.runic_energy.RunicEnergyCost;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.unlockables.AncientFragment;
@@ -18,7 +18,6 @@ import com.finderfeed.solarforge.recipe_types.infusing_new.InfusingRecipe;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.achievements.Progression;
 import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
 import com.finderfeed.solarforge.world_generation.structures.Structures;
-import com.google.common.util.concurrent.AtomicDouble;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.item.Items;
@@ -29,12 +28,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.DiggerItem;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.core.NonNullList;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.core.BlockPos;
@@ -43,7 +39,6 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
@@ -51,7 +46,7 @@ import javax.annotation.Nullable;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class InfuserTileEntity extends AbstractRunicEnergyContainer implements  IEnergyUser, IBindable, ISolarEnergyContainer, OneWay,DebugTarget {
+public class InfuserTileEntity extends REItemHandlerBlockEntity implements  IEnergyUser, IBindable, ISolarEnergyContainer, OneWay,DebugTarget {
 
 
     private EaseIn rotationValue = new EaseIn(0,1,100);
@@ -70,12 +65,6 @@ public class InfuserTileEntity extends AbstractRunicEnergyContainer implements  
         super(SolarForge.INFUSING_STAND_BLOCKENTITY.get(), p_155630_, p_155631_);
     }
 
-
-    @Nullable
-    public ItemStackHandler getInventory(){
-        IItemHandler h = this.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(null);
-        return h != null ? (ItemStackHandler) h : null;
-    }
 
     public ItemStack getItem(int slot){
         ItemStackHandler handler = getInventory();
@@ -229,13 +218,13 @@ public class InfuserTileEntity extends AbstractRunicEnergyContainer implements  
                 }
 
             }
-            if (world.getGameTime() % 40 == 0){
+            //if (world.getGameTime() % 40 == 0){
+            //    Helpers.updateTile(tile);
+            //}else{
+            if (forceUpdate) {
                 Helpers.updateTile(tile);
-            }else{
-                if (forceUpdate) {
-                    Helpers.updateTile(tile);
-                }
             }
+            //}
 
         }else{
             recipeFinalizationParticles(tile,pos,world);
@@ -485,7 +474,7 @@ public class InfuserTileEntity extends AbstractRunicEnergyContainer implements  
             }
             if (list.get(i) instanceof InfusingStandTileEntity){
                 InfusingStandTileEntity tile = (InfusingStandTileEntity) list.get(i);
-                this.setItem(iter,tile.getItem(0));
+                this.setItem(iter,tile.getStackInSlot(0));
             }else{
                 this.setItem(iter, ItemStack.EMPTY);
             }
@@ -520,8 +509,8 @@ public class InfuserTileEntity extends AbstractRunicEnergyContainer implements  
 
         Structures.checkInfusingStandStructure(worldPosition,level).forEach((tile)->{
             if (tile instanceof InfusingStandTileEntity pool){
-                if ((pool.getItem(0).getItem() != Items.AIR) && pool.getItem(0).getCount() < count.get()){
-                    count.set(pool.getItem(0).getCount());
+                if ((pool.getStackInSlot(0).getItem() != Items.AIR) && pool.getStackInSlot(0).getCount() < count.get()){
+                    count.set(pool.getStackInSlot(0).getCount());
                 }
             }
         });
@@ -556,7 +545,7 @@ public class InfuserTileEntity extends AbstractRunicEnergyContainer implements  
         for (int i = 0;i < list.size();i++){
             if (list.get(i) instanceof InfusingStandTileEntity){
                 InfusingStandTileEntity tile = (InfusingStandTileEntity) list.get(i);
-                tile.getItem(0).grow(-amount);
+                tile.getStackInSlot(0).grow(-amount);
             }
         }
     }

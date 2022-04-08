@@ -5,6 +5,8 @@ import com.finderfeed.solarforge.client.rendering.rendertypes.SolarCraftRenderTy
 import com.finderfeed.solarforge.magic.blocks.RunicEnergyChargerBlock;
 import com.finderfeed.solarforge.magic.blocks.blockentities.RunicEnergyChargerTileEntity;
 import com.finderfeed.solarforge.magic.blocks.render.abstracts.AbstractRunicEnergyContainerRenderer;
+import com.finderfeed.solarforge.magic.items.runic_energy.IRunicEnergyUser;
+import com.finderfeed.solarforge.magic.items.runic_energy.ItemRunicEnergy;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -40,8 +42,8 @@ public class RunicEnergyChargerRenderer extends AbstractRunicEnergyContainerRend
         if (tile.getInventory() == null) return;
         ItemStack stack = tile.chargeSlot();
         if (stack.isEmpty())return;
+        if (ItemRunicEnergy.isFullyCharged(stack,(IRunicEnergyUser)stack.getItem())) return;
         Direction dir = tile.getBlockState().getValue(RunicEnergyChargerBlock.FACING);
-
         matrices.pushPose();
         VertexConsumer vertex = buffer.getBuffer(SolarCraftRenderTypes.shaderRendertypetest(CoreShaders.RUNIC_ENERGY_FLOW_STATE_SHARD));
         CoreShaders.RUNIC_ENERGY_FLOW_SHADER.safeGetUniform("time").set((tile.getLevel().getGameTime() + pticks)/10f );

@@ -9,6 +9,8 @@ import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
+
+@Deprecated
 public class ResetAllAbilitiesPacket {
 
     public ResetAllAbilitiesPacket(FriendlyByteBuf buf){

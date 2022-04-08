@@ -32,6 +32,7 @@ public final class SolarcraftConfig {
     public static final ForgeConfigSpec.ConfigValue<Integer> DISARM_CHANCE_MODULE;
     public static final ForgeConfigSpec.ConfigValue<Double> RUNIC_ENERGY_PER_TICK_PYLON;
     public static final ForgeConfigSpec.ConfigValue<Double> RUNIC_ENERGY_PER_TICK_UPGRADE;
+    public static final ForgeConfigSpec.ConfigValue<Double> RUNIC_ENERGY_PER_RUNE_CHARGER;
     public static final ForgeConfigSpec.ConfigValue<List<String>> ISLAND_ORES;
     static {
         BUILDER.push("SolarCraft config");
@@ -53,6 +54,8 @@ public final class SolarcraftConfig {
         ISLAND_ORES = BUILDER.comment("Blocks that can generate in islands/crystallized ore veins in radiant land dimension")
                 .define("blocks",DEFAULT_BLOCKS);
 
+        RUNIC_ENERGY_PER_RUNE_CHARGER = BUILDER.comment("How much runic energy will be given to runic energy charger when it consumes a rune.")
+                .define("runic_energy_per_rune",7.5d);
         BUILDER.pop();
         SPEC = BUILDER.build();
     }

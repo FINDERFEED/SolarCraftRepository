@@ -1,6 +1,7 @@
 package com.finderfeed.solarforge.magic.blocks.infusing_table_things.infusing_pool;
 
 import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.local_library.tile_entities.abstracts.ItemStackHandlerTile;
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
 import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
 import net.minecraft.core.BlockPos;
@@ -27,7 +28,7 @@ import net.minecraftforge.network.PacketDistributor;
 import javax.annotation.Nullable;
 
 
-public class InfusingStandTileEntity extends BlockEntity {
+public class InfusingStandTileEntity extends ItemStackHandlerTile {
 
 
     private boolean shouldRenderItem = true;
@@ -37,44 +38,16 @@ public class InfusingStandTileEntity extends BlockEntity {
         super(TileEntitiesRegistry.INFUSING_POOL_BLOCKENTITY.get(), p_155630_, p_155631_);
     }
 
-
-
-//    @Override
-//    protected Component getDefaultName() {
-//        return new TranslatableComponent("container.solarforge.infusing_pool");
-//    }
-//
-//    @Override
-//    protected AbstractContainerMenu createMenu(int x, Inventory inv) {
-//        return new InfusingStandContainer(x,inv,this);
-//    }
-//
-//    @Override
-//    protected NonNullList<ItemStack> getItems() {
-//        return this.items;
-//    }
-//
-//    @Override
-//    protected void setItems(NonNullList<ItemStack> items) {
-//        this.items = items;
-//    }
-//
-//
-//
-//    @Override
-//    public int getContainerSize() {
-//        return this.items.size();
-//    }
     public ItemStackHandler getInventory(){
         return (ItemStackHandler) this.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(null);
     }
 
-    public ItemStack getItem(int i){
+    public ItemStack getStackInSlot(int i){
         ItemStackHandler inv = getInventory();
         if (inv == null) return ItemStack.EMPTY;
         return inv.getStackInSlot(i);
     }
-    public void setItem(int i,ItemStack stack){
+    public void setStackInSlot(int i, ItemStack stack){
         ItemStackHandler inv = getInventory();
         if (inv == null)return;
         inv.setStackInSlot(i,stack);
@@ -88,37 +61,14 @@ public class InfusingStandTileEntity extends BlockEntity {
         return shouldRenderItem;
     }
 
-    @Override
-    public void saveAdditional(CompoundTag cmp){
-        super.saveAdditional(cmp);
 
-//        if (!this.trySaveLootTable(cmp)) {
-//            ContainerHelper.saveAllItems(cmp, this.items);
+
+//    public static void tick(Level world, BlockPos pos, BlockState state, InfusingStandTileEntity tile) {
+//        if (!tile.level.isClientSide) {
+//            tile.setChanged();
+//            world.sendBlockUpdated(pos,state,state,3);
 //        }
-
-    }
-
-    @Override
-    public void load( CompoundTag cmp) {
-        super.load(cmp);
-
-//        this.items = NonNullList.withSize(getContainerSize(), ItemStack.EMPTY);
-//        if (!this.tryLoadLootTable(cmp)) {
-//            ContainerHelper.loadAllItems(cmp, this.items);
-//        }
-    }
-
-
-    public static void tick(Level world, BlockPos pos, BlockState state, InfusingStandTileEntity tile) {
-        if (!tile.level.isClientSide) {
-            tile.setChanged();
-            world.sendBlockUpdated(pos,state,state,3);
-//            SolarForgePacketHandler.INSTANCE.send(PacketDistributor.NEAR.with(PacketDistributor.TargetPoint.p(tile.worldPosition.getX(),tile.worldPosition.getY(),tile.worldPosition.getZ(),20,tile.level.dimension())),
-//                    new UpdateStacksOnClientPacketPool(tile.getItem(0),tile.worldPosition));
-
-        }
-    }
-
+//    }
 
     @Override
     public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
@@ -129,10 +79,7 @@ public class InfusingStandTileEntity extends BlockEntity {
     @Nullable
     @Override
     public ClientboundBlockEntityDataPacket getUpdatePacket() {
-
         CompoundTag tag = saveWithFullMetadata();
-
-
         return Helpers.createTilePacket(this,tag);
     }
 }

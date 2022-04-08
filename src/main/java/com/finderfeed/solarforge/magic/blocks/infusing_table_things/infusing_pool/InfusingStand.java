@@ -41,7 +41,7 @@ public class InfusingStand extends Block implements EntityBlock {
 
         if (te instanceof InfusingStandTileEntity){
             InfusingStandTileEntity ent = (InfusingStandTileEntity) te;
-            ItemStack stacks = ent.getItem(0);
+            ItemStack stacks = ent.getStackInSlot(0);
             popResource(p_196243_2_,p_196243_3_,stacks);
         }
         super.onRemove(p_196243_1_, p_196243_2_, p_196243_3_, p_196243_4_, p_196243_5_);
@@ -68,20 +68,20 @@ public class InfusingStand extends Block implements EntityBlock {
 
 
     private static void handleContainerClick(BlockState state, Level world, BlockPos pos, Player user, InteractionHand hand, InfusingStandTileEntity tile){
-        if (tile.getItem(0).isEmpty()) {
+        if (tile.getStackInSlot(0).isEmpty()) {
             ItemStack stack = user.getItemInHand(hand);
             ItemStack stacktoplace = stack.copy();
             stacktoplace.setCount(1);
-            tile.setItem(0,stacktoplace);
+            tile.setStackInSlot(0,stacktoplace);
             stack.grow(-1);
         }else{
             ItemStack stack = user.getItemInHand(hand);
-            if (tile.getItem(0).getItem() == stack.getItem()){
-                ItemStack containerStack = tile.getItem(0);
+            if (tile.getStackInSlot(0).getItem() == stack.getItem()){
+                ItemStack containerStack = tile.getStackInSlot(0);
                 if (containerStack.getMaxStackSize() != 1){
                     if (containerStack.getCount() > 1){
                         popResource(world,pos,containerStack);
-                        tile.setItem(0,ItemStack.EMPTY);
+                        tile.setStackInSlot(0,ItemStack.EMPTY);
                     }else{
                         if (containerStack.getCount() + stack.getCount() <= containerStack.getMaxStackSize()){
                             containerStack.grow(stack.getCount());
@@ -94,11 +94,11 @@ public class InfusingStand extends Block implements EntityBlock {
                     }
                 }else{
                     popResource(world,pos,containerStack);
-                    tile.setItem(0,ItemStack.EMPTY);
+                    tile.setStackInSlot(0,ItemStack.EMPTY);
                 }
             }else{
-                popResource(world,pos,tile.getItem(0));
-                tile.setItem(0,ItemStack.EMPTY);
+                popResource(world,pos,tile.getStackInSlot(0));
+                tile.setStackInSlot(0,ItemStack.EMPTY);
             }
 
         }
@@ -121,13 +121,13 @@ public class InfusingStand extends Block implements EntityBlock {
         return TileEntitiesRegistry.INFUSING_POOL_BLOCKENTITY.get().create(blockPos,blockState);
     }
 
-    @Nullable
-    @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level p_153212_, BlockState p_153213_, BlockEntityType<T> p_153214_) {
-        return (((level, blockPos, blockState, t) -> {
-            if (level.getGameTime() % 20 == 1) {
-                InfusingStandTileEntity.tick(level, blockPos, blockState, (InfusingStandTileEntity) t);
-            }
-        }));
-    }
+//    @Nullable
+//    @Override
+//    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level p_153212_, BlockState p_153213_, BlockEntityType<T> p_153214_) {
+//        return (((level, blockPos, blockState, t) -> {
+//            if (level.getGameTime() % 20 == 1) {
+//                InfusingStandTileEntity.tick(level, blockPos, blockState, (InfusingStandTileEntity) t);
+//            }
+//        }));
+//    }
 }

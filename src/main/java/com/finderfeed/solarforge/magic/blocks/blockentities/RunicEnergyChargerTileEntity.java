@@ -1,6 +1,7 @@
 package com.finderfeed.solarforge.magic.blocks.blockentities;
 
 import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.config.SolarcraftConfig;
 import com.finderfeed.solarforge.magic.blocks.blockentities.runic_energy.IRunicEnergySaver;
 import com.finderfeed.solarforge.magic.items.RuneItem;
 import com.finderfeed.solarforge.magic.items.runic_energy.IRunicEnergyUser;
@@ -10,6 +11,7 @@ import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import com.finderfeed.solarforge.registries.items.ItemsRegister;
 import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.item.ItemStack;
@@ -43,15 +45,15 @@ public class RunicEnergyChargerTileEntity extends REItemHandlerBlockEntity imple
         ItemStack rune = tile.runeSlot();
         if (rune.getItem() instanceof RuneItem item && tile.getRunicEnergy(item.type) < tile.getRunicEnergyLimit()){
             rune.shrink(1);
-            tile.giveEnergy(item.type,Math.min(100,tile.getRunicEnergyLimit() - tile.getRunicEnergy(item.type)));
+            tile.giveEnergy(item.type,Math.min(SolarcraftConfig.RUNIC_ENERGY_PER_RUNE_CHARGER.get(),tile.getRunicEnergyLimit() - tile.getRunicEnergy(item.type)));
             Helpers.updateTile(tile);
         }
     }
 
     private static void manageItemCharging(RunicEnergyChargerTileEntity tile){
         ItemStack chargeItem = tile.chargeSlot();
+        tile.setChanged();
         if (chargeItem.getItem() instanceof IRunicEnergyUser user && !ItemRunicEnergy.isFullyCharged(chargeItem,user)){
-//            Map<RunicEnergy.Type,Double> request = new HashMap<>();
             RunicEnergyCost request = new RunicEnergyCost();
             for (RunicEnergy.Type type : user.allowedInputs()){
                 if (!ItemRunicEnergy.hasChargedEnergy(chargeItem,user,type)) {
@@ -94,7 +96,6 @@ public class RunicEnergyChargerTileEntity extends REItemHandlerBlockEntity imple
         this.load(pkt.getTag());
 
     }
-
 
     public ItemStack chargeSlot(){
         ItemStackHandler inv = this.getInventory();

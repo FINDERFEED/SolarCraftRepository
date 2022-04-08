@@ -1,34 +1,36 @@
-package com.finderfeed.solarforge.magic.blocks.blockentities;
+package com.finderfeed.solarforge.local_library.tile_entities.abstracts;
 
-import com.finderfeed.solarforge.magic.blocks.blockentities.runic_energy.AbstractRunicEnergyContainer;
+import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.misc_things.PhantomInventory;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.Connection;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-/**
- * ONLY FOR ItemStackHandler!
- */
-public abstract class REItemHandlerBlockEntity extends AbstractRunicEnergyContainer {
-    public REItemHandlerBlockEntity(BlockEntityType<?> p_155228_, BlockPos p_155229_, BlockState p_155230_) {
-        super(p_155228_, p_155229_, p_155230_);
+import javax.annotation.Nullable;
+
+public class ItemStackHandlerTile extends BlockEntity {
+    public ItemStackHandlerTile(BlockEntityType<?> type, BlockPos pos, BlockState state) {
+        super(type, pos, state);
     }
-
-
 
     public ItemStackHandler getInventory(){
         return (ItemStackHandler) this.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(null);
     }
 
-
     public void setStackInSlot(int i, ItemStack stack){
         ItemStackHandler handler = getInventory();
         if (handler == null) return;
+        if (!level.isClientSide){
+            Helpers.updateTile(this);
+        }
         this.getInventory().setStackInSlot(i,stack);
     }
 
@@ -51,6 +53,19 @@ public abstract class REItemHandlerBlockEntity extends AbstractRunicEnergyContai
     }
 
     @Override
+    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
+        super.onDataPacket(net, pkt);
+        this.load(pkt.getTag());
+    }
+
+    @Nullable
+    @Override
+    public ClientboundBlockEntityDataPacket getUpdatePacket() {
+        CompoundTag tag = saveWithFullMetadata();
+        return Helpers.createTilePacket(this,tag);
+    }
+
+    @Override
     public CompoundTag getUpdateTag() {
         CompoundTag tag = super.getUpdateTag();
         ItemStackHandler g = this.getInventory();
@@ -68,4 +83,5 @@ public abstract class REItemHandlerBlockEntity extends AbstractRunicEnergyContai
             h.deserializeNBT(tag);
         }
     }
+
 }

@@ -30,8 +30,8 @@ public class RuneItem extends SolarcraftItem {
     private static final String TAG_POSITION = "progress";
     private static final String TAG = "progress";
     public final RunicEnergy.Type type;
-    public RuneItem(Properties p_41383_,RunicEnergy.Type type, Supplier<AncientFragment> fragmentSupplier) {
-        super(p_41383_,fragmentSupplier);
+    public RuneItem(Properties props,RunicEnergy.Type type, Supplier<AncientFragment> fragmentSupplier) {
+        super(props,fragmentSupplier);
         this.type = type;
     }
 
