@@ -62,11 +62,11 @@ public class RunicEnergyChargerBlock extends RunicEnergySaverBlock implements En
                 NetworkHooks.openGui((ServerPlayer) player, new RunicEnergyChargerContainer.Provider(pos), (buf) -> {
                     buf.writeBlockPos(pos);
                 });
-                return InteractionResult.CONSUME;
+                return InteractionResult.SUCCESS;
             }
 
        }
-        return InteractionResult.CONSUME;
+        return InteractionResult.SUCCESS;
     }
 
     @Nullable

@@ -68,7 +68,7 @@ public class LightningGun extends RareSolarcraftItem implements IRunicEnergyUser
 
     @Override
     public float getMaxRunicEnergyCapacity() {
-        return 100000;
+        return 5000;
     }
 
     @Override

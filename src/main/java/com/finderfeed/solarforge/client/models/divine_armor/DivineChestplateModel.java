@@ -157,7 +157,7 @@ public class DivineChestplateModel extends HumanoidModel<LivingEntity> {
             int tick = armor.getTick(stack);
             int step = stack.getOrCreateTagElement(SolarCraftTags.DIVINE_ARMOR_TAG).getBoolean("direction") ? 1 : -1;
             float pTick = Minecraft.getInstance().isPaused() || (tick == 10 || tick == 0) ? 0 : Minecraft.getInstance().getFrameTime();
-            float percent = (tick + step*pTick) / 20f;
+            float percent = (tick ) / 20f;
             for (int i = 1; i <= 8; i++) {
                 int idx = i - 1;
                 float d = 0.05f;

@@ -80,6 +80,7 @@ public class AncientFragment {
 
     public static final AncientFragment AURA_HEALER = new AncientFragment(tx("solar_fragment.aura_healer"),"aura_healer",ProgressionStage.AFTER_CATALYSTS.ALL_PROGRESSIONS,SubCategoryBase.BEGINNER_BLOCKS,CategoryBase.BEGINNER,ItemWithRecipe.of(ItemsRegister.AURA_HEALER.get().getDefaultInstance(),"infusing_new_aura_healer_block"),tx("aura_healer.lore"), SolarForge.INFUSING_RECIPE_TYPE,2);
     public static final AncientFragment DISC_LAUNCHER = new AncientFragment(tx("solar_fragment.disc_launcher"),"disc_launcher",ProgressionStage.AFTER_CATALYSTS.ALL_PROGRESSIONS,SubCategoryBase.BEGINNER_ITEMS,CategoryBase.BEGINNER,ItemWithRecipe.of(ItemsRegister.SOLAR_DISC_LAUNCHER.get().getDefaultInstance(),"infusing_new_solar_disc_launcher"),tx("disc_launcher.lore"), SolarForge.INFUSING_RECIPE_TYPE,2);
+    public static final AncientFragment RUNIC_ENERGY_CHARGER = new AncientFragment(tx("solar_fragment.re_charger"),"re_charger",ProgressionStage.AFTER_CATALYSTS.ALL_PROGRESSIONS,SubCategoryBase.BEGINNER_BLOCKS,CategoryBase.BEGINNER,ItemWithRecipe.of(ItemsRegister.RUNIC_ENERGY_CHARGER.get().getDefaultInstance(),"infusing_runic_energy_charger"),tx("re_charger.lore"), SolarForge.INFUSING_RECIPE_TYPE,1);
     public static final AncientFragment TURRET_RADAR = new AncientFragment(tx("solar_fragment.turret_radar"),"turret_radar",ProgressionStage.AFTER_CATALYSTS.ALL_PROGRESSIONS,SubCategoryBase.BEGINNER_MATERIALS,CategoryBase.BEGINNER,ItemWithRecipe.of(ItemsRegister.TURRET_RADAR.get().getDefaultInstance(),"infusing_new_turret_radar"),tx("turret_radar.lore"), SolarForge.INFUSING_RECIPE_TYPE,2);
     public static final AncientFragment SOLAR_TURRET = new AncientFragment(tx("solar_fragment.solar_turret"),"solar_turret",ProgressionStage.AFTER_CATALYSTS.ALL_PROGRESSIONS,SubCategoryBase.BEGINNER_BLOCKS,CategoryBase.BEGINNER,ItemWithRecipe.of(ItemsRegister.TURRET_BLOCK.get().getDefaultInstance(),"infusing_new_turret_block"),tx("solar_turret.lore"), SolarForge.INFUSING_RECIPE_TYPE,2);
     public static final AncientFragment GLOVES_OF_REACH = new AncientFragment(tx("solar_fragment.gloves_of_reach"),"gloves_of_reach",ProgressionStage.AFTER_CATALYSTS.ALL_PROGRESSIONS,SubCategoryBase.BEGINNER_ITEMS,CategoryBase.BEGINNER,ItemWithRecipe.of(ItemsRegister.REACH_GLOVES.get().getDefaultInstance(),"infusing_new_gloves_of_reach"),tx("gloves_of_reach.lore"), SolarForge.INFUSING_RECIPE_TYPE,2);
@@ -172,7 +173,10 @@ public class AncientFragment {
     ),SolarForge.INFUSING_RECIPE_TYPE,tx("amulets.lore"),5);
     public static final AncientFragment RADIANT_LAND_LORE = new AncientFragment(tx("solar_fragment.radiant_land"),"radiant_land",ProgressionStage.DIMENSION.ALL_PROGRESSIONS,SubCategoryBase.RADIANT_LAND,CategoryBase.MIDGAME,"radiant_land_lore",ItemsRegister.DIMENSION_CORE.get().getDefaultInstance(),9);
     public static final AncientFragment DEFENCE_CRYSTAL = new AncientFragment(tx("solar_fragment.defence_crystal"),"defence_crystal",ProgressionStage.DIMENSION.ALL_PROGRESSIONS,SubCategoryBase.RADIANT_LAND,CategoryBase.MIDGAME,"defence_crystal_lore",ItemsRegister.CRYSTALLITE_CORE.get().getDefaultInstance(),9);
-
+    public static final AncientFragment DIVINE_ARMOR = new AncientFragment(tx("solar_fragment.divine_armor"),"divine_armor",ProgressionStage.AFTER_LENS.ALL_PROGRESSIONS,SubCategoryBase.ARMOR,CategoryBase.ARMOR,List.of(
+            ItemWithRecipe.of(DIVINE_BOOTS.get().getDefaultInstance(),"infusing_divine_boots"),ItemWithRecipe.of(DIVINE_LEGGINGS.get().getDefaultInstance(),"infusing_divine_leggings"),
+            ItemWithRecipe.of(DIVINE_CHESTPLATE.get().getDefaultInstance(),"infusing_divine_chestplate"),ItemWithRecipe.of(DIVINE_HELMET.get().getDefaultInstance(),"infusing_divine_helmet")
+    ),SolarForge.INFUSING_RECIPE_TYPE,tx("divine_armor.lore"),9);
     ;
 
     public static Map<String,AncientFragment> FRAGMENTS_ID_MAP = new HashMap<>();

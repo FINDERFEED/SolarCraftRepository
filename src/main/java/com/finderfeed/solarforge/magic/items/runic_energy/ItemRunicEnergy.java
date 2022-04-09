@@ -83,7 +83,7 @@ public class ItemRunicEnergy {
 
     public static void addRunicEnergyTextComponents(ItemStack stack, IRunicEnergyUser item, List<Component> components){
         for (RunicEnergy.Type type : item.allowedInputs()){
-            components.add(new TextComponent(type.id.toUpperCase(Locale.ROOT) + ": " + getRunicEnergyFromItem(stack,type)).withStyle(ChatFormatting.GOLD));
+            components.add(new TextComponent(type.id.toUpperCase(Locale.ROOT) + ": " + getRunicEnergyFromItem(stack,type)  + "/" + item.getMaxRunicEnergyCapacity()).withStyle(ChatFormatting.GOLD));
         }
     }
 

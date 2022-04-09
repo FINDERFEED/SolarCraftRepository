@@ -103,7 +103,7 @@ public class UltraCrossbowItem extends RareSolarcraftItem implements IRunicEnerg
 
     @Override
     public float getMaxRunicEnergyCapacity() {
-        return 100000;
+        return 5000;
     }
 
     @Override

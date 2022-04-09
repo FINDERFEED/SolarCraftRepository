@@ -42,38 +42,40 @@ public class RunicEnergyChargerRenderer extends AbstractRunicEnergyContainerRend
         if (tile.getInventory() == null) return;
         ItemStack stack = tile.chargeSlot();
         if (stack.isEmpty())return;
-        if (ItemRunicEnergy.isFullyCharged(stack,(IRunicEnergyUser)stack.getItem())) return;
         Direction dir = tile.getBlockState().getValue(RunicEnergyChargerBlock.FACING);
-        matrices.pushPose();
-        VertexConsumer vertex = buffer.getBuffer(SolarCraftRenderTypes.shaderRendertypetest(CoreShaders.RUNIC_ENERGY_FLOW_STATE_SHARD));
-        CoreShaders.RUNIC_ENERGY_FLOW_SHADER.safeGetUniform("time").set((tile.getLevel().getGameTime() + pticks)/10f );
-        CoreShaders.RUNIC_ENERGY_FLOW_SHADER.safeGetUniform("definedColor").set(1f,0.65f,0.0f);
-        CoreShaders.RUNIC_ENERGY_FLOW_SHADER.safeGetUniform("innerColor").set(1f,1f,0f);
-        CoreShaders.RUNIC_ENERGY_FLOW_SHADER.safeGetUniform("modifier").set(0.5f);
-        float size = 0.14f;
-        for (int i = 0;i < 2;i++) {
+        float rot = dir.toYRot();
+        if (!ItemRunicEnergy.isFullyCharged(stack,(IRunicEnergyUser)stack.getItem())) {
+
             matrices.pushPose();
-            matrices.translate(0.5,0.555,0.5);
-            matrices.mulPose(Vector3f.YP.rotationDegrees(180*i + dir.toYRot()));
-            matrices.translate(0.2,0,0);
+            VertexConsumer vertex = buffer.getBuffer(SolarCraftRenderTypes.shaderRendertypetest(CoreShaders.RUNIC_ENERGY_FLOW_STATE_SHARD));
+            CoreShaders.RUNIC_ENERGY_FLOW_SHADER.safeGetUniform("time").set((tile.getLevel().getGameTime() + pticks) / 10f);
+            CoreShaders.RUNIC_ENERGY_FLOW_SHADER.safeGetUniform("definedColor").set(1f, 0.65f, 0.0f);
+            CoreShaders.RUNIC_ENERGY_FLOW_SHADER.safeGetUniform("innerColor").set(1f, 1f, 0f);
+            CoreShaders.RUNIC_ENERGY_FLOW_SHADER.safeGetUniform("modifier").set(0.5f);
+            float size = 0.14f;
+            for (int i = 0; i < 2; i++) {
+                matrices.pushPose();
+                matrices.translate(0.5, 0.555, 0.5);
+                matrices.mulPose(Vector3f.YP.rotationDegrees(180 * i + rot));
+                matrices.translate(0.2, 0, 0);
 
-            Matrix4f mat = matrices.last().pose();
-            vertex.vertex(mat, -size, size / 2, 0).uv(0, 1).color(1f,1,1,1).endVertex();
-            vertex.vertex(mat, size, size / 2, 0).uv(1, 1).color(1f,1,1,1).endVertex();
-            vertex.vertex(mat, size, -size / 2, 0).uv(1, 0).color(1f,1,1,1).endVertex();
-            vertex.vertex(mat, -size, -size / 2, 0).uv(0, 0).color(1f,1,1,1).endVertex();
+                Matrix4f mat = matrices.last().pose();
+                vertex.vertex(mat, -size, size / 2, 0).uv(0, 1).color(1f, 1, 1, 1).endVertex();
+                vertex.vertex(mat, size, size / 2, 0).uv(1, 1).color(1f, 1, 1, 1).endVertex();
+                vertex.vertex(mat, size, -size / 2, 0).uv(1, 0).color(1f, 1, 1, 1).endVertex();
+                vertex.vertex(mat, -size, -size / 2, 0).uv(0, 0).color(1f, 1, 1, 1).endVertex();
 
-            vertex.vertex(mat, -size, -size / 2, 0).uv(0, 0).color(1f,1,1,1).endVertex();
-            vertex.vertex(mat, size, -size / 2, 0).uv(1, 0).color(1f,1,1,1).endVertex();
-            vertex.vertex(mat, size, size / 2, 0).uv(1, 1).color(1f,1,1,1).endVertex();
-            vertex.vertex(mat, -size, size / 2, 0).uv(0, 1).color(1f,1,1,1).endVertex();
+                vertex.vertex(mat, -size, -size / 2, 0).uv(0, 0).color(1f, 1, 1, 1).endVertex();
+                vertex.vertex(mat, size, -size / 2, 0).uv(1, 0).color(1f, 1, 1, 1).endVertex();
+                vertex.vertex(mat, size, size / 2, 0).uv(1, 1).color(1f, 1, 1, 1).endVertex();
+                vertex.vertex(mat, -size, size / 2, 0).uv(0, 1).color(1f, 1, 1, 1).endVertex();
+                matrices.popPose();
+            }
             matrices.popPose();
         }
-        matrices.popPose();
-
         matrices.pushPose();
         matrices.translate(0.5,0.555 + Math.sin((tile.getLevel().getGameTime() + pticks)/10 )*0.01,0.5);
-        matrices.mulPose(Vector3f.YP.rotationDegrees(dir.toYRot()));
+        matrices.mulPose(Vector3f.YP.rotationDegrees(rot));
         matrices.scale(0.4f,0.4f,0.4f);
         ItemRenderer renderer = Minecraft.getInstance().getItemRenderer();
         renderer.render(stack, ItemTransforms.TransformType.FIXED,false,matrices,buffer,light, OverlayTexture.NO_OVERLAY,

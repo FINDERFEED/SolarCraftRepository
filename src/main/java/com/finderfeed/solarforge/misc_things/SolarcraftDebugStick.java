@@ -62,13 +62,14 @@ public class SolarcraftDebugStick extends Item {
 
         if (!ctx.getLevel().isClientSide && ctx.getPlayer() != null && ctx.getPlayer().isCrouching()){
             if (ctx.getLevel().getBlockEntity(ctx.getClickedPos()) instanceof RuneEnergyPylonTile pylon){
-                pylon.addEnergy(pylon.getEnergyType(),200);
-                ctx.getPlayer().sendMessage(new TextComponent(Float.toString(pylon.getCurrentEnergy())),ctx.getPlayer().getUUID());
+                boolean mode = ctx.getItemInHand().getOrCreateTagElement("pylon_mode").getBoolean("isCyclingPylons");
+                if (!mode) {
+                    pylon.addEnergy(pylon.getEnergyType(), 200);
+                    ctx.getPlayer().sendMessage(new TextComponent(Float.toString(pylon.getCurrentEnergy())), ctx.getPlayer().getUUID());
+                }else{
+                    pylon.setType(RunicEnergy.Type.byIndex((pylon.getEnergyType().getIndex() + 1) % 8));
+                }
             }
-        }
-
-        if (!world.isClientSide){
-            System.out.println(world.getBlockState(pos));
         }
 
 
@@ -78,15 +79,15 @@ public class SolarcraftDebugStick extends Item {
     @Override
     public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
         if (!world.isClientSide){
-            Vec3 lookVec = player.getLookAngle();
-            Vec3 pos = player.position().add(0,2,0).add(lookVec);
-            SolarFireballProjectile p = new SolarFireballProjectile(EntityTypes.SOLAR_FIREBALL.get(),world);
-            p.setPos(pos);
-            p.setDeltaMovement(lookVec);
-            world.addFreshEntity(p);
+            ItemStack stack = player.getItemInHand(hand);
+            boolean mode = stack.getOrCreateTagElement("pylon_mode").getBoolean("isCyclingPylons");
+            if (mode){
+                stack.getOrCreateTagElement("pylon_mode").putBoolean("isCyclingPylons",false);
+            }else{
+                stack.getOrCreateTagElement("pylon_mode").putBoolean("isCyclingPylons",true);
+            }
+
         }
-
-
         return super.use(world, player, hand);
     }
 }

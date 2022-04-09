@@ -68,10 +68,10 @@ public class ItemsRegister {
     public static final RegistryObject<ArmorItem> SOLAR_LEGGINS = ITEMS.register("solar_leggins",()-> new SolarcraftArmorItem(SolarArmorMaterial.SOLAR_ARMOR, EquipmentSlot.LEGS,new Item.Properties().rarity(Rarity.EPIC).tab(SolarForge.SOLAR_GROUP),()->AncientFragment.SOLAR_LEGGINS));
     public static final RegistryObject<ArmorItem> SOLAR_BOOTS = ITEMS.register("solar_boots",()-> new SolarcraftArmorItem(SolarArmorMaterial.SOLAR_ARMOR, EquipmentSlot.FEET,new Item.Properties().rarity(Rarity.EPIC).tab(SolarForge.SOLAR_GROUP),()->AncientFragment.SOLAR_BOOTS));
 
-    public static final RegistryObject<ArmorItem> DIVINE_HELMET = ITEMS.register("divine_helmet",()-> new DivineHelmet(SolarArmorMaterial.DIVINE_ARMOR, EquipmentSlot.HEAD,new Item.Properties().rarity(Rarity.EPIC).tab(SolarForge.SOLAR_GROUP),()->AncientFragment.SOLAR_BOOTS));
-    public static final RegistryObject<ArmorItem> DIVINE_CHESTPLATE = ITEMS.register("divine_chestplate",()-> new DivineChestplate(SolarArmorMaterial.DIVINE_ARMOR, EquipmentSlot.CHEST,new Item.Properties().rarity(Rarity.EPIC).tab(SolarForge.SOLAR_GROUP),()->AncientFragment.SOLAR_BOOTS));
-    public static final RegistryObject<ArmorItem> DIVINE_LEGGINGS = ITEMS.register("divine_leggings",()-> new DivineLeggings(SolarArmorMaterial.DIVINE_ARMOR, EquipmentSlot.LEGS,new Item.Properties().rarity(Rarity.EPIC).tab(SolarForge.SOLAR_GROUP),()->AncientFragment.SOLAR_BOOTS));
-    public static final RegistryObject<ArmorItem> DIVINE_BOOTS = ITEMS.register("divine_boots",()-> new DivineBoots(SolarArmorMaterial.DIVINE_ARMOR, EquipmentSlot.FEET,new Item.Properties().rarity(Rarity.EPIC).tab(SolarForge.SOLAR_GROUP),()->AncientFragment.SOLAR_BOOTS));
+    public static final RegistryObject<ArmorItem> DIVINE_HELMET = ITEMS.register("divine_helmet",()-> new DivineHelmet(SolarArmorMaterial.DIVINE_ARMOR, EquipmentSlot.HEAD,new Item.Properties().rarity(Rarity.EPIC).tab(SolarForge.SOLAR_GROUP),()->AncientFragment.DIVINE_ARMOR));
+    public static final RegistryObject<ArmorItem> DIVINE_CHESTPLATE = ITEMS.register("divine_chestplate",()-> new DivineChestplate(SolarArmorMaterial.DIVINE_ARMOR, EquipmentSlot.CHEST,new Item.Properties().rarity(Rarity.EPIC).tab(SolarForge.SOLAR_GROUP),()->AncientFragment.DIVINE_ARMOR));
+    public static final RegistryObject<ArmorItem> DIVINE_LEGGINGS = ITEMS.register("divine_leggings",()-> new DivineLeggings(SolarArmorMaterial.DIVINE_ARMOR, EquipmentSlot.LEGS,new Item.Properties().rarity(Rarity.EPIC).tab(SolarForge.SOLAR_GROUP),()->AncientFragment.DIVINE_ARMOR));
+    public static final RegistryObject<ArmorItem> DIVINE_BOOTS = ITEMS.register("divine_boots",()-> new DivineBoots(SolarArmorMaterial.DIVINE_ARMOR, EquipmentSlot.FEET,new Item.Properties().rarity(Rarity.EPIC).tab(SolarForge.SOLAR_GROUP),()->AncientFragment.DIVINE_ARMOR));
 
     //radiant armor
     public static final RegistryObject<RadiantChestplate> RADIANT_CHESTPLATE = ITEMS.register("radiant_chestplate",()-> new RadiantChestplate(SolarArmorMaterial.RADIANT_ARMOR, EquipmentSlot.CHEST,new Item.Properties().rarity(Rarity.EPIC).tab(SolarForge.SOLAR_GROUP),()->AncientFragment.RADIANT_CHESTPLATE));
@@ -140,7 +140,7 @@ public class ItemsRegister {
     public static final RegistryObject<Item> ENCHANTER = ITEMS.register("elemental_enchanter",()->new SolarcraftBlockItem(BlocksRegistry.ENCHANTER.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS),()->AncientFragment.ENCHANTER){
         @Override
         public void appendHoverText(ItemStack stack, @org.jetbrains.annotations.Nullable Level world, List<Component> cmps, TooltipFlag flag) {
-            cmps.add(new TranslatableComponent("solarcraft.cant_save_energy").withStyle(ChatFormatting.RED));
+
             super.appendHoverText(stack, world, cmps, flag);
         }
     });
@@ -148,7 +148,7 @@ public class ItemsRegister {
     public static final RegistryObject<Item> RUNIC_ENERGY_CHARGER = ITEMS.register("runic_energy_charger",()->new SolarcraftBlockItem(BlocksRegistry.RUNIC_ENERGY_CHARGER.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS),()->null){
         @Override
         public void appendHoverText(ItemStack stack, @org.jetbrains.annotations.Nullable Level world, List<Component> cmps, TooltipFlag flag) {
-            cmps.add(new TranslatableComponent("solarcraft.cant_save_energy").withStyle(ChatFormatting.RED));
+            
             super.appendHoverText(stack, world, cmps, flag);
         }
     });
@@ -298,7 +298,8 @@ public class ItemsRegister {
 
     public static final RegistryObject<Item> CORRUPTED_STONE = ITEMS.register("corrupted_stone",()->new BlockItem(BlocksRegistry.CORRUPTED_STONE.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
     public static final RegistryObject<Item> ULDERA_RUNE_BLOCK = ITEMS.register("uldera_rune_block",()->new BlockItem(BlocksRegistry.ULDERA_RUNE_BLOCK.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
-    public static final RegistryObject<Item> CRYSTAL_HEART = ITEMS.register("crystal_heart",()->new Item(new Item.Properties().tab(SolarForge.SOLAR_GROUP_MATERIALS).rarity(Rarity.EPIC)));
+    public static final RegistryObject<Item> CRYSTAL_HEART = ITEMS.register("crystal_heart",()->new RareSolarcraftItem(new Item.Properties().tab(SolarForge.SOLAR_GROUP_MATERIALS).rarity(Rarity.EPIC),()->null));
+    public static final RegistryObject<Item> CRYSTAL_HEART_PIECE = ITEMS.register("crystal_heart_piece",()->new RareSolarcraftItem(new Item.Properties().tab(SolarForge.SOLAR_GROUP_MATERIALS).rarity(Rarity.EPIC),()->null));
 
 
 

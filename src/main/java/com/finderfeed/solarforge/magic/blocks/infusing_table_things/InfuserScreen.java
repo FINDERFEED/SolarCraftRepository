@@ -214,7 +214,7 @@ public class InfuserScreen extends AbstractContainerScreen<InfuserContainer> {
         matrices.mulPose(Vector3f.ZN.rotationDegrees(90));
         if (!simulate) {
             blit(matrices, 0, 0, 0, 0, texturex, 6);
-            if (mousex > offsetx && mousex < offsetx + 6 && mousey > offsety-60 && mousey < offsety){
+            if (mousex+2 > offsetx && mousex+2 < offsetx + 7 && mousey > offsety-60 && mousey < offsety){
                 postRender.add(()->{
                     renderTooltip(matrices,new TextComponent((float) energyAmount + "/" + menu.te.getRunicEnergyLimit()),mousex-3,mousey+3);
                 });

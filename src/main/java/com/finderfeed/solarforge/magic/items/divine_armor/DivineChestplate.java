@@ -39,7 +39,6 @@ public class DivineChestplate extends BaseDivineArmor{
     public void onArmorTick(ItemStack stack, Level level, Player player) {
         super.onArmorTick(stack, level, player);
         if (level.isClientSide) return;
-        player.getAbilities().mayfly = true;
         if (level.getGameTime() % 20 != 0) return;
         player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 40, 1, false, false));
         player.addEffect(new MobEffectInstance(MobEffects.DIG_SPEED, 40, 1, false, false));

@@ -80,7 +80,7 @@ public class RenderingTools {
     public static void drawBoundedText(PoseStack matrices,int posx,int posy,int bound,String s,int color){
         int iter = 0;
         for (String str : RenderingTools.splitString(s,bound)){
-            Gui.drawString(matrices,Minecraft.getInstance().font,str,posx,posy + iter * 8,color);
+            Gui.drawString(matrices,Minecraft.getInstance().font,str,posx,posy + iter * 9,color);
             iter++;
         }
     }

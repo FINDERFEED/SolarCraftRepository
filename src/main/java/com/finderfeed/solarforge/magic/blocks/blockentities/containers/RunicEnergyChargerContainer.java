@@ -20,6 +20,8 @@ import net.minecraftforge.items.SlotItemHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import javax.annotation.Nonnull;
+
 public class RunicEnergyChargerContainer extends AbstractContainerMenu {
 
     public RunicEnergyChargerTileEntity tile;
@@ -41,13 +43,13 @@ public class RunicEnergyChargerContainer extends AbstractContainerMenu {
             }
 
             @Override
-            public void onTake(Player player, ItemStack stack) {
-                if (!player.level.isClientSide){
+            public void set(@Nonnull ItemStack stack) {
+                super.set(stack);
+                if (!inv.player.level.isClientSide){
                     tile.resetAllRepeaters();
                     tile.clearWays();
                     Helpers.updateTile(tile);
                 }
-                super.onTake(player, stack);
             }
         });
 
@@ -91,6 +93,8 @@ public class RunicEnergyChargerContainer extends AbstractContainerMenu {
 
         return itemstack;
     }
+
+
 
     @Override
     public boolean stillValid(Player player) {
