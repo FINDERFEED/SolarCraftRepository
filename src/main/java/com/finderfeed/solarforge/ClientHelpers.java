@@ -126,11 +126,22 @@ public class ClientHelpers {
     public static void handleShadowBoltExplosion(Vec3 pos){
         Level world = Minecraft.getInstance().level;
         if (world == null) return;
-        for (int i = 0; i < 20;i++){
-            double r = world.random.nextDouble() * 0.08 + 0.04;
-            Vec3 rndVec = Helpers.randomVector().multiply(r,r,r);
-            ParticleAnimationHelper.createParticle(ParticleTypesRegistry.SMALL_SOLAR_STRIKE_PARTICLE.get(),
-                    pos.x,pos.y,pos.z,rndVec.x,rndVec.y,rndVec.z,()->70 + (int)(world.random.nextFloat()*30f),()->0,()->255,0.5f );
+        int intensity = 1;
+        for (int x = -intensity; x <= intensity;x++){
+            for (int y = -intensity; y <= intensity;y++){
+                for (int z = -intensity; z <= intensity;z++){
+                    Vec3 offset = new Vec3(x,y,z).normalize().multiply(2,2,2);
+                    Vec3 finalpos = pos.add(offset);
+                    LightningBoltPath path = LightningBoltPath.create(pos,finalpos,4);
+                    path.setMaxOffset(0.5f);
+                    for (int g = 0; g < 3;g++){
+                        Vec3 posS = path.getPos(g);
+                        Vec3 posE = path.getPos(g+1);
+                        ParticleAnimationHelper.line(ParticleTypesRegistry.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+                                posS,posE,0.25f,()->70 + (int)(world.random.nextFloat()*60f),()->0,()->255,(5f-g)/3*0.3f );
+                    }
+                }
+            }
         }
     }
 

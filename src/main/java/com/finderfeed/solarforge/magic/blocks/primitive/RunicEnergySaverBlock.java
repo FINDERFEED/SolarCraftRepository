@@ -35,18 +35,6 @@ public abstract class RunicEnergySaverBlock extends Block {
         super(p_49795_);
     }
 
-
-//    @Override
-//    public void onRemove(BlockState state, Level level, BlockPos pos, BlockState idk, boolean idkToo) {
-//        super.onRemove(state, level, pos, idk, idkToo);
-//        if (!level.isClientSide && level.getBlockEntity(pos) instanceof AbstractRunicEnergyContainer container){
-//            ItemStack stack = new ItemStack(this.asItem());
-//            IRunicEnergySaver.defaultSave(stack,container);
-//            ItemEntity entity = new ItemEntity(level,pos.getX() + 0.5,pos.getY() + 0.5,pos.getZ() + 0.5,stack);
-//            level.addFreshEntity(entity);
-//        }
-//    }
-
     @Override
     public List<ItemStack> getDrops(BlockState state, LootContext.Builder context) {
         ItemStack stack = new ItemStack(this.asItem());
@@ -66,9 +54,9 @@ public abstract class RunicEnergySaverBlock extends Block {
 
 
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable BlockGetter getter, List<Component> components, TooltipFlag p_49819_) {
+    public void appendHoverText(ItemStack stack, @Nullable BlockGetter getter, List<Component> components, TooltipFlag flag) {
         IRunicEnergySaver.addHoverText(stack,components,getTooltipEnergies());
-        super.appendHoverText(stack, getter, components, p_49819_);
+        super.appendHoverText(stack, getter, components, flag);
     }
 
     public List<RunicEnergy.Type> getTooltipEnergies(){

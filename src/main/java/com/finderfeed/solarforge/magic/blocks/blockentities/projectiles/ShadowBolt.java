@@ -69,7 +69,7 @@ public class ShadowBolt extends AbstractHurtingProjectile {
     private void explode(){
         ShadowBoltExplosionPacket.send(level,this.position());
         for (LivingEntity e : level.getEntitiesOfClass(LivingEntity.class,new AABB(-4,-4,-4,4,4,4).move(position()),(en)->{
-            return en.distanceToSqr(this.position()) <= 3*3;
+            return en.distanceToSqr(this.position()) <= 3.5*3.5;
         })){
             e.hurt(SolarcraftDamageSources.SHADOW.setMagic().bypassArmor().setProjectile(),5);
         }
