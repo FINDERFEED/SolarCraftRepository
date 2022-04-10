@@ -319,6 +319,10 @@ public abstract class AbstractRunicEnergyContainer extends SolarcraftBlockEntity
         return container;
     }
 
+    public void setContainer(RunicEnergyContainer container) {
+        this.container = container;
+    }
+
     @Override
     public CompoundTag getUpdateTag() {
         CompoundTag tag = super.getUpdateTag();

@@ -28,6 +28,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.fml.util.thread.EffectiveSide;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.Nullable;
 
@@ -134,7 +135,7 @@ public class EnchanterBlockEntity extends REItemHandlerBlockEntity {
 
 
     public void triggerEnchanting(Enchantment enchantment, int level){
-        if (SERVERSIDE_CONFIG.getConfigEntryByEnchantment(enchantment) != null) return;
+        if (SERVERSIDE_CONFIG.getConfigEntryByEnchantment(enchantment) == null) return;
         Map<Enchantment,Integer> enchs = new HashMap<>(EnchantmentHelper.getEnchantments(getStackInSlot(0)));
         for (Enchantment e : enchs.keySet()){
             if (!e.isCompatibleWith(enchantment)){
@@ -225,39 +226,12 @@ public class EnchanterBlockEntity extends REItemHandlerBlockEntity {
     }
 
 
-//    public static Map<Enchantment, Map<RunicEnergy.Type,Double>> parseJson(JsonObject object){
-//        Map<Enchantment, Map<RunicEnergy.Type,Double>> costs = new HashMap<>();
-//        JsonArray array = object.getAsJsonArray("enchantments");
-//        for (JsonElement enchantmentElement : array){
-//            JsonObject enchantmentJSON = enchantmentElement.getAsJsonObject();
-//            Enchantment enchantment = ForgeRegistries.ENCHANTMENTS.getValue(new ResourceLocation(GsonHelper.getAsString(enchantmentJSON,"enchantment_id")));
-//            float ardo    = GsonHelper.getAsFloat(enchantmentJSON,"ardo",0 );
-//            float zeta = GsonHelper.getAsFloat(enchantmentJSON,"zeta",0 );
-//            float tera = GsonHelper.getAsFloat(enchantmentJSON,"tera",0 );
-//            float kelda = GsonHelper.getAsFloat(enchantmentJSON,"kelda",0);
-//            float urba = GsonHelper.getAsFloat(enchantmentJSON,"urba",0);
-//            float fira = GsonHelper.getAsFloat(enchantmentJSON,"fira",0);
-//            float giro = GsonHelper.getAsFloat(enchantmentJSON,"giro",0);
-//            float ultima = GsonHelper.getAsFloat(enchantmentJSON,"ultima",0);
-//
-//            Map<RunicEnergy.Type,Double> runicCosts = new RunicEnergyCostConstructor()
-//                    .addRunicEnergy(RunicEnergy.Type.ARDO,  ardo)
-//                    .addRunicEnergy(RunicEnergy.Type.ZETA,  zeta)
-//                    .addRunicEnergy(RunicEnergy.Type.TERA,  tera)
-//                    .addRunicEnergy(RunicEnergy.Type.KELDA, kelda)
-//                    .addRunicEnergy(RunicEnergy.Type.URBA,  urba)
-//                    .addRunicEnergy(RunicEnergy.Type.FIRA,  fira)
-//                    .addRunicEnergy(RunicEnergy.Type.GIRO,  giro)
-//                    .addRunicEnergy(RunicEnergy.Type.ULTIMA,ultima)
-//                    .COSTS;
-//            costs.put(enchantment,runicCosts);
-//        }
-//        return costs;
-//    }
+
 
     public void loadConfigIfNecessary(){
-        if (level.isClientSide) return;
-        if (SERVERSIDE_CONFIG == null) SERVERSIDE_CONFIG = new EnchanterConfig(EnchanterConfigInit.SERVERSIDE_JSON);
+        if (SERVERSIDE_CONFIG != null) return;
+        if (EffectiveSide.get().isClient()) return;
+        SERVERSIDE_CONFIG = new EnchanterConfig(EnchanterConfigInit.SERVERSIDE_JSON);
     }
 
     @Override
