@@ -4,6 +4,7 @@ import com.finderfeed.solarforge.abilities.meteorite.MeteoriteProjectileRenderer
 import com.finderfeed.solarforge.abilities.solar_strike.SolarStrikeRenderer;
 import com.finderfeed.solarforge.entities.renderers.*;
 import com.finderfeed.solarforge.magic.blocks.blockentities.containers.screens.*;
+import com.finderfeed.solarforge.magic.blocks.blockentities.projectiles.renderers.ShadowBoltRenderer;
 import com.finderfeed.solarforge.magic.blocks.infusing_table_things.InfuserRenderer;
 import com.finderfeed.solarforge.magic.blocks.infusing_table_things.infusing_pool.InfusingStandRenderer;
 import com.finderfeed.solarforge.magic.blocks.blockentities.projectiles.renderers.AbstractTurretProjectileRenderer;
@@ -119,6 +120,7 @@ public class SolarForgeClientRegistry {
         BlockEntityRenderers.register(TileEntitiesRegistry.EXPLOSTION_BLOCKER.get(), ExplosionBlockerRenderer::new);
         BlockEntityRenderers.register(TileEntitiesRegistry.ENCHANTER.get(), EnchanterRenderer::new);
         BlockEntityRenderers.register(TileEntitiesRegistry.RUNIC_ENERGY_CHARGER.get(), RunicEnergyChargerRenderer::new);
+        BlockEntityRenderers.register(TileEntitiesRegistry.ULDERA_PYLON.get(), UlderaPylonRenderer::new);
 
         MenuScreens.register(Containers.SOLAR_FURNACE_CONTAINER.get(), SolarFurnaceScreen::new);
         MenuScreens.register(Containers.RUNIC_TABLE_CONTAINER.get(), RunicTableContainerScreen::new);
@@ -223,6 +225,7 @@ public class SolarForgeClientRegistry {
         event.registerEntityRenderer(EntityTypes.EXPLOSIVE_CRYSTAL.get(), ExplosiveCrystalRenderer::new);
         event.registerEntityRenderer(EntityTypes.RUNIC_WARRIOR.get(), RunicWarriorRenderer::new);
         event.registerEntityRenderer(EntityTypes.RUNIC_WARRIOR_ROCKET.get(), RunicWarriorSummoningRocketRenderer::new);
+        event.registerEntityRenderer(EntityTypes.SHADOW_BOLT.get(), ShadowBoltRenderer::new);
     }
 
 }

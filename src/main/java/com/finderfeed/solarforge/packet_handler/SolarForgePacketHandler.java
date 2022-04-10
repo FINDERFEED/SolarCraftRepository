@@ -73,6 +73,7 @@ public class SolarForgePacketHandler {
         INSTANCE.registerMessage(nextID(), ExplosionParticlesPacket.class, ExplosionParticlesPacket::toBytes, ExplosionParticlesPacket::new, ExplosionParticlesPacket::handle);
         INSTANCE.registerMessage(nextID(), TeleportEntityPacket.class, TeleportEntityPacket::toBytes, TeleportEntityPacket::new, TeleportEntityPacket::handle);
         INSTANCE.registerMessage(nextID(), DisablePlayerFlightPacket.class, DisablePlayerFlightPacket::toBytes, DisablePlayerFlightPacket::new, DisablePlayerFlightPacket::handle);
+        INSTANCE.registerMessage(nextID(), ShadowBoltExplosionPacket.class, ShadowBoltExplosionPacket::toBytes, ShadowBoltExplosionPacket::new, ShadowBoltExplosionPacket::handle);
     }
 //            INSTANCE.registerMessage(nextID(), .class, ::toBytes, ::new, ::handle);
     //RepeaterParentUpdateOnClient

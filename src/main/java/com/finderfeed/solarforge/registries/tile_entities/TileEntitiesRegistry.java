@@ -96,5 +96,8 @@ public class TileEntitiesRegistry {
     public static final RegistryObject<BlockEntityType<RunicEnergyChargerTileEntity>> RUNIC_ENERGY_CHARGER = TILE_ENTITY_TYPE.register("runic_energy_charger",()->
             BlockEntityType.Builder.of(RunicEnergyChargerTileEntity::new, BlocksRegistry.RUNIC_ENERGY_CHARGER.get()).build(null));
 
+    public static final RegistryObject<BlockEntityType<UlderaPylon>> ULDERA_PYLON = TILE_ENTITY_TYPE.register("uldera_pylon",()->
+            BlockEntityType.Builder.of(UlderaPylon::new, BlocksRegistry.ULDERA_PYLON.get()).build(null));
+
 
 }

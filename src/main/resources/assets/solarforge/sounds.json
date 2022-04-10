@@ -58,5 +58,8 @@
   },
   "sunstrike": {
     "sounds": ["solarforge:sunstrike"]
+  },
+  "shadow_bolt": {
+    "sounds": ["solarforge:shadow_bolt_explosion"]
   }
 }

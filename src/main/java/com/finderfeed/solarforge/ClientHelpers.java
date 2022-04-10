@@ -123,6 +123,17 @@ public class ClientHelpers {
         );
     }
 
+    public static void handleShadowBoltExplosion(Vec3 pos){
+        Level world = Minecraft.getInstance().level;
+        if (world == null) return;
+        for (int i = 0; i < 20;i++){
+            double r = world.random.nextDouble() * 0.08 + 0.04;
+            Vec3 rndVec = Helpers.randomVector().multiply(r,r,r);
+            ParticleAnimationHelper.createParticle(ParticleTypesRegistry.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+                    pos.x,pos.y,pos.z,rndVec.x,rndVec.y,rndVec.z,()->70 + (int)(world.random.nextFloat()*30f),()->0,()->255,0.5f );
+        }
+    }
+
     public static void handleBallLightningProjectileParticles(Vec3 pos){
         Level level = Minecraft.getInstance().level;
         if (level != null) {

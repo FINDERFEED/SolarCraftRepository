@@ -4,6 +4,7 @@ package com.finderfeed.solarforge.registries.entities;
 import com.finderfeed.solarforge.entities.*;
 import com.finderfeed.solarforge.magic.blocks.blockentities.projectiles.AbstractTurretProjectile;
 import com.finderfeed.solarforge.magic.blocks.blockentities.projectiles.MortarProjectile;
+import com.finderfeed.solarforge.magic.blocks.blockentities.projectiles.ShadowBolt;
 import com.finderfeed.solarforge.magic.projectiles.*;
 import com.finderfeed.solarforge.magic.items.solar_disc_gun.SolarDiscProjectile;
 import net.minecraft.world.entity.MobCategory;
@@ -103,4 +104,8 @@ public class EntityTypes {
     public static final RegistryObject<EntityType<EarthquakeEntity>> EARTHQUAKE = ENTITY_TYPE_REGISTER.register("earthquake", () ->
             EntityType.Builder.<EarthquakeEntity>of(EarthquakeEntity::new, MobCategory.MISC)
                     .sized(0.2f, 0.2f).build("earthquake"));
+
+    public static final RegistryObject<EntityType<ShadowBolt>> SHADOW_BOLT = ENTITY_TYPE_REGISTER.register("shadow_bolt", () ->
+            EntityType.Builder.<ShadowBolt>of(ShadowBolt::new, MobCategory.MISC)
+                    .sized(0.25f, 0.25f).build("shadow_bolt"));
 }

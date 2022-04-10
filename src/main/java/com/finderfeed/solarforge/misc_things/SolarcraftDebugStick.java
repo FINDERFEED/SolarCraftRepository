@@ -4,6 +4,7 @@ import com.finderfeed.solarforge.ClientHelpers;
 import com.finderfeed.solarforge.client.particles.ParticleTypesRegistry;
 import com.finderfeed.solarforge.entities.EarthquakeEntity;
 import com.finderfeed.solarforge.magic.blocks.blockentities.RuneEnergyPylonTile;
+import com.finderfeed.solarforge.magic.blocks.blockentities.projectiles.ShadowBolt;
 import com.finderfeed.solarforge.magic.projectiles.SolarFireballProjectile;
 import com.finderfeed.solarforge.registries.entities.EntityTypes;
 import net.minecraft.core.BlockPos;
@@ -86,7 +87,10 @@ public class SolarcraftDebugStick extends Item {
             }else{
                 stack.getOrCreateTagElement("pylon_mode").putBoolean("isCyclingPylons",true);
             }
-
+            ShadowBolt bolt = new ShadowBolt(EntityTypes.SHADOW_BOLT.get(),world);
+            bolt.setPos(player.position().add(0,2,0));
+            bolt.setDeltaMovement(player.getLookAngle());
+            world.addFreshEntity(bolt);
         }
         return super.use(world, player, hand);
     }

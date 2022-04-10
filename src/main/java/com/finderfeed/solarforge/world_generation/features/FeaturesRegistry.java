@@ -88,6 +88,7 @@ public class FeaturesRegistry {
     public static final Feature<NoneFeatureConfiguration> CEILING_DRIPSTONE_LIKE_CRYSTALS = new CeilingDripstoneLikeCrystals(NoneFeatureConfiguration.CODEC);
     public static final Feature<SimpleBlockConfiguration> CRYSTALS_ORE = new CrystalsOreFeature(SimpleBlockConfiguration.CODEC);
     public static final Feature<NoneFeatureConfiguration> ULDERA_OBELISK = new UlderaObeliskFeature(NoneFeatureConfiguration.CODEC);
+    public static final Feature<NoneFeatureConfiguration> ULDERA_PYLON = new UlderaPylonFeature(NoneFeatureConfiguration.CODEC);
 
 
 
@@ -111,7 +112,7 @@ public class FeaturesRegistry {
     public static ConfiguredFeature<?,?> SOLAR_ORE_CONF;
     public static ConfiguredFeature<?,?> SOLAR_STONE_CONF;
     public static ConfiguredFeature<?,?> ULDERA_OBELISK_CONFIGURED;
-
+    public static ConfiguredFeature<?,?> ULDERA_PYLON_CONFIGURED;
 
 
     public static Holder<PlacedFeature> ULDERA_OBELISK_PLACEMENT;
@@ -139,7 +140,7 @@ public class FeaturesRegistry {
     public static Holder<PlacedFeature> BURNT_BIOME_AMBIENECE_PLACED_FEATURE;
     public static Holder<PlacedFeature> SOLAR_ORE;
     public static Holder<PlacedFeature> SOLAR_STONE;
-
+    public static Holder<PlacedFeature> ULDERA_PYLON_PLACEMENT;
 
     //public static ConfiguredFeature<?,?> RADIANT_LAND_AMBIENT_TREE;
 
@@ -171,7 +172,7 @@ public class FeaturesRegistry {
         event.getRegistry().register(CEILING_DRIPSTONE_LIKE_CRYSTALS.setRegistryName(new ResourceLocation(SolarForge.MOD_ID,"ceiling_dripstonelike_crystals")));
         registerFeature(event, CRYSTALS_ORE,"crystallized_runic_energy");
         registerFeature(event,ULDERA_OBELISK,"uldera_obelisk");
-
+        registerFeature(event,ULDERA_PYLON,"uldera_pylon");
 
     }
     private static void registerFeature(RegistryEvent.Register<Feature<?>> event,Feature<?> f,String name){
@@ -490,7 +491,11 @@ public class FeaturesRegistry {
                     InSquarePlacement.spread());
 
 
+            ULDERA_PYLON_CONFIGURED = new ConfiguredFeature<>(ULDERA_PYLON,NoneFeatureConfiguration.INSTANCE);
+            registerConfiguredFeature(ULDERA_PYLON_CONFIGURED,"uldera_pylon");
 
+            ULDERA_PYLON_PLACEMENT = registerPlacedFeature("uldera_pylon",Holder.direct(ULDERA_PYLON_CONFIGURED),
+                    RarityFilter.onAverageOnceEvery(300));
         });
     }
 
