@@ -14,6 +14,7 @@ import com.mojang.blaze3d.vertex.*;
 
 import com.mojang.math.Vector3d;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.components.AbstractWidget;
 
@@ -32,7 +33,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class SolarLexiconScreen extends Screen implements IScrollable {
-
+    private int ticker = 0;
     private int OFFSET_X = 40;
     private int OFFSET_Y = 40;
 
@@ -49,13 +50,6 @@ public class SolarLexiconScreen extends Screen implements IScrollable {
     public Progression currentProgression = null;
     private List<Runnable> postLinesRender = new ArrayList<>();
 
-
-//    public List<Achievement> firstTier;
-//    public List<Achievement> secondTier;
-//    public List<Achievement> thirdTier;
-//    public List<Achievement> forthTier;
-//    public List<Achievement> fifthTier;
-//    public List<Achievement> sixthTier;
     public int prevscrollX = 0;
     public int prevscrollY = 0;
     public int scrollX = 0;
@@ -72,10 +66,6 @@ public class SolarLexiconScreen extends Screen implements IScrollable {
         super(new TextComponent("screen_solar_lexicon"));
         this.width = 256;
         this.height = 256;
-//        int width = 0;
-//        int height = 225;
-//        this.relX = (this.width - width)/2;
-//        this.relY = (this.height - height)/2;
     }
 
     @Override
@@ -145,22 +135,6 @@ public class SolarLexiconScreen extends Screen implements IScrollable {
     }
 
 
-//    @Override
-//    public boolean keyPressed(int x, int y, int z) {
-//        if (y == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_LEFT) && !(scrollX -4 < -58)){
-//            scrollX-=4;
-//        } else if (y == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_UP) && !(scrollY -4 < -138)){
-//            scrollY-=4;
-//        }else if(y == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_DOWN) && !(scrollY +4 > 0)){
-//            scrollY+=4;
-//        }else if (y == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_RIGHT)&& !(scrollX +4 > 0)){
-//            scrollX+=4;
-//        }
-//
-//
-//
-//        return super.keyPressed(x, y, z);
-//    }
 
 
     private void initMap(int tiersCount){
@@ -231,7 +205,19 @@ public class SolarLexiconScreen extends Screen implements IScrollable {
         stagesPage.y = relY + 13;
     }
 
-
+    @Override
+    public void tick() {
+        super.tick();
+        if (ticker++ < 5) return;
+        ticker = 0;
+        List<AbstractWidget> list = ClientHelpers.getScreenButtons(this);
+        list.remove(justForge);
+        list.remove(stagesPage);
+        list.remove(toggleRecipesScreen);
+        for (AbstractWidget widget : list){
+            widget.active = widget.x >= relX - 5 && widget.x <= relX + 230 && widget.y >= relY - 5 && widget.y <= relY + 115;
+        }
+    }
 
     @Override
     public void render(PoseStack matrices, int mousex, int mousey, float partialTicks) {

@@ -8,12 +8,14 @@ import com.finderfeed.solarforge.local_library.helpers.FinderfeedMathHelper;
 import com.finderfeed.solarforge.misc_things.CrystalBossBuddy;
 import com.finderfeed.solarforge.registries.data_serializers.FDEntityDataSerializers;
 import com.finderfeed.solarforge.registries.entities.EntityTypes;
+import com.finderfeed.solarforge.registries.sounds.Sounds;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializer;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -75,7 +77,7 @@ public class EarthquakeEntity extends Entity {
                         e.hurt(DamageSource.MAGIC,damage);
                     }
                 }
-
+                level.playSound(null,position().x,position().y,position().z, Sounds.EARTHQUAKE.get(), SoundSource.HOSTILE,5f,1f);
             }
             if (tickCount >= DEATH_TIME-20){
                 this.kill();

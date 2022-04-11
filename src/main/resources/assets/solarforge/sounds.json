@@ -61,5 +61,8 @@
   },
   "shadow_bolt": {
     "sounds": ["solarforge:shadow_bolt_explosion"]
+  },
+  "earthquake": {
+    "sounds": ["solarforge:earthquake_explosion"]
   }
 }

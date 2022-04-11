@@ -22,7 +22,7 @@ public enum Progression {
     KILL_WITHER("kill_wither",2, Blocks.WITHER_SKELETON_SKULL.asItem().getDefaultInstance(),new TranslatableComponent("ach.kill_wither"),nextID(),new TranslatableComponent("pre.kill_wither"),new TranslatableComponent("aft.kill_wither")),
     ACQUIRE_COLD_STAR("cold_star_piece",2,ItemsRegister.COLD_STAR_PIECE.get().getDefaultInstance(), new TranslatableComponent("ach.cold_star_piece"),nextID(),new TranslatableComponent("pre.cold_star_piece"),new TranslatableComponent("aft.cold_star_piece")),
     RUNE_ENERGY_CLAIM("rune_energy_claim",2, ItemsRegister.SOLAR_WAND.get().getDefaultInstance(),new TranslatableComponent("ach.rune_energy_claim"),nextID(),new TranslatableComponent("pre.rune_energy_claim"),new TranslatableComponent("aft.rune_energy_claim")),
-    SOLAR_RUNE("solar_rune",2, ItemsRegister.SOLAR_RUNE_ZETA.get().getDefaultInstance(),new TranslatableComponent("ach.solar_rune"),nextID(),new TranslatableComponent("pre.solar_rune"),new TranslatableComponent("aft.solar_rune")),
+    SOLAR_RUNE("solar_rune",2, ItemsRegister.SOLAR_RUNE_BASE.get().getDefaultInstance(),new TranslatableComponent("ach.solar_rune"),nextID(),new TranslatableComponent("pre.solar_rune"),new TranslatableComponent("aft.solar_rune")),
     ALL_ENERGY_TYPES("all_energy_types",2, ItemsRegister.RUNE_ENERGY_PYLON.get().getDefaultInstance(),new TranslatableComponent("ach.all_energy_types"),nextID(),new TranslatableComponent("pre.all_energy_types"),new TranslatableComponent("aft.all_energy_types")),
 
 

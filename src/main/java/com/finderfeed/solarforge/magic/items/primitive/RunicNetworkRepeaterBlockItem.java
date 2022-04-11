@@ -18,12 +18,14 @@ public class RunicNetworkRepeaterBlockItem extends SolarcraftBlockItem {
     }
 
     @Override
-    public void inventoryTick(ItemStack p_41404_, Level p_41405_, Entity p_41406_, int p_41407_, boolean p_41408_) {
-        if (!p_41405_.isClientSide){
+    public void inventoryTick(ItemStack p_41404_, Level world, Entity p_41406_, int p_41407_, boolean p_41408_) {
+        if (!world.isClientSide){
             if (p_41406_ instanceof Player player) {
-                Helpers.fireProgressionEvent(player, Progression.RUNIC_ENERGY_REPEATER);
+                if (world.getGameTime() % 20 ==0 ) {
+                    Helpers.fireProgressionEvent(player, Progression.RUNIC_ENERGY_REPEATER);
+                }
             }
         }
-        super.inventoryTick(p_41404_, p_41405_, p_41406_, p_41407_, p_41408_);
+        super.inventoryTick(p_41404_, world, p_41406_, p_41407_, p_41408_);
     }
 }

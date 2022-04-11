@@ -20,6 +20,8 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
+import java.util.Map;
+
 public class SolarcraftDebugStick extends Item {
     public SolarcraftDebugStick(Properties p_41383_) {
         super(p_41383_);
