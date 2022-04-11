@@ -35,11 +35,22 @@ public class ShadowBolt extends AbstractHurtingProjectile {
     public void tick() {
         super.tick();
         if (level.isClientSide){
-            Vec3 pos = this.position().add(0,0.125,0);
-            Vec3 v = Helpers.randomVector().multiply(0.25,0.25,0.25);
-            Vec3 vec = new Vec3(v.x+pos.x,v.y+pos.y,v.z+pos.z);
-            ClientHelpers.ParticleAnimationHelper.createParticle(ParticleTypesRegistry.SMALL_SOLAR_STRIKE_PARTICLE.get(),
-                    vec.x,vec.y,vec.z,0,0,0,()->70,()->0,()->200,0.25f);
+            Vec3 pos = this.position();
+
+            Vec3 movement = getDeltaMovement();
+            Vector3f mv = new Vector3f((float)movement.x,(float)movement.y,(float)movement.z);
+            float z2 = -mv.x() / (mv.z() + 0.000001f);
+            for (int i = 0;i < 2;i++) {
+                Vector3f rotateIt = new Vector3f(1, 0, z2);
+                rotateIt.normalize();
+                Quaternion q = mv.rotationDegrees((level.getGameTime() * 20 + i*180)  % 360);
+                rotateIt.transform(q);
+                Vec3 normalVec = new Vec3(rotateIt.x()*0.1, rotateIt.y()*0.1, rotateIt.z()*0.1);
+                Vec3 p = pos.add(normalVec);
+                ClientHelpers.ParticleAnimationHelper.createParticle(ParticleTypesRegistry.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+                        p.x, p.y, p.z, normalVec.x*0.3, normalVec.y*0.3, normalVec.z*0.3, () -> 70, () -> 0, () -> 200, 0.25f);
+            }
+
         }
     }
 
