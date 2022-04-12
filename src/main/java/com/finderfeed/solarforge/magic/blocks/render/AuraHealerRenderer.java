@@ -33,12 +33,13 @@ public class AuraHealerRenderer implements BlockEntityRenderer<AuraHealerTile> {
         
         matrices.mulPose(Vector3f.XN.rotationDegrees(180));
         matrices.translate(0.5,-1.85,-0.5);
-        float bigTing = 22 - (time + 15) % 45;
-        if (bigTing >= 0) {
-            matrices.translate(0, bigTing / 100, 0);
-        } else {
-            matrices.translate(0, -bigTing / 100, 0);
-        }
+//        float bigTing = 22 - (time + 15) % 45;
+//        if (bigTing >= 0) {
+//            matrices.translate(0, bigTing / 100, 0);
+//        } else {
+//            matrices.translate(0, -bigTing / 100, 0);
+//        }
+        matrices.translate(0,0.2 + Math.sin(time/10)*0.06,0);
 
 
         model.renderToBuffer(matrices,buffer.getBuffer(RenderType.text(res)),p_225616_5_,p_225616_6_,1,1,1,1);

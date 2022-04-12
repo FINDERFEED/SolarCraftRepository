@@ -31,8 +31,8 @@ public class BlockBoomerang extends SolarcraftItem {
     @Override
     public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
         if (!world.isClientSide){
-
-            if (player.getItemInHand(InteractionHand.OFF_HAND).getItem() instanceof BlockItem) {
+            ItemStack i = player.getItemInHand(InteractionHand.OFF_HAND);
+            if (i.getItem() instanceof BlockItem && !i.hasTag()) {
                 BlockItem item = (BlockItem) player.getItemInHand(InteractionHand.OFF_HAND).getItem();
 
                 BlockBoomerangProjectile proj = new BlockBoomerangProjectile(EntityTypes.BLOCK_BOOMERANG.get(), world);

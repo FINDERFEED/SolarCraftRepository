@@ -179,7 +179,7 @@ public class InfusingRecipeScreen extends Screen {
         renderItemAndTooltip(itemRators.get(11).getCurrentStack(),relX+96   -1,relY+150 -1,mousex,mousey,matrices,false);
         renderItemAndTooltip(itemRators.get(12).getCurrentStack(),relX+142  -1,relY+143 -1,mousex,mousey,matrices,false);
 
-        renderItemAndTooltip(currentRecipe.getResultItem().copy(),relX+12,relY+12,mousex,mousey,matrices,false);
+        renderItemAndTooltip(currentRecipe.getResultItem().copy(),relX+12,relY+12,mousex,mousey,matrices,true);
 
 //        renderItemAndTooltip(stacks.get(0),relX+120 + xOffset,relY+69 + yOffset,mousex,mousey,matrices,false);
 //        renderItemAndTooltip(stacks.get(1),relX+173 + xOffset,relY+69 + yOffset,mousex,mousey,matrices,false);

@@ -16,6 +16,5 @@
     "item": "solarforge:runic_energy_charger"
   },
   "time": 500,
-  "fragment": "re_charger",
-  "catalysts": "KUK   KUK   "
+  "fragment": "re_charger"
 }

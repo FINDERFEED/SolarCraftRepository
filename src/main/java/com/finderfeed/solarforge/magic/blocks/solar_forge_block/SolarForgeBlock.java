@@ -71,7 +71,7 @@ public class SolarForgeBlock extends Block implements EntityBlock {
         }
 
 
-        return super.use(state, world, pos, user, hand, rayTraceResult);
+        return InteractionResult.SUCCESS;
     }
 
 

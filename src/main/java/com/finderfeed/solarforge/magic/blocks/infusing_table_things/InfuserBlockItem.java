@@ -23,18 +23,18 @@ public class InfuserBlockItem extends SolarcraftBlockItem {
         super(p_i48527_1_, p_i48527_2_,fragmentSupplier);
     }
 
-
-    @Override
-    public void onCraftedBy(ItemStack stack, Level world, Player pe) {
-        if (!world.isClientSide){
-            Helpers.fireProgressionEvent(pe, Progression.SOLAR_INFUSER);
-        }
-        super.onCraftedBy(stack,world,pe);
-    }
-
-    @Override
-    public void appendHoverText(ItemStack p_40572_, @Nullable Level p_40573_, List<Component> cmps, TooltipFlag p_40575_) {
-        cmps.add(new TranslatableComponent("solarcraft.cant_save_energy").withStyle(ChatFormatting.RED));
-        super.appendHoverText(p_40572_, p_40573_, cmps, p_40575_);
-    }
+//
+//    @Override
+//    public void onCraftedBy(ItemStack stack, Level world, Player pe) {
+//        if (!world.isClientSide){
+//            Helpers.fireProgressionEvent(pe, Progression.SOLAR_INFUSER);
+//        }
+//        super.onCraftedBy(stack,world,pe);
+//    }
+//
+//    @Override
+//    public void appendHoverText(ItemStack p_40572_, @Nullable Level p_40573_, List<Component> cmps, TooltipFlag p_40575_) {
+//
+//        super.appendHoverText(p_40572_, p_40573_, cmps, p_40575_);
+//    }
 }
