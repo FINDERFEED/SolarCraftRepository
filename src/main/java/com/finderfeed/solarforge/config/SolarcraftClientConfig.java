@@ -11,6 +11,7 @@ public final class SolarcraftClientConfig {
     public static final ForgeConfigSpec SPEC;
 
     public static final ForgeConfigSpec.ConfigValue<Boolean> SHADERS_ENABLED;
+    public static final ForgeConfigSpec.ConfigValue<Boolean> WELCOME_MESSAGE_ENABLED;
 
     static {
         BUILDER.push("SolarCraft client config");
@@ -19,6 +20,10 @@ public final class SolarcraftClientConfig {
         SHADERS_ENABLED =
                 BUILDER.comment("Enable/Disable shader effects. If your screen blackens when looking at pylons(and other things that use my custom effects) with shaders or optifine disable this.")
                         .define("shaders_enabled",true);
+
+        WELCOME_MESSAGE_ENABLED =
+                BUILDER.comment("Enable/Disable welcome message")
+                        .define("message",true);
         BUILDER.pop();
         SPEC = BUILDER.build();
     }

@@ -6,12 +6,6 @@
     },
     {
       "item": "solarforge:algadium_ingot"
-    },
-    {
-      "item": "minecraft:air"
-    },
-    {
-      "item": "minecraft:air"
     }
   ],
   "result": "solarforge:qualadium_ingot",

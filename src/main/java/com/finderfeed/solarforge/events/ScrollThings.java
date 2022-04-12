@@ -1,6 +1,7 @@
 package com.finderfeed.solarforge.events;
 
 
+import com.finderfeed.solarforge.config.SolarcraftClientConfig;
 import com.finderfeed.solarforge.misc_things.IScrollable;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.unlockables.BookEntry;
@@ -33,7 +34,7 @@ public class ScrollThings {
     public static void initMaps(final ClientPlayerNetworkEvent.LoggedInEvent event){
 
         BookEntry.initMap();
-        if (event.getPlayer() != null) {
+        if (event.getPlayer() != null && SolarcraftClientConfig.WELCOME_MESSAGE_ENABLED.get()) {
             event.getPlayer().sendMessage(new TranslatableComponent("solarcraft.welcome_message"), event.getPlayer().getUUID());
             event.getPlayer().sendMessage(new TranslatableComponent("solarcraft.welcome_message2"), event.getPlayer().getUUID());
 
