@@ -3,11 +3,9 @@ package com.finderfeed.solarforge.capabilities.capability_mana;
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
 import com.finderfeed.solarforge.packet_handler.packets.ToggleAlchemistPacket;
 import com.finderfeed.solarforge.registries.abilities.AbilitiesRegistry;
-import com.finderfeed.solarforge.registries.items.ItemsRegister;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.network.NetworkDirection;
@@ -15,11 +13,11 @@ import net.minecraftforge.network.NetworkDirection;
 
 public class AttachManaCapabilityEvent {
     public static void attachCapabilities(final AttachCapabilitiesEvent<Entity> event){
-        if (event.getObject() instanceof Player) {
-            PlayerManaProvider provide = new PlayerManaProvider();
-            event.addCapability(new ResourceLocation("solarforge", "solar_mana_level"), provide);
+        //if (event.getObject() instanceof Player) {
+//            PlayerManaProvider provide = new PlayerManaProvider();
+//            event.addCapability(new ResourceLocation("solarforge", "solar_mana_level"), provide);
             //event.addListener(provide::invalidate);
-        }
+        //}
     }
 
 

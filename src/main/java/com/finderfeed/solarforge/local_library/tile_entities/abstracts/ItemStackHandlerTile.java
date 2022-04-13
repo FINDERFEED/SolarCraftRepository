@@ -28,10 +28,10 @@ public class ItemStackHandlerTile extends BlockEntity {
     public void setStackInSlot(int i, ItemStack stack){
         ItemStackHandler handler = getInventory();
         if (handler == null) return;
+        this.getInventory().setStackInSlot(i,stack);
         if (!level.isClientSide){
             Helpers.updateTile(this);
         }
-        this.getInventory().setStackInSlot(i,stack);
     }
 
     public Container wrapInContainer(){

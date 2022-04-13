@@ -7,12 +7,16 @@ import com.finderfeed.solarforge.packet_handler.packets.TakeEnergyFromForgePacke
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.Component;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+
+import java.util.List;
+import java.util.Optional;
 
 @OnlyIn(Dist.CLIENT)
 public class SolarForgeScreen extends AbstractContainerScreen<SolarForgeContainer> {
@@ -43,7 +47,10 @@ public class SolarForgeScreen extends AbstractContainerScreen<SolarForgeContaine
         addRenderableWidget(new SolarForgeButton(i + 186, j + 32, 65, 15, new TranslatableComponent("forge.take"),(button)->{
             SolarForgePacketHandler.INSTANCE.sendToServer(new TakeEnergyFromForgePacket(this.menu.te.getBlockPos()));
         },(button,matrices,mousex,mousey)->{
-            renderTooltip(matrices,new TranslatableComponent("forge.moved"),mousex,mousey);
+            renderTooltip(matrices, List.of(new TextComponent("Consume energy. Abilities were moved to separate screen"),
+                    new TextComponent("look into hotkey settings.")
+                    ), Optional.empty(),mousex,mousey);
+
         }));
 //        addRenderableWidget(new SolarForgeButton(i + 186, j + 10, 65, 15, new TextComponent("Fireball"), button -> SolarForgePacketHandler.INSTANCE.sendToServer(new AbilityBuyPacket("fireball",this.menu.te.getBlockPos(),15000)),
 //                (button, matrices, p_onTooltip_3_, p_onTooltip_4_) ->{

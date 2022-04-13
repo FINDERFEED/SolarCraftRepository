@@ -32,6 +32,7 @@
     "solarforge:damage_amp_block",
     "solarforge:armor_amp_block",
     "solarforge:evasion_amp_block",
-    "solarforge:solar_stone_slab"
+    "solarforge:solar_stone_slab",
+    "solarforge:runic_energy_charger"
   ]
 }
