@@ -70,7 +70,7 @@ public class RunicTableBlock extends Block implements EntityBlock {
             );
             return InteractionResult.SUCCESS;
         }
-        return super.use(state, world, pos, pe, hand, trace);
+        return InteractionResult.SUCCESS;
     }
 
     @Nullable

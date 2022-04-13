@@ -574,7 +574,7 @@
   "block.solarforge.speed_road": "Speed tile",
   "solar_fragment.speed_road": "Speed tile",
   "speed_road.lore": "Running between your chests and crafting tables can take a lot of time. Well this won't teleport your items but it will speed you up instead! Gives speed I when stepping on.",
-  "solarcraft.stages": "These are progression stages (each row is a progression stage). When you have completed the stage and ALL stages before it you will be able to unlock new fragments.",
+  "solarcraft.stages": "These are progression stages (each row is a progression stage). When you have completed the stage and ALL stages before it you will be able to decrypt more fragments.",
   "solarcraft.completed": "Status: Completed",
   "solarcraft.not_completed": "Status: Not completed",
   "solarcraft.cannot_be_completed": "Status: Cannot be completed",
