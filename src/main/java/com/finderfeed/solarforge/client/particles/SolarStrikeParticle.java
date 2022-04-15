@@ -52,13 +52,7 @@ public class SolarStrikeParticle extends TextureSheetParticle {
         return SolarCraftRenderTypes.ParticleRenderTypes.SOLAR_STRIKE_PARTICLE_RENDER ;
     }
 
-    @Override
-    public void render(VertexConsumer builder, Camera info, float partialTicks) {
 
-
-        super.render(builder, info, partialTicks);
-
-    }
 
     @Override
     public void tick() {

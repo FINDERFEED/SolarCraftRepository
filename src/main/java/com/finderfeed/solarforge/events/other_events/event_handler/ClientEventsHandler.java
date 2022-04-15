@@ -4,7 +4,9 @@ package com.finderfeed.solarforge.events.other_events.event_handler;
 import com.finderfeed.solarforge.ClientHelpers;
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.SolarForge;
+import com.finderfeed.solarforge.client.particles.screen.TestScreenParticle;
 import com.finderfeed.solarforge.events.misc.ClientTicker;
+import com.finderfeed.solarforge.local_library.client.particles.ScreenParticlesRenderHandler;
 import com.finderfeed.solarforge.magic.blocks.infusing_table_things.InfuserTileEntity;
 import com.finderfeed.solarforge.magic.items.ModuleItem;
 import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
@@ -59,8 +61,16 @@ public class ClientEventsHandler {
 
     @SubscribeEvent
     public static void manageTickers(TickEvent.ClientTickEvent event) {
+        //TODO:delete test
+        if (Minecraft.getInstance().level != null && event.phase == TickEvent.Phase.START && Minecraft.getInstance().level.getGameTime() % 60 == 0) {
+            TestScreenParticle particle = new TestScreenParticle(60, 50, 50, 0, 0.5, 0, 0, 255, 255, 255, 255);
+            particle.setSize(100);
+            ScreenParticlesRenderHandler.addParticle(particle);
+        }
 
         if (event.phase == TickEvent.Phase.START && !Minecraft.getInstance().isPaused())  {
+
+
             TICKERS.values().forEach((ticker)->{
 
                 if (ticker.shouldBeRemoved()){

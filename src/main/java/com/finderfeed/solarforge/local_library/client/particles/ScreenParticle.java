@@ -7,34 +7,44 @@ import net.minecraft.client.particle.ParticleRenderType;
 public abstract class ScreenParticle {
 
 
-    private double x;
-    private double y;
-    private double z;
+    protected double x;
+    protected double y;
+    protected double xOld;
+    protected double yOld;
+    protected double xSpeed;
+    protected double ySpeed;
+    protected double xAcceleration;
+    protected double yAcceleration;
+    protected double size = 1;
+    protected boolean removed = false;
+    protected int lifetime;
+    protected int age = 0;
 
-    private double xSpeed;
-    private double ySpeed;
-    private double zSpeed;
+    public ScreenParticle(int lifetime,double x,double y,double xSpeed,double ySpeed,double xAcceleration,double yAcceleration) {
+        this.lifetime = lifetime;
 
-    private double size = 1;
-
-    private boolean removed = false;
-
-    private int lifetime;
-    private int age = 0;
-
-    public ScreenParticle(double x,double y,double z,double xSpeed,double ySpeed,double zSpeed) {
         this.x = x;
         this.y = y;
-        this.z = z;
+
+        this.xOld = x;
+        this.yOld = y;
+
         this.xSpeed = xSpeed;
         this.ySpeed = ySpeed;
-        this.zSpeed = zSpeed;
+        this.xAcceleration = xAcceleration;
+        this.yAcceleration = yAcceleration;
     }
 
     public void tick(){
+        this.xOld = this.x;
+        this.yOld = this.y;
+
         this.x += xSpeed;
         this.y += ySpeed;
-        this.z += zSpeed;
+
+        this.xSpeed += this.xAcceleration;
+        this.ySpeed += this.yAcceleration;
+
         if (age++ > lifetime) this.removed = true;
     }
 
@@ -55,13 +65,13 @@ public abstract class ScreenParticle {
     public void setSpeed(double x, double y, double z){
         this.xSpeed = x;
         this.ySpeed = y;
-        this.zSpeed = z;
+
     }
 
     public void setPos(double x,double y,double z){
         this.x = x;
         this.y = y;
-        this.z = z;
+
     }
 
     public void setSize(double size) {
@@ -72,6 +82,6 @@ public abstract class ScreenParticle {
         return size;
     }
 
-    public abstract void render(VertexConsumer consumer, float partialTicks);
+    public abstract void render(VertexConsumer vertex, float partialTicks);
     public abstract ParticleRenderType getRenderType();
 }

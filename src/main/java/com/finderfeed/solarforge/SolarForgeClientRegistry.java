@@ -2,7 +2,9 @@ package com.finderfeed.solarforge;
 
 import com.finderfeed.solarforge.abilities.meteorite.MeteoriteProjectileRenderer;
 import com.finderfeed.solarforge.abilities.solar_strike.SolarStrikeRenderer;
+import com.finderfeed.solarforge.client.rendering.rendertypes.SolarCraftRenderTypes;
 import com.finderfeed.solarforge.entities.renderers.*;
+import com.finderfeed.solarforge.local_library.client.particles.ScreenParticlesRenderHandler;
 import com.finderfeed.solarforge.magic.blocks.blockentities.containers.screens.*;
 import com.finderfeed.solarforge.magic.blocks.blockentities.projectiles.renderers.ShadowBoltRenderer;
 import com.finderfeed.solarforge.magic.blocks.infusing_table_things.InfuserRenderer;
@@ -70,6 +72,8 @@ public class SolarForgeClientRegistry {
 
     @SubscribeEvent
     public static void registerClientStuff(final FMLClientSetupEvent event){
+
+        ScreenParticlesRenderHandler.registerRenderType(SolarCraftRenderTypes.ParticleRenderTypes.TEST_SCREEN_RENDER_TYPE);
 
         ScreenSuppliers.SCREEN_REGISTRY.registerAll();
 
