@@ -21,7 +21,8 @@ public abstract class ScreenParticle {
     protected int lifetime;
     protected int age = 0;
     protected float rotationPerTick;
-    protected float rotationValue;
+    protected float rotationValue = 0;
+    protected float rotationValueOld = 0;
 
     public ScreenParticle(int lifetime,double x,double y,double xSpeed,double ySpeed,double xAcceleration,double yAcceleration) {
         this.lifetime = lifetime;
@@ -47,7 +48,7 @@ public abstract class ScreenParticle {
 
         this.xSpeed += this.xAcceleration;
         this.ySpeed += this.yAcceleration;
-
+        this.rotationValueOld = rotationValue;
         this.rotationValue += rotationPerTick;
 
         if (age++ > lifetime) this.removed = true;

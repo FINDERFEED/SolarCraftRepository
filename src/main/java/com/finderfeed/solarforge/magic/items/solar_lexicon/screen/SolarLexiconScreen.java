@@ -3,7 +3,7 @@ package com.finderfeed.solarforge.magic.items.solar_lexicon.screen;
 import com.finderfeed.solarforge.ClientHelpers;
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.SolarForge;
-import com.finderfeed.solarforge.client.particles.screen.TestScreenParticle;
+import com.finderfeed.solarforge.client.particles.screen.RuneTileParticle;
 import com.finderfeed.solarforge.local_library.client.particles.ScreenParticlesRenderHandler;
 import com.finderfeed.solarforge.local_library.helpers.RenderingTools;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.achievements.Progression;
@@ -16,7 +16,6 @@ import com.mojang.blaze3d.vertex.*;
 
 import com.mojang.math.Vector3d;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.components.AbstractWidget;
 
@@ -25,7 +24,6 @@ import net.minecraft.world.item.Items;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
-import net.minecraftforge.event.TickEvent;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL11;
 
@@ -223,7 +221,7 @@ public class SolarLexiconScreen extends Screen implements IScrollable {
             widget.active = widget.x >= relX - 5 && widget.x <= relX + 230 && widget.y >= relY - 5 && widget.y <= relY + 115;
         }
 
-        TestScreenParticle particle = new TestScreenParticle(60, relX, relY, 0, 0.5, 0, 0, 255, 255, 255, 255);
+        RuneTileParticle particle = new RuneTileParticle(60, relX, relY, 0, 0.5, 0, 0, 255, 255, 255, 255);
         particle.setSize(20);
         ScreenParticlesRenderHandler.addParticle(particle);
 

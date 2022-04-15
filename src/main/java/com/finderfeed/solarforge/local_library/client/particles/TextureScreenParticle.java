@@ -35,19 +35,18 @@ public abstract class TextureScreenParticle extends ScreenParticle{
     public void render(VertexConsumer vertex, float partialTicks) {
         PoseStack matrices = new PoseStack();
         matrices.pushPose();
-        matrices.mulPose(Vector3f.ZP.rotationDegrees(rotationValue));
-        Matrix4f matrix4f = matrices.last().pose();
         double s = size/2;
         double x1 = Mth.lerp(partialTicks,xOld,this.x) - s;
         double y1 = Mth.lerp(partialTicks,yOld,this.y) - s;
         double x2 = x1 + size;
         double y2 = y1 + size;
-
-
-        vertex.vertex(matrix4f,(float) x1,(float) y2,500).uv(0,0).color(rCol,gCol,bCol,alpha).uv2(LightTexture.FULL_BRIGHT).endVertex();
-        vertex.vertex(matrix4f,(float) x2,(float) y2,500).uv(1,0).color(rCol,gCol,bCol,alpha).uv2(LightTexture.FULL_BRIGHT).endVertex();
-        vertex.vertex(matrix4f,(float) x2,(float) y1,500).uv(1,1).color(rCol,gCol,bCol,alpha).uv2(LightTexture.FULL_BRIGHT).endVertex();
-        vertex.vertex(matrix4f,(float) x1,(float) y1,500).uv(0,1).color(rCol,gCol,bCol,alpha).uv2(LightTexture.FULL_BRIGHT).endVertex();
+        matrices.translate(Mth.lerp(partialTicks,xOld,this.x),Mth.lerp(partialTicks,yOld,this.y),0);
+        matrices.mulPose(Vector3f.ZP.rotationDegrees(Mth.lerp(partialTicks,rotationValueOld,rotationValue)));
+        Matrix4f matrix4f = matrices.last().pose();
+        vertex.vertex(matrix4f,(float) -s,(float) s,500).uv(0,0).color(rCol,gCol,bCol,alpha).uv2(LightTexture.FULL_BRIGHT).endVertex();
+        vertex.vertex(matrix4f,(float) s,(float) s,500).uv(1,0).color(rCol,gCol,bCol,alpha).uv2(LightTexture.FULL_BRIGHT).endVertex();
+        vertex.vertex(matrix4f,(float) s,(float) -s,500).uv(1,1).color(rCol,gCol,bCol,alpha).uv2(LightTexture.FULL_BRIGHT).endVertex();
+        vertex.vertex(matrix4f,(float)  -s,(float) -s,500).uv(0,1).color(rCol,gCol,bCol,alpha).uv2(LightTexture.FULL_BRIGHT).endVertex();
 
         matrices.popPose();
     }

@@ -73,7 +73,7 @@ public class SolarForgeClientRegistry {
     @SubscribeEvent
     public static void registerClientStuff(final FMLClientSetupEvent event){
 
-        ScreenParticlesRenderHandler.registerRenderType(SolarCraftRenderTypes.ParticleRenderTypes.TEST_SCREEN_RENDER_TYPE);
+        ScreenParticlesRenderHandler.registerRenderType(SolarCraftRenderTypes.ParticleRenderTypes.RUNE_TILE_PARTICLE);
 
         ScreenSuppliers.SCREEN_REGISTRY.registerAll();
 

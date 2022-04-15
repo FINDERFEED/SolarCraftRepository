@@ -93,6 +93,7 @@ public class ScreenParticlesRenderHandler {
         for (List<ScreenParticle> particles : PARTICLES.values()){
             Iterator<ScreenParticle> p = particles.iterator();
             while (p.hasNext()){
+                p.next();
                 p.remove();
             }
         }
