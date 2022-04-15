@@ -3,6 +3,8 @@ package com.finderfeed.solarforge.magic.items.solar_lexicon.screen;
 import com.finderfeed.solarforge.ClientHelpers;
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.SolarForge;
+import com.finderfeed.solarforge.client.particles.screen.TestScreenParticle;
+import com.finderfeed.solarforge.local_library.client.particles.ScreenParticlesRenderHandler;
 import com.finderfeed.solarforge.local_library.helpers.RenderingTools;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.achievements.Progression;
 import com.finderfeed.solarforge.misc_things.IScrollable;
@@ -23,6 +25,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
+import net.minecraftforge.event.TickEvent;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL11;
 
@@ -205,6 +208,8 @@ public class SolarLexiconScreen extends Screen implements IScrollable {
         stagesPage.y = relY + 13;
     }
 
+
+
     @Override
     public void tick() {
         super.tick();
@@ -217,10 +222,18 @@ public class SolarLexiconScreen extends Screen implements IScrollable {
         for (AbstractWidget widget : list){
             widget.active = widget.x >= relX - 5 && widget.x <= relX + 230 && widget.y >= relY - 5 && widget.y <= relY + 115;
         }
+
+        TestScreenParticle particle = new TestScreenParticle(60, relX, relY, 0, 0.5, 0, 0, 255, 255, 255, 255);
+        particle.setSize(20);
+        ScreenParticlesRenderHandler.addParticle(particle);
+
     }
 
     @Override
     public void render(PoseStack matrices, int mousex, int mousey, float partialTicks) {
+
+        matrices.pushPose();
+
         int stringColor = 0xee2222;
 
         ClientHelpers.bindText(MAIN_SCREEN_SCROLLABLE);
@@ -300,49 +313,11 @@ public class SolarLexiconScreen extends Screen implements IScrollable {
             }
         }
 
-//        Helpers.drawBoundedText(matrices,relX+10,relY+132,40,currentText);
-//        Helpers.drawBoundedText(matrices,relX+10,relY+162,40,afterTxt);
-        //super.render(matrices, mousex, mousey, partialTicks);
-
-
-    //scroll = 0
-        //prevScroll = -2;
-
-//        if (this.prevscrollX != scrollX){
-//            List<Widget> list = this.buttons;
-//            list.remove(toggleRecipesScreen);
-//            list.remove(justForge);
-//            for (Widget a : list) {
-//                    if (prevscrollX < scrollX) {
-//                        a.x += 4;
-//                    } else {
-//                        a.x -= 4;
-//                    }
-//
-//            }
-//            this.prevscrollX = scrollX;
-//        }
-//        if (this.prevscrollY != scrollY){
-//            List<Widget> list = this.buttons;
-//            list.remove(toggleRecipesScreen);
-//            list.remove(justForge);
-//            for (Widget a : list) {
-//                    if (prevscrollY < scrollY) {
-//
-//                        a.y += 4;
-//                    } else {
-//
-//                        a.y -= 4;
-//                    }
-//
-//
-//            }
-//            this.prevscrollY = scrollY;
-//        }
-
         toggleRecipesScreen.render(matrices,mousex,mousey,partialTicks);
         justForge.render(matrices,mousex,mousey,partialTicks);
         stagesPage.render(matrices,mousex,mousey,partialTicks);
+        matrices.popPose();
+
 
 
     }

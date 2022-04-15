@@ -1,6 +1,11 @@
 package com.finderfeed.solarforge.local_library.client.particles;
 
+import com.finderfeed.solarforge.local_library.helpers.FinderfeedMathHelper;
+import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.math.Matrix4f;
+import com.mojang.math.Vector3f;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.util.Mth;
 
@@ -28,16 +33,23 @@ public abstract class TextureScreenParticle extends ScreenParticle{
 
     @Override
     public void render(VertexConsumer vertex, float partialTicks) {
-        double x1 = Mth.lerp(partialTicks,xOld,this.x);
-        double y1 = Mth.lerp(partialTicks,yOld,this.y);
+        PoseStack matrices = new PoseStack();
+        matrices.pushPose();
+        matrices.mulPose(Vector3f.ZP.rotationDegrees(rotationValue));
+        Matrix4f matrix4f = matrices.last().pose();
+        double s = size/2;
+        double x1 = Mth.lerp(partialTicks,xOld,this.x) - s;
+        double y1 = Mth.lerp(partialTicks,yOld,this.y) - s;
         double x2 = x1 + size;
         double y2 = y1 + size;
 
-        vertex.vertex(x1,y1,500).uv(0,1).color(rCol,gCol,bCol,alpha).uv2(LightTexture.FULL_BRIGHT).endVertex();
-        vertex.vertex(x2,y1,500).uv(1,1).color(rCol,gCol,bCol,alpha).uv2(LightTexture.FULL_BRIGHT).endVertex();
-        vertex.vertex(x1,y2,500).uv(0,0).color(rCol,gCol,bCol,alpha).uv2(LightTexture.FULL_BRIGHT).endVertex();
-        vertex.vertex(x2,y2,500).uv(1,0).color(rCol,gCol,bCol,alpha).uv2(LightTexture.FULL_BRIGHT).endVertex();
 
+        vertex.vertex(matrix4f,(float) x1,(float) y2,500).uv(0,0).color(rCol,gCol,bCol,alpha).uv2(LightTexture.FULL_BRIGHT).endVertex();
+        vertex.vertex(matrix4f,(float) x2,(float) y2,500).uv(1,0).color(rCol,gCol,bCol,alpha).uv2(LightTexture.FULL_BRIGHT).endVertex();
+        vertex.vertex(matrix4f,(float) x2,(float) y1,500).uv(1,1).color(rCol,gCol,bCol,alpha).uv2(LightTexture.FULL_BRIGHT).endVertex();
+        vertex.vertex(matrix4f,(float) x1,(float) y1,500).uv(0,1).color(rCol,gCol,bCol,alpha).uv2(LightTexture.FULL_BRIGHT).endVertex();
+
+        matrices.popPose();
     }
 
 

@@ -10,6 +10,7 @@ import com.mojang.blaze3d.vertex.Tesselator;
 import com.mojang.blaze3d.vertex.VertexFormat;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.ParticleRenderType;
+import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.RenderStateShard;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.ShaderInstance;
@@ -128,6 +129,7 @@ public class SolarCraftRenderTypes extends RenderType{
 
             @Override
             public void begin(BufferBuilder bufferBuilder, TextureManager textureManager) {
+                RenderSystem.setShader(GameRenderer::getPositionTexShader);
                 RenderSystem.depthMask(false);
                 RenderSystem.enableBlend();
                 RenderSystem.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE);
@@ -145,7 +147,7 @@ public class SolarCraftRenderTypes extends RenderType{
             }
             @Override
             public String toString() {
-                return "solarforge:test_screen_particle_renertype";
+                return "solarforge:test_screen_particle_rendertype";
             }
         };
 

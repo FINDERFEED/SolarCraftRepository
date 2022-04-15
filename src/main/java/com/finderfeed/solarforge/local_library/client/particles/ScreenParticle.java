@@ -1,6 +1,7 @@
 package com.finderfeed.solarforge.local_library.client.particles;
 
 
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.particle.ParticleRenderType;
 
@@ -19,6 +20,8 @@ public abstract class ScreenParticle {
     protected boolean removed = false;
     protected int lifetime;
     protected int age = 0;
+    protected float rotationPerTick;
+    protected float rotationValue;
 
     public ScreenParticle(int lifetime,double x,double y,double xSpeed,double ySpeed,double xAcceleration,double yAcceleration) {
         this.lifetime = lifetime;
@@ -44,6 +47,8 @@ public abstract class ScreenParticle {
 
         this.xSpeed += this.xAcceleration;
         this.ySpeed += this.yAcceleration;
+
+        this.rotationValue += rotationPerTick;
 
         if (age++ > lifetime) this.removed = true;
     }
@@ -84,4 +89,9 @@ public abstract class ScreenParticle {
 
     public abstract void render(VertexConsumer vertex, float partialTicks);
     public abstract ParticleRenderType getRenderType();
+
+    public void setRotationPerTick(float rotationPerTick) {
+        this.rotationPerTick = rotationPerTick;
+    }
 }
+

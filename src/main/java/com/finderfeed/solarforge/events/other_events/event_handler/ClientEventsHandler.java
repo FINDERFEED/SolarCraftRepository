@@ -61,12 +61,7 @@ public class ClientEventsHandler {
 
     @SubscribeEvent
     public static void manageTickers(TickEvent.ClientTickEvent event) {
-        //TODO:delete test
-        if (Minecraft.getInstance().level != null && event.phase == TickEvent.Phase.START && Minecraft.getInstance().level.getGameTime() % 60 == 0) {
-            TestScreenParticle particle = new TestScreenParticle(60, 50, 50, 0, 0.5, 0, 0, 255, 255, 255, 255);
-            particle.setSize(100);
-            ScreenParticlesRenderHandler.addParticle(particle);
-        }
+
 
         if (event.phase == TickEvent.Phase.START && !Minecraft.getInstance().isPaused())  {
 
