@@ -35,37 +35,40 @@ public class InfuserRenderer extends AbstractRunicEnergyContainerRenderer<Infuse
         if (tile.RECIPE_IN_PROGRESS) {
             matrices.pushPose();
 
-            matrices.translate(0, -0.30, 0);
+            matrices.translate(0, -0.20, 0);
             float bigRing = 33 - (time + 15) % 67;
-            if (bigRing >= 0) {
-                matrices.translate(0, bigRing / 100, 0);
-            } else {
-                matrices.translate(0, -bigRing / 100, 0);
-            }
+//            if (bigRing >= 0) {
+//                matrices.translate(0, bigRing / 100, 0);
+//            } else {
+//                matrices.translate(0, -bigRing / 100, 0);
+//            }
+            matrices.translate(0,Math.sin(time/20)*0.15,0);
             drawRing(partialTicks, matrices, buffer, light, light2, 0.75f,time*2);
             matrices.popPose();
 
             matrices.pushPose();
 
-            matrices.translate(0, -0.30, 0);
-            float centerRing = 33 - (time + 30) % 67;
-            if (centerRing >= 0) {
-                matrices.translate(0, centerRing / 100, 0);
-            } else {
-                matrices.translate(0, -centerRing / 100, 0);
-            }
+            matrices.translate(0, -0.20, 0);
+//            float centerRing = 33 - (time + 30) % 67;
+//            if (centerRing >= 0) {
+//                matrices.translate(0, centerRing / 100, 0);
+//            } else {
+//                matrices.translate(0, -centerRing / 100, 0);
+//            }
+            matrices.translate(0,Math.sin(time/20 + Math.PI/2f)*0.15,0);
             drawRing(partialTicks, matrices, buffer, light, light2, 0.525f,time*2+90);
             matrices.popPose();
 
             matrices.pushPose();
 
-            matrices.translate(0, -0.30, 0);
-            float smallRing = 33 - (time + 45) % 67;
-            if (smallRing >= 0) {
-                matrices.translate(0, smallRing / 100, 0);
-            } else {
-                matrices.translate(0, -smallRing / 100, 0);
-            }
+            matrices.translate(0, -0.20, 0);
+//            float smallRing = 33 - (time + 45) % 67;
+//            if (smallRing >= 0) {
+//                matrices.translate(0, smallRing / 100, 0);
+//            } else {
+//                matrices.translate(0, -smallRing / 100, 0);
+//            }
+            matrices.translate(0,Math.sin(time/20 + Math.PI)*0.15,0);
             drawRing(partialTicks, matrices, buffer, light, light2, 0.30f,time*2+270);
             matrices.popPose();
             matrices.pushPose();
