@@ -221,9 +221,7 @@ public class SolarLexiconScreen extends Screen implements IScrollable {
             widget.active = widget.x >= relX - 5 && widget.x <= relX + 230 && widget.y >= relY - 5 && widget.y <= relY + 115;
         }
 
-        RuneTileParticle particle = new RuneTileParticle(60, relX, relY, 0, 0.5, 0, 0, 255, 255, 255, 255);
-        particle.setSize(20);
-        ScreenParticlesRenderHandler.addParticle(particle);
+
 
     }
 

@@ -9,6 +9,7 @@ import com.mojang.math.Vector3f;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.DimensionSpecialEffects;
+import net.minecraft.client.renderer.FogRenderer;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.resources.ResourceLocation;
 
@@ -57,13 +58,15 @@ class RenderSky implements ISkyRenderHandler{
     public void render(int ticks, float partialTicks, PoseStack matrixStack, ClientLevel world, Minecraft mc) {
         Tesselator tes = Tesselator.getInstance();
         BufferBuilder builder = tes.getBuilder();
-
+        //RenderSystem.depthMask(false);
         RenderSystem.enableBlend();
+        RenderSystem.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
+
         //0.25 - start of night
         //0.75 - end of night
         float timeOfDay = world.getTimeOfDay(partialTicks);
 
-
+        RenderSystem.enableTexture();
         matrixStack.pushPose();
         matrixStack.scale(3,1,3);
         Matrix4f mat = matrixStack.last().pose();
@@ -77,9 +80,10 @@ class RenderSky implements ISkyRenderHandler{
         }else if ( (timeOfDay >=0.5) && (timeOfDay < 0.75) ){
             renderBrokenSky(matrixStack, builder, (0.75f-timeOfDay)*4f );
         }
-
-
+        RenderSystem.setShader(GameRenderer::getPositionTexShader);;
         tes.end();
+
+        RenderSystem.defaultBlendFunc();
         matrixStack.popPose();
 
         matrixStack.pushPose();
@@ -89,26 +93,26 @@ class RenderSky implements ISkyRenderHandler{
         ClientHelpers.bindText(STARGAZE_TEST);
 
 
-        RenderSystem.setShader(GameRenderer::getPositionTexColorShader);
-        builder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX_COLOR);
-        builder.vertex(mat,-25,-80,25).uv(0,1).color(255,255,255,255).endVertex();
-        builder.vertex(mat,25,-80,25).uv(1,1).color(255,255,255,255).endVertex();
-        builder.vertex(mat,25,-80,-25).uv(1,0).color(255,255,255,255).endVertex();
-        builder.vertex(mat,-25,-80,-25).uv(0,0).color(255,255,255,255).endVertex();
+
+        builder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
+        builder.vertex(mat,-25,-80,25).uv(0,1).endVertex();
+        builder.vertex(mat,25,-80,25).uv(1,1).endVertex();
+        builder.vertex(mat,25,-80,-25).uv(1,0).endVertex();
+        builder.vertex(mat,-25,-80,-25).uv(0,0).endVertex();
         tes.end();
 
         ClientHelpers.bindText(SUNGAZE_TEST);
-        RenderSystem.setShader(GameRenderer::getPositionTexColorShader);
-        builder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX_COLOR);
-        builder.vertex(mat,-25,80,-25).uv(0,0).color(255,255,255,255).endVertex();
-        builder.vertex(mat,25,80,-25).uv(1,0).color(255,255,255,255).endVertex();
-        builder.vertex(mat,25,80,25).uv(1,1).color(255,255,255,255).endVertex();
-        builder.vertex(mat,-25,80,25).uv(0,1).color(255,255,255,255).endVertex();
+
+        builder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
+        builder.vertex(mat,-25,80,-25).uv(0,0).endVertex();
+        builder.vertex(mat,25,80,-25).uv(1,0).endVertex();
+        builder.vertex(mat,25,80,25).uv(1,1).endVertex();
+        builder.vertex(mat,-25,80,25).uv(0,1).endVertex();
         tes.end();
         matrixStack.popPose();
-
-
-
+        RenderSystem.disableTexture();
+        //RenderSystem.depthMask(true);
+        RenderSystem.disableBlend();
     }
 
     private void renderBrokenSky(PoseStack matrixStack,BufferBuilder bufferbuilder,float opacityFactor){

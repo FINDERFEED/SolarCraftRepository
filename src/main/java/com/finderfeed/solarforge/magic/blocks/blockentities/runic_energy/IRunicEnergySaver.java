@@ -42,7 +42,7 @@ public interface IRunicEnergySaver {
         components.add(new TranslatableComponent("solarcraft.contained_energy"));
         for (RunicEnergy.Type type : types){
             components.add(new TextComponent(type.id.toUpperCase(Locale.ROOT)).withStyle(ChatFormatting.GOLD)
-                    .append(new TextComponent(" " + container.get(type) + "/" + container.getMaxEnergy()).withStyle(ChatFormatting.WHITE)));
+                    .append(new TextComponent(": " + container.get(type) + "/" + container.getMaxEnergy()).withStyle(ChatFormatting.WHITE)));
         }
     }
 

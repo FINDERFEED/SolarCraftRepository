@@ -9,11 +9,13 @@ import com.finderfeed.solarforge.magic.blocks.infusing_table_things.InfuserTileE
 import com.finderfeed.solarforge.magic.items.ModuleItem;
 import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
 import com.finderfeed.solarforge.registries.items.ItemsRegister;
+import com.mojang.blaze3d.shaders.FogShape;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.client.renderer.FogRenderer;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
@@ -25,6 +27,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ClientPlayerNetworkEvent;
+import net.minecraftforge.client.event.EntityViewRenderEvent;
 import net.minecraftforge.client.event.RenderLevelLastEvent;
 
 import net.minecraftforge.common.Tags;
@@ -44,6 +47,10 @@ public class ClientEventsHandler {
     private static List<BlockPos> CATALYST_RENDER_POSITIONS = new ArrayList<>();
     
 
+    @SubscribeEvent
+    public static void reduceFog(EntityViewRenderEvent.RenderFogEvent event){
+
+    }
 
     @SubscribeEvent
     public static void onPlayerLogout(final ClientPlayerNetworkEvent.LoggedOutEvent event){

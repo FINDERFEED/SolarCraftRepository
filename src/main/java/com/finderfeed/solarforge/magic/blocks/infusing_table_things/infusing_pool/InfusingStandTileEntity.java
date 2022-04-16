@@ -73,7 +73,6 @@ public class InfusingStandTileEntity extends ItemStackHandlerTile {
     @Override
     public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
         super.onDataPacket(net, pkt);
-        this.load(pkt.getTag());
     }
 
     @Nullable
@@ -81,5 +80,10 @@ public class InfusingStandTileEntity extends ItemStackHandlerTile {
     public ClientboundBlockEntityDataPacket getUpdatePacket() {
         CompoundTag tag = saveWithFullMetadata();
         return Helpers.createTilePacket(this,tag);
+    }
+
+    @Override
+    protected void saveAdditional(CompoundTag tag) {
+        super.saveAdditional(tag);
     }
 }

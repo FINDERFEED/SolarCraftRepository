@@ -354,7 +354,7 @@
   "item.solarforge.solar_god_bow": "Solar God Bow",
   "block.solarforge.solar_stone_stairs": "Solar Stone Stairs",
   "ach.runic_energy_repeater": "Networking",
-  "pre.runic_energy_repeater": "If pylons contain some sort of energy, then can they can be used?",
+  "pre.runic_energy_repeater": "If pylons contain some sort of energy, then they can be used?",
   "solarforge.solar_energy_generator": "Solar Energy Generator",
   "solar_fragment.runic_energy_repeater": "Runic Energy Repeater",
   "runic_energy_repeater.lore": "The only way to connect the source of runic energy to the consumers. Radius - 25 blocks. Place a catalyst block under it to assign which energy it should transmit.",

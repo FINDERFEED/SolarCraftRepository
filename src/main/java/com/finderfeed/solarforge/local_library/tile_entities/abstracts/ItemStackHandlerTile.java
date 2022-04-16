@@ -55,7 +55,6 @@ public class ItemStackHandlerTile extends BlockEntity {
     @Override
     public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
         super.onDataPacket(net, pkt);
-        this.load(pkt.getTag());
     }
 
     @Nullable
