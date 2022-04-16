@@ -274,8 +274,7 @@ public class FeaturesRegistry {
             Registry.register(BuiltinRegistries.CONFIGURED_FEATURE,new ResourceLocation("solarforge","energy_pylon_configured"),
                     ENERGY_PYLON_CONFIGURED_CONF);
 
-            ENERGY_PYLON_PLACEMENT = registerPlacedFeature("energy_pylon",Holder.direct(ENERGY_PYLON_CONFIGURED_CONF),
-                    RarityFilter.onAverageOnceEvery(200));
+            ENERGY_PYLON_PLACEMENT = registerPlacedFeature("energy_pylon",Holder.direct(ENERGY_PYLON_CONFIGURED_CONF));
 
 
             RUNIC_TREE_FEATURE_CONF = new ConfiguredFeature<>(Feature.TREE,new TreeConfiguration.TreeConfigurationBuilder(

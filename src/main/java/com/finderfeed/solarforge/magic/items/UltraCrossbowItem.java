@@ -82,9 +82,11 @@ public class UltraCrossbowItem extends RareSolarcraftItem implements IRunicEnerg
     }
 
     @Override
-    public InteractionResultHolder<ItemStack> use(Level p_77659_1_, Player p_77659_2_, InteractionHand p_77659_3_) {
-        p_77659_2_.startUsingItem(p_77659_3_);
-        return super.use(p_77659_1_, p_77659_2_, p_77659_3_);
+    public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
+        if (ItemRunicEnergy.isEnough(getCost(),player.getItemInHand(hand),this,player)) {
+            player.startUsingItem(hand);
+        }
+        return super.use(world, player, hand);
     }
 
 
@@ -114,5 +116,10 @@ public class UltraCrossbowItem extends RareSolarcraftItem implements IRunicEnerg
     @Override
     public RunicEnergyCost getCost() {
         return COST;
+    }
+
+    @Override
+    public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
+        return slotChanged;
     }
 }

@@ -33,6 +33,7 @@ public final class SolarcraftConfig {
     public static final ForgeConfigSpec.ConfigValue<Double> RUNIC_ENERGY_PER_TICK_PYLON;
     public static final ForgeConfigSpec.ConfigValue<Double> RUNIC_ENERGY_PER_TICK_UPGRADE;
     public static final ForgeConfigSpec.ConfigValue<Double> RUNIC_ENERGY_PER_RUNE_CHARGER;
+    public static final ForgeConfigSpec.ConfigValue<Integer> ENERGY_PYLON_SPAWN_CHANCE;
     public static final ForgeConfigSpec.ConfigValue<List<String>> ISLAND_ORES;
     static {
         BUILDER.push("SolarCraft config");
@@ -56,6 +57,9 @@ public final class SolarcraftConfig {
 
         RUNIC_ENERGY_PER_RUNE_CHARGER = BUILDER.comment("How much runic energy will be given to runic energy charger when it consumes a rune.")
                 .define("runic_energy_per_rune",7.5d);
+
+        ENERGY_PYLON_SPAWN_CHANCE = BUILDER.comment("Runic energy pylon spawn chance. Works similar to datapacks")
+                .define("spawn_chance",180);
         BUILDER.pop();
         SPEC = BUILDER.build();
     }

@@ -36,10 +36,6 @@ public abstract class TextureScreenParticle extends ScreenParticle{
         PoseStack matrices = new PoseStack();
         matrices.pushPose();
         double s = size/2;
-        double x1 = Mth.lerp(partialTicks,xOld,this.x) - s;
-        double y1 = Mth.lerp(partialTicks,yOld,this.y) - s;
-        double x2 = x1 + size;
-        double y2 = y1 + size;
         matrices.translate(Mth.lerp(partialTicks,xOld,this.x),Mth.lerp(partialTicks,yOld,this.y),0);
         matrices.mulPose(Vector3f.ZP.rotationDegrees(Mth.lerp(partialTicks,rotationValueOld,rotationValue)));
         Matrix4f matrix4f = matrices.last().pose();

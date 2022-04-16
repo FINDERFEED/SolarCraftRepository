@@ -27,7 +27,7 @@ public class ScreenParticlesRenderHandler {
 
     @SubscribeEvent
     public static void tickParticles(TickEvent.ClientTickEvent event){
-        if (event.phase == TickEvent.Phase.START){
+        if (event.phase == TickEvent.Phase.START && !Minecraft.getInstance().isPaused()){
             Collection<List<ScreenParticle>> particles = PARTICLES.values();
             for (List<ScreenParticle> p : particles){
                 Iterator<ScreenParticle> iterator = p.iterator();
@@ -56,19 +56,6 @@ public class ScreenParticlesRenderHandler {
         }
 
 
-    }
-
-
-    public static void test(){
-        BufferBuilder builder = TESSELATOR.getBuilder();
-        for (Map.Entry<ParticleRenderType,List<ScreenParticle>> entry : PARTICLES.entrySet()){
-            ParticleRenderType type = entry.getKey();
-            type.begin(builder, Minecraft.getInstance().getTextureManager());
-            for (ScreenParticle particle : entry.getValue()){
-                particle.render(builder,Minecraft.getInstance().getFrameTime());
-            }
-            type.end(TESSELATOR);
-        }
     }
 
 

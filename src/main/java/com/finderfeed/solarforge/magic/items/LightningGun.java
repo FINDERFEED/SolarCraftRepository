@@ -80,4 +80,9 @@ public class LightningGun extends RareSolarcraftItem implements IRunicEnergyUser
     public RunicEnergyCost getCost() {
         return COST;
     }
+
+    @Override
+    public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
+        return slotChanged;
+    }
 }

@@ -42,8 +42,8 @@ public class BonemealerTileEntity extends AbstractRunicEnergyContainer implement
                     List<BlockPos> positons = tile.getGrowablePositons();
                     tile.performBonemealing(positons);
                     if (!positons.isEmpty()) {
-//                        tile.COST.forEach((type, cost) -> {
-//                            tile.giveEnergy(type, -cost);
+//                        tile.COST.forEach((type, baseCost) -> {
+//                            tile.giveEnergy(type, -baseCost);
 //                        });
                         tile.COST.getSetTypes().forEach((type)->{
                             tile.giveEnergy(type,tile.COST.get(type));

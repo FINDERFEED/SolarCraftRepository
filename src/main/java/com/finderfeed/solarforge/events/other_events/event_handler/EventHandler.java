@@ -214,7 +214,7 @@ public class EventHandler {
     public static void addFeatures(BiomeLoadingEvent event){
         BiomeGenerationSettingsBuilder b = event.getGeneration();
         if ( (event.getCategory() != Biome.BiomeCategory.NETHER) && (event.getCategory() != Biome.BiomeCategory.THEEND) && notNone(event)) {
-            event.getGeneration().addFeature(GenerationStep.Decoration.LOCAL_MODIFICATIONS, FeaturesRegistry.ENERGY_PYLON_PLACEMENT);
+            event.getGeneration().addFeature(GenerationStep.Decoration.STRONGHOLDS, FeaturesRegistry.ENERGY_PYLON_PLACEMENT);
             event.getGeneration().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES,FeaturesRegistry.EMPTY_CRYSTALS_PLACEMENT);
         }
         if (event.getCategory() == Biome.BiomeCategory.PLAINS){

@@ -5,6 +5,7 @@ import com.finderfeed.solarforge.magic.items.runic_energy.RunicEnergyCost;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import com.google.gson.*;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.logging.log4j.Level;
@@ -14,6 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
+import java.util.function.Function;
 
 public class EnchanterConfig {
 
@@ -64,7 +66,7 @@ public class EnchanterConfig {
                     }
                 }
                 if (cost.getSetTypes().isEmpty()){
-                    SolarForge.LOGGER.log(Level.ERROR,"Enchantment " + enchantmentID + " doesn't have runic energy cost. Skipping...");
+                    SolarForge.LOGGER.log(Level.ERROR,"Enchantment " + enchantmentID + " doesn't have runic energy baseCost. Skipping...");
                 }
                 ConfigEnchantmentInstance instance = new ConfigEnchantmentInstance(enchantment,maxLevel,cost);
                 CONFIG_ENCHANTMENTS.add(instance);
@@ -156,15 +158,15 @@ public class EnchanterConfig {
         }
 
     }
-    //TODO:implement exponental cost increasing
     public enum Mode{
-        EXPONENT("exponent"),
-        STATIC("static");
+        SQUARE("square",(x)->x*x),
+        STATIC("static",(x)->x);
 
         private String id;
-
-        Mode(String id){
+        private Function<Float,Float> func;
+        Mode(String id, Function<Float,Float> func){
             this.id = id;
+            this.func = func;
         }
 
         private static Mode byId(String id){
@@ -188,5 +190,15 @@ public class EnchanterConfig {
     public interface Changes{
         void applyChanges(JsonObject object);
     }
-    public static record ConfigEnchantmentInstance(Enchantment enchantment,int maxLevel,RunicEnergyCost cost){}
+    public static record ConfigEnchantmentInstance(Enchantment enchantment,int maxLevel,RunicEnergyCost baseCost){
+        public RunicEnergyCost getCostForLevel(Mode mode,int level){
+            RunicEnergyCost newCost = new RunicEnergyCost();
+            for (RunicEnergy.Type type : baseCost.getSetTypes()) {
+                float maximum = baseCost.get(type)*maxLevel;
+                newCost.set(type, Mth.lerp(mode.func.apply(level/(float)maxLevel),0,maximum));
+            }
+            return newCost;
+        }
+
+    }
 }

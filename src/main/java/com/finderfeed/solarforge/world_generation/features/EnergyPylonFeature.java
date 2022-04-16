@@ -1,6 +1,7 @@
 package com.finderfeed.solarforge.world_generation.features;
 
 import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.config.SolarcraftConfig;
 import com.mojang.serialization.Codec;
 
 import net.minecraft.world.level.block.Blocks;
@@ -48,9 +49,10 @@ public class EnergyPylonFeature extends Feature<NoneFeatureConfiguration> {
 
     @Override
     public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> ctx) {
+        Random random = ctx.random();
+        if (random.nextFloat() > 1.0f/SolarcraftConfig.ENERGY_PYLON_SPAWN_CHANCE.get()) return false;
 
         WorldGenLevel world = ctx.level();
-        Random random = ctx.random();
         BlockPos pos = ctx.origin();
         Rotation rot = Rotation.NONE;
         StructureManager manager = world.getLevel().getStructureManager();

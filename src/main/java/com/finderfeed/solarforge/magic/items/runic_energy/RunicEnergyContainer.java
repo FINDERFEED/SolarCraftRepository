@@ -44,4 +44,8 @@ public class RunicEnergyContainer {
     public float getMaxEnergy() {
         return maximumEnergy;
     }
+
+    public void setMaximumEnergy(float maximumEnergy) {
+        this.maximumEnergy = maximumEnergy;
+    }
 }

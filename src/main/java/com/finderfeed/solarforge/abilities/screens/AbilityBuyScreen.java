@@ -104,7 +104,7 @@ public class AbilityBuyScreen extends Screen {
             ClientHelpers.bindText(new ResourceLocation("solarforge","textures/abilities/"+currentAbility.id+".png"));
             blit(matrices,relX+157-20,relY+33,0,0,38,38,38,38);
             drawCenteredString(matrices, minecraft.font,new TranslatableComponent("name."+currentAbility.id),relX+176-20,relY+72,0xffffff);
-            drawCenteredString(matrices, minecraft.font,new TranslatableComponent("cost."+currentAbility.id).append(String.valueOf(currentAbility.buyCost)),relX+176-20,relY+82,0xffffff);
+            drawCenteredString(matrices, minecraft.font,new TranslatableComponent("baseCost."+currentAbility.id).append(String.valueOf(currentAbility.buyCost)),relX+176-20,relY+82,0xffffff);
             doText(matrices,new TranslatableComponent("desc."+currentAbility.id).getString(),17,relX+176-20,relY+92);
         }
         drawCenteredString(matrices,font,String.valueOf(minecraft.player.getPersistentData().getInt(SolarCraftTags.RAW_SOLAR_ENERGY)),relX+87,relY+218,0xff0000);

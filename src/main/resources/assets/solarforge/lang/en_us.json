@@ -573,7 +573,7 @@
   "solar_fragment.solar_infuser_structure_3": "Infuser Structure 3",
   "block.solarforge.speed_road": "Speed Tile",
   "solar_fragment.speed_road": "Speed Tile",
-  "speed_road.lore": "Gives speed I when stepped on.",
+  "speed_road.lore": "Running between your chests and crafting tables can take a lot of time. Well this won't teleport your items but it will speed you up instead! Gives speed I when stepped on.",
   "solarcraft.stages": "These are progression stages (each row is a progression stage). When you have completed the stage and ALL stages before it you will be able to decrypt more fragments.",
   "solarcraft.completed": "Status: Completed",
   "solarcraft.not_completed": "Status: Not completed",
@@ -637,8 +637,8 @@
   "solar_fragment.lightning_gun": "Lightning Emitter",
   "solar_category.beginner_blocks": "Blocks",
   "solar_fragment.elemental_enchanter": "Elemental Enchanter",
-  "block.solarforge.elemental_enchanter": "Elemental nchanter",
-  "elemental_enchanter.lore": "Enchants items with elemental energy.",
+  "block.solarforge.elemental_enchanter": "Elemental Enchanter",
+  "elemental_enchanter.lore": "Trying to catch needed enchantments in enchantment table and searching for old books left in some dungeons may become a tedious task, luckily you have discovered that element powers can be used to empower your gear as same as enchantments do.",
   "solarforge_struct.explosion_blocker": "Explosion Blocker",
   "solarcraft.cant_save_energy": "Energy is not saved when broken!",
   "entity.solarforge.runic_elemental_boss": "Runic Elemental",
@@ -667,5 +667,6 @@
   "divine_armor.lore": "The most powerful set of armor you will ever find! Blocks 1 damage for 2 ARDO runic energy. Each piece also provides permanent potion effects: chestplate - strength II and haste II, leggings - jump boost III, boots - speed III, helmet - night vision. Chestplate gives creative flight with increased speed.",
   "solar_fragment.re_charger": "Runic Energy Charger",
   "re_charger.lore": "Some items cannot function without \"fuel\", and this block will help you charge these items! Can be charged by runes or pylons.",
-  "death.attack.solarcraft_shadow" : "%s shadowed away"
+  "death.attack.solarcraft_shadow" : "%s shadowed away",
+  "solarcraft.divine_armor": "Blocks 1 damage for 2 Ardo Runic Energy."
 }

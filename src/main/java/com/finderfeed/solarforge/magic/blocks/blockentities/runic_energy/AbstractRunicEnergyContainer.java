@@ -30,7 +30,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public abstract class AbstractRunicEnergyContainer extends SolarcraftBlockEntity implements OwnedBlock {
 
     private int seekingCooldown = 0;
-    private RunicEnergyContainer container = new RunicEnergyContainer((float) getRunicEnergyLimit());
+    private RunicEnergyContainer container = new RunicEnergyContainer();
     public List<BlockPos> nullOrGiverPositionForClient = new ArrayList<>();
     private UUID owner;
     private Map<RunicEnergy.Type,List<BlockPos>> PATH_TO_CONTAINERS = new HashMap<>();
@@ -335,5 +335,12 @@ public abstract class AbstractRunicEnergyContainer extends SolarcraftBlockEntity
         super.handleUpdateTag(tag);
     }
 
+    @Override
+    public void onLoad() {
+        super.onLoad();
+        if (!level.isClientSide) {
+            this.container.setMaximumEnergy((float) getRunicEnergyLimit());
+        }
+    }
 }
 

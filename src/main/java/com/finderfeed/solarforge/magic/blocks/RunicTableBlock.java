@@ -37,15 +37,14 @@ public class RunicTableBlock extends Block implements EntityBlock {
 
 
     @Override
-    public void onRemove(BlockState p_196243_1_, Level p_196243_2_, BlockPos p_196243_3_, BlockState p_196243_4_, boolean p_196243_5_) {
-        if (!p_196243_2_.isClientSide){
-            BlockEntity tile = p_196243_2_.getBlockEntity(p_196243_3_);
+    public void onRemove(BlockState state1, Level world, BlockPos pos, BlockState state, boolean p_196243_5_) {
+        if (!world.isClientSide){
+            BlockEntity tile = world.getBlockEntity(pos);
             if (tile instanceof RunicTableTileEntity t){
-//                Containers.dropContents(p_196243_2_,p_196243_3_,(RunicTableTileEntity)tile);
-                Containers.dropContents(p_196243_2_, p_196243_3_,new PhantomInventory(t.getInventory()));
+                Containers.dropContents(world, pos,new PhantomInventory(t.getInventory()));
             }
         }
-        super.onRemove(p_196243_1_, p_196243_2_, p_196243_3_, p_196243_4_, p_196243_5_);
+        super.onRemove(state1, world, pos, state, p_196243_5_);
     }
 
     @Override

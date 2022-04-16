@@ -72,4 +72,9 @@ public class SolarDiscGunItem extends SolarcraftItem implements IRunicEnergyUser
     public RunicEnergyCost getCost() {
         return COST;
     }
+
+    @Override
+    public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
+        return slotChanged;
+    }
 }

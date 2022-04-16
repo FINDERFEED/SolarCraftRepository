@@ -51,6 +51,7 @@ public class IllidiumHoe extends RareSolarcraftHoe implements IRunicEnergyUser {
     public void appendHoverText(ItemStack item, @Nullable Level world, List<Component> components, TooltipFlag p_77624_4_) {
         components.add(new TranslatableComponent("solarforge.illidium_hoe").withStyle(ChatFormatting.GOLD));
         super.appendHoverText(item, world, components, p_77624_4_);
+        ItemRunicEnergy.addRunicEnergyTextComponents(item,this,components);
     }
 
 
@@ -67,5 +68,10 @@ public class IllidiumHoe extends RareSolarcraftHoe implements IRunicEnergyUser {
     @Override
     public RunicEnergyCost getCost() {
         return COST;
+    }
+
+    @Override
+    public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
+        return slotChanged;
     }
 }

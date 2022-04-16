@@ -341,8 +341,8 @@ public class InfuserTileEntity extends REItemHandlerBlockEntity implements  IEne
         tile.resetCatalysts(recipe);
         ItemStack result = new ItemStack(recipe.output.getItem(),recipe.count);
         int count = tile.getMinRecipeCountOutput(recipe);
-//        recipe.RUNIC_ENERGY_COST.forEach((type,cost)->{
-//            tile.giveEnergy(type,-cost*count);
+//        recipe.RUNIC_ENERGY_COST.forEach((type,baseCost)->{
+//            tile.giveEnergy(type,-baseCost*count);
 //        });
         for (RunicEnergy.Type type : recipe.RUNIC_ENERGY_COST.getSetTypes()){
             tile.giveEnergy(type,-recipe.RUNIC_ENERGY_COST.get(type)*count);
@@ -523,9 +523,9 @@ public class InfuserTileEntity extends REItemHandlerBlockEntity implements  IEne
 
     private float getMaxEnergyCostFromRecipe(InfusingRecipe recipe){
 //        AtomicDouble integer = new AtomicDouble(0);
-//        recipe.RUNIC_ENERGY_COST.forEach((type,cost)->{
-//            if (cost > integer.get()){
-//                integer.set(cost);
+//        recipe.RUNIC_ENERGY_COST.forEach((type,baseCost)->{
+//            if (baseCost > integer.get()){
+//                integer.set(baseCost);
 //            }
 //        });
         float max = 0;

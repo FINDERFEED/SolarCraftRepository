@@ -10,9 +10,6 @@ import com.finderfeed.solarforge.local_library.helpers.FinderfeedMathHelper;
 import com.finderfeed.solarforge.magic.items.runic_energy.RunicEnergyCost;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
@@ -20,7 +17,6 @@ import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.util.GsonHelper;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
@@ -28,7 +24,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.fml.util.thread.EffectiveSide;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.Nullable;
 
@@ -42,7 +37,7 @@ public class EnchanterBlockEntity extends REItemHandlerBlockEntity {
     public static final int MAX_ENCHANTING_TICKS = 500;
     private int enchantingTicks = 0;
     private boolean enchantingInProgress = false;
-    private Enchantment processingEnchantment = null;
+    private EnchanterConfig.ConfigEnchantmentInstance processingEnchantment = null;
     private int procesingEnchantmentLevel = 0;
 
     public EnchanterBlockEntity(BlockPos pos, BlockState state) {
@@ -54,23 +49,24 @@ public class EnchanterBlockEntity extends REItemHandlerBlockEntity {
         if (!world.isClientSide){
             if (enchanter.enchantingInProgress()){
                 ItemStack stack = enchanter.getStackInSlot(0);
-                int enchLevelCurrent = EnchantmentHelper.getItemEnchantmentLevel(enchanter.processingEnchantment,stack);
-                if (!stack.isEmpty() && stack.canApplyAtEnchantingTable(enchanter.processingEnchantment)
+                int enchLevelCurrent = EnchantmentHelper.getItemEnchantmentLevel(enchanter.processingEnchantment.enchantment(),stack);
+                if (!stack.isEmpty() && stack.canApplyAtEnchantingTable(enchanter.processingEnchantment.enchantment())
                         && enchLevelCurrent < enchanter.procesingEnchantmentLevel){
                     enchanter.setChanged();
                     world.sendBlockUpdated(pos,state,state,3);
                     enchanter.loadConfigIfNecessary();
 //                        SERVERSIDE_CONFIG = parseJson(EnchanterConfigInit.SERVERSIDE_JSON);
-                    RunicEnergyCost defaultCosts = SERVERSIDE_CONFIG.getEnchantmentById(enchanter.processingEnchantment.getRegistryName().toString()).cost();
-                    if (enchanter.hasEnoughRunicEnergy(defaultCosts,enchanter.procesingEnchantmentLevel)){
+                    RunicEnergyCost defaultCosts = enchanter.processingEnchantment.getCostForLevel(SERVERSIDE_CONFIG.getMode(), enchanter.procesingEnchantmentLevel);
+
+                    if (enchanter.hasEnoughRunicEnergy(defaultCosts,1)){
                         if (enchanter.enchantingTicks++ > MAX_ENCHANTING_TICKS){
                             Map<Enchantment,Integer> enchs = new HashMap<>(EnchantmentHelper.getEnchantments(stack));
-                            if (enchs.containsKey(enchanter.processingEnchantment)){
-                                enchs.remove(enchanter.processingEnchantment);
-                                enchs.put(enchanter.processingEnchantment,enchanter.procesingEnchantmentLevel);
+                            if (enchs.containsKey(enchanter.processingEnchantment.enchantment())){
+                                enchs.remove(enchanter.processingEnchantment.enchantment());
+                                enchs.put(enchanter.processingEnchantment.enchantment(),enchanter.procesingEnchantmentLevel);
                                 EnchantmentHelper.setEnchantments(enchs,stack);
                             }else{
-                                stack.enchant(enchanter.processingEnchantment,enchanter.procesingEnchantmentLevel);
+                                stack.enchant(enchanter.processingEnchantment.enchantment(),enchanter.procesingEnchantmentLevel);
                             }
                             enchanter.spendEnergy(defaultCosts, enchanter.procesingEnchantmentLevel);
                             enchanter.reset();
@@ -110,7 +106,7 @@ public class EnchanterBlockEntity extends REItemHandlerBlockEntity {
         }
     }
 
-    public Enchantment getProcessingEnchantment() {
+    public EnchanterConfig.ConfigEnchantmentInstance getProcessingEnchantment() {
         return processingEnchantment;
     }
 
@@ -145,7 +141,7 @@ public class EnchanterBlockEntity extends REItemHandlerBlockEntity {
 
         this.level.playSound(null,worldPosition.getX(),worldPosition.getY(),worldPosition.getZ(), SoundEvents.BEACON_ACTIVATE, SoundSource.BLOCKS,
                 1,1);
-        this.processingEnchantment = enchantment;
+        this.processingEnchantment = SERVERSIDE_CONFIG.getConfigEntryByEnchantment(enchantment);
         this.procesingEnchantmentLevel = level;
         this.enchantingInProgress = true;
     }
@@ -160,7 +156,7 @@ public class EnchanterBlockEntity extends REItemHandlerBlockEntity {
         tag.putInt("enchanting_ticks",enchantingTicks);
         tag.putBoolean("in_progress",enchantingInProgress);
         if (processingEnchantment != null) {
-            tag.putString("enchantment",processingEnchantment.getRegistryName().toString());
+            tag.putString("enchantment",processingEnchantment.enchantment().getRegistryName().toString());
         }else{
             tag.putString("enchantment","null");
         }
@@ -174,7 +170,7 @@ public class EnchanterBlockEntity extends REItemHandlerBlockEntity {
         enchantingInProgress = tag.getBoolean("in_progress");
         String enchantment = tag.getString("enchantment");
         if (!enchantment.equals("null")){
-            this.processingEnchantment = ForgeRegistries.ENCHANTMENTS.getValue(new ResourceLocation(enchantment));
+            this.processingEnchantment = SERVERSIDE_CONFIG.getConfigEntryByEnchantment(ForgeRegistries.ENCHANTMENTS.getValue(new ResourceLocation(enchantment)));
         }else{
             processingEnchantment = null;
         }
@@ -229,8 +225,8 @@ public class EnchanterBlockEntity extends REItemHandlerBlockEntity {
 
 
     public void loadConfigIfNecessary(){
+        if (level.isClientSide) return;
         if (SERVERSIDE_CONFIG != null) return;
-        if (EffectiveSide.get().isClient()) return;
         SERVERSIDE_CONFIG = new EnchanterConfig(EnchanterConfigInit.SERVERSIDE_JSON);
     }
 

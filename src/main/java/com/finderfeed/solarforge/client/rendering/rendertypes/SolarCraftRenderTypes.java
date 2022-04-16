@@ -147,5 +147,32 @@ public class SolarCraftRenderTypes extends RenderType{
             }
         };
 
+        public static final ParticleRenderType SOLAR_STRIKE_PARTICLE_SCREEN = new ParticleRenderType() {
+            ResourceLocation loc = new ResourceLocation(SolarForge.MOD_ID,"textures/particle/solar_strike_particle.png");
+            @Override
+            public void begin(BufferBuilder bufferBuilder, TextureManager textureManager) {
+                RenderSystem.setShader(GameRenderer::getPositionTexColorShader);
+                ClientHelpers.bindText(loc);
+                RenderSystem.depthMask(false);
+                RenderSystem.enableBlend();
+                RenderSystem.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE);
+
+                //textureManager.getTexture(TextureAtlas.LOCATION_PARTICLES).setBlurMipmap(true, false);
+                bufferBuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.PARTICLE);
+            }
+
+            @Override
+            public void end(Tesselator tessellator) {
+                tessellator.end();
+                //Minecraft.getInstance().textureManager.getTexture(TextureAtlas.LOCATION_PARTICLES).restoreLastBlurMipmap();
+                RenderSystem.disableBlend();
+                RenderSystem.depthMask(true);
+            }
+            @Override
+            public String toString() {
+                return "solarforge:solar_strike_particle_screen";
+            }
+        };
+
     }
 }

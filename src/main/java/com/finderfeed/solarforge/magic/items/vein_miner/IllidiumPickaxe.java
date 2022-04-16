@@ -114,5 +114,10 @@ public class IllidiumPickaxe extends RareSolarcraftPickaxe implements IRunicEner
     public RunicEnergyCost getCost() {
         return COST;
     }
+
+    @Override
+    public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
+        return slotChanged;
+    }
 }
 
