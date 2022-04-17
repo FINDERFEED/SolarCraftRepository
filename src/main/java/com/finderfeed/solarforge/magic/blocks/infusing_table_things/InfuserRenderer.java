@@ -1,5 +1,6 @@
 package com.finderfeed.solarforge.magic.blocks.infusing_table_things;
 
+import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.local_library.helpers.RenderingTools;
 import com.finderfeed.solarforge.magic.blocks.render.abstracts.AbstractRunicEnergyContainerRCBERenderer;
 import com.finderfeed.solarforge.magic.blocks.render.abstracts.AbstractRunicEnergyContainerRenderer;
@@ -21,8 +22,8 @@ import net.minecraft.world.phys.Vec3;
 import java.util.List;
 
 public class InfuserRenderer extends AbstractRunicEnergyContainerRenderer<InfuserTileEntity> {
-    public final ResourceLocation text = new ResourceLocation("solarforge","textures/misc/solar_infuser_ring.png");
-    public final ResourceLocation fancyRing = new ResourceLocation("solarforge","textures/misc/fancy_ring_1.png");
+    public final ResourceLocation text = new ResourceLocation(SolarForge.MOD_ID,"textures/misc/solar_infuser_ring.png");
+    public final ResourceLocation fancyRing = new ResourceLocation(SolarForge.MOD_ID,"textures/misc/fancy_ring_1.png");
     public InfuserRenderer(BlockEntityRendererProvider.Context ctx) {
         super(ctx);
 
@@ -36,12 +37,6 @@ public class InfuserRenderer extends AbstractRunicEnergyContainerRenderer<Infuse
             matrices.pushPose();
 
             matrices.translate(0, -0.20, 0);
-            float bigRing = 33 - (time + 15) % 67;
-//            if (bigRing >= 0) {
-//                matrices.translate(0, bigRing / 100, 0);
-//            } else {
-//                matrices.translate(0, -bigRing / 100, 0);
-//            }
             matrices.translate(0,Math.sin(time/20)*0.15,0);
             drawRing(partialTicks, matrices, buffer, light, light2, 0.75f,time*2);
             matrices.popPose();
@@ -49,12 +44,6 @@ public class InfuserRenderer extends AbstractRunicEnergyContainerRenderer<Infuse
             matrices.pushPose();
 
             matrices.translate(0, -0.20, 0);
-//            float centerRing = 33 - (time + 30) % 67;
-//            if (centerRing >= 0) {
-//                matrices.translate(0, centerRing / 100, 0);
-//            } else {
-//                matrices.translate(0, -centerRing / 100, 0);
-//            }
             matrices.translate(0,Math.sin(time/20 + Math.PI/2f)*0.15,0);
             drawRing(partialTicks, matrices, buffer, light, light2, 0.525f,time*2+90);
             matrices.popPose();
@@ -62,12 +51,6 @@ public class InfuserRenderer extends AbstractRunicEnergyContainerRenderer<Infuse
             matrices.pushPose();
 
             matrices.translate(0, -0.20, 0);
-//            float smallRing = 33 - (time + 45) % 67;
-//            if (smallRing >= 0) {
-//                matrices.translate(0, smallRing / 100, 0);
-//            } else {
-//                matrices.translate(0, -smallRing / 100, 0);
-//            }
             matrices.translate(0,Math.sin(time/20 + Math.PI)*0.15,0);
             drawRing(partialTicks, matrices, buffer, light, light2, 0.30f,time*2+270);
             matrices.popPose();
@@ -108,12 +91,12 @@ public class InfuserRenderer extends AbstractRunicEnergyContainerRenderer<Infuse
             matrices.translate(0.5, 0.5 + Math.sin(time/20)*0.05, 0.5);
             matrices.mulPose(Vector3f.YP.rotationDegrees((time % 360) * 2f));
             Minecraft.getInstance().getItemRenderer().render(tile.getItem(tile.outputSlot()), ItemTransforms.TransformType.GROUND, true,
-                    matrices, buffer, light, light2, Minecraft.getInstance().getItemRenderer().getModel(tile.getItem(tile.outputSlot()), null, null,0));
+                    matrices, buffer, light, light2, Minecraft.getInstance().getItemRenderer().getModel(tile.getItem(tile.outputSlot()), tile.getLevel(), null,0));
         }else{
             matrices.translate(0.5, 0.5 + Math.sin(time/20)*0.05, 0.5);
             matrices.mulPose(Vector3f.YP.rotationDegrees((time % 360) * 2f));
             Minecraft.getInstance().getItemRenderer().render(tile.getItem(tile.inputSlot()), ItemTransforms.TransformType.GROUND, true,
-                    matrices, buffer, light, light2, Minecraft.getInstance().getItemRenderer().getModel(tile.getItem(tile.inputSlot()), null, null,0));
+                    matrices, buffer, light, light2, Minecraft.getInstance().getItemRenderer().getModel(tile.getItem(tile.inputSlot()), tile.getLevel(), null,0));
         }
 
         matrices.popPose();
@@ -143,7 +126,7 @@ public class InfuserRenderer extends AbstractRunicEnergyContainerRenderer<Infuse
                     matrices.translate(v.x, v.y, v.z);
                     RenderingTools.applyMovementMatrixRotations(matrices, v.normalize().reverse());
                     Minecraft.getInstance().getItemRenderer().render(item, ItemTransforms.TransformType.GROUND, true,
-                            matrices, buffer, light, light2, Minecraft.getInstance().getItemRenderer().getModel(item, null, null, 0));
+                            matrices, buffer, light, light2, Minecraft.getInstance().getItemRenderer().getModel(item, tile.getLevel(), null, 0));
                     matrices.popPose();
                 }
             }

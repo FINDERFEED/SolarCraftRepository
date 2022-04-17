@@ -5,6 +5,9 @@ import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.client.particles.screen.RuneTileParticle;
 import com.finderfeed.solarforge.local_library.client.particles.ScreenParticlesRenderHandler;
+import com.finderfeed.solarforge.local_library.client.tooltips.AnimatedTooltip;
+import com.finderfeed.solarforge.local_library.client.tooltips.BlackBackgroundTooltip;
+import com.finderfeed.solarforge.local_library.client.tooltips.animatable_omponents.*;
 import com.finderfeed.solarforge.local_library.helpers.RenderingTools;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.achievements.Progression;
 import com.finderfeed.solarforge.misc_things.IScrollable;
@@ -16,6 +19,7 @@ import com.mojang.blaze3d.vertex.*;
 
 import com.mojang.math.Vector3d;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.components.AbstractWidget;
 
@@ -50,7 +54,7 @@ public class SolarLexiconScreen extends Screen implements IScrollable {
     public Component currAch;
     public Progression currentProgression = null;
     private List<Runnable> postLinesRender = new ArrayList<>();
-
+    private List<AnimatedTooltip> animatedTooltips = new ArrayList<>();
     public int prevscrollX = 0;
     public int prevscrollY = 0;
     public int scrollX = 0;
@@ -149,7 +153,7 @@ public class SolarLexiconScreen extends Screen implements IScrollable {
     @Override
     protected void init() {
         super.init();
-
+        animatedTooltips.clear();
         this.prevscrollX = 0;
         this.prevscrollY = 0;
         this.scrollX = 0;
@@ -167,7 +171,24 @@ public class SolarLexiconScreen extends Screen implements IScrollable {
         currAch = new TextComponent("");
         int offsetX = 0;
         int offsetY = 0;
-
+        AnimatedTooltip tooltip = new BlackBackgroundTooltip(relX,relY,relX + 210,relY + 200,20,5).setStartYOpeness(16)
+                .addComponents(new ComponentSequence(new ComponentSequence.ComponentSequenceBuilder()
+                .addComponent(new FDTextComponent(ContentAlignment.NO_ALIGNMENT,20,0)
+                        .setText(new TextComponent("Lorem ipsum dorem sim amet blah blah blah blah blah blah blah"),0xffffff))
+                .nextLine()
+                        .addComponent(new EmptySpaceComponent(1,20))
+                .nextLine()
+                .addComponent(new ImageComponent(ContentAlignment.NO_ALIGNMENT,
+                        new ImageComponent.Image(new ResourceLocation(SolarForge.MOD_ID,"textures/misc/button.png"),40,40)))
+                .addComponent(new CustomRenderComponent(ContentAlignment.NO_ALIGNMENT,40,40,(m,x,y,ticks,mx,my,tick,length)->{
+                    drawString(m,font,"teststring",x,y,0xffffff);
+                })).build()));
+        Button but = new Button(relX + 50,relY + 50,10,10,new TextComponent(""),(btn)->{},(btn,matrices,mousex,mousey)->{
+            tooltip.render(matrices,btn.x,btn.y,Minecraft.getInstance().getFrameTime(),mousex,mousey);
+        });
+        tooltip.tieToWidget(but);
+        animatedTooltips.add(tooltip);
+        this.addRenderableWidget(but);
         for (Progression a : Progression.allProgressions){
             int tier = a.getAchievementTier();
             map.get(tier).add(a);
@@ -211,12 +232,18 @@ public class SolarLexiconScreen extends Screen implements IScrollable {
     @Override
     public void tick() {
         super.tick();
+        for (AnimatedTooltip tooltip : animatedTooltips){
+            if (tooltip.getTiedWidget() != null){
+                tooltip.tick(tooltip.getTiedWidget().isHoveredOrFocused());
+            }
+        }
         if (ticker++ < 5) return;
         ticker = 0;
         List<AbstractWidget> list = ClientHelpers.getScreenButtons(this);
         list.remove(justForge);
         list.remove(stagesPage);
         list.remove(toggleRecipesScreen);
+
         for (AbstractWidget widget : list){
             widget.active = widget.x >= relX - 5 && widget.x <= relX + 230 && widget.y >= relY - 5 && widget.y <= relY + 115;
         }
@@ -227,7 +254,10 @@ public class SolarLexiconScreen extends Screen implements IScrollable {
 
     @Override
     public void render(PoseStack matrices, int mousex, int mousey, float partialTicks) {
-
+        for (AbstractWidget b : ClientHelpers.getScreenButtons(this)){
+            if (!(b instanceof ItemStackButton)) b.render(matrices,mousex,mousey,partialTicks);
+        }
+        if (true) return;
         matrices.pushPose();
 
         int stringColor = 0xee2222;
@@ -274,6 +304,7 @@ public class SolarLexiconScreen extends Screen implements IScrollable {
         listButtons.remove(stagesPage);
 
         for (AbstractWidget a :listButtons){
+            if (!(a instanceof  ItemStackButton)) {a.render(matrices,mousex,mousey,partialTicks); continue;}
             ItemStackButton button = (ItemStackButton) a;
             if (button.qMark){
                 button.render(matrices,mousex,mousey,partialTicks);
@@ -281,6 +312,7 @@ public class SolarLexiconScreen extends Screen implements IScrollable {
         }
         ClientHelpers.bindText(QMARK);
         for (AbstractWidget a :listButtons){
+            if (!(a instanceof  ItemStackButton)) continue;
             ItemStackButton button = (ItemStackButton) a;
             if (!button.qMark){
 

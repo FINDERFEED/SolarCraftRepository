@@ -604,6 +604,41 @@ public class RenderingTools {
     }
 
 
+    public static boolean isMouseInBorders(int mx, int my, int x1, int y1, int x2, int y2){
+        return (mx >= x1 && mx <= x2) && (my >= y1 && my <= y2);
+    }
+
+    public static void fill(PoseStack matrices,double x1,double y1,double x2,double y2,float r,float g,float b,float a){
+        if (x1 > x2){
+            double k = x1;
+            x1 = x2;
+            x2 = k;
+        }
+        if (y1 > y2){
+            double k = y1;
+            y1 = y2;
+            y2 = k;
+        }
+        Matrix4f matrix4f = matrices.last().pose();
+        BufferBuilder builder = Tesselator.getInstance().getBuilder();
+
+        RenderSystem.enableBlend();
+        RenderSystem.disableTexture();
+        RenderSystem.defaultBlendFunc();
+        RenderSystem.setShader(GameRenderer::getPositionColorShader);
+        builder.begin(VertexFormat.Mode.QUADS,DefaultVertexFormat.POSITION_COLOR);
+
+        builder.vertex(matrix4f,(float)x1,(float)y1,0).color(r,g,b,a).endVertex();
+        builder.vertex(matrix4f,(float)x1,(float)y2,0).color(r,g,b,a).endVertex();
+        builder.vertex(matrix4f,(float)x2,(float)y2,0).color(r,g,b,a).endVertex();
+        builder.vertex(matrix4f,(float)x2,(float)y1,0).color(r,g,b,a).endVertex();
+
+        builder.end();
+        BufferUploader.end(builder);
+        RenderSystem.enableTexture();
+        RenderSystem.disableBlend();
+    }
+
     public static class DragonEffect {
         private static final float HALF_SQRT_3 = (float)(Math.sqrt(3.0D) / 2.0D);
 
