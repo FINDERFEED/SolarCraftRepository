@@ -21,7 +21,7 @@ import com.finderfeed.solarforge.misc_things.*;
 import com.finderfeed.solarforge.registries.items.ItemsRegister;
 import com.finderfeed.solarforge.registries.sounds.Sounds;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.SolarLexicon;
-import com.finderfeed.solarforge.magic.items.solar_lexicon.achievements.Progression;
+import com.finderfeed.solarforge.magic.items.solar_lexicon.progressions.Progression;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.unlockables.ProgressionHelper;
 import com.google.gson.JsonObject;
 import com.mojang.blaze3d.systems.RenderSystem;

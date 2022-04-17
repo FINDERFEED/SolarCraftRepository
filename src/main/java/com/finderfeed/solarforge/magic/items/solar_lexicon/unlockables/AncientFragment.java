@@ -1,9 +1,8 @@
 package com.finderfeed.solarforge.magic.items.solar_lexicon.unlockables;
 
 import com.finderfeed.solarforge.SolarForge;
-import com.finderfeed.solarforge.config.JsonFragmentsHelper;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.ProgressionStage;
-import com.finderfeed.solarforge.magic.items.solar_lexicon.achievements.Progression;
+import com.finderfeed.solarforge.magic.items.solar_lexicon.progressions.Progression;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.structure.category.CategoryBase;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.structure.subcategory.SubCategoryBase;
 import com.finderfeed.solarforge.multiblocks.Multiblocks;
@@ -17,8 +16,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraft.world.level.Level;
-import net.minecraftforge.registries.ForgeRegistries;
+
 import static com.finderfeed.solarforge.registries.items.ItemsRegister.*;
 
 import java.util.*;

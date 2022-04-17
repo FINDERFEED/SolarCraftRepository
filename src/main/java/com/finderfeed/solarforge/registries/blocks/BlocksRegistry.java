@@ -10,7 +10,7 @@ import com.finderfeed.solarforge.magic.blocks.BlueGemDoorBlock;
 import com.finderfeed.solarforge.magic.blocks.*;
 import com.finderfeed.solarforge.magic.blocks.primitive.*;
 import com.finderfeed.solarforge.magic.decoration_blocks.SolarFlower;
-import com.finderfeed.solarforge.magic.items.solar_lexicon.achievements.Progression;
+import com.finderfeed.solarforge.magic.items.solar_lexicon.progressions.Progression;
 import com.finderfeed.solarforge.magic.runic_network.repeater.RunicNetworkRepeater;
 import com.finderfeed.solarforge.client.particles.ParticleTypesRegistry;
 import com.finderfeed.solarforge.registries.effects.EffectsRegister;

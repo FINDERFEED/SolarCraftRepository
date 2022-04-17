@@ -6,7 +6,7 @@ import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.client.screens.ScrollableScreen;
 import com.finderfeed.solarforge.local_library.helpers.RenderingTools;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.ProgressionStage;
-import com.finderfeed.solarforge.magic.items.solar_lexicon.achievements.Progression;
+import com.finderfeed.solarforge.magic.items.solar_lexicon.progressions.Progression;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
@@ -27,7 +27,7 @@ public class StagesScreen extends ScrollableScreen {
     private ArrayList<PostRender> RENDER_QMARKS_TOOLTIPS = new ArrayList<>();
     private ArrayList<PostRender> RENDER_FRAMES = new ArrayList<>();
 
-    public ItemStackButton stagesPage = new ItemStackButton(relX+100,relY + 20,12,12,(button)->{minecraft.setScreen(new SolarLexiconScreen());}, SolarForge.SOLAR_FORGE_ITEM.get().getDefaultInstance(),0.7f,false);
+    public ItemStackButton stagesPage = new ItemStackButton(relX+100,relY + 20,12,12,(button)->{minecraft.setScreen(new SolarLexiconScreen());}, SolarForge.SOLAR_FORGE_ITEM.get().getDefaultInstance(),0.7f);
 
     public StagesScreen() {
 
@@ -48,7 +48,7 @@ public class StagesScreen extends ScrollableScreen {
                 int x = g * 20 + getRelX() + 15;
                 Progression progression = stage.SELF_PROGRESSIONS[g];
                 if (Helpers.canPlayerUnlock(progression, Minecraft.getInstance().player)){
-                    addRenderableWidget(new ItemStackButton(x+getCurrentScrollX(),y+getCurrentScrollY(),16,16,(btn)->{},progression.icon,1,false,
+                    addRenderableWidget(new ItemStackButton(x+getCurrentScrollX(),y+getCurrentScrollY(),16,16,(btn)->{},progression.icon,1,
                             (button,matrix,mousex,mousey)->{
                                 if (Helpers.hasPlayerUnlocked(progression,Minecraft.getInstance().player)) {
                                     renderComponentTooltip(matrix, List.of(progression.translation,new TranslatableComponent("solarcraft.completed").withStyle(ChatFormatting.GREEN)), mousex, mousey);

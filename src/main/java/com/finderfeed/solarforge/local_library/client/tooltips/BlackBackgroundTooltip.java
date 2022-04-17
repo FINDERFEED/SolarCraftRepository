@@ -29,11 +29,13 @@ public class BlackBackgroundTooltip extends AnimatedTooltip{
         int xPos = calculateXRenderPos(x);
         int yPos = calculateYRenderPos(y);
 
-        RenderingTools.fill(matrices,x,y,x+xOpeness,y+yOpeness,0,0,0,0.75f);
+        RenderingTools.fill(matrices,xPos,yPos,xPos+xOpeness,yPos+yOpeness,0,0,0,0.9f);
         if (ticker >= animLength) {
             this.getComponents().render(matrices, xPos + borderWidth, yPos + borderWidth, pTicks, mousex, mousey, ticker, animLength);
         }
     }
+
+
 
 
     public BlackBackgroundTooltip setStartYOpeness(int y){

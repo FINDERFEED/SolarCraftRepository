@@ -5,7 +5,7 @@ import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.local_library.other.ItemRator;
 import com.finderfeed.solarforge.magic.blocks.infusing_table_things.InfuserTileEntity;
-import com.finderfeed.solarforge.magic.items.solar_lexicon.achievements.Progression;
+import com.finderfeed.solarforge.magic.items.solar_lexicon.progressions.Progression;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
 
 import com.finderfeed.solarforge.magic.items.solar_lexicon.SolarLexicon;
@@ -133,15 +133,15 @@ public class InfusingRecipeScreen extends Screen {
             xoffs+=8;
             addRenderableWidget(new ItemStackButton(relX + 48 + xoffs, relY + 9, 12, 12, (button) -> {
                 minecraft.setScreen(new InfusingRecipeEnergyScreen(recipe, currentPage));
-            }, ItemsRegister.SOLAR_WAND.get().getDefaultInstance(), 0.7f, false));
+            }, ItemsRegister.SOLAR_WAND.get().getDefaultInstance(), 0.7f));
         }
-        addRenderableWidget(new ItemStackButton(relX+74+xoffs,relY+9,12,12,(button)->{minecraft.setScreen(new SolarLexiconRecipesScreen());}, Items.CRAFTING_TABLE.getDefaultInstance(),0.7f,false));
+        addRenderableWidget(new ItemStackButton(relX+74+xoffs,relY+9,12,12,(button)->{minecraft.setScreen(new SolarLexiconRecipesScreen());}, Items.CRAFTING_TABLE.getDefaultInstance(),0.7f));
         addRenderableWidget(new ItemStackButton(relX+61+xoffs,relY+9,12,12,(button)->{
             Minecraft mc = Minecraft.getInstance();
             SolarLexicon lexicon = (SolarLexicon) mc.player.getMainHandItem().getItem();
             lexicon.currentSavedScreen = this;
             minecraft.setScreen(null);
-        }, Items.WRITABLE_BOOK.getDefaultInstance(),0.7f,false));
+        }, Items.WRITABLE_BOOK.getDefaultInstance(),0.7f));
         super.init();
     }
 

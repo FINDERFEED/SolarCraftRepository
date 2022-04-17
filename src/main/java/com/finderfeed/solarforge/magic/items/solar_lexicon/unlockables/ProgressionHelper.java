@@ -2,17 +2,13 @@ package com.finderfeed.solarforge.magic.items.solar_lexicon.unlockables;
 
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.SolarForge;
-import com.finderfeed.solarforge.magic.items.solar_lexicon.achievements.Progression;
+import com.finderfeed.solarforge.magic.items.solar_lexicon.progressions.Progression;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
-import com.finderfeed.solarforge.recipe_types.infusing_new.InfusingRecipe;
-import com.finderfeed.solarforge.recipe_types.infusing_crafting.InfusingCraftingRecipe;
-import com.finderfeed.solarforge.recipe_types.solar_smelting.SolarSmeltingRecipe;
 import com.finderfeed.solarforge.registries.items.ItemsRegister;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.RecipeManager;
 
 import java.util.*;
 

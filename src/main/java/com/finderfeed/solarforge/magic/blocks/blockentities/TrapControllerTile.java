@@ -2,7 +2,7 @@ package com.finderfeed.solarforge.magic.blocks.blockentities;
 
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.magic.blocks.BlueGemDoorBlock;
-import com.finderfeed.solarforge.magic.items.solar_lexicon.achievements.Progression;
+import com.finderfeed.solarforge.magic.items.solar_lexicon.progressions.Progression;
 import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
 import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
 import net.minecraft.world.level.Level;

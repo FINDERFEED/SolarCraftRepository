@@ -1,7 +1,7 @@
 package com.finderfeed.solarforge.entities;
 
 import com.finderfeed.solarforge.Helpers;
-import com.finderfeed.solarforge.magic.items.solar_lexicon.achievements.Progression;
+import com.finderfeed.solarforge.magic.items.solar_lexicon.progressions.Progression;
 import com.finderfeed.solarforge.registries.items.ItemsRegister;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.EntityType;

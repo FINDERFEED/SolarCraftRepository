@@ -66,13 +66,13 @@ public class InformationScreen extends Screen {
             }else{
                 Minecraft.getInstance().setScreen(screenCrafting);
             }
-        }, i.getDefaultInstance(),1,false,(buttons,matrices,b,c)->{
+        }, i.getDefaultInstance(),1,(buttons,matrices,b,c)->{
             renderTooltip(matrices,new TextComponent("Craft"),b,c);
         });
         if (screen != null || screenCrafting != null){
             addRenderableWidget(button);
         }
-        addRenderableWidget(new ItemStackButton(relX+236,relY+187,12,12,(buttons)->{minecraft.setScreen(new SolarLexiconRecipesScreen());}, Items.CRAFTING_TABLE.getDefaultInstance(),0.7f,false));
+        addRenderableWidget(new ItemStackButton(relX+236,relY+187,12,12,(buttons)->{minecraft.setScreen(new SolarLexiconRecipesScreen());}, Items.CRAFTING_TABLE.getDefaultInstance(),0.7f));
         super.init();
     }
 

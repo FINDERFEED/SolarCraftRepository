@@ -15,7 +15,7 @@ import com.finderfeed.solarforge.magic.items.ExperienceCrystal;
 import com.finderfeed.solarforge.magic.items.divine_armor.BaseDivineArmor;
 import com.finderfeed.solarforge.magic.items.primitive.solacraft_item_classes.FragmentItem;
 import com.finderfeed.solarforge.magic.items.runic_energy.ItemRunicEnergy;
-import com.finderfeed.solarforge.magic.items.solar_lexicon.achievements.Progression;
+import com.finderfeed.solarforge.magic.items.solar_lexicon.progressions.Progression;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.unlockables.ProgressionHelper;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import com.finderfeed.solarforge.packet_handler.packets.DisablePlayerFlightPacket;

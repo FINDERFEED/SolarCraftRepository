@@ -15,7 +15,7 @@ import com.finderfeed.solarforge.magic.items.solar_lexicon.unlockables.Progressi
 import com.finderfeed.solarforge.misc_things.*;
 import com.finderfeed.solarforge.multiblocks.Multiblocks;
 import com.finderfeed.solarforge.recipe_types.infusing_new.InfusingRecipe;
-import com.finderfeed.solarforge.magic.items.solar_lexicon.achievements.Progression;
+import com.finderfeed.solarforge.magic.items.solar_lexicon.progressions.Progression;
 import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
 import com.finderfeed.solarforge.world_generation.structures.Structures;
 import net.minecraft.network.Connection;

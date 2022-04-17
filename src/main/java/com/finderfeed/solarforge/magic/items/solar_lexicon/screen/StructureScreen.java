@@ -95,13 +95,13 @@ public class StructureScreen extends Screen {
             }
         });
 
-        addRenderableWidget(new ItemStackButton(relX+186+10,relY+9,12,12,(button)->{minecraft.setScreen(new SolarLexiconRecipesScreen());}, Items.CRAFTING_TABLE.getDefaultInstance(),0.7f,false));
+        addRenderableWidget(new ItemStackButton(relX+186+10,relY+9,12,12,(button)->{minecraft.setScreen(new SolarLexiconRecipesScreen());}, Items.CRAFTING_TABLE.getDefaultInstance(),0.7f));
         addRenderableWidget(new ItemStackButton(relX+174+10,relY+9,12,12,(button)->{
             Minecraft mc = Minecraft.getInstance();
             SolarLexicon lexicon = (SolarLexicon) mc.player.getMainHandItem().getItem();
             lexicon.currentSavedScreen = this;
             minecraft.setScreen(null);
-        }, Items.WRITABLE_BOOK.getDefaultInstance(),0.7f,false));
+        }, Items.WRITABLE_BOOK.getDefaultInstance(),0.7f));
 
         super.init();
 

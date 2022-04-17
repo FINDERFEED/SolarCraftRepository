@@ -27,13 +27,13 @@ public class EightElementsFragmentScreen extends ScreenWithPages{
     @Override
     protected void init() {
         super.init();
-        addRenderableWidget(new ItemStackButton(relX+74+53,relY+9,12,12,(button)->{minecraft.setScreen(new SolarLexiconRecipesScreen());}, Items.CRAFTING_TABLE.getDefaultInstance(),0.7f,false));
+        addRenderableWidget(new ItemStackButton(relX+74+53,relY+9,12,12,(button)->{minecraft.setScreen(new SolarLexiconRecipesScreen());}, Items.CRAFTING_TABLE.getDefaultInstance(),0.7f));
         addRenderableWidget(new ItemStackButton(relX+61+53,relY+9,12,12,(button)->{
             Minecraft mc = Minecraft.getInstance();
             SolarLexicon lexicon = (SolarLexicon) mc.player.getMainHandItem().getItem();
             lexicon.currentSavedScreen = this;
             minecraft.setScreen(null);
-        }, Items.WRITABLE_BOOK.getDefaultInstance(),0.7f,false));
+        }, Items.WRITABLE_BOOK.getDefaultInstance(),0.7f));
     }
 
     @Override

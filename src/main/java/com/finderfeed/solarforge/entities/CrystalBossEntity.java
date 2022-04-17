@@ -12,7 +12,7 @@ import com.finderfeed.solarforge.local_library.other.CyclingInterpolatedValue;
 import com.finderfeed.solarforge.magic.projectiles.CrystalBossAttackHoldingMissile;
 import com.finderfeed.solarforge.magic.projectiles.FallingMagicMissile;
 import com.finderfeed.solarforge.magic.projectiles.RandomBadEffectProjectile;
-import com.finderfeed.solarforge.magic.items.solar_lexicon.achievements.Progression;
+import com.finderfeed.solarforge.magic.items.solar_lexicon.progressions.Progression;
 import com.finderfeed.solarforge.misc_things.CrystalBossBuddy;
 import com.finderfeed.solarforge.misc_things.NoHealthLimitMob;
 import com.finderfeed.solarforge.client.particles.ParticleTypesRegistry;

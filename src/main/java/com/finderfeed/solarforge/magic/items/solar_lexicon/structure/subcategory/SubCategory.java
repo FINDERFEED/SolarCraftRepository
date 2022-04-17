@@ -183,7 +183,7 @@ public class SubCategory {
     public ItemStackButton constructInfusingRecipeButton(AncientFragment fragment, List<InfusingRecipe> recipe, int x , int y){
         return new ItemStackButton(x,y,24,24,(button)->{
             Minecraft.getInstance().setScreen(new InformationScreen(fragment,new InfusingRecipeScreen(recipe)));
-        },fragment.getIcon().getDefaultInstance(),1.5f,false,(button,matrices,mx,my)->{
+        },fragment.getIcon().getDefaultInstance(),1.5f,(button,matrices,mx,my)->{
 //            if (button.isHovered()){
 //                this.onHovered();
 //            }
@@ -200,7 +200,7 @@ public class SubCategory {
     public ItemStackButton constructInfusingRecipeButton(AncientFragment fragment,InfusingRecipe recipe,int x , int y){
         return new ItemStackButton(x,y,24,24,(button)->{
             Minecraft.getInstance().setScreen(new InformationScreen(fragment,new InfusingRecipeScreen(recipe)));
-        },fragment.getIcon().getDefaultInstance(),1.5f,false,(button,matrices,mx,my)->{
+        },fragment.getIcon().getDefaultInstance(),1.5f,(button,matrices,mx,my)->{
 //            if (button.isHovered()){
 //                this.onHovered();
 //            }
@@ -216,7 +216,7 @@ public class SubCategory {
     public ItemStackButton constructInfusingCraftingRecipeButton(AncientFragment fragment, List<InfusingCraftingRecipe> recipe, int x , int y){
         return new ItemStackButton(x,y,24,24,(button)->{
             Minecraft.getInstance().setScreen(new InformationScreen(fragment,new InfusingCraftingRecipeScreen(recipe)));
-        },fragment.getIcon().getDefaultInstance(),1.5f,false,(button,matrices,mx,my)->{
+        },fragment.getIcon().getDefaultInstance(),1.5f,(button,matrices,mx,my)->{
 //            if (button.isHovered()){
 //                this.onHovered();
 //            }
@@ -233,7 +233,7 @@ public class SubCategory {
     public ItemStackButton constructInfusingCraftingRecipeButton(AncientFragment fragment, InfusingCraftingRecipe recipe, int x , int y){
         return new ItemStackButton(x,y,24,24,(button)->{
             Minecraft.getInstance().setScreen(new InformationScreen(fragment,new InfusingCraftingRecipeScreen(recipe)));
-        },fragment.getIcon().getDefaultInstance(),1.5f,false,(button,matrices,mx,my)->{
+        },fragment.getIcon().getDefaultInstance(),1.5f,(button,matrices,mx,my)->{
 //            if (button.isHovered()){
 //                this.onHovered();
 //            }
@@ -250,7 +250,7 @@ public class SubCategory {
     public ItemStackButton constructSmeltingRecipeButton(SolarSmeltingRecipe recipe, int x , int y){
         return new ItemStackButton(x,y,24,24,(button)->{
             Minecraft.getInstance().setScreen(new SmeltingRecipeScreen(recipe));
-        },recipe.output,1.5f,false,(button,matrices,mx,my)->{
+        },recipe.output,1.5f,(button,matrices,mx,my)->{
 //            if (button.isHovered()){
 //                this.onHovered();
 //            }
@@ -268,7 +268,7 @@ public class SubCategory {
     public ItemStackButton constructInformationButton(ItemStack logo, int x , int y, AncientFragment fragment){
         return new ItemStackButton(x,y,24,24,(button)->{
             Minecraft.getInstance().setScreen(new InformationScreen(fragment, (InfusingRecipeScreen) null));
-        },logo,1.5f,false, (button,matrices,mx,my)->{
+        },logo,1.5f, (button,matrices,mx,my)->{
 
             if (Minecraft.getInstance().screen instanceof SolarLexiconRecipesScreen screen) {
                 screen.postRender.add(()->screen.renderTooltip(matrices, fragment.getTranslation(), mx, my));
@@ -282,7 +282,7 @@ public class SubCategory {
     public ItemStackButton constructStructureButton(Multiblock structure, int x , int y, AncientFragment fragment){
         return new ItemStackButton(x,y,24,24,(button)->{
             Minecraft.getInstance().setScreen(new StructureScreen(structure));
-        },structure.getMainBlock().getBlock().asItem().getDefaultInstance(),1.5f,false, (button,matrices,mx,my)->{
+        },structure.getMainBlock().getBlock().asItem().getDefaultInstance(),1.5f, (button,matrices,mx,my)->{
 
             if (Minecraft.getInstance().screen instanceof SolarLexiconRecipesScreen screen) {
                 screen.postRender.add(()->screen.renderTooltip(matrices, fragment.getTranslation(), mx, my));
@@ -299,7 +299,7 @@ public class SubCategory {
 
         return new ItemStackButton(x,y,24,24,(button)->{
             Minecraft.getInstance().setScreen(sp.get());
-        },fragment.getIcon().getDefaultInstance(),1.5f,false,(button,matrices,mx,my)->{
+        },fragment.getIcon().getDefaultInstance(),1.5f,(button,matrices,mx,my)->{
 
             if (Minecraft.getInstance().screen instanceof SolarLexiconRecipesScreen screen) {
                 screen.postRender.add(()->screen.renderTooltip(matrices, fragment.getTranslation(), mx, my));

@@ -4,7 +4,7 @@ import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.misc_things.Multiblock;
 import com.finderfeed.solarforge.registries.Tags;
 import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
-import com.finderfeed.solarforge.magic.items.solar_lexicon.achievements.Progression;
+import com.finderfeed.solarforge.magic.items.solar_lexicon.progressions.Progression;
 import net.minecraft.core.Direction;
 
 import net.minecraft.world.level.block.Blocks;

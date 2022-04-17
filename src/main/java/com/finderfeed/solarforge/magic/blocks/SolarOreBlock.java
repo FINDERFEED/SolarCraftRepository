@@ -1,7 +1,7 @@
 package com.finderfeed.solarforge.magic.blocks;
 
 import com.finderfeed.solarforge.SolarForge;
-import com.finderfeed.solarforge.magic.items.solar_lexicon.achievements.Progression;
+import com.finderfeed.solarforge.magic.items.solar_lexicon.progressions.Progression;
 import com.finderfeed.solarforge.misc_things.IProgressionBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;

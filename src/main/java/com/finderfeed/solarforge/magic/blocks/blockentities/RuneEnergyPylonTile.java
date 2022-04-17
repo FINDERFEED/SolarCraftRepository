@@ -6,7 +6,7 @@ import com.finderfeed.solarforge.client.particles.ParticleTypesRegistry;
 import com.finderfeed.solarforge.config.SolarcraftConfig;
 import com.finderfeed.solarforge.magic.blocks.blockentities.runic_energy.RunicEnergyGiver;
 import com.finderfeed.solarforge.magic.blocks.primitive.InscriptionStone;
-import com.finderfeed.solarforge.magic.items.solar_lexicon.achievements.Progression;
+import com.finderfeed.solarforge.magic.items.solar_lexicon.progressions.Progression;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.unlockables.ProgressionHelper;
 import com.finderfeed.solarforge.misc_things.*;
 import com.finderfeed.solarforge.multiblocks.Multiblocks;

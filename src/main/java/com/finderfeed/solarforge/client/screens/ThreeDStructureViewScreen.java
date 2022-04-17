@@ -41,13 +41,13 @@ import java.util.List;
 
 public class ThreeDStructureViewScreen extends Screen implements IScrollable {
 
-    private final Button b = new ItemStackButton(0,0,12,12,(button)->{minecraft.setScreen(new SolarLexiconRecipesScreen());}, Items.CRAFTING_TABLE.getDefaultInstance(),0.7f,false);
+    private final Button b = new ItemStackButton(0,0,12,12,(button)->{minecraft.setScreen(new SolarLexiconRecipesScreen());}, Items.CRAFTING_TABLE.getDefaultInstance(),0.7f);
     private final Button c = new ItemStackButton(0,0,12,12,(button)->{
         Minecraft mc = Minecraft.getInstance();
         SolarLexicon lexicon = (SolarLexicon) mc.player.getMainHandItem().getItem();
         lexicon.currentSavedScreen = this;
         minecraft.setScreen(null);
-    }, Items.WRITABLE_BOOK.getDefaultInstance(),0.7f,false);
+    }, Items.WRITABLE_BOOK.getDefaultInstance(),0.7f);
     public final ResourceLocation THREEDSCREENBTN = new ResourceLocation("solarforge","textures/misc/button.png");
     public final ResourceLocation STRUCTURE_GUI = new ResourceLocation("solarforge","textures/gui/structure_screen.png");
     private double xDragPos=0;

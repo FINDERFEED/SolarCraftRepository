@@ -3,15 +3,13 @@ package com.finderfeed.solarforge.magic.items.solar_lexicon.screen;
 import com.finderfeed.solarforge.ClientHelpers;
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.SolarForge;
-import com.finderfeed.solarforge.client.particles.screen.RuneTileParticle;
-import com.finderfeed.solarforge.local_library.client.particles.ScreenParticlesRenderHandler;
 import com.finderfeed.solarforge.local_library.client.tooltips.AnimatedTooltip;
 import com.finderfeed.solarforge.local_library.client.tooltips.BlackBackgroundTooltip;
 import com.finderfeed.solarforge.local_library.client.tooltips.animatable_omponents.*;
 import com.finderfeed.solarforge.local_library.helpers.RenderingTools;
-import com.finderfeed.solarforge.magic.items.solar_lexicon.achievements.Progression;
+import com.finderfeed.solarforge.magic.items.solar_lexicon.progressions.Progression;
 import com.finderfeed.solarforge.misc_things.IScrollable;
-import com.finderfeed.solarforge.magic.items.solar_lexicon.achievements.achievement_tree.ProgressionTree;
+import com.finderfeed.solarforge.magic.items.solar_lexicon.progressions.progression_tree.ProgressionTree;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
@@ -19,11 +17,12 @@ import com.mojang.blaze3d.vertex.*;
 
 import com.mojang.math.Vector3d;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.components.AbstractWidget;
 
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.item.Items;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.Component;
@@ -37,7 +36,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class SolarLexiconScreen extends Screen implements IScrollable {
+public class SolarLexiconScreen extends Screen implements IScrollable,PostRenderTooltips {
     private int ticker = 0;
     private int OFFSET_X = 40;
     private int OFFSET_Y = 40;
@@ -48,25 +47,28 @@ public class SolarLexiconScreen extends Screen implements IScrollable {
     public final ResourceLocation MAIN_SCREEN_SCROLLABLE = new ResourceLocation("solarforge","textures/gui/solar_lexicon_main_page_scrollablet.png");
     public String currentText = "";
     private String afterTxt = "";
-    public  int relX;
-    public  int relY;
+    public int relX;
+    public int relY;
     public final ProgressionTree tree = ProgressionTree.INSTANCE;
     public Component currAch;
     public Progression currentProgression = null;
     private List<Runnable> postLinesRender = new ArrayList<>();
-    private List<AnimatedTooltip> animatedTooltips = new ArrayList<>();
+
     public int prevscrollX = 0;
     public int prevscrollY = 0;
     public int scrollX = 0;
     public int scrollY = 0;
 
-    public ItemStackButton stagesPage = new ItemStackButton(relX+100,relY + 20,12,12,(button)->{minecraft.setScreen(new StagesScreen());},Items.BEACON.getDefaultInstance(),0.7f,false);
-
-    public ItemStackButton toggleRecipesScreen = new ItemStackButton(relX+100,relY+100,12,12,(button)->{minecraft.setScreen(new SolarLexiconRecipesScreen());}, Items.CRAFTING_TABLE.getDefaultInstance(),0.7f,false);
-    public ItemStackButton justForge = new ItemStackButton(relX+100,relY+100,12,12,(button)->{}, SolarForge.SOLAR_FORGE_ITEM.get().getDefaultInstance(),0.7f,false);
+    public ItemStackButton stagesPage = new ItemStackButton(relX+100,relY + 20,12,12,(button)->{minecraft.setScreen(new StagesScreen());},Items.BEACON.getDefaultInstance(),0.7f);
+    public ItemStackButton toggleRecipesScreen = new ItemStackButton(relX+100,relY+100,12,12,(button)->{minecraft.setScreen(new SolarLexiconRecipesScreen());}, Items.CRAFTING_TABLE.getDefaultInstance(),0.7f);
+    public ItemStackButton justForge = new ItemStackButton(relX+100,relY+100,12,12,(button)->{}, SolarForge.SOLAR_FORGE_ITEM.get().getDefaultInstance(),0.7f);
 
     public HashMap<Integer,List<Progression>> map = new HashMap<>();
 
+    private List<ItemStackButtonAnimatedTooltip> locked;
+    private List<ItemStackButtonAnimatedTooltip> unlocked;
+
+    private List<Runnable> postRender = new ArrayList<>();
     public SolarLexiconScreen() {
         super(new TextComponent("screen_solar_lexicon"));
         this.width = 256;
@@ -153,7 +155,9 @@ public class SolarLexiconScreen extends Screen implements IScrollable {
     @Override
     protected void init() {
         super.init();
-        animatedTooltips.clear();
+        postRender.clear();
+        locked = new ArrayList<>();
+        unlocked = new ArrayList<>();
         this.prevscrollX = 0;
         this.prevscrollY = 0;
         this.scrollX = 0;
@@ -171,24 +175,7 @@ public class SolarLexiconScreen extends Screen implements IScrollable {
         currAch = new TextComponent("");
         int offsetX = 0;
         int offsetY = 0;
-        AnimatedTooltip tooltip = new BlackBackgroundTooltip(relX,relY,relX + 210,relY + 200,20,5).setStartYOpeness(16)
-                .addComponents(new ComponentSequence(new ComponentSequence.ComponentSequenceBuilder()
-                .addComponent(new FDTextComponent(ContentAlignment.NO_ALIGNMENT,20,0)
-                        .setText(new TextComponent("Lorem ipsum dorem sim amet blah blah blah blah blah blah blah"),0xffffff))
-                .nextLine()
-                        .addComponent(new EmptySpaceComponent(1,20))
-                .nextLine()
-                .addComponent(new ImageComponent(ContentAlignment.NO_ALIGNMENT,
-                        new ImageComponent.Image(new ResourceLocation(SolarForge.MOD_ID,"textures/misc/button.png"),40,40)))
-                .addComponent(new CustomRenderComponent(ContentAlignment.NO_ALIGNMENT,40,40,(m,x,y,ticks,mx,my,tick,length)->{
-                    drawString(m,font,"teststring",x,y,0xffffff);
-                })).build()));
-        Button but = new Button(relX + 50,relY + 50,10,10,new TextComponent(""),(btn)->{},(btn,matrices,mousex,mousey)->{
-            tooltip.render(matrices,btn.x,btn.y,Minecraft.getInstance().getFrameTime(),mousex,mousey);
-        });
-        tooltip.tieToWidget(but);
-        animatedTooltips.add(tooltip);
-        this.addRenderableWidget(but);
+
         for (Progression a : Progression.allProgressions){
             int tier = a.getAchievementTier();
             map.get(tier).add(a);
@@ -197,13 +184,12 @@ public class SolarLexiconScreen extends Screen implements IScrollable {
 
             offsetY = (a.getAchievementTier() -1)* OFFSET_Y;
             boolean c = Helpers.canPlayerUnlock(a,minecraft.player);
-            addRenderableWidget(new ItemStackButton(relX+12+offsetX,relY+12+offsetY,16,16,(button)->{
-
-
-                if (Helpers.hasPlayerUnlocked(a,Minecraft.getInstance().player)){
+            LocalPlayer player = Minecraft.getInstance().player;
+            ItemStackButtonAnimatedTooltip button = new ItemStackButtonAnimatedTooltip(relX+12+offsetX,relY+12+offsetY,16,16,(btn)->{
+                if (Helpers.hasPlayerUnlocked(a,player)){
                     currentText = a.getPretext().getString();
                     afterTxt = a.afterText.getString();
-                }else if (Helpers.canPlayerUnlock(a,Minecraft.getInstance().player)){
+                }else if (Helpers.canPlayerUnlock(a,player)){
                     currentText = a.getPretext().getString();
                     afterTxt = "???";
                 }
@@ -214,7 +200,44 @@ public class SolarLexiconScreen extends Screen implements IScrollable {
                 currAch = a.getTranslation();
                 currentProgression = a;
 
-                },a.getIcon(),1,c));
+            },a.getIcon(),1);
+            TextComponent preText;
+            TextComponent afterText;
+            if (Helpers.hasPlayerUnlocked(a,player)){
+                preText = new TextComponent(a.getPretext().getString());
+                afterText = new TextComponent(a.afterText.getString());
+            }else if (Helpers.canPlayerUnlock(a,player)){
+                preText = new TextComponent(a.getPretext().getString());
+                afterText = new TextComponent("???");
+            }else{
+                afterText = new TextComponent("???");
+                preText = new TextComponent("???");
+            }
+            AnimatedTooltip tooltip = new BlackBackgroundTooltip(-1000,-1000,relX + 230,relY + 200,20,5)
+                    .setStartYOpeness(16).addComponents(new ComponentSequence(new ComponentSequence.ComponentSequenceBuilder()
+                    .setAlignment(ContentAlignment.NO_ALIGNMENT)
+                            .addComponent(new FDTextComponent(ContentAlignment.NO_ALIGNMENT,30,0).setText(a.getTranslation(),0xffffff).setInnerBorder(3))
+                            .addComponent(new CustomRenderComponent(ContentAlignment.NO_ALIGNMENT,16,16,(matrices,x,y,pTicks,mouseX,mouseY,ticker,animationLength)->{
+                        RenderSystem.disableDepthTest();
+                        Minecraft.getInstance().getItemRenderer().renderGuiItem(a.getIcon(),x,y);
+                        RenderSystem.disableDepthTest();
+                    }))
+                    .nextLine()
+                    .addComponent(new EmptySpaceComponent(0,10))
+                    .nextLine()
+                    .addComponent(new FDTextComponent(ContentAlignment.NO_ALIGNMENT,30,0).setText(preText,0xffffff).setInnerBorder(3))
+                    .nextLine()
+                    .addComponent(new EmptySpaceComponent(0,10))
+                    .nextLine()
+                    .addComponent(new FDTextComponent(ContentAlignment.NO_ALIGNMENT,30,0).setText(afterText,0xffffff).setInnerBorder(3))
+                    .build()));
+            button.setTooltip(tooltip);
+            if (c){
+                unlocked.add(button);
+            }else{
+                locked.add(button);
+            }
+            addRenderableWidget(button);
         }
         addRenderableWidget(toggleRecipesScreen);
         addRenderableWidget(justForge);
@@ -232,10 +255,11 @@ public class SolarLexiconScreen extends Screen implements IScrollable {
     @Override
     public void tick() {
         super.tick();
-        for (AnimatedTooltip tooltip : animatedTooltips){
-            if (tooltip.getTiedWidget() != null){
-                tooltip.tick(tooltip.getTiedWidget().isHoveredOrFocused());
-            }
+        for (ItemStackButtonAnimatedTooltip btn : unlocked){
+            btn.tick();
+        }
+        for (ItemStackButtonAnimatedTooltip btn : locked){
+            btn.tick();
         }
         if (ticker++ < 5) return;
         ticker = 0;
@@ -245,7 +269,7 @@ public class SolarLexiconScreen extends Screen implements IScrollable {
         list.remove(toggleRecipesScreen);
 
         for (AbstractWidget widget : list){
-            widget.active = widget.x >= relX - 5 && widget.x <= relX + 230 && widget.y >= relY - 5 && widget.y <= relY + 115;
+            widget.active = widget.x >= relX - 5 && widget.x <= relX + 230 && widget.y >= relY - 5 && widget.y <= relY + 195;
         }
 
 
@@ -254,13 +278,8 @@ public class SolarLexiconScreen extends Screen implements IScrollable {
 
     @Override
     public void render(PoseStack matrices, int mousex, int mousey, float partialTicks) {
-        for (AbstractWidget b : ClientHelpers.getScreenButtons(this)){
-            if (!(b instanceof ItemStackButton)) b.render(matrices,mousex,mousey,partialTicks);
-        }
-        if (true) return;
         matrices.pushPose();
 
-        int stringColor = 0xee2222;
 
         ClientHelpers.bindText(MAIN_SCREEN_SCROLLABLE);
         GL11.glEnable(GL11.GL_SCISSOR_TEST);
@@ -269,7 +288,7 @@ public class SolarLexiconScreen extends Screen implements IScrollable {
         int height = minecraft.getWindow().getHeight();
         int scale = (int)minecraft.getWindow().getGuiScale();
 
-        GL11.glScissor(width/2-((30+83)*scale),height/2-(6*scale),((188+35)*scale),107*scale);
+        GL11.glScissor(width/2-((30+83)*scale),height/2-(89*scale),((188+35)*scale),196*scale);
         blit(matrices,relX,relY,0,0,256,256);
 
         ClientHelpers.bindText(FRAME);
@@ -288,8 +307,6 @@ public class SolarLexiconScreen extends Screen implements IScrollable {
 
             }
 
-//            blit(matrices,first.x-8,first.y-8,0,0,16,16,16,16);
-
         }
 
         postLinesRender.forEach(Runnable::run);
@@ -298,48 +315,44 @@ public class SolarLexiconScreen extends Screen implements IScrollable {
             Point first = new Point(relX+scrollX+18+map.get(a.getAchievementTier()).indexOf(a)*OFFSET_X,relY+scrollY+18+(a.getAchievementTier()-1)*OFFSET_Y);
             blit(matrices,first.x-8,first.y-8,0,0,20,20,20,20);
         }
-        List<AbstractWidget> listButtons = ClientHelpers.getScreenButtons(this);
-        listButtons.remove(toggleRecipesScreen);
-        listButtons.remove(justForge);
-        listButtons.remove(stagesPage);
 
-        for (AbstractWidget a :listButtons){
-            if (!(a instanceof  ItemStackButton)) {a.render(matrices,mousex,mousey,partialTicks); continue;}
-            ItemStackButton button = (ItemStackButton) a;
-            if (button.qMark){
-                button.render(matrices,mousex,mousey,partialTicks);
-            }
+
+
+        for (ItemStackButton button : unlocked){
+            button.render(matrices,mousex,mousey,partialTicks);
         }
         ClientHelpers.bindText(QMARK);
-        for (AbstractWidget a :listButtons){
-            if (!(a instanceof  ItemStackButton)) continue;
-            ItemStackButton button = (ItemStackButton) a;
-            if (!button.qMark){
-
-                blit(matrices,button.x,button.y,0,0,16,16,16,16);
-            }
+        for (ItemStackButton button : locked){
+            blit(matrices,button.x,button.y,0,0,16,16,16,16);
         }
+        for (Runnable runnable : postRender){
+            runnable.run();
+        }
+        postRender.clear();
         GL11.glDisable(GL11.GL_SCISSOR_TEST);
         ClientHelpers.bindText(MAIN_SCREEN);
+        RenderSystem.setShaderColor(0.75f,0.75f,0.75f,1f);
         blit(matrices,relX,relY,0,0,256,256);
-        drawString(matrices,minecraft.font,currAch,relX+12,relY+124,stringColor);
-        if (currentText != null && (currentText.length() != 0)) {
-            List<String> toRender1 = RenderingTools.splitString(currentText, 40);
-            int y = 0;
-            for (String s : toRender1) {
-                drawString(matrices, font, s, relX + 12, relY + 134 + y, stringColor);
-                y += 8;
-            }
-        }
-        if ((afterTxt != null) && (afterTxt.length() != 0)) {
-            List<String> toRender2 = RenderingTools.splitString(afterTxt, 40);
-            int yOffset = (toRender2.size()-1)*8;
-            int y = 0;
-            for (String s : toRender2) {
-                drawString(matrices, font, s, relX + 12, relY + 187 + y - yOffset, stringColor);
-                y += 8;
-            }
-        }
+
+
+//        drawString(matrices,minecraft.font,currAch,relX+12,relY+124,stringColor);
+//        if (currentText != null && (currentText.length() != 0)) {
+//            List<String> toRender1 = RenderingTools.splitString(currentText, 40);
+//            int y = 0;
+//            for (String s : toRender1) {
+//                drawString(matrices, font, s, relX + 12, relY + 134 + y, stringColor);
+//                y += 8;
+//            }
+//        }
+//        if ((afterTxt != null) && (afterTxt.length() != 0)) {
+//            List<String> toRender2 = RenderingTools.splitString(afterTxt, 40);
+//            int yOffset = (toRender2.size()-1)*8;
+//            int y = 0;
+//            for (String s : toRender2) {
+//                drawString(matrices, font, s, relX + 12, relY + 187 + y - yOffset, stringColor);
+//                y += 8;
+//            }
+//        }
 
         toggleRecipesScreen.render(matrices,mousex,mousey,partialTicks);
         justForge.render(matrices,mousex,mousey,partialTicks);
@@ -373,5 +386,10 @@ public class SolarLexiconScreen extends Screen implements IScrollable {
         GlStateManager._enableCull();
         GlStateManager._depthMask(true);
         GlStateManager._enableTexture();
+    }
+
+    @Override
+    public void addPostRenderTooltip(Runnable runnable) {
+        this.postRender.add(runnable);
     }
 }

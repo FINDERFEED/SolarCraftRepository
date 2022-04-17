@@ -16,7 +16,6 @@ public abstract class AnimatedTooltip {
     protected boolean yFixed = false;
     protected int maxSizeX;
     protected int maxSizeY;
-    protected AbstractWidget tiedWidget;
     private ComponentSequence sequence;
 
     public AnimatedTooltip(int borderX1,int borderY1,int borderX2,int borderY2,int animationLength,int borderWidth){
@@ -72,12 +71,7 @@ public abstract class AnimatedTooltip {
         return sequence;
     }
 
-    public AnimatedTooltip tieToWidget(AbstractWidget widget){
-        this.tiedWidget = widget;
-        return this;
-    }
-
-    public AbstractWidget getTiedWidget() {
-        return tiedWidget;
+    public int getTicker() {
+        return ticker;
     }
 }

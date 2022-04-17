@@ -82,14 +82,14 @@ public class InfusingRecipeEnergyScreen extends Screen {
 
 
         int xoffs = 37;
-        addRenderableWidget(new ItemStackButton(relX+48+xoffs,relY+9,12,12,(button)->{minecraft.setScreen(new InfusingRecipeScreen(recipes,currentPage));}, SolarForge.INFUSER_ITEM.get().getDefaultInstance(),0.7f,false));
-        addRenderableWidget(new ItemStackButton(relX+74+xoffs,relY+9,12,12,(button)->{minecraft.setScreen(new SolarLexiconRecipesScreen());}, Items.CRAFTING_TABLE.getDefaultInstance(),0.7f,false));
+        addRenderableWidget(new ItemStackButton(relX+48+xoffs,relY+9,12,12,(button)->{minecraft.setScreen(new InfusingRecipeScreen(recipes,currentPage));}, SolarForge.INFUSER_ITEM.get().getDefaultInstance(),0.7f));
+        addRenderableWidget(new ItemStackButton(relX+74+xoffs,relY+9,12,12,(button)->{minecraft.setScreen(new SolarLexiconRecipesScreen());}, Items.CRAFTING_TABLE.getDefaultInstance(),0.7f));
         addRenderableWidget(new ItemStackButton(relX+61+xoffs,relY+9,12,12,(button)->{
             Minecraft mc = Minecraft.getInstance();
             SolarLexicon lexicon = (SolarLexicon) mc.player.getMainHandItem().getItem();
             lexicon.currentSavedScreen = this;
             minecraft.setScreen(null);
-        }, Items.WRITABLE_BOOK.getDefaultInstance(),0.7f,false));
+        }, Items.WRITABLE_BOOK.getDefaultInstance(),0.7f));
     }
 
 

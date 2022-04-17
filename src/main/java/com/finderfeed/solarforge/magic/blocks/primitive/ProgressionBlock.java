@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.magic.blocks.primitive;
 
-import com.finderfeed.solarforge.magic.items.solar_lexicon.achievements.Progression;
+import com.finderfeed.solarforge.magic.items.solar_lexicon.progressions.Progression;
 import com.finderfeed.solarforge.misc_things.IProgressionBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;

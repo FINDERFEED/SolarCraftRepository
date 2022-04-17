@@ -1,6 +1,6 @@
-package com.finderfeed.solarforge.magic.items.solar_lexicon.achievements.achievement_tree;
+package com.finderfeed.solarforge.magic.items.solar_lexicon.progressions.progression_tree;
 
-import com.finderfeed.solarforge.magic.items.solar_lexicon.achievements.Progression;
+import com.finderfeed.solarforge.magic.items.solar_lexicon.progressions.Progression;
 
 import java.util.*;
 

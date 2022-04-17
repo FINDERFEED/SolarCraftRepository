@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.magic.items.solar_lexicon;
 
-import com.finderfeed.solarforge.magic.items.solar_lexicon.achievements.Progression;
+import com.finderfeed.solarforge.magic.items.solar_lexicon.progressions.Progression;
 import org.apache.commons.lang3.ArrayUtils;
 
 

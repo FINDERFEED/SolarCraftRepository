@@ -2,7 +2,7 @@ package com.finderfeed.solarforge.magic.blocks.solar_forge_block;
 
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.magic.items.primitive.solacraft_item_classes.SolarcraftBlockItem;
-import com.finderfeed.solarforge.magic.items.solar_lexicon.achievements.Progression;
+import com.finderfeed.solarforge.magic.items.solar_lexicon.progressions.Progression;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.unlockables.AncientFragment;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.item.TooltipFlag;

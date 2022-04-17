@@ -4,7 +4,7 @@ import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.local_library.helpers.CompoundNBTHelper;
 import com.finderfeed.solarforge.magic.blocks.primitive.InscriptionStone;
 import com.finderfeed.solarforge.magic.items.primitive.solacraft_item_classes.SolarcraftItem;
-import com.finderfeed.solarforge.magic.items.solar_lexicon.achievements.Progression;
+import com.finderfeed.solarforge.magic.items.solar_lexicon.progressions.Progression;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;

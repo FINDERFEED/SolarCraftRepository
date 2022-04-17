@@ -2,7 +2,7 @@ package com.finderfeed.solarforge.magic.items;
 
 import com.finderfeed.solarforge.Helpers;
 
-import com.finderfeed.solarforge.magic.items.solar_lexicon.achievements.Progression;
+import com.finderfeed.solarforge.magic.items.solar_lexicon.progressions.Progression;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 

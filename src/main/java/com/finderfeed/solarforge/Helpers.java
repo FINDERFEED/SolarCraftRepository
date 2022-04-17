@@ -1,20 +1,18 @@
 package com.finderfeed.solarforge;
 
-import com.finderfeed.solarforge.capabilities.capability_mana.CapabilitySolarMana;
-import com.finderfeed.solarforge.capabilities.capability_mana.SolarForgeMana;
 import com.finderfeed.solarforge.entities.CrystalBossEntity;
 import com.finderfeed.solarforge.entities.RunicElementalBoss;
 import com.finderfeed.solarforge.events.my_events.ProgressionUnlockEvent;
 import com.finderfeed.solarforge.local_library.OwnedBlock;
 import com.finderfeed.solarforge.local_library.helpers.FinderfeedMathHelper;
-import com.finderfeed.solarforge.magic.items.solar_lexicon.achievements.Progression;
+import com.finderfeed.solarforge.magic.items.solar_lexicon.progressions.Progression;
 import com.finderfeed.solarforge.misc_things.Multiblock;
 import com.finderfeed.solarforge.client.particles.ParticleTypesRegistry;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import com.finderfeed.solarforge.misc_things.StateAndTag;
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
 import com.finderfeed.solarforge.packet_handler.packets.*;
-import com.finderfeed.solarforge.magic.items.solar_lexicon.achievements.achievement_tree.ProgressionTree;
+import com.finderfeed.solarforge.magic.items.solar_lexicon.progressions.progression_tree.ProgressionTree;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.packets.UpdateProgressionOnClient;
 import com.mojang.blaze3d.vertex.*;
 import net.minecraft.client.Minecraft;
@@ -37,8 +35,6 @@ import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraftforge.common.MinecraftForge;
-
-import net.minecraftforge.common.util.LazyOptional;
 
 import net.minecraftforge.network.NetworkDirection;
 

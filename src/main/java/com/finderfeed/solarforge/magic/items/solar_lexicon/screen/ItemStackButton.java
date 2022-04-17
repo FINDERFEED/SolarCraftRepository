@@ -18,49 +18,29 @@ public class ItemStackButton extends Button {
     public final ResourceLocation LOC = new ResourceLocation("solarforge","textures/misc/item_stack_button.png");
     public final ResourceLocation LOC2 = new ResourceLocation("solarforge","textures/misc/question_mark.png");
     public final float scaleFactor;
-    public final boolean qMark;
-    public ItemStackButton(int x, int y, int xLoc, int yLoc, OnPress press,ItemStack stack,float scaleFactor,boolean qMark) {
+
+    public ItemStackButton(int x, int y, int xLoc, int yLoc, OnPress press,ItemStack stack,float scaleFactor) {
         super(x,y,xLoc,yLoc,new TextComponent(""),press);
         this.stack = stack;
         this.scaleFactor = scaleFactor;
-        this.qMark = qMark;
     }
 
 
-    public ItemStackButton(int x, int y, int xLoc, int yLoc, OnPress press,ItemStack stack,float scaleFactor,boolean qMark,Button.OnTooltip tooltip) {
+    public ItemStackButton(int x, int y, int xLoc, int yLoc, OnPress press,ItemStack stack,float scaleFactor,Button.OnTooltip tooltip) {
         super(x,y,xLoc,yLoc,new TextComponent(""),press,tooltip);
         this.stack = stack;
         this.scaleFactor = scaleFactor;
-        this.qMark = qMark;
-    }
-
-
-    @Override
-    public void playDownSound(SoundManager p_230988_1_) {
-        p_230988_1_.play(SimpleSoundInstance.forUI(Sounds.BUTTON_PRESS2.get(),1,1));
     }
 
     @Override
     public void renderButton(PoseStack matrices, int mousex, int mousey, float partialTicks) {
-        Minecraft mc = Minecraft.getInstance();
         matrices.pushPose();
         if (this.isHovered){
-
             this.renderToolTip(matrices,mousex,mousey);
         }
         matrices.scale(scaleFactor,scaleFactor,scaleFactor);
-//        GL11.glScalef(scaleFactor,scaleFactor,scaleFactor);
-
-        //if (!qMark) {
         RenderingTools.renderScaledGuiItem(stack,(int) x, (int) y,scaleFactor);
-//        mc.getItemRenderer().renderGuiItem(stack, (int) (x / scaleFactor), (int) (y / scaleFactor));
-        //}else{
 
-
-        //}
-
-
-//        GL11.glScalef(1/scaleFactor,1/scaleFactor,1/scaleFactor);
         RenderSystem.setShaderTexture(0,LOC);
         RenderSystem.enableBlend();
         if (this.isHovered){
@@ -69,4 +49,10 @@ public class ItemStackButton extends Button {
         }
         matrices.popPose();
     }
+
+    @Override
+    public void playDownSound(SoundManager manager) {
+        manager.play(SimpleSoundInstance.forUI(Sounds.BUTTON_PRESS2.get(),1,1));
+    }
+
 }

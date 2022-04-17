@@ -3,7 +3,7 @@ package com.finderfeed.solarforge.magic.items;
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.magic.items.primitive.RareSolarcraftBlockItem;
-import com.finderfeed.solarforge.magic.items.solar_lexicon.achievements.Progression;
+import com.finderfeed.solarforge.magic.items.solar_lexicon.progressions.Progression;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
 import net.minecraft.world.entity.Entity;

@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.magic.items.solar_lexicon.unlockables;
 
-import com.finderfeed.solarforge.magic.items.solar_lexicon.achievements.Progression;
+import com.finderfeed.solarforge.magic.items.solar_lexicon.progressions.Progression;
 import net.minecraft.network.chat.TranslatableComponent;
 
 import javax.annotation.Nullable;

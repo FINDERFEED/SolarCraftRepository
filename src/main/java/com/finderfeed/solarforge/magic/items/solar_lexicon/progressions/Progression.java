@@ -1,4 +1,4 @@
-package com.finderfeed.solarforge.magic.items.solar_lexicon.achievements;
+package com.finderfeed.solarforge.magic.items.solar_lexicon.progressions;
 
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
