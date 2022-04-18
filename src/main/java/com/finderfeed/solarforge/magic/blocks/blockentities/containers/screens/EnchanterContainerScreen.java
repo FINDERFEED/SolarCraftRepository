@@ -5,7 +5,6 @@ import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.client.particles.screen.SolarStrikeParticleScreen;
 import com.finderfeed.solarforge.config.enchanter_config.EnchanterConfig;
 import com.finderfeed.solarforge.local_library.client.particles.ScreenParticlesRenderHandler;
-import com.finderfeed.solarforge.local_library.helpers.FinderfeedMathHelper;
 import com.finderfeed.solarforge.magic.blocks.blockentities.EnchanterBlockEntity;
 import com.finderfeed.solarforge.magic.blocks.blockentities.containers.EnchanterContainer;
 import com.finderfeed.solarforge.magic.blocks.infusing_table_things.InfuserScreen;
@@ -27,7 +26,6 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraft.world.phys.Vec2;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.*;

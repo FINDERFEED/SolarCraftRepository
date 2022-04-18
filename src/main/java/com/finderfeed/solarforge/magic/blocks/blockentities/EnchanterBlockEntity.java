@@ -6,7 +6,7 @@ import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.client.particles.ParticleTypesRegistry;
 import com.finderfeed.solarforge.config.enchanter_config.EnchanterConfig;
 import com.finderfeed.solarforge.config.enchanter_config.EnchanterConfigInit;
-import com.finderfeed.solarforge.local_library.helpers.FinderfeedMathHelper;
+import com.finderfeed.solarforge.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarforge.magic.items.runic_energy.RunicEnergyCost;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
@@ -97,7 +97,7 @@ public class EnchanterBlockEntity extends REItemHandlerBlockEntity {
                 );
 
                 for (int i = 0; i < 3; i++) {
-                    double[] xz = FinderfeedMathHelper.rotatePointDegrees(0.5, 0, i * 120 + 120 * Math.sin(world.getGameTime() / 20f));
+                    double[] xz = FDMathHelper.rotatePointDegrees(0.5, 0, i * 120 + 120 * Math.sin(world.getGameTime() / 20f));
                     ClientHelpers.ParticleAnimationHelper.createParticle(ParticleTypesRegistry.SMALL_SOLAR_STRIKE_PARTICLE.get(),
                             center.x + xz[0], center.y - 0.2, center.z + xz[1], 0, 0.07, 0, () -> 255, () -> 255, () -> 0, 0.25f);
                 }

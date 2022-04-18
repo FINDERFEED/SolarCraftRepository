@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.entities;
 
-import com.finderfeed.solarforge.local_library.helpers.FinderfeedMathHelper;
+import com.finderfeed.solarforge.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarforge.local_library.other.CyclingInterpolatedValue;
 import com.finderfeed.solarforge.misc_things.CrystalBossBuddy;
 import com.finderfeed.solarforge.client.particles.ParticleTypesRegistry;
@@ -76,7 +76,7 @@ public class RipRayGenerator extends PathfinderMob implements CrystalBossBuddy{
     public void doDeployingParticles(){
         if (level.getGameTime() % 2 == 0) {
             for (int i = 0; i < 6; i++) {
-                double[] coords = FinderfeedMathHelper.polarToCartesian(0.5, Math.toRadians(60 * i));
+                double[] coords = FDMathHelper.polarToCartesian(0.5, Math.toRadians(60 * i));
                 this.level.addParticle(ParticleTypesRegistry.SMALL_SOLAR_STRIKE_PARTICLE.get(),
                         this.position().x + coords[0],
                         this.position().y,
@@ -98,7 +98,7 @@ public class RipRayGenerator extends PathfinderMob implements CrystalBossBuddy{
 
 
     public void doParticles(){
-        double[] coords = FinderfeedMathHelper.polarToCartesian(0.4,Math.toRadians(level.getGameTime()*30));
+        double[] coords = FDMathHelper.polarToCartesian(0.4,Math.toRadians(level.getGameTime()*30));
         this.level.addParticle(ParticleTypesRegistry.SMALL_SOLAR_STRIKE_PARTICLE.get(),
                 this.position().x+coords[0],
                 this.position().y-particlesValue.getValue(),

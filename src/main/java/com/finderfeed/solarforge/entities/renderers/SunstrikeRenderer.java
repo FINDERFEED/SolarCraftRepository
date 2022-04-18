@@ -3,7 +3,7 @@ package com.finderfeed.solarforge.entities.renderers;
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.client.rendering.rendertypes.SolarCraftRenderTypes;
 import com.finderfeed.solarforge.entities.SunstrikeEntity;
-import com.finderfeed.solarforge.local_library.helpers.FinderfeedMathHelper;
+import com.finderfeed.solarforge.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarforge.local_library.helpers.RenderingTools;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -16,7 +16,6 @@ import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.client.ForgeRenderTypes;
 
 public class SunstrikeRenderer extends EntityRenderer<SunstrikeEntity> {
 
@@ -35,7 +34,7 @@ public class SunstrikeRenderer extends EntityRenderer<SunstrikeEntity> {
         matrices.pushPose();
         matrices.translate(0,0.001,0);
         matrices.mulPose(Vector3f.YP.rotationDegrees(RenderingTools.getTime(entity.level,pticks)*15));
-        double percent = FinderfeedMathHelper.clamp(0,(entity.tickCount + pticks)/(float)SunstrikeEntity.FALLING_TIME,1);
+        double percent = FDMathHelper.clamp(0,(entity.tickCount + pticks)/(float)SunstrikeEntity.FALLING_TIME,1);
         matrices.pushPose();
         VertexConsumer vertex = src.getBuffer(RenderType.text(LOC));
         float h = 5;

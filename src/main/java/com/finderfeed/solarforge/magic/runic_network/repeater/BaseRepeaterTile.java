@@ -2,7 +2,7 @@ package com.finderfeed.solarforge.magic.runic_network.repeater;
 
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.local_library.helpers.CompoundNBTHelper;
-import com.finderfeed.solarforge.local_library.helpers.FinderfeedMathHelper;
+import com.finderfeed.solarforge.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarforge.client.particles.ParticleTypesRegistry;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
@@ -21,7 +21,6 @@ import net.minecraft.world.phys.Vec3;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 //NEVER GONNA GIVE YOU UP
 public class BaseRepeaterTile extends BlockEntity {
@@ -75,8 +74,8 @@ public class BaseRepeaterTile extends BlockEntity {
     }
 
     private void handleParticlesBetween(BlockPos pos){
-        Vec3 startPos = FinderfeedMathHelper.TileEntityThings.getTileEntityCenter(this);
-        Vec3 endPos = FinderfeedMathHelper.TileEntityThings.getTileEntityCenter(pos);
+        Vec3 startPos = FDMathHelper.TileEntityThings.getTileEntityCenter(this);
+        Vec3 endPos = FDMathHelper.TileEntityThings.getTileEntityCenter(pos);
         Vec3 vector = endPos.subtract(startPos);
         double length = vector.length();
 

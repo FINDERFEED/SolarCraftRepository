@@ -2,7 +2,7 @@ package com.finderfeed.solarforge.magic.blocks.blockentities;
 
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.local_library.helpers.CompoundNBTHelper;
-import com.finderfeed.solarforge.local_library.helpers.FinderfeedMathHelper;
+import com.finderfeed.solarforge.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarforge.local_library.OwnedBlock;
 import com.finderfeed.solarforge.client.particles.ParticleTypesRegistry;
 import com.finderfeed.solarforge.multiblocks.Multiblocks;
@@ -45,11 +45,11 @@ public class ZapTurretTile extends BlockEntity implements OwnedBlock {
                 tile.attackTick = 0;
                 tile.targets.clear();
                 tile.attack = false;
-                List<LivingEntity> targets = FinderfeedMathHelper.TargetFinding.getAllValidTargetsFromVec(
+                List<LivingEntity> targets = FDMathHelper.TargetFinding.getAllValidTargetsFromVec(
                         LivingEntity.class,
                         20,
                         world,
-                        FinderfeedMathHelper.TileEntityThings.getTileEntityCenter(tile),
+                        FDMathHelper.TileEntityThings.getTileEntityCenter(tile),
                         (entity) -> {
                             return !(entity instanceof Player);
                         }
@@ -60,7 +60,7 @@ public class ZapTurretTile extends BlockEntity implements OwnedBlock {
                     List<LivingEntity> invalidTargets = new ArrayList<>();
                     invalidTargets.add(lastTarget);
                     for (int i = 0; i < 4; i++) {
-                        List<LivingEntity> secondaryTargets = FinderfeedMathHelper.TargetFinding.getAllValidTargetsFromVec(
+                        List<LivingEntity> secondaryTargets = FDMathHelper.TargetFinding.getAllValidTargetsFromVec(
                                 LivingEntity.class,
                                 20,
                                 world,
@@ -78,7 +78,7 @@ public class ZapTurretTile extends BlockEntity implements OwnedBlock {
                         }
                     }
 
-                    tile.targets.add(FinderfeedMathHelper.TileEntityThings.getTileEntityCenter(pos));
+                    tile.targets.add(FDMathHelper.TileEntityThings.getTileEntityCenter(pos));
 
                     invalidTargets.forEach((trg) -> {
                         tile.targets.add(trg.position().add(0, trg.getBbHeight() / 2, 0));

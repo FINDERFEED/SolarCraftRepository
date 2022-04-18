@@ -1,9 +1,6 @@
 package com.finderfeed.solarforge.magic.blocks.blockentities.projectiles.renderers;
 
-import com.finderfeed.solarforge.ClientHelpers;
-import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.SolarForge;
-import com.finderfeed.solarforge.local_library.helpers.FinderfeedMathHelper;
 import com.finderfeed.solarforge.local_library.helpers.RenderingTools;
 import com.finderfeed.solarforge.magic.blocks.blockentities.projectiles.ShadowBolt;
 import com.mojang.blaze3d.vertex.PoseStack;

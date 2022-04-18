@@ -3,7 +3,7 @@ package com.finderfeed.solarforge.entities.renderers;
 import com.finderfeed.solarforge.entities.CrystalBossEntity;
 import com.finderfeed.solarforge.entities.ShieldingCrystalCrystalBoss;
 import com.finderfeed.solarforge.events.other_events.OBJModels;
-import com.finderfeed.solarforge.local_library.helpers.FinderfeedMathHelper;
+import com.finderfeed.solarforge.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarforge.local_library.helpers.RenderingTools;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -100,8 +100,8 @@ public class CrystalBossRenderer extends EntityRenderer<CrystalBossEntity> {
         Matrix4f mat = matrices.last().pose();
 
         for (int i = 0; i < 6;i++){
-            double[] xz = FinderfeedMathHelper.polarToCartesian(0.25f,Math.toRadians(i*60));
-            double[] xz2 = FinderfeedMathHelper.polarToCartesian(0.25f,Math.toRadians(i*60+60));
+            double[] xz = FDMathHelper.polarToCartesian(0.25f,Math.toRadians(i*60));
+            double[] xz2 = FDMathHelper.polarToCartesian(0.25f,Math.toRadians(i*60+60));
             RenderingTools.basicVertex(mat,vertex,xz[0],0,xz[1],0,(time%2)*(float)factor);
             RenderingTools.basicVertex(mat,vertex,xz2[0],0,xz2[1],1,(time%2)*(float)factor);
             RenderingTools.basicVertex(mat,vertex,xz2[0],length,xz2[1],1,(1+time%2)*(float)factor);

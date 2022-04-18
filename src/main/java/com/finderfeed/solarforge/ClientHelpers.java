@@ -10,7 +10,7 @@ import com.finderfeed.solarforge.config.SolarcraftClientConfig;
 import com.finderfeed.solarforge.entities.BallLightningProjectile;
 import com.finderfeed.solarforge.events.RenderEventsHandler;
 import com.finderfeed.solarforge.local_library.effects.LightningBoltPath;
-import com.finderfeed.solarforge.local_library.helpers.FinderfeedMathHelper;
+import com.finderfeed.solarforge.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarforge.magic.blocks.blockentities.RayTrapTileEntity;
 import com.finderfeed.solarforge.magic.blocks.blockentities.RuneEnergyPylonTile;
 import com.finderfeed.solarforge.magic.blocks.blockentities.containers.screens.RunicTableContainerScreen;
@@ -439,7 +439,7 @@ public class ClientHelpers {
 
         SmallSolarStrikeParticle particle = (SmallSolarStrikeParticle) Minecraft.getInstance().particleEngine.
                 createParticle(ParticleTypesRegistry.SMALL_SOLAR_STRIKE_PARTICLE.get(),x,y,z,xs,ys,zs);
-        int[] rgba = FinderfeedMathHelper.intToRgba(effect.getColor());
+        int[] rgba = FDMathHelper.intToRgba(effect.getColor());
         particle.setColor((float)rgba[0]/255,(float)rgba[1]/255,(float)rgba[2]/255);
     }
 
@@ -600,7 +600,7 @@ public class ClientHelpers {
                     double a = Math.toRadians(i * angle + gametime);
                     double x = radius * Math.sin(a);
                     double y = radius * Math.cos(a);
-                    double[] rotatedXZ = FinderfeedMathHelper.rotatePointDegrees(x, 0, rotAngle);
+                    double[] rotatedXZ = FDMathHelper.rotatePointDegrees(x, 0, rotAngle);
                     x = rotatedXZ[0];
                     double z = rotatedXZ[1];
 

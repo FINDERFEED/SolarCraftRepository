@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.entities.models;
 
-import com.finderfeed.solarforge.local_library.helpers.FinderfeedMathHelper;
+import com.finderfeed.solarforge.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarforge.local_library.helpers.RenderingTools;
 import com.finderfeed.solarforge.local_library.other.EaseInOut;
 import com.finderfeed.solarforge.local_library.other.InterpolatedValue;
@@ -133,15 +133,15 @@ public class RunicElementalAnimations {
         model.legsrow2.yRot = model.mlegsrow2.getInitRotY() + (float)Math.toRadians(720*value);
         model.legsrow3.yRot = model.mlegsrow3.getInitRotY() + (float)Math.toRadians(720*value);
         if (value <= 0.5) {
-            model.lefthand.xRot = model.mlefthand.getInitRotX() + (float) Math.toRadians(75 * FinderfeedMathHelper.clamp(0, value * 2, 1));
-            model.righthand.xRot = model.mrighthand.getInitRotX() - (float) Math.toRadians(75 * FinderfeedMathHelper.clamp(0, value * 2, 1));
+            model.lefthand.xRot = model.mlefthand.getInitRotX() + (float) Math.toRadians(75 * FDMathHelper.clamp(0, value * 2, 1));
+            model.righthand.xRot = model.mrighthand.getInitRotX() - (float) Math.toRadians(75 * FDMathHelper.clamp(0, value * 2, 1));
         }else{
-            model.lefthand.xRot = model.mlefthand.getInitRotX() + (float) Math.toRadians(75 * (1-FinderfeedMathHelper.clamp(0, value * 2 - 1, 1)));
-            model.righthand.xRot = model.mrighthand.getInitRotX() - (float) Math.toRadians(75 * (1-FinderfeedMathHelper.clamp(0, value * 2 - 1, 1)));
+            model.lefthand.xRot = model.mlefthand.getInitRotX() + (float) Math.toRadians(75 * (1- FDMathHelper.clamp(0, value * 2 - 1, 1)));
+            model.righthand.xRot = model.mrighthand.getInitRotX() - (float) Math.toRadians(75 * (1- FDMathHelper.clamp(0, value * 2 - 1, 1)));
         }
         model.righthand.yRot = model.mrighthand.getInitRotY() + (float)Math.toRadians(720*value);
         model.lefthand.yRot = model.mlefthand.getInitRotY() + (float)Math.toRadians(720*value);
-        double[] xy = FinderfeedMathHelper.rotatePointDegrees(9,0,720*value);
+        double[] xy = FDMathHelper.rotatePointDegrees(9,0,720*value);
         model.righthand.x = + model.mrighthand.getInitX() + 9 - (float)xy[0];
         model.righthand.z = + model.mrighthand.getInitZ() + (float)xy[1];
 
@@ -179,13 +179,13 @@ public class RunicElementalAnimations {
 
         model.head.z = model.mhead.getInitZ() - 2f*value;
 
-        double[] xz = FinderfeedMathHelper.rotatePointDegrees(9,0,angle);
-        double[] xzf = FinderfeedMathHelper.rotatePointDegrees(0,-5*value,angle);
+        double[] xz = FDMathHelper.rotatePointDegrees(9,0,angle);
+        double[] xzf = FDMathHelper.rotatePointDegrees(0,-5*value,angle);
         model.righthand.z = model.mrighthand.getInitZ() - (float)xz[1] - (float)xzf[1];
         model.righthand.x = model.mrighthand.getInitX() + 9 -(float)xz[0] - (float)xzf[0];
 
-        double[] xz2 = FinderfeedMathHelper.rotatePointDegrees(-9,0,angle);
-        double[] xzf2 = FinderfeedMathHelper.rotatePointDegrees(0,5*value,angle);
+        double[] xz2 = FDMathHelper.rotatePointDegrees(-9,0,angle);
+        double[] xzf2 = FDMathHelper.rotatePointDegrees(0,5*value,angle);
         model.lefthand.z = model.mlefthand.getInitZ() - (float)xz2[1] - (float)xzf2[1];
         model.lefthand.x = model.mlefthand.getInitX() - 9 - (float)xz2[0] - (float)xzf2[0];
 
@@ -205,13 +205,13 @@ public class RunicElementalAnimations {
         float angle = value*80;
         model.head.z = model.mhead.getInitZ() - 2f*value;
 
-        double[] xz = FinderfeedMathHelper.rotatePointDegrees(9,0,angle);
-        double[] xzf = FinderfeedMathHelper.rotatePointDegrees(0,5*value,angle);
+        double[] xz = FDMathHelper.rotatePointDegrees(9,0,angle);
+        double[] xzf = FDMathHelper.rotatePointDegrees(0,5*value,angle);
         model.righthand.z = model.mrighthand.getInitZ() - (float)xz[1] - (float)xzf[1];
         model.righthand.x = model.mrighthand.getInitX() + 9 -(float)xz[0] - (float)xzf[0];
 
-        double[] xz2 = FinderfeedMathHelper.rotatePointDegrees(-9,0,angle);
-        double[] xzf2 = FinderfeedMathHelper.rotatePointDegrees(0,-5*value,angle);
+        double[] xz2 = FDMathHelper.rotatePointDegrees(-9,0,angle);
+        double[] xzf2 = FDMathHelper.rotatePointDegrees(0,-5*value,angle);
         model.lefthand.z = model.mlefthand.getInitZ() - (float)xz2[1] - (float)xzf2[1];
         model.lefthand.x = model.mlefthand.getInitX() - 9 - (float)xz2[0] - (float)xzf2[0];
 
@@ -234,13 +234,13 @@ public class RunicElementalAnimations {
         float angle = value*80;
         model.head.z = model.mhead.getInitZ() - 2f;
 
-        double[] xz = FinderfeedMathHelper.rotatePointDegrees(9,0,angle);
-        double[] xzf = FinderfeedMathHelper.rotatePointDegrees(0,5*value,angle);
+        double[] xz = FDMathHelper.rotatePointDegrees(9,0,angle);
+        double[] xzf = FDMathHelper.rotatePointDegrees(0,5*value,angle);
         model.righthand.z = model.mrighthand.getInitZ() - (float)xz[1] - (float)xzf[1];
         model.righthand.x = model.mrighthand.getInitX() + 9 -(float)xz[0] - (float)xzf[0];
 
-        double[] xz2 = FinderfeedMathHelper.rotatePointDegrees(-9,0,angle);
-        double[] xzf2 = FinderfeedMathHelper.rotatePointDegrees(0,-5*value,angle);
+        double[] xz2 = FDMathHelper.rotatePointDegrees(-9,0,angle);
+        double[] xzf2 = FDMathHelper.rotatePointDegrees(0,-5*value,angle);
         model.lefthand.z = model.mlefthand.getInitZ() - (float)xz2[1] - (float)xzf2[1];
         model.lefthand.x = model.mlefthand.getInitX() - 9 - (float)xz2[0] - (float)xzf2[0];
 

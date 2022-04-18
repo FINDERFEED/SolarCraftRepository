@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.local_library.other;
 
-import com.finderfeed.solarforge.local_library.helpers.FinderfeedMathHelper;
+import com.finderfeed.solarforge.local_library.helpers.FDMathHelper;
 import net.minecraft.util.Mth;
 
 public class CyclingInterpolatedValue extends InterpolatedValue{
@@ -22,7 +22,7 @@ public class CyclingInterpolatedValue extends InterpolatedValue{
 
         double lerped = Mth.lerp((float)ticker/duration, start,end);
 
-        return FinderfeedMathHelper.clamp(0,
+        return FDMathHelper.clamp(0,
                 lerped,
                 end);
     }

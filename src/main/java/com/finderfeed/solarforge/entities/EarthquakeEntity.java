@@ -1,10 +1,8 @@
 package com.finderfeed.solarforge.entities;
 
 import com.finderfeed.solarforge.ClientHelpers;
-import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.client.particles.ParticleTypesRegistry;
 import com.finderfeed.solarforge.local_library.helpers.CompoundNBTHelper;
-import com.finderfeed.solarforge.local_library.helpers.FinderfeedMathHelper;
 import com.finderfeed.solarforge.misc_things.CrystalBossBuddy;
 import com.finderfeed.solarforge.registries.data_serializers.FDEntityDataSerializers;
 import com.finderfeed.solarforge.registries.entities.EntityTypes;
@@ -22,10 +20,8 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
-import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.NetworkHooks;
-import net.minecraftforge.registries.ForgeRegistries;
 
 public class EarthquakeEntity extends Entity {
 

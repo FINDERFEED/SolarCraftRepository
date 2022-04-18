@@ -1,12 +1,10 @@
 package com.finderfeed.solarforge.entities.renderers;
 
 import com.finderfeed.solarforge.SolarForge;
-import com.finderfeed.solarforge.entities.CrystalBossEntity;
 import com.finderfeed.solarforge.entities.RunicElementalBoss;
-import com.finderfeed.solarforge.entities.models.RunicElementalAnimations;
 import com.finderfeed.solarforge.entities.models.RunicElementalModel;
 import com.finderfeed.solarforge.events.other_events.OBJModels;
-import com.finderfeed.solarforge.local_library.helpers.FinderfeedMathHelper;
+import com.finderfeed.solarforge.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarforge.local_library.helpers.RenderingTools;
 import com.finderfeed.solarforge.local_library.other.EaseIn;
 import com.finderfeed.solarforge.local_library.other.EaseInOut;
@@ -15,7 +13,6 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Matrix4f;
 import com.mojang.math.Vector3f;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.culling.Frustum;
@@ -25,7 +22,6 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.phys.Vec3;
 
 public class RunicElementalRenderer extends MobRenderer<RunicElementalBoss, RunicElementalModel> {
@@ -126,7 +122,7 @@ public class RunicElementalRenderer extends MobRenderer<RunicElementalBoss, Runi
             matrices.translate(0,-3*scaleMod+0.5,0);
             matrices.scale(2,scaleMod,scaleMod);
             HAMMER.renderToBuffer(matrices,buffer.getBuffer(RenderType.entityTranslucent(RunicHammerModel.TEXTURE_LOCATION)),
-                    light,OverlayTexture.NO_OVERLAY,1,1,1,(float)FinderfeedMathHelper.clamp(0,value*2,1));
+                    light,OverlayTexture.NO_OVERLAY,1,1,1,(float) FDMathHelper.clamp(0,value*2,1));
             matrices.popPose();
         }else if (attackTick < 26){
             float value = (float)boss.getOrCreateAnimationValue("swing_hammer",new EaseInOut(0,2,10,3)).getValue()-1;
@@ -154,7 +150,7 @@ public class RunicElementalRenderer extends MobRenderer<RunicElementalBoss, Runi
             matrices.translate(0,-3*scaleMod+0.5,0);
             matrices.scale(2,scaleMod,scaleMod);
             HAMMER.renderToBuffer(matrices,buffer.getBuffer(RenderType.entityTranslucent(RunicHammerModel.TEXTURE_LOCATION)),
-                    light,OverlayTexture.NO_OVERLAY,1,1,1,(float)FinderfeedMathHelper.clamp(0,value*2,1));
+                    light,OverlayTexture.NO_OVERLAY,1,1,1,(float) FDMathHelper.clamp(0,value*2,1));
             matrices.popPose();
         }
     }
@@ -174,8 +170,8 @@ public class RunicElementalRenderer extends MobRenderer<RunicElementalBoss, Runi
         Matrix4f mat = matrices.last().pose();
 
         for (int i = 0; i < 6;i++){
-            double[] xz = FinderfeedMathHelper.polarToCartesian(0.25f,Math.toRadians(i*60));
-            double[] xz2 = FinderfeedMathHelper.polarToCartesian(0.25f,Math.toRadians(i*60+60));
+            double[] xz = FDMathHelper.polarToCartesian(0.25f,Math.toRadians(i*60));
+            double[] xz2 = FDMathHelper.polarToCartesian(0.25f,Math.toRadians(i*60+60));
             RenderingTools.basicVertex(mat,vertex,xz[0],0,xz[1],0,(time%2)*(float)factor);
             RenderingTools.basicVertex(mat,vertex,xz2[0],0,xz2[1],1,(time%2)*(float)factor);
             RenderingTools.basicVertex(mat,vertex,xz2[0],length,xz2[1],1,(1+time%2)*(float)factor);

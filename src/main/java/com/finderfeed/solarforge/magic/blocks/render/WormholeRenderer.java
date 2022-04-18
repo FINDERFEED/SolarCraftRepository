@@ -1,7 +1,7 @@
 package com.finderfeed.solarforge.magic.blocks.render;
 
 import com.finderfeed.solarforge.events.other_events.OBJModels;
-import com.finderfeed.solarforge.local_library.helpers.FinderfeedMathHelper;
+import com.finderfeed.solarforge.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarforge.local_library.helpers.RenderingTools;
 import com.finderfeed.solarforge.magic.blocks.blockentities.WormholeTileEntity;
 import com.finderfeed.solarforge.client.rendering.deprecated_shaders.post_chains.PostChainPlusUltra;
@@ -44,7 +44,7 @@ public class WormholeRenderer implements BlockEntityRenderer<WormholeTileEntity>
 
     }
     private void doShader(PoseStack matrices, WormholeTileEntity tile){
-        if (FinderfeedMathHelper.canSeeTileEntity(tile, Minecraft.getInstance().player) && Minecraft.getInstance().cameraEntity != null) {
+        if (FDMathHelper.canSeeTileEntity(tile, Minecraft.getInstance().player) && Minecraft.getInstance().cameraEntity != null) {
             Vec3 playerPos = Minecraft.getInstance().gameRenderer.getMainCamera().getPosition();
             Vec3 tilePos = new Vec3(tile.getBlockPos().getX() + 0.5, tile.getBlockPos().getY() + 0.5, tile.getBlockPos().getZ() + 0.5);
             float dist = (float) new Vec3(tilePos.x - playerPos.x, tilePos.y - playerPos.y, tilePos.z - playerPos.z).length()*50;

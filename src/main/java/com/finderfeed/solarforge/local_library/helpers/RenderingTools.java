@@ -14,13 +14,11 @@ import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import com.finderfeed.solarforge.client.rendering.rendertypes.RadiantPortalRendertype;
 import com.finderfeed.solarforge.client.rendering.deprecated_shaders.post_chains.PostChainPlusUltra;
 import com.finderfeed.solarforge.client.rendering.deprecated_shaders.post_chains.UniformPlusPlus;
-import com.mojang.blaze3d.pipeline.RenderTarget;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.platform.Lighting;
 import com.mojang.blaze3d.vertex.*;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.platform.Window;
 import com.mojang.math.Vector3d;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
@@ -57,7 +55,6 @@ import net.minecraft.world.level.block.HalfTransparentBlock;
 import net.minecraft.world.level.block.StainedGlassPaneBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.model.data.EmptyModelData;
 import net.minecraftforge.client.model.data.ModelDataMap;
 import net.minecraftforge.common.MinecraftForge;
@@ -471,8 +468,8 @@ public class RenderingTools {
 
 
         for (int i = 0; i < acurarry;i++){
-            double[] first = FinderfeedMathHelper.polarToCartesian(radius,Math.toRadians(i*angle));
-            double[] second = FinderfeedMathHelper.polarToCartesian(radius,Math.toRadians(i*angle+angle));
+            double[] first = FDMathHelper.polarToCartesian(radius,Math.toRadians(i*angle));
+            double[] second = FDMathHelper.polarToCartesian(radius,Math.toRadians(i*angle+angle));
             vertex.vertex((float)first[0],(float)height,(float)first[1]).color(255, 255, 255, 255).uv(1, 0+time).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
             vertex.vertex((float)first[0],(float)height+secondHeight,(float)first[1]).color(255, 255, 255, 255).uv(1, 1+time).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
             vertex.vertex((float)second[0],(float)height+secondHeight,(float)second[1]).color(255, 255, 255, 255).uv(0, 1+time).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();

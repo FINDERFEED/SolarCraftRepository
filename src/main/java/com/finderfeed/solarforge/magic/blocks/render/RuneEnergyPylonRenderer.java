@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.magic.blocks.render;
 
-import com.finderfeed.solarforge.local_library.helpers.FinderfeedMathHelper;
+import com.finderfeed.solarforge.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarforge.local_library.helpers.RenderingTools;
 import com.finderfeed.solarforge.magic.blocks.blockentities.RuneEnergyPylonTile;
 import com.finderfeed.solarforge.client.rendering.deprecated_shaders.post_chains.PostChainPlusUltra;
@@ -36,7 +36,7 @@ public class RuneEnergyPylonRenderer implements BlockEntityRenderer<RuneEnergyPy
 
     @Override
     public void render(RuneEnergyPylonTile tile, float partialTicks, PoseStack matrices, MultiBufferSource buffer, int light, int overlay) {
-        if (FinderfeedMathHelper.canSeeTileEntity(tile,Minecraft.getInstance().player) && (Minecraft.getInstance().cameraEntity != null) ) {
+        if (FDMathHelper.canSeeTileEntity(tile,Minecraft.getInstance().player) && (Minecraft.getInstance().cameraEntity != null) ) {
             Vec3 playerPos = Minecraft.getInstance().gameRenderer.getMainCamera().getPosition();
 
 

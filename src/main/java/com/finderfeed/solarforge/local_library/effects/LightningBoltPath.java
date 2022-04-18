@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.local_library.effects;
 
-import com.finderfeed.solarforge.local_library.helpers.FinderfeedMathHelper;
+import com.finderfeed.solarforge.local_library.helpers.FDMathHelper;
 import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.Nonnull;
@@ -39,9 +39,9 @@ public class LightningBoltPath implements Iterable<Vec3>{
     public void calculate(){
         Vec3 vectorBetween = end.subtract(start);
         for (int i = 1;i < breakCount-1;i++){
-            double xOff = FinderfeedMathHelper.randomPlusMinus() * (FinderfeedMathHelper.RANDOM.nextDouble() * maxOffset);
-            double yOff = FinderfeedMathHelper.randomPlusMinus() * (FinderfeedMathHelper.RANDOM.nextDouble() * maxOffset);
-            double zOff = FinderfeedMathHelper.randomPlusMinus() * (FinderfeedMathHelper.RANDOM.nextDouble() * maxOffset);
+            double xOff = FDMathHelper.randomPlusMinus() * (FDMathHelper.RANDOM.nextDouble() * maxOffset);
+            double yOff = FDMathHelper.randomPlusMinus() * (FDMathHelper.RANDOM.nextDouble() * maxOffset);
+            double zOff = FDMathHelper.randomPlusMinus() * (FDMathHelper.RANDOM.nextDouble() * maxOffset);
             double m = (float)i / breakCount;
             Vec3 posOnLine = start.add(vectorBetween.multiply(m,m,m));
             positions[i] = posOnLine.add(xOff,yOff,zOff);

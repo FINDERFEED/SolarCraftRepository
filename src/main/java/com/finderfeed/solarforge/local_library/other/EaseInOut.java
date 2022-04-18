@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.local_library.other;
 
-import com.finderfeed.solarforge.local_library.helpers.FinderfeedMathHelper;
+import com.finderfeed.solarforge.local_library.helpers.FDMathHelper;
 import net.minecraft.util.Mth;
 
 public class EaseInOut extends InterpolatedValue implements CanTick{
@@ -17,9 +17,9 @@ public class EaseInOut extends InterpolatedValue implements CanTick{
 
 
     public double getValue(){
-        double time = FinderfeedMathHelper.clamp(start,ticker,duration);
-        double easein= FinderfeedMathHelper.SQUARE.apply(time/duration);
-        double easeout = FinderfeedMathHelper.FLIP.apply(Math.pow(FinderfeedMathHelper.FLIP.apply(time/duration),modifier));
+        double time = FDMathHelper.clamp(start,ticker,duration);
+        double easein= FDMathHelper.SQUARE.apply(time/duration);
+        double easeout = FDMathHelper.FLIP.apply(Math.pow(FDMathHelper.FLIP.apply(time/duration),modifier));
         return Mth.lerp(Mth.lerp(time/duration,easein,easeout),start,end);
     }
 

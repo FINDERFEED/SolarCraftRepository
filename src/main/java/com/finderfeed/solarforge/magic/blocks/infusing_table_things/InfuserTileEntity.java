@@ -5,7 +5,7 @@ import com.finderfeed.solarforge.ClientHelpers;
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.client.particles.ParticleTypesRegistry;
-import com.finderfeed.solarforge.local_library.helpers.FinderfeedMathHelper;
+import com.finderfeed.solarforge.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarforge.local_library.other.EaseIn;
 import com.finderfeed.solarforge.magic.blocks.blockentities.REItemHandlerBlockEntity;
 import com.finderfeed.solarforge.magic.blocks.infusing_table_things.infusing_pool.InfusingStandTileEntity;
@@ -257,7 +257,7 @@ public class InfuserTileEntity extends REItemHandlerBlockEntity implements  IEne
             Vec3 center = Helpers.getBlockCenter(tile.getBlockPos());
             for (int i = 1; i <= 4; i++) {
                 double h = Math.toRadians(i * 90 + 30);
-                double[] xz = FinderfeedMathHelper.rotatePointRadians(7,0,h);
+                double[] xz = FDMathHelper.rotatePointRadians(7,0,h);
                 double x = xz[0];
                 double z = xz[1];
                 ClientHelpers.ParticleAnimationHelper.randomline(ParticleTypesRegistry.SPARK_PARTICLE.get(),
@@ -265,7 +265,7 @@ public class InfuserTileEntity extends REItemHandlerBlockEntity implements  IEne
             }
             for (int i = 1; i <= 4; i++) {
                 double h = Math.toRadians(i * 90 + 60);
-                double[] xz = FinderfeedMathHelper.rotatePointRadians(6.5f,0,h);
+                double[] xz = FDMathHelper.rotatePointRadians(6.5f,0,h);
                 double x = xz[0];
                 double z = xz[1];
                 ClientHelpers.ParticleAnimationHelper.randomline(ParticleTypesRegistry.SPARK_PARTICLE.get(),

@@ -3,7 +3,7 @@ package com.finderfeed.solarforge.abilities.screens;
 import com.finderfeed.solarforge.ClientHelpers;
 import com.finderfeed.solarforge.abilities.ability_classes.AbstractAbility;
 import com.finderfeed.solarforge.SolarCraftTags;
-import com.finderfeed.solarforge.local_library.helpers.FinderfeedMathHelper;
+import com.finderfeed.solarforge.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarforge.local_library.custom_registries.RegistryDelegate;
 import com.finderfeed.solarforge.local_library.helpers.RenderingTools;
 import com.finderfeed.solarforge.local_library.other.EaseInOut;
@@ -120,7 +120,7 @@ public class AbilityBuyScreen extends Screen {
         for (String s : strings){
             maxSymbols+=s.length();
         }
-        int remainingChars = FinderfeedMathHelper.clamp(0,this.ticker,maxSymbols);
+        int remainingChars = FDMathHelper.clamp(0,this.ticker,maxSymbols);
         int count = 0;
         for (String s : strings){
             if (remainingChars > s.length()){

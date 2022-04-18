@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.local_library.other;
 
-import com.finderfeed.solarforge.local_library.helpers.FinderfeedMathHelper;
+import com.finderfeed.solarforge.local_library.helpers.FDMathHelper;
 import net.minecraft.util.Mth;
 
 public class EaseIn extends InterpolatedValue{
@@ -15,8 +15,8 @@ public class EaseIn extends InterpolatedValue{
 
 
     public double getValue(){
-        double time = FinderfeedMathHelper.clamp(0,ticker,duration);
-        return Mth.lerp(FinderfeedMathHelper.SQUARE.apply(time/duration),start,end);
+        double time = FDMathHelper.clamp(0,ticker,duration);
+        return Mth.lerp(FDMathHelper.SQUARE.apply(time/duration),start,end);
     }
 
     public void setDuration(double duration) {

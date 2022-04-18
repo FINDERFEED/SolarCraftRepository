@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.magic.items.solar_lexicon.structure.category;
 
-import com.finderfeed.solarforge.local_library.helpers.FinderfeedMathHelper;
+import com.finderfeed.solarforge.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarforge.local_library.other.EaseInOut;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.structure.subcategory.SubCategory;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.structure.subcategory.SubCategoryBase;
@@ -85,7 +85,7 @@ public class Category {
         }else{
             VALUE.tickBackwards();
         }
-        double val = FinderfeedMathHelper.clamp(0.3,VALUE.getValue(),1);
+        double val = FDMathHelper.clamp(0.3,VALUE.getValue(),1);
         this.linesRGB[0] = (int)Math.round(val*255);
         this.linesRGB[1] = (int)Math.round(val*255);
         this.linesRGB[2] = (int)Math.round(val*255);

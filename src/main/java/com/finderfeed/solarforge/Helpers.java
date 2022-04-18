@@ -4,7 +4,7 @@ import com.finderfeed.solarforge.entities.CrystalBossEntity;
 import com.finderfeed.solarforge.entities.RunicElementalBoss;
 import com.finderfeed.solarforge.events.my_events.ProgressionUnlockEvent;
 import com.finderfeed.solarforge.local_library.OwnedBlock;
-import com.finderfeed.solarforge.local_library.helpers.FinderfeedMathHelper;
+import com.finderfeed.solarforge.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.progressions.Progression;
 import com.finderfeed.solarforge.misc_things.Multiblock;
 import com.finderfeed.solarforge.client.particles.ParticleTypesRegistry;
@@ -483,7 +483,7 @@ public class Helpers {
         List<BlockPos> toReturn = new ArrayList<>();
         for (int i = -radius; i <= radius;i++){
             for (int g = -radius; g <= radius;g++){
-                if (FinderfeedMathHelper.isInCircle(i,g,radius)) {
+                if (FDMathHelper.isInCircle(i,g,radius)) {
                     BlockPos check = mainpos.offset(i, 0, g);
                     if (isNormal(world, check)) {
                         toReturn.add(check);

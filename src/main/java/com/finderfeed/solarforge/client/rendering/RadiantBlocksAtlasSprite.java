@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.client.rendering;
 
-import com.finderfeed.solarforge.local_library.helpers.FinderfeedMathHelper;
+import com.finderfeed.solarforge.local_library.helpers.FDMathHelper;
 import com.mojang.blaze3d.platform.NativeImage;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -54,7 +54,7 @@ public class RadiantBlocksAtlasSprite extends TextureAtlasSprite {
                     for (int a = 0; a < image.getWidth(); a++) {
                         for (int b = 0; b < image.getHeight(); b++) {
                             int color = image2.getPixelRGBA(a, b);
-                            int[] rgba = FinderfeedMathHelper.intToRgba(color);
+                            int[] rgba = FDMathHelper.intToRgba(color);
                             int flag = isGray(rgba);
                             //rb - night
                             //rg - day
@@ -73,7 +73,7 @@ public class RadiantBlocksAtlasSprite extends TextureAtlasSprite {
                                         }
                                     }
 
-                                    int finalColor = FinderfeedMathHelper.rgbaToInt(new int[]{d + 10, dg + 10-n*5, n*3, 255});
+                                    int finalColor = FDMathHelper.rgbaToInt(new int[]{d + 10, dg + 10-n*5, n*3, 255});
                                     image.setPixelRGBA(a, b, finalColor);
                                 }else{
 
@@ -86,7 +86,7 @@ public class RadiantBlocksAtlasSprite extends TextureAtlasSprite {
                                         }
                                     }
 
-                                    int finalColor = FinderfeedMathHelper.rgbaToInt(new int[]{Math.round((float)n/1.8f) + d*3, d*3, n-d*3 , 255});
+                                    int finalColor = FDMathHelper.rgbaToInt(new int[]{Math.round((float)n/1.8f) + d*3, d*3, n-d*3 , 255});
                                     image.setPixelRGBA(a, b, finalColor);
                                 }
                             }

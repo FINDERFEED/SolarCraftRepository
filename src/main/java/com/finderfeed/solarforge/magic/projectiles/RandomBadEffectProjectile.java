@@ -1,7 +1,7 @@
 package com.finderfeed.solarforge.magic.projectiles;
 
 import com.finderfeed.solarforge.ClientHelpers;
-import com.finderfeed.solarforge.local_library.helpers.FinderfeedMathHelper;
+import com.finderfeed.solarforge.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarforge.misc_things.CrystalBossBuddy;
 import com.finderfeed.solarforge.client.particles.ParticleTypesRegistry;
 import com.finderfeed.solarforge.registries.entities.EntityTypes;
@@ -110,7 +110,7 @@ public class RandomBadEffectProjectile extends AbstractHurtingProjectile {
             for (int i = 0; i < 12;i++){
                 float radius = 3f;
                 for (int g = 0; g < radius;g++) {
-                    double[] xz = FinderfeedMathHelper.polarToCartesian(g, i * 30);
+                    double[] xz = FDMathHelper.polarToCartesian(g, i * 30);
                     ClientHelpers.createEffectParticle(
                             this.position().x + xz[0],
                             this.position().y + this.getBbHeight()/2,

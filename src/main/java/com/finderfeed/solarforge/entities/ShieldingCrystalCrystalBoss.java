@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.entities;
 
-import com.finderfeed.solarforge.local_library.helpers.FinderfeedMathHelper;
+import com.finderfeed.solarforge.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarforge.misc_things.CrystalBossBuddy;
 import com.finderfeed.solarforge.registries.sounds.Sounds;
 import net.minecraft.core.particles.ParticleTypes;
@@ -40,7 +40,7 @@ public class ShieldingCrystalCrystalBoss extends Mob implements CrystalBossBuddy
         }
         if (level.isClientSide && this.entityData.get(DEPLOYING)){
             for (int i = 0; i < 12;i++){
-                double[] xz = FinderfeedMathHelper.polarToCartesian(0.5,i*30);
+                double[] xz = FDMathHelper.polarToCartesian(0.5,i*30);
                 level.addParticle(ParticleTypes.ENCHANT,this.position().x+xz[0],this.position().y+this.getBbHeight(),this.position().z+xz[1],0,-0.3,0);
             }
         }

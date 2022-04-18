@@ -1,7 +1,7 @@
 package com.finderfeed.solarforge.magic.blocks.render;
 
 import com.finderfeed.solarforge.Helpers;
-import com.finderfeed.solarforge.local_library.helpers.FinderfeedMathHelper;
+import com.finderfeed.solarforge.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarforge.local_library.helpers.RenderingTools;
 import com.finderfeed.solarforge.magic.blocks.blockentities.EnergyGeneratorTile;
 import com.finderfeed.solarforge.magic.blocks.rendering_models.SolarEnergyGeneratorModel;
@@ -224,7 +224,7 @@ public class EnergyGeneratorTileRender implements BlockEntityRenderer<EnergyGene
 
 
     private void doShader(PoseStack matrices,EnergyGeneratorTile tile){
-        if (FinderfeedMathHelper.canSeeTileEntity(tile,Minecraft.getInstance().player) && Minecraft.getInstance().cameraEntity != null) {
+        if (FDMathHelper.canSeeTileEntity(tile,Minecraft.getInstance().player) && Minecraft.getInstance().cameraEntity != null) {
             Vec3 playerPos = Minecraft.getInstance().gameRenderer.getMainCamera().getPosition();
             Vec3 tilePos = new Vec3(tile.getBlockPos().getX() + 0.5, tile.getBlockPos().getY() + 0.5, tile.getBlockPos().getZ() + 0.5);
             float dist = (float) new Vec3(tilePos.x - playerPos.x, tilePos.y - playerPos.y, tilePos.z - playerPos.z).length()*50;

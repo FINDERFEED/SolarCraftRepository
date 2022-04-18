@@ -2,7 +2,7 @@ package com.finderfeed.solarforge.entities;
 
 import com.finderfeed.solarforge.ClientHelpers;
 import com.finderfeed.solarforge.client.particles.ParticleTypesRegistry;
-import com.finderfeed.solarforge.local_library.helpers.FinderfeedMathHelper;
+import com.finderfeed.solarforge.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarforge.misc_things.CrystalBossBuddy;
 import com.finderfeed.solarforge.registries.attributes.AttributesRegistry;
 import com.finderfeed.solarforge.registries.sounds.Sounds;
@@ -43,7 +43,7 @@ public class RefractionCrystal extends Mob implements CrystalBossBuddy {
         if (level.isClientSide){
             if (isDeploying()){
                 for (int i = 0;i < 6;i++){
-                    double[] xz = FinderfeedMathHelper.rotatePointDegrees(1.5*(1-(float)tickCount / DEPLOYING_TIME),0,i*60 + tickCount*5);
+                    double[] xz = FDMathHelper.rotatePointDegrees(1.5*(1-(float)tickCount / DEPLOYING_TIME),0,i*60 + tickCount*5);
                     ClientHelpers.ParticleAnimationHelper.createParticle(ParticleTypesRegistry.SMALL_SOLAR_STRIKE_PARTICLE.get(),
                             position().x + xz[0],position().y + 1.5,position().z + xz[1],0,0,0,()->200 + level.random.nextInt(55),
                             ()->200 + level.random.nextInt(55),()->0,0.3f);

@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.magic.runic_network.algorithms;
 
-import com.finderfeed.solarforge.local_library.helpers.FinderfeedMathHelper;
+import com.finderfeed.solarforge.local_library.helpers.FDMathHelper;
 import net.minecraft.core.BlockPos;
 
 import java.util.*;
@@ -203,7 +203,7 @@ class Nodes{
 
     public Nodes(BlockPos pos,BlockPos finalPos,double g){
         this.pos = pos;
-        this.heuristic = FinderfeedMathHelper.getDistanceBetween(pos,finalPos);
+        this.heuristic = FDMathHelper.getDistanceBetween(pos,finalPos);
         this.g = g;
         this.f = heuristic+g;
     }

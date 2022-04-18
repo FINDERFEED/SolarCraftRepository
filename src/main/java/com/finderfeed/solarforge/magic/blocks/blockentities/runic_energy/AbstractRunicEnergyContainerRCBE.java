@@ -3,7 +3,7 @@ package com.finderfeed.solarforge.magic.blocks.blockentities.runic_energy;
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.local_library.OwnedBlock;
 import com.finderfeed.solarforge.local_library.helpers.CompoundNBTHelper;
-import com.finderfeed.solarforge.local_library.helpers.FinderfeedMathHelper;
+import com.finderfeed.solarforge.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarforge.magic.blocks.blockentities.RuneEnergyPylonTile;
 import com.finderfeed.solarforge.magic.runic_network.algorithms.RunicEnergyPath;
 import com.finderfeed.solarforge.magic.runic_network.repeater.BaseRepeaterTile;
@@ -294,8 +294,8 @@ public abstract class AbstractRunicEnergyContainerRCBE extends RandomizableConta
                 if (tiles.get(g) instanceof BaseRepeaterTile repeater){
 
                     if ((repeater.getEnergyType() == type) && !(tile instanceof RuneEnergyPylonTile)) {
-                        if (FinderfeedMathHelper.canSee(repeater.getBlockPos(),pos,getMaxRange(),world)) {
-                            double range = FinderfeedMathHelper.getDistanceBetween(repeater.getBlockPos(), pos);
+                        if (FDMathHelper.canSee(repeater.getBlockPos(),pos,getMaxRange(),world)) {
+                            double range = FDMathHelper.getDistanceBetween(repeater.getBlockPos(), pos);
                             if (range <= getMaxRange()) {
                                 if (range <= minRange) {
                                     minRange = range;
@@ -306,9 +306,9 @@ public abstract class AbstractRunicEnergyContainerRCBE extends RandomizableConta
                     }
                 }
                 else if (tiles.get(g) instanceof RunicEnergyGiver pylon){
-                    if (FinderfeedMathHelper.canSee(pylon.getPos(),pos,getMaxRange(),world)) {
+                    if (FDMathHelper.canSee(pylon.getPos(),pos,getMaxRange(),world)) {
                         if (pylon.getTypes() != null && pylon.getTypes().contains(type)) {
-                            double range = FinderfeedMathHelper.getDistanceBetween(pylon.getPos(), pos);
+                            double range = FDMathHelper.getDistanceBetween(pylon.getPos(), pos);
                             if (range <= getMaxRange()) {
                                 if (range <= minRange) {
                                     minRange = range;

@@ -3,9 +3,8 @@ package com.finderfeed.solarforge.entities.renderers;
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.client.rendering.rendertypes.SolarCraftRenderTypes;
 import com.finderfeed.solarforge.entities.EarthquakeEntity;
-import com.finderfeed.solarforge.local_library.helpers.FinderfeedMathHelper;
+import com.finderfeed.solarforge.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarforge.local_library.helpers.RenderingTools;
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Matrix4f;
@@ -34,7 +33,7 @@ public class EarthquakeRenderer extends EntityRenderer<EarthquakeEntity> {
         RenderingTools.applyMovementMatrixRotations(matrices,entity.getDir());
         Matrix4f m = matrices.last().pose();
         float percent = entity.getLength()/EarthquakeEntity.MAX_LENGTH;
-        int yellow = (int)Math.round(FinderfeedMathHelper.clamp(0,230*((entity.tickCount + pticks) /EarthquakeEntity.ACTIVATION_TIME),230));
+        int yellow = (int)Math.round(FDMathHelper.clamp(0,230*((entity.tickCount + pticks) /EarthquakeEntity.ACTIVATION_TIME),230));
         RenderingTools.coloredBasicVertex(m,vertex,-0.5*(percent*2),0,0,0,1,255,255,255-yellow,255);
         RenderingTools.coloredBasicVertex(m,vertex,-0.5*(percent*2),EarthquakeEntity.MAX_LENGTH*percent,0,1/*percent*/,1,255,255,255-yellow,255);
         RenderingTools.coloredBasicVertex(m,vertex,0.5*(percent*2),EarthquakeEntity.MAX_LENGTH*percent,0,1/*percent*/,0,255,255,255-yellow,255);
@@ -52,10 +51,10 @@ public class EarthquakeRenderer extends EntityRenderer<EarthquakeEntity> {
             matrices.translate(0, 0.01, 0);
             RenderingTools.applyMovementMatrixRotations(matrices, entity.getDir());
             m = matrices.last().pose();
-            int alpha = (int) Math.round(FinderfeedMathHelper.clamp(0, 255 * ((entity.tickCount - delta + pticks) / 3), 255));
+            int alpha = (int) Math.round(FDMathHelper.clamp(0, 255 * ((entity.tickCount - delta + pticks) / 3), 255));
             int secondDelta = EarthquakeEntity.ACTIVATION_TIME + 10;
             if (entity.tickCount > EarthquakeEntity.ACTIVATION_TIME){
-                alpha = (int) Math.round(FinderfeedMathHelper.clamp(0, 255 * ((secondDelta - entity.tickCount - pticks) / 10), 255));
+                alpha = (int) Math.round(FDMathHelper.clamp(0, 255 * ((secondDelta - entity.tickCount - pticks) / 10), 255));
             }
 
 //            vertex.vertex(m,0, 0, 0)            .color(255,255,0,alpha).endVertex();

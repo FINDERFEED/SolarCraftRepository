@@ -1,7 +1,7 @@
 package com.finderfeed.solarforge.magic.blocks.blockentities;
 
 import com.finderfeed.solarforge.local_library.helpers.EntityHelper;
-import com.finderfeed.solarforge.local_library.helpers.FinderfeedMathHelper;
+import com.finderfeed.solarforge.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.LivingEntity;
@@ -23,7 +23,7 @@ public class WormholeTileEntity extends BlockEntity {
     public static void tick(Level world,BlockState state, BlockPos pos, WormholeTileEntity tile){
 
         world.getEntitiesOfClass(LivingEntity.class,new AABB(-10,-10,-10,10,10,10).move(pos), (entity)->{
-            if (entity.canChangeDimensions() && Math.sqrt(entity.distanceToSqr(FinderfeedMathHelper.TileEntityThings.getTileEntityCenter(pos))) <= 10){
+            if (entity.canChangeDimensions() && Math.sqrt(entity.distanceToSqr(FDMathHelper.TileEntityThings.getTileEntityCenter(pos))) <= 10){
                 return true;
             }else{
                 return false;

@@ -3,7 +3,7 @@ package com.finderfeed.solarforge.magic.blocks.blockentities.runic_energy;
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.local_library.OwnedBlock;
 import com.finderfeed.solarforge.local_library.helpers.CompoundNBTHelper;
-import com.finderfeed.solarforge.local_library.helpers.FinderfeedMathHelper;
+import com.finderfeed.solarforge.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarforge.magic.blocks.blockentities.RuneEnergyPylonTile;
 import com.finderfeed.solarforge.magic.blocks.blockentities.SolarcraftBlockEntity;
 import com.finderfeed.solarforge.magic.items.runic_energy.RunicEnergyContainer;
@@ -20,11 +20,9 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.LevelChunk;
-import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.Nullable;
 import java.util.*;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 
 public abstract class AbstractRunicEnergyContainer extends SolarcraftBlockEntity implements OwnedBlock {
@@ -114,7 +112,7 @@ public abstract class AbstractRunicEnergyContainer extends SolarcraftBlockEntity
             BlockPos firstPos = PATH_TO_CONTAINERS.get(type).get(1);
             BlockEntity first = level.getBlockEntity(firstPos);
             if (first instanceof RunicEnergyGiver container){
-                if (FinderfeedMathHelper.canSee(firstPos,worldPosition,getMaxRange(),level)) {
+                if (FDMathHelper.canSee(firstPos,worldPosition,getMaxRange(),level)) {
                     if (!nullOrGiverPositionForClient.contains(firstPos)){
                         nullOrGiverPositionForClient.add(firstPos);
                         BlockState state = level.getBlockState(worldPosition);
@@ -221,7 +219,7 @@ public abstract class AbstractRunicEnergyContainer extends SolarcraftBlockEntity
 
     private boolean checkRoute(List<BlockPos> route,RunicEnergy.Type type){
         return route != null && (level.getBlockEntity(route.get(1)) instanceof RunicEnergyGiver giver ?
-                FinderfeedMathHelper.canSee(giver.getPos(),worldPosition,getMaxRange(),level) :
+                FDMathHelper.canSee(giver.getPos(),worldPosition,getMaxRange(),level) :
                 RunicEnergyPath.isRouteCorrect(PATH_TO_CONTAINERS.get(type),level));
     }
 
@@ -260,8 +258,8 @@ public abstract class AbstractRunicEnergyContainer extends SolarcraftBlockEntity
                     if (entity instanceof BaseRepeaterTile repeater) {
 
                         if ((repeater.getEnergyType() == type) && !(tile instanceof RuneEnergyPylonTile)) {
-                            if (FinderfeedMathHelper.canSee(repeater.getBlockPos(), pos, getMaxRange(), world)) {
-                                double range = FinderfeedMathHelper.getDistanceBetween(repeater.getBlockPos(), pos);
+                            if (FDMathHelper.canSee(repeater.getBlockPos(), pos, getMaxRange(), world)) {
+                                double range = FDMathHelper.getDistanceBetween(repeater.getBlockPos(), pos);
                                 if (range <= getMaxRange()) {
                                     if (range <= minRange) {
                                         minRange = range;
@@ -271,9 +269,9 @@ public abstract class AbstractRunicEnergyContainer extends SolarcraftBlockEntity
                             }
                         }
                     } else if (entity instanceof RunicEnergyGiver pylon) {
-                        if (FinderfeedMathHelper.canSee(pylon.getPos(), pos, getMaxRange(), world)) {
+                        if (FDMathHelper.canSee(pylon.getPos(), pos, getMaxRange(), world)) {
                             if (pylon.getTypes() != null && pylon.getTypes().contains(type)) {
-                                double range = FinderfeedMathHelper.getDistanceBetween(pylon.getPos(), pos);
+                                double range = FDMathHelper.getDistanceBetween(pylon.getPos(), pos);
                                 if (range <= getMaxRange()) {
                                     if (range <= minRange) {
                                         minRange = range;

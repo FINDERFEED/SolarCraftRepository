@@ -2,7 +2,7 @@ package com.finderfeed.solarforge.magic.runic_network.repeater;
 
 
 import com.finderfeed.solarforge.Helpers;
-import com.finderfeed.solarforge.local_library.helpers.FinderfeedMathHelper;
+import com.finderfeed.solarforge.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
@@ -34,8 +34,8 @@ public interface IRunicEnergyReciever {
                 if (tiles.get(g) instanceof BaseRepeaterTile repeater){
 
                     if ((repeater.getEnergyType() == type) /*&& !(tile instanceof RuneEnergyPylonTile)*/) {
-                        if (FinderfeedMathHelper.canSee(repeater.getBlockPos(),pos,getMaxRange(),world)) {
-                            double range = FinderfeedMathHelper.getDistanceBetween(repeater.getBlockPos(), pos);
+                        if (FDMathHelper.canSee(repeater.getBlockPos(),pos,getMaxRange(),world)) {
+                            double range = FDMathHelper.getDistanceBetween(repeater.getBlockPos(), pos);
                             if (range <= getMaxRange()) {
                                 if (range <= minRange) {
                                     minRange = range;

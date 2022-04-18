@@ -8,7 +8,7 @@ import com.finderfeed.solarforge.abilities.ability_classes.AbstractAbility;
 import com.finderfeed.solarforge.SolarCraftAttributeModifiers;
 import com.finderfeed.solarforge.events.my_events.ProgressionUnlockEvent;
 import com.finderfeed.solarforge.local_library.OwnedBlock;
-import com.finderfeed.solarforge.local_library.helpers.FinderfeedMathHelper;
+import com.finderfeed.solarforge.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarforge.magic.blocks.blockentities.ExplosionBlockerBlockEntity;
 import com.finderfeed.solarforge.magic.blocks.infusing_table_things.InfuserBlock;
 import com.finderfeed.solarforge.magic.items.ExperienceCrystal;
@@ -181,7 +181,7 @@ public class EventHandler {
 
                 AttributeInstance attr = player.getAttribute(ForgeMod.REACH_DISTANCE.get());
                 if (attr != null) {
-                    if (FinderfeedMathHelper.PlayerThings.doPlayerHasItem(player.getInventory(), ItemsRegister.REACH_GLOVES.get())) {
+                    if (FDMathHelper.PlayerThings.doPlayerHasItem(player.getInventory(), ItemsRegister.REACH_GLOVES.get())) {
                         if (!attr.hasModifier(SolarCraftAttributeModifiers.REACH_2_MODIFIER)) {
                             attr.addTransientModifier(SolarCraftAttributeModifiers.REACH_2_MODIFIER);
                         }

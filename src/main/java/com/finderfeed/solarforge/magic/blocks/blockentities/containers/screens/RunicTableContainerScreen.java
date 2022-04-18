@@ -1,11 +1,10 @@
 package com.finderfeed.solarforge.magic.blocks.blockentities.containers.screens;
 
 import com.finderfeed.solarforge.ClientHelpers;
-import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.client.particles.screen.RuneTileParticle;
 import com.finderfeed.solarforge.client.screens.buttons.RuneButtonRunicTable;
 import com.finderfeed.solarforge.local_library.client.particles.ScreenParticlesRenderHandler;
-import com.finderfeed.solarforge.local_library.helpers.FinderfeedMathHelper;
+import com.finderfeed.solarforge.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarforge.magic.blocks.blockentities.containers.RunicTableContainer;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.unlockables.RunePattern;
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
@@ -131,11 +130,11 @@ public class RunicTableContainerScreen extends AbstractContainerScreen<RunicTabl
             Random random = new Random();
             for (int i = 0; i < 3 + random.nextInt(4);i++){
                 random = new Random();
-                Vec2 vec2 = new Vec2(random.nextFloat()*FinderfeedMathHelper.randomPlusMinus(),random.nextFloat()*-1).add(new Vec2(0,-2.5f));
+                Vec2 vec2 = new Vec2(random.nextFloat()* FDMathHelper.randomPlusMinus(),random.nextFloat()*-1).add(new Vec2(0,-2.5f));
 
                 RuneTileParticle particle = new RuneTileParticle(60,v.x + 11,v.y + 11,vec2.x,vec2.y,0,1,255,255,255,255);
                 particle.setSize(6.5);
-                particle.setRotationPerTick(FinderfeedMathHelper.randomPlusMinus()*20);
+                particle.setRotationPerTick(FDMathHelper.randomPlusMinus()*20);
                 ScreenParticlesRenderHandler.addParticle(particle);
             }
             v.active = false;

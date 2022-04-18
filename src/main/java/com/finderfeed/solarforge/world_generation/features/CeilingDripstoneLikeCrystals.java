@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.world_generation.features;
 
-import com.finderfeed.solarforge.local_library.helpers.FinderfeedMathHelper;
+import com.finderfeed.solarforge.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
@@ -35,10 +35,10 @@ public class CeilingDripstoneLikeCrystals extends Feature<NoneFeatureConfigurati
                    int height = pos.getY() - floor;
                    if (height > 10) {
                        int crystalHeight = Math.round(height * 0.5f);
-                       int maxRandomCrystalHeight = FinderfeedMathHelper.clamp(7, crystalHeight, 15);
+                       int maxRandomCrystalHeight = FDMathHelper.clamp(7, crystalHeight, 15);
                        crystalHeight = 6 + world.getRandom().nextInt(maxRandomCrystalHeight - 3);
                        int maxRad = crystalHeight / 2;
-                       maxRad = FinderfeedMathHelper.clamp(1,maxRad,4);
+                       maxRad = FDMathHelper.clamp(1,maxRad,4);
 
                        ArrayList<BlockPos> fillPositions = new ArrayList<>();
 

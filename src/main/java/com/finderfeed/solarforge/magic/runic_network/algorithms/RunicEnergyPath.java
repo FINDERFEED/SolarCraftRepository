@@ -1,7 +1,7 @@
 package com.finderfeed.solarforge.magic.runic_network.algorithms;
 
 import com.finderfeed.solarforge.Helpers;
-import com.finderfeed.solarforge.local_library.helpers.FinderfeedMathHelper;
+import com.finderfeed.solarforge.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarforge.magic.blocks.blockentities.runic_energy.RunicEnergyGiver;
 import com.finderfeed.solarforge.magic.runic_network.repeater.BaseRepeaterTile;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
@@ -76,14 +76,14 @@ public class RunicEnergyPath {
                 if ((tileentity instanceof BaseRepeaterTile repeater)
                         && !(Helpers.equalsBlockPos(start.getBlockPos(),position))
                         && (repeater.getEnergyType() == start.getEnergyType())){
-                    if (FinderfeedMathHelper.canSeeTileEntity(start,repeater,range)){
+                    if (FDMathHelper.canSeeTileEntity(start,repeater,range)){
                         tiles.add(tileentity.getBlockPos());
                     }
                 }else if ((tileentity instanceof RunicEnergyGiver giver) &&
                         (giver.getTypes() != null) &&
                         (giver.getTypes().contains(start.getEnergyType())) &&
-                        (FinderfeedMathHelper.getDistanceBetween(start.getBlockPos(),giver.getPos()) <= range) &&
-                        (FinderfeedMathHelper.canSeeTileEntity(start.getBlockPos(),giver.getPos(),range,world))){
+                        (FDMathHelper.getDistanceBetween(start.getBlockPos(),giver.getPos()) <= range) &&
+                        (FDMathHelper.canSeeTileEntity(start.getBlockPos(),giver.getPos(),range,world))){
 //                    tiles.add(giver.getPos());
                     FINAL_POSITIONS.add(new PosPair(start.getBlockPos(),giver.getPos()));
                 }
@@ -138,7 +138,7 @@ public class RunicEnergyPath {
                 for (int i = 0; i < nodes.size(); i++) {
                     if (!alreadyVisited.contains(nodes.get(i))) {
                         alreadyVisited.add(nodes.get(i));
-                        Node nd = new Node(nodes.get(i), finalPos, currentNode.g + FinderfeedMathHelper.getDistanceBetween(nodes.get(i), currentNode.pos));
+                        Node nd = new Node(nodes.get(i), finalPos, currentNode.g + FDMathHelper.getDistanceBetween(nodes.get(i), currentNode.pos));
                         nd.setSavedPath(new ArrayList<>(currentNode.getSavedPath()));
                         nd.addToPath(currentNode.pos);
                         open.add(nd);
@@ -188,7 +188,7 @@ public class RunicEnergyPath {
                     return false;
                 }
             }
-            if (!FinderfeedMathHelper.canSeeTileEntity(route.get(i),route.get(i+1),10000,world)){
+            if (!FDMathHelper.canSeeTileEntity(route.get(i),route.get(i+1),10000,world)){
                 return false;
             }
         }
@@ -261,7 +261,7 @@ class Node{
 
     public Node(BlockPos pos,BlockPos finalPos,double g){
         this.pos = pos;
-        this.heuristic = FinderfeedMathHelper.getDistanceBetween(pos,finalPos);
+        this.heuristic = FDMathHelper.getDistanceBetween(pos,finalPos);
         this.g = g;
         this.f = heuristic+g;
     }

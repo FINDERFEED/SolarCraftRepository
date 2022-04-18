@@ -18,7 +18,7 @@ import java.util.Random;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-public class FinderfeedMathHelper {
+public class FDMathHelper {
 
     public static final Random RANDOM = new Random();
     public static final Function<Double,Double> SQUARE = (x)->x*x;

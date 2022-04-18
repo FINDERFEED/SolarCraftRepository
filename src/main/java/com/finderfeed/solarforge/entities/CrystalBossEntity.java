@@ -7,7 +7,7 @@ import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.events.my_events.AbilityUseEvent;
 import com.finderfeed.solarforge.events.other_events.event_handler.EventHandler;
 import com.finderfeed.solarforge.local_library.entities.BossAttackChain;
-import com.finderfeed.solarforge.local_library.helpers.FinderfeedMathHelper;
+import com.finderfeed.solarforge.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarforge.local_library.other.CyclingInterpolatedValue;
 import com.finderfeed.solarforge.magic.projectiles.CrystalBossAttackHoldingMissile;
 import com.finderfeed.solarforge.magic.projectiles.FallingMagicMissile;
@@ -273,7 +273,7 @@ public class CrystalBossEntity extends NoHealthLimitMob implements CrystalBossBu
             if (rounded != RAY_NOT_ACTIVE){
                 if (rounded == RAY_PREPARING){
 
-                    double[] coords = FinderfeedMathHelper.polarToCartesian(0.4,Math.toRadians(level.getGameTime()*30));
+                    double[] coords = FDMathHelper.polarToCartesian(0.4,Math.toRadians(level.getGameTime()*30));
                     level.addParticle(ParticleTypesRegistry.SMALL_SOLAR_STRIKE_PARTICLE.get(),
                             this.position().x+
                                     rayparticlesvalue.getValue(),
@@ -289,7 +289,7 @@ public class CrystalBossEntity extends NoHealthLimitMob implements CrystalBossBu
                 }else{
                     float firstangle = (float)Math.toRadians(state);
                     float secondangle = (float)Math.toRadians(state+180);
-                    double[] coords = FinderfeedMathHelper.polarToCartesian(0.4,Math.toRadians(level.getGameTime()*30));
+                    double[] coords = FDMathHelper.polarToCartesian(0.4,Math.toRadians(level.getGameTime()*30));
                     Vec3 vec1 = new Vec3(rayparticlesvalue.getValue(),0,coords[0]).yRot(firstangle);
                     Vec3 vec2 = new Vec3(rayparticlesvalue.getValue(),0,coords[0]).yRot(secondangle);
 
@@ -314,8 +314,8 @@ public class CrystalBossEntity extends NoHealthLimitMob implements CrystalBossBu
 
     public void airStrike(){
         for (int i = 0;i < 6;i++){
-            double x = (level.random.nextDouble()*SIDE_SPEED_MULTIPLIER_AIR_STRIKE+0.01)*FinderfeedMathHelper.randomPlusMinus();
-            double z = (level.random.nextDouble()*SIDE_SPEED_MULTIPLIER_AIR_STRIKE+0.01)*FinderfeedMathHelper.randomPlusMinus();
+            double x = (level.random.nextDouble()*SIDE_SPEED_MULTIPLIER_AIR_STRIKE+0.01)* FDMathHelper.randomPlusMinus();
+            double z = (level.random.nextDouble()*SIDE_SPEED_MULTIPLIER_AIR_STRIKE+0.01)* FDMathHelper.randomPlusMinus();
             FallingMagicMissile star = new FallingMagicMissile(level,x,UP_SPEED_MULTIPLIER_AIR_STRIKE,z);
             star.setPos(this.position().add(0,this.getBbHeight()*0.7,0));
             level.addFreshEntity(star);
@@ -349,7 +349,7 @@ public class CrystalBossEntity extends NoHealthLimitMob implements CrystalBossBu
                     break;
                 }
                 ShieldingCrystalCrystalBoss crystal = new ShieldingCrystalCrystalBoss(EntityTypes.CRYSTAL_BOSS_SHIELDING_CRYSTAL.get(), level);
-                Vec3 positon = this.position().add((level.random.nextDouble() * 4.5 + 3) * FinderfeedMathHelper.randomPlusMinus(), 0, (level.random.nextDouble() * 4.5 + 3) * FinderfeedMathHelper.randomPlusMinus());
+                Vec3 positon = this.position().add((level.random.nextDouble() * 4.5 + 3) * FDMathHelper.randomPlusMinus(), 0, (level.random.nextDouble() * 4.5 + 3) * FDMathHelper.randomPlusMinus());
                 crystal.setPos(positon);
                 level.addFreshEntity(crystal);
                 currentCrystals++;
