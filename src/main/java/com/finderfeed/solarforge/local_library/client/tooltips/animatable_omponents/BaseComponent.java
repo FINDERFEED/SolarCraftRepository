@@ -49,5 +49,13 @@ public abstract class BaseComponent {
         return innerBorder;
     }
 
+    public BaseComponent forceXSize(int size){
+        this.xSize = size;
+        return this;
+    }
 
+    public BaseComponent forceYSize(int size){
+        this.ySize = size;
+        return this;
+    }
 }

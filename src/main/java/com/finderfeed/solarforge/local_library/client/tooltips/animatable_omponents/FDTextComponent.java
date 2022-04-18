@@ -32,7 +32,6 @@ public class FDTextComponent extends BaseComponent{
         Font font = Minecraft.getInstance().font;
         for (int i = 0; i < text.size();i++){
             int yOffset = i*TEXT_HEIGHT;
-            //Minecraft.getInstance().font.drawShadow(matrices, text.get(i),xy[0],xy[1] + yOffset,textColor);
             MultiBufferSource.BufferSource source = MultiBufferSource.immediate(Tesselator.getInstance().getBuilder());
             font.drawInBatch(text.get(i),xy[0],xy[1] + yOffset,0xffffff,true,matrices.last().pose(),source,true,
                     0, 15728880,font.isBidirectional());

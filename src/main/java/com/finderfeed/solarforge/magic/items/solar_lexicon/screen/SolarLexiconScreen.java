@@ -22,7 +22,7 @@ import net.minecraft.client.gui.components.AbstractWidget;
 
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.GameRenderer;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.world.item.Items;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.Component;
@@ -33,6 +33,7 @@ import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
@@ -203,23 +204,30 @@ public class SolarLexiconScreen extends Screen implements IScrollable,PostRender
             },a.getIcon(),1);
             TextComponent preText;
             TextComponent afterText;
+            boolean g = Helpers.canPlayerUnlock(a,player);
             if (Helpers.hasPlayerUnlocked(a,player)){
                 preText = new TextComponent(a.getPretext().getString());
                 afterText = new TextComponent(a.afterText.getString());
-            }else if (Helpers.canPlayerUnlock(a,player)){
+            }else if (g){
                 preText = new TextComponent(a.getPretext().getString());
                 afterText = new TextComponent("???");
             }else{
                 afterText = new TextComponent("???");
                 preText = new TextComponent("???");
             }
-            AnimatedTooltip tooltip = new BlackBackgroundTooltip(-1000,-1000,relX + 230,relY + 200,20,5)
+            Collection<Progression> parents = ProgressionTree.INSTANCE.getAchievementRequirements(a);
+            AnimatedTooltip tooltip = new BlackBackgroundTooltip(-1000,-1000,relX + 230,relY + 200,15,5)
                     .setStartYOpeness(16).addComponents(new ComponentSequence(new ComponentSequence.ComponentSequenceBuilder()
                     .setAlignment(ContentAlignment.NO_ALIGNMENT)
                             .addComponent(new FDTextComponent(ContentAlignment.NO_ALIGNMENT,30,0).setText(a.getTranslation(),0xffffff).setInnerBorder(3))
                             .addComponent(new CustomRenderComponent(ContentAlignment.NO_ALIGNMENT,16,16,(matrices,x,y,pTicks,mouseX,mouseY,ticker,animationLength)->{
                         RenderSystem.disableDepthTest();
-                        Minecraft.getInstance().getItemRenderer().renderGuiItem(a.getIcon(),x,y);
+                        if (g) {
+                            Minecraft.getInstance().getItemRenderer().renderGuiItem(a.getIcon(), x, y);
+                        }else{
+                            ClientHelpers.bindText(QMARK);
+                            blit(matrices,x,y,0,0,16,16,16,16);
+                        }
                         RenderSystem.disableDepthTest();
                     }))
                     .nextLine()
@@ -230,6 +238,31 @@ public class SolarLexiconScreen extends Screen implements IScrollable,PostRender
                     .addComponent(new EmptySpaceComponent(0,10))
                     .nextLine()
                     .addComponent(new FDTextComponent(ContentAlignment.NO_ALIGNMENT,30,0).setText(afterText,0xffffff).setInnerBorder(3))
+                    .nextLine()
+                    .addComponent(new EmptySpaceComponent(0,5))
+                    .nextLine()
+                    .addComponent(new FDTextComponent(ContentAlignment.NO_ALIGNMENT,20,0).setText(new TextComponent("Parent progressions:"),0xffffff).setInnerBorder(3))
+                    .addComponent(new CustomRenderComponent(ContentAlignment.NO_ALIGNMENT,16,16,(matrices,x,y,pTicks,mouseX,mouseY,ticker,animationLength)->{
+                        if (!parents.isEmpty()) {
+                            RenderSystem.disableDepthTest();
+                            int offset = 0;
+                            for (Progression p : parents) {
+                                if (Helpers.hasPlayerUnlocked(p,player)) {
+                                    Minecraft.getInstance().getItemRenderer().renderGuiItem(p.getIcon(), x + offset, y-1);
+                                }else{
+                                    ClientHelpers.bindText(QMARK);
+                                    blit(matrices,x,y,0,0,16,16,16,16);
+                                }
+                                offset += 18;
+                            }
+                            RenderSystem.disableDepthTest();
+                        }else{
+                            MultiBufferSource.BufferSource source = MultiBufferSource.immediate(Tesselator.getInstance().getBuilder());
+                            font.drawInBatch("None",x,y + 3,0xffffff,true,matrices.last().pose(),source,true,
+                                    0, 15728880,font.isBidirectional());
+                            source.endBatch();
+                        }
+                    }).forceXSize(parents.isEmpty() ? font.width("None") : parents.size()*18))
                     .build()));
             button.setTooltip(tooltip);
             if (c){
@@ -290,7 +323,8 @@ public class SolarLexiconScreen extends Screen implements IScrollable,PostRender
 
         GL11.glScissor(width/2-((30+83)*scale),height/2-(89*scale),((188+35)*scale),196*scale);
         blit(matrices,relX,relY,0,0,256,256);
-
+        float time = RenderingTools.getTime(Minecraft.getInstance().level,partialTicks);
+        double s = Math.sin(time/10);
         ClientHelpers.bindText(FRAME);
         for (Progression a : tree.PROGRESSION_TREE.keySet()) {
             Point first = new Point(relX+scrollX+21+map.get(a.getAchievementTier()).indexOf(a)*OFFSET_X,relY+scrollY+21+(a.getAchievementTier()-1)*OFFSET_Y);
@@ -302,7 +336,8 @@ public class SolarLexiconScreen extends Screen implements IScrollable,PostRender
                     });
                 }
                 else {
-                    drawLine(matrices, first.x, first.y, second.x, second.y,50,50,50);
+
+                    drawLine(matrices, first.x, first.y, second.x, second.y,45 + (int)(s*10),45 + (int)(s*10),45 + (int)(s*10));
                 }
 
             }
@@ -318,12 +353,13 @@ public class SolarLexiconScreen extends Screen implements IScrollable,PostRender
 
 
 
-        for (ItemStackButton button : unlocked){
+        for (ItemStackButtonAnimatedTooltip button : unlocked){
             button.render(matrices,mousex,mousey,partialTicks);
         }
         ClientHelpers.bindText(QMARK);
-        for (ItemStackButton button : locked){
+        for (ItemStackButtonAnimatedTooltip button : locked){
             blit(matrices,button.x,button.y,0,0,16,16,16,16);
+            button.renderTooltip(matrices,mousex,mousey,partialTicks);
         }
         for (Runnable runnable : postRender){
             runnable.run();

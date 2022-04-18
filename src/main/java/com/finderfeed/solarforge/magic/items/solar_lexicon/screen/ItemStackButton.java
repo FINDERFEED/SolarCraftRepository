@@ -50,6 +50,7 @@ public class ItemStackButton extends Button {
         matrices.popPose();
     }
 
+
     @Override
     public void playDownSound(SoundManager manager) {
         manager.play(SimpleSoundInstance.forUI(Sounds.BUTTON_PRESS2.get(),1,1));
