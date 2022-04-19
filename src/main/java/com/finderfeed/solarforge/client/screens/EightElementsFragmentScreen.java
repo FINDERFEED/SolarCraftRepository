@@ -14,7 +14,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Items;
 
 public class EightElementsFragmentScreen extends ScreenWithPages{
-
+    private int ticker = 0;
     public static final ResourceLocation MAIN_SCREEN = new ResourceLocation(SolarForge.MOD_ID,"textures/gui/lore_screen_new.png");
     public static final ResourceLocation IMAGE_LOCATION = new ResourceLocation(SolarForge.MOD_ID,"textures/lore_images/elements.png");
     public static final ResourceLocation IMAGE_LOCATION_2 = new ResourceLocation(SolarForge.MOD_ID,"textures/misc/all_elements.png");
@@ -27,6 +27,7 @@ public class EightElementsFragmentScreen extends ScreenWithPages{
     @Override
     protected void init() {
         super.init();
+        ticker = 0;
         addRenderableWidget(new ItemStackButton(relX+74+53,relY+9,12,12,(button)->{minecraft.setScreen(new SolarLexiconRecipesScreen());}, Items.CRAFTING_TABLE.getDefaultInstance(),0.7f));
         addRenderableWidget(new ItemStackButton(relX+61+53,relY+9,12,12,(button)->{
             Minecraft mc = Minecraft.getInstance();
@@ -35,6 +36,7 @@ public class EightElementsFragmentScreen extends ScreenWithPages{
             minecraft.setScreen(null);
         }, Items.WRITABLE_BOOK.getDefaultInstance(),0.7f));
     }
+
 
     @Override
     public void render(PoseStack matrices, int mousex, int mousey, float partialTicks) {
@@ -49,7 +51,8 @@ public class EightElementsFragmentScreen extends ScreenWithPages{
 
             int posX = relX+14;
             int posY = relY+100;
-            RenderingTools.drawBoundedText(matrices,posX,posY,45,new TranslatableComponent("eight_elements.lore").getString(),stringColor);
+
+            RenderingTools.drawBoundedTextObfuscated(matrices,posX,posY,45,new TranslatableComponent("eight_elements.lore"),stringColor,ticker*4);
         }else{
             ClientHelpers.bindText(MAIN_SCREEN_2);
             blit(matrices,relX,relY,0,0,256,256,256,256);
@@ -59,7 +62,8 @@ public class EightElementsFragmentScreen extends ScreenWithPages{
 
             int posX = relX+14;
             int posY = relY+82;
-            RenderingTools.drawBoundedText(matrices,posX,posY,45,new TranslatableComponent("solarcraft.rune_element_"+(getCurrentPage()-1)).getString(),stringColor);
+            RenderingTools.drawBoundedTextObfuscated(matrices,posX,posY,45,new TranslatableComponent("solarcraft.rune_element_"+(getCurrentPage()-1)),stringColor,ticker*4);
+//            RenderingTools.drawBoundedText(matrices,posX,posY,45,new TranslatableComponent("solarcraft.rune_element_"+(getCurrentPage()-1)).getString(),stringColor);
         }
 
 
@@ -94,5 +98,23 @@ public class EightElementsFragmentScreen extends ScreenWithPages{
     @Override
     public int[] getPageButtonsCoords() {
         return new int[]{216,10};
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+        ticker++;
+    }
+
+    @Override
+    public void nextPage(boolean resetScrolls) {
+        super.nextPage(resetScrolls);
+        ticker = 0;
+    }
+
+    @Override
+    public void previousPage(boolean resetScrolls) {
+        super.previousPage(resetScrolls);
+        ticker = 0;
     }
 }

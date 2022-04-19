@@ -2,6 +2,7 @@ package com.finderfeed.solarforge.client.screens;
 
 
 import com.finderfeed.solarforge.ClientHelpers;
+import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.local_library.helpers.RenderingTools;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.SolarLexicon;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.screen.ItemStackButton;
@@ -23,10 +24,12 @@ public class LoreScreen extends Screen {
     public int relX;
     public int relY;
 
+    private int ticker = 0;
+
     public LoreScreen(TranslatableComponent lore,String image) {
         super(new TextComponent(""));
         this.lore = lore;
-        this.IMAGE_LOCATION = new ResourceLocation("solarforge","textures/lore_images/"+image+".png");
+        this.IMAGE_LOCATION = new ResourceLocation(SolarForge.MOD_ID,"textures/lore_images/"+image+".png");
     }
 
     @Override
@@ -62,12 +65,17 @@ public class LoreScreen extends Screen {
 
         int posX = relX+14;
         int posY = relY+100;
-        RenderingTools.drawBoundedText(matrices,posX,posY,43,lore.getString(),stringColor);
-
+        RenderingTools.drawBoundedTextObfuscated(matrices,posX,posY,43,lore,stringColor,ticker*4);
 
 
 
 
         super.render(matrices, mousex, mousey, partialTicks);
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+        this.ticker++;
     }
 }

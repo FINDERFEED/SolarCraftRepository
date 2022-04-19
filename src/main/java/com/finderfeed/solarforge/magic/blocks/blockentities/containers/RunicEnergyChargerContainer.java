@@ -30,13 +30,13 @@ public class RunicEnergyChargerContainer extends AbstractContainerMenu {
         super(Containers.RUNIC_ENERGY_CHARGER.get(), id);
         this.tile = (RunicEnergyChargerTileEntity) inv.player.level.getBlockEntity(pos);
 
-        this.addSlot(new SlotItemHandler(tile.getInventory(), 0,   56, 26){
+        this.addSlot(new SlotItemHandler(tile.getInventory(), 0,   25, 35){
             @Override
             public boolean mayPlace(@NotNull ItemStack stack) {
                 return stack.getItem() instanceof RuneItem;
             }
         });
-        this.addSlot(new SlotItemHandler(tile.getInventory(), 1, 56+108, 26){
+        this.addSlot(new SlotItemHandler(tile.getInventory(), 1, 25+108, 35){
             @Override
             public boolean mayPlace(@NotNull ItemStack stack) {
                 return stack.getItem() instanceof IRunicEnergyUser;
@@ -55,12 +55,12 @@ public class RunicEnergyChargerContainer extends AbstractContainerMenu {
 
         for(int l = 0; l < 3; ++l) {
             for(int j1 = 0; j1 < 9; ++j1) {
-                this.addSlot(new Slot(inv, j1 + l * 9 + 9,   8+j1 * 18 + 30, 103 + l * 18 -20));
+                this.addSlot(new Slot(inv, j1 + l * 9 + 9,   8+j1 * 18 -1, 103 + l * 18 -20));
             }
         }
 
         for(int i1 = 0; i1 < 9; ++i1) {
-            this.addSlot(new Slot(inv, i1,  8+ i1 * 18 + 30, 161 -20));
+            this.addSlot(new Slot(inv, i1,  8+ i1 * 18 -1, 161 -20));
         }
     }
 

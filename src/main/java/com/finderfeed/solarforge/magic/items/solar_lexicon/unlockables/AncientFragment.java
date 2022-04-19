@@ -323,11 +323,11 @@ public class AncientFragment {
     }
 
     public TranslatableComponent getItemDescription(){
-        return itemLore;
+        return (TranslatableComponent) itemLore.copy();
     }
 
     public TranslatableComponent getLore() {
-        return lore;
+        return (TranslatableComponent) lore.copy();
     }
 
     @Deprecated

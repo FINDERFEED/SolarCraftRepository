@@ -36,7 +36,7 @@ public class InformationScreen extends Screen {
     private InfusingRecipeScreen screen;
     private InfusingCraftingRecipeScreen screenCrafting;
     private AncientFragment fragment;
-
+    private int ticker = 0;
     public InformationScreen(AncientFragment fragment,InfusingRecipeScreen screen) {
         super(new TextComponent(""));
         this.screen = screen;
@@ -50,8 +50,14 @@ public class InformationScreen extends Screen {
     }
 
     @Override
-    protected void init() {
+    public void tick() {
+        super.tick();
+        ticker++;
+    }
 
+    @Override
+    protected void init() {
+        ticker = 0;
         int width = minecraft.getWindow().getWidth();
         int height = minecraft.getWindow().getHeight();
         int scale = (int) minecraft.getWindow().getGuiScale();
@@ -83,9 +89,9 @@ public class InformationScreen extends Screen {
         blit(matrices,relX,relY,0,0,256,256);
         drawString(matrices,Minecraft.getInstance().font,fragment.getTranslation(), relX+60,relY+35,0xffffff);
         if (fragment.getType() == AncientFragment.Type.INFORMATION) {
-            RenderingTools.drawBoundedText(matrices, relX + 12, relY + 80, 43, fragment.getLore().getString(),stringColor);
+            RenderingTools.drawBoundedTextObfuscated(matrices, relX + 12, relY + 80, 43, fragment.getLore(),stringColor,ticker*4);
         }else{
-            RenderingTools.drawBoundedText(matrices, relX + 12, relY + 80, 43, fragment.getItemDescription().getString(),stringColor);
+            RenderingTools.drawBoundedTextObfuscated(matrices, relX + 12, relY + 80, 43, fragment.getItemDescription(),stringColor,ticker*4);
         }
         renderGuiItem(fragment.getIcon().getDefaultInstance(),relX+32,relY+32,Minecraft.getInstance().getItemRenderer().getModel(fragment.getIcon().getDefaultInstance(),null,null,0),1.5,1.5,1.5);
         super.render(matrices, mousex, mousey, partialTicks);

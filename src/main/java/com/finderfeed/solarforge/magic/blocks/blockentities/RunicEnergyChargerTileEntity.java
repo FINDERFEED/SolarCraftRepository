@@ -116,7 +116,7 @@ public class RunicEnergyChargerTileEntity extends REItemHandlerBlockEntity imple
 
     @Override
     public double getRunicEnergyLimit() {
-        return 100000;
+        return 10000;
     }
 
     @Override

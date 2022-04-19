@@ -20,7 +20,9 @@ import com.mojang.blaze3d.vertex.*;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.math.Vector3d;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiComponent;
 
@@ -35,7 +37,9 @@ import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.TextComponent;
+import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.core.Direction;
@@ -78,6 +82,22 @@ public class RenderingTools {
         int iter = 0;
         for (String str : RenderingTools.splitString(s,bound)){
             Gui.drawString(matrices,Minecraft.getInstance().font,str,posx,posy + iter * 9,color);
+            iter++;
+        }
+    }
+
+    public static void drawBoundedTextObfuscated(PoseStack matrices,int posx,int posy,int bound,Component component,int color,int ticker){
+        int iter = 0;
+        int remainingOpenedSymbols = ticker;
+        for (String str : RenderingTools.splitString(component.getString(),bound)){
+            if (remainingOpenedSymbols >= str.length()){
+                Gui.drawString(matrices,Minecraft.getInstance().font,str,posx,posy + iter * 9,color);
+                remainingOpenedSymbols -= str.length();
+            }else if (remainingOpenedSymbols != 0){
+                Gui.drawString(matrices,Minecraft.getInstance().font,new TextComponent(str.substring(0,remainingOpenedSymbols)).withStyle(ChatFormatting.RESET)
+                        .append(new TextComponent("a").withStyle(ChatFormatting.OBFUSCATED)),posx,posy + iter * 9,color);
+                remainingOpenedSymbols = 0;
+            }
             iter++;
         }
     }
@@ -560,6 +580,17 @@ public class RenderingTools {
         return deleteStartingProbelsSmbdyTeachHimEnglish(returnable);
     }
 
+    public static void renderStringObfuscated(PoseStack matrices,int x,int y,Component component,int ticker,int color){
+        String s = component.getString();
+        if (s.isEmpty()) return;
+        if (ticker < s.length()) {
+            Gui.drawString(matrices, Minecraft.getInstance().font, new TextComponent(component.getString().substring(0, ticker))
+                    .withStyle(ChatFormatting.RESET).append("a").withStyle(ChatFormatting.OBFUSCATED), x, y, color);
+        }else{
+            Gui.drawString(matrices, Minecraft.getInstance().font, component.getString(), x, y, color);
+        }
+    }
+
 
     private static List<String> deleteStartingProbelsSmbdyTeachHimEnglish(List<String> strings){
         List<String> toReturn = new ArrayList<>();
@@ -604,6 +635,7 @@ public class RenderingTools {
     public static boolean isMouseInBorders(int mx, int my, int x1, int y1, int x2, int y2){
         return (mx >= x1 && mx <= x2) && (my >= y1 && my <= y2);
     }
+
 
     public static void fill(PoseStack matrices,double x1,double y1,double x2,double y2,float r,float g,float b,float a){
         if (x1 > x2){
