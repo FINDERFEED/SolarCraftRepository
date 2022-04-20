@@ -28,9 +28,9 @@ import java.util.*;
 import java.util.List;
 
 public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
-    public final ResourceLocation MAIN_SCREEN = new ResourceLocation("solarforge","textures/gui/solar_lexicon_recipes_page.png");
+    public final ResourceLocation MAIN_SCREEN = new ResourceLocation("solarforge","textures/gui/solar_lexicon_recipes_page_new.png");
     public final ResourceLocation FRAME = new ResourceLocation("solarforge","textures/misc/frame.png");
-    public final ResourceLocation MAIN_SCREEN_SCROLLABLE = new ResourceLocation("solarforge","textures/gui/solar_lexicon_main_page_scrollablet.png");
+    public final ResourceLocation MAIN_SCREEN_SCROLLABLE = new ResourceLocation("solarforge","textures/gui/solar_lexicon_main_page_scrollablep.png");
 
 //    public Map<BookEntry,List<AncientFragment>> map = new HashMap<>();
     private List<AncientFragment> FRAGMENTS = new ArrayList<>();
@@ -145,10 +145,15 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
         addRenderableWidget(goBack);
         addRenderableWidget(nothing);
 
+        //nothing.x = relX +207+35;
+        //nothing.y = relY + 184;
+        //goBack.x = relX +207+35;
+        //goBack.y = relY + 164;
+
         nothing.x = relX +207+35;
-        nothing.y = relY + 184;
+        nothing.y = relY + 184 - 137;
         goBack.x = relX +207+35;
-        goBack.y = relY + 164;
+        goBack.y = relY + 164 - 137;
     }
 
     private void collectFragments(){

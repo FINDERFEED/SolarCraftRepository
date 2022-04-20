@@ -11,6 +11,7 @@ import com.finderfeed.solarforge.magic.items.solar_lexicon.progressions.Progress
 import com.finderfeed.solarforge.misc_things.IScrollable;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.progressions.progression_tree.ProgressionTree;
 import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.platform.Lighting;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 
@@ -42,10 +43,10 @@ public class SolarLexiconScreen extends Screen implements IScrollable,PostRender
     private int OFFSET_X = 40;
     private int OFFSET_Y = 40;
 
-    public final ResourceLocation MAIN_SCREEN = new ResourceLocation("solarforge","textures/gui/solar_lexicon_main_page.png");
+    public final ResourceLocation MAIN_SCREEN = new ResourceLocation("solarforge","textures/gui/solar_lexicon_main_page_new.png");
     public final ResourceLocation FRAME = new ResourceLocation("solarforge","textures/misc/frame.png");
     public final ResourceLocation QMARK = new ResourceLocation("solarforge","textures/misc/question_mark.png");
-    public final ResourceLocation MAIN_SCREEN_SCROLLABLE = new ResourceLocation("solarforge","textures/gui/solar_lexicon_main_page_scrollablet.png");
+    public final ResourceLocation MAIN_SCREEN_SCROLLABLE = new ResourceLocation("solarforge","textures/gui/solar_lexicon_main_page_scrollablep.png");
     public String currentText = "";
     private String afterTxt = "";
     public int relX;
@@ -60,7 +61,7 @@ public class SolarLexiconScreen extends Screen implements IScrollable,PostRender
     public int scrollX = 0;
     public int scrollY = 0;
 
-    public ItemStackButton stagesPage = new ItemStackButton(relX+100,relY + 20,12,12,(button)->{minecraft.setScreen(new StagesScreen());},Items.BEACON.getDefaultInstance(),0.7f);
+    public ItemStackButton stagesPage = new ItemStackButton(relX+100,relY + 40,12,12,(button)->{minecraft.setScreen(new StagesScreen());},Items.BEACON.getDefaultInstance(),0.7f);
     public ItemStackButton toggleRecipesScreen = new ItemStackButton(relX+100,relY+100,12,12,(button)->{minecraft.setScreen(new SolarLexiconRecipesScreen());}, Items.CRAFTING_TABLE.getDefaultInstance(),0.7f);
     public ItemStackButton justForge = new ItemStackButton(relX+100,relY+100,12,12,(button)->{}, SolarForge.SOLAR_FORGE_ITEM.get().getDefaultInstance(),0.7f);
 
@@ -276,11 +277,11 @@ public class SolarLexiconScreen extends Screen implements IScrollable,PostRender
         addRenderableWidget(justForge);
         addRenderableWidget(stagesPage);
         toggleRecipesScreen.x = relX +207+35;
-        toggleRecipesScreen.y = relY + 184;
+        toggleRecipesScreen.y = relY + 184 - 137;
         justForge.x = relX +207+35;
-        justForge.y = relY + 164;
+        justForge.y = relY + 164 - 137;
         stagesPage.x = relX + 207 + 35;
-        stagesPage.y = relY + 13;
+        stagesPage.y = relY + 67;
     }
 
 
@@ -367,6 +368,7 @@ public class SolarLexiconScreen extends Screen implements IScrollable,PostRender
         postRender.clear();
         GL11.glDisable(GL11.GL_SCISSOR_TEST);
         ClientHelpers.bindText(MAIN_SCREEN);
+
         RenderSystem.setShaderColor(0.75f,0.75f,0.75f,1f);
         blit(matrices,relX,relY,0,0,256,256);
 
@@ -409,7 +411,7 @@ public class SolarLexiconScreen extends Screen implements IScrollable,PostRender
         RenderSystem.setShader(GameRenderer::getRendertypeLinesShader);
         Tesselator var4 = RenderSystem.renderThreadTesselator();
         BufferBuilder var5 = var4.getBuilder();
-        RenderSystem.lineWidth(2.5F);
+        RenderSystem.lineWidth(5F);
         var5.begin(VertexFormat.Mode.LINES, DefaultVertexFormat.POSITION_COLOR_NORMAL);
         Vector3d vector3f = new Vector3d(x2-x1,y2-y1,0);
         Vector3d vector3f2 = new Vector3d(x1-x2,y1-y2,0);
