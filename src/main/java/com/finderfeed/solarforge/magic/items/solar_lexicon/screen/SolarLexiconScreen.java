@@ -95,7 +95,7 @@ public class SolarLexiconScreen extends Screen implements IScrollable,PostRender
                 && !(scrollY -4 < -340)){
             scrollY-=4;
         }else if ((keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_RIGHT) || keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_D))
-                && !(scrollX -4 < -80)){
+                && !(scrollX -4 < -90)){
             scrollX-=4;
         }
         if (this.prevscrollX != scrollX){
@@ -187,7 +187,7 @@ public class SolarLexiconScreen extends Screen implements IScrollable,PostRender
             offsetY = (a.getAchievementTier() -1)* OFFSET_Y;
             boolean c = Helpers.canPlayerUnlock(a,minecraft.player);
             LocalPlayer player = Minecraft.getInstance().player;
-            ItemStackButtonAnimatedTooltip button = new ItemStackButtonAnimatedTooltip(relX+12+offsetX,relY+12+offsetY,16,16,(btn)->{
+            ItemStackButtonAnimatedTooltip button = new ItemStackButtonAnimatedTooltip(relX+17+offsetX,relY+17+offsetY,16,16,(btn)->{
                 if (Helpers.hasPlayerUnlocked(a,player)){
                     currentText = a.getPretext().getString();
                     afterTxt = a.afterText.getString();
@@ -322,15 +322,16 @@ public class SolarLexiconScreen extends Screen implements IScrollable,PostRender
         int height = minecraft.getWindow().getHeight();
         int scale = (int)minecraft.getWindow().getGuiScale();
 
-        GL11.glScissor(width/2-((30+83)*scale),height/2-(89*scale),((188+35)*scale),196*scale);
+        GL11.glScissor(width/2-((30+83)*scale),height/2-(89*scale),((188+33)*scale),189*scale);
         blit(matrices,relX,relY,0,0,256,256);
         float time = RenderingTools.getTime(Minecraft.getInstance().level,partialTicks);
         double s = Math.sin(time/10);
+        int offs = 26;
         ClientHelpers.bindText(FRAME);
         for (Progression a : tree.PROGRESSION_TREE.keySet()) {
-            Point first = new Point(relX+scrollX+21+map.get(a.getAchievementTier()).indexOf(a)*OFFSET_X,relY+scrollY+21+(a.getAchievementTier()-1)*OFFSET_Y);
+            Point first = new Point(relX+scrollX+offs+map.get(a.getAchievementTier()).indexOf(a)*OFFSET_X,relY+scrollY+offs+(a.getAchievementTier()-1)*OFFSET_Y);
             for (Progression b : tree.getAchievementRequirements(a)){
-                Point second = new Point(relX+scrollX+21+map.get(b.getAchievementTier()).indexOf(b)*OFFSET_X,relY+scrollY+21+(b.getAchievementTier()-1)*OFFSET_Y);
+                Point second = new Point(relX+scrollX+offs+map.get(b.getAchievementTier()).indexOf(b)*OFFSET_X,relY+scrollY+offs+(b.getAchievementTier()-1)*OFFSET_Y);
                 if (currentProgression != null && (currentProgression == b || currentProgression == a) ) {
                     postLinesRender.add(()->{
                         drawLine(matrices, first.x, first.y, second.x, second.y,255,255,255);
@@ -348,18 +349,20 @@ public class SolarLexiconScreen extends Screen implements IScrollable,PostRender
         postLinesRender.forEach(Runnable::run);
         postLinesRender.clear();
         for (Progression a : tree.PROGRESSION_TREE.keySet()) {
-            Point first = new Point(relX+scrollX+18+map.get(a.getAchievementTier()).indexOf(a)*OFFSET_X,relY+scrollY+18+(a.getAchievementTier()-1)*OFFSET_Y);
-            blit(matrices,first.x-8,first.y-8,0,0,20,20,20,20);
+            Point first = new Point(relX+scrollX+offs-3+map.get(a.getAchievementTier()).indexOf(a)*OFFSET_X,relY+scrollY+offs-3+(a.getAchievementTier()-1)*OFFSET_Y);
+            blit(matrices,first.x-10,first.y-10,0,0,24,24,24,24);
         }
+
 
 
 
         for (ItemStackButtonAnimatedTooltip button : unlocked){
-            button.render(matrices,mousex,mousey,partialTicks);
+            button.render(matrices,mousex,mousey,partialTicks,-30);
         }
+
         ClientHelpers.bindText(QMARK);
         for (ItemStackButtonAnimatedTooltip button : locked){
-            blit(matrices,button.x,button.y,0,0,16,16,16,16);
+            blit(matrices,button.x+1,button.y+1,0,0,14,14,14,14);
             button.renderTooltip(matrices,mousex,mousey,partialTicks);
         }
         for (Runnable runnable : postRender){
@@ -369,9 +372,10 @@ public class SolarLexiconScreen extends Screen implements IScrollable,PostRender
         GL11.glDisable(GL11.GL_SCISSOR_TEST);
         ClientHelpers.bindText(MAIN_SCREEN);
 
-        RenderSystem.setShaderColor(0.75f,0.75f,0.75f,1f);
+        matrices.pushPose();
+        matrices.translate(0,0,100);
         blit(matrices,relX,relY,0,0,256,256);
-
+        matrices.popPose();
 
 //        drawString(matrices,minecraft.font,currAch,relX+12,relY+124,stringColor);
 //        if (currentText != null && (currentText.length() != 0)) {
@@ -392,9 +396,9 @@ public class SolarLexiconScreen extends Screen implements IScrollable,PostRender
 //            }
 //        }
 
-        toggleRecipesScreen.render(matrices,mousex,mousey,partialTicks);
-        justForge.render(matrices,mousex,mousey,partialTicks);
-        stagesPage.render(matrices,mousex,mousey,partialTicks);
+        toggleRecipesScreen.render(matrices,mousex,mousey,partialTicks,101);
+        justForge.render(matrices,mousex,mousey,partialTicks,101);
+        stagesPage.render(matrices,mousex,mousey,partialTicks,101);
         matrices.popPose();
 
 
@@ -411,7 +415,7 @@ public class SolarLexiconScreen extends Screen implements IScrollable,PostRender
         RenderSystem.setShader(GameRenderer::getRendertypeLinesShader);
         Tesselator var4 = RenderSystem.renderThreadTesselator();
         BufferBuilder var5 = var4.getBuilder();
-        RenderSystem.lineWidth(5F);
+        RenderSystem.lineWidth(4.5F);
         var5.begin(VertexFormat.Mode.LINES, DefaultVertexFormat.POSITION_COLOR_NORMAL);
         Vector3d vector3f = new Vector3d(x2-x1,y2-y1,0);
         Vector3d vector3f2 = new Vector3d(x1-x2,y1-y2,0);

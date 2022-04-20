@@ -22,7 +22,37 @@ public class ItemStackButtonAnimatedTooltip extends ItemStackButton{
         matrices.pushPose();
 
         matrices.scale(scaleFactor,scaleFactor,scaleFactor);
-        RenderingTools.renderScaledGuiItem(stack,(int) x, (int) y,scaleFactor);
+        RenderingTools.renderScaledGuiItem(stack,(int) x, (int) y,scaleFactor,0);
+
+
+        RenderSystem.enableBlend();
+
+        if (tooltip != null && shouldRenderTooltip) {
+
+            if (Minecraft.getInstance().screen instanceof PostRenderTooltips t) {
+                t.addPostRenderTooltip(()->{
+                    RenderSystem.disableDepthTest();
+                    tooltip.render(matrices, this.x, this.y, partialTicks, mousex, mousey);
+                    RenderSystem.enableDepthTest();
+                });
+            }else{
+                RenderSystem.disableDepthTest();
+                tooltip.render(matrices, this.x, this.y, partialTicks, mousex, mousey);
+                RenderSystem.enableDepthTest();
+            }
+        }
+
+
+        matrices.popPose();
+    }
+
+
+    public void render(PoseStack matrices, int mousex, int mousey, float partialTicks,double zOffset){
+        this.isHovered = RenderingTools.isMouseInBorders(mousex,mousey,x,y,x + width,y + height);
+        matrices.pushPose();
+
+        matrices.scale(scaleFactor,scaleFactor,scaleFactor);
+        RenderingTools.renderScaledGuiItem(stack,(int) x, (int) y,scaleFactor,zOffset);
 
 
         RenderSystem.enableBlend();

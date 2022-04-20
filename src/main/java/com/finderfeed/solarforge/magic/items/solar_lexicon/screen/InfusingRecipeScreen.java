@@ -3,6 +3,7 @@ package com.finderfeed.solarforge.magic.items.solar_lexicon.screen;
 import com.finderfeed.solarforge.ClientHelpers;
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.SolarForge;
+import com.finderfeed.solarforge.local_library.helpers.RenderingTools;
 import com.finderfeed.solarforge.local_library.other.ItemRator;
 import com.finderfeed.solarforge.magic.blocks.infusing_table_things.InfuserTileEntity;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.progressions.Progression;
@@ -11,7 +12,9 @@ import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.SolarLexicon;
 import com.finderfeed.solarforge.recipe_types.infusing_new.InfusingRecipe;
 import com.finderfeed.solarforge.registries.items.ItemsRegister;
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.screens.Screen;
@@ -25,11 +28,12 @@ import net.minecraft.world.level.block.Block;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class InfusingRecipeScreen extends Screen {
     public final ResourceLocation BUTTONS = new ResourceLocation("solarforge","textures/misc/page_buttons.png");
-    public final ResourceLocation MAIN_SCREEN_OPENED = new ResourceLocation("solarforge","textures/gui/solar_lexicon_infusing_recipe_with_catalysts.png");
-    public final ResourceLocation MAIN_SCREEN_UNOPENED = new ResourceLocation("solarforge","textures/gui/solar_lexicon_infusing_recipe_without_catalysts.png");
+    public final ResourceLocation MAIN_SCREEN_OPENED = new ResourceLocation("solarforge","textures/gui/solar_lexicon_infusing_recipe_with_catalysts_new.png");
+    public final ResourceLocation MAIN_SCREEN_UNOPENED = new ResourceLocation("solarforge","textures/gui/solar_lexicon_infusing_recipe_without_catalysts_new.png");
     public final ResourceLocation REQ_ENERGY = new ResourceLocation("solarforge","textures/gui/energy_bar.png");
     //60*6
     private int[][] runicEnergySymbolsRenderPositions = new int[12][2];
@@ -88,17 +92,6 @@ public class InfusingRecipeScreen extends Screen {
         itemRators = new ArrayList<>();
         this.catalystsUnlocked = Helpers.hasPlayerUnlocked(Progression.CATALYSTS,Minecraft.getInstance().player);
         fillItemRators();
-//        addStack(currentRecipe.input1,stacks);
-//        addStack(currentRecipe.input2,stacks);
-//        addStack(currentRecipe.input3,stacks);
-//        addStack(currentRecipe.input4,stacks);
-//        addStack(currentRecipe.input5,stacks);
-//        addStack(currentRecipe.input6,stacks);
-//        addStack(currentRecipe.input7,stacks);
-//        addStack(currentRecipe.input8,stacks);
-//        addStack(currentRecipe.input9,stacks);
-//        stacks.add(currentRecipe.output);
-
         if (maxPages != 0) {
             addRenderableWidget(new ImageButton(relX + 180, relY + 28, 16, 16, 0, 0, 0, BUTTONS, 16, 32, (button) -> {
                 if ((currentPage + 1 <= maxPages)) {
@@ -179,21 +172,11 @@ public class InfusingRecipeScreen extends Screen {
         renderItemAndTooltip(itemRators.get(11).getCurrentStack(),relX+96   -1,relY+150 -1,mousex,mousey,matrices,false);
         renderItemAndTooltip(itemRators.get(12).getCurrentStack(),relX+142  -1,relY+143 -1,mousex,mousey,matrices,false);
 
-        renderItemAndTooltip(currentRecipe.getResultItem().copy(),relX+12,relY+12,mousex,mousey,matrices,true);
-
-//        renderItemAndTooltip(stacks.get(0),relX+120 + xOffset,relY+69 + yOffset,mousex,mousey,matrices,false);
-//        renderItemAndTooltip(stacks.get(1),relX+173 + xOffset,relY+69 + yOffset,mousex,mousey,matrices,false);
-//        renderItemAndTooltip(stacks.get(2),relX+159 + xOffset,relY+30 + yOffset,mousex,mousey,matrices,false);
-//        renderItemAndTooltip(stacks.get(3),relX+120 + xOffset,relY+16 + yOffset,mousex,mousey,matrices,false);
-//        renderItemAndTooltip(stacks.get(4),relX+81 + xOffset,relY+30 + yOffset,mousex,mousey,matrices,false);
-//        renderItemAndTooltip(stacks.get(5),relX+67 + xOffset,relY+69 + yOffset,mousex,mousey,matrices,false);
-//        renderItemAndTooltip(stacks.get(6),relX+81 + xOffset,relY+108 + yOffset,mousex,mousey,matrices,false);
-//        renderItemAndTooltip(stacks.get(7),relX+120 + xOffset,relY+122 + yOffset,mousex,mousey,matrices,false);
-//        renderItemAndTooltip(stacks.get(8),relX+159 + xOffset,relY+108 + yOffset,mousex,mousey,matrices,false);
-//        renderItemAndTooltip(stacks.get(9),relX+120+xOffset ,relY+180 ,mousex,mousey,matrices,true);
+        renderItemAndTooltip(currentRecipe.getResultItem().copy(),relX+20,relY+21,mousex,mousey,matrices,true);
 
 
-        drawCenteredString(matrices, minecraft.font,new TextComponent(recipe.get(currentPage).infusingTime / 20 +" ").append(new TranslatableComponent("solarforge.seconds2")),relX+170,relY+15,0xff0000);
+
+        drawCenteredString(matrices, minecraft.font,new TextComponent(recipe.get(currentPage).infusingTime / 20 +" ").append(new TranslatableComponent("solarforge.seconds2")),relX+170,relY+25,0xfffcfc00);
 
 
         super.render(matrices,mousex,mousey,partialTicks);
@@ -211,9 +194,16 @@ public class InfusingRecipeScreen extends Screen {
                     if (block != null) {
                         matrices.pushPose();
                         RunicEnergy.Type type = RunicEnergy.BLOCK_TO_RUNE_ENERGY_TYPE.get(block);
+                        int p1 = pos[0];
+                        int p2 = pos[1];
                         bindTypeTexture(type);
-                        blit(matrices, pos[0], pos[1], 0, 0, 16, 16, 16, 16);
+                        blit(matrices, p1, p2, 0, 0, 16, 16, 16, 16);
+                        if (RenderingTools.isMouseInBorders(mousex,mousey,p1,p2,p1+ 16,p2 + 16)){
+                            renderTooltip(matrices,new TextComponent(type.id.toUpperCase(Locale.ROOT)).withStyle(ChatFormatting.GOLD),mousex,mousey);
+                            RenderSystem.enableBlend();
+                        }
                         matrices.popPose();
+
                     }
 
                     iterator++;

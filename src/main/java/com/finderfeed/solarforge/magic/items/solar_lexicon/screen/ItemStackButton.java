@@ -39,7 +39,7 @@ public class ItemStackButton extends Button {
             this.renderToolTip(matrices,mousex,mousey);
         }
         matrices.scale(scaleFactor,scaleFactor,scaleFactor);
-        RenderingTools.renderScaledGuiItem(stack,(int) x, (int) y,scaleFactor);
+        RenderingTools.renderScaledGuiItem(stack,(int) x, (int) y,scaleFactor,0);
 
         RenderSystem.setShaderTexture(0,LOC);
         RenderSystem.enableBlend();
@@ -50,6 +50,22 @@ public class ItemStackButton extends Button {
         matrices.popPose();
     }
 
+    public void render(PoseStack matrices, int mousex, int mousey, float partialTicks,double zOffset){
+        matrices.pushPose();
+        if (this.isHovered){
+            this.renderToolTip(matrices,mousex,mousey);
+        }
+        matrices.scale(scaleFactor,scaleFactor,scaleFactor);
+        RenderingTools.renderScaledGuiItem(stack,(int) x, (int) y,scaleFactor,zOffset);
+
+        RenderSystem.setShaderTexture(0,LOC);
+        RenderSystem.enableBlend();
+        if (this.isHovered){
+            this.blit(matrices,(int)(x/scaleFactor),(int)(y/scaleFactor),0,0,16,16);
+
+        }
+        matrices.popPose();
+    }
 
     @Override
     public void playDownSound(SoundManager manager) {

@@ -294,7 +294,7 @@ public class RenderingTools {
     }
 
 
-    public static void renderScaledGuiItem(ItemStack stack, int x, int y,float scale) {
+    public static void renderScaledGuiItem(ItemStack stack, int x, int y,float scale,double zOffset) {
         Minecraft.getInstance().textureManager.getTexture(TextureAtlas.LOCATION_BLOCKS).setFilter(false, false);
         RenderSystem.setShaderTexture(0, TextureAtlas.LOCATION_BLOCKS);
         RenderSystem.enableBlend();
@@ -302,7 +302,7 @@ public class RenderingTools {
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         PoseStack posestack = RenderSystem.getModelViewStack();
         posestack.pushPose();
-        posestack.translate((double)x, (double)y, (double)(100.0F + Minecraft.getInstance().getItemRenderer().blitOffset - 20));
+        posestack.translate((double)x, (double)y, (double)(100.0F + Minecraft.getInstance().getItemRenderer().blitOffset + zOffset));
         posestack.translate(8.0D*scale, 8.0D*scale, 0.0D);
         posestack.scale(1.0F, -1.0F, 1.0F);
         posestack.scale(16.0F*scale, 16.0F*scale, 16.0F*scale);

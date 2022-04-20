@@ -198,7 +198,7 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
         int width = minecraft.getWindow().getWidth();
         int height = minecraft.getWindow().getHeight();
         int scale = (int)minecraft.getWindow().getGuiScale();
-        GL11.glScissor(width/2-((113)*scale),height/2-(89*scale),(222*scale),190*scale);
+        GL11.glScissor(width/2-((113)*scale),height/2-(89*scale),(221*scale),189*scale);
 
         ClientHelpers.bindText(MAIN_SCREEN_SCROLLABLE);
         blit(matrices,relX,relY,0,0,256,256);
@@ -213,11 +213,16 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
         }
         GL11.glDisable(GL11.GL_SCISSOR_TEST);
 
-        ClientHelpers.bindText(MAIN_SCREEN);
-        blit(matrices,relX,relY,0,0,256,256);
 
-        goBack.render(matrices,mousex,mousey,partialTicks);
-        nothing.render(matrices,mousex,mousey,partialTicks);
+        ClientHelpers.bindText(MAIN_SCREEN);
+
+        matrices.pushPose();
+        matrices.translate(0,0,250);
+        blit(matrices,relX,relY,0,0,256,256);
+        matrices.popPose();
+
+        goBack.render(matrices,mousex,mousey,partialTicks,300);
+        nothing.render(matrices,mousex,mousey,partialTicks,300);
 
         this.renderables.forEach((widget)->{
 
