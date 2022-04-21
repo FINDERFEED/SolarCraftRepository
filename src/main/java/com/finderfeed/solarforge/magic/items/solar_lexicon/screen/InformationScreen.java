@@ -66,37 +66,36 @@ public class InformationScreen extends Screen {
 
         Item i = screen != null ? SolarForge.INFUSER_ITEM.get() : ItemsRegister.INFUSING_TABLE.get();
 
-        ItemStackButton button = new ItemStackButton(relX+260,relY+25 + 18 + 3,12,12,(buttons)->{
+        ItemStackButton button = new ItemStackTabButton(relX+260,relY+25 + 18 + 3,12,12,(buttons)->{
             if (screen != null) {
                 Minecraft.getInstance().setScreen(screen);
             }else{
                 Minecraft.getInstance().setScreen(screenCrafting);
             }
-        }, i.getDefaultInstance(),0.6f,(buttons,matrices,b,c)->{
+        }, i.getDefaultInstance(),0.7f,(buttons,matrices,b,c)->{
             renderTooltip(matrices,new TextComponent("Craft"),b,c);
         });
         if (screen != null || screenCrafting != null){
             addRenderableWidget(button);
         }
-        addRenderableWidget(new ItemStackButton(relX+257 + 3,relY+28,12,12,(buttons)->{minecraft.setScreen(new SolarLexiconRecipesScreen());},
+        addRenderableWidget(new ItemStackTabButton(relX+257 + 3,relY+28,12,12,(buttons)->{minecraft.setScreen(new SolarLexiconRecipesScreen());},
                 Items.CRAFTING_TABLE.getDefaultInstance(),0.7f));
         super.init();
     }
 
     @Override
     public void render(PoseStack matrices, int mousex, int mousey, float partialTicks) {
-        int stringColor = 0x4800a6;
         ClientHelpers.bindText(LOC);
         blit(matrices,relX,relY,0,0,256,209,256,256);
-        blit(matrices,relX + 257,relY + 25,17,209,17,17,256,256);
-        if (screen != null || screenCrafting != null) {
-            blit(matrices, relX + 257, relY + 25 + 18, 17, 209, 17, 17, 256, 256);
-        }
+//        blit(matrices,relX + 257,relY + 25,17,209,17,17,256,256);
+//        if (screen != null || screenCrafting != null) {
+//            blit(matrices, relX + 257, relY + 25 + 18, 17, 209, 17, 17, 256, 256);
+//        }
         drawString(matrices,Minecraft.getInstance().font,fragment.getTranslation(), relX+60,relY+35,0xffffff);
         if (fragment.getType() == AncientFragment.Type.INFORMATION) {
-            RenderingTools.drawBoundedTextObfuscated(matrices, relX + 14, relY + 81, 43, fragment.getLore(),stringColor,ticker*4);
+            RenderingTools.drawBoundedTextObfuscated(matrices, relX + 14, relY + 81, 43, fragment.getLore(),SolarLexiconScreen.TEXT_COLOR,ticker*4);
         }else{
-            RenderingTools.drawBoundedTextObfuscated(matrices, relX + 14, relY + 81, 43, fragment.getItemDescription(),stringColor,ticker*4);
+            RenderingTools.drawBoundedTextObfuscated(matrices, relX + 14, relY + 81, 43, fragment.getItemDescription(),SolarLexiconScreen.TEXT_COLOR,ticker*4);
         }
         renderGuiItem(fragment.getIcon().getDefaultInstance(),relX+32,relY+32,Minecraft.getInstance().getItemRenderer().getModel(fragment.getIcon().getDefaultInstance(),null,null,0),1.5,1.5,1.5);
         super.render(matrices, mousex, mousey, partialTicks);

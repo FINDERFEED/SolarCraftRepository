@@ -114,7 +114,7 @@ public class InfusingRecipeScreen extends Screen {
         }
 
         //13
-        int xoffs = 37-8;
+
         boolean d = false;
         for (int i = 0; i <= maxPages;i++){
             if (recipe.get(i).requriedEnergy != 0 || InfuserTileEntity.doRecipeRequiresRunicEnergy(recipe.get(i).RUNIC_ENERGY_COST)){
@@ -123,13 +123,13 @@ public class InfusingRecipeScreen extends Screen {
             }
         }
         if (d) {
-            xoffs+=8;
-            addRenderableWidget(new ItemStackButton(relX + 48 + xoffs, relY + 9, 12, 12, (button) -> {
+
+            addRenderableWidget(new ItemStackTabButton(relX + 214, relY + 9 + 8, 12, 12, (button) -> {
                 minecraft.setScreen(new InfusingRecipeEnergyScreen(recipe, currentPage));
             }, ItemsRegister.SOLAR_WAND.get().getDefaultInstance(), 0.7f));
         }
-        addRenderableWidget(new ItemStackButton(relX+74+xoffs,relY+9,12,12,(button)->{minecraft.setScreen(new SolarLexiconRecipesScreen());}, Items.CRAFTING_TABLE.getDefaultInstance(),0.7f));
-        addRenderableWidget(new ItemStackButton(relX+61+xoffs,relY+9,12,12,(button)->{
+        addRenderableWidget(new ItemStackTabButton(relX + 214,relY+27 + 8,12,12,(button)->{minecraft.setScreen(new SolarLexiconRecipesScreen());}, Items.CRAFTING_TABLE.getDefaultInstance(),0.7f));
+        addRenderableWidget(new ItemStackTabButton(relX + 214,relY+27 + 8 + 18,12,12,(button)->{
             Minecraft mc = Minecraft.getInstance();
             SolarLexicon lexicon = (SolarLexicon) mc.player.getMainHandItem().getItem();
             lexicon.currentSavedScreen = this;
@@ -154,10 +154,14 @@ public class InfusingRecipeScreen extends Screen {
         }else{
             ClientHelpers.bindText(MAIN_SCREEN_UNOPENED);
         }
-        blit(matrices,relX,relY,0,0,256,256);
+        InfusingRecipe currentRecipe = recipe.get(currentPage);
+        blit(matrices,relX,relY,0,0,256,208,256,256);
+//        blit(matrices,relX + 210,relY + 25,0,208,17,17,256,256);
+//        blit(matrices,relX + 210,relY + 25 + 18,0,208,17,17,256,256);
+//        blit(matrices,relX + 210,relY + 25 + 36,0,208,17,17,256,256);
         int xOffset = -25;
         int yOffset = 27;
-        InfusingRecipe currentRecipe = recipe.get(currentPage);
+
         renderItemAndTooltip(itemRators.get(0).getCurrentStack(),relX+50    -1,relY+51  -1,mousex,mousey,matrices,false);
         renderItemAndTooltip(itemRators.get(1).getCurrentStack(),relX+96    -1,relY+44  -1,mousex,mousey,matrices,false);
         renderItemAndTooltip(itemRators.get(2).getCurrentStack(),relX+142   -1,relY+51  -1,mousex,mousey,matrices,false);
@@ -175,8 +179,8 @@ public class InfusingRecipeScreen extends Screen {
         renderItemAndTooltip(currentRecipe.getResultItem().copy(),relX+20,relY+21,mousex,mousey,matrices,true);
 
 
-
-        drawCenteredString(matrices, minecraft.font,new TextComponent(recipe.get(currentPage).infusingTime / 20 +" ").append(new TranslatableComponent("solarforge.seconds2")),relX+170,relY+25,0xfffcfc00);
+        drawCenteredString(matrices, minecraft.font,new TextComponent(recipe.get(currentPage).infusingTime / 20 +" ").append(new TranslatableComponent("solarforge.seconds2")),relX+170,relY+25,
+                SolarLexiconScreen.TEXT_COLOR);
 
 
         super.render(matrices,mousex,mousey,partialTicks);

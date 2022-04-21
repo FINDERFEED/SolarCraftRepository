@@ -51,6 +51,7 @@ public class ItemStackButton extends Button {
     }
 
     public void render(PoseStack matrices, int mousex, int mousey, float partialTicks,double zOffset){
+        this.isHovered = RenderingTools.isMouseInBorders(mousex,mousey,x,y,x + width,y + height);
         matrices.pushPose();
         if (this.isHovered){
             this.renderToolTip(matrices,mousex,mousey);

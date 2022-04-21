@@ -40,8 +40,10 @@ import java.util.List;
 
 public class SolarLexiconScreen extends Screen implements IScrollable,PostRenderTooltips {
     private int ticker = 0;
-    private int OFFSET_X = 40;
-    private int OFFSET_Y = 40;
+    private int OFFSET_X = 50;
+    private int OFFSET_Y = 50;
+
+    public static int TEXT_COLOR = 0x7500dd;
 
     public final ResourceLocation MAIN_SCREEN = new ResourceLocation("solarforge","textures/gui/solar_lexicon_main_page_new.png");
     public final ResourceLocation FRAME = new ResourceLocation("solarforge","textures/misc/frame.png");
@@ -187,7 +189,7 @@ public class SolarLexiconScreen extends Screen implements IScrollable,PostRender
             offsetY = (a.getAchievementTier() -1)* OFFSET_Y;
             boolean c = Helpers.canPlayerUnlock(a,minecraft.player);
             LocalPlayer player = Minecraft.getInstance().player;
-            ItemStackButtonAnimatedTooltip button = new ItemStackButtonAnimatedTooltip(relX+17+offsetX,relY+17+offsetY,16,16,(btn)->{
+            ItemStackButtonAnimatedTooltip button = new ItemStackButtonAnimatedTooltip(relX+21+offsetX,relY+21+offsetY,16,16,(btn)->{
                 if (Helpers.hasPlayerUnlocked(a,player)){
                     currentText = a.getPretext().getString();
                     afterTxt = a.afterText.getString();
@@ -326,7 +328,7 @@ public class SolarLexiconScreen extends Screen implements IScrollable,PostRender
         blit(matrices,relX,relY,0,0,256,256);
         float time = RenderingTools.getTime(Minecraft.getInstance().level,partialTicks);
         double s = Math.sin(time/10);
-        int offs = 26;
+        int offs = 30;
         ClientHelpers.bindText(FRAME);
         for (Progression a : tree.PROGRESSION_TREE.keySet()) {
             Point first = new Point(relX+scrollX+offs+map.get(a.getAchievementTier()).indexOf(a)*OFFSET_X,relY+scrollY+offs+(a.getAchievementTier()-1)*OFFSET_Y);
@@ -350,7 +352,7 @@ public class SolarLexiconScreen extends Screen implements IScrollable,PostRender
         postLinesRender.clear();
         for (Progression a : tree.PROGRESSION_TREE.keySet()) {
             Point first = new Point(relX+scrollX+offs-3+map.get(a.getAchievementTier()).indexOf(a)*OFFSET_X,relY+scrollY+offs-3+(a.getAchievementTier()-1)*OFFSET_Y);
-            blit(matrices,first.x-10,first.y-10,0,0,24,24,24,24);
+            blit(matrices,first.x-12,first.y-12,0,0,28,28,28,28);
         }
 
 

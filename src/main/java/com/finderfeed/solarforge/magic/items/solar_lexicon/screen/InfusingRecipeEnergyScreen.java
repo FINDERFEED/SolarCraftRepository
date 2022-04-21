@@ -81,10 +81,10 @@ public class InfusingRecipeEnergyScreen extends Screen {
         }
 
 
-        int xoffs = 37;
-        addRenderableWidget(new ItemStackButton(relX+48+xoffs,relY+9,12,12,(button)->{minecraft.setScreen(new InfusingRecipeScreen(recipes,currentPage));}, SolarForge.INFUSER_ITEM.get().getDefaultInstance(),0.7f));
-        addRenderableWidget(new ItemStackButton(relX+74+xoffs,relY+9,12,12,(button)->{minecraft.setScreen(new SolarLexiconRecipesScreen());}, Items.CRAFTING_TABLE.getDefaultInstance(),0.7f));
-        addRenderableWidget(new ItemStackButton(relX+61+xoffs,relY+9,12,12,(button)->{
+        int xoffs = 214;
+        addRenderableWidget(new ItemStackTabButton(relX+xoffs,relY+9 + 8,12,12,(button)->{minecraft.setScreen(new InfusingRecipeScreen(recipes,currentPage));}, SolarForge.INFUSER_ITEM.get().getDefaultInstance(),0.7f));
+        addRenderableWidget(new ItemStackTabButton(relX+xoffs,relY+27 + 8,12,12,(button)->{minecraft.setScreen(new SolarLexiconRecipesScreen());}, Items.CRAFTING_TABLE.getDefaultInstance(),0.7f));
+        addRenderableWidget(new ItemStackTabButton(relX+xoffs,relY+27 + 8 + 18,12,12,(button)->{
             Minecraft mc = Minecraft.getInstance();
             SolarLexicon lexicon = (SolarLexicon) mc.player.getMainHandItem().getItem();
             lexicon.currentSavedScreen = this;
@@ -97,7 +97,7 @@ public class InfusingRecipeEnergyScreen extends Screen {
     @Override
     public void render(PoseStack matrices, int mousex, int mousey, float partialTicks) {
         InfusingRecipe recipe = recipes.get(currentPage);
-
+        int xoffs = 1;
         matrices.pushPose();
         ClientHelpers.bindText(MAIN_SCREEN_OPENED);
         blit(matrices,relX,relY,0,0,256,256);
@@ -105,28 +105,28 @@ public class InfusingRecipeEnergyScreen extends Screen {
 
         //float percent = (float)recipe.get(currentPage).requriedEnergy / 100000;
         matrices.pushPose();
-        drawCenteredString(matrices,font,new TranslatableComponent("solarcraft.total_energy"),relX+102,relY+126,0xff0000);
+        drawCenteredString(matrices,font,new TranslatableComponent("solarcraft.total_energy"),relX+102 + xoffs,relY+126,SolarLexiconScreen.TEXT_COLOR);
         matrices.popPose();
         matrices.pushPose();
         int iter = 0;
 
         for (RunicEnergy.Type type : ORDERED_TYPES){
-            renderEnergyBar(matrices,relX+64+iter*17,relY+90,type,recipe);
+            renderEnergyBar(matrices,relX+64+iter*17 + xoffs,relY+90,type,recipe);
             iter++;
         }
         int solaren = Math.round((float)recipe.requriedEnergy / 100000 * 64);
-        fill(matrices,relX+15,relY+94-solaren,relX+25,relY+94,0xddffff00);
+        fill(matrices,relX+15 + xoffs,relY+94-solaren,relX+25 + xoffs,relY+94,0xddffff00);
         double totalEnergy = recipe.requriedEnergy;
         for (double cost : recipe.RUNIC_ENERGY_COST.getCosts()){
             totalEnergy+=cost;
         }
-        int totaltext = Math.round((float)totalEnergy / 900000 * 175);
-        fill(matrices,relX+15,relY+145,relX+15+totaltext,relY+145+6,0xddffff00);
-        drawString(matrices,font,new TranslatableComponent("solarcraft.total_solar_energy"),relX+16,relY+160,0xff0000);
-        drawCenteredString(matrices,font,""+recipe.requriedEnergy,relX+160,relY+161,0xff0000);
+        int totaltext = Math.round((float)totalEnergy / 900000 * 173);
+        fill(matrices,relX+16 + xoffs,relY+145,relX+16+totaltext + xoffs,relY+145+6,0xddffff00);
+        drawString(matrices,font,new TranslatableComponent("solarcraft.total_solar_energy"),relX+16 + xoffs,relY+160,SolarLexiconScreen.TEXT_COLOR);
+        drawCenteredString(matrices,font,""+recipe.requriedEnergy,relX+160 + xoffs,relY+161,SolarLexiconScreen.TEXT_COLOR);
 
-        drawString(matrices,font,new TranslatableComponent("solarcraft.total_runic_energy"),relX+16,relY+160+21,0xff0000);
-        drawCenteredString(matrices,font,""+(int)(totalEnergy-recipe.requriedEnergy),relX+160,relY+161+21,0xff0000);
+        drawString(matrices,font,new TranslatableComponent("solarcraft.total_runic_energy"),relX+16 + xoffs,relY+160+21,SolarLexiconScreen.TEXT_COLOR);
+        drawCenteredString(matrices,font,""+(int)(totalEnergy-recipe.requriedEnergy),relX+160 + xoffs,relY+161+21,SolarLexiconScreen.TEXT_COLOR);
         matrices.popPose();
         super.render(matrices, mousex, mousey, partialTicks);
     }
