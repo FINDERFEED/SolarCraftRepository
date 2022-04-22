@@ -206,3 +206,23 @@ dependencies {
     runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:1.18.2-5.0.6.3")
     compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:1.18.2-5.0.6.3:api")
 }
+
+repositories {
+    maven {
+        // location of the maven that hosts JEI files
+        name = "Progwml6 maven"
+        url = "https://dvs1.progwml6.com/files/maven/"
+    }
+    maven {
+        // location of a maven mirror for JEI files, as a fallback
+        name = "ModMaven"
+        url = "https://modmaven.dev"
+    }
+}
+
+dependencies {
+    // compile against the JEI API but do not include it at runtime
+    compileOnly fg.deobf("mezz.jei:jei-1.18.2:9.7.0.193:api")
+    // at runtime, use the full JEI jar
+    runtimeOnly fg.deobf("mezz.jei:jei-1.18.2:9.7.0.193")
+}
