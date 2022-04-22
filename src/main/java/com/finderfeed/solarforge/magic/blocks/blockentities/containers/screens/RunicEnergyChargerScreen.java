@@ -8,6 +8,7 @@ import com.finderfeed.solarforge.magic.items.RuneItem;
 import com.finderfeed.solarforge.magic.items.runic_energy.IRunicEnergyUser;
 import com.finderfeed.solarforge.magic.items.runic_energy.ItemRunicEnergy;
 import com.finderfeed.solarforge.magic.items.runic_energy.RunicEnergyContainer;
+import com.finderfeed.solarforge.magic.items.solar_lexicon.screen.SolarLexiconScreen;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.ChatFormatting;
@@ -86,10 +87,11 @@ public class RunicEnergyChargerScreen extends AbstractScrollableContainerScreen<
         float percent = curEnergy/maxRE;
         blit(matrices,relX+71 + xOffset,relY+38 + yOffset + (int)(34*(1-percent)),176,48 + (int)(34*(1-percent)),34,(int)Math.ceil(34*percent),256,256);
 
-        if (RenderingTools.isMouseInBorders(mousex,mousey,relX + 80 + xOffset,relY + 47 + yOffset,relX + 98 + xOffset,relY + 47 + 18 + yOffset )){
+        if (RenderingTools.isMouseInBorders(mousex,mousey,relX + 80 + xOffset,relY + 40 + yOffset,relX + 98 + xOffset,relY + 40 + 18 + yOffset )){
             renderTooltip(matrices,components,Optional.empty(),mousex,mousey,font);
         }
-        drawCenteredString(matrices,font,"Runic Energy Charger",relX + 89 + xOffset,relY + 9 + yOffset,0xff1111);
+
+        drawCenteredString(matrices,font,"Runic Energy Charger",relX + 89 + xOffset,relY + 13 + yOffset, SolarLexiconScreen.TEXT_COLOR);
     }
 
     @Override

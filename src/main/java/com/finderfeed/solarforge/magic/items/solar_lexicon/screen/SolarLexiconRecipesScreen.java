@@ -42,6 +42,8 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
     public IItemHandler handler;
     public final ItemStackButton goBack = new ItemStackButton(0,10,12,12,(button)->{minecraft.setScreen(new SolarLexiconScreen());}, SolarForge.SOLAR_FORGE_ITEM.get().getDefaultInstance(),0.7f);
     public final ItemStackButton nothing = new ItemStackButton(0,10,12,12,(button)->{}, Items.CRAFTING_TABLE.getDefaultInstance(),0.7f);
+    public InfoButton infoButton;
+
     public List<Runnable> postRender = new ArrayList<>();
 
 
@@ -74,6 +76,7 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
             List<AbstractWidget> list = ClientHelpers.getScreenButtons(this);
             list.remove(goBack);
             list.remove(nothing);
+            list.remove(infoButton);
             for (AbstractWidget a : list) {
                 if (prevscrollX < scrollX) {
                     a.x += scroll;
@@ -88,6 +91,7 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
             List<AbstractWidget> list = ClientHelpers.getScreenButtons(this);
             list.remove(goBack);
             list.remove(nothing);
+            list.remove(infoButton);
             for (AbstractWidget a : list) {
                 if (prevscrollY < scrollY) {
 
@@ -121,17 +125,20 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
     @Override
     protected void init() {
         super.init();
-
-
-        FRAGMENTS.clear();
-        handler = getLexiconInventory();
-        collectFragments();
-
         int width = minecraft.getWindow().getWidth();
         int height = minecraft.getWindow().getHeight();
         int scale = (int) minecraft.getWindow().getGuiScale();
         this.relX = (width/scale - 183)/2-30;
         this.relY = (height - 218*scale)/2/scale;
+        infoButton = new InfoButton(relX  +206+35,relY + 64,13,13,(btn1, matrices1, mx, my)->{
+            renderTooltip(matrices1,font.split(new TranslatableComponent("solarcraft.recipes_screen_info"),200),mx,my);
+        });
+
+        FRAGMENTS.clear();
+        handler = getLexiconInventory();
+        collectFragments();
+
+
         scrollX = 0;
         scrollY = 0;
         prevscrollX = 0;
@@ -149,7 +156,6 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
         //nothing.y = relY + 184;
         //goBack.x = relX +207+35;
         //goBack.y = relY + 164;
-
         nothing.x = relX +207+35;
         nothing.y = relY + 184 - 137;
         goBack.x = relX +207+35;
@@ -223,6 +229,7 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
 
         goBack.render(matrices,mousex,mousey,partialTicks,300);
         nothing.render(matrices,mousex,mousey,partialTicks,300);
+        infoButton.render(matrices,mousex,mousey,partialTicks);
 
         this.renderables.forEach((widget)->{
 
@@ -237,6 +244,8 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
         nothing.active = true;
         goBack.visible = true;
         nothing.visible = true;
+        infoButton.visible = true;
+        infoButton.active = true;
 
         for (Runnable r : postRender){
             r.run();

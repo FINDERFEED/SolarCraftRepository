@@ -32,10 +32,10 @@ public class BlackBackgroundTooltip extends AnimatedTooltip{
         double yDownOpeness = startYOpeness + Mth.lerp(percentYOpeness,0,Math.abs(yPos + maxSizeY - yStartRenderPos - startYOpeness));
         double yUpOpeness = Mth.lerp(percentYOpeness,0,Math.abs(yStartRenderPos - yPos));
 
-        RenderingTools.fill(matrices,xStartRenderPos - xLeftOpeness,yStartRenderPos,xStartRenderPos,yStartRenderPos + yDownOpeness,0,0,0,0.9f);
-        RenderingTools.fill(matrices,xStartRenderPos,yStartRenderPos,xStartRenderPos + xRightOpeness,yStartRenderPos + yDownOpeness,0,0,0,0.9f);
-        RenderingTools.fill(matrices,xStartRenderPos - xLeftOpeness,yStartRenderPos,xStartRenderPos,yStartRenderPos - yUpOpeness,0,0,0,0.9f);
-        RenderingTools.fill(matrices,xStartRenderPos,yStartRenderPos,xStartRenderPos + xRightOpeness,yStartRenderPos - yUpOpeness,0,0,0,0.9f);
+        RenderingTools.fill(matrices,xStartRenderPos - xLeftOpeness,yStartRenderPos,xStartRenderPos,yStartRenderPos + yDownOpeness,0,0,0,0.94f);
+        RenderingTools.fill(matrices,xStartRenderPos,yStartRenderPos,xStartRenderPos + xRightOpeness,yStartRenderPos + yDownOpeness,0,0,0,0.94f);
+        RenderingTools.fill(matrices,xStartRenderPos - xLeftOpeness,yStartRenderPos,xStartRenderPos,yStartRenderPos - yUpOpeness,0,0,0,0.94f);
+        RenderingTools.fill(matrices,xStartRenderPos,yStartRenderPos,xStartRenderPos + xRightOpeness,yStartRenderPos - yUpOpeness,0,0,0,0.94f);
         if (ticker >= animLength) {
             this.getComponents().render(matrices, xPos + borderWidth, yPos + borderWidth, pTicks, mousex, mousey, ticker, animLength);
         }

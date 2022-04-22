@@ -1,6 +1,7 @@
 package com.finderfeed.solarforge.client.screens;
 
 import com.finderfeed.solarforge.ClientHelpers;
+import com.finderfeed.solarforge.local_library.other.CanTick;
 import com.finderfeed.solarforge.misc_things.IScrollable;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.screens.Screen;
@@ -20,6 +21,7 @@ public abstract class ScrollableScreen extends Screen implements IScrollable {
     public int scrollY = 0;
     private List<AbstractWidget> staticWidgets = new ArrayList<>();
     private List<Runnable> postRenderEntries = new ArrayList<>();
+    private List<CanTick> tickables = new ArrayList<>();
 
     public ScrollableScreen() {
         super(new TextComponent(""));
@@ -29,11 +31,18 @@ public abstract class ScrollableScreen extends Screen implements IScrollable {
     @Override
     protected void init() {
         super.init();
+        this.tickables.clear();
         int width = minecraft.getWindow().getWidth();
         int height = minecraft.getWindow().getHeight();
         int scale = (int) minecraft.getWindow().getGuiScale();
         this.relX = (width/scale - 183)/2 - 30;
         this.relY = (height - 218*scale)/2/scale;
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+        tickables.forEach(CanTick::tick);
     }
 
     @Override

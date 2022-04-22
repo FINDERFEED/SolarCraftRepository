@@ -11,7 +11,6 @@ import com.finderfeed.solarforge.magic.items.solar_lexicon.progressions.Progress
 import com.finderfeed.solarforge.misc_things.IScrollable;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.progressions.progression_tree.ProgressionTree;
 import com.mojang.blaze3d.platform.GlStateManager;
-import com.mojang.blaze3d.platform.Lighting;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 
@@ -24,6 +23,7 @@ import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.item.Items;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.Component;
@@ -43,7 +43,7 @@ public class SolarLexiconScreen extends Screen implements IScrollable,PostRender
     private int OFFSET_X = 50;
     private int OFFSET_Y = 50;
 
-    public static int TEXT_COLOR = 0x7500dd;
+    public static int TEXT_COLOR = 0x5500dd;
 
     public final ResourceLocation MAIN_SCREEN = new ResourceLocation("solarforge","textures/gui/solar_lexicon_main_page_new.png");
     public final ResourceLocation FRAME = new ResourceLocation("solarforge","textures/misc/frame.png");
@@ -66,6 +66,7 @@ public class SolarLexiconScreen extends Screen implements IScrollable,PostRender
     public ItemStackButton stagesPage = new ItemStackButton(relX+100,relY + 40,12,12,(button)->{minecraft.setScreen(new StagesScreen());},Items.BEACON.getDefaultInstance(),0.7f);
     public ItemStackButton toggleRecipesScreen = new ItemStackButton(relX+100,relY+100,12,12,(button)->{minecraft.setScreen(new SolarLexiconRecipesScreen());}, Items.CRAFTING_TABLE.getDefaultInstance(),0.7f);
     public ItemStackButton justForge = new ItemStackButton(relX+100,relY+100,12,12,(button)->{}, SolarForge.SOLAR_FORGE_ITEM.get().getDefaultInstance(),0.7f);
+    public InfoButton info;
 
     public HashMap<Integer,List<Progression>> map = new HashMap<>();
 
@@ -94,10 +95,10 @@ public class SolarLexiconScreen extends Screen implements IScrollable,PostRender
                 && !(scrollY +4 > 0)){
             scrollY+=4;
         }else if((keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_DOWN) || keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_S))
-                && !(scrollY -4 < -340)){
+                && !(scrollY -4 < -360)){
             scrollY-=4;
         }else if ((keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_RIGHT) || keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_D))
-                && !(scrollX -4 < -90)){
+                && !(scrollX -4 < -180)){
             scrollX-=4;
         }
         if (this.prevscrollX != scrollX){
@@ -105,6 +106,7 @@ public class SolarLexiconScreen extends Screen implements IScrollable,PostRender
             list.remove(toggleRecipesScreen);
             list.remove(justForge);
             list.remove(stagesPage);
+            list.remove(info);
             for (AbstractWidget a : list) {
                 if (prevscrollX < scrollX) {
                     a.x += 4;
@@ -120,6 +122,7 @@ public class SolarLexiconScreen extends Screen implements IScrollable,PostRender
             list.remove(toggleRecipesScreen);
             list.remove(justForge);
             list.remove(stagesPage);
+            list.remove(info);
             for (AbstractWidget a : list) {
                 if (prevscrollY < scrollY) {
 
@@ -275,6 +278,11 @@ public class SolarLexiconScreen extends Screen implements IScrollable,PostRender
             }
             addRenderableWidget(button);
         }
+                                                            //nice
+        this.info = new InfoButton(relX + 206 + 35,relY + 69 + 15,13,13,(button,matrices,mx,my)->{
+            renderTooltip(matrices,font.split(new TranslatableComponent("solarcraft.solar_lexicon_screen_info"),200),mx,my);
+        });
+        addRenderableWidget(this.info);
         addRenderableWidget(toggleRecipesScreen);
         addRenderableWidget(justForge);
         addRenderableWidget(stagesPage);
@@ -303,6 +311,7 @@ public class SolarLexiconScreen extends Screen implements IScrollable,PostRender
         list.remove(justForge);
         list.remove(stagesPage);
         list.remove(toggleRecipesScreen);
+        list.remove(info);
 
         for (AbstractWidget widget : list){
             widget.active = widget.x >= relX - 5 && widget.x <= relX + 230 && widget.y >= relY - 5 && widget.y <= relY + 195;
@@ -401,6 +410,7 @@ public class SolarLexiconScreen extends Screen implements IScrollable,PostRender
         toggleRecipesScreen.render(matrices,mousex,mousey,partialTicks,101);
         justForge.render(matrices,mousex,mousey,partialTicks,101);
         stagesPage.render(matrices,mousex,mousey,partialTicks,101);
+        info.render(matrices,mousex,mousey,partialTicks);
         matrices.popPose();
 
 

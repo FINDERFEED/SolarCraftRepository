@@ -27,8 +27,8 @@ public class StagesScreen extends ScrollableScreen {
     private ArrayList<PostRender> RENDER_QMARKS_TOOLTIPS = new ArrayList<>();
     private ArrayList<PostRender> RENDER_FRAMES = new ArrayList<>();
 
-    public ItemStackButton stagesPage = new ItemStackButton(relX+100,relY + 20,12,12,(button)->{minecraft.setScreen(new SolarLexiconScreen());}, SolarForge.SOLAR_FORGE_ITEM.get().getDefaultInstance(),0.7f);
-
+    public ItemStackButton stagesPage = new ItemStackTabButton(relX+100,relY + 20,12,12,(button)->{minecraft.setScreen(new SolarLexiconScreen());}, SolarForge.SOLAR_FORGE_ITEM.get().getDefaultInstance(),0.7f);
+    public InfoButton infoButton;
     public StagesScreen() {
 
     }
@@ -37,7 +37,12 @@ public class StagesScreen extends ScrollableScreen {
     @Override
     protected void init() {
         super.init();
+        infoButton = new InfoButton(relX +  206 + 35,relY + 43,13,13,(btn1, matrices1, mx, my)->{
+            renderTooltip(matrices1,font.split(STAGES_CMP.copy(),200),mx,my);
+        });
+
         setAsStaticWidget(stagesPage);
+        setAsStaticWidget(infoButton);
         RENDER_QMARKS.clear();
         RENDER_QMARKS_TOOLTIPS.clear();
         RENDER_FRAMES.clear();
@@ -73,9 +78,11 @@ public class StagesScreen extends ScrollableScreen {
                 }));
             }
         }
+
         addRenderableWidget(stagesPage);
+        addRenderableWidget(infoButton);
         stagesPage.x = relX + 207 + 35;
-        stagesPage.y = relY + 13;
+        stagesPage.y = relY + 164 - 137;
 
     }
 
@@ -94,7 +101,7 @@ public class StagesScreen extends ScrollableScreen {
         ClientHelpers.bindText(MAIN_SCREEN);
         blit(matrices,getRelX(),getRelY(),0,0,256,256);
         GL11.glEnable(GL11.GL_SCISSOR_TEST);
-        GL11.glScissor(width/2-((30+83)*scale),height/2-(89*scale),((188+35)*scale),189*scale);
+        GL11.glScissor(width/2-((30+83)*scale),height/2-(88*scale),((188+35)*scale),187*scale);
         List<AbstractWidget> btns = ClientHelpers.getScreenButtons(this);
         btns.removeAll(getStaticWidgets());
         for (AbstractWidget w : btns){
@@ -113,14 +120,15 @@ public class StagesScreen extends ScrollableScreen {
         }
         GL11.glDisable(GL11.GL_SCISSOR_TEST);
 
-        List<String> splittedString = RenderingTools.splitString(STAGES_CMP.getString(),20);
-        for (int i = 0; i < splittedString.size();i++){
-            int y = i * 9;
-            drawString(matrices,font,splittedString.get(i),getRelX() + 120,getRelY() + y + 19,0xff0000);
-        }
+//        List<String> splittedString = RenderingTools.splitString(STAGES_CMP.getString(),20);
+//        for (int i = 0; i < splittedString.size();i++){
+//            int y = i * 9;
+//            drawString(matrices,font,splittedString.get(i),getRelX() + 120,getRelY() + y + 19,0xff0000);
+//        }
 
 
         stagesPage.render(matrices,mousex,mousey,pticks);
+        infoButton.render(matrices,mousex,mousey,pticks);
     }
 
     @Override
