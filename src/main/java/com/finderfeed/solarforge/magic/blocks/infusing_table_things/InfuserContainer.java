@@ -31,11 +31,11 @@ public class InfuserContainer extends AbstractContainerMenu {
 
 
         int i = (6 - 4) * 18;
-
+        int offsx = 0;
         // Tile Entity
         //for (int kj = 0; kj <= te.getContainerSize()-1;kj++){
-            this.addSlot(new SlotItemHandler(inventory, te.inputSlot(), 120, 34));
-            this.addSlot(new OutputSlot.ItemHandler(inventory, te.outputSlot(), 195, -22));
+            this.addSlot(new SlotItemHandler(inventory, te.inputSlot(), 120 + offsx, 34));
+            this.addSlot(new OutputSlot.ItemHandler(inventory, te.outputSlot(), 195 + offsx, -22));
 
         //}
 
@@ -43,12 +43,12 @@ public class InfuserContainer extends AbstractContainerMenu {
         int mody = 30;
         for(int l = 0; l < 3; ++l) {
             for(int j1 = 0; j1 < 9; ++j1) {
-                this.addSlot(new Slot(playerInv, j1 + l * 9 + 9,   8+j1 * 18+modx, 103 + l * 18 -19 +mody));
+                this.addSlot(new Slot(playerInv, j1 + l * 9 + 9,   8+j1 * 18+modx + offsx, 103 + l * 18 -19 +mody));
             }
         }
 
         for(int i1 = 0; i1 < 9; ++i1) {
-            this.addSlot(new Slot(playerInv, i1,  8+ i1 * 18+modx, 161 -19+mody));
+            this.addSlot(new Slot(playerInv, i1,  8+ i1 * 18+modx + offsx, 161 -19+mody));
         }
 
 

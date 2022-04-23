@@ -6,7 +6,9 @@ import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.local_library.helpers.RenderingTools;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.SolarLexicon;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.screen.ItemStackButton;
+import com.finderfeed.solarforge.magic.items.solar_lexicon.screen.ItemStackTabButton;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.screen.SolarLexiconRecipesScreen;
+import com.finderfeed.solarforge.magic.items.solar_lexicon.screen.SolarLexiconScreen;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
@@ -40,8 +42,8 @@ public class LoreScreen extends Screen {
         int scale = (int) minecraft.getWindow().getGuiScale();
         this.relX = (width/scale - 183)/2 - 40;
         this.relY = (height - 218*scale)/2/scale;
-        addRenderableWidget(new ItemStackButton(relX+74+53,relY+9,12,12,(button)->{minecraft.setScreen(new SolarLexiconRecipesScreen());}, Items.CRAFTING_TABLE.getDefaultInstance(),0.7f));
-        addRenderableWidget(new ItemStackButton(relX+61+53,relY+9,12,12,(button)->{
+        addRenderableWidget(new ItemStackTabButton(relX+258,relY+27,12,12,(button)->{minecraft.setScreen(new SolarLexiconRecipesScreen());}, Items.CRAFTING_TABLE.getDefaultInstance(),0.7f));
+        addRenderableWidget(new ItemStackTabButton(relX+258,relY+27 + 21,12,12,(button)->{
             Minecraft mc = Minecraft.getInstance();
             SolarLexicon lexicon = (SolarLexicon) mc.player.getMainHandItem().getItem();
             lexicon.currentSavedScreen = this;
@@ -56,16 +58,16 @@ public class LoreScreen extends Screen {
 
     @Override
     public void render(PoseStack matrices, int mousex, int mousey, float partialTicks) {
-        int stringColor = 0xee2222;
+
         ClientHelpers.bindText(MAIN);
         blit(matrices,relX,relY,0,0,256,256,256,256);
         ClientHelpers.bindText(IMAGE_LOCATION);
-        blit(matrices,relX+19,relY+19,0,0,60,60,60,60);
+        blit(matrices,relX+21,relY+19,0,0,60,60,60,60);
 
 
         int posX = relX+14;
         int posY = relY+100;
-        RenderingTools.drawBoundedTextObfuscated(matrices,posX,posY,43,lore,stringColor,ticker*4);
+        RenderingTools.drawBoundedTextObfuscated(matrices,posX,posY,40,lore, SolarLexiconScreen.TEXT_COLOR,ticker*4);
 
 
 
