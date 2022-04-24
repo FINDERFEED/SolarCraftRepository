@@ -4,10 +4,13 @@ import com.finderfeed.solarforge.ClientHelpers;
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.SolarLexicon;
 import com.finderfeed.solarforge.recipe_types.infusing_crafting.InfusingCraftingRecipe;
+import com.finderfeed.solarforge.registries.sounds.Sounds;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.resources.sounds.SimpleSoundInstance;
+import net.minecraft.client.sounds.SoundManager;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
@@ -18,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class InfusingCraftingRecipeScreen extends Screen {
-    public final ResourceLocation BUTTONS = new ResourceLocation("solarforge","textures/misc/page_buttons.png");
+    public final ResourceLocation BUTTONS = new ResourceLocation(SolarForge.MOD_ID,"textures/misc/page_buttons.png");
 
     private static final ResourceLocation MAIN_SCREEN = new ResourceLocation(SolarForge.MOD_ID,"textures/gui/solar_lexicon_crafting_recipe_screen.png");
 
@@ -50,23 +53,33 @@ public class InfusingCraftingRecipeScreen extends Screen {
         this.relY = (height - 218*scale)/2/scale;
         int xoffs = 111;
         if (maxPages != 0) {
-            addRenderableWidget(new ImageButton(relX + 180, relY + 33, 16, 16, 0, 0, 0, BUTTONS, 16, 32, (button) -> {
+            addRenderableWidget(new ImageButton(relX + 180 - 5, relY + 33, 16, 16, 0, 0, 0, BUTTONS, 16, 32, (button) -> {
                 if ((currentPage + 1 <= maxPages)) {
                     currentPage += 1;
                 }
             },(button,matrices,mousex,mousey)->{
                 renderTooltip(matrices,new TextComponent("Next recipe"),mousex,mousey);
-            },new TextComponent("")));
-            addRenderableWidget(new ImageButton(relX + 164, relY + 33, 16, 16, 0, 16, 0, BUTTONS, 16, 32, (button) -> {
+            },new TextComponent("")){
+                @Override
+                public void playDownSound(SoundManager manager) {
+                    manager.play(SimpleSoundInstance.forUI(Sounds.BUTTON_PRESS2.get(),1,1));
+                }
+            });
+            addRenderableWidget(new ImageButton(relX + 164 - 5, relY + 33, 16, 16, 0, 16, 0, BUTTONS, 16, 32, (button) -> {
                 if ((currentPage - 1 >= 0)) {
                     currentPage -= 1;
                 }
             },(button,matrices,mousex,mousey)->{
                 renderTooltip(matrices,new TextComponent("Previous recipe"),mousex,mousey);
-            },new TextComponent("")));
+            },new TextComponent("")){
+                @Override
+                public void playDownSound(SoundManager manager) {
+                    manager.play(SimpleSoundInstance.forUI(Sounds.BUTTON_PRESS2.get(),1,1));
+                }
+            });
         }
-        addRenderableWidget(new ItemStackButton(relX+74+xoffs,relY+9,12,12,(button)->{minecraft.setScreen(new SolarLexiconRecipesScreen());}, Items.CRAFTING_TABLE.getDefaultInstance(),0.7f));
-        addRenderableWidget(new ItemStackButton(relX+61+xoffs,relY+9,12,12,(button)->{
+        addRenderableWidget(new ItemStackTabButton(relX+96+xoffs,relY+29,12,12,(button)->{minecraft.setScreen(new SolarLexiconRecipesScreen());}, Items.CRAFTING_TABLE.getDefaultInstance(),0.7f));
+        addRenderableWidget(new ItemStackTabButton(relX+96+xoffs,relY+29 + 19,12,12,(button)->{
             Minecraft mc = Minecraft.getInstance();
             SolarLexicon lexicon = (SolarLexicon) mc.player.getMainHandItem().getItem();
             lexicon.currentSavedScreen = this;
@@ -88,14 +101,14 @@ public class InfusingCraftingRecipeScreen extends Screen {
                 int iteratorLength = 0;
                 for (Item item : arr){
                     if (item != null) {
-                        renderItemAndTooltip(item.getDefaultInstance(), relX + iteratorLength * 18 + 15, relY + iteratorHeight * 18 + 15, mousex, mousey, matrices, false);
+                        renderItemAndTooltip(item.getDefaultInstance(), relX + iteratorLength * 18 + 20, relY + iteratorHeight * 18 + 16, mousex, mousey, matrices, false);
                     }
                     iteratorLength++;
                 }
                 iteratorHeight++;
                 iteratorLength = 0;
             }
-            renderItemAndTooltip(currentRecipe.getOutput(),relX+76,relY+33,mousex,mousey,matrices,true);
+            renderItemAndTooltip(currentRecipe.getOutput(),relX+81,relY+34,mousex,mousey,matrices,true);
 
             List<Item> uniqueItems = new ArrayList<>();
             Integer[] counts = new Integer[9];
@@ -119,7 +132,7 @@ public class InfusingCraftingRecipeScreen extends Screen {
 
             for (Item i : uniqueItems){
                 int in = uniqueItems.indexOf(i);
-                drawString(matrices,font,new TextComponent(counts[in]+" x: ").append(i.getName(i.getDefaultInstance())),relX+10,relY+80+iter*9,0xffffff);
+                drawString(matrices,font,new TextComponent(counts[in]+" x: ").append(i.getName(i.getDefaultInstance())),relX+13,relY+84+iter*9,SolarLexiconScreen.TEXT_COLOR);
                 iter++;
             }
 

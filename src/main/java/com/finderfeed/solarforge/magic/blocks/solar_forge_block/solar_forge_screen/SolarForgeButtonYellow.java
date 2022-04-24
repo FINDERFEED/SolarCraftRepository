@@ -2,36 +2,36 @@ package com.finderfeed.solarforge.magic.blocks.solar_forge_block.solar_forge_scr
 
 import com.finderfeed.solarforge.ClientHelpers;
 import com.finderfeed.solarforge.registries.sounds.Sounds;
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.resources.sounds.SimpleSoundInstance;
-import net.minecraft.client.sounds.SoundManager;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.resources.sounds.SimpleSoundInstance;
+import net.minecraft.client.sounds.SoundManager;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
-import net.minecraft.network.chat.Component;
 
-public class SolarForgeButton extends Button  {
+public class SolarForgeButtonYellow extends Button {
     protected  Button.OnTooltip tool;
-    public static final ResourceLocation WIDGETS_SOLARFORGE = new ResourceLocation("solarforge","textures/gui/widgets_solarforge.png");
-    public SolarForgeButton(int posx, int posy, int sizeX, int sizeY, Component component, OnPress onPress) {
-      super(posx, posy, sizeX, sizeY, component, onPress);
+    public static final ResourceLocation WIDGETS_SOLARFORGE = new ResourceLocation("solarforge","textures/gui/solar_button_yellow.png");
+    public SolarForgeButtonYellow(int posx, int posy, int sizeX, int sizeY, Component component, OnPress onPress) {
+        super(posx, posy, sizeX, sizeY, component, onPress);
 
     }
 
-    public SolarForgeButton(int p_i232255_1_, int p_i232255_2_, Component p_i232255_5_, OnPress p_i232255_6_) {
+    public SolarForgeButtonYellow(int p_i232255_1_, int p_i232255_2_, Component p_i232255_5_, OnPress p_i232255_6_) {
         super(p_i232255_1_, p_i232255_2_, 65,15, p_i232255_5_, p_i232255_6_);
 
     }
 
-    public SolarForgeButton(int p_i232256_1_, int p_i232256_2_, int p_i232256_3_, int p_i232256_4_, Component p_i232256_5_, OnPress p_i232256_6_, Button.OnTooltip onTooltip) {
+    public SolarForgeButtonYellow(int p_i232256_1_, int p_i232256_2_, int p_i232256_3_, int p_i232256_4_, Component p_i232256_5_, OnPress p_i232256_6_, Button.OnTooltip onTooltip) {
         super(p_i232256_1_, p_i232256_2_, p_i232256_3_, p_i232256_4_, p_i232256_5_, p_i232256_6_,onTooltip);
-    this.tool = onTooltip;
+        this.tool = onTooltip;
     }
 
-    public SolarForgeButton(int p_i232256_1_, int p_i232256_2_, Component p_i232256_5_, OnPress p_i232256_6_, Button.OnTooltip onTooltip) {
+    public SolarForgeButtonYellow(int p_i232256_1_, int p_i232256_2_, Component p_i232256_5_, OnPress p_i232256_6_, Button.OnTooltip onTooltip) {
         super(p_i232256_1_, p_i232256_2_,65,15, p_i232256_5_, p_i232256_6_,onTooltip);
         this.tool = onTooltip;
     }
@@ -70,5 +70,4 @@ public class SolarForgeButton extends Button  {
             this.tool.onTooltip(this, matrices, mx, my);
         }
     }
-
 }

@@ -6,7 +6,9 @@ import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.local_library.helpers.RenderingTools;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.SolarLexicon;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.screen.ItemStackButton;
+import com.finderfeed.solarforge.magic.items.solar_lexicon.screen.ItemStackTabButton;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.screen.SolarLexiconRecipesScreen;
+import com.finderfeed.solarforge.magic.items.solar_lexicon.screen.SolarLexiconScreen;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -28,8 +30,8 @@ public class EightElementsFragmentScreen extends ScreenWithPages{
     protected void init() {
         super.init();
         ticker = 0;
-        addRenderableWidget(new ItemStackButton(relX+74+53,relY+9,12,12,(button)->{minecraft.setScreen(new SolarLexiconRecipesScreen());}, Items.CRAFTING_TABLE.getDefaultInstance(),0.7f));
-        addRenderableWidget(new ItemStackButton(relX+61+53,relY+9,12,12,(button)->{
+        addRenderableWidget(new ItemStackTabButton(relX+258,relY+28,12,12,(button)->{minecraft.setScreen(new SolarLexiconRecipesScreen());}, Items.CRAFTING_TABLE.getDefaultInstance(),0.7f));
+        addRenderableWidget(new ItemStackTabButton(relX+258,relY+28 + 18,12,12,(button)->{
             Minecraft mc = Minecraft.getInstance();
             SolarLexicon lexicon = (SolarLexicon) mc.player.getMainHandItem().getItem();
             lexicon.currentSavedScreen = this;
@@ -40,13 +42,13 @@ public class EightElementsFragmentScreen extends ScreenWithPages{
 
     @Override
     public void render(PoseStack matrices, int mousex, int mousey, float partialTicks) {
-        int stringColor = 0xee2222;
+        int stringColor = SolarLexiconScreen.TEXT_COLOR;
         if (getCurrentPage() == 1){
 
             ClientHelpers.bindText(MAIN_SCREEN);
             blit(matrices,relX,relY,0,0,256,256,256,256);
             ClientHelpers.bindText(IMAGE_LOCATION);
-            blit(matrices,relX+19,relY+19,0,0,60,60,60,60);
+            blit(matrices,relX+21,relY+19,0,0,60,60,60,60);
 
 
             int posX = relX+14;
@@ -97,7 +99,7 @@ public class EightElementsFragmentScreen extends ScreenWithPages{
 
     @Override
     public int[] getPageButtonsCoords() {
-        return new int[]{216,10};
+        return new int[]{212,11};
     }
 
     @Override

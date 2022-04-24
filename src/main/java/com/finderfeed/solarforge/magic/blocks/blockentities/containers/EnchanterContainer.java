@@ -41,16 +41,16 @@ public class EnchanterContainer extends AbstractContainerMenu {
         this.tile = (EnchanterBlockEntity) world.getBlockEntity(tilepos);
         this.inventory = tile.getInventory();
 
-        this.addSlot(new SlotItemHandler(this.inventory, 0, 134 + 26, 18));
+        this.addSlot(new SlotItemHandler(this.inventory, 0, 134 + 26 - 118, 12));
 
         for(int l = 0; l < 3; ++l) {
             for(int j1 = 0; j1 < 9; ++j1) {
-                this.addSlot(new Slot(inv, j1 + l * 9 + 9,   8+j1 * 18 + 30, 103 + l * 18 -20));
+                this.addSlot(new Slot(inv, j1 + l * 9 + 9,   8+j1 * 18 + 30 - 68, 103 + l * 18 -20 + 3));
             }
         }
 
         for(int i1 = 0; i1 < 9; ++i1) {
-            this.addSlot(new Slot(inv, i1,  8+ i1 * 18 + 30, 161 -20));
+            this.addSlot(new Slot(inv, i1,  8+ i1 * 18 + 30 - 68, 161 -20 + 3));
         }
     }
 

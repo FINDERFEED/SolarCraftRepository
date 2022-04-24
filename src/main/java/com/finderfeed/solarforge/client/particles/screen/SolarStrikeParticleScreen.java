@@ -2,6 +2,7 @@ package com.finderfeed.solarforge.client.particles.screen;
 
 import com.finderfeed.solarforge.client.rendering.rendertypes.SolarCraftRenderTypes;
 import com.finderfeed.solarforge.local_library.client.particles.TextureScreenParticle;
+import com.finderfeed.solarforge.local_library.helpers.FDMathHelper;
 import net.minecraft.client.particle.ParticleRenderType;
 
 public class SolarStrikeParticleScreen extends TextureScreenParticle {
@@ -25,7 +26,7 @@ public class SolarStrikeParticleScreen extends TextureScreenParticle {
     @Override
     public void tick() {
         super.tick();
-        this.size = maxSize*(1-(this.age/(float)this.lifetime));
+        this.size = FDMathHelper.clamp(0,maxSize*(1-(this.age/(float)this.lifetime)),maxSize);
     }
 
     @Override

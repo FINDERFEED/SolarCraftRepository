@@ -5,17 +5,21 @@ import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.client.particles.screen.SolarStrikeParticleScreen;
 import com.finderfeed.solarforge.config.enchanter_config.EnchanterConfig;
 import com.finderfeed.solarforge.local_library.client.particles.ScreenParticlesRenderHandler;
+import com.finderfeed.solarforge.local_library.helpers.RenderingTools;
 import com.finderfeed.solarforge.magic.blocks.blockentities.EnchanterBlockEntity;
 import com.finderfeed.solarforge.magic.blocks.blockentities.containers.EnchanterContainer;
 import com.finderfeed.solarforge.magic.blocks.infusing_table_things.InfuserScreen;
 import com.finderfeed.solarforge.magic.blocks.solar_forge_block.solar_forge_screen.SolarForgeButton;
+import com.finderfeed.solarforge.magic.blocks.solar_forge_block.solar_forge_screen.SolarForgeButtonYellow;
 import com.finderfeed.solarforge.magic.items.runic_energy.RunicEnergyCost;
+import com.finderfeed.solarforge.magic.items.solar_lexicon.screen.SolarLexiconScreen;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
 import com.finderfeed.solarforge.packet_handler.packets.EnchanterPacket;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Vector3f;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.Component;
@@ -26,6 +30,8 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.phys.Vec2;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.*;
@@ -36,7 +42,7 @@ public class EnchanterContainerScreen extends AbstractScrollableContainerScreen<
     public final ResourceLocation RUNIC_ENERGY_BAR = new ResourceLocation("solarforge","textures/gui/runic_energy_bar.png");
     private EnchanterConfig.ConfigEnchantmentInstance selectedEnchantment = null;
     private int selectedLevel = 0;
-    private final List<SolarForgeButton> postRender = new ArrayList<>();
+    private final List<SolarForgeButtonYellow> postRender = new ArrayList<>();
     private int currentMouseScroll = 0;
     private List<Runnable> postRunRender = new ArrayList<>();
     private Random random = new Random();
@@ -48,11 +54,14 @@ public class EnchanterContainerScreen extends AbstractScrollableContainerScreen<
 
     @Override
     public void init() {
+
         currentMouseScroll = 0;
         super.init();
         this.inventoryLabelX = 10000;
-        relX+=60;
+        relX+=65;
         relY+=10;
+
+
         EnchanterConfig defaultCosts = menu.config;
         int iter = 0;
         postRender.clear();
@@ -66,7 +75,7 @@ public class EnchanterContainerScreen extends AbstractScrollableContainerScreen<
                     this.selectedLevel = menu.tile.getProcesingEnchantmentLevel();
                 }
             }
-            SolarForgeButton b = new SolarForgeButton(relX + 15 ,relY + 12 + iter*16,new TranslatableComponent(e.enchantment().getDescriptionId()),(button)->{
+            SolarForgeButtonYellow b = new SolarForgeButtonYellow(relX + 111 ,relY + 60 + iter*16,new TranslatableComponent(e.enchantment().getDescriptionId()),(button)->{
                 if (!menu.tile.enchantingInProgress()) {
                     this.selectedEnchantment = e;
                     this.selectedLevel = 1;
@@ -81,18 +90,18 @@ public class EnchanterContainerScreen extends AbstractScrollableContainerScreen<
             iter++;
         }
 
-        Button buttonPlus = new SolarForgeButton(relX+ 87,relY + 22,15,16,new TextComponent("+"),(btn)->{
+        Button buttonPlus = new SolarForgeButtonYellow(relX+ 161,relY + 32,15,16,new TextComponent("+"),(btn)->{
             if (!(selectedLevel + 1 > selectedEnchantment.maxLevel()) && !menu.tile.enchantingInProgress()){
                 selectedLevel++;
             }
         });
-        Button buttonMinus = new SolarForgeButton(relX+ 87,relY + 62,15,16,new TextComponent("-"),(btn)->{
+        Button buttonMinus = new SolarForgeButtonYellow(relX+ 111,relY + 32,15,16,new TextComponent("-"),(btn)->{
             if (!(selectedLevel - 1 < 1) && !menu.tile.enchantingInProgress()){
                 selectedLevel--;
             }
         });
 
-        Button button = new SolarForgeButton(relX+ 110,relY + 80,new TextComponent("Enchant"),(btn)->{
+        Button button = new SolarForgeButtonYellow(relX+ 111,relY + 12,new TextComponent("Enchant"),(btn)->{
             ItemStack stack = menu.tile.getStackInSlot(0);
 
             if (selectedEnchantment != null && stack.canApplyAtEnchantingTable(selectedEnchantment.enchantment())
@@ -137,52 +146,48 @@ public class EnchanterContainerScreen extends AbstractScrollableContainerScreen<
             a = 0;
         }
 
-        blit(matrices,relX+a+3,relY+4,0,0,176,256,256,256);
+        blit(matrices,relX+a-70,relY+4,0,0,256,180,256,256);
 
         if (menu.tile.enchantingInProgress()){
-            int xTex = Math.round(62f*(menu.tile.getEnchantingTicks()/ (float)EnchanterBlockEntity.MAX_ENCHANTING_TICKS));
-            blit(matrices,relX+a+110,relY+11,176,0,xTex,62,256,256);
+//            int xTex = Math.round(62f*(menu.tile.getEnchantingTicks()/ (float)EnchanterBlockEntity.MAX_ENCHANTING_TICKS));
+//            blit(matrices,relX+a+110,relY+11,176,0,xTex,62,256,256);
+
         }
 
 
         if (selectedEnchantment != null) {
-            int y = 12;
+
             matrices.pushPose();
-            ClientHelpers.bindText(ENERGY_GUI);
-            blit(matrices, relX + a - 73 + 4, relY - 8 + y, 0, 0, 73, 177, 73, 177);
-            ClientHelpers.bindText(RUNIC_ENERGY_BAR);
+
             RunicEnergyCost c = selectedEnchantment.getCostForLevel(menu.config.getMode(),selectedLevel);
-            RenderSystem.enableBlend();
-            renderEnergyBar(matrices, relX + a - 12 - 16 + 1, relY + 61 + y, c.get(RunicEnergy.Type.KELDA), true,mousex,mousey);
-            renderEnergyBar(matrices, relX + a - 28 - 16 + 1, relY + 61 + y, c.get(RunicEnergy.Type.TERA), true,mousex,mousey);
-            renderEnergyBar(matrices, relX + a - 44 - 16 + 1, relY + 61 + y, c.get(RunicEnergy.Type.ZETA), true,mousex,mousey);
-            renderEnergyBar(matrices, relX + a - 12 - 16 + 1, relY + 145 + y, c.get(RunicEnergy.Type.URBA), true,mousex,mousey);
-            renderEnergyBar(matrices, relX + a - 28 - 16 + 1, relY + 145 + y, c.get(RunicEnergy.Type.FIRA), true,mousex,mousey);
-            renderEnergyBar(matrices, relX + a - 44 - 16 + 1, relY + 145 + y, c.get(RunicEnergy.Type.ARDO), true,mousex,mousey);
-            renderEnergyBar(matrices, relX + a - 12 , relY + 61 + y, c.get(RunicEnergy.Type.GIRO), true,mousex,mousey);
-            renderEnergyBar(matrices, relX + a - 12 , relY + 145 + y, c.get(RunicEnergy.Type.ULTIMA), true,mousex,mousey);
-            RenderSystem.disableBlend();
 
+            for (RunicEnergy.Type type : c.getSetTypes()){
+                int x = type.getIndex() * 20;
+                int ytexture = (int)(16*(c.get(type) / menu.config.getMaxEnchanterRunicEnergyCapacity()));
+                RenderingTools.blitWithBlend(matrices,relX + x - 58 + a,relY + 78 + (16-ytexture),0,196 - ytexture,12,16,256,256,getBlitOffset(),0.5f);
 
-            renderEnergyBar(matrices, relX + a - 12 - 16 + 1, relY + 61 + y, menu.tile.getRunicEnergy(RunicEnergy.Type.KELDA), false,mousex,mousey);
-            renderEnergyBar(matrices, relX + a - 28 - 16 + 1, relY + 61 + y, menu.tile.getRunicEnergy(RunicEnergy.Type.TERA), false,mousex,mousey);
-            renderEnergyBar(matrices, relX + a - 44 - 16 + 1, relY + 61 + y, menu.tile.getRunicEnergy(RunicEnergy.Type.ZETA), false,mousex,mousey);
-            renderEnergyBar(matrices, relX + a - 12 - 16 + 1, relY + 145 + y,menu.tile.getRunicEnergy(RunicEnergy.Type.URBA), false,mousex,mousey);
-            renderEnergyBar(matrices, relX + a - 28 - 16 + 1, relY + 145 + y,menu.tile.getRunicEnergy(RunicEnergy.Type.FIRA), false,mousex,mousey);
-            renderEnergyBar(matrices, relX + a - 44 - 16 + 1, relY + 145 + y,menu.tile.getRunicEnergy(RunicEnergy.Type.ARDO), false,mousex,mousey);
-            renderEnergyBar(matrices, relX + a - 12 , relY + 61 + y, menu.tile.getRunicEnergy(RunicEnergy.Type.GIRO), false,mousex,mousey);
-            renderEnergyBar(matrices, relX + a - 12 , relY + 145 + y, menu.tile.getRunicEnergy(RunicEnergy.Type.ULTIMA), false,mousex,mousey);
+            }
 
-            drawCenteredString(matrices,font,""+selectedLevel,relX + 94,relY + 45,0xffffff);
-            drawCenteredString(matrices,font,selectedEnchantment.enchantment().getFullname(selectedLevel).getString(),relX + 93,relY + 184,0xff0000);
             matrices.popPose();
+        }
+        Runnable rf = null;
+        for (RunicEnergy.Type type : RunicEnergy.Type.getAll()){
+            int x = type.getIndex() * 20;
+            int ytexture = (int)(16*(menu.tile.getRunicEnergy(type) / menu.config.getMaxEnchanterRunicEnergyCapacity()));
 
-
+            RenderingTools.blitWithBlend(matrices,relX + x - 58 + a,relY + 78 + (16-ytexture),0,196 - ytexture,12,16,256,256,getBlitOffset(),1f);
+            if (RenderingTools.isMouseInBorders(mousex,mousey,relX + x - 58,relY + 78,relX + x - 58 + 12,relY + 78 + 16)){
+                rf = ()->renderTooltip(matrices,new TextComponent(type.id.toUpperCase(Locale.ROOT) + ": ").withStyle(ChatFormatting.GOLD)
+                        .append(new TextComponent(menu.tile.getRunicEnergy(type) + "/" + menu.config.getMaxEnchanterRunicEnergyCapacity()).withStyle(ChatFormatting.WHITE)),mousex,mousey);
+            }
         }
 
-        RenderSystem.enableScissor((relX + 12 + a)*scale,(relY + 106 )*scale,69*scale,80*scale);
+        if (rf != null) rf.run();
+        drawCenteredString(matrices,font,""+selectedLevel,relX + 142,relY + 35,SolarLexiconScreen.TEXT_COLOR);
+        drawCenteredString(matrices,font,selectedEnchantment.enchantment().getFullname(selectedLevel).getString(),relX + 20,relY + 15, SolarLexiconScreen.TEXT_COLOR);
+        RenderSystem.enableScissor((relX + 108  + a)*scale,(relY + 22 )*scale,69*scale,117*scale);
 
-        for (SolarForgeButton b : postRender){
+        for (SolarForgeButtonYellow b : postRender){
             b.render(matrices,mousex,mousey,pticks);
         }
         RenderSystem.disableScissor();
@@ -202,31 +207,48 @@ public class EnchanterContainerScreen extends AbstractScrollableContainerScreen<
     protected void containerTick() {
         super.containerTick();
         //I KNOW THIS LOOKS STRANGE DON'T TELL ME ANYTHING OR I WILL.... WISH YOU A GOOD DAY!
-        if (menu.tile.enchantingInProgress()){
-            int scale = (int) minecraft.getWindow().getGuiScale();
-            int a = 1;
-            if (scale == 2) {
-                a = 0;
+
+        if (menu.tile.enchantingInProgress() && menu.tile.getProcessingEnchantment() != null){
+
+            for (RunicEnergy.Type  type : menu.tile.getProcessingEnchantment().baseCost().getSetTypes()){
+                int x = relX + type.getIndex()*20 - 58 + 6;
+                int y = relY + 86;
+                int targetX = relX + 19;
+                int targetY = relY + 38;
+                Vec2 vec2 = new Vec2(targetX - x,targetY - y);
+                float l = vec2.length();
+                vec2 = vec2.normalized();
+                double vel = (l / 40);
+                SolarStrikeParticleScreen strikeParticleScreen = new SolarStrikeParticleScreen(40,x,y,vec2.x*vel,vec2.y*vel,255,255,0,255);
+                strikeParticleScreen.setSize(20);
+                ScreenParticlesRenderHandler.addParticle(strikeParticleScreen);
+
             }
-            ticker++;
-            int time = 40;
-            if (ticker > time) ticker = 0;
-            int g = time/4;
-            double y = 0;
-            double x = 0;
-            double squareRadius = 16f;
-            if (ticker <= g) y = ticker/(float)g*squareRadius;
-            if (ticker > g && ticker <= g*2) {y = squareRadius; x = (ticker - g)/(float)g*squareRadius;}
-            if (ticker > g*2 && ticker <= g*3) {y = (1-(ticker-g*2)/(float)g)*squareRadius; x = squareRadius;}
-            if (ticker > g*3 && ticker < g*4) {x =  (1-(ticker- g*3)/(float)g)*squareRadius; }
-            SolarStrikeParticleScreen s = new SolarStrikeParticleScreen(20,relX + 133 + x + a,relY + 34 + y,0,0,
-                    231 + random.nextInt(25),
-                    231+ random.nextInt(25),0,255);
-            s.setSize(7);
-            ScreenParticlesRenderHandler.addParticle(s);
+
+//            int scale = (int) minecraft.getWindow().getGuiScale();
+//            int a = 1;
+//            if (scale == 2) {
+//                a = 0;
+//            }
+//            ticker++;
+//            int time = 40;
+//            if (ticker > time) ticker = 0;
+//            int g = time/4;
+//            double y = 0;
+//            double x = 0;
+//            double squareRadius = 16f;
+//            if (ticker <= g) y = ticker/(float)g*squareRadius;
+//            if (ticker > g && ticker <= g*2) {y = squareRadius; x = (ticker - g)/(float)g*squareRadius;}
+//            if (ticker > g*2 && ticker <= g*3) {y = (1-(ticker-g*2)/(float)g)*squareRadius; x = squareRadius;}
+//            if (ticker > g*3 && ticker < g*4) {x =  (1-(ticker- g*3)/(float)g)*squareRadius; }
+//            SolarStrikeParticleScreen s = new SolarStrikeParticleScreen(20,relX + 133 + x + a,relY + 34 + y,0,0,
+//                    231 + random.nextInt(25),
+//                    231+ random.nextInt(25),0,255);
+//            s.setSize(7);
+//            ScreenParticlesRenderHandler.addParticle(s);
         }
-        for (SolarForgeButton b : postRender){
-            if (!(b.y > relY   && b.y <  relY + 89) ){
+        for (SolarForgeButtonYellow b : postRender){
+            if (!(b.y > relY + 45 && b.y <  relY +175) ){
                 b.active = false;
                 b.visible = false;
             }else{
@@ -240,7 +262,7 @@ public class EnchanterContainerScreen extends AbstractScrollableContainerScreen<
     @Override
     public boolean mouseScrolled(double p_94686_, double p_94687_, double delta) {
 
-        for (SolarForgeButton b : postRender){
+        for (SolarForgeButtonYellow b : postRender){
             if (currentMouseScroll + delta*getScrollValue() >= -getMaxYDownScrollValue() && currentMouseScroll + delta*getScrollValue() <= 0) {
                 b.y = b.y + (int) delta * getScrollValue();
 
@@ -257,7 +279,7 @@ public class EnchanterContainerScreen extends AbstractScrollableContainerScreen<
         int delta = getScrollValue()/2;
         if ((keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_UP)
                 || keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_W)) ){
-            for (SolarForgeButton b : postRender){
+            for (SolarForgeButtonYellow b : postRender){
                 if (currentMouseScroll + delta*getScrollValue() >= -getMaxYDownScrollValue() && currentMouseScroll + delta*getScrollValue() <= 0) {
                     b.y = b.y + (int) delta * getScrollValue();
 
@@ -268,7 +290,7 @@ public class EnchanterContainerScreen extends AbstractScrollableContainerScreen<
             }
         }else if((keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_DOWN)
                 || keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_S)) ){
-            for (SolarForgeButton b : postRender){
+            for (SolarForgeButtonYellow b : postRender){
                 if (currentMouseScroll - delta*getScrollValue() >= -getMaxYDownScrollValue() && currentMouseScroll - delta*getScrollValue() <= 0) {
                     b.y = b.y - (int) delta * getScrollValue();
 
@@ -330,4 +352,7 @@ public class EnchanterContainerScreen extends AbstractScrollableContainerScreen<
     protected int getMaxXLeftScrollValue() {
         return 0;
     }
+
+
+
 }

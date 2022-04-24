@@ -404,6 +404,25 @@ public class RenderingTools {
         }
     }
 
+    public static void blitWithBlend(PoseStack matrices,int x,int y,int texPosX,int texPosY,int width,int height,int texWidth,int texHeight, int zOffset,float alpha){
+        RenderSystem.enableBlend();
+        RenderSystem.setShader(GameRenderer::getPositionColorTexShader);
+        BufferBuilder vertex = Tesselator.getInstance().getBuilder();
+        float u1 = texPosX / (float)texWidth;
+        float u2 = (texPosX + width) / (float)texWidth;
+        float v1 = texPosY / (float)texHeight;
+        float v2 = (texPosY + height) / (float)texHeight;
+        Matrix4f m = matrices.last().pose();
+        vertex.begin(VertexFormat.Mode.QUADS,DefaultVertexFormat.POSITION_COLOR_TEX);
+        vertex.vertex(m,x,y,zOffset).color(1,1,1,alpha).uv(u1,v1).endVertex();
+        vertex.vertex(m,x,y + height,zOffset).color(1,1,1,alpha).uv(u1,v2).endVertex();
+        vertex.vertex(m,x + width,y + height,zOffset).color(1,1,1,alpha).uv(u2,v2).endVertex();
+        vertex.vertex(m,x + width,y,zOffset).color(1,1,1,alpha).uv(u2,v1).endVertex();
+
+        vertex.end();
+        BufferUploader.end(vertex);
+        RenderSystem.disableBlend();
+    }
 
 
     /**

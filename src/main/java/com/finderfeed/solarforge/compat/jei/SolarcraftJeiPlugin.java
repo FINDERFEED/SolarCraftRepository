@@ -2,17 +2,20 @@ package com.finderfeed.solarforge.compat.jei;
 
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.compat.jei.recipe_categories.InfusingRecipeCategory;
+import com.finderfeed.solarforge.magic.blocks.blockentities.containers.screens.EnchanterContainerScreen;
 import com.finderfeed.solarforge.recipe_types.infusing_new.InfusingRecipe;
 import com.finderfeed.solarforge.registries.items.ItemsRegister;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.VanillaTypes;
+import mezz.jei.api.gui.handlers.IGuiContainerHandler;
 import mezz.jei.api.registration.IGuiHandlerRegistration;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.renderer.Rect2i;
 import net.minecraft.resources.ResourceLocation;
 
 import java.util.List;
@@ -36,6 +39,12 @@ public class SolarcraftJeiPlugin implements IModPlugin {
     @Override
     public void registerGuiHandlers(IGuiHandlerRegistration registration) {
         IModPlugin.super.registerGuiHandlers(registration);
+        registration.addGuiContainerHandler(EnchanterContainerScreen.class, new IGuiContainerHandler<EnchanterContainerScreen>() {
+            @Override
+            public List<Rect2i> getGuiExtraAreas(EnchanterContainerScreen containerScreen) {
+                return List.of(new Rect2i(0,0,10000,10000));
+            }
+        });
     }
 
     @Override

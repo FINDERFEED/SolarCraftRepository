@@ -68,7 +68,7 @@ public class EnchanterBlockEntity extends REItemHandlerBlockEntity {
                             }else{
                                 stack.enchant(enchanter.processingEnchantment.enchantment(),enchanter.procesingEnchantmentLevel);
                             }
-                            enchanter.spendEnergy(defaultCosts, enchanter.procesingEnchantmentLevel);
+                            enchanter.spendEnergy(defaultCosts, 1);
                             enchanter.reset();
                             enchanter.level.playSound(null,enchanter.worldPosition.getX(),enchanter.worldPosition.getY(),enchanter.worldPosition.getZ(),
                                     SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.BLOCKS,
@@ -78,7 +78,7 @@ public class EnchanterBlockEntity extends REItemHandlerBlockEntity {
                         enchanter.onRemove();
                         enchanter.clearWays();
                     }else{
-                        enchanter.requestRunicEnergy(defaultCosts, enchanter.procesingEnchantmentLevel);
+                        enchanter.requestRunicEnergy(defaultCosts, 1);
                     }
                 }else{
                     enchanter.reset();
