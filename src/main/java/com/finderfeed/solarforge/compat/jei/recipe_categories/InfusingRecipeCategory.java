@@ -63,6 +63,7 @@ public class InfusingRecipeCategory implements IRecipeCategory<InfusingRecipe> {
 
     @Override
     public IDrawable getBackground() {
+
         return helpers.getGuiHelper().drawableBuilder(InfusingRecipeJEI.LOC,0,0,161,141).setTextureSize(161,141).build();
     }
 
@@ -93,22 +94,12 @@ public class InfusingRecipeCategory implements IRecipeCategory<InfusingRecipe> {
         builder.addSlot(RecipeIngredientRole.INPUT,17,109).addIngredients(ingredients.get(10));
         builder.addSlot(RecipeIngredientRole.INPUT,63,116).addIngredients(ingredients.get(11));
         builder.addSlot(RecipeIngredientRole.INPUT,109,109).addIngredients(ingredients.get(12));
+        builder.addSlot(RecipeIngredientRole.OUTPUT,136,63).addItemStack(recipe.output.copy());
     }
 
     @Override
     public void draw(InfusingRecipe recipe, IRecipeSlotsView recipeSlotsView, PoseStack matrices, double mouseX, double mouseY) {
 
-        if (RenderingTools.isMouseInBorders((int)mouseX,(int)mouseY,68,100,68 + 6,106)) {
-            Screen screen = Minecraft.getInstance().screen;
-            if (screen != null) {
-                List<Component> components = new ArrayList<>();
-                for (RunicEnergy.Type type : recipe.RUNIC_ENERGY_COST.getSetTypes()) {
-                    components.add(new TextComponent(type.id.toUpperCase(Locale.ROOT) + ": " + recipe.RUNIC_ENERGY_COST.get(type)));
-                }
-                components.add(new TextComponent("Solar Energy: " + recipe.requriedEnergy));
-                screen.renderTooltip(matrices, components, Optional.empty(), (int) mouseX, (int) mouseY);
-            }
-        }
 
     }
 
