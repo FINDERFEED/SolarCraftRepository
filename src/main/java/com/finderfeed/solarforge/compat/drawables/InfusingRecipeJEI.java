@@ -53,9 +53,8 @@ public class InfusingRecipeJEI implements IDrawable {
         matrices.pushPose();
         ItemRenderer renderer = Minecraft.getInstance().getItemRenderer();
         ClientHelpers.bindText(LOC);
-        Gui.blit(matrices,x,y,0,0,188,188,188,188);
 
-        renderer.renderGuiItem(output,x + 161,y + 30);
+        renderer.renderGuiItem(output,x,y);
         matrices.popPose();
     }
 

@@ -149,9 +149,8 @@ public class EnchanterContainerScreen extends AbstractScrollableContainerScreen<
         blit(matrices,relX+a-70,relY+4,0,0,256,180,256,256);
 
         if (menu.tile.enchantingInProgress()){
-//            int xTex = Math.round(62f*(menu.tile.getEnchantingTicks()/ (float)EnchanterBlockEntity.MAX_ENCHANTING_TICKS));
-//            blit(matrices,relX+a+110,relY+11,176,0,xTex,62,256,256);
-
+            double xt = menu.tile.getEnchantingTicks()/(double)EnchanterBlockEntity.MAX_ENCHANTING_TICKS * 150;
+            RenderingTools.fill(matrices,relX - 57 + a,relY +13 ,relX + xt - 57,relY + 11+13 + a,1,1,0,0.25f);
         }
 
 
@@ -209,43 +208,24 @@ public class EnchanterContainerScreen extends AbstractScrollableContainerScreen<
         //I KNOW THIS LOOKS STRANGE DON'T TELL ME ANYTHING OR I WILL.... WISH YOU A GOOD DAY!
 
         if (menu.tile.enchantingInProgress() && menu.tile.getProcessingEnchantment() != null){
+            if (ticker++ % 10 == 0) {
+                ticker = 1;
+                for (RunicEnergy.Type type : menu.tile.getProcessingEnchantment().baseCost().getSetTypes()) {
+                    int x = relX + type.getIndex() * 20 - 58 + 6;
+                    int y = relY + 86;
+                    int targetX = relX + 19;
+                    int targetY = relY + 38;
+                    Vec2 vec2 = new Vec2(targetX - x, targetY - y);
+                    float l = vec2.length();
+                    vec2 = vec2.normalized();
+                    double vel = (l / 40);
+                    SolarStrikeParticleScreen strikeParticleScreen = new SolarStrikeParticleScreen(40, x, y, vec2.x * vel, vec2.y * vel, 255, 255, 0, 255);
+                    strikeParticleScreen.setSize(20);
+                    ScreenParticlesRenderHandler.addParticle(strikeParticleScreen);
 
-            for (RunicEnergy.Type  type : menu.tile.getProcessingEnchantment().baseCost().getSetTypes()){
-                int x = relX + type.getIndex()*20 - 58 + 6;
-                int y = relY + 86;
-                int targetX = relX + 19;
-                int targetY = relY + 38;
-                Vec2 vec2 = new Vec2(targetX - x,targetY - y);
-                float l = vec2.length();
-                vec2 = vec2.normalized();
-                double vel = (l / 40);
-                SolarStrikeParticleScreen strikeParticleScreen = new SolarStrikeParticleScreen(40,x,y,vec2.x*vel,vec2.y*vel,255,255,0,255);
-                strikeParticleScreen.setSize(20);
-                ScreenParticlesRenderHandler.addParticle(strikeParticleScreen);
-
+                }
             }
 
-//            int scale = (int) minecraft.getWindow().getGuiScale();
-//            int a = 1;
-//            if (scale == 2) {
-//                a = 0;
-//            }
-//            ticker++;
-//            int time = 40;
-//            if (ticker > time) ticker = 0;
-//            int g = time/4;
-//            double y = 0;
-//            double x = 0;
-//            double squareRadius = 16f;
-//            if (ticker <= g) y = ticker/(float)g*squareRadius;
-//            if (ticker > g && ticker <= g*2) {y = squareRadius; x = (ticker - g)/(float)g*squareRadius;}
-//            if (ticker > g*2 && ticker <= g*3) {y = (1-(ticker-g*2)/(float)g)*squareRadius; x = squareRadius;}
-//            if (ticker > g*3 && ticker < g*4) {x =  (1-(ticker- g*3)/(float)g)*squareRadius; }
-//            SolarStrikeParticleScreen s = new SolarStrikeParticleScreen(20,relX + 133 + x + a,relY + 34 + y,0,0,
-//                    231 + random.nextInt(25),
-//                    231+ random.nextInt(25),0,255);
-//            s.setSize(7);
-//            ScreenParticlesRenderHandler.addParticle(s);
         }
         for (SolarForgeButtonYellow b : postRender){
             if (!(b.y > relY + 45 && b.y <  relY +175) ){

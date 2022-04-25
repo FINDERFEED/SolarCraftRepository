@@ -3,7 +3,6 @@ package com.finderfeed.solarforge.recipe_types.infusing_new;
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.magic.blocks.infusing_table_things.InfuserTileEntity;
 import com.finderfeed.solarforge.magic.items.runic_energy.RunicEnergyCost;
-import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
@@ -27,7 +26,7 @@ public class InfusingRecipe implements Recipe<Container> {
     public final String oneRowPattern;
     public final String[] fiveRowPattern;
     public final ItemStack output;
-    public final String child;
+    public final String fragID;
     public final int infusingTime;
     public final int requriedEnergy;
     public final String tag;
@@ -46,7 +45,7 @@ public class InfusingRecipe implements Recipe<Container> {
         this.deserializedCatalysts = deserializeCatalysts();
         this.output = output;
         this.infusingTime = infusingTime;
-        this.child = fragmentID;
+        this.fragID = fragmentID;
         this.RUNIC_ENERGY_COST = costs;
         this.requriedEnergy = requriedEnergy;
         this.tag = tag;

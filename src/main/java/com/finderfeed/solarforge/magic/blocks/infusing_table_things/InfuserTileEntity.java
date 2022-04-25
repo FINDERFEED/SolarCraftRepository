@@ -415,7 +415,7 @@ public class InfuserTileEntity extends REItemHandlerBlockEntity implements  IEne
         Optional<InfusingRecipe> recipe = this.level.getRecipeManager().getRecipeFor(SolarForge.INFUSING_RECIPE_TYPE,new PhantomInventory(getInventory()),level);
         calculateTier();
         try {
-            if (recipe.isPresent() && ProgressionHelper.doPlayerHasFragment(playerEntity, AncientFragment.getFragmentByID(recipe.get().child))) {
+            if (recipe.isPresent() && ProgressionHelper.doPlayerHasFragment(playerEntity, AncientFragment.getFragmentByID(recipe.get().fragID))) {
                 if (!this.getItem(outputSlot()).isEmpty()){
                     playerEntity.sendMessage(new TextComponent("Clear the output slot").withStyle(ChatFormatting.RED),
                             playerEntity.getUUID());
@@ -442,7 +442,7 @@ public class InfuserTileEntity extends REItemHandlerBlockEntity implements  IEne
 
             } else {
                 if (recipe.isPresent()) {
-                    AncientFragment fragment = AncientFragment.getFragmentByID(recipe.get().child);
+                    AncientFragment fragment = AncientFragment.getFragmentByID(recipe.get().fragID);
                     if (fragment != null){
                         if (!ProgressionHelper.doPlayerHasFragment(playerEntity,fragment)){
                             playerEntity.sendMessage(new TextComponent("Cant start craft, you dont have "+fragment.getTranslation().getString().toUpperCase()+" fragment unlocked.").withStyle(ChatFormatting.RED),
