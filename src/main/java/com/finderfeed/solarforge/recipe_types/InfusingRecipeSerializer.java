@@ -15,7 +15,7 @@ import net.minecraftforge.registries.ForgeRegistryEntry;
 import javax.annotation.Nullable;
 import java.util.Map;
 
-public class InfusingRecipeSerializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<InfusingRecipe> {
+public class InfusingRecipeSerializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<OldInfusingRecipe> {
 
 
 
@@ -24,7 +24,7 @@ public class InfusingRecipeSerializer extends ForgeRegistryEntry<RecipeSerialize
     }
 
     @Override
-    public InfusingRecipe fromJson(ResourceLocation loc, JsonObject file) {
+    public OldInfusingRecipe fromJson(ResourceLocation loc, JsonObject file) {
         JsonElement inputElement1 = GsonHelper.getAsJsonObject(file, "input1");
         JsonElement inputElement2 = GsonHelper.getAsJsonObject(file, "input2");
         JsonElement inputElement3 = GsonHelper.getAsJsonObject(file, "input3");
@@ -74,7 +74,7 @@ public class InfusingRecipeSerializer extends ForgeRegistryEntry<RecipeSerialize
         if (catalysts.length() != 12){
             throw new IllegalStateException("Catalysts length cant be != 12, recipe: " + loc.toString());
         }
-        return new InfusingRecipe(loc,catalysts,input1,input2,input3,input4,input5,input6,input7,input8,input9,output,infusingTime,child,reqEnergy,tag,count,costs);
+        return new OldInfusingRecipe(loc,catalysts,input1,input2,input3,input4,input5,input6,input7,input8,input9,output,infusingTime,child,reqEnergy,tag,count,costs);
     }
 
     private Ingredient getIngredient(JsonElement element,int i){
@@ -88,7 +88,7 @@ public class InfusingRecipeSerializer extends ForgeRegistryEntry<RecipeSerialize
 
     @Nullable
     @Override
-    public InfusingRecipe fromNetwork(ResourceLocation loc, FriendlyByteBuf buf) {
+    public OldInfusingRecipe fromNetwork(ResourceLocation loc, FriendlyByteBuf buf) {
         Ingredient input1 = Ingredient.fromNetwork(buf);
         Ingredient input2 = Ingredient.fromNetwork(buf);
         Ingredient input3 = Ingredient.fromNetwork(buf);
@@ -123,11 +123,11 @@ public class InfusingRecipeSerializer extends ForgeRegistryEntry<RecipeSerialize
                 RunicEnergy.Type.ULTIMA,ULTIMA
         );
         String cat = buf.readUtf();
-        return new InfusingRecipe(loc,cat,input1,input2,input3,input4,input5,input6,input7,input8,input9,output,infusingTime,child,reqEnergy,tag,count,costs);
+        return new OldInfusingRecipe(loc,cat,input1,input2,input3,input4,input5,input6,input7,input8,input9,output,infusingTime,child,reqEnergy,tag,count,costs);
     }
 
     @Override
-    public void toNetwork(FriendlyByteBuf buf, InfusingRecipe recipeType) {
+    public void toNetwork(FriendlyByteBuf buf, OldInfusingRecipe recipeType) {
         recipeType.input1.toNetwork(buf);
         recipeType.input2.toNetwork(buf);
         recipeType.input3.toNetwork(buf);

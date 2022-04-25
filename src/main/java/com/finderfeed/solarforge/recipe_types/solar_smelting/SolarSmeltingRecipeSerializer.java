@@ -1,6 +1,5 @@
 package com.finderfeed.solarforge.recipe_types.solar_smelting;
 
-import com.finderfeed.solarforge.recipe_types.InfusingRecipe;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -17,7 +16,6 @@ import net.minecraftforge.registries.ForgeRegistryEntry;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class SolarSmeltingRecipeSerializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<SolarSmeltingRecipe>{

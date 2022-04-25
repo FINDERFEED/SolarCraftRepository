@@ -1,6 +1,7 @@
 package com.finderfeed.solarforge.compat.jei.recipe_categories;
 
 import com.finderfeed.solarforge.SolarForge;
+import com.finderfeed.solarforge.compat.drawables.InfusingRecipeJEI;
 import com.finderfeed.solarforge.compat.jei.JeiRecipeTypes;
 import com.finderfeed.solarforge.recipe_types.infusing_new.InfusingRecipe;
 import com.finderfeed.solarforge.registries.items.ItemsRegister;
@@ -46,7 +47,7 @@ public class InfusingRecipeCategory implements IRecipeCategory<InfusingRecipe> {
 
     @Override
     public IDrawable getBackground() {
-        return helpers.getGuiHelper().createBlankDrawable(100,100);
+        return helpers.getGuiHelper().createDrawable(InfusingRecipeJEI.LOC,0,0,188,188);
     }
 
     @Override
@@ -68,7 +69,9 @@ public class InfusingRecipeCategory implements IRecipeCategory<InfusingRecipe> {
 
     @Override
     public void draw(InfusingRecipe recipe, IRecipeSlotsView recipeSlotsView, PoseStack matrices, double mouseX, double mouseY) {
-        IRecipeCategory.super.draw(recipe, recipeSlotsView, matrices, mouseX, mouseY);
+//        IRecipeCategory.super.draw(recipe, recipeSlotsView, matrices, mouseX, mouseY);
+        InfusingRecipeJEI drawable = new InfusingRecipeJEI(recipe,mouseX,mouseY);
+
     }
 
     @Override
@@ -98,4 +101,6 @@ public class InfusingRecipeCategory implements IRecipeCategory<InfusingRecipe> {
     public Class<? extends InfusingRecipe> getRecipeClass() {
         return InfusingRecipe.class;
     }
+
+
 }

@@ -17,7 +17,7 @@ import net.minecraft.world.level.block.Block;
 
 import java.util.Map;
 
-public class InfusingRecipe implements Recipe<Container> {
+public class OldInfusingRecipe implements Recipe<Container> {
 
 
 
@@ -42,8 +42,8 @@ public class InfusingRecipe implements Recipe<Container> {
     private final String catalysts;
     private final Block[] deserializedCatalysts;
     public static final InfusingRecipeSerializer serializer = new InfusingRecipeSerializer();
-    public InfusingRecipe(ResourceLocation id,String catalysts, Ingredient input1, Ingredient input2, Ingredient input3, Ingredient input4, Ingredient input5, Ingredient input6, Ingredient input7,Ingredient input8,Ingredient input9, ItemStack output, int infusingTime,String child
-    ,int requriedEnergy,String tag,int count,Map<RunicEnergy.Type,Double> costs) {
+    public OldInfusingRecipe(ResourceLocation id, String catalysts, Ingredient input1, Ingredient input2, Ingredient input3, Ingredient input4, Ingredient input5, Ingredient input6, Ingredient input7, Ingredient input8, Ingredient input9, ItemStack output, int infusingTime, String child
+    , int requriedEnergy, String tag, int count, Map<RunicEnergy.Type,Double> costs) {
         this.id = id;
         this.catalysts = catalysts;
         this.deserializedCatalysts = deserializeCatalysts();
