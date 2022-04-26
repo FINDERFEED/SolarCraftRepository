@@ -49,28 +49,26 @@ public class SolarSmeltingRecipeSerializer extends ForgeRegistryEntry<RecipeSeri
 
         ItemStack output = GsonHelper.getAsItem(file, "result").getDefaultInstance();
         int infusingTime = GsonHelper.getAsInt(file, "time", 20);
-        String child = GsonHelper.getAsString(file,"requires");
-        String category = GsonHelper.getAsString(file,"category");
-        return new SolarSmeltingRecipe(loc,stacks,output,infusingTime,child,category);
+//        String child = GsonHelper.getAsString(file,"requires");
+//        String category = GsonHelper.getAsString(file,"category");
+        return new SolarSmeltingRecipe(loc,stacks,output,infusingTime);
     }
 
     @Nullable
     @Override
     public SolarSmeltingRecipe fromNetwork(ResourceLocation loc, FriendlyByteBuf buf) {
-//        NonNullList<Ingredient> nonnulllist = NonNullList.withSize(4, Ingredient.EMPTY);
+
         int size = buf.readInt();
         List<ItemStack> stacks = new ArrayList<>();
         for (int i = 0; i < size;i++){
             stacks.add(buf.readItem());
         }
-//        for(int j = 0; j < nonnulllist.size(); ++j) {
-//            nonnulllist.set(j, Ingredient.fromNetwork(buf));
-//        }
+
         ItemStack output = buf.readItem();
         int infusingTime = buf.readVarInt();
-        String child = buf.readUtf();
-        String category = buf.readUtf();
-        return new SolarSmeltingRecipe(loc,stacks,output,infusingTime,child,category);
+//        String child = buf.readUtf();
+//        String category = buf.readUtf();
+        return new SolarSmeltingRecipe(loc,stacks,output,infusingTime);
     }
 
     @Override
@@ -82,8 +80,8 @@ public class SolarSmeltingRecipeSerializer extends ForgeRegistryEntry<RecipeSeri
 
         buf.writeItemStack(recipeType.output, true);
         buf.writeVarInt(recipeType.smeltingTime);
-        buf.writeUtf(recipeType.child);
-        buf.writeUtf(recipeType.category);
+//        buf.writeUtf(recipeType.child);
+//        buf.writeUtf(recipeType.category);
 
     }
 

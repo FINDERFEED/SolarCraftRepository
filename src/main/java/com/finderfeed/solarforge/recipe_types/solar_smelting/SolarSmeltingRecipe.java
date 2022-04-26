@@ -25,17 +25,15 @@ public class SolarSmeltingRecipe implements Recipe<PhantomInventory> {
     public final List<ItemStack> stacks;
 
     public final ItemStack output;
-    public final String child;
-    public final String category;
+
     public final int smeltingTime;
     public static final SolarSmeltingRecipeSerializer serializer = new SolarSmeltingRecipeSerializer();
-    public SolarSmeltingRecipe(ResourceLocation id, List<ItemStack> stacks, ItemStack output, int infusingTime, String child, String category) {
+    public SolarSmeltingRecipe(ResourceLocation id, List<ItemStack> stacks, ItemStack output, int infusingTime) {
         this.id = id;
         this.stacks = stacks;
         this.output = output;
         this.smeltingTime = infusingTime;
-        this.child = child;
-        this.category = category;
+
     }
 
     public int getInfusingTime(){
@@ -44,22 +42,7 @@ public class SolarSmeltingRecipe implements Recipe<PhantomInventory> {
 
     @Override
     public boolean matches(PhantomInventory inv, Level world) {
-//        NonNullList<Item> lists = NonNullList.withSize(4, Items.AIR);
-//        for (int i = 0;i < 4;i++){
-//            lists.set(i,inv.INVENTORY.get(i).getItem());
-//        }
-//        if (containsOrNot(lists,0) &&
-//                containsOrNot(lists,1)&&
-//                containsOrNot(lists,2) &&
-//                containsOrNot(lists,3)){
-//            return true;
-//        }
-//        if (lists.contains(list.get(0).getItems()[0].getItem()) &&
-//                lists.contains(list.get(1).getItems()[0].getItem())&&
-//                lists.contains(list.get(2).getItems()[0].getItem())&&
-//                lists.contains(list.get(3).getItems()[0].getItem())){
-//            return true;
-//        }
+
         List<ItemStack> stacks = getStacks();
         boolean returnable = true;
         for (ItemStack stack : stacks){
