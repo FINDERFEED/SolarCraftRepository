@@ -1,8 +1,10 @@
 package com.finderfeed.solarforge.magic.items.solar_lexicon.screen;
 
 import com.finderfeed.solarforge.ClientHelpers;
+import com.finderfeed.solarforge.magic.items.solar_lexicon.SolarLexicon;
 import com.finderfeed.solarforge.recipe_types.solar_smelting.SolarSmeltingRecipe;
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -50,7 +52,14 @@ public class SmeltingRecipeScreen extends Screen {
         stacks.add(recipe.output);
 
 
-        addRenderableWidget(new ItemStackButton(relX+185,relY+187,12,12,(button)->{minecraft.setScreen(new SolarLexiconRecipesScreen());}, Items.CRAFTING_TABLE.getDefaultInstance(),0.7f));
+        addRenderableWidget(new ItemStackTabButton(relX+205,relY+9 + 20,12,12,(button)->{minecraft.setScreen(new SolarLexiconRecipesScreen());},
+                Items.CRAFTING_TABLE.getDefaultInstance(),0.7f));
+        addRenderableWidget(new ItemStackTabButton(relX + 205,relY+27 + 20,12,12,(button)->{
+            Minecraft mc = Minecraft.getInstance();
+            SolarLexicon lexicon = (SolarLexicon) mc.player.getMainHandItem().getItem();
+            lexicon.currentSavedScreen = this;
+            minecraft.setScreen(null);
+        }, Items.WRITABLE_BOOK.getDefaultInstance(),0.7f));
         super.init();
     }
 
@@ -68,16 +77,16 @@ public class SmeltingRecipeScreen extends Screen {
 
         for (ItemStack item : recipe.getStacks()){
 
-            int posX = (iter % 3) * 16;
-            int posY = (int)Math.floor((float)iter / 3) * 16;
+            int posX = (iter % 3) * 17;
+            int posY = (int)Math.floor((float)iter / 3) * 17;
 
-            renderItemAndTooltip(item,relX + 77 + posX , relY + 111 + posY,mousex,mousey,matrices,false);
+            renderItemAndTooltip(item,relX + 77 + posX , relY + 118 + posY,mousex,mousey,matrices,false);
 
             iter++;
         }
 
 
-        renderItemAndTooltip(recipe.getResultItem(),relX+94,relY+161,mousex,mousey,matrices,false);
+        renderItemAndTooltip(recipe.getResultItem(),relX+94,relY+169,mousex,mousey,matrices,false);
         super.render(matrices,mousex,mousey,partialTicks);
     }
     private void renderItemAndTooltip(ItemStack toRender,int place1,int place2,int mousex,int mousey,PoseStack matrices,boolean last){

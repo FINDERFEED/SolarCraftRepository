@@ -1,22 +1,11 @@
-package com.finderfeed.solarforge.compat.drawables;
+package com.finderfeed.solarforge.compat.jei.drawables;
 
 import com.finderfeed.solarforge.ClientHelpers;
 import com.finderfeed.solarforge.SolarForge;
-import com.finderfeed.solarforge.local_library.helpers.RenderingTools;
-import com.finderfeed.solarforge.local_library.other.ItemRator;
-import com.finderfeed.solarforge.magic.items.runic_energy.RunicEnergyCost;
-import com.finderfeed.solarforge.recipe_types.infusing_new.InfusingRecipe;
 import com.mojang.blaze3d.vertex.PoseStack;
 import mezz.jei.api.gui.drawable.IDrawable;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.MouseHandler;
 import net.minecraft.client.gui.Gui;
-import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.ItemStack;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class InfusingRecipeJEI implements IDrawable {
 
@@ -41,10 +30,9 @@ public class InfusingRecipeJEI implements IDrawable {
     @Override
     public void draw(PoseStack matrices, int x, int y) {
         matrices.pushPose();
-        MouseHandler handler = Minecraft.getInstance().mouseHandler;
-        double mx = handler.xpos() - x;
-        double my = handler.ypos() - y;
+        ClientHelpers.bindText(LOC);
         Gui.blit(matrices,x,y,0,0,161,141,161,141);
+
         matrices.popPose();
     }
 

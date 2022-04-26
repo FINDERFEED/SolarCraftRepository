@@ -671,5 +671,7 @@
   "solarcraft.recipe_requires_fragment": "You can't view this recipe now. Fragment required: ",
   "solarcraft.divine_armor": "Blocks 1 damage for 2 Ardo Runic Energy.",
   "solarcraft.solar_lexicon_screen_info": "This is the progressions page. Progressions hint you the correct way of how to progress in mod. Think how can you complete each one by reading their descriptions carefully, and looking at icon and connections between them.",
-  "solarcraft.recipes_screen_info" : "This is the fragments page. Put your fragments inside lexicon and they will appear here. Shift-click while crouching to open lexicon inventory and then put decrypted fragment inside with a shift-click."
+  "solarcraft.recipes_screen_info" : "This is the fragments page. Put your fragments inside lexicon and they will appear here. Shift-click while crouching to open lexicon inventory and then put decrypted fragment inside with a shift-click.",
+  "solarcraft.solar_energy": "Solar Energy",
+  "solarcraft.fragment_not_unlocked": "Associated fragment is not decrypted."
 }
