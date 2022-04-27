@@ -225,7 +225,7 @@ public class InfusingTableTile extends BlockEntity implements OwnedBlock {
         tag.putBoolean("recipe",recipeTrigerred);
         tag.putInt("time",recipeTime);
         tag.putUUID("tileowner", owner);
-
+        super.saveAdditional(tag);
 
     }
 
@@ -233,13 +233,10 @@ public class InfusingTableTile extends BlockEntity implements OwnedBlock {
     public void load(CompoundTag tag) {
         this.recipeTrigerred = tag.getBoolean("recipe");
         this.recipeTime = tag.getInt("time");
-        if (this.level != null){
-            if (!this.level.isClientSide){
-                this.setOwner(tag.getUUID("tileowner"));
-            }
-        }else{
+        if (tag.contains("tileowner")){
             this.setOwner(tag.getUUID("tileowner"));
         }
+
         super.load(tag);
     }
     public CompoundTag saveW(CompoundTag tag) {
