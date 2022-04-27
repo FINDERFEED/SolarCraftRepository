@@ -125,6 +125,8 @@
   "solarcraft.welcome_message": "Thanks for downloading SolarCraft! If you were playing before 2.3 mod version use /solarcraft fragments transfer (ONLY ONCE PER WORLD!). If you updated the mod and had a solar lexicon",
   "solarcraft.welcome_message2": "delete it and make new. Use /solarcraft fragments retain to get all the fragments you had. If you open old lexicon it may cause crash.",
   "solarcraft.gethelpcommand": "This codes are used in /solarcraft unlock <code>",
+  "solarforge.command.description.fragment_dump" : "Dumps the list of Registered SolarForge Fragments",
+  "solarforge.command.dump.info" : "SolarForge Fragments",
   "solarcraft.solar_wand": "Is used to trigger crafting on the Infuser.",
   "container.solarfurnace": "Solar Furnace",
   "solarcraft.turret_level": "Turret level:",

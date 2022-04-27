@@ -36,7 +36,7 @@ public class InfusingCraftingRecipe implements Recipe<Container> {
         this.fragment = fragment;
     }
 
-    public  String getFragmentID(){
+    public String getFragmentID(){
         return fragment;
     }
 

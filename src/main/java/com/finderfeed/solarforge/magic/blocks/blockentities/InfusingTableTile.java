@@ -1,10 +1,13 @@
 package com.finderfeed.solarforge.magic.blocks.blockentities;
 
+import com.blamejared.crafttweaker.api.CraftTweakerAPI;
+import com.blamejared.crafttweaker.api.CraftTweakerConstants;
 import com.finderfeed.solarforge.ClientHelpers;
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.local_library.OwnedBlock;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.progressions.Progression;
+import com.finderfeed.solarforge.magic.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.unlockables.ProgressionHelper;
 import com.finderfeed.solarforge.client.particles.ParticleTypesRegistry;
 import com.finderfeed.solarforge.misc_things.PhantomInventory;
@@ -19,6 +22,8 @@ import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -27,9 +32,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
 import javax.annotation.Nullable;
-import java.util.Locale;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 public class InfusingTableTile extends BlockEntity implements OwnedBlock {
     public static final int ANIM_TIME = 100;
@@ -145,6 +148,18 @@ public class InfusingTableTile extends BlockEntity implements OwnedBlock {
 
         if (level.getPlayerByUUID(owner) == pl){
             IItemHandler handler = getInventory();
+            level.getRecipeManager().getAllRecipesFor(SolarForge.INFUSING_CRAFTING_RECIPE_TYPE).stream().forEach(recipe -> {
+                if (recipe.getId().getNamespace().matches(CraftTweakerConstants.MOD_ID)){
+                    CraftTweakerAPI.LOGGER.info(recipe.getOutput().getDisplayName().getString());
+                    CraftTweakerAPI.LOGGER.info(Arrays.toString(recipe.getPattern()));
+                    CraftTweakerAPI.LOGGER.info(recipe.getDefinitions());
+                    CraftTweakerAPI.LOGGER.info(recipe.getTime());
+                    CraftTweakerAPI.LOGGER.info(recipe.getFragmentID());
+                    if (!recipe.getFragmentID().isEmpty()){
+                        //CraftTweakerAPI.LOGGER.info(ProgressionHelper.doPlayerHasFragment(pl, AncientFragment.getFragmentByID(recipe.getFragmentID())));
+                    }
+                }
+            });
             if (handler.getStackInSlot(9).is(Items.AIR)) {
                 Optional<InfusingCraftingRecipe> recipe = level.getRecipeManager().getRecipeFor(SolarForge.INFUSING_CRAFTING_RECIPE_TYPE, phantomInv.set(handler), level);
                     if (recipe.isPresent()) {
@@ -170,7 +185,7 @@ public class InfusingTableTile extends BlockEntity implements OwnedBlock {
         }else{
             pl.sendMessage(new TextComponent("You are not the owner!").withStyle(ChatFormatting.RED),pl.getUUID());
         }
-    }
+        }
 
     public int calculateMaximumRecipeOutput(InfusingCraftingRecipe recipe){
         int maxSize = recipe.getOutput().getMaxStackSize();
