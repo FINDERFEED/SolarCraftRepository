@@ -53,7 +53,7 @@ public class InfusingCraftingRecipeCategory implements IRecipeCategory<InfusingC
     public void setRecipe(IRecipeLayoutBuilder builder, InfusingCraftingRecipe recipe, IFocusGroup focuses) {
         AncientFragment fragment = recipe.getFragment();
         if (fragment == null) return;
-        if (!ProgressionHelper.doPlayerHasFragment(Minecraft.getInstance().player, fragment)){
+        if (!ProgressionHelper.doPlayerHasFragment(Minecraft.getInstance().player, fragment) && !Minecraft.getInstance().player.isCreative()){
             builder.addInvisibleIngredients(RecipeIngredientRole.OUTPUT).addItemStack(recipe.getOutput().copy());
             return;
         }
@@ -67,7 +67,7 @@ public class InfusingCraftingRecipeCategory implements IRecipeCategory<InfusingC
                 }
             }
         }
-        builder.addSlot(RecipeIngredientRole.OUTPUT,82,27).addItemStack(recipe.getOutput().copy());
+        builder.addSlot(RecipeIngredientRole.OUTPUT,84,29).addItemStack(recipe.getOutput().copy());
     }
 
     @Override
@@ -77,8 +77,8 @@ public class InfusingCraftingRecipeCategory implements IRecipeCategory<InfusingC
         if (!ProgressionHelper.doPlayerHasFragment(Minecraft.getInstance().player,fragment)){
             RenderingTools.fill(stack,6,6,104,68,0.3f,0,0.45f,1);
             int iter = 0;
-            for (FormattedCharSequence charSequence : Minecraft.getInstance().font.split(new TranslatableComponent("solarcraft.fragment_not_unlocked"),104)) {
-                Gui.drawCenteredString(stack,Minecraft.getInstance().font,charSequence,110/2,74/2 + iter*9 - 9,0xffff00);
+            for (FormattedCharSequence charSequence : Minecraft.getInstance().font.split(new TranslatableComponent("solarcraft.fragment_not_unlocked"),80)) {
+                Gui.drawCenteredString(stack,Minecraft.getInstance().font,charSequence,110/2,74/2 + iter*9 - 14,0xffff00);
                 iter++;
             }
         }

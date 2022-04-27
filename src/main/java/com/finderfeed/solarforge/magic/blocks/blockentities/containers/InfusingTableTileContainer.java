@@ -36,7 +36,7 @@ public class InfusingTableTileContainer extends AbstractContainerMenu {
 
         for(int i = 0; i < 3; ++i) {
             for(int j = 0; j < 3; ++j) {
-                this.addSlot(new SlotItemHandler(this.inventory, j + i * 3, 64 + j * 18, 17 + i * 18));
+                this.addSlot(new SlotItemHandler(this.inventory, j + i * 3, 64 + j * 18 - 2, 17 + i * 18 + 2));
             }
         }
         this.addSlot(new SlotItemHandler(inventory,9,150,10){

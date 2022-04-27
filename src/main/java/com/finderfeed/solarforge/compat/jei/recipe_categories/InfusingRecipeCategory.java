@@ -71,7 +71,7 @@ public class InfusingRecipeCategory implements IRecipeCategory<InfusingRecipe> {
     public void setRecipe(IRecipeLayoutBuilder builder, InfusingRecipe recipe, IFocusGroup focuses) {
         AncientFragment fragment = AncientFragment.getFragmentByID(recipe.fragID);
         if (fragment == null) return;
-        if (!ProgressionHelper.doPlayerHasFragment(Minecraft.getInstance().player, fragment)) {
+        if (!ProgressionHelper.doPlayerHasFragment(Minecraft.getInstance().player, fragment) && !Minecraft.getInstance().player.isCreative()) {
             builder.addInvisibleIngredients(RecipeIngredientRole.OUTPUT).addItemStack(recipe.output.copy());
             return;
         }

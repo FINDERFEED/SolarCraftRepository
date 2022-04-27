@@ -29,12 +29,14 @@ public class InfusingTableScreen extends AbstractContainerScreen<InfusingTableTi
 
     public InfusingTableScreen(InfusingTableTileContainer p_97741_, Inventory p_97742_, Component p_97743_) {
         super(p_97741_, p_97742_, p_97743_);
+        inventoryLabelX = 1000000;
     }
 
 
     @Override
     protected void init() {
         super.init();
+        titleLabelX += 35;
         int width = minecraft.getWindow().getWidth();
         int height = minecraft.getWindow().getHeight();
         int scale = (int) minecraft.getWindow().getGuiScale();

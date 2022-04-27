@@ -3,6 +3,7 @@ package com.finderfeed.solarforge.compat.jei;
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.compat.jei.recipe_categories.InfusingCraftingRecipeCategory;
 import com.finderfeed.solarforge.compat.jei.recipe_categories.InfusingRecipeCategory;
+import com.finderfeed.solarforge.compat.jei.recipe_categories.SmeltingRecipeCategory;
 import com.finderfeed.solarforge.magic.blocks.blockentities.containers.screens.EnchanterContainerScreen;
 import com.finderfeed.solarforge.recipe_types.infusing_crafting.InfusingCraftingRecipe;
 import com.finderfeed.solarforge.recipe_types.infusing_new.InfusingRecipe;
@@ -58,6 +59,7 @@ public class SolarcraftJeiPlugin implements IModPlugin {
         IModPlugin.super.registerCategories(registration);
         registration.addRecipeCategories(new InfusingRecipeCategory(registration.getJeiHelpers()));
         registration.addRecipeCategories(new InfusingCraftingRecipeCategory(registration.getJeiHelpers()));
+        registration.addRecipeCategories(new SmeltingRecipeCategory(registration.getJeiHelpers()));
     }
 
     @Override
