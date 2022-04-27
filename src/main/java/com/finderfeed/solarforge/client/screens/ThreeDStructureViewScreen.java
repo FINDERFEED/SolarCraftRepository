@@ -5,6 +5,7 @@ import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.local_library.helpers.RenderingTools;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.SolarLexicon;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.screen.ItemStackButton;
+import com.finderfeed.solarforge.magic.items.solar_lexicon.screen.ItemStackTabButton;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.screen.SolarLexiconRecipesScreen;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.screen.StructureScreen;
 import com.finderfeed.solarforge.misc_things.IScrollable;
@@ -41,8 +42,8 @@ import java.util.List;
 
 public class ThreeDStructureViewScreen extends Screen implements IScrollable {
 
-    private final Button b = new ItemStackButton(0,0,12,12,(button)->{minecraft.setScreen(new SolarLexiconRecipesScreen());}, Items.CRAFTING_TABLE.getDefaultInstance(),0.7f);
-    private final Button c = new ItemStackButton(0,0,12,12,(button)->{
+    private final Button b = new ItemStackTabButton(0,0,12,12,(button)->{minecraft.setScreen(new SolarLexiconRecipesScreen());}, Items.CRAFTING_TABLE.getDefaultInstance(),0.7f);
+    private final Button c = new ItemStackTabButton(0,0,12,12,(button)->{
         Minecraft mc = Minecraft.getInstance();
         SolarLexicon lexicon = (SolarLexicon) mc.player.getMainHandItem().getItem();
         lexicon.currentSavedScreen = this;
@@ -93,10 +94,10 @@ public class ThreeDStructureViewScreen extends Screen implements IScrollable {
 
         addRenderableWidget(b);
         addRenderableWidget(c);
-        b.x = relX+186+10;
-        b.y = relY+9;
-        c.x = relX+174+10;
-        c.y = relY + 9;
+        b.x = relX+219;
+        b.y = relY+20;
+        c.x = relX+219;
+        c.y = relY+20+18;
     }
 
     @Override
@@ -146,7 +147,7 @@ public class ThreeDStructureViewScreen extends Screen implements IScrollable {
         matrices.scale(structScale,structScale,structScale);
         //this renders the structure
 
-        RenderingTools.StructureRenderer.render(matrices,POS_STATE_TILEENTITY,partialTicks,getter,relX+105,relY+100);
+        RenderingTools.StructureRenderer.render(matrices,POS_STATE_TILEENTITY,partialTicks,getter,relX+112,relY+108);
 
         matrices.popPose();
 

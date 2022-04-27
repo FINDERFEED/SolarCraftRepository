@@ -72,10 +72,10 @@ public class RunicEnergyChargerScreen extends AbstractScrollableContainerScreen<
         boolean shouldRenderItemCharging = menu.tile.chargeSlot().getItem() instanceof IRunicEnergyUser user && !ItemRunicEnergy.isFullyCharged(menu.tile.chargeSlot(),user);
         int t = ticker*2 % 38;
         if (shouldRenderRuneCharging){
-            blit(matrices,relX+44 + xOffset + t,relY+43 + yOffset,177+t,0,5,24,256,256);
+            blit(matrices,relX+44 + xOffset + t,relY+43 - 4 + yOffset,177+t,0,5,24,256,256);
         }
         if (shouldRenderItemCharging){
-            blit(matrices,relX+97 + xOffset + t,relY+43 + yOffset,177+t,24,5,24,256,256);
+            blit(matrices,relX+97 + xOffset + t,relY+43 - 4 + yOffset,177+t,24,5,24,256,256);
         }
         float curEnergy = 0;
         List<Component> components = new ArrayList<>();
@@ -85,7 +85,7 @@ public class RunicEnergyChargerScreen extends AbstractScrollableContainerScreen<
             curEnergy += re;
         }
         float percent = curEnergy/maxRE;
-        blit(matrices,relX+71 + xOffset,relY+38 + yOffset + (int)(34*(1-percent)),176,48 + (int)(34*(1-percent)),34,(int)Math.ceil(34*percent),256,256);
+        blit(matrices,relX+71 + xOffset,relY+38 - 4 + yOffset + (int)(34*(1-percent)),176,48 + (int)(34*(1-percent)),34,(int)Math.ceil(34*percent),256,256);
 
         if (RenderingTools.isMouseInBorders(mousex,mousey,relX + 80 + xOffset,relY + 40 + yOffset,relX + 98 + xOffset,relY + 40 + 18 + yOffset )){
             renderTooltip(matrices,components,Optional.empty(),mousex,mousey,font);
