@@ -8,6 +8,20 @@ import mods.solarforge.RunicEnergyCost;
 ```
 
 
+## Static Methods
+
+:::group{name=EMPTY}
+
+Return Type: [RunicEnergyCost](/mods/SolarForge/Type/RunicEnergyCost)
+
+```zenscript
+// RunicEnergyCost.EMPTY() as RunicEnergyCost
+
+RunicEnergyCost.EMPTY();
+```
+
+:::
+
 ## Methods
 
 :::group{name=getType}

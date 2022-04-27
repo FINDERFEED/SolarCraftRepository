@@ -87,7 +87,8 @@ public class InfusingRecipeSerializer extends ForgeRegistryEntry<RecipeSerialize
         if (catalysts.length() != 12){
             throw new IllegalStateException("Catalysts length cant be != 12, recipe: " + loc.toString());
         }
-        return new InfusingRecipe(loc,ingredientMap,fiveRowPattern,catalysts,output,infusingTime,child,reqEnergy,tag,count,costs);
+        output.setCount(count);
+        return new InfusingRecipe(loc,ingredientMap,fiveRowPattern,catalysts,output,infusingTime,child,reqEnergy,tag,costs);
     }
 
     private Ingredient getIngredient(JsonElement element,int i){
@@ -148,7 +149,7 @@ public class InfusingRecipeSerializer extends ForgeRegistryEntry<RecipeSerialize
                 .set(RunicEnergy.Type.GIRO,GIRO)
                 .set(RunicEnergy.Type.ARDO,ARDO);
         String cat = buf.readUtf();
-        return new InfusingRecipe(loc,ingredientMap,pattern,cat,output,infusingTime,child,reqEnergy,tag,count,costs);
+        return new InfusingRecipe(loc,ingredientMap,pattern,cat,output,infusingTime,child,reqEnergy,tag,costs);
     }
 
     @Override

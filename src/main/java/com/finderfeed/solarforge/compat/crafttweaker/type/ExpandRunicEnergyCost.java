@@ -8,13 +8,18 @@ import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import org.openzen.zencode.java.ZenCodeType;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @NativeTypeRegistration(value = RunicEnergyCost.class, zenCodeName = "mods.solarforge.RunicEnergyCost")
 @ZenRegister
 @Document("mods/SolarForge/Type/RunicEnergyCost")
 public class ExpandRunicEnergyCost {
+
+
+    @ZenCodeType.StaticExpansionMethod
+    public static RunicEnergyCost EMPTY(){
+        return RunicEnergyCost.EMPTY;
+    }
 
     @ZenCodeType.Method
     @ZenCodeType.Getter("types")

@@ -1,4 +1,4 @@
-# SolarSmeltingManager
+# InfusingManager
 
 
 
@@ -6,14 +6,14 @@
 
 It might be required for you to import the package if you encounter any issues (like casting an Array), so better be safe than sorry and add the import at the very top of the file.
 ```zenscript
-import mods.solarforge.SolarSmeltingManager;
+import mods.solarforge.InfusingManager;
 ```
 
 
 ## Implemented Interfaces
-SolarSmeltingManager implements the following interfaces. That means all methods defined in these interfaces are also available in SolarSmeltingManager
+InfusingManager implements the following interfaces. That means all methods defined in these interfaces are also available in InfusingManager
 
-- [IRecipeManager](/vanilla/api/recipe/manager/IRecipeManager)&lt;[SolarSmeltingRecipe](/mods/SolarForge/Recipe/SolarSmeltingRecipe)&gt;
+- [IRecipeManager](/vanilla/api/recipe/manager/IRecipeManager)&lt;[InfusingRecipe](/mods/SolarForge/Recipe/InfusingRecipe)&gt;
 
 ## Methods
 
@@ -22,7 +22,7 @@ SolarSmeltingManager implements the following interfaces. That means all methods
 Return Type: void
 
 ```zenscript
-SolarSmeltingManager.addJsonRecipe(name as string, mapData as MapData) as void
+InfusingManager.addJsonRecipe(name as string, mapData as MapData) as void
 ```
 
 | Parameter | Type | Description |
@@ -35,23 +35,24 @@ SolarSmeltingManager.addJsonRecipe(name as string, mapData as MapData) as void
 
 :::group{name=addRecipe}
 
-Uses the Solar Lens and the power of the Sun to Smelt items
- The sun is a deadly lazer.
+Adds a new recipe to the Infuser Multiblock Setup
 
 Return Type: void
 
 ```zenscript
-// SolarSmeltingManager.addRecipe(name as string, output as IItemStack, inputs as IItemStack[], time as int) as void
-
-<recipetype:solarforge:solar_smelting>.addRecipe("test_solar_smelting", <item:minecraft:diamond_ingot>, [<item:minecraft:coal>, <item:minecraft:coal>, <item:minecraft:coal>, <item:minecraft:coal>, <item:minecraft:gold_ingot>], 200);
+InfusingManager.addRecipe(name as string, output as IItemStack, ings as IItemStack[][], catalysts as Block[][], processingTime as int, fragment as string, costs as RunicEnergyCost, tag as string) as void
 ```
 
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| name | string | The recipe name |
-| output | [IItemStack](/vanilla/api/item/IItemStack) | The output of the recipe |
-| inputs | [IItemStack](/vanilla/api/item/IItemStack)[] | The inputs of the recipe |
-| time | int | The processing time of the recipe |
+| Parameter | Type | Description | Optional | DefaultValue |
+|-----------|------|-------------|----------|--------------|
+| name | string |  | false |  |
+| output | [IItemStack](/vanilla/api/item/IItemStack) |  | false |  |
+| ings | [IItemStack](/vanilla/api/item/IItemStack)[][] |  | false |  |
+| catalysts | [Block](/vanilla/api/block/Block)[][] |  | false |  |
+| processingTime | int |  | false |  |
+| fragment | string |  | false |  |
+| costs | [RunicEnergyCost](/mods/SolarForge/Type/RunicEnergyCost) |  | false |  |
+| tag | string |  | true |  |
 
 
 :::
@@ -61,9 +62,9 @@ Return Type: void
 Return Type: stdlib.List&lt;T&gt;
 
 ```zenscript
-// SolarSmeltingManager.getAllRecipes() as stdlib.List<T>
+// InfusingManager.getAllRecipes() as stdlib.List<T>
 
-<recipetype:solarforge:solar_smelting>.getAllRecipes();
+<recipetype:solarforge:infusing_new>.getAllRecipes();
 ```
 
 :::
@@ -73,7 +74,7 @@ Return Type: stdlib.List&lt;T&gt;
 Return Type: T
 
 ```zenscript
-SolarSmeltingManager.getRecipeByName(name as string) as T
+InfusingManager.getRecipeByName(name as string) as T
 ```
 
 | Parameter | Type | Description |
@@ -88,9 +89,9 @@ SolarSmeltingManager.getRecipeByName(name as string) as T
 Return Type: T[[ResourceLocation](/vanilla/api/resource/ResourceLocation)]
 
 ```zenscript
-// SolarSmeltingManager.getRecipeMap() as T[ResourceLocation]
+// InfusingManager.getRecipeMap() as T[ResourceLocation]
 
-<recipetype:solarforge:solar_smelting>.getRecipeMap();
+<recipetype:solarforge:infusing_new>.getRecipeMap();
 ```
 
 :::
@@ -100,7 +101,7 @@ Return Type: T[[ResourceLocation](/vanilla/api/resource/ResourceLocation)]
 Return Type: stdlib.List&lt;T&gt;
 
 ```zenscript
-SolarSmeltingManager.getRecipesByOutput(output as IIngredient) as stdlib.List<T>
+InfusingManager.getRecipesByOutput(output as IIngredient) as stdlib.List<T>
 ```
 
 | Parameter | Type | Description |
@@ -115,7 +116,7 @@ SolarSmeltingManager.getRecipesByOutput(output as IIngredient) as stdlib.List<T>
 Return Type: void
 
 ```zenscript
-SolarSmeltingManager.remove(output as IIngredient) as void
+InfusingManager.remove(output as IIngredient) as void
 ```
 
 | Parameter | Type | Description |
@@ -130,9 +131,9 @@ SolarSmeltingManager.remove(output as IIngredient) as void
 Return Type: void
 
 ```zenscript
-// SolarSmeltingManager.removeAll() as void
+// InfusingManager.removeAll() as void
 
-<recipetype:solarforge:solar_smelting>.removeAll();
+<recipetype:solarforge:infusing_new>.removeAll();
 ```
 
 :::
@@ -142,7 +143,7 @@ Return Type: void
 Return Type: void
 
 ```zenscript
-SolarSmeltingManager.removeByInput(input as IItemStack) as void
+InfusingManager.removeByInput(input as IItemStack) as void
 ```
 
 | Parameter | Type | Description |
@@ -157,7 +158,7 @@ SolarSmeltingManager.removeByInput(input as IItemStack) as void
 Return Type: void
 
 ```zenscript
-SolarSmeltingManager.removeByModid(modid as string, exclude as Predicate<string>) as void
+InfusingManager.removeByModid(modid as string, exclude as Predicate<string>) as void
 ```
 
 | Parameter | Type | Description | Optional | DefaultValue |
@@ -173,7 +174,7 @@ SolarSmeltingManager.removeByModid(modid as string, exclude as Predicate<string>
 Return Type: void
 
 ```zenscript
-SolarSmeltingManager.removeByName(name as string) as void
+InfusingManager.removeByName(name as string) as void
 ```
 
 | Parameter | Type | Description |
@@ -188,7 +189,7 @@ SolarSmeltingManager.removeByName(name as string) as void
 Return Type: void
 
 ```zenscript
-SolarSmeltingManager.removeByRegex(regex as string, exclude as Predicate<string>) as void
+InfusingManager.removeByRegex(regex as string, exclude as Predicate<string>) as void
 ```
 
 | Parameter | Type | Description | Optional | DefaultValue |
