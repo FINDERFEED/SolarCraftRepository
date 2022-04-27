@@ -546,6 +546,7 @@ public class InfuserTileEntity extends REItemHandlerBlockEntity implements  IEne
             if (list.get(i) instanceof InfusingStandTileEntity){
                 InfusingStandTileEntity tile = (InfusingStandTileEntity) list.get(i);
                 tile.getStackInSlot(0).grow(-amount);
+                Helpers.updateTile(tile);
             }
         }
     }

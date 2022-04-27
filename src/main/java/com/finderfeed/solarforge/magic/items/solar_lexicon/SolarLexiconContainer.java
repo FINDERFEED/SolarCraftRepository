@@ -1,5 +1,8 @@
 package com.finderfeed.solarforge.magic.items.solar_lexicon;
 
+import com.finderfeed.solarforge.magic.items.AncientFragmentItem;
+import com.finderfeed.solarforge.magic.items.solar_lexicon.unlockables.ProgressionHelper;
+import com.finderfeed.solarforge.misc_things.PhantomInventory;
 import com.finderfeed.solarforge.registries.containers.Containers;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.unlockables.AncientFragment;
 import net.minecraft.world.entity.player.Player;
@@ -13,15 +16,20 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.SlotItemHandler;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class SolarLexiconContainer extends AbstractContainerMenu {
 
     private final IItemHandler inventory;
     private final ItemStack stack;
-
+    private final List<SlotItemHandler> scrollableSlots = new ArrayList<>();
+    private int maxRows = 0;
     public SolarLexiconContainer(int p_i50105_2_, Inventory inv, ItemStack stack) {
         super(Containers.SOLAR_LEXICON_CONTAINER.get(), p_i50105_2_);
         this.stack = stack;
@@ -30,35 +38,56 @@ public class SolarLexiconContainer extends AbstractContainerMenu {
         int row = 1;
         int id = 0;
 
-        for (AncientFragment frag : AncientFragment.getAllFragments()){
+        for (AncientFragment fragment : AncientFragment.getAllFragments()){
             if (kolvo > 8){
                 kolvo = 0;
-                if (row < 3) {
+//                if (row < 3) {
                     row += 1;
-                }else{
-                    row = 50000;
-                }
+//                }else{
+//                    row = 50000;
+//                }
             }
-            addSlot(new SolarLexiconContainerSlot(inventory,id,8+kolvo*18,-1+row*18,frag));
+            SlotItemHandler s = new SlotItemHandler(inventory,id,8+kolvo*18 - 3,-1+row*18){
+                @Override
+                public boolean mayPlace(@NotNull ItemStack stack) {
+                    if (!(stack.getItem() instanceof AncientFragmentItem)) return false;
+                    AncientFragment fragment1 = ProgressionHelper.getFragmentFromItem(stack);
+                    for (int i = 0; i < inventory.getSlots();i++){
+                           AncientFragment fragment2 = ProgressionHelper.getFragmentFromItem(inventory.getStackInSlot(i));
+                           if (fragment1 == fragment2) return false;
+                    }
+                    return true;
+                }
+
+                @Override
+                public boolean isActive() {
+                    return this.y > -1 && y <= -1 + 18 * 3;
+                }
+            };
+            addSlot(s);
+            scrollableSlots.add(s);
             id++;
             kolvo++;
         }
-
+        maxRows = row;
 
 
 
 
         for(int l = 0; l < 3; ++l) {
             for(int j1 = 0; j1 < 9; ++j1) {
-                this.addSlot(new Slot(inv, j1 + l * 9 + 9,   8+j1 * 18, 103 + l * 18 -19));
+                this.addSlot(new Slot(inv, j1 + l * 9 + 9,   8+j1 * 18- 3, 103 + l * 18 -19));
             }
         }
 
         for(int i1 = 0; i1 < 9; ++i1) {
-            this.addSlot(new Slot(inv, i1,  8+ i1 * 18, 161 -19));
+            this.addSlot(new Slot(inv, i1,  8+ i1 * 18 - 3, 161 -19));
         }
     }
 
+    public int getMaxRows() {
+        return maxRows;
+    }
 
     public SolarLexiconContainer(int windowId, Inventory inv, FriendlyByteBuf buf){
         this(windowId,inv,buf.readItem());
@@ -94,6 +123,9 @@ public class SolarLexiconContainer extends AbstractContainerMenu {
         return !player.isDeadOrDying() && player.getInventory().contains(stack);
     }
 
+    public List<SlotItemHandler> getScrollableSlots() {
+        return scrollableSlots;
+    }
 
     static class Provider implements MenuProvider{
 

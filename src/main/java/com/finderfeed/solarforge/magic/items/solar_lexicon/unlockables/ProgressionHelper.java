@@ -10,6 +10,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
+import javax.annotation.Nullable;
 import java.util.*;
 
 
@@ -102,6 +103,12 @@ public class ProgressionHelper {
 
     public static void applyTagToFragment(ItemStack stack,AncientFragment fragment){
                 stack.getOrCreateTagElement(TAG_ELEMENT).putString(FRAG_ID,fragment.getId());
+    }
+
+    @Nullable
+    public static AncientFragment getFragmentFromItem(ItemStack stack){
+        CompoundTag tag = stack.getOrCreateTagElement(TAG_ELEMENT);
+        return AncientFragment.getFragmentByID(tag.getString(FRAG_ID));
     }
 
 

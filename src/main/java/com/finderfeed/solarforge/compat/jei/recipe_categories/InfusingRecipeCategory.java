@@ -1,9 +1,18 @@
 package com.finderfeed.solarforge.compat.jei.recipe_categories;
 
+import com.finderfeed.solarforge.ClientHelpers;
+import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.compat.jei.drawables.InfusingRecipeJEI;
 import com.finderfeed.solarforge.compat.jei.JeiRecipeTypes;
+import com.finderfeed.solarforge.local_library.client.tooltips.BlackBackgroundTooltip;
+import com.finderfeed.solarforge.local_library.client.tooltips.StaticBlackBackgroundTooltip;
+import com.finderfeed.solarforge.local_library.client.tooltips.animatable_omponents.ComponentSequence;
+import com.finderfeed.solarforge.local_library.client.tooltips.animatable_omponents.ContentAlignment;
+import com.finderfeed.solarforge.local_library.client.tooltips.animatable_omponents.CustomRenderComponent;
 import com.finderfeed.solarforge.local_library.helpers.RenderingTools;
+import com.finderfeed.solarforge.magic.items.solar_lexicon.progressions.Progression;
+import com.finderfeed.solarforge.magic.items.solar_lexicon.screen.InfoButton;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.unlockables.ProgressionHelper;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
@@ -29,6 +38,7 @@ import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.block.Block;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -112,23 +122,116 @@ public class InfusingRecipeCategory implements IRecipeCategory<InfusingRecipe> {
             }
             return;
         }
+        Screen screen = Minecraft.getInstance().screen;
+        if (screen == null) return;
         if (RenderingTools.isMouseInBorders((int) mouseX, (int) mouseY, 68, 100, 68 + 6, 100 + 6)) {
-            Screen screen = Minecraft.getInstance().screen;
-            if (screen != null) {
-                List<Component> components = new ArrayList<>();
-                for (RunicEnergy.Type type : recipe.RUNIC_ENERGY_COST.getSetTypes()) {
-                    float re = recipe.RUNIC_ENERGY_COST.get(type);
-                    components.add(new TextComponent(type.id.toUpperCase(Locale.ROOT) + ": ").withStyle(ChatFormatting.GOLD)
-                            .append(new TextComponent(re + "").withStyle(ChatFormatting.RESET)));
-                }
-                components.add(new TranslatableComponent("solarcraft.solar_energy").withStyle(ChatFormatting.GOLD)
-                        .append(new TextComponent(": " + recipe.requriedEnergy).withStyle(ChatFormatting.RESET)));
-                screen.renderTooltip(matrices, components, Optional.empty(), (int) mouseX, (int) mouseY - 70);
+
+
+            List<Component> components = new ArrayList<>();
+            for (RunicEnergy.Type type : recipe.RUNIC_ENERGY_COST.getSetTypes()) {
+                float re = recipe.RUNIC_ENERGY_COST.get(type);
+                components.add(new TextComponent(type.id.toUpperCase(Locale.ROOT) + ": ").withStyle(ChatFormatting.GOLD)
+                        .append(new TextComponent(re + "").withStyle(ChatFormatting.RESET)));
             }
+            components.add(new TranslatableComponent("solarcraft.solar_energy").withStyle(ChatFormatting.GOLD)
+                    .append(new TextComponent(": " + recipe.requriedEnergy).withStyle(ChatFormatting.RESET)));
+            screen.renderTooltip(matrices, components, Optional.empty(), (int) mouseX, (int) mouseY - 70);
+
+        }
+        Block[] catalysts = recipe.deserializeCatalysts();
+        if (catalysts == null) return;
+        ClientHelpers.bindText(InfoButton.LOC);
+        if (RenderingTools.isMouseInBorders((int) mouseX, (int) mouseY,137,15,137 + 12,15 + 12)){
+            Gui.blit(matrices,137,15,0,12,12,12,12,24);
+
+            if (Helpers.hasPlayerUnlocked(Progression.CATALYSTS,Minecraft.getInstance().player)){
+                /*
+                012
+              11    3
+              10    4
+               9    5
+                876
+                 */
+
+                screen.renderTooltip(matrices,new TranslatableComponent("solarcraft.catalysts_jei"),(int)mouseX,(int)mouseY);
+            }else{
+                screen.renderTooltip(matrices,new TranslatableComponent("solarcraft.catalysts_not_unlocked"),(int)mouseX,(int)mouseY);
+            }
+        }else{
+            Gui.blit(matrices,137,15,0,0,12,12,12,24);
         }
 
 
     }
+
+//    private ComponentSequence.ComponentSequenceBuilder constructBuilder(Block[] catalysts){
+//        ComponentSequence.ComponentSequenceBuilder builder = new ComponentSequence.ComponentSequenceBuilder();
+//        builder.addComponent(new CustomRenderComponent(ContentAlignment.NO_ALIGNMENT,16*5,16*5,(matrix,x,y, pTicks,mX,mY,ticker,animationLength)->{
+//            for (int i = 0; i < 3;i++){
+//                Block b = catalysts[i];
+//                if (b != null){
+//                    RunicEnergy.Type type = RunicEnergy.BLOCK_TO_RUNE_ENERGY_TYPE.get(b);
+//                    ClientHelpers.bindText(new ResourceLocation(SolarForge.MOD_ID,"textures/misc/tile_energy_pylon_" + type.id + ".png"));
+//                    Gui.blit(matrix,x + i*3,y,0,0,16,16,16,16);
+//                }
+//            }
+//        })).nextLine();
+//        builder.addComponent(new CustomRenderComponent(ContentAlignment.NO_ALIGNMENT,16*5,16*5,(matrix,x,y, pTicks,mX,mY,ticker,animationLength)->{
+//            Block b3 = catalysts[3];
+//            Block b11 = catalysts[11];
+//            if (b3 != null){
+//                RunicEnergy.Type type = RunicEnergy.BLOCK_TO_RUNE_ENERGY_TYPE.get(b3);
+//                ClientHelpers.bindText(new ResourceLocation(SolarForge.MOD_ID,"textures/misc/tile_energy_pylon_" + type.id + ".png"));
+//                Gui.blit(matrix,x + 4*16,y,0,0,16,16,16,16);
+//            }
+//            if (b11 != null){
+//                RunicEnergy.Type type = RunicEnergy.BLOCK_TO_RUNE_ENERGY_TYPE.get(b11);
+//                ClientHelpers.bindText(new ResourceLocation(SolarForge.MOD_ID,"textures/misc/tile_energy_pylon_" + type.id + ".png"));
+//                Gui.blit(matrix,x ,y,0,0,16,16,16,16);
+//            }
+//        })).nextLine();
+//        builder.addComponent(new CustomRenderComponent(ContentAlignment.NO_ALIGNMENT,16*5,16*5,(matrix,x,y, pTicks,mX,mY,ticker,animationLength)->{
+//            Block b10 = catalysts[4];
+//            Block b4 = catalysts[10];
+//            if (b10 != null){
+//                RunicEnergy.Type type = RunicEnergy.BLOCK_TO_RUNE_ENERGY_TYPE.get(b10);
+//                ClientHelpers.bindText(new ResourceLocation(SolarForge.MOD_ID,"textures/misc/tile_energy_pylon_" + type.id + ".png"));
+//                Gui.blit(matrix,x + 4*16,y,0,0,16,16,16,16);
+//            }
+//            if (b4 != null){
+//                RunicEnergy.Type type = RunicEnergy.BLOCK_TO_RUNE_ENERGY_TYPE.get(b4);
+//                ClientHelpers.bindText(new ResourceLocation(SolarForge.MOD_ID,"textures/misc/tile_energy_pylon_" + type.id + ".png"));
+//                Gui.blit(matrix,x ,y,0,0,16,16,16,16);
+//            }
+//        })).nextLine();
+//        builder.addComponent(new CustomRenderComponent(ContentAlignment.NO_ALIGNMENT,16*5,16*5,(matrix,x,y, pTicks,mX,mY,ticker,animationLength)->{
+//            Block b5 = catalysts[5];
+//            Block b9 = catalysts[9];
+//            if (b5 != null){
+//                RunicEnergy.Type type = RunicEnergy.BLOCK_TO_RUNE_ENERGY_TYPE.get(b5);
+//                ClientHelpers.bindText(new ResourceLocation(SolarForge.MOD_ID,"textures/misc/tile_energy_pylon_" + type.id + ".png"));
+//                Gui.blit(matrix,x + 4*16,y,0,0,16,16,16,16);
+//            }
+//            if (b9 != null){
+//                RunicEnergy.Type type = RunicEnergy.BLOCK_TO_RUNE_ENERGY_TYPE.get(b9);
+//                ClientHelpers.bindText(new ResourceLocation(SolarForge.MOD_ID,"textures/misc/tile_energy_pylon_" + type.id + ".png"));
+//                Gui.blit(matrix,x ,y,0,0,16,16,16,16);
+//            }
+//        })).nextLine();
+//        builder.addComponent(new CustomRenderComponent(ContentAlignment.NO_ALIGNMENT,16*5,16*5,(matrix,x,y, pTicks,mX,mY,ticker,animationLength)->{
+//            int iter = 0;
+//            for (int i = 8; i != 5;i--){
+//                Block b = catalysts[i];
+//                if (b != null){
+//                    RunicEnergy.Type type = RunicEnergy.BLOCK_TO_RUNE_ENERGY_TYPE.get(b);
+//                    ClientHelpers.bindText(new ResourceLocation(SolarForge.MOD_ID,"textures/misc/tile_energy_pylon_" + type.id + ".png"));
+//                    Gui.blit(matrix,x + iter*3,y,0,0,16,16,16,16);
+//                }
+//                iter++;
+//            }
+//        })).build();
+//        return builder;
+//    }
 
     @Override
     public List<Component> getTooltipStrings(InfusingRecipe recipe, IRecipeSlotsView recipeSlotsView, double mouseX, double mouseY) {

@@ -67,7 +67,7 @@ public class SolarLexicon extends Item {
                 pe.level.addFreshEntity(entity);
             }
             Helpers.updateFragmentsOnClient((ServerPlayer) pe);
-
+            updateInventory(pe.getMainHandItem(),pe);
             if (!pe.isCrouching()) {
                 ProgressionTree tree = ProgressionTree.INSTANCE;
                 for (Progression a : tree.PROGRESSION_TREE.keySet()) {
@@ -75,12 +75,14 @@ public class SolarLexicon extends Item {
                             ((ServerPlayer) pe).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
                 }
                 SolarForgePacketHandler.INSTANCE.sendTo(new OpenScreenPacket(), ((ServerPlayer) pe).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
-                updateInventory(pe.getMainHandItem(),pe);
+
             }else{
+
                 NetworkHooks.openGui((ServerPlayer) pe,new SolarLexiconContainer.Provider(pe.getItemInHand(hand)),(buf)->{
                     buf.writeItem(pe.getItemInHand(hand));
                 });
             }
+
         }
 
 

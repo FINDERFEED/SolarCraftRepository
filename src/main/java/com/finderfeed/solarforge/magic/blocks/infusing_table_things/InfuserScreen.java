@@ -161,7 +161,7 @@ public class InfuserScreen extends AbstractContainerScreen<InfuserContainer> {
         renderItemAndTooltip(tile.getItem(12),relX +  7 + a + offs + 126,   relY - 8 + a + 112,x,y,matrices);
 
         if (recipe.isPresent()){
-            renderItemAndTooltip(ItemsRegister.ALGADIUM_BLOCK.get().getDefaultInstance(),relX+159+a + offs + 3,relY+2,x,y,matrices);
+            renderItemAndTooltip(recipe.get().output.copy(),relX+159+a + offs + 3,relY+2,x,y,matrices);
 
         }
 
