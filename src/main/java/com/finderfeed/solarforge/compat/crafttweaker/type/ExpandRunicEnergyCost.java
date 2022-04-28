@@ -36,7 +36,7 @@ public class ExpandRunicEnergyCost {
     public static Map<RunicEnergy.Type, Float> getType(RunicEnergyCost internal){
         Map<RunicEnergy.Type, Float> toReturn = new HashMap<>();
         for (RunicEnergy.Type type : internal.getSetTypes()){
-            toReturn.put(type, (float) type.getIndex());
+            toReturn.put(type, internal.get(type));
         }
         return toReturn;
     }
