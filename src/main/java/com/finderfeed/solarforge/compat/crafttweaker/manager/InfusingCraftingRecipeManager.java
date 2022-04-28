@@ -38,13 +38,27 @@ public class InfusingCraftingRecipeManager implements IRecipeManager<InfusingCra
 
 
     /**
-     * Adds a recipe to the InfusingCraftingManager
+     * Adds a recipe to the Infusing crafting table.
+     *
+     * The inputs array must be a 3x3 Two dimensional array, just like the craftingTable one you are probably used to.
+     *
+     * You can get a list of usable fragment id's by running the `/ct dump solarforge_fragments` command.
      *
      * @param name The recipe name
      * @param output The {@link IItemStack} the recipe should output
      * @param inputs The inputs necessary for the recipe to craft
      * @param processingTime The amount of time the recipe should process for
      * @param fragment The fragment used in the recipe.
+     *
+     * @docParam name "infusing_crafting_table_recipe_test"
+     * @docParam output <item:minecraft:lapis_lazuli>
+     * @docParam inputs [
+     * [<item:minecraft:blue_dye>, <item:minecraft:glass>,<item:minecraft:blue_dye>],
+     * [<item:minecraft:blue_dye>, <item:minecraft:golden_ingot>, <item:minecraft:glass>],
+     * [<item:minecraft:glass>, <item:minecraft:blue_dye>, <item:minecraft:glass>],
+     * ]
+     * @docParam processingTime 300
+     * @docParam fragment "energy_dust"
      */
     @ZenCodeType.Method
     public void addRecipe(String name, IItemStack output, IItemStack[][] inputs, int processingTime, String fragment){

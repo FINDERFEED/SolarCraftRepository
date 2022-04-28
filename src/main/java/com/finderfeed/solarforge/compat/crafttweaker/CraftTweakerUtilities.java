@@ -6,17 +6,14 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Block;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Supplier;
 
 public class CraftTweakerUtilities {
 
     private static final char[] CHAR_ARRAY = "ABCDEFGHIJ".toCharArray();
 
-    public static final Map<Supplier<Block>, Character> map = new HashMap<>();
+    public static final Map<String, Character> map = new HashMap<>();
 
     public static String[] getPattern(List<IItemStack> inputs, int maxLength, String errorMessage){
         List<String> pattern = new ArrayList<>();
@@ -75,9 +72,7 @@ public class CraftTweakerUtilities {
     public static <T> List<T> flatten (T[][] inputs){
         List<T> toReturn = new ArrayList<>();
         for (T[] arrayStack : inputs){
-            for (T stack : arrayStack){
-                toReturn.add(stack);
-            }
+            toReturn.addAll(Arrays.asList(arrayStack));
         }
         return toReturn;
     }
@@ -87,17 +82,17 @@ public class CraftTweakerUtilities {
     }
 
     public static void setupCatalystsMap(){
-        map.put(BlocksRegistry.TERA_RUNE_BLOCK, 'T');
-        map.put(BlocksRegistry.ZETA_RUNE_BLOCK, 'Z');
-        map.put(BlocksRegistry.KELDA_RUNE_BLOCK, 'K');
-        map.put(BlocksRegistry.URBA_RUNE_BLOCK, 'R');
-        map.put(BlocksRegistry.FIRA_RUNE_BLOCK, 'F');
-        map.put(BlocksRegistry.ARDO_RUNE_BLOCK, 'A');
-        map.put(BlocksRegistry.ULTIMA_RUNE_BLOCK, 'U');
-        map.put(BlocksRegistry.GIRO_RUNE_BLOCK, 'G');
+        map.put("solarforge:tera_rune_block", 'T');
+        map.put("solarforge:zeta_rune_block", 'Z');
+        map.put("solarforge:kelda_rune_block", 'K');
+        map.put("solarforge:urba_rune_block", 'R');
+        map.put("solarforge:fira_rune_block", 'F');
+        map.put("solarforge:ardo_rune_block", 'A');
+        map.put("solarforge:ultima_rune_block", 'U');
+        map.put("solarforge:giro_rune_block", 'G');
     }
 
-    public static Map<Supplier<Block>, Character> getMap(){
+    public static Map<String, Character> getMap(){
         return map;
     }
 
@@ -108,14 +103,13 @@ public class CraftTweakerUtilities {
         String toReturn = "";
         List<Block> flattened = (List<Block>) flatten(catalysts);
         for (Block block : flattened){
-            if (map.containsKey(block)){
-                toReturn += map.get(block);
+            if (map.containsKey(block.getRegistryName().toString())){
+                toReturn = toReturn.concat(String.valueOf(map.get(block.getRegistryName().toString())));
             }
             else {
                 toReturn += " ";
             }
         }
-        System.out.println(toReturn);
         return toReturn;
     }
 }

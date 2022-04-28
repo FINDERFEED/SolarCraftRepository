@@ -44,7 +44,7 @@ public class SolarSmeltingRecipeManager implements IRecipeManager<SolarSmeltingR
      * @param inputs The inputs of the recipe
      * @param time The processing time of the recipe
      *
-     * @docParam name "test_solar_smelting"
+     * @docParam name "test_solar_smelting_recipe"
      * @docParam output <item:minecraft:diamond_ingot>
      * @docParam inputs [<item:minecraft:coal>, <item:minecraft:coal>, <item:minecraft:coal>, <item:minecraft:coal>, <item:minecraft:gold_ingot>]
      * @docParam time 200

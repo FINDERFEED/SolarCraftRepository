@@ -13,13 +13,17 @@ import org.openzen.zencode.java.ZenCodeType;
 @Document("mods/SolarForge/Type/RunicEnergyType")
 @BracketEnum("solarforge:energytype")
 public class ExpandRunicEnergyType {
+
+
+    /**
+     * @return A Usable RunicEnergyType to use in {@link com.finderfeed.solarforge.magic.items.runic_energy.RunicEnergyCost} to set up a requirement.
+     */
+
     @ZenCodeType.Method
     @ZenCodeType.Getter("commandString")
     public static String getCommandString(RunicEnergy.Type internal) {
 
         return "<constant:solarforge:energytype:" + internal.name() + ">";
     }
-
-
 
 }

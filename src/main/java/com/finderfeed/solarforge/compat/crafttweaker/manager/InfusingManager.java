@@ -23,7 +23,7 @@ import java.util.List;
  */
 @ZenRegister
 @ZenCodeType.Name("mods.solarforge.InfusingManager")
-@Document("mods/SolarForge/SolarSmeltingManager")
+@Document("mods/SolarForge/InfusingManager")
 public class InfusingManager implements IRecipeManager<InfusingRecipe> {
 
     /**
@@ -37,23 +37,98 @@ public class InfusingManager implements IRecipeManager<InfusingRecipe> {
     }
 
     /**
-     * Adds a new recipe to the Infuser Multiblock Setup
-     * @param name
-     * @param output
-     * @param ings
-     * @param catalysts
-     * @param processingTime
-     * @param fragment
-     * @param costs
-     * @param tag
+     * Adds a new recipe to the Infuser Multiblock Setup. Some parameters have some constraints:
+     *
+     * The input ingredients two dimensional array must have a structure like this:
+     *```
+     *[
+     * [input1, input2, input3],
+     *
+     * [input4, input5],
+     *
+     * [input6, input7, input8],
+     *
+     * [input9, input10],
+     *
+     * [input11, input12, input13]
+     *
+     * ]
+     * ```
+     *
+     * So that it matches the Infuser Screen. Air can and should be used to pad out the recipe but the Array structure must match that or it will error.
+     * No IIngredients are supported currently. This can change in the future.
+     *
+     * The catalysts two dimensional array must have a structure like this:
+     *```
+     * [
+     *
+     * [block1, block2, block3],
+     *
+     * [block4, block5, block6],
+     *
+     * [block7, block8, block9],
+     *
+     * [block10, block11, block12]
+     *
+     * ]
+     * ```
+     *
+     * The catalysts array is transposed like this:
+     * ```
+     * [
+     *
+     * [North],
+     *
+     * [East],
+     *
+     * [South],
+     *
+     * [West]
+     *
+     * ]
+     * ```
+     *
+     * You can find out the list of usable catalyst blocks by using the `/ct dump solarforge_catalysts` command.
+     * Any other blocks that are present in the array but aren't considered a catalyst will be ignored.
+     *
+     * You can find out possible fragment ids by using the `/ct dump solarforge_fragments` command.
+     * These will be required by the player in order to be able to craft the recipe.
+     *
+     * @param name The name of the recipe to add
+     * @param output The IItemStack to be outputted from the recipe.
+     * @param ings The input IItemStacks[]. Does not support tags.
+     * @param catalysts The required Block catalysts that should be placed in columns in order for the recipe to craft.
+     * @param processingTime The amount of time it should take the recipe to craft.
+     * @param fragment The id of the fragment to use.
+     * @param costs The RunicEnergyCost this recipe has.
+     *
+     * @docParam name "infuser_multiblock_test_recipe"
+     * @docParam output <item:minecraft:egg>
+     * @docParam ings [
+     * [<item:minecraft:iron_ingot>,<item:minecraft:air>, <item:minecraft:stick>],
+     * [<item:minecraft:iron_ingot>, <item:minecraft:stick>],
+     * [<item:minecraft:air>, <item:minecraft:iron_ingot>, <item:minecraft:air>],
+     * [<item:minecraft:stick>, <item:minecraft:iron_ingot>],
+     * [<item:minecraft:stick>, <item:minecraft:air>, <item:minecraft:iron_ingot>]
+     * ]
+     *
+     * @docParam catalysts [
+     *  [<block:minecraft:air>, <block:solarforge:urba_rune_block>, <block:minecraft:air>],
+     *  [<block:minecraft:air>, <block:minecraft:air>, <block:minecraft:air>],
+     *  [<block:minecraft:air>, <block:solarforge:ultima_rune_block>, <block:minecraft:air>],
+     *  [<block:minecraft:air>, <block:minecraft:air>, <block:minecraft:air>],
+     * ]
+     * @docParam processingTime 600
+     * @docParam fragment "crystals"
+     * @docParam costs RunicEnergyCost.EMPTY()
      */
     @ZenCodeType.Method
-    public void addRecipe(String name, IItemStack output, IItemStack[][] ings, Block[][] catalysts, int processingTime, String fragment, RunicEnergyCost costs, @ZenCodeType.OptionalString(value = "") String tag){
+    public void addRecipe(String name, IItemStack output, IItemStack[][] ings, Block[][] catalysts, int processingTime, String fragment, RunicEnergyCost costs){
         name = fixRecipeName(name);
         ResourceLocation location = new ResourceLocation(CraftTweakerConstants.MOD_ID, name);
         List<IItemStack> listStack = CraftTweakerUtilities.flatten(ings);
         String[] patterns = CraftTweakerUtilities.getPattern(listStack, 13, "Inputs must be a special (3-2-3-2-3)x5 2D Array");
-        InfusingRecipe recipe = new InfusingRecipe(location, CraftTweakerUtilities.getInputIngredientMap(listStack, patterns), patterns, CraftTweakerUtilities.readCatalysts(catalysts), output.getInternal(), processingTime, fragment, 0, tag, costs);
+        InfusingRecipe recipe = new InfusingRecipe(location, CraftTweakerUtilities.getInputIngredientMap(listStack, patterns), patterns, CraftTweakerUtilities.readCatalysts(catalysts), output.getInternal(), processingTime, fragment, 0, "", costs);
         CraftTweakerAPI.apply(new ActionAddRecipe<>(this, recipe));
     }
 }

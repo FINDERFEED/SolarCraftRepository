@@ -48,7 +48,7 @@ public class CraftTweakerSolarForgePlugin implements ICraftTweakerPlugin {
             builder.executes(context -> {
                 ServerPlayer player = context.getSource().getPlayerOrException();
                 CraftTweakerAPI.LOGGER.info("List of all known Catalyst Blocks ");
-                CraftTweakerUtilities.getMap().keySet().stream().map(Supplier::get).map(ExpandBlock::getCommandString).map(it -> "- " + it).forEach(CraftTweakerAPI.LOGGER::info);
+                CraftTweakerUtilities.getMap().keySet().stream().map(thing -> "<block:" + thing + ">").map(it -> "- " + it).forEach(CraftTweakerAPI.LOGGER::info);
                 CommandUtilities.send(CommandUtilities.openingLogFile(new TranslatableComponent("crafttweaker.command.list.check.log", CommandUtilities.makeNoticeable(new TranslatableComponent("solarforge.command.dump.catalysts")), CommandUtilities.getFormattedLogFile()).withStyle(ChatFormatting.GREEN)), player);
                 return Command.SINGLE_SUCCESS;
             });
