@@ -339,7 +339,7 @@ public class InfuserTileEntity extends REItemHandlerBlockEntity implements  IEne
 
     private static void finishRecipe(Level world, InfuserTileEntity tile, InfusingRecipe recipe){
         tile.resetCatalysts(recipe);
-        ItemStack result = recipe.getResultItem();
+        ItemStack result = recipe.getResultItem().copy();
         int count = tile.getMinRecipeCountOutput(recipe);
 //        recipe.RUNIC_ENERGY_COST.forEach((type,baseCost)->{
 //            tile.giveEnergy(type,-baseCost*count);
