@@ -12,7 +12,7 @@ import java.util.*;
 
 public class CraftTweakerSolarForgeCompatUtilities {
 
-    private static final char[] CHAR_ARRAY = "ABCDEFGHIJ".toCharArray();
+    private static final char[] CHAR_ARRAY = "ABCDEFGHIJKLM".toCharArray();
 
     public static final Map<String, Character> map = new HashMap<>();
 
