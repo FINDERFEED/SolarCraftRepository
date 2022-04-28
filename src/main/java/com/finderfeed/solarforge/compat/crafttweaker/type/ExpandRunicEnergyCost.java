@@ -23,7 +23,7 @@ public class ExpandRunicEnergyCost {
      */
     @ZenCodeType.StaticExpansionMethod
     public static RunicEnergyCost EMPTY(){
-        return RunicEnergyCost.EMPTY;
+        return new RunicEnergyCost();
     }
 
     /**
