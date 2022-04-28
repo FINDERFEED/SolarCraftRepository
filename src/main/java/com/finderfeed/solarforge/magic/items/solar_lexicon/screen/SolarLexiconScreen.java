@@ -222,7 +222,7 @@ public class SolarLexiconScreen extends Screen implements IScrollable,PostRender
                 preText = new TextComponent("???");
             }
             Collection<Progression> parents = ProgressionTree.INSTANCE.getAchievementRequirements(a);
-            AnimatedTooltip tooltip = new BlackBackgroundTooltip(-1000,-1000,relX + 230,relY + 200,15,5)
+            AnimatedTooltip tooltip = new BlackBackgroundTooltip(-1000,-1000,relX + 230,relY + 200,7,5)
                     .setStartYOpeness(16).addComponents(new ComponentSequence(new ComponentSequence.ComponentSequenceBuilder()
                     .setAlignment(ContentAlignment.NO_ALIGNMENT)
                             .addComponent(new FDTextComponent(ContentAlignment.NO_ALIGNMENT,30,0).setText(a.getTranslation(),0xffffff).setInnerBorder(3))

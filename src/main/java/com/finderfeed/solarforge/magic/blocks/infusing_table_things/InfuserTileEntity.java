@@ -16,6 +16,7 @@ import com.finderfeed.solarforge.misc_things.*;
 import com.finderfeed.solarforge.multiblocks.Multiblocks;
 import com.finderfeed.solarforge.recipe_types.infusing_new.InfusingRecipe;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.progressions.Progression;
+import com.finderfeed.solarforge.registries.Tags;
 import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
 import com.finderfeed.solarforge.world_generation.structures.Structures;
 import net.minecraft.network.Connection;
@@ -328,7 +329,7 @@ public class InfuserTileEntity extends REItemHandlerBlockEntity implements  IEne
             int iterator = 0;
             for (BlockPos pos : getCatalystsPositions()){
                 Block c = recipe.getDeserializedCatalysts()[iterator];
-                if (c != null){
+                if (c != null && c.defaultBlockState().is(Tags.CATALYST)){
                     level.setBlock(pos, BlocksRegistry.CATALYST_BASE.get().defaultBlockState(), 3);
                 }
                 iterator++;
@@ -665,7 +666,7 @@ public class InfuserTileEntity extends REItemHandlerBlockEntity implements  IEne
             Block[] c = getCurrentCatalystPattern();
             for (int i = 0 ; i < 12;i++){
                 Block bl = recipe.getDeserializedCatalysts()[i];
-                if (bl != null){
+                if (bl != null && bl.defaultBlockState().is(Tags.CATALYST)){
                     if (bl != c[i]){
                         return false;
                     }

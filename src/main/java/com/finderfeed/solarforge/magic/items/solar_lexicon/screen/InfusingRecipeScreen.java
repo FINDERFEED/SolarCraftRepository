@@ -11,6 +11,7 @@ import com.finderfeed.solarforge.misc_things.RunicEnergy;
 
 import com.finderfeed.solarforge.magic.items.solar_lexicon.SolarLexicon;
 import com.finderfeed.solarforge.recipe_types.infusing_new.InfusingRecipe;
+import com.finderfeed.solarforge.registries.Tags;
 import com.finderfeed.solarforge.registries.items.ItemsRegister;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -195,7 +196,7 @@ public class InfusingRecipeScreen extends Screen {
                 int iterator = 0;
                 for (int[] pos : runicEnergySymbolsRenderPositions) {
                     Block block = r.getDeserializedCatalysts()[iterator];
-                    if (block != null) {
+                    if (block != null && block.defaultBlockState().is(Tags.CATALYST)) {
                         matrices.pushPose();
                         RunicEnergy.Type type = RunicEnergy.BLOCK_TO_RUNE_ENERGY_TYPE.get(block);
                         int p1 = pos[0];

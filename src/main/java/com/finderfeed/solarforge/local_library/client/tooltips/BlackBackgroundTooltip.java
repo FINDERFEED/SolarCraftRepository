@@ -18,9 +18,10 @@ public class BlackBackgroundTooltip extends AnimatedTooltip{
         int xPos = calculateXRenderPos(x);
         int yPos = calculateYRenderPos(y);
         float k = animLength/4f;
-        double percentXOpeness = ticker < k ? (ticker + pTicks)/animLength*4 : 1f;
+        float tick = Mth.lerp(pTicks,oldTick,ticker);
+        double percentXOpeness = ticker < k ? (tick )/animLength*4 : 1f;
         percentXOpeness *= percentXOpeness;
-        double percentYOpeness = FDMathHelper.clamp(0,ticker < k ? 0f : (ticker + pTicks - k)/(animLength - k),1);
+        double percentYOpeness = FDMathHelper.clamp(0,ticker < k ? 0f : (tick - k)/(animLength - k),1);
         percentYOpeness *= percentYOpeness;
 
         double xStartRenderPos = FDMathHelper.clamp(borderX1,x,borderX2);

@@ -6,6 +6,7 @@ import net.minecraft.client.gui.components.AbstractWidget;
 
 public abstract class AnimatedTooltip {
     protected int ticker = 0;
+    protected int oldTick = 0;
     protected int borderX1;
     protected int borderY1;
     protected int borderX2;
@@ -43,6 +44,7 @@ public abstract class AnimatedTooltip {
     }
 
     public void tick(boolean forward){
+        oldTick = ticker;
         if (forward){
             if (ticker < animLength) ticker++;
         }else{
