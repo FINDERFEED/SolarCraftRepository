@@ -148,18 +148,18 @@ public class InfusingTableTile extends BlockEntity implements OwnedBlock {
 
         if (level.getPlayerByUUID(owner) == pl){
             IItemHandler handler = getInventory();
-            level.getRecipeManager().getAllRecipesFor(SolarForge.INFUSING_CRAFTING_RECIPE_TYPE).stream().forEach(recipe -> {
-                if (recipe.getId().getNamespace().matches(CraftTweakerConstants.MOD_ID)){
-                    CraftTweakerAPI.LOGGER.info(recipe.getOutput().getDisplayName().getString());
-                    CraftTweakerAPI.LOGGER.info(Arrays.toString(recipe.getPattern()));
-                    CraftTweakerAPI.LOGGER.info(recipe.getDefinitions());
-                    CraftTweakerAPI.LOGGER.info(recipe.getTime());
-                    CraftTweakerAPI.LOGGER.info(recipe.getFragmentID());
-                    if (!recipe.getFragmentID().isEmpty()){
-                        //CraftTweakerAPI.LOGGER.info(ProgressionHelper.doPlayerHasFragment(pl, AncientFragment.getFragmentByID(recipe.getFragmentID())));
-                    }
-                }
-            });
+            //level.getRecipeManager().getAllRecipesFor(SolarForge.INFUSING_CRAFTING_RECIPE_TYPE).stream().forEach(recipe -> {
+            //    if (recipe.getId().getNamespace().matches(CraftTweakerConstants.MOD_ID)){
+            //        CraftTweakerAPI.LOGGER.info(recipe.getOutput().getDisplayName().getString());
+            //        CraftTweakerAPI.LOGGER.info(Arrays.toString(recipe.getPattern()));
+            //        CraftTweakerAPI.LOGGER.info(recipe.getDefinitions());
+            //        CraftTweakerAPI.LOGGER.info(recipe.getTime());
+            //        CraftTweakerAPI.LOGGER.info(recipe.getFragmentID());
+            //        if (!recipe.getFragmentID().isEmpty()){
+            //            //CraftTweakerAPI.LOGGER.info(ProgressionHelper.doPlayerHasFragment(pl, AncientFragment.getFragmentByID(recipe.getFragmentID())));
+            //        }
+            //    }
+            //});
             if (handler.getStackInSlot(9).is(Items.AIR)) {
                 Optional<InfusingCraftingRecipe> recipe = level.getRecipeManager().getRecipeFor(SolarForge.INFUSING_CRAFTING_RECIPE_TYPE, phantomInv.set(handler), level);
                     if (recipe.isPresent()) {
