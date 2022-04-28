@@ -21,7 +21,7 @@ import java.util.*;
  */
 @ZenRegister
 @ZenCodeType.Name("mods.solarforge.InfusingCraftingManager")
-@Document("mods/SolarForge/InfusingCraftingManager")
+@Document("mods/SolarForge/InfusingTableManager")
 public class InfusingCraftingRecipeManager implements IRecipeManager<InfusingCraftingRecipe> {
 
 
@@ -40,6 +40,7 @@ public class InfusingCraftingRecipeManager implements IRecipeManager<InfusingCra
      * Adds a recipe to the Infusing crafting table.
      *
      * The inputs array must be a 3x3 Two dimensional array, just like the craftingTable one you are probably used to.
+     * No IIngredients are supported currently. This can change in the future.
      *
      * You can get a list of usable fragment id's by running the `/ct dump solarforge_fragments` command.
      *
@@ -64,7 +65,7 @@ public class InfusingCraftingRecipeManager implements IRecipeManager<InfusingCra
         name = fixRecipeName(name);
         ResourceLocation location = new ResourceLocation(CraftTweakerConstants.MOD_ID, name);
         List<IItemStack> stackList =  CraftTweakerSolarForgeCompatUtilities.flatten(inputs);
-        String[] patterns = CraftTweakerSolarForgeCompatUtilities.getPattern(stackList, 9, "Inputs must be a 3x3 Two-Dimensional Array!");
+        String[] patterns = CraftTweakerSolarForgeCompatUtilities.getIItemStackPattern(stackList, 9, "Inputs must be a 3x3 Two-Dimensional Array!");
         InfusingCraftingRecipe recipe = new InfusingCraftingRecipe(location, patterns, CraftTweakerSolarForgeCompatUtilities.getInputItemMap(stackList, patterns), output.getInternal(), processingTime, output.getAmount(), fragment);
         CraftTweakerAPI.apply(new ActionAddRecipe<>(this, recipe));
     }

@@ -1,8 +1,10 @@
 package com.finderfeed.solarforge.compat.crafttweaker;
 
+import com.blamejared.crafttweaker.api.ingredient.IIngredient;
 import com.blamejared.crafttweaker.api.item.IItemStack;
 import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Block;
 
@@ -14,26 +16,26 @@ public class CraftTweakerSolarForgeCompatUtilities {
 
     public static final Map<String, Character> map = new HashMap<>();
 
-    public static String[] getPattern(List<IItemStack> inputs, int maxLength, String errorMessage){
+    public static String[] getIngPattern(List<IIngredient> inputs, int maxLength, String errorMessage){
         List<String> pattern = new ArrayList<>();
-        Map<Item, String> map = new HashMap<>();
+        Map<Ingredient, String> map = new HashMap<>();
         if (inputs.size() != maxLength){
             throw new IllegalArgumentException(errorMessage);
         }
         String construct = "";
         for (int i = 0; i < inputs.size(); i++){
-            final IItemStack stack = inputs.get(i);
-            if (stack.isEmpty()){
+            final IIngredient stack = inputs.get(i);
+            if (stack.asVanillaIngredient().isEmpty()){
                 construct = construct.concat(" ");
             }
             else {
-                if (map.containsKey(stack.getInternal().getItem())){
-                    construct = construct.concat(map.get(stack.getInternal().getItem()));
+                if (map.containsKey(stack.asVanillaIngredient())){
+                    construct = construct.concat(map.get(stack.asVanillaIngredient()));
                 }
                 else {
                     String s = (String.valueOf(CHAR_ARRAY[i]));
                     construct = construct.concat(s);
-                    map.put(stack.getInternal().getItem(), s);
+                    map.put(stack.asVanillaIngredient(), s);
                 }
 
             }
@@ -44,6 +46,37 @@ public class CraftTweakerSolarForgeCompatUtilities {
         }
         return pattern.stream().toArray(String[]::new);
     }
+    public static String[] getIItemStackPattern(List<IItemStack> inputs, int maxLength, String errorMessage){
+        List<String> pattern = new ArrayList<>();
+        Map<ItemStack, String> map = new HashMap<>();
+        if (inputs.size() != maxLength){
+            throw new IllegalArgumentException(errorMessage);
+        }
+        String construct = "";
+        for (int i = 0; i < inputs.size(); i++){
+            final ItemStack stack = inputs.get(i).getInternal();
+            if (stack.isEmpty()){
+                construct = construct.concat(" ");
+            }
+            else {
+                if (map.containsKey(stack)){
+                    construct = construct.concat(map.get(stack));
+                }
+                else {
+                    String s = (String.valueOf(CHAR_ARRAY[i]));
+                    construct = construct.concat(s);
+                    map.put(stack, s);
+                }
+
+            }
+            if (resetConstructor(i, maxLength)){
+                pattern.add(construct);
+                construct = "";
+            }
+        }
+        return pattern.stream().toArray(String[]::new);
+    }
+
     public static Map<Character, Item> getInputItemMap(List<IItemStack> flattenedList, String[] patterns){
         Map<Character, Item> toReturn = new HashMap<>();
         if (flattenedList.size() != 9) {
@@ -56,15 +89,15 @@ public class CraftTweakerSolarForgeCompatUtilities {
         }
         return toReturn;
     }
-    public static Map<Character, Ingredient> getInputIngredientMap(List<IItemStack> flattenedList, String[] patterns){
+    public static Map<Character, Ingredient> getInputIngredientMap(List<IIngredient> flattenedList, String[] patterns){
         Map<Character, Ingredient> toReturn = new HashMap<>();
         if (flattenedList.size() != 13) {
             throw new IllegalArgumentException("Invalid Map configuration!");
         }
         for (int i = 0; i < flattenedList.size(); i++){
             Character toAnalyze = String.join("", patterns).toCharArray()[i];
-            IItemStack stack = flattenedList.get(i);
-            toReturn.put(toAnalyze, Ingredient.of(stack.getInternal()));
+            IIngredient stack = flattenedList.get(i);
+            toReturn.put(toAnalyze, stack.asVanillaIngredient());
         }
         return toReturn;
     }

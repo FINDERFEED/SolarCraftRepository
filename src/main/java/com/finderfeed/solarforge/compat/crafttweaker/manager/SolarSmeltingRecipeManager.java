@@ -38,6 +38,7 @@ public class SolarSmeltingRecipeManager implements IRecipeManager<SolarSmeltingR
     /**
      * Uses the Solar Lens and the power of the Sun to Smelt items
      * The sun is a deadly lazer.
+     * No IIngredients are supported currently. This can change in the future.
      *
      * @param name The recipe name
      * @param output The output of the recipe

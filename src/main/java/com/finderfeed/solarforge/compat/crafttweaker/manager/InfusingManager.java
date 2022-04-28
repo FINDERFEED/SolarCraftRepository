@@ -4,6 +4,7 @@ import com.blamejared.crafttweaker.api.CraftTweakerAPI;
 import com.blamejared.crafttweaker.api.CraftTweakerConstants;
 import com.blamejared.crafttweaker.api.action.recipe.ActionAddRecipe;
 import com.blamejared.crafttweaker.api.annotation.ZenRegister;
+import com.blamejared.crafttweaker.api.ingredient.IIngredient;
 import com.blamejared.crafttweaker.api.item.IItemStack;
 import com.blamejared.crafttweaker.api.recipe.manager.base.IRecipeManager;
 import com.blamejared.crafttweaker_annotations.annotations.Document;
@@ -22,8 +23,8 @@ import java.util.List;
  * @docParam this <recipetype:solarforge:infusing_new>
  */
 @ZenRegister
-@ZenCodeType.Name("mods.solarforge.InfusingManager")
-@Document("mods/SolarForge/InfusingManager")
+@ZenCodeType.Name("mods.solarforge.InfuserManager")
+@Document("mods/SolarForge/InfuserManager")
 public class InfusingManager implements IRecipeManager<InfusingRecipe> {
 
     /**
@@ -56,7 +57,6 @@ public class InfusingManager implements IRecipeManager<InfusingRecipe> {
      * ```
      *
      * So that it matches the Infuser Screen. Air can and should be used to pad out the recipe but the Array structure must match that or it will error.
-     * No IIngredients are supported currently. This can change in the future.
      *
      * The catalysts two dimensional array must have a structure like this:
      *```
@@ -123,11 +123,11 @@ public class InfusingManager implements IRecipeManager<InfusingRecipe> {
      * @docParam costs RunicEnergyCost.EMPTY()
      */
     @ZenCodeType.Method
-    public void addRecipe(String name, IItemStack output, IItemStack[][] ings, Block[][] catalysts, int processingTime, String fragment, RunicEnergyCost costs){
+    public void addRecipe(String name, IItemStack output, IIngredient[][] ings, Block[][] catalysts, int processingTime, String fragment, RunicEnergyCost costs){
         name = fixRecipeName(name);
         ResourceLocation location = new ResourceLocation(CraftTweakerConstants.MOD_ID, name);
-        List<IItemStack> listStack = CraftTweakerSolarForgeCompatUtilities.flatten(ings);
-        String[] patterns = CraftTweakerSolarForgeCompatUtilities.getPattern(listStack, 13, "Inputs must be a special (3-2-3-2-3)x5 2D Array");
+        List<IIngredient> listStack = CraftTweakerSolarForgeCompatUtilities.flatten(ings);
+        String[] patterns = CraftTweakerSolarForgeCompatUtilities.getIngPattern(listStack, 13, "Inputs must be a special (3-2-3-2-3)x5 2D Array");
         InfusingRecipe recipe = new InfusingRecipe(location, CraftTweakerSolarForgeCompatUtilities.getInputIngredientMap(listStack, patterns), patterns, CraftTweakerSolarForgeCompatUtilities.readCatalysts(catalysts), output.getInternal(), processingTime, fragment, 0, "", costs);
         CraftTweakerAPI.apply(new ActionAddRecipe<>(this, recipe));
     }
