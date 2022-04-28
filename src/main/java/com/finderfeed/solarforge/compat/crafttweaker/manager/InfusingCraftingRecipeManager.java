@@ -8,11 +8,10 @@ import com.blamejared.crafttweaker.api.item.IItemStack;
 import com.blamejared.crafttweaker.api.recipe.manager.base.IRecipeManager;
 import com.blamejared.crafttweaker_annotations.annotations.Document;
 import com.finderfeed.solarforge.SolarForge;
-import com.finderfeed.solarforge.compat.crafttweaker.CraftTweakerUtilities;
+import com.finderfeed.solarforge.compat.crafttweaker.CraftTweakerSolarForgeCompatUtilities;
 import com.finderfeed.solarforge.recipe_types.infusing_crafting.InfusingCraftingRecipe;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraft.world.level.block.Block;
 import org.openzen.zencode.java.ZenCodeType;
 
 import java.util.*;
@@ -64,9 +63,9 @@ public class InfusingCraftingRecipeManager implements IRecipeManager<InfusingCra
     public void addRecipe(String name, IItemStack output, IItemStack[][] inputs, int processingTime, String fragment){
         name = fixRecipeName(name);
         ResourceLocation location = new ResourceLocation(CraftTweakerConstants.MOD_ID, name);
-        List<IItemStack> stackList =  CraftTweakerUtilities.flatten(inputs);
-        String[] patterns = CraftTweakerUtilities.getPattern(stackList, 9, "Inputs must be a 3x3 Two-Dimensional Array!");
-        InfusingCraftingRecipe recipe = new InfusingCraftingRecipe(location, patterns, CraftTweakerUtilities.getInputItemMap(stackList, patterns), output.getInternal(), processingTime, output.getAmount(), fragment);
+        List<IItemStack> stackList =  CraftTweakerSolarForgeCompatUtilities.flatten(inputs);
+        String[] patterns = CraftTweakerSolarForgeCompatUtilities.getPattern(stackList, 9, "Inputs must be a 3x3 Two-Dimensional Array!");
+        InfusingCraftingRecipe recipe = new InfusingCraftingRecipe(location, patterns, CraftTweakerSolarForgeCompatUtilities.getInputItemMap(stackList, patterns), output.getInternal(), processingTime, output.getAmount(), fragment);
         CraftTweakerAPI.apply(new ActionAddRecipe<>(this, recipe));
     }
 

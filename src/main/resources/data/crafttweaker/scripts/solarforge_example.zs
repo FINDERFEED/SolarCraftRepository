@@ -38,7 +38,7 @@ import mods.solarforge.RunicEnergyCost;
 var empty = <block:minecraft:air>;
 
 
-<recipetype:solarforge:infusing_new>.addRecipe("infusing_test_recipe", <item:minecraft:egg>,
+<recipetype:solarforge:infusing_new>.addRecipe("infusing_test_recipe", <item:minecraft:pumpkin>,
 [[<item:minecraft:diamond>, <item:minecraft:diamond>, <item:minecraft:diamond>], [<item:minecraft:diamond>, <item:minecraft:diamond>], [<item:minecraft:diamond>, <item:minecraft:diamond>, <item:minecraft:diamond>], [<item:minecraft:diamond>, <item:minecraft:diamond>], [<item:minecraft:diamond>, <item:minecraft:diamond>, <item:minecraft:diamond>]],
 [[empty, <block:solarforge:zeta_rune_block>, empty],[<block:solarforge:urba_rune_block>, empty, <block:solarforge:fira_rune_block>],[empty, <block:solarforge:ardo_rune_block>, empty],[<block:solarforge:giro_rune_block>, empty, <block:solarforge:ultima_rune_block>]],
 300, "crystals", RunicEnergyCost.EMPTY());

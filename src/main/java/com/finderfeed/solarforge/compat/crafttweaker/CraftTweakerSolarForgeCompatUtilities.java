@@ -7,9 +7,8 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Block;
 
 import java.util.*;
-import java.util.function.Supplier;
 
-public class CraftTweakerUtilities {
+public class CraftTweakerSolarForgeCompatUtilities {
 
     private static final char[] CHAR_ARRAY = "ABCDEFGHIJ".toCharArray();
 
@@ -111,5 +110,19 @@ public class CraftTweakerUtilities {
             }
         }
         return toReturn;
+    }
+
+    public static <T> Object[][] convertMap(Map<Character, T> thing, int maxLength){
+        List<T> itemList = thing.values().stream().toList();
+        if (maxLength == 9){
+            return new Object[][] {
+                     {itemList.get(0), itemList.get(1), itemList.get(2)},  {itemList.get(3), itemList.get(4), itemList.get(5)},  {itemList.get(6), itemList.get(7), itemList.get(8)}
+            };
+        }
+        {
+            return new Object[][]{
+                    {itemList.get(0), itemList.get(1), itemList.get(2)}, {itemList.get(3), itemList.get(4)}, {itemList.get(5), itemList.get(6), itemList.get(7)}, {itemList.get(8), itemList.get(9)}, {itemList.get(10), itemList.get(11), itemList.get(12)},
+            };
+        }
     }
 }

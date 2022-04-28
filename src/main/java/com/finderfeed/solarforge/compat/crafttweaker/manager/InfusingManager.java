@@ -8,7 +8,7 @@ import com.blamejared.crafttweaker.api.item.IItemStack;
 import com.blamejared.crafttweaker.api.recipe.manager.base.IRecipeManager;
 import com.blamejared.crafttweaker_annotations.annotations.Document;
 import com.finderfeed.solarforge.SolarForge;
-import com.finderfeed.solarforge.compat.crafttweaker.CraftTweakerUtilities;
+import com.finderfeed.solarforge.compat.crafttweaker.CraftTweakerSolarForgeCompatUtilities;
 import com.finderfeed.solarforge.magic.items.runic_energy.RunicEnergyCost;
 import com.finderfeed.solarforge.recipe_types.infusing_new.InfusingRecipe;
 import net.minecraft.resources.ResourceLocation;
@@ -126,9 +126,9 @@ public class InfusingManager implements IRecipeManager<InfusingRecipe> {
     public void addRecipe(String name, IItemStack output, IItemStack[][] ings, Block[][] catalysts, int processingTime, String fragment, RunicEnergyCost costs){
         name = fixRecipeName(name);
         ResourceLocation location = new ResourceLocation(CraftTweakerConstants.MOD_ID, name);
-        List<IItemStack> listStack = CraftTweakerUtilities.flatten(ings);
-        String[] patterns = CraftTweakerUtilities.getPattern(listStack, 13, "Inputs must be a special (3-2-3-2-3)x5 2D Array");
-        InfusingRecipe recipe = new InfusingRecipe(location, CraftTweakerUtilities.getInputIngredientMap(listStack, patterns), patterns, CraftTweakerUtilities.readCatalysts(catalysts), output.getInternal(), processingTime, fragment, 0, "", costs);
+        List<IItemStack> listStack = CraftTweakerSolarForgeCompatUtilities.flatten(ings);
+        String[] patterns = CraftTweakerSolarForgeCompatUtilities.getPattern(listStack, 13, "Inputs must be a special (3-2-3-2-3)x5 2D Array");
+        InfusingRecipe recipe = new InfusingRecipe(location, CraftTweakerSolarForgeCompatUtilities.getInputIngredientMap(listStack, patterns), patterns, CraftTweakerSolarForgeCompatUtilities.readCatalysts(catalysts), output.getInternal(), processingTime, fragment, 0, "", costs);
         CraftTweakerAPI.apply(new ActionAddRecipe<>(this, recipe));
     }
 }

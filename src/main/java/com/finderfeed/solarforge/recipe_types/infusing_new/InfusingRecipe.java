@@ -136,7 +136,9 @@ public class InfusingRecipe implements Recipe<Container> {
             'G', BlocksRegistry.GIRO_RUNE_BLOCK.get()
     );
 
-
+    public Map<Character, Block> getCatalystDeserializer() {
+        return DESERIALIZATOR;
+    }
 
     public Block[] deserializeCatalysts(){
         if (!catalysts.equals("            ")) {

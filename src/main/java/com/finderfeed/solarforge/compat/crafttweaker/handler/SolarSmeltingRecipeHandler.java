@@ -1,5 +1,6 @@
 package com.finderfeed.solarforge.compat.crafttweaker.handler;
 
+import com.blamejared.crafttweaker.api.ingredient.IIngredient;
 import com.blamejared.crafttweaker.api.item.MCItemStack;
 import com.blamejared.crafttweaker.api.recipe.handler.IRecipeHandler;
 import com.blamejared.crafttweaker.api.recipe.manager.base.IRecipeManager;
@@ -15,7 +16,7 @@ public class SolarSmeltingRecipeHandler implements IRecipeHandler<SolarSmeltingR
         String script = String.format("<recipetype:solarforge:solar_smelting>.addRecipe(\"%s\", %s, [%s], %s",
                 recipe.getId().toString(),
                 new MCItemStack(recipe.getResultItem()).getCommandString(),
-                recipe.getIngredients().stream().map(ing -> new MCItemStack(ing.getItems()[0])).map(MCItemStack::getCommandString).collect(Collectors.joining(", ")),
+                recipe.stacks.stream().map(MCItemStack::new).map(MCItemStack::getCommandString).collect(Collectors.joining(", ")),
                 recipe.getInfusingTime()
                 );
         script = script.concat(");");
