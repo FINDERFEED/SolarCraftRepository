@@ -122,6 +122,7 @@ public class InfusingRecipeSerializer extends ForgeRegistryEntry<RecipeSerialize
         int reqEnergy = buf.readInt();
         String tag = buf.readUtf();
         int count = buf.readInt();
+        output.setCount(count);
         float ARDO =buf.readFloat();
         float KELDA = buf.readFloat();
         float FIRA =buf.readFloat();
