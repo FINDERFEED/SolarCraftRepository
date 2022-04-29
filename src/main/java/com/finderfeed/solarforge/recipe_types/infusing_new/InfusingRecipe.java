@@ -36,7 +36,7 @@ public class InfusingRecipe implements Recipe<Container> {
     private final Block[] deserializedCatalysts;
     public static final InfusingRecipeSerializer serializer = new InfusingRecipeSerializer();
     public InfusingRecipe(ResourceLocation id,Map<Character,Ingredient> ingredientMap,String[] fiveRowPattern,String catalysts, ItemStack output, int infusingTime,String fragmentID
-            ,int requriedEnergy,String tag,int count,RunicEnergyCost costs) {
+            ,int requriedEnergy,String tag,RunicEnergyCost costs) {
         this.INGR_MAP = ingredientMap;
         this.fiveRowPattern = fiveRowPattern;
         this.oneRowPattern = fiveRowPattern[0] + fiveRowPattern[1] + fiveRowPattern[2] + fiveRowPattern[3] + fiveRowPattern[4];
@@ -48,8 +48,8 @@ public class InfusingRecipe implements Recipe<Container> {
         this.fragID = fragmentID;
         this.RUNIC_ENERGY_COST = costs;
         this.requriedEnergy = requriedEnergy;
+        this.count = output.getCount();
         this.tag = tag;
-        this.count = count;
         if (requriedEnergy > 0){
             this.tier = InfuserTileEntity.Tier.SOLAR_ENERGY;
         }else if (doRecipeRequiresRunicEnergy(costs)){
@@ -136,6 +136,9 @@ public class InfusingRecipe implements Recipe<Container> {
             'G', BlocksRegistry.GIRO_RUNE_BLOCK.get()
     );
 
+    public Map<Character, Block> getCatalystDeserializer() {
+        return DESERIALIZATOR;
+    }
 
     public Block[] deserializeCatalysts(){
         if (!catalysts.equals("            ")) {

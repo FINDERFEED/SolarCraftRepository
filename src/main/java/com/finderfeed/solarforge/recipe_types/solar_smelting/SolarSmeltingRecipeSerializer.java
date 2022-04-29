@@ -22,7 +22,7 @@ public class SolarSmeltingRecipeSerializer extends ForgeRegistryEntry<RecipeSeri
     public SolarSmeltingRecipeSerializer(){
         this.setRegistryName(new ResourceLocation("solarforge","solar_smelting"));
     }
-//ShapedRecipe.itemFromJson(
+    //ShapedRecipe.itemFromJson(
     @Override
     public SolarSmeltingRecipe fromJson(ResourceLocation loc, JsonObject file) {
 //        NonNullList<Ingredient> nonnulllist = itemsFromJson(GsonHelper.getAsJsonArray(file, "ingredients"));
