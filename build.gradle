@@ -13,7 +13,7 @@ apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
 
-version = '2.6'
+version = '2.7'
 group = 'com.finderfeed.solarforge' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'solarforge'
 
