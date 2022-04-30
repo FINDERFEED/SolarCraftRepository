@@ -150,7 +150,7 @@ public class InfusingRecipeCategory implements IRecipeCategory<InfusingRecipe> {
                9    5
                 876
                  */
-                String cats = recipe.getCatalysts();
+                String cats = recipe.getCatalysts().replace(' ','-');
                 List<Component> cmps = new ArrayList<>();
                 cmps.add(new TextComponent(" " + cats.substring(0,3) + " "));
                 cmps.add(new TextComponent(cats.charAt(11) + "   " + cats.charAt(3)));

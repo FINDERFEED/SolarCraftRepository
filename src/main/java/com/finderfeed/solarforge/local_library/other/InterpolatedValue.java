@@ -41,4 +41,8 @@ public abstract class InterpolatedValue implements CanTick{
     public boolean canBeDeleted(){
         return ticker == duration;
     }
+
+    public int getTicker() {
+        return ticker;
+    }
 }

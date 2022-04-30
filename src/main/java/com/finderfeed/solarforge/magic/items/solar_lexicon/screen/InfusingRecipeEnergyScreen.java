@@ -7,10 +7,13 @@ import com.finderfeed.solarforge.magic.items.solar_lexicon.SolarLexicon;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
 
 import com.finderfeed.solarforge.recipe_types.infusing_new.InfusingRecipe;
+import com.finderfeed.solarforge.registries.sounds.Sounds;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.resources.sounds.SimpleSoundInstance;
+import net.minecraft.client.sounds.SoundManager;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
@@ -65,22 +68,32 @@ public class InfusingRecipeEnergyScreen extends Screen {
 
 
         if (maxPages != 0) {
-            addRenderableWidget(new ImageButton(relX + 180, relY + 9, 16, 16, 0, 0, 0, BUTTONS, 16, 32, (button) -> {
+            addRenderableWidget(new ImageButton(relX + 193 + 19, relY + 55 + 13, 16, 16, 0, 0, 0, BUTTONS, 16, 32, (button) -> {
                 if ((currentPage + 1 <= maxPages)) {
                     currentPage += 1;
 
                 }
             },(button,matrices,mousex,mousey)->{
                 renderTooltip(matrices,new TextComponent("Next recipe"),mousex,mousey);
-            },new TextComponent("")));
-            addRenderableWidget(new ImageButton(relX + 164, relY + 9, 16, 16, 0, 16, 0, BUTTONS, 16, 32, (button) -> {
+            },new TextComponent("")){
+                @Override
+                public void playDownSound(SoundManager manager) {
+                    manager.play(SimpleSoundInstance.forUI(Sounds.BUTTON_PRESS2.get(),1,1));
+                }
+            });
+            addRenderableWidget(new ImageButton(relX + 193 + 19, relY + 55 + 13 + 16, 16, 16, 0, 16, 0, BUTTONS, 16, 32, (button) -> {
                 if ((currentPage - 1 >= 0)) {
                     currentPage -= 1;
 
                 }
             },(button,matrices,mousex,mousey)->{
                 renderTooltip(matrices,new TextComponent("Previous recipe"),mousex,mousey);
-            },new TextComponent("")));
+            },new TextComponent("")){
+                @Override
+                public void playDownSound(SoundManager manager) {
+                    manager.play(SimpleSoundInstance.forUI(Sounds.BUTTON_PRESS2.get(),1,1));
+                }
+            });
         }
 
 

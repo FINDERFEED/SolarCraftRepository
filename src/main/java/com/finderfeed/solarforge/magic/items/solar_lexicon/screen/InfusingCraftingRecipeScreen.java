@@ -53,7 +53,7 @@ public class InfusingCraftingRecipeScreen extends Screen {
         this.relY = (height - 218*scale)/2/scale;
         int xoffs = 111;
         if (maxPages != 0) {
-            addRenderableWidget(new ImageButton(relX + 180 - 5, relY + 33, 16, 16, 0, 0, 0, BUTTONS, 16, 32, (button) -> {
+            addRenderableWidget(new ImageButton(relX + 180 - 10, relY + 36, 16, 16, 0, 0, 0, BUTTONS, 16, 32, (button) -> {
                 if ((currentPage + 1 <= maxPages)) {
                     currentPage += 1;
                 }
@@ -65,7 +65,7 @@ public class InfusingCraftingRecipeScreen extends Screen {
                     manager.play(SimpleSoundInstance.forUI(Sounds.BUTTON_PRESS2.get(),1,1));
                 }
             });
-            addRenderableWidget(new ImageButton(relX + 164 - 5, relY + 33, 16, 16, 0, 16, 0, BUTTONS, 16, 32, (button) -> {
+            addRenderableWidget(new ImageButton(relX + 164 - 10, relY + 36, 16, 16, 0, 16, 0, BUTTONS, 16, 32, (button) -> {
                 if ((currentPage - 1 >= 0)) {
                     currentPage -= 1;
                 }
@@ -78,8 +78,8 @@ public class InfusingCraftingRecipeScreen extends Screen {
                 }
             });
         }
-        addRenderableWidget(new ItemStackTabButton(relX+96+xoffs,relY+29,12,12,(button)->{minecraft.setScreen(new SolarLexiconRecipesScreen());}, Items.CRAFTING_TABLE.getDefaultInstance(),0.7f));
-        addRenderableWidget(new ItemStackTabButton(relX+96+xoffs,relY+29 + 19,12,12,(button)->{
+        addRenderableWidget(new ItemStackTabButton(relX+97+xoffs,relY+29,12,12,(button)->{minecraft.setScreen(new SolarLexiconRecipesScreen());}, Items.CRAFTING_TABLE.getDefaultInstance(),0.7f));
+        addRenderableWidget(new ItemStackTabButton(relX+97+xoffs,relY+29 + 19,12,12,(button)->{
             Minecraft mc = Minecraft.getInstance();
             SolarLexicon lexicon = (SolarLexicon) mc.player.getMainHandItem().getItem();
             lexicon.currentSavedScreen = this;

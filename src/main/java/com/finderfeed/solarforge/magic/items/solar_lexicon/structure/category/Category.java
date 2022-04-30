@@ -68,7 +68,7 @@ public class Category {
             boolean hovered = false;
             List<Button> buttonsToAdd = c.getButtonsToAdd();
             for (Button b : buttonsToAdd){
-                if (b.isHoveredOrFocused()) {
+                if (b.isHoveredOrFocused() && b.isActive()) {
                     hovered = true;
                     break;
                 }
