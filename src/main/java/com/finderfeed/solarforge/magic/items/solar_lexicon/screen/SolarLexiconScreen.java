@@ -45,10 +45,10 @@ public class SolarLexiconScreen extends Screen implements IScrollable,PostRender
 
     public static int TEXT_COLOR = 0x5500dd;
 
-    public final ResourceLocation MAIN_SCREEN = new ResourceLocation("solarforge","textures/gui/solar_lexicon_main_page_new.png");
-    public final ResourceLocation FRAME = new ResourceLocation("solarforge","textures/misc/frame.png");
-    public final ResourceLocation QMARK = new ResourceLocation("solarforge","textures/misc/question_mark.png");
-    public final ResourceLocation MAIN_SCREEN_SCROLLABLE = new ResourceLocation("solarforge","textures/gui/solar_lexicon_main_page_scrollablep.png");
+    public final ResourceLocation MAIN_SCREEN = new ResourceLocation(SolarForge.MOD_ID,"textures/gui/solar_lexicon_main_page_new.png");
+    public final ResourceLocation FRAME = new ResourceLocation(SolarForge.MOD_ID,"textures/misc/frame.png");
+    public final ResourceLocation QMARK = new ResourceLocation(SolarForge.MOD_ID,"textures/misc/question_mark.png");
+    public final ResourceLocation MAIN_SCREEN_SCROLLABLE = new ResourceLocation(SolarForge.MOD_ID,"textures/gui/solar_lexicon_main_page_scrollablep.png");
     public String currentText = "";
     private String afterTxt = "";
     public int relX;

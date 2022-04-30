@@ -9,7 +9,9 @@ import mods.solarforge.RunicEnergyCost;
 //You can get the usable fragment parameters using the command /ct dump solarforge_fragments.
 
 <recipetype:solarforge:infusing_crafting>.addRecipe("infusing_crafting_test_recipe", <item:minecraft:egg>, [
-[<item:minecraft:air>, <item:minecraft:diamond>, <item:minecraft:air>], [<item:minecraft:white_wool>, <item:minecraft:stick>, <item:minecraft:white_wool>], [<item:minecraft:air>, <item:minecraft:diamond>, <item:minecraft:air>]
+[<item:minecraft:stick>, <item:minecraft:air>, <item:minecraft:stick>],
+[<item:minecraft:air>, <item:minecraft:diamond>, <item:minecraft:air>],
+[<item:minecraft:air>, <item:minecraft:air>, <item:minecraft:air>]
 ], 300, "crystals");
 
 
@@ -39,8 +41,13 @@ var empty = <block:minecraft:air>;
 
 
 <recipetype:solarforge:infusing_new>.addRecipe("infusing_test_recipe", <item:minecraft:pumpkin>,
-[[<item:minecraft:diamond>, <item:minecraft:diamond>, <item:minecraft:diamond>], [<item:minecraft:diamond>, <item:minecraft:diamond>], [<item:minecraft:diamond>, <item:minecraft:diamond>, <item:minecraft:diamond>], [<item:minecraft:diamond>, <item:minecraft:diamond>], [<item:minecraft:diamond>, <item:minecraft:diamond>, <item:minecraft:diamond>]],
-[[empty, <block:solarforge:zeta_rune_block>, empty],[<block:solarforge:urba_rune_block>, empty, <block:solarforge:fira_rune_block>],[empty, <block:solarforge:ardo_rune_block>, empty],[<block:solarforge:giro_rune_block>, empty, <block:solarforge:ultima_rune_block>]],
+[[<item:minecraft:diamond>, <item:minecraft:diamond>, <item:minecraft:diamond>],
+[<item:minecraft:diamond>, <item:minecraft:diamond>], [<item:minecraft:diamond>, <item:minecraft:diamond>, <item:minecraft:diamond>],
+[<item:minecraft:diamond>, <item:minecraft:diamond>], [<item:minecraft:diamond>, <item:minecraft:diamond>, <item:minecraft:diamond>]],
+[[empty, <block:solarforge:zeta_rune_block>, empty],
+[<block:solarforge:urba_rune_block>, empty, <block:solarforge:fira_rune_block>],
+[empty, <block:solarforge:ardo_rune_block>, empty],
+[<block:solarforge:giro_rune_block>, empty, <block:solarforge:ultima_rune_block>]],
 300, "crystals", RunicEnergyCost.EMPTY());
 
 <recipetype:solarforge:solar_smelting>.addRecipe("solar_smelting_test_recipe", <item:minecraft:diamond_pickaxe>, [<item:minecraft:dirt>, <item:minecraft:emerald>], 300);

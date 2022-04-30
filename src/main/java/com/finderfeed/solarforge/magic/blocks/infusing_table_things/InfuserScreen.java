@@ -118,11 +118,11 @@ public class InfuserScreen extends AbstractContainerScreen<InfuserContainer> {
             float percent = (float) tile.energy / tile.getMaxEnergy()*33;
 
             if (recipe.isPresent()) {
-                float percentNeeded = (float) recipe.get().requriedEnergy / (float)tile.getRunicEnergyLimit() * 33;
+                float percentNeeded = (float) recipe.get().requriedEnergy / (float)tile.getMaxEnergy() * 33;
                 RenderingTools.fill(matrices,relX + 11 + a,relY + 80,relX + 21 + a,relY + (int)(80 - percentNeeded),1,1,0,1);
             }
             if (RenderingTools.isMouseInBorders(x,y,relX + 11 + a,relY + 80 - 33,relX + 21 + a,relY + 80)){
-                renderTooltip(matrices,new TextComponent(tile.energy + "/" + tile.getMaxEnergy()),x,y);
+                postRender.add(()->renderTooltip(matrices,new TextComponent(tile.energy + "/" + tile.getMaxEnergy()),x,y));
             }
             RenderingTools.fill(matrices,relX + 11 + a,relY + 80,relX + 21 + a,relY + (int)(80 - percent),1,1,0,1);
         }

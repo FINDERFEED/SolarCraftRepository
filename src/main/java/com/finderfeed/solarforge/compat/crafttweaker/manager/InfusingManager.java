@@ -98,9 +98,13 @@ public class InfusingManager implements IRecipeManager<InfusingRecipe> {
      * @param output The IItemStack to be outputted from the recipe.
      * @param ings The input IItemStacks[]. Does not support tags.
      * @param catalysts The required Block catalysts that should be placed in columns in order for the recipe to craft.
+     * @param solarEnergy Required solar energy for recipe.
      * @param processingTime The amount of time it should take the recipe to craft.
      * @param fragment The id of the fragment to use.
      * @param costs The RunicEnergyCost this recipe has.
+     *
+     * Recipe will automatically assign itself the structure tier it needs. (If Runic energy cost > 0 tier will be Runic Energy, if solar energy > 0 tier will be Solar Energy.
+     * Solar Energy tier overrides Runic Energy tier. If both of the costs are 0, the tier will be First.).
      *
      * @docParam name "infuser_multiblock_test_recipe"
      * @docParam output <item:minecraft:egg>
@@ -118,17 +122,18 @@ public class InfusingManager implements IRecipeManager<InfusingRecipe> {
      *  [<block:minecraft:air>, <block:solarforge:ultima_rune_block>, <block:minecraft:air>],
      *  [<block:minecraft:air>, <block:minecraft:air>, <block:minecraft:air>],
      * ]
+     * @docParam solarEnergy 0
      * @docParam processingTime 600
      * @docParam fragment "crystals"
      * @docParam costs RunicEnergyCost.EMPTY()
      */
     @ZenCodeType.Method
-    public void addRecipe(String name, IItemStack output, IIngredient[][] ings, Block[][] catalysts, int processingTime, String fragment, RunicEnergyCost costs){
+    public void addRecipe(String name, IItemStack output, IIngredient[][] ings, Block[][] catalysts, int solarEnergy,int processingTime, String fragment, RunicEnergyCost costs){
         name = fixRecipeName(name);
         ResourceLocation location = new ResourceLocation(CraftTweakerConstants.MOD_ID, name);
         List<IIngredient> listStack = CraftTweakerSolarForgeCompatUtilities.flatten(ings);
         String[] patterns = CraftTweakerSolarForgeCompatUtilities.getIngPattern(listStack, 13, "Inputs must be a special (3-2-3-2-3)x5 2D Array");
-        InfusingRecipe recipe = new InfusingRecipe(location, CraftTweakerSolarForgeCompatUtilities.getInputIngredientMap(listStack, patterns), patterns, CraftTweakerSolarForgeCompatUtilities.readCatalysts(catalysts), output.getInternal(), processingTime, fragment, 0, "", costs);
+        InfusingRecipe recipe = new InfusingRecipe(location, CraftTweakerSolarForgeCompatUtilities.getInputIngredientMap(listStack, patterns), patterns, CraftTweakerSolarForgeCompatUtilities.readCatalysts(catalysts), output.getInternal(), processingTime, fragment, solarEnergy, "", costs);
         CraftTweakerAPI.apply(new ActionAddRecipe<>(this, recipe));
     }
 }

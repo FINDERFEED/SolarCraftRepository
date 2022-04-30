@@ -172,7 +172,7 @@ public class AncientFragment {
     ),SolarForge.INFUSING_RECIPE_TYPE,tx("amulets.lore"),5);
     public static final AncientFragment RADIANT_LAND_LORE = new AncientFragment(tx("solar_fragment.radiant_land"),"radiant_land",ProgressionStage.DIMENSION.ALL_PROGRESSIONS,SubCategoryBase.RADIANT_LAND,CategoryBase.MIDGAME,"radiant_land_lore",ItemsRegister.DIMENSION_CORE.get().getDefaultInstance(),9);
     public static final AncientFragment DEFENCE_CRYSTAL = new AncientFragment(tx("solar_fragment.defence_crystal"),"defence_crystal",ProgressionStage.DIMENSION.ALL_PROGRESSIONS,SubCategoryBase.RADIANT_LAND,CategoryBase.MIDGAME,"defence_crystal_lore",ItemsRegister.CRYSTALLITE_CORE.get().getDefaultInstance(),9);
-    public static final AncientFragment DIVINE_ARMOR = new AncientFragment(tx("solar_fragment.divine_armor"),"divine_armor",ProgressionStage.AFTER_LENS.ALL_PROGRESSIONS,SubCategoryBase.ARMOR,CategoryBase.ARMOR,List.of(
+    public static final AncientFragment DIVINE_ARMOR = new AncientFragment(tx("solar_fragment.divine_armor"),"divine_armor",ProgressionStage.RUNIC_ELEMENTAL.ALL_PROGRESSIONS,SubCategoryBase.ARMOR,CategoryBase.ARMOR,List.of(
             ItemWithRecipe.of(DIVINE_BOOTS.get().getDefaultInstance(),"infusing_divine_boots"),ItemWithRecipe.of(DIVINE_LEGGINGS.get().getDefaultInstance(),"infusing_divine_leggings"),
             ItemWithRecipe.of(DIVINE_CHESTPLATE.get().getDefaultInstance(),"infusing_divine_chestplate"),ItemWithRecipe.of(DIVINE_HELMET.get().getDefaultInstance(),"infusing_divine_helmet")
     ),SolarForge.INFUSING_RECIPE_TYPE,tx("divine_armor.lore"),9);

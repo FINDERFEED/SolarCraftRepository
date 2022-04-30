@@ -2,6 +2,7 @@ package com.finderfeed.solarforge.magic.items.solar_lexicon.screen;
 
 import com.finderfeed.solarforge.ClientHelpers;
 import com.finderfeed.solarforge.SolarForge;
+import com.finderfeed.solarforge.local_library.helpers.RenderingTools;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.SolarLexicon;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
 
@@ -15,6 +16,7 @@ import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Items;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class InfusingRecipeEnergyScreen extends Screen {
@@ -29,6 +31,7 @@ public class InfusingRecipeEnergyScreen extends Screen {
     };
     private int relX;
     private int relY;
+    private List<Runnable> postRender = new ArrayList<>();
 
     public InfusingRecipeEnergyScreen(InfusingRecipe recipe) {
         super(new TextComponent(""));
@@ -111,11 +114,16 @@ public class InfusingRecipeEnergyScreen extends Screen {
         int iter = 0;
 
         for (RunicEnergy.Type type : ORDERED_TYPES){
-            renderEnergyBar(matrices,relX+64+iter*17 + xoffs,relY+90,type,recipe);
+            renderEnergyBar(matrices,relX+64+iter*17 + xoffs,relY+90,type,recipe,mousex,mousey);
             iter++;
         }
-        int solaren = Math.round((float)recipe.requriedEnergy / 100000 * 64);
+        int solaren = Math.round((float)recipe.requriedEnergy / 100000 * 63);
         fill(matrices,relX+15 + xoffs,relY+93-solaren,relX+25 + xoffs,relY+93,0xddffff00);
+        if (RenderingTools.isMouseInBorders(mousex,mousey,relX + 17,relY + 31,relX + 17 + 10,relY + 93)){
+            postRender.add(()->{
+               renderTooltip(matrices,new TextComponent(String.valueOf(recipe.requriedEnergy)),mousex,mousey);
+            });
+        }
         double totalEnergy = recipe.requriedEnergy;
         for (double cost : recipe.RUNIC_ENERGY_COST.getCosts()){
             totalEnergy+=cost;
@@ -129,14 +137,21 @@ public class InfusingRecipeEnergyScreen extends Screen {
         drawCenteredString(matrices,font,""+(int)(totalEnergy-recipe.requriedEnergy),relX+160 + xoffs,relY+161+21,SolarLexiconScreen.TEXT_COLOR);
         matrices.popPose();
         super.render(matrices, mousex, mousey, partialTicks);
+        postRender.forEach(Runnable::run);
+        postRender.clear();
     }
 
 
-    private void renderEnergyBar(PoseStack matrices, int offsetx, int offsety, RunicEnergy.Type type,InfusingRecipe recipe){
+    private void renderEnergyBar(PoseStack matrices, int offsetx, int offsety, RunicEnergy.Type type,InfusingRecipe recipe,int mx,int my){
         matrices.pushPose();
-        double energyCostPerItem = recipe.RUNIC_ENERGY_COST.get(type);
+        float energyCostPerItem = recipe.RUNIC_ENERGY_COST.get(type);
         int xtexture =  ( Math.round( (float)energyCostPerItem/100000*60));
         fill(matrices,offsetx,offsety-xtexture,offsetx+6,offsety,0xddffff00);
+        if (RenderingTools.isMouseInBorders(mx,my,offsetx,offsety - 60,offsetx + 6,offsety)){
+            postRender.add(()->{
+               renderTooltip(matrices,new TextComponent(String.valueOf(energyCostPerItem)),mx,my);
+            });
+        }
         matrices.popPose();
     }
 }

@@ -679,5 +679,5 @@
   "solarcraft.fragment_not_unlocked": "Associated fragment is not decrypted.",
   "solarcraft.lexicon_inventory_description" : "This is lexicon inventory. Put your decrypted fragments here and they will appear on fragments page. You can scroll here by using W/S buttons or arrows.",
   "solarcraft.catalysts_not_unlocked": "This is not yet opened to you. Complete more progressions.",
-  "solarcraft.catalysts_jei": "Catalysts view is not available in JEI. Look inside lexicon."
+  "solarcraft.catalysts_jei": "Catalysts. Definitions:"
 }

@@ -40,10 +40,7 @@ import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Block;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Optional;
+import java.util.*;
 
 public class InfusingRecipeCategory implements IRecipeCategory<InfusingRecipe> {
 
@@ -133,10 +130,11 @@ public class InfusingRecipeCategory implements IRecipeCategory<InfusingRecipe> {
                 components.add(new TextComponent(type.id.toUpperCase(Locale.ROOT) + ": ").withStyle(ChatFormatting.GOLD)
                         .append(new TextComponent(re + "").withStyle(ChatFormatting.RESET)));
             }
-            components.add(new TranslatableComponent("solarcraft.solar_energy").withStyle(ChatFormatting.GOLD)
-                    .append(new TextComponent(": " + recipe.requriedEnergy).withStyle(ChatFormatting.RESET)));
-            screen.renderTooltip(matrices, components, Optional.empty(), (int) mouseX, (int) mouseY - 70);
-
+            if (recipe.requriedEnergy != 0) {
+                components.add(new TranslatableComponent("solarcraft.solar_energy").withStyle(ChatFormatting.GOLD)
+                        .append(new TextComponent(": " + recipe.requriedEnergy).withStyle(ChatFormatting.RESET)));
+                screen.renderTooltip(matrices, components, Optional.empty(), (int) mouseX, (int) mouseY - 40);
+            }
         }
         Block[] catalysts = recipe.deserializeCatalysts();
         if (catalysts == null) return;
@@ -152,10 +150,21 @@ public class InfusingRecipeCategory implements IRecipeCategory<InfusingRecipe> {
                9    5
                 876
                  */
-
-                screen.renderTooltip(matrices,new TranslatableComponent("solarcraft.catalysts_jei"),(int)mouseX,(int)mouseY);
+                String cats = recipe.getCatalysts();
+                List<Component> cmps = new ArrayList<>();
+                cmps.add(new TextComponent(" " + cats.substring(0,3) + " "));
+                cmps.add(new TextComponent(cats.charAt(11) + "   " + cats.charAt(3)));
+                cmps.add(new TextComponent(cats.charAt(10) + "   " + cats.charAt(4)));
+                cmps.add(new TextComponent(cats.charAt(9) + "   " + cats.charAt(5)));
+                cmps.add(new TextComponent(" " + cats.charAt(8) + cats.charAt(7) + cats.charAt(6) + " "));
+                cmps.add(new TranslatableComponent("solarcraft.catalysts_jei"));
+                for (RunicEnergy.Type type : RunicEnergy.Type.getAll()){
+                    cmps.add(new TextComponent(InfusingRecipe.DESERIALIZATOR_RE_TO_CHARACTER[type.getIndex()] + ": " + type.id.toUpperCase(Locale.ROOT)));
+                }
+                screen.renderTooltip(matrices,cmps,Optional.empty(),(int)mouseX,(int)mouseY);
             }else{
-                screen.renderTooltip(matrices,new TranslatableComponent("solarcraft.catalysts_not_unlocked"),(int)mouseX,(int)mouseY);
+                screen.renderTooltip(matrices,Minecraft.getInstance().font.split(new TranslatableComponent("solarcraft.catalysts_not_unlocked"),100),
+                        (int)mouseX,(int)mouseY);
             }
         }else{
             Gui.blit(matrices,137,15,0,0,12,12,12,24);

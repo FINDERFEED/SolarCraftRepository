@@ -23,9 +23,11 @@ public class StagesScreen extends ScrollableScreen {
     public final ResourceLocation FRAME = new ResourceLocation(SolarForge.MOD_ID,"textures/misc/frame.png");
     public final ResourceLocation QMARK = new ResourceLocation(SolarForge.MOD_ID,"textures/misc/question_mark.png");
     public final ResourceLocation MAIN_SCREEN = new ResourceLocation(SolarForge.MOD_ID,"textures/gui/stages_page.png");
+    public final ResourceLocation BG = new ResourceLocation(SolarForge.MOD_ID,"textures/gui/solar_lexicon_main_page_scrollablep.png");
     private ArrayList<PostRender> RENDER_QMARKS = new ArrayList<>();
     private ArrayList<PostRender> RENDER_QMARKS_TOOLTIPS = new ArrayList<>();
     private ArrayList<PostRender> RENDER_FRAMES = new ArrayList<>();
+    private ArrayList<PostRender> RENDER_BORDERS = new ArrayList<>();
 
     public ItemStackButton stagesPage = new ItemStackTabButton(relX+100,relY + 20,12,12,(button)->{minecraft.setScreen(new SolarLexiconScreen());}, SolarForge.SOLAR_FORGE_ITEM.get().getDefaultInstance(),0.7f);
     public InfoButton infoButton;
@@ -46,11 +48,12 @@ public class StagesScreen extends ScrollableScreen {
         RENDER_QMARKS.clear();
         RENDER_QMARKS_TOOLTIPS.clear();
         RENDER_FRAMES.clear();
+        RENDER_BORDERS.clear();
         for (int i = 0; i < ProgressionStage.STAGES_IN_ORDER.length;i++){
             ProgressionStage stage = ProgressionStage.STAGES_IN_ORDER[i];
-            int y = i * 30 + getRelY() + 15;
+            int y = i * 60 + getRelY() + 15 +10;
             for (int g = 0; g < stage.SELF_PROGRESSIONS.length;g++){
-                int x = g * 20 + getRelX() + 15;
+                int x = g * 40 + getRelX() + 15 +10;
                 Progression progression = stage.SELF_PROGRESSIONS[g];
                 if (Helpers.canPlayerUnlock(progression, Minecraft.getInstance().player)){
                     addRenderableWidget(new ItemStackButton(x+getCurrentScrollX(),y+getCurrentScrollY(),16,16,(btn)->{},progression.icon,1,
@@ -73,10 +76,16 @@ public class StagesScreen extends ScrollableScreen {
                         }
                     }));
                 }
+
                 RENDER_FRAMES.add(((matrices, mousex, mousey, partialTicks) -> {
-                    blit(matrices,x + getCurrentScrollX(),y + getCurrentScrollY(),0,0,16,16,16,16);
+                    blit(matrices,x + getCurrentScrollX() - 4,y + getCurrentScrollY() - 4,0,0,24,24,24,24);
                 }));
+
             }
+            int l = stage.SELF_PROGRESSIONS.length;
+            RENDER_BORDERS.add((matrices, mousex, mousey, partialTicks) -> {
+                RenderingTools.drawFancyBorder(matrices,getRelX() + getCurrentScrollX() + 25 - 13,y + getCurrentScrollY() - 13,stage.SELF_PROGRESSIONS.length * 40 + 2,42,getBlitOffset());
+            });
         }
 
         addRenderableWidget(stagesPage);
@@ -98,12 +107,13 @@ public class StagesScreen extends ScrollableScreen {
         int width = minecraft.getWindow().getWidth();
         int height = minecraft.getWindow().getHeight();
         int scale = (int)minecraft.getWindow().getGuiScale();
-        ClientHelpers.bindText(MAIN_SCREEN);
-        blit(matrices,getRelX(),getRelY(),0,0,256,256);
+        ClientHelpers.bindText(BG);
+        blit(matrices,getRelX()+ 10,getRelY()+ 10,0,0,220,188,512,512);
         GL11.glEnable(GL11.GL_SCISSOR_TEST);
         GL11.glScissor(width/2-((30+83)*scale),height/2-(88*scale),((188+35)*scale),187*scale);
         List<AbstractWidget> btns = ClientHelpers.getScreenButtons(this);
         btns.removeAll(getStaticWidgets());
+
         for (AbstractWidget w : btns){
             w.render(matrices,mousex,mousey,pticks);
         }
@@ -115,20 +125,21 @@ public class StagesScreen extends ScrollableScreen {
         for (PostRender xy : RENDER_QMARKS){
             xy.doRender(matrices,mousex,mousey,pticks);
         }
-        for (PostRender xy :RENDER_QMARKS_TOOLTIPS){
+        for (PostRender xy : RENDER_BORDERS){
             xy.doRender(matrices,mousex,mousey,pticks);
         }
         GL11.glDisable(GL11.GL_SCISSOR_TEST);
 
-//        List<String> splittedString = RenderingTools.splitString(STAGES_CMP.getString(),20);
-//        for (int i = 0; i < splittedString.size();i++){
-//            int y = i * 9;
-//            drawString(matrices,font,splittedString.get(i),getRelX() + 120,getRelY() + y + 19,0xff0000);
-//        }
+        ClientHelpers.bindText(MAIN_SCREEN);
+        blit(matrices,getRelX(),getRelY(),0,0,256,256);
 
+        for (PostRender xy :RENDER_QMARKS_TOOLTIPS){
+            xy.doRender(matrices,mousex,mousey,pticks);
+        }
 
         stagesPage.render(matrices,mousex,mousey,pticks);
         infoButton.render(matrices,mousex,mousey,pticks);
+
     }
 
     @Override
@@ -138,12 +149,12 @@ public class StagesScreen extends ScrollableScreen {
 
     @Override
     protected int getMaxYDownScrollValue() {
-        return 200;
+        return 600;
     }
 
     @Override
     protected int getMaxXRightScrollValue() {
-        return 0;
+        return 100;
     }
 
     @Override

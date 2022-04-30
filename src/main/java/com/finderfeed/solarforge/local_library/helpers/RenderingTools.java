@@ -72,12 +72,37 @@ import java.util.function.Consumer;
 
 public class RenderingTools {
 
-    public static final ResourceLocation TEST = new ResourceLocation("solarforge","textures/gui/solar_furnace_gui.png");
-    public static final ResourceLocation RAY = new ResourceLocation("solarforge","textures/misc/ray_into_skyy.png");
-    public static final ResourceLocation SHADERED_RAY = new ResourceLocation("solarforge","textures/misc/shadered_ray.png");
-    public static final ResourceLocation HP_BAR = new ResourceLocation("solarforge","textures/misc/hp_bar.png"); //0.875
+    public static final ResourceLocation TEST = new ResourceLocation(SolarForge.MOD_ID,"textures/gui/solar_furnace_gui.png");
+    public static final ResourceLocation RAY = new ResourceLocation(SolarForge.MOD_ID,"textures/misc/ray_into_skyy.png");
+    public static final ResourceLocation SHADERED_RAY = new ResourceLocation(SolarForge.MOD_ID,"textures/misc/shadered_ray.png");
+    public static final ResourceLocation HP_BAR = new ResourceLocation(SolarForge.MOD_ID,"textures/misc/hp_bar.png"); //0.875
     public static final ResourceLocation RUNIC_ENERGY_BARS_GUI = new ResourceLocation(SolarForge.MOD_ID,"textures/gui/infuser_energy_gui.png");
     public static final ResourceLocation RUNIC_ENERGY_BAR = new ResourceLocation(SolarForge.MOD_ID,"textures/gui/runic_energy_bar.png");
+    public static final ResourceLocation FANCY_BORDER_CORNERS = new ResourceLocation(SolarForge.MOD_ID,"textures/gui/fancy_border_corners.png");
+    public static final ResourceLocation FANCY_BORDER_HORIZONTAL = new ResourceLocation(SolarForge.MOD_ID,"textures/gui/fancy_border_horizontal.png");
+    public static final ResourceLocation FANCY_BORDER_VERTICAL = new ResourceLocation(SolarForge.MOD_ID,"textures/gui/fancy_border_vertical.png");
+
+
+    public static void drawFancyBorder(PoseStack matrices,int xStart,int yStart,int width,int height,int zOffset){
+        matrices.pushPose();
+        ClientHelpers.bindText(FANCY_BORDER_CORNERS);
+        Gui.blit(matrices,xStart,yStart,0,0,11,11,22,22);
+        Gui.blit(matrices,xStart + width - 11,yStart,11,0,11,11,22,22);
+        Gui.blit(matrices,xStart,yStart + height - 11,0,11,11,11,22,22);
+        Gui.blit(matrices,xStart + width - 11,yStart + height - 11,11,11,11,11,22,22);
+
+
+        ClientHelpers.bindText(FANCY_BORDER_HORIZONTAL);
+        Gui.blit(matrices,xStart + 11,yStart + 2,0,0,width - 22,6,16,6);
+        Gui.blit(matrices,xStart + 11,yStart + 3 + height - 11,0,0,width - 22,6,16,6);
+
+        ClientHelpers.bindText(FANCY_BORDER_VERTICAL);
+        Gui.blit(matrices,xStart + 2,yStart + 11,0,0,6,height - 22,6,16);
+        Gui.blit(matrices,xStart + 3 + width - 11,yStart + 11,0,0,6, height - 22, 6, 16);
+
+
+        matrices.popPose();
+    }
 
     public static void drawBoundedText(PoseStack matrices,int posx,int posy,int bound,String s,int color){
         int iter = 0;
@@ -142,33 +167,11 @@ public class RenderingTools {
         renderEnergyBar(matrices, x + 12 + 16, y + 96, current.get(RunicEnergy.Type.FIRA), false,mousex,mousey,maximum,tooltips);
         renderEnergyBar(matrices, x + 12 + 16*2, y + 96, current.get(RunicEnergy.Type.URBA), false,mousex,mousey,maximum,tooltips);
         renderEnergyBar(matrices, x + 12 + 16*3-1, y + 96, current.get(RunicEnergy.Type.ULTIMA), false,mousex,mousey,maximum,tooltips);
-
-//        renderEnergyBar(matrices, x - 28 - 16 + 1 + 69, y + 61 +8, maximum, false,mousex,mousey,maximum,tooltips);
-//        renderEnergyBar(matrices, x - 44 - 16 + 1 + 69, y + 61 +8, maximum, false,mousex,mousey,maximum,tooltips);
-//        renderEnergyBar(matrices, x - 12 - 16 + 1 + 69, y + 145 +8,maximum, false,mousex,mousey,maximum,tooltips);
-//        renderEnergyBar(matrices, x - 28 - 16 + 1 + 69, y + 145 +8,maximum, false,mousex,mousey,maximum,tooltips);
-//        renderEnergyBar(matrices, x - 44 - 16 + 1 + 69, y + 145 +8,maximum, false,mousex,mousey,maximum,tooltips);
-//        renderEnergyBar(matrices, x - 12 + 69 , y + 61 +8, maximum, false,mousex,mousey,maximum,tooltips);
-//        renderEnergyBar(matrices, x - 12 + 69 , y + 145 +8, maximum, false,mousex,mousey,maximum,tooltips);
         return tooltips;
     }
 
     private static void renderEnergyBar(PoseStack matrices, int offsetx, int offsety, float energyAmount, boolean simulate,int mousex,int mousey,float maxEnergy,List<Component> tooltips){
         matrices.pushPose();
-
-//        int texturex = Math.round(energyAmount/maxEnergy*60);
-//        matrices.translate(offsetx,offsety,0);
-//        matrices.mulPose(Vector3f.ZN.rotationDegrees(90));
-//        if (!simulate) {
-//            if (mousex > offsetx && mousex < offsetx + 6 && mousey > offsety-60 && mousey < offsety){
-//                tooltips.add(new TextComponent(energyAmount + "/" + maxEnergy));
-//            }
-//            Minecraft.getInstance().screen.blit(matrices, 0, 0, 0, 0, texturex, 6);
-//        }else{
-//            InfuserScreen.blitm(matrices, 0, 0, 0, 0, texturex, 6,60,6);
-//        }
-
-
         int k = 60;
         float energy = (energyAmount / maxEnergy) * k;
         if (!simulate){

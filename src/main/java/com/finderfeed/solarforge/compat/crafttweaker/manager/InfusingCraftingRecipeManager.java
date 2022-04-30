@@ -65,8 +65,8 @@ public class InfusingCraftingRecipeManager implements IRecipeManager<InfusingCra
         name = fixRecipeName(name);
         ResourceLocation location = new ResourceLocation(CraftTweakerConstants.MOD_ID, name);
         List<IItemStack> stackList =  CraftTweakerSolarForgeCompatUtilities.flatten(inputs);
-        String[] patterns = CraftTweakerSolarForgeCompatUtilities.getIItemStackPattern(stackList, 9, "Inputs must be a 3x3 Two-Dimensional Array!");
-        InfusingCraftingRecipe recipe = new InfusingCraftingRecipe(location, patterns, CraftTweakerSolarForgeCompatUtilities.getInputItemMap(stackList, patterns), output.getInternal(), processingTime, output.getAmount(), fragment);
+        String[][] patterns = CraftTweakerSolarForgeCompatUtilities.getIItemStackPattern(stackList, 9, "Inputs must be a 3x3 Two-Dimensional Array!");
+        InfusingCraftingRecipe recipe = new InfusingCraftingRecipe(location, patterns[1], CraftTweakerSolarForgeCompatUtilities.getInputItemMap(stackList, patterns[0]), output.getInternal(), processingTime, output.getAmount(), fragment);
         CraftTweakerAPI.apply(new ActionAddRecipe<>(this, recipe));
     }
 

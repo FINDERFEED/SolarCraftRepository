@@ -3,6 +3,7 @@ package com.finderfeed.solarforge.recipe_types.infusing_new;
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.magic.blocks.infusing_table_things.InfuserTileEntity;
 import com.finderfeed.solarforge.magic.items.runic_energy.RunicEnergyCost;
+import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
@@ -135,6 +136,8 @@ public class InfusingRecipe implements Recipe<Container> {
             'U', BlocksRegistry.ULTIMA_RUNE_BLOCK.get(),
             'G', BlocksRegistry.GIRO_RUNE_BLOCK.get()
     );
+
+    public static final Character[] DESERIALIZATOR_RE_TO_CHARACTER = {'Z','A','R','K','F','T','G','U'};
 
     public Map<Character, Block> getCatalystDeserializer() {
         return DESERIALIZATOR;

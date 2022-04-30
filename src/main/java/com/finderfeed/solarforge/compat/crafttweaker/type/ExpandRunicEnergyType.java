@@ -8,6 +8,8 @@ import com.blamejared.crafttweaker_annotations.annotations.NativeTypeRegistratio
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import org.openzen.zencode.java.ZenCodeType;
 
+import java.util.Locale;
+
 @NativeTypeRegistration(value = RunicEnergy.Type.class, zenCodeName = "mods.solarforge.RunicEnergyType")
 @ZenRegister
 @Document("mods/SolarForge/Type/RunicEnergyType")
@@ -23,7 +25,7 @@ public class ExpandRunicEnergyType {
     @ZenCodeType.Getter("commandString")
     public static String getCommandString(RunicEnergy.Type internal) {
 
-        return "<constant:solarforge:energytype:" + internal.name() + ">";
+        return "<constant:solarforge:energytype:" + internal.name().toLowerCase(Locale.ROOT) + ">";
     }
 
 }

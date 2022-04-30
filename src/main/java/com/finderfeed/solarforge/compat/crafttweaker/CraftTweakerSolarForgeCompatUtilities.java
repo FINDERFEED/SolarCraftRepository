@@ -46,9 +46,9 @@ public class CraftTweakerSolarForgeCompatUtilities {
         }
         return pattern.stream().toArray(String[]::new);
     }
-    public static String[] getIItemStackPattern(List<IItemStack> inputs, int maxLength, String errorMessage){
+    public static String[][] getIItemStackPattern(List<IItemStack> inputs, int maxLength, String errorMessage){
         List<String> pattern = new ArrayList<>();
-        Map<ItemStack, String> map = new HashMap<>();
+        Map<Item, String> map = new HashMap<>();
         if (inputs.size() != maxLength){
             throw new IllegalArgumentException(errorMessage);
         }
@@ -59,13 +59,13 @@ public class CraftTweakerSolarForgeCompatUtilities {
                 construct = construct.concat(" ");
             }
             else {
-                if (map.containsKey(stack)){
-                    construct = construct.concat(map.get(stack));
+                if (map.containsKey(stack.getItem())){
+                    construct = construct.concat(map.get(stack.getItem()));
                 }
                 else {
                     String s = (String.valueOf(CHAR_ARRAY[i]));
                     construct = construct.concat(s);
-                    map.put(stack, s);
+                    map.put(stack.getItem(), s);
                 }
 
             }
@@ -74,7 +74,53 @@ public class CraftTweakerSolarForgeCompatUtilities {
                 construct = "";
             }
         }
-        return pattern.stream().toArray(String[]::new);
+        String[] arr = pattern.stream().toArray(String[]::new);
+        String[] cut = cutArray(arr);
+        return new String[][]{arr,cut};
+    }
+
+    private static String[] cutArray(String[] array){
+        int leftXBorder = -1;
+        int rightXBorder = -1;
+        int upBorder = -1;
+        int downBorder = -1;
+        List<String> strings = new ArrayList<>();
+        for (int i = 0;i < array.length;i++){
+            char r1 = array[0].charAt(i);
+            char r2 = array[1].charAt(i);
+            char r3 = array[2].charAt(i);
+            if (!allCharsEmpty(r1,r2,r3)){
+                if (leftXBorder == -1){
+                    leftXBorder = i;
+                }else{
+                    rightXBorder = i;
+                }
+            }
+            char u1 = array[i].charAt(0);
+            char u2 = array[i].charAt(1);
+            char u3 = array[i].charAt(2);
+            if (!allCharsEmpty(u1,u2,u3)){
+                if (upBorder == -1){
+                    upBorder = i;
+                }else{
+                    downBorder = i;
+                }
+            }
+        }
+        if (rightXBorder == -1) rightXBorder = leftXBorder;
+        if (downBorder == -1) downBorder = upBorder;
+        for (int i = upBorder; i <= downBorder;i++){
+            StringBuilder builder = new StringBuilder();
+            for (int g = leftXBorder;g <= rightXBorder;g++){
+                builder.append(array[i].charAt(g));
+            }
+            strings.add(builder.toString());
+        }
+        return strings.toArray(String[]::new);
+    }
+
+    private static boolean allCharsEmpty(char r1,char r2,char r3){
+        return r1 == ' ' && r2 == ' ' && r3 == ' ';
     }
 
     public static Map<Character, Item> getInputItemMap(List<IItemStack> flattenedList, String[] patterns){
@@ -85,7 +131,9 @@ public class CraftTweakerSolarForgeCompatUtilities {
         for (int i = 0; i < flattenedList.size(); i++){
             Character toAnalyze = String.join("", patterns).toCharArray()[i];
             IItemStack stack = flattenedList.get(i);
-            toReturn.put(toAnalyze, stack.getInternal().getItem());
+            if (!toReturn.containsKey(toAnalyze)) {
+                toReturn.put(toAnalyze, stack.getInternal().getItem());
+            }
         }
         return toReturn;
     }
@@ -94,10 +142,12 @@ public class CraftTweakerSolarForgeCompatUtilities {
         if (flattenedList.size() != 13) {
             throw new IllegalArgumentException("Invalid Map configuration!");
         }
-        for (int i = 0; i < flattenedList.size(); i++){
+        for (int i = 0; i < flattenedList.size(); i++) {
             Character toAnalyze = String.join("", patterns).toCharArray()[i];
             IIngredient stack = flattenedList.get(i);
-            toReturn.put(toAnalyze, stack.asVanillaIngredient());
+            if (!toReturn.containsKey(toAnalyze)) {
+                toReturn.put(toAnalyze, stack.asVanillaIngredient());
+            }
         }
         return toReturn;
     }
