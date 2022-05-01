@@ -1,7 +1,7 @@
 package com.finderfeed.solarforge.magic.projectiles.renderers;
 
 import com.finderfeed.solarforge.local_library.helpers.RenderingTools;
-import com.finderfeed.solarforge.magic.projectiles.FallingMagicMissile;
+import com.finderfeed.solarforge.magic.projectiles.MagicMissile;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Matrix4f;
@@ -12,7 +12,7 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.resources.ResourceLocation;
 
-public class FallingMagicMissileRenderer extends EntityRenderer<FallingMagicMissile> {
+public class FallingMagicMissileRenderer extends EntityRenderer<MagicMissile> {
 
     private static final ResourceLocation LOC = new ResourceLocation("solarforge","textures/entities/falling_star_projectile.png");
 
@@ -21,7 +21,7 @@ public class FallingMagicMissileRenderer extends EntityRenderer<FallingMagicMiss
     }
 
     @Override
-    public void render(FallingMagicMissile star, float idk, float partialTicks, PoseStack matrices, MultiBufferSource buf, int light) {
+    public void render(MagicMissile star, float idk, float partialTicks, PoseStack matrices, MultiBufferSource buf, int light) {
         matrices.pushPose();
 
         VertexConsumer vertex = buf.getBuffer(RenderType.text(LOC));
@@ -54,7 +54,7 @@ public class FallingMagicMissileRenderer extends EntityRenderer<FallingMagicMiss
     }
 
     @Override
-    public ResourceLocation getTextureLocation(FallingMagicMissile p_114482_) {
+    public ResourceLocation getTextureLocation(MagicMissile p_114482_) {
         return TextureAtlas.LOCATION_BLOCKS;
     }
 }

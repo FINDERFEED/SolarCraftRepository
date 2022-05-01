@@ -4,7 +4,6 @@ package com.finderfeed.solarforge;
 import com.finderfeed.solarforge.abilities.meteorite.MeteoriteProjectile;
 import com.finderfeed.solarforge.abilities.solar_strike.SolarStrikeEntity;
 import com.finderfeed.solarforge.abilities.SolarStunEffect;
-import com.finderfeed.solarforge.capabilities.capability_mana.AttachManaCapabilityEvent;
 import com.finderfeed.solarforge.config.enchanter_config.EnchanterConfigInit;
 import com.finderfeed.solarforge.config.JsonFragmentsHelper;
 import com.finderfeed.solarforge.config.SolarcraftClientConfig;
@@ -61,7 +60,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.client.gui.screens.MenuScreens;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.inventory.MenuType;
@@ -209,15 +207,11 @@ public class SolarForge
 
 
         FMLJavaModLoadingContext.get().getModEventBus().addGenericListener(Feature.class,EventPriority.HIGHEST,FeaturesRegistry::registerFeatures);
-//        FMLJavaModLoadingContext.get().getModEventBus().addGenericListener(Biome.class,FeaturesRegistry::registerBiomes);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(FeaturesRegistry::addCarvableBlocks);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(FeaturesRegistry::registerConfiguredFeatures);
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, SolarcraftConfig.SPEC,"solarcraft-config.toml");
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, SolarcraftClientConfig.SPEC,"solarcraft-client-config.toml");
-        // Register the doClientStuff method for modloading
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
-//        BiomesRegister.BIOMES.register(bus);
-        // Register ourselves for server and other game events we are interested in
 
         MinecraftForge.EVENT_BUS.register(this);
         SolarForgePacketHandler.registerMessages();
@@ -232,39 +226,31 @@ public class SolarForge
         JsonFragmentsHelper.setupJSON();
         EnchanterConfigInit.setupJSON();
         Tags.init();
-        AbilitiesRegistry.ABILITIES.registerAll();
+        AbilitiesRegistry.init();
         TierSortingRegistry.registerTier(SolarCraftToolTiers.ILLIDIUM_TOOLS_TIER,new ResourceLocation("illidium"), List.of(Tiers.DIAMOND),List.of());
         TierSortingRegistry.registerTier(SolarCraftToolTiers.QUALADIUM_TOOLS_TIER,new ResourceLocation("qualadium"), List.of(Tiers.DIAMOND),List.of());
         TierSortingRegistry.registerTier(SolarCraftToolTiers.CHARGED_QUALADIUM_TOOLS_TIER,new ResourceLocation("charged_qualadium"), List.of(Tiers.DIAMOND),List.of());
         TierSortingRegistry.registerTier(SolarCraftToolTiers.SOLAR_GOD_TOOL_TIER,new ResourceLocation("solar_god"), List.of(Tiers.DIAMOND),List.of());
         TierSortingRegistry.registerTier(SolarCraftToolTiers.DIVINE_TIER,new ResourceLocation("divine"), List.of(Tiers.DIAMOND),List.of());
-//        CapabilitySolarMana.register();
-        MinecraftForge.EVENT_BUS.addGenericListener(Entity.class,AttachManaCapabilityEvent::attachCapabilities);
-        MinecraftForge.EVENT_BUS.addListener(AttachManaCapabilityEvent::tickEvent);
+
         MinecraftForge.EVENT_BUS.register(new PlayerTickEvent());
-        //MinecraftForge.EVENT_BUS.addListener(SolarWandItem::renderWandOverlays);
+
         MinecraftForge.EVENT_BUS.addListener(InfusingStand::placeBlockEvent);
         event.enqueueWork(()->{
 
 
-//            SolarForgeStructures.setupStructures();
             SolarForgeConfiguredStructures.registerConfiguredStructures();
             //TODO: was temporarily removed since mojang biome system cardinally changed, meaning i need to wait for forge to do something
-//            BiomeManager.addBiome(BiomeManager.BiomeType.DESERT,new BiomeManager.BiomeEntry(FeaturesRegistry.MOLTEN_BIOME_KEY,4));
 
         });
 
     }
 
     private void doClientStuff(final FMLClientSetupEvent event) {
-        // do something that can only be done on the client
         MinecraftForge.EVENT_BUS.register(new RenderEventsHandler());
-
-
         MenuScreens.register(SOLAR_FORGE_CONTAINER.get(), SolarForgeScreen::new);
         MenuScreens.register(INFUSING_TABLE_CONTAINER.get(), InfuserScreen::new);
     }
-    // You can use SubscribeEvent and let the Event Bus discover methods to call
 
     @Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.MOD)
     public static class RegistryEvents {

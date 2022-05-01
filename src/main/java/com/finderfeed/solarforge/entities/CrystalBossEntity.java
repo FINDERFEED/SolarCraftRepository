@@ -10,7 +10,7 @@ import com.finderfeed.solarforge.local_library.entities.BossAttackChain;
 import com.finderfeed.solarforge.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarforge.local_library.other.CyclingInterpolatedValue;
 import com.finderfeed.solarforge.magic.projectiles.CrystalBossAttackHoldingMissile;
-import com.finderfeed.solarforge.magic.projectiles.FallingMagicMissile;
+import com.finderfeed.solarforge.magic.projectiles.MagicMissile;
 import com.finderfeed.solarforge.magic.projectiles.RandomBadEffectProjectile;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.progressions.Progression;
 import com.finderfeed.solarforge.misc_things.CrystalBossBuddy;
@@ -316,7 +316,7 @@ public class CrystalBossEntity extends NoHealthLimitMob implements CrystalBossBu
         for (int i = 0;i < 6;i++){
             double x = (level.random.nextDouble()*SIDE_SPEED_MULTIPLIER_AIR_STRIKE+0.01)* FDMathHelper.randomPlusMinus();
             double z = (level.random.nextDouble()*SIDE_SPEED_MULTIPLIER_AIR_STRIKE+0.01)* FDMathHelper.randomPlusMinus();
-            FallingMagicMissile star = new FallingMagicMissile(level,x,UP_SPEED_MULTIPLIER_AIR_STRIKE,z);
+            MagicMissile star = new MagicMissile(level,x,UP_SPEED_MULTIPLIER_AIR_STRIKE,z);
             star.setPos(this.position().add(0,this.getBbHeight()*0.7,0));
             level.addFreshEntity(star);
         }

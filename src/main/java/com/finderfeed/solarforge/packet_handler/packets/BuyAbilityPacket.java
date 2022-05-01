@@ -1,13 +1,16 @@
 package com.finderfeed.solarforge.packet_handler.packets;
 
 
-import com.finderfeed.solarforge.abilities.Abilities;
+import com.finderfeed.solarforge.SolarForge;
+import com.finderfeed.solarforge.abilities.AbilityHelper;
 import com.finderfeed.solarforge.abilities.ability_classes.AbstractAbility;
 import com.finderfeed.solarforge.SolarCraftTags;
+import com.finderfeed.solarforge.registries.abilities.AbilitiesRegistry;
 import net.minecraft.network.FriendlyByteBuf;
 
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkEvent;
+import org.apache.logging.log4j.Level;
 
 
 import java.util.function.Supplier;
@@ -24,20 +27,21 @@ public class BuyAbilityPacket {
     public void toBytes(FriendlyByteBuf buf){
         buf.writeUtf(id);
     }
+
     public void handle(Supplier<NetworkEvent.Context> ctx){
         ctx.get().enqueueWork(()->{
-            ServerPlayer enti = ctx.get().getSender();
+            ServerPlayer player = ctx.get().getSender();
             try {
-                AbstractAbility ability = Abilities.BY_IDS.get(id).getAbility();
-                int en = getPlayerEnergy(enti);
+                AbstractAbility ability = AbilitiesRegistry.getAbilityByID(id);
+                int en = getPlayerEnergy(player);
                 if (en >= ability.buyCost){
-                    if (!enti.getPersistentData().getBoolean(SolarCraftTags.CAN_PLAYER_USE+id)) {
-                        spendEnergy(enti, ability.buyCost);
-                        enti.getPersistentData().putBoolean(SolarCraftTags.CAN_PLAYER_USE + id, true);
+                    if (!AbilityHelper.isAbilityBought(player,ability)) {
+                        spendEnergy(player, ability.buyCost);
+                        AbilityHelper.setAbilityUsable(player,ability,true);
                     }
                 }
             }catch (Exception e){
-                System.out.println("Exception caught during BuyAbilityPacket handling.");
+                SolarForge.LOGGER.log(Level.ERROR,"Exception caught during BuyAbilityPacket handling.");
                 e.printStackTrace();
             }
 

@@ -5,7 +5,7 @@ import com.finderfeed.solarforge.local_library.entities.BossAttackChain;
 import com.finderfeed.solarforge.local_library.helpers.CompoundNBTHelper;
 import com.finderfeed.solarforge.local_library.other.InterpolatedValue;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.progressions.Progression;
-import com.finderfeed.solarforge.magic.projectiles.FallingMagicMissile;
+import com.finderfeed.solarforge.magic.projectiles.MagicMissile;
 import com.finderfeed.solarforge.magic.projectiles.RunicWarriorSummoningRocket;
 import com.finderfeed.solarforge.misc_things.CrystalBossBuddy;
 import com.finderfeed.solarforge.packet_handler.packets.DisablePlayerFlightPacket;
@@ -233,7 +233,7 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
             if (target == null) return;
             float speedMod = 1.5f;
             Vec3 between = target.position().add(0,target.getEyeHeight(target.getPose())*0.8,0).subtract(position().add(0, 2, 0));
-            FallingMagicMissile missile = new FallingMagicMissile(level,between.normalize().multiply(speedMod,speedMod,speedMod));
+            MagicMissile missile = new MagicMissile(level,between.normalize().multiply(speedMod,speedMod,speedMod));
             missile.setSpeedDecrement(0);
             float damage = (MISSILES_DAMAGE + getDamageBonus()) * getDamageModifier();
             missile.setDamage(damage);
@@ -241,7 +241,7 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
             level.addFreshEntity(missile);
             for (RefractionCrystal crystal : getRefractionCrystalsAround()){
                 between = target.position().add(0,target.getEyeHeight(target.getPose())*0.8,0).subtract(crystal.position().add(0, crystal.getBbHeight()/2, 0));
-                FallingMagicMissile m = new FallingMagicMissile(level,between.normalize().multiply(speedMod,speedMod,speedMod));
+                MagicMissile m = new MagicMissile(level,between.normalize().multiply(speedMod,speedMod,speedMod));
                 m.setSpeedDecrement(0);
                 m.setDamage(damage);
                 m.setPos(crystal.position().add(0,crystal.getBbHeight()/2,0).add(between.normalize().multiply(0.5,0.5,0.5)));

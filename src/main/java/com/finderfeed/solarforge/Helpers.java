@@ -281,7 +281,7 @@ public class Helpers {
         for (Progression a : Progression.allProgressions) {
 
             SolarForgePacketHandler.INSTANCE.sendTo(new UpdateProgressionOnClient(a.getAchievementCode(),hasPlayerUnlocked(a,player)),
-                    ((ServerPlayer) player).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+                    player.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
         }
     }
 

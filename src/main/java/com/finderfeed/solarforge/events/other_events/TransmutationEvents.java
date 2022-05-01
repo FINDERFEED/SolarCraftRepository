@@ -1,5 +1,6 @@
 package com.finderfeed.solarforge.events.other_events;
 
+import com.finderfeed.solarforge.abilities.AbilityHelper;
 import com.finderfeed.solarforge.magic.items.runic_energy.ItemRunicEnergy;
 import com.finderfeed.solarforge.magic.items.vein_miner.IllidiumPickaxe;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
@@ -23,7 +24,7 @@ public class TransmutationEvents {
     public static void breakBlock(final BlockEvent.BreakEvent event){
         if (event.getPlayer() instanceof ServerPlayer player) {
             if (AbilitiesRegistry.ALCHEMIST.isToggled(player) && !event.getPlayer().isDeadOrDying() ) {
-                if (RunicEnergy.getEnergy(player, RunicEnergy.Type.TERA) > AbilitiesRegistry.ALCHEMIST.RUNIC_ENERGY_COST.get(RunicEnergy.Type.TERA)) {
+                if (AbilityHelper.isAbilityUsable(player,AbilitiesRegistry.ALCHEMIST)) {
                     LevelAccessor world = event.getWorld();
                     BlockPos pos = event.getPos();
                     event.getWorld().setBlock(event.getPos(), Blocks.AIR.defaultBlockState(), 3);

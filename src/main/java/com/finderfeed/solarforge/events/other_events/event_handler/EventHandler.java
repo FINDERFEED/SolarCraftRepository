@@ -3,7 +3,6 @@ package com.finderfeed.solarforge.events.other_events.event_handler;
 
 import com.finderfeed.solarforge.ClientHelpers;
 import com.finderfeed.solarforge.Helpers;
-import com.finderfeed.solarforge.abilities.Abilities;
 import com.finderfeed.solarforge.abilities.ability_classes.AbstractAbility;
 import com.finderfeed.solarforge.SolarCraftAttributeModifiers;
 import com.finderfeed.solarforge.events.my_events.ProgressionUnlockEvent;
@@ -21,6 +20,7 @@ import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import com.finderfeed.solarforge.packet_handler.packets.DisablePlayerFlightPacket;
 import com.finderfeed.solarforge.registries.SolarcraftDamageSources;
 import com.finderfeed.solarforge.registries.Tags;
+import com.finderfeed.solarforge.registries.abilities.AbilitiesRegistry;
 import com.finderfeed.solarforge.registries.attributes.AttributesRegistry;
 import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
 import com.finderfeed.solarforge.registries.effects.EffectsRegister;
@@ -77,8 +77,8 @@ public class EventHandler {
     public static final ResourceKey<Level> RADIANT_LAND_KEY = ResourceKey.create(Registry.DIMENSION_REGISTRY,new ResourceLocation("solarforge","radiant_land"));
     public static final ResourceKey<Biome> RADIANT_LAND_BIOME_KEY = ResourceKey.create(Registry.BIOME_REGISTRY,new ResourceLocation("solarforge","radiant_land"));
     public static List<AbstractAbility> ALLOWED_ABILITIES_DURING_BOSSFIGHT = List.of(
-            Abilities.HEAL.getAbility(),
-            Abilities.DISPEL.getAbility()
+            AbilitiesRegistry.HEAL,
+            AbilitiesRegistry.DISPEL
     );
 
     @SubscribeEvent

@@ -1,5 +1,6 @@
 package com.finderfeed.solarforge;
 
+import com.finderfeed.solarforge.abilities.ability_classes.ToggleableAbility;
 import com.finderfeed.solarforge.abilities.screens.AbilityBuyScreen;
 import com.finderfeed.solarforge.client.particles.ParticleTypesRegistry;
 import com.finderfeed.solarforge.client.particles.SmallSolarStrikeParticle;
@@ -69,6 +70,10 @@ public class ClientHelpers {
         }
         getClientPlayer().getAbilities().mayfly = !disable;
 
+    }
+
+    public static void handleToggleAbilityPacket(ToggleableAbility ability,boolean t){
+        ability.setToggled(getClientPlayer(),t);
     }
 
 

@@ -2,6 +2,7 @@ package com.finderfeed.solarforge.entities;
 
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.misc_things.CrystalBossBuddy;
+import com.finderfeed.solarforge.registries.SolarcraftDamageSources;
 import com.finderfeed.solarforge.registries.sounds.Sounds;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
@@ -76,7 +77,7 @@ public class MineEntityCrystalBoss extends PathfinderMob implements CrystalBossB
             level.getEntitiesOfClass(LivingEntity.class,new AABB(-1.5,-1.0,-1.5,1.5,2,1.5).move(position()),(ent)->{
                 return !(ent instanceof CrystalBossBuddy);
             }).forEach((living)->{
-                living.hurt(DamageSource.MAGIC,CrystalBossEntity.MINES_DAMAGE);
+                living.hurt(SolarcraftDamageSources.RUNIC_MAGIC,CrystalBossEntity.MINES_DAMAGE);
             });
         }
 

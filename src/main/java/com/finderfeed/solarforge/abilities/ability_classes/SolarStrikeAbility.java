@@ -1,7 +1,9 @@
 package com.finderfeed.solarforge.abilities.ability_classes;
 
+import com.finderfeed.solarforge.abilities.AbilityHelper;
 import com.finderfeed.solarforge.abilities.solar_strike.SolarStrikeEntity;
 import com.finderfeed.solarforge.SolarForge;
+import com.finderfeed.solarforge.magic.items.runic_energy.RunicEnergyCost;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.core.BlockPos;
@@ -13,16 +15,15 @@ import net.minecraft.server.level.ServerLevel;
 
 public class SolarStrikeAbility extends AbstractAbility{
     public SolarStrikeAbility() {
-        super("solar_strike",new RunicEnergyCostConstructor()
-        .addRunicEnergy(RunicEnergy.Type.FIRA,5000)
-        .addRunicEnergy(RunicEnergy.Type.ARDO,2000)
-        .addRunicEnergy(RunicEnergy.Type.KELDA,1000),100000);
+        super("solar_strike",new RunicEnergyCost()
+        .set(RunicEnergy.Type.FIRA,5000)
+        .set(RunicEnergy.Type.ARDO,2000)
+        .set(RunicEnergy.Type.KELDA,1000),100000);
     }
 
     @Override
     public void cast(ServerPlayer entity, ServerLevel world) {
-        super.cast(entity, world);
-        if (allowed) {
+        if (AbilityHelper.isAbilityUsable(entity,this)) {
 
             Vec3 vec = entity.getLookAngle().multiply(200, 200, 200);
             ClipContext ctx = new ClipContext(entity.position().add(0, 1.5, 0), entity.position().add(0, 1.5, 0).add(vec), ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, entity);
@@ -37,7 +38,7 @@ public class SolarStrikeAbility extends AbstractAbility{
                     world.addFreshEntity(entityBolt);
                 }else{
                     if (!entity.isCreative()) {
-                        refund(entity);
+                        AbilityHelper.refundEnergy(entity,this);
                     }
                 }
             }

@@ -1,9 +1,13 @@
 package com.finderfeed.solarforge.magic.blocks.solar_forge_block.solar_forge_screen;
 
 import com.finderfeed.solarforge.ClientHelpers;
-import com.finderfeed.solarforge.abilities.Abilities;
+import com.finderfeed.solarforge.abilities.ability_classes.AbstractAbility;
+import com.finderfeed.solarforge.client.screens.ScrollableScreen;
+import com.finderfeed.solarforge.local_library.helpers.RenderingTools;
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
 import com.finderfeed.solarforge.packet_handler.packets.AbilityIndexSetPacket;
+import com.finderfeed.solarforge.registries.abilities.AbilitiesRegistry;
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 
@@ -17,7 +21,7 @@ import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 
 
-public class SolarForgeConfigScreenAdditional extends Screen {
+public class SolarForgeConfigScreenAdditional extends ScrollableScreen {
 
     private static final int WIDTH = 77;
     private static final int HEIGHT = 180;
@@ -29,7 +33,7 @@ public class SolarForgeConfigScreenAdditional extends Screen {
 
 
     public SolarForgeConfigScreenAdditional(int index) {
-        super(new TranslatableComponent("test.screen.thing"));
+        super();
         this.ids = index;
     }
     @Override
@@ -45,21 +49,46 @@ public class SolarForgeConfigScreenAdditional extends Screen {
     @Override
     public void init(){
         super.init();
-        int relX = (this.width - WIDTH) / 2;
-        int relY = (this.height - HEIGHT) / 2;
+
         this.page = 1;
         this.maxPages = 1;
         this.previousPage = 1;
-        addSolarButton(relX,relY,10, Abilities.FIREBALL.getAbility().id,"Fireball");
-        addSolarButton(relX,relY,30,Abilities.LIGHTNING.getAbility().id,"Lightning");
-        addSolarButton(relX,relY,50,Abilities.DISARM.getAbility().id,"Disarm");
-        addSolarButton(relX,relY,70,Abilities.SOLAR_STRIKE.getAbility().id,"Solar Strike");
-        addSolarButton(relX,relY,90,Abilities.METEORITE.getAbility().id,"Meteorite");
-        addSolarButton(relX,relY,110,Abilities.HEAL.getAbility().id,"Heal");
-        addSolarButton(relX,relY,130,Abilities.ALCHEMIST.getAbility().id,"Alchemist");
-        addSolarButton(relX,relY,150,Abilities.DISPEL.getAbility().id,"Dispel");
+        int iter = 0;
+        for (AbstractAbility ability : AbilitiesRegistry.getAllAbilities()) {
+            addSolarButton(relX + 82,relY + 30,10 + iter * 20,ability.id,new TranslatableComponent("name." + ability.id).getString());
+            iter += 1;
+        }
     }
 
+    @Override
+    public void tick() {
+        super.tick();
+    }
+
+    @Override
+    protected int getScrollValue() {
+        return 4;
+    }
+
+    @Override
+    protected int getMaxYDownScrollValue() {
+        return 20;
+    }
+
+    @Override
+    protected int getMaxXRightScrollValue() {
+        return 0;
+    }
+
+    @Override
+    protected int getMaxYUpScrollValue() {
+        return 0;
+    }
+
+    @Override
+    protected int getMaxXLeftScrollValue() {
+        return 0;
+    }
 
 
     @Override
@@ -67,17 +96,17 @@ public class SolarForgeConfigScreenAdditional extends Screen {
 
         ClientHelpers.bindText(GUI);
 
-        int relX = (this.width - WIDTH) / 2;
-        int relY = (this.height - HEIGHT) / 2;
+        this.blit(stack, relX + 82, relY + 30, 0, 0, WIDTH, HEIGHT);
 
-
-        this.blit(stack, relX, relY, 0, 0, WIDTH, HEIGHT);
-//        drawCenteredString(stack,minecraft.font,"Page "+page+"/"+maxPages,relX,relY,0xffffff);
-
-       // GL11.glScissor((int)(relX*scale), (int)(relY*scale), scissorsWidth, scissorsHeight-120);
+        int scaledWidth = Minecraft.getInstance().getWindow().getGuiScaledWidth();
+        int scaledHeight = Minecraft.getInstance().getWindow().getGuiScaledHeight();
+        int width = Minecraft.getInstance().getWindow().getWidth();
+        int height = Minecraft.getInstance().getWindow().getHeight();
+        int scale = (int)Minecraft.getInstance().getWindow().getGuiScale();
+        RenderSystem.enableScissor((width - WIDTH*scale)/2,(height - HEIGHT*scale + 15*scale)/2,WIDTH*scale,(HEIGHT - 22)*scale);
 
         super.render(stack,rouseX,rouseY,partialTicks);
-
+        RenderSystem.disableScissor();
     }
 
 

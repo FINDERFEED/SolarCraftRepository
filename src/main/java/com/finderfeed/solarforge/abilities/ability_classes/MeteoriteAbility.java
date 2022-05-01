@@ -1,6 +1,8 @@
 package com.finderfeed.solarforge.abilities.ability_classes;
 
+import com.finderfeed.solarforge.abilities.AbilityHelper;
 import com.finderfeed.solarforge.abilities.meteorite.MeteoriteProjectile;
+import com.finderfeed.solarforge.magic.items.runic_energy.RunicEnergyCost;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.core.BlockPos;
@@ -13,16 +15,14 @@ import net.minecraft.server.level.ServerLevel;
 
 public class MeteoriteAbility extends AbstractAbility{
     public MeteoriteAbility() {
-        super("meteorite",new RunicEnergyCostConstructor()
-        .addRunicEnergy(RunicEnergy.Type.ZETA,500)
-        .addRunicEnergy(RunicEnergy.Type.KELDA,300),50000);
+        super("meteorite",new RunicEnergyCost()
+        .set(RunicEnergy.Type.ZETA,500)
+        .set(RunicEnergy.Type.KELDA,300),50000);
     }
 
     @Override
     public void cast(ServerPlayer entity, ServerLevel world) {
-        super.cast(entity, world);
-        if (allowed) {
-
+        if (AbilityHelper.isAbilityUsable(entity,this)) {
             Vec3 vec = entity.getLookAngle().multiply(200, 200, 200);
 
             ClipContext ctx = new ClipContext(entity.position().add(0, 1.5, 0), entity.position().add(0, 1.5, 0).add(vec), ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, entity);
@@ -40,7 +40,7 @@ public class MeteoriteAbility extends AbstractAbility{
                     world.addFreshEntity(proj);
                 }else{
                     if (!entity.isCreative()) {
-                        refund(entity);
+                        AbilityHelper.refundEnergy(entity,this);
                     }
                 }
 

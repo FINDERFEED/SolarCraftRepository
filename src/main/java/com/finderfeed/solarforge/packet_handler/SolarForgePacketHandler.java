@@ -32,10 +32,7 @@ public class SolarForgePacketHandler {
 
     public static void registerMessages(){
         INSTANCE.registerMessage(nextID(), CastAbilityPacket.class, CastAbilityPacket::toBytes, CastAbilityPacket::new, CastAbilityPacket::handle);
-        INSTANCE.registerMessage(nextID(), AbilityBuyPacket.class, AbilityBuyPacket::toBytes, AbilityBuyPacket::new, AbilityBuyPacket::handle);
         INSTANCE.registerMessage(nextID(), AbilityIndexSetPacket.class, AbilityIndexSetPacket::toBytes, AbilityIndexSetPacket::new, AbilityIndexSetPacket::handle);
-        INSTANCE.registerMessage(nextID(), ResetAllAbilitiesPacket.class, ResetAllAbilitiesPacket::toBytes, ResetAllAbilitiesPacket::new, ResetAllAbilitiesPacket::handle);
-        INSTANCE.registerMessage(nextID(), UpdateManaPacket.class, UpdateManaPacket::toBytes, UpdateManaPacket::new, UpdateManaPacket::handle);
         INSTANCE.registerMessage(nextID(), ToggleAlchemistPacket.class, ToggleAlchemistPacket::toBytes, ToggleAlchemistPacket::new, ToggleAlchemistPacket::handle);
         INSTANCE.registerMessage(nextID(), UpdateProgressOnClientPacket.class, UpdateProgressOnClientPacket::toBytes, UpdateProgressOnClientPacket::new, UpdateProgressOnClientPacket::handle);
         INSTANCE.registerMessage(nextID(), UpdateStacksOnClientPacketPool.class, UpdateStacksOnClientPacketPool::toBytes, UpdateStacksOnClientPacketPool::new, UpdateStacksOnClientPacketPool::handle);
@@ -54,7 +51,6 @@ public class SolarForgePacketHandler {
         INSTANCE.registerMessage(nextID(), ReloadChunks.class, ReloadChunks::toBytes, ReloadChunks::new, ReloadChunks::handle);
         INSTANCE.registerMessage(nextID(), UpdateInventoryPacket.class, UpdateInventoryPacket::toBytes, UpdateInventoryPacket::new, UpdateInventoryPacket::handle);
         INSTANCE.registerMessage(nextID(), RunicTablePacket.class, RunicTablePacket::toBytes, RunicTablePacket::new, RunicTablePacket::handle);
-
         INSTANCE.registerMessage(nextID(), UpdateTypeOnClientPacket.class, UpdateTypeOnClientPacket::toBytes, UpdateTypeOnClientPacket::new, UpdateTypeOnClientPacket::handle);
         INSTANCE.registerMessage(nextID(), UpdateEnergyOnClientPacket.class, UpdateEnergyOnClientPacket::toBytes, UpdateEnergyOnClientPacket::new, UpdateEnergyOnClientPacket::handle);
         INSTANCE.registerMessage(nextID(), TriggerProgressionShaderPacket.class, TriggerProgressionShaderPacket::toBytes, TriggerProgressionShaderPacket::new, TriggerProgressionShaderPacket::handle);
@@ -74,6 +70,7 @@ public class SolarForgePacketHandler {
         INSTANCE.registerMessage(nextID(), TeleportEntityPacket.class, TeleportEntityPacket::toBytes, TeleportEntityPacket::new, TeleportEntityPacket::handle);
         INSTANCE.registerMessage(nextID(), DisablePlayerFlightPacket.class, DisablePlayerFlightPacket::toBytes, DisablePlayerFlightPacket::new, DisablePlayerFlightPacket::handle);
         INSTANCE.registerMessage(nextID(), ShadowBoltExplosionPacket.class, ShadowBoltExplosionPacket::toBytes, ShadowBoltExplosionPacket::new, ShadowBoltExplosionPacket::handle);
+        INSTANCE.registerMessage(nextID(),ToggleableAbilityPacket.class, ToggleableAbilityPacket::toBytes, ToggleableAbilityPacket::new, ToggleableAbilityPacket::handle);
     }
 //            INSTANCE.registerMessage(nextID(), .class, ::toBytes, ::new, ::handle);
     //RepeaterParentUpdateOnClient

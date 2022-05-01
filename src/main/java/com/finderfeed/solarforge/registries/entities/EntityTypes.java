@@ -69,8 +69,8 @@ public class EntityTypes {
     public static final RegistryObject<EntityType<MineEntityCrystalBoss>> CRYSTAL_BOSS_MINE = ENTITY_TYPE_REGISTER.register("crystal_boss_mine",()->
             EntityType.Builder.of(MineEntityCrystalBoss::new,MobCategory.CREATURE).sized(1,0.3f).build("crystal_boss_mine"));
 
-    public static final RegistryObject<EntityType<FallingMagicMissile>> FALLING_MAGIC_MISSILE = ENTITY_TYPE_REGISTER.register("falling_star", () ->
-            EntityType.Builder.<FallingMagicMissile>of(FallingMagicMissile::new, MobCategory.MISC)
+    public static final RegistryObject<EntityType<MagicMissile>> FALLING_MAGIC_MISSILE = ENTITY_TYPE_REGISTER.register("falling_star", () ->
+            EntityType.Builder.<MagicMissile>of(MagicMissile::new, MobCategory.MISC)
                     .sized(0.2f, 0.2f).updateInterval(5).build("falling_star"));
 
     public static final RegistryObject<EntityType<RandomBadEffectProjectile>> RANDOM_BAD_EFFECT_PROJECTILE = ENTITY_TYPE_REGISTER.register("rnd_effect_proj", () ->

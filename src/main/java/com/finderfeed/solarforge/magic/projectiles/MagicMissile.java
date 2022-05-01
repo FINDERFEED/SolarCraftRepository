@@ -5,6 +5,7 @@ import com.finderfeed.solarforge.entities.CrystalBossEntity;
 import com.finderfeed.solarforge.misc_things.CrystalBossBuddy;
 import com.finderfeed.solarforge.client.particles.ParticleTypesRegistry;
 import com.finderfeed.solarforge.packet_handler.packets.misc_packets.ExplosionParticlesPacket;
+import com.finderfeed.solarforge.registries.SolarcraftDamageSources;
 import com.finderfeed.solarforge.registries.entities.EntityTypes;
 import com.finderfeed.solarforge.registries.sounds.Sounds;
 import net.minecraft.core.particles.ParticleOptions;
@@ -20,23 +21,23 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
 
-public class FallingMagicMissile extends AbstractHurtingProjectile implements CrystalBossBuddy {
+public class MagicMissile extends AbstractHurtingProjectile implements CrystalBossBuddy {
 
-    private boolean removeIT = false;
+
     private double speedDecrement = 0.04;
     private Float damage;
 
-    public FallingMagicMissile(EntityType<? extends AbstractHurtingProjectile> p_36833_, Level p_36834_) {
+    public MagicMissile(EntityType<? extends AbstractHurtingProjectile> p_36833_, Level p_36834_) {
         super(p_36833_, p_36834_);
     }
 
 
-    public FallingMagicMissile(Level p_36834_, double x, double y, double z) {
+    public MagicMissile(Level p_36834_, double x, double y, double z) {
         super(EntityTypes.FALLING_MAGIC_MISSILE.get(), p_36834_);
         this.setDeltaMovement(x,y,z);
     }
 
-    public FallingMagicMissile(Level p_36834_, Vec3 speed) {
+    public MagicMissile(Level p_36834_, Vec3 speed) {
         super(EntityTypes.FALLING_MAGIC_MISSILE.get(), p_36834_);
         this.setDeltaMovement(speed);
     }
@@ -44,11 +45,7 @@ public class FallingMagicMissile extends AbstractHurtingProjectile implements Cr
 
     @Override
     public void tick() {
-        if (!level.isClientSide){
-            if (this.removeIT){
-                this.kill();
-            }
-        }
+
         super.tick();
 
         if (!level.isClientSide){
@@ -65,7 +62,7 @@ public class FallingMagicMissile extends AbstractHurtingProjectile implements Cr
     @Override
     protected void onHitEntity(EntityHitResult hit) {
         super.onHitEntity(hit);
-        if (!(hit.getEntity() instanceof CrystalBossBuddy) && !(hit.getEntity() instanceof FallingMagicMissile)){
+        if (!(hit.getEntity() instanceof CrystalBossBuddy) && !(hit.getEntity() instanceof MagicMissile)){
             if (Helpers.isVulnerable(hit.getEntity())){
                 if (damage == null) {
                     hit.getEntity().hurt(DamageSource.MAGIC,CrystalBossEntity.AIR_STRIKE_DAMAGE);
@@ -96,27 +93,24 @@ public class FallingMagicMissile extends AbstractHurtingProjectile implements Cr
     }
 
     private void explode(){
-        if (this.level.isClientSide){
-
-
-            Helpers.createSmallSolarStrikeParticleExplosionWithLines(level,this.position().add(this.getDeltaMovement().multiply(0.7,0.7,0.7)),2,0.1f,0.5f);
-        }else{
+        if (!this.level.isClientSide){
             level.playSound(null,this.getX(),this.getY(),this.getZ(), Sounds.SOLAR_EXPLOSION.get(), SoundSource.AMBIENT,level.random.nextFloat()*0.5f+0.5f,1f);
             this.level.getEntitiesOfClass(LivingEntity.class,new AABB(this.position().add(-1.5,-1.5,-1.5),this.position().add(1.5,1.5,1.5)),(living)->{
                 return !(living instanceof CrystalBossBuddy);
             }).forEach((entity)->{
                 if (Helpers.isVulnerable(entity)){
-                    entity.hurt(DamageSource.MAGIC,damage != null ? damage : 3);
+                    entity.hurt(SolarcraftDamageSources.RUNIC_MAGIC,damage != null ? damage : 3);
                     entity.invulnerableTime = 0;
                 }
             });
-            this.removeIT = true;
+            ExplosionParticlesPacket.send(level, position().add(getDeltaMovement()));
+            this.kill();
         }
     }
 
     @Override
     public boolean save(CompoundTag tag) {
-        tag.putBoolean("removeit",this.removeIT);
+
         tag.putDouble("speedD",speedDecrement);
         tag.putFloat("dam",damage);
         return super.save(tag);
@@ -124,7 +118,7 @@ public class FallingMagicMissile extends AbstractHurtingProjectile implements Cr
 
     @Override
     public void load(CompoundTag tag) {
-        this.removeIT= tag.getBoolean("removeit");
+
         this.speedDecrement = tag.getDouble("speedD");
         this.damage = tag.getFloat("dam");
         super.load(tag);

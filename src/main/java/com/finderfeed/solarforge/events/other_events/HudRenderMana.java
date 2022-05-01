@@ -1,13 +1,17 @@
 package com.finderfeed.solarforge.events.other_events;
 
 import com.finderfeed.solarforge.ClientHelpers;
+import com.finderfeed.solarforge.SolarForge;
+import com.finderfeed.solarforge.abilities.ability_classes.ToggleableAbility;
 import com.finderfeed.solarforge.local_library.helpers.RenderingTools;
 import com.finderfeed.solarforge.capabilities.capability_mana.CapabilitySolarMana;
 import com.finderfeed.solarforge.magic.blocks.infusing_table_things.SolarWandItem;
 import com.finderfeed.solarforge.magic.items.runic_energy.IRunicEnergyUser;
 import com.finderfeed.solarforge.misc_things.ManaConsumer;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
+import com.finderfeed.solarforge.registries.abilities.AbilitiesRegistry;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
@@ -15,6 +19,10 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+
+import java.util.ArrayList;
+import java.util.List;
+
 //,value = Dist.CLIENT
 @Mod.EventBusSubscriber(modid = "solarforge",bus = Mod.EventBusSubscriber.Bus.FORGE,value = Dist.CLIENT)
 public class HudRenderMana {
@@ -28,12 +36,24 @@ public class HudRenderMana {
 
 
         if (event.getType() == RenderGameOverlayEvent.ElementType.TEXT){
-           //TODO:Toggleable abilities overlay
-            if (mc.player.getPersistentData().getBoolean("is_alchemist_toggled")){
-                int height = event.getWindow().getGuiScaledHeight();
-                ClientHelpers.bindText(Loc2);
-                GuiComponent.blit(event.getMatrixStack(),0,height/2-30,100,0,27,27,38,180,185);
+            List<ResourceLocation> locationsToRender = new ArrayList<>();
+            for (ToggleableAbility ability : AbilitiesRegistry.getToggleableAbilities()){
+                if (ability.isToggled(mc.player)){
+                    locationsToRender.add(new ResourceLocation(SolarForge.MOD_ID,"textures/abilities/" + ability.id + ".png"));
+                }
             }
+
+            int initYPos = mc.getWindow().getGuiScaledHeight()/2 - 10 - (locationsToRender.size()-1)*20;
+            int initXPos = mc.getWindow().getGuiScaledWidth() - 20;
+            for (int i = 0; i < locationsToRender.size();i++){
+                ResourceLocation location = locationsToRender.get(i);
+                ClientHelpers.bindText(location);
+                Gui.blit(event.getMatrixStack(),initXPos,initYPos + i*20,0,0,20,20,20,20);
+            }
+
+
+
+
 
             if (mc.player.getMainHandItem().getItem() instanceof SolarWandItem){
                 int height = event.getWindow().getGuiScaledHeight();

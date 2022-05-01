@@ -1,7 +1,9 @@
 package com.finderfeed.solarforge.abilities.ability_classes;
 
 import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.abilities.AbilityHelper;
 import com.finderfeed.solarforge.entities.MyFallingBlockEntity;
+import com.finderfeed.solarforge.magic.items.runic_energy.RunicEnergyCost;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LightningBolt;
@@ -16,15 +18,14 @@ import net.minecraft.server.level.ServerLevel;
 
 public class LightningAbility extends AbstractAbility{
     public LightningAbility() {
-        super("lightning",new RunicEnergyCostConstructor()
-        .addRunicEnergy(RunicEnergy.Type.KELDA,400)
-        .addRunicEnergy(RunicEnergy.Type.URBA,250),30000);
+        super("lightning",new RunicEnergyCost()
+        .set(RunicEnergy.Type.KELDA,400)
+        .set(RunicEnergy.Type.URBA,250),30000);
     }
 
     @Override
     public void cast(ServerPlayer entity, ServerLevel world) {
-        super.cast(entity, world);
-        if (allowed) {
+        if (AbilityHelper.isAbilityUsable(entity,this)) {
 
             Vec3 vec = entity.getLookAngle().multiply(200, 200, 200);
             ClipContext ctx = new ClipContext(entity.position().add(0, 1.5, 0), entity.position().add(0, 1.5, 0).add(vec), ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, entity);
@@ -43,7 +44,7 @@ public class LightningAbility extends AbstractAbility{
                     world.explode(entity,null,StoneDestroyerCalculator.INSTANCE_01, pos.getX(), pos.getY()-5, pos.getZ(), 4, true, Explosion.BlockInteraction.BREAK);
                 }else{
                     if (!entity.isCreative()) {
-                        refund(entity);
+                        AbilityHelper.refundEnergy(entity,this);
                     }
                 }
 

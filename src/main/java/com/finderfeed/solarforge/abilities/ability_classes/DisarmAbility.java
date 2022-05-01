@@ -1,6 +1,8 @@
 package com.finderfeed.solarforge.abilities.ability_classes;
 
 import com.finderfeed.solarforge.SolarForge;
+import com.finderfeed.solarforge.abilities.AbilityHelper;
+import com.finderfeed.solarforge.magic.items.runic_energy.RunicEnergyCost;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -15,21 +17,21 @@ import java.util.List;
 
 public class DisarmAbility extends AbstractAbility{
     public DisarmAbility() {
-        super("solar_stun",new RunicEnergyCostConstructor()
-        .addRunicEnergy(RunicEnergy.Type.URBA,450)
-        .addRunicEnergy(RunicEnergy.Type.KELDA,600),45000);
+        super("solar_stun",new RunicEnergyCost()
+        .set(RunicEnergy.Type.URBA,450)
+        .set(RunicEnergy.Type.KELDA,600),45000);
     }
 
     @Override
     public void cast(ServerPlayer entity, ServerLevel world) {
-        super.cast(entity, world);
-        if (allowed) {
+        if (AbilityHelper.isAbilityUsable(entity,this)) {
             world.playSound(null, entity.getX(), entity.getY(), entity.getZ(), SoundEvents.ZOMBIE_VILLAGER_CURE, SoundSource.AMBIENT, 1, 1);
             List<Entity> list = world.getEntities(entity, new AABB(-8, -8, -8, 8, 8, 8).move(entity.position()), x -> x instanceof LivingEntity);
             for (int i = 0; i < list.size(); i++) {
                 LivingEntity ent = (LivingEntity) list.get(i);
                 ent.addEffect(new MobEffectInstance(SolarForge.SOLAR_STUN.get(), 100, 0));
             }
+            AbilityHelper.spendAbilityEnergy(entity,this);
         }
     }
 }

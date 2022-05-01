@@ -5,7 +5,7 @@ import com.finderfeed.solarforge.local_library.custom_registries.CustomRegistryE
 
 public class SolarcraftRegistries {
 
-    public static CustomRegistryEntry<AbstractAbility> ABILITIES = new CustomRegistryEntry<>("abilities");
+
 
 
 }
