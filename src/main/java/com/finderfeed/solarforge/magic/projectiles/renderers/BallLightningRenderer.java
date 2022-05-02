@@ -2,7 +2,7 @@ package com.finderfeed.solarforge.magic.projectiles.renderers;
 
 import com.finderfeed.solarforge.client.rendering.CoreShaders;
 import com.finderfeed.solarforge.client.rendering.rendertypes.SolarCraftRenderTypes;
-import com.finderfeed.solarforge.entities.BallLightningProjectile;
+import com.finderfeed.solarforge.entities.not_alive.BallLightningProjectile;
 import com.finderfeed.solarforge.local_library.helpers.RenderingTools;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;

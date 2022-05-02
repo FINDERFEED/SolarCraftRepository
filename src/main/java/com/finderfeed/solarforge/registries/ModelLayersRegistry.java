@@ -1,6 +1,7 @@
 package com.finderfeed.solarforge.registries;
 
 
+import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.abilities.meteorite.MeteoriteModel;
 import com.finderfeed.solarforge.client.models.divine_armor.DivineBootsModel;
 import com.finderfeed.solarforge.client.models.divine_armor.DivineChestplateModel;
@@ -19,7 +20,10 @@ import com.finderfeed.solarforge.magic.items.item_models.SolarGodShield;
 import com.finderfeed.solarforge.magic.projectiles.renderers.UltraCrossbowProjectileRenderer;
 
 import com.finderfeed.solarforge.magic.projectiles.renderers.models.RunicHammerModel;
+import net.minecraft.client.model.ZombieModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
+import net.minecraft.client.model.geom.builders.CubeDeformation;
+import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
@@ -60,6 +64,8 @@ public class ModelLayersRegistry {
     public static final ModelLayerLocation RADIANT_PORTAL_CREATOR_MODEL =
             new ModelLayerLocation(new ResourceLocation("solarforge","radiant_model_creator"), "main");
 
+    public static final ModelLayerLocation SHADOW_ZOMBIE_LAYER = new ModelLayerLocation(new ResourceLocation(SolarForge.MOD_ID,"shadow_zombie_layer"),"main");
+
     @SubscribeEvent
     public static void registerModelLayers(EntityRenderersEvent.RegisterLayerDefinitions event){
         event.registerLayerDefinition(METEORITE_LAYER, MeteoriteModel::createLayer);
@@ -79,5 +85,7 @@ public class ModelLayersRegistry {
         event.registerLayerDefinition(DivineLeggingsModel.LAYER_LOCATION, DivineLeggingsModel::createBodyLayer);
         event.registerLayerDefinition(DivineHelmetModel.LAYER_LOCATION, DivineHelmetModel::createBodyLayer);
         event.registerLayerDefinition(DivineBootsModel.LAYER_LOCATION, DivineBootsModel::createBodyLayer);
+        event.registerLayerDefinition(SHADOW_ZOMBIE_LAYER, ()->
+                LayerDefinition.create(ZombieModel.createMesh(new CubeDeformation(0.5f),0.0f),64,64));
     }
 }

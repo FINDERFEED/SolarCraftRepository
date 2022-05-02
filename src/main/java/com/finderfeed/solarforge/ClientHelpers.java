@@ -8,7 +8,7 @@ import com.finderfeed.solarforge.client.particles.SolarcraftParticle;
 import com.finderfeed.solarforge.client.toasts.UnlockedEnergyTypeToast;
 import com.finderfeed.solarforge.config.JsonFragmentsHelper;
 import com.finderfeed.solarforge.config.SolarcraftClientConfig;
-import com.finderfeed.solarforge.entities.BallLightningProjectile;
+import com.finderfeed.solarforge.entities.not_alive.BallLightningProjectile;
 import com.finderfeed.solarforge.events.RenderEventsHandler;
 import com.finderfeed.solarforge.local_library.effects.LightningBoltPath;
 import com.finderfeed.solarforge.local_library.helpers.FDMathHelper;

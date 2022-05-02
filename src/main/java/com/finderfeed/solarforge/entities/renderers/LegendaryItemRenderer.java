@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.entities.renderers;
 
-import com.finderfeed.solarforge.entities.LegendaryItem;
+import com.finderfeed.solarforge.entities.not_alive.LegendaryItem;
 import com.finderfeed.solarforge.local_library.helpers.RenderingTools;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Vector3f;

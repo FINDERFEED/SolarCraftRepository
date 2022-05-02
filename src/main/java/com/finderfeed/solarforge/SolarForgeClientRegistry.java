@@ -231,6 +231,7 @@ public class SolarForgeClientRegistry {
         event.registerEntityRenderer(EntityTypes.RUNIC_WARRIOR.get(), RunicWarriorRenderer::new);
         event.registerEntityRenderer(EntityTypes.RUNIC_WARRIOR_ROCKET.get(), RunicWarriorSummoningRocketRenderer::new);
         event.registerEntityRenderer(EntityTypes.SHADOW_BOLT.get(), ShadowBoltRenderer::new);
+        event.registerEntityRenderer(EntityTypes.SHADOW_ZOMBIE.get(), ShadowZombieRenderer::new);
     }
 
 }

@@ -65,7 +65,7 @@ public class MagicMissile extends AbstractHurtingProjectile implements CrystalBo
         if (!(hit.getEntity() instanceof CrystalBossBuddy) && !(hit.getEntity() instanceof MagicMissile)){
             if (Helpers.isVulnerable(hit.getEntity())){
                 if (damage == null) {
-                    hit.getEntity().hurt(DamageSource.MAGIC,CrystalBossEntity.AIR_STRIKE_DAMAGE);
+                    hit.getEntity().hurt(SolarcraftDamageSources.RUNIC_MAGIC,CrystalBossEntity.AIR_STRIKE_DAMAGE);
                     hit.getEntity().invulnerableTime = 0;
                     this.kill();
                 }else{
@@ -73,7 +73,7 @@ public class MagicMissile extends AbstractHurtingProjectile implements CrystalBo
                         level.playSound(null,this.getX(),this.getY(),this.getZ(), Sounds.SOLAR_EXPLOSION.get(), SoundSource.AMBIENT,level.random.nextFloat()*0.5f+0.5f,1f);
                         ExplosionParticlesPacket.send(level, position().add(getDeltaMovement()));
                         if (Helpers.isVulnerable(hit.getEntity())){
-                            hit.getEntity().hurt(DamageSource.MAGIC,damage != null ? damage : 3);
+                            hit.getEntity().hurt(SolarcraftDamageSources.RUNIC_MAGIC,damage != null ? damage : 3);
                             hit.getEntity().invulnerableTime = 0;
                         }
                     }

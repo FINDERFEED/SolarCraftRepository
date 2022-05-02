@@ -29,6 +29,7 @@ public class Sounds {
     public static final RegistryObject<SoundEvent> SUNSTRIKE = SOUND_EVENTS.register("sunstrike",()-> new SoundEvent(new ResourceLocation(SolarForge.MOD_ID,"sunstrike")));
     public static final RegistryObject<SoundEvent> SHADOW_BOLT_EXPLOSION = SOUND_EVENTS.register("shadow_bolt",()-> new SoundEvent(new ResourceLocation(SolarForge.MOD_ID,"shadow_bolt")));
     public static final RegistryObject<SoundEvent> EARTHQUAKE = SOUND_EVENTS.register("earthquake",()-> new SoundEvent(new ResourceLocation(SolarForge.MOD_ID,"earthquake")));
+    public static final RegistryObject<SoundEvent> SHADOW_ZOMBIE_HURT = SOUND_EVENTS.register("shadow_zombie_hurt",()-> new SoundEvent(new ResourceLocation(SolarForge.MOD_ID,"shadow_zombie_hurt")));
 
     //original author: https://freesound.org/people/ejfortin/
     public static final RegistryObject<SoundEvent> BALL_LIGHTNING_BLOW = SOUND_EVENTS.register("ball_lightning_blow",()-> new SoundEvent(new ResourceLocation(SolarForge.MOD_ID,"ball_lightning_blow")));

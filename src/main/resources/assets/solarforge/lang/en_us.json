@@ -684,5 +684,6 @@
   "solarcraft.catalysts_jei": "Catalysts. Definitions:",
   "solarcraft.buy_cost": "Cost",
   "death.attack.runic_magic": "%s got killed by runic magic.",
-  "solarcraft_button.magic_bolt": "Magic Bolt"
+  "solarcraft_button.magic_bolt": "Magic Bolt",
+  "entity.solarforge.shadow_zombie": "Shadow Zombie"
 }

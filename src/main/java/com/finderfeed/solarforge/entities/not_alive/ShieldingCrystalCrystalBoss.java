@@ -1,4 +1,4 @@
-package com.finderfeed.solarforge.entities;
+package com.finderfeed.solarforge.entities.not_alive;
 
 import com.finderfeed.solarforge.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarforge.misc_things.CrystalBossBuddy;

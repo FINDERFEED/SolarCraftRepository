@@ -1,7 +1,7 @@
 package com.finderfeed.solarforge.entities.renderers;
 
 import com.finderfeed.solarforge.entities.CrystalBossEntity;
-import com.finderfeed.solarforge.entities.ShieldingCrystalCrystalBoss;
+import com.finderfeed.solarforge.entities.not_alive.ShieldingCrystalCrystalBoss;
 import com.finderfeed.solarforge.events.other_events.OBJModels;
 import com.finderfeed.solarforge.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarforge.local_library.helpers.RenderingTools;

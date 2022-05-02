@@ -9,6 +9,7 @@ import com.finderfeed.solarforge.config.JsonFragmentsHelper;
 import com.finderfeed.solarforge.config.SolarcraftClientConfig;
 import com.finderfeed.solarforge.config.SolarcraftConfig;
 import com.finderfeed.solarforge.entities.*;
+import com.finderfeed.solarforge.entities.not_alive.*;
 import com.finderfeed.solarforge.events.PlayerTickEvent;
 import com.finderfeed.solarforge.events.RenderEventsHandler;
 import com.finderfeed.solarforge.magic.blocks.SolarOreBlock;
@@ -268,6 +269,7 @@ public class SolarForge
             event.put(EntityTypes.REFRACTION_CRYSTAL.get(), RefractionCrystal.createAttributes().build());
             event.put(EntityTypes.EXPLOSIVE_CRYSTAL.get(), ExplosiveCrystal.createAttributes().build());
             event.put(EntityTypes.RUNIC_WARRIOR.get(), RunicWarrior.createAttributes().build());
+            event.put(EntityTypes.SHADOW_ZOMBIE.get(), ShadowZombie.createAttributes().build());
         }
 
         @SubscribeEvent

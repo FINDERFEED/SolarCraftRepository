@@ -2,7 +2,7 @@ package com.finderfeed.solarforge.abilities.ability_classes;
 
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.abilities.AbilityHelper;
-import com.finderfeed.solarforge.entities.MyFallingBlockEntity;
+import com.finderfeed.solarforge.entities.not_alive.MyFallingBlockEntity;
 import com.finderfeed.solarforge.magic.items.runic_energy.RunicEnergyCost;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import net.minecraft.world.entity.EntityType;

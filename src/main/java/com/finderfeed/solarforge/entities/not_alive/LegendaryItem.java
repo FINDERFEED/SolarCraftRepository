@@ -1,4 +1,4 @@
-package com.finderfeed.solarforge.entities;
+package com.finderfeed.solarforge.entities.not_alive;
 
 import com.finderfeed.solarforge.registries.entities.EntityTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -11,7 +11,6 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;

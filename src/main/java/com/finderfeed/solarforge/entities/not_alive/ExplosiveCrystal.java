@@ -1,4 +1,4 @@
-package com.finderfeed.solarforge.entities;
+package com.finderfeed.solarforge.entities.not_alive;
 
 import com.finderfeed.solarforge.ClientHelpers;
 import com.finderfeed.solarforge.client.particles.ParticleTypesRegistry;

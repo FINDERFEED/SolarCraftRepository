@@ -2,7 +2,7 @@ package com.finderfeed.solarforge.entities.renderers;
 
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.client.rendering.rendertypes.SolarCraftRenderTypes;
-import com.finderfeed.solarforge.entities.EarthquakeEntity;
+import com.finderfeed.solarforge.entities.not_alive.EarthquakeEntity;
 import com.finderfeed.solarforge.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarforge.local_library.helpers.RenderingTools;
 import com.mojang.blaze3d.vertex.PoseStack;

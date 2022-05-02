@@ -1,14 +1,12 @@
 package com.finderfeed.solarforge.magic.items;
 
 import com.finderfeed.solarforge.ClientHelpers;
-import com.finderfeed.solarforge.Helpers;
-import com.finderfeed.solarforge.entities.BallLightningProjectile;
+import com.finderfeed.solarforge.entities.not_alive.BallLightningProjectile;
 import com.finderfeed.solarforge.magic.items.primitive.RareSolarcraftItem;
 import com.finderfeed.solarforge.magic.items.runic_energy.IRunicEnergyUser;
 import com.finderfeed.solarforge.magic.items.runic_energy.ItemRunicEnergy;
 import com.finderfeed.solarforge.magic.items.runic_energy.RunicEnergyCost;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.unlockables.AncientFragment;
-import com.finderfeed.solarforge.misc_things.ManaConsumer;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import com.finderfeed.solarforge.registries.entities.EntityTypes;
 import com.finderfeed.solarforge.registries.sounds.Sounds;

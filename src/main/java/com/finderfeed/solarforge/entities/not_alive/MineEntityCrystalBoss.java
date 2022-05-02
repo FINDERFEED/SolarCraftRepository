@@ -1,6 +1,7 @@
-package com.finderfeed.solarforge.entities;
+package com.finderfeed.solarforge.entities.not_alive;
 
 import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.entities.CrystalBossEntity;
 import com.finderfeed.solarforge.misc_things.CrystalBossBuddy;
 import com.finderfeed.solarforge.registries.SolarcraftDamageSources;
 import com.finderfeed.solarforge.registries.sounds.Sounds;
@@ -10,14 +11,12 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 
@@ -77,7 +76,7 @@ public class MineEntityCrystalBoss extends PathfinderMob implements CrystalBossB
             level.getEntitiesOfClass(LivingEntity.class,new AABB(-1.5,-1.0,-1.5,1.5,2,1.5).move(position()),(ent)->{
                 return !(ent instanceof CrystalBossBuddy);
             }).forEach((living)->{
-                living.hurt(SolarcraftDamageSources.RUNIC_MAGIC,CrystalBossEntity.MINES_DAMAGE);
+                living.hurt(SolarcraftDamageSources.RUNIC_MAGIC, CrystalBossEntity.MINES_DAMAGE);
             });
         }
 

@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.entities.renderers;
 
-import com.finderfeed.solarforge.entities.RipRayGenerator;
+import com.finderfeed.solarforge.entities.not_alive.RipRayGenerator;
 import com.finderfeed.solarforge.events.other_events.OBJModels;
 import com.finderfeed.solarforge.local_library.helpers.RenderingTools;
 import com.mojang.blaze3d.vertex.PoseStack;

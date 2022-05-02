@@ -64,5 +64,8 @@
   },
   "earthquake": {
     "sounds": ["solarforge:earthquake_explosion"]
+  },
+  "shadow_zombie_hurt": {
+    "sounds": ["solarforge:shadow_zombie_hurt"]
   }
 }

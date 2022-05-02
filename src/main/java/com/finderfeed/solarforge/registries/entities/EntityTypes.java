@@ -2,6 +2,7 @@ package com.finderfeed.solarforge.registries.entities;
 
 
 import com.finderfeed.solarforge.entities.*;
+import com.finderfeed.solarforge.entities.not_alive.*;
 import com.finderfeed.solarforge.magic.blocks.blockentities.projectiles.AbstractTurretProjectile;
 import com.finderfeed.solarforge.magic.blocks.blockentities.projectiles.MortarProjectile;
 import com.finderfeed.solarforge.magic.blocks.blockentities.projectiles.ShadowBolt;
@@ -43,6 +44,9 @@ public class EntityTypes {
 
     public static final RegistryObject<EntityType<VillagerSolarMaster>> VILLAGER_SOLAR_MASTER = ENTITY_TYPE_REGISTER.register("solar_master_villager",()->
             EntityType.Builder.of(VillagerSolarMaster::new,MobCategory.CREATURE).sized(1,2).build("solar_master_villager"));
+
+    public static final RegistryObject<EntityType<ShadowZombie>> SHADOW_ZOMBIE = ENTITY_TYPE_REGISTER.register("shadow_zombie",()->
+            EntityType.Builder.of(ShadowZombie::new,MobCategory.MONSTER).sized(1,2).build("shadow_zombie"));
 
     public static final RegistryObject<EntityType<MyFallingBlockEntity>> FALLING_BLOCK = ENTITY_TYPE_REGISTER.register("my_falling_block",()->
             EntityType.Builder.<MyFallingBlockEntity>of(MyFallingBlockEntity::new,MobCategory.MISC).sized(0.98F, 0.98F).clientTrackingRange(10).updateInterval(20).build("my_falling_block"));
