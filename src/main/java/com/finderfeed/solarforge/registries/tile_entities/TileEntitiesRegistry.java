@@ -99,5 +99,6 @@ public class TileEntitiesRegistry {
     public static final RegistryObject<BlockEntityType<UlderaPylon>> ULDERA_PYLON = TILE_ENTITY_TYPE.register("uldera_pylon",()->
             BlockEntityType.Builder.of(UlderaPylon::new, BlocksRegistry.ULDERA_PYLON.get()).build(null));
 
-
+    public static final RegistryObject<BlockEntityType<CrystalEnergyVinesTile>> CRYSTAL_ENERGY_VINES = TILE_ENTITY_TYPE.register("crystal_energy_vines",()->
+            BlockEntityType.Builder.of(CrystalEnergyVinesTile::new, BlocksRegistry.CRYSTAL_ENERGY_VINES.get()).build(null));
 }

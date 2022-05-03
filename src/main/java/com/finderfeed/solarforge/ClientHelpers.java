@@ -5,6 +5,7 @@ import com.finderfeed.solarforge.abilities.screens.AbilityBuyScreen;
 import com.finderfeed.solarforge.client.particles.ParticleTypesRegistry;
 import com.finderfeed.solarforge.client.particles.SmallSolarStrikeParticle;
 import com.finderfeed.solarforge.client.particles.SolarcraftParticle;
+import com.finderfeed.solarforge.client.screens.CrystalEnergyVinesPuzzleScreen;
 import com.finderfeed.solarforge.client.toasts.UnlockedEnergyTypeToast;
 import com.finderfeed.solarforge.config.JsonFragmentsHelper;
 import com.finderfeed.solarforge.config.SolarcraftClientConfig;
@@ -12,6 +13,7 @@ import com.finderfeed.solarforge.entities.not_alive.BallLightningProjectile;
 import com.finderfeed.solarforge.events.RenderEventsHandler;
 import com.finderfeed.solarforge.local_library.effects.LightningBoltPath;
 import com.finderfeed.solarforge.local_library.helpers.FDMathHelper;
+import com.finderfeed.solarforge.magic.blocks.blockentities.CrystalEnergyVinesTile;
 import com.finderfeed.solarforge.magic.blocks.blockentities.RayTrapTileEntity;
 import com.finderfeed.solarforge.magic.blocks.blockentities.RuneEnergyPylonTile;
 import com.finderfeed.solarforge.magic.blocks.blockentities.containers.screens.RunicTableContainerScreen;
@@ -28,6 +30,7 @@ import com.google.gson.JsonObject;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Widget;
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.nbt.CompoundTag;
@@ -63,6 +66,15 @@ import java.util.function.Supplier;
 
 public class ClientHelpers {
 
+
+
+
+    public static void handlePuzzlePacket(BlockPos pos){
+        Level level = getLevel();
+        if (level.getBlockEntity(pos) instanceof CrystalEnergyVinesTile tile){
+            Minecraft.getInstance().setScreen(new CrystalEnergyVinesPuzzleScreen(tile));
+        }
+    }
 
     public static void disableFlight(boolean disable){
         if (disable) {
@@ -260,6 +272,9 @@ public class ClientHelpers {
         return Minecraft.getInstance().player;
     }
 
+    public static ClientLevel getLevel(){
+        return Minecraft.getInstance().level;
+    }
 
     public static void updateClientRunicEnergyForPlayer(float amount, RunicEnergy.Type type){
 

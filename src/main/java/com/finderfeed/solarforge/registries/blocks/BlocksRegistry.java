@@ -168,5 +168,6 @@ public class BlocksRegistry {
     public  static  final RegistryObject<Block> CRYSTAL = BLOCKS.register("crystal",()-> new CrystalBlock(BlockBehaviour.Properties.copy(Blocks.STONE).sound(SoundType.GLASS).noOcclusion()));
     public  static  final RegistryObject<Block> CORRUPTED_STONE = BLOCKS.register("corrupted_stone",()-> new Block(BlockBehaviour.Properties.copy(Blocks.STONE)));
     public  static  final RegistryObject<Block> ULDERA_RUNE_BLOCK = BLOCKS.register("uldera_rune_block",()-> new Block(BlockBehaviour.Properties.copy(Blocks.STONE)));
+    public  static  final RegistryObject<Block> CRYSTAL_ENERGY_VINES = BLOCKS.register("crystal_energy_vines",()-> new CrystalEnergyVinesBlock(BlockBehaviour.Properties.copy(Blocks.BEDROCK)));
 
 }

@@ -24,6 +24,10 @@ public class MagicBoltAbility extends AbstractAbility{
             magicMissile.setDeltaMovement(entity.getLookAngle());
             world.addFreshEntity(magicMissile);
             AbilityHelper.spendAbilityEnergy(entity,this);
+        }else {
+            if (AbilityHelper.isAbilityBought(entity,this)){
+                AbilityHelper.notEnoughEnergyMessage(entity,this);
+            }
         }
     }
 }

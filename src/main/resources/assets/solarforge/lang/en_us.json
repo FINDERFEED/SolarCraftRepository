@@ -685,5 +685,7 @@
   "solarcraft.buy_cost": "Cost",
   "death.attack.runic_magic": "%s got killed by runic magic.",
   "solarcraft_button.magic_bolt": "Magic Bolt",
-  "entity.solarforge.shadow_zombie": "Shadow Zombie"
+  "entity.solarforge.shadow_zombie": "Shadow Zombie",
+  "solarcraft.not_enough_runic_energy": "Not enough runic energy",
+  "solarcraft.failed_to_generate_puzzle": "Failed to generate puzzle. Try again."
 }

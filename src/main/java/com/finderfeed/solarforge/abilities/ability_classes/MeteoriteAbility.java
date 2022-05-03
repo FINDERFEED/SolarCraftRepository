@@ -16,7 +16,7 @@ import net.minecraft.server.level.ServerLevel;
 public class MeteoriteAbility extends AbstractAbility{
     public MeteoriteAbility() {
         super("meteorite",new RunicEnergyCost()
-        .set(RunicEnergy.Type.ZETA,500)
+        .set(RunicEnergy.Type.ZETA,1000)
         .set(RunicEnergy.Type.KELDA,300),50000);
     }
 

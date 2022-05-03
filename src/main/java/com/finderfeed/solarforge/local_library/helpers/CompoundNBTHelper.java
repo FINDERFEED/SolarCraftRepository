@@ -46,6 +46,35 @@ public class CompoundNBTHelper {
         return positions;
     }
 
+    /**
+     * ARRAY SHOULD BE A RECTANGLE!
+     */
+    public static void save2DIntArray(int[][] toSave,String saveID,CompoundTag tag){
+        CompoundTag arrayTag = new CompoundTag();
+        int xLength = toSave.length;
+        int yLength = toSave[0].length;
+        for (int i = 0;i < toSave.length;i++){
+            for (int j = 0; j < toSave[i].length;j++){
+                arrayTag.putInt(saveID + "_array_" + i + "" + j,toSave[i][j]);
+            }
+        }
+        arrayTag.putInt(saveID + "_xLen",xLength);
+        arrayTag.putInt(saveID + "_yLen",yLength);
+        tag.put(saveID,arrayTag);
+    }
+    public static int[][] load2DArray(String saveID,CompoundTag t){
+        CompoundTag tag = t.getCompound(saveID);
+        int xLength = tag.getInt(saveID + "_xLen");
+        int yLength = tag.getInt(saveID + "_yLen");
+        int[][] toReturn = new int[xLength][yLength];
+        for (int i = 0;i < xLength;i++){
+            for (int j = 0; j < yLength;j++){
+                toReturn[i][j] = tag.getInt(saveID + "_array_" + i + "" + j);
+            }
+        }
+        return toReturn;
+    }
+
 
 
 }

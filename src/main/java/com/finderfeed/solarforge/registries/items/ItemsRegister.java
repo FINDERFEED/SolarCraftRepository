@@ -300,6 +300,7 @@ public class ItemsRegister {
     public static final RegistryObject<Item> ULDERA_RUNE_BLOCK = ITEMS.register("uldera_rune_block",()->new BlockItem(BlocksRegistry.ULDERA_RUNE_BLOCK.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
     public static final RegistryObject<Item> CRYSTAL_HEART = ITEMS.register("crystal_heart",()->new RareSolarcraftItem(new Item.Properties().tab(SolarForge.SOLAR_GROUP_MATERIALS).rarity(Rarity.EPIC),()->null));
     public static final RegistryObject<Item> CRYSTAL_HEART_PIECE = ITEMS.register("crystal_heart_piece",()->new RareSolarcraftItem(new Item.Properties().tab(SolarForge.SOLAR_GROUP_MATERIALS).rarity(Rarity.EPIC),()->null));
+    public static final RegistryObject<Item> CRYSTAL_ENERGY_VINES = ITEMS.register("crystal_energy_vines",()->new BlockItem(BlocksRegistry.CRYSTAL_ENERGY_VINES.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP)));
 
 
 

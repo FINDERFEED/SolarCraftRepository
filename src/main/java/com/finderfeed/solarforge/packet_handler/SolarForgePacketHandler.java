@@ -1,6 +1,5 @@
 package com.finderfeed.solarforge.packet_handler;
 
-import com.finderfeed.solarforge.capabilities.capability_mana.UpdateManaPacket;
 import com.finderfeed.solarforge.magic.blocks.infusing_table_things.UpdateProgressOnClientPacket;
 import com.finderfeed.solarforge.magic.blocks.infusing_table_things.UpdateStacksOnClientTable;
 import com.finderfeed.solarforge.magic.blocks.infusing_table_things.infusing_pool.UpdateStacksOnClientPacketPool;
@@ -9,6 +8,8 @@ import com.finderfeed.solarforge.magic.items.solar_lexicon.packets.OpenScreenPac
 import com.finderfeed.solarforge.magic.items.solar_lexicon.packets.UpdateAllProgressionOnClient;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.packets.UpdateInventoryPacket;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.packets.UpdateProgressionOnClient;
+import com.finderfeed.solarforge.packet_handler.packets.crystal_energy_vines_puzzle.OpenPuzzleScreenPacket;
+import com.finderfeed.solarforge.packet_handler.packets.crystal_energy_vines_puzzle.PuzzleActionPacket;
 import com.finderfeed.solarforge.packet_handler.packets.misc_packets.BallLightningSpawnLightningParticles;
 import com.finderfeed.solarforge.packet_handler.packets.misc_packets.ExplosionParticlesPacket;
 import com.finderfeed.solarforge.packet_handler.packets.misc_packets.SolarStrikeEntityDoExplosion;
@@ -71,6 +72,8 @@ public class SolarForgePacketHandler {
         INSTANCE.registerMessage(nextID(), DisablePlayerFlightPacket.class, DisablePlayerFlightPacket::toBytes, DisablePlayerFlightPacket::new, DisablePlayerFlightPacket::handle);
         INSTANCE.registerMessage(nextID(), ShadowBoltExplosionPacket.class, ShadowBoltExplosionPacket::toBytes, ShadowBoltExplosionPacket::new, ShadowBoltExplosionPacket::handle);
         INSTANCE.registerMessage(nextID(),ToggleableAbilityPacket.class, ToggleableAbilityPacket::toBytes, ToggleableAbilityPacket::new, ToggleableAbilityPacket::handle);
+        INSTANCE.registerMessage(nextID(), OpenPuzzleScreenPacket.class, OpenPuzzleScreenPacket::toBytes, OpenPuzzleScreenPacket::new, OpenPuzzleScreenPacket::handle);
+        INSTANCE.registerMessage(nextID(), PuzzleActionPacket.class, PuzzleActionPacket::toBytes, PuzzleActionPacket::new, PuzzleActionPacket::handle);
     }
 //            INSTANCE.registerMessage(nextID(), .class, ::toBytes, ::new, ::handle);
     //RepeaterParentUpdateOnClient

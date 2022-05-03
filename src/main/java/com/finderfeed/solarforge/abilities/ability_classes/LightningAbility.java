@@ -19,7 +19,7 @@ import net.minecraft.server.level.ServerLevel;
 public class LightningAbility extends AbstractAbility{
     public LightningAbility() {
         super("lightning",new RunicEnergyCost()
-        .set(RunicEnergy.Type.KELDA,400)
+        .set(RunicEnergy.Type.KELDA,800)
         .set(RunicEnergy.Type.URBA,250),30000);
     }
 
@@ -50,6 +50,10 @@ public class LightningAbility extends AbstractAbility{
 
             }
 
+        }else{
+            if (AbilityHelper.isAbilityBought(entity,this)){
+                AbilityHelper.notEnoughEnergyMessage(entity,this);
+            }
         }
 
     }

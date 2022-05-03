@@ -22,6 +22,10 @@ public class FireballAbility extends AbstractAbility{
             fireball.setPos(entity.position().x + entity.getLookAngle().x * 1.5, entity.position().y + entity.getLookAngle().y * 1.5, entity.position().z + entity.getLookAngle().z * 1.5);
             world.addFreshEntity(fireball);
             AbilityHelper.spendAbilityEnergy(entity,this);
+        }else {
+            if (AbilityHelper.isAbilityBought(entity,this)){
+                AbilityHelper.notEnoughEnergyMessage(entity,this);
+            }
         }
     }
 }
