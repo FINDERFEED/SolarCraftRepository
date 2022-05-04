@@ -21,7 +21,7 @@ import java.util.Random;
 
 public class CrystalEnergyVinesTile extends BlockEntity {
 
-    public static final int PUZZLE_SIZE = 8;
+    public static final int PUZZLE_SIZE = 16;
 
     public static final IPosition[] MOVEMENTS = {
             new IPosition(1,0,0),
@@ -62,7 +62,7 @@ public class CrystalEnergyVinesTile extends BlockEntity {
         int[][] pat = new int[PUZZLE_SIZE][PUZZLE_SIZE];
         int tries = 0;
         boolean success = false;
-        while (tries++ < 100){
+        while (tries++ < 400){
             for (int i = 0; i < PUZZLE_SIZE; i++) {
                 for (int g = 0; g < PUZZLE_SIZE; g++) {
                     pat[i][g] = random.nextInt(2);

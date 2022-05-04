@@ -55,7 +55,7 @@ public class CompoundNBTHelper {
         int yLength = toSave[0].length;
         for (int i = 0;i < toSave.length;i++){
             for (int j = 0; j < toSave[i].length;j++){
-                arrayTag.putInt(saveID + "_array_" + i + "" + j,toSave[i][j]);
+                arrayTag.putInt(saveID + "_array_" + i + " " + j,toSave[i][j]);
             }
         }
         arrayTag.putInt(saveID + "_xLen",xLength);
@@ -69,7 +69,7 @@ public class CompoundNBTHelper {
         int[][] toReturn = new int[xLength][yLength];
         for (int i = 0;i < xLength;i++){
             for (int j = 0; j < yLength;j++){
-                toReturn[i][j] = tag.getInt(saveID + "_array_" + i + "" + j);
+                toReturn[i][j] = tag.getInt(saveID + "_array_" + i + " " + j);
             }
         }
         return toReturn;
