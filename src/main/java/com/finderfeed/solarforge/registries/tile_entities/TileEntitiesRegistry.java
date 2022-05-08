@@ -1,5 +1,6 @@
 package com.finderfeed.solarforge.registries.tile_entities;
 
+import com.finderfeed.solarforge.magic.blocks.blockentities.vines_puzzle.CrystalEnergyVinesTile;
 import com.finderfeed.solarforge.magic.blocks.infusing_table_things.infusing_pool.InfusingStandTileEntity;
 import com.finderfeed.solarforge.magic.blocks.blockentities.*;
 import com.finderfeed.solarforge.magic.runic_network.repeater.BaseRepeaterTile;

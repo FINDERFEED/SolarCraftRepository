@@ -13,7 +13,7 @@ import com.finderfeed.solarforge.entities.not_alive.BallLightningProjectile;
 import com.finderfeed.solarforge.events.RenderEventsHandler;
 import com.finderfeed.solarforge.local_library.effects.LightningBoltPath;
 import com.finderfeed.solarforge.local_library.helpers.FDMathHelper;
-import com.finderfeed.solarforge.magic.blocks.blockentities.CrystalEnergyVinesTile;
+import com.finderfeed.solarforge.magic.blocks.blockentities.vines_puzzle.CrystalEnergyVinesTile;
 import com.finderfeed.solarforge.magic.blocks.blockentities.RayTrapTileEntity;
 import com.finderfeed.solarforge.magic.blocks.blockentities.RuneEnergyPylonTile;
 import com.finderfeed.solarforge.magic.blocks.blockentities.containers.screens.RunicTableContainerScreen;

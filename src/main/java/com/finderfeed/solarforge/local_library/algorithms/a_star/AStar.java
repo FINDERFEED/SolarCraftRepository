@@ -78,11 +78,11 @@ public class AStar {
     private static boolean canMoveTo(int[][] matrix,int x,int y){
         return x >= 0
                 &&
-                x < matrix[0].length
+                x < matrix.length
                 &&
                 y >= 0
                 &&
-                y < matrix.length
+                y < matrix[0].length
                 &&
                 matrix[x][y] != 1;
     }

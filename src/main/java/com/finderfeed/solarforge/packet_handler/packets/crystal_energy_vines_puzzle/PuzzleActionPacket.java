@@ -1,7 +1,7 @@
 package com.finderfeed.solarforge.packet_handler.packets.crystal_energy_vines_puzzle;
 
 import com.finderfeed.solarforge.Helpers;
-import com.finderfeed.solarforge.magic.blocks.blockentities.CrystalEnergyVinesTile;
+import com.finderfeed.solarforge.magic.blocks.blockentities.vines_puzzle.CrystalEnergyVinesTile;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerLevel;

@@ -538,20 +538,9 @@ public class Helpers {
     }
 
 
-    public static class HashMapConstructor<T,E>{
-        private Map<T,E> MAP = new HashMap<>();
 
-        public HashMapConstructor(){}
-
-        public HashMapConstructor<T,E> addEntry(T key,E entry){
-            MAP.put(key,entry);
-            return this;
-        }
-
-        public Map<T,E> build(){
-            return MAP;
-        }
-
+    public static boolean isIn2DArrayBounds(int[][] arr,int x,int y){
+        return x >= 0 && x < arr.length && y >= 0 && y < arr[0].length;
     }
 
     public static ClientboundBlockEntityDataPacket createTilePacket(BlockEntity tile, CompoundTag tag){

@@ -714,6 +714,81 @@ public class RenderingTools {
         RenderSystem.disableBlend();
     }
 
+    public static void gradientBarHorizontal(PoseStack matrices,double x1,double y1,double x2,double y2,float r,float g,float b,float a){
+        if (x1 > x2){
+            double k = x1;
+            x1 = x2;
+            x2 = k;
+        }
+        if (y1 > y2){
+            double k = y1;
+            y1 = y2;
+            y2 = k;
+        }
+        Matrix4f matrix4f = matrices.last().pose();
+        BufferBuilder builder = Tesselator.getInstance().getBuilder();
+
+        double sizeY = y2 - y1;
+
+        RenderSystem.enableBlend();
+        RenderSystem.disableTexture();
+        RenderSystem.defaultBlendFunc();
+        RenderSystem.setShader(GameRenderer::getPositionColorShader);
+        builder.begin(VertexFormat.Mode.QUADS,DefaultVertexFormat.POSITION_COLOR);
+
+        builder.vertex(matrix4f,(float)x1,(float)y1,0).color(r,g,b,0).endVertex();
+        builder.vertex(matrix4f,(float)x1,(float)(y2 - sizeY/2f),0).color(r,g,b,a).endVertex();
+        builder.vertex(matrix4f,(float)x2,(float)(y2 - sizeY/2f),0).color(r,g,b,a).endVertex();
+        builder.vertex(matrix4f,(float)x2,(float)y1,0).color(r,g,b,0).endVertex();
+
+        builder.vertex(matrix4f,(float)x1,(float)(y1 + sizeY/2),0).color(r,g,b,a).endVertex();
+        builder.vertex(matrix4f,(float)x1,(float)y2 ,0).color(r,g,b,0).endVertex();
+        builder.vertex(matrix4f,(float)x2,(float)y2 ,0).color(r,g,b,0).endVertex();
+        builder.vertex(matrix4f,(float)x2,(float)(y1 + sizeY/2),0).color(r,g,b,a).endVertex();
+
+
+        builder.end();
+        BufferUploader.end(builder);
+        RenderSystem.enableTexture();
+        RenderSystem.disableBlend();
+    }
+
+    public static void gradientBarVertical(PoseStack matrices,double x1,double y1,double x2,double y2,float r,float g,float b,float a){
+        if (x1 > x2){
+            double k = x1;
+            x1 = x2;
+            x2 = k;
+        }
+        if (y1 > y2){
+            double k = y1;
+            y1 = y2;
+            y2 = k;
+        }
+        Matrix4f matrix4f = matrices.last().pose();
+        BufferBuilder builder = Tesselator.getInstance().getBuilder();
+        double sizeX = x2 - x1;
+        RenderSystem.enableBlend();
+        RenderSystem.disableTexture();
+        RenderSystem.defaultBlendFunc();
+        RenderSystem.setShader(GameRenderer::getPositionColorShader);
+        builder.begin(VertexFormat.Mode.QUADS,DefaultVertexFormat.POSITION_COLOR);
+
+        builder.vertex(matrix4f,(float)x1,(float)y1,0).color(r,g,b,0).endVertex();
+        builder.vertex(matrix4f,(float)x1,(float)y2,0).color(r,g,b,0).endVertex();
+        builder.vertex(matrix4f,(float)(x2 - sizeX/2f),(float)y2,0).color(r,g,b,a).endVertex();
+        builder.vertex(matrix4f,(float)(x2 - sizeX/2f),(float)y1,0).color(r,g,b,a).endVertex();
+
+        builder.vertex(matrix4f,(float)(x1 + sizeX/2f),(float)y1,0).color(r,g,b,a).endVertex();
+        builder.vertex(matrix4f,(float)(x1 + sizeX/2f),(float)y2,0).color(r,g,b,a).endVertex();
+        builder.vertex(matrix4f,(float)x2 ,(float)y2,0).color(r,g,b,0).endVertex();
+        builder.vertex(matrix4f,(float)x2 ,(float)y1,0).color(r,g,b,0).endVertex();
+        builder.end();
+        BufferUploader.end(builder);
+        RenderSystem.enableTexture();
+        RenderSystem.disableBlend();
+    }
+
+
     public static class DragonEffect {
         private static final float HALF_SQRT_3 = (float)(Math.sqrt(3.0D) / 2.0D);
 

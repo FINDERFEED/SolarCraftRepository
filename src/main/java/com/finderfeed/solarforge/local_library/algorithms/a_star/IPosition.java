@@ -13,6 +13,14 @@ public record IPosition(int x, int y, int z){
         return new IPosition(x + another.x,y + another.y,z + another.z);
     }
 
+    public IPosition add(int xt,int yt,int zt){
+        return new IPosition(x + xt,y + yt,z + zt);
+    }
+
+    public IPosition copy(){
+        return new IPosition(x,y,z);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

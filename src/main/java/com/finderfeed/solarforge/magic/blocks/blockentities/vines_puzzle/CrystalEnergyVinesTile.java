@@ -1,10 +1,11 @@
-package com.finderfeed.solarforge.magic.blocks.blockentities;
+package com.finderfeed.solarforge.magic.blocks.blockentities.vines_puzzle;
 
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.local_library.algorithms.a_star.AStar;
 import com.finderfeed.solarforge.local_library.algorithms.a_star.IPosition;
 import com.finderfeed.solarforge.local_library.helpers.CompoundNBTHelper;
 import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
+import com.mojang.datafixers.util.Pair;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
@@ -15,14 +16,12 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class CrystalEnergyVinesTile extends BlockEntity {
 
-    public static final int PUZZLE_SIZE = 16;
-
+    public static final int PUZZLE_SIZE_Y = 17;
+    public static final int PUZZLE_SIZE_X = 17;
     public static final IPosition[] MOVEMENTS = {
             new IPosition(1,0,0),
             new IPosition(-1,0,0),
@@ -57,28 +56,24 @@ public class CrystalEnergyVinesTile extends BlockEntity {
     public boolean generatePattern() {
         if (puzzlePattern != null) return true;
         Random random = new Random();
-        int initPos = random.nextInt(PUZZLE_SIZE);
-        int endPos = random.nextInt(PUZZLE_SIZE);
-        int[][] pat = new int[PUZZLE_SIZE][PUZZLE_SIZE];
+        int initPos = random.nextInt(PUZZLE_SIZE_Y);
+        int endPos = random.nextInt(PUZZLE_SIZE_Y);
+        if (initPos % 2 != 0) initPos = initPos != PUZZLE_SIZE_Y ? initPos + 1 : initPos - 1;
         int tries = 0;
         boolean success = false;
-        while (tries++ < 400){
-            for (int i = 0; i < PUZZLE_SIZE; i++) {
-                for (int g = 0; g < PUZZLE_SIZE; g++) {
-                    pat[i][g] = random.nextInt(2);
-                }
-            }
-            List<IPosition> path = AStar.pathFrom2DArrayNoDiagonals(pat,new IPosition(PUZZLE_SIZE-1,initPos,0),new IPosition(0,endPos,0));
+        while (tries++ < 200){
+            int[][] pat = generateMaze(initPos);
+            List<IPosition> path = AStar.pathFrom2DArrayNoDiagonals(pat,new IPosition(PUZZLE_SIZE_X-1,initPos,0),new IPosition(0,endPos,0));
             if (path != null){
                 remainingTries = path.size() - 1;
                 this.endPos = endPos;
                 this.initPos = initPos;
                 this.initRemainingTries = remainingTries;
-                pat[PUZZLE_SIZE-1][initPos] = PLAYER_WAY;
+                pat[PUZZLE_SIZE_X-1][initPos] = PLAYER_WAY;
                 pat[0][endPos] = FINAL_POS;
                 puzzlePattern = pat;
                 initPuzzlePattern = pat.clone();
-                currentPosition = new int[]{PUZZLE_SIZE-1,initPos};
+                currentPosition = new int[]{PUZZLE_SIZE_X -1,initPos};
                 success = true;
                 break;
             }
@@ -93,7 +88,7 @@ public class CrystalEnergyVinesTile extends BlockEntity {
         if (actionType == RESET){
             this.puzzlePattern = initPuzzlePattern.clone();
             this.remainingTries = initRemainingTries;
-            this.currentPosition = new int[]{PUZZLE_SIZE-1,initPos};
+            this.currentPosition = new int[]{PUZZLE_SIZE_X -1,initPos};
             return false;
         }
         IPosition targetPos = new IPosition(currentPosition[0],currentPosition[1],0).add(MOVEMENTS[actionType]);
@@ -113,8 +108,9 @@ public class CrystalEnergyVinesTile extends BlockEntity {
     }
 
     private boolean isValid(IPosition target){
-        return target.x() >= 0 && target.x() < PUZZLE_SIZE &&
-                target.y() >= 0 && target.y() < PUZZLE_SIZE &&
+
+        return target.x() >= 0 && target.x() < PUZZLE_SIZE_X &&
+                target.y() >= 0 && target.y() < PUZZLE_SIZE_Y &&
                 puzzlePattern[target.x()][target.y()] != BLOCKED_WAY && puzzlePattern[target.x()][target.y()] != PLAYER_WAY;
     }
 
@@ -178,5 +174,57 @@ public class CrystalEnergyVinesTile extends BlockEntity {
     public int[][] getPuzzlePattern() {
         return puzzlePattern;
     }
+
+
+    private int[][] generateMaze(int beginningPos){
+        Random random = new Random();
+
+        int[][] maze = new int[PUZZLE_SIZE_X][PUZZLE_SIZE_Y];
+        for (int[] ints : maze) {
+            Arrays.fill(ints, 1);
+        }
+        Stack<Pair<Integer,Integer>> visited = new Stack<>();
+        visited.add(new Pair<>(PUZZLE_SIZE_X-1,beginningPos));
+        maze[PUZZLE_SIZE_X-1][beginningPos] = FREE_WAY;
+
+        while(!visited.isEmpty()){
+            Pair<Integer,Integer> t = visited.peek();
+            List<IPosition> neighbours = getNeighbours(maze,t.getFirst(),t.getSecond());
+            if (neighbours.isEmpty()){ visited.pop(); continue;}
+            IPosition pos = neighbours.get(random.nextInt(neighbours.size()));
+            int mmax = Math.max(t.getFirst(),pos.x());
+            int mmin = Math.min(t.getFirst(),pos.x());
+            int ymax = Math.max(t.getSecond(),pos.y());
+            int ymin = Math.min(t.getSecond(),pos.y());
+            for (int x = mmin;x <= mmax;x++){
+                for (int y = ymin;y <= ymax;y++){
+                    maze[x][y] = 0;
+                }
+            }
+            visited.push(new Pair<>(pos.x(),pos.y()));
+        }
+        return maze;
+    }
+
+    private final int[][] movements = {
+            {2,0},
+            {-2,0},
+            {0,2},
+            {0,-2}
+    };
+
+    public List<IPosition> getNeighbours(int[][] maze,int x,int y){
+        List<IPosition> positions = new ArrayList<>();
+        for (int[] m : movements){
+            int xp = x + m[0];
+            int yp = y + m[1];
+            if (Helpers.isIn2DArrayBounds(maze,xp,yp) && maze[xp][yp] != 0){
+                positions.add(new IPosition(xp,yp,0));
+            }
+        }
+        return positions;
+    }
+
+
 
 }
