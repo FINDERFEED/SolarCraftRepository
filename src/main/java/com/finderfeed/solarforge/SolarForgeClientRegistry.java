@@ -5,6 +5,7 @@ import com.finderfeed.solarforge.abilities.solar_strike.SolarStrikeRenderer;
 import com.finderfeed.solarforge.client.rendering.rendertypes.SolarCraftRenderTypes;
 import com.finderfeed.solarforge.entities.renderers.*;
 import com.finderfeed.solarforge.local_library.client.particles.ScreenParticlesRenderHandler;
+import com.finderfeed.solarforge.magic.blocks.blockentities.clearing_ritual.clearing_ritual_crystal.ClearingRitualCrystalRenderer;
 import com.finderfeed.solarforge.magic.blocks.blockentities.containers.screens.*;
 import com.finderfeed.solarforge.magic.blocks.blockentities.projectiles.renderers.ShadowBoltRenderer;
 import com.finderfeed.solarforge.magic.blocks.infusing_table_things.InfuserRenderer;
@@ -126,6 +127,7 @@ public class SolarForgeClientRegistry {
         BlockEntityRenderers.register(TileEntitiesRegistry.ENCHANTER.get(), EnchanterRenderer::new);
         BlockEntityRenderers.register(TileEntitiesRegistry.RUNIC_ENERGY_CHARGER.get(), RunicEnergyChargerRenderer::new);
         BlockEntityRenderers.register(TileEntitiesRegistry.ULDERA_PYLON.get(), UlderaPylonRenderer::new);
+        BlockEntityRenderers.register(TileEntitiesRegistry.CLEARING_RITUAL_CRYSTAL.get(), ClearingRitualCrystalRenderer::new);
 
         MenuScreens.register(Containers.SOLAR_FURNACE_CONTAINER.get(), SolarFurnaceScreen::new);
         MenuScreens.register(Containers.RUNIC_TABLE_CONTAINER.get(), RunicTableContainerScreen::new);

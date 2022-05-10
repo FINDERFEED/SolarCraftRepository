@@ -3,6 +3,7 @@ package com.finderfeed.solarforge.registries.items;
 import com.finderfeed.solarforge.SolarForge;
 
 import com.finderfeed.solarforge.magic.blocks.FuelBlockItem;
+import com.finderfeed.solarforge.magic.blocks.blockentities.clearing_ritual.clearing_ritual_crystal.ClearingRitualCrystalItem;
 import com.finderfeed.solarforge.magic.blocks.infusing_table_things.SolarWandItem;
 import com.finderfeed.solarforge.magic.armor.SolarArmorMaterial;
 import com.finderfeed.solarforge.magic.blocks.blockitems.TurretBlockItem;
@@ -301,6 +302,7 @@ public class ItemsRegister {
     public static final RegistryObject<Item> CRYSTAL_HEART = ITEMS.register("crystal_heart",()->new RareSolarcraftItem(new Item.Properties().tab(SolarForge.SOLAR_GROUP_MATERIALS).rarity(Rarity.EPIC),()->null));
     public static final RegistryObject<Item> CRYSTAL_HEART_PIECE = ITEMS.register("crystal_heart_piece",()->new RareSolarcraftItem(new Item.Properties().tab(SolarForge.SOLAR_GROUP_MATERIALS).rarity(Rarity.EPIC),()->null));
     public static final RegistryObject<Item> CRYSTAL_ENERGY_VINES = ITEMS.register("crystal_energy_vines",()->new BlockItem(BlocksRegistry.CRYSTAL_ENERGY_VINES.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP)));
+    public static final RegistryObject<Item> CLEARING_CRYSTAL_RITUAL = ITEMS.register("clearing_ritual_crystal",()->new ClearingRitualCrystalItem(BlocksRegistry.CLEARING_RITUAL_CRYSTAL.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP)));
 
 
 

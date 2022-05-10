@@ -30,10 +30,12 @@ public class OBJModels {
     public static final ResourceLocation SHIELDING_CRYSTAL_SHIELD = new ResourceLocation("solarforge:objmodels/crystal_boss_shielding_crystal_shield");
     public static final ResourceLocation GET_OFF_MEEE = new ResourceLocation("solarforge:objmodels/crystal_boss_getoffme");
     public static final ResourceLocation RIP_RAY_GENERATOR = new ResourceLocation("solarforge:objmodels/rip_ray_generator");
+    public static final ResourceLocation CLEARING_RITUAL_CRYSTAL = new ResourceLocation(SolarForge.MOD_ID,"objmodels/clearing_ritual_crystal");
 
     public static final ResourceLocation HOLE_MODEL = new ResourceLocation("solarforge:objmodels/hole");
     public static final ResourceLocation ANCIENT_FRAGMENT_MODEL = new ResourceLocation("solarforge:toloadmodels/ancient_fragment");
     public static final ResourceLocation ULDORADIUM_ORE = new ResourceLocation("solarforge:progression_ore_models/uldoradium_ore");
+
 
 
     public static final SolarforgeModelLoader LOADER = new SolarforgeModelLoader();
@@ -52,5 +54,6 @@ public class OBJModels {
         ForgeModelBakery.addSpecialModel(RIP_RAY_GENERATOR);
         ForgeModelBakery.addSpecialModel(CRYSTAL_1);
         ForgeModelBakery.addSpecialModel(EXPLOSIVE_CRYSTAL);
+        ForgeModelBakery.addSpecialModel(CLEARING_RITUAL_CRYSTAL);
     }
 }

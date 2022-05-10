@@ -6,14 +6,14 @@ import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarforge.local_library.helpers.RenderingTools;
 import com.finderfeed.solarforge.local_library.other.EaseInOut;
-import com.finderfeed.solarforge.magic.blocks.blockentities.vines_puzzle.CrystalEnergyVinesTile;
+import com.finderfeed.solarforge.magic.blocks.blockentities.clearing_ritual.CrystalEnergyVinesTile;
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
 import com.finderfeed.solarforge.packet_handler.packets.crystal_energy_vines_puzzle.PuzzleActionPacket;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.Mth;
 import org.lwjgl.glfw.GLFW;
 
 public class CrystalEnergyVinesPuzzleScreen extends SolarCraftScreen {
@@ -33,13 +33,13 @@ public class CrystalEnergyVinesPuzzleScreen extends SolarCraftScreen {
 
     @Override
     public boolean keyPressed(int keyCode, int idk, int type) {
-        if (keyCode == GLFW.GLFW_KEY_UP){
+        if (keyCode == GLFW.GLFW_KEY_UP || keyCode == GLFW.GLFW_KEY_W){
             sendMovementPacket(CrystalEnergyVinesTile.MOVE_UP);
-        }else if (keyCode == GLFW.GLFW_KEY_DOWN){
+        }else if (keyCode == GLFW.GLFW_KEY_DOWN || keyCode == GLFW.GLFW_KEY_S){
             sendMovementPacket(CrystalEnergyVinesTile.MOVE_DOWN);
-        }else if (keyCode == GLFW.GLFW_KEY_LEFT){
+        }else if (keyCode == GLFW.GLFW_KEY_LEFT || keyCode == GLFW.GLFW_KEY_A){
             sendMovementPacket(CrystalEnergyVinesTile.MOVE_LEFT);
-        }else if (keyCode == GLFW.GLFW_KEY_RIGHT){
+        }else if (keyCode == GLFW.GLFW_KEY_RIGHT || keyCode == GLFW.GLFW_KEY_D){
             sendMovementPacket(CrystalEnergyVinesTile.MOVE_RIGHT);
         }
 
@@ -58,6 +58,9 @@ public class CrystalEnergyVinesPuzzleScreen extends SolarCraftScreen {
         super.tick();
         ticker++;
         VALUE.tick();
+        if (tile.getPuzzlePattern() != null && tile.isWin()){
+            Minecraft.getInstance().setScreen(null);
+        }
     }
 
     private void sendMovementPacket(int moveType){
@@ -112,17 +115,6 @@ public class CrystalEnergyVinesPuzzleScreen extends SolarCraftScreen {
             }
         }
 
-//        RenderSystem.enableBlend();
-//        for (int i = 0; i < pattern.length;i++){
-//            for (int j = 0; j < pattern[i].length;j++){
-//
-//                if (node != 0) {
-//
-//
-//                }
-//            }
-//        }
-
         RenderSystem.disableBlend();
 
         Gui.drawString(matrices,font,tile.getRemainingTries()+" - moves",relX + 260,relY+ 200,0xffffff);
@@ -134,12 +126,13 @@ public class CrystalEnergyVinesPuzzleScreen extends SolarCraftScreen {
             int xp = (int)(relX + (i+1) * 23* (1-v));
             Gui.blit(matrices,xp - 20,relY - 18,(i % 4) *40,0,40,256,256,256);
             int xp2 = (int)((i+1) * 23* (1-v));
-            Gui.blit(matrices,relX + 230 - xp2,relY - 18,(i % 4) *40,0,40,256,256,256);
+            Gui.blit(matrices,relX + 230 - xp2,relY - 18,(i % 4) *40 + 120,0,40,256,256,256);
         }
 
 
         super.render(matrices, mx, my, pTicks);
     }
+
 
     @Override
     public boolean isPauseScreen() {

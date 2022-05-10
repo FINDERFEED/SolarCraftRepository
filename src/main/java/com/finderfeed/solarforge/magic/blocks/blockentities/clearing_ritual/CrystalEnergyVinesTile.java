@@ -1,9 +1,10 @@
-package com.finderfeed.solarforge.magic.blocks.blockentities.vines_puzzle;
+package com.finderfeed.solarforge.magic.blocks.blockentities.clearing_ritual;
 
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.local_library.algorithms.a_star.AStar;
 import com.finderfeed.solarforge.local_library.algorithms.a_star.IPosition;
 import com.finderfeed.solarforge.local_library.helpers.CompoundNBTHelper;
+import com.finderfeed.solarforge.magic.blocks.blockentities.clearing_ritual.clearing_ritual_crystal.ClearingRitualCrystalTile;
 import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.core.BlockPos;
@@ -96,14 +97,18 @@ public class CrystalEnergyVinesTile extends BlockEntity {
             this.currentPosition = new int[]{targetPos.x(),targetPos.y()};
             this.puzzlePattern[currentPosition[0]][currentPosition[1]] = PLAYER_WAY;
             this.remainingTries--;
-            if (isWin()) level.destroyBlock(this.getBlockPos(),false);
+            if (isWin()){
+                if (level.getBlockEntity(worldPosition.above(2)) instanceof ClearingRitualCrystalTile tile){
+                    tile.overload();
+                }
+            }
             return isWin();
         }else{
             return false;
         }
     }
 
-    private boolean isWin(){
+    public boolean isWin(){
         return currentPosition[0] == 0 && currentPosition[1] == endPos;
     }
 
