@@ -6,6 +6,7 @@ import com.finderfeed.solarforge.client.rendering.rendertypes.SolarCraftRenderTy
 import com.finderfeed.solarforge.entities.renderers.*;
 import com.finderfeed.solarforge.local_library.client.particles.ScreenParticlesRenderHandler;
 import com.finderfeed.solarforge.magic.blocks.blockentities.clearing_ritual.clearing_ritual_crystal.ClearingRitualCrystalRenderer;
+import com.finderfeed.solarforge.magic.blocks.blockentities.clearing_ritual.clearing_ritual_crystal.corruption_wisp.CorruptionWispRenderer;
 import com.finderfeed.solarforge.magic.blocks.blockentities.containers.screens.*;
 import com.finderfeed.solarforge.magic.blocks.blockentities.projectiles.renderers.ShadowBoltRenderer;
 import com.finderfeed.solarforge.magic.blocks.infusing_table_things.InfuserRenderer;
@@ -234,6 +235,7 @@ public class SolarForgeClientRegistry {
         event.registerEntityRenderer(EntityTypes.RUNIC_WARRIOR_ROCKET.get(), RunicWarriorSummoningRocketRenderer::new);
         event.registerEntityRenderer(EntityTypes.SHADOW_BOLT.get(), ShadowBoltRenderer::new);
         event.registerEntityRenderer(EntityTypes.SHADOW_ZOMBIE.get(), ShadowZombieRenderer::new);
+        event.registerEntityRenderer(EntityTypes.CORRUPTION_WISP.get(), CorruptionWispRenderer::new);
     }
 
 }

@@ -13,6 +13,7 @@ import com.finderfeed.solarforge.entities.not_alive.*;
 import com.finderfeed.solarforge.events.PlayerTickEvent;
 import com.finderfeed.solarforge.events.RenderEventsHandler;
 import com.finderfeed.solarforge.magic.blocks.SolarOreBlock;
+import com.finderfeed.solarforge.magic.blocks.blockentities.clearing_ritual.clearing_ritual_crystal.corruption_wisp.CorruptionWisp;
 import com.finderfeed.solarforge.magic.blocks.infusing_table_things.*;
 import com.finderfeed.solarforge.magic.blocks.infusing_table_things.infusing_pool.InfusingStand;
 import com.finderfeed.solarforge.magic.items.item_tiers.SolarCraftToolTiers;
@@ -270,6 +271,7 @@ public class SolarForge
             event.put(EntityTypes.EXPLOSIVE_CRYSTAL.get(), ExplosiveCrystal.createAttributes().build());
             event.put(EntityTypes.RUNIC_WARRIOR.get(), RunicWarrior.createAttributes().build());
             event.put(EntityTypes.SHADOW_ZOMBIE.get(), ShadowZombie.createAttributes().build());
+            event.put(EntityTypes.CORRUPTION_WISP.get(), CorruptionWisp.createAttributes().build());
         }
 
         @SubscribeEvent

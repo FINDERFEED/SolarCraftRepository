@@ -18,6 +18,8 @@ import org.jetbrains.annotations.Nullable;
 
 public class ClearingRitualCrystalTile extends BlockEntity {
 
+    private boolean corrupted;
+    private int corruptionTicks;
     private boolean overloaded;
     private int overloadTicker = 0;
     private int ticker = 0;
@@ -47,6 +49,15 @@ public class ClearingRitualCrystalTile extends BlockEntity {
                 }
             }
         }
+        if (tile.corrupted){
+            if (!world.isClientSide){
+
+            }else{
+
+            }
+        }else{
+            tile.corruptionTicks = 0;
+        }
         tile.ticker++;
     }
 
@@ -59,13 +70,18 @@ public class ClearingRitualCrystalTile extends BlockEntity {
         Helpers.updateTile(this);
     }
 
-
-    public void setType(RunicEnergy.Type type) {
-        this.type = type;
+    public boolean isCorrupted() {
+        return corrupted;
     }
 
+    public void setCorrupted(boolean corrupted) {
+        this.corrupted = corrupted;
+        Helpers.updateTile(this);
+    }
 
-
+    public void setREType(RunicEnergy.Type type) {
+        this.type = type;
+    }
 
     public RunicEnergy.Type getREType() {
         return type;

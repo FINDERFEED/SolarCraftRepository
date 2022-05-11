@@ -9,6 +9,7 @@ import com.finderfeed.solarforge.client.models.divine_armor.DivineHelmetModel;
 import com.finderfeed.solarforge.client.models.divine_armor.DivineLeggingsModel;
 import com.finderfeed.solarforge.entities.models.RunicElementalModel;
 import com.finderfeed.solarforge.entities.models.RunicWarriorModel;
+import com.finderfeed.solarforge.magic.blocks.blockentities.clearing_ritual.clearing_ritual_crystal.corruption_wisp.CorruptionWispModel;
 import com.finderfeed.solarforge.magic.blocks.blockentities.projectiles.renderers.AbstractTurretProjectileRenderer;
 import com.finderfeed.solarforge.magic.blocks.blockentities.projectiles.renderers.MortarProjectileRenderer;
 import com.finderfeed.solarforge.magic.blocks.rendering_models.AuraHealerModel;
@@ -65,6 +66,7 @@ public class ModelLayersRegistry {
             new ModelLayerLocation(new ResourceLocation("solarforge","radiant_model_creator"), "main");
 
     public static final ModelLayerLocation SHADOW_ZOMBIE_LAYER = new ModelLayerLocation(new ResourceLocation(SolarForge.MOD_ID,"shadow_zombie_layer"),"main");
+    public static final ModelLayerLocation CORRUPTION_WISP_LAYER = new ModelLayerLocation(new ResourceLocation(SolarForge.MOD_ID,"corruption_wisp_layer"),"main");
 
     @SubscribeEvent
     public static void registerModelLayers(EntityRenderersEvent.RegisterLayerDefinitions event){
@@ -87,5 +89,7 @@ public class ModelLayersRegistry {
         event.registerLayerDefinition(DivineBootsModel.LAYER_LOCATION, DivineBootsModel::createBodyLayer);
         event.registerLayerDefinition(SHADOW_ZOMBIE_LAYER, ()->
                 LayerDefinition.create(ZombieModel.createMesh(new CubeDeformation(0.5f),0.0f),64,64));
+        event.registerLayerDefinition(CORRUPTION_WISP_LAYER,()-> CorruptionWispModel.createBodyLayer(0.25f));
+        event.registerLayerDefinition(CorruptionWispModel.LAYER_LOCATION,()->CorruptionWispModel.createBodyLayer(0.0f));
     }
 }

@@ -3,6 +3,7 @@ package com.finderfeed.solarforge.registries.entities;
 
 import com.finderfeed.solarforge.entities.*;
 import com.finderfeed.solarforge.entities.not_alive.*;
+import com.finderfeed.solarforge.magic.blocks.blockentities.clearing_ritual.clearing_ritual_crystal.corruption_wisp.CorruptionWisp;
 import com.finderfeed.solarforge.magic.blocks.blockentities.projectiles.AbstractTurretProjectile;
 import com.finderfeed.solarforge.magic.blocks.blockentities.projectiles.MortarProjectile;
 import com.finderfeed.solarforge.magic.blocks.blockentities.projectiles.ShadowBolt;
@@ -112,4 +113,7 @@ public class EntityTypes {
     public static final RegistryObject<EntityType<ShadowBolt>> SHADOW_BOLT = ENTITY_TYPE_REGISTER.register("shadow_bolt", () ->
             EntityType.Builder.<ShadowBolt>of(ShadowBolt::new, MobCategory.MISC)
                     .sized(0.25f, 0.25f).build("shadow_bolt"));
+    public static final RegistryObject<EntityType<CorruptionWisp>> CORRUPTION_WISP = ENTITY_TYPE_REGISTER.register("corruption_wisp", () ->
+            EntityType.Builder.<CorruptionWisp>of(CorruptionWisp::new, MobCategory.CREATURE)
+                    .sized(0.35f, 0.35f).build("corruption_wisp"));
 }
