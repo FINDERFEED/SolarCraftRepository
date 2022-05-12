@@ -67,5 +67,8 @@
   },
   "shadow_zombie_hurt": {
     "sounds": ["solarforge:shadow_zombie_hurt"]
+  },
+  "clearing_crystal_overload": {
+    "sounds": ["solarforge:clearing_crystal_overload"]
   }
 }

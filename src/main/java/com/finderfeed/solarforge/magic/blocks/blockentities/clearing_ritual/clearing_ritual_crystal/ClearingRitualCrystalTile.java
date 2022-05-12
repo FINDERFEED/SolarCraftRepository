@@ -4,11 +4,13 @@ import com.finderfeed.solarforge.ClientHelpers;
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.client.particles.ParticleTypesRegistry;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
+import com.finderfeed.solarforge.registries.sounds.Sounds;
 import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -33,7 +35,7 @@ public class ClearingRitualCrystalTile extends BlockEntity {
     public static void superDuperTickYouCanNeverImagineHowSuperItIs(Level world,BlockState state,BlockPos pos,ClearingRitualCrystalTile tile){
         if (tile.overloaded){
             Vec3 c = Helpers.getBlockCenter(pos);
-            if (tile.overloadTicker++ > 80) {
+            if (tile.overloadTicker++ > 100) {
 
                 if (!world.isClientSide) {
                     tile.overloaded = false;
@@ -67,6 +69,8 @@ public class ClearingRitualCrystalTile extends BlockEntity {
 
     public void overload(){
         this.overloaded = true;
+        Vec3 center = Helpers.getBlockCenter(worldPosition);
+        level.playSound(null,center.x,center.y,center.z, Sounds.CLEARING_CRYSTAL_OVERLOAD.get(), SoundSource.BLOCKS,5,1);
         Helpers.updateTile(this);
     }
 
