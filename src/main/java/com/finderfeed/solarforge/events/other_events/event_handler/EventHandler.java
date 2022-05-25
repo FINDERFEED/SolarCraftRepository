@@ -429,13 +429,15 @@ public class EventHandler {
                 if (player.getItemBySlot(EquipmentSlot.CHEST).is(ItemsRegister.DIVINE_CHESTPLATE.get())){
                     if (!player.isCreative() && !player.isSpectator()) {
                         DisablePlayerFlightPacket.send(player, false);
+                        setWorn(player,true);
                     }
                     if (player.getAbilities().getFlyingSpeed() < 0.1f) {
                         player.getAbilities().setFlyingSpeed(0.10f);
                     }
                 }else{
-                    if (!player.isCreative() && !player.isSpectator()) {
+                    if (!player.isCreative() && !player.isSpectator() && hasWornChestplateBefore(player)) {
                         DisablePlayerFlightPacket.send(player, true);
+                        setWorn(player,false);
                     }
                     if (player.getAbilities().getFlyingSpeed() == 0.1f) {
                         player.getAbilities().setFlyingSpeed(0.05f);
@@ -445,6 +447,13 @@ public class EventHandler {
         }
     }
 
+    public static boolean hasWornChestplateBefore(Player player){
+        return player.getPersistentData().getBoolean("worn");
+    }
+
+    public static void setWorn(Player player,boolean worn){
+        player.getPersistentData().putBoolean("worn",worn);
+    }
 
     @SubscribeEvent(priority = EventPriority.LOW)
     public static void manageDivineArmorShields(LivingHurtEvent event){
