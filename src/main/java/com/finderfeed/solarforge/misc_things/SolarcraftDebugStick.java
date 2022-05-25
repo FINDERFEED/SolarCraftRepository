@@ -1,6 +1,7 @@
 package com.finderfeed.solarforge.misc_things;
 
 import com.finderfeed.solarforge.magic.blocks.blockentities.RuneEnergyPylonTile;
+import com.finderfeed.solarforge.magic.blocks.blockentities.clearing_ritual.clearing_ritual_crystal.ClearingRitualCrystalTile;
 import com.finderfeed.solarforge.magic.blocks.blockentities.projectiles.ShadowBolt;
 import com.finderfeed.solarforge.registries.entities.EntityTypes;
 import net.minecraft.core.BlockPos;
@@ -48,27 +49,28 @@ public class SolarcraftDebugStick extends Item {
     public InteractionResult useOn(UseOnContext ctx) {
         Level world = ctx.getLevel();
         BlockPos pos = ctx.getClickedPos();
+        if (world.isClientSide) return InteractionResult.SUCCESS;
 
-
-        if (!ctx.getLevel().isClientSide && (ctx.getLevel().getBlockEntity(ctx.getClickedPos()) instanceof DebugTarget target) && ctx.getPlayer() != null && !ctx.getPlayer().isCrouching()){
-            target.getDebugStrings().forEach((string)->{
-                ctx.getPlayer().sendMessage(new TextComponent(string),ctx.getPlayer().getUUID());
-            });
+//        if (!ctx.getLevel().isClientSide && (ctx.getLevel().getBlockEntity(ctx.getClickedPos()) instanceof DebugTarget target) && ctx.getPlayer() != null && !ctx.getPlayer().isCrouching()){
+//            target.getDebugStrings().forEach((string)->{
+//                ctx.getPlayer().sendMessage(new TextComponent(string),ctx.getPlayer().getUUID());
+//            });
+//        }
+//
+//        if (!ctx.getLevel().isClientSide && ctx.getPlayer() != null && ctx.getPlayer().isCrouching()){
+//            if (ctx.getLevel().getBlockEntity(ctx.getClickedPos()) instanceof RuneEnergyPylonTile pylon){
+//                boolean mode = ctx.getItemInHand().getOrCreateTagElement("pylon_mode").getBoolean("isCyclingPylons");
+//                if (!mode) {
+//                    pylon.addEnergy(pylon.getEnergyType(), 200);
+//                    ctx.getPlayer().sendMessage(new TextComponent(Float.toString(pylon.getCurrentEnergy())), ctx.getPlayer().getUUID());
+//                }else{
+//                    pylon.setType(RunicEnergy.Type.byIndex((pylon.getEnergyType().getIndex() + 1) % 8));
+//                }
+//            }
+//        }
+        if (world.getBlockEntity(pos) instanceof ClearingRitualCrystalTile tile){
+            tile.setCorrupted(true);
         }
-
-        if (!ctx.getLevel().isClientSide && ctx.getPlayer() != null && ctx.getPlayer().isCrouching()){
-            if (ctx.getLevel().getBlockEntity(ctx.getClickedPos()) instanceof RuneEnergyPylonTile pylon){
-                boolean mode = ctx.getItemInHand().getOrCreateTagElement("pylon_mode").getBoolean("isCyclingPylons");
-                if (!mode) {
-                    pylon.addEnergy(pylon.getEnergyType(), 200);
-                    ctx.getPlayer().sendMessage(new TextComponent(Float.toString(pylon.getCurrentEnergy())), ctx.getPlayer().getUUID());
-                }else{
-                    pylon.setType(RunicEnergy.Type.byIndex((pylon.getEnergyType().getIndex() + 1) % 8));
-                }
-            }
-        }
-
-
         return InteractionResult.SUCCESS;
     }
 

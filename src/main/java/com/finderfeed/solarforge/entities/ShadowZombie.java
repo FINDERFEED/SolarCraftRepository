@@ -2,9 +2,11 @@ package com.finderfeed.solarforge.entities;
 
 import com.finderfeed.solarforge.registries.SolarcraftDamageSources;
 import com.finderfeed.solarforge.registries.sounds.Sounds;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -19,6 +21,7 @@ import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 
 public class ShadowZombie extends Monster implements PowerableMob {
@@ -94,5 +97,17 @@ public class ShadowZombie extends Monster implements PowerableMob {
     @Override
     public boolean isPowered() {
         return true;
+    }
+
+    protected SoundEvent getAmbientSound() {
+        return SoundEvents.ZOMBIE_AMBIENT;
+    }
+
+    protected SoundEvent getStepSound() {
+        return SoundEvents.ZOMBIE_STEP;
+    }
+
+    protected void playStepSound(BlockPos p_34316_, BlockState p_34317_) {
+        this.playSound(this.getStepSound(), 0.15F, 1.0F);
     }
 }

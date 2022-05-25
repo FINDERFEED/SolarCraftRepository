@@ -70,5 +70,8 @@
   },
   "clearing_crystal_overload": {
     "sounds": ["solarforge:clearing_crystal_overload"]
+  },
+  "corruption_wisp_hit": {
+    "sounds": ["solarforge:corruption_wisp_hit"]
   }
 }

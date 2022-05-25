@@ -499,24 +499,6 @@ public class ClientHelpers {
             }
         }
 
-
-        @Deprecated
-        public static void cyclingTimedFunctionAnimation(ParticleOptions particle, Vec3 from, Vec3 to, int duration
-                ,Supplier<Integer> red, Supplier<Integer> green, Supplier<Integer> blue, float maxSize
-                ,Function<Double,Double> func) {
-            Vec3 between = to.subtract(from);
-            double l = between.length();
-            double value = Minecraft.getInstance().level.getGameTime() % (duration * 2L) - duration;
-            double percentage;
-            if (value >= 0){
-                percentage = value/duration;
-            }else{
-                percentage = 1 + value/duration;
-            }
-
-
-        }
-
         public static void line(ParticleOptions particle, Vec3 from, Vec3 to, double intensity, Supplier<Integer> red,Supplier<Integer> green,Supplier<Integer> blue,float maxSize){
             Vec3 between = to.subtract(from);
             double l = between.length();
@@ -618,6 +600,45 @@ public class ClientHelpers {
                 double angle = 360d / count;
                 for (int i = 0; i < count; i += 1) {
                     double a = Math.toRadians(i * angle + gametime);
+                    double x = radius * Math.sin(a);
+                    double y = radius * Math.cos(a);
+                    double[] rotatedXZ = FDMathHelper.rotatePointDegrees(x, 0, rotAngle);
+                    x = rotatedXZ[0];
+                    double z = rotatedXZ[1];
+
+                    Particle p = Minecraft.getInstance().particleEngine.createParticle(particle, center.x + x, center.y + y, center.z + z, speed[0], speed[1], speed[2]);
+                    p.setColor((float) red.get() / 255, (float) green.get() / 255, (float) blue.get() / 255);
+                    if (p instanceof SolarcraftParticle pd) {
+                        pd.setMaxSize(maxSize);
+                    }
+                }
+            }
+        }
+
+        public static void verticalCircleWTime(ParticleOptions particle, Vec3 center,double radius, int count,float[] speed, Supplier<Integer> red,Supplier<Integer> green,Supplier<Integer> blue,float maxSize,float time){
+            if (Minecraft.getInstance().level != null) {
+                float gametime = Minecraft.getInstance().level.getGameTime();
+                double angle = 360d / count;
+                for (int i = 0; i < count; i += 1) {
+                    double a = Math.toRadians(i * angle + gametime);
+                    double x = radius * Math.sin(a);
+                    double z = radius * Math.cos(a);
+                    Particle p = Minecraft.getInstance().particleEngine.createParticle(particle, center.x + x, center.y, center.z + z, speed[0], speed[1], speed[2]);
+                    p.setColor((float) red.get() / 255, (float) green.get() / 255, (float) blue.get() / 255);
+                    if (p instanceof SolarcraftParticle pd) {
+                        pd.setMaxSize(maxSize);
+                    }
+                }
+            }
+        }
+
+
+
+        public static void horizontalRotatedCircleWTime(ParticleOptions particle, Vec3 center,double radius,double rotAngle, int count,float[] speed, Supplier<Integer> red,Supplier<Integer> green,Supplier<Integer> blue,float maxSize,float time){
+            if (Minecraft.getInstance().level != null) {
+                double angle = 360d / count;
+                for (int i = 0; i < count; i += 1) {
+                    double a = Math.toRadians(i * angle + time);
                     double x = radius * Math.sin(a);
                     double y = radius * Math.cos(a);
                     double[] rotatedXZ = FDMathHelper.rotatePointDegrees(x, 0, rotAngle);

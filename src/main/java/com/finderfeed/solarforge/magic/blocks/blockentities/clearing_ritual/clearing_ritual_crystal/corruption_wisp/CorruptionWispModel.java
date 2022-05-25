@@ -59,12 +59,16 @@ public class CorruptionWispModel<T extends Entity> extends EntityModel<T> {
 
 	@Override
 	public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-		this.outer_ring.y = mouter.getInitY() + 0.5f;
-		this.inner_ring.y = minner.getInitY() + 0.5f;
+		ageInTicks = ageInTicks*6;
+		this.outer_ring.y = mouter.getInitY() - 3f;
+		this.inner_ring.y = minner.getInitY() - 3f;
 		this.outer_ring.yRot = (float) Math.toRadians(mouter.getInitRotY() + ageInTicks % 360);
 		this.outer_ring.xRot = (float) Math.toRadians(mouter.getInitRotX() + ageInTicks % 360);
-		this.inner_ring.yRot = (float) Math.toRadians(minner.getInitRotY() + ageInTicks % 360);
-		this.inner_ring.xRot = (float) Math.toRadians(minner.getInitRotX() + ageInTicks % 360);
+		this.outer_ring.zRot = (float) Math.toRadians(mouter.getInitRotZ() - ageInTicks % 360);
+
+		this.inner_ring.yRot = (float) Math.toRadians(minner.getInitRotY() - ageInTicks % 360);
+		this.inner_ring.xRot = (float) Math.toRadians(minner.getInitRotX() - ageInTicks % 360);
+		this.inner_ring.zRot = (float) Math.toRadians(minner.getInitRotZ() + ageInTicks % 360);
 	}
 
 	@Override

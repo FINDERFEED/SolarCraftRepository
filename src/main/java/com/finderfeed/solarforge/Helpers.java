@@ -585,5 +585,8 @@ public class Helpers {
     }
 
 
+    public static AABB createAABBWithRadius(Vec3 pos,int horizontal,int vertical){
+        return new AABB(-horizontal,-vertical,-horizontal,horizontal,vertical,horizontal).move(pos);
+    }
 
 }

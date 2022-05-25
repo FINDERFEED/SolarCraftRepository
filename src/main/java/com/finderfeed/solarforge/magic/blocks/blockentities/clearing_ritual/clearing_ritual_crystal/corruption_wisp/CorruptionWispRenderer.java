@@ -15,8 +15,8 @@ public class CorruptionWispRenderer extends MobRenderer<CorruptionWisp,Corruptio
     private static final ResourceLocation WISP = new ResourceLocation(SolarForge.MOD_ID,"textures/entities/corruption_wisp.png");
 
     public CorruptionWispRenderer(EntityRendererProvider.Context ctx) {
-        super(ctx,new CorruptionWispModel<>(ctx.bakeLayer(ModelLayersRegistry.CORRUPTION_WISP_LAYER)), 1f);
-        this.addLayer(new Layer(this));
+        super(ctx,new CorruptionWispModel<>(ctx.bakeLayer(ModelLayersRegistry.CORRUPTION_WISP_LAYER)), 0.05f);
+        //this.addLayer(new Layer(this));
     }
 
     @Override

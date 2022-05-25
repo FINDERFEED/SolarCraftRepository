@@ -115,5 +115,5 @@ public class EntityTypes {
                     .sized(0.25f, 0.25f).build("shadow_bolt"));
     public static final RegistryObject<EntityType<CorruptionWisp>> CORRUPTION_WISP = ENTITY_TYPE_REGISTER.register("corruption_wisp", () ->
             EntityType.Builder.<CorruptionWisp>of(CorruptionWisp::new, MobCategory.CREATURE)
-                    .sized(0.35f, 0.35f).build("corruption_wisp"));
+                    .sized(0.35f, 0.35f).clientTrackingRange(8).updateInterval(1).build("corruption_wisp"));
 }

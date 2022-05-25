@@ -50,4 +50,11 @@ public class TileEntityDataSaverBlock extends Block {
             tile.load(stack.getOrCreateTagElement(modid + "_tile_saved_data").getCompound("data"));
         }
     }
+
+
+    @Nullable
+    public CompoundTag getTileTag(ItemStack stack){
+        CompoundTag t = stack.getTagElement(modid + "_tile_saved_data");
+        return t == null ? t : t.getCompound("data");
+    }
 }
