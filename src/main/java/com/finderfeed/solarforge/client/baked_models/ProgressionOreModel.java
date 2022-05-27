@@ -37,7 +37,7 @@ public class ProgressionOreModel implements BakedModel {
     public List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction side, @Nonnull Random rand, @Nonnull IModelData extraData) {
 
         if (state != null && (Minecraft.getInstance().player != null) ) {
-            if ((state.getBlock() instanceof IProgressionBlock) && !Helpers.hasPlayerUnlocked(((IProgressionBlock) state.getBlock()).getRequiredProgression(), Minecraft.getInstance().player)) {
+            if ((state.getBlock() instanceof IProgressionBlock) && !Helpers.hasPlayerCompletedProgression(((IProgressionBlock) state.getBlock()).getRequiredProgression(), Minecraft.getInstance().player)) {
                 BlockState lockedState = ((IProgressionBlock) state.getBlock()).getLockedBlock().defaultBlockState();
 
                 return Minecraft.getInstance().getBlockRenderer().getBlockModel(lockedState)

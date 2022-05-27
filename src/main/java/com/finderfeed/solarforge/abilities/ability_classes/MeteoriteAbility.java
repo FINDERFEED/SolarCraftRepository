@@ -22,7 +22,7 @@ public class MeteoriteAbility extends AbstractAbility{
 
     @Override
     public void cast(ServerPlayer entity, ServerLevel world) {
-        if (AbilityHelper.isAbilityUsable(entity,this)) {
+        if (AbilityHelper.isAbilityUsable(entity,this,true)) {
             Vec3 vec = entity.getLookAngle().multiply(200, 200, 200);
 
             ClipContext ctx = new ClipContext(entity.position().add(0, 1.5, 0), entity.position().add(0, 1.5, 0).add(vec), ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, entity);

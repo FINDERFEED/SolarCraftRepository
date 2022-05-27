@@ -246,8 +246,8 @@ public class EventHandler {
     public static void progressionUnlockEvent(ProgressionUnlockEvent event){
         Progression ach = event.getProgression();
         Player playerEntity = event.getPlayer();
-        if (!Helpers.hasPlayerUnlocked(ach,playerEntity) && Helpers.canPlayerUnlock(ach,playerEntity)){
-            Helpers.setAchievementStatus(ach, playerEntity,true);
+        if (!Helpers.hasPlayerCompletedProgression(ach,playerEntity) && Helpers.canPlayerUnlock(ach,playerEntity)){
+            Helpers.setProgressionCompletionStatus(ach, playerEntity,true);
             Helpers.triggerToast(ach, playerEntity);
             Helpers.updateProgression((ServerPlayer)playerEntity );
             Helpers.forceChunksReload((ServerPlayer) playerEntity);
@@ -309,7 +309,7 @@ public class EventHandler {
     public static void catalystsProgression(BlockEvent.EntityPlaceEvent event){
         if (event.getEntity() instanceof Player pl){
             if (event.getPlacedBlock().is(Tags.CATALYST) && event.getPlacedBlock().getBlock() != BlocksRegistry.SOLAR_STONE_COLLUMN.get()) {
-                if (!Helpers.hasPlayerUnlocked(Progression.CATALYSTS, pl)) {
+                if (!Helpers.hasPlayerCompletedProgression(Progression.CATALYSTS, pl)) {
                     for (int x = -10; x < 10;x++){
                         for (int z = -10; z < 10;z++){
                             for (int height = 2; height > -5;height--){
@@ -448,11 +448,11 @@ public class EventHandler {
     }
 
     public static boolean hasWornChestplateBefore(Player player){
-        return player.getPersistentData().getBoolean("worn");
+        return player.getPersistentData().getBoolean("wornDivineChestplate");
     }
 
     public static void setWorn(Player player,boolean worn){
-        player.getPersistentData().putBoolean("worn",worn);
+        player.getPersistentData().putBoolean("wornDivineChestplate",worn);
     }
 
     @SubscribeEvent(priority = EventPriority.LOW)

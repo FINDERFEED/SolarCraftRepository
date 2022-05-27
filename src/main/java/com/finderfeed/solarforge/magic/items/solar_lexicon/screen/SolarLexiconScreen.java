@@ -193,7 +193,7 @@ public class SolarLexiconScreen extends Screen implements IScrollable,PostRender
             boolean c = Helpers.canPlayerUnlock(a,minecraft.player);
             LocalPlayer player = Minecraft.getInstance().player;
             ItemStackButtonAnimatedTooltip button = new ItemStackButtonAnimatedTooltip(relX+21+offsetX,relY+21+offsetY,16,16,(btn)->{
-                if (Helpers.hasPlayerUnlocked(a,player)){
+                if (Helpers.hasPlayerCompletedProgression(a,player)){
                     currentText = a.getPretext().getString();
                     afterTxt = a.afterText.getString();
                 }else if (Helpers.canPlayerUnlock(a,player)){
@@ -211,7 +211,7 @@ public class SolarLexiconScreen extends Screen implements IScrollable,PostRender
             TextComponent preText;
             TextComponent afterText;
             boolean g = Helpers.canPlayerUnlock(a,player);
-            if (Helpers.hasPlayerUnlocked(a,player)){
+            if (Helpers.hasPlayerCompletedProgression(a,player)){
                 preText = new TextComponent(a.getPretext().getString());
                 afterText = new TextComponent(a.afterText.getString());
             }else if (g){
@@ -253,7 +253,7 @@ public class SolarLexiconScreen extends Screen implements IScrollable,PostRender
                             RenderSystem.disableDepthTest();
                             int offset = 0;
                             for (Progression p : parents) {
-                                if (Helpers.hasPlayerUnlocked(p,player)) {
+                                if (Helpers.hasPlayerCompletedProgression(p,player)) {
                                     Minecraft.getInstance().getItemRenderer().renderGuiItem(p.getIcon(), x + offset, y-1);
                                 }else{
                                     ClientHelpers.bindText(QMARK);

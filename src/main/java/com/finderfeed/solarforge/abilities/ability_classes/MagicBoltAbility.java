@@ -15,7 +15,7 @@ public class MagicBoltAbility extends AbstractAbility{
 
     @Override
     public void cast(ServerPlayer entity, ServerLevel world) {
-        if (AbilityHelper.isAbilityUsable(entity,this)){
+        if (AbilityHelper.isAbilityUsable(entity,this,true)){
             Vec3 initPos = entity.position().add(0,entity.getBbHeight()*0.75,0).add(entity.getLookAngle());
             MagicMissile magicMissile = new MagicMissile(world,0,0,0);
             magicMissile.setPos(initPos);

@@ -1,8 +1,10 @@
 package com.finderfeed.solarforge.commands;
 
 import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.SolarLexicon;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.progressions.Progression;
+import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import com.finderfeed.solarforge.multiblocks.Multiblocks;
 import com.finderfeed.solarforge.registries.items.ItemsRegister;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.unlockables.AncientFragment;
@@ -10,14 +12,18 @@ import com.finderfeed.solarforge.magic.items.solar_lexicon.unlockables.Progressi
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.arguments.ArgumentType;
+import com.mojang.brigadier.arguments.FloatArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.ArgumentBuilder;
+import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
+import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.ChatFormatting;
@@ -25,6 +31,8 @@ import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
+
+import java.util.Locale;
 
 public class CommandsSolarCraft {
 
@@ -38,8 +46,29 @@ public class CommandsSolarCraft {
                         .then(Commands.literal("structure").then(Commands.literal("construct").then(Commands.argument("structure_code",StringArgumentType.string())
                                 .executes((cmds)-> constructMultiblock(cmds.getSource(),cmds.getArgument("structure_code",String.class))))))
                         .then(Commands.literal("fillLexicon").executes((cmss)-> fillLexicon(cmss.getSource())))
+                        .then(Commands.literal("runicEnergy")
+                                .then(Commands.literal("set").then(Commands.argument("type",StringArgumentType.string())
+                                        .then(Commands.argument("target",EntityArgument.player()).then(Commands.argument("amount", FloatArgumentType.floatArg(0))
+                                                .executes((stack)->setREAmount(stack.getSource(),EntityArgument.getPlayer(stack,"target"),
+                                                                stack.getArgument("type",String.class),
+                                                                stack.getArgument("amount",Float.class)))))))
+                        )
 
         );
+    }
+    public static int setREAmount(CommandSourceStack stack, Player target,String type,float amount){
+        if (target != null){
+            RunicEnergy.Type t = RunicEnergy.Type.byId(type.toLowerCase(Locale.ROOT));
+            if (t != null && t != RunicEnergy.Type.NONE){
+                RunicEnergy.setEnergy(target, (float)FDMathHelper.clamp(0,amount,10000),t);
+                Helpers.updateRunicEnergyOnClient(t,RunicEnergy.getEnergy(target,t),target);
+            }else{
+                stack.sendFailure(new TextComponent("Unknown RE type."));
+            }
+        }else{
+            stack.sendFailure(new TextComponent("Target is null."));
+        }
+        return 1;
     }
 
     public static int fillLexicon(CommandSourceStack src) throws CommandSyntaxException {
@@ -183,7 +212,7 @@ class UnlockProgressionsCommand {
             ServerPlayer pl = src.getPlayerOrException();
             if (code.equals("all")){
                 for (Progression a : Progression.allProgressions){
-                    Helpers.setAchievementStatus(a,src.getPlayerOrException(),true);
+                    Helpers.setProgressionCompletionStatus(a,src.getPlayerOrException(),true);
                     src.sendSuccess(new TranslatableComponent("solarcraft.success_unlock")
                             .append(new TextComponent(" "+a.translation.getString()).withStyle(ChatFormatting.GOLD)),false);
                 }
@@ -191,7 +220,7 @@ class UnlockProgressionsCommand {
 
             }else if (progression != null){
                 if (Helpers.canPlayerUnlock(progression,pl)){
-                    Helpers.setAchievementStatus(progression,pl,true);
+                    Helpers.setProgressionCompletionStatus(progression,pl,true);
                     src.sendSuccess(new TranslatableComponent("solarcraft.success_unlock")
                             .append(new TextComponent(" "+ progression.getAchievementCode()).withStyle(ChatFormatting.GOLD)),false);
 
@@ -220,25 +249,11 @@ class refreshAchievements{
 
     public static int refresh(CommandSourceStack src) throws CommandSyntaxException {
             for (Progression ach : Progression.allProgressions){
-                Helpers.setAchievementStatus(ach,src.getPlayerOrException(),false);
+                Helpers.setProgressionCompletionStatus(ach,src.getPlayerOrException(),false);
             }
             src.sendSuccess(new TextComponent("Successfully refreshed all progressions"),false);
         Helpers.updateProgression(src.getPlayerOrException());
         Helpers.forceChunksReload(src.getPlayerOrException());
         return 0;
     }
-}
-
-
-class AchievementArgument implements ArgumentType<String>{
-
-    public static AchievementArgument arg(){
-        return new AchievementArgument();
-    }
-    @Override
-    public String parse(StringReader reader) throws CommandSyntaxException {
-        return reader.readString();
-    }
-
-    
 }

@@ -24,7 +24,7 @@ public class TransmutationEvents {
     public static void breakBlock(final BlockEvent.BreakEvent event){
         if (event.getPlayer() instanceof ServerPlayer player) {
             if (AbilitiesRegistry.ALCHEMIST.isToggled(player) && !event.getPlayer().isDeadOrDying() ) {
-                if (AbilityHelper.isAbilityUsable(player,AbilitiesRegistry.ALCHEMIST)) {
+                if (AbilityHelper.isAbilityUsable(player,AbilitiesRegistry.ALCHEMIST,false)) {
                     LevelAccessor world = event.getWorld();
                     BlockPos pos = event.getPos();
                     event.getWorld().setBlock(event.getPos(), Blocks.AIR.defaultBlockState(), 3);

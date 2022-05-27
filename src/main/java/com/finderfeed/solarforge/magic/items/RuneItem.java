@@ -45,7 +45,7 @@ public class RuneItem extends SolarcraftItem {
         InteractionHand hand=  context.getHand();
         BlockState state = world.getBlockState(pos);
 
-        if (!world.isClientSide && (Helpers.hasPlayerUnlocked(Progression.SOLAR_RUNE,pl))){
+        if (!world.isClientSide && (Helpers.hasPlayerCompletedProgression(Progression.SOLAR_RUNE,pl))){
 
             if (state.hasProperty(InscriptionStone.PROP) && (state.getValue(InscriptionStone.PROP) == RunicEnergy.Type.NONE) ) {
                 if (hand == InteractionHand.MAIN_HAND) {

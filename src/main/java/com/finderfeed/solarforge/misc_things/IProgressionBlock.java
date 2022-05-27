@@ -19,7 +19,7 @@ public interface IProgressionBlock {
     Progression getRequiredProgression();
 
     default BlockState getHarvestState(Player playerEntity, BlockState state){
-        return Helpers.hasPlayerUnlocked(getRequiredProgression(),playerEntity) ? getUnlockedBlock().defaultBlockState():getLockedBlock().defaultBlockState();
+        return Helpers.hasPlayerCompletedProgression(getRequiredProgression(),playerEntity) ? getUnlockedBlock().defaultBlockState():getLockedBlock().defaultBlockState();
     }
 
 

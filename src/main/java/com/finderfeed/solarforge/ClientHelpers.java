@@ -358,7 +358,7 @@ public class ClientHelpers {
 
         Player player = Minecraft.getInstance().player;
         for (Progression a : Progression.getAllAchievements()){
-            Helpers.setAchievementStatus(a,player,Helpers.hasPlayerUnlocked(a,playerServer));
+            Helpers.setProgressionCompletionStatus(a,player,Helpers.hasPlayerCompletedProgression(a,playerServer));
 
         }
     }
@@ -384,7 +384,7 @@ public class ClientHelpers {
         IProgressionBlock block = (IProgressionBlock) ((BlockItem)stack.getItem()).getBlock();
         Player playerEntity = getClientPlayer();
         if (playerEntity != null) {
-            if (Helpers.hasPlayerUnlocked(block.getRequiredProgression(), playerEntity)) {
+            if (Helpers.hasPlayerCompletedProgression(block.getRequiredProgression(), playerEntity)) {
                 return block.getUnlockedBlock().getName();
             } else {
                 return block.getLockedBlock().asItem().getDefaultInstance().getHoverName();
