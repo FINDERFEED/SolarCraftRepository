@@ -423,21 +423,17 @@ public class EventHandler {
     @SubscribeEvent
     public static void equipmentChangedEvent(LivingEquipmentChangeEvent event){
         if (event.getEntityLiving() instanceof ServerPlayer player){
-
-
             if (event.getSlot() == EquipmentSlot.CHEST){
-                if (player.getItemBySlot(EquipmentSlot.CHEST).is(ItemsRegister.DIVINE_CHESTPLATE.get())){
+                if (event.getTo().is(ItemsRegister.DIVINE_CHESTPLATE.get()) && !event.getFrom().is(ItemsRegister.DIVINE_CHESTPLATE.get())){
                     if (!player.isCreative() && !player.isSpectator()) {
                         DisablePlayerFlightPacket.send(player, false);
-                        setWorn(player,true);
                     }
                     if (player.getAbilities().getFlyingSpeed() < 0.1f) {
                         player.getAbilities().setFlyingSpeed(0.10f);
                     }
-                }else{
-                    if (!player.isCreative() && !player.isSpectator() && hasWornChestplateBefore(player)) {
+                }else if (event.getFrom().is(ItemsRegister.DIVINE_CHESTPLATE.get()) && !event.getTo().is(ItemsRegister.DIVINE_CHESTPLATE.get())){
+                    if (!player.isCreative() && !player.isSpectator() ) {
                         DisablePlayerFlightPacket.send(player, true);
-                        setWorn(player,false);
                     }
                     if (player.getAbilities().getFlyingSpeed() == 0.1f) {
                         player.getAbilities().setFlyingSpeed(0.05f);
@@ -445,14 +441,6 @@ public class EventHandler {
                 }
             }
         }
-    }
-
-    public static boolean hasWornChestplateBefore(Player player){
-        return player.getPersistentData().getBoolean("wornDivineChestplate");
-    }
-
-    public static void setWorn(Player player,boolean worn){
-        player.getPersistentData().putBoolean("wornDivineChestplate",worn);
     }
 
     @SubscribeEvent(priority = EventPriority.LOW)
