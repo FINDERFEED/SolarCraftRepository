@@ -423,17 +423,16 @@ public class EventHandler {
     @SubscribeEvent
     public static void equipmentChangedEvent(LivingEquipmentChangeEvent event){
         if (event.getEntityLiving() instanceof ServerPlayer player){
-
-
             if (event.getSlot() == EquipmentSlot.CHEST){
-                if (player.getItemBySlot(EquipmentSlot.CHEST).is(ItemsRegister.DIVINE_CHESTPLATE.get())){
+                //Note: The secondary conditions in the following are intended to prevent armor damage and divine chestplate exchanges from cancelling flight
+                if (event.getTo().is(ItemsRegister.DIVINE_CHESTPLATE.get()) && !event.getFrom().is(ItemsRegister.DIVINE_CHESTPLATE.get())){
                     if (!player.isCreative() && !player.isSpectator()) {
                         DisablePlayerFlightPacket.send(player, false);
                     }
                     if (player.getAbilities().getFlyingSpeed() < 0.1f) {
                         player.getAbilities().setFlyingSpeed(0.10f);
                     }
-                }else{
+                } else if (event.getFrom().is(ItemsRegister.DIVINE_CHESTPLATE.get()) && !event.getTo().is(ItemsRegister.DIVINE_CHESTPLATE.get())){
                     if (!player.isCreative() && !player.isSpectator()) {
                         DisablePlayerFlightPacket.send(player, true);
                     }
