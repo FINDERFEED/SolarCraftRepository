@@ -18,7 +18,7 @@ public class DispelAbility extends AbstractAbility{
     @Override
     public void cast(ServerPlayer playerEntity, ServerLevel world) {
 
-        if (AbilityHelper.isAbilityUsable(playerEntity,this)) {
+        if (AbilityHelper.isAbilityUsable(playerEntity,this,true)) {
 
             Object[] arr =  playerEntity.getActiveEffects().toArray();
             for (int i = 0; i < arr.length; i++) {

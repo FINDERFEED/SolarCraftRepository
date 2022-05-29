@@ -16,7 +16,7 @@ public class HealAbility extends AbstractAbility{
 
     @Override
     public void cast(ServerPlayer entity, ServerLevel world) {
-        if (AbilityHelper.isAbilityUsable(entity,this)) {
+        if (AbilityHelper.isAbilityUsable(entity,this,true)) {
             entity.heal(4);
             AbilityHelper.spendAbilityEnergy(entity,this);
         }else {

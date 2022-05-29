@@ -50,7 +50,7 @@ public class ColdStarInfuser extends Block implements EntityBlock {
             }
         }
         if (hand == InteractionHand.MAIN_HAND) {
-            if (!world.isClientSide && Helpers.hasPlayerUnlocked(Progression.ACQUIRE_COLD_STAR, player)) {
+            if (!world.isClientSide && Helpers.hasPlayerCompletedProgression(Progression.ACQUIRE_COLD_STAR, player)) {
                 if (state != starredState) {
                     if (player.getItemInHand(hand).getItem() == Items.NETHER_STAR){
                         player.getItemInHand(hand).grow(-1);

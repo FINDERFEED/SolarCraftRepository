@@ -67,7 +67,7 @@ public class RetainLostEvent {
         Player playernew = event.getPlayer();
         if (!event.isWasDeath()) {
             for (AbstractAbility ability : AbilitiesRegistry.getAllAbilities()){
-                AbilityHelper.setAbilityUsable(playernew,ability,AbilityHelper.isAbilityUsable(peorig,ability));
+                AbilityHelper.setAbilityUsable(playernew,ability,AbilityHelper.isAbilityBought(peorig,ability));
             }
 
             playernew.getPersistentData().putInt(SolarCraftTags.RAW_SOLAR_ENERGY, peorig.getPersistentData().getInt(SolarCraftTags.RAW_SOLAR_ENERGY));
@@ -99,7 +99,7 @@ public class RetainLostEvent {
 
 
         for (Progression a : Progression.allProgressions){
-            Helpers.setAchievementStatus(a,playernew,Helpers.hasPlayerUnlocked(a,peorig));
+            Helpers.setProgressionCompletionStatus(a,playernew,Helpers.hasPlayerCompletedProgression(a,peorig));
 
         }
         if (!playernew.level.isClientSide) {
@@ -112,9 +112,6 @@ public class RetainLostEvent {
             for (AncientFragment fragment : AncientFragment.getAllFragments()) {
                 if (ProgressionHelper.doPlayerHasFragment(peorig, fragment)) {
                     ProgressionHelper.givePlayerFragment(fragment, playernew);
-                }
-                if (ProgressionHelper.doPlayerHasFragmentOld(peorig, fragment)) {
-                    ProgressionHelper.givePlayerFragmentOld(fragment, playernew);
                 }
             }
             Helpers.updateFragmentsOnClient(player);

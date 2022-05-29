@@ -144,7 +144,7 @@ public class SolarForgeClientRegistry {
 
                 Player playerEntity = Minecraft.getInstance().player;
                 if (playerEntity != null) {
-                    return Helpers.hasPlayerUnlocked(BlocksRegistry.ULDORADIUM_ORE.get().getRequiredProgression(), Minecraft.getInstance().player) ? 1f : 0;
+                    return Helpers.hasPlayerCompletedProgression(BlocksRegistry.ULDORADIUM_ORE.get().getRequiredProgression(), Minecraft.getInstance().player) ? 1f : 0;
                 }else{
                     return 0;
                 }
@@ -153,7 +153,7 @@ public class SolarForgeClientRegistry {
 
                 Player playerEntity = Minecraft.getInstance().player;
                 if (playerEntity != null) {
-                    return Helpers.hasPlayerUnlocked(BlocksRegistry.SOLAR_STONE.get().getRequiredProgression(), Minecraft.getInstance().player) ? 1f : 0;
+                    return Helpers.hasPlayerCompletedProgression(BlocksRegistry.SOLAR_STONE.get().getRequiredProgression(), Minecraft.getInstance().player) ? 1f : 0;
                 }else{
                     return 0;
                 }
@@ -162,7 +162,7 @@ public class SolarForgeClientRegistry {
 
                 Player playerEntity = Minecraft.getInstance().player;
                 if (playerEntity != null) {
-                    return Helpers.hasPlayerUnlocked(BlocksRegistry.ENDER_CRACKS.get().getRequiredProgression(), Minecraft.getInstance().player) ? 1f : 0;
+                    return Helpers.hasPlayerCompletedProgression(BlocksRegistry.ENDER_CRACKS.get().getRequiredProgression(), Minecraft.getInstance().player) ? 1f : 0;
                 }else{
                     return 0;
                 }
@@ -172,7 +172,7 @@ public class SolarForgeClientRegistry {
                 Player playerEntity = Minecraft.getInstance().player;
                 if (playerEntity != null) {
 
-                    return Helpers.hasPlayerUnlocked(SolarForge.SOLAR_ORE.get().getRequiredProgression(), Minecraft.getInstance().player) ? 1f : 0;
+                    return Helpers.hasPlayerCompletedProgression(SolarForge.SOLAR_ORE.get().getRequiredProgression(), Minecraft.getInstance().player) ? 1f : 0;
                 }else{
                     return 0;
                 }
@@ -197,7 +197,7 @@ public class SolarForgeClientRegistry {
             Player playerEntity = Minecraft.getInstance().player;
             if (playerEntity != null) {
 
-                return Helpers.hasPlayerUnlocked( ((ProgressionBlock)item.getBlock()).getRequiredProgression(), Minecraft.getInstance().player) ? 1f : 0;
+                return Helpers.hasPlayerCompletedProgression( ((ProgressionBlock)item.getBlock()).getRequiredProgression(), Minecraft.getInstance().player) ? 1f : 0;
             }else{
                 return 0;
             }

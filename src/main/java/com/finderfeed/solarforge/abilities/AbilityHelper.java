@@ -9,6 +9,7 @@ import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
 import com.finderfeed.solarforge.packet_handler.packets.ToggleableAbilityPacket;
 import com.finderfeed.solarforge.registries.abilities.AbilitiesRegistry;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -20,22 +21,25 @@ import java.util.Locale;
 public class AbilityHelper {
 
 
-    public static void notEnoughEnergyMessage(Player player,AbstractAbility ability){
+    public static void sendMessages(Player player, AbstractAbility ability){
         for (RunicEnergy.Type type : ability.getCost().getSetTypes()){
-            float pl = RunicEnergy.getEnergy(player,type);
-            if (pl < ability.getCost().get(type)){
-                player.sendMessage(new TranslatableComponent("solarcraft.not_enough_runic_energy").append(" " + type.id.toUpperCase(Locale.ROOT)),
-                        player.getUUID());
+            float amount = RunicEnergy.getEnergy(player,type);
+            if (amount < ability.getCost().get(type)){
+                player.sendMessage(new TranslatableComponent("solarcraft.not_enought_runic_energy")
+                        .append(new TextComponent(" " + type.id.toUpperCase(Locale.ROOT) + ", "))
+                        .append(new TranslatableComponent("solarcraft.not_enought_runic_energy_needed"))
+                        .append(ability.getCost().get(type) + ""),player.getUUID());
             }
         }
     }
 
-    public static boolean isAbilityUsable(Player player, AbstractAbility ability){
+    public static boolean isAbilityUsable(Player player, AbstractAbility ability,boolean sendMessages){
         if (player.isCreative()) return true;
         if (isAbilityBought(player,ability)){
             RunicEnergyCost cost = ability.cost;
             for (RunicEnergy.Type type : cost.getSetTypes()){
                 if (RunicEnergy.getEnergy(player,type) < cost.get(type)){
+                    if (sendMessages) sendMessages(player,ability);
                     return false;
                 }
             }

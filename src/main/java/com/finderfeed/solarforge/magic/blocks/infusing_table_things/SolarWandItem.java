@@ -125,7 +125,7 @@ public class SolarWandItem extends Item implements IRunicEnergyUser {
                     Helpers.sendEnergyTypeToast((ServerPlayer) player, type);
                     RunicEnergy.setFound(player,type);
                 }
-                if (!Helpers.hasPlayerUnlocked(Progression.ALL_ENERGY_TYPES,player)){
+                if (!Helpers.hasPlayerCompletedProgression(Progression.ALL_ENERGY_TYPES,player)){
                     boolean f = true;
                     for (RunicEnergy.Type t : RunicEnergy.Type.getAll()){
                         f = RunicEnergy.hasFoundType(player,t);

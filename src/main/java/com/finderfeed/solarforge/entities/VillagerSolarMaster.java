@@ -57,7 +57,7 @@ public class VillagerSolarMaster extends PathfinderMob {
             stack.setCount(64);
 
 
-            if (Helpers.hasPlayerUnlocked(Progression.IMBUED_COLD_STAR, player) &&
+            if (Helpers.hasPlayerCompletedProgression(Progression.IMBUED_COLD_STAR, player) &&
                     ((player.getMainHandItem().getItem() == Items.EMERALD) && (player.getMainHandItem().getCount() == player.getMainHandItem().getMaxStackSize()))) {
                 if (TRADED_WITH.contains(player.getUUID())) {
                     player.sendMessage(new TranslatableComponent("solarcraft.already_traded"), player.getUUID());
@@ -72,7 +72,7 @@ public class VillagerSolarMaster extends PathfinderMob {
                     player.addItem(new ItemStack(ItemsRegister.BLUE_GEM.get(),30));
                 }
 
-            } else if (Helpers.hasPlayerUnlocked(Progression.CRAFT_SOLAR_LENS, player)) {
+            } else if (Helpers.hasPlayerCompletedProgression(Progression.CRAFT_SOLAR_LENS, player)) {
                 if (TRADED_WITH.contains(player.getUUID())) {
                     player.sendMessage(new TranslatableComponent("solarcraft.already_traded"), player.getUUID());
                     playSound(SoundEvents.VILLAGER_NO,1,1);

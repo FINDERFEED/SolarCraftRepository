@@ -101,7 +101,7 @@ public class Helpers {
         return ent.invulnerableTime == 0;
     }
 
-    public static boolean hasPlayerUnlocked(Progression ach, Player entity){
+    public static boolean hasPlayerCompletedProgression(Progression ach, Player entity){
 
         return ach == null ? true : entity.getPersistentData().getBoolean("solar_forge_progression_"+ach.getAchievementCode());
     }
@@ -116,7 +116,7 @@ public class Helpers {
         return true;
     }
 
-    public static void setAchievementStatus(Progression ach, Player pe, boolean a){
+    public static void setProgressionCompletionStatus(Progression ach, Player pe, boolean a){
         pe.getPersistentData().putBoolean("solar_forge_progression_"+ach.getAchievementCode(),a);
     }
 
@@ -283,7 +283,7 @@ public class Helpers {
     public static void updateProgression(ServerPlayer player){
         for (Progression a : Progression.allProgressions) {
 
-            SolarForgePacketHandler.INSTANCE.sendTo(new UpdateProgressionOnClient(a.getAchievementCode(),hasPlayerUnlocked(a,player)),
+            SolarForgePacketHandler.INSTANCE.sendTo(new UpdateProgressionOnClient(a.getAchievementCode(), hasPlayerCompletedProgression(a,player)),
                     player.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
         }
     }

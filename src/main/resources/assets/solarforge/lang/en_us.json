@@ -142,13 +142,13 @@
   "solarcraft.solar_god_sword_level_5": "Level 5: Projectile is explosive",
   "solar_category.upgrade": "Upgrades",
   "pre.solar_stone": "What is this luminous stone in the caves?",
-  "pre.solar_forge_craft": "With the power of the solarium, I think I will be able to create the machinery...",
+  "pre.solar_forge_craft": "With the power of the solarium, I think I will be able to create this machinery...",
   "pre.solar_infuser_create": "Solar Stone and Solarium are a good combination...",
   "pre.solar_infuser_use": "A Beginning Magician",
   "pre.acquire_solar_dust": "Useful Solarium remains.",
   "pre.key_lock_dungeon": "A magic aura comes from the desert.",
   "pre.infuser_dungeon": "Plains secrets",
-  "pre.key_source": "Evil savanna caves brin nothing but death... or do they?",
+  "pre.key_source": "Evil savanna caves bring nothing but death... or do they?",
   "pre.cold_star_piece": "The item with strong lensing properties is a myth. Or is it?",
   "pre.cold_star_piece_activated": "It seems that this piece needs to be charged somehow.",
   "pre.solar_lens_craft": "Regular stone furnace heat isn't enough to make alloys from magic metals, perhaps a big cubic yellow thing above you could help?",
@@ -685,7 +685,6 @@
   "solarcraft.buy_cost": "Cost",
   "death.attack.runic_magic": "%s got killed by runic magic.",
   "solarcraft_button.magic_bolt": "Magic Bolt",
-  "entity.solarforge.shadow_zombie": "Shadow Zombie",
-  "solarcraft.not_enough_runic_energy": "Not enough runic energy",
-  "solarcraft.failed_to_generate_puzzle": "Failed to generate puzzle. Try again."
+  "solarcraft.not_enought_runic_energy": "Not enough runic energy:",
+  "solarcraft.not_enought_runic_energy_needed": "Need:"
 }

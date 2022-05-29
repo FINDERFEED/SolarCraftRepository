@@ -94,7 +94,7 @@ public class InfusingRecipeScreen extends Screen {
         this.relY = (height - 218*scale)/2/scale;
         fillArray();
         itemRators = new ArrayList<>();
-        this.catalystsUnlocked = Helpers.hasPlayerUnlocked(Progression.CATALYSTS,Minecraft.getInstance().player);
+        this.catalystsUnlocked = Helpers.hasPlayerCompletedProgression(Progression.CATALYSTS,Minecraft.getInstance().player);
         fillItemRators();
         if (maxPages != 0) {
             addRenderableWidget(new ImageButton(relX + 193 + 19, relY + 55 + 14 - 1 , 16, 16, 0, 0, 0, BUTTONS, 16, 32, (button) -> {

@@ -24,7 +24,7 @@ public class DisarmAbility extends AbstractAbility{
 
     @Override
     public void cast(ServerPlayer entity, ServerLevel world) {
-        if (AbilityHelper.isAbilityUsable(entity,this)) {
+        if (AbilityHelper.isAbilityUsable(entity,this,true)) {
             world.playSound(null, entity.getX(), entity.getY(), entity.getZ(), SoundEvents.ZOMBIE_VILLAGER_CURE, SoundSource.AMBIENT, 1, 1);
             List<Entity> list = world.getEntities(entity, new AABB(-8, -8, -8, 8, 8, 8).move(entity.position()), x -> x instanceof LivingEntity);
             for (int i = 0; i < list.size(); i++) {

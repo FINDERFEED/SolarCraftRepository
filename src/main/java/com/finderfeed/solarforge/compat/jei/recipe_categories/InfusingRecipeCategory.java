@@ -5,11 +5,6 @@ import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.compat.jei.drawables.InfusingRecipeJEI;
 import com.finderfeed.solarforge.compat.jei.JeiRecipeTypes;
-import com.finderfeed.solarforge.local_library.client.tooltips.BlackBackgroundTooltip;
-import com.finderfeed.solarforge.local_library.client.tooltips.StaticBlackBackgroundTooltip;
-import com.finderfeed.solarforge.local_library.client.tooltips.animatable_omponents.ComponentSequence;
-import com.finderfeed.solarforge.local_library.client.tooltips.animatable_omponents.ContentAlignment;
-import com.finderfeed.solarforge.local_library.client.tooltips.animatable_omponents.CustomRenderComponent;
 import com.finderfeed.solarforge.local_library.helpers.RenderingTools;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.progressions.Progression;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.screen.InfoButton;
@@ -142,7 +137,7 @@ public class InfusingRecipeCategory implements IRecipeCategory<InfusingRecipe> {
         if (RenderingTools.isMouseInBorders((int) mouseX, (int) mouseY,137,15,137 + 12,15 + 12)){
             Gui.blit(matrices,137,15,0,12,12,12,12,24);
 
-            if (Helpers.hasPlayerUnlocked(Progression.CATALYSTS,Minecraft.getInstance().player)){
+            if (Helpers.hasPlayerCompletedProgression(Progression.CATALYSTS,Minecraft.getInstance().player)){
                 /*
                 012
               11    3

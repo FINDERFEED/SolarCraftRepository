@@ -30,16 +30,16 @@ public class ScrollThings {
 
     }
 
-    @SubscribeEvent
-    public static void initMaps(final ClientPlayerNetworkEvent.LoggedInEvent event){
-
-        //BookEntry.initMap();
-        if (event.getPlayer() != null && !SolarcraftClientConfig.DISABLE_WELCOME_MESSAGE.get()) {
-            event.getPlayer().sendMessage(new TranslatableComponent("solarcraft.welcome_message"), event.getPlayer().getUUID());
-            event.getPlayer().sendMessage(new TranslatableComponent("solarcraft.welcome_message2"), event.getPlayer().getUUID());
-
-        }
-    }
+//    @SubscribeEvent
+//    public static void initMaps(final ClientPlayerNetworkEvent.LoggedInEvent event){
+//
+//        //BookEntry.initMap();
+//        if (event.getPlayer() != null && !SolarcraftClientConfig.DISABLE_WELCOME_MESSAGE.get()) {
+//            event.getPlayer().sendMessage(new TranslatableComponent("solarcraft.welcome_message"), event.getPlayer().getUUID());
+//            event.getPlayer().sendMessage(new TranslatableComponent("solarcraft.welcome_message2"), event.getPlayer().getUUID());
+//
+//        }
+//    }
 
     @SubscribeEvent
     public static void initRecipes(final RecipesUpdatedEvent event){

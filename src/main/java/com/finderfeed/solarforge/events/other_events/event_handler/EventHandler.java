@@ -246,8 +246,8 @@ public class EventHandler {
     public static void progressionUnlockEvent(ProgressionUnlockEvent event){
         Progression ach = event.getProgression();
         Player playerEntity = event.getPlayer();
-        if (!Helpers.hasPlayerUnlocked(ach,playerEntity) && Helpers.canPlayerUnlock(ach,playerEntity)){
-            Helpers.setAchievementStatus(ach, playerEntity,true);
+        if (!Helpers.hasPlayerCompletedProgression(ach,playerEntity) && Helpers.canPlayerUnlock(ach,playerEntity)){
+            Helpers.setProgressionCompletionStatus(ach, playerEntity,true);
             Helpers.triggerToast(ach, playerEntity);
             Helpers.updateProgression((ServerPlayer)playerEntity );
             Helpers.forceChunksReload((ServerPlayer) playerEntity);
@@ -309,7 +309,7 @@ public class EventHandler {
     public static void catalystsProgression(BlockEvent.EntityPlaceEvent event){
         if (event.getEntity() instanceof Player pl){
             if (event.getPlacedBlock().is(Tags.CATALYST) && event.getPlacedBlock().getBlock() != BlocksRegistry.SOLAR_STONE_COLLUMN.get()) {
-                if (!Helpers.hasPlayerUnlocked(Progression.CATALYSTS, pl)) {
+                if (!Helpers.hasPlayerCompletedProgression(Progression.CATALYSTS, pl)) {
                     for (int x = -10; x < 10;x++){
                         for (int z = -10; z < 10;z++){
                             for (int height = 2; height > -5;height--){
@@ -423,18 +423,16 @@ public class EventHandler {
     @SubscribeEvent
     public static void equipmentChangedEvent(LivingEquipmentChangeEvent event){
         if (event.getEntityLiving() instanceof ServerPlayer player){
-
-
             if (event.getSlot() == EquipmentSlot.CHEST){
-                if (player.getItemBySlot(EquipmentSlot.CHEST).is(ItemsRegister.DIVINE_CHESTPLATE.get())){
+                if (event.getTo().is(ItemsRegister.DIVINE_CHESTPLATE.get()) && !event.getFrom().is(ItemsRegister.DIVINE_CHESTPLATE.get())){
                     if (!player.isCreative() && !player.isSpectator()) {
                         DisablePlayerFlightPacket.send(player, false);
                     }
                     if (player.getAbilities().getFlyingSpeed() < 0.1f) {
                         player.getAbilities().setFlyingSpeed(0.10f);
                     }
-                }else{
-                    if (!player.isCreative() && !player.isSpectator()) {
+                }else if (event.getFrom().is(ItemsRegister.DIVINE_CHESTPLATE.get()) && !event.getTo().is(ItemsRegister.DIVINE_CHESTPLATE.get())){
+                    if (!player.isCreative() && !player.isSpectator() ) {
                         DisablePlayerFlightPacket.send(player, true);
                     }
                     if (player.getAbilities().getFlyingSpeed() == 0.1f) {
@@ -444,7 +442,6 @@ public class EventHandler {
             }
         }
     }
-
 
     @SubscribeEvent(priority = EventPriority.LOW)
     public static void manageDivineArmorShields(LivingHurtEvent event){

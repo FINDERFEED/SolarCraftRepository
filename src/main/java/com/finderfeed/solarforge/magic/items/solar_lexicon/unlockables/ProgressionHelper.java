@@ -161,7 +161,7 @@ public class ProgressionHelper {
         if (!doPlayerHasFragment(pe,frag)){
             if (!(frag.getNeededProgression() == null)) {
                 for (Progression a : frag.getNeededProgression()) {
-                    if (!Helpers.hasPlayerUnlocked(a, pe)) {
+                    if (!Helpers.hasPlayerCompletedProgression(a, pe)) {
                         return false;
                     }
                 }

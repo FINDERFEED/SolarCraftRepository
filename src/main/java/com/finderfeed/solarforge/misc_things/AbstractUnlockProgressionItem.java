@@ -25,8 +25,8 @@ public abstract class AbstractUnlockProgressionItem extends Item {
         if (!p_77663_2_.isClientSide && p_77663_3_ instanceof Player){
             Player entity = (Player) p_77663_3_;
 
-            if ((Helpers.canPlayerUnlock(getAchivement(),entity)) && !Helpers.hasPlayerUnlocked(getAchivement(),entity)){
-                Helpers.setAchievementStatus(getAchivement(),entity,true);
+            if ((Helpers.canPlayerUnlock(getAchivement(),entity)) && !Helpers.hasPlayerCompletedProgression(getAchivement(),entity)){
+                Helpers.setProgressionCompletionStatus(getAchivement(),entity,true);
                 SolarForgePacketHandler.INSTANCE.sendTo(new TriggerToastPacket(getAchivement().getId()), ((ServerPlayer)entity).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
             }
         }

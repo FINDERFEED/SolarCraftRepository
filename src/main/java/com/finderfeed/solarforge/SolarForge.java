@@ -239,11 +239,7 @@ public class SolarForge
 
         MinecraftForge.EVENT_BUS.addListener(InfusingStand::placeBlockEvent);
         event.enqueueWork(()->{
-
-
             SolarForgeConfiguredStructures.registerConfiguredStructures();
-            //TODO: was temporarily removed since mojang biome system cardinally changed, meaning i need to wait for forge to do something
-
         });
 
     }
