@@ -19,7 +19,7 @@ public class AbilitiesRegistry {
     public static final ToggleableAbility ALCHEMIST = register("alchemist",new AlchemistAbility());
     public static final AbstractAbility METEORITE = register("meteorite",new MeteoriteAbility());
     public static final AbstractAbility HEAL = register("heal",new HealAbility());
-    //public static final AbstractAbility MAGIC_BOLT = register("magic_bolt",new MagicBoltAbility());
+    public static final AbstractAbility MAGIC_BOLT = register("magic_bolt",new MagicBoltAbility());
 
 
 
