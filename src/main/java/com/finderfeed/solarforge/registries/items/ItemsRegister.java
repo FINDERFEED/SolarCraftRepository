@@ -182,9 +182,9 @@ public class ItemsRegister {
     public static final RegistryObject<Item> BLUE_GEM = ITEMS.register("blue_gem",()->new BlueGemItem(new Item.Properties().tab(SolarForge.SOLAR_GROUP_MATERIALS).fireResistant()));
     public static final RegistryObject<Item> BLUE_GEM_ENCHANCED = ITEMS.register("blue_gem_enriched",()->new EnchancedBlueGem(new Item.Properties().tab(SolarForge.SOLAR_GROUP_MATERIALS).fireResistant()));
     public static final RegistryObject<Item> BLUE_GEM_DOOR_BLOCK = ITEMS.register("blue_gem_door_block",()->new BlockItem(BlocksRegistry.BLUE_GEM_DOOR_BLOCK.get(),new Item.Properties()));
-    public static final RegistryObject<Item> ASH_LEAVES = ITEMS.register("ash_leaves",()->new BlockItem(BlocksRegistry.ASH_LEAVES.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
-    public static final RegistryObject<Item> BURNT_LOG = ITEMS.register("burnt_log",()->new BlockItem(BlocksRegistry.BURNT_LOG.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
-    public static final RegistryObject<Item> DEAD_SPROUT = ITEMS.register("dead_sprout",()->new BlockItem(BlocksRegistry.DEAD_SPROUT.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
+    public static final RegistryObject<Item> ASH_LEAVES = ITEMS.register("ash_leaves",()->new BlockItem(BlocksRegistry.ASH_LEAVES.get(),new Item.Properties()));
+    public static final RegistryObject<Item> BURNT_LOG = ITEMS.register("burnt_log",()->new BlockItem(BlocksRegistry.BURNT_LOG.get(),new Item.Properties()));
+    public static final RegistryObject<Item> DEAD_SPROUT = ITEMS.register("dead_sprout",()->new BlockItem(BlocksRegistry.DEAD_SPROUT.get(),new Item.Properties()));
     public static final RegistryObject<Item> FIRST_DIMENSIONAL_SHARD = ITEMS.register("first_dimensional_shard",()->new Item(new Item.Properties().tab(SolarForge.SOLAR_GROUP_MATERIALS).rarity(Rarity.EPIC)));
     public static final RegistryObject<Item> ASH_ITEM = ITEMS.register("ash",()->new AshItem(new Item.Properties().tab(SolarForge.SOLAR_GROUP)));
     public static final RegistryObject<Item> INFO_FRAGMENT = ITEMS.register("ancient_fragment",()->new AncientFragmentItem(new Item.Properties().tab(SolarForge.SOLAR_GROUP_FRAGMENTS).stacksTo(1)));
@@ -195,6 +195,7 @@ public class ItemsRegister {
     public static final RegistryObject<Item> REGEN_AMPLIFICATION_BLOCK = ITEMS.register("regen_amp_block",()->new BlockItem(BlocksRegistry.REGENERATION_AMPLIFICATION_BLOCK.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
     public static final RegistryObject<Item> EVASION_AMPLIFICATION_BLOCK = ITEMS.register("evasion_amp_block",()->new BlockItem(BlocksRegistry.EVASION_AMPLIFICATION_BLOCK.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
 
+    public static final RegistryObject<Item> RUNIC_TREE_SAPLING = ITEMS.register("runic_tree_sapling",()->new BlockItem(BlocksRegistry.RUNIC_TREE_SAPLING.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
     public static final RegistryObject<Item> RUNIC_LEAVES = ITEMS.register("runic_leaves",()->new BlockItem(BlocksRegistry.RUNIC_LEAVES.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
     public static final RegistryObject<Item> RUNIC_LOG = ITEMS.register("runic_log",()->new FuelBlockItem(BlocksRegistry.RUNIC_LOG.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS),600));
     public static final RegistryObject<Item> RUNIC_PLANKS = ITEMS.register("runic_planks",()->new FuelBlockItem(BlocksRegistry.RUNIC_PLANKS.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS),300));

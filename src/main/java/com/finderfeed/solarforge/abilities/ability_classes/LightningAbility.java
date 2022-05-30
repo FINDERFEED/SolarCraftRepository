@@ -50,10 +50,6 @@ public class LightningAbility extends AbstractAbility{
 
             }
 
-        }else{
-            if (AbilityHelper.isAbilityBought(entity,this)){
-                AbilityHelper.notEnoughEnergyMessage(entity,this);
-            }
         }
 
     }

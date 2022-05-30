@@ -158,7 +158,7 @@
   "solarcraft.solar_god_pickaxe_level_3": "Level 3: Auto smelts blocks",
   "solarcraft.solar_god_pickaxe_level_4": "Level 4: Mining AOE 3 by 3",
   "item.solarforge.solar_god_pickaxe": "Solar God Pickaxe",
-  "block.solarforge.uldoradium_ore": "Uldoradium ore",
+  "block.solarforge.uldoradium_ore": "Blue gem ore",
   "solarcraft.already_traded": "I have already traded with you!",
   "solarcraft.use_villager_success": "Deal. Also I must warn you about a strange structure in the jungle. Those who entered it did not return...",
   "solarcraft.bring_emeralds": "Okay, I will give you some gems, but only for 64 emeralds",
@@ -318,7 +318,7 @@
   "ach.enter_nether": "The Nether",
   "pre.rune_energy_claim": "Pylons radiate with strange energy, maybe you can collect it?",
   "pre.rune_energy_deposit": "Strange structures scattered around the world.",
-  "pre.solar_rune": "Pylons radiate with energy, maybe you can store it in something?",
+  "pre.solar_rune": "Pylons radiate with energy, maybe you can store it in something? Perhaps a flint-processed stone can serve as a container?",
   "pre.enter_nether": "A scary and uncontrollable world hides behind the purple veil.",
   "solar_category.beginning": "Start",
   "solar_category.solar_forge": "Solar Forge basics",
@@ -686,5 +686,8 @@
   "death.attack.runic_magic": "%s got killed by runic magic.",
   "solarcraft_button.magic_bolt": "Magic Bolt",
   "solarcraft.not_enought_runic_energy": "Not enough runic energy:",
-  "solarcraft.not_enought_runic_energy_needed": "Need:"
+  "solarcraft.not_enought_runic_energy_needed": "Need:",
+  "solar_fragment.hidden_ores": "Buried secrets",
+  "hidden_ores.lore": "Your eyes lie to you. Many unexperienced adventurers just don't see the treasures hidden in the depth. As you explore the world and gain more knowledge about it, things that you saw as a regular stone block might not be a stone anymore.",
+  "block.solarforge.runic_tree_sapling": "Runic Tree Sapling"
 }

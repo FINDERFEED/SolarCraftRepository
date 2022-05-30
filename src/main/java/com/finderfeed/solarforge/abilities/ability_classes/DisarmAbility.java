@@ -32,10 +32,6 @@ public class DisarmAbility extends AbstractAbility{
                 ent.addEffect(new MobEffectInstance(SolarForge.SOLAR_STUN.get(), 100, 0));
             }
             AbilityHelper.spendAbilityEnergy(entity,this);
-        }else {
-            if (AbilityHelper.isAbilityBought(entity,this)){
-                AbilityHelper.notEnoughEnergyMessage(entity,this);
-            }
         }
     }
 }

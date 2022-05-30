@@ -42,8 +42,8 @@ public class TooltipEventHandler {
         int sizeY = event.getSizeY()+4;
         PoseStack stack = event.getPoseStack();
         CustomTooltip tooltip = event.getTooltip();
-        renderTop(stack,tooltip,relX,relY,sizeX,sizeY);
-        renderBottom(stack,tooltip,relX,relY,sizeX,sizeY);
+        renderTop(stack,tooltip,relX+4,relY,event.getSizeX(),sizeY);
+        renderBottom(stack,tooltip,relX+4,relY,event.getSizeX(),sizeY);
         renderCorners(stack,tooltip,relX,relY,sizeX,sizeY);
     }
 

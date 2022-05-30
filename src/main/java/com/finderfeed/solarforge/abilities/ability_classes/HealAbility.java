@@ -19,10 +19,6 @@ public class HealAbility extends AbstractAbility{
         if (AbilityHelper.isAbilityUsable(entity,this,true)) {
             entity.heal(4);
             AbilityHelper.spendAbilityEnergy(entity,this);
-        }else {
-            if (AbilityHelper.isAbilityBought(entity,this)){
-                AbilityHelper.notEnoughEnergyMessage(entity,this);
-            }
         }
 
     }

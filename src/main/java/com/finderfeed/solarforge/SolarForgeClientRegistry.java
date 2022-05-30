@@ -97,6 +97,7 @@ public class SolarForgeClientRegistry {
         ItemBlockRenderTypes.setRenderLayer(BlocksRegistry.EXPLOSION_BLOCKER.get(), RenderType.translucent());
         ItemBlockRenderTypes.setRenderLayer(BlocksRegistry.CRYSTAL_FLOWER.get(), RenderType.cutout());
         ItemBlockRenderTypes.setRenderLayer(BlocksRegistry.VOID_LILY.get(), RenderType.cutout());
+        ItemBlockRenderTypes.setRenderLayer(BlocksRegistry.RUNIC_TREE_SAPLING.get(), RenderType.cutout());
 
         ClientRegistry.registerKeyBinding(FIRST_ABILITY_KEY);
         ClientRegistry.registerKeyBinding(SECOND_ABILITY_KEY);

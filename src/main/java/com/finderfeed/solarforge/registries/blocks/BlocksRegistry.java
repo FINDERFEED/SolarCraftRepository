@@ -96,6 +96,7 @@ public class BlocksRegistry {
     public  static  final RegistryObject<Block> ENCHANTER = BLOCKS.register("elemental_enchanter",()-> new EnchanterBlock(BlockBehaviour.Properties.copy(Blocks.STONE).noOcclusion()));
     public  static  final RegistryObject<Block> RUNIC_ENERGY_CHARGER = BLOCKS.register("runic_energy_charger",()-> new RunicEnergyChargerBlock(BlockBehaviour.Properties.copy(Blocks.STONE).noOcclusion()));
     public  static  final RegistryObject<Block> RUNIC_TABLE = BLOCKS.register("runic_table",()-> new RunicTableBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).noOcclusion()));
+    public  static  final RegistryObject<Block> RUNIC_TREE_SAPLING = BLOCKS.register("runic_tree_sapling",()-> new SaplingBlock(new RunicTreeGrower(),BlockBehaviour.Properties.of(Material.PLANT).noCollission().randomTicks().instabreak().sound(SoundType.GRASS)));
     public  static  final RegistryObject<LeavesBlock> RUNIC_LEAVES = BLOCKS.register("runic_leaves",()-> new RunicLeavesBlock(BlockBehaviour.Properties.copy(Blocks.OAK_LEAVES).noOcclusion()));
     public  static  final RegistryObject<RotatedPillarBlock> RUNIC_LOG = BLOCKS.register("runic_log",()-> new RotatedPillarFlammableBlock(BlockBehaviour.Properties.copy(Blocks.OAK_LOG),20));
     public  static  final RegistryObject<Block> RUNIC_PLANKS = BLOCKS.register("runic_planks",()-> new FlammableBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS),20));

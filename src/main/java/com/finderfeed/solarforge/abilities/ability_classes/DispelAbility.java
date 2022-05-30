@@ -28,10 +28,6 @@ public class DispelAbility extends AbstractAbility{
             }
             AbilityHelper.spendAbilityEnergy(playerEntity,this);
 
-        }else {
-            if (AbilityHelper.isAbilityBought(playerEntity,this)){
-                AbilityHelper.notEnoughEnergyMessage(playerEntity,this);
-            }
         }
 
     }

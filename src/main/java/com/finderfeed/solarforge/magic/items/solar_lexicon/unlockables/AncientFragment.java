@@ -14,6 +14,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.network.chat.TranslatableComponent;
 
@@ -32,6 +33,7 @@ public class AncientFragment {
     public static final AncientFragment VOID_DUST = new AncientFragment(tx("solar_fragment.void_dust"),"void_dust",null,SubCategoryBase.BASIC_DUSTS,CategoryBase.EXPLORATION, ItemsRegister.VOID_DUST.get(),tx("void_dust.lore"),1);
     public static final AncientFragment INFUSING_CRAFTING_TABLE = new AncientFragment(tx("solar_fragment.infusing_crafting_table"),"infusing_crafting_table",null,SubCategoryBase.BEGINNER_BLOCKS,CategoryBase.BEGINNER, ItemsRegister.INFUSING_TABLE.get(),tx("infusing_crafting_table.lore"),1);
     public static final AncientFragment WAND = new AncientFragment(tx("solar_fragment.wand"),"wand",null,SubCategoryBase.BEGGINING,CategoryBase.BEGGINING_INFO, ItemsRegister.SOLAR_WAND.get(),tx("wand.lore"),1);
+    public static final AncientFragment HIDDEN_ORES = new AncientFragment(tx("solar_fragment.hidden_ores"),"hidden_ores",ProgressionStage.PRE_BEGGINING.ALL_PROGRESSIONS,SubCategoryBase.WORLD,CategoryBase.EXPLORATION, Items.STONE,tx("hidden_ores.lore"),1);
     public static final AncientFragment SOLAR_STONES = new AncientFragment(tx("solar_fragment.solar_stones"),"solar_stones", ProgressionStage.PRE_BEGGINING.ALL_PROGRESSIONS,SubCategoryBase.BEGINNER_BLOCKS,CategoryBase.BEGINNER, List.of(
             ItemWithRecipe.of(ItemsRegister.SOLAR_STONE_BRICKS.get().getDefaultInstance(),"solar_stone_bricks"),ItemWithRecipe.of(ItemsRegister.SOLAR_STONE_COLLUMN.get().getDefaultInstance(),"solar_stone_collumn"),
             ItemWithRecipe.of(ItemsRegister.SOLAR_STONE_COLLUMN_HORIZONTAL.get().getDefaultInstance(),"solar_stone_collumn_horizontal"),ItemWithRecipe.of(ItemsRegister.SOLAR_STONE_STAIRS.get().getDefaultInstance(),"solar_stone_stairs"),
