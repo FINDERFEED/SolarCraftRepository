@@ -52,6 +52,7 @@ public class SolarLexiconContainer extends AbstractContainerMenu {
                 public boolean mayPlace(@NotNull ItemStack stack) {
                     if (!(stack.getItem() instanceof AncientFragmentItem)) return false;
                     AncientFragment fragment1 = ProgressionHelper.getFragmentFromItem(stack);
+                    if (fragment1 == null) return false;
                     for (int i = 0; i < inventory.getSlots();i++){
                            AncientFragment fragment2 = ProgressionHelper.getFragmentFromItem(inventory.getStackInSlot(i));
                            if (fragment1 == fragment2) return false;

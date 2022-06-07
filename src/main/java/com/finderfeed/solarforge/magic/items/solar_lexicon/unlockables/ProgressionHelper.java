@@ -107,6 +107,7 @@ public class ProgressionHelper {
 
     @Nullable
     public static AncientFragment getFragmentFromItem(ItemStack stack){
+        if (stack.getTagElement(TAG_ELEMENT) == null) return null;
         CompoundTag tag = stack.getOrCreateTagElement(TAG_ELEMENT);
         return AncientFragment.getFragmentByID(tag.getString(FRAG_ID));
     }
