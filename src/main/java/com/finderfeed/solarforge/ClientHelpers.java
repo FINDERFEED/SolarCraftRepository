@@ -66,8 +66,11 @@ import java.util.function.Supplier;
 
 public class ClientHelpers {
 
+    public static boolean IS_RADIANT_LAND_CLEANED_CLIENT = false;
 
-
+    public static boolean isIsRadiantLandCleaned() {
+        return IS_RADIANT_LAND_CLEANED_CLIENT;
+    }
 
     public static void handlePuzzlePacket(BlockPos pos){
         Level level = getLevel();

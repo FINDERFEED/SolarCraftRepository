@@ -5,6 +5,7 @@ import com.finderfeed.solarforge.entities.RunicElementalBoss;
 import com.finderfeed.solarforge.events.my_events.ProgressionUnlockEvent;
 import com.finderfeed.solarforge.local_library.OwnedBlock;
 import com.finderfeed.solarforge.local_library.helpers.FDMathHelper;
+import com.finderfeed.solarforge.magic.blocks.blockentities.clearing_ritual.RadiantLandCleanedData;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.progressions.Progression;
 import com.finderfeed.solarforge.misc_things.Multiblock;
 import com.finderfeed.solarforge.client.particles.ParticleTypesRegistry;
@@ -19,6 +20,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -48,12 +50,25 @@ import java.util.function.Predicate;
 public class Helpers {
 
 
+
     public static final Random RANDOM = new Random();
     public static final String FRAGMENT = "solar_forge_fragment_";
     public static double GRAVITY_METRES_PER_SEC = 20;
     public static double GRAVITY_VELOCITY = 0.05;
     public static String PROGRESSION = "solar_forge_progression_";
     public static BlockPos NULL_POS = new BlockPos(0,-100,0);
+
+
+
+    public static boolean isRadiantLandCleanedServer(ServerLevel level){
+        RadiantLandCleanedData data = level.getServer().overworld()
+                .getDataStorage()
+                .computeIfAbsent(RadiantLandCleanedData::load,()->new RadiantLandCleanedData(false),"is_radiant_land_cleaned");
+        return data.isCleaned();
+    }
+
+
+
     public static void drawBoundedText(PoseStack matrices,int posx,int posy,int bound,String s,int color){
         StringBuilder str = new StringBuilder(s);
         for (int a = 0;a < s.length();a++) {

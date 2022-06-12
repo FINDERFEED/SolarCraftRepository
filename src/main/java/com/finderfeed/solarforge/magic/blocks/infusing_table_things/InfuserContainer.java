@@ -1,5 +1,6 @@
 package com.finderfeed.solarforge.magic.blocks.infusing_table_things;
 
+import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.custom_slots.OutputSlot;
 import net.minecraft.network.chat.Component;
@@ -101,8 +102,8 @@ public class InfuserContainer extends AbstractContainerMenu {
 
 
     @Override
-    public boolean stillValid(Player p_75145_1_) {
-        return true;
+    public boolean stillValid(Player player) {
+        return this.te != null && this.te.getInventory() != null && player.distanceToSqr(Helpers.getBlockCenter(te.getBlockPos())) <= 256;
     }
 
     public static class Provider implements MenuProvider{
