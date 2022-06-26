@@ -2,6 +2,7 @@ package com.finderfeed.solarforge.registries.tile_entities;
 
 import com.finderfeed.solarforge.magic.blocks.blockentities.clearing_ritual.CrystalEnergyVinesTile;
 import com.finderfeed.solarforge.magic.blocks.blockentities.clearing_ritual.clearing_ritual_crystal.ClearingRitualCrystalTile;
+import com.finderfeed.solarforge.magic.blocks.blockentities.clearing_ritual.clearing_ritual_main_tile.ClearingRitualMainTile;
 import com.finderfeed.solarforge.magic.blocks.infusing_table_things.infusing_pool.InfusingStandTileEntity;
 import com.finderfeed.solarforge.magic.blocks.blockentities.*;
 import com.finderfeed.solarforge.magic.runic_network.repeater.BaseRepeaterTile;
@@ -106,5 +107,8 @@ public class TileEntitiesRegistry {
 
     public static final RegistryObject<BlockEntityType<ClearingRitualCrystalTile>> CLEARING_RITUAL_CRYSTAL = TILE_ENTITY_TYPE.register("clearing_ritual_crystal",()->
             BlockEntityType.Builder.of(ClearingRitualCrystalTile::new, BlocksRegistry.CLEARING_RITUAL_CRYSTAL.get()).build(null));
+
+    public static final RegistryObject<BlockEntityType<ClearingRitualMainTile>> CLEARING_RITUAL_MAIN_BLOCK = TILE_ENTITY_TYPE.register("clearing_ritual_main_block",()->
+            BlockEntityType.Builder.of(ClearingRitualMainTile::new, BlocksRegistry.CLEARING_RITUAL_MAIN_BLOCK.get()).build(null));
 
 }

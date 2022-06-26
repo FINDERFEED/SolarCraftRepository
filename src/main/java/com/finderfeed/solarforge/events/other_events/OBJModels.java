@@ -32,6 +32,10 @@ public class OBJModels {
     public static final ResourceLocation RIP_RAY_GENERATOR = new ResourceLocation("solarforge:objmodels/rip_ray_generator");
     public static final ResourceLocation CLEARING_RITUAL_CRYSTAL = new ResourceLocation(SolarForge.MOD_ID,"objmodels/clearing_ritual_crystal");
 
+    public static final ResourceLocation CLEARING_RITUAL_MAIN_BLOCK_LOWER = new ResourceLocation(SolarForge.MOD_ID,"objmodels/clearing_ritual_main_block_lower");
+    public static final ResourceLocation CLEARING_RITUAL_MAIN_BLOCK_PETALS = new ResourceLocation(SolarForge.MOD_ID,"objmodels/clearing_ritual_main_block_petals");
+    public static final ResourceLocation CLEARING_RITUAL_MAIN_BLOCK_TOP = new ResourceLocation(SolarForge.MOD_ID,"objmodels/clearing_ritual_main_block_top");
+
     public static final ResourceLocation HOLE_MODEL = new ResourceLocation("solarforge:objmodels/hole");
     public static final ResourceLocation ANCIENT_FRAGMENT_MODEL = new ResourceLocation("solarforge:toloadmodels/ancient_fragment");
     public static final ResourceLocation ULDORADIUM_ORE = new ResourceLocation("solarforge:progression_ore_models/uldoradium_ore");
@@ -55,5 +59,8 @@ public class OBJModels {
         ForgeModelBakery.addSpecialModel(CRYSTAL_1);
         ForgeModelBakery.addSpecialModel(EXPLOSIVE_CRYSTAL);
         ForgeModelBakery.addSpecialModel(CLEARING_RITUAL_CRYSTAL);
+        ForgeModelBakery.addSpecialModel(CLEARING_RITUAL_MAIN_BLOCK_LOWER);
+        ForgeModelBakery.addSpecialModel(CLEARING_RITUAL_MAIN_BLOCK_PETALS);
+        ForgeModelBakery.addSpecialModel(CLEARING_RITUAL_MAIN_BLOCK_TOP);
     }
 }

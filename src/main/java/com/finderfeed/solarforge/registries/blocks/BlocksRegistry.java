@@ -6,6 +6,7 @@ import com.finderfeed.solarforge.local_library.blocks.FlammableLeavesBlock;
 import com.finderfeed.solarforge.local_library.blocks.FlammableSlabBlock;
 import com.finderfeed.solarforge.local_library.blocks.RotatedPillarFlammableBlock;
 import com.finderfeed.solarforge.magic.blocks.blockentities.clearing_ritual.clearing_ritual_crystal.ClearingRitualCrystalBlock;
+import com.finderfeed.solarforge.magic.blocks.blockentities.clearing_ritual.clearing_ritual_main_tile.ClearingRitualMainBlock;
 import com.finderfeed.solarforge.magic.blocks.infusing_table_things.infusing_pool.InfusingStand;
 import com.finderfeed.solarforge.magic.blocks.BlueGemDoorBlock;
 import com.finderfeed.solarforge.magic.blocks.*;
@@ -172,5 +173,6 @@ public class BlocksRegistry {
     public  static  final RegistryObject<Block> ULDERA_RUNE_BLOCK = BLOCKS.register("uldera_rune_block",()-> new Block(BlockBehaviour.Properties.copy(Blocks.STONE)));
     public  static  final RegistryObject<Block> CRYSTAL_ENERGY_VINES = BLOCKS.register("crystal_energy_vines",()-> new CrystalEnergyVinesBlock(BlockBehaviour.Properties.copy(Blocks.BEDROCK)));
     public  static  final RegistryObject<Block> CLEARING_RITUAL_CRYSTAL = BLOCKS.register("clearing_ritual_crystal",()-> new ClearingRitualCrystalBlock(BlockBehaviour.Properties.copy(Blocks.BEDROCK).noOcclusion()));
+    public  static  final RegistryObject<Block> CLEARING_RITUAL_MAIN_BLOCK = BLOCKS.register("clearing_ritual_main_block",()-> new ClearingRitualMainBlock(BlockBehaviour.Properties.copy(Blocks.BEDROCK).noOcclusion()));
 
 }
