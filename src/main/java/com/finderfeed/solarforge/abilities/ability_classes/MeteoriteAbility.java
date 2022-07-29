@@ -38,11 +38,12 @@ public class MeteoriteAbility extends AbstractAbility{
                     Vec3 velocity = new Vec3(pos.offset(0.5, 0, 0.5).getX() - posVect.x(), pos.offset(0.5, 0, 0.5).getY() - posVect.y(), pos.offset(0.5, 0, 0.5).getZ() - posVect.z());
                     proj.setDeltaMovement(velocity.normalize());
                     world.addFreshEntity(proj);
-                }else{
-                    if (!entity.isCreative()) {
-                        AbilityHelper.refundEnergy(entity,this);
-                    }
-                }
+                    AbilityHelper.spendAbilityEnergy(entity,this);
+                }/*else{*/
+//                    if (!entity.isCreative()) {
+//                        AbilityHelper.refundEnergy(entity,this);
+//                    }
+//                }
 
             }
 

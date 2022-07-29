@@ -41,6 +41,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.util.FormattedCharSequence;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.core.Direction;
@@ -59,6 +60,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.HalfTransparentBlock;
 import net.minecraft.world.level.block.StainedGlassPaneBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.client.model.data.EmptyModelData;
 import net.minecraftforge.client.model.data.ModelDataMap;
@@ -1155,4 +1157,72 @@ public class RenderingTools {
     }
 
 
+    public static class Lightning2DRenderer{
+
+
+        public static void renderLightningRectangle(VertexConsumer vertex,PoseStack matrices,Vec2 init,Vec2 end,float height,float r,float g,float b){
+            Matrix4f matrix4f = matrices.last().pose();
+            float halfSize = height / 2f;
+            float halfHalfSize = halfSize / 2f;
+            float initX = init.x;
+            float initY = init.y;
+            float endX = end.x;
+            float endY = end.y;
+            vertex.vertex(matrix4f,initX,initY,0).color(r,g,b,1.0f).endVertex();
+            vertex.vertex(matrix4f,initX,initY + halfSize,0).color(r,g,b,0.0f).endVertex();
+            vertex.vertex(matrix4f,endX,endY + halfSize,0).color(r,g,b,0.0f).endVertex();
+            vertex.vertex(matrix4f,endX,endY,0).color(r,g,b,1.0f).endVertex();
+            vertex.vertex(matrix4f,endX,endY,0).color(r,g,b,1.0f).endVertex();
+            vertex.vertex(matrix4f,endX,endY + halfSize,0).color(r,g,b,0.0f).endVertex();
+            vertex.vertex(matrix4f,initX,initY + halfSize,0).color(r,g,b,0.0f).endVertex();
+            vertex.vertex(matrix4f,initX,initY,0).color(r,g,b,1.0f).endVertex();
+
+
+            vertex.vertex(matrix4f,initX,initY,0).color(r,g,b,1.0f).endVertex();
+            vertex.vertex(matrix4f,initX,initY - halfSize,0).color(r,g,b,0.0f).endVertex();
+            vertex.vertex(matrix4f,endX,endY - halfSize,0).color(r,g,b,0.0f).endVertex();
+            vertex.vertex(matrix4f,endX,endY,0).color(r,g,b,1.0f).endVertex();
+            vertex.vertex(matrix4f,endX,endY,0).color(r,g,b,1.0f).endVertex();
+            vertex.vertex(matrix4f,endX,endY - halfSize,0).color(r,g,b,0.0f).endVertex();
+            vertex.vertex(matrix4f,initX,initY - halfSize,0).color(r,g,b,0.0f).endVertex();
+            vertex.vertex(matrix4f,initX,initY,0).color(r,g,b,1.0f).endVertex();
+
+        }
+
+
+
+        public static List<Vec2> randomLightningBreaks(Random random,int breaksCount,float length,float maxSpread){
+
+            float x = length / breaksCount;
+            List<Vec2> points = new ArrayList<>(List.of(new Vec2(0,0)));
+            for (int i = 0; i < breaksCount-1;i++){
+                float randomY = random.nextFloat() * maxSpread * (random.nextInt(3) == 0 ? 1 : -1);
+                points.add(new Vec2(x * (i + 1),randomY));
+            }
+            points.add(new Vec2(length,0));
+            return points;
+        }
+
+        public static void renderLightning(PoseStack matrices,MultiBufferSource source,int breaksCount,float maxSpread,float rectangleHeights,Vec3 initialPos,Vec3 endPos,Random random,float r,float g,float b){
+            VertexConsumer vertex = source.getBuffer(RenderType.lightning());
+            matrices.translate(initialPos.x,initialPos.y,initialPos.z);
+            Vec3 between = endPos.subtract(initialPos);
+            float length = (float)between.length();
+            List<Vec2> dots = randomLightningBreaks(random,breaksCount,length,maxSpread);
+            matrices.pushPose();
+            double angleXZ = Math.atan2(between.z,between.x);
+            double angleXY = Math.atan2(between.y,between.x);
+            matrices.mulPose(Vector3f.YP.rotation((float)angleXZ));
+            matrices.mulPose(Vector3f.ZP.rotation((float)angleXY));
+//            System.out.println(angle);
+//            applyMovementMatrixRotations(matrices,between);
+            for (int i = 0; i < dots.size()-1;i++){
+                Vec2 init = dots.get(i);
+                Vec2 end = dots.get(i+1);
+                renderLightningRectangle(vertex,matrices,init,end,rectangleHeights,r,g,b);
+            }
+            matrices.popPose();
+        }
+
+    }
 }

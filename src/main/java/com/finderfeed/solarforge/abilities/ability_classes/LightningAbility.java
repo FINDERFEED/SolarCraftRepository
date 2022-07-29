@@ -42,11 +42,12 @@ public class LightningAbility extends AbstractAbility{
 
                     world.explode(entity,null,StoneDestroyerCalculator.INSTANCE_01, pos.getX(), pos.getY()-1, pos.getZ(), 6, true, Explosion.BlockInteraction.BREAK);
                     world.explode(entity,null,StoneDestroyerCalculator.INSTANCE_01, pos.getX(), pos.getY()-5, pos.getZ(), 4, true, Explosion.BlockInteraction.BREAK);
-                }else{
-                    if (!entity.isCreative()) {
-                        AbilityHelper.refundEnergy(entity,this);
-                    }
-                }
+                    AbilityHelper.spendAbilityEnergy(entity,this);
+                }/*else{*/
+//                    if (!entity.isCreative()) {
+//                        AbilityHelper.refundEnergy(entity,this);
+//                    }
+//                }
 
             }
 

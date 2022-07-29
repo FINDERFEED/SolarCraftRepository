@@ -36,11 +36,12 @@ public class SolarStrikeAbility extends AbstractAbility{
                     SolarStrikeEntity entityBolt = new SolarStrikeEntity(SolarForge.SOLAR_STRIKE_ENTITY_REG.get(), world);
                     entityBolt.setPos(pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5);
                     world.addFreshEntity(entityBolt);
-                }else{
-                    if (!entity.isCreative()) {
-                        AbilityHelper.refundEnergy(entity,this);
-                    }
-                }
+                    AbilityHelper.spendAbilityEnergy(entity,this);
+                }/*else{*/
+//                    if (!entity.isCreative()) {
+//                        AbilityHelper.refundEnergy(entity,this);
+//                    }
+//                }
             }
 
         }
