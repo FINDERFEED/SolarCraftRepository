@@ -4,7 +4,7 @@ import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.magic.blocks.blockentities.clearing_ritual.CrystalEnergyVinesTile;
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
 import com.finderfeed.solarforge.packet_handler.packets.crystal_energy_vines_puzzle.OpenPuzzleScreenPacket;
-import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
+import com.finderfeed.solarforge.registries.tile_entities.SolarcraftTileEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerPlayer;
@@ -42,6 +42,6 @@ public class CrystalEnergyVinesBlock extends Block implements EntityBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return TileEntitiesRegistry.CRYSTAL_ENERGY_VINES.get().create(pos,state);
+        return SolarcraftTileEntityTypes.CRYSTAL_ENERGY_VINES.get().create(pos,state);
     }
 }

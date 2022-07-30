@@ -3,7 +3,7 @@ package com.finderfeed.solarforge.multiblocks;
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.misc_things.Multiblock;
 import com.finderfeed.solarforge.registries.Tags;
-import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
+import com.finderfeed.solarforge.registries.blocks.SolarcraftBlocks;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.progressions.Progression;
 import net.minecraft.core.Direction;
 
@@ -19,66 +19,66 @@ import java.util.Map;
 
 public enum Multiblocks {
     SOLAR_CORE(new Multiblock(new Multiblock.Constructor()
-            .addBlock(BlocksRegistry.SOLAR_CORE.get().defaultBlockState(),'Z',false)
-            .addBlock(BlocksRegistry.ALGADIUM_BLOCK.get().defaultBlockState(),'H',false)
-            .addBlock(BlocksRegistry.ILLIDIUM_BLOCK.get().defaultBlockState(),'X',false)
-            .addBlock(BlocksRegistry.SOLAR_STONE_BRICKS.get().defaultBlockState(),'B',false)
-            .addBlock(BlocksRegistry.SOLAR_STONE_COLLUMN.get().defaultBlockState(),'J',false)
-            .addBlock(BlocksRegistry.SOLAR_STONE_CHISELED.get().defaultBlockState(),'N',false)
+            .addBlock(SolarcraftBlocks.SOLAR_CORE.get().defaultBlockState(),'Z',false)
+            .addBlock(SolarcraftBlocks.ALGADIUM_BLOCK.get().defaultBlockState(),'H',false)
+            .addBlock(SolarcraftBlocks.ILLIDIUM_BLOCK.get().defaultBlockState(),'X',false)
+            .addBlock(SolarcraftBlocks.SOLAR_STONE_BRICKS.get().defaultBlockState(),'B',false)
+            .addBlock(SolarcraftBlocks.SOLAR_STONE_COLLUMN.get().defaultBlockState(),'J',false)
+            .addBlock(SolarcraftBlocks.SOLAR_STONE_CHISELED.get().defaultBlockState(),'N',false)
             .addStruct(Structures.CORE_STRUCTURE)
-            .addMainBlock(BlocksRegistry.SOLAR_CORE.get().defaultBlockState())
+            .addMainBlock(SolarcraftBlocks.SOLAR_CORE.get().defaultBlockState())
             .addAchievement(Progression.CRAFT_SOLAR_ENERGY_GENERATOR)
             .setStructName("solarforge.solar_core_structure")
         )),
     AURA_HEALER(new Multiblock(new Multiblock.Constructor()
-            .addBlock(BlocksRegistry.ILLIDIUM_BLOCK.get().defaultBlockState(),'I',false)
-            .addBlock(BlocksRegistry.SOLAR_STONE_BRICKS.get().defaultBlockState(),'B',false)
-            .addBlock(BlocksRegistry.SOLAR_STONE_CHISELED.get().defaultBlockState(),'C',false)
-            .addBlock(BlocksRegistry.SOLAR_STONE_COLLUMN.get().defaultBlockState(),'L',false)
-            .addBlock(BlocksRegistry.AURA_HEALER_BLOCK.get().defaultBlockState(), 'H',false)
+            .addBlock(SolarcraftBlocks.ILLIDIUM_BLOCK.get().defaultBlockState(),'I',false)
+            .addBlock(SolarcraftBlocks.SOLAR_STONE_BRICKS.get().defaultBlockState(),'B',false)
+            .addBlock(SolarcraftBlocks.SOLAR_STONE_CHISELED.get().defaultBlockState(),'C',false)
+            .addBlock(SolarcraftBlocks.SOLAR_STONE_COLLUMN.get().defaultBlockState(),'L',false)
+            .addBlock(SolarcraftBlocks.AURA_HEALER_BLOCK.get().defaultBlockState(), 'H',false)
             .addStruct(Structures.AURA_HEALER_STRUCTURE)
-            .addMainBlock(BlocksRegistry.AURA_HEALER_BLOCK.get().defaultBlockState())
+            .addMainBlock(SolarcraftBlocks.AURA_HEALER_BLOCK.get().defaultBlockState())
             .addAchievement(Progression.SOLAR_INFUSER)
             .setStructName("solarforge.aura_healer_structure")
         )),
     SOLAR_MORTAR(new Multiblock(new Multiblock.Constructor()
-            .addBlock(BlocksRegistry.SOLAR_STONE_BRICKS.get().defaultBlockState(),'B',false)
-            .addBlock(BlocksRegistry.SOLAR_MORTAR_BLOCK.get().defaultBlockState(), 'M',false)
+            .addBlock(SolarcraftBlocks.SOLAR_STONE_BRICKS.get().defaultBlockState(),'B',false)
+            .addBlock(SolarcraftBlocks.SOLAR_MORTAR_BLOCK.get().defaultBlockState(), 'M',false)
 
             .addBlock(Structures.BlockStates.HORIZONTAL_COLLUMN_FACING_EAST, 'H',true)
             .addBlock(Structures.BlockStates.HORIZONTAL_COLLUMN_FACING_WEST, 'K',true)
             .addBlock(Structures.BlockStates.HORIZONTAL_COLLUMN_FACING_SOUTH, 'h',true)
             .addBlock(Structures.BlockStates.HORIZONTAL_COLLUMN_FACING_NORTH, 'k',true)
 
-            .addBlock(BlocksRegistry.SOLAR_STONE_COLLUMN.get().defaultBlockState(),'C',false)
-            .addBlock(BlocksRegistry.SOLAR_STONE_CHISELED.get().defaultBlockState(),'L',false)
+            .addBlock(SolarcraftBlocks.SOLAR_STONE_COLLUMN.get().defaultBlockState(),'C',false)
+            .addBlock(SolarcraftBlocks.SOLAR_STONE_CHISELED.get().defaultBlockState(),'L',false)
             .addAchievement(Progression.CRAFT_SOLAR_ENERGY_GENERATOR)
             .addStruct(Structures.MORTAR_STRUCTURE)
-            .addMainBlock(BlocksRegistry.SOLAR_MORTAR_BLOCK.get().defaultBlockState())
+            .addMainBlock(SolarcraftBlocks.SOLAR_MORTAR_BLOCK.get().defaultBlockState())
             .setStructName("solarforge.mortar_structure")
     )),
     SOLAR_ENERGY_GENERATOR(new Multiblock(new Multiblock.Constructor()
-            .addBlock(BlocksRegistry.SOLAR_STONE_BRICKS.get().defaultBlockState(),'B',false)
-            .addBlock(BlocksRegistry.SOLAR_MORTAR_BLOCK.get().defaultBlockState(), 'M',false)
+            .addBlock(SolarcraftBlocks.SOLAR_STONE_BRICKS.get().defaultBlockState(),'B',false)
+            .addBlock(SolarcraftBlocks.SOLAR_MORTAR_BLOCK.get().defaultBlockState(), 'M',false)
 
             .addBlock(Structures.BlockStates.HORIZONTAL_COLLUMN_FACING_EAST, 'H',true)
             .addBlock(Structures.BlockStates.HORIZONTAL_COLLUMN_FACING_WEST, 'F',true)
             .addBlock(Structures.BlockStates.HORIZONTAL_COLLUMN_FACING_NORTH, 'h',true)
             .addBlock(Structures.BlockStates.HORIZONTAL_COLLUMN_FACING_SOUTH, 'f',true)
 
-            .addBlock(BlocksRegistry.SOLAR_STONE_COLLUMN.get().defaultBlockState(),'C',false)
-            .addBlock(BlocksRegistry.SOLAR_STONE_CHISELED.get().defaultBlockState(),'L',false)
-            .addBlock(BlocksRegistry.SOLAR_ENERGY_GENERATOR.get().defaultBlockState(),'G',false)
-            .addMainBlock(BlocksRegistry.SOLAR_ENERGY_GENERATOR.get().defaultBlockState())
+            .addBlock(SolarcraftBlocks.SOLAR_STONE_COLLUMN.get().defaultBlockState(),'C',false)
+            .addBlock(SolarcraftBlocks.SOLAR_STONE_CHISELED.get().defaultBlockState(),'L',false)
+            .addBlock(SolarcraftBlocks.SOLAR_ENERGY_GENERATOR.get().defaultBlockState(),'G',false)
+            .addMainBlock(SolarcraftBlocks.SOLAR_ENERGY_GENERATOR.get().defaultBlockState())
             .addAchievement(Progression.CRAFT_SOLAR_LENS)
             .addStruct(Structures.SOLAR_ENERGY_GENERATOR_STRUCTURE)
             .setStructName("solarforge.solar_energy_generator")
     )),
     INFUSER_TIER_FIRST(new Multiblock(new Multiblock.Constructor()
             .addBlock(SolarForge.SOLAR_INFUSER.get().defaultBlockState(),'I',false)
-            .addBlock(BlocksRegistry.INFUSING_POOL.get().defaultBlockState(),'F',false)
-            .addBlock(BlocksRegistry.SOLAR_STONE_BRICKS.get().defaultBlockState(),'B',false)
-            .addBlock(BlocksRegistry.SOLAR_STONE_CHISELED.get().defaultBlockState(),'C',false)
+            .addBlock(SolarcraftBlocks.INFUSING_POOL.get().defaultBlockState(),'F',false)
+            .addBlock(SolarcraftBlocks.SOLAR_STONE_BRICKS.get().defaultBlockState(),'B',false)
+            .addBlock(SolarcraftBlocks.SOLAR_STONE_CHISELED.get().defaultBlockState(),'C',false)
             .addBlock(Blocks.GOLD_BLOCK.defaultBlockState(),'G',false)
 
             .addBlock(Structures.BlockStates.HORIZONTAL_COLLUMN_FACING_EAST,'H',true)
@@ -86,9 +86,9 @@ public enum Multiblocks {
             .addBlock(Structures.BlockStates.HORIZONTAL_COLLUMN_FACING_SOUTH,'J',true)
             .addBlock(Structures.BlockStates.HORIZONTAL_COLLUMN_FACING_NORTH,'L',true)
 
-            .addBlock(BlocksRegistry.SOLAR_STONE_COLLUMN.get().defaultBlockState(),'D',false)
+            .addBlock(SolarcraftBlocks.SOLAR_STONE_COLLUMN.get().defaultBlockState(),'D',false)
 
-            .addBlockAndTag(BlocksRegistry.SOLAR_STONE_COLLUMN.get().defaultBlockState(), Tags.CATALYST,'M',false)
+            .addBlockAndTag(SolarcraftBlocks.SOLAR_STONE_COLLUMN.get().defaultBlockState(), Tags.CATALYST,'M',false)
 
 
 
@@ -104,15 +104,15 @@ public enum Multiblocks {
             .addBlock(Structures.BlockStates.SOLAR_STONE_STAIRS_BOTTOM_NORTH_STRAIGHT,'c',false)
             .addBlock(Structures.BlockStates.SOLAR_STONE_STAIRS_BOTTOM_SOUTH_STRAIGHT,'d',false)
 
-            .addBlock(BlocksRegistry.ARDO_RUNE_BLOCK.get().defaultBlockState(),'f',false)
-            .addBlock(BlocksRegistry.KELDA_RUNE_BLOCK.get().defaultBlockState(),'g',false)
-            .addBlock(BlocksRegistry.ZETA_RUNE_BLOCK.get().defaultBlockState(),'h',false)
-            .addBlock(BlocksRegistry.URBA_RUNE_BLOCK.get().defaultBlockState(),'j',false)
-            .addBlock(BlocksRegistry.FIRA_RUNE_BLOCK.get().defaultBlockState(),'k',false)
-            .addBlock(BlocksRegistry.TERA_RUNE_BLOCK.get().defaultBlockState(),'l',false)
-            .addBlock(BlocksRegistry.ULTIMA_RUNE_BLOCK.get().defaultBlockState(),'z',false)
-            .addBlock(BlocksRegistry.GIRO_RUNE_BLOCK.get().defaultBlockState(),'x',false)
-            .addBlock(BlocksRegistry.REPEATER.get().defaultBlockState(),'o',false)
+            .addBlock(SolarcraftBlocks.ARDO_RUNE_BLOCK.get().defaultBlockState(),'f',false)
+            .addBlock(SolarcraftBlocks.KELDA_RUNE_BLOCK.get().defaultBlockState(),'g',false)
+            .addBlock(SolarcraftBlocks.ZETA_RUNE_BLOCK.get().defaultBlockState(),'h',false)
+            .addBlock(SolarcraftBlocks.URBA_RUNE_BLOCK.get().defaultBlockState(),'j',false)
+            .addBlock(SolarcraftBlocks.FIRA_RUNE_BLOCK.get().defaultBlockState(),'k',false)
+            .addBlock(SolarcraftBlocks.TERA_RUNE_BLOCK.get().defaultBlockState(),'l',false)
+            .addBlock(SolarcraftBlocks.ULTIMA_RUNE_BLOCK.get().defaultBlockState(),'z',false)
+            .addBlock(SolarcraftBlocks.GIRO_RUNE_BLOCK.get().defaultBlockState(),'x',false)
+            .addBlock(SolarcraftBlocks.REPEATER.get().defaultBlockState(),'o',false)
             .addBlock(Blocks.DIAMOND_BLOCK.defaultBlockState(),'v',false)
             .addStruct(Structures.INFUSER_TIER_2)
             .setStructName("solarforge_struct.solar_infuser")
@@ -120,7 +120,7 @@ public enum Multiblocks {
     INFUSER_TIER_SOLAR_ENERGY(new Multiblock(new Multiblock.Constructor()
             .extend(INFUSER_TIER_RUNIC_ENERGY.getM())
             .addBlock(Blocks.OBSIDIAN.defaultBlockState(),'q',false)
-            .addBlock(BlocksRegistry.ENERGIZED_STONE.get().defaultBlockState(),'e',false)
+            .addBlock(SolarcraftBlocks.ENERGIZED_STONE.get().defaultBlockState(),'e',false)
 
             .addBlock(Structures.BlockStates.SOLAR_STONE_STAIRS_TOP_EAST_STRAIGHT,'m',false)
             .addBlock(Structures.BlockStates.SOLAR_STONE_STAIRS_TOP_WEST_STRAIGHT,'n',false)
@@ -131,21 +131,21 @@ public enum Multiblocks {
             .setStructName("solarforge_struct.solar_infuser")
     )),
     RADIANT_LAND_PORTAL(new Multiblock(new Multiblock.Constructor()
-            .addBlock(BlocksRegistry.DIMENSION_CORE.get().defaultBlockState(), 'C',false)
-            .addBlock(BlocksRegistry.SOLAR_STONE_BRICKS.get().defaultBlockState(),'B',false)
-            .addBlock(BlocksRegistry.SOLAR_STONE_COLLUMN.get().defaultBlockState(),'H',false)
+            .addBlock(SolarcraftBlocks.DIMENSION_CORE.get().defaultBlockState(), 'C',false)
+            .addBlock(SolarcraftBlocks.SOLAR_STONE_BRICKS.get().defaultBlockState(),'B',false)
+            .addBlock(SolarcraftBlocks.SOLAR_STONE_COLLUMN.get().defaultBlockState(),'H',false)
 
             .addBlock(Structures.BlockStates.HORIZONTAL_COLLUMN_FACING_SOUTH, 'L',true)
             .addBlock(Structures.BlockStates.HORIZONTAL_COLLUMN_FACING_WEST, 'l',true)
             .addBlock(Structures.BlockStates.HORIZONTAL_COLLUMN_FACING_NORTH, 'f',true)
             .addBlock(Structures.BlockStates.HORIZONTAL_COLLUMN_FACING_EAST, 'g',true)
 
-            .addBlock(BlocksRegistry.TERA_RUNE_BLOCK.get().defaultBlockState(), 'T',false)
-            .addBlock(BlocksRegistry.FIRA_RUNE_BLOCK.get().defaultBlockState(), 'F',false)
-            .addBlock(BlocksRegistry.KELDA_RUNE_BLOCK.get().defaultBlockState(), 'K',false)
-            .addBlock(BlocksRegistry.ARDO_RUNE_BLOCK.get().defaultBlockState(), 'A',false)
-            .addBlock(BlocksRegistry.URBA_RUNE_BLOCK.get().defaultBlockState(), 'U',false)
-            .addBlock(BlocksRegistry.ZETA_RUNE_BLOCK.get().defaultBlockState(), 'Z',false)
+            .addBlock(SolarcraftBlocks.TERA_RUNE_BLOCK.get().defaultBlockState(), 'T',false)
+            .addBlock(SolarcraftBlocks.FIRA_RUNE_BLOCK.get().defaultBlockState(), 'F',false)
+            .addBlock(SolarcraftBlocks.KELDA_RUNE_BLOCK.get().defaultBlockState(), 'K',false)
+            .addBlock(SolarcraftBlocks.ARDO_RUNE_BLOCK.get().defaultBlockState(), 'A',false)
+            .addBlock(SolarcraftBlocks.URBA_RUNE_BLOCK.get().defaultBlockState(), 'U',false)
+            .addBlock(SolarcraftBlocks.ZETA_RUNE_BLOCK.get().defaultBlockState(), 'Z',false)
 
             .addBlock(Structures.BlockStates.SOLAR_STONE_STAIRS_BOTTOM_EAST_STRAIGHT, 'J',false)
             .addBlock(Structures.BlockStates.SOLAR_STONE_STAIRS_TOP_EAST_STRAIGHT, 'X',false)
@@ -154,9 +154,9 @@ public enum Multiblocks {
             .addBlock(Structures.BlockStates.SOLAR_STONE_STAIRS_TOP_NORTH_STRAIGHT, 'Q',false)
             .addBlock(Structures.BlockStates.SOLAR_STONE_STAIRS_TOP_SOUTH_STRAIGHT, '&',false)
 
-            .addBlock(BlocksRegistry.RADIANT_LAND_PORTAL_CREATOR.get().defaultBlockState(), 'R',false)
-            .addBlock(BlocksRegistry.SOLAR_STONE_CHISELED.get().defaultBlockState(), 'I',false)
-            .addMainBlock(BlocksRegistry.DIMENSION_CORE.get().defaultBlockState())
+            .addBlock(SolarcraftBlocks.RADIANT_LAND_PORTAL_CREATOR.get().defaultBlockState(), 'R',false)
+            .addBlock(SolarcraftBlocks.SOLAR_STONE_CHISELED.get().defaultBlockState(), 'I',false)
+            .addMainBlock(SolarcraftBlocks.DIMENSION_CORE.get().defaultBlockState())
             .addStruct(Structures.RADIANT_DIM_PORTAL_STRUCTURE)
             .setStructName("solarcraft.dimension_portal")
 
@@ -164,16 +164,16 @@ public enum Multiblocks {
     )),
     ZAP_TURRET(new Multiblock(new Multiblock.Constructor()
             .addStruct(Structures.ZAP_TURRET)
-            .addBlock(BlocksRegistry.SOLAR_STONE_BRICKS.get().defaultBlockState(),'B',false)
-            .addBlock(BlocksRegistry.SOLAR_STONE_COLLUMN.get().defaultBlockState(), 'C',false)
+            .addBlock(SolarcraftBlocks.SOLAR_STONE_BRICKS.get().defaultBlockState(),'B',false)
+            .addBlock(SolarcraftBlocks.SOLAR_STONE_COLLUMN.get().defaultBlockState(), 'C',false)
 
             .addBlock(Structures.BlockStates.SOLAR_STONE_STAIRS_BOTTOM_WEST_STRAIGHT, 'S',false)
             .addBlock(Structures.BlockStates.SOLAR_STONE_STAIRS_BOTTOM_EAST_STRAIGHT, 'D',false)
             .addBlock(Structures.BlockStates.SOLAR_STONE_STAIRS_BOTTOM_NORTH_STRAIGHT, 's',false)
             .addBlock(Structures.BlockStates.SOLAR_STONE_STAIRS_BOTTOM_SOUTH_STRAIGHT, 'd',false)
 
-            .addBlock(BlocksRegistry.ZAP_TURRET_BLOCK.get().defaultBlockState(), 'T',false)
-            .addMainBlock(BlocksRegistry.ZAP_TURRET_BLOCK.get().defaultBlockState())
+            .addBlock(SolarcraftBlocks.ZAP_TURRET_BLOCK.get().defaultBlockState(), 'T',false)
+            .addMainBlock(SolarcraftBlocks.ZAP_TURRET_BLOCK.get().defaultBlockState())
             .addAchievement(Progression.CRAFT_SOLAR_LENS)
             .setStructName("solarcraft.zap_turret")
     )),
@@ -192,24 +192,24 @@ public enum Multiblocks {
             .addBlock(Structures.BlockStates.HORIZONTAL_COLLUMN_FACING_SOUTH,'I',false)
             .addBlock(Structures.BlockStates.HORIZONTAL_COLLUMN_FACING_NORTH,'O',false)
 
-            .addBlockAndTag(BlocksRegistry.INSCRIPTION_STONE.get().defaultBlockState(),Tags.INSCRIPTION_STONE,'c',false)
-            .addBlockAndTag(BlocksRegistry.ARDO_RUNE_BLOCK.get().defaultBlockState(),Tags.CATALYST,'l',false)
+            .addBlockAndTag(SolarcraftBlocks.INSCRIPTION_STONE.get().defaultBlockState(),Tags.INSCRIPTION_STONE,'c',false)
+            .addBlockAndTag(SolarcraftBlocks.ARDO_RUNE_BLOCK.get().defaultBlockState(),Tags.CATALYST,'l',false)
 
-            .addBlock(BlocksRegistry.SOLAR_STONE_CHISELED.get().defaultBlockState(),'A',false)
-            .addBlock(BlocksRegistry.SOLAR_STONE_BRICKS.get().defaultBlockState(),'B',false)
-            .addBlock(BlocksRegistry.SOLAR_STONE_COLLUMN.get().defaultBlockState(),'N',false)
-            .addBlock(BlocksRegistry.RUNE_ENERGY_PYLON.get().defaultBlockState(),'p',false)
+            .addBlock(SolarcraftBlocks.SOLAR_STONE_CHISELED.get().defaultBlockState(),'A',false)
+            .addBlock(SolarcraftBlocks.SOLAR_STONE_BRICKS.get().defaultBlockState(),'B',false)
+            .addBlock(SolarcraftBlocks.SOLAR_STONE_COLLUMN.get().defaultBlockState(),'N',false)
+            .addBlock(SolarcraftBlocks.RUNE_ENERGY_PYLON.get().defaultBlockState(),'p',false)
 
-            .addMainBlock(BlocksRegistry.RUNE_ENERGY_PYLON.get().defaultBlockState())
+            .addMainBlock(SolarcraftBlocks.RUNE_ENERGY_PYLON.get().defaultBlockState())
             .addStruct(Structures.PYLON)
             .setStructName("structure.energy_pylon")
             .addAchievement(Progression.RUNE_ENERGY_PYLON)
 
     )),
     EXPLOSION_BLOCKER(new Multiblock(new Multiblock.Constructor()
-            .addBlock(BlocksRegistry.SOLAR_STONE_CHISELED.get().defaultBlockState(),'q',false)
-            .addBlock(BlocksRegistry.ENERGIZED_STONE.get().defaultBlockState(),'e',false)
-            .addBlock(BlocksRegistry.SOLAR_STONE_COLLUMN.get().defaultBlockState(),'g',false)
+            .addBlock(SolarcraftBlocks.SOLAR_STONE_CHISELED.get().defaultBlockState(),'q',false)
+            .addBlock(SolarcraftBlocks.ENERGIZED_STONE.get().defaultBlockState(),'e',false)
+            .addBlock(SolarcraftBlocks.SOLAR_STONE_COLLUMN.get().defaultBlockState(),'g',false)
             .addBlock(Structures.BlockStates.SOLAR_STONE_STAIRS_BOTTOM_EAST_STRAIGHT,'m',false)
             .addBlock(Structures.BlockStates.SOLAR_STONE_STAIRS_BOTTOM_WEST_STRAIGHT,'n',false)
             .addBlock(Structures.BlockStates.SOLAR_STONE_STAIRS_BOTTOM_NORTH_STRAIGHT,'u',false)
@@ -220,11 +220,11 @@ public enum Multiblocks {
             .addBlock(Structures.BlockStates.SOLAR_STONE_STAIRS_TOP_NORTH_STRAIGHT,'U',false)
             .addBlock(Structures.BlockStates.SOLAR_STONE_STAIRS_TOP_SOUTH_STRAIGHT,'V',false)
 
-            .addBlock(BlocksRegistry.SOLAR_STONE_BRICKS.get().defaultBlockState(),'f',false)
-            .addBlock(BlocksRegistry.EXPLOSION_BLOCKER.get().defaultBlockState(),'b',false)
+            .addBlock(SolarcraftBlocks.SOLAR_STONE_BRICKS.get().defaultBlockState(),'f',false)
+            .addBlock(SolarcraftBlocks.EXPLOSION_BLOCKER.get().defaultBlockState(),'b',false)
 
             .addStruct(Structures.EXPLOSION_BLOCKER)
-            .addMainBlock(BlocksRegistry.EXPLOSION_BLOCKER.get().defaultBlockState())
+            .addMainBlock(SolarcraftBlocks.EXPLOSION_BLOCKER.get().defaultBlockState())
             .setStructName("solarforge_struct.explosion_blocker")
     )),
     ;
@@ -1212,54 +1212,54 @@ class Structures{
             };
 
     public static class BlockStates{
-        public static final BlockState SOLAR_STONE_STAIRS_BOTTOM_EAST_STRAIGHT = BlocksRegistry.SOLAR_STONE_STAIRS.get()
+        public static final BlockState SOLAR_STONE_STAIRS_BOTTOM_EAST_STRAIGHT = SolarcraftBlocks.SOLAR_STONE_STAIRS.get()
                 .defaultBlockState()
                 .setValue(StairBlock.FACING, Direction.EAST)
                 .setValue(StairBlock.HALF, Half.BOTTOM)
                 .setValue(StairBlock.SHAPE, StairsShape.STRAIGHT);
-        public static final BlockState SOLAR_STONE_STAIRS_BOTTOM_NORTH_STRAIGHT = BlocksRegistry.SOLAR_STONE_STAIRS.get()
+        public static final BlockState SOLAR_STONE_STAIRS_BOTTOM_NORTH_STRAIGHT = SolarcraftBlocks.SOLAR_STONE_STAIRS.get()
                 .defaultBlockState()
                 .setValue(StairBlock.FACING, Direction.NORTH)
                 .setValue(StairBlock.HALF, Half.BOTTOM)
                 .setValue(StairBlock.SHAPE, StairsShape.STRAIGHT);
-        public static final BlockState SOLAR_STONE_STAIRS_BOTTOM_WEST_STRAIGHT = BlocksRegistry.SOLAR_STONE_STAIRS.get()
+        public static final BlockState SOLAR_STONE_STAIRS_BOTTOM_WEST_STRAIGHT = SolarcraftBlocks.SOLAR_STONE_STAIRS.get()
                 .defaultBlockState()
                 .setValue(StairBlock.FACING, Direction.WEST)
                 .setValue(StairBlock.HALF, Half.BOTTOM)
                 .setValue(StairBlock.SHAPE, StairsShape.STRAIGHT);
-        public static final BlockState SOLAR_STONE_STAIRS_BOTTOM_SOUTH_STRAIGHT = BlocksRegistry.SOLAR_STONE_STAIRS.get()
+        public static final BlockState SOLAR_STONE_STAIRS_BOTTOM_SOUTH_STRAIGHT = SolarcraftBlocks.SOLAR_STONE_STAIRS.get()
                 .defaultBlockState()
                 .setValue(StairBlock.FACING, Direction.SOUTH)
                 .setValue(StairBlock.HALF, Half.BOTTOM)
                 .setValue(StairBlock.SHAPE, StairsShape.STRAIGHT);
-        public static final BlockState SOLAR_STONE_STAIRS_TOP_EAST_STRAIGHT = BlocksRegistry.SOLAR_STONE_STAIRS.get()
+        public static final BlockState SOLAR_STONE_STAIRS_TOP_EAST_STRAIGHT = SolarcraftBlocks.SOLAR_STONE_STAIRS.get()
                 .defaultBlockState()
                 .setValue(StairBlock.FACING, Direction.EAST)
                 .setValue(StairBlock.HALF, Half.TOP)
                 .setValue(StairBlock.SHAPE, StairsShape.STRAIGHT);
-        public static final BlockState SOLAR_STONE_STAIRS_TOP_NORTH_STRAIGHT = BlocksRegistry.SOLAR_STONE_STAIRS.get()
+        public static final BlockState SOLAR_STONE_STAIRS_TOP_NORTH_STRAIGHT = SolarcraftBlocks.SOLAR_STONE_STAIRS.get()
                 .defaultBlockState()
                 .setValue(StairBlock.FACING, Direction.NORTH)
                 .setValue(StairBlock.HALF, Half.TOP)
                 .setValue(StairBlock.SHAPE, StairsShape.STRAIGHT);
-        public static final BlockState SOLAR_STONE_STAIRS_TOP_WEST_STRAIGHT = BlocksRegistry.SOLAR_STONE_STAIRS.get()
+        public static final BlockState SOLAR_STONE_STAIRS_TOP_WEST_STRAIGHT = SolarcraftBlocks.SOLAR_STONE_STAIRS.get()
                 .defaultBlockState()
                 .setValue(StairBlock.FACING, Direction.WEST)
                 .setValue(StairBlock.HALF, Half.TOP)
                 .setValue(StairBlock.SHAPE, StairsShape.STRAIGHT);
-        public static final BlockState SOLAR_STONE_STAIRS_TOP_SOUTH_STRAIGHT = BlocksRegistry.SOLAR_STONE_STAIRS.get()
+        public static final BlockState SOLAR_STONE_STAIRS_TOP_SOUTH_STRAIGHT = SolarcraftBlocks.SOLAR_STONE_STAIRS.get()
                 .defaultBlockState()
                 .setValue(StairBlock.FACING, Direction.SOUTH)
                 .setValue(StairBlock.HALF, Half.TOP)
                 .setValue(StairBlock.SHAPE, StairsShape.STRAIGHT);
 
-        public static final BlockState HORIZONTAL_COLLUMN_FACING_SOUTH = BlocksRegistry.SOLAR_STONE_COLLUMN_HORIZONTAL.get().defaultBlockState()
+        public static final BlockState HORIZONTAL_COLLUMN_FACING_SOUTH = SolarcraftBlocks.SOLAR_STONE_COLLUMN_HORIZONTAL.get().defaultBlockState()
                 .setValue(HorizontalDirectionalBlock.FACING,Direction.SOUTH);
-        public static final BlockState HORIZONTAL_COLLUMN_FACING_WEST = BlocksRegistry.SOLAR_STONE_COLLUMN_HORIZONTAL.get().defaultBlockState()
+        public static final BlockState HORIZONTAL_COLLUMN_FACING_WEST = SolarcraftBlocks.SOLAR_STONE_COLLUMN_HORIZONTAL.get().defaultBlockState()
                 .setValue(HorizontalDirectionalBlock.FACING,Direction.WEST);
-        public static final BlockState HORIZONTAL_COLLUMN_FACING_NORTH = BlocksRegistry.SOLAR_STONE_COLLUMN_HORIZONTAL.get().defaultBlockState()
+        public static final BlockState HORIZONTAL_COLLUMN_FACING_NORTH = SolarcraftBlocks.SOLAR_STONE_COLLUMN_HORIZONTAL.get().defaultBlockState()
                 .setValue(HorizontalDirectionalBlock.FACING,Direction.NORTH);
-        public static final BlockState HORIZONTAL_COLLUMN_FACING_EAST = BlocksRegistry.SOLAR_STONE_COLLUMN_HORIZONTAL.get().defaultBlockState()
+        public static final BlockState HORIZONTAL_COLLUMN_FACING_EAST = SolarcraftBlocks.SOLAR_STONE_COLLUMN_HORIZONTAL.get().defaultBlockState()
                 .setValue(HorizontalDirectionalBlock.FACING,Direction.EAST);
     }
 

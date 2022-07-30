@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.events;
 
-import com.finderfeed.solarforge.registries.items.ItemsRegister;
+import com.finderfeed.solarforge.registries.items.SolarcraftItems;
 
 import net.minecraft.world.entity.LivingEntity;
 
@@ -18,7 +18,7 @@ public class RadiantChestplateMissChance {
         if (event.getSource() != null && (event.getSource().getEntity() != null)){
             LivingEntity ent = event.getEntityLiving();
             ent.getArmorSlots().forEach((stack)->{
-                if (stack.getItem().equals(ItemsRegister.RADIANT_CHESTPLATE.get())){
+                if (stack.getItem().equals(SolarcraftItems.RADIANT_CHESTPLATE.get())){
                     if (ent.level.random.nextFloat() <= 0.17){
                         event.setCanceled(true);
                     }

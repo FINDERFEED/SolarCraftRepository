@@ -1,8 +1,8 @@
 package com.finderfeed.solarforge.magic.blocks;
 
 import com.finderfeed.solarforge.magic.blocks.blockentities.TurretTileEntity;
-import com.finderfeed.solarforge.registries.items.ItemsRegister;
-import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
+import com.finderfeed.solarforge.registries.items.SolarcraftItems;
+import com.finderfeed.solarforge.registries.tile_entities.SolarcraftTileEntityTypes;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
@@ -62,7 +62,7 @@ public class TurretBlock extends Block implements EntityBlock {
             BlockEntity test = world.getBlockEntity(pos);
             if (test instanceof TurretTileEntity) {
                 TurretTileEntity tile = (TurretTileEntity) test;
-                ItemStack stack = ItemsRegister.TURRET_BLOCK.get().getDefaultInstance();
+                ItemStack stack = SolarcraftItems.TURRET_BLOCK.get().getDefaultInstance();
                 stack.getOrCreateTagElement(SUBTAG).putInt(LEVEL_TAG, tile.turretLevel);
                 world.addFreshEntity(new ItemEntity(world, pos.getX() + 0.5f, pos.getY() + 0.5, pos.getZ() + 0.5, stack));
             }
@@ -96,7 +96,7 @@ public class TurretBlock extends Block implements EntityBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-        return TileEntitiesRegistry.TURRET_TILE_ENTITY.get().create(blockPos,blockState);
+        return SolarcraftTileEntityTypes.TURRET_TILE_ENTITY.get().create(blockPos,blockState);
     }
 
     @Nullable

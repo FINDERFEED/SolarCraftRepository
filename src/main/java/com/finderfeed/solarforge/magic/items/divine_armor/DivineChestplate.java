@@ -1,8 +1,6 @@
 package com.finderfeed.solarforge.magic.items.divine_armor;
 
-import com.finderfeed.solarforge.magic.items.primitive.solacraft_item_classes.SolarcraftArmorItem;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.unlockables.AncientFragment;
-import com.finderfeed.solarforge.registries.items.ItemsRegister;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;

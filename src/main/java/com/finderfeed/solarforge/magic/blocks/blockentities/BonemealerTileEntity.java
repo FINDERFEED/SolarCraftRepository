@@ -1,11 +1,10 @@
 package com.finderfeed.solarforge.magic.blocks.blockentities;
 
-import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.magic.blocks.blockentities.runic_energy.AbstractRunicEnergyContainer;
 import com.finderfeed.solarforge.magic.items.runic_energy.RunicEnergyCost;
 import com.finderfeed.solarforge.misc_things.DebugTarget;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
-import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
+import com.finderfeed.solarforge.registries.tile_entities.SolarcraftTileEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
@@ -14,7 +13,6 @@ import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class BonemealerTileEntity extends AbstractRunicEnergyContainer implements DebugTarget {
 
@@ -29,7 +27,7 @@ public class BonemealerTileEntity extends AbstractRunicEnergyContainer implement
     private final RunicEnergyCost COST = new RunicEnergyCost().set(RunicEnergy.Type.TERA,200);
 
     public BonemealerTileEntity( BlockPos p_155229_, BlockState p_155230_) {
-        super(TileEntitiesRegistry.BONEMEALER.get(), p_155229_, p_155230_);
+        super(SolarcraftTileEntityTypes.BONEMEALER.get(), p_155229_, p_155230_);
     }
 
 

@@ -1,8 +1,8 @@
 package com.finderfeed.solarforge.magic.projectiles;
 
 import com.finderfeed.solarforge.client.particles.ParticleTypesRegistry;
-import com.finderfeed.solarforge.registries.entities.EntityTypes;
-import com.finderfeed.solarforge.registries.sounds.Sounds;
+import com.finderfeed.solarforge.registries.entities.SolarcraftEntityTypes;
+import com.finderfeed.solarforge.registries.sounds.SolarcraftSounds;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -35,12 +35,12 @@ public class UltraCrossbowProjectile extends AbstractHurtingProjectile {
     }
 
     public UltraCrossbowProjectile(double p_i50174_2_, double p_i50174_4_, double p_i50174_6_, double p_i50174_8_, double p_i50174_10_, double p_i50174_12_, Level p_i50174_14_) {
-        super(EntityTypes.ULTRA_CROSSBOW_SHOT.get(), p_i50174_2_, p_i50174_4_, p_i50174_6_, p_i50174_8_, p_i50174_10_, p_i50174_12_, p_i50174_14_);
+        super(SolarcraftEntityTypes.ULTRA_CROSSBOW_SHOT.get(), p_i50174_2_, p_i50174_4_, p_i50174_6_, p_i50174_8_, p_i50174_10_, p_i50174_12_, p_i50174_14_);
 
     }
 
     public UltraCrossbowProjectile(LivingEntity p_i50175_2_, Level p_i50175_9_) {
-        super(EntityTypes.ULTRA_CROSSBOW_SHOT.get(),  p_i50175_9_);
+        super(SolarcraftEntityTypes.ULTRA_CROSSBOW_SHOT.get(),  p_i50175_9_);
 
     }
 
@@ -52,7 +52,7 @@ public class UltraCrossbowProjectile extends AbstractHurtingProjectile {
 
     @Override
     protected void onHitEntity(EntityHitResult ctx) {
-        level.playSound(null,this.getX(),this.getY(),this.getZ(), Sounds.CROSSBOW_SHOT_IMPACT.get(),SoundSource.AMBIENT,5,1);
+        level.playSound(null,this.getX(),this.getY(),this.getZ(), SolarcraftSounds.CROSSBOW_SHOT_IMPACT.get(),SoundSource.AMBIENT,5,1);
         if (!level.isClientSide) {
 
             Entity ent = ctx.getEntity();
@@ -84,7 +84,7 @@ public class UltraCrossbowProjectile extends AbstractHurtingProjectile {
             }
 
         }
-        level.playSound(null,this.getX(),this.getY(),this.getZ(), Sounds.CROSSBOW_SHOT_IMPACT.get(),SoundSource.AMBIENT,5,1);
+        level.playSound(null,this.getX(),this.getY(),this.getZ(), SolarcraftSounds.CROSSBOW_SHOT_IMPACT.get(),SoundSource.AMBIENT,5,1);
         this.remove(RemovalReason.KILLED);
     }
 

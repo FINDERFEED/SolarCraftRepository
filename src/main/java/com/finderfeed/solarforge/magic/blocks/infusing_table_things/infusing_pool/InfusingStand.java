@@ -1,11 +1,9 @@
 package com.finderfeed.solarforge.magic.blocks.infusing_table_things.infusing_pool;
 
 import com.finderfeed.solarforge.magic.blocks.infusing_table_things.SolarWandItem;
-import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
+import com.finderfeed.solarforge.registries.tile_entities.SolarcraftTileEntityTypes;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
-import net.minecraft.world.level.block.entity.BlockEntityTicker;
-import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -118,7 +116,7 @@ public class InfusingStand extends Block implements EntityBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-        return TileEntitiesRegistry.INFUSING_POOL_BLOCKENTITY.get().create(blockPos,blockState);
+        return SolarcraftTileEntityTypes.INFUSING_POOL_BLOCKENTITY.get().create(blockPos,blockState);
     }
 
 //    @Nullable

@@ -1,8 +1,8 @@
 package com.finderfeed.solarforge.world_generation.features;
 
 import com.finderfeed.solarforge.SolarForge;
-import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
-import com.finderfeed.solarforge.registries.worldgen.configured.ConfiguredFeatures;
+import com.finderfeed.solarforge.registries.blocks.SolarcraftBlocks;
+import com.finderfeed.solarforge.registries.worldgen.configured.LazyConfiguredFeatures;
 import com.finderfeed.solarforge.world_generation.biomes.molten_forest.MoltenForestAmbience;
 import com.finderfeed.solarforge.world_generation.dimension_related.radiant_land.CrystallizedOreVeinFeature;
 import com.finderfeed.solarforge.world_generation.dimension_related.radiant_land.RadiantSmallTreeFoliagePlacer;
@@ -187,7 +187,7 @@ public class FeaturesRegistry {
             if (carver != null) {
                 ImmutableSet.Builder<Block> builder = new ImmutableSet.Builder<>();
                 builder.addAll(carver.replaceableBlocks);
-                builder.add(BlocksRegistry.RADIANT_GRASS.get());
+                builder.add(SolarcraftBlocks.RADIANT_GRASS.get());
                 carver.replaceableBlocks = builder.build();
             }
         });
@@ -196,9 +196,9 @@ public class FeaturesRegistry {
     public static void registerConfiguredFeatures(final FMLCommonSetupEvent event){
         event.enqueueWork(()->{
             BURNT_TREE_FEATURE_2_CONF = new ConfiguredFeature<>(Feature.TREE,new TreeConfiguration.TreeConfigurationBuilder(
-                    BlockStateProvider.simple(BlocksRegistry.BURNT_LOG.get().defaultBlockState()),
+                    BlockStateProvider.simple(SolarcraftBlocks.BURNT_LOG.get().defaultBlockState()),
                     new StraightTrunkPlacer(4, 2, 0),
-                    BlockStateProvider.simple(BlocksRegistry.ASH_LEAVES.get().defaultBlockState()),
+                    BlockStateProvider.simple(SolarcraftBlocks.ASH_LEAVES.get().defaultBlockState()),
                     new BlobFoliagePlacer(ConstantInt.of(2), ConstantInt.of(0), 3),
                     new TwoLayersFeatureSize(1, 0, 1))
                     .ignoreVines().build());
@@ -226,9 +226,9 @@ public class FeaturesRegistry {
 
 //            registerPlacedFeature(BURNT_TREE_2,"burnt_tree_feature2");
             BURNT_TREE_FEATURE_CONF = new ConfiguredFeature<>(Feature.TREE,new TreeConfiguration.TreeConfigurationBuilder(
-                    BlockStateProvider.simple(BlocksRegistry.BURNT_LOG.get().defaultBlockState()),
+                    BlockStateProvider.simple(SolarcraftBlocks.BURNT_LOG.get().defaultBlockState()),
                     new BurntTreeTrunkPlacer(5, 3, 0),
-                    BlockStateProvider.simple(BlocksRegistry.ASH_LEAVES.get().defaultBlockState()),
+                    BlockStateProvider.simple(SolarcraftBlocks.ASH_LEAVES.get().defaultBlockState()),
                     new BurntTreeFoliagePlacer(ConstantInt.of(0), ConstantInt.of(0)),
                     new TwoLayersFeatureSize(1, 0, 1))
                     .ignoreVines().build());
@@ -264,7 +264,7 @@ public class FeaturesRegistry {
 
             ULDORADIUM_ORE = new ConfiguredFeature<>(Feature.ORE,
                     new OreConfiguration(OreFeatures.NATURAL_STONE,
-                            BlocksRegistry.ULDORADIUM_ORE.get().defaultBlockState(),6));
+                            SolarcraftBlocks.ULDORADIUM_ORE.get().defaultBlockState(),6));
             Registry.register(BuiltinRegistries.CONFIGURED_FEATURE,new ResourceLocation("solarforge","uldoradium_ore_configured"),ULDORADIUM_ORE);
 
             ULDORADIUM_ORE_PLACED_FEATURE = registerPlacedFeature("uldoradium_ore",Holder.direct(ULDORADIUM_ORE),
@@ -278,9 +278,9 @@ public class FeaturesRegistry {
 
 
             RUNIC_TREE_FEATURE_CONF = new ConfiguredFeature<>(Feature.TREE,new TreeConfiguration.TreeConfigurationBuilder(
-                    BlockStateProvider.simple(BlocksRegistry.RUNIC_LOG.get().defaultBlockState()),
+                    BlockStateProvider.simple(SolarcraftBlocks.RUNIC_LOG.get().defaultBlockState()),
                     new StraightTrunkPlacer(4, 2, 0),
-                    BlockStateProvider.simple(BlocksRegistry.RUNIC_LEAVES.get().defaultBlockState()),
+                    BlockStateProvider.simple(SolarcraftBlocks.RUNIC_LEAVES.get().defaultBlockState()),
                     new BlobFoliagePlacer(ConstantInt.of(2), ConstantInt.of(0), 3),
                     new TwoLayersFeatureSize(1, 0, 1))
                     .ignoreVines().build());
@@ -305,9 +305,9 @@ public class FeaturesRegistry {
 
             RADIANT_TREE_CONFIGURED_CONF = new ConfiguredFeature<>(Feature.TREE,
                     new TreeConfiguration.TreeConfigurationBuilder(
-                            BlockStateProvider.simple(BlocksRegistry.RADIANT_LOG.get().defaultBlockState()),
+                            BlockStateProvider.simple(SolarcraftBlocks.RADIANT_LOG.get().defaultBlockState()),
                             new StraightTrunkPlacer(15, 1, 0),
-                            BlockStateProvider.simple(BlocksRegistry.RADIANT_LEAVES.get().defaultBlockState()),
+                            BlockStateProvider.simple(SolarcraftBlocks.RADIANT_LEAVES.get().defaultBlockState()),
                             new RadiantTreeFoliagePlacer(ConstantInt.of(2), ConstantInt.of(0)),
                             new TwoLayersFeatureSize(1, 0, 1)
                     ).build());
@@ -329,7 +329,7 @@ public class FeaturesRegistry {
 
             RANDOM_PATCH_RADIANT_GRASS_CONF = new ConfiguredFeature<>(Feature.RANDOM_PATCH,
                     FeatureUtils.simpleRandomPatchConfiguration(1,PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK,
-                            new SimpleBlockConfiguration(BlockStateProvider.simple(BlocksRegistry.RADIANT_GRASS_NOT_BLOCK.get())))));
+                            new SimpleBlockConfiguration(BlockStateProvider.simple(SolarcraftBlocks.RADIANT_GRASS_NOT_BLOCK.get())))));
             Registry.register(BuiltinRegistries.CONFIGURED_FEATURE,new ResourceLocation("solarforge","radiant_grass_grass_configured"), RANDOM_PATCH_RADIANT_GRASS_CONF);
 
             RANDOM_PATCH_RADIANT_GRASS = registerPlacedFeature("radiant_grass_grass",Holder.direct(RANDOM_PATCH_RADIANT_GRASS_CONF),
@@ -348,9 +348,9 @@ public class FeaturesRegistry {
 
             RADIANT_SMALL_TREE_CONFIGURED_CONF = new ConfiguredFeature<>(Feature.TREE,
                     new TreeConfiguration.TreeConfigurationBuilder(
-                            BlockStateProvider.simple(BlocksRegistry.RADIANT_LOG.get().defaultBlockState()),
+                            BlockStateProvider.simple(SolarcraftBlocks.RADIANT_LOG.get().defaultBlockState()),
                             new StraightTrunkPlacer(9, 1, 0),
-                            BlockStateProvider.simple(BlocksRegistry.RADIANT_LEAVES.get().defaultBlockState()),
+                            BlockStateProvider.simple(SolarcraftBlocks.RADIANT_LEAVES.get().defaultBlockState()),
                             new RadiantSmallTreeFoliagePlacer(ConstantInt.of(2), ConstantInt.of(0)),
                             new TwoLayersFeatureSize(1, 0, 1))
                             .ignoreVines().build());
@@ -376,14 +376,14 @@ public class FeaturesRegistry {
 
             RADIANT_BERRY_BUSH_CONF = new ConfiguredFeature<>(Feature.RANDOM_PATCH,FeatureUtils.simpleRandomPatchConfiguration(4,
                     PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK,
-                            new SimpleBlockConfiguration(BlockStateProvider.simple(BlocksRegistry.RADIANT_BERRY_BUSH.get())))));
+                            new SimpleBlockConfiguration(BlockStateProvider.simple(SolarcraftBlocks.RADIANT_BERRY_BUSH.get())))));
             Registry.register(BuiltinRegistries.CONFIGURED_FEATURE,new ResourceLocation("solarforge","radiant_berry_bush_configured"), RADIANT_BERRY_BUSH_CONF);
             RADIANT_BERRY_BUSH = registerPlacedFeature("radiant_berry_bush",Holder.direct(RADIANT_BERRY_BUSH_CONF),
                     InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE);
 
 
             ENDER_CRACKS_CONF = new ConfiguredFeature<>(Feature.ORE,
-                    new OreConfiguration(END_STONE, BlocksRegistry.ENDER_CRACKS.get().defaultBlockState(),5));
+                    new OreConfiguration(END_STONE, SolarcraftBlocks.ENDER_CRACKS.get().defaultBlockState(),5));
             Registry.register(BuiltinRegistries.CONFIGURED_FEATURE,new ResourceLocation("solarforge","ender_cracks_configured"), ENDER_CRACKS_CONF);
 
             ENDER_CRACKS = registerPlacedFeature("ender_cracks",Holder.direct(ENDER_CRACKS_CONF),
@@ -406,7 +406,7 @@ public class FeaturesRegistry {
             CRYSTAL_FLOWER_CONF = new ConfiguredFeature<>(Feature.FLOWER,
                     FeatureUtils.simpleRandomPatchConfiguration(7,
                             PlacementUtils.onlyWhenEmpty(STONE_FLOWERS,
-                                    new SimpleBlockConfiguration(BlockStateProvider.simple(BlocksRegistry.CRYSTAL_FLOWER.get())))));
+                                    new SimpleBlockConfiguration(BlockStateProvider.simple(SolarcraftBlocks.CRYSTAL_FLOWER.get())))));
             registerConfiguredFeature(CRYSTAL_FLOWER_CONF,"crystal_flower");
 
             CRYSTAL_FLOWER_PLACEMENT = registerPlacedFeature("crystal_flower",Holder.direct(CRYSTAL_FLOWER_CONF),
@@ -421,7 +421,7 @@ public class FeaturesRegistry {
                     PlacementUtils.RANGE_BOTTOM_TO_MAX_TERRAIN_HEIGHT,BiomeFilter.biome());
 
             CRYSTALLIZED_RUNIC_ENERGY_CRYSTALS_CONF = new ConfiguredFeature<>(CRYSTALS_ORE,
-                    new SimpleBlockConfiguration(BlockStateProvider.simple(BlocksRegistry.CRYSTALLIZED_RUNIC_ENERGY.get())));
+                    new SimpleBlockConfiguration(BlockStateProvider.simple(SolarcraftBlocks.CRYSTALLIZED_RUNIC_ENERGY.get())));
             registerConfiguredFeature(CRYSTALLIZED_RUNIC_ENERGY_CRYSTALS_CONF,"crystallized_runic_energy");
 
             CRYSTALLIZED_RUNIC_ENERGY_CRYSTALS_PLACEMENT = registerPlacedFeature("crystallized_runic_energy",
@@ -430,7 +430,7 @@ public class FeaturesRegistry {
                     HeightRangePlacement.uniform(VerticalAnchor.bottom(),VerticalAnchor.absolute(100)),BiomeFilter.biome());
 
             LENSING_CRYSTAL_ORE_CONF = new ConfiguredFeature<>(Feature.ORE,
-                    new OreConfiguration(OreFeatures.NATURAL_STONE,BlocksRegistry.LENSING_CRYSTAL_ORE.get().defaultBlockState(),4));
+                    new OreConfiguration(OreFeatures.NATURAL_STONE, SolarcraftBlocks.LENSING_CRYSTAL_ORE.get().defaultBlockState(),4));
             registerConfiguredFeature(LENSING_CRYSTAL_ORE_CONF,"lensing_crystal_ore");
 
             LENSING_CRYSTAL_ORE_PLACEMENT = registerPlacedFeature("lensing_crystal_ore",Holder.direct(LENSING_CRYSTAL_ORE_CONF),
@@ -439,7 +439,7 @@ public class FeaturesRegistry {
 
             LUNAR_LILY_FEATURE_CONF = new ConfiguredFeature<>(Feature.FLOWER,
                     FeatureUtils.simpleRandomPatchConfiguration(3,PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK,
-                            new SimpleBlockConfiguration(BlockStateProvider.simple(BlocksRegistry.VOID_LILY.get())))));
+                            new SimpleBlockConfiguration(BlockStateProvider.simple(SolarcraftBlocks.VOID_LILY.get())))));
             registerConfiguredFeature(LUNAR_LILY_FEATURE_CONF,"lunar_lily");
 
             LUNAR_LILY_FEATURE_PLACEMENT = registerPlacedFeature("lunar_lily",Holder.direct(LUNAR_LILY_FEATURE_CONF),
@@ -447,7 +447,7 @@ public class FeaturesRegistry {
                     RarityFilter.onAverageOnceEvery(32), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP );
 
             EMPTY_CRYSTALS_CONF = new ConfiguredFeature<>(CRYSTALS_ORE,
-                    new SimpleBlockConfiguration(BlockStateProvider.simple(BlocksRegistry.CRYSTAL.get())));
+                    new SimpleBlockConfiguration(BlockStateProvider.simple(SolarcraftBlocks.CRYSTAL.get())));
             registerConfiguredFeature(EMPTY_CRYSTALS_CONF,"empty_crystals");
 
             EMPTY_CRYSTALS_PLACEMENT = registerPlacedFeature("empty_crystals",Holder.direct(EMPTY_CRYSTALS_CONF),
@@ -460,25 +460,25 @@ public class FeaturesRegistry {
                     HeightRangePlacement.uniform(VerticalAnchor.absolute(5),VerticalAnchor.absolute(30)));
 
 
-            SOLAR_STONE_CONF = new ConfiguredFeature<>(Feature.ORE,new OreConfiguration(OreFeatures.NATURAL_STONE, BlocksRegistry.SOLAR_STONE.get().defaultBlockState(),13));
+            SOLAR_STONE_CONF = new ConfiguredFeature<>(Feature.ORE,new OreConfiguration(OreFeatures.NATURAL_STONE, SolarcraftBlocks.SOLAR_STONE.get().defaultBlockState(),13));
             registerConfiguredFeature(SOLAR_STONE_CONF,"solar_stone");
             SOLAR_STONE = registerPlacedFeature("solar_stone",Holder.direct(SOLAR_STONE_CONF),
                     CountPlacement.of(UniformInt.of(3,4)), InSquarePlacement.spread(),
                     HeightRangePlacement.uniform(VerticalAnchor.bottom(),VerticalAnchor.absolute(80)));
 
 
-            ConfiguredFeatures.SOLAR_FLOWER_FEATURE_CONF = new ConfiguredFeature<>(Feature.RANDOM_PATCH,FeatureUtils.simpleRandomPatchConfiguration(2,
-                    PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK,new SimpleBlockConfiguration(BlockStateProvider.simple(BlocksRegistry.SOLAR_FLOWER.get())))));
-            registerConfiguredFeature(ConfiguredFeatures.SOLAR_FLOWER_FEATURE_CONF,"solar_flower_feature");
-            ConfiguredFeatures.SOLAR_FLOWER_FEATURE = registerPlacedFeature("solar_flower_feature",Holder.direct(ConfiguredFeatures.SOLAR_FLOWER_FEATURE_CONF),
+            LazyConfiguredFeatures.SOLAR_FLOWER_FEATURE_CONF = new ConfiguredFeature<>(Feature.RANDOM_PATCH,FeatureUtils.simpleRandomPatchConfiguration(2,
+                    PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK,new SimpleBlockConfiguration(BlockStateProvider.simple(SolarcraftBlocks.SOLAR_FLOWER.get())))));
+            registerConfiguredFeature(LazyConfiguredFeatures.SOLAR_FLOWER_FEATURE_CONF,"solar_flower_feature");
+            LazyConfiguredFeatures.SOLAR_FLOWER_FEATURE = registerPlacedFeature("solar_flower_feature",Holder.direct(LazyConfiguredFeatures.SOLAR_FLOWER_FEATURE_CONF),
                     HeightmapPlacement.onHeightmap(Heightmap.Types.MOTION_BLOCKING),InSquarePlacement.spread());
 
 
-            ConfiguredFeatures.DEAD_SPROUT_FEATURE_CONF = new ConfiguredFeature<>(Feature.RANDOM_PATCH,
+            LazyConfiguredFeatures.DEAD_SPROUT_FEATURE_CONF = new ConfiguredFeature<>(Feature.RANDOM_PATCH,
                     FeatureUtils.simpleRandomPatchConfiguration(7,PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK,
-                            new SimpleBlockConfiguration(BlockStateProvider.simple(BlocksRegistry.DEAD_SPROUT.get())))));
-            registerConfiguredFeature(ConfiguredFeatures.DEAD_SPROUT_FEATURE_CONF,"dead_sprout_feature");
-            ConfiguredFeatures.DEAD_SPROUT_FEATURE = registerPlacedFeature("dead_sprout_feature",Holder.direct(ConfiguredFeatures.DEAD_SPROUT_FEATURE_CONF),
+                            new SimpleBlockConfiguration(BlockStateProvider.simple(SolarcraftBlocks.DEAD_SPROUT.get())))));
+            registerConfiguredFeature(LazyConfiguredFeatures.DEAD_SPROUT_FEATURE_CONF,"dead_sprout_feature");
+            LazyConfiguredFeatures.DEAD_SPROUT_FEATURE = registerPlacedFeature("dead_sprout_feature",Holder.direct(LazyConfiguredFeatures.DEAD_SPROUT_FEATURE_CONF),
                     HeightmapPlacement.onHeightmap(Heightmap.Types.MOTION_BLOCKING),InSquarePlacement.spread());
 
             ULDERA_OBELISK_CONFIGURED = new ConfiguredFeature<>(ULDERA_OBELISK,NoneFeatureConfiguration.INSTANCE);

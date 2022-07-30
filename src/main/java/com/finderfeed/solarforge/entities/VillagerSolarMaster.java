@@ -2,7 +2,7 @@ package com.finderfeed.solarforge.entities;
 
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.progressions.Progression;
-import com.finderfeed.solarforge.registries.items.ItemsRegister;
+import com.finderfeed.solarforge.registries.items.SolarcraftItems;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -69,7 +69,7 @@ public class VillagerSolarMaster extends PathfinderMob {
                     playSound(SoundEvents.VILLAGER_YES,1,1);
                     TRADED_WITH.add(player.getUUID());
                     player.getMainHandItem().setCount(0);
-                    player.addItem(new ItemStack(ItemsRegister.BLUE_GEM.get(),30));
+                    player.addItem(new ItemStack(SolarcraftItems.BLUE_GEM.get(),30));
                 }
 
             } else if (Helpers.hasPlayerCompletedProgression(Progression.CRAFT_SOLAR_LENS, player)) {

@@ -3,7 +3,7 @@ package com.finderfeed.solarforge.magic.blocks.primitive;
 import com.finderfeed.solarforge.config.enchanter_config.EnchanterConfigInit;
 import com.finderfeed.solarforge.magic.blocks.blockentities.EnchanterBlockEntity;
 import com.finderfeed.solarforge.magic.blocks.blockentities.containers.EnchanterContainer;
-import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
+import com.finderfeed.solarforge.registries.tile_entities.SolarcraftTileEntityTypes;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.TextComponent;
@@ -76,7 +76,7 @@ public class EnchanterBlock extends RunicEnergySaverBlock implements EntityBlock
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return TileEntitiesRegistry.ENCHANTER.get().create(pos,state);
+        return SolarcraftTileEntityTypes.ENCHANTER.get().create(pos,state);
     }
 
     @Nullable

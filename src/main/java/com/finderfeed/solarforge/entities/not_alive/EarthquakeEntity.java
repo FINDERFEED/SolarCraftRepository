@@ -5,8 +5,8 @@ import com.finderfeed.solarforge.client.particles.ParticleTypesRegistry;
 import com.finderfeed.solarforge.local_library.helpers.CompoundNBTHelper;
 import com.finderfeed.solarforge.misc_things.CrystalBossBuddy;
 import com.finderfeed.solarforge.registries.data_serializers.FDEntityDataSerializers;
-import com.finderfeed.solarforge.registries.entities.EntityTypes;
-import com.finderfeed.solarforge.registries.sounds.Sounds;
+import com.finderfeed.solarforge.registries.entities.SolarcraftEntityTypes;
+import com.finderfeed.solarforge.registries.sounds.SolarcraftSounds;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -41,7 +41,7 @@ public class EarthquakeEntity extends Entity {
 
 
     public EarthquakeEntity(Level world,Vec3 dir,float length){
-        this(EntityTypes.EARTHQUAKE.get(),world);
+        this(SolarcraftEntityTypes.EARTHQUAKE.get(),world);
         this.setDirection(dir);
         setLength(length);
     }
@@ -73,7 +73,7 @@ public class EarthquakeEntity extends Entity {
                         e.hurt(DamageSource.MAGIC,damage);
                     }
                 }
-                level.playSound(null,position().x,position().y,position().z, Sounds.EARTHQUAKE.get(), SoundSource.HOSTILE,5f,1f);
+                level.playSound(null,position().x,position().y,position().z, SolarcraftSounds.EARTHQUAKE.get(), SoundSource.HOSTILE,5f,1f);
             }
             if (tickCount >= DEATH_TIME-20){
                 this.kill();

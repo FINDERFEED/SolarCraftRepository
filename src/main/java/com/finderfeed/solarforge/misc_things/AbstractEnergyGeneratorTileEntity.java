@@ -22,7 +22,6 @@ import java.util.List;
 
 public abstract class AbstractEnergyGeneratorTileEntity extends BlockEntity implements IBindable,ISolarEnergyContainer{
 
-    public int update_tick = 0;
     public int SOLAR_ENERGY = 0;
     public List<BlockPos> poslist = new ArrayList<>();
     public int count = 0;
@@ -117,12 +116,6 @@ public abstract class AbstractEnergyGeneratorTileEntity extends BlockEntity impl
 
     @Override
     public void saveAdditional(CompoundTag p_189515_1_) {
-//        p_189515_1_.putInt("sizepos",count);
-//        for (int i = 0;i<poslist.size();i++) {
-//            p_189515_1_.putInt("xpos"+i, poslist.get(i).getX());
-//            p_189515_1_.putInt("ypos"+i, poslist.get(i).getY());
-//            p_189515_1_.putInt("zpos"+i, poslist.get(i).getZ());
-//        }
         CompoundNBTHelper.writeBlockPosList("positions",poslist,p_189515_1_);
         p_189515_1_.putInt("energy_level",SOLAR_ENERGY);
         super.saveAdditional(p_189515_1_);
@@ -130,10 +123,6 @@ public abstract class AbstractEnergyGeneratorTileEntity extends BlockEntity impl
 
     @Override
     public void load( CompoundTag p_230337_2_) {
-//        count = p_230337_2_.getInt("sizepos");
-//        for (int i = 0;i<count;i++) {
-//            poslist.add(new BlockPos(p_230337_2_.getInt("xpos"+i), p_230337_2_.getInt("ypos"+i), p_230337_2_.getInt("zpos"+i)));
-//        }
         poslist = CompoundNBTHelper.getBlockPosList("positions",p_230337_2_);
         SOLAR_ENERGY = p_230337_2_.getInt("energy_level");
         super.load( p_230337_2_);

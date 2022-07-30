@@ -4,7 +4,7 @@ import com.finderfeed.solarforge.ClientHelpers;
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.client.particles.ParticleTypesRegistry;
 import com.finderfeed.solarforge.entities.RunicWarrior;
-import com.finderfeed.solarforge.registries.entities.EntityTypes;
+import com.finderfeed.solarforge.registries.entities.SolarcraftEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.world.entity.EntityType;
@@ -72,7 +72,7 @@ public class RunicWarriorSummoningRocket extends AbstractHurtingProjectile {
     protected void onHitBlock(BlockHitResult res) {
         BlockPos pos = res.getBlockPos();
         if (!level.isClientSide){
-            RunicWarrior warrior = new RunicWarrior(EntityTypes.RUNIC_WARRIOR.get(),level);
+            RunicWarrior warrior = new RunicWarrior(SolarcraftEntityTypes.RUNIC_WARRIOR.get(),level);
             warrior.setPos(Helpers.getBlockCenter(pos.above()));
             level.addFreshEntity(warrior);
             this.kill();

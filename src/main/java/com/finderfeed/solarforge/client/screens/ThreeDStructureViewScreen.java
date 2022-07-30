@@ -4,13 +4,12 @@ import com.finderfeed.solarforge.ClientHelpers;
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.local_library.helpers.RenderingTools;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.SolarLexicon;
-import com.finderfeed.solarforge.magic.items.solar_lexicon.screen.ItemStackButton;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.screen.ItemStackTabButton;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.screen.SolarLexiconRecipesScreen;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.screen.StructureScreen;
 import com.finderfeed.solarforge.misc_things.IScrollable;
 import com.finderfeed.solarforge.misc_things.Multiblock;
-import com.finderfeed.solarforge.registries.sounds.Sounds;
+import com.finderfeed.solarforge.registries.sounds.SolarcraftSounds;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Vector3f;
 import net.minecraft.client.Minecraft;
@@ -88,7 +87,7 @@ public class ThreeDStructureViewScreen extends Screen implements IScrollable {
         },new TextComponent("2D")){
             @Override
             public void playDownSound(SoundManager p_93665_) {
-                p_93665_.play(SimpleSoundInstance.forUI(Sounds.BUTTON_PRESS2.get(),1,1));
+                p_93665_.play(SimpleSoundInstance.forUI(SolarcraftSounds.BUTTON_PRESS2.get(),1,1));
             }
         });
 

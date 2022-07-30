@@ -4,7 +4,7 @@ package com.finderfeed.solarforge.events.other_events;
 import com.finderfeed.solarforge.magic.items.TotemOfImmortality;
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
 import com.finderfeed.solarforge.packet_handler.packets.ProcImmortalityTotemAnimation;
-import com.finderfeed.solarforge.registries.effects.EffectsRegister;
+import com.finderfeed.solarforge.registries.effects.SolarcraftEffects;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
@@ -29,7 +29,7 @@ public class DeathEvent {
             Player player = (Player) event.getEntityLiving();
             int slot = findImmortalityTotem(player);
             if (slot != -10000){
-                player.addEffect(new MobEffectInstance(EffectsRegister.IMMORTALITY_EFFECT.get(),400,0));
+                player.addEffect(new MobEffectInstance(SolarcraftEffects.IMMORTALITY_EFFECT.get(),400,0));
                 player.setHealth(player.getMaxHealth());
 
                 player.getInventory().setItem(slot, ItemStack.EMPTY);

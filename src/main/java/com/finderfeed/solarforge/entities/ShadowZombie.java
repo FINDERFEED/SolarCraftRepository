@@ -1,10 +1,9 @@
 package com.finderfeed.solarforge.entities;
 
 import com.finderfeed.solarforge.registries.SolarcraftDamageSources;
-import com.finderfeed.solarforge.registries.sounds.Sounds;
+import com.finderfeed.solarforge.registries.sounds.SolarcraftSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
@@ -75,12 +74,12 @@ public class ShadowZombie extends Monster implements PowerableMob {
 
     @Override
     protected SoundEvent getHurtSound(DamageSource p_33034_) {
-        return Sounds.SHADOW_ZOMBIE_HURT.get();
+        return SolarcraftSounds.SHADOW_ZOMBIE_HURT.get();
     }
 
     @Override
     protected SoundEvent getDeathSound() {
-        return Sounds.SHADOW_ZOMBIE_HURT.get();
+        return SolarcraftSounds.SHADOW_ZOMBIE_HURT.get();
     }
 
     protected void registerGoals() {

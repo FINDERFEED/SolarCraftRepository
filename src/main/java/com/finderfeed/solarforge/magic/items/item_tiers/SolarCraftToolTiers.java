@@ -1,8 +1,7 @@
 package com.finderfeed.solarforge.magic.items.item_tiers;
 
 import com.finderfeed.solarforge.SolarCraftTags;
-import com.finderfeed.solarforge.registries.items.ItemsRegister;
-import net.minecraft.tags.Tag;
+import com.finderfeed.solarforge.registries.items.SolarcraftItems;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -13,10 +12,10 @@ import javax.annotation.Nullable;
 import java.util.function.Supplier;
 
 public enum SolarCraftToolTiers implements Tier {
-    ILLIDIUM_TOOLS_TIER(5, 2500, 9.5f, 6.0F, 20,()-> Ingredient.of(ItemsRegister.ILLIDIUM_INGOT.get()), SolarCraftTags.ILLIDIUM_TAG),
-    QUALADIUM_TOOLS_TIER(5, 4000, 11f, 13.0F, 25,()-> Ingredient.of(ItemsRegister.QUALADIUM_INGOT.get()),SolarCraftTags.QUALADIUM_TAG),
-    CHARGED_QUALADIUM_TOOLS_TIER(5, 4200, 11.5f, 13.5F, 40,()-> Ingredient.of(ItemsRegister.QUALADIUM_INGOT.get()),SolarCraftTags.CHARGED_QUALADIUM_TAG),
-    SOLAR_GOD_TOOL_TIER(6, 8000, 17f, 17F, 45,()-> Ingredient.of(ItemsRegister.CHARGED_QUALADIUM_INGOT.get()),SolarCraftTags.SOLAR_GOD_TAG),
+    ILLIDIUM_TOOLS_TIER(5, 2500, 9.5f, 6.0F, 20,()-> Ingredient.of(SolarcraftItems.ILLIDIUM_INGOT.get()), SolarCraftTags.ILLIDIUM_TAG),
+    QUALADIUM_TOOLS_TIER(5, 4000, 11f, 13.0F, 25,()-> Ingredient.of(SolarcraftItems.QUALADIUM_INGOT.get()),SolarCraftTags.QUALADIUM_TAG),
+    CHARGED_QUALADIUM_TOOLS_TIER(5, 4200, 11.5f, 13.5F, 40,()-> Ingredient.of(SolarcraftItems.QUALADIUM_INGOT.get()),SolarCraftTags.CHARGED_QUALADIUM_TAG),
+    SOLAR_GOD_TOOL_TIER(6, 8000, 17f, 17F, 45,()-> Ingredient.of(SolarcraftItems.CHARGED_QUALADIUM_INGOT.get()),SolarCraftTags.SOLAR_GOD_TAG),
     DIVINE_TIER(10, 16000, 30f, 25F, 50,()-> Ingredient.EMPTY,SolarCraftTags.DIVINE);
 
 

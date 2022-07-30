@@ -1,7 +1,7 @@
 package com.finderfeed.solarforge.magic.blocks.blockentities.containers;
 
 import com.finderfeed.solarforge.magic.blocks.blockentities.SolarEnergyFurnaceTile;
-import com.finderfeed.solarforge.registries.containers.Containers;
+import com.finderfeed.solarforge.registries.containers.SolarcraftContainers;
 import net.minecraft.world.entity.player.Inventory;
 
 import net.minecraft.world.inventory.FurnaceResultSlot;
@@ -17,7 +17,7 @@ import java.util.Objects;
 public class SolarFurnaceContainer extends AbstractContainer<SolarEnergyFurnaceTile>{
 
     public SolarFurnaceContainer( int windowId, Inventory playerInv, SolarEnergyFurnaceTile te, ContainerData array) {
-        super(Containers.SOLAR_FURNACE_CONTAINER.get(), windowId, playerInv, te, array);
+        super(SolarcraftContainers.SOLAR_FURNACE_CONTAINER.get(), windowId, playerInv, te, array);
         this.addSlot(new Slot(te,0,48,35));
         this.addSlot(new FurnaceResultSlot(playerInv.player,te,1,108,35));
 

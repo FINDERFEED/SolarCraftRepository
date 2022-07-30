@@ -22,11 +22,11 @@ import com.finderfeed.solarforge.registries.SolarcraftDamageSources;
 import com.finderfeed.solarforge.registries.Tags;
 import com.finderfeed.solarforge.registries.abilities.AbilitiesRegistry;
 import com.finderfeed.solarforge.registries.attributes.AttributesRegistry;
-import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
-import com.finderfeed.solarforge.registries.effects.EffectsRegister;
-import com.finderfeed.solarforge.registries.worldgen.configured.ConfiguredFeatures;
-import com.finderfeed.solarforge.registries.items.ItemsRegister;
-import com.finderfeed.solarforge.registries.sounds.Sounds;
+import com.finderfeed.solarforge.registries.blocks.SolarcraftBlocks;
+import com.finderfeed.solarforge.registries.effects.SolarcraftEffects;
+import com.finderfeed.solarforge.registries.worldgen.configured.LazyConfiguredFeatures;
+import com.finderfeed.solarforge.registries.items.SolarcraftItems;
+import com.finderfeed.solarforge.registries.sounds.SolarcraftSounds;
 import com.finderfeed.solarforge.world_generation.features.FeaturesRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
@@ -139,14 +139,14 @@ public class EventHandler {
 
                     if ((actualtime % 13000 == 0)) {
                         player.sendMessage(new TranslatableComponent("radiant_dimension.nightfall").withStyle(ChatFormatting.RED), player.getUUID());
-                        ClientHelpers.playsoundInEars(Sounds.NIGHT_DIM.get(), 1, 1);
+                        ClientHelpers.playsoundInEars(SolarcraftSounds.NIGHT_DIM.get(), 1, 1);
                     } else if ((actualtime % 14400 == 0)) {
 
-                        ClientHelpers.playsoundInEars(Sounds.AMBIENT_DIM_1.get(), 1, 1);
+                        ClientHelpers.playsoundInEars(SolarcraftSounds.AMBIENT_DIM_1.get(), 1, 1);
                     } else if ((actualtime % 16800 == 0)) {
-                        ClientHelpers.playsoundInEars(Sounds.AMBIENT_DIM_2.get(), 1, 1);
+                        ClientHelpers.playsoundInEars(SolarcraftSounds.AMBIENT_DIM_2.get(), 1, 1);
                     } else if ((actualtime % 20000) == 0) {
-                        ClientHelpers.playsoundInEars(Sounds.AMBIENT_DIM_1.get(), 1, 1);
+                        ClientHelpers.playsoundInEars(SolarcraftSounds.AMBIENT_DIM_1.get(), 1, 1);
                     }
                 }
             }
@@ -155,11 +155,11 @@ public class EventHandler {
 
                 if ((world.getGameTime() % 20 == 1) && !(actualtime % 24000 <= 13000) && (world.dimension() == RADIANT_LAND_KEY)) {
                     if (world.canSeeSky(player.getOnPos().above())) {
-                        player.addEffect(new MobEffectInstance(EffectsRegister.STAR_GAZE_EFFECT.get(), 400, 0));
+                        player.addEffect(new MobEffectInstance(SolarcraftEffects.STAR_GAZE_EFFECT.get(), 400, 0));
                     }
                 }
 
-                if (player.hasEffect(EffectsRegister.STAR_GAZE_EFFECT.get())) {
+                if (player.hasEffect(SolarcraftEffects.STAR_GAZE_EFFECT.get())) {
                     if (world.getGameTime() % 80 == 1) {
                         DamageSource src = SolarcraftDamageSources.STARGAZE.bypassArmor().setMagic();
                         player.hurt(src, 6);
@@ -181,7 +181,7 @@ public class EventHandler {
 
                 AttributeInstance attr = player.getAttribute(ForgeMod.REACH_DISTANCE.get());
                 if (attr != null) {
-                    if (FDMathHelper.PlayerThings.doPlayerHasItem(player.getInventory(), ItemsRegister.REACH_GLOVES.get())) {
+                    if (FDMathHelper.PlayerThings.doPlayerHasItem(player.getInventory(), SolarcraftItems.REACH_GLOVES.get())) {
                         if (!attr.hasModifier(SolarCraftAttributeModifiers.REACH_2_MODIFIER)) {
                             attr.addTransientModifier(SolarCraftAttributeModifiers.REACH_2_MODIFIER);
                         }
@@ -233,7 +233,7 @@ public class EventHandler {
         }
 
         if (event.getCategory() == Biome.BiomeCategory.DESERT){
-            event.getGeneration().addFeature(GenerationStep.Decoration.TOP_LAYER_MODIFICATION, ConfiguredFeatures.SOLAR_FLOWER_FEATURE);
+            event.getGeneration().addFeature(GenerationStep.Decoration.TOP_LAYER_MODIFICATION, LazyConfiguredFeatures.SOLAR_FLOWER_FEATURE);
         }
 
     }
@@ -308,7 +308,7 @@ public class EventHandler {
     @SubscribeEvent
     public static void catalystsProgression(BlockEvent.EntityPlaceEvent event){
         if (event.getEntity() instanceof Player pl){
-            if (event.getPlacedBlock().is(Tags.CATALYST) && event.getPlacedBlock().getBlock() != BlocksRegistry.SOLAR_STONE_COLLUMN.get()) {
+            if (event.getPlacedBlock().is(Tags.CATALYST) && event.getPlacedBlock().getBlock() != SolarcraftBlocks.SOLAR_STONE_COLLUMN.get()) {
                 if (!Helpers.hasPlayerCompletedProgression(Progression.CATALYSTS, pl)) {
                     for (int x = -10; x < 10;x++){
                         for (int z = -10; z < 10;z++){
@@ -399,8 +399,8 @@ public class EventHandler {
     public static void handleEvasion(LivingDamageEvent event){
         LivingEntity living = event.getEntityLiving();
         if (!living.level.isClientSide){
-            if (living.hasEffect(EffectsRegister.EVASION.get())){
-                int level = living.getActiveEffectsMap().get(EffectsRegister.EVASION.get()).getAmplifier();
+            if (living.hasEffect(SolarcraftEffects.EVASION.get())){
+                int level = living.getActiveEffectsMap().get(SolarcraftEffects.EVASION.get()).getAmplifier();
                 if (living.level.random.nextDouble() <= 0.2 * (level + 1)){
                     event.setCanceled(true);
                 }
@@ -413,7 +413,7 @@ public class EventHandler {
     public static void cancelFallDamage(LivingFallEvent event){
         if (event.getEntityLiving() instanceof Player player){
             if (player.level.isClientSide) return;
-            if (player.getItemBySlot(EquipmentSlot.CHEST).is(ItemsRegister.DIVINE_CHESTPLATE.get())){
+            if (player.getItemBySlot(EquipmentSlot.CHEST).is(SolarcraftItems.DIVINE_CHESTPLATE.get())){
                 event.setDamageMultiplier(0);
             }
         }
@@ -424,14 +424,14 @@ public class EventHandler {
     public static void equipmentChangedEvent(LivingEquipmentChangeEvent event){
         if (event.getEntityLiving() instanceof ServerPlayer player){
             if (event.getSlot() == EquipmentSlot.CHEST){
-                if (event.getTo().is(ItemsRegister.DIVINE_CHESTPLATE.get()) && !event.getFrom().is(ItemsRegister.DIVINE_CHESTPLATE.get())){
+                if (event.getTo().is(SolarcraftItems.DIVINE_CHESTPLATE.get()) && !event.getFrom().is(SolarcraftItems.DIVINE_CHESTPLATE.get())){
                     if (!player.isCreative() && !player.isSpectator()) {
                         DisablePlayerFlightPacket.send(player, false);
                     }
                     if (player.getAbilities().getFlyingSpeed() < 0.1f) {
                         player.getAbilities().setFlyingSpeed(0.10f);
                     }
-                }else if (event.getFrom().is(ItemsRegister.DIVINE_CHESTPLATE.get()) && !event.getTo().is(ItemsRegister.DIVINE_CHESTPLATE.get())){
+                }else if (event.getFrom().is(SolarcraftItems.DIVINE_CHESTPLATE.get()) && !event.getTo().is(SolarcraftItems.DIVINE_CHESTPLATE.get())){
                     if (!player.isCreative() && !player.isSpectator() ) {
                         DisablePlayerFlightPacket.send(player, true);
                     }

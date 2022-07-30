@@ -3,7 +3,7 @@ package com.finderfeed.solarforge.magic.items;
 import com.finderfeed.solarforge.magic.items.primitive.solacraft_item_classes.SolarcraftItem;
 import com.finderfeed.solarforge.magic.projectiles.BlockBoomerangProjectile;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.unlockables.AncientFragment;
-import com.finderfeed.solarforge.registries.entities.EntityTypes;
+import com.finderfeed.solarforge.registries.entities.SolarcraftEntityTypes;
 
 import net.minecraft.world.item.TooltipFlag;
 
@@ -35,7 +35,7 @@ public class BlockBoomerang extends SolarcraftItem {
             if (i.getItem() instanceof BlockItem && !i.hasTag()) {
                 BlockItem item = (BlockItem) player.getItemInHand(InteractionHand.OFF_HAND).getItem();
 
-                BlockBoomerangProjectile proj = new BlockBoomerangProjectile(EntityTypes.BLOCK_BOOMERANG.get(), world);
+                BlockBoomerangProjectile proj = new BlockBoomerangProjectile(SolarcraftEntityTypes.BLOCK_BOOMERANG.get(), world);
                 proj.setPos(player.getX() + player.getLookAngle().x * 2, player.getY()+1.5 + player.getLookAngle().y, player.getZ() + player.getLookAngle().z * 2);
                 proj.setOwner(player.getUUID());
                 proj.setBlockToPlace(item.getBlock());

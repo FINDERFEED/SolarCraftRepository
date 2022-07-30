@@ -4,7 +4,7 @@ import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.entities.CrystalBossEntity;
 import com.finderfeed.solarforge.misc_things.CrystalBossBuddy;
 import com.finderfeed.solarforge.client.particles.ParticleTypesRegistry;
-import com.finderfeed.solarforge.registries.entities.EntityTypes;
+import com.finderfeed.solarforge.registries.entities.SolarcraftEntityTypes;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
@@ -37,7 +37,7 @@ public class CrystalBossAttackHoldingMissile extends AbstractHurtingProjectile i
     }
 
     private CrystalBossAttackHoldingMissile(Builder builder){
-        super(EntityTypes.CRYSTAL_BOSS_ATTACK_HOLDING_MISSILE.get(),builder.world);
+        super(SolarcraftEntityTypes.CRYSTAL_BOSS_ATTACK_HOLDING_MISSILE.get(),builder.world);
         this.TARGET = builder.target;
         this.HOLDING_TIME = builder.holding_time;
         this.setPos(builder.position);

@@ -3,7 +3,7 @@ package com.finderfeed.solarforge.magic.blocks.blockentities;
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.misc_things.AbstractSolarCore;
 import com.finderfeed.solarforge.multiblocks.Multiblocks;
-import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
+import com.finderfeed.solarforge.registries.tile_entities.SolarcraftTileEntityTypes;
 
 
 import net.minecraft.core.BlockPos;
@@ -16,7 +16,7 @@ public class SolarCoreBlockEntity extends AbstractSolarCore {
     public boolean IS_STRUCT_CORRECT = false;
 
     public SolarCoreBlockEntity(BlockPos pos,BlockState state) {
-        super(TileEntitiesRegistry.SOLAR_CORE_TILE.get(),pos,state);
+        super(SolarcraftTileEntityTypes.SOLAR_CORE_TILE.get(),pos,state);
     }
 
 

@@ -2,7 +2,7 @@ package com.finderfeed.solarforge.magic.blocks;
 
 import com.finderfeed.solarforge.magic.blocks.blockentities.EnergyGeneratorTile;
 import com.finderfeed.solarforge.misc_things.AbstractEnergyGeneratorTileEntity;
-import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
+import com.finderfeed.solarforge.registries.tile_entities.SolarcraftTileEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -32,7 +32,7 @@ public class SolarEnergyGenerator extends Block implements EntityBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-        return TileEntitiesRegistry.ENERGY_GENERATOR_TILE.get().create(blockPos,blockState);
+        return SolarcraftTileEntityTypes.ENERGY_GENERATOR_TILE.get().create(blockPos,blockState);
     }
 
     @Nullable

@@ -2,8 +2,8 @@ package com.finderfeed.solarforge.magic.blocks.blockentities.containers;
 
 import com.finderfeed.solarforge.magic.blocks.blockentities.RunicTableTileEntity;
 import com.finderfeed.solarforge.magic.items.RuneItem;
-import com.finderfeed.solarforge.registries.containers.Containers;
-import com.finderfeed.solarforge.registries.items.ItemsRegister;
+import com.finderfeed.solarforge.registries.containers.SolarcraftContainers;
+import com.finderfeed.solarforge.registries.items.SolarcraftItems;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.unlockables.ProgressionHelper;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
@@ -20,6 +20,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.core.BlockPos;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.Nonnull;
@@ -31,7 +32,7 @@ public class RunicTableContainer extends AbstractContainerMenu {
     public boolean hideRuneButtons;
 
     public RunicTableContainer(int windowId, Inventory playerInv,BlockPos tilepos,boolean hideRuneButtons) {
-        super(Containers.RUNIC_TABLE_CONTAINER.get(), windowId);
+        super(SolarcraftContainers.RUNIC_TABLE_CONTAINER.get(), windowId);
         this.hideRuneButtons = hideRuneButtons;
         Level world= playerInv.player.level;
         this.tile = (RunicTableTileEntity)world.getBlockEntity(tilepos);
@@ -136,14 +137,14 @@ class RuneSlot extends Slot{
     @Override
     public boolean mayPlace(ItemStack stack) {
         Item item = stack.getItem();
-        return (item == ItemsRegister.SOLAR_RUNE_ARDO.get()) ||
-                (item == ItemsRegister.SOLAR_RUNE_ZETA.get()) ||
-                (item == ItemsRegister.SOLAR_RUNE_TERA.get()) ||
-                (item == ItemsRegister.SOLAR_RUNE_URBA.get()) ||
-                (item == ItemsRegister.SOLAR_RUNE_KELDA.get()) ||
-                (item == ItemsRegister.SOLAR_RUNE_FIRA.get()) ||
-                (item == ItemsRegister.SOLAR_RUNE_GIRO.get()) ||
-                (item == ItemsRegister.SOLAR_RUNE_ULTIMA.get());
+        return (item == SolarcraftItems.SOLAR_RUNE_ARDO.get()) ||
+                (item == SolarcraftItems.SOLAR_RUNE_ZETA.get()) ||
+                (item == SolarcraftItems.SOLAR_RUNE_TERA.get()) ||
+                (item == SolarcraftItems.SOLAR_RUNE_URBA.get()) ||
+                (item == SolarcraftItems.SOLAR_RUNE_KELDA.get()) ||
+                (item == SolarcraftItems.SOLAR_RUNE_FIRA.get()) ||
+                (item == SolarcraftItems.SOLAR_RUNE_GIRO.get()) ||
+                (item == SolarcraftItems.SOLAR_RUNE_ULTIMA.get());
     }
 }
 class FragmentSlot extends SlotItemHandler {
@@ -156,6 +157,16 @@ class FragmentSlot extends SlotItemHandler {
     @Override
     public boolean mayPlace(ItemStack stack) {
         Item item = stack.getItem();
-        return (item == ItemsRegister.INFO_FRAGMENT.get()) && (stack.getTagElement(ProgressionHelper.TAG_ELEMENT) == null);
+        return (item == SolarcraftItems.INFO_FRAGMENT.get()) && (stack.getTagElement(ProgressionHelper.TAG_ELEMENT) == null);
+    }
+
+    @Override
+    public int getMaxStackSize(@NotNull ItemStack stack) {
+        return 1;
+    }
+
+    @Override
+    public int getMaxStackSize() {
+        return 1;
     }
 }

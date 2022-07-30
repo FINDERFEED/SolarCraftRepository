@@ -2,7 +2,7 @@ package com.finderfeed.solarforge.magic.blocks;
 
 import com.finderfeed.solarforge.magic.items.solar_lexicon.progressions.Progression;
 import com.finderfeed.solarforge.misc_things.IProgressionBlock;
-import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
+import com.finderfeed.solarforge.registries.blocks.SolarcraftBlocks;
 
 
 import net.minecraft.world.entity.player.Player;
@@ -33,7 +33,7 @@ public class UldoradiumOre extends OreBlock implements IProgressionBlock {
     @Override
     public Block getUnlockedBlock() {
 
-        return BlocksRegistry.ULDORADIUM_ORE.get();
+        return SolarcraftBlocks.ULDORADIUM_ORE.get();
     }
 
     @Override

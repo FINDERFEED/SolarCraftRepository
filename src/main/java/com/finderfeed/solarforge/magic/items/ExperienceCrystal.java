@@ -3,7 +3,7 @@ package com.finderfeed.solarforge.magic.items;
 import com.finderfeed.solarforge.SolarCraftTags;
 import com.finderfeed.solarforge.magic.items.primitive.solacraft_item_classes.SolarcraftItem;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.unlockables.AncientFragment;
-import com.finderfeed.solarforge.registries.items.ItemsRegister;
+import com.finderfeed.solarforge.registries.items.SolarcraftItems;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -50,7 +50,7 @@ public class ExperienceCrystal extends SolarcraftItem {
     private static int findExperienceCrystal(Inventory inv){
 
         for (int i = 0; i < inv.getContainerSize();i++){
-            if (inv.getItem(i).getItem() == ItemsRegister.EXPERIENCE_CRYSTAL.get()){
+            if (inv.getItem(i).getItem() == SolarcraftItems.EXPERIENCE_CRYSTAL.get()){
                 return i;
             }
         }

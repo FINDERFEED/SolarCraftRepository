@@ -12,8 +12,8 @@ import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.SolarLexicon;
 import com.finderfeed.solarforge.recipe_types.infusing_new.InfusingRecipe;
 import com.finderfeed.solarforge.registries.Tags;
-import com.finderfeed.solarforge.registries.items.ItemsRegister;
-import com.finderfeed.solarforge.registries.sounds.Sounds;
+import com.finderfeed.solarforge.registries.items.SolarcraftItems;
+import com.finderfeed.solarforge.registries.sounds.SolarcraftSounds;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.ChatFormatting;
@@ -108,7 +108,7 @@ public class InfusingRecipeScreen extends Screen {
             },new TextComponent("")){
                 @Override
                 public void playDownSound(SoundManager manager) {
-                    manager.play(SimpleSoundInstance.forUI(Sounds.BUTTON_PRESS2.get(),1,1));
+                    manager.play(SimpleSoundInstance.forUI(SolarcraftSounds.BUTTON_PRESS2.get(),1,1));
                 }
             });
             addRenderableWidget(new ImageButton(relX + 193 + 19, relY + 16 + 55 + 14 - 1, 16, 16, 0, 16, 0, BUTTONS, 16, 32, (button) -> {
@@ -122,7 +122,7 @@ public class InfusingRecipeScreen extends Screen {
             },new TextComponent("")){
                 @Override
                 public void playDownSound(SoundManager manager) {
-                    manager.play(SimpleSoundInstance.forUI(Sounds.BUTTON_PRESS2.get(),1,1));
+                    manager.play(SimpleSoundInstance.forUI(SolarcraftSounds.BUTTON_PRESS2.get(),1,1));
                 }
             });
         }
@@ -140,7 +140,7 @@ public class InfusingRecipeScreen extends Screen {
 
             addRenderableWidget(new ItemStackTabButton(relX + 214, relY + 9 + 8, 12, 12, (button) -> {
                 minecraft.setScreen(new InfusingRecipeEnergyScreen(recipe, currentPage));
-            }, ItemsRegister.SOLAR_WAND.get().getDefaultInstance(), 0.7f));
+            }, SolarcraftItems.SOLAR_WAND.get().getDefaultInstance(), 0.7f));
         }
         addRenderableWidget(new ItemStackTabButton(relX + 214,relY+28 + 8 - 1,12,12,(button)->{minecraft.setScreen(new SolarLexiconRecipesScreen());}, Items.CRAFTING_TABLE.getDefaultInstance(),0.7f));
         addRenderableWidget(new ItemStackTabButton(relX + 214,relY+28 + 8 - 1 + 18,12,12,(button)->{

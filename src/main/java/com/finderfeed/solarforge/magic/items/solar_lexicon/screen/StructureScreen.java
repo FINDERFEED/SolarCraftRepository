@@ -6,8 +6,8 @@ import com.finderfeed.solarforge.client.screens.ThreeDStructureViewScreen;
 import com.finderfeed.solarforge.local_library.helpers.RenderingTools;
 import com.finderfeed.solarforge.misc_things.Multiblock;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.SolarLexicon;
-import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
-import com.finderfeed.solarforge.registries.sounds.Sounds;
+import com.finderfeed.solarforge.registries.blocks.SolarcraftBlocks;
+import com.finderfeed.solarforge.registries.sounds.SolarcraftSounds;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
@@ -71,7 +71,7 @@ public class StructureScreen extends Screen {
         }){
             @Override
             public void playDownSound(SoundManager p_93665_) {
-                p_93665_.play(SimpleSoundInstance.forUI(Sounds.BUTTON_PRESS2.get(),1,1));
+                p_93665_.play(SimpleSoundInstance.forUI(SolarcraftSounds.BUTTON_PRESS2.get(),1,1));
             }
         });
         addRenderableWidget(new ImageButton(relX+216,relY+32,16,16,0,16,0,BUTTONS,16,32,(button)->{
@@ -81,7 +81,7 @@ public class StructureScreen extends Screen {
         }){
             @Override
             public void playDownSound(SoundManager p_93665_) {
-                p_93665_.play(SimpleSoundInstance.forUI(Sounds.BUTTON_PRESS2.get(),1,1));
+                p_93665_.play(SimpleSoundInstance.forUI(SolarcraftSounds.BUTTON_PRESS2.get(),1,1));
             }
         });
         addRenderableWidget(new ImageButton(relX+216,relY,16,16,0,0,0,THREEDSCREENBTN,16,16,(button)->{
@@ -91,7 +91,7 @@ public class StructureScreen extends Screen {
         },new TextComponent("3D")) {
             @Override
             public void playDownSound(SoundManager p_93665_) {
-                p_93665_.play(SimpleSoundInstance.forUI(Sounds.BUTTON_PRESS2.get(), 1, 1));
+                p_93665_.play(SimpleSoundInstance.forUI(SolarcraftSounds.BUTTON_PRESS2.get(), 1, 1));
             }
         });
 
@@ -164,7 +164,7 @@ public class StructureScreen extends Screen {
 
     private void renderItemAndTooltip(BlockState toRender, int place1, int place2, int mousex, int mousey, PoseStack matrices){
         ItemStack stack = toRender.getBlock().asItem().getDefaultInstance();
-        if (toRender.getBlock() != BlocksRegistry.SOLAR_STONE_BRICKS.get()) {
+        if (toRender.getBlock() != SolarcraftBlocks.SOLAR_STONE_BRICKS.get()) {
             minecraft.getItemRenderer().renderGuiItem(stack, place1, place2);
         }else{
             optimizedRenderer.renderGuiItem(stack,place1,place2);

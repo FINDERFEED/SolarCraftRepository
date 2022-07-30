@@ -3,7 +3,7 @@ package com.finderfeed.solarforge.packet_handler.packets;
 import com.finderfeed.solarforge.ClientHelpers;
 import com.finderfeed.solarforge.client.toasts.SolarAchievementToast;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.progressions.progression_tree.ProgressionTree;
-import com.finderfeed.solarforge.registries.sounds.Sounds;
+import com.finderfeed.solarforge.registries.sounds.SolarcraftSounds;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.api.distmarker.Dist;
@@ -30,7 +30,7 @@ public class TriggerToastPacket {
         ctx.get().enqueueWork(()->{
             DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> ()-> {
                 ProgressionTree tree = ProgressionTree.INSTANCE;
-                ClientHelpers.playSound(Sounds.PROGRESSION_GAIN.get(),1,1);
+                ClientHelpers.playSound(SolarcraftSounds.PROGRESSION_GAIN.get(),1,1);
                 SolarAchievementToast.addOrUpdate(Minecraft.getInstance().getToasts(), tree.getAchievementById(id));
             });
 

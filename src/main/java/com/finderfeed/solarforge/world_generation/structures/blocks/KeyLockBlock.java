@@ -1,7 +1,7 @@
 package com.finderfeed.solarforge.world_generation.structures.blocks;
 
-import com.finderfeed.solarforge.registries.items.ItemsRegister;
-import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
+import com.finderfeed.solarforge.registries.items.SolarcraftItems;
+import com.finderfeed.solarforge.registries.tile_entities.SolarcraftTileEntityTypes;
 import com.finderfeed.solarforge.world_generation.structures.blocks.tile_entities.KeyLockStructureTile;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
@@ -14,7 +14,6 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 
 import javax.annotation.Nullable;
@@ -35,7 +34,7 @@ public class KeyLockBlock extends GlazedTerracottaBlock implements EntityBlock {
     public InteractionResult use(BlockState p_225533_1_, Level p_225533_2_, BlockPos p_225533_3_, Player p_225533_4_, InteractionHand p_225533_5_, BlockHitResult p_225533_6_) {
 
         if (!p_225533_2_.isClientSide){
-            if (p_225533_4_.getItemInHand(p_225533_5_).getItem() == ItemsRegister.SOLAR_KEY.get()){
+            if (p_225533_4_.getItemInHand(p_225533_5_).getItem() == SolarcraftItems.SOLAR_KEY.get()){
                 p_225533_2_.destroyBlock(p_225533_3_,false);
                 p_225533_2_.destroyBlock(p_225533_3_.below(),false);
                 p_225533_2_.destroyBlock(p_225533_3_.above(),false);
@@ -55,7 +54,7 @@ public class KeyLockBlock extends GlazedTerracottaBlock implements EntityBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-        return TileEntitiesRegistry.KEY_LOCK_TILE.get().create(blockPos,blockState);
+        return SolarcraftTileEntityTypes.KEY_LOCK_TILE.get().create(blockPos,blockState);
     }
 
     @Nullable

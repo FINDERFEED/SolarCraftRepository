@@ -5,7 +5,7 @@ import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.client.particles.ParticleTypesRegistry;
 import com.finderfeed.solarforge.misc_things.PhantomInventory;
 import com.finderfeed.solarforge.recipe_types.solar_smelting.SolarSmeltingRecipe;
-import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
+import com.finderfeed.solarforge.registries.tile_entities.SolarcraftTileEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.Packet;
@@ -36,7 +36,7 @@ public class SolarLensTile extends BlockEntity  {
     public boolean RECIPE_IN_PROGRESS = false;
 
     public SolarLensTile(BlockPos p_155229_, BlockState p_155230_) {
-        super(TileEntitiesRegistry.SOLAR_LENS_TILE.get(), p_155229_, p_155230_);
+        super(SolarcraftTileEntityTypes.SOLAR_LENS_TILE.get(), p_155229_, p_155230_);
     }
 
 

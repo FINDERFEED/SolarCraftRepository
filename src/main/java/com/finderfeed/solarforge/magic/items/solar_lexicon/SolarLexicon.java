@@ -9,7 +9,7 @@ import com.finderfeed.solarforge.magic.items.solar_lexicon.progressions.Progress
 import com.finderfeed.solarforge.magic.items.solar_lexicon.packets.OpenScreenPacket;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.packets.UpdateInventoryPacket;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.packets.UpdateProgressionOnClient;
-import com.finderfeed.solarforge.registries.items.ItemsRegister;
+import com.finderfeed.solarforge.registries.items.SolarcraftItems;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
@@ -43,7 +43,7 @@ public class SolarLexicon extends Item {
         if (!world.isClientSide && hand.equals(InteractionHand.MAIN_HAND)){
 
             if (!ProgressionHelper.doPlayerHasFragment(pe,AncientFragment.LEXICON)) {
-                ItemStack frag = ItemsRegister.INFO_FRAGMENT.get().getDefaultInstance();
+                ItemStack frag = SolarcraftItems.INFO_FRAGMENT.get().getDefaultInstance();
                 ProgressionHelper.applyTagToFragment(frag, AncientFragment.LEXICON);
                 ItemEntity entity = new ItemEntity(pe.level, pe.getX(), pe.getY() + 0.3f, pe.getZ(), frag);
                 ProgressionHelper.givePlayerFragment(AncientFragment.LEXICON, pe);
@@ -52,7 +52,7 @@ public class SolarLexicon extends Item {
             }
 
             if (!ProgressionHelper.doPlayerHasFragment(pe,AncientFragment.FRAGMENT)){
-                ItemStack frag = ItemsRegister.INFO_FRAGMENT.get().getDefaultInstance();
+                ItemStack frag = SolarcraftItems.INFO_FRAGMENT.get().getDefaultInstance();
                 ProgressionHelper.applyTagToFragment(frag, AncientFragment.FRAGMENT);
                 ItemEntity entity = new ItemEntity(pe.level,pe.getX(),pe.getY()+0.3f,pe.getZ(),frag);
                 ProgressionHelper.givePlayerFragment(AncientFragment.FRAGMENT,pe);
@@ -60,7 +60,7 @@ public class SolarLexicon extends Item {
             }
 
             if (!ProgressionHelper.doPlayerHasFragment(pe,AncientFragment.RUNIC_TABLE)){
-                ItemStack frag = ItemsRegister.INFO_FRAGMENT.get().getDefaultInstance();
+                ItemStack frag = SolarcraftItems.INFO_FRAGMENT.get().getDefaultInstance();
                 ProgressionHelper.applyTagToFragment(frag, AncientFragment.RUNIC_TABLE);
                 ItemEntity entity = new ItemEntity(pe.level,pe.getX(),pe.getY()+0.3f,pe.getZ(),frag);
                 ProgressionHelper.givePlayerFragment(AncientFragment.RUNIC_TABLE,pe);

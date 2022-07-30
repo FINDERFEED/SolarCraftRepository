@@ -6,12 +6,11 @@ import com.finderfeed.solarforge.misc_things.CrystalBossBuddy;
 import com.finderfeed.solarforge.client.particles.ParticleTypesRegistry;
 import com.finderfeed.solarforge.packet_handler.packets.misc_packets.ExplosionParticlesPacket;
 import com.finderfeed.solarforge.registries.SolarcraftDamageSources;
-import com.finderfeed.solarforge.registries.entities.EntityTypes;
-import com.finderfeed.solarforge.registries.sounds.Sounds;
+import com.finderfeed.solarforge.registries.entities.SolarcraftEntityTypes;
+import com.finderfeed.solarforge.registries.sounds.SolarcraftSounds;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractHurtingProjectile;
@@ -33,12 +32,12 @@ public class MagicMissile extends AbstractHurtingProjectile implements CrystalBo
 
 
     public MagicMissile(Level p_36834_, double x, double y, double z) {
-        super(EntityTypes.FALLING_MAGIC_MISSILE.get(), p_36834_);
+        super(SolarcraftEntityTypes.FALLING_MAGIC_MISSILE.get(), p_36834_);
         this.setDeltaMovement(x,y,z);
     }
 
     public MagicMissile(Level p_36834_, Vec3 speed) {
-        super(EntityTypes.FALLING_MAGIC_MISSILE.get(), p_36834_);
+        super(SolarcraftEntityTypes.FALLING_MAGIC_MISSILE.get(), p_36834_);
         this.setDeltaMovement(speed);
     }
 
@@ -70,7 +69,7 @@ public class MagicMissile extends AbstractHurtingProjectile implements CrystalBo
                     this.kill();
                 }else{
                     if (!level.isClientSide) {
-                        level.playSound(null,this.getX(),this.getY(),this.getZ(), Sounds.SOLAR_EXPLOSION.get(), SoundSource.AMBIENT,level.random.nextFloat()*0.5f+0.5f,1f);
+                        level.playSound(null,this.getX(),this.getY(),this.getZ(), SolarcraftSounds.SOLAR_EXPLOSION.get(), SoundSource.AMBIENT,level.random.nextFloat()*0.5f+0.5f,1f);
                         ExplosionParticlesPacket.send(level, position().add(getDeltaMovement()));
                         if (Helpers.isVulnerable(hit.getEntity())){
                             hit.getEntity().hurt(SolarcraftDamageSources.RUNIC_MAGIC,damage != null ? damage : 3);
@@ -94,7 +93,7 @@ public class MagicMissile extends AbstractHurtingProjectile implements CrystalBo
 
     private void explode(){
         if (!this.level.isClientSide){
-            level.playSound(null,this.getX(),this.getY(),this.getZ(), Sounds.SOLAR_EXPLOSION.get(), SoundSource.AMBIENT,level.random.nextFloat()*0.5f+0.5f,1f);
+            level.playSound(null,this.getX(),this.getY(),this.getZ(), SolarcraftSounds.SOLAR_EXPLOSION.get(), SoundSource.AMBIENT,level.random.nextFloat()*0.5f+0.5f,1f);
             this.level.getEntitiesOfClass(LivingEntity.class,new AABB(this.position().add(-1.5,-1.5,-1.5),this.position().add(1.5,1.5,1.5)),(living)->{
                 return !(living instanceof CrystalBossBuddy);
             }).forEach((entity)->{

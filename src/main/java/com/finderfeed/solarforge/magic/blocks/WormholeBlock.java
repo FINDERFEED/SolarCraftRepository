@@ -1,7 +1,7 @@
 package com.finderfeed.solarforge.magic.blocks;
 
 import com.finderfeed.solarforge.magic.blocks.blockentities.WormholeTileEntity;
-import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
+import com.finderfeed.solarforge.registries.tile_entities.SolarcraftTileEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
@@ -30,7 +30,7 @@ public class WormholeBlock extends Block implements EntityBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-        return TileEntitiesRegistry.WORMHOLE.get().create(blockPos,blockState);
+        return SolarcraftTileEntityTypes.WORMHOLE.get().create(blockPos,blockState);
     }
 
     @Nullable

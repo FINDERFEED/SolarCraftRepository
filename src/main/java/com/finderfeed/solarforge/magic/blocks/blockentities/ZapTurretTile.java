@@ -6,8 +6,8 @@ import com.finderfeed.solarforge.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarforge.local_library.OwnedBlock;
 import com.finderfeed.solarforge.client.particles.ParticleTypesRegistry;
 import com.finderfeed.solarforge.multiblocks.Multiblocks;
-import com.finderfeed.solarforge.registries.sounds.Sounds;
-import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
+import com.finderfeed.solarforge.registries.sounds.SolarcraftSounds;
+import com.finderfeed.solarforge.registries.tile_entities.SolarcraftTileEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
@@ -35,7 +35,7 @@ public class ZapTurretTile extends BlockEntity implements OwnedBlock {
     private List<Vec3> targets = new ArrayList<>();
 
     public ZapTurretTile( BlockPos p_155229_, BlockState p_155230_) {
-        super(TileEntitiesRegistry.ZAP_TURRET_TILE.get(), p_155229_, p_155230_);
+        super(SolarcraftTileEntityTypes.ZAP_TURRET_TILE.get(), p_155229_, p_155230_);
     }
 
 
@@ -84,7 +84,7 @@ public class ZapTurretTile extends BlockEntity implements OwnedBlock {
                         tile.targets.add(trg.position().add(0, trg.getBbHeight() / 2, 0));
                     });
 
-                    world.playSound(null,pos.getX()+0.5f,pos.getY()+0.5f,pos.getZ()+0.5f, Sounds.ZAP_TURRET_SHOT.get(), SoundSource.AMBIENT,1f,0.7f);
+                    world.playSound(null,pos.getX()+0.5f,pos.getY()+0.5f,pos.getZ()+0.5f, SolarcraftSounds.ZAP_TURRET_SHOT.get(), SoundSource.AMBIENT,1f,0.7f);
                     tile.attack = true;
                     world.sendBlockUpdated(pos, state, state, 3);
 

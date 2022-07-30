@@ -3,7 +3,7 @@ package com.finderfeed.solarforge.magic.projectiles;
 import com.finderfeed.solarforge.ClientHelpers;
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.client.particles.ParticleTypesRegistry;
-import com.finderfeed.solarforge.registries.entities.EntityTypes;
+import com.finderfeed.solarforge.registries.entities.SolarcraftEntityTypes;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
@@ -27,11 +27,11 @@ public class SolarFireballProjectile extends AbstractHurtingProjectile {
     }
 
     public SolarFireballProjectile( double p_36818_, double p_36819_, double p_36820_, double p_36821_, double p_36822_, double p_36823_, Level p_36824_) {
-        super(EntityTypes.SOLAR_FIREBALL.get(), p_36818_, p_36819_, p_36820_, p_36821_, p_36822_, p_36823_, p_36824_);
+        super(SolarcraftEntityTypes.SOLAR_FIREBALL.get(), p_36818_, p_36819_, p_36820_, p_36821_, p_36822_, p_36823_, p_36824_);
     }
 
     public SolarFireballProjectile( LivingEntity p_36827_, double p_36828_, double p_36829_, double p_36830_, Level p_36831_) {
-        super(EntityTypes.SOLAR_FIREBALL.get(), p_36827_, p_36828_, p_36829_, p_36830_, p_36831_);
+        super(SolarcraftEntityTypes.SOLAR_FIREBALL.get(), p_36827_, p_36828_, p_36829_, p_36830_, p_36831_);
     }
 
 

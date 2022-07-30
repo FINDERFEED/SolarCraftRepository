@@ -5,7 +5,7 @@ import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.magic.items.primitive.RareSolarcraftBlockItem;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.progressions.Progression;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.unlockables.AncientFragment;
-import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
+import com.finderfeed.solarforge.registries.blocks.SolarcraftBlocks;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 
@@ -17,7 +17,7 @@ import net.minecraft.world.level.Level;
 public class SolarEnergyGeneratorBlockItem extends RareSolarcraftBlockItem {
 
     public SolarEnergyGeneratorBlockItem() {
-        super(BlocksRegistry.SOLAR_ENERGY_GENERATOR.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS),()-> AncientFragment.SOLAR_ENERGY_GENERATOR);
+        super(SolarcraftBlocks.SOLAR_ENERGY_GENERATOR.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS),()-> AncientFragment.SOLAR_ENERGY_GENERATOR);
     }
 
     @Override

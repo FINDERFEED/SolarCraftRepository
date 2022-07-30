@@ -2,7 +2,7 @@ package com.finderfeed.solarforge.magic.blocks.blockentities.containers;
 
 import com.finderfeed.solarforge.magic.blocks.ModuleStation;
 import com.finderfeed.solarforge.magic.items.ModuleItem;
-import com.finderfeed.solarforge.registries.containers.Containers;
+import com.finderfeed.solarforge.registries.containers.SolarcraftContainers;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -16,14 +16,14 @@ public class ModuleApplierMenu extends ItemCombinerMenu {
     private boolean valid;
 
     public ModuleApplierMenu( int p_39774_, Inventory p_39775_, ContainerLevelAccess p_39776_) {
-        super(Containers.MODULE_APPLIER_CONTAINER.get(), p_39774_, p_39775_, p_39776_);
+        super(SolarcraftContainers.MODULE_APPLIER_CONTAINER.get(), p_39774_, p_39775_, p_39776_);
 
 
     }
 
 
     public ModuleApplierMenu( int p_39774_, Inventory p_39775_, FriendlyByteBuf buf) {
-        super(Containers.MODULE_APPLIER_CONTAINER.get(), p_39774_, p_39775_, ContainerLevelAccess.create(p_39775_.player.level,buf.readBlockPos()));
+        super(SolarcraftContainers.MODULE_APPLIER_CONTAINER.get(), p_39774_, p_39775_, ContainerLevelAccess.create(p_39775_.player.level,buf.readBlockPos()));
     }
 
     @Override

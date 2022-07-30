@@ -5,7 +5,7 @@ import com.finderfeed.solarforge.magic.blocks.RayTrapBlock;
 import com.finderfeed.solarforge.client.particles.ParticleTypesRegistry;
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
 import com.finderfeed.solarforge.packet_handler.packets.UpdateLaserTrapTile;
-import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
+import com.finderfeed.solarforge.registries.tile_entities.SolarcraftTileEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -32,7 +32,7 @@ public class RayTrapTileEntity extends BlockEntity  {
     public int CLIENT_TRIGGER_INTEGER = 0;
 
     public RayTrapTileEntity( BlockPos p_155229_, BlockState p_155230_) {
-        super(TileEntitiesRegistry.RAY_TRAP_TILE_ENTITY.get(), p_155229_, p_155230_);
+        super(SolarcraftTileEntityTypes.RAY_TRAP_TILE_ENTITY.get(), p_155229_, p_155230_);
     }
 
 

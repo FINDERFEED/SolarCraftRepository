@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.magic.runic_network.repeater;
 
-import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
+import com.finderfeed.solarforge.registries.tile_entities.SolarcraftTileEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -22,7 +22,7 @@ public class RunicNetworkRepeater extends Block implements EntityBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-        return TileEntitiesRegistry.REPEATER.get().create(blockPos,blockState);
+        return SolarcraftTileEntityTypes.REPEATER.get().create(blockPos,blockState);
     }
 
     @Nullable

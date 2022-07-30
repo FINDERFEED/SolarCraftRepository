@@ -15,7 +15,7 @@ import net.minecraftforge.fml.common.Mod;
 import java.io.IOException;
 
 @Mod.EventBusSubscriber(modid = "solarforge",bus = Mod.EventBusSubscriber.Bus.MOD,value = Dist.CLIENT)
-public class CoreShaderRegistry {
+public class SolarcraftCoreShaders {
 
 
 

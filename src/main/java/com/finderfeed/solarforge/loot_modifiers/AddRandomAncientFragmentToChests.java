@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.loot_modifiers;
 
-import com.finderfeed.solarforge.registries.items.ItemsRegister;
+import com.finderfeed.solarforge.registries.items.SolarcraftItems;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import net.minecraft.resources.ResourceLocation;
@@ -37,7 +37,7 @@ public class AddRandomAncientFragmentToChests extends LootModifier {
         int amount = min + r.nextInt((minMax[1] - min) + 1);
         ArrayList<ItemStack> stacks = new ArrayList<>(generatedLoot);
         for (int i = 0; i < amount;i++){
-            stacks.add(ItemsRegister.INFO_FRAGMENT.get().getDefaultInstance());
+            stacks.add(SolarcraftItems.INFO_FRAGMENT.get().getDefaultInstance());
         }
         return stacks;
     }

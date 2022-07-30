@@ -5,7 +5,7 @@ import com.finderfeed.solarforge.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarforge.local_library.other.CyclingInterpolatedValue;
 import com.finderfeed.solarforge.misc_things.CrystalBossBuddy;
 import com.finderfeed.solarforge.client.particles.ParticleTypesRegistry;
-import com.finderfeed.solarforge.registries.sounds.Sounds;
+import com.finderfeed.solarforge.registries.sounds.SolarcraftSounds;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -186,13 +186,13 @@ public class RipRayGenerator extends PathfinderMob implements CrystalBossBuddy{
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        return Sounds.CRYSTAL_HIT.get();
+        return SolarcraftSounds.CRYSTAL_HIT.get();
     }
 
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource p_21239_) {
-        return Sounds.CRYSTAL_HIT.get();
+        return SolarcraftSounds.CRYSTAL_HIT.get();
     }
 
     @Override

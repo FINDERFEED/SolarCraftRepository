@@ -2,8 +2,8 @@ package com.finderfeed.solarforge.entities.not_alive;
 
 import com.finderfeed.solarforge.client.particles.ParticleTypesRegistry;
 import com.finderfeed.solarforge.packet_handler.packets.misc_packets.BallLightningSpawnLightningParticles;
-import com.finderfeed.solarforge.registries.entities.EntityTypes;
-import com.finderfeed.solarforge.registries.sounds.Sounds;
+import com.finderfeed.solarforge.registries.entities.SolarcraftEntityTypes;
+import com.finderfeed.solarforge.registries.sounds.SolarcraftSounds;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
@@ -33,11 +33,11 @@ public class BallLightningProjectile extends AbstractHurtingProjectile {
     }
 
     public BallLightningProjectile( double x, double y, double z, double xv, double yv, double zv, Level world) {
-        super(EntityTypes.BALL_LIGHTNING.get(), x, y, z, xv, yv, zv, world);
+        super(SolarcraftEntityTypes.BALL_LIGHTNING.get(), x, y, z, xv, yv, zv, world);
     }
 
     public BallLightningProjectile( LivingEntity owner, double xv, double yv, double zv, Level world) {
-        super(EntityTypes.BALL_LIGHTNING.get(), owner, xv, yv, zv, world);
+        super(SolarcraftEntityTypes.BALL_LIGHTNING.get(), owner, xv, yv, zv, world);
     }
 
 
@@ -96,7 +96,7 @@ public class BallLightningProjectile extends AbstractHurtingProjectile {
     private void doExplosion(Vec3 position){
         List<LivingEntity> living = this.level.getEntitiesOfClass(LivingEntity.class,BOX.move(position),(l)->!(l instanceof Player));
         BallLightningSpawnLightningParticles.sendToServer(level,position);
-        this.level.playSound(null,this.getX(),this.getY(),this.getZ(), Sounds.BALL_LIGHTNING_BLOW.get(), SoundSource.PLAYERS,10,1);
+        this.level.playSound(null,this.getX(),this.getY(),this.getZ(), SolarcraftSounds.BALL_LIGHTNING_BLOW.get(), SoundSource.PLAYERS,10,1);
         for (LivingEntity ent : living){
             if (ent.distanceTo(this) <= 10){
                 ent.hurt(DamageSource.LIGHTNING_BOLT.setMagic(),10);

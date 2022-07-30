@@ -2,7 +2,7 @@ package com.finderfeed.solarforge.magic.blocks;
 
 import com.finderfeed.solarforge.magic.items.solar_lexicon.progressions.Progression;
 import com.finderfeed.solarforge.misc_things.IProgressionBlock;
-import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
+import com.finderfeed.solarforge.registries.blocks.SolarcraftBlocks;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.Blocks;
@@ -23,7 +23,7 @@ public class SolarStoneBlock extends Block implements IProgressionBlock {
 
     @Override
     public Block getUnlockedBlock() {
-        return BlocksRegistry.SOLAR_STONE.get();
+        return SolarcraftBlocks.SOLAR_STONE.get();
     }
 
     @Override

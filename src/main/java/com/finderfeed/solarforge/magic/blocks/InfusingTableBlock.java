@@ -3,8 +3,8 @@ package com.finderfeed.solarforge.magic.blocks;
 import com.finderfeed.solarforge.magic.blocks.blockentities.InfusingTableTile;
 import com.finderfeed.solarforge.magic.blocks.blockentities.containers.InfusingTableTileContainer;
 import com.finderfeed.solarforge.misc_things.PhantomInventory;
-import com.finderfeed.solarforge.registries.items.ItemsRegister;
-import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
+import com.finderfeed.solarforge.registries.items.SolarcraftItems;
+import com.finderfeed.solarforge.registries.tile_entities.SolarcraftTileEntityTypes;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.TextComponent;
@@ -35,7 +35,7 @@ public class InfusingTableBlock extends Block implements EntityBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return TileEntitiesRegistry.INFUSING_CRAFTING_TABLE.get().create(pos,state);
+        return SolarcraftTileEntityTypes.INFUSING_CRAFTING_TABLE.get().create(pos,state);
     }
 
     @Override
@@ -43,7 +43,7 @@ public class InfusingTableBlock extends Block implements EntityBlock {
 
         if (!level.isClientSide
                 && hand == InteractionHand.MAIN_HAND
-                && !player.getItemInHand(hand).is(ItemsRegister.SOLAR_WAND.get())){
+                && !player.getItemInHand(hand).is(SolarcraftItems.SOLAR_WAND.get())){
             BlockEntity e = level.getBlockEntity(pos);
             if (e instanceof  InfusingTableTile tile) {
                 if (tile.getOwner() != null && (level.getPlayerByUUID(tile.getOwner()) == player)) {
@@ -55,7 +55,7 @@ public class InfusingTableBlock extends Block implements EntityBlock {
                 }
             }
         }
-        if (player.getItemInHand(hand).is(ItemsRegister.SOLAR_WAND.get())){
+        if (player.getItemInHand(hand).is(SolarcraftItems.SOLAR_WAND.get())){
                return InteractionResult.FAIL;
         }else {
             return InteractionResult.SUCCESS;

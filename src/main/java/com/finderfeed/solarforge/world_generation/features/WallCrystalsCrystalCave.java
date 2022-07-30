@@ -1,18 +1,14 @@
 package com.finderfeed.solarforge.world_generation.features;
 
-import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
+import com.finderfeed.solarforge.registries.blocks.SolarcraftBlocks;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
 import net.minecraft.data.worldgen.features.OreFeatures;
-import net.minecraft.data.worldgen.placement.OrePlacements;
 import net.minecraft.world.level.WorldGenLevel;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
-import net.minecraft.world.level.levelgen.feature.OreFeature;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
-import net.minecraft.world.phys.Vec3;
 
 public class WallCrystalsCrystalCave extends Feature<NoneFeatureConfiguration> {
 
@@ -41,7 +37,7 @@ public class WallCrystalsCrystalCave extends Feature<NoneFeatureConfiguration> {
                                 world.getBlockState(pos.west()).isAir() || world.getBlockState(pos.south()).isAir())
 
                                 && OreFeatures.NATURAL_STONE.test(world.getBlockState(pos),world.getRandom())){
-                            world.setBlock(pos,BlocksRegistry.RADIANT_CRYSTAL.get().defaultBlockState(),3);
+                            world.setBlock(pos, SolarcraftBlocks.RADIANT_CRYSTAL.get().defaultBlockState(),3);
                         }
                     }
                 }

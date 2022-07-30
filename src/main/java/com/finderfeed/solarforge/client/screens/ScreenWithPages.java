@@ -2,7 +2,7 @@ package com.finderfeed.solarforge.client.screens;
 
 
 import com.finderfeed.solarforge.magic.items.solar_lexicon.screen.StructureScreen;
-import com.finderfeed.solarforge.registries.sounds.Sounds;
+import com.finderfeed.solarforge.registries.sounds.SolarcraftSounds;
 import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.sounds.SoundManager;
@@ -26,7 +26,7 @@ public abstract class ScreenWithPages extends ScrollableScreen{
             }) {
                 @Override
                 public void playDownSound(SoundManager smanager) {
-                    smanager.play(SimpleSoundInstance.forUI(Sounds.BUTTON_PRESS2.get(), 1, 1));
+                    smanager.play(SimpleSoundInstance.forUI(SolarcraftSounds.BUTTON_PRESS2.get(), 1, 1));
                 }
             });
             addRenderableWidget(new ImageButton(relX + getPageButtonsCoords()[0] , relY+getPageButtonsCoords()[1], 16, 16, 0, 16, 0, StructureScreen.BUTTONS, 16, 32, (button) -> {
@@ -34,7 +34,7 @@ public abstract class ScreenWithPages extends ScrollableScreen{
             }) {
                 @Override
                 public void playDownSound(SoundManager smanager) {
-                    smanager.play(SimpleSoundInstance.forUI(Sounds.BUTTON_PRESS2.get(), 1, 1));
+                    smanager.play(SimpleSoundInstance.forUI(SolarcraftSounds.BUTTON_PRESS2.get(), 1, 1));
                 }
             });
         }

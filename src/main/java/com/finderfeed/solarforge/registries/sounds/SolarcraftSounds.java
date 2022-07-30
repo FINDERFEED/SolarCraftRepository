@@ -8,7 +8,7 @@ import net.minecraftforge.registries.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
-public class Sounds {
+public class SolarcraftSounds {
     public static final DeferredRegister<SoundEvent> SOUND_EVENTS = DeferredRegister.create(ForgeRegistries.SOUND_EVENTS,"solarforge");
     public static final RegistryObject<SoundEvent> CROSSBOW_SHOOT_SOUND = SOUND_EVENTS.register("crossbow_shoot",()-> new SoundEvent(new ResourceLocation(SolarForge.MOD_ID,"crossbow_shoot")));
     public static final RegistryObject<SoundEvent> CROSSBOW_CHARGING = SOUND_EVENTS.register("crossbow_charge",()-> new SoundEvent(new ResourceLocation(SolarForge.MOD_ID,"crossbow_charge")));

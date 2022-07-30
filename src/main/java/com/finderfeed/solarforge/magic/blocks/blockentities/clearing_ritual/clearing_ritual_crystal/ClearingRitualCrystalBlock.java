@@ -2,7 +2,7 @@ package com.finderfeed.solarforge.magic.blocks.blockentities.clearing_ritual.cle
 
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.local_library.blocks.TileEntityDataSaverBlock;
-import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
+import com.finderfeed.solarforge.registries.tile_entities.SolarcraftTileEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.EntityBlock;
@@ -23,7 +23,7 @@ public class ClearingRitualCrystalBlock extends TileEntityDataSaverBlock impleme
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return TileEntitiesRegistry.CLEARING_RITUAL_CRYSTAL.get().create(pos,state);
+        return SolarcraftTileEntityTypes.CLEARING_RITUAL_CRYSTAL.get().create(pos,state);
     }
 
     @Nullable

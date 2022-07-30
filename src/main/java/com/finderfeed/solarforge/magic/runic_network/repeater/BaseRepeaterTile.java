@@ -5,8 +5,8 @@ import com.finderfeed.solarforge.local_library.helpers.CompoundNBTHelper;
 import com.finderfeed.solarforge.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarforge.client.particles.ParticleTypesRegistry;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
-import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
-import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
+import com.finderfeed.solarforge.registries.blocks.SolarcraftBlocks;
+import com.finderfeed.solarforge.registries.tile_entities.SolarcraftTileEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
@@ -33,7 +33,7 @@ public class BaseRepeaterTile extends BlockEntity {
 
 
     public BaseRepeaterTile( BlockPos p_155229_, BlockState p_155230_) {
-        super(TileEntitiesRegistry.REPEATER.get(), p_155229_, p_155230_);
+        super(SolarcraftTileEntityTypes.REPEATER.get(), p_155229_, p_155230_);
     }
 
 
@@ -43,21 +43,21 @@ public class BaseRepeaterTile extends BlockEntity {
     public static void tick(Level world,BlockPos pos,BlockState state,BaseRepeaterTile tile){
         Block block = world.getBlockState(pos.below()).getBlock();
         if (tile.getEnergyType() == null && world.getGameTime() % 20 == 0) {
-            if (block == BlocksRegistry.ZETA_RUNE_BLOCK.get()) {
+            if (block == SolarcraftBlocks.ZETA_RUNE_BLOCK.get()) {
                 tile.setEnergyType(RunicEnergy.Type.ZETA);
-            } else if (block == BlocksRegistry.URBA_RUNE_BLOCK.get()) {
+            } else if (block == SolarcraftBlocks.URBA_RUNE_BLOCK.get()) {
                 tile.setEnergyType(RunicEnergy.Type.URBA);
-            } else if (block == BlocksRegistry.KELDA_RUNE_BLOCK.get()) {
+            } else if (block == SolarcraftBlocks.KELDA_RUNE_BLOCK.get()) {
                 tile.setEnergyType(RunicEnergy.Type.KELDA);
-            } else if (block == BlocksRegistry.FIRA_RUNE_BLOCK.get()) {
+            } else if (block == SolarcraftBlocks.FIRA_RUNE_BLOCK.get()) {
                 tile.setEnergyType(RunicEnergy.Type.FIRA);
-            } else if (block == BlocksRegistry.ARDO_RUNE_BLOCK.get()) {
+            } else if (block == SolarcraftBlocks.ARDO_RUNE_BLOCK.get()) {
                 tile.setEnergyType(RunicEnergy.Type.ARDO);
-            } else if (block == BlocksRegistry.TERA_RUNE_BLOCK.get()) {
+            } else if (block == SolarcraftBlocks.TERA_RUNE_BLOCK.get()) {
                 tile.setEnergyType(RunicEnergy.Type.TERA);
-            } else if (block == BlocksRegistry.GIRO_RUNE_BLOCK.get()) {
+            } else if (block == SolarcraftBlocks.GIRO_RUNE_BLOCK.get()) {
                 tile.setEnergyType(RunicEnergy.Type.GIRO);
-            } else if (block == BlocksRegistry.ULTIMA_RUNE_BLOCK.get()) {
+            } else if (block == SolarcraftBlocks.ULTIMA_RUNE_BLOCK.get()) {
                 tile.setEnergyType(RunicEnergy.Type.ULTIMA);
             } else {
                 tile.setEnergyType(null);

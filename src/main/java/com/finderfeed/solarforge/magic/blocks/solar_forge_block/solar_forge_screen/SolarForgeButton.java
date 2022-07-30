@@ -1,7 +1,7 @@
 package com.finderfeed.solarforge.magic.blocks.solar_forge_block.solar_forge_screen;
 
 import com.finderfeed.solarforge.ClientHelpers;
-import com.finderfeed.solarforge.registries.sounds.Sounds;
+import com.finderfeed.solarforge.registries.sounds.SolarcraftSounds;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
@@ -38,7 +38,7 @@ public class SolarForgeButton extends Button  {
 
     @Override
     public void playDownSound(SoundManager manager) {
-        manager.play(SimpleSoundInstance.forUI(Sounds.BUTTON_PRESS2.get(),1,1));
+        manager.play(SimpleSoundInstance.forUI(SolarcraftSounds.BUTTON_PRESS2.get(),1,1));
     }
 
     @Override

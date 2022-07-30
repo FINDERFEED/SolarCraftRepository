@@ -1,11 +1,9 @@
 package com.finderfeed.solarforge.misc_things;
 
-import com.finderfeed.solarforge.magic.blocks.blockentities.RuneEnergyPylonTile;
 import com.finderfeed.solarforge.magic.blocks.blockentities.clearing_ritual.clearing_ritual_crystal.ClearingRitualCrystalTile;
 import com.finderfeed.solarforge.magic.blocks.blockentities.projectiles.ShadowBolt;
-import com.finderfeed.solarforge.registries.entities.EntityTypes;
+import com.finderfeed.solarforge.registries.entities.SolarcraftEntityTypes;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
@@ -84,7 +82,7 @@ public class SolarcraftDebugStick extends Item {
             }else{
                 stack.getOrCreateTagElement("pylon_mode").putBoolean("isCyclingPylons",true);
             }
-            ShadowBolt bolt = new ShadowBolt(EntityTypes.SHADOW_BOLT.get(),world);
+            ShadowBolt bolt = new ShadowBolt(SolarcraftEntityTypes.SHADOW_BOLT.get(),world);
             bolt.setPos(player.position().add(0,2,0));
             bolt.setDeltaMovement(player.getLookAngle());
             world.addFreshEntity(bolt);

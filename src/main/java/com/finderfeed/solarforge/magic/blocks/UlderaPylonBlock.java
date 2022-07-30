@@ -1,8 +1,7 @@
 package com.finderfeed.solarforge.magic.blocks;
 
-import com.finderfeed.solarforge.magic.blocks.blockentities.RuneEnergyPylonTile;
 import com.finderfeed.solarforge.magic.blocks.blockentities.UlderaPylon;
-import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
+import com.finderfeed.solarforge.registries.tile_entities.SolarcraftTileEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -52,6 +51,6 @@ public class UlderaPylonBlock extends Block implements EntityBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-        return TileEntitiesRegistry.ULDERA_PYLON.get().create(blockPos,blockState);
+        return SolarcraftTileEntityTypes.ULDERA_PYLON.get().create(blockPos,blockState);
     }
 }

@@ -1,11 +1,9 @@
 package com.finderfeed.solarforge.magic.items.solar_lexicon.unlockables;
 
 import com.finderfeed.solarforge.events.other_events.OBJModels;
-import com.finderfeed.solarforge.registries.items.ItemsRegister;
 import com.mojang.blaze3d.platform.Lighting;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.model.Model;
 import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.block.model.ItemTransforms;

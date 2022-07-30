@@ -1,7 +1,7 @@
 package com.finderfeed.solarforge.magic.blocks;
 
-import com.finderfeed.solarforge.registries.items.ItemsRegister;
-import com.finderfeed.solarforge.registries.sounds.Sounds;
+import com.finderfeed.solarforge.registries.items.SolarcraftItems;
+import com.finderfeed.solarforge.registries.sounds.SolarcraftSounds;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.GlazedTerracottaBlock;
@@ -39,12 +39,12 @@ public class BlueGemDoorBlock extends GlazedTerracottaBlock {
     public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult result) {
         if (!world.isClientSide && hand.equals(InteractionHand.MAIN_HAND)){
 
-            if (player.getMainHandItem().getItem() == ItemsRegister.BLUE_GEM_ENCHANCED.get()){
+            if (player.getMainHandItem().getItem() == SolarcraftItems.BLUE_GEM_ENCHANCED.get()){
                 if (!world.getBlockState(pos).getValue(UNLOCKED)) {
                     player.getMainHandItem().grow(-1);
                 }
                 world.setBlock(pos,state.setValue(UNLOCKED,true), 3);
-                world.playSound(null,player,Sounds.GEM_INSERT.get(), SoundSource.AMBIENT,1,1);
+                world.playSound(null,player, SolarcraftSounds.GEM_INSERT.get(), SoundSource.AMBIENT,1,1);
 
 
                 if ( world.getBlockState(pos.offset(0,0,-2)).hasProperty(UNLOCKED)&& world.getBlockState(pos.offset(0,0,-2)).getValue(UNLOCKED)){

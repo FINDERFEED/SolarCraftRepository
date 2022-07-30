@@ -1,7 +1,7 @@
 package com.finderfeed.solarforge.magic.blocks;
 
 import com.finderfeed.solarforge.magic.blocks.blockentities.SolarEnergyRepeaterBlockEntity;
-import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
+import com.finderfeed.solarforge.registries.tile_entities.SolarcraftTileEntityTypes;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
@@ -34,7 +34,7 @@ public class SolarRepeaterBlock extends Block implements EntityBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-        return TileEntitiesRegistry.SOLAR_REPEATER.get().create(blockPos,blockState);
+        return SolarcraftTileEntityTypes.SOLAR_REPEATER.get().create(blockPos,blockState);
     }
 
     @Nullable

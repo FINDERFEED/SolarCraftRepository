@@ -2,7 +2,6 @@ package com.finderfeed.solarforge.compat.crafttweaker;
 
 import com.blamejared.crafttweaker.api.ingredient.IIngredient;
 import com.blamejared.crafttweaker.api.item.IItemStack;
-import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;

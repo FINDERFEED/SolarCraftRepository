@@ -7,15 +7,13 @@ import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.events.misc.ClientTicker;
 import com.finderfeed.solarforge.magic.blocks.infusing_table_things.InfuserTileEntity;
 import com.finderfeed.solarforge.magic.items.ModuleItem;
-import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
-import com.finderfeed.solarforge.registries.items.ItemsRegister;
-import com.mojang.blaze3d.shaders.FogShape;
+import com.finderfeed.solarforge.registries.blocks.SolarcraftBlocks;
+import com.finderfeed.solarforge.registries.items.SolarcraftItems;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.client.renderer.FogRenderer;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
@@ -105,7 +103,7 @@ public class ClientEventsHandler {
         LocalPlayer player = Minecraft.getInstance().player;
         if (player != null){
             if (player.level.getGameTime() % 5 == 0){
-                if (player.getInventory().countItem(ItemsRegister.ENDER_RADAR.get()) > 0){
+                if (player.getInventory().countItem(SolarcraftItems.ENDER_RADAR.get()) > 0){
                         fillList(player.getOnPos().above(),player.level);
                 }else{
                     ORES_RENDER_POSITIONS.clear();
@@ -245,7 +243,7 @@ public class ClientEventsHandler {
         CATALYST_RENDER_POSITIONS.clear();
         Player pl = Minecraft.getInstance().player;
         if (pl.getMainHandItem().getItem() instanceof BlockItem t) {
-            if ((t.getBlock().defaultBlockState().is(com.finderfeed.solarforge.registries.Tags.CATALYST)) && (t.getBlock() != BlocksRegistry.SOLAR_STONE_COLLUMN.get())) {
+            if ((t.getBlock().defaultBlockState().is(com.finderfeed.solarforge.registries.Tags.CATALYST)) && (t.getBlock() != SolarcraftBlocks.SOLAR_STONE_COLLUMN.get())) {
                 for (LevelChunk c : Helpers.getSurroundingChunks(Minecraft.getInstance().level, Minecraft.getInstance().player.getOnPos())) {
                     for (BlockEntity e : c.getBlockEntities().values()) {
                         if (e instanceof InfuserTileEntity tile) {

@@ -2,7 +2,7 @@ package com.finderfeed.solarforge.magic.blocks;
 
 import com.finderfeed.solarforge.magic.blocks.blockentities.SolarEnergyFurnaceTile;
 import com.finderfeed.solarforge.magic.items.SolarNetworkBinder;
-import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
+import com.finderfeed.solarforge.registries.tile_entities.SolarcraftTileEntityTypes;
 
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
@@ -58,7 +58,7 @@ public class SolarEnergyFurnace extends GlazedTerracottaBlock implements EntityB
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-        return TileEntitiesRegistry.SOLAR_FURNACE_TILE_ENTITY.get().create(blockPos,blockState);
+        return SolarcraftTileEntityTypes.SOLAR_FURNACE_TILE_ENTITY.get().create(blockPos,blockState);
     }
 
     @Nullable

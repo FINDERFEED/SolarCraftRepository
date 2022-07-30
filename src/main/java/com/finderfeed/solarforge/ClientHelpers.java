@@ -21,8 +21,8 @@ import com.finderfeed.solarforge.magic.items.primitive.solacraft_item_classes.Fr
 import com.finderfeed.solarforge.magic.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.unlockables.RunePattern;
 import com.finderfeed.solarforge.misc_things.*;
-import com.finderfeed.solarforge.registries.items.ItemsRegister;
-import com.finderfeed.solarforge.registries.sounds.Sounds;
+import com.finderfeed.solarforge.registries.items.SolarcraftItems;
+import com.finderfeed.solarforge.registries.sounds.SolarcraftSounds;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.SolarLexicon;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.progressions.Progression;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.unlockables.ProgressionHelper;
@@ -60,7 +60,6 @@ import net.minecraftforge.items.IItemHandler;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Function;
 import java.util.function.Supplier;
 
 
@@ -285,7 +284,7 @@ public class ClientHelpers {
     }
 
     public static void addEnergyTypeToast(String id){
-        playSound(Sounds.PROGRESSION_GAIN.get(),1,1);
+        playSound(SolarcraftSounds.PROGRESSION_GAIN.get(),1,1);
         UnlockedEnergyTypeToast.addOrUpdate(Minecraft.getInstance().getToasts(), RunicEnergy.Type.byId(id));
     }
 
@@ -312,7 +311,7 @@ public class ClientHelpers {
     public static void playTotemAnimation( ){
         LocalPlayer ent = Minecraft.getInstance().player;
         Minecraft.getInstance().particleEngine.createTrackingEmitter(ent, ParticleTypes.TOTEM_OF_UNDYING, 30);
-        Minecraft.getInstance().gameRenderer.displayItemActivation(ItemsRegister.TOTEM_OF_IMMORTALITY.get().getDefaultInstance());
+        Minecraft.getInstance().gameRenderer.displayItemActivation(SolarcraftItems.TOTEM_OF_IMMORTALITY.get().getDefaultInstance());
         Minecraft.getInstance().level.playLocalSound(ent.getX(), ent.getY(), ent.getZ(), SoundEvents.TOTEM_USE, ent.getSoundSource(), 1F, 0.6F, false);
     }
 
@@ -364,9 +363,9 @@ public class ClientHelpers {
 
     public static SoundEvent getSoundByID(int id){
         if (id == 1){
-            return Sounds.SOLAR_MORTAR_SHOOT.get();
+            return SolarcraftSounds.SOLAR_MORTAR_SHOOT.get();
         }else if(id == 2){
-            return Sounds.SOLAR_MORTAR_PROJECTILE.get();
+            return SolarcraftSounds.SOLAR_MORTAR_PROJECTILE.get();
         }
         return null;
     }

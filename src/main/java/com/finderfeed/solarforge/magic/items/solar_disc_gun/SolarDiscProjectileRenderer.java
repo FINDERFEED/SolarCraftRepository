@@ -1,7 +1,7 @@
 package com.finderfeed.solarforge.magic.items.solar_disc_gun;
 
 import com.finderfeed.solarforge.local_library.helpers.RenderingTools;
-import com.finderfeed.solarforge.registries.items.ItemsRegister;
+import com.finderfeed.solarforge.registries.items.SolarcraftItems;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.client.Minecraft;
@@ -64,8 +64,8 @@ public class SolarDiscProjectileRenderer extends EntityRenderer<SolarDiscProject
         RenderingTools.applyMovementMatrixRotations(matrices,entity.getDeltaMovement());
         matrices.mulPose(Vector3f.ZP.rotationDegrees(time % 360));
 
-        Minecraft.getInstance().getItemRenderer().render(ItemsRegister.SOLAR_DISC.get().getDefaultInstance(), ItemTransforms.TransformType.FIXED,false,
-                matrices,buffer,light,getPackedLightCoords(entity,light),Minecraft.getInstance().getItemRenderer().getModel(ItemsRegister.SOLAR_DISC.get().getDefaultInstance(),null,null,0));
+        Minecraft.getInstance().getItemRenderer().render(SolarcraftItems.SOLAR_DISC.get().getDefaultInstance(), ItemTransforms.TransformType.FIXED,false,
+                matrices,buffer,light,getPackedLightCoords(entity,light),Minecraft.getInstance().getItemRenderer().getModel(SolarcraftItems.SOLAR_DISC.get().getDefaultInstance(),null,null,0));
 
         matrices.popPose();
     }

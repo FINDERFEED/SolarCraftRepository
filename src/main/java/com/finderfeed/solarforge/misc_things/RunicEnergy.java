@@ -1,7 +1,6 @@
 package com.finderfeed.solarforge.misc_things;
 
-import com.finderfeed.solarforge.Helpers;
-import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
+import com.finderfeed.solarforge.registries.blocks.SolarcraftBlocks;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.nbt.CompoundTag;
 
@@ -16,14 +15,14 @@ public class RunicEnergy {
     public static String DEFAULT_ENERGY_TAG = "solarcraft.solar_rune_energy_";
 
     public static Map<Block, Type> BLOCK_TO_RUNE_ENERGY_TYPE = Map.of(
-            BlocksRegistry.TERA_RUNE_BLOCK.get(), RunicEnergy.Type.TERA,
-            BlocksRegistry.FIRA_RUNE_BLOCK.get(), RunicEnergy.Type.FIRA,
-            BlocksRegistry.ZETA_RUNE_BLOCK.get(), RunicEnergy.Type.ZETA,
-            BlocksRegistry.KELDA_RUNE_BLOCK.get(), RunicEnergy.Type.KELDA,
-            BlocksRegistry.URBA_RUNE_BLOCK.get(), RunicEnergy.Type.URBA,
-            BlocksRegistry.ARDO_RUNE_BLOCK.get(), RunicEnergy.Type.ARDO,
-            BlocksRegistry.ULTIMA_RUNE_BLOCK.get(), RunicEnergy.Type.ULTIMA,
-            BlocksRegistry.GIRO_RUNE_BLOCK.get(), RunicEnergy.Type.GIRO
+            SolarcraftBlocks.TERA_RUNE_BLOCK.get(), RunicEnergy.Type.TERA,
+            SolarcraftBlocks.FIRA_RUNE_BLOCK.get(), RunicEnergy.Type.FIRA,
+            SolarcraftBlocks.ZETA_RUNE_BLOCK.get(), RunicEnergy.Type.ZETA,
+            SolarcraftBlocks.KELDA_RUNE_BLOCK.get(), RunicEnergy.Type.KELDA,
+            SolarcraftBlocks.URBA_RUNE_BLOCK.get(), RunicEnergy.Type.URBA,
+            SolarcraftBlocks.ARDO_RUNE_BLOCK.get(), RunicEnergy.Type.ARDO,
+            SolarcraftBlocks.ULTIMA_RUNE_BLOCK.get(), RunicEnergy.Type.ULTIMA,
+            SolarcraftBlocks.GIRO_RUNE_BLOCK.get(), RunicEnergy.Type.GIRO
 
     );
 

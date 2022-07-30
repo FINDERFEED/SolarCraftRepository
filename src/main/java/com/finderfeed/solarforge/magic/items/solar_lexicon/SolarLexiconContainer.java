@@ -2,8 +2,7 @@ package com.finderfeed.solarforge.magic.items.solar_lexicon;
 
 import com.finderfeed.solarforge.magic.items.AncientFragmentItem;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.unlockables.ProgressionHelper;
-import com.finderfeed.solarforge.misc_things.PhantomInventory;
-import com.finderfeed.solarforge.registries.containers.Containers;
+import com.finderfeed.solarforge.registries.containers.SolarcraftContainers;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.unlockables.AncientFragment;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
@@ -31,7 +30,7 @@ public class SolarLexiconContainer extends AbstractContainerMenu {
     private final List<SlotItemHandler> scrollableSlots = new ArrayList<>();
     private int maxRows = 0;
     public SolarLexiconContainer(int p_i50105_2_, Inventory inv, ItemStack stack) {
-        super(Containers.SOLAR_LEXICON_CONTAINER.get(), p_i50105_2_);
+        super(SolarcraftContainers.SOLAR_LEXICON_CONTAINER.get(), p_i50105_2_);
         this.stack = stack;
         this.inventory = stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(null);
         int kolvo = 0;

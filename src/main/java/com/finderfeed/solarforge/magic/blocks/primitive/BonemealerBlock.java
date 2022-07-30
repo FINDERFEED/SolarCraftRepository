@@ -2,10 +2,9 @@ package com.finderfeed.solarforge.magic.blocks.primitive;
 
 import com.finderfeed.solarforge.magic.blocks.blockentities.BonemealerTileEntity;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
-import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
+import com.finderfeed.solarforge.registries.tile_entities.SolarcraftTileEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -29,7 +28,7 @@ public class BonemealerBlock extends RunicEnergySaverBlock implements EntityBloc
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos p_153215_, BlockState p_153216_) {
-        return TileEntitiesRegistry.BONEMEALER.get().create(p_153215_,p_153216_);
+        return SolarcraftTileEntityTypes.BONEMEALER.get().create(p_153215_,p_153216_);
     }
 
     @Override

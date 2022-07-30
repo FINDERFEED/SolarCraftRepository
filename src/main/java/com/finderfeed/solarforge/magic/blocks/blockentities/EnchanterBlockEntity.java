@@ -9,7 +9,7 @@ import com.finderfeed.solarforge.config.enchanter_config.EnchanterConfigInit;
 import com.finderfeed.solarforge.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarforge.magic.items.runic_energy.RunicEnergyCost;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
-import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
+import com.finderfeed.solarforge.registries.tile_entities.SolarcraftTileEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
@@ -41,7 +41,7 @@ public class EnchanterBlockEntity extends REItemHandlerBlockEntity {
     private int procesingEnchantmentLevel = 0;
 
     public EnchanterBlockEntity(BlockPos pos, BlockState state) {
-        super(TileEntitiesRegistry.ENCHANTER.get(), pos, state);
+        super(SolarcraftTileEntityTypes.ENCHANTER.get(), pos, state);
     }
 
 

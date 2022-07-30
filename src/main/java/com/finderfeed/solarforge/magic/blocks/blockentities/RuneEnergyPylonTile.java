@@ -12,8 +12,10 @@ import com.finderfeed.solarforge.misc_things.*;
 import com.finderfeed.solarforge.multiblocks.Multiblocks;
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
 import com.finderfeed.solarforge.packet_handler.packets.UpdateTypeOnClientPacket;
-import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
+import com.finderfeed.solarforge.registries.tile_entities.SolarcraftTileEntityTypes;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
@@ -25,6 +27,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.network.PacketDistributor;
+import org.jetbrains.annotations.Nullable;
 
 
 import java.util.List;
@@ -39,7 +42,7 @@ public class RuneEnergyPylonTile extends BlockEntity implements  DebugTarget, Ru
     private int updateTick = 40;
 
     public RuneEnergyPylonTile(BlockPos p_155229_, BlockState p_155230_) {
-        super(TileEntitiesRegistry.RUNE_ENERGY_PYLON.get(), p_155229_, p_155230_);
+        super(SolarcraftTileEntityTypes.RUNE_ENERGY_PYLON.get(), p_155229_, p_155230_);
     }
 
 
@@ -51,11 +54,8 @@ public class RuneEnergyPylonTile extends BlockEntity implements  DebugTarget, Ru
     public static void tick(Level world, BlockPos pos, BlockState blockState, RuneEnergyPylonTile tile) {
         if (!tile.level.isClientSide){
             assignEnergyAndGainIt(tile);
-            doUpdate(tile);
+//            doUpdate(tile);
             doProgression(tile);
-
-
-
         }
         imbueItemsNear(tile);
 
@@ -125,12 +125,11 @@ public class RuneEnergyPylonTile extends BlockEntity implements  DebugTarget, Ru
     }
 
     public static void assignEnergyAndGainIt(RuneEnergyPylonTile tile){
-            if (tile.type == null) {
-                RunicEnergy.Type[] types = {
-                  RunicEnergy.Type.ARDO, RunicEnergy.Type.TERA, RunicEnergy.Type.FIRA, RunicEnergy.Type.URBA, RunicEnergy.Type.KELDA, RunicEnergy.Type.ZETA, RunicEnergy.Type.GIRO, RunicEnergy.Type.ULTIMA
-                };
-                tile.type = types[tile.level.random.nextInt(types.length)];
-            }
+        if (tile.type == null) {
+            RunicEnergy.Type[] types = {RunicEnergy.Type.ARDO, RunicEnergy.Type.TERA, RunicEnergy.Type.FIRA, RunicEnergy.Type.URBA, RunicEnergy.Type.KELDA, RunicEnergy.Type.ZETA, RunicEnergy.Type.GIRO, RunicEnergy.Type.ULTIMA
+            };
+            tile.type = types[tile.level.random.nextInt(types.length)];
+        }
         if (isStructCorrect(tile)) {
             float bonus = getPerTickEnergyBonus(tile);
             if (bonus+tile.currentEnergy  + SolarcraftConfig.RUNIC_ENERGY_PER_TICK_PYLON.get().floatValue() <= tile.maxEnergy) {
@@ -200,7 +199,7 @@ public class RuneEnergyPylonTile extends BlockEntity implements  DebugTarget, Ru
 
     public static void doProgression(RuneEnergyPylonTile tile){
         if (tile.level.getGameTime() % 20 == 0) {
-            AABB box = new AABB(tile.worldPosition.offset(-2, -2, -2), tile.worldPosition.offset(2, 2, 2));
+            AABB box = new AABB(tile.worldPosition.offset(-4, -10, -4), tile.worldPosition.offset(4, 2, 4));
             tile.level.getEntitiesOfClass(Player.class, box).forEach((player) -> {
                 Helpers.fireProgressionEvent(player, Progression.RUNE_ENERGY_PYLON);
             });
@@ -229,7 +228,23 @@ public class RuneEnergyPylonTile extends BlockEntity implements  DebugTarget, Ru
         super.load( nbt);
     }
 
-    public void givePlayerEnergy(Player entity,float amount){
+    @Override
+    public CompoundTag getUpdateTag() {
+        CompoundTag tag = super.getUpdateTag();
+        this.saveAdditional(tag);
+        return tag;
+    }
+
+    @Nullable
+    @Override
+    public Packet<ClientGamePacketListener> getUpdatePacket() {
+        CompoundTag tag = new CompoundTag();
+        this.saveAdditional(tag);
+        return Helpers.createTilePacket(this,tag);
+    }
+
+
+    public void givePlayerEnergy(Player entity, float amount){
         if (amount <= getCurrentEnergy()){
             this.currentEnergy-=amount;
             float flag = RunicEnergy.givePlayerEnergy(entity,amount,type);

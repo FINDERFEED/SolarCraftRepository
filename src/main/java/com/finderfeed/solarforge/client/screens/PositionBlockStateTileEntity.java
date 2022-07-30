@@ -1,6 +1,5 @@
 package com.finderfeed.solarforge.client.screens;
 
-import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Minecraft;

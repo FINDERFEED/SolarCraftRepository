@@ -20,6 +20,7 @@ import com.mojang.math.Matrix4f;
 import com.mojang.math.Quaternion;
 
 import com.mojang.math.Vector3f;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.Map;
@@ -36,7 +37,10 @@ public class RuneEnergyPylonRenderer implements BlockEntityRenderer<RuneEnergyPy
 
     @Override
     public void render(RuneEnergyPylonTile tile, float partialTicks, PoseStack matrices, MultiBufferSource buffer, int light, int overlay) {
-        if (FDMathHelper.canSeeTileEntity(tile,Minecraft.getInstance().player) && (Minecraft.getInstance().cameraEntity != null) ) {
+        Vec3 d1 = new Vec3(tile.getBlockPos().getX(),tile.getBlockPos().getY(),tile.getBlockPos().getZ());
+        if (FDMathHelper.canSeeTileEntity(tile,Minecraft.getInstance().player) && (Minecraft.getInstance().cameraEntity != null)
+        && RenderingTools.isBoxVisible(new AABB(d1,d1.add(1,1,1)))) {
+
             Vec3 playerPos = Minecraft.getInstance().gameRenderer.getMainCamera().getPosition();
 
 

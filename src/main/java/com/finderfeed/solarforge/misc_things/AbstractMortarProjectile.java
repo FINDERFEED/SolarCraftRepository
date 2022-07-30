@@ -2,7 +2,7 @@ package com.finderfeed.solarforge.misc_things;
 
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.client.particles.ParticleTypesRegistry;
-import com.finderfeed.solarforge.registries.sounds.Sounds;
+import com.finderfeed.solarforge.registries.sounds.SolarcraftSounds;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.EntityType;
@@ -57,7 +57,7 @@ public abstract class AbstractMortarProjectile extends AbstractHurtingProjectile
             causeExplosion(result.getLocation());
             causeExplosionParticles(result.getLocation());
         }
-        level.playSound(null,result.getBlockPos().getX()+0.5,result.getBlockPos().getY()+0.5,result.getBlockPos().getZ()+0.5, Sounds.SOLAR_MORTAR_PROJECTILE.get(), SoundSource.AMBIENT,
+        level.playSound(null,result.getBlockPos().getX()+0.5,result.getBlockPos().getY()+0.5,result.getBlockPos().getZ()+0.5, SolarcraftSounds.SOLAR_MORTAR_PROJECTILE.get(), SoundSource.AMBIENT,
                 5,1);
         this.removeit = true;
     }

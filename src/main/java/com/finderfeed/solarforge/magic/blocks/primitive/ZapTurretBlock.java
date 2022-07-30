@@ -1,7 +1,7 @@
 package com.finderfeed.solarforge.magic.blocks.primitive;
 
 import com.finderfeed.solarforge.magic.blocks.blockentities.ZapTurretTile;
-import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
+import com.finderfeed.solarforge.registries.tile_entities.SolarcraftTileEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -27,7 +27,7 @@ public class ZapTurretBlock extends Block implements EntityBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos p_153215_, BlockState p_153216_) {
-        return TileEntitiesRegistry.ZAP_TURRET_TILE.get().create(p_153215_,p_153216_);
+        return SolarcraftTileEntityTypes.ZAP_TURRET_TILE.get().create(p_153215_,p_153216_);
     }
 
     @Nullable

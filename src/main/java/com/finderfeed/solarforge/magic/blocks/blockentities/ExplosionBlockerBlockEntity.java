@@ -4,7 +4,7 @@ import com.finderfeed.solarforge.ClientHelpers;
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.client.particles.ParticleTypesRegistry;
 import com.finderfeed.solarforge.multiblocks.Multiblocks;
-import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
+import com.finderfeed.solarforge.registries.tile_entities.SolarcraftTileEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
@@ -22,7 +22,7 @@ public class ExplosionBlockerBlockEntity extends SolarcraftBlockEntity{
     private boolean shouldRenderShield = true;
 
     public ExplosionBlockerBlockEntity( BlockPos p_155229_, BlockState p_155230_) {
-        super(TileEntitiesRegistry.EXPLOSTION_BLOCKER.get(), p_155229_, p_155230_);
+        super(SolarcraftTileEntityTypes.EXPLOSTION_BLOCKER.get(), p_155229_, p_155230_);
     }
 
 

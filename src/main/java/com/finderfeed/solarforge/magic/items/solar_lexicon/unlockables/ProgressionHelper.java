@@ -4,7 +4,7 @@ import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.progressions.Progression;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
-import com.finderfeed.solarforge.registries.items.ItemsRegister;
+import com.finderfeed.solarforge.registries.items.SolarcraftItems;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -23,10 +23,6 @@ public class ProgressionHelper {
 
 
     public static final String COMPOUND_TAG_FRAGMENTS = "fragments";
-//    public static Map<Item, InfusingRecipe> INFUSING_RECIPE_MAP = new HashMap<>();
-//    public static Map<Item, InfusingRecipe> UPGRADES_INFUSING_RECIPE_MAP = new HashMap<>();
-//    public static Map<Item, SolarSmeltingRecipe> SMELTING_RECIPE_MAP = new HashMap<>();
-//    public static Map<Item, InfusingCraftingRecipe> INFUSING_CRAFTING_RECIPE_MAP = new HashMap<>();
     public static final String UNLOCK_PATTERN = "solar_forge_player_pattern";
     public static final String TAG_ELEMENT = "fragment";
     public static final String FRAG_ID = "fragmentid";
@@ -36,14 +32,14 @@ public class ProgressionHelper {
 
     //they have weird names didn't they?
     public static final Item[] RUNES = {
-            ItemsRegister.SOLAR_RUNE_ARDO.get(),
-            ItemsRegister.SOLAR_RUNE_FIRA.get(),
-            ItemsRegister.SOLAR_RUNE_KELDA.get(),
-            ItemsRegister.SOLAR_RUNE_TERA.get(),
-            ItemsRegister.SOLAR_RUNE_URBA.get(),
-            ItemsRegister.SOLAR_RUNE_ZETA.get(),
-            ItemsRegister.SOLAR_RUNE_GIRO.get(),
-            ItemsRegister.SOLAR_RUNE_ULTIMA.get()
+            SolarcraftItems.SOLAR_RUNE_ARDO.get(),
+            SolarcraftItems.SOLAR_RUNE_FIRA.get(),
+            SolarcraftItems.SOLAR_RUNE_KELDA.get(),
+            SolarcraftItems.SOLAR_RUNE_TERA.get(),
+            SolarcraftItems.SOLAR_RUNE_URBA.get(),
+            SolarcraftItems.SOLAR_RUNE_ZETA.get(),
+            SolarcraftItems.SOLAR_RUNE_GIRO.get(),
+            SolarcraftItems.SOLAR_RUNE_ULTIMA.get()
     };
 
     public static Map<RunicEnergy.Type,Item> RUNES_MAP = initRunesMap();
@@ -51,14 +47,14 @@ public class ProgressionHelper {
 
     public static Map<RunicEnergy.Type,Item> initRunesMap(){
         RUNES_MAP = new HashMap<>();
-        RUNES_MAP.put(RunicEnergy.Type.ARDO,ItemsRegister.SOLAR_RUNE_ARDO.get());
-        RUNES_MAP.put(RunicEnergy.Type.FIRA,ItemsRegister.SOLAR_RUNE_FIRA.get());
-        RUNES_MAP.put(RunicEnergy.Type.ZETA,ItemsRegister.SOLAR_RUNE_ZETA.get());
-        RUNES_MAP.put(RunicEnergy.Type.KELDA,ItemsRegister.SOLAR_RUNE_KELDA.get());
-        RUNES_MAP.put(RunicEnergy.Type.URBA,ItemsRegister.SOLAR_RUNE_URBA.get());
-        RUNES_MAP.put(RunicEnergy.Type.TERA,ItemsRegister.SOLAR_RUNE_TERA.get());
-        RUNES_MAP.put(RunicEnergy.Type.GIRO,ItemsRegister.SOLAR_RUNE_GIRO.get());
-        RUNES_MAP.put(RunicEnergy.Type.ULTIMA,ItemsRegister.SOLAR_RUNE_ULTIMA.get());
+        RUNES_MAP.put(RunicEnergy.Type.ARDO, SolarcraftItems.SOLAR_RUNE_ARDO.get());
+        RUNES_MAP.put(RunicEnergy.Type.FIRA, SolarcraftItems.SOLAR_RUNE_FIRA.get());
+        RUNES_MAP.put(RunicEnergy.Type.ZETA, SolarcraftItems.SOLAR_RUNE_ZETA.get());
+        RUNES_MAP.put(RunicEnergy.Type.KELDA, SolarcraftItems.SOLAR_RUNE_KELDA.get());
+        RUNES_MAP.put(RunicEnergy.Type.URBA, SolarcraftItems.SOLAR_RUNE_URBA.get());
+        RUNES_MAP.put(RunicEnergy.Type.TERA, SolarcraftItems.SOLAR_RUNE_TERA.get());
+        RUNES_MAP.put(RunicEnergy.Type.GIRO, SolarcraftItems.SOLAR_RUNE_GIRO.get());
+        RUNES_MAP.put(RunicEnergy.Type.ULTIMA, SolarcraftItems.SOLAR_RUNE_ULTIMA.get());
         return RUNES_MAP;
     }
 
@@ -116,9 +112,7 @@ public class ProgressionHelper {
     public static AncientFragment getRandomUnlockableFragment(Player pe){
         List<AncientFragment> fraglist = getAllUnlockableFragments(pe);
         if (fraglist != null){
-            fraglist.sort((f1,f2)->{
-                return f1.getPriority() - f2.getPriority();
-            });
+            fraglist.sort(Comparator.comparingInt(AncientFragment::getPriority));
             List<AncientFragment> h = getNextFragmentsForRandoming(fraglist);
             if (h != null) {
                 return h.get(pe.level.random.nextInt(h.size()));
@@ -221,44 +215,4 @@ public class ProgressionHelper {
         return  pe.getPersistentData().getBoolean(Helpers.FRAGMENT+frag.getId());
     }
 
-//    public static InfusingRecipe getInfusingRecipeForItem(Item item){
-//        return INFUSING_RECIPE_MAP.get(item);
-//    }
-//    public static InfusingCraftingRecipe getInfusingCraftingRecipeForItem(Item item){
-//        return INFUSING_CRAFTING_RECIPE_MAP.get(item);
-//    }
-//
-//    public static SolarSmeltingRecipe getSolarSmeltingRecipeForItem(Item item){
-//        return SMELTING_RECIPE_MAP.get(item);
-//    }
-//
-//
-//    public static void initInfRecipesMap(RecipeManager manager){
-//        List<InfusingRecipe> list = manager.getAllRecipesFor(SolarForge.INFUSING_RECIPE_TYPE);
-//        list.forEach((recipe)->{
-//            if (recipe.tag.equals("") && !INFUSING_RECIPE_MAP.containsKey(recipe.output.getItem())) {
-//                INFUSING_RECIPE_MAP.put(recipe.output.getItem(),recipe);
-//            }else if (!recipe.tag.equals("") && !UPGRADES_INFUSING_RECIPE_MAP.containsKey(recipe.output.getItem())){
-//                UPGRADES_INFUSING_RECIPE_MAP.put(recipe.output.getItem(),recipe);
-//            }
-//        });
-//    }
-//
-//    public static void initSmeltingRecipesMap(RecipeManager manager){
-//        List<SolarSmeltingRecipe> list = manager.getAllRecipesFor(SolarForge.SOLAR_SMELTING);
-//        list.forEach((recipe)->{
-//            if (!SMELTING_RECIPE_MAP.containsKey(recipe.output.getItem())) {
-//                SMELTING_RECIPE_MAP.put(recipe.output.getItem(),recipe);
-//            }
-//        });
-//    }
-//
-//    public static void initInfusingCraftingRecipes(RecipeManager manager){
-//        List<InfusingCraftingRecipe> list = manager.getAllRecipesFor(SolarForge.INFUSING_CRAFTING_RECIPE_TYPE);
-//        list.forEach((recipe)->{
-//            if (!INFUSING_CRAFTING_RECIPE_MAP.containsKey(recipe.getOutput().getItem())) {
-//                INFUSING_CRAFTING_RECIPE_MAP.put(recipe.getOutput().getItem(),recipe);
-//            }
-//        });
-//    }
 }

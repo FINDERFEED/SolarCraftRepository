@@ -1,7 +1,7 @@
 package com.finderfeed.solarforge.magic.blocks;
 
 import com.finderfeed.solarforge.magic.blocks.blockentities.RayTrapTileEntity;
-import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
+import com.finderfeed.solarforge.registries.tile_entities.SolarcraftTileEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -42,7 +42,7 @@ public class RayTrapBlock extends Block implements EntityBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-        return TileEntitiesRegistry.RAY_TRAP_TILE_ENTITY.get().create(blockPos,blockState);
+        return SolarcraftTileEntityTypes.RAY_TRAP_TILE_ENTITY.get().create(blockPos,blockState);
     }
 
     @Nullable

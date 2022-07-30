@@ -3,8 +3,8 @@ package com.finderfeed.solarforge.magic.blocks.blockentities;
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.events.other_events.event_handler.EventHandler;
 import com.finderfeed.solarforge.multiblocks.Multiblocks;
-import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
-import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
+import com.finderfeed.solarforge.registries.blocks.SolarcraftBlocks;
+import com.finderfeed.solarforge.registries.tile_entities.SolarcraftTileEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.server.level.ServerLevel;
@@ -28,7 +28,7 @@ public class RadiantPortalCreatorTile extends BlockEntity {
 
 
     public RadiantPortalCreatorTile( BlockPos p_155229_, BlockState p_155230_) {
-        super(TileEntitiesRegistry.PORTAL_CREATOR.get(), p_155229_, p_155230_);
+        super(SolarcraftTileEntityTypes.PORTAL_CREATOR.get(), p_155229_, p_155230_);
     }
 
 
@@ -72,13 +72,13 @@ public class RadiantPortalCreatorTile extends BlockEntity {
         int yHeight = destination.getHeight(Heightmap.Types.WORLD_SURFACE,1,1);
         boolean placed = false;
         for (int i = yHeight-10; i <= 255;i++){
-            if (destination.getBlockState(BlockPos.ZERO.offset(1,0,1).above(i)).getBlock() == BlocksRegistry.WORMHOLE.get()){
+            if (destination.getBlockState(BlockPos.ZERO.offset(1,0,1).above(i)).getBlock() == SolarcraftBlocks.WORMHOLE.get()){
                 placed = true;
                 break;
             }
         }
         if (!placed){
-            destination.setBlockAndUpdate(BlockPos.ZERO.offset(1,0,1).above(yHeight + 50),BlocksRegistry.WORMHOLE.get().defaultBlockState());
+            destination.setBlockAndUpdate(BlockPos.ZERO.offset(1,0,1).above(yHeight + 50), SolarcraftBlocks.WORMHOLE.get().defaultBlockState());
         }
     }
 

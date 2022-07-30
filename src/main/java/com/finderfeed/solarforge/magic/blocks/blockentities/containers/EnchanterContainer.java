@@ -2,8 +2,7 @@ package com.finderfeed.solarforge.magic.blocks.blockentities.containers;
 
 import com.finderfeed.solarforge.config.enchanter_config.EnchanterConfig;
 import com.finderfeed.solarforge.magic.blocks.blockentities.EnchanterBlockEntity;
-import com.finderfeed.solarforge.misc_things.RunicEnergy;
-import com.finderfeed.solarforge.registries.containers.Containers;
+import com.finderfeed.solarforge.registries.containers.SolarcraftContainers;
 import com.google.gson.JsonParser;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
@@ -16,13 +15,10 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.Map;
 
 public class EnchanterContainer extends AbstractContainerMenu {
 
@@ -31,7 +27,7 @@ public class EnchanterContainer extends AbstractContainerMenu {
     public final EnchanterConfig config;
 
     public EnchanterContainer( int p_38852_,Inventory inv, BlockPos tilepos,String json) {
-        super(Containers.ENCHANTER.get(), p_38852_);
+        super(SolarcraftContainers.ENCHANTER.get(), p_38852_);
         Level world= inv.player.level;
         if (world.isClientSide){
             config = new EnchanterConfig(JsonParser.parseString(json).getAsJsonObject());

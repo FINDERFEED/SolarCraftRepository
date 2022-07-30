@@ -5,7 +5,7 @@ import com.finderfeed.solarforge.SolarForge;
 
 import com.finderfeed.solarforge.local_library.helpers.RenderingTools;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.unlockables.AncientFragment;
-import com.finderfeed.solarforge.registries.items.ItemsRegister;
+import com.finderfeed.solarforge.registries.items.SolarcraftItems;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -64,7 +64,7 @@ public class InformationScreen extends Screen {
         this.relX = (width/scale - 183)/2 - 40;
         this.relY = (height - 218*scale)/2/scale;
 
-        Item i = screen != null ? SolarForge.INFUSER_ITEM.get() : ItemsRegister.INFUSING_TABLE.get();
+        Item i = screen != null ? SolarForge.INFUSER_ITEM.get() : SolarcraftItems.INFUSING_TABLE.get();
 
         ItemStackButton button = new ItemStackTabButton(relX+260,relY+25 + 18 + 3,12,12,(buttons)->{
             if (screen != null) {

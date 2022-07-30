@@ -1,17 +1,15 @@
 package com.finderfeed.solarforge.magic.items;
 
 
-import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.magic.items.primitive.RareSolarcraftItem;
 import com.finderfeed.solarforge.magic.items.runic_energy.IRunicEnergyUser;
 import com.finderfeed.solarforge.magic.items.runic_energy.ItemRunicEnergy;
 import com.finderfeed.solarforge.magic.items.runic_energy.RunicEnergyCost;
 import com.finderfeed.solarforge.magic.projectiles.UltraCrossbowProjectile;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.unlockables.AncientFragment;
-import com.finderfeed.solarforge.misc_things.ManaConsumer;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
-import com.finderfeed.solarforge.registries.entities.EntityTypes;
-import com.finderfeed.solarforge.registries.sounds.Sounds;
+import com.finderfeed.solarforge.registries.entities.SolarcraftEntityTypes;
+import com.finderfeed.solarforge.registries.sounds.SolarcraftSounds;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -43,7 +41,7 @@ public class UltraCrossbowItem extends RareSolarcraftItem implements IRunicEnerg
     public void onUsingTick(ItemStack stack, LivingEntity player, int count) {
         if (!player.level.isClientSide && (player instanceof Player) ) {
             if (count % 20 == 0){
-                player.level.playSound(null,player, Sounds.CROSSBOW_CHARGING.get(), SoundSource.AMBIENT,1f,1f);
+                player.level.playSound(null,player, SolarcraftSounds.CROSSBOW_CHARGING.get(), SoundSource.AMBIENT,1f,1f);
             }
 
             if ((float)(72000-count)/20*DAMAGE_PER_SECOND < 120) {
@@ -64,9 +62,9 @@ public class UltraCrossbowItem extends RareSolarcraftItem implements IRunicEnerg
         if (!world.isClientSide){
 
             if (player instanceof Player pl && ItemRunicEnergy.spendEnergy(this.getCost(),stack,this,pl)) {
-            UltraCrossbowProjectile proj = new UltraCrossbowProjectile(EntityTypes.ULTRA_CROSSBOW_SHOT.get(),world);
+            UltraCrossbowProjectile proj = new UltraCrossbowProjectile(SolarcraftEntityTypes.ULTRA_CROSSBOW_SHOT.get(),world);
             proj.setPos(player.getX() + player.getLookAngle().x,player.getY()+1.5f+player.getLookAngle().y,player.getZ()+player.getLookAngle().z);
-            player.level.playSound(null,player, Sounds.CROSSBOW_SHOOT_SOUND.get(), SoundSource.AMBIENT,1,1);
+            player.level.playSound(null,player, SolarcraftSounds.CROSSBOW_SHOOT_SOUND.get(), SoundSource.AMBIENT,1,1);
             proj.setYAW(player.getYRot());
             proj.setPITCH(player.getXRot());
             if ((float)(72000 - remainingSeconds)/20*DAMAGE_PER_SECOND < 120) {

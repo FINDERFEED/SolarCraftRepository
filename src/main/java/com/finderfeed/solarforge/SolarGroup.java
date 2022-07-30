@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge;
 
-import com.finderfeed.solarforge.registries.items.ItemsRegister;
+import com.finderfeed.solarforge.registries.items.SolarcraftItems;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -38,7 +38,7 @@ class SolarGroupBlocks extends CreativeModeTab{
     }
     @Override
     public ItemStack makeIcon() {
-        return ItemsRegister.SOLAR_STONE_BRICKS.get().getDefaultInstance();
+        return SolarcraftItems.SOLAR_STONE_BRICKS.get().getDefaultInstance();
     }
 }
 
@@ -56,7 +56,7 @@ class SolarGroupTools extends CreativeModeTab{
     }
     @Override
     public ItemStack makeIcon() {
-        return ItemsRegister.ILLIDIUM_AXE.get().getDefaultInstance();
+        return SolarcraftItems.ILLIDIUM_AXE.get().getDefaultInstance();
     }
 }
 class SolarGroupThemed extends CreativeModeTab{
@@ -92,6 +92,6 @@ class SolarGroupFragments extends CreativeModeTab{
     }
     @Override
     public ItemStack makeIcon() {
-        return ItemsRegister.INFO_FRAGMENT.get().getDefaultInstance();
+        return SolarcraftItems.INFO_FRAGMENT.get().getDefaultInstance();
     }
 }

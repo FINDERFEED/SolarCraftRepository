@@ -21,9 +21,9 @@ import com.finderfeed.solarforge.misc_things.CrystalBossBuddy;
 import com.finderfeed.solarforge.misc_things.NoHealthLimitMob;
 import com.finderfeed.solarforge.client.particles.ParticleTypesRegistry;
 import com.finderfeed.solarforge.registries.attributes.AttributesRegistry;
-import com.finderfeed.solarforge.registries.entities.EntityTypes;
-import com.finderfeed.solarforge.registries.items.ItemsRegister;
-import com.finderfeed.solarforge.registries.sounds.Sounds;
+import com.finderfeed.solarforge.registries.entities.SolarcraftEntityTypes;
+import com.finderfeed.solarforge.registries.items.SolarcraftItems;
+import com.finderfeed.solarforge.registries.sounds.SolarcraftSounds;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -329,7 +329,7 @@ public class CrystalBossEntity extends NoHealthLimitMob implements CrystalBossBu
     public void throwRipRayGenerators(){
         for (int i = 0; i < 4;i++){
             Vec3 vec = Helpers.randomVector().multiply(2+level.random.nextDouble()*9,0,1+2+level.random.nextDouble()*9);
-            RipRayGenerator gen = new RipRayGenerator(EntityTypes.RIP_RAY_GENERATOR.get(),level);
+            RipRayGenerator gen = new RipRayGenerator(SolarcraftEntityTypes.RIP_RAY_GENERATOR.get(),level);
             gen.setPos(this.position().add(vec.x,this.getBbHeight()/2,vec.z));
 
             level.addFreshEntity(gen);
@@ -339,7 +339,7 @@ public class CrystalBossEntity extends NoHealthLimitMob implements CrystalBossBu
     public void spawnMines(){
         List<Vec3> positions = Helpers.findRandomGroundPositionsAround(level,position(),20,15);
         for (Vec3 pos : positions){
-            MineEntityCrystalBoss mine = new MineEntityCrystalBoss(EntityTypes.CRYSTAL_BOSS_MINE.get(),level);
+            MineEntityCrystalBoss mine = new MineEntityCrystalBoss(SolarcraftEntityTypes.CRYSTAL_BOSS_MINE.get(),level);
             mine.setPos(pos);
             level.addFreshEntity(mine);
         }
@@ -352,7 +352,7 @@ public class CrystalBossEntity extends NoHealthLimitMob implements CrystalBossBu
                 if (crystals.size() + i > 8) {
                     break;
                 }
-                ShieldingCrystalCrystalBoss crystal = new ShieldingCrystalCrystalBoss(EntityTypes.CRYSTAL_BOSS_SHIELDING_CRYSTAL.get(), level);
+                ShieldingCrystalCrystalBoss crystal = new ShieldingCrystalCrystalBoss(SolarcraftEntityTypes.CRYSTAL_BOSS_SHIELDING_CRYSTAL.get(), level);
                 Vec3 positon = this.position().add((level.random.nextDouble() * 4.5 + 3) * FDMathHelper.randomPlusMinus(), 0, (level.random.nextDouble() * 4.5 + 3) * FDMathHelper.randomPlusMinus());
                 crystal.setPos(positon);
                 level.addFreshEntity(crystal);
@@ -513,7 +513,7 @@ public class CrystalBossEntity extends NoHealthLimitMob implements CrystalBossBu
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource p_21239_) {
-        return Sounds.CRYSTAL_HIT.get();
+        return SolarcraftSounds.CRYSTAL_HIT.get();
     }
 
     @Override
@@ -540,7 +540,7 @@ public class CrystalBossEntity extends NoHealthLimitMob implements CrystalBossBu
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        return Sounds.CRYSTAL_HIT.get();
+        return SolarcraftSounds.CRYSTAL_HIT.get();
     }
 
     @Override
@@ -585,7 +585,7 @@ public class CrystalBossEntity extends NoHealthLimitMob implements CrystalBossBu
     @Override
     protected void dropAllDeathLoot(DamageSource p_21192_) {
         super.dropAllDeathLoot(p_21192_);
-        LegendaryItem item = new LegendaryItem(level, new ItemStack(ItemsRegister.CRYSTALLITE_CORE.get(),1));
+        LegendaryItem item = new LegendaryItem(level, new ItemStack(SolarcraftItems.CRYSTALLITE_CORE.get(),1));
         item.setPos(this.position().add(0,this.getBbHeight()/2,0));
         level.addFreshEntity(item);
     }

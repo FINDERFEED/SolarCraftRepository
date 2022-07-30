@@ -8,10 +8,9 @@ import com.finderfeed.solarforge.magic.items.runic_energy.IRunicEnergyUser;
 import com.finderfeed.solarforge.magic.items.runic_energy.ItemRunicEnergy;
 import com.finderfeed.solarforge.magic.items.runic_energy.RunicEnergyCost;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
-import com.finderfeed.solarforge.registries.items.ItemsRegister;
-import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
+import com.finderfeed.solarforge.registries.items.SolarcraftItems;
+import com.finderfeed.solarforge.registries.tile_entities.SolarcraftTileEntityTypes;
 import net.minecraft.core.BlockPos;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.item.ItemStack;
@@ -20,16 +19,13 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class RunicEnergyChargerTileEntity extends REItemHandlerBlockEntity implements IRunicEnergySaver {
 
     private int updateTicker = 0;
     private static final float CHARGE_RATE_PER_TICK = 2.5f;
 
     public RunicEnergyChargerTileEntity( BlockPos pos, BlockState state) {
-        super(TileEntitiesRegistry.RUNIC_ENERGY_CHARGER.get(), pos, state);
+        super(SolarcraftTileEntityTypes.RUNIC_ENERGY_CHARGER.get(), pos, state);
     }
     public static void tick(RunicEnergyChargerTileEntity tile, Level world,BlockState state,BlockPos pos){
         if (!world.isClientSide){
@@ -136,6 +132,6 @@ public class RunicEnergyChargerTileEntity extends REItemHandlerBlockEntity imple
 
     @Override
     public ItemStack droppedStack() {
-        return IRunicEnergySaver.defaultSave(ItemsRegister.RUNIC_ENERGY_CHARGER.get().getDefaultInstance(),this);
+        return IRunicEnergySaver.defaultSave(SolarcraftItems.RUNIC_ENERGY_CHARGER.get().getDefaultInstance(),this);
     }
 }

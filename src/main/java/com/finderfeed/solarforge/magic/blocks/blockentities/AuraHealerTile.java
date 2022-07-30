@@ -3,7 +3,7 @@ package com.finderfeed.solarforge.magic.blocks.blockentities;
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.client.particles.ParticleTypesRegistry;
 import com.finderfeed.solarforge.multiblocks.Multiblocks;
-import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
+import com.finderfeed.solarforge.registries.tile_entities.SolarcraftTileEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -20,7 +20,7 @@ public class AuraHealerTile extends BlockEntity  {
     public int HEAL_TICK = 0;
 
     public AuraHealerTile( BlockPos p_155229_, BlockState p_155230_) {
-        super(TileEntitiesRegistry.AURA_HEALER_TILE.get(), p_155229_, p_155230_);
+        super(SolarcraftTileEntityTypes.AURA_HEALER_TILE.get(), p_155229_, p_155230_);
     }
 
 

@@ -1,12 +1,10 @@
 package com.finderfeed.solarforge.magic.items.solar_lexicon.screen;
 
 import com.finderfeed.solarforge.ClientHelpers;
-import com.finderfeed.solarforge.local_library.helpers.RenderingTools;
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.structure.Book;
 import com.finderfeed.solarforge.misc_things.IScrollable;
-import com.finderfeed.solarforge.recipe_types.infusing_new.InfusingRecipe;
-import com.finderfeed.solarforge.registries.items.ItemsRegister;
+import com.finderfeed.solarforge.registries.items.SolarcraftItems;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.unlockables.ProgressionHelper;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -23,7 +21,6 @@ import net.minecraftforge.items.IItemHandler;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL11;
 
-import java.awt.*;
 import java.util.*;
 import java.util.List;
 
@@ -165,7 +162,7 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
     private void collectFragments(){
         for (int i = 0;i < handler.getSlots();i++){
             ItemStack stack = handler.getStackInSlot(i);
-            if (stack.getItem() == ItemsRegister.INFO_FRAGMENT.get()){
+            if (stack.getItem() == SolarcraftItems.INFO_FRAGMENT.get()){
                 if (stack.getTagElement(ProgressionHelper.TAG_ELEMENT) != null) {
                     showNoFragmentsMessage = false;
                     AncientFragment frag = AncientFragment.getFragmentByID(stack.getTagElement(ProgressionHelper.TAG_ELEMENT).getString(ProgressionHelper.FRAG_ID));

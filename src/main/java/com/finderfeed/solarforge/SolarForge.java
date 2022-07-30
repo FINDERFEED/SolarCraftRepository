@@ -27,19 +27,19 @@ import com.finderfeed.solarforge.registries.Tags;
 import com.finderfeed.solarforge.registries.abilities.AbilitiesRegistry;
 import com.finderfeed.solarforge.registries.attributes.AttributesRegistry;
 import com.finderfeed.solarforge.registries.data_serializers.FDEntityDataSerializers;
-import com.finderfeed.solarforge.registries.entities.EntityTypes;
+import com.finderfeed.solarforge.registries.entities.SolarcraftEntityTypes;
 
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
 import com.finderfeed.solarforge.recipe_types.infusing_new.InfusingRecipe;
 import com.finderfeed.solarforge.recipe_types.solar_smelting.SolarSmeltingRecipe;
 import com.finderfeed.solarforge.recipe_types.solar_smelting.SolarSmeltingRecipeType;
-import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
-import com.finderfeed.solarforge.registries.containers.Containers;
-import com.finderfeed.solarforge.registries.effects.EffectsRegister;
-import com.finderfeed.solarforge.registries.worldgen.configured.ConfiguredFeatures;
-import com.finderfeed.solarforge.registries.items.ItemsRegister;
-import com.finderfeed.solarforge.registries.sounds.Sounds;
-import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
+import com.finderfeed.solarforge.registries.blocks.SolarcraftBlocks;
+import com.finderfeed.solarforge.registries.containers.SolarcraftContainers;
+import com.finderfeed.solarforge.registries.effects.SolarcraftEffects;
+import com.finderfeed.solarforge.registries.tile_entities.SolarcraftTileEntityTypes;
+import com.finderfeed.solarforge.registries.worldgen.configured.LazyConfiguredFeatures;
+import com.finderfeed.solarforge.registries.items.SolarcraftItems;
+import com.finderfeed.solarforge.registries.sounds.SolarcraftSounds;
 import com.finderfeed.solarforge.magic.blocks.solar_forge_block.SolarForgeBlock;
 import com.finderfeed.solarforge.magic.blocks.solar_forge_block.SolarForgeBlockEntity;
 
@@ -128,8 +128,8 @@ public class SolarForge
     public static final CreativeModeTab SOLAR_GROUP = new SolarGroup("solar_forge_group");
     public static final CreativeModeTab SOLAR_GROUP_BLOCKS = new SolarGroupBlocks("solar_forge_group_blocks");
     public static final CreativeModeTab SOLAR_GROUP_TOOLS = new SolarGroupTools("solar_forge_group_tools");
-    public static final CreativeModeTab SOLAR_GROUP_MATERIALS = new SolarGroupThemed("solar_group_materials",ItemsRegister.ILLIDIUM_INGOT);
-    public static final CreativeModeTab SOLAR_GROUP_WEAPONS = new SolarGroupThemed("solar_group_weapons",ItemsRegister.ILLIDIUM_SWORD);
+    public static final CreativeModeTab SOLAR_GROUP_MATERIALS = new SolarGroupThemed("solar_group_materials", SolarcraftItems.ILLIDIUM_INGOT);
+    public static final CreativeModeTab SOLAR_GROUP_WEAPONS = new SolarGroupThemed("solar_group_weapons", SolarcraftItems.ILLIDIUM_SWORD);
     public static final CreativeModeTab SOLAR_GROUP_FRAGMENTS = new SolarGroupFragments("solar_forge_group_fragments");
 
 
@@ -187,13 +187,13 @@ public class SolarForge
         BLOCKS.register(bus);
         TILE_ENTITY_TYPE.register(bus);
         CONTAINER_TYPE.register(bus);
-        ItemsRegister.ITEMS.register(bus);
-        BlocksRegistry.BLOCKS.register(bus);
-        TileEntitiesRegistry.TILE_ENTITY_TYPE.register(bus);
-        EntityTypes.ENTITY_TYPE_REGISTER.register(bus);
-        EffectsRegister.EFFECTS.register(bus);
-        Sounds.SOUND_EVENTS.register(bus);
-        Containers.CONTAINER_TYPE.register(bus);
+        SolarcraftItems.ITEMS.register(bus);
+        SolarcraftBlocks.BLOCKS.register(bus);
+        SolarcraftTileEntityTypes.TILE_ENTITY_TYPE.register(bus);
+        SolarcraftEntityTypes.ENTITY_TYPE_REGISTER.register(bus);
+        SolarcraftEffects.EFFECTS.register(bus);
+        SolarcraftSounds.SOUND_EVENTS.register(bus);
+        SolarcraftContainers.CONTAINER_TYPE.register(bus);
         FoliagePlacerRegistry.DEFERRED_REGISTER.register(bus);
         AttributesRegistry.DEF_REG.register(bus);
         FDEntityDataSerializers.DEF_REG.register(bus);
@@ -203,7 +203,7 @@ public class SolarForge
 
         FMLJavaModLoadingContext.get().getModEventBus().addListener(TrunkPlacersRegistry::registerTrunkPlacerTypes);
 
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(ConfiguredFeatures::registerConfiguredFeatures);
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(LazyConfiguredFeatures::registerConfiguredFeatures);
 
 
 
@@ -257,17 +257,17 @@ public class SolarForge
         @SubscribeEvent
         public static void entityAttributes(EntityAttributeCreationEvent event) {
             event.put(SOLAR_STRIKE_ENTITY_REG.get(),SolarStrikeEntity.createAttributes().build());
-            event.put(EntityTypes.VILLAGER_SOLAR_MASTER.get(), VillagerSolarMaster.createAttributes().build());
-            event.put(EntityTypes.CRYSTAL_BOSS.get(), CrystalBossEntity.createAttributes().build());
-            event.put(EntityTypes.RUNIC_ELEMENTAL_BOSS.get(), RunicElementalBoss.createAttributes().build());
-            event.put(EntityTypes.CRYSTAL_BOSS_SHIELDING_CRYSTAL.get(), ShieldingCrystalCrystalBoss.createAttributes().build());
-            event.put(EntityTypes.CRYSTAL_BOSS_MINE.get(), MineEntityCrystalBoss.createAttributes().build());
-            event.put(EntityTypes.RIP_RAY_GENERATOR.get(), RipRayGenerator.createAttributes().build());
-            event.put(EntityTypes.REFRACTION_CRYSTAL.get(), RefractionCrystal.createAttributes().build());
-            event.put(EntityTypes.EXPLOSIVE_CRYSTAL.get(), ExplosiveCrystal.createAttributes().build());
-            event.put(EntityTypes.RUNIC_WARRIOR.get(), RunicWarrior.createAttributes().build());
-            event.put(EntityTypes.SHADOW_ZOMBIE.get(), ShadowZombie.createAttributes().build());
-            event.put(EntityTypes.CORRUPTION_WISP.get(), CorruptionWisp.createAttributes().build());
+            event.put(SolarcraftEntityTypes.VILLAGER_SOLAR_MASTER.get(), VillagerSolarMaster.createAttributes().build());
+            event.put(SolarcraftEntityTypes.CRYSTAL_BOSS.get(), CrystalBossEntity.createAttributes().build());
+            event.put(SolarcraftEntityTypes.RUNIC_ELEMENTAL_BOSS.get(), RunicElementalBoss.createAttributes().build());
+            event.put(SolarcraftEntityTypes.CRYSTAL_BOSS_SHIELDING_CRYSTAL.get(), ShieldingCrystalCrystalBoss.createAttributes().build());
+            event.put(SolarcraftEntityTypes.CRYSTAL_BOSS_MINE.get(), MineEntityCrystalBoss.createAttributes().build());
+            event.put(SolarcraftEntityTypes.RIP_RAY_GENERATOR.get(), RipRayGenerator.createAttributes().build());
+            event.put(SolarcraftEntityTypes.REFRACTION_CRYSTAL.get(), RefractionCrystal.createAttributes().build());
+            event.put(SolarcraftEntityTypes.EXPLOSIVE_CRYSTAL.get(), ExplosiveCrystal.createAttributes().build());
+            event.put(SolarcraftEntityTypes.RUNIC_WARRIOR.get(), RunicWarrior.createAttributes().build());
+            event.put(SolarcraftEntityTypes.SHADOW_ZOMBIE.get(), ShadowZombie.createAttributes().build());
+            event.put(SolarcraftEntityTypes.CORRUPTION_WISP.get(), CorruptionWisp.createAttributes().build());
         }
 
         @SubscribeEvent

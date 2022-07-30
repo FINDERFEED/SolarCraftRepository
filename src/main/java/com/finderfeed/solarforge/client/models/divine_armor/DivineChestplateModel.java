@@ -3,10 +3,7 @@ package com.finderfeed.solarforge.client.models.divine_armor;
 
 import com.finderfeed.solarforge.SolarCraftTags;
 import com.finderfeed.solarforge.SolarForge;
-import com.finderfeed.solarforge.local_library.other.MemorizedModelPart;
 import com.finderfeed.solarforge.magic.items.divine_armor.BaseDivineArmor;
-import com.finderfeed.solarforge.registries.items.ItemsRegister;
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Minecraft;
@@ -17,10 +14,7 @@ import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.Mth;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
 public class DivineChestplateModel extends HumanoidModel<LivingEntity> {

@@ -5,9 +5,8 @@ import com.finderfeed.solarforge.SolarCraftTags;
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.config.SolarcraftConfig;
 import com.finderfeed.solarforge.magic.items.ModuleItem;
-import com.finderfeed.solarforge.magic.items.runic_energy.RunicEnergyCost;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
-import com.finderfeed.solarforge.registries.items.ItemsRegister;
+import com.finderfeed.solarforge.registries.items.SolarcraftItems;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -43,7 +42,7 @@ public class ModuleEventsHandler {
         if (!player.level.isClientSide){
             ItemStack stack = player.getMainHandItem();
             if ((stack.getItem() instanceof SwordItem)  && (entity instanceof LivingEntity target)){
-                if (hasModule(ItemsRegister.FURY_SWIPES_MODULE.get(),stack)){
+                if (hasModule(SolarcraftItems.FURY_SWIPES_MODULE.get(),stack)){
                     if (Helpers.isVulnerable(target)) {
                     DamageSource src = DamageSource.playerAttack(player);
 
@@ -67,7 +66,7 @@ public class ModuleEventsHandler {
         if (!player.level.isClientSide){
             ItemStack stack = player.getMainHandItem();
             if ((stack.getItem() instanceof SwordItem)  && (entity instanceof LivingEntity target)){
-                if (hasModule(ItemsRegister.POISONING_BLADE_MODULE.get(),stack)){
+                if (hasModule(SolarcraftItems.POISONING_BLADE_MODULE.get(),stack)){
                     if (!target.hasEffect(MobEffects.POISON)){
                         target.addEffect(new MobEffectInstance(MobEffects.POISON,160,1));
                     }
@@ -82,7 +81,7 @@ public class ModuleEventsHandler {
         DamageSource src = event.getSource();
         LivingEntity entity = event.getEntityLiving();
         if (!entity.level.isClientSide && (src.getEntity() instanceof LivingEntity attacker) ){
-            if (doesArmorHaveModule(ItemsRegister.DISARMING_THORNS_MODULE.get(),entity.getArmorSlots()) != 0){
+            if (doesArmorHaveModule(SolarcraftItems.DISARMING_THORNS_MODULE.get(),entity.getArmorSlots()) != 0){
                 if (entity.level.random.nextFloat() <= (float)SolarcraftConfig.DISARM_CHANCE_MODULE.get()/100){
                     if (!attacker.hasEffect(SolarForge.SOLAR_STUN.get())){
                         attacker.addEffect(new MobEffectInstance(SolarForge.SOLAR_STUN.get(),40,0));
@@ -100,7 +99,7 @@ public class ModuleEventsHandler {
         InteractionHand hand = event.getHand();
         if (!world.isClientSide){
             ItemStack stack = player.getItemInHand(hand);
-            if ((stack.getItem() instanceof PickaxeItem) && hasModule(ItemsRegister.PICKAXE_MINER_ABILITY_MODULE.get(),stack)){
+            if ((stack.getItem() instanceof PickaxeItem) && hasModule(SolarcraftItems.PICKAXE_MINER_ABILITY_MODULE.get(),stack)){
                 if (RunicEnergy.spendEnergy(player,300, RunicEnergy.Type.URBA)){
                     player.addEffect(new MobEffectInstance(MobEffects.DIG_SPEED,400,1));
                 }
@@ -116,7 +115,7 @@ public class ModuleEventsHandler {
         if (!player.level.isClientSide){
             ItemStack stack = player.getMainHandItem();
             if ((stack.getItem() instanceof SwordItem)  && (entity instanceof LivingEntity target)){
-                if (hasModule(ItemsRegister.MAGIC_DAMAGE_MODULE_5.get(),stack)){
+                if (hasModule(SolarcraftItems.MAGIC_DAMAGE_MODULE_5.get(),stack)){
                     if (Helpers.isVulnerable(target)) {
                         float modifier = player.getAttackStrengthScale(0);
                         DamageSource src = DamageSource.playerAttack(player).bypassArmor().setMagic();
@@ -137,7 +136,7 @@ public class ModuleEventsHandler {
         InteractionHand hand = event.getHand();
         if (!world.isClientSide){
             ItemStack stack = player.getItemInHand(hand);
-            if ((stack.getItem() instanceof SwordItem sword) &&  hasModule(ItemsRegister.SWORD_AOE_ATTACK.get(),stack)){
+            if ((stack.getItem() instanceof SwordItem sword) &&  hasModule(SolarcraftItems.SWORD_AOE_ATTACK.get(),stack)){
                 AABB aabb = new AABB(player.position().add(-2.5,0,-2.5),player.position().add(2.5,player.getBbHeight(),2.5));
                 world.getEntitiesOfClass(LivingEntity.class,aabb,(entity)-> !entity.equals(player)).forEach((livingEntity) -> {
                     livingEntity.hurt(DamageSource.playerAttack(player),sword.getDamage()/2);
@@ -155,7 +154,7 @@ public class ModuleEventsHandler {
             if ((src.getEntity() instanceof Player player) && !player.level.isClientSide ){
                 ItemStack stack = player.getMainHandItem();
                 if (!stack.isEmpty()){
-                    if (hasModule(ItemsRegister.SWORD_AUTOHEAL_MODULE.get(),stack)){
+                    if (hasModule(SolarcraftItems.SWORD_AUTOHEAL_MODULE.get(),stack)){
                         if (player.level.random.nextFloat() <= ((float) SolarcraftConfig.AUTOHEAL_CHANCE.get()/100) ){
                             stack.hurt(-2,player.level.random,(ServerPlayer) player);
                         }
@@ -172,7 +171,7 @@ public class ModuleEventsHandler {
                 if (event.player.level.getGameTime() % 20 == 1) {
                     ServerPlayer entity = (ServerPlayer) event.player;
                     entity.getArmorSlots().forEach((stack) -> {
-                        if (hasModule(ItemsRegister.BLESSED_MODULE.get(), stack)) {
+                        if (hasModule(SolarcraftItems.BLESSED_MODULE.get(), stack)) {
                             if (Helpers.isDay(event.player.level)) {
                                 if (entity.level.random.nextFloat() <= (float)SolarcraftConfig.BLESSED_CHANCE.get()/100) {
                                     stack.hurt(-1, entity.level.random, entity);
@@ -195,7 +194,7 @@ public class ModuleEventsHandler {
             if (!src.isMagic() && !src.isBypassArmor()) {
                 LivingEntity entity = event.getEntityLiving();
                 entity.getArmorSlots().forEach((stack) -> {
-                    if (hasModule(ItemsRegister.PHYSICAL_DEFENCE_MODULE_10.get(), stack)) {
+                    if (hasModule(SolarcraftItems.PHYSICAL_DEFENCE_MODULE_10.get(), stack)) {
                         float amount = event.getAmount();
                         event.setAmount(amount * 0.9f);
                     }

@@ -1,21 +1,19 @@
 package com.finderfeed.solarforge.magic.armor;
 
 import com.finderfeed.solarforge.SolarForge;
-import com.finderfeed.solarforge.registries.items.ItemsRegister;
+import com.finderfeed.solarforge.registries.items.SolarcraftItems;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.util.LazyLoadedValue;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.function.Supplier;
 
 public enum SolarArmorMaterial implements ArmorMaterial {
     SOLAR_ARMOR("solarforge:solar_armor",40,new int[]{5, 8, 9, 5},20, SoundEvents.ARMOR_EQUIP_NETHERITE,3.5f,0.2f,()->Ingredient.of(SolarForge.TEST_ITEM.get())),
-    RADIANT_ARMOR("solarforge:radiant_armor",80,new int[]{8, 10, 11, 8},40, SoundEvents.ARMOR_EQUIP_NETHERITE,4f,0.3f,()->Ingredient.of(ItemsRegister.BLUE_GEM_ENCHANCED.get())),
+    RADIANT_ARMOR("solarforge:radiant_armor",80,new int[]{8, 10, 11, 8},40, SoundEvents.ARMOR_EQUIP_NETHERITE,4f,0.3f,()->Ingredient.of(SolarcraftItems.BLUE_GEM_ENCHANCED.get())),
     DIVINE_ARMOR("solarforge:divine_armor",200,new int[]{10, 13, 15, 8},60, SoundEvents.ARMOR_EQUIP_NETHERITE,7f,0.5f,()->Ingredient.EMPTY);
 
 

@@ -8,8 +8,8 @@ import com.finderfeed.solarforge.magic.items.runic_energy.ItemRunicEnergy;
 import com.finderfeed.solarforge.magic.items.runic_energy.RunicEnergyCost;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
-import com.finderfeed.solarforge.registries.entities.EntityTypes;
-import com.finderfeed.solarforge.registries.sounds.Sounds;
+import com.finderfeed.solarforge.registries.entities.SolarcraftEntityTypes;
+import com.finderfeed.solarforge.registries.sounds.SolarcraftSounds;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -42,15 +42,15 @@ public class LightningGun extends RareSolarcraftItem implements IRunicEnergyUser
                     player.getCooldowns().addCooldown(this,60);
                 }
                 world.playSound(player,player.getX(),player.getY()+0.5f,player.getZ(),
-                        Sounds.LIGHTNING_GUN_SHOT.get(),SoundSource.PLAYERS,1,10);
-                BallLightningProjectile p = new BallLightningProjectile(EntityTypes.BALL_LIGHTNING.get(),world);
+                        SolarcraftSounds.LIGHTNING_GUN_SHOT.get(),SoundSource.PLAYERS,1,10);
+                BallLightningProjectile p = new BallLightningProjectile(SolarcraftEntityTypes.BALL_LIGHTNING.get(),world);
                 p.setPos(player.getX(),player.getY() + player.getEyeHeight(player.getPose())* 0.8,player.getZ());
                 p.setDeltaMovement(player.getLookAngle().multiply(0.7,0.7,0.7));
                 world.addFreshEntity(p);
             }
         }
         if (world.isClientSide){
-            ClientHelpers.playsoundInEars(Sounds.LIGHTNING_GUN_SHOT.get(),1,10);
+            ClientHelpers.playsoundInEars(SolarcraftSounds.LIGHTNING_GUN_SHOT.get(),1,10);
         }
         return super.use(world, player, hand);
     }

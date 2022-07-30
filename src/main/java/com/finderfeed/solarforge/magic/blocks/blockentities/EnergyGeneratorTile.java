@@ -3,7 +3,7 @@ package com.finderfeed.solarforge.magic.blocks.blockentities;
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.misc_things.AbstractEnergyGeneratorTileEntity;
 import com.finderfeed.solarforge.multiblocks.Multiblocks;
-import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
+import com.finderfeed.solarforge.registries.tile_entities.SolarcraftTileEntityTypes;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
@@ -16,7 +16,7 @@ public class EnergyGeneratorTile extends AbstractEnergyGeneratorTileEntity {
 
 
     public EnergyGeneratorTile(BlockPos pos, BlockState state) {
-        super(TileEntitiesRegistry.ENERGY_GENERATOR_TILE.get(),pos,state);
+        super(SolarcraftTileEntityTypes.ENERGY_GENERATOR_TILE.get(),pos,state);
     }
 
 
@@ -49,6 +49,6 @@ public class EnergyGeneratorTile extends AbstractEnergyGeneratorTileEntity {
 
     @Override
     public AABB getRenderBoundingBox(){
-        return new AABB(getBlockPos().offset(0,-1,0),getBlockPos().offset(1,16,1));
+        return new AABB(getBlockPos().offset(-16,-1,-16),getBlockPos().offset(16,16,16));
     }
 }

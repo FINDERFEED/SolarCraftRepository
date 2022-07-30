@@ -1,7 +1,7 @@
 package com.finderfeed.solarforge.world_generation.features;
 
 import com.finderfeed.solarforge.local_library.helpers.FDMathHelper;
-import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
+import com.finderfeed.solarforge.registries.blocks.SolarcraftBlocks;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.WorldGenLevel;
@@ -67,7 +67,7 @@ public class CeilingDripstoneLikeCrystals extends Feature<NoneFeatureConfigurati
                            double Z = (fillPos.getZ() - pos.getZ());
                            double r = Math.sqrt(X*X + Z*Z);
                            if (r <= maxRad){
-                               world.setBlock(fillPos,BlocksRegistry.RADIANT_CRYSTAL.get().defaultBlockState(),3);
+                               world.setBlock(fillPos, SolarcraftBlocks.RADIANT_CRYSTAL.get().defaultBlockState(),3);
                            }
                        }
                        for (int x = -maxRad; x <= maxRad; x++) {
@@ -75,7 +75,7 @@ public class CeilingDripstoneLikeCrystals extends Feature<NoneFeatureConfigurati
                                for (int z = -maxRad; z <= maxRad; z++) {
                                    BlockPos test = pos.offset(x, -y, z);
                                    if (isValidPlace(world, pos, test, crystalHeight, maxRad)) {
-                                       world.setBlock(test, BlocksRegistry.RADIANT_CRYSTAL.get().defaultBlockState(), 3);
+                                       world.setBlock(test, SolarcraftBlocks.RADIANT_CRYSTAL.get().defaultBlockState(), 3);
                                    }
                                }
                            }

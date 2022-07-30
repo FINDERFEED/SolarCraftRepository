@@ -32,6 +32,7 @@ import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
+import net.minecraft.client.renderer.culling.Frustum;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 
 import net.minecraft.client.renderer.texture.TextureAtlas;
@@ -60,6 +61,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.HalfTransparentBlock;
 import net.minecraft.world.level.block.StainedGlassPaneBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.client.model.data.EmptyModelData;
@@ -948,6 +950,17 @@ public class RenderingTools {
         p_93125_.vertex(p_93124_, (float)p_93128_, (float)p_93129_, (float)p_93130_).color(f5, f6, f7, f4).endVertex();
     }
 
+    public static boolean isBoxVisible(AABB box){
+        LevelRenderer renderer = Minecraft.getInstance().levelRenderer;
+        Frustum frustum;
+        if (renderer.capturedFrustum != null){
+            frustum = renderer.capturedFrustum;
+        }else{
+            frustum = renderer.cullingFrustum;
+        }
+        return frustum.isVisible(box);
+    }
+
 
     public static class StructureRenderer{
         public static List<PositionBlockStateTileEntity> prepareList(Multiblock m){
@@ -1168,24 +1181,54 @@ public class RenderingTools {
             float initY = init.y;
             float endX = end.x;
             float endY = end.y;
-            vertex.vertex(matrix4f,initX,initY,0).color(r,g,b,1.0f).endVertex();
-            vertex.vertex(matrix4f,initX,initY + halfSize,0).color(r,g,b,0.0f).endVertex();
-            vertex.vertex(matrix4f,endX,endY + halfSize,0).color(r,g,b,0.0f).endVertex();
-            vertex.vertex(matrix4f,endX,endY,0).color(r,g,b,1.0f).endVertex();
-            vertex.vertex(matrix4f,endX,endY,0).color(r,g,b,1.0f).endVertex();
-            vertex.vertex(matrix4f,endX,endY + halfSize,0).color(r,g,b,0.0f).endVertex();
-            vertex.vertex(matrix4f,initX,initY + halfSize,0).color(r,g,b,0.0f).endVertex();
-            vertex.vertex(matrix4f,initX,initY,0).color(r,g,b,1.0f).endVertex();
+            vertex.vertex(matrix4f,initX,initY,                     0).color(r,g,b,1.0f).endVertex();
+            vertex.vertex(matrix4f,initX,initY + halfSize,  0).color(r,g,b,0.0f).endVertex();
+            vertex.vertex(matrix4f,endX,endY + halfSize,    0).color(r,g,b,0.0f).endVertex();
+            vertex.vertex(matrix4f,endX,endY,                       0).color(r,g,b,1.0f).endVertex();
+            vertex.vertex(matrix4f,endX,endY,                       0).color(r,g,b,1.0f).endVertex();
+            vertex.vertex(matrix4f,endX,endY + halfSize,    0).color(r,g,b,0.0f).endVertex();
+            vertex.vertex(matrix4f,initX,initY + halfSize,  0).color(r,g,b,0.0f).endVertex();
+            vertex.vertex(matrix4f,initX,initY,                     0).color(r,g,b,1.0f).endVertex();
 
 
-            vertex.vertex(matrix4f,initX,initY,0).color(r,g,b,1.0f).endVertex();
-            vertex.vertex(matrix4f,initX,initY - halfSize,0).color(r,g,b,0.0f).endVertex();
-            vertex.vertex(matrix4f,endX,endY - halfSize,0).color(r,g,b,0.0f).endVertex();
-            vertex.vertex(matrix4f,endX,endY,0).color(r,g,b,1.0f).endVertex();
-            vertex.vertex(matrix4f,endX,endY,0).color(r,g,b,1.0f).endVertex();
-            vertex.vertex(matrix4f,endX,endY - halfSize,0).color(r,g,b,0.0f).endVertex();
-            vertex.vertex(matrix4f,initX,initY - halfSize,0).color(r,g,b,0.0f).endVertex();
-            vertex.vertex(matrix4f,initX,initY,0).color(r,g,b,1.0f).endVertex();
+            vertex.vertex(matrix4f,initX,initY,                     0).color(r,g,b,1.0f).endVertex();
+            vertex.vertex(matrix4f,initX,initY - halfSize,  0).color(r,g,b,0.0f).endVertex();
+            vertex.vertex(matrix4f,endX,endY - halfSize,    0).color(r,g,b,0.0f).endVertex();
+            vertex.vertex(matrix4f,endX,endY,                       0).color(r,g,b,1.0f).endVertex();
+            vertex.vertex(matrix4f,endX,endY,                       0).color(r,g,b,1.0f).endVertex();
+            vertex.vertex(matrix4f,endX,endY - halfSize,    0).color(r,g,b,0.0f).endVertex();
+            vertex.vertex(matrix4f,initX,initY - halfSize,  0).color(r,g,b,0.0f).endVertex();
+            vertex.vertex(matrix4f,initX,initY,                     0).color(r,g,b,1.0f).endVertex();
+
+        }
+
+        public static void renderLightningRectangle3D(VertexConsumer vertex,PoseStack matrices,Vec3 init,Vec3 end,float height,float r,float g,float b){
+            Matrix4f matrix4f = matrices.last().pose();
+            float halfSize = height / 2f;
+            float initX =(float) init.x;
+            float initY =(float) init.y;
+            float initZ = (float)init.z;
+            float endX = (float)end.x;
+            float endY = (float)end.y;
+            float endZ = (float)end.z;
+            vertex.vertex(matrix4f,initX,initY,                     initZ).color(r,g,b,1.0f).endVertex();
+            vertex.vertex(matrix4f,initX,initY + halfSize,  initZ).color(r,g,b,0.0f).endVertex();
+            vertex.vertex(matrix4f,endX,endY + halfSize,    endZ).color(r,g,b,0.0f).endVertex();
+            vertex.vertex(matrix4f,endX,endY,                       endZ).color(r,g,b,1.0f).endVertex();
+            vertex.vertex(matrix4f,endX,endY,                       endZ).color(r,g,b,1.0f).endVertex();
+            vertex.vertex(matrix4f,endX,endY + halfSize,    endZ).color(r,g,b,0.0f).endVertex();
+            vertex.vertex(matrix4f,initX,initY + halfSize,  initZ).color(r,g,b,0.0f).endVertex();
+            vertex.vertex(matrix4f,initX,initY,                     initZ).color(r,g,b,1.0f).endVertex();
+
+
+            vertex.vertex(matrix4f,initX,initY,                     initZ).color(r,g,b,1.0f).endVertex();
+            vertex.vertex(matrix4f,initX,initY - halfSize,  initZ).color(r,g,b,0.0f).endVertex();
+            vertex.vertex(matrix4f,endX,endY - halfSize,    endZ).color(r,g,b,0.0f).endVertex();
+            vertex.vertex(matrix4f,endX,endY,                       endZ).color(r,g,b,1.0f).endVertex();
+            vertex.vertex(matrix4f,endX,endY,                       endZ).color(r,g,b,1.0f).endVertex();
+            vertex.vertex(matrix4f,endX,endY - halfSize,    endZ).color(r,g,b,0.0f).endVertex();
+            vertex.vertex(matrix4f,initX,initY - halfSize,  initZ).color(r,g,b,0.0f).endVertex();
+            vertex.vertex(matrix4f,initX,initY,                     initZ).color(r,g,b,1.0f).endVertex();
 
         }
 
@@ -1193,9 +1236,9 @@ public class RenderingTools {
 
         public static List<Vec2> randomLightningBreaks(Random random,int breaksCount,float length,float maxSpread){
 
-            float x = length / breaksCount;
+            float x = length / (breaksCount+1);
             List<Vec2> points = new ArrayList<>(List.of(new Vec2(0,0)));
-            for (int i = 0; i < breaksCount-1;i++){
+            for (int i = 0; i < breaksCount;i++){
                 float randomY = random.nextFloat() * maxSpread * (random.nextInt(3) == 0 ? 1 : -1);
                 points.add(new Vec2(x * (i + 1),randomY));
             }
@@ -1203,23 +1246,33 @@ public class RenderingTools {
             return points;
         }
 
+        private static List<Vec3> generateLightningPositions(Random random,int breaksCount,float length,float maxSpread,Vec3 init,Vec3 end){
+            Vec3 between = end.subtract(init);
+            List<Vec3> points = new ArrayList<>(List.of(init));
+            for (int i = 0; i < breaksCount;i++){
+                float randomY = random.nextFloat() * maxSpread * (random.nextInt(3) == 0 ? 1 : -1);
+                double multiplier = (i+1) / (double)(breaksCount+1);
+                Vec3 f = init.add(between.multiply(multiplier,multiplier,multiplier).add(0,randomY,0));
+                points.add(f);
+            }
+            points.add(end);
+            return points;
+        }
+
         public static void renderLightning(PoseStack matrices,MultiBufferSource source,int breaksCount,float maxSpread,float rectangleHeights,Vec3 initialPos,Vec3 endPos,Random random,float r,float g,float b){
             VertexConsumer vertex = source.getBuffer(RenderType.lightning());
-            matrices.translate(initialPos.x,initialPos.y,initialPos.z);
             Vec3 between = endPos.subtract(initialPos);
             float length = (float)between.length();
-            List<Vec2> dots = randomLightningBreaks(random,breaksCount,length,maxSpread);
+            List<Vec3> dots = generateLightningPositions(random,breaksCount,length,maxSpread,initialPos,endPos);
             matrices.pushPose();
-            double angleXZ = Math.atan2(between.z,between.x);
-            double angleXY = Math.atan2(between.y,between.x);
-            matrices.mulPose(Vector3f.YP.rotation((float)angleXZ));
-            matrices.mulPose(Vector3f.ZP.rotation((float)angleXY));
-//            System.out.println(angle);
-//            applyMovementMatrixRotations(matrices,between);
+//            double angleXZ = Math.atan2(between.z,between.x);
+//            double angleXY = Math.atan2(between.y,between.x);
+//            matrices.mulPose(Vector3f.YP.rotation((float)angleXZ));
+//            matrices.mulPose(Vector3f.ZP.rotation((float)angleXY));
             for (int i = 0; i < dots.size()-1;i++){
-                Vec2 init = dots.get(i);
-                Vec2 end = dots.get(i+1);
-                renderLightningRectangle(vertex,matrices,init,end,rectangleHeights,r,g,b);
+                Vec3 init = dots.get(i);
+                Vec3 end = dots.get(i+1);
+                renderLightningRectangle3D(vertex,matrices,init,end,rectangleHeights,r,g,b);
             }
             matrices.popPose();
         }

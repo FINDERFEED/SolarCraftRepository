@@ -15,7 +15,7 @@ import com.finderfeed.solarforge.magic.decoration_blocks.SolarFlower;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.progressions.Progression;
 import com.finderfeed.solarforge.magic.runic_network.repeater.RunicNetworkRepeater;
 import com.finderfeed.solarforge.client.particles.ParticleTypesRegistry;
-import com.finderfeed.solarforge.registries.effects.EffectsRegister;
+import com.finderfeed.solarforge.registries.effects.SolarcraftEffects;
 import com.finderfeed.solarforge.world_generation.structures.blocks.ColdStarInfuser;
 import com.finderfeed.solarforge.world_generation.structures.blocks.InvincibleStone;
 import com.finderfeed.solarforge.world_generation.structures.blocks.KeyDefender;
@@ -40,7 +40,7 @@ import net.minecraftforge.registries.RegistryObject;
 
 import java.util.Random;
 
-public class BlocksRegistry {
+public class SolarcraftBlocks {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS,"solarforge");
     public  static  final RegistryObject<InfusingStand> INFUSING_POOL = BLOCKS.register("solar_forge_infusion_pool",()-> new InfusingStand(BlockBehaviour.Properties.of(Material.STONE)
             .sound(SoundType.METAL)
@@ -145,7 +145,7 @@ public class BlocksRegistry {
     public static final RegistryObject<Block> REGENERATION_AMPLIFICATION_BLOCK = BLOCKS.register("regen_amp_block",
             ()->new AmplificationBlock(BlockBehaviour.Properties.copy(Blocks.STONE),()->MobEffects.REGENERATION));
     public static final RegistryObject<Block> EVASION_AMPLIFICATION_BLOCK = BLOCKS.register("evasion_amp_block",
-            ()->new AmplificationBlock(BlockBehaviour.Properties.copy(Blocks.STONE), EffectsRegister.EVASION));
+            ()->new AmplificationBlock(BlockBehaviour.Properties.copy(Blocks.STONE), SolarcraftEffects.EVASION));
 
     public static final RegistryObject<RotatedPillarBlock> RADIANT_LOG = BLOCKS.register("radiant_log",()-> new RotatedPillarFlammableBlock(BlockBehaviour.Properties.copy(Blocks.OAK_LOG),20));
     public static final RegistryObject<Block> RADIANT_PLANKS = BLOCKS.register("radiant_planks",()-> new FlammableBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS),20));

@@ -23,6 +23,7 @@ public class ClearingRitualTileRenderer extends TileEntityRenderer<ClearingRitua
     @Override
     public void render(ClearingRitualMainTile tile, float pticks, PoseStack matrices, MultiBufferSource buffer, int light, int overlay) {
         this.renderModel(matrices,buffer,light,overlay,pticks);
+
     }
 
 
@@ -49,14 +50,6 @@ public class ClearingRitualTileRenderer extends TileEntityRenderer<ClearingRitua
         matrices.popPose();
         matrices.popPose();
 
-        matrices.pushPose();
-        matrices.translate(0,2,0);
-
-        Random random = new Random(Minecraft.getInstance().level.getGameTime());
-        random.nextFloat();
-
-
-        matrices.popPose();
     }
 
     @Override

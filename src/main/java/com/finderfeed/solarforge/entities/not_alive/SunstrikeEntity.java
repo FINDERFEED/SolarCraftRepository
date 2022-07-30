@@ -3,11 +3,10 @@ package com.finderfeed.solarforge.entities.not_alive;
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.misc_things.CrystalBossBuddy;
 import com.finderfeed.solarforge.packet_handler.packets.misc_packets.ExplosionParticlesPacket;
-import com.finderfeed.solarforge.registries.entities.EntityTypes;
-import com.finderfeed.solarforge.registries.sounds.Sounds;
+import com.finderfeed.solarforge.registries.entities.SolarcraftEntityTypes;
+import com.finderfeed.solarforge.registries.sounds.SolarcraftSounds;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
@@ -27,7 +26,7 @@ public class SunstrikeEntity extends Entity {
     }
 
     public SunstrikeEntity(Level world,double x,double y,double z){
-        this(EntityTypes.SUNSTRIKE.get(),world);
+        this(SolarcraftEntityTypes.SUNSTRIKE.get(),world);
         setPos(x,y,z);
     }
 
@@ -35,7 +34,7 @@ public class SunstrikeEntity extends Entity {
     @Override
     public void tick() {
         if (!level.isClientSide && tickCount == 1){
-            level.playSound(null,this.getX(),this.getY(),this.getZ(), Sounds.SUNSTRIKE.get(), SoundSource.AMBIENT,1,1f);
+            level.playSound(null,this.getX(),this.getY(),this.getZ(), SolarcraftSounds.SUNSTRIKE.get(), SoundSource.AMBIENT,1,1f);
         }
         if (!level.isClientSide && tickCount > FALLING_TIME){
             explode();
@@ -51,7 +50,7 @@ public class SunstrikeEntity extends Entity {
                 entity.invulnerableTime = 0;
             }
         }
-        level.playSound(null,this.getX(),this.getY(),this.getZ(), Sounds.SOLAR_EXPLOSION.get(), SoundSource.AMBIENT,level.random.nextFloat()*0.5f+0.5f,1f);
+        level.playSound(null,this.getX(),this.getY(),this.getZ(), SolarcraftSounds.SOLAR_EXPLOSION.get(), SoundSource.AMBIENT,level.random.nextFloat()*0.5f+0.5f,1f);
         ExplosionParticlesPacket.send(level,this.position());
         this.discard();
     }

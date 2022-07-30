@@ -4,7 +4,7 @@ import com.finderfeed.solarforge.ClientHelpers;
 import com.finderfeed.solarforge.client.particles.ParticleTypesRegistry;
 import com.finderfeed.solarforge.packet_handler.packets.ShadowBoltExplosionPacket;
 import com.finderfeed.solarforge.registries.SolarcraftDamageSources;
-import com.finderfeed.solarforge.registries.sounds.Sounds;
+import com.finderfeed.solarforge.registries.sounds.SolarcraftSounds;
 import com.mojang.math.Quaternion;
 import com.mojang.math.Vector3f;
 import net.minecraft.core.particles.ParticleOptions;
@@ -80,7 +80,7 @@ public class ShadowBolt extends AbstractHurtingProjectile {
         })){
             e.hurt(SolarcraftDamageSources.SHADOW.setMagic().bypassArmor().setProjectile(),5);
         }
-        level.playSound(null,position().x,position().y,position().z, Sounds.SHADOW_BOLT_EXPLOSION.get(), SoundSource.HOSTILE,4,0.75f);
+        level.playSound(null,position().x,position().y,position().z, SolarcraftSounds.SHADOW_BOLT_EXPLOSION.get(), SoundSource.HOSTILE,4,0.75f);
     }
 
     @Override

@@ -6,16 +6,13 @@ import com.finderfeed.solarforge.magic.items.solar_lexicon.SolarLexicon;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.progressions.Progression;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import com.finderfeed.solarforge.multiblocks.Multiblocks;
-import com.finderfeed.solarforge.registries.items.ItemsRegister;
+import com.finderfeed.solarforge.registries.items.SolarcraftItems;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.unlockables.ProgressionHelper;
 import com.mojang.brigadier.CommandDispatcher;
-import com.mojang.brigadier.StringReader;
-import com.mojang.brigadier.arguments.ArgumentType;
 import com.mojang.brigadier.arguments.FloatArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.ArgumentBuilder;
-import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import net.minecraft.commands.CommandSourceStack;
@@ -81,7 +78,7 @@ public class CommandsSolarCraft {
                         for (int i = 0; i < AncientFragment.getAllFragments().length; i++) {
 
                             AncientFragment fragment = AncientFragment.getAllFragments()[i];
-                            ItemStack stack = ItemsRegister.INFO_FRAGMENT.get().getDefaultInstance();
+                            ItemStack stack = SolarcraftItems.INFO_FRAGMENT.get().getDefaultInstance();
                             ProgressionHelper.applyTagToFragment(stack, fragment);
                             inv.insertItem(i, stack, false);
 
@@ -144,7 +141,7 @@ class RetainFragments{
         ServerPlayer playerEntity  = src.getPlayerOrException();
         for (AncientFragment fragment : AncientFragment.getAllFragments()){
             if (ProgressionHelper.doPlayerHasFragment(playerEntity,fragment)){
-                ItemStack frag = ItemsRegister.INFO_FRAGMENT.get().getDefaultInstance();
+                ItemStack frag = SolarcraftItems.INFO_FRAGMENT.get().getDefaultInstance();
                 ProgressionHelper.applyTagToFragment(frag,fragment);
                 ItemEntity entity = new ItemEntity(playerEntity.level,playerEntity.getX(),playerEntity.getY()+0.3f,playerEntity.getZ(),frag);
                 playerEntity.getLevel().addFreshEntity(entity);

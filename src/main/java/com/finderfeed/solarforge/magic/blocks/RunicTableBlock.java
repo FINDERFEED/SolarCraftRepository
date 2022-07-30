@@ -6,7 +6,7 @@ import com.finderfeed.solarforge.magic.items.solar_lexicon.unlockables.RunePatte
 import com.finderfeed.solarforge.misc_things.PhantomInventory;
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
 import com.finderfeed.solarforge.packet_handler.packets.UpdateRunePattern;
-import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
+import com.finderfeed.solarforge.registries.tile_entities.SolarcraftTileEntityTypes;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.unlockables.ProgressionHelper;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
@@ -75,7 +75,7 @@ public class RunicTableBlock extends Block implements EntityBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-        return TileEntitiesRegistry.RUNIC_TABLE_TILE.get().create(blockPos,blockState);
+        return SolarcraftTileEntityTypes.RUNIC_TABLE_TILE.get().create(blockPos,blockState);
     }
 
 

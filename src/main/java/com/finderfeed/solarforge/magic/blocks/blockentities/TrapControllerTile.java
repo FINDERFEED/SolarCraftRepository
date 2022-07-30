@@ -3,8 +3,8 @@ package com.finderfeed.solarforge.magic.blocks.blockentities;
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.magic.blocks.BlueGemDoorBlock;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.progressions.Progression;
-import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
-import com.finderfeed.solarforge.registries.tile_entities.TileEntitiesRegistry;
+import com.finderfeed.solarforge.registries.blocks.SolarcraftBlocks;
+import com.finderfeed.solarforge.registries.tile_entities.SolarcraftTileEntityTypes;
 import net.minecraft.world.level.Level;
 
 import net.minecraft.world.level.block.state.BlockState;
@@ -36,7 +36,7 @@ public class TrapControllerTile extends BlockEntity  {
     public int TICKS = 0;
 
     public TrapControllerTile( BlockPos p_155229_, BlockState p_155230_) {
-        super(TileEntitiesRegistry.TRAP_STRUCT_CONTROLLER.get(), p_155229_, p_155230_);
+        super(SolarcraftTileEntityTypes.TRAP_STRUCT_CONTROLLER.get(), p_155229_, p_155230_);
     }
 
 
@@ -95,12 +95,12 @@ public class TrapControllerTile extends BlockEntity  {
 
                 for (BlockPos pos : tile.ENTRANCE_BLOCK_POSITIONS){
 
-                    if ((tile.level.getBlockState(pos).getBlock() != BlocksRegistry.INVINCIBLE_STONE.get()) || (tile.level.getBlockState(pos).getBlock() != BlocksRegistry.BLUE_GEM_DOOR_BLOCK.get())){
+                    if ((tile.level.getBlockState(pos).getBlock() != SolarcraftBlocks.INVINCIBLE_STONE.get()) || (tile.level.getBlockState(pos).getBlock() != SolarcraftBlocks.BLUE_GEM_DOOR_BLOCK.get())){
                         if ((!Helpers.equalsBlockPos(pos,tile.worldPosition.offset(8,-4,-1)))
                         && (!Helpers.equalsBlockPos(pos,tile.worldPosition.offset(8,-4,1)))) {
-                            tile.level.setBlock(pos, BlocksRegistry.INVINCIBLE_STONE.get().defaultBlockState(), 3);
+                            tile.level.setBlock(pos, SolarcraftBlocks.INVINCIBLE_STONE.get().defaultBlockState(), 3);
                         }else {
-                            tile.level.setBlock(pos, BlocksRegistry.BLUE_GEM_DOOR_BLOCK.get().defaultBlockState()
+                            tile.level.setBlock(pos, SolarcraftBlocks.BLUE_GEM_DOOR_BLOCK.get().defaultBlockState()
                                     .setValue(BlockStateProperties.HORIZONTAL_FACING, Direction.EAST)
                                     .setValue(BlueGemDoorBlock.UNLOCKED, false), 3);
                         }

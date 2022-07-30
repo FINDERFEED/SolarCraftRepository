@@ -24,6 +24,7 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.core.BlockPos;
 import com.mojang.math.Matrix4f;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import com.mojang.math.Vector3f;
 
@@ -224,6 +225,8 @@ public class EnergyGeneratorTileRender implements BlockEntityRenderer<EnergyGene
 
 
     private void doShader(PoseStack matrices,EnergyGeneratorTile tile){
+        Vec3 d1 = new Vec3(tile.getBlockPos().getX(),tile.getBlockPos().getY(),tile.getBlockPos().getZ());
+        if (!RenderingTools.isBoxVisible(new AABB(d1,d1.add(1,1,1)))) return;
         if (FDMathHelper.canSeeTileEntity(tile,Minecraft.getInstance().player) && Minecraft.getInstance().cameraEntity != null) {
             Vec3 playerPos = Minecraft.getInstance().gameRenderer.getMainCamera().getPosition();
             Vec3 tilePos = new Vec3(tile.getBlockPos().getX() + 0.5, tile.getBlockPos().getY() + 0.5, tile.getBlockPos().getZ() + 0.5);

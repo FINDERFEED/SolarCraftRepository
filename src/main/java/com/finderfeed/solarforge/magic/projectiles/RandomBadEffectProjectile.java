@@ -4,7 +4,7 @@ import com.finderfeed.solarforge.ClientHelpers;
 import com.finderfeed.solarforge.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarforge.misc_things.CrystalBossBuddy;
 import com.finderfeed.solarforge.client.particles.ParticleTypesRegistry;
-import com.finderfeed.solarforge.registries.entities.EntityTypes;
+import com.finderfeed.solarforge.registries.entities.SolarcraftEntityTypes;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -53,13 +53,13 @@ public class RandomBadEffectProjectile extends AbstractHurtingProjectile {
     }
 
     public RandomBadEffectProjectile(double p_36818_, double p_36819_, double p_36820_, double p_36821_, double p_36822_, double p_36823_, Level p_36824_) {
-        super(EntityTypes.RANDOM_BAD_EFFECT_PROJECTILE.get(), p_36818_, p_36819_, p_36820_, p_36821_, p_36822_, p_36823_, p_36824_);
+        super(SolarcraftEntityTypes.RANDOM_BAD_EFFECT_PROJECTILE.get(), p_36818_, p_36819_, p_36820_, p_36821_, p_36822_, p_36823_, p_36824_);
         MobEffect effect = ID.get(new Random().nextInt(ID.keySet().size()));
         this.potionID = REVERSE_ID.get(effect);
     }
 
     public RandomBadEffectProjectile(LivingEntity p_36827_, double p_36828_, double p_36829_, double p_36830_, Level p_36831_) {
-        super(EntityTypes.RANDOM_BAD_EFFECT_PROJECTILE.get(), p_36827_, p_36828_, p_36829_, p_36830_, p_36831_);
+        super(SolarcraftEntityTypes.RANDOM_BAD_EFFECT_PROJECTILE.get(), p_36827_, p_36828_, p_36829_, p_36830_, p_36831_);
         MobEffect effect = ID.get(new Random().nextInt(ID.keySet().size()));
         this.potionID = REVERSE_ID.get(effect);
     }

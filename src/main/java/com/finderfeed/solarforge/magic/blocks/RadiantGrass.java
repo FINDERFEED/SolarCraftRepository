@@ -1,7 +1,7 @@
 package com.finderfeed.solarforge.magic.blocks;
 
 import com.finderfeed.solarforge.local_library.blocks.NormalGrassBlock;
-import com.finderfeed.solarforge.registries.blocks.BlocksRegistry;
+import com.finderfeed.solarforge.registries.blocks.SolarcraftBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.block.BonemealableBlock;
@@ -20,7 +20,7 @@ public class RadiantGrass extends NormalGrassBlock {
     @Override
     public void performBonemeal(ServerLevel p_53687_, Random p_53688_, BlockPos p_53689_, BlockState p_53690_) {
         BlockPos var5 = p_53689_.above();
-        BlockState var6 = BlocksRegistry.RADIANT_GRASS_NOT_BLOCK.get().defaultBlockState();
+        BlockState var6 = SolarcraftBlocks.RADIANT_GRASS_NOT_BLOCK.get().defaultBlockState();
 
         label48:
         for(int var7 = 0; var7 < 128; ++var7) {

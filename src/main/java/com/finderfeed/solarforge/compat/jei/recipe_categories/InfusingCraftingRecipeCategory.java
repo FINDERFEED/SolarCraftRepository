@@ -5,7 +5,7 @@ import com.finderfeed.solarforge.local_library.helpers.RenderingTools;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.unlockables.ProgressionHelper;
 import com.finderfeed.solarforge.recipe_types.infusing_crafting.InfusingCraftingRecipe;
-import com.finderfeed.solarforge.registries.items.ItemsRegister;
+import com.finderfeed.solarforge.registries.items.SolarcraftItems;
 import com.mojang.blaze3d.vertex.PoseStack;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
@@ -22,8 +22,6 @@ import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Ingredient;
 
 public class InfusingCraftingRecipeCategory implements IRecipeCategory<InfusingCraftingRecipe> {
 
@@ -46,7 +44,7 @@ public class InfusingCraftingRecipeCategory implements IRecipeCategory<InfusingC
 
     @Override
     public IDrawable getIcon() {
-        return helpers.getGuiHelper().createDrawableIngredient(VanillaTypes.ITEM_STACK,ItemsRegister.INFUSING_TABLE.get().getDefaultInstance());
+        return helpers.getGuiHelper().createDrawableIngredient(VanillaTypes.ITEM_STACK, SolarcraftItems.INFUSING_TABLE.get().getDefaultInstance());
     }
 
     @Override
