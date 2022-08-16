@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.magic.blocks.blockentities.projectiles;
 
-import com.finderfeed.solarforge.client.particles.ParticleTypesRegistry;
+import com.finderfeed.solarforge.client.particles.SolarcraftParticleTypes;
 import com.finderfeed.solarforge.registries.entities.SolarcraftEntityTypes;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -88,7 +88,7 @@ public class AbstractTurretProjectile extends AbstractHurtingProjectile {
     @Override
     public void tick(){
         if (level.isClientSide) {
-            level.addParticle(ParticleTypesRegistry.SMALL_SOLAR_STRIKE_PARTICLE.get(), true, position().x, position().y + 0.15, position().z, 0, 0, 0);
+            level.addParticle(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(), true, position().x, position().y + 0.15, position().z, 0, 0, 0);
         }
         super.tick();
 
@@ -101,7 +101,7 @@ public class AbstractTurretProjectile extends AbstractHurtingProjectile {
 
     @Override
     protected ParticleOptions getTrailParticle() {
-        return ParticleTypesRegistry.INVISIBLE_PARTICLE.get();
+        return SolarcraftParticleTypes.INVISIBLE_PARTICLE.get();
     }
 
     @Override

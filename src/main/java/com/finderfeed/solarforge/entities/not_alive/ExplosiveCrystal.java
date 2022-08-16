@@ -1,7 +1,7 @@
 package com.finderfeed.solarforge.entities.not_alive;
 
 import com.finderfeed.solarforge.ClientHelpers;
-import com.finderfeed.solarforge.client.particles.ParticleTypesRegistry;
+import com.finderfeed.solarforge.client.particles.SolarcraftParticleTypes;
 import com.finderfeed.solarforge.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarforge.misc_things.CrystalBossBuddy;
 import com.finderfeed.solarforge.registries.sounds.SolarcraftSounds;
@@ -53,7 +53,7 @@ public class ExplosiveCrystal extends Mob implements CrystalBossBuddy {
             if (isDeploying()){
                 for (int i = 0;i < 6;i++){
                     double[] xz = FDMathHelper.rotatePointDegrees(1.5*(1-(float)tickCount / DEPLOYING_TIME),0,i*60 + tickCount*5);
-                    ClientHelpers.ParticleAnimationHelper.createParticle(ParticleTypesRegistry.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+                    ClientHelpers.ParticleAnimationHelper.createParticle(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
                             position().x + xz[0],position().y + 1.5,position().z + xz[1],0,0,0,()->200 + level.random.nextInt(55),
                             ()->0,()->0,0.3f);
                 }

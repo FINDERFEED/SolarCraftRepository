@@ -1,7 +1,7 @@
 package com.finderfeed.solarforge.magic.blocks.blockentities;
 
 import com.finderfeed.solarforge.Helpers;
-import com.finderfeed.solarforge.client.particles.ParticleTypesRegistry;
+import com.finderfeed.solarforge.client.particles.SolarcraftParticleTypes;
 import com.finderfeed.solarforge.multiblocks.Multiblocks;
 import com.finderfeed.solarforge.registries.tile_entities.SolarcraftTileEntityTypes;
 import net.minecraft.core.BlockPos;
@@ -39,7 +39,7 @@ public class AuraHealerTile extends BlockEntity  {
                         if (a.getHealth() != a.getMaxHealth()) {
                             a.heal(4);
                             for (int i = 10; i < 16; i++) {
-                                ((ServerLevel) tile.level).sendParticles(ParticleTypesRegistry.HEAL_PARTICLE.get(), a.position().x, a.position().y + 1.35f, a.position().z, 5, 0, 0.3, 0, 0.02);
+                                ((ServerLevel) tile.level).sendParticles(SolarcraftParticleTypes.HEAL_PARTICLE.get(), a.position().x, a.position().y + 1.35f, a.position().z, 5, 0, 0.3, 0, 0.02);
                             }
                         }
                     }

@@ -1,17 +1,11 @@
 package com.finderfeed.solarforge.magic.blocks.primitive;
 
-import com.finderfeed.solarforge.Helpers;
-import com.finderfeed.solarforge.client.particles.ParticleTypesRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-
-import java.util.Random;
 
 public class CrystalBlock extends DirectionBlock{
     private VoxelShape shape_up = Block.box(5,0,5,11,12,11);

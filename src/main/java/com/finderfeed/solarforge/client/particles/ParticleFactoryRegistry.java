@@ -14,14 +14,14 @@ public class ParticleFactoryRegistry {
 
 
 
-        Minecraft.getInstance().particleEngine.register(ParticleTypesRegistry.SOLAR_STRIKE_PARTICLE.get(), SolarStrikeParticle.Factory::new);
-        Minecraft.getInstance().particleEngine.register(ParticleTypesRegistry.INVISIBLE_PARTICLE.get(), InvisibleParticle.Factory::new);
-        Minecraft.getInstance().particleEngine.register(ParticleTypesRegistry.HEAL_PARTICLE.get(), HealParticle.Factory::new);
-        Minecraft.getInstance().particleEngine.register(ParticleTypesRegistry.SMALL_SOLAR_STRIKE_PARTICLE.get(), SmallSolarStrikeParticle.Factory::new);
-        Minecraft.getInstance().particleEngine.register(ParticleTypesRegistry.RUNE_PARTICLE.get(), RuneParticle.Factory::new);
-        Minecraft.getInstance().particleEngine.register(ParticleTypesRegistry.SOLAR_EXPLOSION_PARTICLE.get(), SolarExplosionParticle.Factory::new);
-        Minecraft.getInstance().particleEngine.register(ParticleTypesRegistry.SPARK_PARTICLE.get(), SparkParticle.Factory::new);
-        Minecraft.getInstance().particleEngine.register(ParticleTypesRegistry.CRYSTAL_SPARK_PARTICLE.get(), CrystalSparkParticle.Provider::new);
+        Minecraft.getInstance().particleEngine.register(SolarcraftParticleTypes.SOLAR_STRIKE_PARTICLE.get(), SolarStrikeParticle.Factory::new);
+        Minecraft.getInstance().particleEngine.register(SolarcraftParticleTypes.INVISIBLE_PARTICLE.get(), InvisibleParticle.Factory::new);
+        Minecraft.getInstance().particleEngine.register(SolarcraftParticleTypes.HEAL_PARTICLE.get(), HealParticle.Factory::new);
+        Minecraft.getInstance().particleEngine.register(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(), SmallSolarStrikeParticle.Factory::new);
+        Minecraft.getInstance().particleEngine.register(SolarcraftParticleTypes.RUNE_PARTICLE.get(), RuneParticle.Factory::new);
+        Minecraft.getInstance().particleEngine.register(SolarcraftParticleTypes.SOLAR_EXPLOSION_PARTICLE.get(), SolarExplosionParticle.Factory::new);
+        Minecraft.getInstance().particleEngine.register(SolarcraftParticleTypes.SPARK_PARTICLE.get(), SparkParticle.Factory::new);
+        Minecraft.getInstance().particleEngine.register(SolarcraftParticleTypes.CRYSTAL_SPARK_PARTICLE.get(), CrystalSparkParticle.Provider::new);
 
     }
 

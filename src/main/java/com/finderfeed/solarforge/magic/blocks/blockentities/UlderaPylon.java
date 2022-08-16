@@ -2,7 +2,7 @@ package com.finderfeed.solarforge.magic.blocks.blockentities;
 
 import com.finderfeed.solarforge.ClientHelpers;
 import com.finderfeed.solarforge.Helpers;
-import com.finderfeed.solarforge.client.particles.ParticleTypesRegistry;
+import com.finderfeed.solarforge.client.particles.SolarcraftParticleTypes;
 import com.finderfeed.solarforge.magic.blocks.blockentities.projectiles.ShadowBolt;
 import com.finderfeed.solarforge.registries.entities.SolarcraftEntityTypes;
 import com.finderfeed.solarforge.registries.tile_entities.SolarcraftTileEntityTypes;
@@ -59,7 +59,7 @@ public class UlderaPylon extends BlockEntity {
         }else{
             if (world.getGameTime() % 4 == 0) {
                 Vec3 p = Helpers.getBlockCenter(pos).add(Helpers.randomVector().multiply(0.5,0.5,0.5));
-                ClientHelpers.ParticleAnimationHelper.createParticle(ParticleTypesRegistry.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+                ClientHelpers.ParticleAnimationHelper.createParticle(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
                         p.x, p.y, p.z, 0, 0.05, 0, () -> 50, () -> 0, () -> 130, 0.4f);
             }
         }

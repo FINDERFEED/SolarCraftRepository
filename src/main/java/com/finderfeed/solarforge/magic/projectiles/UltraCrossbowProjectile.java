@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.magic.projectiles;
 
-import com.finderfeed.solarforge.client.particles.ParticleTypesRegistry;
+import com.finderfeed.solarforge.client.particles.SolarcraftParticleTypes;
 import com.finderfeed.solarforge.registries.entities.SolarcraftEntityTypes;
 import com.finderfeed.solarforge.registries.sounds.SolarcraftSounds;
 import net.minecraft.world.entity.Entity;
@@ -59,7 +59,7 @@ public class UltraCrossbowProjectile extends AbstractHurtingProjectile {
 
             ent.hurt(DamageSource.MAGIC.setProjectile(),(float)damage);
 
-            ((ServerLevel)level).sendParticles(ParticleTypesRegistry.SOLAR_STRIKE_PARTICLE.get(),ent.getX(),ent.getY()+1.2,ent.getZ(),2,0,0.02,0,0.02);
+            ((ServerLevel)level).sendParticles(SolarcraftParticleTypes.SOLAR_STRIKE_PARTICLE.get(),ent.getX(),ent.getY()+1.2,ent.getZ(),2,0,0.02,0,0.02);
             if (damage >= 30 && (damage < 120) ){
                 level.explode(null,this.getX(),this.getY(),this.getZ(),5,true, Explosion.BlockInteraction.BREAK);
             }else if (damage >= 120){
@@ -125,7 +125,7 @@ public class UltraCrossbowProjectile extends AbstractHurtingProjectile {
 
     @Override
     protected ParticleOptions getTrailParticle() {
-        return ParticleTypesRegistry.INVISIBLE_PARTICLE.get();
+        return SolarcraftParticleTypes.INVISIBLE_PARTICLE.get();
     }
 
     public void setPITCH(float a ) {

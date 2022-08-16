@@ -14,7 +14,7 @@ import com.finderfeed.solarforge.magic.blocks.primitive.*;
 import com.finderfeed.solarforge.magic.decoration_blocks.SolarFlower;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.progressions.Progression;
 import com.finderfeed.solarforge.magic.runic_network.repeater.RunicNetworkRepeater;
-import com.finderfeed.solarforge.client.particles.ParticleTypesRegistry;
+import com.finderfeed.solarforge.client.particles.SolarcraftParticleTypes;
 import com.finderfeed.solarforge.registries.effects.SolarcraftEffects;
 import com.finderfeed.solarforge.world_generation.structures.blocks.ColdStarInfuser;
 import com.finderfeed.solarforge.world_generation.structures.blocks.InvincibleStone;
@@ -164,7 +164,7 @@ public class SolarcraftBlocks {
         public void animateTick(BlockState state, Level world, BlockPos pos, Random random) {
             if (random.nextInt(5) == 0) {
                 Vec3 vec = Helpers.randomVector().normalize().multiply(0.5,0.5,0.5);
-                world.addParticle(ParticleTypesRegistry.CRYSTAL_SPARK_PARTICLE.get(),pos.getX() + 0.5 + vec.x,pos.getY() + 0.5 + vec.y,pos.getZ() + 0.5 + vec.z,0,0,0);
+                world.addParticle(SolarcraftParticleTypes.CRYSTAL_SPARK_PARTICLE.get(),pos.getX() + 0.5 + vec.x,pos.getY() + 0.5 + vec.y,pos.getZ() + 0.5 + vec.z,0,0,0);
             }
         }
     });
@@ -172,7 +172,7 @@ public class SolarcraftBlocks {
     public  static  final RegistryObject<Block> CORRUPTED_STONE = BLOCKS.register("corrupted_stone",()-> new Block(BlockBehaviour.Properties.copy(Blocks.STONE)));
     public  static  final RegistryObject<Block> ULDERA_RUNE_BLOCK = BLOCKS.register("uldera_rune_block",()-> new Block(BlockBehaviour.Properties.copy(Blocks.STONE)));
     public  static  final RegistryObject<Block> CRYSTAL_ENERGY_VINES = BLOCKS.register("crystal_energy_vines",()-> new CrystalEnergyVinesBlock(BlockBehaviour.Properties.copy(Blocks.BEDROCK)));
-    public  static  final RegistryObject<Block> CLEARING_RITUAL_CRYSTAL = BLOCKS.register("clearing_ritual_crystal",()-> new ClearingRitualCrystalBlock(BlockBehaviour.Properties.copy(Blocks.BEDROCK).noOcclusion()));
+    public  static  final RegistryObject<Block> CLEARING_RITUAL_CRYSTAL = BLOCKS.register("clearing_ritual_crystal",()-> new ClearingRitualCrystalBlock(BlockBehaviour.Properties.copy(Blocks.STONE).explosionResistance(3600000.0F).noOcclusion()));
     public  static  final RegistryObject<Block> CLEARING_RITUAL_MAIN_BLOCK = BLOCKS.register("clearing_ritual_main_block",()-> new ClearingRitualMainBlock(BlockBehaviour.Properties.copy(Blocks.BEDROCK).noOcclusion()));
 
 }

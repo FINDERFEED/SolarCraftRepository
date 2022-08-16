@@ -8,7 +8,7 @@ import com.finderfeed.solarforge.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarforge.magic.blocks.blockentities.clearing_ritual.RadiantLandCleanedData;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.progressions.Progression;
 import com.finderfeed.solarforge.misc_things.Multiblock;
-import com.finderfeed.solarforge.client.particles.ParticleTypesRegistry;
+import com.finderfeed.solarforge.client.particles.SolarcraftParticleTypes;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import com.finderfeed.solarforge.misc_things.StateAndTag;
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
@@ -24,16 +24,14 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.core.Direction;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.*;
 import net.minecraft.world.level.ClipContext;
@@ -112,6 +110,17 @@ public class Helpers {
         return chunks;
     }
 
+    public static <T extends BlockEntity> List<T> collectTilesInChunks(BlockEntityType<T> type, Level world, BlockPos pos, int radius){
+        List<LevelChunk> chunks = getChunksInRadius(world,pos,radius);
+        List<T> tiles = new ArrayList<>();
+        chunks.forEach(chunk->chunk.getBlockEntities().forEach((p,tile)->{
+            if (tile.getType() == type){
+                tiles.add((T)tile);
+            }
+        }));
+        return tiles;
+    }
+
     public static boolean isVulnerable(Entity ent){
         return ent.invulnerableTime == 0;
     }
@@ -134,29 +143,6 @@ public class Helpers {
     public static void setProgressionCompletionStatus(Progression ach, Player pe, boolean a){
         pe.getPersistentData().putBoolean("solar_forge_progression_"+ach.getAchievementCode(),a);
     }
-
-
-
-
-
-//    public static void spendMana(Player playerEntity,double count){
-//        if (!playerEntity.isDeadOrDying() && playerEntity.getCapability(CapabilitySolarMana.SOLAR_MANA_PLAYER).isPresent() && !playerEntity.isCreative()){
-//            if (count < playerEntity.getCapability(CapabilitySolarMana.SOLAR_MANA_PLAYER).orElseThrow(Error::new).getMana()) {
-//                playerEntity.getCapability(CapabilitySolarMana.SOLAR_MANA_PLAYER).orElseThrow(Error::new).setMana(playerEntity.getCapability(CapabilitySolarMana.SOLAR_MANA_PLAYER).orElseThrow(Error::new).getMana() - count);
-//            }
-//        }
-//    }
-//    public static boolean canCast(Player playerEntity,double count){
-//        if (!playerEntity.isDeadOrDying() && playerEntity.getCapability(CapabilitySolarMana.SOLAR_MANA_PLAYER).isPresent() && !playerEntity.isCreative()) {
-//            if (count < playerEntity.getCapability(CapabilitySolarMana.SOLAR_MANA_PLAYER).orElseThrow(Error::new).getMana()) {
-//                return true;
-//            }
-//        }else if (playerEntity.isCreative()){
-//            return true;
-//
-//        }
-//        return false;
-//    }
 
 
     public static LevelChunk[] getSurroundingChunks(Level level,BlockPos worldPosition){
@@ -408,46 +394,13 @@ public class Helpers {
         return world.getDayTime() % 24000 <= 12000;
     }
 
-
-//    public static class ManaHandler{
-//        public static boolean spendMana(Player player,double amount){
-//            LazyOptional<SolarForgeMana> cap = getCap(player);
-//            if (cap.isPresent() ){
-//                if (player.isCreative()){
-//                    return true;
-//                }else{
-//                    Optional<SolarForgeMana> op = cap.resolve();
-//                    if (op.isPresent()){
-//                        SolarForgeMana capability = op.get();
-//                        double mana = capability.getMana();
-//                        if (mana >= amount){
-//                            capability.setMana(mana-amount);
-//                            return true;
-//                        }else {
-//                            return false;
-//                        }
-//                    }else{
-//                        return false;
-//                    }
-//                }
-//            }else{
-//                return false;
-//            }
-//        }
-//
-//        private static LazyOptional<SolarForgeMana> getCap(Player player){
-//            return player.getCapability(CapabilitySolarMana.SOLAR_MANA_PLAYER);
-//        }
-//    }
-
-
     public static void createSmallSolarStrikeParticleExplosion(Level world,Vec3 position,int intensity,float speedFactor,float spawnDistanceFactor){
         for (int x = -intensity; x < intensity+1;x++){
             for (int y = -intensity; y < intensity+1;y++){
                 for (int z = -intensity; z < intensity+1;z++){
                     Vec3 offset = new Vec3(x,y,z).normalize().multiply(spawnDistanceFactor,spawnDistanceFactor,spawnDistanceFactor);
                     Vec3 finalpos = position.add(offset);
-                    world.addParticle(ParticleTypesRegistry.SMALL_SOLAR_STRIKE_PARTICLE.get(),finalpos.x,finalpos.y,finalpos.z,offset.x*speedFactor,offset.y*speedFactor,offset.z*speedFactor);
+                    world.addParticle(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),finalpos.x,finalpos.y,finalpos.z,offset.x*speedFactor,offset.y*speedFactor,offset.z*speedFactor);
 
                 }
             }
@@ -460,8 +413,8 @@ public class Helpers {
                 for (int z = -intensity; z < intensity+1;z++){
                     Vec3 offset = new Vec3(x,y,z).normalize().multiply(spawnDistanceFactor,spawnDistanceFactor,spawnDistanceFactor);
                     Vec3 finalpos = position.add(offset);
-                    world.addParticle(ParticleTypesRegistry.SMALL_SOLAR_STRIKE_PARTICLE.get(),finalpos.x,finalpos.y,finalpos.z,offset.x*speedFactor,offset.y*speedFactor,offset.z*speedFactor);
-                    world.addParticle(ParticleTypesRegistry.SOLAR_EXPLOSION_PARTICLE.get(),finalpos.x,finalpos.y,finalpos.z,offset.x*(speedFactor+0.3),offset.y*(speedFactor+0.3),offset.z*(speedFactor+0.3));
+                    world.addParticle(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),finalpos.x,finalpos.y,finalpos.z,offset.x*speedFactor,offset.y*speedFactor,offset.z*speedFactor);
+                    world.addParticle(SolarcraftParticleTypes.SOLAR_EXPLOSION_PARTICLE.get(),finalpos.x,finalpos.y,finalpos.z,offset.x*(speedFactor+0.3),offset.y*(speedFactor+0.3),offset.z*(speedFactor+0.3));
 
                 }
             }

@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.entities.not_alive;
 
-import com.finderfeed.solarforge.client.particles.ParticleTypesRegistry;
+import com.finderfeed.solarforge.client.particles.SolarcraftParticleTypes;
 import com.finderfeed.solarforge.packet_handler.packets.misc_packets.BallLightningSpawnLightningParticles;
 import com.finderfeed.solarforge.registries.entities.SolarcraftEntityTypes;
 import com.finderfeed.solarforge.registries.sounds.SolarcraftSounds;
@@ -54,7 +54,7 @@ public class BallLightningProjectile extends AbstractHurtingProjectile {
 
     @Override
     protected ParticleOptions getTrailParticle() {
-        return ParticleTypesRegistry.INVISIBLE_PARTICLE.get();
+        return SolarcraftParticleTypes.INVISIBLE_PARTICLE.get();
     }
 
     @Override

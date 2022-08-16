@@ -1,17 +1,24 @@
 package com.finderfeed.solarforge.magic.blocks.blockentities.clearing_ritual.clearing_ritual_crystal;
 
+import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.SolarForge;
+import com.finderfeed.solarforge.registries.blocks.SolarcraftBlocks;
+import com.finderfeed.solarforge.registries.tile_entities.SolarcraftTileEntityTypes;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
+import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.client.IItemRenderProperties;
 import org.jetbrains.annotations.Nullable;
 
@@ -41,6 +48,18 @@ public class ClearingRitualCrystalItem extends BlockItem {
     public void initializeClient(Consumer<IItemRenderProperties> consumer) {
         super.initializeClient(consumer);
         consumer.accept(RenderProperties.INSTANCE);
+    }
+
+    @Override
+    protected boolean canPlace(BlockPlaceContext ctx, BlockState state) {
+        return super.canPlace(ctx, state) && ctx.getLevel().getBlockState(ctx.getClickedPos().above()).isAir();
+    }
+
+    @Override
+    protected boolean placeBlock(BlockPlaceContext ctx, BlockState state) {
+        BlockPlaceContext context = new BlockPlaceContext(ctx.getLevel(),ctx.getPlayer(),ctx.getHand(),ctx.getItemInHand(),
+                new BlockHitResult(Helpers.getBlockCenter(ctx.getClickedPos().above()),Direction.UP,ctx.getClickedPos().above(),false));
+        return super.placeBlock(context, state);
     }
 }
 class RenderProperties implements IItemRenderProperties{

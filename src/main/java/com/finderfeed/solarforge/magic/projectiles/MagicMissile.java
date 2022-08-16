@@ -3,7 +3,7 @@ package com.finderfeed.solarforge.magic.projectiles;
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.entities.CrystalBossEntity;
 import com.finderfeed.solarforge.misc_things.CrystalBossBuddy;
-import com.finderfeed.solarforge.client.particles.ParticleTypesRegistry;
+import com.finderfeed.solarforge.client.particles.SolarcraftParticleTypes;
 import com.finderfeed.solarforge.packet_handler.packets.misc_packets.ExplosionParticlesPacket;
 import com.finderfeed.solarforge.registries.SolarcraftDamageSources;
 import com.finderfeed.solarforge.registries.entities.SolarcraftEntityTypes;
@@ -53,7 +53,7 @@ public class MagicMissile extends AbstractHurtingProjectile implements CrystalBo
         }
 
         if (this.level.isClientSide){
-            this.level.addParticle(ParticleTypesRegistry.SMALL_SOLAR_STRIKE_PARTICLE.get(),this.position().x,this.position().y,this.position().z,0,0,0);
+            this.level.addParticle(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),this.position().x,this.position().y,this.position().z,0,0,0);
         }
     }
 
@@ -153,6 +153,6 @@ public class MagicMissile extends AbstractHurtingProjectile implements CrystalBo
 
     @Override
     protected ParticleOptions getTrailParticle() {
-        return ParticleTypesRegistry.INVISIBLE_PARTICLE.get();
+        return SolarcraftParticleTypes.INVISIBLE_PARTICLE.get();
     }
 }

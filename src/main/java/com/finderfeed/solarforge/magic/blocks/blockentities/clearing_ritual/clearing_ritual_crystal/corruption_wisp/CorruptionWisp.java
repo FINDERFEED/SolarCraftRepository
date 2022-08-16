@@ -1,7 +1,7 @@
 package com.finderfeed.solarforge.magic.blocks.blockentities.clearing_ritual.clearing_ritual_crystal.corruption_wisp;
 
 import com.finderfeed.solarforge.ClientHelpers;
-import com.finderfeed.solarforge.client.particles.ParticleTypesRegistry;
+import com.finderfeed.solarforge.client.particles.SolarcraftParticleTypes;
 import com.finderfeed.solarforge.local_library.helpers.CompoundNBTHelper;
 import com.finderfeed.solarforge.magic.blocks.blockentities.clearing_ritual.clearing_ritual_crystal.ClearingRitualCrystalTile;
 import com.finderfeed.solarforge.registries.sounds.SolarcraftSounds;
@@ -35,7 +35,7 @@ public class CorruptionWisp extends FlyingMob implements PowerableMob {
         super.tick();
 
         if (level.isClientSide) {
-            ClientHelpers.ParticleAnimationHelper.createParticle(ParticleTypesRegistry.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+            ClientHelpers.ParticleAnimationHelper.createParticle(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
                     position().x,position().y + 0.175f,position().z,0,0,0,()->150 + level.random.nextInt(50),()->0,()->177,0.25f);
             return;
         }

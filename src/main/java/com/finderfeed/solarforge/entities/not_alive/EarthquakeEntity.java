@@ -1,7 +1,7 @@
 package com.finderfeed.solarforge.entities.not_alive;
 
 import com.finderfeed.solarforge.ClientHelpers;
-import com.finderfeed.solarforge.client.particles.ParticleTypesRegistry;
+import com.finderfeed.solarforge.client.particles.SolarcraftParticleTypes;
 import com.finderfeed.solarforge.local_library.helpers.CompoundNBTHelper;
 import com.finderfeed.solarforge.misc_things.CrystalBossBuddy;
 import com.finderfeed.solarforge.registries.data_serializers.FDEntityDataSerializers;
@@ -88,7 +88,7 @@ public class EarthquakeEntity extends Entity {
                     for (double g = 0;g <= between.length();g+=0.75){
                         double percentile = (g + level.random.nextDouble()*0.3) /between.length();
                         Vec3 pos = initPos.add(between.multiply(percentile,0,percentile));
-                        ClientHelpers.ParticleAnimationHelper.createParticle(ParticleTypesRegistry.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+                        ClientHelpers.ParticleAnimationHelper.createParticle(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
                                 pos.x,pos.y,pos.z,0,(0.1 + level.random.nextDouble()*0.05) *(1-i/4f),0,()->255,()->255,()->0,0.5f*(i/4f));
                     }
                 }

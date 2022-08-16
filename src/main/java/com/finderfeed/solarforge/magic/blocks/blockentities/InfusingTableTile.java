@@ -6,7 +6,7 @@ import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.local_library.OwnedBlock;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.progressions.Progression;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.unlockables.ProgressionHelper;
-import com.finderfeed.solarforge.client.particles.ParticleTypesRegistry;
+import com.finderfeed.solarforge.client.particles.SolarcraftParticleTypes;
 import com.finderfeed.solarforge.misc_things.PhantomInventory;
 import com.finderfeed.solarforge.recipe_types.infusing_crafting.InfusingCraftingRecipe;
 import com.finderfeed.solarforge.registries.tile_entities.SolarcraftTileEntityTypes;
@@ -114,13 +114,13 @@ public class InfusingTableTile extends BlockEntity implements OwnedBlock {
                 double a = Math.toRadians(i * 180 + time % 360);
                 double x = 0.5*Math.sin(a);
                 double z = 0.5*Math.cos(a);
-                ClientHelpers.ParticleConstructor c = new ClientHelpers.ParticleConstructor(ParticleTypesRegistry.SMALL_SOLAR_STRIKE_PARTICLE.get(),pos.x+x,pos.y+0.9,pos.z+z,0,0,0);
+                ClientHelpers.ParticleConstructor c = new ClientHelpers.ParticleConstructor(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),pos.x+x,pos.y+0.9,pos.z+z,0,0,0);
             }
         }
         if (remainingRecipeTime != -1){
             Vec3 vec3 = Helpers.randomVector();
             Vec3 pos = Helpers.getBlockCenter(worldPosition);
-            ClientHelpers.ParticleConstructor c = new ClientHelpers.ParticleConstructor(ParticleTypesRegistry.SPARK_PARTICLE.get(),pos.x,pos.y+0.9,pos.z,vec3.x*0.01,vec3.y*0.01,vec3.z*0.01)
+            ClientHelpers.ParticleConstructor c = new ClientHelpers.ParticleConstructor(SolarcraftParticleTypes.SPARK_PARTICLE.get(),pos.x,pos.y+0.9,pos.z,vec3.x*0.01,vec3.y*0.01,vec3.z*0.01)
                     .setColor(255,255,Math.round(40+level.random.nextFloat()*120));
 
         }

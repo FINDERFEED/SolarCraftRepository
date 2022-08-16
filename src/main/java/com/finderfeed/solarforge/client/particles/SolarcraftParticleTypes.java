@@ -9,7 +9,7 @@ import net.minecraftforge.registries.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
-public class ParticleTypesRegistry {
+public class SolarcraftParticleTypes {
     public static final DeferredRegister<ParticleType<?>> PARTICLES =DeferredRegister.create(ForgeRegistries.PARTICLE_TYPES,"solarforge");
     public static final RegistryObject<SimpleParticleType> SOLAR_STRIKE_PARTICLE = PARTICLES.register("solar_strike_particle",()-> new SimpleParticleType(true));
     public static final RegistryObject<SimpleParticleType> INVISIBLE_PARTICLE = PARTICLES.register("invisible",()-> new SimpleParticleType(true));

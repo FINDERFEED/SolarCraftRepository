@@ -2,17 +2,16 @@ package com.finderfeed.solarforge.magic.blocks.blockentities.clearing_ritual.cle
 
 import com.finderfeed.solarforge.events.other_events.OBJModels;
 import com.finderfeed.solarforge.local_library.helpers.RenderingTools;
+import com.finderfeed.solarforge.magic.blocks.blockentities.clearing_ritual.ClearingRitual;
 import com.finderfeed.solarforge.magic.blocks.render.abstracts.TileEntityRenderer;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Vector3f;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
-import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
 
+import java.util.List;
 import java.util.Random;
 
 public class ClearingRitualTileRenderer extends TileEntityRenderer<ClearingRitualMainTile> {
@@ -22,6 +21,18 @@ public class ClearingRitualTileRenderer extends TileEntityRenderer<ClearingRitua
 
     @Override
     public void render(ClearingRitualMainTile tile, float pticks, PoseStack matrices, MultiBufferSource buffer, int light, int overlay) {
+        matrices.pushPose();
+        if (tile.ritual.ritualOnline()){
+            List<Vec3> positions = ClearingRitual.crystalOffsets();
+            Random random = new Random(tile.getLevel().getGameTime());
+            for (int i = 0; i < positions.size()-1;i++) {
+                RenderingTools.Lightning2DRenderer.renderLightning(matrices, buffer, 3, 0.5f, 0.25f,
+                        positions.get(i),positions.get(i+1),random,1f,1f,0f);
+            }
+            RenderingTools.Lightning2DRenderer.renderLightning(matrices, buffer, 3, 0.5f, 0.25f,
+                    positions.get(positions.size()-1),positions.get(0),random,1f,1f,0f);
+        }
+        matrices.popPose();
         this.renderModel(matrices,buffer,light,overlay,pticks);
 
     }

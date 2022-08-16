@@ -19,7 +19,7 @@ import com.finderfeed.solarforge.magic.blocks.infusing_table_things.infusing_poo
 import com.finderfeed.solarforge.magic.items.item_tiers.SolarCraftToolTiers;
 import com.finderfeed.solarforge.magic.items.ProgressionBlockItem;
 import com.finderfeed.solarforge.magic.items.solar_lexicon.unlockables.AncientFragment;
-import com.finderfeed.solarforge.client.particles.ParticleTypesRegistry;
+import com.finderfeed.solarforge.client.particles.SolarcraftParticleTypes;
 import com.finderfeed.solarforge.recipe_types.infusing_crafting.InfusingCraftingRecipe;
 import com.finderfeed.solarforge.recipe_types.infusing_crafting.InfusingCraftingRecipeType;
 import com.finderfeed.solarforge.recipe_types.infusing_new.InfusingRecipeType;
@@ -179,7 +179,7 @@ public class SolarForge
     public static final RecipeType<SolarSmeltingRecipe> SOLAR_SMELTING = new SolarSmeltingRecipeType();
     public SolarForge() {
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
-        ParticleTypesRegistry.PARTICLES.register(bus);
+        SolarcraftParticleTypes.PARTICLES.register(bus);
         EFFECTS.register(bus);
         SOUND_EVENTS.register(bus);
         ENTITY_TYPE_REGISTER.register(bus);

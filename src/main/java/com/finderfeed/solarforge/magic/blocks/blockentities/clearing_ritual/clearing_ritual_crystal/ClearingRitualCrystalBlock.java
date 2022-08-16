@@ -2,8 +2,11 @@ package com.finderfeed.solarforge.magic.blocks.blockentities.clearing_ritual.cle
 
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.local_library.blocks.TileEntityDataSaverBlock;
+import com.finderfeed.solarforge.registries.blocks.SolarcraftBlocks;
 import com.finderfeed.solarforge.registries.tile_entities.SolarcraftTileEntityTypes;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.RenderShape;
@@ -38,5 +41,10 @@ public class ClearingRitualCrystalBlock extends TileEntityDataSaverBlock impleme
     @Override
     public RenderShape getRenderShape(BlockState p_60550_) {
         return RenderShape.ENTITYBLOCK_ANIMATED;
+    }
+
+    @Override
+    public boolean canHarvestBlock(BlockState state, BlockGetter level, BlockPos pos, Player player) {
+        return !level.getBlockState(pos.below(2)).is(SolarcraftBlocks.CRYSTAL_ENERGY_VINES.get());
     }
 }

@@ -1,7 +1,7 @@
 package com.finderfeed.solarforge.magic.blocks.blockentities.projectiles;
 
 import com.finderfeed.solarforge.ClientHelpers;
-import com.finderfeed.solarforge.client.particles.ParticleTypesRegistry;
+import com.finderfeed.solarforge.client.particles.SolarcraftParticleTypes;
 import com.finderfeed.solarforge.packet_handler.packets.ShadowBoltExplosionPacket;
 import com.finderfeed.solarforge.registries.SolarcraftDamageSources;
 import com.finderfeed.solarforge.registries.sounds.SolarcraftSounds;
@@ -43,7 +43,7 @@ public class ShadowBolt extends AbstractHurtingProjectile {
                 rotateIt.transform(q);
                 Vec3 normalVec = new Vec3(rotateIt.x()*0.1, rotateIt.y()*0.1, rotateIt.z()*0.1);
                 Vec3 p = pos.add(normalVec);
-                ClientHelpers.ParticleAnimationHelper.createParticle(ParticleTypesRegistry.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+                ClientHelpers.ParticleAnimationHelper.createParticle(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
                         p.x, p.y, p.z, normalVec.x*0.3, normalVec.y*0.3, normalVec.z*0.3, () -> 70, () -> 0, () -> 200, 0.25f);
             }
 
@@ -100,7 +100,7 @@ public class ShadowBolt extends AbstractHurtingProjectile {
 
     @Override
     protected ParticleOptions getTrailParticle() {
-        return ParticleTypesRegistry.INVISIBLE_PARTICLE.get();
+        return SolarcraftParticleTypes.INVISIBLE_PARTICLE.get();
     }
 
     @Override

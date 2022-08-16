@@ -1265,10 +1265,6 @@ public class RenderingTools {
             float length = (float)between.length();
             List<Vec3> dots = generateLightningPositions(random,breaksCount,length,maxSpread,initialPos,endPos);
             matrices.pushPose();
-//            double angleXZ = Math.atan2(between.z,between.x);
-//            double angleXY = Math.atan2(between.y,between.x);
-//            matrices.mulPose(Vector3f.YP.rotation((float)angleXZ));
-//            matrices.mulPose(Vector3f.ZP.rotation((float)angleXY));
             for (int i = 0; i < dots.size()-1;i++){
                 Vec3 init = dots.get(i);
                 Vec3 end = dots.get(i+1);

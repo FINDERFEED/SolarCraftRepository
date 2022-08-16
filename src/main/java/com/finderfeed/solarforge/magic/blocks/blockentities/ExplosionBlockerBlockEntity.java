@@ -2,7 +2,7 @@ package com.finderfeed.solarforge.magic.blocks.blockentities;
 
 import com.finderfeed.solarforge.ClientHelpers;
 import com.finderfeed.solarforge.Helpers;
-import com.finderfeed.solarforge.client.particles.ParticleTypesRegistry;
+import com.finderfeed.solarforge.client.particles.SolarcraftParticleTypes;
 import com.finderfeed.solarforge.multiblocks.Multiblocks;
 import com.finderfeed.solarforge.registries.tile_entities.SolarcraftTileEntityTypes;
 import net.minecraft.core.BlockPos;
@@ -29,10 +29,10 @@ public class ExplosionBlockerBlockEntity extends SolarcraftBlockEntity{
     public static void tick(ExplosionBlockerBlockEntity b, Level world){
         if (b.shouldRenderShield) {
 
-            ClientHelpers.ParticleAnimationHelper.horizontalXCircle(ParticleTypesRegistry.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+            ClientHelpers.ParticleAnimationHelper.horizontalXCircle(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
                     Helpers.getBlockCenter(b.getBlockPos()), 3, 2, new float[]{0, 0, 0},
                     () -> 87, () -> 202, () -> 255, 0.4f, 2f, 0);
-            ClientHelpers.ParticleAnimationHelper.horizontalZCircle(ParticleTypesRegistry.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+            ClientHelpers.ParticleAnimationHelper.horizontalZCircle(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
                     Helpers.getBlockCenter(b.getBlockPos()), 3, 2, new float[]{0, 0, 0},
                     () -> 87, () -> 202, () -> 255, 0.4f, 2f, 90);
         }

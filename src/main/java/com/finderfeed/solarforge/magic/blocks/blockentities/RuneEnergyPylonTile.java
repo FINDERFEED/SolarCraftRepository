@@ -2,7 +2,7 @@ package com.finderfeed.solarforge.magic.blocks.blockentities;
 
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.SolarCraftTags;
-import com.finderfeed.solarforge.client.particles.ParticleTypesRegistry;
+import com.finderfeed.solarforge.client.particles.SolarcraftParticleTypes;
 import com.finderfeed.solarforge.config.SolarcraftConfig;
 import com.finderfeed.solarforge.magic.blocks.blockentities.runic_energy.RunicEnergyGiver;
 import com.finderfeed.solarforge.magic.blocks.primitive.InscriptionStone;
@@ -109,7 +109,7 @@ public class RuneEnergyPylonTile extends BlockEntity implements  DebugTarget, Ru
                         double rndY = entity.level.random.nextDouble() * 0.6 - 0.3;
                         double rndZ = entity.level.random.nextDouble() * 0.6 - 0.3;
 
-                        entity.level.addParticle(ParticleTypesRegistry.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+                        entity.level.addParticle(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
                                 entity.position().x + rndX, entity.position().y + rndY, entity.position().z + rndZ, 0, 0.1, 0
                         );
                     }

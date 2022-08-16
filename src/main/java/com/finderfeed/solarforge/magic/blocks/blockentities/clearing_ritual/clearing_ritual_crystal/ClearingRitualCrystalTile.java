@@ -2,9 +2,10 @@ package com.finderfeed.solarforge.magic.blocks.blockentities.clearing_ritual.cle
 
 import com.finderfeed.solarforge.ClientHelpers;
 import com.finderfeed.solarforge.Helpers;
-import com.finderfeed.solarforge.client.particles.ParticleTypesRegistry;
+import com.finderfeed.solarforge.client.particles.SolarcraftParticleTypes;
 import com.finderfeed.solarforge.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarforge.magic.blocks.blockentities.clearing_ritual.clearing_ritual_crystal.corruption_wisp.CorruptionWisp;
+import com.finderfeed.solarforge.magic.blocks.blockentities.clearing_ritual.clearing_ritual_main_tile.ClearingRitualMainTile;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import com.finderfeed.solarforge.registries.entities.SolarcraftEntityTypes;
 import com.finderfeed.solarforge.registries.sounds.SolarcraftSounds;
@@ -56,7 +57,7 @@ public class ClearingRitualCrystalTile extends BlockEntity {
             }else{
                 if (level.isClientSide){
                     Vec3 rnd = Helpers.randomVector().multiply(0.05,0.05,0.05);
-                    ClientHelpers.ParticleAnimationHelper.createParticle(ParticleTypesRegistry.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+                    ClientHelpers.ParticleAnimationHelper.createParticle(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
                             c.x,c.y,c.z,rnd.x,rnd.y,rnd.z,()->255,()->255,()->level.random.nextInt(40),0.5f);
                 }
             }
@@ -72,6 +73,8 @@ public class ClearingRitualCrystalTile extends BlockEntity {
                     for (CorruptionWisp wisp : level.getEntitiesOfClass(CorruptionWisp.class,Helpers.createAABBWithRadius(c,3,3))) {
                         wisp.kill();
                     }
+                    Helpers.collectTilesInChunks(SolarcraftTileEntityTypes.CLEARING_RITUAL_MAIN_BLOCK.get(),level,this.getBlockPos(),2)
+                            .forEach(ClearingRitualMainTile::notifyCrystalExploded);
                     this.explode(false);
                     return;
                 }
@@ -89,14 +92,14 @@ public class ClearingRitualCrystalTile extends BlockEntity {
                     this.wispSpawnTicks = FDMathHelper.clamp(0, this.wispSpawnTicks - 1, 200);
                 }
             } else {
-                ClientHelpers.ParticleAnimationHelper.verticalCircleWTime(
-                        ParticleTypesRegistry.SMALL_SOLAR_STRIKE_PARTICLE.get(),c,0.5f,3,new float[]{0,0.05f,0},() -> 196, () -> 0, () -> 171,
-                        0.3f,ticker
-                );
-                ClientHelpers.ParticleAnimationHelper.verticalCircleWTime(
-                        ParticleTypesRegistry.SMALL_SOLAR_STRIKE_PARTICLE.get(),c,0.5f,3,new float[]{0,-0.05f,0},() -> 196, () -> 0, () -> 171,
-                        0.3f,ticker
-                );
+//                ClientHelpers.ParticleAnimationHelper.verticalCircleWTime(
+//                        SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),c,0.5f,3,new float[]{0,0.05f,0},() -> 196, () -> 0, () -> 171,
+//                        0.3f,ticker
+//                );
+//                ClientHelpers.ParticleAnimationHelper.verticalCircleWTime(
+//                        SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),c,0.5f,3,new float[]{0,-0.05f,0},() -> 196, () -> 0, () -> 171,
+//                        0.3f,ticker
+//                );
             }
             this.corruptionTicks++;
         }else{

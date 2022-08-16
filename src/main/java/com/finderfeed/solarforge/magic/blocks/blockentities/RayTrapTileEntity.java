@@ -2,7 +2,7 @@ package com.finderfeed.solarforge.magic.blocks.blockentities;
 
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.magic.blocks.RayTrapBlock;
-import com.finderfeed.solarforge.client.particles.ParticleTypesRegistry;
+import com.finderfeed.solarforge.client.particles.SolarcraftParticleTypes;
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
 import com.finderfeed.solarforge.packet_handler.packets.UpdateLaserTrapTile;
 import com.finderfeed.solarforge.registries.tile_entities.SolarcraftTileEntityTypes;
@@ -50,7 +50,7 @@ public class RayTrapTileEntity extends BlockEntity  {
                     if (tile.attackTick == 1){
 
                         Helpers.getBlockPositionsByDirection(Direction.byName(tile.direction),tile.worldPosition,1).forEach((pos)->{
-                            ((ServerLevel)tile.level).sendParticles(ParticleTypesRegistry.SMALL_SOLAR_STRIKE_PARTICLE.get(),pos.getX()+0.5,pos.getY()+0.5,pos.getZ()+0.5,1,0,0,0,0);
+                            ((ServerLevel)tile.level).sendParticles(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),pos.getX()+0.5,pos.getY()+0.5,pos.getZ()+0.5,1,0,0,0,0);
                         });
                     }
 

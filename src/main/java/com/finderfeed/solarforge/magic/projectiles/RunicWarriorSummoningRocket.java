@@ -2,7 +2,7 @@ package com.finderfeed.solarforge.magic.projectiles;
 
 import com.finderfeed.solarforge.ClientHelpers;
 import com.finderfeed.solarforge.Helpers;
-import com.finderfeed.solarforge.client.particles.ParticleTypesRegistry;
+import com.finderfeed.solarforge.client.particles.SolarcraftParticleTypes;
 import com.finderfeed.solarforge.entities.RunicWarrior;
 import com.finderfeed.solarforge.registries.entities.SolarcraftEntityTypes;
 import net.minecraft.core.BlockPos;
@@ -39,7 +39,7 @@ public class RunicWarriorSummoningRocket extends AbstractHurtingProjectile {
         if (level.isClientSide){
             for (int i = 0;i < 2;i++) {
                 Vec3 vec = Helpers.randomVector().normalize().multiply(0.2, 0.2, 0.2);
-                ClientHelpers.ParticleAnimationHelper.createParticle(ParticleTypesRegistry.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+                ClientHelpers.ParticleAnimationHelper.createParticle(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
                         position().x + vec.x, position().y + vec.y, position().z + vec.z, 0, 0, 0, () -> 200 + level.random.nextInt(55),
                         () -> 200 + level.random.nextInt(55), () -> 0, 0.4f);
             }
@@ -59,7 +59,7 @@ public class RunicWarriorSummoningRocket extends AbstractHurtingProjectile {
 
     @Override
     protected ParticleOptions getTrailParticle() {
-        return ParticleTypesRegistry.INVISIBLE_PARTICLE.get();
+        return SolarcraftParticleTypes.INVISIBLE_PARTICLE.get();
     }
 
     @Override

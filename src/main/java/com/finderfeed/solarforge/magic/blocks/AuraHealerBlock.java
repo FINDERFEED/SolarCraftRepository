@@ -1,7 +1,7 @@
 package com.finderfeed.solarforge.magic.blocks;
 
 import com.finderfeed.solarforge.magic.blocks.blockentities.AuraHealerTile;
-import com.finderfeed.solarforge.client.particles.ParticleTypesRegistry;
+import com.finderfeed.solarforge.client.particles.SolarcraftParticleTypes;
 import com.finderfeed.solarforge.registries.tile_entities.SolarcraftTileEntityTypes;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
@@ -50,11 +50,11 @@ public class AuraHealerBlock extends Block implements EntityBlock {
                 double d0 = direction.getStepX() == 0 ? p_180655_4_.nextDouble() : 0.5D + (double)direction.getStepX() * 0.6D;
                 double d1 = direction.getStepY() == 0 ? p_180655_4_.nextDouble() : 0.5D + (double)direction.getStepY() * 0.6D;
                 double d2 = direction.getStepZ() == 0 ? p_180655_4_.nextDouble() : 0.5D + (double)direction.getStepZ() * 0.6D;
-                p_180655_2_.addParticle(ParticleTypesRegistry.HEAL_PARTICLE.get(), (double)p_180655_3_.getX() + d0, (double)p_180655_3_.getY() + d1+new Random().nextFloat()*1.5-1, (double)p_180655_3_.getZ() + d2, 0, 0.02, 0.0D);
+                p_180655_2_.addParticle(SolarcraftParticleTypes.HEAL_PARTICLE.get(), (double)p_180655_3_.getX() + d0, (double)p_180655_3_.getY() + d1+new Random().nextFloat()*1.5-1, (double)p_180655_3_.getZ() + d2, 0, 0.02, 0.0D);
              d0 = direction.getStepX() == 0 ? p_180655_4_.nextDouble() : 0.5D + (double)direction.getStepX() * 0.6D;
              d1 = direction.getStepY() == 0 ? p_180655_4_.nextDouble() : 0.5D + (double)direction.getStepY() * 0.6D;
              d2 = direction.getStepZ() == 0 ? p_180655_4_.nextDouble() : 0.5D + (double)direction.getStepZ() * 0.6D;
-            p_180655_2_.addParticle(ParticleTypesRegistry.HEAL_PARTICLE.get(), (double)p_180655_3_.getX() + d0, (double)p_180655_3_.getY() + d1+new Random().nextFloat()*1.5-1, (double)p_180655_3_.getZ() + d2, 0.0D, 0.02, 0.0D);
+            p_180655_2_.addParticle(SolarcraftParticleTypes.HEAL_PARTICLE.get(), (double)p_180655_3_.getX() + d0, (double)p_180655_3_.getY() + d1+new Random().nextFloat()*1.5-1, (double)p_180655_3_.getZ() + d2, 0.0D, 0.02, 0.0D);
             //}
         //}
     }

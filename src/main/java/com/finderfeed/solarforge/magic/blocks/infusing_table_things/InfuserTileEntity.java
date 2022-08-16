@@ -4,7 +4,7 @@ package com.finderfeed.solarforge.magic.blocks.infusing_table_things;
 import com.finderfeed.solarforge.ClientHelpers;
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.SolarForge;
-import com.finderfeed.solarforge.client.particles.ParticleTypesRegistry;
+import com.finderfeed.solarforge.client.particles.SolarcraftParticleTypes;
 import com.finderfeed.solarforge.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarforge.local_library.other.EaseIn;
 import com.finderfeed.solarforge.magic.blocks.blockentities.REItemHandlerBlockEntity;
@@ -261,7 +261,7 @@ public class InfuserTileEntity extends REItemHandlerBlockEntity implements  IEne
                 double[] xz = FDMathHelper.rotatePointRadians(7,0,h);
                 double x = xz[0];
                 double z = xz[1];
-                ClientHelpers.ParticleAnimationHelper.randomline(ParticleTypesRegistry.SPARK_PARTICLE.get(),
+                ClientHelpers.ParticleAnimationHelper.randomline(SolarcraftParticleTypes.SPARK_PARTICLE.get(),
                         center.add(x, 4, z), center, 0.5, () -> 255, () -> 255, () -> r, 0.4f,0.05f);
             }
             for (int i = 1; i <= 4; i++) {
@@ -269,10 +269,10 @@ public class InfuserTileEntity extends REItemHandlerBlockEntity implements  IEne
                 double[] xz = FDMathHelper.rotatePointRadians(6.5f,0,h);
                 double x = xz[0];
                 double z = xz[1];
-                ClientHelpers.ParticleAnimationHelper.randomline(ParticleTypesRegistry.SPARK_PARTICLE.get(),
+                ClientHelpers.ParticleAnimationHelper.randomline(SolarcraftParticleTypes.SPARK_PARTICLE.get(),
                         center.add(x, 4, z), center, 0.5, () -> 255, () -> 255, () -> r, 0.4f,0.05f);
             }
-            ClientHelpers.ParticleAnimationHelper.verticalCircle(ParticleTypesRegistry.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+            ClientHelpers.ParticleAnimationHelper.verticalCircle(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
                     center.add(0, -0.5, 0), 3, 4, new float[]{0, 0, 0}, () -> 255, () -> 255, () -> r, 0.35f);
             return true;
         }else{
@@ -284,7 +284,7 @@ public class InfuserTileEntity extends REItemHandlerBlockEntity implements  IEne
         if (firstTierAnimation(tile,world)) {
             for (BlockPos pos : Structures.infusingPoolsPositions(tile.worldPosition)) {
                 Vec3 center = Helpers.getBlockCenter(pos);
-                ClientHelpers.ParticleAnimationHelper.verticalCircle(ParticleTypesRegistry.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+                ClientHelpers.ParticleAnimationHelper.verticalCircle(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
                         center, 1, 3, new float[]{0, 0, 0}, () -> 255, () -> 255, () -> Math.round(world.random.nextFloat() * 128) + 40, 0.25f);
             }
             return true;
@@ -296,9 +296,9 @@ public class InfuserTileEntity extends REItemHandlerBlockEntity implements  IEne
     public static void thirdTierAnimation(InfuserTileEntity tile,Level world){
         if (secondTierAnimation(tile,world)) {
             Vec3 center = Helpers.getBlockCenter(tile.getBlockPos());
-            ClientHelpers.ParticleAnimationHelper.verticalCircle(ParticleTypesRegistry.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+            ClientHelpers.ParticleAnimationHelper.verticalCircle(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
                     center.add(0, 6, 0), 3, 4, new float[]{0, 0, 0}, () -> 255, () -> 255, ()->40, 0.25f);
-            ClientHelpers.ParticleAnimationHelper.verticalCircle(ParticleTypesRegistry.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+            ClientHelpers.ParticleAnimationHelper.verticalCircle(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
                     center.add(0, 8, 0), 3, 4, new float[]{0, 0, 0}, () -> 255, () -> 255, ()->40, 0.25f);
         }
     }
@@ -706,9 +706,9 @@ public class InfuserTileEntity extends REItemHandlerBlockEntity implements  IEne
                     BlockPos p = offsets[iter];
                     Vec3 v = new Vec3(p.getX(), p.getY(), p.getZ()).multiply(1 - rotValue, 1 - rotValue, 1 - rotValue).yRot(-(float) Math.toRadians(rotValue * 360));
                     Vec3 ps = Helpers.getBlockCenter(pos).add(v);
-                    ClientHelpers.ParticleAnimationHelper.createParticle(ParticleTypesRegistry.SMALL_SOLAR_STRIKE_PARTICLE.get(), ps.x, ps.y, ps.z,
+                    ClientHelpers.ParticleAnimationHelper.createParticle(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(), ps.x, ps.y, ps.z,
                             0, 0, 0, () -> 255, () -> 255, () -> 0, 0.25f);
-                    world.addParticle(ParticleTypesRegistry.SMALL_SOLAR_STRIKE_PARTICLE.get(), ps.x, ps.y, ps.z, 0, 0, 0);
+                    world.addParticle(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(), ps.x, ps.y, ps.z, 0, 0, 0);
                 }
             }
 

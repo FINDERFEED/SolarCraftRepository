@@ -9,6 +9,7 @@ import com.finderfeed.solarforge.events.my_events.ProgressionUnlockEvent;
 import com.finderfeed.solarforge.local_library.OwnedBlock;
 import com.finderfeed.solarforge.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarforge.magic.blocks.blockentities.ExplosionBlockerBlockEntity;
+import com.finderfeed.solarforge.magic.blocks.blockentities.clearing_ritual.clearing_ritual_crystal.ClearingRitualCrystalTile;
 import com.finderfeed.solarforge.magic.blocks.infusing_table_things.InfuserBlock;
 import com.finderfeed.solarforge.magic.items.ExperienceCrystal;
 import com.finderfeed.solarforge.magic.items.divine_armor.BaseDivineArmor;
@@ -89,6 +90,15 @@ public class EventHandler {
                 if (!pla.getUUID().equals(block.getOwner())){
                      event.setCanceled(true);
                 }
+            }
+
+
+        }
+        if (pla.getLevel().getBlockState(event.getPos()).is(SolarcraftBlocks.CLEARING_RITUAL_CRYSTAL.get())){
+            if (pla.getLevel().getBlockState(event.getPos().below(2)).is(SolarcraftBlocks.CRYSTAL_ENERGY_VINES.get())
+                    || (pla.getLevel().getBlockEntity(event.getPos()) instanceof ClearingRitualCrystalTile tile && tile.isCorrupted())) {
+
+                event.setNewSpeed(-1);
             }
         }
     }

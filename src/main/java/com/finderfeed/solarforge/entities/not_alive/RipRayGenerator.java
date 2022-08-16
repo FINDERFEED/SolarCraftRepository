@@ -4,7 +4,7 @@ import com.finderfeed.solarforge.entities.CrystalBossEntity;
 import com.finderfeed.solarforge.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarforge.local_library.other.CyclingInterpolatedValue;
 import com.finderfeed.solarforge.misc_things.CrystalBossBuddy;
-import com.finderfeed.solarforge.client.particles.ParticleTypesRegistry;
+import com.finderfeed.solarforge.client.particles.SolarcraftParticleTypes;
 import com.finderfeed.solarforge.registries.sounds.SolarcraftSounds;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -78,7 +78,7 @@ public class RipRayGenerator extends PathfinderMob implements CrystalBossBuddy{
         if (level.getGameTime() % 2 == 0) {
             for (int i = 0; i < 6; i++) {
                 double[] coords = FDMathHelper.polarToCartesian(0.5, Math.toRadians(60 * i));
-                this.level.addParticle(ParticleTypesRegistry.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+                this.level.addParticle(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
                         this.position().x + coords[0],
                         this.position().y,
                         this.position().z + coords[1],
@@ -100,7 +100,7 @@ public class RipRayGenerator extends PathfinderMob implements CrystalBossBuddy{
 
     public void doParticles(){
         double[] coords = FDMathHelper.polarToCartesian(0.4,Math.toRadians(level.getGameTime()*30));
-        this.level.addParticle(ParticleTypesRegistry.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+        this.level.addParticle(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
                 this.position().x+coords[0],
                 this.position().y-particlesValue.getValue(),
                 this.position().z + coords[1],

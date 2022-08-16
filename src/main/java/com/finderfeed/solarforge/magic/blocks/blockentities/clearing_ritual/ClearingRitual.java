@@ -22,7 +22,7 @@ import java.util.Objects;
 
 public class ClearingRitual {
 
-    public static final int MAX_TIME = 1000;
+    public static final int MAX_TIME = 2000;
 
     public static final int RITUAL_OFFLINE = -1;
     public static final int RITUAL_ONLINE = 1;
@@ -70,11 +70,16 @@ public class ClearingRitual {
                         crystals.get(world.random.nextInt(crystals.size())).setCorrupted(true);
                     }
                 }
-                if (ticker % 150 == 0){
+                if (ticker % 75 == 0){
                     this.randomLightning(world,tilePos);
                 }
             }
         }
+    }
+
+    public void stopRitual(){
+        this.ticker = 0;
+        this.setRitualStatus(RITUAL_OFFLINE);
     }
 
     private void cleanWorld(){
@@ -89,7 +94,7 @@ public class ClearingRitual {
                 MinecraftServer server = level.getServer();
                 if (server != null) {
                     for (ServerPlayer player : players) {
-                        player.changeDimension(server.overworld().getLevel().getLevel().getLevel());
+                        player.changeDimension(server.overworld().getLevel());
                     }
                 }
                 data.setCleaned(true);
@@ -98,8 +103,23 @@ public class ClearingRitual {
         }
     }
 
+    public static void setRLState(ServerLevel level,boolean cleaned){
+        RadiantLandCleanedData data = level.getServer().overworld()
+                .getDataStorage()
+                .computeIfAbsent(RadiantLandCleanedData::load,()->new RadiantLandCleanedData(false),"is_radiant_land_cleaned");
+        data.setCleaned(cleaned);
+        data.setDirty();
+    }
+
+    public static boolean getRLState(ServerLevel level){
+        RadiantLandCleanedData data = level.getServer().overworld()
+                .getDataStorage()
+                .computeIfAbsent(RadiantLandCleanedData::load,()->new RadiantLandCleanedData(false),"is_radiant_land_cleaned");
+        return data.isCleaned();
+    }
+
     public void randomLightning(Level world,BlockPos pos){
-        Vec3 vec = new Vec3(8,0,0).yRot((float)Math.toRadians(world.random.nextInt(360)));
+        Vec3 vec = new Vec3(24,0,0).yRot((float)Math.toRadians(world.random.nextInt(360)));
         Vec3 newPos = Helpers.getBlockCenter(pos).add(vec);
         int y = world.getHeight(Heightmap.Types.WORLD_SURFACE_WG,(int)Math.floor(newPos.x),(int)Math.floor(newPos.z));
         LightningBolt bolt = new LightningBolt(EntityType.LIGHTNING_BOLT,world);
@@ -108,7 +128,7 @@ public class ClearingRitual {
     }
 
     public void tryStartRitual(){
-        if (checkStructure() && ritualStatus != RITUAL_OFFLINE){
+        if (!tile.getLevel().isClientSide && checkStructure() && ritualStatus == RITUAL_OFFLINE && !getRLState((ServerLevel) tile.getLevel())){
             this.setRitualStatus(RITUAL_ONLINE);
         }
     }
@@ -125,6 +145,9 @@ public class ClearingRitual {
     public boolean checkStructure(){
         ArrayList<RunicEnergy.Type> used = new ArrayList<>();
         for (ClearingRitualCrystalTile tile : this.getAllCrystals()){
+            used.add(tile.getREType());
+            if (true) continue;
+            //TODO:delete this shiesh above
             if (used.contains(tile.getREType())){
                 return false;
             }else{
@@ -137,18 +160,45 @@ public class ClearingRitual {
     public ArrayList<ClearingRitualCrystalTile> getAllCrystals(){
         Level world = tile.getLevel();
         BlockPos pos = tile.getBlockPos();
-        int yShift = 0;
+        int yShift = -1;
         ArrayList<ClearingRitualCrystalTile> list = new ArrayList<>();
         list.add((ClearingRitualCrystalTile) world.getBlockEntity(pos.above(yShift).north(16)));
         list.add((ClearingRitualCrystalTile) world.getBlockEntity(pos.above(yShift).south(16)));
         list.add((ClearingRitualCrystalTile) world.getBlockEntity(pos.above(yShift).east(16)));
         list.add((ClearingRitualCrystalTile) world.getBlockEntity(pos.above(yShift).west(16)));
-        list.add((ClearingRitualCrystalTile) world.getBlockEntity(pos.above(yShift).north(9).west(9)));
-        list.add((ClearingRitualCrystalTile) world.getBlockEntity(pos.above(yShift).north(9).east(9)));
-        list.add((ClearingRitualCrystalTile) world.getBlockEntity(pos.above(yShift).south(9).west(9)));
-        list.add((ClearingRitualCrystalTile) world.getBlockEntity(pos.above(yShift).south(9).east(9)));
+        list.add((ClearingRitualCrystalTile) world.getBlockEntity(pos.above(yShift).north(12).west(12)));
+        list.add((ClearingRitualCrystalTile) world.getBlockEntity(pos.above(yShift).north(12).east(12)));
+        list.add((ClearingRitualCrystalTile) world.getBlockEntity(pos.above(yShift).south(12).west(12)));
+        list.add((ClearingRitualCrystalTile) world.getBlockEntity(pos.above(yShift).south(12).east(12)));
         list.removeIf(Objects::isNull);
         return list;
+    }
+
+    public static List<Vec3> crystalPositions(BlockPos pos){
+        List<Vec3> list = new ArrayList<>();
+        int yShift = -1;
+        list.add(Helpers.getBlockCenter(pos.above(yShift).north(16)));
+        list.add(Helpers.getBlockCenter(pos.above(yShift).south(16)));
+        list.add(Helpers.getBlockCenter(pos.above(yShift).east(16)));
+        list.add(Helpers.getBlockCenter(pos.above(yShift).west(16)));
+        list.add(Helpers.getBlockCenter(pos.above(yShift).north(12).west(12)));
+        list.add(Helpers.getBlockCenter(pos.above(yShift).north(12).east(12)));
+        list.add(Helpers.getBlockCenter(pos.above(yShift).south(12).west(12)));
+        list.add(Helpers.getBlockCenter(pos.above(yShift).south(12).east(12)));
+        return list;
+    }
+
+    public static List<Vec3> crystalOffsets(){
+        return List.of(
+                    new Vec3(16.5,-0.5,0),
+                new Vec3(12.5,-0.5,12.5),
+                new Vec3(0,-0.5,16.5),
+                new Vec3(-11.5,-0.5,12.5),
+                new Vec3(-15.5,-0.5,0),
+                new Vec3(-11.5,-0.5,-11.5),
+                new Vec3(0,-0.5,-15.5),
+                new Vec3(12.5,-0.5,-11.5)
+                );
     }
 
     public void save(CompoundTag tag){

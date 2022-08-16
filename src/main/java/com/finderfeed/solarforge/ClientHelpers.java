@@ -2,7 +2,7 @@ package com.finderfeed.solarforge;
 
 import com.finderfeed.solarforge.abilities.ability_classes.ToggleableAbility;
 import com.finderfeed.solarforge.abilities.screens.AbilityBuyScreen;
-import com.finderfeed.solarforge.client.particles.ParticleTypesRegistry;
+import com.finderfeed.solarforge.client.particles.SolarcraftParticleTypes;
 import com.finderfeed.solarforge.client.particles.SmallSolarStrikeParticle;
 import com.finderfeed.solarforge.client.particles.SolarcraftParticle;
 import com.finderfeed.solarforge.client.screens.CrystalEnergyVinesPuzzleScreen;
@@ -156,7 +156,7 @@ public class ClientHelpers {
                     for (int g = 0; g < 3;g++){
                         Vec3 posS = path.getPos(g);
                         Vec3 posE = path.getPos(g+1);
-                        ParticleAnimationHelper.line(ParticleTypesRegistry.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+                        ParticleAnimationHelper.line(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
                                 posS,posE,0.25f,()->70 + (int)(world.random.nextFloat()*60f),()->0,()->255,(5f-g)/3*0.3f );
                     }
                 }
@@ -180,7 +180,7 @@ public class ClientHelpers {
                     for (int i = 0; i < maxDots - 1; i++) {
                         Vec3 iPos = path.getPos(i);
                         Vec3 ePos = path.getPos(i + 1);
-                        ParticleAnimationHelper.line(ParticleTypesRegistry.SMALL_SOLAR_STRIKE_PARTICLE.get(), iPos, ePos,
+                        ParticleAnimationHelper.line(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(), iPos, ePos,
                                 0.20, () -> 220+level.random.nextInt(36), () -> 220+level.random.nextInt(36), () -> 0, 0.25f);
                     }
                 }
@@ -236,7 +236,7 @@ public class ClientHelpers {
                 float length = 34;
                 double offsetx = length * Math.cos(Math.toRadians(i*7.5));
                 double offsetz = length * Math.sin(Math.toRadians(i*7.5));
-                level.addParticle(ParticleTypesRegistry.SOLAR_STRIKE_PARTICLE.get(),pos.x +offsetx,pos.y,pos.z +offsetz,0,0.05,0);
+                level.addParticle(SolarcraftParticleTypes.SOLAR_STRIKE_PARTICLE.get(),pos.x +offsetx,pos.y,pos.z +offsetz,0,0.05,0);
 
 
 
@@ -246,7 +246,7 @@ public class ClientHelpers {
                     float length = 34;
                     double offsetx = level.random.nextFloat()*length * Math.cos(Math.toRadians(i*15));
                     double offsetz = level.random.nextFloat()*length * Math.sin(Math.toRadians(i*15));
-                    level.addParticle(ParticleTypesRegistry.SOLAR_STRIKE_PARTICLE.get(),pos.x +offsetx,pos.y,pos.z +offsetz,0,0.05,0);
+                    level.addParticle(SolarcraftParticleTypes.SOLAR_STRIKE_PARTICLE.get(),pos.x +offsetx,pos.y,pos.z +offsetz,0,0.05,0);
 
                 }
 
@@ -259,7 +259,7 @@ public class ClientHelpers {
                         double offsetx = level.random.nextFloat() * length * Math.cos(Math.toRadians(i * 60));
                         double offsetz = level.random.nextFloat() * length * Math.sin(Math.toRadians(i * 60));
                         double offsety = level.random.nextFloat() * length + h*8;
-                        level.addParticle(ParticleTypesRegistry.SOLAR_STRIKE_PARTICLE.get(), pos.x + offsetx, pos.y +offsety, pos.z + offsetz, 0, 0.05, 0);
+                        level.addParticle(SolarcraftParticleTypes.SOLAR_STRIKE_PARTICLE.get(), pos.x + offsetx, pos.y +offsety, pos.z + offsetz, 0, 0.05, 0);
 
                     }
 
@@ -290,7 +290,7 @@ public class ClientHelpers {
 
 
     public static void handleSolarWandParticles(Vec3 pos,Vec3 vel){
-        SmallSolarStrikeParticle particle = (SmallSolarStrikeParticle) Minecraft.getInstance().particleEngine.createParticle(ParticleTypesRegistry.SMALL_SOLAR_STRIKE_PARTICLE.get(),pos.x,pos.y,pos.z,vel.normalize().x,vel.normalize().y,vel.normalize().z);
+        SmallSolarStrikeParticle particle = (SmallSolarStrikeParticle) Minecraft.getInstance().particleEngine.createParticle(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),pos.x,pos.y,pos.z,vel.normalize().x,vel.normalize().y,vel.normalize().z);
         particle.setLifetime((int)Math.round(vel.length()/vel.normalize().length())*5/2 );
     }
 
@@ -460,7 +460,7 @@ public class ClientHelpers {
     public static void createEffectParticle(double x, double y, double z,double xs, double ys, double zs, MobEffect effect){
 
         SmallSolarStrikeParticle particle = (SmallSolarStrikeParticle) Minecraft.getInstance().particleEngine.
-                createParticle(ParticleTypesRegistry.SMALL_SOLAR_STRIKE_PARTICLE.get(),x,y,z,xs,ys,zs);
+                createParticle(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),x,y,z,xs,ys,zs);
         int[] rgba = FDMathHelper.intToRgba(effect.getColor());
         particle.setColor((float)rgba[0]/255,(float)rgba[1]/255,(float)rgba[2]/255);
     }

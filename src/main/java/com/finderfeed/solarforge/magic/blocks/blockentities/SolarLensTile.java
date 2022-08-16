@@ -2,7 +2,7 @@ package com.finderfeed.solarforge.magic.blocks.blockentities;
 
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.SolarForge;
-import com.finderfeed.solarforge.client.particles.ParticleTypesRegistry;
+import com.finderfeed.solarforge.client.particles.SolarcraftParticleTypes;
 import com.finderfeed.solarforge.misc_things.PhantomInventory;
 import com.finderfeed.solarforge.recipe_types.solar_smelting.SolarSmeltingRecipe;
 import com.finderfeed.solarforge.registries.tile_entities.SolarcraftTileEntityTypes;
@@ -102,7 +102,7 @@ public class SolarLensTile extends BlockEntity  {
                 if (world.getGameTime() % 3 == 0 && Helpers.isDay(world)) {
                     Vec3 v = Helpers.getBlockCenter(post.offset(0, -2, 0));
                     Vec3 offs = Helpers.randomVector().normalize().multiply(0.5, 0.5, 0.5);
-                    world.addParticle(ParticleTypesRegistry.SMALL_SOLAR_STRIKE_PARTICLE.get(), v.x + offs.x, v.y + offs.y, v.z + offs.z, 0, 0.05, 0);
+                    world.addParticle(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(), v.x + offs.x, v.y + offs.y, v.z + offs.z, 0, 0.05, 0);
                 }
             }
         }
