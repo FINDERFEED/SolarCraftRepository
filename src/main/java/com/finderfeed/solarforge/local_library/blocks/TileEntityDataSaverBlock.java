@@ -44,11 +44,13 @@ public class TileEntityDataSaverBlock extends Block {
 
     @Override
     public void setPlacedBy(Level world, BlockPos pos, BlockState state, @Nullable LivingEntity living, ItemStack stack) {
-        super.setPlacedBy(world, pos, state, living, stack);
-        BlockEntity tile = world.getBlockEntity(pos);
-        if (tile != null){
-            tile.load(stack.getOrCreateTagElement(modid + "_tile_saved_data").getCompound("data"));
+        if (!world.isClientSide) {
+            BlockEntity tile = world.getBlockEntity(pos);
+            if (tile != null) {
+                tile.load(stack.getOrCreateTagElement(modid + "_tile_saved_data").getCompound("data"));
+            }
         }
+        super.setPlacedBy(world, pos, state, living, stack);
     }
 
 

@@ -15,6 +15,11 @@
         "spacing": 200,
         "separation": 150,
         "salt": 442382084
+      },
+      "solarforge:clearing_ritual_structure": {
+        "spacing": 500,
+        "separation": 400,
+        "salt": 56053313
       }
     }
   },

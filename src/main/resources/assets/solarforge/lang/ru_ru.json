@@ -688,16 +688,7 @@
   "solarcraft.fragment_not_unlocked": "Связанный фрагмент не расшифрован.",
   "solarcraft.lexicon_inventory_description": "Это инвентарь лексикона. Положите расшифрованные фрагменты сюда и они появятся на странице фрагментов. Здесь вы можете передвигаться с помощью стрелок или кнопок W/S.",
   "solarcraft.catalysts_not_unlocked": "Данный функционал еще не открыт. Завершите больше прогрессий.",
-  "solarcraft.catalysts_jei": "Катализаторы. Обозначения:"
-
-
-
-
-
-
-
-
-
-
-
+  "solarcraft.catalysts_jei": "Катализаторы. Обозначения:",
+  "block.solarforge.crystal_energy_vines": "Лозы Рунической Энергии",
+  "block.solarforge.clearing_ritual_crystal": "Обелиск Рунической Энергии"
 }

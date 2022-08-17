@@ -689,5 +689,7 @@
   "solarcraft.not_enought_runic_energy_needed": "Need:",
   "solar_fragment.hidden_ores": "Buried secrets",
   "hidden_ores.lore": "Your eyes lie to you. Many unexperienced adventurers just don't see the treasures hidden in the depth. As you explore the world and gain more knowledge about it, things that you saw as a regular stone block might not be a stone anymore.",
-  "block.solarforge.runic_tree_sapling": "Runic Tree Sapling"
+  "block.solarforge.runic_tree_sapling": "Runic Tree Sapling",
+  "block.solarforge.crystal_energy_vines": "Crystal Energy Vines",
+  "block.solarforge.clearing_ritual_crystal": "Runic Energy Obelisk"
 }

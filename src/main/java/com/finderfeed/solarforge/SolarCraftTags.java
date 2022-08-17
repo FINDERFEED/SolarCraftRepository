@@ -66,6 +66,7 @@ public class SolarCraftTags {
         public static final TagKey<Biome> HAS_LABYRINTH = create("labyrinth");
         public static final TagKey<Biome> HAS_MAGICIAN_TOWER = create("magician_tower");
         public static final TagKey<Biome> HAS_RUNIC_ELEMENTAL_ARENA = create("runic_elemental_arena");
+        public static final TagKey<Biome> HAS_CLEARING_RITUAL_STRUCTURE = create("clearing_ritual_structure");
 
 
         public static TagKey<Biome> create(String name){

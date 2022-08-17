@@ -10,15 +10,20 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.level.portal.PortalInfo;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.common.util.ITeleporter;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Function;
 
 public class ClearingRitual {
 
@@ -94,7 +99,14 @@ public class ClearingRitual {
                 MinecraftServer server = level.getServer();
                 if (server != null) {
                     for (ServerPlayer player : players) {
-                        player.changeDimension(server.overworld().getLevel());
+                        player.changeDimension(server.overworld().getLevel(),
+                                new ITeleporter() {
+                                    @Nullable
+                                    @Override
+                                    public PortalInfo getPortalInfo(Entity entity, ServerLevel destWorld, Function<ServerLevel, PortalInfo> defaultPortalInfo) {
+                                        return defaultPortalInfo.apply(server.overworld());
+                                    }
+                                });
                     }
                 }
                 data.setCleaned(true);

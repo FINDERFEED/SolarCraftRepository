@@ -11,6 +11,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -56,10 +57,10 @@ public class ClearingRitualCrystalItem extends BlockItem {
     }
 
     @Override
-    protected boolean placeBlock(BlockPlaceContext ctx, BlockState state) {
+    public InteractionResult place(BlockPlaceContext ctx) {
         BlockPlaceContext context = new BlockPlaceContext(ctx.getLevel(),ctx.getPlayer(),ctx.getHand(),ctx.getItemInHand(),
                 new BlockHitResult(Helpers.getBlockCenter(ctx.getClickedPos().above()),Direction.UP,ctx.getClickedPos().above(),false));
-        return super.placeBlock(context, state);
+        return super.place(context);
     }
 }
 class RenderProperties implements IItemRenderProperties{

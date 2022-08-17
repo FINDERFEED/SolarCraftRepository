@@ -1,0 +1,7 @@
+{
+  "parent": "block/cube_column",
+  "textures": {
+    "end": "solarforge:block/crystal_vines_top",
+    "side": "solarforge:block/crystal_vines"
+  }
+}

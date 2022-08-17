@@ -2,6 +2,7 @@ package com.finderfeed.solarforge.events.other_events;
 
 
 import com.finderfeed.solarforge.world_generation.structures.charging_station.ChargingStationPieces;
+import com.finderfeed.solarforge.world_generation.structures.clearing_ritual_structure.ClearingRitualPieces;
 import com.finderfeed.solarforge.world_generation.structures.crystal_boss_room.CrystalBossRoomStructurePieces;
 import com.finderfeed.solarforge.world_generation.structures.dimensional_shard_structure.DimStructPieces;
 import com.finderfeed.solarforge.world_generation.structures.dungeon_one_key_lock.DungeonOnePieces;
@@ -29,6 +30,7 @@ public class StructurePieces {
     public static StructurePieceType DIMENSIONAL_SHARD_STRUCTURE = DimStructPieces.Piece::new;
     public static StructurePieceType CRYSTAL_BOSS_ROOM_PIECE = CrystalBossRoomStructurePieces.Piece::new;
     public static StructurePieceType RUNIC_ELEMENTAL_ARENA_PIECE = RunicElementalArenaStructurePieces.Piece::new;
+    public static StructurePieceType CLEARING_RITUAL_STRUCTURE = ClearingRitualPieces.Piece::new;
     @SubscribeEvent
     public static void registerFeatures(final RegistryEvent.Register<Feature<?>> event){
         IForgeRegistry<Feature<?>> registry = event.getRegistry();

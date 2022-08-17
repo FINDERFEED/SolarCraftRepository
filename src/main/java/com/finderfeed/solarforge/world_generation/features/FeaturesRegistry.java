@@ -89,6 +89,7 @@ public class FeaturesRegistry {
     public static final Feature<SimpleBlockConfiguration> CRYSTALS_ORE = new CrystalsOreFeature(SimpleBlockConfiguration.CODEC);
     public static final Feature<NoneFeatureConfiguration> ULDERA_OBELISK = new UlderaObeliskFeature(NoneFeatureConfiguration.CODEC);
     public static final Feature<NoneFeatureConfiguration> ULDERA_PYLON = new UlderaPylonFeature(NoneFeatureConfiguration.CODEC);
+    public static final Feature<NoneFeatureConfiguration> CLEARING_CRYSTAL = new ClearingCrystalFeature(NoneFeatureConfiguration.CODEC);
 
 
 
@@ -113,6 +114,7 @@ public class FeaturesRegistry {
     public static ConfiguredFeature<?,?> SOLAR_STONE_CONF;
     public static ConfiguredFeature<?,?> ULDERA_OBELISK_CONFIGURED;
     public static ConfiguredFeature<?,?> ULDERA_PYLON_CONFIGURED;
+    public static ConfiguredFeature<?,?> CLEARING_CRYSTAL_CONFIGURED;
 
 
     public static Holder<PlacedFeature> ULDERA_OBELISK_PLACEMENT;
@@ -141,6 +143,7 @@ public class FeaturesRegistry {
     public static Holder<PlacedFeature> SOLAR_ORE;
     public static Holder<PlacedFeature> SOLAR_STONE;
     public static Holder<PlacedFeature> ULDERA_PYLON_PLACEMENT;
+    public static Holder<PlacedFeature> CLEARING_CRYSTAL_PLACEMENT;
 
     //public static ConfiguredFeature<?,?> RADIANT_LAND_AMBIENT_TREE;
 
@@ -173,7 +176,7 @@ public class FeaturesRegistry {
         registerFeature(event, CRYSTALS_ORE,"crystallized_runic_energy");
         registerFeature(event,ULDERA_OBELISK,"uldera_obelisk");
         registerFeature(event,ULDERA_PYLON,"uldera_pylon");
-
+        registerFeature(event,CLEARING_CRYSTAL,"clearing_crystal");
     }
     private static void registerFeature(RegistryEvent.Register<Feature<?>> event,Feature<?> f,String name){
         event.getRegistry().register(f.setRegistryName(new ResourceLocation(SolarForge.MOD_ID,name)));
@@ -202,18 +205,6 @@ public class FeaturesRegistry {
                     new BlobFoliagePlacer(ConstantInt.of(2), ConstantInt.of(0), 3),
                     new TwoLayersFeatureSize(1, 0, 1))
                     .ignoreVines().build());
-//
-//            Registry.register(Registry.FOLIAGE_PLACER_TYPES,new ResourceLocation("solarforge","burnt_tree_foliage"), FoliagePlacerRegistry.BURNT_TREE_PLACER);
-//            Registry.register(Registry.FOLIAGE_PLACER_TYPES,new ResourceLocation("solarforge","radiant_tree_foliage"), FoliagePlacerRegistry.RADIANT_PLACER);
-//            Registry.register(Registry.FOLIAGE_PLACER_TYPES,new ResourceLocation("solarforge","radiant_tree_small_foliage"), FoliagePlacerRegistry.RADIANT_SMALL_PLACER);
-
-
-//            BURNT_TREE_2 = BURNT_TREE_FEATURE_2_CONF.placed(
-//                    PlacementUtils.countExtra(10,0.1f,1),
-//                    HeightmapPlacement.onHeightmap(Heightmap.Types.WORLD_SURFACE_WG),
-//                    InSquarePlacement.spread(),
-//                    NoiseBasedCountPlacement.of(3,2,3),
-//                    BlockPredicateFilter.forPredicate(BlockPredicate.wouldSurvive(Blocks.OAK_SAPLING.defaultBlockState(), BlockPos.ZERO)));
             Registry.register(BuiltinRegistries.CONFIGURED_FEATURE,new ResourceLocation(SolarForge.MOD_ID,"burnt_tree_feature2_configured"), BURNT_TREE_FEATURE_2_CONF);
             BURNT_TREE_2 = registerPlacedFeature("burnt_tree_feature2",Holder.direct(BURNT_TREE_FEATURE_2_CONF),
                     PlacementUtils.countExtra(10,0.1f,1),
@@ -224,7 +215,6 @@ public class FeaturesRegistry {
                             BlockPos.ZERO)));
 
 
-//            registerPlacedFeature(BURNT_TREE_2,"burnt_tree_feature2");
             BURNT_TREE_FEATURE_CONF = new ConfiguredFeature<>(Feature.TREE,new TreeConfiguration.TreeConfigurationBuilder(
                     BlockStateProvider.simple(SolarcraftBlocks.BURNT_LOG.get().defaultBlockState()),
                     new BurntTreeTrunkPlacer(5, 3, 0),
@@ -495,6 +485,11 @@ public class FeaturesRegistry {
 
             ULDERA_PYLON_PLACEMENT = registerPlacedFeature("uldera_pylon",Holder.direct(ULDERA_PYLON_CONFIGURED),
                     RarityFilter.onAverageOnceEvery(300));
+
+            CLEARING_CRYSTAL_CONFIGURED = new ConfiguredFeature<>(CLEARING_CRYSTAL,NoneFeatureConfiguration.INSTANCE);
+            registerConfiguredFeature(CLEARING_CRYSTAL_CONFIGURED,"clearing_crystal");
+            CLEARING_CRYSTAL_PLACEMENT = registerPlacedFeature("clearing_crystal",Holder.direct(CLEARING_CRYSTAL_CONFIGURED),
+                    RarityFilter.onAverageOnceEvery(450),InSquarePlacement.spread(),HeightmapPlacement.onHeightmap(Heightmap.Types.MOTION_BLOCKING));
         });
     }
 

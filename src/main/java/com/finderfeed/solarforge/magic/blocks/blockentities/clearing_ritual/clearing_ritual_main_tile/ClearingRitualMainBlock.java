@@ -1,7 +1,9 @@
 package com.finderfeed.solarforge.magic.blocks.blockentities.clearing_ritual.clearing_ritual_main_tile;
 
+import com.finderfeed.solarforge.magic.blocks.blockentities.clearing_ritual.ClearingRitual;
 import com.finderfeed.solarforge.registries.tile_entities.SolarcraftTileEntityTypes;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -42,6 +44,7 @@ public class ClearingRitualMainBlock extends Block implements EntityBlock {
     @Override
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult res) {
         if (!level.isClientSide && hand == InteractionHand.MAIN_HAND && level.getBlockEntity(pos) instanceof ClearingRitualMainTile tile){
+            ClearingRitual.setRLState((ServerLevel) level,false); //TODO:delete
             tile.startRitual();
             return InteractionResult.SUCCESS;
         }

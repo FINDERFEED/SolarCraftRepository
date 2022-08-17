@@ -69,7 +69,8 @@
       "minecraft:disk_gravel"
     ],
     [
-      "solarforge:uldera_pylon"
+      "solarforge:uldera_pylon",
+      "solarforge:clearing_crystal"
     ],
     [
       "solarforge:floating_islands",
@@ -91,7 +92,8 @@
   },
   "starts": [
     "solarforge:crystal_boss_room",
-    "solarforge:runic_elemental_arena"
+    "solarforge:runic_elemental_arena",
+    "solarforge:clearing_ritual_structure"
   ],
   "player_spawn_friendly": true,
   "spawn_costs": {}

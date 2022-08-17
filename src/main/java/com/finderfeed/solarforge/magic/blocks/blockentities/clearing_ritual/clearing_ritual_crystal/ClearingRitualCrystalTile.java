@@ -32,7 +32,7 @@ public class ClearingRitualCrystalTile extends BlockEntity {
     private int wispsCount = 0;
     private int wispSpawnTicks = 0;
 
-    private RunicEnergy.Type type = RunicEnergy.Type.ARDO;
+    private RunicEnergy.Type type = null;
 
     public ClearingRitualCrystalTile( BlockPos pos, BlockState state) {
         super(SolarcraftTileEntityTypes.CLEARING_RITUAL_CRYSTAL.get(), pos, state);
@@ -40,6 +40,10 @@ public class ClearingRitualCrystalTile extends BlockEntity {
 
     //don't ask me
     public static void superDuperTickYouCanNeverImagineHowSuperItIs(Level world,BlockState state,BlockPos pos,ClearingRitualCrystalTile tile){
+        if (tile.getREType() == null){
+            RunicEnergy.Type[] types = RunicEnergy.Type.getAll();
+            tile.setREType(types[world.getRandom().nextInt(types.length)]);
+        }
         tile.handleOverloading();
         tile.handleCorruption();
         tile.ticker++;
@@ -91,15 +95,6 @@ public class ClearingRitualCrystalTile extends BlockEntity {
                     }
                     this.wispSpawnTicks = FDMathHelper.clamp(0, this.wispSpawnTicks - 1, 200);
                 }
-            } else {
-//                ClientHelpers.ParticleAnimationHelper.verticalCircleWTime(
-//                        SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),c,0.5f,3,new float[]{0,0.05f,0},() -> 196, () -> 0, () -> 171,
-//                        0.3f,ticker
-//                );
-//                ClientHelpers.ParticleAnimationHelper.verticalCircleWTime(
-//                        SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),c,0.5f,3,new float[]{0,-0.05f,0},() -> 196, () -> 0, () -> 171,
-//                        0.3f,ticker
-//                );
             }
             this.corruptionTicks++;
         }else{
@@ -148,6 +143,7 @@ public class ClearingRitualCrystalTile extends BlockEntity {
 
     public void setREType(RunicEnergy.Type type) {
         this.type = type;
+        Helpers.updateTile(this);
     }
 
     public RunicEnergy.Type getREType() {
@@ -175,7 +171,9 @@ public class ClearingRitualCrystalTile extends BlockEntity {
         super.saveAdditional(tag);
         tag.putBoolean("overloaded",overloaded);
         tag.putBoolean("corrupted",corrupted);
-        tag.putString("retype",type.id);
+        if (type != null) {
+            tag.putString("retype", type.id);
+        }
         tag.putInt("wisps",wispsCount);
         tag.putInt("wispTicks",wispSpawnTicks);
     }
