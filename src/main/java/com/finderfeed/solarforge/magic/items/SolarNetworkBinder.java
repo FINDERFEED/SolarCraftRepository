@@ -21,27 +21,15 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class SolarNetworkBinder extends Item {
-    public BlockPos pos1 = null;
-    public BlockPos pos2 = null;
+
     public SolarNetworkBinder(Properties p_i48487_1_) {
         super(p_i48487_1_);
     }
 
-//    @Override
-//    public ActionResult<ItemStack> use(World p_77659_1_, PlayerEntity p_77659_2_, Hand p_77659_3_) {
-//        if (p_77659_1_.isClientSide){
-//            Minecraft.getInstance().gameRenderer.displayItemActivation(p_77659_2_.getItemInHand(p_77659_3_));
-//        }
-//
-//        return super.use(p_77659_1_, p_77659_2_, p_77659_3_);
-//    }
-
     public InteractionResult useOn(UseOnContext ctx) {
-        BlockPos pos = ctx.getClickedPos();
         Level world = ctx.getLevel();
         ItemStack stack = ctx.getItemInHand();
         if (!world.isClientSide && ctx.getHand() == InteractionHand.MAIN_HAND){
-
             if (!ctx.getPlayer().isCrouching()) {
                 bindAll(world, ctx.getClickedPos(), ctx.getPlayer(),getPos1(stack),getPos2(stack), stack);
             }else{
@@ -80,194 +68,6 @@ public class SolarNetworkBinder extends Item {
         }
     }
 
-//    public void bindAll(World world,BlockPos clickedPos,PlayerEntity p){
-//        if (pos1 == null && pos2 == null){
-//            if (world.getBlockEntity(clickedPos) != null && (world.getBlockEntity(clickedPos) instanceof AbstractSolarNetworkRepeater
-//            || world.getBlockEntity(clickedPos) instanceof AbstractEnergyGeneratorTileEntity
-//                    || world.getBlockEntity(clickedPos) instanceof AbstractSolarCore
-//                    || world.getBlockEntity(clickedPos) instanceof IEnergyUser)) {
-//                pos1 = clickedPos;
-//            }
-//        }else if (pos1 != null && pos2 == null) {
-//            if (world.getBlockEntity(clickedPos) != null && (world.getBlockEntity(clickedPos) instanceof AbstractSolarNetworkRepeater
-//                    || world.getBlockEntity(clickedPos) instanceof AbstractEnergyGeneratorTileEntity
-//                    || world.getBlockEntity(clickedPos) instanceof IEnergyUser
-//                    || world.getBlockEntity(clickedPos) instanceof AbstractSolarCore)) {
-//                pos2 = clickedPos;
-//            }
-//        }
-//
-//        if (pos1 != null && pos2 != null ){
-//            Vector3d length = new Vector3d(pos2.getX()-pos1.getX(),pos2.getY()-pos1.getY(),pos2.getZ()-pos1.getZ());
-//            TileEntity tileAtPos1 = world.getBlockEntity(pos1);
-//            TileEntity tileAtPos2 = world.getBlockEntity(pos2);
-//            if (isValid(tileAtPos2,length.length())) {
-//                if (tileAtPos1 instanceof AbstractEnergyGeneratorTileEntity) {
-//                    if (tileAtPos2 instanceof AbstractSolarNetworkRepeater) {
-//                        if (Helpers.isReachable(world, pos1, pos2) && !((AbstractEnergyGeneratorTileEntity) tileAtPos1).poslist.contains(pos2)) {
-//                            ((AbstractEnergyGeneratorTileEntity) tileAtPos1).poslist.add(pos2);
-//                            setNull();
-//                            print(true, p);
-//                        } else {
-//                            print(false, p);
-//                            setNull();
-//                        }
-//                    } else if (tileAtPos2 instanceof IEnergyUser) {
-//                        if (Helpers.isReachable(world, pos1, pos2) && !((AbstractEnergyGeneratorTileEntity) tileAtPos1).poslist.contains(pos2)) {
-//                            ((AbstractEnergyGeneratorTileEntity) tileAtPos1).poslist.add(pos2);
-//                            setNull();
-//                            print(true, p);
-//                        } else {
-//                            print(false, p);
-//                            setNull();
-//                        }
-//                    } else if (tileAtPos2 instanceof AbstractSolarCore) {
-//                        if (Helpers.isReachable(world, pos1, pos2) && !((AbstractEnergyGeneratorTileEntity) tileAtPos1).poslist.contains(pos2)) {
-//                            ((AbstractEnergyGeneratorTileEntity) tileAtPos1).poslist.add(pos2);
-//                            setNull();
-//                            print(true, p);
-//                        } else {
-//                            print(false, p);
-//                            setNull();
-//                        }
-//                    } else if (tileAtPos2 instanceof AbstractEnergyGeneratorTileEntity) {
-//                        print(false, p);
-//                        setNull();
-//                    }
-//
-//                } else if (tileAtPos1 instanceof AbstractSolarNetworkRepeater) {
-//                    if (tileAtPos2 instanceof AbstractSolarNetworkRepeater) {
-//                        if (Helpers.isReachable(world, pos1, pos2) && !((AbstractSolarNetworkRepeater) tileAtPos2).connectedTo.equals(pos1) && !pos1.equals(pos2)) {
-//                            ((AbstractSolarNetworkRepeater) tileAtPos1).connectedTo = pos2;
-//                            print(true, p);
-//                            setNull();
-//                        } else {
-//                            print(false, p);
-//                            setNull();
-//                        }
-//                    } else if (tileAtPos2 instanceof IEnergyUser) {
-//                        if (Helpers.isReachable(world, pos1, pos2)) {
-//                            ((AbstractSolarNetworkRepeater) tileAtPos1).connectedTo = pos2;
-//                            print(true, p);
-//                            setNull();
-//                        } else {
-//                            print(false, p);
-//                            setNull();
-//                        }
-//                    } else if (tileAtPos2 instanceof AbstractSolarCore) {
-//                        if (Helpers.isReachable(world, pos1, pos2) && !((AbstractSolarCore) tileAtPos2).poslist.contains(pos1)) {
-//                            ((AbstractSolarCore) tileAtPos2).poslist.add(pos1);
-//                            setNull();
-//                            print(true, p);
-//                        } else {
-//                            print(false, p);
-//                            setNull();
-//                        }
-//                    } else if (tileAtPos2 instanceof AbstractEnergyGeneratorTileEntity) {
-//                        if (Helpers.isReachable(world, pos1, pos2) && !((AbstractEnergyGeneratorTileEntity) tileAtPos2).poslist.contains(pos1)) {
-//                            ((AbstractEnergyGeneratorTileEntity) tileAtPos2).poslist.add(pos1);
-//                            setNull();
-//                            print(true, p);
-//                        } else {
-//                            print(false, p);
-//                            setNull();
-//                        }
-//                    }
-//                } else if (tileAtPos1 instanceof IEnergyUser) {
-//                    if (tileAtPos2 instanceof AbstractSolarNetworkRepeater) {
-//                        if (Helpers.isReachable(world, pos1, pos2)) {
-//                            ((AbstractSolarNetworkRepeater) tileAtPos2).connectedTo = pos1;
-//                            print(true, p);
-//                            setNull();
-//                        } else {
-//                            print(false, p);
-//                            setNull();
-//                        }
-//                    } else if (tileAtPos2 instanceof IEnergyUser) {
-//                        print(false, p);
-//                        setNull();
-//                    } else if (tileAtPos2 instanceof AbstractSolarCore) {
-//                        if (Helpers.isReachable(world, pos1, pos2) && !((AbstractSolarCore) tileAtPos2).poslist.contains(pos1)) {
-//                            ((AbstractSolarCore) tileAtPos2).poslist.add(pos1);
-//                            setNull();
-//                            print(true, p);
-//                        } else {
-//                            print(false, p);
-//                            setNull();
-//                        }
-//                    } else if (tileAtPos2 instanceof AbstractEnergyGeneratorTileEntity) {
-//                        if (Helpers.isReachable(world, pos1, pos2) && !((AbstractEnergyGeneratorTileEntity) tileAtPos2).poslist.contains(pos1)) {
-//                            ((AbstractEnergyGeneratorTileEntity) tileAtPos2).poslist.add(pos1);
-//                            setNull();
-//                            print(true, p);
-//                        } else {
-//                            print(false, p);
-//                            setNull();
-//                        }
-//                    }
-//                } else if (tileAtPos1 instanceof AbstractSolarCore) {
-//                    if (tileAtPos2 instanceof AbstractSolarNetworkRepeater) {
-//                        if (Helpers.isReachable(world, pos1, pos2) && !((AbstractSolarCore) tileAtPos1).poslist.contains(pos2)) {
-//                            ((AbstractSolarCore) tileAtPos1).poslist.add(pos2);
-//                            print(true, p);
-//                            setNull();
-//                        } else {
-//                            print(false, p);
-//                            setNull();
-//                        }
-//                    } else if (tileAtPos2 instanceof AbstractSolarCore) {
-//                        print(false, p);
-//                        setNull();
-//                    } else if (tileAtPos2 instanceof IEnergyUser) {
-//                        if (Helpers.isReachable(world, pos1, pos2)) {
-//                            ((AbstractSolarCore) tileAtPos1).poslist.add(pos2);
-//                            setNull();
-//                            print(true, p);
-//                        } else {
-//                            print(false, p);
-//                            setNull();
-//                        }
-//                    } else if (tileAtPos2 instanceof AbstractEnergyGeneratorTileEntity) {
-//                        if (Helpers.isReachable(world, pos1, pos2) && !((AbstractEnergyGeneratorTileEntity) tileAtPos2).poslist.contains(pos1)) {
-//                            ((AbstractEnergyGeneratorTileEntity) tileAtPos2).poslist.add(pos1);
-//                            setNull();
-//                            print(true, p);
-//                        } else {
-//                            print(false, p);
-//                            setNull();
-//                        }
-//                    }
-//                }
-//            }else{
-//                print(false,p);
-//                setNull();
-//            }
-//        }
-//    }
-
-    public boolean isValid(BlockEntity tile,double length){
-        if (tile instanceof AbstractSolarNetworkRepeater){
-            if (((AbstractSolarNetworkRepeater) tile).getRadius() < length){
-                return false;
-            }
-        }else if(tile instanceof AbstractSolarCore){
-            if (((AbstractSolarCore) tile).getRadius() < length){
-                return false;
-            }
-        }else if (tile instanceof IEnergyUser){
-            if (((IEnergyUser) tile).getRadius() < length){
-                return false;
-            }
-        }else if (tile instanceof AbstractEnergyGeneratorTileEntity){
-            if (((AbstractEnergyGeneratorTileEntity) tile).getRadius() < length){
-                return false;
-            }
-
-        }
-        return true;
-    }
-
-
     public void setNull(ItemStack stack){
         CompoundNBTHelper.writeBlockPos("pos",BlockPos.ZERO,stack.getOrCreateTagElement("positionone"));
         CompoundNBTHelper.writeBlockPos("pos",BlockPos.ZERO,stack.getOrCreateTagElement("positiontwo"));
@@ -289,11 +89,4 @@ public class SolarNetworkBinder extends Item {
        CompoundNBTHelper.writeBlockPos("pos",set,stack.getOrCreateTagElement("positiontwo"));
     }
 
-    public void print(boolean a, Player playerEntity){
-        if (a){
-            playerEntity.displayClientMessage(new TextComponent("Binding sucesseful"),true);
-        }else{
-            playerEntity.displayClientMessage(new TextComponent("Binding failed"),true);
-        }
-    }
 }

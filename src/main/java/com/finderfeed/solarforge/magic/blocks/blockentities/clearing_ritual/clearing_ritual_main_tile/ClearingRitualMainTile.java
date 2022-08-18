@@ -5,8 +5,10 @@ import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.client.particles.SolarcraftParticleTypes;
 import com.finderfeed.solarforge.magic.blocks.blockentities.clearing_ritual.ClearingRitual;
 import com.finderfeed.solarforge.registries.tile_entities.SolarcraftTileEntityTypes;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.world.level.Level;
@@ -84,6 +86,6 @@ public class ClearingRitualMainTile extends BlockEntity {
 
     @Override
     public AABB getRenderBoundingBox() {
-        return Helpers.createAABBWithRadius(Helpers.getBlockCenter(this.getBlockPos()),20,20);
+        return Helpers.createAABBWithRadius(Helpers.getBlockCenter(this.getBlockPos()),20,100);
     }
 }

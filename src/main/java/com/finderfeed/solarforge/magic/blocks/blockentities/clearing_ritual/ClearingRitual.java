@@ -27,7 +27,7 @@ import java.util.function.Function;
 
 public class ClearingRitual {
 
-    public static final int MAX_TIME = 2000;
+    public static final int MAX_TIME = 300;
 
     public static final int RITUAL_OFFLINE = -1;
     public static final int RITUAL_ONLINE = 1;
@@ -50,33 +50,33 @@ public class ClearingRitual {
     public void tick(){
         Level world = tile.getLevel();
         BlockPos tilePos = tile.getBlockPos();
-        if (this.ritualOnline() && !world.isClientSide){
+        if (this.ritualOnline()){
             ticker++;
-
-            if (ticker > 0){
-                if (ticker >= MAX_TIME){
-                    if (this.checkStructure()){
-                        this.cleanWorld();
-                    }else{
-                        this.setRitualStatus(RITUAL_OFFLINE);
-                        this.ticker = 0;
-                    }
-                    return;
-                }
-                if (ticker % 200 == 0) {
-                    if (!this.checkStructure()) {
+            if (!world.isClientSide) {
+                if (ticker > 0) {
+                    if (ticker >= MAX_TIME) {
+                        if (this.checkStructure()) {
+                            this.cleanWorld();
+                        }
                         this.setRitualStatus(RITUAL_OFFLINE);
                         this.ticker = 0;
                         return;
                     }
-                    ArrayList<ClearingRitualCrystalTile> crystals = getAllCrystals();
-                    crystals.removeIf(ClearingRitualCrystalTile::isCorrupted);
-                    if (crystals.size() != 0) {
-                        crystals.get(world.random.nextInt(crystals.size())).setCorrupted(true);
+                    if (ticker % 200 == 0) {
+                        if (!this.checkStructure()) {
+                            this.setRitualStatus(RITUAL_OFFLINE);
+                            this.ticker = 0;
+                            return;
+                        }
+                        ArrayList<ClearingRitualCrystalTile> crystals = getAllCrystals();
+                        crystals.removeIf(ClearingRitualCrystalTile::isCorrupted);
+                        if (crystals.size() != 0) {
+                            crystals.get(world.random.nextInt(crystals.size())).setCorrupted(true);
+                        }
                     }
-                }
-                if (ticker % 75 == 0){
-                    this.randomLightning(world,tilePos);
+                    if (ticker % 40 == 0) {
+                        this.randomLightning(world, tilePos);
+                    }
                 }
             }
         }
@@ -95,20 +95,20 @@ public class ClearingRitual {
                     .getDataStorage()
                     .computeIfAbsent(RadiantLandCleanedData::load,()->new RadiantLandCleanedData(false),"is_radiant_land_cleaned");
             if (!data.isCleaned()){
-                List<ServerPlayer> players = ((ServerLevel) level).getPlayers((p)->p.getLevel().dimension() == EventHandler.RADIANT_LAND_KEY);
-                MinecraftServer server = level.getServer();
-                if (server != null) {
-                    for (ServerPlayer player : players) {
-                        player.changeDimension(server.overworld().getLevel(),
-                                new ITeleporter() {
-                                    @Nullable
-                                    @Override
-                                    public PortalInfo getPortalInfo(Entity entity, ServerLevel destWorld, Function<ServerLevel, PortalInfo> defaultPortalInfo) {
-                                        return defaultPortalInfo.apply(server.overworld());
-                                    }
-                                });
-                    }
-                }
+//                List<ServerPlayer> players = ((ServerLevel) level).getPlayers((p)->p.getLevel().dimension() == EventHandler.RADIANT_LAND_KEY);
+//                MinecraftServer server = level.getServer();
+//                if (server != null) {
+//                    for (ServerPlayer player : players) {
+//                        player.changeDimension(server.overworld().getLevel(),
+//                                new ITeleporter() {
+//                                    @Nullable
+//                                    @Override
+//                                    public PortalInfo getPortalInfo(Entity entity, ServerLevel destWorld, Function<ServerLevel, PortalInfo> defaultPortalInfo) {
+//                                        return defaultPortalInfo.apply(server.overworld());
+//                                    }
+//                                });
+//                    }
+//                }
                 data.setCleaned(true);
                 data.setDirty();
             }
@@ -152,6 +152,10 @@ public class ClearingRitual {
     public void setRitualStatus(int ritualStatus) {
         this.ritualStatus = ritualStatus;
         Helpers.updateTile(tile);
+    }
+
+    public int getCurrentTime() {
+        return ticker;
     }
 
     public boolean checkStructure(){

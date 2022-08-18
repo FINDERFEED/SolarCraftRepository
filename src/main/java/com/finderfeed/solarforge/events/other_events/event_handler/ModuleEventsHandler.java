@@ -4,8 +4,10 @@ import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.SolarCraftTags;
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.config.SolarcraftConfig;
+import com.finderfeed.solarforge.entities.ShadowZombie;
 import com.finderfeed.solarforge.magic.items.ModuleItem;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
+import com.finderfeed.solarforge.registries.SolarcraftDamageSources;
 import com.finderfeed.solarforge.registries.items.SolarcraftItems;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -119,6 +121,9 @@ public class ModuleEventsHandler {
                     if (Helpers.isVulnerable(target)) {
                         float modifier = player.getAttackStrengthScale(0);
                         DamageSource src = DamageSource.playerAttack(player).bypassArmor().setMagic();
+                        if (target instanceof ShadowZombie){
+                            src = SolarcraftDamageSources.RUNIC_MAGIC;
+                        }
                         target.hurt(src, modifier * 5);
                         target.invulnerableTime = 0;
                     }

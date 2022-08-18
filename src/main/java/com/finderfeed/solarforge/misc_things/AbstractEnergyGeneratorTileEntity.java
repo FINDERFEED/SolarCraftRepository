@@ -26,8 +26,8 @@ public abstract class AbstractEnergyGeneratorTileEntity extends BlockEntity impl
     public List<BlockPos> poslist = new ArrayList<>();
     public int count = 0;
 
-    public AbstractEnergyGeneratorTileEntity(BlockEntityType<?> type,BlockPos p_155229_, BlockState p_155230_) {
-        super(type, p_155229_, p_155230_);
+    public AbstractEnergyGeneratorTileEntity(BlockEntityType<?> type,BlockPos pos, BlockState state) {
+        super(type, pos, state);
     }
 
 
@@ -70,7 +70,7 @@ public abstract class AbstractEnergyGeneratorTileEntity extends BlockEntity impl
 
                     } else if (tile.level.getBlockEntity(CONNECTED_TO) instanceof AbstractSolarNetworkRepeater) {
                         AbstractSolarNetworkRepeater rep = (AbstractSolarNetworkRepeater) tile.level.getBlockEntity(CONNECTED_TO);
-                        List<BlockPos > visited = new ArrayList<>();
+                        List<BlockPos> visited = new ArrayList<>();
                         rep.tryTransmitEnergy(tile, tile.getEnergyFlowAmount(),visited);
                     }else if (tile.level.getBlockEntity(CONNECTED_TO) instanceof AbstractSolarCore) {
                         AbstractSolarCore core = (AbstractSolarCore) tile.level.getBlockEntity(CONNECTED_TO);
@@ -87,8 +87,6 @@ public abstract class AbstractEnergyGeneratorTileEntity extends BlockEntity impl
                 } else {
                     toRemove.add(CONNECTED_TO);
                 }
-//                    SolarForgePacketHandler.INSTANCE.send(PacketDistributor.NEAR.with(PacketDistributor.TargetPoint.p(pos.getX(), pos.getY(), pos.getZ(), 40, world.dimension())),
-//                            new TileEnergyGeneratorUpdate(pos, CONNECTED_TO, tile.poslist.indexOf(CONNECTED_TO), a));
             }
             tile.poslist.removeAll(toRemove);
         }
@@ -99,6 +97,14 @@ public abstract class AbstractEnergyGeneratorTileEntity extends BlockEntity impl
     public abstract int getRadius();
     public abstract int getEnergyPerSecond();
     public abstract boolean getConditionToFunction();
+
+
+    @Override
+    public CompoundTag getUpdateTag() {
+        CompoundTag tag = new CompoundTag();
+        this.saveAdditional(tag);
+        return tag;
+    }
 
     @Nullable
     @Override
@@ -122,7 +128,7 @@ public abstract class AbstractEnergyGeneratorTileEntity extends BlockEntity impl
     }
 
     @Override
-    public void load( CompoundTag p_230337_2_) {
+    public void load(CompoundTag p_230337_2_) {
         poslist = CompoundNBTHelper.getBlockPosList("positions",p_230337_2_);
         SOLAR_ENERGY = p_230337_2_.getInt("energy_level");
         super.load( p_230337_2_);
@@ -130,18 +136,11 @@ public abstract class AbstractEnergyGeneratorTileEntity extends BlockEntity impl
 
     @Override
     public void bindPos(BlockPos pos) {
-
         if (!poslist.contains(pos) && !(this.level.getBlockEntity(pos) instanceof AbstractEnergyGeneratorTileEntity) && Helpers.isReachable(level,worldPosition,pos,getRadius())){
             poslist.add(pos);
-
-
+            Helpers.updateTile(this);
         }
-
     }
-
-
-
-
 
     @Override
     public double getEnergy() {

@@ -42,5 +42,6 @@ public class StructurePieces {
         Registry.register(Registry.STRUCTURE_PIECE,"dimensional_shard_structure",DIMENSIONAL_SHARD_STRUCTURE);
         Registry.register(Registry.STRUCTURE_PIECE,"crystal_boss_room_piece",CRYSTAL_BOSS_ROOM_PIECE);
         Registry.register(Registry.STRUCTURE_PIECE,"runic_elemental_arena_piece",RUNIC_ELEMENTAL_ARENA_PIECE);
+        Registry.register(Registry.STRUCTURE_PIECE,"clearing_ritual_piece",CLEARING_RITUAL_STRUCTURE);
     }
 }
