@@ -73,7 +73,9 @@ public class CrystalEnergyVinesTile extends BlockEntity {
                 pat[PUZZLE_SIZE_X-1][initPos] = PLAYER_WAY;
                 pat[0][endPos] = FINAL_POS;
                 puzzlePattern = pat;
-                initPuzzlePattern = pat.clone();
+                initPuzzlePattern = new int[PUZZLE_SIZE_X][PUZZLE_SIZE_Y];
+                cloneArray(puzzlePattern,initPuzzlePattern);
+//                initPuzzlePattern = pat.clone();
                 currentPosition = new int[]{PUZZLE_SIZE_X -1,initPos};
                 success = true;
                 break;
@@ -87,7 +89,8 @@ public class CrystalEnergyVinesTile extends BlockEntity {
         if (puzzlePattern == null || remainingTries == 0 || actionType > 4) return false;
         if (isWin()) return true;
         if (actionType == RESET){
-            this.puzzlePattern = initPuzzlePattern.clone();
+            cloneArray(initPuzzlePattern,puzzlePattern);
+//            this.puzzlePattern = initPuzzlePattern.clone();
             this.remainingTries = initRemainingTries;
             this.currentPosition = new int[]{PUZZLE_SIZE_X -1,initPos};
             return false;
@@ -231,5 +234,11 @@ public class CrystalEnergyVinesTile extends BlockEntity {
     }
 
 
-
+    private void cloneArray(int[][] initArray,int[][] cloneTo){
+        for (int i = 0;i < initArray.length;i++){
+            for (int g = 0;g < initArray[i].length;g++){
+                cloneTo[i][g] = initArray[i][g];
+            }
+        }
+    }
 }

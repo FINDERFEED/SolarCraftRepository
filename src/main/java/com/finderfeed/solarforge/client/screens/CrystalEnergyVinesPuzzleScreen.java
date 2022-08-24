@@ -18,6 +18,7 @@ import org.lwjgl.glfw.GLFW;
 
 public class CrystalEnergyVinesPuzzleScreen extends SolarCraftScreen {
 
+    public static final ResourceLocation TRIES = new ResourceLocation(SolarForge.MOD_ID,"textures/gui/wooden_window.png");
     public static final ResourceLocation MAIN_GUI = new ResourceLocation(SolarForge.MOD_ID,"textures/gui/crystal_energy_vines_puzzle.png");
     public static final ResourceLocation TWIGS = new ResourceLocation(SolarForge.MOD_ID,"textures/gui/twigs.png");
     public static final ResourceLocation NODE = new ResourceLocation(SolarForge.MOD_ID,"textures/particle/solar_strike_particle.png");
@@ -41,6 +42,8 @@ public class CrystalEnergyVinesPuzzleScreen extends SolarCraftScreen {
             sendMovementPacket(CrystalEnergyVinesTile.MOVE_LEFT);
         }else if (keyCode == GLFW.GLFW_KEY_RIGHT || keyCode == GLFW.GLFW_KEY_D){
             sendMovementPacket(CrystalEnergyVinesTile.MOVE_RIGHT);
+        }else if (keyCode == GLFW.GLFW_KEY_R){
+            sendMovementPacket(CrystalEnergyVinesTile.RESET);
         }
 
         return super.keyPressed(keyCode, idk, type);
@@ -81,6 +84,10 @@ public class CrystalEnergyVinesPuzzleScreen extends SolarCraftScreen {
         int offsY = -14;
         blit(matrices,relX,relY + offsY,0,0,256,256);
 
+        ClientHelpers.bindText(TRIES);
+        blit(matrices,relX - 70 - 10,relY + offsY + 110,0,0,60,18,60,18);
+        Gui.drawString(matrices,font,"Moves: "+tile.getRemainingTries(),relX - 64 - 10,relY + offsY + 115,0xffffff);
+
         if (pattern == null) return;
         ClientHelpers.bindText(NODE);
         RenderSystem.enableBlend();
@@ -117,16 +124,16 @@ public class CrystalEnergyVinesPuzzleScreen extends SolarCraftScreen {
 
         RenderSystem.disableBlend();
 
-        Gui.drawString(matrices,font,tile.getRemainingTries()+" - moves",relX + 260,relY+ 200,0xffffff);
+
 
         RenderSystem.setShaderColor(1,1,1,1);
         ClientHelpers.bindText(TWIGS);
         double v = VALUE.getValue();
         for (int i = 0; i < 6; i ++ ){
             int xp = (int)(relX + (i+1) * 23* (1-v));
-            Gui.blit(matrices,xp - 20,relY - 18,(i % 4) *40,0,40,256,256,256);
+            Gui.blit(matrices,xp - 20,relY - 18,(i % 3) *40,0,40,256,256,256);
             int xp2 = (int)((i+1) * 23* (1-v));
-            Gui.blit(matrices,relX + 230 - xp2,relY - 18,(i % 4) *40 + 120,0,40,256,256,256);
+            Gui.blit(matrices,relX + 230 - xp2,relY - 18,(i % 3) *40 + 120,0,40,256,256,256);
         }
 
 

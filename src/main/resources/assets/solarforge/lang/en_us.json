@@ -256,7 +256,7 @@
   "charged_qualadium_sword.lore": "Charged qualadium tools have higher enchantability than their \"parents\"",
   "solar_fragment.charged_qualadium_axe": "Charged Qualadium Axe",
   "charged_qualadium_axe.lore": "Charged qualadium tools have higher enchantability than their \"parents\"",
-  "solar_fragment.способностьcharged_qualadium_shovel": "Charged Qualadium Shovel",
+  "solar_fragment.charged_qualadium_shovel": "Charged Qualadium Shovel",
   "charged_qualadium_shovel.lore": "Charged qualadium tools have higher enchantability than their \"parents\"",
   "solar_fragment.charged_qualadium_hoe": "Charged Qualadium Hoe",
   "charged_qualadium_hoe.lore": "Charged Qualadium Tools have higher enchantability than their \"parents\"",
@@ -691,5 +691,12 @@
   "hidden_ores.lore": "Your eyes lie to you. Many unexperienced adventurers just don't see the treasures hidden in the depth. As you explore the world and gain more knowledge about it, things that you saw as a regular stone block might not be a stone anymore.",
   "block.solarforge.runic_tree_sapling": "Runic Tree Sapling",
   "block.solarforge.crystal_energy_vines": "Crystal Energy Vines",
-  "block.solarforge.clearing_ritual_crystal": "Runic Energy Obelisk"
+  "block.solarforge.clearing_ritual_crystal": "Runic Energy Obelisk",
+  "dusts.lore": "The world is full of various flowers and other vegetation that can provide some very useful crafting materials.",
+  "solar_fragment.dusts": "Dusts",
+  "solar_fragment.solar_armor": "Solar Armor",
+  "solar_armor.lore": "All those monsters are really getting on you nerves don't they? Well, this armor set is not the best but it will protect you much better than a netherite one.",
+  "death.lore": "You somehow manage to revive every time you die but you loose all your items and xp levels. Luckily your knowledge still remains with you which you can't say about the runic energy that you had.",
+  "solar_fragment.death": "Death"
+
 }

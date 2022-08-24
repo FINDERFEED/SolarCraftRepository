@@ -40,7 +40,7 @@ public class ClearingRitualCrystalTile extends BlockEntity {
 
     //don't ask me
     public static void superDuperTickYouCanNeverImagineHowSuperItIs(Level world,BlockState state,BlockPos pos,ClearingRitualCrystalTile tile){
-        if (tile.getREType() == null){
+        if (!world.isClientSide && tile.getREType() == null){
             RunicEnergy.Type[] types = RunicEnergy.Type.getAll();
             tile.setREType(types[world.getRandom().nextInt(types.length)]);
         }

@@ -32,7 +32,7 @@ public class ProgressionTree {
         tree.addAchievementRequirements(Progression.PYLON_INSCRIPTION,Progression.SOLAR_RUNE);
         tree.addAchievementRequirements(Progression.ALL_ENERGY_TYPES,Progression.RUNE_ENERGY_PYLON);
         tree.addAchievementRequirements(Progression.CRAFT_SOLAR_FORGE,Progression.RUNE_ENERGY_CLAIM,Progression.KILL_DRAGON);
-        tree.addAchievementRequirements(Progression.TRANSMUTE_GEM,Progression.FIND_INCINERATED_FOREST,Progression.IMBUED_COLD_STAR,Progression.TRADE_FOR_BLUE_GEM);
+        tree.addAchievementRequirements(Progression.TRANSMUTE_GEM,Progression.IMBUED_COLD_STAR,Progression.TRADE_FOR_BLUE_GEM);
         tree.addAchievementRequirements(Progression.SOLAR_INFUSER,Progression.CRAFT_SOLAR_FORGE,Progression.INFUSING_CRAFTING_TABLE);
         tree.addAchievementRequirements(Progression.DIMENSIONAL_SHARD_DUNGEON,Progression.TRANSMUTE_GEM);
         tree.addAchievementRequirements(Progression.CRAFT_SOLAR_LENS,Progression.IMBUED_COLD_STAR,Progression.SOLAR_INFUSER,Progression.CATALYSTS);

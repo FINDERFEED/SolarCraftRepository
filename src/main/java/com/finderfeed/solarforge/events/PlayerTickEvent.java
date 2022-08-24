@@ -15,13 +15,13 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 //@Mod.EventBusSubscriber(modid = "solarforge",bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class PlayerTickEvent {
 
-    @SubscribeEvent
-    public void replaceIncineratedForestEnter(BlockEvent.BreakEvent event){
-        Player p = event.getPlayer();
-        if (event.getState().is(Blocks.DIAMOND_BLOCK)){
-            Helpers.fireProgressionEvent(p, Progression.FIND_INCINERATED_FOREST);
-        }
-    }
+//    @SubscribeEvent
+//    public void replaceIncineratedForestEnter(BlockEvent.BreakEvent event){
+//        Player p = event.getPlayer();
+//        if (event.getState().is(Blocks.DIAMOND_BLOCK)){
+//            Helpers.fireProgressionEvent(p, Progression.FIND_INCINERATED_FOREST);
+//        }
+//    }
 
     @SubscribeEvent
     public void enterIncineratedForest(final TickEvent.PlayerTickEvent event){

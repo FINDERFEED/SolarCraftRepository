@@ -29,8 +29,7 @@ public class AncientFragment {
     public static final AncientFragment RUNIC_TABLE = new AncientFragment(tx("solar_fragment.runic_table"),"runic_table",null,SubCategoryBase.BEGGINING,CategoryBase.BEGGINING_INFO, SolarcraftItems.RUNIC_TABLE.get(),tx("runic_table.lore"),1);
     public static final AncientFragment FRAGMENT = new AncientFragment(tx("solar_fragment.fragment"),"fragment",null,SubCategoryBase.BEGGINING,CategoryBase.BEGGINING_INFO, SolarcraftItems.INFO_FRAGMENT.get(),tx("fragment.lore"),1);
     public static final AncientFragment LEXICON = new AncientFragment(tx("solar_fragment.lexicon"),"lexicon",null,SubCategoryBase.BEGGINING,CategoryBase.BEGGINING_INFO, SolarcraftItems.SOLAR_LEXICON.get(),tx("lexicon.lore"),1);
-    public static final AncientFragment ENERGY_DUST = new AncientFragment(tx("solar_fragment.energy_dust"),"energy_dust",null,SubCategoryBase.BASIC_DUSTS,CategoryBase.EXPLORATION, SolarcraftItems.ENERGY_DUST.get(),tx("energy_dust.lore"),1);
-    public static final AncientFragment VOID_DUST = new AncientFragment(tx("solar_fragment.void_dust"),"void_dust",null,SubCategoryBase.BASIC_DUSTS,CategoryBase.EXPLORATION, SolarcraftItems.VOID_DUST.get(),tx("void_dust.lore"),1);
+    public static final AncientFragment DUSTS = new AncientFragment(tx("solar_fragment.dusts"),"dusts",null,SubCategoryBase.WORLD,CategoryBase.EXPLORATION, SolarcraftItems.ENERGY_DUST.get(),tx("dusts.lore"),1);
     public static final AncientFragment INFUSING_CRAFTING_TABLE = new AncientFragment(tx("solar_fragment.infusing_crafting_table"),"infusing_crafting_table",null,SubCategoryBase.BEGINNER_BLOCKS,CategoryBase.BEGINNER, SolarcraftItems.INFUSING_TABLE.get(),tx("infusing_crafting_table.lore"),1);
     public static final AncientFragment WAND = new AncientFragment(tx("solar_fragment.wand"),"wand",null,SubCategoryBase.BEGGINING,CategoryBase.BEGGINING_INFO, SolarcraftItems.SOLAR_WAND.get(),tx("wand.lore"),1);
     public static final AncientFragment HIDDEN_ORES = new AncientFragment(tx("solar_fragment.hidden_ores"),"hidden_ores",ProgressionStage.PRE_BEGGINING.ALL_PROGRESSIONS,SubCategoryBase.WORLD,CategoryBase.EXPLORATION, Items.STONE,tx("hidden_ores.lore"),1);
@@ -56,18 +55,16 @@ public class AncientFragment {
     ),SolarForge.INFUSING_CRAFTING_RECIPE_TYPE,tx("solar_infuser.lore"),1);
 
 
-    public static final AncientFragment SOLAR_DUST = new AncientFragment(tx("solar_fragment.solar_dust"),"solar_dust",ProgressionStage.PRE_FORGE.ALL_PROGRESSIONS,SubCategoryBase.BASIC_DUSTS,CategoryBase.EXPLORATION, SolarcraftItems.SOLAR_DUST.get(),tx("solar_dust.lore"),1);
+    public static final AncientFragment DEATH = new AncientFragment(tx("solar_fragment.death"),"death",ProgressionStage.PRE_BEGGINING.ALL_PROGRESSIONS,SubCategoryBase.BEGGINING,CategoryBase.BEGGINING_INFO, Items.SKELETON_SKULL,tx("death.lore"),1);
     public static final AncientFragment SOLAR_FORGE = new AncientFragment(tx("solar_fragment.solar_forge"),"solar_forge",ProgressionStage.PRE_FORGE.ALL_PROGRESSIONS,SubCategoryBase.BEGINNER_BLOCKS,CategoryBase.BEGINNER, ItemWithRecipe.of(SolarForge.SOLAR_FORGE_ITEM.get().getDefaultInstance(),"infusing_crafting_solar_forge"),tx("solar_forge.lore"),SolarForge.INFUSING_CRAFTING_RECIPE_TYPE,1);
-
-
-
     public static final AncientFragment ENDER_RADAR = new AncientFragment(tx("solar_fragment.ender_radar"),"ender_radar",ProgressionStage.PRE_FORGE.SELF_PROGRESSIONS,SubCategoryBase.BEGINNER_ITEMS,CategoryBase.BEGINNER, ItemWithRecipe.of(SolarcraftItems.ENDER_RADAR.get().getDefaultInstance(),"ender_radar"),tx("ender_radar.lore"),SolarForge.INFUSING_CRAFTING_RECIPE_TYPE,2);
 
 
-    public static final AncientFragment SOLAR_HELMET = new AncientFragment(tx("solar_fragment.solar_helmet"),"solar_helmet",ProgressionStage.FORGE.ALL_PROGRESSIONS,SubCategoryBase.ARMOR,CategoryBase.ARMOR,ItemWithRecipe.of(SolarcraftItems.SOLAR_HELMET.get().getDefaultInstance(),"infusing_new_solar_helmet"),tx("solar_helmet.lore"), SolarForge.INFUSING_RECIPE_TYPE,2);
-    public static final AncientFragment SOLAR_CHESTPLATE = new AncientFragment(tx("solar_fragment.solar_chestplate"),"solar_chestplate",ProgressionStage.FORGE.ALL_PROGRESSIONS,SubCategoryBase.ARMOR,CategoryBase.ARMOR,ItemWithRecipe.of(SolarcraftItems.SOLAR_CHESTPLATE.get().getDefaultInstance(),"infusing_new_solar_chestplate"),tx("solar_chestplate.lore"), SolarForge.INFUSING_RECIPE_TYPE,2);
-    public static final AncientFragment SOLAR_LEGGINS = new AncientFragment(tx("solar_fragment.solar_leggings"),"solar_leggings",ProgressionStage.FORGE.ALL_PROGRESSIONS,SubCategoryBase.ARMOR,CategoryBase.ARMOR,ItemWithRecipe.of(SolarcraftItems.SOLAR_LEGGINS.get().getDefaultInstance(),"infusing_new_solar_leggins"),tx("solar_leggings.lore"), SolarForge.INFUSING_RECIPE_TYPE,2);
-    public static final AncientFragment SOLAR_BOOTS = new AncientFragment(tx("solar_fragment.solar_boots"),"solar_boots",ProgressionStage.FORGE.ALL_PROGRESSIONS,SubCategoryBase.ARMOR,CategoryBase.ARMOR,ItemWithRecipe.of(SolarcraftItems.SOLAR_BOOTS.get().getDefaultInstance(),"infusing_new_solar_boots"),tx("solar_boots.lore"), SolarForge.INFUSING_RECIPE_TYPE,2);
+
+    public static final AncientFragment SOLAR_ARMOR = new AncientFragment(tx("solar_fragment.solar_armor"),"solar_armor",ProgressionStage.FORGE.ALL_PROGRESSIONS,SubCategoryBase.ARMOR,CategoryBase.ARMOR,List.of(
+            ItemWithRecipe.of(SOLAR_BOOTS.get().getDefaultInstance(),"infusing_new_solar_boots"),ItemWithRecipe.of(SOLAR_LEGGINGS.get().getDefaultInstance(),"infusing_new_solar_leggins"),
+            ItemWithRecipe.of(SOLAR_CHESTPLATE.get().getDefaultInstance(),"infusing_new_solar_chestplate"),ItemWithRecipe.of(SOLAR_HELMET.get().getDefaultInstance(),"infusing_new_solar_helmet")
+    ),SolarForge.INFUSING_RECIPE_TYPE,tx("solar_armor.lore"),2);
     public static final AncientFragment ITEM_MAGNET = new AncientFragment(tx("solar_fragment.item_magnet"),"item_magnet",ProgressionStage.AFTER_INFUSER.ALL_PROGRESSIONS,SubCategoryBase.BEGINNER_BLOCKS,CategoryBase.BEGINNER,ItemWithRecipe.of(SolarcraftItems.MAGNET_BLOCK.get().getDefaultInstance(),"infusing_new_magnet_block"),tx("item_magnet.lore"), SolarForge.INFUSING_RECIPE_TYPE,2);
     public static final AncientFragment ILLIDIUM_INGOT = new AncientFragment(tx("solar_fragment.illidium_ingot"),"illidium_ingot",ProgressionStage.AFTER_INFUSER.ALL_PROGRESSIONS,SubCategoryBase.BEGINNER_MATERIALS,CategoryBase.BEGINNER,ItemWithRecipe.of(SolarcraftItems.ILLIDIUM_INGOT.get().getDefaultInstance(),"infusing_new_illidium_ingot"),tx("illidium_ingot.lore"), SolarForge.INFUSING_RECIPE_TYPE,2);
     public static final AncientFragment ALGADIUM_INGOT = new AncientFragment(tx("solar_fragment.algadium_ingot"),"algadium_ingot",ProgressionStage.AFTER_INFUSER.ALL_PROGRESSIONS,SubCategoryBase.BEGINNER_MATERIALS,CategoryBase.BEGINNER,ItemWithRecipe.of(SolarcraftItems.ALGADIUM_INGOT.get().getDefaultInstance(),"infusing_new_algadium_ingot"),tx("algadium_ingot.lore"), SolarForge.INFUSING_RECIPE_TYPE,2);
@@ -143,7 +140,7 @@ public class AncientFragment {
     public static final AncientFragment CHARGED_QUALADIUM_INGOT = new AncientFragment(tx("solar_fragment.charged_qualadium_ingot"),"charged_qualadium_ingot",ProgressionStage.SOLAR_ENERGY.ALL_PROGRESSIONS,SubCategoryBase.MASTER_MATERIALS,CategoryBase.MASTER,ItemWithRecipe.of(SolarcraftItems.CHARGED_QUALADIUM_INGOT.get().getDefaultInstance(),"infusing_new_charged_qualadium_ingot"),tx("charged_qualadium_ingot.lore"), SolarForge.INFUSING_RECIPE_TYPE,7);
     public static final AncientFragment SOLAR_MORTAR = new AncientFragment(tx("solar_fragment.solar_mortar"),"solar_mortar",ProgressionStage.SOLAR_ENERGY.ALL_PROGRESSIONS,SubCategoryBase.MASTER_ITEMS,CategoryBase.MASTER,ItemWithRecipe.of(SolarcraftItems.SOLAR_MORTAR.get().getDefaultInstance(),"infusing_new_solar_mortar_block"),tx("solar_mortar.lore"), SolarForge.INFUSING_RECIPE_TYPE,8);
     public static final AncientFragment SOLAR_FURNACE = new AncientFragment(tx("solar_fragment.solar_furnace"),"solar_furnace",ProgressionStage.SOLAR_ENERGY.ALL_PROGRESSIONS,SubCategoryBase.MASTER_ITEMS,CategoryBase.MASTER,ItemWithRecipe.of(SolarcraftItems.SOLAR_FURNACE_BLOCK.get().getDefaultInstance(),"infusing_new_solar_furnace"),tx("solar_furnace.lore"), SolarForge.INFUSING_RECIPE_TYPE,8);
-   public static final AncientFragment  TOTEM_OF_IMMORTALITY = new AncientFragment(tx("solar_fragment.totem_of_immortality"),"totem_of_immortality",ProgressionStage.SOLAR_ENERGY.ALL_PROGRESSIONS,SubCategoryBase.MASTER_ITEMS,CategoryBase.MASTER,ItemWithRecipe.of(SolarcraftItems.TOTEM_OF_IMMORTALITY.get().getDefaultInstance(),"infusing_new_totem_of_immortality"),tx("totem_of_immortality.lore"), SolarForge.INFUSING_RECIPE_TYPE,8);
+    public static final AncientFragment  TOTEM_OF_IMMORTALITY = new AncientFragment(tx("solar_fragment.totem_of_immortality"),"totem_of_immortality",ProgressionStage.SOLAR_ENERGY.ALL_PROGRESSIONS,SubCategoryBase.MASTER_ITEMS,CategoryBase.MASTER,ItemWithRecipe.of(SolarcraftItems.TOTEM_OF_IMMORTALITY.get().getDefaultInstance(),"infusing_new_totem_of_immortality"),tx("totem_of_immortality.lore"), SolarForge.INFUSING_RECIPE_TYPE,8);
     public static final AncientFragment SOLAR_CROSSBOW = new AncientFragment(tx("solar_fragment.solar_crossbow"),"solar_crossbow",ProgressionStage.SOLAR_ENERGY.ALL_PROGRESSIONS,SubCategoryBase.MASTER_ITEMS,CategoryBase.MASTER,ItemWithRecipe.of(SolarcraftItems.ULTRA_CROSSBOW.get().getDefaultInstance(),"infusing_new_solar_crossbow"),tx("solar_crossbow.lore"), SolarForge.INFUSING_RECIPE_TYPE,8);
     public static final AncientFragment LIGHTNING_GUN = new AncientFragment(tx("solar_fragment.lightning_gun"),"lightning_gun",ProgressionStage.SOLAR_ENERGY.ALL_PROGRESSIONS,SubCategoryBase.MASTER_ITEMS,CategoryBase.MASTER,ItemWithRecipe.of(SolarcraftItems.LIGHTNING_GUN.get().getDefaultInstance(),"infusing_new_lightning_emitter"),tx("lightning_gun.lore"), SolarForge.INFUSING_RECIPE_TYPE,8);
     public static final AncientFragment DIMENSION_CORE = new AncientFragment(tx("solar_fragment.dimension_core"),"dimension_core",ProgressionStage.SOLAR_ENERGY.ALL_PROGRESSIONS,SubCategoryBase.MASTER_ITEMS,CategoryBase.MASTER,ItemWithRecipe.of(SolarcraftItems.DIMENSION_CORE.get().getDefaultInstance(),"infusing_new_dimension_core"),tx("dimension_core.lore"), SolarForge.INFUSING_RECIPE_TYPE,9);
@@ -461,6 +458,10 @@ public class AncientFragment {
             items.add(new ItemWithRecipe(item,location));
         }
         return items;
+    }
+
+    private static AncientFragment infoFragment(String id,Progression[] progressions,CategoryBase base,SubCategoryBase subBase,Item icon,int priority){
+        return new AncientFragment(tx("solar_fragment." + id),id,progressions,subBase,base,icon,tx(id + ".lore"),priority);
     }
 
     public static class ItemWithRecipe{

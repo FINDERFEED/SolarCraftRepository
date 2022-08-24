@@ -43,9 +43,9 @@ public class SolarcraftItems {
 
     public static final RegistryObject<SolarWandItem> SOLAR_WAND = ITEMS.register("solar_wand",()-> new SolarWandItem(new Item.Properties().rarity(Rarity.EPIC).tab(SolarForge.SOLAR_GROUP).stacksTo(1)));
     public static  final RegistryObject<Item> SOLAR_INFUSION_POOL = ITEMS.register("solar_forge_infusion_pool",()-> new SolarcraftBlockItem(SolarcraftBlocks.INFUSING_POOL.get(),new Item.Properties().rarity(Rarity.EPIC).tab(SolarForge.SOLAR_GROUP_BLOCKS),()->AncientFragment.SOLAR_INFUSER));
-    public static  final RegistryObject<SolarDustItem> SOLAR_DUST = ITEMS.register("solar_dust",()-> new SolarDustItem(new Item.Properties().tab(SolarForge.SOLAR_GROUP_MATERIALS),()->AncientFragment.SOLAR_DUST));
-    public static  final RegistryObject<Item> VOID_DUST = ITEMS.register("void_dust",()-> new Item(new Item.Properties().tab(SolarForge.SOLAR_GROUP_MATERIALS)));
-    public static final RegistryObject<Item> ENERGY_DUST = ITEMS.register("energy_dust",()->new SolarcraftItem(new Item.Properties().tab(SolarForge.SOLAR_GROUP_MATERIALS),()->AncientFragment.ENERGY_DUST));
+    public static  final RegistryObject<SolarDustItem> SOLAR_DUST = ITEMS.register("solar_dust",()-> new SolarDustItem(new Item.Properties().tab(SolarForge.SOLAR_GROUP_MATERIALS),()->AncientFragment.DUSTS));
+    public static  final RegistryObject<Item> VOID_DUST = ITEMS.register("void_dust",()-> new SolarcraftItem(new Item.Properties().tab(SolarForge.SOLAR_GROUP_MATERIALS),()->AncientFragment.DUSTS));
+    public static final RegistryObject<Item> ENERGY_DUST = ITEMS.register("energy_dust",()->new SolarcraftItem(new Item.Properties().tab(SolarForge.SOLAR_GROUP_MATERIALS),()->AncientFragment.DUSTS));
     public static  final RegistryObject<Item> ENDERITE_ESSENCE = ITEMS.register("enderite_essence",()-> new Item(new Item.Properties().rarity(Rarity.RARE).tab(SolarForge.SOLAR_GROUP_MATERIALS)));
     public static final RegistryObject<Item> SOLAR_STONE = ITEMS.register("solar_stone",()->new ProgressionBlockItem(SolarcraftBlocks.SOLAR_STONE.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
     public static final RegistryObject<ProgressionBlockItem> LENSING_CRYSTAL_ORE = ITEMS.register("lensing_crystal_ore",()->new ProgressionBlockItem(SolarcraftBlocks.LENSING_CRYSTAL_ORE.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
@@ -64,10 +64,10 @@ public class SolarcraftItems {
 
     public static final RegistryObject<Item> SOLAR_STONE_COLLUMN_HORIZONTAL = ITEMS.register("solar_stone_collumn_horizontal",()->new BlockItem(SolarcraftBlocks.SOLAR_STONE_COLLUMN_HORIZONTAL.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
     //solar armor
-    public static final RegistryObject<ArmorItem> SOLAR_HELMET = ITEMS.register("solar_helmet",()-> new SolarcraftArmorItem(SolarArmorMaterial.SOLAR_ARMOR, EquipmentSlot.HEAD,new Item.Properties().rarity(Rarity.EPIC).tab(SolarForge.SOLAR_GROUP),()->AncientFragment.SOLAR_HELMET));
-    public static final RegistryObject<ArmorItem> SOLAR_CHESTPLATE = ITEMS.register("solar_chestplate",()-> new SolarcraftArmorItem(SolarArmorMaterial.SOLAR_ARMOR, EquipmentSlot.CHEST,new Item.Properties().rarity(Rarity.EPIC).tab(SolarForge.SOLAR_GROUP),()->AncientFragment.SOLAR_CHESTPLATE));
-    public static final RegistryObject<ArmorItem> SOLAR_LEGGINS = ITEMS.register("solar_leggins",()-> new SolarcraftArmorItem(SolarArmorMaterial.SOLAR_ARMOR, EquipmentSlot.LEGS,new Item.Properties().rarity(Rarity.EPIC).tab(SolarForge.SOLAR_GROUP),()->AncientFragment.SOLAR_LEGGINS));
-    public static final RegistryObject<ArmorItem> SOLAR_BOOTS = ITEMS.register("solar_boots",()-> new SolarcraftArmorItem(SolarArmorMaterial.SOLAR_ARMOR, EquipmentSlot.FEET,new Item.Properties().rarity(Rarity.EPIC).tab(SolarForge.SOLAR_GROUP),()->AncientFragment.SOLAR_BOOTS));
+    public static final RegistryObject<ArmorItem> SOLAR_HELMET = ITEMS.register("solar_helmet",()-> new SolarcraftArmorItem(SolarArmorMaterial.SOLAR_ARMOR, EquipmentSlot.HEAD,new Item.Properties().rarity(Rarity.EPIC).tab(SolarForge.SOLAR_GROUP),()->AncientFragment.SOLAR_ARMOR));
+    public static final RegistryObject<ArmorItem> SOLAR_CHESTPLATE = ITEMS.register("solar_chestplate",()-> new SolarcraftArmorItem(SolarArmorMaterial.SOLAR_ARMOR, EquipmentSlot.CHEST,new Item.Properties().rarity(Rarity.EPIC).tab(SolarForge.SOLAR_GROUP),()->AncientFragment.SOLAR_ARMOR));
+    public static final RegistryObject<ArmorItem> SOLAR_LEGGINGS = ITEMS.register("solar_leggins",()-> new SolarcraftArmorItem(SolarArmorMaterial.SOLAR_ARMOR, EquipmentSlot.LEGS,new Item.Properties().rarity(Rarity.EPIC).tab(SolarForge.SOLAR_GROUP),()->AncientFragment.SOLAR_ARMOR));
+    public static final RegistryObject<ArmorItem> SOLAR_BOOTS = ITEMS.register("solar_boots",()-> new SolarcraftArmorItem(SolarArmorMaterial.SOLAR_ARMOR, EquipmentSlot.FEET,new Item.Properties().rarity(Rarity.EPIC).tab(SolarForge.SOLAR_GROUP),()->AncientFragment.SOLAR_ARMOR));
 
     public static final RegistryObject<ArmorItem> DIVINE_HELMET = ITEMS.register("divine_helmet",()-> new DivineHelmet(SolarArmorMaterial.DIVINE_ARMOR, EquipmentSlot.HEAD,new Item.Properties().rarity(Rarity.EPIC).tab(SolarForge.SOLAR_GROUP),()->AncientFragment.DIVINE_ARMOR));
     public static final RegistryObject<ArmorItem> DIVINE_CHESTPLATE = ITEMS.register("divine_chestplate",()-> new DivineChestplate(SolarArmorMaterial.DIVINE_ARMOR, EquipmentSlot.CHEST,new Item.Properties().rarity(Rarity.EPIC).tab(SolarForge.SOLAR_GROUP),()->AncientFragment.DIVINE_ARMOR));

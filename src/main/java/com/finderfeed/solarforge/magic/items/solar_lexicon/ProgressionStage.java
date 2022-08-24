@@ -12,7 +12,7 @@ import java.util.Iterator;
 
 public enum ProgressionStage implements Iterable<Progression>{
     PRE_BEGGINING(null,"pre_beggining",Progression.ENTER_NETHER),
-    BEGGINING(PRE_BEGGINING,"beggining",Progression.RUNE_ENERGY_PYLON,Progression.FIND_INCINERATED_FOREST),
+    BEGGINING(PRE_BEGGINING,"beggining",Progression.RUNE_ENERGY_PYLON),
     BEGGINING_2(BEGGINING,"beggining_2",Progression.ENTER_END,Progression.INFUSING_CRAFTING_TABLE,Progression.ALL_ENERGY_TYPES),
     PRE_FORGE(BEGGINING_2,"pre_forge",Progression.KILL_DRAGON,Progression.RUNE_ENERGY_CLAIM),
     FORGE(PRE_FORGE,"pre_infuser",Progression.CRAFT_SOLAR_FORGE),

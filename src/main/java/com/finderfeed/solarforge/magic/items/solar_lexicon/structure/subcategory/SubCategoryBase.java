@@ -5,7 +5,6 @@ import net.minecraft.network.chat.TranslatableComponent;
 
 public enum SubCategoryBase {
     BEGGINING(tx("solar_category.beginning")),
-    BASIC_DUSTS(tx("solar_category.basic_dusts")),
     WORLD(tx("solar_category.world")),
     ARMOR(tx("solar_category.armor")),
     STRUCTURES(tx("solar_category.structures")),

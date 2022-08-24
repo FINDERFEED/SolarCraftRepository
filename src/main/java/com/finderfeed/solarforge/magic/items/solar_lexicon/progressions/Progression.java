@@ -6,10 +6,9 @@ import com.finderfeed.solarforge.registries.items.SolarcraftItems;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.network.chat.TranslatableComponent;
-//TODO: some progressions lack context!
 public enum Progression {
     ENTER_NETHER("enter_nether",1, Blocks.NETHERRACK.asItem().getDefaultInstance(),new TranslatableComponent("ach.enter_nether"),nextID(),new TranslatableComponent("pre.enter_nether"),new TranslatableComponent("aft.enter_nether")),
-    FIND_INCINERATED_FOREST("find_incinerated_forest",1, SolarcraftItems.BURNT_LOG.get().getDefaultInstance(), new TranslatableComponent("ach.find_incinerated_forest"),nextID(),new TranslatableComponent("pre.find_incinerated_forest"),new TranslatableComponent("aft.find_incinerated_forest")),
+//    FIND_INCINERATED_FOREST("find_incinerated_forest",1, SolarcraftItems.BURNT_LOG.get().getDefaultInstance(), new TranslatableComponent("ach.find_incinerated_forest"),nextID(),new TranslatableComponent("pre.find_incinerated_forest"),new TranslatableComponent("aft.find_incinerated_forest")),
     FIND_KEY_LOCK_DUNGEON("find_key_lock",1, SolarcraftItems.INVINCIBLE_STONE.get().getDefaultInstance(), new TranslatableComponent("ach.key_lock_dungeon"),nextID(),new TranslatableComponent("pre.key_lock_dungeon"),new TranslatableComponent("aft.key_lock_dungeon")),
     FIND_INFUSER_DUNGEON("find_infuser_dungeon",1, SolarcraftItems.SOLAR_STONE_COLLUMN.get().getDefaultInstance(), new TranslatableComponent("ach.infuser_dungeon"),nextID(),new TranslatableComponent("pre.infuser_dungeon"),new TranslatableComponent("aft.infuser_dungeon")),
     FIND_KEY_SOURCE("find_key_source",1, SolarcraftItems.SOLAR_STONE_COLLUMN_HORIZONTAL.get().getDefaultInstance(), new TranslatableComponent("ach.key_source"),nextID(),new TranslatableComponent("pre.key_source"),new TranslatableComponent("aft.key_source")),
