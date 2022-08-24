@@ -1,7 +1,7 @@
 package com.finderfeed.solarforge.misc_things;
 
 
-import com.finderfeed.solarforge.magic.items.solar_lexicon.progressions.Progression;
+import com.finderfeed.solarforge.content.items.solar_lexicon.progressions.Progression;
 
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;

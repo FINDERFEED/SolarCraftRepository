@@ -1,21 +1,13 @@
 package com.finderfeed.solarforge.events;
 
 
-import com.finderfeed.solarforge.config.SolarcraftClientConfig;
 import com.finderfeed.solarforge.misc_things.IScrollable;
-import com.finderfeed.solarforge.magic.items.solar_lexicon.unlockables.AncientFragment;
-import com.finderfeed.solarforge.magic.items.solar_lexicon.unlockables.BookEntry;
-import com.finderfeed.solarforge.magic.items.solar_lexicon.unlockables.ProgressionHelper;
 import net.minecraft.client.Minecraft;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.ClientPlayerNetworkEvent;
 import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.client.event.RecipesUpdatedEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-
-import java.util.Locale;
 
 @Mod.EventBusSubscriber(modid = "solarforge",bus = Mod.EventBusSubscriber.Bus.FORGE,value = Dist.CLIENT)
 public class ScrollThings {

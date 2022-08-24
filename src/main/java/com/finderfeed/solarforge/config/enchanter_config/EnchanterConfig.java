@@ -1,7 +1,7 @@
 package com.finderfeed.solarforge.config.enchanter_config;
 
 import com.finderfeed.solarforge.SolarForge;
-import com.finderfeed.solarforge.magic.items.runic_energy.RunicEnergyCost;
+import com.finderfeed.solarforge.content.items.runic_energy.RunicEnergyCost;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import com.google.gson.*;
 import net.minecraft.resources.ResourceLocation;
@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Consumer;
 import java.util.function.Function;
 
 public class EnchanterConfig {

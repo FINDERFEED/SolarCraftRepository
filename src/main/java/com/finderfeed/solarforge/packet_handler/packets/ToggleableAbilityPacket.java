@@ -1,7 +1,7 @@
 package com.finderfeed.solarforge.packet_handler.packets;
 
 import com.finderfeed.solarforge.ClientHelpers;
-import com.finderfeed.solarforge.abilities.ability_classes.ToggleableAbility;
+import com.finderfeed.solarforge.content.abilities.ability_classes.ToggleableAbility;
 import com.finderfeed.solarforge.registries.abilities.AbilitiesRegistry;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.network.NetworkEvent;

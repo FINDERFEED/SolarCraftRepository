@@ -1,14 +1,14 @@
 package com.finderfeed.solarforge.registries.entities;
 
 
-import com.finderfeed.solarforge.entities.*;
-import com.finderfeed.solarforge.entities.not_alive.*;
-import com.finderfeed.solarforge.magic.blocks.blockentities.clearing_ritual.clearing_ritual_crystal.corruption_wisp.CorruptionWisp;
-import com.finderfeed.solarforge.magic.blocks.blockentities.projectiles.AbstractTurretProjectile;
-import com.finderfeed.solarforge.magic.blocks.blockentities.projectiles.MortarProjectile;
-import com.finderfeed.solarforge.magic.blocks.blockentities.projectiles.ShadowBolt;
-import com.finderfeed.solarforge.magic.projectiles.*;
-import com.finderfeed.solarforge.magic.items.solar_disc_gun.SolarDiscProjectile;
+import com.finderfeed.solarforge.content.entities.*;
+import com.finderfeed.solarforge.content.entities.not_alive.*;
+import com.finderfeed.solarforge.content.entities.projectiles.*;
+import com.finderfeed.solarforge.content.blocks.blockentities.clearing_ritual.clearing_ritual_crystal.corruption_wisp.CorruptionWisp;
+import com.finderfeed.solarforge.content.blocks.blockentities.projectiles.AbstractTurretProjectile;
+import com.finderfeed.solarforge.content.blocks.blockentities.projectiles.MortarProjectile;
+import com.finderfeed.solarforge.content.blocks.blockentities.projectiles.ShadowBolt;
+import com.finderfeed.solarforge.content.items.solar_disc_gun.SolarDiscProjectile;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.EntityType;
 
@@ -101,6 +101,10 @@ public class SolarcraftEntityTypes {
     public static final RegistryObject<EntityType<SolarFireballProjectile>> SOLAR_FIREBALL = ENTITY_TYPE_REGISTER.register("solar_fireball", () ->
             EntityType.Builder.<SolarFireballProjectile>of(SolarFireballProjectile::new, MobCategory.MISC)
                     .sized(0.2f, 0.2f).build("solar_fireball"));
+
+    public static final RegistryObject<EntityType<SummoningProjectile>> SUMMONING_PROJECTILE = ENTITY_TYPE_REGISTER.register("summoning_projectile", () ->
+            EntityType.Builder.<SummoningProjectile>of(SummoningProjectile::new, MobCategory.MISC)
+                    .sized(0.2f, 0.2f).build("summoning_projectile"));
 
     public static final RegistryObject<EntityType<RunicWarriorSummoningRocket>> RUNIC_WARRIOR_ROCKET = ENTITY_TYPE_REGISTER.register("runic_warrior_rocket", () ->
             EntityType.Builder.<RunicWarriorSummoningRocket>of(RunicWarriorSummoningRocket::new, MobCategory.MISC)

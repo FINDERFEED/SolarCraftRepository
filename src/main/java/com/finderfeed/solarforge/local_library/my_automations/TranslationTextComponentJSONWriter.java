@@ -1,7 +1,7 @@
 package com.finderfeed.solarforge.local_library.my_automations;
 
 
-import com.finderfeed.solarforge.magic.items.solar_lexicon.unlockables.AncientFragment;
+import com.finderfeed.solarforge.content.items.solar_lexicon.unlockables.AncientFragment;
 import net.minecraftforge.client.event.InputEvent;
 import org.lwjgl.glfw.GLFW;
 

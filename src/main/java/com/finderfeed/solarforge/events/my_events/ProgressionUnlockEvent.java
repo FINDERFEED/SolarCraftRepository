@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.events.my_events;
 
-import com.finderfeed.solarforge.magic.items.solar_lexicon.progressions.Progression;
+import com.finderfeed.solarforge.content.items.solar_lexicon.progressions.Progression;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.eventbus.api.Event;
 

@@ -3,10 +3,10 @@ package com.finderfeed.solarforge.events;
 
 import com.finderfeed.solarforge.ClientHelpers;
 import com.finderfeed.solarforge.local_library.helpers.RenderingTools;
-import com.finderfeed.solarforge.magic.blocks.render.EnergyGeneratorTileRender;
-import com.finderfeed.solarforge.magic.blocks.render.RuneEnergyPylonRenderer;
+import com.finderfeed.solarforge.content.blocks.render.EnergyGeneratorTileRender;
+import com.finderfeed.solarforge.content.blocks.render.RuneEnergyPylonRenderer;
 
-import com.finderfeed.solarforge.magic.blocks.render.WormholeRenderer;
+import com.finderfeed.solarforge.content.blocks.render.WormholeRenderer;
 import com.finderfeed.solarforge.client.rendering.deprecated_shaders.post_chains.PostChainPlusUltra;
 import com.finderfeed.solarforge.client.rendering.deprecated_shaders.post_chains.UniformPlusPlus;
 

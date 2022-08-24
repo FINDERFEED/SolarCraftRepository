@@ -2,17 +2,13 @@ package com.finderfeed.solarforge.events.other_events;
 
 import com.finderfeed.solarforge.ClientHelpers;
 import com.finderfeed.solarforge.SolarForge;
-import com.finderfeed.solarforge.abilities.ability_classes.ToggleableAbility;
+import com.finderfeed.solarforge.content.abilities.ability_classes.ToggleableAbility;
 import com.finderfeed.solarforge.local_library.helpers.RenderingTools;
-import com.finderfeed.solarforge.capabilities.capability_mana.CapabilitySolarMana;
-import com.finderfeed.solarforge.magic.blocks.infusing_table_things.SolarWandItem;
-import com.finderfeed.solarforge.magic.items.runic_energy.IRunicEnergyUser;
-import com.finderfeed.solarforge.misc_things.ManaConsumer;
+import com.finderfeed.solarforge.content.blocks.infusing_table_things.SolarWandItem;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import com.finderfeed.solarforge.registries.abilities.AbilitiesRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
-import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 

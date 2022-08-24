@@ -2,9 +2,9 @@ package com.finderfeed.solarforge.compat.jei.recipe_categories;
 
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.local_library.helpers.RenderingTools;
-import com.finderfeed.solarforge.magic.items.solar_lexicon.unlockables.AncientFragment;
-import com.finderfeed.solarforge.magic.items.solar_lexicon.unlockables.ProgressionHelper;
-import com.finderfeed.solarforge.recipe_types.infusing_crafting.InfusingCraftingRecipe;
+import com.finderfeed.solarforge.content.items.solar_lexicon.unlockables.AncientFragment;
+import com.finderfeed.solarforge.content.items.solar_lexicon.unlockables.ProgressionHelper;
+import com.finderfeed.solarforge.content.recipe_types.infusing_crafting.InfusingCraftingRecipe;
 import com.finderfeed.solarforge.registries.items.SolarcraftItems;
 import com.mojang.blaze3d.vertex.PoseStack;
 import mezz.jei.api.constants.VanillaTypes;

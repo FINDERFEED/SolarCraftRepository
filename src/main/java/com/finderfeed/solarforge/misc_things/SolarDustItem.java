@@ -1,7 +1,7 @@
 package com.finderfeed.solarforge.misc_things;
 
-import com.finderfeed.solarforge.magic.items.primitive.solacraft_item_classes.SolarcraftItem;
-import com.finderfeed.solarforge.magic.items.solar_lexicon.unlockables.AncientFragment;
+import com.finderfeed.solarforge.content.items.primitive.solacraft_item_classes.SolarcraftItem;
+import com.finderfeed.solarforge.content.items.solar_lexicon.unlockables.AncientFragment;
 
 import java.util.function.Supplier;
 

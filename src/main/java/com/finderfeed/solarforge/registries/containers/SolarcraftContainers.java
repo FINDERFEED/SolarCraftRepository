@@ -1,7 +1,7 @@
 package com.finderfeed.solarforge.registries.containers;
 
-import com.finderfeed.solarforge.magic.blocks.blockentities.containers.*;
-import com.finderfeed.solarforge.magic.items.solar_lexicon.SolarLexiconContainer;
+import com.finderfeed.solarforge.content.blocks.blockentities.containers.*;
+import com.finderfeed.solarforge.content.items.solar_lexicon.SolarLexiconContainer;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraftforge.common.extensions.IForgeMenuType;
 

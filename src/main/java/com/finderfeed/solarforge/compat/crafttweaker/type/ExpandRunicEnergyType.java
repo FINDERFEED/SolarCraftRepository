@@ -18,7 +18,7 @@ public class ExpandRunicEnergyType {
 
 
     /**
-     * @return A Usable RunicEnergyType to use in {@link com.finderfeed.solarforge.magic.items.runic_energy.RunicEnergyCost} to set up a requirement.
+     * @return A Usable RunicEnergyType to use in {@link com.finderfeed.solarforge.content.items.runic_energy.RunicEnergyCost} to set up a requirement.
      */
 
     @ZenCodeType.Method

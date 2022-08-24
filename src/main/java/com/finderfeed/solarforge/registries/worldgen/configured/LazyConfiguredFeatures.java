@@ -1,7 +1,7 @@
 package com.finderfeed.solarforge.registries.worldgen.configured;
 
-import com.finderfeed.solarforge.loot_modifiers.custom_loot_conditions.SolarcraftModulePredicate;
-import com.finderfeed.solarforge.loot_modifiers.custom_loot_conditions.SolarcraftNBTPredicate;
+import com.finderfeed.solarforge.content.loot_modifiers.custom_loot_conditions.SolarcraftModulePredicate;
+import com.finderfeed.solarforge.content.loot_modifiers.custom_loot_conditions.SolarcraftNBTPredicate;
 import net.minecraft.advancements.critereon.ItemPredicate;
 
 import net.minecraft.core.Holder;

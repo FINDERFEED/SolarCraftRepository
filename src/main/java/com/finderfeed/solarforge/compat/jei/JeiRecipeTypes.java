@@ -1,9 +1,9 @@
 package com.finderfeed.solarforge.compat.jei;
 
 import com.finderfeed.solarforge.SolarForge;
-import com.finderfeed.solarforge.recipe_types.infusing_new.InfusingRecipe;
-import com.finderfeed.solarforge.recipe_types.infusing_crafting.InfusingCraftingRecipe;
-import com.finderfeed.solarforge.recipe_types.solar_smelting.SolarSmeltingRecipe;
+import com.finderfeed.solarforge.content.recipe_types.infusing_new.InfusingRecipe;
+import com.finderfeed.solarforge.content.recipe_types.infusing_crafting.InfusingCraftingRecipe;
+import com.finderfeed.solarforge.content.recipe_types.solar_smelting.SolarSmeltingRecipe;
 import mezz.jei.api.recipe.RecipeType;
 
 

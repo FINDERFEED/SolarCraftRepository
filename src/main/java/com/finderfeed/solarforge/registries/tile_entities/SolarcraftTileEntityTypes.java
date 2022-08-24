@@ -1,15 +1,15 @@
 package com.finderfeed.solarforge.registries.tile_entities;
 
-import com.finderfeed.solarforge.magic.blocks.blockentities.clearing_ritual.CrystalEnergyVinesTile;
-import com.finderfeed.solarforge.magic.blocks.blockentities.clearing_ritual.clearing_ritual_crystal.ClearingRitualCrystalTile;
-import com.finderfeed.solarforge.magic.blocks.blockentities.clearing_ritual.clearing_ritual_main_tile.ClearingRitualMainTile;
-import com.finderfeed.solarforge.magic.blocks.infusing_table_things.infusing_pool.InfusingStandTileEntity;
-import com.finderfeed.solarforge.magic.blocks.blockentities.*;
-import com.finderfeed.solarforge.magic.runic_network.repeater.BaseRepeaterTile;
+import com.finderfeed.solarforge.content.blocks.blockentities.clearing_ritual.CrystalEnergyVinesTile;
+import com.finderfeed.solarforge.content.blocks.blockentities.clearing_ritual.clearing_ritual_crystal.ClearingRitualCrystalTile;
+import com.finderfeed.solarforge.content.blocks.blockentities.clearing_ritual.clearing_ritual_main_tile.ClearingRitualMainTile;
+import com.finderfeed.solarforge.content.blocks.infusing_table_things.infusing_pool.InfusingStandTileEntity;
+import com.finderfeed.solarforge.content.blocks.blockentities.*;
+import com.finderfeed.solarforge.content.runic_network.repeater.BaseRepeaterTile;
 import com.finderfeed.solarforge.registries.blocks.SolarcraftBlocks;
-import com.finderfeed.solarforge.world_generation.structures.blocks.tile_entities.ColdStarInfuserTile;
-import com.finderfeed.solarforge.world_generation.structures.blocks.tile_entities.KeyDefenderTile;
-import com.finderfeed.solarforge.world_generation.structures.blocks.tile_entities.KeyLockStructureTile;
+import com.finderfeed.solarforge.content.world_generation.structures.blocks.tile_entities.ColdStarInfuserTile;
+import com.finderfeed.solarforge.content.world_generation.structures.blocks.tile_entities.KeyDefenderTile;
+import com.finderfeed.solarforge.content.world_generation.structures.blocks.tile_entities.KeyLockStructureTile;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 
 import net.minecraftforge.registries.RegistryObject;

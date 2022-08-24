@@ -1,35 +1,35 @@
 package com.finderfeed.solarforge;
 
-import com.finderfeed.solarforge.abilities.meteorite.MeteoriteProjectileRenderer;
-import com.finderfeed.solarforge.abilities.solar_strike.SolarStrikeRenderer;
+import com.finderfeed.solarforge.content.abilities.meteorite.MeteoriteProjectileRenderer;
+import com.finderfeed.solarforge.content.abilities.solar_strike.SolarStrikeRenderer;
 import com.finderfeed.solarforge.client.rendering.rendertypes.SolarCraftRenderTypes;
-import com.finderfeed.solarforge.entities.renderers.*;
+import com.finderfeed.solarforge.content.entities.projectiles.renderers.*;
+import com.finderfeed.solarforge.content.entities.renderers.*;
 import com.finderfeed.solarforge.local_library.client.particles.ScreenParticlesRenderHandler;
-import com.finderfeed.solarforge.magic.blocks.blockentities.clearing_ritual.clearing_ritual_crystal.ClearingRitualCrystalRenderer;
-import com.finderfeed.solarforge.magic.blocks.blockentities.clearing_ritual.clearing_ritual_crystal.corruption_wisp.CorruptionWispRenderer;
-import com.finderfeed.solarforge.magic.blocks.blockentities.clearing_ritual.clearing_ritual_main_tile.ClearingRitualTileRenderer;
-import com.finderfeed.solarforge.magic.blocks.blockentities.containers.screens.*;
-import com.finderfeed.solarforge.magic.blocks.blockentities.projectiles.renderers.ShadowBoltRenderer;
-import com.finderfeed.solarforge.magic.blocks.infusing_table_things.InfuserRenderer;
-import com.finderfeed.solarforge.magic.blocks.infusing_table_things.infusing_pool.InfusingStandRenderer;
-import com.finderfeed.solarforge.magic.blocks.blockentities.projectiles.renderers.AbstractTurretProjectileRenderer;
-import com.finderfeed.solarforge.magic.blocks.blockentities.projectiles.renderers.MortarProjectileRenderer;
-import com.finderfeed.solarforge.magic.blocks.primitive.ProgressionBlock;
-import com.finderfeed.solarforge.magic.blocks.render.*;
-import com.finderfeed.solarforge.magic.items.ProgressionBlockItem;
-import com.finderfeed.solarforge.magic.projectiles.renderers.*;
-import com.finderfeed.solarforge.magic.items.solar_disc_gun.SolarDiscProjectileRenderer;
-import com.finderfeed.solarforge.magic.runic_network.repeater.RepeaterRenderer;
+import com.finderfeed.solarforge.content.blocks.blockentities.clearing_ritual.clearing_ritual_crystal.ClearingRitualCrystalRenderer;
+import com.finderfeed.solarforge.content.blocks.blockentities.clearing_ritual.clearing_ritual_crystal.corruption_wisp.CorruptionWispRenderer;
+import com.finderfeed.solarforge.content.blocks.blockentities.clearing_ritual.clearing_ritual_main_tile.ClearingRitualTileRenderer;
+import com.finderfeed.solarforge.content.blocks.blockentities.containers.screens.*;
+import com.finderfeed.solarforge.content.blocks.blockentities.projectiles.renderers.ShadowBoltRenderer;
+import com.finderfeed.solarforge.content.blocks.infusing_table_things.InfuserRenderer;
+import com.finderfeed.solarforge.content.blocks.infusing_table_things.infusing_pool.InfusingStandRenderer;
+import com.finderfeed.solarforge.content.blocks.blockentities.projectiles.renderers.AbstractTurretProjectileRenderer;
+import com.finderfeed.solarforge.content.blocks.blockentities.projectiles.renderers.MortarProjectileRenderer;
+import com.finderfeed.solarforge.content.blocks.primitive.ProgressionBlock;
+import com.finderfeed.solarforge.content.blocks.render.*;
+import com.finderfeed.solarforge.content.items.ProgressionBlockItem;
+import com.finderfeed.solarforge.content.items.solar_disc_gun.SolarDiscProjectileRenderer;
+import com.finderfeed.solarforge.content.runic_network.repeater.RepeaterRenderer;
 import com.finderfeed.solarforge.registries.ScreenSuppliers;
 import com.finderfeed.solarforge.registries.blocks.SolarcraftBlocks;
 import com.finderfeed.solarforge.registries.containers.SolarcraftContainers;
 import com.finderfeed.solarforge.registries.entities.SolarcraftEntityTypes;
 import com.finderfeed.solarforge.registries.items.SolarcraftItems;
 import com.finderfeed.solarforge.registries.tile_entities.SolarcraftTileEntityTypes;
-import com.finderfeed.solarforge.magic.blocks.solar_forge_block.SolarForgeBlockEntityRenderer;
-import com.finderfeed.solarforge.magic.items.solar_lexicon.SolarLexiconContScreen;
+import com.finderfeed.solarforge.content.blocks.solar_forge_block.SolarForgeBlockEntityRenderer;
+import com.finderfeed.solarforge.content.items.solar_lexicon.SolarLexiconContScreen;
 import com.finderfeed.solarforge.client.rendering.RadiantTextureAtlasSpriteLoader;
-import com.finderfeed.solarforge.world_generation.dimension_related.radiant_land.RadiantLandDimEffects;
+import com.finderfeed.solarforge.content.world_generation.dimension_related.radiant_land.RadiantLandDimEffects;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.DimensionSpecialEffects;
@@ -243,6 +243,7 @@ public class SolarcraftClientRegistry {
         event.registerEntityRenderer(SolarcraftEntityTypes.SHADOW_BOLT.get(), ShadowBoltRenderer::new);
         event.registerEntityRenderer(SolarcraftEntityTypes.SHADOW_ZOMBIE.get(), ShadowZombieRenderer::new);
         event.registerEntityRenderer(SolarcraftEntityTypes.CORRUPTION_WISP.get(), CorruptionWispRenderer::new);
+        event.registerEntityRenderer(SolarcraftEntityTypes.SUMMONING_PROJECTILE.get(), NullRenderer::new);
     }
 
 }

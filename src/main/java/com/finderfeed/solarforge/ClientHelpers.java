@@ -1,7 +1,7 @@
 package com.finderfeed.solarforge;
 
-import com.finderfeed.solarforge.abilities.ability_classes.ToggleableAbility;
-import com.finderfeed.solarforge.abilities.screens.AbilityBuyScreen;
+import com.finderfeed.solarforge.content.abilities.ability_classes.ToggleableAbility;
+import com.finderfeed.solarforge.content.abilities.screens.AbilityBuyScreen;
 import com.finderfeed.solarforge.client.particles.SolarcraftParticleTypes;
 import com.finderfeed.solarforge.client.particles.SmallSolarStrikeParticle;
 import com.finderfeed.solarforge.client.particles.SolarcraftParticle;
@@ -9,23 +9,23 @@ import com.finderfeed.solarforge.client.screens.CrystalEnergyVinesPuzzleScreen;
 import com.finderfeed.solarforge.client.toasts.UnlockedEnergyTypeToast;
 import com.finderfeed.solarforge.config.JsonFragmentsHelper;
 import com.finderfeed.solarforge.config.SolarcraftClientConfig;
-import com.finderfeed.solarforge.entities.not_alive.BallLightningProjectile;
+import com.finderfeed.solarforge.content.entities.not_alive.BallLightningProjectile;
 import com.finderfeed.solarforge.events.RenderEventsHandler;
 import com.finderfeed.solarforge.local_library.effects.LightningBoltPath;
 import com.finderfeed.solarforge.local_library.helpers.FDMathHelper;
-import com.finderfeed.solarforge.magic.blocks.blockentities.clearing_ritual.CrystalEnergyVinesTile;
-import com.finderfeed.solarforge.magic.blocks.blockentities.RayTrapTileEntity;
-import com.finderfeed.solarforge.magic.blocks.blockentities.RuneEnergyPylonTile;
-import com.finderfeed.solarforge.magic.blocks.blockentities.containers.screens.RunicTableContainerScreen;
-import com.finderfeed.solarforge.magic.items.primitive.solacraft_item_classes.FragmentItem;
-import com.finderfeed.solarforge.magic.items.solar_lexicon.unlockables.AncientFragment;
-import com.finderfeed.solarforge.magic.items.solar_lexicon.unlockables.RunePattern;
+import com.finderfeed.solarforge.content.blocks.blockentities.clearing_ritual.CrystalEnergyVinesTile;
+import com.finderfeed.solarforge.content.blocks.blockentities.RayTrapTileEntity;
+import com.finderfeed.solarforge.content.blocks.blockentities.RuneEnergyPylonTile;
+import com.finderfeed.solarforge.content.blocks.blockentities.containers.screens.RunicTableContainerScreen;
+import com.finderfeed.solarforge.content.items.primitive.solacraft_item_classes.FragmentItem;
+import com.finderfeed.solarforge.content.items.solar_lexicon.unlockables.AncientFragment;
+import com.finderfeed.solarforge.content.items.solar_lexicon.unlockables.RunePattern;
 import com.finderfeed.solarforge.misc_things.*;
 import com.finderfeed.solarforge.registries.items.SolarcraftItems;
 import com.finderfeed.solarforge.registries.sounds.SolarcraftSounds;
-import com.finderfeed.solarforge.magic.items.solar_lexicon.SolarLexicon;
-import com.finderfeed.solarforge.magic.items.solar_lexicon.progressions.Progression;
-import com.finderfeed.solarforge.magic.items.solar_lexicon.unlockables.ProgressionHelper;
+import com.finderfeed.solarforge.content.items.solar_lexicon.SolarLexicon;
+import com.finderfeed.solarforge.content.items.solar_lexicon.progressions.Progression;
+import com.finderfeed.solarforge.content.items.solar_lexicon.unlockables.ProgressionHelper;
 import com.google.gson.JsonObject;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.components.AbstractWidget;
@@ -156,7 +156,7 @@ public class ClientHelpers {
                     for (int g = 0; g < 3;g++){
                         Vec3 posS = path.getPos(g);
                         Vec3 posE = path.getPos(g+1);
-                        ParticleAnimationHelper.line(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+                        Particles.line(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
                                 posS,posE,0.25f,()->70 + (int)(world.random.nextFloat()*60f),()->0,()->255,(5f-g)/3*0.3f );
                     }
                 }
@@ -180,7 +180,7 @@ public class ClientHelpers {
                     for (int i = 0; i < maxDots - 1; i++) {
                         Vec3 iPos = path.getPos(i);
                         Vec3 ePos = path.getPos(i + 1);
-                        ParticleAnimationHelper.line(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(), iPos, ePos,
+                        Particles.line(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(), iPos, ePos,
                                 0.20, () -> 220+level.random.nextInt(36), () -> 220+level.random.nextInt(36), () -> 0, 0.25f);
                     }
                 }
@@ -486,14 +486,28 @@ public class ClientHelpers {
     }
 
 
-    public static class ParticleAnimationHelper{
+    public static class Particles {
 
+        @Deprecated
         public static void createParticle(ParticleOptions options,double x,double y,double z,double xd,double yd,double zd,
                                           Supplier<Integer> red,Supplier<Integer> green,Supplier<Integer> blue,float maxsize){
             if (Minecraft.getInstance().level == null) return;
             Particle particle = Minecraft.getInstance().particleEngine.createParticle(options,x,y,z,xd,yd,zd);
             if (particle != null) {
                 particle.setColor(red.get()/255f, green.get()/255f, blue.get()/255f);
+                if (particle instanceof SolarcraftParticle solarcraftParticle) {
+                    solarcraftParticle.setMaxSize(maxsize);
+
+                }
+            }
+        }
+
+        public static void createParticle(ParticleOptions options,double x,double y,double z,double xd,double yd,double zd,
+                                          int red,int green,int blue,float maxsize){
+            if (Minecraft.getInstance().level == null) return;
+            Particle particle = Minecraft.getInstance().particleEngine.createParticle(options,x,y,z,xd,yd,zd);
+            if (particle != null) {
+                particle.setColor(red/255f, green/255f, blue/255f);
                 if (particle instanceof SolarcraftParticle solarcraftParticle) {
                     solarcraftParticle.setMaxSize(maxsize);
 

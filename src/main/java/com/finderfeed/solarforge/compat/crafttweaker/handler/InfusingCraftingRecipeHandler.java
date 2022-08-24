@@ -5,11 +5,9 @@ import com.blamejared.crafttweaker.api.recipe.handler.IRecipeHandler;
 import com.blamejared.crafttweaker.api.recipe.manager.base.IRecipeManager;
 import com.blamejared.crafttweaker.natives.item.ExpandItem;
 import com.finderfeed.solarforge.compat.crafttweaker.CraftTweakerSolarForgeCompatUtilities;
-import com.finderfeed.solarforge.recipe_types.infusing_crafting.InfusingCraftingRecipe;
+import com.finderfeed.solarforge.content.recipe_types.infusing_crafting.InfusingCraftingRecipe;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 
-import java.util.Arrays;
 import java.util.stream.Collectors;
 
 @IRecipeHandler.For(InfusingCraftingRecipe.class)

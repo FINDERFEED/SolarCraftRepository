@@ -1,20 +1,20 @@
 package com.finderfeed.solarforge;
 
-import com.finderfeed.solarforge.entities.CrystalBossEntity;
-import com.finderfeed.solarforge.entities.RunicElementalBoss;
+import com.finderfeed.solarforge.content.entities.CrystalBossEntity;
+import com.finderfeed.solarforge.content.entities.RunicElementalBoss;
 import com.finderfeed.solarforge.events.my_events.ProgressionUnlockEvent;
 import com.finderfeed.solarforge.local_library.OwnedBlock;
 import com.finderfeed.solarforge.local_library.helpers.FDMathHelper;
-import com.finderfeed.solarforge.magic.blocks.blockentities.clearing_ritual.RadiantLandCleanedData;
-import com.finderfeed.solarforge.magic.items.solar_lexicon.progressions.Progression;
+import com.finderfeed.solarforge.content.blocks.blockentities.clearing_ritual.RadiantLandCleanedData;
+import com.finderfeed.solarforge.content.items.solar_lexicon.progressions.Progression;
 import com.finderfeed.solarforge.misc_things.Multiblock;
 import com.finderfeed.solarforge.client.particles.SolarcraftParticleTypes;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import com.finderfeed.solarforge.misc_things.StateAndTag;
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
 import com.finderfeed.solarforge.packet_handler.packets.*;
-import com.finderfeed.solarforge.magic.items.solar_lexicon.progressions.progression_tree.ProgressionTree;
-import com.finderfeed.solarforge.magic.items.solar_lexicon.packets.UpdateProgressionOnClient;
+import com.finderfeed.solarforge.content.items.solar_lexicon.progressions.progression_tree.ProgressionTree;
+import com.finderfeed.solarforge.content.items.solar_lexicon.packets.UpdateProgressionOnClient;
 import com.mojang.blaze3d.vertex.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiComponent;

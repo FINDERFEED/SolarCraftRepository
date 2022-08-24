@@ -2,7 +2,7 @@ package com.finderfeed.solarforge.compat.jei.recipe_categories;
 
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.compat.jei.JeiRecipeTypes;
-import com.finderfeed.solarforge.recipe_types.solar_smelting.SolarSmeltingRecipe;
+import com.finderfeed.solarforge.content.recipe_types.solar_smelting.SolarSmeltingRecipe;
 import com.finderfeed.solarforge.registries.items.SolarcraftItems;
 import com.mojang.blaze3d.vertex.PoseStack;
 import mezz.jei.api.constants.VanillaTypes;

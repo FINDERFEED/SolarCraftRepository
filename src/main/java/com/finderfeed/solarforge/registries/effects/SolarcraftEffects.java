@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.registries.effects;
 
-import com.finderfeed.solarforge.magic.effects.SolarCraftEffect;
+import com.finderfeed.solarforge.content.effects.SolarCraftEffect;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 

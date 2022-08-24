@@ -5,7 +5,7 @@ import com.finderfeed.solarforge.SolarcraftClientRegistry;
 
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
 import com.finderfeed.solarforge.packet_handler.packets.CastAbilityPacket;
-import com.finderfeed.solarforge.magic.blocks.solar_forge_block.solar_forge_screen.SolarForgeAbilityConfigScreen;
+import com.finderfeed.solarforge.content.blocks.solar_forge_block.solar_forge_screen.SolarForgeAbilityConfigScreen;
 import com.finderfeed.solarforge.packet_handler.packets.RequestAbilityScreen;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.api.distmarker.Dist;

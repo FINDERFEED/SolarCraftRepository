@@ -1,18 +1,14 @@
 package com.finderfeed.solarforge.compat.crafttweaker.handler;
 
-import com.blamejared.crafttweaker.api.ingredient.IIngredient;
 import com.blamejared.crafttweaker.api.item.MCItemStack;
 import com.blamejared.crafttweaker.api.recipe.handler.IRecipeHandler;
 import com.blamejared.crafttweaker.api.recipe.manager.base.IRecipeManager;
 import com.blamejared.crafttweaker.natives.block.ExpandBlock;
-import com.finderfeed.solarforge.compat.crafttweaker.CraftTweakerSolarForgeCompatUtilities;
 import com.finderfeed.solarforge.compat.crafttweaker.type.ExpandRunicEnergyCost;
-import com.finderfeed.solarforge.recipe_types.infusing_new.InfusingRecipe;
-import net.minecraft.world.item.crafting.Ingredient;
+import com.finderfeed.solarforge.content.recipe_types.infusing_new.InfusingRecipe;
 import net.minecraft.world.level.block.Block;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 

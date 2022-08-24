@@ -1,9 +1,8 @@
 package com.finderfeed.solarforge.events.other_events;
 
-import com.finderfeed.solarforge.abilities.AbilityHelper;
-import com.finderfeed.solarforge.magic.items.runic_energy.ItemRunicEnergy;
-import com.finderfeed.solarforge.magic.items.vein_miner.IllidiumPickaxe;
-import com.finderfeed.solarforge.misc_things.RunicEnergy;
+import com.finderfeed.solarforge.content.abilities.AbilityHelper;
+import com.finderfeed.solarforge.content.items.runic_energy.ItemRunicEnergy;
+import com.finderfeed.solarforge.content.items.vein_miner.IllidiumPickaxe;
 import com.finderfeed.solarforge.registries.abilities.AbilitiesRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;

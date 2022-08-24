@@ -1,28 +1,29 @@
 package com.finderfeed.solarforge;
 
 
-import com.finderfeed.solarforge.abilities.meteorite.MeteoriteProjectile;
-import com.finderfeed.solarforge.abilities.solar_strike.SolarStrikeEntity;
-import com.finderfeed.solarforge.abilities.SolarStunEffect;
+import com.finderfeed.solarforge.content.abilities.meteorite.MeteoriteProjectile;
+import com.finderfeed.solarforge.content.abilities.solar_strike.SolarStrikeEntity;
+import com.finderfeed.solarforge.content.abilities.SolarStunEffect;
 import com.finderfeed.solarforge.config.enchanter_config.EnchanterConfigInit;
 import com.finderfeed.solarforge.config.JsonFragmentsHelper;
 import com.finderfeed.solarforge.config.SolarcraftClientConfig;
 import com.finderfeed.solarforge.config.SolarcraftConfig;
-import com.finderfeed.solarforge.entities.*;
-import com.finderfeed.solarforge.entities.not_alive.*;
+import com.finderfeed.solarforge.content.entities.*;
+import com.finderfeed.solarforge.content.entities.not_alive.*;
+
 import com.finderfeed.solarforge.events.PlayerTickEvent;
 import com.finderfeed.solarforge.events.RenderEventsHandler;
-import com.finderfeed.solarforge.magic.blocks.SolarOreBlock;
-import com.finderfeed.solarforge.magic.blocks.blockentities.clearing_ritual.clearing_ritual_crystal.corruption_wisp.CorruptionWisp;
-import com.finderfeed.solarforge.magic.blocks.infusing_table_things.*;
-import com.finderfeed.solarforge.magic.blocks.infusing_table_things.infusing_pool.InfusingStand;
-import com.finderfeed.solarforge.magic.items.item_tiers.SolarCraftToolTiers;
-import com.finderfeed.solarforge.magic.items.ProgressionBlockItem;
-import com.finderfeed.solarforge.magic.items.solar_lexicon.unlockables.AncientFragment;
+import com.finderfeed.solarforge.content.blocks.SolarOreBlock;
+import com.finderfeed.solarforge.content.blocks.blockentities.clearing_ritual.clearing_ritual_crystal.corruption_wisp.CorruptionWisp;
+import com.finderfeed.solarforge.content.blocks.infusing_table_things.*;
+import com.finderfeed.solarforge.content.blocks.infusing_table_things.infusing_pool.InfusingStand;
+import com.finderfeed.solarforge.content.items.item_tiers.SolarCraftToolTiers;
+import com.finderfeed.solarforge.content.items.ProgressionBlockItem;
+import com.finderfeed.solarforge.content.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarforge.client.particles.SolarcraftParticleTypes;
-import com.finderfeed.solarforge.recipe_types.infusing_crafting.InfusingCraftingRecipe;
-import com.finderfeed.solarforge.recipe_types.infusing_crafting.InfusingCraftingRecipeType;
-import com.finderfeed.solarforge.recipe_types.infusing_new.InfusingRecipeType;
+import com.finderfeed.solarforge.content.recipe_types.infusing_crafting.InfusingCraftingRecipe;
+import com.finderfeed.solarforge.content.recipe_types.infusing_crafting.InfusingCraftingRecipeType;
+import com.finderfeed.solarforge.content.recipe_types.infusing_new.InfusingRecipeType;
 import com.finderfeed.solarforge.registries.Tags;
 import com.finderfeed.solarforge.registries.abilities.AbilitiesRegistry;
 import com.finderfeed.solarforge.registries.attributes.AttributesRegistry;
@@ -30,9 +31,9 @@ import com.finderfeed.solarforge.registries.data_serializers.FDEntityDataSeriali
 import com.finderfeed.solarforge.registries.entities.SolarcraftEntityTypes;
 
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
-import com.finderfeed.solarforge.recipe_types.infusing_new.InfusingRecipe;
-import com.finderfeed.solarforge.recipe_types.solar_smelting.SolarSmeltingRecipe;
-import com.finderfeed.solarforge.recipe_types.solar_smelting.SolarSmeltingRecipeType;
+import com.finderfeed.solarforge.content.recipe_types.infusing_new.InfusingRecipe;
+import com.finderfeed.solarforge.content.recipe_types.solar_smelting.SolarSmeltingRecipe;
+import com.finderfeed.solarforge.content.recipe_types.solar_smelting.SolarSmeltingRecipeType;
 import com.finderfeed.solarforge.registries.blocks.SolarcraftBlocks;
 import com.finderfeed.solarforge.registries.containers.SolarcraftContainers;
 import com.finderfeed.solarforge.registries.effects.SolarcraftEffects;
@@ -40,21 +41,21 @@ import com.finderfeed.solarforge.registries.tile_entities.SolarcraftTileEntityTy
 import com.finderfeed.solarforge.registries.worldgen.configured.LazyConfiguredFeatures;
 import com.finderfeed.solarforge.registries.items.SolarcraftItems;
 import com.finderfeed.solarforge.registries.sounds.SolarcraftSounds;
-import com.finderfeed.solarforge.magic.blocks.solar_forge_block.SolarForgeBlock;
-import com.finderfeed.solarforge.magic.blocks.solar_forge_block.SolarForgeBlockEntity;
+import com.finderfeed.solarforge.content.blocks.solar_forge_block.SolarForgeBlock;
+import com.finderfeed.solarforge.content.blocks.solar_forge_block.SolarForgeBlockEntity;
 
 
-import com.finderfeed.solarforge.magic.blocks.solar_forge_block.SolarForgeBlockItem;
-import com.finderfeed.solarforge.magic.blocks.solar_forge_block.solar_forge_screen.SolarForgeContainer;
-import com.finderfeed.solarforge.magic.blocks.solar_forge_block.solar_forge_screen.SolarForgeScreen;
+import com.finderfeed.solarforge.content.blocks.solar_forge_block.SolarForgeBlockItem;
+import com.finderfeed.solarforge.content.blocks.solar_forge_block.solar_forge_screen.SolarForgeContainer;
+import com.finderfeed.solarforge.content.blocks.solar_forge_block.solar_forge_screen.SolarForgeScreen;
 
 
-import com.finderfeed.solarforge.world_generation.structures.SolarForgeConfiguredStructures;
-import com.finderfeed.solarforge.world_generation.structures.SolarForgeStructures;
-import com.finderfeed.solarforge.world_generation.BiomesRegister;
-import com.finderfeed.solarforge.world_generation.features.FeaturesRegistry;
-import com.finderfeed.solarforge.world_generation.features.foliage_placers.FoliagePlacerRegistry;
-import com.finderfeed.solarforge.world_generation.features.trunk_placers.TrunkPlacersRegistry;
+import com.finderfeed.solarforge.content.world_generation.structures.SolarForgeConfiguredStructures;
+import com.finderfeed.solarforge.content.world_generation.structures.SolarForgeStructures;
+import com.finderfeed.solarforge.content.world_generation.BiomesRegister;
+import com.finderfeed.solarforge.content.world_generation.features.FeaturesRegistry;
+import com.finderfeed.solarforge.content.world_generation.features.foliage_placers.FoliagePlacerRegistry;
+import com.finderfeed.solarforge.content.world_generation.features.trunk_placers.TrunkPlacersRegistry;
 import net.minecraft.world.item.Tiers;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.Block;

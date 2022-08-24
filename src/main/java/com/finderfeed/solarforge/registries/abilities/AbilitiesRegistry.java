@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.registries.abilities;
 
-import com.finderfeed.solarforge.abilities.ability_classes.*;
+import com.finderfeed.solarforge.content.abilities.ability_classes.*;
 
 import java.util.*;
 

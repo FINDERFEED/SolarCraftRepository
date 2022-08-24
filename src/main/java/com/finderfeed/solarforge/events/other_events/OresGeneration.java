@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.events.other_events;
 
-import com.finderfeed.solarforge.world_generation.features.FeaturesRegistry;
+import com.finderfeed.solarforge.content.world_generation.features.FeaturesRegistry;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraftforge.event.world.BiomeLoadingEvent;

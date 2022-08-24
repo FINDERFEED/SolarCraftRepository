@@ -3,7 +3,7 @@ package com.finderfeed.solarforge.client.models.divine_armor;
 
 import com.finderfeed.solarforge.SolarCraftTags;
 import com.finderfeed.solarforge.SolarForge;
-import com.finderfeed.solarforge.magic.items.divine_armor.BaseDivineArmor;
+import com.finderfeed.solarforge.content.items.divine_armor.BaseDivineArmor;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Minecraft;

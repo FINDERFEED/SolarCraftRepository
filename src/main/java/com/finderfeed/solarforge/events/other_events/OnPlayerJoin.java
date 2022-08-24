@@ -3,12 +3,11 @@ package com.finderfeed.solarforge.events.other_events;
 
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.SolarForge;
-import com.finderfeed.solarforge.abilities.AbilityHelper;
-import com.finderfeed.solarforge.abilities.ability_classes.ToggleableAbility;
+import com.finderfeed.solarforge.content.abilities.AbilityHelper;
+import com.finderfeed.solarforge.content.abilities.ability_classes.ToggleableAbility;
 import com.finderfeed.solarforge.config.enchanter_config.EnchanterConfigInit;
 import com.finderfeed.solarforge.config.JsonFragmentsHelper;
-import com.finderfeed.solarforge.magic.items.solar_lexicon.unlockables.AncientFragment;
-import com.finderfeed.solarforge.magic.items.solar_lexicon.unlockables.BookEntry;
+import com.finderfeed.solarforge.content.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import com.finderfeed.solarforge.registries.abilities.AbilitiesRegistry;
 import net.minecraft.world.entity.player.Player;

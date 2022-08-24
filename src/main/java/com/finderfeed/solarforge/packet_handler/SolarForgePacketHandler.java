@@ -1,13 +1,13 @@
 package com.finderfeed.solarforge.packet_handler;
 
-import com.finderfeed.solarforge.magic.blocks.infusing_table_things.UpdateProgressOnClientPacket;
-import com.finderfeed.solarforge.magic.blocks.infusing_table_things.UpdateStacksOnClientTable;
-import com.finderfeed.solarforge.magic.blocks.infusing_table_things.infusing_pool.UpdateStacksOnClientPacketPool;
+import com.finderfeed.solarforge.content.blocks.infusing_table_things.UpdateProgressOnClientPacket;
+import com.finderfeed.solarforge.content.blocks.infusing_table_things.UpdateStacksOnClientTable;
+import com.finderfeed.solarforge.content.blocks.infusing_table_things.infusing_pool.UpdateStacksOnClientPacketPool;
 import com.finderfeed.solarforge.packet_handler.packets.*;
-import com.finderfeed.solarforge.magic.items.solar_lexicon.packets.OpenScreenPacket;
-import com.finderfeed.solarforge.magic.items.solar_lexicon.packets.UpdateAllProgressionOnClient;
-import com.finderfeed.solarforge.magic.items.solar_lexicon.packets.UpdateInventoryPacket;
-import com.finderfeed.solarforge.magic.items.solar_lexicon.packets.UpdateProgressionOnClient;
+import com.finderfeed.solarforge.content.items.solar_lexicon.packets.OpenScreenPacket;
+import com.finderfeed.solarforge.content.items.solar_lexicon.packets.UpdateAllProgressionOnClient;
+import com.finderfeed.solarforge.content.items.solar_lexicon.packets.UpdateInventoryPacket;
+import com.finderfeed.solarforge.content.items.solar_lexicon.packets.UpdateProgressionOnClient;
 import com.finderfeed.solarforge.packet_handler.packets.crystal_energy_vines_puzzle.OpenPuzzleScreenPacket;
 import com.finderfeed.solarforge.packet_handler.packets.crystal_energy_vines_puzzle.PuzzleActionPacket;
 import com.finderfeed.solarforge.packet_handler.packets.misc_packets.BallLightningSpawnLightningParticles;
