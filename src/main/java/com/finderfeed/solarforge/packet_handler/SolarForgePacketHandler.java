@@ -74,6 +74,7 @@ public class SolarForgePacketHandler {
         INSTANCE.registerMessage(nextID(),ToggleableAbilityPacket.class, ToggleableAbilityPacket::toBytes, ToggleableAbilityPacket::new, ToggleableAbilityPacket::handle);
         INSTANCE.registerMessage(nextID(), OpenPuzzleScreenPacket.class, OpenPuzzleScreenPacket::toBytes, OpenPuzzleScreenPacket::new, OpenPuzzleScreenPacket::handle);
         INSTANCE.registerMessage(nextID(), PuzzleActionPacket.class, PuzzleActionPacket::toBytes, PuzzleActionPacket::new, PuzzleActionPacket::handle);
+        INSTANCE.registerMessage(nextID(), SetClientRadiantLandStatePacket.class, SetClientRadiantLandStatePacket::toBytes, SetClientRadiantLandStatePacket::new, SetClientRadiantLandStatePacket::handle);
     }
 //            INSTANCE.registerMessage(nextID(), .class, ::toBytes, ::new, ::handle);
     //RepeaterParentUpdateOnClient

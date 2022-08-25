@@ -65,29 +65,30 @@ class RenderSky implements ISkyRenderHandler{
         float timeOfDay = world.getTimeOfDay(partialTicks);
 
         RenderSystem.enableTexture();
-        matrixStack.pushPose();
-        matrixStack.scale(3,1,3);
-        Matrix4f mat = matrixStack.last().pose();
-        ClientHelpers.bindText(BROKEN_SKY);
-        RenderSystem.setShader(GameRenderer::getPositionTexColorShader);
-        builder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX_COLOR);
+        if (!ClientHelpers.isIsRadiantLandCleaned()) {
+            matrixStack.pushPose();
+            matrixStack.scale(3, 1, 3);
 
-        if ((timeOfDay >= 0.25) && timeOfDay < 0.5 ) {
+            ClientHelpers.bindText(BROKEN_SKY);
+            RenderSystem.setShader(GameRenderer::getPositionTexColorShader);
+            builder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX_COLOR);
 
-            renderBrokenSky(matrixStack, builder, (timeOfDay-0.25f)*4f );
-        }else if ( (timeOfDay >=0.5) && (timeOfDay < 0.75) ){
-            renderBrokenSky(matrixStack, builder, (0.75f-timeOfDay)*4f );
+            if ((timeOfDay >= 0.25) && timeOfDay < 0.5) {
+
+                renderBrokenSky(matrixStack, builder, (timeOfDay - 0.25f) * 4f);
+            } else if ((timeOfDay >= 0.5) && (timeOfDay < 0.75)) {
+                renderBrokenSky(matrixStack, builder, (0.75f - timeOfDay) * 4f);
+            }
+
+            tes.end();
+            matrixStack.popPose();
         }
-        RenderSystem.setShader(GameRenderer::getPositionTexShader);;
-        tes.end();
-
         RenderSystem.defaultBlendFunc();
-        matrixStack.popPose();
-
+        RenderSystem.setShader(GameRenderer::getPositionTexShader);
         matrixStack.pushPose();
         matrixStack.mulPose(Vector3f.YP.rotationDegrees(-90.0F));
         matrixStack.mulPose(Vector3f.XP.rotationDegrees(timeOfDay * 360.0F));
-        mat = matrixStack.last().pose();
+        Matrix4f mat = matrixStack.last().pose();
         ClientHelpers.bindText(STARGAZE_TEST);
 
 

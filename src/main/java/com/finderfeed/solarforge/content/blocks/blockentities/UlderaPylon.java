@@ -60,7 +60,7 @@ public class UlderaPylon extends BlockEntity {
                     world.addFreshEntity(bolt);
                 }
 
-                List<Player> players = world.getEntitiesOfClass(Player.class,aabb);
+                List<Player> players = world.getEntitiesOfClass(Player.class,aabb,player->!player.isCreative() && !player.isSpectator());
                 if (!players.isEmpty() && tile.spawnZombieCooldown <= 0 && Helpers.isDay(world)){
                     tile.spawnZombieCooldown = 1200;
                     SummoningProjectile projectile = new SummoningProjectile(world,SolarcraftEntityTypes.SHADOW_ZOMBIE.get(),

@@ -1,13 +1,18 @@
 package com.finderfeed.solarforge.content.blocks.blockentities.clearing_ritual;
 
 import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.content.RadiantPortalBlock;
+import com.finderfeed.solarforge.content.entities.projectiles.SummoningProjectile;
 import com.finderfeed.solarforge.events.other_events.event_handler.EventHandler;
 import com.finderfeed.solarforge.content.blocks.blockentities.clearing_ritual.clearing_ritual_crystal.ClearingRitualCrystalTile;
 import com.finderfeed.solarforge.content.blocks.blockentities.clearing_ritual.clearing_ritual_main_tile.ClearingRitualMainTile;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
+import com.finderfeed.solarforge.registries.entities.SolarcraftEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.level.Level;
@@ -66,6 +71,14 @@ public class ClearingRitual {
                         if (crystals.size() != 0) {
                             crystals.get(world.random.nextInt(crystals.size())).setCorrupted(true);
                         }
+                        SummoningProjectile projectile = new SummoningProjectile(world, SolarcraftEntityTypes.SHADOW_ZOMBIE.get(),
+                                43,0,60);
+                        double speedMult = world.random.nextDouble()*0.2 + 0.1;
+                        Vec3 rnd = new Vec3(1,0,0).yRot(world.random.nextFloat()*360).multiply(speedMult,speedMult,speedMult);
+                        projectile.setFallSpeedDecrement(0.025);
+                        projectile.setPos(Helpers.getBlockCenter(tile.getBlockPos()).add(0,0.75,0));
+                        projectile.setDeltaMovement(rnd.add(0,0.1,0));
+                        world.addFreshEntity(projectile);
                     }
                     if (ticker % 40 == 0) {
                         this.randomLightning(world, tilePos);
@@ -88,27 +101,30 @@ public class ClearingRitual {
                     .getDataStorage()
                     .computeIfAbsent(RadiantLandCleanedData::load,()->new RadiantLandCleanedData(false),"is_radiant_land_cleaned");
             if (!data.isCleaned()){
-//                List<ServerPlayer> players = ((ServerLevel) level).getPlayers((p)->p.getLevel().dimension() == EventHandler.RADIANT_LAND_KEY);
-//                MinecraftServer server = level.getServer();
-//                if (server != null) {
-//                    for (ServerPlayer player : players) {
-//                        player.changeDimension(server.overworld().getLevel(),
-//                                new ITeleporter() {
-//                                    @Nullable
-//                                    @Override
-//                                    public PortalInfo getPortalInfo(Entity entity, ServerLevel destWorld, Function<ServerLevel, PortalInfo> defaultPortalInfo) {
-//                                        return defaultPortalInfo.apply(server.overworld());
-//                                    }
-//                                });
-//                    }
-//                }
+                List<ServerPlayer> players = ((ServerLevel) level).getPlayers((p)->p.getLevel().dimension() == EventHandler.RADIANT_LAND_KEY);
+                List<ServerPlayer> allPlayers = ((ServerLevel) level).getPlayers((p)->true);
+                MinecraftServer server = level.getServer();
+                if (server != null) {
+                    for (ServerPlayer player : allPlayers){
+                        Helpers.updateClientRadiantLandStateForPlayer(player,true);
+                    }
+                    for (ServerPlayer player : players) {
+                        player.changeDimension(server.overworld().getLevel(), RadiantPortalBlock.RadiantTeleporter.INSTANCE);
+                    }
+                }
                 data.setCleaned(true);
                 data.setDirty();
             }
         }
     }
 
-    public static void setRLState(ServerLevel level,boolean cleaned){
+    public static void setRLState(ServerLevel level,boolean cleaned,boolean notifyPlayers){
+        if (notifyPlayers){
+        List<ServerPlayer> allPlayers = level.getPlayers((p)->true);
+            for (ServerPlayer player : allPlayers){
+                Helpers.updateClientRadiantLandStateForPlayer(player,cleaned);
+            }
+        }
         RadiantLandCleanedData data = level.getServer().overworld()
                 .getDataStorage()
                 .computeIfAbsent(RadiantLandCleanedData::load,()->new RadiantLandCleanedData(false),"is_radiant_land_cleaned");

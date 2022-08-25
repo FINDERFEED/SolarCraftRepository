@@ -49,6 +49,7 @@ public class OnPlayerJoin {
                     EnchanterConfigInit.readJson();
                 }
                 Helpers.updateFragmentsOnClient(sPlayer);
+                Helpers.updateClientRadiantLandStateForPlayer(sPlayer);
                 AncientFragment.initFragmentsMap();
             }
         }

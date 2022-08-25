@@ -1,5 +1,6 @@
 package com.finderfeed.solarforge;
 
+import com.finderfeed.solarforge.content.blocks.blockentities.clearing_ritual.ClearingRitual;
 import com.finderfeed.solarforge.content.entities.CrystalBossEntity;
 import com.finderfeed.solarforge.content.entities.RunicElementalBoss;
 import com.finderfeed.solarforge.events.my_events.ProgressionUnlockEvent;
@@ -293,6 +294,17 @@ public class Helpers {
         SolarForgePacketHandler.INSTANCE.sendTo(new UpdateFragmentsOnClient(player),
                 player.connection.connection,NetworkDirection.PLAY_TO_CLIENT);
     }
+
+    public static void updateClientRadiantLandStateForPlayer(ServerPlayer player){
+        SolarForgePacketHandler.INSTANCE.sendTo(new SetClientRadiantLandStatePacket(ClearingRitual.getRLState((ServerLevel) player.level)),
+                player.connection.connection,NetworkDirection.PLAY_TO_CLIENT);
+    }
+
+    public static void updateClientRadiantLandStateForPlayer(ServerPlayer player,boolean state){
+        SolarForgePacketHandler.INSTANCE.sendTo(new SetClientRadiantLandStatePacket(state),
+                player.connection.connection,NetworkDirection.PLAY_TO_CLIENT);
+    }
+
     public static void forceChunksReload(ServerPlayer playerEntity){
 
         SolarForgePacketHandler.INSTANCE.sendTo(new ReloadChunks(),playerEntity.connection.connection, NetworkDirection.PLAY_TO_CLIENT);

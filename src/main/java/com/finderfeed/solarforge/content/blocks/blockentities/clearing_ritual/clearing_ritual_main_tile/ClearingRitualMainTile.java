@@ -45,13 +45,13 @@ public class ClearingRitualMainTile extends BlockEntity {
                     220 + world.random.nextInt(35), 220 + world.random.nextInt(35), world.random.nextInt(20),
                     0.5f);
             for (int g = 0; g < 3;g++) {
-                Vec3 pSpawnPosOuterRing = center.add(new Vec3(25, 0, 0).yRot((float) Math.toRadians(360 * world.random.nextDouble()))).add(0, -2, 0);
+                Vec3 pSpawnPosOuterRing = center.add(new Vec3(23, 0, 0).yRot((float) Math.toRadians(360 * world.random.nextDouble()))).add(0, -2, 0);
                 double rxoRing = world.random.nextDouble();
-                double ryoRing = world.random.nextDouble();
+                double ryoRing = world.random.nextDouble()*2.5;
                 double rzoRing = world.random.nextDouble();
-                double rxdoRing = world.random.nextDouble() * 0.02 - 0.01;
-                double rydoRing = world.random.nextDouble() * 0.02 - 0.01;
-                double rzdoRing = world.random.nextDouble() * 0.02 - 0.01;
+                double rxdoRing = world.random.nextDouble() * 0.06 - 0.03;
+                double rydoRing = world.random.nextDouble() * 0.06 - 0.03;
+                double rzdoRing = world.random.nextDouble() * 0.06 - 0.03;
                 ClientHelpers.Particles.createParticle(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
                         pSpawnPosOuterRing.x + rxoRing, pSpawnPosOuterRing.y + ryoRing, pSpawnPosOuterRing.z + rzoRing,
                         rxdoRing, rydoRing, rzdoRing,
@@ -59,6 +59,9 @@ public class ClearingRitualMainTile extends BlockEntity {
                         0.7f);
             }
         }
+
+
+
     }
 
     public void notifyCrystalExploded(){

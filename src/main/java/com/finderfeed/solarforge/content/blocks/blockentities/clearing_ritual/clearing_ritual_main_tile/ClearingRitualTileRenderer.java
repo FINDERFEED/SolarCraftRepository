@@ -24,6 +24,9 @@ import java.util.Random;
 
 public class ClearingRitualTileRenderer extends TileEntityRenderer<ClearingRitualMainTile> {
 
+    public static final int RAY_ANIMATION_TICKS = 200;
+    public static final int DIMENSION_CRACK_ANIMATION_TICKS = 100;
+
     private static final ResourceLocation RAY = new ResourceLocation(SolarForge.MOD_ID,"textures/misc/solar_strike_ray.png");
     private static final ResourceLocation SKY_BREAK = new ResourceLocation(SolarForge.MOD_ID,"textures/misc/dimension_sky_break.png");
     private static final ResourceLocation STAR = new ResourceLocation(SolarForge.MOD_ID,"textures/misc/star.png");
@@ -37,11 +40,11 @@ public class ClearingRitualTileRenderer extends TileEntityRenderer<ClearingRitua
         matrices.pushPose();
         if (tile.ritual.ritualOnline() ){
 
-            if (ClearingRitual.MAX_TIME - tile.ritual.getCurrentTime() <= 100){
+            if (ClearingRitual.MAX_TIME - tile.ritual.getCurrentTime() <= RAY_ANIMATION_TICKS){
                 matrices.pushPose();
-                int time = 50 - (FDMathHelper.clamp(50,ClearingRitual.MAX_TIME - tile.ritual.getCurrentTime(),100) - 50);
+                int time = (RAY_ANIMATION_TICKS - DIMENSION_CRACK_ANIMATION_TICKS) - (FDMathHelper.clamp(DIMENSION_CRACK_ANIMATION_TICKS,ClearingRitual.MAX_TIME - tile.ritual.getCurrentTime(),RAY_ANIMATION_TICKS) - DIMENSION_CRACK_ANIMATION_TICKS);
 
-                double height = 200f*((time + pticks)/50f);
+                double height = 200f*((time + pticks)/(RAY_ANIMATION_TICKS - DIMENSION_CRACK_ANIMATION_TICKS));
 
                 Vec3 camPos = Minecraft.getInstance().getCameraEntity().position();
                 Vec3 tilepos = Helpers.getBlockCenter(tile.getBlockPos());
@@ -71,16 +74,16 @@ public class ClearingRitualTileRenderer extends TileEntityRenderer<ClearingRitua
                 vertex.vertex(m,-r,-r,0).color(1f,1f,0f,1f).uv(0, 0).uv2(LightTexture.FULL_BRIGHT).endVertex();
 
                 matrices.popPose();
-                if (ClearingRitual.MAX_TIME - tile.ritual.getCurrentTime() <= 25){
-                    int time2 = 25 - FDMathHelper.clamp(0,ClearingRitual.MAX_TIME - tile.ritual.getCurrentTime(),25);
-                    double alpha = time2/25f;
+                if (ClearingRitual.MAX_TIME - tile.ritual.getCurrentTime() <= DIMENSION_CRACK_ANIMATION_TICKS){
+                    int time2 = DIMENSION_CRACK_ANIMATION_TICKS - FDMathHelper.clamp(0,ClearingRitual.MAX_TIME - tile.ritual.getCurrentTime(),DIMENSION_CRACK_ANIMATION_TICKS);
+                    double alpha = time2/(float)DIMENSION_CRACK_ANIMATION_TICKS;
                     vertex = buffer.getBuffer(SolarCraftRenderTypes.depthMaskedTextSeeThrough(SKY_BREAK));
                     Matrix4f m2 = matrices.last().pose();
                     float r3 = 100f;
-                    vertex.vertex(m2,-r3,200,-r3).color(1f,1f,0.15f,(float)alpha).uv(0,0).uv2(LightTexture.FULL_BRIGHT).endVertex();
-                    vertex.vertex(m2,r3,200,-r3).color(1f,1f,0.15f,(float)alpha).uv(1,0).uv2(LightTexture.FULL_BRIGHT).endVertex();
-                    vertex.vertex(m2,r3,200,r3).color(1f,1f,0.15f,(float)alpha).uv(1,1).uv2(LightTexture.FULL_BRIGHT).endVertex();
-                    vertex.vertex(m2,-r3,200,r3).color(1f,1f,0.15f,(float)alpha).uv(0,1).uv2(LightTexture.FULL_BRIGHT).endVertex();
+                    vertex.vertex(m2,-r3,200,-r3).color(1f,0.8f,0.15f,(float)alpha).uv(0,0).uv2(LightTexture.FULL_BRIGHT).endVertex();
+                    vertex.vertex(m2,r3,200,-r3).color(1f,0.8f,0.15f,(float)alpha).uv(1,0).uv2(LightTexture.FULL_BRIGHT).endVertex();
+                    vertex.vertex(m2,r3,200,r3).color(1f,0.8f,0.15f,(float)alpha).uv(1,1).uv2(LightTexture.FULL_BRIGHT).endVertex();
+                    vertex.vertex(m2,-r3,200,r3).color(1f,0.8f,0.15f,(float)alpha).uv(0,1).uv2(LightTexture.FULL_BRIGHT).endVertex();
                 }
                 matrices.popPose();
             }

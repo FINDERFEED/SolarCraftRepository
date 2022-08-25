@@ -1,8 +1,10 @@
 package com.finderfeed.solarforge.content;
 
+import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.events.other_events.event_handler.EventHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -35,7 +37,9 @@ public class RadiantPortalBlock extends Block implements EntityBlock {
                     destination = world.getServer().getLevel(Level.OVERWORLD);
                 }
                 if (destination != null){
-
+                    if (entity instanceof ServerPlayer player){
+                        Helpers.updateClientRadiantLandStateForPlayer(player);
+                    }
                     entity.changeDimension(destination,RadiantTeleporter.INSTANCE);
                 }else {
                     return;
@@ -59,32 +63,33 @@ public class RadiantPortalBlock extends Block implements EntityBlock {
     public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
         return null;
     }
-}
-class RadiantTeleporter implements ITeleporter{
 
-    public static RadiantTeleporter INSTANCE = new RadiantTeleporter();
+    public static class RadiantTeleporter implements ITeleporter{
 
-    @Override
-    public Entity placeEntity(Entity entity, ServerLevel currentWorld, ServerLevel destWorld, float yaw, Function<Boolean, Entity> repositionEntity) {
+        public static RadiantTeleporter INSTANCE = new RadiantTeleporter();
 
-        return repositionEntity.apply(true);
-    }
+        @Override
+        public Entity placeEntity(Entity entity, ServerLevel currentWorld, ServerLevel destWorld, float yaw, Function<Boolean, Entity> repositionEntity) {
 
-    @Nullable
-    @Override
-    public PortalInfo getPortalInfo(Entity entity, ServerLevel destWorld, Function<ServerLevel, PortalInfo> defaultPortalInfo) {
-
-        BlockPos pos;
-        if (destWorld.dimension() == Level.OVERWORLD){
-            pos = entity.getOnPos();
-        }else{
-            pos = BlockPos.ZERO;
+            return repositionEntity.apply(true);
         }
-        destWorld.getChunkAt(pos).setUnsaved(true);
-        return this.isVanilla() ? defaultPortalInfo.apply(destWorld) :
-                new PortalInfo(new Vec3(pos.getX(),destWorld.getHeight(Heightmap.Types.WORLD_SURFACE,pos.getX(),pos.getZ()),pos.getZ()),
-                        Vec3.ZERO,
-                        entity.getYRot(),
-                        entity.getXRot());
+
+        @Nullable
+        @Override
+        public PortalInfo getPortalInfo(Entity entity, ServerLevel destWorld, Function<ServerLevel, PortalInfo> defaultPortalInfo) {
+
+            BlockPos pos;
+            if (destWorld.dimension() == Level.OVERWORLD){
+                pos = entity.getOnPos();
+            }else{
+                pos = BlockPos.ZERO;
+            }
+            destWorld.getChunkAt(pos).setUnsaved(true);
+            return this.isVanilla() ? defaultPortalInfo.apply(destWorld) :
+                    new PortalInfo(new Vec3(pos.getX(),destWorld.getHeight(Heightmap.Types.WORLD_SURFACE,pos.getX(),pos.getZ()),pos.getZ()),
+                            Vec3.ZERO,
+                            entity.getYRot(),
+                            entity.getXRot());
+        }
     }
 }

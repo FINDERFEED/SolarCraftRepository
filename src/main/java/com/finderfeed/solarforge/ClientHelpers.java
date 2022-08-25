@@ -71,6 +71,10 @@ public class ClientHelpers {
         return IS_RADIANT_LAND_CLEANED_CLIENT;
     }
 
+    public static void setClientRadiantLandState(boolean state){
+        IS_RADIANT_LAND_CLEANED_CLIENT = state;
+    }
+
     public static void handlePuzzlePacket(BlockPos pos){
         Level level = getLevel();
         if (level.getBlockEntity(pos) instanceof CrystalEnergyVinesTile tile){
