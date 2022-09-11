@@ -33,8 +33,8 @@ public class PostChainPlusUltra extends PostChain {
         } else {
             this.time += p_110024_ - this.lastStamp;
         }
-        for(this.lastStamp = p_110024_; this.time > 20.0F; this.time -= 20.0F) {
-        }
+//        for(this.lastStamp = p_110024_; this.time > 20.0F; this.time -= 20.0F) {
+//        }
         for(PostPass postpass : this.passes) {
 
             if(uniforms != null){

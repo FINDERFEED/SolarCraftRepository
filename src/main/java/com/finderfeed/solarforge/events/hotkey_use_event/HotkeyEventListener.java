@@ -3,6 +3,7 @@ package com.finderfeed.solarforge.events.hotkey_use_event;
 
 import com.finderfeed.solarforge.SolarcraftClientRegistry;
 
+import com.finderfeed.solarforge.client.screens.ability_screen.AbilitySelectionScreen;
 import com.finderfeed.solarforge.content.items.solar_lexicon.screen.CraftingRecipeScreen;
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
 import com.finderfeed.solarforge.packet_handler.packets.CastAbilityPacket;
@@ -33,6 +34,7 @@ public class HotkeyEventListener {
         if (Minecraft.getInstance().screen != null) return;
 
         if (SolarcraftClientRegistry.FIRST_ABILITY_KEY.isDown() && event.getAction() == GLFW.GLFW_PRESS){
+            Minecraft.getInstance().setScreen(new AbilitySelectionScreen());
             SolarForgePacketHandler.INSTANCE.sendToServer(new CastAbilityPacket(1));
 
         }

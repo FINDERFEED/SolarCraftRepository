@@ -98,10 +98,7 @@ public class InformationScreen extends Screen {
     public void render(PoseStack matrices, int mousex, int mousey, float partialTicks) {
         ClientHelpers.bindText(LOC);
         blit(matrices,relX,relY,0,0,256,209,256,256);
-//        blit(matrices,relX + 257,relY + 25,17,209,17,17,256,256);
-//        if (screen != null || screenCrafting != null) {
-//            blit(matrices, relX + 257, relY + 25 + 18, 17, 209, 17, 17, 256, 256);
-//        }
+
         drawString(matrices,Minecraft.getInstance().font,fragment.getTranslation(), relX+60,relY+35,0xffffff);
         if (fragment.getType() == AncientFragment.Type.INFORMATION) {
             RenderingTools.drawBoundedTextObfuscated(matrices, relX + 14, relY + 81, 43, fragment.getLore(),SolarLexiconScreen.TEXT_COLOR,ticker*4);

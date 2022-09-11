@@ -80,7 +80,32 @@ public class RenderingTools {
     public static final ResourceLocation FANCY_BORDER_CORNERS = new ResourceLocation(SolarForge.MOD_ID,"textures/gui/fancy_border_corners.png");
     public static final ResourceLocation FANCY_BORDER_HORIZONTAL = new ResourceLocation(SolarForge.MOD_ID,"textures/gui/fancy_border_horizontal.png");
     public static final ResourceLocation FANCY_BORDER_VERTICAL = new ResourceLocation(SolarForge.MOD_ID,"textures/gui/fancy_border_vertical.png");
+    public static final ResourceLocation TEXT_FIELD_INNER = new ResourceLocation(SolarForge.MOD_ID,"textures/gui/text_field_inner.png");
+    public static final ResourceLocation TEXT_FIELD_CORNERS = new ResourceLocation(SolarForge.MOD_ID,"textures/gui/text_field_corners.png");
+    public static final ResourceLocation TEXT_FIELD_HORIZONTAL = new ResourceLocation(SolarForge.MOD_ID,"textures/gui/text_field_horizontal.png");
+    public static final ResourceLocation TEXT_FIELD_VERTICAL = new ResourceLocation(SolarForge.MOD_ID,"textures/gui/text_field_vertical.png");
 
+
+    public static void renderTextField(PoseStack matrices,int xStart,int yStart,int width,int height){
+        matrices.pushPose();
+        ClientHelpers.bindText(TEXT_FIELD_INNER);
+        Gui.blit(matrices,xStart,yStart,0,0,width,height,4,4);
+
+        ClientHelpers.bindText(TEXT_FIELD_CORNERS);
+        Gui.blit(matrices,xStart-13,yStart-13,0,0,13,13,26,26);
+        Gui.blit(matrices,xStart + width,yStart-13,13,0,13,13,26,26);
+        Gui.blit(matrices,xStart + width,yStart + height,13,13,13,13,26,26);
+        Gui.blit(matrices,xStart-13,yStart + height,0,13,13,13,26,26);
+
+        ClientHelpers.bindText(TEXT_FIELD_HORIZONTAL);
+        Gui.blit(matrices,xStart,yStart - 11,0,0,width,11,72,22);
+        Gui.blit(matrices,xStart,yStart + height,0,11,width,11,72,22);
+
+        ClientHelpers.bindText(TEXT_FIELD_VERTICAL);
+        Gui.blit(matrices,xStart - 11,yStart,0,0,11,height,22,63);
+        Gui.blit(matrices,xStart + width,yStart,11,0,11,height,22,63);
+        matrices.popPose();
+    }
 
     public static void drawFancyBorder(PoseStack matrices,int xStart,int yStart,int width,int height,int zOffset){
         matrices.pushPose();
