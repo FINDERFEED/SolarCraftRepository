@@ -34,7 +34,8 @@ public class InformationScreen extends Screen {
     public int relY;
     private final ResourceLocation LOC = new ResourceLocation("solarforge","textures/gui/solar_lexicon_info_screen_new.png");
     private InfusingRecipeScreen screen;
-    private InfusingCraftingRecipeScreen screenCrafting;
+    private InfusingCraftingRecipeScreen screenInfusingCrafting;
+    private CraftingRecipeScreen craftingScreen;
     private AncientFragment fragment;
     private int ticker = 0;
     public InformationScreen(AncientFragment fragment,InfusingRecipeScreen screen) {
@@ -45,7 +46,13 @@ public class InformationScreen extends Screen {
 
     public InformationScreen(AncientFragment fragment,InfusingCraftingRecipeScreen screen) {
         super(new TextComponent(""));
-        this.screenCrafting = screen;
+        this.screenInfusingCrafting = screen;
+        this.fragment = fragment;
+    }
+
+    public InformationScreen(AncientFragment fragment,CraftingRecipeScreen screen) {
+        super(new TextComponent(""));
+        this.craftingScreen = screen;
         this.fragment = fragment;
     }
 
@@ -64,22 +71,26 @@ public class InformationScreen extends Screen {
         this.relX = (width/scale - 183)/2 - 40;
         this.relY = (height - 218*scale)/2/scale;
 
-        Item i = screen != null ? SolarForge.INFUSER_ITEM.get() : SolarcraftItems.INFUSING_TABLE.get();
+        Item i = screen != null ? SolarForge.INFUSER_ITEM.get() : screenInfusingCrafting != null ? SolarcraftItems.INFUSING_TABLE.get() : Items.CRAFTING_TABLE.asItem();
 
         ItemStackButton button = new ItemStackTabButton(relX+260,relY+25 + 18 + 3,12,12,(buttons)->{
             if (screen != null) {
                 Minecraft.getInstance().setScreen(screen);
+            }else if (screenInfusingCrafting != null){
+                Minecraft.getInstance().setScreen(screenInfusingCrafting);
             }else{
-                Minecraft.getInstance().setScreen(screenCrafting);
+                Minecraft.getInstance().setScreen(craftingScreen);
             }
         }, i.getDefaultInstance(),0.7f,(buttons,matrices,b,c)->{
-            renderTooltip(matrices,new TextComponent("Craft"),b,c);
+            renderTooltip(matrices,new TextComponent("Crafting Recipe"),b,c);
         });
-        if (screen != null || screenCrafting != null){
+        if (screen != null || screenInfusingCrafting != null || craftingScreen != null){
             addRenderableWidget(button);
         }
         addRenderableWidget(new ItemStackTabButton(relX+257 + 3,relY+28,12,12,(buttons)->{minecraft.setScreen(new SolarLexiconRecipesScreen());},
-                Items.CRAFTING_TABLE.getDefaultInstance(),0.7f));
+                Items.CRAFTING_TABLE.getDefaultInstance(),0.7f,(buttons,matrices,b,c)->{
+            renderTooltip(matrices,new TextComponent("Go back"),b,c);
+        }));
         super.init();
     }
 

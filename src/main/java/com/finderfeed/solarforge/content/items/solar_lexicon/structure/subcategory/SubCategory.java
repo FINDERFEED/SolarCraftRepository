@@ -19,8 +19,10 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeManager;
+import net.minecraft.world.item.crafting.RecipeType;
 
 import javax.annotation.Nullable;
 import java.awt.*;
@@ -67,6 +69,8 @@ public class SubCategory {
                     buttonsToAdd.add(constructSmeltingRecipeButton(getSmeltingRecipeFromFragment(frag),buttonPosX,buttonPosY));
                 }else if (frag.getRecipeType() == SolarForge.INFUSING_CRAFTING_RECIPE_TYPE){
                     buttonsToAdd.add(constructInfusingCraftingRecipeButton(frag,getInfusingCraftingRecipeFromFragment(frag),buttonPosX,buttonPosY));
+                }else if (frag.getRecipeType() == RecipeType.CRAFTING){
+                    buttonsToAdd.add(constructCraftingRecipeButton(frag,List.of(getCraftingRecipeFromFragment(frag)),buttonPosX,buttonPosY));
 
                 }
             }else if (type == AncientFragment.Type.INFORMATION){
@@ -74,8 +78,10 @@ public class SubCategory {
             }else if (type == AncientFragment.Type.ITEMS){
                 if (frag.getRecipeType() == SolarForge.INFUSING_RECIPE_TYPE) {
                     buttonsToAdd.add(constructInfusingRecipeButton(frag, getInfusingRecipesFromFragment(frag), buttonPosX, buttonPosY));
-                }else{
+                }else if (frag.getRecipeType() == SolarForge.INFUSING_CRAFTING_RECIPE_TYPE){
                     buttonsToAdd.add(constructInfusingCraftingRecipeButton(frag, getInfusingCraftingRecipesFromFragment(frag), buttonPosX, buttonPosY));
+                }else if (frag.getRecipeType() == RecipeType.CRAFTING){
+                    buttonsToAdd.add(constructCraftingRecipeButton(frag, getCraftingRecipesFromFragment(frag), buttonPosX, buttonPosY));
                 }
             }else if (type == AncientFragment.Type.STRUCTURE){
                 buttonsToAdd.add(constructStructureButton(frag.getStructure().getM(),buttonPosX,buttonPosY,frag));
@@ -116,6 +122,25 @@ public class SubCategory {
             Optional<? extends Recipe<?>> recipe = manager.byKey(item.getRecipeLocation());
             if (recipe.isEmpty()) throw new IllegalStateException("Incorrect recipe in fragment: " + fragment.getId().toUpperCase(Locale.ROOT) +", unable to find recipe: " + item.getRecipeLocation());
             recipes.add((InfusingCraftingRecipe) recipe.get());
+        }
+        return recipes;
+    }
+
+    private CraftingRecipe getCraftingRecipeFromFragment(AncientFragment fragment){
+        Optional<? extends Recipe<?>> recipe = Minecraft.getInstance().level.getRecipeManager().byKey(fragment.getItem().getRecipeLocation());
+        if (recipe.isEmpty()) throw new IllegalStateException("Incorrect recipe in fragment: " + fragment.getId().toUpperCase(Locale.ROOT) +", unable to find recipe: " + fragment.getItem().getRecipeLocation());
+        if (!(recipe.get() instanceof CraftingRecipe)) throw new IllegalStateException("Recipe is not shaped/shapeless: " + fragment.getId().toUpperCase(Locale.ROOT) + ", recipe: " + fragment.getItem().getRecipeLocation());
+        return (CraftingRecipe) recipe.get();
+    }
+    private List<CraftingRecipe> getCraftingRecipesFromFragment(AncientFragment fragment){
+        List<CraftingRecipe> recipes = new ArrayList<>();
+        RecipeManager manager = Minecraft.getInstance().level.getRecipeManager();
+        for (AncientFragment.ItemWithRecipe item : fragment.getStacks()){
+            Optional<? extends Recipe<?>> recipe = manager.byKey(item.getRecipeLocation());
+            if (recipe.isEmpty()) throw new IllegalStateException("Incorrect recipe in fragment: " + fragment.getId().toUpperCase(Locale.ROOT) +", unable to find recipe: " + item.getRecipeLocation());
+            if (!(recipe.get() instanceof CraftingRecipe)) throw new IllegalStateException("Recipe is not shaped/shapeless: " + fragment.getId().toUpperCase(Locale.ROOT) + ", recipe: " + fragment.getItem().getRecipeLocation());
+
+            recipes.add((CraftingRecipe) recipe.get());
         }
         return recipes;
     }
@@ -182,9 +207,6 @@ public class SubCategory {
         return new ItemStackButton(x,y,24,24,(button)->{
             Minecraft.getInstance().setScreen(new InformationScreen(fragment,new InfusingRecipeScreen(recipe)));
         },fragment.getIcon().getDefaultInstance(),1.5f,(button,matrices,mx,my)->{
-//            if (button.isHovered()){
-//                this.onHovered();
-//            }
             if (Minecraft.getInstance().screen instanceof SolarLexiconRecipesScreen screen) {
                 screen.postRender.add(()->screen.renderTooltip(matrices, fragment.getTranslation(), mx, my));
 
@@ -194,6 +216,18 @@ public class SubCategory {
         });
     }
 
+    public ItemStackButton constructCraftingRecipeButton(AncientFragment fragment, List<CraftingRecipe> recipe, int x , int y){
+        return new ItemStackButton(x,y,24,24,(button)->{
+            Minecraft.getInstance().setScreen(new InformationScreen(fragment,new CraftingRecipeScreen(recipe)));
+        },fragment.getIcon().getDefaultInstance(),1.5f,(button,matrices,mx,my)->{
+            if (Minecraft.getInstance().screen instanceof SolarLexiconRecipesScreen screen) {
+                screen.postRender.add(()->screen.renderTooltip(matrices, fragment.getTranslation(), mx, my));
+
+            }else{
+                Minecraft.getInstance().screen.renderTooltip(matrices, fragment.getTranslation(), mx, my);
+            }
+        });
+    }
 
     public ItemStackButton constructInfusingRecipeButton(AncientFragment fragment,InfusingRecipe recipe,int x , int y){
         return new ItemStackButton(x,y,24,24,(button)->{
