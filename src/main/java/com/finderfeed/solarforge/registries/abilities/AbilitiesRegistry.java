@@ -11,27 +11,27 @@ public class AbilitiesRegistry {
     private static final List<ToggleableAbility> TOGGLEABLE_ABILITIES = new ArrayList<>();
     private static final Map<String,AbstractAbility> ABILITY_MAP = new HashMap<>();
 
-    public static final LightningAbility LIGHTNING = register("lightning", new LightningAbility());
-    public static final FireballAbility FIREBALL =  register("fireball", new FireballAbility());
-    public static final AbstractAbility SOLAR_STRIKE = register("solar_strike", new SolarStrikeAbility());
-    public static final AbstractAbility DISARM = register("disarm",new DisarmAbility());
-    public static final AbstractAbility DISPEL = register("dispel",new DispelAbility());
-    public static final ToggleableAbility ALCHEMIST = register("alchemist",new AlchemistAbility());
-    public static final AbstractAbility METEORITE = register("meteorite",new MeteoriteAbility());
-    public static final AbstractAbility HEAL = register("heal",new HealAbility());
-    public static final AbstractAbility MAGIC_BOLT = register("magic_bolt",new MagicBoltAbility());
+    public static final LightningAbility LIGHTNING = register(new LightningAbility());
+    public static final FireballAbility FIREBALL =  register(new FireballAbility());
+    public static final AbstractAbility SOLAR_STRIKE = register(new SolarStrikeAbility());
+    public static final AbstractAbility DISARM = register(new DisarmAbility());
+    public static final AbstractAbility DISPEL = register(new DispelAbility());
+    public static final ToggleableAbility ALCHEMIST = register(new AlchemistAbility());
+    public static final AbstractAbility METEORITE = register(new MeteoriteAbility());
+    public static final AbstractAbility HEAL = register(new HealAbility());
+    public static final AbstractAbility MAGIC_BOLT = register(new MagicBoltAbility());
 
 
 
-    public static <T extends AbstractAbility> T register(String id, T ability){
+    public static <T extends AbstractAbility> T register(T ability){
         if (!ABILITIES.contains(ability)){
             ABILITIES.add(ability);
             if (ability instanceof ToggleableAbility a){
                 TOGGLEABLE_ABILITIES.add(a);
             }
         }
-        if (!ABILITY_MAP.containsKey(id)){
-            ABILITY_MAP.put(id,ability);
+        if (!ABILITY_MAP.containsKey(ability.id)){
+            ABILITY_MAP.put(ability.id,ability);
         }
         return ability;
     }

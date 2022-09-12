@@ -476,7 +476,7 @@
   "solarcraft_button.fireball": "Fireball",
   "solarcraft_button.solar_stun": "Disarm",
   "solarcraft_button.solar_dispel": "Dispel",
-  "ability.buy_ability": "Confirm",
+  "ability.buy_ability": "Buy",
   "forge.take": "Consume",
   "forge.moved": "Consume energy. (Abilities were moved to separate screen, look into hotkey settings)",
   "solar_fragment.gloves_of_reach": "Reach gloves",
@@ -697,6 +697,10 @@
   "solar_fragment.solar_armor": "Solar Armor",
   "solar_armor.lore": "All those monsters are really getting on you nerves don't they? Well, this armor set is not the best but it will protect you much better than a netherite one.",
   "death.lore": "You somehow manage to revive every time you die but you loose all your items and xp levels. Luckily your knowledge still remains with you which you can't say about the runic energy that you had.",
-  "solar_fragment.death": "Death"
-
+  "solar_fragment.death": "Death",
+  "solarcraft.bind_ability": "Click to bind",
+  "solarcraft.bind_guide": "Click on one of the frames and then click on the ability you want to bind. Each frame corresponds to one hotkey in your settings (1rst frame - hotkey 1, 2nd frame - hotkey 2 e.t.c.)",
+  "solarcraft.yours": "Yours",
+  "solarcraft.raw_solar_energy": "Raw Solar Energy",
+  "solarcraft.cast_cost": "Cast Runic Energy cost"
 }

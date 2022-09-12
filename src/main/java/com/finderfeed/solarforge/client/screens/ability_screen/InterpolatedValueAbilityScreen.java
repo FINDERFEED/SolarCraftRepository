@@ -9,17 +9,21 @@ public class InterpolatedValueAbilityScreen {
     private double oldValue = 0;
     private int ticker = 0;
 
+    private int time;
+    public InterpolatedValueAbilityScreen(int time){
+        this.time = time;
+    }
 
     public void tick(){
-        float percentage = Mth.clamp(ticker,0,10)/10f;
+        float percentage = Mth.clamp(ticker,0,time)/(float)time;
         double progress = -Math.pow(percentage,2) + 1;
         currentValue = Mth.lerp(progress,oldValue,newValue);
-        ticker = Mth.clamp(ticker-1,0,10);
+        ticker = Mth.clamp(ticker-1,0,time);
     }
 
     public void setNewValue(int newValue) {
         if (newValue != this.newValue) {
-            ticker = 10;
+            ticker = time;
             this.oldValue = currentValue;
             this.newValue = newValue;
         }

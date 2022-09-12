@@ -55,11 +55,11 @@ public class HotkeyEventListener {
             SolarForgePacketHandler.INSTANCE.sendToServer(new CastAbilityPacket(4));
 
         }
-        if (SolarcraftClientRegistry.OPEN_GUI_ABILITY_KEY.isDown() && event.getAction() == GLFW.GLFW_PRESS){
-
-            Minecraft.getInstance().setScreen(new SolarForgeAbilityConfigScreen());
-
-        }
+//        if (SolarcraftClientRegistry.OPEN_GUI_ABILITY_KEY.isDown() && event.getAction() == GLFW.GLFW_PRESS){
+//
+//            Minecraft.getInstance().setScreen(new SolarForgeAbilityConfigScreen());
+//
+//        }
 
         if (SolarcraftClientRegistry.GUI_ABILITY_BUY_SCREEN.isDown() && event.getAction() == GLFW.GLFW_PRESS){
             ClientHelpers.requestAbilityScreen(false);

@@ -3,8 +3,10 @@ package com.finderfeed.solarforge.events.other_events.event_handler;
 
 import com.finderfeed.solarforge.ClientHelpers;
 import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.content.abilities.AbilityHelper;
 import com.finderfeed.solarforge.content.abilities.ability_classes.AbstractAbility;
 import com.finderfeed.solarforge.SolarCraftAttributeModifiers;
+import com.finderfeed.solarforge.content.abilities.ability_classes.ToggleableAbility;
 import com.finderfeed.solarforge.events.my_events.ProgressionUnlockEvent;
 import com.finderfeed.solarforge.local_library.OwnedBlock;
 import com.finderfeed.solarforge.local_library.helpers.FDMathHelper;
@@ -176,6 +178,19 @@ public class EventHandler {
                     }
                 }
 
+                for (ToggleableAbility ability : AbilitiesRegistry.getToggleableAbilities()){
+                    if (ability.isToggled(player)){
+                        if (!AbilityHelper.isAbilityUsable(player,ability,false)){
+                            ability.setToggled(player,false);
+                            continue;
+                        }
+                        for (RunicEnergy.Type type : ability.getCost().getSetTypes()){
+                            RunicEnergy.spendEnergy(player,ability.getCost().get(type),type);
+                            Helpers.updateRunicEnergyOnClient(type, RunicEnergy.getEnergy(player, type), player);
+                        }
+
+                    }
+                }
 
             }
 
