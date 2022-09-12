@@ -57,7 +57,7 @@ public class SolarForgePacketHandler {
         INSTANCE.registerMessage(nextID(), TriggerProgressionShaderPacket.class, TriggerProgressionShaderPacket::toBytes, TriggerProgressionShaderPacket::new, TriggerProgressionShaderPacket::handle);
         INSTANCE.registerMessage(nextID(), BuyAbilityPacket.class, BuyAbilityPacket::toBytes, BuyAbilityPacket::new, BuyAbilityPacket::handle);
         INSTANCE.registerMessage(nextID(), RequestAbilityScreen.class, RequestAbilityScreen::toBytes, RequestAbilityScreen::new, RequestAbilityScreen::handle);
-        INSTANCE.registerMessage(nextID(), OpenAbilityScreenPacket.class, OpenAbilityScreenPacket::toBytes, OpenAbilityScreenPacket::new, OpenAbilityScreenPacket::handle);
+        INSTANCE.registerMessage(nextID(), OpenAbilityScreen.class, OpenAbilityScreen::toBytes, OpenAbilityScreen::new, OpenAbilityScreen::handle);
         INSTANCE.registerMessage(nextID(), TakeEnergyFromForgePacket.class, TakeEnergyFromForgePacket::toBytes, TakeEnergyFromForgePacket::new, TakeEnergyFromForgePacket::handle);
         INSTANCE.registerMessage(nextID(), SetSpeedPacket.class, SetSpeedPacket::toBytes, SetSpeedPacket::new, SetSpeedPacket::handle);
         INSTANCE.registerMessage(nextID(), TriggerEnergyTypeToast.class, TriggerEnergyTypeToast::toBytes, TriggerEnergyTypeToast::new, TriggerEnergyTypeToast::handle);
@@ -75,6 +75,9 @@ public class SolarForgePacketHandler {
         INSTANCE.registerMessage(nextID(), OpenPuzzleScreenPacket.class, OpenPuzzleScreenPacket::toBytes, OpenPuzzleScreenPacket::new, OpenPuzzleScreenPacket::handle);
         INSTANCE.registerMessage(nextID(), PuzzleActionPacket.class, PuzzleActionPacket::toBytes, PuzzleActionPacket::new, PuzzleActionPacket::handle);
         INSTANCE.registerMessage(nextID(), SetClientRadiantLandStatePacket.class, SetClientRadiantLandStatePacket::toBytes, SetClientRadiantLandStatePacket::new, SetClientRadiantLandStatePacket::handle);
+        INSTANCE.registerMessage(nextID(), RequestAbilityScreenPacket.class, RequestAbilityScreenPacket::toBytes, RequestAbilityScreenPacket::new, RequestAbilityScreenPacket::handle);
+        INSTANCE.registerMessage(nextID(), OpenAbilityScreenPacket.class, OpenAbilityScreenPacket::toBytes, OpenAbilityScreenPacket::new, OpenAbilityScreenPacket::handle);
+
     }
 //            INSTANCE.registerMessage(nextID(), .class, ::toBytes, ::new, ::handle);
     //RepeaterParentUpdateOnClient

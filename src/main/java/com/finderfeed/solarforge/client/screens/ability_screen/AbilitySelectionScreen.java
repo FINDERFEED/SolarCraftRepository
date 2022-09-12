@@ -4,8 +4,14 @@ import com.finderfeed.solarforge.ClientHelpers;
 import com.finderfeed.solarforge.SolarCraftTags;
 import com.finderfeed.solarforge.client.screens.SolarCraftScreen;
 import com.finderfeed.solarforge.content.abilities.ability_classes.AbstractAbility;
+import com.finderfeed.solarforge.content.blocks.solar_forge_block.solar_forge_screen.SolarForgeButton;
+import com.finderfeed.solarforge.content.blocks.solar_forge_block.solar_forge_screen.SolarForgeButtonYellow;
 import com.finderfeed.solarforge.content.items.solar_lexicon.screen.SolarLexiconScreen;
 import com.finderfeed.solarforge.local_library.helpers.RenderingTools;
+import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
+import com.finderfeed.solarforge.packet_handler.packets.BuyAbilityPacket;
+import com.finderfeed.solarforge.packet_handler.packets.RequestAbilityScreen;
+import com.finderfeed.solarforge.packet_handler.packets.RequestAbilityScreenPacket;
 import com.finderfeed.solarforge.registries.abilities.AbilitiesRegistry;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.components.AbstractWidget;
@@ -23,6 +29,21 @@ public class AbilitySelectionScreen extends SolarCraftScreen {
     private int currentShift = 0;
     private int currentSelectedAbilityIndex = 0;
     private AbstractAbility selectedAbility = null;
+    private int ticker = 0;
+    private int energy = 0;
+
+    public List<AbstractAbility> bindedAbilities;
+
+    public AbilitySelectionScreen(String[] abils){
+        setupBindedAbilities(abils);
+    }
+
+    public void setupBindedAbilities(String[] abils){
+        bindedAbilities = new ArrayList<>();
+        for (String str : abils){
+            bindedAbilities.add(AbilitiesRegistry.getAbilityByID(str));
+        }
+    }
 
     @Override
     protected void init() {
@@ -44,6 +65,16 @@ public class AbilitySelectionScreen extends SolarCraftScreen {
             btns.add(button);
             iter++;
         }
+
+        SolarForgeButtonYellow b = new SolarForgeButtonYellow(relX+235,
+                relY+195,65,15,new TranslatableComponent("ability.buy_ability"),(button)->{
+            if (selectedAbility != null) {
+                SolarForgePacketHandler.INSTANCE.sendToServer(new BuyAbilityPacket(selectedAbility.id));
+                SolarForgePacketHandler.INSTANCE.sendToServer(new RequestAbilityScreenPacket(true));
+            }
+        });
+        addRenderableWidget(b);
+
         selectedAbility = btns.get(0).ability;
     }
 
@@ -67,6 +98,7 @@ public class AbilitySelectionScreen extends SolarCraftScreen {
             currentSelectedAbilityIndex = Mth.clamp(currentSelectedAbilityIndex + 1,0,btns.size()-1);
             value.setNewValue(currentShift);
         }
+        ticker = 0;
         selectedAbility = btns.get(currentSelectedAbilityIndex).ability;
         return super.mouseScrolled(mousePosX, mousePosY, delta);
     }
@@ -75,23 +107,29 @@ public class AbilitySelectionScreen extends SolarCraftScreen {
     public void tick() {
         super.tick();
         value.tick();
+        ticker++;
+        this.energy = ClientHelpers.getClientPlayer().getPersistentData().getInt(SolarCraftTags.RAW_SOLAR_ENERGY);
     }
 
     @Override
     public void render(PoseStack matrices, int mousex, int mousey, float pTicks) {
+        int xShift = -7;
         for (AbilityScreenButton button : btns){
             button.y = button.getInitY() - (int)value.getCurrentValue(pTicks);
         }
-        super.render(matrices, mousex, mousey, pTicks);
-
-        RenderingTools.renderTextField(matrices,relX + 210,relY + 10 ,120,210);
+        matrices.pushPose();
+        RenderingTools.renderTextField(matrices,xShift + relX + 210,relY + 10 ,120,210);
         drawCenteredString(matrices, minecraft.font,new TranslatableComponent("name."+selectedAbility.id),
-                relX+270,relY+15,SolarLexiconScreen.TEXT_COLOR);
+                xShift + relX+270,relY+15,SolarLexiconScreen.TEXT_COLOR);
         drawCenteredString(matrices, minecraft.font,new TranslatableComponent("solarcraft.buy_cost").append(": "+ selectedAbility.buyCost),
-                relX+270,relY+210, SolarLexiconScreen.TEXT_COLOR);
+                xShift + relX+270,relY+210 - 30, SolarLexiconScreen.TEXT_COLOR);
         drawCenteredString(matrices,font,
-                "Player energy: "+ minecraft.player.getPersistentData().getInt(SolarCraftTags.RAW_SOLAR_ENERGY),
-                relX+270,relY+198,SolarLexiconScreen.TEXT_COLOR);
+                "Player energy: "+ energy,
+                xShift + relX+270,relY+198 - 30,SolarLexiconScreen.TEXT_COLOR);
+        RenderingTools.drawCenteredBoundedTextObfuscated(matrices,xShift + relX + 270, relY + 25,20,
+                new TranslatableComponent("desc."+selectedAbility.id),SolarLexiconScreen.TEXT_COLOR,ticker*5);
+        matrices.popPose();
+        super.render(matrices, mousex, mousey, pTicks);
     }
 
 

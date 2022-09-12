@@ -1,36 +1,53 @@
 package com.finderfeed.solarforge.packet_handler.packets;
 
 import com.finderfeed.solarforge.ClientHelpers;
-import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.SolarCraftTags;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkEvent;
-
 
 import java.util.function.Supplier;
 
 public class OpenAbilityScreenPacket {
 
-    public final int energy;
-    public final boolean only;
-    public OpenAbilityScreenPacket(FriendlyByteBuf buf){
-        energy = buf.readInt();
-        only = buf.readBoolean();
+    private String[] bindedAbilities;
+    private boolean dontOpen;
+    private int energy;
+    /**
+     * SHOULD BE 4 STRINGS!
+     */
+    public OpenAbilityScreenPacket(int energy,boolean dontOpen,String... bindedAbilities) {
+        this.dontOpen = dontOpen;
+        this.energy = energy;
+        this.bindedAbilities = bindedAbilities;
     }
-    public OpenAbilityScreenPacket(int a,boolean onlyEnergy){
-        energy = a;
-        only = onlyEnergy;
+
+    public OpenAbilityScreenPacket(FriendlyByteBuf buf) {
+        this.bindedAbilities = new String[4];
+        this.dontOpen = buf.readBoolean();
+        this.energy = buf.readInt();
+        bindedAbilities[0] = buf.readUtf();
+        bindedAbilities[1] = buf.readUtf();
+        bindedAbilities[2] = buf.readUtf();
+        bindedAbilities[3] = buf.readUtf();
+
     }
-    public void toBytes(FriendlyByteBuf buf){
+
+    public void toBytes(FriendlyByteBuf buf) {
+        buf.writeBoolean(dontOpen);
         buf.writeInt(energy);
-        buf.writeBoolean(only);
+        buf.writeUtf(bindedAbilities[0]);
+        buf.writeUtf(bindedAbilities[1]);
+        buf.writeUtf(bindedAbilities[2]);
+        buf.writeUtf(bindedAbilities[3]);
     }
-    public void handle(Supplier<NetworkEvent.Context> ctx){
+
+    public void handle(Supplier<NetworkEvent.Context> ctx) {
         ctx.get().enqueueWork(()->{
             ClientHelpers.getClientPlayer().getPersistentData().putInt(SolarCraftTags.RAW_SOLAR_ENERGY,energy);
-            if (!only) {
-                ClientHelpers.openAbilityScreen();
+            if (!dontOpen) {
+                ClientHelpers.openAbilityScreen(bindedAbilities);
+            }else{
+                ClientHelpers.updateAbilityScreen(bindedAbilities);
             }
         });
         ctx.get().setPacketHandled(true);

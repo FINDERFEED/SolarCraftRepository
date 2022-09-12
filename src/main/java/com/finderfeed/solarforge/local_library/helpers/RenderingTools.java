@@ -152,6 +152,22 @@ public class RenderingTools {
         }
     }
 
+    public static void drawCenteredBoundedTextObfuscated(PoseStack matrices,int posx,int posy,int bound,Component component,int color,int ticker){
+        int iter = 0;
+        int remainingOpenedSymbols = ticker;
+        for (String str : RenderingTools.splitString(component.getString(),bound)){
+            if (remainingOpenedSymbols >= str.length()){
+                Gui.drawCenteredString(matrices,Minecraft.getInstance().font,str,posx,posy + iter * 9,color);
+                remainingOpenedSymbols -= str.length();
+            }else if (remainingOpenedSymbols != 0){
+                Gui.drawCenteredString(matrices,Minecraft.getInstance().font,new TextComponent(str.substring(0,remainingOpenedSymbols)).withStyle(ChatFormatting.RESET)
+                        .append(new TextComponent("a").withStyle(ChatFormatting.OBFUSCATED)),posx,posy + iter * 9,color);
+                remainingOpenedSymbols = 0;
+            }
+            iter++;
+        }
+    }
+
 
 
     public static void addActivePostShader(UniformPlusPlus uniformPlusPlus,PostChainPlusUltra shader){

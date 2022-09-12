@@ -1,5 +1,6 @@
 package com.finderfeed.solarforge;
 
+import com.finderfeed.solarforge.client.screens.ability_screen.AbilitySelectionScreen;
 import com.finderfeed.solarforge.content.abilities.ability_classes.ToggleableAbility;
 import com.finderfeed.solarforge.content.abilities.screens.AbilityBuyScreen;
 import com.finderfeed.solarforge.client.particles.SolarcraftParticleTypes;
@@ -21,6 +22,8 @@ import com.finderfeed.solarforge.content.items.primitive.solacraft_item_classes.
 import com.finderfeed.solarforge.content.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarforge.content.items.solar_lexicon.unlockables.RunePattern;
 import com.finderfeed.solarforge.misc_things.*;
+import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
+import com.finderfeed.solarforge.packet_handler.packets.RequestAbilityScreenPacket;
 import com.finderfeed.solarforge.registries.items.SolarcraftItems;
 import com.finderfeed.solarforge.registries.sounds.SolarcraftSounds;
 import com.finderfeed.solarforge.content.items.solar_lexicon.SolarLexicon;
@@ -434,6 +437,11 @@ public class ClientHelpers {
 
         }
     }
+
+    public static void requestAbilityScreen(boolean dontOpen){
+        SolarForgePacketHandler.INSTANCE.sendToServer(new RequestAbilityScreenPacket(dontOpen));
+    }
+
     public static void triggerProgressionUnlockShader(){
         RenderEventsHandler.triggerProgressionShader();
     }
@@ -457,9 +465,20 @@ public class ClientHelpers {
         return returnable;
     }
 
-    public static void openAbilityScreen(){
+    public static void openAbilityScreenOld(){
         Minecraft.getInstance().setScreen(new AbilityBuyScreen());
     }
+
+    public static void openAbilityScreen(String[] abilities){
+        Minecraft.getInstance().setScreen(new AbilitySelectionScreen(abilities));
+    }
+
+    public static void updateAbilityScreen(String[] abilities){
+        if (Minecraft.getInstance().screen instanceof AbilitySelectionScreen screen){
+            screen.setupBindedAbilities(abilities);
+        }
+    }
+
 
     public static void createEffectParticle(double x, double y, double z,double xs, double ys, double zs, MobEffect effect){
 
@@ -675,6 +694,7 @@ public class ClientHelpers {
         }
 
     }
+
 
 
 

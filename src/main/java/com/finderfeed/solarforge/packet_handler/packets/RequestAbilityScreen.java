@@ -10,6 +10,7 @@ import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
+@Deprecated
 public class RequestAbilityScreen {
 
     public final boolean only;
@@ -26,7 +27,7 @@ public class RequestAbilityScreen {
     public void handle(Supplier<NetworkEvent.Context> ctx){
         ctx.get().enqueueWork(()->{
             ServerPlayer enti = ctx.get().getSender();
-            SolarForgePacketHandler.INSTANCE.sendTo(new OpenAbilityScreenPacket(enti.getPersistentData().getInt(SolarCraftTags.RAW_SOLAR_ENERGY),only),enti.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+            SolarForgePacketHandler.INSTANCE.sendTo(new OpenAbilityScreen(enti.getPersistentData().getInt(SolarCraftTags.RAW_SOLAR_ENERGY),only),enti.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
         });
         ctx.get().setPacketHandled(true);
     }
