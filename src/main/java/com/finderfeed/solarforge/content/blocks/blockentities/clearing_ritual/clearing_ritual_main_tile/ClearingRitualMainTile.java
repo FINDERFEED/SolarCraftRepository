@@ -4,6 +4,7 @@ import com.finderfeed.solarforge.ClientHelpers;
 import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.client.particles.SolarcraftParticleTypes;
 import com.finderfeed.solarforge.content.blocks.blockentities.clearing_ritual.ClearingRitual;
+import com.finderfeed.solarforge.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarforge.registries.tile_entities.SolarcraftTileEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -15,6 +16,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
+
+import static com.finderfeed.solarforge.content.blocks.blockentities.clearing_ritual.clearing_ritual_main_tile.ClearingRitualTileRenderer.DIMENSION_CRACK_ANIMATION_TICKS;
+import static com.finderfeed.solarforge.content.blocks.blockentities.clearing_ritual.clearing_ritual_main_tile.ClearingRitualTileRenderer.RAY_ANIMATION_TICKS;
 
 public class ClearingRitualMainTile extends BlockEntity {
 
@@ -35,6 +39,7 @@ public class ClearingRitualMainTile extends BlockEntity {
 
     private static void handleRitualParticles(ClearingRitualMainTile tile, BlockPos pos, BlockState state, Level world){
         Vec3 center = Helpers.getBlockCenter(pos);
+        //particles outside of structure and particles that go from crystals to this tile
         for (int i = 0;i <= 4;i++) {
             Vec3 rnd = new Vec3(16,0,0).yRot((float)Math.toRadians(360*world.random.nextDouble()));
             Vec3 particleSpawnPos = center.add(rnd).add(0, -2, 0);
@@ -57,6 +62,22 @@ public class ClearingRitualMainTile extends BlockEntity {
                         rxdoRing, rydoRing, rzdoRing,
                         220 + world.random.nextInt(35), 220 + world.random.nextInt(35), world.random.nextInt(20),
                         0.7f);
+            }
+        }
+        // ray particles
+        if (ClearingRitual.MAX_TIME - tile.ritual.getCurrentTime() <= RAY_ANIMATION_TICKS && tile.level.getGameTime() % 5 == 0){
+            int time = (RAY_ANIMATION_TICKS - DIMENSION_CRACK_ANIMATION_TICKS) -
+                    (FDMathHelper.clamp(DIMENSION_CRACK_ANIMATION_TICKS,ClearingRitual.MAX_TIME - tile.ritual.getCurrentTime(),RAY_ANIMATION_TICKS) - DIMENSION_CRACK_ANIMATION_TICKS);
+            double height = 200f*((float)time/(RAY_ANIMATION_TICKS - DIMENSION_CRACK_ANIMATION_TICKS));
+            Vec3 pPos = Helpers.getBlockCenter(tile.getBlockPos());
+            for (int i = 0; i < height;i++){
+                double rndX = tile.level.random.nextDouble()*0.5 - 0.25;
+                double rndZ = tile.level.random.nextDouble()*0.5 - 0.25;
+                double rndY = tile.level.random.nextDouble()*0.2 - 0.1;
+                Vec3 p = pPos.add(rndX,rndY + i,rndZ);
+                ClientHelpers.Particles.createParticle(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+                        p.x,p.y,p.z,0,0,0,
+                        220 + world.random.nextInt(35), 220 + world.random.nextInt(35), world.random.nextInt(20),0.25f);
             }
         }
 

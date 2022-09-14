@@ -25,11 +25,11 @@ import java.util.Objects;
 
 public class ClearingRitual {
 
-    public static final int MAX_TIME = 300;
+    public static final int MAX_TIME = 2000;
 
     public static final int RITUAL_OFFLINE = -1;
     public static final int RITUAL_ONLINE = 1;
-    public static final int RITUAL_ENDED = 0;
+
 
 
     public int ticker = 0;
