@@ -19,6 +19,10 @@ public class ScreenSuppliers {
             new LoreScreen(new TranslatableComponent("runic_energy.lore"),"runic_energy"));
     public static final Supplier<Screen> DEFENCE_CRYSTAL = SCREEN_REGISTRY.register("defence_crystal_lore",()->()->
             new LoreScreen(new TranslatableComponent("defence_crystal.lore"),"defence_crystal"));
+    public static final Supplier<Screen> RUNIC_ELEMENTAL = SCREEN_REGISTRY.register("runic_elemental_lore",()->()->
+            new LoreScreen(new TranslatableComponent("runic_elemental.lore"),"runic_elemental"));
+    public static final Supplier<Screen> SHADOW_ZOMBIE = SCREEN_REGISTRY.register("shadow_zombie_lore",()->()->
+            new LoreScreen(new TranslatableComponent("shadow_zombie.lore"),"shadow_zombie"));
     public static final Supplier<Screen> EIGHT_ELEMENTS = SCREEN_REGISTRY.register("eight_elements_lore",()->
             EightElementsFragmentScreen::new);
 }

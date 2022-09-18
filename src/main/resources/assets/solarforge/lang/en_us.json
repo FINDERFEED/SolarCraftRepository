@@ -702,5 +702,9 @@
   "solarcraft.bind_guide": "Click on one of the frames and then click on the ability you want to bind. Each frame corresponds to one hotkey in your settings (1rst frame - hotkey 1, 2nd frame - hotkey 2 e.t.c.)",
   "solarcraft.yours": "Yours",
   "solarcraft.raw_solar_energy": "Raw Solar Energy",
-  "solarcraft.cast_cost": "Cast Runic Energy cost"
+  "solarcraft.cast_cost": "Cast Runic Energy cost",
+  "shadow_zombie.lore": "The creatures made of dark energy. Disappears at day. Physical attacks don't work on them, only magic damage can be dealt.",
+  "solar_fragment.shadow_zombie": "Shadows",
+  "runic_elemental.lore": "A powerful creature sleeps in a radiant land. Can be awoken by placing a special item in his chest. Almost all of his attacks do magic damage, so it is advised to dodge and run.",
+  "solar_fragment.runic_elemental": "Runic Elemental"
 }

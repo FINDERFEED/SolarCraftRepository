@@ -1,5 +1,6 @@
 package com.finderfeed.solarforge.content.blocks.blockentities;
 
+import com.finderfeed.solarforge.content.entities.ShadowZombie;
 import com.finderfeed.solarforge.helpers.ClientHelpers;
 import com.finderfeed.solarforge.helpers.Helpers;
 import com.finderfeed.solarforge.client.particles.SolarcraftParticleTypes;
@@ -37,7 +38,7 @@ public class UlderaPylon extends BlockEntity {
                 Vec3 p = Helpers.getBlockCenter(pos);
 
                 List<LivingEntity> livings = world.getEntitiesOfClass(LivingEntity.class,aabb,(e)->{
-                    if (e.isDeadOrDying()) return false;
+                    if (e.isDeadOrDying() || e instanceof ShadowZombie) return false;
                     if (e instanceof Player player){
                         if (player.isCreative() || player.isSpectator()){
                             return false;

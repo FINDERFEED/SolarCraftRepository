@@ -28,7 +28,9 @@ public class AncientFragment {
     public static List<AncientFragment> ALL_FRAGMENTS = new ArrayList<>();
     public static List<AncientFragment> CLIENTSIDE_FRAGMENTS_CACHE = new ArrayList<>();
 
-    public static final AncientFragment RUNIC_TABLE = new AncientFragment(tx("solar_fragment.runic_table"),"runic_table",null,SubCategoryBase.BEGGINING,CategoryBase.BEGGINING_INFO, SolarcraftItems.RUNIC_TABLE.get(),tx("runic_table.lore"),1);
+//    public static final AncientFragment RUNIC_TABLE = new AncientFragment(tx("solar_fragment.runic_table"),"runic_table",null,SubCategoryBase.BEGGINING,CategoryBase.BEGGINING_INFO, SolarcraftItems.RUNIC_TABLE.get(),tx("runic_table.lore"),1);
+    public static final AncientFragment RUNIC_TABLE = new AncientFragment(tx("solar_fragment.runic_table"),"runic_table",null,SubCategoryBase.BEGGINING,CategoryBase.BEGGINING_INFO,ItemWithRecipe.of(SolarcraftItems.RUNIC_TABLE.get().getDefaultInstance(),"runic_table"),tx("runic_table.lore"), RecipeType.CRAFTING,1);
+
     public static final AncientFragment FRAGMENT = new AncientFragment(tx("solar_fragment.fragment"),"fragment",null,SubCategoryBase.BEGGINING,CategoryBase.BEGGINING_INFO, SolarcraftItems.INFO_FRAGMENT.get(),tx("fragment.lore"),1);
     public static final AncientFragment LEXICON = new AncientFragment(tx("solar_fragment.lexicon"),"lexicon",null,SubCategoryBase.BEGGINING,CategoryBase.BEGGINING_INFO, SolarcraftItems.SOLAR_LEXICON.get(),tx("lexicon.lore"),1);
     public static final AncientFragment DUSTS = new AncientFragment(tx("solar_fragment.dusts"),"dusts",null,SubCategoryBase.WORLD,CategoryBase.EXPLORATION, SolarcraftItems.ENERGY_DUST.get(),tx("dusts.lore"),1);
@@ -174,8 +176,13 @@ public class AncientFragment {
             ItemWithRecipe.of(SPEED_AMULET.get().getDefaultInstance(),"infusing_new_speed_amulet"),ItemWithRecipe.of(HASTE_AMULET.get().getDefaultInstance(),"infusing_new_haste_amulet"),
             ItemWithRecipe.of(NIGHT_VISION_AMULET.get().getDefaultInstance(),"infusing_new_night_vision_amulet"),ItemWithRecipe.of(STRENGTH_AMULET.get().getDefaultInstance(),"infusing_new_strength_amulet")
     ),SolarForge.INFUSING_RECIPE_TYPE,tx("amulets.lore"),5);
-    public static final AncientFragment RADIANT_LAND_LORE = new AncientFragment(tx("solar_fragment.radiant_land"),"radiant_land",ProgressionStage.DIMENSION.ALL_PROGRESSIONS,SubCategoryBase.RADIANT_LAND,CategoryBase.MIDGAME,"radiant_land_lore", SolarcraftItems.DIMENSION_CORE.get().getDefaultInstance(),9);
+
+    public static final AncientFragment SHADOW_ZOMBIES = new AncientFragment(tx("solar_fragment.shadow_zombie"),"shadow_zombie",ProgressionStage.DIMENSION.ALL_PROGRESSIONS,SubCategoryBase.RADIANT_LAND,CategoryBase.MIDGAME,"shadow_zombie_lore", Items.PAPER.getDefaultInstance(),9);
+    public static final AncientFragment RADIANT_LAND_LORE = new AncientFragment(tx("solar_fragment.radiant_land"),"radiant_land",ProgressionStage.DIMENSION.ALL_PROGRESSIONS,SubCategoryBase.RADIANT_LAND,CategoryBase.MIDGAME,"radiant_land_lore", SolarcraftItems.DIMENSION_CORE.get().getDefaultInstance(),8);
     public static final AncientFragment DEFENCE_CRYSTAL = new AncientFragment(tx("solar_fragment.defence_crystal"),"defence_crystal",ProgressionStage.DIMENSION.ALL_PROGRESSIONS,SubCategoryBase.RADIANT_LAND,CategoryBase.MIDGAME,"defence_crystal_lore", SolarcraftItems.CRYSTALLITE_CORE.get().getDefaultInstance(),9);
+    public static final AncientFragment RUNIC_ELEMENTAL = new AncientFragment(tx("solar_fragment.runic_elemental"),"runic_elemental",ProgressionStage.DIMENSION.ALL_PROGRESSIONS,SubCategoryBase.RADIANT_LAND,CategoryBase.MIDGAME,"runic_elemental_lore", CRYSTAL_HEART.get().getDefaultInstance(),11);
+
+
     public static final AncientFragment DIVINE_ARMOR = new AncientFragment(tx("solar_fragment.divine_armor"),"divine_armor",ProgressionStage.RUNIC_ELEMENTAL.ALL_PROGRESSIONS,SubCategoryBase.ARMOR,CategoryBase.ARMOR,List.of(
             ItemWithRecipe.of(DIVINE_BOOTS.get().getDefaultInstance(),"infusing_divine_boots"),ItemWithRecipe.of(DIVINE_LEGGINGS.get().getDefaultInstance(),"infusing_divine_leggings"),
             ItemWithRecipe.of(DIVINE_CHESTPLATE.get().getDefaultInstance(),"infusing_divine_chestplate"),ItemWithRecipe.of(DIVINE_HELMET.get().getDefaultInstance(),"infusing_divine_helmet")
