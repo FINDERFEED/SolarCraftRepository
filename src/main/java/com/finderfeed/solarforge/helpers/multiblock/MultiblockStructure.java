@@ -134,6 +134,10 @@ public class MultiblockStructure {
         return blocks;
     }
 
+    public BlockPos getCenterOffset() {
+        return centerOffset;
+    }
+
     public static class Builder{
 
         private Map<Character,BlockState> stateMap = new HashMap<>();

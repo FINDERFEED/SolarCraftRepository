@@ -1,8 +1,10 @@
 package com.finderfeed.solarforge.client.screens;
 
+import com.finderfeed.solarforge.content.blocks.solar_forge_block.solar_forge_screen.SolarForgeButtonYellow;
 import com.finderfeed.solarforge.helpers.ClientHelpers;
 import com.finderfeed.solarforge.helpers.Helpers;
 import com.finderfeed.solarforge.helpers.multiblock.MultiblockStructure;
+import com.finderfeed.solarforge.helpers.multiblock.MultiblockVisualizer;
 import com.finderfeed.solarforge.local_library.helpers.RenderingTools;
 import com.finderfeed.solarforge.content.items.solar_lexicon.SolarLexicon;
 import com.finderfeed.solarforge.content.items.solar_lexicon.screen.ItemStackTabButton;
@@ -91,6 +93,10 @@ public class ThreeDStructureViewScreen extends Screen implements IScrollable {
                 p_93665_.play(SimpleSoundInstance.forUI(SolarcraftSounds.BUTTON_PRESS2.get(),1,1));
             }
         });
+        addRenderableWidget(new SolarForgeButtonYellow(relX + 5,relY + 198,60,16,new TextComponent("Visualize"),(btn)->{
+            MultiblockVisualizer.setMultiblock(this.struct);
+            Minecraft.getInstance().setScreen(null);
+        }));
 
         addRenderableWidget(b);
         addRenderableWidget(c);
