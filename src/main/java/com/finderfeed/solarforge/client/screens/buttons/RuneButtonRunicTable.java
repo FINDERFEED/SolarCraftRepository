@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.client.screens.buttons;
 
-import com.finderfeed.solarforge.ClientHelpers;
+import com.finderfeed.solarforge.helpers.ClientHelpers;
 import com.finderfeed.solarforge.SolarForge;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.components.Button;

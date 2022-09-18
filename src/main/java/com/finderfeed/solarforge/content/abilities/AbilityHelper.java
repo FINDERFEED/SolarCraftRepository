@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.content.abilities;
 
-import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.helpers.Helpers;
 import com.finderfeed.solarforge.SolarCraftTags;
 import com.finderfeed.solarforge.content.abilities.ability_classes.AbstractAbility;
 import com.finderfeed.solarforge.content.abilities.ability_classes.ToggleableAbility;

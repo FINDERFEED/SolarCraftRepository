@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.packet_handler.packets;
 
-import com.finderfeed.solarforge.ClientHelpers;
+import com.finderfeed.solarforge.helpers.ClientHelpers;
 import com.finderfeed.solarforge.client.toasts.SolarAchievementToast;
 import com.finderfeed.solarforge.content.items.solar_lexicon.progressions.progression_tree.ProgressionTree;
 import com.finderfeed.solarforge.registries.sounds.SolarcraftSounds;

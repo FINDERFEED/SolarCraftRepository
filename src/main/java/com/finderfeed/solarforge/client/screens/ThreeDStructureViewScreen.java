@@ -1,7 +1,8 @@
 package com.finderfeed.solarforge.client.screens;
 
-import com.finderfeed.solarforge.ClientHelpers;
-import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.helpers.ClientHelpers;
+import com.finderfeed.solarforge.helpers.Helpers;
+import com.finderfeed.solarforge.helpers.multiblock.MultiblockStructure;
 import com.finderfeed.solarforge.local_library.helpers.RenderingTools;
 import com.finderfeed.solarforge.content.items.solar_lexicon.SolarLexicon;
 import com.finderfeed.solarforge.content.items.solar_lexicon.screen.ItemStackTabButton;
@@ -55,7 +56,7 @@ public class ThreeDStructureViewScreen extends Screen implements IScrollable {
     private float structScale = 1;
     private double dragLeftRight=0;
     private double dragUpDown=0;
-    private Multiblock struct;
+    private MultiblockStructure struct;
     private BlockAndTintGetter getter = new Getter();
 
     private List<PositionBlockStateTileEntity> POS_STATE_TILEENTITY = new ArrayList<>();
@@ -63,7 +64,7 @@ public class ThreeDStructureViewScreen extends Screen implements IScrollable {
 
     int relX = 0;
     int relY = 0;
-    public ThreeDStructureViewScreen(Multiblock structure) {
+    public ThreeDStructureViewScreen(MultiblockStructure structure) {
         super(new TextComponent(""));
         this.struct = structure;
     }
@@ -78,7 +79,7 @@ public class ThreeDStructureViewScreen extends Screen implements IScrollable {
         this.relX = (width/scale - 183)/2-15;
         this.relY = (height - 218*scale)/2/scale;
         POS_STATE_TILEENTITY.clear();
-        structScale = 10f/Math.max(struct.getStruct().length,struct.getStruct()[0].length);
+        structScale = 10f/Math.max(struct.pattern.length,struct.pattern[0].length);
         this.POS_STATE_TILEENTITY = RenderingTools.StructureRenderer.prepareList(struct);
         addRenderableWidget(new ImageButton(relX+216,relY,16,16,0,0,0,THREEDSCREENBTN,16,16,(button)->{
             Minecraft.getInstance().setScreen(new StructureScreen(struct));
@@ -137,7 +138,7 @@ public class ThreeDStructureViewScreen extends Screen implements IScrollable {
         ClientHelpers.bindText(STRUCTURE_GUI);
         blit(matrices,relX,relY,0,0,256,256);
         super.render(matrices, p_96563_, p_96564_, partialTicks);
-        Helpers.drawBoundedText(matrices,relX+14,relY+10,7,new TranslatableComponent(struct.getName()).getString(),0xffffff);
+        Helpers.drawBoundedText(matrices,relX+14,relY+10,7,new TranslatableComponent(struct.getId()).getString(),0xffffff);
         matrices.popPose();
 
         matrices.pushPose();

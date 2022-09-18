@@ -1,14 +1,11 @@
 package com.finderfeed.solarforge.content.world_generation.features;
 
-import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.config.SolarcraftConfig;
 import com.mojang.serialization.Codec;
-import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;

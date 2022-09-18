@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.content.blocks.blockentities.clearing_ritual;
 
-import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.helpers.Helpers;
 import com.finderfeed.solarforge.local_library.algorithms.a_star.AStar;
 import com.finderfeed.solarforge.local_library.algorithms.a_star.IPosition;
 import com.finderfeed.solarforge.local_library.helpers.CompoundNBTHelper;

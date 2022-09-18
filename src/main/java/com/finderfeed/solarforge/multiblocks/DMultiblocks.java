@@ -16,8 +16,8 @@ import net.minecraft.world.level.block.state.properties.StairsShape;
 
 
 import java.util.Map;
-
-public enum Multiblocks {
+@Deprecated
+public enum DMultiblocks {
     SOLAR_CORE(new Multiblock(new Multiblock.Constructor()
             .addBlock(SolarcraftBlocks.SOLAR_CORE.get().defaultBlockState(),'Z',false)
             .addBlock(SolarcraftBlocks.ALGADIUM_BLOCK.get().defaultBlockState(),'H',false)
@@ -247,7 +247,7 @@ public enum Multiblocks {
 
 
     Multiblock a;
-    Multiblocks(Multiblock a){
+    DMultiblocks(Multiblock a){
         this.a = a;
     }
 
@@ -255,7 +255,7 @@ public enum Multiblocks {
         return a;
     }
 
-    public static Multiblocks[] ALL_STRUCTURES=
+    public static DMultiblocks[] ALL_STRUCTURES=
     {
             SOLAR_CORE,
             AURA_HEALER,

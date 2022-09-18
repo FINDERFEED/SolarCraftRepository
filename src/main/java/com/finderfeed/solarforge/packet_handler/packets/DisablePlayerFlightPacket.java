@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.packet_handler.packets;
 
-import com.finderfeed.solarforge.ClientHelpers;
+import com.finderfeed.solarforge.helpers.ClientHelpers;
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;

@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.local_library.tile_entities.abstracts;
 
-import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.helpers.Helpers;
 import com.finderfeed.solarforge.misc_things.PhantomInventory;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;

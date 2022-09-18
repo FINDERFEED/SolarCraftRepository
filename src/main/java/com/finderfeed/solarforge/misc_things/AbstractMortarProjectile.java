@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.misc_things;
 
-import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.helpers.Helpers;
 import com.finderfeed.solarforge.client.particles.SolarcraftParticleTypes;
 import com.finderfeed.solarforge.registries.sounds.SolarcraftSounds;
 

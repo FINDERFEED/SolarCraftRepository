@@ -1,7 +1,7 @@
 package com.finderfeed.solarforge.content.blocks.render;
 
-import com.finderfeed.solarforge.ClientHelpers;
-import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.helpers.ClientHelpers;
+import com.finderfeed.solarforge.helpers.Helpers;
 import com.finderfeed.solarforge.content.blocks.blockentities.RadiantPortalCreatorTile;
 import com.finderfeed.solarforge.content.blocks.rendering_models.RadiantPortal;
 import com.finderfeed.solarforge.registries.ModelLayersRegistry;

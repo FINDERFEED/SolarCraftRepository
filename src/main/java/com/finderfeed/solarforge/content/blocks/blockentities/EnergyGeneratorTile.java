@@ -1,8 +1,9 @@
 package com.finderfeed.solarforge.content.blocks.blockentities;
 
-import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.helpers.Helpers;
+import com.finderfeed.solarforge.helpers.multiblock.Multiblocks;
 import com.finderfeed.solarforge.misc_things.AbstractEnergyGeneratorTileEntity;
-import com.finderfeed.solarforge.multiblocks.Multiblocks;
+
 import com.finderfeed.solarforge.registries.tile_entities.SolarcraftTileEntityTypes;
 
 import net.minecraft.core.BlockPos;
@@ -43,7 +44,7 @@ public class EnergyGeneratorTile extends AbstractEnergyGeneratorTileEntity {
 
     @Override
     public boolean getConditionToFunction() {
-        return Helpers.checkStructure(level,worldPosition.offset(-2,-2,-2), Multiblocks.SOLAR_ENERGY_GENERATOR.getM(),true) && level.canSeeSky(worldPosition.above()) && (level.getDayTime() % 24000 <= 13000);
+        return Multiblocks.ENERGY_GENERATOR.check(level,worldPosition,true) && level.canSeeSky(worldPosition.above()) && (level.getDayTime() % 24000 <= 13000);
 
     }
 

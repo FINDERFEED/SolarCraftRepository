@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.events.other_events.event_handler;
 
-import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.helpers.Helpers;
 import com.finderfeed.solarforge.SolarCraftTags;
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.config.SolarcraftConfig;

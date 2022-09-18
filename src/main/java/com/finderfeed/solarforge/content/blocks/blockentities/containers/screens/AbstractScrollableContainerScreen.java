@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.content.blocks.blockentities.containers.screens;
 
-import com.finderfeed.solarforge.ClientHelpers;
+import com.finderfeed.solarforge.helpers.ClientHelpers;
 import com.finderfeed.solarforge.misc_things.IScrollable;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;

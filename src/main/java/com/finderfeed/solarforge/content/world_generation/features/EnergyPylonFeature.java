@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.content.world_generation.features;
 
-import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.helpers.Helpers;
 import com.finderfeed.solarforge.config.SolarcraftConfig;
 import com.mojang.serialization.Codec;
 
@@ -14,7 +14,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.WorldGenLevel;
-import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
@@ -22,10 +21,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.BlockIgnorePr
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureManager;
-import net.minecraftforge.fluids.IFluidBlock;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 public class EnergyPylonFeature extends Feature<NoneFeatureConfiguration> {

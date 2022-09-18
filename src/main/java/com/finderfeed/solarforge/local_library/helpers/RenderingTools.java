@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.local_library.helpers;
 
-import com.finderfeed.solarforge.ClientHelpers;
+import com.finderfeed.solarforge.helpers.ClientHelpers;
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.client.custom_tooltips.CustomTooltip;
 import com.finderfeed.solarforge.client.screens.PositionBlockStateTileEntity;
@@ -9,7 +9,8 @@ import com.finderfeed.solarforge.events.my_events.MyColorEvent;
 import com.finderfeed.solarforge.events.my_events.PostColorEvent;
 import com.finderfeed.solarforge.content.items.runic_energy.RunicEnergyContainer;
 import com.finderfeed.solarforge.content.items.runic_energy.RunicEnergyCost;
-import com.finderfeed.solarforge.misc_things.Multiblock;
+import com.finderfeed.solarforge.helpers.multiblock.MultiblockStructure;
+
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import com.finderfeed.solarforge.client.rendering.rendertypes.RadiantPortalRendertype;
 import com.finderfeed.solarforge.client.rendering.deprecated_shaders.post_chains.PostChainPlusUltra;
@@ -999,10 +1000,10 @@ public class RenderingTools {
 
 
     public static class StructureRenderer{
-        public static List<PositionBlockStateTileEntity> prepareList(Multiblock m){
+        public static List<PositionBlockStateTileEntity> prepareList(MultiblockStructure m){
 
             List<PositionBlockStateTileEntity> toReturn = new ArrayList<>();
-            String[][] struct = m.struct;
+            String[][] struct = m.pattern;
             double heightOffset = (float)struct.length/2;
             double xzoffset = (float)struct[0].length/2;
             for (int i = 0;i < struct.length;i++){

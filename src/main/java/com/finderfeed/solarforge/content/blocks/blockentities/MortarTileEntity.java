@@ -1,10 +1,11 @@
 package com.finderfeed.solarforge.content.blocks.blockentities;
 
-import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.helpers.Helpers;
 import com.finderfeed.solarforge.content.blocks.blockentities.projectiles.MortarProjectile;
+import com.finderfeed.solarforge.helpers.multiblock.Multiblocks;
 import com.finderfeed.solarforge.misc_things.AbstractMortarProjectile;
 import com.finderfeed.solarforge.misc_things.AbstractMortarTileEntity;
-import com.finderfeed.solarforge.multiblocks.Multiblocks;
+
 import com.finderfeed.solarforge.registries.entities.SolarcraftEntityTypes;
 import com.finderfeed.solarforge.registries.tile_entities.SolarcraftTileEntityTypes;
 import net.minecraft.core.BlockPos;
@@ -18,7 +19,7 @@ public class MortarTileEntity extends AbstractMortarTileEntity {
 
     @Override
     public boolean getConditionToFunction() {
-        return Helpers.checkStructure(level,worldPosition.offset(-2,-12,-2), Multiblocks.SOLAR_MORTAR.getM(),true);
+        return Multiblocks.SOLAR_MORTAR.check(level,worldPosition,true);
     }
 
     @Override

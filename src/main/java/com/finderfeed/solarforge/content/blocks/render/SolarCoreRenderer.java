@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.content.blocks.render;
 
-import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.helpers.Helpers;
 import com.finderfeed.solarforge.events.other_events.OBJModels;
 import com.finderfeed.solarforge.content.blocks.blockentities.SolarCoreBlockEntity;
 import com.finderfeed.solarforge.misc_things.AbstractSolarNetworkRepeater;

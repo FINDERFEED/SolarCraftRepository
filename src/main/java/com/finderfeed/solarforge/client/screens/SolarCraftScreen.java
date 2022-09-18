@@ -1,11 +1,8 @@
 package com.finderfeed.solarforge.client.screens;
 
-import com.finderfeed.solarforge.ClientHelpers;
 import com.finderfeed.solarforge.local_library.other.CanTick;
-import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.TextComponent;
-import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
 import java.util.List;

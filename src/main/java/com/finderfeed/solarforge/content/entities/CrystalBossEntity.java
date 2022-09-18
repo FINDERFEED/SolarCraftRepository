@@ -1,7 +1,7 @@
 package com.finderfeed.solarforge.content.entities;
 
 
-import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.helpers.Helpers;
 import com.finderfeed.solarforge.content.abilities.ability_classes.AbstractAbility;
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.content.entities.not_alive.LegendaryItem;

@@ -1,12 +1,9 @@
 package com.finderfeed.solarforge.packet_handler.packets;
 
-import com.finderfeed.solarforge.ClientHelpers;
+import com.finderfeed.solarforge.helpers.ClientHelpers;
 import com.finderfeed.solarforge.config.JsonFragmentsHelper;
 import com.google.gson.JsonObject;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;

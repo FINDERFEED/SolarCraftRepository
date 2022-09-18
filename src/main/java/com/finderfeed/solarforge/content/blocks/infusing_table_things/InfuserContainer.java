@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.content.blocks.infusing_table_things;
 
-import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.helpers.Helpers;
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.custom_slots.OutputSlot;
 import net.minecraft.network.chat.Component;

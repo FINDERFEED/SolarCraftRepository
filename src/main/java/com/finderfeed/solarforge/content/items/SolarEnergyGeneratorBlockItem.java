@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.content.items;
 
-import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.helpers.Helpers;
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.content.items.primitive.RareSolarcraftBlockItem;
 import com.finderfeed.solarforge.content.items.solar_lexicon.progressions.Progression;

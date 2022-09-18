@@ -1,4 +1,4 @@
-package com.finderfeed.solarforge;
+package com.finderfeed.solarforge.helpers;
 
 import com.finderfeed.solarforge.client.screens.ability_screen.AbilitySelectionScreen;
 import com.finderfeed.solarforge.content.abilities.ability_classes.ToggleableAbility;
@@ -417,12 +417,6 @@ public class ClientHelpers {
         return block.getLockedBlock().asItem().getDefaultInstance().getHoverName();
     }
 
-//    public static TranslatableComponent getTranslationFor(Block block){
-//        if (block.equals(BlocksRegistry.ULDORADIUM_ORE.get())){
-//            return new TranslatableComponent("item.solarforge.uldoradium_ore");
-//        }
-//        return null;
-//    }
 
 
     public static void updateLexiconInventory(ItemStack[] stacks){

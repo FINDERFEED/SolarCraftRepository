@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.client.custom_tooltips;
 
-import com.finderfeed.solarforge.ClientHelpers;
+import com.finderfeed.solarforge.helpers.ClientHelpers;
 import com.finderfeed.solarforge.SolarForge;
 import net.minecraft.resources.ResourceLocation;
 

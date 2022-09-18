@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.content.blocks.blockitems;
 
-import com.finderfeed.solarforge.ClientHelpers;
+import com.finderfeed.solarforge.helpers.ClientHelpers;
 import net.minecraft.world.level.block.Block;
 
 import net.minecraft.world.item.BlockItem;

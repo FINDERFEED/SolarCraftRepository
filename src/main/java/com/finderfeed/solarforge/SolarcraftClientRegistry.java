@@ -5,6 +5,7 @@ import com.finderfeed.solarforge.content.abilities.solar_strike.SolarStrikeRende
 import com.finderfeed.solarforge.client.rendering.rendertypes.SolarCraftRenderTypes;
 import com.finderfeed.solarforge.content.entities.projectiles.renderers.*;
 import com.finderfeed.solarforge.content.entities.renderers.*;
+import com.finderfeed.solarforge.helpers.Helpers;
 import com.finderfeed.solarforge.local_library.client.particles.ScreenParticlesRenderHandler;
 import com.finderfeed.solarforge.content.blocks.blockentities.clearing_ritual.clearing_ritual_crystal.ClearingRitualCrystalRenderer;
 import com.finderfeed.solarforge.content.blocks.blockentities.clearing_ritual.clearing_ritual_crystal.corruption_wisp.CorruptionWispRenderer;

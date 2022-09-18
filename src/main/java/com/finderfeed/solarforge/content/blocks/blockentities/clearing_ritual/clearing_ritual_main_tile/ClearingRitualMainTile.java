@@ -1,10 +1,11 @@
 package com.finderfeed.solarforge.content.blocks.blockentities.clearing_ritual.clearing_ritual_main_tile;
 
-import com.finderfeed.solarforge.ClientHelpers;
-import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.helpers.ClientHelpers;
+import com.finderfeed.solarforge.helpers.Helpers;
 import com.finderfeed.solarforge.client.particles.SolarcraftParticleTypes;
 import com.finderfeed.solarforge.content.blocks.blockentities.clearing_ritual.ClearingRitual;
 import com.finderfeed.solarforge.local_library.helpers.FDMathHelper;
+import com.finderfeed.solarforge.registries.sounds.SolarcraftSounds;
 import com.finderfeed.solarforge.registries.tile_entities.SolarcraftTileEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -65,7 +66,8 @@ public class ClearingRitualMainTile extends BlockEntity {
             }
         }
         // ray particles
-        if (ClearingRitual.MAX_TIME - tile.ritual.getCurrentTime() <= RAY_ANIMATION_TICKS && tile.level.getGameTime() % 5 == 0){
+        if (ClearingRitual.MAX_TIME - tile.ritual.getCurrentTime() <= RAY_ANIMATION_TICKS &&
+                tile.level.getGameTime() % 5 == 0){
             int time = (RAY_ANIMATION_TICKS - DIMENSION_CRACK_ANIMATION_TICKS) -
                     (FDMathHelper.clamp(DIMENSION_CRACK_ANIMATION_TICKS,ClearingRitual.MAX_TIME - tile.ritual.getCurrentTime(),RAY_ANIMATION_TICKS) - DIMENSION_CRACK_ANIMATION_TICKS);
             double height = 200f*((float)time/(RAY_ANIMATION_TICKS - DIMENSION_CRACK_ANIMATION_TICKS));
@@ -79,6 +81,10 @@ public class ClearingRitualMainTile extends BlockEntity {
                         p.x,p.y,p.z,0,0,0,
                         220 + world.random.nextInt(35), 220 + world.random.nextInt(35), world.random.nextInt(20),0.25f);
             }
+        }
+
+        if (ClearingRitual.MAX_TIME - tile.ritual.getCurrentTime() == DIMENSION_CRACK_ANIMATION_TICKS){
+            ClientHelpers.playsoundInEars(SolarcraftSounds.DIMENSION_BREAK.get(),1f,1f);
         }
 
 

@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.content.runic_network.repeater;
 
-import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.helpers.Helpers;
 import com.finderfeed.solarforge.local_library.helpers.RenderingTools;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.MultiBufferSource;

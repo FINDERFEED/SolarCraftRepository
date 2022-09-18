@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.content.items.solar_lexicon.unlockables;
 
-import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.helpers.Helpers;
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.content.items.solar_lexicon.progressions.Progression;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;

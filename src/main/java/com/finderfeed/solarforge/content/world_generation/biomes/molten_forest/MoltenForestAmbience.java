@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.content.world_generation.biomes.molten_forest;
 
-import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.helpers.Helpers;
 import com.mojang.serialization.Codec;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -9,7 +9,6 @@ import net.minecraft.world.level.block.Mirror;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.WorldGenLevel;

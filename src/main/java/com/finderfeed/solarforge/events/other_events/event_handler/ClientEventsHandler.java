@@ -1,8 +1,8 @@
 package com.finderfeed.solarforge.events.other_events.event_handler;
 
 
-import com.finderfeed.solarforge.ClientHelpers;
-import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.helpers.ClientHelpers;
+import com.finderfeed.solarforge.helpers.Helpers;
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.events.misc.ClientTicker;
 import com.finderfeed.solarforge.content.blocks.infusing_table_things.InfuserTileEntity;

@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.misc_things;
 
-import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.helpers.Helpers;
 import com.finderfeed.solarforge.content.items.solar_lexicon.progressions.Progression;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;

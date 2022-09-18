@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.content.items;
 
-import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.helpers.Helpers;
 import com.finderfeed.solarforge.local_library.helpers.CompoundNBTHelper;
 import com.finderfeed.solarforge.content.blocks.primitive.InscriptionStone;
 import com.finderfeed.solarforge.content.items.primitive.solacraft_item_classes.SolarcraftItem;

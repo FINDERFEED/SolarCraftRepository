@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.packet_handler.packets;
 
-import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.helpers.Helpers;
 import com.finderfeed.solarforge.content.blocks.blockentities.RunicTableTileEntity;
 import com.finderfeed.solarforge.content.items.solar_lexicon.unlockables.RunePattern;
 import com.finderfeed.solarforge.misc_things.AbstractPacket;

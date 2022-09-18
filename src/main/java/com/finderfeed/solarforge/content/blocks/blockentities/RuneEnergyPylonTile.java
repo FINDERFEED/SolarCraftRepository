@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.content.blocks.blockentities;
 
-import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.helpers.Helpers;
 import com.finderfeed.solarforge.SolarCraftTags;
 import com.finderfeed.solarforge.client.particles.SolarcraftParticleTypes;
 import com.finderfeed.solarforge.config.SolarcraftConfig;
@@ -8,8 +8,9 @@ import com.finderfeed.solarforge.content.blocks.blockentities.runic_energy.Runic
 import com.finderfeed.solarforge.content.blocks.primitive.InscriptionStone;
 import com.finderfeed.solarforge.content.items.solar_lexicon.progressions.Progression;
 import com.finderfeed.solarforge.content.items.solar_lexicon.unlockables.ProgressionHelper;
+import com.finderfeed.solarforge.helpers.multiblock.Multiblocks;
 import com.finderfeed.solarforge.misc_things.*;
-import com.finderfeed.solarforge.multiblocks.Multiblocks;
+
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
 import com.finderfeed.solarforge.packet_handler.packets.UpdateTypeOnClientPacket;
 import com.finderfeed.solarforge.registries.tile_entities.SolarcraftTileEntityTypes;
@@ -185,7 +186,7 @@ public class RuneEnergyPylonTile extends BlockEntity implements  DebugTarget, Ru
                 return false;
             }
         }
-        return Helpers.checkStructure(tile.level,tile.worldPosition.below(8).north(2).west(2), Multiblocks.RUNIC_ENERGY_PYLON.getM(), true);
+        return Multiblocks.PYLON.check(tile.level,tile.worldPosition,false);
     }
 
     public static void doUpdate(RuneEnergyPylonTile tile){

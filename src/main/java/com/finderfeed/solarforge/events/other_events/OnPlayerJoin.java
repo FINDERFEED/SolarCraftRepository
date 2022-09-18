@@ -1,7 +1,7 @@
 package com.finderfeed.solarforge.events.other_events;
 
 
-import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.helpers.Helpers;
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.content.abilities.AbilityHelper;
 import com.finderfeed.solarforge.content.abilities.ability_classes.ToggleableAbility;

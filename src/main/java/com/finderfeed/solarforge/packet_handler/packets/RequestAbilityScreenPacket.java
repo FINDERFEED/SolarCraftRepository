@@ -1,6 +1,5 @@
 package com.finderfeed.solarforge.packet_handler.packets;
 
-import com.finderfeed.solarforge.ClientHelpers;
 import com.finderfeed.solarforge.SolarCraftTags;
 import com.finderfeed.solarforge.content.abilities.AbilityHelper;
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
@@ -8,7 +7,6 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkDirection;
 import net.minecraftforge.network.NetworkEvent;
-import net.minecraftforge.network.PacketDistributor;
 
 import java.util.function.Supplier;
 

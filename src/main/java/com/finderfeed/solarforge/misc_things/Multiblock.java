@@ -12,7 +12,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import java.util.HashMap;
 import java.util.Set;
 
-
+@Deprecated
 public class Multiblock {
 
 

@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.content.blocks.blockentities.containers.screens;
 
-import com.finderfeed.solarforge.ClientHelpers;
+import com.finderfeed.solarforge.helpers.ClientHelpers;
 import com.finderfeed.solarforge.content.blocks.blockentities.containers.SolarFurnaceContainer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;

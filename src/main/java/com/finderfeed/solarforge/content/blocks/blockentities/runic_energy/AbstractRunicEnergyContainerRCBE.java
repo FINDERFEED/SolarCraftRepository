@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.content.blocks.blockentities.runic_energy;
 
-import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.helpers.Helpers;
 import com.finderfeed.solarforge.local_library.OwnedBlock;
 import com.finderfeed.solarforge.local_library.helpers.CompoundNBTHelper;
 import com.finderfeed.solarforge.local_library.helpers.FDMathHelper;

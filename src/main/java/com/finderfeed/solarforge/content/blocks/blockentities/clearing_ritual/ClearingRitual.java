@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.content.blocks.blockentities.clearing_ritual;
 
-import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.helpers.Helpers;
 import com.finderfeed.solarforge.content.RadiantPortalBlock;
 import com.finderfeed.solarforge.content.entities.projectiles.SummoningProjectile;
 import com.finderfeed.solarforge.events.other_events.event_handler.EventHandler;

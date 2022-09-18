@@ -1,11 +1,12 @@
 package com.finderfeed.solarforge.content.blocks.blockentities;
 
-import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.helpers.Helpers;
+import com.finderfeed.solarforge.helpers.multiblock.Multiblocks;
 import com.finderfeed.solarforge.local_library.helpers.CompoundNBTHelper;
 import com.finderfeed.solarforge.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarforge.local_library.OwnedBlock;
 import com.finderfeed.solarforge.client.particles.SolarcraftParticleTypes;
-import com.finderfeed.solarforge.multiblocks.Multiblocks;
+
 import com.finderfeed.solarforge.registries.sounds.SolarcraftSounds;
 import com.finderfeed.solarforge.registries.tile_entities.SolarcraftTileEntityTypes;
 import net.minecraft.core.BlockPos;
@@ -162,7 +163,7 @@ public class ZapTurretTile extends BlockEntity implements OwnedBlock {
     }
 
     public boolean isWorking(){
-        return Helpers.checkStructure(level,worldPosition.offset(-1,-3,-1), Multiblocks.ZAP_TURRET.getM(),true);
+        return Multiblocks.ZAP_TURRET.check(level,worldPosition,true);
     }
 
 }

@@ -1,7 +1,7 @@
 package com.finderfeed.solarforge.compat.jei.recipe_categories;
 
-import com.finderfeed.solarforge.ClientHelpers;
-import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.helpers.ClientHelpers;
+import com.finderfeed.solarforge.helpers.Helpers;
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.compat.jei.drawables.InfusingRecipeJEI;
 import com.finderfeed.solarforge.compat.jei.JeiRecipeTypes;

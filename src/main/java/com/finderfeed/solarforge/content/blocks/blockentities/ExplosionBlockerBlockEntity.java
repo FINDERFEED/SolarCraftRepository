@@ -1,9 +1,9 @@
 package com.finderfeed.solarforge.content.blocks.blockentities;
 
-import com.finderfeed.solarforge.ClientHelpers;
-import com.finderfeed.solarforge.Helpers;
 import com.finderfeed.solarforge.client.particles.SolarcraftParticleTypes;
-import com.finderfeed.solarforge.multiblocks.Multiblocks;
+import com.finderfeed.solarforge.helpers.ClientHelpers;
+import com.finderfeed.solarforge.helpers.Helpers;
+import com.finderfeed.solarforge.helpers.multiblock.Multiblocks;
 import com.finderfeed.solarforge.registries.tile_entities.SolarcraftTileEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -38,7 +38,7 @@ public class ExplosionBlockerBlockEntity extends SolarcraftBlockEntity{
         }
         if (world.getGameTime() % 20 == 0){
 
-            b.shouldRenderShield = Helpers.checkStructure(world,b.worldPosition.below(5).north(2).west(2), Multiblocks.EXPLOSION_BLOCKER.getM(),true);
+            b.shouldRenderShield = Multiblocks.EXPLOSION_BLOCKER.check(b.level,b.worldPosition,true);
         }
     }
 
@@ -88,7 +88,7 @@ public class ExplosionBlockerBlockEntity extends SolarcraftBlockEntity{
 
 
     public boolean isFunctioning(){
-        return Helpers.checkStructure(level,this.worldPosition.below(5).north(2).west(2), Multiblocks.EXPLOSION_BLOCKER.getM(),true);
+        return Multiblocks.EXPLOSION_BLOCKER.check(level,worldPosition,true);
     }
 
 

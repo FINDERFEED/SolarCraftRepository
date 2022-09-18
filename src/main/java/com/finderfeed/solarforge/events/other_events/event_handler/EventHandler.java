@@ -1,8 +1,8 @@
 package com.finderfeed.solarforge.events.other_events.event_handler;
 
 
-import com.finderfeed.solarforge.ClientHelpers;
-import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.helpers.ClientHelpers;
+import com.finderfeed.solarforge.helpers.Helpers;
 import com.finderfeed.solarforge.content.abilities.AbilityHelper;
 import com.finderfeed.solarforge.content.abilities.ability_classes.AbstractAbility;
 import com.finderfeed.solarforge.SolarCraftAttributeModifiers;

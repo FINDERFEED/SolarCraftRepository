@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.content.abilities.screens;
 
-import com.finderfeed.solarforge.ClientHelpers;
+import com.finderfeed.solarforge.helpers.ClientHelpers;
 import com.finderfeed.solarforge.content.abilities.ability_classes.AbstractAbility;
 import com.finderfeed.solarforge.SolarCraftTags;
 import com.finderfeed.solarforge.local_library.helpers.FDMathHelper;

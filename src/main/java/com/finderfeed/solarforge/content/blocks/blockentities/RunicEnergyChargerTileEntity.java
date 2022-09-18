@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.content.blocks.blockentities;
 
-import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.helpers.Helpers;
 import com.finderfeed.solarforge.config.SolarcraftConfig;
 import com.finderfeed.solarforge.content.blocks.blockentities.runic_energy.IRunicEnergySaver;
 import com.finderfeed.solarforge.content.items.RuneItem;

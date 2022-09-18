@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.client.particles;
 
-import com.finderfeed.solarforge.ClientHelpers;
+import com.finderfeed.solarforge.helpers.ClientHelpers;
 import com.finderfeed.solarforge.client.rendering.rendertypes.SolarCraftRenderTypes;
 import com.finderfeed.solarforge.local_library.other.EaseIn;
 import com.mojang.blaze3d.systems.RenderSystem;

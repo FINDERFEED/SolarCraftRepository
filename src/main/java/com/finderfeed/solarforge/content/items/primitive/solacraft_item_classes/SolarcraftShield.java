@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.content.items.primitive.solacraft_item_classes;
 
-import com.finderfeed.solarforge.ClientHelpers;
+import com.finderfeed.solarforge.helpers.ClientHelpers;
 import com.finderfeed.solarforge.content.items.solar_lexicon.unlockables.AncientFragment;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;

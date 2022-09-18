@@ -1,8 +1,9 @@
 package com.finderfeed.solarforge.content.items.solar_lexicon.screen;
 
-import com.finderfeed.solarforge.ClientHelpers;
-import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.helpers.ClientHelpers;
+import com.finderfeed.solarforge.helpers.Helpers;
 import com.finderfeed.solarforge.client.screens.ThreeDStructureViewScreen;
+import com.finderfeed.solarforge.helpers.multiblock.MultiblockStructure;
 import com.finderfeed.solarforge.local_library.helpers.RenderingTools;
 import com.finderfeed.solarforge.misc_things.Multiblock;
 import com.finderfeed.solarforge.content.items.solar_lexicon.SolarLexicon;
@@ -44,10 +45,10 @@ public class StructureScreen extends Screen {
 
     public int structWidth;
     public int structHeightAndPageCount;
-    public Multiblock structure;
+    public MultiblockStructure structure;
     public  int relX;
     public  int relY;
-    public StructureScreen(Multiblock structure) {
+    public StructureScreen(MultiblockStructure structure) {
         super(new TextComponent(""));
         this.structure = structure;
     }
@@ -62,8 +63,8 @@ public class StructureScreen extends Screen {
         this.relX = (width/scale - 183)/2-15;
         this.relY = (height - 218*scale)/2/scale;
         currentPage = 1;
-        structHeightAndPageCount = structure.getStruct().length;
-        structWidth = structure.getStruct()[0].length / 2;
+        structHeightAndPageCount = structure.pattern.length;
+        structWidth = structure.pattern[0].length / 2;
         addRenderableWidget(new ImageButton(relX+216,relY+16,16,16,0,0,0,BUTTONS,16,32,(button)->{
             if ((currentPage+1 <= structHeightAndPageCount) ){
                 currentPage+=1;
@@ -115,7 +116,7 @@ public class StructureScreen extends Screen {
                 for (int i = -structWidth; i <= structWidth;i++){
                     for (int g = -structWidth; g <= structWidth;g++){
 
-                            BlockState state = structure.getBlockByCharacter(structure.struct[heights][i + structWidth].charAt(g + structWidth));
+                            BlockState state = structure.getBlockByCharacter(structure.pattern[heights][i + structWidth].charAt(g + structWidth));
                             if (!state.isAir()) {
                                 toAdd.add(new BlockAndRelxRely(state, relX + 100 + g * (13 - a), relY + 100 + i * (14 - a)));
                             }
@@ -135,23 +136,10 @@ public class StructureScreen extends Screen {
         ClientHelpers.bindText(STRUCTURE_GUI);
         blit(matrices,relX,relY,0,0,256,256);
 
-        String[] struct = structure.struct[currentPage-1];
-//        int a = 0;
-//        if (structWidth*2 > 16){
-//            a = structWidth*2-16;
-//        }
+
         drawCenteredString(matrices, minecraft.font,new TextComponent(currentPage+ "/" + structHeightAndPageCount),relX+108,relY+14,0xffffff);
-        //drawCenteredString(matrices, minecraft.font,new TranslationTextComponent(structure.getName()),relX+20,relY+10,0xffffff);
-        Helpers.drawBoundedText(matrices,relX+14,relY+10,7,new TranslatableComponent(structure.getName()).getString(),0xffffff);
+        Helpers.drawBoundedText(matrices,relX+14,relY+10,7,new TranslatableComponent(structure.getId()).getString(),0xffffff);
 
-
-        ItemRenderer ren = Minecraft.getInstance().getItemRenderer();
-//        for (int i = -structWidth; i <= structWidth;i++){
-//            for (int g = -structWidth; g <= structWidth;g++){
-//
-//                renderItemAndTooltip(structure.getBlockByCharacter(struct[i+structWidth].charAt(g+structWidth)),relX+100+g*(13-a),relY+100+i*(14-a),mousex,mousey,matrices);
-//            }
-//        }
         for (BlockAndRelxRely obj : structureBlocks.get(currentPage-1)){
             renderItemAndTooltip(obj.block,obj.posx,obj.posy,mousex,mousey,matrices);
         }

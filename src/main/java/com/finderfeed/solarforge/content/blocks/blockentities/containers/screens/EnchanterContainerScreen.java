@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.content.blocks.blockentities.containers.screens;
 
-import com.finderfeed.solarforge.ClientHelpers;
+import com.finderfeed.solarforge.helpers.ClientHelpers;
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.client.particles.screen.SolarStrikeParticleScreen;
 import com.finderfeed.solarforge.config.enchanter_config.EnchanterConfig;

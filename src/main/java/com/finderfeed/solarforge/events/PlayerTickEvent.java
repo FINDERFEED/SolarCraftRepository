@@ -1,7 +1,7 @@
 package com.finderfeed.solarforge.events;
 
 
-import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.helpers.Helpers;
 import com.finderfeed.solarforge.content.items.solar_lexicon.progressions.Progression;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;

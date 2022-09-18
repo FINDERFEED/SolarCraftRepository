@@ -1,4 +1,4 @@
-package com.finderfeed.solarforge;
+package com.finderfeed.solarforge.helpers;
 
 import com.finderfeed.solarforge.content.blocks.blockentities.clearing_ritual.ClearingRitual;
 import com.finderfeed.solarforge.content.entities.CrystalBossEntity;
@@ -177,42 +177,42 @@ public class Helpers {
 
     //structure towards north, initPos is the pos at the lowest by y lowest by z left corner
 
-    public static boolean checkStructure(Level world,BlockPos initPos,Multiblock struct,boolean ignoreOtherBlocks){
-        BlockPos pos = initPos;
-        String[][] structure = struct.struct;
-        for (int i = 0;i < structure.length;i++){
-            for (int g = 0;g < structure[i].length;g++){
-                String line = structure[i][g];
-                    for (int k = 0;k < line.length();k++){
-                        //here the checking begins
-                        char c = line.charAt(k);
-
-                        if (c != ' ') {
-                                if (!checkBlock(world,pos.offset(k,i,g),struct.getStateAndTag(c))){
-                                    return false;
-                                }
-                        }else{
-                            if (!ignoreOtherBlocks){
-                                if (!checkBlock(world,pos.offset(k,i,g),struct.getStateAndTag(c))){
-                                    return false;
-                                }
-                            }
-                        }
-                        //here ends
-                    }
-            }
-        }
-        return true;
-    }
+//    public static boolean checkStructure(Level world,BlockPos initPos,Multiblock struct,boolean ignoreOtherBlocks){
+//        BlockPos pos = initPos;
+//        String[][] structure = struct.struct;
+//        for (int i = 0;i < structure.length;i++){
+//            for (int g = 0;g < structure[i].length;g++){
+//                String line = structure[i][g];
+//                    for (int k = 0;k < line.length();k++){
+//                        //here the checking begins
+//                        char c = line.charAt(k);
+//
+//                        if (c != ' ') {
+//                                if (!checkBlock(world,pos.offset(k,i,g),struct.getStateAndTag(c))){
+//                                    return false;
+//                                }
+//                        }else{
+//                            if (!ignoreOtherBlocks){
+//                                if (!checkBlock(world,pos.offset(k,i,g),struct.getStateAndTag(c))){
+//                                    return false;
+//                                }
+//                            }
+//                        }
+//                        //here ends
+//                    }
+//            }
+//        }
+//        return true;
+//    }
 //    world.getBlockState(initPos.offset(k, i, g))
-    private static boolean checkBlock(Level world,BlockPos pos, StateAndTag stateAndTag){
-        TagKey<Block> tag;
-        if ((tag = stateAndTag.getTag()) == null){
-            return StateAndTag.checkBlockState(world.getBlockState(pos),stateAndTag.getState(),stateAndTag.isIgnoreFacing());
-        }else{
-            return world.getBlockState(pos).is(tag);
-        }
-    }
+//    private static boolean checkBlock(Level world,BlockPos pos, StateAndTag stateAndTag){
+//        TagKey<Block> tag;
+//        if ((tag = stateAndTag.getTag()) == null){
+//            return StateAndTag.checkBlockState(world.getBlockState(pos),stateAndTag.getState(),stateAndTag.isIgnoreFacing());
+//        }else{
+//            return world.getBlockState(pos).is(tag);
+//        }
+//    }
 
     public static double blocksPerSecondToVelocity(double a){
         return a*0.05;
@@ -569,4 +569,12 @@ public class Helpers {
         return new AABB(-horizontal,-vertical,-horizontal,horizontal,vertical,horizontal).move(pos);
     }
 
+
+    public static Vec3 posToVec(BlockPos pos){
+        return new Vec3(pos.getX(),pos.getY(),pos.getZ());
+    }
+
+    public static BlockPos vecToPos(Vec3 pos){
+        return new BlockPos(pos.x,pos.y,pos.z);
+    }
 }

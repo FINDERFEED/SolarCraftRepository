@@ -1,11 +1,12 @@
 package com.finderfeed.solarforge.content.commands;
 
-import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.helpers.Helpers;
+import com.finderfeed.solarforge.helpers.multiblock.Multiblocks;
 import com.finderfeed.solarforge.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarforge.content.items.solar_lexicon.SolarLexicon;
 import com.finderfeed.solarforge.content.items.solar_lexicon.progressions.Progression;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
-import com.finderfeed.solarforge.multiblocks.Multiblocks;
+
 import com.finderfeed.solarforge.registries.items.SolarcraftItems;
 import com.finderfeed.solarforge.content.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarforge.content.items.solar_lexicon.unlockables.ProgressionHelper;
@@ -102,8 +103,9 @@ public class CommandsSolarCraft {
 
     public static int constructMultiblock(CommandSourceStack src,String id) throws CommandSyntaxException{
         ServerPlayer player = src.getPlayerOrException();
-        if (Multiblocks.MULTIBLOCKS.containsKey(id)){
-            Helpers.constructMultiblock(player,Multiblocks.MULTIBLOCKS.get(id));
+        if (Multiblocks.STRUCTURES.containsKey(id)){
+            Multiblocks.STRUCTURES.get(id).placeInWorld(player,player.level,player.getOnPos().above());
+//            Helpers.constructMultiblock(player,Multiblocks.MULTIBLOCKS.get(id));
             src.sendSuccess(new TextComponent("Constructed!"),false);
         }else{
             src.sendFailure(new TextComponent("Structure doesnt exist"));

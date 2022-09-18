@@ -1,10 +1,8 @@
 package com.finderfeed.solarforge.packet_handler.packets;
 
-import com.finderfeed.solarforge.ClientHelpers;
-import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.helpers.ClientHelpers;
 import com.finderfeed.solarforge.misc_things.AbstractPacket;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
 
 import net.minecraftforge.network.NetworkEvent;

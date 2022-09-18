@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.content.blocks.solar_forge_block.solar_forge_screen;
 
-import com.finderfeed.solarforge.ClientHelpers;
+import com.finderfeed.solarforge.helpers.ClientHelpers;
 import com.finderfeed.solarforge.registries.sounds.SolarcraftSounds;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.systems.RenderSystem;

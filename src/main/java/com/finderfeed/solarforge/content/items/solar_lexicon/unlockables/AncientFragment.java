@@ -5,7 +5,9 @@ import com.finderfeed.solarforge.content.items.solar_lexicon.ProgressionStage;
 import com.finderfeed.solarforge.content.items.solar_lexicon.progressions.Progression;
 import com.finderfeed.solarforge.content.items.solar_lexicon.structure.category.CategoryBase;
 import com.finderfeed.solarforge.content.items.solar_lexicon.structure.subcategory.SubCategoryBase;
-import com.finderfeed.solarforge.multiblocks.Multiblocks;
+
+import com.finderfeed.solarforge.helpers.multiblock.MultiblockStructure;
+import com.finderfeed.solarforge.helpers.multiblock.Multiblocks;
 import com.finderfeed.solarforge.registries.items.SolarcraftItems;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -149,18 +151,18 @@ public class AncientFragment {
     public static final AncientFragment DIMENSION_CORE = new AncientFragment(tx("solar_fragment.dimension_core"),"dimension_core",ProgressionStage.SOLAR_ENERGY.ALL_PROGRESSIONS,SubCategoryBase.MASTER_ITEMS,CategoryBase.MASTER,ItemWithRecipe.of(SolarcraftItems.DIMENSION_CORE.get().getDefaultInstance(),"infusing_new_dimension_core"),tx("dimension_core.lore"), SolarForge.INFUSING_RECIPE_TYPE,9);
 
 
-    public static final AncientFragment AURA_HEALER_STRUCTURE = new AncientFragment(tx("solar_fragment.aura_healer_structure"),"aura_healer_structure",AURA_HEALER.neededProgression,SubCategoryBase.STRUCTURES,CategoryBase.STRUCTURES,Multiblocks.AURA_HEALER, AURA_HEALER.priority);
-    public static final AncientFragment SOLAR_MORTAR_STRUCTURE = new AncientFragment(tx("solar_fragment.solar_mortar_structure"),"solar_mortar_structure",SOLAR_MORTAR.neededProgression,SubCategoryBase.STRUCTURES,CategoryBase.STRUCTURES,Multiblocks.SOLAR_MORTAR, SOLAR_MORTAR.priority);
-    public static final AncientFragment INFUSER_TIER_BEGINNER = new AncientFragment(tx("solar_fragment.solar_infuser_structure"),"solar_infuser_structure",SOLAR_INFUSER.neededProgression,SubCategoryBase.STRUCTURES,CategoryBase.STRUCTURES,Multiblocks.INFUSER_TIER_FIRST, SOLAR_INFUSER.priority);
-    public static final AncientFragment INFUSER_TIER_RUNIC_ENERGY = new AncientFragment(tx("solar_fragment.solar_infuser_structure_2"),"solar_infuser_structure_2",ProgressionStage.AFTER_LENS.ALL_PROGRESSIONS, SubCategoryBase.STRUCTURES,CategoryBase.STRUCTURES,Multiblocks.INFUSER_TIER_RUNIC_ENERGY, SOLAR_INFUSER.priority);
-    public static final AncientFragment INFUSER_TIER_SOLAR_ENERGY = new AncientFragment(tx("solar_fragment.solar_infuser_structure_3"),"solar_infuser_structure_3",ProgressionStage.SOLAR_ENERGY.ALL_PROGRESSIONS,SubCategoryBase.STRUCTURES,CategoryBase.STRUCTURES,Multiblocks.INFUSER_TIER_SOLAR_ENERGY, SOLAR_INFUSER.priority);
+    public static final AncientFragment AURA_HEALER_STRUCTURE = new AncientFragment(tx("solar_fragment.aura_healer_structure"),"aura_healer_structure",AURA_HEALER.neededProgression,SubCategoryBase.STRUCTURES,CategoryBase.STRUCTURES, Multiblocks.AURA_HEALER, AURA_HEALER.priority);
+    public static final AncientFragment SOLAR_MORTAR_STRUCTURE = new AncientFragment(tx("solar_fragment.solar_mortar_structure"),"solar_mortar_structure",SOLAR_MORTAR.neededProgression,SubCategoryBase.STRUCTURES,CategoryBase.STRUCTURES, Multiblocks.SOLAR_MORTAR, SOLAR_MORTAR.priority);
+    public static final AncientFragment INFUSER_TIER_BEGINNER = new AncientFragment(tx("solar_fragment.solar_infuser_structure"),"solar_infuser_structure",SOLAR_INFUSER.neededProgression,SubCategoryBase.STRUCTURES,CategoryBase.STRUCTURES, Multiblocks.INFUSER_TIER_ONE, SOLAR_INFUSER.priority);
+    public static final AncientFragment INFUSER_TIER_RUNIC_ENERGY = new AncientFragment(tx("solar_fragment.solar_infuser_structure_2"),"solar_infuser_structure_2",ProgressionStage.AFTER_LENS.ALL_PROGRESSIONS, SubCategoryBase.STRUCTURES,CategoryBase.STRUCTURES, Multiblocks.INFUSER_TIER_TWO, SOLAR_INFUSER.priority);
+    public static final AncientFragment INFUSER_TIER_SOLAR_ENERGY = new AncientFragment(tx("solar_fragment.solar_infuser_structure_3"),"solar_infuser_structure_3",ProgressionStage.SOLAR_ENERGY.ALL_PROGRESSIONS,SubCategoryBase.STRUCTURES,CategoryBase.STRUCTURES, Multiblocks.INFUSER_TIER_THREE, SOLAR_INFUSER.priority);
 
 
-    public static final AncientFragment SOLAR_CORE_STRUCTURE = new AncientFragment(tx("solar_fragment.solar_core_structure"),"solar_core_structure",SOLAR_CORE.neededProgression,SubCategoryBase.STRUCTURES,CategoryBase.STRUCTURES,Multiblocks.SOLAR_CORE, SOLAR_CORE.priority);
-    public static final AncientFragment SOLAR_ENERGY_GENERATOR_STRUCTURE = new AncientFragment(tx("solar_fragment.solar_energy_generator_structure"),"solar_energy_generator_structure",SOLAR_ENERGY_GENERATOR.neededProgression,SubCategoryBase.STRUCTURES,CategoryBase.STRUCTURES,Multiblocks.SOLAR_ENERGY_GENERATOR, SOLAR_ENERGY_GENERATOR.priority);
-    public static final AncientFragment DIMENSION_STRUCTURE = new AncientFragment(tx("solar_fragment.dimension_structure"),"dimension_structure",ProgressionStage.SOLAR_ENERGY.ALL_PROGRESSIONS,SubCategoryBase.STRUCTURES,CategoryBase.STRUCTURES,Multiblocks.RADIANT_LAND_PORTAL, DIMENSION_CORE.priority);
-    public static final AncientFragment ZAP_TURRET_STRUCTURE = new AncientFragment(tx("solar_fragment.zap_turret_structure"),"zap_turret_structure",ProgressionStage.SOLAR_ENERGY.ALL_PROGRESSIONS,SubCategoryBase.STRUCTURES,CategoryBase.STRUCTURES,Multiblocks.ZAP_TURRET, ZAP_TURRET.priority);
-    public static final AncientFragment EXPLOSION_BLOCKER_STRUCTURE = new AncientFragment(tx("solar_fragment.explosion_blocker_structure"),"explosion_blocker_structure",EXPLOSION_BLOCKER.neededProgression,SubCategoryBase.STRUCTURES,CategoryBase.STRUCTURES,Multiblocks.EXPLOSION_BLOCKER, EXPLOSION_BLOCKER.priority);
+    public static final AncientFragment SOLAR_CORE_STRUCTURE = new AncientFragment(tx("solar_fragment.solar_core_structure"),"solar_core_structure",SOLAR_CORE.neededProgression,SubCategoryBase.STRUCTURES,CategoryBase.STRUCTURES, Multiblocks.SOLAR_CORE, SOLAR_CORE.priority);
+    public static final AncientFragment SOLAR_ENERGY_GENERATOR_STRUCTURE = new AncientFragment(tx("solar_fragment.solar_energy_generator_structure"),"solar_energy_generator_structure",SOLAR_ENERGY_GENERATOR.neededProgression,SubCategoryBase.STRUCTURES,CategoryBase.STRUCTURES, Multiblocks.ENERGY_GENERATOR, SOLAR_ENERGY_GENERATOR.priority);
+    public static final AncientFragment DIMENSION_STRUCTURE = new AncientFragment(tx("solar_fragment.dimension_structure"),"dimension_structure",ProgressionStage.SOLAR_ENERGY.ALL_PROGRESSIONS,SubCategoryBase.STRUCTURES,CategoryBase.STRUCTURES, Multiblocks.RADIANT_LAND_PORTAL, DIMENSION_CORE.priority);
+    public static final AncientFragment ZAP_TURRET_STRUCTURE = new AncientFragment(tx("solar_fragment.zap_turret_structure"),"zap_turret_structure",ProgressionStage.SOLAR_ENERGY.ALL_PROGRESSIONS,SubCategoryBase.STRUCTURES,CategoryBase.STRUCTURES, Multiblocks.ZAP_TURRET, ZAP_TURRET.priority);
+    public static final AncientFragment EXPLOSION_BLOCKER_STRUCTURE = new AncientFragment(tx("solar_fragment.explosion_blocker_structure"),"explosion_blocker_structure",EXPLOSION_BLOCKER.neededProgression,SubCategoryBase.STRUCTURES,CategoryBase.STRUCTURES, Multiblocks.EXPLOSION_BLOCKER, EXPLOSION_BLOCKER.priority);
 
     public static final AncientFragment SOLAR_GOD_PICKAXE_UPGRADE = new AncientFragment(tx("solar_fragment.solar_god_pickaxe_upgrade"),"solar_god_pickaxe_upgrade",ProgressionStage.SOLAR_ENERGY.ALL_PROGRESSIONS,SubCategoryBase.UPGRADES,CategoryBase.UPGRADES,ItemWithRecipe.of(SolarcraftItems.SOLAR_GOD_PICKAXE.get().getDefaultInstance(),"infusing_new_solar_god_pickaxe_upgrade"),tx("solar_pickaxe_upgrade.lore"),8);
     public static final AncientFragment SOLAR_GOD_SWORD_UPGRADE = new AncientFragment(tx("solar_fragment.solar_god_sword_upgrade"),"solar_god_sword_upgrade",ProgressionStage.SOLAR_ENERGY.ALL_PROGRESSIONS,SubCategoryBase.UPGRADES,CategoryBase.UPGRADES,ItemWithRecipe.of(SolarcraftItems.SOLAR_GOD_SWORD.get().getDefaultInstance(),"infusing_new_solar_god_sword_upgrade"),tx("solar_god_sword_upgrade.lore"),8);
@@ -208,7 +210,7 @@ public class AncientFragment {
 
     private final int priority;
     private List<ItemWithRecipe> stacks;
-    private Multiblocks structure;
+    private MultiblockStructure structure;
     private ItemWithRecipe item;
     private TranslatableComponent lore;
     private TranslatableComponent itemLore;
@@ -240,8 +242,8 @@ public class AncientFragment {
 
     }
 
-    AncientFragment(TranslatableComponent translation, String id, Progression[] neededProgression, SubCategoryBase subBase, CategoryBase catBase, Multiblocks structure, int priority){
-        this(translation,id,neededProgression,subBase,catBase,Type.STRUCTURE,structure.getM().mainBlock.getBlock().asItem(),priority,false);
+    AncientFragment(TranslatableComponent translation, String id, Progression[] neededProgression, SubCategoryBase subBase, CategoryBase catBase, MultiblockStructure structure, int priority){
+        this(translation,id,neededProgression,subBase,catBase,Type.STRUCTURE,structure.mainBlock.getBlock().asItem(),priority,false);
         this.structure = structure;
 
     }
@@ -337,7 +339,7 @@ public class AncientFragment {
         return entry;
     }
 
-    public Multiblocks getStructure() {
+    public MultiblockStructure getStructure() {
         return structure;
     }
 

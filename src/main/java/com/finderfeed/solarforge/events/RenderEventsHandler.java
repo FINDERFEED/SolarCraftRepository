@@ -1,7 +1,7 @@
 package com.finderfeed.solarforge.events;
 
 
-import com.finderfeed.solarforge.ClientHelpers;
+import com.finderfeed.solarforge.helpers.ClientHelpers;
 import com.finderfeed.solarforge.local_library.helpers.RenderingTools;
 import com.finderfeed.solarforge.content.blocks.render.EnergyGeneratorTileRender;
 import com.finderfeed.solarforge.content.blocks.render.RuneEnergyPylonRenderer;

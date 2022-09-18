@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.client.toasts;
 
-import com.finderfeed.solarforge.ClientHelpers;
+import com.finderfeed.solarforge.helpers.ClientHelpers;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.Gui;

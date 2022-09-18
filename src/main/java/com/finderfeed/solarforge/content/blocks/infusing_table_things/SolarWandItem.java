@@ -1,7 +1,7 @@
 package com.finderfeed.solarforge.content.blocks.infusing_table_things;
 
-import com.finderfeed.solarforge.ClientHelpers;
-import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.helpers.ClientHelpers;
+import com.finderfeed.solarforge.helpers.Helpers;
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.content.blocks.blockentities.InfusingTableTile;
 import com.finderfeed.solarforge.content.blocks.blockentities.RuneEnergyPylonTile;

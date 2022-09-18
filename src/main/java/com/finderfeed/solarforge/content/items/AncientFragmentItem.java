@@ -1,7 +1,7 @@
 package com.finderfeed.solarforge.content.items;
 
 
-import com.finderfeed.solarforge.ClientHelpers;
+import com.finderfeed.solarforge.helpers.ClientHelpers;
 import com.finderfeed.solarforge.client.custom_tooltips.CustomTooltip;
 import com.finderfeed.solarforge.client.custom_tooltips.ICustomTooltip;
 import com.finderfeed.solarforge.content.items.solar_lexicon.unlockables.AncientFragment;

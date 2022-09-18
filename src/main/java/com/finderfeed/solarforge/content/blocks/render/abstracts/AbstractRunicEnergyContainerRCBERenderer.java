@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.content.blocks.render.abstracts;
 
-import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.helpers.Helpers;
 import com.finderfeed.solarforge.local_library.helpers.RenderingTools;
 import com.finderfeed.solarforge.content.blocks.blockentities.runic_energy.AbstractRunicEnergyContainerRCBE;
 import com.mojang.blaze3d.vertex.PoseStack;

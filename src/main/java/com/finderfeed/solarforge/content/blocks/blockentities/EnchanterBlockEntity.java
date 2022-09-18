@@ -1,8 +1,8 @@
 package com.finderfeed.solarforge.content.blocks.blockentities;
 
 
-import com.finderfeed.solarforge.ClientHelpers;
-import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.helpers.ClientHelpers;
+import com.finderfeed.solarforge.helpers.Helpers;
 import com.finderfeed.solarforge.client.particles.SolarcraftParticleTypes;
 import com.finderfeed.solarforge.config.enchanter_config.EnchanterConfig;
 import com.finderfeed.solarforge.config.enchanter_config.EnchanterConfigInit;

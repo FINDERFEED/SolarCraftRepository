@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.content.blocks;
 
-import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.helpers.Helpers;
 import com.finderfeed.solarforge.content.blocks.blockentities.clearing_ritual.CrystalEnergyVinesTile;
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
 import com.finderfeed.solarforge.packet_handler.packets.crystal_energy_vines_puzzle.OpenPuzzleScreenPacket;

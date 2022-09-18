@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.content.world_generation.dimension_related.radiant_land;
 
-import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.helpers.Helpers;
 import com.finderfeed.solarforge.content.world_generation.features.foliage_placers.FoliagePlacerRegistry;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;

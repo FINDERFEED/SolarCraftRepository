@@ -1,7 +1,7 @@
 package com.finderfeed.solarforge.content.items.render_player_events;
 
 
-import com.finderfeed.solarforge.ClientHelpers;
+import com.finderfeed.solarforge.helpers.ClientHelpers;
 import com.finderfeed.solarforge.content.items.LightningGun;
 import com.finderfeed.solarforge.content.items.UltraCrossbowItem;
 import com.mojang.blaze3d.vertex.PoseStack;

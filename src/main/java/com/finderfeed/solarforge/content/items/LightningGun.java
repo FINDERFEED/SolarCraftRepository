@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.content.items;
 
-import com.finderfeed.solarforge.ClientHelpers;
+import com.finderfeed.solarforge.helpers.ClientHelpers;
 import com.finderfeed.solarforge.content.entities.not_alive.BallLightningProjectile;
 import com.finderfeed.solarforge.content.items.primitive.RareSolarcraftItem;
 import com.finderfeed.solarforge.content.items.runic_energy.IRunicEnergyUser;

@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.content;
 
-import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.helpers.Helpers;
 import com.finderfeed.solarforge.events.other_events.event_handler.EventHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;

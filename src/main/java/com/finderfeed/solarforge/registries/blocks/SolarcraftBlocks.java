@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.registries.blocks;
 
-import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.helpers.Helpers;
 import com.finderfeed.solarforge.local_library.blocks.FlammableBlock;
 import com.finderfeed.solarforge.local_library.blocks.FlammableLeavesBlock;
 import com.finderfeed.solarforge.local_library.blocks.FlammableSlabBlock;

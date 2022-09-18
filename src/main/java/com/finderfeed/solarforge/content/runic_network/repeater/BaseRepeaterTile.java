@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.content.runic_network.repeater;
 
-import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.helpers.Helpers;
 import com.finderfeed.solarforge.local_library.helpers.CompoundNBTHelper;
 import com.finderfeed.solarforge.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarforge.client.particles.SolarcraftParticleTypes;

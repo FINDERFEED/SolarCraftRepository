@@ -1,22 +1,12 @@
 package com.finderfeed.solarforge.events.hotkey_use_event;
 
 
-import com.finderfeed.solarforge.ClientHelpers;
+import com.finderfeed.solarforge.helpers.ClientHelpers;
 import com.finderfeed.solarforge.SolarcraftClientRegistry;
 
-import com.finderfeed.solarforge.client.screens.ability_screen.AbilitySelectionScreen;
-import com.finderfeed.solarforge.content.items.solar_lexicon.screen.CraftingRecipeScreen;
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
 import com.finderfeed.solarforge.packet_handler.packets.CastAbilityPacket;
-import com.finderfeed.solarforge.content.blocks.solar_forge_block.solar_forge_screen.SolarForgeAbilityConfigScreen;
-import com.finderfeed.solarforge.packet_handler.packets.RequestAbilityScreen;
-import com.finderfeed.solarforge.packet_handler.packets.RequestAbilityScreenPacket;
 import net.minecraft.client.Minecraft;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.crafting.CraftingRecipe;
-import net.minecraft.world.item.crafting.Recipe;
-import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.minecraftforge.api.distmarker.Dist;
 
 import net.minecraftforge.client.event.InputEvent;

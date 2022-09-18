@@ -1,10 +1,8 @@
 package com.finderfeed.solarforge.content.items.solar_lexicon.screen;
 
-import com.finderfeed.solarforge.ClientHelpers;
+import com.finderfeed.solarforge.helpers.ClientHelpers;
 import com.finderfeed.solarforge.SolarForge;
-import com.finderfeed.solarforge.client.rendering.PreparedShapedRecipe;
 import com.finderfeed.solarforge.content.items.solar_lexicon.SolarLexicon;
-import com.finderfeed.solarforge.content.recipe_types.infusing_crafting.InfusingCraftingRecipe;
 import com.finderfeed.solarforge.local_library.other.ItemRator;
 import com.finderfeed.solarforge.misc_things.PhantomInventory;
 import com.finderfeed.solarforge.registries.sounds.SolarcraftSounds;
@@ -12,14 +10,12 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.gui.screens.recipebook.GhostRecipe;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.sounds.SoundManager;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.recipebook.PlaceRecipe;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.Slot;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.CraftingRecipe;

@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.misc_things;
 
-import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.helpers.Helpers;
 
 import com.finderfeed.solarforge.local_library.helpers.CompoundNBTHelper;
 import net.minecraft.network.Connection;

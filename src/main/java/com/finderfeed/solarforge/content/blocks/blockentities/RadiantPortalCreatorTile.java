@@ -1,8 +1,9 @@
 package com.finderfeed.solarforge.content.blocks.blockentities;
 
-import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.helpers.Helpers;
 import com.finderfeed.solarforge.events.other_events.event_handler.EventHandler;
-import com.finderfeed.solarforge.multiblocks.Multiblocks;
+
+import com.finderfeed.solarforge.helpers.multiblock.Multiblocks;
 import com.finderfeed.solarforge.registries.blocks.SolarcraftBlocks;
 import com.finderfeed.solarforge.registries.tile_entities.SolarcraftTileEntityTypes;
 import net.minecraft.core.BlockPos;
@@ -33,7 +34,7 @@ public class RadiantPortalCreatorTile extends BlockEntity {
 
 
     public boolean isActive(){
-        return Helpers.checkStructure(level,worldPosition.offset(-3,-1,-3), Multiblocks.RADIANT_LAND_PORTAL.getM(),false);
+        return Multiblocks.RADIANT_LAND_PORTAL.check(level,worldPosition,false);
     }
 
 

@@ -2,7 +2,7 @@ package com.finderfeed.solarforge.client.baked_models;
 
 
 
-import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.helpers.Helpers;
 import com.finderfeed.solarforge.misc_things.IProgressionBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.client.Minecraft;

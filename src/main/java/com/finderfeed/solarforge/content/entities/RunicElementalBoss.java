@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.content.entities;
 
-import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.helpers.Helpers;
 import com.finderfeed.solarforge.content.entities.not_alive.*;
 import com.finderfeed.solarforge.local_library.entities.BossAttackChain;
 import com.finderfeed.solarforge.local_library.helpers.CompoundNBTHelper;

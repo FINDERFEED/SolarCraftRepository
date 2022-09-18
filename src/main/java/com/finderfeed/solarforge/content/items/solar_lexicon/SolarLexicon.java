@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.content.items.solar_lexicon;
 
-import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.helpers.Helpers;
 import com.finderfeed.solarforge.content.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarforge.content.items.solar_lexicon.unlockables.ProgressionHelper;
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;

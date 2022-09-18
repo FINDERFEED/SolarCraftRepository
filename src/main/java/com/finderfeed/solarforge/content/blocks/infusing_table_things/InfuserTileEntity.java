@@ -1,10 +1,12 @@
 package com.finderfeed.solarforge.content.blocks.infusing_table_things;
 
 
-import com.finderfeed.solarforge.ClientHelpers;
-import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.helpers.ClientHelpers;
+import com.finderfeed.solarforge.helpers.Helpers;
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.client.particles.SolarcraftParticleTypes;
+import com.finderfeed.solarforge.helpers.multiblock.MultiblockStructure;
+import com.finderfeed.solarforge.helpers.multiblock.Multiblocks;
 import com.finderfeed.solarforge.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarforge.local_library.other.EaseIn;
 import com.finderfeed.solarforge.content.blocks.blockentities.REItemHandlerBlockEntity;
@@ -13,7 +15,7 @@ import com.finderfeed.solarforge.content.items.runic_energy.RunicEnergyCost;
 import com.finderfeed.solarforge.content.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarforge.content.items.solar_lexicon.unlockables.ProgressionHelper;
 import com.finderfeed.solarforge.misc_things.*;
-import com.finderfeed.solarforge.multiblocks.Multiblocks;
+//import com.finderfeed.solarforge.multiblocks.Multiblocks;
 import com.finderfeed.solarforge.content.recipe_types.infusing_new.InfusingRecipe;
 import com.finderfeed.solarforge.content.items.solar_lexicon.progressions.Progression;
 import com.finderfeed.solarforge.registries.Tags;
@@ -383,9 +385,12 @@ public class InfuserTileEntity extends REItemHandlerBlockEntity implements  IEne
     }
 
     public void calculateTier(){
-        boolean tier1 = Helpers.checkStructure(level,worldPosition.below(1).north(6).west(6),Multiblocks.INFUSER_TIER_FIRST.getM(), true);
-        boolean tier2 = Helpers.checkStructure(level,worldPosition.below(1).north(9).west(9),Multiblocks.INFUSER_TIER_RUNIC_ENERGY.getM(), true);
-        boolean tier3 = Helpers.checkStructure(level,worldPosition.below(1).north(9).west(9),Multiblocks.INFUSER_TIER_SOLAR_ENERGY.getM(), true);
+//        boolean tier1 = Helpers.checkStructure(level,worldPosition.below(1).north(6).west(6),Multiblocks.INFUSER_TIER_FIRST.getM(), true);
+//        boolean tier2 = Helpers.checkStructure(level,worldPosition.below(1).north(9).west(9),Multiblocks.INFUSER_TIER_RUNIC_ENERGY.getM(), true);
+//        boolean tier3 = Helpers.checkStructure(level,worldPosition.below(1).north(9).west(9),Multiblocks.INFUSER_TIER_SOLAR_ENERGY.getM(), true);
+        boolean tier1 = Multiblocks.INFUSER_TIER_ONE.check(level,worldPosition,true);
+        boolean tier2 = Multiblocks.INFUSER_TIER_TWO.check(level,worldPosition,true);
+        boolean tier3 = Multiblocks.INFUSER_TIER_THREE.check(level,worldPosition,true);
         if (tier3){
             this.tier = Tier.SOLAR_ENERGY;
         }else if (tier2){
@@ -606,7 +611,9 @@ public class InfuserTileEntity extends REItemHandlerBlockEntity implements  IEne
     }
 
     private boolean isStructureCorrect(){
-        return tier != null && Helpers.checkStructure(level, worldPosition.below().north(tier.offsetPos).west(tier.offsetPos), this.tier.structure, true);
+        return tier != null && this.tier.structure.check(level,worldPosition,true);
+//                Helpers.checkStructure(level, worldPosition.below().north(tier.offsetPos).west(tier.offsetPos),
+//                this.tier.structure, true);
     }
 
     @Override
@@ -726,26 +733,22 @@ public class InfuserTileEntity extends REItemHandlerBlockEntity implements  IEne
 
 
     public enum Tier{
-        FIRST("first",Multiblocks.INFUSER_TIER_FIRST.getM(), 6),
-        RUNIC_ENERGY("runic_energy",Multiblocks.INFUSER_TIER_RUNIC_ENERGY.getM(), 9),
-        SOLAR_ENERGY("solar_energy",Multiblocks.INFUSER_TIER_SOLAR_ENERGY.getM(), 9)
+        FIRST("first",Multiblocks.INFUSER_TIER_ONE),
+        RUNIC_ENERGY("runic_energy",Multiblocks.INFUSER_TIER_TWO),
+        SOLAR_ENERGY("solar_energy",Multiblocks.INFUSER_TIER_THREE)
         ;
         private String id;
-        private Multiblock structure;
-        private int offsetPos;
-        Tier(String id,Multiblock struct,int offsetPos){
+        private MultiblockStructure structure;
+
+        Tier(String id,MultiblockStructure struct){
             this.id = id;
             this.structure = struct;
-            this.offsetPos = offsetPos;
+
 
         }
 
-        public Multiblock getStructure() {
+        public MultiblockStructure getStructure() {
             return structure;
-        }
-
-        public int getOffsetPos() {
-            return offsetPos;
         }
 
         public String getId() {

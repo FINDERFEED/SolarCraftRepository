@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.content.entities.not_alive;
 
-import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.helpers.Helpers;
 import com.finderfeed.solarforge.misc_things.CrystalBossBuddy;
 import com.finderfeed.solarforge.packet_handler.packets.misc_packets.ExplosionParticlesPacket;
 import com.finderfeed.solarforge.registries.entities.SolarcraftEntityTypes;

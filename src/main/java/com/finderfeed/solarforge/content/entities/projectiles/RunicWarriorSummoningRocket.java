@@ -1,7 +1,7 @@
 package com.finderfeed.solarforge.content.entities.projectiles;
 
-import com.finderfeed.solarforge.ClientHelpers;
-import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.helpers.ClientHelpers;
+import com.finderfeed.solarforge.helpers.Helpers;
 import com.finderfeed.solarforge.client.particles.SolarcraftParticleTypes;
 import com.finderfeed.solarforge.content.entities.RunicWarrior;
 import com.finderfeed.solarforge.registries.entities.SolarcraftEntityTypes;

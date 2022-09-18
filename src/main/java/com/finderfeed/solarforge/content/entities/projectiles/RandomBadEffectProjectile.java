@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.content.entities.projectiles;
 
-import com.finderfeed.solarforge.ClientHelpers;
+import com.finderfeed.solarforge.helpers.ClientHelpers;
 import com.finderfeed.solarforge.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarforge.misc_things.CrystalBossBuddy;
 import com.finderfeed.solarforge.client.particles.SolarcraftParticleTypes;

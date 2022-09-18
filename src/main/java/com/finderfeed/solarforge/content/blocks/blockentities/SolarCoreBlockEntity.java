@@ -1,8 +1,9 @@
 package com.finderfeed.solarforge.content.blocks.blockentities;
 
-import com.finderfeed.solarforge.Helpers;
+
+import com.finderfeed.solarforge.helpers.multiblock.Multiblocks;
 import com.finderfeed.solarforge.misc_things.AbstractSolarCore;
-import com.finderfeed.solarforge.multiblocks.Multiblocks;
+
 import com.finderfeed.solarforge.registries.tile_entities.SolarcraftTileEntityTypes;
 
 
@@ -23,7 +24,9 @@ public class SolarCoreBlockEntity extends AbstractSolarCore {
 
     public static void tick(Level world, BlockPos pos, BlockState blockState, SolarCoreBlockEntity tile) {
         AbstractSolarCore.tick(world,pos,blockState,tile);
-        tile.IS_STRUCT_CORRECT = Helpers.checkStructure(tile.level,tile.worldPosition.offset(-2,-4,-2), Multiblocks.SOLAR_CORE.getM(),true);
+        if (world.getGameTime() % 20 == 0) {
+            tile.IS_STRUCT_CORRECT = Multiblocks.SOLAR_CORE.check(world,pos,true);
+        }
     }
 
 

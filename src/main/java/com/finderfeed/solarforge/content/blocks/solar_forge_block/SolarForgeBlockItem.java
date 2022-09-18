@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.content.blocks.solar_forge_block;
 
-import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.helpers.Helpers;
 import com.finderfeed.solarforge.content.items.primitive.solacraft_item_classes.SolarcraftBlockItem;
 import com.finderfeed.solarforge.content.items.solar_lexicon.progressions.Progression;
 import com.finderfeed.solarforge.content.items.solar_lexicon.unlockables.AncientFragment;

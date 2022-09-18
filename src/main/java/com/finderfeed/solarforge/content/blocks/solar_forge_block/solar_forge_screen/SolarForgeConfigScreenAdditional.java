@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.content.blocks.solar_forge_block.solar_forge_screen;
 
-import com.finderfeed.solarforge.ClientHelpers;
+import com.finderfeed.solarforge.helpers.ClientHelpers;
 import com.finderfeed.solarforge.content.abilities.ability_classes.AbstractAbility;
 import com.finderfeed.solarforge.client.screens.ScrollableScreen;
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;

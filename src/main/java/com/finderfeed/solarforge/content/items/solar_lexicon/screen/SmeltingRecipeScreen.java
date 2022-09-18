@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.content.items.solar_lexicon.screen;
 
-import com.finderfeed.solarforge.ClientHelpers;
+import com.finderfeed.solarforge.helpers.ClientHelpers;
 import com.finderfeed.solarforge.content.items.solar_lexicon.SolarLexicon;
 import com.finderfeed.solarforge.content.recipe_types.solar_smelting.SolarSmeltingRecipe;
 import com.mojang.blaze3d.vertex.PoseStack;

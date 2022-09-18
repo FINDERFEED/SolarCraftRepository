@@ -55,9 +55,18 @@ public class ShadowZombie extends Monster implements PowerableMob {
         }
     }
 
+//    @Override
+//    public boolean isInvulnerableTo(DamageSource src) {
+//        System.out.println(src);
+//        return !src.isMagic() && src != DamageSource.OUT_OF_WORLD;
+//    }
+
     @Override
-    public boolean isInvulnerableTo(DamageSource src) {
-        return !src.isMagic() && src != DamageSource.OUT_OF_WORLD;
+    public boolean hurt(DamageSource src, float amount) {
+        if (!src.isMagic() && src != DamageSource.OUT_OF_WORLD){
+            return super.hurt(src,0);
+        }
+        return super.hurt(src, amount);
     }
 
     public static AttributeSupplier.Builder createAttributes() {

@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.content.blocks.blockentities.clearing_ritual.clearing_ritual_crystal.corruption_wisp;
 
-import com.finderfeed.solarforge.ClientHelpers;
+import com.finderfeed.solarforge.helpers.ClientHelpers;
 import com.finderfeed.solarforge.client.particles.SolarcraftParticleTypes;
 import com.finderfeed.solarforge.local_library.helpers.CompoundNBTHelper;
 import com.finderfeed.solarforge.content.blocks.blockentities.clearing_ritual.clearing_ritual_crystal.ClearingRitualCrystalTile;

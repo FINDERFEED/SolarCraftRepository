@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.misc_things;
 
-import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.helpers.Helpers;
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
 import com.finderfeed.solarforge.packet_handler.packets.PlaySoundPacket;
 import net.minecraft.core.BlockPos;

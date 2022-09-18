@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.content.blocks;
 
-import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.helpers.Helpers;
 import com.finderfeed.solarforge.content.blocks.blockentities.RunicEnergyChargerTileEntity;
 import com.finderfeed.solarforge.content.blocks.blockentities.containers.RunicEnergyChargerContainer;
 import com.finderfeed.solarforge.content.blocks.primitive.RunicEnergySaverBlock;

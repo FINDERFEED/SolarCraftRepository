@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.content.blocks.primitive;
 
-import com.finderfeed.solarforge.ClientHelpers;
+import com.finderfeed.solarforge.helpers.ClientHelpers;
 import com.finderfeed.solarforge.client.particles.SolarcraftParticleTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

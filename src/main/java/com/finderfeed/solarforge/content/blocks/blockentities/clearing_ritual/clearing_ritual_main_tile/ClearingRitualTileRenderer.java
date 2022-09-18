@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.content.blocks.blockentities.clearing_ritual.clearing_ritual_main_tile;
 
-import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.helpers.Helpers;
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.client.rendering.rendertypes.SolarCraftRenderTypes;
 import com.finderfeed.solarforge.events.other_events.OBJModels;

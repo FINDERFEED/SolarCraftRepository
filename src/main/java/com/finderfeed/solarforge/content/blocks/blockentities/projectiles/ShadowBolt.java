@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.content.blocks.blockentities.projectiles;
 
-import com.finderfeed.solarforge.ClientHelpers;
+import com.finderfeed.solarforge.helpers.ClientHelpers;
 import com.finderfeed.solarforge.client.particles.SolarcraftParticleTypes;
 import com.finderfeed.solarforge.packet_handler.packets.ShadowBoltExplosionPacket;
 import com.finderfeed.solarforge.registries.SolarcraftDamageSources;

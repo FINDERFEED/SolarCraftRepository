@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.client.particles;
 
-import com.finderfeed.solarforge.ClientHelpers;
+import com.finderfeed.solarforge.helpers.ClientHelpers;
 import com.finderfeed.solarforge.client.rendering.rendertypes.SolarCraftRenderTypes;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
@@ -17,9 +17,6 @@ import org.lwjgl.opengl.GL11;
 import javax.annotation.Nullable;
 
 import static org.apache.commons.lang3.RandomUtils.nextFloat;
-
-
-import net.minecraft.client.Camera;
 
 public class SolarStrikeParticle extends TextureSheetParticle {
 

@@ -1,8 +1,9 @@
 package com.finderfeed.solarforge.content.blocks.blockentities;
 
-import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.helpers.Helpers;
 import com.finderfeed.solarforge.client.particles.SolarcraftParticleTypes;
-import com.finderfeed.solarforge.multiblocks.Multiblocks;
+
+import com.finderfeed.solarforge.helpers.multiblock.Multiblocks;
 import com.finderfeed.solarforge.registries.tile_entities.SolarcraftTileEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
@@ -33,8 +34,8 @@ public class AuraHealerTile extends BlockEntity  {
             if (tile.HEAL_TICK > 400 ) {
                 tile.HEAL_TICK = 0;
 
-                if (Helpers.checkStructure(tile.level,tile.worldPosition.offset(-1,-2,-1), Multiblocks.AURA_HEALER.getM(),true)) {
-                    List<Player> players = tile.level.getEntitiesOfClass(Player.class, new AABB(-20, -5, -20, 20, 5, 20).move(tile.worldPosition), null);
+                if (Multiblocks.AURA_HEALER.check(world,pos,false)) {
+                    List<Player> players = tile.level.getEntitiesOfClass(Player.class, new AABB(-20, -5, -20, 20, 5, 20).move(tile.worldPosition));
                     for (Player a : players) {
                         if (a.getHealth() != a.getMaxHealth()) {
                             a.heal(4);

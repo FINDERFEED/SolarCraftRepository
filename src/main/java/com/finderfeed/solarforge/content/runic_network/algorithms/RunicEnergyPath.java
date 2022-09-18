@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.content.runic_network.algorithms;
 
-import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.helpers.Helpers;
 import com.finderfeed.solarforge.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarforge.content.blocks.blockentities.runic_energy.RunicEnergyGiver;
 import com.finderfeed.solarforge.content.runic_network.repeater.BaseRepeaterTile;

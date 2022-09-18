@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.content.blocks.blockentities;
 
-import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.helpers.Helpers;
 import com.finderfeed.solarforge.content.blocks.blockentities.projectiles.AbstractTurretProjectile;
 import com.finderfeed.solarforge.registries.items.SolarcraftItems;
 import com.finderfeed.solarforge.registries.tile_entities.SolarcraftTileEntityTypes;

@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.content.blocks.blockentities.clearing_ritual.clearing_ritual_crystal;
 
-import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.helpers.Helpers;
 import com.finderfeed.solarforge.SolarForge;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;

@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.content.blocks.blockentities.containers.screens;
 
-import com.finderfeed.solarforge.ClientHelpers;
+import com.finderfeed.solarforge.helpers.ClientHelpers;
 import com.finderfeed.solarforge.client.particles.screen.RuneTileParticle;
 import com.finderfeed.solarforge.client.screens.buttons.RuneButtonRunicTable;
 import com.finderfeed.solarforge.local_library.client.particles.ScreenParticlesRenderHandler;

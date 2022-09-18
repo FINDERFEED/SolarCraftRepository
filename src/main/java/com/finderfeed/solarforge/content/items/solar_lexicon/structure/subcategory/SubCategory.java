@@ -1,6 +1,7 @@
 package com.finderfeed.solarforge.content.items.solar_lexicon.structure.subcategory;
 
 import com.finderfeed.solarforge.SolarForge;
+import com.finderfeed.solarforge.helpers.multiblock.MultiblockStructure;
 import com.finderfeed.solarforge.local_library.custom_registries.RegistryDelegate;
 import com.finderfeed.solarforge.local_library.helpers.RenderingTools;
 import com.finderfeed.solarforge.content.items.solar_lexicon.screen.*;
@@ -84,7 +85,7 @@ public class SubCategory {
                     buttonsToAdd.add(constructCraftingRecipeButton(frag, getCraftingRecipesFromFragment(frag), buttonPosX, buttonPosY));
                 }
             }else if (type == AncientFragment.Type.STRUCTURE){
-                buttonsToAdd.add(constructStructureButton(frag.getStructure().getM(),buttonPosX,buttonPosY,frag));
+                buttonsToAdd.add(constructStructureButton(frag.getStructure(),buttonPosX,buttonPosY,frag));
             }else if (type == AncientFragment.Type.UPGRADE){
                 buttonsToAdd.add(constructInfusingRecipeButton(frag,getInfusingRecipeFromFragment(frag),buttonPosX,buttonPosY));
             }else if (type == AncientFragment.Type.CUSTOM){
@@ -311,10 +312,10 @@ public class SubCategory {
         });
     }
 
-    public ItemStackButton constructStructureButton(Multiblock structure, int x , int y, AncientFragment fragment){
+    public ItemStackButton constructStructureButton(MultiblockStructure structure, int x , int y, AncientFragment fragment){
         return new ItemStackButton(x,y,24,24,(button)->{
             Minecraft.getInstance().setScreen(new StructureScreen(structure));
-        },structure.getMainBlock().getBlock().asItem().getDefaultInstance(),1.5f, (button,matrices,mx,my)->{
+        },structure.mainBlock.getBlock().asItem().getDefaultInstance(),1.5f, (button,matrices,mx,my)->{
 
             if (Minecraft.getInstance().screen instanceof SolarLexiconRecipesScreen screen) {
                 screen.postRender.add(()->screen.renderTooltip(matrices, fragment.getTranslation(), mx, my));

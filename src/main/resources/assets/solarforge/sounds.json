@@ -73,5 +73,8 @@
   },
   "corruption_wisp_hit": {
     "sounds": ["solarforge:corruption_wisp_hit"]
+  },
+  "dimension_break": {
+    "sounds": ["solarforge:dimension/dimension_break"]
   }
 }

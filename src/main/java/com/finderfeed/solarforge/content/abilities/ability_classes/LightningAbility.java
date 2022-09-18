@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.content.abilities.ability_classes;
 
-import com.finderfeed.solarforge.Helpers;
+import com.finderfeed.solarforge.helpers.Helpers;
 import com.finderfeed.solarforge.content.abilities.AbilityHelper;
 import com.finderfeed.solarforge.content.entities.not_alive.MyFallingBlockEntity;
 import com.finderfeed.solarforge.content.items.runic_energy.RunicEnergyCost;

@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.content.items.solar_lexicon.screen;
 
-import com.finderfeed.solarforge.ClientHelpers;
+import com.finderfeed.solarforge.helpers.ClientHelpers;
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.content.items.solar_lexicon.SolarLexicon;
 import com.finderfeed.solarforge.content.recipe_types.infusing_crafting.InfusingCraftingRecipe;
