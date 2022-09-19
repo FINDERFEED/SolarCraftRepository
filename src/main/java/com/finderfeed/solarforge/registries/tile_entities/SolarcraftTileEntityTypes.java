@@ -111,4 +111,6 @@ public class SolarcraftTileEntityTypes {
     public static final RegistryObject<BlockEntityType<ClearingRitualMainTile>> CLEARING_RITUAL_MAIN_BLOCK = TILE_ENTITY_TYPE.register("clearing_ritual_main_block",()->
             BlockEntityType.Builder.of(ClearingRitualMainTile::new, SolarcraftBlocks.CLEARING_RITUAL_MAIN_BLOCK.get()).build(null));
 
+    public static final RegistryObject<BlockEntityType<DimensionCoreTile>> DIMENSION_CORE_TILE = TILE_ENTITY_TYPE.register("dimension_core",()->
+            BlockEntityType.Builder.of(DimensionCoreTile::new, SolarcraftBlocks.DIMENSION_CORE.get()).build(null));
 }
