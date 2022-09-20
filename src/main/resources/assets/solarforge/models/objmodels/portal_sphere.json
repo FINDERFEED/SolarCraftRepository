@@ -1,0 +1,4 @@
+{
+  "loader": "forge:obj",
+  "model": "solarforge:objmodels/portal_sphere.obj"
+}

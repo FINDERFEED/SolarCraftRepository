@@ -37,7 +37,7 @@ public class PortalCreatorBlock extends Block implements EntityBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-        return SolarcraftTileEntityTypes.PORTAL_CREATOR.get().create(blockPos,blockState);
+        return null;
     }
 
 

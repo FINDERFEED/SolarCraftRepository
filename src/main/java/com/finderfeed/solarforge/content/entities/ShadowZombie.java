@@ -111,11 +111,17 @@ public class ShadowZombie extends Monster implements PowerableMob {
         return SoundEvents.ZOMBIE_AMBIENT;
     }
 
+    @Override
+    public void playAmbientSound() {
+
+    }
+
     protected SoundEvent getStepSound() {
         return SoundEvents.ZOMBIE_STEP;
     }
 
+
     protected void playStepSound(BlockPos p_34316_, BlockState p_34317_) {
-        this.playSound(this.getStepSound(), 0.15F, 1.0F);
+//        this.playSound(this.getStepSound(), 0.15F, 1.0F);
     }
 }

@@ -29,7 +29,7 @@ public class RadiantPortalCreatorTile extends BlockEntity {
 
 
     public RadiantPortalCreatorTile( BlockPos p_155229_, BlockState p_155230_) {
-        super(SolarcraftTileEntityTypes.PORTAL_CREATOR.get(), p_155229_, p_155230_);
+        super(null, p_155229_, p_155230_);
     }
 
 

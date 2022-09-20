@@ -543,6 +543,19 @@ public class RenderingTools {
         matrices.popPose();
     }
 
+    public static void renderObjModel(ResourceLocation location,PoseStack matrices,MultiBufferSource buffer,float r, float g,float b,int light,int overlay){
+        List<BakedQuad> list = Minecraft.getInstance().getModelManager().getModel(location)
+                .getQuads(null, null, new Random(), new ModelDataMap.Builder().build());
+
+        VertexConsumer cons = buffer.getBuffer(RenderType.entityTranslucent(TextureAtlas.LOCATION_BLOCKS));
+        matrices.pushPose();
+
+        for (BakedQuad a : list) {
+            cons.putBulkData(matrices.last(), a, r, g, b, light, overlay);
+        }
+        matrices.popPose();
+    }
+
     public static void renderShaderedRay(PoseStack stack, MultiBufferSource buffer, float mod, float height, Consumer<PoseStack> translations, boolean rotate, float rotationModifier, float partialTicks){
         RenderSystem.depthMask(false);
         stack.pushPose();

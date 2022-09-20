@@ -1,20 +1,25 @@
 package com.finderfeed.solarforge.events.other_events.event_handler;
 
 
+import com.finderfeed.solarforge.events.PlayerTickEvent;
 import com.finderfeed.solarforge.helpers.ClientHelpers;
 import com.finderfeed.solarforge.helpers.Helpers;
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.events.misc.ClientTicker;
 import com.finderfeed.solarforge.content.blocks.infusing_table_things.InfuserTileEntity;
 import com.finderfeed.solarforge.content.items.ModuleItem;
+import com.finderfeed.solarforge.misc_things.Flash;
 import com.finderfeed.solarforge.registries.blocks.SolarcraftBlocks;
 import com.finderfeed.solarforge.registries.items.SolarcraftItems;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
+import com.mojang.math.Matrix4f;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Gui;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
@@ -26,12 +31,14 @@ import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ClientPlayerNetworkEvent;
 import net.minecraftforge.client.event.EntityViewRenderEvent;
+import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderLevelLastEvent;
 
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.common.Mod;
 
 import java.util.*;
@@ -260,8 +267,54 @@ public class ClientEventsHandler {
 
 
 
+    private static Flash currentFlashEffect = null;
 
+    @SubscribeEvent
+    public static void renderFlash(RenderGameOverlayEvent event){
+        if (currentFlashEffect == null) return;
+        if (event.getType() != RenderGameOverlayEvent.ElementType.TEXT) return;
+        PoseStack matrices = event.getMatrixStack();
+        float scaledHeight = Minecraft.getInstance().getWindow().getGuiScaledHeight();
+        float scaledWidth = Minecraft.getInstance().getWindow().getGuiScaledWidth();
+        float alpha = 1f;
+        if (currentFlashEffect.getTicker() <= currentFlashEffect.getInTime()){
+            alpha = currentFlashEffect.getTicker() / (float) currentFlashEffect.getInTime();
+        }else if (currentFlashEffect.getTicker() >= currentFlashEffect.getAllTime() - currentFlashEffect.getOutTime()){
+            alpha = 1f - (currentFlashEffect.getTicker() - currentFlashEffect.getStayTime() - currentFlashEffect.getInTime())/(float)currentFlashEffect.getOutTime();
+        }
+        RenderSystem.enableBlend();
+        RenderSystem.disableTexture();
+        RenderSystem.defaultBlendFunc();
+        RenderSystem.setShader(GameRenderer::getPositionColorShader);
+        BufferBuilder b = Tesselator.getInstance().getBuilder();
+        b.begin(VertexFormat.Mode.QUADS,DefaultVertexFormat.POSITION_COLOR);
 
+        Matrix4f m = matrices.last().pose();
+
+        b.vertex(m,0,scaledHeight,0).color(1f,1f,1f,alpha).endVertex();
+        b.vertex(m,scaledWidth,scaledHeight,0).color(1f,1f,1f,alpha).endVertex();
+        b.vertex(m,scaledWidth,0,0).color(1f,1f,1f,alpha).endVertex();
+        b.vertex(m,0,0,0).color(1f,1f,1f,alpha).endVertex();
+        b.end();
+        BufferUploader.end(b);
+        RenderSystem.enableTexture();
+        RenderSystem.disableBlend();
+    }
+
+    @SubscribeEvent
+    public static void tickFlash(TickEvent.PlayerTickEvent event){
+        if (currentFlashEffect != null && event.side == LogicalSide.CLIENT && event.phase == TickEvent.Phase.END){
+            if (currentFlashEffect.isFinished()){
+                currentFlashEffect = null;
+                return;
+            }
+            currentFlashEffect.tick();
+        }
+    }
+
+    public static void setCurrentFlashEffect(Flash currentFlashEffect) {
+        ClientEventsHandler.currentFlashEffect = currentFlashEffect;
+    }
 }
 
 

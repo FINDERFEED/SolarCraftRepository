@@ -12,6 +12,7 @@ import com.finderfeed.solarforge.config.JsonFragmentsHelper;
 import com.finderfeed.solarforge.config.SolarcraftClientConfig;
 import com.finderfeed.solarforge.content.entities.not_alive.BallLightningProjectile;
 import com.finderfeed.solarforge.events.RenderEventsHandler;
+import com.finderfeed.solarforge.events.other_events.event_handler.ClientEventsHandler;
 import com.finderfeed.solarforge.local_library.effects.LightningBoltPath;
 import com.finderfeed.solarforge.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarforge.content.blocks.blockentities.clearing_ritual.CrystalEnergyVinesTile;
@@ -502,6 +503,10 @@ public class ClientHelpers {
 
     }
 
+
+    public static void flash(int inTime,int stayTime,int outTime){
+        ClientEventsHandler.setCurrentFlashEffect(new Flash(inTime,stayTime,outTime));
+    }
 
     public static class Particles {
 

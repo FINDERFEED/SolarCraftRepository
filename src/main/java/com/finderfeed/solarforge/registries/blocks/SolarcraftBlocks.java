@@ -155,7 +155,7 @@ public class SolarcraftBlocks {
     public  static  final RegistryObject<Block> CRYSTAL_FLOWER = BLOCKS.register("crystal_flower",()-> new CrystalFlower(BlockBehaviour.Properties.copy(Blocks.DEAD_BUSH).lightLevel((i)->6)));
     public static final RegistryObject<Block> RADIANT_BERRY_BUSH = BLOCKS.register("radiant_berry_bush",()->new BushBlock(BlockBehaviour.Properties.copy(Blocks.DEAD_BUSH)));
 //    public static final RegistryObject<Block> RADIANT_LAND_PORTAL = BLOCKS.register("radiant_portal",()->new RadiantPortalBlock(BlockBehaviour.Properties.copy(Blocks.BEDROCK).isViewBlocking((a, b, c)-> false).noCollission() ));
-    public static final RegistryObject<Block> RADIANT_LAND_PORTAL_CREATOR = BLOCKS.register("radiant_portal_creator",()->new PortalCreatorBlock(BlockBehaviour.Properties.copy(Blocks.NETHERITE_BLOCK).isViewBlocking((a, b, c)-> false).noCollission()));
+//    public static final RegistryObject<Block> RADIANT_LAND_PORTAL_CREATOR = BLOCKS.register("radiant_portal_creator",()->new PortalCreatorBlock(BlockBehaviour.Properties.copy(Blocks.NETHERITE_BLOCK).isViewBlocking((a, b, c)-> false).noCollission()));
 
 
     public  static  final RegistryObject<Block> DIMENSION_CORE = BLOCKS.register("dimension_core",()-> new DimensionCoreBlock(BlockBehaviour.Properties.copy(Blocks.STONE)));

@@ -110,14 +110,14 @@ public class MultiblockVisualizer {
 
     @SubscribeEvent
     public static void updateGhostsOnPlace(BlockEvent.EntityPlaceEvent event){
-        if (visualizingAnchor != null && Minecraft.getInstance().level != null){
+        if (visualizingAnchor != null && Minecraft.getInstance().level != null && multiblock != null){
             multiblock.updateGhosts(visualizingAnchor,Minecraft.getInstance().level,event.getPos(),event.getPlacedBlock());
         }
     }
 
     @SubscribeEvent
     public static void updateGhostsOnBreak(BlockEvent.BreakEvent event){
-        if (visualizingAnchor != null && Minecraft.getInstance().level != null){
+        if (visualizingAnchor != null && Minecraft.getInstance().level != null && multiblock != null){
             multiblock.updateGhosts(visualizingAnchor,Minecraft.getInstance().level,event.getPos(), Blocks.AIR.defaultBlockState());
         }
     }

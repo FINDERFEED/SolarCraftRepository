@@ -279,7 +279,8 @@ public class SolarcraftItems {
     public static final RegistryObject<Item> RADIANT_BERRY = ITEMS.register("radiant_berry",()->new RadiantBerry(new Item.Properties().tab(SolarForge.SOLAR_GROUP).food(new FoodProperties.Builder().alwaysEat().nutrition(5).saturationMod(0.9F).build())));
     public static final RegistryObject<Item> RADIANT_BERRY_BUSH = ITEMS.register("radiant_berry_bush",()->new BlockItem(SolarcraftBlocks.RADIANT_BERRY_BUSH.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
 
-    public static final RegistryObject<Item> RADIANT_PORTAL_CREATOR = ITEMS.register("radiant_portal_creator",()->new PortalCreatorBlockItem(SolarcraftBlocks.RADIANT_LAND_PORTAL_CREATOR.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
+
+//    public static final RegistryObject<Item> RADIANT_PORTAL_CREATOR = ITEMS.register("radiant_portal_creator",()->new PortalCreatorBlockItem(SolarcraftBlocks.RADIANT_LAND_PORTAL_CREATOR.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP_BLOCKS)));
 
 
     public static final RegistryObject<Item> EXPERIENCE_CRYSTAL = ITEMS.register("xp_crystal",()->new ExperienceCrystal(new Item.Properties().tab(SolarForge.SOLAR_GROUP_TOOLS).stacksTo(1),()->AncientFragment.EXPERIENCE_CRYSTAL));

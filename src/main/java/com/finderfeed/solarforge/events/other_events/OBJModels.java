@@ -38,7 +38,7 @@ public class OBJModels {
 
     public static final ResourceLocation HOLE_MODEL = new ResourceLocation("solarforge:objmodels/hole");
     public static final ResourceLocation ANCIENT_FRAGMENT_MODEL = new ResourceLocation("solarforge:toloadmodels/ancient_fragment");
-    public static final ResourceLocation ULDORADIUM_ORE = new ResourceLocation("solarforge:progression_ore_models/uldoradium_ore");
+    public static final ResourceLocation PORTAL_SPHERE = new ResourceLocation("solarforge:objmodels/portal_sphere");
 
 
 
@@ -62,5 +62,6 @@ public class OBJModels {
         ForgeModelBakery.addSpecialModel(CLEARING_RITUAL_MAIN_BLOCK_LOWER);
         ForgeModelBakery.addSpecialModel(CLEARING_RITUAL_MAIN_BLOCK_PETALS);
         ForgeModelBakery.addSpecialModel(CLEARING_RITUAL_MAIN_BLOCK_TOP);
+        ForgeModelBakery.addSpecialModel(PORTAL_SPHERE);
     }
 }

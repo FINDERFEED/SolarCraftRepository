@@ -154,7 +154,7 @@ public enum DMultiblocks {
             .addBlock(Structures.BlockStates.SOLAR_STONE_STAIRS_TOP_NORTH_STRAIGHT, 'Q',false)
             .addBlock(Structures.BlockStates.SOLAR_STONE_STAIRS_TOP_SOUTH_STRAIGHT, '&',false)
 
-            .addBlock(SolarcraftBlocks.RADIANT_LAND_PORTAL_CREATOR.get().defaultBlockState(), 'R',false)
+//            .addBlock(SolarcraftBlocks.RADIANT_LAND_PORTAL_CREATOR.get().defaultBlockState(), 'R',false)
             .addBlock(SolarcraftBlocks.SOLAR_STONE_CHISELED.get().defaultBlockState(), 'I',false)
             .addMainBlock(SolarcraftBlocks.DIMENSION_CORE.get().defaultBlockState())
             .addStruct(Structures.RADIANT_DIM_PORTAL_STRUCTURE)

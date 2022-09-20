@@ -1,10 +1,12 @@
 package com.finderfeed.solarforge.content.blocks.blockentities.clearing_ritual.clearing_ritual_main_tile;
 
+import com.finderfeed.solarforge.events.other_events.event_handler.ClientEventsHandler;
 import com.finderfeed.solarforge.helpers.ClientHelpers;
 import com.finderfeed.solarforge.helpers.Helpers;
 import com.finderfeed.solarforge.client.particles.SolarcraftParticleTypes;
 import com.finderfeed.solarforge.content.blocks.blockentities.clearing_ritual.ClearingRitual;
 import com.finderfeed.solarforge.local_library.helpers.FDMathHelper;
+import com.finderfeed.solarforge.misc_things.Flash;
 import com.finderfeed.solarforge.registries.sounds.SolarcraftSounds;
 import com.finderfeed.solarforge.registries.tile_entities.SolarcraftTileEntityTypes;
 import net.minecraft.core.BlockPos;
@@ -84,7 +86,8 @@ public class ClearingRitualMainTile extends BlockEntity {
         }
 
         if (ClearingRitual.MAX_TIME - tile.ritual.getCurrentTime() == DIMENSION_CRACK_ANIMATION_TICKS){
-            ClientHelpers.playsoundInEars(SolarcraftSounds.DIMENSION_BREAK.get(),1f,1f);
+            ClientHelpers.playsoundInEars(SolarcraftSounds.DIMENSION_BREAK.get(),1f,0.5f);
+            ClientHelpers.flash(100,40,40);
         }
 
 

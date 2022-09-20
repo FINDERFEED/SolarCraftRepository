@@ -10,6 +10,7 @@ import com.finderfeed.solarforge.config.JsonFragmentsHelper;
 import com.finderfeed.solarforge.content.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import com.finderfeed.solarforge.registries.abilities.AbilitiesRegistry;
+import com.finderfeed.solarforge.registries.items.SolarcraftItems;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -28,6 +29,10 @@ public class OnPlayerJoin {
         if (event.getPlayer() != null) {
             Player player = event.getPlayer();
             if (player instanceof  ServerPlayer sPlayer) {
+                if (!sPlayer.getPersistentData().getBoolean("recieved_solar_lexicon")){
+                    sPlayer.addItem(SolarcraftItems.SOLAR_LEXICON.get().getDefaultInstance());
+                }
+
                 for (RunicEnergy.Type type : RunicEnergy.Type.values()) {
                     Helpers.updateRunicEnergyOnClient(type, RunicEnergy.getEnergy(event.getPlayer(), type), event.getPlayer());
                 }
