@@ -1,5 +1,6 @@
 package com.finderfeed.solarforge.content.blocks.blockentities.clearing_ritual;
 
+import com.finderfeed.solarforge.helpers.ClientHelpers;
 import com.finderfeed.solarforge.helpers.Helpers;
 import com.finderfeed.solarforge.content.RadiantPortalBlock;
 import com.finderfeed.solarforge.content.entities.projectiles.SummoningProjectile;
@@ -8,6 +9,7 @@ import com.finderfeed.solarforge.content.blocks.blockentities.clearing_ritual.cl
 import com.finderfeed.solarforge.content.blocks.blockentities.clearing_ritual.clearing_ritual_main_tile.ClearingRitualMainTile;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import com.finderfeed.solarforge.registries.entities.SolarcraftEntityTypes;
+import com.finderfeed.solarforge.registries.sounds.SolarcraftSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.MinecraftServer;
@@ -22,6 +24,8 @@ import net.minecraft.world.phys.Vec3;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
+import static com.finderfeed.solarforge.content.blocks.blockentities.clearing_ritual.clearing_ritual_main_tile.ClearingRitualTileRenderer.DIMENSION_CRACK_ANIMATION_TICKS;
 
 public class ClearingRitual {
 
@@ -60,6 +64,11 @@ public class ClearingRitual {
                         this.ticker = 0;
                         return;
                     }
+                    if (ClearingRitual.MAX_TIME - tile.ritual.getCurrentTime() == DIMENSION_CRACK_ANIMATION_TICKS){
+//                        ClientHelpers.playsoundInEars(SolarcraftSounds.DIMENSION_BREAK.get(),1f,0.5f);
+//                        ClientHelpers.flash(100,40,40);
+                        Helpers.sendDimBreak((ServerLevel) tile.getLevel());
+                    }
                     if (ticker % 200 == 0) {
                         if (!this.checkStructure()) {
                             this.setRitualStatus(RITUAL_OFFLINE);
@@ -84,6 +93,7 @@ public class ClearingRitual {
                         this.randomLightning(world, tilePos);
                     }
                 }
+
             }
         }
     }

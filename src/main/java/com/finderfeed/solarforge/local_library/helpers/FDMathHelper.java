@@ -110,6 +110,16 @@ public class FDMathHelper {
         }
         return false;
     }
+    public static boolean canSeeBlock(BlockPos tile, Player player){
+        Vec3 playerHeadPos = player.position().add(0,player.getStandingEyeHeight(player.getPose(),player.getDimensions(player.getPose())),0);
+        Vec3 tileEntityPos = new Vec3(tile.getX()+0.5,tile.getY()+0.5,tile.getZ()+0.5);
+        ClipContext ctx = new ClipContext(playerHeadPos,tileEntityPos, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE,null);
+        BlockHitResult res = player.level.clip(ctx);
+        if (equalsBlockPos(tile,res.getBlockPos())){
+            return true;
+        }
+        return false;
+    }
 
 
     public static boolean canSeeTileEntity(BlockPos tile, BlockPos start,double radius,Level world){
@@ -156,6 +166,8 @@ public class FDMathHelper {
         }
         return false;
     }
+
+
 
     public static boolean equalsBlockPos(BlockPos pos1, BlockPos pos2){
         return (pos1.getX() == pos2.getX()) && (pos1.getY() == pos2.getY()) && (pos1.getZ() == pos2.getZ());

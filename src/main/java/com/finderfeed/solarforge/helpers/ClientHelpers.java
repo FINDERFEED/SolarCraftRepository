@@ -508,6 +508,11 @@ public class ClientHelpers {
         ClientEventsHandler.setCurrentFlashEffect(new Flash(inTime,stayTime,outTime));
     }
 
+    public static void handleDimBreakPacket(){
+        ClientHelpers.playsoundInEars(SolarcraftSounds.DIMENSION_BREAK.get(),1f,0.5f);
+        ClientHelpers.flash(100,40,40);
+    }
+
     public static class Particles {
 
         @Deprecated

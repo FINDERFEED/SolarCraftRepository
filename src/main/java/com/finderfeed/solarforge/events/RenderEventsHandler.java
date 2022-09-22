@@ -1,6 +1,7 @@
 package com.finderfeed.solarforge.events;
 
 
+import com.finderfeed.solarforge.content.blocks.render.DimensionCoreRenderer;
 import com.finderfeed.solarforge.helpers.ClientHelpers;
 import com.finderfeed.solarforge.local_library.helpers.RenderingTools;
 import com.finderfeed.solarforge.content.blocks.render.EnergyGeneratorTileRender;
@@ -107,7 +108,8 @@ public class RenderEventsHandler {
             if (!ACTIVE_SHADERS.isEmpty()) {
                 RenderingTools.renderHandManually(event.getPoseStack(), event.getPartialTick());
             }
-            resizeShader(width,height,RuneEnergyPylonRenderer.SHADER,EnergyGeneratorTileRender.SHADER, WormholeRenderer.SHADER);
+            resizeShader(width,height,RuneEnergyPylonRenderer.SHADER,EnergyGeneratorTileRender.SHADER, WormholeRenderer.SHADER,
+                    DimensionCoreRenderer.SHADER);
 
 
             ACTIVE_SHADERS.forEach((uniforms,shader)->{

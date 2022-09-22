@@ -29,9 +29,9 @@ public class OnPlayerJoin {
         if (event.getPlayer() != null) {
             Player player = event.getPlayer();
             if (player instanceof  ServerPlayer sPlayer) {
-                if (!sPlayer.getPersistentData().getBoolean("recieved_solar_lexicon")){
-                    sPlayer.addItem(SolarcraftItems.SOLAR_LEXICON.get().getDefaultInstance());
-                }
+//                if (!sPlayer.getPersistentData().getBoolean("recieved_solar_lexicon")){
+//                    sPlayer.addItem(SolarcraftItems.SOLAR_LEXICON.get().getDefaultInstance());
+//                }
 
                 for (RunicEnergy.Type type : RunicEnergy.Type.values()) {
                     Helpers.updateRunicEnergyOnClient(type, RunicEnergy.getEnergy(event.getPlayer(), type), event.getPlayer());

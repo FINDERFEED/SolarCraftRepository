@@ -565,7 +565,7 @@ public class Helpers {
     }
 
 
-    public static AABB createAABBWithRadius(Vec3 pos,int horizontal,int vertical){
+    public static AABB createAABBWithRadius(Vec3 pos,double horizontal,double vertical){
         return new AABB(-horizontal,-vertical,-horizontal,horizontal,vertical,horizontal).move(pos);
     }
 
@@ -576,5 +576,11 @@ public class Helpers {
 
     public static BlockPos vecToPos(Vec3 pos){
         return new BlockPos(pos.x,pos.y,pos.z);
+    }
+
+    public static void sendDimBreak(ServerLevel world){
+        world.getPlayers((e)->true).forEach((player)->{
+            SolarForgePacketHandler.INSTANCE.sendTo(new DimensionBreakPacket(),player.connection.connection,NetworkDirection.PLAY_TO_CLIENT);
+        });
     }
 }

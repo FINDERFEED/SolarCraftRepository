@@ -85,10 +85,7 @@ public class ClearingRitualMainTile extends BlockEntity {
             }
         }
 
-        if (ClearingRitual.MAX_TIME - tile.ritual.getCurrentTime() == DIMENSION_CRACK_ANIMATION_TICKS){
-            ClientHelpers.playsoundInEars(SolarcraftSounds.DIMENSION_BREAK.get(),1f,0.5f);
-            ClientHelpers.flash(100,40,40);
-        }
+
 
 
 

@@ -100,7 +100,7 @@ public class DimensionCoreTile extends BlockEntity {
     private static void handleTP(Level world,BlockPos pos){
         if (world.getGameTime() % 10 == 0) {
             AABB box = Helpers.createAABBWithRadius(Helpers.posToVec(pos).add(0.5,3.5,0.5),
-                    2,2);
+                    1.5,1.5);
             world.getEntitiesOfClass(Entity.class, box, Entity::canChangeDimensions).forEach((entity) -> {
                 if (world.getServer() != null) {
                     ServerLevel destination;
