@@ -8,6 +8,7 @@ import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.events.misc.ClientTicker;
 import com.finderfeed.solarforge.content.blocks.infusing_table_things.InfuserTileEntity;
 import com.finderfeed.solarforge.content.items.ModuleItem;
+import com.finderfeed.solarforge.misc_things.CameraShake;
 import com.finderfeed.solarforge.misc_things.Flash;
 import com.finderfeed.solarforge.registries.blocks.SolarcraftBlocks;
 import com.finderfeed.solarforge.registries.items.SolarcraftItems;
@@ -268,6 +269,7 @@ public class ClientEventsHandler {
 
 
     private static Flash currentFlashEffect = null;
+    private static CameraShake cameraShakeEffect = null;
 
     @SubscribeEvent
     public static void renderFlash(RenderGameOverlayEvent event){
@@ -302,18 +304,52 @@ public class ClientEventsHandler {
     }
 
     @SubscribeEvent
-    public static void tickFlash(TickEvent.PlayerTickEvent event){
-        if (currentFlashEffect != null && event.side == LogicalSide.CLIENT && event.phase == TickEvent.Phase.END){
-            if (currentFlashEffect.isFinished()){
-                currentFlashEffect = null;
-                return;
+    public static void tickFlashAndCameraShake(TickEvent.PlayerTickEvent event){
+        if (event.side == LogicalSide.CLIENT && event.phase == TickEvent.Phase.END){
+            if (currentFlashEffect != null) {
+                currentFlashEffect.tick();
+                if (currentFlashEffect.isFinished()) {
+                    currentFlashEffect = null;
+                }
             }
-            currentFlashEffect.tick();
+            if (cameraShakeEffect != null){
+                cameraShakeEffect.tick();
+                if (cameraShakeEffect.isFinished()){
+                    cameraShakeEffect = null;
+                }
+            }
+
         }
     }
 
     public static void setCurrentFlashEffect(Flash currentFlashEffect) {
         ClientEventsHandler.currentFlashEffect = currentFlashEffect;
+    }
+
+    public static void setCameraShakeEffect(CameraShake cameraShakeEffect) {
+        ClientEventsHandler.cameraShakeEffect = cameraShakeEffect;
+    }
+
+    @SubscribeEvent
+    public static void cameraShake(EntityViewRenderEvent.CameraSetup event){
+        if (Minecraft.getInstance().level == null || cameraShakeEffect == null) return;
+        Random random = new Random(Minecraft.getInstance().level.getGameTime()*1233);
+
+        float spread = cameraShakeEffect.getMaxSpread();
+        float mod = 1f;
+        int time = cameraShakeEffect.getTicker();
+        if (time <= cameraShakeEffect.getInTime()){
+            mod = time / (float) cameraShakeEffect.getInTime();
+        }else if (time >= cameraShakeEffect.getInTime() + cameraShakeEffect.getStayTime()){
+            mod = (time - (cameraShakeEffect.getInTime() + cameraShakeEffect.getStayTime()) )/(float) cameraShakeEffect.getOutTime();
+        }
+
+
+        spread *= mod;
+        float rx = random.nextFloat()*spread*2 - spread;
+        float ry = random.nextFloat()*spread*2 - spread;
+        event.setPitch(event.getPitch() + rx);
+        event.setYaw(event.getYaw() + ry);
     }
 }
 

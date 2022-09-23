@@ -508,9 +508,14 @@ public class ClientHelpers {
         ClientEventsHandler.setCurrentFlashEffect(new Flash(inTime,stayTime,outTime));
     }
 
+    public static void shake(int inTime,int stayTime,int outTime,float spread){
+        ClientEventsHandler.setCameraShakeEffect(new CameraShake(inTime,stayTime,outTime,spread));
+    }
+
     public static void handleDimBreakPacket(){
         ClientHelpers.playsoundInEars(SolarcraftSounds.DIMENSION_BREAK.get(),1f,0.5f);
         ClientHelpers.flash(100,40,40);
+        ClientHelpers.shake(50,50,20,7.5f);
     }
 
     public static class Particles {
