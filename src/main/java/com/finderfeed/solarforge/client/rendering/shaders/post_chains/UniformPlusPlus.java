@@ -1,4 +1,4 @@
-package com.finderfeed.solarforge.client.rendering.deprecated_shaders.post_chains;
+package com.finderfeed.solarforge.client.rendering.shaders.post_chains;
 
 import com.mojang.math.Matrix4f;
 import com.mojang.math.Vector3f;

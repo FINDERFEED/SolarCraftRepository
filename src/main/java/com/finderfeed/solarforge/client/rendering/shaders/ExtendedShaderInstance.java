@@ -1,4 +1,4 @@
-package com.finderfeed.solarforge.client.rendering.deprecated_shaders;
+package com.finderfeed.solarforge.client.rendering.shaders;
 
 import com.mojang.blaze3d.vertex.VertexFormat;
 import com.mojang.math.Matrix4f;

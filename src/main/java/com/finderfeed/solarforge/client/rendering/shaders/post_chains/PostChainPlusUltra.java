@@ -1,4 +1,4 @@
-package com.finderfeed.solarforge.client.rendering.deprecated_shaders.post_chains;
+package com.finderfeed.solarforge.client.rendering.shaders.post_chains;
 
 
 import com.google.gson.JsonSyntaxException;

@@ -1,8 +1,8 @@
 package com.finderfeed.solarforge.content.blocks.render;
 
 import com.finderfeed.solarforge.SolarForge;
-import com.finderfeed.solarforge.client.rendering.deprecated_shaders.post_chains.PostChainPlusUltra;
-import com.finderfeed.solarforge.client.rendering.deprecated_shaders.post_chains.UniformPlusPlus;
+import com.finderfeed.solarforge.client.rendering.shaders.post_chains.PostChainPlusUltra;
+import com.finderfeed.solarforge.client.rendering.shaders.post_chains.UniformPlusPlus;
 import com.finderfeed.solarforge.content.blocks.blockentities.DimensionCoreTile;
 import com.finderfeed.solarforge.content.blocks.render.abstracts.TileEntityRenderer;
 import com.finderfeed.solarforge.events.other_events.OBJModels;
@@ -17,7 +17,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.Map;

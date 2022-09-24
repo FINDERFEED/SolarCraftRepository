@@ -56,8 +56,6 @@ public class SolarForgePacketHandler {
         INSTANCE.registerMessage(nextID(), UpdateEnergyOnClientPacket.class, UpdateEnergyOnClientPacket::toBytes, UpdateEnergyOnClientPacket::new, UpdateEnergyOnClientPacket::handle);
         INSTANCE.registerMessage(nextID(), TriggerProgressionShaderPacket.class, TriggerProgressionShaderPacket::toBytes, TriggerProgressionShaderPacket::new, TriggerProgressionShaderPacket::handle);
         INSTANCE.registerMessage(nextID(), BuyAbilityPacket.class, BuyAbilityPacket::toBytes, BuyAbilityPacket::new, BuyAbilityPacket::handle);
-        INSTANCE.registerMessage(nextID(), RequestAbilityScreen.class, RequestAbilityScreen::toBytes, RequestAbilityScreen::new, RequestAbilityScreen::handle);
-        INSTANCE.registerMessage(nextID(), OpenAbilityScreen.class, OpenAbilityScreen::toBytes, OpenAbilityScreen::new, OpenAbilityScreen::handle);
         INSTANCE.registerMessage(nextID(), TakeEnergyFromForgePacket.class, TakeEnergyFromForgePacket::toBytes, TakeEnergyFromForgePacket::new, TakeEnergyFromForgePacket::handle);
         INSTANCE.registerMessage(nextID(), SetSpeedPacket.class, SetSpeedPacket::toBytes, SetSpeedPacket::new, SetSpeedPacket::handle);
         INSTANCE.registerMessage(nextID(), TriggerEnergyTypeToast.class, TriggerEnergyTypeToast::toBytes, TriggerEnergyTypeToast::new, TriggerEnergyTypeToast::handle);

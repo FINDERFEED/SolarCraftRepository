@@ -11,11 +11,11 @@ import net.minecraft.resources.ResourceLocation;
 
 import net.minecraft.network.chat.TranslatableComponent;
 
-public class SolarAchievementToast implements Toast {
+public class ProgressionToast implements Toast {
 
     public Progression progression;
 
-    public SolarAchievementToast(Progression a){
+    public ProgressionToast(Progression a){
         this.progression = a;
     }
 
@@ -43,7 +43,7 @@ public class SolarAchievementToast implements Toast {
 
     public static void addOrUpdate(ToastComponent gui, Progression ach){
 
-        gui.addToast(new SolarAchievementToast(ach));
+        gui.addToast(new ProgressionToast(ach));
 
     }
 }

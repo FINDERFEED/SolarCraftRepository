@@ -2,7 +2,6 @@ package com.finderfeed.solarforge.helpers;
 
 import com.finderfeed.solarforge.client.screens.ability_screen.AbilitySelectionScreen;
 import com.finderfeed.solarforge.content.abilities.ability_classes.ToggleableAbility;
-import com.finderfeed.solarforge.content.abilities.screens.AbilityBuyScreen;
 import com.finderfeed.solarforge.client.particles.SolarcraftParticleTypes;
 import com.finderfeed.solarforge.client.particles.SmallSolarStrikeParticle;
 import com.finderfeed.solarforge.client.particles.SolarcraftParticle;
@@ -458,10 +457,6 @@ public class ClientHelpers {
             }
         });
         return returnable;
-    }
-
-    public static void openAbilityScreenOld(){
-        Minecraft.getInstance().setScreen(new AbilityBuyScreen());
     }
 
     public static void openAbilityScreen(String[] abilities){

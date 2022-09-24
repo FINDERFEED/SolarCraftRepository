@@ -13,8 +13,8 @@ import com.finderfeed.solarforge.helpers.multiblock.MultiblockStructure;
 
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import com.finderfeed.solarforge.client.rendering.rendertypes.RadiantPortalRendertype;
-import com.finderfeed.solarforge.client.rendering.deprecated_shaders.post_chains.PostChainPlusUltra;
-import com.finderfeed.solarforge.client.rendering.deprecated_shaders.post_chains.UniformPlusPlus;
+import com.finderfeed.solarforge.client.rendering.shaders.post_chains.PostChainPlusUltra;
+import com.finderfeed.solarforge.client.rendering.shaders.post_chains.UniformPlusPlus;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.platform.Lighting;
 import com.mojang.blaze3d.vertex.*;
