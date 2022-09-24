@@ -76,5 +76,8 @@
   },
   "dimension_break": {
     "sounds": ["solarforge:dimension/dimension_break"]
+  },
+  "ritual_tile_strike": {
+    "sounds": ["solarforge:ritual_tile_strike"]
   }
 }

@@ -309,7 +309,7 @@ public class SolarcraftItems {
     public static final RegistryObject<Item> CLEARING_CRYSTAL_RITUAL = ITEMS.register("clearing_ritual_crystal",()->new ClearingRitualCrystalItem(SolarcraftBlocks.CLEARING_RITUAL_CRYSTAL.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP)));
 
     //TODO: delete this
-    public static final RegistryObject<Item> CLEARING_RITUAL_MAIN_BLOCK = ITEMS.register("clearing_ritual_main_block",()->new BlockItem(SolarcraftBlocks.CLEARING_RITUAL_MAIN_BLOCK.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP)));
+    public static final RegistryObject<Item> CLEARING_RITUAL_MAIN_BLOCK = ITEMS.register("clearing_ritual_main_block",()->new BlockItem(SolarcraftBlocks.CLEARING_RITUAL_MAIN_BLOCK.get(),new Item.Properties()));
 
 
 }

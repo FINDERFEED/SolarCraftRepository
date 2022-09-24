@@ -42,6 +42,7 @@ public class ProgressionTree {
         tree.addAchievementRequirements(Progression.RADIANT_LAND,Progression.DIMENSIONAL_SHARD_DUNGEON,Progression.TRADE_FOR_BLUE_GEM,Progression.CRAFT_SOLAR_ENERGY_GENERATOR);
         tree.addAchievementRequirements(Progression.KILL_CRYSTAL_BOSS,Progression.RADIANT_LAND);
         tree.addAchievementRequirements(Progression.KILL_RUNIC_ELEMENTAL,Progression.KILL_CRYSTAL_BOSS);
+        tree.addAchievementRequirements(Progression.CLEAR_WORLD,Progression.KILL_RUNIC_ELEMENTAL);
 
         return tree;
     }

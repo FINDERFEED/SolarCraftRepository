@@ -690,5 +690,11 @@
   "solarcraft.catalysts_not_unlocked": "Данный функционал еще не открыт. Завершите больше прогрессий.",
   "solarcraft.catalysts_jei": "Катализаторы. Обозначения:",
   "block.solarforge.crystal_energy_vines": "Лозы Рунической Энергии",
-  "block.solarforge.clearing_ritual_crystal": "Обелиск Рунической Энергии"
+  "block.solarforge.clearing_ritual_crystal": "Обелиск Рунической Энергии",
+  "solarcraft.visualize_guide": "Визуализировать постройку в мире. Правый клик на блок привяжет постройку к блоку. Зажатие Shift временнно скроет постройку. Зажатие Shift и правый клик на любой блок с пустой рукой отменит визуализацию.",
+  "solarcraft.visualize": "Визуализировать",
+  "solarcraft.ritual_time": "Мистическая кристальная структура не среагировала.",
+  "ach.clear_world": "Мистическая структура",
+  "pre.clear_world": "Восемь стендов вокруг и кристальная структура посередине... Что это может быть...",
+  "aft.clear_world": "Мир был излечен от проклятия. Вы достигли финала."
 }

@@ -93,9 +93,12 @@ public class ThreeDStructureViewScreen extends Screen implements IScrollable {
                 p_93665_.play(SimpleSoundInstance.forUI(SolarcraftSounds.BUTTON_PRESS2.get(),1,1));
             }
         });
-        addRenderableWidget(new SolarForgeButtonYellow(relX + 5,relY + 198,60,16,new TextComponent("Visualize"),(btn)->{
+        addRenderableWidget(new SolarForgeButtonYellow(relX + 5,relY + 198,60,16,new TranslatableComponent("solarcraft.visualize"),(btn)->{
             MultiblockVisualizer.setMultiblock(this.struct);
             Minecraft.getInstance().setScreen(null);
+        },(btn,matrix,mx,my)->{
+            renderTooltip(matrix,font.split(new TranslatableComponent("solarcraft.visualize_guide"),200),
+                    mx,my);
         }));
 
         addRenderableWidget(b);

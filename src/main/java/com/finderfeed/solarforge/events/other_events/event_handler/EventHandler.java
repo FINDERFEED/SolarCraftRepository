@@ -27,6 +27,7 @@ import com.finderfeed.solarforge.registries.abilities.AbilitiesRegistry;
 import com.finderfeed.solarforge.registries.attributes.AttributesRegistry;
 import com.finderfeed.solarforge.registries.blocks.SolarcraftBlocks;
 import com.finderfeed.solarforge.registries.effects.SolarcraftEffects;
+import com.finderfeed.solarforge.registries.tile_entities.SolarcraftTileEntityTypes;
 import com.finderfeed.solarforge.registries.worldgen.configured.LazyConfiguredFeatures;
 import com.finderfeed.solarforge.registries.items.SolarcraftItems;
 import com.finderfeed.solarforge.registries.sounds.SolarcraftSounds;
@@ -36,6 +37,7 @@ import net.minecraft.core.Registry;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -165,7 +167,9 @@ public class EventHandler {
 
             if (!world.isClientSide && !player.isCreative()) {
 
-                if ((world.getGameTime() % 20 == 1) && !(actualtime % 24000 <= 13000) && (world.dimension() == RADIANT_LAND_KEY)) {
+                if ((world.dimension() == RADIANT_LAND_KEY) && (world.getGameTime() % 20 == 1) && !(actualtime % 24000 <= 13000)
+                 && Helpers.collectTilesInChunks(SolarcraftTileEntityTypes.CLEARING_RITUAL_MAIN_BLOCK.get(),player.level,player.getOnPos(),2).isEmpty()
+                  && !Helpers.isRadiantLandCleanedServer((ServerLevel) world)) {
                     if (world.canSeeSky(player.getOnPos().above())) {
                         player.addEffect(new MobEffectInstance(SolarcraftEffects.STAR_GAZE_EFFECT.get(), 400, 0));
                     }
@@ -271,13 +275,13 @@ public class EventHandler {
     public static void progressionUnlockEvent(ProgressionUnlockEvent event){
         Progression ach = event.getProgression();
         Player playerEntity = event.getPlayer();
-        if (!Helpers.hasPlayerCompletedProgression(ach,playerEntity) && Helpers.canPlayerUnlock(ach,playerEntity)){
-            Helpers.setProgressionCompletionStatus(ach, playerEntity,true);
-            Helpers.triggerToast(ach, playerEntity);
-            Helpers.updateProgression((ServerPlayer)playerEntity );
-            Helpers.forceChunksReload((ServerPlayer) playerEntity);
-            Helpers.triggerProgressionShader(playerEntity);
-        }
+//        if (!Helpers.hasPlayerCompletedProgression(ach,playerEntity) && Helpers.canPlayerUnlock(ach,playerEntity)){
+        Helpers.setProgressionCompletionStatus(ach, playerEntity,true);
+        Helpers.triggerToast(ach, playerEntity);
+        Helpers.updateProgression((ServerPlayer)playerEntity );
+        Helpers.forceChunksReload((ServerPlayer) playerEntity);
+        Helpers.triggerProgressionShader(playerEntity);
+//        }
 
     }
 

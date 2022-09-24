@@ -48,9 +48,10 @@ public class RadiantLandDimEffects extends DimensionSpecialEffects {
 }
 
 class RenderSky implements ISkyRenderHandler{
-    public static final ResourceLocation STARGAZE_TEST = new ResourceLocation("solarforge","textures/environment/test_stargaze.png");
-    public static final ResourceLocation SUNGAZE_TEST = new ResourceLocation("solarforge","textures/environment/test_sungaze.png");
+    public static final ResourceLocation STARGAZE = new ResourceLocation("solarforge","textures/environment/test_stargaze.png");
+    public static final ResourceLocation SUNGAZE = new ResourceLocation("solarforge","textures/environment/test_sungaze.png");
     public static final ResourceLocation BROKEN_SKY = new ResourceLocation("solarforge","textures/environment/broken_sky.png");
+    public static final ResourceLocation MOON = new ResourceLocation("solarforge","textures/environment/moon.png");
 
     @Override
     public void render(int ticks, float partialTicks, PoseStack matrixStack, ClientLevel world, Minecraft mc) {
@@ -89,7 +90,7 @@ class RenderSky implements ISkyRenderHandler{
         matrixStack.mulPose(Vector3f.YP.rotationDegrees(-90.0F));
         matrixStack.mulPose(Vector3f.XP.rotationDegrees(timeOfDay * 360.0F));
         Matrix4f mat = matrixStack.last().pose();
-        ClientHelpers.bindText(STARGAZE_TEST);
+        ClientHelpers.bindText(ClientHelpers.isIsRadiantLandCleaned() ? MOON : STARGAZE);
 
 
 
@@ -100,7 +101,7 @@ class RenderSky implements ISkyRenderHandler{
         builder.vertex(mat,-25,-80,-25).uv(0,0).endVertex();
         tes.end();
 
-        ClientHelpers.bindText(SUNGAZE_TEST);
+        ClientHelpers.bindText(SUNGAZE);
 
         builder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
         builder.vertex(mat,-25,80,-25).uv(0,0).endVertex();

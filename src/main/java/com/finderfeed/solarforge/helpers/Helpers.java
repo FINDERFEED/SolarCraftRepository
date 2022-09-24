@@ -352,7 +352,9 @@ public class Helpers {
     }
 
     public static void fireProgressionEvent(Player playerEntity, Progression ach){
-        MinecraftForge.EVENT_BUS.post(new ProgressionUnlockEvent(playerEntity,ach));
+        if (!Helpers.hasPlayerCompletedProgression(ach,playerEntity) && Helpers.canPlayerUnlock(ach,playerEntity)) {
+            MinecraftForge.EVENT_BUS.post(new ProgressionUnlockEvent(playerEntity, ach));
+        }
     }
 
 

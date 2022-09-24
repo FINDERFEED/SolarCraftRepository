@@ -332,6 +332,7 @@ public class ClientEventsHandler {
 
     @SubscribeEvent
     public static void cameraShake(EntityViewRenderEvent.CameraSetup event){
+
         if (Minecraft.getInstance().level == null || cameraShakeEffect == null) return;
         Random random = new Random(Minecraft.getInstance().level.getGameTime()*1233);
 

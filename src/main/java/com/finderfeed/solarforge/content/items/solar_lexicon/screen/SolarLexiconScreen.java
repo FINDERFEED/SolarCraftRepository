@@ -95,7 +95,7 @@ public class SolarLexiconScreen extends Screen implements IScrollable,PostRender
                 && !(scrollY +4 > 0)){
             scrollY+=4;
         }else if((keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_DOWN) || keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_S))
-                && !(scrollY -4 < -360)){
+                && !(scrollY -4 < -map.size() * 24)){
             scrollY-=4;
         }else if ((keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_RIGHT) || keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_D))
                 && !(scrollX -4 < -180)){

@@ -98,14 +98,22 @@ public class ClearingRitualTileRenderer extends TileEntityRenderer<ClearingRitua
                     positions.get(positions.size()-1),positions.get(0),random,1f,1f,0f);
         }
         matrices.popPose();
-        this.renderModel(matrices,buffer,light,overlay,pticks);
+        this.renderModel(matrices,buffer,light,overlay,pticks,tile);
 
     }
 
 
-    private void renderModel(PoseStack matrices,MultiBufferSource src,int light,int overlay,float pticks){
+    private void renderModel(PoseStack matrices,MultiBufferSource src,int light,int overlay,float pticks,ClearingRitualMainTile tile){
         matrices.pushPose();
+        float worldtime = tile.getLevel().getDayTime() % 24000;
         float time = RenderingTools.getTime(Minecraft.getInstance().level,pticks);
+
+        if (!(worldtime >= 16500 && worldtime <= 19500)){
+            time = 0;
+        }
+
+        float rotation = time % 360 * (tile.ritual.ritualOnline() ? 8 : 1);
+
         matrices.translate(0.5,0,0.5);
         matrices.scale(0.5f,0.5f,0.5f);
         matrices.pushPose();
@@ -114,14 +122,14 @@ public class ClearingRitualTileRenderer extends TileEntityRenderer<ClearingRitua
 
         matrices.pushPose();
         matrices.translate(0,2,0);
-        matrices.mulPose(Vector3f.YP.rotationDegrees(time % 360));
+        matrices.mulPose(Vector3f.YP.rotationDegrees(rotation));
         RenderingTools.renderObjModel(OBJModels.CLEARING_RITUAL_MAIN_BLOCK_PETALS,matrices,src,light,overlay,(a)->{});
         matrices.popPose();
 
         matrices.pushPose();
         matrices.translate(0,4,0);
         matrices.scale(0.7f,0.7f,0.7f);
-        matrices.mulPose(Vector3f.YP.rotationDegrees(-time % 360));
+        matrices.mulPose(Vector3f.YP.rotationDegrees(-rotation));
         RenderingTools.renderObjModel(OBJModels.CLEARING_RITUAL_MAIN_BLOCK_TOP,matrices,src,light,overlay,(a)->{});
         matrices.popPose();
         matrices.popPose();

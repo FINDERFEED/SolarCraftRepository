@@ -1,5 +1,7 @@
 package com.finderfeed.solarforge.content.blocks.blockentities.clearing_ritual;
 
+import com.finderfeed.solarforge.client.particles.SolarcraftParticleTypes;
+import com.finderfeed.solarforge.content.items.solar_lexicon.progressions.Progression;
 import com.finderfeed.solarforge.helpers.ClientHelpers;
 import com.finderfeed.solarforge.helpers.Helpers;
 import com.finderfeed.solarforge.content.RadiantPortalBlock;
@@ -7,17 +9,25 @@ import com.finderfeed.solarforge.content.entities.projectiles.SummoningProjectil
 import com.finderfeed.solarforge.events.other_events.event_handler.EventHandler;
 import com.finderfeed.solarforge.content.blocks.blockentities.clearing_ritual.clearing_ritual_crystal.ClearingRitualCrystalTile;
 import com.finderfeed.solarforge.content.blocks.blockentities.clearing_ritual.clearing_ritual_main_tile.ClearingRitualMainTile;
+import com.finderfeed.solarforge.local_library.helpers.FDMathHelper;
+import com.finderfeed.solarforge.local_library.helpers.RenderingTools;
+import com.finderfeed.solarforge.misc_things.RadiantTeleporter;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import com.finderfeed.solarforge.registries.entities.SolarcraftEntityTypes;
 import com.finderfeed.solarforge.registries.sounds.SolarcraftSounds;
+import net.minecraft.ChatFormatting;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LightningBolt;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.Vec3;
 
@@ -26,10 +36,11 @@ import java.util.List;
 import java.util.Objects;
 
 import static com.finderfeed.solarforge.content.blocks.blockentities.clearing_ritual.clearing_ritual_main_tile.ClearingRitualTileRenderer.DIMENSION_CRACK_ANIMATION_TICKS;
+import static com.finderfeed.solarforge.content.blocks.blockentities.clearing_ritual.clearing_ritual_main_tile.ClearingRitualTileRenderer.RAY_ANIMATION_TICKS;
 
 public class ClearingRitual {
 
-    public static final int MAX_TIME = 300;
+    public static final int MAX_TIME = 2000;
 
     public static final int RITUAL_OFFLINE = -1;
     public static final int RITUAL_ONLINE = 1;
@@ -65,11 +76,10 @@ public class ClearingRitual {
                         return;
                     }
                     if (ClearingRitual.MAX_TIME - tile.ritual.getCurrentTime() == DIMENSION_CRACK_ANIMATION_TICKS){
-//                        ClientHelpers.playsoundInEars(SolarcraftSounds.DIMENSION_BREAK.get(),1f,0.5f);
-//                        ClientHelpers.flash(100,40,40);
                         Helpers.sendDimBreak((ServerLevel) tile.getLevel());
                     }
-                    if (ticker % 200 == 0) {
+                    int frequency = ticker >= MAX_TIME / 2f ? 100 : 150;
+                    if (ticker % frequency == 0) {
                         if (!this.checkStructure()) {
                             this.setRitualStatus(RITUAL_OFFLINE);
                             this.ticker = 0;
@@ -80,22 +90,90 @@ public class ClearingRitual {
                         if (crystals.size() != 0) {
                             crystals.get(world.random.nextInt(crystals.size())).setCorrupted(true);
                         }
-                        SummoningProjectile projectile = new SummoningProjectile(world, SolarcraftEntityTypes.SHADOW_ZOMBIE.get(),
-                                43,0,60);
-                        double speedMult = world.random.nextDouble()*0.2 + 0.1;
-                        Vec3 rnd = new Vec3(1,0,0).yRot(world.random.nextFloat()*360).multiply(speedMult,speedMult,speedMult);
-                        projectile.setFallSpeedDecrement(0.025);
-                        projectile.setPos(Helpers.getBlockCenter(tile.getBlockPos()).add(0,0.75,0));
-                        projectile.setDeltaMovement(rnd.add(0,0.1,0));
-                        world.addFreshEntity(projectile);
+                        if (frequency == 100) {
+                            SummoningProjectile projectile = new SummoningProjectile(world, SolarcraftEntityTypes.SHADOW_ZOMBIE.get(),
+                                    43, 0, 60);
+                            double speedMult = world.random.nextDouble() * 0.2 + 0.1;
+                            Vec3 rnd = new Vec3(1, 0, 0).yRot(world.random.nextFloat() * 360).multiply(speedMult, speedMult, speedMult);
+                            projectile.setFallSpeedDecrement(0.025);
+                            projectile.setPos(Helpers.getBlockCenter(tile.getBlockPos()).add(0, 0.75, 0));
+                            projectile.setDeltaMovement(rnd.add(0, 0.1, 0));
+                            world.addFreshEntity(projectile);
+                        }
                     }
                     if (ticker % 40 == 0) {
                         this.randomLightning(world, tilePos);
                     }
                 }
 
+            } else {
+                this.handleRitualParticles(tile,tilePos,tile.getLevel());
+            }
+        } else {
+            if (tile.getLevel().isClientSide && !ClientHelpers.isIsRadiantLandCleaned()){
+                float worldtime = tile.getLevel().getDayTime() % 24000;
+                if (worldtime >= 16500 && worldtime <= 19500){
+                    Vec3 pos = Helpers.getBlockCenter(tilePos).add(0,-0.25,0)
+                            .add(world.random.nextDouble() * 2 - 1,world.random.nextDouble() * 0.5f - 0.25d,world.random.nextDouble() * 2 - 1);
+                    ClientHelpers.Particles.createParticle(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+                            pos.x, pos.y, pos.z, 0, 0.05 * (world.random.nextDouble()*0.5 + 0.5), 0,
+                            220 + world.random.nextInt(35), 220 + world.random.nextInt(35), world.random.nextInt(20),
+                            0.5f);
+                }
             }
         }
+    }
+    private void handleRitualParticles(ClearingRitualMainTile tile, BlockPos pos, Level world){
+        Vec3 center = Helpers.getBlockCenter(pos);
+        //particles outside of structure and particles that go from crystals to this tile
+        for (int i = 0;i <= 4;i++) {
+            Vec3 rnd = new Vec3(16,0,0).yRot((float)Math.toRadians(360*world.random.nextDouble()));
+            Vec3 particleSpawnPos = center.add(rnd).add(0, -2, 0);
+            Vec3 between = center.subtract(particleSpawnPos);
+            Vec3 pSpeed = between.multiply(0.03, 0.03, 0.03);
+            ClientHelpers.Particles.createParticle(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+                    particleSpawnPos.x, particleSpawnPos.y, particleSpawnPos.z, pSpeed.x, pSpeed.y, pSpeed.z,
+                    220 + world.random.nextInt(35), 220 + world.random.nextInt(35), world.random.nextInt(20),
+                    0.5f);
+            for (int g = 0; g < 3;g++) {
+                Vec3 pSpawnPosOuterRing = center.add(new Vec3(23, 0, 0).yRot((float) Math.toRadians(360 * world.random.nextDouble()))).add(0, -2, 0);
+                double rxoRing = world.random.nextDouble();
+                double ryoRing = world.random.nextDouble()*2.5;
+                double rzoRing = world.random.nextDouble();
+                double rxdoRing = world.random.nextDouble() * 0.06 - 0.03;
+                double rydoRing = world.random.nextDouble() * 0.06 - 0.03;
+                double rzdoRing = world.random.nextDouble() * 0.06 - 0.03;
+                ClientHelpers.Particles.createParticle(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+                        pSpawnPosOuterRing.x + rxoRing, pSpawnPosOuterRing.y + ryoRing, pSpawnPosOuterRing.z + rzoRing,
+                        rxdoRing, rydoRing, rzdoRing,
+                        220 + world.random.nextInt(35), 220 + world.random.nextInt(35), world.random.nextInt(20),
+                        0.7f);
+            }
+        }
+        // ray particles
+        if (ClearingRitual.MAX_TIME - tile.ritual.getCurrentTime() <= RAY_ANIMATION_TICKS &&
+                tile.getLevel().getGameTime() % 5 == 0){
+            int time = (RAY_ANIMATION_TICKS - DIMENSION_CRACK_ANIMATION_TICKS) -
+                    (FDMathHelper.clamp(DIMENSION_CRACK_ANIMATION_TICKS,ClearingRitual.MAX_TIME - tile.ritual.getCurrentTime(),RAY_ANIMATION_TICKS) - DIMENSION_CRACK_ANIMATION_TICKS);
+            double height = 200f*((float)time/(RAY_ANIMATION_TICKS - DIMENSION_CRACK_ANIMATION_TICKS));
+            Vec3 pPos = Helpers.getBlockCenter(tile.getBlockPos());
+            for (int i = 0; i < height;i++){
+                double rndX = tile.getLevel().random.nextDouble()*0.5 - 0.25;
+                double rndZ = tile.getLevel().random.nextDouble()*0.5 - 0.25;
+                double rndY = tile.getLevel().random.nextDouble()*0.2 - 0.1;
+                Vec3 p = pPos.add(rndX,rndY + i,rndZ);
+                ClientHelpers.Particles.createParticle(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+                        p.x,p.y,p.z,0,0,0,
+                        220 + world.random.nextInt(35), 220 + world.random.nextInt(35), world.random.nextInt(20),0.25f);
+            }
+        }
+
+        if (ClearingRitual.MAX_TIME - tile.ritual.getCurrentTime() == RAY_ANIMATION_TICKS){
+            ClientHelpers.playsoundInEars(SolarcraftSounds.RITUAL_TILE_STRIKE.get(),1f,1f);
+        }
+
+
+
     }
 
     public void stopRitual(){
@@ -117,9 +195,10 @@ public class ClearingRitual {
                 if (server != null) {
                     for (ServerPlayer player : allPlayers){
                         Helpers.updateClientRadiantLandStateForPlayer(player,true);
+                        Helpers.fireProgressionEvent(player,Progression.CLEAR_WORLD);
                     }
                     for (ServerPlayer player : players) {
-                        player.changeDimension(server.overworld().getLevel(), RadiantPortalBlock.RadiantTeleporter.INSTANCE);
+                        player.changeDimension(server.overworld().getLevel(), RadiantTeleporter.INSTANCE);
                     }
                 }
                 data.setCleaned(true);
@@ -158,9 +237,18 @@ public class ClearingRitual {
         world.addFreshEntity(bolt);
     }
 
-    public void tryStartRitual(){
-        if (!tile.getLevel().isClientSide && checkStructure() && ritualStatus == RITUAL_OFFLINE && !getRLState((ServerLevel) tile.getLevel())){
-            this.setRitualStatus(RITUAL_ONLINE);
+    public void tryStartRitual(Player user){
+        if (!tile.getLevel().isClientSide &&
+                checkStructure() &&
+                ritualStatus == RITUAL_OFFLINE &&
+                !getRLState((ServerLevel) tile.getLevel())){
+
+            float time = tile.getLevel().getDayTime() % 24000;
+            if (time >= 16500 && time <= 19500 && Helpers.hasPlayerCompletedProgression(Progression.KILL_RUNIC_ELEMENTAL,user)) {
+                this.setRitualStatus(RITUAL_ONLINE);
+            }else{
+                user.sendMessage(new TranslatableComponent("solarcraft.ritual_time"),user.getUUID());
+            }
         }
     }
 
@@ -180,9 +268,6 @@ public class ClearingRitual {
     public boolean checkStructure(){
         ArrayList<RunicEnergy.Type> used = new ArrayList<>();
         for (ClearingRitualCrystalTile tile : this.getAllCrystals()){
-            used.add(tile.getREType());
-            if (true) continue;
-            //TODO:delete this shiesh above
             if (used.contains(tile.getREType())){
                 return false;
             }else{

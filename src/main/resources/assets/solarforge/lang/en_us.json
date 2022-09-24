@@ -528,7 +528,7 @@
   "runic_energy.lore": "Runic energy remains unknown and mysterious, but you have identified some of its usages. The main purpose of it - reality cloth, a force that created everything you see and touch. Regardless of its power you should be able to begin harnessing it for your own purposes, just like how you were extracting energy from coal or generating it with different machines.",
   "solar_fragment.defence_crystal": "Defense Crystal",
   "solar_fragment.runic_energy": "Runic Energy",
-  "solar_category.midgame": "Midgame",
+  "solar_category.midgame": "Endgame",
   "solar_category.radiant_land": "Radiant Land",
   "blockstate_solarforge.properties": "BlockState properties:",
   "defence_crystal.lore": "This world is full of crystals and it's not surprising that some of that crystals will defend themselves. Since this world is not a place to live due to its curse, killing one of those will not harm anything. ",
@@ -703,8 +703,14 @@
   "solarcraft.yours": "Yours",
   "solarcraft.raw_solar_energy": "Raw Solar Energy",
   "solarcraft.cast_cost": "Cast Runic Energy cost",
-  "shadow_zombie.lore": "The creatures made of dark energy. Disappears at day. Physical attacks don't work on them, only magic damage can be dealt.",
-  "solar_fragment.shadow_zombie": "Shadows",
+  "shadow_zombie.lore": "The creature made of dark energy. Disappears at day. Physical attacks don't work on him, only magic damage can be dealt.",
+  "solar_fragment.shadow_zombie": "Shadow",
   "runic_elemental.lore": "A powerful creature sleeps in a radiant land. Can be awoken by placing a special item in his chest. Almost all of his attacks do magic damage, so it is advised to dodge and run.",
-  "solar_fragment.runic_elemental": "Runic Elemental"
+  "solar_fragment.runic_elemental": "Runic Elemental",
+  "solarcraft.visualize_guide": "Visualize structure in world. Press on any block to lock a structure to it. Press shift to temporarily hide the structure. Press shift and then right click on any block with empty hand to disable visualization.",
+  "solarcraft.visualize": "Visualize",
+  "solarcraft.ritual_time": "The mysterious crystal structure didn't react.",
+  "ach.clear_world": "Mysterious structure",
+  "pre.clear_world": "Eight stands around and a strange crystal in the center... What could it be...",
+  "aft.clear_world": "The world has been cured from it's curse. You have reached the finale."
 }

@@ -6,12 +6,15 @@ import com.finderfeed.solarforge.content.items.runic_energy.ItemRunicEnergy;
 import com.finderfeed.solarforge.content.items.primitive.solacraft_item_classes.SolarcraftArmorItem;
 import com.finderfeed.solarforge.content.items.runic_energy.RunicEnergyCost;
 import com.finderfeed.solarforge.content.items.solar_lexicon.unlockables.AncientFragment;
+import com.finderfeed.solarforge.content.items.solar_lexicon.unlockables.ProgressionHelper;
+import com.finderfeed.solarforge.helpers.Helpers;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -70,6 +73,15 @@ public abstract class BaseDivineArmor extends SolarcraftArmorItem implements IRu
             ItemRunicEnergy.addRunicEnergyTextComponents(stack,item,cmps);
         }
         super.appendHoverText(stack, p_41422_, cmps, p_41424_);
+    }
+
+    @Override
+    public boolean canEquip(ItemStack stack, EquipmentSlot armorType, Entity entity) {
+        System.out.println(entity.level.isClientSide);
+        if (entity instanceof Player player){
+            return super.canEquip(stack,armorType,entity) && ProgressionHelper.doPlayerHasFragment(player,AncientFragment.DIVINE_ARMOR);
+        }
+        return super.canEquip(stack, armorType, entity);
     }
 
     @Override

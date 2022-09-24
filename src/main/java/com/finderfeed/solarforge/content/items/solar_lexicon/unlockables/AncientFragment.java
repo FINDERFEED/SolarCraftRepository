@@ -177,10 +177,10 @@ public class AncientFragment {
             ItemWithRecipe.of(NIGHT_VISION_AMULET.get().getDefaultInstance(),"infusing_new_night_vision_amulet"),ItemWithRecipe.of(STRENGTH_AMULET.get().getDefaultInstance(),"infusing_new_strength_amulet")
     ),SolarForge.INFUSING_RECIPE_TYPE,tx("amulets.lore"),5);
 
-    public static final AncientFragment SHADOW_ZOMBIES = new AncientFragment(tx("solar_fragment.shadow_zombie"),"shadow_zombie",ProgressionStage.DIMENSION.ALL_PROGRESSIONS,SubCategoryBase.RADIANT_LAND,CategoryBase.MIDGAME,"shadow_zombie_lore", Items.PAPER.getDefaultInstance(),9);
-    public static final AncientFragment RADIANT_LAND_LORE = new AncientFragment(tx("solar_fragment.radiant_land"),"radiant_land",ProgressionStage.DIMENSION.ALL_PROGRESSIONS,SubCategoryBase.RADIANT_LAND,CategoryBase.MIDGAME,"radiant_land_lore", SolarcraftItems.DIMENSION_CORE.get().getDefaultInstance(),8);
-    public static final AncientFragment DEFENCE_CRYSTAL = new AncientFragment(tx("solar_fragment.defence_crystal"),"defence_crystal",ProgressionStage.DIMENSION.ALL_PROGRESSIONS,SubCategoryBase.RADIANT_LAND,CategoryBase.MIDGAME,"defence_crystal_lore", SolarcraftItems.CRYSTALLITE_CORE.get().getDefaultInstance(),9);
-    public static final AncientFragment RUNIC_ELEMENTAL = new AncientFragment(tx("solar_fragment.runic_elemental"),"runic_elemental",ProgressionStage.DIMENSION.ALL_PROGRESSIONS,SubCategoryBase.RADIANT_LAND,CategoryBase.MIDGAME,"runic_elemental_lore", CRYSTAL_HEART.get().getDefaultInstance(),11);
+    public static final AncientFragment SHADOW_ZOMBIES = new AncientFragment(tx("solar_fragment.shadow_zombie"),"shadow_zombie",ProgressionStage.DIMENSION.ALL_PROGRESSIONS,SubCategoryBase.RADIANT_LAND,CategoryBase.ENDGAME,"shadow_zombie_lore", Items.PAPER.getDefaultInstance(),9);
+    public static final AncientFragment RADIANT_LAND_LORE = new AncientFragment(tx("solar_fragment.radiant_land"),"radiant_land",ProgressionStage.DIMENSION.ALL_PROGRESSIONS,SubCategoryBase.RADIANT_LAND,CategoryBase.ENDGAME,"radiant_land_lore", SolarcraftItems.DIMENSION_CORE.get().getDefaultInstance(),8);
+    public static final AncientFragment DEFENCE_CRYSTAL = new AncientFragment(tx("solar_fragment.defence_crystal"),"defence_crystal",ProgressionStage.DIMENSION.ALL_PROGRESSIONS,SubCategoryBase.RADIANT_LAND,CategoryBase.ENDGAME,"defence_crystal_lore", SolarcraftItems.CRYSTALLITE_CORE.get().getDefaultInstance(),9);
+    public static final AncientFragment RUNIC_ELEMENTAL = new AncientFragment(tx("solar_fragment.runic_elemental"),"runic_elemental",ProgressionStage.DIMENSION.ALL_PROGRESSIONS,SubCategoryBase.RADIANT_LAND,CategoryBase.ENDGAME,"runic_elemental_lore", CRYSTAL_HEART.get().getDefaultInstance(),11);
 
 
     public static final AncientFragment DIVINE_ARMOR = new AncientFragment(tx("solar_fragment.divine_armor"),"divine_armor",ProgressionStage.RUNIC_ELEMENTAL.ALL_PROGRESSIONS,SubCategoryBase.ARMOR,CategoryBase.ARMOR,List.of(

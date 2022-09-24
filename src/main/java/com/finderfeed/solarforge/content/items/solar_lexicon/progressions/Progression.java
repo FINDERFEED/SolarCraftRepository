@@ -46,7 +46,9 @@ public enum Progression {
     RADIANT_LAND("dimension_core",9, SolarcraftItems.DIMENSION_CORE.get().getDefaultInstance(), new TranslatableComponent("ach.dimension_core"),nextID(),new TranslatableComponent("pre.dimension_core"),new TranslatableComponent("aft.dimension_core")),
 
     KILL_CRYSTAL_BOSS("crystal_boss",10, SolarcraftItems.CRYSTALLITE_CORE.get().getDefaultInstance(), new TranslatableComponent("ach.crystal_boss"),nextID(),new TranslatableComponent("pre.crystal_boss"),new TranslatableComponent("aft.crystal_boss")),
-    KILL_RUNIC_ELEMENTAL("runic_elemental",11, SolarcraftItems.CRYSTAL_HEART.get().getDefaultInstance(), new TranslatableComponent("ach.runic_elemental"),nextID(),new TranslatableComponent("pre.runic_elemental"),new TranslatableComponent("aft.runic_elemental"));
+    KILL_RUNIC_ELEMENTAL("runic_elemental",11, SolarcraftItems.CRYSTAL_HEART.get().getDefaultInstance(), new TranslatableComponent("ach.runic_elemental"),nextID(),new TranslatableComponent("pre.runic_elemental"),new TranslatableComponent("aft.runic_elemental")),
+    CLEAR_WORLD("clear_world",12, SolarcraftItems.CLEARING_CRYSTAL_RITUAL.get().getDefaultInstance(), new TranslatableComponent("ach.clear_world"),nextID(),new TranslatableComponent("pre.clear_world"),new TranslatableComponent("aft.clear_world"));
+
 
 
     //FIND_SOLAR_STONE("solar_stone",2, ItemsRegister.SOLAR_STONE.get().getDefaultInstance(),new TranslatableComponent("ach.solar_stone"),7,new TranslatableComponent("pre.solar_stone"),new TranslatableComponent("aft.solar_stone")),
