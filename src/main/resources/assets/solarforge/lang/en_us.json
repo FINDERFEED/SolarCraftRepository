@@ -712,5 +712,6 @@
   "solarcraft.ritual_time": "The mysterious crystal structure didn't react.",
   "ach.clear_world": "Mysterious structure",
   "pre.clear_world": "Eight stands around and a strange crystal in the center... What could it be...",
-  "aft.clear_world": "The world has been cured from it's curse. You have reached the finale."
+  "aft.clear_world": "The world has been cured from it's curse. You have reached the finale.",
+  "solarcraft.retain_fragments": "Here you can retain the fragments you have lost somehow. Click on the needed fragment and if you have a piece of paper in your inventory, it will be consumed and then fragment will be put in your inventory."
 }

@@ -1,4 +1,4 @@
-package com.finderfeed.solarforge.content.items.solar_lexicon.screen;
+package com.finderfeed.solarforge.content.items.solar_lexicon.screen.buttons;
 
 import com.finderfeed.solarforge.local_library.helpers.RenderingTools;
 import com.finderfeed.solarforge.registries.sounds.SolarcraftSounds;

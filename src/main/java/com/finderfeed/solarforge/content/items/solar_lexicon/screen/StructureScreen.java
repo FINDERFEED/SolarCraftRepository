@@ -1,11 +1,11 @@
 package com.finderfeed.solarforge.content.items.solar_lexicon.screen;
 
+import com.finderfeed.solarforge.content.items.solar_lexicon.screen.buttons.ItemStackTabButton;
 import com.finderfeed.solarforge.helpers.ClientHelpers;
 import com.finderfeed.solarforge.helpers.Helpers;
 import com.finderfeed.solarforge.client.screens.ThreeDStructureViewScreen;
 import com.finderfeed.solarforge.helpers.multiblock.MultiblockStructure;
 import com.finderfeed.solarforge.local_library.helpers.RenderingTools;
-import com.finderfeed.solarforge.misc_things.Multiblock;
 import com.finderfeed.solarforge.content.items.solar_lexicon.SolarLexicon;
 import com.finderfeed.solarforge.registries.blocks.SolarcraftBlocks;
 import com.finderfeed.solarforge.registries.sounds.SolarcraftSounds;
@@ -15,7 +15,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 
 import net.minecraft.client.gui.components.ImageButton;
-import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.sounds.SoundManager;
 import net.minecraft.network.chat.Component;

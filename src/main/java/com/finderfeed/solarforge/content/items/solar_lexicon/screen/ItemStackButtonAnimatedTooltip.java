@@ -1,5 +1,6 @@
 package com.finderfeed.solarforge.content.items.solar_lexicon.screen;
 
+import com.finderfeed.solarforge.content.items.solar_lexicon.screen.buttons.ItemStackButton;
 import com.finderfeed.solarforge.local_library.client.tooltips.AnimatedTooltip;
 import com.finderfeed.solarforge.local_library.helpers.RenderingTools;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -7,7 +8,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.item.ItemStack;
 
-public class ItemStackButtonAnimatedTooltip extends ItemStackButton{
+public class ItemStackButtonAnimatedTooltip extends ItemStackButton {
 
     private AnimatedTooltip tooltip;
     private boolean shouldRenderTooltip;

@@ -5,7 +5,7 @@ import com.finderfeed.solarforge.SolarCraftTags;
 import com.finderfeed.solarforge.client.screens.SolarCraftScreen;
 import com.finderfeed.solarforge.content.abilities.ability_classes.AbstractAbility;
 import com.finderfeed.solarforge.content.blocks.solar_forge_block.solar_forge_screen.SolarForgeButtonYellow;
-import com.finderfeed.solarforge.content.items.solar_lexicon.screen.InfoButton;
+import com.finderfeed.solarforge.content.items.solar_lexicon.screen.buttons.InfoButton;
 import com.finderfeed.solarforge.content.items.solar_lexicon.screen.SolarLexiconScreen;
 import com.finderfeed.solarforge.local_library.helpers.RenderingTools;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;

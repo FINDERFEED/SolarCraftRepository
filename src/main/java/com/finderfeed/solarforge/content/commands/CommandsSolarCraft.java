@@ -122,7 +122,7 @@ class RetainFragments{
     public static ArgumentBuilder<CommandSourceStack,?> register(){
         return Commands.literal("fragments")
                 .requires(cs->cs.hasPermission(0))
-                .then(Commands.literal("retain").executes((cmd)->retainFragments(cmd.getSource())))
+//                .then(Commands.literal("retain").executes((cmd)->retainFragments(cmd.getSource())))
                 .then(Commands.literal("unlockall").executes((cmd)->unlockAllFragments(cmd.getSource())))
                 .then(Commands.literal("transferFromOldDataToNew").executes((cmd)->transferFromOldToNew(cmd.getSource())))
                 .then(Commands.literal("refresh").executes((cmd)->refreshFragments(cmd.getSource())));
@@ -139,18 +139,18 @@ class RetainFragments{
         return 1;
     }
 
-    public static int retainFragments(CommandSourceStack src) throws CommandSyntaxException {
-        ServerPlayer playerEntity  = src.getPlayerOrException();
-        for (AncientFragment fragment : AncientFragment.getAllFragments()){
-            if (ProgressionHelper.doPlayerHasFragment(playerEntity,fragment)){
-                ItemStack frag = SolarcraftItems.INFO_FRAGMENT.get().getDefaultInstance();
-                ProgressionHelper.applyTagToFragment(frag,fragment);
-                ItemEntity entity = new ItemEntity(playerEntity.level,playerEntity.getX(),playerEntity.getY()+0.3f,playerEntity.getZ(),frag);
-                playerEntity.getLevel().addFreshEntity(entity);
-            }
-        }
-        return 0;
-    }
+//    public static int retainFragments(CommandSourceStack src) throws CommandSyntaxException {
+//        ServerPlayer playerEntity  = src.getPlayerOrException();
+//        for (AncientFragment fragment : AncientFragment.getAllFragments()){
+//            if (ProgressionHelper.doPlayerHasFragment(playerEntity,fragment)){
+//                ItemStack frag = SolarcraftItems.INFO_FRAGMENT.get().getDefaultInstance();
+//                ProgressionHelper.applyTagToFragment(frag,fragment);
+//                ItemEntity entity = new ItemEntity(playerEntity.level,playerEntity.getX(),playerEntity.getY()+0.3f,playerEntity.getZ(),frag);
+//                playerEntity.getLevel().addFreshEntity(entity);
+//            }
+//        }
+//        return 0;
+//    }
 
     public static int unlockAllFragments(CommandSourceStack src) throws CommandSyntaxException {
         ServerPlayer playerEntity  = src.getPlayerOrException();

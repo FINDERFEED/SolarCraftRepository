@@ -5,7 +5,7 @@ import com.finderfeed.solarforge.helpers.ClientHelpers;
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.local_library.helpers.RenderingTools;
 import com.finderfeed.solarforge.content.items.solar_lexicon.SolarLexicon;
-import com.finderfeed.solarforge.content.items.solar_lexicon.screen.ItemStackTabButton;
+import com.finderfeed.solarforge.content.items.solar_lexicon.screen.buttons.ItemStackTabButton;
 import com.finderfeed.solarforge.content.items.solar_lexicon.screen.SolarLexiconRecipesScreen;
 import com.finderfeed.solarforge.content.items.solar_lexicon.screen.SolarLexiconScreen;
 import com.mojang.blaze3d.vertex.PoseStack;

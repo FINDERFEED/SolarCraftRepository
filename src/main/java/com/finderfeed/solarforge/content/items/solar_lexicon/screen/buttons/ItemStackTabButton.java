@@ -1,4 +1,4 @@
-package com.finderfeed.solarforge.content.items.solar_lexicon.screen;
+package com.finderfeed.solarforge.content.items.solar_lexicon.screen.buttons;
 
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.local_library.helpers.RenderingTools;
@@ -8,7 +8,7 @@ import net.minecraft.client.gui.Gui;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 
-public class ItemStackTabButton extends ItemStackButton{
+public class ItemStackTabButton extends ItemStackButton {
 
     public static final ResourceLocation LOCATION = new ResourceLocation(SolarForge.MOD_ID,"textures/gui/tab_button.png");
 

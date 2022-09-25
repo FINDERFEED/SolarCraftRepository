@@ -76,6 +76,7 @@ public class SolarForgePacketHandler {
         INSTANCE.registerMessage(nextID(), RequestAbilityScreenPacket.class, RequestAbilityScreenPacket::toBytes, RequestAbilityScreenPacket::new, RequestAbilityScreenPacket::handle);
         INSTANCE.registerMessage(nextID(), OpenAbilityScreenPacket.class, OpenAbilityScreenPacket::toBytes, OpenAbilityScreenPacket::new, OpenAbilityScreenPacket::handle);
         INSTANCE.registerMessage(nextID(), DimensionBreakPacket.class, DimensionBreakPacket::toBytes, DimensionBreakPacket::new, DimensionBreakPacket::handle);
+        INSTANCE.registerMessage(nextID(), RetainFragmentPacket.class, RetainFragmentPacket::toBytes, RetainFragmentPacket::new, RetainFragmentPacket::handle);
 
 
     }

@@ -7,7 +7,7 @@ import com.finderfeed.solarforge.compat.jei.drawables.InfusingRecipeJEI;
 import com.finderfeed.solarforge.compat.jei.JeiRecipeTypes;
 import com.finderfeed.solarforge.local_library.helpers.RenderingTools;
 import com.finderfeed.solarforge.content.items.solar_lexicon.progressions.Progression;
-import com.finderfeed.solarforge.content.items.solar_lexicon.screen.InfoButton;
+import com.finderfeed.solarforge.content.items.solar_lexicon.screen.buttons.InfoButton;
 import com.finderfeed.solarforge.content.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarforge.content.items.solar_lexicon.unlockables.ProgressionHelper;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;

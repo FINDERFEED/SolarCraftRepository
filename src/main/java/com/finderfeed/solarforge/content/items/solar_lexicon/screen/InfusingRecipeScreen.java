@@ -1,5 +1,6 @@
 package com.finderfeed.solarforge.content.items.solar_lexicon.screen;
 
+import com.finderfeed.solarforge.content.items.solar_lexicon.screen.buttons.ItemStackTabButton;
 import com.finderfeed.solarforge.helpers.ClientHelpers;
 import com.finderfeed.solarforge.helpers.Helpers;
 import com.finderfeed.solarforge.SolarForge;

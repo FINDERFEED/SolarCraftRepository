@@ -1,6 +1,7 @@
 package com.finderfeed.solarforge.content.items.solar_lexicon.structure.subcategory;
 
 import com.finderfeed.solarforge.SolarForge;
+import com.finderfeed.solarforge.content.items.solar_lexicon.screen.buttons.ItemStackButton;
 import com.finderfeed.solarforge.helpers.multiblock.MultiblockStructure;
 import com.finderfeed.solarforge.local_library.custom_registries.RegistryDelegate;
 import com.finderfeed.solarforge.local_library.helpers.RenderingTools;
@@ -8,7 +9,6 @@ import com.finderfeed.solarforge.content.items.solar_lexicon.screen.*;
 import com.finderfeed.solarforge.content.items.solar_lexicon.structure.category.Category;
 import com.finderfeed.solarforge.content.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarforge.misc_things.IScrollable;
-import com.finderfeed.solarforge.misc_things.Multiblock;
 import com.finderfeed.solarforge.content.recipe_types.infusing_new.InfusingRecipe;
 import com.finderfeed.solarforge.content.recipe_types.infusing_crafting.InfusingCraftingRecipe;
 import com.finderfeed.solarforge.content.recipe_types.solar_smelting.SolarSmeltingRecipe;
