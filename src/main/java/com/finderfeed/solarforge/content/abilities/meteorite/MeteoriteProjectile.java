@@ -2,6 +2,8 @@ package com.finderfeed.solarforge.content.abilities.meteorite;
 
 import com.finderfeed.solarforge.content.abilities.solar_strike.SolarStrikeEntity;
 import com.finderfeed.solarforge.SolarForge;
+import com.finderfeed.solarforge.helpers.Helpers;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.block.Blocks;
 
 import net.minecraft.world.entity.EntityType;
@@ -40,29 +42,33 @@ public class MeteoriteProjectile extends AbstractHurtingProjectile {
     protected void onHit(HitResult p_70227_1_) {
         if (!this.level.isClientSide) {
             Vec3 velocityVector = this.getDeltaMovement().multiply(8,8,8);
+            if (Helpers.isSpellGriefingEnabled((ServerLevel) level)) {
+                this.level.explode(null, DamageSource.DRAGON_BREATH, null, this.position().x, this.position().y, this.position().z, 10, true, Explosion.BlockInteraction.DESTROY);
+                this.level.explode(null, DamageSource.DRAGON_BREATH, null, this.position().x + velocityVector.x / 5, this.position().y + velocityVector.y / 15, this.position().z + velocityVector.z / 10, 10, true, Explosion.BlockInteraction.DESTROY);
+                double radius = this.level.random.nextFloat() * 1 + 4;
+                for (int i = (int) -Math.ceil(radius); i < Math.ceil(radius); i++) {
+                    for (int g = (int) -Math.ceil(radius); g < Math.ceil(radius); g++) {
+                        for (int h = (int) -Math.ceil(radius); h < Math.ceil(radius); h++) {
+                            if (SolarStrikeEntity.checkTochkaVEllipse(i, g, h, radius, radius, radius)) {
+                                BlockPos pos = this.getOnPos().offset((int) Math.floor(i), (int) Math.floor(g), (int) Math.floor(h)).offset((int) Math.ceil(velocityVector.x), (int) Math.ceil(velocityVector.y), (int) Math.ceil(velocityVector.z));
 
-            this.level.explode(null, DamageSource.DRAGON_BREATH, null, this.position().x, this.position().y, this.position().z, 10, true, Explosion.BlockInteraction.DESTROY);
-            this.level.explode(null, DamageSource.DRAGON_BREATH, null, this.position().x + velocityVector.x/5, this.position().y+velocityVector.y/15, this.position().z+velocityVector.z/10, 10, true, Explosion.BlockInteraction.DESTROY);
-            double radius = this.level.random.nextFloat()*1 +4;
-            for (int i = (int) -Math.ceil(radius);i < Math.ceil(radius);i++){
-                for (int g = (int) -Math.ceil(radius);g < Math.ceil(radius);g++){
-                    for (int h = (int) -Math.ceil(radius);h < Math.ceil(radius);h++){
-                        if (SolarStrikeEntity.checkTochkaVEllipse(i,g,h,radius,radius,radius)){
-                            BlockPos pos = this.getOnPos().offset((int)Math.floor(i),(int)Math.floor(g),(int)Math.floor(h)).offset((int)Math.ceil(velocityVector.x),(int)Math.ceil(velocityVector.y),(int)Math.ceil(velocityVector.z));
+                                if (this.level.random.nextFloat() < 0.8) {
 
-                            if (this.level.random.nextFloat() < 0.8){
-
-                                    if (this.level.getBlockState(pos).getDestroySpeed(this.level,pos) >= 0 && this.level.getBlockState(pos).getDestroySpeed(this.level,pos) <= 100){
-                                        this.level.setBlock(pos,Blocks.OBSIDIAN.defaultBlockState(), 3);
+                                    if (this.level.getBlockState(pos).getDestroySpeed(this.level, pos) >= 0 && this.level.getBlockState(pos).getDestroySpeed(this.level, pos) <= 100) {
+                                        this.level.setBlock(pos, Blocks.OBSIDIAN.defaultBlockState(), 3);
                                     }
-                                }else{
-                                if (this.level.getBlockState(pos).getDestroySpeed(this.level,pos) >= 0 && this.level.getBlockState(pos).getDestroySpeed(this.level,pos) <= 100){
-                                    this.level.setBlock(pos,Blocks.MAGMA_BLOCK.defaultBlockState(), 3);
+                                } else {
+                                    if (this.level.getBlockState(pos).getDestroySpeed(this.level, pos) >= 0 && this.level.getBlockState(pos).getDestroySpeed(this.level, pos) <= 100) {
+                                        this.level.setBlock(pos, Blocks.MAGMA_BLOCK.defaultBlockState(), 3);
+                                    }
                                 }
                             }
                         }
                     }
                 }
+            }else{
+                this.level.explode(null, DamageSource.DRAGON_BREATH, null, this.position().x, this.position().y, this.position().z, 10, true, Explosion.BlockInteraction.NONE);
+                this.level.explode(null, DamageSource.DRAGON_BREATH, null, this.position().x + velocityVector.x / 5, this.position().y + velocityVector.y / 15, this.position().z + velocityVector.z / 10, 10, true, Explosion.BlockInteraction.NONE);
             }
         }
         this.remove(RemovalReason.KILLED);

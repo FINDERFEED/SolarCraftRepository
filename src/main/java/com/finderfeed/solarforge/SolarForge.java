@@ -24,6 +24,7 @@ import com.finderfeed.solarforge.client.particles.SolarcraftParticleTypes;
 import com.finderfeed.solarforge.content.recipe_types.infusing_crafting.InfusingCraftingRecipe;
 import com.finderfeed.solarforge.content.recipe_types.infusing_crafting.InfusingCraftingRecipeType;
 import com.finderfeed.solarforge.content.recipe_types.infusing_new.InfusingRecipeType;
+import com.finderfeed.solarforge.registries.SolarcraftGamerules;
 import com.finderfeed.solarforge.registries.Tags;
 import com.finderfeed.solarforge.registries.abilities.AbilitiesRegistry;
 import com.finderfeed.solarforge.registries.attributes.AttributesRegistry;
@@ -57,6 +58,7 @@ import com.finderfeed.solarforge.content.world_generation.features.FeaturesRegis
 import com.finderfeed.solarforge.content.world_generation.features.foliage_placers.FoliagePlacerRegistry;
 import com.finderfeed.solarforge.content.world_generation.features.trunk_placers.TrunkPlacersRegistry;
 import net.minecraft.world.item.Tiers;
+import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.Block;
 
@@ -199,6 +201,7 @@ public class SolarForge
         AttributesRegistry.DEF_REG.register(bus);
         FDEntityDataSerializers.DEF_REG.register(bus);
         BiomesRegister.BIOMES.register(bus);
+        SolarcraftGamerules.init();
         // Register the setup method for modloading
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
 

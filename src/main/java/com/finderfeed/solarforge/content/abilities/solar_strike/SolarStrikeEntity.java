@@ -7,6 +7,7 @@ import com.finderfeed.solarforge.config.SolarcraftConfig;
 import com.finderfeed.solarforge.events.other_events.event_handler.EventHandler;
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
 import com.finderfeed.solarforge.packet_handler.packets.misc_packets.SolarStrikeEntityDoExplosion;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 
@@ -119,7 +120,7 @@ public class SolarStrikeEntity extends PathfinderMob {
 
 
     public void doSolarStrikeExplosion(BlockPos pos) {
-        if (!EventHandler.isExplosionBlockerAround(level, Helpers.getBlockCenter(pos))) {
+        if (!EventHandler.isExplosionBlockerAround(level, Helpers.getBlockCenter(pos)) && Helpers.isSpellGriefingEnabled((ServerLevel) level)) {
             //8
             //3 + Math.ceil(randomRadius) * 3
             double randomRadius = this.level.random.nextFloat() * 2 + 10;

@@ -36,12 +36,16 @@ public class LightningAbility extends AbstractAbility{
                 if (world.canSeeSky(pos.above())) {
                     LightningBolt entityBolt = new LightningBolt(EntityType.LIGHTNING_BOLT, world);
                     entityBolt.setPos(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
+                    if (Helpers.isSpellGriefingEnabled(world)) {
+                        Explosion explosion = new Explosion(world, null, null, StoneDestroyerCalculator.INSTANCE_01, pos.getX(), pos.getY() - 3, pos.getZ(), 6, true, Explosion.BlockInteraction.BREAK);
+                        spawnFallingBlocks(world, pos.below(3), explosion);
 
-                    Explosion explosion = new Explosion(world, null, null, StoneDestroyerCalculator.INSTANCE_01, pos.getX(), pos.getY()-3, pos.getZ(), 6, true, Explosion.BlockInteraction.BREAK);
-                    spawnFallingBlocks(world,pos.below(3),explosion);
-
-                    world.explode(entity,null,StoneDestroyerCalculator.INSTANCE_01, pos.getX(), pos.getY()-1, pos.getZ(), 6, true, Explosion.BlockInteraction.BREAK);
-                    world.explode(entity,null,StoneDestroyerCalculator.INSTANCE_01, pos.getX(), pos.getY()-5, pos.getZ(), 4, true, Explosion.BlockInteraction.BREAK);
+                        world.explode(entity, null, StoneDestroyerCalculator.INSTANCE_01, pos.getX(), pos.getY() - 1, pos.getZ(), 6, true, Explosion.BlockInteraction.BREAK);
+                        world.explode(entity, null, StoneDestroyerCalculator.INSTANCE_01, pos.getX(), pos.getY() - 5, pos.getZ(), 4, true, Explosion.BlockInteraction.BREAK);
+                    }else{
+                        world.explode(entity, null, StoneDestroyerCalculator.INSTANCE_01, pos.getX(), pos.getY() - 1, pos.getZ(), 6, true, Explosion.BlockInteraction.NONE);
+                        world.explode(entity, null, StoneDestroyerCalculator.INSTANCE_01, pos.getX(), pos.getY() - 5, pos.getZ(), 4, true, Explosion.BlockInteraction.NONE);
+                    }
                     AbilityHelper.spendAbilityEnergy(entity,this);
                     world.addFreshEntity(entityBolt);
                 }/*else{*/

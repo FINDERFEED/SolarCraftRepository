@@ -16,6 +16,7 @@ import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
 import com.finderfeed.solarforge.packet_handler.packets.*;
 import com.finderfeed.solarforge.content.items.solar_lexicon.progressions.progression_tree.ProgressionTree;
 import com.finderfeed.solarforge.content.items.solar_lexicon.packets.UpdateProgressionOnClient;
+import com.finderfeed.solarforge.registries.SolarcraftGamerules;
 import com.mojang.blaze3d.vertex.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiComponent;
@@ -66,6 +67,9 @@ public class Helpers {
         return data.isCleaned();
     }
 
+    public static boolean isSpellGriefingEnabled(ServerLevel level){
+        return level.getGameRules().getBoolean(SolarcraftGamerules.SPELL_GRIEFING);
+    }
 
 
     public static void drawBoundedText(PoseStack matrices,int posx,int posy,int bound,String s,int color){
