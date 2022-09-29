@@ -40,6 +40,8 @@ public class AncientFragment {
     public static final AncientFragment WAND = new AncientFragment(tx("solar_fragment.wand"),"wand",null,SubCategoryBase.BEGGINING,CategoryBase.BEGGINING_INFO,ItemWithRecipe.of(SOLAR_WAND.get().getDefaultInstance(),"solar_wand"),tx("wand.lore"), RecipeType.CRAFTING,1);
 
     public static final AncientFragment HIDDEN_ORES = new AncientFragment(tx("solar_fragment.hidden_ores"),"hidden_ores",ProgressionStage.PRE_BEGGINING.ALL_PROGRESSIONS,SubCategoryBase.WORLD,CategoryBase.EXPLORATION, Items.STONE,tx("hidden_ores.lore"),1);
+    public static final AncientFragment THROWABLE_LIGHT = new AncientFragment(tx("solar_fragment.throwable_light"),"throwable_light",null,SubCategoryBase.BEGINNER_ITEMS,CategoryBase.BEGINNER,ItemWithRecipe.of(THROWN_LIGHT.get().getDefaultInstance(),"thrown_light"),tx("throwable_light.lore"), RecipeType.CRAFTING,1);
+
     public static final AncientFragment SOLAR_STONES = new AncientFragment(tx("solar_fragment.solar_stones"),"solar_stones", ProgressionStage.PRE_BEGGINING.ALL_PROGRESSIONS,SubCategoryBase.BEGINNER_BLOCKS,CategoryBase.BEGINNER, List.of(
             ItemWithRecipe.of(SolarcraftItems.SOLAR_STONE_BRICKS.get().getDefaultInstance(),"solar_stone_bricks"),ItemWithRecipe.of(SolarcraftItems.SOLAR_STONE_COLLUMN.get().getDefaultInstance(),"solar_stone_collumn"),
             ItemWithRecipe.of(SolarcraftItems.SOLAR_STONE_COLLUMN_HORIZONTAL.get().getDefaultInstance(),"solar_stone_collumn_horizontal"),ItemWithRecipe.of(SolarcraftItems.SOLAR_STONE_STAIRS.get().getDefaultInstance(),"solar_stone_stairs"),

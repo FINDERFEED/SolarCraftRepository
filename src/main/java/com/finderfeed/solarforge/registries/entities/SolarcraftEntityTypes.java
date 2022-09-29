@@ -118,6 +118,11 @@ public class SolarcraftEntityTypes {
             EntityType.Builder.<ShadowBolt>of(ShadowBolt::new, MobCategory.MISC)
                     .sized(0.25f, 0.25f).build("shadow_bolt"));
 
+    public static final RegistryObject<EntityType<ThrownLightProjectile>> THROWN_LIGHT = ENTITY_TYPE_REGISTER.register("thrown_light", () ->
+            EntityType.Builder.<ThrownLightProjectile>of(ThrownLightProjectile::new, MobCategory.MISC)
+                    .sized(0.25f, 0.25f).clientTrackingRange(8).updateInterval(1).build("thrown_light"));
+
+
     public static final RegistryObject<EntityType<CorruptionWisp>> CORRUPTION_WISP = ENTITY_TYPE_REGISTER.register("corruption_wisp", () ->
             EntityType.Builder.<CorruptionWisp>of(CorruptionWisp::new, MobCategory.CREATURE)
                     .sized(0.35f, 0.35f).clientTrackingRange(8).updateInterval(1).build("corruption_wisp"));

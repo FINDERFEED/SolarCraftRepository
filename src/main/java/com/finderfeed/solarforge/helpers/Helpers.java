@@ -536,6 +536,10 @@ public class Helpers {
         return ClientboundBlockEntityDataPacket.create(tile,(til)-> tag);
     }
 
+    public static Vec3 getPlayerShootPos(Player player){
+        return player.position().add(0,player.getStandingEyeHeight(player.getPose(),player.getDimensions(player.getPose())),0);
+    }
+
 
     public static List<BlockPos> getValidSpawningPositionsAround(Level world,BlockPos initPos,double radius,int maxHeightCheck,int maxYCheck){
         int rad = (int)Math.round(radius);

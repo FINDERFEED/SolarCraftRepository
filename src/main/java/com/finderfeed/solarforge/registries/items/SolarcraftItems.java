@@ -310,6 +310,8 @@ public class SolarcraftItems {
 
     //TODO: delete this
     public static final RegistryObject<Item> CLEARING_RITUAL_MAIN_BLOCK = ITEMS.register("clearing_ritual_main_block",()->new BlockItem(SolarcraftBlocks.CLEARING_RITUAL_MAIN_BLOCK.get(),new Item.Properties()));
+    public static final RegistryObject<Item> THROWN_LIGHT = ITEMS.register("thrown_light",()->new ThrownLight(SolarcraftBlocks.THROWN_LIGHT.get(),new Item.Properties().tab(SolarForge.SOLAR_GROUP)));
+
 
 
 }

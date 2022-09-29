@@ -154,9 +154,6 @@ public class SolarcraftBlocks {
     public static final RegistryObject<Block> RADIANT_CRYSTAL = BLOCKS.register("radiant_crystal",()->new GlassBlock(BlockBehaviour.Properties.copy(Blocks.GLASS)));
     public  static  final RegistryObject<Block> CRYSTAL_FLOWER = BLOCKS.register("crystal_flower",()-> new CrystalFlower(BlockBehaviour.Properties.copy(Blocks.DEAD_BUSH).lightLevel((i)->6)));
     public static final RegistryObject<Block> RADIANT_BERRY_BUSH = BLOCKS.register("radiant_berry_bush",()->new BushBlock(BlockBehaviour.Properties.copy(Blocks.DEAD_BUSH)));
-//    public static final RegistryObject<Block> RADIANT_LAND_PORTAL = BLOCKS.register("radiant_portal",()->new RadiantPortalBlock(BlockBehaviour.Properties.copy(Blocks.BEDROCK).isViewBlocking((a, b, c)-> false).noCollission() ));
-//    public static final RegistryObject<Block> RADIANT_LAND_PORTAL_CREATOR = BLOCKS.register("radiant_portal_creator",()->new PortalCreatorBlock(BlockBehaviour.Properties.copy(Blocks.NETHERITE_BLOCK).isViewBlocking((a, b, c)-> false).noCollission()));
-
 
     public  static  final RegistryObject<Block> DIMENSION_CORE = BLOCKS.register("dimension_core",()-> new DimensionCoreBlock(BlockBehaviour.Properties.copy(Blocks.STONE)));
 
@@ -178,5 +175,8 @@ public class SolarcraftBlocks {
     public  static  final RegistryObject<Block> CRYSTAL_ENERGY_VINES = BLOCKS.register("crystal_energy_vines",()-> new CrystalEnergyVinesBlock(BlockBehaviour.Properties.copy(Blocks.BEDROCK)));
     public  static  final RegistryObject<Block> CLEARING_RITUAL_CRYSTAL = BLOCKS.register("clearing_ritual_crystal",()-> new ClearingRitualCrystalBlock(BlockBehaviour.Properties.copy(Blocks.STONE).explosionResistance(3600000.0F).noOcclusion()));
     public  static  final RegistryObject<Block> CLEARING_RITUAL_MAIN_BLOCK = BLOCKS.register("clearing_ritual_main_block",()-> new ClearingRitualMainBlock(BlockBehaviour.Properties.copy(Blocks.BEDROCK).noOcclusion()));
+    public  static  final RegistryObject<TemporaryLightBlock> TEMPORARY_LIGHT = BLOCKS.register("temporary_light",()-> new TemporaryLightBlock(BlockBehaviour.Properties.copy(Blocks.LIGHT).lightLevel((state)-> state.getValue(TemporaryLightBlock.LIGHT_LEVEL))));
+    public  static  final RegistryObject<Block> THROWN_LIGHT = BLOCKS.register("thrown_light",()-> new ThrownLightBlock(BlockBehaviour.Properties.copy(Blocks.TORCH).sound(SoundType.WOOL)));
+
 
 }

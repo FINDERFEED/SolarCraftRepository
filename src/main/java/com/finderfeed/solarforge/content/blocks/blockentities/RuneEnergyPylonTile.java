@@ -130,6 +130,7 @@ public class RuneEnergyPylonTile extends BlockEntity implements  DebugTarget, Ru
             RunicEnergy.Type[] types = {RunicEnergy.Type.ARDO, RunicEnergy.Type.TERA, RunicEnergy.Type.FIRA, RunicEnergy.Type.URBA, RunicEnergy.Type.KELDA, RunicEnergy.Type.ZETA, RunicEnergy.Type.GIRO, RunicEnergy.Type.ULTIMA
             };
             tile.type = types[tile.level.random.nextInt(types.length)];
+            Helpers.updateTile(tile);
         }
         if (isStructCorrect(tile)) {
             float bonus = getPerTickEnergyBonus(tile);

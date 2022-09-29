@@ -1,6 +1,5 @@
 package com.finderfeed.solarforge.registries;
 
-import com.mojang.brigadier.arguments.BoolArgumentType;
 import net.minecraft.world.level.GameRules;
 
 import static net.minecraft.world.level.GameRules.register;

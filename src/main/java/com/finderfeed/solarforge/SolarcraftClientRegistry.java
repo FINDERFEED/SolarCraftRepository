@@ -247,6 +247,7 @@ public class SolarcraftClientRegistry {
         event.registerEntityRenderer(SolarcraftEntityTypes.SHADOW_ZOMBIE.get(), ShadowZombieRenderer::new);
         event.registerEntityRenderer(SolarcraftEntityTypes.CORRUPTION_WISP.get(), CorruptionWispRenderer::new);
         event.registerEntityRenderer(SolarcraftEntityTypes.SUMMONING_PROJECTILE.get(), NullRenderer::new);
+        event.registerEntityRenderer(SolarcraftEntityTypes.THROWN_LIGHT.get(), ThrownLightProjectileRenderer::new);
     }
 
 }
