@@ -21,7 +21,7 @@ public class UniformPlusPlus {
             if (uniform instanceof Float a) {
                 shader.safeGetUniform(name).set(a);
             }else if (uniform instanceof Matrix4f a){
-                shader.safeGetUniform(name).set(a);
+                shader.safeGetUniform(name).set(a.copy());
             }else if (uniform instanceof Vector3f a){
                 shader.safeGetUniform(name).set(a);
             }

@@ -22,6 +22,7 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.core.BlockPos;
 import com.mojang.math.Matrix4f;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import com.mojang.math.Vector3f;
@@ -230,7 +231,7 @@ public class EnergyGeneratorTileRender implements BlockEntityRenderer<SolarEnerg
             matrices.pushPose();
             matrices.translate(0.5, 0.6, 0.5);
             Matrix4f modelview = matrices.last().pose();
-            this.loadShader(SHADER_LOCATION, new UniformPlusPlus(Map.of(
+            this.loadShader(tile,SHADER_LOCATION, new UniformPlusPlus(Map.of(
                     "projection", RenderSystem.getProjectionMatrix(),
                     "modelview", modelview,
                     "distance", dist,
@@ -243,19 +244,19 @@ public class EnergyGeneratorTileRender implements BlockEntityRenderer<SolarEnerg
     }
 
 
-    private void loadShader(ResourceLocation LOC, UniformPlusPlus uniforms){
+    private void loadShader(BlockEntity tile,ResourceLocation LOC, UniformPlusPlus uniforms){
         if (SHADER == null){
             try {
                 SHADER = new PostChainPlusUltra(LOC,uniforms);
                 SHADER.resize(Minecraft.getInstance().getWindow().getScreenWidth(),Minecraft.getInstance().getWindow().getScreenHeight());
-                RenderingTools.addActivePostShader(uniforms,SHADER);
+                RenderingTools.addActivePostShader(tile.toString(),uniforms,SHADER);
             }catch (Exception e){
                 e.printStackTrace();
                 throw new RuntimeException("Failed to load shader in EnergyGeneratorTileRender.java");
             }
 
         }else{
-            RenderingTools.addActivePostShader(uniforms,SHADER);
+            RenderingTools.addActivePostShader(tile.toString(),uniforms,SHADER);
         }
     }
 

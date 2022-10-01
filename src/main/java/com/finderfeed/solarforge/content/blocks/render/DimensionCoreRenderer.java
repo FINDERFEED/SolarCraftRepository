@@ -17,6 +17,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.Map;
@@ -73,7 +74,7 @@ public class DimensionCoreRenderer extends TileEntityRenderer<DimensionCoreTile>
             matrices.pushPose();
             matrices.translate(0.5, 3.5, 0.5);
             Matrix4f modelview = matrices.last().pose();
-            this.loadShader(SHADER_LOCATION, new UniformPlusPlus(Map.of(
+            this.loadShader(tile,SHADER_LOCATION, new UniformPlusPlus(Map.of(
                     "projection", RenderSystem.getProjectionMatrix(),
                     "modelview", modelview,
                     "distance", dist,
@@ -88,20 +89,20 @@ public class DimensionCoreRenderer extends TileEntityRenderer<DimensionCoreTile>
     }
 
 
-    private void loadShader(ResourceLocation LOC, UniformPlusPlus uniforms){
+    private void loadShader(BlockEntity tile,ResourceLocation LOC, UniformPlusPlus uniforms){
         if (SHADER == null){
             try {
                 SHADER = new PostChainPlusUltra(LOC,uniforms);
                 SHADER.resize(Minecraft.getInstance().getWindow().getScreenWidth(),
                         Minecraft.getInstance().getWindow().getScreenHeight());
-                RenderingTools.addActivePostShader(uniforms,SHADER);
+                RenderingTools.addActivePostShader(tile.toString(),uniforms,SHADER);
             }catch (Exception e){
                 e.printStackTrace();
                 throw new RuntimeException("Failed to load shader in DimensionCoreRenderer.java");
             }
 
         }else{
-            RenderingTools.addActivePostShader(uniforms,SHADER);
+            RenderingTools.addActivePostShader(tile.toString(),uniforms,SHADER);
         }
     }
 }

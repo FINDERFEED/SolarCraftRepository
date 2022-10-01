@@ -62,9 +62,6 @@ public class ModelLayersRegistry {
     public static final ModelLayerLocation SOLAR_GOD_SHIELD_MODEL =
             new ModelLayerLocation(new ResourceLocation("solarforge","solar_god_shield"), "main");
 
-    public static final ModelLayerLocation RADIANT_PORTAL_CREATOR_MODEL =
-            new ModelLayerLocation(new ResourceLocation("solarforge","radiant_model_creator"), "main");
-
     public static final ModelLayerLocation SHADOW_ZOMBIE_LAYER = new ModelLayerLocation(new ResourceLocation(SolarForge.MOD_ID,"shadow_zombie_layer"),"main");
     public static final ModelLayerLocation CORRUPTION_WISP_LAYER = new ModelLayerLocation(new ResourceLocation(SolarForge.MOD_ID,"corruption_wisp_layer"),"main");
 
@@ -79,7 +76,6 @@ public class ModelLayersRegistry {
         event.registerLayerDefinition(SOLAR_FORGE_PETALS, SolarForgePetalsTrue::createLayer);
         event.registerLayerDefinition(SOLAR_FORGE_MAIN_MODEL, SolarForgeBlockModelTrue::createLayer);
         event.registerLayerDefinition(SOLAR_GOD_SHIELD_MODEL, SolarGodShield::createLayers);
-        event.registerLayerDefinition(RADIANT_PORTAL_CREATOR_MODEL, RadiantPortal::createLayers);
         event.registerLayerDefinition(RunicElementalModel.LAYER_LOCATION, RunicElementalModel::createBodyLayer);
         event.registerLayerDefinition(RunicWarriorModel.LAYER_LOCATION, RunicWarriorModel::createBodyLayer);
         event.registerLayerDefinition(RunicHammerModel.LAYER_LOCATION, RunicHammerModel::createBodyLayer);

@@ -8,10 +8,8 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.BufferBuilder;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.blaze3d.vertex.VertexFormat;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -21,7 +19,6 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ClipContext;
@@ -34,11 +31,10 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ClientPlayerNetworkEvent;
-import net.minecraftforge.client.event.RenderLevelLastEvent;
+import net.minecraftforge.client.event.RenderLevelStageEvent;
 import net.minecraftforge.client.model.data.EmptyModelData;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BlockEvent;
-import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import org.jetbrains.annotations.Nullable;
@@ -58,7 +54,8 @@ public class MultiblockVisualizer {
     private static TransparentBuffers buffers = null;
 
     @SubscribeEvent
-    public static void render(RenderLevelLastEvent event){
+    public static void render(RenderLevelStageEvent event){
+        if (event.getStage() != RenderLevelStageEvent.Stage.AFTER_TRANSLUCENT_BLOCKS) return;
         Player player = Minecraft.getInstance().player;
         Level world = Minecraft.getInstance().level;
         Camera camera = Minecraft.getInstance().gameRenderer.getMainCamera();
@@ -152,6 +149,10 @@ public class MultiblockVisualizer {
             Vec3 pos = renderPos.add(Helpers.posToVec(block.pos));
             matrices.translate(pos.x,pos.y,pos.z);
             int overlay = block.status == GhostBlock.NEUTRAL ? OverlayTexture.NO_OVERLAY : OverlayTexture.RED_OVERLAY_V;
+            if (block.status == GhostBlock.WRONG){
+                matrices.translate(-0.025,-0.025,-0.025);
+                matrices.scale(1.05f,1.05f,1.05f);
+            }
             d.renderSingleBlock(block.state,matrices,buffers,0xf000f0, overlay, EmptyModelData.INSTANCE);
             if (block.tile != null){
                 BlockEntityRenderer<BlockEntity> renderer = td.getRenderer(block.tile);
@@ -197,14 +198,14 @@ public class MultiblockVisualizer {
             super(init.toString() + "_transparent_blocks_solarcraft", init.format(), init.mode(), init.bufferSize(), init.affectsCrumbling(),
                     true, () -> {
                 init.setupRenderState();
-                RenderSystem.disableDepthTest();
+//                RenderSystem.disableDepthTest();
 //                RenderSystem.depthMask(true);
                 RenderSystem.setShaderColor(1, 1, 1, 0.45F);
                 RenderSystem.enableBlend();
             }, () -> {
                 RenderSystem.setShaderColor(1, 1, 1, 1);
                 RenderSystem.disableBlend();
-                RenderSystem.enableDepthTest();
+//                RenderSystem.enableDepthTest();
                 init.clearRenderState();
             });
         }

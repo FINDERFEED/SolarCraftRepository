@@ -54,6 +54,7 @@ public class SolarCraftRenderTypes extends RenderType{
         RenderType.CompositeState state = RenderType.CompositeState.builder()
                 .setShaderState(shaderStateShard)
                 .setTransparencyState(RenderStateShard.TRANSLUCENT_TRANSPARENCY)
+                .setTextureState(RenderStateShard.NO_TEXTURE)
                 .createCompositeState(false);
         return RenderType.create("shaderRendertype", DefaultVertexFormat.POSITION_TEX, VertexFormat.Mode.QUADS, 256, false, true,state);
     }

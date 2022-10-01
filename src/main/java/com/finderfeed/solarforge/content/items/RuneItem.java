@@ -54,7 +54,7 @@ public class RuneItem extends SolarcraftItem {
 //                    if (stack.getCount() == 1) {
 
                         CompoundTag tag = putTag(stack);
-                        tag.putInt(TAG_OFFLINE_TIME,400);
+                        tag.putInt(TAG_OFFLINE_TIME,100);
                         int progress = tag.getInt(TAG_PROGRESS);
                         BlockPos position = CompoundNBTHelper.getBlockPos(TAG_POSITION,tag);
                         if (Helpers.equalsBlockPos(pos,position)){
@@ -73,7 +73,10 @@ public class RuneItem extends SolarcraftItem {
                                 world.playSound(null,pos.getX(),pos.getY(),pos.getZ(), SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.BLOCKS,1,1);
                                 world.setBlock(pos, SolarcraftBlocks.INSCRIPTION_STONE.get().defaultBlockState().setValue(InscriptionStone.PROP,type), 3);
 //                                pl.setItemInHand(hand,ItemStack.EMPTY);
-                                pl.getItemInHand(hand).shrink(1);
+
+                                ItemStack copy = stack.copy();
+                                copy.shrink(1);
+                                pl.setItemInHand(hand,copy);
                             }
                         }else{
                             CompoundNBTHelper.writeBlockPos(TAG_POSITION,pos,tag);

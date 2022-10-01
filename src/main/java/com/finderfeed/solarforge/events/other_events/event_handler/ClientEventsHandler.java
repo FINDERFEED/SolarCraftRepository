@@ -1,13 +1,12 @@
 package com.finderfeed.solarforge.events.other_events.event_handler;
 
 
-import com.finderfeed.solarforge.events.PlayerTickEvent;
-import com.finderfeed.solarforge.helpers.ClientHelpers;
-import com.finderfeed.solarforge.helpers.Helpers;
 import com.finderfeed.solarforge.SolarForge;
-import com.finderfeed.solarforge.events.misc.ClientTicker;
 import com.finderfeed.solarforge.content.blocks.infusing_table_things.InfuserTileEntity;
 import com.finderfeed.solarforge.content.items.ModuleItem;
+import com.finderfeed.solarforge.events.misc.ClientTicker;
+import com.finderfeed.solarforge.helpers.ClientHelpers;
+import com.finderfeed.solarforge.helpers.Helpers;
 import com.finderfeed.solarforge.misc_things.CameraShake;
 import com.finderfeed.solarforge.misc_things.Flash;
 import com.finderfeed.solarforge.registries.blocks.SolarcraftBlocks;
@@ -17,10 +16,8 @@ import com.mojang.blaze3d.vertex.*;
 import com.mojang.math.Matrix4f;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Gui;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.GameRenderer;
-import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
@@ -33,8 +30,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ClientPlayerNetworkEvent;
 import net.minecraftforge.client.event.EntityViewRenderEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
-import net.minecraftforge.client.event.RenderLevelLastEvent;
-
+import net.minecraftforge.client.event.RenderLevelStageEvent;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
@@ -128,7 +124,8 @@ public class ClientEventsHandler {
 
 
     @SubscribeEvent
-    public static void renderList(RenderLevelLastEvent event){
+    public static void renderList(RenderLevelStageEvent event){
+        if (event.getStage() != RenderLevelStageEvent.Stage.AFTER_TRANSLUCENT_BLOCKS) return;
         PoseStack stack = event.getPoseStack();
         if (!ORES_RENDER_POSITIONS.isEmpty()){
             Camera cam = Minecraft.getInstance().gameRenderer.getMainCamera();

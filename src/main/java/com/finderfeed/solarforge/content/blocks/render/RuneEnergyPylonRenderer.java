@@ -20,6 +20,7 @@ import com.mojang.math.Matrix4f;
 import com.mojang.math.Quaternion;
 
 import com.mojang.math.Vector3f;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
@@ -51,13 +52,12 @@ public class RuneEnergyPylonRenderer implements BlockEntityRenderer<RuneEnergyPy
                      ) * 50f ;
 
 
-
             matrices.pushPose();
             matrices.translate(0.5, 0.5, 0.5);
             Matrix4f modelview = matrices.last().pose();
-            this.loadShader(SHADER_LOCATION, new UniformPlusPlus(Map.of(
+            this.loadShader(tile,SHADER_LOCATION, new UniformPlusPlus(Map.of(
                     "projection", RenderSystem.getProjectionMatrix(),
-                    "modelview", modelview,
+                    "modelview", modelview.copy(),
                     "distance", dist,
                     "intensity", 0.5f
             )));
@@ -122,19 +122,19 @@ public class RuneEnergyPylonRenderer implements BlockEntityRenderer<RuneEnergyPy
     }
 
 
-    private void loadShader(ResourceLocation LOC, UniformPlusPlus uniforms){
+    private void loadShader(BlockEntity tile,ResourceLocation LOC, UniformPlusPlus uniforms){
         if (SHADER == null){
             try {
                 SHADER = new PostChainPlusUltra(LOC,uniforms);
                 SHADER.resize(Minecraft.getInstance().getWindow().getScreenWidth(),Minecraft.getInstance().getWindow().getScreenHeight());
-                RenderingTools.addActivePostShader(uniforms,SHADER);
+                RenderingTools.addActivePostShader(tile.toString(),uniforms,SHADER);
             }catch (Exception e){
                 e.printStackTrace();
                 throw new RuntimeException("Failed to load shader in RuneEnergyPylonRenderer.java");
             }
 
         }else{
-            RenderingTools.addActivePostShader(uniforms,SHADER);
+            RenderingTools.addActivePostShader(tile.toString(),uniforms,SHADER);
         }
     }
 }

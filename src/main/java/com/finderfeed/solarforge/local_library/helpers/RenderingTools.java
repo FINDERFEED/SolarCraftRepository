@@ -11,10 +11,12 @@ import com.finderfeed.solarforge.content.items.runic_energy.RunicEnergyContainer
 import com.finderfeed.solarforge.content.items.runic_energy.RunicEnergyCost;
 import com.finderfeed.solarforge.helpers.multiblock.MultiblockStructure;
 
+import com.finderfeed.solarforge.misc_things.PostShader;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import com.finderfeed.solarforge.client.rendering.rendertypes.RadiantPortalRendertype;
 import com.finderfeed.solarforge.client.rendering.shaders.post_chains.PostChainPlusUltra;
 import com.finderfeed.solarforge.client.rendering.shaders.post_chains.UniformPlusPlus;
+import com.google.common.base.MoreObjects;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.platform.Lighting;
 import com.mojang.blaze3d.vertex.*;
@@ -22,11 +24,14 @@ import com.mojang.blaze3d.vertex.*;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.math.Vector3d;
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.Options;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiComponent;
 
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
@@ -39,6 +44,8 @@ import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
+import net.minecraft.util.Mth;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.core.Direction;
@@ -52,6 +59,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.BlockAndTintGetter;
+import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.HalfTransparentBlock;
@@ -171,9 +179,9 @@ public class RenderingTools {
 
 
 
-    public static void addActivePostShader(UniformPlusPlus uniformPlusPlus,PostChainPlusUltra shader){
+    public static void addActivePostShader(String uniqueID,UniformPlusPlus uniformPlusPlus,PostChainPlusUltra shader){
         if (ClientHelpers.isShadersEnabled()) {
-            RenderEventsHandler.ACTIVE_SHADERS.put(uniformPlusPlus, shader);
+            RenderEventsHandler.ACTIVE_SHADERS.put(uniqueID,new PostShader(uniformPlusPlus, shader));
         }
     }
 
@@ -304,13 +312,6 @@ public class RenderingTools {
 
 
 
-    public static void renderHandManually(PoseStack matrixStack,float partialTicks){
-        boolean render = Minecraft.getInstance().gameRenderer.renderHand;
-        if (render){
-            RenderSystem.clear(256, Minecraft.ON_OSX);
-            Minecraft.getInstance().gameRenderer.renderItemInHand(matrixStack,Minecraft.getInstance().gameRenderer.getMainCamera(),partialTicks);
-        }
-    }
 
 
     private static ResourceLocation runeEnergyOverlay = new ResourceLocation("solarforge","textures/misc/runic_energy_bar.png");
@@ -1324,4 +1325,20 @@ public class RenderingTools {
         }
 
     }
+
+    public static void renderHandManually(PoseStack matrixStack,float partialTicks,int clearValueAfter){
+        boolean render = Minecraft.getInstance().gameRenderer.renderHand;
+        if (render){
+            matrixStack.pushPose();
+            Matrix4f copy = RenderSystem.getProjectionMatrix().copy();
+            RenderSystem.clear(256, Minecraft.ON_OSX);
+            Minecraft.getInstance().gameRenderer.renderItemInHand(matrixStack,Minecraft.getInstance().gameRenderer.getMainCamera(),partialTicks);
+            RenderSystem.clear(clearValueAfter,Minecraft.ON_OSX);
+            RenderSystem.setProjectionMatrix(copy);
+            matrixStack.popPose();
+        }
+    }
+
+
+
 }

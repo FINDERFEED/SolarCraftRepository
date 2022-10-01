@@ -703,7 +703,8 @@
   "solarcraft.energy_vines_screen": "Соедените зеленую и желтую точки. WASD/Стрелки - движение. R - Сброс.",
   "solarcraft.solar_network_binder": "Кликните на один механизм, использующий чистую солнечную энергию, затем кликните на второй и ВТОРОЙ механизм будет привязан к первому.",
   "solarcraft.failed_to_bind": "Привязка не удалась.",
-  "solar_catergory.endgame": "Конец",
+  "solar_category.endgame": "Endgame",
+
 
 
   "solarcraft.structure.infuser_tier_one": "Наполнитель I",

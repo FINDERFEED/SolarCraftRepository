@@ -720,7 +720,7 @@
   "solarcraft.energy_vines_screen": "Connect yellow and green points. WASD/Arrows - movement. R - Reset puzzle.",
   "solarcraft.solar_network_binder": "Right click on one SOLAR energy user, then right click on second SOLAR energy user and SECOND one will be bound to first one.",
   "solarcraft.failed_to_bind": "Failed to bind.",
-  "solar_catergory.endgame": "Endgame",
+  "solar_category.endgame": "Endgame",
   "solarcraft.structure.infuser_tier_one": "Infuser I",
   "solarcraft.structure.infuser_tier_two": "Infuser II",
   "solarcraft.structure.infuser_tier_three": "Infuser III",
