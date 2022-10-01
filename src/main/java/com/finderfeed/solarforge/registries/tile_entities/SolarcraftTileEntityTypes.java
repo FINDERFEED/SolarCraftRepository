@@ -5,6 +5,9 @@ import com.finderfeed.solarforge.content.blocks.blockentities.clearing_ritual.cl
 import com.finderfeed.solarforge.content.blocks.blockentities.clearing_ritual.clearing_ritual_main_tile.ClearingRitualMainTile;
 import com.finderfeed.solarforge.content.blocks.infusing_table_things.infusing_pool.InfusingStandTileEntity;
 import com.finderfeed.solarforge.content.blocks.blockentities.*;
+import com.finderfeed.solarforge.content.blocks.solar_energy.SolarEnergyCoreTile;
+import com.finderfeed.solarforge.content.blocks.solar_energy.SolarEnergyGeneratorTile;
+import com.finderfeed.solarforge.content.blocks.solar_energy.SolarEnergyRepeaterTile;
 import com.finderfeed.solarforge.content.runic_network.repeater.BaseRepeaterTile;
 import com.finderfeed.solarforge.registries.blocks.SolarcraftBlocks;
 import com.finderfeed.solarforge.content.world_generation.structures.blocks.tile_entities.ColdStarInfuserTile;
@@ -39,14 +42,14 @@ public class SolarcraftTileEntityTypes {
     public static final RegistryObject<BlockEntityType<MagnetBlockTile>> MAGNET_BLOCK_TILE = TILE_ENTITY_TYPE.register("magnet_block_tile",()->
             BlockEntityType.Builder.of(MagnetBlockTile::new, SolarcraftBlocks.MAGNET_BLOCK.get()).build(null));
 
-    public static final RegistryObject<BlockEntityType<EnergyGeneratorTile>> ENERGY_GENERATOR_TILE = TILE_ENTITY_TYPE.register("energy_generator_tile",()->
-            BlockEntityType.Builder.of(EnergyGeneratorTile::new, SolarcraftBlocks.SOLAR_ENERGY_GENERATOR.get()).build(null));
+    public static final RegistryObject<BlockEntityType<SolarEnergyGeneratorTile>> ENERGY_GENERATOR_TILE = TILE_ENTITY_TYPE.register("energy_generator_tile",()->
+            BlockEntityType.Builder.of(SolarEnergyGeneratorTile::new, SolarcraftBlocks.SOLAR_ENERGY_GENERATOR.get()).build(null));
 
-    public static final RegistryObject<BlockEntityType<SolarEnergyRepeaterBlockEntity>> SOLAR_REPEATER = TILE_ENTITY_TYPE.register("energy_repeater_tile",()->
-            BlockEntityType.Builder.of(SolarEnergyRepeaterBlockEntity::new, SolarcraftBlocks.SOLAR_REPEATER.get()).build(null));
+    public static final RegistryObject<BlockEntityType<SolarEnergyRepeaterTile>> SOLAR_REPEATER = TILE_ENTITY_TYPE.register("energy_repeater_tile",()->
+            BlockEntityType.Builder.of(SolarEnergyRepeaterTile::new, SolarcraftBlocks.SOLAR_REPEATER.get()).build(null));
 
-    public static final RegistryObject<BlockEntityType<SolarCoreBlockEntity>> SOLAR_CORE_TILE = TILE_ENTITY_TYPE.register("energy_core_tile",()->
-            BlockEntityType.Builder.of(SolarCoreBlockEntity::new, SolarcraftBlocks.SOLAR_CORE.get()).build(null));
+    public static final RegistryObject<BlockEntityType<SolarEnergyCoreTile>> SOLAR_CORE_TILE = TILE_ENTITY_TYPE.register("energy_core_tile",()->
+            BlockEntityType.Builder.of(SolarEnergyCoreTile::new, SolarcraftBlocks.SOLAR_CORE.get()).build(null));
 
     public static final RegistryObject<BlockEntityType<AuraHealerTile>> AURA_HEALER_TILE = TILE_ENTITY_TYPE.register("aura_healer_tile",()->
             BlockEntityType.Builder.of(AuraHealerTile::new, SolarcraftBlocks.AURA_HEALER_BLOCK.get()).build(null));

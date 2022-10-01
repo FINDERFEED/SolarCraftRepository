@@ -40,7 +40,7 @@ public class SolarEnergyFurnace extends GlazedTerracottaBlock implements EntityB
                     NetworkHooks.openGui((ServerPlayer) p_225533_4_, (SolarEnergyFurnaceTile) world.getBlockEntity(p_225533_3_),
                             (buf) -> buf.writeBlockPos(p_225533_3_)
                     );
-                    return InteractionResult.SUCCESS;
+                    return InteractionResult.CONSUME;
                 }
             }
         return super.use(p_225533_1_, world, p_225533_3_, p_225533_4_, p_225533_5_, p_225533_6_);

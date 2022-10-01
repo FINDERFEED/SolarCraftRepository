@@ -21,10 +21,10 @@ public class SolarEnergyGeneratorBlockItem extends RareSolarcraftBlockItem {
     }
 
     @Override
-    public void inventoryTick(ItemStack p_77663_1_, Level p_77663_2_, Entity p_77663_3_, int p_77663_4_, boolean p_77663_5_) {
-        if ((!p_77663_2_.isClientSide) && (p_77663_3_ instanceof Player) ){
-            Helpers.fireProgressionEvent((Player) p_77663_3_, Progression.CRAFT_SOLAR_ENERGY_GENERATOR);
+    public void inventoryTick(ItemStack item, Level level, Entity entity, int p_77663_4_, boolean p_77663_5_) {
+        if ((!level.isClientSide) && (entity instanceof Player) ){
+            Helpers.fireProgressionEvent((Player) entity, Progression.CRAFT_SOLAR_ENERGY_GENERATOR);
         }
-        super.inventoryTick(p_77663_1_, p_77663_2_, p_77663_3_, p_77663_4_, p_77663_5_);
+        super.inventoryTick(item, level, entity, p_77663_4_, p_77663_5_);
     }
 }

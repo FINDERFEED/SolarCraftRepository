@@ -51,19 +51,7 @@ public class ExplosionBlockerBlockEntity extends SolarcraftBlockEntity{
         return shouldRenderShield;
     }
 
-    @Nullable
-    @Override
-    public Packet<ClientGamePacketListener> getUpdatePacket() {
-        CompoundTag tag = new CompoundTag();
-        saveAdditional(tag);
-        return Helpers.createTilePacket(this,tag);
-    }
 
-    @Override
-    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
-        load(pkt.getTag());
-        super.onDataPacket(net, pkt);
-    }
 
     @Override
     protected void saveAdditional(CompoundTag tag) {

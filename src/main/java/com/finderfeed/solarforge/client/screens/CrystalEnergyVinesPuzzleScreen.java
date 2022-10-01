@@ -1,5 +1,6 @@
 package com.finderfeed.solarforge.client.screens;
 
+import com.finderfeed.solarforge.content.items.solar_lexicon.screen.buttons.InfoButton;
 import com.finderfeed.solarforge.helpers.ClientHelpers;
 import com.finderfeed.solarforge.helpers.Helpers;
 import com.finderfeed.solarforge.SolarForge;
@@ -13,6 +14,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import org.lwjgl.glfw.GLFW;
 
@@ -54,6 +56,10 @@ public class CrystalEnergyVinesPuzzleScreen extends SolarCraftScreen {
     protected void init() {
         super.init();
         VALUE.reset();
+        InfoButton.Wooden button = new InfoButton.Wooden(relX- 30 ,relY ,13,13,(btn,matrices,mx,my)->{
+            renderTooltip(matrices,font.split(new TranslatableComponent("solarcraft.energy_vines_screen"),200),mx,my);
+        });
+        addRenderableWidget(button);
     }
 
     @Override

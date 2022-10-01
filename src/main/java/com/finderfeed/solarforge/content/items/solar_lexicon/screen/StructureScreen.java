@@ -137,7 +137,7 @@ public class StructureScreen extends Screen {
 
 
         drawCenteredString(matrices, minecraft.font,new TextComponent(currentPage+ "/" + structHeightAndPageCount),relX+108,relY+14,0xffffff);
-        Helpers.drawBoundedText(matrices,relX+14,relY+10,7,new TranslatableComponent(structure.getId()).getString(),0xffffff);
+        Helpers.drawBoundedText(matrices,relX+14,relY+10,7,new TranslatableComponent("solarcraft.structure." + structure.getId()).getString(),0xffffff);
 
         for (BlockAndRelxRely obj : structureBlocks.get(currentPage-1)){
             renderItemAndTooltip(obj.block,obj.posx,obj.posy,mousex,mousey,matrices);

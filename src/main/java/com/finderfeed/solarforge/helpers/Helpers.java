@@ -8,7 +8,7 @@ import com.finderfeed.solarforge.local_library.OwnedBlock;
 import com.finderfeed.solarforge.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarforge.content.blocks.blockentities.clearing_ritual.RadiantLandCleanedData;
 import com.finderfeed.solarforge.content.items.solar_lexicon.progressions.Progression;
-import com.finderfeed.solarforge.misc_things.Multiblock;
+
 import com.finderfeed.solarforge.client.particles.SolarcraftParticleTypes;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import com.finderfeed.solarforge.misc_things.StateAndTag;
@@ -161,7 +161,7 @@ public class Helpers {
     }
 
 
-    public static boolean isReachable(Level world, BlockPos pos1, BlockPos pos2,int radius){
+    public static boolean isReachable(Level world, BlockPos pos1, BlockPos pos2,double radius){
         Vec3 vec1 = new Vec3(pos1.getX()+0.5f,pos1.getY()+0.5f,pos1.getZ()+0.5f);
         Vec3 vec2 = new Vec3(pos2.getX()+0.5f,pos2.getY()+0.5f,pos2.getZ()+0.5f);
         Vec3 vector = new Vec3(vec2.x - vec1.x,vec2.y - vec1.y,vec2.z - vec1.z);
@@ -374,28 +374,7 @@ public class Helpers {
 
 
 
-    public static void constructMultiblock(Player player,Multiblock multiblock){
-        Level w = player.level;
-        BlockPos startingPos = player.getOnPos();
-        for (int i = 0; i < multiblock.struct.length; i++){
-            for (int g = 0; g < multiblock.struct[i].length; g++){
-                String row = multiblock.struct[i][g];
-                    for (int f = 0;f < row.length();f++){
-                        int offsetX = f;
-                        int offsetZ = g;
-                        int offsetY = i;
-//                        w.setBlock(startingPos.offset(offsetX,offsetY,offsetZ),multiblock.blockMap.get(row.charAt(f)).defaultBlockState(), Constants.BlockFlags.DEFAULT);
-                        BlockState state = multiblock.blockMap.get(row.charAt(f)).getState();
-                        BlockPos pos = startingPos.offset(offsetX,offsetY,offsetZ);
-                        w.setBlockAndUpdate(pos,state);
-                        if (player.level.getBlockEntity(pos) instanceof OwnedBlock bl){
-                            bl.setOwner(player.getUUID());
-                        }
-                    }
 
-            }
-        }
-    }
 
 
     public static List<LevelChunk> getSurroundingChunks5Radius(BlockPos pos,Level world){

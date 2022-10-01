@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.content.blocks;
 
-import com.finderfeed.solarforge.content.blocks.blockentities.SolarCoreBlockEntity;
+import com.finderfeed.solarforge.content.blocks.solar_energy.SolarEnergyCoreTile;
 import com.finderfeed.solarforge.registries.tile_entities.SolarcraftTileEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
@@ -33,7 +33,7 @@ public class SolarCoreBlock extends Block implements EntityBlock {
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level p_153212_, BlockState p_153213_, BlockEntityType<T> p_153214_) {
         return (((level, blockPos, blockState, t) -> {
-            SolarCoreBlockEntity.tick(level,blockPos,blockState,(SolarCoreBlockEntity) t);
+            SolarEnergyCoreTile.tick(level,blockPos,blockState,(SolarEnergyCoreTile) t);
         }));
     }
 }

@@ -1,6 +1,8 @@
 package com.finderfeed.solarforge.content.blocks.infusing_table_things;
 
 
+import com.finderfeed.solarforge.content.blocks.solar_energy.Bindable;
+import com.finderfeed.solarforge.content.blocks.solar_energy.SolarEnergyContainer;
 import com.finderfeed.solarforge.helpers.ClientHelpers;
 import com.finderfeed.solarforge.helpers.Helpers;
 import com.finderfeed.solarforge.SolarForge;
@@ -49,7 +51,7 @@ import javax.annotation.Nullable;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class InfuserTileEntity extends REItemHandlerBlockEntity implements  IEnergyUser, IBindable, ISolarEnergyContainer, OneWay,DebugTarget {
+public class InfuserTileEntity extends REItemHandlerBlockEntity implements SolarEnergyContainer, Bindable, DebugTarget {
 
 
     private EaseIn rotationValue = new EaseIn(0,1,100);
@@ -598,52 +600,14 @@ public class InfuserTileEntity extends REItemHandlerBlockEntity implements  IEne
         };
     }
 
-    @Override
-    public int giveEnergy(int a) {
-        if (getEnergy() + a <= getMaxEnergy()) {
-            this.energy += a;
-            return 0;
-        }else {
-            int raznitsa =((int)getEnergy() + a) - getMaxEnergy();
-            this.energy = getMaxEnergy();
-            return raznitsa;
-        }
-    }
+
 
     private boolean isStructureCorrect(){
         return tier != null && this.tier.structure.check(level,worldPosition,true);
-//                Helpers.checkStructure(level, worldPosition.below().north(tier.offsetPos).west(tier.offsetPos),
-//                this.tier.structure, true);
     }
 
-    @Override
-    public int getMaxEnergy() {
-        return 100000;
-    }
 
-    @Override
-    public boolean requriesEnergy() {
-        return requiresEnergy;
-    }
 
-    @Override
-    public int getRadius() {
-        return 16;
-    }
-
-    @Override
-    public void bindPos(BlockPos pos) {
-        BlockEntity poss = level.getBlockEntity(pos);
-        if (poss instanceof IBindable && !(poss instanceof IEnergyUser)) {
-            ((IBindable) poss).bindPos(worldPosition);
-        }
-        update(this);
-    }
-
-    @Override
-    public double getEnergy() {
-        return energy;
-    }
 
     @Override
     public double getMaxRange() {
@@ -729,6 +693,50 @@ public class InfuserTileEntity extends REItemHandlerBlockEntity implements  IEne
                 tile.infusingStandsRendering(true);
             }
         }
+    }
+
+    @Override
+    public boolean bind(BlockPos pos) {
+        return false;
+    }
+
+    @Override
+    public int getSolarEnergy() {
+        return energy;
+    }
+
+    @Override
+    public void setSolarEnergy(int energy) {
+        boolean flag = energy == getMaxSolarEnergy();
+        this.energy = energy;
+        if (!flag) {
+            Helpers.updateTile(this);
+        }
+    }
+
+    @Override
+    public int getMaxSolarEnergy() {
+        return 100000;
+    }
+
+    @Override
+    public BlockPos getPos() {
+        return worldPosition;
+    }
+
+    @Override
+    public double getSolarEnergyCollectionRadius() {
+        return 14;
+    }
+
+    @Override
+    public boolean canBeBinded() {
+        return true;
+    }
+
+    @Override
+    public int maxEnergyInput() {
+        return 20;
     }
 
 

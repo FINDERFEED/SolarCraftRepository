@@ -322,43 +322,10 @@ public class ClientHelpers {
         Minecraft.getInstance().level.playLocalSound(ent.getX(), ent.getY(), ent.getZ(), SoundEvents.TOTEM_USE, ent.getSoundSource(), 1F, 0.6F, false);
     }
 
-    public static void updateRepeatersOnClient(BlockPos pos,BlockPos pos2){
-        BlockEntity tile = Minecraft.getInstance().level.getBlockEntity(pos);
-        if (tile instanceof AbstractSolarNetworkRepeater){
-            ((AbstractSolarNetworkRepeater) tile).connectedTo = pos2;
-        }
-    }
 
-    public static void updateGeneratorOnClient(BlockPos pos, BlockPos pos2,int index,boolean remove){
-        BlockEntity tile = Minecraft.getInstance().level.getBlockEntity(pos);
-        if (tile instanceof AbstractEnergyGeneratorTileEntity){
-            if (!remove) {
 
-                if (((AbstractEnergyGeneratorTileEntity) tile).poslist.size()-1 >= index) {
-                    ((AbstractEnergyGeneratorTileEntity) tile).poslist.set(index, pos2);
-                }else{
-                    ((AbstractEnergyGeneratorTileEntity) tile).poslist.add(pos2);
-                }
-            }else{
 
-                ((AbstractEnergyGeneratorTileEntity) tile).poslist.remove(pos2);
-            }
-        }
-    }
-    public static void updateCoreOnClient(BlockPos pos, BlockPos pos2,int index,boolean remove){
-        BlockEntity tile = Minecraft.getInstance().level.getBlockEntity(pos);
-        if (tile instanceof AbstractSolarCore){
-            if (!remove) {
-                if (((AbstractSolarCore) tile).poslist.size()-1 >= index) {
-                    ((AbstractSolarCore) tile).poslist.set(index, pos2);
-                }else{
-                    ((AbstractSolarCore) tile).poslist.add(pos2);
-                }
-            }else{
-                ((AbstractSolarCore) tile).poslist.remove(pos2);
-            }
-        }
-    }
+
     public static void playSoundAtPos(BlockPos pos,int soundID,float pitch, float volume){
         Level world = Minecraft.getInstance().player.level;
 

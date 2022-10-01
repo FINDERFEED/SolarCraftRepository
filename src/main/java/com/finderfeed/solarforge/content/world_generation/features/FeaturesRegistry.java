@@ -489,7 +489,7 @@ public class FeaturesRegistry {
             CLEARING_CRYSTAL_CONFIGURED = new ConfiguredFeature<>(CLEARING_CRYSTAL,NoneFeatureConfiguration.INSTANCE);
             registerConfiguredFeature(CLEARING_CRYSTAL_CONFIGURED,"clearing_crystal");
             CLEARING_CRYSTAL_PLACEMENT = registerPlacedFeature("clearing_crystal",Holder.direct(CLEARING_CRYSTAL_CONFIGURED),
-                    RarityFilter.onAverageOnceEvery(450),InSquarePlacement.spread(),HeightmapPlacement.onHeightmap(Heightmap.Types.MOTION_BLOCKING));
+                    RarityFilter.onAverageOnceEvery(250),InSquarePlacement.spread(),HeightmapPlacement.onHeightmap(Heightmap.Types.MOTION_BLOCKING));
         });
     }
 

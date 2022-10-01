@@ -716,5 +716,30 @@
   "solarcraft.retain_fragments": "Here you can retain the fragments you have lost somehow. Click on the needed fragment and if you have a piece of paper in your inventory, it will be consumed and then fragment will be put in your inventory.",
   "block.solarforge.thrown_light": "Throwable Light",
   "solar_fragment.throwable_light": "Throwable Light",
-  "throwable_light.lore": "If your reach isn't enough to place a torch in a cave, you can throw this to light up an area! Can be placed like an ordinary block too. Be careful, it doesn't drop anything when broken."
+  "throwable_light.lore": "If your reach isn't enough to place a torch in a cave, you can throw this to light up an area! Can be placed like an ordinary block too. Be careful, it doesn't drop anything when broken.",
+  "solarcraft.energy_vines_screen": "Connect yellow and green points. WASD/Arrows - movement. R - Reset puzzle.",
+  "solarcraft.solar_network_binder": "Right click on one SOLAR energy user, then right click on second SOLAR energy user and SECOND one will be bound to first one.",
+  "solarcraft.failed_to_bind": "Failed to bind.",
+  "solar_catergory.endgame": "Endgame",
+  "solarcraft.structure.infuser_tier_one": "Infuser I",
+  "solarcraft.structure.infuser_tier_two": "Infuser II",
+  "solarcraft.structure.infuser_tier_three": "Infuser III",
+  "solarcraft.structure.generator": "Solar Energy Generator",
+  "solarcraft.structure.healer": "Aura Healer",
+  "solarcraft.structure.mortar": "Solar Mortar",
+  "solarcraft.structure.solar_core": "Solar Core",
+  "solarcraft.structure.dim_portal": "Radiant Land Portal",
+  "solarcraft.structure.zap_turret": "Zap Turret",
+  "solarcraft.structure.pylon": "Runic Energy Pylon",
+  "solarcraft.structure.explosion_blocker": "Explosion Blocker"
+
+
+
+
+
+
+
+
+
 }
+

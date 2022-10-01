@@ -1,8 +1,10 @@
 package com.finderfeed.solarforge.content.items;
 
+import com.finderfeed.solarforge.content.blocks.solar_energy.Bindable;
 import com.finderfeed.solarforge.helpers.Helpers;
 import com.finderfeed.solarforge.local_library.helpers.CompoundNBTHelper;
 import com.finderfeed.solarforge.misc_things.*;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.entity.player.Player;
@@ -41,44 +43,48 @@ public class SolarNetworkBinder extends Item {
     }
 
     @Override
-    public void appendHoverText(ItemStack p_77624_1_, @Nullable Level p_77624_2_, List<Component> p_77624_3_, TooltipFlag p_77624_4_) {
-        p_77624_3_.add(new TextComponent("Click on relay,energy generator,energy user or core to set two positions. When two positions exist they are reset and the blocks are connected.").withStyle(ChatFormatting.GOLD));
-
-        super.appendHoverText(p_77624_1_, p_77624_2_, p_77624_3_, p_77624_4_);
+    public void appendHoverText(ItemStack item, @Nullable Level p_77624_2_, List<Component> cmps, TooltipFlag p_77624_4_) {
+        cmps.add(new TranslatableComponent("solarcraft.solar_network_binder").withStyle(ChatFormatting.GOLD));
+        cmps.add(new TextComponent("Pos 1: " + getPos1(item)).withStyle(ChatFormatting.GOLD));
+        cmps.add(new TextComponent("Pos 2: " + getPos2(item)).withStyle(ChatFormatting.GOLD));
+        super.appendHoverText(item, p_77624_2_, cmps, p_77624_4_);
     }
     public void bindAll(Level world,BlockPos clickedPos,Player p,BlockPos pos1,BlockPos pos2,ItemStack stack){
         if (pos1 == null && pos2 == null){
-            if (world.getBlockEntity(clickedPos) != null && (world.getBlockEntity(clickedPos) instanceof IBindable)) {
+            if (world.getBlockEntity(clickedPos) != null && (world.getBlockEntity(clickedPos) instanceof Bindable)) {
                 setPos1(stack,clickedPos);
             }
         }else if (pos1 != null && pos2 == null) {
-            if (world.getBlockEntity(clickedPos) != null && (world.getBlockEntity(clickedPos) instanceof IBindable)) {
+            if (world.getBlockEntity(clickedPos) != null && (world.getBlockEntity(clickedPos) instanceof Bindable)) {
                 setPos2(stack,clickedPos);
             }
         }
+        BlockPos p1 = getPos1(stack);
+        BlockPos p2 = getPos2(stack);
+        if (p1 != null && p2 != null  && world.getBlockEntity(p1) instanceof Bindable tile1) {
 
-        if (getPos1(stack) != null && getPos2(stack) != null ) {
-            IBindable tile1 = (IBindable) world.getBlockEntity(getPos1(stack));
-            IBindable tile2 = (IBindable) world.getBlockEntity(getPos2(stack));
-            if (tile1 != null) {
-                tile1.bindPos(getPos2(stack));
+            if (!p1.equals(p2)) {
+                if (!tile1.bind(p2)){
+                    p.displayClientMessage(new TranslatableComponent("solarcraft.failed_to_bind")
+                            .withStyle(ChatFormatting.RED),false);
+                }
             }
             setNull(stack);
         }
     }
 
     public void setNull(ItemStack stack){
-        CompoundNBTHelper.writeBlockPos("pos",BlockPos.ZERO,stack.getOrCreateTagElement("positionone"));
-        CompoundNBTHelper.writeBlockPos("pos",BlockPos.ZERO,stack.getOrCreateTagElement("positiontwo"));
+        CompoundNBTHelper.writeBlockPos("pos",Helpers.NULL_POS,stack.getOrCreateTagElement("positionone"));
+        CompoundNBTHelper.writeBlockPos("pos",Helpers.NULL_POS,stack.getOrCreateTagElement("positiontwo"));
     }
 
     private BlockPos getPos1(ItemStack stack){
         BlockPos pos =  CompoundNBTHelper.getBlockPos("pos",stack.getOrCreateTagElement("positionone"));
-        return Helpers.equalsBlockPos(pos,BlockPos.ZERO) ? null : pos;
+        return Helpers.equalsBlockPos(pos,Helpers.NULL_POS) ? null : pos;
     }
     private BlockPos getPos2(ItemStack stack){
         BlockPos pos =  CompoundNBTHelper.getBlockPos("pos",stack.getOrCreateTagElement("positiontwo"));
-        return Helpers.equalsBlockPos(pos,BlockPos.ZERO) ? null : pos;
+        return Helpers.equalsBlockPos(pos,Helpers.NULL_POS) ? null : pos;
     }
 
     private void setPos1(ItemStack stack,BlockPos set){

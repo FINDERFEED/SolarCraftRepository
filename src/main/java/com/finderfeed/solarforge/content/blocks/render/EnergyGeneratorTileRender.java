@@ -1,13 +1,11 @@
 package com.finderfeed.solarforge.content.blocks.render;
 
+import com.finderfeed.solarforge.content.blocks.solar_energy.SolarEnergyGeneratorTile;
 import com.finderfeed.solarforge.helpers.Helpers;
+import com.finderfeed.solarforge.helpers.multiblock.Multiblocks;
 import com.finderfeed.solarforge.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarforge.local_library.helpers.RenderingTools;
-import com.finderfeed.solarforge.content.blocks.blockentities.EnergyGeneratorTile;
 import com.finderfeed.solarforge.content.blocks.rendering_models.SolarEnergyGeneratorModel;
-import com.finderfeed.solarforge.misc_things.AbstractSolarCore;
-import com.finderfeed.solarforge.misc_things.AbstractSolarNetworkRepeater;
-import com.finderfeed.solarforge.misc_things.IEnergyUser;
 import com.finderfeed.solarforge.registries.ModelLayersRegistry;
 import com.finderfeed.solarforge.client.rendering.shaders.post_chains.PostChainPlusUltra;
 import com.finderfeed.solarforge.client.rendering.shaders.post_chains.UniformPlusPlus;
@@ -30,7 +28,7 @@ import com.mojang.math.Vector3f;
 
 import java.util.Map;
 
-public class EnergyGeneratorTileRender implements BlockEntityRenderer<EnergyGeneratorTile> {
+public class EnergyGeneratorTileRender implements BlockEntityRenderer<SolarEnergyGeneratorTile> {
     public final ResourceLocation RAY = new ResourceLocation("solarforge","textures/misc/ray_into_sky.png");
     public final ResourceLocation BLOCK = new ResourceLocation("solarforge","textures/block/solar_energy_generator.png");
     public final ResourceLocation RAYY = new ResourceLocation("solarforge","textures/misc/ray_into_skyy.png");
@@ -43,16 +41,11 @@ public class EnergyGeneratorTileRender implements BlockEntityRenderer<EnergyGene
     }
 
     @Override
-    public void render(EnergyGeneratorTile entity, float partialTicks, PoseStack matrices, MultiBufferSource buffer, int light1, int light2) {
+    public void render(SolarEnergyGeneratorTile entity, float partialTicks, PoseStack matrices, MultiBufferSource buffer, int light1, int light2) {
 
 
 
-        for (BlockPos a : entity.poslist) {
-            if (entity.getLevel().getBlockEntity(a) instanceof AbstractSolarNetworkRepeater ||
-                    entity.getLevel().getBlockEntity(a) instanceof AbstractSolarCore ||
-                    (entity.getLevel().getBlockEntity(a) instanceof IEnergyUser
-            && ((IEnergyUser)entity.getLevel().getBlockEntity(a)).requriesEnergy())) {
-
+        for (BlockPos a : entity.getBindedTiles()) {
                 matrices.pushPose();
                 matrices.translate(0.5f, 0.6f, 0.5f);
                 Vec3 parentPos = new Vec3(entity.getBlockPos().getX() - 0.5d, entity.getBlockPos().getY() + 0.5d, entity.getBlockPos().getZ() - 0.5d);
@@ -117,14 +110,14 @@ public class EnergyGeneratorTileRender implements BlockEntityRenderer<EnergyGene
                 vertex.vertex(matrix, -0.5F * mod, percent, -0.5F * mod).color(255, 255, 255, 255).uv(1, 1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
                 vertex.vertex(matrix, -0.5F * mod, 0, -0.5F * mod).color(255, 255, 255, 255).uv(1, 0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
                 matrices.popPose();
-            }
         }
         VertexConsumer bufferbuilder = buffer.getBuffer(RenderType.text(BLOCK));
         matrices.pushPose();
 
         float time = (entity.getLevel().getGameTime() + partialTicks)*8%360;
         matrices.translate(0.5,0.6,0.5);
-        if (entity.getConditionToFunction()) {
+        boolean flag = Multiblocks.ENERGY_GENERATOR.check(entity.getLevel(),entity.getBlockPos(),true) && Helpers.isDay(entity.getLevel());
+        if (flag) {
             matrices.mulPose(Vector3f.YP.rotationDegrees(time));
 
             matrices.mulPose(Vector3f.ZP.rotationDegrees(-time));
@@ -136,7 +129,7 @@ public class EnergyGeneratorTileRender implements BlockEntityRenderer<EnergyGene
 
         matrices.pushPose();
         matrices.translate(0.5,0.6,0.5);
-        if (entity.getConditionToFunction()) {
+        if (flag) {
             matrices.mulPose(Vector3f.YP.rotationDegrees(-time));
 
             matrices.mulPose(Vector3f.ZP.rotationDegrees(time));
@@ -149,7 +142,7 @@ public class EnergyGeneratorTileRender implements BlockEntityRenderer<EnergyGene
 
         matrices.pushPose();
         matrices.translate(0.5,0.6,0.5);
-        if (entity.getConditionToFunction()) {
+        if (flag) {
             matrices.mulPose(Vector3f.YP.rotationDegrees(time));
 
             matrices.mulPose(Vector3f.ZP.rotationDegrees(-time));
@@ -164,7 +157,7 @@ public class EnergyGeneratorTileRender implements BlockEntityRenderer<EnergyGene
         model.renderBase(matrices,bufferbuilder,light1,light2,255,255,255,255);
         matrices.popPose();
 
-        if (entity.getConditionToFunction()) {
+        if (flag) {
             doShader(matrices,entity);
             matrices.pushPose();
 
@@ -224,7 +217,7 @@ public class EnergyGeneratorTileRender implements BlockEntityRenderer<EnergyGene
     }
 
 
-    private void doShader(PoseStack matrices,EnergyGeneratorTile tile){
+    private void doShader(PoseStack matrices,SolarEnergyGeneratorTile tile){
         Vec3 d1 = new Vec3(tile.getBlockPos().getX(),tile.getBlockPos().getY(),tile.getBlockPos().getZ());
         if (!RenderingTools.isBoxVisible(new AABB(d1,d1.add(1,1,1)))) return;
         if (FDMathHelper.canSeeTileEntity(tile,Minecraft.getInstance().player) && Minecraft.getInstance().cameraEntity != null) {
@@ -267,7 +260,7 @@ public class EnergyGeneratorTileRender implements BlockEntityRenderer<EnergyGene
     }
 
     @Override
-    public boolean shouldRenderOffScreen(EnergyGeneratorTile p_188185_1_) {
+    public boolean shouldRenderOffScreen(SolarEnergyGeneratorTile p_188185_1_) {
         return true;
     }
 }

@@ -1,9 +1,8 @@
 package com.finderfeed.solarforge.content.blocks.blockentities;
 
 import com.finderfeed.solarforge.content.blocks.blockentities.containers.SolarFurnaceContainer;
-import com.finderfeed.solarforge.misc_things.IBindable;
-import com.finderfeed.solarforge.misc_things.IEnergyUser;
-import com.finderfeed.solarforge.misc_things.OneWay;
+import com.finderfeed.solarforge.content.blocks.solar_energy.Bindable;
+import com.finderfeed.solarforge.content.blocks.solar_energy.SolarEnergyContainer;
 import com.finderfeed.solarforge.registries.tile_entities.SolarcraftTileEntityTypes;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -14,7 +13,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.SmeltingRecipe;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.nbt.CompoundTag;
-
 import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
 import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.core.NonNullList;
@@ -24,7 +22,7 @@ import net.minecraft.network.chat.TranslatableComponent;
 
 import java.util.Optional;
 
-public class SolarEnergyFurnaceTile extends RandomizableContainerBlockEntity implements IEnergyUser, IBindable, OneWay {
+public class SolarEnergyFurnaceTile extends RandomizableContainerBlockEntity implements Bindable, SolarEnergyContainer {
     public int SOLAR_ENERGY_LEVEL = 0;
     public int RECIPE_PROGRESS = 0;
     public int MAX_RECIPE_TIME = 0;
@@ -91,42 +89,12 @@ public class SolarEnergyFurnaceTile extends RandomizableContainerBlockEntity imp
         }
     }
 
-    @Override
-    public void bindPos(BlockPos pos) {
-        if ((level.getBlockEntity(pos) instanceof IBindable) && !(level.getBlockEntity(pos) instanceof IEnergyUser)){
-            ((IBindable) level.getBlockEntity(pos)).bindPos(pos);
-        }
-        update(this);
-    }
 
-    @Override
-    public int giveEnergy(int a) {
-        if (this.getCurrentEnergy() + a <= getMaxEnergy()) {
-            this.SOLAR_ENERGY_LEVEL += a;
-            return 0;
-        }else {
-            int raznitsa =(getCurrentEnergy() + a) - getMaxEnergy();
-            this.SOLAR_ENERGY_LEVEL = getMaxEnergy();
-            return raznitsa;
-        }
 
-    }
 
-    @Override
-    public int getMaxEnergy() {
-        return 10000;
-    }
 
-    @Override
-    public boolean requriesEnergy() {
 
-        return SOLAR_ENERGY_LEVEL < getMaxEnergy();
-    }
 
-    @Override
-    public int getRadius() {
-        return 16;
-    }
 
     public int getSmeltingCost(){
         return 10;
@@ -142,8 +110,10 @@ public class SolarEnergyFurnaceTile extends RandomizableContainerBlockEntity imp
             Optional<SmeltingRecipe> recipe =tile.level.getRecipeManager().getRecipeFor(RecipeType.SMELTING,tile,tile.level);
                 if (recipe.isPresent()){
                     SmeltingRecipe recipe1 = recipe.get();
-                    if ( ( (tile.getItem(1).getItem().equals(recipe1.getResultItem().getItem()) && (tile.getItem(1).getCount() < tile.getItem(1).getMaxStackSize()) )
-                            || tile.getItem(1).getItem().equals(ItemStack.EMPTY.getItem())) ) {
+                    ItemStack item = tile.getItem(1);
+                    if (((item.getItem().equals(recipe1.getResultItem().getItem())
+                            && (item.getCount() < item.getMaxStackSize()) )
+                            || item.getItem().equals(ItemStack.EMPTY.getItem())) ) {
                         tile.RECIPE_IN_PROGRESS = true;
                         tile.MAX_RECIPE_TIME = recipe1.getCookingTime() / 2;
 
@@ -155,8 +125,8 @@ public class SolarEnergyFurnaceTile extends RandomizableContainerBlockEntity imp
                             tile.RECIPE_PROGRESS = 0;
                             tile.RECIPE_IN_PROGRESS = false;
                             tile.MAX_RECIPE_TIME = 0;
-                            if ((tile.getItem(1).getItem().equals(recipe1.getResultItem().getItem()) )){
-                                tile.getItem(1).grow(1);
+                            if ((item.getItem().equals(recipe1.getResultItem().getItem()) )){
+                                item.grow(1);
                             }else{
                                 tile.setItem(1,recipe1.getResultItem().copy());
                             }
@@ -174,5 +144,45 @@ public class SolarEnergyFurnaceTile extends RandomizableContainerBlockEntity imp
                     tile.MAX_RECIPE_TIME = 0;
                 }
         }
+    }
+
+    @Override
+    public boolean bind(BlockPos pos) {
+        return false;
+    }
+
+    @Override
+    public int getSolarEnergy() {
+        return SOLAR_ENERGY_LEVEL;
+    }
+
+    @Override
+    public void setSolarEnergy(int energy) {
+        this.SOLAR_ENERGY_LEVEL = energy;
+    }
+
+    @Override
+    public int getMaxSolarEnergy() {
+        return 10000;
+    }
+
+    @Override
+    public BlockPos getPos() {
+        return worldPosition;
+    }
+
+    @Override
+    public double getSolarEnergyCollectionRadius() {
+        return 10;
+    }
+
+    @Override
+    public boolean canBeBinded() {
+        return false;
+    }
+
+    @Override
+    public int maxEnergyInput() {
+        return 10;
     }
 }

@@ -41,9 +41,6 @@ public class SolarForgePacketHandler {
         INSTANCE.registerMessage(nextID(), UpdateProgressionOnClient.class, UpdateProgressionOnClient::toBytes, UpdateProgressionOnClient::new, UpdateProgressionOnClient::handle);
         INSTANCE.registerMessage(nextID(), TriggerToastPacket.class, TriggerToastPacket::toBytes, TriggerToastPacket::new, TriggerToastPacket::handle);
         INSTANCE.registerMessage(nextID(), OpenScreenPacket.class, OpenScreenPacket::toBytes, OpenScreenPacket::new, OpenScreenPacket::handle);
-        INSTANCE.registerMessage(nextID(), TileEnergyGeneratorUpdate.class, TileEnergyGeneratorUpdate::toBytes, TileEnergyGeneratorUpdate::new, TileEnergyGeneratorUpdate::handle);
-        INSTANCE.registerMessage(nextID(), RepeaterParentUpdateOnClient.class, RepeaterParentUpdateOnClient::toBytes, RepeaterParentUpdateOnClient::new, RepeaterParentUpdateOnClient::handle);
-        INSTANCE.registerMessage(nextID(), UpdateCoreOnClient.class, UpdateCoreOnClient::toBytes, UpdateCoreOnClient::new, UpdateCoreOnClient::handle);
         INSTANCE.registerMessage(nextID(), SpawnHealParticles.class, SpawnHealParticles::toBytes, SpawnHealParticles::new, SpawnHealParticles::handle);
         INSTANCE.registerMessage(nextID(), ProcImmortalityTotemAnimation.class, ProcImmortalityTotemAnimation::toBytes, ProcImmortalityTotemAnimation::new, ProcImmortalityTotemAnimation::handle);
         INSTANCE.registerMessage(nextID(), PlaySoundPacket.class, PlaySoundPacket::toBytes, PlaySoundPacket::new, PlaySoundPacket::handle);

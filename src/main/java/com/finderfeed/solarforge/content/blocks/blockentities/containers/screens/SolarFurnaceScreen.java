@@ -52,7 +52,7 @@ public class SolarFurnaceScreen extends AbstractContainerScreen<SolarFurnaceCont
 
         blit(matrices,relX+a+76,relY+47,177,0,(int)(22 * percent),256);
         ClientHelpers.bindText(REQ_ENERGY);
-        percent = (float)menu.getEnergy()/menu.te.getMaxEnergy();
+        percent = (float)menu.getEnergy()/menu.te.getMaxSolarEnergy();
         matrices.pushPose();
         matrices.translate(relX+24+a,relY+78,0);
         matrices.mulPose(Vector3f.ZP.rotationDegrees(180));

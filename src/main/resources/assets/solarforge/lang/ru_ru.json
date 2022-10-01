@@ -699,7 +699,22 @@
   "aft.clear_world": "Мир был излечен от проклятия. Вы достигли финала.",
   "solarcraft.retain_fragments": "Здесь вы можете восстановить утерянные фрагменты. Кликните на нужный, и если у вас в инвентаре есть бумага, вы получите фрагмент взамен на одну бумагу.",
   "block.solarforge.thrown_light": "Метательный свет",
-  "throwable_light.lore": "Если вам не хвататет длины рук чтобы поставить факел, вы можете бросить это чтобы осветить территорию. Может быть поставлен как и обычный блок. Внимание: При разрушении не выпадает!"
+  "throwable_light.lore": "Если вам не хвататет длины рук чтобы поставить факел, вы можете бросить это чтобы осветить территорию. Может быть поставлен как и обычный блок. Внимание: При разрушении не выпадает!",
+  "solarcraft.energy_vines_screen": "Соедените зеленую и желтую точки. WASD/Стрелки - движение. R - Сброс.",
+  "solarcraft.solar_network_binder": "Кликните на один механизм, использующий чистую солнечную энергию, затем кликните на второй и ВТОРОЙ механизм будет привязан к первому.",
+  "solarcraft.failed_to_bind": "Привязка не удалась.",
+  "solar_catergory.endgame": "Конец",
 
 
+  "solarcraft.structure.infuser_tier_one": "Наполнитель I",
+  "solarcraft.structure.infuser_tier_two": "Наполнитель II",
+  "solarcraft.structure.infuser_tier_three": "Наполнитель III",
+  "solarcraft.structure.generator": "Генератор Солнечной Энергии",
+  "solarcraft.structure.healer": "Блок Лечащей Ауры",
+  "solarcraft.structure.mortar": "Солнечная Мортира",
+  "solarcraft.structure.solar_core": "Солнечное ядро",
+  "solarcraft.structure.dim_portal": "Портал в Сияющие Земли",
+  "solarcraft.structure.zap_turret": "Турель-молния",
+  "solarcraft.structure.pylon": "Пилон Рунической Энергии",
+  "solarcraft.structure.explosion_blocker": "Взрывной щит"
 }

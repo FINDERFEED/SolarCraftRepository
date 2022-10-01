@@ -1,6 +1,7 @@
 package com.finderfeed.solarforge.content.blocks.blockentities.clearing_ritual.clearing_ritual_main_tile;
 
 import com.finderfeed.solarforge.content.blocks.blockentities.clearing_ritual.ClearingRitual;
+import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import com.finderfeed.solarforge.registries.tile_entities.SolarcraftTileEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -45,6 +46,10 @@ public class ClearingRitualMainBlock extends Block implements EntityBlock {
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult res) {
         if (!level.isClientSide && hand == InteractionHand.MAIN_HAND && level.getBlockEntity(pos) instanceof ClearingRitualMainTile tile){
 //            ClearingRitual.setRLState((ServerLevel) level,false,true);
+//            for (int i = 0; i < RunicEnergy.Type.getAll().length;i++){
+//                RunicEnergy.Type type = RunicEnergy.Type.getAll()[i];
+//                tile.ritual.getAllCrystals().get(i).setREType(type);
+//            }
             tile.startRitual(player);
             return InteractionResult.SUCCESS;
         }

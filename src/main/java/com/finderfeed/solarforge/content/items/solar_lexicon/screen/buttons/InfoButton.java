@@ -12,8 +12,9 @@ import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
 
 public class InfoButton extends Button {
-
     public static final ResourceLocation LOC = new ResourceLocation(SolarForge.MOD_ID,"textures/gui/info_button.png");
+
+    public ResourceLocation LOCR = new ResourceLocation(SolarForge.MOD_ID,"textures/gui/info_button.png");
 
     public InfoButton(int x, int y, int width, int height) {
         super(x, y, width, height, new TextComponent(""), (btn)->{});
@@ -26,7 +27,7 @@ public class InfoButton extends Button {
     @Override
     public void renderButton(PoseStack matrices, int mousex, int mousey, float partialTicks) {
         matrices.pushPose();
-        RenderSystem.setShaderTexture(0,LOC);
+        RenderSystem.setShaderTexture(0, LOCR);
         if (!this.isHoveredOrFocused()) {
             Gui.blit(matrices, x, y, width, height, 0, 0, 16, 16, 16, 32);
         }else{
@@ -42,5 +43,18 @@ public class InfoButton extends Button {
     @Override
     public void playDownSound(SoundManager manager) {
         manager.play(SimpleSoundInstance.forUI(SolarcraftSounds.BUTTON_PRESS2.get(),1,1));
+    }
+
+    public static class Wooden extends InfoButton{
+
+        public Wooden(int x, int y, int width, int height) {
+            super(x, y, width, height);
+            this.LOCR = new ResourceLocation(SolarForge.MOD_ID,"textures/gui/info_button_wood.png");
+        }
+
+        public Wooden(int x, int y, int width, int height, OnTooltip tooltip) {
+            super(x, y, width, height, tooltip);
+            this.LOCR = new ResourceLocation(SolarForge.MOD_ID,"textures/gui/info_button_wood.png");
+        }
     }
 }

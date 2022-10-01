@@ -111,6 +111,7 @@ public class SolarLexiconScreen extends Screen implements IScrollable,PostRender
             list.remove(justForge);
             list.remove(stagesPage);
             list.remove(info);
+            list.remove(retainFragmentsScreen);
             for (AbstractWidget a : list) {
                 if (prevscrollX < scrollX) {
                     a.x += 4;
@@ -127,6 +128,7 @@ public class SolarLexiconScreen extends Screen implements IScrollable,PostRender
             list.remove(justForge);
             list.remove(stagesPage);
             list.remove(info);
+            list.remove(retainFragmentsScreen);
             for (AbstractWidget a : list) {
                 if (prevscrollY < scrollY) {
 

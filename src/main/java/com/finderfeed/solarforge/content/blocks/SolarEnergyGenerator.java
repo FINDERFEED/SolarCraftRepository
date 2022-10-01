@@ -1,7 +1,6 @@
 package com.finderfeed.solarforge.content.blocks;
 
-import com.finderfeed.solarforge.content.blocks.blockentities.EnergyGeneratorTile;
-import com.finderfeed.solarforge.misc_things.AbstractEnergyGeneratorTileEntity;
+import com.finderfeed.solarforge.content.blocks.solar_energy.SolarEnergyGeneratorTile;
 import com.finderfeed.solarforge.registries.tile_entities.SolarcraftTileEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
@@ -39,7 +38,7 @@ public class SolarEnergyGenerator extends Block implements EntityBlock {
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level p_153212_, BlockState p_153213_, BlockEntityType<T> p_153214_) {
         return ((level, blockPos, blockState, t) -> {
-            EnergyGeneratorTile.tick(level,blockPos,blockState,(AbstractEnergyGeneratorTileEntity) t);
+            SolarEnergyGeneratorTile.tick(level,blockPos,blockState,(SolarEnergyGeneratorTile) t);
         });
     }
 }

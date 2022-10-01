@@ -1,5 +1,6 @@
 package com.finderfeed.solarforge.content.items.primitive;
 
+import com.finderfeed.solarforge.content.blocks.solar_energy.SolarEnergyContainer;
 import com.finderfeed.solarforge.misc_things.ISolarEnergyContainer;
 
 import net.minecraft.world.item.Item;
@@ -18,8 +19,8 @@ public class EnergyMeter extends Item {
 
     @Override
     public InteractionResult useOn(UseOnContext ctx) {
-        if (!ctx.getLevel().isClientSide && (ctx.getLevel().getBlockEntity(ctx.getClickedPos()) instanceof ISolarEnergyContainer)){
-            ctx.getPlayer().displayClientMessage(new TextComponent(String.format("%.0f",((ISolarEnergyContainer) ctx.getLevel().getBlockEntity(ctx.getClickedPos())).getEnergy())).withStyle(ChatFormatting.GOLD),true);
+        if (!ctx.getLevel().isClientSide && (ctx.getLevel().getBlockEntity(ctx.getClickedPos()) instanceof SolarEnergyContainer container)){
+            ctx.getPlayer().displayClientMessage(new TextComponent("" + container.getSolarEnergy()).withStyle(ChatFormatting.GOLD),true);
         }
         return InteractionResult.CONSUME;
     }

@@ -14,6 +14,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
@@ -28,6 +29,7 @@ public class RuneItem extends SolarcraftItem {
 
     private static final String TAG_PROGRESS = "progress";
     private static final String TAG_POSITION = "progress";
+    private static final String TAG_OFFLINE_TIME = "offline_time";
     private static final String TAG = "progress";
     public final RunicEnergy.Type type;
     public RuneItem(Properties props,RunicEnergy.Type type, Supplier<AncientFragment> fragmentSupplier) {
@@ -49,8 +51,10 @@ public class RuneItem extends SolarcraftItem {
 
             if (state.hasProperty(InscriptionStone.PROP) && (state.getValue(InscriptionStone.PROP) == RunicEnergy.Type.NONE) ) {
                 if (hand == InteractionHand.MAIN_HAND) {
-                    if (stack.getCount() == 1) {
+//                    if (stack.getCount() == 1) {
+
                         CompoundTag tag = putTag(stack);
+                        tag.putInt(TAG_OFFLINE_TIME,400);
                         int progress = tag.getInt(TAG_PROGRESS);
                         BlockPos position = CompoundNBTHelper.getBlockPos(TAG_POSITION,tag);
                         if (Helpers.equalsBlockPos(pos,position)){
@@ -68,7 +72,8 @@ public class RuneItem extends SolarcraftItem {
                                 Helpers.fireProgressionEvent(pl, Progression.PYLON_INSCRIPTION);
                                 world.playSound(null,pos.getX(),pos.getY(),pos.getZ(), SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.BLOCKS,1,1);
                                 world.setBlock(pos, SolarcraftBlocks.INSCRIPTION_STONE.get().defaultBlockState().setValue(InscriptionStone.PROP,type), 3);
-                                pl.setItemInHand(hand,ItemStack.EMPTY);
+//                                pl.setItemInHand(hand,ItemStack.EMPTY);
+                                pl.getItemInHand(hand).shrink(1);
                             }
                         }else{
                             CompoundNBTHelper.writeBlockPos(TAG_POSITION,pos,tag);
@@ -76,7 +81,7 @@ public class RuneItem extends SolarcraftItem {
                         }
 
 
-                    }
+//                    }
                 }
             }
         }
@@ -89,6 +94,21 @@ public class RuneItem extends SolarcraftItem {
         return stack.getOrCreateTagElement(TAG);
     }
 
+    @Override
+    public void inventoryTick(ItemStack stack, Level world, Entity entity, int slot, boolean selected) {
+        if (!world.isClientSide){
+            CompoundTag element = stack.getTagElement(TAG);
+            if (element != null){
+                int time = element.getInt(TAG_OFFLINE_TIME);
+                if (time <= 0){
+                    stack.removeTagKey(TAG);
+                }else{
+                    element.putInt(TAG_OFFLINE_TIME,time-1);
+                }
+            }
+        }
+        super.inventoryTick(stack, world, entity, slot, selected);
+    }
 
     @Override
     public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {

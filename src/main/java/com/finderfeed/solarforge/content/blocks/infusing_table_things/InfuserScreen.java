@@ -112,14 +112,14 @@ public class InfuserScreen extends AbstractContainerScreen<InfuserContainer> {
         matrices.popPose();
 
         if (tier == InfuserTileEntity.Tier.SOLAR_ENERGY) {
-            float percent = (float) tile.energy / tile.getMaxEnergy()*33;
+            float percent = (float) tile.energy / tile.getMaxSolarEnergy()*33;
 
             if (recipe.isPresent()) {
-                float percentNeeded = (float) recipe.get().requriedEnergy / (float)tile.getMaxEnergy() * 33;
+                float percentNeeded = (float) recipe.get().requriedEnergy / (float)tile.getMaxSolarEnergy() * 33;
                 RenderingTools.fill(matrices,relX + 11 + a,relY + 80,relX + 21 + a,relY + (int)(80 - percentNeeded),1,1,0,1);
             }
             if (RenderingTools.isMouseInBorders(x,y,relX + 11 + a,relY + 80 - 33,relX + 21 + a,relY + 80)){
-                postRender.add(()->renderTooltip(matrices,new TextComponent(tile.energy + "/" + tile.getMaxEnergy()),x,y));
+                postRender.add(()->renderTooltip(matrices,new TextComponent(tile.energy + "/" + tile.getMaxSolarEnergy()),x,y));
             }
             RenderingTools.fill(matrices,relX + 11 + a,relY + 80,relX + 21 + a,relY + (int)(80 - percent),1,1,0,1);
         }
