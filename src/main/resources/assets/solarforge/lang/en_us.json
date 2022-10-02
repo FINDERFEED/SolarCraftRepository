@@ -124,7 +124,7 @@
   "solarcraft.success_unlock": "Successfully unlocked",
   "solarcraft.welcome_message": "Thanks for downloading SolarCraft! If you were playing before 2.3 mod version use /solarcraft fragments transfer (ONLY ONCE PER WORLD!). If you updated the mod and had a solar lexicon",
   "solarcraft.welcome_message2": "delete it and make new. Use /solarcraft fragments retain to get all the fragments you had. If you open old lexicon it may cause crash.",
-  "solarcraft.gethelpcommand": "This codes are used in /solarcraft unlock <code>",
+  "solarcraft.gethelpcommand": "This codes are used in /solarcraft progressions unlock (or revoke) <code> ",
   "solarforge.command.description.fragment_dump" : "Dumps the list of Registered SolarForge Fragments",
   "solarforge.command.dump.fragments" : "SolarForge Fragments",
   "solarforge.command.dump.catalysts" : "SolarForge Catalysts",
@@ -731,7 +731,9 @@
   "solarcraft.structure.dim_portal": "Radiant Land Portal",
   "solarcraft.structure.zap_turret": "Zap Turret",
   "solarcraft.structure.pylon": "Runic Energy Pylon",
-  "solarcraft.structure.explosion_blocker": "Explosion Blocker"
+  "solarcraft.structure.explosion_blocker": "Explosion Blocker",
+  "solarcraft.success_revoke": "Successefully Revoked",
+  "solarcraft.failure_revoke": "Unable to revoke progression, it doesn't exist or you have other completed progressions ahead, or you haven't completed it yet."
 
 
 

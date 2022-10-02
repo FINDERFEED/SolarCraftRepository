@@ -34,9 +34,12 @@ public class AncientFragment {
     public static final AncientFragment FRAGMENT = new AncientFragment(tx("solar_fragment.fragment"),"fragment",null,SubCategoryBase.BEGGINING,CategoryBase.BEGGINING_INFO, SolarcraftItems.INFO_FRAGMENT.get(),tx("fragment.lore"),1);
     public static final AncientFragment LEXICON = new AncientFragment(tx("solar_fragment.lexicon"),"lexicon",null,SubCategoryBase.BEGGINING,CategoryBase.BEGGINING_INFO, SolarcraftItems.SOLAR_LEXICON.get(),tx("lexicon.lore"),1);
     public static final AncientFragment DUSTS = new AncientFragment(tx("solar_fragment.dusts"),"dusts",null,SubCategoryBase.WORLD,CategoryBase.EXPLORATION, SolarcraftItems.ENERGY_DUST.get(),tx("dusts.lore"),1);
-    public static final AncientFragment INFUSING_CRAFTING_TABLE = new AncientFragment(tx("solar_fragment.infusing_crafting_table"),"infusing_crafting_table",null,SubCategoryBase.BEGINNER_BLOCKS,CategoryBase.BEGINNER, SolarcraftItems.INFUSING_TABLE.get(),tx("infusing_crafting_table.lore"),1);
 
-//    public static final AncientFragment WAND = new AncientFragment(tx("solar_fragment.wand"),"wand",null,SubCategoryBase.BEGGINING,CategoryBase.BEGGINING_INFO, SolarcraftItems.SOLAR_WAND.get(),tx("wand.lore"),1);
+//    public static final AncientFragment INFUSING_CRAFTING_TABLE = new AncientFragment(tx("solar_fragment.infusing_crafting_table"),"infusing_crafting_table",null,SubCategoryBase.BEGINNER_BLOCKS,CategoryBase.BEGINNER, SolarcraftItems.INFUSING_TABLE.get(),tx("infusing_crafting_table.lore"),1);
+    public static final AncientFragment INFUSING_CRAFTING_TABLE = new AncientFragment(tx("solar_fragment.infusing_crafting_table"),"infusing_crafting_table",null,SubCategoryBase.BEGINNER_BLOCKS,CategoryBase.BEGINNER,ItemWithRecipe.of(INFUSING_TABLE.get().getDefaultInstance(),"infusing_crafting_table"),tx("infusing_crafting_table.lore"), RecipeType.CRAFTING,1);
+
+
+    //    public static final AncientFragment WAND = new AncientFragment(tx("solar_fragment.wand"),"wand",null,SubCategoryBase.BEGGINING,CategoryBase.BEGGINING_INFO, SolarcraftItems.SOLAR_WAND.get(),tx("wand.lore"),1);
     public static final AncientFragment WAND = new AncientFragment(tx("solar_fragment.wand"),"wand",null,SubCategoryBase.BEGGINING,CategoryBase.BEGGINING_INFO,ItemWithRecipe.of(SOLAR_WAND.get().getDefaultInstance(),"solar_wand"),tx("wand.lore"), RecipeType.CRAFTING,1);
 
     public static final AncientFragment HIDDEN_ORES = new AncientFragment(tx("solar_fragment.hidden_ores"),"hidden_ores",ProgressionStage.PRE_BEGGINING.ALL_PROGRESSIONS,SubCategoryBase.WORLD,CategoryBase.EXPLORATION, Items.STONE,tx("hidden_ores.lore"),1);

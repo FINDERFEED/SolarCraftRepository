@@ -11,6 +11,6 @@ public class ServerStartEvent {
 
     @SubscribeEvent
     public static void registerCommands(final RegisterCommandsEvent event){
-        CommandsSolarCraft.register(event.getDispatcher());
+        SolarCraftCommands.register(event.getDispatcher());
     }
 }

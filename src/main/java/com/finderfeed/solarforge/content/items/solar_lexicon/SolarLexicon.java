@@ -71,7 +71,7 @@ public class SolarLexicon extends Item {
             if (!pe.isCrouching()) {
                 ProgressionTree tree = ProgressionTree.INSTANCE;
                 for (Progression a : tree.PROGRESSION_TREE.keySet()) {
-                    SolarForgePacketHandler.INSTANCE.sendTo(new UpdateProgressionOnClient(a.getAchievementCode(), pe.getPersistentData().getBoolean(Helpers.PROGRESSION + a.getAchievementCode())),
+                    SolarForgePacketHandler.INSTANCE.sendTo(new UpdateProgressionOnClient(a.getProgressionCode(), pe.getPersistentData().getBoolean(Helpers.PROGRESSION + a.getProgressionCode())),
                             ((ServerPlayer) pe).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
                 }
                 SolarForgePacketHandler.INSTANCE.sendTo(new OpenScreenPacket(), ((ServerPlayer) pe).connection.connection, NetworkDirection.PLAY_TO_CLIENT);

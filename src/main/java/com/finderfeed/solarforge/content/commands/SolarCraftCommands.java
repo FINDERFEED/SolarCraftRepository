@@ -1,5 +1,6 @@
 package com.finderfeed.solarforge.content.commands;
 
+import com.finderfeed.solarforge.content.items.solar_lexicon.progressions.progression_tree.ProgressionTree;
 import com.finderfeed.solarforge.helpers.Helpers;
 import com.finderfeed.solarforge.helpers.multiblock.Multiblocks;
 import com.finderfeed.solarforge.local_library.helpers.FDMathHelper;
@@ -19,7 +20,6 @@ import com.mojang.brigadier.tree.LiteralCommandNode;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.EntityArgument;
-import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -32,14 +32,24 @@ import net.minecraftforge.items.IItemHandler;
 
 import java.util.Locale;
 
-public class CommandsSolarCraft {
+public class SolarCraftCommands {
 
     public static void register(CommandDispatcher<CommandSourceStack> disp){
         LiteralCommandNode<CommandSourceStack> cmd = disp.register(
                 Commands.literal("solarcraft").requires((p)-> p.hasPermission(2))
-                        .then(UnlockProgressionsCommand.register())
-                        .then(refreshAchievements.register())
-                        .then(AchievementsHelp.register())
+//                        .then(UnlockProgressionsCommand.register())
+//                        .then(refreshAchievements.register())
+//                        .then(AchievementsHelp.register())
+
+                        .then(Commands.literal("progressions")
+                                .then(Commands.literal("help").executes((e)->progressionsHelp(e.getSource())))
+                                .then(Commands.literal("unlock")
+                                        .then(Commands.argument("progression",StringArgumentType.string())
+                                                .executes((e)->unlockProgression(e.getSource(),e.getArgument("progression",String.class)))))
+                                .then(Commands.literal("revoke").then(Commands.argument("progression",StringArgumentType.string())
+                                        .executes((e)->revokeProgression(e.getSource(),e.getArgument("progression",String.class))))))
+
+
                         .then(RetainFragments.register())
                         .then(Commands.literal("structure").then(Commands.literal("construct").then(Commands.argument("structure_code",StringArgumentType.string())
                                 .executes((cmds)-> constructMultiblock(cmds.getSource(),cmds.getArgument("structure_code",String.class))))))
@@ -54,6 +64,89 @@ public class CommandsSolarCraft {
 
         );
     }
+
+    public static int revokeProgression(CommandSourceStack src,String code) throws CommandSyntaxException {
+        Progression progression = Progression.getAchievementByName(code);
+        ServerPlayer pl = src.getPlayerOrException();
+        if (code.equals("all")){
+            for (Progression a : Progression.allProgressions){
+                Helpers.setProgressionCompletionStatus(a,src.getPlayerOrException(),false);
+                src.sendSuccess(new TranslatableComponent("solarcraft.success_revoke")
+                        .append(new TextComponent(" "+a.translation.getString()).withStyle(ChatFormatting.GOLD)),false);
+            }
+            Helpers.updateProgression(src.getPlayerOrException());
+
+        }else if (progression != null){
+            if (Helpers.hasPlayerCompletedProgression(progression,pl)){
+                boolean flag = true;
+                for (Progression p : ProgressionTree.INSTANCE.getProgressionChildren(progression)){
+                    if (Helpers.hasPlayerCompletedProgression(p,pl)){
+                        flag = false;
+                        break;
+                    }
+                }
+                if (flag) {
+                    Helpers.setProgressionCompletionStatus(progression, pl, false);
+                    src.sendSuccess(new TranslatableComponent("solarcraft.success_revoke")
+                            .append(new TextComponent(" " + progression.getProgressionCode()).withStyle(ChatFormatting.GOLD)), false);
+                    Helpers.updateProgression(src.getPlayerOrException());
+                }else{
+                    src.sendFailure(new TranslatableComponent("solarcraft.failure_revoke"));
+
+                }
+            }else {
+                src.sendFailure(new TranslatableComponent("solarcraft.failure_revoke"));
+            }
+        }else {
+            src.sendFailure(new TranslatableComponent("solarcraft.failure_revoke"));
+        }
+        Helpers.forceChunksReload(src.getPlayerOrException());
+        return 0;
+    }
+
+    public static int unlockProgression(CommandSourceStack src,String code) throws CommandSyntaxException {
+        Progression progression = Progression.getAchievementByName(code);
+        ServerPlayer pl = src.getPlayerOrException();
+        if (code.equals("all")){
+            for (Progression a : Progression.allProgressions){
+                Helpers.setProgressionCompletionStatus(a,src.getPlayerOrException(),true);
+                src.sendSuccess(new TranslatableComponent("solarcraft.success_unlock")
+                        .append(new TextComponent(" "+a.translation.getString()).withStyle(ChatFormatting.GOLD)),false);
+            }
+            Helpers.updateProgression(src.getPlayerOrException());
+
+        }else if (progression != null){
+            if (Helpers.canPlayerUnlock(progression,pl)){
+                Helpers.setProgressionCompletionStatus(progression,pl,true);
+                src.sendSuccess(new TranslatableComponent("solarcraft.success_unlock")
+                        .append(new TextComponent(" "+ progression.getProgressionCode()).withStyle(ChatFormatting.GOLD)),false);
+
+                Helpers.updateProgression(src.getPlayerOrException());
+
+
+            }else {
+                src.sendFailure(new TranslatableComponent("solarcraft.failure_unlock"));
+            }
+        }else {
+            src.sendFailure(new TranslatableComponent("solarcraft.failure_unlock"));
+        }
+        Helpers.forceChunksReload(src.getPlayerOrException());
+        return 0;
+    }
+
+    public static int progressionsHelp(CommandSourceStack src) throws CommandSyntaxException {
+        src.sendSuccess(new TranslatableComponent("solarcraft.gethelpcommand").withStyle(ChatFormatting.GOLD),false);
+        for (Progression ach : Progression.allProgressions){
+
+            src.sendSuccess(new TextComponent(ach.translation.getString()).withStyle(ChatFormatting.GOLD)
+                    .append(new TextComponent(" -> "+ach.getProgressionCode())).withStyle(ChatFormatting.WHITE),false);
+
+        }
+        src.sendSuccess(new TextComponent("all").withStyle(ChatFormatting.GOLD)
+                .append(" -> unlocks/revokes all").withStyle(ChatFormatting.WHITE),false);
+        return 0;
+    }
+
     public static int setREAmount(CommandSourceStack stack, Player target,String type,float amount){
         if (target != null){
             RunicEnergy.Type t = RunicEnergy.Type.byId(type.toLowerCase(Locale.ROOT));
@@ -186,7 +279,7 @@ class AchievementsHelp{
         for (Progression ach : Progression.allProgressions){
 
             src.sendSuccess(new TextComponent(ach.translation.getString()).withStyle(ChatFormatting.GOLD)
-                    .append(new TextComponent(" -> "+ach.getAchievementCode())).withStyle(ChatFormatting.WHITE),false);
+                    .append(new TextComponent(" -> "+ach.getProgressionCode())).withStyle(ChatFormatting.WHITE),false);
 
         }
         src.sendSuccess(new TextComponent("all").withStyle(ChatFormatting.GOLD)
@@ -221,7 +314,7 @@ class UnlockProgressionsCommand {
                 if (Helpers.canPlayerUnlock(progression,pl)){
                     Helpers.setProgressionCompletionStatus(progression,pl,true);
                     src.sendSuccess(new TranslatableComponent("solarcraft.success_unlock")
-                            .append(new TextComponent(" "+ progression.getAchievementCode()).withStyle(ChatFormatting.GOLD)),false);
+                            .append(new TextComponent(" "+ progression.getProgressionCode()).withStyle(ChatFormatting.GOLD)),false);
 
                     Helpers.updateProgression(src.getPlayerOrException());
 

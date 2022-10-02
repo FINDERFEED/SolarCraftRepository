@@ -97,7 +97,7 @@ public enum Progression {
     public TranslatableComponent getPretext() {
         return pretext; }
 
-    public String getAchievementCode(){
+    public String getProgressionCode(){
         return this.str;
     }
     public int getAchievementTier(){

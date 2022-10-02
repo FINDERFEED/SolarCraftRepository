@@ -99,7 +99,7 @@ public class SolarLexiconScreen extends Screen implements IScrollable,PostRender
                 && !(scrollY +4 > 0)){
             scrollY+=4;
         }else if((keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_DOWN) || keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_S))
-                && !(scrollY -4 < -map.size() * 24)){
+                && !(scrollY -4 < -1000)){
             scrollY-=4;
         }else if ((keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_RIGHT) || keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_D))
                 && !(scrollX -4 < -180)){
@@ -227,7 +227,7 @@ public class SolarLexiconScreen extends Screen implements IScrollable,PostRender
                 afterText = new TextComponent("???");
                 preText = new TextComponent("???");
             }
-            Collection<Progression> parents = ProgressionTree.INSTANCE.getAchievementRequirements(a);
+            Collection<Progression> parents = ProgressionTree.INSTANCE.getProgressionRequirements(a);
             AnimatedTooltip tooltip = new BlackBackgroundTooltip(-1000,-1000,relX + 230,relY + 200,7,5)
                     .setStartYOpeness(16).addComponents(new ComponentSequence(new ComponentSequence.ComponentSequenceBuilder()
                     .setAlignment(ContentAlignment.NO_ALIGNMENT)
@@ -353,7 +353,7 @@ public class SolarLexiconScreen extends Screen implements IScrollable,PostRender
         ClientHelpers.bindText(FRAME);
         for (Progression a : tree.PROGRESSION_TREE.keySet()) {
             Point first = new Point(relX+scrollX+offs+map.get(a.getAchievementTier()).indexOf(a)*OFFSET_X,relY+scrollY+offs+(a.getAchievementTier()-1)*OFFSET_Y);
-            for (Progression b : tree.getAchievementRequirements(a)){
+            for (Progression b : tree.getProgressionRequirements(a)){
                 Point second = new Point(relX+scrollX+offs+map.get(b.getAchievementTier()).indexOf(b)*OFFSET_X,relY+scrollY+offs+(b.getAchievementTier()-1)*OFFSET_Y);
                 if (currentProgression != null && (currentProgression == b || currentProgression == a) ) {
                     postLinesRender.add(()->{

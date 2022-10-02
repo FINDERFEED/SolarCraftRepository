@@ -4,14 +4,12 @@ import com.finderfeed.solarforge.content.blocks.blockentities.clearing_ritual.Cl
 import com.finderfeed.solarforge.content.entities.CrystalBossEntity;
 import com.finderfeed.solarforge.content.entities.RunicElementalBoss;
 import com.finderfeed.solarforge.events.my_events.ProgressionUnlockEvent;
-import com.finderfeed.solarforge.local_library.OwnedBlock;
 import com.finderfeed.solarforge.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarforge.content.blocks.blockentities.clearing_ritual.RadiantLandCleanedData;
 import com.finderfeed.solarforge.content.items.solar_lexicon.progressions.Progression;
 
 import com.finderfeed.solarforge.client.particles.SolarcraftParticleTypes;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
-import com.finderfeed.solarforge.misc_things.StateAndTag;
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
 import com.finderfeed.solarforge.packet_handler.packets.*;
 import com.finderfeed.solarforge.content.items.solar_lexicon.progressions.progression_tree.ProgressionTree;
@@ -23,7 +21,6 @@ import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -31,7 +28,6 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.core.Direction;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -132,13 +128,13 @@ public class Helpers {
 
     public static boolean hasPlayerCompletedProgression(Progression ach, Player entity){
 
-        return ach == null ? true : entity.getPersistentData().getBoolean("solar_forge_progression_"+ach.getAchievementCode());
+        return ach == null ? true : entity.getPersistentData().getBoolean("solar_forge_progression_"+ach.getProgressionCode());
     }
 
     public static boolean canPlayerUnlock(Progression ach, Player entity){
         ProgressionTree tree = ProgressionTree.INSTANCE;
-        for (Progression a : tree.getAchievementRequirements(ach)){
-            if (!entity.getPersistentData().getBoolean("solar_forge_progression_"+a.getAchievementCode())){
+        for (Progression a : tree.getProgressionRequirements(ach)){
+            if (!entity.getPersistentData().getBoolean("solar_forge_progression_"+a.getProgressionCode())){
                 return false;
             }
         }
@@ -146,7 +142,7 @@ public class Helpers {
     }
 
     public static void setProgressionCompletionStatus(Progression ach, Player pe, boolean a){
-        pe.getPersistentData().putBoolean("solar_forge_progression_"+ach.getAchievementCode(),a);
+        pe.getPersistentData().putBoolean("solar_forge_progression_"+ach.getProgressionCode(),a);
     }
 
 
@@ -289,7 +285,7 @@ public class Helpers {
     public static void updateProgression(ServerPlayer player){
         for (Progression a : Progression.allProgressions) {
 
-            SolarForgePacketHandler.INSTANCE.sendTo(new UpdateProgressionOnClient(a.getAchievementCode(), hasPlayerCompletedProgression(a,player)),
+            SolarForgePacketHandler.INSTANCE.sendTo(new UpdateProgressionOnClient(a.getProgressionCode(), hasPlayerCompletedProgression(a,player)),
                     player.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
         }
     }

@@ -10,6 +10,7 @@ import com.finderfeed.solarforge.registries.entities.SolarcraftEntityTypes;
 import com.finderfeed.solarforge.registries.tile_entities.SolarcraftTileEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.ClipContext;
@@ -33,7 +34,7 @@ public class UlderaPylon extends BlockEntity {
     public static void tick(UlderaPylon tile, BlockPos pos, BlockState state, Level world){
         if (!world.isClientSide){
             tile.spawnZombieCooldown--;
-            if (world.getGameTime() % 20 == 0){
+            if (world.getGameTime() % 20 == 0 && !Helpers.isRadiantLandCleanedServer((ServerLevel) world)){
                 AABB aabb = new AABB(-20,-20,-20,20,20,20).move(Helpers.getBlockCenter(pos));
                 Vec3 p = Helpers.getBlockCenter(pos);
 

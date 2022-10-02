@@ -104,7 +104,7 @@ public class RetainLostEvent {
         }
         if (!playernew.level.isClientSide) {
             for (Progression a : Progression.allProgressions) {
-                SolarForgePacketHandler.INSTANCE.sendTo(new UpdateProgressionOnClient(a.getAchievementCode(),playernew.getPersistentData().getBoolean(Helpers.PROGRESSION+a.getAchievementCode())),
+                SolarForgePacketHandler.INSTANCE.sendTo(new UpdateProgressionOnClient(a.getProgressionCode(),playernew.getPersistentData().getBoolean(Helpers.PROGRESSION+a.getProgressionCode())),
                         ((ServerPlayer) playernew).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
             }
         }
