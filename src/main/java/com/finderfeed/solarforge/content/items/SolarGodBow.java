@@ -9,8 +9,8 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -174,12 +174,12 @@ public class SolarGodBow extends RareSolarcraftItem implements ITagUser {
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> comp, TooltipFlag p_41424_) {
         CompoundTag tag = getTag(stack);
         if (tag != null){
-            comp.add(new TranslatableComponent("solarcraft.god_bow_upgrade").withStyle(ChatFormatting.GOLD).append(new TextComponent(" "+getLevel(stack))));
-            addLevelDesc(stack,comp,new TranslatableComponent("solarcraft.god_bow_upgrade_2"),2);
-            addLevelDesc(stack,comp,new TranslatableComponent("solarcraft.god_bow_upgrade_3"),3);
-            addLevelDesc(stack,comp,new TranslatableComponent("solarcraft.god_bow_upgrade_4"),4);
-            addLevelDesc(stack,comp,new TranslatableComponent("solarcraft.god_bow_upgrade_5"),5);
-            addLevelDesc(stack,comp,new TranslatableComponent("solarcraft.god_bow_upgrade_6"),6);
+            comp.add(Component.translatable("solarcraft.god_bow_upgrade").withStyle(ChatFormatting.GOLD).append(Component.literal(" "+getLevel(stack))));
+            addLevelDesc(stack,comp,Component.translatable("solarcraft.god_bow_upgrade_2"),2);
+            addLevelDesc(stack,comp,Component.translatable("solarcraft.god_bow_upgrade_3"),3);
+            addLevelDesc(stack,comp,Component.translatable("solarcraft.god_bow_upgrade_4"),4);
+            addLevelDesc(stack,comp,Component.translatable("solarcraft.god_bow_upgrade_5"),5);
+            addLevelDesc(stack,comp,Component.translatable("solarcraft.god_bow_upgrade_6"),6);
         }
         super.appendHoverText(stack, level, comp, p_41424_);
     }

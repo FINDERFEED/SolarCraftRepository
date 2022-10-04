@@ -4,7 +4,7 @@ import com.finderfeed.solarforge.content.blocks.solar_energy.Bindable;
 import com.finderfeed.solarforge.helpers.Helpers;
 import com.finderfeed.solarforge.local_library.helpers.CompoundNBTHelper;
 import com.finderfeed.solarforge.misc_things.*;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.entity.player.Player;
@@ -14,7 +14,7 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.ChatFormatting;
 import net.minecraft.world.level.Level;
 
@@ -35,7 +35,7 @@ public class SolarNetworkBinder extends Item {
                 bindAll(world, ctx.getClickedPos(), ctx.getPlayer(),getPos1(stack),getPos2(stack), stack);
             }else{
                 setNull(ctx.getItemInHand());
-                ctx.getPlayer().displayClientMessage(new TextComponent("Positions cleared"),true);
+                ctx.getPlayer().displayClientMessage(Component.literal("Positions cleared"),true);
             }
         }
 
@@ -44,9 +44,9 @@ public class SolarNetworkBinder extends Item {
 
     @Override
     public void appendHoverText(ItemStack item, @Nullable Level p_77624_2_, List<Component> cmps, TooltipFlag p_77624_4_) {
-        cmps.add(new TranslatableComponent("solarcraft.solar_network_binder").withStyle(ChatFormatting.GOLD));
-        cmps.add(new TextComponent("Pos 1: " + getPos1(item)).withStyle(ChatFormatting.GOLD));
-        cmps.add(new TextComponent("Pos 2: " + getPos2(item)).withStyle(ChatFormatting.GOLD));
+        cmps.add(Component.translatable("solarcraft.solar_network_binder").withStyle(ChatFormatting.GOLD));
+        cmps.add(Component.literal("Pos 1: " + getPos1(item)).withStyle(ChatFormatting.GOLD));
+        cmps.add(Component.literal("Pos 2: " + getPos2(item)).withStyle(ChatFormatting.GOLD));
         super.appendHoverText(item, p_77624_2_, cmps, p_77624_4_);
     }
     public void bindAll(Level world,BlockPos clickedPos,Player p,BlockPos pos1,BlockPos pos2,ItemStack stack){
@@ -65,7 +65,7 @@ public class SolarNetworkBinder extends Item {
 
             if (!p1.equals(p2)) {
                 if (!tile1.bind(p2)){
-                    p.displayClientMessage(new TranslatableComponent("solarcraft.failed_to_bind")
+                    p.displayClientMessage(Component.translatable("solarcraft.failed_to_bind")
                             .withStyle(ChatFormatting.RED),false);
                 }
             }

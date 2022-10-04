@@ -13,7 +13,7 @@ import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.sounds.SoundManager;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.recipebook.PlaceRecipe;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.Slot;
@@ -44,14 +44,14 @@ public class CraftingRecipeScreen extends Screen implements PlaceRecipe<Ingredie
     private int time = 0;
 
     public CraftingRecipeScreen(CraftingRecipe recipe) {
-        super(new TextComponent(""));
+        super(Component.literal(""));
         this.recipes = List.of(recipe);
         this.maxPages = 0;
     }
 
 
     public CraftingRecipeScreen(List<CraftingRecipe> recipe) {
-        super(new TextComponent(""));
+        super(Component.literal(""));
         this.recipes = recipe;
         this.maxPages = recipe.size()-1;
     }
@@ -73,8 +73,8 @@ public class CraftingRecipeScreen extends Screen implements PlaceRecipe<Ingredie
                 }
                 this.setupGhostRecipe(recipes.get(currentPage));
             },(button,matrices,mousex,mousey)->{
-                renderTooltip(matrices,new TextComponent("Next recipe"),mousex,mousey);
-            },new TextComponent("")){
+                renderTooltip(matrices,Component.literal("Next recipe"),mousex,mousey);
+            },Component.literal("")){
                 @Override
                 public void playDownSound(SoundManager manager) {
                     manager.play(SimpleSoundInstance.forUI(SolarcraftSounds.BUTTON_PRESS2.get(),1,1));
@@ -86,8 +86,8 @@ public class CraftingRecipeScreen extends Screen implements PlaceRecipe<Ingredie
                 }
                 this.setupGhostRecipe(recipes.get(currentPage));
             },(button,matrices,mousex,mousey)->{
-                renderTooltip(matrices,new TextComponent("Previous recipe"),mousex,mousey);
-            },new TextComponent("")){
+                renderTooltip(matrices,Component.literal("Previous recipe"),mousex,mousey);
+            },Component.literal("")){
                 @Override
                 public void playDownSound(SoundManager manager) {
                     manager.play(SimpleSoundInstance.forUI(SolarcraftSounds.BUTTON_PRESS2.get(),1,1));
@@ -133,7 +133,7 @@ public class CraftingRecipeScreen extends Screen implements PlaceRecipe<Ingredie
             ItemRator itemRator = itemRators.get(0);
             renderItemAndTooltip(itemRator.getCurrentStack(),itemRator.getX(),itemRator.getY(),mousex,mousey,matrices,false);
             for (ItemStack i : uniqueItems){
-                drawString(matrices,font,new TextComponent(counts[uniqueItems.indexOf(i)]+" x: ").append(i.getItem().getName(i)),relX+13,relY+84+iter*9,SolarLexiconScreen.TEXT_COLOR);
+                drawString(matrices,font,Component.literal(counts[uniqueItems.indexOf(i)]+" x: ").append(i.getItem().getName(i)),relX+13,relY+84+iter*9,SolarLexiconScreen.TEXT_COLOR);
                 iter++;
             }
         }

@@ -44,7 +44,7 @@ import net.minecraft.world.level.levelgen.placement.*;
 import net.minecraft.world.level.levelgen.structure.templatesystem.RuleTest;
 import net.minecraft.world.level.levelgen.structure.templatesystem.TagMatchTest;
 import net.minecraftforge.common.Tags;
-import net.minecraftforge.event.RegistryEvent;
+
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 
 
@@ -53,8 +53,10 @@ import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.featuresize.TwoLayersFeatureSize;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegisterEvent;
 
 import java.util.List;
+import java.util.Objects;
 
 
 //i hate you with every ounce of being mojang!
@@ -163,7 +165,8 @@ public class FeaturesRegistry {
 
 
 
-    public static void registerFeatures(final RegistryEvent.Register<Feature<?>> event){
+    public static void registerFeatures(RegisterEvent event){
+        if (!Objects.equals(event.getForgeRegistry(), ForgeRegistries.FEATURES)) return;
         event.getRegistry().register(BURNT_BIOME_AMBIENCE_1.setRegistryName(BURNT_BIOME_BURNT_TREE));
         event.getRegistry().register(BURNT_BIOME_AMBIENCE_2.setRegistryName(new ResourceLocation(SolarForge.MOD_ID,"ruins_feature")));
         event.getRegistry().register(ENERGY_PYLON.setRegistryName(new ResourceLocation(SolarForge.MOD_ID,"energy_pylon_feature")));
@@ -178,7 +181,7 @@ public class FeaturesRegistry {
         registerFeature(event,ULDERA_PYLON,"uldera_pylon");
         registerFeature(event,CLEARING_CRYSTAL,"clearing_crystal");
     }
-    private static void registerFeature(RegistryEvent.Register<Feature<?>> event,Feature<?> f,String name){
+    private static void registerFeature(RegisterEvent event, Feature<?> f, String name){
         event.getRegistry().register(f.setRegistryName(new ResourceLocation(SolarForge.MOD_ID,name)));
 
     }

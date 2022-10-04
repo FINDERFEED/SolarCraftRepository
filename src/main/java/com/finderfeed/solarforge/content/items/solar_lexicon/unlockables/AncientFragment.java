@@ -18,7 +18,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 
 import static com.finderfeed.solarforge.registries.items.SolarcraftItems.*;
 
@@ -411,7 +411,7 @@ public class AncientFragment {
     }
 
     public static TranslatableComponent tx(String a){
-        return new TranslatableComponent(a);
+        return Component.translatable(a);
     }
 
 
@@ -430,8 +430,8 @@ public class AncientFragment {
             Type type = Type.valueOf(GsonHelper.getAsString(jFragment,"type").toUpperCase(Locale.ROOT));
 
 
-            TranslatableComponent translation = new TranslatableComponent(GsonHelper.getAsString(jFragment,"translation_id"));
-            TranslatableComponent lore = new TranslatableComponent(GsonHelper.getAsString(jFragment,"translation_id_lore"));
+            TranslatableComponent translation = Component.translatable(GsonHelper.getAsString(jFragment,"translation_id"));
+            TranslatableComponent lore = Component.translatable(GsonHelper.getAsString(jFragment,"translation_id_lore"));
             String id = GsonHelper.getAsString(jFragment,"unique_id");
             CategoryBase catBase = CategoryBase.valueOf(GsonHelper.getAsString(jFragment,"category_base").toUpperCase(Locale.ROOT));
             SubCategoryBase subBase = SubCategoryBase.valueOf(GsonHelper.getAsString(jFragment,"sub_category_base").toUpperCase(Locale.ROOT));

@@ -17,7 +17,7 @@ import com.finderfeed.solarforge.registries.abilities.AbilitiesRegistry;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 import org.lwjgl.glfw.GLFW;
 
@@ -109,7 +109,7 @@ public class AbilitySelectionScreen extends SolarCraftScreen {
 
 
         SolarForgeButtonYellow b = new SolarForgeButtonYellow(winX - 107,
-                winY - 40,65,15,new TranslatableComponent("ability.buy_ability"),(button)->{
+                winY - 40,65,15,Component.translatable("ability.buy_ability"),(button)->{
             if (selectedAbility != null) {
                 SolarForgePacketHandler.INSTANCE.sendToServer(new BuyAbilityPacket(selectedAbility.id));
                 SolarForgePacketHandler.INSTANCE.sendToServer(new RequestAbilityScreenPacket(true));
@@ -117,7 +117,7 @@ public class AbilitySelectionScreen extends SolarCraftScreen {
         });
         InfoButton info = new InfoButton(135,27,12,12,(but,matrix,mx,my)->{
            renderTooltip(matrix,
-                   font.split(new TranslatableComponent("solarcraft.bind_guide"),250),
+                   font.split(Component.translatable("solarcraft.bind_guide"),250),
                    mx,my);
         });
         addRenderableWidget(b);
@@ -210,24 +210,24 @@ public class AbilitySelectionScreen extends SolarCraftScreen {
         RenderingTools.renderTextField(matrices,xShiftRight + winX - 130 - 7,20 ,120,winY - 40);
         int textXStartRight = xShiftRight + winX - 69 - 7;
         int texXStartLeft = 20 + xShiftLeft;
-        drawCenteredString(matrices, minecraft.font,new TranslatableComponent("name."+selectedAbility.id),
+        drawCenteredString(matrices, minecraft.font,Component.translatable("name."+selectedAbility.id),
                 textXStartRight,30,SolarLexiconScreen.TEXT_COLOR);
-        drawCenteredString(matrices, minecraft.font,new TranslatableComponent("solarcraft.buy_cost")
+        drawCenteredString(matrices, minecraft.font,Component.translatable("solarcraft.buy_cost")
                         .append(": "+ selectedAbility.buyCost),
                 textXStartRight,winY - 50, SolarLexiconScreen.TEXT_COLOR);
         drawCenteredString(matrices,font,
-                new TranslatableComponent("solarcraft.raw_solar_energy"),
+                Component.translatable("solarcraft.raw_solar_energy"),
                 textXStartRight,winY - 70,SolarLexiconScreen.TEXT_COLOR);
         drawCenteredString(matrices,font,
-                new TranslatableComponent("solarcraft.yours").append(": "+ energy),
+                Component.translatable("solarcraft.yours").append(": "+ energy),
                 textXStartRight,winY - 60,SolarLexiconScreen.TEXT_COLOR);
         RenderingTools.drawCenteredBoundedTextObfuscated(matrices,textXStartRight + 1, 50,20,
-                new TranslatableComponent("desc."+selectedAbility.id),SolarLexiconScreen.TEXT_COLOR,ticker*5);
+                Component.translatable("desc."+selectedAbility.id),SolarLexiconScreen.TEXT_COLOR,ticker*5);
 
         RenderingTools.renderTextField(matrices,texXStartLeft,20 ,130,27);
         RenderingTools.renderTextField(matrices,texXStartLeft,winY - 125 ,130,105);
         int iter = 0;
-        drawString(matrices,font,new TranslatableComponent("solarcraft.cast_cost"),texXStartLeft + 6,
+        drawString(matrices,font,Component.translatable("solarcraft.cast_cost"),texXStartLeft + 6,
                 winY - 120,SolarLexiconScreen.TEXT_COLOR);
         for (RunicEnergy.Type type : RunicEnergy.Type.getAll()){
             drawString(matrices,font,type.toString().toUpperCase(Locale.ROOT)+": " + selectedAbility.cost.get(type),

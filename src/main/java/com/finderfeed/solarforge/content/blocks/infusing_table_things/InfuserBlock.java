@@ -5,7 +5,7 @@ import com.finderfeed.solarforge.content.blocks.primitive.RunicEnergySaverBlock;
 import com.finderfeed.solarforge.content.items.SolarNetworkBinder;
 import com.finderfeed.solarforge.misc_things.SolarcraftDebugStick;
 import net.minecraft.ChatFormatting;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
@@ -89,7 +89,7 @@ public class InfuserBlock extends RunicEnergySaverBlock implements EntityBlock {
 
                     }
                 }else{
-                    user.sendMessage(new TextComponent("You are not the owner!").withStyle(ChatFormatting.RED),user.getUUID());
+                    user.sendMessage(Component.literal("You are not the owner!").withStyle(ChatFormatting.RED),user.getUUID());
                 }
 
             };

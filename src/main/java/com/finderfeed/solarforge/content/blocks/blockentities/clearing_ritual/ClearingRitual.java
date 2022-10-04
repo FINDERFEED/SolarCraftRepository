@@ -18,7 +18,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -246,7 +246,7 @@ public class ClearingRitual {
             if (time >= 16500 && time <= 19500 && Helpers.hasPlayerCompletedProgression(Progression.KILL_RUNIC_ELEMENTAL,user)) {
                 this.setRitualStatus(RITUAL_ONLINE);
             }else{
-                user.sendMessage(new TranslatableComponent("solarcraft.ritual_time"),user.getUUID());
+                user.sendMessage(Component.translatable("solarcraft.ritual_time"),user.getUUID());
             }
         }
     }

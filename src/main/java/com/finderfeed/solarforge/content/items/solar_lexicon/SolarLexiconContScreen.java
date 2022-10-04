@@ -5,7 +5,7 @@ import com.finderfeed.solarforge.content.items.solar_lexicon.screen.buttons.Info
 import com.finderfeed.solarforge.misc_things.IScrollable;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.Component;
@@ -71,7 +71,7 @@ public class SolarLexiconContScreen extends AbstractContainerScreen<SolarLexicon
             a = 1;
         }
         InfoButton button = new InfoButton(relX + 180 + a,relY + 40,12,12,(btn,matrices,x,y)->{
-           this.renderTooltip(matrices,font.split(new TranslatableComponent("solarcraft.lexicon_inventory_description"),200),x,y,font);
+           this.renderTooltip(matrices,font.split(Component.translatable("solarcraft.lexicon_inventory_description"),200),x,y,font);
         });
         addRenderableWidget(button);
     }

@@ -12,8 +12,8 @@ import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.sounds.SoundManager;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 
 public class AbilityScreenButton extends Button {
@@ -24,7 +24,7 @@ public class AbilityScreenButton extends Button {
     private ResourceLocation textureLocation;
 
     public AbilityScreenButton(AbstractAbility abstractAbility,int p_93721_, int p_93722_, int p_93723_, int p_93724_, OnPress p_93726_) {
-        super(p_93721_, p_93722_, p_93723_, p_93724_, new TextComponent(""), p_93726_);
+        super(p_93721_, p_93722_, p_93723_, p_93724_, Component.literal(""), p_93726_);
         this.ability = abstractAbility;
         this.textureLocation = abstractAbility != null ? new ResourceLocation(SolarForge.MOD_ID,"textures/abilities/"+abstractAbility.id+"_new.png")
         : new ResourceLocation(SolarForge.MOD_ID,"textures/abilities/no_ability.png");
@@ -32,7 +32,7 @@ public class AbilityScreenButton extends Button {
     }
 
     public AbilityScreenButton(AbstractAbility abstractAbility,int p_93728_, int p_93729_, int p_93730_, int p_93731_, OnPress p_93733_, OnTooltip p_93734_) {
-        super(p_93728_, p_93729_, p_93730_, p_93731_, new TextComponent(""), p_93733_, p_93734_);
+        super(p_93728_, p_93729_, p_93730_, p_93731_, Component.literal(""), p_93733_, p_93734_);
         this.ability = abstractAbility;
         this.textureLocation = abstractAbility != null ? new ResourceLocation(SolarForge.MOD_ID,"textures/abilities/"+abstractAbility.id+"_new.png")
                 : new ResourceLocation(SolarForge.MOD_ID,"textures/abilities/no_ability.png");
@@ -52,7 +52,7 @@ public class AbilityScreenButton extends Button {
                     x + width - (int)(xf * 8),y + height - (int)(yf * 8),0xff000000);
             RenderSystem.setShaderColor(1f,1f,1f,1f);
             drawCenteredString(matrices, Minecraft.getInstance().font,
-                    new TranslatableComponent("solarcraft.bind_ability"),
+                    Component.translatable("solarcraft.bind_ability"),
                     x + width/2,y + height/2 - 5,
                     0xffffff);
         }

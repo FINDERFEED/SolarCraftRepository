@@ -12,7 +12,7 @@ import com.finderfeed.solarforge.registries.entities.SolarcraftEntityTypes;
 import com.finderfeed.solarforge.registries.sounds.SolarcraftSounds;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -58,7 +58,7 @@ public class LightningGun extends RareSolarcraftItem implements IRunicEnergyUser
 
     @Override
     public void appendHoverText(ItemStack item, @Nullable Level p_41422_, List<Component> components, TooltipFlag p_41424_) {
-        components.add(new TranslatableComponent("solarcraft.lightning_gun").withStyle(ChatFormatting.GOLD));
+        components.add(Component.translatable("solarcraft.lightning_gun").withStyle(ChatFormatting.GOLD));
         ItemRunicEnergy.addRunicEnergyTextComponents(item,this,components);
         super.appendHoverText(item, p_41422_, components, p_41424_);
     }

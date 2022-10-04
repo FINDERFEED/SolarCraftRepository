@@ -2,7 +2,7 @@ package com.finderfeed.solarforge.client.screens;
 
 import com.finderfeed.solarforge.local_library.other.CanTick;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.Component;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +14,7 @@ public abstract class SolarCraftScreen extends Screen {
     private List<CanTick> tickables = new ArrayList<>();
 
     public SolarCraftScreen() {
-        super(new TextComponent(""));
+        super(Component.literal(""));
     }
 
 

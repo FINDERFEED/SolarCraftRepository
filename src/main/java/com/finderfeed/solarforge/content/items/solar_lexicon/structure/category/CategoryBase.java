@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.content.items.solar_lexicon.structure.category;
 
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 
 public enum CategoryBase {
     BEGGINING_INFO(tx("solar_category.beginning"),1,1),
@@ -38,7 +38,7 @@ public enum CategoryBase {
         return translation;
     }
     public static TranslatableComponent tx(String a){
-        return new TranslatableComponent(a);
+        return Component.translatable(a);
     }
     public static CategoryBase getByID(String id){
         for (CategoryBase v : CategoryBase.class.getEnumConstants()){

@@ -19,7 +19,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.ChatFormatting;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.Level;
 
 
@@ -87,7 +87,7 @@ public class IllidiumPickaxe extends RareSolarcraftPickaxe implements IRunicEner
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level world, List<Component> components, TooltipFlag p_77624_4_) {
-        components.add(new TranslatableComponent("solarforge.veinminer").withStyle(ChatFormatting.GOLD));
+        components.add(Component.translatable("solarforge.veinminer").withStyle(ChatFormatting.GOLD));
         ItemRunicEnergy.addRunicEnergyTextComponents(stack,this,components);
         super.appendHoverText(stack, world, components, p_77624_4_);
     }

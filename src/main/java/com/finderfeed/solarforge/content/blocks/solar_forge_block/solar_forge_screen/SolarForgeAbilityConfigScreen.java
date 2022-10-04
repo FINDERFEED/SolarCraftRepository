@@ -5,8 +5,8 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Component;
 
 public class SolarForgeAbilityConfigScreen extends Screen {
 
@@ -16,7 +16,7 @@ public class SolarForgeAbilityConfigScreen extends Screen {
     private ResourceLocation GUI = new ResourceLocation("solarforge","textures/gui/solar_config_gui.png");
 
     public SolarForgeAbilityConfigScreen() {
-        super(new TranslatableComponent("test.screen.thing"));
+        super(Component.translatable("test.screen.thing"));
 
     }
 
@@ -25,10 +25,10 @@ public class SolarForgeAbilityConfigScreen extends Screen {
         super.init();
         int relX = (this.width - WIDTH) / 2;
         int relY = (this.height - HEIGHT) / 2;
-        addRenderableWidget(new SolarForgeButton(relX +7 , relY + 10-3, 65, 15, new TextComponent("Hotkey 1"), button -> Minecraft.getInstance().setScreen(new SolarForgeConfigScreenAdditional(1))));
-        addRenderableWidget(new SolarForgeButton(relX +7, relY + 30-3, 65, 15, new TextComponent("Hotkey 2"), button -> Minecraft.getInstance().setScreen(new SolarForgeConfigScreenAdditional(2))));
-        addRenderableWidget(new SolarForgeButton(relX +7, relY + 50-3, 65, 15, new TextComponent("Hotkey 3"), button -> Minecraft.getInstance().setScreen(new SolarForgeConfigScreenAdditional(3))));
-        addRenderableWidget(new SolarForgeButton(relX +7, relY + 70-3, 65, 15, new TextComponent("Hotkey 4"), button -> Minecraft.getInstance().setScreen(new SolarForgeConfigScreenAdditional(4))));
+        addRenderableWidget(new SolarForgeButton(relX +7 , relY + 10-3, 65, 15, Component.literal("Hotkey 1"), button -> Minecraft.getInstance().setScreen(new SolarForgeConfigScreenAdditional(1))));
+        addRenderableWidget(new SolarForgeButton(relX +7, relY + 30-3, 65, 15, Component.literal("Hotkey 2"), button -> Minecraft.getInstance().setScreen(new SolarForgeConfigScreenAdditional(2))));
+        addRenderableWidget(new SolarForgeButton(relX +7, relY + 50-3, 65, 15, Component.literal("Hotkey 3"), button -> Minecraft.getInstance().setScreen(new SolarForgeConfigScreenAdditional(3))));
+        addRenderableWidget(new SolarForgeButton(relX +7, relY + 70-3, 65, 15, Component.literal("Hotkey 4"), button -> Minecraft.getInstance().setScreen(new SolarForgeConfigScreenAdditional(4))));
     }
 
 

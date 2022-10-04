@@ -4,8 +4,8 @@ import com.finderfeed.solarforge.content.items.runic_energy.RunicEnergyContainer
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.List;
@@ -29,20 +29,20 @@ public interface IRunicEnergySaver {
     static void addHoverText(ItemStack stack, List<Component> components){
         RunicEnergyContainer container = new RunicEnergyContainer();
         container.loadFromTag(stack.getOrCreateTagElement(ITEM_STACK_TAG));
-        components.add(new TranslatableComponent("solarcraft.contained_energy"));
+        components.add(Component.translatable("solarcraft.contained_energy"));
         for (RunicEnergy.Type type : RunicEnergy.Type.getAll()){
-            components.add(new TextComponent(type.id.toUpperCase(Locale.ROOT)).withStyle(ChatFormatting.GOLD)
-                    .append(new TextComponent(" " + container.get(type) + "/" + container.getMaxEnergy()).withStyle(ChatFormatting.WHITE)));
+            components.add(Component.literal(type.id.toUpperCase(Locale.ROOT)).withStyle(ChatFormatting.GOLD)
+                    .append(Component.literal(" " + container.get(type) + "/" + container.getMaxEnergy()).withStyle(ChatFormatting.WHITE)));
         }
     }
 
     static void addHoverText(ItemStack stack, List<Component> components,List<RunicEnergy.Type> types){
         RunicEnergyContainer container = new RunicEnergyContainer();
         container.loadFromTag(stack.getOrCreateTagElement(ITEM_STACK_TAG));
-        components.add(new TranslatableComponent("solarcraft.contained_energy"));
+        components.add(Component.translatable("solarcraft.contained_energy"));
         for (RunicEnergy.Type type : types){
-            components.add(new TextComponent(type.id.toUpperCase(Locale.ROOT)).withStyle(ChatFormatting.GOLD)
-                    .append(new TextComponent(": " + container.get(type) + "/" + container.getMaxEnergy()).withStyle(ChatFormatting.WHITE)));
+            components.add(Component.literal(type.id.toUpperCase(Locale.ROOT)).withStyle(ChatFormatting.GOLD)
+                    .append(Component.literal(": " + container.get(type) + "/" + container.getMaxEnergy()).withStyle(ChatFormatting.WHITE)));
         }
     }
 

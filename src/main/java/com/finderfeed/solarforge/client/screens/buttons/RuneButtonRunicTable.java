@@ -6,7 +6,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.sounds.SoundManager;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 
@@ -16,7 +16,7 @@ public class RuneButtonRunicTable extends Button {
     public int rune;
 
     public RuneButtonRunicTable(int xPos, int yPos, int xSize, int ySize, OnPress onPress, OnTooltip onTooltip, int xoffs) {
-        super(xPos, yPos, xSize, ySize, new TextComponent(""), onPress, onTooltip);
+        super(xPos, yPos, xSize, ySize, Component.literal(""), onPress, onTooltip);
         this.rune = xoffs;
     }
 

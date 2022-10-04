@@ -15,7 +15,7 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.network.chat.Component;
 import net.minecraft.ChatFormatting;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.Level;
 
 import javax.annotation.Nullable;
@@ -85,32 +85,32 @@ public class SolarGodSword extends RareSolarcraftSword implements ITagUser {
         if ((stack.getTagElement(SolarCraftTags.SOLAR_GOD_SWORD_TAG) != null)) {
 
             int level = stack.getTagElement(SolarCraftTags.SOLAR_GOD_SWORD_TAG).getInt(SolarCraftTags.SOLAR_GOD_SWORD_LEVEL_TAG);
-            text.add(new TranslatableComponent("solarcraft.solar_god_sword_desc").append(String.valueOf(level)).withStyle(ChatFormatting.GOLD));
+            text.add(Component.translatable("solarcraft.solar_god_sword_desc").append(String.valueOf(level)).withStyle(ChatFormatting.GOLD));
             if (level >= 2){
-                text.add(new TranslatableComponent("solarcraft.solar_god_sword_level_2").withStyle(ChatFormatting.GOLD).withStyle(ChatFormatting.ITALIC));
+                text.add(Component.translatable("solarcraft.solar_god_sword_level_2").withStyle(ChatFormatting.GOLD).withStyle(ChatFormatting.ITALIC));
 
             }else{
-                text.add(new TranslatableComponent("solarcraft.solar_god_sword_level_2").withStyle(ChatFormatting.GOLD).withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.STRIKETHROUGH));
+                text.add(Component.translatable("solarcraft.solar_god_sword_level_2").withStyle(ChatFormatting.GOLD).withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.STRIKETHROUGH));
             }
 
             if (level >= 3){
-                text.add(new TranslatableComponent("solarcraft.solar_god_sword_level_3").withStyle(ChatFormatting.GOLD).withStyle(ChatFormatting.ITALIC));
+                text.add(Component.translatable("solarcraft.solar_god_sword_level_3").withStyle(ChatFormatting.GOLD).withStyle(ChatFormatting.ITALIC));
 
             }else{
-                text.add(new TranslatableComponent("solarcraft.solar_god_sword_level_3").withStyle(ChatFormatting.GOLD).withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.STRIKETHROUGH));
+                text.add(Component.translatable("solarcraft.solar_god_sword_level_3").withStyle(ChatFormatting.GOLD).withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.STRIKETHROUGH));
             }
 
             if (level >= 4){
-                text.add(new TranslatableComponent("solarcraft.solar_god_sword_level_4").withStyle(ChatFormatting.GOLD).withStyle(ChatFormatting.ITALIC));
+                text.add(Component.translatable("solarcraft.solar_god_sword_level_4").withStyle(ChatFormatting.GOLD).withStyle(ChatFormatting.ITALIC));
 
             }else{
-                text.add(new TranslatableComponent("solarcraft.solar_god_sword_level_4").withStyle(ChatFormatting.GOLD).withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.STRIKETHROUGH));
+                text.add(Component.translatable("solarcraft.solar_god_sword_level_4").withStyle(ChatFormatting.GOLD).withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.STRIKETHROUGH));
             }
 
             if (level >= 5){
-                text.add(new TranslatableComponent("solarcraft.solar_god_sword_level_5").withStyle(ChatFormatting.GOLD).withStyle(ChatFormatting.ITALIC));
+                text.add(Component.translatable("solarcraft.solar_god_sword_level_5").withStyle(ChatFormatting.GOLD).withStyle(ChatFormatting.ITALIC));
             }else{
-                text.add(new TranslatableComponent("solarcraft.solar_god_sword_level_5").withStyle(ChatFormatting.GOLD).withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.STRIKETHROUGH));
+                text.add(Component.translatable("solarcraft.solar_god_sword_level_5").withStyle(ChatFormatting.GOLD).withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.STRIKETHROUGH));
             }
 
         }

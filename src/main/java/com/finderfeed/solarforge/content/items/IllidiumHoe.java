@@ -12,7 +12,7 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.network.chat.Component;
 import net.minecraft.ChatFormatting;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.Level;
 
 import javax.annotation.Nullable;
@@ -47,7 +47,7 @@ public class IllidiumHoe extends RareSolarcraftHoe implements IRunicEnergyUser {
 
     @Override
     public void appendHoverText(ItemStack item, @Nullable Level world, List<Component> components, TooltipFlag p_77624_4_) {
-        components.add(new TranslatableComponent("solarforge.illidium_hoe").withStyle(ChatFormatting.GOLD));
+        components.add(Component.translatable("solarforge.illidium_hoe").withStyle(ChatFormatting.GOLD));
         super.appendHoverText(item, world, components, p_77624_4_);
         ItemRunicEnergy.addRunicEnergyTextComponents(item,this,components);
     }

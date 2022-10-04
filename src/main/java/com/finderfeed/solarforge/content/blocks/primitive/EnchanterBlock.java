@@ -6,7 +6,7 @@ import com.finderfeed.solarforge.content.blocks.blockentities.containers.Enchant
 import com.finderfeed.solarforge.registries.tile_entities.SolarcraftTileEntityTypes;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
@@ -51,7 +51,7 @@ public class EnchanterBlock extends RunicEnergySaverBlock implements EntityBlock
                         buf.writeUtf(configString);
                     });
                 }else {
-                    player.sendMessage(new TextComponent("You are not the owner!").withStyle(ChatFormatting.RED),player.getUUID());
+                    player.sendMessage(Component.literal("You are not the owner!").withStyle(ChatFormatting.RED),player.getUUID());
                 }
                 return InteractionResult.SUCCESS;
             }

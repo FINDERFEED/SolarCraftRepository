@@ -13,7 +13,7 @@ import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 
@@ -80,7 +80,7 @@ public class RunicEnergyChargerScreen extends AbstractScrollableContainerScreen<
         List<Component> components = new ArrayList<>();
         for (RunicEnergy.Type type : RunicEnergy.Type.getAll()){
             float re = menu.tile.getRunicEnergy(type);
-            components.add(new TextComponent(type.id.toUpperCase(Locale.ROOT)).append(new TextComponent(": "+ re + "/" + menu.tile.getRunicEnergyLimit()).withStyle(ChatFormatting.GOLD)));
+            components.add(Component.literal(type.id.toUpperCase(Locale.ROOT)).append(Component.literal(": "+ re + "/" + menu.tile.getRunicEnergyLimit()).withStyle(ChatFormatting.GOLD)));
             curEnergy += re;
         }
         float percent = curEnergy/maxRE;

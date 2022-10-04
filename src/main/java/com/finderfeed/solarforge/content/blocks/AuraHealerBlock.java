@@ -17,7 +17,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.ChatFormatting;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
@@ -62,7 +62,7 @@ public class AuraHealerBlock extends Block implements EntityBlock {
 
     @Override
     public void appendHoverText(ItemStack p_190948_1_, @Nullable BlockGetter p_190948_2_, List<Component> p_190948_3_, TooltipFlag p_190948_4_) {
-        p_190948_3_.add(new TranslatableComponent("solarforge.aura_healer_block").withStyle(ChatFormatting.GOLD));
+        p_190948_3_.add(Component.translatable("solarforge.aura_healer_block").withStyle(ChatFormatting.GOLD));
         super.appendHoverText(p_190948_1_, p_190948_2_, p_190948_3_, p_190948_4_);
     }
 

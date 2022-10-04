@@ -14,7 +14,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.AbstractWidget;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class StagesScreen extends ScrollableScreen {
-    public final TranslatableComponent STAGES_CMP = new TranslatableComponent("solarcraft.stages");
+    public final TranslatableComponent STAGES_CMP = Component.translatable("solarcraft.stages");
     public final ResourceLocation FRAME = new ResourceLocation(SolarForge.MOD_ID,"textures/misc/frame.png");
     public final ResourceLocation QMARK = new ResourceLocation(SolarForge.MOD_ID,"textures/misc/question_mark.png");
     public final ResourceLocation MAIN_SCREEN = new ResourceLocation(SolarForge.MOD_ID,"textures/gui/stages_page.png");
@@ -62,9 +62,9 @@ public class StagesScreen extends ScrollableScreen {
                     addRenderableWidget(new ItemStackButton(x+getCurrentScrollX(),y+getCurrentScrollY(),16,16,(btn)->{},progression.icon,1,
                             (button,matrix,mousex,mousey)->{
                                 if (Helpers.hasPlayerCompletedProgression(progression,Minecraft.getInstance().player)) {
-                                    renderComponentTooltip(matrix, List.of(progression.translation,new TranslatableComponent("solarcraft.completed").withStyle(ChatFormatting.GREEN)), mousex, mousey);
+                                    renderComponentTooltip(matrix, List.of(progression.translation,Component.translatable("solarcraft.completed").withStyle(ChatFormatting.GREEN)), mousex, mousey);
                                 }else{
-                                    renderComponentTooltip(matrix, List.of(progression.translation,new TranslatableComponent("solarcraft.not_completed").withStyle(ChatFormatting.RED)), mousex, mousey);
+                                    renderComponentTooltip(matrix, List.of(progression.translation,Component.translatable("solarcraft.not_completed").withStyle(ChatFormatting.RED)), mousex, mousey);
                                 }
                             }));
                 }else{
@@ -75,7 +75,7 @@ public class StagesScreen extends ScrollableScreen {
                         if ((mousex  >= x + getCurrentScrollX() && mousex  <= x + getCurrentScrollX()+16)
                                 && (mousey  >= y + getCurrentScrollY() && mousey <= y + 16 + getCurrentScrollY()) ) {
                             renderComponentTooltip(matrices, List.of(progression.translation,
-                                    new TranslatableComponent("solarcraft.cannot_be_completed").withStyle(ChatFormatting.GRAY)), mousex , mousey );
+                                    Component.translatable("solarcraft.cannot_be_completed").withStyle(ChatFormatting.GRAY)), mousex , mousey );
                         }
                     }));
                 }

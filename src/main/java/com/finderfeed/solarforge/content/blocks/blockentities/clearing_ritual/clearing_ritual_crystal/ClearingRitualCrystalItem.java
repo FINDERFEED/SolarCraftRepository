@@ -8,7 +8,7 @@ import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
@@ -37,7 +37,7 @@ public class ClearingRitualCrystalItem extends BlockItem {
         if (tileTag != null){
             CompoundTag tag = tileTag.getCompound("data");
             if (tag.contains("retype")){
-                components.add(new TextComponent(tag.getString("retype").toUpperCase(Locale.ROOT)).withStyle(ChatFormatting.GOLD));
+                components.add(Component.literal(tag.getString("retype").toUpperCase(Locale.ROOT)).withStyle(ChatFormatting.GOLD));
             }
         }
         super.appendHoverText(stack, world, components, flag);

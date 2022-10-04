@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.content.items.solar_lexicon.structure.subcategory;
 
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 
 public enum SubCategoryBase {
     BEGGINING(tx("solar_category.beginning")),
@@ -35,7 +35,7 @@ public enum SubCategoryBase {
     }
 
     public static TranslatableComponent tx(String a){
-        return new TranslatableComponent(a);
+        return Component.translatable(a);
     }
     public SubCategoryBase getByID(String id){
         for (SubCategoryBase v : SubCategoryBase.class.getEnumConstants()){

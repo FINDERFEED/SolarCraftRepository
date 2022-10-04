@@ -26,7 +26,7 @@ import com.finderfeed.solarforge.registries.items.SolarcraftItems;
 import com.finderfeed.solarforge.registries.sounds.SolarcraftSounds;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -620,7 +620,7 @@ class AntiCheat{
         if (pl.level.dimension()  == EventHandler.RADIANT_LAND_KEY){
             if (!pl.level.getEntitiesOfClass(LivingEntity.class,CHECK_AABB.move(pl.position()),
                     (l)-> l instanceof CrystalBossEntity || l instanceof RunicElementalBoss).isEmpty()){
-                pl.sendMessage(new TranslatableComponent("player.boss_cant_break_block").withStyle(ChatFormatting.RED),pl.getUUID());
+                pl.sendMessage(Component.translatable("player.boss_cant_break_block").withStyle(ChatFormatting.RED),pl.getUUID());
                 event.setCanceled(true);
             }
         }
@@ -633,7 +633,7 @@ class AntiCheat{
             if (pl.level.dimension() == EventHandler.RADIANT_LAND_KEY) {
                 if (!pl.level.getEntitiesOfClass(LivingEntity.class, CHECK_AABB.move(pl.position()),
                         (l)-> l instanceof CrystalBossEntity || l instanceof RunicElementalBoss).isEmpty()) {
-                    pl.sendMessage(new TranslatableComponent("player.boss_cant_place_block").withStyle(ChatFormatting.RED), pl.getUUID());
+                    pl.sendMessage(Component.translatable("player.boss_cant_place_block").withStyle(ChatFormatting.RED), pl.getUUID());
                     event.setCanceled(true);
                 }
             }
@@ -646,7 +646,7 @@ class AntiCheat{
         if ((player.level.dimension() == EventHandler.RADIANT_LAND_KEY) && EventHandler.ALLOWED_ABILITIES_DURING_BOSSFIGHT.contains(ability)) {
             if (!player.level.getEntitiesOfClass(LivingEntity.class, CHECK_AABB_BIGGER.move(player.position()),
                     (l)-> l instanceof CrystalBossEntity || l instanceof RunicElementalBoss).isEmpty()) {
-                player.sendMessage(new TranslatableComponent("player.cant_use_ability_near_boss").withStyle(ChatFormatting.RED),player.getUUID());
+                player.sendMessage(Component.translatable("player.cant_use_ability_near_boss").withStyle(ChatFormatting.RED),player.getUUID());
                 event.setCanceled(true);
             }
         }
@@ -661,7 +661,7 @@ class AntiCheat{
                         (l)-> l instanceof CrystalBossEntity || l instanceof RunicElementalBoss).isEmpty()) {
 
 //                    if (ent != null) {
-//                        ent.sendMessage(new TranslatableComponent("player.boss_cant_explode_blocks").withStyle(ChatFormatting.RED), ent.getUUID());
+//                        ent.sendMessage(Component.translatable("player.boss_cant_explode_blocks").withStyle(ChatFormatting.RED), ent.getUUID());
 //
 //                    }
                     event.getExplosion().getToBlow().clear();

@@ -18,7 +18,7 @@ import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 
 import java.util.Optional;
 
@@ -40,7 +40,7 @@ public class SolarEnergyFurnaceTile extends RandomizableContainerBlockEntity imp
     }
     @Override
     protected Component getDefaultName() {
-        return new TranslatableComponent("container.solarfurnace");
+        return Component.translatable("container.solarfurnace");
     }
 
     @Override

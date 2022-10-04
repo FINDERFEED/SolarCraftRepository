@@ -8,7 +8,7 @@ import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.sounds.SoundManager;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 
 public class InfoButton extends Button {
@@ -17,11 +17,11 @@ public class InfoButton extends Button {
     public ResourceLocation LOCR = new ResourceLocation(SolarForge.MOD_ID,"textures/gui/info_button.png");
 
     public InfoButton(int x, int y, int width, int height) {
-        super(x, y, width, height, new TextComponent(""), (btn)->{});
+        super(x, y, width, height, Component.literal(""), (btn)->{});
     }
 
     public InfoButton(int x, int y, int width, int height, OnTooltip tooltip) {
-        super(x, y, width, height, new TextComponent(""), (btn)->{}, tooltip);
+        super(x, y, width, height, Component.literal(""), (btn)->{}, tooltip);
     }
 
     @Override

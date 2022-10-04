@@ -11,7 +11,7 @@ import com.finderfeed.solarforge.helpers.Helpers;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
@@ -68,7 +68,7 @@ public abstract class BaseDivineArmor extends SolarcraftArmorItem implements IRu
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level p_41422_, List<Component> cmps, TooltipFlag p_41424_) {
-        cmps.add(new TranslatableComponent("solarcraft.divine_armor").withStyle(ChatFormatting.GOLD));
+        cmps.add(Component.translatable("solarcraft.divine_armor").withStyle(ChatFormatting.GOLD));
         if (stack.getItem() instanceof IRunicEnergyUser item){
             ItemRunicEnergy.addRunicEnergyTextComponents(stack,item,cmps);
         }

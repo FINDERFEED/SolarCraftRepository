@@ -12,7 +12,7 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
@@ -139,7 +139,7 @@ public class SolarLexiconContainer extends AbstractContainerMenu {
 
         @Override
         public Component getDisplayName() {
-            return new TranslatableComponent("");
+            return Component.translatable("");
         }
 
         @Nullable

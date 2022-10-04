@@ -25,11 +25,11 @@ import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Items;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.Component;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL11;
 
@@ -79,7 +79,7 @@ public class SolarLexiconScreen extends Screen implements IScrollable,PostRender
 
     private List<Runnable> postRender = new ArrayList<>();
     public SolarLexiconScreen() {
-        super(new TextComponent("screen_solar_lexicon"));
+        super(Component.literal("screen_solar_lexicon"));
         this.width = 256;
         this.height = 256;
     }
@@ -185,7 +185,7 @@ public class SolarLexiconScreen extends Screen implements IScrollable,PostRender
 
         currentText = "Select Progression";
 
-        currAch = new TextComponent("");
+        currAch = Component.literal("");
         int offsetX = 0;
         int offsetY = 0;
 
@@ -218,14 +218,14 @@ public class SolarLexiconScreen extends Screen implements IScrollable,PostRender
             TextComponent afterText;
             boolean g = Helpers.canPlayerUnlock(a,player);
             if (Helpers.hasPlayerCompletedProgression(a,player)){
-                preText = new TextComponent(a.getPretext().getString());
-                afterText = new TextComponent(a.afterText.getString());
+                preText = Component.literal(a.getPretext().getString());
+                afterText = Component.literal(a.afterText.getString());
             }else if (g){
-                preText = new TextComponent(a.getPretext().getString());
-                afterText = new TextComponent("???");
+                preText = Component.literal(a.getPretext().getString());
+                afterText = Component.literal("???");
             }else{
-                afterText = new TextComponent("???");
-                preText = new TextComponent("???");
+                afterText = Component.literal("???");
+                preText = Component.literal("???");
             }
             Collection<Progression> parents = ProgressionTree.INSTANCE.getProgressionRequirements(a);
             AnimatedTooltip tooltip = new BlackBackgroundTooltip(-1000,-1000,relX + 230,relY + 200,7,5)
@@ -253,7 +253,7 @@ public class SolarLexiconScreen extends Screen implements IScrollable,PostRender
                     .nextLine()
                     .addComponent(new EmptySpaceComponent(0,5))
                     .nextLine()
-                    .addComponent(new FDTextComponent(ContentAlignment.NO_ALIGNMENT,20,0).setText(new TextComponent("Parent progressions:"),0xffffff).setInnerBorder(3))
+                    .addComponent(new FDTextComponent(ContentAlignment.NO_ALIGNMENT,20,0).setText(Component.literal("Parent progressions:"),0xffffff).setInnerBorder(3))
                     .addComponent(new CustomRenderComponent(ContentAlignment.NO_ALIGNMENT,16,16,(matrices,x,y,pTicks,mouseX,mouseY,ticker,animationLength)->{
                         if (!parents.isEmpty()) {
                             RenderSystem.disableDepthTest();
@@ -286,7 +286,7 @@ public class SolarLexiconScreen extends Screen implements IScrollable,PostRender
         }
                                                             //nice
         this.info = new InfoButton(relX + 206 + 35,relY + 69 + 15 + 20,13,13,(button,matrices,mx,my)->{
-            renderTooltip(matrices,font.split(new TranslatableComponent("solarcraft.solar_lexicon_screen_info"),200),mx,my);
+            renderTooltip(matrices,font.split(Component.translatable("solarcraft.solar_lexicon_screen_info"),200),mx,my);
         });
 
         addRenderableWidget(this.info);

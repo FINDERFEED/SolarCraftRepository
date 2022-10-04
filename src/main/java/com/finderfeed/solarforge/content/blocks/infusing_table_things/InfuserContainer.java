@@ -4,7 +4,7 @@ import com.finderfeed.solarforge.helpers.Helpers;
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.custom_slots.OutputSlot;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
@@ -116,7 +116,7 @@ public class InfuserContainer extends AbstractContainerMenu {
 
         @Override
         public Component getDisplayName() {
-            return new TextComponent("");
+            return Component.literal("");
         }
 
         @Nullable

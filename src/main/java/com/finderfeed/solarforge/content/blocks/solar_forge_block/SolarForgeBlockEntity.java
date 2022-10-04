@@ -17,7 +17,7 @@ import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 
 public class SolarForgeBlockEntity extends RandomizableContainerBlockEntity  {
     public int SOLAR_ENERGY_LEVEL = 0;
@@ -35,7 +35,7 @@ public class SolarForgeBlockEntity extends RandomizableContainerBlockEntity  {
     }
     @Override
     protected Component getDefaultName() {
-        return new TranslatableComponent("container.solarforge");
+        return Component.translatable("container.solarforge");
     }
 
     @Override

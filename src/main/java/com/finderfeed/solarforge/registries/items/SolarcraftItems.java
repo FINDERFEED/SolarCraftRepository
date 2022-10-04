@@ -23,7 +23,7 @@ import com.finderfeed.solarforge.registries.blocks.SolarcraftBlocks;
 import com.finderfeed.solarforge.content.items.solar_lexicon.SolarLexicon;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EquipmentSlot;
 
@@ -264,7 +264,7 @@ public class SolarcraftItems {
     public static final RegistryObject<Item> REACH_GLOVES = ITEMS.register("gloves_of_reach",()->new SolarcraftItem(new Item.Properties().tab(SolarForge.SOLAR_GROUP_TOOLS).stacksTo(1),()->AncientFragment.GLOVES_OF_REACH){
         @Override
         public void appendHoverText(ItemStack p_41421_, @Nullable Level p_41422_, List<Component> text, TooltipFlag p_41424_) {
-            text.add(new TranslatableComponent("gloves_of_reach_active").withStyle(ChatFormatting.GOLD));
+            text.add(Component.translatable("gloves_of_reach_active").withStyle(ChatFormatting.GOLD));
             super.appendHoverText(p_41421_, p_41422_, text, p_41424_);
         }
     });

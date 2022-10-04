@@ -7,8 +7,8 @@ import com.finderfeed.solarforge.packet_handler.packets.TakeEnergyFromForgePacke
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.Component;
@@ -44,15 +44,15 @@ public class SolarForgeScreen extends AbstractContainerScreen<SolarForgeContaine
         int i = (this.width - this.imageWidth) / 2;
         int j = (this.height - this.imageHeight) / 2;
 
-        addRenderableWidget(new SolarForgeButton(i + 186, j + 32, 65, 15, new TranslatableComponent("forge.take"),(button)->{
+        addRenderableWidget(new SolarForgeButton(i + 186, j + 32, 65, 15, Component.translatable("forge.take"),(button)->{
             SolarForgePacketHandler.INSTANCE.sendToServer(new TakeEnergyFromForgePacket(this.menu.te.getBlockPos()));
         },(button,matrices,mousex,mousey)->{
-            renderTooltip(matrices, List.of(new TextComponent("Consume energy. Abilities were moved to separate screen"),
-                    new TextComponent("look into hotkey settings.")
+            renderTooltip(matrices, List.of(Component.literal("Consume energy. Abilities were moved to separate screen"),
+                    Component.literal("look into hotkey settings.")
                     ), Optional.empty(),mousex,mousey);
 
         }));
-//        addRenderableWidget(new SolarForgeButton(i + 186, j + 10, 65, 15, new TextComponent("Fireball"), button -> SolarForgePacketHandler.INSTANCE.sendToServer(new AbilityBuyPacket("fireball",this.menu.te.getBlockPos(),15000)),
+//        addRenderableWidget(new SolarForgeButton(i + 186, j + 10, 65, 15, Component.literal("Fireball"), button -> SolarForgePacketHandler.INSTANCE.sendToServer(new AbilityBuyPacket("fireball",this.menu.te.getBlockPos(),15000)),
 //                (button, matrices, p_onTooltip_3_, p_onTooltip_4_) ->{
 //            ClientHelpers.bindText(new ResourceLocation("solarforge","textures/gui/tooltips_solarforge.png"));
 //            blit(matrices,i,j-38,100,0,0,38,38,256,256);
@@ -60,7 +60,7 @@ public class SolarForgeScreen extends AbstractContainerScreen<SolarForgeContaine
 //            drawString(matrices, Minecraft.getInstance().font, "Lets you launch Fireballs",i+39 ,j -21,0xffffff);
 //            drawString(matrices, Minecraft.getInstance().font, "Cost:15000.Manacost:50",i+39 ,j -12,0xffffff);
 //        }));
-//        addRenderableWidget(new SolarForgeButton(i + 186, j + 26, 65, 15, new TextComponent("Lightning"), button -> SolarForgePacketHandler.INSTANCE.sendToServer(new AbilityBuyPacket("lightning",this.menu.te.getBlockPos(),20000)),(button, matrices, p_onTooltip_3_, p_onTooltip_4_) ->
+//        addRenderableWidget(new SolarForgeButton(i + 186, j + 26, 65, 15, Component.literal("Lightning"), button -> SolarForgePacketHandler.INSTANCE.sendToServer(new AbilityBuyPacket("lightning",this.menu.te.getBlockPos(),20000)),(button, matrices, p_onTooltip_3_, p_onTooltip_4_) ->
 //        {
 //            ClientHelpers.bindText(new ResourceLocation("solarforge","textures/gui/tooltips_solarforge.png"));
 //            blit(matrices,i,j-38,100,38,0,38,38,256,256);
@@ -68,7 +68,7 @@ public class SolarForgeScreen extends AbstractContainerScreen<SolarForgeContaine
 //            drawString(matrices, Minecraft.getInstance().font, "Lets you cast Lightnings",i+39 ,j -21,0xffffff);
 //            drawString(matrices, Minecraft.getInstance().font, "Cost:20000.Manacost:50",i+39 ,j -12,0xffffff);
 //        }));
-//        addRenderableWidget(new SolarForgeButton(i + 186, j + 42, 65, 15, new TextComponent("Disarm"), button -> SolarForgePacketHandler.INSTANCE.sendToServer(new AbilityBuyPacket("solar_stun",this.menu.te.getBlockPos(),20000)),(button, matrices, p_onTooltip_3_, p_onTooltip_4_) ->
+//        addRenderableWidget(new SolarForgeButton(i + 186, j + 42, 65, 15, Component.literal("Disarm"), button -> SolarForgePacketHandler.INSTANCE.sendToServer(new AbilityBuyPacket("solar_stun",this.menu.te.getBlockPos(),20000)),(button, matrices, p_onTooltip_3_, p_onTooltip_4_) ->
 //        {
 //            ClientHelpers.bindText(new ResourceLocation("solarforge","textures/gui/tooltips_solarforge.png"));
 //            blit(matrices,i,j-38,100,76,0,38,38,256,256);
@@ -76,7 +76,7 @@ public class SolarForgeScreen extends AbstractContainerScreen<SolarForgeContaine
 //            drawString(matrices, Minecraft.getInstance().font, "Affected enemies dont deal damage",i+39 ,j -21,0xffffff);
 //            drawString(matrices, Minecraft.getInstance().font, "8 block radius.Cost:20000.Manacost:300",i+39 ,j -12,0xffffff);
 //        }));
-//        addRenderableWidget(new SolarForgeButton(i + 186, j + 58, 65, 15, new TextComponent("Solar Strike"), button -> SolarForgePacketHandler.INSTANCE.sendToServer(new AbilityBuyPacket("solar_strike",this.menu.te.getBlockPos(),30000)),(button, matrices, p_onTooltip_3_, p_onTooltip_4_) ->
+//        addRenderableWidget(new SolarForgeButton(i + 186, j + 58, 65, 15, Component.literal("Solar Strike"), button -> SolarForgePacketHandler.INSTANCE.sendToServer(new AbilityBuyPacket("solar_strike",this.menu.te.getBlockPos(),30000)),(button, matrices, p_onTooltip_3_, p_onTooltip_4_) ->
 //        {
 //            ClientHelpers.bindText(new ResourceLocation("solarforge","textures/gui/tooltips_solarforge.png"));
 //            blit(matrices,i,j-38,100,114,0,38,38,256,256);
@@ -84,7 +84,7 @@ public class SolarForgeScreen extends AbstractContainerScreen<SolarForgeContaine
 //            drawString(matrices, Minecraft.getInstance().font, "Call down the rage of the sun itself!",i+39 ,j -21,0xffffff);
 //            drawString(matrices, Minecraft.getInstance().font, "Cost:30000.Manacost:1000",i+39 ,j -12,0xffffff);
 //        }));
-//        addRenderableWidget(new SolarForgeButton(i + 186, j + 74, 65, 15, new TextComponent("Meteorite"), button -> SolarForgePacketHandler.INSTANCE.sendToServer(new AbilityBuyPacket("meteorite",this.menu.te.getBlockPos(),27000)),(button, matrices, p_onTooltip_3_, p_onTooltip_4_) ->
+//        addRenderableWidget(new SolarForgeButton(i + 186, j + 74, 65, 15, Component.literal("Meteorite"), button -> SolarForgePacketHandler.INSTANCE.sendToServer(new AbilityBuyPacket("meteorite",this.menu.te.getBlockPos(),27000)),(button, matrices, p_onTooltip_3_, p_onTooltip_4_) ->
 //        {
 //            ClientHelpers.bindText(new ResourceLocation("solarforge","textures/gui/tooltips_solarforge.png"));
 //            blit(matrices,i,j-38,100,152,0,38,38,256,256);
@@ -92,7 +92,7 @@ public class SolarForgeScreen extends AbstractContainerScreen<SolarForgeContaine
 //            drawString(matrices, Minecraft.getInstance().font, "Lets you call down meteorites",i+39 ,j -21,0xffffff);
 //            drawString(matrices, Minecraft.getInstance().font, "Cost:27000.Manacost:500",i+39 ,j -12,0xffffff);
 //        }));
-//        addRenderableWidget(new SolarForgeButton(i + 186, j + 90, 65, 15, new TextComponent("Heal"), button -> SolarForgePacketHandler.INSTANCE.sendToServer(new AbilityBuyPacket("solar_heal",this.menu.te.getBlockPos(),15000)),(button, matrices, p_onTooltip_3_, p_onTooltip_4_) ->
+//        addRenderableWidget(new SolarForgeButton(i + 186, j + 90, 65, 15, Component.literal("Heal"), button -> SolarForgePacketHandler.INSTANCE.sendToServer(new AbilityBuyPacket("solar_heal",this.menu.te.getBlockPos(),15000)),(button, matrices, p_onTooltip_3_, p_onTooltip_4_) ->
 //        {
 //            ClientHelpers.bindText(new ResourceLocation("solarforge","textures/gui/tooltips_solarforge.png"));
 //            blit(matrices,i,j-38,100,190,0,38,38,256,256);
@@ -100,7 +100,7 @@ public class SolarForgeScreen extends AbstractContainerScreen<SolarForgeContaine
 //            drawString(matrices, Minecraft.getInstance().font, "Heals you for 2 hearts",i+39 ,j -21,0xffffff);
 //            drawString(matrices, Minecraft.getInstance().font, "Cost:15000.Manacost:250",i+39 ,j -12,0xffffff);
 //        }));
-//        addRenderableWidget(new SolarForgeButton(i + 186, j + 106, 65, 15, new TextComponent("Alchemist"), button -> SolarForgePacketHandler.INSTANCE.sendToServer(new AbilityBuyPacket("alchemist",this.menu.te.getBlockPos(),25000)),(button, matrices, p_onTooltip_3_, p_onTooltip_4_) ->
+//        addRenderableWidget(new SolarForgeButton(i + 186, j + 106, 65, 15, Component.literal("Alchemist"), button -> SolarForgePacketHandler.INSTANCE.sendToServer(new AbilityBuyPacket("alchemist",this.menu.te.getBlockPos(),25000)),(button, matrices, p_onTooltip_3_, p_onTooltip_4_) ->
 //        {
 //            ClientHelpers.bindText(new ResourceLocation("solarforge","textures/gui/tooltips_solarforge.png"));
 //            blit(matrices,i,j-38,100,0,38,38,38,256,256);
@@ -108,7 +108,7 @@ public class SolarForgeScreen extends AbstractContainerScreen<SolarForgeContaine
 //            drawString(matrices, Minecraft.getInstance().font, "When active, transforms blocks into exp",i+39 ,j -21,0xffffff);
 //            drawString(matrices, Minecraft.getInstance().font, "Cost:25000.Mana/sec:10",i+39 ,j -12,0xffffff);
 //        }));
-//        addRenderableWidget(new SolarForgeButton(i + 186, j + 122, 65, 15, new TextComponent("Dispel"), button -> SolarForgePacketHandler.INSTANCE.sendToServer(new AbilityBuyPacket("solar_dispel",this.menu.te.getBlockPos(),20000)),(button, matrices, p_onTooltip_3_, p_onTooltip_4_) ->
+//        addRenderableWidget(new SolarForgeButton(i + 186, j + 122, 65, 15, Component.literal("Dispel"), button -> SolarForgePacketHandler.INSTANCE.sendToServer(new AbilityBuyPacket("solar_dispel",this.menu.te.getBlockPos(),20000)),(button, matrices, p_onTooltip_3_, p_onTooltip_4_) ->
 //        {
 //            ClientHelpers.bindText(new ResourceLocation("solarforge","textures/gui/tooltips_solarforge.png"));
 //            blit(matrices,i,j-38,100,38,38,38,38,256,256);

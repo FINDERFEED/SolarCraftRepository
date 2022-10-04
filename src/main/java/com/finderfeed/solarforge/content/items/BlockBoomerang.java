@@ -14,7 +14,7 @@ import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.network.chat.Component;
 import net.minecraft.ChatFormatting;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.Level;
 
 import javax.annotation.Nullable;
@@ -52,7 +52,7 @@ public class BlockBoomerang extends SolarcraftItem {
 
     @Override
     public void appendHoverText(ItemStack p_77624_1_, @Nullable Level p_77624_2_, List<Component> p_77624_3_, TooltipFlag p_77624_4_) {
-        p_77624_3_.add(new TranslatableComponent("solarforge.block_boomerang").withStyle(ChatFormatting.GOLD));
+        p_77624_3_.add(Component.translatable("solarforge.block_boomerang").withStyle(ChatFormatting.GOLD));
         super.appendHoverText(p_77624_1_, p_77624_2_, p_77624_3_, p_77624_4_);
     }
 }

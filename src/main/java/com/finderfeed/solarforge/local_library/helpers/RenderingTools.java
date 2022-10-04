@@ -43,7 +43,7 @@ import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
@@ -153,8 +153,8 @@ public class RenderingTools {
                 Gui.drawString(matrices,Minecraft.getInstance().font,str,posx,posy + iter * 9,color);
                 remainingOpenedSymbols -= str.length();
             }else if (remainingOpenedSymbols != 0){
-                Gui.drawString(matrices,Minecraft.getInstance().font,new TextComponent(str.substring(0,remainingOpenedSymbols)).withStyle(ChatFormatting.RESET)
-                        .append(new TextComponent("a").withStyle(ChatFormatting.OBFUSCATED)),posx,posy + iter * 9,color);
+                Gui.drawString(matrices,Minecraft.getInstance().font,Component.literal(str.substring(0,remainingOpenedSymbols)).withStyle(ChatFormatting.RESET)
+                        .append(Component.literal("a").withStyle(ChatFormatting.OBFUSCATED)),posx,posy + iter * 9,color);
                 remainingOpenedSymbols = 0;
             }
             iter++;
@@ -169,8 +169,8 @@ public class RenderingTools {
                 Gui.drawCenteredString(matrices,Minecraft.getInstance().font,str,posx,posy + iter * 9,color);
                 remainingOpenedSymbols -= str.length();
             }else if (remainingOpenedSymbols != 0){
-                Gui.drawCenteredString(matrices,Minecraft.getInstance().font,new TextComponent(str.substring(0,remainingOpenedSymbols)).withStyle(ChatFormatting.RESET)
-                        .append(new TextComponent("a").withStyle(ChatFormatting.OBFUSCATED)),posx,posy + iter * 9,color);
+                Gui.drawCenteredString(matrices,Minecraft.getInstance().font,Component.literal(str.substring(0,remainingOpenedSymbols)).withStyle(ChatFormatting.RESET)
+                        .append(Component.literal("a").withStyle(ChatFormatting.OBFUSCATED)),posx,posy + iter * 9,color);
                 remainingOpenedSymbols = 0;
             }
             iter++;
@@ -225,7 +225,7 @@ public class RenderingTools {
         float energy = (energyAmount / maxEnergy) * k;
         if (!simulate){
             if (isMouseInBorders(mousex,mousey,offsetx,offsety,offsetx + 6,offsety + k)){
-                tooltips.add(new TextComponent(energyAmount + "/" + maxEnergy));
+                tooltips.add(Component.literal(energyAmount + "/" + maxEnergy));
             }
             Gui.fill(matrices,offsetx,offsety  + k,offsetx + 6,(int)(offsety + k - energy),0xffffff00);
         }else{
@@ -685,7 +685,7 @@ public class RenderingTools {
         String s = component.getString();
         if (s.isEmpty()) return;
         if (ticker < s.length()) {
-            Gui.drawString(matrices, Minecraft.getInstance().font, new TextComponent(component.getString().substring(0, ticker))
+            Gui.drawString(matrices, Minecraft.getInstance().font, Component.literal(component.getString().substring(0, ticker))
                     .withStyle(ChatFormatting.RESET).append("a").withStyle(ChatFormatting.OBFUSCATED), x, y, color);
         }else{
             Gui.drawString(matrices, Minecraft.getInstance().font, component.getString(), x, y, color);

@@ -23,7 +23,7 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.phys.Vec2;
 
 import java.util.ArrayList;
@@ -201,8 +201,8 @@ public class RunicTableContainerScreen extends AbstractContainerScreen<RunicTabl
         }
         blit(matrices,relX+a+3,relY+4,0,0,256,256,256,256);
         if (menu.hideRuneButtons){
-            drawCenteredString(matrices,font,new TranslatableComponent("solarcraft.no_fragments_available"),relX+135,relY+40,0xffffff);
-            drawCenteredString(matrices,font,new TranslatableComponent("solarcraft.no_fragments_available2"),relX+135,relY+48,0xffffff);
+            drawCenteredString(matrices,font,Component.translatable("solarcraft.no_fragments_available"),relX+135,relY+40,0xffffff);
+            drawCenteredString(matrices,font,Component.translatable("solarcraft.no_fragments_available2"),relX+135,relY+48,0xffffff);
 
         }else{
             ItemStack stack = menu.inventory.getStackInSlot(0);

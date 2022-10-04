@@ -3,7 +3,7 @@ package com.finderfeed.solarforge.content.items.runic_energy;
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
@@ -83,7 +83,7 @@ public class ItemRunicEnergy {
 
     public static void addRunicEnergyTextComponents(ItemStack stack, IRunicEnergyUser item, List<Component> components){
         for (RunicEnergy.Type type : item.allowedInputs()){
-            components.add(new TextComponent(type.id.toUpperCase(Locale.ROOT) + ": " + getRunicEnergyFromItem(stack,type)  + "/" + item.getMaxRunicEnergyCapacity()).withStyle(ChatFormatting.GOLD));
+            components.add(Component.literal(type.id.toUpperCase(Locale.ROOT) + ": " + getRunicEnergyFromItem(stack,type)  + "/" + item.getMaxRunicEnergyCapacity()).withStyle(ChatFormatting.GOLD));
         }
     }
 

@@ -23,9 +23,9 @@ import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.ChatFormatting;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
@@ -71,8 +71,8 @@ public class SolarCraftCommands {
         if (code.equals("all")){
             for (Progression a : Progression.allProgressions){
                 Helpers.setProgressionCompletionStatus(a,src.getPlayerOrException(),false);
-                src.sendSuccess(new TranslatableComponent("solarcraft.success_revoke")
-                        .append(new TextComponent(" "+a.translation.getString()).withStyle(ChatFormatting.GOLD)),false);
+                src.sendSuccess(Component.translatable("solarcraft.success_revoke")
+                        .append(Component.literal(" "+a.translation.getString()).withStyle(ChatFormatting.GOLD)),false);
             }
             Helpers.updateProgression(src.getPlayerOrException());
 
@@ -87,18 +87,18 @@ public class SolarCraftCommands {
                 }
                 if (flag) {
                     Helpers.setProgressionCompletionStatus(progression, pl, false);
-                    src.sendSuccess(new TranslatableComponent("solarcraft.success_revoke")
-                            .append(new TextComponent(" " + progression.getProgressionCode()).withStyle(ChatFormatting.GOLD)), false);
+                    src.sendSuccess(Component.translatable("solarcraft.success_revoke")
+                            .append(Component.literal(" " + progression.getProgressionCode()).withStyle(ChatFormatting.GOLD)), false);
                     Helpers.updateProgression(src.getPlayerOrException());
                 }else{
-                    src.sendFailure(new TranslatableComponent("solarcraft.failure_revoke"));
+                    src.sendFailure(Component.translatable("solarcraft.failure_revoke"));
 
                 }
             }else {
-                src.sendFailure(new TranslatableComponent("solarcraft.failure_revoke"));
+                src.sendFailure(Component.translatable("solarcraft.failure_revoke"));
             }
         }else {
-            src.sendFailure(new TranslatableComponent("solarcraft.failure_revoke"));
+            src.sendFailure(Component.translatable("solarcraft.failure_revoke"));
         }
         Helpers.forceChunksReload(src.getPlayerOrException());
         return 0;
@@ -110,39 +110,39 @@ public class SolarCraftCommands {
         if (code.equals("all")){
             for (Progression a : Progression.allProgressions){
                 Helpers.setProgressionCompletionStatus(a,src.getPlayerOrException(),true);
-                src.sendSuccess(new TranslatableComponent("solarcraft.success_unlock")
-                        .append(new TextComponent(" "+a.translation.getString()).withStyle(ChatFormatting.GOLD)),false);
+                src.sendSuccess(Component.translatable("solarcraft.success_unlock")
+                        .append(Component.literal(" "+a.translation.getString()).withStyle(ChatFormatting.GOLD)),false);
             }
             Helpers.updateProgression(src.getPlayerOrException());
 
         }else if (progression != null){
             if (Helpers.canPlayerUnlock(progression,pl)){
                 Helpers.setProgressionCompletionStatus(progression,pl,true);
-                src.sendSuccess(new TranslatableComponent("solarcraft.success_unlock")
-                        .append(new TextComponent(" "+ progression.getProgressionCode()).withStyle(ChatFormatting.GOLD)),false);
+                src.sendSuccess(Component.translatable("solarcraft.success_unlock")
+                        .append(Component.literal(" "+ progression.getProgressionCode()).withStyle(ChatFormatting.GOLD)),false);
 
                 Helpers.updateProgression(src.getPlayerOrException());
 
 
             }else {
-                src.sendFailure(new TranslatableComponent("solarcraft.failure_unlock"));
+                src.sendFailure(Component.translatable("solarcraft.failure_unlock"));
             }
         }else {
-            src.sendFailure(new TranslatableComponent("solarcraft.failure_unlock"));
+            src.sendFailure(Component.translatable("solarcraft.failure_unlock"));
         }
         Helpers.forceChunksReload(src.getPlayerOrException());
         return 0;
     }
 
     public static int progressionsHelp(CommandSourceStack src) throws CommandSyntaxException {
-        src.sendSuccess(new TranslatableComponent("solarcraft.gethelpcommand").withStyle(ChatFormatting.GOLD),false);
+        src.sendSuccess(Component.translatable("solarcraft.gethelpcommand").withStyle(ChatFormatting.GOLD),false);
         for (Progression ach : Progression.allProgressions){
 
-            src.sendSuccess(new TextComponent(ach.translation.getString()).withStyle(ChatFormatting.GOLD)
-                    .append(new TextComponent(" -> "+ach.getProgressionCode())).withStyle(ChatFormatting.WHITE),false);
+            src.sendSuccess(Component.literal(ach.translation.getString()).withStyle(ChatFormatting.GOLD)
+                    .append(Component.literal(" -> "+ach.getProgressionCode())).withStyle(ChatFormatting.WHITE),false);
 
         }
-        src.sendSuccess(new TextComponent("all").withStyle(ChatFormatting.GOLD)
+        src.sendSuccess(Component.literal("all").withStyle(ChatFormatting.GOLD)
                 .append(" -> unlocks/revokes all").withStyle(ChatFormatting.WHITE),false);
         return 0;
     }
@@ -154,10 +154,10 @@ public class SolarCraftCommands {
                 RunicEnergy.setEnergy(target, (float)FDMathHelper.clamp(0,amount,10000),t);
                 Helpers.updateRunicEnergyOnClient(t,RunicEnergy.getEnergy(target,t),target);
             }else{
-                stack.sendFailure(new TextComponent("Unknown RE type."));
+                stack.sendFailure(Component.literal("Unknown RE type."));
             }
         }else{
-            stack.sendFailure(new TextComponent("Target is null."));
+            stack.sendFailure(Component.literal("Target is null."));
         }
         return 1;
     }
@@ -178,18 +178,18 @@ public class SolarCraftCommands {
 
 
                         }
-                        src.sendSuccess(new TextComponent("Filled lexicon inventory"),false);
+                        src.sendSuccess(Component.literal("Filled lexicon inventory"),false);
                     }catch (Exception e){
                         e.printStackTrace();
-                        src.sendFailure(new TextComponent("CAUGHT FATAL ERROR DURING COMMAND, STACK TRACE PRINTED"));
+                        src.sendFailure(Component.literal("CAUGHT FATAL ERROR DURING COMMAND, STACK TRACE PRINTED"));
                     }
 
                 });
             }else {
-                src.sendFailure(new TextComponent("Not found inventory"));
+                src.sendFailure(Component.literal("Not found inventory"));
             }
         }else {
-            src.sendFailure(new TextComponent("Solar lexicon not found in main hand"));
+            src.sendFailure(Component.literal("Solar lexicon not found in main hand"));
         }
         return 1;
     }
@@ -199,9 +199,9 @@ public class SolarCraftCommands {
         if (Multiblocks.STRUCTURES.containsKey(id)){
             Multiblocks.STRUCTURES.get(id).placeInWorld(player,player.level,player.getOnPos().above());
 //            Helpers.constructMultiblock(player,Multiblocks.MULTIBLOCKS.get(id));
-            src.sendSuccess(new TextComponent("Constructed!"),false);
+            src.sendSuccess(Component.literal("Constructed!"),false);
         }else{
-            src.sendFailure(new TextComponent("Structure doesnt exist"));
+            src.sendFailure(Component.literal("Structure doesnt exist"));
         }
         return 0;
     }
@@ -228,7 +228,7 @@ class RetainFragments{
                 ProgressionHelper.givePlayerFragment(fragment,player);
             }
         }
-        src.sendSuccess(new TextComponent("Fragments successfully translated from old data to new"),true);
+        src.sendSuccess(Component.literal("Fragments successfully translated from old data to new"),true);
         return 1;
     }
 
@@ -275,14 +275,14 @@ class AchievementsHelp{
     }
 
     public static int getHelp(CommandSourceStack src){
-        src.sendSuccess(new TranslatableComponent("solarcraft.gethelpcommand").withStyle(ChatFormatting.GOLD),false);
+        src.sendSuccess(Component.translatable("solarcraft.gethelpcommand").withStyle(ChatFormatting.GOLD),false);
         for (Progression ach : Progression.allProgressions){
 
-            src.sendSuccess(new TextComponent(ach.translation.getString()).withStyle(ChatFormatting.GOLD)
-                    .append(new TextComponent(" -> "+ach.getProgressionCode())).withStyle(ChatFormatting.WHITE),false);
+            src.sendSuccess(Component.literal(ach.translation.getString()).withStyle(ChatFormatting.GOLD)
+                    .append(Component.literal(" -> "+ach.getProgressionCode())).withStyle(ChatFormatting.WHITE),false);
 
         }
-        src.sendSuccess(new TextComponent("all").withStyle(ChatFormatting.GOLD)
+        src.sendSuccess(Component.literal("all").withStyle(ChatFormatting.GOLD)
                 .append(" -> unlocks all").withStyle(ChatFormatting.WHITE),false);
         return 0;
     }
@@ -305,25 +305,25 @@ class UnlockProgressionsCommand {
             if (code.equals("all")){
                 for (Progression a : Progression.allProgressions){
                     Helpers.setProgressionCompletionStatus(a,src.getPlayerOrException(),true);
-                    src.sendSuccess(new TranslatableComponent("solarcraft.success_unlock")
-                            .append(new TextComponent(" "+a.translation.getString()).withStyle(ChatFormatting.GOLD)),false);
+                    src.sendSuccess(Component.translatable("solarcraft.success_unlock")
+                            .append(Component.literal(" "+a.translation.getString()).withStyle(ChatFormatting.GOLD)),false);
                 }
                 Helpers.updateProgression(src.getPlayerOrException());
 
             }else if (progression != null){
                 if (Helpers.canPlayerUnlock(progression,pl)){
                     Helpers.setProgressionCompletionStatus(progression,pl,true);
-                    src.sendSuccess(new TranslatableComponent("solarcraft.success_unlock")
-                            .append(new TextComponent(" "+ progression.getProgressionCode()).withStyle(ChatFormatting.GOLD)),false);
+                    src.sendSuccess(Component.translatable("solarcraft.success_unlock")
+                            .append(Component.literal(" "+ progression.getProgressionCode()).withStyle(ChatFormatting.GOLD)),false);
 
                     Helpers.updateProgression(src.getPlayerOrException());
 
 
                 }else {
-                    src.sendFailure(new TranslatableComponent("solarcraft.failure_unlock"));
+                    src.sendFailure(Component.translatable("solarcraft.failure_unlock"));
                 }
             }else {
-                src.sendFailure(new TranslatableComponent("solarcraft.failure_unlock"));
+                src.sendFailure(Component.translatable("solarcraft.failure_unlock"));
             }
         Helpers.forceChunksReload(src.getPlayerOrException());
         return 0;
@@ -343,7 +343,7 @@ class refreshAchievements{
             for (Progression ach : Progression.allProgressions){
                 Helpers.setProgressionCompletionStatus(ach,src.getPlayerOrException(),false);
             }
-            src.sendSuccess(new TextComponent("Successfully refreshed all progressions"),false);
+            src.sendSuccess(Component.literal("Successfully refreshed all progressions"),false);
         Helpers.updateProgression(src.getPlayerOrException());
         Helpers.forceChunksReload(src.getPlayerOrException());
         return 0;

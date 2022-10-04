@@ -26,8 +26,8 @@ import net.minecraft.client.sounds.SoundManager;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Block;
 
@@ -53,18 +53,18 @@ public class InfusingRecipeScreen extends Screen {
     private int ticker = 0;
 
     public InfusingRecipeScreen(InfusingRecipe a) {
-        super(new TextComponent(""));
+        super(Component.literal(""));
         this.recipe = List.of(a);
         maxPages = 0;
     }
     public InfusingRecipeScreen(List<InfusingRecipe> a) {
-        super(new TextComponent(""));
+        super(Component.literal(""));
         this.recipe = a;
         maxPages = recipe.size()-1;
     }
 
     public InfusingRecipeScreen(List<InfusingRecipe> a,int page) {
-        super(new TextComponent(""));
+        super(Component.literal(""));
         this.recipe = a;
         maxPages = recipe.size()-1;
         this.currentPage = page;
@@ -105,8 +105,8 @@ public class InfusingRecipeScreen extends Screen {
                     fillItemRators();
                 }
             },(button,matrices,mousex,mousey)->{
-                renderTooltip(matrices,new TextComponent("Next recipe"),mousex,mousey);
-            },new TextComponent("")){
+                renderTooltip(matrices,Component.literal("Next recipe"),mousex,mousey);
+            },Component.literal("")){
                 @Override
                 public void playDownSound(SoundManager manager) {
                     manager.play(SimpleSoundInstance.forUI(SolarcraftSounds.BUTTON_PRESS2.get(),1,1));
@@ -119,8 +119,8 @@ public class InfusingRecipeScreen extends Screen {
                     fillItemRators();
                 }
             },(button,matrices,mousex,mousey)->{
-                renderTooltip(matrices,new TextComponent("Previous recipe"),mousex,mousey);
-            },new TextComponent("")){
+                renderTooltip(matrices,Component.literal("Previous recipe"),mousex,mousey);
+            },Component.literal("")){
                 @Override
                 public void playDownSound(SoundManager manager) {
                     manager.play(SimpleSoundInstance.forUI(SolarcraftSounds.BUTTON_PRESS2.get(),1,1));
@@ -194,7 +194,7 @@ public class InfusingRecipeScreen extends Screen {
         renderItemAndTooltip(currentRecipe.getResultItem().copy(),relX+20,relY+21,mousex,mousey,matrices,true);
 
 
-        drawCenteredString(matrices, minecraft.font,new TextComponent(recipe.get(currentPage).infusingTime / 20 +" ").append(new TranslatableComponent("solarforge.seconds2")),relX+170,relY+25,
+        drawCenteredString(matrices, minecraft.font,Component.literal(recipe.get(currentPage).infusingTime / 20 +" ").append(Component.translatable("solarforge.seconds2")),relX+170,relY+25,
                 SolarLexiconScreen.TEXT_COLOR);
 
 
@@ -218,7 +218,7 @@ public class InfusingRecipeScreen extends Screen {
                         bindTypeTexture(type);
                         blit(matrices, p1, p2, 0, 0, 16, 16, 16, 16);
                         if (RenderingTools.isMouseInBorders(mousex,mousey,p1,p2,p1+ 16,p2 + 16)){
-                            renderTooltip(matrices,new TextComponent(type.id.toUpperCase(Locale.ROOT)).withStyle(ChatFormatting.GOLD),mousex,mousey);
+                            renderTooltip(matrices,Component.literal(type.id.toUpperCase(Locale.ROOT)).withStyle(ChatFormatting.GOLD),mousex,mousey);
                             RenderSystem.enableBlend();
                         }
                         matrices.popPose();

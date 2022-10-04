@@ -3,6 +3,8 @@ package com.finderfeed.solarforge.content.world_generation.structures.maze_key_k
 import com.finderfeed.solarforge.events.other_events.StructurePieces;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.core.Vec3i;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.StructureManager;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.entity.ChestBlockEntity;
@@ -16,7 +18,7 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext;
 import net.minecraft.world.level.levelgen.structure.templatesystem.BlockIgnoreProcessor;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
-import net.minecraft.world.level.levelgen.structure.templatesystem.StructureManager;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
 
 import java.util.Map;
 import java.util.Random;
@@ -27,7 +29,7 @@ public class MazeStructurePieces {
     private static final Map<ResourceLocation, BlockPos> OFFSET = ImmutableMap.of(DUNGEON_PIECE, new BlockPos(0, 1, 0));
 
 
-    public static void start(StructureManager templateManager, BlockPos pos, Rotation rotation, StructurePieceAccessor pieceList, Random random) {
+    public static void start(StructureTemplateManager templateManager, BlockPos pos, Rotation rotation, StructurePieceAccessor pieceList, Random random) {
         int x = pos.getX();
         int z = pos.getZ();
 
@@ -39,12 +41,12 @@ public class MazeStructurePieces {
 
     public static class Piece extends TemplateStructurePiece {
 
-        public Piece( StructureManager templateManagerIn, ResourceLocation resourceLocationIn,Rotation rot, BlockPos pos) {
+        public Piece(StructureTemplateManager templateManagerIn, ResourceLocation resourceLocationIn, Rotation rot, BlockPos pos) {
             super(StructurePieces.DUNGEON_MAZE_PIECE, 0, templateManagerIn, resourceLocationIn, resourceLocationIn.toString(), makeSettings(rot,DUNGEON_PIECE), makePosition(DUNGEON_PIECE,pos,0));
         }
 
         public Piece(  StructurePieceSerializationContext p_163670_,CompoundTag tagCompound) {
-            super(StructurePieces.DUNGEON_MAZE_PIECE, tagCompound, p_163670_.structureManager(), (loc)->{
+            super(StructurePieces.DUNGEON_MAZE_PIECE, tagCompound, p_163670_.structureTemplateManager(), (loc)->{
                 return makeSettings(Rotation.valueOf(tagCompound.getString("Rot")),loc);
             });
         }
@@ -65,9 +67,9 @@ public class MazeStructurePieces {
 //            tag.putString("Template", this.resourceLocation.toString());
             tag.putString("Rot", this.placeSettings.getRotation().name());
         }
-        @Override
-        protected void handleDataMarker(String func, BlockPos pos, ServerLevelAccessor world, Random rnd, BoundingBox box) {
 
+        @Override
+        protected void handleDataMarker(String func, BlockPos pos, ServerLevelAccessor world, RandomSource rnd, BoundingBox box) {
             if ("chest".equals(func)){
                 world.setBlock(pos, Blocks.AIR.defaultBlockState(),3);
                 BlockEntity tile = world.getBlockEntity(pos.below());
@@ -76,5 +78,6 @@ public class MazeStructurePieces {
                 }
             }
         }
+
     }
 }

@@ -23,6 +23,7 @@ import com.finderfeed.solarforge.content.world_generation.structures.blocks.KeyL
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
@@ -127,14 +128,16 @@ public class SolarcraftBlocks {
         }
 
         @Override
-        public boolean isBonemealSuccess(Level level, Random p_57331_, BlockPos p_57332_, BlockState p_57333_) {
+        public boolean isBonemealSuccess(Level p_222583_, RandomSource p_222584_, BlockPos p_222585_, BlockState p_222586_) {
             return false;
         }
 
         @Override
-        public void performBonemeal(ServerLevel p_57320_, Random p_57321_, BlockPos p_57322_, BlockState p_57323_) {
+        public void performBonemeal(ServerLevel p_222578_, RandomSource p_222579_, BlockPos p_222580_, BlockState p_222581_) {
 
         }
+
+
     });
 
 
@@ -161,13 +164,15 @@ public class SolarcraftBlocks {
     public  static  final RegistryObject<Block> WORMHOLE = BLOCKS.register("wormhole",()-> new WormholeBlock(BlockBehaviour.Properties.copy(Blocks.BEDROCK).noCollission()));
     public  static  final RegistryObject<Block> BONEMEALER = BLOCKS.register("bonemealer",()-> new BonemealerBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).sound(SoundType.NETHERITE_BLOCK).noOcclusion()));
     public  static  final RegistryObject<Block> CRYSTALLIZED_RUNIC_ENERGY = BLOCKS.register("crystallized_runic_energy",()-> new CrystalBlock(BlockBehaviour.Properties.copy(Blocks.STONE).sound(SoundType.GLASS).noOcclusion()){
+
         @Override
-        public void animateTick(BlockState state, Level world, BlockPos pos, Random random) {
+        public void animateTick(BlockState p_220827_, Level world, BlockPos pos, RandomSource random) {
             if (random.nextInt(5) == 0) {
                 Vec3 vec = Helpers.randomVector().normalize().multiply(0.5,0.5,0.5);
                 world.addParticle(SolarcraftParticleTypes.CRYSTAL_SPARK_PARTICLE.get(),pos.getX() + 0.5 + vec.x,pos.getY() + 0.5 + vec.y,pos.getZ() + 0.5 + vec.z,0,0,0);
             }
         }
+
     });
     public  static  final RegistryObject<Block> CRYSTAL = BLOCKS.register("crystal",()-> new CrystalBlock(BlockBehaviour.Properties.copy(Blocks.STONE).sound(SoundType.GLASS).noOcclusion()));
     public  static  final RegistryObject<Block> CORRUPTED_STONE = BLOCKS.register("corrupted_stone",()-> new Block(BlockBehaviour.Properties.copy(Blocks.STONE)));

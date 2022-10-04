@@ -10,7 +10,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.ChatFormatting;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.Level;
 
 
@@ -48,7 +48,7 @@ public class QualadiumHoe extends IllidiumHoe{
 
     @Override
     public void appendHoverText(ItemStack item, @Nullable Level world, List<Component> components, TooltipFlag p_77624_4_) {
-        components.add(new TranslatableComponent("solarforge.qualadium_hoe").withStyle(ChatFormatting.GOLD));
+        components.add(Component.translatable("solarforge.qualadium_hoe").withStyle(ChatFormatting.GOLD));
         super.appendHoverText(item, world, components, p_77624_4_);
     }
 }

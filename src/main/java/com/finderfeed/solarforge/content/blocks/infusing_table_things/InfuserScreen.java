@@ -11,7 +11,7 @@ import com.mojang.blaze3d.vertex.*;
 import com.mojang.math.Matrix4f;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.resources.ResourceLocation;
 import com.mojang.math.Vector3f;
@@ -119,7 +119,7 @@ public class InfuserScreen extends AbstractContainerScreen<InfuserContainer> {
                 RenderingTools.fill(matrices,relX + 11 + a,relY + 80,relX + 21 + a,relY + (int)(80 - percentNeeded),1,1,0,1);
             }
             if (RenderingTools.isMouseInBorders(x,y,relX + 11 + a,relY + 80 - 33,relX + 21 + a,relY + 80)){
-                postRender.add(()->renderTooltip(matrices,new TextComponent(tile.energy + "/" + tile.getMaxSolarEnergy()),x,y));
+                postRender.add(()->renderTooltip(matrices,Component.literal(tile.energy + "/" + tile.getMaxSolarEnergy()),x,y));
             }
             RenderingTools.fill(matrices,relX + 11 + a,relY + 80,relX + 21 + a,relY + (int)(80 - percent),1,1,0,1);
         }
@@ -192,7 +192,7 @@ public class InfuserScreen extends AbstractContainerScreen<InfuserContainer> {
             blit(matrices, 0, 0, 0, 0, texturex, 6);
             if (mousex+2 > offsetx && mousex+2 < offsetx + 7 && mousey > offsety-60 && mousey < offsety){
                 postRender.add(()->{
-                    renderTooltip(matrices,new TextComponent((float) energyAmount + "/" + menu.te.getRunicEnergyLimit()),mousex-3,mousey+3);
+                    renderTooltip(matrices,Component.literal((float) energyAmount + "/" + menu.te.getRunicEnergyLimit()),mousex-3,mousey+3);
                 });
             }
         }else{

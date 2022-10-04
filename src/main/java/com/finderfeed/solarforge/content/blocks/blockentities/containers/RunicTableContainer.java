@@ -6,7 +6,7 @@ import com.finderfeed.solarforge.registries.containers.SolarcraftContainers;
 import com.finderfeed.solarforge.registries.items.SolarcraftItems;
 import com.finderfeed.solarforge.content.items.solar_lexicon.unlockables.ProgressionHelper;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.Container;
@@ -114,7 +114,7 @@ public class RunicTableContainer extends AbstractContainerMenu {
 
         @Override
         public Component getDisplayName() {
-            return new TextComponent("");
+            return Component.literal("");
         }
 
         @Nullable

@@ -8,7 +8,7 @@ import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
 import com.finderfeed.solarforge.content.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarforge.content.items.solar_lexicon.unlockables.ProgressionHelper;
 import net.minecraft.ChatFormatting;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.item.Item;
@@ -94,7 +94,7 @@ public class RunicTablePacket extends AbstractPacket {
 
                             Helpers.updateFragmentsOnClient(player);
                         } else {
-                            player.sendMessage(new TextComponent("Couldnt find any unlockable fragment. Tell that to dev if you havent done anything suspicious.").withStyle(ChatFormatting.RED), player.getUUID());
+                            player.sendMessage(Component.literal("Couldnt find any unlockable fragment. Tell that to dev if you havent done anything suspicious.").withStyle(ChatFormatting.RED), player.getUUID());
                         }
                     }
 

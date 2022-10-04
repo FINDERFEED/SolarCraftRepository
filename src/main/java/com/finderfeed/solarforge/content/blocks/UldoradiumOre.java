@@ -22,10 +22,9 @@ import javax.annotation.Nullable;
 
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.OreBlock;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class UldoradiumOre extends OreBlock implements IProgressionBlock {
+public class UldoradiumOre extends Block implements IProgressionBlock {
     public UldoradiumOre(Properties p_i48357_1_) {
         super(p_i48357_1_);
     }

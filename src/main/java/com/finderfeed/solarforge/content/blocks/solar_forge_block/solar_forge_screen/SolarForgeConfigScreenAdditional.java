@@ -14,8 +14,8 @@ import net.minecraft.client.Minecraft;
 
 
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Component;
 
 
 public class SolarForgeConfigScreenAdditional extends ScrollableScreen {
@@ -52,7 +52,7 @@ public class SolarForgeConfigScreenAdditional extends ScrollableScreen {
         this.previousPage = 1;
         int iter = 0;
         for (AbstractAbility ability : AbilitiesRegistry.getAllAbilities()) {
-            addSolarButton(relX + 82,relY + 30,10 + iter * 20,ability.id,new TranslatableComponent("name." + ability.id).getString());
+            addSolarButton(relX + 82,relY + 30,10 + iter * 20,ability.id,Component.translatable("name." + ability.id).getString());
             iter += 1;
         }
     }
@@ -109,7 +109,7 @@ public class SolarForgeConfigScreenAdditional extends ScrollableScreen {
 
 
     public void addSolarButton(int relX, int relY, int offset, String abilityId, String string){
-        addRenderableWidget(new SolarForgeButton(relX + 6, relY-4+offset, 65, 15, new TextComponent(string), button -> {
+        addRenderableWidget(new SolarForgeButton(relX + 6, relY-4+offset, 65, 15, Component.literal(string), button -> {
             SolarForgePacketHandler.INSTANCE.sendToServer(new AbilityIndexSetPacket(ids,abilityId));
             Minecraft.getInstance().setScreen(new SolarForgeAbilityConfigScreen());
         }));

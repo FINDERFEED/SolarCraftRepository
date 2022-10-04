@@ -10,7 +10,7 @@ import net.minecraft.world.entity.player.Player;
 
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.ChatFormatting;
 import net.minecraft.world.level.Level;
 
@@ -37,7 +37,7 @@ public class SolarForgeBlockItem extends SolarcraftBlockItem {
     @Override
     public void appendHoverText(ItemStack p_77624_1_, @Nullable Level p_77624_2_, List<Component> list, TooltipFlag p_77624_4_) {
 
-        list.add(new TextComponent("ALL ENERGY IS LOST WHEN BROKEN!").withStyle(ChatFormatting.RED));
+        list.add(Component.literal("ALL ENERGY IS LOST WHEN BROKEN!").withStyle(ChatFormatting.RED));
         super.appendHoverText(p_77624_1_, p_77624_2_, list, p_77624_4_);
     }
 }

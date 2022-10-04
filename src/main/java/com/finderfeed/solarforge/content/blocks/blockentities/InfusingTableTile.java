@@ -14,7 +14,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -164,21 +164,21 @@ public class InfusingTableTile extends BlockEntity implements OwnedBlock {
                                 this.recipeTrigerred = true;
                                 update();
                             } else {
-                                pl.sendMessage(new TextComponent("Cant start craft, you don't have " + recipe.get().getFragment().getId().toUpperCase(Locale.ROOT) +
+                                pl.sendMessage(Component.literal("Cant start craft, you don't have " + recipe.get().getFragment().getId().toUpperCase(Locale.ROOT) +
                                         " fragment unlocked.").withStyle(ChatFormatting.RED), pl.getUUID());
                             }
                         }catch (Exception e){
-                            pl.sendMessage(new TextComponent("INCORRECT FRAGMENT IN RECIPE "+ recipe.get().getOutput().getDisplayName()+" TELL MOD AUTHOR TO FIX IT").withStyle(ChatFormatting.RED),
+                            pl.sendMessage(Component.literal("INCORRECT FRAGMENT IN RECIPE "+ recipe.get().getOutput().getDisplayName()+" TELL MOD AUTHOR TO FIX IT").withStyle(ChatFormatting.RED),
                                     pl.getUUID());
                         }
                     }else{
-                        pl.sendMessage(new TextComponent("Recipe invalid.").withStyle(ChatFormatting.RED),
+                        pl.sendMessage(Component.literal("Recipe invalid.").withStyle(ChatFormatting.RED),
                                 pl.getUUID());
                     }
 
             }
         }else{
-            pl.sendMessage(new TextComponent("You are not the owner!").withStyle(ChatFormatting.RED),pl.getUUID());
+            pl.sendMessage(Component.literal("You are not the owner!").withStyle(ChatFormatting.RED),pl.getUUID());
         }
         }
 

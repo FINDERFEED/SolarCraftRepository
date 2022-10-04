@@ -19,9 +19,9 @@ import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.ChatFormatting;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.Level;
 
 import javax.annotation.Nullable;
@@ -45,9 +45,9 @@ public class UltraCrossbowItem extends RareSolarcraftItem implements IRunicEnerg
             }
 
             if ((float)(72000-count)/20*DAMAGE_PER_SECOND < 120) {
-                ((Player) player).displayClientMessage(new TextComponent("-" + String.format("%.1f", (float) (72000 - count) / 20 * DAMAGE_PER_SECOND) + "-").withStyle(ChatFormatting.GOLD), true);
+                ((Player) player).displayClientMessage(Component.literal("-" + String.format("%.1f", (float) (72000 - count) / 20 * DAMAGE_PER_SECOND) + "-").withStyle(ChatFormatting.GOLD), true);
             }else{
-                ((Player) player).displayClientMessage(new TextComponent("-" + 120.0 + "-").withStyle(ChatFormatting.GOLD), true);
+                ((Player) player).displayClientMessage(Component.literal("-" + 120.0 + "-").withStyle(ChatFormatting.GOLD), true);
             }
         }
 
@@ -90,7 +90,7 @@ public class UltraCrossbowItem extends RareSolarcraftItem implements IRunicEnerg
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level p_77624_2_, List<Component> components, TooltipFlag p_77624_4_) {
-        components.add(new TranslatableComponent("solarforge.ultra_crossbow").withStyle(ChatFormatting.GOLD));
+        components.add(Component.translatable("solarforge.ultra_crossbow").withStyle(ChatFormatting.GOLD));
         ItemRunicEnergy.addRunicEnergyTextComponents(stack,this,components);
         super.appendHoverText(stack, p_77624_2_, components, p_77624_4_);
     }

@@ -14,7 +14,7 @@ import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.network.chat.Component;
 import net.minecraft.ChatFormatting;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.Level;
 
 import javax.annotation.Nullable;
@@ -50,7 +50,7 @@ public class SolarDiscGunItem extends SolarcraftItem implements IRunicEnergyUser
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level world, List<Component> components, TooltipFlag flag) {
-        components.add(new TranslatableComponent("solar_disk.launcher").withStyle(ChatFormatting.GOLD));
+        components.add(Component.translatable("solar_disk.launcher").withStyle(ChatFormatting.GOLD));
         ItemRunicEnergy.addRunicEnergyTextComponents(stack,this,components);
         super.appendHoverText(stack, world, components, flag);
     }

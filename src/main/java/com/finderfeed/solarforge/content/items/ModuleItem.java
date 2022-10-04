@@ -6,7 +6,7 @@ import com.finderfeed.solarforge.content.items.primitive.solacraft_item_classes.
 import com.finderfeed.solarforge.content.items.solar_lexicon.unlockables.AncientFragment;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
@@ -64,14 +64,14 @@ public class ModuleItem extends SolarcraftItem implements ICustomTooltip {
     @Override
     public void appendHoverText(ItemStack p_41421_, @Nullable Level p_41422_, List<Component> sacredTexts, TooltipFlag p_41424_) {
         if (type == Type.ARMOR){
-            sacredTexts.add(new TranslatableComponent("solarcraft.module_armor").withStyle(ChatFormatting.GOLD));
+            sacredTexts.add(Component.translatable("solarcraft.module_armor").withStyle(ChatFormatting.GOLD));
         }else if(type == Type.SWORDS){
-            sacredTexts.add(new TranslatableComponent("solarcraft.module_swords").withStyle(ChatFormatting.GOLD));
+            sacredTexts.add(Component.translatable("solarcraft.module_swords").withStyle(ChatFormatting.GOLD));
         }else if (type == Type.PICKAXES){
-            sacredTexts.add(new TranslatableComponent("solarcraft.module_pickaxes").withStyle(ChatFormatting.GOLD));
+            sacredTexts.add(Component.translatable("solarcraft.module_pickaxes").withStyle(ChatFormatting.GOLD));
         }
 
-        sacredTexts.add(new TranslatableComponent(subTag).withStyle(ChatFormatting.GOLD));
+        sacredTexts.add(Component.translatable(subTag).withStyle(ChatFormatting.GOLD));
         super.appendHoverText(p_41421_, p_41422_, sacredTexts, p_41424_);
     }
 
@@ -97,7 +97,7 @@ public class ModuleItem extends SolarcraftItem implements ICustomTooltip {
         for (Tags tag : Tags.values()){
             if (stack.getTagElement(tag.tag) != null){
 
-                comp.add(new TranslatableComponent(tag.tag).withStyle(ChatFormatting.GOLD));
+                comp.add(Component.translatable(tag.tag).withStyle(ChatFormatting.GOLD));
             }
         }
     }

@@ -13,7 +13,7 @@ import com.finderfeed.solarforge.packet_handler.packets.RetainFragmentPacket;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.AbstractWidget;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
@@ -21,7 +21,7 @@ import java.util.List;
 
 public class RetainFragmentsScreen extends ScrollableScreen {
 
-    public final TranslatableComponent RETAIN_FRAGMENTS = new TranslatableComponent("solarcraft.retain_fragments");
+    public final TranslatableComponent RETAIN_FRAGMENTS = Component.translatable("solarcraft.retain_fragments");
 
     public final ResourceLocation MAIN_SCREEN = new ResourceLocation(SolarForge.MOD_ID,"textures/gui/stages_page.png");
     public final ResourceLocation BG = new ResourceLocation(SolarForge.MOD_ID,"textures/gui/solar_lexicon_main_page_scrollablep.png");

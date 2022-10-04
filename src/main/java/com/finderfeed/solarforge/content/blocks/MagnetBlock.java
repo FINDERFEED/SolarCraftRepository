@@ -14,7 +14,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.network.chat.Component;
 import net.minecraft.ChatFormatting;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.BlockGetter;
 
 import javax.annotation.Nullable;
@@ -29,7 +29,7 @@ public class MagnetBlock extends Block implements EntityBlock {
 
     @Override
     public void appendHoverText(ItemStack p_190948_1_, @Nullable BlockGetter p_190948_2_, List<Component> p_190948_3_, TooltipFlag p_190948_4_) {
-        p_190948_3_.add(new TranslatableComponent("solarforge.magnet_block").withStyle(ChatFormatting.GOLD));
+        p_190948_3_.add(Component.translatable("solarforge.magnet_block").withStyle(ChatFormatting.GOLD));
         super.appendHoverText(p_190948_1_, p_190948_2_, p_190948_3_, p_190948_4_);
     }
 

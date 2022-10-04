@@ -40,7 +40,7 @@ public abstract class AbstractAbility {
 ////            RUNIC_ENERGY_COST.forEach((type,cost)->{
 ////                if (RunicEnergy.getEnergy(entity,type) < cost){
 ////                    allowed = false;
-////                    entity.sendMessage(new TextComponent("Not enough rune energy: "+ type.id.toUpperCase()),entity.getUUID());
+////                    entity.sendMessage(Component.literal("Not enough rune energy: "+ type.id.toUpperCase()),entity.getUUID());
 ////                }
 ////            });
 ////            if (allowed){

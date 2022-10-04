@@ -18,9 +18,9 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.ChatFormatting;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.Level;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.client.IItemRenderProperties;
@@ -93,12 +93,12 @@ public class ShieldOfSolarGod extends RareSolarcraftShieldItem {
 
     @Override
     public void appendHoverText(ItemStack p_77624_1_, @Nullable Level p_77624_2_, List<Component> p_77624_3_, TooltipFlag p_77624_4_) {
-        p_77624_3_.add(new TranslatableComponent("solarforge.solar_shield_of_god").withStyle(ChatFormatting.GOLD));
-        p_77624_3_.add(new TextComponent("5-10 : 3.5").withStyle(ChatFormatting.GOLD));
-        p_77624_3_.add(new TextComponent("10-15 : 5.5").withStyle(ChatFormatting.GOLD));
-        p_77624_3_.add(new TextComponent("15-20 : 7.5").withStyle(ChatFormatting.GOLD));
-        p_77624_3_.add(new TextComponent("20-30 : 9.5").withStyle(ChatFormatting.GOLD));
-        p_77624_3_.add(new TextComponent("30+ : 12").withStyle(ChatFormatting.GOLD));
+        p_77624_3_.add(Component.translatable("solarforge.solar_shield_of_god").withStyle(ChatFormatting.GOLD));
+        p_77624_3_.add(Component.literal("5-10 : 3.5").withStyle(ChatFormatting.GOLD));
+        p_77624_3_.add(Component.literal("10-15 : 5.5").withStyle(ChatFormatting.GOLD));
+        p_77624_3_.add(Component.literal("15-20 : 7.5").withStyle(ChatFormatting.GOLD));
+        p_77624_3_.add(Component.literal("20-30 : 9.5").withStyle(ChatFormatting.GOLD));
+        p_77624_3_.add(Component.literal("30+ : 12").withStyle(ChatFormatting.GOLD));
         super.appendHoverText(p_77624_1_, p_77624_2_, p_77624_3_, p_77624_4_);
     }
 
@@ -118,7 +118,7 @@ public class ShieldOfSolarGod extends RareSolarcraftShieldItem {
         }else if (usingTime >= 30){
             damage = 12;
         }
-        ((Player)player).displayClientMessage(new TextComponent("-"+ (int) Math.floor((float) (72000 - count) / 20) +"->"+damage+"-").withStyle(ChatFormatting.GOLD),true);
+        ((Player)player).displayClientMessage(Component.literal("-"+ (int) Math.floor((float) (72000 - count) / 20) +"->"+damage+"-").withStyle(ChatFormatting.GOLD),true);
         super.onUsingTick(stack, player, count);
     }
 

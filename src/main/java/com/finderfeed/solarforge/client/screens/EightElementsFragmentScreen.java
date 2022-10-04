@@ -10,7 +10,7 @@ import com.finderfeed.solarforge.content.items.solar_lexicon.screen.SolarLexicon
 import com.finderfeed.solarforge.content.items.solar_lexicon.screen.SolarLexiconScreen;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Items;
 
@@ -53,7 +53,7 @@ public class EightElementsFragmentScreen extends ScreenWithPages{
             int posX = relX+14;
             int posY = relY+100;
 
-            RenderingTools.drawBoundedTextObfuscated(matrices,posX,posY,45,new TranslatableComponent("eight_elements.lore"),stringColor,ticker*4);
+            RenderingTools.drawBoundedTextObfuscated(matrices,posX,posY,45,Component.translatable("eight_elements.lore"),stringColor,ticker*4);
         }else{
             ClientHelpers.bindText(MAIN_SCREEN_2);
             blit(matrices,relX,relY,0,0,256,256,256,256);
@@ -63,8 +63,8 @@ public class EightElementsFragmentScreen extends ScreenWithPages{
 
             int posX = relX+14;
             int posY = relY+82;
-            RenderingTools.drawBoundedTextObfuscated(matrices,posX,posY,45,new TranslatableComponent("solarcraft.rune_element_"+(getCurrentPage()-1)),stringColor,ticker*4);
-//            RenderingTools.drawBoundedText(matrices,posX,posY,45,new TranslatableComponent("solarcraft.rune_element_"+(getCurrentPage()-1)).getString(),stringColor);
+            RenderingTools.drawBoundedTextObfuscated(matrices,posX,posY,45,Component.translatable("solarcraft.rune_element_"+(getCurrentPage()-1)),stringColor,ticker*4);
+//            RenderingTools.drawBoundedText(matrices,posX,posY,45,Component.translatable("solarcraft.rune_element_"+(getCurrentPage()-1)).getString(),stringColor);
         }
 
 

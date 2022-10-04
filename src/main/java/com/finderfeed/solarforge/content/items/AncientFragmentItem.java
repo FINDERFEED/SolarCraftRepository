@@ -18,7 +18,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.ChatFormatting;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.client.IItemRenderProperties;
 
@@ -62,18 +62,18 @@ public class AncientFragmentItem extends Item implements ICustomTooltip {
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> texts, TooltipFlag p_77624_4_) {
         CompoundTag nbt = stack.getTagElement(ProgressionHelper.TAG_ELEMENT);
         if (nbt == null){
-            texts.add(new TranslatableComponent("ancient_frag.no_tag").withStyle(ChatFormatting.GOLD));
+            texts.add(Component.translatable("ancient_frag.no_tag").withStyle(ChatFormatting.GOLD));
         }else{
             AncientFragment frag = AncientFragment.getFragmentByID(nbt.getString(ProgressionHelper.FRAG_ID));
             if (frag != null){
                 if (ClientHelpers.doClientPlayerHasFragment(frag)) {
-                    texts.add(new TranslatableComponent("ancient_frag.fragment_active").withStyle(ChatFormatting.GOLD).append(frag.getTranslation()));
+                    texts.add(Component.translatable("ancient_frag.fragment_active").withStyle(ChatFormatting.GOLD).append(frag.getTranslation()));
                 }else{
-                    texts.add(new TranslatableComponent("ancient_frag.fragment_active").withStyle(ChatFormatting.GOLD).append(frag.getTranslation().withStyle(ChatFormatting.OBFUSCATED)));
+                    texts.add(Component.translatable("ancient_frag.fragment_active").withStyle(ChatFormatting.GOLD).append(frag.getTranslation().withStyle(ChatFormatting.OBFUSCATED)));
 
                 }
             }
-            texts.add(new TranslatableComponent("ancient_frag.has_tag").withStyle(ChatFormatting.GOLD));
+            texts.add(Component.translatable("ancient_frag.has_tag").withStyle(ChatFormatting.GOLD));
         }
 
         super.appendHoverText(stack, level, texts, p_77624_4_);

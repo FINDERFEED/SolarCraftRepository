@@ -16,12 +16,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class InfusingCraftingRecipeSerializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<InfusingCraftingRecipe> {
+public class InfusingCraftingRecipeSerializer  implements RecipeSerializer<InfusingCraftingRecipe> {
 
 
 
     public InfusingCraftingRecipeSerializer(){
-        this.setRegistryName(new ResourceLocation("solarforge","infusing_crafting"));
+//        this.setRegistryName(new ResourceLocation("solarforge","infusing_crafting"));
+
     }
 
     @Override

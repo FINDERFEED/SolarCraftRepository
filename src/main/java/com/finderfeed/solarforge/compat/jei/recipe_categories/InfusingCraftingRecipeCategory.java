@@ -18,7 +18,7 @@ import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.world.item.Item;
@@ -33,7 +33,7 @@ public class InfusingCraftingRecipeCategory implements IRecipeCategory<InfusingC
 
     @Override
     public Component getTitle() {
-        return new TranslatableComponent("block.solarforge.infusing_crafting_table");
+        return Component.translatable("block.solarforge.infusing_crafting_table");
     }
 
     @Override
@@ -75,7 +75,7 @@ public class InfusingCraftingRecipeCategory implements IRecipeCategory<InfusingC
         if (!ProgressionHelper.doPlayerHasFragment(Minecraft.getInstance().player,fragment)){
             RenderingTools.fill(stack,6,6,104,68,0.3f,0,0.45f,1);
             int iter = 0;
-            for (FormattedCharSequence charSequence : Minecraft.getInstance().font.split(new TranslatableComponent("solarcraft.fragment_not_unlocked"),80)) {
+            for (FormattedCharSequence charSequence : Minecraft.getInstance().font.split(Component.translatable("solarcraft.fragment_not_unlocked"),80)) {
                 Gui.drawCenteredString(stack,Minecraft.getInstance().font,charSequence,110/2,74/2 + iter*9 - 14,0xffff00);
                 iter++;
             }

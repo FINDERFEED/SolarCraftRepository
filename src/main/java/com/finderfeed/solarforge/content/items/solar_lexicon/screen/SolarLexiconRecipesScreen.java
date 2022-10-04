@@ -16,8 +16,8 @@ import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Component;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import org.lwjgl.glfw.GLFW;
@@ -117,7 +117,7 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
     }
 
     public SolarLexiconRecipesScreen() {
-        super(new TextComponent(""));
+        super(Component.literal(""));
     }
 
 
@@ -130,7 +130,7 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
         this.relX = (width/scale - 183)/2-30;
         this.relY = (height - 218*scale)/2/scale;
         infoButton = new InfoButton(relX  +206+35,relY + 64,13,13,(btn1, matrices1, mx, my)->{
-            renderTooltip(matrices1,font.split(new TranslatableComponent("solarcraft.recipes_screen_info"),200),mx,my);
+            renderTooltip(matrices1,font.split(Component.translatable("solarcraft.recipes_screen_info"),200),mx,my);
         });
 
         FRAGMENTS.clear();

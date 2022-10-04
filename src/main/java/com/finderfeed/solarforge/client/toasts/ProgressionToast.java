@@ -9,7 +9,7 @@ import net.minecraft.client.gui.components.toasts.Toast;
 import net.minecraft.client.gui.components.toasts.ToastComponent;
 import net.minecraft.resources.ResourceLocation;
 
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 
 public class ProgressionToast implements Toast {
 
@@ -31,7 +31,7 @@ public class ProgressionToast implements Toast {
         gui.blit(matrices, 0, 0, 0, 32, this.width(), this.height());
         mc.getItemRenderer().renderGuiItem(progression.getIcon(),8,8);
         mc.font.draw(matrices, progression.getTranslation(),30,8,0xffffff);
-        mc.font.draw(matrices,new TranslatableComponent("ach.completed"),30,17,0xffffff);
+        mc.font.draw(matrices,Component.translatable("ach.completed"),30,17,0xffffff);
         if (timer <= 5000) {
             return Visibility.SHOW;
         }else{

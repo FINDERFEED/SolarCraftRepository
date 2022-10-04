@@ -1,7 +1,7 @@
 package com.finderfeed.solarforge.content.items.solar_lexicon.unlockables;
 
 import com.finderfeed.solarforge.content.items.solar_lexicon.progressions.Progression;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 
 import javax.annotation.Nullable;
 import java.awt.*;
@@ -74,7 +74,7 @@ public enum BookEntry {
     }
 
     public static TranslatableComponent tx(String a){
-        return new TranslatableComponent(a);
+        return Component.translatable(a);
     }
 
     public static List<BookEntry> nonChildEntries(){

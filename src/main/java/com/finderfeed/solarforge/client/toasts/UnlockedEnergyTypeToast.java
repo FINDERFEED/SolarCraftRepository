@@ -6,7 +6,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.components.toasts.Toast;
 import net.minecraft.client.gui.components.toasts.ToastComponent;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 
 import java.util.Locale;
@@ -28,7 +28,7 @@ public class UnlockedEnergyTypeToast implements Toast {
         Gui.blit(matrices,8,8,0,0,16,16,16,16);
 
         Gui.drawCenteredString(matrices,cmp.getMinecraft().font,type.id.toUpperCase(Locale.ROOT),81,7,0xffffff);
-        Gui.drawCenteredString(matrices,cmp.getMinecraft().font,new TranslatableComponent("solarcraft.energy_type_unlocked"),81,15,0xffffff);
+        Gui.drawCenteredString(matrices,cmp.getMinecraft().font,Component.translatable("solarcraft.energy_type_unlocked"),81,15,0xffffff);
 
 
         if (timer <= 5000) {

@@ -39,7 +39,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.ChatFormatting;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
@@ -416,7 +416,7 @@ public class InfuserTileEntity extends REItemHandlerBlockEntity implements Solar
 
     public void triggerCrafting(Player playerEntity){
         if (getInventory() == null) {
-            playerEntity.sendMessage(new TextComponent("Cant access inventory").withStyle(ChatFormatting.RED),
+            playerEntity.sendMessage(Component.literal("Cant access inventory").withStyle(ChatFormatting.RED),
                     playerEntity.getUUID());
             return;
         }
@@ -425,7 +425,7 @@ public class InfuserTileEntity extends REItemHandlerBlockEntity implements Solar
         try {
             if (recipe.isPresent() && ProgressionHelper.doPlayerHasFragment(playerEntity, AncientFragment.getFragmentByID(recipe.get().fragID))) {
                 if (!this.getItem(outputSlot()).isEmpty()){
-                    playerEntity.sendMessage(new TextComponent("Clear the output slot").withStyle(ChatFormatting.RED),
+                    playerEntity.sendMessage(Component.literal("Clear the output slot").withStyle(ChatFormatting.RED),
                             playerEntity.getUUID());
                     return;
                 }
@@ -440,11 +440,11 @@ public class InfuserTileEntity extends REItemHandlerBlockEntity implements Solar
                             this.level.playSound(null, this.worldPosition, SoundEvents.VILLAGER_NO, SoundSource.AMBIENT, 2, 1);
                         }
                     }else{
-                        playerEntity.sendMessage(new TextComponent("Catalysts don't match the recipe.").withStyle(ChatFormatting.RED),
+                        playerEntity.sendMessage(Component.literal("Catalysts don't match the recipe.").withStyle(ChatFormatting.RED),
                                 playerEntity.getUUID());
                     }
                 }else{
-                    playerEntity.sendMessage(new TextComponent("Structure invalid.").withStyle(ChatFormatting.RED),
+                    playerEntity.sendMessage(Component.literal("Structure invalid.").withStyle(ChatFormatting.RED),
                             playerEntity.getUUID());
                 }
 
@@ -453,18 +453,18 @@ public class InfuserTileEntity extends REItemHandlerBlockEntity implements Solar
                     AncientFragment fragment = AncientFragment.getFragmentByID(recipe.get().fragID);
                     if (fragment != null){
                         if (!ProgressionHelper.doPlayerHasFragment(playerEntity,fragment)){
-                            playerEntity.sendMessage(new TextComponent("Cant start craft, you dont have "+fragment.getTranslation().getString().toUpperCase()+" fragment unlocked.").withStyle(ChatFormatting.RED),
+                            playerEntity.sendMessage(Component.literal("Cant start craft, you dont have "+fragment.getTranslation().getString().toUpperCase()+" fragment unlocked.").withStyle(ChatFormatting.RED),
                                     playerEntity.getUUID());
                         }
                     }
                 }else{
-                    playerEntity.sendMessage(new TextComponent("Recipe invalid").withStyle(ChatFormatting.RED),
+                    playerEntity.sendMessage(Component.literal("Recipe invalid").withStyle(ChatFormatting.RED),
                             playerEntity.getUUID());
                 }
                 this.level.playSound(null, this.worldPosition, SoundEvents.VILLAGER_NO, SoundSource.AMBIENT, 2, 1);
             }
         }catch (NullPointerException e){
-            playerEntity.sendMessage(new TextComponent("INCORRECT FRAGMENT IN RECIPE "+ recipe.get().output.getDisplayName()+" TELL MOD AUTHOR TO FIX IT").withStyle(ChatFormatting.RED),
+            playerEntity.sendMessage(Component.literal("INCORRECT FRAGMENT IN RECIPE "+ recipe.get().output.getDisplayName()+" TELL MOD AUTHOR TO FIX IT").withStyle(ChatFormatting.RED),
                     playerEntity.getUUID());
         }
 

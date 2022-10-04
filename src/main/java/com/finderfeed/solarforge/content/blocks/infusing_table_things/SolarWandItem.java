@@ -33,9 +33,9 @@ import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.ChatFormatting;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
@@ -101,7 +101,7 @@ public class SolarWandItem extends Item implements IRunicEnergyUser {
 
     @Override
     public void appendHoverText(ItemStack p_77624_1_, @Nullable Level p_77624_2_, List<Component> p_77624_3_, TooltipFlag p_77624_4_) {
-        p_77624_3_.add(new TranslatableComponent("solarcraft.solar_wand").withStyle(ChatFormatting.GOLD));
+        p_77624_3_.add(Component.translatable("solarcraft.solar_wand").withStyle(ChatFormatting.GOLD));
         super.appendHoverText(p_77624_1_, p_77624_2_, p_77624_3_, p_77624_4_);
     }
 
@@ -118,7 +118,7 @@ public class SolarWandItem extends Item implements IRunicEnergyUser {
             if (!world.isClientSide){
                 tile.givePlayerEnergy(player,5);
                 RunicEnergy.Type type = tile.getEnergyType();
-                player.displayClientMessage(new TextComponent(type.id.toUpperCase()+" "+RunicEnergy.getEnergy(player,tile.getEnergyType())).withStyle(ChatFormatting.GOLD),true);
+                player.displayClientMessage(Component.literal(type.id.toUpperCase()+" "+RunicEnergy.getEnergy(player,tile.getEnergyType())).withStyle(ChatFormatting.GOLD),true);
                 Helpers.updateRunicEnergyOnClient(type,RunicEnergy.getEnergy(player,type),player);
                 Helpers.fireProgressionEvent(player, Progression.RUNE_ENERGY_CLAIM);
                 if (!RunicEnergy.hasFoundType(player,type)) {

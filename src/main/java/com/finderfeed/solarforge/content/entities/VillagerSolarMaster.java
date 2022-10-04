@@ -13,7 +13,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.Level;
 
 import javax.annotation.Nullable;
@@ -60,10 +60,10 @@ public class VillagerSolarMaster extends PathfinderMob {
             if (Helpers.hasPlayerCompletedProgression(Progression.IMBUED_COLD_STAR, player) &&
                     ((player.getMainHandItem().getItem() == Items.EMERALD) && (player.getMainHandItem().getCount() == player.getMainHandItem().getMaxStackSize()))) {
                 if (TRADED_WITH.contains(player.getUUID())) {
-                    player.sendMessage(new TranslatableComponent("solarcraft.already_traded"), player.getUUID());
+                    player.sendMessage(Component.translatable("solarcraft.already_traded"), player.getUUID());
                     playSound(SoundEvents.VILLAGER_NO,1,1);
                 } else {
-                    player.sendMessage(new TranslatableComponent("solarcraft.use_villager_success"), player.getUUID());
+                    player.sendMessage(Component.translatable("solarcraft.use_villager_success"), player.getUUID());
                     Helpers.fireProgressionEvent(player, Progression.TRADE_FOR_BLUE_GEM);
 
                     playSound(SoundEvents.VILLAGER_YES,1,1);
@@ -74,14 +74,14 @@ public class VillagerSolarMaster extends PathfinderMob {
 
             } else if (Helpers.hasPlayerCompletedProgression(Progression.CRAFT_SOLAR_LENS, player)) {
                 if (TRADED_WITH.contains(player.getUUID())) {
-                    player.sendMessage(new TranslatableComponent("solarcraft.already_traded"), player.getUUID());
+                    player.sendMessage(Component.translatable("solarcraft.already_traded"), player.getUUID());
                     playSound(SoundEvents.VILLAGER_NO,1,1);
                 } else {
-                    player.sendMessage(new TranslatableComponent("solarcraft.bring_emeralds"), player.getUUID());
+                    player.sendMessage(Component.translatable("solarcraft.bring_emeralds"), player.getUUID());
                 }
 
             } else {
-                player.sendMessage(new TranslatableComponent("solarcraft.not_enough_skill"), player.getUUID());
+                player.sendMessage(Component.translatable("solarcraft.not_enough_skill"), player.getUUID());
                 playSound(SoundEvents.VILLAGER_NO,1,1);
             }
 

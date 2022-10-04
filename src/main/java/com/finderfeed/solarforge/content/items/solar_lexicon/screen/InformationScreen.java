@@ -25,7 +25,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.resources.ResourceLocation;
 
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.Component;
 
 
 
@@ -41,19 +41,19 @@ public class InformationScreen extends Screen {
     private AncientFragment fragment;
     private int ticker = 0;
     public InformationScreen(AncientFragment fragment,InfusingRecipeScreen screen) {
-        super(new TextComponent(""));
+        super(Component.literal(""));
         this.screen = screen;
         this.fragment = fragment;
     }
 
     public InformationScreen(AncientFragment fragment,InfusingCraftingRecipeScreen screen) {
-        super(new TextComponent(""));
+        super(Component.literal(""));
         this.screenInfusingCrafting = screen;
         this.fragment = fragment;
     }
 
     public InformationScreen(AncientFragment fragment,CraftingRecipeScreen screen) {
-        super(new TextComponent(""));
+        super(Component.literal(""));
         this.craftingScreen = screen;
         this.fragment = fragment;
     }
@@ -84,14 +84,14 @@ public class InformationScreen extends Screen {
                 Minecraft.getInstance().setScreen(craftingScreen);
             }
         }, i.getDefaultInstance(),0.7f,(buttons,matrices,b,c)->{
-            renderTooltip(matrices,new TextComponent("Crafting Recipe"),b,c);
+            renderTooltip(matrices,Component.literal("Crafting Recipe"),b,c);
         });
         if (screen != null || screenInfusingCrafting != null || craftingScreen != null){
             addRenderableWidget(button);
         }
         addRenderableWidget(new ItemStackTabButton(relX+257 + 3,relY+28,12,12,(buttons)->{minecraft.setScreen(new SolarLexiconRecipesScreen());},
                 Items.CRAFTING_TABLE.getDefaultInstance(),0.7f,(buttons,matrices,b,c)->{
-            renderTooltip(matrices,new TextComponent("Go back"),b,c);
+            renderTooltip(matrices,Component.literal("Go back"),b,c);
         }));
         super.init();
     }

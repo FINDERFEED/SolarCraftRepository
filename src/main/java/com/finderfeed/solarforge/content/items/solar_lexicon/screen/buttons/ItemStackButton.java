@@ -9,7 +9,7 @@ import net.minecraft.client.sounds.SoundManager;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.Component;
 
 public class ItemStackButton extends Button {
 
@@ -19,14 +19,14 @@ public class ItemStackButton extends Button {
     public final float scaleFactor;
 
     public ItemStackButton(int x, int y, int xLoc, int yLoc, OnPress press,ItemStack stack,float scaleFactor) {
-        super(x,y,xLoc,yLoc,new TextComponent(""),press);
+        super(x,y,xLoc,yLoc,Component.literal(""),press);
         this.stack = stack;
         this.scaleFactor = scaleFactor;
     }
 
 
     public ItemStackButton(int x, int y, int xLoc, int yLoc, OnPress press,ItemStack stack,float scaleFactor,Button.OnTooltip tooltip) {
-        super(x,y,xLoc,yLoc,new TextComponent(""),press,tooltip);
+        super(x,y,xLoc,yLoc,Component.literal(""),press,tooltip);
         this.stack = stack;
         this.scaleFactor = scaleFactor;
     }

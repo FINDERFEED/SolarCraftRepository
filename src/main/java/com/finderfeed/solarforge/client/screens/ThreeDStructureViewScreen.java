@@ -22,8 +22,8 @@ import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.sounds.SoundManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.BlockAndTintGetter;
@@ -66,7 +66,7 @@ public class ThreeDStructureViewScreen extends Screen implements IScrollable {
     int relX = 0;
     int relY = 0;
     public ThreeDStructureViewScreen(MultiblockStructure structure) {
-        super(new TextComponent(""));
+        super(Component.literal(""));
         this.struct = structure;
     }
 
@@ -85,18 +85,18 @@ public class ThreeDStructureViewScreen extends Screen implements IScrollable {
         addRenderableWidget(new ImageButton(relX+216,relY,16,16,0,0,0,THREEDSCREENBTN,16,16,(button)->{
             Minecraft.getInstance().setScreen(new StructureScreen(struct));
         },(btn,poseStack,mx,my)->{
-            renderTooltip(poseStack,new TextComponent("2D View"),mx,my);
-        },new TextComponent("2D")){
+            renderTooltip(poseStack,Component.literal("2D View"),mx,my);
+        },Component.literal("2D")){
             @Override
             public void playDownSound(SoundManager p_93665_) {
                 p_93665_.play(SimpleSoundInstance.forUI(SolarcraftSounds.BUTTON_PRESS2.get(),1,1));
             }
         });
-        addRenderableWidget(new SolarForgeButtonYellow(relX + 5,relY + 198,60,16,new TranslatableComponent("solarcraft.visualize"),(btn)->{
+        addRenderableWidget(new SolarForgeButtonYellow(relX + 5,relY + 198,60,16,Component.translatable("solarcraft.visualize"),(btn)->{
             MultiblockVisualizer.setMultiblock(this.struct);
             Minecraft.getInstance().setScreen(null);
         },(btn,matrix,mx,my)->{
-            renderTooltip(matrix,font.split(new TranslatableComponent("solarcraft.visualize_guide"),200),
+            renderTooltip(matrix,font.split(Component.translatable("solarcraft.visualize_guide"),200),
                     mx,my);
         }));
 
@@ -146,7 +146,7 @@ public class ThreeDStructureViewScreen extends Screen implements IScrollable {
         ClientHelpers.bindText(STRUCTURE_GUI);
         blit(matrices,relX,relY,0,0,256,256);
         super.render(matrices, p_96563_, p_96564_, partialTicks);
-        Helpers.drawBoundedText(matrices,relX+14,relY+10,7,new TranslatableComponent("solarcraft.structure."+struct.getId()).getString(),0xffffff);
+        Helpers.drawBoundedText(matrices,relX+14,relY+10,7,Component.translatable("solarcraft.structure."+struct.getId()).getString(),0xffffff);
         matrices.popPose();
 
         matrices.pushPose();

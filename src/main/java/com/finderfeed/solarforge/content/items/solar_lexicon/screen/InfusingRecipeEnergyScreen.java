@@ -15,8 +15,8 @@ import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.sounds.SoundManager;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Items;
 
@@ -38,20 +38,20 @@ public class InfusingRecipeEnergyScreen extends Screen {
     private List<Runnable> postRender = new ArrayList<>();
 
     public InfusingRecipeEnergyScreen(InfusingRecipe recipe) {
-        super(new TextComponent(""));
+        super(Component.literal(""));
         this.recipes = List.of(recipe);
         maxPages = 0;
     }
 
     public InfusingRecipeEnergyScreen(List<InfusingRecipe> recipes) {
-        super(new TextComponent(""));
+        super(Component.literal(""));
         this.recipes = recipes;
         maxPages = recipes.size()-1;
     }
 
 
     public InfusingRecipeEnergyScreen(List<InfusingRecipe> recipes,int currentPage) {
-        super(new TextComponent(""));
+        super(Component.literal(""));
         this.recipes = recipes;
         maxPages = recipes.size()-1;
         this.currentPage = currentPage;
@@ -75,8 +75,8 @@ public class InfusingRecipeEnergyScreen extends Screen {
 
                 }
             },(button,matrices,mousex,mousey)->{
-                renderTooltip(matrices,new TextComponent("Next recipe"),mousex,mousey);
-            },new TextComponent("")){
+                renderTooltip(matrices,Component.literal("Next recipe"),mousex,mousey);
+            },Component.literal("")){
                 @Override
                 public void playDownSound(SoundManager manager) {
                     manager.play(SimpleSoundInstance.forUI(SolarcraftSounds.BUTTON_PRESS2.get(),1,1));
@@ -88,8 +88,8 @@ public class InfusingRecipeEnergyScreen extends Screen {
 
                 }
             },(button,matrices,mousex,mousey)->{
-                renderTooltip(matrices,new TextComponent("Previous recipe"),mousex,mousey);
-            },new TextComponent("")){
+                renderTooltip(matrices,Component.literal("Previous recipe"),mousex,mousey);
+            },Component.literal("")){
                 @Override
                 public void playDownSound(SoundManager manager) {
                     manager.play(SimpleSoundInstance.forUI(SolarcraftSounds.BUTTON_PRESS2.get(),1,1));
@@ -122,7 +122,7 @@ public class InfusingRecipeEnergyScreen extends Screen {
 
         //float percent = (float)recipe.get(currentPage).requriedEnergy / 100000;
         matrices.pushPose();
-        drawCenteredString(matrices,font,new TranslatableComponent("solarcraft.total_energy"),relX+102 + xoffs,relY+126,SolarLexiconScreen.TEXT_COLOR);
+        drawCenteredString(matrices,font,Component.translatable("solarcraft.total_energy"),relX+102 + xoffs,relY+126,SolarLexiconScreen.TEXT_COLOR);
         matrices.popPose();
         matrices.pushPose();
         int iter = 0;
@@ -135,7 +135,7 @@ public class InfusingRecipeEnergyScreen extends Screen {
         fill(matrices,relX+15 + xoffs,relY+93-solaren,relX+25 + xoffs,relY+93,0xddffff00);
         if (RenderingTools.isMouseInBorders(mousex,mousey,relX + 17,relY + 31,relX + 17 + 10,relY + 93)){
             postRender.add(()->{
-               renderTooltip(matrices,new TextComponent(String.valueOf(recipe.requriedEnergy)),mousex,mousey);
+               renderTooltip(matrices,Component.literal(String.valueOf(recipe.requriedEnergy)),mousex,mousey);
             });
         }
         double totalEnergy = recipe.requriedEnergy;
@@ -144,10 +144,10 @@ public class InfusingRecipeEnergyScreen extends Screen {
         }
         int totaltext = Math.round((float)totalEnergy / 900000 * 173);
         fill(matrices,relX+16 + xoffs,relY+145,relX+16+totaltext + xoffs,relY+145+6,0xddffff00);
-        drawString(matrices,font,new TranslatableComponent("solarcraft.total_solar_energy"),relX+16 + xoffs,relY+160,SolarLexiconScreen.TEXT_COLOR);
+        drawString(matrices,font,Component.translatable("solarcraft.total_solar_energy"),relX+16 + xoffs,relY+160,SolarLexiconScreen.TEXT_COLOR);
         drawCenteredString(matrices,font,""+recipe.requriedEnergy,relX+160 + xoffs,relY+161,SolarLexiconScreen.TEXT_COLOR);
 
-        drawString(matrices,font,new TranslatableComponent("solarcraft.total_runic_energy"),relX+16 + xoffs,relY+160+21,SolarLexiconScreen.TEXT_COLOR);
+        drawString(matrices,font,Component.translatable("solarcraft.total_runic_energy"),relX+16 + xoffs,relY+160+21,SolarLexiconScreen.TEXT_COLOR);
         drawCenteredString(matrices,font,""+(int)(totalEnergy-recipe.requriedEnergy),relX+160 + xoffs,relY+161+21,SolarLexiconScreen.TEXT_COLOR);
         matrices.popPose();
         super.render(matrices, mousex, mousey, partialTicks);
@@ -163,7 +163,7 @@ public class InfusingRecipeEnergyScreen extends Screen {
         fill(matrices,offsetx,offsety-xtexture,offsetx+6,offsety,0xddffff00);
         if (RenderingTools.isMouseInBorders(mx,my,offsetx,offsety - 60,offsetx + 6,offsety)){
             postRender.add(()->{
-               renderTooltip(matrices,new TextComponent(String.valueOf(energyCostPerItem)),mx,my);
+               renderTooltip(matrices,Component.literal(String.valueOf(energyCostPerItem)),mx,my);
             });
         }
         matrices.popPose();

@@ -7,7 +7,7 @@ import net.minecraft.world.item.Item;
 
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.ChatFormatting;
 
 public class EnergyMeter extends Item {
@@ -20,7 +20,7 @@ public class EnergyMeter extends Item {
     @Override
     public InteractionResult useOn(UseOnContext ctx) {
         if (!ctx.getLevel().isClientSide && (ctx.getLevel().getBlockEntity(ctx.getClickedPos()) instanceof SolarEnergyContainer container)){
-            ctx.getPlayer().displayClientMessage(new TextComponent("" + container.getSolarEnergy()).withStyle(ChatFormatting.GOLD),true);
+            ctx.getPlayer().displayClientMessage(Component.literal("" + container.getSolarEnergy()).withStyle(ChatFormatting.GOLD),true);
         }
         return InteractionResult.CONSUME;
     }

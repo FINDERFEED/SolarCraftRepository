@@ -21,8 +21,8 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.Property;
@@ -48,7 +48,7 @@ public class StructureScreen extends Screen {
     public  int relX;
     public  int relY;
     public StructureScreen(MultiblockStructure structure) {
-        super(new TextComponent(""));
+        super(Component.literal(""));
         this.structure = structure;
     }
 
@@ -87,8 +87,8 @@ public class StructureScreen extends Screen {
         addRenderableWidget(new ImageButton(relX+216,relY,16,16,0,0,0,THREEDSCREENBTN,16,16,(button)->{
             Minecraft.getInstance().setScreen(new ThreeDStructureViewScreen(structure));
         },(btn,poseStack,mx,my)->{
-            renderTooltip(poseStack,new TextComponent("3D View"),mx,my);
-        },new TextComponent("3D")) {
+            renderTooltip(poseStack,Component.literal("3D View"),mx,my);
+        },Component.literal("3D")) {
             @Override
             public void playDownSound(SoundManager p_93665_) {
                 p_93665_.play(SimpleSoundInstance.forUI(SolarcraftSounds.BUTTON_PRESS2.get(), 1, 1));
@@ -136,8 +136,8 @@ public class StructureScreen extends Screen {
         blit(matrices,relX,relY,0,0,256,256);
 
 
-        drawCenteredString(matrices, minecraft.font,new TextComponent(currentPage+ "/" + structHeightAndPageCount),relX+108,relY+14,0xffffff);
-        Helpers.drawBoundedText(matrices,relX+14,relY+10,7,new TranslatableComponent("solarcraft.structure." + structure.getId()).getString(),0xffffff);
+        drawCenteredString(matrices, minecraft.font,Component.literal(currentPage+ "/" + structHeightAndPageCount),relX+108,relY+14,0xffffff);
+        Helpers.drawBoundedText(matrices,relX+14,relY+10,7,Component.translatable("solarcraft.structure." + structure.getId()).getString(),0xffffff);
 
         for (BlockAndRelxRely obj : structureBlocks.get(currentPage-1)){
             renderItemAndTooltip(obj.block,obj.posx,obj.posy,mousex,mousey,matrices);
@@ -162,9 +162,9 @@ public class StructureScreen extends Screen {
             List<Component> comp = stack.getTooltipLines(Minecraft.getInstance().player, TooltipFlag.Default.NORMAL);
             ArrayList<Component> list = new ArrayList<>(comp);
             if (!toRender.getProperties().isEmpty()){
-                list.add(new TranslatableComponent("blockstate_solarforge.properties").withStyle(ChatFormatting.GOLD));
+                list.add(Component.translatable("blockstate_solarforge.properties").withStyle(ChatFormatting.GOLD));
                 for (Property<?> prop : toRender.getProperties()) {
-                    list.add(new TextComponent(prop.getName() + ": " + toRender.getValue(prop)).withStyle(ChatFormatting.UNDERLINE));
+                    list.add(Component.literal(prop.getName() + ": " + toRender.getValue(prop)).withStyle(ChatFormatting.UNDERLINE));
                 }
             }
 

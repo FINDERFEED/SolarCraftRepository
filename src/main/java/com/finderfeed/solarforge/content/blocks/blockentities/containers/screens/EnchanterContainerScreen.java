@@ -22,8 +22,8 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
@@ -73,14 +73,14 @@ public class EnchanterContainerScreen extends AbstractScrollableContainerScreen<
                     this.selectedLevel = menu.tile.getProcesingEnchantmentLevel();
                 }
             }
-            SolarForgeButtonYellow b = new SolarForgeButtonYellow(relX + 111 ,relY + 60 + iter*16,new TranslatableComponent(e.enchantment().getDescriptionId()),(button)->{
+            SolarForgeButtonYellow b = new SolarForgeButtonYellow(relX + 111 ,relY + 60 + iter*16,Component.translatable(e.enchantment().getDescriptionId()),(button)->{
                 if (!menu.tile.enchantingInProgress()) {
                     this.selectedEnchantment = e;
                     this.selectedLevel = 1;
                 }
             },(btn,matrices,mousex,mousey)->{
                 postRunRender.add(()->{
-                    renderTooltip(matrices,new TranslatableComponent(e.enchantment().getDescriptionId()),mousex,mousey);
+                    renderTooltip(matrices,Component.translatable(e.enchantment().getDescriptionId()),mousex,mousey);
                 });
             });
             postRender.add(b);
@@ -88,18 +88,18 @@ public class EnchanterContainerScreen extends AbstractScrollableContainerScreen<
             iter++;
         }
 
-        Button buttonPlus = new SolarForgeButtonYellow(relX+ 161,relY + 32,15,16,new TextComponent("+"),(btn)->{
+        Button buttonPlus = new SolarForgeButtonYellow(relX+ 161,relY + 32,15,16,Component.literal("+"),(btn)->{
             if (!(selectedLevel + 1 > selectedEnchantment.maxLevel()) && !menu.tile.enchantingInProgress()){
                 selectedLevel++;
             }
         });
-        Button buttonMinus = new SolarForgeButtonYellow(relX+ 111,relY + 32,15,16,new TextComponent("-"),(btn)->{
+        Button buttonMinus = new SolarForgeButtonYellow(relX+ 111,relY + 32,15,16,Component.literal("-"),(btn)->{
             if (!(selectedLevel - 1 < 1) && !menu.tile.enchantingInProgress()){
                 selectedLevel--;
             }
         });
 
-        Button button = new SolarForgeButtonYellow(relX+ 111,relY + 12,new TextComponent("Enchant"),(btn)->{
+        Button button = new SolarForgeButtonYellow(relX+ 111,relY + 12,Component.literal("Enchant"),(btn)->{
             ItemStack stack = menu.tile.getStackInSlot(0);
 
             if (selectedEnchantment != null && stack.canApplyAtEnchantingTable(selectedEnchantment.enchantment())
@@ -115,14 +115,14 @@ public class EnchanterContainerScreen extends AbstractScrollableContainerScreen<
                     if (!menu.tile.enchantingInProgress()) {
                         SolarForgePacketHandler.INSTANCE.sendToServer(new EnchanterPacket(menu.tile.getBlockPos(), selectedEnchantment.enchantment(), selectedLevel));
                     } else {
-                        Minecraft.getInstance().player.displayClientMessage(new TextComponent("Enchanting is already in progress!"), false);
+                        Minecraft.getInstance().player.displayClientMessage(Component.literal("Enchanting is already in progress!"), false);
                     }
                 }else{
-                    Minecraft.getInstance().player.displayClientMessage(new TextComponent("Enchantment is incompatible with other enchantments on this item"),false);
+                    Minecraft.getInstance().player.displayClientMessage(Component.literal("Enchantment is incompatible with other enchantments on this item"),false);
                 }
             }else{
 
-                Minecraft.getInstance().player.displayClientMessage(new TextComponent("Enchantment cannot be applied to this item"),false);
+                Minecraft.getInstance().player.displayClientMessage(Component.literal("Enchantment cannot be applied to this item"),false);
             }
         });
         addRenderableWidget(button);
@@ -174,8 +174,8 @@ public class EnchanterContainerScreen extends AbstractScrollableContainerScreen<
 
             RenderingTools.blitWithBlend(matrices,relX + x - 58 + a,relY + 78 + (16-ytexture),0,196 - ytexture,12,16,256,256,getBlitOffset(),1f);
             if (RenderingTools.isMouseInBorders(mousex,mousey,relX + x - 58,relY + 78,relX + x - 58 + 12,relY + 78 + 16)){
-                rf = ()->renderTooltip(matrices,new TextComponent(type.id.toUpperCase(Locale.ROOT) + ": ").withStyle(ChatFormatting.GOLD)
-                        .append(new TextComponent(menu.tile.getRunicEnergy(type) + "/" + menu.config.getMaxEnchanterRunicEnergyCapacity()).withStyle(ChatFormatting.WHITE)),mousex,mousey);
+                rf = ()->renderTooltip(matrices,Component.literal(type.id.toUpperCase(Locale.ROOT) + ": ").withStyle(ChatFormatting.GOLD)
+                        .append(Component.literal(menu.tile.getRunicEnergy(type) + "/" + menu.config.getMaxEnchanterRunicEnergyCapacity()).withStyle(ChatFormatting.WHITE)),mousex,mousey);
             }
         }
 
@@ -291,7 +291,7 @@ public class EnchanterContainerScreen extends AbstractScrollableContainerScreen<
             blit(matrices, 0, 0, 0, 0, texturex, 6);
             if (mousex > offsetx && mousex < offsetx + 6 && mousey > offsety-60 && mousey < offsety){
                 postRunRender.add(()->{
-                    renderTooltip(matrices,new TextComponent((float) energyAmount + "/" + menu.tile.getRunicEnergyLimit()),mousex-3,mousey+3);
+                    renderTooltip(matrices,Component.literal((float) energyAmount + "/" + menu.tile.getRunicEnergyLimit()),mousex-3,mousey+3);
                 });
             }
         }else{

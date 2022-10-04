@@ -7,7 +7,7 @@ import com.finderfeed.solarforge.helpers.multiblock.Multiblocks;
 import com.finderfeed.solarforge.registries.blocks.SolarcraftBlocks;
 import com.finderfeed.solarforge.registries.tile_entities.SolarcraftTileEntityTypes;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
@@ -58,7 +58,7 @@ public class RadiantPortalCreatorTile extends BlockEntity {
                         entity.changeDimension(destination, RadiantTeleporter.INSTANCE);
                         if (destination.dimension() == EventHandler.RADIANT_LAND_KEY){
                             createWormhole(destination);
-                            entity.sendMessage(new TextComponent("Use wormhole on 1,Y(~120),1 coordinates to return back"),entity.getUUID());
+                            entity.sendMessage(Component.literal("Use wormhole on 1,Y(~120),1 coordinates to return back"),entity.getUUID());
                         }
                     }
                 }

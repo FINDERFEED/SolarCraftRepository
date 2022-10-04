@@ -11,8 +11,8 @@ import com.finderfeed.solarforge.content.items.solar_lexicon.screen.SolarLexicon
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Items;
 
@@ -28,7 +28,7 @@ public class LoreScreen extends Screen {
     private int ticker = 0;
 
     public LoreScreen(TranslatableComponent lore,String image) {
-        super(new TextComponent(""));
+        super(Component.literal(""));
         this.lore = lore;
         this.IMAGE_LOCATION = new ResourceLocation(SolarForge.MOD_ID,"textures/lore_images/"+image+".png");
     }

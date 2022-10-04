@@ -7,8 +7,8 @@ import com.finderfeed.solarforge.registries.items.SolarcraftItems;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -91,12 +91,12 @@ public class ExperienceCrystal extends SolarcraftItem {
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level p_41422_, List<Component> list, TooltipFlag p_41424_) {
-        list.add(new TranslatableComponent("solarforge.experience_crystal_lore").withStyle(ChatFormatting.GOLD));
+        list.add(Component.translatable("solarforge.experience_crystal_lore").withStyle(ChatFormatting.GOLD));
         CompoundTag tag = stack.getTagElement(SolarCraftTags.EXPERIENCE_CRYSTAL_SUBTAG);
         if (tag != null){
             int total = tag.getInt(SolarCraftTags.EXPERIENCE_CRYSTAL_CONTAINED_XP);
-            list.add(new TranslatableComponent("solarforge.experience_crystal_lore2").withStyle(ChatFormatting.GOLD)
-                    .append(new TextComponent(" "+total).withStyle(ChatFormatting.GREEN)));
+            list.add(Component.translatable("solarforge.experience_crystal_lore2").withStyle(ChatFormatting.GOLD)
+                    .append(Component.literal(" "+total).withStyle(ChatFormatting.GREEN)));
         }
         super.appendHoverText(stack, p_41422_, list, p_41424_);
     }

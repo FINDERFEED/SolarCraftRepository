@@ -17,7 +17,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.ChatFormatting;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.Level;
 import net.minecraft.server.level.ServerLevel;
 
@@ -122,26 +122,26 @@ public class SolarGodPickaxe extends RareSolarcraftPickaxe implements ITagUser {
         if ((stack.getTagElement(SolarCraftTags.SOLAR_GOD_PICKAXE_TAG) != null)) {
 
             int level = stack.getTagElement(SolarCraftTags.SOLAR_GOD_PICKAXE_TAG).getInt(SolarCraftTags.SOLAR_GOD_PICKAXE_LEVEL_TAG);
-            text.add(new TranslatableComponent("solarcraft.solar_god_pickaxe_desc").append(String.valueOf(level)).withStyle(ChatFormatting.GOLD));
+            text.add(Component.translatable("solarcraft.solar_god_pickaxe_desc").append(String.valueOf(level)).withStyle(ChatFormatting.GOLD));
             if (level >= 2){
-                text.add(new TranslatableComponent("solarcraft.solar_god_pickaxe_level_2").withStyle(ChatFormatting.GOLD).withStyle(ChatFormatting.ITALIC));
+                text.add(Component.translatable("solarcraft.solar_god_pickaxe_level_2").withStyle(ChatFormatting.GOLD).withStyle(ChatFormatting.ITALIC));
 
             }else{
-                text.add(new TranslatableComponent("solarcraft.solar_god_pickaxe_level_2").withStyle(ChatFormatting.GOLD).withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.STRIKETHROUGH));
+                text.add(Component.translatable("solarcraft.solar_god_pickaxe_level_2").withStyle(ChatFormatting.GOLD).withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.STRIKETHROUGH));
             }
 
             if (level >= 3){
-                text.add(new TranslatableComponent("solarcraft.solar_god_pickaxe_level_3").withStyle(ChatFormatting.GOLD).withStyle(ChatFormatting.ITALIC));
+                text.add(Component.translatable("solarcraft.solar_god_pickaxe_level_3").withStyle(ChatFormatting.GOLD).withStyle(ChatFormatting.ITALIC));
 
             }else{
-                text.add(new TranslatableComponent("solarcraft.solar_god_pickaxe_level_3").withStyle(ChatFormatting.GOLD).withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.STRIKETHROUGH));
+                text.add(Component.translatable("solarcraft.solar_god_pickaxe_level_3").withStyle(ChatFormatting.GOLD).withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.STRIKETHROUGH));
             }
 
             if (level >= 4){
-                text.add(new TranslatableComponent("solarcraft.solar_god_pickaxe_level_4").withStyle(ChatFormatting.GOLD).withStyle(ChatFormatting.ITALIC));
+                text.add(Component.translatable("solarcraft.solar_god_pickaxe_level_4").withStyle(ChatFormatting.GOLD).withStyle(ChatFormatting.ITALIC));
 
             }else{
-                text.add(new TranslatableComponent("solarcraft.solar_god_pickaxe_level_4").withStyle(ChatFormatting.GOLD).withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.STRIKETHROUGH));
+                text.add(Component.translatable("solarcraft.solar_god_pickaxe_level_4").withStyle(ChatFormatting.GOLD).withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.STRIKETHROUGH));
             }
 
 

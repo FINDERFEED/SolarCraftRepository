@@ -16,7 +16,7 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.ChatFormatting;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.Level;
 
 import javax.annotation.Nullable;
@@ -58,7 +58,7 @@ public class QualadiumPickaxe extends IllidiumPickaxe {
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level world, List<Component> components, TooltipFlag p_77624_4_) {
-        components.add(new TranslatableComponent("solarforge.qualadium_pickaxe").withStyle(ChatFormatting.GOLD));
+        components.add(Component.translatable("solarforge.qualadium_pickaxe").withStyle(ChatFormatting.GOLD));
         super.appendHoverText(stack, world, components, p_77624_4_);
     }
 
