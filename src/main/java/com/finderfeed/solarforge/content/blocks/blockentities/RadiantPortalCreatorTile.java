@@ -58,7 +58,7 @@ public class RadiantPortalCreatorTile extends BlockEntity {
                         entity.changeDimension(destination, RadiantTeleporter.INSTANCE);
                         if (destination.dimension() == EventHandler.RADIANT_LAND_KEY){
                             createWormhole(destination);
-                            entity.sendMessage(Component.literal("Use wormhole on 1,Y(~120),1 coordinates to return back"),entity.getUUID());
+                            entity.sendSystemMessage(Component.literal("Use wormhole on 1,Y(~120),1 coordinates to return back"),entity.getUUID());
                         }
                     }
                 }

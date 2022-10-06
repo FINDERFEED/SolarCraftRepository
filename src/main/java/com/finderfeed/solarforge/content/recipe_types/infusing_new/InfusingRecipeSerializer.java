@@ -14,18 +14,18 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.ShapedRecipe;
-import net.minecraftforge.registries.ForgeRegistryEntry;
+
 
 import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class InfusingRecipeSerializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<InfusingRecipe> {
+public class InfusingRecipeSerializer implements RecipeSerializer<InfusingRecipe> {
 
 
 
     public InfusingRecipeSerializer(){
-        this.setRegistryName(new ResourceLocation("solarforge","infusing_new"));
+
     }
 
     @Override

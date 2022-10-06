@@ -6,8 +6,8 @@
       "loot_table_id": "minecraft:chests/stronghold_library"
     }
   ],
-  "count": [
-    2,
-    5
-  ]
+
+    "min":2,
+    "max":5
+
 }

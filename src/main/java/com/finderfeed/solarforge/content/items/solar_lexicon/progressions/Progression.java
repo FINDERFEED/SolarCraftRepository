@@ -80,11 +80,11 @@ public enum Progression {
     public final String str;
     public final int tier;
     public final ItemStack icon;
-    public final TranslatableComponent translation;
+    public final Component translation;
     public final int id;
-    public final TranslatableComponent pretext;
-    public final TranslatableComponent afterText;
-    Progression(String str, int tier, ItemStack icon, TranslatableComponent translation, int id, TranslatableComponent pretext, TranslatableComponent after) {
+    public final Component pretext;
+    public final Component afterText;
+    Progression(String str, int tier, ItemStack icon, Component translation, int id, Component pretext, Component after) {
         this.str = str;
         this.tier = tier;
         this.icon = icon;
@@ -94,7 +94,7 @@ public enum Progression {
         this.afterText = after;
     }
 
-    public TranslatableComponent getPretext() {
+    public Component getPretext() {
         return pretext; }
 
     public String getProgressionCode(){
@@ -110,7 +110,7 @@ public enum Progression {
     public int getId() {
         return id; }
 
-    public TranslatableComponent getTranslation() {
+    public Component getTranslation() {
         return translation;
     }
 

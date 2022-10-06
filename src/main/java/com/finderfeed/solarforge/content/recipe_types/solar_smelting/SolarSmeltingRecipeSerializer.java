@@ -12,15 +12,15 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.core.NonNullList;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.registries.ForgeRegistryEntry;
+
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SolarSmeltingRecipeSerializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<SolarSmeltingRecipe>{
+public class SolarSmeltingRecipeSerializer  implements RecipeSerializer<SolarSmeltingRecipe>{
     public SolarSmeltingRecipeSerializer(){
-        this.setRegistryName(new ResourceLocation("solarforge","solar_smelting"));
+//        this.setRegistryName(new ResourceLocation("solarforge","solar_smelting"));
     }
     //ShapedRecipe.itemFromJson(
     @Override

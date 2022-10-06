@@ -3,6 +3,7 @@ package com.finderfeed.solarforge.content.recipe_types.solar_smelting;
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.misc_things.PhantomInventory;
 
+import com.finderfeed.solarforge.registries.recipe_types.SolarcraftRecipeTypes;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -26,7 +27,7 @@ public class SolarSmeltingRecipe implements Recipe<PhantomInventory> {
     public final ItemStack output;
 
     public final int smeltingTime;
-    public static final SolarSmeltingRecipeSerializer serializer = new SolarSmeltingRecipeSerializer();
+//    public static final SolarSmeltingRecipeSerializer serializer = new SolarSmeltingRecipeSerializer();
     public SolarSmeltingRecipe(ResourceLocation id, List<ItemStack> stacks, ItemStack output, int infusingTime) {
         this.id = id;
         this.stacks = stacks;
@@ -99,11 +100,11 @@ public class SolarSmeltingRecipe implements Recipe<PhantomInventory> {
 
     @Override
     public RecipeSerializer<?> getSerializer() {
-        return serializer;
+        return SolarcraftRecipeTypes.SMELTING_SERIALIZER.get();
     }
 
     @Override
     public RecipeType<?> getType() {
-        return SolarForge.SOLAR_SMELTING;
+        return SolarcraftRecipeTypes.SMELTING.get();
     }
 }

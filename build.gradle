@@ -236,6 +236,8 @@ repositories {
 }
 
 dependencies {
+    compileOnly fg.deobf("mezz.jei:jei-1.19.2-common-api:11.3.0.262")
+
     // compile against the JEI API but do not include it at runtime
     compileOnly fg.deobf("mezz.jei:jei-1.19.2-forge-api:11.3.0.262")
     // at runtime, use the full JEI jar

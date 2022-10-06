@@ -51,8 +51,8 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
-import net.minecraftforge.event.world.BlockEvent;
-import net.minecraftforge.event.world.ExplosionEvent;
+import net.minecraftforge.event.level.BlockEvent;
+import net.minecraftforge.event.level.ExplosionEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -596,11 +596,11 @@ class CancelAttack{
 
     @SubscribeEvent
     public static void cancelCrystalBossAttack(LivingHurtEvent event){
-        if (event.getEntityLiving() instanceof CrystalBossEntity boss){
+        if (event.getEntity() instanceof CrystalBossEntity boss){
             if (boss.isBlockingDamage() && boss.hasEnemiesNearby(true)){
                 event.setCanceled(true);
             }
-        }else if (event.getEntityLiving() instanceof ShieldingCrystalCrystalBoss shield){
+        }else if (event.getEntity() instanceof ShieldingCrystalCrystalBoss shield){
             if (shield.isDeploying()){
                 event.setCanceled(true);
             }
@@ -620,7 +620,7 @@ class AntiCheat{
         if (pl.level.dimension()  == EventHandler.RADIANT_LAND_KEY){
             if (!pl.level.getEntitiesOfClass(LivingEntity.class,CHECK_AABB.move(pl.position()),
                     (l)-> l instanceof CrystalBossEntity || l instanceof RunicElementalBoss).isEmpty()){
-                pl.sendMessage(Component.translatable("player.boss_cant_break_block").withStyle(ChatFormatting.RED),pl.getUUID());
+                pl.sendSystemMessage(Component.translatable("player.boss_cant_break_block").withStyle(ChatFormatting.RED));
                 event.setCanceled(true);
             }
         }
@@ -633,7 +633,7 @@ class AntiCheat{
             if (pl.level.dimension() == EventHandler.RADIANT_LAND_KEY) {
                 if (!pl.level.getEntitiesOfClass(LivingEntity.class, CHECK_AABB.move(pl.position()),
                         (l)-> l instanceof CrystalBossEntity || l instanceof RunicElementalBoss).isEmpty()) {
-                    pl.sendMessage(Component.translatable("player.boss_cant_place_block").withStyle(ChatFormatting.RED), pl.getUUID());
+                    pl.sendSystemMessage(Component.translatable("player.boss_cant_place_block").withStyle(ChatFormatting.RED));
                     event.setCanceled(true);
                 }
             }
@@ -646,7 +646,7 @@ class AntiCheat{
         if ((player.level.dimension() == EventHandler.RADIANT_LAND_KEY) && EventHandler.ALLOWED_ABILITIES_DURING_BOSSFIGHT.contains(ability)) {
             if (!player.level.getEntitiesOfClass(LivingEntity.class, CHECK_AABB_BIGGER.move(player.position()),
                     (l)-> l instanceof CrystalBossEntity || l instanceof RunicElementalBoss).isEmpty()) {
-                player.sendMessage(Component.translatable("player.cant_use_ability_near_boss").withStyle(ChatFormatting.RED),player.getUUID());
+                player.sendSystemMessage(Component.translatable("player.cant_use_ability_near_boss").withStyle(ChatFormatting.RED));
                 event.setCanceled(true);
             }
         }
@@ -656,12 +656,12 @@ class AntiCheat{
     @SubscribeEvent
     public static void cancelExplosions(ExplosionEvent.Detonate event){
 
-            if (event.getWorld().dimension() == EventHandler.RADIANT_LAND_KEY) {
-                if (!event.getWorld().getEntitiesOfClass(LivingEntity.class, CHECK_AABB.move(event.getExplosion().getPosition()),
+            if (event.getLevel().dimension() == EventHandler.RADIANT_LAND_KEY) {
+                if (!event.getLevel().getEntitiesOfClass(LivingEntity.class, CHECK_AABB.move(event.getExplosion().getPosition()),
                         (l)-> l instanceof CrystalBossEntity || l instanceof RunicElementalBoss).isEmpty()) {
 
 //                    if (ent != null) {
-//                        ent.sendMessage(Component.translatable("player.boss_cant_explode_blocks").withStyle(ChatFormatting.RED), ent.getUUID());
+//                        ent.sendSystemMessage(Component.translatable("player.boss_cant_explode_blocks").withStyle(ChatFormatting.RED), ent.getUUID());
 //
 //                    }
                     event.getExplosion().getToBlow().clear();

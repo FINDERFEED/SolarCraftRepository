@@ -89,7 +89,7 @@ public class InfuserBlock extends RunicEnergySaverBlock implements EntityBlock {
 
                     }
                 }else{
-                    user.sendMessage(Component.literal("You are not the owner!").withStyle(ChatFormatting.RED),user.getUUID());
+                    user.sendSystemMessage(Component.literal("You are not the owner!").withStyle(ChatFormatting.RED),user.getUUID());
                 }
 
             };

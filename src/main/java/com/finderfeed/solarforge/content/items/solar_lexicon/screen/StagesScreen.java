@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class StagesScreen extends ScrollableScreen {
-    public final TranslatableComponent STAGES_CMP = Component.translatable("solarcraft.stages");
+    public final Component STAGES_CMP = Component.translatable("solarcraft.stages");
     public final ResourceLocation FRAME = new ResourceLocation(SolarForge.MOD_ID,"textures/misc/frame.png");
     public final ResourceLocation QMARK = new ResourceLocation(SolarForge.MOD_ID,"textures/misc/question_mark.png");
     public final ResourceLocation MAIN_SCREEN = new ResourceLocation(SolarForge.MOD_ID,"textures/gui/stages_page.png");

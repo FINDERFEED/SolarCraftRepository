@@ -5,7 +5,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.client.IItemRenderProperties;
+import net.minecraftforge.client.extensions.common.IClientItemExtensions;
+
 
 import java.util.function.Consumer;
 
@@ -15,17 +16,17 @@ public class EnergyPylonBlockItem extends BlockItem {
     }
 
     @Override
-    public void initializeClient(Consumer<IItemRenderProperties> consumer) {
+    public void initializeClient(Consumer<IClientItemExtensions> consumer) {
         super.initializeClient(consumer);
         consumer.accept(com.finderfeed.solarforge.content.items.Properties.INSTANCE);
     }
 }
-class Properties implements IItemRenderProperties{
+class Properties implements IClientItemExtensions{
 
     public static Properties INSTANCE = new Properties();
 
     @Override
-    public BlockEntityWithoutLevelRenderer getItemStackRenderer() {
+    public BlockEntityWithoutLevelRenderer getCustomRenderer() {
 
         return new EnergyPylonISTER(Minecraft.getInstance().getBlockEntityRenderDispatcher(),Minecraft.getInstance().getEntityModels());
     }

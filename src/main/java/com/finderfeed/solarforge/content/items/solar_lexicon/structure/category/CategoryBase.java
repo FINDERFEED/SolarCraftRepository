@@ -15,11 +15,11 @@ public enum CategoryBase {
     ENDGAME(tx("solar_category.endgame"),1,6);
     ;
 
-    private final TranslatableComponent translation;
+    private final Component translation;
     private final int widthPriority;
     private final int heightPriority;
 
-    CategoryBase(TranslatableComponent comp,int x,int y){
+    CategoryBase(Component comp,int x,int y){
         this.translation = comp;
         this.widthPriority = x;
         this.heightPriority = y;
@@ -34,10 +34,10 @@ public enum CategoryBase {
         return widthPriority;
     }
 
-    public TranslatableComponent getTranslation() {
+    public Component getTranslation() {
         return translation;
     }
-    public static TranslatableComponent tx(String a){
+    public static Component tx(String a){
         return Component.translatable(a);
     }
     public static CategoryBase getByID(String id){

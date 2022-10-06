@@ -38,6 +38,7 @@ import com.finderfeed.solarforge.content.recipe_types.solar_smelting.SolarSmelti
 import com.finderfeed.solarforge.registries.blocks.SolarcraftBlocks;
 import com.finderfeed.solarforge.registries.containers.SolarcraftContainers;
 import com.finderfeed.solarforge.registries.effects.SolarcraftEffects;
+import com.finderfeed.solarforge.registries.recipe_types.SolarcraftRecipeTypes;
 import com.finderfeed.solarforge.registries.tile_entities.SolarcraftTileEntityTypes;
 import com.finderfeed.solarforge.registries.worldgen.configured.LazyConfiguredFeatures;
 import com.finderfeed.solarforge.registries.items.SolarcraftItems;
@@ -177,9 +178,9 @@ public class SolarForge
     public static final RegistryObject<MenuType<SolarForgeContainer>> SOLAR_FORGE_CONTAINER = CONTAINER_TYPE.register("solarforge_container",()-> IForgeMenuType.create(SolarForgeContainer::new));
     public static final RegistryObject<MenuType<InfuserContainer>> INFUSING_TABLE_CONTAINER = CONTAINER_TYPE.register("infusing_stand_container",()-> IForgeMenuType.create(InfuserContainer::new));
 
-    public static final RecipeType<InfusingCraftingRecipe> INFUSING_CRAFTING_RECIPE_TYPE = new InfusingCraftingRecipeType();
-    public static final RecipeType<InfusingRecipe> INFUSING_RECIPE_TYPE = new InfusingRecipeType();
-    public static final RecipeType<SolarSmeltingRecipe> SOLAR_SMELTING = new SolarSmeltingRecipeType();
+//    public static final RecipeType<InfusingCraftingRecipe> INFUSING_CRAFTING_RECIPE_TYPE = new InfusingCraftingRecipeType();
+//    public static final RecipeType<InfusingRecipe> INFUSING_RECIPE_TYPE = new InfusingRecipeType();
+//    public static final RecipeType<SolarSmeltingRecipe> SOLAR_SMELTING = new SolarSmeltingRecipeType();
     public SolarForge() {
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
         SolarcraftParticleTypes.PARTICLES.register(bus);
@@ -201,6 +202,9 @@ public class SolarForge
         AttributesRegistry.DEF_REG.register(bus);
         FDEntityDataSerializers.DEF_REG.register(bus);
         BiomesRegister.BIOMES.register(bus);
+        FeaturesRegistry.FEATURES.register(bus);
+        SolarcraftRecipeTypes.RECIPE_SERIALIZERS.register(bus);
+        SolarcraftRecipeTypes.RECIPE_TYPES.register(bus);
         SolarcraftGamerules.init();
         // Register the setup method for modloading
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
@@ -212,8 +216,8 @@ public class SolarForge
 
 
 
-        FMLJavaModLoadingContext.get().getModEventBus().addGenericListener(Feature.class,EventPriority.HIGHEST,FeaturesRegistry::registerFeatures);
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(FeaturesRegistry::addCarvableBlocks);
+//        FMLJavaModLoadingContext.get().getModEventBus().addGenericListener(Feature.class,EventPriority.HIGHEST,FeaturesRegistry::registerFeatures);
+//        FMLJavaModLoadingContext.get().getModEventBus().addListener(FeaturesRegistry::addCarvableBlocks);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(FeaturesRegistry::registerConfiguredFeatures);
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, SolarcraftConfig.SPEC,"solarcraft-config.toml");
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, SolarcraftClientConfig.SPEC,"solarcraft-client-config.toml");
@@ -274,16 +278,15 @@ public class SolarForge
             event.put(SolarcraftEntityTypes.CORRUPTION_WISP.get(), CorruptionWisp.createAttributes().build());
         }
 
-        @SubscribeEvent
-        public static void registerRecipeSerializers(RegisterEvent event) {
-            Registry.register(Registry.RECIPE_TYPE, new ResourceLocation(INFUSING_CRAFTING_RECIPE_TYPE.toString()), INFUSING_CRAFTING_RECIPE_TYPE);
-            Registry.register(Registry.RECIPE_TYPE, new ResourceLocation(INFUSING_RECIPE_TYPE.toString()), INFUSING_RECIPE_TYPE);
-            Registry.register(Registry.RECIPE_TYPE, new ResourceLocation(SOLAR_SMELTING.toString()), SOLAR_SMELTING);
-
-
-            event.getForgeRegistry().register(InfusingCraftingRecipe.serializer);
-            event.getForgeRegistry().register(InfusingRecipe.serializer);
-            event.getForgeRegistry().register(SolarSmeltingRecipe.serializer);
-        }
+//        @SubscribeEvent
+//        public static void registerRecipeSerializers(RegisterEvent event) {
+//            Registry.register(Registry.RECIPE_TYPE, new ResourceLocation(INFUSING_CRAFTING_RECIPE_TYPE.toString()), INFUSING_CRAFTING_RECIPE_TYPE);
+//            Registry.register(Registry.RECIPE_TYPE, new ResourceLocation(INFUSING_RECIPE_TYPE.toString()), INFUSING_RECIPE_TYPE);
+//            Registry.register(Registry.RECIPE_TYPE, new ResourceLocation(SOLAR_SMELTING.toString()), SOLAR_SMELTING);
+//
+////            event.getForgeRegistry().register(InfusingCraftingRecipe.serializer);
+////            event.getForgeRegistry().register(InfusingRecipe.serializer);
+////            event.getForgeRegistry().register(SolarSmeltingRecipe.serializer);
+//        }
     }
 }

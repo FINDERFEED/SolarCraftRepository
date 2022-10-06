@@ -184,7 +184,7 @@ public class SolarGodBow extends RareSolarcraftItem implements ITagUser {
         super.appendHoverText(stack, level, comp, p_41424_);
     }
 
-    private void addLevelDesc(ItemStack stack,List<Component> toAdd, TranslatableComponent desc, int reqLevel){
+    private void addLevelDesc(ItemStack stack,List<Component> toAdd, Component desc, int reqLevel){
         if (getLevel(stack) >= reqLevel){
             toAdd.add(desc.withStyle(ChatFormatting.GOLD));
         }else{

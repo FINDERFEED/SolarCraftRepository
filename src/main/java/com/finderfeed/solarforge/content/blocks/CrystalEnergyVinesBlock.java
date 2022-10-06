@@ -33,7 +33,7 @@ public class CrystalEnergyVinesBlock extends Block implements EntityBlock {
                 Helpers.updateTile(tile);
                 SolarForgePacketHandler.INSTANCE.sendTo(new OpenPuzzleScreenPacket(tile),s.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
             }else{
-                player.sendMessage(Component.translatable("solarcraft.failed_to_generate_puzzle"),player.getUUID());
+                player.sendSystemMessage(Component.translatable("solarcraft.failed_to_generate_puzzle"),player.getUUID());
             }
         }
         return InteractionResult.SUCCESS;

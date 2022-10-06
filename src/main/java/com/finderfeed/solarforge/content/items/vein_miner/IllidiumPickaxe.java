@@ -9,7 +9,7 @@ import com.finderfeed.solarforge.content.items.solar_lexicon.unlockables.Ancient
 import com.finderfeed.solarforge.misc_things.RunicEnergy;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.OreBlock;
+
 
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.entity.LivingEntity;
@@ -76,7 +76,7 @@ public class IllidiumPickaxe extends RareSolarcraftPickaxe implements IRunicEner
             poslis.removeIf(posList::contains);
             for (BlockPos a : poslis) {
                 BlockState state = world.getBlockState(a);
-                if (state.getBlock() instanceof OreBlock || state.is(Tags.Blocks.ORES)) {
+                if (state.is(Tags.Blocks.ORES)) {
                     posList.add(a);
                     populateList(a, world, posList, depth + 1);
                 }

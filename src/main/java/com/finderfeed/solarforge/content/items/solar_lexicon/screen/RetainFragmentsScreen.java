@@ -21,7 +21,7 @@ import java.util.List;
 
 public class RetainFragmentsScreen extends ScrollableScreen {
 
-    public final TranslatableComponent RETAIN_FRAGMENTS = Component.translatable("solarcraft.retain_fragments");
+    public final Component RETAIN_FRAGMENTS = Component.translatable("solarcraft.retain_fragments");
 
     public final ResourceLocation MAIN_SCREEN = new ResourceLocation(SolarForge.MOD_ID,"textures/gui/stages_page.png");
     public final ResourceLocation BG = new ResourceLocation(SolarForge.MOD_ID,"textures/gui/solar_lexicon_main_page_scrollablep.png");

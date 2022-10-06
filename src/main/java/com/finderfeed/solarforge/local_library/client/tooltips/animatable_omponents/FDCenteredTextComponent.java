@@ -43,7 +43,7 @@ public class FDCenteredTextComponent extends BaseComponent{
     }
 
 
-    public FDCenteredTextComponent setText(TranslatableComponent component, int textColor){
+    public FDCenteredTextComponent setText(Component component, int textColor){
         this.textColor = textColor;
         this.text = RenderingTools.splitString(component.getString(),this.getXSize());
         this.setYSize(this.text.size()*TEXT_HEIGHT + this.getInnerBorder()*2);
@@ -59,7 +59,7 @@ public class FDCenteredTextComponent extends BaseComponent{
         return this;
     }
 
-    public FDCenteredTextComponent setText(TranslatableComponent component,int forceX, int textColor){
+    public FDCenteredTextComponent setText(Component component,int forceX, int textColor){
         this.textColor = textColor;
         this.text = RenderingTools.splitString(component.getString(),this.getXSize());
         this.setYSize(this.text.size()*TEXT_HEIGHT + this.getInnerBorder()*2);

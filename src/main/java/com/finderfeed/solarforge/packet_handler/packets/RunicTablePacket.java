@@ -94,7 +94,7 @@ public class RunicTablePacket extends AbstractPacket {
 
                             Helpers.updateFragmentsOnClient(player);
                         } else {
-                            player.sendMessage(Component.literal("Couldnt find any unlockable fragment. Tell that to dev if you havent done anything suspicious.").withStyle(ChatFormatting.RED), player.getUUID());
+                            player.sendSystemMessage(Component.literal("Couldnt find any unlockable fragment. Tell that to dev if you havent done anything suspicious.").withStyle(ChatFormatting.RED), player.getUUID());
                         }
                     }
 

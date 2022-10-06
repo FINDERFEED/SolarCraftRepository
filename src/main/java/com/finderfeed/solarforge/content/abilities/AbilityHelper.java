@@ -25,7 +25,7 @@ public class AbilityHelper {
         for (RunicEnergy.Type type : ability.getCost().getSetTypes()){
             float amount = RunicEnergy.getEnergy(player,type);
             if (amount < ability.getCost().get(type)){
-                player.sendMessage(Component.translatable("solarcraft.not_enought_runic_energy")
+                player.sendSystemMessage(Component.translatable("solarcraft.not_enought_runic_energy")
                         .append(Component.literal(" " + type.id.toUpperCase(Locale.ROOT) + ", "))
                         .append(Component.translatable("solarcraft.not_enought_runic_energy_needed"))
                         .append(ability.getCost().get(type) + ""),player.getUUID());

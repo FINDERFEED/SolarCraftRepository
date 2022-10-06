@@ -416,7 +416,7 @@ public class InfuserTileEntity extends REItemHandlerBlockEntity implements Solar
 
     public void triggerCrafting(Player playerEntity){
         if (getInventory() == null) {
-            playerEntity.sendMessage(Component.literal("Cant access inventory").withStyle(ChatFormatting.RED),
+            playerEntity.sendSystemMessage(Component.literal("Cant access inventory").withStyle(ChatFormatting.RED),
                     playerEntity.getUUID());
             return;
         }
@@ -425,7 +425,7 @@ public class InfuserTileEntity extends REItemHandlerBlockEntity implements Solar
         try {
             if (recipe.isPresent() && ProgressionHelper.doPlayerHasFragment(playerEntity, AncientFragment.getFragmentByID(recipe.get().fragID))) {
                 if (!this.getItem(outputSlot()).isEmpty()){
-                    playerEntity.sendMessage(Component.literal("Clear the output slot").withStyle(ChatFormatting.RED),
+                    playerEntity.sendSystemMessage(Component.literal("Clear the output slot").withStyle(ChatFormatting.RED),
                             playerEntity.getUUID());
                     return;
                 }
@@ -440,11 +440,11 @@ public class InfuserTileEntity extends REItemHandlerBlockEntity implements Solar
                             this.level.playSound(null, this.worldPosition, SoundEvents.VILLAGER_NO, SoundSource.AMBIENT, 2, 1);
                         }
                     }else{
-                        playerEntity.sendMessage(Component.literal("Catalysts don't match the recipe.").withStyle(ChatFormatting.RED),
+                        playerEntity.sendSystemMessage(Component.literal("Catalysts don't match the recipe.").withStyle(ChatFormatting.RED),
                                 playerEntity.getUUID());
                     }
                 }else{
-                    playerEntity.sendMessage(Component.literal("Structure invalid.").withStyle(ChatFormatting.RED),
+                    playerEntity.sendSystemMessage(Component.literal("Structure invalid.").withStyle(ChatFormatting.RED),
                             playerEntity.getUUID());
                 }
 
@@ -453,18 +453,18 @@ public class InfuserTileEntity extends REItemHandlerBlockEntity implements Solar
                     AncientFragment fragment = AncientFragment.getFragmentByID(recipe.get().fragID);
                     if (fragment != null){
                         if (!ProgressionHelper.doPlayerHasFragment(playerEntity,fragment)){
-                            playerEntity.sendMessage(Component.literal("Cant start craft, you dont have "+fragment.getTranslation().getString().toUpperCase()+" fragment unlocked.").withStyle(ChatFormatting.RED),
+                            playerEntity.sendSystemMessage(Component.literal("Cant start craft, you dont have "+fragment.getTranslation().getString().toUpperCase()+" fragment unlocked.").withStyle(ChatFormatting.RED),
                                     playerEntity.getUUID());
                         }
                     }
                 }else{
-                    playerEntity.sendMessage(Component.literal("Recipe invalid").withStyle(ChatFormatting.RED),
+                    playerEntity.sendSystemMessage(Component.literal("Recipe invalid").withStyle(ChatFormatting.RED),
                             playerEntity.getUUID());
                 }
                 this.level.playSound(null, this.worldPosition, SoundEvents.VILLAGER_NO, SoundSource.AMBIENT, 2, 1);
             }
         }catch (NullPointerException e){
-            playerEntity.sendMessage(Component.literal("INCORRECT FRAGMENT IN RECIPE "+ recipe.get().output.getDisplayName()+" TELL MOD AUTHOR TO FIX IT").withStyle(ChatFormatting.RED),
+            playerEntity.sendSystemMessage(Component.literal("INCORRECT FRAGMENT IN RECIPE "+ recipe.get().output.getDisplayName()+" TELL MOD AUTHOR TO FIX IT").withStyle(ChatFormatting.RED),
                     playerEntity.getUUID());
         }
 

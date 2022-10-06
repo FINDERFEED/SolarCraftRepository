@@ -51,7 +51,7 @@ public class EnchanterBlock extends RunicEnergySaverBlock implements EntityBlock
                         buf.writeUtf(configString);
                     });
                 }else {
-                    player.sendMessage(Component.literal("You are not the owner!").withStyle(ChatFormatting.RED),player.getUUID());
+                    player.sendSystemMessage(Component.literal("You are not the owner!").withStyle(ChatFormatting.RED),player.getUUID());
                 }
                 return InteractionResult.SUCCESS;
             }

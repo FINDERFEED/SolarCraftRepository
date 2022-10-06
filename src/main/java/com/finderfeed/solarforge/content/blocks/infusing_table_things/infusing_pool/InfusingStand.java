@@ -16,7 +16,8 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.event.world.BlockEvent;
+import net.minecraftforge.event.level.BlockEvent;
+
 
 import javax.annotation.Nullable;
 
@@ -105,6 +106,7 @@ public class InfusingStand extends Block implements EntityBlock {
     }
 
     public static void placeBlockEvent(final BlockEvent.EntityPlaceEvent event){
+
 
         if ((event.getPlacedAgainst().getBlock() instanceof InfusingStand) && event.getEntity() instanceof Player){
             if (!((Player)(event.getEntity())).isCrouching()) {

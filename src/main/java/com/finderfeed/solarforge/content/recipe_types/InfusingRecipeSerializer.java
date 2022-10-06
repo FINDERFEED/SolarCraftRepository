@@ -10,17 +10,16 @@ import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.registries.ForgeRegistryEntry;
+
 
 import javax.annotation.Nullable;
 import java.util.Map;
 
-public class InfusingRecipeSerializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<OldInfusingRecipe> {
+public class InfusingRecipeSerializer implements RecipeSerializer<OldInfusingRecipe> {
 
 
 
     public InfusingRecipeSerializer(){
-        this.setRegistryName(new ResourceLocation("solarforge","infusing"));
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.finderfeed.solarforge.content.world_generation.biomes.molten_forest;
 
 import com.finderfeed.solarforge.helpers.Helpers;
 import com.mojang.serialization.Codec;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 
@@ -21,9 +22,10 @@ import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConf
 import java.util.*;
 
 import net.minecraft.world.level.levelgen.structure.templatesystem.BlockIgnoreProcessor;
-import net.minecraft.world.level.levelgen.structure.templatesystem.StructureManager;
+
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
 
 public class MoltenForestAmbience extends Feature<NoneFeatureConfiguration> {
     private static final ResourceLocation TREE = new ResourceLocation("solarforge:worldgen_features/burnt_forest_ambience1");
@@ -39,10 +41,10 @@ public class MoltenForestAmbience extends Feature<NoneFeatureConfiguration> {
 
         BlockPos pos = ctx.origin();
         WorldGenLevel world = ctx.level();
-        Random random = ctx.random();
+        RandomSource random = ctx.random();
 
         Rotation rot = Rotation.getRandom(random);
-        StructureManager manager = world.getLevel().getStructureManager();
+        StructureTemplateManager manager = world.getLevel().getStructureManager();
         List<ResourceLocation> list = new ArrayList<>();
         list.add(TREE);
         list.add(TREE2);

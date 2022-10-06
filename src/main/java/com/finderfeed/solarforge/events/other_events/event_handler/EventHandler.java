@@ -152,7 +152,7 @@ public class EventHandler {
                 if ((world.dimension() == RADIANT_LAND_KEY)) {
 
                     if ((actualtime % 13000 == 0)) {
-                        player.sendMessage(Component.translatable("radiant_dimension.nightfall").withStyle(ChatFormatting.RED), player.getUUID());
+                        player.sendSystemMessage(Component.translatable("radiant_dimension.nightfall").withStyle(ChatFormatting.RED), player.getUUID());
                         ClientHelpers.playsoundInEars(SolarcraftSounds.NIGHT_DIM.get(), 1, 1);
                     } else if ((actualtime % 14400 == 0)) {
 
@@ -387,7 +387,7 @@ public class EventHandler {
 
             if (fragmentItem.getNeededFragment() != null) {
                 if (!ProgressionHelper.doPlayerHasFragment(event.getPlayer(), fragmentItem.getNeededFragment())) {
-                    event.getPlayer().sendMessage(Component.translatable("solarcraft.item_unknown").withStyle(ChatFormatting.RED),event.getPlayer().getUUID());
+                    event.getPlayer().sendSystemMessage(Component.translatable("solarcraft.item_unknown").withStyle(ChatFormatting.RED),event.getPlayer().getUUID());
                     event.setCanceled(true);
                 }
             }
@@ -402,7 +402,7 @@ public class EventHandler {
 
             if (fragmentItem.getNeededFragment() != null) {
                 if (!ProgressionHelper.doPlayerHasFragment(event.getPlayer(), fragmentItem.getNeededFragment())) {
-                    event.getPlayer().sendMessage(Component.translatable("solarcraft.item_unknown").withStyle(ChatFormatting.RED), event.getPlayer().getUUID());
+                    event.getPlayer().sendSystemMessage(Component.translatable("solarcraft.item_unknown").withStyle(ChatFormatting.RED), event.getPlayer().getUUID());
                     event.setCanceled(true);
                 }
             }
@@ -417,7 +417,7 @@ public class EventHandler {
 
             if (fragmentItem.getNeededFragment() != null) {
                 if (!ProgressionHelper.doPlayerHasFragment(player, fragmentItem.getNeededFragment())) {
-                    player.sendMessage(Component.translatable("solarcraft.item_unknown").withStyle(ChatFormatting.RED), player.getUUID());
+                    player.sendSystemMessage(Component.translatable("solarcraft.item_unknown").withStyle(ChatFormatting.RED), player.getUUID());
                     event.setCanceled(true);
                 }
             }

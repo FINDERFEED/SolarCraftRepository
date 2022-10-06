@@ -18,7 +18,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraftforge.client.IItemRenderProperties;
+
+import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -44,7 +45,7 @@ public class ClearingRitualCrystalItem extends BlockItem {
     }
 
     @Override
-    public void initializeClient(Consumer<IItemRenderProperties> consumer) {
+    public void initializeClient(Consumer<IClientItemExtensions> consumer) {
         super.initializeClient(consumer);
         consumer.accept(RenderProperties.INSTANCE);
     }
@@ -61,13 +62,13 @@ public class ClearingRitualCrystalItem extends BlockItem {
         return super.place(context);
     }
 }
-class RenderProperties implements IItemRenderProperties{
+class RenderProperties implements IClientItemExtensions {
 
     public static final RenderProperties INSTANCE = new RenderProperties();
 
 
     @Override
-    public BlockEntityWithoutLevelRenderer getItemStackRenderer() {
+    public BlockEntityWithoutLevelRenderer getCustomRenderer() {
         return new ClearingRitualCrystalISTER(Minecraft.getInstance().getBlockEntityRenderDispatcher(),Minecraft.getInstance().getEntityModels());
     }
 }

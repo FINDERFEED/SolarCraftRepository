@@ -30,8 +30,7 @@ public class EarthquakeEntity extends Entity {
     public static final float MAX_LENGTH = 20;
     private float damage;
 
-    public static final EntityDataAccessor<Vec3> DIRECTION_VECTOR = SynchedEntityData.defineId(EarthquakeEntity.class,
-            (EntityDataSerializer<Vec3>)FDEntityDataSerializers.VEC3.get().getSerializer());
+    public static final EntityDataAccessor<Vec3> DIRECTION_VECTOR = SynchedEntityData.defineId(EarthquakeEntity.class, FDEntityDataSerializers.VEC3.get());
 
     public static final EntityDataAccessor<Float> LENGTH = SynchedEntityData.defineId(EarthquakeEntity.class, EntityDataSerializers.FLOAT);
 

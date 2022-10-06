@@ -120,7 +120,7 @@ public class OldInfusingRecipe implements Recipe<Container> {
 
     @Override
     public RecipeType<?> getType() {
-        return SolarForge.INFUSING_RECIPE_TYPE;
+        return null;
     }
 
     public InfuserTileEntity.Tier getTier() {

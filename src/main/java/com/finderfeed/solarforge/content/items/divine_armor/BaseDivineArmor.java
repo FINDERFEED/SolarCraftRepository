@@ -19,7 +19,8 @@ import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.client.IItemRenderProperties;
+
+import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -35,7 +36,7 @@ public abstract class BaseDivineArmor extends SolarcraftArmorItem implements IRu
     }
 
     @Override
-    public void initializeClient(Consumer<IItemRenderProperties> props) {
+    public void initializeClient(Consumer<IClientItemExtensions> props) {
         super.initializeClient(props);
         props.accept(DivineArmorRenderProperties.INSTANCE);
     }

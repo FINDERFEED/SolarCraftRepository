@@ -4,6 +4,7 @@ import com.finderfeed.solarforge.content.blocks.solar_energy.SolarEnergyCoreTile
 import com.finderfeed.solarforge.helpers.Helpers;
 import com.finderfeed.solarforge.events.other_events.OBJModels;
 import com.finderfeed.solarforge.helpers.multiblock.Multiblocks;
+import com.finderfeed.solarforge.local_library.helpers.RenderingTools;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Minecraft;
@@ -19,7 +20,7 @@ import net.minecraft.core.BlockPos;
 import com.mojang.math.Matrix4f;
 import net.minecraft.world.phys.Vec3;
 import com.mojang.math.Vector3f;
-import net.minecraftforge.client.model.data.ModelDataMap;
+
 
 import java.util.List;
 import java.util.Random;
@@ -105,16 +106,17 @@ public class SolarCoreRenderer implements BlockEntityRenderer<SolarEnergyCoreTil
                     matrices.popPose();
 
             }
-            List<BakedQuad> list = Minecraft.getInstance().getModelManager().getModel(OBJModels.SOLAR_CORE_MODEL)
-                    .getQuads(null, null, new Random(), new ModelDataMap.Builder().build());
-            for (BakedQuad a : list) {
-                matrices.pushPose();
-                matrices.scale(0.5f, 0.5f, 0.5f);
-                matrices.translate(1, 1, 1);
-                matrices.mulPose(Vector3f.YP.rotationDegrees((entity.getLevel().getGameTime() + partialTicks) % 360));
-                buffer.getBuffer(RenderType.solid()).putBulkData(matrices.last(), a, 1, 1, 1, light1, light2);
-                matrices.popPose();
-            }
+            RenderingTools.renderObjModel(OBJModels.SOLAR_CORE_MODEL,matrices,buffer,1f,1f,1f,light1, light2);
+//            List<BakedQuad> list = Minecraft.getInstance().getModelManager().getModel(OBJModels.SOLAR_CORE_MODEL)
+//                    .getQuads(null, null, new Random(), new ModelDataMap.Builder().build());
+//            for (BakedQuad a : list) {
+//                matrices.pushPose();
+//                matrices.scale(0.5f, 0.5f, 0.5f);
+//                matrices.translate(1, 1, 1);
+//                matrices.mulPose(Vector3f.YP.rotationDegrees((entity.getLevel().getGameTime() + partialTicks) % 360));
+//                buffer.getBuffer(RenderType.solid()).putBulkData(matrices.last(), a, 1, 1, 1, light1, light2);
+//                matrices.popPose();
+//            }
 
         }
     }

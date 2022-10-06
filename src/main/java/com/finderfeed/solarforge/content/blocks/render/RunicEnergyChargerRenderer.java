@@ -133,7 +133,7 @@ public class RunicEnergyChargerRenderer extends AbstractRunicEnergyContainerRend
                     Minecraft.getInstance().getItemRenderer().renderModelLists(model, stack, light, overlay, matrices, vertexconsumer);
                 }
             } else {
-                net.minecraftforge.client.RenderProperties.get(stack).getItemStackRenderer().renderByItem(stack, trns, matrices, src, light, overlay);
+                net.minecraftforge.client.RenderProperties.get(stack).getCustomRenderer().renderByItem(stack, trns, matrices, src, light, overlay);
             }
 
             matrices.popPose();

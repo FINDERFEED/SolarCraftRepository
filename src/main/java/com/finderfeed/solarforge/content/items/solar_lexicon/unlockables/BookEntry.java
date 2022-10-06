@@ -35,12 +35,12 @@ public enum BookEntry {
     public static Map<BookEntry, List<BookEntry>> ENTRY_TREE = new HashMap<>();
 
 
-    private final TranslatableComponent translation;
+    private final Component translation;
     private final Point placeInBook;
     private final Progression toUnlock;
     private final BookEntry child;
 
-    BookEntry(TranslatableComponent translation, Point placeInBook, @Nullable Progression toUnlock, @Nullable BookEntry child){
+    BookEntry(Component translation, Point placeInBook, @Nullable Progression toUnlock, @Nullable BookEntry child){
         this.placeInBook = placeInBook;
         this.translation = translation;
         this.toUnlock = toUnlock;
@@ -48,7 +48,7 @@ public enum BookEntry {
     }
 
 
-    public TranslatableComponent getTranslation() {
+    public Component getTranslation() {
         return translation;
 
     }
@@ -73,7 +73,7 @@ public enum BookEntry {
         return new Point(a,b);
     }
 
-    public static TranslatableComponent tx(String a){
+    public static Component tx(String a){
         return Component.translatable(a);
     }
 

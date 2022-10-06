@@ -2,6 +2,7 @@ package com.finderfeed.solarforge.content.recipe_types.infusing_crafting;
 
 import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.content.items.solar_lexicon.unlockables.AncientFragment;
+import com.finderfeed.solarforge.registries.recipe_types.SolarcraftRecipeTypes;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.Item;
@@ -16,7 +17,7 @@ import java.util.Arrays;
 import java.util.Map;
 
 public class InfusingCraftingRecipe implements Recipe<Container> {
-    public static final InfusingCraftingRecipeSerializer serializer = new InfusingCraftingRecipeSerializer();
+//    public static final InfusingCraftingRecipeSerializer serializer = new InfusingCraftingRecipeSerializer();
 
     private final ResourceLocation id;
     private final ItemStack output;
@@ -209,12 +210,12 @@ public class InfusingCraftingRecipe implements Recipe<Container> {
 
     @Override
     public RecipeSerializer<?> getSerializer() {
-        return serializer;
+        return SolarcraftRecipeTypes.INFUSING_CRAFTING_SERIALIZER.get();
     }
 
     @Override
     public RecipeType<?> getType() {
-        return SolarForge.INFUSING_CRAFTING_RECIPE_TYPE;
+        return SolarcraftRecipeTypes.INFUSING_CRAFTING.get();
     }
 }
 //            for (int i = 0; i < 3;i++){

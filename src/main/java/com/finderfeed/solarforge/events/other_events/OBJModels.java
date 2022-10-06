@@ -7,11 +7,8 @@ import com.finderfeed.solarforge.client.model_loaders.SolarforgeModelLoader;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 
-import net.minecraftforge.client.event.ModelRegistryEvent;
 
-import net.minecraftforge.client.model.ForgeModelBakery;
-import net.minecraftforge.client.model.ModelLoaderRegistry;
-
+import net.minecraftforge.client.event.ModelEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -46,22 +43,42 @@ public class OBJModels {
 
 
     @SubscribeEvent
-    public static void registerModels(final ModelRegistryEvent event){
-        ModelLoaderRegistry.registerLoader(new ResourceLocation(SolarForge.MOD_ID,"progression_ore_loader"),LOADER);
-        ForgeModelBakery.addSpecialModel(CRYSTAL_BOSS);
-        ForgeModelBakery.addSpecialModel(SOLAR_CORE_MODEL);
-        ForgeModelBakery.addSpecialModel(ANCIENT_FRAGMENT_MODEL);
-        ForgeModelBakery.addSpecialModel(HOLE_MODEL);
-        ForgeModelBakery.addSpecialModel(SHIELDING_CRYSTAL_SHIELD);
-        ForgeModelBakery.addSpecialModel(SHIELDING_CRYSTAL);
-        ForgeModelBakery.addSpecialModel(GET_OFF_MEEE);
-        ForgeModelBakery.addSpecialModel(RIP_RAY_GENERATOR);
-        ForgeModelBakery.addSpecialModel(CRYSTAL_1);
-        ForgeModelBakery.addSpecialModel(EXPLOSIVE_CRYSTAL);
-        ForgeModelBakery.addSpecialModel(CLEARING_RITUAL_CRYSTAL);
-        ForgeModelBakery.addSpecialModel(CLEARING_RITUAL_MAIN_BLOCK_LOWER);
-        ForgeModelBakery.addSpecialModel(CLEARING_RITUAL_MAIN_BLOCK_PETALS);
-        ForgeModelBakery.addSpecialModel(CLEARING_RITUAL_MAIN_BLOCK_TOP);
-        ForgeModelBakery.addSpecialModel(PORTAL_SPHERE);
+    public static void registerLoaders(ModelEvent.RegisterGeometryLoaders event){
+        event.register("progression_ore_loader",LOADER);
+    }
+
+    @SubscribeEvent
+    public static void registerModels(final ModelEvent.RegisterAdditional event){
+//        ModelLoaderRegistry.registerLoader(new ResourceLocation(SolarForge.MOD_ID,"progression_ore_loader"),LOADER);
+//        ForgeModelBakery.addSpecialModel(CRYSTAL_BOSS);
+//        ForgeModelBakery.addSpecialModel(SOLAR_CORE_MODEL);
+//        ForgeModelBakery.addSpecialModel(ANCIENT_FRAGMENT_MODEL);
+//        ForgeModelBakery.addSpecialModel(HOLE_MODEL);
+//        ForgeModelBakery.addSpecialModel(SHIELDING_CRYSTAL_SHIELD);
+//        ForgeModelBakery.addSpecialModel(SHIELDING_CRYSTAL);
+//        ForgeModelBakery.addSpecialModel(GET_OFF_MEEE);
+//        ForgeModelBakery.addSpecialModel(RIP_RAY_GENERATOR);
+//        ForgeModelBakery.addSpecialModel(CRYSTAL_1);
+//        ForgeModelBakery.addSpecialModel(EXPLOSIVE_CRYSTAL);
+//        ForgeModelBakery.addSpecialModel(CLEARING_RITUAL_CRYSTAL);
+//        ForgeModelBakery.addSpecialModel(CLEARING_RITUAL_MAIN_BLOCK_LOWER);
+//        ForgeModelBakery.addSpecialModel(CLEARING_RITUAL_MAIN_BLOCK_PETALS);
+//        ForgeModelBakery.addSpecialModel(CLEARING_RITUAL_MAIN_BLOCK_TOP);
+//        ForgeModelBakery.addSpecialModel(PORTAL_SPHERE);
+        event.register(CRYSTAL_BOSS);
+        event.register(SOLAR_CORE_MODEL);
+        event.register(ANCIENT_FRAGMENT_MODEL);
+        event.register(HOLE_MODEL);
+        event.register(SHIELDING_CRYSTAL_SHIELD);
+        event.register(SHIELDING_CRYSTAL);
+        event.register(GET_OFF_MEEE);
+        event.register(RIP_RAY_GENERATOR);
+        event.register(CRYSTAL_1);
+        event.register(EXPLOSIVE_CRYSTAL);
+        event.register(CLEARING_RITUAL_CRYSTAL);
+        event.register(CLEARING_RITUAL_MAIN_BLOCK_LOWER);
+        event.register(CLEARING_RITUAL_MAIN_BLOCK_PETALS);
+        event.register(CLEARING_RITUAL_MAIN_BLOCK_TOP);
+        event.register(PORTAL_SPHERE);
     }
 }

@@ -164,21 +164,21 @@ public class InfusingTableTile extends BlockEntity implements OwnedBlock {
                                 this.recipeTrigerred = true;
                                 update();
                             } else {
-                                pl.sendMessage(Component.literal("Cant start craft, you don't have " + recipe.get().getFragment().getId().toUpperCase(Locale.ROOT) +
+                                pl.sendSystemMessage(Component.literal("Cant start craft, you don't have " + recipe.get().getFragment().getId().toUpperCase(Locale.ROOT) +
                                         " fragment unlocked.").withStyle(ChatFormatting.RED), pl.getUUID());
                             }
                         }catch (Exception e){
-                            pl.sendMessage(Component.literal("INCORRECT FRAGMENT IN RECIPE "+ recipe.get().getOutput().getDisplayName()+" TELL MOD AUTHOR TO FIX IT").withStyle(ChatFormatting.RED),
+                            pl.sendSystemMessage(Component.literal("INCORRECT FRAGMENT IN RECIPE "+ recipe.get().getOutput().getDisplayName()+" TELL MOD AUTHOR TO FIX IT").withStyle(ChatFormatting.RED),
                                     pl.getUUID());
                         }
                     }else{
-                        pl.sendMessage(Component.literal("Recipe invalid.").withStyle(ChatFormatting.RED),
+                        pl.sendSystemMessage(Component.literal("Recipe invalid.").withStyle(ChatFormatting.RED),
                                 pl.getUUID());
                     }
 
             }
         }else{
-            pl.sendMessage(Component.literal("You are not the owner!").withStyle(ChatFormatting.RED),pl.getUUID());
+            pl.sendSystemMessage(Component.literal("You are not the owner!").withStyle(ChatFormatting.RED),pl.getUUID());
         }
         }
 

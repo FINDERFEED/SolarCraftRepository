@@ -4,6 +4,7 @@ import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.content.blocks.infusing_table_things.InfuserTileEntity;
 import com.finderfeed.solarforge.content.items.runic_energy.RunicEnergyCost;
 import com.finderfeed.solarforge.registries.blocks.SolarcraftBlocks;
+import com.finderfeed.solarforge.registries.recipe_types.SolarcraftRecipeTypes;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
@@ -34,7 +35,7 @@ public class InfusingRecipe implements Recipe<Container> {
     public final RunicEnergyCost RUNIC_ENERGY_COST;
     private final String catalysts;
     private final Block[] deserializedCatalysts;
-    public static final InfusingRecipeSerializer serializer = new InfusingRecipeSerializer();
+//    public static final InfusingRecipeSerializer serializer = new InfusingRecipeSerializer();
     public InfusingRecipe(ResourceLocation id,Map<Character,Ingredient> ingredientMap,String[] fiveRowPattern,String catalysts, ItemStack output, int infusingTime,String fragmentID
             ,int requriedEnergy,String tag,RunicEnergyCost costs) {
         this.INGR_MAP = ingredientMap;
@@ -100,12 +101,12 @@ public class InfusingRecipe implements Recipe<Container> {
 
     @Override
     public RecipeSerializer<?> getSerializer() {
-        return serializer;
+        return SolarcraftRecipeTypes.INFUSING_SERIALIZER.get();
     }
 
     @Override
     public RecipeType<?> getType() {
-        return SolarForge.INFUSING_RECIPE_TYPE;
+        return SolarcraftRecipeTypes.INFUSING.get();
     }
 
     public InfuserTileEntity.Tier getTier() {

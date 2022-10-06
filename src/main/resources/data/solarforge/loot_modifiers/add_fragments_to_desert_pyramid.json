@@ -6,8 +6,7 @@
       "loot_table_id": "minecraft:chests/desert_pyramid"
     }
   ],
-  "count": [
-    0,
-    3
-  ]
+  "min":  0,
+  "max":  3
+
 }

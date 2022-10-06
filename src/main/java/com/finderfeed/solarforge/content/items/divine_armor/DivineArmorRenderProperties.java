@@ -11,10 +11,12 @@ import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.client.IItemRenderProperties;
+
+import net.minecraftforge.client.extensions.common.IClientItemExtensions;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class DivineArmorRenderProperties implements IItemRenderProperties {
+public class DivineArmorRenderProperties implements IClientItemExtensions {
 
     public static DivineArmorRenderProperties INSTANCE = new DivineArmorRenderProperties();
 
@@ -23,13 +25,11 @@ public class DivineArmorRenderProperties implements IItemRenderProperties {
     public static ModelPart MODEL_PART_LEGGINGS;
     public static ModelPart MODEL_PART_BOOTS;
 
-
-    @Nullable
     @Override
-    public HumanoidModel<?> getArmorModel(LivingEntity entityLiving, ItemStack itemStack, EquipmentSlot armorSlot, HumanoidModel<?> _default) {
-        HumanoidModel<?> model = _default;
+    public @NotNull HumanoidModel<?> getHumanoidArmorModel(LivingEntity livingEntity, ItemStack itemStack, EquipmentSlot equipmentSlot, HumanoidModel<?> original) {
+        HumanoidModel<?> model = original;
         EntityModelSet set = Minecraft.getInstance().getEntityModels();
-        switch (armorSlot) {
+        switch (equipmentSlot) {
             case HEAD -> {
                 if (MODEL_PART_HELMET == null) MODEL_PART_HELMET = set.bakeLayer(DivineHelmetModel.LAYER_LOCATION);
                 model = new DivineHelmetModel(MODEL_PART_HELMET);
@@ -50,4 +50,6 @@ public class DivineArmorRenderProperties implements IItemRenderProperties {
 
         return model;
     }
+
+
 }

@@ -3,15 +3,14 @@ package com.finderfeed.solarforge.client.model_loaders;
 import com.finderfeed.solarforge.client.baked_models.ProgressionOreModel;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
 import com.mojang.datafixers.util.Pair;
 
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.client.model.IModelConfiguration;
-import net.minecraftforge.client.model.IModelLoader;
-import net.minecraftforge.client.model.geometry.IModelGeometry;
+
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -26,22 +25,28 @@ import net.minecraft.client.resources.model.Material;
 import net.minecraft.client.resources.model.ModelBakery;
 import net.minecraft.client.resources.model.ModelState;
 import net.minecraft.client.resources.model.UnbakedModel;
+import net.minecraftforge.client.model.geometry.IGeometryBakingContext;
+import net.minecraftforge.client.model.geometry.IGeometryLoader;
+import net.minecraftforge.client.model.geometry.IUnbakedGeometry;
 
-public class SolarforgeModelLoader implements IModelLoader<ProgressionOreGeometry> {
+public class SolarforgeModelLoader implements IGeometryLoader<ProgressionOreGeometry> {
+
+
+
+//    @Override
+//    public ProgressionOreGeometry read(JsonDeserializationContext deserializationContext, JsonObject modelContents) {
+//            BlockModel model = deserializationContext.deserialize(GsonHelper.getAsJsonObject(modelContents,"orig_model"), BlockModel.class);
+//        return new ProgressionOreGeometry(model);
+//    }
 
     @Override
-    public void onResourceManagerReload(ResourceManager resourceManager) {
-
-    }
-
-    @Override
-    public ProgressionOreGeometry read(JsonDeserializationContext deserializationContext, JsonObject modelContents) {
-            BlockModel model = deserializationContext.deserialize(GsonHelper.getAsJsonObject(modelContents,"orig_model"), BlockModel.class);
+    public ProgressionOreGeometry read(JsonObject jsonObject, JsonDeserializationContext deserializationContext) throws JsonParseException {
+        BlockModel model = deserializationContext.deserialize(GsonHelper.getAsJsonObject(jsonObject,"orig_model"), BlockModel.class);
         return new ProgressionOreGeometry(model);
     }
 }
 
-class ProgressionOreGeometry implements IModelGeometry<ProgressionOreGeometry>{
+class ProgressionOreGeometry implements IUnbakedGeometry<ProgressionOreGeometry> {
 
     public BlockModel model;
 
@@ -49,23 +54,37 @@ class ProgressionOreGeometry implements IModelGeometry<ProgressionOreGeometry>{
         this.model = model;
     }
 
+//    @Override
+//    public BakedModel bake(IModelConfiguration owner,
+//                            ModelBakery bakery,
+//                            Function<Material, TextureAtlasSprite> spriteGetter,
+//                            ModelState modelTransform,
+//                            ItemOverrides overrides,
+//                            ResourceLocation modelLocation) {
+//
+//
+//        BakedModel model = this.model.bake(bakery,this.model,spriteGetter,modelTransform,modelLocation,false);
+//        return new ProgressionOreModel(model);
+//    }
+
+//    @Override
+//    public Collection<Material> getTextures(IModelConfiguration owner,
+//                                                  Function<ResourceLocation, UnbakedModel> modelGetter,
+//                                                  Set<Pair<String, String>> missingTextureErrors) {
+//        List<Material> list = new ArrayList<>();
+//        list.addAll(model.getMaterials(modelGetter,missingTextureErrors));
+//
+//        return list;
+//    }
+
     @Override
-    public BakedModel bake(IModelConfiguration owner,
-                            ModelBakery bakery,
-                            Function<Material, TextureAtlasSprite> spriteGetter,
-                            ModelState modelTransform,
-                            ItemOverrides overrides,
-                            ResourceLocation modelLocation) {
-
-
-        BakedModel model = this.model.bake(bakery,this.model,spriteGetter,modelTransform,modelLocation,false);
+    public BakedModel bake(IGeometryBakingContext context, ModelBakery bakery, Function<Material, TextureAtlasSprite> spriteGetter, ModelState modelState, ItemOverrides overrides, ResourceLocation modelLocation) {
+        BakedModel model = this.model.bake(bakery,this.model,spriteGetter,modelState,modelLocation,false);
         return new ProgressionOreModel(model);
     }
 
     @Override
-    public Collection<Material> getTextures(IModelConfiguration owner,
-                                                  Function<ResourceLocation, UnbakedModel> modelGetter,
-                                                  Set<Pair<String, String>> missingTextureErrors) {
+    public Collection<Material> getMaterials(IGeometryBakingContext context, Function<ResourceLocation, UnbakedModel> modelGetter, Set<Pair<String, String>> missingTextureErrors) {
         List<Material> list = new ArrayList<>();
         list.addAll(model.getMaterials(modelGetter,missingTextureErrors));
 

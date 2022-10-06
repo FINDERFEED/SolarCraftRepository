@@ -18,7 +18,7 @@ import net.minecraft.world.item.Items;
 
 public class LoreScreen extends Screen {
 
-    private final TranslatableComponent lore;
+    private final Component lore;
     private final ResourceLocation IMAGE_LOCATION;
     private final ResourceLocation MAIN = new ResourceLocation("solarforge","textures/gui/lore_screen_new.png");
 
@@ -27,7 +27,7 @@ public class LoreScreen extends Screen {
 
     private int ticker = 0;
 
-    public LoreScreen(TranslatableComponent lore,String image) {
+    public LoreScreen(Component lore,String image) {
         super(Component.literal(""));
         this.lore = lore;
         this.IMAGE_LOCATION = new ResourceLocation(SolarForge.MOD_ID,"textures/lore_images/"+image+".png");

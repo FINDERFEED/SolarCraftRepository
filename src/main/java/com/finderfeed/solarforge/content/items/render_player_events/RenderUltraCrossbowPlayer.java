@@ -17,7 +17,7 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import com.mojang.math.Vector3f;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.RenderGameOverlayEvent;
+
 import net.minecraftforge.client.event.RenderHandEvent;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -31,38 +31,38 @@ public class RenderUltraCrossbowPlayer {
     public static ResourceLocation PRICEL = new ResourceLocation("solarforge","textures/misc/solar_crossbow_pricel.png");
 
 
-    @SubscribeEvent
-    public static void gameOverlay(final RenderGameOverlayEvent event){
-        Minecraft mc = Minecraft.getInstance();
-        if (event.getType() == RenderGameOverlayEvent.ElementType.TEXT) {
-            if (Minecraft.getInstance().player.getMainHandItem().getItem() instanceof UltraCrossbowItem) {
-                PoseStack stack = event.getMatrixStack();
-                Window window = event.getWindow();
-                ClientHelpers.bindText(PRICEL);
-                RenderSystem.enableBlend();
-
-                RenderSystem.setShaderColor(1,1,0.3f,0.5f);
-                int width = (int)((window.getWidth())/2/window.getGuiScale() -21);
-                int height = (int)((window.getHeight())/2/window.getGuiScale() - 20);
-
-                GuiComponent.blit(stack,width,height,0,0,41,41,41,41);
-                RenderSystem.setShaderColor(1,1,1f,1f);
-            }else if( Minecraft.getInstance().player.getOffhandItem().getItem() instanceof UltraCrossbowItem){
-                PoseStack stack = event.getMatrixStack();
-                Window window = event.getWindow();
-                ClientHelpers.bindText(PRICEL);
-                RenderSystem.enableBlend();
-                RenderSystem.setShaderColor(1,1,0.3f,0.5f);
-
-                int width = (int)((window.getWidth())/2/window.getGuiScale() -21);
-                int height = (int)((window.getHeight())/2/window.getGuiScale() - 20);
-
-                GuiComponent.blit(stack,width,height,0,0,41,41,41,41);
-                RenderSystem.setShaderColor(1,1,1f,1f);
-            }
-        }
-
-    }
+//    @SubscribeEvent
+//    public static void gameOverlay(final RenderGameOverlayEvent event){
+//        Minecraft mc = Minecraft.getInstance();
+//        if (event.getType() == RenderGameOverlayEvent.ElementType.TEXT) {
+//            if (Minecraft.getInstance().player.getMainHandItem().getItem() instanceof UltraCrossbowItem) {
+//                PoseStack stack = event.getMatrixStack();
+//                Window window = event.getWindow();
+//                ClientHelpers.bindText(PRICEL);
+//                RenderSystem.enableBlend();
+//
+//                RenderSystem.setShaderColor(1,1,0.3f,0.5f);
+//                int width = (int)((window.getWidth())/2/window.getGuiScale() -21);
+//                int height = (int)((window.getHeight())/2/window.getGuiScale() - 20);
+//
+//                GuiComponent.blit(stack,width,height,0,0,41,41,41,41);
+//                RenderSystem.setShaderColor(1,1,1f,1f);
+//            }else if( Minecraft.getInstance().player.getOffhandItem().getItem() instanceof UltraCrossbowItem){
+//                PoseStack stack = event.getMatrixStack();
+//                Window window = event.getWindow();
+//                ClientHelpers.bindText(PRICEL);
+//                RenderSystem.enableBlend();
+//                RenderSystem.setShaderColor(1,1,0.3f,0.5f);
+//
+//                int width = (int)((window.getWidth())/2/window.getGuiScale() -21);
+//                int height = (int)((window.getHeight())/2/window.getGuiScale() - 20);
+//
+//                GuiComponent.blit(stack,width,height,0,0,41,41,41,41);
+//                RenderSystem.setShaderColor(1,1,1f,1f);
+//            }
+//        }
+//
+//    }
 
     @SubscribeEvent
     public static void RenderHand(final RenderHandEvent event){
@@ -71,7 +71,7 @@ public class RenderUltraCrossbowPlayer {
             if (Minecraft.getInstance().player.isUsingItem()) {
                 PoseStack stack = event.getPoseStack();
                 MultiBufferSource buffer = event.getMultiBufferSource();
-                float partialTicks = event.getPartialTicks();
+                float partialTicks = event.getPartialTick();
 
                 stack.pushPose();
                 stack.translate(-0.02, -0.4, -1.7);
@@ -86,7 +86,7 @@ public class RenderUltraCrossbowPlayer {
             if (Minecraft.getInstance().player.isUsingItem()) {
                 PoseStack stack = event.getPoseStack();
                 MultiBufferSource buffer = event.getMultiBufferSource();
-                float partialTicks = event.getPartialTicks();
+                float partialTicks = event.getPartialTick();
 
                 stack.pushPose();
                 stack.translate(-0.02, -0.4, -1.7);
@@ -111,10 +111,11 @@ public class RenderUltraCrossbowPlayer {
 
     @SubscribeEvent
     public static void renderPlayer(final RenderPlayerEvent.Pre event){
-        if ((event.getPlayer().getMainHandItem().getItem() instanceof UltraCrossbowItem) || (event.getPlayer().getOffhandItem().getItem() instanceof UltraCrossbowItem)) {
+
+        if ((event.getEntity().getMainHandItem().getItem() instanceof UltraCrossbowItem) || (event.getEntity().getOffhandItem().getItem() instanceof UltraCrossbowItem)) {
             event.getRenderer().getModel().rightArmPose = HumanoidModel.ArmPose.CROSSBOW_HOLD;
         }
-        if ((event.getPlayer().getMainHandItem().getItem() instanceof LightningGun) || (event.getPlayer().getOffhandItem().getItem() instanceof LightningGun)) {
+        if ((event.getEntity().getMainHandItem().getItem() instanceof LightningGun) || (event.getEntity().getOffhandItem().getItem() instanceof LightningGun)) {
             event.getRenderer().getModel().rightArmPose = HumanoidModel.ArmPose.CROSSBOW_HOLD;
         }
     }

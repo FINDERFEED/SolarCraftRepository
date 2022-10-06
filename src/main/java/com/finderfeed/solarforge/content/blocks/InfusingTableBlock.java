@@ -51,7 +51,7 @@ public class InfusingTableBlock extends Block implements EntityBlock {
                             buf.writeBlockPos(pos)
                     ));
                 }else {
-                    player.sendMessage(Component.literal("You are not the owner!").withStyle(ChatFormatting.RED),player.getUUID());
+                    player.sendSystemMessage(Component.literal("You are not the owner!").withStyle(ChatFormatting.RED),player.getUUID());
                 }
             }
         }

@@ -41,7 +41,7 @@ public class FDTextComponent extends BaseComponent{
     }
 
 
-    public FDTextComponent setText(TranslatableComponent component,int textColor){
+    public FDTextComponent setText(Component component,int textColor){
         this.textColor = textColor;
         this.text = RenderingTools.splitString(component.getString(),this.getXSize());
         this.setYSize(this.text.size()*TEXT_HEIGHT + this.getInnerBorder()*2);
@@ -57,7 +57,7 @@ public class FDTextComponent extends BaseComponent{
         return this;
     }
 
-    public FDTextComponent setText(TranslatableComponent component,int forceX, int textColor){
+    public FDTextComponent setText(Component component,int forceX, int textColor){
         this.textColor = textColor;
         this.text = RenderingTools.splitString(component.getString(),this.getXSize());
         this.setYSize(this.text.size()*TEXT_HEIGHT + this.getInnerBorder()*2);

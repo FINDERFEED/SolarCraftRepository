@@ -23,7 +23,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.Level;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraftforge.client.IItemRenderProperties;
+
 
 import javax.annotation.Nullable;
 
@@ -34,6 +34,7 @@ import java.util.function.Supplier;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 
 public class ShieldOfSolarGod extends RareSolarcraftShieldItem {
 
@@ -122,32 +123,30 @@ public class ShieldOfSolarGod extends RareSolarcraftShieldItem {
         super.onUsingTick(stack, player, count);
     }
 
-
     @Override
-    public void initializeClient(Consumer<IItemRenderProperties> consumer) {
+    public void initializeClient(Consumer<IClientItemExtensions> consumer) {
         super.initializeClient(consumer);
         consumer.accept(RenderProp.INSTANCE);
-
     }
+
+
 }
 
-class RenderProp implements IItemRenderProperties{
+class RenderProp implements IClientItemExtensions{
 
     public static RenderProp INSTANCE = new RenderProp();
 
     @Override
-    public Font getFont(ItemStack stack) {
+    public @org.jetbrains.annotations.Nullable Font getFont(ItemStack stack, FontContext context) {
         return Minecraft.getInstance().font;
     }
 
+
+
+
     @Override
-    public BlockEntityWithoutLevelRenderer getItemStackRenderer() {
+    public BlockEntityWithoutLevelRenderer getCustomRenderer() {
         return new ShieldOfSolarGodISTER(Minecraft.getInstance().getBlockEntityRenderDispatcher(),Minecraft.getInstance().getEntityModels());
     }
 
-    @org.jetbrains.annotations.Nullable
-    @Override
-    public HumanoidModel<?> getArmorModel(LivingEntity entityLiving, ItemStack itemStack, EquipmentSlot armorSlot, HumanoidModel<?> _default) {
-        return IItemRenderProperties.super.getArmorModel(entityLiving, itemStack, armorSlot, _default);
-    }
 }

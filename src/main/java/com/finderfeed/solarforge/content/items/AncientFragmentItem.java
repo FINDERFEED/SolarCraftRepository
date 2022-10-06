@@ -20,7 +20,8 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.client.IItemRenderProperties;
+import net.minecraftforge.client.extensions.common.IClientItemExtensions;
+
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -46,8 +47,7 @@ public class AncientFragmentItem extends Item implements ICustomTooltip {
     @Override
     public void fillItemCategory(CreativeModeTab tab, NonNullList<ItemStack> list) {
         super.fillItemCategory(tab, list);
-
-        if (this.allowdedIn(tab)) {
+        if (this.allowedIn(tab)) {
             for (AncientFragment frag : AncientFragment.getAllFragments()) {
                 ItemStack stack = new ItemStack(this, 1);
                 stack.getOrCreateTagElement(ProgressionHelper.TAG_ELEMENT).putString(ProgressionHelper.FRAG_ID, frag.getId());
@@ -80,7 +80,7 @@ public class AncientFragmentItem extends Item implements ICustomTooltip {
     }
 
     @Override
-    public void initializeClient(Consumer<IItemRenderProperties> consumer) {
+    public void initializeClient(Consumer<IClientItemExtensions> consumer) {
         super.initializeClient(consumer);
         consumer.accept(FragmentRenderProperties.INSTANCE);
     }
@@ -91,12 +91,12 @@ public class AncientFragmentItem extends Item implements ICustomTooltip {
     }
 }
 
-class FragmentRenderProperties implements IItemRenderProperties{
+class FragmentRenderProperties implements IClientItemExtensions{
 
     public static FragmentRenderProperties INSTANCE = new FragmentRenderProperties();
 
     @Override
-    public BlockEntityWithoutLevelRenderer getItemStackRenderer() {
+    public BlockEntityWithoutLevelRenderer getCustomRenderer() {
         return new AncientFragmentISTER(Minecraft.getInstance().getBlockEntityRenderDispatcher(), Minecraft.getInstance().getEntityModels());
     }
 }

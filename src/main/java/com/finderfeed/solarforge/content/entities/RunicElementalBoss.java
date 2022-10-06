@@ -106,8 +106,7 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
     private static final EntityDataAccessor<Integer> DATA_ID_ATTACK_TARGET = SynchedEntityData.defineId(RunicElementalBoss.class, EntityDataSerializers.INT);
     public static final EntityDataAccessor<Byte> UPDATE_PUSH_WAVE_TICKER = SynchedEntityData.defineId(RunicElementalBoss.class, EntityDataSerializers.BYTE);
     public static final EntityDataAccessor<Boolean> IS_ALREADY_SUMMONED = SynchedEntityData.defineId(RunicElementalBoss.class,EntityDataSerializers.BOOLEAN);
-    public static final EntityDataAccessor<Vec3> HAMMER_ATTACK_DIRECTION = SynchedEntityData.defineId(RunicElementalBoss.class,
-            (EntityDataSerializer<Vec3>)FDEntityDataSerializers.VEC3.get().getSerializer());
+    public static final EntityDataAccessor<Vec3> HAMMER_ATTACK_DIRECTION = SynchedEntityData.defineId(RunicElementalBoss.class, FDEntityDataSerializers.VEC3.get());
     public int summoningTicks = 0;
     public int pushWaveTicker = 0;
     public boolean isWaitingForPlayerToDestroyExplosiveCrystals = false;
@@ -482,8 +481,9 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
         return super.interactAt(player, vec, hand);
     }
 
+
     @Override
-    protected int getExperienceReward(Player p_21511_) {
+    public int getExperienceReward() {
         return 200;
     }
 

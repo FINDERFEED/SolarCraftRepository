@@ -10,6 +10,7 @@ import com.finderfeed.solarforge.content.items.runic_energy.RunicEnergyCost;
 import com.finderfeed.solarforge.content.items.solar_lexicon.progressions.Progression;
 import com.finderfeed.solarforge.misc_things.*;
 import com.finderfeed.solarforge.content.recipe_types.infusing_new.InfusingRecipe;
+import com.finderfeed.solarforge.registries.recipe_types.SolarcraftRecipeTypes;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.server.level.ServerPlayer;
@@ -38,7 +39,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.client.event.RenderGuiOverlayEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -162,56 +163,56 @@ public class SolarWandItem extends Item implements IRunicEnergyUser {
     }
 }
 
-@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE,modid = "solarforge",value = Dist.CLIENT)
-class WandEvents{
-
-    public static final ResourceLocation LOC = new ResourceLocation("solarforge", "textures/misc/wand_crafting_progress.png");
-    @SubscribeEvent
-    public static void renderWandOverlays(final RenderGameOverlayEvent event){
-
-            if (event.getType() == RenderGameOverlayEvent.ElementType.TEXT) {
-                Minecraft mc = Minecraft.getInstance();
-                Player player = mc.player;
-                if (player.getMainHandItem().getItem() instanceof SolarWandItem) {
-                    ClipContext ctx = new ClipContext(player.position().add(0, 1.5, 0),
-                            player.position().add(0, 1.5, 0).add(player.getLookAngle().normalize().multiply(4.5, 4.5, 4.5)),
-                            ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, player);
-                    BlockHitResult result = player.level.clip(ctx);
-
-                    if (result.getType() == HitResult.Type.BLOCK &&
-                            player.level.getBlockState(result.getBlockPos()).getBlock() instanceof InfuserBlock) {
-                        BlockEntity tile = player.level.getBlockEntity(result.getBlockPos());
-                        if (tile instanceof InfuserTileEntity) {
-                            InfuserTileEntity tileInfusing = (InfuserTileEntity) tile;
-                            ClientHelpers.bindText(LOC);
-                            if (tileInfusing.RECIPE_IN_PROGRESS) {
-                                double percent = (float) tileInfusing.CURRENT_PROGRESS / tileInfusing.INFUSING_TIME;
-                                int height = event.getWindow().getGuiScaledHeight();
-                                int width = event.getWindow().getGuiScaledWidth();
-
-                                GuiComponent.blit(event.getMatrixStack(), width / 2 - 20, height / 2 + 11, 0, 9, (int) (40 * percent), 3, 40, 20);
-                                GuiComponent.blit(event.getMatrixStack(), width / 2 - 20, height / 2 + 8, 0, 0, 40, 9, 40, 20);
-                            }else{
-                                Optional<InfusingRecipe> recipe = mc.level.getRecipeManager().getRecipeFor(SolarForge.INFUSING_RECIPE_TYPE,new PhantomInventory(tileInfusing.getInventory()),mc.level);
-                                if (recipe.isPresent()) {
-                                    int height = event.getWindow().getGuiScaledHeight();
-                                    int width = event.getWindow().getGuiScaledWidth();
-                                    GuiComponent.blit(event.getMatrixStack(), width / 2 - 20, height / 2 + 8, 0, 0, 40, 9, 40, 20);
-                                    GuiComponent.blit(event.getMatrixStack(), width / 2 -7, height / 2 + 7, 14, 24, 14, 14, 80, 40);
-                                }else{
-                                    int height = event.getWindow().getGuiScaledHeight();
-                                    int width = event.getWindow().getGuiScaledWidth();
-                                    GuiComponent.blit(event.getMatrixStack(), width / 2 - 20, height / 2 + 8, 0, 0, 40, 9, 40, 20);
-                                    GuiComponent.blit(event.getMatrixStack(), width / 2 -7, height / 2 + 7, 0, 24, 14, 14, 80, 40);
-
-                                }
-                            }
-
-                        }
-                    }
-
-                }
-            }
-
-    }
-}
+//@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE,modid = "solarforge",value = Dist.CLIENT)
+//class WandEvents{
+//
+//    public static final ResourceLocation LOC = new ResourceLocation("solarforge", "textures/misc/wand_crafting_progress.png");
+//    @SubscribeEvent
+//    public static void renderWandOverlays(final RenderGuiOverlayEvent event){
+//
+////            if (event.getType() == RenderGameOverlayEvent.ElementType.TEXT) {
+//                Minecraft mc = Minecraft.getInstance();
+//                Player player = mc.player;
+//                if (player.getMainHandItem().getItem() instanceof SolarWandItem) {
+//                    ClipContext ctx = new ClipContext(player.position().add(0, 1.5, 0),
+//                            player.position().add(0, 1.5, 0).add(player.getLookAngle().normalize().multiply(4.5, 4.5, 4.5)),
+//                            ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, player);
+//                    BlockHitResult result = player.level.clip(ctx);
+//
+//                    if (result.getType() == HitResult.Type.BLOCK &&
+//                            player.level.getBlockState(result.getBlockPos()).getBlock() instanceof InfuserBlock) {
+//                        BlockEntity tile = player.level.getBlockEntity(result.getBlockPos());
+//                        if (tile instanceof InfuserTileEntity) {
+//                            InfuserTileEntity tileInfusing = (InfuserTileEntity) tile;
+//                            ClientHelpers.bindText(LOC);
+//                            if (tileInfusing.RECIPE_IN_PROGRESS) {
+//                                double percent = (float) tileInfusing.CURRENT_PROGRESS / tileInfusing.INFUSING_TIME;
+//                                int height = event.getWindow().getGuiScaledHeight();
+//                                int width = event.getWindow().getGuiScaledWidth();
+//
+//                                GuiComponent.blit(event.getPoseStack(), width / 2 - 20, height / 2 + 11, 0, 9, (int) (40 * percent), 3, 40, 20);
+//                                GuiComponent.blit(event.getPoseStack(), width / 2 - 20, height / 2 + 8, 0, 0, 40, 9, 40, 20);
+//                            }else{
+//                                Optional<InfusingRecipe> recipe = mc.level.getRecipeManager().getRecipeFor(SolarcraftRecipeTypes.INFUSING.get(),new PhantomInventory(tileInfusing.getInventory()),mc.level);
+//                                if (recipe.isPresent()) {
+//                                    int height = event.getWindow().getGuiScaledHeight();
+//                                    int width = event.getWindow().getGuiScaledWidth();
+//                                    GuiComponent.blit(event.getPoseStack(), width / 2 - 20, height / 2 + 8, 0, 0, 40, 9, 40, 20);
+//                                    GuiComponent.blit(event.getPoseStack(), width / 2 -7, height / 2 + 7, 14, 24, 14, 14, 80, 40);
+//                                }else{
+//                                    int height = event.getWindow().getGuiScaledHeight();
+//                                    int width = event.getWindow().getGuiScaledWidth();
+//                                    GuiComponent.blit(event.getPoseStack(), width / 2 - 20, height / 2 + 8, 0, 0, 40, 9, 40, 20);
+//                                    GuiComponent.blit(event.getPoseStack(), width / 2 -7, height / 2 + 7, 0, 24, 14, 14, 80, 40);
+//
+//                                }
+//                            }
+//
+//                        }
+//                    }
+//
+//                }
+////            }
+//
+//    }
+//}

@@ -24,17 +24,17 @@ public enum SubCategoryBase {
 
 
 
-    private final TranslatableComponent translation;
+    private final Component translation;
 
-    SubCategoryBase(TranslatableComponent comp){
+    SubCategoryBase(Component comp){
         this.translation = comp;
     }
 
-    public TranslatableComponent getTranslation() {
+    public Component getTranslation() {
         return translation;
     }
 
-    public static TranslatableComponent tx(String a){
+    public static Component tx(String a){
         return Component.translatable(a);
     }
     public SubCategoryBase getByID(String id){
