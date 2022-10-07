@@ -32,7 +32,7 @@ public class InfusingCraftingRecipeManager /*implements IRecipeManager<InfusingC
 //     */
 //    @Override
 //    public RecipeType<InfusingCraftingRecipe> getRecipeType() {
-//        return SolarForge.INFUSING_CRAFTING_RECIPE_TYPE;
+//        return SolarcraftRecipeTypes.INFUSING_CRAFTING.get();
 //    }
 //
 //

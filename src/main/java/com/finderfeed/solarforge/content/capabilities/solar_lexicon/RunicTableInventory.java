@@ -5,7 +5,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.Nonnull;
@@ -21,7 +21,7 @@ public class RunicTableInventory implements ICapabilitySerializable<CompoundTag>
     @Nonnull
     @Override
     public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
-        if (cap != CapabilityItemHandler.ITEM_HANDLER_CAPABILITY){
+        if (cap != ForgeCapabilities.ITEM_HANDLER){
             return LazyOptional.empty();
         }
         return RUNIC_TABLE_INV_OPT.cast();

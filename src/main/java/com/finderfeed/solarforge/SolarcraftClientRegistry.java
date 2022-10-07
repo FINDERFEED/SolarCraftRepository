@@ -1,61 +1,56 @@
 package com.finderfeed.solarforge;
 
+import com.finderfeed.solarforge.client.rendering.RadiantTextureAtlasSpriteLoader;
+import com.finderfeed.solarforge.client.rendering.rendertypes.SolarCraftRenderTypes;
 import com.finderfeed.solarforge.content.abilities.meteorite.MeteoriteProjectileRenderer;
 import com.finderfeed.solarforge.content.abilities.solar_strike.SolarStrikeRenderer;
-import com.finderfeed.solarforge.client.rendering.rendertypes.SolarCraftRenderTypes;
-import com.finderfeed.solarforge.content.entities.projectiles.renderers.*;
-import com.finderfeed.solarforge.content.entities.renderers.*;
-import com.finderfeed.solarforge.helpers.Helpers;
-import com.finderfeed.solarforge.local_library.client.particles.ScreenParticlesRenderHandler;
 import com.finderfeed.solarforge.content.blocks.blockentities.clearing_ritual.clearing_ritual_crystal.ClearingRitualCrystalRenderer;
 import com.finderfeed.solarforge.content.blocks.blockentities.clearing_ritual.clearing_ritual_crystal.corruption_wisp.CorruptionWispRenderer;
 import com.finderfeed.solarforge.content.blocks.blockentities.clearing_ritual.clearing_ritual_main_tile.ClearingRitualTileRenderer;
 import com.finderfeed.solarforge.content.blocks.blockentities.containers.screens.*;
+import com.finderfeed.solarforge.content.blocks.blockentities.projectiles.renderers.AbstractTurretProjectileRenderer;
+import com.finderfeed.solarforge.content.blocks.blockentities.projectiles.renderers.MortarProjectileRenderer;
 import com.finderfeed.solarforge.content.blocks.blockentities.projectiles.renderers.ShadowBoltRenderer;
 import com.finderfeed.solarforge.content.blocks.infusing_table_things.InfuserRenderer;
 import com.finderfeed.solarforge.content.blocks.infusing_table_things.infusing_pool.InfusingStandRenderer;
-import com.finderfeed.solarforge.content.blocks.blockentities.projectiles.renderers.AbstractTurretProjectileRenderer;
-import com.finderfeed.solarforge.content.blocks.blockentities.projectiles.renderers.MortarProjectileRenderer;
 import com.finderfeed.solarforge.content.blocks.primitive.ProgressionBlock;
 import com.finderfeed.solarforge.content.blocks.render.*;
+import com.finderfeed.solarforge.content.blocks.solar_forge_block.SolarForgeBlockEntityRenderer;
+import com.finderfeed.solarforge.content.entities.projectiles.renderers.*;
+import com.finderfeed.solarforge.content.entities.renderers.*;
 import com.finderfeed.solarforge.content.items.ProgressionBlockItem;
 import com.finderfeed.solarforge.content.items.solar_disc_gun.SolarDiscProjectileRenderer;
+import com.finderfeed.solarforge.content.items.solar_lexicon.SolarLexiconContScreen;
 import com.finderfeed.solarforge.content.runic_network.repeater.RepeaterRenderer;
+import com.finderfeed.solarforge.content.world_generation.dimension_related.radiant_land.RadiantLandDimEffects;
+import com.finderfeed.solarforge.helpers.Helpers;
+import com.finderfeed.solarforge.local_library.client.particles.ScreenParticlesRenderHandler;
 import com.finderfeed.solarforge.registries.ScreenSuppliers;
 import com.finderfeed.solarforge.registries.blocks.SolarcraftBlocks;
 import com.finderfeed.solarforge.registries.containers.SolarcraftContainers;
 import com.finderfeed.solarforge.registries.entities.SolarcraftEntityTypes;
 import com.finderfeed.solarforge.registries.items.SolarcraftItems;
 import com.finderfeed.solarforge.registries.tile_entities.SolarcraftTileEntityTypes;
-import com.finderfeed.solarforge.content.blocks.solar_forge_block.SolarForgeBlockEntityRenderer;
-import com.finderfeed.solarforge.content.items.solar_lexicon.SolarLexiconContScreen;
-import com.finderfeed.solarforge.client.rendering.RadiantTextureAtlasSpriteLoader;
-import com.finderfeed.solarforge.content.world_generation.dimension_related.radiant_land.RadiantLandDimEffects;
+import com.mojang.blaze3d.platform.InputConstants;
+import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.DimensionSpecialEffects;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
-import net.minecraft.client.KeyMapping;
-import com.mojang.blaze3d.platform.InputConstants;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
-
-import net.minecraftforge.client.ClientRegistry;
-import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.client.event.EntityRenderersEvent;
-import net.minecraftforge.client.event.TextureStitchEvent;
+import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
+import net.minecraftforge.client.event.RegisterTextureAtlasSpriteLoadersEvent;
 import net.minecraftforge.client.settings.KeyConflictContext;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-
-
 import org.lwjgl.glfw.GLFW;
 
 
@@ -73,10 +68,20 @@ public class SolarcraftClientRegistry {
     public static final KeyMapping GUI_ABILITY_BUY_SCREEN = new KeyMapping("key.ability_buy_screen.solarforge", KeyConflictContext.UNIVERSAL, InputConstants.Type.SCANCODE, GLFW.GLFW_KEY_D,"key.solarforge.category");
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
-    public static void registerTest(TextureStitchEvent.Pre event){
-        MinecraftForgeClient.registerTextureAtlasSpriteLoader(RadiantTextureAtlasSpriteLoader.REGISTRY_ID,RADIANT_TEXTURE_ATLAS_SPRITE_LOADER);
+    public static void registerTest(RegisterTextureAtlasSpriteLoadersEvent event){
+        event.register("radiant_loader",RADIANT_TEXTURE_ATLAS_SPRITE_LOADER);
+//        MinecraftForgeClient.registerTextureAtlasSpriteLoader(RadiantTextureAtlasSpriteLoader.REGISTRY_ID,RADIANT_TEXTURE_ATLAS_SPRITE_LOADER);
     }
 
+
+    @SubscribeEvent
+    public static void registerKeys(RegisterKeyMappingsEvent event){
+        event.register(FIRST_ABILITY_KEY);
+        event.register(SECOND_ABILITY_KEY);
+        event.register(THIRD_ABILITY_KEY);
+        event.register(FORTH_ABILITY_KEY);
+        event.register(GUI_ABILITY_BUY_SCREEN);
+    }
 
     @SubscribeEvent
     public static void registerClientStuff(final FMLClientSetupEvent event){
@@ -86,31 +91,30 @@ public class SolarcraftClientRegistry {
 
         ScreenSuppliers.SCREEN_REGISTRY.registerAll();
 
-        ItemBlockRenderTypes.setRenderLayer(SolarForge.SOLAR_INFUSER.get(), RenderType.solid());
-        ItemBlockRenderTypes.setRenderLayer(SolarcraftBlocks.INFUSING_POOL.get(), RenderType.solid());
-        ItemBlockRenderTypes.setRenderLayer(SolarcraftBlocks.SOLAR_LENS.get(), RenderType.translucent());
-        ItemBlockRenderTypes.setRenderLayer(SolarcraftBlocks.BONEMEALER.get(), RenderType.translucent());
-        ItemBlockRenderTypes.setRenderLayer(SolarcraftBlocks.SOLAR_FLOWER.get(), RenderType.cutout());
-        ItemBlockRenderTypes.setRenderLayer(SolarcraftBlocks.ASH_LEAVES.get(), RenderType.cutout());
-        ItemBlockRenderTypes.setRenderLayer(SolarcraftBlocks.RUNIC_LEAVES.get(), RenderType.cutout());
-        ItemBlockRenderTypes.setRenderLayer(SolarcraftBlocks.DEAD_SPROUT.get(), RenderType.cutout());
-        ItemBlockRenderTypes.setRenderLayer(SolarcraftBlocks.RADIANT_LEAVES.get(), RenderType.cutout());
-        ItemBlockRenderTypes.setRenderLayer(SolarcraftBlocks.RADIANT_GRASS_NOT_BLOCK.get(), RenderType.cutout());
-        ItemBlockRenderTypes.setRenderLayer(SolarcraftBlocks.RADIANT_GRASS.get(), RenderType.cutout());
-        ItemBlockRenderTypes.setRenderLayer(SolarcraftBlocks.RADIANT_BERRY_BUSH.get(), RenderType.cutout());
-        ItemBlockRenderTypes.setRenderLayer(SolarcraftBlocks.RADIANT_CRYSTAL.get(), RenderType.translucent());
-        ItemBlockRenderTypes.setRenderLayer(SolarcraftBlocks.CRYSTAL.get(), RenderType.translucent());
-        ItemBlockRenderTypes.setRenderLayer(SolarcraftBlocks.EXPLOSION_BLOCKER.get(), RenderType.translucent());
-        ItemBlockRenderTypes.setRenderLayer(SolarcraftBlocks.CRYSTAL_FLOWER.get(), RenderType.cutout());
-        ItemBlockRenderTypes.setRenderLayer(SolarcraftBlocks.VOID_LILY.get(), RenderType.cutout());
-        ItemBlockRenderTypes.setRenderLayer(SolarcraftBlocks.RUNIC_TREE_SAPLING.get(), RenderType.cutout());
+//        ItemBlockRenderTypes.setRenderLayer(SolarForge.SOLAR_INFUSER.get(), RenderType.solid());
+//        ItemBlockRenderTypes.setRenderLayer(SolarcraftBlocks.INFUSING_POOL.get(), RenderType.solid());
+//        ItemBlockRenderTypes.setRenderLayer(SolarcraftBlocks.SOLAR_LENS.get(), RenderType.translucent());
+//        ItemBlockRenderTypes.setRenderLayer(SolarcraftBlocks.BONEMEALER.get(), RenderType.translucent());
+//        ItemBlockRenderTypes.setRenderLayer(SolarcraftBlocks.SOLAR_FLOWER.get(), RenderType.cutout());
+//        ItemBlockRenderTypes.setRenderLayer(SolarcraftBlocks.ASH_LEAVES.get(), RenderType.cutout());
+//        ItemBlockRenderTypes.setRenderLayer(SolarcraftBlocks.RUNIC_LEAVES.get(), RenderType.cutout());
+//        ItemBlockRenderTypes.setRenderLayer(SolarcraftBlocks.DEAD_SPROUT.get(), RenderType.cutout());
+//        ItemBlockRenderTypes.setRenderLayer(SolarcraftBlocks.RADIANT_LEAVES.get(), RenderType.cutout());
+//        ItemBlockRenderTypes.setRenderLayer(SolarcraftBlocks.RADIANT_GRASS_NOT_BLOCK.get(), RenderType.cutout());
+//        ItemBlockRenderTypes.setRenderLayer(SolarcraftBlocks.RADIANT_GRASS.get(), RenderType.cutout());
+//        ItemBlockRenderTypes.setRenderLayer(SolarcraftBlocks.RADIANT_BERRY_BUSH.get(), RenderType.cutout());
+//        ItemBlockRenderTypes.setRenderLayer(SolarcraftBlocks.RADIANT_CRYSTAL.get(), RenderType.translucent());
+//        ItemBlockRenderTypes.setRenderLayer(SolarcraftBlocks.CRYSTAL.get(), RenderType.translucent());
+//        ItemBlockRenderTypes.setRenderLayer(SolarcraftBlocks.EXPLOSION_BLOCKER.get(), RenderType.translucent());
+//        ItemBlockRenderTypes.setRenderLayer(SolarcraftBlocks.CRYSTAL_FLOWER.get(), RenderType.cutout());
+//        ItemBlockRenderTypes.setRenderLayer(SolarcraftBlocks.VOID_LILY.get(), RenderType.cutout());
+//        ItemBlockRenderTypes.setRenderLayer(SolarcraftBlocks.RUNIC_TREE_SAPLING.get(), RenderType.cutout());
 
-        ClientRegistry.registerKeyBinding(FIRST_ABILITY_KEY);
-        ClientRegistry.registerKeyBinding(SECOND_ABILITY_KEY);
-        ClientRegistry.registerKeyBinding(THIRD_ABILITY_KEY);
-        ClientRegistry.registerKeyBinding(FORTH_ABILITY_KEY);
-//        ClientRegistry.registerKeyBinding(OPEN_GUI_ABILITY_KEY);
-        ClientRegistry.registerKeyBinding(GUI_ABILITY_BUY_SCREEN);
+//        ClientRegistry.registerKeyBinding(FIRST_ABILITY_KEY);
+//        ClientRegistry.registerKeyBinding(SECOND_ABILITY_KEY);
+//        ClientRegistry.registerKeyBinding(THIRD_ABILITY_KEY);
+//        ClientRegistry.registerKeyBinding(FORTH_ABILITY_KEY);
+//        ClientRegistry.registerKeyBinding(GUI_ABILITY_BUY_SCREEN);
 
 
 

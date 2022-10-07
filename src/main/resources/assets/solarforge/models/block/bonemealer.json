@@ -5,6 +5,7 @@
 		"1": "solarforge:block/bonemealer",
 		"particle": "block/netherite_block"
 	},
+	"render_type": "translucent",
 	"elements": [
 		{
 			"from": [0, 0, 0],

@@ -6,6 +6,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.util.RandomSource;
 import net.minecraft.util.valueproviders.IntProvider;
 import net.minecraft.world.level.LevelSimulatedReader;
 import net.minecraft.world.level.block.state.BlockState;
@@ -33,7 +34,7 @@ public class RadiantSmallTreeFoliagePlacer extends FoliagePlacer {
     }
 
     @Override
-    protected void createFoliage(LevelSimulatedReader reader, BiConsumer<BlockPos, BlockState> world, Random random, TreeConfiguration cfg, int i, FoliageAttachment place, int i1, int i2, int i3) {
+    protected void createFoliage(LevelSimulatedReader reader, BiConsumer<BlockPos, BlockState> world, RandomSource random, TreeConfiguration cfg, int i, FoliageAttachment place, int i1, int i2, int i3) {
         BlockPos mainpos = place.pos().below(3);
 
         for (int a = -3;a < 4;a++){
@@ -73,12 +74,12 @@ public class RadiantSmallTreeFoliagePlacer extends FoliagePlacer {
     }
 
     @Override
-    public int foliageHeight(Random random, int i, TreeConfiguration treeConfiguration) {
+    public int foliageHeight(RandomSource random, int i, TreeConfiguration treeConfiguration) {
         return 0;
     }
 
     @Override
-    protected boolean shouldSkipLocation(Random random, int i, int i1, int i2, int i3, boolean b) {
+    protected boolean shouldSkipLocation(RandomSource random, int i, int i1, int i2, int i3, boolean b) {
         return false;
     }
 }

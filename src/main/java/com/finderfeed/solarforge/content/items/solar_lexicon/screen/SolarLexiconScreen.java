@@ -26,10 +26,9 @@ import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.item.Items;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.Component;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL11;
 
@@ -214,8 +213,8 @@ public class SolarLexiconScreen extends Screen implements IScrollable,PostRender
                 currentProgression = a;
 
             },a.getIcon(),1);
-            TextComponent preText;
-            TextComponent afterText;
+            MutableComponent preText;
+            MutableComponent afterText;
             boolean g = Helpers.canPlayerUnlock(a,player);
             if (Helpers.hasPlayerCompletedProgression(a,player)){
                 preText = Component.literal(a.getPretext().getString());

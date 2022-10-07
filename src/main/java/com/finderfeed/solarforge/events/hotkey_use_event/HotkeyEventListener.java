@@ -22,7 +22,7 @@ public class HotkeyEventListener {
 
 
     @SubscribeEvent
-    public static void ListenToEvent(final InputEvent.KeyInputEvent event){
+    public static void ListenToEvent(final InputEvent.Key event){
         if (Minecraft.getInstance().screen != null) return;
 
         if (SolarcraftClientRegistry.FIRST_ABILITY_KEY.isDown() && event.getAction() == GLFW.GLFW_PRESS){

@@ -4,6 +4,7 @@ import com.finderfeed.solarforge.helpers.Helpers;
 import com.finderfeed.solarforge.config.SolarcraftConfig;
 import com.mojang.serialization.Codec;
 
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.Mirror;
@@ -20,7 +21,8 @@ import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConf
 import net.minecraft.world.level.levelgen.structure.templatesystem.BlockIgnoreProcessor;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
-import net.minecraft.world.level.levelgen.structure.templatesystem.StructureManager;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
+
 
 import java.util.Random;
 
@@ -45,13 +47,13 @@ public class EnergyPylonFeature extends Feature<NoneFeatureConfiguration> {
 
     @Override
     public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> ctx) {
-        Random random = ctx.random();
+        RandomSource random = ctx.random();
         if (random.nextFloat() > 1.0f/SolarcraftConfig.ENERGY_PYLON_SPAWN_CHANCE.get()) return false;
 
         WorldGenLevel world = ctx.level();
         BlockPos pos = ctx.origin();
         Rotation rot = Rotation.NONE;
-        StructureManager manager = world.getLevel().getStructureManager();
+        StructureTemplateManager manager = world.getLevel().getStructureManager();
 
         StructureTemplate templ = manager.getOrCreate(LOCATIONS[world.getRandom().nextInt(LOCATIONS.length)]);
 

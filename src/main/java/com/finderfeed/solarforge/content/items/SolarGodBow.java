@@ -11,6 +11,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -125,7 +126,7 @@ public class SolarGodBow extends RareSolarcraftItem implements ITagUser {
 
     @Override
     public void fillItemCategory(CreativeModeTab tab, NonNullList<ItemStack> stacks) {
-        if (this.allowdedIn(tab)){
+        if (this.allowedIn(tab)){
             ItemStack stack = new ItemStack(this);
             stack.getOrCreateTagElement(SolarCraftTags.SOLAR_GOD_BOW_TAG).putInt(SolarCraftTags.SOLAR_GOD_BOW_LEVEL_TAG,1);
             stacks.add(stack);
@@ -184,7 +185,7 @@ public class SolarGodBow extends RareSolarcraftItem implements ITagUser {
         super.appendHoverText(stack, level, comp, p_41424_);
     }
 
-    private void addLevelDesc(ItemStack stack,List<Component> toAdd, Component desc, int reqLevel){
+    private void addLevelDesc(ItemStack stack, List<Component> toAdd, MutableComponent desc, int reqLevel){
         if (getLevel(stack) >= reqLevel){
             toAdd.add(desc.withStyle(ChatFormatting.GOLD));
         }else{

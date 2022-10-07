@@ -3,6 +3,7 @@ package com.finderfeed.solarforge.content.world_generation.structures.dimensiona
 import com.finderfeed.solarforge.events.other_events.StructurePieces;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.core.Vec3i;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.entity.ChestBlockEntity;
@@ -18,7 +19,7 @@ import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSeriali
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePiecesBuilder;
 import net.minecraft.world.level.levelgen.structure.templatesystem.BlockIgnoreProcessor;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
-import net.minecraft.world.level.levelgen.structure.templatesystem.StructureManager;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
 
 import java.util.Map;
 import java.util.Random;
@@ -31,7 +32,7 @@ public class DimStructPieces {
     /*
      * Begins assembling your structure and where the pieces needs to go.
      */
-    public static void start(StructureManager templateManager, BlockPos pos, Rotation rotation, StructurePiecesBuilder pieceList, Random random) {
+    public static void start(StructureTemplateManager templateManager, BlockPos pos, Rotation rotation, StructurePiecesBuilder pieceList) {
         int x = pos.getX();
         int z = pos.getZ();
 
@@ -57,12 +58,12 @@ public class DimStructPieces {
     public static class Piece extends TemplateStructurePiece {
 
 
-        public Piece( StructureManager p_163662_, ResourceLocation p_163663_, Rotation rotation, BlockPos p_163666_) {
+        public Piece( StructureTemplateManager p_163662_, ResourceLocation p_163663_, Rotation rotation, BlockPos p_163666_) {
             super(StructurePieces.DIMENSIONAL_SHARD_STRUCTURE, 0, p_163662_, p_163663_,p_163663_.toString(), makeSettings(rotation,p_163663_), makePosition(p_163663_,p_163666_,0));
         }
 
         public Piece( StructurePieceSerializationContext p_163670_,CompoundTag tagCompound) {
-            super(StructurePieces.DIMENSIONAL_SHARD_STRUCTURE, tagCompound, p_163670_.structureManager(), (loc)->{
+            super(StructurePieces.DIMENSIONAL_SHARD_STRUCTURE, tagCompound, p_163670_.structureTemplateManager(), (loc)->{
                 return makeSettings(Rotation.valueOf(tagCompound.getString("Rot")),loc);
             });
         }
@@ -84,6 +85,17 @@ public class DimStructPieces {
             tag.putString("Rot", this.placeSettings.getRotation().name());
         }
 
+        @Override
+        protected void handleDataMarker(String func, BlockPos pos, ServerLevelAccessor world, RandomSource rnd, BoundingBox p_226910_) {
+            if ("treasure".equals(func)){
+                world.setBlock(pos, Blocks.AIR.defaultBlockState(),3);
+                BlockEntity tile = world.getBlockEntity(pos.below());
+                if (tile instanceof ChestBlockEntity){
+                    ((ChestBlockEntity) tile).setLootTable(new ResourceLocation("solarforge","chest/dimensional_shard"),rnd.nextLong());
+                }
+            }
+        }
+
         /**
          * (abstract) Helper method to read subclass data from NBT
          */
@@ -100,19 +112,9 @@ public class DimStructPieces {
          * You can set other data markers to do other behaviors such as spawn a random mob in a certain spot,
          * randomize what rare block spawns under the floor, or what item an Item Frame will have.
          */
-        @Override
-        protected void handleDataMarker(String func, BlockPos pos, ServerLevelAccessor world, Random rnd, BoundingBox box) {
-            if ("treasure".equals(func)){
-                world.setBlock(pos, Blocks.AIR.defaultBlockState(),3);
-                BlockEntity tile = world.getBlockEntity(pos.below());
-                if (tile instanceof ChestBlockEntity){
-                    ((ChestBlockEntity) tile).setLootTable(new ResourceLocation("solarforge","chest/dimensional_shard"),rnd.nextLong());
-                }
-            }
-        }
     }
 }
-//        public Piece(StructureManager templateManagerIn, ResourceLocation resourceLocationIn, BlockPos pos, Rotation rotationIn) {
+//        public Piece(StructureTemplateManager templateManagerIn, ResourceLocation resourceLocationIn, BlockPos pos, Rotation rotationIn) {
 //            super(FeatureInit.DIMENSIONAL_SHARD_STRUCTURE, 0);
 //            this.resourceLocation = resourceLocationIn;
 //            BlockPos blockpos = DimStructPieces.OFFSET.get(resourceLocation);
@@ -121,14 +123,14 @@ public class DimStructPieces {
 //            this.setupPiece(templateManagerIn);
 //        }
 //
-//        public Piece(StructureManager templateManagerIn, CompoundTag tagCompound) {
+//        public Piece(StructureTemplateManager templateManagerIn, CompoundTag tagCompound) {
 //            super(FeatureInit.DIMENSIONAL_SHARD_STRUCTURE, tagCompound);
 //            this.resourceLocation = new ResourceLocation(tagCompound.getString("Template"));
 //            this.rotation = Rotation.valueOf(tagCompound.getString("Rot"));
 //            this.setupPiece(templateManagerIn);
 //        }
 //
-//        private void setupPiece(StructureManager templateManager) {
+//        private void setupPiece(StructureTemplateManager templateManager) {
 //            StructureTemplate template = templateManager.get(this.resourceLocation);
 //            StructurePlaceSettings placementsettings = (new StructurePlaceSettings()).setRotation(this.rotation).setMirror(Mirror.NONE);
 //            this.setup(template, this.templatePosition, placementsettings);

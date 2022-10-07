@@ -6,6 +6,7 @@ import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -16,9 +17,10 @@ import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.templatesystem.BlockIgnoreProcessor;
-import net.minecraft.world.level.levelgen.structure.templatesystem.StructureManager;
+
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
 import org.apache.logging.log4j.Level;
 
 import java.util.ArrayList;
@@ -48,11 +50,11 @@ public class RadiantLandFloatingIslands extends Feature<NoneFeatureConfiguration
         }
         BlockPos pos = ctx.origin();
 
-        Random random = ctx.random();
+        RandomSource random = ctx.random();
 
 
         Rotation rot = Rotation.getRandom(random);
-        StructureManager manager = world.getLevel().getStructureManager();
+        StructureTemplateManager manager = world.getLevel().getStructureManager();
         StructureTemplate templ = manager.getOrCreate(List.of(ISLAND1,ISLAND2,ISLAND3,ISLAND4).get(random.nextInt(4)));
         StructurePlaceSettings set = new StructurePlaceSettings().addProcessor(BlockIgnoreProcessor.AIR).setRandom(random).setRotation(rot).setBoundingBox(BoundingBox.infinite());
         BlockPos blockpos1 = templ.getZeroPositionWithTransform(pos.offset(0,1,0), Mirror.NONE, rot);

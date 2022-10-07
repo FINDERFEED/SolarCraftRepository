@@ -37,7 +37,7 @@ public class SolarEnergyFurnace extends GlazedTerracottaBlock implements EntityB
     public InteractionResult use(BlockState p_225533_1_, Level world, BlockPos p_225533_3_, Player p_225533_4_, InteractionHand p_225533_5_, BlockHitResult p_225533_6_) {
             if (!world.isClientSide && (world.getBlockEntity(p_225533_3_) instanceof SolarEnergyFurnaceTile) ){
                 if (!(p_225533_4_.getMainHandItem().getItem() instanceof SolarNetworkBinder)) {
-                    NetworkHooks.openGui((ServerPlayer) p_225533_4_, (SolarEnergyFurnaceTile) world.getBlockEntity(p_225533_3_),
+                    NetworkHooks.openScreen((ServerPlayer) p_225533_4_, (SolarEnergyFurnaceTile) world.getBlockEntity(p_225533_3_),
                             (buf) -> buf.writeBlockPos(p_225533_3_)
                     );
                     return InteractionResult.CONSUME;

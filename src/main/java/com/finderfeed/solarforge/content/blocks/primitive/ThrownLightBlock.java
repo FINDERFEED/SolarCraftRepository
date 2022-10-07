@@ -4,6 +4,7 @@ import com.finderfeed.solarforge.client.particles.SolarcraftParticleTypes;
 import com.finderfeed.solarforge.helpers.ClientHelpers;
 import com.finderfeed.solarforge.helpers.Helpers;
 import net.minecraft.core.BlockPos;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -36,7 +37,7 @@ public class ThrownLightBlock extends Block {
     }
 
     @Override
-    public void animateTick(BlockState state, Level level, BlockPos pos, Random random) {
+    public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
         double rx = random.nextDouble() * 0.5 - 0.25f;
         double ry = random.nextDouble() * 0.5 - 0.25f;
         double rz = random.nextDouble() * 0.5 - 0.25f;
@@ -47,4 +48,5 @@ public class ThrownLightBlock extends Block {
 
         super.animateTick(state, level, pos, random);
     }
+
 }

@@ -67,15 +67,5 @@ public class SmeltingRecipeCategory implements IRecipeCategory<SolarSmeltingReci
         return JeiRecipeTypes.SMELTING;
     }
 
-    @SuppressWarnings("removal")
-    @Override
-    public ResourceLocation getUid() {
-        return new ResourceLocation(SolarForge.MOD_ID,"solar_smelting");
-    }
 
-    @SuppressWarnings("removal")
-    @Override
-    public Class<? extends SolarSmeltingRecipe> getRecipeClass() {
-        return SolarSmeltingRecipe.class;
-    }
 }

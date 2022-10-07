@@ -4,6 +4,7 @@ import com.finderfeed.solarforge.helpers.Helpers;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -15,9 +16,9 @@ import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.templatesystem.BlockIgnoreProcessor;
-import net.minecraft.world.level.levelgen.structure.templatesystem.StructureManager;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
 
 import java.util.Random;
 
@@ -36,10 +37,10 @@ public class MoltenForestRuins extends Feature<NoneFeatureConfiguration> {
 
         BlockPos pos = ctx.origin();
         WorldGenLevel world = ctx.level();
-        Random random = ctx.random();
+        RandomSource random = ctx.random();
 
         Rotation rot = Rotation.getRandom(random);
-        StructureManager manager = world.getLevel().getStructureManager();
+        StructureTemplateManager manager = world.getLevel().getStructureManager();
         ResourceLocation[] LOC = {RUINS1,RUINS2,RUINS3};
         StructureTemplate templ = manager.getOrCreate(LOC[random.nextInt(3)]);
         StructurePlaceSettings set = new StructurePlaceSettings().addProcessor(BlockIgnoreProcessor.AIR).setRandom(random).setRotation(rot).setBoundingBox(BoundingBox.infinite());

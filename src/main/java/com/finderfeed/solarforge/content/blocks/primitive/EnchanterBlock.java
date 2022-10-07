@@ -46,12 +46,12 @@ public class EnchanterBlock extends RunicEnergySaverBlock implements EntityBlock
                     level.sendBlockUpdated(pos,state,state,3);
                     enchanter.loadConfigIfNecessary();
                     String configString = EnchanterConfigInit.SERVERSIDE_JSON.toString();
-                    NetworkHooks.openGui((ServerPlayer) player,new EnchanterContainer.Provider(pos,configString),(buf)->{
+                    NetworkHooks.openScreen((ServerPlayer) player,new EnchanterContainer.Provider(pos,configString),(buf)->{
                         buf.writeBlockPos(pos);
                         buf.writeUtf(configString);
                     });
                 }else {
-                    player.sendSystemMessage(Component.literal("You are not the owner!").withStyle(ChatFormatting.RED),player.getUUID());
+                    player.sendSystemMessage(Component.literal("You are not the owner!").withStyle(ChatFormatting.RED));
                 }
                 return InteractionResult.SUCCESS;
             }

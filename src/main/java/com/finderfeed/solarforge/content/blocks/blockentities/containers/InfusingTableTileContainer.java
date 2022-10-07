@@ -15,7 +15,7 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
-import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
@@ -31,7 +31,7 @@ public class InfusingTableTileContainer extends AbstractContainerMenu {
         super(SolarcraftContainers.INFUSING_TABLE_TILE.get(), p_38852_);
         Level world= inv.player.level;
         this.tile = (InfusingTableTile) world.getBlockEntity(tilepos);
-        this.inventory = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(null);
+        this.inventory = tile.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(null);
 
 
         for(int i = 0; i < 3; ++i) {

@@ -156,7 +156,7 @@ public class EnchanterBlockEntity extends REItemHandlerBlockEntity {
         tag.putInt("enchanting_ticks",enchantingTicks);
         tag.putBoolean("in_progress",enchantingInProgress);
         if (processingEnchantment != null) {
-            tag.putString("enchantment",processingEnchantment.enchantment().getRegistryName().toString());
+            tag.putString("enchantment",ForgeRegistries.ENCHANTMENTS.getKey(processingEnchantment.enchantment()).toString());
         }else{
             tag.putString("enchantment","null");
         }

@@ -31,7 +31,7 @@ public class SolarSmeltingRecipeManager /*implements IRecipeManager<SolarSmeltin
 //     */
 //    @Override
 //    public RecipeType<SolarSmeltingRecipe> getRecipeType() {
-//        return SolarForge.SOLAR_SMELTING;
+//        return SolarcraftRecipeTypes.SMELTING.get();
 //    }
 //
 //    /**

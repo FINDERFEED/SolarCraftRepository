@@ -2,5 +2,6 @@
   "parent": "block/cross",
   "textures": {
     "cross": "solarforge:block/dead_sprout"
-  }
+  },
+  "render_type": "cutout"
 }

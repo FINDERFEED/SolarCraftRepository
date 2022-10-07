@@ -180,17 +180,5 @@ public class InfusingRecipeCategory implements IRecipeCategory<InfusingRecipe> {
     }
 
 
-    @SuppressWarnings("removal")
-    @Override
-    public ResourceLocation getUid() {
-        return new ResourceLocation(SolarForge.MOD_ID,"infusing_category");
-    }
-
-    @SuppressWarnings("removal")
-    @Override
-    public Class<? extends InfusingRecipe> getRecipeClass() {
-        return InfusingRecipe.class;
-    }
-
 
 }

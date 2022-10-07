@@ -3,26 +3,26 @@ package com.finderfeed.solarforge.events.other_events;
 import com.finderfeed.solarforge.content.world_generation.features.FeaturesRegistry;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.levelgen.GenerationStep;
-import net.minecraftforge.event.world.BiomeLoadingEvent;
+
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid = "solarforge",bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class OresGeneration {
 
-    @SubscribeEvent
-    public static void genOres(final BiomeLoadingEvent event){
-
-//.rangeUniform(VerticalAnchor.bottom(),VerticalAnchor.absolute(30)).squared().count(10)
-        if (!event.getCategory().equals(Biome.BiomeCategory.NETHER) && !event.getCategory().equals(Biome.BiomeCategory.THEEND) && notNone(event)){
-            event.getGeneration().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES,FeaturesRegistry.SOLAR_ORE);
-        }
-//        .rangeUniform(VerticalAnchor.bottom(),VerticalAnchor.absolute(80)).squared().count(7)
-        if (!event.getCategory().equals(Biome.BiomeCategory.NETHER) && !event.getCategory().equals(Biome.BiomeCategory.THEEND) && notNone(event)){
-            event.getGeneration().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, FeaturesRegistry.SOLAR_STONE);
-            //TODO:remove when adding overworld biomes will be possible
-            event.getGeneration().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, FeaturesRegistry.ULDORADIUM_ORE_PLACED_FEATURE);
-        }
+//    @SubscribeEvent
+//    public static void genOres(final BiomeLoadingEvent event){
+//
+////.rangeUniform(VerticalAnchor.bottom(),VerticalAnchor.absolute(30)).squared().count(10)
+//        if (!event.getCategory().equals(Biome.BiomeCategory.NETHER) && !event.getCategory().equals(Biome.BiomeCategory.THEEND) && notNone(event)){
+//            event.getGeneration().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES,FeaturesRegistry.SOLAR_ORE);
+//        }
+////        .rangeUniform(VerticalAnchor.bottom(),VerticalAnchor.absolute(80)).squared().count(7)
+//        if (!event.getCategory().equals(Biome.BiomeCategory.NETHER) && !event.getCategory().equals(Biome.BiomeCategory.THEEND) && notNone(event)){
+//            event.getGeneration().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, FeaturesRegistry.SOLAR_STONE);
+//            //TODO:remove when adding overworld biomes will be possible
+//            event.getGeneration().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, FeaturesRegistry.ULDORADIUM_ORE_PLACED_FEATURE);
+//        }
 
 //        if (event.getCategory().equals(Biome.BiomeCategory.DESERT) ) {
 //            event.getGeneration().getStructures().add(() -> SolarForgeStructureFeatures.CONF_DUNGEON_ONE);
@@ -47,11 +47,11 @@ public class OresGeneration {
 //        }
 
 
-    }
-
-    private static boolean notNone(BiomeLoadingEvent event){
-        return event.getCategory() != Biome.BiomeCategory.NONE;
-    }
+//    }
+//
+//    private static boolean notNone(BiomeLoadingEvent event){
+//        return event.getCategory() != Biome.BiomeCategory.NONE;
+//    }
 
 //    @SubscribeEvent
 //    public void addDimensionalSpacing(final WorldEvent.Load event) {

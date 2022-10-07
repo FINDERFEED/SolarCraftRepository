@@ -2,5 +2,6 @@
   "parent": "block/cross",
   "textures": {
     "cross": "solarforge:block/radiant_berry_bush"
-  }
+  },
+  "render_type": "cutout"
 }

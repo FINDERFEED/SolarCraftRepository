@@ -6,6 +6,7 @@ import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -18,9 +19,9 @@ import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.templatesystem.BlockIgnoreProcessor;
-import net.minecraft.world.level.levelgen.structure.templatesystem.StructureManager;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
 import org.apache.logging.log4j.Level;
 
 import java.util.ArrayList;
@@ -45,7 +46,7 @@ public class CrystalCaveOreCrystal extends Feature<NoneFeatureConfiguration> {
         }
         BlockPos pos = ctx.origin();
 
-        Random random = ctx.random();
+        RandomSource random = ctx.random();
         BlockState stateAtPos = world.getBlockState(pos);
         if (!(stateAtPos.isAir())){
             return false;
@@ -54,7 +55,7 @@ public class CrystalCaveOreCrystal extends Feature<NoneFeatureConfiguration> {
         if (column.isPresent() && column.get().getFloor().isPresent()) {
 
             Rotation rot = Rotation.getRandom(random);
-            StructureManager manager = world.getLevel().getStructureManager();
+            StructureTemplateManager manager = world.getLevel().getStructureManager();
             StructureTemplate templ = manager.getOrCreate(ORE_CRYSTAL);
             StructurePlaceSettings set = new StructurePlaceSettings().addProcessor(BlockIgnoreProcessor.AIR).setRandom(random).setRotation(rot).setBoundingBox(BoundingBox.infinite());
             BlockPos blockpos1 = templ.getZeroPositionWithTransform(pos.offset(-templ.getSize().getX() / 2, 0, -templ.getSize().getZ() / 2), Mirror.NONE, rot);

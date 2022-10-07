@@ -60,10 +60,10 @@ public class VillagerSolarMaster extends PathfinderMob {
             if (Helpers.hasPlayerCompletedProgression(Progression.IMBUED_COLD_STAR, player) &&
                     ((player.getMainHandItem().getItem() == Items.EMERALD) && (player.getMainHandItem().getCount() == player.getMainHandItem().getMaxStackSize()))) {
                 if (TRADED_WITH.contains(player.getUUID())) {
-                    player.sendSystemMessage(Component.translatable("solarcraft.already_traded"), player.getUUID());
+                    player.sendSystemMessage(Component.translatable("solarcraft.already_traded"));
                     playSound(SoundEvents.VILLAGER_NO,1,1);
                 } else {
-                    player.sendSystemMessage(Component.translatable("solarcraft.use_villager_success"), player.getUUID());
+                    player.sendSystemMessage(Component.translatable("solarcraft.use_villager_success"));
                     Helpers.fireProgressionEvent(player, Progression.TRADE_FOR_BLUE_GEM);
 
                     playSound(SoundEvents.VILLAGER_YES,1,1);
@@ -74,14 +74,14 @@ public class VillagerSolarMaster extends PathfinderMob {
 
             } else if (Helpers.hasPlayerCompletedProgression(Progression.CRAFT_SOLAR_LENS, player)) {
                 if (TRADED_WITH.contains(player.getUUID())) {
-                    player.sendSystemMessage(Component.translatable("solarcraft.already_traded"), player.getUUID());
+                    player.sendSystemMessage(Component.translatable("solarcraft.already_traded"));
                     playSound(SoundEvents.VILLAGER_NO,1,1);
                 } else {
-                    player.sendSystemMessage(Component.translatable("solarcraft.bring_emeralds"), player.getUUID());
+                    player.sendSystemMessage(Component.translatable("solarcraft.bring_emeralds"));
                 }
 
             } else {
-                player.sendSystemMessage(Component.translatable("solarcraft.not_enough_skill"), player.getUUID());
+                player.sendSystemMessage(Component.translatable("solarcraft.not_enough_skill"));
                 playSound(SoundEvents.VILLAGER_NO,1,1);
             }
 

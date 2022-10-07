@@ -39,7 +39,7 @@ public class ModuleEventsHandler {
 
     @SubscribeEvent
     public static void handleFurySwipes(AttackEntityEvent event){
-        Player player = event.getPlayer();
+        Player player = event.getEntity();
         Entity entity = event.getTarget();
         if (!player.level.isClientSide){
             ItemStack stack = player.getMainHandItem();
@@ -63,7 +63,7 @@ public class ModuleEventsHandler {
 
     @SubscribeEvent
     public static void handlePosioningBlade(AttackEntityEvent event){
-        Player player = event.getPlayer();
+        Player player = event.getEntity();
         Entity entity = event.getTarget();
         if (!player.level.isClientSide){
             ItemStack stack = player.getMainHandItem();
@@ -81,7 +81,7 @@ public class ModuleEventsHandler {
     @SubscribeEvent
     public static void handleDisarmingThorns(LivingDamageEvent event){
         DamageSource src = event.getSource();
-        LivingEntity entity = event.getEntityLiving();
+        LivingEntity entity = event.getEntity();
         if (!entity.level.isClientSide && (src.getEntity() instanceof LivingEntity attacker) ){
             if (doesArmorHaveModule(SolarcraftItems.DISARMING_THORNS_MODULE.get(),entity.getArmorSlots()) != 0){
                 if (entity.level.random.nextFloat() <= (float)SolarcraftConfig.DISARM_CHANCE_MODULE.get()/100){
@@ -96,7 +96,7 @@ public class ModuleEventsHandler {
 
     @SubscribeEvent
     public static void handleMinerModule(PlayerInteractEvent.RightClickItem event){
-        Player player = event.getPlayer();
+        Player player = event.getEntity();
         Level world = player.level;
         InteractionHand hand = event.getHand();
         if (!world.isClientSide){
@@ -112,7 +112,7 @@ public class ModuleEventsHandler {
 
     @SubscribeEvent
     public static void handleMagicDamageBonus(AttackEntityEvent event){
-        Player player = event.getPlayer();
+        Player player = event.getEntity();
         Entity entity = event.getTarget();
         if (!player.level.isClientSide){
             ItemStack stack = player.getMainHandItem();
@@ -136,7 +136,7 @@ public class ModuleEventsHandler {
 
     @SubscribeEvent
     public static void handleAOEAttackAbility(PlayerInteractEvent.RightClickItem event){
-        Player player = event.getPlayer();
+        Player player = event.getEntity();
         Level world = player.level;
         InteractionHand hand = event.getHand();
         if (!world.isClientSide){
@@ -195,9 +195,9 @@ public class ModuleEventsHandler {
     @SubscribeEvent
     public static void handle10PhysicalDefenceModule(LivingDamageEvent event){
         DamageSource src = event.getSource();
-        if (!event.getEntityLiving().level.isClientSide) {
+        if (!event.getEntity().level.isClientSide) {
             if (!src.isMagic() && !src.isBypassArmor()) {
-                LivingEntity entity = event.getEntityLiving();
+                LivingEntity entity = event.getEntity();
                 entity.getArmorSlots().forEach((stack) -> {
                     if (hasModule(SolarcraftItems.PHYSICAL_DEFENCE_MODULE_10.get(), stack)) {
                         float amount = event.getAmount();

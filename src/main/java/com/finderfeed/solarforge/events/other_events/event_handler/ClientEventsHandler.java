@@ -22,15 +22,14 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.OreBlock;
+
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ClientPlayerNetworkEvent;
-import net.minecraftforge.client.event.EntityViewRenderEvent;
-import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderLevelStageEvent;
+import net.minecraftforge.client.event.ViewportEvent;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
@@ -49,13 +48,9 @@ public class ClientEventsHandler {
     private static List<BlockPos> CATALYST_RENDER_POSITIONS = new ArrayList<>();
     
 
-    @SubscribeEvent
-    public static void reduceFog(EntityViewRenderEvent.RenderFogEvent event){
-
-    }
 
     @SubscribeEvent
-    public static void onPlayerLogout(final ClientPlayerNetworkEvent.LoggedOutEvent event){
+    public static void onPlayerLogout(final ClientPlayerNetworkEvent.LoggingOut event){
         ClientHelpers.deleteCachedFragments();
     }
 
@@ -236,7 +231,7 @@ public class ClientEventsHandler {
                 for (int z = -radius;z <= radius;z++){
                     BlockPos pos = mainpos.offset(x,y,z);
                     BlockState state = level.getBlockState(pos);
-                    if (state.is(Tags.Blocks.ORES) || (state.getBlock() instanceof OreBlock)){
+                    if (state.is(Tags.Blocks.ORES)){
                         ORES_RENDER_POSITIONS.add(pos);
                     }
                 }
@@ -265,40 +260,40 @@ public class ClientEventsHandler {
 
 
 
-    private static Flash currentFlashEffect = null;
-    private static CameraShake cameraShakeEffect = null;
+    public static Flash currentFlashEffect = null;
+    public static CameraShake cameraShakeEffect = null;
 
-    @SubscribeEvent
-    public static void renderFlash(RenderGameOverlayEvent event){
-        if (currentFlashEffect == null) return;
-        if (event.getType() != RenderGameOverlayEvent.ElementType.TEXT) return;
-        PoseStack matrices = event.getMatrixStack();
-        float scaledHeight = Minecraft.getInstance().getWindow().getGuiScaledHeight();
-        float scaledWidth = Minecraft.getInstance().getWindow().getGuiScaledWidth();
-        float alpha = 1f;
-        if (currentFlashEffect.getTicker() <= currentFlashEffect.getInTime()){
-            alpha = currentFlashEffect.getTicker() / (float) currentFlashEffect.getInTime();
-        }else if (currentFlashEffect.getTicker() >= currentFlashEffect.getAllTime() - currentFlashEffect.getOutTime()){
-            alpha = 1f - (currentFlashEffect.getTicker() - currentFlashEffect.getStayTime() - currentFlashEffect.getInTime())/(float)currentFlashEffect.getOutTime();
-        }
-        RenderSystem.enableBlend();
-        RenderSystem.disableTexture();
-        RenderSystem.defaultBlendFunc();
-        RenderSystem.setShader(GameRenderer::getPositionColorShader);
-        BufferBuilder b = Tesselator.getInstance().getBuilder();
-        b.begin(VertexFormat.Mode.QUADS,DefaultVertexFormat.POSITION_COLOR);
-
-        Matrix4f m = matrices.last().pose();
-
-        b.vertex(m,0,scaledHeight,0).color(1f,1f,1f,alpha).endVertex();
-        b.vertex(m,scaledWidth,scaledHeight,0).color(1f,1f,1f,alpha).endVertex();
-        b.vertex(m,scaledWidth,0,0).color(1f,1f,1f,alpha).endVertex();
-        b.vertex(m,0,0,0).color(1f,1f,1f,alpha).endVertex();
-        b.end();
-        BufferUploader.end(b);
-        RenderSystem.enableTexture();
-        RenderSystem.disableBlend();
-    }
+//    @SubscribeEvent
+//    public static void renderFlash(RenderGameOverlayEvent event){
+//        if (currentFlashEffect == null) return;
+//        if (event.getType() != RenderGameOverlayEvent.ElementType.TEXT) return;
+//        PoseStack matrices = event.getMatrixStack();
+//        float scaledHeight = Minecraft.getInstance().getWindow().getGuiScaledHeight();
+//        float scaledWidth = Minecraft.getInstance().getWindow().getGuiScaledWidth();
+//        float alpha = 1f;
+//        if (currentFlashEffect.getTicker() <= currentFlashEffect.getInTime()){
+//            alpha = currentFlashEffect.getTicker() / (float) currentFlashEffect.getInTime();
+//        }else if (currentFlashEffect.getTicker() >= currentFlashEffect.getAllTime() - currentFlashEffect.getOutTime()){
+//            alpha = 1f - (currentFlashEffect.getTicker() - currentFlashEffect.getStayTime() - currentFlashEffect.getInTime())/(float)currentFlashEffect.getOutTime();
+//        }
+//        RenderSystem.enableBlend();
+//        RenderSystem.disableTexture();
+//        RenderSystem.defaultBlendFunc();
+//        RenderSystem.setShader(GameRenderer::getPositionColorShader);
+//        BufferBuilder b = Tesselator.getInstance().getBuilder();
+//        b.begin(VertexFormat.Mode.QUADS,DefaultVertexFormat.POSITION_COLOR);
+//
+//        Matrix4f m = matrices.last().pose();
+//
+//        b.vertex(m,0,scaledHeight,0).color(1f,1f,1f,alpha).endVertex();
+//        b.vertex(m,scaledWidth,scaledHeight,0).color(1f,1f,1f,alpha).endVertex();
+//        b.vertex(m,scaledWidth,0,0).color(1f,1f,1f,alpha).endVertex();
+//        b.vertex(m,0,0,0).color(1f,1f,1f,alpha).endVertex();
+////        b.end();
+//        BufferUploader.drawWithShader(b.end());
+//        RenderSystem.enableTexture();
+//        RenderSystem.disableBlend();
+//    }
 
     @SubscribeEvent
     public static void tickFlashAndCameraShake(TickEvent.PlayerTickEvent event){
@@ -328,7 +323,7 @@ public class ClientEventsHandler {
     }
 
     @SubscribeEvent
-    public static void cameraShake(EntityViewRenderEvent.CameraSetup event){
+    public static void cameraShake(ViewportEvent.ComputeCameraAngles event){
 
         if (Minecraft.getInstance().level == null || cameraShakeEffect == null) return;
         Random random = new Random(Minecraft.getInstance().level.getGameTime()*1233);

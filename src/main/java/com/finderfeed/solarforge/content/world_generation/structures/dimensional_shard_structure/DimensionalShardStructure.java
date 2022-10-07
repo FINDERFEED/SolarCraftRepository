@@ -1,31 +1,35 @@
 package com.finderfeed.solarforge.content.world_generation.structures.dimensional_shard_structure;
 
+import com.finderfeed.solarforge.content.world_generation.structures.SolarForgeStructures;
 import com.mojang.serialization.Codec;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
-import net.minecraft.world.level.levelgen.feature.StructureFeature;
+import net.minecraft.world.level.levelgen.structure.Structure;
+import net.minecraft.world.level.levelgen.structure.StructureType;
 import net.minecraft.world.level.levelgen.structure.pieces.PieceGenerator;
 import net.minecraft.world.level.levelgen.structure.pieces.PieceGeneratorSupplier;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePiecesBuilder;
 
-public class DimensionalShardStructure extends StructureFeature<NoneFeatureConfiguration> {
-    public DimensionalShardStructure(Codec<NoneFeatureConfiguration> p_197165_) {
-        super(p_197165_, PieceGeneratorSupplier.simple(PieceGeneratorSupplier.checkForBiomeOnTop(Heightmap.Types.WORLD_SURFACE_WG), DimensionalShardStructure::generatePieces));
+import java.util.Optional;
+
+public class DimensionalShardStructure extends Structure {
+
+    public static final Codec<DimensionalShardStructure> CODEC = simpleCodec(DimensionalShardStructure::new);
+
+    protected DimensionalShardStructure(StructureSettings p_226558_) {
+        super(p_226558_);
     }
 
-
-
-
-    private static void generatePieces(StructurePiecesBuilder p_197089_, PieceGenerator.Context<NoneFeatureConfiguration> ctx) {
+    private static void generatePieces(StructurePiecesBuilder p_197089_, GenerationContext ctx) {
         int x = (ctx.chunkPos().x << 4) + 7;
         int z = (ctx.chunkPos().z << 4) + 7;
-        int surfaceY = ctx.chunkGenerator().getBaseHeight(x,z, Heightmap.Types.WORLD_SURFACE_WG,ctx.heightAccessor());
-        BlockPos blockpos = new BlockPos(x, surfaceY, z);
+//        int surfaceY = ctx.chunkGenerator().getBaseHeight(x,z, Heightmap.Types.WORLD_SURFACE_WG,ctx.heightAccessor());
+        BlockPos blockpos = new BlockPos(x, 90, z);
         Rotation rotation = Rotation.NONE;
-        DimStructPieces.start(ctx.structureManager(), blockpos, rotation, p_197089_, ctx.random());
+        DimStructPieces.start(ctx.structureTemplateManager(), blockpos, rotation, p_197089_);
     }
 
     @Override
@@ -33,6 +37,17 @@ public class DimensionalShardStructure extends StructureFeature<NoneFeatureConfi
         return GenerationStep.Decoration.SURFACE_STRUCTURES;
     }
 
+    @Override
+    public Optional<GenerationStub> findGenerationPoint(GenerationContext ctx) {
+        return onTopOfChunkCenter(ctx, Heightmap.Types.WORLD_SURFACE_WG, (p_227598_) -> {
+            generatePieces(p_227598_, ctx);
+        });
+    }
+
+    @Override
+    public StructureType<?> type() {
+        return SolarForgeStructures.DIMENSIONAL_SHARD_STRUCTURE_STRUCTURE_TYPE;
+    }
 
 
     //    public DimensionalShardStructure(Codec<NoneFeatureConfiguration> codec){
@@ -67,7 +82,7 @@ public class DimensionalShardStructure extends StructureFeature<NoneFeatureConfi
 //        }
 //
 //        @Override
-//        public void generatePieces(RegistryAccess dynamicRegistryManager, ChunkGenerator chunkGenerator, StructureManager templateManagerIn, ChunkPos pos, Biome biomeIn, NoneFeatureConfiguration config,LevelHeightAccessor a) {
+//        public void generatePieces(RegistryAccess dynamicRegistryManager, ChunkGenerator chunkGenerator, StructureTemplateManager templateManagerIn, ChunkPos pos, Biome biomeIn, NoneFeatureConfiguration config,LevelHeightAccessor a) {
 //            Rotation rotation = Rotation.NONE;
 //
 //            // Turns the chunk coordinates into actual coordinates we can use. (Gets center of that chunk)

@@ -4,6 +4,7 @@ import com.finderfeed.solarforge.helpers.Helpers;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LiquidBlock;
@@ -15,9 +16,9 @@ import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.templatesystem.BlockIgnoreProcessor;
-import net.minecraft.world.level.levelgen.structure.templatesystem.StructureManager;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
 
 import java.util.Random;
 
@@ -32,10 +33,10 @@ public class UlderaPylonFeature extends Feature<NoneFeatureConfiguration> {
     public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> ctx) {
 
         WorldGenLevel world = ctx.level();
-        Random random = ctx.random();
+        RandomSource random = ctx.random();
         BlockPos pos = ctx.origin();
         Rotation rot = Rotation.getRandom(world.getRandom());
-        StructureManager manager = world.getLevel().getStructureManager();
+        StructureTemplateManager manager = world.getLevel().getStructureManager();
 
         StructureTemplate templ = manager.getOrCreate(FEATURE);
 

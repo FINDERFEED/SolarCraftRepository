@@ -85,11 +85,11 @@ public class InfuserBlock extends RunicEnergySaverBlock implements EntityBlock {
                         Consumer<FriendlyByteBuf> cons = x -> {
                             x.writeBlockPos(pos);
                         };
-                        NetworkHooks.openGui((ServerPlayer) user, new InfuserContainer.Provider(pos), cons);
+                        NetworkHooks.openScreen((ServerPlayer) user, new InfuserContainer.Provider(pos), cons);
 
                     }
                 }else{
-                    user.sendSystemMessage(Component.literal("You are not the owner!").withStyle(ChatFormatting.RED),user.getUUID());
+                    user.sendSystemMessage(Component.literal("You are not the owner!").withStyle(ChatFormatting.RED));
                 }
 
             };

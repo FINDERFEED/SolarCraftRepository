@@ -3,11 +3,17 @@ package com.finderfeed.solarforge.content.blocks;
 import com.finderfeed.solarforge.local_library.blocks.NormalGrassBlock;
 import com.finderfeed.solarforge.registries.blocks.SolarcraftBlocks;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
+import net.minecraft.data.worldgen.placement.VegetationPlacements;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.block.state.BlockState;
 
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
+import net.minecraft.world.level.levelgen.feature.configurations.RandomPatchConfiguration;
+import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 
 import java.util.List;
 import java.util.Random;
@@ -17,49 +23,45 @@ public class RadiantGrass extends NormalGrassBlock {
     public RadiantGrass(Properties p_53685_) {
         super(p_53685_);
     }
+
     @Override
-    public void performBonemeal(ServerLevel p_53687_, Random p_53688_, BlockPos p_53689_, BlockState p_53690_) {
-        BlockPos var5 = p_53689_.above();
-        BlockState var6 = SolarcraftBlocks.RADIANT_GRASS_NOT_BLOCK.get().defaultBlockState();
+    public void performBonemeal(ServerLevel p_221270_, RandomSource p_221271_, BlockPos p_221272_, BlockState p_221273_) {
+        BlockPos blockpos = p_221272_.above();
+        BlockState blockstate = SolarcraftBlocks.RADIANT_GRASS.get().defaultBlockState();
 
-        label48:
-        for(int var7 = 0; var7 < 128; ++var7) {
-            BlockPos var8 = var5;
+        label46:
+        for(int i = 0; i < 128; ++i) {
+            BlockPos blockpos1 = blockpos;
 
-            for(int var9 = 0; var9 < var7 / 16; ++var9) {
-                var8 = var8.offset(p_53688_.nextInt(3) - 1, (p_53688_.nextInt(3) - 1) * p_53688_.nextInt(3) / 2, p_53688_.nextInt(3) - 1);
-                if (!p_53687_.getBlockState(var8.below()).is(this) || p_53687_.getBlockState(var8).isCollisionShapeFullBlock(p_53687_, var8)) {
-                    continue label48;
+            for(int j = 0; j < i / 16; ++j) {
+                blockpos1 = blockpos1.offset(p_221271_.nextInt(3) - 1, (p_221271_.nextInt(3) - 1) * p_221271_.nextInt(3) / 2, p_221271_.nextInt(3) - 1);
+                if (!p_221270_.getBlockState(blockpos1.below()).is(this) || p_221270_.getBlockState(blockpos1).isCollisionShapeFullBlock(p_221270_, blockpos1)) {
+                    continue label46;
                 }
             }
 
-            BlockState var12 = p_53687_.getBlockState(var8);
-            if (var12.is(var6.getBlock()) && p_53688_.nextInt(10) == 0) {
-                ((BonemealableBlock)var6.getBlock()).performBonemeal(p_53687_, p_53688_, var8, var12);
+            BlockState blockstate1 = p_221270_.getBlockState(blockpos1);
+            if (blockstate1.is(blockstate.getBlock()) && p_221271_.nextInt(10) == 0) {
+                ((BonemealableBlock)blockstate.getBlock()).performBonemeal(p_221270_, p_221271_, blockpos1, blockstate1);
             }
 
-            if (var12.isAir()) {
-                BlockState var10;
-                if (p_53688_.nextInt(8) == 0) {
-                    List<ConfiguredFeature<?, ?>> var11 = p_53687_.getBiome(var8).value().getGenerationSettings().getFlowerFeatures();
-                    if (var11.isEmpty()) {
+            if (blockstate1.isAir()) {
+                Holder<PlacedFeature> holder;
+                if (p_221271_.nextInt(8) == 0) {
+                    List<ConfiguredFeature<?, ?>> list = p_221270_.getBiome(blockpos1).value().getGenerationSettings().getFlowerFeatures();
+                    if (list.isEmpty()) {
                         continue;
                     }
 
-                    var10 = var6;
+                    holder = ((RandomPatchConfiguration)list.get(0).config()).feature();
                 } else {
-                    var10 = var6;
+                    holder = VegetationPlacements.GRASS_BONEMEAL;
                 }
 
-                if (var10.canSurvive(p_53687_, var8)) {
-                    p_53687_.setBlock(var8, var10, 3);
-                }
+                holder.value().place(p_221270_, p_221270_.getChunkSource().getGenerator(), p_221271_, blockpos1);
             }
         }
     }
 
-//    private static <U extends FeatureConfiguration> BlockState getBlockStatem(Random p_153318_, BlockPos p_153319_, ConfiguredFeature<U, ?> p_153320_) {
-//        AbstractFlowerFeature<U> var3 = (AbstractFlowerFeature)p_153320_.feature;
-//        return var3.getRandomFlower(p_153318_, p_153319_, p_153320_.config());
-//    }
+
 }

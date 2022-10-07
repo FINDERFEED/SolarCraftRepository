@@ -13,6 +13,7 @@ import com.finderfeed.solarforge.content.recipe_types.infusing_new.InfusingRecip
 import com.finderfeed.solarforge.content.recipe_types.infusing_crafting.InfusingCraftingRecipe;
 import com.finderfeed.solarforge.content.recipe_types.solar_smelting.SolarSmeltingRecipe;
 import com.finderfeed.solarforge.registries.SolarCraftClientRegistries;
+import com.finderfeed.solarforge.registries.recipe_types.SolarcraftRecipeTypes;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
@@ -64,11 +65,11 @@ public class SubCategory {
             AncientFragment frag = fragments.get(i);
             AncientFragment.Type type = frag.getType();
             if (type == AncientFragment.Type.ITEM){
-                if (frag.getRecipeType() == SolarForge.INFUSING_RECIPE_TYPE){
+                if (frag.getRecipeType() == SolarcraftRecipeTypes.INFUSING.get()){
                     buttonsToAdd.add(constructInfusingRecipeButton(frag, getInfusingRecipeFromFragment(frag),buttonPosX,buttonPosY));
-                }else if (frag.getRecipeType() == SolarForge.SOLAR_SMELTING){
+                }else if (frag.getRecipeType() == SolarcraftRecipeTypes.SMELTING.get()){
                     buttonsToAdd.add(constructSmeltingRecipeButton(getSmeltingRecipeFromFragment(frag),buttonPosX,buttonPosY));
-                }else if (frag.getRecipeType() == SolarForge.INFUSING_CRAFTING_RECIPE_TYPE){
+                }else if (frag.getRecipeType() == SolarcraftRecipeTypes.INFUSING_CRAFTING.get()){
                     buttonsToAdd.add(constructInfusingCraftingRecipeButton(frag,getInfusingCraftingRecipeFromFragment(frag),buttonPosX,buttonPosY));
                 }else if (frag.getRecipeType() == RecipeType.CRAFTING){
                     buttonsToAdd.add(constructCraftingRecipeButton(frag,List.of(getCraftingRecipeFromFragment(frag)),buttonPosX,buttonPosY));
@@ -77,9 +78,9 @@ public class SubCategory {
             }else if (type == AncientFragment.Type.INFORMATION){
                 buttonsToAdd.add(constructInformationButton(frag.getIcon().getDefaultInstance(),buttonPosX,buttonPosY,frag));
             }else if (type == AncientFragment.Type.ITEMS){
-                if (frag.getRecipeType() == SolarForge.INFUSING_RECIPE_TYPE) {
+                if (frag.getRecipeType() == SolarcraftRecipeTypes.INFUSING.get()) {
                     buttonsToAdd.add(constructInfusingRecipeButton(frag, getInfusingRecipesFromFragment(frag), buttonPosX, buttonPosY));
-                }else if (frag.getRecipeType() == SolarForge.INFUSING_CRAFTING_RECIPE_TYPE){
+                }else if (frag.getRecipeType() == SolarcraftRecipeTypes.INFUSING_CRAFTING.get()){
                     buttonsToAdd.add(constructInfusingCraftingRecipeButton(frag, getInfusingCraftingRecipesFromFragment(frag), buttonPosX, buttonPosY));
                 }else if (frag.getRecipeType() == RecipeType.CRAFTING){
                     buttonsToAdd.add(constructCraftingRecipeButton(frag, getCraftingRecipesFromFragment(frag), buttonPosX, buttonPosY));

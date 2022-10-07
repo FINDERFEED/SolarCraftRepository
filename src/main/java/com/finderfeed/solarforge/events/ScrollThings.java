@@ -13,7 +13,7 @@ import net.minecraftforge.fml.common.Mod;
 public class ScrollThings {
 
     @SubscribeEvent
-    public static void listenToHotkeys(final InputEvent.KeyInputEvent event){
+    public static void listenToHotkeys(final InputEvent.Key event){
         if (Minecraft.getInstance().screen instanceof IScrollable){
             ((IScrollable) Minecraft.getInstance().screen).performScroll(event.getScanCode());
 

@@ -7,6 +7,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.Rotation;
@@ -15,7 +16,7 @@ import net.minecraft.world.level.levelgen.structure.StructurePieceAccessor;
 import net.minecraft.world.level.levelgen.structure.TemplateStructurePiece;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext;
 import net.minecraft.world.level.levelgen.structure.templatesystem.BlockIgnoreProcessor;
-import net.minecraft.world.level.levelgen.structure.templatesystem.StructureManager;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 
 import java.util.Map;
@@ -26,7 +27,7 @@ public class RunicElementalArenaStructurePieces {
     private static final Map<ResourceLocation, BlockPos> OFFSET = ImmutableMap.of(DUNGEON_PIECE, new BlockPos(0, 1, 0));
 
 
-    public static void start(StructureManager templateManager, BlockPos pos, Rotation rotation, StructurePieceAccessor pieceList, Random random) {
+    public static void start(StructureTemplateManager templateManager, BlockPos pos, Rotation rotation, StructurePieceAccessor pieceList) {
         int x = pos.getX();
         int z = pos.getZ();
 
@@ -38,14 +39,14 @@ public class RunicElementalArenaStructurePieces {
 
     public static class Piece extends TemplateStructurePiece {
 
-        public Piece( StructureManager templateManagerIn, ResourceLocation resourceLocationIn,Rotation rot, BlockPos pos) {
+        public Piece( StructureTemplateManager templateManagerIn, ResourceLocation resourceLocationIn,Rotation rot, BlockPos pos) {
             super(StructurePieces.RUNIC_ELEMENTAL_ARENA_PIECE, 0, templateManagerIn, resourceLocationIn, resourceLocationIn.toString(),
                     makeSettings(rot,DUNGEON_PIECE),
                     makePosition(DUNGEON_PIECE,pos,1));
         }
 
         public Piece(StructurePieceSerializationContext p_163670_, CompoundTag tagCompound) {
-            super(StructurePieces.RUNIC_ELEMENTAL_ARENA_PIECE, tagCompound, p_163670_.structureManager(), (loc)->{
+            super(StructurePieces.RUNIC_ELEMENTAL_ARENA_PIECE, tagCompound, p_163670_.structureTemplateManager(), (loc)->{
                 return makeSettings(Rotation.valueOf(tagCompound.getString("Rot")),loc);
             });
         }
@@ -69,9 +70,10 @@ public class RunicElementalArenaStructurePieces {
         }
 
         @Override
-        protected void handleDataMarker(String p_73683_, BlockPos p_73684_, ServerLevelAccessor p_73685_, Random p_73686_, BoundingBox p_73687_) {
+        protected void handleDataMarker(String p_226906_, BlockPos p_226907_, ServerLevelAccessor p_226908_, RandomSource p_226909_, BoundingBox p_226910_) {
 
         }
+
 
     }
 }

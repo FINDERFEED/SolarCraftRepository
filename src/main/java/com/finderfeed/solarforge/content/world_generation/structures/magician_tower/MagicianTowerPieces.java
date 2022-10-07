@@ -4,6 +4,7 @@ import com.finderfeed.solarforge.events.other_events.StructurePieces;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.core.Vec3i;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.Mirror;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Rotation;
@@ -15,7 +16,7 @@ import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSeriali
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePiecesBuilder;
 import net.minecraft.world.level.levelgen.structure.templatesystem.BlockIgnoreProcessor;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
-import net.minecraft.world.level.levelgen.structure.templatesystem.StructureManager;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
 
 import java.util.Map;
 import java.util.Random;
@@ -29,7 +30,7 @@ public class MagicianTowerPieces {
     /*
      * Begins assembling your structure and where the pieces needs to go.
      */
-    public static void start(StructureManager templateManager, BlockPos pos, Rotation rotation, StructurePiecesBuilder pieceList, Random random) {
+    public static void start(StructureTemplateManager templateManager, BlockPos pos, Rotation rotation, StructurePiecesBuilder pieceList) {
         int x = pos.getX();
         int z = pos.getZ();
 
@@ -55,12 +56,12 @@ public class MagicianTowerPieces {
     public static class Piece extends TemplateStructurePiece {
 
 
-        public Piece( StructureManager p_163662_, ResourceLocation p_163663_, Rotation rot, BlockPos p_163666_) {
+        public Piece( StructureTemplateManager p_163662_, ResourceLocation p_163663_, Rotation rot, BlockPos p_163666_) {
             super(StructurePieces.MAGICIAN_TOWER, 0, p_163662_, p_163663_, p_163663_.toString(), makeSettings(rot,DUNGEON_PIECE), makePosition(DUNGEON_PIECE,p_163666_,0));
         }
 
         public Piece( StructurePieceSerializationContext p_163670_, CompoundTag tagCompound) {
-            super(StructurePieces.MAGICIAN_TOWER, tagCompound, p_163670_.structureManager(), (loc)->{
+            super(StructurePieces.MAGICIAN_TOWER, tagCompound, p_163670_.structureTemplateManager(), (loc)->{
                 return makeSettings(Rotation.valueOf(tagCompound.getString("Rot")),loc);
             });
         }
@@ -82,14 +83,15 @@ public class MagicianTowerPieces {
         }
 
         @Override
-        protected void handleDataMarker(String p_186175_1_, BlockPos p_186175_2_, ServerLevelAccessor p_186175_3_, Random p_186175_4_, BoundingBox p_186175_5_) {
+        protected void handleDataMarker(String p_226906_, BlockPos p_226907_, ServerLevelAccessor p_226908_, RandomSource p_226909_, BoundingBox p_226910_) {
 
         }
 
 
+
     }
 }
-//        public Piece(StructureManager templateManagerIn, ResourceLocation resourceLocationIn, BlockPos pos, Rotation rotationIn) {
+//        public Piece(StructureTemplateManager templateManagerIn, ResourceLocation resourceLocationIn, BlockPos pos, Rotation rotationIn) {
 //            super(FeatureInit.MAGICIAN_TOWER, 0);
 //            this.resourceLocation = resourceLocationIn;
 //            BlockPos blockpos = MagicianTowerPieces.OFFSET.get(resourceLocation);
@@ -98,14 +100,14 @@ public class MagicianTowerPieces {
 //            this.setupPiece(templateManagerIn);
 //        }
 //
-//        public Piece(StructureManager templateManagerIn, CompoundTag tagCompound) {
+//        public Piece(StructureTemplateManager templateManagerIn, CompoundTag tagCompound) {
 //            super(FeatureInit.MAGICIAN_TOWER, tagCompound);
 //            this.resourceLocation = new ResourceLocation(tagCompound.getString("Template"));
 //            this.rotation = Rotation.valueOf(tagCompound.getString("Rot"));
 //            this.setupPiece(templateManagerIn);
 //        }
 //
-//        private void setupPiece(StructureManager templateManager) {
+//        private void setupPiece(StructureTemplateManager templateManager) {
 //            StructureTemplate template = templateManager.get(this.resourceLocation);
 //            StructurePlaceSettings placementsettings = (new StructurePlaceSettings()).setRotation(this.rotation).setMirror(Mirror.NONE);
 //            this.setup(template, this.templatePosition, placementsettings);

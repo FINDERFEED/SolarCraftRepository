@@ -13,7 +13,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Component;
-import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import org.jetbrains.annotations.NotNull;
@@ -32,7 +32,7 @@ public class SolarLexiconContainer extends AbstractContainerMenu {
     public SolarLexiconContainer(int p_i50105_2_, Inventory inv, ItemStack stack) {
         super(SolarcraftContainers.SOLAR_LEXICON_CONTAINER.get(), p_i50105_2_);
         this.stack = stack;
-        this.inventory = stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(null);
+        this.inventory = stack.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(null);
         int kolvo = 0;
         int row = 1;
         int id = 0;

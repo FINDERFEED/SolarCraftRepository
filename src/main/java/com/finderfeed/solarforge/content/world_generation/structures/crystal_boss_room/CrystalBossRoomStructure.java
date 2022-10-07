@@ -1,34 +1,52 @@
 package com.finderfeed.solarforge.content.world_generation.structures.crystal_boss_room;
 
+import com.finderfeed.solarforge.content.world_generation.structures.SolarForgeStructures;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.Heightmap;
-import net.minecraft.world.level.levelgen.feature.StructureFeature;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import net.minecraft.world.level.levelgen.structure.Structure;
+import net.minecraft.world.level.levelgen.structure.StructureType;
 import net.minecraft.world.level.levelgen.structure.pieces.PieceGenerator;
 import net.minecraft.world.level.levelgen.structure.pieces.PieceGeneratorSupplier;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePiecesBuilder;
 
-public class CrystalBossRoomStructure extends StructureFeature<NoneFeatureConfiguration> {
-    public CrystalBossRoomStructure(Codec<NoneFeatureConfiguration> p_197165_) {
-        super(p_197165_,  PieceGeneratorSupplier.simple(PieceGeneratorSupplier.checkForBiomeOnTop(Heightmap.Types.WORLD_SURFACE_WG), CrystalBossRoomStructure::generatePieces));
+import java.util.Optional;
+
+public class CrystalBossRoomStructure extends Structure {
+
+    public static final Codec<CrystalBossRoomStructure> CODEC = simpleCodec(CrystalBossRoomStructure::new);
+
+    protected CrystalBossRoomStructure(StructureSettings p_226558_) {
+        super(p_226558_);
     }
 
-
-    private static void generatePieces(StructurePiecesBuilder p_197089_, PieceGenerator.Context<NoneFeatureConfiguration> ctx) {
+    private static void generatePieces(StructurePiecesBuilder p_197089_, GenerationContext ctx) {
         int x = (ctx.chunkPos().x << 4) + 7;
         int z = (ctx.chunkPos().z << 4) + 7;
-        int surfaceY = ctx.chunkGenerator().getBaseHeight(x,z, Heightmap.Types.WORLD_SURFACE_WG,ctx.heightAccessor());
-        BlockPos blockpos = new BlockPos(x, surfaceY, z);
+//        int surfaceY = ctx.chunkGenerator().getBaseHeight(x,z, Heightmap.Types.WORLD_SURFACE_WG,ctx.heightAccessor());
+        BlockPos blockpos = new BlockPos(x, 90, z);
         Rotation rotation = Rotation.getRandom(ctx.random());
-        CrystalBossRoomStructurePieces.start(ctx.structureManager(), blockpos, rotation, p_197089_, ctx.random());
+        CrystalBossRoomStructurePieces.start(ctx.structureTemplateManager(), blockpos, rotation, p_197089_);
     }
 
     @Override
     public GenerationStep.Decoration step() {
         return GenerationStep.Decoration.SURFACE_STRUCTURES;
+    }
+
+    @Override
+    public Optional<GenerationStub> findGenerationPoint(GenerationContext ctx) {
+        return onTopOfChunkCenter(ctx, Heightmap.Types.WORLD_SURFACE_WG, (p_227598_) -> {
+            generatePieces(p_227598_, ctx);
+        });
+    }
+
+    @Override
+    public StructureType<?> type() {
+        return SolarForgeStructures.CRYSTAL_BOSS_ROOM_STRUCTURE_STRUCTURE_TYPE;
     }
 //    public CrystalBossRoomStructure(Codec<NoneFeatureConfiguration> codec){
 //        super(codec);
@@ -62,7 +80,7 @@ public class CrystalBossRoomStructure extends StructureFeature<NoneFeatureConfig
 //        }
 //
 //        @Override
-//        public void generatePieces(RegistryAccess dynamicRegistryManager, ChunkGenerator chunkGenerator, StructureManager templateManagerIn, ChunkPos pos, Biome biomeIn, NoneFeatureConfiguration config, LevelHeightAccessor a) {
+//        public void generatePieces(RegistryAccess dynamicRegistryManager, ChunkGenerator chunkGenerator, StructureTemplateManager templateManagerIn, ChunkPos pos, Biome biomeIn, NoneFeatureConfiguration config, LevelHeightAccessor a) {
 //            Rotation rotation = Rotation.values()[this.random.nextInt(Rotation.values().length)];
 //            int x = (pos.x << 4) + 7;
 //            int z = (pos.z << 4) + 7;

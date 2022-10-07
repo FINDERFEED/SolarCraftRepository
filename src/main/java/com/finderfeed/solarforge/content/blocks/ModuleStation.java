@@ -27,7 +27,7 @@ public class ModuleStation extends Block {
     @Override
     public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
         if (!world.isClientSide){
-            NetworkHooks.openGui((ServerPlayer) player,getMenuProvider(world,pos),(buf)->buf.writeBlockPos(pos));
+            NetworkHooks.openScreen((ServerPlayer) player,getMenuProvider(world,pos),(buf)->buf.writeBlockPos(pos));
             return InteractionResult.CONSUME;
         }
         return InteractionResult.SUCCESS;

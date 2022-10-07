@@ -25,7 +25,7 @@ public class SolarcraftRecipeTypes {
 
 
     public static final RegistryObject<RecipeSerializer<?>> INFUSING_CRAFTING_SERIALIZER = RECIPE_SERIALIZERS.register("infusing_crafting", InfusingCraftingRecipeSerializer::new);
-    public static final RegistryObject<RecipeSerializer<?>> SMELTING_SERIALIZER = RECIPE_SERIALIZERS.register("infusing_crafting", SolarSmeltingRecipeSerializer::new);
+    public static final RegistryObject<RecipeSerializer<?>> SMELTING_SERIALIZER = RECIPE_SERIALIZERS.register("solar_smelting", SolarSmeltingRecipeSerializer::new);
     public static final RegistryObject<RecipeSerializer<?>> INFUSING_SERIALIZER = RECIPE_SERIALIZERS.register("infusing_new", InfusingRecipeSerializer::new);
 
 

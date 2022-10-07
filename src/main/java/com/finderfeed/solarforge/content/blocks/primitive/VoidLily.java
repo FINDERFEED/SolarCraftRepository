@@ -4,6 +4,7 @@ import com.finderfeed.solarforge.helpers.ClientHelpers;
 import com.finderfeed.solarforge.client.particles.SolarcraftParticleTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.DeadBushBlock;
 import net.minecraft.world.level.block.state.BlockState;
@@ -16,8 +17,8 @@ public class VoidLily extends DeadBushBlock {
         super(p_52417_);
     }
 
-
-    public void animateTick(BlockState state, Level level, BlockPos pos, Random rnd) {
+    @Override
+    public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource rnd) {
         if (rnd.nextInt(9) == 0) {
             Direction direction = Direction.getRandom(rnd);
             if (direction != Direction.UP) {
@@ -33,4 +34,5 @@ public class VoidLily extends DeadBushBlock {
             }
         }
     }
+
 }

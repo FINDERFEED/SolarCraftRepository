@@ -4,6 +4,7 @@
 		"0": "solarforge:block/crystal",
 		"particle": "solarforge:block/crystal"
 	},
+	"render_type": "translucent",
 	"elements": [
 		{
 			"from": [6, 0, 6],

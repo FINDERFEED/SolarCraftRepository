@@ -18,7 +18,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Component;
-import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.IItemHandler;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL11;
@@ -254,7 +254,7 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
     }
 
     public IItemHandler getLexiconInventory(){
-        return Minecraft.getInstance().player.getMainHandItem().getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(null);
+        return Minecraft.getInstance().player.getMainHandItem().getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(null);
     }
 
 }

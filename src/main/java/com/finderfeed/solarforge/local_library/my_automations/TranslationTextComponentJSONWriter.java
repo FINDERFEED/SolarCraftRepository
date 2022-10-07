@@ -18,26 +18,26 @@ public class TranslationTextComponentJSONWriter {
 
 //    }
 
-    public void writeAllFragmentsTranslationComponents(InputEvent.KeyInputEvent event,String path){
-                if (event.getKey() == GLFW.GLFW_KEY_O   && event.getAction() == GLFW.GLFW_PRESS) {
-            try {
-                BufferedWriter writer = new BufferedWriter(new FileWriter(path));
-                for (AncientFragment fragment : AncientFragment.getAllFragments()){
-                    writer.write("\""+fragment.getTranslation().getKey()+"\": \"\",");
-                    writer.newLine();
-
-                    if (fragment.getType() == AncientFragment.Type.ITEM){
-                        writer.write("\""+fragment.getItemDescription().getKey()+"\": \"\",");
-                        writer.newLine();
-                    }else if (fragment.getType() == AncientFragment.Type.INFORMATION){
-                        writer.write("\""+fragment.getLore().getKey()+"\": \"\",");
-                        writer.newLine();
-                    }
-                }
-                writer.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
+//    public void writeAllFragmentsTranslationComponents(InputEvent.Key event,String path){
+//                if (event.getKey() == GLFW.GLFW_KEY_O   && event.getAction() == GLFW.GLFW_PRESS) {
+//            try {
+//                BufferedWriter writer = new BufferedWriter(new FileWriter(path));
+//                for (AncientFragment fragment : AncientFragment.getAllFragments()){
+//                    writer.write("\""+fragment.getTranslation().getKey()+"\": \"\",");
+//                    writer.newLine();
+//
+//                    if (fragment.getType() == AncientFragment.Type.ITEM){
+//                        writer.write("\""+fragment.getItemDescription().getKey()+"\": \"\",");
+//                        writer.newLine();
+//                    }else if (fragment.getType() == AncientFragment.Type.INFORMATION){
+//                        writer.write("\""+fragment.getLore().getKey()+"\": \"\",");
+//                        writer.newLine();
+//                    }
+//                }
+//                writer.close();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//    }
 }

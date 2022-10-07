@@ -58,7 +58,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.IItemHandler;
 
 import java.util.ArrayList;
@@ -389,7 +389,7 @@ public class ClientHelpers {
     public static void updateLexiconInventory(ItemStack[] stacks){
         ItemStack stack = Minecraft.getInstance().player.getMainHandItem();
         if ((stack.getItem() instanceof SolarLexicon)){
-            IItemHandler handler = stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(null);
+            IItemHandler handler = stack.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(null);
             if (handler != null){
                 for (int i = 0; i < stacks.length;i++){
                     handler.insertItem(i,stacks[i],false);

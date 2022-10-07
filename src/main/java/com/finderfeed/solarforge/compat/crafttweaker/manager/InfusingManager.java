@@ -34,7 +34,7 @@ public class InfusingManager /*implements IRecipeManager<InfusingRecipe>*/ {
 //     */
 //    @Override
 //    public RecipeType<InfusingRecipe> getRecipeType() {
-//        return SolarForge.INFUSING_RECIPE_TYPE;
+//        return SolarcraftRecipeTypes.INFUSING.get();
 //    }
 //
 //    /**

@@ -5,6 +5,7 @@
 		"0": "solarforge:block/solar_forge_infusing_pool",
 		"particle": "solarforge:block/solar_forge_infusing_pool"
 	},
+	"render_type": "solid",
 	"elements": [
 		{
 			"from": [3, 2, 5],

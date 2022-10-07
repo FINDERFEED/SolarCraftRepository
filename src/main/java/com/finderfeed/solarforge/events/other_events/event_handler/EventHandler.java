@@ -67,9 +67,8 @@ import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerXpEvent;
-import net.minecraftforge.event.world.BiomeLoadingEvent;
-import net.minecraftforge.event.world.BlockEvent;
-import net.minecraftforge.event.world.ExplosionEvent;
+import net.minecraftforge.event.level.BlockEvent;
+import net.minecraftforge.event.level.ExplosionEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -88,9 +87,11 @@ public class EventHandler {
 
     @SubscribeEvent
     public static void playerHarvestCheck(PlayerEvent.BreakSpeed event){
-        Player pla = event.getPlayer();
+        if (event.getPosition().isEmpty()) return;
+        BlockPos pos = event.getPosition().get();
+        Player pla = event.getEntity();
         if (!pla.level.isClientSide){
-            if (pla.level.getBlockEntity(event.getPos()) instanceof OwnedBlock block){
+            if (pla.level.getBlockEntity(pos) instanceof OwnedBlock block){
                 if (!pla.getUUID().equals(block.getOwner())){
                      event.setCanceled(true);
                 }
@@ -98,9 +99,9 @@ public class EventHandler {
 
 
         }
-        if (pla.getLevel().getBlockState(event.getPos()).is(SolarcraftBlocks.CLEARING_RITUAL_CRYSTAL.get())){
-            if (pla.getLevel().getBlockState(event.getPos().below(2)).is(SolarcraftBlocks.CRYSTAL_ENERGY_VINES.get())
-                    || (pla.getLevel().getBlockEntity(event.getPos()) instanceof ClearingRitualCrystalTile tile && tile.isCorrupted())) {
+        if (pla.getLevel().getBlockState(pos).is(SolarcraftBlocks.CLEARING_RITUAL_CRYSTAL.get())){
+            if (pla.getLevel().getBlockState(pos.below(2)).is(SolarcraftBlocks.CRYSTAL_ENERGY_VINES.get())
+                    || (pla.getLevel().getBlockEntity(pos) instanceof ClearingRitualCrystalTile tile && tile.isCorrupted())) {
 
                 event.setNewSpeed(-1);
             }
@@ -152,7 +153,7 @@ public class EventHandler {
                 if ((world.dimension() == RADIANT_LAND_KEY)) {
 
                     if ((actualtime % 13000 == 0)) {
-                        player.sendSystemMessage(Component.translatable("radiant_dimension.nightfall").withStyle(ChatFormatting.RED), player.getUUID());
+                        player.sendSystemMessage(Component.translatable("radiant_dimension.nightfall").withStyle(ChatFormatting.RED));
                         ClientHelpers.playsoundInEars(SolarcraftSounds.NIGHT_DIM.get(), 1, 1);
                     } else if ((actualtime % 14400 == 0)) {
 
@@ -229,7 +230,7 @@ public class EventHandler {
     @SubscribeEvent
     public static void handleExperienceCrystal(PlayerXpEvent.PickupXp event){
         ExperienceOrb orb = event.getOrb();
-        Player player = event.getPlayer();
+        Player player = event.getEntity();
         if (!player.level.isClientSide){
             if (ExperienceCrystal.consumeExperience(player,orb.value)) {
                 orb.remove(Entity.RemovalReason.DISCARDED);
@@ -239,37 +240,37 @@ public class EventHandler {
     }
 
 
-    @SubscribeEvent
-    public static void addFeatures(BiomeLoadingEvent event){
-        BiomeGenerationSettingsBuilder b = event.getGeneration();
-        if ( (event.getCategory() != Biome.BiomeCategory.NETHER) && (event.getCategory() != Biome.BiomeCategory.THEEND) && notNone(event)) {
-            event.getGeneration().addFeature(GenerationStep.Decoration.STRONGHOLDS, FeaturesRegistry.ENERGY_PYLON_PLACEMENT);
-            event.getGeneration().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES,FeaturesRegistry.EMPTY_CRYSTALS_PLACEMENT);
-        }
-        if (event.getCategory() == Biome.BiomeCategory.PLAINS){
-            event.getGeneration().addFeature(GenerationStep.Decoration.VEGETAL_DECORATION,FeaturesRegistry.RUNIC_TREE_FEATURE);
-        }
-        if ( (event.getCategory() != Biome.BiomeCategory.NETHER) && (event.getCategory() != Biome.BiomeCategory.THEEND)) {
-            event.getGeneration().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES,FeaturesRegistry.LENSING_CRYSTAL_ORE_PLACEMENT);
-        }
-        if (event.getCategory() == Biome.BiomeCategory.THEEND){
-            event.getGeneration().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, FeaturesRegistry.ENDER_CRACKS);
-        }
-        //TODO:delete when incinerated forest returns
-        if (event.getCategory() == Biome.BiomeCategory.PLAINS){
-            event.getGeneration().addFeature(GenerationStep.Decoration.LOCAL_MODIFICATIONS,FeaturesRegistry.MOLTEN_FOREST_RUINS_PLACEMENT);
-            b.addFeature(GenerationStep.Decoration.TOP_LAYER_MODIFICATION,FeaturesRegistry.LUNAR_LILY_FEATURE_PLACEMENT);
-        }
-
-        if (event.getCategory() == Biome.BiomeCategory.DESERT){
-            event.getGeneration().addFeature(GenerationStep.Decoration.TOP_LAYER_MODIFICATION, LazyConfiguredFeatures.SOLAR_FLOWER_FEATURE);
-        }
-
-    }
-
-    private static boolean notNone(BiomeLoadingEvent event){
-        return event.getCategory() != Biome.BiomeCategory.NONE;
-    }
+//    @SubscribeEvent
+//    public static void addFeatures(BiomeLoadingEvent event){
+//        BiomeGenerationSettingsBuilder b = event.getGeneration();
+//        if ( (event.getCategory() != Biome.BiomeCategory.NETHER) && (event.getCategory() != Biome.BiomeCategory.THEEND) && notNone(event)) {
+//            event.getGeneration().addFeature(GenerationStep.Decoration.STRONGHOLDS, FeaturesRegistry.ENERGY_PYLON_PLACEMENT);
+//            event.getGeneration().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES,FeaturesRegistry.EMPTY_CRYSTALS_PLACEMENT);
+//        }
+//        if (event.getCategory() == Biome.BiomeCategory.PLAINS){
+//            event.getGeneration().addFeature(GenerationStep.Decoration.VEGETAL_DECORATION,FeaturesRegistry.RUNIC_TREE_FEATURE);
+//        }
+//        if ( (event.getCategory() != Biome.BiomeCategory.NETHER) && (event.getCategory() != Biome.BiomeCategory.THEEND)) {
+//            event.getGeneration().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES,FeaturesRegistry.LENSING_CRYSTAL_ORE_PLACEMENT);
+//        }
+//        if (event.getCategory() == Biome.BiomeCategory.THEEND){
+//            event.getGeneration().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, FeaturesRegistry.ENDER_CRACKS);
+//        }
+//        //TODO:delete when incinerated forest returns
+//        if (event.getCategory() == Biome.BiomeCategory.PLAINS){
+//            event.getGeneration().addFeature(GenerationStep.Decoration.LOCAL_MODIFICATIONS,FeaturesRegistry.MOLTEN_FOREST_RUINS_PLACEMENT);
+//            b.addFeature(GenerationStep.Decoration.TOP_LAYER_MODIFICATION,FeaturesRegistry.LUNAR_LILY_FEATURE_PLACEMENT);
+//        }
+//
+//        if (event.getCategory() == Biome.BiomeCategory.DESERT){
+//            event.getGeneration().addFeature(GenerationStep.Decoration.TOP_LAYER_MODIFICATION, LazyConfiguredFeatures.SOLAR_FLOWER_FEATURE);
+//        }
+//
+//    }
+//
+//    private static boolean notNone(BiomeLoadingEvent event){
+//        return event.getCategory() != Biome.BiomeCategory.NONE;
+//    }
 
     @SubscribeEvent
     public static void progressionUnlockEvent(ProgressionUnlockEvent event){
@@ -297,7 +298,7 @@ public class EventHandler {
     @SubscribeEvent
     public static void handleMagicResistanceAttribute(LivingDamageEvent event){
         DamageSource src = event.getSource();
-        LivingEntity entity = event.getEntityLiving();
+        LivingEntity entity = event.getEntity();
         if (!entity.level.isClientSide &&
                 (src.isMagic()) &&
                 (entity.getAttributes().hasAttribute(AttributesRegistry.MAGIC_RESISTANCE.get()))){
@@ -314,8 +315,8 @@ public class EventHandler {
     public static void killEvent(LivingDeathEvent event){
         DamageSource src = event.getSource();
         Entity killer = src.getEntity();
-        LivingEntity deadEntity = event.getEntityLiving();
-        Level world = event.getEntityLiving().level;
+        LivingEntity deadEntity = event.getEntity();
+        Level world = event.getEntity().level;
         if (!world.isClientSide && killer != null){
             if (killer instanceof  Player pl){
                 if (deadEntity instanceof WitherBoss){
@@ -342,7 +343,7 @@ public class EventHandler {
                     for (int x = -10; x < 10;x++){
                         for (int z = -10; z < 10;z++){
                             for (int height = 2; height > -5;height--){
-                                if (event.getWorld().getBlockState(event.getPos().offset(x,height,z)).getBlock() instanceof InfuserBlock){
+                                if (event.getLevel().getBlockState(event.getPos().offset(x,height,z)).getBlock() instanceof InfuserBlock){
                                     Helpers.fireProgressionEvent(pl,Progression.CATALYSTS);
                                 }
                             }
@@ -356,8 +357,8 @@ public class EventHandler {
     @SubscribeEvent
     public static void cancelExplosionsInRangeOfExplosionBlocker(ExplosionEvent.Detonate event){
         Vec3 pos = event.getExplosion().getPosition();
-        if (!event.getWorld().isClientSide) {
-            if (isExplosionBlockerAround(event.getWorld(),pos)){
+        if (!event.getLevel().isClientSide) {
+            if (isExplosionBlockerAround(event.getLevel(),pos)){
                 event.getAffectedBlocks().clear();
             }
         }
@@ -387,7 +388,7 @@ public class EventHandler {
 
             if (fragmentItem.getNeededFragment() != null) {
                 if (!ProgressionHelper.doPlayerHasFragment(event.getPlayer(), fragmentItem.getNeededFragment())) {
-                    event.getPlayer().sendSystemMessage(Component.translatable("solarcraft.item_unknown").withStyle(ChatFormatting.RED),event.getPlayer().getUUID());
+                    event.getPlayer().sendSystemMessage(Component.translatable("solarcraft.item_unknown").withStyle(ChatFormatting.RED));
                     event.setCanceled(true);
                 }
             }
@@ -397,12 +398,12 @@ public class EventHandler {
 
     @SubscribeEvent
     public static void preventItemUsing(PlayerInteractEvent.RightClickItem event) {
-        if (event.getItemStack().getItem() instanceof FragmentItem fragmentItem && !event.getPlayer().level.isClientSide) {
-            if (event.getPlayer().isCreative()) return;
+        if (event.getItemStack().getItem() instanceof FragmentItem fragmentItem && !event.getEntity().level.isClientSide) {
+            if (event.getEntity().isCreative()) return;
 
             if (fragmentItem.getNeededFragment() != null) {
-                if (!ProgressionHelper.doPlayerHasFragment(event.getPlayer(), fragmentItem.getNeededFragment())) {
-                    event.getPlayer().sendSystemMessage(Component.translatable("solarcraft.item_unknown").withStyle(ChatFormatting.RED), event.getPlayer().getUUID());
+                if (!ProgressionHelper.doPlayerHasFragment(event.getEntity(), fragmentItem.getNeededFragment())) {
+                    event.getEntity().sendSystemMessage(Component.translatable("solarcraft.item_unknown").withStyle(ChatFormatting.RED));
                     event.setCanceled(true);
                 }
             }
@@ -417,7 +418,7 @@ public class EventHandler {
 
             if (fragmentItem.getNeededFragment() != null) {
                 if (!ProgressionHelper.doPlayerHasFragment(player, fragmentItem.getNeededFragment())) {
-                    player.sendSystemMessage(Component.translatable("solarcraft.item_unknown").withStyle(ChatFormatting.RED), player.getUUID());
+                    player.sendSystemMessage(Component.translatable("solarcraft.item_unknown").withStyle(ChatFormatting.RED));
                     event.setCanceled(true);
                 }
             }
@@ -426,7 +427,7 @@ public class EventHandler {
 
     @SubscribeEvent
     public static void handleEvasion(LivingDamageEvent event){
-        LivingEntity living = event.getEntityLiving();
+        LivingEntity living = event.getEntity();
         if (!living.level.isClientSide){
             if (living.hasEffect(SolarcraftEffects.EVASION.get())){
                 int level = living.getActiveEffectsMap().get(SolarcraftEffects.EVASION.get()).getAmplifier();
@@ -440,7 +441,7 @@ public class EventHandler {
 
     @SubscribeEvent
     public static void cancelFallDamage(LivingFallEvent event){
-        if (event.getEntityLiving() instanceof Player player){
+        if (event.getEntity() instanceof Player player){
             if (player.level.isClientSide) return;
             if (player.getItemBySlot(EquipmentSlot.CHEST).is(SolarcraftItems.DIVINE_CHESTPLATE.get())){
                 event.setDamageMultiplier(0);
@@ -451,7 +452,7 @@ public class EventHandler {
 
     @SubscribeEvent
     public static void equipmentChangedEvent(LivingEquipmentChangeEvent event){
-        if (event.getEntityLiving() instanceof ServerPlayer player){
+        if (event.getEntity() instanceof ServerPlayer player){
             if (event.getSlot() == EquipmentSlot.CHEST){
                 if (event.getTo().is(SolarcraftItems.DIVINE_CHESTPLATE.get()) && !event.getFrom().is(SolarcraftItems.DIVINE_CHESTPLATE.get())){
                     if (!player.isCreative() && !player.isSpectator()) {
@@ -474,7 +475,7 @@ public class EventHandler {
 
     @SubscribeEvent(priority = EventPriority.LOW)
     public static void manageDivineArmorShields(LivingHurtEvent event){
-        LivingEntity entity = event.getEntityLiving();
+        LivingEntity entity = event.getEntity();
         if (entity instanceof Player player && !player.isCreative() && !player.isSpectator()){
             float damageAmount = event.getAmount();
             for (ItemStack stack : player.getArmorSlots()){

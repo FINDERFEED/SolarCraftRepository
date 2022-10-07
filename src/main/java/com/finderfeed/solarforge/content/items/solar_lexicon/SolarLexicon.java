@@ -21,7 +21,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.level.Level;
 
 
-import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.network.NetworkDirection;
 import net.minecraftforge.network.NetworkHooks;
@@ -77,8 +77,7 @@ public class SolarLexicon extends Item {
                 SolarForgePacketHandler.INSTANCE.sendTo(new OpenScreenPacket(), ((ServerPlayer) pe).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
 
             }else{
-
-                NetworkHooks.openGui((ServerPlayer) pe,new SolarLexiconContainer.Provider(pe.getItemInHand(hand)),(buf)->{
+                NetworkHooks.openScreen((ServerPlayer) pe,new SolarLexiconContainer.Provider(pe.getItemInHand(hand)),(buf)->{
                     buf.writeItem(pe.getItemInHand(hand));
                 });
             }
@@ -94,7 +93,7 @@ public class SolarLexicon extends Item {
 
     public void updateInventory(ItemStack stack,Player ent){
         if (stack.getItem() instanceof SolarLexicon){
-            IItemHandler handelr = stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(null);
+            IItemHandler handelr = stack.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(null);
             if (handelr != null){
                 List<ItemStack> stacks = new ArrayList<>();
                 for (int i = 0;i < handelr.getSlots();i++){

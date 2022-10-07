@@ -8,6 +8,7 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 
 import java.util.Comparator;
 import java.util.List;
@@ -49,9 +50,9 @@ public class FDTextComponent extends BaseComponent{
         return this;
     }
 
-    public FDTextComponent setText(TextComponent component,int textColor){
+    public FDTextComponent setText(MutableComponent component,int textColor){
         this.textColor = textColor;
-        this.text = RenderingTools.splitString(component.getText(),this.getXSize());
+        this.text = RenderingTools.splitString(component.getString(),this.getXSize());
         this.setYSize(this.text.size()*TEXT_HEIGHT + this.getInnerBorder()*2);
         this.setXSize(Minecraft.getInstance().font.width(this.text.stream().max(Comparator.comparingInt(String::length)).get()) + this.getInnerBorder()*2);
         return this;
@@ -65,9 +66,9 @@ public class FDTextComponent extends BaseComponent{
         return this;
     }
 
-    public FDTextComponent setText(TextComponent component,int forceX, int textColor){
+    public FDTextComponent setText(MutableComponent component, int forceX, int textColor){
         this.textColor = textColor;
-        this.text = RenderingTools.splitString(component.getText(),this.getXSize());
+        this.text = RenderingTools.splitString(component.getString(),this.getXSize());
         this.setYSize(this.text.size()*TEXT_HEIGHT + this.getInnerBorder()*2);
         this.setXSize(forceX * 5 + this.getInnerBorder()*2);
         return this;

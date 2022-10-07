@@ -32,9 +32,11 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ClientPlayerNetworkEvent;
 import net.minecraftforge.client.event.RenderLevelStageEvent;
-import net.minecraftforge.client.model.data.EmptyModelData;
+
+import net.minecraftforge.client.model.data.ModelData;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.event.world.BlockEvent;
+
+import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import org.jetbrains.annotations.Nullable;
@@ -120,7 +122,7 @@ public class MultiblockVisualizer {
     }
 
     @SubscribeEvent
-    public static void removeMultiblock(ClientPlayerNetworkEvent.LoggedOutEvent event){
+    public static void removeMultiblock(ClientPlayerNetworkEvent.LoggingOut event){
         multiblock = null;
         visualizingAnchor = null;
     }
@@ -153,7 +155,7 @@ public class MultiblockVisualizer {
                 matrices.translate(-0.025,-0.025,-0.025);
                 matrices.scale(1.05f,1.05f,1.05f);
             }
-            d.renderSingleBlock(block.state,matrices,buffers,0xf000f0, overlay, EmptyModelData.INSTANCE);
+            d.renderSingleBlock(block.state,matrices,buffers,0xf000f0, overlay, ModelData.EMPTY,null);
             if (block.tile != null){
                 BlockEntityRenderer<BlockEntity> renderer = td.getRenderer(block.tile);
                 if (renderer != null){

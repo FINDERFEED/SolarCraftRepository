@@ -1,7 +1,7 @@
 package com.finderfeed.solarforge.misc_things;
 
 import net.minecraft.core.Direction;
-import net.minecraft.tags.Tag;
+
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;

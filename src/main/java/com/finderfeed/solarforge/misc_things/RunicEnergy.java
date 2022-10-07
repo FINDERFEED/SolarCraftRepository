@@ -77,7 +77,7 @@ public class RunicEnergy {
 
 
     public static void handleCloneEvent(PlayerEvent.Clone event){
-        Player newP = event.getPlayer();
+        Player newP = event.getEntity();
         Player oldP = event.getOriginal();
 
         for (Type type : Type.values()){

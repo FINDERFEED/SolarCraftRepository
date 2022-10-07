@@ -2,5 +2,6 @@
   "parent": "block/cross",
   "textures": {
     "cross": "solarforge:block/crystal_flower"
-  }
+  },
+  "render_type": "cutout"
 }

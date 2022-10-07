@@ -11,7 +11,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraftforge.event.world.BlockEvent;
+
+import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -24,9 +25,9 @@ public class TransmutationEvents {
         if (event.getPlayer() instanceof ServerPlayer player) {
             if (AbilitiesRegistry.ALCHEMIST.isToggled(player) && !event.getPlayer().isDeadOrDying() ) {
                 if (AbilityHelper.isAbilityUsable(player,AbilitiesRegistry.ALCHEMIST,false)) {
-                    LevelAccessor world = event.getWorld();
+                    LevelAccessor world = event.getLevel();
                     BlockPos pos = event.getPos();
-                    event.getWorld().setBlock(event.getPos(), Blocks.AIR.defaultBlockState(), 3);
+                    world.setBlock(event.getPos(), Blocks.AIR.defaultBlockState(), 3);
                     world.addFreshEntity(new ExperienceOrb((Level) world, pos.getX(), pos.getY(), pos.getZ(), 10));
                 }
             }

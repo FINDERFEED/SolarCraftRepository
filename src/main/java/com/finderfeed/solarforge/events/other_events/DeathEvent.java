@@ -25,8 +25,8 @@ public class DeathEvent {
 
     @SubscribeEvent
     public static void procImmortalityTotem(final LivingDeathEvent event){
-        if (event.getEntityLiving() instanceof Player && !event.getEntityLiving().level.isClientSide){
-            Player player = (Player) event.getEntityLiving();
+        if (event.getEntity() instanceof Player && !event.getEntity().level.isClientSide){
+            Player player = (Player) event.getEntity();
             int slot = findImmortalityTotem(player);
             if (slot != -10000){
                 player.addEffect(new MobEffectInstance(SolarcraftEffects.IMMORTALITY_EFFECT.get(),400,0));

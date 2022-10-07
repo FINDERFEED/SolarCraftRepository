@@ -225,7 +225,7 @@ public class SolarForge
 
         MinecraftForge.EVENT_BUS.register(this);
         SolarForgePacketHandler.registerMessages();
-        SolarForgeStructures.STRUCTURES.register(bus);
+//        SolarForgeStructures.STRUCTURES.register(bus);
 
     }
 

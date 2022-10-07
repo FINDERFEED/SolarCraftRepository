@@ -3,6 +3,7 @@ package com.finderfeed.solarforge.content.world_generation.features.foliage_plac
 import com.finderfeed.solarforge.helpers.Helpers;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.util.RandomSource;
 import net.minecraft.util.valueproviders.IntProvider;
 import net.minecraft.world.level.LevelSimulatedReader;
 import net.minecraft.world.level.block.state.BlockState;
@@ -31,7 +32,7 @@ public class BurntTreeFoliagePlacer extends FoliagePlacer {
 
 
     @Override
-    protected void createFoliage(LevelSimulatedReader reader, BiConsumer<BlockPos, BlockState> world, Random random, TreeConfiguration cfg, int i12, FoliageAttachment foliageAttachment, int i1, int i2, int i3) {
+    protected void createFoliage(LevelSimulatedReader reader, BiConsumer<BlockPos, BlockState> world, RandomSource random, TreeConfiguration cfg, int i12, FoliageAttachment foliageAttachment, int i1, int i2, int i3) {
 
         BlockPos foliagePos = foliageAttachment.pos();
         BlockPos foliagePosBelow = foliagePos.below();
@@ -78,12 +79,12 @@ public class BurntTreeFoliagePlacer extends FoliagePlacer {
 
 
     @Override
-    public int foliageHeight(Random p_230374_1_, int p_230374_2_, TreeConfiguration p_230374_3_) {
+    public int foliageHeight(RandomSource p_230374_1_, int p_230374_2_, TreeConfiguration p_230374_3_) {
         return 0;
     }
 
     @Override
-    protected boolean shouldSkipLocation(Random p_230373_1_, int p_230373_2_, int p_230373_3_, int p_230373_4_, int p_230373_5_, boolean p_230373_6_) {
+    protected boolean shouldSkipLocation(RandomSource p_230373_1_, int p_230373_2_, int p_230373_3_, int p_230373_4_, int p_230373_5_, boolean p_230373_6_) {
         return false;
     }
 

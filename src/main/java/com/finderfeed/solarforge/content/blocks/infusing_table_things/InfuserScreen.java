@@ -6,6 +6,7 @@ import com.finderfeed.solarforge.local_library.helpers.RenderingTools;
 import com.finderfeed.solarforge.content.items.runic_energy.RunicEnergyCost;
 import com.finderfeed.solarforge.misc_things.PhantomInventory;
 import com.finderfeed.solarforge.content.recipe_types.infusing_new.InfusingRecipe;
+import com.finderfeed.solarforge.registries.recipe_types.SolarcraftRecipeTypes;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import com.mojang.math.Matrix4f;
@@ -103,7 +104,7 @@ public class InfuserScreen extends AbstractContainerScreen<InfuserContainer> {
 //        renderItemAndTooltip(tile.getItem(6),relX+45+a,relY+97,x,y,matrices);
 //        renderItemAndTooltip(tile.getItem(7),relX+84+a,relY+111,x,y,matrices);
 //        renderItemAndTooltip(tile.getItem(8),relX+123+a,relY+97,x,y,matrices);
-        Optional<InfusingRecipe> recipe = minecraft.level.getRecipeManager().getRecipeFor(SolarForge.INFUSING_RECIPE_TYPE,new PhantomInventory(tile.getInventory()),minecraft.level);
+        Optional<InfusingRecipe> recipe = minecraft.level.getRecipeManager().getRecipeFor(SolarcraftRecipeTypes.INFUSING.get(),new PhantomInventory(tile.getInventory()),minecraft.level);
 
 //        if (recipe.isPresent()){
 //            renderItemAndTooltip(recipe.get().output,relX+159+a,relY+2,x,y,matrices);
@@ -227,8 +228,8 @@ public class InfuserScreen extends AbstractContainerScreen<InfuserContainer> {
         var10.vertex(p_93113_, (float)p_93115_, (float)p_93117_, (float)p_93118_).uv(p_93120_, p_93122_).color(1,1,1,0.5f).endVertex();
         var10.vertex(p_93113_, (float)p_93115_, (float)p_93116_, (float)p_93118_).uv(p_93120_, p_93121_).color(1,1,1,0.5f).endVertex();
         var10.vertex(p_93113_, (float)p_93114_, (float)p_93116_, (float)p_93118_).uv(p_93119_, p_93121_).color(1,1,1,0.5f).endVertex();
-        var10.end();
-        BufferUploader.end(var10);
+//        var10.end();
+        BufferUploader.drawWithShader(var10.end());
 
     }
 

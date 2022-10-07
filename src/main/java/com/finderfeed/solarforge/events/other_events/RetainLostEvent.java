@@ -50,7 +50,7 @@ public class RetainLostEvent {
 
     @SubscribeEvent
     public static void respawn(PlayerEvent.PlayerRespawnEvent event){
-        if (event.getPlayer() instanceof ServerPlayer player){
+        if (event.getEntity() instanceof ServerPlayer player){
             Helpers.updateProgression(player);
             for (RunicEnergy.Type type : RunicEnergy.Type.getAll()) {
                 Helpers.updateRunicEnergyOnClient(type, RunicEnergy.getEnergy(player, type), player);
@@ -64,7 +64,7 @@ public class RetainLostEvent {
     @SubscribeEvent
     public static void retainAbilities(final PlayerEvent.Clone event) {
         Player peorig = event.getOriginal();
-        Player playernew = event.getPlayer();
+        Player playernew = event.getEntity();
         if (!event.isWasDeath()) {
             for (AbstractAbility ability : AbilitiesRegistry.getAllAbilities()){
                 AbilityHelper.setAbilityUsable(playernew,ability,AbilityHelper.isAbilityBought(peorig,ability));

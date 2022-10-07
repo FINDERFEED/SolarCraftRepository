@@ -9,6 +9,7 @@ import com.finderfeed.solarforge.content.items.solar_lexicon.unlockables.Progres
 import com.finderfeed.solarforge.client.particles.SolarcraftParticleTypes;
 import com.finderfeed.solarforge.misc_things.PhantomInventory;
 import com.finderfeed.solarforge.content.recipe_types.infusing_crafting.InfusingCraftingRecipe;
+import com.finderfeed.solarforge.registries.recipe_types.SolarcraftRecipeTypes;
 import com.finderfeed.solarforge.registries.tile_entities.SolarcraftTileEntityTypes;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -23,7 +24,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.IItemHandler;
 
 import javax.annotation.Nullable;
@@ -47,7 +48,7 @@ public class InfusingTableTile extends BlockEntity implements OwnedBlock {
             int updateTime = 40;
             if (tile.isRecipeInProgress()){
                 IItemHandler handler = tile.getInventory();
-                Optional<InfusingCraftingRecipe> optional = world.getRecipeManager().getRecipeFor(SolarForge.INFUSING_CRAFTING_RECIPE_TYPE, tile.phantomInv.set(handler), world);
+                Optional<InfusingCraftingRecipe> optional = world.getRecipeManager().getRecipeFor(SolarcraftRecipeTypes.INFUSING_CRAFTING.get(), tile.phantomInv.set(handler), world);
                 if (optional.isPresent()) {
                     InfusingCraftingRecipe recipe = optional.get();
                     int recipeTime = recipe.getTime();
@@ -143,7 +144,7 @@ public class InfusingTableTile extends BlockEntity implements OwnedBlock {
 
         if (level.getPlayerByUUID(owner) == pl){
             IItemHandler handler = getInventory();
-            //level.getRecipeManager().getAllRecipesFor(SolarForge.INFUSING_CRAFTING_RECIPE_TYPE).stream().forEach(recipe -> {
+            //level.getRecipeManager().getAllRecipesFor(SolarcraftRecipeTypes.INFUSING_CRAFTING.get()).stream().forEach(recipe -> {
             //    if (recipe.getId().getNamespace().matches(CraftTweakerConstants.MOD_ID)){
             //        CraftTweakerAPI.LOGGER.info(recipe.getOutput().getDisplayName().getString());
             //        CraftTweakerAPI.LOGGER.info(Arrays.toString(recipe.getPattern()));
@@ -156,7 +157,7 @@ public class InfusingTableTile extends BlockEntity implements OwnedBlock {
             //    }
             //});
             if (handler.getStackInSlot(9).is(Items.AIR)) {
-                Optional<InfusingCraftingRecipe> recipe = level.getRecipeManager().getRecipeFor(SolarForge.INFUSING_CRAFTING_RECIPE_TYPE, phantomInv.set(handler), level);
+                Optional<InfusingCraftingRecipe> recipe = level.getRecipeManager().getRecipeFor(SolarcraftRecipeTypes.INFUSING_CRAFTING.get(), phantomInv.set(handler), level);
                     if (recipe.isPresent()) {
                         try {
                             if (ProgressionHelper.doPlayerHasFragment(pl, recipe.get().getFragment())) {
@@ -165,20 +166,18 @@ public class InfusingTableTile extends BlockEntity implements OwnedBlock {
                                 update();
                             } else {
                                 pl.sendSystemMessage(Component.literal("Cant start craft, you don't have " + recipe.get().getFragment().getId().toUpperCase(Locale.ROOT) +
-                                        " fragment unlocked.").withStyle(ChatFormatting.RED), pl.getUUID());
+                                        " fragment unlocked.").withStyle(ChatFormatting.RED));
                             }
                         }catch (Exception e){
-                            pl.sendSystemMessage(Component.literal("INCORRECT FRAGMENT IN RECIPE "+ recipe.get().getOutput().getDisplayName()+" TELL MOD AUTHOR TO FIX IT").withStyle(ChatFormatting.RED),
-                                    pl.getUUID());
+                            pl.sendSystemMessage(Component.literal("INCORRECT FRAGMENT IN RECIPE "+ recipe.get().getOutput().getDisplayName()+" TELL MOD AUTHOR TO FIX IT").withStyle(ChatFormatting.RED));
                         }
                     }else{
-                        pl.sendSystemMessage(Component.literal("Recipe invalid.").withStyle(ChatFormatting.RED),
-                                pl.getUUID());
+                        pl.sendSystemMessage(Component.literal("Recipe invalid.").withStyle(ChatFormatting.RED));
                     }
 
             }
         }else{
-            pl.sendSystemMessage(Component.literal("You are not the owner!").withStyle(ChatFormatting.RED),pl.getUUID());
+            pl.sendSystemMessage(Component.literal("You are not the owner!").withStyle(ChatFormatting.RED));
         }
         }
 
@@ -205,7 +204,7 @@ public class InfusingTableTile extends BlockEntity implements OwnedBlock {
 
 
     public IItemHandler getInventory(){
-        IItemHandler handler = this.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(null);
+        IItemHandler handler = this.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(null);
         return handler;
     }
     @Override

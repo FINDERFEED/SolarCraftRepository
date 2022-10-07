@@ -93,7 +93,7 @@ public class EnchanterConfig {
     }
 
     public ConfigEnchantmentInstance getConfigEntryByEnchantment(Enchantment enchantment) {
-        return CONFIG_ENCHANTMENTS_MAP.get(enchantment.getRegistryName().toString());
+        return CONFIG_ENCHANTMENTS_MAP.get(ForgeRegistries.ENCHANTMENTS.getKey(enchantment).toString());
     }
 
     public float getMaxEnchanterRunicEnergyCapacity() {
@@ -141,7 +141,7 @@ public class EnchanterConfig {
 
             public EnchantmentsArray addEnchantment(Enchantment enchantment,int maxLevel,RunicEnergyCost cost){
                 JsonObject enchantmentInstance = new JsonObject();
-                enchantmentInstance.addProperty("enchantment_id",enchantment.getRegistryName().toString());
+                enchantmentInstance.addProperty("enchantment_id",ForgeRegistries.ENCHANTMENTS.getKey(enchantment).toString());
                 enchantmentInstance.addProperty("max_level",maxLevel);
                 for (RunicEnergy.Type type : cost.getSetTypes()){
                     enchantmentInstance.addProperty(type.id,cost.get(type));

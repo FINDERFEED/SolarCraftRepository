@@ -7,12 +7,15 @@ import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.commands.arguments.blocks.BlockStateParser;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.Registry;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -171,10 +174,10 @@ public class MultiblockStructure {
         }
 
         public Builder put(char c, String state) {
+
             try {
-                BlockStateParser parser = new BlockStateParser(new StringReader(state), true);
-                parser.parse(false);
-                stateMap.put(c, parser.getState());
+                BlockStateParser.BlockResult parser = BlockStateParser.parseForBlock(Registry.BLOCK,new StringReader(state), true);
+                stateMap.put(c, parser.blockState());
             }catch (CommandSyntaxException e){
                 throw new RuntimeException(e);
             }

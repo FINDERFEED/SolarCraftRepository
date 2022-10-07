@@ -71,7 +71,7 @@ public class SolarGodPickaxe extends RareSolarcraftPickaxe implements ITagUser {
     @Override
     public void fillItemCategory(CreativeModeTab p_41391_, NonNullList<ItemStack> p_41392_) {
         super.fillItemCategory(p_41391_, p_41392_);
-        if (this.allowdedIn(p_41391_)) {
+        if (this.allowedIn(p_41391_)) {
             ItemStack sword = new ItemStack(this);
             sword.getOrCreateTagElement(SolarCraftTags.SOLAR_GOD_PICKAXE_TAG).putInt(SolarCraftTags.SOLAR_GOD_PICKAXE_LEVEL_TAG,4);
             p_41392_.add(sword);

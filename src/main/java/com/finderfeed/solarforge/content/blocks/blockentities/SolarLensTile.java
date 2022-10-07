@@ -5,6 +5,7 @@ import com.finderfeed.solarforge.SolarForge;
 import com.finderfeed.solarforge.client.particles.SolarcraftParticleTypes;
 import com.finderfeed.solarforge.misc_things.PhantomInventory;
 import com.finderfeed.solarforge.content.recipe_types.solar_smelting.SolarSmeltingRecipe;
+import com.finderfeed.solarforge.registries.recipe_types.SolarcraftRecipeTypes;
 import com.finderfeed.solarforge.registries.tile_entities.SolarcraftTileEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.Connection;
@@ -61,7 +62,7 @@ public class SolarLensTile extends BlockEntity  {
 
                 }
 
-                Optional<SolarSmeltingRecipe> recipe = tile.level.getRecipeManager().getRecipeFor(SolarForge.SOLAR_SMELTING,tile.INVENTORY,tile.level);
+                Optional<SolarSmeltingRecipe> recipe = tile.level.getRecipeManager().getRecipeFor(SolarcraftRecipeTypes.SMELTING.get(),tile.INVENTORY,tile.level);
                 if (recipe.isPresent() ){
                     SolarSmeltingRecipe actualRecipe = recipe.get();
                     tile.RECIPE_IN_PROGRESS = true;

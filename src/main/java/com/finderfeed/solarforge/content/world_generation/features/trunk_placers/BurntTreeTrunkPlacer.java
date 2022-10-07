@@ -5,6 +5,7 @@ import com.google.common.collect.ImmutableList;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.LevelSimulatedReader;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
@@ -42,7 +43,7 @@ public class BurntTreeTrunkPlacer extends TrunkPlacer {
 
 
     @Override
-    public List<FoliagePlacer.FoliageAttachment> placeTrunk(LevelSimulatedReader levelSimulatedReader, BiConsumer<BlockPos, BlockState> world, Random rnd, int height, BlockPos pos, TreeConfiguration cfg) {
+    public List<FoliagePlacer.FoliageAttachment> placeTrunk(LevelSimulatedReader levelSimulatedReader, BiConsumer<BlockPos, BlockState> world, RandomSource rnd, int height, BlockPos pos, TreeConfiguration cfg) {
         setDirtAt(levelSimulatedReader,world,rnd,pos.below(),cfg);
 
         placeLogsInDirection(levelSimulatedReader,cfg,world,pos,Direction.WEST,4,rnd,0,cfg.trunkProvider.getState(rnd,pos),true,true);
@@ -63,7 +64,7 @@ public class BurntTreeTrunkPlacer extends TrunkPlacer {
         return ImmutableList.of(new FoliagePlacer.FoliageAttachment(pos.above(height), 0, false));
     }
 
-    public void placeLogsInDirection(LevelSimulatedReader levelSimulatedReader,TreeConfiguration cfg,BiConsumer<BlockPos,BlockState> world,BlockPos pos,Direction dir, int length, Random rnd, int iterator, BlockState state,boolean rotate,boolean placeDirt){
+    public void placeLogsInDirection(LevelSimulatedReader levelSimulatedReader,TreeConfiguration cfg,BiConsumer<BlockPos,BlockState> world,BlockPos pos,Direction dir, int length, RandomSource rnd, int iterator, BlockState state,boolean rotate,boolean placeDirt){
         if (iterator < length){
 
             BlockState stateConf = state.getBlock().defaultBlockState();

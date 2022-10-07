@@ -33,7 +33,7 @@ public class RenderSolarGodShieldPlayer {
                     playerEntity.isUsingItem() ){
                 PoseStack stack = event.getPoseStack();
                 MultiBufferSource buffer = event.getMultiBufferSource();
-                float partialTicks = event.getPartialTicks();
+                float partialTicks = event.getPartialTick();
                 int light = event.getPackedLight();
                 stack.pushPose();
                 float time = (Minecraft.getInstance().level.getGameTime() + partialTicks);
@@ -48,7 +48,7 @@ public class RenderSolarGodShieldPlayer {
                     playerEntity.isUsingItem() ) {
                 PoseStack stack = event.getPoseStack();
                 MultiBufferSource buffer = event.getMultiBufferSource();
-                float partialTicks = event.getPartialTicks();
+                float partialTicks = event.getPartialTick();
                 int light = event.getPackedLight();
                 stack.pushPose();
                 float time = (Minecraft.getInstance().level.getGameTime() + partialTicks);

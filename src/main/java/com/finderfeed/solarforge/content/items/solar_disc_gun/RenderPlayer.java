@@ -14,7 +14,7 @@ public class RenderPlayer {
 
     @SubscribeEvent
     public static void renderPlayer(final RenderPlayerEvent.Pre event){
-        if (event.getPlayer().getMainHandItem().getItem() instanceof  SolarDiscGunItem) {
+        if (event.getEntity().getMainHandItem().getItem() instanceof  SolarDiscGunItem) {
             event.getRenderer().getModel().rightArmPose = HumanoidModel.ArmPose.BOW_AND_ARROW;
         }
     }

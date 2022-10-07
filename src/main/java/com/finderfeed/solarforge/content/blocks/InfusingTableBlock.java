@@ -47,11 +47,11 @@ public class InfusingTableBlock extends Block implements EntityBlock {
             BlockEntity e = level.getBlockEntity(pos);
             if (e instanceof  InfusingTableTile tile) {
                 if (tile.getOwner() != null && (level.getPlayerByUUID(tile.getOwner()) == player)) {
-                    NetworkHooks.openGui((ServerPlayer) player, new InfusingTableTileContainer.Provider(tile), (buf ->
+                    NetworkHooks.openScreen((ServerPlayer) player, new InfusingTableTileContainer.Provider(tile), (buf ->
                             buf.writeBlockPos(pos)
                     ));
                 }else {
-                    player.sendSystemMessage(Component.literal("You are not the owner!").withStyle(ChatFormatting.RED),player.getUUID());
+                    player.sendSystemMessage(Component.literal("You are not the owner!").withStyle(ChatFormatting.RED));
                 }
             }
         }

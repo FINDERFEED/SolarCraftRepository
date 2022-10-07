@@ -246,7 +246,7 @@ public class ClearingRitual {
             if (time >= 16500 && time <= 19500 && Helpers.hasPlayerCompletedProgression(Progression.KILL_RUNIC_ELEMENTAL,user)) {
                 this.setRitualStatus(RITUAL_ONLINE);
             }else{
-                user.sendSystemMessage(Component.translatable("solarcraft.ritual_time"),user.getUUID());
+                user.sendSystemMessage(Component.translatable("solarcraft.ritual_time"));
             }
         }
     }

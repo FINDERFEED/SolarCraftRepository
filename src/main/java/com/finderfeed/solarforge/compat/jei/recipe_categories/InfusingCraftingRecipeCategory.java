@@ -1,6 +1,7 @@
 package com.finderfeed.solarforge.compat.jei.recipe_categories;
 
 import com.finderfeed.solarforge.SolarForge;
+import com.finderfeed.solarforge.compat.jei.JeiRecipeTypes;
 import com.finderfeed.solarforge.local_library.helpers.RenderingTools;
 import com.finderfeed.solarforge.content.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarforge.content.items.solar_lexicon.unlockables.ProgressionHelper;
@@ -14,6 +15,7 @@ import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.helpers.IJeiHelpers;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
+import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
@@ -29,6 +31,11 @@ public class InfusingCraftingRecipeCategory implements IRecipeCategory<InfusingC
 
     public InfusingCraftingRecipeCategory(IJeiHelpers helpers){
         this.helpers = helpers;
+    }
+
+    @Override
+    public RecipeType<InfusingCraftingRecipe> getRecipeType() {
+        return JeiRecipeTypes.INFUSING_CRAFTING_RECIPE;
     }
 
     @Override
@@ -83,15 +90,4 @@ public class InfusingCraftingRecipeCategory implements IRecipeCategory<InfusingC
 
     }
 
-    @SuppressWarnings("removal")
-    @Override
-    public ResourceLocation getUid() {
-        return new ResourceLocation(SolarForge.MOD_ID,"infusing_crafting");
-    }
-
-    @SuppressWarnings("removal")
-    @Override
-    public Class<? extends InfusingCraftingRecipe> getRecipeClass() {
-        return InfusingCraftingRecipe.class;
-    }
 }

@@ -6,6 +6,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import com.mojang.math.Matrix4f;
 import com.mojang.math.Vector3f;
+import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.DimensionSpecialEffects;
@@ -13,7 +14,7 @@ import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.resources.ResourceLocation;
 
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.client.ISkyRenderHandler;
+
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -34,10 +35,20 @@ public class RadiantLandDimEffects extends DimensionSpecialEffects {
         return false;
     }
 
-    @Nullable
+//    @Nullable
+//    @Override
+//    public ISkyRenderHandler getSkyRenderHandler() {
+//        return new RenderSky();
+//    }
+//
+
+
+    public static final RenderSky skyHandler = new RenderSky();
+
     @Override
-    public ISkyRenderHandler getSkyRenderHandler() {
-        return new RenderSky();
+    public boolean renderSky(ClientLevel level, int ticks, float partialTick, PoseStack poseStack, Camera camera, Matrix4f projectionMatrix, boolean isFoggy, Runnable setupFog) {
+        skyHandler.render(ticks,partialTick,poseStack,level,Minecraft.getInstance());
+        return true;
     }
 
     @Nullable
@@ -47,13 +58,13 @@ public class RadiantLandDimEffects extends DimensionSpecialEffects {
     }
 }
 
-class RenderSky implements ISkyRenderHandler{
+class RenderSky{
     public static final ResourceLocation STARGAZE = new ResourceLocation("solarforge","textures/environment/test_stargaze.png");
     public static final ResourceLocation SUNGAZE = new ResourceLocation("solarforge","textures/environment/test_sungaze.png");
     public static final ResourceLocation BROKEN_SKY = new ResourceLocation("solarforge","textures/environment/broken_sky.png");
     public static final ResourceLocation MOON = new ResourceLocation("solarforge","textures/environment/moon.png");
 
-    @Override
+
     public void render(int ticks, float partialTicks, PoseStack matrixStack, ClientLevel world, Minecraft mc) {
         Tesselator tes = Tesselator.getInstance();
         BufferBuilder builder = tes.getBuilder();

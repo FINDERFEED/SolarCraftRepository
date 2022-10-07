@@ -24,7 +24,7 @@ public class EnchanterPacket {
     }
     public EnchanterPacket(BlockPos pos,Enchantment e, int level){
         this.level = level;
-        this.location = e.getRegistryName();
+        this.location = ForgeRegistries.ENCHANTMENTS.getKey(e);
         this.enchanterPos = pos;
     }
     public void toBytes(FriendlyByteBuf buf){

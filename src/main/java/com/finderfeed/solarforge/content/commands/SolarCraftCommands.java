@@ -27,7 +27,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.IItemHandler;
 
 import java.util.Locale;
@@ -165,7 +165,7 @@ public class SolarCraftCommands {
     public static int fillLexicon(CommandSourceStack src) throws CommandSyntaxException {
         ServerPlayer player = src.getPlayerOrException();
         if (player.getMainHandItem().getItem() instanceof SolarLexicon){
-            LazyOptional<IItemHandler> cap = player.getMainHandItem().getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY);
+            LazyOptional<IItemHandler> cap = player.getMainHandItem().getCapability(ForgeCapabilities.ITEM_HANDLER);
             if (cap.isPresent()){
                 cap.ifPresent((inv)->{
                     try {

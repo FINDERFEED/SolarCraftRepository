@@ -23,6 +23,7 @@ import com.finderfeed.solarforge.content.items.solar_lexicon.progressions.Progre
 import com.finderfeed.solarforge.registries.Tags;
 import com.finderfeed.solarforge.registries.blocks.SolarcraftBlocks;
 import com.finderfeed.solarforge.content.world_generation.structures.Structures;
+import com.finderfeed.solarforge.registries.recipe_types.SolarcraftRecipeTypes;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.item.Items;
@@ -166,10 +167,10 @@ public class InfuserTileEntity extends REItemHandlerBlockEntity implements Solar
             tile.updateStacksInPhantomSlots();
             boolean forceUpdate = false;
             if (tile.RECIPE_IN_PROGRESS) {
-
+                
                 Optional<InfusingRecipe> recipe;
                 if (tile.currentRecipe == null){
-                    recipe = tile.level.getRecipeManager().getRecipeFor(SolarForge.INFUSING_RECIPE_TYPE, new PhantomInventory(inv), world);
+                    recipe = tile.level.getRecipeManager().getRecipeFor(SolarcraftRecipeTypes.INFUSING.get(), new PhantomInventory(inv), world);
                     recipe.ifPresent(infusingRecipe -> tile.currentRecipe = infusingRecipe);
                 }else{
                     if (!tile.currentRecipe.matches(new PhantomInventory(inv),world)){
@@ -416,17 +417,15 @@ public class InfuserTileEntity extends REItemHandlerBlockEntity implements Solar
 
     public void triggerCrafting(Player playerEntity){
         if (getInventory() == null) {
-            playerEntity.sendSystemMessage(Component.literal("Cant access inventory").withStyle(ChatFormatting.RED),
-                    playerEntity.getUUID());
+            playerEntity.sendSystemMessage(Component.literal("Cant access inventory").withStyle(ChatFormatting.RED));
             return;
         }
-        Optional<InfusingRecipe> recipe = this.level.getRecipeManager().getRecipeFor(SolarForge.INFUSING_RECIPE_TYPE,new PhantomInventory(getInventory()),level);
+        Optional<InfusingRecipe> recipe = this.level.getRecipeManager().getRecipeFor(SolarcraftRecipeTypes.INFUSING.get(),new PhantomInventory(getInventory()),level);
         calculateTier();
         try {
             if (recipe.isPresent() && ProgressionHelper.doPlayerHasFragment(playerEntity, AncientFragment.getFragmentByID(recipe.get().fragID))) {
                 if (!this.getItem(outputSlot()).isEmpty()){
-                    playerEntity.sendSystemMessage(Component.literal("Clear the output slot").withStyle(ChatFormatting.RED),
-                            playerEntity.getUUID());
+                    playerEntity.sendSystemMessage(Component.literal("Clear the output slot").withStyle(ChatFormatting.RED));
                     return;
                 }
                 if (tierEquals(recipe.get().getTier())) {
@@ -440,12 +439,10 @@ public class InfuserTileEntity extends REItemHandlerBlockEntity implements Solar
                             this.level.playSound(null, this.worldPosition, SoundEvents.VILLAGER_NO, SoundSource.AMBIENT, 2, 1);
                         }
                     }else{
-                        playerEntity.sendSystemMessage(Component.literal("Catalysts don't match the recipe.").withStyle(ChatFormatting.RED),
-                                playerEntity.getUUID());
+                        playerEntity.sendSystemMessage(Component.literal("Catalysts don't match the recipe.").withStyle(ChatFormatting.RED));
                     }
                 }else{
-                    playerEntity.sendSystemMessage(Component.literal("Structure invalid.").withStyle(ChatFormatting.RED),
-                            playerEntity.getUUID());
+                    playerEntity.sendSystemMessage(Component.literal("Structure invalid.").withStyle(ChatFormatting.RED));
                 }
 
             } else {
@@ -453,19 +450,16 @@ public class InfuserTileEntity extends REItemHandlerBlockEntity implements Solar
                     AncientFragment fragment = AncientFragment.getFragmentByID(recipe.get().fragID);
                     if (fragment != null){
                         if (!ProgressionHelper.doPlayerHasFragment(playerEntity,fragment)){
-                            playerEntity.sendSystemMessage(Component.literal("Cant start craft, you dont have "+fragment.getTranslation().getString().toUpperCase()+" fragment unlocked.").withStyle(ChatFormatting.RED),
-                                    playerEntity.getUUID());
+                            playerEntity.sendSystemMessage(Component.literal("Cant start craft, you dont have "+fragment.getTranslation().getString().toUpperCase()+" fragment unlocked.").withStyle(ChatFormatting.RED));
                         }
                     }
                 }else{
-                    playerEntity.sendSystemMessage(Component.literal("Recipe invalid").withStyle(ChatFormatting.RED),
-                            playerEntity.getUUID());
+                    playerEntity.sendSystemMessage(Component.literal("Recipe invalid").withStyle(ChatFormatting.RED));
                 }
                 this.level.playSound(null, this.worldPosition, SoundEvents.VILLAGER_NO, SoundSource.AMBIENT, 2, 1);
             }
         }catch (NullPointerException e){
-            playerEntity.sendSystemMessage(Component.literal("INCORRECT FRAGMENT IN RECIPE "+ recipe.get().output.getDisplayName()+" TELL MOD AUTHOR TO FIX IT").withStyle(ChatFormatting.RED),
-                    playerEntity.getUUID());
+            playerEntity.sendSystemMessage(Component.literal("INCORRECT FRAGMENT IN RECIPE "+ recipe.get().output.getDisplayName()+" TELL MOD AUTHOR TO FIX IT").withStyle(ChatFormatting.RED));
         }
 
     }

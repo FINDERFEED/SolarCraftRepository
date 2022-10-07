@@ -61,7 +61,7 @@ public class RunicTableBlock extends Block implements EntityBlock {
             SolarForgePacketHandler.INSTANCE.sendTo(new UpdateRunePattern(pe,false),serverPlayer.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
             boolean b = ProgressionHelper.getAllUnlockableFragments(pe) == null ;
 
-            NetworkHooks.openGui((ServerPlayer) pe, new RunicTableContainer.Provider(tile,b),
+            NetworkHooks.openScreen((ServerPlayer) pe, new RunicTableContainer.Provider(tile,b),
                     (buf) -> {
                 buf.writeBlockPos(pos);
                 buf.writeBoolean(b);

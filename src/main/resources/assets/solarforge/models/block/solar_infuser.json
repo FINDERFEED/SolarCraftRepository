@@ -5,6 +5,7 @@
 		"0": "solarforge:block/solar_infuser",
 		"particle": "solarforge:block/solar_infuser"
 	},
+	"render_type": "solid",
 	"elements": [
 		{
 			"from": [5, 2, 2],

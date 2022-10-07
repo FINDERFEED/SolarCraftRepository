@@ -20,7 +20,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 public class SummoningProjectile extends NormalProjectile {
 
-    public static final EntityDataAccessor<Vec3> COLOR = SynchedEntityData.defineId(SummoningProjectile.class,(EntityDataSerializer<Vec3>)FDEntityDataSerializers.VEC3.get().getSerializer());
+    public static final EntityDataAccessor<Vec3> COLOR = SynchedEntityData.defineId(SummoningProjectile.class, FDEntityDataSerializers.VEC3.get());
 
     private EntityType<? extends LivingEntity> summoningEntityType = EntityType.SHEEP;
     private float r = 0f;
@@ -63,7 +63,7 @@ public class SummoningProjectile extends NormalProjectile {
 
     @Override
     public boolean save(CompoundTag tag) {
-        tag.putString("typeRegID",summoningEntityType.getRegistryName().toString());
+        tag.putString("typeRegID",ForgeRegistries.ENTITY_TYPES.getKey(summoningEntityType).toString());
         tag.putFloat("rcolor",r);
         tag.putFloat("gcolor",g);
         tag.putFloat("bcolor",b);
@@ -74,7 +74,7 @@ public class SummoningProjectile extends NormalProjectile {
     @Override
     public void load(CompoundTag tag) {
         super.load(tag);
-        EntityType<? extends LivingEntity> type = (EntityType<? extends LivingEntity>) ForgeRegistries.ENTITIES.getValue(new ResourceLocation(tag.getString("typeRegID")));
+        EntityType<? extends LivingEntity> type = (EntityType<? extends LivingEntity>) ForgeRegistries.ENTITY_TYPES.getValue(new ResourceLocation(tag.getString("typeRegID")));
         if (type != null){
             this.summoningEntityType = type;
         }else{

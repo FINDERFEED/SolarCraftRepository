@@ -53,7 +53,7 @@ public class RunicEnergyChargerBlock extends RunicEnergySaverBlock implements En
        if (!world.isClientSide && hand == InteractionHand.MAIN_HAND){
             if (world.getBlockEntity(pos) instanceof RunicEnergyChargerTileEntity tile) {
                 Helpers.updateTile(tile);
-                NetworkHooks.openGui((ServerPlayer) player, new RunicEnergyChargerContainer.Provider(pos), (buf) -> {
+                NetworkHooks.openScreen((ServerPlayer) player, new RunicEnergyChargerContainer.Provider(pos), (buf) -> {
                     buf.writeBlockPos(pos);
                 });
                 return InteractionResult.SUCCESS;

@@ -9,6 +9,7 @@ import com.finderfeed.solarforge.content.recipe_types.infusing_crafting.Infusing
 import com.finderfeed.solarforge.content.recipe_types.infusing_new.InfusingRecipe;
 import com.finderfeed.solarforge.content.recipe_types.solar_smelting.SolarSmeltingRecipe;
 import com.finderfeed.solarforge.registries.items.SolarcraftItems;
+import com.finderfeed.solarforge.registries.recipe_types.SolarcraftRecipeTypes;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.gui.handlers.IGuiContainerHandler;
@@ -34,10 +35,10 @@ public class SolarcraftJeiPlugin implements IModPlugin {
     public void registerRecipes(IRecipeRegistration registration) {
         IModPlugin.super.registerRecipes(registration);
         ClientLevel world = Minecraft.getInstance().level;
-        List<InfusingRecipe> w = world.getRecipeManager().getAllRecipesFor(SolarForge.INFUSING_RECIPE_TYPE);
+        List<InfusingRecipe> w = world.getRecipeManager().getAllRecipesFor(SolarcraftRecipeTypes.INFUSING.get());
         registration.addRecipes(JeiRecipeTypes.INFUSING_RECIPE,w);
-        List<InfusingCraftingRecipe> w1 = world.getRecipeManager().getAllRecipesFor(SolarForge.INFUSING_CRAFTING_RECIPE_TYPE);
-        List<SolarSmeltingRecipe> sm = world.getRecipeManager().getAllRecipesFor(SolarForge.SOLAR_SMELTING);
+        List<InfusingCraftingRecipe> w1 = world.getRecipeManager().getAllRecipesFor(SolarcraftRecipeTypes.INFUSING_CRAFTING.get());
+        List<SolarSmeltingRecipe> sm = world.getRecipeManager().getAllRecipesFor(SolarcraftRecipeTypes.SMELTING.get());
         registration.addRecipes(JeiRecipeTypes.INFUSING_CRAFTING_RECIPE,w1);
         registration.addRecipes(JeiRecipeTypes.SMELTING,sm);
     }

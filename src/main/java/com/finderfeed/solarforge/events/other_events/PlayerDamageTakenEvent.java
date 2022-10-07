@@ -11,7 +11,7 @@ public class PlayerDamageTakenEvent {
 
     @SubscribeEvent
     public static void damageTaken(final LivingDamageEvent event){
-        if ((event.getEntityLiving()).hasEffect(SolarcraftEffects.IMMORTALITY_EFFECT.get()) ){
+        if ((event.getEntity()).hasEffect(SolarcraftEffects.IMMORTALITY_EFFECT.get()) ){
             event.setCanceled(true);
         }
     }

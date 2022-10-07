@@ -1,10 +1,12 @@
 package com.finderfeed.solarforge.content.world_generation.structures.maze_key_keeper;
 
+import com.finderfeed.solarforge.SolarForge;
+import com.finderfeed.solarforge.content.world_generation.structures.SolarForgeStructures;
 import com.finderfeed.solarforge.events.other_events.StructurePieces;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.core.Vec3i;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.level.StructureManager;
+
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.entity.ChestBlockEntity;
@@ -29,7 +31,7 @@ public class MazeStructurePieces {
     private static final Map<ResourceLocation, BlockPos> OFFSET = ImmutableMap.of(DUNGEON_PIECE, new BlockPos(0, 1, 0));
 
 
-    public static void start(StructureTemplateManager templateManager, BlockPos pos, Rotation rotation, StructurePieceAccessor pieceList, Random random) {
+    public static void start(StructureTemplateManager templateManager, BlockPos pos, Rotation rotation, StructurePieceAccessor pieceList) {
         int x = pos.getX();
         int z = pos.getZ();
 
@@ -74,7 +76,7 @@ public class MazeStructurePieces {
                 world.setBlock(pos, Blocks.AIR.defaultBlockState(),3);
                 BlockEntity tile = world.getBlockEntity(pos.below());
                 if (tile instanceof ChestBlockEntity){
-                    ((ChestBlockEntity) tile).setLootTable(new ResourceLocation("solarforge","chest/dungeon_maze"),rnd.nextLong());
+                    ((ChestBlockEntity) tile).setLootTable(new ResourceLocation(SolarForge.MOD_ID,"chest/dungeon_maze"),rnd.nextLong());
                 }
             }
         }

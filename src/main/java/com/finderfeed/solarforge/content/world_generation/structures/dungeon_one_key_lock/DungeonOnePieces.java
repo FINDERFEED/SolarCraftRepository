@@ -3,6 +3,7 @@ package com.finderfeed.solarforge.content.world_generation.structures.dungeon_on
 import com.finderfeed.solarforge.events.other_events.StructurePieces;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.core.Vec3i;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.Blocks;
 
 import net.minecraft.nbt.CompoundTag;
@@ -19,7 +20,7 @@ import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSeriali
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePiecesBuilder;
 import net.minecraft.world.level.levelgen.structure.templatesystem.BlockIgnoreProcessor;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
-import net.minecraft.world.level.levelgen.structure.templatesystem.StructureManager;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
 
 import java.util.Map;
 import java.util.Random;
@@ -33,7 +34,7 @@ public class DungeonOnePieces {
         /*
          * Begins assembling your structure and where the pieces needs to go.
          */
-        public static void start(StructureManager templateManager, BlockPos pos, Rotation rotation, StructurePiecesBuilder pieceList, Random random) {
+        public static void start(StructureTemplateManager templateManager, BlockPos pos, Rotation rotation, StructurePiecesBuilder pieceList) {
             int x = pos.getX();
             int z = pos.getZ();
 
@@ -57,12 +58,12 @@ public class DungeonOnePieces {
          * The method you will most likely want to touch is the handleDataMarker method.
          */
         public static class Piece extends TemplateStructurePiece {
-            public Piece( StructureManager p_163662_, ResourceLocation p_163663_,  Rotation rot, BlockPos p_163666_) {
+            public Piece( StructureTemplateManager p_163662_, ResourceLocation p_163663_,  Rotation rot, BlockPos p_163666_) {
                 super(StructurePieces.DUNGEON_ONE_PIECE, 0, p_163662_, p_163663_, p_163663_.toString(), makeSettings(rot,p_163663_), makePosition(p_163663_,p_163666_,0));
             }
 
             public Piece(  StructurePieceSerializationContext p_163670_,CompoundTag tagCompound) {
-                super(StructurePieces.DUNGEON_ONE_PIECE, tagCompound, p_163670_.structureManager(), (loc)->{
+                super(StructurePieces.DUNGEON_ONE_PIECE, tagCompound, p_163670_.structureTemplateManager(), (loc)->{
                     return makeSettings(Rotation.valueOf(tagCompound.getString("Rot")),loc);
                 });
             }
@@ -86,24 +87,8 @@ public class DungeonOnePieces {
                 tag.putString("Rot", this.placeSettings.getRotation().name());
             }
 
-            /**
-             * (abstract) Helper method to read subclass data from NBT
-             */
-
-
-            /*
-             * If you added any data marker structure blocks to your structure, you can access and modify them here.
-             * In this case, our structure has a data maker with the string "chest" put into it. So we check to see
-             * if the incoming function is "chest" and if it is, we now have that exact position.
-             *
-             * So what is done here is we replace the structure block with
-             * a chest and we can then set the loottable for it.
-             *
-             * You can set other data markers to do other behaviors such as spawn a random mob in a certain spot,
-             * randomize what rare block spawns under the floor, or what item an Item Frame will have.
-             */
             @Override
-            protected void handleDataMarker(String func, BlockPos pos, ServerLevelAccessor world, Random rnd, BoundingBox box) {
+            protected void handleDataMarker(String func, BlockPos pos, ServerLevelAccessor world, RandomSource rnd, BoundingBox p_226910_) {
                 if ("chest".equals(func)){
                     world.setBlock(pos, Blocks.AIR.defaultBlockState(),3);
                     BlockEntity tile = world.getBlockEntity(pos.below());
@@ -119,9 +104,27 @@ public class DungeonOnePieces {
                     }
                 }
             }
+
+//            @Override
+//            protected void handleDataMarker(String func, BlockPos pos, ServerLevelAccessor world, Random rnd, BoundingBox box) {
+//                if ("chest".equals(func)){
+//                    world.setBlock(pos, Blocks.AIR.defaultBlockState(),3);
+//                    BlockEntity tile = world.getBlockEntity(pos.below());
+//                    if (tile instanceof ChestBlockEntity){
+//                        ((ChestBlockEntity) tile).setLootTable(new ResourceLocation("solarforge","chest/dungeon_chest_fragments"),rnd.nextLong());
+//                    }
+//                }
+//                if ("chest_star_piece".equals(func)){
+//                    world.setBlock(pos, Blocks.AIR.defaultBlockState(),3);
+//                    BlockEntity tile = world.getBlockEntity(pos.below());
+//                    if (tile instanceof ChestBlockEntity){
+//                        ((ChestBlockEntity) tile).setLootTable(new ResourceLocation("solarforge","chest/dungeon_one"),rnd.nextLong());
+//                    }
+//                }
+//            }
         }
     }
-//        public Piece(StructureManager templateManagerIn, ResourceLocation resourceLocationIn, BlockPos pos, Rotation rotationIn) {
+//        public Piece(StructureTemplateManager templateManagerIn, ResourceLocation resourceLocationIn, BlockPos pos, Rotation rotationIn) {
 //                super(FeatureInit.DUNGEON_ONE_PIECE_TEST, 0);
 //                this.resourceLocation = resourceLocationIn;
 //                BlockPos blockpos = DungeonOnePieces.OFFSET.get(resourceLocation);
@@ -130,14 +133,14 @@ public class DungeonOnePieces {
 //                this.setupPiece(templateManagerIn);
 //            }
 //
-//            public Piece(StructureManager templateManagerIn, CompoundTag tagCompound) {
+//            public Piece(StructureTemplateManager templateManagerIn, CompoundTag tagCompound) {
 //                super(FeatureInit.DUNGEON_ONE_PIECE_TEST, tagCompound);
 //                this.resourceLocation = new ResourceLocation(tagCompound.getString("Template"));
 //                this.rotation = Rotation.valueOf(tagCompound.getString("Rot"));
 //                this.setupPiece(templateManagerIn);
 //            }
 //
-//            private void setupPiece(StructureManager templateManager) {
+//            private void setupPiece(StructureTemplateManager templateManager) {
 //                StructureTemplate template = templateManager.get(this.resourceLocation);
 //                StructurePlaceSettings placementsettings = (new StructurePlaceSettings()).setRotation(this.rotation).setMirror(Mirror.NONE);
 //                this.setup(template, this.templatePosition, placementsettings);

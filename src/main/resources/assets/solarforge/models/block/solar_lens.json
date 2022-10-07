@@ -4,6 +4,7 @@
 		"0": "solarforge:block/solar_lens",
 		"particle": "solarforge:block/solar_lens"
 	},
+	"render_type": "translucent",
 	"elements": [
 		{
 			"from": [-8, 4.5, -8],

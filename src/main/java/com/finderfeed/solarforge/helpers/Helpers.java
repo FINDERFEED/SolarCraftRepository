@@ -21,6 +21,7 @@ import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -335,6 +336,19 @@ public class Helpers {
     }
 
     public static Direction getRandomHorizontalDirection(boolean exclude, Direction whatToExclude, Random rnd){
+        Direction[] horizontal = {Direction.EAST,Direction.NORTH,Direction.SOUTH,Direction.WEST};
+
+        if (exclude){
+            Direction direction = horizontal[rnd.nextInt(4)];
+            while (direction.equals(whatToExclude)){
+                direction = horizontal[rnd.nextInt(4)];
+            }
+            return direction;
+        }
+        return horizontal[rnd.nextInt(4)];
+    }
+
+    public static Direction getRandomHorizontalDirection(boolean exclude, Direction whatToExclude, RandomSource rnd){
         Direction[] horizontal = {Direction.EAST,Direction.NORTH,Direction.SOUTH,Direction.WEST};
 
         if (exclude){
