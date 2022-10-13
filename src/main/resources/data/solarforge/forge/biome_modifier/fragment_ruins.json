@@ -1,0 +1,6 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#forge:is_plains",
+  "features": "solarforge:configured_ruins",
+  "step": "local_modifications"
+}

@@ -178,7 +178,7 @@ public class SolarEnergyFurnaceTile extends RandomizableContainerBlockEntity imp
 
     @Override
     public boolean canBeBinded() {
-        return false;
+        return true;
     }
 
     @Override

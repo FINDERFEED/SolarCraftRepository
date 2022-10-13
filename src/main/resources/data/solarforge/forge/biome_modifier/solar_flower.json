@@ -1,0 +1,6 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#forge:is_desert",
+  "features": "solarforge:solar_flower_feature",
+  "step": "top_layer_modification"
+}
