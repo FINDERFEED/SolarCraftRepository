@@ -3,8 +3,11 @@ package com.finderfeed.solarforge.content.blocks.blockentities;
 import com.finderfeed.solarforge.content.blocks.blockentities.containers.SolarFurnaceContainer;
 import com.finderfeed.solarforge.content.blocks.solar_energy.Bindable;
 import com.finderfeed.solarforge.content.blocks.solar_energy.SolarEnergyContainer;
+import com.finderfeed.solarforge.content.blocks.solar_energy.SolarEnergyRepeaterTile;
+import com.finderfeed.solarforge.helpers.Helpers;
 import com.finderfeed.solarforge.registries.tile_entities.SolarcraftTileEntityTypes;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.ContainerHelper;
@@ -148,6 +151,7 @@ public class SolarEnergyFurnaceTile extends RandomizableContainerBlockEntity imp
 
     @Override
     public boolean bind(BlockPos pos) {
+
         return false;
     }
 
@@ -178,7 +182,7 @@ public class SolarEnergyFurnaceTile extends RandomizableContainerBlockEntity imp
 
     @Override
     public boolean canBeBinded() {
-        return false;
+        return true;
     }
 
     @Override
