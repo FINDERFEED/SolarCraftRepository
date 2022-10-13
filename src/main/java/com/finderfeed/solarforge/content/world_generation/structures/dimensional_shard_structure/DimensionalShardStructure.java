@@ -1,16 +1,13 @@
 package com.finderfeed.solarforge.content.world_generation.structures.dimensional_shard_structure;
 
-import com.finderfeed.solarforge.content.world_generation.structures.SolarForgeStructures;
+import com.finderfeed.solarforge.content.world_generation.structures.SolarcraftStructureTypes;
 import com.mojang.serialization.Codec;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.Heightmap;
-import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.StructureType;
-import net.minecraft.world.level.levelgen.structure.pieces.PieceGenerator;
-import net.minecraft.world.level.levelgen.structure.pieces.PieceGeneratorSupplier;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePiecesBuilder;
 
 import java.util.Optional;
@@ -19,7 +16,7 @@ public class DimensionalShardStructure extends Structure {
 
     public static final Codec<DimensionalShardStructure> CODEC = simpleCodec(DimensionalShardStructure::new);
 
-    protected DimensionalShardStructure(StructureSettings p_226558_) {
+    public DimensionalShardStructure(StructureSettings p_226558_) {
         super(p_226558_);
     }
 
@@ -46,7 +43,7 @@ public class DimensionalShardStructure extends Structure {
 
     @Override
     public StructureType<?> type() {
-        return SolarForgeStructures.DIMENSIONAL_SHARD_STRUCTURE_STRUCTURE_TYPE;
+        return SolarcraftStructureTypes.DIMENSIONAL_SHARD_STRUCTURE_STRUCTURE_TYPE;
     }
 
 

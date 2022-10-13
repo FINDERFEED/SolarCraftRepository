@@ -11,14 +11,10 @@ import com.finderfeed.solarforge.content.world_generation.structures.runic_eleme
 import com.mojang.serialization.Codec;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.StructureType;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
 
-public class SolarForgeStructures {
+public class SolarcraftStructureTypes {
 //    public static final DeferredRegister<StructureFeature<?>> STRUCTURES = DeferredRegister.create(ForgeRegistries.STRUC,"solarforge");
 
 //    public static final RegistryObject<StructureFeature<NoneFeatureConfiguration>> DUNGEON_ONE_KEY_LOCK = STRUCTURES.register("solarforge_dungeon_one",()-> new DungeonOne(NoneFeatureConfiguration.CODEC));
@@ -39,6 +35,7 @@ public class SolarForgeStructures {
     public static final StructureType<MazeStructure>  MAZE_STRUCTURE_STRUCTURE_TYPE = register("labyrinth",MazeStructure.CODEC);
     public static final StructureType<RunicElementalArenaStructure>  RUNIC_ELEMENTAL_ARENA_STRUCTURE_STRUCTURE_TYPE = register("runic_elemental_arena",RunicElementalArenaStructure.CODEC);
 
+    public static void init(){}
 
 
     private static <S extends Structure> StructureType<S> register(String id, Codec<S> codec) {

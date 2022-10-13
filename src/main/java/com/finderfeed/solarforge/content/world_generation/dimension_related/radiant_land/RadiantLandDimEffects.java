@@ -35,13 +35,6 @@ public class RadiantLandDimEffects extends DimensionSpecialEffects {
         return false;
     }
 
-//    @Nullable
-//    @Override
-//    public ISkyRenderHandler getSkyRenderHandler() {
-//        return new RenderSky();
-//    }
-//
-
 
     public static final RenderSky skyHandler = new RenderSky();
 

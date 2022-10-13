@@ -1,7 +1,6 @@
 package com.finderfeed.solarforge.content.world_generation.structures.maze_key_keeper;
 
 import com.finderfeed.solarforge.SolarForge;
-import com.finderfeed.solarforge.content.world_generation.structures.SolarForgeStructures;
 import com.finderfeed.solarforge.events.other_events.StructurePieces;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.core.Vec3i;
@@ -23,7 +22,6 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlac
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
 
 import java.util.Map;
-import java.util.Random;
 
 
 public class MazeStructurePieces {

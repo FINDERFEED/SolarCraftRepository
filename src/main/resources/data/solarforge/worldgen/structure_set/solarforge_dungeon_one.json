@@ -1,7 +1,7 @@
 {
   "structures": [
     {
-      "structure": "solarforge:configured_dungeon_one",
+      "structure": "solarforge:dungeon_one",
       "weight": 1
     }
   ],

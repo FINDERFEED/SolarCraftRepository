@@ -11,6 +11,7 @@ import com.finderfeed.solarforge.config.SolarcraftConfig;
 import com.finderfeed.solarforge.content.entities.*;
 import com.finderfeed.solarforge.content.entities.not_alive.*;
 
+import com.finderfeed.solarforge.content.world_generation.structures.SolarcraftStructureTypes;
 import com.finderfeed.solarforge.events.PlayerTickEvent;
 import com.finderfeed.solarforge.events.RenderEventsHandler;
 import com.finderfeed.solarforge.content.blocks.SolarOreBlock;
@@ -21,9 +22,6 @@ import com.finderfeed.solarforge.content.items.item_tiers.SolarCraftToolTiers;
 import com.finderfeed.solarforge.content.items.ProgressionBlockItem;
 import com.finderfeed.solarforge.content.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarforge.client.particles.SolarcraftParticleTypes;
-import com.finderfeed.solarforge.content.recipe_types.infusing_crafting.InfusingCraftingRecipe;
-import com.finderfeed.solarforge.content.recipe_types.infusing_crafting.InfusingCraftingRecipeType;
-import com.finderfeed.solarforge.content.recipe_types.infusing_new.InfusingRecipeType;
 import com.finderfeed.solarforge.registries.SolarcraftGamerules;
 import com.finderfeed.solarforge.registries.Tags;
 import com.finderfeed.solarforge.registries.abilities.AbilitiesRegistry;
@@ -32,12 +30,10 @@ import com.finderfeed.solarforge.registries.data_serializers.FDEntityDataSeriali
 import com.finderfeed.solarforge.registries.entities.SolarcraftEntityTypes;
 
 import com.finderfeed.solarforge.packet_handler.SolarForgePacketHandler;
-import com.finderfeed.solarforge.content.recipe_types.infusing_new.InfusingRecipe;
-import com.finderfeed.solarforge.content.recipe_types.solar_smelting.SolarSmeltingRecipe;
-import com.finderfeed.solarforge.content.recipe_types.solar_smelting.SolarSmeltingRecipeType;
 import com.finderfeed.solarforge.registries.blocks.SolarcraftBlocks;
 import com.finderfeed.solarforge.registries.containers.SolarcraftContainers;
 import com.finderfeed.solarforge.registries.effects.SolarcraftEffects;
+import com.finderfeed.solarforge.registries.loot_modifiers.SolarcraftLootModifiers;
 import com.finderfeed.solarforge.registries.recipe_types.SolarcraftRecipeTypes;
 import com.finderfeed.solarforge.registries.tile_entities.SolarcraftTileEntityTypes;
 import com.finderfeed.solarforge.registries.worldgen.configured.LazyConfiguredFeatures;
@@ -52,14 +48,12 @@ import com.finderfeed.solarforge.content.blocks.solar_forge_block.solar_forge_sc
 import com.finderfeed.solarforge.content.blocks.solar_forge_block.solar_forge_screen.SolarForgeScreen;
 
 
-import com.finderfeed.solarforge.content.world_generation.structures.SolarForgeConfiguredStructures;
-import com.finderfeed.solarforge.content.world_generation.structures.SolarForgeStructures;
+import com.finderfeed.solarforge.content.world_generation.structures.SolarcraftStructureHolders;
 import com.finderfeed.solarforge.content.world_generation.BiomesRegister;
 import com.finderfeed.solarforge.content.world_generation.features.FeaturesRegistry;
 import com.finderfeed.solarforge.content.world_generation.features.foliage_placers.FoliagePlacerRegistry;
 import com.finderfeed.solarforge.content.world_generation.features.trunk_placers.TrunkPlacersRegistry;
 import net.minecraft.world.item.Tiers;
-import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.Block;
 
@@ -70,8 +64,6 @@ import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.inventory.MenuType;
 
-import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 
@@ -79,15 +71,12 @@ import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.core.Registry;
-import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraftforge.common.MinecraftForge;
 
 import net.minecraftforge.common.TierSortingRegistry;
 
 import net.minecraftforge.common.extensions.IForgeMenuType;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
-import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
@@ -98,7 +87,6 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.registries.RegisterEvent;
 import net.minecraftforge.registries.RegistryObject;
 
 import net.minecraftforge.registries.DeferredRegister;
@@ -205,6 +193,7 @@ public class SolarForge
         FeaturesRegistry.FEATURES.register(bus);
         SolarcraftRecipeTypes.RECIPE_SERIALIZERS.register(bus);
         SolarcraftRecipeTypes.RECIPE_TYPES.register(bus);
+        SolarcraftLootModifiers.MODIFIERS.register(bus);
         SolarcraftGamerules.init();
         // Register the setup method for modloading
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
@@ -247,7 +236,9 @@ public class SolarForge
 
         MinecraftForge.EVENT_BUS.addListener(InfusingStand::placeBlockEvent);
         event.enqueueWork(()->{
-            SolarForgeConfiguredStructures.registerConfiguredStructures();
+//            SolarcraftStructureHolders.registerConfiguredStructures();
+            SolarcraftStructureTypes.init();
+            SolarcraftStructureHolders.init();
         });
 
     }

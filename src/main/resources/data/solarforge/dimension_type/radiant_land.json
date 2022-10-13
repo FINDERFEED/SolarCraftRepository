@@ -1,5 +1,7 @@
 {
   "logical_height": 384,
+  "monster_spawn_block_light_limit": 0,
+  "monster_spawn_light_level": 0,
   "infiniburn": "#minecraft:infiniburn_overworld",
   "effects": "solarforge:radiant_land",
   "ambient_light": 0.0,

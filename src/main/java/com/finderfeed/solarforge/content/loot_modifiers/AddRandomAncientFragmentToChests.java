@@ -25,10 +25,10 @@ public class AddRandomAncientFragmentToChests extends LootModifier {
 
     public static final Codec<AddRandomAncientFragmentToChests> CODEC = RecordCodecBuilder.create(inst->codecStart(inst)
             .and(inst.group(
-                    ExtraCodecs.POSITIVE_INT.fieldOf("min").forGetter((obj)->{
+                    Codec.INT.fieldOf("min").forGetter((obj)->{
                         return obj.min;
                     }),
-                    ExtraCodecs.POSITIVE_INT.fieldOf("max").forGetter((obj)->{
+                    Codec.INT.fieldOf("max").forGetter((obj)->{
                         return obj.max;
                     })
             )).apply(inst,AddRandomAncientFragmentToChests::new));

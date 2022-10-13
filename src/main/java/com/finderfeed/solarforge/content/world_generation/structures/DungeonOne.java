@@ -24,8 +24,9 @@ public class DungeonOne extends Structure {
     private static void generatePieces(StructurePiecesBuilder p_197089_, GenerationContext ctx) {
         int x = (ctx.chunkPos().x << 4) + 7;
         int z = (ctx.chunkPos().z << 4) + 7;
-//        int surfaceY = ctx.chunkGenerator().getBaseHeight(x,z, Heightmap.Types.WORLD_SURFACE_WG,ctx.heightAccessor());
-        BlockPos blockpos = new BlockPos(x, 90, z);
+        int y = ctx.chunkGenerator().getBaseHeight(x-15,z-15, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+                ctx.heightAccessor(), ctx.randomState());
+        BlockPos blockpos = new BlockPos(x-15, y, z-15);
         Rotation rotation = Rotation.getRandom(ctx.random());
         DungeonOnePieces.start(ctx.structureTemplateManager(), blockpos, rotation, p_197089_);
     }
@@ -43,7 +44,7 @@ public class DungeonOne extends Structure {
 
     @Override
     public StructureType<?> type() {
-        return SolarForgeStructures.DUNGEON_KEY_LOCK;
+        return SolarcraftStructureTypes.DUNGEON_KEY_LOCK;
     }
 
 

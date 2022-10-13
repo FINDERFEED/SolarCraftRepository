@@ -44,6 +44,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
+import net.minecraftforge.client.event.RegisterDimensionSpecialEffectsEvent;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.client.event.RegisterTextureAtlasSpriteLoadersEvent;
 import net.minecraftforge.client.settings.KeyConflictContext;
@@ -84,37 +85,18 @@ public class SolarcraftClientRegistry {
     }
 
     @SubscribeEvent
+    public static void registerDimensionEffects(RegisterDimensionSpecialEffectsEvent event){
+        event.register(new ResourceLocation("solarforge","radiant_land"),RADIANT_LAND);
+//        DimensionSpecialEffects.EFFECTS.put(new ResourceLocation("solarforge","radiant_land"),RADIANT_LAND);
+    }
+
+    @SubscribeEvent
     public static void registerClientStuff(final FMLClientSetupEvent event){
 
         ScreenParticlesRenderHandler.registerRenderType(SolarCraftRenderTypes.ParticleRenderTypes.RUNE_TILE_PARTICLE);
         ScreenParticlesRenderHandler.registerRenderType(SolarCraftRenderTypes.ParticleRenderTypes.SOLAR_STRIKE_PARTICLE_SCREEN);
 
         ScreenSuppliers.SCREEN_REGISTRY.registerAll();
-
-//        ItemBlockRenderTypes.setRenderLayer(SolarForge.SOLAR_INFUSER.get(), RenderType.solid());
-//        ItemBlockRenderTypes.setRenderLayer(SolarcraftBlocks.INFUSING_POOL.get(), RenderType.solid());
-//        ItemBlockRenderTypes.setRenderLayer(SolarcraftBlocks.SOLAR_LENS.get(), RenderType.translucent());
-//        ItemBlockRenderTypes.setRenderLayer(SolarcraftBlocks.BONEMEALER.get(), RenderType.translucent());
-//        ItemBlockRenderTypes.setRenderLayer(SolarcraftBlocks.SOLAR_FLOWER.get(), RenderType.cutout());
-//        ItemBlockRenderTypes.setRenderLayer(SolarcraftBlocks.ASH_LEAVES.get(), RenderType.cutout());
-//        ItemBlockRenderTypes.setRenderLayer(SolarcraftBlocks.RUNIC_LEAVES.get(), RenderType.cutout());
-//        ItemBlockRenderTypes.setRenderLayer(SolarcraftBlocks.DEAD_SPROUT.get(), RenderType.cutout());
-//        ItemBlockRenderTypes.setRenderLayer(SolarcraftBlocks.RADIANT_LEAVES.get(), RenderType.cutout());
-//        ItemBlockRenderTypes.setRenderLayer(SolarcraftBlocks.RADIANT_GRASS_NOT_BLOCK.get(), RenderType.cutout());
-//        ItemBlockRenderTypes.setRenderLayer(SolarcraftBlocks.RADIANT_GRASS.get(), RenderType.cutout());
-//        ItemBlockRenderTypes.setRenderLayer(SolarcraftBlocks.RADIANT_BERRY_BUSH.get(), RenderType.cutout());
-//        ItemBlockRenderTypes.setRenderLayer(SolarcraftBlocks.RADIANT_CRYSTAL.get(), RenderType.translucent());
-//        ItemBlockRenderTypes.setRenderLayer(SolarcraftBlocks.CRYSTAL.get(), RenderType.translucent());
-//        ItemBlockRenderTypes.setRenderLayer(SolarcraftBlocks.EXPLOSION_BLOCKER.get(), RenderType.translucent());
-//        ItemBlockRenderTypes.setRenderLayer(SolarcraftBlocks.CRYSTAL_FLOWER.get(), RenderType.cutout());
-//        ItemBlockRenderTypes.setRenderLayer(SolarcraftBlocks.VOID_LILY.get(), RenderType.cutout());
-//        ItemBlockRenderTypes.setRenderLayer(SolarcraftBlocks.RUNIC_TREE_SAPLING.get(), RenderType.cutout());
-
-//        ClientRegistry.registerKeyBinding(FIRST_ABILITY_KEY);
-//        ClientRegistry.registerKeyBinding(SECOND_ABILITY_KEY);
-//        ClientRegistry.registerKeyBinding(THIRD_ABILITY_KEY);
-//        ClientRegistry.registerKeyBinding(FORTH_ABILITY_KEY);
-//        ClientRegistry.registerKeyBinding(GUI_ABILITY_BUY_SCREEN);
 
 
 
@@ -153,7 +135,7 @@ public class SolarcraftClientRegistry {
         MenuScreens.register(SolarcraftContainers.RUNIC_ENERGY_CHARGER.get(), RunicEnergyChargerScreen::new);
 
         event.enqueueWork(()->{
-            DimensionSpecialEffects.EFFECTS.put(new ResourceLocation("solarforge","radiant_land"),RADIANT_LAND);
+
             ItemProperties.register(SolarcraftItems.ULDORADIUM_ORE.get(),new ResourceLocation("solarforge","unlocked"),(stack, world, living, a)->{
 
                 Player playerEntity = Minecraft.getInstance().player;

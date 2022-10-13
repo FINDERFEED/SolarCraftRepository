@@ -1,6 +1,6 @@
 package com.finderfeed.solarforge.content.world_generation.structures.runic_elemental_arena;
 
-import com.finderfeed.solarforge.content.world_generation.structures.SolarForgeStructures;
+import com.finderfeed.solarforge.content.world_generation.structures.SolarcraftStructureTypes;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.Rotation;
@@ -16,15 +16,16 @@ public class RunicElementalArenaStructure extends Structure {
 
     public static final Codec<RunicElementalArenaStructure> CODEC = simpleCodec(RunicElementalArenaStructure::new);
 
-    protected RunicElementalArenaStructure(StructureSettings p_226558_) {
+    public RunicElementalArenaStructure(StructureSettings p_226558_) {
         super(p_226558_);
     }
 
     private static void generatePieces(StructurePiecesBuilder p_197089_, GenerationContext ctx) {
         int x = (ctx.chunkPos().x << 4) + 7;
         int z = (ctx.chunkPos().z << 4) + 7;
-//        int surfaceY = ctx.chunkGenerator().getBaseHeight(x,z, Heightmap.Types.WORLD_SURFACE_WG,ctx.heightAccessor());
-        BlockPos blockpos = new BlockPos(x-9, 90, z-9);
+        int y = ctx.chunkGenerator().getBaseHeight(x-9,z-9, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+                ctx.heightAccessor(), ctx.randomState());
+        BlockPos blockpos = new BlockPos(x-9, y, z-9);
         Rotation rotation = Rotation.getRandom(ctx.random());
         RunicElementalArenaStructurePieces.start(ctx.structureTemplateManager(), blockpos, rotation, p_197089_);
     }
@@ -44,7 +45,7 @@ public class RunicElementalArenaStructure extends Structure {
 
     @Override
     public StructureType<?> type() {
-        return SolarForgeStructures.RUNIC_ELEMENTAL_ARENA_STRUCTURE_STRUCTURE_TYPE;
+        return SolarcraftStructureTypes.RUNIC_ELEMENTAL_ARENA_STRUCTURE_STRUCTURE_TYPE;
     }
 
 }

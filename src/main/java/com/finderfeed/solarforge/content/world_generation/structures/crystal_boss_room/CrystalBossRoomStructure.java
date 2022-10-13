@@ -1,16 +1,13 @@
 package com.finderfeed.solarforge.content.world_generation.structures.crystal_boss_room;
 
-import com.finderfeed.solarforge.content.world_generation.structures.SolarForgeStructures;
+import com.finderfeed.solarforge.content.world_generation.structures.SolarcraftStructureTypes;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.Heightmap;
-import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.StructureType;
-import net.minecraft.world.level.levelgen.structure.pieces.PieceGenerator;
-import net.minecraft.world.level.levelgen.structure.pieces.PieceGeneratorSupplier;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePiecesBuilder;
 
 import java.util.Optional;
@@ -19,15 +16,16 @@ public class CrystalBossRoomStructure extends Structure {
 
     public static final Codec<CrystalBossRoomStructure> CODEC = simpleCodec(CrystalBossRoomStructure::new);
 
-    protected CrystalBossRoomStructure(StructureSettings p_226558_) {
+    public CrystalBossRoomStructure(StructureSettings p_226558_) {
         super(p_226558_);
     }
 
     private static void generatePieces(StructurePiecesBuilder p_197089_, GenerationContext ctx) {
         int x = (ctx.chunkPos().x << 4) + 7;
         int z = (ctx.chunkPos().z << 4) + 7;
-//        int surfaceY = ctx.chunkGenerator().getBaseHeight(x,z, Heightmap.Types.WORLD_SURFACE_WG,ctx.heightAccessor());
-        BlockPos blockpos = new BlockPos(x, 90, z);
+        int y = ctx.chunkGenerator().getBaseHeight(x,z, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+                ctx.heightAccessor(), ctx.randomState());
+        BlockPos blockpos = new BlockPos(x, y, z);
         Rotation rotation = Rotation.getRandom(ctx.random());
         CrystalBossRoomStructurePieces.start(ctx.structureTemplateManager(), blockpos, rotation, p_197089_);
     }
@@ -46,7 +44,7 @@ public class CrystalBossRoomStructure extends Structure {
 
     @Override
     public StructureType<?> type() {
-        return SolarForgeStructures.CRYSTAL_BOSS_ROOM_STRUCTURE_STRUCTURE_TYPE;
+        return SolarcraftStructureTypes.CRYSTAL_BOSS_ROOM_STRUCTURE_STRUCTURE_TYPE;
     }
 //    public CrystalBossRoomStructure(Codec<NoneFeatureConfiguration> codec){
 //        super(codec);

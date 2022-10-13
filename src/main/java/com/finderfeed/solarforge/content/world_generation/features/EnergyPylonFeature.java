@@ -27,7 +27,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemp
 import java.util.Random;
 
 public class EnergyPylonFeature extends Feature<NoneFeatureConfiguration> {
-    private static final ResourceLocation FEATURE = new ResourceLocation("solarforge:worldgen_features/energy_pylon");
+
     private static final ResourceLocation[] LOCATIONS = {
       new ResourceLocation("solarforge:worldgen_features/energy_pylon_ardo"),
             new ResourceLocation("solarforge:worldgen_features/energy_pylon_fira"),

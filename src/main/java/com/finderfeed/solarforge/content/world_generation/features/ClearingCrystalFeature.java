@@ -43,7 +43,7 @@ public class ClearingCrystalFeature extends Feature<NoneFeatureConfiguration> {
         StructurePlaceSettings set = new StructurePlaceSettings().addProcessor(BlockIgnoreProcessor.AIR).setRandom(random).setRotation(rot).setBoundingBox(BoundingBox.infinite());
         BlockPos blockpos1 = templ.getZeroPositionWithTransform(pos.offset(-1,0,-1), Mirror.NONE, rot);
         templ.placeInWorld(world, blockpos1, blockpos1, set, random, 4);
-        System.out.println(blockpos1);
+
         return true;
     }
 }
