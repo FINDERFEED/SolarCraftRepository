@@ -150,7 +150,7 @@ public class EventHandler {
             Level world = player.level;
             long actualtime = world.getDayTime()%24000;
             if (world.isClientSide && !Helpers.isDay(world)) {
-                if ((world.dimension() == RADIANT_LAND_KEY)) {
+                if ((world.dimension() == RADIANT_LAND_KEY) && !ClientHelpers.isIsRadiantLandCleaned()) {
 
                     if ((actualtime % 13000 == 0)) {
                         player.sendSystemMessage(Component.translatable("radiant_dimension.nightfall").withStyle(ChatFormatting.RED));

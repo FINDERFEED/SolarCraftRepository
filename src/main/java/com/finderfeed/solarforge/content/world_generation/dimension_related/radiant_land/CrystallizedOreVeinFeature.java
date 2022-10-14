@@ -11,6 +11,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
@@ -39,7 +40,10 @@ public class CrystallizedOreVeinFeature extends Feature<NoneFeatureConfiguration
         if (AVAILABLE_TO_SPAWN == null){
             initList(world);
         }
-        BlockPos pos = ctx.origin().below(13);
+//        System.out.println(ctx.origin());
+        BlockPos pos = ctx.origin();
+        int y = ctx.level().getHeight(Heightmap.Types.WORLD_SURFACE_WG,pos.getX(),pos.getZ());
+        pos = new BlockPos(pos.getX(),y,pos.getZ()).above(5);
 
         RandomSource random = ctx.random();
 
@@ -48,7 +52,7 @@ public class CrystallizedOreVeinFeature extends Feature<NoneFeatureConfiguration
         StructureTemplateManager manager = world.getLevel().getStructureManager();
         StructureTemplate templ = manager.getOrCreate(VEIN);
         StructurePlaceSettings set = new StructurePlaceSettings().addProcessor(BlockIgnoreProcessor.AIR).setRandom(random).setRotation(rot).setBoundingBox(BoundingBox.infinite());
-        BlockPos blockpos1 = templ.getZeroPositionWithTransform(pos.offset(0,1,0), Mirror.NONE, rot);
+        BlockPos blockpos1 = templ.getZeroPositionWithTransform(pos.offset(-3,1,-3), Mirror.NONE, rot);
 
         templ.placeInWorld(world, blockpos1, blockpos1, set, random, 4);
         templ.filterBlocks(blockpos1,set, Blocks.SEA_LANTERN).forEach((info)->{

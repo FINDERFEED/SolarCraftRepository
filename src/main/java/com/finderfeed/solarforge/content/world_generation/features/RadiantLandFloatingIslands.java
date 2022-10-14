@@ -48,7 +48,7 @@ public class RadiantLandFloatingIslands extends Feature<NoneFeatureConfiguration
         if (AVAILABLE_TO_SPAWN == null){
             initList(world);
         }
-        BlockPos pos = ctx.origin();
+        BlockPos pos = ctx.origin().above(60 + ctx.random().nextInt(20));
 
         RandomSource random = ctx.random();
 

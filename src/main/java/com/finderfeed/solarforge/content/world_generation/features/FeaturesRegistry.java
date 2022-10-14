@@ -338,7 +338,8 @@ public class FeaturesRegistry {
 
             FLOATING_ISLANDS_RADIANT_LAND_PLACEMENT = registerPlacedFeature("floating_islands",Holder.direct(FLOATING_ISLANDS_RADIANT_LAND_CONFIGURED_CONF),
                     RarityFilter.onAverageOnceEvery(30),
-                    HeightRangePlacement.triangle(VerticalAnchor.absolute(100),VerticalAnchor.absolute(130)),
+//                    HeightRangePlacement.triangle(VerticalAnchor.absolute(100),VerticalAnchor.absolute(130)),
+                    HeightmapPlacement.onHeightmap(Heightmap.Types.WORLD_SURFACE_WG),
                     InSquarePlacement.spread());
 
 
@@ -367,7 +368,7 @@ public class FeaturesRegistry {
 
             CRYSTALLIZED_ORE_VEIN_CONFIGURED = registerPlacedFeature("crystallized_ore_vein",Holder.direct(CRYSTALLIZED_ORE_VEIN_CONFIGURED_CONF),
                     RarityFilter.onAverageOnceEvery(25),
-                    HeightmapPlacement.onHeightmap(Heightmap.Types.WORLD_SURFACE_WG),
+//                    HeightmapPlacement.onHeightmap(Heightmap.Types.WORLD_SURFACE_WG),
                     InSquarePlacement.spread());
 
 
