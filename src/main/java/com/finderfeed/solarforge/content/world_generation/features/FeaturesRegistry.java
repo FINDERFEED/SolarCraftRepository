@@ -391,7 +391,7 @@ public class FeaturesRegistry {
             Registry.register(BuiltinRegistries.CONFIGURED_FEATURE,new ResourceLocation("solarforge","crystal_cave_ore_crystal"), CRYSTAL_CAVE_ORE_CRYSTAL_CONF);
 
             CRYSTAL_CAVE_ORE_CRYSTAL_PLACEMENT = registerPlacedFeature("crystal_cave_ore_crystal",Holder.direct(CRYSTAL_CAVE_ORE_CRYSTAL_CONF),
-                    RarityFilter.onAverageOnceEvery(2),
+                    RarityFilter.onAverageOnceEvery(10),
                     CountPlacement.of(UniformInt.of(10,15)),InSquarePlacement.spread(), PlacementUtils.RANGE_BOTTOM_TO_MAX_TERRAIN_HEIGHT, BiomeFilter.biome());
 
             CEILING_FLOOR_CRYSTALS_CONF = new ConfiguredFeature<>(CEILING_FLOOR_CRYSTALS.get(),NoneFeatureConfiguration.INSTANCE);
@@ -484,7 +484,7 @@ public class FeaturesRegistry {
 
             ULDERA_OBELISK_PLACEMENT = registerPlacedFeature("uldera_obelisk",Holder.direct(ULDERA_OBELISK_CONFIGURED),
                     RarityFilter.onAverageOnceEvery(100),
-                    HeightRangePlacement.triangle(VerticalAnchor.absolute(75),VerticalAnchor.absolute(90)),
+//                    HeightRangePlacement.triangle(VerticalAnchor.absolute(75),VerticalAnchor.absolute(90)),
                     InSquarePlacement.spread());
 
 

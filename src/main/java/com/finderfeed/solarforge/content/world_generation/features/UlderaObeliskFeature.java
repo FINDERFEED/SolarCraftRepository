@@ -9,6 +9,7 @@ import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
@@ -34,7 +35,8 @@ public class UlderaObeliskFeature extends Feature<NoneFeatureConfiguration> {
         WorldGenLevel world = ctx.level();
 
         BlockPos pos = ctx.origin();
-
+        int y = ctx.level().getHeight(Heightmap.Types.WORLD_SURFACE_WG,pos.getX(),pos.getZ());
+        pos = new BlockPos(pos.getX(),y,pos.getZ()).above(30 + ctx.random().nextInt(10));
         RandomSource random = ctx.random();
 
 
