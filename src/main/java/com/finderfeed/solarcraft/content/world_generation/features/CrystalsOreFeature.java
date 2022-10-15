@@ -4,6 +4,7 @@ import com.finderfeed.solarcraft.content.blocks.primitive.DirectionBlock;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
@@ -44,7 +45,7 @@ public class CrystalsOreFeature extends Feature<SimpleBlockConfiguration> {
         List<Direction> dirs = new ArrayList<>();
         for (Direction dir : Direction.values()){
             BlockPos add = pos.relative(dir);
-            if (level.getBlockState(add).is(Tags.Blocks.STONE)){
+            if (level.getBlockState(add).is(BlockTags.BASE_STONE_OVERWORLD)){
                 dirs.add(dir);
             }
         }

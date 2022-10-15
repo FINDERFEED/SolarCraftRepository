@@ -1,6 +1,6 @@
-import mods.solarforge.RunicEnergyCost;
+import mods.solarcraft.RunicEnergyCost;
 
-//<recipetype:solarforge:infusing_crafting>.addRecipe(name as string, output as IItemStack, inputs as IItemStack[][], processingTime as int, fragment as string).
+//<recipetype:solarcraft:infusing_crafting>.addRecipe(name as string, output as IItemStack, inputs as IItemStack[][], processingTime as int, fragment as string).
 
 //Adds a new recipe to the Infusing Crafting Table.
 
@@ -8,14 +8,14 @@ import mods.solarforge.RunicEnergyCost;
 
 //You can get the usable fragment parameters using the command /ct dump solarforge_fragments.
 
-<recipetype:solarforge:infusing_crafting>.addRecipe("infusing_crafting_test_recipe", <item:minecraft:egg>, [
+<recipetype:solarcraft:infusing_crafting>.addRecipe("infusing_crafting_test_recipe", <item:minecraft:egg>, [
 [<item:minecraft:stick>, <item:minecraft:air>, <item:minecraft:stick>],
 [<item:minecraft:air>, <item:minecraft:diamond>, <item:minecraft:air>],
 [<item:minecraft:air>, <item:minecraft:air>, <item:minecraft:air>]
 ], 300, "crystals");
 
 
-//<recipetype:solarforge:infusing_new>.addRecipe(name as string, output as IItemStack, inputs as IItemStack[][], catalysts as Block[][], processing time as int, fragment as string, cost as RunicEnergyCost);
+//<recipetype:solarcraft:infusing_new>.addRecipe(name as string, output as IItemStack, inputs as IItemStack[][], catalysts as Block[][], processing time as int, fragment as string, cost as RunicEnergyCost);
 
 //Adds a new recipe to the Infuser Multiblock setup.
 
@@ -40,17 +40,17 @@ import mods.solarforge.RunicEnergyCost;
 var empty = <block:minecraft:air>;
 
 
-<recipetype:solarforge:infusing_new>.addRecipe("infusing_test_recipe", <item:minecraft:pumpkin>,
+<recipetype:solarcraft:infusing_new>.addRecipe("infusing_test_recipe", <item:minecraft:pumpkin>,
 [[<item:minecraft:diamond>, <item:minecraft:diamond>, <item:minecraft:diamond>],
 [<item:minecraft:diamond>, <item:minecraft:diamond>], [<item:minecraft:diamond>, <item:minecraft:diamond>, <item:minecraft:diamond>],
 [<item:minecraft:diamond>, <item:minecraft:diamond>], [<item:minecraft:diamond>, <item:minecraft:diamond>, <item:minecraft:diamond>]],
-[[empty, <block:solarforge:zeta_rune_block>, empty],
-[<block:solarforge:urba_rune_block>, empty, <block:solarforge:fira_rune_block>],
-[empty, <block:solarforge:ardo_rune_block>, empty],
-[<block:solarforge:giro_rune_block>, empty, <block:solarforge:ultima_rune_block>]],
+[[empty, <block:solarcraft:zeta_rune_block>, empty],
+[<block:solarcraft:urba_rune_block>, empty, <block:solarcraft:fira_rune_block>],
+[empty, <block:solarcraft:ardo_rune_block>, empty],
+[<block:solarcraft:giro_rune_block>, empty, <block:solarcraft:ultima_rune_block>]],
 300, "crystals", RunicEnergyCost.EMPTY());
 
-<recipetype:solarforge:solar_smelting>.addRecipe("solar_smelting_test_recipe", <item:minecraft:diamond_pickaxe>, [<item:minecraft:dirt>, <item:minecraft:emerald>], 300);
+<recipetype:solarcraft:solar_smelting>.addRecipe("solar_smelting_test_recipe", <item:minecraft:diamond_pickaxe>, [<item:minecraft:dirt>, <item:minecraft:emerald>], 300);
 
 /*
  List of all known SolarForge Fragments 
@@ -148,12 +148,12 @@ var empty = <block:minecraft:air>;
 
 /*
  List of all known Catalyst Blocks 
-- <block:solarforge:fira_rune_block>
-- <block:solarforge:tera_rune_block>
-- <block:solarforge:kelda_rune_block>
-- <block:solarforge:zeta_rune_block>
-- <block:solarforge:urba_rune_block>
-- <block:solarforge:ultima_rune_block>
-- <block:solarforge:giro_rune_block>
-- <block:solarforge:ardo_rune_block>
+- <block:solarcraft:fira_rune_block>
+- <block:solarcraft:tera_rune_block>
+- <block:solarcraft:kelda_rune_block>
+- <block:solarcraft:zeta_rune_block>
+- <block:solarcraft:urba_rune_block>
+- <block:solarcraft:ultima_rune_block>
+- <block:solarcraft:giro_rune_block>
+- <block:solarcraft:ardo_rune_block>
 */

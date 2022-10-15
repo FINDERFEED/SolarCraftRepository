@@ -4,6 +4,7 @@ import com.finderfeed.solarcraft.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarcraft.registries.blocks.SolarcraftBlocks;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.levelgen.Column;
@@ -25,7 +26,7 @@ public class CeilingDripstoneLikeCrystals extends Feature<NoneFeatureConfigurati
     public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {
         BlockPos origin = context.origin();
         WorldGenLevel world = context.level();
-        Optional<Column> optionalColumn = Column.scan(world,origin,40, BlockBehaviour.BlockStateBase::isAir,state -> state.is(Tags.Blocks.STONE));
+        Optional<Column> optionalColumn = Column.scan(world,origin,40, BlockBehaviour.BlockStateBase::isAir,state -> state.is(BlockTags.BASE_STONE_OVERWORLD));
         if (optionalColumn.isPresent()){
                Column column = optionalColumn.get();
                if (column.getCeiling().isPresent() && column.getFloor().isPresent()){
@@ -49,7 +50,7 @@ public class CeilingDripstoneLikeCrystals extends Feature<NoneFeatureConfigurati
                                    boolean end = true;
                                    for (int i = 1; i <= 3;i++){
                                        BlockPos above = test.above(i);
-                                       if (world.getBlockState(test.above(i)).is(Tags.Blocks.STONE)){
+                                       if (world.getBlockState(test.above(i)).is(BlockTags.BASE_STONE_OVERWORLD)){
                                            end = false;
                                            break;
                                        }

@@ -76,7 +76,7 @@ public abstract class BaseDivineArmor extends SolarcraftArmorItem implements IRu
 
     @Override
     public boolean canEquip(ItemStack stack, EquipmentSlot armorType, Entity entity) {
-        System.out.println(entity.level.isClientSide);
+
         if (entity instanceof Player player){
             return super.canEquip(stack,armorType,entity) && ProgressionHelper.doPlayerHasFragment(player,AncientFragment.DIVINE_ARMOR);
         }

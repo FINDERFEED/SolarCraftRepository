@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "solarcraft:radiant_grass"
+    "solarcraft:radiant_grass",
+    "solarcraft:radiant_stone"
   ]
 }

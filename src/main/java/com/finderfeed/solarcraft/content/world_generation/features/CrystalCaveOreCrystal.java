@@ -6,6 +6,7 @@ import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Block;
@@ -50,7 +51,7 @@ public class CrystalCaveOreCrystal extends Feature<NoneFeatureConfiguration> {
         if (!(stateAtPos.isAir())){
             return false;
         }
-        Optional<Column> column = Column.scan(world,pos,30,(state)->state.is(Blocks.AIR) || state.is(Blocks.CAVE_AIR),(state)->state.is(Blocks.STONE));
+        Optional<Column> column = Column.scan(world,pos,30,(state)->state.is(Blocks.AIR) || state.is(Blocks.CAVE_AIR),(state)->state.is(BlockTags.BASE_STONE_OVERWORLD));
         if (column.isPresent() && column.get().getFloor().isPresent()) {
 
             Rotation rot = Rotation.getRandom(random);

@@ -1,6 +1,6 @@
 {
   "replace": false,
   "values": [
-    "#solarcraft:is_radiant_land"
+    "solarcraft:radiant_stone"
   ]
 }

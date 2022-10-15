@@ -2,6 +2,7 @@ package com.finderfeed.solarcraft.content.world_generation.features;
 
 import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.DoublePlantBlock;
@@ -21,7 +22,7 @@ public class StoneFlowersFeature extends SimpleBlockFeature {
         WorldGenLevel worldgenlevel = context.level();
         BlockPos blockpos = context.origin();
         BlockState blockstate = simpleblockconfiguration.toPlace().getState(context.random(), blockpos);
-        if (worldgenlevel.getBlockState(blockpos.below()).is(Blocks.STONE)) {
+        if (worldgenlevel.getBlockState(blockpos.below()).is(BlockTags.BASE_STONE_OVERWORLD)) {
             if (blockstate.getBlock() instanceof DoublePlantBlock) {
                 if (!worldgenlevel.isEmptyBlock(blockpos.above())) {
                     return false;
