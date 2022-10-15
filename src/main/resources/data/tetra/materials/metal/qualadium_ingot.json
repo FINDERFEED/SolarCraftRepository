@@ -18,7 +18,7 @@
     "metal"
   ],
   "material": {
-    "items": [ "solarforge:qualadium_ingot" ]
+    "items": [ "solarcraft:qualadium_ingot" ]
   },
   "requiredTools": {
     "hammer_dig": "minecraft:iron"

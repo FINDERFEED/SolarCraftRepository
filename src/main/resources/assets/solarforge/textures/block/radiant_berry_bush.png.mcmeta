@@ -1,6 +1,0 @@
-{
-  "forge": {
-    "loader": "solarforge:radiant_loader"
-  },
-  "animation":{}
-}

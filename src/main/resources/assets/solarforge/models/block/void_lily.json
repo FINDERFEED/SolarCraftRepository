@@ -1,8 +1,0 @@
-{
-  "parent": "block/cross",
-  "textures": {
-    "cross": "solarforge:block/void_lily"
-  },
-  "render_type": "cutout"
-
-}

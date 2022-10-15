@@ -1,6 +1,0 @@
-{
-  "parent": "item/generated",
-  "textures" : {
-    "layer0": "solarforge:items/solar_rune_urba"
-  }
-}

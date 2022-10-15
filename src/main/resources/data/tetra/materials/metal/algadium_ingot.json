@@ -18,7 +18,7 @@
     "metal"
   ],
   "material": {
-    "items": [ "solarforge:algadium_ingot" ]
+    "items": [ "solarcraft:algadium_ingot" ]
   },
   "requiredTools": {
     "hammer_dig": "minecraft:iron"

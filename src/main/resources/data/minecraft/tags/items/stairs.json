@@ -1,7 +1,7 @@
 {
   "replace": false,
   "values": [
-    "solarforge:runic_stairs",
-    "solarforge:radiant_stairs"
+    "solarcraft:runic_stairs",
+    "solarcraft:radiant_stairs"
   ]
 }

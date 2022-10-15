@@ -1,7 +1,0 @@
-{
-  "parent": "block/cube_column",
-  "textures": {
-    "end": "solarforge:block/radiant_log_top",
-    "side": "block/acacia_log"
-  }
-}

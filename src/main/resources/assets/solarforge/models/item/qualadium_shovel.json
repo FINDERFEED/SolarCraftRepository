@@ -1,6 +1,0 @@
-{
-  "parent": "item/handheld",
-  "textures" : {
-    "layer0": "solarforge:items/qualadium_shovel"
-  }
-}

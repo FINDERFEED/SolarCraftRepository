@@ -1,8 +1,0 @@
-{
-  "parent": "block/orientable",
-  "textures": {
-    "top": "solarforge:block/solar_stone_vertical_collumn_top",
-    "side": "solarforge:block/solar_stone_vertical_collumn",
-    "front": "solarforge:block/solar_stone_vertical_collumn"
-  }
-}

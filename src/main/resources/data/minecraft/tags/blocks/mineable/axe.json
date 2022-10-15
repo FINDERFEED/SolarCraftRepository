@@ -1,16 +1,16 @@
 {
   "replace": false,
   "values": [
-    "solarforge:burnt_log",
-    "solarforge:runic_table",
-    "solarforge:runic_log",
-    "solarforge:runic_planks",
-    "solarforge:module_table",
-    "solarforge:radiant_planks",
-    "solarforge:radiant_log",
-    "solarforge:radiant_stairs",
-    "solarforge:radiant_slab",
-    "solarforge:runic_slab",
-    "solarforge:runic_stairs"
+    "solarcraft:burnt_log",
+    "solarcraft:runic_table",
+    "solarcraft:runic_log",
+    "solarcraft:runic_planks",
+    "solarcraft:module_table",
+    "solarcraft:radiant_planks",
+    "solarcraft:radiant_log",
+    "solarcraft:radiant_stairs",
+    "solarcraft:radiant_slab",
+    "solarcraft:runic_slab",
+    "solarcraft:runic_stairs"
   ]
 }

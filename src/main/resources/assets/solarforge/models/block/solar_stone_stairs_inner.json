@@ -1,8 +1,0 @@
-{
-  "parent": "block/inner_stairs",
-  "textures": {
-    "bottom": "solarforge:block/solar_stone_bricks",
-    "top": "solarforge:block/solar_stone_bricks",
-    "side": "solarforge:block/solar_stone_bricks"
-  }
-}

@@ -1,7 +1,0 @@
-{
-  "parent": "block/cube_column",
-  "textures": {
-    "end": "block/smithing_table_top",
-    "side": "solarforge:block/module_table_side"
-  }
-}

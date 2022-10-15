@@ -1,8 +1,0 @@
-{
-  "variants": {
-    "facing=south": { "model": "solarforge:block/key_lock_block", "y": 180},
-    "facing=west": { "model": "solarforge:block/key_lock_block", "y": 270 },
-    "facing=north": { "model": "solarforge:block/key_lock_block", "y": 0 },
-    "facing=east": { "model": "solarforge:block/key_lock_block", "y": 90 }
-  }
-}

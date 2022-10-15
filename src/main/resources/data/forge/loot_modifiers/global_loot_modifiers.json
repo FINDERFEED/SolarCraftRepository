@@ -1,12 +1,12 @@
 {
   "replace": "false",
   "entries": [
-    "solarforge:solar_god_smelting",
-    "solarforge:module_smelting",
-    "solarforge:add_fragments_to_monster_room",
-    "solarforge:add_fragments_to_stronghold_library",
-    "solarforge:add_fragments_to_jungle_temple",
-    "solarforge:add_fragments_to_desert_pyramid",
-    "solarforge:add_fragments_to_abandoned_mineshaft"
+    "solarcraft:solar_god_smelting",
+    "solarcraft:module_smelting",
+    "solarcraft:add_fragments_to_monster_room",
+    "solarcraft:add_fragments_to_stronghold_library",
+    "solarcraft:add_fragments_to_jungle_temple",
+    "solarcraft:add_fragments_to_desert_pyramid",
+    "solarcraft:add_fragments_to_abandoned_mineshaft"
   ]
 }

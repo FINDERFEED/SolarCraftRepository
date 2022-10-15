@@ -1,8 +1,8 @@
 {
   "replace": false,
   "values": [
-    "solarforge:ash_leaves",
-    "solarforge:runic_leaves",
-    "solarforge:radiant_leaves"
+    "solarcraft:ash_leaves",
+    "solarcraft:runic_leaves",
+    "solarcraft:radiant_leaves"
   ]
 }

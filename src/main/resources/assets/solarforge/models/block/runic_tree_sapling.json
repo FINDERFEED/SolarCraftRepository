@@ -1,7 +1,0 @@
-{
-  "parent": "block/cross",
-  "textures": {
-    "cross": "solarforge:block/runic_tree_sapling"
-  },
-  "render_type": "cutout"
-}

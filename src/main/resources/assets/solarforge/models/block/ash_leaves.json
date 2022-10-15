@@ -1,7 +1,0 @@
-{
-  "parent": "block/leaves",
-  "textures": {
-    "all": "solarforge:block/ash_leaves2"
-  },
-  "render_type": "cutout"
-}

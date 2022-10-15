@@ -1,11 +1,11 @@
 {
   "replace": false,
   "values": [
-    "solarforge:solar_core_block",
-    "solarforge:uldoradium_ore",
-    "solarforge:solar_ores",
-    "solarforge:uldera_rune_block",
-    "solarforge:corrupted_stone",
-    "solarforge:clearing_ritual_crystal"
+    "solarcraft:solar_core_block",
+    "solarcraft:uldoradium_ore",
+    "solarcraft:solar_ores",
+    "solarcraft:uldera_rune_block",
+    "solarcraft:corrupted_stone",
+    "solarcraft:clearing_ritual_crystal"
   ]
 }

@@ -1,8 +1,0 @@
-{
-  "parent": "block/orientable",
-  "textures": {
-    "top": "solarforge:block/solar_stone_bricks",
-    "side": "solarforge:block/solar_stone_bricks",
-    "front": "solarforge:block/solar_furnace_front"
-  }
-}

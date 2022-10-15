@@ -1,6 +1,0 @@
-{
-  "variants": {
-    "not_starred=false": { "model": "solarforge:block/cold_star_charger_starred" },
-    "not_starred=true": { "model": "solarforge:block/cold_star_charger" }
-  }
-}
