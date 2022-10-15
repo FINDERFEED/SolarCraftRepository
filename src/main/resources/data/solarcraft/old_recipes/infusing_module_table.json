@@ -1,0 +1,35 @@
+{
+  "type":"solarcraft:infusing",
+  "input1": {
+    "item": "minecraft:smithing_table"
+  },
+  "input2": {
+    "item": "minecraft:air"
+  },
+  "input3": {
+    "item": "minecraft:air"
+  },
+  "input4": {
+    "item": "minecraft:amethyst_shard"
+  },
+  "input5": {
+    "item": "minecraft:air"
+  },
+  "input6": {
+    "item": "minecraft:air"
+  },
+  "input7": {
+    "item": "minecraft:air"
+  },
+  "input8": {
+    "item": "solarcraft:solar_dust"
+  },
+  "input9": {
+    "item": "minecraft:air"
+  },
+  "result": {
+    "item": "solarcraft:module_table"
+  },
+  "time": 200,
+  "fragment": "modules"
+}

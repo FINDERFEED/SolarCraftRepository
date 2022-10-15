@@ -1,0 +1,7 @@
+{
+  "parent": "block/leaves",
+  "textures": {
+    "all": "solarcraft:block/ash_leaves2"
+  },
+  "render_type": "cutout"
+}

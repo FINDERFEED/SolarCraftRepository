@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "solarcraft:block/radiant_slab"
+    },
+    "type=double": {
+      "model": "solarcraft:block/radiant_planks"
+    },
+    "type=top": {
+      "model": "solarcraft:block/radiant_slab_top"
+    }
+  }
+}

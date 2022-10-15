@@ -1,0 +1,35 @@
+{
+  "type":"solarcraft:infusing",
+  "input1": {
+    "item": "minecraft:diamond"
+  },
+  "input2": {
+    "item": "solarcraft:zeta_crystal"
+  },
+  "input3": {
+    "item": "solarcraft:fira_crystal"
+  },
+  "input4": {
+    "item": "solarcraft:tera_crystal"
+  },
+  "input5": {
+    "item": "solarcraft:kelda_crystal"
+  },
+  "input6": {
+    "item": "solarcraft:urba_crystal"
+  },
+  "input7": {
+    "item": "solarcraft:giro_crystal"
+  },
+  "input8": {
+    "item": "solarcraft:ardo_crystal"
+  },
+  "input9": {
+    "item": "solarcraft:ultima_crystal"
+  },
+  "result": {
+    "item": "solarcraft:crystal_core"
+  },
+  "time": 100,
+  "fragment": "crystal_cores"
+}

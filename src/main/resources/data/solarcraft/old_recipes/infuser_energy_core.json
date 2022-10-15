@@ -1,0 +1,36 @@
+{
+  "type":"solarcraft:infusing",
+  "input1": {
+    "item": "solarcraft:crystal_core"
+  },
+  "input2": {
+    "item": "solarcraft:energy_dust"
+  },
+  "input3": {
+    "item": "minecraft:redstone"
+  },
+  "input4": {
+    "item": "solarcraft:energy_dust"
+  },
+  "input5": {
+    "item": "minecraft:redstone"
+  },
+  "input6": {
+    "item": "solarcraft:energy_dust"
+  },
+  "input7": {
+    "item": "minecraft:redstone"
+  },
+  "input8": {
+    "item": "solarcraft:energy_dust"
+  },
+  "input9": {
+    "item": "minecraft:redstone"
+  },
+  "result": {
+    "item": "solarcraft:energy_core"
+  },
+  "time": 200,
+  "fragment": "crystal_cores",
+  "catalysts": "A AA AA AA A"
+}

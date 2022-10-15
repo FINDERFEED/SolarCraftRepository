@@ -1,0 +1,25 @@
+{
+  "type": "solarcraft:infusing_new",
+  "items": {
+    "A": {"item": "solarcraft:small_solar_reactor"},
+    "B": {"item": "solarcraft:solar_stone_bricks"},
+    "C": {"item": "solarcraft:solar_dust"},
+    "D": {"item": "solarcraft:turret_radar"},
+    "E": {"item": "solarcraft:illidium_ingot"},
+    "F": {"item": "solarcraft:zeta_crystal"},
+    "M": {"item": "solarcraft:kelda_crystal"}
+  },
+  "pattern": [
+    "FDF",
+    "CC",
+    "BAB",
+    "EE",
+    "MBM"
+  ],
+  "result": {
+    "item": "solarcraft:turret_block"
+  },
+  "time": 250,
+  "fragment": "solar_turret",
+  "catalysts": "   ZKZ   ZKZ"
+}

@@ -1,0 +1,37 @@
+{
+  "type":"solarcraft:infusing",
+  "input1": {
+    "item": "solarcraft:illidium_shovel"
+  },
+  "input2": {
+    "item": "solarcraft:geminium_ingot"
+  },
+  "input3": {
+    "item": "solarcraft:qualadium_ingot"
+  },
+  "input4": {
+    "item": "solarcraft:geminium_ingot"
+  },
+  "input5": {
+    "item": "solarcraft:qualadium_ingot"
+  },
+  "input6": {
+    "item": "solarcraft:geminium_ingot"
+  },
+  "input7": {
+    "item": "solarcraft:qualadium_ingot"
+  },
+  "input8": {
+    "item": "solarcraft:geminium_ingot"
+  },
+  "input9": {
+    "item": "solarcraft:qualadium_ingot"
+  },
+  "result": {
+    "item": "solarcraft:qualadium_shovel"
+  },
+  "time": 1500,
+  "fragment": "qualadium_shovel",
+  "kelda": 2500,
+  "catalysts": "   K K   K K"
+}

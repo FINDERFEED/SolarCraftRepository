@@ -1,0 +1,36 @@
+{
+  "type":"solarcraft:infusing",
+  "input1": {
+    "item": "minecraft:compass"
+  },
+  "input2": {
+    "item": "solarcraft:solar_dust"
+  },
+  "input3": {
+    "item": "minecraft:diamond"
+  },
+  "input4": {
+    "item": "solarcraft:energy_dust"
+  },
+  "input5": {
+    "item": "minecraft:diamond"
+  },
+  "input6": {
+    "item": "solarcraft:solar_dust"
+  },
+  "input7": {
+    "item": "solarcraft:illidium_ingot"
+  },
+  "input8": {
+    "item": "solarcraft:energy_dust"
+  },
+  "input9": {
+    "item": "solarcraft:illidium_ingot"
+  },
+  "result": {
+    "item": "solarcraft:turret_radar"
+  },
+  "time": 400,
+  "fragment": "turret_radar",
+  "catalysts": " U  U  U  U "
+}

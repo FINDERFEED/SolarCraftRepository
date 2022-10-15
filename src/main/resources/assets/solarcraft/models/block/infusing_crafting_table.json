@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "particle": "solarcraft:block/infusing_crafting_table",
+    "down": "solarcraft:block/infusing_crafting_table_down",
+    "up": "solarcraft:block/infusing_crafting_table_top",
+    "north": "solarcraft:block/infusing_crafting_table",
+    "east": "solarcraft:block/infusing_crafting_table",
+    "south": "solarcraft:block/infusing_crafting_table",
+    "west": "solarcraft:block/infusing_crafting_table"
+  }
+}

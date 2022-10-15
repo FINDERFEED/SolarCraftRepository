@@ -1,0 +1,7 @@
+{
+  "parent": "block/leaves",
+  "textures": {
+    "all": "solarcraft:block/runic_leaves"
+  },
+  "render_type": "cutout"
+}

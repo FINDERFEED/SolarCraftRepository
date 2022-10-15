@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab",
+  "textures": {
+    "bottom": "solarcraft:block/radiant_planks",
+    "top": "solarcraft:block/radiant_planks",
+    "side": "solarcraft:block/radiant_planks"
+  }
+}

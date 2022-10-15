@@ -1,0 +1,8 @@
+{
+  "parent": "block/orientable",
+  "textures": {
+    "top": "solarcraft:block/stone_collumn_top",
+    "side": "solarcraft:block/stone_collumn",
+    "front": "solarcraft:block/stone_collumn"
+  }
+}

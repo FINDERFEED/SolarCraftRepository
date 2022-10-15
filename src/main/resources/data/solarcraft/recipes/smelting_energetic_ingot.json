@@ -1,0 +1,20 @@
+{
+  "type":"solarcraft:solar_smelting",
+  "ingredients": [
+    {
+      "item": "minecraft:gold_ingot"
+    },
+    {
+      "item": "solarcraft:energy_dust",
+      "count": 8
+    },
+    {
+      "item": "minecraft:redstone",
+      "count": 16
+    }
+  ],
+  "result": "solarcraft:energetic_ingot",
+  "time": 150,
+  "requires": "solar_forge_progression_solar_lens_craft",
+  "category": "solar_category.smelting"
+}

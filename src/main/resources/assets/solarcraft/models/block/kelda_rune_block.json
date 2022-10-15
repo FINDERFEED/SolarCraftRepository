@@ -1,0 +1,7 @@
+{
+  "parent": "block/cube_column",
+  "textures": {
+    "end": "solarcraft:block/chiseled_solar_stone",
+    "side": "solarcraft:block/kelda_rune_block"
+  }
+}

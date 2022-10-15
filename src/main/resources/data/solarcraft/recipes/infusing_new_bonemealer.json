@@ -1,0 +1,26 @@
+{
+  "type": "solarcraft:infusing_new",
+  "items": {
+    "X": {"item": "solarcraft:runic_core"},
+    "Z": {"item": "solarcraft:geminium_ingot"},
+    "S": {"tag": "saplings"},
+    "B": {"item": "minecraft:bone_meal"},
+    "C": {"item": "solarcraft:illidium_ingot"},
+    "E": {"item": "solarcraft:enderium_ingot"}
+  },
+  "pattern": [
+    "EBE",
+    "SS",
+    "BXB",
+    "SS",
+    "ZBZ"
+  ],
+
+  "result": {
+    "item": "solarcraft:bonemealer"
+  },
+  "time": 1200,
+  "fragment": "bonemealer",
+  "tera": 5000,
+  "catalysts": "TFTTGTTKTTUT"
+}

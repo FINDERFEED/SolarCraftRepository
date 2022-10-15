@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:coal"
+    },
+    {
+      "item": "minecraft:glowstone_dust"
+    },
+    {
+      "item": "solarcraft:energy_dust"
+    }
+  ],
+  "result": {
+    "item": "solarcraft:thrown_light",
+    "count": 8
+  }
+}

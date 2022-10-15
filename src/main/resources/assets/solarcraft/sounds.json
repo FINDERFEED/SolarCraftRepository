@@ -1,0 +1,83 @@
+{
+  "solar_strike_explosion_sound": {
+    "sounds": [ "solarcraft:ray_explosion_sound" ]
+  },
+  "solar_strike_buildup": {
+    "sounds": ["solarcraft:ray_buildup_sound"]
+  },
+  "crossbow_shoot": {
+    "sounds": ["solarcraft:crossbow_shoot_sound"]
+  },
+  "crossbow_charge": {
+    "sounds": ["solarcraft:crossbow_charge_shot"]
+  },
+  "crossbow_shot_impact": {
+    "sounds": ["solarcraft:crossbow_shot_impact"]
+  },
+  "solar_mortar_shoot": {
+    "sounds": ["solarcraft:solar_mortar_shoot"]
+  },
+  "solar_mortar_projectile": {
+    "sounds": ["solarcraft:solar_mortar_projectile"]
+  },
+  "gem_insert": {
+    "sounds": ["solarcraft:gem_insert"]
+  },
+  "ray_trap_proc": {
+    "sounds": ["solarcraft:ray_trap_proc"]
+  },
+  "button_press2": {
+    "sounds": ["solarcraft:button_press2"]
+  },
+  "progression_unlock": {
+    "sounds": ["solarcraft:progression_unlock"]
+  },
+  "zap_turret_shot": {
+    "sounds": ["solarcraft:zap_turret_shot"]
+  },
+  "crystal_hit": {
+    "sounds": ["solarcraft:crystal_hit"]
+  },
+  "solar_explosion": {
+    "sounds": ["solarcraft:solar_explosion"]
+  },
+  "ambient_one": {
+    "sounds": ["solarcraft:dimension/ambient_one"]
+  },
+  "ambient_two": {
+    "sounds": ["solarcraft:dimension/ambient2"]
+  },
+  "night_beggining": {
+    "sounds": ["solarcraft:dimension/night_beggining"]
+  },
+  "ball_lightning_blow": {
+    "sounds": ["solarcraft:ball_lightning_blow"]
+  },
+  "lightning_gun_shot": {
+    "sounds": ["solarcraft:lightning_gun_shot"]
+  },
+  "sunstrike": {
+    "sounds": ["solarcraft:sunstrike"]
+  },
+  "shadow_bolt": {
+    "sounds": ["solarcraft:shadow_bolt_explosion"]
+  },
+  "earthquake": {
+    "sounds": ["solarcraft:earthquake_explosion"]
+  },
+  "shadow_zombie_hurt": {
+    "sounds": ["solarcraft:shadow_zombie_hurt"]
+  },
+  "clearing_crystal_overload": {
+    "sounds": ["solarcraft:clearing_crystal_overload"]
+  },
+  "corruption_wisp_hit": {
+    "sounds": ["solarcraft:corruption_wisp_hit"]
+  },
+  "dimension_break": {
+    "sounds": ["solarcraft:dimension/dimension_break"]
+  },
+  "ritual_tile_strike": {
+    "sounds": ["solarcraft:ritual_tile_strike"]
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "type":"solarcraft:infusing",
+  "input1": {
+    "item": "solarcraft:solar_god_pickaxe"
+  },
+  "input2": {
+    "item": "solarcraft:enderium_ingot"
+  },
+  "input3": {
+    "item": "solarcraft:energetic_ingot"
+  },
+  "input4": {
+    "item": "solarcraft:charged_qualadium_ingot"
+  },
+  "input5": {
+    "item": "solarcraft:energetic_ingot"
+  },
+  "input6": {
+    "item": "solarcraft:enderium_ingot"
+  },
+  "input7": {
+    "item": "solarcraft:blue_gem_enriched"
+  },
+  "input8": {
+    "item": "solarcraft:charged_qualadium_ingot"
+  },
+  "input9": {
+    "item": "solarcraft:blue_gem_enriched"
+  },
+  "result": {
+    "item": "solarcraft:solar_god_pickaxe"
+  },
+  "time": 500,
+  "fragment": "solar_god_pickaxe_upgrade",
+  "tag": "yes",
+  "energy" : 10000,
+  "ardo": 2500,
+  "urba": 1500,
+  "catalysts":"K    KK    K"
+}

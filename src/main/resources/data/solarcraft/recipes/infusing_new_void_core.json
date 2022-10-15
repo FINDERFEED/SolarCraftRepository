@@ -1,0 +1,22 @@
+{
+  "type": "solarcraft:infusing_new",
+  "items": {
+    "B": {"item": "solarcraft:crystal_core"},
+    "C": {"item": "solarcraft:void_dust"},
+    "D": {"item": "minecraft:obsidian"}
+  },
+  "pattern": [
+    " C ",
+    "DD",
+    "CBC",
+    "DD",
+    " C "
+  ],
+
+  "result": {
+    "item": "solarcraft:void_core"
+  },
+  "time": 200,
+  "fragment": "crystal_cores",
+  "catalysts": "F FF FF FF F"
+}

@@ -1,0 +1,36 @@
+{
+  "type":"solarcraft:infusing",
+  "input1": {
+    "item": "minecraft:glass"
+  },
+  "input2": {
+    "item": "minecraft:gold_ingot"
+  },
+  "input3": {
+    "item": "solarcraft:energy_dust"
+  },
+  "input4": {
+    "item": "minecraft:gold_ingot"
+  },
+  "input5": {
+    "item": "solarcraft:energy_dust"
+  },
+  "input6": {
+    "item": "minecraft:gold_ingot"
+  },
+  "input7": {
+    "item": "solarcraft:solar_dust"
+  },
+  "input8": {
+    "item": "minecraft:gold_ingot"
+  },
+  "input9": {
+    "item": "solarcraft:solar_dust"
+  },
+  "result": {
+    "item": "solarcraft:solar_mana_amulet"
+  },
+  "time": 250,
+  "fragment": "mana_regen_amulet",
+  "catalysts": "   KKK   KKK"
+}

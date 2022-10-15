@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "   ",
+    " # ",
+    "   "
+  ],
+  "key": {
+    "#": {
+      "item": "solarcraft:radiant_log"
+    }
+  },
+  "result": {
+    "item": "solarcraft:radiant_planks",
+    "count": 4
+  }
+}

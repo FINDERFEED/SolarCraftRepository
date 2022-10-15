@@ -1,0 +1,15 @@
+{
+  "type":"solarcraft:solar_smelting",
+  "ingredients": [
+    {
+      "item": "solarcraft:illidium_ingot"
+    },
+    {
+      "item": "solarcraft:algadium_ingot"
+    }
+  ],
+  "result": "solarcraft:qualadium_ingot",
+  "time": 300,
+  "requires": "solar_forge_progression_solar_lens_craft",
+  "category": "solar_category.smelting"
+}

@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "solarcraft:radiant_planks"
+    }
+  },
+  "result": {
+    "item": "solarcraft:radiant_slab",
+    "count": 6
+  }
+}

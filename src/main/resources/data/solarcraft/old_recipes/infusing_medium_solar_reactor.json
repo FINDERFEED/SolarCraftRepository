@@ -1,0 +1,38 @@
+{
+  "type":"solarcraft:infusing",
+  "input1": {
+    "item": "solarcraft:small_solar_reactor"
+  },
+  "input2": {
+    "item": "solarcraft:energetic_ingot"
+  },
+  "input3": {
+    "item": "solarcraft:qualadium_ingot"
+  },
+  "input4": {
+    "item": "solarcraft:energetic_ingot"
+  },
+  "input5": {
+    "item": "solarcraft:qualadium_ingot"
+  },
+  "input6": {
+    "item": "solarcraft:energetic_ingot"
+  },
+  "input7": {
+    "item": "solarcraft:qualadium_ingot"
+  },
+  "input8": {
+    "item": "solarcraft:energetic_ingot"
+  },
+  "input9": {
+    "item": "solarcraft:qualadium_ingot"
+  },
+  "result": {
+    "item": "solarcraft:medium_solar_reactor"
+  },
+  "time": 3000,
+  "fragment": "medium_solar_reactor",
+  "ardo": 2000,
+  "fira": 3000,
+  "kelda": 2000
+}

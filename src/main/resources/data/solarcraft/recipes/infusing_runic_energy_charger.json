@@ -1,0 +1,20 @@
+{
+  "type": "solarcraft:infusing_new",
+  "items": {
+    "B": {"item": "solarcraft:energy_dust"},
+    "C": {"item": "minecraft:iron_block"},
+    "F": {"item": "solarcraft:illidium_ingot"}
+  },
+  "pattern": [
+    "BBB",
+    "FF",
+    "BCB",
+    "FF",
+    "BBB"
+  ],
+  "result": {
+    "item": "solarcraft:runic_energy_charger"
+  },
+  "time": 500,
+  "fragment": "re_charger"
+}

@@ -1,0 +1,20 @@
+{
+  "type": "solarcraft:infusing_new",
+  "items": {
+    "A": {"item": "minecraft:smithing_table"},
+    "B": {"item": "minecraft:amethyst_shard"},
+    "C": {"item": "solarcraft:solar_dust"}
+  },
+  "pattern": [
+    " B ",
+    "  ",
+    " A ",
+    "  ",
+    " C "
+  ],
+  "result": {
+    "item": "solarcraft:module_table"
+  },
+  "time": 200,
+  "fragment": "modules"
+}

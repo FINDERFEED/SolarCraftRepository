@@ -1,0 +1,7 @@
+{
+  "parent": "block/cube_column",
+  "textures": {
+    "end": "solarcraft:block/ash_log_top",
+    "side": "solarcraft:block/ash_log_front"
+  }
+}

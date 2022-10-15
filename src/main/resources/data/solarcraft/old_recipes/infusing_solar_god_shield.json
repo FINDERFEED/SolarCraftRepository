@@ -1,0 +1,36 @@
+{
+  "type":"solarcraft:infusing",
+  "input1": {
+    "item": "minecraft:shield"
+  },
+  "input2": {
+    "item": "solarcraft:geminium_ingot"
+  },
+  "input3": {
+    "item": "solarcraft:qualadium_ingot"
+  },
+  "input4": {
+    "item": "solarcraft:energy_dust"
+  },
+  "input5": {
+    "item": "solarcraft:qualadium_ingot"
+  },
+  "input6": {
+    "item": "solarcraft:energy_dust"
+  },
+  "input7": {
+    "item": "solarcraft:solar_dust"
+  },
+  "input8": {
+    "item": "solarcraft:runic_core"
+  },
+  "input9": {
+    "item": "solarcraft:solar_dust"
+  },
+  "result": {
+    "item": "solarcraft:solar_god_shield"
+  },
+  "time": 1500,
+  "fragment": "solar_god_shield",
+  "catalysts":"  UU    UU  "
+}

@@ -1,0 +1,25 @@
+{
+  "type": "solarcraft:infusing_crafting",
+  "pattern": [
+    "#S#",
+    "SPS",
+    "#S#"
+  ],
+  "keys": {
+    "#": {
+      "item": "solarcraft:enderite_essence"
+    },
+    "P": {
+      "item": "minecraft:ender_pearl"
+    },
+    "S": {
+      "item": "minecraft:diamond"
+    }
+  },
+  "output": {
+    "item": "solarcraft:ender_radar"
+
+  },
+  "fragment": "ender_radar",
+  "time": 300
+}

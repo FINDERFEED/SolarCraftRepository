@@ -1,0 +1,38 @@
+{
+  "type":"solarcraft:infusing",
+  "input1": {
+    "item": "solarcraft:amethyst_core"
+  },
+  "input2": {
+    "item": "solarcraft:solar_rune_kelda"
+  },
+  "input3": {
+    "item": "minecraft:iron_pickaxe"
+  },
+  "input4": {
+    "item": "solarcraft:solar_rune_zeta"
+  },
+  "input5": {
+    "item": "minecraft:iron_pickaxe"
+  },
+  "input6": {
+    "item": "solarcraft:solar_rune_kelda"
+  },
+  "input7": {
+    "item": "minecraft:gold_block"
+  },
+  "input8": {
+    "item": "solarcraft:solar_rune_zeta"
+  },
+  "input9": {
+    "item": "minecraft:gold_block"
+  },
+  "result": {
+    "item": "solarcraft:pickaxe_miner_module"
+  },
+  "time": 700,
+  "fragment": "modules",
+  "kelda": 2000,
+  "zeta": 2000,
+  "catalysts": "K KK KZ ZZ Z"
+}

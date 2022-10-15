@@ -1,0 +1,37 @@
+{
+  "type":"solarcraft:infusing",
+  "input1": {
+    "item": "solarcraft:miner_item"
+  },
+  "input2": {
+    "item": "solarcraft:geminium_ingot"
+  },
+  "input3": {
+    "item": "solarcraft:qualadium_ingot"
+  },
+  "input4": {
+    "item": "solarcraft:geminium_ingot"
+  },
+  "input5": {
+    "item": "solarcraft:qualadium_ingot"
+  },
+  "input6": {
+    "item": "solarcraft:geminium_ingot"
+  },
+  "input7": {
+    "item": "solarcraft:qualadium_ingot"
+  },
+  "input8": {
+    "item": "solarcraft:geminium_ingot"
+  },
+  "input9": {
+    "item": "solarcraft:qualadium_ingot"
+  },
+  "result": {
+    "item": "solarcraft:qualadium_pickaxe"
+  },
+  "time": 3000,
+  "fragment": "qualadium_pickaxe",
+  "ardo": 2500,
+  "catalysts": "A A   A A   "
+}

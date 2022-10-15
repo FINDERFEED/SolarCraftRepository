@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "FFF",
+    "FFF",
+    "FFF"
+  ],
+  "key": {
+    "F": {
+      "item": "solarcraft:algadium_ingot"
+    }
+  },
+  "result": {
+    "item": "solarcraft:algadium_block"
+
+  }
+}

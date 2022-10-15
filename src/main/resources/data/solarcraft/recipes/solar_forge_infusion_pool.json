@@ -1,0 +1,25 @@
+{
+  "type": "solarcraft:infusing_crafting",
+  "pattern": [
+    " J ",
+    "JFJ",
+    "###"
+  ],
+  "keys": {
+    "#": {
+      "item": "minecraft:iron_ingot"
+    },
+    "F": {
+      "item": "solarcraft:solar_shard"
+    },
+    "J": {
+      "item": "solarcraft:solar_stone"
+    }
+  },
+  "output": {
+    "item": "solarcraft:solar_forge_infusion_pool"
+  },
+  "fragment": "solar_infuser",
+  "time": 40,
+  "count": 1
+}

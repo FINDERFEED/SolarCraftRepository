@@ -1,0 +1,19 @@
+{
+  "targets":
+  [
+    "swap"
+  ],
+  "passes":
+  [
+    {
+      "name": "solarcraft:dimension_portal/dimension_portal",
+      "intarget": "minecraft:main",
+      "outtarget": "swap"
+    },
+    {
+      "name": "blit",
+      "intarget": "swap",
+      "outtarget": "minecraft:main"
+    }
+  ]
+}

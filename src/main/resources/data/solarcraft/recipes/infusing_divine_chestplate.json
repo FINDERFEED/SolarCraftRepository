@@ -1,0 +1,34 @@
+{
+  "type": "solarcraft:infusing_new",
+  "items": {
+    "B": {"item": "solarcraft:crystal_heart_piece"},
+    "C": {"item": "solarcraft:solar_chestplate"},
+    "D": {"item": "minecraft:netherite_ingot"},
+    "N": {"item": "solarcraft:qualadium_ingot"},
+    "S": {"item": "solarcraft:crystal_star"},
+    "F": {"item": "minecraft:feather"}
+
+  },
+  "pattern": [
+    "NBN",
+    "DD",
+    "FCF",
+    "DD",
+    "NSN"
+  ],
+
+  "result": {
+    "item": "solarcraft:divine_chestplate"
+  },
+  "time": 2000,
+  "energy": 5000,
+  "zeta": 5000,
+  "kelda": 5000,
+  "fira": 5000,
+  "tera": 5000,
+  "urba": 5000,
+  "ardo": 5000,
+  "giro": 5000,
+  "ultima": 5000,
+  "fragment": "divine_armor"
+}

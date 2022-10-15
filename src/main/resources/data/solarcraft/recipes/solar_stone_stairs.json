@@ -1,0 +1,19 @@
+{
+  "type": "solarcraft:infusing_crafting",
+  "pattern": [
+    "#  ",
+    "## ",
+    "###"
+  ],
+  "keys": {
+    "#": {
+      "item": "solarcraft:solar_stone_bricks"
+    }
+  },
+  "output": {
+    "item": "solarcraft:solar_stone_stairs"
+  },
+  "fragment": "solar_stones",
+  "time": 5,
+  "count": 4
+}

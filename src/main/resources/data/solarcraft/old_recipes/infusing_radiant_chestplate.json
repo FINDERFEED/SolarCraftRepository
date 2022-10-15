@@ -1,0 +1,41 @@
+{
+  "type":"solarcraft:infusing",
+  "input1": {
+    "item": "solarcraft:solar_chestplate"
+  },
+  "input2": {
+    "item": "solarcraft:qualadium_ingot"
+  },
+  "input3": {
+    "item": "solarcraft:energy_dust"
+  },
+  "input4": {
+    "item": "solarcraft:blue_gem_enriched"
+  },
+  "input5": {
+    "item": "solarcraft:energy_dust"
+  },
+  "input6": {
+    "item": "solarcraft:qualadium_ingot"
+  },
+  "input7": {
+    "item": "solarcraft:geminium_ingot"
+  },
+  "input8": {
+    "item": "solarcraft:runic_core"
+  },
+  "input9": {
+    "item": "solarcraft:geminium_ingot"
+  },
+  "result": {
+    "item": "solarcraft:radiant_chestplate"
+  },
+  "time": 1500,
+  "fragment": "radiant_cuirass",
+  "energy": 15000,
+  "fira": 1000,
+  "zeta": 1000,
+  "ardo": 1000,
+  "catalysts": "  RR    UU  "
+
+}

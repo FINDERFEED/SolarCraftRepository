@@ -1,0 +1,38 @@
+{
+  "type":"solarcraft:infusing",
+  "input1": {
+    "item": "solarcraft:amethyst_core"
+  },
+  "input2": {
+    "item": "solarcraft:solar_rune_ardo"
+  },
+  "input3": {
+    "item": "solarcraft:blue_gem_enriched"
+  },
+  "input4": {
+    "item": "solarcraft:solar_rune_urba"
+  },
+  "input5": {
+    "item": "solarcraft:blue_gem_enriched"
+  },
+  "input6": {
+    "item": "solarcraft:solar_rune_ardo"
+  },
+  "input7": {
+    "item": "solarcraft:qualadium_ingot"
+  },
+  "input8": {
+    "item": "solarcraft:solar_rune_urba"
+  },
+  "input9": {
+    "item": "solarcraft:qualadium_ingot"
+  },
+  "result": {
+    "item": "solarcraft:magic_damage_5_module"
+  },
+  "time": 700,
+  "fragment": "modules",
+  "ardo": 2000,
+  "urba": 2000,
+  "catalysts": "A AA AR RR R"
+}

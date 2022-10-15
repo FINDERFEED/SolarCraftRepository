@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "dir=down": {  "model": "solarcraft:block/crystallized_runic_energy", "x": 180 },
+    "dir=up": {  "model": "solarcraft:block/crystallized_runic_energy" },
+    "dir=north": { "model": "solarcraft:block/crystallized_runic_energy", "x": 90  },
+    "dir=south": { "model": "solarcraft:block/crystallized_runic_energy", "x": 90, "y": 180  },
+    "dir=west": {  "model": "solarcraft:block/crystallized_runic_energy", "x": 90, "y": 270  },
+    "dir=east": {  "model": "solarcraft:block/crystallized_runic_energy", "x": 90, "y": 90 }
+  }
+}

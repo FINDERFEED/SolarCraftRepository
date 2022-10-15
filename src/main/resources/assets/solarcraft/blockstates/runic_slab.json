@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "solarcraft:block/runic_slab"
+    },
+    "type=double": {
+      "model": "solarcraft:block/runic_planks"
+    },
+    "type=top": {
+      "model": "solarcraft:block/runic_slab_top"
+    }
+  }
+}

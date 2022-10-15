@@ -1,0 +1,11 @@
+{
+  "variants": {
+    "facing=north": { "model": "solarcraft:block/runic_energy_charger" },
+    "facing=east": { "model": "solarcraft:block/runic_energy_charger", "y": 90 },
+    "facing=west": { "model": "solarcraft:block/runic_energy_charger","y": 270 },
+    "facing=south": { "model": "solarcraft:block/runic_energy_charger","y": 180 }
+
+
+
+  }
+}

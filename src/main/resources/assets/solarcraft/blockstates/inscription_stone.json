@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=none": { "model": "solarcraft:block/inscription_stone" },
+    "type=zeta": { "model": "solarcraft:block/inscription_stone_states/inscription_stone_zeta" },
+    "type=kelda": { "model": "solarcraft:block/inscription_stone_states/inscription_stone_kelda" },
+    "type=tera": { "model": "solarcraft:block/inscription_stone_states/inscription_stone_tera" },
+    "type=urba": { "model": "solarcraft:block/inscription_stone_states/inscription_stone_urba" },
+    "type=fira": { "model": "solarcraft:block/inscription_stone_states/inscription_stone_fira" },
+    "type=ardo": { "model": "solarcraft:block/inscription_stone_states/inscription_stone_ardo" },
+    "type=giro": { "model": "solarcraft:block/inscription_stone_states/inscription_stone_giro" },
+    "type=ultima": { "model": "solarcraft:block/inscription_stone_states/inscription_stone_ultima" }
+  }
+}

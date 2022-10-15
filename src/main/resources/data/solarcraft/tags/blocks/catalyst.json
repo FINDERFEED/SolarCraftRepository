@@ -1,0 +1,15 @@
+{
+  "replace": false,
+  "values": [
+    "solarcraft:solar_stone_collumn",
+    "solarcraft:tera_rune_block",
+    "solarcraft:fira_rune_block",
+    "solarcraft:kelda_rune_block",
+    "solarcraft:urba_rune_block",
+    "solarcraft:ardo_rune_block",
+    "solarcraft:giro_rune_block",
+    "solarcraft:ultima_rune_block",
+    "solarcraft:zeta_rune_block",
+    "solarcraft:catalyst_base"
+  ]
+}

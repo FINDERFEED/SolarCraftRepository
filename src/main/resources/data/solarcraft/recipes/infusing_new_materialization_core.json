@@ -1,0 +1,23 @@
+{
+  "type": "solarcraft:infusing_new",
+  "items": {
+    "B": {"item": "solarcraft:crystal_core"},
+    "C": {"item": "solarcraft:illidium_ingot"},
+    "D": {"item": "minecraft:redstone_block"},
+    "F": {"item": "solarcraft:algadium_block"}
+  },
+  "pattern": [
+    " C ",
+    "DD",
+    "CBC",
+    "FF",
+    " C "
+  ],
+
+  "result": {
+    "item": "solarcraft:materialization_core"
+  },
+  "time": 200,
+  "fragment": "crystal_cores",
+  "catalysts": "A AA AA AA A"
+}

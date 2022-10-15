@@ -1,0 +1,11 @@
+{
+  "variants": {
+    "snowy=false": [
+      { "model": "solarcraft:block/radiant_grass" },
+      { "model": "solarcraft:block/radiant_grass", "y": 90 },
+      { "model": "solarcraft:block/radiant_grass", "y": 180 },
+      { "model": "solarcraft:block/radiant_grass", "y": 270 }
+    ],
+    "snowy=true":  { "model": "solarcraft:block/radiant_grass" }
+  }
+}

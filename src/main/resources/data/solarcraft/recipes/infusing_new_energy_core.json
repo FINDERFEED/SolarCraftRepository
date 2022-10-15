@@ -1,0 +1,22 @@
+{
+  "type": "solarcraft:infusing_new",
+  "items": {
+    "B": {"item": "solarcraft:crystal_core"},
+    "C": {"item": "solarcraft:energy_dust"},
+    "D": {"item": "minecraft:redstone"}
+  },
+  "pattern": [
+    " C ",
+    "DD",
+    "CBC",
+    "DD",
+    " C "
+  ],
+
+  "result": {
+    "item": "solarcraft:energy_core"
+  },
+  "time": 200,
+  "fragment": "crystal_cores",
+  "catalysts": "A AA AA AA A"
+}

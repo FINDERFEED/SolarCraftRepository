@@ -1,0 +1,9 @@
+{
+  "loader": "solarcraft:progression_ore_loader",
+  "orig_model": {
+    "parent": "block/cube_all",
+    "textures": {
+      "all": "solarcraft:block/lensing_crystal_ore"
+    }
+  }
+}

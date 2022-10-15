@@ -1,0 +1,20 @@
+{
+  "type":"solarcraft:solar_smelting",
+  "ingredients": [
+    {
+      "item": "solarcraft:illidium_ingot"
+    },
+    {
+      "item": "solarcraft:blue_gem_enriched",
+      "count": 4
+    },
+    {
+      "item": "solarcraft:solar_dust",
+      "count": 8
+    }
+  ],
+  "result": "solarcraft:geminium_ingot",
+  "time": 200,
+  "requires": "solar_forge_progression_solar_lens_craft",
+  "category": "solar_category.smelting"
+}

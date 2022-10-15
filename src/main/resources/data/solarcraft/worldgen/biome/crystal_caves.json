@@ -1,0 +1,107 @@
+{
+  "effects": {
+
+    "music": {
+      "sound": "minecraft:music_disc.otherside",
+      "min_delay": 12000,
+      "max_delay": 24000,
+      "replace_current_music": false
+    },
+    "sky_color": 8103167,
+    "fog_color": 12638463,
+    "water_color": 6391290,
+    "water_fog_color": 6391290
+  },
+  "carvers": {
+    "air": [
+      "minecraft:cave",
+      "minecraft:cave_extra_underground",
+      "minecraft:canyon"
+    ]
+  },
+  "features": [
+    [],
+    [
+      "minecraft:lake_lava_underground",
+      "minecraft:lake_lava_surface"
+    ],
+    [
+      "minecraft:amethyst_geode",
+      "solarcraft:ceiling_floor_crystals"
+    ],
+    [
+
+    ],
+    [],
+    [],
+    [
+      "minecraft:ore_dirt",
+      "minecraft:ore_gravel",
+      "minecraft:ore_granite_upper",
+      "minecraft:ore_diorite_upper",
+      "minecraft:ore_andesite_upper",
+      "minecraft:ore_tuff",
+      "minecraft:ore_coal_upper",
+      "minecraft:ore_coal_lower",
+      "minecraft:ore_iron_upper",
+      "minecraft:ore_iron_middle",
+      "minecraft:ore_iron_small",
+      "minecraft:ore_gold",
+      "minecraft:ore_gold_lower",
+      "minecraft:ore_redstone",
+      "minecraft:ore_redstone_lower",
+      "minecraft:ore_diamond",
+      "minecraft:ore_diamond_large",
+      "minecraft:ore_diamond_buried",
+      "minecraft:ore_lapis",
+      "minecraft:ore_lapis_buried",
+      "minecraft:ore_copper",
+      "minecraft:underwater_magma",
+      "minecraft:ore_clay",
+      "minecraft:disk_sand",
+      "minecraft:disk_clay",
+      "minecraft:disk_gravel",
+      "solarcraft:crystal_cave_ore_crystal",
+      "solarcraft:crystallized_runic_energy",
+      "solarcraft:ceiling_dripstonelike_crystals"
+    ],
+    [
+      "solarcraft:crystal_flower"
+    ],
+    [
+      "minecraft:spring_water",
+      "minecraft:spring_lava"
+    ],
+    [
+
+    ],
+    [
+
+    ]
+  ],
+  "spawners": {
+    "monster": [
+
+    ],
+    "creature": [],
+    "ambient": [
+
+    ],
+    "axolotls": [
+
+    ],
+    "underground_water_creature": [
+
+    ],
+    "water_creature": [],
+    "water_ambient": [
+
+    ],
+    "misc": []
+  },
+  "spawn_costs": {},
+  "precipitation": "none",
+  "temperature": 0.5,
+  "downfall": 0.5,
+  "category": "none"
+}

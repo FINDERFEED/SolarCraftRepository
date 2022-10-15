@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#  ",
+    "## ",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "solarcraft:runic_planks"
+    }
+  },
+  "result": {
+    "item": "solarcraft:runic_stairs",
+    "count": 4
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "type": "solarcraft:infusing_new",
+  "items": {
+    "C": {"item": "solarcraft:amethyst_core"},
+    "D": {"item": "solarcraft:ardo_crystal"},
+    "F": {"item": "solarcraft:zeta_crystal"},
+    "G": {"item": "solarcraft:energy_dust"},
+    "Q": {"item": "minecraft:iron_sword"}
+  },
+  "pattern": [
+    " F ",
+    "GG",
+    "DCD",
+    "QQ",
+    " F "
+  ],
+  "result": {
+    "item": "solarcraft:sword_aoe_module"
+  },
+  "time": 700,
+  "fragment": "modules",
+  "zeta": 2000,
+  "ardo": 2000,
+  "catalysts": "Z ZZ ZA AA A"
+}

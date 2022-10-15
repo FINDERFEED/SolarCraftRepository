@@ -1,0 +1,45 @@
+{
+  "type":"solarcraft:infusing",
+  "input1": {
+    "item": "solarcraft:first_dimensional_shard"
+  },
+  "input2": {
+    "item": "solarcraft:geminium_ingot"
+  },
+  "input3": {
+    "item": "solarcraft:amethyst_core"
+  },
+  "input4": {
+    "item": "solarcraft:runic_core"
+  },
+  "input5": {
+    "item": "solarcraft:amethyst_core"
+  },
+  "input6": {
+    "item": "solarcraft:geminium_ingot"
+  },
+  "input7": {
+    "item": "solarcraft:qualadium_ingot"
+  },
+  "input8": {
+    "item": "solarcraft:chiseled_solar_stone"
+  },
+  "input9": {
+    "item": "solarcraft:qualadium_ingot"
+  },
+  "result": {
+    "item": "solarcraft:dimension_core"
+  },
+  "time": 5000,
+  "fragment": "dimension_core",
+  "energy": 50000,
+  "zeta": 50000,
+  "kelda": 50000,
+  "fira": 50000,
+  "tera": 50000,
+  "urba": 50000,
+  "ardo": 50000,
+  "giro": 50000,
+  "ultima": 50000,
+  "catalysts": "Z KF TR AG U"
+}

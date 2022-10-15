@@ -1,0 +1,10 @@
+{
+  "textures": [
+    "solarcraft:tile_energy_pylon_ardo",
+    "solarcraft:tile_energy_pylon_fira",
+    "solarcraft:tile_energy_pylon_kelda",
+    "solarcraft:tile_energy_pylon_tera",
+    "solarcraft:tile_energy_pylon_urba",
+    "solarcraft:tile_energy_pylon_zeta"
+  ]
+}

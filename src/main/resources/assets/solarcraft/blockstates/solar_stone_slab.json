@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "solarcraft:block/solar_stone_slab"
+    },
+    "type=double": {
+      "model": "solarcraft:block/solar_stone_bricks"
+    },
+    "type=top": {
+      "model": "solarcraft:block/solar_stone_slab_top"
+    }
+  }
+}

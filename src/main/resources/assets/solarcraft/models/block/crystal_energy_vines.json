@@ -1,0 +1,7 @@
+{
+  "parent": "block/cube_column",
+  "textures": {
+    "end": "solarcraft:block/crystal_vines_top",
+    "side": "solarcraft:block/crystal_vines"
+  }
+}

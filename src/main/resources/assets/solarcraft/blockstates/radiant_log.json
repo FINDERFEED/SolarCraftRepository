@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "axis=y":  { "model": "solarcraft:block/radiant_log" },
+    "axis=z":   { "model": "solarcraft:block/radiant_log", "x": 90 },
+    "axis=x":   { "model": "solarcraft:block/radiant_log", "x": 90, "y": 90 }
+  }
+}

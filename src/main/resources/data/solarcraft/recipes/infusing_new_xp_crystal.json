@@ -1,0 +1,23 @@
+{
+  "type": "solarcraft:infusing_new",
+  "items": {
+    "A": {"item": "minecraft:bowl"},
+    "B": {"item": "solarcraft:enderium_ingot"},
+    "C": {"item": "minecraft:amethyst_shard"},
+    "D": {"item": "solarcraft:illidium_ingot"},
+    "E": {"item": "minecraft:deepslate"}
+  },
+  "pattern": [
+    " C ",
+    "CC",
+    "BAB",
+    "EE",
+    "DED"
+  ],
+  "result": {
+    "item": "solarcraft:xp_crystal"
+  },
+  "time": 400,
+  "fragment": "experience_crystal",
+  "catalysts": "RARRARKAKKAK"
+}

@@ -1,0 +1,40 @@
+{
+  "type":"solarcraft:infusing",
+  "input1": {
+    "item": "solarcraft:medium_solar_reactor"
+  },
+  "input2": {
+    "item": "minecraft:iron_block"
+  },
+  "input3": {
+    "item": "solarcraft:energy_dust"
+  },
+  "input4": {
+    "item": "minecraft:iron_block"
+  },
+  "input5": {
+    "item": "solarcraft:energy_dust"
+  },
+  "input6": {
+    "item": "minecraft:iron_block"
+  },
+  "input7": {
+    "item": "solarcraft:energy_dust"
+  },
+  "input8": {
+    "item": "minecraft:iron_block"
+  },
+  "input9": {
+    "item": "solarcraft:energy_dust"
+  },
+  "result": {
+    "item": "solarcraft:solar_core_block"
+  },
+  "time": 5000,
+  "fragment": "solar_core",
+  "energy": 20000,
+  "tera": 4000,
+  "urba": 3500,
+  "kelda": 5000
+
+}

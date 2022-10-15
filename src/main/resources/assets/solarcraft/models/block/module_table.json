@@ -1,0 +1,7 @@
+{
+  "parent": "block/cube_column",
+  "textures": {
+    "end": "block/smithing_table_top",
+    "side": "solarcraft:block/module_table_side"
+  }
+}

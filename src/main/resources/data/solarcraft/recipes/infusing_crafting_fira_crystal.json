@@ -1,0 +1,21 @@
+{
+  "type": "solarcraft:infusing_crafting",
+  "pattern": [
+    " F ",
+    "F#F",
+    " F "
+  ],
+  "keys": {
+    "#": {
+      "item": "solarcraft:empty_crystal"
+    },
+    "F": {
+      "item": "solarcraft:solar_rune_fira"
+    }
+  },
+  "output": {
+    "item": "solarcraft:fira_crystal"
+  },
+  "fragment": "crystals",
+  "time": 20
+}

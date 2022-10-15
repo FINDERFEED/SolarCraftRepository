@@ -1,0 +1,27 @@
+{
+  "type": "solarcraft:infusing_crafting",
+  "pattern": [
+    "Z#Z",
+    "XFX",
+    "Z#Z"
+  ],
+  "keys": {
+    "#": {
+      "item": "minecraft:iron_block"
+    },
+    "X": {
+      "item": "minecraft:obsidian"
+    },
+    "F": {
+      "item": "solarcraft:infusing_crafting_table"
+    },
+    "Z": {
+      "item": "solarcraft:energy_dust"
+    }
+  },
+  "output": {
+    "item": "solarcraft:solar_infuser"
+  },
+  "fragment": "solar_infuser",
+  "time": 700
+}

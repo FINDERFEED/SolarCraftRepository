@@ -1,0 +1,24 @@
+{
+  "type": "solarcraft:infusing_new",
+  "items": {
+    "A": {"item": ""},
+    "B": {"item": ""},
+    "C": {"item": ""},
+    "D": {"item": ""},
+    "E": {"item": ""},
+    "F": {"item": ""},
+    "G": {"item": ""}
+  },
+  "pattern": [
+    "   ",
+    "  ",
+    "   ",
+    "  ",
+    "   "
+  ],
+  "result": {
+    "item": "solarcraft:"
+  },
+  "time": 1000,
+  "fragment": "fragment"
+}

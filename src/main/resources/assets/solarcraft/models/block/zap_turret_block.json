@@ -1,0 +1,7 @@
+{
+  "parent": "block/cube_column",
+  "textures": {
+    "end": "solarcraft:block/zap_turret_top",
+    "side": "solarcraft:block/zap_turret"
+  }
+}

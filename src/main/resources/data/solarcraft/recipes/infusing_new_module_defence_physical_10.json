@@ -1,0 +1,27 @@
+{
+  "type": "solarcraft:infusing_new",
+  "items": {
+    "B": {"item": "minecraft:iron_block"},
+    "C": {"item": "solarcraft:amethyst_core"},
+    "D": {"item": "solarcraft:fira_crystal"},
+    "F": {"item": "solarcraft:tera_crystal"},
+    "G": {"item": "minecraft:diamond"},
+    "Q": {"item": "solarcraft:algadium_ingot"}
+  },
+  "pattern": [
+    " F ",
+    "GG",
+    "DCD",
+    "QQ",
+    " F "
+  ],
+
+  "result": {
+    "item": "solarcraft:defence_module_physical_10"
+  },
+  "time": 700,
+  "fragment": "modules",
+  "fira": 2000,
+  "tera": 2000,
+  "catalysts": "F FF FT TT T"
+}

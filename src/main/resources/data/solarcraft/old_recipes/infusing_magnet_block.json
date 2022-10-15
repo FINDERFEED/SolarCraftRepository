@@ -1,0 +1,35 @@
+{
+  "type":"solarcraft:infusing",
+  "input1": {
+    "item": "minecraft:iron_block"
+  },
+  "input2": {
+    "item": "minecraft:air"
+  },
+  "input3": {
+    "item": "solarcraft:energy_dust"
+  },
+  "input4": {
+    "item": "solarcraft:illidium_ingot"
+  },
+  "input5": {
+    "item": "solarcraft:energy_dust"
+  },
+  "input6": {
+    "item": "minecraft:air"
+  },
+  "input7": {
+    "item": "solarcraft:energy_dust"
+  },
+  "input8": {
+    "item": "solarcraft:algadium_ingot"
+  },
+  "input9": {
+    "item": "solarcraft:energy_dust"
+  },
+  "result": {
+    "item": "solarcraft:magnet_block"
+  },
+  "time": 500,
+  "fragment": "item_magnet"
+}

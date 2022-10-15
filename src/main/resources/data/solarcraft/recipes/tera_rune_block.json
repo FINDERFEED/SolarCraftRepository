@@ -1,0 +1,25 @@
+{
+  "type": "solarcraft:infusing_crafting",
+  "pattern": [
+    "F#F",
+    "#H#",
+    "F#F"
+  ],
+  "keys": {
+    "#": {
+      "item": "solarcraft:solar_rune_tera"
+    },
+    "F": {
+      "item": "solarcraft:enderite_essence"
+    },
+    "H": {
+      "item": "solarcraft:catalyst_base"
+    }
+  },
+  "output": {
+    "item": "solarcraft:tera_rune_block"
+
+  },
+  "fragment": "catalysts",
+  "time": 20
+}

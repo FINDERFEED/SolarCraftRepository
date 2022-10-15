@@ -1,0 +1,25 @@
+{
+  "type": "solarcraft:infusing_new",
+  "items": {
+    "C": {"item": "solarcraft:amethyst_core"},
+    "D": {"item": "solarcraft:tera_crystal"},
+    "F": {"item": "solarcraft:zeta_crystal"},
+    "G": {"item": "solarcraft:qualadium_ingot"},
+    "Q": {"item": "minecraft:magma_block"}
+  },
+  "pattern": [
+    " F ",
+    "GG",
+    "DCD",
+    "QQ",
+    " F "
+  ],
+  "result": {
+    "item": "solarcraft:pickaxe_auto_smelt_module"
+  },
+  "time": 700,
+  "fragment": "modules",
+  "tera": 2000,
+  "zeta": 2000,
+  "catalysts": "T TT TZ ZZ Z"
+}

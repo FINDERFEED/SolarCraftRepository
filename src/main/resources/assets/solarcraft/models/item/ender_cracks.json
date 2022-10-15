@@ -1,0 +1,11 @@
+{
+  "parent": "block/end_stone",
+  "overrides": [
+    {
+      "predicate": {
+        "solarcraft:unlocked": 1
+      },
+      "model": "solarcraft:item/ender_cracks_unlocked"
+    }
+  ]
+}

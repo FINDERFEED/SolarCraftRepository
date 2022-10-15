@@ -1,0 +1,5 @@
+{
+  "variants": {
+    "": { "model": "solarcraft:block/regen_amp_block" }
+  }
+}

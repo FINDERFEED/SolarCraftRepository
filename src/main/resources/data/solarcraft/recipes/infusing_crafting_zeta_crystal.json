@@ -1,0 +1,21 @@
+{
+  "type": "solarcraft:infusing_crafting",
+  "pattern": [
+    " F ",
+    "F#F",
+    " F "
+  ],
+  "keys": {
+    "#": {
+      "item": "solarcraft:empty_crystal"
+    },
+    "F": {
+      "item": "solarcraft:solar_rune_zeta"
+    }
+  },
+  "output": {
+    "item": "solarcraft:zeta_crystal"
+  },
+  "fragment": "crystals",
+  "time": 20
+}

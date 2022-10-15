@@ -1,0 +1,21 @@
+{
+  "type": "solarcraft:infusing_new",
+  "items": {
+    "A": {"item": "minecraft:iron_block"},
+    "B": {"item": "solarcraft:energy_dust"},
+    "C": {"item": "solarcraft:illidium_ingot"},
+    "D": {"item": "solarcraft:algadium_ingot"}
+  },
+  "pattern": [
+    " C ",
+    "BB",
+    " A ",
+    "BB",
+    " D "
+  ],
+  "result": {
+    "item": "solarcraft:magnet_block"
+  },
+  "time": 500,
+  "fragment": "item_magnet"
+}

@@ -1,0 +1,35 @@
+{
+  "type":"solarcraft:infusing",
+  "input1": {
+    "item": "solarcraft:illidium_ingot"
+  },
+  "input2": {
+    "item": "solarcraft:solar_dust"
+  },
+  "input3": {
+    "item": "minecraft:iron_ingot"
+  },
+  "input4": {
+    "item": "solarcraft:energy_dust"
+  },
+  "input5": {
+    "item": "minecraft:iron_ingot"
+  },
+  "input6": {
+    "item": "solarcraft:solar_dust"
+  },
+  "input7": {
+    "item": "minecraft:iron_ingot"
+  },
+  "input8": {
+    "item": "solarcraft:energy_dust"
+  },
+  "input9": {
+    "item": "minecraft:iron_ingot"
+  },
+  "result": {
+    "item": "solarcraft:algadium_ingot"
+  },
+  "time": 350,
+  "fragment": "algadium_ingot"
+}

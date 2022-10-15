@@ -1,0 +1,22 @@
+{
+  "type": "solarcraft:infusing_crafting",
+  "pattern": [
+    " F ",
+    "F#F",
+    " F "
+  ],
+  "keys": {
+    "#": {
+      "item": "solarcraft:runestone"
+    },
+    "F": {
+      "item": "solarcraft:chiseled_solar_stone"
+    }
+  },
+  "output": {
+    "item": "solarcraft:catalyst_base"
+  },
+  "fragment": "catalysts",
+  "time": 30,
+  "count": 4
+}

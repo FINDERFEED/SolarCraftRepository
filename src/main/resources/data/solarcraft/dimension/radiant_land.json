@@ -1,0 +1,98 @@
+{
+  "type": "solarcraft:radiant_land",
+  "generator": {
+    "type": "minecraft:noise",
+    "seed": 0,
+    "settings": "solarcraft:radiant_land",
+    "biome_source": {
+      "seed": 0,
+      "type": "minecraft:multi_noise",
+      "biomes": [
+        {
+          "parameters": {
+            "erosion": [
+              -1.0,
+              1.0
+            ],
+            "depth": [
+              0.1,
+              0.6
+            ],
+            "weirdness": [
+              -1.0,
+              1.0
+            ],
+            "offset": 0.0,
+            "temperature": [
+              -1.0,
+              1.0
+            ],
+            "humidity": [
+              0.0,
+              1.0
+            ],
+            "continentalness": [
+              0.0,
+              1.0
+            ]
+          },
+          "biome": "solarcraft:crystal_caves"
+        },
+        {
+          "biome": "solarcraft:radiant_land",
+          "parameters": {
+            "erosion": [
+              -1.0,
+              1.0
+            ],
+            "depth": 0.0,
+            "weirdness": [
+              -1.0,
+              1.0
+            ],
+            "offset": 0.0,
+            "temperature": [
+              -1.0,
+              1.0
+            ],
+            "humidity": [
+              -1.0,
+              1.0
+            ],
+            "continentalness": [
+              -1.0,
+              1.0
+            ]
+          }
+        },
+        {
+          "biome": "solarcraft:radiant_land",
+          "parameters": {
+            "erosion": [
+              -1.0,
+              1.0
+            ],
+            "depth": 1.0,
+            "weirdness": [
+              -1.0,
+              1.0
+            ],
+            "offset": 0.0,
+            "temperature": [
+              -1.0,
+              1.0
+            ],
+            "humidity": [
+              -1.0,
+              1.0
+            ],
+            "continentalness": [
+              -1.0,
+              1.0
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

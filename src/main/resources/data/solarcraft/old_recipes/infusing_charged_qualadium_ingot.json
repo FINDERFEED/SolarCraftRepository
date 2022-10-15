@@ -1,0 +1,37 @@
+{
+  "type":"solarcraft:infusing",
+  "input1": {
+    "item": "solarcraft:qualadium_ingot"
+  },
+  "input2": {
+    "item": "solarcraft:energy_dust"
+  },
+  "input3": {
+    "item": "solarcraft:solar_dust"
+  },
+  "input4": {
+    "item": "solarcraft:energy_dust"
+  },
+  "input5": {
+    "item": "solarcraft:solar_dust"
+  },
+  "input6": {
+    "item": "solarcraft:energy_dust"
+  },
+  "input7": {
+    "item": "solarcraft:solar_dust"
+  },
+  "input8": {
+    "item": "solarcraft:energy_dust"
+  },
+  "input9": {
+    "item": "solarcraft:solar_dust"
+  },
+  "result": {
+    "item": "solarcraft:charged_qualadium_ingot"
+  },
+  "time": 250,
+  "fragment": "charged_qualadium_ingot",
+  "energy": 5000,
+  "catalysts": " G  G  G  G "
+}

@@ -1,0 +1,22 @@
+{
+  "type": "solarcraft:infusing_crafting",
+  "pattern": [
+    "###",
+    "FFF",
+    "###"
+  ],
+  "keys": {
+    "#": {
+      "item": "solarcraft:solar_stone_bricks"
+    },
+    "F": {
+      "item": "solarcraft:energy_dust"
+    }
+  },
+  "output": {
+    "item": "solarcraft:energized_stone"
+  },
+  "fragment": "solar_stones",
+  "time": 5,
+  "count": 4
+}

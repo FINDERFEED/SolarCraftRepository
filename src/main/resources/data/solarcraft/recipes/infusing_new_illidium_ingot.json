@@ -1,0 +1,20 @@
+{
+  "type": "solarcraft:infusing_new",
+  "items": {
+    "A": {"item": "minecraft:iron_ingot"},
+    "B": {"item": "solarcraft:energy_dust"},
+    "C": {"item": "solarcraft:solar_dust"}
+  },
+  "pattern": [
+    "   ",
+    "BB",
+    " A ",
+    "CC",
+    "   "
+  ],
+  "result": {
+    "item": "solarcraft:illidium_ingot"
+  },
+  "time": 200,
+  "fragment": "illidium_ingot"
+}

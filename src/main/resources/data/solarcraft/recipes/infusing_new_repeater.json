@@ -1,0 +1,24 @@
+{
+  "type": "solarcraft:infusing_new",
+  "items": {
+    "A": {"item": "solarcraft:energy_core"},
+    "B": {"item": "solarcraft:energy_dust"},
+    "C": {"item": "solarcraft:lensing_crystal"},
+    "D": {"item": "solarcraft:solar_dust"},
+    "E": {"item": "minecraft:iron_block"}
+  },
+  "pattern": [
+    " C ",
+    "CC",
+    "BAB",
+    "DD",
+    " E "
+  ],
+  "result": {
+    "item": "solarcraft:repeater"
+  },
+  "time": 300,
+  "fragment": "runic_energy_repeater",
+  "count": 8,
+  "catalysts": "K KF FZ ZU U"
+}

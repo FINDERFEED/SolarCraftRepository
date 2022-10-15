@@ -1,0 +1,7 @@
+{
+  "parent": "block/cross",
+  "textures": {
+    "cross": "solarcraft:block/dead_sprout"
+  },
+  "render_type": "cutout"
+}

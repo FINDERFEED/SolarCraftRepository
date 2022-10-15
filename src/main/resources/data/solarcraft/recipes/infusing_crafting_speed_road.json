@@ -1,0 +1,25 @@
+{
+  "type": "solarcraft:infusing_crafting",
+  "pattern": [
+    "#F#",
+    "#X#",
+    "#F#"
+  ],
+  "keys": {
+    "#": {
+      "item": "minecraft:iron_ingot"
+    },
+    "X": {
+      "item": "minecraft:obsidian"
+    },
+    "F": {
+      "item": "solarcraft:energy_dust"
+    }
+  },
+  "output": {
+    "item": "solarcraft:speed_road"
+  },
+  "count": 4,
+  "fragment": "speed_road",
+  "time": 200
+}

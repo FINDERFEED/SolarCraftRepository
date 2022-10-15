@@ -1,0 +1,38 @@
+{
+  "type":"solarcraft:infusing",
+  "input1": {
+    "item": "solarcraft:amethyst_core"
+  },
+  "input2": {
+    "item": "solarcraft:solar_rune_tera"
+  },
+  "input3": {
+    "item": "solarcraft:qualadium_ingot"
+  },
+  "input4": {
+    "item": "solarcraft:solar_rune_zeta"
+  },
+  "input5": {
+    "item": "solarcraft:qualadium_ingot"
+  },
+  "input6": {
+    "item": "solarcraft:solar_rune_tera"
+  },
+  "input7": {
+    "item": "minecraft:magma_block"
+  },
+  "input8": {
+    "item": "solarcraft:solar_rune_zeta"
+  },
+  "input9": {
+    "item": "minecraft:magma_block"
+  },
+  "result": {
+    "item": "solarcraft:pickaxe_auto_smelt_module"
+  },
+  "time": 700,
+  "fragment": "modules",
+  "tera": 2000,
+  "zeta": 2000,
+  "catalysts": "T TT TZ ZZ Z"
+}

@@ -1,0 +1,7 @@
+{
+  "parent": "block/leaves",
+  "textures": {
+    "all": "solarcraft:block/radiant_leaves"
+  },
+  "render_type": "cutout"
+}

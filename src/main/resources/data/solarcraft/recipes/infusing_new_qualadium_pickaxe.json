@@ -1,0 +1,22 @@
+{
+  "type": "solarcraft:infusing_new",
+  "items": {
+    "A": {"item": "solarcraft:miner_item"},
+    "B": {"item": "solarcraft:geminium_ingot"},
+    "C": {"item": "solarcraft:qualadium_ingot"}
+  },
+  "pattern": [
+    " B ",
+    "CC",
+    "BAB",
+    "CC",
+    " B "
+  ],
+  "result": {
+    "item": "solarcraft:qualadium_pickaxe"
+  },
+  "time": 3000,
+  "fragment": "qualadium_pickaxe",
+  "ardo": 2500,
+  "catalysts": "A A   A A   "
+}

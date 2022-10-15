@@ -1,0 +1,13 @@
+{
+  "type": "solarcraft:smelting",
+  "conditions": [{
+    "condition": "minecraft:match_tool",
+    "predicate": {
+      "type": "solarcraft_predicate",
+      "nbt": "solarcraft_solar_god_pickaxe",
+      "subnbt": "solarcraft_solar_god_pickaxe_level",
+      "higherthan": 3
+
+    }
+  }]
+}

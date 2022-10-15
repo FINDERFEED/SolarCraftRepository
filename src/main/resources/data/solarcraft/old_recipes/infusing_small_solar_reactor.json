@@ -1,0 +1,35 @@
+{
+  "type":"solarcraft:infusing",
+  "input1": {
+    "item": "solarcraft:energy_core"
+  },
+  "input2": {
+    "item": "solarcraft:algadium_ingot"
+  },
+  "input3": {
+    "item": "solarcraft:solar_dust"
+  },
+  "input4": {
+    "item": "solarcraft:algadium_ingot"
+  },
+  "input5": {
+    "item": "solarcraft:solar_dust"
+  },
+  "input6": {
+    "item": "solarcraft:algadium_ingot"
+  },
+  "input7": {
+    "item": "solarcraft:illidium_ingot"
+  },
+  "input8": {
+    "item": "solarcraft:algadium_ingot"
+  },
+  "input9": {
+    "item": "solarcraft:illidium_ingot"
+  },
+  "result": {
+    "item": "solarcraft:small_solar_reactor"
+  },
+  "time": 1000,
+  "fragment": "small_solar_reactor"
+}

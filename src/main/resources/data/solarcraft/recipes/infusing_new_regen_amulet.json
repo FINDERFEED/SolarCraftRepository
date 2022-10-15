@@ -1,0 +1,24 @@
+{
+  "type": "solarcraft:infusing_new",
+  "items": {
+    "A": {"item": "solarcraft:zeta_crystal"},
+    "B": {"item": "minecraft:obsidian"},
+    "C": {"item": "minecraft:glass"},
+    "D": {"item": "minecraft:string"},
+    "E": {"item": "solarcraft:qualadium_ingot"},
+    "F": {"item": "minecraft:netherite_ingot"}
+  },
+  "pattern": [
+    " D ",
+    "CC",
+    "BAB",
+    "EE",
+    " F "
+  ],
+  "result": {
+    "item": "solarcraft:regen_amulet"
+  },
+  "time": 500,
+  "fragment": "amulets",
+  "catalysts": " U  U  U  U "
+}

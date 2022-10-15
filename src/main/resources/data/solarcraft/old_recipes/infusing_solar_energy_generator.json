@@ -1,0 +1,36 @@
+{
+  "type":"solarcraft:infusing",
+  "input1": {
+    "item": "solarcraft:amethyst_core"
+  },
+  "input2": {
+    "item": "solarcraft:energetic_ingot"
+  },
+  "input3": {
+    "item": "solarcraft:blue_gem_enriched"
+  },
+  "input4": {
+    "item": "solarcraft:lensing_crystal"
+  },
+  "input5": {
+    "item": "solarcraft:blue_gem_enriched"
+  },
+  "input6": {
+    "item": "solarcraft:energetic_ingot"
+  },
+  "input7": {
+    "item": "solarcraft:energy_core"
+  },
+  "input8": {
+    "item": "minecraft:iron_block"
+  },
+  "input9": {
+    "item": "solarcraft:energy_core"
+  },
+  "result": {
+    "item": "solarcraft:solar_energy_generator"
+  },
+  "time": 1000,
+  "fragment": "solar_energy_generator"
+
+}

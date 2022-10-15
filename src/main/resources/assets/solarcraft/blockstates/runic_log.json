@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "axis=y":  { "model": "solarcraft:block/runic_log" },
+    "axis=z":   { "model": "solarcraft:block/runic_log", "x": 90 },
+    "axis=x":   { "model": "solarcraft:block/runic_log", "x": 90, "y": 90 }
+  }
+}

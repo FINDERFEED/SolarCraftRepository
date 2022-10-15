@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "solarcraft:crystal_boss_room",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "salt": 739048430,
+    "spacing": 100,
+    "separation": 80,
+    "type": "minecraft:random_spread"
+  }
+}

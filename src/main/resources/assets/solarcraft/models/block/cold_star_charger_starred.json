@@ -1,0 +1,6 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "all": "solarcraft:block/cold_star_charger_starred"
+  }
+}

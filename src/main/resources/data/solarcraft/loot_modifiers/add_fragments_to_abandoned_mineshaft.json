@@ -1,0 +1,12 @@
+{
+  "type": "solarcraft:add_fragments",
+  "conditions": [
+    {
+      "condition": "forge:loot_table_id",
+      "loot_table_id": "minecraft:chests/abandoned_mineshaft"
+    }
+  ],
+    "min":0,
+    "max":1
+
+}

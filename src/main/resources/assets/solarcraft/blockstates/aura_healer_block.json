@@ -1,0 +1,5 @@
+{
+  "variants": {
+    "": { "model": "solarcraft:block/aura_healer_block" }
+  }
+}

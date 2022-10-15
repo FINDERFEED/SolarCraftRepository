@@ -1,0 +1,11 @@
+{
+  "type": "solarcraft:smelting",
+  "conditions": [{
+    "condition": "minecraft:match_tool",
+    "predicate": {
+      "type": "solarcraft_module_predicate",
+      "module_tag": "solarcraft_smelting_module"
+
+    }
+  }]
+}

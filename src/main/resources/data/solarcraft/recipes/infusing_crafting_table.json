@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ISI",
+    "#P#",
+    "DDD"
+  ],
+  "key": {
+    "#": {
+      "item": "solarcraft:energy_dust"
+    },
+    "P": {
+      "item": "minecraft:crafting_table"
+    },
+    "S": {
+      "item": "minecraft:diamond"
+    },
+    "D": {
+      "item": "minecraft:obsidian"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    }
+  },
+  "result": {
+    "item": "solarcraft:infusing_crafting_table"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "type": "solarcraft:infusing_new",
+  "items": {
+    "A": {"item": "minecraft:nether_star"},
+    "B": {"item": "solarcraft:crystal_core"},
+    "C": {"item": "minecraft:diamond"}
+  },
+  "pattern": [
+    " B ",
+    "CC",
+    "BAB",
+    "CC",
+    " B "
+  ],
+
+  "result": {
+    "item": "solarcraft:crystal_star"
+  },
+  "time": 350,
+  "count": 4,
+  "fragment": "crystal_cores",
+  "catalysts": "F FF FF FF F"
+}

@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "solarcraft:cold_star_charging_station",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "salt": 739048430,
+    "spacing": 50,
+    "separation": 40,
+    "type": "minecraft:random_spread"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "solarcraft:crystal_heart_piece"
+    },
+    {
+      "item": "solarcraft:crystal_heart_piece"
+    },
+    {
+      "item": "solarcraft:crystal_heart_piece"
+    },
+    {
+      "item": "solarcraft:crystal_heart_piece"
+    }
+  ],
+  "result": {
+    "item": "solarcraft:crystal_heart"
+  }
+}

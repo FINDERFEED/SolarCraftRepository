@@ -1,0 +1,24 @@
+{
+
+  "items": {
+    "X": {
+      "item": "solarcraft:"
+    }
+  },
+
+
+  "pattern": [
+    "X X",
+    "XX",
+    "X X",
+    "XX",
+    "X X"
+  ],
+
+  "result": {
+    "item": "solarcraft:"
+  },
+  "time": "OVER NINE THOUSAAAAND",
+  "fragment": "lolkekcheburek",
+  "catalysts": "  RR    UU  "
+}

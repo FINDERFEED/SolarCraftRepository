@@ -1,0 +1,71 @@
+vec2 getWindowCoordinates(float a,float b,float c){
+    vec4 clip = projection*(modelview*vec4(a,b,c,1));
+    vec3 ndc = clip.xyz/clip.w;
+    vec2 value = (ndc.xy+1.0)/2.0;
+    return value;
+}
+
+float dist(vec2 dotone,vec2 dottwo){
+    float a = dottwo.x - dotone.x;
+    float b = dottwo.y - dotone.y;
+    return sqrt(a*a + b*b);
+}
+
+
+bool isInCircle(float radius,vec2 dot,vec2 center){
+        float a = (dot.x - center.x)*(dot.x - center.x);
+        float b = (dot.y - center.y)*(dot.y - center.y);
+        if ((a + b) <= radius*radius ){
+            return true;
+        }
+    return false;
+}
+
+bool isOutOfCircle(float radius,vec2 dot,vec2 center){
+    float a = (dot.x - center.x)*(dot.x - center.x);
+    float b = (dot.y - center.y)*(dot.y - center.y);
+    if ((a + b) >= radius*radius ){
+        return true;
+    }
+    return false;
+}
+
+
+shader base {
+//vertex shader
+#version 120
+
+uniform int screenW;
+uniform int screenH;
+uniform sampler2D sampler;
+uniform mat4 modelview;
+uniform mat4 projection;
+
+varying vec2 texCoords;
+
+void main(){
+    vec4 vert = gl_Vertex;
+    gl_Position = gl_ModelViewProjectionMatrix * vert;
+    texCoords = vec2(gl_MultiTexCoord0);
+
+}
+
+//fragment shader
+#version 120
+
+uniform int screenW;
+uniform int screenH;
+uniform sampler2D sampler;
+uniform mat4 modelview;
+uniform mat4 projection;
+
+
+varying vec2 texCoords;
+
+
+void main() {
+
+    gl_FragColor = ?;
+}
+
+}

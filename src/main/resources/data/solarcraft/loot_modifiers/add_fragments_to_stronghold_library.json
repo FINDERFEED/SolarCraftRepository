@@ -1,0 +1,13 @@
+{
+  "type": "solarcraft:add_fragments",
+  "conditions": [
+    {
+      "condition": "forge:loot_table_id",
+      "loot_table_id": "minecraft:chests/stronghold_library"
+    }
+  ],
+
+    "min":2,
+    "max":5
+
+}

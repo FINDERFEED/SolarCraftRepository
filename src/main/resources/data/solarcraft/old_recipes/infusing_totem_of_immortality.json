@@ -1,0 +1,39 @@
+{
+  "type":"solarcraft:infusing",
+  "input1": {
+    "item": "minecraft:totem_of_undying"
+  },
+  "input2": {
+    "item": "solarcraft:geminium_ingot"
+  },
+  "input3": {
+    "item": "solarcraft:illidium_block"
+  },
+  "input4": {
+    "item": "solarcraft:geminium_ingot"
+  },
+  "input5": {
+    "item": "solarcraft:illidium_block"
+  },
+  "input6": {
+    "item": "solarcraft:geminium_ingot"
+  },
+  "input7": {
+    "item": "solarcraft:algadium_block"
+  },
+  "input8": {
+    "item": "solarcraft:geminium_ingot"
+  },
+  "input9": {
+    "item": "solarcraft:algadium_block"
+  },
+  "result": {
+    "item": "solarcraft:totem_of_immortality"
+  },
+  "time": 2000,
+  "fragment": "totem_of_immortality",
+  "energy" : 25000,
+  "zeta": 3500,
+  "fira": 7500,
+  "ardo": 4000
+}

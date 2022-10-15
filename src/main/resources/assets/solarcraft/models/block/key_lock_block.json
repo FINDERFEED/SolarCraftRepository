@@ -1,0 +1,8 @@
+{
+  "parent": "block/orientable",
+  "textures": {
+    "top": "solarcraft:block/invincible_stone",
+    "side": "solarcraft:block/invincible_stone",
+    "front": "solarcraft:block/key_lock_block_front"
+  }
+}

@@ -1,0 +1,5 @@
+{
+  "variants": {
+    "": { "model": "solarcraft:block/damage_amp_block" }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "type":"solarcraft:infusing",
+  "input1": {
+    "item": "solarcraft:small_solar_reactor"
+  },
+  "input2": {
+    "item": "solarcraft:energy_dust"
+  },
+  "input3": {
+    "item": "minecraft:iron_block"
+  },
+  "input4": {
+    "item": "minecraft:glass"
+  },
+  "input5": {
+    "item": "minecraft:iron_block"
+  },
+  "input6": {
+    "item": "solarcraft:energy_dust"
+  },
+  "input7": {
+    "item": "minecraft:iron_ingot"
+  },
+  "input8": {
+    "item": "minecraft:leather"
+  },
+  "input9": {
+    "item": "minecraft:iron_ingot"
+  },
+  "result": {
+    "item": "solarcraft:solar_disc_launcher"
+  },
+  "time": 1500,
+  "fragment": "disc_launcher",
+  "catalysts": "TFT   TFT   "
+}

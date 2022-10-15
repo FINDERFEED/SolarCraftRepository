@@ -1,0 +1,24 @@
+{
+  "type": "solarcraft:infusing_new",
+  "items": {
+    "A": {"item": "minecraft:shield"},
+    "B": {"item": "solarcraft:geminium_ingot"},
+    "C": {"item": "solarcraft:qualadium_ingot"},
+    "D": {"item": "solarcraft:energetic_ingot"},
+    "E": {"item": "solarcraft:runic_core"},
+    "F": {"item": "solarcraft:solar_dust"}
+  },
+  "pattern": [
+    " C ",
+    "FF",
+    "BAB",
+    "DD",
+    " E "
+  ],
+  "result": {
+    "item": "solarcraft:solar_god_shield"
+  },
+  "time": 1500,
+  "fragment": "solar_god_shield",
+  "catalysts":"  UU    UU  "
+}

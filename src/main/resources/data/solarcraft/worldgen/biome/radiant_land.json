@@ -1,0 +1,100 @@
+{
+  "scale": 0.05,
+  "precipitation": "none",
+  "category": "none",
+  "temperature": 1,
+  "downfall": 0.1,
+  "depth": 0.125,
+  "effects": {
+    "fog_color": 12638463,
+    "folliage_color": 16772662,
+    "grass_color": 16772662,
+    "sky_color": 8103167,
+    "water_color": 6391290,
+    "water_fog_color": 6391290,
+    "grass_color_modifier": "none"
+  },
+
+
+  "carvers": {
+    "air": [
+      "minecraft:cave",
+      "minecraft:canyon",
+      "minecraft:cave_extra_underground"
+    ]
+  },
+
+  "features": [
+    [],
+    [
+      "minecraft:lake_lava_underground",
+      "solarcraft:crystallized_ore_vein"
+    ],
+    [
+      "minecraft:amethyst_geode"
+    ],
+    [
+
+    ],
+    [],
+    [],
+    [
+      "minecraft:ore_dirt",
+      "minecraft:ore_gravel",
+      "minecraft:ore_granite_upper",
+      "minecraft:ore_granite_lower",
+      "minecraft:ore_diorite_upper",
+      "minecraft:ore_diorite_lower",
+      "minecraft:ore_andesite_upper",
+      "minecraft:ore_andesite_lower",
+      "minecraft:ore_tuff",
+      "minecraft:ore_coal_upper",
+      "minecraft:ore_coal_lower",
+      "minecraft:ore_iron_upper",
+      "minecraft:ore_iron_middle",
+      "minecraft:ore_iron_small",
+      "minecraft:ore_gold",
+      "minecraft:ore_gold_lower",
+      "minecraft:ore_redstone",
+      "minecraft:ore_redstone_lower",
+      "minecraft:ore_diamond",
+      "minecraft:ore_diamond_large",
+      "minecraft:ore_diamond_buried",
+      "minecraft:ore_lapis",
+      "minecraft:ore_lapis_buried",
+      "minecraft:ore_copper",
+      "minecraft:underwater_magma",
+      "minecraft:disk_sand",
+      "minecraft:disk_clay",
+      "minecraft:disk_gravel"
+    ],
+    [
+      "solarcraft:uldera_pylon",
+      "solarcraft:clearing_crystal"
+    ],
+    [
+      "solarcraft:floating_islands",
+      "solarcraft:uldera_obelisk",
+      "solarcraft:radiant_land_ambient_tree",
+      "solarcraft:radiant_grass_grass",
+      "minecraft:spring_lava",
+      "solarcraft:radiant_tree",
+      "solarcraft:radiant_berry_bush"
+    ],
+    [
+
+    ]
+  ],
+  "spawners": {
+    "monster":[
+
+    ]
+  },
+  "starts": [
+    "solarcraft:crystal_boss_room",
+    "solarcraft:runic_elemental_arena",
+    "solarcraft:clearing_ritual_structure"
+  ],
+  "player_spawn_friendly": true,
+  "spawn_costs": {}
+}

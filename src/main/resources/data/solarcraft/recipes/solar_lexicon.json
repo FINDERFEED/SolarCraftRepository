@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " F ",
+    "F#F",
+    "   "
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:book"
+    },
+    "F": {
+      "item": "minecraft:iron_ingot"
+    }
+  },
+  "result": {
+    "item": "solarcraft:solar_lexicon"
+
+  }
+}

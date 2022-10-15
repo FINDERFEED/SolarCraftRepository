@@ -1,0 +1,6 @@
+{
+  "variants": {
+    "not_starred=false": { "model": "solarcraft:block/cold_star_charger_starred" },
+    "not_starred=true": { "model": "solarcraft:block/cold_star_charger" }
+  }
+}

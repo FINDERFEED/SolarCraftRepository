@@ -1,0 +1,35 @@
+{
+  "type":"solarcraft:infusing",
+  "input1": {
+    "item": "solarcraft:small_solar_reactor"
+  },
+  "input2": {
+    "item": "solarcraft:blue_gem_enriched"
+  },
+  "input3": {
+    "item": "minecraft:amethyst_shard"
+  },
+  "input4": {
+    "item": "solarcraft:blue_gem_enriched"
+  },
+  "input5": {
+    "item": "minecraft:amethyst_shard"
+  },
+  "input6": {
+    "item": "solarcraft:blue_gem_enriched"
+  },
+  "input7": {
+    "item": "minecraft:amethyst_shard"
+  },
+  "input8": {
+    "item": "solarcraft:blue_gem_enriched"
+  },
+  "input9": {
+    "item": "minecraft:amethyst_shard"
+  },
+  "result": {
+    "item": "solarcraft:amethyst_core"
+  },
+  "time": 500,
+  "fragment": "amethyst_core"
+}

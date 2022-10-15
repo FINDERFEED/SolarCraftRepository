@@ -1,0 +1,40 @@
+{
+  "type":"solarcraft:infusing",
+  "input1": {
+    "item": "solarcraft:illidium_block"
+  },
+  "input2": {
+    "item": "solarcraft:solar_dust"
+  },
+  "input3": {
+    "item": "solarcraft:solar_stone_bricks"
+  },
+  "input4": {
+    "item": "solarcraft:blue_gem_enriched"
+  },
+  "input5": {
+    "item": "solarcraft:solar_stone_bricks"
+  },
+  "input6": {
+    "item": "solarcraft:solar_dust"
+  },
+  "input7": {
+    "item": "solarcraft:solar_stone_bricks"
+  },
+  "input8": {
+    "item": "solarcraft:solar_energy_repeater"
+  },
+  "input9": {
+    "item": "solarcraft:solar_stone_bricks"
+  },
+  "result": {
+    "item": "solarcraft:solar_furnace"
+  },
+  "time": 500,
+  "fragment": "solar_furnace",
+  "energy": 10000,
+  "fira": 2000,
+  "tera": 1500,
+  "zeta": 1500
+
+}

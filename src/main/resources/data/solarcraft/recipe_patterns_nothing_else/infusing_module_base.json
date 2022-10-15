@@ -1,0 +1,35 @@
+{
+  "type":"solarcraft:infusing",
+  "input1": {
+    "item": "solarcraft:amethyst_core"
+  },
+  "input2": {
+    "item": "solarcraft:solar_rune_"
+  },
+  "input3": {
+    "item": ""
+  },
+  "input4": {
+    "item": "solarcraft:solar_rune_"
+  },
+  "input5": {
+    "item": ""
+  },
+  "input6": {
+    "item": "solarcraft:solar_rune_"
+  },
+  "input7": {
+    "item": ""
+  },
+  "input8": {
+    "item": "solarcraft:solar_rune_"
+  },
+  "input9": {
+    "item": ""
+  },
+  "result": {
+    "item": "solarcraft:"
+  },
+  "time": 700,
+  "fragment": "modules"
+}
