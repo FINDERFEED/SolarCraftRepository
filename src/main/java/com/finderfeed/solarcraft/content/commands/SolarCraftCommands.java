@@ -216,7 +216,7 @@ class RetainFragments{
                 .requires(cs->cs.hasPermission(0))
 //                .then(Commands.literal("retain").executes((cmd)->retainFragments(cmd.getSource())))
                 .then(Commands.literal("unlockall").executes((cmd)->unlockAllFragments(cmd.getSource())))
-                .then(Commands.literal("transferFromOldDataToNew").executes((cmd)->transferFromOldToNew(cmd.getSource())))
+//                .then(Commands.literal("transferFromOldDataToNew").executes((cmd)->transferFromOldToNew(cmd.getSource())))
                 .then(Commands.literal("refresh").executes((cmd)->refreshFragments(cmd.getSource())));
     }
     

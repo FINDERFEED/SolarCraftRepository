@@ -135,80 +135,108 @@
                 "type": "minecraft:above_preliminary_surface"
               },
               "then_run": {
-                "sequence": [
-                  {
-                    "if_true": {
-                      "offset": 0,
-                      "add_surface_depth": false,
-                      "add_surface_secondary_depth": false,
-                      "secondary_depth_range": 0,
-                      "surface_type": "floor",
-                      "type": "minecraft:stone_depth"
-                    },
-
-                    "then_run": {
-                      "sequence": [
-                        {
-                          "type": "minecraft:condition",
-                          "if_true": {
-                            "type": "minecraft:y_above",
-                            "add_stone_depth": false,
-                            "anchor": {
-                              "absolute": 49
-                            },
-                            "surface_depth_multiplier": 0
-                          },
-                          "then_run": {
-                            "result_state": {
-                              "Name": "solarcraft:radiant_grass"
-                            },
-                            "type": "minecraft:block"
-                          }
-                        },
-                        {
-                          "result_state": {
-                            "Name": "minecraft:dirt"
-                          },
-                          "type": "minecraft:block"
-                        }
-                      ],
-                      "type": "minecraft:sequence"
-                    },
-                    "type": "minecraft:condition"
+                "type": "minecraft:condition",
+                "if_true": {
+                  "type": "minecraft:y_above",
+                  "add_stone_depth": false,
+                  "anchor": {
+                    "absolute": 87
                   },
-
-                  {
-                    "if_true": {
-                      "offset": 1,
-                      "add_surface_depth": false,
-                      "add_surface_secondary_depth": false,
-                      "secondary_depth_range": 0,
-                      "surface_type": "floor",
-                      "type": "minecraft:stone_depth"
-                    },
-                    "then_run": {
-                      "result_state": {
-                        "Name": "minecraft:dirt"
-                      },
-                      "type": "minecraft:block"
-                    },
-                    "type":"minecraft:condition"
-                  },
-                  {
-                    "if_true": {
-                      "offset": 2,
-                      "add_surface_depth": false,
-                      "add_surface_secondary_depth": false,
-                      "secondary_depth_range": 0,
-                      "surface_type": "floor",
-                      "type": "minecraft:stone_depth"
-                    },
-                    "then_run": {
+                  "surface_depth_multiplier": 0
+                },
+                "then_run": {
+                  "sequence": [
+                    {
                       "if_true": {
-                        "noise": "minecraft:surface",
-                        "min_threshold": -0.5,
-                        "max_threshold": 0.5,
-                        "type": "minecraft:noise_threshold"
+                        "offset": 0,
+                        "add_surface_depth": false,
+                        "add_surface_secondary_depth": false,
+                        "secondary_depth_range": 0,
+                        "surface_type": "floor",
+                        "type": "minecraft:stone_depth"
+                      },
+
+                      "then_run": {
+                        "sequence": [
+                          {
+                            "type": "minecraft:condition",
+                            "if_true": {
+                              "type": "minecraft:y_above",
+                              "add_stone_depth": false,
+                              "anchor": {
+                                "absolute": 49
+                              },
+                              "surface_depth_multiplier": 0
+                            },
+                            "then_run": {
+                              "result_state": {
+                                "Name": "solarcraft:radiant_grass"
+                              },
+                              "type": "minecraft:block"
+                            }
+                          },
+                          {
+                            "type": "minecraft:sequence",
+                            "sequence": [
+                              {
+                                "if_true": {
+                                  "offset": 1,
+                                  "add_surface_depth": false,
+                                  "add_surface_secondary_depth": false,
+                                  "secondary_depth_range": 0,
+                                  "surface_type": "floor",
+                                  "type": "minecraft:stone_depth"
+                                },
+                                "then_run": {
+                                  "result_state": {
+                                    "Name": "minecraft:dirt"
+                                  },
+                                  "type": "minecraft:block"
+                                },
+                                "type":"minecraft:condition"
+                              },
+                              {
+                                "if_true": {
+                                  "offset": 2,
+                                  "add_surface_depth": false,
+                                  "add_surface_secondary_depth": false,
+                                  "secondary_depth_range": 0,
+                                  "surface_type": "floor",
+                                  "type": "minecraft:stone_depth"
+                                },
+                                "then_run": {
+                                  "if_true": {
+                                    "noise": "minecraft:surface",
+                                    "min_threshold": -0.25,
+                                    "max_threshold": 0.5,
+                                    "type": "minecraft:noise_threshold"
+                                  },
+                                  "then_run": {
+                                    "result_state": {
+                                      "Name": "minecraft:dirt"
+                                    },
+                                    "type": "minecraft:block"
+                                  },
+                                  "type": "minecraft:condition"
+                                },
+                                "type":"minecraft:condition"
+                              }
+                            ]
+                          }
+                        ],
+                        "type": "minecraft:sequence"
+                      },
+                      "type": "minecraft:condition"
+                    },
+
+                    {
+                      "if_true": {
+                        "offset": 1,
+                        "add_surface_depth": false,
+                        "add_surface_secondary_depth": false,
+                        "secondary_depth_range": 0,
+                        "surface_type": "floor",
+                        "type": "minecraft:stone_depth"
                       },
                       "then_run": {
                         "result_state": {
@@ -216,12 +244,57 @@
                         },
                         "type": "minecraft:block"
                       },
-                      "type": "minecraft:condition"
+                      "type":"minecraft:condition"
                     },
-                    "type":"minecraft:condition"
-                  }
-                ],
-                "type": "minecraft:sequence"
+                    {
+                      "if_true": {
+                        "offset": 2,
+                        "add_surface_depth": false,
+                        "add_surface_secondary_depth": false,
+                        "secondary_depth_range": 0,
+                        "surface_type": "floor",
+                        "type": "minecraft:stone_depth"
+                      },
+                      "then_run": {
+                        "type": "minecraft:sequence",
+                        "sequence": [
+                          {
+                            "type": "minecraft:condition",
+                            "if_true": {
+                              "type": "minecraft:noise_threshold",
+                              "max_threshold": 1.7976931348623157E308,
+                              "min_threshold": 0.12121212121212122,
+                              "noise": "minecraft:surface"
+                            },
+                            "then_run": {
+                              "type": "minecraft:block",
+                              "result_state": {
+                                "Name": "minecraft:stone"
+                              }
+                            }
+                          },
+                          {
+                            "type": "minecraft:condition",
+                            "if_true": {
+                              "type": "minecraft:noise_threshold",
+                              "max_threshold": 1.7976931348623157E308,
+                              "min_threshold": -0.12121212121212122,
+                              "noise": "minecraft:surface"
+                            },
+                            "then_run": {
+                              "type": "minecraft:block",
+                              "result_state": {
+                                "Name": "minecraft:dirt"
+                              }
+                            }
+                          }
+                        ]
+                      },
+                      "type":"minecraft:condition"
+                    }
+                  ],
+                  "type": "minecraft:sequence"
+                }
               },
 
               "type": "minecraft:condition"
@@ -243,7 +316,7 @@
         "argument1": {
           "type": "minecraft:y_clamped_gradient",
           "from_y": -64,
-          "to_y": 180,
+          "to_y": 280,
           "from_value": 1,
           "to_value": -1
         },
@@ -269,7 +342,7 @@
             "argument1": {
               "type": "minecraft:y_clamped_gradient",
               "from_y": -70,
-              "to_y": 30,
+              "to_y": 60,
               "from_value": -3,
               "to_value": 0
             },

@@ -6,6 +6,7 @@ import com.finderfeed.solarcraft.content.items.primitive.RareSolarcraftPickaxe;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarcraft.misc_things.ITagUser;
 import net.minecraft.core.NonNullList;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -19,6 +20,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.ChatFormatting;
 import net.minecraft.world.level.Level;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraftforge.event.ForgeEventFactory;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -90,30 +92,41 @@ public class SolarGodPickaxe extends RareSolarcraftPickaxe implements ITagUser {
 
 
 
-    public static void excavate(BlockPos pos, Direction dir, float rotation, Level world, ItemStack stack, LivingEntity player){
-        if ((rotation >= 50) || (rotation <= -50)){
-            for (BlockPos posi : Helpers.getSurroundingBlockPositionsHorizontal(pos)){
-                List<ItemStack> stacks = Block.getDrops(world.getBlockState(posi),(ServerLevel) world,posi,world.getBlockEntity(posi),player,stack);
+    public static void excavate(BlockPos pos, Direction dir, float rotation, Level world, ItemStack stack, LivingEntity living){
+        int level = stack.getTagElement(SolarCraftTags.SOLAR_GOD_PICKAXE_TAG).getInt(SolarCraftTags.SOLAR_GOD_PICKAXE_LEVEL_TAG);
+        if (living instanceof Player player) {
 
-                world.destroyBlock(posi,false);
+            if ((rotation >= 50) || (rotation <= -50)) {
+                for (BlockPos posi : Helpers.getSurroundingBlockPositionsHorizontal(pos)) {
+                    List<ItemStack> stacks = Block.getDrops(world.getBlockState(posi), (ServerLevel) world, posi, world.getBlockEntity(posi), living, stack);
+                    if (player.hasCorrectToolForDrops(world.getBlockState(posi))) {
+                        world.destroyBlock(posi, false);
 
-                for (ItemStack stack1 : stacks){
-                    Block.popResource(world,posi,stack1);
-                    dropExpWithChance(posi,world,20);
+                        for (ItemStack stack1 : stacks) {
+                            Block.popResource(world, posi, stack1);
+                            if (level >= 2) {
+                                dropExpWithChance(posi, world, 20);
+                            }
+                        }
+                    }
                 }
-            }
-        }else{
-            for (BlockPos posi : Helpers.getSurroundingBlockPositionsVertical(pos,dir)){
-                List<ItemStack> stacks = Block.getDrops(world.getBlockState(posi),(ServerLevel) world,posi,world.getBlockEntity(posi),player,stack);
-                world.destroyBlock(posi,false);
+            } else {
+                for (BlockPos posi : Helpers.getSurroundingBlockPositionsVertical(pos, dir)) {
+                    List<ItemStack> stacks = Block.getDrops(world.getBlockState(posi), (ServerLevel) world, posi, world.getBlockEntity(posi), living, stack);
+                    if (player.hasCorrectToolForDrops(world.getBlockState(posi))) {
 
-                for (ItemStack stack1 : stacks){
-                    Block.popResource(world,posi,stack1);
-                    dropExpWithChance(posi,world,20);
+                        world.destroyBlock(posi, false);
+
+                        for (ItemStack stack1 : stacks) {
+                            Block.popResource(world, posi, stack1);
+                            if (level >= 2) {
+                                dropExpWithChance(posi, world, 20);
+                            }
+                        }
+                    }
                 }
             }
         }
-
     }
 
     @Override
