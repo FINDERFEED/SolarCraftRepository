@@ -1071,6 +1071,9 @@ public class RenderingTools {
         }
         public static void renderTile(PositionBlockStateTileEntity block,PoseStack matrices, float partialTicks, BlockAndTintGetter getter, MultiBufferSource src, BlockEntityRenderDispatcher d){
             if (block.tile != null){
+                if (block.tile.getLevel() != Minecraft.getInstance().level){
+                    block.tile.setLevel(Minecraft.getInstance().level);
+                }
                 BlockEntityRenderer<BlockEntity> renderer;
                 if ((renderer = d.getRenderer(block.tile)) != null){
                     matrices.pushPose();
