@@ -3,6 +3,7 @@ package com.finderfeed.solarcraft.content.items.runic_energy;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class RunicEnergyCost {
@@ -27,5 +28,9 @@ public class RunicEnergyCost {
 
     public float[] getCosts() {
         return costs;
+    }
+
+    public void nullifyUnusedTypes(){
+        setTypes.removeIf(type -> get(type) == 0);
     }
 }

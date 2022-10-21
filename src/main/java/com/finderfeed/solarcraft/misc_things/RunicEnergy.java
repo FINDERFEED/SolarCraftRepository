@@ -26,6 +26,18 @@ public class RunicEnergy {
 
     );
 
+    public static Map<Block, Type[]> BLOCK_TO_RUNE_ENERGY_TYPE_ARRAY = Map.of(
+            SolarcraftBlocks.TERA_RUNE_BLOCK.get(), new Type[]{RunicEnergy.Type.TERA},
+            SolarcraftBlocks.FIRA_RUNE_BLOCK.get(), new Type[]{RunicEnergy.Type.FIRA},
+            SolarcraftBlocks.ZETA_RUNE_BLOCK.get(), new Type[]{RunicEnergy.Type.ZETA},
+            SolarcraftBlocks.KELDA_RUNE_BLOCK.get(), new Type[]{RunicEnergy.Type.KELDA},
+            SolarcraftBlocks.URBA_RUNE_BLOCK.get(), new Type[]{RunicEnergy.Type.URBA},
+            SolarcraftBlocks.ARDO_RUNE_BLOCK.get(), new Type[]{RunicEnergy.Type.ARDO},
+            SolarcraftBlocks.ULTIMA_RUNE_BLOCK.get(), new Type[]{RunicEnergy.Type.ULTIMA},
+            SolarcraftBlocks.GIRO_RUNE_BLOCK.get(), new Type[]{RunicEnergy.Type.GIRO},
+            SolarcraftBlocks.MULTIREPEATER_BLOCK.get(),Type.getAll()
+    );
+
     public static void setEnergy(Player playerEntity,float amount, Type type){
         CompoundTag nbt = playerEntity.getPersistentData();
         nbt.putFloat(DEFAULT_ENERGY_TAG+type.id,amount);

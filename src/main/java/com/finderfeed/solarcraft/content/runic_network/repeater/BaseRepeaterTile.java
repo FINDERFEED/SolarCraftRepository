@@ -4,36 +4,34 @@ import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.local_library.helpers.CompoundNBTHelper;
 import com.finderfeed.solarcraft.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarcraft.client.particles.SolarcraftParticleTypes;
+import com.finderfeed.solarcraft.misc_things.DebugTarget;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
-import com.finderfeed.solarcraft.registries.blocks.SolarcraftBlocks;
 import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Vec3i;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 //NEVER GONNA GIVE YOU UP
-public class BaseRepeaterTile extends BlockEntity {
+public class BaseRepeaterTile extends BlockEntity implements DebugTarget {
 
-    public static double NULL = -1000000;
 
-    //rune energy pylon position
-    private RunicEnergy.Type ENERGY_TYPE;
-    private List<BlockPos> CONNECTIONS = new ArrayList<>();
+    private Set<RunicEnergy.Type> accepted_types = new HashSet<>();
+    private List<BlockPos> connections = new ArrayList<>();
 
 
     public BaseRepeaterTile( BlockPos p_155229_, BlockState p_155230_) {
-        super(SolarcraftTileEntityTypes.REPEATER.get(), p_155229_, p_155230_);
+        super(SolarcraftTileEntityTypes.RUNIC_ENERGY_REPEATER.get(), p_155229_, p_155230_);
     }
 
 
@@ -41,35 +39,12 @@ public class BaseRepeaterTile extends BlockEntity {
 
 
     public static void tick(Level world,BlockPos pos,BlockState state,BaseRepeaterTile tile){
-        Block block = world.getBlockState(pos.below()).getBlock();
-        if (tile.getEnergyType() == null && world.getGameTime() % 20 == 0) {
-            if (block == SolarcraftBlocks.ZETA_RUNE_BLOCK.get()) {
-                tile.setEnergyType(RunicEnergy.Type.ZETA);
-            } else if (block == SolarcraftBlocks.URBA_RUNE_BLOCK.get()) {
-                tile.setEnergyType(RunicEnergy.Type.URBA);
-            } else if (block == SolarcraftBlocks.KELDA_RUNE_BLOCK.get()) {
-                tile.setEnergyType(RunicEnergy.Type.KELDA);
-            } else if (block == SolarcraftBlocks.FIRA_RUNE_BLOCK.get()) {
-                tile.setEnergyType(RunicEnergy.Type.FIRA);
-            } else if (block == SolarcraftBlocks.ARDO_RUNE_BLOCK.get()) {
-                tile.setEnergyType(RunicEnergy.Type.ARDO);
-            } else if (block == SolarcraftBlocks.TERA_RUNE_BLOCK.get()) {
-                tile.setEnergyType(RunicEnergy.Type.TERA);
-            } else if (block == SolarcraftBlocks.GIRO_RUNE_BLOCK.get()) {
-                tile.setEnergyType(RunicEnergy.Type.GIRO);
-            } else if (block == SolarcraftBlocks.ULTIMA_RUNE_BLOCK.get()) {
-                tile.setEnergyType(RunicEnergy.Type.ULTIMA);
-            } else {
-                tile.setEnergyType(null);
-            }
-        }
-
-        if (!world.isClientSide && (world.getGameTime() %20 == 1) ) {
-            tile.setChanged();
-            world.sendBlockUpdated(pos, state, state, 3);
-        }
+//        if (!world.isClientSide && (world.getGameTime() %20 == 1) ) {
+//            tile.setChanged();
+//            world.sendBlockUpdated(pos, state, state, 3);
+//        }
         if (world.isClientSide && (world.getGameTime() % 15 == 1)){
-            tile.CONNECTIONS.forEach(tile::handleParticlesBetween);
+            tile.connections.forEach(tile::handleParticlesBetween);
         }
     }
 
@@ -101,28 +76,41 @@ public class BaseRepeaterTile extends BlockEntity {
     }
 
     public List<BlockPos> getConnections(){
-        return CONNECTIONS;
+        return connections;
     }
 
-    public void setEnergyType(RunicEnergy.Type type){
-        this.ENERGY_TYPE = type;
+    public void addAcceptedEnergyType(RunicEnergy.Type type){
+        this.accepted_types.add(type);
     }
 
-    public RunicEnergy.Type getEnergyType(){
-        return ENERGY_TYPE;
+    public Set<RunicEnergy.Type> getAcceptedEnergyTypes(){
+        return accepted_types;
     }
 
-
-
-    public void resetRepeater(BlockPos consumer){
-
+    public void setAcceptedRunicEnergyTypes(RunicEnergy.Type... type) {
+        if (type != null) {
+            this.accepted_types = new HashSet<>(Arrays.stream(type).toList());
+        }else{
+            this.accepted_types = new HashSet<>();
+        }
     }
 
+    @Override
+    public CompoundTag getUpdateTag() {
+        CompoundTag tag = new CompoundTag();
+        CompoundNBTHelper.writeBlockPosList("connections", connections,tag);
+        return tag;
+    }
+
+    @Override
+    public void handleUpdateTag(CompoundTag tag) {
+        this.connections = CompoundNBTHelper.getBlockPosList("connections",tag);
+    }
 
     @Override
     public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
         CompoundTag tag = pkt.getTag();
-        this.CONNECTIONS = CompoundNBTHelper.getBlockPosList("connections",tag);
+        this.connections = CompoundNBTHelper.getBlockPosList("connections",tag);
         super.onDataPacket(net, pkt);
     }
 
@@ -130,17 +118,17 @@ public class BaseRepeaterTile extends BlockEntity {
     @Override
     public ClientboundBlockEntityDataPacket getUpdatePacket() {
         CompoundTag tag = new CompoundTag();
-        CompoundNBTHelper.writeBlockPosList("connections",CONNECTIONS,tag);
+        CompoundNBTHelper.writeBlockPosList("connections", connections,tag);
         return Helpers.createTilePacket(this,tag);
     }
 
 
     public void addConnection(BlockPos pos){
-        CONNECTIONS.add(pos);
+        connections.add(pos);
     }
 
     public void removeConnection(BlockPos pos){
-        CONNECTIONS.remove(pos);
+        connections.remove(pos);
     }
 
 
@@ -148,5 +136,10 @@ public class BaseRepeaterTile extends BlockEntity {
     @Override
     public AABB getRenderBoundingBox() {
         return new AABB(worldPosition.offset(-16,-16,-16),worldPosition.offset(16,16,16));
+    }
+
+    @Override
+    public List<String> getDebugStrings() {
+        return connections.stream().map(Vec3i::toString).collect(Collectors.toList());
     }
 }

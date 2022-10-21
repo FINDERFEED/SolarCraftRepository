@@ -101,7 +101,7 @@ public class SolarcraftClientRegistry {
 
 
         //blockentityrenderers.register
-        BlockEntityRenderers.register(SolarcraftTileEntityTypes.REPEATER.get(), RepeaterRenderer::new);
+        BlockEntityRenderers.register(SolarcraftTileEntityTypes.RUNIC_ENERGY_REPEATER.get(), RepeaterRenderer::new);
         BlockEntityRenderers.register(SolarcraftTileEntityTypes.RUNE_ENERGY_PYLON.get(), RuneEnergyPylonRenderer::new);
         BlockEntityRenderers.register(SolarCraft.SOLAR_FORGE_BLOCKENTITY.get(), SolarForgeBlockEntityRenderer::new);
         BlockEntityRenderers.register(SolarcraftTileEntityTypes.INFUSING_POOL_BLOCKENTITY.get(), InfusingStandRenderer::new);

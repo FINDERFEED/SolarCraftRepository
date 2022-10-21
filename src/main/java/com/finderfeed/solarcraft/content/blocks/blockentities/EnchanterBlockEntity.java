@@ -75,7 +75,7 @@ public class EnchanterBlockEntity extends REItemHandlerBlockEntity {
                                     1,1);
                         }
                         enchanter.nullOrGiverPositionForClient.clear();
-                        enchanter.onRemove();
+                        enchanter.resetAllRepeaters();
                         enchanter.clearWays();
                     }else{
                         enchanter.requestRunicEnergy(defaultCosts, 1);
@@ -123,7 +123,7 @@ public class EnchanterBlockEntity extends REItemHandlerBlockEntity {
         this.enchantingInProgress = false;
         this.processingEnchantment = null;
         this.enchantingTicks = -1;
-        this.onRemove();
+        this.resetAllRepeaters();
         this.clearWays();
         nullOrGiverPositionForClient.clear();
     }

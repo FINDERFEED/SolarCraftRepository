@@ -35,7 +35,7 @@ public class BonemealerBlock extends RunicEnergySaverBlock implements EntityBloc
     public void onRemove(BlockState p_196243_1_, Level p_196243_2_, BlockPos p_196243_3_, BlockState p_196243_4_, boolean p_196243_5_) {
         BlockEntity te = p_196243_2_.getBlockEntity(p_196243_3_);
         if (te instanceof BonemealerTileEntity tileEntity){
-            tileEntity.onRemove();
+            tileEntity.resetAllRepeaters();
         }
         super.onRemove(p_196243_1_, p_196243_2_, p_196243_3_, p_196243_4_, p_196243_5_);
     }

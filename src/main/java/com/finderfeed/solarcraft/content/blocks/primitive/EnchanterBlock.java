@@ -67,7 +67,7 @@ public class EnchanterBlock extends RunicEnergySaverBlock implements EntityBlock
     @Override
     public void onRemove(BlockState state, Level world, BlockPos pos, BlockState state2, boolean smth) {
         if (world.getBlockEntity(pos) instanceof EnchanterBlockEntity enchanterBlockEntity){
-            enchanterBlockEntity.onRemove();
+            enchanterBlockEntity.resetAllRepeaters();
             Containers.dropContents(world,pos,enchanterBlockEntity.wrapInContainer());
         }
         super.onRemove(state, world, pos, state2, smth);

@@ -166,17 +166,17 @@ public abstract class AbstractRunicEnergyContainer extends SolarcraftBlockEntity
 
     public abstract boolean shouldFunction();
 
-    public void onRemove(){
-        PATH_TO_CONTAINERS.forEach((type,way)->{
-            RunicEnergyPath.resetRepeaterConnections(PATH_TO_CONTAINERS.get(type),level);
-        });
-    }
-
     public void resetAllRepeaters(){
         PATH_TO_CONTAINERS.forEach((type,way)->{
             RunicEnergyPath.resetRepeaterConnections(PATH_TO_CONTAINERS.get(type),level);
         });
     }
+
+//    public void resetAllRepeaters(){
+//        PATH_TO_CONTAINERS.forEach((type,way)->{
+//            RunicEnergyPath.resetRepeaterConnections(PATH_TO_CONTAINERS.get(type),level);
+//        });
+//    }
 
     @Nullable
     @Override
@@ -228,10 +228,12 @@ public abstract class AbstractRunicEnergyContainer extends SolarcraftBlockEntity
         for (RunicEnergy.Type type : types) {
             List<BlockPos> oldRoute = PATH_TO_CONTAINERS.get(type);
             if (checkRoute(oldRoute,type)) continue;
-
+            if (oldRoute != null){
+                RunicEnergyPath.resetRepeaterConnections(oldRoute,level);
+            }
             PATH_TO_CONTAINERS.remove(type);
             for (BlockEntity entity : entities) {
-                if (entity instanceof BaseRepeaterTile tile && tile.getEnergyType() == type) {
+                if (entity instanceof BaseRepeaterTile tile && tile.getAcceptedEnergyTypes().contains(type)) {
                     List<BlockPos> route = new RunicEnergyPath(type, this.worldPosition).build(tile);
                     if (route != null) {
                         PATH_TO_CONTAINERS.put(type, route);
@@ -257,7 +259,7 @@ public abstract class AbstractRunicEnergyContainer extends SolarcraftBlockEntity
                 for (BlockEntity entity : chunk.getBlockEntities().values()) {
                     if (entity instanceof BaseRepeaterTile repeater) {
 
-                        if ((repeater.getEnergyType() == type) && !(tile instanceof RuneEnergyPylonTile)) {
+                        if ((repeater.getAcceptedEnergyTypes().contains(type)) && !(tile instanceof RuneEnergyPylonTile)) {
                             if (FDMathHelper.canSee(repeater.getBlockPos(), pos, getMaxRange(), world)) {
                                 double range = FDMathHelper.getDistanceBetween(repeater.getBlockPos(), pos);
                                 if (range <= getMaxRange()) {

@@ -83,6 +83,7 @@ public class InfusingRecipeSerializer implements RecipeSerializer<InfusingRecipe
                 .set(RunicEnergy.Type.ULTIMA,ULTIMA)
                 .set(RunicEnergy.Type.GIRO,GIRO)
                 .set(RunicEnergy.Type.ARDO,ARDO);
+        costs.nullifyUnusedTypes();
         String catalysts = GsonHelper.getAsString(file,"catalysts","            ");
         if (catalysts.length() != 12){
             throw new IllegalStateException("Catalysts length cant be != 12, recipe: " + loc.toString());

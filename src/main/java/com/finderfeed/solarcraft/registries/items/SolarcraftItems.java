@@ -256,6 +256,8 @@ public class SolarcraftItems {
     public static final RegistryObject<Item> GIRO_RUNE_BLOCK = ITEMS.register("giro_rune_block",()->new     BlockItem(SolarcraftBlocks.GIRO_RUNE_BLOCK.get(),new Item.Properties().tab(SolarCraft.SOLAR_GROUP_BLOCKS)));
     public static final RegistryObject<Item> ULTIMA_RUNE_BLOCK = ITEMS.register("ultima_rune_block",()->new BlockItem(SolarcraftBlocks.ULTIMA_RUNE_BLOCK.get(),new Item.Properties().tab(SolarCraft.SOLAR_GROUP_BLOCKS)));
 
+    public static final RegistryObject<Item> MULTIREPEATER_BLOCK = ITEMS.register("multirepeater_block",()->new BlockItem(SolarcraftBlocks.MULTIREPEATER_BLOCK.get(),new Item.Properties().tab(SolarCraft.SOLAR_GROUP_BLOCKS)));
+
 
     public static final RegistryObject<Item> RADIANT_CRYSTAL = ITEMS.register("radiant_crystal",()->new BlockItem(SolarcraftBlocks.RADIANT_CRYSTAL.get(),new Item.Properties().tab(SolarCraft.SOLAR_GROUP_BLOCKS)));
 

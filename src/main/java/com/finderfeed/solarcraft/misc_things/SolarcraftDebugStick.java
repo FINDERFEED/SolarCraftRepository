@@ -1,7 +1,12 @@
 package com.finderfeed.solarcraft.misc_things;
 
+import com.finderfeed.solarcraft.content.blocks.blockentities.RuneEnergyPylonTile;
+import com.finderfeed.solarcraft.content.runic_network.repeater.RunicEnergyRepeaterTile;
 import com.finderfeed.solarcraft.helpers.multiblock.StructurePatternExporter;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
@@ -29,31 +34,20 @@ public class SolarcraftDebugStick extends Item {
     public InteractionResult useOn(UseOnContext ctx) {
         Level world = ctx.getLevel();
         BlockPos pos = ctx.getClickedPos();
-        if (world.isClientSide){
-            if (first == null){
-                first = pos;
-            }else if (second == null){
-                second = pos;
-            }else{
-//                MultiblockStructure structure = new MultiblockStructure.Builder()
-//                        .setId("aboba")
-//                        .setMainChar('u')
-//                        .setPattern(new String[][]{{"qqqqqw", "qqqqqw", "qqeqqw", "qqqqqw", "qqqqqw"}, {"rrtrrr", "rrrrrr", "yrurir", "rrrrrr", "rrorrp"}})
-//                        .put('q',"solarcraft:solar_stone_bricks")
-//                        .put('t',"solarcraft:solar_stone_stairs[facing=north,half=bottom,shape=straight,waterlogged=false]")
-//                        .put('i',"solarcraft:solar_stone_stairs[facing=east,half=bottom,shape=straight,waterlogged=false]")
-//                        .put('e',"solarcraft:chiseled_solar_stone")
-//                        .put('w',"solarcraft:solar_stone_collumn")
-//                        .put('r',"minecraft:air")
-//                        .put('y',"solarcraft:solar_stone_stairs[facing=west,half=bottom,shape=straight,waterlogged=false]")
-//                        .put('o',"solarcraft:solar_stone_stairs[facing=south,half=bottom,shape=straight,waterlogged=false]")
-//                        .put('u',"solarcraft:illidium_block")
-//                        .put('p',"solarcraft:solar_core_block")
-//                        .build();
-//                System.out.println(structure.check(world,first.offset(2,1,2),true));
-                StructurePatternExporter.export(world,first,second);
-                first = null;
-                second = null;
+
+        if (!world.isClientSide && world.getBlockEntity(pos) instanceof DebugTarget dtarget){
+            if (ctx.getPlayer().isShiftKeyDown() && dtarget instanceof RuneEnergyPylonTile pylon) {
+                   pylon.addEnergy(pylon.getEnergyType(),200);
+            }
+
+            if (dtarget instanceof RunicEnergyRepeaterTile repeater){
+                for (BlockPos connection : repeater.getConnections()){
+                    ((ServerLevel)world).sendParticles(ParticleTypes.FLASH,connection.getX()+0.5,connection.getY()+1.5,
+                            connection.getZ()+0.5,1,0,0,0,0);
+                }
+            }
+            for (String s : dtarget.getDebugStrings()) {
+                ctx.getPlayer().sendSystemMessage(Component.literal(s));
             }
         }
         return InteractionResult.SUCCESS;

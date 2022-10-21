@@ -382,7 +382,7 @@ public class InfuserTileEntity extends REItemHandlerBlockEntity implements Solar
         tile.deleteStacksInPhantomSlots(count);
         tile.level.playSound(null, tile.worldPosition, SoundEvents.BEACON_DEACTIVATE, SoundSource.AMBIENT, 2, 1);
         tile.energy-= recipe.requriedEnergy*count;
-        tile.onRemove();
+        tile.resetAllRepeaters();
         tile.clearWays();
 
     }
@@ -622,7 +622,7 @@ public class InfuserTileEntity extends REItemHandlerBlockEntity implements Solar
     }
 
     public void onTileRemove(){
-        this.onRemove();
+        this.resetAllRepeaters();
     }
 
 

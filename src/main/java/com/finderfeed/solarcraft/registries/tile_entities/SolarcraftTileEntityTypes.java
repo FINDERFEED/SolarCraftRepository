@@ -9,6 +9,7 @@ import com.finderfeed.solarcraft.content.blocks.solar_energy.SolarEnergyCoreTile
 import com.finderfeed.solarcraft.content.blocks.solar_energy.SolarEnergyGeneratorTile;
 import com.finderfeed.solarcraft.content.blocks.solar_energy.SolarEnergyRepeaterTile;
 import com.finderfeed.solarcraft.content.runic_network.repeater.BaseRepeaterTile;
+import com.finderfeed.solarcraft.content.runic_network.repeater.RunicEnergyRepeaterTile;
 import com.finderfeed.solarcraft.registries.blocks.SolarcraftBlocks;
 import com.finderfeed.solarcraft.content.world_generation.structures.blocks.tile_entities.ColdStarInfuserTile;
 import com.finderfeed.solarcraft.content.world_generation.structures.blocks.tile_entities.KeyDefenderTile;
@@ -75,8 +76,8 @@ public class SolarcraftTileEntityTypes {
     public static final RegistryObject<BlockEntityType<RuneEnergyPylonTile>> RUNE_ENERGY_PYLON = TILE_ENTITY_TYPE.register("rune_energy_pylon",()->
             BlockEntityType.Builder.of(RuneEnergyPylonTile::new, SolarcraftBlocks.RUNE_ENERGY_PYLON.get()).build(null));
 
-    public static final RegistryObject<BlockEntityType<BaseRepeaterTile>> REPEATER = TILE_ENTITY_TYPE.register("repeater",()->
-            BlockEntityType.Builder.of(BaseRepeaterTile::new, SolarcraftBlocks.REPEATER.get()).build(null));
+    public static final RegistryObject<BlockEntityType<RunicEnergyRepeaterTile>> RUNIC_ENERGY_REPEATER = TILE_ENTITY_TYPE.register("repeater",()->
+            BlockEntityType.Builder.of(RunicEnergyRepeaterTile::new, SolarcraftBlocks.REPEATER.get()).build(null));
 
     public static final RegistryObject<BlockEntityType<WormholeTileEntity>> WORMHOLE = TILE_ENTITY_TYPE.register("wormhole",()->
             BlockEntityType.Builder.of(WormholeTileEntity::new, SolarcraftBlocks.WORMHOLE.get()).build(null));

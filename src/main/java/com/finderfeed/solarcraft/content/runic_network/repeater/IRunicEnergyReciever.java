@@ -33,7 +33,7 @@ public interface IRunicEnergyReciever {
             for (int g = 0; g < tiles.size();g++){
                 if (tiles.get(g) instanceof BaseRepeaterTile repeater){
 
-                    if ((repeater.getEnergyType() == type) /*&& !(tile instanceof RuneEnergyPylonTile)*/) {
+                    if ((repeater.getAcceptedEnergyTypes().contains(type)) /*&& !(tile instanceof RuneEnergyPylonTile)*/) {
                         if (FDMathHelper.canSee(repeater.getBlockPos(),pos,getMaxRange(),world)) {
                             double range = FDMathHelper.getDistanceBetween(repeater.getBlockPos(), pos);
                             if (range <= getMaxRange()) {

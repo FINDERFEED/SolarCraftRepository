@@ -11,6 +11,7 @@ import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.Ancient
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.ProgressionHelper;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.world.item.ItemStack;
@@ -30,10 +31,8 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
     public final ResourceLocation FRAME = new ResourceLocation("solarcraft","textures/misc/frame.png");
     public final ResourceLocation MAIN_SCREEN_SCROLLABLE = new ResourceLocation("solarcraft","textures/gui/solar_lexicon_main_page_scrollablep.png");
 
-//    public Map<BookEntry,List<AncientFragment>> map = new HashMap<>();
     private List<AncientFragment> FRAGMENTS = new ArrayList<>();
     private Book BOOK;
-//    private Map<BookEntry,Integer[]> TO_DRAW = new HashMap<>();
 
     private boolean showNoFragmentsMessage = true;
 
@@ -44,6 +43,7 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
 
     public List<Runnable> postRender = new ArrayList<>();
 
+    private EditBox searchBox;
 
 
 //    public Point structures;
@@ -146,6 +146,16 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
         BOOK.init();
         BOOK.getButtons().forEach(this::addRenderableWidget);
 
+        this.searchBox = new EditBox(this.font,relX,relY,100,20,Component.literal("Fragment name")){
+            @Override
+            public boolean charTyped(char character, int smth) {
+                if (super.charTyped(character,smth)){
+
+                }
+                return super.charTyped(character,smth);
+            }
+        };
+
 
         addRenderableWidget(goBack);
         addRenderableWidget(nothing);
@@ -159,6 +169,7 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
         goBack.x = relX +207+35;
         goBack.y = relY + 164 - 137;
     }
+
 
     private void collectFragments(){
         for (int i = 0;i < handler.getSlots();i++){

@@ -115,7 +115,7 @@ public class InfuserScreen extends AbstractContainerScreen<InfuserContainer> {
 
             if (recipe.isPresent()) {
                 float percentNeeded = (float) recipe.get().requriedEnergy / (float)tile.getMaxSolarEnergy() * 33;
-                RenderingTools.fill(matrices,relX + 11 + a,relY + 80,relX + 21 + a,relY + (int)(80 - percentNeeded),1,1,0,1);
+                RenderingTools.fill(matrices,relX + 11 + a,relY + 80,relX + 21 + a,relY + (int)(80 - percentNeeded),1,1,0,0.5f);
             }
             if (RenderingTools.isMouseInBorders(x,y,relX + 11 + a,relY + 80 - 33,relX + 21 + a,relY + 80)){
                 postRender.add(()->renderTooltip(matrices,Component.literal(tile.energy + "/" + tile.getMaxSolarEnergy()),x,y));

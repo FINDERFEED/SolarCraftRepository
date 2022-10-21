@@ -75,13 +75,13 @@ public class RunicEnergyPath {
             chunk.getBlockEntities().forEach((position,tileentity)->{
                 if ((tileentity instanceof BaseRepeaterTile repeater)
                         && !(Helpers.equalsBlockPos(start.getBlockPos(),position))
-                        && (repeater.getEnergyType() == start.getEnergyType())){
+                        && (repeater.getAcceptedEnergyTypes().contains(type))){
                     if (FDMathHelper.canSeeTileEntity(start,repeater,range)){
                         tiles.add(tileentity.getBlockPos());
                     }
                 }else if ((tileentity instanceof RunicEnergyGiver giver) &&
                         (giver.getTypes() != null) &&
-                        (giver.getTypes().contains(start.getEnergyType())) &&
+                        (giver.getTypes().contains(type)) &&
                         (FDMathHelper.getDistanceBetween(start.getBlockPos(),giver.getPos()) <= range) &&
                         (FDMathHelper.canSeeTileEntity(start.getBlockPos(),giver.getPos(),range,world))){
 //                    tiles.add(giver.getPos());

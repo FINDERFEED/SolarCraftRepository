@@ -582,4 +582,19 @@ public class Helpers {
             SolarCraftPacketHandler.INSTANCE.sendTo(new DimensionBreakPacket(),player.connection.connection,NetworkDirection.PLAY_TO_CLIENT);
         });
     }
+
+    public static List<String> sortStringsByInput(List<String> list,String input){
+        List<String> copy = new ArrayList<>(list);
+        List<String> toReturn = new ArrayList<>();
+        Iterator<String> iter = copy.iterator();
+        while (iter.hasNext()){
+            String val = iter.next();
+            if (val.contains(input)){
+                toReturn.add(val);
+                iter.remove();
+            }
+        }
+        toReturn.addAll(copy);
+        return toReturn;
+    }
 }
