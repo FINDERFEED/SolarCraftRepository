@@ -4,7 +4,7 @@ import com.finderfeed.solarcraft.SolarCraftTags;
 import com.finderfeed.solarcraft.content.blocks.blockentities.projectiles.AbstractTurretProjectile;
 import com.finderfeed.solarcraft.content.items.primitive.RareSolarcraftItem;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
-import com.finderfeed.solarcraft.misc_things.ITagUser;
+import com.finderfeed.solarcraft.misc_things.IUpgradable;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
@@ -30,7 +30,7 @@ import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-public class SolarGodBow extends RareSolarcraftItem implements ITagUser {
+public class SolarGodBow extends RareSolarcraftItem implements IUpgradable {
 
     private static AABB aoe = new AABB(-15,-5,-15,15,5,15);
 
@@ -141,7 +141,7 @@ public class SolarGodBow extends RareSolarcraftItem implements ITagUser {
     }
 
     @Override
-    public void doThingsWithTag(ItemStack prev, ItemStack stack, String tag) {
+    public void upgrade(ItemStack prev, ItemStack stack, String tag) {
         if (getTag(prev) != null){
             stack.getOrCreateTagElement(SolarCraftTags.SOLAR_GOD_BOW_TAG);
             CompoundTag newtag = getTag(stack);

@@ -1,6 +1,7 @@
 package com.finderfeed.solarcraft.local_library.helpers;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -75,6 +76,16 @@ public class FDMathHelper {
     public static int rgbaToInt(int[] rgba){
         int color = (rgba[3] & 0xff) << 24 | (rgba[2] & 0xff) << 16 | (rgba[1] & 0xff) << 8 | (rgba[0] & 0xff);
         return color;
+    }
+
+    public static int[] colorInterpolationRGB(int initColor,int endColor,float f1){
+        int[] rgba = intToRgba(initColor);
+        int[] frgba = intToRgba(endColor);
+        int[] newColor = {0,0,0,255};
+        newColor[0] = (int)Mth.lerp(f1,rgba[0],frgba[0]);
+        newColor[1] = (int)Mth.lerp(f1,rgba[1],frgba[1]);
+        newColor[2] = (int)Mth.lerp(f1,rgba[2],frgba[2]);
+        return newColor;
     }
 
     public static double getDistanceBetween(Vec3 tile,Vec3 start){

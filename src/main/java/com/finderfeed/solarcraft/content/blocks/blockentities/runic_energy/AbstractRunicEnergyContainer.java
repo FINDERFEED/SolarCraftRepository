@@ -27,7 +27,7 @@ import java.util.*;
 
 public abstract class AbstractRunicEnergyContainer extends SolarcraftBlockEntity implements OwnedBlock {
 
-    private int seekingCooldown = 0;
+    private int seekCooldown = 0;
     private RunicEnergyContainer container = new RunicEnergyContainer();
     public List<BlockPos> nullOrGiverPositionForClient = new ArrayList<>();
     private UUID owner;
@@ -65,14 +65,15 @@ public abstract class AbstractRunicEnergyContainer extends SolarcraftBlockEntity
 
     public abstract double getMaxEnergyInput();
     public abstract double getRunicEnergyLimit();
-    public abstract int getSeekingCooldown();
+    public abstract int getSeekCooldown();
     public abstract double getMaxRange();
 
     public void requestRunicEnergy(RunicEnergyCost costs,int multiplier){
-        if (seekingCooldown > getSeekingCooldown()){
+        if (seekCooldown > getSeekCooldown()){
             tryConstructWays(costs.getSetTypes());
+            seekCooldown = 0;
         }else{
-            seekingCooldown++;
+            seekCooldown++;
         }
 
 

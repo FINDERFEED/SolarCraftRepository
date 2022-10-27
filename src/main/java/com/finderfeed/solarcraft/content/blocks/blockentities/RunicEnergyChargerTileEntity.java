@@ -116,7 +116,7 @@ public class RunicEnergyChargerTileEntity extends REItemHandlerBlockEntity imple
     }
 
     @Override
-    public int getSeekingCooldown() {
+    public int getSeekCooldown() {
         return 40;
     }
 

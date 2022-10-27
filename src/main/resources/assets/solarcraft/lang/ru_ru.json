@@ -717,5 +717,6 @@
   "solarcraft.structure.dim_portal": "Портал в Сияющие Земли",
   "solarcraft.structure.zap_turret": "Турель-молния",
   "solarcraft.structure.pylon": "Пилон Рунической Энергии",
-  "solarcraft.structure.explosion_blocker": "Взрывной щит"
+  "solarcraft.structure.explosion_blocker": "Взрывной щит",
+  "block.solarcraft.multirune_block": "Общий Рунический Блок"
 }

@@ -2,8 +2,8 @@ package com.finderfeed.solarcraft.content.blocks.solar_forge_block.solar_forge_s
 
 
 import com.finderfeed.solarcraft.SolarCraft;
-import com.finderfeed.solarcraft.custom_slots.InputSlot;
-import com.finderfeed.solarcraft.custom_slots.OutputSlot;
+import com.finderfeed.solarcraft.client.screens.custom_slots.InputSlot;
+import com.finderfeed.solarcraft.client.screens.custom_slots.OutputSlot;
 import com.finderfeed.solarcraft.content.blocks.solar_forge_block.SolarForgeBlockEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;

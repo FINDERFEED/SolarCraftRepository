@@ -147,7 +147,7 @@ public class InfuserTileEntity extends REItemHandlerBlockEntity implements Solar
     }
 
     @Override
-    public int getSeekingCooldown() {
+    public int getSeekCooldown() {
         return 10;
     }
 
@@ -347,15 +347,12 @@ public class InfuserTileEntity extends REItemHandlerBlockEntity implements Solar
         tile.resetCatalysts(recipe);
         ItemStack result = recipe.getResultItem().copy();
         int count = tile.getMinRecipeCountOutput(recipe);
-//        recipe.RUNIC_ENERGY_COST.forEach((type,baseCost)->{
-//            tile.giveEnergy(type,-baseCost*count);
-//        });
         for (RunicEnergy.Type type : recipe.RUNIC_ENERGY_COST.getSetTypes()){
             tile.giveEnergy(type,-recipe.RUNIC_ENERGY_COST.get(type)*count);
         }
         if (!recipe.tag.equals("")) {
-            if (result.getItem() instanceof ITagUser result2){
-                result2.doThingsWithTag(tile.getItem(0),result,recipe.tag);
+            if (result.getItem() instanceof IUpgradable result2){
+                result2.upgrade(tile.getItem(0),result,recipe.tag);
             }
         }
         ItemStack prev = tile.getItem(0);

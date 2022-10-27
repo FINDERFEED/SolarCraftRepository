@@ -93,7 +93,7 @@ public class BonemealerTileEntity extends AbstractRunicEnergyContainer implement
     }
 
     @Override
-    public int getSeekingCooldown() {
+    public int getSeekCooldown() {
         return 20;
     }
 

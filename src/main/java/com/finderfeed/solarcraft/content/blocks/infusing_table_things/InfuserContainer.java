@@ -2,7 +2,7 @@ package com.finderfeed.solarcraft.content.blocks.infusing_table_things;
 
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.SolarCraft;
-import com.finderfeed.solarcraft.custom_slots.OutputSlot;
+import com.finderfeed.solarcraft.client.screens.custom_slots.OutputSlot;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Player;

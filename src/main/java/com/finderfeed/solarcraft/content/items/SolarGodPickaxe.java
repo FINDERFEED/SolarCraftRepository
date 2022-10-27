@@ -4,7 +4,7 @@ import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.SolarCraftTags;
 import com.finderfeed.solarcraft.content.items.primitive.RareSolarcraftPickaxe;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
-import com.finderfeed.solarcraft.misc_things.ITagUser;
+import com.finderfeed.solarcraft.misc_things.IUpgradable;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
@@ -20,13 +20,12 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.ChatFormatting;
 import net.minecraft.world.level.Level;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraftforge.event.ForgeEventFactory;
 
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.function.Supplier;
 
-public class SolarGodPickaxe extends RareSolarcraftPickaxe implements ITagUser {
+public class SolarGodPickaxe extends RareSolarcraftPickaxe implements IUpgradable {
     public SolarGodPickaxe(Tier p_i48478_1_, int p_i48478_2_, float p_i48478_3_, Properties p_i48478_4_, Supplier<AncientFragment> fragmentSupplier) {
         super(p_i48478_1_, p_i48478_2_, p_i48478_3_, p_i48478_4_,fragmentSupplier);
     }
@@ -60,7 +59,7 @@ public class SolarGodPickaxe extends RareSolarcraftPickaxe implements ITagUser {
         super.inventoryTick(stack, world, entity, slot, inhand);
     }
     @Override
-    public void doThingsWithTag(ItemStack prev, ItemStack stack, String tag) {
+    public void upgrade(ItemStack prev, ItemStack stack, String tag) {
         if (prev.getTagElement(SolarCraftTags.SOLAR_GOD_PICKAXE_TAG).getInt(SolarCraftTags.SOLAR_GOD_PICKAXE_LEVEL_TAG)+1 <= 4) {
             stack.getOrCreateTagElement(SolarCraftTags.SOLAR_GOD_PICKAXE_TAG).putInt(SolarCraftTags.SOLAR_GOD_PICKAXE_LEVEL_TAG,
                     prev.getTagElement(SolarCraftTags.SOLAR_GOD_PICKAXE_TAG).getInt(SolarCraftTags.SOLAR_GOD_PICKAXE_LEVEL_TAG) + 1);

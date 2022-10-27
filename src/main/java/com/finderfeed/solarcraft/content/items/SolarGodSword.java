@@ -4,7 +4,7 @@ import com.finderfeed.solarcraft.SolarCraftTags;
 import com.finderfeed.solarcraft.content.blocks.blockentities.projectiles.AbstractTurretProjectile;
 import com.finderfeed.solarcraft.content.items.primitive.RareSolarcraftSword;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
-import com.finderfeed.solarcraft.misc_things.ITagUser;
+import com.finderfeed.solarcraft.misc_things.IUpgradable;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.item.*;
 import net.minecraft.world.entity.Entity;
@@ -21,7 +21,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.function.Supplier;
 
-public class SolarGodSword extends RareSolarcraftSword implements ITagUser {
+public class SolarGodSword extends RareSolarcraftSword implements IUpgradable {
     public SolarGodSword(Tier p_i48460_1_, int p_i48460_2_, float p_i48460_3_, Properties p_i48460_4_, Supplier<AncientFragment> fragmentSupplier) {
         super(p_i48460_1_, p_i48460_2_, p_i48460_3_, p_i48460_4_,fragmentSupplier);
     }
@@ -117,7 +117,7 @@ public class SolarGodSword extends RareSolarcraftSword implements ITagUser {
     }
 
     @Override
-    public void doThingsWithTag(ItemStack prev,ItemStack stack,String tag) {
+    public void upgrade(ItemStack prev, ItemStack stack, String tag) {
         if (prev.getTagElement(SolarCraftTags.SOLAR_GOD_SWORD_TAG).getInt(SolarCraftTags.SOLAR_GOD_SWORD_LEVEL_TAG)+1 <= 5) {
             stack.getOrCreateTagElement(SolarCraftTags.SOLAR_GOD_SWORD_TAG).putInt(SolarCraftTags.SOLAR_GOD_SWORD_LEVEL_TAG,
                     prev.getTagElement(SolarCraftTags.SOLAR_GOD_SWORD_TAG).getInt(SolarCraftTags.SOLAR_GOD_SWORD_LEVEL_TAG) + 1);

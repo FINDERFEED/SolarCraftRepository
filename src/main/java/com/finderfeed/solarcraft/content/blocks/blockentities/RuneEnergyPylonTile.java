@@ -73,34 +73,15 @@ public class RuneEnergyPylonTile extends BlockEntity implements  DebugTarget, Ru
             AABB bb = new AABB(tile.worldPosition.offset(-8, -10, -8), tile.worldPosition.offset(8, 0, 8));
             tile.level.getEntitiesOfClass(ItemEntity.class, bb, (entity) -> entity.getItem().getItem() instanceof IImbuableItem).forEach(entity -> {
                 if (!entity.level.isClientSide) {
-                    int flag = updateEntityTime(entity);
                     IImbuableItem item = (IImbuableItem) entity.getItem().getItem();
-                    int maxTime = item.getImbueTime();
-                    double neededEnergy = item.getCost();
-
-                    if (flag >= maxTime) {
+                    if (item.imbue(entity,tile)){
+                        double neededEnergy = item.getCost();
+                        int maxItems = (int) Math.floor(tile.getCurrentEnergy() / neededEnergy);
                         ItemStack stack = entity.getItem();
-                        int maxRunes = (int) Math.floor(tile.getCurrentEnergy() / neededEnergy);
-                        if (maxRunes > stack.getCount()) {
+                        if (maxItems > stack.getCount()) {
                             tile.currentEnergy -= stack.getCount() * neededEnergy;
-                            ItemEntity entity1 = new ItemEntity(tile.level, entity.position().x, entity.position().y, entity.position().z,
-                                    new ItemStack(ProgressionHelper.RUNES_MAP.get(tile.getEnergyType()), stack.getCount()));
-                            tile.level.addFreshEntity(entity1);
-                            entity.remove(Entity.RemovalReason.DISCARDED);
-
                         } else {
-                            tile.currentEnergy -= maxRunes * neededEnergy;
-                            ItemEntity entity1 = new ItemEntity(tile.level, entity.position().x, entity.position().y, entity.position().z,
-                                    new ItemStack(ProgressionHelper.RUNES_MAP.get(tile.getEnergyType()), maxRunes));
-                            tile.level.addFreshEntity(entity1);
-                            entity.getItem().setCount(stack.getCount() - maxRunes);
-                            entity.getPersistentData().putInt(SolarCraftTags.IMBUE_TIME_TAG, 0);
-                        }
-                        if (entity.getThrower() != null) {
-                            Player player = entity.level.getPlayerByUUID(entity.getThrower());
-                            if (player != null) {
-                                Helpers.fireProgressionEvent(player, Progression.SOLAR_RUNE);
-                            }
+                            tile.currentEnergy -= maxItems * neededEnergy;
                         }
                     }
                 } else {

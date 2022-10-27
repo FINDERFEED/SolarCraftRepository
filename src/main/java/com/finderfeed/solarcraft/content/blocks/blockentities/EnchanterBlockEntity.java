@@ -207,7 +207,7 @@ public class EnchanterBlockEntity extends REItemHandlerBlockEntity {
     }
 
     @Override
-    public int getSeekingCooldown() {
+    public int getSeekCooldown() {
         return 20;
     }
 

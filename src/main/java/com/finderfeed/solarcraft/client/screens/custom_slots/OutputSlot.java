@@ -1,4 +1,4 @@
-package com.finderfeed.solarcraft.custom_slots;
+package com.finderfeed.solarcraft.client.screens.custom_slots;
 
 import net.minecraft.world.Container;
 import net.minecraft.world.inventory.Slot;

@@ -1,8 +1,17 @@
 package com.finderfeed.solarcraft.content.items;
 
 
+import com.finderfeed.solarcraft.SolarCraftTags;
+import com.finderfeed.solarcraft.content.blocks.blockentities.RuneEnergyPylonTile;
+import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.Progression;
+import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.ProgressionHelper;
+import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.misc_things.IImbuableItem;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 
 public class RuneBase extends Item implements IImbuableItem {
 
@@ -12,45 +21,6 @@ public class RuneBase extends Item implements IImbuableItem {
         super(p_i48487_1_);
     }
 
-//    @Override
-//    public InteractionResult useOn(UseOnContext ctx) {
-//        Level world = ctx.getLevel();
-//        ItemStack stack = ctx.getItemInHand();
-//        BlockPos blockPos = ctx.getClickedPos();
-//        InteractionHand hand = ctx.getHand();
-//        Player player = ctx.getPlayer();
-//        BlockEntity tileEntity = world.getBlockEntity(blockPos);
-//        if (ProgressionHelper.RUNES_MAP == null){
-//            ProgressionHelper.initRunesMap();
-//        }
-//        if (!world.isClientSide && (tileEntity instanceof RuneEnergyPylonTile) && (player != null) ){
-//
-//            RuneEnergyPylonTile tile = (RuneEnergyPylonTile) tileEntity;
-//
-//            if (tile.getCurrentEnergy() >= energyPerRune){
-//                Helpers.fireProgressionEvent(player, Achievement.SOLAR_RUNE);
-//                int maximumRunesCount = (int)Math.floor(tile.getCurrentEnergy()/energyPerRune);
-//                int count = stack.getCount();
-//                if (count <= maximumRunesCount){
-//                    player.setItemInHand(hand,new ItemStack(ProgressionHelper.RUNES_MAP.get(tile.getEnergyType()),count));
-//                    tile.setCurrentEnergy(tile.getCurrentEnergy() - energyPerRune*count);
-//                }else{
-//                    Helpers.fireProgressionEvent(player, Achievement.SOLAR_RUNE);
-//                    ItemStack stack1 = player.getItemInHand(hand);
-//                    player.setItemInHand(hand,new ItemStack(stack1.getItem(),stack1.getCount()-maximumRunesCount));
-//                    ItemStack frag = new ItemStack(ProgressionHelper.RUNES_MAP.get(tile.getEnergyType()),maximumRunesCount);
-//                    ItemEntity entity = new ItemEntity(player.level,player.getX(),player.getY()+0.3f,player.getZ(),frag);
-//                    world.addFreshEntity(entity);
-//
-//                    tile.setCurrentEnergy(tile.getCurrentEnergy() - maximumRunesCount*energyPerRune);
-//                }
-//
-//
-//
-//            }
-//        }
-//        return super.useOn(ctx);
-//    }
 
     @Override
     public double getCost() {
@@ -60,5 +30,45 @@ public class RuneBase extends Item implements IImbuableItem {
     @Override
     public int getImbueTime() {
         return 300;
+    }
+
+    @Override
+    public boolean imbue(ItemEntity entity, RuneEnergyPylonTile tile) {
+        if (entity.getItem().getItem() == this){
+            setCurrentTime(entity,getCurrentTime(entity)+1);
+            int flag = getCurrentTime(entity);
+            IImbuableItem item = (IImbuableItem) entity.getItem().getItem();
+            int maxTime = item.getImbueTime();
+            double neededEnergy = item.getCost();
+
+            if (flag >= maxTime) {
+                ItemStack stack = entity.getItem();
+                int maxRunes = (int) Math.floor(tile.getCurrentEnergy() / neededEnergy);
+                if (maxRunes > stack.getCount()) {
+                    ItemEntity entity1 = new ItemEntity(tile.getLevel(), entity.position().x, entity.position().y, entity.position().z,
+                            new ItemStack(ProgressionHelper.RUNES_MAP.get(tile.getEnergyType()), stack.getCount()));
+                    tile.getLevel().addFreshEntity(entity1);
+                    entity.remove(Entity.RemovalReason.DISCARDED);
+
+                } else {
+                    ItemEntity entity1 = new ItemEntity(tile.getLevel(), entity.position().x, entity.position().y, entity.position().z,
+                            new ItemStack(ProgressionHelper.RUNES_MAP.get(tile.getEnergyType()), maxRunes));
+                    tile.getLevel().addFreshEntity(entity1);
+                    entity.getItem().setCount(stack.getCount() - maxRunes);
+                    entity.getPersistentData().putInt(SolarCraftTags.IMBUE_TIME_TAG, 0);
+                }
+                if (entity.getThrower() != null) {
+                    Player player = entity.level.getPlayerByUUID(entity.getThrower());
+                    if (player != null) {
+                        Helpers.fireProgressionEvent(player, Progression.SOLAR_RUNE);
+                    }
+                }
+                return true;
+            }else{
+                return false;
+            }
+        }else{
+            return false;
+        }
     }
 }

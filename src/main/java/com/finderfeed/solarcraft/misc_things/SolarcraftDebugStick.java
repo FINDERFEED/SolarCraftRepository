@@ -2,6 +2,7 @@ package com.finderfeed.solarcraft.misc_things;
 
 import com.finderfeed.solarcraft.content.blocks.blockentities.RuneEnergyPylonTile;
 import com.finderfeed.solarcraft.content.runic_network.repeater.RunicEnergyRepeaterTile;
+import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.helpers.multiblock.StructurePatternExporter;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -36,18 +37,22 @@ public class SolarcraftDebugStick extends Item {
         BlockPos pos = ctx.getClickedPos();
 
         if (!world.isClientSide && world.getBlockEntity(pos) instanceof DebugTarget dtarget){
-            if (ctx.getPlayer().isShiftKeyDown() && dtarget instanceof RuneEnergyPylonTile pylon) {
-                   pylon.addEnergy(pylon.getEnergyType(),200);
-            }
-
-            if (dtarget instanceof RunicEnergyRepeaterTile repeater){
-                for (BlockPos connection : repeater.getConnections()){
-                    ((ServerLevel)world).sendParticles(ParticleTypes.FLASH,connection.getX()+0.5,connection.getY()+1.5,
-                            connection.getZ()+0.5,1,0,0,0,0);
-                }
-            }
-            for (String s : dtarget.getDebugStrings()) {
-                ctx.getPlayer().sendSystemMessage(Component.literal(s));
+//            if (ctx.getPlayer().isShiftKeyDown() && dtarget instanceof RuneEnergyPylonTile pylon) {
+//                   pylon.addEnergy(pylon.getEnergyType(),200);
+//            }
+//
+//            if (dtarget instanceof RunicEnergyRepeaterTile repeater){
+//                for (BlockPos connection : repeater.getConnections()){
+//                    ((ServerLevel)world).sendParticles(ParticleTypes.FLASH,connection.getX()+0.5,connection.getY()+1.5,
+//                            connection.getZ()+0.5,1,0,0,0,0);
+//                }
+//            }
+//            for (String s : dtarget.getDebugStrings()) {
+//                ctx.getPlayer().sendSystemMessage(Component.literal(s));
+//            }
+            if (world.getBlockEntity(pos) instanceof RuneEnergyPylonTile tile){
+                tile.setType(RunicEnergy.Type.getAll()[(tile.getEnergyType().getIndex() + 1) % RunicEnergy.Type.getAll().length]);
+                Helpers.updateTile(tile);
             }
         }
         return InteractionResult.SUCCESS;
