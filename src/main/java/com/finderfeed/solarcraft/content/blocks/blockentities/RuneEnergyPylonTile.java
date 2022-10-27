@@ -298,6 +298,11 @@ public class RuneEnergyPylonTile extends BlockEntity implements  DebugTarget, Ru
     }
 
     @Override
+    public double getRange() {
+        return 10;
+    }
+
+    @Override
     public List<String> getDebugStrings() {
         return List.of(getEnergyType().id.toUpperCase()+ " " + getCurrentEnergy());
     }

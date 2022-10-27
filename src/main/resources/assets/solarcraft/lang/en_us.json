@@ -734,6 +734,8 @@
   "solarcraft.structure.explosion_blocker": "Explosion Blocker",
   "solarcraft.success_revoke": "Successefully Revoked",
   "solarcraft.failure_revoke": "Unable to revoke progression, it doesn't exist or you have other completed progressions ahead, or you haven't completed it yet.",
-  "block.solarcraft.multirune_block": "Multirune Block"
+  "block.solarcraft.multirune_block": "Multirune Block",
+  "solar_fragment.multirune_block": "Multirune Block",
+  "multirune_block.lore": "A block that represents all types of runic energies. Place below a runic energy repeater to make it a multirepeater (can transmit all types of runic energies)."
 }
 

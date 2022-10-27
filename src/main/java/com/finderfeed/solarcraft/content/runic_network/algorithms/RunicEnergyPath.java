@@ -41,7 +41,7 @@ public class RunicEnergyPath {
 
 
     private Map<BlockPos,List<BlockPos>> buildGraph(BaseRepeaterTile tile,List<BlockPos> visited,Map<BlockPos,List<BlockPos>> toReturn){
-        List<BlockPos> positions = findConnectablePylonsAndEnergySources(tile,tile.getMaxRange());
+        List<BlockPos> positions = findConnectablePylonsAndEnergySources(tile);
         toReturn.put(tile.getBlockPos(),positions);
         visited.add(tile.getBlockPos());
         positions.forEach((pos)->{
@@ -65,7 +65,8 @@ public class RunicEnergyPath {
     }
 
 
-    private List<BlockPos> findConnectablePylonsAndEnergySources(BaseRepeaterTile start, double range){
+    private List<BlockPos> findConnectablePylonsAndEnergySources(BaseRepeaterTile start){
+        double startRange = start.getMaxRange();
         Level world = start.getLevel();
         BlockPos mainpos = start.getBlockPos();
         List<LevelChunk> chunks = Helpers.getSurroundingChunks5Radius(mainpos,world);
@@ -76,16 +77,19 @@ public class RunicEnergyPath {
                 if ((tileentity instanceof BaseRepeaterTile repeater)
                         && !(Helpers.equalsBlockPos(start.getBlockPos(),position))
                         && (repeater.getAcceptedEnergyTypes().contains(type))){
+                    double range = Math.min(startRange,repeater.getMaxRange());
                     if (FDMathHelper.canSeeTileEntity(start,repeater,range)){
                         tiles.add(tileentity.getBlockPos());
                     }
                 }else if ((tileentity instanceof RunicEnergyGiver giver) &&
                         (giver.getTypes() != null) &&
-                        (giver.getTypes().contains(type)) &&
-                        (FDMathHelper.getDistanceBetween(start.getBlockPos(),giver.getPos()) <= range) &&
+                        (giver.getTypes().contains(type))){
+                    double range = Math.min(startRange,giver.getRange());
+                    if ((FDMathHelper.getDistanceBetween(start.getBlockPos(),giver.getPos()) <= range) &&
                         (FDMathHelper.canSeeTileEntity(start.getBlockPos(),giver.getPos(),range,world))){
 //                    tiles.add(giver.getPos());
-                    FINAL_POSITIONS.add(new PosPair(start.getBlockPos(),giver.getPos()));
+                        FINAL_POSITIONS.add(new PosPair(start.getBlockPos(), giver.getPos()));
+                    }
                 }
             });
         }

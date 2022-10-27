@@ -166,14 +166,28 @@ public class EnchanterContainerScreen extends AbstractScrollableContainerScreen<
             matrices.popPose();
         }
         Runnable rf = null;
+        RunicEnergyCost cost = null;
+        if (selectedEnchantment != null){
+            cost = selectedEnchantment.getCostForLevel(menu.config.getMode(),selectedLevel);
+        }
         for (RunicEnergy.Type type : RunicEnergy.Type.getAll()){
             int x = type.getIndex() * 20;
             int ytexture = (int)(16*(menu.tile.getRunicEnergy(type) / menu.config.getMaxEnchanterRunicEnergyCapacity()));
 
             RenderingTools.blitWithBlend(matrices,relX + x - 58 + a,relY + 78 + (16-ytexture),0,196 - ytexture,12,16,256,256,getBlitOffset(),1f);
             if (RenderingTools.isMouseInBorders(mousex,mousey,relX + x - 58,relY + 78,relX + x - 58 + 12,relY + 78 + 16)){
-                rf = ()->renderTooltip(matrices,Component.literal(type.id.toUpperCase(Locale.ROOT) + ": ").withStyle(ChatFormatting.GOLD)
-                        .append(Component.literal(menu.tile.getRunicEnergy(type) + "/" + menu.config.getMaxEnchanterRunicEnergyCapacity()).withStyle(ChatFormatting.WHITE)),mousex,mousey);
+                RunicEnergyCost finalCost = cost;
+                rf = ()->
+                {
+                    List<Component> components = new ArrayList<>();
+                    components.add(Component.literal(type.id.toUpperCase(Locale.ROOT) + ": ").withStyle(ChatFormatting.GOLD)
+                            .append(Component.literal(menu.tile.getRunicEnergy(type) + "/" + menu.config.getMaxEnchanterRunicEnergyCapacity()).withStyle(ChatFormatting.WHITE)));
+                    if (finalCost != null){
+                        components.add(Component.translatable("solarcraft.not_enought_runic_energy_needed").withStyle(ChatFormatting.GOLD)
+                                .append(Component.literal(": " + finalCost.get(type)).withStyle(ChatFormatting.WHITE)));
+                    }
+                    renderTooltip(matrices,components,Optional.empty(), mousex, mousey);
+                };
             }
         }
 

@@ -11,4 +11,5 @@ public interface RunicEnergyGiver {
     List<RunicEnergy.Type> getTypes();
     BlockPos getPos();
     double getRunicEnergy(RunicEnergy.Type type);
+    double getRange();
 }

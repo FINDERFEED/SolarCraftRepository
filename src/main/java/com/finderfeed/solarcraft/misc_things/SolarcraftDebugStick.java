@@ -50,12 +50,16 @@ public class SolarcraftDebugStick extends Item {
 //            for (String s : dtarget.getDebugStrings()) {
 //                ctx.getPlayer().sendSystemMessage(Component.literal(s));
 //            }
-            if (world.getBlockEntity(pos) instanceof RuneEnergyPylonTile tile){
-                tile.setType(RunicEnergy.Type.getAll()[(tile.getEnergyType().getIndex() + 1) % RunicEnergy.Type.getAll().length]);
-                Helpers.updateTile(tile);
-            }
+            switchPylons(pos,world);
         }
         return InteractionResult.SUCCESS;
+    }
+
+    public void switchPylons(BlockPos pos,Level world){
+        if (world.getBlockEntity(pos) instanceof RuneEnergyPylonTile tile){
+            tile.setType(RunicEnergy.Type.getAll()[(tile.getEnergyType().getIndex() + 1) % RunicEnergy.Type.getAll().length]);
+            Helpers.updateTile(tile);
+        }
     }
 
     @Override
