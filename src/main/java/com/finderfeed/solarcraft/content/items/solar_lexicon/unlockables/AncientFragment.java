@@ -219,8 +219,7 @@ public class AncientFragment {
     private final Type type;
     private final Item icon;
 
-    @Deprecated
-    private final BookEntry entry;
+
 
     private final SubCategoryBase subCategory;
     private final CategoryBase category;
@@ -239,7 +238,7 @@ public class AncientFragment {
     AncientFragment(Component translation, String id, Progression[] neededProgression, SubCategoryBase subBase, CategoryBase catBase, Type type, Item Icon, int priority,boolean jsonInit){
         this.translation = translation;
         this.id = id;
-        this.entry = null;
+
         this.neededProgression = neededProgression;
         this.type = type;
         this.icon = Icon;
@@ -351,10 +350,6 @@ public class AncientFragment {
         return (Component) lore.copy();
     }
 
-    @Deprecated
-    public BookEntry getEntry() {
-        return entry;
-    }
 
     public MultiblockStructure getStructure() {
         return structure;

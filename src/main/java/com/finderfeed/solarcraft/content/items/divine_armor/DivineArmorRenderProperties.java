@@ -15,7 +15,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import org.jetbrains.annotations.NotNull;
 
-public class DivineArmorRenderProperties implements IClientItemExtensions {
+public class
+
+DivineArmorRenderProperties implements IClientItemExtensions {
 
     public static DivineArmorRenderProperties INSTANCE = new DivineArmorRenderProperties();
 

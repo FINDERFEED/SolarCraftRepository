@@ -1,6 +1,8 @@
 package com.finderfeed.solarcraft;
 
 import com.finderfeed.solarcraft.registries.items.SolarcraftItems;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -22,6 +24,10 @@ public class SolarGroup extends CreativeModeTab {
     public ResourceLocation getTabsImage() {
         return new ResourceLocation("solarcraft","textures/gui/solar_items_tabs.png");
     }
+    @Override
+    public Component getDisplayName() {
+        return super.getDisplayName().copy().withStyle(ChatFormatting.GOLD);
+    }
 }
 
 class SolarGroupBlocks extends CreativeModeTab{
@@ -39,6 +45,11 @@ class SolarGroupBlocks extends CreativeModeTab{
     @Override
     public ItemStack makeIcon() {
         return SolarcraftItems.SOLAR_STONE_BRICKS.get().getDefaultInstance();
+    }
+
+    @Override
+    public Component getDisplayName() {
+        return super.getDisplayName().copy().withStyle(ChatFormatting.GOLD);
     }
 }
 
@@ -58,6 +69,11 @@ class SolarGroupTools extends CreativeModeTab{
     public ItemStack makeIcon() {
         return SolarcraftItems.ILLIDIUM_AXE.get().getDefaultInstance();
     }
+
+    @Override
+    public Component getDisplayName() {
+        return super.getDisplayName().copy().withStyle(ChatFormatting.GOLD);
+    }
 }
 class SolarGroupThemed extends CreativeModeTab{
 
@@ -76,6 +92,11 @@ class SolarGroupThemed extends CreativeModeTab{
     public ItemStack makeIcon() {
         return icon.get().getDefaultInstance();
     }
+
+    @Override
+    public Component getDisplayName() {
+        return super.getDisplayName().copy().withStyle(ChatFormatting.GOLD);
+    }
 }
 
 class SolarGroupFragments extends CreativeModeTab{
@@ -93,5 +114,10 @@ class SolarGroupFragments extends CreativeModeTab{
     @Override
     public ItemStack makeIcon() {
         return SolarcraftItems.INFO_FRAGMENT.get().getDefaultInstance();
+    }
+
+    @Override
+    public Component getDisplayName() {
+        return super.getDisplayName().copy().withStyle(ChatFormatting.GOLD);
     }
 }
