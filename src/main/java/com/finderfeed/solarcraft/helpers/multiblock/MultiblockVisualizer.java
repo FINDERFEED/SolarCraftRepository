@@ -6,6 +6,7 @@ import com.finderfeed.solarcraft.client.screens.PositionBlockStateTileEntity;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.BufferBuilder;
+import com.mojang.blaze3d.vertex.BufferUploader;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Camera;
@@ -156,10 +157,11 @@ public class MultiblockVisualizer {
                 matrices.scale(1.05f,1.05f,1.05f);
             }
             d.renderSingleBlock(block.state,matrices,buffers,0xf000f0, overlay, ModelData.EMPTY,null);
+//            buffers.endLastBatch();
             if (block.tile != null){
                 BlockEntityRenderer<BlockEntity> renderer = td.getRenderer(block.tile);
                 if (renderer != null){
-                    renderer.render(block.tile,pTicks,matrices,buffers, LightTexture.FULL_BRIGHT, overlay);
+                    renderer.render(block.tile,pTicks,matrices,buffers, LightTexture.FULL_BRIGHT, overlay); //TODO:пофиксить already building, возможно из-за того что рендертип почему то становится линиями
                 }
             }
             matrices.popPose();
