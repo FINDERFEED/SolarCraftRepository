@@ -9,6 +9,7 @@ import com.mojang.blaze3d.vertex.BufferBuilder;
 import com.mojang.blaze3d.vertex.BufferUploader;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import it.unimi.dsi.fastutil.objects.Object2ObjectLinkedOpenHashMap;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.LightTexture;
@@ -58,7 +59,13 @@ public class MultiblockVisualizer {
 
     @SubscribeEvent
     public static void render(RenderLevelStageEvent event){
-        if (event.getStage() != RenderLevelStageEvent.Stage.AFTER_TRANSLUCENT_BLOCKS) return;
+
+        if (Minecraft.useShaderTransparency()){
+            if (event.getStage() != RenderLevelStageEvent.Stage.AFTER_TRANSLUCENT_BLOCKS) return;
+        }else{
+            if (event.getStage() != RenderLevelStageEvent.Stage.AFTER_TRIPWIRE_BLOCKS) return;
+        }
+
         Player player = Minecraft.getInstance().player;
         Level world = Minecraft.getInstance().level;
         Camera camera = Minecraft.getInstance().gameRenderer.getMainCamera();
@@ -93,7 +100,16 @@ public class MultiblockVisualizer {
 
     @SubscribeEvent
     public static void setPos(PlayerInteractEvent.RightClickBlock block){
-        if (block.getFace() == null || block.getHand() != InteractionHand.MAIN_HAND) return;
+        if (block.getFace() == null || block.getHand() != InteractionHand.MAIN_HAND && Minecraft.getInstance().player == null) return;
+
+        if (Minecraft.getInstance().hitResult instanceof BlockHitResult blockRes){
+            BlockPos playerPos = blockRes.getBlockPos();
+            BlockPos eventPos = block.getPos();
+            if (!playerPos.equals(eventPos)){
+                return;
+            }
+        }
+
         if (Minecraft.getInstance().player.getMainHandItem().is(Items.AIR)) {
             if (!Minecraft.getInstance().player.isShiftKeyDown()) {
                 if (visualizingAnchor == null) {
@@ -133,7 +149,7 @@ public class MultiblockVisualizer {
             MultiBufferSource.BufferSource source = Minecraft.getInstance().renderBuffers().bufferSource();
             BufferBuilder builder = source.builder;
             Map<RenderType, BufferBuilder> fixed = source.fixedBuffers;
-            Map<RenderType, BufferBuilder> newMap = new HashMap<>();
+            Map<RenderType, BufferBuilder> newMap = new Object2ObjectLinkedOpenHashMap<>();
             for (Map.Entry<RenderType,BufferBuilder> entry : fixed.entrySet()){
                 newMap.put(TransparentRenderType.get(entry.getKey()),entry.getValue());
             }
@@ -157,11 +173,10 @@ public class MultiblockVisualizer {
                 matrices.scale(1.05f,1.05f,1.05f);
             }
             d.renderSingleBlock(block.state,matrices,buffers,0xf000f0, overlay, ModelData.EMPTY,null);
-//            buffers.endLastBatch();
             if (block.tile != null){
                 BlockEntityRenderer<BlockEntity> renderer = td.getRenderer(block.tile);
                 if (renderer != null){
-                    renderer.render(block.tile,pTicks,matrices,buffers, LightTexture.FULL_BRIGHT, overlay); //TODO:пофиксить already building, возможно из-за того что рендертип почему то становится линиями
+                    renderer.render(block.tile,pTicks,matrices,buffers, LightTexture.FULL_BRIGHT, overlay);
                 }
             }
             matrices.popPose();
