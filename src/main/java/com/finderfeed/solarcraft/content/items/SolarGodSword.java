@@ -118,6 +118,11 @@ public class SolarGodSword extends RareSolarcraftSword implements IUpgradable {
 
     @Override
     public void upgrade(ItemStack prev, ItemStack stack, String tag) {
+        if (stack.getTagElement(SolarCraftTags.SOLAR_GOD_SWORD_TAG) == null){
+            stack.getOrCreateTagElement(SolarCraftTags.SOLAR_GOD_SWORD_TAG);
+            stack.getTagElement(SolarCraftTags.SOLAR_GOD_SWORD_TAG).putInt(SolarCraftTags.SOLAR_GOD_SWORD_LEVEL_TAG,1);
+        }
+
         if (prev.getTagElement(SolarCraftTags.SOLAR_GOD_SWORD_TAG).getInt(SolarCraftTags.SOLAR_GOD_SWORD_LEVEL_TAG)+1 <= 5) {
             stack.getOrCreateTagElement(SolarCraftTags.SOLAR_GOD_SWORD_TAG).putInt(SolarCraftTags.SOLAR_GOD_SWORD_LEVEL_TAG,
                     prev.getTagElement(SolarCraftTags.SOLAR_GOD_SWORD_TAG).getInt(SolarCraftTags.SOLAR_GOD_SWORD_LEVEL_TAG) + 1);
