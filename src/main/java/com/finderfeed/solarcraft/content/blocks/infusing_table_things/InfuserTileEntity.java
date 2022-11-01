@@ -491,7 +491,7 @@ public class InfuserTileEntity extends REItemHandlerBlockEntity implements Solar
     private int getMinRecipeCountOutput(InfusingRecipe recipe){
         AtomicInteger count = new AtomicInteger((int)Math.floor(64/(float)recipe.count));
 
-        double maxenergycost = getMaxEnergyCostFromRecipe(recipe);
+        double maxenergycost = getMaxRunicEnergyCostFromRecipe(recipe);
         if (maxenergycost != 0){
             int maxItems = (int)Math.floor(100000/maxenergycost);
             if (maxItems < count.get()){
@@ -520,7 +520,7 @@ public class InfuserTileEntity extends REItemHandlerBlockEntity implements Solar
     }
 
 
-    private float getMaxEnergyCostFromRecipe(InfusingRecipe recipe){
+    private float getMaxRunicEnergyCostFromRecipe(InfusingRecipe recipe){
 //        AtomicDouble integer = new AtomicDouble(0);
 //        recipe.RUNIC_ENERGY_COST.forEach((type,baseCost)->{
 //            if (baseCost > integer.get()){
@@ -535,7 +535,7 @@ public class InfuserTileEntity extends REItemHandlerBlockEntity implements Solar
                 max = energy;
             }
         }
-        return energy;
+        return max;
     }
 
 

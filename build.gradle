@@ -157,6 +157,7 @@ dependencies {
 //    runtimeOnly fg.deobf("curse.maven:oculus-581495:3929520")
 //    runtimeOnly fg.deobf("curse.maven:rubidium-574856:3929515")
 
+//    runtimeOnly fg.deobf("curse.maven:corailtombstone-243707:4057138")
 
 //    runtimeOnly fg.deobf("curse.maven:curios-309927:3670447")
 //    runtimeOnly fg.deobf("curse.maven:cyanide-541676:3545771")
