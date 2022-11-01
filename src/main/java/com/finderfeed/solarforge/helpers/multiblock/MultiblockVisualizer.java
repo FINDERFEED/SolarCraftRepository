@@ -55,7 +55,13 @@ public class MultiblockVisualizer {
 
     @SubscribeEvent
     public static void render(RenderLevelStageEvent event){
-        if (event.getStage() != RenderLevelStageEvent.Stage.AFTER_TRANSLUCENT_BLOCKS) return;
+        if (Minecraft.useShaderTransparency()){
+            if (event.getStage() != RenderLevelStageEvent.Stage.AFTER_TRANSLUCENT_BLOCKS) return;
+
+        }else{
+            if (event.getStage() != RenderLevelStageEvent.Stage.AFTER_TRIPWIRE_BLOCKS) return;
+
+        }
         Player player = Minecraft.getInstance().player;
         Level world = Minecraft.getInstance().level;
         Camera camera = Minecraft.getInstance().gameRenderer.getMainCamera();
@@ -90,7 +96,18 @@ public class MultiblockVisualizer {
 
     @SubscribeEvent
     public static void setPos(PlayerInteractEvent.RightClickBlock block){
-        if (block.getFace() == null || block.getHand() != InteractionHand.MAIN_HAND) return;
+        if (block.getFace() == null || block.getHand() != InteractionHand.MAIN_HAND || Minecraft.getInstance().player == null) return;
+
+        if (Minecraft.getInstance().hitResult instanceof BlockHitResult hit){
+            BlockPos playerClickPos = hit.getBlockPos();
+            BlockPos eventPos = block.getPos();
+            if (!playerClickPos.equals(eventPos)){
+                return;
+            }
+        }else{
+            return;
+        }
+
         if (Minecraft.getInstance().player.getMainHandItem().is(Items.AIR)) {
             if (!Minecraft.getInstance().player.isShiftKeyDown()) {
                 if (visualizingAnchor == null) {

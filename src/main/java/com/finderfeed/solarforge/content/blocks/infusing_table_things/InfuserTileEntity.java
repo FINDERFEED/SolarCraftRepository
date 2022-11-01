@@ -544,7 +544,7 @@ public class InfuserTileEntity extends REItemHandlerBlockEntity implements Solar
                 max = energy;
             }
         }
-        return energy;
+        return max;
     }
 
 

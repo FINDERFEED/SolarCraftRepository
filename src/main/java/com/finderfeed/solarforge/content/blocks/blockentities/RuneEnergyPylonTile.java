@@ -187,7 +187,7 @@ public class RuneEnergyPylonTile extends BlockEntity implements  DebugTarget, Ru
                 return false;
             }
         }
-        return Multiblocks.PYLON.check(tile.level,tile.worldPosition,false);
+        return Multiblocks.PYLON.check(tile.level,tile.worldPosition,true);
     }
 
     public static void doUpdate(RuneEnergyPylonTile tile){
