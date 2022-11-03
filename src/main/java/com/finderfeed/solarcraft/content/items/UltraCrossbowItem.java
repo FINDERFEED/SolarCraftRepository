@@ -61,6 +61,7 @@ public class UltraCrossbowItem extends RareSolarcraftItem implements IRunicEnerg
 
             if (player instanceof Player pl && ItemRunicEnergy.spendEnergy(this.getCost(),stack,this,pl)) {
             UltraCrossbowProjectile proj = new UltraCrossbowProjectile(SolarcraftEntityTypes.ULTRA_CROSSBOW_SHOT.get(),world);
+            proj.setOwner(pl);
             proj.setPos(player.getX() + player.getLookAngle().x,player.getY()+1.5f+player.getLookAngle().y,player.getZ()+player.getLookAngle().z);
             player.level.playSound(null,player, SolarcraftSounds.CROSSBOW_SHOOT_SOUND.get(), SoundSource.AMBIENT,1,1);
             proj.setYAW(player.getYRot());

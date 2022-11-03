@@ -37,6 +37,7 @@ public class SolarStrikeAbility extends AbstractAbility{
                     entityBolt.setPos(pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5);
                     world.addFreshEntity(entityBolt);
                     AbilityHelper.spendAbilityEnergy(entity,this);
+                    entityBolt.setOwner(entity);
                 }/*else{*/
 //                    if (!entity.isCreative()) {
 //                        AbilityHelper.refundEnergy(entity,this);

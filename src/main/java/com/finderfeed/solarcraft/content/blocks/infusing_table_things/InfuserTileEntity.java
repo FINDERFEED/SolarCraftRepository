@@ -218,7 +218,7 @@ public class InfuserTileEntity extends REItemHandlerBlockEntity implements Solar
                     tile.CURRENT_PROGRESS = 0;
                     tile.INFUSING_TIME = 0;
                     tile.requiresEnergy = false;
-                    tile.currentRecipe = null;
+//                    tile.currentRecipe = null;
                     tile.onTileRemove();
                     tile.clearWays();
                 }

@@ -8,6 +8,7 @@ import com.finderfeed.solarcraft.events.other_events.event_handler.EventHandler;
 import com.finderfeed.solarcraft.packet_handler.SolarCraftPacketHandler;
 import com.finderfeed.solarcraft.packet_handler.packets.misc_packets.SolarStrikeEntityDoExplosion;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 
@@ -38,11 +39,13 @@ import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.network.PacketDistributor;
 
 import java.util.List;
+import java.util.UUID;
 
 
 public class SolarStrikeEntity extends PathfinderMob {
 
 
+    private UUID owner;
 
     public static EntityDataAccessor<Integer> LIFE = SynchedEntityData.defineId(SolarStrikeEntity.class, EntityDataSerializers.INT);
     public int LIFE_TICKS = 0;
@@ -64,14 +67,18 @@ public class SolarStrikeEntity extends PathfinderMob {
     @Override
     public void addAdditionalSaveData(CompoundTag compound) {
         super.addAdditionalSaveData(compound);
-
+        if (owner != null) {
+            compound.putUUID("owner", owner);
+        }
         compound.putInt("life",LIFE_TICKS);
     }
 
     @Override
     public void readAdditionalSaveData(CompoundTag compound) {
         super.readAdditionalSaveData(compound);
-
+        if (compound.contains("owner")){
+            this.owner = compound.getUUID("owner");
+        }
         LIFE_TICKS = compound.getInt("life");
     }
     public int getLifeTicks(){
@@ -93,8 +100,13 @@ public class SolarStrikeEntity extends PathfinderMob {
             if (LIFE_TICKS >= 60) {
                 doSolarStrikeExplosion(this.getOnPos().offset(0,1,0));
                 //this.level.explode(null,DamageSource.DRAGON_BREATH,null, this.position().x, this.position().y, this.position().z, 10, false, Explosion.Mode.BREAK);
-                List<Entity> list = this.level.getEntities(this,new AABB(-30,-30,-30,30,30,30).move(this.getOnPos()),x -> !(x instanceof Player));
+                List<Entity> list = this.level.getEntities(this,new AABB(-30,-30,-30,30,30,30)
+                        .move(this.getOnPos()),x -> x != getOwner());
                 for (Entity entity : list) {
+                    if (getOwner() instanceof LivingEntity entity1){
+                        entity.hurt(DamageSource.mobAttack(entity1).bypassArmor().setMagic(), SolarcraftConfig.SOLAR_STRIKE_DAMAGE.get().floatValue());
+                        continue;
+                    }
                     entity.hurt(DamageSource.MAGIC, SolarcraftConfig.SOLAR_STRIKE_DAMAGE.get().floatValue());
                 }
                 this.level.playSound(null,this.getOnPos().offset(0,5,0), SolarCraft.SOLAR_STRIKE_SOUND.get(),SoundSource.AMBIENT,10,0.4F);
@@ -110,8 +122,20 @@ public class SolarStrikeEntity extends PathfinderMob {
 
 
 
-
     }
+
+
+    public void setOwner(LivingEntity owner) {
+        this.owner = owner.getUUID();
+    }
+
+    public Entity getOwner() {
+        if (level instanceof ServerLevel s && owner != null) {
+            return s.getEntity(owner);
+        }
+        return null;
+    }
+
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();

@@ -1,6 +1,7 @@
 package com.finderfeed.solarcraft.content.entities.projectiles.renderers;
 
 
+import com.finderfeed.solarcraft.client.rendering.rendertypes.SolarCraftRenderTypes;
 import com.finderfeed.solarcraft.content.entities.projectiles.UltraCrossbowProjectile;
 import com.finderfeed.solarcraft.registries.ModelLayersRegistry;
 
@@ -54,7 +55,7 @@ public class UltraCrossbowProjectileRenderer extends EntityRenderer<UltraCrossbo
         ray.setPos(2,2,20);
         matrices.mulPose(Vector3f.YN.rotationDegrees(yaw));
         matrices.mulPose(Vector3f.XN.rotationDegrees(-pitch));
-        VertexConsumer vertex1 = buffer.getBuffer(RenderType.textSeeThrough(RAY));
+        VertexConsumer vertex1 = buffer.getBuffer(SolarCraftRenderTypes.depthMaskedTextSeeThrough(RAY));
         ray.render(matrices,vertex1,light,light);
         matrices.popPose();
         matrices.pushPose();
@@ -63,7 +64,7 @@ public class UltraCrossbowProjectileRenderer extends EntityRenderer<UltraCrossbo
         matrices.mulPose(Vector3f.XN.rotationDegrees(pitch));
 
         matrices.mulPose(Vector3f.ZP.rotationDegrees((entity.level.getGameTime()+partialTicks)*2%360 ));
-        VertexConsumer vertex = buffer.getBuffer(RenderType.textSeeThrough(LOC));
+        VertexConsumer vertex = buffer.getBuffer(SolarCraftRenderTypes.depthMaskedTextSeeThrough(LOC));
         Matrix4f matrix = matrices.last().pose();
         float mod = 1;
         vertex.vertex(matrix,-0.5F*mod,0,-1F*mod).color(255,255,40,255).uv(1,0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();

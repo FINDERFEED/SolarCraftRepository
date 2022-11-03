@@ -299,7 +299,7 @@ public class RuneEnergyPylonTile extends BlockEntity implements  DebugTarget, Ru
 
     @Override
     public double getRange() {
-        return 10;
+        return 20;
     }
 
     @Override

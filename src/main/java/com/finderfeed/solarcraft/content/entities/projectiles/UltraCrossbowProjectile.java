@@ -56,9 +56,12 @@ public class UltraCrossbowProjectile extends AbstractHurtingProjectile {
         if (!level.isClientSide) {
 
             Entity ent = ctx.getEntity();
+            if (getOwner() instanceof LivingEntity entity) {
+                ent.hurt(DamageSource.mobAttack(entity).setMagic().bypassArmor().setProjectile(), (float) damage);
+            }else{
+                ent.hurt(DamageSource.MAGIC.setProjectile(), (float) damage);
 
-            ent.hurt(DamageSource.MAGIC.setProjectile(),(float)damage);
-
+            }
             ((ServerLevel)level).sendParticles(SolarcraftParticleTypes.SOLAR_STRIKE_PARTICLE.get(),ent.getX(),ent.getY()+1.2,ent.getZ(),2,0,0.02,0,0.02);
             if (damage >= 30 && (damage < 120) ){
                 level.explode(null,this.getX(),this.getY(),this.getZ(),5,true, Explosion.BlockInteraction.BREAK);
