@@ -29,6 +29,7 @@ import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.FormattedCharSequence;
+import net.minecraft.util.Mth;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Block;
 
@@ -125,7 +126,9 @@ public class InfusingRecipeCategory implements IRecipeCategory<InfusingRecipe> {
             if (recipe.requriedEnergy != 0) {
                 components.add(Component.translatable("solarcraft.solar_energy").withStyle(ChatFormatting.GOLD)
                         .append(Component.literal(": " + recipe.requriedEnergy).withStyle(ChatFormatting.RESET)));
-                screen.renderTooltip(matrices, components, Optional.empty(), (int) mouseX, (int) mouseY - 40);
+            }
+            if (!components.isEmpty()) {
+                screen.renderTooltip(matrices, components, Optional.empty(), (int) mouseX, (int) mouseY - 40* Mth.clamp(components.size()/8,0,1));
             }
         }
         Block[] catalysts = recipe.deserializeCatalysts();

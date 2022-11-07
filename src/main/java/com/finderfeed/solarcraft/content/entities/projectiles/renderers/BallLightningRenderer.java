@@ -17,6 +17,9 @@ import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.resources.ResourceLocation;
 
 public class BallLightningRenderer extends EntityRenderer<BallLightningProjectile> {
+
+    public static boolean test = false;
+
     public BallLightningRenderer(EntityRendererProvider.Context ctx) {
         super(ctx);
     }
@@ -24,9 +27,11 @@ public class BallLightningRenderer extends EntityRenderer<BallLightningProjectil
     @Override
     public void render(BallLightningProjectile projectile, float smth, float pticks, PoseStack matrices, MultiBufferSource src, int light) {
         if (Minecraft.getInstance().level != null) {
-            CoreShaders.AOE_GUN_PROJECTILE_SHADER.safeGetUniform("time").set(RenderingTools.getTime(Minecraft.getInstance().level, pticks)/10f);
+            CoreShaders.AOE_GUN_PROJECTILE_SHADER.safeGetUniform("time")
+                    .set(RenderingTools.getTime(Minecraft.getInstance().level, pticks)/10f);
         }
-        CoreShaders.AOE_GUN_PROJECTILE_SHADER.safeGetUniform("definedColor").set(1f,1f,0f);
+        CoreShaders.AOE_GUN_PROJECTILE_SHADER.safeGetUniform("definedColor")
+                .set(1f,1f,0f);
 
 
         VertexConsumer vertex = src.getBuffer(SolarCraftRenderTypes.shaderRendertype(CoreShaders.AOE_GUN_PROJECTILE_STATE_SHARD));
@@ -48,6 +53,7 @@ public class BallLightningRenderer extends EntityRenderer<BallLightningProjectil
         vertex.vertex(mat, size, size, 0).uv(1,1).endVertex();
         vertex.vertex(mat,-size, size, 0).uv(0,1).endVertex();
         matrices.popPose();
+
         super.render(projectile, smth, pticks, matrices, src, light);
     }
 

@@ -16,7 +16,7 @@ apply plugin: 'maven-publish'
 apply plugin: 'org.spongepowered.mixin'
 
 
-version = '2.9'
+version = '2.9.1'
 group = 'com.finderfeed.solarcraft' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'solarcraft'
 
@@ -154,8 +154,8 @@ dependencies {
     // For more info...
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
-//    runtimeOnly fg.deobf("curse.maven:oculus-581495:3929520")
-//    runtimeOnly fg.deobf("curse.maven:rubidium-574856:3929515")
+//    runtimeOnly fg.deobf("curse.maven:oculus-581495:3973908")
+//    runtimeOnly fg.deobf("curse.maven:rubidium-574856:3973894")
 
 //    runtimeOnly fg.deobf("curse.maven:corailtombstone-243707:4057138")
 
