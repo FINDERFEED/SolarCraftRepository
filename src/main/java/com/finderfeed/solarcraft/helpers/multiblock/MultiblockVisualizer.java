@@ -100,7 +100,7 @@ public class MultiblockVisualizer {
 
     @SubscribeEvent
     public static void setPos(PlayerInteractEvent.RightClickBlock block){
-        if (block.getFace() == null || block.getHand() != InteractionHand.MAIN_HAND && Minecraft.getInstance().player == null) return;
+        if (block.getFace() == null || block.getHand() != InteractionHand.MAIN_HAND || Minecraft.getInstance().player == null) return;
 
         if (Minecraft.getInstance().hitResult instanceof BlockHitResult blockRes){
             BlockPos playerPos = blockRes.getBlockPos();
