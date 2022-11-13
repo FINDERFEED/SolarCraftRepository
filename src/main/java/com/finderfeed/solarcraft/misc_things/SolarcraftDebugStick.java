@@ -37,9 +37,12 @@ public class SolarcraftDebugStick extends Item {
         BlockPos pos = ctx.getClickedPos();
 
         if (!world.isClientSide && world.getBlockEntity(pos) instanceof DebugTarget dtarget){
-//            if (ctx.getPlayer().isShiftKeyDown() && dtarget instanceof RuneEnergyPylonTile pylon) {
-//                   pylon.addEnergy(pylon.getEnergyType(),200);
-//            }
+            if (ctx.getPlayer().isShiftKeyDown() && dtarget instanceof RuneEnergyPylonTile pylon) {
+                   pylon.addEnergy(pylon.getEnergyType(),200);
+            }else{
+                switchPylons(pos,world);
+
+            }
 //
 //            if (dtarget instanceof RunicEnergyRepeaterTile repeater){
 //                for (BlockPos connection : repeater.getConnections()){
@@ -50,7 +53,6 @@ public class SolarcraftDebugStick extends Item {
 //            for (String s : dtarget.getDebugStrings()) {
 //                ctx.getPlayer().sendSystemMessage(Component.literal(s));
 //            }
-            switchPylons(pos,world);
         }
         return InteractionResult.SUCCESS;
     }

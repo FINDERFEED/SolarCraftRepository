@@ -19,9 +19,8 @@ public class SolarcraftNBTPredicate extends ItemPredicate{
         this.higherthan = higherthan;
     }
     public boolean matches(ItemStack stack){
-        if (    (stack.getTagElement(nbt) != null) &&
-                (stack.getTagElement(nbt).getInt(subNBT) >= higherthan)
-        ){
+        if ((stack.getTagElement(nbt) != null) &&
+                (stack.getTagElement(nbt).getInt(subNBT) >= higherthan)){
             return true;
         }
         return false;

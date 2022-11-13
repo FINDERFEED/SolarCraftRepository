@@ -196,7 +196,7 @@ public class EnchanterBlockEntity extends REItemHandlerBlockEntity {
     }
 
     @Override
-    public double getMaxEnergyInput() {
+    public double getMaxRunicEnergyInput() {
         return 10;
     }
 

@@ -28,41 +28,28 @@ public class SolarGodSword extends RareSolarcraftSword implements IUpgradable {
 
 
     @Override
-    public void inventoryTick(ItemStack stack, Level world, Entity entity, int slot, boolean inhand) {
-        if (!world.isClientSide){
-            if (stack.getTagElement(SolarCraftTags.SOLAR_GOD_SWORD_TAG) == null){
-                stack.getOrCreateTagElement(SolarCraftTags.SOLAR_GOD_SWORD_TAG);
-                stack.getTagElement(SolarCraftTags.SOLAR_GOD_SWORD_TAG).putInt(SolarCraftTags.SOLAR_GOD_SWORD_LEVEL_TAG,1);
-            }
-        }
-
-        super.inventoryTick(stack, world, entity, slot, inhand);
-    }
-
-    @Override
     public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
         if (!world.isClientSide) {
             ItemStack inhand = player.getItemInHand(hand);
-            if (inhand.getTagElement(SolarCraftTags.SOLAR_GOD_SWORD_TAG) != null) {
-                int level = getSwordLevel(inhand);
-                if (level >= 3) {
-                    AbstractTurretProjectile.Constructor constructor = new AbstractTurretProjectile.Constructor()
-                            .setPosition(player.position().add(0, 1.3, 0))
-                            .setVelocity(player.getLookAngle().multiply(2,2,2))
-                            .setDamage(5);
-                    if (level >= 4){
-                        constructor.editDamage(10);
-                    }
-                    if (level >= 5){
-                        constructor.editExplosionPower(3);
-                    }
-                    AbstractTurretProjectile proj = new AbstractTurretProjectile(world,constructor);
-                    world.addFreshEntity(proj);
-                    player.getCooldowns().addCooldown(this,200);
-                    return InteractionResultHolder.success(player.getItemInHand(hand));
+            int level = getItemLevel(inhand);
+            if (level >= 2) {
+                AbstractTurretProjectile.Constructor constructor = new AbstractTurretProjectile.Constructor()
+                        .setPosition(player.position().add(0, 1.3, 0))
+                        .setVelocity(player.getLookAngle().multiply(2,2,2))
+                        .setDamage(5);
+                if (level >= 3){
+                    constructor.editDamage(10);
                 }
-
+                if (level >= 4){
+                    constructor.editExplosionPower(3);
+                }
+                AbstractTurretProjectile proj = new AbstractTurretProjectile(world,constructor);
+                world.addFreshEntity(proj);
+                player.getCooldowns().addCooldown(this,200);
+                return InteractionResultHolder.success(player.getItemInHand(hand));
             }
+
+
         }
         return super.use(world,player,hand);
     }
@@ -72,7 +59,7 @@ public class SolarGodSword extends RareSolarcraftSword implements IUpgradable {
 
     @Override
     public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        if ((getSwordLevel(stack) >= 2) && (attacker instanceof Player player)){
+        if ((getItemLevel(stack) >= 1) && (attacker instanceof Player player)){
             target.invulnerableTime = 0;
             target.hurt(DamageSource.playerAttack(player).setMagic().bypassArmor(),5);
         }
@@ -81,68 +68,43 @@ public class SolarGodSword extends RareSolarcraftSword implements IUpgradable {
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level world, List<Component> text, TooltipFlag flag) {
-        if ((stack.getTagElement(SolarCraftTags.SOLAR_GOD_SWORD_TAG) != null)) {
-
-            int level = stack.getTagElement(SolarCraftTags.SOLAR_GOD_SWORD_TAG).getInt(SolarCraftTags.SOLAR_GOD_SWORD_LEVEL_TAG);
-            text.add(Component.translatable("solarcraft.solar_god_sword_desc").append(String.valueOf(level)).withStyle(ChatFormatting.GOLD));
-            if (level >= 2){
-                text.add(Component.translatable("solarcraft.solar_god_sword_level_2").withStyle(ChatFormatting.GOLD).withStyle(ChatFormatting.ITALIC));
-
-            }else{
-                text.add(Component.translatable("solarcraft.solar_god_sword_level_2").withStyle(ChatFormatting.GOLD).withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.STRIKETHROUGH));
-            }
-
-            if (level >= 3){
-                text.add(Component.translatable("solarcraft.solar_god_sword_level_3").withStyle(ChatFormatting.GOLD).withStyle(ChatFormatting.ITALIC));
-
-            }else{
-                text.add(Component.translatable("solarcraft.solar_god_sword_level_3").withStyle(ChatFormatting.GOLD).withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.STRIKETHROUGH));
-            }
-
-            if (level >= 4){
-                text.add(Component.translatable("solarcraft.solar_god_sword_level_4").withStyle(ChatFormatting.GOLD).withStyle(ChatFormatting.ITALIC));
-
-            }else{
-                text.add(Component.translatable("solarcraft.solar_god_sword_level_4").withStyle(ChatFormatting.GOLD).withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.STRIKETHROUGH));
-            }
-
-            if (level >= 5){
-                text.add(Component.translatable("solarcraft.solar_god_sword_level_5").withStyle(ChatFormatting.GOLD).withStyle(ChatFormatting.ITALIC));
-            }else{
-                text.add(Component.translatable("solarcraft.solar_god_sword_level_5").withStyle(ChatFormatting.GOLD).withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.STRIKETHROUGH));
-            }
-
-        }
+        addComponents(stack,text);
         super.appendHoverText(stack, world, text, flag);
     }
 
-    @Override
-    public void upgrade(ItemStack prev, ItemStack stack, String tag) {
-        if (stack.getTagElement(SolarCraftTags.SOLAR_GOD_SWORD_TAG) == null){
-            stack.getOrCreateTagElement(SolarCraftTags.SOLAR_GOD_SWORD_TAG);
-            stack.getTagElement(SolarCraftTags.SOLAR_GOD_SWORD_TAG).putInt(SolarCraftTags.SOLAR_GOD_SWORD_LEVEL_TAG,1);
-        }
-
-        if (prev.getTagElement(SolarCraftTags.SOLAR_GOD_SWORD_TAG).getInt(SolarCraftTags.SOLAR_GOD_SWORD_LEVEL_TAG)+1 <= 5) {
-            stack.getOrCreateTagElement(SolarCraftTags.SOLAR_GOD_SWORD_TAG).putInt(SolarCraftTags.SOLAR_GOD_SWORD_LEVEL_TAG,
-                    prev.getTagElement(SolarCraftTags.SOLAR_GOD_SWORD_TAG).getInt(SolarCraftTags.SOLAR_GOD_SWORD_LEVEL_TAG) + 1);
-        }else{
-            stack.getOrCreateTagElement(SolarCraftTags.SOLAR_GOD_SWORD_TAG).putInt(SolarCraftTags.SOLAR_GOD_SWORD_LEVEL_TAG,
-                    prev.getTagElement(SolarCraftTags.SOLAR_GOD_SWORD_TAG).getInt(SolarCraftTags.SOLAR_GOD_SWORD_LEVEL_TAG));
-        }
-    }
 
     @Override
-    public void fillItemCategory(CreativeModeTab p_41391_, NonNullList<ItemStack> p_41392_) {
-        super.fillItemCategory(p_41391_, p_41392_);
-        if (this.allowedIn(p_41391_)) {
+    public void fillItemCategory(CreativeModeTab tab, NonNullList<ItemStack> item) {
+        if (this.allowedIn(tab)) {
+            ItemStack def = new ItemStack(this);
+            setItemLevel(def,0);
+            item.add(def);
+
             ItemStack sword = new ItemStack(this);
-            sword.getOrCreateTagElement(SolarCraftTags.SOLAR_GOD_SWORD_TAG).putInt(SolarCraftTags.SOLAR_GOD_SWORD_LEVEL_TAG,5);
-            p_41392_.add(sword);
+            setItemLevel(sword,getMaxUpgrades());
+            item.add(sword);
         }
     }
 
-    public int getSwordLevel(ItemStack stack){
-        return stack.getTagElement(SolarCraftTags.SOLAR_GOD_SWORD_TAG).getInt(SolarCraftTags.SOLAR_GOD_SWORD_LEVEL_TAG);
+
+
+    @Override
+    public String getUpgradeTagString() {
+        return SolarCraftTags.SOLAR_GOD_SWORD_TAG;
+    }
+
+    @Override
+    public int getMaxUpgrades() {
+        return 4;
+    }
+
+    @Override
+    public List<Component> getUpgradeDescriptions() {
+        return List.of(
+                Component.translatable("solarcraft.solar_god_sword_level_2"),
+                Component.translatable("solarcraft.solar_god_sword_level_3"),
+                Component.translatable("solarcraft.solar_god_sword_level_4"),
+                Component.translatable("solarcraft.solar_god_sword_level_5")
+        );
     }
 }

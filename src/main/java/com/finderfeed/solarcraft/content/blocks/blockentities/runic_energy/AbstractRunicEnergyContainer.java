@@ -63,7 +63,7 @@ public abstract class AbstractRunicEnergyContainer extends SolarcraftBlockEntity
         return this.owner;
     }
 
-    public abstract double getMaxEnergyInput();
+    public abstract double getMaxRunicEnergyInput();
     public abstract double getRunicEnergyLimit();
     public abstract int getSeekCooldown();
     public abstract double getMaxRange();
@@ -84,9 +84,9 @@ public abstract class AbstractRunicEnergyContainer extends SolarcraftBlockEntity
             float cost = costs.get(type);
             double multiplied = cost * multiplier;
             double runicEnergy = getRunicEnergy(type);
-            if (multiplied >= runicEnergy + getMaxEnergyInput()) {
-                requestSpecificEnergyNew(type, getMaxEnergyInput());
-            } else if ((multiplied > runicEnergy) && (multiplied < runicEnergy + getMaxEnergyInput())) {
+            if (multiplied >= runicEnergy + getMaxRunicEnergyInput()) {
+                requestSpecificEnergyNew(type, getMaxRunicEnergyInput());
+            } else if ((multiplied > runicEnergy) && (multiplied < runicEnergy + getMaxRunicEnergyInput())) {
                 double request = multiplied - getRunicEnergy(type);
                 requestSpecificEnergyNew(type, request);
             } else {

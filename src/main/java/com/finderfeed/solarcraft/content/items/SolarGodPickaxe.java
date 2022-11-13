@@ -10,14 +10,12 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ExperienceOrb;
 
 import net.minecraft.core.Direction;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.ChatFormatting;
 import net.minecraft.world.level.Level;
 import net.minecraft.server.level.ServerLevel;
 
@@ -35,46 +33,34 @@ public class SolarGodPickaxe extends RareSolarcraftPickaxe implements IUpgradabl
     public boolean mineBlock(ItemStack stack, Level world, BlockState state, BlockPos pos, LivingEntity player) {
         if (!world.isClientSide){
 
-            int level = getPickaxeLevel(stack);
-            if (level >= 2 ){
+            int level = getItemLevel(stack);
+            if (level >= 1){
                dropExpWithChance(pos,world,20);
             }
 
-            if (level >= 4) {
+            if (level >= 3) {
                 excavate(pos, player.getDirection(), player.getXRot(), world, stack, player);
             }
         }
         return super.mineBlock(stack, world, state, pos, player);
     }
 
-    @Override
-    public void inventoryTick(ItemStack stack, Level world, Entity entity, int slot, boolean inhand) {
-        if (!world.isClientSide){
-            if (stack.getTagElement(SolarCraftTags.SOLAR_GOD_PICKAXE_TAG) == null){
-                stack.getOrCreateTagElement(SolarCraftTags.SOLAR_GOD_PICKAXE_TAG);
-                stack.getTagElement(SolarCraftTags.SOLAR_GOD_PICKAXE_TAG).putInt(SolarCraftTags.SOLAR_GOD_PICKAXE_LEVEL_TAG,1);
-            }
-        }
 
-        super.inventoryTick(stack, world, entity, slot, inhand);
-    }
+
     @Override
-    public void upgrade(ItemStack prev, ItemStack stack, String tag) {
-        if (prev.getTagElement(SolarCraftTags.SOLAR_GOD_PICKAXE_TAG).getInt(SolarCraftTags.SOLAR_GOD_PICKAXE_LEVEL_TAG)+1 <= 4) {
-            stack.getOrCreateTagElement(SolarCraftTags.SOLAR_GOD_PICKAXE_TAG).putInt(SolarCraftTags.SOLAR_GOD_PICKAXE_LEVEL_TAG,
-                    prev.getTagElement(SolarCraftTags.SOLAR_GOD_PICKAXE_TAG).getInt(SolarCraftTags.SOLAR_GOD_PICKAXE_LEVEL_TAG) + 1);
-        }else{
-            stack.getOrCreateTagElement(SolarCraftTags.SOLAR_GOD_PICKAXE_TAG).putInt(SolarCraftTags.SOLAR_GOD_PICKAXE_LEVEL_TAG,
-                    prev.getTagElement(SolarCraftTags.SOLAR_GOD_PICKAXE_TAG).getInt(SolarCraftTags.SOLAR_GOD_PICKAXE_LEVEL_TAG));
-        }
-    }
-    @Override
-    public void fillItemCategory(CreativeModeTab p_41391_, NonNullList<ItemStack> p_41392_) {
-        super.fillItemCategory(p_41391_, p_41392_);
-        if (this.allowedIn(p_41391_)) {
-            ItemStack sword = new ItemStack(this);
-            sword.getOrCreateTagElement(SolarCraftTags.SOLAR_GOD_PICKAXE_TAG).putInt(SolarCraftTags.SOLAR_GOD_PICKAXE_LEVEL_TAG,4);
-            p_41392_.add(sword);
+    public void fillItemCategory(CreativeModeTab tab, NonNullList<ItemStack> stacks) {
+        if (this.allowedIn(tab)){
+//            ItemStack stack = new ItemStack(this);
+//            setItemLevel(stack,0);
+//            stacks.add(stack);
+//            ItemStack stack2 = new ItemStack(this);
+//            setItemLevel(stack2,getMaxUpgrades());
+//            stacks.add(stack2);
+            for (int i = 0; i <= getMaxUpgrades();i++){
+                ItemStack stack = new ItemStack(this);
+                setItemLevel(stack,i);
+                stacks.add(stack);
+            }
         }
     }
 
@@ -85,14 +71,12 @@ public class SolarGodPickaxe extends RareSolarcraftPickaxe implements IUpgradabl
     }
 
 
-    public int getPickaxeLevel(ItemStack stack){
-        return stack.getTagElement(SolarCraftTags.SOLAR_GOD_PICKAXE_TAG).getInt(SolarCraftTags.SOLAR_GOD_PICKAXE_LEVEL_TAG);
-    }
 
 
 
-    public static void excavate(BlockPos pos, Direction dir, float rotation, Level world, ItemStack stack, LivingEntity living){
-        int level = stack.getTagElement(SolarCraftTags.SOLAR_GOD_PICKAXE_TAG).getInt(SolarCraftTags.SOLAR_GOD_PICKAXE_LEVEL_TAG);
+
+    public void excavate(BlockPos pos, Direction dir, float rotation, Level world, ItemStack stack, LivingEntity living){
+        int level = getItemLevel(stack);
         if (living instanceof Player player) {
 
             if ((rotation >= 50) || (rotation <= -50)) {
@@ -103,7 +87,7 @@ public class SolarGodPickaxe extends RareSolarcraftPickaxe implements IUpgradabl
 
                         for (ItemStack stack1 : stacks) {
                             Block.popResource(world, posi, stack1);
-                            if (level >= 2) {
+                            if (level >= 1) {
                                 dropExpWithChance(posi, world, 20);
                             }
                         }
@@ -118,7 +102,7 @@ public class SolarGodPickaxe extends RareSolarcraftPickaxe implements IUpgradabl
 
                         for (ItemStack stack1 : stacks) {
                             Block.popResource(world, posi, stack1);
-                            if (level >= 2) {
+                            if (level >= 1) {
                                 dropExpWithChance(posi, world, 20);
                             }
                         }
@@ -130,34 +114,26 @@ public class SolarGodPickaxe extends RareSolarcraftPickaxe implements IUpgradabl
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level world, List<Component> text, TooltipFlag flag) {
-        if ((stack.getTagElement(SolarCraftTags.SOLAR_GOD_PICKAXE_TAG) != null)) {
-
-            int level = stack.getTagElement(SolarCraftTags.SOLAR_GOD_PICKAXE_TAG).getInt(SolarCraftTags.SOLAR_GOD_PICKAXE_LEVEL_TAG);
-            text.add(Component.translatable("solarcraft.solar_god_pickaxe_desc").append(String.valueOf(level)).withStyle(ChatFormatting.GOLD));
-            if (level >= 2){
-                text.add(Component.translatable("solarcraft.solar_god_pickaxe_level_2").withStyle(ChatFormatting.GOLD).withStyle(ChatFormatting.ITALIC));
-
-            }else{
-                text.add(Component.translatable("solarcraft.solar_god_pickaxe_level_2").withStyle(ChatFormatting.GOLD).withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.STRIKETHROUGH));
-            }
-
-            if (level >= 3){
-                text.add(Component.translatable("solarcraft.solar_god_pickaxe_level_3").withStyle(ChatFormatting.GOLD).withStyle(ChatFormatting.ITALIC));
-
-            }else{
-                text.add(Component.translatable("solarcraft.solar_god_pickaxe_level_3").withStyle(ChatFormatting.GOLD).withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.STRIKETHROUGH));
-            }
-
-            if (level >= 4){
-                text.add(Component.translatable("solarcraft.solar_god_pickaxe_level_4").withStyle(ChatFormatting.GOLD).withStyle(ChatFormatting.ITALIC));
-
-            }else{
-                text.add(Component.translatable("solarcraft.solar_god_pickaxe_level_4").withStyle(ChatFormatting.GOLD).withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.STRIKETHROUGH));
-            }
-
-
-
-        }
+        addComponents(stack,text);
         super.appendHoverText(stack, world, text, flag);
+    }
+
+    @Override
+    public String getUpgradeTagString() {
+        return SolarCraftTags.SOLAR_GOD_PICKAXE_TAG;
+    }
+
+    @Override
+    public int getMaxUpgrades() {
+        return 3;
+    }
+
+    @Override
+    public List<Component> getUpgradeDescriptions() {
+        return List.of(
+                Component.translatable("solarcraft.solar_god_pickaxe_level_2"),
+                Component.translatable("solarcraft.solar_god_pickaxe_level_3"),
+                Component.translatable("solarcraft.solar_god_pickaxe_level_4")
+        );
     }
 }

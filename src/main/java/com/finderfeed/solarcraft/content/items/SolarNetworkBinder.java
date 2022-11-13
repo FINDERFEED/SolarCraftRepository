@@ -77,11 +77,11 @@ public class SolarNetworkBinder extends Item {
 
     private BlockPos getPos1(ItemStack stack){
         BlockPos pos =  CompoundNBTHelper.getBlockPos("pos",stack.getOrCreateTagElement("positionone"));
-        return Helpers.equalsBlockPos(pos,Helpers.NULL_POS) ? null : pos;
+        return Helpers.equalsBlockPos(pos,Helpers.NULL_POS) || pos.equals(BlockPos.ZERO) ? null : pos;
     }
     private BlockPos getPos2(ItemStack stack){
         BlockPos pos =  CompoundNBTHelper.getBlockPos("pos",stack.getOrCreateTagElement("positiontwo"));
-        return Helpers.equalsBlockPos(pos,Helpers.NULL_POS) ? null : pos;
+        return Helpers.equalsBlockPos(pos,Helpers.NULL_POS) || pos.equals(BlockPos.ZERO) ? null : pos;
     }
 
     private void setPos1(ItemStack stack,BlockPos set){

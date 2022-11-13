@@ -63,20 +63,20 @@ public class SolarGodBow extends RareSolarcraftItem implements IUpgradable {
             float power = BowItem.getPowerForTime(i);
 
             int damage = 10;
-            if (getLevel(stack) >= 2){
+            if (getItemLevel(stack) >= 1){
                 damage+=5;
             }
             damage *= power;
             Consumer<EntityHitResult> cons = (ctx)-> {
                 Entity entity1 = ctx.getEntity();
                 if (entity1 instanceof LivingEntity ent) {
-                    if (getLevel(stack) >= 3){
+                    if (getItemLevel(stack) >= 2){
                         ent.setSecondsOnFire(8);
                     }
-                    if (getLevel(stack) >= 4) {
+                    if (getItemLevel(stack) >= 3) {
                         ent.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 80, 2));
                     }
-                    if (getLevel(stack) >= 6){
+                    if (getItemLevel(stack) >= 5){
                         List<LivingEntity> targets = ent.level.getEntitiesOfClass(LivingEntity.class,aoe.move(ent.position()),(target)->{
                            if (target.equals(ent) || target.equals(entity)) {
                                return false;
@@ -91,7 +91,7 @@ public class SolarGodBow extends RareSolarcraftItem implements IUpgradable {
                             AbstractTurretProjectile proj = new AbstractTurretProjectile(level,new AbstractTurretProjectile.Constructor()
                                     .setPosition(origPos)
                                     .setVelocity(velocity.normalize().multiply(3,3,3))
-                                    .setDamageSource(DamageSource.MAGIC)
+                                    .setDamageSource(DamageSource.mobAttack(entity).setMagic().bypassArmor())
                                     .setDamage(15*power)
                                     .addOnHitEntityEffect((sideContext)->{
                                         if (sideContext.getEntity() instanceof LivingEntity t){
@@ -108,12 +108,12 @@ public class SolarGodBow extends RareSolarcraftItem implements IUpgradable {
             AbstractTurretProjectile proj = new AbstractTurretProjectile(level,new AbstractTurretProjectile.Constructor()
             .setPosition(entity.position().add(entity.getLookAngle().x,entity.getBbHeight()/1.4 + entity.getLookAngle().y,entity.getLookAngle().z))
                     .setVelocity(entity.getLookAngle().multiply(3,3,3))
-                    .setDamageSource(DamageSource.MAGIC)
+                    .setDamageSource(DamageSource.mobAttack(entity).setMagic().bypassArmor())
                     .setDamage(damage)
                     .addOnHitEntityEffect(cons)
             );
 
-            if ((getLevel(stack) >= 5) && power >= 0.8){
+            if ((getItemLevel(stack) >= 4) && power >= 0.8){
                 proj.explosionPower = 5;
             }
             level.addFreshEntity(proj);
@@ -125,13 +125,17 @@ public class SolarGodBow extends RareSolarcraftItem implements IUpgradable {
     @Override
     public void fillItemCategory(CreativeModeTab tab, NonNullList<ItemStack> stacks) {
         if (this.allowedIn(tab)){
-            ItemStack stack = new ItemStack(this);
-            stack.getOrCreateTagElement(SolarCraftTags.SOLAR_GOD_BOW_TAG).putInt(SolarCraftTags.SOLAR_GOD_BOW_LEVEL_TAG,1);
-            stacks.add(stack);
-            ItemStack stack2 = new ItemStack(this);
-            stack2.getOrCreateTagElement(SolarCraftTags.SOLAR_GOD_BOW_TAG).putInt(SolarCraftTags.SOLAR_GOD_BOW_LEVEL_TAG,6);
-            stacks.add(stack2);
-
+//            ItemStack stack = new ItemStack(this);
+//            setItemLevel(stack,0);
+//            stacks.add(stack);
+//            ItemStack stack2 = new ItemStack(this);
+//            setItemLevel(stack2,getMaxUpgrades());
+//            stacks.add(stack2);
+            for (int i = 0; i <= getMaxUpgrades();i++){
+                ItemStack stack = new ItemStack(this);
+                setItemLevel(stack,i);
+                stacks.add(stack);
+            }
         }
     }
 
@@ -140,54 +144,32 @@ public class SolarGodBow extends RareSolarcraftItem implements IUpgradable {
         return 72000;
     }
 
-    @Override
-    public void upgrade(ItemStack prev, ItemStack stack, String tag) {
-        if (getTag(prev) != null){
-            stack.getOrCreateTagElement(SolarCraftTags.SOLAR_GOD_BOW_TAG);
-            CompoundTag newtag = getTag(stack);
-            if (getLevel(prev) < 6){
-                newtag.putInt(SolarCraftTags.SOLAR_GOD_BOW_LEVEL_TAG,getLevel(prev)+1);
-            }
-        }else {
-            prev.getOrCreateTagElement(SolarCraftTags.SOLAR_GOD_BOW_TAG).putInt(SolarCraftTags.SOLAR_GOD_BOW_LEVEL_TAG,2);
-        }
-    }
 
-    private CompoundTag getTag(ItemStack stack){
-        return stack.getTagElement(SolarCraftTags.SOLAR_GOD_BOW_TAG);
-    }
-
-    private int getLevel(ItemStack stack){
-        return stack.getTagElement(SolarCraftTags.SOLAR_GOD_BOW_TAG).getInt(SolarCraftTags.SOLAR_GOD_BOW_LEVEL_TAG);
-    }
-
-    @Override
-    public void inventoryTick(ItemStack p_41404_, Level p_41405_, Entity p_41406_, int p_41407_, boolean p_41408_) {
-        if (getTag(p_41404_) == null){
-            p_41404_.getOrCreateTagElement(SolarCraftTags.SOLAR_GOD_BOW_TAG).putInt(SolarCraftTags.SOLAR_GOD_SWORD_LEVEL_TAG,1);
-        }
-        super.inventoryTick(p_41404_, p_41405_, p_41406_, p_41407_, p_41408_);
-    }
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> comp, TooltipFlag p_41424_) {
-        CompoundTag tag = getTag(stack);
-        if (tag != null){
-            comp.add(Component.translatable("solarcraft.god_bow_upgrade").withStyle(ChatFormatting.GOLD).append(Component.literal(" "+getLevel(stack))));
-            addLevelDesc(stack,comp,Component.translatable("solarcraft.god_bow_upgrade_2"),2);
-            addLevelDesc(stack,comp,Component.translatable("solarcraft.god_bow_upgrade_3"),3);
-            addLevelDesc(stack,comp,Component.translatable("solarcraft.god_bow_upgrade_4"),4);
-            addLevelDesc(stack,comp,Component.translatable("solarcraft.god_bow_upgrade_5"),5);
-            addLevelDesc(stack,comp,Component.translatable("solarcraft.god_bow_upgrade_6"),6);
-        }
+        addComponents(stack,comp);
         super.appendHoverText(stack, level, comp, p_41424_);
     }
 
-    private void addLevelDesc(ItemStack stack, List<Component> toAdd, MutableComponent desc, int reqLevel){
-        if (getLevel(stack) >= reqLevel){
-            toAdd.add(desc.withStyle(ChatFormatting.GOLD));
-        }else{
-            toAdd.add(desc.withStyle(ChatFormatting.GOLD).withStyle(ChatFormatting.STRIKETHROUGH).withStyle(ChatFormatting.ITALIC));
-        }
+    @Override
+    public String getUpgradeTagString() {
+        return SolarCraftTags.SOLAR_GOD_BOW_TAG;
+    }
+
+    @Override
+    public int getMaxUpgrades() {
+        return 5;
+    }
+
+    @Override
+    public List<Component> getUpgradeDescriptions() {
+        return List.of(
+                Component.translatable("solarcraft.god_bow_upgrade_2"),
+                Component.translatable("solarcraft.god_bow_upgrade_3"),
+                Component.translatable("solarcraft.god_bow_upgrade_4"),
+                Component.translatable("solarcraft.god_bow_upgrade_5"),
+                Component.translatable("solarcraft.god_bow_upgrade_6")
+        );
     }
 }

@@ -63,18 +63,19 @@ public class SubCategory {
             int buttonPosY = y + (int)Math.floor((float) i / 6) * BUTTONS_SIZE;
             AncientFragment frag = fragments.get(i);
             AncientFragment.Type type = frag.getType();
-            if (type == AncientFragment.Type.ITEM){
-                if (frag.getRecipeType() == SolarcraftRecipeTypes.INFUSING.get()){
-                    buttonsToAdd.add(constructInfusingRecipeButton(frag, getInfusingRecipeFromFragment(frag),buttonPosX,buttonPosY));
-                }else if (frag.getRecipeType() == SolarcraftRecipeTypes.SMELTING.get()){
-                    buttonsToAdd.add(constructSmeltingRecipeButton(getSmeltingRecipeFromFragment(frag),buttonPosX,buttonPosY));
-                }else if (frag.getRecipeType() == SolarcraftRecipeTypes.INFUSING_CRAFTING.get()){
-                    buttonsToAdd.add(constructInfusingCraftingRecipeButton(frag,getInfusingCraftingRecipeFromFragment(frag),buttonPosX,buttonPosY));
-                }else if (frag.getRecipeType() == RecipeType.CRAFTING){
-                    buttonsToAdd.add(constructCraftingRecipeButton(frag,List.of(getCraftingRecipeFromFragment(frag)),buttonPosX,buttonPosY));
-
-                }
-            }else if (type == AncientFragment.Type.INFORMATION){
+//            if (type == AncientFragment.Type.ITEM){
+//                if (frag.getRecipeType() == SolarcraftRecipeTypes.INFUSING.get()){
+//                    buttonsToAdd.add(constructInfusingRecipeButton(frag, getInfusingRecipeFromFragment(frag),buttonPosX,buttonPosY));
+//                }else if (frag.getRecipeType() == SolarcraftRecipeTypes.SMELTING.get()){
+//                    buttonsToAdd.add(constructSmeltingRecipeButton(getSmeltingRecipeFromFragment(frag),buttonPosX,buttonPosY));
+//                }else if (frag.getRecipeType() == SolarcraftRecipeTypes.INFUSING_CRAFTING.get()){
+//                    buttonsToAdd.add(constructInfusingCraftingRecipeButton(frag,getInfusingCraftingRecipeFromFragment(frag),buttonPosX,buttonPosY));
+//                }else if (frag.getRecipeType() == RecipeType.CRAFTING){
+//                    buttonsToAdd.add(constructCraftingRecipeButton(frag,List.of(getCraftingRecipeFromFragment(frag)),buttonPosX,buttonPosY));
+//
+//                }
+//            }else
+            if (type == AncientFragment.Type.INFORMATION){
                 buttonsToAdd.add(constructInformationButton(frag.getIcon().getDefaultInstance(),buttonPosX,buttonPosY,frag));
             }else if (type == AncientFragment.Type.ITEMS){
                 if (frag.getRecipeType() == SolarcraftRecipeTypes.INFUSING.get()) {
@@ -83,12 +84,16 @@ public class SubCategory {
                     buttonsToAdd.add(constructInfusingCraftingRecipeButton(frag, getInfusingCraftingRecipesFromFragment(frag), buttonPosX, buttonPosY));
                 }else if (frag.getRecipeType() == RecipeType.CRAFTING){
                     buttonsToAdd.add(constructCraftingRecipeButton(frag, getCraftingRecipesFromFragment(frag), buttonPosX, buttonPosY));
+                }else if (frag.getRecipeType() == SolarcraftRecipeTypes.SMELTING.get()){
+                    buttonsToAdd.add(constructSmeltingRecipeButton(getSmeltingRecipeFromFragment(frag),buttonPosX,buttonPosY));
                 }
             }else if (type == AncientFragment.Type.STRUCTURE){
                 buttonsToAdd.add(constructStructureButton(frag.getStructure(),buttonPosX,buttonPosY,frag));
-            }else if (type == AncientFragment.Type.UPGRADE){
-                buttonsToAdd.add(constructInfusingRecipeButton(frag,getInfusingRecipeFromFragment(frag),buttonPosX,buttonPosY));
-            }else if (type == AncientFragment.Type.CUSTOM){
+            }
+//            else if (type == AncientFragment.Type.UPGRADE){
+//                buttonsToAdd.add(constructInfusingRecipeButton(frag,getInfusingRecipeFromFragment(frag),buttonPosX,buttonPosY));
+//            }
+            else if (type == AncientFragment.Type.CUSTOM){
                 buttonsToAdd.add(constructCustomButton(buttonPosX,buttonPosY,frag));
             }
         }
@@ -147,7 +152,7 @@ public class SubCategory {
     }
 
     private SolarSmeltingRecipe getSmeltingRecipeFromFragment(AncientFragment fragment){
-        Optional<? extends Recipe<?>> recipe = Minecraft.getInstance().level.getRecipeManager().byKey(fragment.getItem().getRecipeLocation());
+        Optional<? extends Recipe<?>> recipe = Minecraft.getInstance().level.getRecipeManager().byKey(fragment.getStacks().get(0).getRecipeLocation());
         if (recipe.isEmpty()) throw new IllegalStateException("Incorrect recipe in fragment: " + fragment.getId().toUpperCase(Locale.ROOT) +", unable to find recipe: " + fragment.getItem().getRecipeLocation());
         return (SolarSmeltingRecipe) recipe.get();
     }

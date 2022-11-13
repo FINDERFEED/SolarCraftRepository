@@ -127,7 +127,8 @@ public class SolarEnergyGeneratorTile extends SolarcraftBlockEntity implements S
     public boolean bind(BlockPos pos) {
         BlockEntity entity = level.getBlockEntity(pos);
         if ((entity instanceof SolarEnergyRepeaterTile || entity instanceof SolarEnergyContainer) &&
-                Helpers.isReachable(level,worldPosition,pos,getSolarEnergyCollectionRadius())) {
+                Helpers.isReachable(level,worldPosition,pos,getSolarEnergyCollectionRadius()) &&
+                !bindedTiles.contains(pos)) {
 
             this.bindedTiles.add(pos);
             Helpers.updateTile(this);
