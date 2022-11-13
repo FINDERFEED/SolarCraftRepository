@@ -354,10 +354,10 @@ public class InfuserTileEntity extends REItemHandlerBlockEntity implements Solar
         }
         if (!recipe.tag.equals("")) {
             if (result.getItem() instanceof ITagUser result2){
-                result2.doThingsWithTag(tile.getItem(0),result,recipe.tag);
+                result2.doThingsWithTag(tile.getItem(tile.inputSlot()),result,recipe.tag);
             }
         }
-        ItemStack prev = tile.getItem(0);
+        ItemStack prev = tile.getItem(tile.inputSlot());
         if (prev.isEnchanted()){
             Map<Enchantment,Integer> map = EnchantmentHelper.getEnchantments(prev);
 
