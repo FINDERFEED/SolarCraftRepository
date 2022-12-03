@@ -17,7 +17,7 @@ public class SolarGroup extends CreativeModeTab {
 
     @Override
     public ItemStack makeIcon() {
-        return SolarCraft.TEST_ITEM.get().getDefaultInstance();
+        return SolarcraftItems.SOLAR_SHARD.get().getDefaultInstance();
     }
 
     @Override

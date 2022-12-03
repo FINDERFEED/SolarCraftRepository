@@ -79,8 +79,8 @@ public class InfusingCraftingRecipeScreen extends Screen {
                 }
             });
         }
-        addRenderableWidget(new ItemStackTabButton(relX+97+xoffs,relY+29,12,12,(button)->{minecraft.setScreen(new SolarLexiconRecipesScreen());}, Items.CRAFTING_TABLE.getDefaultInstance(),0.7f));
-        addRenderableWidget(new ItemStackTabButton(relX+97+xoffs,relY+29 + 19,12,12,(button)->{
+        addRenderableWidget(new ItemStackTabButton(relX+97+xoffs,relY+26,17,17,(button)->{minecraft.setScreen(new SolarLexiconRecipesScreen());}, Items.CRAFTING_TABLE.getDefaultInstance(),0.7f));
+        addRenderableWidget(new ItemStackTabButton(relX+97+xoffs,relY+26 + 19,17,17,(button)->{
             Minecraft mc = Minecraft.getInstance();
             SolarLexicon lexicon = (SolarLexicon) mc.player.getMainHandItem().getItem();
             lexicon.currentSavedScreen = this;

@@ -8,6 +8,7 @@ import com.finderfeed.solarcraft.content.items.solar_lexicon.SolarLexicon;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
 
 import com.finderfeed.solarcraft.content.recipe_types.infusing_new.InfusingRecipe;
+import com.finderfeed.solarcraft.registries.items.SolarcraftItems;
 import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
@@ -97,10 +98,10 @@ public class InfusingRecipeEnergyScreen extends Screen {
         }
 
 
-        int xoffs = 214;
-        addRenderableWidget(new ItemStackTabButton(relX+xoffs,relY+9 + 8,12,12,(button)->{minecraft.setScreen(new InfusingRecipeScreen(recipes,currentPage));}, SolarCraft.INFUSER_ITEM.get().getDefaultInstance(),0.7f));
-        addRenderableWidget(new ItemStackTabButton(relX+xoffs,relY+27 + 8,12,12,(button)->{minecraft.setScreen(new SolarLexiconRecipesScreen());}, Items.CRAFTING_TABLE.getDefaultInstance(),0.7f));
-        addRenderableWidget(new ItemStackTabButton(relX+xoffs,relY+27 + 8 + 18,12,12,(button)->{
+        int xoffs = 211;
+        addRenderableWidget(new ItemStackTabButton(relX+xoffs,relY+9 + 6,17,17,(button)->{minecraft.setScreen(new InfusingRecipeScreen(recipes,currentPage));}, SolarcraftItems.INFUSER_ITEM.get().getDefaultInstance(),0.7f));
+        addRenderableWidget(new ItemStackTabButton(relX+xoffs,relY+27 + 6,17,17,(button)->{minecraft.setScreen(new SolarLexiconRecipesScreen());}, Items.CRAFTING_TABLE.getDefaultInstance(),0.7f));
+        addRenderableWidget(new ItemStackTabButton(relX+xoffs,relY+27 + 6 + 18,17,17,(button)->{
             Minecraft mc = Minecraft.getInstance();
             SolarLexicon lexicon = (SolarLexicon) mc.player.getMainHandItem().getItem();
             lexicon.currentSavedScreen = this;

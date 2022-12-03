@@ -1,8 +1,8 @@
 package com.finderfeed.solarcraft.events.hotkey_use_event;
 
 
+import com.finderfeed.solarcraft.SolarcraftClientInit;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
-import com.finderfeed.solarcraft.SolarcraftClientRegistry;
 
 import com.finderfeed.solarcraft.packet_handler.SolarCraftPacketHandler;
 import com.finderfeed.solarcraft.packet_handler.packets.CastAbilityPacket;
@@ -25,22 +25,22 @@ public class HotkeyEventListener {
     public static void ListenToEvent(final InputEvent.Key event){
         if (Minecraft.getInstance().screen != null) return;
 
-        if (SolarcraftClientRegistry.FIRST_ABILITY_KEY.isDown() && event.getAction() == GLFW.GLFW_PRESS){
+        if (SolarcraftClientInit.FIRST_ABILITY_KEY.isDown() && event.getAction() == GLFW.GLFW_PRESS){
 
             SolarCraftPacketHandler.INSTANCE.sendToServer(new CastAbilityPacket(1));
 
         }
-        if (SolarcraftClientRegistry.SECOND_ABILITY_KEY.isDown() && event.getAction() == GLFW.GLFW_PRESS){
+        if (SolarcraftClientInit.SECOND_ABILITY_KEY.isDown() && event.getAction() == GLFW.GLFW_PRESS){
 
             SolarCraftPacketHandler.INSTANCE.sendToServer(new CastAbilityPacket(2));
 
         }
-        if (SolarcraftClientRegistry.THIRD_ABILITY_KEY.isDown() && event.getAction() == GLFW.GLFW_PRESS){
+        if (SolarcraftClientInit.THIRD_ABILITY_KEY.isDown() && event.getAction() == GLFW.GLFW_PRESS){
 
             SolarCraftPacketHandler.INSTANCE.sendToServer(new CastAbilityPacket(3));
 
         }
-        if (SolarcraftClientRegistry.FORTH_ABILITY_KEY.isDown() && event.getAction() == GLFW.GLFW_PRESS){
+        if (SolarcraftClientInit.FORTH_ABILITY_KEY.isDown() && event.getAction() == GLFW.GLFW_PRESS){
 
             SolarCraftPacketHandler.INSTANCE.sendToServer(new CastAbilityPacket(4));
 
@@ -51,7 +51,7 @@ public class HotkeyEventListener {
 //
 //        }
 
-        if (SolarcraftClientRegistry.GUI_ABILITY_BUY_SCREEN.isDown() && event.getAction() == GLFW.GLFW_PRESS){
+        if (SolarcraftClientInit.GUI_ABILITY_BUY_SCREEN.isDown() && event.getAction() == GLFW.GLFW_PRESS){
             ClientHelpers.requestAbilityScreen(false);
         }
 

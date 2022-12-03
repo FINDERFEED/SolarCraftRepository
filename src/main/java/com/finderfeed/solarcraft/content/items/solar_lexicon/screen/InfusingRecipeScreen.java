@@ -38,10 +38,8 @@ public class InfusingRecipeScreen extends Screen {
     public final ResourceLocation BUTTONS = new ResourceLocation("solarcraft","textures/misc/page_buttons.png");
     public final ResourceLocation MAIN_SCREEN_OPENED = new ResourceLocation("solarcraft","textures/gui/solar_lexicon_infusing_recipe_with_catalysts_new.png");
     public final ResourceLocation MAIN_SCREEN_UNOPENED = new ResourceLocation("solarcraft","textures/gui/solar_lexicon_infusing_recipe_without_catalysts_new.png");
-    public final ResourceLocation REQ_ENERGY = new ResourceLocation("solarcraft","textures/gui/energy_bar.png");
     //60*6
     private int[][] runicEnergySymbolsRenderPositions = new int[12][2];
-    public final ResourceLocation RUNIC_ENERGY_BAR = new ResourceLocation("solarcraft","textures/gui/runic_energy_bar.png");
     public final List<InfusingRecipe> recipe;
     private int maxPages;
     private int currentPage = 0;
@@ -97,7 +95,7 @@ public class InfusingRecipeScreen extends Screen {
         this.catalystsUnlocked = Helpers.hasPlayerCompletedProgression(Progression.CATALYSTS,Minecraft.getInstance().player);
         fillItemRators();
         if (maxPages != 0) {
-            addRenderableWidget(new ImageButton(relX + 193 + 19, relY + 55 + 14 - 1 , 16, 16, 0, 0, 0, BUTTONS, 16, 32, (button) -> {
+            addRenderableWidget(new ImageButton(relX + 193 + 19, relY + 55 + 14  , 16, 16, 0, 0, 0, BUTTONS, 16, 32, (button) -> {
                 if ((currentPage + 1 <= maxPages)) {
                     currentPage += 1;
                     this.itemRators.clear();
@@ -111,7 +109,7 @@ public class InfusingRecipeScreen extends Screen {
                     manager.play(SimpleSoundInstance.forUI(SolarcraftSounds.BUTTON_PRESS2.get(),1,1));
                 }
             });
-            addRenderableWidget(new ImageButton(relX + 193 + 19, relY + 16 + 55 + 14 - 1, 16, 16, 0, 16, 0, BUTTONS, 16, 32, (button) -> {
+            addRenderableWidget(new ImageButton(relX + 193 + 19, relY + 16 + 55 + 14 , 16, 16, 0, 16, 0, BUTTONS, 16, 32, (button) -> {
                 if ((currentPage - 1 >= 0)) {
                     currentPage -= 1;
                     this.itemRators.clear();
@@ -138,12 +136,12 @@ public class InfusingRecipeScreen extends Screen {
         }
         if (d) {
 
-            addRenderableWidget(new ItemStackTabButton(relX + 214, relY + 9 + 8, 12, 12, (button) -> {
+            addRenderableWidget(new ItemStackTabButton(relX + 211, relY + 9 + 6, 17, 17, (button) -> {
                 minecraft.setScreen(new InfusingRecipeEnergyScreen(recipe, currentPage));
             }, SolarcraftItems.SOLAR_WAND.get().getDefaultInstance(), 0.7f));
         }
-        addRenderableWidget(new ItemStackTabButton(relX + 214,relY+28 + 8 - 1,12,12,(button)->{minecraft.setScreen(new SolarLexiconRecipesScreen());}, Items.CRAFTING_TABLE.getDefaultInstance(),0.7f));
-        addRenderableWidget(new ItemStackTabButton(relX + 214,relY+28 + 8 - 1 + 18,12,12,(button)->{
+        addRenderableWidget(new ItemStackTabButton(relX + 211,relY+28 + 6 - 1,17,17,(button)->{minecraft.setScreen(new SolarLexiconRecipesScreen());}, Items.CRAFTING_TABLE.getDefaultInstance(),0.7f));
+        addRenderableWidget(new ItemStackTabButton(relX + 211,relY+28 + 6 - 1 + 18,17,17,(button)->{
             Minecraft mc = Minecraft.getInstance();
             SolarLexicon lexicon = (SolarLexicon) mc.player.getMainHandItem().getItem();
             lexicon.currentSavedScreen = this;

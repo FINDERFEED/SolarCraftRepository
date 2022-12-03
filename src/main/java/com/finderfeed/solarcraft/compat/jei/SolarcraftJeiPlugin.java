@@ -65,7 +65,7 @@ public class SolarcraftJeiPlugin implements IModPlugin {
     @Override
     public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
         IModPlugin.super.registerRecipeCatalysts(registration);
-        registration.addRecipeCatalyst(SolarCraft.INFUSER_ITEM.get().getDefaultInstance(),JeiRecipeTypes.INFUSING_RECIPE);
+        registration.addRecipeCatalyst(SolarcraftItems.INFUSER_ITEM.get().getDefaultInstance(),JeiRecipeTypes.INFUSING_RECIPE);
         registration.addRecipeCatalyst(SolarcraftItems.SOLAR_LENS.get().getDefaultInstance(),JeiRecipeTypes.SMELTING);
         registration.addRecipeCatalyst(SolarcraftItems.INFUSING_TABLE.get().getDefaultInstance(),JeiRecipeTypes.INFUSING_CRAFTING_RECIPE);
 

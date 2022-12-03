@@ -21,6 +21,8 @@ import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.network.chat.Component;
@@ -215,6 +217,37 @@ class RetainFragments{
         return Commands.literal("fragments")
                 .requires(cs->cs.hasPermission(0))
 //                .then(Commands.literal("retain").executes((cmd)->retainFragments(cmd.getSource())))
+                .then(Commands.literal("unlock").then(Commands.argument("player",EntityArgument.player())
+                        .then(Commands.argument("fragment_id",StringArgumentType.string())
+                                .executes((cmd)->{
+                                    CommandSourceStack stack = cmd.getSource();
+                                    Player player = EntityArgument.getPlayer(cmd,"player");
+                                    String id = cmd.getArgument("fragment_id",String.class);
+                                    AncientFragment fragment = AncientFragment.getFragmentByID(id);
+                                    if (fragment != null){
+                                        ProgressionHelper.givePlayerFragment(fragment,player);
+                                        stack.sendSuccess(Component.literal("Fragment successefuly given."),true);
+                                    }else{
+                                        stack.sendFailure(Component.literal("This fragments doesn't exist."));
+                                    }
+                                    return 0;
+                                }))))
+                .then(Commands.literal("revoke").then(Commands.argument("player",EntityArgument.player())
+                        .then(Commands.argument("fragment_id",StringArgumentType.string())
+                                .executes((cmd)->{
+                                    CommandSourceStack stack = cmd.getSource();
+                                    Player player = EntityArgument.getPlayer(cmd,"player");
+                                    String id = cmd.getArgument("fragment_id",String.class);
+                                    AncientFragment fragment = AncientFragment.getFragmentByID(id);
+                                    if (fragment != null){
+                                        ProgressionHelper.revokePlayerFragment(fragment,player);
+                                        stack.sendSuccess(Component.literal("Fragment successfully revoked."),true);
+                                    }else{
+                                        stack.sendFailure(Component.literal("This fragments doesn't exist."));
+                                    }
+                                    return 0;
+                                }))))
+
                 .then(Commands.literal("unlockall").executes((cmd)->unlockAllFragments(cmd.getSource())))
 //                .then(Commands.literal("transferFromOldDataToNew").executes((cmd)->transferFromOldToNew(cmd.getSource())))
                 .then(Commands.literal("refresh").executes((cmd)->refreshFragments(cmd.getSource())));

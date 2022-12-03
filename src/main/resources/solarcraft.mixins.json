@@ -4,6 +4,7 @@
   "compatibilityLevel": "JAVA_17",
   "refmap": "solarcraft.refmap.json",
   "mixins": [
+    "CraftingMenuMixin"
   ],
   "minVersion": "0.8",
   "client": [

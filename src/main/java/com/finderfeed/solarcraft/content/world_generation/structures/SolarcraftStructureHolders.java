@@ -48,8 +48,8 @@ public class SolarcraftStructureHolders {
 //    public static ConfiguredStructureFeature<?,?> CLEARING_RITUAL_STRUCTURE = SolarForgeStructures.CLEARING_RITUAL_STRUCTURE.get()
 //            .configured(FeatureConfiguration.NONE,SolarCraftTags.SStructures.HAS_CLEARING_RITUAL_STRUCTURE,true);
 
-    public static final Holder<Structure> DUNGEON_ONE = register(Keys.DUNGEON_ONE,new DungeonOne(structure(SolarCraftTags.SStructures.HAS_DUNGEON_ONE, GenerationStep.Decoration.SURFACE_STRUCTURES,TerrainAdjustment.BEARD_BOX)));
-    public static final Holder<Structure> LABYRINTH = register(Keys.LABYRINTH,new MazeStructure(structure(SolarCraftTags.SStructures.HAS_LABYRINTH, GenerationStep.Decoration.SURFACE_STRUCTURES,TerrainAdjustment.NONE)));
+    public static final Holder<Structure> DUNGEON_ONE = register(Keys.DUNGEON_ONE,new DungeonOne(structure(SolarCraftTags.SStructures.HAS_DUNGEON_ONE, GenerationStep.Decoration.SURFACE_STRUCTURES,TerrainAdjustment.BURY)));
+    public static final Holder<Structure> LABYRINTH = register(Keys.LABYRINTH,new MazeStructure(structure(SolarCraftTags.SStructures.HAS_LABYRINTH, GenerationStep.Decoration.SURFACE_STRUCTURES,TerrainAdjustment.BURY)));
     public static final Holder<Structure> CHARGING_STATION = register(Keys.COLD_STAR_CHARGING_STATION,new ChargingStationStructure(structure(SolarCraftTags.SStructures.HAS_CHARGING_STATION,GenerationStep.Decoration.SURFACE_STRUCTURES,TerrainAdjustment.BEARD_THIN)));
     public static final Holder<Structure> MAGICIAN_TOWER = register(Keys.MAGICIAN_TOWER,new MagicianTowerStructure(structure(SolarCraftTags.SStructures.HAS_MAGICIAN_TOWER, GenerationStep.Decoration.SURFACE_STRUCTURES,TerrainAdjustment.BEARD_THIN)));
     public static final Holder<Structure> DIM_SHARD_STRUCT = register(Keys.DIMENSIONAL_SHARD,new DimensionalShardStructure(structure(SolarCraftTags.SStructures.HAS_DIM_SHARD_DUNGEON, GenerationStep.Decoration.SURFACE_STRUCTURES,TerrainAdjustment.BEARD_THIN)));

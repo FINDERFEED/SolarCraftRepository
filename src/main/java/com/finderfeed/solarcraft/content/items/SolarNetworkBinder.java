@@ -1,6 +1,8 @@
 package com.finderfeed.solarcraft.content.items;
 
 import com.finderfeed.solarcraft.content.blocks.solar_energy.Bindable;
+import com.finderfeed.solarcraft.content.items.primitive.solacraft_item_classes.SolarcraftItem;
+import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.local_library.helpers.CompoundNBTHelper;
 import net.minecraft.network.chat.Component;
@@ -17,11 +19,12 @@ import net.minecraft.world.level.Level;
 
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.function.Supplier;
 
-public class SolarNetworkBinder extends Item {
+public class SolarNetworkBinder extends SolarcraftItem {
 
-    public SolarNetworkBinder(Properties p_i48487_1_) {
-        super(p_i48487_1_);
+    public SolarNetworkBinder(Properties p_i48487_1_, Supplier<AncientFragment> fragmentSupplier) {
+        super(p_i48487_1_,fragmentSupplier);
     }
 
     public InteractionResult useOn(UseOnContext ctx) {

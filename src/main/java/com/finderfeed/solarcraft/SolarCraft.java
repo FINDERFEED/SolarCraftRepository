@@ -114,7 +114,7 @@ public class SolarCraft
     public static final DeferredRegister<BlockEntityType<?>> TILE_ENTITY_TYPE = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES,"solarcraft");
     public static final DeferredRegister<MenuType<?>> CONTAINER_TYPE = DeferredRegister.create(ForgeRegistries.MENU_TYPES,"solarcraft");
     public static final  DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS,"solarcraft");
-    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS,"solarcraft");
+//    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS,"solarcraft");
     public static final DeferredRegister<EntityType<?>> ENTITY_TYPE_REGISTER = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES,"solarcraft");
 
     public static final CreativeModeTab SOLAR_GROUP = new SolarGroup("solar_forge_group");
@@ -155,10 +155,10 @@ public class SolarCraft
             BlockEntityType.Builder.of(InfuserTileEntity::new,SOLAR_INFUSER.get()).build(null));
 
     public static final RegistryObject<EntityType<MeteoriteProjectile>> METEORITE = ENTITY_TYPE_REGISTER.register("solar_forge_meteorite_projectile",()->EntityType.Builder.<MeteoriteProjectile>of(MeteoriteProjectile::new,MobCategory.MISC).sized(5,5).build("solar_forge_meteorite_projectile"));
-    public static  final RegistryObject<Item> TEST_ITEM = ITEMS.register("solar_shard",()-> new Item(new Item.Properties().rarity(Rarity.EPIC).tab(SOLAR_GROUP)));
-    public static  final RegistryObject<Item> SOLAR_FORGE_ITEM = ITEMS.register("solar_forge",()-> new SolarForgeBlockItem(SOLAR_FORGE.get(),new Item.Properties().rarity(Rarity.EPIC).tab(SOLAR_GROUP_BLOCKS).stacksTo(1)));
-    public static  final RegistryObject<Item> SOLAR_ORE_ITEM = ITEMS.register("solar_ores",()-> new ProgressionBlockItem(SOLAR_ORE.get(),new Item.Properties().tab(SOLAR_GROUP_BLOCKS)));
-    public static  final RegistryObject<Item> INFUSER_ITEM = ITEMS.register("solar_infuser",()-> new InfuserBlockItem(SOLAR_INFUSER.get(),new Item.Properties().rarity(Rarity.EPIC).tab(SOLAR_GROUP_BLOCKS).stacksTo(1),()-> AncientFragment.SOLAR_INFUSER));
+//    public static  final RegistryObject<Item> SOLAR_SHARD = ITEMS.register("solar_shard",()-> new Item(new Item.Properties().rarity(Rarity.EPIC).tab(SOLAR_GROUP)));
+//    public static  final RegistryObject<Item> SOLAR_FORGE_ITEM = ITEMS.register("solar_forge",()-> new SolarForgeBlockItem(SOLAR_FORGE.get(),new Item.Properties().rarity(Rarity.EPIC).tab(SOLAR_GROUP_BLOCKS).stacksTo(1)));
+//    public static  final RegistryObject<Item> SOLAR_ORE_ITEM = ITEMS.register("solar_ores",()-> new ProgressionBlockItem(SOLAR_ORE.get(),new Item.Properties().tab(SOLAR_GROUP_BLOCKS)));
+//    public static  final RegistryObject<Item> INFUSER_ITEM = ITEMS.register("solar_infuser",()-> new InfuserBlockItem(SOLAR_INFUSER.get(),new Item.Properties().rarity(Rarity.EPIC).tab(SOLAR_GROUP_BLOCKS).stacksTo(1),()-> AncientFragment.SOLAR_INFUSER));
     // Directly reference a log4j logger.
     public static final Logger LOGGER = LogManager.getLogger("SOLARCRAFT");
     public static final RegistryObject<BlockEntityType<SolarForgeBlockEntity>> SOLAR_FORGE_BLOCKENTITY = TILE_ENTITY_TYPE.register("solar_forge_blockentity",()->
@@ -175,7 +175,7 @@ public class SolarCraft
         EFFECTS.register(bus);
         SOUND_EVENTS.register(bus);
         ENTITY_TYPE_REGISTER.register(bus);
-        ITEMS.register(bus);
+//        ITEMS.register(bus);
         BLOCKS.register(bus);
         TILE_ENTITY_TYPE.register(bus);
         CONTAINER_TYPE.register(bus);

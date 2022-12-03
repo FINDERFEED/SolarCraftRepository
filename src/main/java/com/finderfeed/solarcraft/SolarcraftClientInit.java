@@ -55,7 +55,7 @@ import org.lwjgl.glfw.GLFW;
 
 
 @Mod.EventBusSubscriber(modid = "solarcraft",bus = Mod.EventBusSubscriber.Bus.MOD,value = Dist.CLIENT)
-public class SolarcraftClientRegistry {
+public class SolarcraftClientInit {
 
     public static final DimensionSpecialEffects RADIANT_LAND  = new RadiantLandDimEffects();
     public static final RadiantTextureAtlasSpriteLoader RADIANT_TEXTURE_ATLAS_SPRITE_LOADER = new RadiantTextureAtlasSpriteLoader();
@@ -122,6 +122,7 @@ public class SolarcraftClientRegistry {
         BlockEntityRenderers.register(SolarcraftTileEntityTypes.CLEARING_RITUAL_CRYSTAL.get(), ClearingRitualCrystalRenderer::new);
         BlockEntityRenderers.register(SolarcraftTileEntityTypes.CLEARING_RITUAL_MAIN_BLOCK.get(), ClearingRitualTileRenderer::new);
         BlockEntityRenderers.register(SolarcraftTileEntityTypes.DIMENSION_CORE_TILE.get(), DimensionCoreRenderer::new);
+        BlockEntityRenderers.register(SolarcraftTileEntityTypes.SAVANNA_DUNGEON_KEEPER.get(), SavannaDungeonKeeperRenderer::new);
 
 
         MenuScreens.register(SolarcraftContainers.SOLAR_FURNACE_CONTAINER.get(), SolarFurnaceScreen::new);
@@ -161,7 +162,7 @@ public class SolarcraftClientRegistry {
                     return 0;
                 }
             });
-            ItemProperties.register(SolarCraft.SOLAR_ORE_ITEM.get(),new ResourceLocation("solarcraft","unlocked"),(stack, world, living, a)->{
+            ItemProperties.register(SolarcraftItems.SOLAR_ORE_ITEM.get(),new ResourceLocation("solarcraft","unlocked"),(stack, world, living, a)->{
 
                 Player playerEntity = Minecraft.getInstance().player;
                 if (playerEntity != null) {

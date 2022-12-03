@@ -456,7 +456,7 @@ public class InfuserTileEntity extends REItemHandlerBlockEntity implements Solar
                 this.level.playSound(null, this.worldPosition, SoundEvents.VILLAGER_NO, SoundSource.AMBIENT, 2, 1);
             }
         }catch (NullPointerException e){
-            playerEntity.sendSystemMessage(Component.literal("INCORRECT FRAGMENT IN RECIPE "+ recipe.get().output.getDisplayName()+" TELL MOD AUTHOR TO FIX IT").withStyle(ChatFormatting.RED));
+            playerEntity.sendSystemMessage(Component.literal("INCORRECT FRAGMENT IN RECIPE "+ recipe.get().output.getDisplayName().getString()+" TELL MOD AUTHOR TO FIX IT").withStyle(ChatFormatting.RED));
         }
 
     }

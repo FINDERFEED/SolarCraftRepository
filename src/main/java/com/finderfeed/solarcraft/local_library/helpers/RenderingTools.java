@@ -93,6 +93,80 @@ public class RenderingTools {
     public static final ResourceLocation TEXT_FIELD_VERTICAL = new ResourceLocation(SolarCraft.MOD_ID,"textures/gui/text_field_vertical.png");
 
 
+
+    public static void renderBox(PoseStack matrices,MultiBufferSource src,AABB box,float r,float g,float b,float a){
+        matrices.pushPose();
+        Matrix4f m = matrices.last().pose();
+        VertexConsumer vertex = src.getBuffer(RenderType.lightning());
+
+        vertex.vertex(m,(float)box.minX,(float)box.minY,(float)box.minZ).color(r,g,b,a).endVertex();
+        vertex.vertex(m,(float)box.minX,(float)box.maxY,(float)box.minZ).color(r,g,b,a).endVertex();
+        vertex.vertex(m,(float)box.maxX,(float)box.maxY,(float)box.minZ).color(r,g,b,a).endVertex();
+        vertex.vertex(m,(float)box.maxX,(float)box.minY,(float)box.minZ).color(r,g,b,a).endVertex();
+
+        vertex.vertex(m,(float)box.minX,(float)box.minY,(float)box.maxZ).color(r,g,b,a).endVertex();
+        vertex.vertex(m,(float)box.minX,(float)box.maxY,(float)box.maxZ).color(r,g,b,a).endVertex();
+        vertex.vertex(m,(float)box.maxX,(float)box.maxY,(float)box.maxZ).color(r,g,b,a).endVertex();
+        vertex.vertex(m,(float)box.maxX,(float)box.minY,(float)box.maxZ).color(r,g,b,a).endVertex();
+
+        vertex.vertex(m,(float)box.minX,(float)box.minY,(float)box.minZ).color(r,g,b,a).endVertex();
+        vertex.vertex(m,(float)box.minX,(float)box.maxY,(float)box.minZ).color(r,g,b,a).endVertex();
+        vertex.vertex(m,(float)box.minX,(float)box.maxY,(float)box.maxZ).color(r,g,b,a).endVertex();
+        vertex.vertex(m,(float)box.minX,(float)box.minY,(float)box.maxZ).color(r,g,b,a).endVertex();
+
+        vertex.vertex(m,(float)box.maxX,(float)box.minY,(float)box.minZ).color(r,g,b,a).endVertex();
+        vertex.vertex(m,(float)box.maxX,(float)box.maxY,(float)box.minZ).color(r,g,b,a).endVertex();
+        vertex.vertex(m,(float)box.maxX,(float)box.maxY,(float)box.maxZ).color(r,g,b,a).endVertex();
+        vertex.vertex(m,(float)box.maxX,(float)box.minY,(float)box.maxZ).color(r,g,b,a).endVertex();
+
+        vertex.vertex(m,(float)box.minX,(float)box.minY,(float)box.minZ).color(r,g,b,a).endVertex();
+        vertex.vertex(m,(float)box.maxX,(float)box.minY,(float)box.minZ).color(r,g,b,a).endVertex();
+        vertex.vertex(m,(float)box.maxX,(float)box.minY,(float)box.maxZ).color(r,g,b,a).endVertex();
+        vertex.vertex(m,(float)box.minX,(float)box.minY,(float)box.maxZ).color(r,g,b,a).endVertex();
+
+        vertex.vertex(m,(float)box.minX,(float)box.maxY,(float)box.minZ).color(r,g,b,a).endVertex();
+        vertex.vertex(m,(float)box.maxX,(float)box.maxY,(float)box.minZ).color(r,g,b,a).endVertex();
+        vertex.vertex(m,(float)box.maxX,(float)box.maxY,(float)box.maxZ).color(r,g,b,a).endVertex();
+        vertex.vertex(m,(float)box.minX,(float)box.maxY,(float)box.maxZ).color(r,g,b,a).endVertex();
+
+
+
+
+
+        vertex.vertex(m,(float)box.maxX,(float)box.minY,(float)box.minZ).color(r,g,b,a).endVertex();
+        vertex.vertex(m,(float)box.maxX,(float)box.maxY,(float)box.minZ).color(r,g,b,a).endVertex();
+        vertex.vertex(m,(float)box.minX,(float)box.maxY,(float)box.minZ).color(r,g,b,a).endVertex();
+        vertex.vertex(m,(float)box.minX,(float)box.minY,(float)box.minZ).color(r,g,b,a).endVertex();
+
+        vertex.vertex(m,(float)box.maxX,(float)box.minY,(float)box.maxZ).color(r,g,b,a).endVertex();
+        vertex.vertex(m,(float)box.maxX,(float)box.maxY,(float)box.maxZ).color(r,g,b,a).endVertex();
+        vertex.vertex(m,(float)box.minX,(float)box.maxY,(float)box.maxZ).color(r,g,b,a).endVertex();
+        vertex.vertex(m,(float)box.minX,(float)box.minY,(float)box.maxZ).color(r,g,b,a).endVertex();
+
+        vertex.vertex(m,(float)box.minX,(float)box.minY,(float)box.maxZ).color(r,g,b,a).endVertex();
+        vertex.vertex(m,(float)box.minX,(float)box.maxY,(float)box.maxZ).color(r,g,b,a).endVertex();
+        vertex.vertex(m,(float)box.minX,(float)box.maxY,(float)box.minZ).color(r,g,b,a).endVertex();
+        vertex.vertex(m,(float)box.minX,(float)box.minY,(float)box.minZ).color(r,g,b,a).endVertex();
+
+        vertex.vertex(m,(float)box.maxX,(float)box.minY,(float)box.maxZ).color(r,g,b,a).endVertex();
+        vertex.vertex(m,(float)box.maxX,(float)box.maxY,(float)box.maxZ).color(r,g,b,a).endVertex();
+        vertex.vertex(m,(float)box.maxX,(float)box.maxY,(float)box.minZ).color(r,g,b,a).endVertex();
+        vertex.vertex(m,(float)box.maxX,(float)box.minY,(float)box.minZ).color(r,g,b,a).endVertex();
+
+        vertex.vertex(m,(float)box.minX,(float)box.minY,(float)box.maxZ).color(r,g,b,a).endVertex();
+        vertex.vertex(m,(float)box.maxX,(float)box.minY,(float)box.maxZ).color(r,g,b,a).endVertex();
+        vertex.vertex(m,(float)box.maxX,(float)box.minY,(float)box.minZ).color(r,g,b,a).endVertex();
+        vertex.vertex(m,(float)box.minX,(float)box.minY,(float)box.minZ).color(r,g,b,a).endVertex();
+
+        vertex.vertex(m,(float)box.minX,(float)box.maxY,(float)box.maxZ).color(r,g,b,a).endVertex();
+        vertex.vertex(m,(float)box.maxX,(float)box.maxY,(float)box.maxZ).color(r,g,b,a).endVertex();
+        vertex.vertex(m,(float)box.maxX,(float)box.maxY,(float)box.minZ).color(r,g,b,a).endVertex();
+        vertex.vertex(m,(float)box.minX,(float)box.maxY,(float)box.minZ).color(r,g,b,a).endVertex();
+
+
+        matrices.popPose();
+    }
+
     public static void renderTextField(PoseStack matrices,int xStart,int yStart,int width,int height){
         matrices.pushPose();
         ClientHelpers.bindText(TEXT_FIELD_INNER);
@@ -394,6 +468,42 @@ public class RenderingTools {
         posestack.popPose();
         RenderSystem.applyModelViewMatrix();
     }
+
+    public static void renderScaledGuiItemCentered(ItemStack stack, float x, float y,float scale,double zOffset) {
+        Minecraft.getInstance().textureManager.getTexture(TextureAtlas.LOCATION_BLOCKS).setFilter(false, false);
+        RenderSystem.setShaderTexture(0, TextureAtlas.LOCATION_BLOCKS);
+        RenderSystem.enableBlend();
+        RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+        PoseStack posestack = RenderSystem.getModelViewStack();
+        posestack.pushPose();
+        posestack.translate((double)x, (double)y, (double)(100.0F + Minecraft.getInstance().getItemRenderer().blitOffset + zOffset));
+//        posestack.translate(4D, 4D, 0.0D);
+        posestack.scale(1.0F, -1.0F, 1.0F);
+        posestack.scale(16.0F*scale, 16.0F*scale, 16.0F*scale);
+
+        RenderSystem.applyModelViewMatrix();
+        PoseStack posestack1 = new PoseStack();
+
+        MultiBufferSource.BufferSource multibuffersource$buffersource = Minecraft.getInstance().renderBuffers().bufferSource();
+        BakedModel p_115131_ = Minecraft.getInstance().getItemRenderer().getModel(stack,null,null,0);
+        boolean flag = !p_115131_.usesBlockLight();
+        if (flag) {
+            Lighting.setupForFlatItems();
+        }
+
+        render(stack, ItemTransforms.TransformType.GUI, false, posestack1, multibuffersource$buffersource, 15728880, OverlayTexture.NO_OVERLAY, p_115131_);
+        multibuffersource$buffersource.endBatch();
+        RenderSystem.enableDepthTest();
+        if (flag) {
+            Lighting.setupFor3DItems();
+        }
+
+        posestack.popPose();
+        RenderSystem.applyModelViewMatrix();
+    }
+
+
     public static void render(ItemStack p_115144_, ItemTransforms.TransformType p_115145_, boolean p_115146_, PoseStack p_115147_, MultiBufferSource p_115148_, int p_115149_, int p_115150_, BakedModel p_115151_) {
         ItemRenderer r = Minecraft.getInstance().getItemRenderer();
         if (!p_115144_.isEmpty()) {
@@ -453,7 +563,7 @@ public class RenderingTools {
         }
     }
 
-    public static void blitWithBlend(PoseStack matrices,int x,int y,int texPosX,int texPosY,int width,int height,int texWidth,int texHeight, int zOffset,float alpha){
+    public static void blitWithBlend(PoseStack matrices,float x,float y,float texPosX,float texPosY,float width,float height,float texWidth,float texHeight, float zOffset,float alpha){
         RenderSystem.enableBlend();
         RenderSystem.setShader(GameRenderer::getPositionColorTexShader);
         BufferBuilder vertex = Tesselator.getInstance().getBuilder();
@@ -1132,70 +1242,18 @@ public class RenderingTools {
 
 
 
-//        private void render(ItemStack item, ItemTransforms.TransformType transform, boolean p_115146_, PoseStack matrices, MultiBufferSource src, int light, int overlay, BakedModel model) {
-//            if (!item.isEmpty()) {
-//                matrices.pushPose();
-//                boolean flag = transform == ItemTransforms.TransformType.GUI || transform == ItemTransforms.TransformType.GROUND || transform == ItemTransforms.TransformType.FIXED;
-//                if (flag) {
-//                    if (item.is(Items.TRIDENT)) {
-//                        model = Minecraft.getInstance().getItemRenderer().getItemModelShaper().getModelManager().getModel(new ModelResourceLocation("minecraft:trident#inventory"));
-//                    } else if (item.is(Items.SPYGLASS)) {
-//                        model = Minecraft.getInstance().getItemRenderer().getItemModelShaper().getModelManager().getModel(new ModelResourceLocation("minecraft:spyglass#inventory"));
-//                    }
-//                }
-//
-//                model = net.minecraftforge.client.ForgeHooksClient.handleCameraTransforms(matrices, model, transform, p_115146_);
-//                matrices.translate(-0.5D, -0.5D, -0.5D);
-//                if (!model.isCustomRenderer() && (!item.is(Items.TRIDENT) || flag)) {
-//                    boolean flag1;
-//                    if (transform != ItemTransforms.TransformType.GUI && !transform.firstPerson() && item.getItem() instanceof BlockItem) {
-//                        Block block = ((BlockItem)item.getItem()).getBlock();
-//                        flag1 = !(block instanceof HalfTransparentBlock) && !(block instanceof StainedGlassPaneBlock);
-//                    } else {
-//                        flag1 = true;
-//                    }
-//                    if (model.isLayered()) { net.minecraftforge.client.ForgeHooksClient.drawItemLayered(Minecraft.getInstance().getItemRenderer(),model, item, matrices, src, light, overlay, flag1); }
-//                    else {
-//                        RenderType rendertype = ItemBlockRenderTypes.getRenderType(item, flag1);
-//                        VertexConsumer vertexconsumer;
-//                        if (item.is(Items.COMPASS) && item.hasFoil()) {
-//                            matrices.pushPose();
-//                            PoseStack.Pose posestack$pose = matrices.last();
-//                            if (transform == ItemTransforms.TransformType.GUI) {
-//                                posestack$pose.pose().multiply(0.5F);
-//                            } else if (transform.firstPerson()) {
-//                                posestack$pose.pose().multiply(0.75F);
-//                            }
-//
-//                            if (flag1) {
-//                                vertexconsumer = Minecraft.getInstance().getItemRenderer().getCompassFoilBufferDirect(src, rendertype, posestack$pose);
-//                            } else {
-//                                vertexconsumer = Minecraft.getInstance().getItemRenderer().getCompassFoilBuffer(src, rendertype, posestack$pose);
-//                            }
-//
-//                            matrices.popPose();
-//                        } else if (flag1) {
-//                            vertexconsumer = Minecraft.getInstance().getItemRenderer().getFoilBufferDirect(src, rendertype, true, item.hasFoil());
-//                        } else {
-//                            vertexconsumer = Minecraft.getInstance().getItemRenderer().getFoilBuffer(src, rendertype, true, item.hasFoil());
-//                        }
-//
-//                        renderModelLists(model, item, light, overlay, matrices, vertexconsumer);
-//                    }
-//                } else {
-//                    net.minecraftforge.client.RenderProperties.get(item).getCustomRenderer().renderByItem(item, transform, matrices, src, light, overlay);
-//                }
-//
-//                matrices.popPose();
-//            }
-//        }
 
 
-        public void renderGuiItem(ItemStack p_115124_, int p_115125_, int p_115126_) {
-            renderGuiItem(p_115124_, p_115125_, p_115126_, Minecraft.getInstance().getItemRenderer().getModel(p_115124_, (Level)null, (LivingEntity)null, 0));
+
+        public void renderGuiItemScaled(ItemStack p_115124_, int p_115125_, int p_115126_,float scale) {
+            renderGuiItem(p_115124_, p_115125_, p_115126_, Minecraft.getInstance().getItemRenderer().getModel(p_115124_, (Level)null, (LivingEntity)null, 0),scale);
         }
 
-        protected void renderGuiItem(ItemStack p_115128_, int p_115129_, int p_115130_, BakedModel p_115131_) {
+        public void renderGuiItem(ItemStack p_115124_, int p_115125_, int p_115126_) {
+            renderGuiItem(p_115124_, p_115125_, p_115126_, Minecraft.getInstance().getItemRenderer().getModel(p_115124_, (Level)null, (LivingEntity)null, 0),1f);
+        }
+
+        protected void renderGuiItem(ItemStack p_115128_, int p_115129_, int p_115130_, BakedModel p_115131_,float scale) {
             Minecraft.getInstance().textureManager.getTexture(TextureAtlas.LOCATION_BLOCKS).setFilter(false, false);
             RenderSystem.setShaderTexture(0, TextureAtlas.LOCATION_BLOCKS);
             RenderSystem.enableBlend();
@@ -1204,9 +1262,9 @@ public class RenderingTools {
             PoseStack posestack = RenderSystem.getModelViewStack();
             posestack.pushPose();
             posestack.translate((double)p_115129_, (double)p_115130_, (double)(100.0F + Minecraft.getInstance().getItemRenderer().blitOffset));
-            posestack.translate(8.0D, 8.0D, 0.0D);
+//            posestack.translate(8.0D, 8.0D, 8.0D);
             posestack.scale(1.0F, -1.0F, 1.0F);
-            posestack.scale(16.0F, 16.0F, 16.0F);
+            posestack.scale(16.0F*scale, 16.0F*scale, 16.0F*scale);
             RenderSystem.applyModelViewMatrix();
             PoseStack posestack1 = new PoseStack();
             MultiBufferSource.BufferSource multibuffersource$buffersource = Minecraft.getInstance().renderBuffers().bufferSource();
@@ -1215,7 +1273,7 @@ public class RenderingTools {
                 Lighting.setupForFlatItems();
             }
 
-            render(p_115128_, ItemTransforms.TransformType.GUI, false, posestack1, multibuffersource$buffersource, 15728880, OverlayTexture.NO_OVERLAY, p_115131_);
+            renderOpt(p_115128_, ItemTransforms.TransformType.GUI, false, posestack1, multibuffersource$buffersource, 15728880, OverlayTexture.NO_OVERLAY, p_115131_);
             multibuffersource$buffersource.endBatch();
             RenderSystem.enableDepthTest();
             if (flag) {
@@ -1225,7 +1283,69 @@ public class RenderingTools {
             posestack.popPose();
             RenderSystem.applyModelViewMatrix();
         }
+
+
+        public void renderOpt(ItemStack p_115144_, ItemTransforms.TransformType p_115145_, boolean p_115146_, PoseStack p_115147_, MultiBufferSource p_115148_, int p_115149_, int p_115150_, BakedModel p_115151_) {
+            ItemRenderer r = Minecraft.getInstance().getItemRenderer();
+            if (!p_115144_.isEmpty()) {
+                p_115147_.pushPose();
+                boolean flag = p_115145_ == ItemTransforms.TransformType.GUI || p_115145_ == ItemTransforms.TransformType.GROUND || p_115145_ == ItemTransforms.TransformType.FIXED;
+                if (flag) {
+                    if (p_115144_.is(Items.TRIDENT)) {
+                        p_115151_ = r.getItemModelShaper().getModelManager().getModel(new ModelResourceLocation("minecraft:trident#inventory"));
+                    } else if (p_115144_.is(Items.SPYGLASS)) {
+                        p_115151_ = r.getItemModelShaper().getModelManager().getModel(new ModelResourceLocation("minecraft:spyglass#inventory"));
+                    }
+                }
+
+                p_115151_ = net.minecraftforge.client.ForgeHooksClient.handleCameraTransforms(p_115147_, p_115151_, p_115145_, p_115146_);
+                p_115147_.translate(-0.5D, -0.5D, -0.5D);
+                if (!p_115151_.isCustomRenderer() && (!p_115144_.is(Items.TRIDENT) || flag)) {
+                    boolean flag1;
+                    if (p_115145_ != ItemTransforms.TransformType.GUI && !p_115145_.firstPerson() && p_115144_.getItem() instanceof BlockItem) {
+                        Block block = ((BlockItem)p_115144_.getItem()).getBlock();
+                        flag1 = !(block instanceof HalfTransparentBlock) && !(block instanceof StainedGlassPaneBlock);
+                    } else {
+                        flag1 = true;
+                    }
+                    for (var model : p_115151_.getRenderPasses(p_115144_, flag1)) {
+                        for (var rendertype : model.getRenderTypes(p_115144_, flag1)) {
+                            VertexConsumer vertexconsumer;
+                            if (p_115144_.is(ItemTags.COMPASSES) && p_115144_.hasFoil()) {
+                                p_115147_.pushPose();
+                                PoseStack.Pose posestack$pose = p_115147_.last();
+                                if (p_115145_ == ItemTransforms.TransformType.GUI) {
+                                    posestack$pose.pose().multiply(0.5F);
+                                } else if (p_115145_.firstPerson()) {
+                                    posestack$pose.pose().multiply(0.75F);
+                                }
+
+                                if (flag1) {
+                                    vertexconsumer = ItemRenderer.getCompassFoilBufferDirect(p_115148_, rendertype, posestack$pose);
+                                } else {
+                                    vertexconsumer = ItemRenderer.getCompassFoilBuffer(p_115148_, rendertype, posestack$pose);
+                                }
+
+                                p_115147_.popPose();
+                            } else if (flag1) {
+                                vertexconsumer = ItemRenderer.getFoilBufferDirect(p_115148_, rendertype, true, p_115144_.hasFoil());
+                            } else {
+                                vertexconsumer = ItemRenderer.getFoilBuffer(p_115148_, rendertype, true, p_115144_.hasFoil());
+                            }
+
+                            renderModelLists(model, p_115144_, p_115149_, p_115150_, p_115147_, vertexconsumer);
+                        }
+                    }
+                } else {
+                    net.minecraftforge.client.extensions.common.IClientItemExtensions.of(p_115144_).getCustomRenderer().renderByItem(p_115144_, p_115145_, p_115147_, p_115148_, p_115149_, p_115150_);
+                }
+
+                p_115147_.popPose();
+            }
+        }
     }
+
+
 
 
     public static class LineRenderer{

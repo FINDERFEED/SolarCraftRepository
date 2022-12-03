@@ -5,6 +5,7 @@ import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.client.screens.custom_slots.InputSlot;
 import com.finderfeed.solarcraft.client.screens.custom_slots.OutputSlot;
 import com.finderfeed.solarcraft.content.blocks.solar_forge_block.SolarForgeBlockEntity;
+import com.finderfeed.solarcraft.registries.items.SolarcraftItems;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.Container;
@@ -38,7 +39,7 @@ public class SolarForgeContainer extends AbstractContainerMenu {
 
         // Tile Entity
 
-        list.add(SolarCraft.TEST_ITEM.get().getDefaultInstance());
+        list.add(SolarcraftItems.SOLAR_SHARD.get().getDefaultInstance());
         this.addSlot(new InputSlot((Container) te, 0, 135, 33,list));
         this.addSlot(new OutputSlot((Container) te, 1, 152, 63));
 

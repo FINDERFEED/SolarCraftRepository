@@ -10,6 +10,7 @@ import com.finderfeed.solarcraft.client.screens.ScrollableScreen;
 import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.ProgressionStage;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.Progression;
+import com.finderfeed.solarcraft.registries.items.SolarcraftItems;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
@@ -32,7 +33,7 @@ public class StagesScreen extends ScrollableScreen {
     private ArrayList<PostRender> RENDER_FRAMES = new ArrayList<>();
     private ArrayList<PostRender> RENDER_BORDERS = new ArrayList<>();
 
-    public ItemStackButton stagesPage = new ItemStackTabButton(relX+100,relY + 20,12,12,(button)->{minecraft.setScreen(new SolarLexiconScreen());}, SolarCraft.SOLAR_FORGE_ITEM.get().getDefaultInstance(),0.7f);
+    public ItemStackButton stagesPage;
     public InfoButton infoButton;
     public StagesScreen() {
 
@@ -45,7 +46,7 @@ public class StagesScreen extends ScrollableScreen {
         infoButton = new InfoButton(relX +  206 + 35,relY + 43,13,13,(btn1, matrices1, mx, my)->{
             renderTooltip(matrices1,font.split(STAGES_CMP.copy(),200),mx,my);
         });
-
+        stagesPage = new ItemStackTabButton(relX+98,relY + 18,17,17,(button)->{minecraft.setScreen(new SolarLexiconScreen());}, SolarcraftItems.SOLAR_FORGE_ITEM.get().getDefaultInstance(),0.7f);
         setAsStaticWidget(stagesPage);
         setAsStaticWidget(infoButton);
         RENDER_QMARKS.clear();
@@ -93,8 +94,8 @@ public class StagesScreen extends ScrollableScreen {
 
         addRenderableWidget(stagesPage);
         addRenderableWidget(infoButton);
-        stagesPage.x = relX + 207 + 35;
-        stagesPage.y = relY + 164 - 137;
+        stagesPage.x = relX + 207 + 35 - 3;
+        stagesPage.y = relY + 164 - 137 - 3;
 
     }
 

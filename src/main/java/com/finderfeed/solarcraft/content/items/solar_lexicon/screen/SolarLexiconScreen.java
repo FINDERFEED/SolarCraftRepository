@@ -12,6 +12,7 @@ import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.Progression;
 import com.finderfeed.solarcraft.misc_things.IScrollable;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.progression_tree.ProgressionTree;
+import com.finderfeed.solarcraft.registries.items.SolarcraftItems;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
@@ -66,7 +67,7 @@ public class SolarLexiconScreen extends Screen implements IScrollable,PostRender
 
     public ItemStackButton stagesPage = new ItemStackButton(relX+100,relY + 40,12,12,(button)->{minecraft.setScreen(new StagesScreen());},Items.BEACON.getDefaultInstance(),0.7f);
     public ItemStackButton toggleRecipesScreen = new ItemStackButton(relX+100,relY+100,12,12,(button)->{minecraft.setScreen(new SolarLexiconRecipesScreen());}, Items.CRAFTING_TABLE.getDefaultInstance(),0.7f);
-    public ItemStackButton justForge = new ItemStackButton(relX+100,relY+100,12,12,(button)->{}, SolarCraft.SOLAR_FORGE_ITEM.get().getDefaultInstance(),0.7f);
+    public ItemStackButton justForge = new ItemStackButton(relX+100,relY+100,12,12,(button)->{}, SolarcraftItems.SOLAR_FORGE_ITEM.get().getDefaultInstance(),0.7f);
     public ItemStackButton retainFragmentsScreen = new ItemStackButton(relX+100,relY+100,12,12,(button)->{minecraft.setScreen(new RetainFragmentsScreen());}, Items.PAPER.getDefaultInstance(),0.7f);
 
     public InfoButton info;

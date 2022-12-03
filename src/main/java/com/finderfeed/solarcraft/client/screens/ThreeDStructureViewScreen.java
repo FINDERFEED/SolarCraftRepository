@@ -1,6 +1,8 @@
 package com.finderfeed.solarcraft.client.screens;
 
 import com.finderfeed.solarcraft.content.blocks.solar_forge_block.solar_forge_screen.SolarForgeButtonYellow;
+import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
+import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.ProgressionHelper;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.helpers.multiblock.MultiblockStructure;
@@ -24,6 +26,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.ColorResolver;
@@ -32,12 +35,14 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.lighting.LevelLightEngine;
 import net.minecraft.world.level.material.FluidState;
+import net.minecraftforge.items.IItemHandler;
 import org.lwjgl.glfw.GLFW;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.finderfeed.solarcraft.content.items.solar_lexicon.screen.InformationScreen.getScreenFromFragment;
 
 
 public class ThreeDStructureViewScreen extends Screen implements IScrollable {
@@ -58,15 +63,17 @@ public class ThreeDStructureViewScreen extends Screen implements IScrollable {
     private double dragUpDown=0;
     private MultiblockStructure struct;
     private BlockAndTintGetter getter = new Getter();
+    private AncientFragment fragment;
 
     private List<PositionBlockStateTileEntity> POS_STATE_TILEENTITY = new ArrayList<>();
 
 
     int relX = 0;
     int relY = 0;
-    public ThreeDStructureViewScreen(MultiblockStructure structure) {
+    public ThreeDStructureViewScreen(AncientFragment fragment,MultiblockStructure structure) {
         super(Component.literal(""));
         this.struct = structure;
+        this.fragment = fragment;
     }
 
 
@@ -82,7 +89,7 @@ public class ThreeDStructureViewScreen extends Screen implements IScrollable {
         structScale = 10f/Math.max(struct.pattern.length,struct.pattern[0].length);
         this.POS_STATE_TILEENTITY = RenderingTools.StructureRenderer.prepareList(struct);
         addRenderableWidget(new ImageButton(relX+216,relY,16,16,0,0,0,THREEDSCREENBTN,16,16,(button)->{
-            Minecraft.getInstance().setScreen(new StructureScreen(struct));
+            Minecraft.getInstance().setScreen(new StructureScreen(fragment,struct));
         },(btn,poseStack,mx,my)->{
             renderTooltip(poseStack,Component.literal("2D View"),mx,my);
         },Component.literal("2D")){
@@ -105,6 +112,30 @@ public class ThreeDStructureViewScreen extends Screen implements IScrollable {
         b.y = relY+20;
         c.x = relX+219;
         c.y = relY+20+18;
+
+
+        int h = 0;
+        IItemHandler items = SolarLexiconRecipesScreen.getLexiconInventory();
+        if (items != null) {
+            List<AncientFragment> refs = new ArrayList<>();
+            for (int i = 0; i < items.getSlots();i++){
+                ItemStack item = items.getStackInSlot(i);
+                AncientFragment iFrag = ProgressionHelper.getFragmentFromItem(item);
+                if (fragment.getReferences().contains(iFrag)){
+                    refs.add(iFrag);
+                }
+            }
+
+            for (AncientFragment ref : refs) {
+                ItemStackTabButton button1 = new ItemStackTabButton(relX + 220, relY + 25 + 18 + 3 + h * 18 + 40, 12, 12, b -> {
+                    Minecraft.getInstance().setScreen(getScreenFromFragment(ref));
+                }, ref.getIcon().getDefaultInstance(), 0.7f, (buttons, matrices, b, c) -> {
+                    renderTooltip(matrices, ref.getTranslation(), b, c);
+                });
+                h++;
+                addRenderableWidget(button1);
+            }
+        }
     }
 
     @Override

@@ -29,10 +29,10 @@ public enum Progression {
     IMBUED_COLD_STAR("cold_star_piece_activated",3, SolarcraftItems.COLD_STAR_PIECE_ACTIVATED.get().getDefaultInstance(), Component.translatable("ach.cold_star_piece_activated"),nextID(),Component.translatable("pre.cold_star_piece_activated"),Component.translatable("aft.cold_star_piece_activated")),
     PYLON_INSCRIPTION("pylon_inscription",3, SolarcraftBlocks.INSCRIPTION_STONE.get().asItem().getDefaultInstance(),Component.translatable("ach.pylon_inscription"),nextID(),Component.translatable("pre.pylon_inscription"),Component.translatable("aft.pylon_inscription")),
 
-    CRAFT_SOLAR_FORGE("solar_forge_craft",4, SolarCraft.SOLAR_FORGE_ITEM.get().getDefaultInstance(),Component.translatable("ach.solar_forge_craft"),nextID(),Component.translatable("pre.solar_forge_craft"),Component.translatable("aft.solar_forge_craft")),
+    CRAFT_SOLAR_FORGE("solar_forge_craft",4, SolarcraftItems.SOLAR_FORGE_ITEM.get().getDefaultInstance(),Component.translatable("ach.solar_forge_craft"),nextID(),Component.translatable("pre.solar_forge_craft"),Component.translatable("aft.solar_forge_craft")),
     TRANSMUTE_GEM("transmute_gem",4, SolarcraftItems.BLUE_GEM_ENCHANCED.get().getDefaultInstance(), Component.translatable("ach.transmute_gem"),nextID(),Component.translatable("pre.transmute_gem"),Component.translatable("aft.transmute_gem")),
 
-    SOLAR_INFUSER("solar_infuser_create",5, SolarCraft.INFUSER_ITEM.get().getDefaultInstance(),Component.translatable("ach.solar_infuser_create"),nextID(),Component.translatable("pre.solar_infuser_create"),Component.translatable("aft.solar_infuser_create")),
+    SOLAR_INFUSER("solar_infuser_create",5, SolarcraftItems.INFUSER_ITEM.get().getDefaultInstance(),Component.translatable("ach.solar_infuser_create"),nextID(),Component.translatable("pre.solar_infuser_create"),Component.translatable("aft.solar_infuser_create")),
     DIMENSIONAL_SHARD_DUNGEON("dim_shard_dungeon",5, SolarcraftItems.SOLAR_STONE_CHISELED.get().getDefaultInstance(), Component.translatable("ach.dim_shard_dungeon"),nextID(),Component.translatable("pre.dim_shard_dungeon"),Component.translatable("aft.dim_shard_dungeon")),
 
     CATALYSTS("catalysts",6, SolarcraftItems.ARDO_RUNE_BLOCK.get().getDefaultInstance(), Component.translatable("ach.catalysts"),nextID(),Component.translatable("pre.catalysts"),Component.translatable("aft.catalysts")),

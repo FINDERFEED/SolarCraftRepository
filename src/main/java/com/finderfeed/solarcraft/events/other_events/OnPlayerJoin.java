@@ -55,7 +55,11 @@ public class OnPlayerJoin {
                 Helpers.updateFragmentsOnClient(sPlayer);
                 Helpers.updateClientRadiantLandStateForPlayer(sPlayer);
                 AncientFragment.initFragmentsMap();
+                for (AncientFragment fr : AncientFragment.ALL_FRAGMENTS){
+                    fr.getReferences();
+                }
             }
+
         }
     }
 

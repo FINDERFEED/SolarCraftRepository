@@ -737,6 +737,8 @@
   "block.solarcraft.multirune_block": "Multirune Block",
   "solar_fragment.multirune_block": "Multirune Block",
   "multirune_block.lore": "A block that represents all types of runic energies. Place below a runic energy repeater to make it a multirepeater (can transmit all types of runic energies).",
-  "solarcraft.item_upgrades.current_lvl": "Current level"
+  "solarcraft.item_upgrades.current_lvl": "Current level",
+  "solar_network_binder.lore": "A tool used to connect two solar energy users between themselves.",
+  "solar_fragment.solar_network_binder": "Solar Network Binder"
 }
 

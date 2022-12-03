@@ -319,7 +319,7 @@ public class SubCategory {
 
     public ItemStackButton constructStructureButton(MultiblockStructure structure, int x , int y, AncientFragment fragment){
         return new ItemStackButton(x,y,24,24,(button)->{
-            Minecraft.getInstance().setScreen(new StructureScreen(structure));
+            Minecraft.getInstance().setScreen(new StructureScreen(fragment,structure));
         },structure.mainBlock.getBlock().asItem().getDefaultInstance(),1.5f, (button,matrices,mx,my)->{
 
             if (Minecraft.getInstance().screen instanceof SolarLexiconRecipesScreen screen) {

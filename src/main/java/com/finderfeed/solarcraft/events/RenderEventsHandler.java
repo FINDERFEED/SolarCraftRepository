@@ -33,39 +33,6 @@ public class RenderEventsHandler {
     }
 
 
-
-//moved to ShaderMixin
-//    @SubscribeEvent
-    public void renderWorld(RenderLevelStageEvent event){
-//        if (event.getStage() != RenderLevelStageEvent.Stage.AFTER_WEATHER) return;
-//        if (ClientHelpers.isShadersEnabled()) {
-//            if ((Minecraft.getInstance().getWindow().getScreenWidth() != 0) && (Minecraft.getInstance().getWindow().getScreenHeight() != 0)) {
-//                if ((intensity > 0)) {
-//
-//                    if (!ACTIVE_SHADERS.isEmpty()) {
-//                        RenderingTools.renderHandManually(event.getPoseStack(), event.getPartialTick(),256);
-//                    }
-//
-//
-//                    float time = Minecraft.getInstance().level.getGameTime();
-//                    UniformPlusPlus uniforms = new UniformPlusPlus(Map.of(
-//                            "intensity", intensity,
-//                            "timeModifier", 3f,
-//                            "time", time
-//                    ));
-//                    if (PROGRESSION_SHADER == null) {
-//                        PROGRESSION_SHADER = loadProgressionShader(PROGRESSION_SHADER_LOC, uniforms);
-//                    } else {
-//                        PROGRESSION_SHADER.updateUniforms(uniforms);
-//                        PROGRESSION_SHADER.resize(Minecraft.getInstance().getWindow().getWidth(), Minecraft.getInstance().getWindow().getHeight());
-//                    }
-//                    if (PROGRESSION_SHADER != null) {
-//                        PROGRESSION_SHADER.process(Minecraft.getInstance().getFrameTime());
-//                    }
-//                }
-//            }
-//        }
-    }
     public static void triggerProgressionShader(){
         intensity = 3;
     }
@@ -92,53 +59,5 @@ public class RenderEventsHandler {
     public static Map<String, PostShader> ACTIVE_SHADERS = new HashMap<>();
     public Vec2 resolution;
 
-
-//moved to ShaderMixin
-//    @SubscribeEvent
-    public void renderActiveShaders(RenderHandEvent event){
-////        if (event.getStage() != RenderLevelStageEvent.Stage.AFTER_WEATHER) return;
-//        float width = (float)Minecraft.getInstance().getWindow().getScreenWidth();
-//        float height = (float)Minecraft.getInstance().getWindow().getScreenHeight();
-//        if (resolution == null){
-//            resolution = new Vec2(width,height);
-//        }
-//        if ((Minecraft.getInstance().getWindow().getScreenWidth() != 0) && (Minecraft.getInstance().getWindow().getScreenHeight() != 0)) {
-//            if (!ACTIVE_SHADERS.isEmpty()) {
-////                PoseStack test = RenderSystem.getModelViewStack();
-////                test.pushPose();
-////                Matrix4f copy = event.getPoseStack().last().pose().copy();
-////                copy.invert();
-////                test.mulPoseMatrix(copy);
-////                RenderSystem.applyModelViewMatrix();
-////
-//////                RenderingTools.renderHandManually(event.getPoseStack(), event.getPartialTick(),256);
-////
-////                copy.invert();
-////                test.mulPoseMatrix(copy);
-////                RenderSystem.applyModelViewMatrix();
-////                test.popPose();
-//            }
-//
-//            resizeShader(width,height,RuneEnergyPylonRenderer.SHADER,EnergyGeneratorTileRender.SHADER, WormholeRenderer.SHADER,
-//                    DimensionCoreRenderer.SHADER);
-//            ACTIVE_SHADERS.forEach((uniforms,shader)->{
-//                shader.updateUniforms(uniforms);
-//                shader.process(Minecraft.getInstance().getFrameTime());
-//            });
-//
-//            ACTIVE_SHADERS.clear();
-//        }
-    }
-
-//    private void resizeShader(float width, float height, PostChainPlusUltra... shader){
-//        if ((shader != null) && (resolution.x != width || resolution.y != height)){
-//            resolution = new Vec2(width,height);
-//            for (PostChainPlusUltra shaders : shader) {
-//                if (shaders != null) {
-//                    shaders.resize(Minecraft.getInstance().getWindow().getScreenWidth(), Minecraft.getInstance().getWindow().getScreenHeight());
-//                }
-//            }
-//        }
-//    }
 
 }

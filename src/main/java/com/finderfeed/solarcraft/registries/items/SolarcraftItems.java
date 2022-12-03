@@ -4,10 +4,12 @@ import com.finderfeed.solarcraft.SolarCraft;
 
 import com.finderfeed.solarcraft.content.blocks.FuelBlockItem;
 import com.finderfeed.solarcraft.content.blocks.blockentities.clearing_ritual.clearing_ritual_crystal.ClearingRitualCrystalItem;
+import com.finderfeed.solarcraft.content.blocks.infusing_table_things.InfuserBlockItem;
 import com.finderfeed.solarcraft.content.blocks.infusing_table_things.SolarWandItem;
 import com.finderfeed.solarcraft.content.armor.SolarArmorMaterial;
 import com.finderfeed.solarcraft.content.blocks.blockitems.TurretBlockItem;
 import com.finderfeed.solarcraft.content.blocks.blockitems.UldoradiumOreBlockitem;
+import com.finderfeed.solarcraft.content.blocks.solar_forge_block.SolarForgeBlockItem;
 import com.finderfeed.solarcraft.content.items.divine_armor.*;
 import com.finderfeed.solarcraft.content.items.item_tiers.SolarCraftToolTiers;
 import com.finderfeed.solarcraft.content.items.*;
@@ -153,7 +155,7 @@ public class SolarcraftItems {
         }
     });
 
-    public static final RegistryObject<Item> SOLAR_NETWORK_BINDER = ITEMS.register("solar_network_binder",()-> new SolarNetworkBinder(new Item.Properties().rarity(Rarity.EPIC).tab(SolarCraft.SOLAR_GROUP).stacksTo(1)));
+    public static final RegistryObject<Item> SOLAR_NETWORK_BINDER = ITEMS.register("solar_network_binder",()-> new SolarNetworkBinder(new Item.Properties().rarity(Rarity.EPIC).tab(SolarCraft.SOLAR_GROUP).stacksTo(1),()->AncientFragment.SOLAR_NETWORK_BINDER));
     public static final RegistryObject<Item> ILLIDIUM_BLOCK = ITEMS.register("illidium_block",()->new SolarcraftBlockItem(SolarcraftBlocks.ILLIDIUM_BLOCK.get(),new Item.Properties().tab(SolarCraft.SOLAR_GROUP_BLOCKS),()->AncientFragment.ILLIDIUM_INGOT));
     public static final RegistryObject<Item> ALGADIUM_BLOCK = ITEMS.register("algadium_block",()->new SolarcraftBlockItem(SolarcraftBlocks.ALGADIUM_BLOCK.get(),new Item.Properties().tab(SolarCraft.SOLAR_GROUP_BLOCKS),()->AncientFragment.ALGADIUM_INGOT));
     public static final RegistryObject<Item> SOLAR_CORE = ITEMS.register("solar_core_block",()->new SolarcraftBlockItem(SolarcraftBlocks.SOLAR_CORE.get(),new Item.Properties().tab(SolarCraft.SOLAR_GROUP_BLOCKS),()->AncientFragment.SOLAR_CORE));
@@ -313,6 +315,9 @@ public class SolarcraftItems {
     public static final RegistryObject<Item> CLEARING_RITUAL_MAIN_BLOCK = ITEMS.register("clearing_ritual_main_block",()->new BlockItem(SolarcraftBlocks.CLEARING_RITUAL_MAIN_BLOCK.get(),new Item.Properties()));
     public static final RegistryObject<Item> THROWN_LIGHT = ITEMS.register("thrown_light",()->new ThrownLight(SolarcraftBlocks.THROWN_LIGHT.get(),new Item.Properties().tab(SolarCraft.SOLAR_GROUP)));
 
-
+    public static  final RegistryObject<Item> SOLAR_SHARD = ITEMS.register("solar_shard",()-> new Item(new Item.Properties().rarity(Rarity.EPIC).tab(SolarCraft.SOLAR_GROUP)));
+    public static  final RegistryObject<Item> SOLAR_FORGE_ITEM = ITEMS.register("solar_forge",()-> new SolarForgeBlockItem(SolarCraft.SOLAR_FORGE.get(),new Item.Properties().rarity(Rarity.EPIC).tab(SolarCraft.SOLAR_GROUP_BLOCKS).stacksTo(1)));
+    public static  final RegistryObject<Item> SOLAR_ORE_ITEM = ITEMS.register("solar_ores",()-> new ProgressionBlockItem(SolarCraft.SOLAR_ORE.get(),new Item.Properties().tab(SolarCraft.SOLAR_GROUP_BLOCKS)));
+    public static  final RegistryObject<Item> INFUSER_ITEM = ITEMS.register("solar_infuser",()-> new InfuserBlockItem(SolarCraft.SOLAR_INFUSER.get(),new Item.Properties().rarity(Rarity.EPIC).tab(SolarCraft.SOLAR_GROUP_BLOCKS).stacksTo(1),()-> AncientFragment.SOLAR_INFUSER));
 
 }

@@ -103,7 +103,7 @@ public class SolarForgeBlockEntity extends RandomizableContainerBlockEntity  {
 
 
             }
-            if (tile.getItems().get(0).getItem() == SolarCraft.TEST_ITEM.get() && tile.SOLAR_ENERGY_LEVEL+300 <= 30000){
+            if (tile.getItems().get(0).getItem() == SolarcraftItems.SOLAR_SHARD.get() && tile.SOLAR_ENERGY_LEVEL+300 <= 30000){
                 tile.getItems().get(0).grow(-1);
                 if (world.random.nextDouble() > 0.85) {
                     if (tile.getItem(1).isEmpty()) {

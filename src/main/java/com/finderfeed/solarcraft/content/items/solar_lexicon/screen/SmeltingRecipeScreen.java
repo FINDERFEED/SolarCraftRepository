@@ -53,9 +53,9 @@ public class SmeltingRecipeScreen extends Screen {
         stacks.add(recipe.output);
 
 
-        addRenderableWidget(new ItemStackTabButton(relX+205,relY+9 + 20,12,12,(button)->{minecraft.setScreen(new SolarLexiconRecipesScreen());},
+        addRenderableWidget(new ItemStackTabButton(relX+205,relY+9 + 20,17,17,(button)->{minecraft.setScreen(new SolarLexiconRecipesScreen());},
                 Items.CRAFTING_TABLE.getDefaultInstance(),0.7f));
-        addRenderableWidget(new ItemStackTabButton(relX + 205,relY+27 + 20,12,12,(button)->{
+        addRenderableWidget(new ItemStackTabButton(relX + 205,relY+27 + 20,17,17,(button)->{
             Minecraft mc = Minecraft.getInstance();
             SolarLexicon lexicon = (SolarLexicon) mc.player.getMainHandItem().getItem();
             lexicon.currentSavedScreen = this;

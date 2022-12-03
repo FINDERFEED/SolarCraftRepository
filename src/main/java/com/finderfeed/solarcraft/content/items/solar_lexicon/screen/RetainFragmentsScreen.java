@@ -10,6 +10,7 @@ import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.Progres
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.packet_handler.SolarCraftPacketHandler;
 import com.finderfeed.solarcraft.packet_handler.packets.RetainFragmentPacket;
+import com.finderfeed.solarcraft.registries.items.SolarcraftItems;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.AbstractWidget;
@@ -26,7 +27,7 @@ public class RetainFragmentsScreen extends ScrollableScreen {
     public final ResourceLocation MAIN_SCREEN = new ResourceLocation(SolarCraft.MOD_ID,"textures/gui/stages_page.png");
     public final ResourceLocation BG = new ResourceLocation(SolarCraft.MOD_ID,"textures/gui/solar_lexicon_main_page_scrollablep.png");
 
-    public ItemStackButton stagesPage = new ItemStackTabButton(relX+100,relY + 20,12,12,(button)->{minecraft.setScreen(new SolarLexiconScreen());}, SolarCraft.SOLAR_FORGE_ITEM.get().getDefaultInstance(),0.7f);
+    public ItemStackButton stagesPage;
     public InfoButton infoButton;
 
     @Override
@@ -35,7 +36,7 @@ public class RetainFragmentsScreen extends ScrollableScreen {
         infoButton = new InfoButton(relX +  206 + 35,relY + 43,13,13,(btn1, matrices1, mx, my)->{
             renderTooltip(matrices1,font.split(RETAIN_FRAGMENTS.copy(),200),mx,my);
         });
-
+        stagesPage  = new ItemStackTabButton(relX+98,relY + 20,17,17,(button)->{minecraft.setScreen(new SolarLexiconScreen());}, SolarcraftItems.SOLAR_FORGE_ITEM.get().getDefaultInstance(),0.7f);
         setAsStaticWidget(stagesPage);
         setAsStaticWidget(infoButton);
 
@@ -59,8 +60,8 @@ public class RetainFragmentsScreen extends ScrollableScreen {
 
         addRenderableWidget(stagesPage);
         addRenderableWidget(infoButton);
-        stagesPage.x = relX + 207 + 35;
-        stagesPage.y = relY + 164 - 137;
+        stagesPage.x = relX + 207 + 35 - 3;
+        stagesPage.y = relY + 164 - 137 - 3;
 
     }
 

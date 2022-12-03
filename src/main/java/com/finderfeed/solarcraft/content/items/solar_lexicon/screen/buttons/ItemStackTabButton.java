@@ -28,34 +28,64 @@ public class ItemStackTabButton extends ItemStackButton {
             this.renderToolTip(matrices,mousex,mousey);
         }
 //        matrices.scale(scaleFactor,scaleFactor,scaleFactor);
-        RenderingTools.renderScaledGuiItem(stack,(int) x, (int) y,scaleFactor,0);
+        float scaleFactor = width / 17f;
+        float itemScale = (width - scaleFactor*5f) / 17f;
+        RenderingTools.renderScaledGuiItemCentered(stack, x + width / 2f,  y + height / 2f,itemScale,0);
 
         RenderSystem.setShaderTexture(0,LOCATION);
         RenderSystem.enableBlend();
+//        if (!this.isHovered){
+//            Gui.blit(matrices,x - width/4,y - height/4,0,0,17,17,17,34);
+//        }else{
+//            Gui.blit(matrices,x - width/4,y - height/4,0,17,17,17,17,34);
+//        }
         if (!this.isHovered){
-            Gui.blit(matrices,x - width/4,y - height/4,0,0,17,17,17,34);
+            RenderingTools.blitWithBlend(matrices,x,y ,0,0,width,height,width,height*2,getBlitOffset(),1f);
         }else{
-            Gui.blit(matrices,x - width/4,y - height/4,0,17,17,17,17,34);
+            RenderingTools.blitWithBlend(matrices,x,y ,0,height,width,height,width,height*2,getBlitOffset(),1f);
         }
         matrices.popPose();
     }
 
     public void render(PoseStack matrices, int mousex, int mousey, float partialTicks,double zOffset){
         this.isHovered = RenderingTools.isMouseInBorders(mousex,mousey,x,y,x + width,y + height);
+//        matrices.pushPose();
+//        if (this.isHovered){
+//            this.renderToolTip(matrices,mousex,mousey);
+//        }
+////        matrices.scale(scaleFactor,scaleFactor,scaleFactor);
+//        RenderingTools.renderScaledGuiItem(stack,(int) x, (int) y,scaleFactor,zOffset);
+//
+//        RenderSystem.setShaderTexture(0,LOCATION);
+//        RenderSystem.enableBlend();
+//        if (!this.isHovered){
+//            Gui.blit(matrices, x, y,0,0,17,17,17,34);
+//        }else{
+//            Gui.blit(matrices, x, y,0,17,17,17,17,34);
+//        }
+//        matrices.popPose();
         matrices.pushPose();
         if (this.isHovered){
             this.renderToolTip(matrices,mousex,mousey);
         }
 //        matrices.scale(scaleFactor,scaleFactor,scaleFactor);
-        RenderingTools.renderScaledGuiItem(stack,(int) x, (int) y,scaleFactor,zOffset);
+        float scaleFactor = width / 17f;
+        float itemScale = (width - scaleFactor*2f) / 17f;
+        RenderingTools.renderScaledGuiItemCentered(stack, x + width / 2f,  y + height / 2f,itemScale,0);
 
         RenderSystem.setShaderTexture(0,LOCATION);
         RenderSystem.enableBlend();
+//        if (!this.isHovered){
+//            Gui.blit(matrices,x - width/4,y - height/4,0,0,17,17,17,34);
+//        }else{
+//            Gui.blit(matrices,x - width/4,y - height/4,0,17,17,17,17,34);
+//        }
         if (!this.isHovered){
-            Gui.blit(matrices, x, y,0,0,17,17,17,34);
+            RenderingTools.blitWithBlend(matrices,x,y ,0,0,width,height,width,height*2,getBlitOffset(),1f);
         }else{
-            Gui.blit(matrices, x, y,0,17,17,17,17,34);
+            RenderingTools.blitWithBlend(matrices,x,y ,0,height,width,height,width,height*2,getBlitOffset(),1f);
         }
         matrices.popPose();
+
     }
 }
