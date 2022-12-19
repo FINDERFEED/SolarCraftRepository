@@ -1,7 +1,7 @@
 package com.finderfeed.solarcraft.content.entities.models;
 
 
-import com.finderfeed.solarcraft.content.entities.RunicElementalBoss;
+import com.finderfeed.solarcraft.content.entities.runic_elemental.RunicElementalBoss;
 
 @FunctionalInterface
 public interface RunicElementalModelAnimation {

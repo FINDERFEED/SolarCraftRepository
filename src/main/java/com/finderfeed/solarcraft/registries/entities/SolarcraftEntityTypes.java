@@ -8,6 +8,7 @@ import com.finderfeed.solarcraft.content.blocks.blockentities.clearing_ritual.cl
 import com.finderfeed.solarcraft.content.blocks.blockentities.projectiles.AbstractTurretProjectile;
 import com.finderfeed.solarcraft.content.blocks.blockentities.projectiles.MortarProjectile;
 import com.finderfeed.solarcraft.content.blocks.blockentities.projectiles.ShadowBolt;
+import com.finderfeed.solarcraft.content.entities.runic_elemental.RunicElementalBoss;
 import com.finderfeed.solarcraft.content.items.solar_disc_gun.SolarDiscProjectile;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.EntityType;

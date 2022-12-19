@@ -63,7 +63,7 @@ public class SolarCraftTags {
         public static final TagKey<Biome> HAS_CRYSTAL_BOSS_ROOM = create("crystal_boss_room");
         public static final TagKey<Biome> HAS_DIM_SHARD_DUNGEON = create("dim_shard_dungeon");
         public static final TagKey<Biome> HAS_DUNGEON_ONE = create("dungeon_one");
-        public static final TagKey<Biome> HAS_LABYRINTH = create("labyrinth");
+        public static final TagKey<Biome> HAS_TRAP_DUNGEON = create("has_trap_dungeon");
         public static final TagKey<Biome> HAS_MAGICIAN_TOWER = create("magician_tower");
         public static final TagKey<Biome> HAS_RUNIC_ELEMENTAL_ARENA = create("runic_elemental_arena");
         public static final TagKey<Biome> HAS_CLEARING_RITUAL_STRUCTURE = create("clearing_ritual_structure");

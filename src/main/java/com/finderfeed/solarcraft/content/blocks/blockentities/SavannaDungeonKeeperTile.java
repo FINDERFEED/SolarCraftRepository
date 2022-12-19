@@ -7,17 +7,21 @@ import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.monster.Vex;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.RandomState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -27,6 +31,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import java.util.List;
+import java.util.Random;
 
 public class SavannaDungeonKeeperTile extends SolarcraftBlockEntity {
 
@@ -39,11 +44,10 @@ public class SavannaDungeonKeeperTile extends SolarcraftBlockEntity {
 
     private static final EntityType[] MONSTER_TYPES = {
             EntityType.ZOMBIE,
-            EntityType.SKELETON,
-            EntityType.VEX
+            EntityType.SKELETON
     };
 
-    public static final int MAX_TIME = 1000;
+    public static final int MAX_TIME = 999;
 
     private int activeTime = 0;
     private boolean active = false;
@@ -56,14 +60,23 @@ public class SavannaDungeonKeeperTile extends SolarcraftBlockEntity {
 
     public static void tick(SavannaDungeonKeeperTile tile, Level world,BlockState state,BlockPos pos){
         if (!world.isClientSide){
+            if (tile.isAlreadyUsed()){
+                world.destroyBlock(pos, false);
+                    ((ServerLevel)world).sendParticles(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+                            pos.getX() + 0.5d, pos.getY() + 0.5d, pos.getZ() + 0.5d,30,
+                            0,0,0,0.05d);
+
+            }
             if (tile.active){
                 if (tile.activeTime % 200 == 0){
                     Vec3 p = Helpers.posToVec(pos);
                     for (BlockPos offset : MONSTER_OFFSETS){
                         EntityType type = MONSTER_TYPES[world.random.nextInt(MONSTER_TYPES.length)];
-                        Entity e = type.create(world);
-                        e.setPos(p.add(offset.getX()+0.5f,offset.getY(),offset.getZ()+0.5f));
-                        world.addFreshEntity(e);
+//                        Entity e = type.create(world);
+//                        e.setPos(p.add(offset.getX()+0.5f,offset.getY(),offset.getZ()+0.5f));
+//                        world.addFreshEntity(e);
+                        type.spawn((ServerLevel) world,
+                                null,null,pos.offset(offset), MobSpawnType.STRUCTURE,false,false);
                     }
                 }
                 List<Player> players = tile.playersInRange();
@@ -75,11 +88,10 @@ public class SavannaDungeonKeeperTile extends SolarcraftBlockEntity {
                 AABB box = tile.affectionBox();
 
                 for (Player player : players){
-                    //TODO:kick player inside box
-//                    if (player.getBoundingBox().intersects(box)){
-//                        Helpers.setServerPlayerSpeed((ServerPlayer) player,Helpers.posToVec(pos).add(0.5,0.5,0.5)
-//                                .subtract(player.position()).multiply(0.1f,0.1f,0.1f));
-//                    }
+                    if (Helpers.AABBTouchesAABB(box,player.getBoundingBox())){
+                        Helpers.setServerPlayerSpeed((ServerPlayer) player,box.getCenter()
+                                .subtract(player.position()).normalize().multiply(0.2f,0.2f,0.2f));
+                    }
                 }
                 tile.activeTime++;
                 if (tile.activeTime > MAX_TIME){
@@ -128,13 +140,13 @@ public class SavannaDungeonKeeperTile extends SolarcraftBlockEntity {
     public List<Player> playersInRange(){
         return level.getEntitiesOfClass(Player.class,
                 new AABB(Helpers.posToVec(this.getBlockPos()).add(-3.5,-4,-3.5),
-                        Helpers.posToVec(this.getBlockPos()).add(4.5,4,4.5)),
+                        Helpers.posToVec(this.getBlockPos()).add(4.5,-0.5,4.5)),
                 player->!(player.isCreative() || player.isSpectator()));
     }
 
     public AABB affectionBox(){
-        return new AABB(Helpers.posToVec(this.getBlockPos()).add(-3.5,-4,-3.5),
-                Helpers.posToVec(this.getBlockPos()).add(4.5,4,4.5));
+        return new AABB(Helpers.posToVec(this.getBlockPos()).add(-3.5,-4.5,-3.5),
+                Helpers.posToVec(this.getBlockPos()).add(4.5,-0.5,4.5));
     }
 
     public boolean isAlreadyUsed(){
@@ -155,6 +167,11 @@ public class SavannaDungeonKeeperTile extends SolarcraftBlockEntity {
         super.load(tag);
     }
 
+    @Override
+    public AABB getRenderBoundingBox() {
+        return Helpers.createAABBWithRadius(Helpers.posToVec(this.getBlockPos()),10,10);
+    }
+
     @Mod.EventBusSubscriber(modid = SolarCraft.MOD_ID,bus = Mod.EventBusSubscriber.Bus.FORGE)
     public static class LocalEventHandler{
 
@@ -162,7 +179,7 @@ public class SavannaDungeonKeeperTile extends SolarcraftBlockEntity {
         public static void detectChestOpening(PlayerInteractEvent.RightClickBlock event){
             Player player = event.getEntity();
             if (!player.level.isClientSide){
-                SavannaDungeonKeeperTile keeper = searchKeeper(player.level,event.getPos());
+                SavannaDungeonKeeperTile keeper = searchKeeper(player.level,event.getPos(),4);
                 if (keeper != null){
                     keeper.trigger();
                     player.swing(event.getHand());
@@ -174,7 +191,7 @@ public class SavannaDungeonKeeperTile extends SolarcraftBlockEntity {
         @SubscribeEvent
         public static void detectBlockPlacing(BlockEvent.EntityPlaceEvent event){
             if (event.getEntity() instanceof Player player && !player.level.isClientSide){
-                SavannaDungeonKeeperTile keeper = searchKeeper(player.level,event.getPos());
+                SavannaDungeonKeeperTile keeper = searchKeeper(player.level,event.getPos(),4);
                 if (keeper != null){
                     keeper.trigger();
                     event.setCanceled(true);
@@ -185,7 +202,7 @@ public class SavannaDungeonKeeperTile extends SolarcraftBlockEntity {
         public static void detectBlockBreaking(BlockEvent.BreakEvent event){
             Player player = event.getPlayer();
             if (!player.level.isClientSide){
-                SavannaDungeonKeeperTile keeper = searchKeeper(player.level,event.getPos());
+                SavannaDungeonKeeperTile keeper = searchKeeper(player.level,event.getPos(),4);
                 if (keeper != null){
                     keeper.trigger();
                     event.setCanceled(true);
@@ -196,7 +213,7 @@ public class SavannaDungeonKeeperTile extends SolarcraftBlockEntity {
         public static void detectTNT(ExplosionEvent.Start event){
             Level world = event.getLevel();
             if (!world.isClientSide){
-                SavannaDungeonKeeperTile keeper = searchKeeper(world,new BlockPos(event.getExplosion().getPosition()));
+                SavannaDungeonKeeperTile keeper = searchKeeper(world,new BlockPos(event.getExplosion().getPosition()),10);
                 if (keeper != null){
                     keeper.trigger();
                     event.setCanceled(true);
@@ -204,9 +221,9 @@ public class SavannaDungeonKeeperTile extends SolarcraftBlockEntity {
             }
         }
 
-        private static SavannaDungeonKeeperTile searchKeeper(Level world, BlockPos offset){
-            for (int x = -4;x <= 4;x++){
-                for (int z = -4;z <= 4;z++){
+        private static SavannaDungeonKeeperTile searchKeeper(Level world, BlockPos offset,int horizontalCheck){
+            for (int x = -horizontalCheck;x <= horizontalCheck;x++){
+                for (int z = -horizontalCheck;z <= horizontalCheck;z++){
                     for (int y = -6;y <= 10;y++){
                         BlockPos pos = new BlockPos(x,y,z).offset(offset);
                         if (world.getBlockEntity(pos) instanceof SavannaDungeonKeeperTile tile && !tile.isAlreadyUsed()){

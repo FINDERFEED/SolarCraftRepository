@@ -8,6 +8,8 @@ import com.finderfeed.solarcraft.content.blocks.infusing_table_things.SolarWandI
 import com.finderfeed.solarcraft.content.items.UltraCrossbowItem;
 import com.finderfeed.solarcraft.content.recipe_types.infusing_new.InfusingRecipe;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
+import com.finderfeed.solarcraft.local_library.entities.bossbar.client.ActiveBossBar;
+import com.finderfeed.solarcraft.local_library.entities.bossbar.client.CustomBossBarRenderer;
 import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.finderfeed.solarcraft.misc_things.PhantomInventory;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
@@ -34,9 +36,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static com.finderfeed.solarcraft.events.other_events.event_handler.ClientEventsHandler.*;
 
@@ -50,6 +50,51 @@ public class SolarcraftOverlays {
         event.registerAboveAll("ultra_crossbow",new UltraCrossbow());
         event.registerAboveAll("runic_energy_bars",new RunicEnergyBars());
         event.registerAboveAll("flash",new Flash());
+        event.registerBelow(new ResourceLocation(SolarCraft.MOD_ID,"flash"),"boss_bars",new BossBars());
+    }
+
+    public static class BossBars implements IGuiOverlay{
+
+        private static final Map<String, CustomBossBarRenderer> BOSS_BAR_REGISTRY = new HashMap<>();
+        private static final Map<UUID, ActiveBossBar> BOSS_BARS = new LinkedHashMap<>();
+
+
+        @Override
+        public void render(ForgeGui gui, PoseStack matrices, float partialTick, int screenWidth, int screenHeight) {
+            if (!BOSS_BARS.isEmpty()) {
+                Minecraft mc = gui.getMinecraft();
+                Window window = mc.getWindow();
+                int scaledWidth = window.getGuiScaledWidth();
+                int scaledHeight = window.getGuiScaledHeight();
+                int yShift = 5;
+
+                for (ActiveBossBar bossBar : BOSS_BARS.values()){
+                    CustomBossBarRenderer cst = BOSS_BAR_REGISTRY.get(bossBar.getCustomBarId());
+                    if (cst == null) throw new IllegalStateException("Custom boss bar not registered: " + bossBar.getCustomBarId());
+                    cst.render(matrices,scaledWidth/2,yShift,bossBar.getName(),bossBar.getProgress(),bossBar.getEntity(Minecraft.getInstance().level));
+                    int barHeight = cst.getHeight();
+                    yShift += barHeight;
+
+                }
+
+            }
+        }
+
+        public static void registerCustomBossBar(String id, CustomBossBarRenderer bossBar){
+            BOSS_BAR_REGISTRY.put(id,bossBar);
+        }
+
+        public static void removeBossBar(UUID uuid){
+            BOSS_BARS.remove(uuid);
+        }
+
+        public static void addBossBar(ActiveBossBar bossBar){
+            BOSS_BARS.put(bossBar.getUUID(),bossBar);
+        }
+
+        public static ActiveBossBar getBossBar(UUID uuid){
+            return BOSS_BARS.get(uuid);
+        }
     }
 
     public static class RunicEnergyBars implements IGuiOverlay{
@@ -142,6 +187,7 @@ public class SolarcraftOverlays {
                     PoseStack stack = poseStack;
                     Window window = gui.getMinecraft().getWindow();
                     ClientHelpers.bindText(PRICEL);
+
                     RenderSystem.enableBlend();
 
                     RenderSystem.setShaderColor(1,1,0.3f,0.5f);

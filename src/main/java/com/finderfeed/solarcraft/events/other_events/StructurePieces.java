@@ -7,7 +7,7 @@ import com.finderfeed.solarcraft.content.world_generation.structures.crystal_bos
 import com.finderfeed.solarcraft.content.world_generation.structures.dimensional_shard_structure.DimStructPieces;
 import com.finderfeed.solarcraft.content.world_generation.structures.dungeon_one_key_lock.DungeonOnePieces;
 import com.finderfeed.solarcraft.content.world_generation.structures.magician_tower.MagicianTowerPieces;
-import com.finderfeed.solarcraft.content.world_generation.structures.maze_key_keeper.MazeStructurePieces;
+import com.finderfeed.solarcraft.content.world_generation.structures.maze_key_keeper.TrapStructurePieces;
 import com.finderfeed.solarcraft.content.world_generation.structures.runic_elemental_arena.RunicElementalArenaStructurePieces;
 import net.minecraft.core.Registry;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceType;
@@ -22,7 +22,7 @@ public class StructurePieces {
 
 
     public static StructurePieceType DUNGEON_ONE_PIECE = DungeonOnePieces.Piece::new;
-    public static StructurePieceType DUNGEON_MAZE_PIECE = MazeStructurePieces.Piece::new;
+    public static StructurePieceType DUNGEON_MAZE_PIECE = TrapStructurePieces.Piece::new;
     public static StructurePieceType CHARGING_PIECE = ChargingStationPieces.Piece::new;
     public static StructurePieceType MAGICIAN_TOWER = MagicianTowerPieces.Piece::new;
     public static StructurePieceType DIMENSIONAL_SHARD_STRUCTURE = DimStructPieces.Piece::new;

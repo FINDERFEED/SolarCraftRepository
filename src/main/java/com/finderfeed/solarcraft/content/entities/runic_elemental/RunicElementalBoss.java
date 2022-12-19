@@ -1,8 +1,9 @@
-package com.finderfeed.solarcraft.content.entities;
+package com.finderfeed.solarcraft.content.entities.runic_elemental;
 
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.content.entities.not_alive.*;
 import com.finderfeed.solarcraft.local_library.entities.BossAttackChain;
+import com.finderfeed.solarcraft.local_library.entities.bossbar.server.CustomServerBossEvent;
 import com.finderfeed.solarcraft.local_library.helpers.CompoundNBTHelper;
 import com.finderfeed.solarcraft.local_library.other.InterpolatedValue;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.Progression;
@@ -24,12 +25,10 @@ import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.Mth;
-import net.minecraft.world.BossEvent;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -60,7 +59,8 @@ import java.util.Map;
 public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
 
 
-    public ServerBossEvent BOSS_INFO = new ServerBossEvent(this.getDisplayName(), BossEvent.BossBarColor.RED, BossEvent.BossBarOverlay.NOTCHED_20);
+    public CustomServerBossEvent BOSS_INFO = new CustomServerBossEvent(this.getDisplayName(),"runic_elemental");
+//    public ServerBossEvent BOSS_INFO = new ServerBossEvent(this.getDisplayName(), BossEvent.BossBarColor.RED, BossEvent.BossBarOverlay.NOTCHED_20);
     public static final String MAGIC_MISSILES_ATTACK = "magic_missiles";
     private BlockPos summoningPos = null;
 
@@ -509,18 +509,21 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
     @Override
     protected void customServerAiStep() {
         super.customServerAiStep();
+//        BOSS_INFO.setProgress(this.getHealth()/this.getMaxHealth());
         BOSS_INFO.setProgress(this.getHealth()/this.getMaxHealth());
     }
 
     @Override
     public void stopSeenByPlayer(ServerPlayer pl) {
+//        BOSS_INFO.removePlayer(pl);
         BOSS_INFO.removePlayer(pl);
         super.stopSeenByPlayer(pl);
     }
 
     @Override
     public void startSeenByPlayer(ServerPlayer pl) {
-        BOSS_INFO.addPlayer(pl);
+//        BOSS_INFO.addPlayer(pl);
+        BOSS_INFO.addPlayer(pl,this.getId());
         super.startSeenByPlayer(pl);
     }
 

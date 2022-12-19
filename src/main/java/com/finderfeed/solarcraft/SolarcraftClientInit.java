@@ -16,8 +16,11 @@ import com.finderfeed.solarcraft.content.blocks.infusing_table_things.infusing_p
 import com.finderfeed.solarcraft.content.blocks.primitive.ProgressionBlock;
 import com.finderfeed.solarcraft.content.blocks.render.*;
 import com.finderfeed.solarcraft.content.blocks.solar_forge_block.SolarForgeBlockEntityRenderer;
+import com.finderfeed.solarcraft.content.entities.CrystalBossBar;
+import com.finderfeed.solarcraft.content.entities.CrystalBossEntity;
 import com.finderfeed.solarcraft.content.entities.projectiles.renderers.*;
 import com.finderfeed.solarcraft.content.entities.renderers.*;
+import com.finderfeed.solarcraft.content.entities.runic_elemental.RunicElementalBossBar;
 import com.finderfeed.solarcraft.content.items.ProgressionBlockItem;
 import com.finderfeed.solarcraft.content.items.solar_disc_gun.SolarDiscProjectileRenderer;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.SolarLexiconContScreen;
@@ -30,6 +33,7 @@ import com.finderfeed.solarcraft.registries.blocks.SolarcraftBlocks;
 import com.finderfeed.solarcraft.registries.containers.SolarcraftContainers;
 import com.finderfeed.solarcraft.registries.entities.SolarcraftEntityTypes;
 import com.finderfeed.solarcraft.registries.items.SolarcraftItems;
+import com.finderfeed.solarcraft.registries.overlays.SolarcraftOverlays;
 import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
 import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.client.KeyMapping;
@@ -96,6 +100,8 @@ public class SolarcraftClientInit {
 
         ScreenSuppliers.SCREEN_REGISTRY.registerAll();
 
+        SolarcraftOverlays.BossBars.registerCustomBossBar("runic_elemental",new RunicElementalBossBar());
+        SolarcraftOverlays.BossBars.registerCustomBossBar("defense_crystal",new CrystalBossBar());
 
 
 

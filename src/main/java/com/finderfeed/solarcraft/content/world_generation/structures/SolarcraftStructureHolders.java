@@ -7,7 +7,7 @@ import com.finderfeed.solarcraft.content.world_generation.structures.clearing_ri
 import com.finderfeed.solarcraft.content.world_generation.structures.crystal_boss_room.CrystalBossRoomStructure;
 import com.finderfeed.solarcraft.content.world_generation.structures.dimensional_shard_structure.DimensionalShardStructure;
 import com.finderfeed.solarcraft.content.world_generation.structures.magician_tower.MagicianTowerStructure;
-import com.finderfeed.solarcraft.content.world_generation.structures.maze_key_keeper.MazeStructure;
+import com.finderfeed.solarcraft.content.world_generation.structures.maze_key_keeper.TrapDungeon;
 import com.finderfeed.solarcraft.content.world_generation.structures.runic_elemental_arena.RunicElementalArenaStructure;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
@@ -49,7 +49,7 @@ public class SolarcraftStructureHolders {
 //            .configured(FeatureConfiguration.NONE,SolarCraftTags.SStructures.HAS_CLEARING_RITUAL_STRUCTURE,true);
 
     public static final Holder<Structure> DUNGEON_ONE = register(Keys.DUNGEON_ONE,new DungeonOne(structure(SolarCraftTags.SStructures.HAS_DUNGEON_ONE, GenerationStep.Decoration.SURFACE_STRUCTURES,TerrainAdjustment.BURY)));
-    public static final Holder<Structure> LABYRINTH = register(Keys.LABYRINTH,new MazeStructure(structure(SolarCraftTags.SStructures.HAS_LABYRINTH, GenerationStep.Decoration.SURFACE_STRUCTURES,TerrainAdjustment.BURY)));
+    public static final Holder<Structure> TRAP_DUNGEON = register(Keys.TRAP_DUNEGON,new TrapDungeon(structure(SolarCraftTags.SStructures.HAS_TRAP_DUNGEON, GenerationStep.Decoration.SURFACE_STRUCTURES,TerrainAdjustment.BEARD_BOX)));
     public static final Holder<Structure> CHARGING_STATION = register(Keys.COLD_STAR_CHARGING_STATION,new ChargingStationStructure(structure(SolarCraftTags.SStructures.HAS_CHARGING_STATION,GenerationStep.Decoration.SURFACE_STRUCTURES,TerrainAdjustment.BEARD_THIN)));
     public static final Holder<Structure> MAGICIAN_TOWER = register(Keys.MAGICIAN_TOWER,new MagicianTowerStructure(structure(SolarCraftTags.SStructures.HAS_MAGICIAN_TOWER, GenerationStep.Decoration.SURFACE_STRUCTURES,TerrainAdjustment.BEARD_THIN)));
     public static final Holder<Structure> DIM_SHARD_STRUCT = register(Keys.DIMENSIONAL_SHARD,new DimensionalShardStructure(structure(SolarCraftTags.SStructures.HAS_DIM_SHARD_DUNGEON, GenerationStep.Decoration.SURFACE_STRUCTURES,TerrainAdjustment.BEARD_THIN)));
@@ -80,7 +80,7 @@ public class SolarcraftStructureHolders {
         public static final ResourceKey<Structure> COLD_STAR_CHARGING_STATION = createKey("cold_star_charging_station");
         public static final ResourceKey<Structure> CRYSTAL_BOSS_ROOM = createKey("crystal_boss_room");
         public static final ResourceKey<Structure> DIMENSIONAL_SHARD = createKey("dimensional_shard_structure");
-        public static final ResourceKey<Structure> LABYRINTH = createKey("labyrinth");
+        public static final ResourceKey<Structure> TRAP_DUNEGON = createKey("trap_dungeon");
         public static final ResourceKey<Structure> MAGICIAN_TOWER = createKey("magician_tower");
         public static final ResourceKey<Structure> RUNIC_ELEMENTAL_ARENA = createKey("runic_elemental_arena");
 

@@ -2,7 +2,7 @@ package com.finderfeed.solarcraft.helpers;
 
 import com.finderfeed.solarcraft.content.blocks.blockentities.clearing_ritual.ClearingRitual;
 import com.finderfeed.solarcraft.content.entities.CrystalBossEntity;
-import com.finderfeed.solarcraft.content.entities.RunicElementalBoss;
+import com.finderfeed.solarcraft.content.entities.runic_elemental.RunicElementalBoss;
 import com.finderfeed.solarcraft.events.my_events.ProgressionUnlockEvent;
 import com.finderfeed.solarcraft.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarcraft.content.blocks.blockentities.clearing_ritual.RadiantLandCleanedData;
@@ -596,5 +596,12 @@ public class Helpers {
         }
         toReturn.addAll(copy);
         return toReturn;
+    }
+
+    public static boolean AABBTouchesAABB(AABB first,AABB second){
+
+        return ((first.minX >= second.minX && first.minX <= second.maxX) || (first.maxX >= second.minX && first.maxX <= second.maxX)) ||
+        ((first.minY >= second.minY && first.minY <= second.maxY) || (first.maxY >= second.minY && first.maxY <= second.maxY)) ||
+        ((first.minZ >= second.minZ && first.minZ <= second.maxZ) || (first.maxZ >= second.minZ && first.maxZ <= second.maxZ));
     }
 }

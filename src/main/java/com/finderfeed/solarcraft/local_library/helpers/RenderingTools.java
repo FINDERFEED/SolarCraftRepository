@@ -1,6 +1,7 @@
 package com.finderfeed.solarcraft.local_library.helpers;
 
 import com.finderfeed.solarcraft.SolarCraft;
+import com.finderfeed.solarcraft.client.rendering.rendertypes.SolarCraftRenderTypes;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.client.custom_tooltips.CustomTooltip;
 import com.finderfeed.solarcraft.client.screens.PositionBlockStateTileEntity;
@@ -94,10 +95,10 @@ public class RenderingTools {
 
 
 
-    public static void renderBox(PoseStack matrices,MultiBufferSource src,AABB box,float r,float g,float b,float a){
+    public static void renderBox(RenderType type,PoseStack matrices,MultiBufferSource src,AABB box,float r,float g,float b,float a){
         matrices.pushPose();
         Matrix4f m = matrices.last().pose();
-        VertexConsumer vertex = src.getBuffer(RenderType.lightning());
+        VertexConsumer vertex = src.getBuffer(type);
 
         vertex.vertex(m,(float)box.minX,(float)box.minY,(float)box.minZ).color(r,g,b,a).endVertex();
         vertex.vertex(m,(float)box.minX,(float)box.maxY,(float)box.minZ).color(r,g,b,a).endVertex();

@@ -11,6 +11,7 @@ import com.finderfeed.solarcraft.config.SolarcraftConfig;
 import com.finderfeed.solarcraft.content.entities.*;
 import com.finderfeed.solarcraft.content.entities.not_alive.*;
 
+import com.finderfeed.solarcraft.content.entities.runic_elemental.RunicElementalBoss;
 import com.finderfeed.solarcraft.content.world_generation.structures.SolarcraftStructureTypes;
 import com.finderfeed.solarcraft.events.PlayerTickEvent;
 import com.finderfeed.solarcraft.events.RenderEventsHandler;
@@ -19,8 +20,6 @@ import com.finderfeed.solarcraft.content.blocks.blockentities.clearing_ritual.cl
 import com.finderfeed.solarcraft.content.blocks.infusing_table_things.*;
 import com.finderfeed.solarcraft.content.blocks.infusing_table_things.infusing_pool.InfusingStand;
 import com.finderfeed.solarcraft.content.items.item_tiers.SolarCraftToolTiers;
-import com.finderfeed.solarcraft.content.items.ProgressionBlockItem;
-import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarcraft.client.particles.SolarcraftParticleTypes;
 import com.finderfeed.solarcraft.registries.SolarcraftGamerules;
 import com.finderfeed.solarcraft.registries.Tags;
@@ -43,7 +42,6 @@ import com.finderfeed.solarcraft.content.blocks.solar_forge_block.SolarForgeBloc
 import com.finderfeed.solarcraft.content.blocks.solar_forge_block.SolarForgeBlockEntity;
 
 
-import com.finderfeed.solarcraft.content.blocks.solar_forge_block.SolarForgeBlockItem;
 import com.finderfeed.solarcraft.content.blocks.solar_forge_block.solar_forge_screen.SolarForgeContainer;
 import com.finderfeed.solarcraft.content.blocks.solar_forge_block.solar_forge_screen.SolarForgeScreen;
 
@@ -96,8 +94,6 @@ import org.apache.logging.log4j.Logger;
 
 // The value here should match an entry in the META-INF/mods.toml file
 import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Rarity;
 
 import java.util.List;
 

@@ -1,7 +1,7 @@
 {
   "structures": [
     {
-      "structure": "solarcraft:labyrinth",
+      "structure": "solarcraft:trap_dungeon",
       "weight": 1
     }
   ],

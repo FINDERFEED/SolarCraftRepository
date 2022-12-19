@@ -13,11 +13,11 @@ import net.minecraft.world.level.levelgen.structure.pieces.StructurePiecesBuilde
 
 import java.util.Optional;
 
-public class MazeStructure extends Structure {
+public class TrapDungeon extends Structure {
 
-    public static final Codec<MazeStructure> CODEC = simpleCodec(MazeStructure::new);
+    public static final Codec<TrapDungeon> CODEC = simpleCodec(TrapDungeon::new);
 
-    public MazeStructure(StructureSettings settings) {
+    public TrapDungeon(StructureSettings settings) {
         super(settings);
     }
 
@@ -35,7 +35,7 @@ public class MazeStructure extends Structure {
                 ctx.heightAccessor(), ctx.randomState());
         BlockPos blockpos = new BlockPos(x, y, z);
         Rotation rotation = Rotation.getRandom(ctx.random());
-        MazeStructurePieces.start(ctx.structureTemplateManager(), blockpos, rotation, p_197089_);
+        TrapStructurePieces.start(ctx.structureTemplateManager(), blockpos, rotation, p_197089_);
     }
 
     @Override
@@ -47,7 +47,7 @@ public class MazeStructure extends Structure {
 
     @Override
     public StructureType<?> type() {
-        return SolarcraftStructureTypes.MAZE_STRUCTURE_STRUCTURE_TYPE;
+        return SolarcraftStructureTypes.TRAP_DUNGEON;
     }
 
 }

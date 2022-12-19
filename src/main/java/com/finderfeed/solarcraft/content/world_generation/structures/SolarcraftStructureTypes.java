@@ -6,7 +6,7 @@ import com.finderfeed.solarcraft.content.world_generation.structures.clearing_ri
 import com.finderfeed.solarcraft.content.world_generation.structures.crystal_boss_room.CrystalBossRoomStructure;
 import com.finderfeed.solarcraft.content.world_generation.structures.dimensional_shard_structure.DimensionalShardStructure;
 import com.finderfeed.solarcraft.content.world_generation.structures.magician_tower.MagicianTowerStructure;
-import com.finderfeed.solarcraft.content.world_generation.structures.maze_key_keeper.MazeStructure;
+import com.finderfeed.solarcraft.content.world_generation.structures.maze_key_keeper.TrapDungeon;
 import com.finderfeed.solarcraft.content.world_generation.structures.runic_elemental_arena.RunicElementalArenaStructure;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.Registry;
@@ -32,7 +32,7 @@ public class SolarcraftStructureTypes {
     public static final StructureType<CrystalBossRoomStructure> CRYSTAL_BOSS_ROOM_STRUCTURE_STRUCTURE_TYPE = register("crystal_boss_room",CrystalBossRoomStructure.CODEC);
     public static final StructureType<DimensionalShardStructure> DIMENSIONAL_SHARD_STRUCTURE_STRUCTURE_TYPE = register("dimensional_shard_structure",DimensionalShardStructure.CODEC);
     public static final StructureType<MagicianTowerStructure> MAGICIAN_TOWER_STRUCTURE_STRUCTURE_TYPE = register("magician_tower",MagicianTowerStructure.CODEC);
-    public static final StructureType<MazeStructure>  MAZE_STRUCTURE_STRUCTURE_TYPE = register("labyrinth",MazeStructure.CODEC);
+    public static final StructureType<TrapDungeon> TRAP_DUNGEON = register("trap_dungeon", TrapDungeon.CODEC);
     public static final StructureType<RunicElementalArenaStructure>  RUNIC_ELEMENTAL_ARENA_STRUCTURE_STRUCTURE_TYPE = register("runic_elemental_arena",RunicElementalArenaStructure.CODEC);
 
     public static void init(){}

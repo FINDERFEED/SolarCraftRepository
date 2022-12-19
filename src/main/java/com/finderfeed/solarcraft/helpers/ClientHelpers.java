@@ -13,6 +13,7 @@ import com.finderfeed.solarcraft.content.entities.not_alive.BallLightningProject
 import com.finderfeed.solarcraft.events.RenderEventsHandler;
 import com.finderfeed.solarcraft.events.other_events.event_handler.ClientEventsHandler;
 import com.finderfeed.solarcraft.local_library.effects.LightningBoltPath;
+import com.finderfeed.solarcraft.local_library.entities.bossbar.client.ActiveBossBar;
 import com.finderfeed.solarcraft.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarcraft.content.blocks.blockentities.clearing_ritual.CrystalEnergyVinesTile;
 import com.finderfeed.solarcraft.content.blocks.blockentities.RayTrapTileEntity;
@@ -25,6 +26,7 @@ import com.finderfeed.solarcraft.misc_things.*;
 import com.finderfeed.solarcraft.packet_handler.SolarCraftPacketHandler;
 import com.finderfeed.solarcraft.packet_handler.packets.RequestAbilityScreenPacket;
 import com.finderfeed.solarcraft.registries.items.SolarcraftItems;
+import com.finderfeed.solarcraft.registries.overlays.SolarcraftOverlays;
 import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.SolarLexicon;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.Progression;
@@ -63,6 +65,7 @@ import net.minecraftforge.items.IItemHandler;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.function.Supplier;
 
 
@@ -478,6 +481,21 @@ public class ClientHelpers {
         ClientHelpers.playsoundInEars(SolarcraftSounds.DIMENSION_BREAK.get(),1f,0.5f);
         ClientHelpers.flash(100,40,40);
         ClientHelpers.shake(50,50,20,7.5f);
+    }
+
+    public static void handleServerBossInitPacket(UUID uuid,Component name,String rendererId,boolean remove,int entityId){
+        if (!remove) {
+            SolarcraftOverlays.BossBars.addBossBar(new ActiveBossBar(uuid, name, 1f, rendererId,entityId));
+        }else{
+            SolarcraftOverlays.BossBars.removeBossBar(uuid);
+        }
+    }
+
+    public static void handleServerBossEventUpdateProgressPacket(UUID id,float progress){
+        ActiveBossBar bar = SolarcraftOverlays.BossBars.getBossBar(id);
+        if (bar != null){
+            bar.setProgress(progress);
+        }
     }
 
     public static class Particles {

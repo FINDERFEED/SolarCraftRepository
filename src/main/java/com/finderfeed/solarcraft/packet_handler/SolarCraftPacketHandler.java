@@ -3,6 +3,8 @@ package com.finderfeed.solarcraft.packet_handler;
 import com.finderfeed.solarcraft.content.blocks.infusing_table_things.UpdateProgressOnClientPacket;
 import com.finderfeed.solarcraft.content.blocks.infusing_table_things.UpdateStacksOnClientTable;
 import com.finderfeed.solarcraft.content.blocks.infusing_table_things.infusing_pool.UpdateStacksOnClientPacketPool;
+import com.finderfeed.solarcraft.local_library.entities.bossbar.server.CustomBossEventInitPacket;
+import com.finderfeed.solarcraft.local_library.entities.bossbar.server.ServerBossEventUpdateProgress;
 import com.finderfeed.solarcraft.packet_handler.packets.*;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.packets.OpenScreenPacket;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.packets.UpdateAllProgressionOnClient;
@@ -74,6 +76,8 @@ public class SolarCraftPacketHandler {
         INSTANCE.registerMessage(nextID(), OpenAbilityScreenPacket.class, OpenAbilityScreenPacket::toBytes, OpenAbilityScreenPacket::new, OpenAbilityScreenPacket::handle);
         INSTANCE.registerMessage(nextID(), DimensionBreakPacket.class, DimensionBreakPacket::toBytes, DimensionBreakPacket::new, DimensionBreakPacket::handle);
         INSTANCE.registerMessage(nextID(), RetainFragmentPacket.class, RetainFragmentPacket::toBytes, RetainFragmentPacket::new, RetainFragmentPacket::handle);
+        INSTANCE.registerMessage(nextID(), CustomBossEventInitPacket.class, CustomBossEventInitPacket::toBytes, CustomBossEventInitPacket::new, CustomBossEventInitPacket::handle);
+        INSTANCE.registerMessage(nextID(), ServerBossEventUpdateProgress.class, ServerBossEventUpdateProgress::toBytes, ServerBossEventUpdateProgress::new, ServerBossEventUpdateProgress::handle);
 
 
     }

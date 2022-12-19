@@ -1,6 +1,7 @@
 package com.finderfeed.solarcraft.content.entities;
 
 
+import com.finderfeed.solarcraft.content.entities.runic_elemental.RunicElementalBoss;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.content.abilities.ability_classes.AbstractAbility;
 import com.finderfeed.solarcraft.SolarCraft;
@@ -11,6 +12,7 @@ import com.finderfeed.solarcraft.content.entities.not_alive.ShieldingCrystalCrys
 import com.finderfeed.solarcraft.events.my_events.AbilityUseEvent;
 import com.finderfeed.solarcraft.events.other_events.event_handler.EventHandler;
 import com.finderfeed.solarcraft.local_library.entities.BossAttackChain;
+import com.finderfeed.solarcraft.local_library.entities.bossbar.server.CustomServerBossEvent;
 import com.finderfeed.solarcraft.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarcraft.local_library.other.CyclingInterpolatedValue;
 import com.finderfeed.solarcraft.content.entities.projectiles.CrystalBossAttackHoldingMissile;
@@ -84,7 +86,8 @@ public class CrystalBossEntity extends NoHealthLimitMob implements CrystalBossBu
     public static final int RAY_NOT_ACTIVE = -1;
     public static final int RAY_PREPARING = -2;
 
-    private ServerBossEvent CRYSTAL_BOSS_EVENT = new ServerBossEvent(this.getDisplayName(), BossEvent.BossBarColor.RED, BossEvent.BossBarOverlay.NOTCHED_20);
+//    private ServerBossEvent CRYSTAL_BOSS_EVENT = new ServerBossEvent(this.getDisplayName(), BossEvent.BossBarColor.RED, BossEvent.BossBarOverlay.NOTCHED_20);
+    private CustomServerBossEvent CRYSTAL_BOSS_EVENT = new CustomServerBossEvent(this.getDisplayName(),"defense_crystal");
     private final BossAttackChain ATTACK_CHAIN = new BossAttackChain.Builder()
             .addAttack("missiles",this::holdingMissilesAttack,60,10,1)
             .addAttack("mines",this::spawnMines,200,20,2)

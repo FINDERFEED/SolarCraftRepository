@@ -1,7 +1,7 @@
 package com.finderfeed.solarcraft.content.entities.renderers;
 
 import com.finderfeed.solarcraft.SolarCraft;
-import com.finderfeed.solarcraft.content.entities.RunicElementalBoss;
+import com.finderfeed.solarcraft.content.entities.runic_elemental.RunicElementalBoss;
 import com.finderfeed.solarcraft.content.entities.models.RunicElementalModel;
 import com.finderfeed.solarcraft.events.other_events.OBJModels;
 import com.finderfeed.solarcraft.local_library.helpers.FDMathHelper;

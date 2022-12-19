@@ -4,7 +4,7 @@ package com.finderfeed.solarcraft.content.entities.models;// Made with Blockbenc
 
 
 import com.finderfeed.solarcraft.SolarCraft;
-import com.finderfeed.solarcraft.content.entities.RunicElementalBoss;
+import com.finderfeed.solarcraft.content.entities.runic_elemental.RunicElementalBoss;
 import com.finderfeed.solarcraft.local_library.other.MemorizedModelPart;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;

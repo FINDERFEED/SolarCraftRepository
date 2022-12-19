@@ -93,6 +93,15 @@ public class SolarCraftRenderTypes extends RenderType{
                 .createCompositeState(false));
     }
 
+    public static RenderType positionColor(){
+        return create("position_color", DefaultVertexFormat.POSITION_COLOR, VertexFormat.Mode.QUADS, 256, false, true,
+                RenderType.CompositeState.builder().setShaderState(RenderStateShard.POSITION_COLOR_SHADER)
+                        .setTransparencyState(TRANSLUCENT_TRANSPARENCY)
+                        .setWriteMaskState(COLOR_DEPTH_WRITE)
+                        .setOutputState(RenderStateShard.MAIN_TARGET)
+                        .createCompositeState(false));
+    }
+
 
     public static class ParticleRenderTypes {
         public static final ParticleRenderType SOLAR_STRIKE_PARTICLE_RENDER = new ParticleRenderType() {
