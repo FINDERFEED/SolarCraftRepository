@@ -81,9 +81,9 @@ public class SavannaDungeonKeeperRenderer extends TileEntityRenderer<SavannaDung
     }
 
     private void renderEffects(SavannaDungeonKeeperTile tile, float idk, PoseStack matrices, MultiBufferSource src, int light, int overlay){
-        RenderingTools.renderBox(RenderType.lightning(),matrices,src,BOX,1f, 228/255f, 138/255f,0.5f);
+        RenderingTools.renderBox(matrices,src,BOX,1f, 228/255f, 138/255f,0.5f);
 //        RenderingTools.renderBox(RenderType.lightning(),matrices,src,BOX2,1f, 228/255f, 138/255f,0.25f);
-        int t = tile.getActiveTime() % 200;
+        int t = tile.getActiveTime() % SavannaDungeonKeeperTile.SPAWN_EACH;
 
         Random random = new Random(tile.getLevel().getGameTime());
         if (t >= 0 && t <= 10){

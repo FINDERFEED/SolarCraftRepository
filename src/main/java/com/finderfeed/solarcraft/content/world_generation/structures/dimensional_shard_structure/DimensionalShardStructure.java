@@ -24,7 +24,9 @@ public class DimensionalShardStructure extends Structure {
         int x = (ctx.chunkPos().x << 4) + 7;
         int z = (ctx.chunkPos().z << 4) + 7;
 //        int surfaceY = ctx.chunkGenerator().getBaseHeight(x,z, Heightmap.Types.WORLD_SURFACE_WG,ctx.heightAccessor());
-        BlockPos blockpos = new BlockPos(x, 90, z);
+        int y = ctx.chunkGenerator().getBaseHeight(x,z, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+                ctx.heightAccessor(), ctx.randomState());
+        BlockPos blockpos = new BlockPos(x, y, z);
         Rotation rotation = Rotation.NONE;
         DimStructPieces.start(ctx.structureTemplateManager(), blockpos, rotation, p_197089_);
     }

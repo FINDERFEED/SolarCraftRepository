@@ -830,7 +830,7 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
 
     @Override
     public boolean isInvulnerableTo(DamageSource src) {
-        return src.isProjectile();
+        return this.wasAlreadySummoned() ? src.isProjectile() : src != DamageSource.OUT_OF_WORLD;
     }
 
     public static class AttackType{

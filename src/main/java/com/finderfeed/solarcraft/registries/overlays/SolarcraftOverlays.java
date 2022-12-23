@@ -65,8 +65,8 @@ public class SolarcraftOverlays {
                 Minecraft mc = gui.getMinecraft();
                 Window window = mc.getWindow();
                 int scaledWidth = window.getGuiScaledWidth();
-                int scaledHeight = window.getGuiScaledHeight();
-                int yShift = 5;
+                int s = gui.getBossOverlay().events.size();
+                int yShift = 5 + Math.min(s, 4)*20;
 
                 for (ActiveBossBar bossBar : BOSS_BARS.values()){
                     CustomBossBarRenderer cst = BOSS_BAR_REGISTRY.get(bossBar.getCustomBarId());

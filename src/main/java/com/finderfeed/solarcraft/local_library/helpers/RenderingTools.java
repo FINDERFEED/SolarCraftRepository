@@ -79,7 +79,7 @@ import java.util.function.Consumer;
 
 public class RenderingTools {
 
-    public static final ResourceLocation TEST = new ResourceLocation(SolarCraft.MOD_ID,"textures/gui/solar_furnace_gui.png");
+    public static final ResourceLocation WHITE_SQUARE = new ResourceLocation(SolarCraft.MOD_ID,"textures/misc/white_square.png");
     public static final ResourceLocation RAY = new ResourceLocation(SolarCraft.MOD_ID,"textures/misc/ray_into_skyy.png");
     public static final ResourceLocation SHADERED_RAY = new ResourceLocation(SolarCraft.MOD_ID,"textures/misc/shadered_ray.png");
     public static final ResourceLocation HP_BAR = new ResourceLocation(SolarCraft.MOD_ID,"textures/misc/hp_bar.png"); //0.875
@@ -95,10 +95,10 @@ public class RenderingTools {
 
 
 
-    public static void renderBox(RenderType type,PoseStack matrices,MultiBufferSource src,AABB box,float r,float g,float b,float a){
+    public static void renderBox(PoseStack matrices,MultiBufferSource src,AABB box,float r,float g,float b,float a){
         matrices.pushPose();
         Matrix4f m = matrices.last().pose();
-        VertexConsumer vertex = src.getBuffer(type);
+        VertexConsumer vertex = src.getBuffer(RenderType.lightning());
 
         vertex.vertex(m,(float)box.minX,(float)box.minY,(float)box.minZ).color(r,g,b,a).endVertex();
         vertex.vertex(m,(float)box.minX,(float)box.maxY,(float)box.minZ).color(r,g,b,a).endVertex();

@@ -16,7 +16,7 @@ apply plugin: 'maven-publish'
 apply plugin: 'org.spongepowered.mixin'
 
 
-version = '2.9.1'
+version = '2.9.2'
 group = 'com.finderfeed.solarcraft' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'solarcraft'
 

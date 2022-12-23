@@ -2,6 +2,7 @@ package com.finderfeed.solarcraft.content.blocks.blockentities;
 
 import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.client.particles.SolarcraftParticleTypes;
+import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.Progression;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
@@ -9,12 +10,15 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.monster.Vex;
 import net.minecraft.world.entity.player.Player;
@@ -47,7 +51,8 @@ public class SavannaDungeonKeeperTile extends SolarcraftBlockEntity {
             EntityType.SKELETON
     };
 
-    public static final int MAX_TIME = 999;
+    public static final int MAX_TIME = 1250;
+    public static final int SPAWN_EACH = 300;
 
     private int activeTime = 0;
     private boolean active = false;
@@ -68,23 +73,20 @@ public class SavannaDungeonKeeperTile extends SolarcraftBlockEntity {
 
             }
             if (tile.active){
-                if (tile.activeTime % 200 == 0){
-                    Vec3 p = Helpers.posToVec(pos);
+                List<Player> players = tile.playersInRange();
+                if (tile.activeTime % SPAWN_EACH == 0){
+                    Vec3 p = Helpers.posToVec(pos).add(0.5,0.5,0.5);
                     for (BlockPos offset : MONSTER_OFFSETS){
                         EntityType type = MONSTER_TYPES[world.random.nextInt(MONSTER_TYPES.length)];
-//                        Entity e = type.create(world);
-//                        e.setPos(p.add(offset.getX()+0.5f,offset.getY(),offset.getZ()+0.5f));
-//                        world.addFreshEntity(e);
-                        type.spawn((ServerLevel) world,
+                        Entity entity = type.spawn((ServerLevel) world,
                                 null,null,pos.offset(offset), MobSpawnType.STRUCTURE,false,false);
+                        if (entity instanceof Mob mob){
+                            mob.setPersistenceRequired();
+                        }
                     }
+                    world.playSound(null,p.x,p.y,p.z, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS,1f,1f);
                 }
-                List<Player> players = tile.playersInRange();
-                if (tile.activeTime % 200 == 0){
-                    for (Player player : players){
-                        player.addEffect(new MobEffectInstance(MobEffects.WEAKNESS,300,0));
-                    }
-                }
+
                 AABB box = tile.affectionBox();
 
                 for (Player player : players){
@@ -102,7 +104,7 @@ public class SavannaDungeonKeeperTile extends SolarcraftBlockEntity {
         }else{
             if (tile.active){
                 tile.activeTime++;
-                if (tile.activeTime % 200 == 0){
+                if (tile.activeTime % SPAWN_EACH == 0){
                     Vec3 p = Helpers.posToVec(pos);
                     for (BlockPos offset : MONSTER_OFFSETS){
                         Vec3 ppos = p.add(offset.getX()+0.5f,offset.getY() + 0.25f,offset.getZ()+0.5f);
@@ -134,6 +136,9 @@ public class SavannaDungeonKeeperTile extends SolarcraftBlockEntity {
         if (!active && activeTime <= MAX_TIME && !playersInRange().isEmpty()){
             active = true;
             Helpers.updateTile(this);
+            for (Player player : playersInRange()){
+                Helpers.fireProgressionEvent(player, Progression.FIND_KEY_SOURCE);
+            }
         }
     }
 
