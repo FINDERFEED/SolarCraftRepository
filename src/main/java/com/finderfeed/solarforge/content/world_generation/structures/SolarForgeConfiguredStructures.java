@@ -15,8 +15,8 @@ public class SolarForgeConfiguredStructures {
 
     public static ConfiguredStructureFeature<?,?> CONF_DUNGEON_ONE = SolarForgeStructures.DUNGEON_ONE_KEY_LOCK.get()
             .configured(FeatureConfiguration.NONE, SolarCraftTags.SStructures.HAS_DUNGEON_ONE,true);
-    public static ConfiguredStructureFeature<?,?> CONF_DUNGEON_MAZE = SolarForgeStructures.DUNGEON_MAZE.get()
-            .configured(FeatureConfiguration.NONE,SolarCraftTags.SStructures.HAS_LABYRINTH,true);
+    public static ConfiguredStructureFeature<?,?> CONF_DUNGEON_TRAP_DUNGEON = SolarForgeStructures.TRAP_DUNGEON.get()
+            .configured(FeatureConfiguration.NONE,SolarCraftTags.SStructures.HAS_TRAP_DUNGEON,true);
     public static ConfiguredStructureFeature<?,?> CONF_DUNGEON_CHARGING_STATION = SolarForgeStructures.CHARGING_STATION.get()
             .configured(FeatureConfiguration.NONE, SolarCraftTags.SStructures.HAS_CHARGING_STATION,true);
    public static ConfiguredStructureFeature<?,?> CONF_MAGICIAN_TOWER = SolarForgeStructures.MAGICIAN_TOWER.get()
@@ -36,7 +36,7 @@ public class SolarForgeConfiguredStructures {
         Registry<ConfiguredStructureFeature<?, ?>> registry = BuiltinRegistries.CONFIGURED_STRUCTURE_FEATURE;
         Registry.register(registry, new ResourceLocation(SolarForge.MOD_ID, "configured_dungeon_one"), CONF_DUNGEON_ONE);
         Registry.register(registry, new ResourceLocation(SolarForge.MOD_ID, "cold_star_charging_station"), CONF_DUNGEON_CHARGING_STATION);
-        Registry.register(registry, new ResourceLocation(SolarForge.MOD_ID, "labyrinth"), CONF_DUNGEON_MAZE);
+        Registry.register(registry, new ResourceLocation(SolarForge.MOD_ID, "trap_dungeon"), CONF_DUNGEON_TRAP_DUNGEON);
         Registry.register(registry, new ResourceLocation(SolarForge.MOD_ID, "magician_tower"), CONF_MAGICIAN_TOWER);
         Registry.register(registry, new ResourceLocation(SolarForge.MOD_ID, "dimensional_shard_structure"), CONF_DIM_SHARD_STRUCT);
         Registry.register(registry, new ResourceLocation(SolarForge.MOD_ID, "crystal_boss_room"), CONF_CRYSTAL_BOSS_ROOM);

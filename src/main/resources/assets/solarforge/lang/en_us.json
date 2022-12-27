@@ -28,7 +28,7 @@
   "solar_category.armor": "Armor",
   "ach.key_lock_dungeon": "A Strange Place",
   "ach.infuser_dungeon": "Mystic Altar",
-  "ach.key_source": "Underground Treasure",
+  "ach.key_source": "Ancient Temple",
   "ach.cold_star_piece": "Cold as liquid nitrogen",
   "ach.cold_star_piece_activated": "Hot as the sun",
   "ach.solar_lens_craft": "Sun-powered Smeltery.",
@@ -148,7 +148,7 @@
   "pre.acquire_solar_dust": "Useful Solarium remains.",
   "pre.key_lock_dungeon": "A magic aura comes from the desert.",
   "pre.infuser_dungeon": "Plains secrets",
-  "pre.key_source": "Evil savanna caves bring nothing but death... or do they?",
+  "pre.key_source": "A lone building standing in a middle of savanna radiates it's hostile aura around.",
   "pre.cold_star_piece": "The item with strong lensing properties is a myth. Or is it?",
   "pre.cold_star_piece_activated": "It seems that this piece needs to be charged somehow.",
   "pre.solar_lens_craft": "Regular stone furnace heat isn't enough to make alloys from magic metals, perhaps a big cubic yellow thing above you could help?",
@@ -733,8 +733,8 @@
   "solarcraft.structure.pylon": "Runic Energy Pylon",
   "solarcraft.structure.explosion_blocker": "Explosion Blocker",
   "solarcraft.success_revoke": "Successefully Revoked",
-  "solarcraft.failure_revoke": "Unable to revoke progression, it doesn't exist or you have other completed progressions ahead, or you haven't completed it yet."
-
+  "solarcraft.failure_revoke": "Unable to revoke progression, it doesn't exist or you have other completed progressions ahead, or you haven't completed it yet.",
+  "block.solarforge.savanna_dungeon_keeper": "Dungeon Keeper"
 
 
 
