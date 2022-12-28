@@ -22,7 +22,7 @@ import com.finderfeed.solarcraft.content.recipe_types.infusing_new.InfusingRecip
 import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.Progression;
 import com.finderfeed.solarcraft.registries.Tags;
 import com.finderfeed.solarcraft.registries.blocks.SolarcraftBlocks;
-import com.finderfeed.solarcraft.content.world_generation.structures.Structures;
+import com.finderfeed.solarcraft.content.world_generation.structures.NotStructures;
 import com.finderfeed.solarcraft.registries.recipe_types.SolarcraftRecipeTypes;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
@@ -287,7 +287,7 @@ public class InfuserTileEntity extends REItemHandlerBlockEntity implements Solar
     public static boolean secondTierAnimation(InfuserTileEntity tile,Level world){
 
         if (firstTierAnimation(tile,world)) {
-            for (BlockPos pos : Structures.infusingPoolsPositions(tile.worldPosition)) {
+            for (BlockPos pos : NotStructures.infusingPoolsPositions(tile.worldPosition)) {
                 Vec3 center = Helpers.getBlockCenter(pos);
                 ClientHelpers.Particles.verticalCircle(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
                         center, 1, 3, new float[]{0, 0, 0}, () -> 255, () -> 255, () -> Math.round(world.random.nextFloat() * 128) + 40, 0.25f);
@@ -465,7 +465,7 @@ public class InfuserTileEntity extends REItemHandlerBlockEntity implements Solar
 
 
     public void updateStacksInPhantomSlots(){
-        List<BlockEntity> list = Structures.checkInfusingStandStructure(worldPosition,level);
+        List<BlockEntity> list = NotStructures.checkInfusingStandStructure(worldPosition,level);
         for (int i = 0;i < list.size();i++){
             int iter = i;
             if (i >= 6){
@@ -480,7 +480,7 @@ public class InfuserTileEntity extends REItemHandlerBlockEntity implements Solar
         }
     }
     public void infusingStandsRendering(boolean e){
-        List<BlockEntity> list = Structures.checkInfusingStandStructure(worldPosition,level);
+        List<BlockEntity> list = NotStructures.checkInfusingStandStructure(worldPosition,level);
         for (int i = 0;i < list.size();i++){
             if (list.get(i) instanceof InfusingStandTileEntity stand){
                stand.shouldRenderItem(e);
@@ -506,7 +506,7 @@ public class InfuserTileEntity extends REItemHandlerBlockEntity implements Solar
             }
         }
 
-        Structures.checkInfusingStandStructure(worldPosition,level).forEach((tile)->{
+        NotStructures.checkInfusingStandStructure(worldPosition,level).forEach((tile)->{
             if (tile instanceof InfusingStandTileEntity pool){
                 if ((pool.getStackInSlot(0).getItem() != Items.AIR) && pool.getStackInSlot(0).getCount() < count.get()){
                     count.set(pool.getStackInSlot(0).getCount());
@@ -540,7 +540,7 @@ public class InfuserTileEntity extends REItemHandlerBlockEntity implements Solar
 
 
     public void deleteStacksInPhantomSlots(int amount){
-        List<BlockEntity> list = Structures.checkInfusingStandStructure(worldPosition,level);
+        List<BlockEntity> list = NotStructures.checkInfusingStandStructure(worldPosition,level);
         for (int i = 0;i < list.size();i++){
             if (list.get(i) instanceof InfusingStandTileEntity){
                 InfusingStandTileEntity tile = (InfusingStandTileEntity) list.get(i);
@@ -656,7 +656,7 @@ public class InfuserTileEntity extends REItemHandlerBlockEntity implements Solar
             tile.getRotationValue().setDuration(maxTime);
             tile.getRotationValue().tick();
 
-            BlockPos[] offsets = Structures.infusingPoolsPositions(BlockPos.ZERO);
+            BlockPos[] offsets = NotStructures.infusingPoolsPositions(BlockPos.ZERO);
 
             float rotValue = (float) tile.getRotationValue().getValue();
             for (int i = 0; i < 14; i++) {

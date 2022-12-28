@@ -2,6 +2,7 @@ package com.finderfeed.solarcraft.content.commands;
 
 import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.progression_tree.ProgressionTree;
 import com.finderfeed.solarcraft.helpers.Helpers;
+import com.finderfeed.solarcraft.helpers.multiblock.MultiblockStructure;
 import com.finderfeed.solarcraft.helpers.multiblock.Multiblocks;
 import com.finderfeed.solarcraft.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.SolarLexicon;
@@ -30,6 +31,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.Locale;
 
@@ -52,8 +54,9 @@ public class SolarCraftCommands {
 
 
                         .then(RetainFragments.register())
-                        .then(Commands.literal("structure").then(Commands.literal("construct").then(Commands.argument("structure_code",StringArgumentType.string())
-                                .executes((cmds)-> constructMultiblock(cmds.getSource(),cmds.getArgument("structure_code",String.class))))))
+                        .then(Commands.literal("structure")
+                                .then(Commands.literal("construct").then(Commands.argument("structure_code",new SolarcraftStructureArgument())
+                                .executes((cmds)-> constructMultiblock(cmds.getSource(),cmds.getArgument("structure_code", String.class))))))
                         .then(Commands.literal("fillLexicon").executes((cmss)-> fillLexicon(cmss.getSource())))
                         .then(Commands.literal("runicEnergy")
                                 .then(Commands.literal("set").then(Commands.argument("type",StringArgumentType.string())
@@ -199,7 +202,6 @@ public class SolarCraftCommands {
         ServerPlayer player = src.getPlayerOrException();
         if (Multiblocks.STRUCTURES.containsKey(id)){
             Multiblocks.STRUCTURES.get(id).placeInWorld(player,player.level,player.getOnPos().above());
-//            Helpers.constructMultiblock(player,Multiblocks.MULTIBLOCKS.get(id));
             src.sendSuccess(Component.literal("Constructed!"),false);
         }else{
             src.sendFailure(Component.literal("Structure doesnt exist"));
@@ -249,33 +251,8 @@ class RetainFragments{
                                 }))))
 
                 .then(Commands.literal("unlockall").executes((cmd)->unlockAllFragments(cmd.getSource())))
-//                .then(Commands.literal("transferFromOldDataToNew").executes((cmd)->transferFromOldToNew(cmd.getSource())))
                 .then(Commands.literal("refresh").executes((cmd)->refreshFragments(cmd.getSource())));
     }
-    
-    public static int transferFromOldToNew(CommandSourceStack src) throws CommandSyntaxException{
-        ServerPlayer player = src.getPlayerOrException();
-        for (AncientFragment fragment : AncientFragment.getAllFragments()){
-            if (player.getPersistentData().getBoolean(ProgressionHelper.getFragIdString(fragment))){
-                ProgressionHelper.givePlayerFragment(fragment,player);
-            }
-        }
-        src.sendSuccess(Component.literal("Fragments successfully translated from old data to new"),true);
-        return 1;
-    }
-
-//    public static int retainFragments(CommandSourceStack src) throws CommandSyntaxException {
-//        ServerPlayer playerEntity  = src.getPlayerOrException();
-//        for (AncientFragment fragment : AncientFragment.getAllFragments()){
-//            if (ProgressionHelper.doPlayerHasFragment(playerEntity,fragment)){
-//                ItemStack frag = SolarcraftItems.INFO_FRAGMENT.get().getDefaultInstance();
-//                ProgressionHelper.applyTagToFragment(frag,fragment);
-//                ItemEntity entity = new ItemEntity(playerEntity.level,playerEntity.getX(),playerEntity.getY()+0.3f,playerEntity.getZ(),frag);
-//                playerEntity.getLevel().addFreshEntity(entity);
-//            }
-//        }
-//        return 0;
-//    }
 
     public static int unlockAllFragments(CommandSourceStack src) throws CommandSyntaxException {
         ServerPlayer playerEntity  = src.getPlayerOrException();
@@ -296,88 +273,6 @@ class RetainFragments{
 }
 
 
-class AchievementsHelp{
-    public static ArgumentBuilder<CommandSourceStack,?> register(){
-        return Commands.literal("codes")
-                .requires(cs->cs.hasPermission(0))
-                .executes((cmd)->{
-
-                    return getHelp(cmd.getSource());
-                        });
-    }
-
-    public static int getHelp(CommandSourceStack src){
-        src.sendSuccess(Component.translatable("solarcraft.gethelpcommand").withStyle(ChatFormatting.GOLD),false);
-        for (Progression ach : Progression.allProgressions){
-
-            src.sendSuccess(Component.literal(ach.translation.getString()).withStyle(ChatFormatting.GOLD)
-                    .append(Component.literal(" -> "+ach.getProgressionCode())).withStyle(ChatFormatting.WHITE),false);
-
-        }
-        src.sendSuccess(Component.literal("all").withStyle(ChatFormatting.GOLD)
-                .append(" -> unlocks all").withStyle(ChatFormatting.WHITE),false);
-        return 0;
-    }
-}
 
 
-class UnlockProgressionsCommand {
-    public static ArgumentBuilder<CommandSourceStack,?> register(){
-        return Commands.literal("unlock")
-                .requires(cs->cs.hasPermission(0))
-                .then(Commands.argument("progression", StringArgumentType.string())
-                        .executes((cmd)->{
 
-                    return unlockAchievement(cmd.getSource(),cmd.getArgument("progression",String.class));
-                }));
-    }
-    public static int unlockAchievement(CommandSourceStack src,String code) throws CommandSyntaxException{
-            Progression progression = Progression.getAchievementByName(code);
-            ServerPlayer pl = src.getPlayerOrException();
-            if (code.equals("all")){
-                for (Progression a : Progression.allProgressions){
-                    Helpers.setProgressionCompletionStatus(a,src.getPlayerOrException(),true);
-                    src.sendSuccess(Component.translatable("solarcraft.success_unlock")
-                            .append(Component.literal(" "+a.translation.getString()).withStyle(ChatFormatting.GOLD)),false);
-                }
-                Helpers.updateProgression(src.getPlayerOrException());
-
-            }else if (progression != null){
-                if (Helpers.canPlayerUnlock(progression,pl)){
-                    Helpers.setProgressionCompletionStatus(progression,pl,true);
-                    src.sendSuccess(Component.translatable("solarcraft.success_unlock")
-                            .append(Component.literal(" "+ progression.getProgressionCode()).withStyle(ChatFormatting.GOLD)),false);
-
-                    Helpers.updateProgression(src.getPlayerOrException());
-
-
-                }else {
-                    src.sendFailure(Component.translatable("solarcraft.failure_unlock"));
-                }
-            }else {
-                src.sendFailure(Component.translatable("solarcraft.failure_unlock"));
-            }
-        Helpers.forceChunksReload(src.getPlayerOrException());
-        return 0;
-    }
-
-}
-
-class refreshAchievements{
-    public static ArgumentBuilder<CommandSourceStack,?> register(){
-        return Commands.literal("refresh").requires(cs->cs.hasPermission(0)).executes(
-                (src)->{
-                    return refresh(src.getSource());
-                });
-    }
-
-    public static int refresh(CommandSourceStack src) throws CommandSyntaxException {
-            for (Progression ach : Progression.allProgressions){
-                Helpers.setProgressionCompletionStatus(ach,src.getPlayerOrException(),false);
-            }
-            src.sendSuccess(Component.literal("Successfully refreshed all progressions"),false);
-        Helpers.updateProgression(src.getPlayerOrException());
-        Helpers.forceChunksReload(src.getPlayerOrException());
-        return 0;
-    }
-}

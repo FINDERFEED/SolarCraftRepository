@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class Structures {
+public class NotStructures {
 
     public static List<BlockEntity> checkInfusingStandStructure(BlockPos pos, Level world){
         List<BlockEntity> toReturn = new ArrayList<>();

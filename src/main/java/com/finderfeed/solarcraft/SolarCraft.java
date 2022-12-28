@@ -25,6 +25,7 @@ import com.finderfeed.solarcraft.registries.SolarcraftGamerules;
 import com.finderfeed.solarcraft.registries.Tags;
 import com.finderfeed.solarcraft.registries.abilities.AbilitiesRegistry;
 import com.finderfeed.solarcraft.registries.attributes.AttributesRegistry;
+import com.finderfeed.solarcraft.registries.command_argument_types.SolarcraftCommandArgumentTypes;
 import com.finderfeed.solarcraft.registries.data_serializers.FDEntityDataSerializers;
 import com.finderfeed.solarcraft.registries.entities.SolarcraftEntityTypes;
 
@@ -190,6 +191,7 @@ public class SolarCraft
         SolarcraftRecipeTypes.RECIPE_SERIALIZERS.register(bus);
         SolarcraftRecipeTypes.RECIPE_TYPES.register(bus);
         SolarcraftLootModifiers.MODIFIERS.register(bus);
+        SolarcraftCommandArgumentTypes.ARGUMENT_TYPES.register(bus);
         SolarcraftGamerules.init();
         // Register the setup method for modloading
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);

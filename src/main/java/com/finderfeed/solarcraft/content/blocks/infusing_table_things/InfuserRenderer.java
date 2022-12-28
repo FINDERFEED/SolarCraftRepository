@@ -3,7 +3,7 @@ package com.finderfeed.solarcraft.content.blocks.infusing_table_things;
 import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.finderfeed.solarcraft.content.blocks.render.abstracts.AbstractRunicEnergyContainerRenderer;
-import com.finderfeed.solarcraft.content.world_generation.structures.Structures;
+import com.finderfeed.solarcraft.content.world_generation.structures.NotStructures;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Minecraft;
@@ -105,7 +105,7 @@ public class InfuserRenderer extends AbstractRunicEnergyContainerRenderer<Infuse
         if (tile.RECIPE_IN_PROGRESS && (razn <= 100)) {
             matrices.pushPose();
             List<ItemStack> stacks = tile.getItems();
-            BlockPos[] offsets = Structures.infusingPoolsPositions(BlockPos.ZERO);
+            BlockPos[] offsets = NotStructures.infusingPoolsPositions(BlockPos.ZERO);
 
             float rotValue = (float)tile.getRotationValue().getValue() ;
 
