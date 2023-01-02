@@ -3,6 +3,7 @@ package com.finderfeed.solarcraft.content.blocks.infusing_table_things;
 
 import com.finderfeed.solarcraft.content.blocks.solar_energy.Bindable;
 import com.finderfeed.solarcraft.content.blocks.solar_energy.SolarEnergyContainer;
+import com.finderfeed.solarcraft.content.items.solar_wand.IWandable;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.SolarCraft;
@@ -52,7 +53,7 @@ import javax.annotation.Nullable;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class InfuserTileEntity extends REItemHandlerBlockEntity implements SolarEnergyContainer, Bindable, DebugTarget {
+public class InfuserTileEntity extends REItemHandlerBlockEntity implements SolarEnergyContainer, Bindable, DebugTarget, IWandable {
 
 
     private EaseIn rotationValue = new EaseIn(0,1,100);
@@ -728,6 +729,11 @@ public class InfuserTileEntity extends REItemHandlerBlockEntity implements Solar
     @Override
     public int maxEnergyInput() {
         return 20;
+    }
+
+    @Override
+    public void onWandUse(BlockPos usePos,Player user) {
+        triggerCrafting(user);
     }
 
 

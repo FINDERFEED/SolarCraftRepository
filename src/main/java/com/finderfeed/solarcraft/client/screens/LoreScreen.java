@@ -40,8 +40,8 @@ public class LoreScreen extends Screen {
         int scale = (int) minecraft.getWindow().getGuiScale();
         this.relX = (width/scale - 183)/2 - 40;
         this.relY = (height - 218*scale)/2/scale;
-        addRenderableWidget(new ItemStackTabButton(relX+258,relY+27,17,17,(button)->{minecraft.setScreen(new SolarLexiconRecipesScreen());}, Items.CRAFTING_TABLE.getDefaultInstance(),0.7f));
-        addRenderableWidget(new ItemStackTabButton(relX+258,relY+27 + 21,17,17,(button)->{
+        addRenderableWidget(new ItemStackTabButton(relX+255,relY+27,17,17,(button)->{minecraft.setScreen(new SolarLexiconRecipesScreen());}, Items.CRAFTING_TABLE.getDefaultInstance(),0.7f));
+        addRenderableWidget(new ItemStackTabButton(relX+255,relY+27 + 21,17,17,(button)->{
             Minecraft mc = Minecraft.getInstance();
             SolarLexicon lexicon = (SolarLexicon) mc.player.getMainHandItem().getItem();
             lexicon.currentSavedScreen = this;

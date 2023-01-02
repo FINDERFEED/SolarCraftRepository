@@ -15,7 +15,7 @@ import net.minecraftforge.fml.common.Mod;
 import java.io.IOException;
 
 @Mod.EventBusSubscriber(modid = "solarcraft",bus = Mod.EventBusSubscriber.Bus.MOD,value = Dist.CLIENT)
-public class SolarcraftCoreShaders {
+public class SolarcraftCoreShadersRegistry {
 
 
 
@@ -29,14 +29,18 @@ public class SolarcraftCoreShaders {
                 (instance)->{
                     RadiantPortalRendertype.RAY_SHADER = instance;
         });
-        event.registerShader(new ShaderInstance(event.getResourceManager(),new ResourceLocation("solarcraft","aoe_gun_projectile"), DefaultVertexFormat.POSITION),
+        event.registerShader(new ShaderInstance(event.getResourceManager(),new ResourceLocation(SolarCraft.MOD_ID,"aoe_gun_projectile"), DefaultVertexFormat.POSITION_TEX),
                 (instance)->{
                     CoreShaders.AOE_GUN_PROJECTILE_SHADER = instance;
         });
-        event.registerShader(new ShaderInstance(event.getResourceManager(),new ResourceLocation(SolarCraft.MOD_ID,"runic_energy_flow"), DefaultVertexFormat.POSITION),
+        event.registerShader(new ShaderInstance(event.getResourceManager(),new ResourceLocation(SolarCraft.MOD_ID,"runic_energy_flow"), DefaultVertexFormat.POSITION_TEX),
                 (instance)->{
                     CoreShaders.RUNIC_ENERGY_FLOW_SHADER = instance;
-                });
+        });
+        event.registerShader(new ShaderInstance(event.getResourceManager(),new ResourceLocation(SolarCraft.MOD_ID,"radial_menu"), DefaultVertexFormat.POSITION_TEX),
+                (instance)->{
+                    CoreShaders.RADIAL_MENU = instance;
+        });
     }
 
 }

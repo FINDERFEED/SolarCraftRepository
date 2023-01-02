@@ -11,4 +11,7 @@ public class CoreShaders {
 
     public static ShaderInstance RUNIC_ENERGY_FLOW_SHADER = null;
     public static RenderStateShard.ShaderStateShard RUNIC_ENERGY_FLOW_STATE_SHARD = new RenderStateShard.ShaderStateShard(() -> RUNIC_ENERGY_FLOW_SHADER);
+
+    public static ShaderInstance RADIAL_MENU = null;
+    public static RenderStateShard.ShaderStateShard RADIAL_MENU_SHADER = new RenderStateShard.ShaderStateShard(()-> RADIAL_MENU);
 }

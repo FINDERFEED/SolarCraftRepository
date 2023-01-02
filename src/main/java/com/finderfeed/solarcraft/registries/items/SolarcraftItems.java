@@ -5,7 +5,7 @@ import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.content.blocks.FuelBlockItem;
 import com.finderfeed.solarcraft.content.blocks.blockentities.clearing_ritual.clearing_ritual_crystal.ClearingRitualCrystalItem;
 import com.finderfeed.solarcraft.content.blocks.infusing_table_things.InfuserBlockItem;
-import com.finderfeed.solarcraft.content.blocks.infusing_table_things.SolarWandItem;
+import com.finderfeed.solarcraft.content.items.solar_wand.SolarWandItem;
 import com.finderfeed.solarcraft.content.armor.SolarArmorMaterial;
 import com.finderfeed.solarcraft.content.blocks.blockitems.TurretBlockItem;
 import com.finderfeed.solarcraft.content.blocks.blockitems.UldoradiumOreBlockitem;

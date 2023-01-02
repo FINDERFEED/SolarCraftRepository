@@ -1,5 +1,6 @@
 package com.finderfeed.solarcraft.content.blocks.blockentities;
 
+import com.finderfeed.solarcraft.content.items.solar_wand.IWandable;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.SolarCraft;
@@ -31,7 +32,7 @@ import net.minecraftforge.items.IItemHandler;
 import javax.annotation.Nullable;
 import java.util.*;
 
-public class InfusingTableTile extends BlockEntity implements OwnedBlock {
+public class InfusingTableTile extends BlockEntity implements OwnedBlock, IWandable {
     public static final int ANIM_TIME = 100;
     private PhantomInventory phantomInv = new PhantomInventory(10);
     private UUID owner;
@@ -269,5 +270,10 @@ public class InfusingTableTile extends BlockEntity implements OwnedBlock {
         BlockState state = level.getBlockState(worldPosition);
         this.setChanged();
         level.sendBlockUpdated(worldPosition,state,state,3);
+    }
+
+    @Override
+    public void onWandUse(BlockPos usePos, Player user) {
+        triggerRecipe(user);
     }
 }

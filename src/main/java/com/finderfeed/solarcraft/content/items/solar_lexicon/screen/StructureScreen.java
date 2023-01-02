@@ -105,8 +105,8 @@ public class StructureScreen extends Screen {
             }
         });
 
-        addRenderableWidget(new ItemStackTabButton(relX+219,relY+52,12,12,(button)->{minecraft.setScreen(new SolarLexiconRecipesScreen());}, Items.CRAFTING_TABLE.getDefaultInstance(),0.7f));
-        addRenderableWidget(new ItemStackTabButton(relX+219,relY+52 + 18,12,12,(button)->{
+        addRenderableWidget(new ItemStackTabButton(relX+217,relY+52,17,17,(button)->{minecraft.setScreen(new SolarLexiconRecipesScreen());}, Items.CRAFTING_TABLE.getDefaultInstance(),0.7f));
+        addRenderableWidget(new ItemStackTabButton(relX+217,relY+52 + 18,17,17,(button)->{
             Minecraft mc = Minecraft.getInstance();
             SolarLexicon lexicon = (SolarLexicon) mc.player.getMainHandItem().getItem();
             lexicon.currentSavedScreen = this;
@@ -175,7 +175,7 @@ public class StructureScreen extends Screen {
             }
 
             for (AncientFragment ref : refs) {
-                ItemStackTabButton button1 = new ItemStackTabButton(relX + 219, relY + 25 + 18 + 3 + h * 18 + 60, 12, 12, b -> {
+                ItemStackTabButton button1 = new ItemStackTabButton(relX + 217, relY + 25 + 18 + 3 + h * 18 + 60, 17, 17, b -> {
                     Minecraft.getInstance().setScreen(getScreenFromFragment(ref));
                 }, ref.getIcon().getDefaultInstance(), 0.7f, (buttons, matrices, b, c) -> {
                     renderTooltip(matrices, ref.getTranslation(), b, c);

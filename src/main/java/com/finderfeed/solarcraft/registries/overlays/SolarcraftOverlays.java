@@ -1,20 +1,17 @@
 package com.finderfeed.solarcraft.registries.overlays;
 
 import com.finderfeed.solarcraft.SolarCraft;
+import com.finderfeed.solarcraft.client.rendering.CoreShaders;
 import com.finderfeed.solarcraft.content.abilities.ability_classes.ToggleableAbility;
-import com.finderfeed.solarcraft.content.blocks.infusing_table_things.InfuserBlock;
 import com.finderfeed.solarcraft.content.blocks.infusing_table_things.InfuserTileEntity;
-import com.finderfeed.solarcraft.content.blocks.infusing_table_things.SolarWandItem;
+import com.finderfeed.solarcraft.content.items.solar_wand.SolarWandItem;
 import com.finderfeed.solarcraft.content.items.UltraCrossbowItem;
-import com.finderfeed.solarcraft.content.recipe_types.infusing_new.InfusingRecipe;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.local_library.entities.bossbar.client.ActiveBossBar;
 import com.finderfeed.solarcraft.local_library.entities.bossbar.client.CustomBossBarRenderer;
 import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
-import com.finderfeed.solarcraft.misc_things.PhantomInventory;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
 import com.finderfeed.solarcraft.registries.abilities.AbilitiesRegistry;
-import com.finderfeed.solarcraft.registries.recipe_types.SolarcraftRecipeTypes;
 import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
@@ -23,8 +20,10 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.client.renderer.ShaderInstance;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
@@ -105,38 +104,55 @@ public class SolarcraftOverlays {
 
 
 
-
-                List<ResourceLocation> locationsToRender = new ArrayList<>();
-                for (ToggleableAbility ability : AbilitiesRegistry.getToggleableAbilities()){
-                    if (ability.isToggled(mc.player)){
-                        locationsToRender.add(new ResourceLocation(SolarCraft.MOD_ID,"textures/abilities/" + ability.id + ".png"));
-                    }
+            List<ResourceLocation> locationsToRender = new ArrayList<>();
+            for (ToggleableAbility ability : AbilitiesRegistry.getToggleableAbilities()){
+                if (ability.isToggled(mc.player)){
+                    locationsToRender.add(new ResourceLocation(SolarCraft.MOD_ID,"textures/abilities/" + ability.id + ".png"));
                 }
+            }
+            int initYPos = mc.getWindow().getGuiScaledHeight()/2 - 10 - (locationsToRender.size()-1)*20;
+            int initXPos = mc.getWindow().getGuiScaledWidth() - 20;
+            for (int i = 0; i < locationsToRender.size();i++) {
+                ResourceLocation location = locationsToRender.get(i);
+                ClientHelpers.bindText(location);
+                Gui.blit(poseStack, initXPos, initYPos + i * 20, 0, 0, 20, 20, 20, 20);
+            }
 
-                int initYPos = mc.getWindow().getGuiScaledHeight()/2 - 10 - (locationsToRender.size()-1)*20;
-                int initXPos = mc.getWindow().getGuiScaledWidth() - 20;
-                for (int i = 0; i < locationsToRender.size();i++){
-                    ResourceLocation location = locationsToRender.get(i);
-                    ClientHelpers.bindText(location);
-                    Gui.blit(poseStack,initXPos,initYPos + i*20,0,0,20,20,20,20);
-                }
+//            int th = mc.getWindow().getGuiScaledHeight()/2;
+//            int tw = mc.getWindow().getGuiScaledWidth()/2;
+//            Matrix4f mt = poseStack.last().pose();
+//            RenderSystem.setShader(()->CoreShaders.RADIAL_MENU);
+//            ShaderInstance m = CoreShaders.RADIAL_MENU;
+//            Level w = Minecraft.getInstance().level;
+//            int sCount = (int)(w.getGameTime()/10) % 10 + 1;
+//            m.safeGetUniform("color").set(1f,1f,1f,0.7f);
+//            m.safeGetUniform("sColor").set(0.5f,0.5f,0.5f,0.7f);
+//            m.safeGetUniform("distFromCenter").set(0.05f);
+//            m.safeGetUniform("innerRadius").set(0.1f);
+//            m.safeGetUniform("outRadius").set(0.5f);
+//            m.safeGetUniform("sectionCount").set(sCount);
+//            m.safeGetUniform("selectedSection").set(0);
+//            BufferBuilder builder = Tesselator.getInstance().getBuilder();
+//            builder.begin(VertexFormat.Mode.QUADS,DefaultVertexFormat.POSITION_TEX);
+//            int testSize = 100;
+//            builder.vertex(mt,tw-testSize,th-testSize,0).uv(0,0).endVertex();
+//            builder.vertex(mt,tw-testSize,th+testSize,0).uv(0,1).endVertex();
+//            builder.vertex(mt,tw+testSize,th+testSize,0).uv(1,1).endVertex();
+//            builder.vertex(mt,tw+testSize,th-testSize,0).uv(1,0).endVertex();
+//            BufferUploader.drawWithShader(builder.end());
 
-
-
-
-
-                if (mc.player.getMainHandItem().getItem() instanceof SolarWandItem){
-                    int height = mc.getWindow().getGuiScaledHeight();
-                    int width = mc.getWindow().getGuiScaledWidth();
-                    RenderingTools.renderRuneEnergyOverlay(poseStack,2,height/2-43, RunicEnergy.Type.KELDA);
-                    RenderingTools.renderRuneEnergyOverlay(poseStack,14,height/2-43, RunicEnergy.Type.ARDO);
-                    RenderingTools.renderRuneEnergyOverlay(poseStack,26,height/2-43, RunicEnergy.Type.ZETA);
-                    RenderingTools.renderRuneEnergyOverlay(poseStack,2,height/2+15, RunicEnergy.Type.FIRA);
-                    RenderingTools.renderRuneEnergyOverlay(poseStack,14,height/2+15, RunicEnergy.Type.TERA);
-                    RenderingTools.renderRuneEnergyOverlay(poseStack,26,height/2+15, RunicEnergy.Type.URBA);
-                    RenderingTools.renderRuneEnergyOverlay(poseStack,38,height/2-43, RunicEnergy.Type.GIRO);
-                    RenderingTools.renderRuneEnergyOverlay(poseStack,38,height/2+15, RunicEnergy.Type.ULTIMA);
-                }
+            if (mc.player.getMainHandItem().getItem() instanceof SolarWandItem){
+                int height = mc.getWindow().getGuiScaledHeight();
+                int width = mc.getWindow().getGuiScaledWidth();
+                RenderingTools.renderRuneEnergyOverlay(poseStack,2,height/2-43, RunicEnergy.Type.KELDA);
+                RenderingTools.renderRuneEnergyOverlay(poseStack,14,height/2-43, RunicEnergy.Type.ARDO);
+                RenderingTools.renderRuneEnergyOverlay(poseStack,26,height/2-43, RunicEnergy.Type.ZETA);
+                RenderingTools.renderRuneEnergyOverlay(poseStack,2,height/2+15, RunicEnergy.Type.FIRA);
+                RenderingTools.renderRuneEnergyOverlay(poseStack,14,height/2+15, RunicEnergy.Type.TERA);
+                RenderingTools.renderRuneEnergyOverlay(poseStack,26,height/2+15, RunicEnergy.Type.URBA);
+                RenderingTools.renderRuneEnergyOverlay(poseStack,38,height/2-43, RunicEnergy.Type.GIRO);
+                RenderingTools.renderRuneEnergyOverlay(poseStack,38,height/2+15, RunicEnergy.Type.ULTIMA);
+            }
 
 
         }
@@ -224,40 +240,19 @@ public class SolarcraftOverlays {
             Minecraft mc = Minecraft.getInstance();
             Player player = mc.player;
             if (player.getMainHandItem().getItem() instanceof SolarWandItem) {
-//                ClipContext ctx = new ClipContext(player.position().add(0, 1.5, 0),
-//                        player.position().add(0, 1.5, 0).add(player.getLookAngle().normalize().multiply(4.5, 4.5, 4.5)),
-//                        ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, player);
-//                BlockHitResult result = player.level.clip(ctx);
                 HitResult re = mc.hitResult;
-                if (re instanceof BlockHitResult result &&
-                        player.level.getBlockState(result.getBlockPos()).getBlock() instanceof InfuserBlock) {
+                if (re instanceof BlockHitResult result) {
                     BlockEntity tile = player.level.getBlockEntity(result.getBlockPos());
-                    if (tile instanceof InfuserTileEntity) {
-                        InfuserTileEntity tileInfusing = (InfuserTileEntity) tile;
+                    if (tile instanceof InfuserTileEntity tileInfusing) {
                         ClientHelpers.bindText(LOC);
+                        int height = event.getWindow().getGuiScaledHeight();
+                        int width = event.getWindow().getGuiScaledWidth();
                         if (tileInfusing.RECIPE_IN_PROGRESS) {
                             double percent = (float) tileInfusing.CURRENT_PROGRESS / tileInfusing.INFUSING_TIME;
-                            int height = event.getWindow().getGuiScaledHeight();
-                            int width = event.getWindow().getGuiScaledWidth();
-
                             GuiComponent.blit(poseStack, width / 2 - 20, height / 2 + 11, 0, 9, (int) (40 * percent), 3, 40, 20);
-                            GuiComponent.blit(poseStack, width / 2 - 20, height / 2 + 8, 0, 0, 40, 9, 40, 20);
-                        }else{
-                            Optional<InfusingRecipe> recipe = mc.level.getRecipeManager().getRecipeFor(SolarcraftRecipeTypes.INFUSING.get(),new PhantomInventory(tileInfusing.getInventory()),mc.level);
-                            if (recipe.isPresent()) {
-                                int height = event.getWindow().getGuiScaledHeight();
-                                int width = event.getWindow().getGuiScaledWidth();
-                                GuiComponent.blit(poseStack, width / 2 - 20, height / 2 + 8, 0, 0, 40, 9, 40, 20);
-                                GuiComponent.blit(poseStack, width / 2 -7, height / 2 + 7, 14, 24, 14, 14, 80, 40);
-                            }else{
-                                int height = event.getWindow().getGuiScaledHeight();
-                                int width = event.getWindow().getGuiScaledWidth();
-                                GuiComponent.blit(poseStack, width / 2 - 20, height / 2 + 8, 0, 0, 40, 9, 40, 20);
-                                GuiComponent.blit(poseStack, width / 2 -7, height / 2 + 7, 0, 24, 14, 14, 80, 40);
-
-                            }
                         }
-
+                        GuiComponent.blit(poseStack, width / 2 - 20, height / 2 + 8, 0, 0, 40, 9, 40, 20);
+                        GuiComponent.drawCenteredString(poseStack,mc.font,"Recipe Progress",width/2,height / 2 + 20,0xffffff);
                     }
                 }
 

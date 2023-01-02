@@ -3,6 +3,7 @@ package com.finderfeed.solarcraft.content.blocks.infusing_table_things;
 import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.content.blocks.primitive.RunicEnergySaverBlock;
 import com.finderfeed.solarcraft.content.items.SolarNetworkBinder;
+import com.finderfeed.solarcraft.content.items.solar_wand.SolarWandItem;
 import com.finderfeed.solarcraft.misc_things.SolarcraftDebugStick;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;

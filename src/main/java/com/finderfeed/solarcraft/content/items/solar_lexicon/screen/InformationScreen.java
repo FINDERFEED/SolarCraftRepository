@@ -99,7 +99,7 @@ public class InformationScreen extends Screen {
 
 //        Item i = screen != null ? SolarcraftItems.INFUSER_ITEM.get() : screenInfusingCrafting != null ? SolarcraftItems.INFUSING_TABLE.get() : Items.CRAFTING_TABLE.asItem();
 
-        ItemStackButton button = new ItemStackTabButton(relX+260,relY+25 + 18   ,17,17,(buttons)->{
+        ItemStackButton button = new ItemStackTabButton(relX+255,relY+25 + 18   ,17,17,(buttons)->{
             if (screen != null) {
                 Minecraft.getInstance().setScreen(screen);
             }
@@ -129,7 +129,7 @@ public class InformationScreen extends Screen {
             }
 
             for (AncientFragment ref : refs) {
-                ItemStackTabButton button1 = new ItemStackTabButton(relX + 260, relY + 25 + 18  + h * 18 + 40, 17, 17, b -> {
+                ItemStackTabButton button1 = new ItemStackTabButton(relX + 255, relY + 25 + 18  + h * 18 + 40, 17, 17, b -> {
                     Minecraft.getInstance().setScreen(getScreenFromFragment(ref));
                 }, ref.getIcon().getDefaultInstance(), 0.7f, (buttons, matrices, b, c) -> {
                     renderTooltip(matrices, ref.getTranslation(), b, c);
@@ -140,7 +140,7 @@ public class InformationScreen extends Screen {
         }
 
 
-        addRenderableWidget(new ItemStackTabButton(relX+257 +3,relY+28 - 3 ,17,17,(buttons)->{minecraft.setScreen(new SolarLexiconRecipesScreen());},
+        addRenderableWidget(new ItemStackTabButton(relX+255,relY+28 - 3 ,17,17,(buttons)->{minecraft.setScreen(new SolarLexiconRecipesScreen());},
                 Items.CRAFTING_TABLE.getDefaultInstance(),0.7f,(buttons,matrices,b,c)->{
             renderTooltip(matrices,Component.literal("Go back"),b,c);
         }));

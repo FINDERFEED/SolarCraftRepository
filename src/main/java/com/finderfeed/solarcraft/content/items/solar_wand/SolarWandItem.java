@@ -1,5 +1,6 @@
-package com.finderfeed.solarcraft.content.blocks.infusing_table_things;
+package com.finderfeed.solarcraft.content.items.solar_wand;
 
+import com.finderfeed.solarcraft.content.blocks.infusing_table_things.InfuserTileEntity;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.content.blocks.blockentities.InfusingTableTile;
@@ -8,6 +9,8 @@ import com.finderfeed.solarcraft.content.items.runic_energy.IRunicEnergyUser;
 import com.finderfeed.solarcraft.content.items.runic_energy.RunicEnergyCost;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.Progression;
 import com.finderfeed.solarcraft.misc_things.*;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.TooltipFlag;
 
@@ -29,21 +32,57 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.network.chat.Component;
 import net.minecraft.ChatFormatting;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.Nullable;
 
 
-import javax.annotation.Nullable;
+import java.util.HashMap;
 import java.util.List;
 
 public class SolarWandItem extends Item implements IRunicEnergyUser {
 
 
+    private static final HashMap<String, WandAction<?>> WAND_ACTIONS = new HashMap<>();
+
     public SolarWandItem(Properties p_i48487_1_) {
         super(p_i48487_1_);
     }
 
+    public static void registerWandAction(ResourceLocation location,WandAction action){
+        String loc = location.toString();
+        if (WAND_ACTIONS.containsKey(loc)) throw new IllegalStateException("Duplicate action: " + loc);
+        WAND_ACTIONS.put(loc,action);
+    }
+
+    public static WandAction<?> getWandAction(ResourceLocation location){
+        String loc = location.toString();
+        return WAND_ACTIONS.get(loc);
+    }
+
+    @Nullable
+    public WandAction<?> getCurrentAction(ItemStack stack){
+        return getWandAction(new ResourceLocation(stack.getOrCreateTag().getString("solarcraft_wand_action")));
+    }
 
     @Override
     public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
+        ItemStack item = player.getItemInHand(hand);
+        var action = getCurrentAction(item);
+        if (action != null) {
+            WandActionType actionType = action.getActionType();
+            if (actionType == WandActionType.AIR){
+                WandUseContext context = new WandUseContext(player.level,player,item,null,null);
+                WandDataSerializer<? extends WandData<?>> serializer = action.getWandDataSerializer();
+                CompoundTag tag = item.getOrCreateTag().getCompound(serializer.getDataName().toString());
+                WandData data = serializer.deserialize(tag);
+
+                action.run(context,data);
+
+                serializer.serialize(tag,data);
+            }else if (actionType == WandActionType.ON_USE_TICK){
+                player.startUsingItem(hand);
+            }
+        }
+
 
         player.startUsingItem(hand);
 
@@ -51,11 +90,24 @@ public class SolarWandItem extends Item implements IRunicEnergyUser {
     }
 
     @Override
-    public void onUsingTick(ItemStack stack, LivingEntity player, int count) {
+    public void onUsingTick(ItemStack stack, LivingEntity player, int time) {
         if (player instanceof  Player) {
             handleEnergyConsumption(player.level, (Player) player);
         }
-        super.onUsingTick(stack, player, count);
+
+        var action = getCurrentAction(stack);
+        if (action != null && action.getActionType() == WandActionType.ON_USE_TICK && player instanceof Player entity){
+            WandUseContext context = new WandUseContext(player.level,entity,stack,null,time);
+            WandDataSerializer<? extends WandData<?>> serializer = action.getWandDataSerializer();
+            CompoundTag tag = stack.getOrCreateTag().getCompound(serializer.getDataName().toString());
+            WandData data = serializer.deserialize(tag);
+
+            action.run(context,data);
+
+            serializer.serialize(tag,data);
+        }
+
+        super.onUsingTick(stack, player, time);
     }
 
     @Override
@@ -63,19 +115,40 @@ public class SolarWandItem extends Item implements IRunicEnergyUser {
         return UseAnim.BOW;
     }
 
+    @Override
     public InteractionResult useOn(UseOnContext ctx) {
-        BlockPos pos = ctx.getClickedPos();
-        Level world = ctx.getLevel();
-        if (!world.isClientSide && world.getBlockEntity(pos) != null ) {
-            BlockEntity entity = world.getBlockEntity(pos);
-            if (entity instanceof InfuserTileEntity infuserTileEntity){
-                infuserTileEntity.triggerCrafting(ctx.getPlayer());
-                return InteractionResult.SUCCESS;
-            }else if (entity instanceof InfusingTableTile craftingTable){
-                craftingTable.triggerRecipe(ctx.getPlayer());
-                return InteractionResult.SUCCESS;
-            }
+        Player player = ctx.getPlayer();
+        InteractionHand hand = ctx.getHand();
+        ItemStack item = player.getItemInHand(hand);
+
+        item.getOrCreateTag().putString("solarcraft_wand_action","solarcraft:on_block_use");
+
+        var action = getCurrentAction(item);
+        if (action != null && action.getActionType() == WandActionType.BLOCK){
+            WandUseContext context = new WandUseContext(player.level,player,item,ctx,null);
+            WandDataSerializer<? extends WandData<?>> serializer = action.getWandDataSerializer();
+            CompoundTag tag = item.getOrCreateTag().getCompound(serializer.getDataName().toString());
+            WandData data = serializer.deserialize(tag);
+
+            InteractionResult result = action.run(context,data);
+
+            serializer.serialize(tag,data);
+            return result;
         }
+
+
+//        BlockPos pos = ctx.getClickedPos();
+//        Level world = ctx.getLevel();
+//        if (!world.isClientSide && world.getBlockEntity(pos) != null ) {
+//            BlockEntity entity = world.getBlockEntity(pos);
+//            if (entity instanceof InfuserTileEntity infuserTileEntity){
+//                infuserTileEntity.triggerCrafting(ctx.getPlayer());
+//                return InteractionResult.SUCCESS;
+//            }else if (entity instanceof InfusingTableTile craftingTable){
+//                craftingTable.triggerRecipe(ctx.getPlayer());
+//                return InteractionResult.SUCCESS;
+//            }
+//        }
 
 
         return InteractionResult.FAIL;
@@ -149,56 +222,3 @@ public class SolarWandItem extends Item implements IRunicEnergyUser {
     }
 }
 
-//@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE,modid = "solarcraft",value = Dist.CLIENT)
-//class WandEvents{
-//
-//    public static final ResourceLocation LOC = new ResourceLocation("solarcraft", "textures/misc/wand_crafting_progress.png");
-//    @SubscribeEvent
-//    public static void renderWandOverlays(final RenderGuiOverlayEvent event){
-//
-////            if (event.getType() == RenderGameOverlayEvent.ElementType.TEXT) {
-//                Minecraft mc = Minecraft.getInstance();
-//                Player player = mc.player;
-//                if (player.getMainHandItem().getItem() instanceof SolarWandItem) {
-//                    ClipContext ctx = new ClipContext(player.position().add(0, 1.5, 0),
-//                            player.position().add(0, 1.5, 0).add(player.getLookAngle().normalize().multiply(4.5, 4.5, 4.5)),
-//                            ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, player);
-//                    BlockHitResult result = player.level.clip(ctx);
-//
-//                    if (result.getType() == HitResult.Type.BLOCK &&
-//                            player.level.getBlockState(result.getBlockPos()).getBlock() instanceof InfuserBlock) {
-//                        BlockEntity tile = player.level.getBlockEntity(result.getBlockPos());
-//                        if (tile instanceof InfuserTileEntity) {
-//                            InfuserTileEntity tileInfusing = (InfuserTileEntity) tile;
-//                            ClientHelpers.bindText(LOC);
-//                            if (tileInfusing.RECIPE_IN_PROGRESS) {
-//                                double percent = (float) tileInfusing.CURRENT_PROGRESS / tileInfusing.INFUSING_TIME;
-//                                int height = event.getWindow().getGuiScaledHeight();
-//                                int width = event.getWindow().getGuiScaledWidth();
-//
-//                                GuiComponent.blit(event.getPoseStack(), width / 2 - 20, height / 2 + 11, 0, 9, (int) (40 * percent), 3, 40, 20);
-//                                GuiComponent.blit(event.getPoseStack(), width / 2 - 20, height / 2 + 8, 0, 0, 40, 9, 40, 20);
-//                            }else{
-//                                Optional<InfusingRecipe> recipe = mc.level.getRecipeManager().getRecipeFor(SolarcraftRecipeTypes.INFUSING.get(),new PhantomInventory(tileInfusing.getInventory()),mc.level);
-//                                if (recipe.isPresent()) {
-//                                    int height = event.getWindow().getGuiScaledHeight();
-//                                    int width = event.getWindow().getGuiScaledWidth();
-//                                    GuiComponent.blit(event.getPoseStack(), width / 2 - 20, height / 2 + 8, 0, 0, 40, 9, 40, 20);
-//                                    GuiComponent.blit(event.getPoseStack(), width / 2 -7, height / 2 + 7, 14, 24, 14, 14, 80, 40);
-//                                }else{
-//                                    int height = event.getWindow().getGuiScaledHeight();
-//                                    int width = event.getWindow().getGuiScaledWidth();
-//                                    GuiComponent.blit(event.getPoseStack(), width / 2 - 20, height / 2 + 8, 0, 0, 40, 9, 40, 20);
-//                                    GuiComponent.blit(event.getPoseStack(), width / 2 -7, height / 2 + 7, 0, 24, 14, 14, 80, 40);
-//
-//                                }
-//                            }
-//
-//                        }
-//                    }
-//
-//                }
-////            }
-//
-//    }
-//}

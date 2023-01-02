@@ -410,7 +410,9 @@ public class RenderingTools {
         stack.scale(0.7f,0.7f,0.7f);
 
         ClientHelpers.bindText(new ResourceLocation("solarcraft", "textures/misc/tile_energy_pylon_" + type.id + ".png"));
+        RenderSystem.enableBlend();
         GuiComponent.blit(stack,-3,63,0,0,16,16,16,16);
+        RenderSystem.disableBlend();
         stack.popPose();
     }
 

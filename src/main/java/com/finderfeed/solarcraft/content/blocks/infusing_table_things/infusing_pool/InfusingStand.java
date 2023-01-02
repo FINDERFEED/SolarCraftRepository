@@ -1,6 +1,6 @@
 package com.finderfeed.solarcraft.content.blocks.infusing_table_things.infusing_pool;
 
-import com.finderfeed.solarcraft.content.blocks.infusing_table_things.SolarWandItem;
+import com.finderfeed.solarcraft.content.items.solar_wand.SolarWandItem;
 import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;

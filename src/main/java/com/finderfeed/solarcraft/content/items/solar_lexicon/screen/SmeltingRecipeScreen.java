@@ -42,7 +42,7 @@ public class SmeltingRecipeScreen extends Screen {
         int width = minecraft.getWindow().getWidth();
         int height = minecraft.getWindow().getHeight();
         int scale = (int) minecraft.getWindow().getGuiScale();
-        this.relX = (width/scale - 183)/2;
+        this.relX = (width/scale - 183)/2 - 5;
         this.relY = (height - 218*scale)/2/scale;
         stacks = new ArrayList<>();
 
@@ -53,9 +53,9 @@ public class SmeltingRecipeScreen extends Screen {
         stacks.add(recipe.output);
 
 
-        addRenderableWidget(new ItemStackTabButton(relX+205,relY+9 + 20,17,17,(button)->{minecraft.setScreen(new SolarLexiconRecipesScreen());},
+        addRenderableWidget(new ItemStackTabButton(relX+202,relY+9 + 20,17,17,(button)->{minecraft.setScreen(new SolarLexiconRecipesScreen());},
                 Items.CRAFTING_TABLE.getDefaultInstance(),0.7f));
-        addRenderableWidget(new ItemStackTabButton(relX + 205,relY+27 + 20,17,17,(button)->{
+        addRenderableWidget(new ItemStackTabButton(relX + 202,relY+27 + 20,17,17,(button)->{
             Minecraft mc = Minecraft.getInstance();
             SolarLexicon lexicon = (SolarLexicon) mc.player.getMainHandItem().getItem();
             lexicon.currentSavedScreen = this;
