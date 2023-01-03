@@ -5,6 +5,6 @@ import com.mojang.blaze3d.vertex.PoseStack;
 @FunctionalInterface
 public interface IRenderable {
 
-    void render(PoseStack matrices,int x,int y);
+    void render(PoseStack matrices,float x,float y);
 
 }

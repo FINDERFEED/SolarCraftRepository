@@ -14,7 +14,7 @@ public class EmptyWandData implements WandData<EmptyWandData>{
         }
 
         @Override
-        public void serialize(CompoundTag item, WandData<EmptyWandData> data) {
+        public void serialize(CompoundTag item, EmptyWandData data) {
 
         }
 

@@ -8,7 +8,11 @@ public interface WandDataSerializer<T extends WandData<T>> {
 
     T deserialize(CompoundTag item);
 
-    void serialize(CompoundTag item,WandData<T> data);
+    void serialize(CompoundTag item,T data);
+
+    default void hackySerialize(CompoundTag tag,WandData<?> data){
+        this.serialize(tag,(T)data);
+    }
 
     /**
      * returns a tag to save data to

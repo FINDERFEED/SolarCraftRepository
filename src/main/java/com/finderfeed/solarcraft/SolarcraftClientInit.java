@@ -69,6 +69,7 @@ public class SolarcraftClientInit {
     public static final KeyMapping FORTH_ABILITY_KEY = new KeyMapping("key.fire_ability_four", KeyConflictContext.UNIVERSAL, InputConstants.Type.SCANCODE, GLFW.GLFW_KEY_D,"key.solarcraft.category");
 //    public static final KeyMapping OPEN_GUI_ABILITY_KEY = new KeyMapping("key.gui_button_solarforge", KeyConflictContext.UNIVERSAL, InputConstants.Type.SCANCODE, GLFW.GLFW_KEY_D,"key.solarcraft.category");
     public static final KeyMapping GUI_ABILITY_BUY_SCREEN = new KeyMapping("key.ability_buy_screen.solarcraft", KeyConflictContext.UNIVERSAL, InputConstants.Type.SCANCODE, GLFW.GLFW_KEY_D,"key.solarcraft.category");
+    public static final KeyMapping GUI_WAND_MODE_SELECTION = new KeyMapping("key.wand_mode_selection_screen", KeyConflictContext.UNIVERSAL, InputConstants.Type.SCANCODE, GLFW.GLFW_KEY_K,"key.solarcraft.category");
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public static void registerTest(RegisterTextureAtlasSpriteLoadersEvent event){
@@ -84,6 +85,7 @@ public class SolarcraftClientInit {
         event.register(THIRD_ABILITY_KEY);
         event.register(FORTH_ABILITY_KEY);
         event.register(GUI_ABILITY_BUY_SCREEN);
+        event.register(GUI_WAND_MODE_SELECTION);
     }
 
     @SubscribeEvent

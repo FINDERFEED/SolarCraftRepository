@@ -78,6 +78,7 @@ public class SolarCraftPacketHandler {
         INSTANCE.registerMessage(nextID(), RetainFragmentPacket.class, RetainFragmentPacket::toBytes, RetainFragmentPacket::new, RetainFragmentPacket::handle);
         INSTANCE.registerMessage(nextID(), CustomBossEventInitPacket.class, CustomBossEventInitPacket::toBytes, CustomBossEventInitPacket::new, CustomBossEventInitPacket::handle);
         INSTANCE.registerMessage(nextID(), ServerBossEventUpdateProgress.class, ServerBossEventUpdateProgress::toBytes, ServerBossEventUpdateProgress::new, ServerBossEventUpdateProgress::handle);
+        INSTANCE.registerMessage(nextID(), CastWandActionPacket.class, CastWandActionPacket::toBytes, CastWandActionPacket::new, CastWandActionPacket::handle);
 
 
     }

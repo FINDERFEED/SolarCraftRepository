@@ -35,6 +35,7 @@ import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
 
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
@@ -47,64 +48,60 @@ public class SolarWandItem extends Item implements IRunicEnergyUser {
         super(p_i48487_1_);
     }
 
-    public static void registerWandAction(ResourceLocation location,WandAction action){
-        String loc = location.toString();
-        if (WAND_ACTIONS.containsKey(loc)) throw new IllegalStateException("Duplicate action: " + loc);
-        WAND_ACTIONS.put(loc,action);
-    }
-
-    public static WandAction<?> getWandAction(ResourceLocation location){
-        String loc = location.toString();
-        return WAND_ACTIONS.get(loc);
-    }
-
-    @Nullable
-    public WandAction<?> getCurrentAction(ItemStack stack){
-        return getWandAction(new ResourceLocation(stack.getOrCreateTag().getString("solarcraft_wand_action")));
-    }
 
     @Override
     public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
         ItemStack item = player.getItemInHand(hand);
         var action = getCurrentAction(item);
         if (action != null) {
-            WandActionType actionType = action.getActionType();
+            WandActionType actionType = action.getActionType(player);
             if (actionType == WandActionType.AIR){
                 WandUseContext context = new WandUseContext(player.level,player,item,null,null);
                 WandDataSerializer<? extends WandData<?>> serializer = action.getWandDataSerializer();
                 CompoundTag tag = item.getOrCreateTag().getCompound(serializer.getDataName().toString());
-                WandData data = serializer.deserialize(tag);
+                WandData<?> data = serializer.deserialize(tag);
 
-                action.run(context,data);
+                InteractionResult result = action.hackyRun(context,data);
 
-                serializer.serialize(tag,data);
+                serializer.hackySerialize(tag,data);
+                switch (result){
+                    case SUCCESS -> {
+                        return InteractionResultHolder.success(item);
+                    }
+                    case FAIL -> {
+                        return InteractionResultHolder.fail(item);
+                    }
+                    case CONSUME -> {
+                        return InteractionResultHolder.consume(item);
+                    }
+                    default -> {
+                        return InteractionResultHolder.pass(item);
+                    }
+                }
             }else if (actionType == WandActionType.ON_USE_TICK){
                 player.startUsingItem(hand);
             }
         }
-
-
-        player.startUsingItem(hand);
 
         return super.use(world, player, hand);
     }
 
     @Override
     public void onUsingTick(ItemStack stack, LivingEntity player, int time) {
-        if (player instanceof  Player) {
-            handleEnergyConsumption(player.level, (Player) player);
-        }
+//        if (player instanceof  Player) {
+//            handleEnergyConsumption(player.level, (Player) player);
+//        }
 
         var action = getCurrentAction(stack);
-        if (action != null && action.getActionType() == WandActionType.ON_USE_TICK && player instanceof Player entity){
+        if (action != null && player instanceof Player entity && action.getActionType(entity) == WandActionType.ON_USE_TICK ){
             WandUseContext context = new WandUseContext(player.level,entity,stack,null,time);
             WandDataSerializer<? extends WandData<?>> serializer = action.getWandDataSerializer();
             CompoundTag tag = stack.getOrCreateTag().getCompound(serializer.getDataName().toString());
-            WandData data = serializer.deserialize(tag);
+            WandData<?> data = serializer.deserialize(tag);
 
-            action.run(context,data);
+            action.hackyRun(context,data);
 
-            serializer.serialize(tag,data);
+            serializer.hackySerialize(tag,data);
         }
 
         super.onUsingTick(stack, player, time);
@@ -121,18 +118,16 @@ public class SolarWandItem extends Item implements IRunicEnergyUser {
         InteractionHand hand = ctx.getHand();
         ItemStack item = player.getItemInHand(hand);
 
-        item.getOrCreateTag().putString("solarcraft_wand_action","solarcraft:on_block_use");
-
         var action = getCurrentAction(item);
-        if (action != null && action.getActionType() == WandActionType.BLOCK){
+        if (action != null && action.getActionType(player) == WandActionType.BLOCK){
             WandUseContext context = new WandUseContext(player.level,player,item,ctx,null);
             WandDataSerializer<? extends WandData<?>> serializer = action.getWandDataSerializer();
             CompoundTag tag = item.getOrCreateTag().getCompound(serializer.getDataName().toString());
             WandData data = serializer.deserialize(tag);
 
-            InteractionResult result = action.run(context,data);
+            InteractionResult result = action.hackyRun(context,data);
 
-            serializer.serialize(tag,data);
+            serializer.hackySerialize(tag,data);
             return result;
         }
 
@@ -165,6 +160,29 @@ public class SolarWandItem extends Item implements IRunicEnergyUser {
         super.appendHoverText(p_77624_1_, p_77624_2_, p_77624_3_, p_77624_4_);
     }
 
+    public static void registerWandAction(ResourceLocation location,WandAction action){
+        String loc = location.toString();
+        if (WAND_ACTIONS.containsKey(loc)) throw new IllegalStateException("Duplicate action: " + loc);
+        WAND_ACTIONS.put(loc,action);
+    }
+
+    public static WandAction<?> getWandAction(ResourceLocation location){
+        String loc = location.toString();
+        return WAND_ACTIONS.get(loc);
+    }
+
+    @Nullable
+    public static WandAction<?> getCurrentAction(ItemStack stack){
+        return getWandAction(new ResourceLocation(stack.getOrCreateTag().getString("solarcraft_wand_action")));
+    }
+
+    public static void setWandAction(ItemStack itemStack,ResourceLocation location){
+        itemStack.getOrCreateTag().putString("solarcraft_wand_action",location.toString());
+    }
+
+    public static Collection<WandAction<?>> getAllActions(){
+        return WAND_ACTIONS.values();
+    }
 
     public void handleEnergyConsumption(Level world, Player player){
 

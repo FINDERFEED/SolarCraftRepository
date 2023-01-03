@@ -740,6 +740,7 @@
   "solarcraft.item_upgrades.current_lvl": "Current level",
   "solar_network_binder.lore": "A tool used to connect two solar energy users between themselves.",
   "solar_fragment.solar_network_binder": "Solar Network Binder",
-  "block.solarcraft.savanna_dungeon_keeper": "Dungeon Keeper"
+  "block.solarcraft.savanna_dungeon_keeper": "Dungeon Keeper",
+  "key.wand_mode_selection_screen": "Wand Mode Selection Screen"
 }
 
