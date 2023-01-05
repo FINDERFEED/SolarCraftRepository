@@ -23,8 +23,16 @@ public class DefaultWandBlockUseAction implements WandAction<EmptyWandData> {
         UseOnContext ctx = context.context();
         BlockPos pos = ctx.getClickedPos();
         Level world = context.level();
-        if (!world.isClientSide && world.getBlockEntity(pos) instanceof IWandable wandable){
-            wandable.onWandUse(pos,player);
+        if (!world.isClientSide){
+            IWandable wandable = null;
+            if (world.getBlockEntity(pos) instanceof IWandable w) {
+                wandable = w;
+            }else if (world.getBlockState(pos).getBlock() instanceof IWandable w){
+                wandable = w;
+            }
+            if (wandable != null){
+                wandable.onWandUse(pos,player);
+            }
             return InteractionResult.SUCCESS;
         }
         return InteractionResult.FAIL;

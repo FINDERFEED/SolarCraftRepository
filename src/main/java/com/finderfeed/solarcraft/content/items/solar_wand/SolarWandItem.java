@@ -1,6 +1,8 @@
 package com.finderfeed.solarcraft.content.items.solar_wand;
 
 import com.finderfeed.solarcraft.content.blocks.infusing_table_things.InfuserTileEntity;
+import com.finderfeed.solarcraft.content.items.solar_wand.wand_actions.drain_runic_enenrgy_action.REDrainWandActionData;
+import com.finderfeed.solarcraft.content.items.solar_wand.wand_actions.drain_runic_enenrgy_action.REDrainWandActionDataSerializer;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.content.blocks.blockentities.InfusingTableTile;
@@ -9,6 +11,7 @@ import com.finderfeed.solarcraft.content.items.runic_energy.IRunicEnergyUser;
 import com.finderfeed.solarcraft.content.items.runic_energy.RunicEnergyCost;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.Progression;
 import com.finderfeed.solarcraft.misc_things.*;
+import com.finderfeed.solarcraft.registries.wand_actions.SolarCraftWandActionRegistry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -38,6 +41,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 public class SolarWandItem extends Item implements IRunicEnergyUser {
 
@@ -58,7 +62,12 @@ public class SolarWandItem extends Item implements IRunicEnergyUser {
             if (actionType == WandActionType.AIR){
                 WandUseContext context = new WandUseContext(player.level,player,item,null,null);
                 WandDataSerializer<? extends WandData<?>> serializer = action.getWandDataSerializer();
-                CompoundTag tag = item.getOrCreateTag().getCompound(serializer.getDataName().toString());
+                String dataname = serializer.getDataName().toString();
+                if (!item.getOrCreateTag().contains(dataname)){
+                    item.getOrCreateTag().put(dataname,new CompoundTag());
+                }
+
+                CompoundTag tag = item.getOrCreateTag().getCompound(dataname);
                 WandData<?> data = serializer.deserialize(tag);
 
                 InteractionResult result = action.hackyRun(context,data);
@@ -87,16 +96,22 @@ public class SolarWandItem extends Item implements IRunicEnergyUser {
     }
 
     @Override
-    public void onUsingTick(ItemStack stack, LivingEntity player, int time) {
+    public void onUsingTick(ItemStack item, LivingEntity player, int time) {
 //        if (player instanceof  Player) {
 //            handleEnergyConsumption(player.level, (Player) player);
 //        }
 
-        var action = getCurrentAction(stack);
+        var action = getCurrentAction(item);
         if (action != null && player instanceof Player entity && action.getActionType(entity) == WandActionType.ON_USE_TICK ){
-            WandUseContext context = new WandUseContext(player.level,entity,stack,null,time);
+            WandUseContext context = new WandUseContext(player.level,entity,item,null,time);
             WandDataSerializer<? extends WandData<?>> serializer = action.getWandDataSerializer();
-            CompoundTag tag = stack.getOrCreateTag().getCompound(serializer.getDataName().toString());
+
+            String dataname = serializer.getDataName().toString();
+            if (!item.getOrCreateTag().contains(dataname)){
+                item.getOrCreateTag().put(dataname,new CompoundTag());
+            }
+
+            CompoundTag tag = item.getOrCreateTag().getCompound(dataname);
             WandData<?> data = serializer.deserialize(tag);
 
             action.hackyRun(context,data);
@@ -104,7 +119,7 @@ public class SolarWandItem extends Item implements IRunicEnergyUser {
             serializer.hackySerialize(tag,data);
         }
 
-        super.onUsingTick(stack, player, time);
+        super.onUsingTick(item, player, time);
     }
 
     @Override
@@ -122,7 +137,13 @@ public class SolarWandItem extends Item implements IRunicEnergyUser {
         if (action != null && action.getActionType(player) == WandActionType.BLOCK){
             WandUseContext context = new WandUseContext(player.level,player,item,ctx,null);
             WandDataSerializer<? extends WandData<?>> serializer = action.getWandDataSerializer();
-            CompoundTag tag = item.getOrCreateTag().getCompound(serializer.getDataName().toString());
+            String dataname = serializer.getDataName().toString();
+            if (!item.getOrCreateTag().contains(dataname)){
+                item.getOrCreateTag().put(dataname,new CompoundTag());
+            }
+
+            CompoundTag tag = item.getOrCreateTag().getCompound(dataname);
+
             WandData data = serializer.deserialize(tag);
 
             InteractionResult result = action.hackyRun(context,data);
@@ -155,9 +176,19 @@ public class SolarWandItem extends Item implements IRunicEnergyUser {
     }
 
     @Override
-    public void appendHoverText(ItemStack p_77624_1_, @Nullable Level p_77624_2_, List<Component> p_77624_3_, TooltipFlag p_77624_4_) {
-        p_77624_3_.add(Component.translatable("solarcraft.solar_wand").withStyle(ChatFormatting.GOLD));
-        super.appendHoverText(p_77624_1_, p_77624_2_, p_77624_3_, p_77624_4_);
+    public void appendHoverText(ItemStack item, @Nullable Level world, List<Component> components, TooltipFlag p_77624_4_) {
+        components.add(Component.translatable("solarcraft.item.solar_wand")
+                .withStyle(ChatFormatting.GOLD));
+        WandAction<?> action = getCurrentAction(item);
+        if (action == SolarCraftWandActionRegistry.RUNIC_ENERGY_DRAIN){
+            if (item.getOrCreateTag().contains(action.getWandDataSerializer().getDataName().toString())) {
+                CompoundTag tag = item.getOrCreateTag().getCompound(action.getWandDataSerializer().getDataName().toString());
+                REDrainWandActionData data = REDrainWandActionDataSerializer.SERIALIZER.deserialize(tag);
+                components.add(Component.translatable("solarcraft.wand_action.re_drain.drain_type").withStyle(ChatFormatting.GOLD)
+                        .append(Component.literal(": " + data.getTypeToDrain().id.toUpperCase(Locale.ROOT)).withStyle(ChatFormatting.GOLD)));
+            }
+        }
+        super.appendHoverText(item, world, components, p_77624_4_);
     }
 
     public static void registerWandAction(ResourceLocation location,WandAction action){
@@ -184,45 +215,7 @@ public class SolarWandItem extends Item implements IRunicEnergyUser {
         return WAND_ACTIONS.values();
     }
 
-    public void handleEnergyConsumption(Level world, Player player){
 
-        Vec3 from = player.position().add(0,1.4,0);
-        Vec3 look = player.getLookAngle().multiply(30,30,30);
-        Vec3 to = from.add(look);
-        ClipContext ctx = new ClipContext(from,to, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE,null);
-        BlockHitResult res = world.clip(ctx);
-
-        if (world.getBlockEntity(res.getBlockPos()) instanceof RuneEnergyPylonTile tile){
-            if (!world.isClientSide){
-                tile.givePlayerEnergy(player,5);
-                RunicEnergy.Type type = tile.getEnergyType();
-                player.displayClientMessage(Component.literal(type.id.toUpperCase()+" "+RunicEnergy.getEnergy(player,tile.getEnergyType())).withStyle(ChatFormatting.GOLD),true);
-                Helpers.updateRunicEnergyOnClient(type,RunicEnergy.getEnergy(player,type),player);
-                Helpers.fireProgressionEvent(player, Progression.RUNE_ENERGY_CLAIM);
-                if (!RunicEnergy.hasFoundType(player,type)) {
-                    Helpers.sendEnergyTypeToast((ServerPlayer) player, type);
-                    RunicEnergy.setFound(player,type);
-                }
-                if (!Helpers.hasPlayerCompletedProgression(Progression.ALL_ENERGY_TYPES,player)){
-                    boolean f = true;
-                    for (RunicEnergy.Type t : RunicEnergy.Type.getAll()){
-                        f = RunicEnergy.hasFoundType(player,t);
-                        if (!f){
-                            break;
-                        }
-                    }
-                    if (f){
-                        Helpers.fireProgressionEvent(player,Progression.ALL_ENERGY_TYPES);
-                    }
-                }
-            }else{
-                Vec3 pos = new Vec3(res.getBlockPos().getX()+0.5,res.getBlockPos().getY()+0.5,res.getBlockPos().getZ()+0.5);
-                Vec3 vel = new Vec3(from.x-pos.x,from.y-pos.y,from.z-pos.z);
-                ClientHelpers.handleSolarWandParticles(pos,vel);
-
-            }
-        }
-    }
 
     @Override
     public float getMaxRunicEnergyCapacity() {

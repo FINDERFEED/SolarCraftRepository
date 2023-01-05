@@ -9,6 +9,7 @@ import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.finderfeed.solarcraft.packet_handler.SolarCraftPacketHandler;
 import com.finderfeed.solarcraft.packet_handler.packets.CastWandActionPacket;
 import com.mojang.blaze3d.platform.InputConstants;
+import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
@@ -32,6 +33,7 @@ public class WandModeSelectionScreen extends DefaultScreen {
     protected void init() {
         super.init();
         Minecraft minecraft = Minecraft.getInstance();
+        Window window = minecraft.getWindow();
         RadialMenu.RadialMenuShaderSettings settings =
                 new RadialMenu.RadialMenuShaderSettings(0,0.5f,0.1f,
                         new float[]{0.6f,0.6f,0.6f,0.7f},
@@ -49,7 +51,8 @@ public class WandModeSelectionScreen extends DefaultScreen {
                         RenderingTools.renderScaledGuiItemCentered(action.getIcon(),x,y,1,10);
                     },
                     (matrices, x, y) -> {
-                        renderTooltip(matrices,minecraft.font.split(action.getActionName(),100),(int)x,(int)y);
+                        renderTooltip(matrices,minecraft.font.split(action.getActionName(),
+                                (int)Math.min(200,window.getGuiScaledWidth() - x)),(int)x,(int)y);
                     }
             );
             section.setPressable(false);

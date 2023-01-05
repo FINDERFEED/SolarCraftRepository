@@ -1,5 +1,6 @@
 package com.finderfeed.solarcraft.content.blocks.blockentities;
 
+import com.finderfeed.solarcraft.content.items.solar_wand.wand_actions.drain_runic_enenrgy_action.IREWandDrainable;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.SolarCraftTags;
 import com.finderfeed.solarcraft.client.particles.SolarcraftParticleTypes;
@@ -17,6 +18,7 @@ import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTy
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
@@ -34,7 +36,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 
-public class RuneEnergyPylonTile extends BlockEntity implements  DebugTarget, RunicEnergyGiver {
+public class RuneEnergyPylonTile extends BlockEntity implements  DebugTarget, RunicEnergyGiver,IREWandDrainable{
 
     private RunicEnergy.Type type = null;
     private float currentEnergy = 0;
@@ -305,5 +307,59 @@ public class RuneEnergyPylonTile extends BlockEntity implements  DebugTarget, Ru
     @Override
     public List<String> getDebugStrings() {
         return List.of(getEnergyType().id.toUpperCase()+ " " + getCurrentEnergy());
+    }
+
+
+    @Override
+    public float drainEnergy(Player player, float amount) {
+        if (!player.level.isClientSide) {
+            float delta = Math.min(amount, currentEnergy);
+            this.currentEnergy -= delta;
+            Helpers.fireProgressionEvent(player, Progression.RUNE_ENERGY_CLAIM);
+            if (!RunicEnergy.hasFoundType(player, type)) {
+                Helpers.sendEnergyTypeToast((ServerPlayer) player, type);
+                RunicEnergy.setFound(player, type);
+            }
+            if (!Helpers.hasPlayerCompletedProgression(Progression.ALL_ENERGY_TYPES, player)) {
+                boolean f = true;
+                for (RunicEnergy.Type t : RunicEnergy.Type.getAll()) {
+                    f = RunicEnergy.hasFoundType(player, t);
+                    if (!f) {
+                        break;
+                    }
+                }
+                if (f) {
+                    Helpers.fireProgressionEvent(player, Progression.ALL_ENERGY_TYPES);
+                }
+            }
+            return delta;
+        }
+        return 0;
+    }
+
+    @Override
+    public float returnEnergy(Player player, float amount) {
+        if (!level.isClientSide) {
+            float r = this.maxEnergy + amount - maxEnergy;
+            this.currentEnergy = Math.min(this.currentEnergy + amount, maxEnergy);
+            return r > 0 ? r : 0;
+        }else{
+            return 0;
+        }
+    }
+
+    @Override
+    public float getMaxEnergyDrain() {
+        return 5;
+    }
+
+    @Override
+    public List<RunicEnergy.Type> allowedDrainableTypes() {
+        return List.of(getEnergyType());
+    }
+
+    @Override
+    public boolean shouldAutomaticallySwitchWandType() {
+        return true;
     }
 }

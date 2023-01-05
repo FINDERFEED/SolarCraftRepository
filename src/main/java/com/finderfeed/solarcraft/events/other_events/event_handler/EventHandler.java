@@ -272,6 +272,9 @@ public class EventHandler {
     public static void progressionUnlockEvent(ProgressionUnlockEvent event){
         Progression ach = event.getProgression();
         Player playerEntity = event.getPlayer();
+        if (Helpers.hasPlayerCompletedProgression(ach, event.getPlayer())){
+
+        }
 //        if (!Helpers.hasPlayerCompletedProgression(ach,playerEntity) && Helpers.canPlayerUnlock(ach,playerEntity)){
         Helpers.setProgressionCompletionStatus(ach, playerEntity,true);
         Helpers.triggerToast(ach, playerEntity);

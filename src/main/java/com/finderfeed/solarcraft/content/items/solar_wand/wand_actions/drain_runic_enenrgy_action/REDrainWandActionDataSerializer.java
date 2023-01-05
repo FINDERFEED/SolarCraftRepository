@@ -3,6 +3,7 @@ package com.finderfeed.solarcraft.content.items.solar_wand.wand_actions.drain_ru
 import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.content.items.solar_wand.WandData;
 import com.finderfeed.solarcraft.content.items.solar_wand.WandDataSerializer;
+import com.finderfeed.solarcraft.misc_things.RunicEnergy;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 
@@ -12,12 +13,13 @@ public class REDrainWandActionDataSerializer implements WandDataSerializer<REDra
 
     @Override
     public REDrainWandActionData deserialize(CompoundTag item) {
-        return new REDrainWandActionData(item.getString("re_type"));
+        RunicEnergy.Type type = RunicEnergy.Type.byId(item.getString("re_type"));
+        return new REDrainWandActionData(type != null ? type : RunicEnergy.Type.ARDO);
     }
 
     @Override
     public void serialize(CompoundTag item, REDrainWandActionData data) {
-        item.putString("re_type",data.getTypeToDrain());
+        item.putString("re_type",data.getTypeToDrain().id);
     }
 
     @Override

@@ -7,7 +7,7 @@ import net.minecraftforge.eventbus.api.Event;
 
 
 /**
- * This event fires when a player completes a progression. DO NOT USE IT.
+ * This event fires when a player completes a progression.
  */
 public class ProgressionUnlockEvent extends Event {
 
