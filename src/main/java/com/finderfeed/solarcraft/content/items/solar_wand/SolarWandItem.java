@@ -1,6 +1,7 @@
 package com.finderfeed.solarcraft.content.items.solar_wand;
 
 import com.finderfeed.solarcraft.content.blocks.infusing_table_things.InfuserTileEntity;
+import com.finderfeed.solarcraft.content.items.solar_wand.client.SolarWandRenderProperties;
 import com.finderfeed.solarcraft.content.items.solar_wand.wand_actions.drain_runic_enenrgy_action.REDrainWandActionData;
 import com.finderfeed.solarcraft.content.items.solar_wand.wand_actions.drain_runic_enenrgy_action.REDrainWandActionDataSerializer;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
@@ -35,6 +36,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.network.chat.Component;
 import net.minecraft.ChatFormatting;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import org.jetbrains.annotations.Nullable;
 
 
@@ -42,6 +44,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.function.Consumer;
 
 public class SolarWandItem extends Item implements IRunicEnergyUser {
 
@@ -230,6 +233,12 @@ public class SolarWandItem extends Item implements IRunicEnergyUser {
     @Override
     public RunicEnergyCost getCost() {
         return RunicEnergyCost.EMPTY;
+    }
+
+    @Override
+    public void initializeClient(Consumer<IClientItemExtensions> consumer) {
+        super.initializeClient(consumer);
+        consumer.accept(SolarWandRenderProperties.INSTANCE);
     }
 }
 

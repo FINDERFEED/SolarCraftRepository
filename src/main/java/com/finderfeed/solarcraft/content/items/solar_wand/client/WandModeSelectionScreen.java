@@ -36,8 +36,8 @@ public class WandModeSelectionScreen extends DefaultScreen {
         Window window = minecraft.getWindow();
         RadialMenu.RadialMenuShaderSettings settings =
                 new RadialMenu.RadialMenuShaderSettings(0,0.5f,0.1f,
-                        new float[]{0.6f,0.6f,0.6f,0.7f},
-                        new float[]{0.9f,0.9f,0.9f,0.7f},
+                        new float[]{0.6f,0.6f,0.6f,0.8f},
+                        new float[]{0.9f,0.9f,0.9f,0.8f},
                         0.05f
                         );
         List<RadialMenu.RadialMenuSection> sections = new ArrayList<>();

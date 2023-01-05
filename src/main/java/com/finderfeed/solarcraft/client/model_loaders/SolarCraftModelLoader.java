@@ -28,7 +28,7 @@ import net.minecraftforge.client.model.geometry.IGeometryBakingContext;
 import net.minecraftforge.client.model.geometry.IGeometryLoader;
 import net.minecraftforge.client.model.geometry.IUnbakedGeometry;
 
-public class SolarforgeModelLoader implements IGeometryLoader<ProgressionOreGeometry> {
+public class SolarCraftModelLoader implements IGeometryLoader<ProgressionOreGeometry> {
 
 
 

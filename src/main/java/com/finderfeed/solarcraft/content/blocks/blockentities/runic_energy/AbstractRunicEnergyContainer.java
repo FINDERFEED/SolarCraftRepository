@@ -173,11 +173,7 @@ public abstract class AbstractRunicEnergyContainer extends SolarcraftBlockEntity
         });
     }
 
-//    public void resetAllRepeaters(){
-//        PATH_TO_CONTAINERS.forEach((type,way)->{
-//            RunicEnergyPath.resetRepeaterConnections(PATH_TO_CONTAINERS.get(type),level);
-//        });
-//    }
+
 
     @Nullable
     @Override
@@ -250,7 +246,7 @@ public abstract class AbstractRunicEnergyContainer extends SolarcraftBlockEntity
 
 
 
-    private List<BlockEntity> findNearestRepeatersOrPylons(BlockPos pos, Level world){
+    public List<BlockEntity> findNearestRepeatersOrPylons(BlockPos pos, Level world){
         List<BlockEntity> toReturn = new ArrayList<>();
         List<LevelChunk> chunks = Helpers.getSurroundingChunks5Radius(pos,world);
         for (RunicEnergy.Type type : RunicEnergy.Type.getAll()) {

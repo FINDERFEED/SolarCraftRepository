@@ -3,7 +3,7 @@ package com.finderfeed.solarcraft.events.other_events;
 
 
 import com.finderfeed.solarcraft.SolarCraft;
-import com.finderfeed.solarcraft.client.model_loaders.SolarforgeModelLoader;
+import com.finderfeed.solarcraft.client.model_loaders.SolarCraftModelLoader;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 
@@ -35,11 +35,12 @@ public class OBJModels {
 
     public static final ResourceLocation HOLE_MODEL = new ResourceLocation("solarcraft:objmodels/hole");
     public static final ResourceLocation ANCIENT_FRAGMENT_MODEL = new ResourceLocation("solarcraft:toloadmodels/ancient_fragment");
+    public static final ResourceLocation SOLAR_WAND_MODEL = new ResourceLocation("solarcraft:toloadmodels/solar_wand");
     public static final ResourceLocation PORTAL_SPHERE = new ResourceLocation("solarcraft:objmodels/portal_sphere");
 
 
 
-    public static final SolarforgeModelLoader LOADER = new SolarforgeModelLoader();
+    public static final SolarCraftModelLoader LOADER = new SolarCraftModelLoader();
 
 
     @SubscribeEvent
@@ -49,22 +50,6 @@ public class OBJModels {
 
     @SubscribeEvent
     public static void registerModels(final ModelEvent.RegisterAdditional event){
-//        ModelLoaderRegistry.registerLoader(new ResourceLocation(SolarForge.MOD_ID,"progression_ore_loader"),LOADER);
-//        ForgeModelBakery.addSpecialModel(CRYSTAL_BOSS);
-//        ForgeModelBakery.addSpecialModel(SOLAR_CORE_MODEL);
-//        ForgeModelBakery.addSpecialModel(ANCIENT_FRAGMENT_MODEL);
-//        ForgeModelBakery.addSpecialModel(HOLE_MODEL);
-//        ForgeModelBakery.addSpecialModel(SHIELDING_CRYSTAL_SHIELD);
-//        ForgeModelBakery.addSpecialModel(SHIELDING_CRYSTAL);
-//        ForgeModelBakery.addSpecialModel(GET_OFF_MEEE);
-//        ForgeModelBakery.addSpecialModel(RIP_RAY_GENERATOR);
-//        ForgeModelBakery.addSpecialModel(CRYSTAL_1);
-//        ForgeModelBakery.addSpecialModel(EXPLOSIVE_CRYSTAL);
-//        ForgeModelBakery.addSpecialModel(CLEARING_RITUAL_CRYSTAL);
-//        ForgeModelBakery.addSpecialModel(CLEARING_RITUAL_MAIN_BLOCK_LOWER);
-//        ForgeModelBakery.addSpecialModel(CLEARING_RITUAL_MAIN_BLOCK_PETALS);
-//        ForgeModelBakery.addSpecialModel(CLEARING_RITUAL_MAIN_BLOCK_TOP);
-//        ForgeModelBakery.addSpecialModel(PORTAL_SPHERE);
         event.register(CRYSTAL_BOSS);
         event.register(SOLAR_CORE_MODEL);
         event.register(ANCIENT_FRAGMENT_MODEL);
@@ -80,5 +65,6 @@ public class OBJModels {
         event.register(CLEARING_RITUAL_MAIN_BLOCK_PETALS);
         event.register(CLEARING_RITUAL_MAIN_BLOCK_TOP);
         event.register(PORTAL_SPHERE);
+        event.register(SOLAR_WAND_MODEL);
     }
 }
