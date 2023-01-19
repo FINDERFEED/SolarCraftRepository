@@ -743,7 +743,7 @@
   "block.solarcraft.savanna_dungeon_keeper": "Dungeon Keeper",
   "key.wand_mode_selection_screen": "Wand Mode Selection Screen",
   "solarcraft.wand_action.re_drain.drain_type": "Current drain type",
-  "solarcraft.wand_action.drain_energy": "Drain energy mode: Drain runic energy from various energy sources. Some of them may automatically set the draining type. To manually cycle drain types press RMB while crouching.",
+  "solarcraft.wand_action.drain_energy": "Drain energy mode: Drain runic energy from various energy sources. Some of them may automatically set the draining type. To change the RE drain type click on the air while crouching.",
   "solarcraft.wand_action.default_block_use": "Block use mode: Trigger some block's action (for ex. start Infuser crafting).",
   "solarcraft.wand_action.re_network": "Check runic network connectivity mode: Click on a repeater or runic energy user and see what RE sources are connected."
 }

@@ -55,12 +55,15 @@ public class RadialMenu {
     }
 
     public void render(PoseStack matrices,int mouseX,int mouseY,float pTicks,float zOffset){
-
         int hoveredSection = getSectionUnderMouse(mouseX,mouseY);
         drawMenu(matrices,mouseX,mouseY,pTicks,zOffset,hoveredSection);
         renderSectionsAndSetHovered(matrices,mouseX,mouseY,pTicks,zOffset,hoveredSection);
+    }
 
 
+    public void render(PoseStack matrices,int mouseX,int mouseY,float pTicks,float zOffset,int hoveredSection){
+        drawMenu(matrices,mouseX,mouseY,pTicks,zOffset,hoveredSection);
+        renderSectionsAndSetHovered(matrices,mouseX,mouseY,pTicks,zOffset,hoveredSection);
     }
 
     public void renderSectionsAndSetHovered(PoseStack matrices,int mouseX,int mouseY,float pTicks,float zOffset,int hoveredSection){

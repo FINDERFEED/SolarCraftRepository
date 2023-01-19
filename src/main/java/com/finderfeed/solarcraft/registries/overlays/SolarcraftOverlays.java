@@ -3,15 +3,22 @@ package com.finderfeed.solarcraft.registries.overlays;
 import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.client.rendering.CoreShaders;
 import com.finderfeed.solarcraft.content.abilities.ability_classes.ToggleableAbility;
+import com.finderfeed.solarcraft.content.blocks.blockentities.runic_energy.AbstractRunicEnergyContainer;
 import com.finderfeed.solarcraft.content.blocks.infusing_table_things.InfuserTileEntity;
+import com.finderfeed.solarcraft.content.items.primitive.solacraft_item_classes.SolarcraftItem;
+import com.finderfeed.solarcraft.content.items.solar_wand.IWandable;
 import com.finderfeed.solarcraft.content.items.solar_wand.SolarWandItem;
 import com.finderfeed.solarcraft.content.items.UltraCrossbowItem;
+import com.finderfeed.solarcraft.content.items.solar_wand.WandAction;
+import com.finderfeed.solarcraft.content.runic_network.repeater.BaseRepeaterTile;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.local_library.entities.bossbar.client.ActiveBossBar;
 import com.finderfeed.solarcraft.local_library.entities.bossbar.client.CustomBossBarRenderer;
 import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
 import com.finderfeed.solarcraft.registries.abilities.AbilitiesRegistry;
+import com.finderfeed.solarcraft.registries.items.SolarcraftItems;
+import com.finderfeed.solarcraft.registries.wand_actions.SolarCraftWandActionRegistry;
 import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
@@ -21,9 +28,12 @@ import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.ShaderInstance;
+import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
@@ -117,29 +127,6 @@ public class SolarcraftOverlays {
                 ClientHelpers.bindText(location);
                 Gui.blit(poseStack, initXPos, initYPos + i * 20, 0, 0, 20, 20, 20, 20);
             }
-
-//            int th = mc.getWindow().getGuiScaledHeight()/2;
-//            int tw = mc.getWindow().getGuiScaledWidth()/2;
-//            Matrix4f mt = poseStack.last().pose();
-//            RenderSystem.setShader(()->CoreShaders.RADIAL_MENU);
-//            ShaderInstance m = CoreShaders.RADIAL_MENU;
-//            Level w = Minecraft.getInstance().level;
-//            int sCount = (int)(w.getGameTime()/10) % 10 + 1;
-//            m.safeGetUniform("color").set(1f,1f,1f,0.7f);
-//            m.safeGetUniform("sColor").set(0.5f,0.5f,0.5f,0.7f);
-//            m.safeGetUniform("distFromCenter").set(0.05f);
-//            m.safeGetUniform("innerRadius").set(0.1f);
-//            m.safeGetUniform("outRadius").set(0.5f);
-//            m.safeGetUniform("sectionCount").set(sCount);
-//            m.safeGetUniform("selectedSection").set(0);
-//            BufferBuilder builder = Tesselator.getInstance().getBuilder();
-//            builder.begin(VertexFormat.Mode.QUADS,DefaultVertexFormat.POSITION_TEX);
-//            int testSize = 100;
-//            builder.vertex(mt,tw-testSize,th-testSize,0).uv(0,0).endVertex();
-//            builder.vertex(mt,tw-testSize,th+testSize,0).uv(0,1).endVertex();
-//            builder.vertex(mt,tw+testSize,th+testSize,0).uv(1,1).endVertex();
-//            builder.vertex(mt,tw+testSize,th-testSize,0).uv(1,0).endVertex();
-//            BufferUploader.drawWithShader(builder.end());
 
             if (mc.player.getMainHandItem().getItem() instanceof SolarWandItem){
                 int height = mc.getWindow().getGuiScaledHeight();
@@ -241,12 +228,13 @@ public class SolarcraftOverlays {
             Player player = mc.player;
             if (player.getMainHandItem().getItem() instanceof SolarWandItem) {
                 HitResult re = mc.hitResult;
+                int height = event.getWindow().getGuiScaledHeight();
+                int width = event.getWindow().getGuiScaledWidth();
                 if (re instanceof BlockHitResult result) {
                     BlockEntity tile = player.level.getBlockEntity(result.getBlockPos());
+                    Block block = player.level.getBlockState(result.getBlockPos()).getBlock();
                     if (tile instanceof InfuserTileEntity tileInfusing) {
                         ClientHelpers.bindText(LOC);
-                        int height = event.getWindow().getGuiScaledHeight();
-                        int width = event.getWindow().getGuiScaledWidth();
                         if (tileInfusing.RECIPE_IN_PROGRESS) {
                             double percent = (float) tileInfusing.CURRENT_PROGRESS / tileInfusing.INFUSING_TIME;
                             GuiComponent.blit(poseStack, width / 2 - 20, height / 2 + 11, 0, 9, (int) (40 * percent), 3, 40, 20);
@@ -254,6 +242,20 @@ public class SolarcraftOverlays {
                         GuiComponent.blit(poseStack, width / 2 - 20, height / 2 + 8, 0, 0, 40, 9, 40, 20);
                         GuiComponent.drawCenteredString(poseStack,mc.font,"Recipe Progress",width/2,height / 2 + 20,0xffffff);
                     }
+
+                    WandAction<?> action = SolarWandItem.getCurrentAction(player.getMainHandItem());
+
+                    if (((action == SolarCraftWandActionRegistry.ON_BLOCK_USE)
+                            && (block instanceof IWandable || tile instanceof IWandable))
+                    || ((action == SolarCraftWandActionRegistry.CHECK_RUNIC_NETWORK_CONNECTIVITY)
+                            && (tile instanceof BaseRepeaterTile || tile instanceof AbstractRunicEnergyContainer)) ) {
+                        ItemStack stack = SolarcraftItems.SOLAR_WAND.get().getDefaultInstance();
+                        SolarWandItem.setWandAction(stack,action.getRegistryName());
+                        RenderingTools.renderScaledGuiItemCentered(stack,
+                                width / 2f + 16, height / 2f - 1, 1f, 0);
+                    }
+
+
                 }
 
             }

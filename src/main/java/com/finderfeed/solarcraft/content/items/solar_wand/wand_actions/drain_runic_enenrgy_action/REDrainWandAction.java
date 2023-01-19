@@ -37,11 +37,13 @@ public class REDrainWandAction implements WandAction<REDrainWandActionData> {
         RunicEnergy.Type type = data.getTypeToDrain();
         WandActionType actionType = this.getActionType(context.player());
         if (actionType == WandActionType.AIR){
-            RunicEnergy.Type newtype = RunicEnergy.Type.getAll()[(type.getIndex() + 1) % RunicEnergy.Type.getAll().length];
-            data.setTypeToDrain(newtype);
-            player.displayClientMessage(Component.translatable("solarcraft.wand_action.re_drain.drain_type").withStyle(ChatFormatting.GOLD)
-                            .append(Component.literal(": " + newtype.id.toUpperCase(Locale.ROOT)).withStyle(ChatFormatting.GOLD)), true);
-
+//            RunicEnergy.Type newtype = RunicEnergy.Type.getAll()[(type.getIndex() + 1) % RunicEnergy.Type.getAll().length];
+//            data.setTypeToDrain(newtype);
+//            player.displayClientMessage(Component.translatable("solarcraft.wand_action.re_drain.drain_type").withStyle(ChatFormatting.GOLD)
+//                            .append(Component.literal(": " + newtype.id.toUpperCase(Locale.ROOT)).withStyle(ChatFormatting.GOLD)), true);
+            if (level.isClientSide){
+                ClientHelpers.handleClientREDrainWandAction();
+            }
         }else{
             Vec3 from = player.position().add(0,player.getStandingEyeHeight(
                     player.getPose(),player.getDimensions(player.getPose())
