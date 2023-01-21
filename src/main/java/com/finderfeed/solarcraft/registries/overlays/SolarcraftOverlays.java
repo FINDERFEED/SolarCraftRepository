@@ -5,6 +5,7 @@ import com.finderfeed.solarcraft.client.rendering.CoreShaders;
 import com.finderfeed.solarcraft.content.abilities.ability_classes.ToggleableAbility;
 import com.finderfeed.solarcraft.content.blocks.blockentities.runic_energy.AbstractRunicEnergyContainer;
 import com.finderfeed.solarcraft.content.blocks.infusing_table_things.InfuserTileEntity;
+import com.finderfeed.solarcraft.content.blocks.solar_energy.SolarEnergyContainer;
 import com.finderfeed.solarcraft.content.items.primitive.solacraft_item_classes.SolarcraftItem;
 import com.finderfeed.solarcraft.content.items.solar_wand.IWandable;
 import com.finderfeed.solarcraft.content.items.solar_wand.SolarWandItem;
@@ -247,8 +248,12 @@ public class SolarcraftOverlays {
 
                     if (((action == SolarCraftWandActionRegistry.ON_BLOCK_USE)
                             && (block instanceof IWandable || tile instanceof IWandable))
+
                     || ((action == SolarCraftWandActionRegistry.CHECK_RUNIC_NETWORK_CONNECTIVITY)
-                            && (tile instanceof BaseRepeaterTile || tile instanceof AbstractRunicEnergyContainer)) ) {
+                            && (tile instanceof BaseRepeaterTile || tile instanceof AbstractRunicEnergyContainer))
+
+                            || ((action == SolarCraftWandActionRegistry.CHECK_SOLAR_ENERGY_WAND_ACTION)
+                            && (tile instanceof BaseRepeaterTile || tile instanceof SolarEnergyContainer))) {
                         ItemStack stack = SolarcraftItems.SOLAR_WAND.get().getDefaultInstance();
                         SolarWandItem.setWandAction(stack,action.getRegistryName());
                         RenderingTools.renderScaledGuiItemCentered(stack,

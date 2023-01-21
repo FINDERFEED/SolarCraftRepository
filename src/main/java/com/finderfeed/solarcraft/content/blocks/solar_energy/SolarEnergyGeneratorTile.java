@@ -29,7 +29,7 @@ public class SolarEnergyGeneratorTile extends SolarcraftBlockEntity implements S
     public static void tick(Level world, BlockPos pos, BlockState blockState, SolarEnergyGeneratorTile tile) {
         if (!world.isClientSide){
             if (Multiblocks.ENERGY_GENERATOR.check(world,tile.worldPosition,true)) {
-                if (Helpers.isDay(world)) {
+                if (Helpers.isDay(world) && world.canSeeSky(pos.above())) {
                     tile.addSolarEnergy(tile.getEnergyPerTick());
                 }
                 checkTilesAndGiveEnergy(world, tile);

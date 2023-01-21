@@ -64,14 +64,10 @@ public class RETypeSelectionScreen extends DefaultScreen {
         this.menu = menu;
     }
 
-    private int mx;
-    private int my;
 
     @Override
     public void render(PoseStack matrices, int mx, int my, float pTicks) {
         super.render(matrices, mx, my, pTicks);
-        this.mx = mx;
-        this.my = my;
         menu.render(matrices,mx,my,pTicks,0);
     }
 

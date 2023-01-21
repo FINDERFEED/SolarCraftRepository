@@ -117,7 +117,8 @@ public class EnergyGeneratorTileRender implements BlockEntityRenderer<SolarEnerg
 
         float time = (entity.getLevel().getGameTime() + partialTicks)*8%360;
         matrices.translate(0.5,0.6,0.5);
-        boolean flag = Multiblocks.ENERGY_GENERATOR.check(entity.getLevel(),entity.getBlockPos(),true) && Helpers.isDay(entity.getLevel());
+        boolean flag = Multiblocks.ENERGY_GENERATOR.check(entity.getLevel(),entity.getBlockPos(),true) && Helpers.isDay(entity.getLevel())
+                && entity.getLevel().canSeeSky(entity.getBlockPos().above());
         if (flag) {
             matrices.mulPose(Vector3f.YP.rotationDegrees(time));
 
