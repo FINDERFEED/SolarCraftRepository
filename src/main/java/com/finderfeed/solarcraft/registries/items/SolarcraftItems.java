@@ -155,7 +155,7 @@ public class SolarcraftItems {
         }
     });
 
-    public static final RegistryObject<Item> SOLAR_NETWORK_BINDER = ITEMS.register("solar_network_binder",()-> new SolarNetworkBinder(new Item.Properties().rarity(Rarity.EPIC).tab(SolarCraft.SOLAR_GROUP).stacksTo(1),()->AncientFragment.SOLAR_NETWORK_BINDER));
+    public static final RegistryObject<Item> SOLAR_NETWORK_BINDER = ITEMS.register("solar_network_binder",()-> new Item(new Item.Properties().rarity(Rarity.EPIC).stacksTo(1)));
     public static final RegistryObject<Item> ILLIDIUM_BLOCK = ITEMS.register("illidium_block",()->new SolarcraftBlockItem(SolarcraftBlocks.ILLIDIUM_BLOCK.get(),new Item.Properties().tab(SolarCraft.SOLAR_GROUP_BLOCKS),()->AncientFragment.ILLIDIUM_INGOT));
     public static final RegistryObject<Item> ALGADIUM_BLOCK = ITEMS.register("algadium_block",()->new SolarcraftBlockItem(SolarcraftBlocks.ALGADIUM_BLOCK.get(),new Item.Properties().tab(SolarCraft.SOLAR_GROUP_BLOCKS),()->AncientFragment.ALGADIUM_INGOT));
     public static final RegistryObject<Item> SOLAR_CORE = ITEMS.register("solar_core_block",()->new SolarcraftBlockItem(SolarcraftBlocks.SOLAR_CORE.get(),new Item.Properties().tab(SolarCraft.SOLAR_GROUP_BLOCKS),()->AncientFragment.SOLAR_CORE));

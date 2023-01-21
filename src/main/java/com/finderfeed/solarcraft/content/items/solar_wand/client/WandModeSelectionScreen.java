@@ -46,7 +46,7 @@ public class WandModeSelectionScreen extends DefaultScreen {
                         RenderingTools.renderScaledGuiItemCentered(action.getIcon(),x,y,1,10);
                     },
                     (matrices, x, y) -> {
-                        renderTooltip(matrices,minecraft.font.split(action.getActionName(),
+                        renderTooltip(matrices,minecraft.font.split(action.getActionDescription(),
                                 (int)Math.min(200,window.getGuiScaledWidth() - x)),(int)x,(int)y);
                     }
             );

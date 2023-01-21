@@ -21,7 +21,7 @@ public interface WandAction<T extends WandData<T>> {
 
     WandActionType getActionType(Player player);
 
-    Component getActionName();
+    Component getActionDescription();
 
     ResourceLocation getRegistryName();
 

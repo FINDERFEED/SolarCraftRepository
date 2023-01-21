@@ -21,6 +21,9 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.function.Supplier;
 
+/**
+ * Not used
+ */
 public class SolarNetworkBinder extends SolarcraftItem {
 
     public SolarNetworkBinder(Properties p_i48487_1_, Supplier<AncientFragment> fragmentSupplier) {

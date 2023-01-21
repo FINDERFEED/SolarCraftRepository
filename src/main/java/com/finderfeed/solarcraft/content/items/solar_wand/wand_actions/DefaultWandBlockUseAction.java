@@ -50,7 +50,7 @@ public class DefaultWandBlockUseAction implements WandAction<EmptyWandData> {
 
 
     @Override
-    public Component getActionName() {
+    public Component getActionDescription() {
         return Component.translatable("solarcraft.wand_action.default_block_use");
     }
 

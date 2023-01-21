@@ -746,6 +746,8 @@
   "solarcraft.wand_action.drain_energy": "Drain energy mode: Drain runic energy from various energy sources. Some of them may automatically set the draining type. To change the RE drain type click on the air while crouching.",
   "solarcraft.wand_action.default_block_use": "Block use mode: Trigger some block's action (for ex. start Infuser crafting).",
   "solarcraft.wand_action.re_network": "Check runic network connectivity mode: Click on a repeater or runic energy user and see what RE sources are connected.",
-  "solarcraft.wand_action.check_solar_energy": "Check solar energy level mode: Click on any solar energy user to get the amount of solar energy inside."
+  "solarcraft.wand_action.check_solar_energy": "Check solar energy level mode: Click on any solar energy user to get the amount of solar energy inside.",
+  "solarcraft.wand_action.solar_network_binder_pos": "Position to bind to: ",
+  "solarcraft.wand_action.solar_network_binder_wa": "Solar Network Binder mode: Bind to solar energy users together. Shift-click on block will clear position data."
 }
 

@@ -4,6 +4,8 @@ import com.finderfeed.solarcraft.content.blocks.infusing_table_things.InfuserTil
 import com.finderfeed.solarcraft.content.items.solar_wand.client.SolarWandRenderProperties;
 import com.finderfeed.solarcraft.content.items.solar_wand.wand_actions.drain_runic_enenrgy_action.REDrainWandActionData;
 import com.finderfeed.solarcraft.content.items.solar_wand.wand_actions.drain_runic_enenrgy_action.REDrainWandActionDataSerializer;
+import com.finderfeed.solarcraft.content.items.solar_wand.wand_actions.solar_network.SolarNetworkBinderWAData;
+import com.finderfeed.solarcraft.content.items.solar_wand.wand_actions.solar_network.SolarNetworkBinderWandAction;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.content.blocks.blockentities.InfusingTableTile;
@@ -156,20 +158,6 @@ public class SolarWandItem extends Item implements IRunicEnergyUser {
         }
 
 
-//        BlockPos pos = ctx.getClickedPos();
-//        Level world = ctx.getLevel();
-//        if (!world.isClientSide && world.getBlockEntity(pos) != null ) {
-//            BlockEntity entity = world.getBlockEntity(pos);
-//            if (entity instanceof InfuserTileEntity infuserTileEntity){
-//                infuserTileEntity.triggerCrafting(ctx.getPlayer());
-//                return InteractionResult.SUCCESS;
-//            }else if (entity instanceof InfusingTableTile craftingTable){
-//                craftingTable.triggerRecipe(ctx.getPlayer());
-//                return InteractionResult.SUCCESS;
-//            }
-//        }
-
-
         return InteractionResult.FAIL;
     }
 
@@ -190,6 +178,11 @@ public class SolarWandItem extends Item implements IRunicEnergyUser {
                 components.add(Component.translatable("solarcraft.wand_action.re_drain.drain_type").withStyle(ChatFormatting.GOLD)
                         .append(Component.literal(": " + data.getTypeToDrain().id.toUpperCase(Locale.ROOT)).withStyle(ChatFormatting.GOLD)));
             }
+        }else if (action == SolarCraftWandActionRegistry.SOLAR_NETWORK_BINDER_WAND_ACTION){
+            CompoundTag tag = action.getWandDataSerializer().getTag(item);
+            SolarNetworkBinderWAData data = (SolarNetworkBinderWAData) action.getWandDataSerializer().deserialize(tag);
+            components.add(Component.translatable("solarcraft.wand_action.solar_network_binder_pos").withStyle(ChatFormatting.GOLD)
+                    .append(Component.literal("" + data.firstPos)));
         }
         super.appendHoverText(item, world, components, p_77624_4_);
     }

@@ -40,7 +40,7 @@ public class CheckSolarEnergyWandAction implements WandAction<EmptyWandData> {
     }
 
     @Override
-    public Component getActionName() {
+    public Component getActionDescription() {
         return Component.translatable("solarcraft.wand_action.check_solar_energy");
     }
 

@@ -151,7 +151,7 @@ public class REDrainWandAction implements WandAction<REDrainWandActionData> {
     }
 
     @Override
-    public Component getActionName() {
+    public Component getActionDescription() {
         return Component.translatable("solarcraft.wand_action.drain_energy");
     }
 
