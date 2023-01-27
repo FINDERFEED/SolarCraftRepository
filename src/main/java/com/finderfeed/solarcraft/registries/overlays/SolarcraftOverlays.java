@@ -247,10 +247,10 @@ public class SolarcraftOverlays {
 
                     WandAction<?> action = SolarWandItem.getCurrentAction(player.getMainHandItem());
 
-                    if (((action == SolarCraftWandActionRegistry.ON_BLOCK_USE)
+                    if (((  action == SolarCraftWandActionRegistry.ON_BLOCK_USE)
                             && (block instanceof IWandable || tile instanceof IWandable))
 
-                    || ((action == SolarCraftWandActionRegistry.CHECK_RUNIC_NETWORK_CONNECTIVITY)
+                            || ((action == SolarCraftWandActionRegistry.CHECK_RUNIC_NETWORK_CONNECTIVITY)
                             && (tile instanceof BaseRepeaterTile || tile instanceof AbstractRunicEnergyContainer))
 
                             || ((action == SolarCraftWandActionRegistry.CHECK_SOLAR_ENERGY_WAND_ACTION)
@@ -258,8 +258,6 @@ public class SolarcraftOverlays {
 
                             || ((action == SolarCraftWandActionRegistry.SOLAR_NETWORK_BINDER_WAND_ACTION)
                             && (tile instanceof Bindable))
-
-
                     ) {
                         ItemStack stack = SolarcraftItems.SOLAR_WAND.get().getDefaultInstance();
                         SolarWandItem.setWandAction(stack,action.getRegistryName());
