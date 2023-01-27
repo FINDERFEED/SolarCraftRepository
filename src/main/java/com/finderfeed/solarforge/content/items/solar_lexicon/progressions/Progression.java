@@ -8,7 +8,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.network.chat.TranslatableComponent;
 public enum Progression {
     ENTER_NETHER("enter_nether",1, Blocks.NETHERRACK.asItem().getDefaultInstance(),new TranslatableComponent("ach.enter_nether"),nextID(),new TranslatableComponent("pre.enter_nether"),new TranslatableComponent("aft.enter_nether")),
-//    FIND_INCINERATED_FOREST("find_incinerated_forest",1, SolarcraftItems.BURNT_LOG.get().getDefaultInstance(), new TranslatableComponent("ach.find_incinerated_forest"),nextID(),new TranslatableComponent("pre.find_incinerated_forest"),new TranslatableComponent("aft.find_incinerated_forest")),
     FIND_KEY_LOCK_DUNGEON("find_key_lock",1, SolarcraftItems.INVINCIBLE_STONE.get().getDefaultInstance(), new TranslatableComponent("ach.key_lock_dungeon"),nextID(),new TranslatableComponent("pre.key_lock_dungeon"),new TranslatableComponent("aft.key_lock_dungeon")),
     FIND_INFUSER_DUNGEON("find_infuser_dungeon",1, SolarcraftItems.SOLAR_STONE_COLLUMN.get().getDefaultInstance(), new TranslatableComponent("ach.infuser_dungeon"),nextID(),new TranslatableComponent("pre.infuser_dungeon"),new TranslatableComponent("aft.infuser_dungeon")),
     FIND_KEY_SOURCE("find_key_source",1, SolarcraftItems.SOLAR_STONE_COLLUMN_HORIZONTAL.get().getDefaultInstance(), new TranslatableComponent("ach.key_source"),nextID(),new TranslatableComponent("pre.key_source"),new TranslatableComponent("aft.key_source")),
@@ -22,7 +21,7 @@ public enum Progression {
     ACQUIRE_COLD_STAR("cold_star_piece",2, SolarcraftItems.COLD_STAR_PIECE.get().getDefaultInstance(), new TranslatableComponent("ach.cold_star_piece"),nextID(),new TranslatableComponent("pre.cold_star_piece"),new TranslatableComponent("aft.cold_star_piece")),
     RUNE_ENERGY_CLAIM("rune_energy_claim",2, SolarcraftItems.SOLAR_WAND.get().getDefaultInstance(),new TranslatableComponent("ach.rune_energy_claim"),nextID(),new TranslatableComponent("pre.rune_energy_claim"),new TranslatableComponent("aft.rune_energy_claim")),
     SOLAR_RUNE("solar_rune",2, SolarcraftItems.SOLAR_RUNE_BASE.get().getDefaultInstance(),new TranslatableComponent("ach.solar_rune"),nextID(),new TranslatableComponent("pre.solar_rune"),new TranslatableComponent("aft.solar_rune")),
-    ALL_ENERGY_TYPES("all_energy_types",2, SolarcraftItems.RUNE_ENERGY_PYLON.get().getDefaultInstance(),new TranslatableComponent("ach.all_energy_types"),nextID(),new TranslatableComponent("pre.all_energy_types"),new TranslatableComponent("aft.all_energy_types")),
+    ALL_ENERGY_TYPES("all_energy_types",3, SolarcraftItems.RUNE_ENERGY_PYLON.get().getDefaultInstance(),new TranslatableComponent("ach.all_energy_types"),nextID(),new TranslatableComponent("pre.all_energy_types"),new TranslatableComponent("aft.all_energy_types")),
 
 
     KILL_DRAGON("kill_dragon",3, Blocks.DRAGON_HEAD.asItem().getDefaultInstance(),new TranslatableComponent("ach.kill_dragon"),nextID(),new TranslatableComponent("pre.kill_dragon"),new TranslatableComponent("aft.kill_dragon")),
