@@ -5,19 +5,28 @@ import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.events.other_events.OBJModels;
 import com.finderfeed.solarcraft.helpers.multiblock.Multiblocks;
 import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 
+import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.core.BlockPos;
 import com.mojang.math.Matrix4f;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.phys.Vec3;
 import com.mojang.math.Vector3f;
+import net.minecraftforge.client.model.data.ModelData;
+
+import java.util.List;
+import java.util.Random;
 
 
 public class SolarCoreRenderer implements BlockEntityRenderer<SolarEnergyCoreTile> {
@@ -100,16 +109,23 @@ public class SolarCoreRenderer implements BlockEntityRenderer<SolarEnergyCoreTil
                     matrices.popPose();
 
             }
-            RenderingTools.renderObjModel(OBJModels.SOLAR_CORE_MODEL,matrices,buffer,1f,1f,1f,light1, light2);
-//            List<BakedQuad> list = Minecraft.getInstance().getModelManager().getModel(OBJModels.SOLAR_CORE_MODEL)
-//                    .getQuads(null, null, new Random(), new ModelDataMap.Builder().build());
-//            for (BakedQuad a : list) {
-//                matrices.pushPose();
-//                matrices.scale(0.5f, 0.5f, 0.5f);
-//                matrices.translate(1, 1, 1);
-//                matrices.mulPose(Vector3f.YP.rotationDegrees((entity.getLevel().getGameTime() + partialTicks) % 360));
-//                buffer.getBuffer(RenderType.solid()).putBulkData(matrices.last(), a, 1, 1, 1, light1, light2);
-//                matrices.popPose();
+//            matrices.pushPose();
+//            matrices.scale(0.5f, 0.5f, 0.5f);
+//            matrices.translate(1, 1, 1);
+//            matrices.mulPose(Vector3f.YP.rotationDegrees((entity.getLevel().getGameTime() + partialTicks) % 360));
+//            RenderingTools.renderObjModel(OBJModels.SOLAR_CORE_MODEL,matrices,buffer,1f,1f,1f,LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY);
+//
+//            matrices.popPose();
+            List<BakedQuad> list = Minecraft.getInstance().getModelManager().getModel(OBJModels.SOLAR_CORE_MODEL)
+                    .getQuads(null, null, RandomSource.create(), ModelData.EMPTY,RenderType.solid());
+            for (BakedQuad a : list) {
+                matrices.pushPose();
+                matrices.scale(0.5f, 0.5f, 0.5f);
+                matrices.translate(1, 1, 1);
+                matrices.mulPose(Vector3f.YP.rotationDegrees((entity.getLevel().getGameTime() + partialTicks) % 360));
+                buffer.getBuffer(RenderType.solid()).putBulkData(matrices.last(), a, 1, 1, 1, light1, light2);
+                matrices.popPose();
+            }
 //            }
 
         }

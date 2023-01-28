@@ -311,7 +311,6 @@ public class SolarcraftItems {
     public static final RegistryObject<Item> CRYSTAL_ENERGY_VINES = ITEMS.register("crystal_energy_vines",()->new BlockItem(SolarcraftBlocks.CRYSTAL_ENERGY_VINES.get(),new Item.Properties().tab(SolarCraft.SOLAR_GROUP)));
     public static final RegistryObject<Item> CLEARING_CRYSTAL_RITUAL = ITEMS.register("clearing_ritual_crystal",()->new ClearingRitualCrystalItem(SolarcraftBlocks.CLEARING_RITUAL_CRYSTAL.get(),new Item.Properties().tab(SolarCraft.SOLAR_GROUP)));
 
-    //TODO: delete this
     public static final RegistryObject<Item> CLEARING_RITUAL_MAIN_BLOCK = ITEMS.register("clearing_ritual_main_block",()->new BlockItem(SolarcraftBlocks.CLEARING_RITUAL_MAIN_BLOCK.get(),new Item.Properties()));
     public static final RegistryObject<Item> THROWN_LIGHT = ITEMS.register("thrown_light",()->new ThrownLight(SolarcraftBlocks.THROWN_LIGHT.get(),new Item.Properties().tab(SolarCraft.SOLAR_GROUP)));
 
@@ -319,5 +318,14 @@ public class SolarcraftItems {
     public static  final RegistryObject<Item> SOLAR_FORGE_ITEM = ITEMS.register("solar_forge",()-> new SolarForgeBlockItem(SolarCraft.SOLAR_FORGE.get(),new Item.Properties().rarity(Rarity.EPIC).tab(SolarCraft.SOLAR_GROUP_BLOCKS).stacksTo(1)));
     public static  final RegistryObject<Item> SOLAR_ORE_ITEM = ITEMS.register("solar_ores",()-> new ProgressionBlockItem(SolarCraft.SOLAR_ORE.get(),new Item.Properties().tab(SolarCraft.SOLAR_GROUP_BLOCKS)));
     public static  final RegistryObject<Item> INFUSER_ITEM = ITEMS.register("solar_infuser",()-> new InfuserBlockItem(SolarCraft.SOLAR_INFUSER.get(),new Item.Properties().rarity(Rarity.EPIC).tab(SolarCraft.SOLAR_GROUP_BLOCKS).stacksTo(1),()-> AncientFragment.SOLAR_INFUSER));
+
+    public static final RegistryObject<ProgressionBlockItem> MAGISTONE = ITEMS.register("magistone",()->new ProgressionBlockItem(SolarcraftBlocks.MAGISTONE.get(),new Item.Properties().tab(SolarCraft.SOLAR_GROUP_BLOCKS)));
+    public static final RegistryObject<Item> MAGISTONE_STAIRS = ITEMS.register("magistone_stairs",()->new BlockItem(SolarcraftBlocks.MAGISTONE_STAIRS.get(),new Item.Properties().tab(SolarCraft.SOLAR_GROUP_BLOCKS)));
+    public static final RegistryObject<Item> MAGISTONE_SLAB = ITEMS.register("magistone_slab",()->new BlockItem(SolarcraftBlocks.MAGISTONE_SLAB.get(),new Item.Properties().tab(SolarCraft.SOLAR_GROUP_BLOCKS)));
+    public static final RegistryObject<Item> MAGISTONE_RAY = ITEMS.register("magistone_ray",()->new BlockItem(SolarcraftBlocks.MAGISTONE_RAY.get(),new Item.Properties().tab(SolarCraft.SOLAR_GROUP_BLOCKS)));
+    public static final RegistryObject<Item> MAGISTONE_COLUMN = ITEMS.register("magistone_column",()->new BlockItem(SolarcraftBlocks.MAGISTONE_COLUMN.get(),new Item.Properties().tab(SolarCraft.SOLAR_GROUP_BLOCKS)));
+    public static final RegistryObject<Item> CHISELED_MAGISTONE = ITEMS.register("chiseled_magistone",()->new BlockItem(SolarcraftBlocks.CHISELED_MAGISTONE.get(),new Item.Properties().tab(SolarCraft.SOLAR_GROUP_BLOCKS)));
+    public static final RegistryObject<Item> MAGISTONE_BRICKS = ITEMS.register("magistone_bricks",()->new BlockItem(SolarcraftBlocks.MAGISTONE_BRICKS.get(),new Item.Properties().tab(SolarCraft.SOLAR_GROUP_BLOCKS)));
+
 
 }

@@ -186,5 +186,14 @@ public class SolarcraftBlocks {
 
     public  static  final RegistryObject<Block> RADIANT_STONE = BLOCKS.register("radiant_stone",()-> new Block(BlockBehaviour.Properties.copy(Blocks.STONE)));
 
+    public  static  final RegistryObject<ProgressionBlock> MAGISTONE = BLOCKS.register("magistone",()-> new ProgressionBlock(BlockBehaviour.Properties.copy(Blocks.DEEPSLATE),()->Progression.ENTER_NETHER,Blocks.DEEPSLATE));
+
+
+    public  static  final RegistryObject<Block> MAGISTONE_BRICKS = BLOCKS.register("magistone_bricks",()-> new Block(BlockBehaviour.Properties.copy(Blocks.STONE)));
+    public  static  final RegistryObject<Block> MAGISTONE_STAIRS = BLOCKS.register("magistone_stairs",()-> new StairBlock(()-> MAGISTONE_BRICKS.get().defaultBlockState(),BlockBehaviour.Properties.copy(Blocks.STONE)));
+    public  static  final RegistryObject<Block> MAGISTONE_RAY = BLOCKS.register("magistone_ray",()-> new GlazedTerracottaBlock(BlockBehaviour.Properties.copy(Blocks.STONE)));
+    public  static  final RegistryObject<Block> MAGISTONE_SLAB = BLOCKS.register("magistone_slab",()-> new SlabBlock(BlockBehaviour.Properties.copy(Blocks.STONE)));
+    public  static  final RegistryObject<Block> MAGISTONE_COLUMN = BLOCKS.register("magistone_column",()-> new Block(BlockBehaviour.Properties.copy(Blocks.STONE)));
+    public  static  final RegistryObject<Block> CHISELED_MAGISTONE = BLOCKS.register("chiseled_magistone",()-> new Block(BlockBehaviour.Properties.copy(Blocks.STONE)));
 
 }

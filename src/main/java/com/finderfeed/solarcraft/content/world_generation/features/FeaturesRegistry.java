@@ -118,6 +118,7 @@ public class FeaturesRegistry {
     public static ConfiguredFeature<?,?> ULDERA_OBELISK_CONFIGURED;
     public static ConfiguredFeature<?,?> ULDERA_PYLON_CONFIGURED;
     public static ConfiguredFeature<?,?> CLEARING_CRYSTAL_CONFIGURED;
+    public static ConfiguredFeature<?,?> MAGISTONE_ORE;
 
 
     public static Holder<PlacedFeature> ULDERA_OBELISK_PLACEMENT;
@@ -147,6 +148,7 @@ public class FeaturesRegistry {
     public static Holder<PlacedFeature> SOLAR_STONE;
     public static Holder<PlacedFeature> ULDERA_PYLON_PLACEMENT;
     public static Holder<PlacedFeature> CLEARING_CRYSTAL_PLACEMENT;
+    public static Holder<PlacedFeature> MAGISTONE_ORE_PLACEMENT;
 
 
 
@@ -458,6 +460,16 @@ public class FeaturesRegistry {
             SOLAR_STONE = registerPlacedFeature("solar_stone",Holder.direct(SOLAR_STONE_CONF),
                     CountPlacement.of(UniformInt.of(3,4)), InSquarePlacement.spread(),
                     HeightRangePlacement.uniform(VerticalAnchor.bottom(),VerticalAnchor.absolute(80)));
+
+
+            MAGISTONE_ORE = new ConfiguredFeature<>(Feature.ORE,
+                    new OreConfiguration(OreFeatures.NATURAL_STONE,
+                            SolarcraftBlocks.MAGISTONE.get().defaultBlockState(),15));
+            registerConfiguredFeature(MAGISTONE_ORE,"magistone");
+            MAGISTONE_ORE_PLACEMENT = registerPlacedFeature("magistone",Holder.direct(MAGISTONE_ORE),
+                    CountPlacement.of(UniformInt.of(3,4)), InSquarePlacement.spread(),
+                    HeightRangePlacement.uniform(VerticalAnchor.bottom(),VerticalAnchor.aboveBottom(64)));
+
 
 
             LazyConfiguredFeatures.SOLAR_FLOWER_FEATURE_CONF = new ConfiguredFeature<>(Feature.RANDOM_PATCH,FeatureUtils.simpleRandomPatchConfiguration(2,
