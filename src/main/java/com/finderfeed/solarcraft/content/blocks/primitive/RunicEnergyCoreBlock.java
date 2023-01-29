@@ -7,6 +7,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -39,5 +40,10 @@ public class RunicEnergyCoreBlock extends Block implements EntityBlock {
             tileEntity.resetAllRepeaters();
         }
         super.onRemove(p_196243_1_, world, p_196243_3_, p_196243_4_, p_196243_5_);
+    }
+
+    @Override
+    public RenderShape getRenderShape(BlockState p_60550_) {
+        return RenderShape.ENTITYBLOCK_ANIMATED;
     }
 }

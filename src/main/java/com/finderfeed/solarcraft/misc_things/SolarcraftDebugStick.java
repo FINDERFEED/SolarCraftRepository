@@ -35,7 +35,9 @@ public class SolarcraftDebugStick extends Item {
     public InteractionResult useOn(UseOnContext ctx) {
         Level world = ctx.getLevel();
         BlockPos pos = ctx.getClickedPos();
-
+        if (!world.isClientSide){
+            StructurePatternExporter.export(world,pos,pos.offset(6,3,6));
+        }
         if (!world.isClientSide && world.getBlockEntity(pos) instanceof DebugTarget dtarget){
             if (ctx.getPlayer().isShiftKeyDown() && dtarget instanceof RuneEnergyPylonTile pylon) {
                    pylon.addEnergy(pylon.getEnergyType(),200);

@@ -6,6 +6,8 @@ import com.finderfeed.solarcraft.content.items.solar_wand.IWandable;
 import com.finderfeed.solarcraft.content.items.solar_wand.wand_actions.drain_runic_enenrgy_action.IREWandDrainable;
 import com.finderfeed.solarcraft.content.runic_network.algorithms.RunicEnergyPath;
 import com.finderfeed.solarcraft.helpers.Helpers;
+import com.finderfeed.solarcraft.helpers.multiblock.MultiblockStructure;
+import com.finderfeed.solarcraft.helpers.multiblock.Multiblocks;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
 import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
 import net.minecraft.core.BlockPos;
@@ -39,7 +41,7 @@ public class RunicEnergyCoreTile extends AbstractRunicEnergyContainer implements
 
     public static void tick(Level world,RunicEnergyCoreTile tile,BlockPos pos,BlockState state){
         if (!world.isClientSide){
-            if (tile.isDrainingEnergy) {
+            if (tile.isDrainingEnergy && tile.shouldFunction()) {
                 tile.requestRunicEnergy(tile.REQUEST, 1);
             }
         }
@@ -82,7 +84,7 @@ public class RunicEnergyCoreTile extends AbstractRunicEnergyContainer implements
 
     @Override
     public boolean shouldFunction() {
-        return true;
+        return Multiblocks.RUNIC_ENERGY_CORE.check(level,worldPosition,false);
     }
 
 

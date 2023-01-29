@@ -318,6 +318,25 @@ public class Multiblocks {
             .put('d',"solarcraft:energized_stone")
             .build());
 
+    public static final MultiblockStructure RUNIC_ENERGY_CORE = register(new MultiblockStructure.Builder()
+            .setId("runic_energy_core")
+            .setPattern(new String[][]{{"qwwwwwq", "errrrrt", "errrrrt", "errrrrt", "errrrrt", "errrrrt", "qyyyyyq"}, {"uiooopu", "aoooooa", "ooooooo", "ooooooo", "ooooooo", "sooooos", "uiooopu"}, {"uooooou", "ooooooo", "ooooooo", "ooooooo", "ooooooo", "ooooooo", "uooooou"}, {"qoooooq", "ooooooo", "ooooooo", "ooodooo", "ooooooo", "ooooooo", "qoooooq"}})
+            .setMainChar('d')
+            .put('e',"solarcraft:magistone_ray[facing=west]")
+            .put('a',"solarcraft:magistone_stairs[facing=north,half=bottom,shape=straight,waterlogged=false]")
+            .put('u',"solarcraft:magistone_column")
+            .put('i',"solarcraft:magistone_stairs[facing=west,half=bottom,shape=straight,waterlogged=false]")
+            .put('w',"solarcraft:magistone_ray[facing=north]")
+            .put('r',"solarcraft:magistone_bricks")
+            .put('t',"solarcraft:magistone_ray[facing=east]")
+            .put('y',"solarcraft:magistone_ray[facing=south]")
+            .put('p',"solarcraft:magistone_stairs[facing=east,half=bottom,shape=straight,waterlogged=false]")
+            .put('q',"solarcraft:chiseled_magistone")
+            .put('s',"solarcraft:magistone_stairs[facing=south,half=bottom,shape=straight,waterlogged=false]")
+            .put('d',"solarcraft:runic_energy_core")
+            .put('o',"minecraft:air")
+            .build()
+    );
 
 
 
