@@ -123,4 +123,7 @@ public class SolarcraftTileEntityTypes {
 
     public static final RegistryObject<BlockEntityType<SavannaDungeonKeeperTile>> SAVANNA_DUNGEON_KEEPER = TILE_ENTITY_TYPE.register("savanna_dungeon_keeper",()->
             BlockEntityType.Builder.of(SavannaDungeonKeeperTile::new, SolarcraftBlocks.SAVANNA_DUNGEON_KEEPER.get()).build(null));
+
+    public static final RegistryObject<BlockEntityType<RunicEnergyCoreTile>> RUNIC_ENERGY_CORE = TILE_ENTITY_TYPE.register("runic_energy_core",()->
+            BlockEntityType.Builder.of(RunicEnergyCoreTile::new, SolarcraftBlocks.RUNIC_ENERGY_CORE.get()).build(null));
 }

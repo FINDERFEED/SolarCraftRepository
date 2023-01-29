@@ -311,7 +311,7 @@ public class RuneEnergyPylonTile extends BlockEntity implements  DebugTarget, Ru
 
 
     @Override
-    public float drainEnergy(Player player, float amount) {
+    public float drainEnergy(RunicEnergy.Type type,Player player, float amount) {
         if (!player.level.isClientSide) {
             float delta = Math.min(amount, currentEnergy);
             this.currentEnergy -= delta;
@@ -338,7 +338,7 @@ public class RuneEnergyPylonTile extends BlockEntity implements  DebugTarget, Ru
     }
 
     @Override
-    public float returnEnergy(Player player, float amount) {
+    public float returnEnergy(RunicEnergy.Type type,Player player, float amount) {
         if (!level.isClientSide) {
             float r = this.maxEnergy + amount - maxEnergy;
             this.currentEnergy = Math.min(this.currentEnergy + amount, maxEnergy);

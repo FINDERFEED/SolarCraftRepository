@@ -13,12 +13,12 @@ public interface IREWandDrainable {
     /**
      * return how much energy should player get
      */
-    float drainEnergy(Player player,float amount);
+    float drainEnergy(RunicEnergy.Type type,Player player,float amount);
 
     /**
      * if player has maximum energy the remains will go here
      */
-    float returnEnergy(Player player,float amount);
+    float returnEnergy(RunicEnergy.Type type,Player player,float amount);
 
     /**
      * Max energy per use tick

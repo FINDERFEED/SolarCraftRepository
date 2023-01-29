@@ -183,6 +183,7 @@ public class SolarcraftBlocks {
     public  static  final RegistryObject<TemporaryLightBlock> TEMPORARY_LIGHT = BLOCKS.register("temporary_light",()-> new TemporaryLightBlock(BlockBehaviour.Properties.copy(Blocks.LIGHT).lightLevel((state)-> state.getValue(TemporaryLightBlock.LIGHT_LEVEL))));
     public  static  final RegistryObject<Block> THROWN_LIGHT = BLOCKS.register("thrown_light",()-> new ThrownLightBlock(BlockBehaviour.Properties.copy(Blocks.TORCH).sound(SoundType.WOOL)));
     public  static  final RegistryObject<Block> SAVANNA_DUNGEON_KEEPER = BLOCKS.register("savanna_dungeon_keeper",()-> new SavannaDungeonKeeper(BlockBehaviour.Properties.copy(Blocks.BEDROCK).noOcclusion()));
+    public  static  final RegistryObject<Block> RUNIC_ENERGY_CORE = BLOCKS.register("runic_energy_core",()-> new RunicEnergyCoreBlock(BlockBehaviour.Properties.copy(Blocks.STONE).noOcclusion()));
 
     public  static  final RegistryObject<Block> RADIANT_STONE = BLOCKS.register("radiant_stone",()-> new Block(BlockBehaviour.Properties.copy(Blocks.STONE)));
 

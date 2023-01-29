@@ -70,7 +70,7 @@ public abstract class AbstractRunicEnergyContainer extends SolarcraftBlockEntity
 
     public void requestRunicEnergy(RunicEnergyCost costs,int multiplier){
         if (seekCooldown > getSeekCooldown()){
-            tryConstructWays(costs.getSetTypes());
+            tryConstructWays(costs,multiplier);
             seekCooldown = 0;
         }else{
             seekCooldown++;
@@ -195,7 +195,12 @@ public abstract class AbstractRunicEnergyContainer extends SolarcraftBlockEntity
     }
 
     public void giveEnergy(RunicEnergy.Type type, double amount){
-        container.set(type,container.get(type)+(float)amount);
+//        container.set(type,container.get(type)+(float)amount);
+        setEnergy(type,(float)amount + container.get(type));
+    }
+
+    public void setEnergy(RunicEnergy.Type type,float amount){
+        container.set(type,Math.min((float)getRunicEnergyLimit(), Math.max(0,amount)));
     }
 
     protected boolean isEnough(RunicEnergy.Type type, RunicEnergyCost cost, int multiplier){
@@ -220,10 +225,28 @@ public abstract class AbstractRunicEnergyContainer extends SolarcraftBlockEntity
                 RunicEnergyPath.isRouteCorrect(PATH_TO_CONTAINERS.get(type),level));
     }
 
-    public void tryConstructWays(List<RunicEnergy.Type> types){
+    public void tryConstructWays(RunicEnergyCost cost,int multiplier){
         List<BlockEntity> entities = findNearestRepeatersOrPylons(worldPosition, level);
-        for (RunicEnergy.Type type : types) {
+        for (RunicEnergy.Type type : cost.getSetTypes()) {
             List<BlockPos> oldRoute = PATH_TO_CONTAINERS.get(type);
+
+            float c = cost.get(type) * multiplier;
+            double runicEnergy = getRunicEnergy(type);
+            if (runicEnergy >= c){
+                if (oldRoute != null){
+                    BlockPos firstPos = oldRoute.get(1);
+                    if (nullOrGiverPositionForClient.contains(firstPos)) {
+                        nullOrGiverPositionForClient.remove(firstPos);
+                        BlockState state = level.getBlockState(worldPosition);
+                        this.setChanged();
+                        this.level.sendBlockUpdated(worldPosition, state, state, 3);
+                    }
+                    RunicEnergyPath.resetRepeaterConnections(PATH_TO_CONTAINERS.get(type), level);
+                    PATH_TO_CONTAINERS.remove(type);
+                }
+                continue;
+            }
+
             if (checkRoute(oldRoute,type)) continue;
             if (oldRoute != null){
                 RunicEnergyPath.resetRepeaterConnections(oldRoute,level);
@@ -303,9 +326,21 @@ public abstract class AbstractRunicEnergyContainer extends SolarcraftBlockEntity
     }
 
     public void breakWay(RunicEnergy.Type type){
+//        List<BlockPos> path = PATH_TO_CONTAINERS.remove(type);
+//        if (path == null) return;
+//        RunicEnergyPath.resetRepeaterConnections(path,level);
+
         List<BlockPos> path = PATH_TO_CONTAINERS.remove(type);
         if (path == null) return;
-        RunicEnergyPath.resetRepeaterConnections(path,level);
+
+        BlockPos firstPos = path.get(1);
+        if (nullOrGiverPositionForClient.contains(firstPos)) {
+            nullOrGiverPositionForClient.remove(firstPos);
+            BlockState state = level.getBlockState(worldPosition);
+            this.setChanged();
+            this.level.sendBlockUpdated(worldPosition, state, state, 3);
+        }
+        RunicEnergyPath.resetRepeaterConnections(path, level);
     }
 
     public Map<RunicEnergy.Type,List<BlockPos>> getWays(){
