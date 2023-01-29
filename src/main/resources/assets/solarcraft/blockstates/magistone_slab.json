@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "solarcraft:block/magistone_slab"
+    },
+    "type=double": {
+      "model": "solarcraft:block/magistone_bricks"
+    },
+    "type=top": {
+      "model": "solarcraft:block/magistone_slab_top"
+    }
+  }
+}

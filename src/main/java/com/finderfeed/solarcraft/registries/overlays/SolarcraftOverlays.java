@@ -12,6 +12,9 @@ import com.finderfeed.solarcraft.content.items.solar_wand.IWandable;
 import com.finderfeed.solarcraft.content.items.solar_wand.SolarWandItem;
 import com.finderfeed.solarcraft.content.items.UltraCrossbowItem;
 import com.finderfeed.solarcraft.content.items.solar_wand.WandAction;
+import com.finderfeed.solarcraft.content.items.solar_wand.wand_actions.drain_runic_enenrgy_action.REDrainWandAction;
+import com.finderfeed.solarcraft.content.items.solar_wand.wand_actions.drain_runic_enenrgy_action.REDrainWandActionData;
+import com.finderfeed.solarcraft.content.items.solar_wand.wand_actions.drain_runic_enenrgy_action.REDrainWandActionDataSerializer;
 import com.finderfeed.solarcraft.content.runic_network.repeater.BaseRepeaterTile;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.local_library.entities.bossbar.client.ActiveBossBar;
@@ -49,6 +52,7 @@ import net.minecraftforge.fml.common.Mod;
 
 import java.util.*;
 
+import static com.finderfeed.solarcraft.content.items.solar_wand.wand_actions.drain_runic_enenrgy_action.RETypeSelectionScreen.ALL_ELEMENTS_ID_ORDERED;
 import static com.finderfeed.solarcraft.events.other_events.event_handler.ClientEventsHandler.*;
 
 @Mod.EventBusSubscriber(modid = SolarCraft.MOD_ID,bus = Mod.EventBusSubscriber.Bus.MOD,value = Dist.CLIENT)
@@ -225,13 +229,13 @@ public class SolarcraftOverlays {
 
         @Override
         public void render(ForgeGui gui, PoseStack poseStack, float partialTick, int screenWidth, int screenHeight) {
-            Minecraft event = gui.getMinecraft();
+
             Minecraft mc = Minecraft.getInstance();
             Player player = mc.player;
             if (player.getMainHandItem().getItem() instanceof SolarWandItem) {
                 HitResult re = mc.hitResult;
-                int height = event.getWindow().getGuiScaledHeight();
-                int width = event.getWindow().getGuiScaledWidth();
+                int height = mc.getWindow().getGuiScaledHeight();
+                int width = mc.getWindow().getGuiScaledWidth();
                 if (re instanceof BlockHitResult result) {
                     BlockEntity tile = player.level.getBlockEntity(result.getBlockPos());
                     Block block = player.level.getBlockState(result.getBlockPos()).getBlock();
@@ -247,10 +251,10 @@ public class SolarcraftOverlays {
 
                     WandAction<?> action = SolarWandItem.getCurrentAction(player.getMainHandItem());
 
-                    if (((action == SolarCraftWandActionRegistry.ON_BLOCK_USE)
+                    if (((  action == SolarCraftWandActionRegistry.ON_BLOCK_USE)
                             && (block instanceof IWandable || tile instanceof IWandable))
 
-                    || ((action == SolarCraftWandActionRegistry.CHECK_RUNIC_NETWORK_CONNECTIVITY)
+                            || ((action == SolarCraftWandActionRegistry.CHECK_RUNIC_NETWORK_CONNECTIVITY)
                             && (tile instanceof BaseRepeaterTile || tile instanceof AbstractRunicEnergyContainer))
 
                             || ((action == SolarCraftWandActionRegistry.CHECK_SOLAR_ENERGY_WAND_ACTION)
@@ -258,14 +262,25 @@ public class SolarcraftOverlays {
 
                             || ((action == SolarCraftWandActionRegistry.SOLAR_NETWORK_BINDER_WAND_ACTION)
                             && (tile instanceof Bindable))
-
-
                     ) {
                         ItemStack stack = SolarcraftItems.SOLAR_WAND.get().getDefaultInstance();
                         SolarWandItem.setWandAction(stack,action.getRegistryName());
                         RenderingTools.renderScaledGuiItemCentered(stack,
                                 width / 2f + 16, height / 2f - 1, 1f, 0);
                     }
+
+                    if (action == SolarCraftWandActionRegistry.RUNIC_ENERGY_DRAIN){
+                        ItemStack stack = player.getMainHandItem();
+                        REDrainWandActionData data = REDrainWandActionDataSerializer.SERIALIZER.deserialize(
+                                REDrainWandActionDataSerializer.SERIALIZER.getTag(stack));
+                        RunicEnergy.Type t = data.getTypeToDrain();
+                        if (t != null){
+                            ClientHelpers.bindText(ALL_ELEMENTS_ID_ORDERED);
+                            RenderingTools.blitWithBlend(poseStack,width/2f-8 - 16,height/2f-8.5f,t.getIndex() * 16,
+                                    0,16,16,128,16,0,1f);
+                        }
+                    }
+
 
 
                 }

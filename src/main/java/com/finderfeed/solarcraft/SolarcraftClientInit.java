@@ -191,6 +191,7 @@ public class SolarcraftClientInit {
             });
         });
         registerDefaultUnknownBlockItemPredicate(SolarcraftItems.LENSING_CRYSTAL_ORE.get());
+        registerDefaultUnknownBlockItemPredicate(SolarcraftItems.MAGISTONE.get());
 
     }
 
