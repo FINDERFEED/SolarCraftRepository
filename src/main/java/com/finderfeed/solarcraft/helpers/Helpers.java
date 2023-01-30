@@ -1,5 +1,6 @@
 package com.finderfeed.solarcraft.helpers;
 
+import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.content.blocks.blockentities.clearing_ritual.ClearingRitual;
 import com.finderfeed.solarcraft.content.entities.CrystalBossEntity;
 import com.finderfeed.solarcraft.content.entities.runic_elemental.RunicElementalBoss;
@@ -18,6 +19,7 @@ import com.finderfeed.solarcraft.registries.SolarcraftGamerules;
 import com.mojang.blaze3d.vertex.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiComponent;
+import net.minecraft.core.SectionPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerLevel;
@@ -29,6 +31,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.core.Direction;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -38,6 +41,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraftforge.common.MinecraftForge;
 
+import net.minecraftforge.common.world.ForgeChunkManager;
 import net.minecraftforge.network.NetworkDirection;
 
 import java.util.*;
@@ -383,6 +387,11 @@ public class Helpers {
     }
 
 
+    public static void loadChunkAtPos(ServerLevel world,BlockPos pos,boolean add,boolean ticking){
+        ForgeChunkManager.forceChunk(world,
+                SolarCraft.MOD_ID,pos, SectionPos.blockToSectionCoord(pos.getX()),SectionPos.blockToSectionCoord(pos.getZ()),
+                add,ticking);
+    }
 
 
 

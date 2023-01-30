@@ -44,6 +44,6 @@ public class RunicEnergyCoreBlock extends Block implements EntityBlock {
 
     @Override
     public RenderShape getRenderShape(BlockState p_60550_) {
-        return RenderShape.ENTITYBLOCK_ANIMATED;
+        return RenderShape.MODEL;
     }
 }

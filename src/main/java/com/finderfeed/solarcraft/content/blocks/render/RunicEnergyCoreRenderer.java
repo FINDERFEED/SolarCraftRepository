@@ -44,7 +44,7 @@ public class RunicEnergyCoreRenderer extends AbstractRunicEnergyContainerRendere
             matrices.pushPose();
             Quaternion cam = Minecraft.getInstance().gameRenderer.getMainCamera().rotation();
             matrices.mulPose(cam);
-            matrices.scale(3f,3f,3f);
+
             Matrix4f m = matrices.last().pose();
 
             float alpha = random.nextFloat() * 0.5f + 0.5f;

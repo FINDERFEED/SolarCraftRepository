@@ -1,21 +1,28 @@
 package com.finderfeed.solarcraft.content.blocks.blockentities;
 
+import com.finderfeed.solarcraft.client.particles.SolarcraftParticleTypes;
 import com.finderfeed.solarcraft.content.blocks.blockentities.runic_energy.AbstractRunicEnergyContainer;
 import com.finderfeed.solarcraft.content.items.runic_energy.RunicEnergyCost;
 import com.finderfeed.solarcraft.content.items.solar_wand.IWandable;
 import com.finderfeed.solarcraft.content.items.solar_wand.wand_actions.drain_runic_enenrgy_action.IREWandDrainable;
 import com.finderfeed.solarcraft.content.runic_network.algorithms.RunicEnergyPath;
+import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.helpers.multiblock.MultiblockStructure;
 import com.finderfeed.solarcraft.helpers.multiblock.Multiblocks;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
 import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.Connection;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
 import java.util.List;
@@ -44,6 +51,16 @@ public class RunicEnergyCoreTile extends AbstractRunicEnergyContainer implements
             if (tile.isDrainingEnergy && tile.shouldFunction()) {
                 tile.requestRunicEnergy(tile.REQUEST, 1);
             }
+        }else{
+            if (tile.isDrainingEnergy()) {
+                Vec3 v = new Vec3(1, 0, 0).yRot((float) (Math.PI * world.random.nextFloat()))
+                        .xRot((float) (Math.PI * 2 * world.random.nextFloat()));
+                Vec3 l = v.add(Helpers.getBlockCenter(pos));
+
+                ClientHelpers.Particles.createParticle(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+                        l.x, l.y, l.z, v.x * 0.025, v.y * 0.025, v.z * 0.025, 230 + world.random.nextInt(25),
+                        230 + world.random.nextInt(25), world.random.nextInt(25), 0.25f);
+            }
         }
     }
 
@@ -54,6 +71,9 @@ public class RunicEnergyCoreTile extends AbstractRunicEnergyContainer implements
             }
         }
         isDrainingEnergy = drainingEnergy;
+        if (!level.isClientSide) {
+            Helpers.updateTile(this);
+        }
 
     }
 
@@ -136,5 +156,32 @@ public class RunicEnergyCoreTile extends AbstractRunicEnergyContainer implements
             user.sendSystemMessage(Component.literal("Draining Energy: " + !isDrainingEnergy()));
             setDrainingEnergy(!isDrainingEnergy());
         }
+    }
+
+    @Override
+    public void saveAdditional(CompoundTag tag) {
+        super.saveAdditional(tag);
+        tag.putBoolean("drainingEnergy",isDrainingEnergy());
+    }
+
+    @Override
+    public void load(CompoundTag tag) {
+        super.load(tag);
+        isDrainingEnergy = tag.getBoolean("drainingEnergy");
+    }
+
+    @Override
+    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
+        super.onDataPacket(net, pkt);
+        isDrainingEnergy = pkt.getTag().getBoolean("drainingEnergy");
+    }
+
+    @Nullable
+    @Override
+    public ClientboundBlockEntityDataPacket getUpdatePacket() {
+
+        ClientboundBlockEntityDataPacket pkt = super.getUpdatePacket();
+        pkt.getTag().putBoolean("drainingEnergy",isDrainingEnergy);
+        return pkt;
     }
 }
