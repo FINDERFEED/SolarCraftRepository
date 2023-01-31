@@ -55,6 +55,15 @@ public class AncientFragment {
             ItemWithRecipe.of(SolarcraftItems.SOLAR_STONE_CHISELED.get().getDefaultInstance(),"chiseled_solar_stone"),ItemWithRecipe.of(SolarcraftItems.ENERGIZED_STONE.get().getDefaultInstance(),"energized_stone"),
             ItemWithRecipe.of(SOLAR_STONE_SLAB.get().getDefaultInstance(),"solar_stone_slab")
     ),tx("solar_stones.lore"),SolarcraftRecipeTypes.INFUSING_CRAFTING.get(),1);
+
+    public static final AncientFragment MAGISTONE = new AncientFragment(tx("solar_fragment.magistone"),"magistone", ProgressionStage.PRE_BEGGINING.ALL_PROGRESSIONS,SubCategoryBase.BEGINNER_BLOCKS,CategoryBase.BEGINNER, List.of(
+            ItemWithRecipe.of(MAGISTONE_BRICKS.get().getDefaultInstance(),"magistone_bricks"),ItemWithRecipe.of(MAGISTONE_COLUMN.get().getDefaultInstance(),"magistone_column"),
+            ItemWithRecipe.of(MAGISTONE_RAY.get().getDefaultInstance(),"magistone_ray"),ItemWithRecipe.of(MAGISTONE_STAIRS.get().getDefaultInstance(),"magistone_stairs"),
+            ItemWithRecipe.of(CHISELED_MAGISTONE.get().getDefaultInstance(),"chiseled_magistone"), ItemWithRecipe.of(MAGISTONE_SLAB.get().getDefaultInstance(),"magistone_slab")
+    ),tx("magistone.lore"),SolarcraftRecipeTypes.INFUSING_CRAFTING.get(),1);
+
+
+
     public static final AncientFragment SPEED_ROAD = new AncientFragment(tx("solar_fragment.speed_road"),"speed_road",ProgressionStage.PRE_BEGGINING.ALL_PROGRESSIONS,SubCategoryBase.BEGINNER_BLOCKS,CategoryBase.BEGINNER, ls(ItemWithRecipe.of(SolarcraftItems.SPEED_ROAD.get().getDefaultInstance(),"infusing_crafting_speed_road")),tx("speed_road.lore"),SolarcraftRecipeTypes.INFUSING_CRAFTING.get(),2);
     public static final AncientFragment EIGHT_ELEMENTS = new AncientFragment(tx("solar_fragment.eight_elements"),"eight_elements",ProgressionStage.BEGGINING_2.ALL_PROGRESSIONS,SubCategoryBase.WORLD,CategoryBase.EXPLORATION,"eight_elements_lore", SolarcraftItems.SOLAR_RUNE_ARDO.get().getDefaultInstance(),1);
     public static final AncientFragment INFUSED_CRYSTALS = new AncientFragment(tx("solar_fragment.crystals"),"crystals", ProgressionStage.BEGGINING_2.ALL_PROGRESSIONS,SubCategoryBase.BEGINNER_ITEMS,CategoryBase.BEGINNER, List.of(
@@ -124,6 +133,7 @@ public class AncientFragment {
 
     public static final AncientFragment MULTIRUNE_BLOCK = new AncientFragment(tx("solar_fragment.multirune_block"),"multirune_block",ProgressionStage.AFTER_LENS.ALL_PROGRESSIONS,SubCategoryBase.RUNIC_ENERGY_TRANSMITTING,CategoryBase.RUNIC_ENERGY,ls(ItemWithRecipe.of(MULTIREPEATER_BLOCK.get().getDefaultInstance(),"infusing_multirune_block")),tx("multirune_block.lore"), SolarcraftRecipeTypes.INFUSING.get(),5).addReferences("runic_energy_repeater");
 
+    public static final AncientFragment RUNIC_ENERGY_CORE = new AncientFragment(tx("solar_fragment.runic_energy_core"),"runic_energy_core",ProgressionStage.AFTER_LENS.ALL_PROGRESSIONS,SubCategoryBase.SKILLED_BLOCKS,CategoryBase.SKILLED,ls(ItemWithRecipe.of(SolarcraftItems.RUNIC_ENERGY_CORE.get().getDefaultInstance(),"infusing_runic_energy_core")),tx("runic_energy_core.lore"), SolarcraftRecipeTypes.INFUSING.get(),5).addReferences("runic_core");
 
     public static final AncientFragment SOLAR_GOD_SWORD = new AncientFragment(tx("solar_fragment.solar_god_sword"),"solar_god_sword",ProgressionStage.AFTER_LENS.ALL_PROGRESSIONS,SubCategoryBase.SKILLED_ITEMS,CategoryBase.SKILLED,ls(ItemWithRecipe.of(SolarcraftItems.SOLAR_GOD_SWORD.get().getDefaultInstance(),"infusing_new_solar_god_sword")),tx("solar_god_sword.lore"), SolarcraftRecipeTypes.INFUSING.get(),5).addReferences("solar_god_sword_upgrade");
     public static final AncientFragment SOLAR_GOD_PICKAXE = new AncientFragment(tx("solar_fragment.solar_god_pickaxe"),"solar_god_pickaxe",ProgressionStage.AFTER_LENS.ALL_PROGRESSIONS,SubCategoryBase.SKILLED_ITEMS,CategoryBase.SKILLED,ls(ItemWithRecipe.of(SolarcraftItems.SOLAR_GOD_PICKAXE.get().getDefaultInstance(),"infusing_new_solar_god_pickaxe")),tx("solar_god_pickaxe.lore"), SolarcraftRecipeTypes.INFUSING.get(),5).addReferences("solar_god_pickaxe_upgrade");

@@ -52,7 +52,7 @@ public class RunicEnergyCoreTile extends AbstractRunicEnergyContainer implements
                 tile.requestRunicEnergy(tile.REQUEST, 1);
             }
         }else{
-            if (tile.isDrainingEnergy()) {
+            if (tile.isDrainingEnergy() && tile.shouldFunction()) {
                 Vec3 v = new Vec3(1, 0, 0).yRot((float) (Math.PI * world.random.nextFloat()))
                         .xRot((float) (Math.PI * 2 * world.random.nextFloat()));
                 Vec3 l = v.add(Helpers.getBlockCenter(pos));

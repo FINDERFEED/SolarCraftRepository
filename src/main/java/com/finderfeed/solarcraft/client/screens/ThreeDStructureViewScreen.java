@@ -47,8 +47,8 @@ import static com.finderfeed.solarcraft.content.items.solar_lexicon.screen.Infor
 
 public class ThreeDStructureViewScreen extends Screen implements IScrollable {
 
-    private final Button b = new ItemStackTabButton(0,0,12,12,(button)->{minecraft.setScreen(new SolarLexiconRecipesScreen());}, Items.CRAFTING_TABLE.getDefaultInstance(),0.7f);
-    private final Button c = new ItemStackTabButton(0,0,12,12,(button)->{
+    private final Button b = new ItemStackTabButton(0,0,17,17,(button)->{minecraft.setScreen(new SolarLexiconRecipesScreen());}, Items.CRAFTING_TABLE.getDefaultInstance(),0.7f);
+    private final Button c = new ItemStackTabButton(0,0,17,17,(button)->{
         Minecraft mc = Minecraft.getInstance();
         SolarLexicon lexicon = (SolarLexicon) mc.player.getMainHandItem().getItem();
         lexicon.currentSavedScreen = this;
@@ -108,9 +108,9 @@ public class ThreeDStructureViewScreen extends Screen implements IScrollable {
 
         addRenderableWidget(b);
         addRenderableWidget(c);
-        b.x = relX+219;
+        b.x = relX+216;
         b.y = relY+20;
-        c.x = relX+219;
+        c.x = relX+216;
         c.y = relY+20+18;
 
 
@@ -127,7 +127,7 @@ public class ThreeDStructureViewScreen extends Screen implements IScrollable {
             }
 
             for (AncientFragment ref : refs) {
-                ItemStackTabButton button1 = new ItemStackTabButton(relX + 220, relY + 25 + 18 + 3 + h * 18 + 40, 12, 12, b -> {
+                ItemStackTabButton button1 = new ItemStackTabButton(relX + 216, relY + 25 + 18 + 3 + h * 18 + 40, 17, 17, b -> {
                     Minecraft.getInstance().setScreen(getScreenFromFragment(ref));
                 }, ref.getIcon().getDefaultInstance(), 0.7f, (buttons, matrices, b, c) -> {
                     renderTooltip(matrices, ref.getTranslation(), b, c);

@@ -327,6 +327,6 @@ public class SolarcraftItems {
     public static final RegistryObject<Item> CHISELED_MAGISTONE = ITEMS.register("chiseled_magistone",()->new BlockItem(SolarcraftBlocks.CHISELED_MAGISTONE.get(),new Item.Properties().tab(SolarCraft.SOLAR_GROUP_BLOCKS)));
     public static final RegistryObject<Item> MAGISTONE_BRICKS = ITEMS.register("magistone_bricks",()->new BlockItem(SolarcraftBlocks.MAGISTONE_BRICKS.get(),new Item.Properties().tab(SolarCraft.SOLAR_GROUP_BLOCKS)));
 
-    public static final RegistryObject<Item> RUNIC_ENERGY_CORE = ITEMS.register("runic_energy_core",()->new BlockItem(SolarcraftBlocks.RUNIC_ENERGY_CORE.get(),new Item.Properties().tab(SolarCraft.SOLAR_GROUP_BLOCKS)));
+    public static final RegistryObject<Item> RUNIC_ENERGY_CORE = ITEMS.register("runic_energy_core",()->new SolarcraftBlockItem(SolarcraftBlocks.RUNIC_ENERGY_CORE.get(),new Item.Properties().tab(SolarCraft.SOLAR_GROUP_BLOCKS),()->AncientFragment.RUNIC_ENERGY_CORE));
 
 }
