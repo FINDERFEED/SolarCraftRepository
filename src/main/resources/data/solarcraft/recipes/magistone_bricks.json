@@ -1,0 +1,18 @@
+{
+  "type": "solarcraft:infusing_crafting",
+  "pattern": [
+    "##",
+    "##"
+  ],
+  "keys": {
+    "#": {
+      "item": "solarcraft:magistone"
+    }
+  },
+  "output": {
+    "item": "solarcraft:magistone_bricks"
+  },
+  "fragment": "magistone",
+  "time": 5,
+  "count": 4
+}

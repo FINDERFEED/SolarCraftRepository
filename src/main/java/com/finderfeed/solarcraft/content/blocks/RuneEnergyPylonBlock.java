@@ -19,7 +19,7 @@ import net.minecraft.world.level.BlockGetter;
 import javax.annotation.Nullable;
 
 public class RuneEnergyPylonBlock extends Block implements EntityBlock {
-    private static final VoxelShape SHAPE = Block.box(5.0D, 5.0D, 5.0D, 11.0D, 11.0D, 11.0D);
+    private static final VoxelShape SHAPE = Block.box(4.0D, 4.0D, 4.0D, 12.0D, 12.0D, 12.0D);
 
     public RuneEnergyPylonBlock(Properties p_i48440_1_) {
         super(p_i48440_1_);

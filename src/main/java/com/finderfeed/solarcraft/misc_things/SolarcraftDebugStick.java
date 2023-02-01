@@ -4,6 +4,7 @@ import com.finderfeed.solarcraft.content.blocks.blockentities.RuneEnergyPylonTil
 import com.finderfeed.solarcraft.content.runic_network.repeater.RunicEnergyRepeaterTile;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.helpers.multiblock.StructurePatternExporter;
+import com.finderfeed.solarcraft.registries.blocks.SolarcraftBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
@@ -35,6 +36,19 @@ public class SolarcraftDebugStick extends Item {
     public InteractionResult useOn(UseOnContext ctx) {
         Level world = ctx.getLevel();
         BlockPos pos = ctx.getClickedPos();
+//        if (!world.isClientSide){
+//            StructurePatternExporter.export(world,pos,pos.offset(6,3,6));
+//        }
+
+        if (!world.isClientSide){
+            for (int i = 0; i <= 100;i++){
+                BlockPos p = pos.above().offset(i*16,0,0);
+//                world.setBlock(p, SolarcraftBlocks.FIRA_RUNE_BLOCK.get().defaultBlockState(),3);
+//                world.setBlock(p.above(),SolarcraftBlocks.REPEATER.get().defaultBlockState(),3);
+                world.getBlockState(p);
+                System.out.println(world.isLoaded(p));
+            }
+        }
 
         if (!world.isClientSide && world.getBlockEntity(pos) instanceof DebugTarget dtarget){
             if (ctx.getPlayer().isShiftKeyDown() && dtarget instanceof RuneEnergyPylonTile pylon) {

@@ -216,7 +216,7 @@ public class InfusingRecipeScreen extends Screen {
                         blit(matrices, p1, p2, 0, 0, 16, 16, 16, 16);
                         if (RenderingTools.isMouseInBorders(mousex,mousey,p1,p2,p1+ 16,p2 + 16)){
                             renderTooltip(matrices,Component.literal(type.id.toUpperCase(Locale.ROOT)).withStyle(ChatFormatting.GOLD),mousex,mousey);
-                            RenderSystem.enableBlend();
+
                         }
                         matrices.popPose();
 

@@ -119,7 +119,6 @@ public class SolarcraftClientInit {
         BlockEntityRenderers.register(SolarcraftTileEntityTypes.SOLAR_CORE_TILE.get(), SolarCoreRenderer::new);
         BlockEntityRenderers.register(SolarcraftTileEntityTypes.AURA_HEALER_TILE.get(), AuraHealerRenderer::new);
         BlockEntityRenderers.register(SolarcraftTileEntityTypes.RAY_TRAP_TILE_ENTITY.get(), RayTrapTileEntityRenderer::new);
-//        BlockEntityRenderers.register(SolarcraftTileEntityTypes.PORTAL_CREATOR.get(), PortalCreatorRenderer::new);
         BlockEntityRenderers.register(SolarcraftTileEntityTypes.WORMHOLE.get(), WormholeRenderer::new);
         BlockEntityRenderers.register(SolarcraftTileEntityTypes.BONEMEALER.get(), BonemealerRenderer::new);
         BlockEntityRenderers.register(SolarcraftTileEntityTypes.INFUSING_CRAFTING_TABLE.get(), InfusingTableTileRenderer::new);
@@ -131,6 +130,7 @@ public class SolarcraftClientInit {
         BlockEntityRenderers.register(SolarcraftTileEntityTypes.CLEARING_RITUAL_MAIN_BLOCK.get(), ClearingRitualTileRenderer::new);
         BlockEntityRenderers.register(SolarcraftTileEntityTypes.DIMENSION_CORE_TILE.get(), DimensionCoreRenderer::new);
         BlockEntityRenderers.register(SolarcraftTileEntityTypes.SAVANNA_DUNGEON_KEEPER.get(), SavannaDungeonKeeperRenderer::new);
+        BlockEntityRenderers.register(SolarcraftTileEntityTypes.RUNIC_ENERGY_CORE.get(), RunicEnergyCoreRenderer::new);
 
 
         MenuScreens.register(SolarcraftContainers.SOLAR_FURNACE_CONTAINER.get(), SolarFurnaceScreen::new);

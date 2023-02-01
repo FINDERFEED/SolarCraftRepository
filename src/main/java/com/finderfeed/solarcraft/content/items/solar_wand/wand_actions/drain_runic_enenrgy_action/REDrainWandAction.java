@@ -56,9 +56,9 @@ public class REDrainWandAction implements WandAction<REDrainWandActionData> {
                 if (!source.shouldAutomaticallySwitchWandType()){
                     if (source.allowedDrainableTypes().contains(type)){
                         if (!level.isClientSide) {
-                            float energy = source.drainEnergy(player, source.getMaxEnergyDrain());
+                            float energy = source.drainEnergy(type,player, source.getMaxEnergyDrain());
                             float delta = RunicEnergy.givePlayerEnergy(player, energy, type);
-                            source.returnEnergy(player, delta);
+                            source.returnEnergy(type,player, delta);
                             Helpers.updateRunicEnergyOnClient(type, RunicEnergy.getEnergy(player, type), player);
                             player.displayClientMessage(Component.literal(type.id.toUpperCase() + " " + RunicEnergy.getEnergy(player, type))
                                     .withStyle(ChatFormatting.GOLD), true);
@@ -73,9 +73,9 @@ public class REDrainWandAction implements WandAction<REDrainWandActionData> {
                     if (!level.isClientSide){
                         RunicEnergy.Type newtype = source.allowedDrainableTypes().get(0);
                         data.setTypeToDrain(newtype);
-                        float energy = source.drainEnergy(player,source.getMaxEnergyDrain());
+                        float energy = source.drainEnergy(type,player,source.getMaxEnergyDrain());
                         float delta = RunicEnergy.givePlayerEnergy(player,energy,newtype);
-                        source.returnEnergy(player,delta);
+                        source.returnEnergy(type,player,delta);
                         player.displayClientMessage(Component.literal(type.id.toUpperCase() + " " + RunicEnergy.getEnergy(player, newtype))
                                 .withStyle(ChatFormatting.GOLD), true);
                         Helpers.updateRunicEnergyOnClient(newtype,RunicEnergy.getEnergy(player,newtype),player);

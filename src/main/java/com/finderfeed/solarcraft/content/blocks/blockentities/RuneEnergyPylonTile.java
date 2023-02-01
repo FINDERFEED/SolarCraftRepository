@@ -1,5 +1,6 @@
 package com.finderfeed.solarcraft.content.blocks.blockentities;
 
+import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.content.items.solar_wand.wand_actions.drain_runic_enenrgy_action.IREWandDrainable;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.SolarCraftTags;
@@ -18,10 +19,12 @@ import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTy
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.player.Player;
@@ -29,6 +32,7 @@ import net.minecraft.nbt.CompoundTag;
 
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.phys.AABB;
+import net.minecraftforge.common.world.ForgeChunkManager;
 import net.minecraftforge.network.PacketDistributor;
 import org.jetbrains.annotations.Nullable;
 
@@ -311,7 +315,7 @@ public class RuneEnergyPylonTile extends BlockEntity implements  DebugTarget, Ru
 
 
     @Override
-    public float drainEnergy(Player player, float amount) {
+    public float drainEnergy(RunicEnergy.Type type,Player player, float amount) {
         if (!player.level.isClientSide) {
             float delta = Math.min(amount, currentEnergy);
             this.currentEnergy -= delta;
@@ -338,7 +342,7 @@ public class RuneEnergyPylonTile extends BlockEntity implements  DebugTarget, Ru
     }
 
     @Override
-    public float returnEnergy(Player player, float amount) {
+    public float returnEnergy(RunicEnergy.Type type,Player player, float amount) {
         if (!level.isClientSide) {
             float r = this.maxEnergy + amount - maxEnergy;
             this.currentEnergy = Math.min(this.currentEnergy + amount, maxEnergy);
@@ -362,4 +366,14 @@ public class RuneEnergyPylonTile extends BlockEntity implements  DebugTarget, Ru
     public boolean shouldAutomaticallySwitchWandType() {
         return true;
     }
+
+//    @Override
+//    public void onLoad() {
+//        super.onLoad();
+//        if (!level.isClientSide){
+//            ChunkPos pos = new ChunkPos(worldPosition);
+//            ForgeChunkManager.forceChunk((ServerLevel) level, SolarCraft.MOD_ID,worldPosition,
+//                    pos.x,pos.z,true,true);
+//        }
+//    }
 }

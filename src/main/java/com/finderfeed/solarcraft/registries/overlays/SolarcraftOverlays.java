@@ -269,7 +269,7 @@ public class SolarcraftOverlays {
                                 width / 2f + 16, height / 2f - 1, 1f, 0);
                     }
 
-                    if (action == SolarCraftWandActionRegistry.RUNIC_ENERGY_DRAIN){
+                    if (action == SolarCraftWandActionRegistry.RUNIC_ENERGY_DRAIN && Minecraft.getInstance().screen == null){
                         ItemStack stack = player.getMainHandItem();
                         REDrainWandActionData data = REDrainWandActionDataSerializer.SERIALIZER.deserialize(
                                 REDrainWandActionDataSerializer.SERIALIZER.getTag(stack));

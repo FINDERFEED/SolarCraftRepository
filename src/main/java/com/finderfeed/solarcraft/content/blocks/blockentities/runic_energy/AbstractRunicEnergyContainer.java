@@ -1,5 +1,6 @@
 package com.finderfeed.solarcraft.content.blocks.blockentities.runic_energy;
 
+import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.local_library.OwnedBlock;
 import com.finderfeed.solarcraft.local_library.helpers.CompoundNBTHelper;
@@ -15,11 +16,15 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.LevelChunk;
+import net.minecraftforge.common.world.ForgeChunkManager;
+import org.checkerframework.checker.units.qual.C;
 
 import javax.annotation.Nullable;
 import java.util.*;
@@ -70,7 +75,7 @@ public abstract class AbstractRunicEnergyContainer extends SolarcraftBlockEntity
 
     public void requestRunicEnergy(RunicEnergyCost costs,int multiplier){
         if (seekCooldown > getSeekCooldown()){
-            tryConstructWays(costs.getSetTypes());
+            tryConstructWays(costs,multiplier);
             seekCooldown = 0;
         }else{
             seekCooldown++;
@@ -90,15 +95,21 @@ public abstract class AbstractRunicEnergyContainer extends SolarcraftBlockEntity
                 double request = multiplied - getRunicEnergy(type);
                 requestSpecificEnergyNew(type, request);
             } else {
-                BlockPos firstPos = PATH_TO_CONTAINERS.get(type).get(1);
+                List<BlockPos> path = PATH_TO_CONTAINERS.remove(type);
+                BlockPos firstPos = path.get(1);
                 if (nullOrGiverPositionForClient.contains(firstPos)) {
                     nullOrGiverPositionForClient.remove(firstPos);
                     BlockState state = level.getBlockState(worldPosition);
                     this.setChanged();
                     this.level.sendBlockUpdated(worldPosition, state, state, 3);
                 }
-                RunicEnergyPath.resetRepeaterConnections(PATH_TO_CONTAINERS.get(type), level);
-                PATH_TO_CONTAINERS.remove(type);
+                if (!level.isClientSide && level.getBlockEntity(path.get(path.size()-1)) instanceof RuneEnergyPylonTile pylon){
+                    ChunkPos pos = new ChunkPos(pylon.getPos());
+                    ForgeChunkManager.forceChunk((ServerLevel)level, SolarCraft.MOD_ID,
+                            pylon.getPos(),pos.x,pos.z,false,true);
+                }
+                RunicEnergyPath.resetRepeaterConnections(path, level);
+//                PATH_TO_CONTAINERS.remove(type);
             }
         }
 
@@ -168,9 +179,13 @@ public abstract class AbstractRunicEnergyContainer extends SolarcraftBlockEntity
     public abstract boolean shouldFunction();
 
     public void resetAllRepeaters(){
-        PATH_TO_CONTAINERS.forEach((type,way)->{
-            RunicEnergyPath.resetRepeaterConnections(PATH_TO_CONTAINERS.get(type),level);
-        });
+//        PATH_TO_CONTAINERS.forEach((type,way)->{
+//            breakWay(type);
+//            RunicEnergyPath.resetRepeaterConnections(PATH_TO_CONTAINERS.get(type),level);
+//        });
+        for (RunicEnergy.Type type : RunicEnergy.Type.getAll()){
+            breakWay(type);
+        }
     }
 
 
@@ -195,7 +210,12 @@ public abstract class AbstractRunicEnergyContainer extends SolarcraftBlockEntity
     }
 
     public void giveEnergy(RunicEnergy.Type type, double amount){
-        container.set(type,container.get(type)+(float)amount);
+//        container.set(type,container.get(type)+(float)amount);
+        setEnergy(type,(float)amount + container.get(type));
+    }
+
+    public void setEnergy(RunicEnergy.Type type,float amount){
+        container.set(type,Math.min((float)getRunicEnergyLimit(), Math.max(0,amount)));
     }
 
     protected boolean isEnough(RunicEnergy.Type type, RunicEnergyCost cost, int multiplier){
@@ -220,10 +240,33 @@ public abstract class AbstractRunicEnergyContainer extends SolarcraftBlockEntity
                 RunicEnergyPath.isRouteCorrect(PATH_TO_CONTAINERS.get(type),level));
     }
 
-    public void tryConstructWays(List<RunicEnergy.Type> types){
+    public void tryConstructWays(RunicEnergyCost cost,int multiplier){
         List<BlockEntity> entities = findNearestRepeatersOrPylons(worldPosition, level);
-        for (RunicEnergy.Type type : types) {
+        for (RunicEnergy.Type type : cost.getSetTypes()) {
             List<BlockPos> oldRoute = PATH_TO_CONTAINERS.get(type);
+
+            float c = cost.get(type) * multiplier;
+            double runicEnergy = getRunicEnergy(type);
+            if (runicEnergy >= c){
+                if (oldRoute != null){
+                    BlockPos firstPos = oldRoute.get(1);
+                    if (nullOrGiverPositionForClient.contains(firstPos)) {
+                        nullOrGiverPositionForClient.remove(firstPos);
+                        BlockState state = level.getBlockState(worldPosition);
+                        this.setChanged();
+                        this.level.sendBlockUpdated(worldPosition, state, state, 3);
+                    }
+                    if (!level.isClientSide && level.getBlockEntity(oldRoute.get(oldRoute.size()-1)) instanceof RuneEnergyPylonTile pylon){
+                        ChunkPos pos = new ChunkPos(pylon.getPos());
+                        ForgeChunkManager.forceChunk((ServerLevel)level, SolarCraft.MOD_ID,
+                                pylon.getPos(),pos.x,pos.z,false,true);
+                    }
+                    RunicEnergyPath.resetRepeaterConnections(PATH_TO_CONTAINERS.get(type), level);
+                    PATH_TO_CONTAINERS.remove(type);
+                }
+                continue;
+            }
+
             if (checkRoute(oldRoute,type)) continue;
             if (oldRoute != null){
                 RunicEnergyPath.resetRepeaterConnections(oldRoute,level);
@@ -233,6 +276,11 @@ public abstract class AbstractRunicEnergyContainer extends SolarcraftBlockEntity
                 if (entity instanceof BaseRepeaterTile tile && tile.getAcceptedEnergyTypes().contains(type)) {
                     List<BlockPos> route = new RunicEnergyPath(type, this.worldPosition).build(tile);
                     if (route != null) {
+                        if (level.getBlockEntity(route.get(route.size()-1)) instanceof RuneEnergyPylonTile pylon) {
+                            ChunkPos pos = new ChunkPos(pylon.getPos());
+                            ForgeChunkManager.forceChunk((ServerLevel) level, SolarCraft.MOD_ID,
+                                    pylon.getPos(), pos.x, pos.z, true, true);
+                        }
                         PATH_TO_CONTAINERS.put(type, route);
                     }
                 } else if (entity instanceof RunicEnergyGiver container && container.getTypes().contains(type)) {
@@ -303,9 +351,26 @@ public abstract class AbstractRunicEnergyContainer extends SolarcraftBlockEntity
     }
 
     public void breakWay(RunicEnergy.Type type){
+//        List<BlockPos> path = PATH_TO_CONTAINERS.remove(type);
+//        if (path == null) return;
+//        RunicEnergyPath.resetRepeaterConnections(path,level);
+
         List<BlockPos> path = PATH_TO_CONTAINERS.remove(type);
         if (path == null) return;
-        RunicEnergyPath.resetRepeaterConnections(path,level);
+
+        BlockPos firstPos = path.get(1);
+        if (nullOrGiverPositionForClient.contains(firstPos)) {
+            nullOrGiverPositionForClient.remove(firstPos);
+            BlockState state = level.getBlockState(worldPosition);
+            this.setChanged();
+            this.level.sendBlockUpdated(worldPosition, state, state, 3);
+        }
+        if (!level.isClientSide && level.getBlockEntity(path.get(path.size()-1)) instanceof RuneEnergyPylonTile pylon){
+            ChunkPos pos = new ChunkPos(pylon.getPos());
+            ForgeChunkManager.forceChunk((ServerLevel)level, SolarCraft.MOD_ID,
+                    pylon.getPos(),pos.x,pos.z,false,true);
+        }
+        RunicEnergyPath.resetRepeaterConnections(path, level);
     }
 
     public Map<RunicEnergy.Type,List<BlockPos>> getWays(){
