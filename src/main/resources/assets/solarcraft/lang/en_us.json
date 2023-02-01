@@ -291,7 +291,7 @@
   "solar_fragment.totem_of_immortality": "Totem of Immortality",
   "totem_of_immortality.lore": "Works similar to totem of undying but heals you for full health and applies 20 seconds of invulnerability.",
   "solar_fragment.solar_crossbow": "Solar Crossbow",
-  "solar_crossbow.lore": "The true expression of power. When you are using it, the damage increases by 3 per second(120 maximum). Also causes an explosion when damage is higher than 30.",
+  "solar_crossbow.lore": "The true expression of power. When you are using it, the damage increases by 3.5 per second(120 maximum). Also causes an explosion when damage is higher than 30.",
   "solar_fragment.aura_healer_structure": "Aura Healer Structure",
   "solar_fragment.solar_mortar_structure": "Solar Mortar Structure",
   "solar_fragment.solar_infuser_structure": "Infuser Structure",
