@@ -1,10 +1,12 @@
 package com.finderfeed.solarcraft.content.blocks.blockentities.containers;
 
+import com.finderfeed.solarcraft.content.items.primitive.solacraft_item_classes.SolarcraftItem;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.content.blocks.blockentities.RunicEnergyChargerTileEntity;
 import com.finderfeed.solarcraft.content.items.RuneItem;
 import com.finderfeed.solarcraft.content.items.runic_energy.IRunicEnergyUser;
 import com.finderfeed.solarcraft.registries.containers.SolarcraftContainers;
+import com.finderfeed.solarcraft.registries.items.SolarcraftItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
@@ -38,7 +40,7 @@ public class RunicEnergyChargerContainer extends AbstractContainerMenu {
         this.addSlot(new SlotItemHandler(tile.getInventory(), 1, 25+108, 35-4){
             @Override
             public boolean mayPlace(@NotNull ItemStack stack) {
-                return stack.getItem() instanceof IRunicEnergyUser;
+                return stack.getItem() instanceof IRunicEnergyUser && stack.getItem() != SolarcraftItems.SOLAR_WAND.get();
             }
 
             @Override

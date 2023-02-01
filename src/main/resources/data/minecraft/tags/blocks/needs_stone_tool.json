@@ -33,6 +33,14 @@
     "solarcraft:armor_amp_block",
     "solarcraft:evasion_amp_block",
     "solarcraft:solar_stone_slab",
-    "solarcraft:runic_energy_charger"
+    "solarcraft:runic_energy_charger",
+    "solarcraft:runic_energy_core",
+    "solarcraft:magistone",
+    "solarcraft:magistone_bricks",
+    "solarcraft:magistone_ray",
+    "solarcraft:magistone_column",
+    "solarcraft:magistone_slab",
+    "solarcraft:magistone_stairs",
+    "solarcraft:chiseled_magistone"
   ]
 }

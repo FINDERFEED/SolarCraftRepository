@@ -57,6 +57,14 @@
     "solarcraft:uldera_rune_block",
     "solarcraft:runic_energy_charger",
     "solarcraft:clearing_ritual_crystal",
-    "solarcraft:multirune_block"
+    "solarcraft:multirune_block",
+    "solarcraft:runic_energy_core",
+    "solarcraft:magistone",
+    "solarcraft:magistone_bricks",
+    "solarcraft:magistone_ray",
+    "solarcraft:magistone_column",
+    "solarcraft:magistone_slab",
+    "solarcraft:magistone_stairs",
+    "solarcraft:chiseled_magistone"
   ]
 }

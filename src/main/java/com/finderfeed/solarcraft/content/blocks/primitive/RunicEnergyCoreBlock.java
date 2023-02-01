@@ -14,7 +14,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
-public class RunicEnergyCoreBlock extends Block implements EntityBlock {
+public class RunicEnergyCoreBlock extends RunicEnergySaverBlock implements EntityBlock {
     public RunicEnergyCoreBlock(Properties p_49795_) {
         super(p_49795_);
     }
