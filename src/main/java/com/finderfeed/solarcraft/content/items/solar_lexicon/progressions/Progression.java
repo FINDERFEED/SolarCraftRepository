@@ -22,7 +22,7 @@ public enum Progression {
     ACQUIRE_COLD_STAR("cold_star_piece",2, SolarcraftItems.COLD_STAR_PIECE.get().getDefaultInstance(), Component.translatable("ach.cold_star_piece"),nextID(),Component.translatable("pre.cold_star_piece"),Component.translatable("aft.cold_star_piece")),
     RUNE_ENERGY_CLAIM("rune_energy_claim",2, SolarcraftItems.SOLAR_WAND.get().getDefaultInstance(),Component.translatable("ach.rune_energy_claim"),nextID(),Component.translatable("pre.rune_energy_claim"),Component.translatable("aft.rune_energy_claim")),
     SOLAR_RUNE("solar_rune",2, SolarcraftItems.SOLAR_RUNE_BASE.get().getDefaultInstance(),Component.translatable("ach.solar_rune"),nextID(),Component.translatable("pre.solar_rune"),Component.translatable("aft.solar_rune")),
-    ALL_ENERGY_TYPES("all_energy_types",2, SolarcraftItems.RUNE_ENERGY_PYLON.get().getDefaultInstance(),Component.translatable("ach.all_energy_types"),nextID(),Component.translatable("pre.all_energy_types"),Component.translatable("aft.all_energy_types")),
+    ALL_ENERGY_TYPES("all_energy_types",3, SolarcraftItems.RUNE_ENERGY_PYLON.get().getDefaultInstance(),Component.translatable("ach.all_energy_types"),nextID(),Component.translatable("pre.all_energy_types"),Component.translatable("aft.all_energy_types")),
 
 
     KILL_DRAGON("kill_dragon",3, Blocks.DRAGON_HEAD.asItem().getDefaultInstance(),Component.translatable("ach.kill_dragon"),nextID(),Component.translatable("pre.kill_dragon"),Component.translatable("aft.kill_dragon")),
