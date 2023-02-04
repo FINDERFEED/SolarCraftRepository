@@ -34,11 +34,11 @@ import java.util.*;
 
 public class InfusingTableTile extends BlockEntity implements OwnedBlock, IWandable {
     public static final int ANIM_TIME = 100;
-    private PhantomInventory phantomInv = new PhantomInventory(10);
+    public PhantomInventory phantomInv = new PhantomInventory(10);
     private UUID owner;
     private boolean recipeTrigerred = false;
     private int recipeTime = 0;
-    private int remainingRecipeTime = -1;
+
 
     public InfusingTableTile( BlockPos p_155229_, BlockState p_155230_) {
         super(SolarcraftTileEntityTypes.INFUSING_CRAFTING_TABLE.get(), p_155229_, p_155230_);
@@ -47,7 +47,7 @@ public class InfusingTableTile extends BlockEntity implements OwnedBlock, IWanda
 
     public static void tick(Level world,BlockPos pos,BlockState state,InfusingTableTile tile){
         if (!world.isClientSide){
-            int updateTime = 40;
+
             if (tile.isRecipeInProgress()){
                 IItemHandler handler = tile.getInventory();
                 Optional<InfusingCraftingRecipe> optional = world.getRecipeManager().getRecipeFor(SolarcraftRecipeTypes.INFUSING_CRAFTING.get(), tile.phantomInv.set(handler), world);
@@ -56,10 +56,10 @@ public class InfusingTableTile extends BlockEntity implements OwnedBlock, IWanda
                     int recipeTime = recipe.getTime();
                     int maxOutput = tile.calculateMaximumRecipeOutput(recipe);
                     if (tile.getCurrentTime() < recipeTime*maxOutput){
-                        if (recipeTime - tile.getCurrentTime() <= ANIM_TIME){
-                            updateTime = 1;
-                            tile.remainingRecipeTime = ANIM_TIME - (recipeTime - tile.getCurrentTime());
-                        }
+//                        if (recipeTime - tile.getCurrentTime() <= ANIM_TIME){
+//                            updateTime = 1;
+//                            tile.remainingRecipeTime = ANIM_TIME - (recipeTime - tile.getCurrentTime());
+//                        }
                         tile.recipeTime++;
                     }else{
                         ItemStack stack = recipe.getOutput().copy();
@@ -82,23 +82,18 @@ public class InfusingTableTile extends BlockEntity implements OwnedBlock, IWanda
                         handler.insertItem(9,stack,false);
                         tile.recipeTrigerred = false;
                         tile.recipeTime = 0;
-                        tile.remainingRecipeTime = -1;
                         tile.update();
                     }
                 }else{
-                    tile.remainingRecipeTime = -1;
                     tile.recipeTrigerred = false;
                 }
 
             }else{
-                tile.remainingRecipeTime = -1;
                 tile.recipeTime = 0;
             }
 
 
-            if (world.getGameTime() % updateTime == 0){
-                tile.update();
-            }
+            tile.update();
         }
 
 
@@ -110,29 +105,38 @@ public class InfusingTableTile extends BlockEntity implements OwnedBlock, IWanda
 
 
     public void clientTick(){
-        if (isRecipeInProgress() && (level.getGameTime() % 2 == 0) ){
-            float time = -level.getGameTime()*4;
-            Vec3 pos = Helpers.getBlockCenter(worldPosition);
-            for (int i = 0; i <= 1;i++){
-                double a = Math.toRadians(i * 180 + time % 360);
-                double x = 0.5*Math.sin(a);
-                double z = 0.5*Math.cos(a);
-                ClientHelpers.ParticleConstructor c = new ClientHelpers.ParticleConstructor(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),pos.x+x,pos.y+0.9,pos.z+z,0,0,0);
+        if (isRecipeInProgress()) {
+            IItemHandler handler = this.getInventory();
+            Optional<InfusingCraftingRecipe> optional = level.getRecipeManager().getRecipeFor(SolarcraftRecipeTypes.INFUSING_CRAFTING.get(), this.phantomInv.set(handler), level);
+            if (optional.isPresent()) {
+                InfusingCraftingRecipe recipe = optional.get();
+                int recipeTime = recipe.getTime();
+                int maxOutput = this.calculateMaximumRecipeOutput(recipe);
+
+                int remainingRecipeTime = recipeTime*maxOutput - this.recipeTime;
+
+                if (level.getGameTime() % 2 == 0) {
+                    float time = -level.getGameTime() * 4;
+                    Vec3 pos = Helpers.getBlockCenter(worldPosition);
+                    for (int i = 0; i <= 1; i++) {
+                        double a = Math.toRadians(i * 180 + time % 360);
+                        double x = 0.5 * Math.sin(a);
+                        double z = 0.5 * Math.cos(a);
+                        ClientHelpers.ParticleConstructor c = new ClientHelpers.ParticleConstructor(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(), pos.x + x, pos.y + 0.9, pos.z + z, 0, 0, 0);
+                    }
+                }
+                int tm = Math.min(recipeTime*maxOutput,InfusingTableTile.ANIM_TIME);
+                if (remainingRecipeTime < tm) {
+                    Vec3 vec3 = Helpers.randomVector();
+                    Vec3 pos = Helpers.getBlockCenter(worldPosition);
+                    ClientHelpers.ParticleConstructor c = new ClientHelpers.ParticleConstructor(SolarcraftParticleTypes.SPARK_PARTICLE.get(), pos.x, pos.y + 0.9, pos.z, vec3.x * 0.01, vec3.y * 0.01, vec3.z * 0.01)
+                            .setColor(255, 255, Math.round(40 + level.random.nextFloat() * 120));
+                }
             }
         }
-        if (remainingRecipeTime != -1){
-            Vec3 vec3 = Helpers.randomVector();
-            Vec3 pos = Helpers.getBlockCenter(worldPosition);
-            ClientHelpers.ParticleConstructor c = new ClientHelpers.ParticleConstructor(SolarcraftParticleTypes.SPARK_PARTICLE.get(),pos.x,pos.y+0.9,pos.z,vec3.x*0.01,vec3.y*0.01,vec3.z*0.01)
-                    .setColor(255,255,Math.round(40+level.random.nextFloat()*120));
-
-        }
     }
 
 
-    public int getRemainingRecipeTime() {
-        return remainingRecipeTime;
-    }
 
     public int getCurrentTime(){
         return recipeTime;
@@ -223,12 +227,16 @@ public class InfusingTableTile extends BlockEntity implements OwnedBlock, IWanda
     @Nullable
     @Override
     public ClientboundBlockEntityDataPacket getUpdatePacket() {
-        return Helpers.createTilePacket(this,this.saveW(new CompoundTag()));
+
+        CompoundTag tag = new CompoundTag();
+        saveAdditional(tag);
+
+        return Helpers.createTilePacket(this,tag);
     }
 
     @Override
     public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
-        this.loadW(pkt.getTag());
+        this.load(pkt.getTag());
     }
 
     @Override
@@ -250,20 +258,20 @@ public class InfusingTableTile extends BlockEntity implements OwnedBlock, IWanda
 
         super.load(tag);
     }
-    public CompoundTag saveW(CompoundTag tag) {
-        tag.putInt("remainingRecipeTime", remainingRecipeTime);
-        tag.putBoolean("recipe",recipeTrigerred);
-        tag.putInt("time",recipeTime);
-        super.saveAdditional(tag);
-        return tag;
-    }
+//    public CompoundTag saveW(CompoundTag tag) {
+//        tag.putInt("remainingRecipeTime", remainingRecipeTime);
+//        tag.putBoolean("recipe",recipeTrigerred);
+//        tag.putInt("time",recipeTime);
+//        super.saveAdditional(tag);
+//        return tag;
+//    }
 
-    public void loadW(CompoundTag tag) {
-        this.remainingRecipeTime = tag.getInt("remainingRecipeTime");
-        this.recipeTrigerred = tag.getBoolean("recipe");
-        this.recipeTime = tag.getInt("time");
-        super.load(tag);
-    }
+//    public void loadW(CompoundTag tag) {
+//        this.remainingRecipeTime = tag.getInt("remainingRecipeTime");
+//        this.recipeTrigerred = tag.getBoolean("recipe");
+//        this.recipeTime = tag.getInt("time");
+//        super.load(tag);
+//    }
 
 
     public void update(){
