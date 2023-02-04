@@ -31,7 +31,7 @@ public class ClearingRitualCrystalISTER extends BlockEntityWithoutLevelRenderer 
             }
         }
         matrices.scale(0.25f,0.25f,0.25f);
-        RenderingTools.renderObjModel(OBJModels.CLEARING_RITUAL_CRYSTAL,matrices,src,light,overlay,(m)->{});
+        RenderingTools.renderEntityObjModel(OBJModels.CLEARING_RITUAL_CRYSTAL,matrices,src,light,overlay,(m)->{});
 
         matrices.popPose();
     }

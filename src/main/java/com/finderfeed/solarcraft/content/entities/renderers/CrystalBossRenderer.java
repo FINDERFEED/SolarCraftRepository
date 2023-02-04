@@ -33,7 +33,7 @@ public class CrystalBossRenderer extends EntityRenderer<CrystalBossEntity> {
     public void render(CrystalBossEntity boss, float idk, float pticks, PoseStack matrices, MultiBufferSource buffer, int light) {
         matrices.pushPose();
         float time = (boss.level.getGameTime() + pticks) % 360;
-        RenderingTools.renderObjModel(OBJModels.CRYSTAL_BOSS,matrices,buffer,light, OverlayTexture.NO_OVERLAY,(pose)->{
+        RenderingTools.renderEntityObjModel(OBJModels.CRYSTAL_BOSS,matrices,buffer,light, OverlayTexture.NO_OVERLAY,(pose)->{
             pose.translate(0,3.5f,0);
             pose.mulPose(Vector3f.YN.rotationDegrees(time));
         });
@@ -78,7 +78,7 @@ public class CrystalBossRenderer extends EntityRenderer<CrystalBossEntity> {
             float scaleFactor = ((float)boss.clientGetOffMeTicker/32) *3+1;
             matrices.translate(0,boss.getBbHeight()/2,0);
             matrices.scale(scaleFactor,scaleFactor*1.25f,scaleFactor);
-            RenderingTools.renderObjModel(OBJModels.GET_OFF_MEEE,matrices,buffer,light,OverlayTexture.NO_OVERLAY,(t)->{});
+            RenderingTools.renderEntityObjModel(OBJModels.GET_OFF_MEEE,matrices,buffer,light,OverlayTexture.NO_OVERLAY,(t)->{});
         }
         matrices.popPose();
         super.render(boss, idk, pticks, matrices, buffer, light);

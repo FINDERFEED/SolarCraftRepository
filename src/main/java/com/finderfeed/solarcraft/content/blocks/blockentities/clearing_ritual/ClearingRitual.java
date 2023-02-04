@@ -303,17 +303,19 @@ public class ClearingRitual {
         return list;
     }
 
+    private static final List<Vec3> offsets = List.of(
+            new Vec3(16.5,-0.5,0),
+            new Vec3(12.5,-0.5,12.5),
+            new Vec3(0,-0.5,16.5),
+            new Vec3(-11.5,-0.5,12.5),
+            new Vec3(-15.5,-0.5,0),
+            new Vec3(-11.5,-0.5,-11.5),
+            new Vec3(0,-0.5,-15.5),
+            new Vec3(12.5,-0.5,-11.5)
+    );
+
     public static List<Vec3> crystalOffsets(){
-        return List.of(
-                    new Vec3(16.5,-0.5,0),
-                new Vec3(12.5,-0.5,12.5),
-                new Vec3(0,-0.5,16.5),
-                new Vec3(-11.5,-0.5,12.5),
-                new Vec3(-15.5,-0.5,0),
-                new Vec3(-11.5,-0.5,-11.5),
-                new Vec3(0,-0.5,-15.5),
-                new Vec3(12.5,-0.5,-11.5)
-                );
+        return offsets;
     }
 
     public void save(CompoundTag tag){

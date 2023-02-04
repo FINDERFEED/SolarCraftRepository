@@ -34,7 +34,7 @@ public class WormholeRenderer implements BlockEntityRenderer<WormholeTileEntity>
     @Override
     public void render(WormholeTileEntity tile, float partialTicks, PoseStack matrices, MultiBufferSource buffer, int light, int light2) {
         matrices.pushPose();
-        RenderingTools.renderObjModel(OBJModels.HOLE_MODEL,matrices,buffer,light, OverlayTexture.NO_OVERLAY,(matrix)->{
+        RenderingTools.renderEntityObjModel(OBJModels.HOLE_MODEL,matrices,buffer,light, OverlayTexture.NO_OVERLAY,(matrix)->{
             matrix.translate(0.5f,0.5f,0.5f);
             matrix.scale(0.4f,0.4f,0.4f);
 

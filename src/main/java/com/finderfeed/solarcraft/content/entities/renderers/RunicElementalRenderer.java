@@ -93,7 +93,7 @@ public class RunicElementalRenderer extends MobRenderer<RunicElementalBoss, Runi
             matrices.translate(0,1.5,0);
             matrices.scale(2,2,2);
             matrices.scale(1-percent,1-percent,1-percent);
-            RenderingTools.renderObjModel(OBJModels.GET_OFF_MEEE,matrices,buffer,light,OverlayTexture.NO_OVERLAY,(d)->{});
+            RenderingTools.renderEntityObjModel(OBJModels.GET_OFF_MEEE,matrices,buffer,light,OverlayTexture.NO_OVERLAY,(d)->{});
 
             matrices.popPose();
         }

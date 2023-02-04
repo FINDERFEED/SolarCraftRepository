@@ -14,6 +14,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Matrix4f;
 import com.mojang.math.Vector3f;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
@@ -55,7 +56,7 @@ public class DimensionCoreRenderer extends TileEntityRenderer<DimensionCoreTile>
             gr = 0;
             b = 1f;
         }
-        RenderingTools.renderObjModel(OBJModels.PORTAL_SPHERE,matrices,src,r,gr,b,light,overlay);
+        RenderingTools.renderBlockObjModel(OBJModels.PORTAL_SPHERE,matrices,src,r,gr,b, LightTexture.FULL_BRIGHT,overlay);
 
         matrices.popPose();
 

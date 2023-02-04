@@ -32,7 +32,7 @@ public class RipRayGeneratorRender extends EntityRenderer<RipRayGenerator> {
             matrices.translate(0, 0.25, 0);
             matrices.scale(0.5f, 0.5f, 0.5f);
             matrices.mulPose(Vector3f.YN.rotationDegrees(time % 360));
-            RenderingTools.renderObjModel(OBJModels.RIP_RAY_GENERATOR, matrices, buffer, light, OverlayTexture.NO_OVERLAY, (m) -> {
+            RenderingTools.renderEntityObjModel(OBJModels.RIP_RAY_GENERATOR, matrices, buffer, light, OverlayTexture.NO_OVERLAY, (m) -> {
             });
             matrices.popPose();
 

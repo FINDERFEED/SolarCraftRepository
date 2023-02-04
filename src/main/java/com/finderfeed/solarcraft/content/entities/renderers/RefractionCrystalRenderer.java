@@ -36,7 +36,7 @@ public class RefractionCrystalRenderer extends EntityRenderer<RefractionCrystal>
             matrices.translate(0,1.1,0);
             matrices.scale(0.7f,0.7f,0.7f);
             matrices.mulPose(Vector3f.YN.rotationDegrees(time % 360));
-            RenderingTools.renderObjModel(OBJModels.CRYSTAL_1, matrices, src, light, OverlayTexture.NO_OVERLAY, (m) -> {
+            RenderingTools.renderEntityObjModel(OBJModels.CRYSTAL_1, matrices, src, light, OverlayTexture.NO_OVERLAY, (m) -> {
             });
 
         }

@@ -116,16 +116,17 @@ public class SolarCoreRenderer implements BlockEntityRenderer<SolarEnergyCoreTil
 //            RenderingTools.renderObjModel(OBJModels.SOLAR_CORE_MODEL,matrices,buffer,1f,1f,1f,LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY);
 //
 //            matrices.popPose();
-            List<BakedQuad> list = Minecraft.getInstance().getModelManager().getModel(OBJModels.SOLAR_CORE_MODEL)
-                    .getQuads(null, null, RandomSource.create(), ModelData.EMPTY,RenderType.solid());
-            for (BakedQuad a : list) {
+//            List<BakedQuad> list = Minecraft.getInstance().getModelManager().getModel(OBJModels.SOLAR_CORE_MODEL)
+//                    .getQuads(null, null, RandomSource.create(), ModelData.EMPTY,RenderType.solid());
+//            for (BakedQuad a : list) {
                 matrices.pushPose();
                 matrices.scale(0.5f, 0.5f, 0.5f);
                 matrices.translate(1, 1, 1);
                 matrices.mulPose(Vector3f.YP.rotationDegrees((entity.getLevel().getGameTime() + partialTicks) % 360));
-                buffer.getBuffer(RenderType.solid()).putBulkData(matrices.last(), a, 1, 1, 1, light1, light2);
+//                buffer.getBuffer(RenderType.solid()).putBulkData(matrices.last(), a, 1, 1, 1, light1, light2);
+                RenderingTools.renderBlockObjModel(OBJModels.SOLAR_CORE_MODEL,matrices,buffer,1,1,1,LightTexture.FULL_BRIGHT,light2);
                 matrices.popPose();
-            }
+//            }
 //            }
 
         }

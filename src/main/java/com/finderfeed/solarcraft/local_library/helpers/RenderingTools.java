@@ -1,7 +1,7 @@
 package com.finderfeed.solarcraft.local_library.helpers;
 
 import com.finderfeed.solarcraft.SolarCraft;
-import com.finderfeed.solarcraft.client.rendering.rendertypes.SolarCraftRenderTypes;
+import com.finderfeed.solarcraft.events.other_events.OBJModels;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.client.custom_tooltips.CustomTooltip;
 import com.finderfeed.solarcraft.client.screens.PositionBlockStateTileEntity;
@@ -648,7 +648,7 @@ public class RenderingTools {
 
 
 
-    public static void renderObjModel(ResourceLocation location,PoseStack matrices,MultiBufferSource buffer,int light,int overlay, @Deprecated Consumer<PoseStack> transforms){
+    public static void renderEntityObjModel(ResourceLocation location, PoseStack matrices, MultiBufferSource buffer, int light, int overlay, @Deprecated Consumer<PoseStack> transforms){
         RenderType t = RenderType.entityTranslucent(TextureAtlas.LOCATION_BLOCKS);
         List<BakedQuad> list = Minecraft.getInstance().getModelManager().getModel(location)
                 .getQuads(null, null, RandomSource.create(), ModelData.EMPTY,t);
@@ -662,7 +662,7 @@ public class RenderingTools {
         matrices.popPose();
     }
 
-    public static void renderObjModel(ResourceLocation location,PoseStack matrices,MultiBufferSource buffer,float r, float g,float b,int light,int overlay){
+    public static void renderEntityObjModel(ResourceLocation location, PoseStack matrices, MultiBufferSource buffer, float r, float g, float b, int light, int overlay){
         RenderType t = RenderType.entityTranslucent(TextureAtlas.LOCATION_BLOCKS);
         List<BakedQuad> list = Minecraft.getInstance().getModelManager().getModel(location)
                 .getQuads(null, null, RandomSource.create(),ModelData.EMPTY, t);
@@ -674,6 +674,18 @@ public class RenderingTools {
             cons.putBulkData(matrices.last(), a, r, g, b, light, overlay);
         }
         matrices.popPose();
+    }
+
+    public static void renderBlockObjModel(ResourceLocation location, PoseStack matrices, MultiBufferSource buffer, float r, float g, float b, int light, int overlay){
+        List<BakedQuad> list = Minecraft.getInstance().getModelManager().getModel(location)
+                .getQuads(null, null, RandomSource.create(), ModelData.EMPTY,RenderType.solid());
+        matrices.pushPose();
+
+        for (BakedQuad a : list) {
+            buffer.getBuffer(RenderType.solid()).putBulkData(matrices.last(), a, r, g, b, light, overlay);
+        }
+        matrices.popPose();
+
     }
 
     public static void renderShaderedRay(PoseStack stack, MultiBufferSource buffer, float mod, float height, Consumer<PoseStack> translations, boolean rotate, float rotationModifier, float partialTicks){

@@ -7,6 +7,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Matrix4f;
 import com.mojang.math.Vector3f;
+import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
@@ -26,7 +27,7 @@ public class ClearingRitualCrystalRenderer extends TileEntityRenderer<ClearingRi
         matrices.translate(0.5,0.5,0.5);
         matrices.mulPose(Vector3f.YP.rotationDegrees(time));
         matrices.scale(0.6f,0.6f,0.6f);
-        RenderingTools.renderObjModel(OBJModels.CLEARING_RITUAL_CRYSTAL,matrices,src,light,overlay,(m)->{});
+        RenderingTools.renderEntityObjModel(OBJModels.CLEARING_RITUAL_CRYSTAL,matrices,src, 1,1,1,LightTexture.FULL_BRIGHT,overlay);
         matrices.popPose();
         matrices.pushPose();
         if (tile.getREType() != null) {

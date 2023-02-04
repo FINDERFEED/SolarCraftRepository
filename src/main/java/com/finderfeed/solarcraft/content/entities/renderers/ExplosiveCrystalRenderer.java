@@ -50,7 +50,7 @@ public class ExplosiveCrystalRenderer extends EntityRenderer<ExplosiveCrystal> {
             matrices.translate(0,1.1,0);
             matrices.scale(0.7f,0.7f,0.7f);
             matrices.mulPose(Vector3f.YN.rotationDegrees(time % 360));
-            RenderingTools.renderObjModel(OBJModels.EXPLOSIVE_CRYSTAL, matrices, src, light, OverlayTexture.NO_OVERLAY, (m) -> {
+            RenderingTools.renderEntityObjModel(OBJModels.EXPLOSIVE_CRYSTAL, matrices, src, light, OverlayTexture.NO_OVERLAY, (m) -> {
             });
             matrices.popPose();
         }
