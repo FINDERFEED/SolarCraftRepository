@@ -85,8 +85,10 @@ public class RunicEnergyChargerBlock extends RunicEnergySaverBlock implements En
     @Override
     public List<ItemStack> getDrops(BlockState state, LootContext.Builder context) {
         List<ItemStack> drops = super.getDrops(state,context);
+
         if (context.getOptionalParameter(LootContextParams.BLOCK_ENTITY) instanceof RunicEnergyChargerTileEntity charger){
             ItemStack i;
+            charger.reviveCaps();
             if (!(i = charger.getStackInSlot(0)).isEmpty()){
                 drops.add(i);
             }
@@ -94,6 +96,7 @@ public class RunicEnergyChargerBlock extends RunicEnergySaverBlock implements En
             if (!(i1 = charger.getStackInSlot(1)).isEmpty()){
                 drops.add(i1);
             }
+            charger.invalidateCaps();
         }
         return drops;
     }
