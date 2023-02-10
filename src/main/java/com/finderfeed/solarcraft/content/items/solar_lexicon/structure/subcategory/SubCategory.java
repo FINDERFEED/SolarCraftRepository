@@ -153,7 +153,7 @@ public class SubCategory {
 
     private SolarSmeltingRecipe getSmeltingRecipeFromFragment(AncientFragment fragment){
         Optional<? extends Recipe<?>> recipe = Minecraft.getInstance().level.getRecipeManager().byKey(fragment.getStacks().get(0).getRecipeLocation());
-        if (recipe.isEmpty()) throw new IllegalStateException("Incorrect recipe in fragment: " + fragment.getId().toUpperCase(Locale.ROOT) +", unable to find recipe: " + fragment.getItem().getRecipeLocation());
+        if (recipe.isEmpty()) throw new IllegalStateException("Incorrect recipe in fragment: " + fragment.getId().toUpperCase(Locale.ROOT) +", unable to find recipe: " + fragment.getStacks().get(0).getRecipeLocation());
         return (SolarSmeltingRecipe) recipe.get();
     }
 
