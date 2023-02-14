@@ -7,15 +7,16 @@
   ],
   "keys": {
     "#": {
-      "item": "solarcraft:empty_crystal"
+      "item": "solarcraft:solar_rune_tera"
     },
     "F": {
-      "item": "solarcraft:solar_rune_tera"
+      "item": "solarcraft:empty_crystal"
     }
   },
   "output": {
     "item": "solarcraft:tera_crystal"
   },
   "fragment": "crystals",
+  "count": 4,
   "time": 20
 }

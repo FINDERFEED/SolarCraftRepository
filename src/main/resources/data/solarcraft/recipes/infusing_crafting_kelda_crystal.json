@@ -7,15 +7,16 @@
   ],
   "keys": {
     "#": {
-      "item": "solarcraft:empty_crystal"
+      "item": "solarcraft:solar_rune_kelda"
     },
     "F": {
-      "item": "solarcraft:solar_rune_kelda"
+      "item": "solarcraft:empty_crystal"
     }
   },
   "output": {
     "item": "solarcraft:kelda_crystal"
   },
   "fragment": "crystals",
+  "count": 4,
   "time": 20
 }

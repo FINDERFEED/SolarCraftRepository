@@ -7,15 +7,16 @@
   ],
   "keys": {
     "#": {
-      "item": "solarcraft:empty_crystal"
+      "item": "solarcraft:solar_rune_ardo"
     },
     "F": {
-      "item": "solarcraft:solar_rune_ardo"
+      "item": "solarcraft:empty_crystal"
     }
   },
   "output": {
     "item": "solarcraft:ardo_crystal"
   },
   "fragment": "crystals",
+  "count": 4,
   "time": 20
 }
