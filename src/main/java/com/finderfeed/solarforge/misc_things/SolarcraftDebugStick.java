@@ -2,6 +2,7 @@ package com.finderfeed.solarforge.misc_things;
 
 import com.finderfeed.solarforge.helpers.multiblock.MultiblockStructure;
 import com.finderfeed.solarforge.helpers.multiblock.StructurePatternExporter;
+import com.finderfeed.solarforge.registries.blocks.SolarcraftBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -10,7 +11,10 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 
 public class SolarcraftDebugStick extends Item {
@@ -76,6 +80,18 @@ public class SolarcraftDebugStick extends Item {
 //            bolt.setDeltaMovement(player.getLookAngle());
 //            world.addFreshEntity(bolt);
 //        }
+
+        if (!world.isClientSide){
+//            BlockPos pos = player.getOnPos();
+//            for (int i = 0; i < 100;i++){
+//                BlockPos p = pos.offset(i*15,0,0);
+//                world.setBlock(p, SolarcraftBlocks.REPEATER.get().defaultBlockState(),3);
+//                world.setBlock(p.below(), SolarcraftBlocks.FIRA_RUNE_BLOCK.get().defaultBlockState(),3);
+//            }
+            ItemStack stack = Items.DIAMOND_SWORD.getDefaultInstance();
+            stack.enchant(Enchantments.SHARPNESS,Byte.MAX_VALUE);
+            player.addItem(stack);
+        }
         return super.use(world, player, hand);
     }
 }

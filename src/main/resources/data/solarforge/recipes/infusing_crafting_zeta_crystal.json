@@ -7,15 +7,17 @@
   ],
   "keys": {
     "#": {
-      "item": "solarforge:empty_crystal"
+      "item": "solarforge:solar_rune_zeta"
     },
     "F": {
-      "item": "solarforge:solar_rune_zeta"
+      "item": "solarforge:empty_crystal"
+
     }
   },
   "output": {
     "item": "solarforge:zeta_crystal"
   },
   "fragment": "crystals",
+  "count": 4,
   "time": 20
 }

@@ -7,15 +7,17 @@
   ],
   "keys": {
     "#": {
-      "item": "solarforge:empty_crystal"
+      "item": "solarforge:solar_rune_giro"
     },
     "F": {
-      "item": "solarforge:solar_rune_giro"
+      "item": "solarforge:empty_crystal"
+
     }
   },
   "output": {
     "item": "solarforge:giro_crystal"
   },
   "fragment": "crystals",
+  "count": 4,
   "time": 20
 }

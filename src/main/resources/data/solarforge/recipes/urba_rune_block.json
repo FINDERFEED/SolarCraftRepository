@@ -1,9 +1,9 @@
 {
   "type": "solarforge:infusing_crafting",
   "pattern": [
-    "F#F",
-    "#H#",
-    "F#F"
+    "HFH",
+    "H#H",
+    "HFH"
   ],
   "keys": {
     "#": {
@@ -18,8 +18,8 @@
   },
   "output": {
     "item": "solarforge:urba_rune_block"
-
   },
+  "count": 6,
   "fragment": "catalysts",
   "time": 20
 }
