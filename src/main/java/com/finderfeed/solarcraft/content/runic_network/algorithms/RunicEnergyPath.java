@@ -5,6 +5,8 @@ import com.finderfeed.solarcraft.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarcraft.content.blocks.blockentities.runic_energy.RunicEnergyGiver;
 import com.finderfeed.solarcraft.content.runic_network.repeater.BaseRepeaterTile;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
+import it.unimi.dsi.fastutil.objects.Object2ObjectLinkedOpenHashMap;
+import it.unimi.dsi.fastutil.objects.Object2ObjectMap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -15,12 +17,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class RunicEnergyPath {
 
     private final RunicEnergy.Type type;
     private List<PosPair> FINAL_POSITIONS = new ArrayList<>();
     private final BlockPos startingPos;
+    private Object2ObjectMap<BlockEntity,Boolean> usedTiles = new Object2ObjectLinkedOpenHashMap<>();
 
     public RunicEnergyPath(RunicEnergy.Type type,BlockPos startingpos){
         this.type = type;
@@ -29,7 +33,8 @@ public class RunicEnergyPath {
 
     @Nullable
     public List<BlockPos> build(BaseRepeaterTile beggining){
-        Map<BlockPos,List<BlockPos>> graph = buildGraph(beggining,new ArrayList<>(),new HashMap<>());
+        usedTiles.clear();
+        Map<BlockPos,List<BlockPos>> graph = buildGraphOpt(beggining,new HashMap<>());
         if (hasEndPoint()){
             sortBestGiver(beggining.getLevel());
             return buildRouteAStar(graph,beggining.getBlockPos(),beggining.getLevel());
@@ -56,6 +61,26 @@ public class RunicEnergyPath {
         return toReturn;
     }
 
+    private Map<BlockPos,List<BlockPos>> buildGraphOpt(BaseRepeaterTile tile,Map<BlockPos,List<BlockPos>> toReturn){
+        List<BlockEntity> positions = findConnectablePylonsAndEnergySourcesOpt(tile);
+        toReturn.put(tile.getBlockPos(),positions.stream().map(BlockEntity::getBlockPos).collect(Collectors.toList()));
+        positions.forEach((tileEntity)->{
+            Boolean bool = usedTiles.get(tileEntity);
+            if (bool == null || !bool){
+                BaseRepeaterTile rep = (BaseRepeaterTile) tileEntity;
+                if (bool == null){
+                    usedTiles.put(tileEntity,true);
+                }
+                if (rep != null) {
+                    buildGraphOpt(rep, toReturn);
+                }
+
+            }
+        });
+
+        return toReturn;
+    }
+
 
 
 
@@ -64,9 +89,9 @@ public class RunicEnergyPath {
         return  be instanceof BaseRepeaterTile ? (BaseRepeaterTile) be : null;
     }
 
-
+//3319
     private List<BlockPos> findConnectablePylonsAndEnergySources(BaseRepeaterTile start){
-        double startRange = start.getMaxRange();
+//        double startRange = start.getMaxRange();
         Level world = start.getLevel();
         BlockPos mainpos = start.getBlockPos();
         List<LevelChunk> chunks = Helpers.getSurroundingChunks5Radius(mainpos,world);
@@ -74,27 +99,67 @@ public class RunicEnergyPath {
         List<BlockPos> tiles = new ArrayList<>();
         for (LevelChunk chunk : chunks){
             chunk.getBlockEntities().forEach((position,tileentity)->{
-                if ((tileentity instanceof BaseRepeaterTile repeater)
-                        && !(Helpers.equalsBlockPos(start.getBlockPos(),position))
-                        && (repeater.getAcceptedEnergyTypes().contains(type))){
-                    double range = Math.min(startRange,repeater.getMaxRange());
-                    if (FDMathHelper.canSeeTileEntity(start,repeater,range)){
-                        tiles.add(tileentity.getBlockPos());
-                    }
-                }else if ((tileentity instanceof RunicEnergyGiver giver) &&
-                        (giver.getTypes() != null) &&
-                        (giver.getTypes().contains(type))){
-                    double range = Math.min(startRange,giver.getRange());
-                    if ((FDMathHelper.getDistanceBetween(start.getBlockPos(),giver.getPos()) <= range) &&
-                        (FDMathHelper.canSeeTileEntity(start.getBlockPos(),giver.getPos(),range,world))){
+                if ((tileentity instanceof BaseRepeaterTile repeater) && this.testRepeater(start,position,repeater)){
+//                    double range = Math.min(startRange,repeater.getMaxRange());
+//                    if (FDMathHelper.canSeeTileEntity(start,repeater,range)){
+                    tiles.add(tileentity.getBlockPos());
+//                    }
+                }else if ((tileentity instanceof RunicEnergyGiver giver) && this.testGiver(start,giver)){
+//                    double range = Math.min(startRange,giver.getRange());
+//                    if ((FDMathHelper.getDistanceBetween(start.getBlockPos(),giver.getPos()) <= range) &&
+//                        (FDMathHelper.canSeeTileEntity(start.getBlockPos(),giver.getPos(),range,world))){
 //                    tiles.add(giver.getPos());
-                        FINAL_POSITIONS.add(new PosPair(start.getBlockPos(), giver.getPos()));
-                    }
+                    FINAL_POSITIONS.add(new PosPair(start.getBlockPos(), giver.getPos()));
+//                    }
                 }
             });
         }
         return tiles;
     }
+
+
+    private List<BlockEntity> findConnectablePylonsAndEnergySourcesOpt(BaseRepeaterTile start){
+//        double startRange = start.getMaxRange();
+        Level world = start.getLevel();
+        BlockPos mainpos = start.getBlockPos();
+        List<LevelChunk> chunks = Helpers.getSurroundingChunks5Radius(mainpos,world);
+
+        List<BlockEntity> tiles = new ArrayList<>();
+        for (LevelChunk chunk : chunks){
+            chunk.getBlockEntities().forEach((position,tileentity)->{
+                if ((tileentity instanceof BaseRepeaterTile repeater) && this.testRepeater(start,position,repeater)){
+//                    double range = Math.min(startRange,repeater.getMaxRange());
+//                    if (FDMathHelper.canSeeTileEntity(start,repeater,range)){
+                    tiles.add(tileentity);
+//                    }
+                }else if ((tileentity instanceof RunicEnergyGiver giver) && this.testGiver(start,giver)){
+//                    double range = Math.min(startRange,giver.getRange());
+//                    if ((FDMathHelper.getDistanceBetween(start.getBlockPos(),giver.getPos()) <= range) &&
+//                        (FDMathHelper.canSeeTileEntity(start.getBlockPos(),giver.getPos(),range,world))){
+//                    tiles.add(giver.getPos());
+                    FINAL_POSITIONS.add(new PosPair(start.getBlockPos(), giver.getPos()));
+//                    }
+                }
+            });
+        }
+        return tiles;
+    }
+
+    private boolean testRepeater(BaseRepeaterTile start,BlockPos position,BaseRepeaterTile repeater){
+        double range = Math.min(start.getMaxRange(),repeater.getMaxRange());
+        return !(Helpers.equalsBlockPos(start.getBlockPos(),position))
+                && (repeater.getAcceptedEnergyTypes().contains(type)) && FDMathHelper.canSeeTileEntity(start,repeater,range);
+    }
+    private boolean testGiver(BaseRepeaterTile start,RunicEnergyGiver giver){
+        double range = Math.min(start.getMaxRange(),giver.getRange());
+
+        return (giver.getTypes() != null) &&
+                (giver.getTypes().contains(type))
+                && (FDMathHelper.getDistanceBetween(start.getBlockPos(),giver.getPos()) <= range) &&
+                (FDMathHelper.canSeeTileEntity(start.getBlockPos(),giver.getPos(),range,start.getLevel()));
+    }
+
+
 
     private boolean hasEndPoint(){
         return !FINAL_POSITIONS.isEmpty();

@@ -186,7 +186,7 @@ public class MultiblockVisualizer {
 
     public static void setMultiblock(@Nullable MultiblockStructure multiblock) {
         if (multiblock == null){
-            multiblock = null;
+            MultiblockVisualizer.multiblock = null;
             visualizingAnchor = null;
             return;
         }

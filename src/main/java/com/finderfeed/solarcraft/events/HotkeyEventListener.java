@@ -1,4 +1,4 @@
-package com.finderfeed.solarcraft.events.hotkey_use_event;
+package com.finderfeed.solarcraft.events;
 
 
 import com.finderfeed.solarcraft.SolarcraftClientInit;

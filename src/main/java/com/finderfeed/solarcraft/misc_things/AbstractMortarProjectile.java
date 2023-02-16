@@ -88,20 +88,7 @@ public abstract class AbstractMortarProjectile extends AbstractHurtingProjectile
         this.level.addParticle(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),this.position().x,this.position().y+0.25,this.position().z,0,0,0);
         this.level.addParticle(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),this.position().x+0.25,this.position().y,this.position().z,0,0,0);
         this.level.addParticle(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),this.position().x-0.25,this.position().y,this.position().z,0,0,0);
-//        else{
-//            for (int i = 0;i<16;i++){
-//                int radius = 1;
-//                double offsety = radius*Math.cos(Math.toRadians(i*22.5));
-//                double offsetz = radius*Math.sin(Math.toRadians(i*22.5));
-//                this.level.addParticle(ParticlesList.SMALL_SOLAR_STRIKE_PARTICLE.get(),this.position().x,this.position().y+offsety,this.position().z+offsetz,0,0,0);
-//            }
-//            for (int i = 0;i<16;i++){
-//                int radius = 1;
-//
-//                double offsetx = radius*Math.sin(Math.toRadians(i*22.5));
-//                this.level.addParticle(ParticlesList.SMALL_SOLAR_STRIKE_PARTICLE.get(),this.position().x+offsetx,this.position().y,this.position().z,0,0,0);
-//            }
-//        }
+
         if (!level.isClientSide && removeit){
             this.kill();
         }

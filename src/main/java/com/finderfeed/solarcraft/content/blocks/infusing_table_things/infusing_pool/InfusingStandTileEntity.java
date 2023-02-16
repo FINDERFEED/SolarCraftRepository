@@ -1,7 +1,7 @@
 package com.finderfeed.solarcraft.content.blocks.infusing_table_things.infusing_pool;
 
 import com.finderfeed.solarcraft.helpers.Helpers;
-import com.finderfeed.solarcraft.local_library.tile_entities.abstracts.ItemStackHandlerTile;
+import com.finderfeed.solarcraft.content.blocks.blockentities.ItemStackHandlerTile;
 import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.Connection;

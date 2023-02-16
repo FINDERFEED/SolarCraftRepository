@@ -94,6 +94,15 @@ public class SolarcraftDebugStick extends Item {
 //            bolt.setDeltaMovement(player.getLookAngle());
 //            world.addFreshEntity(bolt);
 //        }
+        if (!world.isClientSide){
+            for (int i = 0; i <= 10;i++){
+                for (int g = 0; g <= 10;g++){
+                    BlockPos pos = player.getOnPos().offset(i*10,0,g*10);
+                    world.setBlock(pos,SolarcraftBlocks.REPEATER.get().defaultBlockState(),3);
+                    world.setBlock(pos.below(),SolarcraftBlocks.FIRA_RUNE_BLOCK.get().defaultBlockState(),3);
+                }
+            }
+        }
         return super.use(world, player, hand);
     }
 }

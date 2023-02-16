@@ -1,4 +1,4 @@
-package com.finderfeed.solarcraft.local_library.tile_entities.abstracts;
+package com.finderfeed.solarcraft.content.blocks.blockentities;
 
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.misc_things.PhantomInventory;
@@ -16,7 +16,7 @@ import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.Nullable;
 
-public class ItemStackHandlerTile extends BlockEntity {
+public abstract class ItemStackHandlerTile extends BlockEntity {
     public ItemStackHandlerTile(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
     }

@@ -5,7 +5,6 @@ import net.minecraft.util.Mth;
 public class CameraShake {
 
     private float maxSpread;
-    private int time;
     private int inTime;
     private int outTime;
     private int stayTime;

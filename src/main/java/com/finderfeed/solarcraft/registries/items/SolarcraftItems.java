@@ -44,7 +44,7 @@ public class SolarcraftItems {
 
     public static final RegistryObject<SolarWandItem> SOLAR_WAND = ITEMS.register("solar_wand",()-> new SolarWandItem(new Item.Properties().rarity(Rarity.EPIC).tab(SolarCraft.SOLAR_GROUP).stacksTo(1)));
     public static  final RegistryObject<Item> SOLAR_INFUSION_POOL = ITEMS.register("solar_forge_infusion_pool",()-> new SolarcraftBlockItem(SolarcraftBlocks.INFUSING_POOL.get(),new Item.Properties().rarity(Rarity.EPIC).tab(SolarCraft.SOLAR_GROUP_BLOCKS),()->AncientFragment.SOLAR_INFUSER));
-    public static  final RegistryObject<SolarDustItem> SOLAR_DUST = ITEMS.register("solar_dust",()-> new SolarDustItem(new Item.Properties().tab(SolarCraft.SOLAR_GROUP_MATERIALS),()->AncientFragment.DUSTS));
+    public static  final RegistryObject<SolarcraftItem> SOLAR_DUST = ITEMS.register("solar_dust",()-> new SolarcraftItem(new Item.Properties().tab(SolarCraft.SOLAR_GROUP_MATERIALS),()->AncientFragment.DUSTS));
     public static  final RegistryObject<Item> VOID_DUST = ITEMS.register("void_dust",()-> new SolarcraftItem(new Item.Properties().tab(SolarCraft.SOLAR_GROUP_MATERIALS),()->AncientFragment.DUSTS));
     public static final RegistryObject<Item> ENERGY_DUST = ITEMS.register("energy_dust",()->new SolarcraftItem(new Item.Properties().tab(SolarCraft.SOLAR_GROUP_MATERIALS),()->AncientFragment.DUSTS));
     public static  final RegistryObject<Item> ENDERITE_ESSENCE = ITEMS.register("enderite_essence",()-> new Item(new Item.Properties().rarity(Rarity.RARE).tab(SolarCraft.SOLAR_GROUP_MATERIALS)));

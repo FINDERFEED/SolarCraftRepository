@@ -235,50 +235,15 @@ public class EventHandler {
         }
     }
 
-
-//    @SubscribeEvent
-//    public static void addFeatures(BiomeLoadingEvent event){
-//        BiomeGenerationSettingsBuilder b = event.getGeneration();
-//        if ( (event.getCategory() != Biome.BiomeCategory.NETHER) && (event.getCategory() != Biome.BiomeCategory.THEEND) && notNone(event)) {
-//            event.getGeneration().addFeature(GenerationStep.Decoration.STRONGHOLDS, FeaturesRegistry.ENERGY_PYLON_PLACEMENT);
-//            event.getGeneration().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES,FeaturesRegistry.EMPTY_CRYSTALS_PLACEMENT);
-//        }
-//        if (event.getCategory() == Biome.BiomeCategory.PLAINS){
-//            event.getGeneration().addFeature(GenerationStep.Decoration.VEGETAL_DECORATION,FeaturesRegistry.RUNIC_TREE_FEATURE);
-//        }
-//        if ( (event.getCategory() != Biome.BiomeCategory.NETHER) && (event.getCategory() != Biome.BiomeCategory.THEEND)) {
-//            event.getGeneration().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES,FeaturesRegistry.LENSING_CRYSTAL_ORE_PLACEMENT);
-//        }
-//        if (event.getCategory() == Biome.BiomeCategory.THEEND){
-//            event.getGeneration().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, FeaturesRegistry.ENDER_CRACKS);
-//        }
-//        //TODO:delete when incinerated forest returns
-//        if (event.getCategory() == Biome.BiomeCategory.PLAINS){
-//            event.getGeneration().addFeature(GenerationStep.Decoration.LOCAL_MODIFICATIONS,FeaturesRegistry.MOLTEN_FOREST_RUINS_PLACEMENT);
-//            b.addFeature(GenerationStep.Decoration.TOP_LAYER_MODIFICATION,FeaturesRegistry.LUNAR_LILY_FEATURE_PLACEMENT);
-//        }
-//
-//        if (event.getCategory() == Biome.BiomeCategory.DESERT){
-//            event.getGeneration().addFeature(GenerationStep.Decoration.TOP_LAYER_MODIFICATION, LazyConfiguredFeatures.SOLAR_FLOWER_FEATURE);
-//        }
-//
-//    }
-//
-//    private static boolean notNone(BiomeLoadingEvent event){
-//        return event.getCategory() != Biome.BiomeCategory.NONE;
-//    }
-
     @SubscribeEvent
     public static void progressionUnlockEvent(ProgressionUnlockEvent event){
         Progression ach = event.getProgression();
         Player playerEntity = event.getPlayer();
-//        if (!Helpers.hasPlayerCompletedProgression(ach,playerEntity) && Helpers.canPlayerUnlock(ach,playerEntity)){
         Helpers.setProgressionCompletionStatus(ach, playerEntity,true);
         Helpers.triggerToast(ach, playerEntity);
         Helpers.updateProgression((ServerPlayer)playerEntity );
         Helpers.forceChunksReload((ServerPlayer) playerEntity);
         Helpers.triggerProgressionShader(playerEntity);
-//        }
 
     }
 
@@ -317,24 +282,17 @@ public class EventHandler {
             if (killer instanceof  Player pl){
                 if (deadEntity instanceof WitherBoss){
                     Helpers.fireProgressionEvent(pl,Progression.KILL_WITHER);
-                }
-                if (deadEntity instanceof EnderDragon){
+                } else if (deadEntity instanceof EnderDragon){
                     Helpers.fireProgressionEvent(pl,Progression.KILL_DRAGON);
                 }
             }
         }
     }
 
-
-
-    public static ItemEntity createItemEntity(Player playerEntity,ItemStack stack){
-        return new ItemEntity(playerEntity.level,playerEntity.getX(),playerEntity.getY(),playerEntity.getZ(),stack);
-    }
-
     @SubscribeEvent
     public static void catalystsProgression(BlockEvent.EntityPlaceEvent event){
         if (event.getEntity() instanceof Player pl){
-            if (event.getPlacedBlock().is(Tags.CATALYST) && event.getPlacedBlock().getBlock() != SolarcraftBlocks.SOLAR_STONE_COLLUMN.get()) {
+            if (event.getPlacedBlock().is(Tags.CATALYST) && event.getPlacedBlock().getBlock() != SolarcraftBlocks.MAGISTONE_COLUMN.get()) {
                 if (!Helpers.hasPlayerCompletedProgression(Progression.CATALYSTS, pl)) {
                     for (int x = -10; x < 10;x++){
                         for (int z = -10; z < 10;z++){

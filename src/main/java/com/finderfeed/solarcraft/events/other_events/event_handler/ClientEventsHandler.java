@@ -4,7 +4,6 @@ package com.finderfeed.solarcraft.events.other_events.event_handler;
 import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.content.blocks.infusing_table_things.InfuserTileEntity;
 import com.finderfeed.solarcraft.content.items.ModuleItem;
-import com.finderfeed.solarcraft.events.misc.ClientTicker;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.misc_things.CameraShake;
@@ -41,8 +40,6 @@ import java.util.*;
 @Mod.EventBusSubscriber(modid = SolarCraft.MOD_ID,bus = Mod.EventBusSubscriber.Bus.FORGE,value = Dist.CLIENT)
 public class ClientEventsHandler {
 
-    private static Map<String, ClientTicker> TICKERS = new HashMap<>();
-    private static ArrayList<String> TICKERS_TO_REMOVE = new ArrayList<>();
     private static List<BlockPos> ORES_RENDER_POSITIONS = new ArrayList<>();
     private static List<BlockPos> CATALYST_RENDER_POSITIONS = new ArrayList<>();
     
@@ -53,41 +50,6 @@ public class ClientEventsHandler {
         ClientHelpers.deleteCachedFragments();
     }
 
-    @SubscribeEvent
-    public static void manageTickers(TickEvent.ClientTickEvent event) {
-
-
-        if (event.phase == TickEvent.Phase.START && !Minecraft.getInstance().isPaused())  {
-
-
-            TICKERS.values().forEach((ticker)->{
-
-                if (ticker.shouldBeRemoved()){
-                    TICKERS_TO_REMOVE.add(ticker.getId());
-                }
-                ticker.tick();
-            });
-            TICKERS_TO_REMOVE.forEach((id)->{
-                TICKERS.remove(id);
-            });
-            TICKERS_TO_REMOVE.clear();
-        }
-    }
-
-    public static int getTickerValueOrAddANewOne(String id,int maxval){
-        if (TICKERS.containsKey(id)){
-            return TICKERS.get(id).getCurrentValue();
-        }else{
-            ClientTicker ticker = new ClientTicker(id,maxval);
-            TICKERS.put(id,ticker);
-            return 0;
-        }
-    }
-
-
-    public static void removeTicker(String id){
-        TICKERS.remove(id);
-    }
 
     @SubscribeEvent
     public static void renderModules(ItemTooltipEvent event){
