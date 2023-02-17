@@ -82,15 +82,15 @@ public class SolarcraftDebugStick extends Item {
 //        }
 
         if (!world.isClientSide){
-//            BlockPos pos = player.getOnPos();
-//            for (int i = 0; i < 100;i++){
-//                BlockPos p = pos.offset(i*15,0,0);
-//                world.setBlock(p, SolarcraftBlocks.REPEATER.get().defaultBlockState(),3);
-//                world.setBlock(p.below(), SolarcraftBlocks.FIRA_RUNE_BLOCK.get().defaultBlockState(),3);
-//            }
-            ItemStack stack = Items.DIAMOND_SWORD.getDefaultInstance();
-            stack.enchant(Enchantments.SHARPNESS,Byte.MAX_VALUE);
-            player.addItem(stack);
+            BlockPos pos = player.getOnPos();
+            for (int i = 0; i < 100;i++){
+                BlockPos p = pos.offset(i*15,0,0);
+                world.setBlock(p, SolarcraftBlocks.REPEATER.get().defaultBlockState(),3);
+                world.setBlock(p.below(), SolarcraftBlocks.FIRA_RUNE_BLOCK.get().defaultBlockState(),3);
+            }
+    //            ItemStack stack = Items.DIAMOND_SWORD.getDefaultInstance();
+    //            stack.enchant(Enchantments.SHARPNESS,Byte.MAX_VALUE);
+    //            player.addItem(stack);
         }
         return super.use(world, player, hand);
     }
