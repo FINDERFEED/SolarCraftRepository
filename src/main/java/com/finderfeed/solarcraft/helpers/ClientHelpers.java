@@ -9,6 +9,8 @@ import com.finderfeed.solarcraft.client.screens.CrystalEnergyVinesPuzzleScreen;
 import com.finderfeed.solarcraft.client.toasts.UnlockedEnergyTypeToast;
 import com.finderfeed.solarcraft.config.JsonFragmentsHelper;
 import com.finderfeed.solarcraft.config.SolarcraftClientConfig;
+import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.client.SunShardPuzzleScreen;
+import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.puzzle_template.Puzzle;
 import com.finderfeed.solarcraft.content.entities.not_alive.BallLightningProjectile;
 import com.finderfeed.solarcraft.content.items.solar_wand.wand_actions.drain_runic_enenrgy_action.RETypeSelectionScreen;
 import com.finderfeed.solarcraft.events.RenderEventsHandler;
@@ -26,6 +28,7 @@ import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.RunePat
 import com.finderfeed.solarcraft.misc_things.*;
 import com.finderfeed.solarcraft.packet_handler.SolarCraftPacketHandler;
 import com.finderfeed.solarcraft.packet_handler.packets.RequestAbilityScreenPacket;
+import com.finderfeed.solarcraft.packet_handler.packets.sun_shard_puzzle.SunShardPuzzleOpenScreen;
 import com.finderfeed.solarcraft.registries.items.SolarcraftItems;
 import com.finderfeed.solarcraft.registries.overlays.SolarcraftOverlays;
 import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
@@ -501,6 +504,10 @@ public class ClientHelpers {
 
     public static void handleClientREDrainWandAction(){
         Minecraft.getInstance().setScreen(new RETypeSelectionScreen());
+    }
+
+    public static void handleSunShardOpenScreenPacket(Puzzle puzzle,BlockPos tilepos){
+        Minecraft.getInstance().setScreen(new SunShardPuzzleScreen(puzzle,tilepos));
     }
 
     public static class Particles {

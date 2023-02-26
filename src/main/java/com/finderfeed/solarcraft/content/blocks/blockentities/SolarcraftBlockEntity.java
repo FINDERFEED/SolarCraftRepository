@@ -18,25 +18,8 @@ import java.util.Map;
 
 public abstract class SolarcraftBlockEntity extends BlockEntity {
 
-    private Map<String, InterpolatedValue> ANIMATION_VALUES = new HashMap<>();
-
     public SolarcraftBlockEntity(BlockEntityType<?> p_155228_, BlockPos p_155229_, BlockState p_155230_) {
         super(p_155228_, p_155229_, p_155230_);
-    }
-
-    @Nullable
-    public InterpolatedValue getAnimationValue(String id){
-        return ANIMATION_VALUES.get(id);
-    }
-
-    public void addAnimationValue(String id,InterpolatedValue value){
-        if (!ANIMATION_VALUES.containsKey(id)){
-            ANIMATION_VALUES.put(id,value);
-        }
-    }
-
-    public void deleteAnimationValue(String id){
-        ANIMATION_VALUES.remove(id);
     }
 
     @Override

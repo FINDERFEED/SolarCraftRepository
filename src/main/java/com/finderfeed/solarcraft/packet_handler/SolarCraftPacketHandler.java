@@ -15,6 +15,7 @@ import com.finderfeed.solarcraft.packet_handler.packets.crystal_energy_vines_puz
 import com.finderfeed.solarcraft.packet_handler.packets.misc_packets.BallLightningSpawnLightningParticles;
 import com.finderfeed.solarcraft.packet_handler.packets.misc_packets.ExplosionParticlesPacket;
 import com.finderfeed.solarcraft.packet_handler.packets.misc_packets.SolarStrikeEntityDoExplosion;
+import com.finderfeed.solarcraft.packet_handler.packets.sun_shard_puzzle.SunShardPuzzleOpenScreen;
 import net.minecraft.resources.ResourceLocation;
 
 import net.minecraftforge.network.NetworkRegistry;
@@ -68,7 +69,7 @@ public class SolarCraftPacketHandler {
         INSTANCE.registerMessage(nextID(), TeleportEntityPacket.class, TeleportEntityPacket::toBytes, TeleportEntityPacket::new, TeleportEntityPacket::handle);
         INSTANCE.registerMessage(nextID(), DisablePlayerFlightPacket.class, DisablePlayerFlightPacket::toBytes, DisablePlayerFlightPacket::new, DisablePlayerFlightPacket::handle);
         INSTANCE.registerMessage(nextID(), ShadowBoltExplosionPacket.class, ShadowBoltExplosionPacket::toBytes, ShadowBoltExplosionPacket::new, ShadowBoltExplosionPacket::handle);
-        INSTANCE.registerMessage(nextID(),ToggleableAbilityPacket.class, ToggleableAbilityPacket::toBytes, ToggleableAbilityPacket::new, ToggleableAbilityPacket::handle);
+        INSTANCE.registerMessage(nextID(), ToggleableAbilityPacket.class, ToggleableAbilityPacket::toBytes, ToggleableAbilityPacket::new, ToggleableAbilityPacket::handle);
         INSTANCE.registerMessage(nextID(), OpenPuzzleScreenPacket.class, OpenPuzzleScreenPacket::toBytes, OpenPuzzleScreenPacket::new, OpenPuzzleScreenPacket::handle);
         INSTANCE.registerMessage(nextID(), PuzzleActionPacket.class, PuzzleActionPacket::toBytes, PuzzleActionPacket::new, PuzzleActionPacket::handle);
         INSTANCE.registerMessage(nextID(), SetClientRadiantLandStatePacket.class, SetClientRadiantLandStatePacket::toBytes, SetClientRadiantLandStatePacket::new, SetClientRadiantLandStatePacket::handle);
@@ -80,6 +81,8 @@ public class SolarCraftPacketHandler {
         INSTANCE.registerMessage(nextID(), ServerBossEventUpdateProgress.class, ServerBossEventUpdateProgress::toBytes, ServerBossEventUpdateProgress::new, ServerBossEventUpdateProgress::handle);
         INSTANCE.registerMessage(nextID(), CastWandActionPacket.class, CastWandActionPacket::toBytes, CastWandActionPacket::new, CastWandActionPacket::handle);
         INSTANCE.registerMessage(nextID(), SetREDrainTypePacket.class, SetREDrainTypePacket::toBytes, SetREDrainTypePacket::new, SetREDrainTypePacket::handle);
+
+        INSTANCE.registerMessage(nextID(), SunShardPuzzleOpenScreen.class, SunShardPuzzleOpenScreen::toBytes, SunShardPuzzleOpenScreen::new, SunShardPuzzleOpenScreen::handle);
 
 
     }
