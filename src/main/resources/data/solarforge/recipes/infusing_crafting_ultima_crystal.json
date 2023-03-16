@@ -7,15 +7,17 @@
   ],
   "keys": {
     "#": {
-      "item": "solarforge:empty_crystal"
+      "item": "solarforge:solar_rune_ultima"
     },
     "F": {
-      "item": "solarforge:solar_rune_ultima"
+      "item": "solarforge:empty_crystal"
+
     }
   },
   "output": {
     "item": "solarforge:ultima_crystal"
   },
   "fragment": "crystals",
+  "count": 4,
   "time": 20
 }

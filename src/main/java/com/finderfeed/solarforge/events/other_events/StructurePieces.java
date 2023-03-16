@@ -7,7 +7,7 @@ import com.finderfeed.solarforge.content.world_generation.structures.crystal_bos
 import com.finderfeed.solarforge.content.world_generation.structures.dimensional_shard_structure.DimStructPieces;
 import com.finderfeed.solarforge.content.world_generation.structures.dungeon_one_key_lock.DungeonOnePieces;
 import com.finderfeed.solarforge.content.world_generation.structures.magician_tower.MagicianTowerPieces;
-import com.finderfeed.solarforge.content.world_generation.structures.maze_key_keeper.MazeStructurePieces;
+import com.finderfeed.solarforge.content.world_generation.structures.maze_key_keeper.TrapDungeonPieces;
 import com.finderfeed.solarforge.content.world_generation.structures.runic_elemental_arena.RunicElementalArenaStructurePieces;
 import net.minecraft.core.Registry;
 import net.minecraft.world.level.levelgen.feature.Feature;
@@ -24,7 +24,7 @@ public class StructurePieces {
 
 
     public static StructurePieceType DUNGEON_ONE_PIECE = DungeonOnePieces.Piece::new;
-    public static StructurePieceType DUNGEON_MAZE_PIECE = MazeStructurePieces.Piece::new;
+    public static StructurePieceType TRAP_DUNGEON_PIECE = TrapDungeonPieces.Piece::new;
     public static StructurePieceType CHARGING_PIECE = ChargingStationPieces.Piece::new;
     public static StructurePieceType MAGICIAN_TOWER = MagicianTowerPieces.Piece::new;
     public static StructurePieceType DIMENSIONAL_SHARD_STRUCTURE = DimStructPieces.Piece::new;
@@ -36,7 +36,7 @@ public class StructurePieces {
         IForgeRegistry<Feature<?>> registry = event.getRegistry();
 
         Registry.register(Registry.STRUCTURE_PIECE,"solar_forge_dungeon_one_piece_test", DUNGEON_ONE_PIECE);
-        Registry.register(Registry.STRUCTURE_PIECE,"solar_forge_dungeon_maze_piece",DUNGEON_MAZE_PIECE);
+        Registry.register(Registry.STRUCTURE_PIECE,"solar_forge_trap_dungeon_piece", TRAP_DUNGEON_PIECE);
         Registry.register(Registry.STRUCTURE_PIECE,"solar_forge_charging_piece",CHARGING_PIECE);
         Registry.register(Registry.STRUCTURE_PIECE,"magician_tower_piece",MAGICIAN_TOWER);
         Registry.register(Registry.STRUCTURE_PIECE,"dimensional_shard_structure",DIMENSIONAL_SHARD_STRUCTURE);

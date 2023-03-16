@@ -568,4 +568,11 @@ public class Helpers {
             SolarForgePacketHandler.INSTANCE.sendTo(new DimensionBreakPacket(),player.connection.connection,NetworkDirection.PLAY_TO_CLIENT);
         });
     }
+
+    public static boolean AABBTouchesAABB(AABB first,AABB second){
+
+        return ((first.minX >= second.minX && first.minX <= second.maxX) || (first.maxX >= second.minX && first.maxX <= second.maxX)) ||
+                ((first.minY >= second.minY && first.minY <= second.maxY) || (first.maxY >= second.minY && first.maxY <= second.maxY)) ||
+                ((first.minZ >= second.minZ && first.minZ <= second.maxZ) || (first.maxZ >= second.minZ && first.maxZ <= second.maxZ));
+    }
 }

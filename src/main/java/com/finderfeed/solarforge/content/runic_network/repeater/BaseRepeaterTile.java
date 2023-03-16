@@ -21,6 +21,7 @@ import net.minecraft.world.phys.Vec3;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 //NEVER GONNA GIVE YOU UP
 public class BaseRepeaterTile extends BlockEntity {
@@ -41,28 +42,6 @@ public class BaseRepeaterTile extends BlockEntity {
 
 
     public static void tick(Level world,BlockPos pos,BlockState state,BaseRepeaterTile tile){
-        Block block = world.getBlockState(pos.below()).getBlock();
-        if (tile.getEnergyType() == null && world.getGameTime() % 20 == 0) {
-            if (block == SolarcraftBlocks.ZETA_RUNE_BLOCK.get()) {
-                tile.setEnergyType(RunicEnergy.Type.ZETA);
-            } else if (block == SolarcraftBlocks.URBA_RUNE_BLOCK.get()) {
-                tile.setEnergyType(RunicEnergy.Type.URBA);
-            } else if (block == SolarcraftBlocks.KELDA_RUNE_BLOCK.get()) {
-                tile.setEnergyType(RunicEnergy.Type.KELDA);
-            } else if (block == SolarcraftBlocks.FIRA_RUNE_BLOCK.get()) {
-                tile.setEnergyType(RunicEnergy.Type.FIRA);
-            } else if (block == SolarcraftBlocks.ARDO_RUNE_BLOCK.get()) {
-                tile.setEnergyType(RunicEnergy.Type.ARDO);
-            } else if (block == SolarcraftBlocks.TERA_RUNE_BLOCK.get()) {
-                tile.setEnergyType(RunicEnergy.Type.TERA);
-            } else if (block == SolarcraftBlocks.GIRO_RUNE_BLOCK.get()) {
-                tile.setEnergyType(RunicEnergy.Type.GIRO);
-            } else if (block == SolarcraftBlocks.ULTIMA_RUNE_BLOCK.get()) {
-                tile.setEnergyType(RunicEnergy.Type.ULTIMA);
-            } else {
-                tile.setEnergyType(null);
-            }
-        }
 
         if (!world.isClientSide && (world.getGameTime() %20 == 1) ) {
             tile.setChanged();
@@ -108,15 +87,26 @@ public class BaseRepeaterTile extends BlockEntity {
         this.ENERGY_TYPE = type;
     }
 
+    public static Map<Block, RunicEnergy.Type> BLOCK_TO_RUNE_ENERGY_TYPE = Map.of(
+            SolarcraftBlocks.TERA_RUNE_BLOCK.get(), RunicEnergy.Type.TERA,
+            SolarcraftBlocks.FIRA_RUNE_BLOCK.get(), RunicEnergy.Type.FIRA,
+            SolarcraftBlocks.ZETA_RUNE_BLOCK.get(), RunicEnergy.Type.ZETA,
+            SolarcraftBlocks.KELDA_RUNE_BLOCK.get(), RunicEnergy.Type.KELDA,
+            SolarcraftBlocks.URBA_RUNE_BLOCK.get(), RunicEnergy.Type.URBA,
+            SolarcraftBlocks.ARDO_RUNE_BLOCK.get(), RunicEnergy.Type.ARDO,
+            SolarcraftBlocks.ULTIMA_RUNE_BLOCK.get(), RunicEnergy.Type.ULTIMA,
+            SolarcraftBlocks.GIRO_RUNE_BLOCK.get(), RunicEnergy.Type.GIRO
+
+    );
+
     public RunicEnergy.Type getEnergyType(){
+        Block block = level.getBlockState(worldPosition.below()).getBlock();
+        ENERGY_TYPE = BLOCK_TO_RUNE_ENERGY_TYPE.get(block);
         return ENERGY_TYPE;
     }
 
 
 
-    public void resetRepeater(BlockPos consumer){
-
-    }
 
 
     @Override

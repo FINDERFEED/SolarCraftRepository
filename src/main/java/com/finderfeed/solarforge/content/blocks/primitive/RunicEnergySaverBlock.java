@@ -16,6 +16,7 @@ import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class RunicEnergySaverBlock extends Block {
@@ -41,7 +42,7 @@ public abstract class RunicEnergySaverBlock extends Block {
         if (context.getOptionalParameter(LootContextParams.BLOCK_ENTITY) instanceof AbstractRunicEnergyContainer container){
             IRunicEnergySaver.defaultSave(stack,container);
         }
-        return List.of(stack);
+        return new ArrayList<>(List.of(stack));
     }
 
     @Override

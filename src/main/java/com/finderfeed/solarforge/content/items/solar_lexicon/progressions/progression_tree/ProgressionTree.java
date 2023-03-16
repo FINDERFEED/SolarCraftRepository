@@ -30,7 +30,7 @@ public class ProgressionTree {
         tree.addProgressionRequirements(Progression.KILL_DRAGON,Progression.ENTER_END);
         tree.addProgressionRequirements(Progression.IMBUED_COLD_STAR,Progression.KILL_WITHER,Progression.ACQUIRE_COLD_STAR,Progression.FIND_INFUSER_DUNGEON);
         tree.addProgressionRequirements(Progression.PYLON_INSCRIPTION,Progression.SOLAR_RUNE);
-        tree.addProgressionRequirements(Progression.ALL_ENERGY_TYPES,Progression.RUNE_ENERGY_PYLON);
+        tree.addProgressionRequirements(Progression.ALL_ENERGY_TYPES,Progression.RUNE_ENERGY_CLAIM);
         tree.addProgressionRequirements(Progression.CRAFT_SOLAR_FORGE,Progression.RUNE_ENERGY_CLAIM,Progression.KILL_DRAGON);
         tree.addProgressionRequirements(Progression.TRANSMUTE_GEM,Progression.IMBUED_COLD_STAR,Progression.TRADE_FOR_BLUE_GEM);
         tree.addProgressionRequirements(Progression.SOLAR_INFUSER,Progression.CRAFT_SOLAR_FORGE,Progression.INFUSING_CRAFTING_TABLE);

@@ -11,9 +11,9 @@ import net.minecraft.world.level.levelgen.structure.pieces.PieceGenerator;
 import net.minecraft.world.level.levelgen.structure.pieces.PieceGeneratorSupplier;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePiecesBuilder;
 
-public class MazeStructure extends StructureFeature<NoneFeatureConfiguration> {
-    public MazeStructure(Codec<NoneFeatureConfiguration> p_197168_) {
-        super(p_197168_, PieceGeneratorSupplier.simple(PieceGeneratorSupplier.checkForBiomeOnTop(Heightmap.Types.WORLD_SURFACE_WG), MazeStructure::generatePieces));
+public class TrapDungeon extends StructureFeature<NoneFeatureConfiguration> {
+    public TrapDungeon(Codec<NoneFeatureConfiguration> p_197168_) {
+        super(p_197168_, PieceGeneratorSupplier.simple(PieceGeneratorSupplier.checkForBiomeOnTop(Heightmap.Types.WORLD_SURFACE_WG), TrapDungeon::generatePieces));
     }
 
 
@@ -23,7 +23,7 @@ public class MazeStructure extends StructureFeature<NoneFeatureConfiguration> {
         int surfaceY = ctx.chunkGenerator().getBaseHeight(x,z, Heightmap.Types.WORLD_SURFACE_WG,ctx.heightAccessor());
         BlockPos blockpos = new BlockPos(x, surfaceY, z);
         Rotation rotation = Rotation.getRandom(ctx.random());
-        MazeStructurePieces.start(ctx.structureManager(), blockpos, rotation, p_197089_, ctx.random());
+        TrapDungeonPieces.start(ctx.structureManager(), blockpos, rotation, p_197089_, ctx.random());
     }
 
     @Override

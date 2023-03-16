@@ -99,6 +99,79 @@ public class RenderingTools {
     public static final ResourceLocation TEXT_FIELD_VERTICAL = new ResourceLocation(SolarForge.MOD_ID,"textures/gui/text_field_vertical.png");
 
 
+    public static void renderBox(PoseStack matrices,MultiBufferSource src,AABB box,float r,float g,float b,float a){
+        matrices.pushPose();
+        Matrix4f m = matrices.last().pose();
+        VertexConsumer vertex = src.getBuffer(RenderType.lightning());
+
+        vertex.vertex(m,(float)box.minX,(float)box.minY,(float)box.minZ).color(r,g,b,a).endVertex();
+        vertex.vertex(m,(float)box.minX,(float)box.maxY,(float)box.minZ).color(r,g,b,a).endVertex();
+        vertex.vertex(m,(float)box.maxX,(float)box.maxY,(float)box.minZ).color(r,g,b,a).endVertex();
+        vertex.vertex(m,(float)box.maxX,(float)box.minY,(float)box.minZ).color(r,g,b,a).endVertex();
+
+        vertex.vertex(m,(float)box.minX,(float)box.minY,(float)box.maxZ).color(r,g,b,a).endVertex();
+        vertex.vertex(m,(float)box.minX,(float)box.maxY,(float)box.maxZ).color(r,g,b,a).endVertex();
+        vertex.vertex(m,(float)box.maxX,(float)box.maxY,(float)box.maxZ).color(r,g,b,a).endVertex();
+        vertex.vertex(m,(float)box.maxX,(float)box.minY,(float)box.maxZ).color(r,g,b,a).endVertex();
+
+        vertex.vertex(m,(float)box.minX,(float)box.minY,(float)box.minZ).color(r,g,b,a).endVertex();
+        vertex.vertex(m,(float)box.minX,(float)box.maxY,(float)box.minZ).color(r,g,b,a).endVertex();
+        vertex.vertex(m,(float)box.minX,(float)box.maxY,(float)box.maxZ).color(r,g,b,a).endVertex();
+        vertex.vertex(m,(float)box.minX,(float)box.minY,(float)box.maxZ).color(r,g,b,a).endVertex();
+
+        vertex.vertex(m,(float)box.maxX,(float)box.minY,(float)box.minZ).color(r,g,b,a).endVertex();
+        vertex.vertex(m,(float)box.maxX,(float)box.maxY,(float)box.minZ).color(r,g,b,a).endVertex();
+        vertex.vertex(m,(float)box.maxX,(float)box.maxY,(float)box.maxZ).color(r,g,b,a).endVertex();
+        vertex.vertex(m,(float)box.maxX,(float)box.minY,(float)box.maxZ).color(r,g,b,a).endVertex();
+
+        vertex.vertex(m,(float)box.minX,(float)box.minY,(float)box.minZ).color(r,g,b,a).endVertex();
+        vertex.vertex(m,(float)box.maxX,(float)box.minY,(float)box.minZ).color(r,g,b,a).endVertex();
+        vertex.vertex(m,(float)box.maxX,(float)box.minY,(float)box.maxZ).color(r,g,b,a).endVertex();
+        vertex.vertex(m,(float)box.minX,(float)box.minY,(float)box.maxZ).color(r,g,b,a).endVertex();
+
+        vertex.vertex(m,(float)box.minX,(float)box.maxY,(float)box.minZ).color(r,g,b,a).endVertex();
+        vertex.vertex(m,(float)box.maxX,(float)box.maxY,(float)box.minZ).color(r,g,b,a).endVertex();
+        vertex.vertex(m,(float)box.maxX,(float)box.maxY,(float)box.maxZ).color(r,g,b,a).endVertex();
+        vertex.vertex(m,(float)box.minX,(float)box.maxY,(float)box.maxZ).color(r,g,b,a).endVertex();
+
+
+
+
+
+        vertex.vertex(m,(float)box.maxX,(float)box.minY,(float)box.minZ).color(r,g,b,a).endVertex();
+        vertex.vertex(m,(float)box.maxX,(float)box.maxY,(float)box.minZ).color(r,g,b,a).endVertex();
+        vertex.vertex(m,(float)box.minX,(float)box.maxY,(float)box.minZ).color(r,g,b,a).endVertex();
+        vertex.vertex(m,(float)box.minX,(float)box.minY,(float)box.minZ).color(r,g,b,a).endVertex();
+
+        vertex.vertex(m,(float)box.maxX,(float)box.minY,(float)box.maxZ).color(r,g,b,a).endVertex();
+        vertex.vertex(m,(float)box.maxX,(float)box.maxY,(float)box.maxZ).color(r,g,b,a).endVertex();
+        vertex.vertex(m,(float)box.minX,(float)box.maxY,(float)box.maxZ).color(r,g,b,a).endVertex();
+        vertex.vertex(m,(float)box.minX,(float)box.minY,(float)box.maxZ).color(r,g,b,a).endVertex();
+
+        vertex.vertex(m,(float)box.minX,(float)box.minY,(float)box.maxZ).color(r,g,b,a).endVertex();
+        vertex.vertex(m,(float)box.minX,(float)box.maxY,(float)box.maxZ).color(r,g,b,a).endVertex();
+        vertex.vertex(m,(float)box.minX,(float)box.maxY,(float)box.minZ).color(r,g,b,a).endVertex();
+        vertex.vertex(m,(float)box.minX,(float)box.minY,(float)box.minZ).color(r,g,b,a).endVertex();
+
+        vertex.vertex(m,(float)box.maxX,(float)box.minY,(float)box.maxZ).color(r,g,b,a).endVertex();
+        vertex.vertex(m,(float)box.maxX,(float)box.maxY,(float)box.maxZ).color(r,g,b,a).endVertex();
+        vertex.vertex(m,(float)box.maxX,(float)box.maxY,(float)box.minZ).color(r,g,b,a).endVertex();
+        vertex.vertex(m,(float)box.maxX,(float)box.minY,(float)box.minZ).color(r,g,b,a).endVertex();
+
+        vertex.vertex(m,(float)box.minX,(float)box.minY,(float)box.maxZ).color(r,g,b,a).endVertex();
+        vertex.vertex(m,(float)box.maxX,(float)box.minY,(float)box.maxZ).color(r,g,b,a).endVertex();
+        vertex.vertex(m,(float)box.maxX,(float)box.minY,(float)box.minZ).color(r,g,b,a).endVertex();
+        vertex.vertex(m,(float)box.minX,(float)box.minY,(float)box.minZ).color(r,g,b,a).endVertex();
+
+        vertex.vertex(m,(float)box.minX,(float)box.maxY,(float)box.maxZ).color(r,g,b,a).endVertex();
+        vertex.vertex(m,(float)box.maxX,(float)box.maxY,(float)box.maxZ).color(r,g,b,a).endVertex();
+        vertex.vertex(m,(float)box.maxX,(float)box.maxY,(float)box.minZ).color(r,g,b,a).endVertex();
+        vertex.vertex(m,(float)box.minX,(float)box.maxY,(float)box.minZ).color(r,g,b,a).endVertex();
+
+
+        matrices.popPose();
+    }
+
     public static void renderTextField(PoseStack matrices,int xStart,int yStart,int width,int height){
         matrices.pushPose();
         ClientHelpers.bindText(TEXT_FIELD_INNER);
@@ -1075,6 +1148,9 @@ public class RenderingTools {
     public static void renderTile(PositionBlockStateTileEntity block,PoseStack matrices, float partialTicks, BlockAndTintGetter getter, MultiBufferSource src, BlockEntityRenderDispatcher d){
         if (block.tile != null){
             BlockEntityRenderer<BlockEntity> renderer;
+            if (block.tile.getLevel() == null){
+                block.tile.setLevel(Minecraft.getInstance().level);
+            }
             if ((renderer = d.getRenderer(block.tile)) != null){
                 matrices.pushPose();
                 matrices.translate(block.pos.x,block.pos.y,block.pos.z);

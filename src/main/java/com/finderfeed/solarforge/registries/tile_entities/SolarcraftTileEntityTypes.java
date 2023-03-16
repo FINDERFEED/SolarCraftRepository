@@ -119,4 +119,7 @@ public class SolarcraftTileEntityTypes {
 
     public static final RegistryObject<BlockEntityType<TemporaryLightTile>> TEMPORARY_LIGHT = TILE_ENTITY_TYPE.register("temporary_light",()->
             BlockEntityType.Builder.of(TemporaryLightTile::new, SolarcraftBlocks.TEMPORARY_LIGHT.get()).build(null));
+
+    public static final RegistryObject<BlockEntityType<SavannaDungeonKeeperTile>> SAVANNA_DUNGEON_KEEPER = TILE_ENTITY_TYPE.register("savanna_dungeon_keeper",()->
+            BlockEntityType.Builder.of(SavannaDungeonKeeperTile::new, SolarcraftBlocks.SAVANNA_DUNGEON_KEEPER.get()).build(null));
 }

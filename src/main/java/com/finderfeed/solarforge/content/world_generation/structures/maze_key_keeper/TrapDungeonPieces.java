@@ -22,8 +22,8 @@ import java.util.Map;
 import java.util.Random;
 
 
-public class MazeStructurePieces {
-    private static final ResourceLocation DUNGEON_PIECE = new ResourceLocation("solarforge", "labyrinth");
+public class TrapDungeonPieces {
+    private static final ResourceLocation DUNGEON_PIECE = new ResourceLocation("solarforge", "savanna_dungeon");
     private static final Map<ResourceLocation, BlockPos> OFFSET = ImmutableMap.of(DUNGEON_PIECE, new BlockPos(0, 1, 0));
 
 
@@ -33,18 +33,18 @@ public class MazeStructurePieces {
 
 
         BlockPos rotationOffSet = new BlockPos(0, 0, 0).rotate(rotation);
-        BlockPos blockpos = rotationOffSet.offset(x-7, pos.getY()-50, z-20);
-        pieceList.addPiece(new MazeStructurePieces.Piece(templateManager, DUNGEON_PIECE, rotation,blockpos));
+        BlockPos blockpos = rotationOffSet.offset(x-7, pos.getY(), z-20);
+        pieceList.addPiece(new TrapDungeonPieces.Piece(templateManager, DUNGEON_PIECE, rotation,blockpos));
     }
 
     public static class Piece extends TemplateStructurePiece {
 
         public Piece( StructureManager templateManagerIn, ResourceLocation resourceLocationIn,Rotation rot, BlockPos pos) {
-            super(StructurePieces.DUNGEON_MAZE_PIECE, 0, templateManagerIn, resourceLocationIn, resourceLocationIn.toString(), makeSettings(rot,DUNGEON_PIECE), makePosition(DUNGEON_PIECE,pos,0));
+            super(StructurePieces.TRAP_DUNGEON_PIECE, 0, templateManagerIn, resourceLocationIn, resourceLocationIn.toString(), makeSettings(rot,DUNGEON_PIECE), makePosition(DUNGEON_PIECE,pos,0));
         }
 
         public Piece(  StructurePieceSerializationContext p_163670_,CompoundTag tagCompound) {
-            super(StructurePieces.DUNGEON_MAZE_PIECE, tagCompound, p_163670_.structureManager(), (loc)->{
+            super(StructurePieces.TRAP_DUNGEON_PIECE, tagCompound, p_163670_.structureManager(), (loc)->{
                 return makeSettings(Rotation.valueOf(tagCompound.getString("Rot")),loc);
             });
         }
@@ -56,7 +56,7 @@ public class MazeStructurePieces {
         }
 
         private static BlockPos makePosition(ResourceLocation p_162453_, BlockPos p_162454_, int p_162455_) {
-            return p_162454_.offset((Vec3i)MazeStructurePieces.OFFSET.get(p_162453_)).below(p_162455_);
+            return p_162454_.offset((Vec3i) TrapDungeonPieces.OFFSET.get(p_162453_)).below(p_162455_);
         }
 
         @Override
@@ -68,13 +68,7 @@ public class MazeStructurePieces {
         @Override
         protected void handleDataMarker(String func, BlockPos pos, ServerLevelAccessor world, Random rnd, BoundingBox box) {
 
-            if ("chest".equals(func)){
-                world.setBlock(pos, Blocks.AIR.defaultBlockState(),3);
-                BlockEntity tile = world.getBlockEntity(pos.below());
-                if (tile instanceof ChestBlockEntity){
-                    ((ChestBlockEntity) tile).setLootTable(new ResourceLocation("solarforge","chest/dungeon_maze"),rnd.nextLong());
-                }
-            }
+
         }
     }
 }
