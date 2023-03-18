@@ -1,6 +1,6 @@
 package com.finderfeed.solarcraft.local_library.entities.bossbar.server;
 
-import com.finderfeed.solarcraft.packet_handler.SolarCraftPacketHandler;
+import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
@@ -27,7 +27,7 @@ public class CustomServerBossEvent {
     public void addPlayer(ServerPlayer player){
         if (players.add(player)){
 
-            SolarCraftPacketHandler.INSTANCE.sendTo(new CustomBossEventInitPacket(this,-1,false),player.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+            SCPacketHandler.INSTANCE.sendTo(new CustomBossEventInitPacket(this,-1,false),player.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
         }
     }
 
@@ -35,14 +35,14 @@ public class CustomServerBossEvent {
     public void removePlayer(ServerPlayer player){
         if (players.remove(player)){
 
-            SolarCraftPacketHandler.INSTANCE.sendTo(new CustomBossEventInitPacket(this,-1,true),player.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+            SCPacketHandler.INSTANCE.sendTo(new CustomBossEventInitPacket(this,-1,true),player.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
         }
     }
 
     public void addPlayer(ServerPlayer player,int entityId){
         if (players.add(player)){
 
-            SolarCraftPacketHandler.INSTANCE.sendTo(new CustomBossEventInitPacket(this,entityId,false),player.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+            SCPacketHandler.INSTANCE.sendTo(new CustomBossEventInitPacket(this,entityId,false),player.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
         }
     }
 
@@ -50,14 +50,14 @@ public class CustomServerBossEvent {
     public void removePlayer(ServerPlayer player,int entityId){
         if (players.remove(player)){
 
-            SolarCraftPacketHandler.INSTANCE.sendTo(new CustomBossEventInitPacket(this,entityId,true),player.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+            SCPacketHandler.INSTANCE.sendTo(new CustomBossEventInitPacket(this,entityId,true),player.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
         }
     }
 
     public void setProgress(float progress){
         for (ServerPlayer player : players){
 
-            SolarCraftPacketHandler.INSTANCE.sendTo(new ServerBossEventUpdateProgress(this.uuid,progress),player.connection.connection,NetworkDirection.PLAY_TO_CLIENT);
+            SCPacketHandler.INSTANCE.sendTo(new ServerBossEventUpdateProgress(this.uuid,progress),player.connection.connection,NetworkDirection.PLAY_TO_CLIENT);
         }
     }
 

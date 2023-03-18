@@ -13,7 +13,7 @@ import com.finderfeed.solarcraft.content.blocks.solar_forge_block.solar_forge_sc
 import com.finderfeed.solarcraft.content.items.runic_energy.RunicEnergyCost;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.screen.SolarLexiconScreen;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
-import com.finderfeed.solarcraft.packet_handler.SolarCraftPacketHandler;
+import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
 import com.finderfeed.solarcraft.packet_handler.packets.EnchanterPacket;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -111,7 +111,7 @@ public class EnchanterContainerScreen extends AbstractScrollableContainerScreen<
                 }
                 if (compatible) {
                     if (!menu.tile.enchantingInProgress()) {
-                        SolarCraftPacketHandler.INSTANCE.sendToServer(new EnchanterPacket(menu.tile.getBlockPos(), selectedEnchantment.enchantment(), selectedLevel));
+                        SCPacketHandler.INSTANCE.sendToServer(new EnchanterPacket(menu.tile.getBlockPos(), selectedEnchantment.enchantment(), selectedLevel));
                     } else {
                         Minecraft.getInstance().player.displayClientMessage(Component.literal("Enchanting is already in progress!"), false);
                     }

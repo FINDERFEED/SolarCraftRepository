@@ -7,7 +7,7 @@ import com.finderfeed.solarcraft.content.abilities.AbilityHelper;
 import com.finderfeed.solarcraft.content.abilities.ability_classes.AbstractAbility;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.Progression;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
-import com.finderfeed.solarcraft.packet_handler.SolarCraftPacketHandler;
+import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.packets.UpdateProgressionOnClient;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.ProgressionHelper;
@@ -104,7 +104,7 @@ public class RetainLostEvent {
         }
         if (!playernew.level.isClientSide) {
             for (Progression a : Progression.allProgressions) {
-                SolarCraftPacketHandler.INSTANCE.sendTo(new UpdateProgressionOnClient(a.getProgressionCode(),playernew.getPersistentData().getBoolean(Helpers.PROGRESSION+a.getProgressionCode())),
+                SCPacketHandler.INSTANCE.sendTo(new UpdateProgressionOnClient(a.getProgressionCode(),playernew.getPersistentData().getBoolean(Helpers.PROGRESSION+a.getProgressionCode())),
                         ((ServerPlayer) playernew).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
             }
         }

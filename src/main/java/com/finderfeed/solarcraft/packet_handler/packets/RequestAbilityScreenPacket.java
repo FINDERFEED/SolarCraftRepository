@@ -2,7 +2,7 @@ package com.finderfeed.solarcraft.packet_handler.packets;
 
 import com.finderfeed.solarcraft.SolarCraftTags;
 import com.finderfeed.solarcraft.content.abilities.AbilityHelper;
-import com.finderfeed.solarcraft.packet_handler.SolarCraftPacketHandler;
+import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkDirection;
@@ -29,7 +29,7 @@ public class RequestAbilityScreenPacket {
     public void handle(Supplier<NetworkEvent.Context> ctx) {
         ctx.get().enqueueWork(()->{
             ServerPlayer player = ctx.get().getSender();
-            SolarCraftPacketHandler.INSTANCE.sendTo(new OpenAbilityScreenPacket(
+            SCPacketHandler.INSTANCE.sendTo(new OpenAbilityScreenPacket(
                             player.getPersistentData().getInt(SolarCraftTags.RAW_SOLAR_ENERGY),
                             dontOpen,
                             AbilityHelper.getBindedAbilityID(player,1),

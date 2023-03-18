@@ -1,6 +1,5 @@
 package com.finderfeed.solarcraft.client.screens;
 
-import com.finderfeed.solarcraft.local_library.other.CanTick;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 
@@ -11,7 +10,6 @@ public abstract class SolarCraftScreen extends Screen {
     public int relX;
     public int relY;
     private List<Runnable> postRenderEntries = new ArrayList<>();
-    private List<CanTick> tickables = new ArrayList<>();
 
     public SolarCraftScreen() {
         super(Component.literal(""));
@@ -21,7 +19,6 @@ public abstract class SolarCraftScreen extends Screen {
     @Override
     protected void init() {
         super.init();
-        this.tickables.clear();
         int width = minecraft.getWindow().getWidth();
         int height = minecraft.getWindow().getHeight();
         int scale = (int) minecraft.getWindow().getGuiScale();
@@ -32,7 +29,6 @@ public abstract class SolarCraftScreen extends Screen {
     @Override
     public void tick() {
         super.tick();
-        tickables.forEach(CanTick::tick);
     }
 
 

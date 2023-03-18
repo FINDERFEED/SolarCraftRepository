@@ -3,7 +3,8 @@ package com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.
 import com.finderfeed.solarcraft.content.blocks.blockentities.SolarcraftBlockEntity;
 import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.puzzle_template.Puzzle;
 import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.puzzle_template.PuzzleTemplateManager;
-import com.finderfeed.solarcraft.packet_handler.SolarCraftPacketHandler;
+import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.puzzle_tiles.PuzzleTile;
+import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
 import com.finderfeed.solarcraft.packet_handler.packets.sun_shard_puzzle.SunShardPuzzleOpenScreen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -24,6 +25,40 @@ public class SunShardPuzzleBlockEntity extends SolarcraftBlockEntity {
     }
 
 
+
+    public void onPutTile(PuzzleTile tile,int x,int y){
+        var map = puzzle.getRemainingTypes();
+        int amount = map.get(tile.getTileType());
+        if (amount > 0) {
+            boolean put = puzzle.putTileAtPos(tile, x, y);
+            if (put) {
+//                puzzle.getRemainingTiles().remove(tile);
+                map.put(tile.getTileType(),amount - 1);
+                boolean completed = puzzle.checkCompleted();
+                if (completed) {
+                /*
+                TODO: implement functionality
+                 */
+                }
+            }
+        }
+    }
+
+    public void onTakeTile(int x,int y){
+        PuzzleTile tile = puzzle.getTileAtPos(x,y);
+        if (tile != null && !tile.isFixed()){
+//            puzzle.getRemainingTiles().add(tile);
+            var map = puzzle.getRemainingTypes();
+            int amount = map.get(tile.getTileType());
+            map.put(tile.getTileType(),amount + 1);
+            puzzle.setTileAtPos(null,x,y);
+        }
+    }
+
+
+
+
+
     public Puzzle getPuzzle() {
         return puzzle;
     }
@@ -35,10 +70,12 @@ public class SunShardPuzzleBlockEntity extends SolarcraftBlockEntity {
                 String template = templates.get(player.level.random.nextInt(templates.size()));
                 puzzle = new Puzzle(template,20);
             }
-            SolarCraftPacketHandler.INSTANCE.sendTo(new SunShardPuzzleOpenScreen(puzzle,getBlockPos()),
+            SCPacketHandler.INSTANCE.sendTo(new SunShardPuzzleOpenScreen(puzzle,getBlockPos()),
                     ((ServerPlayer)player).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
         }
     }
+
+
 
     @Override
     protected void saveAdditional(CompoundTag tag) {

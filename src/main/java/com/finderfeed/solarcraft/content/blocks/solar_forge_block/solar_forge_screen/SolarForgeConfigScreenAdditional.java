@@ -3,7 +3,7 @@ package com.finderfeed.solarcraft.content.blocks.solar_forge_block.solar_forge_s
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.content.abilities.ability_classes.AbstractAbility;
 import com.finderfeed.solarcraft.client.screens.ScrollableScreen;
-import com.finderfeed.solarcraft.packet_handler.SolarCraftPacketHandler;
+import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
 import com.finderfeed.solarcraft.packet_handler.packets.AbilityIndexSetPacket;
 import com.finderfeed.solarcraft.registries.abilities.AbilitiesRegistry;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -109,7 +109,7 @@ public class SolarForgeConfigScreenAdditional extends ScrollableScreen {
 
     public void addSolarButton(int relX, int relY, int offset, String abilityId, String string){
         addRenderableWidget(new SolarForgeButton(relX + 6, relY-4+offset, 65, 15, Component.literal(string), button -> {
-            SolarCraftPacketHandler.INSTANCE.sendToServer(new AbilityIndexSetPacket(ids,abilityId));
+            SCPacketHandler.INSTANCE.sendToServer(new AbilityIndexSetPacket(ids,abilityId));
             Minecraft.getInstance().setScreen(new SolarForgeAbilityConfigScreen());
         }));
     }

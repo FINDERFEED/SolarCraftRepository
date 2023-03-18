@@ -1,7 +1,7 @@
 package com.finderfeed.solarcraft.packet_handler.packets.misc_packets;
 
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
-import com.finderfeed.solarcraft.packet_handler.SolarCraftPacketHandler;
+import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
@@ -33,7 +33,7 @@ public class BallLightningSpawnLightningParticles {
     }
 
     public static void sendToServer(Level world, Vec3 pos){
-        SolarCraftPacketHandler.INSTANCE.send(PacketDistributor.NEAR.with(
+        SCPacketHandler.INSTANCE.send(PacketDistributor.NEAR.with(
                 PacketDistributor.TargetPoint.p(pos.x,pos.y,pos.z,100,world.dimension())),new BallLightningSpawnLightningParticles(pos));
     }
 }

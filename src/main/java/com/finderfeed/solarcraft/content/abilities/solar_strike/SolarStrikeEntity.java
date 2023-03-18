@@ -5,7 +5,7 @@ import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.config.SolarcraftConfig;
 import com.finderfeed.solarcraft.events.other_events.event_handler.EventHandler;
-import com.finderfeed.solarcraft.packet_handler.SolarCraftPacketHandler;
+import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
 import com.finderfeed.solarcraft.packet_handler.packets.misc_packets.SolarStrikeEntityDoExplosion;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
@@ -17,7 +17,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -111,7 +110,7 @@ public class SolarStrikeEntity extends PathfinderMob {
                 }
                 this.level.playSound(null,this.getOnPos().offset(0,5,0), SolarCraft.SOLAR_STRIKE_SOUND.get(),SoundSource.AMBIENT,10,0.4F);
 
-                SolarCraftPacketHandler.INSTANCE.send(PacketDistributor.NEAR.with(PacketDistributor.TargetPoint.p(
+                SCPacketHandler.INSTANCE.send(PacketDistributor.NEAR.with(PacketDistributor.TargetPoint.p(
                         this.position().x,this.position().y,this.position().z,100,level.dimension()
                 )),new SolarStrikeEntityDoExplosion(this.position()));
 

@@ -12,8 +12,6 @@ import com.finderfeed.solarcraft.content.entities.*;
 import com.finderfeed.solarcraft.content.entities.not_alive.*;
 
 import com.finderfeed.solarcraft.content.entities.runic_elemental.RunicElementalBoss;
-import com.finderfeed.solarcraft.content.items.solar_wand.SolarWandItem;
-import com.finderfeed.solarcraft.content.items.solar_wand.wand_actions.DefaultWandBlockUseAction;
 import com.finderfeed.solarcraft.content.world_generation.structures.SolarcraftStructureTypes;
 import com.finderfeed.solarcraft.events.PlayerTickEvent;
 import com.finderfeed.solarcraft.events.RenderEventsHandler;
@@ -31,7 +29,7 @@ import com.finderfeed.solarcraft.registries.command_argument_types.SolarcraftCom
 import com.finderfeed.solarcraft.registries.data_serializers.FDEntityDataSerializers;
 import com.finderfeed.solarcraft.registries.entities.SolarcraftEntityTypes;
 
-import com.finderfeed.solarcraft.packet_handler.SolarCraftPacketHandler;
+import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
 import com.finderfeed.solarcraft.registries.blocks.SolarcraftBlocks;
 import com.finderfeed.solarcraft.registries.containers.SolarcraftContainers;
 import com.finderfeed.solarcraft.registries.effects.SolarcraftEffects;
@@ -214,7 +212,7 @@ public class SolarCraft
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
 
         MinecraftForge.EVENT_BUS.register(this);
-        SolarCraftPacketHandler.registerMessages();
+        SCPacketHandler.registerMessages();
 //        SolarForgeStructures.STRUCTURES.register(bus);
 
     }

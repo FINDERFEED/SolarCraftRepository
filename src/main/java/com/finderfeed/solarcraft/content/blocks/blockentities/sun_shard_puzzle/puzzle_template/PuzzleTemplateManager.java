@@ -4,6 +4,7 @@ import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.puzzle_tiles.PuzzleTile;
 import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.puzzle_tiles.PuzzleTileTypes;
 import com.google.gson.*;
+import com.google.gson.stream.JsonWriter;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.server.packs.resources.ResourceManager;
@@ -11,10 +12,7 @@ import net.minecraft.server.packs.resources.SimplePreparableReloadListener;
 import net.minecraft.util.profiling.ProfilerFiller;
 import org.apache.logging.log4j.Level;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -104,6 +102,39 @@ public final class PuzzleTemplateManager extends SimplePreparableReloadListener<
                 element.get("rotation").getAsInt(),
                 element.get("fixed").getAsBoolean()
         );
+    }
+
+
+    public static void exportTemplate(PuzzleTile[][] template,String path){
+        try {
+            File file = new File(path);
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+
+            JsonObject jsonObject = new JsonObject();
+
+            JsonArray array = new JsonArray();
+            for (int y = 0; y < template.length;y++){
+                for (int x = 0; x < template[y].length;x++){
+                    array.add(tileToJson(template[y][x]));
+                }
+            }
+            jsonObject.add("template",jsonObject);
+            JsonWriter writer = GSON.newJsonWriter(new BufferedWriter(new FileWriter(file)));
+            GSON.toJson(jsonObject,writer);
+            writer.close();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    private static JsonObject tileToJson(PuzzleTile tile){
+        JsonObject object = new JsonObject();
+        object.addProperty("type",tile.getTileType().getName());
+        object.addProperty("rotation",tile.getRotation());
+        object.addProperty("fixed",tile.isFixed());
+        return object;
     }
 
 }

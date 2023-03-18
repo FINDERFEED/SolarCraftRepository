@@ -1,7 +1,7 @@
 package com.finderfeed.solarcraft.packet_handler.packets;
 
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
-import com.finderfeed.solarcraft.packet_handler.SolarCraftPacketHandler;
+import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
@@ -40,7 +40,7 @@ public class TeleportEntityPacket {
 
     public static void sendPacket(ServerLevel world,Entity entity,Vec3 position){
         Vec3 ePos  = entity.position();
-        SolarCraftPacketHandler.INSTANCE.send(PacketDistributor.NEAR.with(PacketDistributor.TargetPoint.p(ePos.x,ePos.y,ePos.z,100,world.dimension())),
+        SCPacketHandler.INSTANCE.send(PacketDistributor.NEAR.with(PacketDistributor.TargetPoint.p(ePos.x,ePos.y,ePos.z,100,world.dimension())),
                 new TeleportEntityPacket(entity,position));
     }
 

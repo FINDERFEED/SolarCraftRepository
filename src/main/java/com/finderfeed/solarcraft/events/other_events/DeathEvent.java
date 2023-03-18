@@ -2,7 +2,7 @@ package com.finderfeed.solarcraft.events.other_events;
 
 
 import com.finderfeed.solarcraft.content.items.TotemOfImmortality;
-import com.finderfeed.solarcraft.packet_handler.SolarCraftPacketHandler;
+import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
 import com.finderfeed.solarcraft.packet_handler.packets.ProcImmortalityTotemAnimation;
 import com.finderfeed.solarcraft.registries.effects.SolarcraftEffects;
 import net.minecraft.world.entity.player.Player;
@@ -35,7 +35,7 @@ public class DeathEvent {
                 player.getInventory().setItem(slot, ItemStack.EMPTY);
                 ServerLevel world = (ServerLevel)player.level;
                 world.playSound(player,player.getX(),player.getY(),player.getZ(), SoundEvents.TOTEM_USE, SoundSource.AMBIENT,0.5f,0.5f);
-                SolarCraftPacketHandler.INSTANCE.sendTo(new ProcImmortalityTotemAnimation(),((ServerPlayer)player).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+                SCPacketHandler.INSTANCE.sendTo(new ProcImmortalityTotemAnimation(),((ServerPlayer)player).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
 
                 event.setCanceled(true);
             }

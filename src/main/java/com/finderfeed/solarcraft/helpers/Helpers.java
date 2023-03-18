@@ -11,7 +11,7 @@ import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.Progre
 
 import com.finderfeed.solarcraft.client.particles.SolarcraftParticleTypes;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
-import com.finderfeed.solarcraft.packet_handler.SolarCraftPacketHandler;
+import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
 import com.finderfeed.solarcraft.packet_handler.packets.*;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.progression_tree.ProgressionTree;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.packets.UpdateProgressionOnClient;
@@ -31,7 +31,6 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.core.Direction;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -290,29 +289,29 @@ public class Helpers {
     public static void updateProgression(ServerPlayer player){
         for (Progression a : Progression.allProgressions) {
 
-            SolarCraftPacketHandler.INSTANCE.sendTo(new UpdateProgressionOnClient(a.getProgressionCode(), hasPlayerCompletedProgression(a,player)),
+            SCPacketHandler.INSTANCE.sendTo(new UpdateProgressionOnClient(a.getProgressionCode(), hasPlayerCompletedProgression(a,player)),
                     player.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
         }
     }
 
     public static void updateFragmentsOnClient(ServerPlayer player){
-        SolarCraftPacketHandler.INSTANCE.sendTo(new UpdateFragmentsOnClient(player),
+        SCPacketHandler.INSTANCE.sendTo(new UpdateFragmentsOnClient(player),
                 player.connection.connection,NetworkDirection.PLAY_TO_CLIENT);
     }
 
     public static void updateClientRadiantLandStateForPlayer(ServerPlayer player){
-        SolarCraftPacketHandler.INSTANCE.sendTo(new SetClientRadiantLandStatePacket(ClearingRitual.getRLState((ServerLevel) player.level)),
+        SCPacketHandler.INSTANCE.sendTo(new SetClientRadiantLandStatePacket(ClearingRitual.getRLState((ServerLevel) player.level)),
                 player.connection.connection,NetworkDirection.PLAY_TO_CLIENT);
     }
 
     public static void updateClientRadiantLandStateForPlayer(ServerPlayer player,boolean state){
-        SolarCraftPacketHandler.INSTANCE.sendTo(new SetClientRadiantLandStatePacket(state),
+        SCPacketHandler.INSTANCE.sendTo(new SetClientRadiantLandStatePacket(state),
                 player.connection.connection,NetworkDirection.PLAY_TO_CLIENT);
     }
 
     public static void forceChunksReload(ServerPlayer playerEntity){
 
-        SolarCraftPacketHandler.INSTANCE.sendTo(new ReloadChunks(),playerEntity.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+        SCPacketHandler.INSTANCE.sendTo(new ReloadChunks(),playerEntity.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
     }
     public static List<BlockPos> getBlockPositionsByDirection(Direction dir,BlockPos mainpos,int count){
         List<BlockPos> pos = new ArrayList<>();
@@ -366,7 +365,7 @@ public class Helpers {
     }
 
     public static void triggerToast(Progression ach, Player player){
-        SolarCraftPacketHandler.INSTANCE.sendTo(new TriggerToastPacket(ach.getId()), ((ServerPlayer)player).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+        SCPacketHandler.INSTANCE.sendTo(new TriggerToastPacket(ach.getId()), ((ServerPlayer)player).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
     }
 
     public static void fireProgressionEvent(Player playerEntity, Progression ach){
@@ -377,12 +376,12 @@ public class Helpers {
 
 
     public static void updateRunicEnergyOnClient(RunicEnergy.Type type,float amount,Player player){
-        SolarCraftPacketHandler.INSTANCE.sendTo(new UpdateEnergyOnClientPacket(type, amount),
+        SCPacketHandler.INSTANCE.sendTo(new UpdateEnergyOnClientPacket(type, amount),
                 ((ServerPlayer)player).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
     }
 
     public static void triggerProgressionShader(Player playerEntity){
-        SolarCraftPacketHandler.INSTANCE.sendTo(new TriggerProgressionShaderPacket(),
+        SCPacketHandler.INSTANCE.sendTo(new TriggerProgressionShaderPacket(),
                 ((ServerPlayer)playerEntity).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
     }
 
@@ -463,7 +462,7 @@ public class Helpers {
     }
 
     public static void sendEnergyTypeToast(ServerPlayer player,RunicEnergy.Type type){
-        SolarCraftPacketHandler.INSTANCE.sendTo(new TriggerEnergyTypeToast(type.id),player.connection.connection,NetworkDirection.PLAY_TO_CLIENT);
+        SCPacketHandler.INSTANCE.sendTo(new TriggerEnergyTypeToast(type.id),player.connection.connection,NetworkDirection.PLAY_TO_CLIENT);
     }
 
     private static List<BlockPos> findNormalBlockPositionsOnPlane(Level world,int radius,BlockPos mainpos){
@@ -500,7 +499,7 @@ public class Helpers {
     public static void setServerPlayerSpeed(ServerPlayer player,Vec3 speed){
         player.setDeltaMovement(speed);
 
-        SolarCraftPacketHandler.INSTANCE.sendTo(new SetSpeedPacket(speed),player.connection.connection,NetworkDirection.PLAY_TO_CLIENT);
+        SCPacketHandler.INSTANCE.sendTo(new SetSpeedPacket(speed),player.connection.connection,NetworkDirection.PLAY_TO_CLIENT);
     }
 
     public static boolean playerInBossfight(Player pl){
@@ -588,7 +587,7 @@ public class Helpers {
 
     public static void sendDimBreak(ServerLevel world){
         world.getPlayers((e)->true).forEach((player)->{
-            SolarCraftPacketHandler.INSTANCE.sendTo(new DimensionBreakPacket(),player.connection.connection,NetworkDirection.PLAY_TO_CLIENT);
+            SCPacketHandler.INSTANCE.sendTo(new DimensionBreakPacket(),player.connection.connection,NetworkDirection.PLAY_TO_CLIENT);
         });
     }
 
@@ -613,7 +612,7 @@ public class Helpers {
         ((first.minZ >= second.minZ && first.minZ <= second.maxZ) || (first.maxZ >= second.minZ && first.maxZ <= second.maxZ));
     }
 
-    public static <T> void copyDoubleArray(T[][] first,T[][] copyTo){
+    public static <T> void copyMatrixArray(T[][] first, T[][] copyTo){
         for (int i = 0; i < first.length;i++) {
             for (int g = 0; g < first[i].length; g++) {
                 copyTo[i][g] = first[i][g];

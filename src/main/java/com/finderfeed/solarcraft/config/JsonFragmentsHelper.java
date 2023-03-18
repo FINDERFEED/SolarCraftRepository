@@ -1,7 +1,7 @@
 package com.finderfeed.solarcraft.config;
 
 import com.finderfeed.solarcraft.SolarCraft;
-import com.finderfeed.solarcraft.packet_handler.SolarCraftPacketHandler;
+import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
 import com.finderfeed.solarcraft.packet_handler.packets.SendFragmentsToClientPacket;
 import com.google.gson.*;
 import net.minecraft.server.level.ServerPlayer;
@@ -217,7 +217,7 @@ public class JsonFragmentsHelper {
         }else{
             o = SERVERSIDE_FRAGMENTS_JSON;
         }
-        SolarCraftPacketHandler.INSTANCE.sendTo(new SendFragmentsToClientPacket(o),serverPlayer.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+        SCPacketHandler.INSTANCE.sendTo(new SendFragmentsToClientPacket(o),serverPlayer.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
 
     }
 

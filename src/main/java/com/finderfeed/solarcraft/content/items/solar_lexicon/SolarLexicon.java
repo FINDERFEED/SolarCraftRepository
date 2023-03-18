@@ -3,7 +3,7 @@ package com.finderfeed.solarcraft.content.items.solar_lexicon;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.ProgressionHelper;
-import com.finderfeed.solarcraft.packet_handler.SolarCraftPacketHandler;
+import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.progression_tree.ProgressionTree;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.Progression;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.packets.OpenScreenPacket;
@@ -71,10 +71,10 @@ public class SolarLexicon extends Item {
             if (!pe.isCrouching()) {
                 ProgressionTree tree = ProgressionTree.INSTANCE;
                 for (Progression a : tree.PROGRESSION_TREE.keySet()) {
-                    SolarCraftPacketHandler.INSTANCE.sendTo(new UpdateProgressionOnClient(a.getProgressionCode(), pe.getPersistentData().getBoolean(Helpers.PROGRESSION + a.getProgressionCode())),
+                    SCPacketHandler.INSTANCE.sendTo(new UpdateProgressionOnClient(a.getProgressionCode(), pe.getPersistentData().getBoolean(Helpers.PROGRESSION + a.getProgressionCode())),
                             ((ServerPlayer) pe).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
                 }
-                SolarCraftPacketHandler.INSTANCE.sendTo(new OpenScreenPacket(), ((ServerPlayer) pe).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+                SCPacketHandler.INSTANCE.sendTo(new OpenScreenPacket(), ((ServerPlayer) pe).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
 
             }else{
                 NetworkHooks.openScreen((ServerPlayer) pe,new SolarLexiconContainer.Provider(pe.getItemInHand(hand)),(buf)->{
@@ -100,7 +100,7 @@ public class SolarLexicon extends Item {
                     stacks.add(handelr.getStackInSlot(i));
                 }
                 ItemStack[] arr = new ItemStack[stacks.size()];
-                SolarCraftPacketHandler.INSTANCE.sendTo(new UpdateInventoryPacket(stacks.toArray(arr)), ((ServerPlayer) ent).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+                SCPacketHandler.INSTANCE.sendTo(new UpdateInventoryPacket(stacks.toArray(arr)), ((ServerPlayer) ent).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
             }
         }
     }

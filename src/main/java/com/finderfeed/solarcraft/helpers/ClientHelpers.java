@@ -26,9 +26,8 @@ import com.finderfeed.solarcraft.content.items.primitive.solacraft_item_classes.
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.RunePattern;
 import com.finderfeed.solarcraft.misc_things.*;
-import com.finderfeed.solarcraft.packet_handler.SolarCraftPacketHandler;
+import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
 import com.finderfeed.solarcraft.packet_handler.packets.RequestAbilityScreenPacket;
-import com.finderfeed.solarcraft.packet_handler.packets.sun_shard_puzzle.SunShardPuzzleOpenScreen;
 import com.finderfeed.solarcraft.registries.items.SolarcraftItems;
 import com.finderfeed.solarcraft.registries.overlays.SolarcraftOverlays;
 import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
@@ -407,7 +406,7 @@ public class ClientHelpers {
     }
 
     public static void requestAbilityScreen(boolean dontOpen){
-        SolarCraftPacketHandler.INSTANCE.sendToServer(new RequestAbilityScreenPacket(dontOpen));
+        SCPacketHandler.INSTANCE.sendToServer(new RequestAbilityScreenPacket(dontOpen));
     }
 
     public static void triggerProgressionUnlockShader(){

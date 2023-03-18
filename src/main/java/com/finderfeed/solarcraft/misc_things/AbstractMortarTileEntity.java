@@ -1,7 +1,7 @@
 package com.finderfeed.solarcraft.misc_things;
 
 import com.finderfeed.solarcraft.helpers.Helpers;
-import com.finderfeed.solarcraft.packet_handler.SolarCraftPacketHandler;
+import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
 import com.finderfeed.solarcraft.packet_handler.packets.PlaySoundPacket;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.LivingEntity;
@@ -60,7 +60,7 @@ public abstract class AbstractMortarTileEntity extends BlockEntity  {
                         proj.setDeltaMovement(Helpers.blocksPerSecondToVelocity(velX), Helpers.blocksPerSecondToVelocity(velocitystart), Helpers.blocksPerSecondToVelocity(velZ));
                         tile.level.addFreshEntity(proj);
 
-                        SolarCraftPacketHandler.INSTANCE.send(PacketDistributor.NEAR.with(PacketDistributor.TargetPoint.p(tile.worldPosition.getX(), tile.worldPosition.getY(), tile.worldPosition.getZ(), 50, tile.level.dimension())),
+                        SCPacketHandler.INSTANCE.send(PacketDistributor.NEAR.with(PacketDistributor.TargetPoint.p(tile.worldPosition.getX(), tile.worldPosition.getY(), tile.worldPosition.getZ(), 50, tile.level.dimension())),
                                 new PlaySoundPacket(20,1,1,tile.worldPosition.above()));
                     }
                 }

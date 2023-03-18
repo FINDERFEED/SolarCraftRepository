@@ -4,7 +4,7 @@ import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.content.blocks.blockentities.RunicTableTileEntity;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.RunePattern;
 import com.finderfeed.solarcraft.misc_things.AbstractPacket;
-import com.finderfeed.solarcraft.packet_handler.SolarCraftPacketHandler;
+import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.ProgressionHelper;
 import net.minecraft.ChatFormatting;
@@ -98,7 +98,7 @@ public class RunicTablePacket extends AbstractPacket {
                         }
                     }
 
-                    SolarCraftPacketHandler.INSTANCE.sendTo(new UpdateRunePattern(player, ProgressionHelper.getAllUnlockableFragments(player) == null), player.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+                    SCPacketHandler.INSTANCE.sendTo(new UpdateRunePattern(player, ProgressionHelper.getAllUnlockableFragments(player) == null), player.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
                 }
             }
 

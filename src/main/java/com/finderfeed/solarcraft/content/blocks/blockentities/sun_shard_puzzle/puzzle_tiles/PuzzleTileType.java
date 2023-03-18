@@ -1,14 +1,25 @@
 package com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.puzzle_tiles;
 
+import java.util.function.BiPredicate;
+import java.util.function.Predicate;
+
 public class PuzzleTileType {
 
     private final String name;
     private final int rotationValue;
+    private final BiPredicate<PuzzleTile,PuzzleTile> tileTestOverride;
 
 
     public PuzzleTileType(String name, int rotationValue){
         this.name = name;
         this.rotationValue = rotationValue;
+        this.tileTestOverride = null;
+    }
+
+    public PuzzleTileType(String name, int rotationValue,BiPredicate<PuzzleTile,PuzzleTile> tileTestOverride){
+        this.name = name;
+        this.rotationValue = rotationValue;
+        this.tileTestOverride = tileTestOverride;
     }
 
 
@@ -18,6 +29,10 @@ public class PuzzleTileType {
 
     public String getName() {
         return name;
+    }
+
+    public BiPredicate<PuzzleTile,PuzzleTile> getTileTestOverride() {
+        return tileTestOverride;
     }
 
     @Override

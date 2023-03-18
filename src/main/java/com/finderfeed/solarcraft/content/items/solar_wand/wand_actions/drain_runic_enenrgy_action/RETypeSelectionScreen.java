@@ -1,19 +1,15 @@
 package com.finderfeed.solarcraft.content.items.solar_wand.wand_actions.drain_runic_enenrgy_action;
 
 import com.finderfeed.solarcraft.SolarCraft;
-import com.finderfeed.solarcraft.SolarcraftClientInit;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.local_library.client.screens.DefaultScreen;
 import com.finderfeed.solarcraft.local_library.client.screens.RadialMenu;
 import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
-import com.finderfeed.solarcraft.packet_handler.SolarCraftPacketHandler;
+import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
 import com.finderfeed.solarcraft.packet_handler.packets.SetREDrainTypePacket;
-import com.mojang.blaze3d.platform.InputConstants;
-import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 
@@ -44,7 +40,7 @@ public class RETypeSelectionScreen extends DefaultScreen {
 
             RadialMenu.RadialMenuSection section = new RadialMenu.RadialMenuSection(
                     ()->{
-                        SolarCraftPacketHandler.INSTANCE.sendToServer(new SetREDrainTypePacket(type));
+                        SCPacketHandler.INSTANCE.sendToServer(new SetREDrainTypePacket(type));
                     },
                     (matrices, x, y) -> {
                         ClientHelpers.bindText(ALL_ELEMENTS_ID_ORDERED);

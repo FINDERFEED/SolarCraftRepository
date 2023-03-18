@@ -1,7 +1,7 @@
 package com.finderfeed.solarcraft.misc_things;
 
 import com.finderfeed.solarcraft.helpers.Helpers;
-import com.finderfeed.solarcraft.packet_handler.SolarCraftPacketHandler;
+import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
 import com.finderfeed.solarcraft.packet_handler.packets.TriggerToastPacket;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.Progression;
 import net.minecraft.world.entity.Entity;
@@ -27,7 +27,7 @@ public abstract class AbstractUnlockProgressionItem extends Item {
 
             if ((Helpers.canPlayerUnlock(getAchivement(),entity)) && !Helpers.hasPlayerCompletedProgression(getAchivement(),entity)){
                 Helpers.setProgressionCompletionStatus(getAchivement(),entity,true);
-                SolarCraftPacketHandler.INSTANCE.sendTo(new TriggerToastPacket(getAchivement().getId()), ((ServerPlayer)entity).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+                SCPacketHandler.INSTANCE.sendTo(new TriggerToastPacket(getAchivement().getId()), ((ServerPlayer)entity).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
             }
         }
         super.inventoryTick(p_77663_1_, p_77663_2_, p_77663_3_, p_77663_4_, p_77663_5_);

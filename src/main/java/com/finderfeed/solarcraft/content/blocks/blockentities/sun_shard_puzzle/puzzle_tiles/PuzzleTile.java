@@ -72,7 +72,12 @@ public class PuzzleTile {
     @Override
     public boolean equals(Object o){
         if (o instanceof PuzzleTile other){
-            return tileType.equals(other.tileType) && this.rotation == other.rotation;
+            var tileTestOverride = tileType.getTileTestOverride();
+            if (tileTestOverride == null) {
+                return tileType.equals(other.tileType) && this.rotation == other.rotation;
+            }else{
+                return tileTestOverride.test(this,other);
+            }
         }else{
             return false;
         }
@@ -80,6 +85,7 @@ public class PuzzleTile {
 
     @Override
     public String toString() {
-        return tileType + " " + rotation;
+        String[] id = super.toString().replace(".",";").split(";");
+        return id[id.length-1] + " " + tileType.getName() + " " + rotation;
     }
 }

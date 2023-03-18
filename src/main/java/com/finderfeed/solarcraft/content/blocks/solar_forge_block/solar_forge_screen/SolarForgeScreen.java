@@ -2,7 +2,7 @@ package com.finderfeed.solarcraft.content.blocks.solar_forge_block.solar_forge_s
 
 
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
-import com.finderfeed.solarcraft.packet_handler.SolarCraftPacketHandler;
+import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
 import com.finderfeed.solarcraft.packet_handler.packets.TakeEnergyFromForgePacket;
 import com.mojang.blaze3d.vertex.PoseStack;
 
@@ -43,7 +43,7 @@ public class SolarForgeScreen extends AbstractContainerScreen<SolarForgeContaine
         int j = (this.height - this.imageHeight) / 2;
 
         addRenderableWidget(new SolarForgeButton(i + 186, j + 32, 65, 15, Component.translatable("forge.take"),(button)->{
-            SolarCraftPacketHandler.INSTANCE.sendToServer(new TakeEnergyFromForgePacket(this.menu.te.getBlockPos()));
+            SCPacketHandler.INSTANCE.sendToServer(new TakeEnergyFromForgePacket(this.menu.te.getBlockPos()));
         },(button,matrices,mousex,mousey)->{
             renderTooltip(matrices, List.of(Component.literal("Consume energy. Abilities were moved to separate screen"),
                     Component.literal("look into hotkey settings.")

@@ -3,7 +3,7 @@ package com.finderfeed.solarcraft.content.blocks.blockentities;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.content.blocks.RayTrapBlock;
 import com.finderfeed.solarcraft.client.particles.SolarcraftParticleTypes;
-import com.finderfeed.solarcraft.packet_handler.SolarCraftPacketHandler;
+import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
 import com.finderfeed.solarcraft.packet_handler.packets.UpdateLaserTrapTile;
 import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
 import net.minecraft.core.BlockPos;
@@ -55,7 +55,7 @@ public class RayTrapTileEntity extends BlockEntity  {
                     }
 
                   if (tile.attackTick >= tile.getAttackWhen()){
-                      SolarCraftPacketHandler.INSTANCE.send(PacketDistributor.NEAR.with(PacketDistributor.TargetPoint.p(tile.worldPosition.getX(),tile.worldPosition.getY(),tile.worldPosition.getZ(),20,tile.level.dimension())),
+                      SCPacketHandler.INSTANCE.send(PacketDistributor.NEAR.with(PacketDistributor.TargetPoint.p(tile.worldPosition.getX(),tile.worldPosition.getY(),tile.worldPosition.getZ(),20,tile.level.dimension())),
                               new UpdateLaserTrapTile(1,tile.worldPosition));
 //                      Helpers.getBlockPositionsByDirection(Direction.byName(direction),worldPosition,5).forEach((pos)->{
 //                          ((ServerWorld)level).sendParticles(ParticlesList.SMALL_SOLAR_STRIKE_PARTICLE.get(),pos.getX()+0.5,pos.getY()+0.5,pos.getZ()+0.5,1,0,0,0,0);
