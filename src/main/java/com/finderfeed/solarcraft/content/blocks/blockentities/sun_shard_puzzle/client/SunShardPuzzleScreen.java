@@ -3,6 +3,7 @@ package com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.
 import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.blockentity.SunShardPuzzleBlockEntity;
 import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.puzzle_template.Puzzle;
+import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.puzzle_template.PuzzleTemplateManager;
 import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.puzzle_tiles.PuzzleTile;
 import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.puzzle_tiles.PuzzleTileType;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
@@ -26,6 +27,8 @@ import org.lwjgl.glfw.GLFW;
 import java.util.*;
 
 public class SunShardPuzzleScreen extends DefaultScreen {
+
+    private static boolean EDITOR_MODE = true;
 
     private Puzzle localPuzzle;
     private PuzzleTile heldTile = null;
@@ -90,7 +93,7 @@ public class SunShardPuzzleScreen extends DefaultScreen {
         if (xi >= 0 && xi < Puzzle.PUZZLE_SIZE &&
                 yi >= 0 && yi < Puzzle.PUZZLE_SIZE){
             PuzzleTile tile = localPuzzle.getTileAtPos(xi,yi);
-            if (tile != null && !tile.isFixed()){
+            if (tile != null && (!tile.isFixed() || EDITOR_MODE) ){
                 heldTile = tile;
 
                 localPuzzle.setTileAtPos(null,xi,yi);
@@ -112,6 +115,7 @@ public class SunShardPuzzleScreen extends DefaultScreen {
                //     SCPacketHandler.INSTANCE.sendToServer(new SunShardPuzzlePutTilePacket(this.tilePos, heldTile,xi,yi));
                     heldTile = null;
                     this.reinitPuzzle();
+                    System.out.println("Puzzle state: " + localPuzzle.checkCompleted());
                 }else{
                     localPuzzle.getRemainingTiles().add(heldTile);
                     heldTile = null;
@@ -129,7 +133,12 @@ public class SunShardPuzzleScreen extends DefaultScreen {
         if (heldTile != null){
             if (key == GLFW.GLFW_KEY_R){
                 heldTile.rotate();
+            }else if (key == GLFW.GLFW_KEY_F && EDITOR_MODE){
+                heldTile.setFixed(!heldTile.isFixed());
             }
+        }
+        if (key == GLFW.GLFW_KEY_E && hasShiftDown() && EDITOR_MODE){
+            PuzzleTemplateManager.exportTemplate(this.localPuzzle.getTiles(),"C:\\Users\\User\\Desktop\\MISC\\puzzle_templates\\template_4.json",0);
         }
         return super.keyPressed(key, scanCode, modifiers);
     }
@@ -158,12 +167,17 @@ public class SunShardPuzzleScreen extends DefaultScreen {
             matrices.mulPose(Vector3f.ZP.rotationDegrees(((float)Math.sin(time))*10));
             matrices.translate(-8,-8,0);
             Matrix4f m = matrices.last().pose();
-            int x = 0;
-            int y = 0;
-            builder.vertex(m,x,y+16,this.getBlitOffset() - 10).uv(0,1).color(1f,1,1,1).endVertex();
-            builder.vertex(m,x+16,y+16,this.getBlitOffset() - 10).uv(1,1).color(1f,1,1,1).endVertex();
-            builder.vertex(m,x + 16,y,this.getBlitOffset() - 10).uv(1,0).color(1f,1,1,1).endVertex();
-            builder.vertex(m,x,y,this.getBlitOffset() - 10).uv(0,0).color(1f,1,1,1).endVertex();
+            float r = 1f;
+            float g = 1f;
+            float b = 1f;
+            if (heldTile.isFixed() && EDITOR_MODE){
+                g = 0.5f;
+                b = 0.5f;
+            }
+            builder.vertex(m,0,16,this.getBlitOffset() - 10).uv(0,1).color(r,g,b,1).endVertex();
+            builder.vertex(m,16,16,this.getBlitOffset() - 10).uv(1,1).color(r,g,b,1).endVertex();
+            builder.vertex(m,16,0,this.getBlitOffset() - 10).uv(1,0).color(r,g,b,1).endVertex();
+            builder.vertex(m,0,0,this.getBlitOffset() - 10).uv(0,0).color(r,g,b,1).endVertex();
 
 
 
@@ -186,12 +200,17 @@ public class SunShardPuzzleScreen extends DefaultScreen {
                 matrices.translate(tile.x + 8,tile.y + 8,0);
                 matrices.mulPose(Vector3f.ZP.rotationDegrees(tile.rotation()));
                 Matrix4f m = matrices.last().pose();
-                int x = 0;
-                int y = 0;
-                builder.vertex(m,-8,8,this.getBlitOffset()).uv(0,1).color(1f,1,1,1).endVertex();
-                builder.vertex(m,8,8,this.getBlitOffset()).uv(1,1).color(1f,1,1,1).endVertex();
-                builder.vertex(m,8,-8,this.getBlitOffset()).uv(1,0).color(1f,1,1,1).endVertex();
-                builder.vertex(m,-8,-8,this.getBlitOffset()).uv(0,0).color(1f,1,1,1).endVertex();
+                float r = 1f;
+                float g = 1f;
+                float b = 1f;
+                if (tile.tile.isFixed() && EDITOR_MODE){
+                    g = 0.5f;
+                    b = 0.5f;
+                }
+                builder.vertex(m,-8,8,this.getBlitOffset()).uv(0,1).color(r,g,b,1).endVertex();
+                builder.vertex(m,8,8,this.getBlitOffset()).uv(1,1).color(r,g,b,1).endVertex();
+                builder.vertex(m,8,-8,this.getBlitOffset()).uv(1,0).color(r,g,b,1).endVertex();
+                builder.vertex(m,-8,-8,this.getBlitOffset()).uv(0,0).color(r,g,b,1).endVertex();
 
 
 

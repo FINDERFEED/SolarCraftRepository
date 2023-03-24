@@ -57,6 +57,10 @@ public class PuzzleTile {
         return rotation;
     }
 
+    public void setRotation(int rotation) {
+        this.rotation = rotation;
+    }
+
     public PuzzleTileType getTileType() {
         return tileType;
     }

@@ -23,14 +23,14 @@ public final class PuzzleTemplateManager extends SimplePreparableReloadListener<
     public static final PuzzleTemplateManager INSTANCE = new PuzzleTemplateManager();
 
     //[y][x]
-    private Map<String, PuzzleTile[][]> templates;
+    private Map<String, TemplateInstance> templates;
 
     private PuzzleTemplateManager(){}
 
     private static final Gson GSON = new GsonBuilder().disableHtmlEscaping().create();
 
 
-    public PuzzleTile[][] getDefaultTemplate(String id){
+    public TemplateInstance getDefaultTemplate(String id){
         return templates.get(id);
     }
 
@@ -84,8 +84,9 @@ public final class PuzzleTemplateManager extends SimplePreparableReloadListener<
         }
     }
 
-    private PuzzleTile[][] loadTemplate(JsonElement element,int size){
+    private TemplateInstance loadTemplate(JsonElement element,int size){
         JsonArray array = element.getAsJsonObject().getAsJsonArray("template");
+
         PuzzleTile[][] puzzleTiles = new PuzzleTile[size][size];
         for (int y = 0;y < size;y++){
             for (int x = 0;x < size;x++){
@@ -93,10 +94,13 @@ public final class PuzzleTemplateManager extends SimplePreparableReloadListener<
                 puzzleTiles[y][x] = tile;
             }
         }
-        return puzzleTiles;
+        return new TemplateInstance(puzzleTiles,element.getAsJsonObject().get("tile_extract_amount").getAsInt());
     }
 
     private PuzzleTile fromJson(JsonObject element){
+        if (element.get("type").getAsString().equals("empty")){
+            return null;
+        }
         return new PuzzleTile(
                 PuzzleTileTypes.getTileById(element.get("type").getAsString()),
                 element.get("rotation").getAsInt(),
@@ -105,7 +109,7 @@ public final class PuzzleTemplateManager extends SimplePreparableReloadListener<
     }
 
 
-    public static void exportTemplate(PuzzleTile[][] template,String path){
+    public static void exportTemplate(PuzzleTile[][] template,String path,int tileExtractAmount){
         try {
             File file = new File(path);
             if (!file.exists()) {
@@ -113,14 +117,15 @@ public final class PuzzleTemplateManager extends SimplePreparableReloadListener<
             }
 
             JsonObject jsonObject = new JsonObject();
-
+            jsonObject.addProperty("tile_extract_amount",tileExtractAmount);
             JsonArray array = new JsonArray();
             for (int y = 0; y < template.length;y++){
                 for (int x = 0; x < template[y].length;x++){
                     array.add(tileToJson(template[y][x]));
                 }
             }
-            jsonObject.add("template",jsonObject);
+            jsonObject.add("template",array);
+
             JsonWriter writer = GSON.newJsonWriter(new BufferedWriter(new FileWriter(file)));
             GSON.toJson(jsonObject,writer);
             writer.close();
@@ -130,6 +135,11 @@ public final class PuzzleTemplateManager extends SimplePreparableReloadListener<
     }
 
     private static JsonObject tileToJson(PuzzleTile tile){
+        if (tile == null){
+            JsonObject object = new JsonObject();
+            object.addProperty("type","empty");
+            return object;
+        }
         JsonObject object = new JsonObject();
         object.addProperty("type",tile.getTileType().getName());
         object.addProperty("rotation",tile.getRotation());
@@ -137,4 +147,5 @@ public final class PuzzleTemplateManager extends SimplePreparableReloadListener<
         return object;
     }
 
+    public record TemplateInstance(PuzzleTile[][] template,int tileExtractAmount){};
 }

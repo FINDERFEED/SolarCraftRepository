@@ -8,6 +8,7 @@ import net.minecraft.nbt.CompoundTag;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Puzzle {
 
@@ -31,7 +32,7 @@ public class Puzzle {
 
     private Puzzle(){}
 
-    public static Puzzle createTestPuzzle(){
+    public static Puzzle createTestPuzzle(int tilesAmount){
         Puzzle puzzle = new Puzzle();
         puzzle.tiles = new PuzzleTile[PUZZLE_SIZE][PUZZLE_SIZE];
         puzzle.templateId = "null";
@@ -39,32 +40,47 @@ public class Puzzle {
         puzzle.defaultTemplate = new PuzzleTile[PUZZLE_SIZE][PUZZLE_SIZE];
         puzzle.remainingTypes = new HashMap<>();
         for (PuzzleTileType tileType : PuzzleTileTypes.getAllTypes()){
-            for (int i = 0; i < 5;i++) {
+            for (int i = 0; i < tilesAmount;i++) {
                 puzzle.remainingTiles.add(new PuzzleTile(tileType,0,false));
             }
         }
         return puzzle;
     }
 
-    public Puzzle(String defTemplateId,int tileExtractAmount){
+    public static Puzzle editorPuzzle(Puzzle puzzle,int tilesAmount){
+        for (PuzzleTileType tileType : PuzzleTileTypes.getAllTypes()){
+            for (int i = 0; i < tilesAmount;i++) {
+                puzzle.remainingTiles.add(new PuzzleTile(tileType,0,false));
+            }
+        }
+        puzzle.templateId = "null";
+        return puzzle;
+    }
+
+    public Puzzle(String defTemplateId){
         Random random = new Random();
         this.templateId = defTemplateId;
-        PuzzleTile[][] defaultTemplate = PuzzleTemplateManager.INSTANCE.getDefaultTemplate(defTemplateId);
+        PuzzleTemplateManager.TemplateInstance defaultTemplateInstance = PuzzleTemplateManager.INSTANCE.getDefaultTemplate(defTemplateId);
+        PuzzleTile[][] defaultTemplate = defaultTemplateInstance.template();
         this.defaultTemplate = defaultTemplate;
         this.tiles = new PuzzleTile[defaultTemplate.length][defaultTemplate.length];
         this.remainingTypes = new HashMap<>();
+        this.remainingTiles = new ArrayList<>();
         Helpers.copyMatrixArray(this.defaultTemplate,this.tiles);
 
         List<PuzzlePiece> pieces = new ArrayList<>();
         for (int y = 0;y < defaultTemplate.length;y++){
             for (int x = 0; x < defaultTemplate.length;x++){
-                PuzzleTile tile = new PuzzleTile(defaultTemplate[y][x]);
-                if (!tile.isFixed()){
-                    pieces.add(new PuzzlePiece(tile,x,y));
+                PuzzleTile def = defaultTemplate[y][x];
+                if (def != null) {
+                    PuzzleTile tile = new PuzzleTile(defaultTemplate[y][x]);
+                    if (!tile.isFixed()) {
+                        pieces.add(new PuzzlePiece(tile, x, y));
+                    }
                 }
             }
         }
-         int rem = tileExtractAmount;
+         int rem = pieces.size() - defaultTemplateInstance.tileExtractAmount();
 
         while (rem > 0){
             pieces.remove(random.nextInt(pieces.size()));
@@ -81,21 +97,28 @@ public class Puzzle {
                 remainingTypes.put(puzzlePiece.tile.getTileType(),1);
             }
         }
+        remainingTiles.sort(Comparator.comparingInt(t -> t.getTileType().getName().length()));
+        remainingTiles.forEach(tile -> tile.setRotation(0));
     }
 
     public boolean checkCompleted(){
-        if (!remainingTiles.isEmpty()){
+        if (templateId.equals("null")){
             return false;
         }
-        PuzzleTile[][] template = PuzzleTemplateManager.INSTANCE.getDefaultTemplate(templateId);
-        for (int x = 0; x < PUZZLE_SIZE;x++){
-            for (int y = 0; y < PUZZLE_SIZE;y++){
-                PuzzleTile templateTile = template[y][x];
-                PuzzleTile current = getTileAtPos(x,y);
-                if (!templateTile.equals(current)){
-                    return false;
+        if (remainingTiles.isEmpty() || remainingTypes.values().stream().filter(i -> i > 0).collect(Collectors.toList()).isEmpty()) {
+            PuzzleTemplateManager.TemplateInstance templateInstance = PuzzleTemplateManager.INSTANCE.getDefaultTemplate(templateId);
+            PuzzleTile[][] template = templateInstance.template();
+            for (int x = 0; x < PUZZLE_SIZE; x++) {
+                for (int y = 0; y < PUZZLE_SIZE; y++) {
+                    PuzzleTile templateTile = template[y][x];
+                    PuzzleTile current = getTileAtPos(x, y);
+                    if (!templateTile.equals(current)) {
+                        return false;
+                    }
                 }
             }
+        }else{
+            return false;
         }
         return true;
     }
@@ -145,7 +168,7 @@ public class Puzzle {
         PuzzleTile[][] tiles = new PuzzleTile[PUZZLE_SIZE][PUZZLE_SIZE];
         int t = 0;
         String templateId = tag.getString("defaultTemplate");
-        PuzzleTile[][] defaultTemplate = PuzzleTemplateManager.INSTANCE.getDefaultTemplate(templateId);
+        PuzzleTile[][] defaultTemplate = PuzzleTemplateManager.INSTANCE.getDefaultTemplate(templateId).template();
 
         List<PuzzleTile> remainingTiles = new ArrayList<>();
 

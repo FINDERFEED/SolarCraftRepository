@@ -13,12 +13,19 @@ public class PuzzleTileTypes {
     public static final PuzzleTileType CORNER = register(new PuzzleTileType("corner",90));
     public static final PuzzleTileType LINE = register(new PuzzleTileType("line",90,(t,other)->{
         return t.getTileType() == other.getTileType() &&
-                ((t.getRotation() == 90 && other.getRotation() == 90) || (t.getRotation() == 180 && other.getRotation() == 90) || (t.getRotation() == 90 && other.getRotation() == 180) || (t.getRotation() == 180 && other.getRotation() == 180) ||
-                        (t.getRotation() == 0 && other.getRotation() == 0) || (t.getRotation() == 270 && other.getRotation() == 270) || (t.getRotation() == 180 && other.getRotation() == 270) || (t.getRotation() == 270 && other.getRotation() == 180));
+                ((t.getRotation() == 90 && other.getRotation() == 90) ||
+                        (t.getRotation() == 180 && other.getRotation() == 0) ||
+                        (t.getRotation() == 0 && other.getRotation() == 180) ||
+                        (t.getRotation() == 180 && other.getRotation() == 180) ||
+                        (t.getRotation() == 0 && other.getRotation() == 0) ||
+                        (t.getRotation() == 270 && other.getRotation() == 270) ||
+                        (t.getRotation() == 90 && other.getRotation() == 270) ||
+                        (t.getRotation() == 270 && other.getRotation() == 90));
     }));
     public static final PuzzleTileType CROSSROAD = register(new PuzzleTileType("crossroad",0));
     public static final PuzzleTileType TROAD = register(new PuzzleTileType("troad",90));
     public static final PuzzleTileType DOT = register(new PuzzleTileType("dot",360));
+    public static final PuzzleTileType DEAD_END = register(new PuzzleTileType("dead_end",90));
 
 
     public static PuzzleTileType getTileById(String id){

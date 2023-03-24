@@ -13,6 +13,7 @@ import com.mojang.math.Matrix4f;
 import com.mojang.math.Vector3f;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
@@ -114,6 +115,6 @@ public class SunShardPuzzleRemainingTilesComponent extends FDScreenComponent {
 
     @Override
     public void mouseScrolled(double mousePosX, double mousePosY, double delta) {
-        this.deltaY = Mth.clamp(deltaY-delta*5,0,10000);
+        this.deltaY = Mth.clamp(deltaY-delta*(Screen.hasShiftDown() ? 40 : 5),0,10000);
     }
 }

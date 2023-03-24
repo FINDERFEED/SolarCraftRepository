@@ -68,7 +68,7 @@ public class SunShardPuzzleBlockEntity extends SolarcraftBlockEntity {
             if (puzzle == null){
                 List<String> templates = PuzzleTemplateManager.INSTANCE.getAllTemplates();
                 String template = templates.get(player.level.random.nextInt(templates.size()));
-                puzzle = new Puzzle(template,20);
+                puzzle = new Puzzle(template);
             }
             SCPacketHandler.INSTANCE.sendTo(new SunShardPuzzleOpenScreen(puzzle,getBlockPos()),
                     ((ServerPlayer)player).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
