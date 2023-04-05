@@ -24,10 +24,10 @@ public class UlderaPylonRenderer extends TileEntityRenderer<UlderaPylon> {
     }
 
     @Override
-    public void render(UlderaPylon pylon, float pTicks, PoseStack matrices, MultiBufferSource src, int light, int overlay) {
-        if (pylon.getLevel() == null) return;
+    public void render(UlderaPylon tile, float pTicks, PoseStack matrices, MultiBufferSource src, int light, int overlay) {
+        if (tile.getLevel() == null) return;
         matrices.pushPose();
-        float time = RenderingTools.getTime(pylon.getLevel(),pTicks);
+        float time = RenderingTools.getTime(tile.getLevel(),pTicks);
         VertexConsumer vertex = src.getBuffer(RenderType.text(LOC));
         matrices.translate(0.5,0.5 + Math.sin(time/10)*0.1f,0.5);
 

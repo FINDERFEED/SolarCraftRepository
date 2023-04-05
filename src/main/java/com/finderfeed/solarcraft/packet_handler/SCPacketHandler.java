@@ -16,6 +16,8 @@ import com.finderfeed.solarcraft.packet_handler.packets.misc_packets.BallLightni
 import com.finderfeed.solarcraft.packet_handler.packets.misc_packets.ExplosionParticlesPacket;
 import com.finderfeed.solarcraft.packet_handler.packets.misc_packets.SolarStrikeEntityDoExplosion;
 import com.finderfeed.solarcraft.packet_handler.packets.sun_shard_puzzle.SunShardPuzzleOpenScreen;
+import com.finderfeed.solarcraft.packet_handler.packets.sun_shard_puzzle.SunShardPuzzlePutTilePacket;
+import com.finderfeed.solarcraft.packet_handler.packets.sun_shard_puzzle.SunShardPuzzleTakeTilePacket;
 import net.minecraft.resources.ResourceLocation;
 
 import net.minecraftforge.network.NetworkRegistry;
@@ -83,6 +85,8 @@ public class SCPacketHandler {
         INSTANCE.registerMessage(nextID(), SetREDrainTypePacket.class, SetREDrainTypePacket::toBytes, SetREDrainTypePacket::new, SetREDrainTypePacket::handle);
 
         INSTANCE.registerMessage(nextID(), SunShardPuzzleOpenScreen.class, SunShardPuzzleOpenScreen::toBytes, SunShardPuzzleOpenScreen::new, SunShardPuzzleOpenScreen::handle);
+        INSTANCE.registerMessage(nextID(), SunShardPuzzlePutTilePacket.class, SunShardPuzzlePutTilePacket::toBytes, SunShardPuzzlePutTilePacket::new, SunShardPuzzlePutTilePacket::handle);
+        INSTANCE.registerMessage(nextID(), SunShardPuzzleTakeTilePacket.class, SunShardPuzzleTakeTilePacket::toBytes, SunShardPuzzleTakeTilePacket::new, SunShardPuzzleTakeTilePacket::handle);
 
 
     }

@@ -151,7 +151,7 @@ public class Puzzle {
                 PuzzleTile tile = getTileAtPos(x,y);
                 CompoundTag tilec = new CompoundTag();
                 if (tile == null){
-                    tilec.putString("type","null");
+                    tilec.putString("type","empty");
                 }else{
                     tile.serialize(tilec);
                 }
@@ -176,7 +176,7 @@ public class Puzzle {
         for (int y = 0; y < PUZZLE_SIZE;y++){
             for (int x = 0; x < PUZZLE_SIZE;x++){
                 CompoundTag tilec = tag.getCompound(t + "");
-                if (!tilec.getString("type").equals("null")){
+                if (!tilec.getString("type").equals("empty")){
                     PuzzleTile tile = PuzzleTile.deserialize(tilec);
                     tiles[y][x] = tile;
                 }else{

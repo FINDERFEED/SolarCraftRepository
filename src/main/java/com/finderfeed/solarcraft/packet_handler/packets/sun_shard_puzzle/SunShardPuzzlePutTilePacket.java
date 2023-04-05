@@ -38,6 +38,7 @@ public class SunShardPuzzlePutTilePacket {
     public void toBytes(FriendlyByteBuf buf){
         CompoundTag tag = new CompoundTag();
         tile.serialize(tag);
+        buf.writeNbt(tag);
         buf.writeInt(x);
         buf.writeInt(y);
         buf.writeBlockPos(tilePos);

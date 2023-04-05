@@ -46,6 +46,9 @@ public class PuzzleTile {
 
 
     public static boolean isValidRotation(PuzzleTileType tileType,int rot){
+        if (rot == 0){
+            return true;
+        }
         return rot % tileType.getRotationValue() == 0;
     }
 

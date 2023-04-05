@@ -46,7 +46,7 @@ public class ShieldOfSolarGod extends RareSolarcraftShieldItem {
     @Override
     public void releaseUsing(ItemStack stack, Level world, LivingEntity player, int idk) {
 
-        if (!world.isClientSide) {
+        if (!world.isClientSide && player instanceof Player) {
             float damage = 0;
             int usingTime = (72000 - idk)/20;
             if (usingTime >= 5 && usingTime < 10){

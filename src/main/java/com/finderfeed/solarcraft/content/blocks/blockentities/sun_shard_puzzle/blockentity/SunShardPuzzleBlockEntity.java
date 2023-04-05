@@ -6,6 +6,7 @@ import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.p
 import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.puzzle_tiles.PuzzleTile;
 import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
 import com.finderfeed.solarcraft.packet_handler.packets.sun_shard_puzzle.SunShardPuzzleOpenScreen;
+import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
@@ -14,14 +15,15 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.network.NetworkDirection;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SunShardPuzzleBlockEntity extends SolarcraftBlockEntity {
 
     private Puzzle puzzle;
 
-    public SunShardPuzzleBlockEntity(BlockEntityType<?> p_155228_, BlockPos p_155229_, BlockState p_155230_) {
-        super(p_155228_, p_155229_, p_155230_);
+    public SunShardPuzzleBlockEntity(BlockPos p_155229_, BlockState p_155230_) {
+        super(SolarcraftTileEntityTypes.SUN_SHARD_PUZZLE_TILE.get(), p_155229_, p_155230_);
     }
 
 
@@ -39,6 +41,7 @@ public class SunShardPuzzleBlockEntity extends SolarcraftBlockEntity {
                 /*
                 TODO: implement functionality
                  */
+                    System.out.println("completed");
                 }
             }
         }
@@ -66,7 +69,8 @@ public class SunShardPuzzleBlockEntity extends SolarcraftBlockEntity {
     public void onUse(Player player){
         if (!level.isClientSide){
             if (puzzle == null){
-                List<String> templates = PuzzleTemplateManager.INSTANCE.getAllTemplates();
+                List<String> templates = new ArrayList<>(PuzzleTemplateManager.INSTANCE.getAllTemplates());
+                templates.remove("template_null");
                 String template = templates.get(player.level.random.nextInt(templates.size()));
                 puzzle = new Puzzle(template);
             }

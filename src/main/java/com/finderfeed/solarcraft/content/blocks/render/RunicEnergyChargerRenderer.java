@@ -37,7 +37,7 @@ public class RunicEnergyChargerRenderer extends AbstractRunicEnergyContainerRend
         if (!ItemRunicEnergy.isFullyCharged(stack,(IRunicEnergyUser)stack.getItem())) {
 
             matrices.pushPose();
-            VertexConsumer vertex = buffer.getBuffer(SolarCraftRenderTypes.shaderRendertypetest(CoreShaders.RUNIC_ENERGY_FLOW_STATE_SHARD));
+            VertexConsumer vertex = buffer.getBuffer(SolarCraftRenderTypes.shaderRendertype2(CoreShaders.RUNIC_ENERGY_FLOW_STATE_SHARD));
             CoreShaders.RUNIC_ENERGY_FLOW_SHADER.safeGetUniform("time").set((tile.getLevel().getGameTime() + pticks) / 10f);
             CoreShaders.RUNIC_ENERGY_FLOW_SHADER.safeGetUniform("definedColor").set(1f, 0.65f, 0.0f);
             CoreShaders.RUNIC_ENERGY_FLOW_SHADER.safeGetUniform("innerColor").set(1f, 1f, 0f);

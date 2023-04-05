@@ -35,10 +35,4 @@ public abstract class SolarcraftBlockEntity extends BlockEntity {
         saveAdditional(tag);
         return Helpers.createTilePacket(this,tag);
     }
-
-    @Override
-    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
-        load(pkt.getTag());
-        super.onDataPacket(net, pkt);
-    }
 }

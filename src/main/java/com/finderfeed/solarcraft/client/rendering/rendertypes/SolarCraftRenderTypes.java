@@ -2,7 +2,6 @@ package com.finderfeed.solarcraft.client.rendering.rendertypes;
 
 import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
-import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.BufferBuilder;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
@@ -16,6 +15,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraftforge.client.ForgeRenderTypes;
 import org.lwjgl.opengl.GL11;
 
 
@@ -42,14 +42,6 @@ public class SolarCraftRenderTypes extends RenderType{
             new RenderStateShard.TransparencyStateShard("translucent", RenderSystem::enableBlend, RenderSystem::disableBlend);
 
 
-    protected static final RenderStateShard.TransparencyStateShard TRANSLUCENT_T = new RenderStateShard.TransparencyStateShard("translucent_transparency", () -> {
-        RenderSystem.enableBlend();
-        RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-    }, () -> {
-        RenderSystem.disableBlend();
-        RenderSystem.defaultBlendFunc();
-    });
-
     public static RenderType shaderRendertype(ShaderStateShard shaderStateShard){
         RenderType.CompositeState state = RenderType.CompositeState.builder()
                 .setShaderState(shaderStateShard)
@@ -62,7 +54,7 @@ public class SolarCraftRenderTypes extends RenderType{
     }
 
 
-    public static RenderType shaderRendertypetest(ShaderStateShard shaderStateShard){
+    public static RenderType shaderRendertype2(ShaderStateShard shaderStateShard){
         RenderType.CompositeState state = RenderType.CompositeState.builder()
                 .setShaderState(shaderStateShard)
                 .setTransparencyState(RenderStateShard.TRANSLUCENT_TRANSPARENCY)
@@ -72,15 +64,6 @@ public class SolarCraftRenderTypes extends RenderType{
                 .setWriteMaskState(RenderType.COLOR_DEPTH_WRITE)
                 .createCompositeState(false);
         return RenderType.create("shaderRendertypetest", DefaultVertexFormat.POSITION_TEX_COLOR, VertexFormat.Mode.QUADS, 256, true, true,state);
-    }
-
-    public static RenderType test(ResourceLocation loc){
-        RenderType.CompositeState state = RenderType.CompositeState.builder().setShaderState(RENDERTYPE_ITEM_ENTITY_TRANSLUCENT_CULL_SHADER)
-                .setTextureState(new RenderStateShard.TextureStateShard(loc, false, false)).setTransparencyState(TRANSLUCENT_TRANSPARENCY)
-                .setOutputState(MAIN_TARGET).setLightmapState(LIGHTMAP).setOverlayState(OVERLAY).setWriteMaskState(RenderStateShard.COLOR_DEPTH_WRITE)
-                .createCompositeState(true);
-        return RenderType.create("test", DefaultVertexFormat.NEW_ENTITY, VertexFormat.Mode.QUADS, 256, true, true,state);
-
     }
 
     public static RenderType depthMaskedTextSeeThrough(ResourceLocation loc){
@@ -93,14 +76,17 @@ public class SolarCraftRenderTypes extends RenderType{
                 .createCompositeState(false));
     }
 
-    public static RenderType positionColor(){
-        return create("position_color", DefaultVertexFormat.POSITION_COLOR, VertexFormat.Mode.QUADS, 256, false, true,
-                RenderType.CompositeState.builder().setShaderState(RenderStateShard.POSITION_COLOR_SHADER)
-                        .setTransparencyState(TRANSLUCENT_TRANSPARENCY)
-                        .setWriteMaskState(COLOR_DEPTH_WRITE)
-                        .setOutputState(RenderStateShard.MAIN_TARGET)
-                        .createCompositeState(false));
-    }
+    public static RenderType LIGHTING_NO_CULL =
+            create("lightning", DefaultVertexFormat.POSITION_COLOR, VertexFormat.Mode.QUADS,
+                    256, false, true,
+                    RenderType.CompositeState.builder()
+                            .setCullState(RenderStateShard.NO_CULL)
+                            .setShaderState(RENDERTYPE_LIGHTNING_SHADER)
+                            .setWriteMaskState(COLOR_DEPTH_WRITE)
+                            .setTransparencyState(LIGHTNING_TRANSPARENCY)
+            .setOutputState(WEATHER_TARGET).createCompositeState(false));
+
+
 
 
     public static class ParticleRenderTypes {

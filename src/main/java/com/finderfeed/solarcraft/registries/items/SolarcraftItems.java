@@ -327,6 +327,10 @@ public class SolarcraftItems {
     public static final RegistryObject<Item> CHISELED_MAGISTONE = ITEMS.register("chiseled_magistone",()->new BlockItem(SolarcraftBlocks.CHISELED_MAGISTONE.get(),new Item.Properties().tab(SolarCraft.SOLAR_GROUP_BLOCKS)));
     public static final RegistryObject<Item> MAGISTONE_BRICKS = ITEMS.register("magistone_bricks",()->new BlockItem(SolarcraftBlocks.MAGISTONE_BRICKS.get(),new Item.Properties().tab(SolarCraft.SOLAR_GROUP_BLOCKS)));
 
+    public static final RegistryObject<Item> SUN_SHARD_LOCK = ITEMS.register("sun_shard_lock",()->new BlockItem(SolarcraftBlocks.SUN_SHARD_LOCK.get(),new Item.Properties().tab(SolarCraft.SOLAR_GROUP_BLOCKS)));
+    public static final RegistryObject<Item> BEAM_REFLECTOR = ITEMS.register("beam_reflector",()->new BlockItem(SolarcraftBlocks.BEAM_REFLECTOR.get(),new Item.Properties().tab(SolarCraft.SOLAR_GROUP_BLOCKS)));
+    public static final RegistryObject<Item> BEAM_GENERATOR = ITEMS.register("beam_generator",()->new BlockItem(SolarcraftBlocks.BEAM_GENERATOR.get(),new Item.Properties().tab(SolarCraft.SOLAR_GROUP_BLOCKS)));
+
     public static final RegistryObject<Item> RUNIC_ENERGY_CORE = ITEMS.register("runic_energy_core",()->new SolarcraftBlockItem(SolarcraftBlocks.RUNIC_ENERGY_CORE.get(),new Item.Properties().tab(SolarCraft.SOLAR_GROUP_BLOCKS),()->AncientFragment.RUNIC_ENERGY_CORE));
 
 }

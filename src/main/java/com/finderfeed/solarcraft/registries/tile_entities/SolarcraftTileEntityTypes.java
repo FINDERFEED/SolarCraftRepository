@@ -3,6 +3,9 @@ package com.finderfeed.solarcraft.registries.tile_entities;
 import com.finderfeed.solarcraft.content.blocks.blockentities.clearing_ritual.CrystalEnergyVinesTile;
 import com.finderfeed.solarcraft.content.blocks.blockentities.clearing_ritual.clearing_ritual_crystal.ClearingRitualCrystalTile;
 import com.finderfeed.solarcraft.content.blocks.blockentities.clearing_ritual.clearing_ritual_main_tile.ClearingRitualMainTile;
+import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.blockentity.SunShardPuzzleBlockEntity;
+import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.ray_puzzle.blockentities.BeamGenerator;
+import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.ray_puzzle.blockentities.BeamReflectorTile;
 import com.finderfeed.solarcraft.content.blocks.infusing_table_things.infusing_pool.InfusingStandTileEntity;
 import com.finderfeed.solarcraft.content.blocks.blockentities.*;
 import com.finderfeed.solarcraft.content.blocks.solar_energy.SolarEnergyCoreTile;
@@ -126,4 +129,13 @@ public class SolarcraftTileEntityTypes {
 
     public static final RegistryObject<BlockEntityType<RunicEnergyCoreTile>> RUNIC_ENERGY_CORE = TILE_ENTITY_TYPE.register("runic_energy_core",()->
             BlockEntityType.Builder.of(RunicEnergyCoreTile::new, SolarcraftBlocks.RUNIC_ENERGY_CORE.get()).build(null));
+
+    public static final RegistryObject<BlockEntityType<SunShardPuzzleBlockEntity>> SUN_SHARD_PUZZLE_TILE = TILE_ENTITY_TYPE.register("sun_shard_puzzle_tile",()->
+            BlockEntityType.Builder.of(SunShardPuzzleBlockEntity::new, SolarcraftBlocks.SUN_SHARD_LOCK.get()).build(null));
+
+    public static final RegistryObject<BlockEntityType<BeamGenerator>> BEAM_GENERATOR = TILE_ENTITY_TYPE.register("beam_generator",()->
+            BlockEntityType.Builder.of(BeamGenerator::new, SolarcraftBlocks.BEAM_GENERATOR.get()).build(null));
+
+    public static final RegistryObject<BlockEntityType<BeamReflectorTile>> BEAM_REFLECTOR = TILE_ENTITY_TYPE.register("beam_reflector",()->
+            BlockEntityType.Builder.of(BeamReflectorTile::new, SolarcraftBlocks.BEAM_REFLECTOR.get()).build(null));
 }

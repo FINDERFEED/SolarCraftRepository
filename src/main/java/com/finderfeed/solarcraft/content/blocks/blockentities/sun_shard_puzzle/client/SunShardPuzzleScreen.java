@@ -28,7 +28,7 @@ import java.util.*;
 
 public class SunShardPuzzleScreen extends DefaultScreen {
 
-    private static boolean EDITOR_MODE = true;
+    private static boolean EDITOR_MODE = false;
 
     private Puzzle localPuzzle;
     private PuzzleTile heldTile = null;
@@ -38,6 +38,8 @@ public class SunShardPuzzleScreen extends DefaultScreen {
 
     public SunShardPuzzleScreen(Puzzle puzzle, BlockPos tilePosition){
         this.localPuzzle = puzzle;
+        localPuzzle.getRemainingTiles().sort(Comparator.comparingInt(t -> t.getTileType().getName().length()));
+        localPuzzle.getRemainingTiles().forEach(tile -> tile.setRotation(0));
         this.tilePos = tilePosition;
     }
 
@@ -46,6 +48,7 @@ public class SunShardPuzzleScreen extends DefaultScreen {
     @Override
     protected void init() {
         super.init();
+        EDITOR_MODE = false;
         this.reinitPuzzle();
         this.addSCComponent("remaining_tiles",new SunShardPuzzleRemainingTilesComponent(
                 this,localPuzzle,relX + 200,relY,3
@@ -80,7 +83,9 @@ public class SunShardPuzzleScreen extends DefaultScreen {
         super.tick();
         Level level = Minecraft.getInstance().level;
         if (!(level.getBlockEntity(tilePos) instanceof SunShardPuzzleBlockEntity)){
-//            Minecraft.getInstance().setScreen(null);
+            if (!EDITOR_MODE) {
+                Minecraft.getInstance().setScreen(null);
+            }
         }
     }
 
@@ -97,12 +102,17 @@ public class SunShardPuzzleScreen extends DefaultScreen {
                 heldTile = tile;
 
                 localPuzzle.setTileAtPos(null,xi,yi);
-             //   SCPacketHandler.INSTANCE.sendToServer(new SunShardPuzzleTakeTilePacket(this.tilePos,xi,yi));
+                if (!EDITOR_MODE) {
+                    SCPacketHandler.INSTANCE.sendToServer(new SunShardPuzzleTakeTilePacket(this.tilePos, xi, yi));
+                }
                 this.reinitPuzzle();
             }
         }
         return super.mouseClicked(x, y, action);
     }
+
+    int mx;
+    int my;
 
     @Override
     public boolean mouseReleased(double x, double y, int action) {
@@ -112,7 +122,9 @@ public class SunShardPuzzleScreen extends DefaultScreen {
             if (xi >= 0 && xi < Puzzle.PUZZLE_SIZE &&
                     yi >= 0 && yi < Puzzle.PUZZLE_SIZE) {
                 if (localPuzzle.putTileAtPos(heldTile, xi, yi)) {
-               //     SCPacketHandler.INSTANCE.sendToServer(new SunShardPuzzlePutTilePacket(this.tilePos, heldTile,xi,yi));
+                    if (!EDITOR_MODE) {
+                        SCPacketHandler.INSTANCE.sendToServer(new SunShardPuzzlePutTilePacket(this.tilePos, heldTile, xi, yi));
+                    }
                     heldTile = null;
                     this.reinitPuzzle();
                     System.out.println("Puzzle state: " + localPuzzle.checkCompleted());
@@ -128,6 +140,7 @@ public class SunShardPuzzleScreen extends DefaultScreen {
         return super.mouseReleased(x, y, action);
     }
 
+
     @Override
     public boolean keyPressed(int key, int scanCode, int modifiers) {
         if (heldTile != null){
@@ -135,16 +148,23 @@ public class SunShardPuzzleScreen extends DefaultScreen {
                 heldTile.rotate();
             }else if (key == GLFW.GLFW_KEY_F && EDITOR_MODE){
                 heldTile.setFixed(!heldTile.isFixed());
+            }else if (key == GLFW.GLFW_KEY_S && EDITOR_MODE){
+                int xi = (mx - relX) / 16;
+                int yi = (my - relY) / 16;
+                localPuzzle.putTileAtPos(new PuzzleTile(heldTile),xi,yi);
+                this.reinitPuzzle();
             }
         }
         if (key == GLFW.GLFW_KEY_E && hasShiftDown() && EDITOR_MODE){
-            PuzzleTemplateManager.exportTemplate(this.localPuzzle.getTiles(),"C:\\Users\\User\\Desktop\\MISC\\puzzle_templates\\template_4.json",0);
+            PuzzleTemplateManager.exportTemplate(this.localPuzzle.getTiles(),"C:\\Users\\User\\Desktop\\MISC\\puzzle_templates\\template_5.json",0);
         }
         return super.keyPressed(key, scanCode, modifiers);
     }
 
     @Override
     public void render(PoseStack matrices, int mx, int my, float pticks) {
+        this.mx = mx;
+        this.my = my;
         super.render(matrices, mx, my, pticks);
         fill(matrices,relX,relY,relX + getScreenWidth(),relY + getScreenHeight(),0xff111111);
         this.renderPuzzle(matrices,mx,my,pticks);

@@ -1,5 +1,7 @@
 package com.finderfeed.solarcraft.registries.blocks;
 
+import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.ray_puzzle.BeamGeneratorBlock;
+import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.ray_puzzle.blocks.BeamReflectorBlock;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.local_library.blocks.FlammableBlock;
 import com.finderfeed.solarcraft.local_library.blocks.FlammableLeavesBlock;
@@ -196,5 +198,10 @@ public class SolarcraftBlocks {
     public  static  final RegistryObject<Block> MAGISTONE_SLAB = BLOCKS.register("magistone_slab",()-> new SlabBlock(BlockBehaviour.Properties.copy(Blocks.STONE)));
     public  static  final RegistryObject<Block> MAGISTONE_COLUMN = BLOCKS.register("magistone_column",()-> new Block(BlockBehaviour.Properties.copy(Blocks.STONE)));
     public  static  final RegistryObject<Block> CHISELED_MAGISTONE = BLOCKS.register("chiseled_magistone",()-> new Block(BlockBehaviour.Properties.copy(Blocks.STONE)));
+
+
+    public  static  final RegistryObject<SunShardLockBlock> SUN_SHARD_LOCK = BLOCKS.register("sun_shard_lock",()-> new SunShardLockBlock(BlockBehaviour.Properties.copy(Blocks.BEDROCK)));
+    public  static  final RegistryObject<BeamGeneratorBlock> BEAM_GENERATOR = BLOCKS.register("beam_generator", BeamGeneratorBlock::new);
+    public  static  final RegistryObject<BeamReflectorBlock> BEAM_REFLECTOR = BLOCKS.register("beam_reflector",()-> new BeamReflectorBlock(BlockBehaviour.Properties.copy(Blocks.BEDROCK)));
 
 }

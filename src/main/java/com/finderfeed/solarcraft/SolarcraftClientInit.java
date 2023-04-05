@@ -11,6 +11,8 @@ import com.finderfeed.solarcraft.content.blocks.blockentities.containers.screens
 import com.finderfeed.solarcraft.content.blocks.blockentities.projectiles.renderers.AbstractTurretProjectileRenderer;
 import com.finderfeed.solarcraft.content.blocks.blockentities.projectiles.renderers.MortarProjectileRenderer;
 import com.finderfeed.solarcraft.content.blocks.blockentities.projectiles.renderers.ShadowBoltRenderer;
+import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.ray_puzzle.blockentities.BeamGeneratorRenderer;
+import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.ray_puzzle.blockentities.BeamReflectorRenderer;
 import com.finderfeed.solarcraft.content.blocks.infusing_table_things.InfuserRenderer;
 import com.finderfeed.solarcraft.content.blocks.infusing_table_things.infusing_pool.InfusingStandRenderer;
 import com.finderfeed.solarcraft.content.blocks.primitive.ProgressionBlock;
@@ -131,6 +133,8 @@ public class SolarcraftClientInit {
         BlockEntityRenderers.register(SolarcraftTileEntityTypes.DIMENSION_CORE_TILE.get(), DimensionCoreRenderer::new);
         BlockEntityRenderers.register(SolarcraftTileEntityTypes.SAVANNA_DUNGEON_KEEPER.get(), SavannaDungeonKeeperRenderer::new);
         BlockEntityRenderers.register(SolarcraftTileEntityTypes.RUNIC_ENERGY_CORE.get(), RunicEnergyCoreRenderer::new);
+        BlockEntityRenderers.register(SolarcraftTileEntityTypes.BEAM_GENERATOR.get(), BeamGeneratorRenderer::new);
+        BlockEntityRenderers.register(SolarcraftTileEntityTypes.BEAM_REFLECTOR.get(), BeamReflectorRenderer::new);
 
 
         MenuScreens.register(SolarcraftContainers.SOLAR_FURNACE_CONTAINER.get(), SolarFurnaceScreen::new);
