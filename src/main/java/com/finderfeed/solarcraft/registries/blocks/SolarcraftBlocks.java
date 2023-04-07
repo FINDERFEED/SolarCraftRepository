@@ -199,6 +199,7 @@ public class SolarcraftBlocks {
     public  static  final RegistryObject<Block> MAGISTONE_COLUMN = BLOCKS.register("magistone_column",()-> new Block(BlockBehaviour.Properties.copy(Blocks.STONE)));
     public  static  final RegistryObject<Block> CHISELED_MAGISTONE = BLOCKS.register("chiseled_magistone",()-> new Block(BlockBehaviour.Properties.copy(Blocks.STONE)));
 
+    public  static  final RegistryObject<Block> BEAM_INPUT = BLOCKS.register("beam_input",()-> new Block(BlockBehaviour.Properties.copy(Blocks.BEDROCK)));
 
     public  static  final RegistryObject<SunShardLockBlock> SUN_SHARD_LOCK = BLOCKS.register("sun_shard_lock",()-> new SunShardLockBlock(BlockBehaviour.Properties.copy(Blocks.BEDROCK)));
     public  static  final RegistryObject<BeamGeneratorBlock> BEAM_GENERATOR = BLOCKS.register("beam_generator", BeamGeneratorBlock::new);

@@ -1,5 +1,6 @@
 package com.finderfeed.solarcraft.misc_things;
 
+import com.finderfeed.solarcraft.content.blocks.blockentities.PuzzleBlockEntity;
 import com.finderfeed.solarcraft.content.blocks.blockentities.RuneEnergyPylonTile;
 import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.ray_puzzle.blockentities.BeamGenerator;
 import com.finderfeed.solarcraft.content.runic_network.repeater.RunicEnergyRepeaterTile;
@@ -44,7 +45,7 @@ public class SolarcraftDebugStick extends Item {
 //            StructurePatternExporter.export(world,pos,pos.offset(4,5,4));
 //        }
         if (!world.isClientSide){
-            if (world.getBlockEntity(ctx.getClickedPos()) instanceof BeamGenerator generator){
+            if (world.getBlockEntity(ctx.getClickedPos()) instanceof PuzzleBlockEntity generator){
                 generator.destroyPositions = List.of(
                     new BlockPos(15,-3,1),
                     new BlockPos(15,-3,-1),
@@ -65,7 +66,6 @@ public class SolarcraftDebugStick extends Item {
                         new BlockPos(16,-2,-1),
                         new BlockPos(16,-3,0)
                 );
-                generator.targetsNeeded = 3;
             }
         }
 

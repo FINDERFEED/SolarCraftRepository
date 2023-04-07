@@ -1,5 +1,6 @@
 package com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.blockentity;
 
+import com.finderfeed.solarcraft.content.blocks.blockentities.PuzzleBlockEntity;
 import com.finderfeed.solarcraft.content.blocks.blockentities.SolarcraftBlockEntity;
 import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.puzzle_template.Puzzle;
 import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.puzzle_template.PuzzleTemplateManager;
@@ -18,7 +19,7 @@ import net.minecraftforge.network.NetworkDirection;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SunShardPuzzleBlockEntity extends SolarcraftBlockEntity {
+public class SunShardPuzzleBlockEntity extends PuzzleBlockEntity {
 
     private Puzzle puzzle;
 
@@ -26,22 +27,16 @@ public class SunShardPuzzleBlockEntity extends SolarcraftBlockEntity {
         super(SolarcraftTileEntityTypes.SUN_SHARD_PUZZLE_TILE.get(), p_155229_, p_155230_);
     }
 
-
-
     public void onPutTile(PuzzleTile tile,int x,int y){
         var map = puzzle.getRemainingTypes();
         int amount = map.get(tile.getTileType());
         if (amount > 0) {
             boolean put = puzzle.putTileAtPos(tile, x, y);
             if (put) {
-//                puzzle.getRemainingTiles().remove(tile);
                 map.put(tile.getTileType(),amount - 1);
                 boolean completed = puzzle.checkCompleted();
                 if (completed) {
-                /*
-                TODO: implement functionality
-                 */
-                    System.out.println("completed");
+                    this.solve(false);
                 }
             }
         }
@@ -50,7 +45,6 @@ public class SunShardPuzzleBlockEntity extends SolarcraftBlockEntity {
     public void onTakeTile(int x,int y){
         PuzzleTile tile = puzzle.getTileAtPos(x,y);
         if (tile != null && !tile.isFixed()){
-//            puzzle.getRemainingTiles().add(tile);
             var map = puzzle.getRemainingTypes();
             int amount = map.get(tile.getTileType());
             map.put(tile.getTileType(),amount + 1);
@@ -67,7 +61,7 @@ public class SunShardPuzzleBlockEntity extends SolarcraftBlockEntity {
     }
 
     public void onUse(Player player){
-        if (!level.isClientSide){
+        if (!level.isClientSide && !this.isSolved()){
             if (puzzle == null){
                 List<String> templates = new ArrayList<>(PuzzleTemplateManager.INSTANCE.getAllTemplates());
                 templates.remove("template_null");
