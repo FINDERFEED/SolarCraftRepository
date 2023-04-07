@@ -1,6 +1,7 @@
 package com.finderfeed.solarcraft.misc_things;
 
 import com.finderfeed.solarcraft.content.blocks.blockentities.RuneEnergyPylonTile;
+import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.ray_puzzle.blockentities.BeamGenerator;
 import com.finderfeed.solarcraft.content.runic_network.repeater.RunicEnergyRepeaterTile;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.helpers.multiblock.StructurePatternExporter;
@@ -18,6 +19,9 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+
+import java.util.List;
 
 public class SolarcraftDebugStick extends Item {
     public SolarcraftDebugStick(Properties p_41383_) {
@@ -36,8 +40,33 @@ public class SolarcraftDebugStick extends Item {
     public InteractionResult useOn(UseOnContext ctx) {
         Level world = ctx.getLevel();
         BlockPos pos = ctx.getClickedPos();
+//        if (!world.isClientSide){
+//            StructurePatternExporter.export(world,pos,pos.offset(4,5,4));
+//        }
         if (!world.isClientSide){
-            StructurePatternExporter.export(world,pos,pos.offset(4,5,4));
+            if (world.getBlockEntity(ctx.getClickedPos()) instanceof BeamGenerator generator){
+                generator.destroyPositions = List.of(
+                    new BlockPos(15,-3,1),
+                    new BlockPos(15,-3,-1),
+                    new BlockPos(15,-4,0),
+                    new BlockPos(15,-2,0),
+                    new BlockPos(15,-4,1),
+                    new BlockPos(15,-4,-1),
+                    new BlockPos(15,-2,1),
+                    new BlockPos(15,-2,-1),
+                    new BlockPos(15,-3,0),
+                        new BlockPos(16,-3,1),
+                        new BlockPos(16,-3,-1),
+                        new BlockPos(16,-4,0),
+                        new BlockPos(16,-2,0),
+                        new BlockPos(16,-4,1),
+                        new BlockPos(16,-4,-1),
+                        new BlockPos(16,-2,1),
+                        new BlockPos(16,-2,-1),
+                        new BlockPos(16,-3,0)
+                );
+                generator.targetsNeeded = 3;
+            }
         }
 
 //        if (!world.isClientSide){

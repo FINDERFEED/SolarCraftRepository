@@ -4,24 +4,36 @@ import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.r
 import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.EntityBlock;
-import net.minecraft.world.level.block.GlazedTerracottaBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
 
 public class BeamGeneratorBlock extends Block implements EntityBlock {
 
     public BeamGeneratorBlock() {
         super(Properties.copy(Blocks.BEDROCK));
+    }
+
+
+    @Override
+    public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult p_60508_) {
+        if (hand == InteractionHand.MAIN_HAND && world.getBlockEntity(pos) instanceof BeamGenerator generator){
+            generator.onUse();
+        }
+        return super.use(state, world, pos, player, hand, p_60508_);
     }
 
     @Nullable

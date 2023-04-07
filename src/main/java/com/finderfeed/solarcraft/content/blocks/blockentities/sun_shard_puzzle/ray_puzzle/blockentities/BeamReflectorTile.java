@@ -8,6 +8,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Vec3i;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.Connection;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -20,6 +22,7 @@ import java.util.Set;
 public class BeamReflectorTile extends SolarcraftBlockEntity {
 
     private Set<Direction> directions;
+    private BeamGenerator tile;
 
     public BeamReflectorTile(BlockPos p_155229_, BlockState p_155230_) {
         super(SolarcraftTileEntityTypes.BEAM_REFLECTOR.get(), p_155229_, p_155230_);
@@ -61,11 +64,38 @@ public class BeamReflectorTile extends SolarcraftBlockEntity {
             newDirs.add(Direction.fromNormal((int)v.x(),(int)v.y(),(int)v.z()));
         }
         this.directions = newDirs;
+        if (this.getGenerator() != null){
+            this.getGenerator().recalculateBeams();
+        }
         Helpers.updateTile(this);
     }
 
     public Set<Direction> getDirections() {
         return directions;
+    }
+
+    public void setGenerator(BeamGenerator tile) {
+        this.tile = tile;
+    }
+
+    public BeamGenerator getGenerator() {
+        return tile;
+    }
+
+    @Override
+    public void handleUpdateTag(CompoundTag tag) {
+        super.handleUpdateTag(tag);
+        if (this.getGenerator() != null){
+            this.getGenerator().recalculateBeams();
+        }
+    }
+
+    @Override
+    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
+        super.onDataPacket(net, pkt);
+        if (this.getGenerator() != null){
+            this.getGenerator().recalculateBeams();
+        }
     }
 
     @Override
