@@ -87,6 +87,8 @@ public class SCPacketHandler {
         INSTANCE.registerMessage(nextID(), SunShardPuzzleOpenScreen.class, SunShardPuzzleOpenScreen::toBytes, SunShardPuzzleOpenScreen::new, SunShardPuzzleOpenScreen::handle);
         INSTANCE.registerMessage(nextID(), SunShardPuzzlePutTilePacket.class, SunShardPuzzlePutTilePacket::toBytes, SunShardPuzzlePutTilePacket::new, SunShardPuzzlePutTilePacket::handle);
         INSTANCE.registerMessage(nextID(), SunShardPuzzleTakeTilePacket.class, SunShardPuzzleTakeTilePacket::toBytes, SunShardPuzzleTakeTilePacket::new, SunShardPuzzleTakeTilePacket::handle);
+        INSTANCE.registerMessage(nextID(), BlockPlacePacket.class, BlockPlacePacket::toBytes, BlockPlacePacket::new, BlockPlacePacket::handle);
+        INSTANCE.registerMessage(nextID(), BlockBreakPacket.class, BlockBreakPacket::toBytes, BlockBreakPacket::new, BlockBreakPacket::handle);
 
 
     }

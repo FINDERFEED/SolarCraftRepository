@@ -2,6 +2,8 @@ package com.finderfeed.solarcraft.events.other_events.event_handler;
 
 
 import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.puzzle_template.PuzzleTemplateManager;
+import com.finderfeed.solarcraft.events.my_events.ClientsideBlockBreakEvent;
+import com.finderfeed.solarcraft.events.my_events.ClientsideBlockPlaceEvent;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.content.abilities.AbilityHelper;
@@ -21,6 +23,9 @@ import com.finderfeed.solarcraft.content.items.runic_energy.ItemRunicEnergy;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.Progression;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.ProgressionHelper;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
+import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
+import com.finderfeed.solarcraft.packet_handler.packets.BlockBreakPacket;
+import com.finderfeed.solarcraft.packet_handler.packets.BlockPlacePacket;
 import com.finderfeed.solarcraft.packet_handler.packets.DisablePlayerFlightPacket;
 import com.finderfeed.solarcraft.registries.SolarcraftDamageSources;
 import com.finderfeed.solarcraft.registries.Tags;
@@ -69,6 +74,7 @@ import net.minecraftforge.event.level.ExplosionEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.network.NetworkDirection;
 
 import java.util.List;
 
@@ -336,8 +342,25 @@ public class EventHandler {
         return false;
     }
 
+    @SubscribeEvent(priority = EventPriority.HIGHEST)
+    public static void sendClientBreakEvent(BlockEvent.BreakEvent event) {
+        if (event.getPlayer() instanceof ServerPlayer serverPlayer){
+            SCPacketHandler.INSTANCE.sendTo(new BlockBreakPacket(event.getPos(),event.getState()),
+                    serverPlayer.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+        }
+    }
+
+    @SubscribeEvent(priority = EventPriority.HIGHEST)
+    public static void sendClientPlaceEvent(BlockEvent.EntityPlaceEvent event){
+        if (event.getEntity() instanceof ServerPlayer player){
+            SCPacketHandler.INSTANCE.sendTo(new BlockPlacePacket( event.getPos(),event.getState()),
+                    player.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+        }
+    }
+
     @SubscribeEvent
     public static void preventBreakingBlocks(BlockEvent.BreakEvent event){
+
         if ((event.getPlayer().getMainHandItem().getItem() instanceof FragmentItem fragmentItem) && !event.getPlayer().level.isClientSide){
             if (event.getPlayer().isCreative()) return;
 

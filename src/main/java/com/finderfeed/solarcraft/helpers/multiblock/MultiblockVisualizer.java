@@ -3,6 +3,8 @@ package com.finderfeed.solarcraft.helpers.multiblock;
 
 import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.client.screens.PositionBlockStateTileEntity;
+import com.finderfeed.solarcraft.events.my_events.ClientsideBlockBreakEvent;
+import com.finderfeed.solarcraft.events.my_events.ClientsideBlockPlaceEvent;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.BufferBuilder;
@@ -23,6 +25,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
@@ -125,14 +128,14 @@ public class MultiblockVisualizer {
     }
 
     @SubscribeEvent
-    public static void updateGhostsOnPlace(BlockEvent.EntityPlaceEvent event){
+    public static void updateGhostsOnPlace(ClientsideBlockPlaceEvent event){
         if (visualizingAnchor != null && Minecraft.getInstance().level != null && multiblock != null){
-            multiblock.updateGhosts(visualizingAnchor,Minecraft.getInstance().level,event.getPos(),event.getPlacedBlock());
+            multiblock.updateGhosts(visualizingAnchor,Minecraft.getInstance().level,event.getPos(),event.getPlacedState());
         }
     }
 
     @SubscribeEvent
-    public static void updateGhostsOnBreak(BlockEvent.BreakEvent event){
+    public static void updateGhostsOnBreak(ClientsideBlockBreakEvent event){
         if (visualizingAnchor != null && Minecraft.getInstance().level != null && multiblock != null){
             multiblock.updateGhosts(visualizingAnchor,Minecraft.getInstance().level,event.getPos(), Blocks.AIR.defaultBlockState());
         }
