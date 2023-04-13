@@ -335,6 +335,6 @@ public class SolarcraftItems {
 
     public static final RegistryObject<Item> RUNIC_ENERGY_CORE = ITEMS.register("runic_energy_core",()->new SolarcraftBlockItem(SolarcraftBlocks.RUNIC_ENERGY_CORE.get(),new Item.Properties().tab(SolarCraft.SOLAR_GROUP_BLOCKS),()->AncientFragment.RUNIC_ENERGY_CORE));
 
-    public static final RegistryObject<Item> SUN_SHARD = ITEMS.register("sun_shard",()->new RareSolarcraftItem(new Item.Properties().tab(SolarCraft.SOLAR_GROUP_MATERIALS).rarity(Rarity.EPIC),()->null));
+    public static final RegistryObject<Item> SUN_SHARD = ITEMS.register("sun_shard",()->new SunShardItem(new Item.Properties().tab(SolarCraft.SOLAR_GROUP_MATERIALS).rarity(Rarity.EPIC)));
 
 }

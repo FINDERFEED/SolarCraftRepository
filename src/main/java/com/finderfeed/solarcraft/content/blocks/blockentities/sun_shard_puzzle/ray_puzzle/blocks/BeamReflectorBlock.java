@@ -29,9 +29,8 @@ public class BeamReflectorBlock extends Block implements EntityBlock {
                 tile.onUse(res.getDirection());
                 player.swing(hand);
             }else{
-                //TODO:remove!
-                tile.getDirections().add(res.getDirection());
-                Helpers.updateTile(tile);
+//                tile.getDirections().add(res.getDirection());
+//                Helpers.updateTile(tile);
             }
         }
         return super.use(state, level, pos, player, hand, res);

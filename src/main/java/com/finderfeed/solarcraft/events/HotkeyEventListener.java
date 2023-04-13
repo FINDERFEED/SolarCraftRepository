@@ -31,9 +31,6 @@ public class HotkeyEventListener {
         if (Minecraft.getInstance().screen != null) return;
 
         if (SolarcraftClientInit.FIRST_ABILITY_KEY.isDown() && event.getAction() == GLFW.GLFW_PRESS){
-            Minecraft.getInstance().setScreen(new SunShardPuzzleScreen(
-                    Puzzle.editorPuzzle(new Puzzle("template_null"),100),
-                    new BlockPos(0,0,0)));
             SCPacketHandler.INSTANCE.sendToServer(new CastAbilityPacket(1));
         }
         if (SolarcraftClientInit.SECOND_ABILITY_KEY.isDown() && event.getAction() == GLFW.GLFW_PRESS){

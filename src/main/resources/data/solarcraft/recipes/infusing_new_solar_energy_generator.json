@@ -6,14 +6,14 @@
     "C": {"item": "solarcraft:blue_gem_enriched"},
     "D": {"item": "solarcraft:lensing_crystal"},
     "E": {"item": "solarcraft:energy_core"},
-    "F": {"item": "minecraft:iron_block"}
+    "J": {"item": "solarcraft:sun_shard"}
   },
   "pattern": [
     " D ",
     "CC",
-    "BAB",
+    "BJB",
     "EE",
-    " F "
+    " A "
   ],
   "result": {
     "item": "solarcraft:solar_energy_generator"

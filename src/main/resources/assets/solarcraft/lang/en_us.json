@@ -766,6 +766,9 @@
   "solarcraft.wand_action.solar_network_binder_pos": "Position to bind to: ",
   "solarcraft.wand_action.solar_network_binder_wa": "Solar Network Binder mode: Bind to solar energy users together. Shift-click on block will clear position data.",
   "block.solarcraft.beam_reflector": "Beam Reflector",
-  "block.solarcraft.beam_generator": "Beam Generator"
+  "block.solarcraft.beam_generator": "Beam Generator",
+  "block.solarcraft.beam_input": "Beam Input",
+  "item.solarcraft.sun_shard": "\"Sun Shard\"",
+  "solarcraft.descriptions.item.sun_shard": "Heated up time"
 }
 

@@ -120,6 +120,30 @@ public class MultiblockStructure {
         return true;
     }
 
+    /**
+     * Returns incorrect blockstates, if tag doesn't match, incorrect state object also contains this tag,
+     * else - null.
+     */
+    public List<IncorrectState> checkWithInfo(Level world, BlockPos center, boolean ignoreOtherBlocks){
+        List<IncorrectState> incorrectStates = new ArrayList<>();
+        for (PositionBlockStateTileEntity block : this.blocks){
+            if (block.state.isAir() && ignoreOtherBlocks) continue;
+            BlockPos pos = center.offset(Helpers.vecToPos(block.pos));
+            BlockState test = world.getBlockState(pos);
+            TagKey<Block> tag;
+            if ((tag = tagMap.get(block.state)) == null) {
+                if (test != block.state) {
+                    incorrectStates.add(new IncorrectState(pos,block.state,test,null));
+                }
+            }else{
+                if (!test.is(tag)){
+                    incorrectStates.add(new IncorrectState(pos,block.state,test,tag));
+                }
+            }
+        }
+        return incorrectStates;
+    }
+
     public void placeInWorld(Player player,Level world, BlockPos p){
         for (PositionBlockStateTileEntity pos : blocks){
             BlockPos position = p.offset(Helpers.vecToPos(pos.pos)).offset(centerOffset);
@@ -191,4 +215,6 @@ public class MultiblockStructure {
         }
 
     }
+
+    public record IncorrectState(BlockPos atPos,BlockState correct,BlockState incorrect,TagKey<Block> tag){}
 }

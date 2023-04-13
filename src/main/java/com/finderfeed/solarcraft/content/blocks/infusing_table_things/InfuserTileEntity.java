@@ -3,7 +3,10 @@ package com.finderfeed.solarcraft.content.blocks.infusing_table_things;
 
 import com.finderfeed.solarcraft.content.blocks.solar_energy.Bindable;
 import com.finderfeed.solarcraft.content.blocks.solar_energy.SolarEnergyContainer;
+import com.finderfeed.solarcraft.content.items.SunShardItem;
+import com.finderfeed.solarcraft.content.items.primitive.solacraft_item_classes.SolarcraftItem;
 import com.finderfeed.solarcraft.content.items.solar_wand.IWandable;
+import com.finderfeed.solarcraft.content.items.solar_wand.wand_actions.structure_check.IStructureOwner;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.SolarCraft;
@@ -24,6 +27,7 @@ import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.Progre
 import com.finderfeed.solarcraft.registries.Tags;
 import com.finderfeed.solarcraft.registries.blocks.SolarcraftBlocks;
 import com.finderfeed.solarcraft.content.world_generation.structures.NotStructures;
+import com.finderfeed.solarcraft.registries.items.SolarcraftItems;
 import com.finderfeed.solarcraft.registries.recipe_types.SolarcraftRecipeTypes;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
@@ -53,7 +57,7 @@ import javax.annotation.Nullable;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class InfuserTileEntity extends REItemHandlerBlockEntity implements SolarEnergyContainer, Bindable, DebugTarget, IWandable {
+public class InfuserTileEntity extends REItemHandlerBlockEntity implements SolarEnergyContainer, Bindable, DebugTarget, IWandable, IStructureOwner {
 
 
     private EaseIn rotationValue = new EaseIn(0,1,100);
@@ -415,22 +419,33 @@ public class InfuserTileEntity extends REItemHandlerBlockEntity implements Solar
 
     public void triggerCrafting(Player playerEntity){
         if (getInventory() == null) {
-            playerEntity.sendSystemMessage(Component.literal("Cant access inventory").withStyle(ChatFormatting.RED));
+            playerEntity.sendSystemMessage(Component.literal("Can't access inventory").withStyle(ChatFormatting.RED));
             return;
         }
-        Optional<InfusingRecipe> recipe = this.level.getRecipeManager().getRecipeFor(SolarcraftRecipeTypes.INFUSING.get(),new PhantomInventory(getInventory()),level);
+        Optional<InfusingRecipe> opt = this.level.getRecipeManager().getRecipeFor(SolarcraftRecipeTypes.INFUSING.get(),new PhantomInventory(getInventory()),level);
         calculateTier();
         try {
-            if (recipe.isPresent() && ProgressionHelper.doPlayerHasFragment(playerEntity, AncientFragment.getFragmentByID(recipe.get().fragID))) {
+            if (opt.isPresent() && ProgressionHelper.doPlayerHasFragment(playerEntity, AncientFragment.getFragmentByID(opt.get().fragID))) {
                 if (!this.getItem(outputSlot()).isEmpty()){
                     playerEntity.sendSystemMessage(Component.literal("Clear the output slot").withStyle(ChatFormatting.RED));
                     return;
                 }
-                if (tierEquals(recipe.get().getTier())) {
-                    if (catalystsMatch(recipe.get())) {
+                InfusingRecipe recipe = opt.get();
+                if (recipe.output.getItem() == SolarcraftItems.ENERGY_GENERATOR_BLOCK.get()) {
+                    ItemStack input = this.getItem(inputSlot());
+                    if (input.getItem() instanceof SunShardItem shard && !shard.isHeated(input)){
+                        playerEntity.sendSystemMessage(Component.literal("Unable to start ").withStyle(ChatFormatting.RED)
+                                .append(Component.literal("melting").withStyle(ChatFormatting.GOLD)).append(" the item: Sun Shard")
+                                .withStyle(ChatFormatting.RED));
+                        return;
+                    }
+                }
+
+                if (tierEquals(recipe.getTier())) {
+                    if (catalystsMatch(recipe)) {
                         if (!RECIPE_IN_PROGRESS) {
                             Helpers.fireProgressionEvent(playerEntity, Progression.SOLAR_INFUSER);
-                            this.INFUSING_TIME = recipe.get().infusingTime;
+                            this.INFUSING_TIME = recipe.infusingTime;
                             this.RECIPE_IN_PROGRESS = true;
                             this.level.playSound(null, this.worldPosition, SoundEvents.BEACON_ACTIVATE, SoundSource.AMBIENT, 2, 1);
                         } else {
@@ -444,8 +459,8 @@ public class InfuserTileEntity extends REItemHandlerBlockEntity implements Solar
                 }
 
             } else {
-                if (recipe.isPresent()) {
-                    AncientFragment fragment = AncientFragment.getFragmentByID(recipe.get().fragID);
+                if (opt.isPresent()) {
+                    AncientFragment fragment = AncientFragment.getFragmentByID(opt.get().fragID);
                     if (fragment != null){
                         if (!ProgressionHelper.doPlayerHasFragment(playerEntity,fragment)){
                             playerEntity.sendSystemMessage(Component.literal("Cant start craft, you dont have "+fragment.getTranslation().getString().toUpperCase()+" fragment unlocked.").withStyle(ChatFormatting.RED));
@@ -457,7 +472,7 @@ public class InfuserTileEntity extends REItemHandlerBlockEntity implements Solar
                 this.level.playSound(null, this.worldPosition, SoundEvents.VILLAGER_NO, SoundSource.AMBIENT, 2, 1);
             }
         }catch (NullPointerException e){
-            playerEntity.sendSystemMessage(Component.literal("INCORRECT FRAGMENT IN RECIPE "+ recipe.get().output.getDisplayName().getString()+" TELL MOD AUTHOR TO FIX IT").withStyle(ChatFormatting.RED));
+            playerEntity.sendSystemMessage(Component.literal("INCORRECT FRAGMENT IN RECIPE "+ opt.get().output.getDisplayName().getString()+" TELL MOD AUTHOR TO FIX IT").withStyle(ChatFormatting.RED));
         }
 
     }
@@ -734,6 +749,15 @@ public class InfuserTileEntity extends REItemHandlerBlockEntity implements Solar
     @Override
     public void onWandUse(BlockPos usePos,Player user) {
         triggerCrafting(user);
+    }
+
+    @Override
+    public List<MultiblockStructure> getMultiblocks() {
+        return List.of(
+          Multiblocks.INFUSER_TIER_ONE,
+          Multiblocks.INFUSER_TIER_TWO,
+          Multiblocks.INFUSER_TIER_THREE
+        );
     }
 
 

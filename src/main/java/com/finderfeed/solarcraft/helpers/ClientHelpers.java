@@ -50,6 +50,7 @@ import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.BlockItem;
@@ -507,6 +508,13 @@ public class ClientHelpers {
 
     public static void handleSunShardOpenScreenPacket(Puzzle puzzle,BlockPos tilepos){
         Minecraft.getInstance().setScreen(new SunShardPuzzleScreen(puzzle,tilepos));
+    }
+
+    public static void handleUpdateItemEntityPacket(int entityId,CompoundTag tag){
+        Level world = getLevel();
+        if (world.getEntity(entityId) instanceof ItemEntity item){
+            item.getItem().setTag(tag);
+        }
     }
 
     public static class Particles {

@@ -1,0 +1,14 @@
+{
+  "parent": "item/generated",
+  "textures" : {
+    "layer0": "solarcraft:items/sun_shard"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "solarcraft:heated_up": 1
+      },
+      "model": "solarcraft:item/sun_shard_heated"
+    }
+  ]
+}

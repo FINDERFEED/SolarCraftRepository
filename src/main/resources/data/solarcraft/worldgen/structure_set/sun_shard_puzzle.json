@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "solarcraft:sun_shard_puzzle",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "salt": 896746456,
+    "spacing": 100,
+    "separation": 80,
+    "type": "minecraft:random_spread"
+  }
+}

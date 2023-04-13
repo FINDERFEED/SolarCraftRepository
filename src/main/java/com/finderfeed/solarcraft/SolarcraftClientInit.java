@@ -24,6 +24,7 @@ import com.finderfeed.solarcraft.content.entities.projectiles.renderers.*;
 import com.finderfeed.solarcraft.content.entities.renderers.*;
 import com.finderfeed.solarcraft.content.entities.runic_elemental.RunicElementalBossBar;
 import com.finderfeed.solarcraft.content.items.ProgressionBlockItem;
+import com.finderfeed.solarcraft.content.items.SunShardItem;
 import com.finderfeed.solarcraft.content.items.solar_disc_gun.SolarDiscProjectileRenderer;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.SolarLexiconContScreen;
 import com.finderfeed.solarcraft.content.runic_network.repeater.RepeaterRenderer;
@@ -147,6 +148,14 @@ public class SolarcraftClientInit {
 
         event.enqueueWork(()->{
 
+            ItemProperties.register(SolarcraftItems.SUN_SHARD.get(),new ResourceLocation("solarcraft","heated_up"),(stack, world, living, a)->{
+                if (stack.getItem() instanceof SunShardItem item){
+                    return item.isHeated(stack) ? 1 : 0;
+                }else{
+                    return 0;
+                }
+            });
+
             ItemProperties.register(SolarcraftItems.ULDORADIUM_ORE.get(),new ResourceLocation("solarcraft","unlocked"),(stack, world, living, a)->{
 
                 Player playerEntity = Minecraft.getInstance().player;
@@ -156,6 +165,8 @@ public class SolarcraftClientInit {
                     return 0;
                 }
             });
+
+
             ItemProperties.register(SolarcraftItems.SOLAR_STONE.get(),new ResourceLocation("solarcraft","unlocked"),(stack, world, living, a)->{
 
                 Player playerEntity = Minecraft.getInstance().player;

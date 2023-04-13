@@ -9,6 +9,7 @@ import com.finderfeed.solarcraft.content.world_generation.structures.dimensional
 import com.finderfeed.solarcraft.content.world_generation.structures.magician_tower.MagicianTowerStructure;
 import com.finderfeed.solarcraft.content.world_generation.structures.maze_key_keeper.TrapDungeon;
 import com.finderfeed.solarcraft.content.world_generation.structures.runic_elemental_arena.RunicElementalArenaStructure;
+import com.finderfeed.solarcraft.content.world_generation.structures.sun_shard_puzzle.SunShardPuzzleStructure;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.Registry;
@@ -56,6 +57,7 @@ public class SolarcraftStructureHolders {
     public static final Holder<Structure> CRYSTAL_BOSS_ROOM = register(Keys.CRYSTAL_BOSS_ROOM,new CrystalBossRoomStructure(structure(SolarCraftTags.SStructures.HAS_CRYSTAL_BOSS_ROOM, GenerationStep.Decoration.SURFACE_STRUCTURES,TerrainAdjustment.BEARD_THIN)));
     public static final Holder<Structure> RUNIC_ELEMENTAL_ARENA = register(Keys.RUNIC_ELEMENTAL_ARENA,new RunicElementalArenaStructure(structure(SolarCraftTags.SStructures.HAS_RUNIC_ELEMENTAL_ARENA, GenerationStep.Decoration.SURFACE_STRUCTURES,TerrainAdjustment.BEARD_THIN)));
     public static final Holder<Structure> CLEARING_RITUAL = register(Keys.CLEARING_RITUAL_STRUCTURE,new ClearingRitualStructure(structure(SolarCraftTags.SStructures.HAS_CLEARING_RITUAL_STRUCTURE, GenerationStep.Decoration.SURFACE_STRUCTURES,TerrainAdjustment.BEARD_THIN)));
+    public static final Holder<Structure> SUN_SHARD_PUZZLE = register(Keys.SUN_SHARD_DUNGEON,new SunShardPuzzleStructure(structure(SolarCraftTags.SStructures.HAS_SUN_SHARD_PUZZLE, GenerationStep.Decoration.SURFACE_STRUCTURES,TerrainAdjustment.BEARD_THIN)));
 
     private static Holder<Structure> register(ResourceKey<Structure> key, Structure structure) {
         return BuiltinRegistries.register(BuiltinRegistries.STRUCTURES, key, structure);
@@ -83,6 +85,7 @@ public class SolarcraftStructureHolders {
         public static final ResourceKey<Structure> TRAP_DUNEGON = createKey("trap_dungeon");
         public static final ResourceKey<Structure> MAGICIAN_TOWER = createKey("magician_tower");
         public static final ResourceKey<Structure> RUNIC_ELEMENTAL_ARENA = createKey("runic_elemental_arena");
+        public static final ResourceKey<Structure> SUN_SHARD_DUNGEON = createKey("sun_shard_puzzle");
 
         private static ResourceKey<Structure> createKey(String id) {
             return ResourceKey.create(Registry.STRUCTURE_REGISTRY, new ResourceLocation(SolarCraft.MOD_ID,id));
@@ -91,16 +94,4 @@ public class SolarcraftStructureHolders {
     }
 
 
-//    public static void registerConfiguredStructures() {
-////        Registry<ConfiguredStructureFeature<?, ?>> registry = BuiltinRegistries.CONFIGURED_STRUCTURE_FEATURE;
-////        Registry.register(registry, new ResourceLocation(SolarForge.MOD_ID, "configured_dungeon_one"), CONF_DUNGEON_ONE);
-////        Registry.register(registry, new ResourceLocation(SolarForge.MOD_ID, "cold_star_charging_station"), CONF_DUNGEON_CHARGING_STATION);
-////        Registry.register(registry, new ResourceLocation(SolarForge.MOD_ID, "labyrinth"), CONF_DUNGEON_MAZE);
-////        Registry.register(registry, new ResourceLocation(SolarForge.MOD_ID, "magician_tower"), CONF_MAGICIAN_TOWER);
-////        Registry.register(registry, new ResourceLocation(SolarForge.MOD_ID, "dimensional_shard_structure"), CONF_DIM_SHARD_STRUCT);
-////        Registry.register(registry, new ResourceLocation(SolarForge.MOD_ID, "crystal_boss_room"), CONF_CRYSTAL_BOSS_ROOM);
-////        Registry.register(registry, new ResourceLocation(SolarForge.MOD_ID, "runic_elemental_arena"), RUNIC_ELEMENTAL_ARENA);
-////        Registry.register(registry, new ResourceLocation(SolarForge.MOD_ID, "clearing_ritual_structure"), CLEARING_RITUAL_STRUCTURE);
-//
-//    }
 }
