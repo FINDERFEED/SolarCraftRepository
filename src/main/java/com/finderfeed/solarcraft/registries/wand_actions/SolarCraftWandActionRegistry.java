@@ -7,6 +7,7 @@ import com.finderfeed.solarcraft.content.items.solar_wand.wand_actions.RENetwork
 import com.finderfeed.solarcraft.content.items.solar_wand.wand_actions.DefaultWandBlockUseAction;
 import com.finderfeed.solarcraft.content.items.solar_wand.wand_actions.drain_runic_enenrgy_action.REDrainWandAction;
 import com.finderfeed.solarcraft.content.items.solar_wand.wand_actions.solar_network.SolarNetworkBinderWandAction;
+import com.finderfeed.solarcraft.content.items.solar_wand.wand_actions.structure_check.CheckStructureWandAction;
 
 public class SolarCraftWandActionRegistry {
 
@@ -20,6 +21,8 @@ public class SolarCraftWandActionRegistry {
     public static final CheckSolarEnergyWandAction CHECK_SOLAR_ENERGY_WAND_ACTION = register(new CheckSolarEnergyWandAction());
 
     public static final SolarNetworkBinderWandAction SOLAR_NETWORK_BINDER_WAND_ACTION = register(new SolarNetworkBinderWandAction());
+
+    public static final CheckStructureWandAction CHECK_STRUCTURE_WAND_ACTION = register(new CheckStructureWandAction());
 
 
     public static <T extends WandAction<?>> T register(T action){

@@ -769,6 +769,7 @@
   "block.solarcraft.beam_generator": "Beam Generator",
   "block.solarcraft.beam_input": "Beam Input",
   "item.solarcraft.sun_shard": "\"Sun Shard\"",
-  "solarcraft.descriptions.item.sun_shard": "Heated up time"
+  "solarcraft.descriptions.item.sun_shard": "Heated up time",
+  "solarcraft.item.solar_wand.action.structure": "Structure Check mode: Click on a block that has a structure and it will check if its correct or not."
 }
 

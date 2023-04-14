@@ -17,7 +17,6 @@ import com.mojang.blaze3d.vertex.*;
 import com.mojang.math.Matrix4f;
 import com.mojang.math.Vector3f;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.MouseHandler;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
@@ -50,7 +49,7 @@ public class SunShardPuzzleScreen extends DefaultScreen {
         super.init();
         EDITOR_MODE = false;
         this.reinitPuzzle();
-        this.addSCComponent("remaining_tiles",new SunShardPuzzleRemainingTilesComponent(
+        this.addFDComponent("remaining_tiles",new SunShardPuzzleRemainingTilesComponent(
                 this,localPuzzle,relX + 200,relY,3
         ));
     }

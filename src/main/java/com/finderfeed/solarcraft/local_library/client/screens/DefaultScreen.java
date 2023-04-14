@@ -89,7 +89,7 @@ public abstract class DefaultScreen extends Screen {
         }
     }
 
-    public void addSCComponent(String id, FDScreenComponent scScreenComponent){
+    public void addFDComponent(String id, FDScreenComponent scScreenComponent){
         this.components.put(id,scScreenComponent);
     }
 

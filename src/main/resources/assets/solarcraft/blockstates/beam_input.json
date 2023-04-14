@@ -1,0 +1,5 @@
+{
+  "variants": {
+    "": { "model": "solarcraft:block/beam_input" }
+  }
+}

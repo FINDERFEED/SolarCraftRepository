@@ -13,8 +13,10 @@ import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.c
 import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.puzzle_template.Puzzle;
 import com.finderfeed.solarcraft.content.entities.not_alive.BallLightningProjectile;
 import com.finderfeed.solarcraft.content.items.solar_wand.wand_actions.drain_runic_enenrgy_action.RETypeSelectionScreen;
+import com.finderfeed.solarcraft.content.items.solar_wand.wand_actions.structure_check.StructureSelectionScreen;
 import com.finderfeed.solarcraft.events.RenderEventsHandler;
 import com.finderfeed.solarcraft.events.other_events.event_handler.ClientEventsHandler;
+import com.finderfeed.solarcraft.helpers.multiblock.MultiblockStructure;
 import com.finderfeed.solarcraft.local_library.effects.LightningBoltPath;
 import com.finderfeed.solarcraft.local_library.entities.bossbar.client.ActiveBossBar;
 import com.finderfeed.solarcraft.local_library.helpers.FDMathHelper;
@@ -515,6 +517,13 @@ public class ClientHelpers {
         if (world.getEntity(entityId) instanceof ItemEntity item){
             item.getItem().setTag(tag);
         }
+    }
+
+    public static void handleStructureListWandAction(BlockPos clickedPos,List<MultiblockStructure> list){
+        Minecraft.getInstance().setScreen(new StructureSelectionScreen(clickedPos,list));
+    }
+    public static void handleStructureWandAction(BlockPos clickedPos,MultiblockStructure structure){
+        StructureSelectionScreen.processStructure(clickedPos,structure,3);
     }
 
     public static class Particles {
