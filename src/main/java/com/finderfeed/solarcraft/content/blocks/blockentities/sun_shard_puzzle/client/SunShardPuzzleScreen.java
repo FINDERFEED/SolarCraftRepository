@@ -6,6 +6,7 @@ import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.p
 import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.puzzle_template.PuzzleTemplateManager;
 import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.puzzle_tiles.PuzzleTile;
 import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.puzzle_tiles.PuzzleTileType;
+import com.finderfeed.solarcraft.content.items.solar_lexicon.screen.buttons.InfoButton;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.local_library.client.screens.DefaultScreen;
 import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
@@ -19,7 +20,9 @@ import com.mojang.math.Vector3f;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.world.level.Level;
 import org.lwjgl.glfw.GLFW;
 
@@ -48,10 +51,16 @@ public class SunShardPuzzleScreen extends DefaultScreen {
     protected void init() {
         super.init();
         EDITOR_MODE = false;
+        relX -= 40;
         this.reinitPuzzle();
         this.addFDComponent("remaining_tiles",new SunShardPuzzleRemainingTilesComponent(
-                this,localPuzzle,relX + 200,relY,3
+                this,localPuzzle,relX + 220,relY
         ));
+        InfoButton info = new InfoButton(relX - 25, relY + getScreenHeight() / 2 - 8,12,12,(button,matrices,mx,my)->{
+            List<FormattedCharSequence> spl = font.split(Component.translatable("solarcraft.sun_shard_puzzle.info"),200);
+            renderTooltip(matrices,spl,mx,my);
+        });
+        addRenderableWidget(info);
     }
 
     public void reinitPuzzle(){
@@ -160,16 +169,19 @@ public class SunShardPuzzleScreen extends DefaultScreen {
         return super.keyPressed(key, scanCode, modifiers);
     }
 
+    public static final ResourceLocation BACKGROUND = new ResourceLocation(SolarCraft.MOD_ID,"textures/gui/sun_shard_puzzle.png");
+
     @Override
     public void render(PoseStack matrices, int mx, int my, float pticks) {
         this.mx = mx;
         this.my = my;
-        super.render(matrices, mx, my, pticks);
-        fill(matrices,relX,relY,relX + getScreenWidth(),relY + getScreenHeight(),0xff111111);
+        renderBackground(matrices);
+        ClientHelpers.bindText(BACKGROUND);
+        blit(matrices,relX-11,relY-11,0,0,214,214,214,214);
         this.renderPuzzle(matrices,mx,my,pticks);
-        this.renderHeldTile(matrices,mx,my,pticks);
         this.renderComponents(matrices,mx,my,pticks,"remaining_tiles");
-
+        this.renderHeldTile(matrices,mx,my,pticks);
+        super.render(matrices, mx, my, pticks);
     }
 
     private void renderHeldTile(PoseStack matrices,int mx,int my,float pticks){

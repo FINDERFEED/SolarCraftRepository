@@ -24,10 +24,12 @@ public class SunShardPuzzleRemainingTilesComponent extends FDScreenComponent {
     private int frameThickness;
     private double deltaY;
 
-    protected SunShardPuzzleRemainingTilesComponent(DefaultScreen screen,Puzzle puzzle, int x, int y, int frameThickness){
+    public static final ResourceLocation REMAINING_TILES_BACKGROUND = new ResourceLocation(SolarCraft.MOD_ID,"textures/gui/remaining_tiles_back.png");
+
+    protected SunShardPuzzleRemainingTilesComponent(DefaultScreen screen,Puzzle puzzle, int x, int y){
         super(screen,x,y);
         this.localPuzzle = puzzle;
-        this.frameThickness = frameThickness;
+        this.frameThickness = 3;
     }
 
 
@@ -39,7 +41,9 @@ public class SunShardPuzzleRemainingTilesComponent extends FDScreenComponent {
     @Override
     public void render(PoseStack matrices, int mousex, int mousey, float pticks) {
         var tiles = localPuzzle.getRemainingTiles();
-
+        ClientHelpers.bindText(REMAINING_TILES_BACKGROUND);
+        Gui.blit(matrices,x-11,y-11,0,0,66,214,66,214);
+        RenderingTools.scissor(x,y,16*2 + frameThickness*4,192);
         for (int i = 0; i < tiles.size(); i++){
             PuzzleTile tile = tiles.get(i);
 
@@ -67,6 +71,7 @@ public class SunShardPuzzleRemainingTilesComponent extends FDScreenComponent {
             matrices.popPose();
             BufferUploader.drawWithShader(builder.end());
         }
+        RenderSystem.disableScissor();
     }
 
     @Override
@@ -77,7 +82,7 @@ public class SunShardPuzzleRemainingTilesComponent extends FDScreenComponent {
     @Override
     public void mouseClicked(double x, double y, int action) {
         if (this.screen instanceof SunShardPuzzleScreen screen &&
-                this.isMouseInBounds(x,y,(16 + frameThickness * 2)*2,300)){
+                this.isMouseInBounds(x,y,(16 + frameThickness * 2)*2,192)){
             int tile = getTileUnderMouse(x,y);
             if (tile != -1){
                 screen.setHeldTile(localPuzzle.getRemainingTiles().get(tile));

@@ -22,7 +22,6 @@ public enum ProgressionStage implements Iterable<Progression>{
     AFTER_LENS(PRE_LENS,"after_lens",Progression.RUNIC_ENERGY_REPEATER,Progression.CRAFT_SOLAR_LENS,Progression.TRANSMUTE_GEM),
     SOLAR_ENERGY(AFTER_LENS,"solar_energy",Progression.CRAFT_SOLAR_ENERGY_GENERATOR),
     DIMENSION(SOLAR_ENERGY,"dimension",Progression.DIMENSIONAL_SHARD_DUNGEON),
-
     CRYSTAL_CONSTRUCT(DIMENSION,"crystal_construct",Progression.KILL_CRYSTAL_BOSS),
     RUNIC_ELEMENTAL(CRYSTAL_CONSTRUCT,"dimension",Progression.KILL_RUNIC_ELEMENTAL)
     ;

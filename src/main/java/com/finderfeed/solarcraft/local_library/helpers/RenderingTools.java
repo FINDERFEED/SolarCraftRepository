@@ -1,7 +1,6 @@
 package com.finderfeed.solarcraft.local_library.helpers;
 
 import com.finderfeed.solarcraft.SolarCraft;
-import com.finderfeed.solarcraft.events.other_events.OBJModels;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.client.custom_tooltips.CustomTooltip;
 import com.finderfeed.solarcraft.client.screens.PositionBlockStateTileEntity;
@@ -19,6 +18,7 @@ import com.finderfeed.solarcraft.client.rendering.shaders.post_chains.PostChainP
 import com.finderfeed.solarcraft.client.rendering.shaders.post_chains.UniformPlusPlus;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.platform.Lighting;
+import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.vertex.*;
 
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -94,6 +94,15 @@ public class RenderingTools {
     public static final ResourceLocation TEXT_FIELD_VERTICAL = new ResourceLocation(SolarCraft.MOD_ID,"textures/gui/text_field_vertical.png");
 
 
+    public static void scissor(float x,float y, float boxX,float boxY){
+        Window window = Minecraft.getInstance().getWindow();
+        double scale = window.getGuiScale();
+        int nx = (int)(x*scale);
+        int ny = (int)(window.getHeight() - y*scale);
+        int nBX = (int)(boxX * scale);
+        int nBY = (int)(boxY * scale);
+        RenderSystem.enableScissor(nx,ny - nBY,nBX,nBY);
+    }
 
     public static void renderBox(PoseStack matrices,MultiBufferSource src,AABB box,float r,float g,float b,float a){
         matrices.pushPose();
@@ -809,7 +818,7 @@ public class RenderingTools {
             }
         }
 
-        return deleteStartingProbelsSmbdyTeachHimEnglish(returnable);
+        return deleteSpacesAtBeggining(returnable);
     }
 
     public static void renderStringObfuscated(PoseStack matrices,int x,int y,Component component,int ticker,int color){
@@ -824,7 +833,7 @@ public class RenderingTools {
     }
 
 
-    private static List<String> deleteStartingProbelsSmbdyTeachHimEnglish(List<String> strings){
+    private static List<String> deleteSpacesAtBeggining(List<String> strings){
         List<String> toReturn = new ArrayList<>();
         for (int i = 0;i < strings.size();i++){
             StringBuilder builder = new StringBuilder(strings.get(i));

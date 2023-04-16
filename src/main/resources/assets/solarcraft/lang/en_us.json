@@ -770,6 +770,10 @@
   "block.solarcraft.beam_input": "Beam Input",
   "item.solarcraft.sun_shard": "\"Sun Shard\"",
   "solarcraft.descriptions.item.sun_shard": "Heated up time",
-  "solarcraft.item.solar_wand.action.structure": "Structure Check mode: Click on a block that has a structure and it will check if its correct or not."
+  "solarcraft.item.solar_wand.action.structure": "Structure Check mode: Click on a block that has a structure and it will check if its correct or not.",
+  "solarcraft.sun_shard_puzzle.info": "Complete the puzzle to open the vault. R - rotate held tile.",
+  "ach.giant_vault": "Giant Vault",
+  "pre.giant_vault": "A massive plains structure hiding precious treasure.",
+  "aft.giant_vault": "A Sun Shard? Isn't the sun consists of only liquid and gas?"
 }
 

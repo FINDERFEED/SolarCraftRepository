@@ -38,7 +38,7 @@ public class ProgressionTree {
         tree.addProgressionRequirements(Progression.CRAFT_SOLAR_LENS,Progression.IMBUED_COLD_STAR,Progression.SOLAR_INFUSER,Progression.CATALYSTS);
         tree.addProgressionRequirements(Progression.CATALYSTS,Progression.SOLAR_INFUSER);
         tree.addProgressionRequirements(Progression.RUNIC_ENERGY_REPEATER,Progression.SOLAR_INFUSER,Progression.ALL_ENERGY_TYPES,Progression.RUNE_ENERGY_PYLON,Progression.CATALYSTS);
-        tree.addProgressionRequirements(Progression.CRAFT_SOLAR_ENERGY_GENERATOR,Progression.CRAFT_SOLAR_LENS,Progression.RUNIC_ENERGY_REPEATER);
+        tree.addProgressionRequirements(Progression.CRAFT_SOLAR_ENERGY_GENERATOR,Progression.CRAFT_SOLAR_LENS,Progression.RUNIC_ENERGY_REPEATER,Progression.GIANT_VAULT);
         tree.addProgressionRequirements(Progression.RADIANT_LAND,Progression.DIMENSIONAL_SHARD_DUNGEON,Progression.TRADE_FOR_BLUE_GEM,Progression.CRAFT_SOLAR_ENERGY_GENERATOR);
         tree.addProgressionRequirements(Progression.KILL_CRYSTAL_BOSS,Progression.RADIANT_LAND);
         tree.addProgressionRequirements(Progression.KILL_RUNIC_ELEMENTAL,Progression.KILL_CRYSTAL_BOSS);

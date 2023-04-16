@@ -5,6 +5,8 @@ import com.finderfeed.solarcraft.content.blocks.blockentities.SolarcraftBlockEnt
 import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.puzzle_template.Puzzle;
 import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.puzzle_template.PuzzleTemplateManager;
 import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.puzzle_tiles.PuzzleTile;
+import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.Progression;
+import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
 import com.finderfeed.solarcraft.packet_handler.packets.sun_shard_puzzle.SunShardPuzzleOpenScreen;
 import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
@@ -27,7 +29,7 @@ public class SunShardPuzzleBlockEntity extends PuzzleBlockEntity {
         super(SolarcraftTileEntityTypes.SUN_SHARD_PUZZLE_TILE.get(), p_155229_, p_155230_);
     }
 
-    public void onPutTile(PuzzleTile tile,int x,int y){
+    public void onPutTile(ServerPlayer player,PuzzleTile tile,int x,int y){
         var map = puzzle.getRemainingTypes();
         int amount = map.get(tile.getTileType());
         if (amount > 0) {
@@ -36,6 +38,7 @@ public class SunShardPuzzleBlockEntity extends PuzzleBlockEntity {
                 map.put(tile.getTileType(),amount - 1);
                 boolean completed = puzzle.checkCompleted();
                 if (completed) {
+                    Helpers.fireProgressionEvent(player, Progression.GIANT_VAULT);
                     this.solve(false);
                 }
             }

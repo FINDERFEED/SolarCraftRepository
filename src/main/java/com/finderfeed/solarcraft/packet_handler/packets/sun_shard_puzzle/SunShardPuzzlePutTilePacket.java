@@ -50,7 +50,7 @@ public class SunShardPuzzlePutTilePacket {
             if (sender != null){
                 Level world = sender.getLevel();
                 if (world.getBlockEntity(tilePos) instanceof SunShardPuzzleBlockEntity tile){
-                    tile.onPutTile(this.tile,x,y);
+                    tile.onPutTile(sender,this.tile,x,y);
                 }
             }
         });
