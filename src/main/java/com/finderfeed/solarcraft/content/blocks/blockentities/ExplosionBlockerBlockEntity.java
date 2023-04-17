@@ -1,8 +1,10 @@
 package com.finderfeed.solarcraft.content.blocks.blockentities;
 
 import com.finderfeed.solarcraft.client.particles.SolarcraftParticleTypes;
+import com.finderfeed.solarcraft.content.items.solar_wand.wand_actions.structure_check.IStructureOwner;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.helpers.Helpers;
+import com.finderfeed.solarcraft.helpers.multiblock.MultiblockStructure;
 import com.finderfeed.solarcraft.helpers.multiblock.Multiblocks;
 import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
 import net.minecraft.core.BlockPos;
@@ -11,7 +13,9 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 
-public class ExplosionBlockerBlockEntity extends SolarcraftBlockEntity{
+import java.util.List;
+
+public class ExplosionBlockerBlockEntity extends SolarcraftBlockEntity implements IStructureOwner {
 
     public static final int DEFENDING_RADIUS = 30;
     private boolean shouldRenderShield = true;
@@ -75,4 +79,8 @@ public class ExplosionBlockerBlockEntity extends SolarcraftBlockEntity{
     }
 
 
+    @Override
+    public List<MultiblockStructure> getMultiblocks() {
+        return List.of(Multiblocks.EXPLOSION_BLOCKER);
+    }
 }

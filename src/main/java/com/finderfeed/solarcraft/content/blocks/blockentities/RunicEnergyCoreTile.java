@@ -5,6 +5,7 @@ import com.finderfeed.solarcraft.content.blocks.blockentities.runic_energy.Abstr
 import com.finderfeed.solarcraft.content.items.runic_energy.RunicEnergyCost;
 import com.finderfeed.solarcraft.content.items.solar_wand.IWandable;
 import com.finderfeed.solarcraft.content.items.solar_wand.wand_actions.drain_runic_enenrgy_action.IREWandDrainable;
+import com.finderfeed.solarcraft.content.items.solar_wand.wand_actions.structure_check.IStructureOwner;
 import com.finderfeed.solarcraft.content.runic_network.algorithms.RunicEnergyPath;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.helpers.Helpers;
@@ -27,7 +28,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Arrays;
 import java.util.List;
 
-public class RunicEnergyCoreTile extends AbstractRunicEnergyContainer implements IREWandDrainable, IWandable {
+public class RunicEnergyCoreTile extends AbstractRunicEnergyContainer implements IREWandDrainable, IWandable, IStructureOwner {
 
     private boolean isDrainingEnergy = true;
 
@@ -183,5 +184,10 @@ public class RunicEnergyCoreTile extends AbstractRunicEnergyContainer implements
         ClientboundBlockEntityDataPacket pkt = super.getUpdatePacket();
         pkt.getTag().putBoolean("drainingEnergy",isDrainingEnergy);
         return pkt;
+    }
+
+    @Override
+    public List<MultiblockStructure> getMultiblocks() {
+        return List.of(Multiblocks.RUNIC_ENERGY_CORE);
     }
 }

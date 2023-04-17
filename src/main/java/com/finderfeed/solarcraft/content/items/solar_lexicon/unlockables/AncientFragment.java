@@ -30,6 +30,7 @@ import java.util.*;
 public class AncientFragment {
 
     public static final Map<Item,AncientFragment> CRAFTING_TYPE_ITEMS = new HashMap<>();
+    public static final Map<MultiblockStructure,AncientFragment> STRUCTURE_FRAGMENTS = new HashMap<>();
 
 
     public static List<AncientFragment> ALL_FRAGMENTS = new ArrayList<>();
@@ -188,6 +189,7 @@ public class AncientFragment {
     public static final AncientFragment DIMENSION_STRUCTURE = new AncientFragment(tx("solar_fragment.dimension_structure"),"dimension_structure",ProgressionStage.SOLAR_ENERGY.ALL_PROGRESSIONS,SubCategoryBase.STRUCTURES,CategoryBase.STRUCTURES, Multiblocks.RADIANT_LAND_PORTAL, DIMENSION_CORE.priority).addReferences("dimension_core");
     public static final AncientFragment ZAP_TURRET_STRUCTURE = new AncientFragment(tx("solar_fragment.zap_turret_structure"),"zap_turret_structure",ProgressionStage.SOLAR_ENERGY.ALL_PROGRESSIONS,SubCategoryBase.STRUCTURES,CategoryBase.STRUCTURES, Multiblocks.ZAP_TURRET, ZAP_TURRET.priority).addReferences("zap_turret");
     public static final AncientFragment EXPLOSION_BLOCKER_STRUCTURE = new AncientFragment(tx("solar_fragment.explosion_blocker_structure"),"explosion_blocker_structure",EXPLOSION_BLOCKER.neededProgression,SubCategoryBase.STRUCTURES,CategoryBase.STRUCTURES, Multiblocks.EXPLOSION_BLOCKER, EXPLOSION_BLOCKER.priority).addReferences("explosion_blocker");
+    public static final AncientFragment RUNIC_ENERGY_CORE_STRUCTURE = new AncientFragment(tx("solar_fragment.runic_energy_core_structure"),"runic_energy_core_structure",RUNIC_ENERGY_CORE.neededProgression,SubCategoryBase.STRUCTURES,CategoryBase.STRUCTURES, Multiblocks.RUNIC_ENERGY_CORE, RUNIC_ENERGY_CORE.priority).addReferences("runic_energy_core");
 
     public static final AncientFragment SOLAR_GOD_PICKAXE_UPGRADE = new AncientFragment(tx("solar_fragment.solar_god_pickaxe_upgrade"),"solar_god_pickaxe_upgrade",ProgressionStage.SOLAR_ENERGY.ALL_PROGRESSIONS,SubCategoryBase.UPGRADES,CategoryBase.UPGRADES,ls(ItemWithRecipe.of(SolarcraftItems.SOLAR_GOD_PICKAXE.get().getDefaultInstance(),"infusing_new_solar_god_pickaxe_upgrade")),tx("solar_pickaxe_upgrade.lore"),SolarcraftRecipeTypes.INFUSING.get(),8).addReferences("solar_god_pickaxe");
     public static final AncientFragment SOLAR_GOD_SWORD_UPGRADE = new AncientFragment(tx("solar_fragment.solar_god_sword_upgrade"),"solar_god_sword_upgrade",ProgressionStage.SOLAR_ENERGY.ALL_PROGRESSIONS,SubCategoryBase.UPGRADES,CategoryBase.UPGRADES,ls(ItemWithRecipe.of(SolarcraftItems.SOLAR_GOD_SWORD.get().getDefaultInstance(),"infusing_new_solar_god_sword_upgrade")),tx("solar_god_sword_upgrade.lore"),SolarcraftRecipeTypes.INFUSING.get(),8).addReferences("solar_god_sword");
@@ -264,18 +266,11 @@ public class AncientFragment {
         }
     }
 
-//    AncientFragment(Component translation, String id, Progression[] neededProgression, SubCategoryBase subBase, CategoryBase catBase, ItemWithRecipe item, Component itemLore, RecipeType<?> recipeType, int priority){
-//        this(translation,id,neededProgression,subBase,catBase,Type.ITEM,item.getItem().getItem(),priority,false);
-//        this.item = item;
-//        this.itemLore = itemLore;
-//        this.recipeType = recipeType;
-//
-//    }
 
     AncientFragment(Component translation, String id, Progression[] neededProgression, SubCategoryBase subBase, CategoryBase catBase, MultiblockStructure structure, int priority){
         this(translation,id,neededProgression,subBase,catBase,Type.STRUCTURE,structure.mainBlock.getBlock().asItem(),priority,false);
         this.structure = structure;
-
+        STRUCTURE_FRAGMENTS.putIfAbsent(structure,this);
     }
 
     AncientFragment(Component translation, String id, Progression[] neededProgression, SubCategoryBase subBase, CategoryBase catBase, Item Icon, Component lore, int priority){

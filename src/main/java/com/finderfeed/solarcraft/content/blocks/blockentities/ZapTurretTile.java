@@ -1,6 +1,8 @@
 package com.finderfeed.solarcraft.content.blocks.blockentities;
 
+import com.finderfeed.solarcraft.content.items.solar_wand.wand_actions.structure_check.IStructureOwner;
 import com.finderfeed.solarcraft.helpers.Helpers;
+import com.finderfeed.solarcraft.helpers.multiblock.MultiblockStructure;
 import com.finderfeed.solarcraft.helpers.multiblock.Multiblocks;
 import com.finderfeed.solarcraft.local_library.helpers.CompoundNBTHelper;
 import com.finderfeed.solarcraft.local_library.helpers.FDMathHelper;
@@ -28,10 +30,10 @@ import java.util.List;
 import java.util.UUID;
 
 
-public class ZapTurretTile extends BlockEntity implements OwnedBlock {
+public class ZapTurretTile extends BlockEntity implements OwnedBlock, IStructureOwner {
 
     private int attackTick = 0;
-    private UUID OWNER;
+    private UUID owner;
     private boolean attack = false;
     private List<Vec3> targets = new ArrayList<>();
 
@@ -154,16 +156,20 @@ public class ZapTurretTile extends BlockEntity implements OwnedBlock {
 
     @Override
     public UUID getOwner() {
-        return OWNER;
+        return owner;
     }
 
     @Override
     public void setOwner(UUID OWNER) {
-        this.OWNER = OWNER;
+        this.owner = OWNER;
     }
 
     public boolean isWorking(){
         return Multiblocks.ZAP_TURRET.check(level,worldPosition,true);
     }
 
+    @Override
+    public List<MultiblockStructure> getMultiblocks() {
+        return List.of(Multiblocks.ZAP_TURRET);
+    }
 }

@@ -40,9 +40,6 @@ public class SolarCraftCommands {
     public static void register(CommandDispatcher<CommandSourceStack> disp){
         LiteralCommandNode<CommandSourceStack> cmd = disp.register(
                 Commands.literal("solarcraft").requires((p)-> p.hasPermission(2))
-//                        .then(UnlockProgressionsCommand.register())
-//                        .then(refreshAchievements.register())
-//                        .then(AchievementsHelp.register())
 
                         .then(Commands.literal("progressions")
                                 .then(Commands.literal("help").executes((e)->progressionsHelp(e.getSource())))

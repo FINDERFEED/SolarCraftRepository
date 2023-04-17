@@ -2,6 +2,7 @@ package com.finderfeed.solarcraft.local_library.entities.bossbar.server;
 
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.local_library.entities.bossbar.client.ActiveBossBar;
+import com.finderfeed.solarcraft.packet_handler.ClientPacketHandles;
 import com.finderfeed.solarcraft.registries.overlays.SolarcraftOverlays;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
@@ -47,7 +48,7 @@ public class CustomBossEventInitPacket {
 
     public void handle(Supplier<NetworkEvent.Context> ctx){
         ctx.get().enqueueWork(()->{
-            ClientHelpers.handleServerBossInitPacket(uuid,name,rendererId,remove,entityId);
+            ClientPacketHandles.handleServerBossInitPacket(uuid,name,rendererId,remove,entityId);
         });
         ctx.get().setPacketHandled(true);
     }

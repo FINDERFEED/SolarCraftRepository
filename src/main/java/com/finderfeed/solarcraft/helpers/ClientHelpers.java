@@ -17,6 +17,7 @@ import com.finderfeed.solarcraft.content.items.solar_wand.wand_actions.structure
 import com.finderfeed.solarcraft.events.RenderEventsHandler;
 import com.finderfeed.solarcraft.events.other_events.event_handler.ClientEventsHandler;
 import com.finderfeed.solarcraft.helpers.multiblock.MultiblockStructure;
+import com.finderfeed.solarcraft.helpers.multiblock.Multiblocks;
 import com.finderfeed.solarcraft.local_library.effects.LightningBoltPath;
 import com.finderfeed.solarcraft.local_library.entities.bossbar.client.ActiveBossBar;
 import com.finderfeed.solarcraft.local_library.helpers.FDMathHelper;
@@ -73,6 +74,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 
 public class ClientHelpers {
@@ -483,47 +485,8 @@ public class ClientHelpers {
         ClientEventsHandler.setCameraShakeEffect(new CameraShake(inTime,stayTime,outTime,spread));
     }
 
-    public static void handleDimBreakPacket(){
-        ClientHelpers.playsoundInEars(SolarcraftSounds.DIMENSION_BREAK.get(),1f,0.5f);
-        ClientHelpers.flash(100,40,40);
-        ClientHelpers.shake(50,50,20,7.5f);
-    }
-
-    public static void handleServerBossInitPacket(UUID uuid,Component name,String rendererId,boolean remove,int entityId){
-        if (!remove) {
-            SolarcraftOverlays.BossBars.addBossBar(new ActiveBossBar(uuid, name, 1f, rendererId,entityId));
-        }else{
-            SolarcraftOverlays.BossBars.removeBossBar(uuid);
-        }
-    }
-
-    public static void handleServerBossEventUpdateProgressPacket(UUID id,float progress){
-        ActiveBossBar bar = SolarcraftOverlays.BossBars.getBossBar(id);
-        if (bar != null){
-            bar.setProgress(progress);
-        }
-    }
-
     public static void handleClientREDrainWandAction(){
         Minecraft.getInstance().setScreen(new RETypeSelectionScreen());
-    }
-
-    public static void handleSunShardOpenScreenPacket(Puzzle puzzle,BlockPos tilepos){
-        Minecraft.getInstance().setScreen(new SunShardPuzzleScreen(puzzle,tilepos));
-    }
-
-    public static void handleUpdateItemEntityPacket(int entityId,CompoundTag tag){
-        Level world = getLevel();
-        if (world.getEntity(entityId) instanceof ItemEntity item){
-            item.getItem().setTag(tag);
-        }
-    }
-
-    public static void handleStructureListWandAction(BlockPos clickedPos,List<MultiblockStructure> list){
-        Minecraft.getInstance().setScreen(new StructureSelectionScreen(clickedPos,list));
-    }
-    public static void handleStructureWandAction(BlockPos clickedPos,MultiblockStructure structure){
-        StructureSelectionScreen.processStructure(clickedPos,structure,3);
     }
 
     public static class Particles {

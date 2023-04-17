@@ -1,7 +1,9 @@
 package com.finderfeed.solarcraft.content.blocks.solar_energy;
 
 import com.finderfeed.solarcraft.content.blocks.blockentities.SolarcraftBlockEntity;
+import com.finderfeed.solarcraft.content.items.solar_wand.wand_actions.structure_check.IStructureOwner;
 import com.finderfeed.solarcraft.helpers.Helpers;
+import com.finderfeed.solarcraft.helpers.multiblock.MultiblockStructure;
 import com.finderfeed.solarcraft.helpers.multiblock.Multiblocks;
 import com.finderfeed.solarcraft.local_library.helpers.CompoundNBTHelper;
 import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
@@ -17,7 +19,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class SolarEnergyCoreTile extends SolarcraftBlockEntity implements SolarEnergyContainer,Bindable{
+public class SolarEnergyCoreTile extends SolarcraftBlockEntity implements SolarEnergyContainer,Bindable, IStructureOwner {
 
     public static final int MAX_ENERGY = 1000000;
     private List<BlockPos> bindedTiles = new ArrayList<>();
@@ -138,5 +140,10 @@ public class SolarEnergyCoreTile extends SolarcraftBlockEntity implements SolarE
         }
 
         return false;
+    }
+
+    @Override
+    public List<MultiblockStructure> getMultiblocks() {
+        return List.of(Multiblocks.SOLAR_CORE);
     }
 }

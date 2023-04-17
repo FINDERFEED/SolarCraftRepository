@@ -2,6 +2,7 @@ package com.finderfeed.solarcraft.local_library.entities.bossbar.server;
 
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.local_library.entities.bossbar.client.ActiveBossBar;
+import com.finderfeed.solarcraft.packet_handler.ClientPacketHandles;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.network.NetworkEvent;
 
@@ -32,7 +33,7 @@ public class ServerBossEventUpdateProgress {
 
     public void handle(Supplier<NetworkEvent.Context> ctx) {
         ctx.get().enqueueWork(()->{
-            ClientHelpers.handleServerBossEventUpdateProgressPacket(id,progress);
+            ClientPacketHandles.handleServerBossEventUpdateProgressPacket(id,progress);
         });
         ctx.get().setPacketHandled(true);
     }

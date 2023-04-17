@@ -15,6 +15,7 @@ import com.finderfeed.solarcraft.content.items.solar_wand.WandAction;
 import com.finderfeed.solarcraft.content.items.solar_wand.wand_actions.drain_runic_enenrgy_action.REDrainWandAction;
 import com.finderfeed.solarcraft.content.items.solar_wand.wand_actions.drain_runic_enenrgy_action.REDrainWandActionData;
 import com.finderfeed.solarcraft.content.items.solar_wand.wand_actions.drain_runic_enenrgy_action.REDrainWandActionDataSerializer;
+import com.finderfeed.solarcraft.content.items.solar_wand.wand_actions.structure_check.IStructureOwner;
 import com.finderfeed.solarcraft.content.runic_network.repeater.BaseRepeaterTile;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.local_library.entities.bossbar.client.ActiveBossBar;
@@ -262,6 +263,9 @@ public class SolarcraftOverlays {
 
                             || ((action == SolarCraftWandActionRegistry.SOLAR_NETWORK_BINDER_WAND_ACTION)
                             && (tile instanceof Bindable))
+
+                            || ((action == SolarCraftWandActionRegistry.CHECK_STRUCTURE_WAND_ACTION)
+                            && (tile instanceof IStructureOwner))
                     ) {
                         ItemStack stack = SolarcraftItems.SOLAR_WAND.get().getDefaultInstance();
                         SolarWandItem.setWandAction(stack,action.getRegistryName());

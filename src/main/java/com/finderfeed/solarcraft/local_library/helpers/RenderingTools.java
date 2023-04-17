@@ -94,6 +94,28 @@ public class RenderingTools {
     public static final ResourceLocation TEXT_FIELD_VERTICAL = new ResourceLocation(SolarCraft.MOD_ID,"textures/gui/text_field_vertical.png");
 
 
+    public static void renderTextureFromCenter(PoseStack matrices,float centerX,float centerY,float width,float height,float scale){
+        BufferBuilder builder = Tesselator.getInstance().getBuilder();
+        builder.begin(VertexFormat.Mode.QUADS,DefaultVertexFormat.POSITION_TEX);
+
+        matrices.pushPose();
+        matrices.translate(centerX,centerY,0);
+        matrices.scale(scale,scale,scale);
+
+        Matrix4f m = matrices.last().pose();
+
+        float w2 = width/2;
+        float h2 = height/2;
+
+        builder.vertex(m,- w2,+ h2,0).uv(0,1).endVertex();
+        builder.vertex(m,+ w2,+ h2,0).uv(1,1).endVertex();
+        builder.vertex(m,+ w2,- h2,0).uv(1,0).endVertex();
+        builder.vertex(m,- w2,- h2,0).uv(0,0).endVertex();
+
+        BufferUploader.drawWithShader(builder.end());
+        matrices.popPose();
+    }
+
     public static void scissor(float x,float y, float boxX,float boxY){
         Window window = Minecraft.getInstance().getWindow();
         double scale = window.getGuiScale();

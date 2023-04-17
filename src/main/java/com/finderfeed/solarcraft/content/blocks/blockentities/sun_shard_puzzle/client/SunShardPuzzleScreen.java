@@ -135,7 +135,7 @@ public class SunShardPuzzleScreen extends DefaultScreen {
                     }
                     heldTile = null;
                     this.reinitPuzzle();
-                    System.out.println("Puzzle state: " + localPuzzle.checkCompleted());
+                    //System.out.println("Puzzle state: " + localPuzzle.checkCompleted());
                 }else{
                     localPuzzle.getRemainingTiles().add(heldTile);
                     heldTile = null;

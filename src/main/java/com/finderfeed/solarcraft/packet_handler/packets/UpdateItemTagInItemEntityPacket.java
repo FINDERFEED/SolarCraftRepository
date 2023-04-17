@@ -1,6 +1,7 @@
 package com.finderfeed.solarcraft.packet_handler.packets;
 
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
+import com.finderfeed.solarcraft.packet_handler.ClientPacketHandles;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -31,7 +32,7 @@ public class UpdateItemTagInItemEntityPacket {
 
     public void handle(Supplier<NetworkEvent.Context> ctx) {
         ctx.get().enqueueWork(() -> {
-            ClientHelpers.handleUpdateItemEntityPacket(entityId,itemStackTag);
+            ClientPacketHandles.handleUpdateItemEntityPacket(entityId,itemStackTag);
         });
         ctx.get().setPacketHandled(true);
     }

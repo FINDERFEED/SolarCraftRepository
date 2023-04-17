@@ -1,7 +1,10 @@
 package com.finderfeed.solarcraft.content.items.solar_wand.wand_actions.structure_check;
 
 
+import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
+import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.ProgressionHelper;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
+import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.helpers.multiblock.MultiblockStructure;
 import com.finderfeed.solarcraft.local_library.client.screens.DefaultScreen;
 import com.finderfeed.solarcraft.local_library.client.screens.RadialMenu;
@@ -45,7 +48,13 @@ public class StructureSelectionScreen extends DefaultScreen {
 
         for (int i = 0; i < structures.size(); i++){
             MultiblockStructure structure  = structures.get(i);
-
+            try {
+                if (!ProgressionHelper.doPlayerHasFragment(minecraft.player, AncientFragment.STRUCTURE_FRAGMENTS.get(structure))) {
+                    continue;
+                }
+            }catch (NullPointerException e){
+                e.printStackTrace();
+            }
             RadialMenu.RadialMenuSection section = new RadialMenu.RadialMenuSection(
                     ()->{
                         processStructure(checkPos,structure,3);
@@ -82,15 +91,18 @@ public class StructureSelectionScreen extends DefaultScreen {
             for (int i = 0; i < Math.min(blocksToShow,incStates.size());i++){
                 processIncorrectState(incStates.get(i));
             }
+            if (incStates.size() > blocksToShow){
+                minecraft.player.sendSystemMessage(Component.literal("And more...").withStyle(ChatFormatting.RED));
+            }
         }
     }
 
     private static void processIncorrectState(MultiblockStructure.IncorrectState incState){
         Minecraft minecraft = Minecraft.getInstance();
         if (incState.tag() == null){
-            String message1 = "Structure incorrect at: " + incState.atPos();
-            String message2 = "BlockState should be: " + incState.correct();
-            String message3 = "Now: " + incState.incorrect();
+            String message1 = "Structure incorrect at: " + ChatFormatting.GOLD + incState.atPos();
+            String message2 = "BlockState should be: "  + ChatFormatting.GOLD +incState.correct();
+            String message3 = "Now: " + ChatFormatting.GOLD +  incState.incorrect();
             minecraft.player.sendSystemMessage(Component.literal(message1)
                     .withStyle(ChatFormatting.RED));
             minecraft.player.sendSystemMessage(Component.literal(message2)
@@ -98,8 +110,8 @@ public class StructureSelectionScreen extends DefaultScreen {
             minecraft.player.sendSystemMessage(Component.literal(message3)
                     .withStyle(ChatFormatting.RED));
         }else{
-            String message1 = "Structure incorrect at: " + incState.atPos();
-            String message2 = "BlockState is not in " + incState.tag() + " tag";
+            String message1 = "Structure incorrect at: " + ChatFormatting.GOLD + incState.atPos();
+            String message2 = "BlockState is not in " + ChatFormatting.GOLD + incState.tag() + " tag";
             minecraft.player.sendSystemMessage(Component.literal(message1)
                     .withStyle(ChatFormatting.RED));
             minecraft.player.sendSystemMessage(Component.literal(message2)

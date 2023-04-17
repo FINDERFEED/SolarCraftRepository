@@ -25,15 +25,9 @@ public class BeamReflectorBlock extends Block implements EntityBlock {
     @Override
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult res) {
         if (!level.isClientSide && level.getBlockEntity(pos) instanceof BeamReflectorTile tile && hand == InteractionHand.MAIN_HAND){
-            if (!player.isCrouching()) {
-                tile.onUse(res.getDirection());
-                player.swing(hand);
-            }else{
-//                tile.getDirections().add(res.getDirection());
-//                Helpers.updateTile(tile);
-            }
+            tile.onUse(res.getDirection());
         }
-        return super.use(state, level, pos, player, hand, res);
+        return InteractionResult.SUCCESS;
     }
 
     @Nullable

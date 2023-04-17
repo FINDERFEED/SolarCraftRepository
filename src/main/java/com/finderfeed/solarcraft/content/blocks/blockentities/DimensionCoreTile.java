@@ -1,9 +1,11 @@
 package com.finderfeed.solarcraft.content.blocks.blockentities;
 
 import com.finderfeed.solarcraft.client.particles.SolarcraftParticleTypes;
+import com.finderfeed.solarcraft.content.items.solar_wand.wand_actions.structure_check.IStructureOwner;
 import com.finderfeed.solarcraft.events.other_events.event_handler.EventHandler;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.helpers.Helpers;
+import com.finderfeed.solarcraft.helpers.multiblock.MultiblockStructure;
 import com.finderfeed.solarcraft.helpers.multiblock.Multiblocks;
 import com.finderfeed.solarcraft.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarcraft.registries.blocks.SolarcraftBlocks;
@@ -20,7 +22,9 @@ import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
-public class DimensionCoreTile extends BlockEntity {
+import java.util.List;
+
+public class DimensionCoreTile extends BlockEntity implements IStructureOwner {
 
     private boolean structureCorrect = false;
 
@@ -152,5 +156,10 @@ public class DimensionCoreTile extends BlockEntity {
     @Override
     public AABB getRenderBoundingBox() {
         return Helpers.createAABBWithRadius(Helpers.getBlockCenter(worldPosition).add(0,3,0),3,3);
+    }
+
+    @Override
+    public List<MultiblockStructure> getMultiblocks() {
+        return List.of(Multiblocks.RADIANT_LAND_PORTAL);
     }
 }

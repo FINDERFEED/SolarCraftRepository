@@ -3,6 +3,7 @@ package com.finderfeed.solarcraft.packet_handler.packets.sun_shard_puzzle;
 import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.client.SunShardPuzzleScreen;
 import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.puzzle_template.Puzzle;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
+import com.finderfeed.solarcraft.packet_handler.ClientPacketHandles;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
@@ -37,7 +38,7 @@ public class SunShardPuzzleOpenScreen {
 
     public void handle(Supplier<NetworkEvent.Context> ctx){
         ctx.get().enqueueWork(()->{
-            ClientHelpers.handleSunShardOpenScreenPacket(puzzle,pos);
+            ClientPacketHandles.handleSunShardOpenScreenPacket(puzzle,pos);
         });
         ctx.get().setPacketHandled(true);
     }

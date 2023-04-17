@@ -1,6 +1,7 @@
 package com.finderfeed.solarcraft.packet_handler.packets;
 
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
+import com.finderfeed.solarcraft.packet_handler.ClientPacketHandles;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.network.NetworkEvent;
 
@@ -20,7 +21,7 @@ public class DimensionBreakPacket {
 
     }
     public void handle(Supplier<NetworkEvent.Context> ctx){
-        ctx.get().enqueueWork(ClientHelpers::handleDimBreakPacket);
+        ctx.get().enqueueWork(ClientPacketHandles::handleDimBreakPacket);
         ctx.get().setPacketHandled(true);
     }
 
