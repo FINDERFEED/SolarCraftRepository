@@ -33,12 +33,18 @@ public class RunicTableContainer extends AbstractContainerMenu {
     public RunicTableContainer(int windowId, Inventory playerInv,BlockPos tilepos,boolean hideRuneButtons) {
         super(SolarcraftContainers.RUNIC_TABLE_CONTAINER.get(), windowId);
         this.hideRuneButtons = hideRuneButtons;
-        Level world= playerInv.player.level;
+        Level world = playerInv.player.level;
         this.tile = (RunicTableTileEntity)world.getBlockEntity(tilepos);
         this.inventory = tile.getInventory();
 
 
-        this.addSlot(new FragmentSlot(inventory,0,8,24));
+        this.addSlot(new FragmentSlot(inventory,0,8,24){
+            @Override
+            public void setChanged() {
+                super.setChanged();
+                tile.setChanged();
+            }
+        });
         int idx = 1;
         for (int g = 0; g < 2;g++) {
             for (int i = 0; i < 4; i++) {
@@ -46,6 +52,12 @@ public class RunicTableContainer extends AbstractContainerMenu {
                     @Override
                     public boolean mayPlace(@Nonnull ItemStack stack) {
                         return stack.getItem() instanceof RuneItem;
+                    }
+
+                    @Override
+                    public void setChanged() {
+                        super.setChanged();
+                        tile.setChanged();
                     }
                 });
                 idx++;

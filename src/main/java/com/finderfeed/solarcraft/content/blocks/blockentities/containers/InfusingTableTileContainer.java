@@ -1,6 +1,7 @@
 package com.finderfeed.solarcraft.content.blocks.blockentities.containers;
 
 import com.finderfeed.solarcraft.content.blocks.blockentities.InfusingTableTile;
+import com.finderfeed.solarcraft.content.blocks.blockentities.containers.misc.TESlotItemHandler;
 import com.finderfeed.solarcraft.registries.containers.SolarcraftContainers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
@@ -35,10 +36,10 @@ public class InfusingTableTileContainer extends AbstractContainerMenu {
 
         for(int i = 0; i < 3; ++i) {
             for(int j = 0; j < 3; ++j) {
-                this.addSlot(new SlotItemHandler(this.inventory, j + i * 3, 64 + j * 18 - 2, 17 + i * 18 + 2));
+                this.addSlot(new TESlotItemHandler(tile,this.inventory, j + i * 3, 64 + j * 18 - 2, 17 + i * 18 + 2));
             }
         }
-        this.addSlot(new SlotItemHandler(inventory,9,150,10){
+        this.addSlot(new TESlotItemHandler(tile,inventory,9,150,10){
             @Override
             public boolean mayPlace(@Nonnull ItemStack stack) {
                 return false;

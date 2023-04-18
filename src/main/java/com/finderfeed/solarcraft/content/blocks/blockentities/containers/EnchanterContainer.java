@@ -2,6 +2,7 @@ package com.finderfeed.solarcraft.content.blocks.blockentities.containers;
 
 import com.finderfeed.solarcraft.config.enchanter_config.EnchanterConfig;
 import com.finderfeed.solarcraft.content.blocks.blockentities.EnchanterBlockEntity;
+import com.finderfeed.solarcraft.content.blocks.blockentities.containers.misc.TESlotItemHandler;
 import com.finderfeed.solarcraft.registries.containers.SolarcraftContainers;
 import com.google.gson.JsonParser;
 import net.minecraft.core.BlockPos;
@@ -36,7 +37,7 @@ public class EnchanterContainer extends AbstractContainerMenu {
         this.tile = (EnchanterBlockEntity) world.getBlockEntity(tilepos);
         this.inventory = tile.getInventory();
 
-        this.addSlot(new SlotItemHandler(this.inventory, 0, 134 + 26 - 118, 12));
+        this.addSlot(new TESlotItemHandler(tile,this.inventory, 0, 134 + 26 - 118, 12));
 
         for(int l = 0; l < 3; ++l) {
             for(int j1 = 0; j1 < 9; ++j1) {

@@ -1,5 +1,6 @@
 package com.finderfeed.solarcraft.content.blocks.blockentities.containers;
 
+import com.finderfeed.solarcraft.content.blocks.blockentities.containers.misc.TESlotItemHandler;
 import com.finderfeed.solarcraft.content.items.primitive.solacraft_item_classes.SolarcraftItem;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.content.blocks.blockentities.RunicEnergyChargerTileEntity;
@@ -31,13 +32,13 @@ public class RunicEnergyChargerContainer extends AbstractContainerMenu {
         super(SolarcraftContainers.RUNIC_ENERGY_CHARGER.get(), id);
         this.tile = (RunicEnergyChargerTileEntity) inv.player.level.getBlockEntity(pos);
 
-        this.addSlot(new SlotItemHandler(tile.getInventory(), 0,   25, 35-4){
+        this.addSlot(new TESlotItemHandler(tile,tile.getInventory(), 0,   25, 35-4){
             @Override
             public boolean mayPlace(@NotNull ItemStack stack) {
                 return stack.getItem() instanceof RuneItem;
             }
         });
-        this.addSlot(new SlotItemHandler(tile.getInventory(), 1, 25+108, 35-4){
+        this.addSlot(new TESlotItemHandler(tile,tile.getInventory(), 1, 25+108, 35-4){
             @Override
             public boolean mayPlace(@NotNull ItemStack stack) {
                 return stack.getItem() instanceof IRunicEnergyUser && stack.getItem() != SolarcraftItems.SOLAR_WAND.get();
