@@ -1,6 +1,7 @@
 package com.finderfeed.solarcraft;
 
 
+import com.finderfeed.solarcraft.config.JsonConfig;
 import com.finderfeed.solarcraft.content.abilities.meteorite.MeteoriteProjectile;
 import com.finderfeed.solarcraft.content.abilities.solar_strike.SolarStrikeEntity;
 import com.finderfeed.solarcraft.content.abilities.SolarStunEffect;
@@ -21,6 +22,7 @@ import com.finderfeed.solarcraft.content.blocks.infusing_table_things.*;
 import com.finderfeed.solarcraft.content.blocks.infusing_table_things.infusing_pool.InfusingStand;
 import com.finderfeed.solarcraft.content.items.item_tiers.SolarCraftToolTiers;
 import com.finderfeed.solarcraft.client.particles.SolarcraftParticleTypes;
+import com.finderfeed.solarcraft.registries.ConfigRegistry;
 import com.finderfeed.solarcraft.registries.SolarcraftGamerules;
 import com.finderfeed.solarcraft.registries.Tags;
 import com.finderfeed.solarcraft.registries.abilities.AbilitiesRegistry;
@@ -194,6 +196,7 @@ public class SolarCraft
         SolarcraftLootModifiers.MODIFIERS.register(bus);
         SolarcraftCommandArgumentTypes.ARGUMENT_TYPES.register(bus);
         SolarcraftGamerules.init();
+        ConfigRegistry.init();
         // Register the setup method for modloading
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
 
@@ -201,11 +204,6 @@ public class SolarCraft
 
         FMLJavaModLoadingContext.get().getModEventBus().addListener(LazyConfiguredFeatures::registerConfiguredFeatures);
 
-
-
-
-//        FMLJavaModLoadingContext.get().getModEventBus().addGenericListener(Feature.class,EventPriority.HIGHEST,FeaturesRegistry::registerFeatures);
-//        FMLJavaModLoadingContext.get().getModEventBus().addListener(FeaturesRegistry::addCarvableBlocks);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(FeaturesRegistry::registerConfiguredFeatures);
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, SolarcraftConfig.SPEC,"solarcraft-config.toml");
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, SolarcraftClientConfig.SPEC,"solarcraft-client-config.toml");
@@ -215,6 +213,9 @@ public class SolarCraft
         SCPacketHandler.registerMessages();
 //        SolarForgeStructures.STRUCTURES.register(bus);
 
+        for (JsonConfig early : ConfigRegistry.EARLY_LOAD_CONFIGS.values()){
+            early.init();
+        }
     }
 
 
@@ -223,6 +224,9 @@ public class SolarCraft
     {
         JsonFragmentsHelper.setupJSON();
         EnchanterConfigInit.setupJSON();
+        for (JsonConfig post : ConfigRegistry.POST_LOAD_CONFIGS.values()){
+            post.init();
+        }
         Tags.init();
         AbilitiesRegistry.init();
         SolarCraftWandActionRegistry.init();

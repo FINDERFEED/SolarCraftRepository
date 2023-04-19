@@ -91,6 +91,7 @@ public class SCPacketHandler {
         INSTANCE.registerMessage(nextID(), BlockBreakPacket.class, BlockBreakPacket::toBytes, BlockBreakPacket::new, BlockBreakPacket::handle);
         INSTANCE.registerMessage(nextID(), UpdateItemTagInItemEntityPacket.class, UpdateItemTagInItemEntityPacket::toBytes, UpdateItemTagInItemEntityPacket::new, UpdateItemTagInItemEntityPacket::handle);
         INSTANCE.registerMessage(nextID(), WandStructureActionPacket.class, WandStructureActionPacket::toBytes, WandStructureActionPacket::new, WandStructureActionPacket::handle);
+        INSTANCE.registerMessage(nextID(), SendConfigsToClientPacket.class, SendConfigsToClientPacket::toBytes, SendConfigsToClientPacket::new, SendConfigsToClientPacket::handle);
 
 
     }

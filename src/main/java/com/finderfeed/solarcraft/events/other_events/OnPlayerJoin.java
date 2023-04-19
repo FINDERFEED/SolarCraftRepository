@@ -20,17 +20,14 @@ import net.minecraftforge.fml.common.Mod;
 import java.util.List;
 
 
-@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE,modid = SolarCraft.MOD_ID)
+//@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE,modid = SolarCraft.MOD_ID)
 public class OnPlayerJoin {
-
+/*
     @SubscribeEvent
     public static void onPlayerJoin(final PlayerEvent.PlayerLoggedInEvent event) {
         if (event.getEntity() != null) {
             Player player = event.getEntity();
             if (player instanceof  ServerPlayer sPlayer) {
-//                if (!sPlayer.getPersistentData().getBoolean("recieved_solar_lexicon")){
-//                    sPlayer.addItem(SolarcraftItems.SOLAR_LEXICON.get().getDefaultInstance());
-//                }
 
                 for (RunicEnergy.Type type : RunicEnergy.Type.values()) {
                     Helpers.updateRunicEnergyOnClient(type, RunicEnergy.getEnergy(player, type), player);
@@ -76,5 +73,5 @@ public class OnPlayerJoin {
             EnchanterConfigInit.readJson();
         }
     }
-
+*/
 }

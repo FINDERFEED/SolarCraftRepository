@@ -1,5 +1,6 @@
 package com.finderfeed.solarcraft.packet_handler;
 
+import com.finderfeed.solarcraft.config.JsonConfig;
 import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.client.SunShardPuzzleScreen;
 import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.puzzle_template.Puzzle;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
@@ -10,8 +11,11 @@ import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.helpers.multiblock.MultiblockStructure;
 import com.finderfeed.solarcraft.helpers.multiblock.Multiblocks;
 import com.finderfeed.solarcraft.local_library.entities.bossbar.client.ActiveBossBar;
+import com.finderfeed.solarcraft.registries.ConfigRegistry;
 import com.finderfeed.solarcraft.registries.overlays.SolarcraftOverlays;
 import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -86,6 +90,20 @@ public class ClientPacketHandles {
             }
         }else{
             ClientHelpers.getClientPlayer().sendSystemMessage(Component.literal("You don't have structure fragment(s) for this structure!"));
+        }
+    }
+
+    public static void handleClientConfigsPacket(List<String> strs){
+        for (int i = 0; i < strs.size();i += 2){
+            String id = strs.get(i);
+            String json = strs.get(i + 1);
+            JsonObject object = JsonParser.parseString(json).getAsJsonObject();
+            JsonConfig config;
+            if ((config = ConfigRegistry.EARLY_LOAD_CONFIGS.get(id)) != null){
+                config.deserialize(object);
+            }else if ((config = ConfigRegistry.POST_LOAD_CONFIGS.get(id)) != null){
+                config.deserialize(object);
+            }
         }
     }
 }

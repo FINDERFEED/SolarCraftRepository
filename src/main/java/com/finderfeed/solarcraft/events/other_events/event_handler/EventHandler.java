@@ -1,7 +1,10 @@
 package com.finderfeed.solarcraft.events.other_events.event_handler;
 
 
+import com.finderfeed.solarcraft.config.JsonFragmentsHelper;
+import com.finderfeed.solarcraft.config.enchanter_config.EnchanterConfigInit;
 import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.puzzle_template.PuzzleTemplateManager;
+import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarcraft.events.my_events.ClientsideBlockBreakEvent;
 import com.finderfeed.solarcraft.events.my_events.ClientsideBlockPlaceEvent;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
@@ -27,6 +30,8 @@ import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
 import com.finderfeed.solarcraft.packet_handler.packets.BlockBreakPacket;
 import com.finderfeed.solarcraft.packet_handler.packets.BlockPlacePacket;
 import com.finderfeed.solarcraft.packet_handler.packets.DisablePlayerFlightPacket;
+import com.finderfeed.solarcraft.packet_handler.packets.SendConfigsToClientPacket;
+import com.finderfeed.solarcraft.registries.ConfigRegistry;
 import com.finderfeed.solarcraft.registries.SolarcraftDamageSources;
 import com.finderfeed.solarcraft.registries.Tags;
 import com.finderfeed.solarcraft.registries.abilities.AbilitiesRegistry;
@@ -71,6 +76,7 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerXpEvent;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.event.level.ExplosionEvent;
+import net.minecraftforge.event.server.ServerStartedEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -476,5 +482,65 @@ public class EventHandler {
     @SubscribeEvent
     public static void registerReloadableResourceListeners(AddReloadListenerEvent event){
         event.addListener(PuzzleTemplateManager.INSTANCE);
+    }
+
+    @SubscribeEvent
+    public static void onPlayerJoin(final PlayerEvent.PlayerLoggedInEvent event) {
+        if (event.getEntity() != null) {
+            Player player = event.getEntity();
+            if (player instanceof  ServerPlayer sPlayer) {
+
+                SCPacketHandler.INSTANCE.sendTo(new SendConfigsToClientPacket(),sPlayer.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+
+                System.out.println(ConfigRegistry.POST_LOAD_CONFIGS);
+
+                for (RunicEnergy.Type type : RunicEnergy.Type.values()) {
+                    Helpers.updateRunicEnergyOnClient(type, RunicEnergy.getEnergy(player, type), player);
+                }
+                Helpers.updateProgression(sPlayer);
+
+                if (JsonFragmentsHelper.fragmentsShouldBeRead()) {
+                    List<AncientFragment> fragsDes = AncientFragment.deserializeFragments(JsonFragmentsHelper.readFragments());
+
+                    if (fragsDes != null) {
+                        AncientFragment.ALL_FRAGMENTS.addAll(fragsDes);
+                    }
+                }
+
+                for (ToggleableAbility ability : AbilitiesRegistry.getToggleableAbilities()) {
+                    AbilityHelper.sendTogglePacket(sPlayer,ability,ability.isToggled(sPlayer));
+                }
+
+                JsonFragmentsHelper.sendUpdatePacketToClient(sPlayer);
+                if (EnchanterConfigInit.shouldBeRead()) {
+                    EnchanterConfigInit.readJson();
+                }
+                Helpers.updateFragmentsOnClient(sPlayer);
+                Helpers.updateClientRadiantLandStateForPlayer(sPlayer);
+                AncientFragment.initFragmentsMap();
+
+
+                for (AncientFragment fr : AncientFragment.ALL_FRAGMENTS){
+                    fr.getReferences();
+                }
+
+
+            }
+
+        }
+    }
+
+    @SubscribeEvent
+    public static void initServerConfigs(ServerStartedEvent event){
+        if (JsonFragmentsHelper.fragmentsShouldBeRead()){
+            List<AncientFragment> fragsDes = AncientFragment.deserializeFragments(JsonFragmentsHelper.readFragments());
+
+            if (fragsDes != null) {
+                AncientFragment.ALL_FRAGMENTS.addAll(fragsDes);
+            }
+        }
+        if (EnchanterConfigInit.shouldBeRead()) {
+            EnchanterConfigInit.readJson();
+        }
     }
 }
