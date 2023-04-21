@@ -1,6 +1,6 @@
 package com.finderfeed.solarcraft.content.world_generation.structures.dimensional_shard_structure;
 
-import com.finderfeed.solarcraft.events.other_events.StructurePieces;
+import com.finderfeed.solarcraft.content.world_generation.structures.StructurePieces;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.core.Vec3i;
 import net.minecraft.util.RandomSource;

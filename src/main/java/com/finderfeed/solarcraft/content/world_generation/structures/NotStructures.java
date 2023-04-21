@@ -8,7 +8,6 @@ import net.minecraft.world.level.Level;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class NotStructures {
 
     public static List<BlockEntity> checkInfusingStandStructure(BlockPos pos, Level world){

@@ -1,4 +1,4 @@
-package com.finderfeed.solarcraft.events.other_events;
+package com.finderfeed.solarcraft.content.world_generation.structures;
 
 
 import com.finderfeed.solarcraft.content.world_generation.structures.charging_station.ChargingStationPieces;
@@ -21,7 +21,6 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 public class StructurePieces {
 
 
-
     public static StructurePieceType DUNGEON_ONE_PIECE = DungeonOnePieces.Piece::new;
     public static StructurePieceType DUNGEON_MAZE_PIECE = TrapStructurePieces.Piece::new;
     public static StructurePieceType CHARGING_PIECE = ChargingStationPieces.Piece::new;
@@ -31,6 +30,8 @@ public class StructurePieces {
     public static StructurePieceType RUNIC_ELEMENTAL_ARENA_PIECE = RunicElementalArenaStructurePieces.Piece::new;
     public static StructurePieceType SUN_SHARD_PUZZLE_PIECE = SunShardPuzzleStructurePieces.Piece::new;
     public static StructurePieceType CLEARING_RITUAL_STRUCTURE = ClearingRitualPieces.Piece::new;
+
+    
     @SubscribeEvent
     public static void registerFeatures(FMLCommonSetupEvent event){
         event.enqueueWork(()->{

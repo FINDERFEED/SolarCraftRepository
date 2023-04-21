@@ -1,12 +1,16 @@
 package com.finderfeed.solarcraft.events.other_events.event_handler;
 
 
+import com.finderfeed.solarcraft.SolarCraft;
+import com.finderfeed.solarcraft.SolarCraftTags;
+import com.finderfeed.solarcraft.config.JsonConfig;
 import com.finderfeed.solarcraft.config.JsonFragmentsHelper;
 import com.finderfeed.solarcraft.config.enchanter_config.EnchanterConfigInit;
 import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.puzzle_template.PuzzleTemplateManager;
+import com.finderfeed.solarcraft.content.items.TotemOfImmortality;
+import com.finderfeed.solarcraft.content.items.solar_lexicon.packets.UpdateProgressionOnClient;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
-import com.finderfeed.solarcraft.events.my_events.ClientsideBlockBreakEvent;
-import com.finderfeed.solarcraft.events.my_events.ClientsideBlockPlaceEvent;
+import com.finderfeed.solarcraft.content.items.vein_miner.IllidiumPickaxe;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.content.abilities.AbilityHelper;
@@ -27,10 +31,7 @@ import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.Progre
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.ProgressionHelper;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
 import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
-import com.finderfeed.solarcraft.packet_handler.packets.BlockBreakPacket;
-import com.finderfeed.solarcraft.packet_handler.packets.BlockPlacePacket;
-import com.finderfeed.solarcraft.packet_handler.packets.DisablePlayerFlightPacket;
-import com.finderfeed.solarcraft.packet_handler.packets.SendConfigsToClientPacket;
+import com.finderfeed.solarcraft.packet_handler.packets.*;
 import com.finderfeed.solarcraft.registries.ConfigRegistry;
 import com.finderfeed.solarcraft.registries.SolarcraftDamageSources;
 import com.finderfeed.solarcraft.registries.Tags;
@@ -47,6 +48,8 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -63,7 +66,9 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 
 import net.minecraft.ChatFormatting;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraft.world.phys.Vec3;
@@ -152,11 +157,150 @@ public class EventHandler {
 //    }
 
 
+
+
+    @SubscribeEvent
+    public static void respawn(PlayerEvent.PlayerRespawnEvent event){
+        if (event.getEntity() instanceof ServerPlayer player){
+            Helpers.updateProgression(player);
+            for (RunicEnergy.Type type : RunicEnergy.Type.getAll()) {
+                Helpers.updateRunicEnergyOnClient(type, RunicEnergy.getEnergy(player, type), player);
+            }
+            Helpers.updateFragmentsOnClient(player);
+        }
+    }
+
+
+
+    @SubscribeEvent
+    public static void retainAbilities(final PlayerEvent.Clone event) {
+        Player peorig = event.getOriginal();
+        Player playernew = event.getEntity();
+        if (!event.isWasDeath()) {
+            for (AbstractAbility ability : AbilitiesRegistry.getAllAbilities()){
+                AbilityHelper.setAbilityUsable(playernew,ability,AbilityHelper.isAbilityBought(peorig,ability));
+            }
+
+            playernew.getPersistentData().putInt(SolarCraftTags.RAW_SOLAR_ENERGY, peorig.getPersistentData().getInt(SolarCraftTags.RAW_SOLAR_ENERGY));
+            RunicEnergy.handleCloneEvent(event);
+        }
+
+
+        for (RunicEnergy.Type type : RunicEnergy.Type.getAll()) {
+            if (RunicEnergy.hasFoundType(peorig,type)) {
+                RunicEnergy.setFound(playernew, type);
+            }
+            Helpers.updateRunicEnergyOnClient(type, RunicEnergy.getEnergy(peorig, type), peorig);
+        }
+        playernew.getPersistentData().putString("solar_forge_ability_binded_1", peorig.getPersistentData().getString("solar_forge_ability_binded_1"));
+        playernew.getPersistentData().putString("solar_forge_ability_binded_2", peorig.getPersistentData().getString("solar_forge_ability_binded_2"));
+        playernew.getPersistentData().putString("solar_forge_ability_binded_3", peorig.getPersistentData().getString("solar_forge_ability_binded_3"));
+        playernew.getPersistentData().putString("solar_forge_ability_binded_4", peorig.getPersistentData().getString("solar_forge_ability_binded_4"));
+
+        if (playernew instanceof ServerPlayer s){
+            AbilitiesRegistry.ALCHEMIST.setToggled(s, false);
+        }
+
+
+        for (Progression a : Progression.allProgressions){
+            Helpers.setProgressionCompletionStatus(a,playernew,Helpers.hasPlayerCompletedProgression(a,peorig));
+
+        }
+        if (!playernew.level.isClientSide) {
+            for (Progression a : Progression.allProgressions) {
+                SCPacketHandler.INSTANCE.sendTo(new UpdateProgressionOnClient(a.getProgressionCode(),playernew.getPersistentData().getBoolean(Helpers.PROGRESSION+a.getProgressionCode())),
+                        ((ServerPlayer) playernew).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+            }
+        }
+        if (playernew instanceof ServerPlayer player) {
+            for (AncientFragment fragment : AncientFragment.getAllFragments()) {
+                if (ProgressionHelper.doPlayerHasFragment(peorig, fragment)) {
+                    ProgressionHelper.givePlayerFragment(fragment, playernew);
+                }
+            }
+            Helpers.updateFragmentsOnClient(player);
+        }
+
+
+    }
+
+
+    @SubscribeEvent
+    public static void damageTaken(final LivingDamageEvent event){
+        if ((event.getEntity()).hasEffect(SolarcraftEffects.IMMORTALITY_EFFECT.get()) ){
+            event.setCanceled(true);
+        }
+    }
+
+    @SubscribeEvent
+    public static void procImmortalityTotem(final LivingDeathEvent event){
+        if (event.getEntity() instanceof Player && !event.getEntity().level.isClientSide){
+            Player player = (Player) event.getEntity();
+            int slot = findImmortalityTotem(player);
+            if (slot != -10000){
+                player.addEffect(new MobEffectInstance(SolarcraftEffects.IMMORTALITY_EFFECT.get(),400,0));
+                player.setHealth(player.getMaxHealth());
+
+                player.getInventory().setItem(slot, ItemStack.EMPTY);
+                ServerLevel world = (ServerLevel)player.level;
+                world.playSound(player,player.getX(),player.getY(),player.getZ(), SoundEvents.TOTEM_USE, SoundSource.AMBIENT,0.5f,0.5f);
+                SCPacketHandler.INSTANCE.sendTo(new ProcImmortalityTotemAnimation(),((ServerPlayer)player).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+
+                event.setCanceled(true);
+            }
+        }
+
+    }
+
+
+    public static int findImmortalityTotem(Player player){
+        for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
+            if (player.getInventory().getItem(i).getItem() instanceof TotemOfImmortality) {
+                return i;
+            }
+        }
+        return -10000;
+    }
+
+    @SubscribeEvent
+    public static void livingAttackEvent(final LivingAttackEvent event){
+        if (event.getSource() != null) {
+            Entity ent = event.getSource().getEntity();
+            if (ent instanceof LivingEntity livingEnt) {
+                if (livingEnt.hasEffect(SolarCraft.SOLAR_STUN.get())) {
+                    event.setCanceled(true);
+                }
+            }
+        }
+
+        if (event.getSource() != null && (event.getSource().getEntity() != null)){
+            LivingEntity ent = event.getEntity();
+            ent.getArmorSlots().forEach((stack)->{
+                if (stack.getItem().equals(SolarcraftItems.RADIANT_CHESTPLATE.get())){
+                    if (ent.level.random.nextFloat() <= 0.17){
+                        event.setCanceled(true);
+                    }
+                }
+            });
+        }
+    }
+
     @SubscribeEvent
     public static void playerTickEvent(final TickEvent.PlayerTickEvent event){
         if (event.phase == TickEvent.Phase.START) {
             Player player = event.player;
             Level world = player.level;
+
+            if (player.level.getGameTime() % 200 == 0){
+                Helpers.updateFragmentsOnClient((ServerPlayer) player);
+                Helpers.updateProgression((ServerPlayer) player);
+            }
+            if (player.level.getGameTime() % 20 == 0) {
+                if (player.level.dimension() == Level.NETHER) {
+                    Helpers.fireProgressionEvent(player, Progression.ENTER_NETHER);
+                }
+            }
+
             long actualtime = world.getDayTime()%24000;
             if (world.isClientSide && !Helpers.isDay(world)) {
                 if ((world.dimension() == RADIANT_LAND_KEY) && !ClientHelpers.isIsRadiantLandCleaned()) {
@@ -348,11 +492,29 @@ public class EventHandler {
         return false;
     }
 
+
+
     @SubscribeEvent(priority = EventPriority.HIGHEST)
-    public static void sendClientBreakEvent(BlockEvent.BreakEvent event) {
+    public static void breakEvent(BlockEvent.BreakEvent event) {
         if (event.getPlayer() instanceof ServerPlayer serverPlayer){
             SCPacketHandler.INSTANCE.sendTo(new BlockBreakPacket(event.getPos(),event.getState()),
                     serverPlayer.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+        }
+        if (event.getPlayer() instanceof ServerPlayer player) {
+            if (AbilitiesRegistry.ALCHEMIST.isToggled(player) && !event.getPlayer().isDeadOrDying() ) {
+                if (AbilityHelper.isAbilityUsable(player,AbilitiesRegistry.ALCHEMIST,false)) {
+                    LevelAccessor world = event.getLevel();
+                    BlockPos pos = event.getPos();
+                    world.setBlock(event.getPos(), Blocks.AIR.defaultBlockState(), 3);
+                    world.addFreshEntity(new ExperienceOrb((Level) world, pos.getX(), pos.getY(), pos.getZ(), 10));
+                }
+            }
+        }
+        ItemStack stack = event.getPlayer().getMainHandItem();
+        if (stack.getItem() instanceof IllidiumPickaxe pick){
+            if (!ItemRunicEnergy.spendEnergy(pick.getCost(),stack,pick, event.getPlayer())){
+                event.setCanceled(true);
+            }
         }
     }
 
@@ -490,9 +652,15 @@ public class EventHandler {
             Player player = event.getEntity();
             if (player instanceof  ServerPlayer sPlayer) {
 
+                for (JsonConfig config : ConfigRegistry.POST_LOAD_CONFIGS.values()){
+                    config.deserialize(config.defaultJson());
+                }
+                for (JsonConfig config : ConfigRegistry.EARLY_LOAD_CONFIGS.values()){
+                    config.deserialize(config.defaultJson());
+                }
+
                 SCPacketHandler.INSTANCE.sendTo(new SendConfigsToClientPacket(),sPlayer.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
 
-                System.out.println(ConfigRegistry.POST_LOAD_CONFIGS);
 
                 for (RunicEnergy.Type type : RunicEnergy.Type.values()) {
                     Helpers.updateRunicEnergyOnClient(type, RunicEnergy.getEnergy(player, type), player);

@@ -14,7 +14,6 @@ import com.finderfeed.solarcraft.content.entities.not_alive.*;
 
 import com.finderfeed.solarcraft.content.entities.runic_elemental.RunicElementalBoss;
 import com.finderfeed.solarcraft.content.world_generation.structures.SolarcraftStructureTypes;
-import com.finderfeed.solarcraft.events.PlayerTickEvent;
 import com.finderfeed.solarcraft.events.RenderEventsHandler;
 import com.finderfeed.solarcraft.content.blocks.SolarOreBlock;
 import com.finderfeed.solarcraft.content.blocks.blockentities.clearing_ritual.clearing_ritual_crystal.corruption_wisp.CorruptionWisp;
@@ -236,11 +235,9 @@ public class SolarCraft
         TierSortingRegistry.registerTier(SolarCraftToolTiers.SOLAR_GOD_TOOL_TIER,new ResourceLocation("solar_god"), List.of(Tiers.DIAMOND),List.of());
         TierSortingRegistry.registerTier(SolarCraftToolTiers.DIVINE_TIER,new ResourceLocation("divine"), List.of(Tiers.DIAMOND),List.of());
 
-        MinecraftForge.EVENT_BUS.register(new PlayerTickEvent());
 
         MinecraftForge.EVENT_BUS.addListener(InfusingStand::placeBlockEvent);
         event.enqueueWork(()->{
-//            SolarcraftStructureHolders.registerConfiguredStructures();
             SolarcraftStructureTypes.init();
             SolarcraftStructureHolders.init();
         });

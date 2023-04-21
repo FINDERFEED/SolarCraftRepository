@@ -1,7 +1,10 @@
-package com.finderfeed.solarcraft;
+package com.finderfeed.solarcraft.events.other_events.event_handler;
 
+import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.client.rendering.RadiantTextureAtlasSpriteLoader;
 import com.finderfeed.solarcraft.client.rendering.rendertypes.SolarCraftRenderTypes;
+import com.finderfeed.solarcraft.client.tooltips.REClientTooltipComponent;
+import com.finderfeed.solarcraft.client.tooltips.RETooltipComponent;
 import com.finderfeed.solarcraft.content.abilities.meteorite.MeteoriteProjectileRenderer;
 import com.finderfeed.solarcraft.content.abilities.solar_strike.SolarStrikeRenderer;
 import com.finderfeed.solarcraft.content.blocks.blockentities.clearing_ritual.clearing_ritual_crystal.ClearingRitualCrystalRenderer;
@@ -19,7 +22,6 @@ import com.finderfeed.solarcraft.content.blocks.primitive.ProgressionBlock;
 import com.finderfeed.solarcraft.content.blocks.render.*;
 import com.finderfeed.solarcraft.content.blocks.solar_forge_block.SolarForgeBlockEntityRenderer;
 import com.finderfeed.solarcraft.content.entities.CrystalBossBar;
-import com.finderfeed.solarcraft.content.entities.CrystalBossEntity;
 import com.finderfeed.solarcraft.content.entities.projectiles.renderers.*;
 import com.finderfeed.solarcraft.content.entities.renderers.*;
 import com.finderfeed.solarcraft.content.entities.runic_elemental.RunicElementalBossBar;
@@ -48,10 +50,7 @@ import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.EntityRenderersEvent;
-import net.minecraftforge.client.event.RegisterDimensionSpecialEffectsEvent;
-import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
-import net.minecraftforge.client.event.RegisterTextureAtlasSpriteLoadersEvent;
+import net.minecraftforge.client.event.*;
 import net.minecraftforge.client.settings.KeyConflictContext;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -62,7 +61,7 @@ import org.lwjgl.glfw.GLFW;
 
 
 @Mod.EventBusSubscriber(modid = "solarcraft",bus = Mod.EventBusSubscriber.Bus.MOD,value = Dist.CLIENT)
-public class SolarcraftClientInit {
+public class ClientModEventHandler {
 
     public static final DimensionSpecialEffects RADIANT_LAND  = new RadiantLandDimEffects();
     public static final RadiantTextureAtlasSpriteLoader RADIANT_TEXTURE_ATLAS_SPRITE_LOADER = new RadiantTextureAtlasSpriteLoader();
@@ -70,14 +69,19 @@ public class SolarcraftClientInit {
     public static final KeyMapping SECOND_ABILITY_KEY = new KeyMapping("key.fire_ability_two", KeyConflictContext.UNIVERSAL, InputConstants.Type.SCANCODE, GLFW.GLFW_KEY_J,"key.solarcraft.category");
     public static final KeyMapping THIRD_ABILITY_KEY = new KeyMapping("key.fire_ability_three", KeyConflictContext.UNIVERSAL, InputConstants.Type.SCANCODE, GLFW.GLFW_KEY_S,"key.solarcraft.category");
     public static final KeyMapping FORTH_ABILITY_KEY = new KeyMapping("key.fire_ability_four", KeyConflictContext.UNIVERSAL, InputConstants.Type.SCANCODE, GLFW.GLFW_KEY_D,"key.solarcraft.category");
-//    public static final KeyMapping OPEN_GUI_ABILITY_KEY = new KeyMapping("key.gui_button_solarforge", KeyConflictContext.UNIVERSAL, InputConstants.Type.SCANCODE, GLFW.GLFW_KEY_D,"key.solarcraft.category");
     public static final KeyMapping GUI_ABILITY_BUY_SCREEN = new KeyMapping("key.ability_buy_screen.solarcraft", KeyConflictContext.UNIVERSAL, InputConstants.Type.SCANCODE, GLFW.GLFW_KEY_D,"key.solarcraft.category");
     public static final KeyMapping GUI_WAND_MODE_SELECTION = new KeyMapping("key.wand_mode_selection_screen", KeyConflictContext.UNIVERSAL, InputConstants.Type.SCANCODE, GLFW.GLFW_KEY_K,"key.solarcraft.category");
+
+
+    @SubscribeEvent
+    public static void registerTooltips(RegisterClientTooltipComponentFactoriesEvent event){
+        event.register(RETooltipComponent.class, REClientTooltipComponent::new);
+    }
+
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public static void registerTest(RegisterTextureAtlasSpriteLoadersEvent event){
         event.register("radiant_loader",RADIANT_TEXTURE_ATLAS_SPRITE_LOADER);
-//        MinecraftForgeClient.registerTextureAtlasSpriteLoader(RadiantTextureAtlasSpriteLoader.REGISTRY_ID,RADIANT_TEXTURE_ATLAS_SPRITE_LOADER);
     }
 
 
@@ -94,7 +98,6 @@ public class SolarcraftClientInit {
     @SubscribeEvent
     public static void registerDimensionEffects(RegisterDimensionSpecialEffectsEvent event){
         event.register(new ResourceLocation("solarcraft","radiant_land"),RADIANT_LAND);
-//        DimensionSpecialEffects.EFFECTS.put(new ResourceLocation("solarcraft","radiant_land"),RADIANT_LAND);
     }
 
     @SubscribeEvent
@@ -108,10 +111,6 @@ public class SolarcraftClientInit {
         SolarcraftOverlays.BossBars.registerCustomBossBar("runic_elemental",new RunicElementalBossBar());
         SolarcraftOverlays.BossBars.registerCustomBossBar("defense_crystal",new CrystalBossBar());
 
-
-
-
-        //blockentityrenderers.register
         BlockEntityRenderers.register(SolarcraftTileEntityTypes.RUNIC_ENERGY_REPEATER.get(), RepeaterRenderer::new);
         BlockEntityRenderers.register(SolarcraftTileEntityTypes.RUNE_ENERGY_PYLON.get(), RuneEnergyPylonRenderer::new);
         BlockEntityRenderers.register(SolarCraft.SOLAR_FORGE_BLOCKENTITY.get(), SolarForgeBlockEntityRenderer::new);

@@ -31,24 +31,6 @@ public class SolarcraftStructureHolders {
 
     public static void init(){}
 
-
-//    public static ConfiguredStructureFeature<?,?> CONF_DUNGEON_ONE = SolarForgeStructures.DUNGEON_ONE_KEY_LOCK.get()
-//            .configured(FeatureConfiguration.NONE, SolarCraftTags.SStructures.HAS_DUNGEON_ONE,true);
-//    public static ConfiguredStructureFeature<?,?> CONF_DUNGEON_MAZE = SolarForgeStructures.DUNGEON_MAZE.get()
-//            .configured(FeatureConfiguration.NONE,SolarCraftTags.SStructures.HAS_LABYRINTH,true);
-//    public static ConfiguredStructureFeature<?,?> CONF_DUNGEON_CHARGING_STATION = SolarForgeStructures.CHARGING_STATION.get()
-//            .configured(FeatureConfiguration.NONE, SolarCraftTags.SStructures.HAS_CHARGING_STATION,true);
-//   public static ConfiguredStructureFeature<?,?> CONF_MAGICIAN_TOWER = SolarForgeStructures.MAGICIAN_TOWER.get()
-//           .configured(FeatureConfiguration.NONE,SolarCraftTags.SStructures.HAS_MAGICIAN_TOWER,true);
-//    public static ConfiguredStructureFeature<?,?> CONF_DIM_SHARD_STRUCT = SolarForgeStructures.DIM_SHARD_STRUCTURE.get()
-//            .configured(FeatureConfiguration.NONE,SolarCraftTags.SStructures.HAS_DIM_SHARD_DUNGEON);
-//    public static ConfiguredStructureFeature<?,?> CONF_CRYSTAL_BOSS_ROOM = SolarForgeStructures.CRYSTAL_BOSS_ROOM.get()
-//            .configured(FeatureConfiguration.NONE,SolarCraftTags.SStructures.HAS_CRYSTAL_BOSS_ROOM,true);
-//    public static ConfiguredStructureFeature<?,?> RUNIC_ELEMENTAL_ARENA = SolarForgeStructures.RUNIC_ELEMENTAL_ARENA.get()
-//            .configured(FeatureConfiguration.NONE,SolarCraftTags.SStructures.HAS_RUNIC_ELEMENTAL_ARENA,true);
-//    public static ConfiguredStructureFeature<?,?> CLEARING_RITUAL_STRUCTURE = SolarForgeStructures.CLEARING_RITUAL_STRUCTURE.get()
-//            .configured(FeatureConfiguration.NONE,SolarCraftTags.SStructures.HAS_CLEARING_RITUAL_STRUCTURE,true);
-
     public static final Holder<Structure> DUNGEON_ONE = register(Keys.DUNGEON_ONE,new DungeonOne(structure(SolarCraftTags.SStructures.HAS_DUNGEON_ONE, GenerationStep.Decoration.SURFACE_STRUCTURES,TerrainAdjustment.BURY)));
     public static final Holder<Structure> TRAP_DUNGEON = register(Keys.TRAP_DUNEGON,new TrapDungeon(structure(SolarCraftTags.SStructures.HAS_TRAP_DUNGEON, GenerationStep.Decoration.SURFACE_STRUCTURES,TerrainAdjustment.BEARD_BOX)));
     public static final Holder<Structure> CHARGING_STATION = register(Keys.COLD_STAR_CHARGING_STATION,new ChargingStationStructure(structure(SolarCraftTags.SStructures.HAS_CHARGING_STATION,GenerationStep.Decoration.SURFACE_STRUCTURES,TerrainAdjustment.BEARD_THIN)));

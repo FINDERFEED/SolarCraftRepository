@@ -1,6 +1,6 @@
 package com.finderfeed.solarcraft.content.world_generation.structures.crystal_boss_room;
 
-import com.finderfeed.solarcraft.events.other_events.StructurePieces;
+import com.finderfeed.solarcraft.content.world_generation.structures.StructurePieces;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;

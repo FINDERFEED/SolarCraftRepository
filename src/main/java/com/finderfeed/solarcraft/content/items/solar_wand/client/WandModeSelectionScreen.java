@@ -1,6 +1,6 @@
 package com.finderfeed.solarcraft.content.items.solar_wand.client;
 
-import com.finderfeed.solarcraft.SolarcraftClientInit;
+import com.finderfeed.solarcraft.events.other_events.event_handler.ClientModEventHandler;
 import com.finderfeed.solarcraft.content.items.solar_wand.SolarWandItem;
 import com.finderfeed.solarcraft.content.items.solar_wand.WandAction;
 import com.finderfeed.solarcraft.local_library.client.screens.DefaultScreen;
@@ -83,7 +83,7 @@ public class WandModeSelectionScreen extends DefaultScreen {
 
     @Override
     public boolean keyReleased(int keyCode, int p_94716_, int p_94717_) {
-        InputConstants.Key key = SolarcraftClientInit.GUI_WAND_MODE_SELECTION.getKey();
+        InputConstants.Key key = ClientModEventHandler.GUI_WAND_MODE_SELECTION.getKey();
         int code = key.getValue();
         if (keyCode == code) {
             RadialMenu.RadialMenuSection section = menu.getSection(menu.getSectionUnderMouse(mx, my));

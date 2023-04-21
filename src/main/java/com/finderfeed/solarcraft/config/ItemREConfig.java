@@ -18,7 +18,7 @@ public class ItemREConfig extends JsonConfig{
             JsonBuilder.begin()
 
                     .addString("_comment","The runic energy that contains in items (aka their costs in " +
-                            "elemental weaver.")
+                            "elemental weaver.)")
 
                     .addJsonObject("minecraft:dirt")
                     .addFloat("tera",1)
@@ -58,6 +58,9 @@ public class ItemREConfig extends JsonConfig{
     public void deserialize(JsonObject json) {
         Map<Item,RunicEnergyCost> costMap = new HashMap<>();
         for (var element : json.entrySet()){
+            if (element.getKey().contains("_comment")){
+                continue;
+            }
             Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(element.getKey()));
             JsonObject re = element.getValue().getAsJsonObject();
             RunicEnergyCost cost = new RunicEnergyCost();

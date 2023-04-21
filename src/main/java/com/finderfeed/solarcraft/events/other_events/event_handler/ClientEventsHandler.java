@@ -2,16 +2,24 @@ package com.finderfeed.solarcraft.events.other_events.event_handler;
 
 
 import com.finderfeed.solarcraft.SolarCraft;
+import com.finderfeed.solarcraft.client.tooltips.RETooltipComponent;
 import com.finderfeed.solarcraft.content.blocks.infusing_table_things.InfuserTileEntity;
 import com.finderfeed.solarcraft.content.items.ModuleItem;
+import com.finderfeed.solarcraft.content.items.runic_energy.RunicEnergyCost;
+import com.finderfeed.solarcraft.content.items.solar_wand.client.WandModeSelectionScreen;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.misc_things.CameraShake;
 import com.finderfeed.solarcraft.misc_things.Flash;
+import com.finderfeed.solarcraft.misc_things.IScrollable;
+import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
+import com.finderfeed.solarcraft.packet_handler.packets.CastAbilityPacket;
+import com.finderfeed.solarcraft.registries.ConfigRegistry;
 import com.finderfeed.solarcraft.registries.blocks.SolarcraftBlocks;
 import com.finderfeed.solarcraft.registries.items.SolarcraftItems;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
+import com.mojang.datafixers.util.Either;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
@@ -19,21 +27,22 @@ import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.ClientPlayerNetworkEvent;
-import net.minecraftforge.client.event.RenderLevelStageEvent;
-import net.minecraftforge.client.event.ViewportEvent;
+import net.minecraftforge.client.event.*;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.common.Mod;
+import org.lwjgl.glfw.GLFW;
 
 import java.util.*;
 
@@ -42,8 +51,57 @@ public class ClientEventsHandler {
 
     private static List<BlockPos> ORES_RENDER_POSITIONS = new ArrayList<>();
     private static List<BlockPos> CATALYST_RENDER_POSITIONS = new ArrayList<>();
-    
 
+
+    @SubscribeEvent
+    public static void handleKeyInputs(final InputEvent.Key event){
+
+        if (Minecraft.getInstance().screen instanceof IScrollable){
+            ((IScrollable) Minecraft.getInstance().screen).performScroll(event.getScanCode());
+
+        }
+
+        if (Minecraft.getInstance().screen != null) return;
+
+        if (ClientModEventHandler.FIRST_ABILITY_KEY.isDown() && event.getAction() == GLFW.GLFW_PRESS){
+            SCPacketHandler.INSTANCE.sendToServer(new CastAbilityPacket(1));
+        }
+        if (ClientModEventHandler.SECOND_ABILITY_KEY.isDown() && event.getAction() == GLFW.GLFW_PRESS){
+
+            SCPacketHandler.INSTANCE.sendToServer(new CastAbilityPacket(2));
+
+        }
+        if (ClientModEventHandler.THIRD_ABILITY_KEY.isDown() && event.getAction() == GLFW.GLFW_PRESS){
+
+            SCPacketHandler.INSTANCE.sendToServer(new CastAbilityPacket(3));
+
+        }
+        if (ClientModEventHandler.FORTH_ABILITY_KEY.isDown() && event.getAction() == GLFW.GLFW_PRESS){
+
+            SCPacketHandler.INSTANCE.sendToServer(new CastAbilityPacket(4));
+
+        }
+
+        if (ClientModEventHandler.GUI_ABILITY_BUY_SCREEN.isDown() && event.getAction() == GLFW.GLFW_PRESS){
+            ClientHelpers.requestAbilityScreen(false);
+        }
+
+        if (ClientModEventHandler.GUI_WAND_MODE_SELECTION.isDown() && event.getAction() == GLFW.GLFW_PRESS
+                && Minecraft.getInstance().player != null && Minecraft.getInstance().player.getMainHandItem().is(SolarcraftItems.SOLAR_WAND.get())){
+            Minecraft.getInstance().setScreen(new WandModeSelectionScreen());
+        }
+
+
+    }
+
+    @SubscribeEvent(priority = EventPriority.HIGHEST)
+    public static void addREComponentsToItems(RenderTooltipEvent.GatherComponents event){
+        ItemStack item = event.getItemStack();
+        RunicEnergyCost cost;
+        if (!item.isEmpty() && (cost = ConfigRegistry.ITEM_RE_CONFIG.getItemCost(item.getItem())) != null){
+            event.getTooltipElements().add(Either.right(new RETooltipComponent(cost)));
+        }
+    }
 
     @SubscribeEvent
     public static void onPlayerLogout(final ClientPlayerNetworkEvent.LoggingOut event){
@@ -72,12 +130,9 @@ public class ClientEventsHandler {
 
             if (player.level.getGameTime() % 20 == 0){
                 fillCatalystRenderPositions();
-
             }
         }
     }
-
-
 
     @SubscribeEvent
     public static void renderList(RenderLevelStageEvent event){
@@ -139,7 +194,6 @@ public class ClientEventsHandler {
             }
             Tesselator.getInstance().end();
             posestack.popPose();
-
             RenderSystem.applyModelViewMatrix();
         }
     }
@@ -223,38 +277,6 @@ public class ClientEventsHandler {
 
     public static Flash currentFlashEffect = null;
     public static CameraShake cameraShakeEffect = null;
-
-//    @SubscribeEvent
-//    public static void renderFlash(RenderGameOverlayEvent event){
-//        if (currentFlashEffect == null) return;
-//        if (event.getType() != RenderGameOverlayEvent.ElementType.TEXT) return;
-//        PoseStack matrices = event.getMatrixStack();
-//        float scaledHeight = Minecraft.getInstance().getWindow().getGuiScaledHeight();
-//        float scaledWidth = Minecraft.getInstance().getWindow().getGuiScaledWidth();
-//        float alpha = 1f;
-//        if (currentFlashEffect.getTicker() <= currentFlashEffect.getInTime()){
-//            alpha = currentFlashEffect.getTicker() / (float) currentFlashEffect.getInTime();
-//        }else if (currentFlashEffect.getTicker() >= currentFlashEffect.getAllTime() - currentFlashEffect.getOutTime()){
-//            alpha = 1f - (currentFlashEffect.getTicker() - currentFlashEffect.getStayTime() - currentFlashEffect.getInTime())/(float)currentFlashEffect.getOutTime();
-//        }
-//        RenderSystem.enableBlend();
-//        RenderSystem.disableTexture();
-//        RenderSystem.defaultBlendFunc();
-//        RenderSystem.setShader(GameRenderer::getPositionColorShader);
-//        BufferBuilder b = Tesselator.getInstance().getBuilder();
-//        b.begin(VertexFormat.Mode.QUADS,DefaultVertexFormat.POSITION_COLOR);
-//
-//        Matrix4f m = matrices.last().pose();
-//
-//        b.vertex(m,0,scaledHeight,0).color(1f,1f,1f,alpha).endVertex();
-//        b.vertex(m,scaledWidth,scaledHeight,0).color(1f,1f,1f,alpha).endVertex();
-//        b.vertex(m,scaledWidth,0,0).color(1f,1f,1f,alpha).endVertex();
-//        b.vertex(m,0,0,0).color(1f,1f,1f,alpha).endVertex();
-////        b.end();
-//        BufferUploader.drawWithShader(b.end());
-//        RenderSystem.enableTexture();
-//        RenderSystem.disableBlend();
-//    }
 
     @SubscribeEvent
     public static void tickFlashAndCameraShake(TickEvent.PlayerTickEvent event){
