@@ -31,6 +31,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.core.Direction;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -618,5 +619,13 @@ public class Helpers {
                 copyTo[i][g] = first[i][g];
             }
         }
+    }
+
+    public static boolean canContainerProcessItem(ItemStack input,ItemStack output){
+        return !input.isEmpty() && (
+                output.isEmpty() ||
+                        (output.getItem() == input.getItem() &&
+                                output.getCount() < output.getMaxStackSize())
+                );
     }
 }

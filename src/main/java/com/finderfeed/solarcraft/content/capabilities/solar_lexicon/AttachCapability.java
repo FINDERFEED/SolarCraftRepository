@@ -2,12 +2,9 @@ package com.finderfeed.solarcraft.content.capabilities.solar_lexicon;
 
 
 import com.finderfeed.solarcraft.SolarCraft;
+import com.finderfeed.solarcraft.content.blocks.blockentities.*;
 import com.finderfeed.solarcraft.content.capabilities.InfusingTableInventory;
 import com.finderfeed.solarcraft.content.capabilities.ItemHandlerInventory;
-import com.finderfeed.solarcraft.content.blocks.blockentities.EnchanterBlockEntity;
-import com.finderfeed.solarcraft.content.blocks.blockentities.InfusingTableTile;
-import com.finderfeed.solarcraft.content.blocks.blockentities.RunicEnergyChargerTileEntity;
-import com.finderfeed.solarcraft.content.blocks.blockentities.RunicTableTileEntity;
 import com.finderfeed.solarcraft.content.blocks.infusing_table_things.InfuserTileEntity;
 import com.finderfeed.solarcraft.content.blocks.infusing_table_things.infusing_pool.InfusingStandTileEntity;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.SolarLexicon;
@@ -50,6 +47,8 @@ public class AttachCapability {
             event.addCapability(new ResourceLocation(SolarCraft.MOD_ID,"enchanter_inventory"),inventory);
         }else if (event.getObject() instanceof RunicEnergyChargerTileEntity tile){
             event.addCapability(new ResourceLocation(SolarCraft.MOD_ID,"charger_inventory"),new ItemHandlerInventory(2));
+        }else if (event.getObject() instanceof ElementWeaverTileEntity){
+            event.addCapability(new ResourceLocation(SolarCraft.MOD_ID,"element_weaver_inventory"),new ItemHandlerInventory(2));
         }
     }
 }

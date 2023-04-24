@@ -291,13 +291,15 @@ public class EventHandler {
             Player player = event.player;
             Level world = player.level;
 
-            if (player.level.getGameTime() % 200 == 0){
-                Helpers.updateFragmentsOnClient((ServerPlayer) player);
-                Helpers.updateProgression((ServerPlayer) player);
-            }
-            if (player.level.getGameTime() % 20 == 0) {
-                if (player.level.dimension() == Level.NETHER) {
-                    Helpers.fireProgressionEvent(player, Progression.ENTER_NETHER);
+            if (player instanceof ServerPlayer) {
+                if (player.level.getGameTime() % 200 == 0) {
+                    Helpers.updateFragmentsOnClient((ServerPlayer) player);
+                    Helpers.updateProgression((ServerPlayer) player);
+                }
+                if (player.level.getGameTime() % 20 == 0) {
+                    if (player.level.dimension() == Level.NETHER) {
+                        Helpers.fireProgressionEvent(player, Progression.ENTER_NETHER);
+                    }
                 }
             }
 

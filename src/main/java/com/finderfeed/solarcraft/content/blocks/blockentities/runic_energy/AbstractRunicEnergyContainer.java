@@ -68,8 +68,8 @@ public abstract class AbstractRunicEnergyContainer extends SolarcraftBlockEntity
         return this.owner;
     }
 
-    public abstract double getMaxRunicEnergyInput();
-    public abstract double getRunicEnergyLimit();
+    public abstract float getMaxRunicEnergyInput();
+    public abstract float getRunicEnergyLimit();
     public abstract int getSeekCooldown();
     public abstract double getMaxRange();
 
@@ -92,7 +92,7 @@ public abstract class AbstractRunicEnergyContainer extends SolarcraftBlockEntity
             if (multiplied >= runicEnergy + getMaxRunicEnergyInput()) {
                 requestSpecificEnergyNew(type, getMaxRunicEnergyInput());
             } else if ((multiplied > runicEnergy) && (multiplied < runicEnergy + getMaxRunicEnergyInput())) {
-                double request = multiplied - getRunicEnergy(type);
+                double request = multiplied - runicEnergy;
                 requestSpecificEnergyNew(type, request);
             } else {
                 List<BlockPos> path = PATH_TO_CONTAINERS.remove(type);
@@ -109,7 +109,6 @@ public abstract class AbstractRunicEnergyContainer extends SolarcraftBlockEntity
                             pylon.getPos(),pos.x,pos.z,false,true);
                 }
                 RunicEnergyPath.resetRepeaterConnections(path, level);
-//                PATH_TO_CONTAINERS.remove(type);
             }
         }
 
@@ -179,10 +178,6 @@ public abstract class AbstractRunicEnergyContainer extends SolarcraftBlockEntity
     public abstract boolean shouldFunction();
 
     public void resetAllRepeaters(){
-//        PATH_TO_CONTAINERS.forEach((type,way)->{
-//            breakWay(type);
-//            RunicEnergyPath.resetRepeaterConnections(PATH_TO_CONTAINERS.get(type),level);
-//        });
         for (RunicEnergy.Type type : RunicEnergy.Type.getAll()){
             breakWay(type);
         }
@@ -210,7 +205,6 @@ public abstract class AbstractRunicEnergyContainer extends SolarcraftBlockEntity
     }
 
     public void giveEnergy(RunicEnergy.Type type, double amount){
-//        container.set(type,container.get(type)+(float)amount);
         setEnergy(type,(float)amount + container.get(type));
     }
 
@@ -351,10 +345,6 @@ public abstract class AbstractRunicEnergyContainer extends SolarcraftBlockEntity
     }
 
     public void breakWay(RunicEnergy.Type type){
-//        List<BlockPos> path = PATH_TO_CONTAINERS.remove(type);
-//        if (path == null) return;
-//        RunicEnergyPath.resetRepeaterConnections(path,level);
-
         List<BlockPos> path = PATH_TO_CONTAINERS.remove(type);
         if (path == null) return;
 

@@ -196,12 +196,12 @@ public class EnchanterBlockEntity extends REItemHandlerBlockEntity {
     }
 
     @Override
-    public double getMaxRunicEnergyInput() {
+    public float getMaxRunicEnergyInput() {
         return 10;
     }
 
     @Override
-    public double getRunicEnergyLimit() {
+    public float getRunicEnergyLimit() {
         this.loadConfigIfNecessary();
         return SERVERSIDE_CONFIG.getMaxEnchanterRunicEnergyCapacity();
     }

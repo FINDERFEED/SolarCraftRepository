@@ -18,7 +18,7 @@ public class ItemREConfig extends JsonConfig{
             JsonBuilder.begin()
 
                     .addString("_comment","The runic energy that contains in items (aka their costs in " +
-                            "elemental weaver.)")
+                            "element weaver.)")
 
                     .addJsonObject("minecraft:dirt")
                     .addFloat("tera",1)

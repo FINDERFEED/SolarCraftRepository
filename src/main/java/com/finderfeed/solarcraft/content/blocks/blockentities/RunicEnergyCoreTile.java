@@ -84,12 +84,12 @@ public class RunicEnergyCoreTile extends AbstractRunicEnergyContainer implements
 
     //AbstractREContainer
     @Override
-    public double getMaxRunicEnergyInput() {
+    public float getMaxRunicEnergyInput() {
         return 5;
     }
 
     @Override
-    public double getRunicEnergyLimit() {
+    public float getRunicEnergyLimit() {
         return 1000000;
     }
 
