@@ -204,5 +204,6 @@ public class SolarcraftBlocks {
     public  static  final RegistryObject<SunShardLockBlock> SUN_SHARD_LOCK = BLOCKS.register("sun_shard_lock",()-> new SunShardLockBlock(BlockBehaviour.Properties.copy(Blocks.BEDROCK)));
     public  static  final RegistryObject<BeamGeneratorBlock> BEAM_GENERATOR = BLOCKS.register("beam_generator", BeamGeneratorBlock::new);
     public  static  final RegistryObject<BeamReflectorBlock> BEAM_REFLECTOR = BLOCKS.register("beam_reflector",()-> new BeamReflectorBlock(BlockBehaviour.Properties.copy(Blocks.BEDROCK)));
+    public  static  final RegistryObject<ElementWeaverBlock> ELEMENT_WEAVER = BLOCKS.register("element_weaver",()-> new ElementWeaverBlock(BlockBehaviour.Properties.copy(Blocks.STONE)));
 
 }

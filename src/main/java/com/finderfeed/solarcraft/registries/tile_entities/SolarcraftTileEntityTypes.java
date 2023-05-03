@@ -138,4 +138,7 @@ public class SolarcraftTileEntityTypes {
 
     public static final RegistryObject<BlockEntityType<BeamReflectorTile>> BEAM_REFLECTOR = TILE_ENTITY_TYPE.register("beam_reflector",()->
             BlockEntityType.Builder.of(BeamReflectorTile::new, SolarcraftBlocks.BEAM_REFLECTOR.get()).build(null));
+
+    public static final RegistryObject<BlockEntityType<ElementWeaverTileEntity>> ELEMENT_WEAVER = TILE_ENTITY_TYPE.register("element_weaver",()->
+            BlockEntityType.Builder.of(ElementWeaverTileEntity::new, SolarcraftBlocks.ELEMENT_WEAVER.get()).build(null));
 }

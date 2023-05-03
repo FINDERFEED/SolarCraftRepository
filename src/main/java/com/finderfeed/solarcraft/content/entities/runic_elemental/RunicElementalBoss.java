@@ -110,7 +110,7 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
     public int pushWaveTicker = 0;
     public boolean isWaitingForPlayerToDestroyExplosiveCrystals = false;
     private int seekTargetCooldown = 0;
-    private int checkTargetInterval = 0;
+    //private int checkTargetInterval = 0;
     private boolean rotating = false;
 
 
@@ -134,9 +134,9 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
         if (seekTargetCooldown > 0){
             seekTargetCooldown--;
         }
-        if (checkTargetInterval > 0){
-            checkTargetInterval--;
-        }
+//        if (checkTargetInterval > 0){
+//            checkTargetInterval--;
+//        }
         if (!level.isClientSide){
             if (wasAlreadySummoned() && summoningTicks <= 0) {
                 this.bossActivity();
@@ -396,8 +396,13 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
         if (ticker == 1){
             rotating = true;
             List<Player> players = getPlayersAround(false);
-            Vec3 vec = Helpers.getBlockCenter(players.get(level.random.nextInt(players.size())).getOnPos().above()).subtract(this.position()).multiply(1,0,1).normalize();
-            this.setHammerAttackDirection(vec);
+            if (players.isEmpty()){
+                this.setHammerAttackDirection(new Vec3(1,0,0));
+            }else {
+                Vec3 vec = Helpers.getBlockCenter(players.get(level.random.nextInt(players.size())).getOnPos().above())
+                        .subtract(this.position()).multiply(1, 0, 1).normalize();
+                this.setHammerAttackDirection(vec);
+            }
         }
         if (ticker == 21){
             for (Player player : getPlayersAround(false)){
@@ -602,6 +607,7 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
     public int getAttackTick(){
         return this.entityData.get(ATTACK_TICK);
     }
+
     public int getAttackType(){
         return this.entityData.get(ATTACK_TYPE);
     }
@@ -631,12 +637,6 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
             this.summoningTicks = 20;
         }
         super.onSyncedDataUpdated(dataParameter);
-    }
-
-    @Override
-    protected void registerGoals() {
-//        this.targetSelector.addGoal(1,new NearestAttackableTargetGoal<Player>(this,Player.class,30,true,true,(t)->true));
-        super.registerGoals();
     }
 
     public InterpolatedValue getOrCreateAnimationValue(String str, InterpolatedValue value){
@@ -755,8 +755,6 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
             this.setTarget(t);
             return t;
         }else{
-            if (checkTargetInterval > 0) return target;
-            checkTargetInterval = 5;
             Vec3 vec = target.position().subtract(this.position()).multiply(1,0,1);
             if (target instanceof Player player && (player.isCreative() || player.isSpectator())) {
                 setTarget(null);

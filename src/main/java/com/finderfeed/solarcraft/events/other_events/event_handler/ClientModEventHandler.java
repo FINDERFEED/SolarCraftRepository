@@ -135,6 +135,7 @@ public class ClientModEventHandler {
         BlockEntityRenderers.register(SolarcraftTileEntityTypes.RUNIC_ENERGY_CORE.get(), RunicEnergyCoreRenderer::new);
         BlockEntityRenderers.register(SolarcraftTileEntityTypes.BEAM_GENERATOR.get(), BeamGeneratorRenderer::new);
         BlockEntityRenderers.register(SolarcraftTileEntityTypes.BEAM_REFLECTOR.get(), BeamReflectorRenderer::new);
+        BlockEntityRenderers.register(SolarcraftTileEntityTypes.ELEMENT_WEAVER.get(), ElementWeaverRenderer::new);
 
 
         MenuScreens.register(SolarcraftContainers.SOLAR_FURNACE_CONTAINER.get(), SolarFurnaceScreen::new);
@@ -144,6 +145,7 @@ public class ClientModEventHandler {
         MenuScreens.register(SolarcraftContainers.INFUSING_TABLE_TILE.get(), InfusingTableScreen::new);
         MenuScreens.register(SolarcraftContainers.ENCHANTER.get(), EnchanterContainerScreen::new);
         MenuScreens.register(SolarcraftContainers.RUNIC_ENERGY_CHARGER.get(), RunicEnergyChargerScreen::new);
+        MenuScreens.register(SolarcraftContainers.ELEMENT_WEAVER.get(), ElementWeaverContainerScreen::new);
 
         event.enqueueWork(()->{
 

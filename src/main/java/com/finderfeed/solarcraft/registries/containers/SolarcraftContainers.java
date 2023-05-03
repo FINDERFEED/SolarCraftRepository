@@ -18,4 +18,5 @@ public class SolarcraftContainers {
     public static final RegistryObject<MenuType<InfusingTableTileContainer>> INFUSING_TABLE_TILE = CONTAINER_TYPE.register("infusing_crafting_table_container",()-> IForgeMenuType.create(InfusingTableTileContainer::new));
     public static final RegistryObject<MenuType<EnchanterContainer>> ENCHANTER = CONTAINER_TYPE.register("enchanter_container",()-> IForgeMenuType.create(EnchanterContainer::new));
     public static final RegistryObject<MenuType<RunicEnergyChargerContainer>> RUNIC_ENERGY_CHARGER = CONTAINER_TYPE.register("runic_energy_charger_container",()-> IForgeMenuType.create(RunicEnergyChargerContainer::new));
+    public static final RegistryObject<MenuType<ElementWeaverContainer>> ELEMENT_WEAVER = CONTAINER_TYPE.register("element_weaver_container",()-> IForgeMenuType.create(ElementWeaverContainer::new));
 }

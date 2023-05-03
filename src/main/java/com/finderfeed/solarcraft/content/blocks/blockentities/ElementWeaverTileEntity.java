@@ -1,15 +1,19 @@
 package com.finderfeed.solarcraft.content.blocks.blockentities;
 
+import com.finderfeed.solarcraft.client.particles.SolarcraftParticleTypes;
 import com.finderfeed.solarcraft.content.items.runic_energy.RunicEnergyCost;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
 import com.finderfeed.solarcraft.registries.ConfigRegistry;
+import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 
 public class ElementWeaverTileEntity extends REItemHandlerBlockEntity{
 
@@ -31,8 +35,8 @@ public class ElementWeaverTileEntity extends REItemHandlerBlockEntity{
     private int processingTime;
     private boolean active;
 
-    public ElementWeaverTileEntity(BlockEntityType<?> p_155228_, BlockPos p_155229_, BlockState p_155230_) {
-        super(p_155228_, p_155229_, p_155230_);
+    public ElementWeaverTileEntity(BlockPos p_155229_, BlockState p_155230_) {
+        super(SolarcraftTileEntityTypes.ELEMENT_WEAVER.get(), p_155229_, p_155230_);
     }
 
 
@@ -60,6 +64,12 @@ public class ElementWeaverTileEntity extends REItemHandlerBlockEntity{
                 tile.processingItem = null;
                 tile.processingItemCost = null;
                 tile.processingTime = 0;
+            }
+        }else{
+            if (tile.isActive()) {
+                BlockPos pos = tile.getBlockPos();
+                tile.level.addParticle(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+                        pos.getX(), pos.getY() + 2, pos.getZ(), 0, 0.05, 0);
             }
         }
 
@@ -149,5 +159,8 @@ public class ElementWeaverTileEntity extends REItemHandlerBlockEntity{
         return true;
     }
 
-
+    @Override
+    public AABB getRenderBoundingBox() {
+        return Helpers.createAABBWithRadius(Helpers.posToVec(getBlockPos()),10,10);
+    }
 }

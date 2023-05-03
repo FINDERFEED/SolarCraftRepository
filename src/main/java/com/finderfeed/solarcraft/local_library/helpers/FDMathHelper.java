@@ -25,6 +25,21 @@ public class FDMathHelper {
     public static final Function<Double,Double> SQUARE = (x)->x*x;
     public static final Function<Double,Double> FLIP = (x)->1-x;
 
+
+    public static boolean isInEllipse(float x,float y,float z,float ellipseRad,float ellipseDepth){
+        return (x*x) / (ellipseRad * ellipseRad) +
+                (y*y) / (ellipseDepth * ellipseDepth) +
+                (z*z) / (ellipseRad * ellipseRad) <= 1;
+    }
+    public static boolean isOutOfEllipse(float x,float y,float z,float ellipseRad,float ellipseDepth){
+        return (x*x) / (ellipseRad * ellipseRad) +
+                (y*y) / (ellipseDepth * ellipseDepth) +
+                (z*z) / (ellipseRad * ellipseRad) > 1;
+    }
+    public static boolean isBetweenEllipses(float x,float y,float z,float inRad,float inDepth,float outRad,float outDepth){
+        return isOutOfEllipse(x,y,z,inRad,inDepth) && isInEllipse(x,y,z,outRad,outDepth);
+    }
+
     public static double[] polarToCartesian(double radius,double angle){
         return new double[]{radius*Math.cos(angle),radius*Math.sin(angle)};
     }
