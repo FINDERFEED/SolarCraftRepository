@@ -26,7 +26,7 @@ public class SunShardPuzzleRemainingTilesComponent extends FDScreenComponent {
 
     public static final ResourceLocation REMAINING_TILES_BACKGROUND = new ResourceLocation(SolarCraft.MOD_ID,"textures/gui/remaining_tiles_back.png");
 
-    protected SunShardPuzzleRemainingTilesComponent(DefaultScreen screen,Puzzle puzzle, int x, int y){
+    protected SunShardPuzzleRemainingTilesComponent(Screen screen,Puzzle puzzle, int x, int y){
         super(screen,x,y);
         this.localPuzzle = puzzle;
         this.frameThickness = 3;

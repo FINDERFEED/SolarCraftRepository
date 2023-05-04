@@ -1,6 +1,7 @@
 package com.finderfeed.solarcraft.packet_handler;
 
 import com.finderfeed.solarcraft.config.JsonConfig;
+import com.finderfeed.solarcraft.content.blocks.blockentities.runic_energy.AbstractRunicEnergyContainer;
 import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.client.SunShardPuzzleScreen;
 import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.puzzle_template.Puzzle;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
@@ -106,4 +107,12 @@ public class ClientPacketHandles {
             }
         }
     }
+
+    public static void updateContainerRunicEnergy(BlockPos pos,CompoundTag tag){
+        Level world = ClientHelpers.getLevel();
+        if (world.getBlockEntity(pos) instanceof AbstractRunicEnergyContainer container){
+            container.loadRunicEnergy(tag);
+        }
+    }
+
 }

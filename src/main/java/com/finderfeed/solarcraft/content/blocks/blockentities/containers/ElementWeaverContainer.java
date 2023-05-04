@@ -1,14 +1,10 @@
 package com.finderfeed.solarcraft.content.blocks.blockentities.containers;
 
-import com.finderfeed.solarcraft.config.ItemREConfig;
-import com.finderfeed.solarcraft.config.enchanter_config.EnchanterConfig;
 import com.finderfeed.solarcraft.content.blocks.blockentities.ElementWeaverTileEntity;
-import com.finderfeed.solarcraft.content.blocks.blockentities.EnchanterBlockEntity;
 import com.finderfeed.solarcraft.content.blocks.blockentities.containers.misc.TESlotItemHandler;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.registries.ConfigRegistry;
 import com.finderfeed.solarcraft.registries.containers.SolarcraftContainers;
-import com.google.gson.JsonParser;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
@@ -16,7 +12,6 @@ import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -34,29 +29,36 @@ public class ElementWeaverContainer extends AbstractContainerMenu {
         Level world = inv.player.level;
         this.tile = (ElementWeaverTileEntity) world.getBlockEntity(tilepos);
         this.inventory = tile.getInventory();
+        int offsX = -37;
+        int offsY = -33;
 
-
-        this.addSlot(new TESlotItemHandler(tile,this.inventory, 0, 134 + 26 - 118, 12){
+        this.addSlot(new TESlotItemHandler(tile,this.inventory, 0, 134 + 26 - 118 + offsX, 12 + offsY){
             @Override
             public boolean mayPlace(@NotNull ItemStack stack) {
                 return ConfigRegistry.ITEM_RE_CONFIG.getItemCost(stack.getItem()) != null;
             }
         });
-        this.addSlot(new TESlotItemHandler(tile,this.inventory, 1, 134 + 26, 12){
+
+        offsX = -80;
+        offsY = 23;
+
+        this.addSlot(new TESlotItemHandler(tile,this.inventory, 1, 134 + 26 + offsX, 12 + offsY){
             @Override
             public boolean mayPlace(@NotNull ItemStack stack) {
                 return false;
             }
         });
 
+        offsX = 20;
+        offsY = 29;
         for(int l = 0; l < 3; ++l) {
             for(int j1 = 0; j1 < 9; ++j1) {
-                this.addSlot(new Slot(inv, j1 + l * 9 + 9,   8+j1 * 18 + 30 - 68, 103 + l * 18 -20 + 3));
+                this.addSlot(new Slot(inv, j1 + l * 9 + 9 ,   8+j1 * 18 + 30 - 68  + offsX, 103 + l * 18 -20 + 3 + offsY));
             }
         }
 
         for(int i1 = 0; i1 < 9; ++i1) {
-            this.addSlot(new Slot(inv, i1,  8+ i1 * 18 + 30 - 68, 161 -20 + 3));
+            this.addSlot(new Slot(inv, i1,  8+ i1 * 18 + 30 - 68 + offsX, 161 -20 + 3 + offsY));
         }
     }
 
@@ -89,16 +91,24 @@ public class ElementWeaverContainer extends AbstractContainerMenu {
         return itemstack;
     }
 
+    public ElementWeaverTileEntity getTile() {
+        return tile;
+    }
+
+    public ItemStackHandler getInventory() {
+        return inventory;
+    }
+
     @Override
     public boolean stillValid(Player player) {
         return player.position().distanceTo(Helpers.posToVec(tile.getBlockPos())) < 20;
     }
 
-    public static class Provier implements MenuProvider{
+    public static class Provider implements MenuProvider{
 
         private BlockPos pos;
 
-        public Provier(BlockPos pos){
+        public Provider(BlockPos pos){
             this.pos = pos;
         }
 

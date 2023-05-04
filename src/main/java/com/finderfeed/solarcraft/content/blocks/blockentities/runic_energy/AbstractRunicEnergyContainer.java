@@ -12,6 +12,8 @@ import com.finderfeed.solarcraft.content.items.runic_energy.RunicEnergyCost;
 import com.finderfeed.solarcraft.content.runic_network.algorithms.RunicEnergyPath;
 import com.finderfeed.solarcraft.content.runic_network.repeater.BaseRepeaterTile;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
+import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
+import com.finderfeed.solarcraft.packet_handler.packets.UpdateRunicEnergyInContainerPacket;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
@@ -24,6 +26,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraftforge.common.world.ForgeChunkManager;
+import net.minecraftforge.network.PacketDistributor;
 import org.checkerframework.checker.units.qual.C;
 
 import javax.annotation.Nullable;
@@ -337,11 +340,25 @@ public abstract class AbstractRunicEnergyContainer extends SolarcraftBlockEntity
         return container.get(type);
     }
 
-    private void saveRunicEnergy(CompoundTag tag){
+    public void saveRunicEnergy(CompoundTag tag){
         container.saveToTag(tag);
     }
-    private void loadRunicEnergy(CompoundTag tag){
+    public void loadRunicEnergy(CompoundTag tag){
         container.loadFromTag(tag);
+    }
+
+    public void updateRunicEnergy(float radiusOfUpdate){
+        if (!level.isClientSide){
+            SCPacketHandler.INSTANCE.send(PacketDistributor.NEAR.with(
+                PacketDistributor.TargetPoint.p(
+                        this.getBlockPos().getX(),
+                        this.getBlockPos().getY(),
+                        this.getBlockPos().getZ(),
+                        radiusOfUpdate,
+                        this.level.dimension()
+                )
+            ),new UpdateRunicEnergyInContainerPacket(this));
+        }
     }
 
     public void breakWay(RunicEnergy.Type type){

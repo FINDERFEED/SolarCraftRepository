@@ -1,9 +1,9 @@
 package com.finderfeed.solarcraft.content.blocks;
 
 import com.finderfeed.solarcraft.content.blocks.blockentities.ElementWeaverTileEntity;
-import com.finderfeed.solarcraft.content.blocks.blockentities.SolarcraftBlockEntity;
 import com.finderfeed.solarcraft.content.blocks.blockentities.containers.ElementWeaverContainer;
 import com.finderfeed.solarcraft.content.blocks.primitive.RunicEnergySaverBlock;
+import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
@@ -30,7 +30,8 @@ public class ElementWeaverBlock extends RunicEnergySaverBlock implements EntityB
     public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult p_60508_) {
         if (player instanceof ServerPlayer serverPlayer && world.getBlockEntity(pos) instanceof ElementWeaverTileEntity tile){
             if (!player.isCrouching()){
-                NetworkHooks.openScreen(serverPlayer,new ElementWeaverContainer.Provier(pos),buf->{
+                Helpers.updateTile(tile);
+                NetworkHooks.openScreen(serverPlayer,new ElementWeaverContainer.Provider(pos), buf->{
                     buf.writeBlockPos(pos);
                 });
             }else{

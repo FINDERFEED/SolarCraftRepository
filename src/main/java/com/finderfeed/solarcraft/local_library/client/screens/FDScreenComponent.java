@@ -2,15 +2,16 @@ package com.finderfeed.solarcraft.local_library.client.screens;
 
 import com.finderfeed.solarcraft.client.screens.SolarCraftScreen;
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.gui.screens.Screen;
 
 public abstract class FDScreenComponent {
 
     private boolean isFocused = false;
     protected int x;
     protected int y;
-    protected DefaultScreen screen;
+    protected Screen screen;
 
-    public FDScreenComponent(DefaultScreen screen, int x, int y){
+    public FDScreenComponent(Screen screen,int x, int y){
         this.x = x;
         this.y = y;
         this.screen = screen;
@@ -43,5 +44,13 @@ public abstract class FDScreenComponent {
 
     public boolean isMouseInBounds(double x,double y,double sizeX,double sizeY){
         return x >= 0 && y >= 0 && x <= sizeX && y <= sizeY;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
     }
 }

@@ -1,5 +1,6 @@
 package com.finderfeed.solarcraft.local_library.client.screens;
 
+import com.finderfeed.solarcraft.local_library.client.particles.ScreenParticlesRenderHandler;
 import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
@@ -93,6 +94,11 @@ public abstract class DefaultScreen extends Screen {
         this.components.put(id,scScreenComponent);
     }
 
+    @Override
+    public void onClose() {
+        super.onClose();
+        ScreenParticlesRenderHandler.clearAllParticles();
+    }
 
     public abstract int getScreenWidth();
     public abstract int getScreenHeight();

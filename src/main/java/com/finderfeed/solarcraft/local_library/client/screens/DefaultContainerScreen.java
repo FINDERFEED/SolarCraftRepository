@@ -1,5 +1,6 @@
 package com.finderfeed.solarcraft.local_library.client.screens;
 
+import com.finderfeed.solarcraft.local_library.client.particles.ScreenParticlesRenderHandler;
 import com.finderfeed.solarcraft.local_library.client.screens.FDScreenComponent;
 import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -35,7 +36,7 @@ public abstract class DefaultContainerScreen<T extends AbstractContainerMenu> ex
 
     @Override
     public void containerTick() {
-        super.tick();
+        super.containerTick();
         for (FDScreenComponent component : components.values()) {
             component.tick();
         }
@@ -89,10 +90,22 @@ public abstract class DefaultContainerScreen<T extends AbstractContainerMenu> ex
         }
     }
 
+    public void renderAllComponents(PoseStack matrices, int mx, int my, float pticks) {
+        for (FDScreenComponent component : components.values()) {
+            component.render(matrices, mx - component.x, my - component.y, pticks);
+        }
+    }
+
     public void addFDComponent(String id, FDScreenComponent scScreenComponent) {
         this.components.put(id, scScreenComponent);
     }
 
+
+    @Override
+    public void onClose() {
+        super.onClose();
+        ScreenParticlesRenderHandler.clearAllParticles();
+    }
 
     public abstract int getScreenWidth();
 

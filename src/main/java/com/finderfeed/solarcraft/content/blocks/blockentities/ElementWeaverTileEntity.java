@@ -7,6 +7,7 @@ import com.finderfeed.solarcraft.misc_things.RunicEnergy;
 import com.finderfeed.solarcraft.registries.ConfigRegistry;
 import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -55,7 +56,8 @@ public class ElementWeaverTileEntity extends REItemHandlerBlockEntity{
             if (!input.isEmpty()){
                 tile.processingItem = input.getItem();
                 tile.processingItemCost = ConfigRegistry.ITEM_RE_CONFIG.getItemCost(input.getItem());
-                if (output.isEmpty() || (output.getItem() == input.getItem() && output.getCount() < output.getMaxStackSize())){
+                if (output.isEmpty() || (output.getItem() == input.getItem() &&
+                        output.getCount() < output.getMaxStackSize())){
                     createItems(tile,output);
                 }else{
                     tile.processingTime = 0;
@@ -78,8 +80,14 @@ public class ElementWeaverTileEntity extends REItemHandlerBlockEntity{
     private static void createItems(ElementWeaverTileEntity tile,ItemStack output){
         if (tile.hasEnoughRunicEnergy(tile.processingItemCost,1)){
             if (tile.processingTime >= MAX_PROCESSING_TIME){
-                output.grow(1);
+                if (!output.isEmpty()) {
+                    output.grow(1);
+                }else{
+                    tile.setOutputSlot(tile.processingItem.getDefaultInstance());
+                }
                 tile.spendEnergy(tile.processingItemCost,1);
+                tile.processingTime = 0;
+                tile.updateRunicEnergy(10);
             }
             tile.processingTime += 1;
         }else{
@@ -91,6 +99,7 @@ public class ElementWeaverTileEntity extends REItemHandlerBlockEntity{
     private static void energyDrain(ElementWeaverTileEntity tile){
         if (tile.isActive()){
             tile.requestRunicEnergy(tile.REQUEST,1);
+            tile.updateRunicEnergy(10);
         }
     }
 
@@ -116,11 +125,25 @@ public class ElementWeaverTileEntity extends REItemHandlerBlockEntity{
 
     public void onUse(){
         if (!level.isClientSide) {
+            if (active){
+                this.resetAllRepeaters();
+            }
             this.active = !active;
             Helpers.updateTile(this);
         }
     }
 
+    @Override
+    public void saveAdditional(CompoundTag tag) {
+        super.saveAdditional(tag);
+        tag.putBoolean("active",active);
+    }
+
+    @Override
+    public void load(CompoundTag tag) {
+        super.load(tag);
+        this.active = tag.getBoolean("active");
+    }
 
     public RunicEnergyCost getProcessingItemCost() {
         return processingItemCost;

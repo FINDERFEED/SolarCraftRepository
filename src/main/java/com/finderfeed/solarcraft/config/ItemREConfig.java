@@ -11,7 +11,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ItemREConfig extends JsonConfig{
+public class ItemREConfig extends JsonConfig {
 
 
     private static final JsonObject DEFAULT =
