@@ -27,14 +27,22 @@ public class FDMathHelper {
 
 
     public static boolean isInEllipse(float x,float y,float z,float ellipseRad,float ellipseDepth){
-        return (x*x) / (ellipseRad * ellipseRad) +
+        if (ellipseRad == 0 || ellipseDepth == 0){
+            return false;
+        }
+        boolean a = (x*x) / (ellipseRad * ellipseRad) +
                 (y*y) / (ellipseDepth * ellipseDepth) +
                 (z*z) / (ellipseRad * ellipseRad) <= 1;
+        return a;
     }
     public static boolean isOutOfEllipse(float x,float y,float z,float ellipseRad,float ellipseDepth){
-        return (x*x) / (ellipseRad * ellipseRad) +
+        if (ellipseRad == 0 || ellipseDepth == 0){
+            return true;
+        }
+        boolean a = (x*x) / (ellipseRad * ellipseRad) +
                 (y*y) / (ellipseDepth * ellipseDepth) +
                 (z*z) / (ellipseRad * ellipseRad) > 1;
+        return a;
     }
     public static boolean isBetweenEllipses(float x,float y,float z,float inRad,float inDepth,float outRad,float outDepth){
         return isOutOfEllipse(x,y,z,inRad,inDepth) && isInEllipse(x,y,z,outRad,outDepth);

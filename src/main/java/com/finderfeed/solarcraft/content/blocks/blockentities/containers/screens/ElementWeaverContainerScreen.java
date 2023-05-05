@@ -9,10 +9,8 @@ import com.finderfeed.solarcraft.content.items.runic_energy.RunicEnergyCost;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.local_library.client.particles.ScreenParticlesRenderHandler;
 import com.finderfeed.solarcraft.local_library.client.screens.DefaultContainerScreen;
-import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
 import com.finderfeed.solarcraft.registries.ConfigRegistry;
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.network.chat.Component;
@@ -41,42 +39,50 @@ public class ElementWeaverContainerScreen extends DefaultContainerScreen<Element
 
         TooltipBoxComponent zeta = new TooltipBoxComponent(this,relX + 84,relY + 18,16,16,
                 (matrix,x,y)->{
-                    renderTooltip(matrix,Component.literal("ZETA: " + tile.getRunicEnergy(RunicEnergy.Type.ZETA)),(int)x,(int)y);
+                    renderTooltip(matrix,Component.literal("ZETA: " + tile.getRunicEnergy(RunicEnergy.Type.ZETA) +
+                            "/" + ElementWeaverTileEntity.LIMIT) ,(int)x,(int)y);
                 });
 
         TooltipBoxComponent ardo = new TooltipBoxComponent(this,relX + 118,relY + 32,16,16,
                 (matrix,x,y)->{
-                    renderTooltip(matrix,Component.literal("ARDO: " + tile.getRunicEnergy(RunicEnergy.Type.ARDO)),(int)x,(int)y);
+                    renderTooltip(matrix,Component.literal("ARDO: " + tile.getRunicEnergy(RunicEnergy.Type.ARDO) +
+                            "/" + ElementWeaverTileEntity.LIMIT) ,(int)x,(int)y);
                 });
 
         TooltipBoxComponent urba = new TooltipBoxComponent(this,relX + 133,relY + 67,16,16,
                 (matrix,x,y)->{
-                    renderTooltip(matrix,Component.literal("URBA: " + tile.getRunicEnergy(RunicEnergy.Type.URBA)),(int)x,(int)y);
+                    renderTooltip(matrix,Component.literal("URBA: " + tile.getRunicEnergy(RunicEnergy.Type.URBA) +
+                            "/" + ElementWeaverTileEntity.LIMIT) ,(int)x,(int)y);
                 });
 
         TooltipBoxComponent kelda = new TooltipBoxComponent(this,relX + 118,relY + 101,16,16,
                 (matrix,x,y)->{
-                    renderTooltip(matrix,Component.literal("KELDA: " + tile.getRunicEnergy(RunicEnergy.Type.KELDA)),(int)x,(int)y);
+                    renderTooltip(matrix,Component.literal("KELDA: " + tile.getRunicEnergy(RunicEnergy.Type.KELDA) +
+                            "/" + ElementWeaverTileEntity.LIMIT) ,(int)x,(int)y);
                 });
 
         TooltipBoxComponent fira = new TooltipBoxComponent(this,relX + 84,relY + 116,16,16,
                 (matrix,x,y)->{
-                    renderTooltip(matrix,Component.literal("FIRA: " + tile.getRunicEnergy(RunicEnergy.Type.FIRA)),(int)x,(int)y);
+                    renderTooltip(matrix,Component.literal("FIRA: " + tile.getRunicEnergy(RunicEnergy.Type.FIRA) +
+                            "/" + ElementWeaverTileEntity.LIMIT) ,(int)x,(int)y);
                 });
 
         TooltipBoxComponent tera = new TooltipBoxComponent(this,relX + 50,relY + 101,16,16,
                 (matrix,x,y)->{
-                    renderTooltip(matrix,Component.literal("TERA: " + tile.getRunicEnergy(RunicEnergy.Type.TERA)),(int)x,(int)y);
+                    renderTooltip(matrix,Component.literal("TERA: " + tile.getRunicEnergy(RunicEnergy.Type.TERA) +
+                            "/" + ElementWeaverTileEntity.LIMIT) ,(int)x,(int)y);
                 });
 
         TooltipBoxComponent giro = new TooltipBoxComponent(this,relX + 35,relY + 67,16,16,
                 (matrix,x,y)->{
-                    renderTooltip(matrix,Component.literal("GIRO: " + tile.getRunicEnergy(RunicEnergy.Type.GIRO)),(int)x,(int)y);
+                    renderTooltip(matrix,Component.literal("GIRO: " + tile.getRunicEnergy(RunicEnergy.Type.GIRO) +
+                            "/" + ElementWeaverTileEntity.LIMIT) ,(int)x,(int)y);
                 });
 
         TooltipBoxComponent ultima = new TooltipBoxComponent(this,relX + 50,relY + 33,16,16,
                 (matrix,x,y)->{
-                    renderTooltip(matrix,Component.literal("ULTIMA: " + tile.getRunicEnergy(RunicEnergy.Type.ULTIMA)),(int)x,(int)y);
+                    renderTooltip(matrix,Component.literal("ULTIMA: " + tile.getRunicEnergy(RunicEnergy.Type.ULTIMA) +
+                            "/" + ElementWeaverTileEntity.LIMIT) ,(int)x,(int)y);
                 });
         symbolPositions[0] = new int[]{zeta.getX(),zeta.getY()};
         symbolPositions[1] = new int[]{ardo.getX(),ardo.getY()};
@@ -121,7 +127,7 @@ public class ElementWeaverContainerScreen extends DefaultContainerScreen<Element
         super.containerTick();
         ElementWeaverTileEntity tile = menu.getTile();
         ItemStack item = tile.inputSlot();
-        if (!item.isEmpty()){
+        if (!item.isEmpty() && item.getCount() != item.getMaxStackSize()){
             this.setProcessingItem(item);
             if (processingItem != null) {
                 this.spawnParticles();

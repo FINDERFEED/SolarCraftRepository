@@ -4,6 +4,7 @@ import com.finderfeed.solarcraft.content.blocks.blockentities.PuzzleBlockEntity;
 import com.finderfeed.solarcraft.content.blocks.blockentities.RuneEnergyPylonTile;
 import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.blockentity.SunShardPuzzleBlockEntity;
 import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.ray_puzzle.blockentities.BeamGenerator;
+import com.finderfeed.solarcraft.content.entities.OrbitalCannonExplosionEntity;
 import com.finderfeed.solarcraft.content.runic_network.repeater.RunicEnergyRepeaterTile;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.helpers.multiblock.StructurePatternExporter;
@@ -62,6 +63,9 @@ public class SolarcraftDebugStick extends Item {
                 System.out.println(generator.getPuzzle());
                 System.out.println(generator.destroyPositions);
             }
+            OrbitalCannonExplosionEntity entity = new OrbitalCannonExplosionEntity(world,25,50,2);
+            entity.setPos(pos.getX(),pos.getY(),pos.getZ());
+            world.addFreshEntity(entity);
         }
 
 //        if (!world.isClientSide){

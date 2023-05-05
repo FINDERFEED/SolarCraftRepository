@@ -29,7 +29,7 @@ public class ElementWeaverTileEntity extends REItemHandlerBlockEntity{
             .set(RunicEnergy.Type.ZETA,getRunicEnergyLimit())
             .immutable();
 
-    public static final int MAX_PROCESSING_TIME = 200;
+    public static final int MAX_PROCESSING_TIME = 100;
     public static final float LIMIT = 1000000;
     private Item processingItem;
     private RunicEnergyCost processingItemCost;

@@ -127,4 +127,9 @@ public class SolarcraftEntityTypes {
     public static final RegistryObject<EntityType<CorruptionWisp>> CORRUPTION_WISP = ENTITY_TYPE_REGISTER.register("corruption_wisp", () ->
             EntityType.Builder.<CorruptionWisp>of(CorruptionWisp::new, MobCategory.CREATURE)
                     .sized(0.35f, 0.35f).clientTrackingRange(8).updateInterval(1).build("corruption_wisp"));
+
+
+    public static final RegistryObject<EntityType<OrbitalCannonExplosionEntity>> ORBITAL_EXPLOSION = ENTITY_TYPE_REGISTER.register("orbital_explosion", () ->
+            EntityType.Builder.<OrbitalCannonExplosionEntity>of(OrbitalCannonExplosionEntity::new, MobCategory.MISC)
+                    .sized(0.1f, 0.1f).build("orbital_explosion"));
 }

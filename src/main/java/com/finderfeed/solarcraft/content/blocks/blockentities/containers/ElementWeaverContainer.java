@@ -49,7 +49,7 @@ public class ElementWeaverContainer extends AbstractContainerMenu {
             }
         });
 
-        offsX = 20;
+        offsX = 38;
         offsY = 29;
         for(int l = 0; l < 3; ++l) {
             for(int j1 = 0; j1 < 9; ++j1) {
