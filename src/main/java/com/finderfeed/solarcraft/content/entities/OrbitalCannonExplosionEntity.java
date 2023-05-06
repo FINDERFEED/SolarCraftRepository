@@ -1,23 +1,17 @@
 package com.finderfeed.solarcraft.content.entities;
 
-import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarcraft.registries.entities.SolarcraftEntityTypes;
-import it.unimi.dsi.fastutil.shorts.ShortOpenHashSet;
-import it.unimi.dsi.fastutil.shorts.ShortSet;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.SectionPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientboundLevelChunkWithLightPacket;
-import net.minecraft.network.protocol.game.ClientboundSectionBlocksUpdatePacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.level.Explosion;
+import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.LevelChunk;
@@ -28,7 +22,6 @@ import net.minecraftforge.network.NetworkHooks;
 
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class OrbitalCannonExplosionEntity extends Entity {
 
@@ -40,9 +33,10 @@ public class OrbitalCannonExplosionEntity extends Entity {
     private int blockCorrosionRadius;
     private int explosionTick = 0;
     private int ringTick = 0;
-    private List<ExplosionRing> rings;
+    private List<BlockPos> blocksToExplode;
     private CompletableFuture<Boolean> ringCompleter;
     private Random random = new Random();
+    private HashSet<LevelChunk> chunksToUpdate = new HashSet<>();
 
 
     public OrbitalCannonExplosionEntity(EntityType<?> type, Level level){
@@ -61,57 +55,54 @@ public class OrbitalCannonExplosionEntity extends Entity {
     public void tick() {
         super.tick();
         if (!level.isClientSide) {
-            if (rings == null || ringCompleter == null) {
+            if (blocksToExplode == null || ringCompleter == null) {
                 ringCompleter = CompletableFuture.supplyAsync(()->{
-                    this.initRings();
+                    this.initExplodePositions();
                     return true;
                 });
             }
             if (ringCompleter.isDone()){
                 this.explode2((ServerLevel) level);
             }
-            /*
-            if (ringCompleter.isDone()) {
-                this.explode(explosionTick);
-                if (ringTick == 0) {
-                    explosionTick++;
-                }
-            }
-             */
         }
 
     }
 
-    private HashSet<LevelChunk> chunks = new HashSet<>();
-//        for (LevelChunk chunk : chunks){
-//            for (ServerPlayer player : serverLevel.getPlayers((p)->true)){
-//                player.connection.send(new ClientboundLevelChunkWithLightPacket(chunk, serverLevel.getLightEngine(),
-//                        (BitSet)null, (BitSet)null, true));
-//
-//            }
-//        }
-    private record SectionData(ShortSet set,SectionPos pos){}
-    private HashMap<LevelChunkSection, SectionData> sections = new HashMap<>();
-    //Version 2
-
-    private void explode2(ServerLevel serverLevel){
-        for (ExplosionRing ring : rings){
-            for (List<BlockPos> list : ring.splittedRing){
-                for (BlockPos pos : list){
-                    processBlockPos(pos);
-                }
+    private void initExplodePositions(){
+        this.blocksToExplode = new ArrayList<>();
+        BlockPos.betweenClosed(-radius,-depth,-radius,radius,depth,radius).forEach(pos->{
+            if (this.shouldPosBeAdded(pos)){
+                this.blocksToExplode.add(new BlockPos(pos).offset(blockPosition()));
             }
+        });
+    }
+    private boolean shouldPosBeAdded(BlockPos pos){
+        boolean a = FDMathHelper.isBetweenEllipses(
+                pos.getX(),
+                pos.getY(),
+                pos.getZ(),
+                radius - blockCorrosionRadius,
+                depth - blockCorrosionRadius,
+                radius,
+                depth
+        );
+        if (a && this.random.nextFloat() < 0.3){
+            return false;
         }
 
-//        for (Map.Entry<LevelChunkSection,SectionData> entry : sections.entrySet()){
-//            SectionData data = entry.getValue();
-//            for (ServerPlayer player : serverLevel.getPlayers(p->true)){
-//                player.connection.send(new ClientboundSectionBlocksUpdatePacket(data.pos(),data.set(),entry.getKey(),true));
-//            }
-//        }
-        for (LevelChunk chunk : chunks){
+        return FDMathHelper.isInEllipse(pos.getX() + 0.5f,pos.getY() + 0.5f,pos.getZ() + 0.5f, radius,depth);
+    }
+
+    private void explode2(ServerLevel serverLevel){
+        for (BlockPos pos : blocksToExplode){
+            this.processBlockPos(pos);
+        }
+        for (LevelChunk chunk : chunksToUpdate){
             chunk.setUnsaved(true);
-            for (ServerPlayer player : serverLevel.getPlayers((p)->true)){
+            Vec3 chunkPos = new Vec3(chunk.getPos().getMiddleBlockX(),0,chunk.getPos().getMiddleBlockZ());
+            for (ServerPlayer player : serverLevel.getPlayers((p)->{
+                return p.position().multiply(1,0,1).distanceTo(chunkPos) < 300;
+            })){
                 player.connection.send(new ClientboundLevelChunkWithLightPacket(chunk, serverLevel.getLightEngine(),
                         (BitSet)null, (BitSet)null, true));
 
@@ -120,7 +111,6 @@ public class OrbitalCannonExplosionEntity extends Entity {
         this.remove(RemovalReason.DISCARDED);
     }
     private void processBlockPos(BlockPos pos){
-
         if (!level.getBlockState(pos).hasBlockEntity()){
             if (!level.isOutsideBuildHeight(pos)){
                 LevelChunk chunk = level.getChunkAt(pos);
@@ -131,47 +121,16 @@ public class OrbitalCannonExplosionEntity extends Entity {
                 int z = pos.getZ() & 15;
                 section.setBlockState(
                           x,y,z,
-                        Blocks.AIR.defaultBlockState()
+                        getExplosionState(pos)
                 );
-                //((ServerLevel)level).getLightEngine().checkBlock(pos);
-                chunks.add(chunk);
-//                if (sections.containsKey(section)){
-//                    sections.get(section).set().add(SectionPos.sectionRelativePos(pos));
-//                }else {
-//                    ShortOpenHashSet set = new ShortOpenHashSet();
-//                    set.add(SectionPos.sectionRelativePos(pos));
-//                    sections.put(section,new SectionData(set,SectionPos.of(pos)));
-//                }
+                chunksToUpdate.add(chunk);
             }
         }else{
             level.destroyBlock(pos,true);
         }
     }
 
-    //Version 1 below
-
-    private void explode(int tick){
-        if (explosionTick % EXPLOSION_TICK == 0){
-            int ringN = tick / EXPLOSION_TICK;
-            if (ringN < rings.size()) {
-                ExplosionRing ring = rings.get(ringN);
-                List<List<BlockPos>> ringParts = ring.splittedRing();
-                if (ringTick < ringParts.size()) {
-                    List<BlockPos> toRemove = ringParts.get(ringTick);
-                    for (BlockPos pos : toRemove){
-                        this.tryDestroyBlock(pos);
-                    }
-                    ringTick++;
-                }else{
-                    ringTick = 0;
-                }
-            }else{
-                this.remove(RemovalReason.DISCARDED);
-            }
-        }
-    }
-
-    private void tryDestroyBlock(BlockPos pos){
+    private BlockState getExplosionState(BlockPos pos){
         boolean a = FDMathHelper.isBetweenEllipses(
                 pos.getX() - this.blockPosition().getX(),
                 pos.getY() - this.blockPosition().getY(),
@@ -181,38 +140,41 @@ public class OrbitalCannonExplosionEntity extends Entity {
                 radius,
                 depth
         );
-        int flag = Block.UPDATE_ALL;
+
         if (!a) {
-            level.setBlock(pos, Blocks.AIR.defaultBlockState(), flag);
+            return Blocks.AIR.defaultBlockState();
         }else{
             if (this.shouldBeObsidianOrMagma(pos)) {
                 float c = this.random.nextFloat();
 
                 if (c < 0.33) {
-                    level.setBlock(pos, Blocks.OBSIDIAN.defaultBlockState(), flag);
+                    return Blocks.OBSIDIAN.defaultBlockState();
                 } else if (c < 0.66) {
-                    level.setBlock(pos, Blocks.MAGMA_BLOCK.defaultBlockState(), flag);
+                    return Blocks.MAGMA_BLOCK.defaultBlockState();
                 }else{
-
-                    level.setBlock(pos,Blocks.AIR.defaultBlockState(),flag);
+                    return Blocks.AIR.defaultBlockState();
                 }
             }else{
                 BlockState below = level.getBlockState(pos.below());
                 if (!below.isAir()){
                     float c = this.random.nextFloat();
                     if (c > 0.5){
-                        level.setBlock(pos,Blocks.FIRE.defaultBlockState(),flag);
+                        return Blocks.FIRE.defaultBlockState();
                     }else{
-                        level.setBlock(pos, Blocks.AIR.defaultBlockState(), flag);
+                        return Blocks.AIR.defaultBlockState();
                     }
                 }else{
-                    level.setBlock(pos, Blocks.AIR.defaultBlockState(), flag);
+                    return Blocks.AIR.defaultBlockState();
                 }
-
-
             }
         }
     }
+
+    //Version 1 below
+
+
+
+
 
     private boolean shouldBeObsidianOrMagma(BlockPos pos){
         BlockState below = level.getBlockState(pos.below());
@@ -226,75 +188,6 @@ public class OrbitalCannonExplosionEntity extends Entity {
         return false;
     }
 
-    private void initRings(){
-        rings = new ArrayList<>();
-        if (radius > depth){
-            float mod = 1f / radius;
-            float nDepth = depth*mod;
-            int rm = this.radius;
-            for (int i = 0; rm > 0; i++){
-                int rad = Math.min(RADIUS_OF_RING,rm);
-                float innerRad = i*RADIUS_OF_RING;
-                float innerDepth = i*RADIUS_OF_RING*nDepth;
-                this.rings.add(constructRing(innerRad,innerDepth, innerRad + rad,innerDepth + rad*nDepth));
-                rm -= rad;
-            }
-        }else{
-            float mod = 1f / depth;
-            float nRad = radius*mod;
-            int rm = this.depth;
-            for (int i = 0; rm > 0; i++){
-                int rad = Math.min(RADIUS_OF_RING,rm);
-                float innerRad = i*RADIUS_OF_RING*nRad;
-                float innerDepth = i*RADIUS_OF_RING;
-                this.rings.add(constructRing(innerRad,innerDepth, innerRad + rad*nRad,innerDepth + rad));
-                rm -= rad;
-            }
-
-        }
-    }
-
-    private ExplosionRing constructRing(float innerRad,float innerDepth,float endRad,float endDepth){
-        AABB outerBox = new AABB(-endRad,-endDepth,-endRad,endRad,endDepth,endRad);
-        ExplosionRing ring = new ExplosionRing(new ArrayList<>());
-        ring.splittedRing().add(new ArrayList<>());
-
-        int ringPartLimit = 400;
-        AtomicInteger index = new AtomicInteger(0);
-        BlockPos.betweenClosedStream(outerBox).forEach(pos->{
-            if (this.shouldPosBeAdded(pos,innerRad,innerDepth,endRad,endDepth)){
-                BlockPos ps = new BlockPos(pos.getX(),pos.getY(),pos.getZ()).offset(blockPosition());
-                List<BlockPos> list = ring.splittedRing.get(index.get());
-                if (list.size() >= ringPartLimit){
-                    List<BlockPos> newList = new ArrayList<>();
-                    newList.add(ps);
-                    ring.splittedRing.add(newList);
-                    index.incrementAndGet();
-                }else{
-                    list.add(ps);
-                }
-            }
-        });
-
-        return ring;
-    }
-
-    private boolean shouldPosBeAdded(BlockPos pos,float innerRad,float innerDepth,float endRad,float endDepth){
-        boolean a = FDMathHelper.isBetweenEllipses(
-                pos.getX(),
-                pos.getY(),
-                pos.getZ(),
-                radius - blockCorrosionRadius,
-                depth - blockCorrosionRadius,
-                radius,
-                depth
-        );
-        if (a && this.random.nextFloat() < 0.3){
-            return false;
-        }
-        return FDMathHelper.isBetweenEllipses(pos.getX() + 0.5f,pos.getY() + 0.5f,pos.getZ() + 0.5f,
-                innerRad,innerDepth,endRad,endDepth);
-    }
 
 
     @Override
@@ -335,5 +228,4 @@ public class OrbitalCannonExplosionEntity extends Entity {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 
-    public record ExplosionRing(List<List<BlockPos>> splittedRing){ }
 }
