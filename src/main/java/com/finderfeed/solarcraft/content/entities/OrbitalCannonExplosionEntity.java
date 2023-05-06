@@ -3,22 +3,30 @@ package com.finderfeed.solarcraft.content.entities;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarcraft.registries.entities.SolarcraftEntityTypes;
+import it.unimi.dsi.fastutil.shorts.ShortOpenHashSet;
+import it.unimi.dsi.fastutil.shorts.ShortSet;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.SectionPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientboundLevelChunkWithLightPacket;
+import net.minecraft.network.protocol.game.ClientboundSectionBlocksUpdatePacket;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.chunk.LevelChunk;
+import net.minecraft.world.level.chunk.LevelChunkSection;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.NetworkHooks;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -59,15 +67,88 @@ public class OrbitalCannonExplosionEntity extends Entity {
                     return true;
                 });
             }
+            if (ringCompleter.isDone()){
+                this.explode2((ServerLevel) level);
+            }
+            /*
             if (ringCompleter.isDone()) {
                 this.explode(explosionTick);
                 if (ringTick == 0) {
                     explosionTick++;
                 }
             }
+             */
         }
 
     }
+
+    private HashSet<LevelChunk> chunks = new HashSet<>();
+//        for (LevelChunk chunk : chunks){
+//            for (ServerPlayer player : serverLevel.getPlayers((p)->true)){
+//                player.connection.send(new ClientboundLevelChunkWithLightPacket(chunk, serverLevel.getLightEngine(),
+//                        (BitSet)null, (BitSet)null, true));
+//
+//            }
+//        }
+    private record SectionData(ShortSet set,SectionPos pos){}
+    private HashMap<LevelChunkSection, SectionData> sections = new HashMap<>();
+    //Version 2
+
+    private void explode2(ServerLevel serverLevel){
+        for (ExplosionRing ring : rings){
+            for (List<BlockPos> list : ring.splittedRing){
+                for (BlockPos pos : list){
+                    processBlockPos(pos);
+                }
+            }
+        }
+
+//        for (Map.Entry<LevelChunkSection,SectionData> entry : sections.entrySet()){
+//            SectionData data = entry.getValue();
+//            for (ServerPlayer player : serverLevel.getPlayers(p->true)){
+//                player.connection.send(new ClientboundSectionBlocksUpdatePacket(data.pos(),data.set(),entry.getKey(),true));
+//            }
+//        }
+        for (LevelChunk chunk : chunks){
+            chunk.setUnsaved(true);
+            for (ServerPlayer player : serverLevel.getPlayers((p)->true)){
+                player.connection.send(new ClientboundLevelChunkWithLightPacket(chunk, serverLevel.getLightEngine(),
+                        (BitSet)null, (BitSet)null, true));
+
+            }
+        }
+        this.remove(RemovalReason.DISCARDED);
+    }
+    private void processBlockPos(BlockPos pos){
+
+        if (!level.getBlockState(pos).hasBlockEntity()){
+            if (!level.isOutsideBuildHeight(pos)){
+                LevelChunk chunk = level.getChunkAt(pos);
+                int index = chunk.getSectionIndex(pos.getY());
+                LevelChunkSection section = chunk.getSection(index);
+                int x = pos.getX() & 15;
+                int y = pos.getY() & 15;
+                int z = pos.getZ() & 15;
+                section.setBlockState(
+                          x,y,z,
+                        Blocks.AIR.defaultBlockState()
+                );
+                //((ServerLevel)level).getLightEngine().checkBlock(pos);
+                chunks.add(chunk);
+//                if (sections.containsKey(section)){
+//                    sections.get(section).set().add(SectionPos.sectionRelativePos(pos));
+//                }else {
+//                    ShortOpenHashSet set = new ShortOpenHashSet();
+//                    set.add(SectionPos.sectionRelativePos(pos));
+//                    sections.put(section,new SectionData(set,SectionPos.of(pos)));
+//                }
+            }
+        }else{
+            level.destroyBlock(pos,true);
+        }
+    }
+
+    //Version 1 below
 
     private void explode(int tick){
         if (explosionTick % EXPLOSION_TICK == 0){
