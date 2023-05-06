@@ -63,7 +63,7 @@ public class SolarcraftDebugStick extends Item {
                 System.out.println(generator.getPuzzle());
                 System.out.println(generator.destroyPositions);
             }
-            OrbitalCannonExplosionEntity entity = new OrbitalCannonExplosionEntity(world,25,50,2);
+            OrbitalCannonExplosionEntity entity = new OrbitalCannonExplosionEntity(world,75,75,3);
             entity.setPos(pos.getX(),pos.getY(),pos.getZ());
             world.addFreshEntity(entity);
         }
