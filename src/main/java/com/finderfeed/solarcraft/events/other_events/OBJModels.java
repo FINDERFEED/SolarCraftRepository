@@ -37,6 +37,7 @@ public class OBJModels {
     public static final ResourceLocation ANCIENT_FRAGMENT_MODEL = new ResourceLocation("solarcraft:toloadmodels/ancient_fragment");
     public static final ResourceLocation SOLAR_WAND_MODEL = new ResourceLocation("solarcraft:toloadmodels/solar_wand");
     public static final ResourceLocation PORTAL_SPHERE = new ResourceLocation("solarcraft:objmodels/portal_sphere");
+    public static final ResourceLocation ORBITAL_EXPLOSION_SPHERE = new ResourceLocation("solarcraft:objmodels/orbital_explosion_sphere");
 
 
 
@@ -66,5 +67,6 @@ public class OBJModels {
         event.register(CLEARING_RITUAL_MAIN_BLOCK_TOP);
         event.register(PORTAL_SPHERE);
         event.register(SOLAR_WAND_MODEL);
+        event.register(ORBITAL_EXPLOSION_SPHERE);
     }
 }

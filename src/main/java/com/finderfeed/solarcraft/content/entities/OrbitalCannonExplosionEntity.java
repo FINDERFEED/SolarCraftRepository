@@ -10,13 +10,11 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraft.world.level.chunk.LevelChunkSection;
-import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.NetworkHooks;
 
@@ -24,17 +22,11 @@ import java.util.*;
 import java.util.concurrent.CompletableFuture;
 
 public class OrbitalCannonExplosionEntity extends Entity {
-
-    private static final int RADIUS_OF_RING = 5;
-    private static final int EXPLOSION_TICK = 10;
-
     private int radius;
     private int depth;
     private int blockCorrosionRadius;
-    private int explosionTick = 0;
-    private int ringTick = 0;
     private List<BlockPos> blocksToExplode;
-    private CompletableFuture<Boolean> ringCompleter;
+    private CompletableFuture<Boolean> blocksCompleter;
     private Random random = new Random();
     private HashSet<LevelChunk> chunksToUpdate = new HashSet<>();
 
@@ -55,14 +47,14 @@ public class OrbitalCannonExplosionEntity extends Entity {
     public void tick() {
         super.tick();
         if (!level.isClientSide) {
-            if (blocksToExplode == null || ringCompleter == null) {
-                ringCompleter = CompletableFuture.supplyAsync(()->{
+            if (blocksToExplode == null || blocksCompleter == null) {
+                blocksCompleter = CompletableFuture.supplyAsync(()->{
                     this.initExplodePositions();
                     return true;
                 });
             }
-            if (ringCompleter.isDone()){
-                this.explode2((ServerLevel) level);
+            if (blocksCompleter.isDone()){
+                this.explode((ServerLevel) level);
             }
         }
 
@@ -93,7 +85,7 @@ public class OrbitalCannonExplosionEntity extends Entity {
         return FDMathHelper.isInEllipse(pos.getX() + 0.5f,pos.getY() + 0.5f,pos.getZ() + 0.5f, radius,depth);
     }
 
-    private void explode2(ServerLevel serverLevel){
+    private void explode(ServerLevel serverLevel){
         for (BlockPos pos : blocksToExplode){
             this.processBlockPos(pos);
         }
@@ -208,8 +200,8 @@ public class OrbitalCannonExplosionEntity extends Entity {
     @Override
     protected void readAdditionalSaveData(CompoundTag tag) {
         this.radius = tag.getInt("explosion_radius");
-        this.explosionTick = tag.getInt("explosion_tick");
-        this.ringTick = tag.getInt("ring_tick");
+//        this.explosionTick = tag.getInt("explosion_tick");
+//        this.ringTick = tag.getInt("ring_tick");
         this.depth = tag.getInt("explosion_depth");
         this.blockCorrosionRadius = tag.getInt("corrosion");
     }
@@ -217,8 +209,8 @@ public class OrbitalCannonExplosionEntity extends Entity {
     @Override
     protected void addAdditionalSaveData(CompoundTag tag) {
         tag.putInt("explosion_radius",this.radius);
-        tag.putInt("explosion_tick",this.explosionTick);
-        tag.putInt("ring_tick",this.ringTick);
+//        tag.putInt("explosion_tick",this.explosionTick);
+//        tag.putInt("ring_tick",this.ringTick);
         tag.putInt("explosion_depth",this.depth);
         tag.putInt("corrosion",this.blockCorrosionRadius);
     }
