@@ -6,6 +6,9 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientboundLevelChunkWithLightPacket;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
@@ -22,9 +25,20 @@ import java.util.*;
 import java.util.concurrent.CompletableFuture;
 
 public class OrbitalCannonExplosionEntity extends Entity {
+
+    public static final EntityDataAccessor<Integer> RADIUS = SynchedEntityData.defineId(OrbitalCannonExplosionEntity.class,
+            EntityDataSerializers.INT);
+
+    public static final EntityDataAccessor<Integer> DEPTH = SynchedEntityData.defineId(OrbitalCannonExplosionEntity.class,
+            EntityDataSerializers.INT);
+
+    public static final EntityDataAccessor<Integer> TIMER = SynchedEntityData.defineId(OrbitalCannonExplosionEntity.class,
+            EntityDataSerializers.INT);
+
     private int radius;
     private int depth;
     private int blockCorrosionRadius;
+    private int explosionTimer = 60;
     private List<BlockPos> blocksToExplode;
     private CompletableFuture<Boolean> blocksCompleter;
     private Random random = new Random();
@@ -47,6 +61,9 @@ public class OrbitalCannonExplosionEntity extends Entity {
     public void tick() {
         super.tick();
         if (!level.isClientSide) {
+            this.entityData.set(RADIUS,radius);
+            this.entityData.set(DEPTH,depth);
+            this.entityData.set(TIMER,explosionTimer);
             if (blocksToExplode == null || blocksCompleter == null) {
                 blocksCompleter = CompletableFuture.supplyAsync(()->{
                     this.initExplodePositions();
@@ -54,10 +71,20 @@ public class OrbitalCannonExplosionEntity extends Entity {
                 });
             }
             if (blocksCompleter.isDone()){
-                this.explode((ServerLevel) level);
+                if (explosionTimer == 20) {
+                   // this.explode((ServerLevel) level);
+                }else if (explosionTimer <= 0){
+                    this.remove(RemovalReason.DISCARDED);
+                }
+                explosionTimer--;
             }
         }
 
+    }
+
+
+    public int getTimer(){
+        return this.entityData.get(TIMER);
     }
 
     private void initExplodePositions(){
@@ -68,6 +95,7 @@ public class OrbitalCannonExplosionEntity extends Entity {
             }
         });
     }
+
     private boolean shouldPosBeAdded(BlockPos pos){
         boolean a = FDMathHelper.isBetweenEllipses(
                 pos.getX(),
@@ -100,7 +128,6 @@ public class OrbitalCannonExplosionEntity extends Entity {
 
             }
         }
-        this.remove(RemovalReason.DISCARDED);
     }
     private void processBlockPos(BlockPos pos){
         if (!level.getBlockState(pos).hasBlockEntity()){
@@ -194,16 +221,18 @@ public class OrbitalCannonExplosionEntity extends Entity {
 
     @Override
     protected void defineSynchedData() {
-
+        this.entityData.define(RADIUS,this.radius);
+        this.entityData.define(DEPTH,this.depth);
+        this.entityData.define(TIMER,this.explosionTimer);
     }
 
     @Override
     protected void readAdditionalSaveData(CompoundTag tag) {
         this.radius = tag.getInt("explosion_radius");
-//        this.explosionTick = tag.getInt("explosion_tick");
-//        this.ringTick = tag.getInt("ring_tick");
         this.depth = tag.getInt("explosion_depth");
         this.blockCorrosionRadius = tag.getInt("corrosion");
+        this.entityData.set(RADIUS,radius);
+        this.entityData.set(DEPTH,depth);
     }
 
     @Override
@@ -220,4 +249,13 @@ public class OrbitalCannonExplosionEntity extends Entity {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 
+    @Override
+    public boolean shouldRender(double p_20296_, double p_20297_, double p_20298_) {
+        return true;
+    }
+
+    @Override
+    public boolean shouldRenderAtSqrDistance(double dist) {
+        return dist < 1028;
+    }
 }
