@@ -11,6 +11,7 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
@@ -18,6 +19,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraft.world.level.chunk.LevelChunkSection;
+import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.NetworkHooks;
 
@@ -72,11 +74,11 @@ public class OrbitalCannonExplosionEntity extends Entity {
             }
             if (blocksCompleter.isDone()){
                 if (explosionTimer == 20) {
-                   // this.explode((ServerLevel) level);
+                    this.explode((ServerLevel) level);
                 }else if (explosionTimer <= 0){
                     this.remove(RemovalReason.DISCARDED);
                 }
-                explosionTimer--;
+                explosionTimer = Mth.clamp(explosionTimer-1,0,60);
             }
         }
 
@@ -132,16 +134,20 @@ public class OrbitalCannonExplosionEntity extends Entity {
     private void processBlockPos(BlockPos pos){
         if (!level.getBlockState(pos).hasBlockEntity()){
             if (!level.isOutsideBuildHeight(pos)){
+
                 LevelChunk chunk = level.getChunkAt(pos);
                 int index = chunk.getSectionIndex(pos.getY());
                 LevelChunkSection section = chunk.getSection(index);
                 int x = pos.getX() & 15;
                 int y = pos.getY() & 15;
                 int z = pos.getZ() & 15;
+                BlockState state = getExplosionState(pos);
                 section.setBlockState(
                           x,y,z,
-                        getExplosionState(pos)
+                        state
                 );
+
+
                 chunksToUpdate.add(chunk);
             }
         }else{
