@@ -1,10 +1,10 @@
 {
   "blend": {
     "func": "add",
-    "srcrgb": "srcalpha",
-    "dstrgb": "1-srcalpha"
+    "srcrgb": "one",
+    "dstrgb": "zero"
   },
-  "vertex": "blit",
+  "vertex": "screenquad",
   "fragment": "solarcraft:orbital_explosion/orbital_explosion_outline",
   "attributes":
   [
@@ -14,13 +14,20 @@
   [
     {
       "name": "DiffuseSampler"
+    },
+    {
+      "name": "DiffuseDepthSampler"
+    },
+    {
+      "name": "OrbitalExplosionSampler"
+    },
+    {
+      "name": "OrbitalExplosionDepthSampler"
     }
   ],
   "uniforms":
   [
-
-    { "name": "ProjMat",       "type": "matrix4x4", "count": 16, "values": [ 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0 ] },
-    { "name": "OutSize",       "type": "float",     "count": 2,  "values": [ 1.0, 1.0 ] },
-    { "name": "ScreenSize",    "type": "float",     "count": 2,  "values": [ 1.0, 1.0 ] }
+    { "name": "ProjMat",    "type": "matrix4x4", "count": 16, "values": [ 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0 ] },
+    { "name": "OutSize",    "type": "float",     "count": 2,  "values": [ 1.0, 1.0 ] }
   ]
 }

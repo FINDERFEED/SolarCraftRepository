@@ -1,6 +1,7 @@
 package com.finderfeed.solarcraft.content.entities.renderers;
 
 import com.finderfeed.solarcraft.SolarCraft;
+import com.finderfeed.solarcraft.client.rendering.rendertypes.SolarCraftRenderTypes;
 import com.finderfeed.solarcraft.client.rendering.shaders.post_chains.PostChainPlusUltra;
 import com.finderfeed.solarcraft.client.rendering.shaders.post_chains.UniformPlusPlus;
 import com.finderfeed.solarcraft.content.entities.OrbitalCannonExplosionEntity;
@@ -12,6 +13,7 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.PostChain;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.culling.Frustum;
@@ -32,10 +34,10 @@ public class OrbitalExplosionEntityRenderer extends EntityRenderer<OrbitalCannon
 
     public static final ResourceLocation LOCATION = new ResourceLocation(SolarCraft.MOD_ID,"textures/misc/orbital_explosion.png");
 
-    private final ResourceLocation SHADER_LOCATION = new ResourceLocation(SolarCraft.MOD_ID,"shaders/post/orbital_explosion_outline.json");
+    private final ResourceLocation SHADER_LOCATION = new ResourceLocation(SolarCraft.MOD_ID,"shaders/post/orbital_explosion.json");
 
 
-    public static PostChainPlusUltra shader;
+    public static PostChain postChain;
 
     public OrbitalExplosionEntityRenderer(EntityRendererProvider.Context ctx) {
         super(ctx);
@@ -46,19 +48,10 @@ public class OrbitalExplosionEntityRenderer extends EntityRenderer<OrbitalCannon
         matrices.pushPose();
         int radius = entity.getEntityData().get(OrbitalCannonExplosionEntity.RADIUS)*2;
         int depth = entity.getEntityData().get(OrbitalCannonExplosionEntity.DEPTH)*2;
-        matrices.scale(radius,depth,radius);
+        //matrices.scale(radius,depth,radius);
 
+        this.loadShader(entity,SHADER_LOCATION);
         this.renderExplosion(entity,matrices,src);
-
-//        this.loadShader(
-//               entity,SHADER_LOCATION,new UniformPlusPlus(Map.of(
-//
-//                ))
-//        );
-
-
-
-
 
         matrices.popPose();
 
@@ -66,7 +59,7 @@ public class OrbitalExplosionEntityRenderer extends EntityRenderer<OrbitalCannon
 
 
     private void renderExplosion(OrbitalCannonExplosionEntity entity,PoseStack matrices,MultiBufferSource src){
-        RenderType t = RenderType.entityTranslucent(LOCATION);
+        RenderType t = SolarCraftRenderTypes.ORBITAL_EXPLOSION_RENDER_TYPE;
         List<BakedQuad> list = Minecraft.getInstance().getModelManager().getModel(OBJModels.ORBITAL_EXPLOSION_SPHERE)
                 .getQuads(null, null, RandomSource.create(), ModelData.EMPTY, t);
         VertexConsumer cons = src.getBuffer(t);
@@ -87,19 +80,29 @@ public class OrbitalExplosionEntityRenderer extends EntityRenderer<OrbitalCannon
         }
     }
 
-    private void loadShader(Entity tile, ResourceLocation location, UniformPlusPlus uniforms){
-        if (shader == null){
+    private void loadShader(Entity tile, ResourceLocation location){
+        if (postChain == null){
             try {
-                shader = new PostChainPlusUltra(location,uniforms);
-                shader.resize(Minecraft.getInstance().getWindow().getScreenWidth(),Minecraft.getInstance().getWindow().getScreenHeight());
-                RenderingTools.addActivePostShader(tile.toString(),uniforms, shader);
-            }catch (Exception e){
-                e.printStackTrace();
-                throw new RuntimeException("Failed to load shader in RuneEnergyPylonRenderer.java");
+                PostChain chain = new PostChain(Minecraft.getInstance().getTextureManager(), Minecraft.getInstance().getResourceManager(),
+                        Minecraft.getInstance().getMainRenderTarget(), location);
+                chain.resize(Minecraft.getInstance().getWindow().getWidth(),
+                        Minecraft.getInstance().getWindow().getHeight());
+                SolarCraftRenderTypes.orbitalExplosionOutTarget = chain.getTempTarget("orbital_explosion");
+                SolarCraftRenderTypes.orbitalExplosionOutTarget.clear(Minecraft.ON_OSX);
+                SolarCraftRenderTypes.orbitalExplosionOutTarget.copyDepthFrom(Minecraft.getInstance().getMainRenderTarget());
+                postChain = chain;
+            } catch (Exception e){
+                throw new RuntimeException(e);
             }
+        }
+    }
 
-        }else{
-            RenderingTools.addActivePostShader(tile.toString(),uniforms, shader);
+    public static void processShaders(float smth){
+        if (postChain != null){
+            postChain.process(smth);
+            SolarCraftRenderTypes.orbitalExplosionOutTarget.clear(Minecraft.ON_OSX);
+            SolarCraftRenderTypes.orbitalExplosionOutTarget.copyDepthFrom(Minecraft.getInstance().getMainRenderTarget());
+            Minecraft.getInstance().getMainRenderTarget().bindWrite(false);
         }
     }
 

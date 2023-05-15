@@ -1,15 +1,18 @@
 package com.finderfeed.solarcraft.mixins;
 
+import com.finderfeed.solarcraft.client.rendering.rendertypes.SolarCraftRenderTypes;
 import com.finderfeed.solarcraft.client.rendering.shaders.post_chains.PostChainPlusUltra;
 import com.finderfeed.solarcraft.client.rendering.shaders.post_chains.UniformPlusPlus;
 import com.finderfeed.solarcraft.content.blocks.render.DimensionCoreRenderer;
 import com.finderfeed.solarcraft.content.blocks.render.EnergyGeneratorTileRender;
 import com.finderfeed.solarcraft.content.blocks.render.RuneEnergyPylonRenderer;
 import com.finderfeed.solarcraft.content.blocks.render.WormholeRenderer;
+import com.finderfeed.solarcraft.content.entities.renderers.OrbitalExplosionEntityRenderer;
 import com.finderfeed.solarcraft.events.RenderEventsHandler;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.client.renderer.PostChain;
 import net.minecraft.world.phys.Vec2;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -27,6 +30,7 @@ public class ShaderMixin {
     @Inject(method = "render",at = @At(value = "INVOKE",target = "Lnet/minecraft/client/renderer/LevelRenderer;doEntityOutline()V",
     shift = At.Shift.AFTER))
     public void processPostEffects(float p_109094_, long p_109095_, boolean p_109096_, CallbackInfo ci){
+
         this.processBlockEntityShaders();
         this.processProgressionShader();
     }
@@ -63,7 +67,7 @@ public class ShaderMixin {
         }
         if ((Minecraft.getInstance().getWindow().getScreenWidth() != 0) && (Minecraft.getInstance().getWindow().getScreenHeight() != 0)) {
             resizeShader(width,height, RuneEnergyPylonRenderer.SHADER, EnergyGeneratorTileRender.SHADER, WormholeRenderer.SHADER,
-                    DimensionCoreRenderer.SHADER);
+                    DimensionCoreRenderer.SHADER,OrbitalExplosionEntityRenderer.postChain);
             RenderEventsHandler.ACTIVE_SHADERS.forEach((id,shader)->{
                 shader.process(Minecraft.getInstance().getFrameTime());
             });
@@ -72,10 +76,10 @@ public class ShaderMixin {
         }
     }
 
-    private void resizeShader(float width, float height, PostChainPlusUltra... shader){
+    private void resizeShader(float width, float height, PostChain... shader){
         if ((shader != null) && (resolution.x != width || resolution.y != height)){
             resolution = new Vec2(width,height);
-            for (PostChainPlusUltra shaders : shader) {
+            for (PostChain shaders : shader) {
                 if (shaders != null) {
                     shaders.resize(Minecraft.getInstance().getWindow().getScreenWidth(), Minecraft.getInstance().getWindow().getScreenHeight());
                 }

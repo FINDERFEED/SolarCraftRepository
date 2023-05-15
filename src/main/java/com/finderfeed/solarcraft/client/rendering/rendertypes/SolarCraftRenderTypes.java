@@ -1,7 +1,9 @@
 package com.finderfeed.solarcraft.client.rendering.rendertypes;
 
 import com.finderfeed.solarcraft.SolarCraft;
+import com.finderfeed.solarcraft.content.entities.renderers.OrbitalExplosionEntityRenderer;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
+import com.mojang.blaze3d.pipeline.RenderTarget;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.BufferBuilder;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
@@ -86,6 +88,25 @@ public class SolarCraftRenderTypes extends RenderType{
                             .setTransparencyState(LIGHTNING_TRANSPARENCY)
             .setOutputState(WEATHER_TARGET).createCompositeState(false));
 
+
+    public static RenderTarget orbitalExplosionOutTarget;
+    public static final OutputStateShard ORBITAL_EXPLOSION_TARGET = new OutputStateShard("orbital_explosion_target", ()->{
+        orbitalExplosionOutTarget.bindWrite(false);
+    }, ()->{
+        Minecraft.getInstance().getMainRenderTarget().bindWrite(false);
+    });
+
+    public static RenderType ORBITAL_EXPLOSION_RENDER_TYPE =
+      create("entity_translucent", DefaultVertexFormat.NEW_ENTITY, VertexFormat.Mode.QUADS, 256, true, true,
+              RenderType.CompositeState.builder().setShaderState(RENDERTYPE_ENTITY_TRANSLUCENT_SHADER)
+                      .setTextureState(new RenderStateShard.TextureStateShard(OrbitalExplosionEntityRenderer.LOCATION
+                              , false, false))
+                      .setTransparencyState(TRANSLUCENT_TRANSPARENCY)
+                      .setCullState(NO_CULL)
+                      .setLightmapState(LIGHTMAP)
+                      .setOutputState(ORBITAL_EXPLOSION_TARGET)
+                      .setOverlayState(OVERLAY)
+                      .createCompositeState(true));
 
 
 

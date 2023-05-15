@@ -1,0 +1,34 @@
+{
+  "targets":
+  [
+    "orbital_explosion",
+    "misc"
+  ],
+  "passes":
+  [
+    {
+      "name": "solarcraft:orbital_explosion/orbital_explosion_outline",
+      "intarget": "minecraft:main",
+      "outtarget": "misc",
+      "auxtargets": [
+        {
+          "name": "DiffuseDepthSampler",
+          "id": "minecraft:main:depth"
+        },
+        {
+          "name": "OrbitalExplosionSampler",
+          "id": "orbital_explosion"
+        },
+        {
+          "name": "OrbitalExplosionDepthSampler",
+          "id": "orbital_explosion:depth"
+        }
+      ]
+    },
+    {
+      "name": "blit",
+      "intarget": "misc",
+      "outtarget": "minecraft:main"
+    }
+  ]
+}

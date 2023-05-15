@@ -78,7 +78,7 @@ public class OrbitalCannonExplosionEntity extends Entity {
                 }else if (explosionTimer <= 0){
                     this.remove(RemovalReason.DISCARDED);
                 }
-                explosionTimer = Mth.clamp(explosionTimer-1,0,60);
+                //explosionTimer = Mth.clamp(explosionTimer-1,0,60);
             }
         }
 
