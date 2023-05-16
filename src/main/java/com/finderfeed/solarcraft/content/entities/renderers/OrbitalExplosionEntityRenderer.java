@@ -39,6 +39,8 @@ public class OrbitalExplosionEntityRenderer extends EntityRenderer<OrbitalCannon
 
     public static PostChain postChain;
 
+    public static boolean firstPass = true;
+
     public OrbitalExplosionEntityRenderer(EntityRendererProvider.Context ctx) {
         super(ctx);
     }
@@ -51,6 +53,11 @@ public class OrbitalExplosionEntityRenderer extends EntityRenderer<OrbitalCannon
         //matrices.scale(radius,depth,radius);
 
         this.loadShader(entity,SHADER_LOCATION);
+        if (firstPass){
+            SolarCraftRenderTypes.orbitalExplosionOutTarget.clear(Minecraft.ON_OSX);
+            SolarCraftRenderTypes.orbitalExplosionOutTarget.copyDepthFrom(Minecraft.getInstance().getMainRenderTarget());
+            firstPass = false;
+        }
         this.renderExplosion(entity,matrices,src);
 
         matrices.popPose();
@@ -98,10 +105,9 @@ public class OrbitalExplosionEntityRenderer extends EntityRenderer<OrbitalCannon
     }
 
     public static void processShaders(float smth){
-        if (postChain != null){
+        if (postChain != null && !firstPass){
             postChain.process(smth);
-            SolarCraftRenderTypes.orbitalExplosionOutTarget.clear(Minecraft.ON_OSX);
-            SolarCraftRenderTypes.orbitalExplosionOutTarget.copyDepthFrom(Minecraft.getInstance().getMainRenderTarget());
+            firstPass = true;
             Minecraft.getInstance().getMainRenderTarget().bindWrite(false);
         }
     }

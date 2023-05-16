@@ -2,7 +2,8 @@
   "targets":
   [
     "orbital_explosion",
-    "misc"
+    "misc",
+    "depth_target"
   ],
   "passes":
   [
@@ -22,6 +23,10 @@
         {
           "name": "OrbitalExplosionDepthSampler",
           "id": "orbital_explosion:depth"
+        },
+        {
+          "name": "DepthTargetSampler",
+          "id": "depth_target:depth"
         }
       ]
     },
