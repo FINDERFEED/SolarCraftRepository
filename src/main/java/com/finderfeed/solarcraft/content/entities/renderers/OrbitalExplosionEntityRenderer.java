@@ -7,13 +7,12 @@ import com.finderfeed.solarcraft.client.rendering.shaders.post_chains.UniformPlu
 import com.finderfeed.solarcraft.content.entities.OrbitalCannonExplosionEntity;
 import com.finderfeed.solarcraft.events.other_events.OBJModels;
 import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
-import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.PostChain;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.culling.Frustum;
@@ -24,8 +23,8 @@ import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.client.model.data.ModelData;
+import org.lwjgl.opengl.GL30;
 
 import java.util.List;
 import java.util.Map;
@@ -37,7 +36,7 @@ public class OrbitalExplosionEntityRenderer extends EntityRenderer<OrbitalCannon
     private final ResourceLocation SHADER_LOCATION = new ResourceLocation(SolarCraft.MOD_ID,"shaders/post/orbital_explosion.json");
 
 
-    public static PostChain postChain;
+    public static PostChainPlusUltra postChain;
 
     public static boolean firstPass = true;
 
@@ -52,20 +51,31 @@ public class OrbitalExplosionEntityRenderer extends EntityRenderer<OrbitalCannon
         int depth = entity.getEntityData().get(OrbitalCannonExplosionEntity.DEPTH)*2;
         //matrices.scale(radius,depth,radius);
 
+        RenderingTools.renderEntityObjModel(OBJModels.ORBITAL_EXPLOSION_SPHERE,
+                matrices,src,1,1,1,LightTexture.FULL_BRIGHT,OverlayTexture.NO_OVERLAY);
+
         this.loadShader(entity,SHADER_LOCATION);
+
         if (firstPass){
+            int previousFramebuffer = GlStateManager.getBoundFramebuffer();
             SolarCraftRenderTypes.orbitalExplosionOutTarget.clear(Minecraft.ON_OSX);
             SolarCraftRenderTypes.orbitalExplosionOutTarget.copyDepthFrom(Minecraft.getInstance().getMainRenderTarget());
+            SolarCraftRenderTypes.orbitalExplosionDepthTarget.clear(Minecraft.ON_OSX);
+            SolarCraftRenderTypes.orbitalExplosionDepthTarget.copyDepthFrom(Minecraft.getInstance().getMainRenderTarget());
             firstPass = false;
+            //36160
+            GlStateManager._glBindFramebuffer(36160,previousFramebuffer);
+            RenderingTools.addActivePostShader(entity.getUUID().toString(),new UniformPlusPlus(Map.of()),
+                    postChain);
         }
-        this.renderExplosion(entity,matrices,src);
+        this.renderExplosionAtDifferentRenderTarget(entity,matrices,src);
 
         matrices.popPose();
 
     }
 
 
-    private void renderExplosion(OrbitalCannonExplosionEntity entity,PoseStack matrices,MultiBufferSource src){
+    private void renderExplosionAtDifferentRenderTarget(OrbitalCannonExplosionEntity entity, PoseStack matrices, MultiBufferSource src){
         RenderType t = SolarCraftRenderTypes.ORBITAL_EXPLOSION_RENDER_TYPE;
         List<BakedQuad> list = Minecraft.getInstance().getModelManager().getModel(OBJModels.ORBITAL_EXPLOSION_SPHERE)
                 .getQuads(null, null, RandomSource.create(), ModelData.EMPTY, t);
@@ -90,14 +100,20 @@ public class OrbitalExplosionEntityRenderer extends EntityRenderer<OrbitalCannon
     private void loadShader(Entity tile, ResourceLocation location){
         if (postChain == null){
             try {
-                PostChain chain = new PostChain(Minecraft.getInstance().getTextureManager(), Minecraft.getInstance().getResourceManager(),
-                        Minecraft.getInstance().getMainRenderTarget(), location);
+                PostChainPlusUltra chain = new PostChainPlusUltra(location,
+                        new UniformPlusPlus(Map.of()));
                 chain.resize(Minecraft.getInstance().getWindow().getWidth(),
                         Minecraft.getInstance().getWindow().getHeight());
                 SolarCraftRenderTypes.orbitalExplosionOutTarget = chain.getTempTarget("orbital_explosion");
+                SolarCraftRenderTypes.orbitalExplosionDepthTarget = chain.getTempTarget("depth_target");
                 SolarCraftRenderTypes.orbitalExplosionOutTarget.clear(Minecraft.ON_OSX);
                 SolarCraftRenderTypes.orbitalExplosionOutTarget.copyDepthFrom(Minecraft.getInstance().getMainRenderTarget());
+                SolarCraftRenderTypes.orbitalExplosionDepthTarget.clear(Minecraft.ON_OSX);
+                SolarCraftRenderTypes.orbitalExplosionDepthTarget.copyDepthFrom(Minecraft.getInstance().getMainRenderTarget());
                 postChain = chain;
+                postChain.addPostActions(()->{
+                    firstPass = true;
+                });
             } catch (Exception e){
                 throw new RuntimeException(e);
             }
@@ -105,11 +121,11 @@ public class OrbitalExplosionEntityRenderer extends EntityRenderer<OrbitalCannon
     }
 
     public static void processShaders(float smth){
-        if (postChain != null && !firstPass){
-            postChain.process(smth);
-            firstPass = true;
-            Minecraft.getInstance().getMainRenderTarget().bindWrite(false);
-        }
+//        if (postChain != null && !firstPass){
+//            postChain.process(smth);
+//            firstPass = true;
+//            Minecraft.getInstance().getMainRenderTarget().bindWrite(false);
+//        }
     }
 
     @Override

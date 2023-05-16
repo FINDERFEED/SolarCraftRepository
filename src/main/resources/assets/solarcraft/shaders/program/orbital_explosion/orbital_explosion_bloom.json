@@ -5,7 +5,7 @@
     "dstrgb": "1-srcalpha"
   },
   "vertex": "screenquad",
-  "fragment": "solarcraft:orbital_explosion/orbital_explosion_outline",
+  "fragment": "solarcraft:orbital_explosion/orbital_explosion_bloom",
   "attributes":
   [
     "Position"
@@ -13,16 +13,16 @@
   "samplers":
   [
     {
-      "name": "DiffuseSampler"
-    },
-    {
-      "name": "DiffuseDepthSampler"
-    },
-    {
       "name": "OrbitalExplosionSampler"
     },
     {
       "name": "OrbitalExplosionDepthSampler"
+    },
+    {
+      "name": "DepthTargetSampler"
+    },
+    {
+      "name": "DiffuseSampler"
     }
   ],
   "uniforms":

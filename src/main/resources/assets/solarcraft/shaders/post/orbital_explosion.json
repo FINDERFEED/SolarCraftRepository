@@ -8,14 +8,10 @@
   "passes":
   [
     {
-      "name": "solarcraft:orbital_explosion/orbital_explosion_outline",
+      "name": "solarcraft:orbital_explosion/orbital_explosion_bloom",
       "intarget": "minecraft:main",
       "outtarget": "misc",
       "auxtargets": [
-        {
-          "name": "DiffuseDepthSampler",
-          "id": "minecraft:main:depth"
-        },
         {
           "name": "OrbitalExplosionSampler",
           "id": "orbital_explosion"

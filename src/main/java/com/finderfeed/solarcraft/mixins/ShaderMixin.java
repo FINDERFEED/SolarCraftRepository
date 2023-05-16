@@ -1,7 +1,5 @@
 package com.finderfeed.solarcraft.mixins;
 
-import com.finderfeed.solarcraft.client.rendering.rendertypes.SolarCraftRenderTypes;
-import com.finderfeed.solarcraft.client.rendering.shaders.post_chains.PostChainPlusUltra;
 import com.finderfeed.solarcraft.client.rendering.shaders.post_chains.UniformPlusPlus;
 import com.finderfeed.solarcraft.content.blocks.render.DimensionCoreRenderer;
 import com.finderfeed.solarcraft.content.blocks.render.EnergyGeneratorTileRender;
@@ -31,7 +29,7 @@ public class ShaderMixin {
     shift = At.Shift.AFTER))
     public void processPostEffects(float p_109094_, long p_109095_, boolean p_109096_, CallbackInfo ci){
 
-        this.processBlockEntityShaders();
+        this.processPostShaders();
         this.processProgressionShader();
     }
 
@@ -59,7 +57,7 @@ public class ShaderMixin {
         }
     }
 
-    private void processBlockEntityShaders(){
+    private void processPostShaders(){
         float width = (float)Minecraft.getInstance().getWindow().getScreenWidth();
         float height = (float)Minecraft.getInstance().getWindow().getScreenHeight();
         if (resolution == null){
@@ -81,7 +79,7 @@ public class ShaderMixin {
             resolution = new Vec2(width,height);
             for (PostChain shaders : shader) {
                 if (shaders != null) {
-                    shaders.resize(Minecraft.getInstance().getWindow().getScreenWidth(), Minecraft.getInstance().getWindow().getScreenHeight());
+                    shaders.resize(Minecraft.getInstance().getWindow().getWidth(), Minecraft.getInstance().getWindow().getHeight());
                 }
             }
         }

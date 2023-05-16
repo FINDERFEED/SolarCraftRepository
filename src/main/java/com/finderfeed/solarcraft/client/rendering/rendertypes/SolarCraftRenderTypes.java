@@ -90,6 +90,7 @@ public class SolarCraftRenderTypes extends RenderType{
 
 
     public static RenderTarget orbitalExplosionOutTarget;
+    public static RenderTarget orbitalExplosionDepthTarget;
     public static final OutputStateShard ORBITAL_EXPLOSION_TARGET = new OutputStateShard("orbital_explosion_target", ()->{
         orbitalExplosionOutTarget.bindWrite(false);
     }, ()->{

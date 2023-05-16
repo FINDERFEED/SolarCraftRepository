@@ -13,6 +13,7 @@ public class PostChainPlusUltra extends PostChain {
 
 
     private UniformPlusPlus uniforms;
+    private Runnable postActions;
 
     public PostChainPlusUltra(ResourceLocation loc,UniformPlusPlus uniform) throws IOException, JsonSyntaxException {
         super(Minecraft.getInstance().textureManager,
@@ -33,8 +34,6 @@ public class PostChainPlusUltra extends PostChain {
         } else {
             this.time += p_110024_ - this.lastStamp;
         }
-//        for(this.lastStamp = p_110024_; this.time > 20.0F; this.time -= 20.0F) {
-//        }
         for(PostPass postpass : this.passes) {
 
             if(uniforms != null){
@@ -42,5 +41,15 @@ public class PostChainPlusUltra extends PostChain {
             }
             postpass.process(this.time / 20.0F);
         }
+    }
+
+    public void runPostActions(){
+        if (postActions != null){
+            this.postActions.run();
+        }
+    }
+
+    public void addPostActions(Runnable postActions) {
+        this.postActions = postActions;
     }
 }
