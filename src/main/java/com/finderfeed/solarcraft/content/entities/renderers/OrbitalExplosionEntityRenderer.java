@@ -10,6 +10,7 @@ import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.math.Vector3f;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -50,9 +51,11 @@ public class OrbitalExplosionEntityRenderer extends EntityRenderer<OrbitalCannon
         int radius = entity.getEntityData().get(OrbitalCannonExplosionEntity.RADIUS)*2;
         int depth = entity.getEntityData().get(OrbitalCannonExplosionEntity.DEPTH)*2;
         matrices.scale(radius,depth,radius);
+        //matrices.mulPose(Vector3f.YN.rotationDegrees(RenderingTools.getTime(entity.level,partialTicks)));
 
         RenderingTools.renderEntityObjModel(OBJModels.ORBITAL_EXPLOSION_SPHERE,
                 matrices,src,1,1,1,LightTexture.FULL_BRIGHT,OverlayTexture.NO_OVERLAY);
+
 
         this.loadShader(entity,SHADER_LOCATION);
 
@@ -65,7 +68,10 @@ public class OrbitalExplosionEntityRenderer extends EntityRenderer<OrbitalCannon
             firstPass = false;
             //36160
             GlStateManager._glBindFramebuffer(36160,previousFramebuffer);
-            RenderingTools.addActivePostShader(entity.getUUID().toString(),new UniformPlusPlus(Map.of()),
+            RenderingTools.addActivePostShader(entity.getUUID().toString(),new UniformPlusPlus(Map.of(
+                    "l",4f,
+                    "brightness",1.5f
+                    )),
                     postChain);
         }
         this.renderExplosionAtDifferentRenderTarget(entity,matrices,src);

@@ -69,7 +69,7 @@ public class ShaderMixin {
             RenderEventsHandler.ACTIVE_SHADERS.forEach((id,shader)->{
                 shader.process(Minecraft.getInstance().getFrameTime());
             });
-
+            OrbitalExplosionEntityRenderer.firstPass = true;
             RenderEventsHandler.ACTIVE_SHADERS.clear();
         }
     }

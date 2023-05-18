@@ -14,6 +14,10 @@
       "outtarget": "misc",
       "auxtargets": [
         {
+          "name": "MainSampler",
+          "id": "minecraft:main"
+        },
+        {
           "name": "OrbitalExplosionSampler",
           "id": "orbital_explosion"
         },
@@ -32,6 +36,10 @@
       "intarget": "misc",
       "outtarget": "misc2",
       "auxtargets": [
+        {
+          "name": "MainSampler",
+          "id": "minecraft:main"
+        },
         {
           "name": "OrbitalExplosionSampler",
           "id": "orbital_explosion"

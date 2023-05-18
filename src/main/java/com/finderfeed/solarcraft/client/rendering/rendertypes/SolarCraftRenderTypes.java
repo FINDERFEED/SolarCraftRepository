@@ -98,9 +98,9 @@ public class SolarCraftRenderTypes extends RenderType{
     });
 
     public static RenderType ORBITAL_EXPLOSION_RENDER_TYPE =
-      create("entity_translucent", DefaultVertexFormat.NEW_ENTITY, VertexFormat.Mode.QUADS, 256, true, true,
+      create("orbital_explosion", DefaultVertexFormat.NEW_ENTITY, VertexFormat.Mode.QUADS, 256, true, true,
               RenderType.CompositeState.builder().setShaderState(RENDERTYPE_ENTITY_TRANSLUCENT_SHADER)
-                      .setTextureState(new RenderStateShard.TextureStateShard(OrbitalExplosionEntityRenderer.LOCATION
+                      .setTextureState(new RenderStateShard.TextureStateShard(TextureAtlas.LOCATION_BLOCKS
                               , false, false))
                       .setTransparencyState(TRANSLUCENT_TRANSPARENCY)
                       .setCullState(NO_CULL)
