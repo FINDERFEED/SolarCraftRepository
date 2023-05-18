@@ -49,7 +49,7 @@ public class OrbitalExplosionEntityRenderer extends EntityRenderer<OrbitalCannon
         matrices.pushPose();
         int radius = entity.getEntityData().get(OrbitalCannonExplosionEntity.RADIUS)*2;
         int depth = entity.getEntityData().get(OrbitalCannonExplosionEntity.DEPTH)*2;
-        //matrices.scale(radius,depth,radius);
+        matrices.scale(radius,depth,radius);
 
         RenderingTools.renderEntityObjModel(OBJModels.ORBITAL_EXPLOSION_SPHERE,
                 matrices,src,1,1,1,LightTexture.FULL_BRIGHT,OverlayTexture.NO_OVERLAY);
