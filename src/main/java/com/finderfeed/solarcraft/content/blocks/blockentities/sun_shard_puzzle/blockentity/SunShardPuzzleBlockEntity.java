@@ -1,20 +1,19 @@
 package com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.blockentity;
 
+import com.finderfeed.solarcraft.config.PuzzlePatternsConfig;
 import com.finderfeed.solarcraft.content.blocks.blockentities.PuzzleBlockEntity;
-import com.finderfeed.solarcraft.content.blocks.blockentities.SolarcraftBlockEntity;
 import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.puzzle_template.Puzzle;
-import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.puzzle_template.PuzzleTemplateManager;
 import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.puzzle_tiles.PuzzleTile;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.Progression;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
 import com.finderfeed.solarcraft.packet_handler.packets.sun_shard_puzzle.SunShardPuzzleOpenScreen;
+import com.finderfeed.solarcraft.registries.ConfigRegistry;
 import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.network.NetworkDirection;
 
@@ -66,7 +65,8 @@ public class SunShardPuzzleBlockEntity extends PuzzleBlockEntity {
     public void onUse(Player player){
         if (!level.isClientSide && !this.isSolved()){
             if (puzzle == null){
-                List<String> templates = new ArrayList<>(PuzzleTemplateManager.INSTANCE.getAllTemplates());
+                PuzzlePatternsConfig config = ConfigRegistry.PUZZLE_PATTERNS;
+                List<String> templates = new ArrayList<>(config.getAllTemplates());
                 templates.remove("template_null");
                 String template = templates.get(player.level.random.nextInt(templates.size()));
                 puzzle = new Puzzle(template);

@@ -3,7 +3,6 @@ package com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.
 import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.blockentity.SunShardPuzzleBlockEntity;
 import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.puzzle_template.Puzzle;
-import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.puzzle_template.PuzzleTemplateManager;
 import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.puzzle_tiles.PuzzleTile;
 import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.puzzle_tiles.PuzzleTileType;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.screen.buttons.InfoButton;
@@ -163,9 +162,9 @@ public class SunShardPuzzleScreen extends DefaultScreen {
                 this.reinitPuzzle();
             }
         }
-        if (key == GLFW.GLFW_KEY_E && hasShiftDown() && EDITOR_MODE){
-            PuzzleTemplateManager.exportTemplate(this.localPuzzle.getTiles(),"C:\\Users\\User\\Desktop\\MISC\\puzzle_templates\\template_5.json",0);
-        }
+//        if (key == GLFW.GLFW_KEY_E && hasShiftDown() && EDITOR_MODE){
+//            PuzzleTemplateManager.exportTemplate(this.localPuzzle.getTiles(),"",0);
+//        }
         return super.keyPressed(key, scanCode, modifiers);
     }
 

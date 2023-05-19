@@ -6,7 +6,6 @@ import com.finderfeed.solarcraft.SolarCraftTags;
 import com.finderfeed.solarcraft.config.JsonConfig;
 import com.finderfeed.solarcraft.config.JsonFragmentsHelper;
 import com.finderfeed.solarcraft.config.enchanter_config.EnchanterConfigInit;
-import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.puzzle_template.PuzzleTemplateManager;
 import com.finderfeed.solarcraft.content.items.TotemOfImmortality;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.packets.UpdateProgressionOnClient;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
@@ -73,7 +72,6 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
-import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -643,10 +641,10 @@ public class EventHandler {
 
 
 
-    @SubscribeEvent
-    public static void registerReloadableResourceListeners(AddReloadListenerEvent event){
-        event.addListener(PuzzleTemplateManager.INSTANCE);
-    }
+//    @SubscribeEvent
+//    public static void registerReloadableResourceListeners(AddReloadListenerEvent event){
+//        event.addListener(PuzzleTemplateManager.INSTANCE);
+//    }
 
     @SubscribeEvent
     public static void onPlayerJoin(final PlayerEvent.PlayerLoggedInEvent event) {

@@ -15,6 +15,7 @@ import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -91,6 +92,10 @@ public class SolarLensTile extends BlockEntity  {
         ItemStack stack = shard.getItem();
         SunShardItem item = (SunShardItem)stack.getItem();
         if (!item.isHeated(stack)){
+            Vec3 v = Helpers.getBlockCenter(lens.getBlockPos().offset(0, -2, 0));
+            if (lens.level instanceof ServerLevel world){
+                world.sendParticles(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),v.x,v.y,v.z,1,0.05,0.05,0.05,0.05);
+            }
             int time = item.getHeatedTime(stack);
             if (time >= SunShardItem.MAX_HEATED_TIME){
                 item.setHeated(stack,true);

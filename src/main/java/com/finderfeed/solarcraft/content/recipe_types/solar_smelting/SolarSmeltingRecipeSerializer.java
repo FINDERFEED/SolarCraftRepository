@@ -12,6 +12,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.core.NonNullList;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraftforge.registries.ForgeRegistries;
 
 
 import javax.annotation.Nullable;
@@ -32,7 +33,11 @@ public class SolarSmeltingRecipeSerializer  implements RecipeSerializer<SolarSme
 
         for (JsonElement element : array){
             JsonObject obj = element.getAsJsonObject();
-            Item item = GsonHelper.getAsItem(obj,"item");
+//            Item item = GsonHelper.getAsItem(obj,"item");
+
+            String s = obj.get("item").getAsString();
+            Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(s));
+
             int count;
             JsonElement e = obj.get("count");
             if (e != null){

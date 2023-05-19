@@ -25,12 +25,12 @@ public class REClientTooltipComponent implements ClientTooltipComponent {
     @Override
     public void renderImage(Font font, int x, int y, PoseStack matrices, ItemRenderer renderer, int idk3) {
         matrices.pushPose();
-        ClientHelpers.bindText(RETypeSelectionScreen.ALL_ELEMENTS_ID_ORDERED);
-        int i = 0;
-        for (RunicEnergy.Type type : cost.getSetTypes()){
-            Gui.blit(matrices,x + i,y + 2,type.getIndex()*16,0,16,16,128,16);
-            i += 18;
-        }
+//        ClientHelpers.bindText(RETypeSelectionScreen.ALL_ELEMENTS_ID_ORDERED);
+//        int i = 0;
+//        for (RunicEnergy.Type type : cost.getSetTypes()){
+//            Gui.blit(matrices,x + i,y + 2,type.getIndex()*16,0,16,16,128,16);
+//            i += 18;
+//        }
         matrices.popPose();
     }
 

@@ -16,7 +16,7 @@ import java.nio.file.StandardOpenOption;
 
 public abstract class JsonConfig {
 
-    private static final Gson GSON = new GsonBuilder()
+    protected static final Gson GSON = new GsonBuilder()
             .setPrettyPrinting()
             .disableHtmlEscaping()
             .create();
