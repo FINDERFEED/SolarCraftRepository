@@ -2,14 +2,14 @@
   "type":"solarcraft:solar_smelting",
   "ingredients": [
     {
-      "item": "solarcraft:illidium_ingot"
+      "smelting_item": "solarcraft:illidium_ingot"
     },
     {
-      "item": "solarcraft:blue_gem_enriched",
+      "smelting_item": "solarcraft:blue_gem_enriched",
       "count": 4
     },
     {
-      "item": "solarcraft:solar_dust",
+      "smelting_item": "solarcraft:solar_dust",
       "count": 8
     }
   ],

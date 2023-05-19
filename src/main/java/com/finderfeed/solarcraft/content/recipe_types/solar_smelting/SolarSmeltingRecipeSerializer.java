@@ -1,5 +1,6 @@
 package com.finderfeed.solarcraft.content.recipe_types.solar_smelting;
 
+import com.finderfeed.solarcraft.SolarCraft;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -13,6 +14,7 @@ import net.minecraft.util.GsonHelper;
 import net.minecraft.core.NonNullList;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistries;
+import org.apache.logging.log4j.Level;
 
 
 import javax.annotation.Nullable;
@@ -27,7 +29,7 @@ public class SolarSmeltingRecipeSerializer  implements RecipeSerializer<SolarSme
     @Override
     public SolarSmeltingRecipe fromJson(ResourceLocation loc, JsonObject file) {
 //        NonNullList<Ingredient> nonnulllist = itemsFromJson(GsonHelper.getAsJsonArray(file, "ingredients"));
-
+//        SolarCraft.LOGGER.log(Level.ERROR,"Smelting recipe: " + file.toString());
         List<ItemStack> stacks = new ArrayList<>();
         JsonArray array = file.getAsJsonArray("ingredients");
 
@@ -35,7 +37,8 @@ public class SolarSmeltingRecipeSerializer  implements RecipeSerializer<SolarSme
             JsonObject obj = element.getAsJsonObject();
 //            Item item = GsonHelper.getAsItem(obj,"item");
 
-            String s = obj.get("item").getAsString();
+            String s = obj.get("smelting_item").getAsString();
+
             Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(s));
 
             int count;
