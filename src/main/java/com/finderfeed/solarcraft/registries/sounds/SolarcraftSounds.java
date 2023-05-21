@@ -33,6 +33,7 @@ public class SolarcraftSounds {
     public static final RegistryObject<SoundEvent> CLEARING_CRYSTAL_OVERLOAD = SOUND_EVENTS.register("clearing_crystal_overload",()-> new SoundEvent(new ResourceLocation(SolarCraft.MOD_ID,"clearing_crystal_overload")));
     public static final RegistryObject<SoundEvent> CORRUPTION_WISP_HIT = SOUND_EVENTS.register("corruption_wisp_hit",()-> new SoundEvent(new ResourceLocation(SolarCraft.MOD_ID,"corruption_wisp_hit")));
     public static final RegistryObject<SoundEvent> RITUAL_TILE_STRIKE = SOUND_EVENTS.register("ritual_tile_strike",()-> new SoundEvent(new ResourceLocation(SolarCraft.MOD_ID,"ritual_tile_strike")));
+    public static final RegistryObject<SoundEvent> ORBITAL_EXPLOSION = SOUND_EVENTS.register("orbital_explosion",()-> new SoundEvent(new ResourceLocation(SolarCraft.MOD_ID,"orbital_explosion")));
 
 
     //original: https://freesound.org/people/juskiddink/sounds/101934/

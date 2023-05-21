@@ -23,8 +23,11 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.Vec3;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -66,17 +69,7 @@ public class SolarcraftDebugStick extends Item {
                 System.out.println(generator.destroyPositions);
             }
 
-            OrbitalExplosionProjectile projectile = new OrbitalExplosionProjectile(SolarcraftEntityTypes.ORBITAL_EXPLOSION_PROJECTILE.get(),
-                    ctx.getLevel());
-            projectile.setPos(
-                    ctx.getClickedPos().getX()+0.5,
-                    ctx.getClickedPos().getY()+1,
-                    ctx.getClickedPos().getZ()+0.5
-                    );
-            projectile.setExplosionDepth(50);
-            projectile.setExplosionRadius(50);
-            projectile.setDestination(ctx.getClickedPos().getX(),ctx.getClickedPos().getZ());
-            ctx.getLevel().addFreshEntity(projectile);
+
 //            OrbitalCannonExplosionEntity entity = new OrbitalCannonExplosionEntity(world,75,50,3);
 //            entity.setPos(pos.getX(),pos.getY(),pos.getZ());
 //            world.addFreshEntity(entity);
@@ -145,6 +138,24 @@ public class SolarcraftDebugStick extends Item {
 //                }
 //            }
 //        }
+        if (!world.isClientSide){
+            OrbitalExplosionProjectile projectile = new OrbitalExplosionProjectile(SolarcraftEntityTypes.ORBITAL_EXPLOSION_PROJECTILE.get(),
+                    world);
+
+            ClipContext context = new ClipContext(player.position(),player.position().add(
+                    player.getLookAngle().multiply(200,200,200)
+            ), ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE,null);
+            BlockHitResult r = world.clip(context);
+            Vec3 v = r.getLocation();
+
+            projectile.setPos(v);
+
+
+            projectile.setExplosionDepth(70);
+            projectile.setExplosionRadius(80);
+            projectile.setDestination((int) v.x,(int)v.z);
+            world.addFreshEntity(projectile);
+        }
         return super.use(world, player, hand);
     }
 }

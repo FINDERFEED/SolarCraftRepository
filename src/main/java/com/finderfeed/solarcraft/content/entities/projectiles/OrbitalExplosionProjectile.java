@@ -8,10 +8,12 @@ import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
 import com.finderfeed.solarcraft.packet_handler.packets.CameraShakePacket;
 import com.finderfeed.solarcraft.packet_handler.packets.FlashPacket;
+import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractHurtingProjectile;
@@ -83,7 +85,7 @@ public class OrbitalExplosionProjectile extends NormalProjectile{
                 Helpers.loadChunkAtPos((ServerLevel) level, new BlockPos(pos.getMinBlockX(), 0, pos.getMinBlockZ()), true, true);
                 fallingDown = true;
                 int y = level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, xDest, zDest);
-                this.teleportTo(xDest, y + 100, zDest);
+                this.teleportTo(xDest, y + 300, zDest);
             }
         }
     }
@@ -91,7 +93,7 @@ public class OrbitalExplosionProjectile extends NormalProjectile{
 
     private void afterFalling(){
         if (fallingDown){
-            this.setDeltaMovement(0,-3,0);
+            this.setDeltaMovement(0,-4,0);
         }
     }
 
@@ -111,9 +113,10 @@ public class OrbitalExplosionProjectile extends NormalProjectile{
             if (explosionRadius >= 15 || explosionDepth >= 15) {
                 SCPacketHandler.INSTANCE.sendTo(new FlashPacket(0, 40, 40), player.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
             }
-            SCPacketHandler.INSTANCE.sendTo(new CameraShakePacket(0,40,160,1.5f),player.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+            SCPacketHandler.INSTANCE.sendTo(new CameraShakePacket(0,40,160,1.0f),player.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
         }
-
+        level.playSound(null,this.getOnPos(), SolarcraftSounds.ORBITAL_EXPLOSION.get(), SoundSource.HOSTILE,
+                100,1);
         OrbitalCannonExplosionEntity explosion = new OrbitalCannonExplosionEntity(level,explosionRadius,explosionDepth,3);
         explosion.setPos(Helpers.getBlockCenter(pos).add(0,-0.5,0));
         level.addFreshEntity(explosion);
