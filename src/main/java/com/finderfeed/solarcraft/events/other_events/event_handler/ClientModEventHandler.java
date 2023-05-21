@@ -259,6 +259,7 @@ public class ClientModEventHandler {
         event.registerEntityRenderer(SolarcraftEntityTypes.SUMMONING_PROJECTILE.get(), NullRenderer::new);
         event.registerEntityRenderer(SolarcraftEntityTypes.THROWN_LIGHT.get(), ThrownLightProjectileRenderer::new);
         event.registerEntityRenderer(SolarcraftEntityTypes.ORBITAL_EXPLOSION.get(), OrbitalExplosionEntityRenderer::new);
+        event.registerEntityRenderer(SolarcraftEntityTypes.ORBITAL_EXPLOSION_PROJECTILE.get(), OrbitalExplosionProjectileRenderer::new);
     }
 
 }

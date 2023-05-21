@@ -73,8 +73,8 @@ public class SolarCraftRenderTypes extends RenderType{
                 RenderType.CompositeState.builder().setShaderState(RENDERTYPE_TEXT_SEE_THROUGH_SHADER)
                 .setTextureState(new RenderStateShard.TextureStateShard(loc, false, false))
                 .setTransparencyState(TRANSLUCENT_TRANSPARENCY)
+                        .setOutputState(OutputStateShard.WEATHER_TARGET)
                 .setLightmapState(LIGHTMAP)
-                .setWriteMaskState(COLOR_WRITE)
                 .createCompositeState(false));
     }
 

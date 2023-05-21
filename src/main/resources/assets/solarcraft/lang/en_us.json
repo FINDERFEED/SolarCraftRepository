@@ -199,6 +199,7 @@
   "crystal_cores.lore": "A core made from infused crystals can serve as a good crafting material with unique properties.",
   "crystals.lore": "Runes are useful for decrypting the fragments but almost nothing can be made out of them. Perhaps crystals, that I have found in caves, infused with their energy can be used somehow. ",
   "death.attack.runic_magic": "%s got killed by runic magic.",
+  "death.attack.orbital_explosion": "%s was obliterated by orbital explosion.",
   "death.attack.solarcraft_shadow": "%s shadowed away",
   "death.attack.solarcraft_stargaze": "%s has been reduced to atoms by deadly gaze.",
   "death.lore": "You somehow manage to revive every time you die but you loose all your items and xp levels. Luckily your knowledge still remains with you which you can't say about the runic energy that you had.",

@@ -28,10 +28,18 @@ import java.util.List;
 import java.util.UUID;
 
 public class ClientPacketHandles {
+
+    public static void handleFlashPacket(int inTime,int stayTime,int outTime){
+        ClientHelpers.flash(inTime,stayTime,outTime);
+    }
+    public static void handleCameraShakePacket(int inTime,int stayTime,int outTime,float spread){
+        ClientHelpers.shake(inTime,stayTime,outTime,spread);
+    }
+
     public static void handleDimBreakPacket(){
         ClientHelpers.playsoundInEars(SolarcraftSounds.DIMENSION_BREAK.get(),1f,0.5f);
         ClientHelpers.flash(100,40,40);
-        ClientHelpers.shake(50,50,20,7.5f);
+        ClientHelpers.shake(50,50,20,0.5f);
     }
 
     public static void handleServerBossInitPacket(UUID uuid, Component name, String rendererId, boolean remove, int entityId){

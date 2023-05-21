@@ -5,10 +5,12 @@ import com.finderfeed.solarcraft.content.blocks.blockentities.RuneEnergyPylonTil
 import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.blockentity.SunShardPuzzleBlockEntity;
 import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.ray_puzzle.blockentities.BeamGenerator;
 import com.finderfeed.solarcraft.content.entities.OrbitalCannonExplosionEntity;
+import com.finderfeed.solarcraft.content.entities.projectiles.OrbitalExplosionProjectile;
 import com.finderfeed.solarcraft.content.runic_network.repeater.RunicEnergyRepeaterTile;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.helpers.multiblock.StructurePatternExporter;
 import com.finderfeed.solarcraft.registries.blocks.SolarcraftBlocks;
+import com.finderfeed.solarcraft.registries.entities.SolarcraftEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
@@ -63,6 +65,18 @@ public class SolarcraftDebugStick extends Item {
                 System.out.println(generator.getPuzzle());
                 System.out.println(generator.destroyPositions);
             }
+
+            OrbitalExplosionProjectile projectile = new OrbitalExplosionProjectile(SolarcraftEntityTypes.ORBITAL_EXPLOSION_PROJECTILE.get(),
+                    ctx.getLevel());
+            projectile.setPos(
+                    ctx.getClickedPos().getX()+0.5,
+                    ctx.getClickedPos().getY()+1,
+                    ctx.getClickedPos().getZ()+0.5
+                    );
+            projectile.setExplosionDepth(50);
+            projectile.setExplosionRadius(50);
+            projectile.setDestination(ctx.getClickedPos().getX(),ctx.getClickedPos().getZ());
+            ctx.getLevel().addFreshEntity(projectile);
 //            OrbitalCannonExplosionEntity entity = new OrbitalCannonExplosionEntity(world,75,50,3);
 //            entity.setPos(pos.getX(),pos.getY(),pos.getZ());
 //            world.addFreshEntity(entity);
@@ -122,15 +136,15 @@ public class SolarcraftDebugStick extends Item {
 //            bolt.setDeltaMovement(player.getLookAngle());
 //            world.addFreshEntity(bolt);
 //        }
-        if (!world.isClientSide){
-            for (int i = 0; i <= 10;i++){
-                for (int g = 0; g <= 10;g++){
-                    BlockPos pos = player.getOnPos().offset(i*10,0,g*10);
-                    world.setBlock(pos,SolarcraftBlocks.REPEATER.get().defaultBlockState(),3);
-                    world.setBlock(pos.below(),SolarcraftBlocks.FIRA_RUNE_BLOCK.get().defaultBlockState(),3);
-                }
-            }
-        }
+//        if (!world.isClientSide){
+//            for (int i = 0; i <= 10;i++){
+//                for (int g = 0; g <= 10;g++){
+//                    BlockPos pos = player.getOnPos().offset(i*10,0,g*10);
+//                    world.setBlock(pos,SolarcraftBlocks.REPEATER.get().defaultBlockState(),3);
+//                    world.setBlock(pos.below(),SolarcraftBlocks.FIRA_RUNE_BLOCK.get().defaultBlockState(),3);
+//                }
+//            }
+//        }
         return super.use(world, player, hand);
     }
 }

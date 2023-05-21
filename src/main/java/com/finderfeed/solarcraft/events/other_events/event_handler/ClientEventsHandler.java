@@ -305,28 +305,28 @@ public class ClientEventsHandler {
         ClientEventsHandler.cameraShakeEffect = cameraShakeEffect;
     }
 
-    @SubscribeEvent
-    public static void cameraShake(ViewportEvent.ComputeCameraAngles event){
-
-        if (Minecraft.getInstance().level == null || cameraShakeEffect == null) return;
-        Random random = new Random(Minecraft.getInstance().level.getGameTime()*1233);
-
-        float spread = cameraShakeEffect.getMaxSpread();
-        float mod = 1f;
-        int time = cameraShakeEffect.getTicker();
-        if (time <= cameraShakeEffect.getInTime()){
-            mod = time / (float) cameraShakeEffect.getInTime();
-        }else if (time >= cameraShakeEffect.getInTime() + cameraShakeEffect.getStayTime()){
-            mod = (time - (cameraShakeEffect.getInTime() + cameraShakeEffect.getStayTime()) )/(float) cameraShakeEffect.getOutTime();
-        }
-
-
-        spread *= mod;
-        float rx = random.nextFloat()*spread*2 - spread;
-        float ry = random.nextFloat()*spread*2 - spread;
-        event.setPitch(event.getPitch() + rx);
-        event.setYaw(event.getYaw() + ry);
-    }
+//    @SubscribeEvent
+//    public static void cameraShake(ViewportEvent.ComputeCameraAngles event){
+//
+//        if (Minecraft.getInstance().level == null || cameraShakeEffect == null) return;
+//        Random random = new Random(Minecraft.getInstance().level.getGameTime()*1233);
+//
+//        float spread = cameraShakeEffect.getMaxSpread();
+//        float mod = 1f;
+//        int time = cameraShakeEffect.getTicker();
+//        if (time <= cameraShakeEffect.getInTime()){
+//            mod = time / (float) cameraShakeEffect.getInTime();
+//        }else if (time >= cameraShakeEffect.getInTime() + cameraShakeEffect.getStayTime()){
+//            mod = (time - (cameraShakeEffect.getInTime() + cameraShakeEffect.getStayTime()) )/(float) cameraShakeEffect.getOutTime();
+//        }
+//
+//
+//        spread *= mod;
+//        float rx = random.nextFloat()*spread*2 - spread;
+//        float ry = random.nextFloat()*spread*2 - spread;
+//        event.setPitch(event.getPitch() + rx);
+//        event.setYaw(event.getYaw() + ry);
+//    }
 }
 
 

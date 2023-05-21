@@ -1,6 +1,8 @@
 package com.finderfeed.solarcraft.content.entities;
 
+import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.local_library.helpers.FDMathHelper;
+import com.finderfeed.solarcraft.registries.SolarcraftDamageSources;
 import com.finderfeed.solarcraft.registries.entities.SolarcraftEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -12,14 +14,18 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraft.world.level.chunk.LevelChunkSection;
 import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.NetworkHooks;
 
@@ -40,7 +46,7 @@ public class OrbitalCannonExplosionEntity extends Entity {
     private int radius;
     private int depth;
     private int blockCorrosionRadius;
-    private int explosionTimer = 60;
+    private int explosionTimer = 200;
     private List<BlockPos> blocksToExplode;
     private CompletableFuture<Boolean> blocksCompleter;
     private Random random = new Random();
@@ -66,6 +72,7 @@ public class OrbitalCannonExplosionEntity extends Entity {
             this.entityData.set(RADIUS,radius);
             this.entityData.set(DEPTH,depth);
             this.entityData.set(TIMER,explosionTimer);
+            this.damageMobs();
             if (blocksToExplode == null || blocksCompleter == null) {
                 blocksCompleter = CompletableFuture.supplyAsync(()->{
                     this.initExplodePositions();
@@ -73,17 +80,34 @@ public class OrbitalCannonExplosionEntity extends Entity {
                 });
             }
             if (blocksCompleter.isDone()){
-                if (explosionTimer == 20) {
+                if (explosionTimer == 180) {
                     this.explode((ServerLevel) level);
                 }else if (explosionTimer <= 0){
                     this.remove(RemovalReason.DISCARDED);
                 }
-                //explosionTimer = Mth.clamp(explosionTimer-1,0,60);
+                explosionTimer = Mth.clamp(explosionTimer-1,0,200);
             }
+        }else{
+
         }
 
     }
 
+    private void spawnParticles(){
+        int radius = this.entityData.get(RADIUS);
+
+    }
+
+
+    private void damageMobs(){
+        AABB box = new AABB(-radius,-depth,-radius,radius,depth,radius).move(this.position());
+        for (LivingEntity e : level.getEntitiesOfClass(LivingEntity.class,box,entity->{
+            return entity.position().multiply(1,0,1).distanceTo(this.position().multiply(1,0,1)) < radius &&
+                    entity.position().multiply(0,1,0).distanceTo(this.position().multiply(0,1,0)) < depth;
+        })){
+            e.hurt(SolarcraftDamageSources.ORBITAL_EXPLOSION,1000000f);
+        }
+    }
 
     public int getTimer(){
         return this.entityData.get(TIMER);
@@ -130,6 +154,8 @@ public class OrbitalCannonExplosionEntity extends Entity {
 
             }
         }
+        ChunkPos pos = new ChunkPos(this.getOnPos());
+        Helpers.loadChunkAtPos((ServerLevel) level,new BlockPos(pos.getMinBlockX(),0,pos.getMinBlockZ()),false,true);
     }
     private void processBlockPos(BlockPos pos){
         if (!level.getBlockState(pos).hasBlockEntity()){
@@ -262,6 +288,6 @@ public class OrbitalCannonExplosionEntity extends Entity {
 
     @Override
     public boolean shouldRenderAtSqrDistance(double dist) {
-        return dist < 1028;
+        return true;
     }
 }

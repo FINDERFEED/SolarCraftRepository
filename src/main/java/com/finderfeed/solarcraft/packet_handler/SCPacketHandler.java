@@ -83,7 +83,6 @@ public class SCPacketHandler {
         INSTANCE.registerMessage(nextID(), ServerBossEventUpdateProgress.class, ServerBossEventUpdateProgress::toBytes, ServerBossEventUpdateProgress::new, ServerBossEventUpdateProgress::handle);
         INSTANCE.registerMessage(nextID(), CastWandActionPacket.class, CastWandActionPacket::toBytes, CastWandActionPacket::new, CastWandActionPacket::handle);
         INSTANCE.registerMessage(nextID(), SetREDrainTypePacket.class, SetREDrainTypePacket::toBytes, SetREDrainTypePacket::new, SetREDrainTypePacket::handle);
-
         INSTANCE.registerMessage(nextID(), SunShardPuzzleOpenScreen.class, SunShardPuzzleOpenScreen::toBytes, SunShardPuzzleOpenScreen::new, SunShardPuzzleOpenScreen::handle);
         INSTANCE.registerMessage(nextID(), SunShardPuzzlePutTilePacket.class, SunShardPuzzlePutTilePacket::toBytes, SunShardPuzzlePutTilePacket::new, SunShardPuzzlePutTilePacket::handle);
         INSTANCE.registerMessage(nextID(), SunShardPuzzleTakeTilePacket.class, SunShardPuzzleTakeTilePacket::toBytes, SunShardPuzzleTakeTilePacket::new, SunShardPuzzleTakeTilePacket::handle);
@@ -93,6 +92,8 @@ public class SCPacketHandler {
         INSTANCE.registerMessage(nextID(), WandStructureActionPacket.class, WandStructureActionPacket::toBytes, WandStructureActionPacket::new, WandStructureActionPacket::handle);
         INSTANCE.registerMessage(nextID(), SendConfigsToClientPacket.class, SendConfigsToClientPacket::toBytes, SendConfigsToClientPacket::new, SendConfigsToClientPacket::handle);
         INSTANCE.registerMessage(nextID(), UpdateRunicEnergyInContainerPacket.class, UpdateRunicEnergyInContainerPacket::toBytes, UpdateRunicEnergyInContainerPacket::new, UpdateRunicEnergyInContainerPacket::handle);
+        INSTANCE.registerMessage(nextID(), FlashPacket.class, FlashPacket::toBytes, FlashPacket::new, FlashPacket::handle);
+        INSTANCE.registerMessage(nextID(), CameraShakePacket.class, CameraShakePacket::toBytes, CameraShakePacket::new, CameraShakePacket::handle);
 
 
     }
