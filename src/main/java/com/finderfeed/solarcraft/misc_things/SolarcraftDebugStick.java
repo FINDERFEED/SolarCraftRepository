@@ -151,9 +151,9 @@ public class SolarcraftDebugStick extends Item {
             projectile.setPos(v);
 
 
-            projectile.setExplosionDepth(70);
-            projectile.setExplosionRadius(80);
-            projectile.setDestination((int) v.x,(int)v.z);
+            projectile.setExplosionDepth(75);
+            projectile.setExplosionRadius(100);
+            projectile.setDestination((int)v.x,(int)v.z);
             world.addFreshEntity(projectile);
         }
         return super.use(world, player, hand);

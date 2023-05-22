@@ -93,7 +93,7 @@ public class OrbitalExplosionProjectile extends NormalProjectile{
 
     private void afterFalling(){
         if (fallingDown){
-            this.setDeltaMovement(0,-4,0);
+            this.setDeltaMovement(0,-6,0);
         }
     }
 

@@ -4,6 +4,7 @@ import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarcraft.registries.SolarcraftDamageSources;
 import com.finderfeed.solarcraft.registries.entities.SolarcraftEntityTypes;
+import com.google.common.collect.Lists;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
@@ -13,6 +14,7 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.server.players.PlayerList;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
@@ -43,11 +45,15 @@ public class OrbitalCannonExplosionEntity extends Entity {
     public static final EntityDataAccessor<Integer> TIMER = SynchedEntityData.defineId(OrbitalCannonExplosionEntity.class,
             EntityDataSerializers.INT);
 
+
     private int radius;
     private int depth;
     private int blockCorrosionRadius;
-    private int explosionTimer = 200;
-    private List<BlockPos> blocksToExplode;
+    private int explosionTimer = 20;
+    private int minExplosionDurationTicker = 200;
+
+    private HashMap<ChunkPos,List<BlockPos>> blocksToExplode;
+
     private CompletableFuture<Boolean> blocksCompleter;
     private Random random = new Random();
     private HashSet<LevelChunk> chunksToUpdate = new HashSet<>();
@@ -80,17 +86,54 @@ public class OrbitalCannonExplosionEntity extends Entity {
                 });
             }
             if (blocksCompleter.isDone()){
-                if (explosionTimer == 180) {
-                    this.explode((ServerLevel) level);
-                }else if (explosionTimer <= 0){
-                    this.remove(RemovalReason.DISCARDED);
-                }
-                explosionTimer = Mth.clamp(explosionTimer-1,0,200);
+                this.onCompleterFinish();
             }
         }else{
 
         }
 
+    }
+
+    private void onCompleterFinish(){
+        if (!blocksToExplode.isEmpty()){
+            this.progressExplosion();
+        }else{
+            this.waitForRemovalAndRemove((ServerLevel) level);
+        }
+        minExplosionDurationTicker--;
+    }
+
+    private void waitForRemovalAndRemove(ServerLevel serverLevel){
+        if (explosionTimer <= 0 && minExplosionDurationTicker <= 0){
+            PlayerList list = serverLevel.getServer().getPlayerList();
+            int distance = Math.max(list.getSimulationDistance(),list.getViewDistance())*16;
+            for (LevelChunk chunk : chunksToUpdate){
+                chunk.setUnsaved(true);
+                Vec3 chunkPos = new Vec3(chunk.getPos().getMiddleBlockX(),0,chunk.getPos().getMiddleBlockZ());
+                for (ServerPlayer player : serverLevel.getPlayers((p)->{
+                    return p.position().multiply(1,0,1).distanceTo(chunkPos) < distance;
+                })){
+                    player.connection.send(new ClientboundLevelChunkWithLightPacket(chunk, serverLevel.getLightEngine(),
+                            (BitSet)null, (BitSet)null, true));
+
+                }
+            }
+            this.remove(RemovalReason.DISCARDED);
+            ChunkPos pos = new ChunkPos(this.getOnPos());
+            Helpers.loadChunkAtPos((ServerLevel) level,new BlockPos(pos.getMinBlockX(),0,pos.getMinBlockZ()),false,true);
+        }else{
+            explosionTimer--;
+        }
+    }
+
+    private void progressExplosion(){
+        if (explosionTimer <= 0) {
+            System.out.println("exploded");
+            this.explode((ServerLevel) level);
+            explosionTimer = 30;
+        }else{
+            explosionTimer--;
+        }
     }
 
     private void spawnParticles(){
@@ -114,10 +157,17 @@ public class OrbitalCannonExplosionEntity extends Entity {
     }
 
     private void initExplodePositions(){
-        this.blocksToExplode = new ArrayList<>();
+        this.blocksToExplode = new HashMap<>();
         BlockPos.betweenClosed(-radius,-depth,-radius,radius,depth,radius).forEach(pos->{
             if (this.shouldPosBeAdded(pos)){
-                this.blocksToExplode.add(new BlockPos(pos).offset(blockPosition()));
+                BlockPos toAdd = new BlockPos(pos).offset(blockPosition());
+                ChunkPos cPos = new ChunkPos(toAdd);
+                List<BlockPos> l = this.blocksToExplode.get(cPos);
+                if (l == null){
+                    blocksToExplode.put(cPos, Lists.newArrayList(toAdd));
+                }else{
+                    l.add(toAdd);
+                }
             }
         });
     }
@@ -140,22 +190,23 @@ public class OrbitalCannonExplosionEntity extends Entity {
     }
 
     private void explode(ServerLevel serverLevel){
-        for (BlockPos pos : blocksToExplode){
-            this.processBlockPos(pos);
-        }
-        for (LevelChunk chunk : chunksToUpdate){
-            chunk.setUnsaved(true);
-            Vec3 chunkPos = new Vec3(chunk.getPos().getMiddleBlockX(),0,chunk.getPos().getMiddleBlockZ());
-            for (ServerPlayer player : serverLevel.getPlayers((p)->{
-                return p.position().multiply(1,0,1).distanceTo(chunkPos) < 300;
-            })){
-                player.connection.send(new ClientboundLevelChunkWithLightPacket(chunk, serverLevel.getLightEngine(),
-                        (BitSet)null, (BitSet)null, true));
 
+        Iterator<ChunkPos> posi = blocksToExplode.keySet().iterator();
+        int iters = 70;
+        long time = System.nanoTime();
+        while (posi.hasNext() && iters > 0){
+            ChunkPos pos = posi.next();
+            for (BlockPos p : blocksToExplode.get(pos)){
+                this.processBlockPos(p);
             }
+            posi.remove();
+            iters--;
         }
-        ChunkPos pos = new ChunkPos(this.getOnPos());
-        Helpers.loadChunkAtPos((ServerLevel) level,new BlockPos(pos.getMinBlockX(),0,pos.getMinBlockZ()),false,true);
+        System.out.println("time spent: " + (System.nanoTime() - time)/1000000000f);
+
+
+
+
     }
     private void processBlockPos(BlockPos pos){
         if (!level.getBlockState(pos).hasBlockEntity()){
@@ -174,6 +225,19 @@ public class OrbitalCannonExplosionEntity extends Entity {
                 );
 
 
+                List<Heightmap.Types> l = List.of(
+                        Heightmap.Types.MOTION_BLOCKING,
+                        Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+                        Heightmap.Types.OCEAN_FLOOR,
+                        Heightmap.Types.WORLD_SURFACE
+                );
+                for (var m : chunk.getHeightmaps()){
+                    if (l.contains(m.getKey())){
+                        m.getValue().update(x,pos.getY(),z,state);
+                    }
+                }
+
+
                 chunksToUpdate.add(chunk);
             }
         }else{
@@ -182,6 +246,9 @@ public class OrbitalCannonExplosionEntity extends Entity {
     }
 
     private BlockState getExplosionState(BlockPos pos){
+        if (level.getBlockState(pos).getBlock() == Blocks.BEDROCK){
+            return Blocks.BEDROCK.defaultBlockState();
+        }
         boolean a = FDMathHelper.isBetweenEllipses(
                 pos.getX() - this.blockPosition().getX(),
                 pos.getY() - this.blockPosition().getY(),
