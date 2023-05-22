@@ -94,6 +94,7 @@ public class SCPacketHandler {
         INSTANCE.registerMessage(nextID(), UpdateRunicEnergyInContainerPacket.class, UpdateRunicEnergyInContainerPacket::toBytes, UpdateRunicEnergyInContainerPacket::new, UpdateRunicEnergyInContainerPacket::handle);
         INSTANCE.registerMessage(nextID(), FlashPacket.class, FlashPacket::toBytes, FlashPacket::new, FlashPacket::handle);
         INSTANCE.registerMessage(nextID(), CameraShakePacket.class, CameraShakePacket::toBytes, CameraShakePacket::new, CameraShakePacket::handle);
+        INSTANCE.registerMessage(nextID(), UpdateChunkPacket.class, UpdateChunkPacket::toBytes, UpdateChunkPacket::new, UpdateChunkPacket::handle);
 
 
     }

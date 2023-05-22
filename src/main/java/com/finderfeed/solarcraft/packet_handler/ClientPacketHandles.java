@@ -18,9 +18,11 @@ import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.chunk.ChunkRenderDispatcher;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.protocol.game.ClientboundLevelChunkPacketData;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.level.Level;
 
@@ -29,6 +31,14 @@ import java.util.UUID;
 
 public class ClientPacketHandles {
 
+
+    public static void handleUpdateChunkPacket(int x, int z, ClientboundLevelChunkPacketData data){
+        Minecraft.getInstance().level.getChunkSource().replaceWithPacketData(
+                x,z,data.getReadBuffer(),data.getHeightmaps(),data.getBlockEntitiesTagsConsumer(x,z)
+        );
+
+
+    }
     public static void handleFlashPacket(int inTime,int stayTime,int outTime){
         ClientHelpers.flash(inTime,stayTime,outTime);
     }

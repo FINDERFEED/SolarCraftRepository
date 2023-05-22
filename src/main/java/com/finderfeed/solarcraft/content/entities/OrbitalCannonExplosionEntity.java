@@ -2,13 +2,17 @@ package com.finderfeed.solarcraft.content.entities;
 
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.local_library.helpers.FDMathHelper;
+import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
+import com.finderfeed.solarcraft.packet_handler.packets.UpdateChunkPacket;
 import com.finderfeed.solarcraft.registries.SolarcraftDamageSources;
 import com.finderfeed.solarcraft.registries.entities.SolarcraftEntityTypes;
 import com.google.common.collect.Lists;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.SectionPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientboundLevelChunkWithLightPacket;
+import net.minecraft.network.protocol.game.ClientboundLightUpdatePacket;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -29,6 +33,7 @@ import net.minecraft.world.level.chunk.LevelChunkSection;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.network.NetworkDirection;
 import net.minecraftforge.network.NetworkHooks;
 
 import java.util.*;
@@ -106,16 +111,25 @@ public class OrbitalCannonExplosionEntity extends Entity {
     private void waitForRemovalAndRemove(ServerLevel serverLevel){
         if (explosionTimer <= 0 && minExplosionDurationTicker <= 0){
             PlayerList list = serverLevel.getServer().getPlayerList();
-            int distance = Math.max(list.getSimulationDistance(),list.getViewDistance())*16;
+            int distance = Math.max(list.getSimulationDistance(),list.getViewDistance())*16 + 100;
             for (LevelChunk chunk : chunksToUpdate){
                 chunk.setUnsaved(true);
+                for (int i = 0; i < chunk.getSectionsCount();i++){
+//                    LevelChunkSection section = chunk.getSection(i);
+                    serverLevel.getLightEngine().updateSectionStatus(SectionPos.of(chunk.getPos(),i*16),false);
+                }
                 Vec3 chunkPos = new Vec3(chunk.getPos().getMiddleBlockX(),0,chunk.getPos().getMiddleBlockZ());
                 for (ServerPlayer player : serverLevel.getPlayers((p)->{
                     return p.position().multiply(1,0,1).distanceTo(chunkPos) < distance;
                 })){
-                    player.connection.send(new ClientboundLevelChunkWithLightPacket(chunk, serverLevel.getLightEngine(),
+
+//                    player.connection.send(new ClientboundLevelChunkWithLightPacket(chunk, serverLevel.getLightEngine(),
+//                            (BitSet)null, (BitSet)null, true));
+
+                    player.connection.send(new ClientboundLightUpdatePacket(chunk.getPos(),serverLevel.getLightEngine(),
                             (BitSet)null, (BitSet)null, true));
 
+                    SCPacketHandler.INSTANCE.sendTo(new UpdateChunkPacket(chunk),player.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
                 }
             }
             this.remove(RemovalReason.DISCARDED);
@@ -192,7 +206,7 @@ public class OrbitalCannonExplosionEntity extends Entity {
     private void explode(ServerLevel serverLevel){
 
         Iterator<ChunkPos> posi = blocksToExplode.keySet().iterator();
-        int iters = 70;
+        int iters = 100;
         long time = System.nanoTime();
         while (posi.hasNext() && iters > 0){
             ChunkPos pos = posi.next();
