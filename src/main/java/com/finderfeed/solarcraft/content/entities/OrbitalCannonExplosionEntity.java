@@ -18,6 +18,7 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.server.level.ThreadedLevelLightEngine;
 import net.minecraft.server.players.PlayerList;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
@@ -112,23 +113,19 @@ public class OrbitalCannonExplosionEntity extends Entity {
         if (explosionTimer <= 0 && minExplosionDurationTicker <= 0){
             PlayerList list = serverLevel.getServer().getPlayerList();
             int distance = Math.max(list.getSimulationDistance(),list.getViewDistance())*16 + 100;
+            ThreadedLevelLightEngine lightEngine = serverLevel.getChunkSource().chunkMap.lightEngine;
             for (LevelChunk chunk : chunksToUpdate){
                 chunk.setUnsaved(true);
-                for (int i = 0; i < chunk.getSectionsCount();i++){
-//                    LevelChunkSection section = chunk.getSection(i);
-                    serverLevel.getLightEngine().updateSectionStatus(SectionPos.of(chunk.getPos(),i*16),false);
-                }
-                Vec3 chunkPos = new Vec3(chunk.getPos().getMiddleBlockX(),0,chunk.getPos().getMiddleBlockZ());
-                for (ServerPlayer player : serverLevel.getPlayers((p)->{
-                    return p.position().multiply(1,0,1).distanceTo(chunkPos) < distance;
-                })){
+                List<ServerPlayer> serverPlayers = serverLevel.getChunkSource().chunkMap.getPlayers(chunk.getPos(),false);
 
-//                    player.connection.send(new ClientboundLevelChunkWithLightPacket(chunk, serverLevel.getLightEngine(),
-//                            (BitSet)null, (BitSet)null, true));
-
-                    player.connection.send(new ClientboundLightUpdatePacket(chunk.getPos(),serverLevel.getLightEngine(),
-                            (BitSet)null, (BitSet)null, true));
-
+                lightEngine.lightChunk(chunk,true).thenRun(()->{
+                    List<ServerPlayer> players = serverLevel.getChunkSource().chunkMap.getPlayers(chunk.getPos(),false);
+                    for (ServerPlayer player : players) {
+                        player.connection.send(new ClientboundLightUpdatePacket(chunk.getPos(), serverLevel.getLightEngine(),
+                                (BitSet) null, (BitSet) null, true));
+                    }
+                });
+                for (ServerPlayer player : serverPlayers){
                     SCPacketHandler.INSTANCE.sendTo(new UpdateChunkPacket(chunk),player.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
                 }
             }
@@ -206,7 +203,7 @@ public class OrbitalCannonExplosionEntity extends Entity {
     private void explode(ServerLevel serverLevel){
 
         Iterator<ChunkPos> posi = blocksToExplode.keySet().iterator();
-        int iters = 100;
+        int iters = 75;
         long time = System.nanoTime();
         while (posi.hasNext() && iters > 0){
             ChunkPos pos = posi.next();
