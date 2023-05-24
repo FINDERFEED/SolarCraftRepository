@@ -112,7 +112,6 @@ public class OrbitalCannonExplosionEntity extends Entity {
     private void waitForRemovalAndRemove(ServerLevel serverLevel){
         if (explosionTimer <= 0 && minExplosionDurationTicker <= 0){
             PlayerList list = serverLevel.getServer().getPlayerList();
-            int distance = Math.max(list.getSimulationDistance(),list.getViewDistance())*16 + 100;
             ThreadedLevelLightEngine lightEngine = serverLevel.getChunkSource().chunkMap.lightEngine;
             for (LevelChunk chunk : chunksToUpdate){
                 chunk.setUnsaved(true);

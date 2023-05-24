@@ -1,5 +1,6 @@
 package com.finderfeed.solarcraft.helpers;
 
+import com.finderfeed.solarcraft.client.screens.SolarOrbitalMissileLauncherScreen;
 import com.finderfeed.solarcraft.client.screens.ability_screen.AbilitySelectionScreen;
 import com.finderfeed.solarcraft.content.abilities.ability_classes.ToggleableAbility;
 import com.finderfeed.solarcraft.client.particles.SolarcraftParticleTypes;
@@ -445,6 +446,10 @@ public class ClientHelpers {
         if (Minecraft.getInstance().screen instanceof AbilitySelectionScreen screen){
             screen.setupBindedAbilities(abilities);
         }
+    }
+
+    public static void openOrbitalMissileLauncherScreen(BlockPos tilePos){
+        Minecraft.getInstance().setScreen(new SolarOrbitalMissileLauncherScreen(tilePos));
     }
 
 

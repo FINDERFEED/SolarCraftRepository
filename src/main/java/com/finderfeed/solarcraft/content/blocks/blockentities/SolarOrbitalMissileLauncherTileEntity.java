@@ -10,12 +10,12 @@ import com.finderfeed.solarcraft.registries.entities.SolarcraftEntityTypes;
 import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
-public class SolarNuclearMissileLauncherTileEntity extends AbstractRunicEnergyContainer {
+public class SolarOrbitalMissileLauncherTileEntity extends AbstractRunicEnergyContainer {
 
     public static final int MAX_RADIUS = 300;
     public static final int MAX_DEPTH = 125;
@@ -26,12 +26,12 @@ public class SolarNuclearMissileLauncherTileEntity extends AbstractRunicEnergyCo
     private MissileData data;
     private int launchTicker;
 
-    public SolarNuclearMissileLauncherTileEntity( BlockPos p_155229_, BlockState p_155230_) {
-        super(SolarcraftTileEntityTypes.NUCLEAR_MISSILE_LAUNCHER.get(), p_155229_, p_155230_);
+    public SolarOrbitalMissileLauncherTileEntity(BlockPos p_155229_, BlockState p_155230_) {
+        super(SolarcraftTileEntityTypes.ORBITAL_MISSILE_LAUNCHER.get(), p_155229_, p_155230_);
     }
 
 
-    public static void tick(SolarNuclearMissileLauncherTileEntity tile){
+    public static void tick(SolarOrbitalMissileLauncherTileEntity tile){
         Level level = tile.level;
         if (level == null) return;
 
@@ -46,11 +46,12 @@ public class SolarNuclearMissileLauncherTileEntity extends AbstractRunicEnergyCo
     }
 
     private void processMissile(){
+        /*
         if (!this.hasEnoughRunicEnergy(this.getMissileData().cost, 1)){
             this.requestRunicEnergy(this.getMissileData().cost, 1);
             return;
         }
-
+*/
         if (launchTicker <= 0){
             MissileData data = this.getMissileData();
             OrbitalExplosionProjectile projectile = new OrbitalExplosionProjectile(SolarcraftEntityTypes.ORBITAL_EXPLOSION_PROJECTILE.get(),level);
@@ -85,6 +86,14 @@ public class SolarNuclearMissileLauncherTileEntity extends AbstractRunicEnergyCo
 
     public MissileData getMissileData() {
         return data;
+    }
+
+    @Nullable
+    @Override
+    public ClientboundBlockEntityDataPacket getUpdatePacket() {
+        ClientboundBlockEntityDataPacket d = super.getUpdatePacket();
+        saveAdditional(d.getTag());
+        return d;
     }
 
     @Override

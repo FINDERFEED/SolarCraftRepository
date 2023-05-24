@@ -1,6 +1,6 @@
 package com.finderfeed.solarcraft.packet_handler.packets;
 
-import com.finderfeed.solarcraft.content.blocks.blockentities.SolarNuclearMissileLauncherTileEntity;
+import com.finderfeed.solarcraft.content.blocks.blockentities.SolarOrbitalMissileLauncherTileEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
@@ -9,19 +9,19 @@ import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
-public class LaunchNuclearMissilePacket {
+public class LaunchOrbitalMissilePacket {
 
     private BlockPos tilePos;
-    private SolarNuclearMissileLauncherTileEntity.MissileData data;
+    private SolarOrbitalMissileLauncherTileEntity.MissileData data;
 
-    public LaunchNuclearMissilePacket(BlockPos tile, int xDest, int zDest, int radius, int depth){
+    public LaunchOrbitalMissilePacket(BlockPos tile, int xDest, int zDest, int radius, int depth){
         this.tilePos = tile;
-        this.data = new SolarNuclearMissileLauncherTileEntity.MissileData(xDest, zDest, radius, depth);
+        this.data = new SolarOrbitalMissileLauncherTileEntity.MissileData(xDest, zDest, radius, depth);
     }
 
-    public LaunchNuclearMissilePacket(FriendlyByteBuf buf){
+    public LaunchOrbitalMissilePacket(FriendlyByteBuf buf){
         this.tilePos = buf.readBlockPos();
-        this.data = new SolarNuclearMissileLauncherTileEntity.MissileData(
+        this.data = new SolarOrbitalMissileLauncherTileEntity.MissileData(
           buf.readInt(),
           buf.readInt(),
           buf.readInt(),
@@ -45,7 +45,7 @@ public class LaunchNuclearMissilePacket {
 
             level.getChunk(data.xDest() >> 4,data.zDest() >> 4).setLoaded(true);
 
-            if (level.getBlockEntity(tilePos) instanceof SolarNuclearMissileLauncherTileEntity tile){
+            if (level.getBlockEntity(tilePos) instanceof SolarOrbitalMissileLauncherTileEntity tile){
                 if (this.data.isValid()){
                     tile.setMissileData(this.data);
                 }else{

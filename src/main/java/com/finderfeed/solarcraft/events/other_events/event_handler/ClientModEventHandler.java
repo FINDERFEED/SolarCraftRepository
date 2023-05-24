@@ -136,6 +136,7 @@ public class ClientModEventHandler {
         BlockEntityRenderers.register(SolarcraftTileEntityTypes.BEAM_GENERATOR.get(), BeamGeneratorRenderer::new);
         BlockEntityRenderers.register(SolarcraftTileEntityTypes.BEAM_REFLECTOR.get(), BeamReflectorRenderer::new);
         BlockEntityRenderers.register(SolarcraftTileEntityTypes.ELEMENT_WEAVER.get(), ElementWeaverRenderer::new);
+        BlockEntityRenderers.register(SolarcraftTileEntityTypes.ORBITAL_MISSILE_LAUNCHER.get(), OrbitalMissileLauncherTERenderer::new);
 
 
         MenuScreens.register(SolarcraftContainers.SOLAR_FURNACE_CONTAINER.get(), SolarFurnaceScreen::new);

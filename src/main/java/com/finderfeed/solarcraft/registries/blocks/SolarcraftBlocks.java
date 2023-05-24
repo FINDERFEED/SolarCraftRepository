@@ -205,6 +205,6 @@ public class SolarcraftBlocks {
     public  static  final RegistryObject<BeamGeneratorBlock> BEAM_GENERATOR = BLOCKS.register("beam_generator", BeamGeneratorBlock::new);
     public  static  final RegistryObject<BeamReflectorBlock> BEAM_REFLECTOR = BLOCKS.register("beam_reflector",()-> new BeamReflectorBlock(BlockBehaviour.Properties.copy(Blocks.BEDROCK)));
     public  static  final RegistryObject<ElementWeaverBlock> ELEMENT_WEAVER = BLOCKS.register("element_weaver",()-> new ElementWeaverBlock(BlockBehaviour.Properties.copy(Blocks.STONE)));
-    public  static  final RegistryObject<SolarNuclearMissileLauncherBlock> NUCLEAR_MISSILE_LAUNCHER = BLOCKS.register("nuclear_missile_launcher",()-> new SolarNuclearMissileLauncherBlock(BlockBehaviour.Properties.copy(Blocks.STONE)));
+    public  static  final RegistryObject<SolarOrbitalMissileLauncherBlock> ORBITAL_MISSILE_LAUNCHER = BLOCKS.register("orbital_missile_launcher",()-> new SolarOrbitalMissileLauncherBlock(BlockBehaviour.Properties.copy(Blocks.STONE)));
 
 }

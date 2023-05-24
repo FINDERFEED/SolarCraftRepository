@@ -11,7 +11,6 @@ import com.finderfeed.solarcraft.content.blocks.blockentities.*;
 import com.finderfeed.solarcraft.content.blocks.solar_energy.SolarEnergyCoreTile;
 import com.finderfeed.solarcraft.content.blocks.solar_energy.SolarEnergyGeneratorTile;
 import com.finderfeed.solarcraft.content.blocks.solar_energy.SolarEnergyRepeaterTile;
-import com.finderfeed.solarcraft.content.runic_network.repeater.BaseRepeaterTile;
 import com.finderfeed.solarcraft.content.runic_network.repeater.RunicEnergyRepeaterTile;
 import com.finderfeed.solarcraft.registries.blocks.SolarcraftBlocks;
 import com.finderfeed.solarcraft.content.world_generation.structures.blocks.tile_entities.ColdStarInfuserTile;
@@ -142,6 +141,6 @@ public class SolarcraftTileEntityTypes {
     public static final RegistryObject<BlockEntityType<ElementWeaverTileEntity>> ELEMENT_WEAVER = TILE_ENTITY_TYPE.register("element_weaver",()->
             BlockEntityType.Builder.of(ElementWeaverTileEntity::new, SolarcraftBlocks.ELEMENT_WEAVER.get()).build(null));
 
-    public static final RegistryObject<BlockEntityType<SolarNuclearMissileLauncherTileEntity>> NUCLEAR_MISSILE_LAUNCHER = TILE_ENTITY_TYPE.register("nuclear_missile_launcher",()->
-            BlockEntityType.Builder.of(SolarNuclearMissileLauncherTileEntity::new, SolarcraftBlocks.NUCLEAR_MISSILE_LAUNCHER.get()).build(null));
+    public static final RegistryObject<BlockEntityType<SolarOrbitalMissileLauncherTileEntity>> ORBITAL_MISSILE_LAUNCHER = TILE_ENTITY_TYPE.register("orbital_missile_launcher",()->
+            BlockEntityType.Builder.of(SolarOrbitalMissileLauncherTileEntity::new, SolarcraftBlocks.ORBITAL_MISSILE_LAUNCHER.get()).build(null));
 }

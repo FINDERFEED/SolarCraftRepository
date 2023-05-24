@@ -333,7 +333,7 @@ public class SolarcraftItems {
     public static final RegistryObject<Item> BEAM_REFLECTOR = ITEMS.register("beam_reflector",()->new BlockItem(SolarcraftBlocks.BEAM_REFLECTOR.get(),new Item.Properties().tab(SolarCraft.SOLAR_GROUP_BLOCKS)));
     public static final RegistryObject<Item> BEAM_GENERATOR = ITEMS.register("beam_generator",()->new BlockItem(SolarcraftBlocks.BEAM_GENERATOR.get(),new Item.Properties().tab(SolarCraft.SOLAR_GROUP_BLOCKS)));
     public static final RegistryObject<Item> ELEMENT_WEAVER = ITEMS.register("element_weaver",()->new BlockItem(SolarcraftBlocks.ELEMENT_WEAVER.get(),new Item.Properties().tab(SolarCraft.SOLAR_GROUP_BLOCKS)));
-    public static final RegistryObject<Item> NUCLEAR_MISSILE_LAUNCHER = ITEMS.register("nuclear_missile_launcher",()->new BlockItem(SolarcraftBlocks.NUCLEAR_MISSILE_LAUNCHER.get(),new Item.Properties().tab(SolarCraft.SOLAR_GROUP_BLOCKS)));
+    public static final RegistryObject<Item> ORBITAL_MISSILE_LAUNCHER = ITEMS.register("orbital_missile_launcher",()->new BlockItem(SolarcraftBlocks.ORBITAL_MISSILE_LAUNCHER.get(),new Item.Properties().tab(SolarCraft.SOLAR_GROUP_BLOCKS)));
 
     public static final RegistryObject<Item> RUNIC_ENERGY_CORE = ITEMS.register("runic_energy_core",()->new SolarcraftBlockItem(SolarcraftBlocks.RUNIC_ENERGY_CORE.get(),new Item.Properties().tab(SolarCraft.SOLAR_GROUP_BLOCKS),()->AncientFragment.RUNIC_ENERGY_CORE));
 
