@@ -84,7 +84,7 @@ public class RunicEnergyCoreTile extends AbstractRunicEnergyContainer implements
 
     //AbstractREContainer
     @Override
-    public float getMaxRunicEnergyInput() {
+    public float getREPerTickInput() {
         return 5;
     }
 

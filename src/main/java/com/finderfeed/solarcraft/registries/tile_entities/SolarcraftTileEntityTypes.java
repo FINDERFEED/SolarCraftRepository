@@ -141,4 +141,7 @@ public class SolarcraftTileEntityTypes {
 
     public static final RegistryObject<BlockEntityType<ElementWeaverTileEntity>> ELEMENT_WEAVER = TILE_ENTITY_TYPE.register("element_weaver",()->
             BlockEntityType.Builder.of(ElementWeaverTileEntity::new, SolarcraftBlocks.ELEMENT_WEAVER.get()).build(null));
+
+    public static final RegistryObject<BlockEntityType<SolarNuclearMissileLauncherTileEntity>> NUCLEAR_MISSILE_LAUNCHER = TILE_ENTITY_TYPE.register("nuclear_missile_launcher",()->
+            BlockEntityType.Builder.of(SolarNuclearMissileLauncherTileEntity::new, SolarcraftBlocks.NUCLEAR_MISSILE_LAUNCHER.get()).build(null));
 }

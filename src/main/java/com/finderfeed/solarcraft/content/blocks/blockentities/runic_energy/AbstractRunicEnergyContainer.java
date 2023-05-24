@@ -27,7 +27,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraftforge.common.world.ForgeChunkManager;
 import net.minecraftforge.network.PacketDistributor;
-import org.checkerframework.checker.units.qual.C;
 
 import javax.annotation.Nullable;
 import java.util.*;
@@ -71,7 +70,7 @@ public abstract class AbstractRunicEnergyContainer extends SolarcraftBlockEntity
         return this.owner;
     }
 
-    public abstract float getMaxRunicEnergyInput();
+    public abstract float getREPerTickInput();
     public abstract float getRunicEnergyLimit();
     public abstract int getSeekCooldown();
     public abstract double getMaxRange();
@@ -92,9 +91,9 @@ public abstract class AbstractRunicEnergyContainer extends SolarcraftBlockEntity
             float cost = costs.get(type);
             double multiplied = cost * multiplier;
             double runicEnergy = getRunicEnergy(type);
-            if (multiplied >= runicEnergy + getMaxRunicEnergyInput()) {
-                requestSpecificEnergyNew(type, getMaxRunicEnergyInput());
-            } else if ((multiplied > runicEnergy) && (multiplied < runicEnergy + getMaxRunicEnergyInput())) {
+            if (multiplied >= runicEnergy + getREPerTickInput()) {
+                requestSpecificEnergyNew(type, getREPerTickInput());
+            } else if ((multiplied > runicEnergy) && (multiplied < runicEnergy + getREPerTickInput())) {
                 double request = multiplied - runicEnergy;
                 requestSpecificEnergyNew(type, request);
             } else {

@@ -83,7 +83,7 @@ public class BonemealerTileEntity extends AbstractRunicEnergyContainer implement
 
 
     @Override
-    public float getMaxRunicEnergyInput() {
+    public float getREPerTickInput() {
         return 20;
     }
 

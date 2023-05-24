@@ -158,7 +158,7 @@ public class ElementWeaverTileEntity extends REItemHandlerBlockEntity{
     }
 
     @Override
-    public float getMaxRunicEnergyInput() {
+    public float getREPerTickInput() {
         return 2;
     }
 

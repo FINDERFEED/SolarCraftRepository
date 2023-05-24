@@ -142,7 +142,7 @@ public class InfuserTileEntity extends REItemHandlerBlockEntity implements Solar
     }
 
     @Override
-    public float getMaxRunicEnergyInput() {
+    public float getREPerTickInput() {
         return 30;
     }
 

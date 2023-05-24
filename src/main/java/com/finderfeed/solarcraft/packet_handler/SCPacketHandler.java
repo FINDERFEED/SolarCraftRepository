@@ -95,6 +95,7 @@ public class SCPacketHandler {
         INSTANCE.registerMessage(nextID(), FlashPacket.class, FlashPacket::toBytes, FlashPacket::new, FlashPacket::handle);
         INSTANCE.registerMessage(nextID(), CameraShakePacket.class, CameraShakePacket::toBytes, CameraShakePacket::new, CameraShakePacket::handle);
         INSTANCE.registerMessage(nextID(), UpdateChunkPacket.class, UpdateChunkPacket::toBytes, UpdateChunkPacket::new, UpdateChunkPacket::handle);
+        INSTANCE.registerMessage(nextID(), LaunchNuclearMissilePacket.class, LaunchNuclearMissilePacket::toBytes, LaunchNuclearMissilePacket::new, LaunchNuclearMissilePacket::handle);
 
 
     }
