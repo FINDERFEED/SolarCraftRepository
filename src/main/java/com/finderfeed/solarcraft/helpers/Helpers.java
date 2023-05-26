@@ -635,9 +635,8 @@ public class Helpers {
     public static String generateMinutesAndSecondsStringFromTicks(int tick){
         int mins = tick / 20 / 60;
         int seconds = tick / 20 - mins * 60;
-        Component c = Component.translatable("solarcraft.minutes_seconds");
-        String s = c.getString().formatted(""+mins,""+seconds);
-        return s;
+        Component c = Component.translatable("solarcraft.minutes_seconds","%2s".formatted(""+mins),"%2s".formatted(""+seconds));
+        return c.getString();
 
     }
 }

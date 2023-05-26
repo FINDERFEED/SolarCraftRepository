@@ -32,12 +32,12 @@ public class SolarOrbitalMissileLauncherScreen extends DefaultScreen {
     @Override
     protected void init() {
         super.init();
+        relX-=40;
 
-        int y = 100;
-        IntegerEditBox xbox = new IntegerEditBox(font,relX,relY + y + 20,200,20, Component.literal("X"));
-        IntegerEditBox zbox = new IntegerEditBox(font,relX,relY + y + 40,200,20, Component.literal("Z"));
-        IntegerEditBox radbox = new IntegerEditBox(font,relX,relY + y + 60,200,20, Component.literal("Rad"));
-        IntegerEditBox depthbox = new IntegerEditBox(font,relX,relY + y + 80,200,20, Component.literal("Depth"));
+        IntegerEditBox xbox = new IntegerEditBox(font,relX + 8,relY + 51,209,18, Component.literal("X"));
+        IntegerEditBox zbox = new IntegerEditBox(font,relX + 8,relY  + 51 + 18 + 20,209,18, Component.literal("Z"));
+        IntegerEditBox radbox = new IntegerEditBox(font,relX + 8,relY  + 51 + 18*2 + 40,209,18, Component.literal("Rad"));
+        IntegerEditBox depthbox = new IntegerEditBox(font,relX + 8,relY  + 51 + 18*3 + 60,209,18, Component.literal("Depth"));
 
         xbox.setValue(tilePos.getX() + "");
         zbox.setValue(tilePos.getZ() + "");
@@ -56,7 +56,7 @@ public class SolarOrbitalMissileLauncherScreen extends DefaultScreen {
         this.addRenderableWidget(zbox);
         this.addRenderableWidget(radbox);
         this.addRenderableWidget(depthbox);
-        SolarForgeButtonYellow launchButton = new SolarForgeButtonYellow(relX + 200,relY + y,40,15,
+        SolarForgeButtonYellow launchButton = new SolarForgeButtonYellow(relX + this.getScreenWidth() + 28,relY + 20,45,15,
                 Component.translatable("solarcraft.screens.orbital_missile_launch.launch"),(btn)->{
             int x = Integer.parseInt(xbox.getValue());
             int z = Integer.parseInt(zbox.getValue());
@@ -66,7 +66,7 @@ public class SolarOrbitalMissileLauncherScreen extends DefaultScreen {
                     tilePos,x,z,radius,depth,false
             ));
         });
-        SolarForgeButtonYellow cancelButton = new SolarForgeButtonYellow(relX + 200,relY + y,40,15,
+        SolarForgeButtonYellow cancelButton = new SolarForgeButtonYellow(relX + this.getScreenWidth() + 28,relY + 50,45,15,
                 Component.translatable("solarcraft.screens.orbital_missile_launch.cancel"),(btn)->{
             SCPacketHandler.INSTANCE.sendToServer(new LaunchOrbitalMissilePacket(
                     tilePos,0,0,0,0,true
@@ -75,8 +75,8 @@ public class SolarOrbitalMissileLauncherScreen extends DefaultScreen {
         InfoButton info = new InfoButton(relX - 15,relY +  this.getScreenHeight() / 2 - 6,13,13,(btn,m,mx,my)->{
             String s = Component.translatable("solarcraft.screens.orbital_missile_launch.info",
                     ""+Level.MAX_LEVEL_SIZE,""+SolarOrbitalMissileLauncherTileEntity.MAX_RADIUS,
-                    ""+SolarOrbitalMissileLauncherTileEntity.MAX_DEPTH).getString();
-            renderTooltip(m,font.split(Component.literal(s),100),mx,my);
+                    ""+SolarOrbitalMissileLauncherTileEntity.MAX_DEPTH,""+SolarOrbitalMissileLauncherTileEntity.RE_PER_ONE_RING).getString();
+            renderTooltip(m,font.split(Component.literal(s),200),mx,my);
         });
         this.addRenderableWidget(info);
         this.addRenderableWidget(cancelButton);
@@ -93,8 +93,16 @@ public class SolarOrbitalMissileLauncherScreen extends DefaultScreen {
             int tick = tile.getLaunchTicker();
             String s = Helpers.generateMinutesAndSecondsStringFromTicks(tick);
             String s1 = Component.translatable("solarcraft.screens.orbital_missile_launch.launch_time").getString();
-            drawCenteredString(matrices,font,s1 + ": " + s,relX + 100,relY + 50, SolarLexiconScreen.TEXT_COLOR);
+            drawCenteredString(matrices,font,s1 + ": " + s,relX + this.getScreenWidth()/2,relY + 12, SolarLexiconScreen.TEXT_COLOR);
+
+            drawCenteredString(matrices,font,Component.translatable("solarcraft.word.x_coordinate"),relX + this.getScreenWidth()/2,relY + 37, SolarLexiconScreen.TEXT_COLOR);
+            drawCenteredString(matrices,font,Component.translatable("solarcraft.word.z_coordinate"),relX + this.getScreenWidth()/2,relY + 57 + 18, SolarLexiconScreen.TEXT_COLOR);
+            drawCenteredString(matrices,font,Component.translatable("solarcraft.word.radius"),relX + this.getScreenWidth()/2,relY + 77 + 18*2, SolarLexiconScreen.TEXT_COLOR);
+            drawCenteredString(matrices,font,Component.translatable("solarcraft.word.depth"),relX + this.getScreenWidth()/2,relY + 97 + 18*3, SolarLexiconScreen.TEXT_COLOR);
+
+
         }
+        RenderingTools.renderTextField(matrices,relX + this.getScreenWidth() + 20, relY + 13,60,60);
         super.render(matrices, mx, my, pTicks);
     }
 

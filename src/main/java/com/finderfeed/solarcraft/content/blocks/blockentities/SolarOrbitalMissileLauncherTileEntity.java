@@ -160,7 +160,7 @@ public class SolarOrbitalMissileLauncherTileEntity extends AbstractRunicEnergyCo
             this.depth = depth;
             this.cost = new RunicEnergyCost();
             float cost = (radius + depth)*RE_PER_ONE_RING;
-            this.cost.set(RunicEnergy.Type.TERA,cost);
+            this.cost.set(RunicEnergy.Type.KELDA,cost);
         }
 
         public void save(CompoundTag tag){
