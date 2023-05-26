@@ -21,6 +21,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.core.SectionPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
@@ -491,9 +492,11 @@ public class Helpers {
     }
 
     public static void updateTile(BlockEntity tile){
-        tile.setChanged();
-        BlockState state = tile.getLevel().getBlockState(tile.getBlockPos());
-        tile.getLevel().sendBlockUpdated(tile.getBlockPos(),state,state,3);
+        if (tile.getLevel() != null) {
+            tile.setChanged();
+            BlockState state = tile.getLevel().getBlockState(tile.getBlockPos());
+            tile.getLevel().sendBlockUpdated(tile.getBlockPos(), state, state, 3);
+        }
     }
 
 
@@ -627,5 +630,14 @@ public class Helpers {
                         (output.getItem() == input.getItem() &&
                                 output.getCount() < output.getMaxStackSize())
                 );
+    }
+
+    public static String generateMinutesAndSecondsStringFromTicks(int tick){
+        int mins = tick / 20 / 60;
+        int seconds = tick / 20 - mins * 60;
+        Component c = Component.translatable("solarcraft.minutes_seconds");
+        String s = c.getString().formatted(""+mins,""+seconds);
+        return s;
+
     }
 }

@@ -404,10 +404,9 @@ public class EventHandler {
 
     }
 
-    @SubscribeEvent
+    @SubscribeEvent(priority = EventPriority.HIGHEST)
     public static void assignOwner(BlockEvent.EntityPlaceEvent event){
-        if ((event.getEntity() instanceof Player player)
-                && (player.level.getBlockEntity(event.getPos()) instanceof OwnedBlock tile)){
+        if ((event.getEntity() instanceof Player player) && (player.level.getBlockEntity(event.getPos()) instanceof OwnedBlock tile)){
             tile.setOwner(player.getUUID());
         }
     }

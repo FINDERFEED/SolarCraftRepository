@@ -27,7 +27,7 @@ public class IntegerEditBox extends EditBox {
 
     @Override
     public boolean charTyped(char c, int p_94123_) {
-        if (!Character.isDigit(c) || !additionalPredicate.test(c)){
+        if ((c != '-' && !Character.isDigit(c)) || !additionalPredicate.test(c)){
             return false;
         }
         return super.charTyped(c, p_94123_);

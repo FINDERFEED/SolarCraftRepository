@@ -86,12 +86,14 @@ public class OrbitalCannonExplosionEntity extends Entity {
             this.entityData.set(TIMER,explosionTimer);
             this.damageMobs();
             if (blocksToExplode == null || blocksCompleter == null) {
+
                 blocksCompleter = CompletableFuture.supplyAsync(()->{
                     this.initExplodePositions();
                     return true;
                 });
             }
             if (blocksCompleter.isDone()){
+
                 this.onCompleterFinish();
             }
         }else{
@@ -207,7 +209,7 @@ public class OrbitalCannonExplosionEntity extends Entity {
         while (posi.hasNext() && iters > 0){
             ChunkPos pos = posi.next();
             for (BlockPos p : blocksToExplode.get(pos)){
-                this.processBlockPos(p);
+                this.processBlockPos(serverLevel,p);
             }
             posi.remove();
             iters--;
@@ -218,7 +220,7 @@ public class OrbitalCannonExplosionEntity extends Entity {
 
 
     }
-    private void processBlockPos(BlockPos pos){
+    private void processBlockPos(ServerLevel level, BlockPos pos){
         if (!level.getBlockState(pos).hasBlockEntity()){
             if (!level.isOutsideBuildHeight(pos)){
 

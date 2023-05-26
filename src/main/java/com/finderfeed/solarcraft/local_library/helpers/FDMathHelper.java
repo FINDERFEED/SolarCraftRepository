@@ -26,7 +26,7 @@ public class FDMathHelper {
     public static final Function<Double,Double> FLIP = (x)->1-x;
 
     public static boolean isBetweenValues(float value,float val1,float val2){
-        return value > val1 && value < val2;
+        return value >= val1 && value <= val2;
     }
 
     public static boolean isInEllipse(float x,float y,float z,float ellipseRad,float ellipseDepth){

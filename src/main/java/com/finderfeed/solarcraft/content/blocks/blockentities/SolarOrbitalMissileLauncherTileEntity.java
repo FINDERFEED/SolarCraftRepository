@@ -77,7 +77,7 @@ public class SolarOrbitalMissileLauncherTileEntity extends AbstractRunicEnergyCo
     public void setMissileData(MissileData data) {
         this.data = data;
         if (data != null){
-            this.launchTicker = data.radius*20;
+            this.launchTicker = Math.max(data.radius,data.depth)*20;
         }else{
             this.launchTicker = 0;
         }
@@ -112,6 +112,7 @@ public class SolarOrbitalMissileLauncherTileEntity extends AbstractRunicEnergyCo
         this.launchTicker = tag.getInt("launchTicker");
     }
 
+
     @Override
     public float getREPerTickInput() {
         return 30;
@@ -134,6 +135,11 @@ public class SolarOrbitalMissileLauncherTileEntity extends AbstractRunicEnergyCo
 
     @Override
     public boolean shouldFunction() {
+        return true;
+    }
+
+    @Override
+    public boolean saveAndLoadEverything() {
         return true;
     }
 
