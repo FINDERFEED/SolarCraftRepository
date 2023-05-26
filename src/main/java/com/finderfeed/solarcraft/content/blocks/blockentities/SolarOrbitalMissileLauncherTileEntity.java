@@ -64,8 +64,9 @@ public class SolarOrbitalMissileLauncherTileEntity extends AbstractRunicEnergyCo
             setMissileData(null);
             Helpers.updateTile(this);
         }else{
-            Helpers.updateTile(this);
-            launchTicker--;
+            if (--launchTicker % 20 == 0){
+                Helpers.updateTile(this);
+            }
         }
     }
 
@@ -204,6 +205,9 @@ public class SolarOrbitalMissileLauncherTileEntity extends AbstractRunicEnergyCo
         }
 
         public boolean isValid(){
+            if (radius == 0 || depth == 0){
+                return false;
+            }
             return FDMathHelper.isBetweenValues(xDest,-Level.MAX_LEVEL_SIZE,Level.MAX_LEVEL_SIZE) &&
                     FDMathHelper.isBetweenValues(zDest,-Level.MAX_LEVEL_SIZE,Level.MAX_LEVEL_SIZE) &&
                     FDMathHelper.isBetweenValues(radius,0,300) &&

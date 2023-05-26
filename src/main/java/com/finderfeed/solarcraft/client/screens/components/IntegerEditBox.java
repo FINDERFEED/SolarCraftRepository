@@ -27,9 +27,19 @@ public class IntegerEditBox extends EditBox {
 
     @Override
     public boolean charTyped(char c, int p_94123_) {
-        if ((c != '-' && !Character.isDigit(c)) || !additionalPredicate.test(c)){
-            return false;
+//        if ((c != '-' && !Character.isDigit(c)) || !additionalPredicate.test(c)){
+//            return false;
+//        }
+        boolean a = super.charTyped(c,p_94123_);
+        try{
+            String current = this.getValue();
+            if (c == '-' && current.equals("-")){
+                return a;
+            }
+            Integer.parseInt(this.getValue());
+        }catch (NumberFormatException e){
+            this.setValue("0");
         }
-        return super.charTyped(c, p_94123_);
+        return a;
     }
 }
