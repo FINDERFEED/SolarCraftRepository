@@ -154,8 +154,8 @@ dependencies {
     // For more info...
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
-//    runtimeOnly fg.deobf("curse.maven:oculus-581495:4451142")
-    //runtimeOnly fg.deobf("curse.maven:rubidium-574856:4448157")
+    runtimeOnly fg.deobf("curse.maven:oculus-581495:4299147")
+    runtimeOnly fg.deobf("curse.maven:rubidium-574856:4448157")
 
 //    runtimeOnly fg.deobf("curse.maven:corailtombstone-243707:4057138")
 
