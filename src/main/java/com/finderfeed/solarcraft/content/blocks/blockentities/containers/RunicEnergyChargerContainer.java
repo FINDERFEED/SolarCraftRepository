@@ -49,7 +49,6 @@ public class RunicEnergyChargerContainer extends AbstractContainerMenu {
                 super.set(stack);
                 if (!inv.player.level.isClientSide){
                     tile.resetAllRepeaters();
-                    tile.clearWays();
                     Helpers.updateTile(tile);
                 }
             }

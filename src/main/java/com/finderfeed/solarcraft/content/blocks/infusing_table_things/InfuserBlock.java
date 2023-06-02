@@ -60,7 +60,7 @@ public class InfuserBlock extends RunicEnergySaverBlock implements EntityBlock {
             popResource(p_196243_2_,p_196243_3_,stacks);
             stacks = ent.getItem(ent.outputSlot());
             popResource(p_196243_2_,p_196243_3_,stacks);
-            ent.onTileRemove();
+//            ent.onTileRemove();
         }
         super.onRemove(p_196243_1_, p_196243_2_, p_196243_3_, p_196243_4_, p_196243_5_);
     }

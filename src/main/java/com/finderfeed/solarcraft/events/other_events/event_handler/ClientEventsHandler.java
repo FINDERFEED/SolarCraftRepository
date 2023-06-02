@@ -12,6 +12,7 @@ import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.misc_things.CameraShake;
 import com.finderfeed.solarcraft.misc_things.Flash;
 import com.finderfeed.solarcraft.misc_things.IScrollable;
+import com.finderfeed.solarcraft.misc_things.RunicEnergy;
 import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
 import com.finderfeed.solarcraft.packet_handler.packets.CastAbilityPacket;
 import com.finderfeed.solarcraft.registries.ConfigRegistry;
@@ -20,11 +21,15 @@ import com.finderfeed.solarcraft.registries.items.SolarcraftItems;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import com.mojang.datafixers.util.Either;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
@@ -99,9 +104,19 @@ public class ClientEventsHandler {
         ItemStack item = event.getItemStack();
         RunicEnergyCost cost;
         if (!item.isEmpty() && (cost = ConfigRegistry.ITEM_RE_CONFIG.getItemCost(item.getItem())) != null){
-            event.getTooltipElements().add(Either.right(new RETooltipComponent(cost)));
+            var list = event.getTooltipElements();
+            list.add(Either.right(new RETooltipComponent(cost)));
+            if (Screen.hasShiftDown()){
+                for (RunicEnergy.Type type : cost.getSetTypes()){
+                    Component c = Component.literal(type.toString().toUpperCase(Locale.ROOT)+ ": " + "%.1f".formatted(cost.get(type))).withStyle(ChatFormatting.GOLD);
+                    list.add(Either.left(c));
+                }
+            }else{
+                list.add(Either.left(Component.literal("[SHIFT]").withStyle(ChatFormatting.DARK_GRAY)));
+            }
         }
     }
+
 
     @SubscribeEvent
     public static void onPlayerLogout(final ClientPlayerNetworkEvent.LoggingOut event){

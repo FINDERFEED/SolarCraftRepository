@@ -652,10 +652,10 @@ public class EventHandler {
             if (player instanceof  ServerPlayer sPlayer) {
 
                 for (JsonConfig config : ConfigRegistry.POST_LOAD_CONFIGS.values()){
-                    config.deserialize(config.defaultJson());
+                    config.deserialize(config.getJson());
                 }
                 for (JsonConfig config : ConfigRegistry.EARLY_LOAD_CONFIGS.values()){
-                    config.deserialize(config.defaultJson());
+                    config.deserialize(config.getJson());
                 }
 
                 SCPacketHandler.INSTANCE.sendTo(new SendConfigsToClientPacket(),sPlayer.connection.connection, NetworkDirection.PLAY_TO_CLIENT);

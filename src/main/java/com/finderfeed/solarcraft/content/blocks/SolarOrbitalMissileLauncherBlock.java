@@ -1,6 +1,7 @@
 package com.finderfeed.solarcraft.content.blocks;
 
 import com.finderfeed.solarcraft.content.blocks.blockentities.SolarOrbitalMissileLauncherTileEntity;
+import com.finderfeed.solarcraft.content.blocks.primitive.RunicEnergySaverBlock;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
@@ -19,7 +20,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
 
-public class SolarOrbitalMissileLauncherBlock extends Block implements EntityBlock {
+public class SolarOrbitalMissileLauncherBlock extends RunicEnergySaverBlock implements EntityBlock {
 
     public SolarOrbitalMissileLauncherBlock(Properties p_49795_) {
         super(p_49795_);

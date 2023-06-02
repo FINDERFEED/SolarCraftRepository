@@ -34,15 +34,6 @@ public class RunicEnergyCoreBlock extends RunicEnergySaverBlock implements Entit
     }
 
     @Override
-    public void onRemove(BlockState p_196243_1_, Level world, BlockPos p_196243_3_, BlockState p_196243_4_, boolean p_196243_5_) {
-        BlockEntity te = world.getBlockEntity(p_196243_3_);
-        if (te instanceof RunicEnergyCoreTile tileEntity){
-            tileEntity.resetAllRepeaters();
-        }
-        super.onRemove(p_196243_1_, world, p_196243_3_, p_196243_4_, p_196243_5_);
-    }
-
-    @Override
     public RenderShape getRenderShape(BlockState p_60550_) {
         return RenderShape.MODEL;
     }

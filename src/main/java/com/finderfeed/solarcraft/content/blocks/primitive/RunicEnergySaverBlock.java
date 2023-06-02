@@ -19,7 +19,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class RunicEnergySaverBlock extends Block {
+public abstract class RunicEnergySaverBlock extends RunicEnergyContainerBlock {
 
     private static final List<RunicEnergy.Type> ALL = List.of(
             RunicEnergy.Type.ARDO,

@@ -100,4 +100,9 @@ public class RunicEnergyChargerBlock extends RunicEnergySaverBlock implements En
         }
         return drops;
     }
+
+    @Override
+    public void onRemove(BlockState state, Level level, BlockPos pos, BlockState p_60518_, boolean p_60519_) {
+        super.onRemove(state, level, pos, p_60518_, p_60519_);
+    }
 }

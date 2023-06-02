@@ -26,7 +26,7 @@ public abstract class JsonConfig {
     private boolean initialized = false;
 
     /**
-     * Saving the json object in order to sync server and client efficiently
+     * Saving the json object in order to sync server and client
      */
     private JsonObject object;
 

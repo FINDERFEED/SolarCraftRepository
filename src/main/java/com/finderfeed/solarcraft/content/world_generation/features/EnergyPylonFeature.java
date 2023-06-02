@@ -1,17 +1,16 @@
 package com.finderfeed.solarcraft.content.world_generation.features;
 
+import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.config.SolarcraftConfig;
 import com.mojang.serialization.Codec;
 
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.LiquidBlock;
-import net.minecraft.world.level.block.Mirror;
+import net.minecraft.world.level.block.*;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.block.Rotation;
 import net.minecraft.core.BlockPos;
 
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.WorldGenLevel;
@@ -45,8 +44,8 @@ public class EnergyPylonFeature extends Feature<NoneFeatureConfiguration> {
     @Override
     public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> ctx) {
         RandomSource random = ctx.random();
-        if (random.nextFloat() > 1.0f/SolarcraftConfig.ENERGY_PYLON_SPAWN_CHANCE.get()) return false;
 
+        if (random.nextFloat() > 1.0f/SolarcraftConfig.ENERGY_PYLON_SPAWN_CHANCE.get()) return false;
         WorldGenLevel world = ctx.level();
         BlockPos pos = ctx.origin();
         Rotation rot = Rotation.NONE;
@@ -86,10 +85,10 @@ public class EnergyPylonFeature extends Feature<NoneFeatureConfiguration> {
     public static boolean checkIfFlat(WorldGenLevel world,BlockPos whereToCheck,int diameter){
         for (int i = 0;i <= diameter;i++){
             for (int g = 0;g <= diameter;g++){
-
-                if ((world.getBlockState(whereToCheck.offset(i,1,g)).getBlock() != Blocks.AIR) ||
-                        (world.getBlockState(whereToCheck.offset(i,0,g)).getBlock() == Blocks.AIR) ||
-                        (world.getBlockState(whereToCheck.offset(i,0,g)).getBlock() instanceof LiquidBlock)){
+                Block above = world.getBlockState(whereToCheck.offset(i,1,g)).getBlock();
+                Block current = world.getBlockState(whereToCheck.offset(i,0,g)).getBlock();
+                if ((above != Blocks.AIR && !(above instanceof BushBlock) && !(above instanceof SnowLayerBlock))
+                        || (current == Blocks.AIR) || (current instanceof LiquidBlock)){
                     return false;
                 }
             }

@@ -83,6 +83,8 @@ public class OrbitalExplosionProjectile extends NormalProjectile{
             } else {
                 ChunkPos pos = new ChunkPos(xDest >> 4, zDest >> 4);
                 Helpers.loadChunkAtPos((ServerLevel) level, new BlockPos(pos.getMinBlockX(), 0, pos.getMinBlockZ()), true, true);
+                ChunkPos thispos = new ChunkPos(this.getOnPos());
+                Helpers.loadChunkAtPos((ServerLevel) level,new BlockPos(thispos.getMinBlockX(),0,thispos.getMinBlockZ()),false,true);
                 fallingDown = true;
                 int y = level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, xDest, zDest);
                 this.teleportTo(xDest, y + 300, zDest);

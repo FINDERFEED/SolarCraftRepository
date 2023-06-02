@@ -33,7 +33,6 @@ import java.util.Map;
 public class EnchanterBlockEntity extends REItemHandlerBlockEntity {
 
     public static EnchanterConfig SERVERSIDE_CONFIG = null;
-    public static int RUNIC_ENERGY_LIMIT = 300000;
     public static final int MAX_ENCHANTING_TICKS = 500;
     private int enchantingTicks = 0;
     private boolean enchantingInProgress = false;
@@ -74,9 +73,9 @@ public class EnchanterBlockEntity extends REItemHandlerBlockEntity {
                                     SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.BLOCKS,
                                     1,1);
                         }
-                        enchanter.nullOrGiverPositionForClient.clear();
+
                         enchanter.resetAllRepeaters();
-                        enchanter.clearWays();
+
                     }else{
                         enchanter.requestRunicEnergy(defaultCosts, 1);
                     }
@@ -124,8 +123,8 @@ public class EnchanterBlockEntity extends REItemHandlerBlockEntity {
         this.processingEnchantment = null;
         this.enchantingTicks = -1;
         this.resetAllRepeaters();
-        this.clearWays();
-        nullOrGiverPositionForClient.clear();
+
+
     }
 
 

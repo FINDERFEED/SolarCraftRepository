@@ -34,6 +34,22 @@ public class ItemREConfig extends JsonConfig {
                     .addFloat("fira",10)
                     .addFloat("kelda",10)
                     .escape()
+
+                    .addJsonObject("solarcraft:energy_dust")
+                    .addFloat("kelda",30)
+                    .escape()
+
+                    .addJsonObject("solarcraft:solar_dust")
+                    .addFloat("ultima",30)
+                    .escape()
+
+                    .addJsonObject("solarcraft:void_dust")
+                    .addFloat("giro",30)
+                    .escape()
+
+                    .addJsonObject("solarcraft:enderite_essence")
+                    .addFloat("ardo",30)
+                    .escape()
                     .end();
 
     private Map<Item, RunicEnergyCost> costMap;

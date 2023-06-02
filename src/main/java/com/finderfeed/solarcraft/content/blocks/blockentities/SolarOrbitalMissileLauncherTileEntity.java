@@ -70,6 +70,8 @@ public class SolarOrbitalMissileLauncherTileEntity extends AbstractRunicEnergyCo
             setMissileData(null);
             Helpers.updateTile(this);
             Helpers.loadChunkAtPos((ServerLevel) level,getBlockPos(),false,true);
+            ChunkPos pos = new ChunkPos(getBlockPos());
+            Helpers.loadChunkAtPos((ServerLevel) level,new BlockPos(pos.getMinBlockX(),0,pos.getMinBlockZ()),true,true);
         }else{
             if (--launchTicker % 20 == 0){
 
@@ -88,8 +90,8 @@ public class SolarOrbitalMissileLauncherTileEntity extends AbstractRunicEnergyCo
 
         if (data != null){
             this.launchTicker = Math.max(data.radius,data.depth)*20;
-            if (level instanceof ServerLevel) {
-                Helpers.loadChunkAtPos((ServerLevel) level, getBlockPos(), true, true);
+            if (level instanceof ServerLevel sLevel) {
+                Helpers.loadChunkAtPos(sLevel, getBlockPos(), true, true);
             }
         }else{
             this.launchTicker = 0;

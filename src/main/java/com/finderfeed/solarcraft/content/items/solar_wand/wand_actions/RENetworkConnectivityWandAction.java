@@ -12,6 +12,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -34,7 +35,7 @@ public class RENetworkConnectivityWandAction implements WandAction<EmptyWandData
             BlockEntity tile = world.getBlockEntity(pos);
             if (tile instanceof AbstractRunicEnergyContainer container){
 
-                List<BlockEntity> entities = container.findNearestRepeatersOrPylons(container.getBlockPos(),world);
+                List<BlockEntity> entities = container.findNearestRepeatersOrPylons(container.getBlockPos(),(ServerLevel) world);
 
                 for (RunicEnergy.Type type : RunicEnergy.Type.getAll()){
                     boolean connected = false;

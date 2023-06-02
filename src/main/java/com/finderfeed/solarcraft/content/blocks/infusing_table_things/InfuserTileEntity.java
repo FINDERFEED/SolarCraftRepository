@@ -193,7 +193,6 @@ public class InfuserTileEntity extends REItemHandlerBlockEntity implements Solar
                     tile.requiresEnergy = false;
                     tile.currentRecipe = null;
                     tile.onTileRemove();
-                    tile.clearWays();
                 }
                 if (tile.RECIPE_IN_PROGRESS && tile.catalystsMatch(recipe.get()) && tile.isStructureCorrect()) {
                     forceUpdate = true;
@@ -206,7 +205,7 @@ public class InfuserTileEntity extends REItemHandlerBlockEntity implements Solar
                     boolean check = tile.hasEnoughRunicEnergy(costs, count);
                     if ((tile.energy >= recipe1.requriedEnergy * count) && check) {
                         tile.onTileRemove();
-                        tile.clearWays();
+
                         tile.requiresEnergy = false;
                         tile.CURRENT_PROGRESS++;
                         if (tile.CURRENT_PROGRESS >= tile.INFUSING_TIME) {
@@ -225,7 +224,7 @@ public class InfuserTileEntity extends REItemHandlerBlockEntity implements Solar
                     tile.requiresEnergy = false;
 //                    tile.currentRecipe = null;
                     tile.onTileRemove();
-                    tile.clearWays();
+
                 }
 
             }
@@ -385,7 +384,7 @@ public class InfuserTileEntity extends REItemHandlerBlockEntity implements Solar
         tile.level.playSound(null, tile.worldPosition, SoundEvents.BEACON_DEACTIVATE, SoundSource.AMBIENT, 2, 1);
         tile.energy-= recipe.requriedEnergy*count;
         tile.resetAllRepeaters();
-        tile.clearWays();
+
 
     }
 

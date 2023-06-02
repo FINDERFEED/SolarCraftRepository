@@ -48,7 +48,7 @@ public final class SolarcraftConfig {
                 .define("runic_energy_per_rune",7.5d);
 
         ENERGY_PYLON_SPAWN_CHANCE = BUILDER.comment("Runic energy pylon spawn chance. Works similar to datapacks")
-                .define("spawn_chance",180);
+                .define("spawn_chance",80);
         BUILDER.pop();
         SPEC = BUILDER.build();
     }

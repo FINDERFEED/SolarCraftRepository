@@ -67,10 +67,9 @@ public class RunicEnergyChargerTileEntity extends REItemHandlerBlockEntity imple
             tile.requestRunicEnergy(request,1);
             boolean charged = ItemRunicEnergy.isFullyCharged(chargeItem,user);
             if (charged){
-                Helpers.updateTile(tile);
                 tile.resetAllRepeaters();
-                tile.clearWays();
                 tile.updateTicker = 0;
+                Helpers.updateTile(tile);
             }
             if (tile.updateTicker++ >= 3) {
                 Helpers.updateTile(tile);

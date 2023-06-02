@@ -8,11 +8,19 @@ import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
 import com.finderfeed.solarcraft.registries.ConfigRegistry;
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Matrix4f;
+import net.minecraft.ChatFormatting;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.ItemRenderer;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
+
+import java.util.Locale;
 
 public class REClientTooltipComponent implements ClientTooltipComponent {
 
@@ -21,6 +29,8 @@ public class REClientTooltipComponent implements ClientTooltipComponent {
     public REClientTooltipComponent(RETooltipComponent tooltipComponent){
         this.cost = tooltipComponent.getCost();
     }
+
+
 
     @Override
     public void renderImage(Font font, int x, int y, PoseStack matrices, ItemRenderer renderer, int idk3) {
@@ -31,6 +41,7 @@ public class REClientTooltipComponent implements ClientTooltipComponent {
             Gui.blit(matrices,x + i,y + 2,type.getIndex()*16,0,16,16,128,16);
             i += 18;
         }
+
         matrices.popPose();
     }
 
