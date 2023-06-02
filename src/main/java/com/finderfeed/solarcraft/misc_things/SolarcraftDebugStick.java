@@ -51,57 +51,8 @@ public class SolarcraftDebugStick extends Item {
     public InteractionResult useOn(UseOnContext ctx) {
         Level world = ctx.getLevel();
         BlockPos pos = ctx.getClickedPos();
-//        if (!world.isClientSide){
-//            StructurePatternExporter.export(world,pos,pos.offset(4,5,4));
-//        }
         if (!world.isClientSide){
-            if (world.getBlockEntity(ctx.getClickedPos()) instanceof SunShardPuzzleBlockEntity generator){
-                Set<BlockPos> positions = new HashSet<>();
-                for (int i = -1; i <= 1;i++){
-                    for (int g = -1; g <= 1;g++){
-                        for (int k = -1; k <= 1;k++){
-                            positions.add(new BlockPos(i,g,k));
-                        }
-                    }
-                }
-                generator.destroyPositions = new ArrayList<>(positions);
-                System.out.println(generator.getPuzzle());
-                System.out.println(generator.destroyPositions);
-            }
-
-
-//            OrbitalCannonExplosionEntity entity = new OrbitalCannonExplosionEntity(world,75,50,3);
-//            entity.setPos(pos.getX(),pos.getY(),pos.getZ());
-//            world.addFreshEntity(entity);
-        }
-
-//        if (!world.isClientSide){
-//            for (int i = 0; i <= 100;i++){
-//                BlockPos p = pos.above().offset(i*16,0,0);
-////                world.setBlock(p, SolarcraftBlocks.FIRA_RUNE_BLOCK.get().defaultBlockState(),3);
-////                world.setBlock(p.above(),SolarcraftBlocks.REPEATER.get().defaultBlockState(),3);
-//                world.getBlockState(p);
-//                System.out.println(world.isLoaded(p));
-//            }
-//        }
-
-        if (!world.isClientSide && world.getBlockEntity(pos) instanceof DebugTarget dtarget){
-            if (ctx.getPlayer().isShiftKeyDown() && dtarget instanceof RuneEnergyPylonTile pylon) {
-                   pylon.addEnergy(pylon.getEnergyType(),200);
-            }else{
-                switchPylons(pos,world);
-
-            }
-//
-//            if (dtarget instanceof RunicEnergyRepeaterTile repeater){
-//                for (BlockPos connection : repeater.getConnections()){
-//                    ((ServerLevel)world).sendParticles(ParticleTypes.FLASH,connection.getX()+0.5,connection.getY()+1.5,
-//                            connection.getZ()+0.5,1,0,0,0,0);
-//                }
-//            }
-//            for (String s : dtarget.getDebugStrings()) {
-//                ctx.getPlayer().sendSystemMessage(Component.literal(s));
-//            }
+            StructurePatternExporter.export(world,pos.above(), pos.above().offset(4,4,4));
         }
         return InteractionResult.SUCCESS;
     }
@@ -138,25 +89,25 @@ public class SolarcraftDebugStick extends Item {
 //                }
 //            }
 //        }
-        if (!world.isClientSide){
-            OrbitalExplosionProjectile projectile = new OrbitalExplosionProjectile(SolarcraftEntityTypes.ORBITAL_EXPLOSION_PROJECTILE.get(),
-                    world);
-
-            ClipContext context = new ClipContext(player.position(),player.position().add(
-                    player.getLookAngle().multiply(200,200,200)
-            ), ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE,null);
-            BlockHitResult r = world.clip(context);
-            Vec3 v = r.getLocation();
-
-            projectile.setPos(v);
-
-
-            projectile.setExplosionDepth(100);
-            projectile.setExplosionRadius(200);
-//            projectile.setDestination((int)v.x,(int)v.z);
-            projectile.setDestination(1000000,1000000);
-            world.addFreshEntity(projectile);
-        }
+//        if (!world.isClientSide){
+//            OrbitalExplosionProjectile projectile = new OrbitalExplosionProjectile(SolarcraftEntityTypes.ORBITAL_EXPLOSION_PROJECTILE.get(),
+//                    world);
+//
+//            ClipContext context = new ClipContext(player.position(),player.position().add(
+//                    player.getLookAngle().multiply(200,200,200)
+//            ), ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE,null);
+//            BlockHitResult r = world.clip(context);
+//            Vec3 v = r.getLocation();
+//
+//            projectile.setPos(v);
+//
+//
+//            projectile.setExplosionDepth(100);
+//            projectile.setExplosionRadius(200);
+////            projectile.setDestination((int)v.x,(int)v.z);
+//            projectile.setDestination(1000000,1000000);
+//            world.addFreshEntity(projectile);
+//        }
         return super.use(world, player, hand);
     }
 }

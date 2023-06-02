@@ -4,6 +4,7 @@ import com.finderfeed.solarcraft.content.blocks.blockentities.runic_energy.Abstr
 import com.finderfeed.solarcraft.content.entities.projectiles.OrbitalExplosionProjectile;
 import com.finderfeed.solarcraft.content.items.runic_energy.RunicEnergyCost;
 import com.finderfeed.solarcraft.helpers.Helpers;
+import com.finderfeed.solarcraft.helpers.multiblock.Multiblocks;
 import com.finderfeed.solarcraft.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
 import com.finderfeed.solarcraft.registries.entities.SolarcraftEntityTypes;
@@ -58,6 +59,10 @@ public class SolarOrbitalMissileLauncherTileEntity extends AbstractRunicEnergyCo
             return;
         }
 */
+        if (!Multiblocks.ORBITAL_MISSILE_LAUNCHER.check(level,worldPosition,true)){
+            this.setMissileData(null);
+            return;
+        }
         if (launchTicker <= 0){
             MissileData data = this.getMissileData();
             OrbitalExplosionProjectile projectile = new OrbitalExplosionProjectile(SolarcraftEntityTypes.ORBITAL_EXPLOSION_PROJECTILE.get(),level);

@@ -348,6 +348,22 @@ public class Multiblocks {
             .build()
     );
 
+    public static final MultiblockStructure ORBITAL_MISSILE_LAUNCHER = register(new MultiblockStructure.Builder()
+            .setId("orbital_missile_launcher")
+            .setPattern(new String[][]{{"qwwwq", "wwwww", "wwwww", "wwwww", "qwwwq"}, {"qeqeq", "rwewt", "qrwtq", "rwywt", "qyqyq"}, {"qqqqq", "ququq", "qqiqq", "ququq", "qqqqq"}, {"qqqqq", "qwqwq", "qqqqq", "qwqwq", "qqqqq"}, {"qqqqq", "qoqoq", "qqqqq", "qoqoq", "qqqqq"}})
+            .setMainChar('i')
+            .put('q',"minecraft:air")
+            .put('o',"solarcraft:magistone_slab[type=bottom,waterlogged=false]")
+            .put('t',"solarcraft:magistone_stairs[facing=west,half=bottom,shape=straight,waterlogged=false]")
+            .put('u',"solarcraft:kelda_rune_block")
+            .put('i',"solarcraft:orbital_missile_launcher")
+            .put('e',"solarcraft:magistone_stairs[facing=south,half=bottom,shape=straight,waterlogged=false]")
+            .put('w',"solarcraft:magistone_bricks")
+            .put('r',"solarcraft:magistone_stairs[facing=east,half=bottom,shape=straight,waterlogged=false]")
+            .put('y',"solarcraft:magistone_stairs[facing=north,half=bottom,shape=straight,waterlogged=false]")
+            .build()
+    );
+
 
 
     private static MultiblockStructure register(MultiblockStructure structure){

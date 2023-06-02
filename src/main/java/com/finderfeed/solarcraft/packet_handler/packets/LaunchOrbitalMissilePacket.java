@@ -1,6 +1,8 @@
 package com.finderfeed.solarcraft.packet_handler.packets;
 
 import com.finderfeed.solarcraft.content.blocks.blockentities.SolarOrbitalMissileLauncherTileEntity;
+import com.finderfeed.solarcraft.helpers.multiblock.Multiblocks;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
@@ -48,13 +50,18 @@ public class LaunchOrbitalMissilePacket {
             ServerPlayer sender = ctx.get().getSender();
             Level level = sender.level;
 
-            level.getChunk(data.xDest() >> 4,data.zDest() >> 4).setLoaded(true);
+
 
             if (level.getBlockEntity(tilePos) instanceof SolarOrbitalMissileLauncherTileEntity tile){
-                if (!this.cancel) {
-                    this.setExplosion(sender,tile);
+                if (Multiblocks.ORBITAL_MISSILE_LAUNCHER.check(level,tilePos,true)) {
+                    level.getChunk(data.xDest() >> 4,data.zDest() >> 4).setLoaded(true);
+                    if (!this.cancel) {
+                        this.setExplosion(sender, tile);
+                    } else {
+                        tile.setMissileData(null);
+                    }
                 }else{
-                    tile.setMissileData(null);
+                    sender.sendSystemMessage(Component.translatable("solarcraft.message.incorrect_structure").withStyle(ChatFormatting.RED));
                 }
             }
         });
@@ -66,12 +73,12 @@ public class LaunchOrbitalMissilePacket {
             if (tile.getMissileData() == null) {
                 tile.setMissileData(this.data);
             }else{
-                sender.sendSystemMessage(Component.translatable("solarcraft.tile.orbital_missile.launch.is_already_in_process"));
+                sender.sendSystemMessage(Component.translatable("solarcraft.tile.orbital_missile.launch.is_already_in_process").withStyle(ChatFormatting.RED));
 
             }
         } else {
             tile.setMissileData(null);
-            sender.sendSystemMessage(Component.translatable("solarcraft.tile.orbital_missile.launch.data_not_correct"));
+            sender.sendSystemMessage(Component.translatable("solarcraft.tile.orbital_missile.launch.data_not_correct").withStyle(ChatFormatting.RED));
         }
     }
 
