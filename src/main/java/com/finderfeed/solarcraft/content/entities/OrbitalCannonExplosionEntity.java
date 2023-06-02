@@ -131,6 +131,7 @@ public class OrbitalCannonExplosionEntity extends Entity {
                 }
             }
             this.remove(RemovalReason.DISCARDED);
+            System.out.println("finished!");
             ChunkPos pos = new ChunkPos(this.getOnPos());
             Helpers.loadChunkAtPos((ServerLevel) level,new BlockPos(pos.getMinBlockX(),0,pos.getMinBlockZ()),false,true);
         }else{

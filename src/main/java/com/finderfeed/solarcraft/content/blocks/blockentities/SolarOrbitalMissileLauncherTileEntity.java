@@ -11,9 +11,15 @@ import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTy
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 public class SolarOrbitalMissileLauncherTileEntity extends AbstractRunicEnergyContainer {
 
@@ -63,8 +69,10 @@ public class SolarOrbitalMissileLauncherTileEntity extends AbstractRunicEnergyCo
             launchTicker = 0;
             setMissileData(null);
             Helpers.updateTile(this);
+            Helpers.loadChunkAtPos((ServerLevel) level,getBlockPos(),false,true);
         }else{
             if (--launchTicker % 20 == 0){
+
                 Helpers.updateTile(this);
             }
         }
@@ -77,8 +85,12 @@ public class SolarOrbitalMissileLauncherTileEntity extends AbstractRunicEnergyCo
 
     public void setMissileData(MissileData data) {
         this.data = data;
+
         if (data != null){
             this.launchTicker = Math.max(data.radius,data.depth)*20;
+            if (level instanceof ServerLevel) {
+                Helpers.loadChunkAtPos((ServerLevel) level, getBlockPos(), true, true);
+            }
         }else{
             this.launchTicker = 0;
         }

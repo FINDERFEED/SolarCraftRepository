@@ -2,8 +2,10 @@ package com.finderfeed.solarcraft.content.blocks;
 
 import com.finderfeed.solarcraft.content.blocks.blockentities.SolarOrbitalMissileLauncherTileEntity;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
+import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -32,6 +34,14 @@ public class SolarOrbitalMissileLauncherBlock extends Block implements EntityBlo
             }
         }
         return InteractionResult.CONSUME;
+    }
+
+    @Override
+    public void onRemove(BlockState p_60515_, Level world, BlockPos pos, BlockState p_60518_, boolean p_60519_) {
+        if (world instanceof ServerLevel sLevel){
+            Helpers.loadChunkAtPos(sLevel,pos,false,true);
+        }
+        super.onRemove(p_60515_, world, pos, p_60518_, p_60519_);
     }
 
     @Nullable

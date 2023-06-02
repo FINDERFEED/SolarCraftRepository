@@ -774,7 +774,7 @@
   "solarcraft.tile.orbital_missile.launch.is_already_in_process": "Cancel the current explosion first!",
   "solarcraft.screens.orbital_missile_launch.launch": "Launch",
   "solarcraft.screens.orbital_missile_launch.cancel": "Cancel",
-  "solarcraft.screens.orbital_missile_launch.info": "Maximum X and Z: %s, Maximum radius: %s,depth: %s. KELDA cost per radius and depth: %s. Before explosion loads all chunks in area to prevent huge lags.",
+  "solarcraft.screens.orbital_missile_launch.info": "Maximum X and Z: %s, Maximum radius: %s,depth: %s. KELDA cost per radius and depth: %s. It is advised to load all the chunks before launching an explosion there, otherwise there will be a lot of lags.",
   "solarcraft.word.radius": "Radius",
   "solarcraft.word.depth": "Depth",
   "solarcraft.word.needed": "Needed",
