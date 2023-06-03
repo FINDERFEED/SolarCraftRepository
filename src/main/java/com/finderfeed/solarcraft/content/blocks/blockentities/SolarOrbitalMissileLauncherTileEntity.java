@@ -147,7 +147,7 @@ public class SolarOrbitalMissileLauncherTileEntity extends AbstractRunicEnergyCo
 
         if (data != null){
             this.launchTicker = Math.max(data.radius,data.depth)*20;
-            this.launchTicker = 100;
+
             if (level instanceof ServerLevel sLevel) {
                 Helpers.loadChunkAtPos(sLevel, getBlockPos(), true, true);
             }
