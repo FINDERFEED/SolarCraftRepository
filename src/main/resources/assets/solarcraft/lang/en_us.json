@@ -784,5 +784,6 @@
   "solarcraft.word.x_coordinate": "Coordinate X",
   "solarcraft.word.z_coordinate": "Coordinate Z",
   "solarcraft.minutes_seconds": "%s minutes, %s seconds.",
-  "solarcraft.message.incorrect_structure": "Incorrect structure"
+  "solarcraft.message.incorrect_structure": "Incorrect structure",
+  "solarcraft.message.block_disabled": "Block is not allowed. Allow it in config if you wish to use it."
 }

@@ -129,13 +129,22 @@ public class ElementWeaverContainerScreen extends DefaultContainerScreen<Element
         ItemStack item = tile.inputSlot();
         if (!item.isEmpty() && item.getCount() != item.getMaxStackSize()){
             this.setProcessingItem(item);
-            if (processingItem != null) {
+            if (processingItem != null && processingCost != null && this.checkEnough(tile)) {
                 this.spawnParticles();
             }
         }else{
             processingCost = null;
             processingItem = null;
         }
+    }
+
+    private boolean checkEnough(ElementWeaverTileEntity tile){
+        for (RunicEnergy.Type type : processingCost.getSetTypes()){
+            if (tile.getRunicEnergy(type) < processingCost.get(type)){
+                return false;
+            }
+        }
+        return true;
     }
 
     private void spawnParticles(){

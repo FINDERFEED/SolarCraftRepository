@@ -1,5 +1,6 @@
 package com.finderfeed.solarcraft.packet_handler.packets;
 
+import com.finderfeed.solarcraft.config.SolarcraftConfig;
 import com.finderfeed.solarcraft.content.blocks.blockentities.SolarOrbitalMissileLauncherTileEntity;
 import com.finderfeed.solarcraft.helpers.multiblock.Multiblocks;
 import net.minecraft.ChatFormatting;
@@ -50,7 +51,10 @@ public class LaunchOrbitalMissilePacket {
             ServerPlayer sender = ctx.get().getSender();
             Level level = sender.level;
 
-
+            if (!SolarcraftConfig.IS_ORBITAL_MISSILE_LAUNCHER_ALLOWED.get()){
+                sender.sendSystemMessage(Component.translatable("solarcraft.message.block_disabled").withStyle(ChatFormatting.RED));
+                return;
+            }
 
             if (level.getBlockEntity(tilePos) instanceof SolarOrbitalMissileLauncherTileEntity tile){
                 if (Multiblocks.ORBITAL_MISSILE_LAUNCHER.check(level,tilePos,true)) {

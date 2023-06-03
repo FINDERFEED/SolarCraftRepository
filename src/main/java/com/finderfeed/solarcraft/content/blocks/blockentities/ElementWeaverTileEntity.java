@@ -2,6 +2,7 @@ package com.finderfeed.solarcraft.content.blocks.blockentities;
 
 import com.finderfeed.solarcraft.client.particles.SolarcraftParticleTypes;
 import com.finderfeed.solarcraft.content.items.runic_energy.RunicEnergyCost;
+import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
 import com.finderfeed.solarcraft.registries.ConfigRegistry;
@@ -46,6 +47,26 @@ public class ElementWeaverTileEntity extends REItemHandlerBlockEntity{
         if (!world.isClientSide){
             energyDrain(tile);
             processItems(tile);
+        }else{
+            if (tile.level.getGameTime() % 20 == 0) {
+                float k = 0.2f;
+                for (int i = 0; i < 2; i++) {
+                    for (int g = 0; g < 2; g++) {
+                        if (tile.isActive()) {
+                            Vec3 pos = Helpers.posToVec(tile.getBlockPos()).add(i * (1 - k*2) + k, 0.2, g * (1 - k*2) + k);
+                            ClientHelpers.Particles.createParticle(
+                                    SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+                                    pos.x, pos.y, pos.z, 0, 0, 0, 255, 255, 40, 0.3f
+                            );
+                            pos = Helpers.posToVec(tile.getBlockPos()).add(i * (1 - k*2) + k, 0.8, g * (1 - k*2) + k);
+                            ClientHelpers.Particles.createParticle(
+                                    SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+                                    pos.x, pos.y, pos.z, 0, 0, 0, 255, 255, 40, 0.3f
+                            );
+                        }
+                    }
+                }
+            }
         }
     }
 
@@ -66,12 +87,6 @@ public class ElementWeaverTileEntity extends REItemHandlerBlockEntity{
                 tile.processingItem = null;
                 tile.processingItemCost = null;
                 tile.processingTime = 0;
-            }
-        }else{
-            if (tile.isActive()) {
-                BlockPos pos = tile.getBlockPos();
-                tile.level.addParticle(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
-                        pos.getX(), pos.getY() + 2, pos.getZ(), 0, 0.05, 0);
             }
         }
 
@@ -143,6 +158,12 @@ public class ElementWeaverTileEntity extends REItemHandlerBlockEntity{
     public void load(CompoundTag tag) {
         super.load(tag);
         this.active = tag.getBoolean("active");
+    }
+
+
+    @Override
+    public boolean saveAndLoadEverything() {
+        return true;
     }
 
     public RunicEnergyCost getProcessingItemCost() {

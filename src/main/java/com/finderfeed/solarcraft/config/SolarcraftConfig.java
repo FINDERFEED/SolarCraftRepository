@@ -24,6 +24,8 @@ public final class SolarcraftConfig {
     public static final ForgeConfigSpec.ConfigValue<Double> RUNIC_ENERGY_PER_RUNE_CHARGER;
     public static final ForgeConfigSpec.ConfigValue<Integer> ENERGY_PYLON_SPAWN_CHANCE;
     public static final ForgeConfigSpec.ConfigValue<List<String>> ISLAND_ORES;
+
+    public static final ForgeConfigSpec.ConfigValue<Boolean> IS_ORBITAL_MISSILE_LAUNCHER_ALLOWED;
     static {
         BUILDER.push("SolarCraft config");
 
@@ -49,6 +51,10 @@ public final class SolarcraftConfig {
 
         ENERGY_PYLON_SPAWN_CHANCE = BUILDER.comment("Runic energy pylon spawn chance. Works similar to datapacks")
                 .define("spawn_chance",80);
+
+        IS_ORBITAL_MISSILE_LAUNCHER_ALLOWED = BUILDER.comment("Is Orbital Missile Launcher block allowed")
+                        .define("allowed",true);
+
         BUILDER.pop();
         SPEC = BUILDER.build();
     }

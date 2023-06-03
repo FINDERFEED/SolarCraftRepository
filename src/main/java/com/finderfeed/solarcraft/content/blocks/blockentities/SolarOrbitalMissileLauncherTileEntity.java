@@ -1,8 +1,11 @@
 package com.finderfeed.solarcraft.content.blocks.blockentities;
 
+import com.finderfeed.solarcraft.client.particles.SolarcraftParticleTypes;
+import com.finderfeed.solarcraft.config.SolarcraftConfig;
 import com.finderfeed.solarcraft.content.blocks.blockentities.runic_energy.AbstractRunicEnergyContainer;
 import com.finderfeed.solarcraft.content.entities.projectiles.OrbitalExplosionProjectile;
 import com.finderfeed.solarcraft.content.items.runic_energy.RunicEnergyCost;
+import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.helpers.multiblock.Multiblocks;
 import com.finderfeed.solarcraft.local_library.helpers.FDMathHelper;
@@ -16,6 +19,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -49,16 +53,64 @@ public class SolarOrbitalMissileLauncherTileEntity extends AbstractRunicEnergyCo
                 tile.launchTicker = 0;
                 tile.data = null;
             }
+        }else{
+            tile.spawnParticles();
         }
     }
 
+
+    private void spawnParticles(){
+        if (this.getMissileData() == null) return;
+
+
+        for (int i = 0; i < 2;i++){
+            Vec3 pos = new Vec3(
+              level.random.nextFloat(),
+              level.random.nextFloat(),
+              level.random.nextFloat()
+            ).add(Helpers.posToVec(this.getBlockPos())).add(0,1,0);
+            ClientHelpers.Particles.createParticle(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+                    pos.x,pos.y,pos.z,0,0,0,
+                    level.random.nextInt(40)+215,
+                    level.random.nextInt(40)+215,
+                    level.random.nextInt(40)
+                    ,0.25f);
+        }
+
+
+        float time = level.getGameTime();
+        double y = Math.abs(time % 180 - 90) / 20f;
+        double radius = 2.3 + Math.exp(-y/2) * (-0.5*y/2 + 1);
+        Vec3 center = Helpers.getBlockCenter(this.getBlockPos()).add(0,-2.5 + y,0);
+        int count = 4;
+        for (int i = 0; i < count; i++){
+            double angle = Math.PI * 2f / count;
+            Vec3 pos = new Vec3(
+              Math.sin(angle * i + time) * radius,
+              0,
+              Math.cos(angle * i + time) * radius
+            ).add(center);
+            ClientHelpers.Particles.createParticle(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+                    pos.x,pos.y,pos.z,0,0,0,
+                    level.random.nextInt(40)+215,
+                    level.random.nextInt(40)+215,
+                    level.random.nextInt(40)
+                    ,0.25f);
+
+        }
+    }
+///execute in minecraft:overworld run tp @s -948448.94 73.94 30264.19 -802.29 52.07
     private void processMissile(){
-        /*
+
+        if (!SolarcraftConfig.IS_ORBITAL_MISSILE_LAUNCHER_ALLOWED.get()){
+            return;
+        }
+
         if (!this.hasEnoughRunicEnergy(this.getMissileData().cost, 1)){
             this.requestRunicEnergy(this.getMissileData().cost, 1);
             return;
         }
-*/
+
         if (!Multiblocks.ORBITAL_MISSILE_LAUNCHER.check(level,worldPosition,true)){
             this.setMissileData(null);
             return;
@@ -95,6 +147,7 @@ public class SolarOrbitalMissileLauncherTileEntity extends AbstractRunicEnergyCo
 
         if (data != null){
             this.launchTicker = Math.max(data.radius,data.depth)*20;
+            this.launchTicker = 100;
             if (level instanceof ServerLevel sLevel) {
                 Helpers.loadChunkAtPos(sLevel, getBlockPos(), true, true);
             }
