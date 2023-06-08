@@ -6,6 +6,7 @@ import com.finderfeed.solarcraft.client.tooltips.RETooltipComponent;
 import com.finderfeed.solarcraft.content.blocks.infusing_table_things.InfuserTileEntity;
 import com.finderfeed.solarcraft.content.items.ModuleItem;
 import com.finderfeed.solarcraft.content.items.runic_energy.RunicEnergyCost;
+import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.Progression;
 import com.finderfeed.solarcraft.content.items.solar_wand.client.WandModeSelectionScreen;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.helpers.Helpers;
@@ -103,6 +104,10 @@ public class ClientEventsHandler {
     public static void addREComponentsToItems(RenderTooltipEvent.GatherComponents event){
         ItemStack item = event.getItemStack();
         RunicEnergyCost cost;
+        if (Minecraft.getInstance().player == null) return;
+
+        if (!Helpers.hasPlayerCompletedProgression(Progression.RUNIC_ENERGY_REPEATER,Minecraft.getInstance().player)) return;
+
         if (!item.isEmpty() && (cost = ConfigRegistry.ITEM_RE_CONFIG.getItemCost(item.getItem())) != null){
             var list = event.getTooltipElements();
             list.add(Either.right(new RETooltipComponent(cost)));

@@ -28,13 +28,12 @@ public class BlueGemItem extends Item {
             Level world = entity.level;
             Optional<? extends Registry<Biome>> reg = world.registryAccess().registry(Registry.BIOME_REGISTRY);
             if (reg.isPresent()) {
-                //TODO:return this when biome can be added to overworld
-                /*(world.getBiome(entity.blockPosition()).equals(reg.get().get(FeaturesRegistry.MOLTEN_BIOME_KEY))*/
+
                 if (entity.level.getBlockState(entity.blockPosition()).is(Blocks.LAVA)) {
                     int ticks = entity.getPersistentData().getInt("transmutation_ticks")+1;
                     entity.getPersistentData().putInt("transmutation_ticks", ticks);
 
-                    if (ticks >= 1000){
+                    if (ticks >= 500){
                         for (int i = 0; i < stack.getCount();i++) {
                             world.addFreshEntity(new ItemEntity(world, entity.getX(), entity.getY(), entity.getZ(), new ItemStack(SolarcraftItems.BLUE_GEM_ENCHANCED.get(), 1)));
                         }

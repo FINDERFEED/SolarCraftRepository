@@ -2,6 +2,7 @@ package com.finderfeed.solarcraft.content.blocks;
 
 import com.finderfeed.solarcraft.content.blocks.blockentities.SolarEnergyFurnaceTile;
 import com.finderfeed.solarcraft.content.items.SolarNetworkBinder;
+import com.finderfeed.solarcraft.content.items.solar_wand.SolarWandItem;
 import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
 
 import net.minecraft.world.level.block.EntityBlock;
@@ -34,16 +35,16 @@ public class SolarEnergyFurnace extends GlazedTerracottaBlock implements EntityB
 
 
     @Override
-    public InteractionResult use(BlockState p_225533_1_, Level world, BlockPos p_225533_3_, Player p_225533_4_, InteractionHand p_225533_5_, BlockHitResult p_225533_6_) {
+    public InteractionResult use(BlockState p_225533_1_, Level world, BlockPos p_225533_3_, Player player, InteractionHand p_225533_5_, BlockHitResult p_225533_6_) {
             if (!world.isClientSide && (world.getBlockEntity(p_225533_3_) instanceof SolarEnergyFurnaceTile) ){
-                if (!(p_225533_4_.getMainHandItem().getItem() instanceof SolarNetworkBinder)) {
-                    NetworkHooks.openScreen((ServerPlayer) p_225533_4_, (SolarEnergyFurnaceTile) world.getBlockEntity(p_225533_3_),
+                if (!(player.getMainHandItem().getItem() instanceof SolarWandItem)) {
+                    NetworkHooks.openScreen((ServerPlayer) player, (SolarEnergyFurnaceTile) world.getBlockEntity(p_225533_3_),
                             (buf) -> buf.writeBlockPos(p_225533_3_)
                     );
                     return InteractionResult.CONSUME;
                 }
             }
-        return super.use(p_225533_1_, world, p_225533_3_, p_225533_4_, p_225533_5_, p_225533_6_);
+        return super.use(p_225533_1_, world, p_225533_3_, player, p_225533_5_, p_225533_6_);
     }
 
     @Override

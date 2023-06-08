@@ -25,6 +25,7 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
@@ -157,11 +158,15 @@ public class OrbitalCannonExplosionEntity extends Entity {
 
     private void damageMobs(){
         AABB box = new AABB(-radius,-depth,-radius,radius,depth,radius).move(this.position());
-        for (LivingEntity e : level.getEntitiesOfClass(LivingEntity.class,box,entity->{
+        for (Entity e : level.getEntitiesOfClass(Entity.class,box,entity->{
             return entity.position().multiply(1,0,1).distanceTo(this.position().multiply(1,0,1)) < radius &&
                     entity.position().multiply(0,1,0).distanceTo(this.position().multiply(0,1,0)) < depth;
         })){
-            e.hurt(SolarcraftDamageSources.ORBITAL_EXPLOSION,1000000f);
+            if (e instanceof LivingEntity living) {
+                living.hurt(SolarcraftDamageSources.ORBITAL_EXPLOSION, 1000000f);
+            }else if (e instanceof ItemEntity item){
+                item.remove(RemovalReason.KILLED);
+            }
         }
     }
 

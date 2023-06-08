@@ -38,8 +38,8 @@ public final class SolarcraftConfig {
         AUTOHEAL_CHANCE = BUILDER.comment("The chance to heal the sword with sword heal module").define("chance",10);
         BLESSED_CHANCE = BUILDER.comment("The chance to restore durability with blessed module").define("chance",5);
         DISARM_CHANCE_MODULE = BUILDER.comment("Chance to disarm an entity when having the disarm module on armor").define("chance",10);
-        RUNIC_ENERGY_PER_TICK_PYLON = BUILDER.comment("Base runic energy pylon energy generation").define("per tick",0.5d);
-        RUNIC_ENERGY_PER_TICK_UPGRADE = BUILDER.comment("Runic energy regen increment per each inscripted stone").define("per tick upgrade",0.05d);
+        RUNIC_ENERGY_PER_TICK_PYLON = BUILDER.comment("Base runic energy pylon energy generation").define("per tick",0.1d);
+        RUNIC_ENERGY_PER_TICK_UPGRADE = BUILDER.comment("Runic energy regen increment per each inscripted stone").define("per tick upgrade",0.025d);
 
         List<String> DEFAULT_BLOCKS = new ArrayList<>();
         DEFAULT_BLOCKS.addAll(List.of("minecraft:diamond_ore","minecraft:iron_ore","minecraft:gold_ore","minecraft:lapis_ore"));
@@ -50,7 +50,7 @@ public final class SolarcraftConfig {
                 .define("runic_energy_per_rune",7.5d);
 
         ENERGY_PYLON_SPAWN_CHANCE = BUILDER.comment("Runic energy pylon spawn chance. Works similar to datapacks")
-                .define("spawn_chance",80);
+                .define("spawn_chance",100);
 
         IS_ORBITAL_MISSILE_LAUNCHER_ALLOWED = BUILDER.comment("Is Orbital Missile Launcher block allowed")
                         .define("allowed",true);

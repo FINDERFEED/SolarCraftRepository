@@ -1,6 +1,7 @@
 package com.finderfeed.solarcraft.content.blocks.infusing_table_things;
 
 
+import com.finderfeed.solarcraft.config.SolarcraftConfig;
 import com.finderfeed.solarcraft.content.blocks.solar_energy.Bindable;
 import com.finderfeed.solarcraft.content.blocks.solar_energy.SolarEnergyContainer;
 import com.finderfeed.solarcraft.content.items.SunShardItem;
@@ -436,6 +437,11 @@ public class InfuserTileEntity extends REItemHandlerBlockEntity implements Solar
                         playerEntity.sendSystemMessage(Component.literal("Unable to start ").withStyle(ChatFormatting.RED)
                                 .append(Component.literal("melting").withStyle(ChatFormatting.GOLD)).append(" the item: Sun Shard")
                                 .withStyle(ChatFormatting.RED));
+                        return;
+                    }
+                }else if (recipe.output.getItem() == SolarcraftItems.ORBITAL_MISSILE_LAUNCHER.get()){
+                    if (!SolarcraftConfig.IS_ORBITAL_MISSILE_LAUNCHER_ALLOWED.get()){
+                        playerEntity.sendSystemMessage(Component.translatable("solarcraft.message.block_disabled").withStyle(ChatFormatting.RED));
                         return;
                     }
                 }

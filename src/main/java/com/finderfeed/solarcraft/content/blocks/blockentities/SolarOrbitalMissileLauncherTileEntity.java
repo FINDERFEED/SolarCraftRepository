@@ -99,10 +99,15 @@ public class SolarOrbitalMissileLauncherTileEntity extends AbstractRunicEnergyCo
 
         }
     }
-///execute in minecraft:overworld run tp @s -948448.94 73.94 30264.19 -802.29 52.07
     private void processMissile(){
 
         if (!SolarcraftConfig.IS_ORBITAL_MISSILE_LAUNCHER_ALLOWED.get()){
+            this.setMissileData(null);
+            return;
+        }
+
+        if (!Multiblocks.ORBITAL_MISSILE_LAUNCHER.check(level,worldPosition,true)){
+            this.setMissileData(null);
             return;
         }
 
@@ -111,11 +116,9 @@ public class SolarOrbitalMissileLauncherTileEntity extends AbstractRunicEnergyCo
             return;
         }
 
-        if (!Multiblocks.ORBITAL_MISSILE_LAUNCHER.check(level,worldPosition,true)){
-            this.setMissileData(null);
-            return;
-        }
+
         if (launchTicker <= 0){
+            this.spendEnergy(this.getMissileData().cost,1);
             MissileData data = this.getMissileData();
             OrbitalExplosionProjectile projectile = new OrbitalExplosionProjectile(SolarcraftEntityTypes.ORBITAL_EXPLOSION_PROJECTILE.get(),level);
             projectile.setPos(Helpers.getBlockCenter(this.getBlockPos().above()));

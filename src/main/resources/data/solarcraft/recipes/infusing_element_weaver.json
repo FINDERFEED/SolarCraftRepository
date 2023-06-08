@@ -1,0 +1,25 @@
+{
+  "type": "solarcraft:infusing_new",
+  "items": {
+    "A": {"item": "solarcraft:energy_core"},
+    "B": {"item": "solarcraft:qualadium_ingot"},
+    "C": {"item": "minecraft:iron_ingot"},
+    "D": {"item": "solarcraft:runic_core"},
+    "E": {"item": "solarcraft:energetic_ingot"}
+  },
+  "pattern": [
+    "BCB",
+    "EE",
+    "CDC",
+    "EE",
+    "BAB"
+  ],
+
+  "result": {
+    "item": "solarcraft:element_weaver"
+  },
+  "time": 1000,
+  "count": 1,
+  "fragment": "element_weaver",
+  "catalysts": " K  K  K  K "
+}
