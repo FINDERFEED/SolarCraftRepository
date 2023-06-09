@@ -16,7 +16,7 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.resources.ResourceLocation;
-
+import net.minecraft.world.phys.Vec3;
 
 
 public class AbstractTurretProjectileRenderer extends EntityRenderer<AbstractTurretProjectile> {
@@ -39,7 +39,7 @@ public class AbstractTurretProjectileRenderer extends EntityRenderer<AbstractTur
 
     @Override
     public void render(AbstractTurretProjectile entity, float partialTicks, float idk, PoseStack matrices, MultiBufferSource buffer, int light) {
-        float time = (entity.level.getGameTime() + partialTicks);
+        float time = (entity.level().getGameTime() + partialTicks);
 //        matrices.mulPose(Vector3f.XN.rotationDegrees(time%360));
 //        matrices.mulPose(Vector3f.ZN.rotationDegrees(time%360));
         matrices.pushPose();

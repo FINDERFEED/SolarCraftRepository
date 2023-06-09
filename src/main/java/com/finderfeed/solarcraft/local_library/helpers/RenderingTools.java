@@ -28,6 +28,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiComponent;
 
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
 import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.block.BlockRenderDispatcher;
@@ -70,6 +71,10 @@ import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.client.model.data.ModelData;
 import net.minecraftforge.common.MinecraftForge;
+import org.joml.AxisAngle4f;
+import org.joml.Matrix4f;
+import org.joml.Quaternionf;
+import org.joml.Vector3f;
 
 import java.util.*;
 import java.util.function.Consumer;
@@ -93,6 +98,31 @@ public class RenderingTools {
     public static final ResourceLocation TEXT_FIELD_HORIZONTAL = new ResourceLocation(SolarCraft.MOD_ID,"textures/gui/text_field_horizontal.png");
     public static final ResourceLocation TEXT_FIELD_VERTICAL = new ResourceLocation(SolarCraft.MOD_ID,"textures/gui/text_field_vertical.png");
 
+    public static GuiGraphics createGraphics(){
+        return new GuiGraphics(Minecraft.getInstance(),Minecraft.getInstance().renderBuffers().bufferSource());
+    }
+    public static Vector3f YP(){
+        return new Vector3f(0,1,0);
+    }
+    public static Vector3f YN(){
+        return new Vector3f(0,-1,0);
+    }
+    public static Vector3f XP(){
+        return new Vector3f(1,0,0);
+    }
+    public static Vector3f XN(){
+        return new Vector3f(-1,0,0);
+    }
+    public static Vector3f ZP(){
+        return new Vector3f(0,0,1);
+    }
+    public static Vector3f ZN(){
+        return new Vector3f(0,0,-1);
+    }
+
+    public static Quaternionf rotation(Vector3f rotation,float angle){
+        return new Quaternionf(new AxisAngle4f(angle,rotation));
+    }
 
     public static void renderTextureFromCenter(PoseStack matrices,float centerX,float centerY,float width,float height,float scale){
         BufferBuilder builder = Tesselator.getInstance().getBuilder();
@@ -202,40 +232,45 @@ public class RenderingTools {
     public static void renderTextField(PoseStack matrices,int xStart,int yStart,int width,int height){
         matrices.pushPose();
         ClientHelpers.bindText(TEXT_FIELD_INNER);
-        Gui.blit(matrices,xStart,yStart,0,0,width,height,4,4);
+
+
+        blitWithBlend(matrices,xStart,yStart,0,0,width,height,4,4,0,1f);
+
+        blitWithBlend(matrices,xStart,yStart,0,0,width,height,4,4,0,1f);
+
 
         ClientHelpers.bindText(TEXT_FIELD_CORNERS);
-        Gui.blit(matrices,xStart-13,yStart-13,0,0,13,13,26,26);
-        Gui.blit(matrices,xStart + width,yStart-13,13,0,13,13,26,26);
-        Gui.blit(matrices,xStart + width,yStart + height,13,13,13,13,26,26);
-        Gui.blit(matrices,xStart-13,yStart + height,0,13,13,13,26,26);
+        blitWithBlend(matrices,xStart-13,yStart-13,0,0,13,13,26,26,0,1f);
+        blitWithBlend(matrices,xStart + width,yStart-13,13,0,13,13,26,26,0,1f);
+        blitWithBlend(matrices,xStart + width,yStart + height,13,13,13,13,26,26,0,1f);
+        blitWithBlend(matrices,xStart-13,yStart + height,0,13,13,13,26,26,0,1f);
 
         ClientHelpers.bindText(TEXT_FIELD_HORIZONTAL);
-        Gui.blit(matrices,xStart,yStart - 11,0,0,width,11,72,22);
-        Gui.blit(matrices,xStart,yStart + height,0,11,width,11,72,22);
+        blitWithBlend(matrices,xStart,yStart - 11,0,0,width,11,72,22,0,1f);
+        blitWithBlend(matrices,xStart,yStart + height,0,11,width,11,72,22,0,1f);
 
         ClientHelpers.bindText(TEXT_FIELD_VERTICAL);
-        Gui.blit(matrices,xStart - 11,yStart,0,0,11,height,22,63);
-        Gui.blit(matrices,xStart + width,yStart,11,0,11,height,22,63);
+        blitWithBlend(matrices,xStart - 11,yStart,0,0,11,height,22,63,0,1f);
+        blitWithBlend(matrices,xStart + width,yStart,11,0,11,height,22,63,0,1f);
         matrices.popPose();
     }
 
     public static void drawFancyBorder(PoseStack matrices,int xStart,int yStart,int width,int height,int zOffset){
         matrices.pushPose();
         ClientHelpers.bindText(FANCY_BORDER_CORNERS);
-        Gui.blit(matrices,xStart,yStart,0,0,11,11,22,22);
-        Gui.blit(matrices,xStart + width - 11,yStart,11,0,11,11,22,22);
-        Gui.blit(matrices,xStart,yStart + height - 11,0,11,11,11,22,22);
-        Gui.blit(matrices,xStart + width - 11,yStart + height - 11,11,11,11,11,22,22);
+        blitWithBlend(matrices,xStart,yStart,0,0,11,11,22,22,zOffset,1f);
+        blitWithBlend(matrices,xStart + width - 11,yStart,11,0,11,11,22,22,zOffset,1f);
+        blitWithBlend(matrices,xStart,yStart + height - 11,0,11,11,11,22,22,zOffset,1f);
+        blitWithBlend(matrices,xStart + width - 11,yStart + height - 11,11,11,11,11,22,22,zOffset,1f);
 
 
         ClientHelpers.bindText(FANCY_BORDER_HORIZONTAL);
-        Gui.blit(matrices,xStart + 11,yStart + 2,0,0,width - 22,6,16,6);
-        Gui.blit(matrices,xStart + 11,yStart + 3 + height - 11,0,0,width - 22,6,16,6);
+        blitWithBlend(matrices,xStart + 11,yStart + 2,0,0,width - 22,6,16,6,zOffset,1f);
+        blitWithBlend(matrices,xStart + 11,yStart + 3 + height - 11,0,0,width - 22,6,16,6,zOffset,1f);
 
         ClientHelpers.bindText(FANCY_BORDER_VERTICAL);
-        Gui.blit(matrices,xStart + 2,yStart + 11,0,0,6,height - 22,6,16);
-        Gui.blit(matrices,xStart + 3 + width - 11,yStart + 11,0,0,6, height - 22, 6, 16);
+        blitWithBlend(matrices,xStart + 2,yStart + 11,0,0,6,height - 22,6,16,zOffset,1f);
+        blitWithBlend(matrices,xStart + 3 + width - 11,yStart + 11,0,0,6, height - 22, 6, 16,zOffset,1f);
 
 
         matrices.popPose();
@@ -243,26 +278,30 @@ public class RenderingTools {
 
     public static void drawBoundedText(PoseStack matrices,int posx,int posy,int bound,String s,int color){
         int iter = 0;
+        GuiGraphics guiGraphics = createGraphics();
         for (String str : RenderingTools.splitString(s,bound)){
-            Gui.drawString(matrices,Minecraft.getInstance().font,str,posx,posy + iter * 9,color);
+            guiGraphics.drawString(Minecraft.getInstance().font,str,posx,posy + iter * 9,color);
             iter++;
         }
+        guiGraphics.flush();
     }
 
     public static void drawBoundedTextObfuscated(PoseStack matrices,int posx,int posy,int bound,Component component,int color,int ticker){
         int iter = 0;
         int remainingOpenedSymbols = ticker;
+        GuiGraphics g = createGraphics();
         for (String str : RenderingTools.splitString(component.getString(),bound)){
             if (remainingOpenedSymbols >= str.length()){
-                Gui.drawString(matrices,Minecraft.getInstance().font,str,posx,posy + iter * 9,color);
+                g.drawString(Minecraft.getInstance().font,str,posx,posy + iter * 9,color);
                 remainingOpenedSymbols -= str.length();
             }else if (remainingOpenedSymbols != 0){
-                Gui.drawString(matrices,Minecraft.getInstance().font,Component.literal(str.substring(0,remainingOpenedSymbols)).withStyle(ChatFormatting.RESET)
+                g.drawString(Minecraft.getInstance().font,Component.literal(str.substring(0,remainingOpenedSymbols)).withStyle(ChatFormatting.RESET)
                         .append(Component.literal("a").withStyle(ChatFormatting.OBFUSCATED)),posx,posy + iter * 9,color);
                 remainingOpenedSymbols = 0;
             }
             iter++;
         }
+        g.flush();
     }
 
     public static void drawCenteredBoundedTextObfuscated(PoseStack matrices,int posx,int posy,int bound,Component component,int color,int ticker){
