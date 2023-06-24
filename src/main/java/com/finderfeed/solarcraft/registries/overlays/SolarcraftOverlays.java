@@ -32,6 +32,7 @@ import com.mojang.math.Matrix4f;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiComponent;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.ShaderInstance;
 import net.minecraft.client.renderer.entity.ItemRenderer;
@@ -116,7 +117,7 @@ public class SolarcraftOverlays {
     public static class RunicEnergyBars implements IGuiOverlay{
 
         @Override
-        public void render(ForgeGui gui, PoseStack poseStack, float partialTick, int screenWidth, int screenHeight) {
+        public void render(ForgeGui gui, GuiGraphics g, float partialTick, int screenWidth, int screenHeight) {
             Minecraft mc = Minecraft.getInstance();
 
 
@@ -132,20 +133,21 @@ public class SolarcraftOverlays {
             for (int i = 0; i < locationsToRender.size();i++) {
                 ResourceLocation location = locationsToRender.get(i);
                 ClientHelpers.bindText(location);
-                Gui.blit(poseStack, initXPos, initYPos + i * 20, 0, 0, 20, 20, 20, 20);
+//                Gui.blit(poseStack, initXPos, initYPos + i * 20, 0, 0, 20, 20, 20, 20);
+                RenderingTools.blitWithBlend(g.pose(),initXPos, initYPos + i * 20, 0, 0, 20, 20, 20, 20, 0,1f);
             }
 
             if (mc.player.getMainHandItem().getItem() instanceof SolarWandItem){
                 int height = mc.getWindow().getGuiScaledHeight();
                 int width = mc.getWindow().getGuiScaledWidth();
-                RenderingTools.renderRuneEnergyOverlay(poseStack,2,height/2-43, RunicEnergy.Type.KELDA);
-                RenderingTools.renderRuneEnergyOverlay(poseStack,14,height/2-43, RunicEnergy.Type.ARDO);
-                RenderingTools.renderRuneEnergyOverlay(poseStack,26,height/2-43, RunicEnergy.Type.ZETA);
-                RenderingTools.renderRuneEnergyOverlay(poseStack,2,height/2+15, RunicEnergy.Type.FIRA);
-                RenderingTools.renderRuneEnergyOverlay(poseStack,14,height/2+15, RunicEnergy.Type.TERA);
-                RenderingTools.renderRuneEnergyOverlay(poseStack,26,height/2+15, RunicEnergy.Type.URBA);
-                RenderingTools.renderRuneEnergyOverlay(poseStack,38,height/2-43, RunicEnergy.Type.GIRO);
-                RenderingTools.renderRuneEnergyOverlay(poseStack,38,height/2+15, RunicEnergy.Type.ULTIMA);
+                RenderingTools.renderRuneEnergyOverlay(g,2,height/2-43, RunicEnergy.Type.KELDA);
+                RenderingTools.renderRuneEnergyOverlay(g,14,height/2-43, RunicEnergy.Type.ARDO);
+                RenderingTools.renderRuneEnergyOverlay(g,26,height/2-43, RunicEnergy.Type.ZETA);
+                RenderingTools.renderRuneEnergyOverlay(g,2,height/2+15, RunicEnergy.Type.FIRA);
+                RenderingTools.renderRuneEnergyOverlay(g,14,height/2+15, RunicEnergy.Type.TERA);
+                RenderingTools.renderRuneEnergyOverlay(g,26,height/2+15, RunicEnergy.Type.URBA);
+                RenderingTools.renderRuneEnergyOverlay(g,38,height/2-43, RunicEnergy.Type.GIRO);
+                RenderingTools.renderRuneEnergyOverlay(g,38,height/2+15, RunicEnergy.Type.ULTIMA);
             }
 
 

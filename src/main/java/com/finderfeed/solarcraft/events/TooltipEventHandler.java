@@ -20,7 +20,7 @@ public class TooltipEventHandler {
     @SubscribeEvent
     public static void renderTooltips(RenderTooltipEvent.Pre event){
         if (event.getItemStack().getItem() instanceof ICustomTooltip tooltip) {
-            RenderingTools.renderTooltipInternal(event.getPoseStack(), event.getComponents(), event.getX(), event.getY(),tooltip.getTooltip());
+            RenderingTools.renderTooltipInternal(event.getGraphics(), event.getComponents(), event.getX(), event.getY(),event.getTooltipPositioner(),tooltip.getTooltip());
             event.setCanceled(true);
         }
     }

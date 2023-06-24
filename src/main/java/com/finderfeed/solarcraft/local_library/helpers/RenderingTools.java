@@ -22,14 +22,18 @@ import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.vertex.*;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.math.Vector3d;
+
+import com.mojang.math.MatrixUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.Gui;
-import net.minecraft.client.gui.GuiComponent;
+
 
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
+import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipPositioner;
+import net.minecraft.client.gui.screens.inventory.tooltip.TooltipRenderUtil;
 import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.block.BlockRenderDispatcher;
 import net.minecraft.client.renderer.block.model.BakedQuad;
@@ -51,14 +55,10 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
-import com.mojang.math.Matrix4f;
 
-import com.mojang.math.Vector3f;
+import net.minecraft.world.item.*;
+import org.joml.*;
 
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -71,15 +71,14 @@ import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.client.model.data.ModelData;
 import net.minecraftforge.common.MinecraftForge;
-import org.joml.AxisAngle4f;
 import org.joml.Matrix4f;
-import org.joml.Quaternionf;
-import org.joml.Vector3f;
 
+import java.lang.Math;
 import java.util.*;
+import java.util.Random;
 import java.util.function.Consumer;
 
-
+import static net.minecraft.client.renderer.entity.ItemRenderer.*;
 
 
 public class RenderingTools {
@@ -276,20 +275,10 @@ public class RenderingTools {
         matrices.popPose();
     }
 
-    public static void drawBoundedText(PoseStack matrices,int posx,int posy,int bound,String s,int color){
-        int iter = 0;
-        GuiGraphics guiGraphics = createGraphics();
-        for (String str : RenderingTools.splitString(s,bound)){
-            guiGraphics.drawString(Minecraft.getInstance().font,str,posx,posy + iter * 9,color);
-            iter++;
-        }
-        guiGraphics.flush();
-    }
-
-    public static void drawBoundedTextObfuscated(PoseStack matrices,int posx,int posy,int bound,Component component,int color,int ticker){
+    public static void drawBoundedTextObfuscated(GuiGraphics g,int posx,int posy,int bound,Component component,int color,int ticker){
         int iter = 0;
         int remainingOpenedSymbols = ticker;
-        GuiGraphics g = createGraphics();
+
         for (String str : RenderingTools.splitString(component.getString(),bound)){
             if (remainingOpenedSymbols >= str.length()){
                 g.drawString(Minecraft.getInstance().font,str,posx,posy + iter * 9,color);
@@ -304,15 +293,15 @@ public class RenderingTools {
         g.flush();
     }
 
-    public static void drawCenteredBoundedTextObfuscated(PoseStack matrices,int posx,int posy,int bound,Component component,int color,int ticker){
+    public static void drawCenteredBoundedTextObfuscated(GuiGraphics gr,int posx,int posy,int bound,Component component,int color,int ticker){
         int iter = 0;
         int remainingOpenedSymbols = ticker;
         for (String str : RenderingTools.splitString(component.getString(),bound)){
             if (remainingOpenedSymbols >= str.length()){
-                Gui.drawCenteredString(matrices,Minecraft.getInstance().font,str,posx,posy + iter * 9,color);
+                gr.drawCenteredString(Minecraft.getInstance().font,str,posx,posy + iter * 9,color);
                 remainingOpenedSymbols -= str.length();
             }else if (remainingOpenedSymbols != 0){
-                Gui.drawCenteredString(matrices,Minecraft.getInstance().font,Component.literal(str.substring(0,remainingOpenedSymbols)).withStyle(ChatFormatting.RESET)
+                gr.drawCenteredString(Minecraft.getInstance().font,Component.literal(str.substring(0,remainingOpenedSymbols)).withStyle(ChatFormatting.RESET)
                         .append(Component.literal("a").withStyle(ChatFormatting.OBFUSCATED)),posx,posy + iter * 9,color);
                 remainingOpenedSymbols = 0;
             }
@@ -329,53 +318,54 @@ public class RenderingTools {
     }
 
 
-    public static List<Component> renderRunicEnergyGui(PoseStack matrices, int x, int y, int mousex, int mousey, RunicEnergyContainer current, RunicEnergyCost simulate, float maximum){
+    public static List<Component> renderRunicEnergyGui(GuiGraphics g, int x, int y, int mousex, int mousey, RunicEnergyContainer current, RunicEnergyCost simulate, float maximum){
         if (Minecraft.getInstance().screen == null) return List.of();
         ClientHelpers.bindText(RUNIC_ENERGY_BARS_GUI);
-        Gui.blit(matrices, x, y, 0, 0, 77, 182, 77, 182);
+        blitWithBlend(g.pose(),x, y, 0, 0, 77, 182, 77, 182,0,1f);
+
 
         List<Component> tooltips = new ArrayList<>();
 
         if (simulate != null) {
             RenderSystem.enableBlend();
-            renderEnergyBar(matrices, x + 12, y + 12, simulate.get(RunicEnergy.Type.ZETA), true,mousex,mousey,maximum,tooltips);
-            renderEnergyBar(matrices, x + 12 + 16, y + 12, simulate.get(RunicEnergy.Type.TERA), true,mousex,mousey,maximum,tooltips);
-            renderEnergyBar(matrices, x + 12 + 16*2, y + 12, simulate.get(RunicEnergy.Type.KELDA), true,mousex,mousey,maximum,tooltips);
-            renderEnergyBar(matrices, x + 12 + 16*3-1, y + 12, simulate.get(RunicEnergy.Type.GIRO), true,mousex,mousey,maximum,tooltips);
+            renderEnergyBar(g, x + 12, y + 12, simulate.get(RunicEnergy.Type.ZETA), true,mousex,mousey,maximum,tooltips);
+            renderEnergyBar(g, x + 12 + 16, y + 12, simulate.get(RunicEnergy.Type.TERA), true,mousex,mousey,maximum,tooltips);
+            renderEnergyBar(g, x + 12 + 16*2, y + 12, simulate.get(RunicEnergy.Type.KELDA), true,mousex,mousey,maximum,tooltips);
+            renderEnergyBar(g, x + 12 + 16*3-1, y + 12, simulate.get(RunicEnergy.Type.GIRO), true,mousex,mousey,maximum,tooltips);
 
-            renderEnergyBar(matrices, x + 12, y + 96, simulate.get(RunicEnergy.Type.ARDO), true,mousex,mousey,maximum,tooltips);
-            renderEnergyBar(matrices, x + 12 + 16, y + 96, simulate.get(RunicEnergy.Type.FIRA), true,mousex,mousey,maximum,tooltips);
-            renderEnergyBar(matrices, x + 12 + 16*2, y + 96, simulate.get(RunicEnergy.Type.URBA), true,mousex,mousey,maximum,tooltips);
-            renderEnergyBar(matrices, x + 12 + 16*3-1, y + 96, simulate.get(RunicEnergy.Type.ULTIMA), true,mousex,mousey,maximum,tooltips);
+            renderEnergyBar(g, x + 12, y + 96, simulate.get(RunicEnergy.Type.ARDO), true,mousex,mousey,maximum,tooltips);
+            renderEnergyBar(g, x + 12 + 16, y + 96, simulate.get(RunicEnergy.Type.FIRA), true,mousex,mousey,maximum,tooltips);
+            renderEnergyBar(g, x + 12 + 16*2, y + 96, simulate.get(RunicEnergy.Type.URBA), true,mousex,mousey,maximum,tooltips);
+            renderEnergyBar(g, x + 12 + 16*3-1, y + 96, simulate.get(RunicEnergy.Type.ULTIMA), true,mousex,mousey,maximum,tooltips);
             RenderSystem.disableBlend();
         }
 
-        renderEnergyBar(matrices, x + 12, y + 12, current.get(RunicEnergy.Type.ZETA), false,mousex,mousey,maximum,tooltips);
-        renderEnergyBar(matrices, x + 12 + 16, y + 12, current.get(RunicEnergy.Type.TERA), false,mousex,mousey,maximum,tooltips);
-        renderEnergyBar(matrices, x + 12 + 16*2, y + 12, current.get(RunicEnergy.Type.KELDA), false,mousex,mousey,maximum,tooltips);
-        renderEnergyBar(matrices, x + 12 + 16*3-1, y + 12, current.get(RunicEnergy.Type.GIRO), false,mousex,mousey,maximum,tooltips);
+        renderEnergyBar(g, x + 12, y + 12, current.get(RunicEnergy.Type.ZETA), false,mousex,mousey,maximum,tooltips);
+        renderEnergyBar(g, x + 12 + 16, y + 12, current.get(RunicEnergy.Type.TERA), false,mousex,mousey,maximum,tooltips);
+        renderEnergyBar(g, x + 12 + 16*2, y + 12, current.get(RunicEnergy.Type.KELDA), false,mousex,mousey,maximum,tooltips);
+        renderEnergyBar(g, x + 12 + 16*3-1, y + 12, current.get(RunicEnergy.Type.GIRO), false,mousex,mousey,maximum,tooltips);
 
-        renderEnergyBar(matrices, x + 12, y + 96, current.get(RunicEnergy.Type.ARDO), false,mousex,mousey,maximum,tooltips);
-        renderEnergyBar(matrices, x + 12 + 16, y + 96, current.get(RunicEnergy.Type.FIRA), false,mousex,mousey,maximum,tooltips);
-        renderEnergyBar(matrices, x + 12 + 16*2, y + 96, current.get(RunicEnergy.Type.URBA), false,mousex,mousey,maximum,tooltips);
-        renderEnergyBar(matrices, x + 12 + 16*3-1, y + 96, current.get(RunicEnergy.Type.ULTIMA), false,mousex,mousey,maximum,tooltips);
+        renderEnergyBar(g, x + 12, y + 96, current.get(RunicEnergy.Type.ARDO), false,mousex,mousey,maximum,tooltips);
+        renderEnergyBar(g, x + 12 + 16, y + 96, current.get(RunicEnergy.Type.FIRA), false,mousex,mousey,maximum,tooltips);
+        renderEnergyBar(g, x + 12 + 16*2, y + 96, current.get(RunicEnergy.Type.URBA), false,mousex,mousey,maximum,tooltips);
+        renderEnergyBar(g, x + 12 + 16*3-1, y + 96, current.get(RunicEnergy.Type.ULTIMA), false,mousex,mousey,maximum,tooltips);
         return tooltips;
     }
 
-    private static void renderEnergyBar(PoseStack matrices, int offsetx, int offsety, float energyAmount, boolean simulate,int mousex,int mousey,float maxEnergy,List<Component> tooltips){
-        matrices.pushPose();
+    private static void renderEnergyBar(GuiGraphics g, int offsetx, int offsety, float energyAmount, boolean simulate,int mousex,int mousey,float maxEnergy,List<Component> tooltips){
+        g.pose().pushPose();
         int k = 60;
         float energy = (energyAmount / maxEnergy) * k;
         if (!simulate){
             if (isMouseInBorders(mousex,mousey,offsetx,offsety,offsetx + 6,offsety + k)){
                 tooltips.add(Component.literal(energyAmount + "/" + maxEnergy));
             }
-            Gui.fill(matrices,offsetx,offsety  + k,offsetx + 6,(int)(offsety + k - energy),0xffffff00);
+            g.fill(offsetx,offsety  + k,offsetx + 6,(int)(offsety + k - energy),0xffffff00);
         }else{
-            Gui.fill(matrices,offsetx,offsety  + k,offsetx + 6,(int)(offsety + k - energy),0x90ffff00);
+            g.fill(offsetx,offsety  + k,offsetx + 6,(int)(offsety + k - energy),0x90ffff00);
         }
 
-        matrices.popPose();
+        g.pose().popPose();
     }
 
     /**
@@ -386,23 +376,31 @@ public class RenderingTools {
 
         stack.translate(0.5,0.5,0.5);
         if (direction.equals(Direction.DOWN)){
-            stack.mulPose(Vector3f.XN.rotationDegrees(180));
+//            stack.mulPose(Vector3f.XN.rotationDegrees(180));
+            stack.mulPose(rotation(XN(),180));
         }else if(direction.equals(Direction.NORTH)){
-            stack.mulPose(Vector3f.YP.rotationDegrees(90));
-            stack.mulPose(Vector3f.XP.rotationDegrees(90));
+//            stack.mulPose(Vector3f.YP.rotationDegrees(90));
+//            stack.mulPose(Vector3f.XP.rotationDegrees(90));
+            stack.mulPose(rotation(YP(),90));
+            stack.mulPose(rotation(XP(),90));
         }else if(direction.equals(Direction.SOUTH)){
-            stack.mulPose(Vector3f.YP.rotationDegrees(270));
-            stack.mulPose(Vector3f.XP.rotationDegrees(90));
+//            stack.mulPose(Vector3f.YP.rotationDegrees(270));
+//            stack.mulPose(Vector3f.XP.rotationDegrees(90));
+            stack.mulPose(rotation(YP(),270));
+            stack.mulPose(rotation(XP(),90));
         }else if(direction.equals(Direction.EAST)){
-
-            stack.mulPose(Vector3f.XP.rotationDegrees(90));
+            stack.mulPose(rotation(XP(),90));
+//            stack.mulPose(Vector3f.XP.rotationDegrees(90));
         }else if(direction.equals(Direction.WEST)){
-            stack.mulPose(Vector3f.YP.rotationDegrees(180));
-            stack.mulPose(Vector3f.XP.rotationDegrees(90));
+//            stack.mulPose(Vector3f.YP.rotationDegrees(180));
+//            stack.mulPose(Vector3f.XP.rotationDegrees(90));
+            stack.mulPose(rotation(YP(),180));
+            stack.mulPose(rotation(XP(),90));
         }
 
         if (rotate){
-            stack.mulPose(Vector3f.YP.rotationDegrees((Minecraft.getInstance().level.getGameTime() + partialTicks)*rotationModifier%360));
+//            stack.mulPose(Vector3f.YP.rotationDegrees((Minecraft.getInstance().level.getGameTime() + partialTicks)*rotationModifier%360));
+            stack.mulPose(rotation(YP(),(Minecraft.getInstance().level.getGameTime() + partialTicks)*rotationModifier%360));
         }
 
         VertexConsumer vertex = buffer.getBuffer(RenderType.text(RAY));
@@ -458,38 +456,43 @@ public class RenderingTools {
 
 
     private static ResourceLocation runeEnergyOverlay = new ResourceLocation("solarcraft","textures/misc/runic_energy_bar.png");
-    public static void renderRuneEnergyOverlay(PoseStack stack, int x, int y, RunicEnergy.Type type){
-        stack.pushPose();
-        stack.translate(x,y,0);
-        stack.scale(0.7f,0.7f,0.7f);
+    public static void renderRuneEnergyOverlay(GuiGraphics g, int x, int y, RunicEnergy.Type type){
+        g.pose().pushPose();
+        g.pose().translate(x,y,0);
+        g.pose().scale(0.7f,0.7f,0.7f);
 
         Player playerEntity = ClientHelpers.getClientPlayer();
         ClientHelpers.bindText(runeEnergyOverlay);
-        GuiComponent.blit(stack,0,0,0,0,10,60,20,60);
+//        GuiComponent.blit(stack,0,0,0,0,10,60,20,60);
+        blitWithBlend(g.pose(),0,0,0,0,10,60,20,60,0,1);
         float currentEnergy = RunicEnergy.getEnergy(playerEntity,type);
 //        float maxEnergy = playerEntity.getPersistentData().getFloat(RunicEnergy.MAX_ENERGY_TAG); //TODO:Update max energy on client
         int tex = Math.round(50*(currentEnergy/10000));
 
-        stack.mulPose(Vector3f.ZN.rotationDegrees(180));
-        stack.translate(-10,-55,0);
-        GuiComponent.blit(stack,0,0,10,0,10,tex,20,60);
-        stack.popPose();
-        stack.pushPose();
-        stack.translate(x,y,0);
+//        g.pose().mulPose(Vector3f.ZN.rotationDegrees(180));
+        g.pose().mulPose(rotation(ZN(),180));
+        g.pose().translate(-10,-55,0);
+//        GuiComponent.blit(g.pose(),0,0,10,0,10,tex,20,60);
+        blitWithBlend(g.pose(),0,0,10,0,10,tex,20,60,0,1);
 
-        stack.scale(0.7f,0.7f,0.7f);
+        g.pose().popPose();
+        g.pose().pushPose();
+        g.pose().translate(x,y,0);
+
+        g.pose().scale(0.7f,0.7f,0.7f);
 
         ClientHelpers.bindText(new ResourceLocation("solarcraft", "textures/misc/tile_energy_pylon_" + type.id + ".png"));
         RenderSystem.enableBlend();
-        GuiComponent.blit(stack,-3,63,0,0,16,16,16,16);
+//        GuiComponent.blit(g.pose(),-3,63,0,0,16,16,16,16);
+        blitWithBlend(g.pose(),-3,63,0,0,16,16,16,16,0,1);
+
         RenderSystem.disableBlend();
-        stack.popPose();
+        g.pose().popPose();
     }
 
 
     public static void drawLine(PoseStack stack,int x1,int y1,int x2,int y2,int red,int green,int blue){
-
-        GlStateManager._disableTexture();
+//        GlStateManager._disableTexture();
         GlStateManager._depthMask(false);
         GlStateManager._disableCull();
         RenderSystem.setShader(GameRenderer::getRendertypeLinesShader);
@@ -504,7 +507,7 @@ public class RenderingTools {
         var4.end();
         GlStateManager._enableCull();
         GlStateManager._depthMask(true);
-        GlStateManager._enableTexture();
+//        GlStateManager._enableTexture();
     }
 
 
@@ -516,7 +519,10 @@ public class RenderingTools {
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         PoseStack posestack = RenderSystem.getModelViewStack();
         posestack.pushPose();
-        posestack.translate((double)x, (double)y, (double)(100.0F + Minecraft.getInstance().getItemRenderer().blitOffset + zOffset));
+
+
+
+        posestack.translate((double)x, (double)y, (double)(100.0F  + zOffset));
         posestack.translate(8.0D*scale, 8.0D*scale, 0.0D);
         posestack.scale(1.0F, -1.0F, 1.0F);
         posestack.scale(16.0F*scale, 16.0F*scale, 16.0F*scale);
@@ -531,7 +537,8 @@ public class RenderingTools {
             Lighting.setupForFlatItems();
         }
 
-        render(stack, ItemTransforms.TransformType.GUI, false, posestack1, multibuffersource$buffersource, 15728880, OverlayTexture.NO_OVERLAY, p_115131_);
+
+        render(stack, ItemDisplayContext.GUI, false, posestack1, multibuffersource$buffersource, 15728880, OverlayTexture.NO_OVERLAY, p_115131_);
         multibuffersource$buffersource.endBatch();
         RenderSystem.enableDepthTest();
         if (flag) {
@@ -550,7 +557,9 @@ public class RenderingTools {
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         PoseStack posestack = RenderSystem.getModelViewStack();
         posestack.pushPose();
-        posestack.translate((double)x, (double)y, (double)(100.0F + Minecraft.getInstance().getItemRenderer().blitOffset + zOffset));
+
+
+        posestack.translate((double)x, (double)y, (double)(100.0F  + zOffset));
 //        posestack.translate(4D, 4D, 0.0D);
         posestack.scale(1.0F, -1.0F, 1.0F);
         posestack.scale(16.0F*scale, 16.0F*scale, 16.0F*scale);
@@ -565,7 +574,7 @@ public class RenderingTools {
             Lighting.setupForFlatItems();
         }
 
-        render(stack, ItemTransforms.TransformType.GUI, false, posestack1, multibuffersource$buffersource, 15728880, OverlayTexture.NO_OVERLAY, p_115131_);
+        render(stack, ItemDisplayContext.GUI, false, posestack1, multibuffersource$buffersource, 15728880, OverlayTexture.NO_OVERLAY, p_115131_);
         multibuffersource$buffersource.endBatch();
         RenderSystem.enableDepthTest();
         if (flag) {
@@ -577,64 +586,122 @@ public class RenderingTools {
     }
 
 
-    public static void render(ItemStack p_115144_, ItemTransforms.TransformType p_115145_, boolean p_115146_, PoseStack p_115147_, MultiBufferSource p_115148_, int p_115149_, int p_115150_, BakedModel p_115151_) {
-        ItemRenderer r = Minecraft.getInstance().getItemRenderer();
-        if (!p_115144_.isEmpty()) {
-            p_115147_.pushPose();
-            boolean flag = p_115145_ == ItemTransforms.TransformType.GUI || p_115145_ == ItemTransforms.TransformType.GROUND || p_115145_ == ItemTransforms.TransformType.FIXED;
+    public static void render(ItemStack stack, ItemDisplayContext ctx, boolean idk, PoseStack matrices, MultiBufferSource src, int x, int y, BakedModel mdl) {
+        if (!stack.isEmpty()) {
+            matrices.pushPose();
+            boolean flag = ctx == ItemDisplayContext.GUI || ctx == ItemDisplayContext.GROUND || ctx == ItemDisplayContext.FIXED;
             if (flag) {
-                if (p_115144_.is(Items.TRIDENT)) {
-                    p_115151_ = r.getItemModelShaper().getModelManager().getModel(new ModelResourceLocation("minecraft:trident#inventory"));
-                } else if (p_115144_.is(Items.SPYGLASS)) {
-                    p_115151_ = r.getItemModelShaper().getModelManager().getModel(new ModelResourceLocation("minecraft:spyglass#inventory"));
+                if (stack.is(Items.TRIDENT)) {
+                    mdl = Minecraft.getInstance().getItemRenderer().getItemModelShaper().getModelManager().getModel(ModelResourceLocation.vanilla("trident", "inventory"));
+                } else if (stack.is(Items.SPYGLASS)) {
+                    mdl = Minecraft.getInstance().getItemRenderer().getItemModelShaper().getModelManager().getModel(ModelResourceLocation.vanilla("spyglass", "inventory"));
                 }
             }
 
-            p_115151_ = net.minecraftforge.client.ForgeHooksClient.handleCameraTransforms(p_115147_, p_115151_, p_115145_, p_115146_);
-            p_115147_.translate(-0.5D, -0.5D, -0.5D);
-            if (!p_115151_.isCustomRenderer() && (!p_115144_.is(Items.TRIDENT) || flag)) {
+            mdl = net.minecraftforge.client.ForgeHooksClient.handleCameraTransforms(matrices, mdl, ctx, idk);
+            matrices.translate(-0.5F, -0.5F, -0.5F);
+            if (!mdl.isCustomRenderer() && (!stack.is(Items.TRIDENT) || flag)) {
                 boolean flag1;
-                if (p_115145_ != ItemTransforms.TransformType.GUI && !p_115145_.firstPerson() && p_115144_.getItem() instanceof BlockItem) {
-                    Block block = ((BlockItem)p_115144_.getItem()).getBlock();
+                if (ctx != ItemDisplayContext.GUI && !ctx.firstPerson() && stack.getItem() instanceof BlockItem) {
+                    Block block = ((BlockItem)stack.getItem()).getBlock();
                     flag1 = !(block instanceof HalfTransparentBlock) && !(block instanceof StainedGlassPaneBlock);
                 } else {
                     flag1 = true;
                 }
-                for (var model : p_115151_.getRenderPasses(p_115144_, flag1)) {
-                    for (var rendertype : model.getRenderTypes(p_115144_, flag1)) {
+                for (var model : mdl.getRenderPasses(stack, flag1)) {
+                    for (var rendertype : model.getRenderTypes(stack, flag1)) {
                         VertexConsumer vertexconsumer;
-                        if (p_115144_.is(ItemTags.COMPASSES) && p_115144_.hasFoil()) {
-                            p_115147_.pushPose();
-                            PoseStack.Pose posestack$pose = p_115147_.last();
-                            if (p_115145_ == ItemTransforms.TransformType.GUI) {
-                                posestack$pose.pose().multiply(0.5F);
-                            } else if (p_115145_.firstPerson()) {
-                                posestack$pose.pose().multiply(0.75F);
+                        if (( stack.is(ItemTags.COMPASSES) || stack.is(Items.CLOCK)) && stack.hasFoil()) {
+                            matrices.pushPose();
+                            PoseStack.Pose posestack$pose = matrices.last();
+                            if (ctx == ItemDisplayContext.GUI) {
+                                MatrixUtil.mulComponentWise(posestack$pose.pose(), 0.5F);
+                            } else if (ctx.firstPerson()) {
+                                MatrixUtil.mulComponentWise(posestack$pose.pose(), 0.75F);
                             }
 
                             if (flag1) {
-                                vertexconsumer = ItemRenderer.getCompassFoilBufferDirect(p_115148_, rendertype, posestack$pose);
+                                vertexconsumer = getCompassFoilBufferDirect(src, rendertype, posestack$pose);
                             } else {
-                                vertexconsumer = ItemRenderer.getCompassFoilBuffer(p_115148_, rendertype, posestack$pose);
+                                vertexconsumer = getCompassFoilBuffer(src, rendertype, posestack$pose);
                             }
 
-                            p_115147_.popPose();
+                            matrices.popPose();
                         } else if (flag1) {
-                            vertexconsumer = ItemRenderer.getFoilBufferDirect(p_115148_, rendertype, true, p_115144_.hasFoil());
+                            vertexconsumer = getFoilBufferDirect(src, rendertype, true, stack.hasFoil());
                         } else {
-                            vertexconsumer = ItemRenderer.getFoilBuffer(p_115148_, rendertype, true, p_115144_.hasFoil());
+                            vertexconsumer = getFoilBuffer(src, rendertype, true, stack.hasFoil());
                         }
 
-                        r.renderModelLists(model, p_115144_, p_115149_, p_115150_, p_115147_, vertexconsumer);
+                        Minecraft.getInstance().getItemRenderer().renderModelLists(model, stack, x, y, matrices, vertexconsumer);
                     }
                 }
             } else {
-                net.minecraftforge.client.extensions.common.IClientItemExtensions.of(p_115144_).getCustomRenderer().renderByItem(p_115144_, p_115145_, p_115147_, p_115148_, p_115149_, p_115150_);
+                net.minecraftforge.client.extensions.common.IClientItemExtensions.of(stack).getCustomRenderer().renderByItem(stack, ctx, matrices, src, x, y);
             }
 
-            p_115147_.popPose();
+            matrices.popPose();
         }
     }
+
+//    public static void render(ItemStack p_115144_, ItemTransforms.TransformType p_115145_, boolean p_115146_, PoseStack p_115147_, MultiBufferSource p_115148_, int p_115149_, int p_115150_, BakedModel p_115151_) {
+//        ItemRenderer r = Minecraft.getInstance().getItemRenderer();
+//        if (!p_115144_.isEmpty()) {
+//            p_115147_.pushPose();
+//            boolean flag = p_115145_ == ItemTransforms.TransformType.GUI || p_115145_ == ItemTransforms.TransformType.GROUND || p_115145_ == ItemTransforms.TransformType.FIXED;
+//            if (flag) {
+//                if (p_115144_.is(Items.TRIDENT)) {
+//                    p_115151_ = r.getItemModelShaper().getModelManager().getModel(new ModelResourceLocation("minecraft:trident#inventory"));
+//                } else if (p_115144_.is(Items.SPYGLASS)) {
+//                    p_115151_ = r.getItemModelShaper().getModelManager().getModel(new ModelResourceLocation("minecraft:spyglass#inventory"));
+//                }
+//            }
+//
+//            p_115151_ = net.minecraftforge.client.ForgeHooksClient.handleCameraTransforms(p_115147_, p_115151_, p_115145_, p_115146_);
+//            p_115147_.translate(-0.5D, -0.5D, -0.5D);
+//            if (!p_115151_.isCustomRenderer() && (!p_115144_.is(Items.TRIDENT) || flag)) {
+//                boolean flag1;
+//                if (p_115145_ != ItemTransforms.TransformType.GUI && !p_115145_.firstPerson() && p_115144_.getItem() instanceof BlockItem) {
+//                    Block block = ((BlockItem)p_115144_.getItem()).getBlock();
+//                    flag1 = !(block instanceof HalfTransparentBlock) && !(block instanceof StainedGlassPaneBlock);
+//                } else {
+//                    flag1 = true;
+//                }
+//                for (var model : p_115151_.getRenderPasses(p_115144_, flag1)) {
+//                    for (var rendertype : model.getRenderTypes(p_115144_, flag1)) {
+//                        VertexConsumer vertexconsumer;
+//                        if (p_115144_.is(ItemTags.COMPASSES) && p_115144_.hasFoil()) {
+//                            p_115147_.pushPose();
+//                            PoseStack.Pose posestack$pose = p_115147_.last();
+//                            if (p_115145_ == ItemTransforms.TransformType.GUI) {
+//                                posestack$pose.pose().multiply(0.5F);
+//                            } else if (p_115145_.firstPerson()) {
+//                                posestack$pose.pose().multiply(0.75F);
+//                            }
+//
+//                            if (flag1) {
+//                                vertexconsumer = ItemRenderer.getCompassFoilBufferDirect(p_115148_, rendertype, posestack$pose);
+//                            } else {
+//                                vertexconsumer = ItemRenderer.getCompassFoilBuffer(p_115148_, rendertype, posestack$pose);
+//                            }
+//
+//                            p_115147_.popPose();
+//                        } else if (flag1) {
+//                            vertexconsumer = ItemRenderer.getFoilBufferDirect(p_115148_, rendertype, true, p_115144_.hasFoil());
+//                        } else {
+//                            vertexconsumer = ItemRenderer.getFoilBuffer(p_115148_, rendertype, true, p_115144_.hasFoil());
+//                        }
+//
+//                        r.renderModelLists(model, p_115144_, p_115149_, p_115150_, p_115147_, vertexconsumer);
+//                    }
+//                }
+//            } else {
+//                net.minecraftforge.client.extensions.common.IClientItemExtensions.of(p_115144_).getCustomRenderer().renderByItem(p_115144_, p_115145_, p_115147_, p_115148_, p_115149_, p_115150_);
+//            }
+//
+//            p_115147_.popPose();
+//        }
+//    }
 
     public static void blitWithBlend(PoseStack matrices,float x,float y,float texPosX,float texPosY,float width,float height,float texWidth,float texHeight, float zOffset,float alpha){
         RenderSystem.enableBlend();
@@ -669,7 +736,8 @@ public class RenderingTools {
         stack.translate(0.5,0.5,0.5);
         translations.accept(stack);
         if (rotate){
-            stack.mulPose(Vector3f.YP.rotationDegrees((Minecraft.getInstance().level.getGameTime() + partialTicks)*rotationModifier%360));
+//            stack.mulPose(Vector3f.YP.rotationDegrees((Minecraft.getInstance().level.getGameTime() + partialTicks)*rotationModifier%360));
+            stack.mulPose(rotation(YP(),(Minecraft.getInstance().level.getGameTime() + partialTicks)*rotationModifier%360));
         }
 
         VertexConsumer vertex = buffer.getBuffer(RenderType.text(RAY));
@@ -765,7 +833,8 @@ public class RenderingTools {
         stack.translate(0.5,0.5,0.5);
         translations.accept(stack);
         if (rotate){
-            stack.mulPose(Vector3f.YP.rotationDegrees((Minecraft.getInstance().level.getGameTime() + partialTicks)*rotationModifier%360));
+//            stack.mulPose(Vector3f.YP.rotationDegrees((Minecraft.getInstance().level.getGameTime() + partialTicks)*rotationModifier%360));
+            stack.mulPose(rotation(YP(),(Minecraft.getInstance().level.getGameTime() + partialTicks)*rotationModifier%360));
         }
         Matrix4f matrix = stack.last().pose();
 
@@ -882,16 +951,6 @@ public class RenderingTools {
         return deleteSpacesAtBeggining(returnable);
     }
 
-    public static void renderStringObfuscated(PoseStack matrices,int x,int y,Component component,int ticker,int color){
-        String s = component.getString();
-        if (s.isEmpty()) return;
-        if (ticker < s.length()) {
-            Gui.drawString(matrices, Minecraft.getInstance().font, Component.literal(component.getString().substring(0, ticker))
-                    .withStyle(ChatFormatting.RESET).append("a").withStyle(ChatFormatting.OBFUSCATED), x, y, color);
-        }else{
-            Gui.drawString(matrices, Minecraft.getInstance().font, component.getString(), x, y, color);
-        }
-    }
 
 
     private static List<String> deleteSpacesAtBeggining(List<String> strings){
@@ -925,8 +984,10 @@ public class RenderingTools {
     public static void applyMovementMatrixRotations(PoseStack matrices, Vec3 vec){
         double angleY = Math.toDegrees(Math.atan2(vec.x,vec.z));
         double angleX = Math.toDegrees(Math.atan2(Math.sqrt(vec.x*vec.x + vec.z*vec.z),vec.y));
-        matrices.mulPose(Vector3f.YP.rotationDegrees((float)angleY));
-        matrices.mulPose(Vector3f.XP.rotationDegrees((float)angleX));
+//        matrices.mulPose(Vector3f.YP.rotationDegrees((float)angleY));
+//        matrices.mulPose(Vector3f.XP.rotationDegrees((float)angleX));
+        matrices.mulPose(rotation(YP(),(float)angleY));
+        matrices.mulPose(rotation(XP(),(float)angleX));
     }
 
     public static float getTime(Level level,float pticks){
@@ -954,7 +1015,7 @@ public class RenderingTools {
         BufferBuilder builder = Tesselator.getInstance().getBuilder();
 
         RenderSystem.enableBlend();
-        RenderSystem.disableTexture();
+//        RenderSystem.disableTexture();
         RenderSystem.defaultBlendFunc();
         RenderSystem.setShader(GameRenderer::getPositionColorShader);
         builder.begin(VertexFormat.Mode.QUADS,DefaultVertexFormat.POSITION_COLOR);
@@ -965,7 +1026,7 @@ public class RenderingTools {
         builder.vertex(matrix4f,(float)x2,(float)y1,0).color(r,g,b,a).endVertex();
 
         BufferUploader.drawWithShader(builder.end());
-        RenderSystem.enableTexture();
+//        RenderSystem.enableTexture();
         RenderSystem.disableBlend();
     }
 
@@ -986,7 +1047,7 @@ public class RenderingTools {
         double sizeY = y2 - y1;
 
         RenderSystem.enableBlend();
-        RenderSystem.disableTexture();
+//        RenderSystem.disableTexture();
         RenderSystem.defaultBlendFunc();
         RenderSystem.setShader(GameRenderer::getPositionColorShader);
         builder.begin(VertexFormat.Mode.QUADS,DefaultVertexFormat.POSITION_COLOR);
@@ -1003,7 +1064,7 @@ public class RenderingTools {
 
 
         BufferUploader.drawWithShader(builder.end());
-        RenderSystem.enableTexture();
+//        RenderSystem.enableTexture();
         RenderSystem.disableBlend();
     }
 
@@ -1022,7 +1083,7 @@ public class RenderingTools {
         BufferBuilder builder = Tesselator.getInstance().getBuilder();
         double sizeX = x2 - x1;
         RenderSystem.enableBlend();
-        RenderSystem.disableTexture();
+//        RenderSystem.disableTexture();
         RenderSystem.defaultBlendFunc();
         RenderSystem.setShader(GameRenderer::getPositionColorShader);
         builder.begin(VertexFormat.Mode.QUADS,DefaultVertexFormat.POSITION_COLOR);
@@ -1038,7 +1099,7 @@ public class RenderingTools {
         builder.vertex(matrix4f,(float)x2 ,(float)y1,0).color(r,g,b,0).endVertex();
 
         BufferUploader.drawWithShader(builder.end());
-        RenderSystem.enableTexture();
+//        RenderSystem.enableTexture();
         RenderSystem.disableBlend();
     }
 
@@ -1054,12 +1115,18 @@ public class RenderingTools {
             matrices.pushPose();
 
             for (int i = 0; (float) i < (f5 + f5 * f5) / 2.0F * 60.0F; ++i) {
-                matrices.mulPose(Vector3f.XP.rotationDegrees(random.nextFloat() * 360.0F));
-                matrices.mulPose(Vector3f.YP.rotationDegrees(random.nextFloat() * 360.0F));
-                matrices.mulPose(Vector3f.ZP.rotationDegrees(random.nextFloat() * 360.0F));
-                matrices.mulPose(Vector3f.XP.rotationDegrees(random.nextFloat() * 360.0F));
-                matrices.mulPose(Vector3f.YP.rotationDegrees(random.nextFloat() * 360.0F));
-                matrices.mulPose(Vector3f.ZP.rotationDegrees(random.nextFloat() * 360.0F + f5 * 90.0F));
+//                matrices.mulPose(Vector3f.XP.rotationDegrees(random.nextFloat() * 360.0F));
+//                matrices.mulPose(Vector3f.YP.rotationDegrees(random.nextFloat() * 360.0F));
+//                matrices.mulPose(Vector3f.ZP.rotationDegrees(random.nextFloat() * 360.0F));
+//                matrices.mulPose(Vector3f.XP.rotationDegrees(random.nextFloat() * 360.0F));
+//                matrices.mulPose(Vector3f.YP.rotationDegrees(random.nextFloat() * 360.0F));
+//                matrices.mulPose(Vector3f.ZP.rotationDegrees(random.nextFloat() * 360.0F + f5 * 90.0F));
+                matrices.mulPose(rotation(XP(),(random.nextFloat() * 360.0F)));
+                matrices.mulPose(rotation(YP(),(random.nextFloat() * 360.0F)));
+                matrices.mulPose(rotation(ZP(),(random.nextFloat() * 360.0F)));
+                matrices.mulPose(rotation(XP(),(random.nextFloat() * 360.0F)));
+                matrices.mulPose(rotation(YP(),(random.nextFloat() * 360.0F)));
+                matrices.mulPose(rotation(ZP(),(random.nextFloat() * 360.0F + f5 * 90.0F)));
                 float f3 = random.nextFloat() * 20.0F + 5.0F + f7 * 10.0F;
                 float f4 = random.nextFloat() * 2.0F + 1.0F + f7 * 2.0F;
                 Matrix4f matrix4f = matrices.last().pose();
@@ -1092,15 +1159,14 @@ public class RenderingTools {
             p_114229_.vertex(p_114230_, 0.0F, p_114231_, 1.0F * p_114232_).color(255, 255, 0, 0).endVertex();
         }
     }
+    //using my render tooltip thing because currently post events are removed. (copied from GuiGraphics class and a bit modified with events)
 
-    //using my render tooltip thing because currently post events are removed. (copied from screen class and a bit modified with events)
-    public static void renderTooltipInternal(PoseStack p_169384_, List<ClientTooltipComponent> p_169385_, int mousex, int mousey, CustomTooltip tooltip) {
-        if (!p_169385_.isEmpty()) {
-
+    public static void renderTooltipInternal(GuiGraphics g, List<ClientTooltipComponent> components, int x, int y, ClientTooltipPositioner positioner,CustomTooltip tooltip) {
+        if (!components.isEmpty()) {
             int i = 0;
-            int j = p_169385_.size() == 1 ? -2 : 0;
+            int j = components.size() == 1 ? -2 : 0;
 
-            for(ClientTooltipComponent clienttooltipcomponent : p_169385_) {
+            for(ClientTooltipComponent clienttooltipcomponent : components) {
                 int k = clienttooltipcomponent.getWidth(Minecraft.getInstance().font);
                 if (k > i) {
                     i = k;
@@ -1109,82 +1175,134 @@ public class RenderingTools {
                 j += clienttooltipcomponent.getHeight();
             }
 
-            int j2 = mousex + 12;
-            int k2 = mousey - 12;
-            if (j2 + i > Minecraft.getInstance().screen.width) {
-                j2 -= 28 + i;
+            int i2 = i;
+            int j2 = j;
+            Vector2ic vector2ic = positioner.positionTooltip(g.guiWidth(), g.guiHeight(), x, y, i2, j2);
+            int l = vector2ic.x();
+            int i1 = vector2ic.y();
+            g.pose().pushPose();
+            int j1 = 400;
+            g.drawManaged(() -> {
+//                net.minecraftforge.client.event.RenderTooltipEvent.Color colorEvent = net.minecraftforge.client.ForgeHooksClient.onRenderTooltipColor(this.tooltipStack, this, l, i1, preEvent.getFont(), components);
+                MyColorEvent event = new MyColorEvent(Items.AIR.getDefaultInstance(), g.pose(), l, i1, Minecraft.getInstance().font,components,tooltip);
+                MinecraftForge.EVENT_BUS.post(event);
+                TooltipRenderUtil.renderTooltipBackground(g, l, i1, i2, j2, 400, event.getBackgroundStart(), event.getBackgroundEnd(), event.getBorderStart(), event.getBorderEnd());
+            });
+            g.pose().translate(0.0F, 0.0F, 400.0F);
+            int k1 = i1;
+
+            for(int l1 = 0; l1 < components.size(); ++l1) {
+                ClientTooltipComponent clienttooltipcomponent1 = components.get(l1);
+                clienttooltipcomponent1.renderText(Minecraft.getInstance().font, l, k1, g.pose().last().pose(), g.bufferSource());
+                k1 += clienttooltipcomponent1.getHeight() + (l1 == 0 ? 2 : 0);
             }
 
-            if (k2 + j + 6 > Minecraft.getInstance().screen.height) {
-                k2 = Minecraft.getInstance().screen.height - j - 6;
+            k1 = i1;
+
+            for(int k2 = 0; k2 < components.size(); ++k2) {
+                ClientTooltipComponent clienttooltipcomponent2 = components.get(k2);
+                clienttooltipcomponent2.renderImage(Minecraft.getInstance().font, l, k1, g);
+                k1 += clienttooltipcomponent2.getHeight() + (k2 == 0 ? 2 : 0);
             }
 
-            p_169384_.pushPose();
-            int l = -267386864;
-            int i1 = 1347420415;
-            int j1 = 1344798847;
-            int k1 = 400;
-            float f = Minecraft.getInstance().getItemRenderer().blitOffset;
-            Minecraft.getInstance().getItemRenderer().blitOffset = 400.0F;
-            Tesselator tesselator = Tesselator.getInstance();
-            BufferBuilder bufferbuilder = tesselator.getBuilder();
-            RenderSystem.setShader(GameRenderer::getPositionColorShader);
-            bufferbuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_COLOR);
-            Matrix4f matrix4f = p_169384_.last().pose();
-            MyColorEvent colorEvent = new MyColorEvent(Items.AIR.getDefaultInstance(), p_169384_, j2, k2, Minecraft.getInstance().font,p_169385_,tooltip);
-            MinecraftForge.EVENT_BUS.post(colorEvent);
-
-            fillGradient(matrix4f, bufferbuilder, j2 - 3, k2 - 4, j2 + i + 3, k2 - 3, 400, colorEvent.getBackgroundStart(), colorEvent.getBackgroundStart());
-            fillGradient(matrix4f, bufferbuilder, j2 - 3, k2 + j + 3, j2 + i + 3, k2 + j + 4, 400, colorEvent.getBackgroundEnd(), colorEvent.getBackgroundEnd());
-            fillGradient(matrix4f, bufferbuilder, j2 - 3, k2 - 3, j2 + i + 3, k2 + j + 3, 400, colorEvent.getBackgroundStart(), colorEvent.getBackgroundEnd());
-            fillGradient(matrix4f, bufferbuilder, j2 - 4, k2 - 3, j2 - 3, k2 + j + 3, 400, colorEvent.getBackgroundStart(), colorEvent.getBackgroundEnd());
-            fillGradient(matrix4f, bufferbuilder, j2 + i + 3, k2 - 3, j2 + i + 4, k2 + j + 3, 400, colorEvent.getBackgroundStart(), colorEvent.getBackgroundEnd());
-            fillGradient(matrix4f, bufferbuilder, j2 - 3, k2 - 3 + 1, j2 - 3 + 1, k2 + j + 3 - 1, 400, colorEvent.getBorderStart(), colorEvent.getBorderEnd());
-            fillGradient(matrix4f, bufferbuilder, j2 + i + 2, k2 - 3 + 1, j2 + i + 3, k2 + j + 3 - 1, 400, colorEvent.getBorderStart(), colorEvent.getBorderEnd());
-            fillGradient(matrix4f, bufferbuilder, j2 - 3, k2 - 3, j2 + i + 3, k2 - 3 + 1, 400, colorEvent.getBorderStart(), colorEvent.getBorderStart());
-            fillGradient(matrix4f, bufferbuilder, j2 - 3, k2 + j + 2, j2 + i + 3, k2 + j + 3, 400, colorEvent.getBorderEnd(), colorEvent.getBorderEnd());
-            RenderSystem.enableDepthTest();
-            RenderSystem.disableTexture();
-            RenderSystem.enableBlend();
-            RenderSystem.defaultBlendFunc();
-
-            BufferUploader.drawWithShader(bufferbuilder.end());
-            RenderSystem.disableBlend();
-            RenderSystem.enableTexture();
-
-
-
-            MultiBufferSource.BufferSource multibuffersource$buffersource = MultiBufferSource.immediate(Tesselator.getInstance().getBuilder());
-            p_169384_.translate(0.0D, 0.0D, 400.0D);
-            int l1 = k2;
-
-            for(int i2 = 0; i2 < p_169385_.size(); ++i2) {
-                ClientTooltipComponent clienttooltipcomponent1 = p_169385_.get(i2);
-                clienttooltipcomponent1.renderText(Minecraft.getInstance().font, j2, l1, matrix4f, multibuffersource$buffersource);
-                l1 += clienttooltipcomponent1.getHeight() + (i2 == 0 ? 2 : 0);
-            }
-
-            multibuffersource$buffersource.endBatch();
-
-
-
-            p_169384_.popPose();
-
-            l1 = k2;
-
-            for(int l2 = 0; l2 < p_169385_.size(); ++l2) {
-                ClientTooltipComponent clienttooltipcomponent2 = p_169385_.get(l2);
-                clienttooltipcomponent2.renderImage(Minecraft.getInstance().font, j2, l1, p_169384_, Minecraft.getInstance().getItemRenderer(), 400);
-                l1 += clienttooltipcomponent2.getHeight() + (l2 == 0 ? 2 : 0);
-            }
-
-            Minecraft.getInstance().getItemRenderer().blitOffset = f;
-            PostColorEvent event = new PostColorEvent(p_169384_, j2, k2, Minecraft.getInstance().font,p_169385_,i,j,tooltip);
+            g.pose().popPose();
+            PostColorEvent event = new PostColorEvent(g.pose(), l, i1, Minecraft.getInstance().font,components,i,j,tooltip);
             MinecraftForge.EVENT_BUS.post(event);
         }
-
-
     }
+
+    //using my render tooltip thing because currently post events are removed. (copied from screen class and a bit modified with events)
+//    public static void renderTooltipInternal(PoseStack p_169384_, List<ClientTooltipComponent> p_169385_, int mousex, int mousey, CustomTooltip tooltip) {
+//        if (!p_169385_.isEmpty()) {
+//
+//            int i = 0;
+//            int j = p_169385_.size() == 1 ? -2 : 0;
+//
+//            for(ClientTooltipComponent clienttooltipcomponent : p_169385_) {
+//                int k = clienttooltipcomponent.getWidth(Minecraft.getInstance().font);
+//                if (k > i) {
+//                    i = k;
+//                }
+//
+//                j += clienttooltipcomponent.getHeight();
+//            }
+//
+//            int j2 = mousex + 12;
+//            int k2 = mousey - 12;
+//            if (j2 + i > Minecraft.getInstance().screen.width) {
+//                j2 -= 28 + i;
+//            }
+//
+//            if (k2 + j + 6 > Minecraft.getInstance().screen.height) {
+//                k2 = Minecraft.getInstance().screen.height - j - 6;
+//            }
+//
+//            p_169384_.pushPose();
+//            int l = -267386864;
+//            int i1 = 1347420415;
+//            int j1 = 1344798847;
+//            int k1 = 400;
+//            float f = Minecraft.getInstance().getItemRenderer().blitOffset;
+//            Minecraft.getInstance().getItemRenderer().blitOffset = 400.0F;
+//            Tesselator tesselator = Tesselator.getInstance();
+//            BufferBuilder bufferbuilder = tesselator.getBuilder();
+//            RenderSystem.setShader(GameRenderer::getPositionColorShader);
+//            bufferbuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_COLOR);
+//            Matrix4f matrix4f = p_169384_.last().pose();
+//            MyColorEvent colorEvent = new MyColorEvent(Items.AIR.getDefaultInstance(), p_169384_, j2, k2, Minecraft.getInstance().font,p_169385_,tooltip);
+//            MinecraftForge.EVENT_BUS.post(colorEvent);
+//
+//            fillGradient(matrix4f, bufferbuilder, j2 - 3, k2 - 4, j2 + i + 3, k2 - 3, 400, colorEvent.getBackgroundStart(), colorEvent.getBackgroundStart());
+//            fillGradient(matrix4f, bufferbuilder, j2 - 3, k2 + j + 3, j2 + i + 3, k2 + j + 4, 400, colorEvent.getBackgroundEnd(), colorEvent.getBackgroundEnd());
+//            fillGradient(matrix4f, bufferbuilder, j2 - 3, k2 - 3, j2 + i + 3, k2 + j + 3, 400, colorEvent.getBackgroundStart(), colorEvent.getBackgroundEnd());
+//            fillGradient(matrix4f, bufferbuilder, j2 - 4, k2 - 3, j2 - 3, k2 + j + 3, 400, colorEvent.getBackgroundStart(), colorEvent.getBackgroundEnd());
+//            fillGradient(matrix4f, bufferbuilder, j2 + i + 3, k2 - 3, j2 + i + 4, k2 + j + 3, 400, colorEvent.getBackgroundStart(), colorEvent.getBackgroundEnd());
+//            fillGradient(matrix4f, bufferbuilder, j2 - 3, k2 - 3 + 1, j2 - 3 + 1, k2 + j + 3 - 1, 400, colorEvent.getBorderStart(), colorEvent.getBorderEnd());
+//            fillGradient(matrix4f, bufferbuilder, j2 + i + 2, k2 - 3 + 1, j2 + i + 3, k2 + j + 3 - 1, 400, colorEvent.getBorderStart(), colorEvent.getBorderEnd());
+//            fillGradient(matrix4f, bufferbuilder, j2 - 3, k2 - 3, j2 + i + 3, k2 - 3 + 1, 400, colorEvent.getBorderStart(), colorEvent.getBorderStart());
+//            fillGradient(matrix4f, bufferbuilder, j2 - 3, k2 + j + 2, j2 + i + 3, k2 + j + 3, 400, colorEvent.getBorderEnd(), colorEvent.getBorderEnd());
+//            RenderSystem.enableDepthTest();
+////            RenderSystem.disableTexture();
+//            RenderSystem.enableBlend();
+//            RenderSystem.defaultBlendFunc();
+//
+//            BufferUploader.drawWithShader(bufferbuilder.end());
+//            RenderSystem.disableBlend();
+////            RenderSystem.enableTexture();
+//
+//
+//
+//            MultiBufferSource.BufferSource multibuffersource$buffersource = MultiBufferSource.immediate(Tesselator.getInstance().getBuilder());
+//            p_169384_.translate(0.0D, 0.0D, 400.0D);
+//            int l1 = k2;
+//
+//            for(int i2 = 0; i2 < p_169385_.size(); ++i2) {
+//                ClientTooltipComponent clienttooltipcomponent1 = p_169385_.get(i2);
+//                clienttooltipcomponent1.renderText(Minecraft.getInstance().font, j2, l1, matrix4f, multibuffersource$buffersource);
+//                l1 += clienttooltipcomponent1.getHeight() + (i2 == 0 ? 2 : 0);
+//            }
+//
+//            multibuffersource$buffersource.endBatch();
+//
+//
+//
+//            p_169384_.popPose();
+//
+//            l1 = k2;
+//
+//            for(int l2 = 0; l2 < p_169385_.size(); ++l2) {
+//                ClientTooltipComponent clienttooltipcomponent2 = p_169385_.get(l2);
+//                clienttooltipcomponent2.renderImage(Minecraft.getInstance().font, j2, l1, p_169384_, Minecraft.getInstance().getItemRenderer(), 400);
+//                l1 += clienttooltipcomponent2.getHeight() + (l2 == 0 ? 2 : 0);
+//            }
+//
+//            Minecraft.getInstance().getItemRenderer().blitOffset = f;
+//            PostColorEvent event = new PostColorEvent(p_169384_, j2, k2, Minecraft.getInstance().font,p_169385_,i,j,tooltip);
+//            MinecraftForge.EVENT_BUS.post(event);
+//        }
+//
+//
+//    }
     protected static void fillGradient(Matrix4f p_93124_, BufferBuilder p_93125_, int p_93126_, int p_93127_, int p_93128_, int p_93129_, int p_93130_, int p_93131_, int p_93132_) {
         float f = (float)(p_93131_ >> 24 & 255) / 255.0F;
         float f1 = (float)(p_93131_ >> 16 & 255) / 255.0F;
@@ -1406,14 +1524,14 @@ public class RenderingTools {
                                 }
 
                                 if (flag1) {
-                                    vertexconsumer = ItemRenderer.getCompassFoilBufferDirect(p_115148_, rendertype, posestack$pose);
+                                    vertexconsumer = getCompassFoilBufferDirect(p_115148_, rendertype, posestack$pose);
                                 } else {
-                                    vertexconsumer = ItemRenderer.getCompassFoilBuffer(p_115148_, rendertype, posestack$pose);
+                                    vertexconsumer = getCompassFoilBuffer(p_115148_, rendertype, posestack$pose);
                                 }
 
                                 p_115147_.popPose();
                             } else if (flag1) {
-                                vertexconsumer = ItemRenderer.getFoilBufferDirect(p_115148_, rendertype, true, p_115144_.hasFoil());
+                                vertexconsumer = getFoilBufferDirect(p_115148_, rendertype, true, p_115144_.hasFoil());
                             } else {
                                 vertexconsumer = ItemRenderer.getFoilBuffer(p_115148_, rendertype, true, p_115144_.hasFoil());
                             }
