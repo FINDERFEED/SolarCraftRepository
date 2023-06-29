@@ -11,6 +11,7 @@ import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.resources.model.BakedModel;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 
@@ -23,59 +24,52 @@ public class AncientFragmentISTER extends BlockEntityWithoutLevelRenderer {
     }
 
     @Override
-    public void renderByItem(ItemStack stack, ItemTransforms.TransformType transformType, PoseStack matrices, MultiBufferSource buffer, int light, int overlay) {
+    public void renderByItem(ItemStack stack, ItemDisplayContext transformType, PoseStack matrices, MultiBufferSource buffer, int light, int overlay) {
 
-        if (transformType == ItemTransforms.TransformType.NONE){
+        if (transformType == ItemDisplayContext.NONE){
             matrices.pushPose();
             matrices.translate(0.5,0.5,0.5);
 
-            renderItem(matrices,stack, ItemTransforms.TransformType.NONE,buffer, light,OverlayTexture.NO_OVERLAY);
+            renderItem(matrices,stack, ItemDisplayContext.NONE,buffer, light,OverlayTexture.NO_OVERLAY);
             matrices.popPose();
-        }
-        if (transformType == ItemTransforms.TransformType.FIXED){
+        } else if (transformType == ItemDisplayContext.FIXED){
             matrices.pushPose();
             matrices.translate(0.5,0.5,0.5);
-            renderItem(matrices,stack, ItemTransforms.TransformType.FIXED,buffer,light,OverlayTexture.NO_OVERLAY);
+            renderItem(matrices,stack, ItemDisplayContext.FIXED,buffer,light,OverlayTexture.NO_OVERLAY);
             matrices.popPose();
-        }
-        if (transformType == ItemTransforms.TransformType.FIRST_PERSON_LEFT_HAND){
+        } else if (transformType == ItemDisplayContext.FIRST_PERSON_LEFT_HAND){
             matrices.pushPose();
             matrices.translate(0.5,0.5,0.5);
-            renderItem(matrices,stack, ItemTransforms.TransformType.FIRST_PERSON_LEFT_HAND,buffer,light,OverlayTexture.NO_OVERLAY);
+            renderItem(matrices,stack, ItemDisplayContext.FIRST_PERSON_LEFT_HAND,buffer,light,OverlayTexture.NO_OVERLAY);
             matrices.popPose();
-        }
-        if (transformType == ItemTransforms.TransformType.FIRST_PERSON_RIGHT_HAND){
+        } else if (transformType == ItemDisplayContext.FIRST_PERSON_RIGHT_HAND){
             matrices.pushPose();
             matrices.translate(0.5,0.5,0.5);
-            renderItem(matrices,stack, ItemTransforms.TransformType.FIRST_PERSON_RIGHT_HAND,buffer,light,OverlayTexture.NO_OVERLAY);
+            renderItem(matrices,stack, ItemDisplayContext.FIRST_PERSON_RIGHT_HAND,buffer,light,OverlayTexture.NO_OVERLAY);
             matrices.popPose();
-        }
-        if (transformType == ItemTransforms.TransformType.GROUND){
+        } else if (transformType == ItemDisplayContext.GROUND){
             matrices.pushPose();
             matrices.translate(0.5,0.5,0.5);
-            renderItem(matrices,stack, ItemTransforms.TransformType.GROUND,buffer,light,OverlayTexture.NO_OVERLAY);
+            renderItem(matrices,stack, ItemDisplayContext.GROUND,buffer,light,OverlayTexture.NO_OVERLAY);
             matrices.popPose();
-        }
-        if (transformType == ItemTransforms.TransformType.THIRD_PERSON_RIGHT_HAND){
+        } else if (transformType == ItemDisplayContext.THIRD_PERSON_RIGHT_HAND){
             matrices.pushPose();
             matrices.translate(0.5,0.5,0.5);
-            renderItem(matrices,stack, ItemTransforms.TransformType.THIRD_PERSON_RIGHT_HAND,buffer,light,OverlayTexture.NO_OVERLAY);
+            renderItem(matrices,stack, ItemDisplayContext.THIRD_PERSON_RIGHT_HAND,buffer,light,OverlayTexture.NO_OVERLAY);
             matrices.popPose();
-        }
-        if (transformType == ItemTransforms.TransformType.THIRD_PERSON_LEFT_HAND){
+        } else if (transformType == ItemDisplayContext.THIRD_PERSON_LEFT_HAND){
             matrices.pushPose();
             matrices.translate(0.5,0.5,0.5);
-            renderItem(matrices,stack, ItemTransforms.TransformType.THIRD_PERSON_LEFT_HAND,buffer,light,OverlayTexture.NO_OVERLAY);
+            renderItem(matrices,stack, ItemDisplayContext.THIRD_PERSON_LEFT_HAND,buffer,light,OverlayTexture.NO_OVERLAY);
             matrices.popPose();
-        }
-        if (transformType == ItemTransforms.TransformType.GUI){
+        } else  if (transformType == ItemDisplayContext.GUI){
 
 
             matrices.pushPose();
             matrices.translate(0.5,0.5,0);
             MultiBufferSource.BufferSource source = Minecraft.getInstance().renderBuffers().bufferSource();
             Lighting.setupForFlatItems();
-            renderItem(matrices,stack, ItemTransforms.TransformType.GUI,source,light,OverlayTexture.NO_OVERLAY);
+            renderItem(matrices,stack, ItemDisplayContext.GUI,source,light,OverlayTexture.NO_OVERLAY);
             matrices.popPose();
             source.endBatch();
             Lighting.setupFor3DItems();
@@ -95,7 +89,7 @@ public class AncientFragmentISTER extends BlockEntityWithoutLevelRenderer {
                     if (!model.usesBlockLight()){
                         Lighting.setupForFlatItems();
                     }
-                    Minecraft.getInstance().getItemRenderer().render(frag.getIcon().getDefaultInstance(), ItemTransforms.TransformType.GUI, false, matrices, src2, light,
+                    Minecraft.getInstance().getItemRenderer().render(frag.getIcon().getDefaultInstance(), ItemDisplayContext.GUI, false, matrices, src2, light,
                             OverlayTexture.NO_OVERLAY, model);
                     src2.endBatch();
                     if (!model.usesBlockLight()){
@@ -109,7 +103,7 @@ public class AncientFragmentISTER extends BlockEntityWithoutLevelRenderer {
         }
     }
 
-    public static void renderItem(PoseStack matrices, ItemStack stack, ItemTransforms.TransformType type,MultiBufferSource buffer,int light, int overlay){
+    public static void renderItem(PoseStack matrices, ItemStack stack, ItemDisplayContext type,MultiBufferSource buffer,int light, int overlay){
         Minecraft.getInstance().getItemRenderer().render(stack,type,false,matrices,buffer,light,overlay,
                 Minecraft.getInstance().getModelManager().getModel(OBJModels.ANCIENT_FRAGMENT_MODEL));
     }

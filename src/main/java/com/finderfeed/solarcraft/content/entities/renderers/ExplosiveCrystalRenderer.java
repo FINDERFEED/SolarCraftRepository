@@ -4,9 +4,10 @@ import com.finderfeed.solarcraft.content.entities.not_alive.ExplosiveCrystal;
 import com.finderfeed.solarcraft.events.other_events.OBJModels;
 import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Vector3f;
+
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiComponent;
+
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -29,10 +30,17 @@ public class ExplosiveCrystalRenderer extends EntityRenderer<ExplosiveCrystal> {
             matrices.mulPose(Minecraft.getInstance().gameRenderer.getMainCamera().rotation());
             matrices.translate(0.5,0,0);
             matrices.scale(0.03f,0.03f,0.03f);
-            matrices.mulPose(Vector3f.ZN.rotationDegrees(180));
+//            matrices.mulPose(Vector3f.ZN.rotationDegrees(180));
+            RenderingTools.rotationDegrees(RenderingTools.ZN(),180);
 
-            GuiComponent.drawCenteredString(matrices,Minecraft.getInstance().font,
-                    String.valueOf(crystal.getRemainingActivationSeconds()),0,0,0xff1111);
+
+            GuiGraphics graphics = new GuiGraphics(Minecraft.getInstance(),matrices,Minecraft.getInstance().renderBuffers().bufferSource());
+
+            graphics.drawCenteredString(Minecraft.getInstance().font, String.valueOf(crystal.getRemainingActivationSeconds()),0,0,0xff1111);
+
+
+
+
 
             matrices.popPose();
 
@@ -49,9 +57,9 @@ public class ExplosiveCrystalRenderer extends EntityRenderer<ExplosiveCrystal> {
             float time = RenderingTools.getTime(crystal.level,pticks);
             matrices.translate(0,1.1,0);
             matrices.scale(0.7f,0.7f,0.7f);
-            matrices.mulPose(Vector3f.YN.rotationDegrees(time % 360));
-            RenderingTools.renderEntityObjModel(OBJModels.EXPLOSIVE_CRYSTAL, matrices, src, light, OverlayTexture.NO_OVERLAY, (m) -> {
-            });
+//            matrices.mulPose(Vector3f.YN.rotationDegrees(time % 360));
+            matrices.mulPose(RenderingTools.rotationDegrees(RenderingTools.YN(),time % 360));
+            RenderingTools.renderEntityObjModel(OBJModels.EXPLOSIVE_CRYSTAL, matrices, src,1,1,1, light, OverlayTexture.NO_OVERLAY);
             matrices.popPose();
         }
         matrices.popPose();

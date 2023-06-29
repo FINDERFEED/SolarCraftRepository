@@ -7,6 +7,7 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.client.renderer.entity.ItemRenderer;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.HalfTransparentBlock;
 import net.minecraft.world.level.block.StainedGlassPaneBlock;
@@ -35,10 +36,11 @@ public class TransparentItemrenderer extends ItemRenderer {
 
     private final float transparency;
 
-    public TransparentItemrenderer(TextureManager p_i46552_1_, ModelManager p_i46552_2_, ItemColors p_i46552_3_, BlockEntityWithoutLevelRenderer p_174228_, float a) {
-        super(p_i46552_1_,p_i46552_2_,p_i46552_3_,p_174228_);
-        this.transparency = a;
+    public TransparentItemrenderer(TextureManager p_266774_, ModelManager p_266850_, ItemColors p_267016_, BlockEntityWithoutLevelRenderer p_267049_,float t) {
+        super(Minecraft.getInstance(), p_266774_, p_266850_, p_267016_, p_267049_);
+        this.transparency = t;
     }
+
 
     public void renderQuadList(PoseStack p_229112_1_, VertexConsumer p_229112_2_, List<BakedQuad> p_229112_3_, ItemStack stack, int p_229112_5_, int p_229112_6_)
     {
@@ -54,14 +56,14 @@ public class TransparentItemrenderer extends ItemRenderer {
     }
 
     @Override
-    public void render(ItemStack p_229111_1_, ItemTransforms.TransformType p_229111_2_, boolean p_229111_3_, PoseStack p_229111_4_, MultiBufferSource p_229111_5_, int p_229111_6_, int p_229111_7_, BakedModel p_229111_8_)
+    public void render(ItemStack p_229111_1_, ItemDisplayContext p_229111_2_, boolean p_229111_3_, PoseStack p_229111_4_, MultiBufferSource p_229111_5_, int p_229111_6_, int p_229111_7_, BakedModel p_229111_8_)
     {
 
         if (!p_229111_1_.isEmpty())
         {
             p_229111_4_.pushPose();
-            boolean flag = p_229111_2_ == ItemTransforms.TransformType.GUI || p_229111_2_ == ItemTransforms.TransformType.GROUND
-                    || p_229111_2_ == ItemTransforms.TransformType.FIXED;
+            boolean flag = p_229111_2_ == ItemDisplayContext.GUI || p_229111_2_ == ItemDisplayContext.GROUND
+                    || p_229111_2_ == ItemDisplayContext.FIXED;
 
             p_229111_8_ = net.minecraftforge.client.ForgeHooksClient.handleCameraTransforms(p_229111_4_, p_229111_8_, p_229111_2_, p_229111_3_);
             p_229111_4_.translate(-0.5D, -0.5D, -0.5D);
@@ -69,7 +71,7 @@ public class TransparentItemrenderer extends ItemRenderer {
             if (!p_229111_8_.isCustomRenderer() && (p_229111_1_.getItem() != Items.TRIDENT || flag))
             {
                 boolean flag1 = true;
-                if (p_229111_2_ != ItemTransforms.TransformType.GUI && !p_229111_2_.firstPerson() && p_229111_1_.getItem() instanceof BlockItem)
+                if (p_229111_2_ != ItemDisplayContext.GUI && !p_229111_2_.firstPerson() && p_229111_1_.getItem() instanceof BlockItem)
                 {
                     Block block = ((BlockItem) p_229111_1_.getItem()).getBlock();
                     flag1 = !(block instanceof HalfTransparentBlock) && !(block instanceof StainedGlassPaneBlock);

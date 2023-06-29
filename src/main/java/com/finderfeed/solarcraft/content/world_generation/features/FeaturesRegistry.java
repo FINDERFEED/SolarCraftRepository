@@ -12,6 +12,7 @@ import com.finderfeed.solarcraft.content.world_generation.biomes.molten_forest.M
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.features.FeatureUtils;
 import net.minecraft.data.worldgen.features.OreFeatures;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
@@ -164,41 +165,6 @@ public class FeaturesRegistry {
     public static ConfiguredFeature<TreeConfiguration,?> RUNIC_TREE_FEATURE_CONF;
 
 
-
-//    public static void registerFeatures(RegisterEvent event){
-//        if (!Objects.equals(event.getForgeRegistry(), ForgeRegistries.FEATURES)) return;
-//        event.getRegistry().register(BURNT_BIOME_AMBIENCE_1.setRegistryName(BURNT_BIOME_BURNT_TREE));
-//        event.getRegistry().register(BURNT_BIOME_AMBIENCE_2.setRegistryName(new ResourceLocation(SolarForge.MOD_ID,"ruins_feature")));
-//        event.getRegistry().register(ENERGY_PYLON.setRegistryName(new ResourceLocation(SolarForge.MOD_ID,"energy_pylon_feature")));
-//        event.getRegistry().register(FLOATING_ISLANDS_RADIANT_LAND.setRegistryName(new ResourceLocation(SolarForge.MOD_ID,"floating_islands")));
-//        event.getRegistry().register(CRYSTALLIZED_ORE_VEIN_RADIANT_LAND.setRegistryName(new ResourceLocation(SolarForge.MOD_ID,"crystallized_ore_vein")));
-//        event.getRegistry().register(CRYSTAL_CAVE_ORE_CRYSTAL.setRegistryName(new ResourceLocation(SolarForge.MOD_ID,"crystal_cave_ore_crystal")));
-//        event.getRegistry().register(CEILING_FLOOR_CRYSTALS.setRegistryName(new ResourceLocation(SolarForge.MOD_ID,"ceiling_floor_crystals")));
-//        event.getRegistry().register(STONE_FLOWERS.setRegistryName(new ResourceLocation(SolarForge.MOD_ID,"stone_flowers")));
-//        event.getRegistry().register(CEILING_DRIPSTONE_LIKE_CRYSTALS.setRegistryName(new ResourceLocation(SolarForge.MOD_ID,"ceiling_dripstonelike_crystals")));
-//        registerFeature(event, CRYSTALS_ORE,"crystallized_runic_energy");
-//        registerFeature(event,ULDERA_OBELISK,"uldera_obelisk");
-//        registerFeature(event,ULDERA_PYLON,"uldera_pylon");
-//        registerFeature(event,CLEARING_CRYSTAL,"clearing_crystal");
-//    }
-//    private static void registerFeature(RegisterEvent event, Feature<?> f, String name){
-//        event.getRegistry().register(f.setRegistryName(new ResourceLocation(SolarForge.MOD_ID,name)));
-//
-//    }
-
-
-//    public static void addCarvableBlocks(FMLCommonSetupEvent event){
-//        event.enqueueWork(()-> {
-//            WorldCarver<?> carver = ForgeRegistries.WORLD_CARVERS.getValue(new ResourceLocation("minecraft", "cave"));
-//            if (carver != null) {
-//                ImmutableSet.Builder<Block> builder = new ImmutableSet.Builder<>();
-//                carver.
-//                builder.addAll(carver.replaceableBlocks);
-//                builder.add(SolarcraftBlocks.RADIANT_GRASS.get());
-//                carver.replaceableBlocks = builder.build();
-//            }
-//        });
-//    }
 
     public static void registerConfiguredFeatures(final FMLCommonSetupEvent event){
         event.enqueueWork(()->{
@@ -365,7 +331,6 @@ public class FeaturesRegistry {
 
             CRYSTALLIZED_ORE_VEIN_CONFIGURED = registerPlacedFeature("crystallized_ore_vein",Holder.direct(CRYSTALLIZED_ORE_VEIN_CONFIGURED_CONF),
                     RarityFilter.onAverageOnceEvery(25),
-//                    HeightmapPlacement.onHeightmap(Heightmap.Types.WORLD_SURFACE_WG),
                     InSquarePlacement.spread());
 
 
@@ -453,6 +418,7 @@ public class FeaturesRegistry {
             registerConfiguredFeature(SOLAR_ORE_CONF,"solar_ore");
             SOLAR_ORE = registerPlacedFeature("solar_ore",Holder.direct(SOLAR_ORE_CONF),
                     HeightRangePlacement.uniform(VerticalAnchor.absolute(5),VerticalAnchor.absolute(30)));
+
 
 
             SOLAR_STONE_CONF = new ConfiguredFeature<>(Feature.ORE,new OreConfiguration(OreFeatures.NATURAL_STONE, SolarcraftBlocks.SOLAR_STONE.get().defaultBlockState(),13));

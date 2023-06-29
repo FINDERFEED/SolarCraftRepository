@@ -28,10 +28,10 @@ import com.finderfeed.solarcraft.registries.wand_actions.SolarCraftWandActionReg
 import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
-import com.mojang.math.Matrix4f;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
-import net.minecraft.client.gui.GuiComponent;
+
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.ShaderInstance;
@@ -50,6 +50,7 @@ import net.minecraftforge.client.gui.overlay.ForgeGui;
 import net.minecraftforge.client.gui.overlay.IGuiOverlay;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import org.joml.Matrix4f;
 
 
 import java.util.*;
@@ -77,8 +78,9 @@ public class SolarcraftOverlays {
 
 
         @Override
-        public void render(ForgeGui gui, PoseStack matrices, float partialTick, int screenWidth, int screenHeight) {
+        public void render(ForgeGui gui, GuiGraphics graphics, float partialTick, int screenWidth, int screenHeight) {
             if (!BOSS_BARS.isEmpty()) {
+                PoseStack matrices = graphics.pose();
                 Minecraft mc = gui.getMinecraft();
                 Window window = mc.getWindow();
                 int scaledWidth = window.getGuiScaledWidth();
@@ -157,9 +159,10 @@ public class SolarcraftOverlays {
     public static class Flash implements IGuiOverlay{
 
         @Override
-        public void render(ForgeGui gui, PoseStack matrices, float partialTick, int screenWidth, int screenHeight) {
+        public void render(ForgeGui gui, GuiGraphics graphics, float partialTick, int screenWidth, int screenHeight) {
             if (currentFlashEffect == null) return;
 
+            PoseStack matrices = graphics.pose();
             float scaledHeight = Minecraft.getInstance().getWindow().getGuiScaledHeight();
             float scaledWidth = Minecraft.getInstance().getWindow().getGuiScaledWidth();
             float alpha = 1f;
@@ -169,7 +172,7 @@ public class SolarcraftOverlays {
                 alpha = 1f - (currentFlashEffect.getTicker() - currentFlashEffect.getStayTime() - currentFlashEffect.getInTime())/(float)currentFlashEffect.getOutTime();
             }
             RenderSystem.enableBlend();
-            RenderSystem.disableTexture();
+//            RenderSystem.disableTexture();
             RenderSystem.defaultBlendFunc();
             RenderSystem.setShader(GameRenderer::getPositionColorShader);
             BufferBuilder b = Tesselator.getInstance().getBuilder();
@@ -183,7 +186,7 @@ public class SolarcraftOverlays {
             b.vertex(m,0,0,0).color(1f,1f,1f,alpha).endVertex();
 //        b.end();
             BufferUploader.drawWithShader(b.end());
-            RenderSystem.enableTexture();
+//            RenderSystem.enableTexture();
             RenderSystem.disableBlend();
         }
     }
@@ -193,10 +196,10 @@ public class SolarcraftOverlays {
         public static ResourceLocation PRICEL = new ResourceLocation("solarcraft","textures/misc/solar_crossbow_pricel.png");
 
         @Override
-        public void render(ForgeGui gui, PoseStack poseStack, float partialTick, int screenWidth, int screenHeight) {
+        public void render(ForgeGui gui, GuiGraphics graphics, float partialTick, int screenWidth, int screenHeight) {
             Minecraft mc = Minecraft.getInstance();
                 if (Minecraft.getInstance().player.getMainHandItem().getItem() instanceof UltraCrossbowItem) {
-                    PoseStack stack = poseStack;
+                    PoseStack stack = graphics.pose();
                     Window window = gui.getMinecraft().getWindow();
                     ClientHelpers.bindText(PRICEL);
 
@@ -206,10 +209,10 @@ public class SolarcraftOverlays {
                     int width = (int)((window.getWidth())/2/window.getGuiScale() -21);
                     int height = (int)((window.getHeight())/2/window.getGuiScale() - 20);
 
-                    GuiComponent.blit(stack,width,height,0,0,41,41,41,41);
+                    RenderingTools.blitWithBlend(stack,width,height,0,0,41,41,41,41,0,1f);
                     RenderSystem.setShaderColor(1,1,1f,1f);
                 }else if( Minecraft.getInstance().player.getOffhandItem().getItem() instanceof UltraCrossbowItem){
-                    PoseStack stack = poseStack;
+                    PoseStack stack = graphics.pose();
                     Window window = gui.getMinecraft().getWindow();
                     ClientHelpers.bindText(PRICEL);
                     RenderSystem.enableBlend();
@@ -218,7 +221,7 @@ public class SolarcraftOverlays {
                     int width = (int)((window.getWidth())/2/window.getGuiScale() -21);
                     int height = (int)((window.getHeight())/2/window.getGuiScale() - 20);
 
-                    GuiComponent.blit(stack,width,height,0,0,41,41,41,41);
+                    RenderingTools.blitWithBlend(stack,width,height,0,0,41,41,41,41,0,1f);
                     RenderSystem.setShaderColor(1,1,1f,1f);
                 }
 
@@ -231,11 +234,12 @@ public class SolarcraftOverlays {
         public static final ResourceLocation LOC = new ResourceLocation("solarcraft", "textures/misc/wand_crafting_progress.png");
 
         @Override
-        public void render(ForgeGui gui, PoseStack poseStack, float partialTick, int screenWidth, int screenHeight) {
+        public void render(ForgeGui gui, GuiGraphics graphics, float partialTick, int screenWidth, int screenHeight) {
 
             Minecraft mc = Minecraft.getInstance();
             Player player = mc.player;
             if (player.getMainHandItem().getItem() instanceof SolarWandItem) {
+                PoseStack poseStack = graphics.pose();
                 HitResult re = mc.hitResult;
                 int height = mc.getWindow().getGuiScaledHeight();
                 int width = mc.getWindow().getGuiScaledWidth();
@@ -246,10 +250,10 @@ public class SolarcraftOverlays {
                         ClientHelpers.bindText(LOC);
                         if (tileInfusing.RECIPE_IN_PROGRESS) {
                             double percent = (float) tileInfusing.CURRENT_PROGRESS / tileInfusing.INFUSING_TIME;
-                            GuiComponent.blit(poseStack, width / 2 - 20, height / 2 + 11, 0, 9, (int) (40 * percent), 3, 40, 20);
+                            RenderingTools.blitWithBlend(poseStack, width / 2 - 20, height / 2 + 11, 0, 9, (int) (40 * percent), 3, 40, 20,0,1f);
                         }
-                        GuiComponent.blit(poseStack, width / 2 - 20, height / 2 + 8, 0, 0, 40, 9, 40, 20);
-                        GuiComponent.drawCenteredString(poseStack,mc.font,"Recipe Progress",width/2,height / 2 + 20,0xffffff);
+                        RenderingTools.blitWithBlend(poseStack, width / 2 - 20, height / 2 + 8, 0, 0, 40, 9, 40, 20,0,1f);
+                        graphics.drawCenteredString(mc.font,"Recipe Progress",width/2,height / 2 + 20,0xffffff);
                     }
 
                     WandAction<?> action = SolarWandItem.getCurrentAction(player.getMainHandItem());

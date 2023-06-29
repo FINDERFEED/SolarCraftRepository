@@ -11,8 +11,7 @@ import com.finderfeed.solarcraft.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Matrix4f;
-import com.mojang.math.Vector3f;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -20,6 +19,7 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.phys.Vec3;
+import org.joml.Matrix4f;
 
 import java.util.Map;
 
@@ -43,7 +43,8 @@ public class DimensionCoreRenderer extends TileEntityRenderer<DimensionCoreTile>
         matrices.translate(0.5,3.5,0.5);
         matrices.scale(0.95f,0.95f,0.95f);
         float time = RenderingTools.getTime(tile.getLevel(),pticks);
-        matrices.mulPose(Vector3f.YN.rotationDegrees(time));
+//        matrices.mulPose(Vector3f.YN.rotationDegrees(time));
+        matrices.mulPose(RenderingTools.rotationDegrees(RenderingTools.YN(),time));
         float r;
         float gr;
         float b;

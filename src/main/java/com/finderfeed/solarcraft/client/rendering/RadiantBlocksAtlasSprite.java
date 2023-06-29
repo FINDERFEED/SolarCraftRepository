@@ -7,6 +7,7 @@ import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.util.Mth;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +26,7 @@ public class RadiantBlocksAtlasSprite extends TextureAtlasSprite {
     public void uploadFirstFrame() {
 
         super.uploadFirstFrame();
+        NativeImage[] mainImage = this.contents().byMipLevel;
         if (original == null) {
             original = new ArrayList<>();
             for (int i = 0;i < mainImage.length;i++){
@@ -40,8 +42,26 @@ public class RadiantBlocksAtlasSprite extends TextureAtlasSprite {
         }
     }
 
+    @Nullable
+    @Override
+    public Ticker createTicker() {
+
+        return new Ticker() {
+            @Override
+            public void tickAndUpload() {
+
+            }
+
+            @Override
+            public void close() {
+
+            }
+        };
+    }
+
     @Override
     public void upload(int p_118376_, int p_118377_, NativeImage[] images) {
+
         for(int i = 0; i < this.mainImage.length; ++i) {
             NativeImage image = images[i];
             if ((this.getWidth() >> i <= 0) || (this.getHeight() >> i <= 0)) break;

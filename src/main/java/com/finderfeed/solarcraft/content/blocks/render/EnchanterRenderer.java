@@ -5,7 +5,7 @@ import com.finderfeed.solarcraft.content.blocks.blockentities.EnchanterBlockEnti
 import com.finderfeed.solarcraft.content.blocks.render.abstracts.AbstractRunicEnergyContainerRenderer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Vector3f;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -14,6 +14,7 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 
 public class EnchanterRenderer extends AbstractRunicEnergyContainerRenderer<EnchanterBlockEntity> {
@@ -33,8 +34,9 @@ public class EnchanterRenderer extends AbstractRunicEnergyContainerRenderer<Ench
             matrices.pushPose();
             matrices.translate(0.5,1.3,0.5);
             matrices.scale(0.5f,0.5f,0.5f);
-            matrices.mulPose(Vector3f.YN.rotationDegrees(time%360));
-            renderer.render(stack, ItemTransforms.TransformType.FIXED,true,matrices,buffer,light, OverlayTexture.NO_OVERLAY,
+//            matrices.mulPose(Vector3f.YN.rotationDegrees(time%360));
+            matrices.mulPose(RenderingTools.rotationDegrees(RenderingTools.YN(),time%360));
+            renderer.render(stack, ItemDisplayContext.FIXED,true,matrices,buffer,light, OverlayTexture.NO_OVERLAY,
                     renderer.getModel(stack,Minecraft.getInstance().level, Minecraft.getInstance().player,0));
             matrices.popPose();
         }
@@ -44,7 +46,8 @@ public class EnchanterRenderer extends AbstractRunicEnergyContainerRenderer<Ench
 
             VertexConsumer vertex = buffer.getBuffer(RenderType.text(fancyRing));
             matrices.translate(0.5, 0.001, 0.5);
-            matrices.mulPose(Vector3f.YP.rotationDegrees(time % 360));
+//            matrices.mulPose(Vector3f.YP.rotationDegrees(time % 360));
+            matrices.mulPose(RenderingTools.rotationDegrees(RenderingTools.YP(),time % 360));
             matrices.scale(0.25f, 0, 0.25f);
             PoseStack.Pose entry = matrices.last();
             vertex.vertex(entry.pose(), -1.25F, 0, -1.25F).color(255, 255, 255, 255).uv(1, 0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
@@ -58,7 +61,8 @@ public class EnchanterRenderer extends AbstractRunicEnergyContainerRenderer<Ench
             vertex.vertex(entry.pose(), -1.25F, 0, -1.25F).color(255, 255, 255, 255).uv(0, 0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
 
 
-            matrices.mulPose(Vector3f.YP.rotationDegrees(-(time % 360) * 2));
+//            matrices.mulPose(Vector3f.YP.rotationDegrees(-(time % 360) * 2));
+            matrices.mulPose(RenderingTools.rotationDegrees(RenderingTools.YP(),-(time % 360) * 2));
             vertex.vertex(entry.pose(), -2.8F, 0, -2.8F).color(255, 255, 255, 255).uv(1, 0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
             vertex.vertex(entry.pose(), 2.8F, 0, -2.8F).color(255, 255, 255, 255).uv(1, 1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
             vertex.vertex(entry.pose(), 2.8F, 0, 2.8F).color(255, 255, 255, 255).uv(0, 1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();

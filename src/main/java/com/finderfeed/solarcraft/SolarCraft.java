@@ -55,11 +55,12 @@ import com.finderfeed.solarcraft.content.world_generation.features.FeaturesRegis
 import com.finderfeed.solarcraft.content.world_generation.features.foliage_placers.FoliagePlacerRegistry;
 import com.finderfeed.solarcraft.content.world_generation.features.trunk_placers.TrunkPlacersRegistry;
 import net.minecraft.world.item.Tiers;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.Block;
 
 import net.minecraft.world.level.block.SoundType;
-import net.minecraft.world.level.material.Material;
+
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.EntityType;
@@ -124,31 +125,21 @@ public class SolarCraft
     public static final CreativeModeTab SOLAR_GROUP_FRAGMENTS = new SolarGroupFragments("solar_forge_group_fragments");
 
 
-    public static final RegistryObject<SoundEvent> SOLAR_STRIKE_SOUND = SOUND_EVENTS.register("solar_ray_sound",()-> new SoundEvent(new ResourceLocation("solarcraft","solar_strike_explosion_sound")));
-    public static final RegistryObject<SoundEvent> SOLAR_STRIKE_BUILD_SOUND = SOUND_EVENTS.register("solar_ray_buildup_sound",()-> new SoundEvent(new ResourceLocation("solarcraft","solar_strike_buildup")));
+    public static final RegistryObject<SoundEvent> SOLAR_STRIKE_SOUND = SOUND_EVENTS.register("solar_ray_sound",()-> SoundEvent.createVariableRangeEvent(new ResourceLocation("solarcraft","solar_strike_explosion_sound")));
+    public static final RegistryObject<SoundEvent> SOLAR_STRIKE_BUILD_SOUND = SOUND_EVENTS.register("solar_ray_buildup_sound",()-> SoundEvent.createVariableRangeEvent(new ResourceLocation("solarcraft","solar_strike_buildup")));
 
     public static final RegistryObject<EntityType<SolarStrikeEntity>> SOLAR_STRIKE_ENTITY_REG = ENTITY_TYPE_REGISTER.register("solar_strike_entity",
             ()->EntityType.Builder.of(SolarStrikeEntity::new, MobCategory.CREATURE).sized(0.5F,0.5F).build("solarcraft:solar_strike_entity"));
 
     public static final RegistryObject<MobEffect> SOLAR_STUN = EFFECTS.register("solar_stun",()-> new SolarStunEffect(MobEffectCategory.HARMFUL,0xd1b515));
-    public  static  final  RegistryObject<SolarForgeBlock> SOLAR_FORGE = BLOCKS.register("solar_forge",()-> new SolarForgeBlock(BlockBehaviour.Properties.of(Material.STONE)
-            .sound(SoundType.METAL)
-            .requiresCorrectToolForDrops()
-            .noOcclusion()
-            .strength(3,3)));
+    public  static  final  RegistryObject<SolarForgeBlock> SOLAR_FORGE = BLOCKS.register("solar_forge",()->
+            new SolarForgeBlock(BlockBehaviour.Properties.copy(Blocks.STONE).sound(SoundType.ANCIENT_DEBRIS)));
 
-    public  static  final  RegistryObject<SolarOreBlock> SOLAR_ORE = BLOCKS.register("solar_ores",()-> new SolarOreBlock(BlockBehaviour.Properties.of(Material.STONE)
-            .sound(SoundType.ANCIENT_DEBRIS)
-            .requiresCorrectToolForDrops()
-            .strength(3,3)));
+    public  static  final  RegistryObject<SolarOreBlock> SOLAR_ORE = BLOCKS.register("solar_ores",()-> new SolarOreBlock(BlockBehaviour.Properties.copy(Blocks.STONE)
+            .sound(SoundType.ANCIENT_DEBRIS)));
 
     public  static  final  RegistryObject<InfuserBlock> SOLAR_INFUSER = BLOCKS.register("solar_infuser",
-            ()-> new InfuserBlock(BlockBehaviour.Properties.of(Material.STONE)
-            .sound(SoundType.METAL)
-            .requiresCorrectToolForDrops()
-            .noOcclusion()
-            .dynamicShape()
-            .strength(3,3)));
+            ()-> new InfuserBlock(BlockBehaviour.Properties.copy(Blocks.STONE)));
 
     public static final RegistryObject<BlockEntityType<InfuserTileEntity>> INFUSING_STAND_BLOCKENTITY = TILE_ENTITY_TYPE.register("infusing_stand_blockentity",()->
             BlockEntityType.Builder.of(InfuserTileEntity::new,SOLAR_INFUSER.get()).build(null));

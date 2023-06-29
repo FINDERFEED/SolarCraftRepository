@@ -115,7 +115,7 @@ public class RenderingTools {
     }
 
     public static Quaternionf rotationDegrees(Vector3f rotation, float angle){
-        return new Quaternionf(new AxisAngle4f((float)Math.toDegrees(angle),rotation));
+        return new Quaternionf(new AxisAngle4f((float)Math.toRadians(angle),rotation));
     }
 
     public static void renderTextureFromCenter(PoseStack matrices,float centerX,float centerY,float width,float height,float scale){

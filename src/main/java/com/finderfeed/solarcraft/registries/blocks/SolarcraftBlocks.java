@@ -28,9 +28,10 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
+
 import net.minecraft.world.effect.MobEffects;
 
 
@@ -43,11 +44,9 @@ import net.minecraftforge.registries.RegistryObject;
 
 public class SolarcraftBlocks {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS,"solarcraft");
-    public  static  final RegistryObject<InfusingStand> INFUSING_POOL = BLOCKS.register("solar_forge_infusion_pool",()-> new InfusingStand(BlockBehaviour.Properties.of(Material.STONE)
-            .sound(SoundType.METAL)
-            .requiresCorrectToolForDrops()
-            .noOcclusion()
-            .strength(3,3)));
+    public  static  final RegistryObject<InfusingStand> INFUSING_POOL = BLOCKS.register("solar_forge_infusion_pool",()-> new InfusingStand(
+            BlockBehaviour.Properties.copy(Blocks.STONE)
+    ));
 
     public  static  final RegistryObject<Block> INFUSING_CRAFTING_TABLE_BLOCK = BLOCKS.register("infusing_crafting_table",()-> new InfusingTableBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)));
     public  static  final RegistryObject<SolarStoneBlock> SOLAR_STONE = BLOCKS.register("solar_stone",()-> new SolarStoneBlock(BlockBehaviour.Properties.copy(Blocks.ANDESITE)));
@@ -98,7 +97,7 @@ public class SolarcraftBlocks {
     public  static  final RegistryObject<Block> ENCHANTER = BLOCKS.register("elemental_enchanter",()-> new EnchanterBlock(BlockBehaviour.Properties.copy(Blocks.STONE).noOcclusion()));
     public  static  final RegistryObject<Block> RUNIC_ENERGY_CHARGER = BLOCKS.register("runic_energy_charger",()-> new RunicEnergyChargerBlock(BlockBehaviour.Properties.copy(Blocks.STONE).noOcclusion()));
     public  static  final RegistryObject<Block> RUNIC_TABLE = BLOCKS.register("runic_table",()-> new RunicTableBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).noOcclusion()));
-    public  static  final RegistryObject<Block> RUNIC_TREE_SAPLING = BLOCKS.register("runic_tree_sapling",()-> new SaplingBlock(new RunicTreeGrower(),BlockBehaviour.Properties.of(Material.PLANT).noCollission().randomTicks().instabreak().sound(SoundType.GRASS)));
+    public  static  final RegistryObject<Block> RUNIC_TREE_SAPLING = BLOCKS.register("runic_tree_sapling",()-> new SaplingBlock(new RunicTreeGrower(),BlockBehaviour.Properties.copy(Blocks.DARK_OAK_SAPLING)));
     public  static  final RegistryObject<LeavesBlock> RUNIC_LEAVES = BLOCKS.register("runic_leaves",()-> new RunicLeavesBlock(BlockBehaviour.Properties.copy(Blocks.OAK_LEAVES).noOcclusion()));
     public  static  final RegistryObject<RotatedPillarBlock> RUNIC_LOG = BLOCKS.register("runic_log",()-> new RotatedPillarFlammableBlock(BlockBehaviour.Properties.copy(Blocks.OAK_LOG),20));
     public  static  final RegistryObject<Block> RUNIC_PLANKS = BLOCKS.register("runic_planks",()-> new FlammableBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS),20));
@@ -124,8 +123,13 @@ public class SolarcraftBlocks {
     public static final RegistryObject<Block> RADIANT_LEAVES = BLOCKS.register("radiant_leaves",()->new FlammableLeavesBlock(BlockBehaviour.Properties.copy(Blocks.OAK_LEAVES).noOcclusion(),20));
     public static final RegistryObject<Block> RADIANT_GRASS = BLOCKS.register("radiant_grass",()->new RadiantGrass(BlockBehaviour.Properties.copy(Blocks.GRASS_BLOCK)));
     public static final RegistryObject<Block> RADIANT_GRASS_NOT_BLOCK = BLOCKS.register("radiant_grass_grass",()->new TallGrassBlock(BlockBehaviour.Properties.copy(Blocks.GRASS)){
+//        @Override
+//        public boolean isValidBonemealTarget(BlockGetter p_57325_, BlockPos p_57326_, BlockState p_57327_, boolean p_57328_) {
+//            return false;
+//        }
+
         @Override
-        public boolean isValidBonemealTarget(BlockGetter p_57325_, BlockPos p_57326_, BlockState p_57327_, boolean p_57328_) {
+        public boolean isValidBonemealTarget(LevelReader p_255692_, BlockPos p_57326_, BlockState p_57327_, boolean p_57328_) {
             return false;
         }
 

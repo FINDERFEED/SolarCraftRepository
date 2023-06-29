@@ -10,14 +10,14 @@ import com.finderfeed.solarcraft.content.blocks.blockentities.clearing_ritual.Cl
 import com.finderfeed.solarcraft.content.blocks.render.abstracts.TileEntityRenderer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Matrix4f;
-import com.mojang.math.Vector3f;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.phys.Vec3;
+import org.joml.Matrix4f;
 
 import java.util.List;
 import java.util.Random;
@@ -54,7 +54,8 @@ public class ClearingRitualTileRenderer extends TileEntityRenderer<ClearingRitua
                 matrices.translate(0.5,0.5,0.5);
                 matrices.pushPose();
                 double angle = Math.atan2(betweenHorizontal.x,betweenHorizontal.z);
-                matrices.mulPose(Vector3f.YP.rotationDegrees((float)Math.toDegrees(angle)));
+//                matrices.mulPose(Vector3f.YP.rotationDegrees((float)Math.toDegrees(angle)));
+                matrices.mulPose(RenderingTools.rotationDegrees(RenderingTools.YP(),(float)Math.toDegrees(angle)));
                 Matrix4f m = matrices.last().pose();
                 vertex.vertex(m,0.25f,0,0).color(1f,1f,1f,1f).uv(0,0).uv2(LightTexture.FULL_BRIGHT).endVertex();
                 vertex.vertex(m,0.25f,(float)height,0).color(1f,1f,1f,1f).uv(1,0).uv2(LightTexture.FULL_BRIGHT).endVertex();
@@ -117,20 +118,22 @@ public class ClearingRitualTileRenderer extends TileEntityRenderer<ClearingRitua
         matrices.translate(0.5,0,0.5);
         matrices.scale(0.5f,0.5f,0.5f);
         matrices.pushPose();
-        RenderingTools.renderEntityObjModel(OBJModels.CLEARING_RITUAL_MAIN_BLOCK_LOWER,matrices,src,light,overlay,(a)->{});
+        RenderingTools.renderEntityObjModel(OBJModels.CLEARING_RITUAL_MAIN_BLOCK_LOWER,matrices,src,1,1,1,light,overlay);
         matrices.popPose();
 
         matrices.pushPose();
         matrices.translate(0,2,0);
-        matrices.mulPose(Vector3f.YP.rotationDegrees(rotation));
-        RenderingTools.renderEntityObjModel(OBJModels.CLEARING_RITUAL_MAIN_BLOCK_PETALS,matrices,src,light,overlay,(a)->{});
+//        matrices.mulPose(Vector3f.YP.rotationDegrees(rotation));
+        matrices.mulPose(RenderingTools.rotationDegrees(RenderingTools.YP(),rotation));
+        RenderingTools.renderEntityObjModel(OBJModels.CLEARING_RITUAL_MAIN_BLOCK_PETALS,matrices,src,1,1,1,light,overlay);
         matrices.popPose();
 
         matrices.pushPose();
         matrices.translate(0,4,0);
         matrices.scale(0.7f,0.7f,0.7f);
-        matrices.mulPose(Vector3f.YP.rotationDegrees(-rotation));
-        RenderingTools.renderEntityObjModel(OBJModels.CLEARING_RITUAL_MAIN_BLOCK_TOP,matrices,src,light,overlay,(a)->{});
+//        matrices.mulPose(Vector3f.YP.rotationDegrees(-rotation));
+        matrices.mulPose(RenderingTools.rotationDegrees(RenderingTools.YP(),-rotation));
+        RenderingTools.renderEntityObjModel(OBJModels.CLEARING_RITUAL_MAIN_BLOCK_TOP,matrices,src,1,1,1,light,overlay);
         matrices.popPose();
         matrices.popPose();
 

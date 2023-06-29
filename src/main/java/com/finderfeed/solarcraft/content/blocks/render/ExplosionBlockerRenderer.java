@@ -6,12 +6,12 @@ import com.finderfeed.solarcraft.content.blocks.blockentities.ExplosionBlockerBl
 import com.finderfeed.solarcraft.content.blocks.render.abstracts.TileEntityRenderer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Matrix4f;
-import com.mojang.math.Vector3f;
+
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
+import org.joml.Matrix4f;
 
 public class ExplosionBlockerRenderer extends TileEntityRenderer<ExplosionBlockerBlockEntity> {
     public static final ResourceLocation LOC = new ResourceLocation(SolarCraft.MOD_ID,"textures/misc/explosion_shield.png");
@@ -29,7 +29,8 @@ public class ExplosionBlockerRenderer extends TileEntityRenderer<ExplosionBlocke
             int m = 20;
             for (int i = 0; i < m;i++){
                 matrices.pushPose();
-                matrices.mulPose(Vector3f.YP.rotationDegrees(360f/m * i + (time % 360) ));
+//                matrices.mulPose(Vector3f.YP.rotationDegrees(360f/m * i + (time % 360) ));
+                matrices.mulPose(RenderingTools.rotationDegrees(RenderingTools.YP(),360f/m * i + (time % 360) ));
                 Matrix4f mat = matrices.last().pose();
                 RenderingTools.coloredBasicVertex(mat,vertex,ExplosionBlockerBlockEntity.DEFENDING_RADIUS,-2,-4,0,0,255,255,255,255);
                 RenderingTools.coloredBasicVertex(mat,vertex,ExplosionBlockerBlockEntity.DEFENDING_RADIUS,2,-4 ,0,1,255,255,255,255);

@@ -18,7 +18,8 @@ import com.finderfeed.solarcraft.content.items.solar_lexicon.packets.UpdateProgr
 import com.finderfeed.solarcraft.registries.SolarcraftGamerules;
 import com.mojang.blaze3d.vertex.*;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiComponent;
+
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.SectionPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -74,7 +75,7 @@ public class Helpers {
     }
 
 
-    public static void drawBoundedText(PoseStack matrices,int posx,int posy,int bound,String s,int color){
+    public static void drawBoundedText(GuiGraphics graphics, int posx, int posy, int bound, String s, int color){
         StringBuilder str = new StringBuilder(s);
         for (int a = 0;a < s.length();a++) {
             if (a % bound == 0 ){
@@ -101,7 +102,7 @@ public class Helpers {
 
         int y = 0;
         for (String strings : string){
-            GuiComponent.drawString(matrices, Minecraft.getInstance().font, strings,posx,posy+y,color);
+            graphics.drawString(Minecraft.getInstance().font, strings,posx,posy+y,color);
             y+=10;
         }
 
@@ -449,7 +450,7 @@ public class Helpers {
         List<Vec3> toreturn = new ArrayList<>();
         List<BlockPos> pos = new ArrayList<>();
         for (int i = 0; i > -2;i--){
-            List<BlockPos> positions = findNormalBlockPositionsOnPlane(world,radius,new BlockPos(mainpos.x,mainpos.y+i,mainpos.z));
+            List<BlockPos> positions = findNormalBlockPositionsOnPlane(world,radius,new BlockPos((int)mainpos.x,(int)mainpos.y+i,(int)mainpos.z));
             pos.addAll(positions);
         }
         for (int i = 0; i < amount;i++){
@@ -586,7 +587,7 @@ public class Helpers {
     }
 
     public static BlockPos vecToPos(Vec3 pos){
-        return new BlockPos(pos.x,pos.y,pos.z);
+        return new BlockPos((int)pos.x,(int)pos.y,(int)pos.z);
     }
 
     public static void sendDimBreak(ServerLevel world){

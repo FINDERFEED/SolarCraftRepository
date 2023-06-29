@@ -41,7 +41,8 @@ import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.Progres
 import com.google.gson.JsonObject;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.components.AbstractWidget;
-import net.minecraft.client.gui.components.Widget;
+
+import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.core.particles.ParticleOptions;
@@ -428,7 +429,7 @@ public class ClientHelpers {
     }
 
     public static List<AbstractWidget> getScreenButtons(Screen screen){
-        List<Widget> widgets = screen.renderables;
+        List<Renderable> widgets = screen.renderables;
         List<AbstractWidget> returnable = new ArrayList<>();
         widgets.forEach((widget)->{
             if (widget instanceof AbstractWidget){

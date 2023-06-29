@@ -21,11 +21,11 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.core.BlockPos;
-import com.mojang.math.Matrix4f;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import com.mojang.math.Vector3f;
+import org.joml.Matrix4f;
+
 
 import java.util.Map;
 
@@ -53,15 +53,18 @@ public class EnergyGeneratorTileRender implements BlockEntityRenderer<SolarEnerg
                 Vec3 childPos = new Vec3(a.getX() - 0.5d, a.getY() + 0.4d, a.getZ() - 0.5d);
                 Vec3 vector = new Vec3((childPos.x - parentPos.x), (childPos.y - parentPos.y), (childPos.z - parentPos.z));
                 Vec3 horizontalVector = new Vec3(childPos.x - parentPos.x, 0, childPos.z - parentPos.z);
-                Vec3 verticalVector = new Vec3(0, childPos.y - parentPos.y, 0).normalize();
+//                Vec3 verticalVector = new Vec3(0, childPos.y - parentPos.y, 0).normalize();
 
                 if (horizontalVector.x >= 0) {
-                    matrices.mulPose(Vector3f.YN.rotationDegrees((float) Math.toDegrees(Math.acos(-horizontalVector.normalize().z))));
+//                    matrices.mulPose(Vector3f.YN.rotationDegrees((float) Math.toDegrees(Math.acos(-horizontalVector.normalize().z))));
+                    matrices.mulPose(RenderingTools.rotationDegrees(RenderingTools.YN(),(float) Math.toDegrees(Math.acos(-horizontalVector.normalize().z))));
                 } else {
-                    matrices.mulPose(Vector3f.YN.rotationDegrees(180 + (float) Math.toDegrees(Math.acos(horizontalVector.normalize().z))));
+//                    matrices.mulPose(Vector3f.YN.rotationDegrees(180 + (float) Math.toDegrees(Math.acos(horizontalVector.normalize().z))));
+                    matrices.mulPose(RenderingTools.rotationDegrees(RenderingTools.YN(),180 + (float) Math.toDegrees(Math.acos(horizontalVector.normalize().z))));
                 }
 
-                matrices.mulPose(Vector3f.XN.rotationDegrees((float) Math.toDegrees(Math.acos(vector.normalize().y))));
+                matrices.mulPose(RenderingTools.rotationDegrees(RenderingTools.XN(),(float) Math.toDegrees(Math.acos(vector.normalize().y))));
+//                matrices.mulPose(Vector3f.XN.rotationDegrees((float) Math.toDegrees(Math.acos(vector.normalize().y))));
 
 
                 float percent = (float) (Helpers.getGipotenuza(Helpers.getGipotenuza(vector.x, vector.z), vector.y));
@@ -120,9 +123,11 @@ public class EnergyGeneratorTileRender implements BlockEntityRenderer<SolarEnerg
         boolean flag = Multiblocks.ENERGY_GENERATOR.check(entity.getLevel(),entity.getBlockPos(),true) && Helpers.isDay(entity.getLevel())
                 && entity.getLevel().canSeeSky(entity.getBlockPos().above());
         if (flag) {
-            matrices.mulPose(Vector3f.YP.rotationDegrees(time));
-
-            matrices.mulPose(Vector3f.ZP.rotationDegrees(-time));
+//            matrices.mulPose(Vector3f.YP.rotationDegrees(time));
+//
+//            matrices.mulPose(Vector3f.ZP.rotationDegrees(-time));
+            matrices.mulPose(RenderingTools.rotationDegrees(RenderingTools.YP(),-time));
+            matrices.mulPose(RenderingTools.rotationDegrees(RenderingTools.ZP(),time));
         }
         model.renderCore(matrices,bufferbuilder,light1,light2,255,255,255,255);
         matrices.popPose();
@@ -132,9 +137,11 @@ public class EnergyGeneratorTileRender implements BlockEntityRenderer<SolarEnerg
         matrices.pushPose();
         matrices.translate(0.5,0.6,0.5);
         if (flag) {
-            matrices.mulPose(Vector3f.YP.rotationDegrees(-time));
+//            matrices.mulPose(Vector3f.YP.rotationDegrees(-time));
 
-            matrices.mulPose(Vector3f.ZP.rotationDegrees(time));
+//            matrices.mulPose(Vector3f.ZP.rotationDegrees(time));
+            matrices.mulPose(RenderingTools.rotationDegrees(RenderingTools.YP(),-time));
+            matrices.mulPose(RenderingTools.rotationDegrees(RenderingTools.ZP(),time));
         }
         matrices.scale(0.8f,0.8f,0.8f);
         model.renderRing2(matrices,bufferbuilder,light1,light2,255,255,255,255);
@@ -145,16 +152,19 @@ public class EnergyGeneratorTileRender implements BlockEntityRenderer<SolarEnerg
         matrices.pushPose();
         matrices.translate(0.5,0.6,0.5);
         if (flag) {
-            matrices.mulPose(Vector3f.YP.rotationDegrees(time));
-
-            matrices.mulPose(Vector3f.ZP.rotationDegrees(-time));
+//            matrices.mulPose(Vector3f.YP.rotationDegrees(time));
+//
+//            matrices.mulPose(Vector3f.ZP.rotationDegrees(-time));
+            matrices.mulPose(RenderingTools.rotationDegrees(RenderingTools.YP(),time));
+            matrices.mulPose(RenderingTools.rotationDegrees(RenderingTools.ZP(),-time));
         }
         model.renderRing2(matrices,bufferbuilder,light1,light2,255,255,255,255);
         matrices.popPose();
 
 
         matrices.pushPose();
-        matrices.mulPose(Vector3f.XP.rotationDegrees(180));
+//        matrices.mulPose(Vector3f.XP.rotationDegrees(180));
+        matrices.mulPose(RenderingTools.rotationDegrees(RenderingTools.XP(),180));
         matrices.translate(0.5,-1.5,-0.5);
         model.renderBase(matrices,bufferbuilder,light1,light2,255,255,255,255);
         matrices.popPose();
@@ -166,7 +176,10 @@ public class EnergyGeneratorTileRender implements BlockEntityRenderer<SolarEnerg
             matrices.translate(0.5f, 1.3f, 0.5f);
 
 
-            matrices.mulPose(Vector3f.YP.rotationDegrees((entity.getLevel().getGameTime() % 360 + partialTicks) * 2));
+//            matrices.mulPose(Vector3f.YP.rotationDegrees((entity.getLevel().getGameTime() % 360 + partialTicks) * 2));
+
+            matrices.mulPose(RenderingTools.rotationDegrees(RenderingTools.YP(),(entity.getLevel().getGameTime() % 360 + partialTicks) * 2));
+
 
             VertexConsumer vertex = buffer.getBuffer(RenderType.text(RAYY));
 
