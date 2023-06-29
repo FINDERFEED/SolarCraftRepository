@@ -15,8 +15,8 @@ import com.finderfeed.solarcraft.content.items.solar_lexicon.screen.StructureScr
 import com.finderfeed.solarcraft.misc_things.IScrollable;
 import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Vector3f;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.screens.Screen;
@@ -101,8 +101,8 @@ public class ThreeDStructureViewScreen extends Screen implements IScrollable {
         addRenderableWidget(new SolarForgeButtonYellow(relX + 5,relY + 198,60,16,Component.translatable("solarcraft.visualize"),(btn)->{
             MultiblockVisualizer.setMultiblock(this.struct);
             Minecraft.getInstance().setScreen(null);
-        },(btn,matrix,mx,my)->{
-            renderTooltip(matrix,font.split(Component.translatable("solarcraft.visualize_guide"),200),
+        },(btn,graphics,mx,my)->{
+            graphics.renderTooltip(font,font.split(Component.translatable("solarcraft.visualize_guide"),200),
                     mx,my);
         }));
 
@@ -129,8 +129,8 @@ public class ThreeDStructureViewScreen extends Screen implements IScrollable {
             for (AncientFragment ref : refs) {
                 ItemStackTabButton button1 = new ItemStackTabButton(relX + 216, relY + 25 + 18 + 3 + h * 18 + 40, 17, 17, b -> {
                     Minecraft.getInstance().setScreen(getScreenFromFragment(ref));
-                }, ref.getIcon().getDefaultInstance(), 0.7f, (buttons, matrices, b, c) -> {
-                    renderTooltip(matrices, ref.getTranslation(), b, c);
+                }, ref.getIcon().getDefaultInstance(), 0.7f, (buttons, graphics, b, c) -> {
+                    graphics.renderTooltip(font, ref.getTranslation(), b, c);
                 });
                 h++;
                 addRenderableWidget(button1);
@@ -165,23 +165,27 @@ public class ThreeDStructureViewScreen extends Screen implements IScrollable {
 
 
     @Override
-    public void renderBackground(PoseStack p_96557_) {
+    public void renderBackground(GuiGraphics p_96557_) {
         super.renderBackground(p_96557_);
     }
 
     @Override
-    public void render(PoseStack matrices, int p_96563_, int p_96564_, float partialTicks) {
+    public void render(GuiGraphics graphics, int p_96563_, int p_96564_, float partialTicks) {
+
+        PoseStack matrices = graphics.pose();
 
         matrices.pushPose();
         ClientHelpers.bindText(STRUCTURE_GUI);
-        blit(matrices,relX,relY,0,0,256,256);
-        super.render(matrices, p_96563_, p_96564_, partialTicks);
+        RenderingTools.blitWithBlend(matrices,relX,relY,0,0,256,256,256,256,0,1f);
+        super.render(graphics, p_96563_, p_96564_, partialTicks);
         Helpers.drawBoundedText(matrices,relX+14,relY+10,7,Component.translatable("solarcraft.structure."+struct.getId()).getString(),0xffffff);
         matrices.popPose();
 
         matrices.pushPose();
-        matrices.mulPose(Vector3f.XN.rotationDegrees(-45+(int)this.dragUpDown));
-        matrices.mulPose(Vector3f.YP.rotationDegrees(45+(int)this.dragLeftRight));
+//        matrices.mulPose(Vector3f.XN.rotationDegrees(-45+(int)this.dragUpDown));
+//        matrices.mulPose(Vector3f.YP.rotationDegrees(45+(int)this.dragLeftRight));
+        matrices.mulPose(RenderingTools.rotationDegrees(RenderingTools.XN(),-45+(int)this.dragUpDown));
+        matrices.mulPose(RenderingTools.rotationDegrees(RenderingTools.YP(),45+(int)this.dragLeftRight));
         matrices.scale(structScale,structScale,structScale);
         //this renders the structure
 

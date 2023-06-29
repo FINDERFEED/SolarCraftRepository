@@ -3,6 +3,7 @@ package com.finderfeed.solarcraft.content.entities.projectiles;
 import com.finderfeed.solarcraft.client.particles.SolarcraftParticleTypes;
 import com.finderfeed.solarcraft.registries.entities.SolarcraftEntityTypes;
 import com.finderfeed.solarcraft.registries.items.SolarcraftItems;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.entity.Entity;
@@ -153,8 +154,9 @@ public class BlockBoomerangProjectile extends AbstractHurtingProjectile {
     public boolean hurt(DamageSource p_70097_1_, float p_70097_2_) {
         return false;
     }
+
     @Override
-    public Packet<?> getAddEntityPacket() {
+    public Packet<ClientGamePacketListener> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 

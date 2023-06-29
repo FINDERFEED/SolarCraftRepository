@@ -5,6 +5,7 @@ import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 
@@ -22,11 +23,12 @@ public class ItemStackTabButton extends ItemStackButton {
 
 
     @Override
-    public void renderButton(PoseStack matrices, int mousex, int mousey, float partialTicks) {
+    public void renderWidget(GuiGraphics graphics, int mousex, int mousey, float partialTicks) {
+        PoseStack matrices = graphics.pose();
         matrices.pushPose();
-        if (this.isHovered){
-            this.renderToolTip(matrices,mousex,mousey);
-        }
+//        if (this.isHovered){
+//            this.renderTooltip(graphics,mousex,mousey);
+//        }
 //        matrices.scale(scaleFactor,scaleFactor,scaleFactor);
         float scaleFactor = width / 17f;
         float itemScale = (width - scaleFactor*5f) / 17f;
@@ -40,14 +42,14 @@ public class ItemStackTabButton extends ItemStackButton {
 //            Gui.blit(matrices,x - width/4,y - height/4,0,17,17,17,17,34);
 //        }
         if (!this.isHovered){
-            RenderingTools.blitWithBlend(matrices,x,y ,0,0,width,height,width,height*2,getBlitOffset(),1f);
+            RenderingTools.blitWithBlend(matrices,x,y ,0,0,width,height,width,height*2,0,1f);
         }else{
-            RenderingTools.blitWithBlend(matrices,x,y ,0,height,width,height,width,height*2,getBlitOffset(),1f);
+            RenderingTools.blitWithBlend(matrices,x,y ,0,height,width,height,width,height*2,0,1f);
         }
         matrices.popPose();
     }
 
-    public void render(PoseStack matrices, int mousex, int mousey, float partialTicks,double zOffset){
+    public void render(GuiGraphics graphics, int mousex, int mousey, float partialTicks, double zOffset){
         this.isHovered = RenderingTools.isMouseInBorders(mousex,mousey,x,y,x + width,y + height);
 //        matrices.pushPose();
 //        if (this.isHovered){
@@ -64,9 +66,10 @@ public class ItemStackTabButton extends ItemStackButton {
 //            Gui.blit(matrices, x, y,0,17,17,17,17,34);
 //        }
 //        matrices.popPose();
+        PoseStack matrices = graphics.pose();
         matrices.pushPose();
         if (this.isHovered){
-            this.renderToolTip(matrices,mousex,mousey);
+            this.renderTooltip(graphics,mousex,mousey);
         }
 //        matrices.scale(scaleFactor,scaleFactor,scaleFactor);
         float scaleFactor = width / 17f;
@@ -81,9 +84,9 @@ public class ItemStackTabButton extends ItemStackButton {
 //            Gui.blit(matrices,x - width/4,y - height/4,0,17,17,17,17,34);
 //        }
         if (!this.isHovered){
-            RenderingTools.blitWithBlend(matrices,x,y ,0,0,width,height,width,height*2,getBlitOffset(),1f);
+            RenderingTools.blitWithBlend(matrices,x,y ,0,0,width,height,width,height*2,0,1f);
         }else{
-            RenderingTools.blitWithBlend(matrices,x,y ,0,height,width,height,width,height*2,getBlitOffset(),1f);
+            RenderingTools.blitWithBlend(matrices,x,y ,0,height,width,height,width,height*2,0,1f);
         }
         matrices.popPose();
 

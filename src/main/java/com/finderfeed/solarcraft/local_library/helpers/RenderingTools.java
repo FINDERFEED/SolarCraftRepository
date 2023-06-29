@@ -26,8 +26,6 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.math.MatrixUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.Gui;
 
 
 import net.minecraft.client.gui.GuiGraphics;
@@ -37,11 +35,9 @@ import net.minecraft.client.gui.screens.inventory.tooltip.TooltipRenderUtil;
 import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.block.BlockRenderDispatcher;
 import net.minecraft.client.renderer.block.model.BakedQuad;
-import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.culling.Frustum;
-import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 
 import net.minecraft.client.renderer.texture.TextureAtlas;
@@ -51,7 +47,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
@@ -119,8 +114,8 @@ public class RenderingTools {
         return new Vector3f(0,0,-1);
     }
 
-    public static Quaternionf rotation(Vector3f rotation,float angle){
-        return new Quaternionf(new AxisAngle4f(angle,rotation));
+    public static Quaternionf rotationDegrees(Vector3f rotation, float angle){
+        return new Quaternionf(new AxisAngle4f((float)Math.toDegrees(angle),rotation));
     }
 
     public static void renderTextureFromCenter(PoseStack matrices,float centerX,float centerY,float width,float height,float scale){
@@ -377,30 +372,30 @@ public class RenderingTools {
         stack.translate(0.5,0.5,0.5);
         if (direction.equals(Direction.DOWN)){
 //            stack.mulPose(Vector3f.XN.rotationDegrees(180));
-            stack.mulPose(rotation(XN(),180));
+            stack.mulPose(rotationDegrees(XN(),180));
         }else if(direction.equals(Direction.NORTH)){
 //            stack.mulPose(Vector3f.YP.rotationDegrees(90));
 //            stack.mulPose(Vector3f.XP.rotationDegrees(90));
-            stack.mulPose(rotation(YP(),90));
-            stack.mulPose(rotation(XP(),90));
+            stack.mulPose(rotationDegrees(YP(),90));
+            stack.mulPose(rotationDegrees(XP(),90));
         }else if(direction.equals(Direction.SOUTH)){
 //            stack.mulPose(Vector3f.YP.rotationDegrees(270));
 //            stack.mulPose(Vector3f.XP.rotationDegrees(90));
-            stack.mulPose(rotation(YP(),270));
-            stack.mulPose(rotation(XP(),90));
+            stack.mulPose(rotationDegrees(YP(),270));
+            stack.mulPose(rotationDegrees(XP(),90));
         }else if(direction.equals(Direction.EAST)){
-            stack.mulPose(rotation(XP(),90));
+            stack.mulPose(rotationDegrees(XP(),90));
 //            stack.mulPose(Vector3f.XP.rotationDegrees(90));
         }else if(direction.equals(Direction.WEST)){
 //            stack.mulPose(Vector3f.YP.rotationDegrees(180));
 //            stack.mulPose(Vector3f.XP.rotationDegrees(90));
-            stack.mulPose(rotation(YP(),180));
-            stack.mulPose(rotation(XP(),90));
+            stack.mulPose(rotationDegrees(YP(),180));
+            stack.mulPose(rotationDegrees(XP(),90));
         }
 
         if (rotate){
 //            stack.mulPose(Vector3f.YP.rotationDegrees((Minecraft.getInstance().level.getGameTime() + partialTicks)*rotationModifier%360));
-            stack.mulPose(rotation(YP(),(Minecraft.getInstance().level.getGameTime() + partialTicks)*rotationModifier%360));
+            stack.mulPose(rotationDegrees(YP(),(Minecraft.getInstance().level.getGameTime() + partialTicks)*rotationModifier%360));
         }
 
         VertexConsumer vertex = buffer.getBuffer(RenderType.text(RAY));
@@ -470,7 +465,7 @@ public class RenderingTools {
         int tex = Math.round(50*(currentEnergy/10000));
 
 //        g.pose().mulPose(Vector3f.ZN.rotationDegrees(180));
-        g.pose().mulPose(rotation(ZN(),180));
+        g.pose().mulPose(rotationDegrees(ZN(),180));
         g.pose().translate(-10,-55,0);
 //        GuiComponent.blit(g.pose(),0,0,10,0,10,tex,20,60);
         blitWithBlend(g.pose(),0,0,10,0,10,tex,20,60,0,1);
@@ -538,7 +533,7 @@ public class RenderingTools {
         }
 
 
-        render(stack, ItemDisplayContext.GUI, false, posestack1, multibuffersource$buffersource, 15728880, OverlayTexture.NO_OVERLAY, p_115131_);
+        renderItemStack(stack, ItemDisplayContext.GUI, false, posestack1, multibuffersource$buffersource, 15728880, OverlayTexture.NO_OVERLAY, p_115131_);
         multibuffersource$buffersource.endBatch();
         RenderSystem.enableDepthTest();
         if (flag) {
@@ -574,7 +569,7 @@ public class RenderingTools {
             Lighting.setupForFlatItems();
         }
 
-        render(stack, ItemDisplayContext.GUI, false, posestack1, multibuffersource$buffersource, 15728880, OverlayTexture.NO_OVERLAY, p_115131_);
+        renderItemStack(stack, ItemDisplayContext.GUI, false, posestack1, multibuffersource$buffersource, 15728880, OverlayTexture.NO_OVERLAY, p_115131_);
         multibuffersource$buffersource.endBatch();
         RenderSystem.enableDepthTest();
         if (flag) {
@@ -586,7 +581,7 @@ public class RenderingTools {
     }
 
 
-    public static void render(ItemStack stack, ItemDisplayContext ctx, boolean idk, PoseStack matrices, MultiBufferSource src, int x, int y, BakedModel mdl) {
+    public static void renderItemStack(ItemStack stack, ItemDisplayContext ctx, boolean idk, PoseStack matrices, MultiBufferSource src, int x, int y, BakedModel mdl) {
         if (!stack.isEmpty()) {
             matrices.pushPose();
             boolean flag = ctx == ItemDisplayContext.GUI || ctx == ItemDisplayContext.GROUND || ctx == ItemDisplayContext.FIXED;
@@ -737,7 +732,7 @@ public class RenderingTools {
         translations.accept(stack);
         if (rotate){
 //            stack.mulPose(Vector3f.YP.rotationDegrees((Minecraft.getInstance().level.getGameTime() + partialTicks)*rotationModifier%360));
-            stack.mulPose(rotation(YP(),(Minecraft.getInstance().level.getGameTime() + partialTicks)*rotationModifier%360));
+            stack.mulPose(rotationDegrees(YP(),(Minecraft.getInstance().level.getGameTime() + partialTicks)*rotationModifier%360));
         }
 
         VertexConsumer vertex = buffer.getBuffer(RenderType.text(RAY));
@@ -834,7 +829,7 @@ public class RenderingTools {
         translations.accept(stack);
         if (rotate){
 //            stack.mulPose(Vector3f.YP.rotationDegrees((Minecraft.getInstance().level.getGameTime() + partialTicks)*rotationModifier%360));
-            stack.mulPose(rotation(YP(),(Minecraft.getInstance().level.getGameTime() + partialTicks)*rotationModifier%360));
+            stack.mulPose(rotationDegrees(YP(),(Minecraft.getInstance().level.getGameTime() + partialTicks)*rotationModifier%360));
         }
         Matrix4f matrix = stack.last().pose();
 
@@ -986,8 +981,8 @@ public class RenderingTools {
         double angleX = Math.toDegrees(Math.atan2(Math.sqrt(vec.x*vec.x + vec.z*vec.z),vec.y));
 //        matrices.mulPose(Vector3f.YP.rotationDegrees((float)angleY));
 //        matrices.mulPose(Vector3f.XP.rotationDegrees((float)angleX));
-        matrices.mulPose(rotation(YP(),(float)angleY));
-        matrices.mulPose(rotation(XP(),(float)angleX));
+        matrices.mulPose(rotationDegrees(YP(),(float)angleY));
+        matrices.mulPose(rotationDegrees(XP(),(float)angleX));
     }
 
     public static float getTime(Level level,float pticks){
@@ -1121,12 +1116,12 @@ public class RenderingTools {
 //                matrices.mulPose(Vector3f.XP.rotationDegrees(random.nextFloat() * 360.0F));
 //                matrices.mulPose(Vector3f.YP.rotationDegrees(random.nextFloat() * 360.0F));
 //                matrices.mulPose(Vector3f.ZP.rotationDegrees(random.nextFloat() * 360.0F + f5 * 90.0F));
-                matrices.mulPose(rotation(XP(),(random.nextFloat() * 360.0F)));
-                matrices.mulPose(rotation(YP(),(random.nextFloat() * 360.0F)));
-                matrices.mulPose(rotation(ZP(),(random.nextFloat() * 360.0F)));
-                matrices.mulPose(rotation(XP(),(random.nextFloat() * 360.0F)));
-                matrices.mulPose(rotation(YP(),(random.nextFloat() * 360.0F)));
-                matrices.mulPose(rotation(ZP(),(random.nextFloat() * 360.0F + f5 * 90.0F)));
+                matrices.mulPose(rotationDegrees(XP(),(random.nextFloat() * 360.0F)));
+                matrices.mulPose(rotationDegrees(YP(),(random.nextFloat() * 360.0F)));
+                matrices.mulPose(rotationDegrees(ZP(),(random.nextFloat() * 360.0F)));
+                matrices.mulPose(rotationDegrees(XP(),(random.nextFloat() * 360.0F)));
+                matrices.mulPose(rotationDegrees(YP(),(random.nextFloat() * 360.0F)));
+                matrices.mulPose(rotationDegrees(ZP(),(random.nextFloat() * 360.0F + f5 * 90.0F)));
                 float f3 = random.nextFloat() * 20.0F + 5.0F + f7 * 10.0F;
                 float f4 = random.nextFloat() * 2.0F + 1.0F + f7 * 2.0F;
                 Matrix4f matrix4f = matrices.last().pose();
@@ -1420,7 +1415,7 @@ public class RenderingTools {
 
 
         private void renderModelLists(BakedModel model, ItemStack item, int light, int overlay, PoseStack matrices, VertexConsumer vertex) {
-            Random random = new Random();
+
             Item r = item.getItem();
             if (!ITEMS.containsKey(r)){
                 ArrayList<List<BakedQuad>> add = new ArrayList<>();
@@ -1449,14 +1444,45 @@ public class RenderingTools {
 
 
         public void renderGuiItemScaled(ItemStack p_115124_, int p_115125_, int p_115126_,float scale) {
-            renderGuiItem(p_115124_, p_115125_, p_115126_, Minecraft.getInstance().getItemRenderer().getModel(p_115124_, (Level)null, (LivingEntity)null, 0),scale);
+            renderScaledGuiItem(p_115124_, p_115125_, p_115126_,scale,0);
         }
 
         public void renderGuiItem(ItemStack p_115124_, int p_115125_, int p_115126_) {
-            renderGuiItem(p_115124_, p_115125_, p_115126_, Minecraft.getInstance().getItemRenderer().getModel(p_115124_, (Level)null, (LivingEntity)null, 0),1f);
+            renderScaledGuiItem(p_115124_, p_115125_, p_115126_,1f,0);
         }
 
-        protected void renderGuiItem(ItemStack p_115128_, int p_115129_, int p_115130_, BakedModel p_115131_,float scale) {
+//        protected void renderGuiItem(ItemStack p_115128_, int p_115129_, int p_115130_, BakedModel p_115131_,float scale) {
+//            Minecraft.getInstance().textureManager.getTexture(TextureAtlas.LOCATION_BLOCKS).setFilter(false, false);
+//            RenderSystem.setShaderTexture(0, TextureAtlas.LOCATION_BLOCKS);
+//            RenderSystem.enableBlend();
+//            RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+//            RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+//            PoseStack posestack = RenderSystem.getModelViewStack();
+//            posestack.pushPose();
+//            posestack.translate((double)p_115129_, (double)p_115130_, (double)(100.0F + Minecraft.getInstance().getItemRenderer().blitOffset));
+////            posestack.translate(8.0D, 8.0D, 8.0D);
+//            posestack.scale(1.0F, -1.0F, 1.0F);
+//            posestack.scale(16.0F*scale, 16.0F*scale, 16.0F*scale);
+//            RenderSystem.applyModelViewMatrix();
+//            PoseStack posestack1 = new PoseStack();
+//            MultiBufferSource.BufferSource multibuffersource$buffersource = Minecraft.getInstance().renderBuffers().bufferSource();
+//            boolean flag = !p_115131_.usesBlockLight();
+//            if (flag) {
+//                Lighting.setupForFlatItems();
+//            }
+//
+//            renderOpt(p_115128_, ItemTransforms.TransformType.GUI, false, posestack1, multibuffersource$buffersource, 15728880, OverlayTexture.NO_OVERLAY, p_115131_);
+//            multibuffersource$buffersource.endBatch();
+//            RenderSystem.enableDepthTest();
+//            if (flag) {
+//                Lighting.setupFor3DItems();
+//            }
+//
+//            posestack.popPose();
+//            RenderSystem.applyModelViewMatrix();
+//        }
+
+        protected void renderScaledGuiItem(ItemStack stack, int x, int y,float scale,double zOffset) {
             Minecraft.getInstance().textureManager.getTexture(TextureAtlas.LOCATION_BLOCKS).setFilter(false, false);
             RenderSystem.setShaderTexture(0, TextureAtlas.LOCATION_BLOCKS);
             RenderSystem.enableBlend();
@@ -1464,19 +1490,26 @@ public class RenderingTools {
             RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
             PoseStack posestack = RenderSystem.getModelViewStack();
             posestack.pushPose();
-            posestack.translate((double)p_115129_, (double)p_115130_, (double)(100.0F + Minecraft.getInstance().getItemRenderer().blitOffset));
-//            posestack.translate(8.0D, 8.0D, 8.0D);
+
+
+
+            posestack.translate((double)x, (double)y, (double)(100.0F  + zOffset));
+            posestack.translate(8.0D*scale, 8.0D*scale, 0.0D);
             posestack.scale(1.0F, -1.0F, 1.0F);
             posestack.scale(16.0F*scale, 16.0F*scale, 16.0F*scale);
+
             RenderSystem.applyModelViewMatrix();
             PoseStack posestack1 = new PoseStack();
+
             MultiBufferSource.BufferSource multibuffersource$buffersource = Minecraft.getInstance().renderBuffers().bufferSource();
+            BakedModel p_115131_ = Minecraft.getInstance().getItemRenderer().getModel(stack,null,null,0);
             boolean flag = !p_115131_.usesBlockLight();
             if (flag) {
                 Lighting.setupForFlatItems();
             }
 
-            renderOpt(p_115128_, ItemTransforms.TransformType.GUI, false, posestack1, multibuffersource$buffersource, 15728880, OverlayTexture.NO_OVERLAY, p_115131_);
+
+            renderItemStackOptimized(stack, ItemDisplayContext.GUI, false, posestack1, multibuffersource$buffersource, 15728880, OverlayTexture.NO_OVERLAY, p_115131_);
             multibuffersource$buffersource.endBatch();
             RenderSystem.enableDepthTest();
             if (flag) {
@@ -1487,95 +1520,129 @@ public class RenderingTools {
             RenderSystem.applyModelViewMatrix();
         }
 
-
-        public void renderOpt(ItemStack p_115144_, ItemTransforms.TransformType p_115145_, boolean p_115146_, PoseStack p_115147_, MultiBufferSource p_115148_, int p_115149_, int p_115150_, BakedModel p_115151_) {
-            ItemRenderer r = Minecraft.getInstance().getItemRenderer();
-            if (!p_115144_.isEmpty()) {
-                p_115147_.pushPose();
-                boolean flag = p_115145_ == ItemTransforms.TransformType.GUI || p_115145_ == ItemTransforms.TransformType.GROUND || p_115145_ == ItemTransforms.TransformType.FIXED;
+        public void renderItemStackOptimized(ItemStack stack, ItemDisplayContext ctx, boolean idk, PoseStack matrices, MultiBufferSource src, int x, int y, BakedModel mdl) {
+            if (!stack.isEmpty()) {
+                matrices.pushPose();
+                boolean flag = ctx == ItemDisplayContext.GUI || ctx == ItemDisplayContext.GROUND || ctx == ItemDisplayContext.FIXED;
                 if (flag) {
-                    if (p_115144_.is(Items.TRIDENT)) {
-                        p_115151_ = r.getItemModelShaper().getModelManager().getModel(new ModelResourceLocation("minecraft:trident#inventory"));
-                    } else if (p_115144_.is(Items.SPYGLASS)) {
-                        p_115151_ = r.getItemModelShaper().getModelManager().getModel(new ModelResourceLocation("minecraft:spyglass#inventory"));
+                    if (stack.is(Items.TRIDENT)) {
+                        mdl = Minecraft.getInstance().getItemRenderer().getItemModelShaper().getModelManager().getModel(ModelResourceLocation.vanilla("trident", "inventory"));
+                    } else if (stack.is(Items.SPYGLASS)) {
+                        mdl = Minecraft.getInstance().getItemRenderer().getItemModelShaper().getModelManager().getModel(ModelResourceLocation.vanilla("spyglass", "inventory"));
                     }
                 }
 
-                p_115151_ = net.minecraftforge.client.ForgeHooksClient.handleCameraTransforms(p_115147_, p_115151_, p_115145_, p_115146_);
-                p_115147_.translate(-0.5D, -0.5D, -0.5D);
-                if (!p_115151_.isCustomRenderer() && (!p_115144_.is(Items.TRIDENT) || flag)) {
+                mdl = net.minecraftforge.client.ForgeHooksClient.handleCameraTransforms(matrices, mdl, ctx, idk);
+                matrices.translate(-0.5F, -0.5F, -0.5F);
+                if (!mdl.isCustomRenderer() && (!stack.is(Items.TRIDENT) || flag)) {
                     boolean flag1;
-                    if (p_115145_ != ItemTransforms.TransformType.GUI && !p_115145_.firstPerson() && p_115144_.getItem() instanceof BlockItem) {
-                        Block block = ((BlockItem)p_115144_.getItem()).getBlock();
+                    if (ctx != ItemDisplayContext.GUI && !ctx.firstPerson() && stack.getItem() instanceof BlockItem) {
+                        Block block = ((BlockItem)stack.getItem()).getBlock();
                         flag1 = !(block instanceof HalfTransparentBlock) && !(block instanceof StainedGlassPaneBlock);
                     } else {
                         flag1 = true;
                     }
-                    for (var model : p_115151_.getRenderPasses(p_115144_, flag1)) {
-                        for (var rendertype : model.getRenderTypes(p_115144_, flag1)) {
+                    for (var model : mdl.getRenderPasses(stack, flag1)) {
+                        for (var rendertype : model.getRenderTypes(stack, flag1)) {
                             VertexConsumer vertexconsumer;
-                            if (p_115144_.is(ItemTags.COMPASSES) && p_115144_.hasFoil()) {
-                                p_115147_.pushPose();
-                                PoseStack.Pose posestack$pose = p_115147_.last();
-                                if (p_115145_ == ItemTransforms.TransformType.GUI) {
-                                    posestack$pose.pose().multiply(0.5F);
-                                } else if (p_115145_.firstPerson()) {
-                                    posestack$pose.pose().multiply(0.75F);
+                            if (( stack.is(ItemTags.COMPASSES) || stack.is(Items.CLOCK)) && stack.hasFoil()) {
+                                matrices.pushPose();
+                                PoseStack.Pose posestack$pose = matrices.last();
+                                if (ctx == ItemDisplayContext.GUI) {
+                                    MatrixUtil.mulComponentWise(posestack$pose.pose(), 0.5F);
+                                } else if (ctx.firstPerson()) {
+                                    MatrixUtil.mulComponentWise(posestack$pose.pose(), 0.75F);
                                 }
 
                                 if (flag1) {
-                                    vertexconsumer = getCompassFoilBufferDirect(p_115148_, rendertype, posestack$pose);
+                                    vertexconsumer = getCompassFoilBufferDirect(src, rendertype, posestack$pose);
                                 } else {
-                                    vertexconsumer = getCompassFoilBuffer(p_115148_, rendertype, posestack$pose);
+                                    vertexconsumer = getCompassFoilBuffer(src, rendertype, posestack$pose);
                                 }
 
-                                p_115147_.popPose();
+                                matrices.popPose();
                             } else if (flag1) {
-                                vertexconsumer = getFoilBufferDirect(p_115148_, rendertype, true, p_115144_.hasFoil());
+                                vertexconsumer = getFoilBufferDirect(src, rendertype, true, stack.hasFoil());
                             } else {
-                                vertexconsumer = ItemRenderer.getFoilBuffer(p_115148_, rendertype, true, p_115144_.hasFoil());
+                                vertexconsumer = getFoilBuffer(src, rendertype, true, stack.hasFoil());
                             }
 
-                            renderModelLists(model, p_115144_, p_115149_, p_115150_, p_115147_, vertexconsumer);
+                            renderModelLists(model, stack, x, y, matrices, vertexconsumer);
                         }
                     }
                 } else {
-                    net.minecraftforge.client.extensions.common.IClientItemExtensions.of(p_115144_).getCustomRenderer().renderByItem(p_115144_, p_115145_, p_115147_, p_115148_, p_115149_, p_115150_);
+                    net.minecraftforge.client.extensions.common.IClientItemExtensions.of(stack).getCustomRenderer().renderByItem(stack, ctx, matrices, src, x, y);
                 }
 
-                p_115147_.popPose();
+                matrices.popPose();
             }
         }
+
+
+//        public void renderOpt(ItemStack p_115144_, ItemTransforms.TransformType p_115145_, boolean p_115146_, PoseStack p_115147_, MultiBufferSource p_115148_, int p_115149_, int p_115150_, BakedModel p_115151_) {
+//            ItemRenderer r = Minecraft.getInstance().getItemRenderer();
+//            if (!p_115144_.isEmpty()) {
+//                p_115147_.pushPose();
+//                boolean flag = p_115145_ == ItemTransforms.TransformType.GUI || p_115145_ == ItemTransforms.TransformType.GROUND || p_115145_ == ItemTransforms.TransformType.FIXED;
+//                if (flag) {
+//                    if (p_115144_.is(Items.TRIDENT)) {
+//                        p_115151_ = r.getItemModelShaper().getModelManager().getModel(new ModelResourceLocation("minecraft:trident#inventory"));
+//                    } else if (p_115144_.is(Items.SPYGLASS)) {
+//                        p_115151_ = r.getItemModelShaper().getModelManager().getModel(new ModelResourceLocation("minecraft:spyglass#inventory"));
+//                    }
+//                }
+//
+//                p_115151_ = net.minecraftforge.client.ForgeHooksClient.handleCameraTransforms(p_115147_, p_115151_, p_115145_, p_115146_);
+//                p_115147_.translate(-0.5D, -0.5D, -0.5D);
+//                if (!p_115151_.isCustomRenderer() && (!p_115144_.is(Items.TRIDENT) || flag)) {
+//                    boolean flag1;
+//                    if (p_115145_ != ItemTransforms.TransformType.GUI && !p_115145_.firstPerson() && p_115144_.getItem() instanceof BlockItem) {
+//                        Block block = ((BlockItem)p_115144_.getItem()).getBlock();
+//                        flag1 = !(block instanceof HalfTransparentBlock) && !(block instanceof StainedGlassPaneBlock);
+//                    } else {
+//                        flag1 = true;
+//                    }
+//                    for (var model : p_115151_.getRenderPasses(p_115144_, flag1)) {
+//                        for (var rendertype : model.getRenderTypes(p_115144_, flag1)) {
+//                            VertexConsumer vertexconsumer;
+//                            if (p_115144_.is(ItemTags.COMPASSES) && p_115144_.hasFoil()) {
+//                                p_115147_.pushPose();
+//                                PoseStack.Pose posestack$pose = p_115147_.last();
+//                                if (p_115145_ == ItemTransforms.TransformType.GUI) {
+//                                    posestack$pose.pose().multiply(0.5F);
+//                                } else if (p_115145_.firstPerson()) {
+//                                    posestack$pose.pose().multiply(0.75F);
+//                                }
+//
+//                                if (flag1) {
+//                                    vertexconsumer = getCompassFoilBufferDirect(p_115148_, rendertype, posestack$pose);
+//                                } else {
+//                                    vertexconsumer = getCompassFoilBuffer(p_115148_, rendertype, posestack$pose);
+//                                }
+//
+//                                p_115147_.popPose();
+//                            } else if (flag1) {
+//                                vertexconsumer = getFoilBufferDirect(p_115148_, rendertype, true, p_115144_.hasFoil());
+//                            } else {
+//                                vertexconsumer = ItemRenderer.getFoilBuffer(p_115148_, rendertype, true, p_115144_.hasFoil());
+//                            }
+//
+//                            renderModelLists(model, p_115144_, p_115149_, p_115150_, p_115147_, vertexconsumer);
+//                        }
+//                    }
+//                } else {
+//                    net.minecraftforge.client.extensions.common.IClientItemExtensions.of(p_115144_).getCustomRenderer().renderByItem(p_115144_, p_115145_, p_115147_, p_115148_, p_115149_, p_115150_);
+//                }
+//
+//                p_115147_.popPose();
+//            }
+//        }
     }
 
 
 
 
-    public static class LineRenderer{
 
-        public static BufferBuilder preparePositionColorNormal(){
-            RenderSystem.disableDepthTest();
-            RenderSystem.disableTexture();
-            RenderSystem.disableCull();
-            PoseStack posestack = RenderSystem.getModelViewStack();
-            posestack.pushPose();
-            RenderSystem.applyModelViewMatrix();
-
-            RenderSystem.setShader(GameRenderer::getRendertypeLinesShader);
-            BufferBuilder bufferBuilder = Tesselator.getInstance().getBuilder();
-            RenderSystem.lineWidth(3f);
-            bufferBuilder.begin(VertexFormat.Mode.LINES, DefaultVertexFormat.POSITION_COLOR_NORMAL);
-            return bufferBuilder;
-        }
-
-        public static void end(){
-            PoseStack posestack = RenderSystem.getModelViewStack();
-            Tesselator.getInstance().end();
-            posestack.popPose();
-
-            RenderSystem.applyModelViewMatrix();
-        }
-    }
 
 
     public static class Lightning2DRenderer{
@@ -1682,20 +1749,5 @@ public class RenderingTools {
         }
 
     }
-
-    public static void renderHandManually(PoseStack matrixStack,float partialTicks,int clearValueAfter){
-        boolean render = Minecraft.getInstance().gameRenderer.renderHand;
-        if (render){
-            matrixStack.pushPose();
-            Matrix4f copy = RenderSystem.getProjectionMatrix().copy();
-            RenderSystem.clear(256, Minecraft.ON_OSX);
-            Minecraft.getInstance().gameRenderer.renderItemInHand(matrixStack,Minecraft.getInstance().gameRenderer.getMainCamera(),partialTicks);
-            RenderSystem.clear(clearValueAfter,Minecraft.ON_OSX);
-            RenderSystem.setProjectionMatrix(copy);
-            matrixStack.popPose();
-        }
-    }
-
-
 
 }

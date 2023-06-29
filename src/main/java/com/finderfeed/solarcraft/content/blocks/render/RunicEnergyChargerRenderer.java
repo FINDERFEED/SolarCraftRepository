@@ -68,7 +68,7 @@ public class RunicEnergyChargerRenderer extends AbstractRunicEnergyContainerRend
         matrices.mulPose(Vector3f.YP.rotationDegrees(rot));
         matrices.scale(0.4f,0.4f,0.4f);
         ItemRenderer renderer = Minecraft.getInstance().getItemRenderer();
-        RenderingTools.render(stack, ItemTransforms.TransformType.FIXED,false,matrices,buffer,light, OverlayTexture.NO_OVERLAY,
+        RenderingTools.renderItemStack(stack, ItemTransforms.TransformType.FIXED,false,matrices,buffer,light, OverlayTexture.NO_OVERLAY,
                 renderer.getModel(stack,tile.getLevel(),null,1));
         matrices.popPose();
     }

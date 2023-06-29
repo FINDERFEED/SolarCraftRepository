@@ -2,6 +2,7 @@ package com.finderfeed.solarcraft.content.blocks.render;
 
 import com.finderfeed.solarcraft.content.blocks.blockentities.AuraHealerTile;
 import com.finderfeed.solarcraft.content.blocks.rendering_models.AuraHealerModel;
+import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.finderfeed.solarcraft.registries.ModelLayersRegistry;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -9,7 +10,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
-import com.mojang.math.Vector3f;
+
 
 public class AuraHealerRenderer implements BlockEntityRenderer<AuraHealerTile> {
 
@@ -31,7 +32,8 @@ public class AuraHealerRenderer implements BlockEntityRenderer<AuraHealerTile> {
 
 
         
-        matrices.mulPose(Vector3f.XN.rotationDegrees(180));
+//        matrices.mulPose(Vector3f.XN.rotationDegrees(180));
+        matrices.mulPose(RenderingTools.rotationDegrees(RenderingTools.XN(),180));
         matrices.translate(0.5,-1.85,-0.5);
 //        float bigTing = 22 - (time + 15) % 45;
 //        if (bigTing >= 0) {

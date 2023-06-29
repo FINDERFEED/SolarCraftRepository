@@ -61,11 +61,11 @@ public class StagesScreen extends ScrollableScreen {
                 Progression progression = stage.SELF_PROGRESSIONS[g];
                 if (Helpers.canPlayerUnlock(progression, Minecraft.getInstance().player)){
                     addRenderableWidget(new ItemStackButton(x+getCurrentScrollX(),y+getCurrentScrollY(),16,16,(btn)->{},progression.icon,1,
-                            (button,matrix,mousex,mousey)->{
+                            (button,graphics,mousex,mousey)->{
                                 if (Helpers.hasPlayerCompletedProgression(progression,Minecraft.getInstance().player)) {
-                                    renderComponentTooltip(matrix, List.of(progression.translation,Component.translatable("solarcraft.completed").withStyle(ChatFormatting.GREEN)), mousex, mousey);
+                                    graphics.renderComponentTooltip(font, List.of(progression.translation,Component.translatable("solarcraft.completed").withStyle(ChatFormatting.GREEN)), mousex, mousey);
                                 }else{
-                                    renderComponentTooltip(matrix, List.of(progression.translation,Component.translatable("solarcraft.not_completed").withStyle(ChatFormatting.RED)), mousex, mousey);
+                                    graphics.renderComponentTooltip(font, List.of(progression.translation,Component.translatable("solarcraft.not_completed").withStyle(ChatFormatting.RED)), mousex, mousey);
                                 }
                             }));
                 }else{

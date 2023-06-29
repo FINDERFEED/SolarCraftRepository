@@ -5,10 +5,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.util.Mth;
-import org.joml.AxisAngle4f;
 import org.joml.Matrix4f;
-import org.joml.Quaternionf;
-import org.joml.Vector3f;
 
 public abstract class TextureScreenParticle extends ScreenParticle{
 
@@ -43,7 +40,7 @@ public abstract class TextureScreenParticle extends ScreenParticle{
 //        Quaternionf q = new Quaternionf(new AxisAngle4f(Mth.lerp(partialTicks,rotationValueOld,rotationValue),v));
 
 //        matrices.mulPose(Vector3f.ZP.rotationDegrees(Mth.lerp(partialTicks,rotationValueOld,rotationValue)));
-        matrices.mulPose(RenderingTools.rotation(RenderingTools.ZP(),Mth.lerp(partialTicks,rotationValueOld,rotationValue)));
+        matrices.mulPose(RenderingTools.rotationDegrees(RenderingTools.ZP(),Mth.lerp(partialTicks,rotationValueOld,rotationValue)));
         Matrix4f matrix4f = matrices.last().pose();
         vertex.vertex(matrix4f,(float) -s,(float) s,500).uv(0,0).color(rCol,gCol,bCol,alpha).uv2(LightTexture.FULL_BRIGHT).endVertex();
         vertex.vertex(matrix4f,(float) s,(float) s,500).uv(1,0).color(rCol,gCol,bCol,alpha).uv2(LightTexture.FULL_BRIGHT).endVertex();

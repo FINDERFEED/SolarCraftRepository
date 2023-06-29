@@ -6,11 +6,12 @@ import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.r
 import com.finderfeed.solarcraft.content.blocks.render.abstracts.TileEntityRenderer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Matrix4f;
+
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
+import org.joml.Matrix4f;
 
 public class BeamGeneratorRenderer extends TileEntityRenderer<BeamGenerator> {
 
