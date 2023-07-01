@@ -11,7 +11,7 @@ import com.finderfeed.solarcraft.local_library.other.EaseInOut;
 import com.finderfeed.solarcraft.content.entities.projectiles.renderers.models.RunicHammerModel;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Matrix4f;
+import org.joml.Matrix4f;
 import com.mojang.math.Vector3f;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;

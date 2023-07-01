@@ -1,11 +1,10 @@
 package com.finderfeed.solarcraft.content.world_generation.dimension_related.radiant_land;
 
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
+import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
-import com.mojang.math.Matrix4f;
-import com.mojang.math.Vector3f;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -14,6 +13,7 @@ import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.resources.ResourceLocation;
 
 import net.minecraft.world.phys.Vec3;
+import org.joml.Matrix4f;
 
 
 import javax.annotation.Nonnull;
@@ -41,8 +41,14 @@ public class RadiantLandDimEffects extends DimensionSpecialEffects {
     @Override
     public boolean renderSky(ClientLevel level, int ticks, float partialTick, PoseStack poseStack, Camera camera, Matrix4f projectionMatrix, boolean isFoggy, Runnable setupFog) {
         skyHandler.render(ticks,partialTick,poseStack,level,Minecraft.getInstance());
-        return true;
+        return super.renderSky(level, ticks, partialTick, poseStack, camera, projectionMatrix, isFoggy, setupFog);
     }
+
+//    @Override
+//    public boolean renderSky(ClientLevel level, int ticks, float partialTick, PoseStack poseStack, Camera camera, Matrix4f projectionMatrix, boolean isFoggy, Runnable setupFog) {
+//        skyHandler.render(ticks,partialTick,poseStack,level,Minecraft.getInstance());
+//        return true;
+//    }
 
     @Nullable
     @Override
@@ -69,7 +75,7 @@ class RenderSky{
         //0.75 - end of night
         float timeOfDay = world.getTimeOfDay(partialTicks);
 
-        RenderSystem.enableTexture();
+//        RenderSystem.enableTexture();
         if (!ClientHelpers.isIsRadiantLandCleaned()) {
             matrixStack.pushPose();
             matrixStack.scale(3, 1, 3);
@@ -91,8 +97,10 @@ class RenderSky{
         RenderSystem.defaultBlendFunc();
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         matrixStack.pushPose();
-        matrixStack.mulPose(Vector3f.YP.rotationDegrees(-90.0F));
-        matrixStack.mulPose(Vector3f.XP.rotationDegrees(timeOfDay * 360.0F));
+//        matrixStack.mulPose(Vector3f.YP.rotationDegrees(-90.0F));
+//        matrixStack.mulPose(Vector3f.XP.rotationDegrees(timeOfDay * 360.0F));
+        matrixStack.mulPose(RenderingTools.rotationDegrees(RenderingTools.YP(),-90));
+        matrixStack.mulPose(RenderingTools.rotationDegrees(RenderingTools.XP(),timeOfDay * 360.0F));
         Matrix4f mat = matrixStack.last().pose();
         ClientHelpers.bindText(ClientHelpers.isIsRadiantLandCleaned() ? MOON : STARGAZE);
 
@@ -114,7 +122,7 @@ class RenderSky{
         builder.vertex(mat,-25,80,25).uv(0,1).endVertex();
         tes.end();
         matrixStack.popPose();
-        RenderSystem.disableTexture();
+//        RenderSystem.disableTexture();
         //RenderSystem.depthMask(true);
         RenderSystem.disableBlend();
     }
@@ -125,23 +133,27 @@ class RenderSky{
             matrixStack.pushPose();
             if (i == 0) {
                 matrixStack.scale(1,2,1);
-                matrixStack.mulPose(Vector3f.XP.rotationDegrees(90.0F));
+//                matrixStack.mulPose(Vector3f.XP.rotationDegrees(90.0F));
+                matrixStack.mulPose(RenderingTools.rotationDegrees(RenderingTools.XP(),90));
 
             }
 
             if (i == 1) {
                 matrixStack.scale(1,2,1);
-                matrixStack.mulPose(Vector3f.XP.rotationDegrees(-90.0F));
+//                matrixStack.mulPose(Vector3f.XP.rotationDegrees(-90.0F));
+                matrixStack.mulPose(RenderingTools.rotationDegrees(RenderingTools.XP(),-90));
             }
 
             if (i == 2) {
                 matrixStack.scale(1,2,1);
-                matrixStack.mulPose(Vector3f.ZP.rotationDegrees(90.0F));
+//                matrixStack.mulPose(Vector3f.ZP.rotationDegrees(90.0F));
+                matrixStack.mulPose(RenderingTools.rotationDegrees(RenderingTools.ZP(),90));
             }
 
             if (i == 3) {
                 matrixStack.scale(1,2,1);
-                matrixStack.mulPose(Vector3f.ZP.rotationDegrees(-90.0F));
+//                matrixStack.mulPose(Vector3f.ZP.rotationDegrees(-90.0F));
+                matrixStack.mulPose(RenderingTools.rotationDegrees(RenderingTools.ZP(),-90));
             }
 
             Matrix4f matrix4f = matrixStack.last().pose();
@@ -161,7 +173,8 @@ class RenderSky{
         bufferbuilder.vertex(matrix4f, 100.0F, -100.0F, 100.0F).uv(1.0F, 1.0F).color(mod, mod, mod, opacityFactor).endVertex();
         bufferbuilder.vertex(matrix4f, 100.0F, -100.0F, -100.0F).uv(1.0F, 0.0F).color(mod, mod, mod, opacityFactor).endVertex();
 
-        matrixStack.mulPose(Vector3f.XN.rotationDegrees(180));
+//        matrixStack.mulPose(Vector3f.XN.rotationDegrees(180));
+        matrixStack.mulPose(RenderingTools.rotationDegrees(RenderingTools.XN(),180));
         bufferbuilder.vertex(matrix4f, -100.0F, -100.0F, -100.0F).uv(0.0F, 0.0F).color(mod, mod, mod, opacityFactor).endVertex();
         bufferbuilder.vertex(matrix4f, -100.0F, -100.0F, 100.0F).uv(0.0F, 1.0F).color(mod, mod, mod, opacityFactor).endVertex();
         bufferbuilder.vertex(matrix4f, 100.0F, -100.0F, 100.0F).uv(1.0F, 1.0F).color(mod, mod, mod, opacityFactor).endVertex();

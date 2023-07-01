@@ -14,7 +14,8 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
-import com.mojang.math.Vector3f;
+
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
 
@@ -57,7 +58,8 @@ public class InfuserRenderer extends AbstractRunicEnergyContainerRenderer<Infuse
 
             VertexConsumer vertex = buffer.getBuffer(RenderType.text(fancyRing));
             matrices.translate(0.5,0.001,0.5);
-            matrices.mulPose(Vector3f.YP.rotationDegrees(time % 360));
+//            matrices.mulPose(Vector3f.YP.rotationDegrees(time % 360));
+            matrices.mulPose(RenderingTools.rotationDegrees(RenderingTools.YP(),time % 360));
             PoseStack.Pose entry = matrices.last();
             vertex.vertex(entry.pose(),-1.25F,0,-1.25F).color(255,255,255,255).uv(1,0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
             vertex.vertex(entry.pose(), 1.25F,0,-1.25F).color(255,255,255,255).uv(1,1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
@@ -70,7 +72,8 @@ public class InfuserRenderer extends AbstractRunicEnergyContainerRenderer<Infuse
             vertex.vertex(entry.pose(),-1.25F,0,-1.25F).color(255,255,255,255).uv(0,0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
 
 
-            matrices.mulPose(Vector3f.YP.rotationDegrees(-(time % 360)*2));
+//            matrices.mulPose(Vector3f.YP.rotationDegrees(-(time % 360)*2));
+            matrices.mulPose(RenderingTools.rotationDegrees(RenderingTools.YP(),-(time % 360)*2));
             vertex.vertex(entry.pose(),-2.8F,0,-2.8F).color(255,255,255,255).uv(1,0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
             vertex.vertex(entry.pose(), 2.8F,0,-2.8F).color(255,255,255,255).uv(1,1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
             vertex.vertex(entry.pose(), 2.8F,0, 2.8F).color(255,255,255,255).uv(0,1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
@@ -88,13 +91,16 @@ public class InfuserRenderer extends AbstractRunicEnergyContainerRenderer<Infuse
 
         if (!tile.getItem(tile.outputSlot()).isEmpty()) {
             matrices.translate(0.5, 0.5 + Math.sin(time/20)*0.05, 0.5);
-            matrices.mulPose(Vector3f.YP.rotationDegrees((time % 360) * 2f));
-            Minecraft.getInstance().getItemRenderer().render(tile.getItem(tile.outputSlot()), ItemTransforms.TransformType.GROUND, true,
+//            matrices.mulPose(Vector3f.YP.rotationDegrees((time % 360) * 2f));
+            matrices.mulPose(RenderingTools.rotationDegrees(RenderingTools.YP(),(time % 360) * 2f));
+            Minecraft.getInstance().getItemRenderer().render(tile.getItem(tile.outputSlot()), ItemDisplayContext.GROUND, true,
                     matrices, buffer, light, light2, Minecraft.getInstance().getItemRenderer().getModel(tile.getItem(tile.outputSlot()), tile.getLevel(), null,0));
         }else{
             matrices.translate(0.5, 0.5 + Math.sin(time/20)*0.05, 0.5);
-            matrices.mulPose(Vector3f.YP.rotationDegrees((time % 360) * 2f));
-            Minecraft.getInstance().getItemRenderer().render(tile.getItem(tile.inputSlot()), ItemTransforms.TransformType.GROUND, true,
+//            matrices.mulPose(Vector3f.YP.rotationDegrees((time % 360) * 2f));
+            matrices.mulPose(RenderingTools.rotationDegrees(RenderingTools.YP(),(time % 360) * 2f));
+
+            Minecraft.getInstance().getItemRenderer().render(tile.getItem(tile.inputSlot()), ItemDisplayContext.GROUND, true,
                     matrices, buffer, light, light2, Minecraft.getInstance().getItemRenderer().getModel(tile.getItem(tile.inputSlot()), tile.getLevel(), null,0));
         }
 
@@ -110,7 +116,8 @@ public class InfuserRenderer extends AbstractRunicEnergyContainerRenderer<Infuse
             float rotValue = (float)tile.getRotationValue().getValue() ;
 
             matrices.translate(0.5,0.5,0.5);
-            matrices.mulPose(Vector3f.YN.rotationDegrees(rotValue * 360));
+//            matrices.mulPose(Vector3f.YN.rotationDegrees(rotValue * 360));
+            matrices.mulPose(RenderingTools.rotationDegrees(RenderingTools.YN(),rotValue * 360));
             for (int i = 0; i < 14; i++) {
                 int iter = i;
                 //kostyli nashe vse!
@@ -124,7 +131,7 @@ public class InfuserRenderer extends AbstractRunicEnergyContainerRenderer<Infuse
 
                     matrices.translate(v.x, v.y, v.z);
                     RenderingTools.applyMovementMatrixRotations(matrices, v.normalize().reverse());
-                    Minecraft.getInstance().getItemRenderer().render(item, ItemTransforms.TransformType.GROUND, true,
+                    Minecraft.getInstance().getItemRenderer().render(item, ItemDisplayContext.GROUND, true,
                             matrices, buffer, light, light2, Minecraft.getInstance().getItemRenderer().getModel(item, tile.getLevel(), null, 0));
                     matrices.popPose();
                 }
@@ -136,7 +143,8 @@ public class InfuserRenderer extends AbstractRunicEnergyContainerRenderer<Infuse
     public void drawRing(float partialTicks,PoseStack stack,MultiBufferSource buffer,int light,int light2,float scaleFactor,float angle){
         VertexConsumer vertex = buffer.getBuffer(RenderType.text(text));
         stack.translate(0.5,0.8,0.5);
-        stack.mulPose(Vector3f.YP.rotationDegrees(angle));
+//        stack.mulPose(Vector3f.YP.rotationDegrees(angle));
+        stack.mulPose(RenderingTools.rotationDegrees(RenderingTools.YP(),angle));
         PoseStack.Pose entry = stack.last();
         vertex.vertex(entry.pose(),-0.5F*scaleFactor,0,-0.5F*scaleFactor).color(255,255,255,255).uv(1,0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
         vertex.vertex(entry.pose(),0.5F*scaleFactor,0,-0.5F*scaleFactor).color(255,255,255,255).uv(1,1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();

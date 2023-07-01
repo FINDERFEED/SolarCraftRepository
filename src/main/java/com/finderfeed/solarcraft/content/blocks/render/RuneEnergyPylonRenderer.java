@@ -16,13 +16,11 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 
 import net.minecraft.resources.ResourceLocation;
-import com.mojang.math.Matrix4f;
-import com.mojang.math.Quaternion;
-
-import com.mojang.math.Vector3f;
+import org.joml.Matrix4f;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import org.joml.Quaternionf;
 
 import java.util.Map;
 
@@ -57,7 +55,7 @@ public class RuneEnergyPylonRenderer implements BlockEntityRenderer<RuneEnergyPy
             Matrix4f modelview = matrices.last().pose();
             this.loadShader(tile,SHADER_LOCATION, new UniformPlusPlus(Map.of(
                     "projection", RenderSystem.getProjectionMatrix(),
-                    "modelview", modelview.copy(),
+                    "modelview", new Matrix4f(modelview),
                     "distance", dist,
                     "intensity", 0.5f
             )));
@@ -71,7 +69,8 @@ public class RuneEnergyPylonRenderer implements BlockEntityRenderer<RuneEnergyPy
 
                 matrices.translate(0.5, 0.5, 0.5f);
                 matrices.scale(0.7f,0.7f,0.7f);
-                matrices.mulPose(Vector3f.YP.rotationDegrees(i*45+time%360));
+//                matrices.mulPose(Vector3f.YP.rotationDegrees(i*45+time%360));
+                matrices.mulPose(RenderingTools.rotationDegrees(RenderingTools.YP(),i*45+time%360));
                 Matrix4f matrix1 = matrices.last().pose();
                 vertex.vertex(matrix1, -0.5f, 0.5f, 1.5f).color(255, 255, 255, 255).uv(0, 0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
                 vertex.vertex(matrix1, 0.5f, 0.5f, 1.5f).color(255, 255, 255, 255).uv(1, 0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
@@ -93,12 +92,13 @@ public class RuneEnergyPylonRenderer implements BlockEntityRenderer<RuneEnergyPy
 
 
 
-        Quaternion quaternion = Minecraft.getInstance().gameRenderer.getMainCamera().rotation();
+        Quaternionf quaternion = Minecraft.getInstance().gameRenderer.getMainCamera().rotation();
 
         float time = (Minecraft.getInstance().level.getGameTime()+partialTicks)*5;
 
         matrices.mulPose(quaternion);
-        matrices.mulPose(Vector3f.ZP.rotationDegrees(time%360));
+//        matrices.mulPose(Vector3f.ZP.rotationDegrees(time%360));
+        matrices.mulPose(RenderingTools.rotationDegrees(RenderingTools.ZP(),time%360));
         matrices.scale(1.5f,1.5f,1.5f);
         Matrix4f matrix = matrices.last().pose();
         vertex.vertex(matrix, -0.5f,0.5f,0).color(255, 255, 0, 200).uv(0, 1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
@@ -110,7 +110,9 @@ public class RuneEnergyPylonRenderer implements BlockEntityRenderer<RuneEnergyPy
         matrices.pushPose();
         matrices.translate(0.5,0.5,0.5);
         matrices.mulPose(quaternion);
-        matrices.mulPose(Vector3f.ZN.rotationDegrees(time%360));
+//        matrices.mulPose(Vector3f.ZN.rotationDegrees(time%360));
+        matrices.mulPose(RenderingTools.rotationDegrees(RenderingTools.ZN(),time%360));
+
         Matrix4f matrix2 = matrices.last().pose();
         matrices.scale(1.5f,1.5f,1.5f);
         vertex.vertex(matrix2, -0.5f,0.5f,0.001f).color(255, 255, 0, 200).uv(0, 1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();

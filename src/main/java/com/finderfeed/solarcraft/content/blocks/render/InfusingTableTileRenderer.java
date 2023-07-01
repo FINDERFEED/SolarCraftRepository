@@ -7,7 +7,7 @@ import com.finderfeed.solarcraft.content.blocks.blockentities.InfusingTableTile;
 import com.finderfeed.solarcraft.content.blocks.render.abstracts.TileEntityRenderer;
 import com.finderfeed.solarcraft.registries.recipe_types.SolarcraftRecipeTypes;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Vector3f;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -16,6 +16,7 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.util.Mth;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;
 
@@ -64,7 +65,8 @@ public class InfusingTableTileRenderer extends TileEntityRenderer<InfusingTableT
                 int count = items.size();
                 matrices.pushPose();
                 matrices.translate(0.5,1.4,0.5);
-                matrices.mulPose(Vector3f.YN.rotationDegrees(time+rotationModifier));
+//                matrices.mulPose(Vector3f.YN.rotationDegrees(time+rotationModifier));
+                matrices.mulPose(RenderingTools.rotationDegrees(RenderingTools.YN(),time+rotationModifier));
                 matrices.scale(0.4f,0.4f,0.4f);
                 for (int i = 0 ;i < count;i++){
                     double h = i*(360f/count);
@@ -73,9 +75,10 @@ public class InfusingTableTileRenderer extends TileEntityRenderer<InfusingTableT
 
                     matrices.pushPose();
                     matrices.translate(x,0,z);
-                    matrices.mulPose(Vector3f.YP.rotationDegrees((float)(h) % 360));
+//                    matrices.mulPose(Vector3f.YP.rotationDegrees((float)(h) % 360));
+                    matrices.mulPose(RenderingTools.rotationDegrees(RenderingTools.YP(),(float)(h) % 360));
                     ItemStack toRender = items.get(i);
-                    renderer.render(toRender, ItemTransforms.TransformType.FIXED,false,matrices,src, LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY,
+                    renderer.render(toRender, ItemDisplayContext.FIXED,false,matrices,src, LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY,
                             renderer.getModel(toRender,null,null,0));
                     matrices.popPose();
                 }
@@ -88,8 +91,9 @@ public class InfusingTableTileRenderer extends TileEntityRenderer<InfusingTableT
                 matrices.pushPose();
                 matrices.translate(0.5, 1.4, 0.5);
                 matrices.scale(0.4f, 0.4f, 0.4f);
-                matrices.mulPose(Vector3f.YN.rotationDegrees(time % 360));
-                renderer.render(stack, ItemTransforms.TransformType.FIXED, false, matrices, src, LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY,
+//                matrices.mulPose(Vector3f.YN.rotationDegrees(time % 360));
+                matrices.mulPose(RenderingTools.rotationDegrees(RenderingTools.YN(),time % 360));
+                renderer.render(stack, ItemDisplayContext.FIXED, false, matrices, src, LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY,
                         renderer.getModel(stack, null, null, 0));
                 matrices.popPose();
             }

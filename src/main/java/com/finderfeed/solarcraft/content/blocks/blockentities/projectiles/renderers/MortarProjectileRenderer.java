@@ -1,6 +1,7 @@
 package com.finderfeed.solarcraft.content.blocks.blockentities.projectiles.renderers;
 
 import com.finderfeed.solarcraft.content.blocks.blockentities.projectiles.MortarProjectile;
+import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.finderfeed.solarcraft.registries.ModelLayersRegistry;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.geom.PartPose;
@@ -16,7 +17,7 @@ import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 
-import com.mojang.math.Vector3f;
+
 
 
 
@@ -38,15 +39,17 @@ public class MortarProjectileRenderer extends EntityRenderer<MortarProjectile> {
     }
 
     @Override
-    public void render(MortarProjectile p_225623_1_, float p_225623_2_, float p_225623_3_, PoseStack p_225623_4_, MultiBufferSource p_225623_5_, int p_225623_6_) {
+    public void render(MortarProjectile p_225623_1_, float p_225623_2_, float p_225623_3_, PoseStack matrices, MultiBufferSource p_225623_5_, int p_225623_6_) {
 
 
         float time = (p_225623_1_.level.getGameTime() + p_225623_2_);
-        p_225623_4_.mulPose(Vector3f.XN.rotationDegrees(time%360));
-        p_225623_4_.mulPose(Vector3f.ZN.rotationDegrees(time%360));
-        ray.render(p_225623_4_, p_225623_5_.getBuffer(RenderType.text(RAY)),p_225623_6_,p_225623_6_);
+//        matrices.mulPose(Vector3f.XN.rotationDegrees(time%360));
+//        matrices.mulPose(Vector3f.ZN.rotationDegrees(time%360));
+        matrices.mulPose(RenderingTools.rotationDegrees(RenderingTools.XN(),time%360));
+        matrices.mulPose(RenderingTools.rotationDegrees(RenderingTools.ZN(),time%360));
+        ray.render(matrices, p_225623_5_.getBuffer(RenderType.text(RAY)),p_225623_6_,p_225623_6_);
 
-        super.render(p_225623_1_, p_225623_2_, p_225623_3_, p_225623_4_, p_225623_5_, p_225623_6_);
+        super.render(p_225623_1_, p_225623_2_, p_225623_3_, matrices, p_225623_5_, p_225623_6_);
     }
 
     @Override

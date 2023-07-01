@@ -8,15 +8,17 @@ import com.finderfeed.solarcraft.content.recipe_types.infusing_new.InfusingRecip
 import com.finderfeed.solarcraft.registries.recipe_types.SolarcraftRecipeTypes;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
-import com.mojang.math.Matrix4f;
+
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.resources.ResourceLocation;
-import com.mojang.math.Vector3f;
+
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import org.joml.Matrix4f;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,19 +68,20 @@ public class InfuserScreen extends AbstractContainerScreen<InfuserContainer> {
         this.tier = menu.te.getTier();
     }
     @Override
-    public void render(PoseStack stack, int rouseX, int rouseY, float partialTicks){
+    public void render(GuiGraphics graphics, int rouseX, int rouseY, float partialTicks){
 
-        this.renderBackground(stack);
+        this.renderBackground(graphics);
 
-        super.render(stack,rouseX,rouseY,partialTicks);
-        this.renderTooltip(stack,rouseX,rouseY);
+        super.render(graphics,rouseX,rouseY,partialTicks);
+        this.renderTooltip(graphics,rouseX,rouseY);
 
 
 
     }
     @Override
-    protected void renderBg(PoseStack matrices, float partialTicks, int x, int y) {
+    protected void renderBg(GuiGraphics graphics, float partialTicks, int x, int y) {
         InfuserTileEntity tile = this.menu.te;
+        PoseStack matrices = graphics.pose();
         matrices.pushPose();
         int offs = -3;
         if (tier == InfuserTileEntity.Tier.SOLAR_ENERGY) {
@@ -90,7 +93,7 @@ public class InfuserScreen extends AbstractContainerScreen<InfuserContainer> {
         if ((int)minecraft.getWindow().getGuiScale() == 2){
             a = -1;
         }
-        this.blit(matrices, relX+4+a + offs, relY-8, 0, 0, 190, 230);
+        RenderingTools.blitWithBlend(matrices, relX+4+a + offs, relY-8, 0, 0, 190, 230,256,256,0,1f);
 
 
 
@@ -118,7 +121,9 @@ public class InfuserScreen extends AbstractContainerScreen<InfuserContainer> {
                 RenderingTools.fill(matrices,relX + 11 + a,relY + 80,relX + 21 + a,relY + (int)(80 - percentNeeded),1,1,0,0.5f);
             }
             if (RenderingTools.isMouseInBorders(x,y,relX + 11 + a,relY + 80 - 33,relX + 21 + a,relY + 80)){
-                postRender.add(()->renderTooltip(matrices,Component.literal(tile.energy + "/" + tile.getMaxSolarEnergy()),x,y));
+                postRender.add(()->{
+                    graphics.renderTooltip(font,Component.literal(tile.energy + "/" + tile.getMaxSolarEnergy()),x,y);
+                });
             }
             RenderingTools.fill(matrices,relX + 11 + a,relY + 80,relX + 21 + a,relY + (int)(80 - percent),1,1,0,1);
         }
@@ -128,36 +133,36 @@ public class InfuserScreen extends AbstractContainerScreen<InfuserContainer> {
 
             if (recipe.isPresent()) {
                 InfusingRecipe recipe1 = recipe.get();
-                List<Component> components = RenderingTools.renderRunicEnergyGui(matrices,relX - 74 + a +offs,relY - 8,x,y,tile.getRunicEnergyContainer(),recipe1.RUNIC_ENERGY_COST, (float) tile.getRunicEnergyLimit());
+                List<Component> components = RenderingTools.renderRunicEnergyGui(graphics,relX - 74 + a +offs,relY - 8,x,y,tile.getRunicEnergyContainer(),recipe1.RUNIC_ENERGY_COST, (float) tile.getRunicEnergyLimit());
 
                 for (Component component : components){
-                    renderTooltip(matrices,component,x,y);
+                    graphics.renderTooltip(font,component,x,y);
                 }
             }else{
-                List<Component> components = RenderingTools.renderRunicEnergyGui(matrices,relX - 74 + a +offs,relY - 8,x,y,tile.getRunicEnergyContainer(),null, (float) tile.getRunicEnergyLimit());
+                List<Component> components = RenderingTools.renderRunicEnergyGui(graphics,relX - 74 + a +offs,relY - 8,x,y,tile.getRunicEnergyContainer(),null, (float) tile.getRunicEnergyLimit());
                 for (Component component : components){
-                    renderTooltip(matrices,component,x,y);
+                    graphics.renderTooltip(font,component,x,y);
                 }
             }
 
 
         }
 
-        renderItemAndTooltip(tile.getItem(0) , relX + 7 + a + offs + 34,    relY - 8 + a + 20,x,y,matrices);
-        renderItemAndTooltip(tile.getItem(1) , relX + 7 + a + offs + 80,    relY - 8 + a + 13,x,y,matrices);
-        renderItemAndTooltip(tile.getItem(2) , relX + 7 + a + offs + 126,   relY - 8 + a + 20,x,y,matrices);
-        renderItemAndTooltip(tile.getItem(3) , relX + 7 + a + offs + 54,    relY - 8 + a + 40,x,y,matrices);
-        renderItemAndTooltip(tile.getItem(4) , relX + 7 + a + offs + 106,   relY - 8 + a + 40,x,y,matrices);
-        renderItemAndTooltip(tile.getItem(5) , relX + 7 + a + offs + 27,    relY - 8 + a + 66,x,y,matrices);
-        renderItemAndTooltip(tile.getItem(7) , relX + 7 + a + offs + 133,   relY - 8 + a + 66,x,y,matrices);
-        renderItemAndTooltip(tile.getItem(8) , relX + 7 + a + offs + 54,    relY - 8 + a + 92,x,y,matrices);
-        renderItemAndTooltip(tile.getItem(9) , relX + 7 + a  + offs+ 106,   relY - 8 + a + 92,x,y,matrices);
-        renderItemAndTooltip(tile.getItem(10),relX +  7 + a + offs + 34,    relY - 8 + a + 112,x,y,matrices);
-        renderItemAndTooltip(tile.getItem(11),relX +  7 + a + offs + 80,    relY - 8 + a + 119,x,y,matrices);
-        renderItemAndTooltip(tile.getItem(12),relX +  7 + a + offs + 126,   relY - 8 + a + 112,x,y,matrices);
+        renderItemAndTooltip(tile.getItem(0) , relX + 7 + a + offs + 34,    relY - 8 + a + 20,x,y,graphics);
+        renderItemAndTooltip(tile.getItem(1) , relX + 7 + a + offs + 80,    relY - 8 + a + 13,x,y,graphics);
+        renderItemAndTooltip(tile.getItem(2) , relX + 7 + a + offs + 126,   relY - 8 + a + 20,x,y,graphics);
+        renderItemAndTooltip(tile.getItem(3) , relX + 7 + a + offs + 54,    relY - 8 + a + 40,x,y,graphics);
+        renderItemAndTooltip(tile.getItem(4) , relX + 7 + a + offs + 106,   relY - 8 + a + 40,x,y,graphics);
+        renderItemAndTooltip(tile.getItem(5) , relX + 7 + a + offs + 27,    relY - 8 + a + 66,x,y,graphics);
+        renderItemAndTooltip(tile.getItem(7) , relX + 7 + a + offs + 133,   relY - 8 + a + 66,x,y,graphics);
+        renderItemAndTooltip(tile.getItem(8) , relX + 7 + a + offs + 54,    relY - 8 + a + 92,x,y,graphics);
+        renderItemAndTooltip(tile.getItem(9) , relX + 7 + a  + offs+ 106,   relY - 8 + a + 92,x,y,graphics);
+        renderItemAndTooltip(tile.getItem(10),relX +  7 + a + offs + 34,    relY - 8 + a + 112,x,y,graphics);
+        renderItemAndTooltip(tile.getItem(11),relX +  7 + a + offs + 80,    relY - 8 + a + 119,x,y,graphics);
+        renderItemAndTooltip(tile.getItem(12),relX +  7 + a + offs + 126,   relY - 8 + a + 112,x,y,graphics);
 
         if (recipe.isPresent()){
-            renderItemAndTooltip(recipe.get().output.copy(),relX+159+a + offs + 3,relY+2,x,y,matrices);
+            renderItemAndTooltip(recipe.get().output.copy(),relX+159+a + offs + 3,relY+2,x,y,graphics);
 
         }
 
@@ -168,38 +173,40 @@ public class InfuserScreen extends AbstractContainerScreen<InfuserContainer> {
             postRender.clear();
         }
     }
-    private void renderItemAndTooltip(ItemStack toRender, int place1, int place2, int mousex, int mousey, PoseStack matrices){
-        minecraft.getItemRenderer().renderGuiItem(toRender,place1,place2);
-        minecraft.getItemRenderer().renderGuiItemDecorations(font,toRender,place1,place2);
+    private void renderItemAndTooltip(ItemStack toRender, int place1, int place2, int mousex, int mousey, GuiGraphics graphics){
+        PoseStack matrices = graphics.pose();
+        graphics.renderItem(toRender,place1,place2);
+        graphics.renderItemDecorations(font,toRender,place1,place2);
         if (((mousex >= place1) && (mousex <= place1+16)) && ((mousey >= place2) && (mousey <= place2+16)) && !toRender.getItem().equals(Items.AIR)){
             matrices.pushPose();
-            renderTooltip(matrices,toRender,mousex,mousey);
+            graphics.renderTooltip(font,toRender,mousex,mousey);
+
             matrices.popPose();
         }
     }
 
 
     //runic energy bar texture is binded before it
-    private void renderEnergyBar(PoseStack matrices, int offsetx, int offsety, double energyAmount,boolean simulate,int mousex,int mousey){
-
-        matrices.pushPose();
-
-        int texturex = Math.round((float)energyAmount/(float)menu.te.getRunicEnergyLimit()*60);
-        matrices.translate(offsetx,offsety,0);
-        matrices.mulPose(Vector3f.ZN.rotationDegrees(90));
-        if (!simulate) {
-            blit(matrices, 0, 0, 0, 0, texturex, 6);
-            if (mousex+2 > offsetx && mousex+2 < offsetx + 7 && mousey > offsety-60 && mousey < offsety){
-                postRender.add(()->{
-                    renderTooltip(matrices,Component.literal((float) energyAmount + "/" + menu.te.getRunicEnergyLimit()),mousex-3,mousey+3);
-                });
-            }
-        }else{
-
-            blitm(matrices, 0, 0, 0, 0, texturex, 6,60,6);
-        }
-        matrices.popPose();
-    }
+//    private void renderEnergyBar(PoseStack matrices, int offsetx, int offsety, double energyAmount,boolean simulate,int mousex,int mousey){
+//
+//        matrices.pushPose();
+//
+//        int texturex = Math.round((float)energyAmount/(float)menu.te.getRunicEnergyLimit()*60);
+//        matrices.translate(offsetx,offsety,0);
+//        matrices.mulPose(Vector3f.ZN.rotationDegrees(90));
+//        if (!simulate) {
+//            blit(matrices, 0, 0, 0, 0, texturex, 6);
+//            if (mousex+2 > offsetx && mousex+2 < offsetx + 7 && mousey > offsety-60 && mousey < offsety){
+//                postRender.add(()->{
+//                    renderTooltip(matrices,Component.literal((float) energyAmount + "/" + menu.te.getRunicEnergyLimit()),mousex-3,mousey+3);
+//                });
+//            }
+//        }else{
+//
+//            blitm(matrices, 0, 0, 0, 0, texturex, 6,60,6);
+//        }
+//        matrices.popPose();
+//    }
 
 
 

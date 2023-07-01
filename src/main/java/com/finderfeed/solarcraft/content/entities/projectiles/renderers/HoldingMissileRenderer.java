@@ -3,8 +3,6 @@ package com.finderfeed.solarcraft.content.entities.projectiles.renderers;
 import com.finderfeed.solarcraft.content.entities.projectiles.CrystalBossAttackHoldingMissile;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Matrix4f;
-import com.mojang.math.Quaternion;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -13,6 +11,8 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.resources.ResourceLocation;
+import org.joml.Matrix4f;
+import org.joml.Quaternionf;
 
 public class HoldingMissileRenderer extends EntityRenderer<CrystalBossAttackHoldingMissile> {
 
@@ -32,7 +32,7 @@ public class HoldingMissileRenderer extends EntityRenderer<CrystalBossAttackHold
         matrices.pushPose();
         VertexConsumer vertex = buffer.getBuffer(RenderType.text(MAIN));
         matrices.translate(0,0.125,0);
-        Quaternion quaternion = Minecraft.getInstance().gameRenderer.getMainCamera().rotation();
+        Quaternionf quaternion = Minecraft.getInstance().gameRenderer.getMainCamera().rotation();
         matrices.mulPose(quaternion);
         Matrix4f matrix = matrices.last().pose();
         vertex.vertex(matrix, -0.5f,0.5f,0).color(255, 255, 0, 200).uv(0, 1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();

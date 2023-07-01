@@ -6,7 +6,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.resources.ResourceLocation;
-import com.mojang.math.Vector3f;
+
 import net.minecraft.network.chat.Component;
 
 public class SolarFurnaceScreen extends AbstractContainerScreen<SolarFurnaceContainer> {

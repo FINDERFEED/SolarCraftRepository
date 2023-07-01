@@ -1,8 +1,9 @@
 package com.finderfeed.solarcraft.content.entities.renderers;
 
 import com.finderfeed.solarcraft.content.entities.not_alive.MyFallingBlockEntity;
+import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Vector3f;
+
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.block.BlockRenderDispatcher;
 import net.minecraft.client.renderer.entity.EntityRenderer;
@@ -17,6 +18,7 @@ import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.client.model.data.ModelData;
+import org.joml.Vector3f;
 
 public class MyFallingBlockEntityRenderer extends EntityRenderer<MyFallingBlockEntity> {
 
@@ -33,16 +35,18 @@ public class MyFallingBlockEntityRenderer extends EntityRenderer<MyFallingBlockE
     public void render(MyFallingBlockEntity entity, float p_114635_, float p_114636_, PoseStack matrices, MultiBufferSource p_114638_, int p_114639_) {
         BlockState blockstate = entity.getBlockState();
         if (blockstate.getRenderShape() == RenderShape.MODEL) {
-            Level level = entity.getLevel();
+            Level level = entity.level;
             if (blockstate != level.getBlockState(entity.blockPosition()) && blockstate.getRenderShape() != RenderShape.INVISIBLE) {
                 matrices.pushPose();
-                BlockPos blockpos = new BlockPos(entity.getX(), entity.getBoundingBox().maxY, entity.getZ());
+                BlockPos blockpos = new BlockPos((int)entity.getX(), (int)entity.getBoundingBox().maxY, (int)entity.getZ());
                 matrices.translate(0.5,0.5,0.5);
 
                 float time = (entity.level.getGameTime() + p_114636_)*30%360;
                 Vec3 speed = entity.getDeltaMovement().multiply(1,0,1).normalize();
                 Vec3 rotateAround = speed.yRot((float)Math.toRadians(90));
-                matrices.mulPose(new Vector3f((float)rotateAround.x,(float)rotateAround.y,(float)rotateAround.z).rotationDegrees(time));
+//                matrices.mulPose(new Vector3f((float)rotateAround.x,(float)rotateAround.y,(float)rotateAround.z).rotationDegrees(time));
+
+                matrices.mulPose(RenderingTools.rotationDegrees(new Vector3f((float)rotateAround.x,(float)rotateAround.y,(float)rotateAround.z),time));
 
                 matrices.translate(-0.5D, 0.0D, -0.5D);
                 var model = this.dispatcher.getBlockModel(blockstate);

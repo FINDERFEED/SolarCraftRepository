@@ -1,5 +1,6 @@
 package com.finderfeed.solarcraft.content.abilities.solar_strike;
 
+import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -9,9 +10,7 @@ import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
-import com.mojang.math.Matrix4f;
-import com.mojang.math.Vector3f;
-
+import org.joml.Matrix4f;
 
 
 public class SolarStrikeRenderer extends EntityRenderer<SolarStrikeEntity> {
@@ -34,7 +33,8 @@ public class SolarStrikeRenderer extends EntityRenderer<SolarStrikeEntity> {
         }
 
         float time = (entity.level.getGameTime() + partialTicks)*10 % 360;
-        matrices.mulPose(Vector3f.YP.rotationDegrees(time));
+//        matrices.mulPose(Vector3f.YP.rotationDegrees(time));
+        matrices.mulPose(RenderingTools.rotationDegrees(RenderingTools.YP(),time));
 
         PoseStack.Pose entry = matrices.last();
         Matrix4f matrix = entry.pose();
