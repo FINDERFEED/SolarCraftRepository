@@ -5,7 +5,6 @@ import com.finderfeed.solarcraft.content.entities.projectiles.ThrownLightProject
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import org.joml.Matrix4f;
-import com.mojang.math.Quaternion;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -13,6 +12,7 @@ import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
+import org.joml.Quaternionf;
 
 public class ThrownLightProjectileRenderer extends EntityRenderer<ThrownLightProjectile> {
 
@@ -27,7 +27,7 @@ public class ThrownLightProjectileRenderer extends EntityRenderer<ThrownLightPro
         super.render(e, idk, pticks, matrices, src, light);
         VertexConsumer vertex = src.getBuffer(RenderType.text(TEXTURE));
         matrices.pushPose();
-        Quaternion quaternion = Minecraft.getInstance().gameRenderer.getMainCamera().rotation();
+        Quaternionf quaternion = Minecraft.getInstance().gameRenderer.getMainCamera().rotation();
         matrices.translate(0,0.125,0);
         matrices.mulPose(quaternion);
         Matrix4f m = matrices.last().pose();

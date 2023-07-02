@@ -22,7 +22,7 @@ import net.minecraft.core.BlockPos;
 import org.joml.Matrix4f;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.phys.Vec3;
-import com.mojang.math.Vector3f;
+import static com.finderfeed.solarcraft.local_library.helpers.RenderingTools.*;
 import net.minecraftforge.client.model.data.ModelData;
 
 import java.util.List;
@@ -52,13 +52,15 @@ public class SolarCoreRenderer implements BlockEntityRenderer<SolarEnergyCoreTil
                     Vec3 verticalVector = new Vec3(0, childPos.y - parentPos.y, 0).normalize();
 
                     if (horizontalVector.x >= 0) {
-                        matrices.mulPose(Vector3f.YN.rotationDegrees((float) Math.toDegrees(Math.acos(-horizontalVector.normalize().z))));
+//                        matrices.mulPose(Vector3f.YN.rotationDegrees((float) Math.toDegrees(Math.acos(-horizontalVector.normalize().z))));
+                        matrices.mulPose(rotationDegrees(YN(),(float) Math.toDegrees(Math.acos(-horizontalVector.normalize().z))));
                     } else {
-                        matrices.mulPose(Vector3f.YN.rotationDegrees(180 + (float) Math.toDegrees(Math.acos(horizontalVector.normalize().z))));
+//                        matrices.mulPose(Vector3f.YN.rotationDegrees(180 + (float) Math.toDegrees(Math.acos(horizontalVector.normalize().z))));
+                        matrices.mulPose(rotationDegrees(YN(),180 + (float) Math.toDegrees(Math.acos(-horizontalVector.normalize().z))));
                     }
 
-                    matrices.mulPose(Vector3f.XN.rotationDegrees((float) Math.toDegrees(Math.acos(vector.normalize().y))));
-
+//                    matrices.mulPose(Vector3f.XN.rotationDegrees((float) Math.toDegrees(Math.acos(vector.normalize().y))));
+                    matrices.mulPose(rotationDegrees(XN(),(float) Math.toDegrees(Math.acos(vector.normalize().y))));
 
                     float percent = (float) (Helpers.getGipotenuza(Helpers.getGipotenuza(vector.x, vector.z), vector.y));
 
@@ -122,7 +124,8 @@ public class SolarCoreRenderer implements BlockEntityRenderer<SolarEnergyCoreTil
                 matrices.pushPose();
                 matrices.scale(0.5f, 0.5f, 0.5f);
                 matrices.translate(1, 1, 1);
-                matrices.mulPose(Vector3f.YP.rotationDegrees((entity.getLevel().getGameTime() + partialTicks) % 360));
+//                matrices.mulPose(Vector3f.YP.rotationDegrees((entity.getLevel().getGameTime() + partialTicks) % 360));
+                matrices.mulPose(rotationDegrees(YP(),(entity.getLevel().getGameTime() + partialTicks) % 360));
 //                buffer.getBuffer(RenderType.solid()).putBulkData(matrices.last(), a, 1, 1, 1, light1, light2);
                 RenderingTools.renderBlockObjModel(OBJModels.SOLAR_CORE_MODEL,matrices,buffer,1,1,1,LightTexture.FULL_BRIGHT,light2);
                 matrices.popPose();

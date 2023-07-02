@@ -3,7 +3,7 @@ package com.finderfeed.solarcraft.client.screens;
 import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.client.screens.components.IntegerEditBox;
 import com.finderfeed.solarcraft.content.blocks.blockentities.SolarOrbitalMissileLauncherTileEntity;
-import com.finderfeed.solarcraft.content.blocks.solar_forge_block.solar_forge_screen.SolarForgeButtonYellow;
+import com.finderfeed.solarcraft.content.blocks.solar_forge_block.solar_forge_screen.SolarCraftButton;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.screen.SolarLexiconScreen;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.screen.buttons.InfoButton;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
@@ -14,7 +14,6 @@ import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
 import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
 import com.finderfeed.solarcraft.packet_handler.packets.LaunchOrbitalMissilePacket;
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
@@ -23,7 +22,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.border.WorldBorder;
 
 import java.util.List;
 import java.util.Optional;
@@ -67,7 +65,7 @@ public class SolarOrbitalMissileLauncherScreen extends DefaultScreen {
         this.addRenderableWidget(zbox);
         this.addRenderableWidget(radbox);
         this.addRenderableWidget(depthbox);
-        SolarForgeButtonYellow launchButton = new SolarForgeButtonYellow(relX + this.getScreenWidth() + 28,relY + 20,45,15,
+        SolarCraftButton launchButton = new SolarCraftButton(relX + this.getScreenWidth() + 28,relY + 20,45,15,
                 Component.translatable("solarcraft.screens.orbital_missile_launch.launch"),(btn)->{
             int x = Integer.parseInt(xbox.getValue());
             int z = Integer.parseInt(zbox.getValue());
@@ -77,7 +75,7 @@ public class SolarOrbitalMissileLauncherScreen extends DefaultScreen {
                     tilePos,x,z,radius,depth,false
             ));
         });
-        SolarForgeButtonYellow cancelButton = new SolarForgeButtonYellow(relX + this.getScreenWidth() + 28,relY + 50,45,15,
+        SolarCraftButton cancelButton = new SolarCraftButton(relX + this.getScreenWidth() + 28,relY + 50,45,15,
                 Component.translatable("solarcraft.screens.orbital_missile_launch.cancel"),(btn)->{
             SCPacketHandler.INSTANCE.sendToServer(new LaunchOrbitalMissilePacket(
                     tilePos,0,0,0,0,true

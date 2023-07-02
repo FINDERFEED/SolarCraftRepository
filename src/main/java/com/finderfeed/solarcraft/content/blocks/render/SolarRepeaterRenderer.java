@@ -14,7 +14,7 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.resources.ResourceLocation;
 import org.joml.Matrix4f;
 import net.minecraft.world.phys.Vec3;
-import com.mojang.math.Vector3f;
+import static com.finderfeed.solarcraft.local_library.helpers.RenderingTools.*;
 
 public class SolarRepeaterRenderer implements BlockEntityRenderer<SolarEnergyRepeaterTile> {
     public final ResourceLocation RAY = new ResourceLocation("solarcraft","textures/misc/ray_into_sky.png");
@@ -38,12 +38,15 @@ public class SolarRepeaterRenderer implements BlockEntityRenderer<SolarEnergyRep
             Vec3 verticalVector = new Vec3(0, childPos.y - parentPos.y, 0).normalize();
 
             if (horizontalVector.x >= 0) {
-                matrices.mulPose(Vector3f.YN.rotationDegrees((float) Math.toDegrees(Math.acos(-horizontalVector.normalize().z))));
+//                matrices.mulPose(Vector3f.YN.rotationDegrees((float) Math.toDegrees(Math.acos(-horizontalVector.normalize().z))));
+                matrices.mulPose(rotationDegrees(YN(),(float) Math.toDegrees(Math.acos(-horizontalVector.normalize().z))));
             } else {
-                matrices.mulPose(Vector3f.YN.rotationDegrees(180 + (float) Math.toDegrees(Math.acos(horizontalVector.normalize().z))));
+//                matrices.mulPose(Vector3f.YN.rotationDegrees(180 + (float) Math.toDegrees(Math.acos(horizontalVector.normalize().z))));
+                matrices.mulPose(rotationDegrees(YN(),180 + (float) Math.toDegrees(Math.acos(horizontalVector.normalize().z))));
             }
 
-            matrices.mulPose(Vector3f.XN.rotationDegrees((float) Math.toDegrees(Math.acos(vector.normalize().y))));
+//            matrices.mulPose(Vector3f.XN.rotationDegrees((float) Math.toDegrees(Math.acos(vector.normalize().y))));
+            matrices.mulPose(rotationDegrees(XN(),(float) Math.toDegrees(Math.acos(vector.normalize().y))));
 
 
             float percent = (float) (Helpers.getGipotenuza(Helpers.getGipotenuza(vector.x, vector.z), vector.y));

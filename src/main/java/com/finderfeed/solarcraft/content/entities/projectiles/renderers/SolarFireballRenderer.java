@@ -7,13 +7,13 @@ import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import org.joml.Matrix4f;
-import com.mojang.math.Quaternion;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.resources.ResourceLocation;
+import org.joml.Quaternionf;
 
 public class SolarFireballRenderer extends EntityRenderer<SolarFireballProjectile> {
 
@@ -29,7 +29,7 @@ public class SolarFireballRenderer extends EntityRenderer<SolarFireballProjectil
         matrices.pushPose();
         matrices.translate(0,0.125,0);
         matrices.scale(1.5f,1.5f,1.5f);
-        Quaternion q = Minecraft.getInstance().gameRenderer.getMainCamera().rotation();
+        Quaternionf q = Minecraft.getInstance().gameRenderer.getMainCamera().rotation();
 
         VertexConsumer vertex = src.getBuffer(SolarCraftRenderTypes.depthMaskedTextSeeThrough(LOC));
         matrices.mulPose(q);

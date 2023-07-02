@@ -42,7 +42,7 @@ public class SolarForgeScreen extends AbstractContainerScreen<SolarForgeContaine
         int i = (this.width - this.imageWidth) / 2;
         int j = (this.height - this.imageHeight) / 2;
 
-        addRenderableWidget(new SolarForgeButton(i + 186, j + 32, 65, 15, Component.translatable("forge.take"),(button)->{
+        addRenderableWidget(new SolarCraftButtonRed(i + 186, j + 32, 65, 15, Component.translatable("forge.take"),(button)->{
             SCPacketHandler.INSTANCE.sendToServer(new TakeEnergyFromForgePacket(this.menu.te.getBlockPos()));
         },(button,matrices,mousex,mousey)->{
             renderTooltip(matrices, List.of(Component.literal("Consume energy. Abilities were moved to separate screen"),

@@ -1,17 +1,20 @@
 package com.finderfeed.solarcraft.content.items.solar_lexicon.screen.buttons;
 
 import com.finderfeed.solarcraft.SolarCraft;
+import com.finderfeed.solarcraft.local_library.client.screens.FDButton;
+import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.sounds.SoundManager;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 
-public class InfoButton extends Button {
+public class InfoButton extends FDButton {
     public static final ResourceLocation LOC = new ResourceLocation(SolarCraft.MOD_ID,"textures/gui/info_button.png");
 
     public ResourceLocation LOCR = new ResourceLocation(SolarCraft.MOD_ID,"textures/gui/info_button.png");
@@ -25,19 +28,35 @@ public class InfoButton extends Button {
     }
 
     @Override
-    public void renderButton(PoseStack matrices, int mousex, int mousey, float partialTicks) {
+    public void renderWidget(GuiGraphics graphics, int mx, int my, float pticks) {
+        PoseStack matrices = graphics.pose();
         matrices.pushPose();
         RenderSystem.setShaderTexture(0, LOCR);
         if (!this.isHoveredOrFocused()) {
-            Gui.blit(matrices, x, y, width, height, 0, 0, 16, 16, 16, 32);
+            RenderingTools.blitWithBlend(matrices, x, y, width, height, 0, 0, 16, 32,0,1f);
         }else{
-            Gui.blit(matrices, x, y, width, height, 0, 16, 16, 16, 16, 32);
+            RenderingTools.blitWithBlend(matrices, x, y, width, height, 0, 16, 16, 32,0,1f);
         }
         if (this.isHoveredOrFocused()){
-            this.renderToolTip(matrices,mousex,mousey);
+            this.renderTooltip(graphics,mx,my);
         }
         matrices.popPose();
     }
+
+//    @Override
+//    public void renderButton(PoseStack matrices, int mousex, int mousey, float partialTicks) {
+//        matrices.pushPose();
+//        RenderSystem.setShaderTexture(0, LOCR);
+//        if (!this.isHoveredOrFocused()) {
+//            Gui.blit(matrices, x, y, width, height, 0, 0, 16, 16, 16, 32);
+//        }else{
+//            Gui.blit(matrices, x, y, width, height, 0, 16, 16, 16, 16, 32);
+//        }
+//        if (this.isHoveredOrFocused()){
+//            this.renderToolTip(matrices,mousex,mousey);
+//        }
+//        matrices.popPose();
+//    }
 
 
     @Override

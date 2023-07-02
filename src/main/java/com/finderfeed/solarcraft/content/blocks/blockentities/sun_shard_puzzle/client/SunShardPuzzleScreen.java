@@ -15,7 +15,7 @@ import com.finderfeed.solarcraft.packet_handler.packets.sun_shard_puzzle.SunShar
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import org.joml.Matrix4f;
-import com.mojang.math.Vector3f;
+import static com.finderfeed.solarcraft.local_library.helpers.RenderingTools.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.core.BlockPos;

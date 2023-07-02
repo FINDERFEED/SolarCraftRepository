@@ -9,7 +9,7 @@ import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.finderfeed.solarcraft.content.blocks.blockentities.EnchanterBlockEntity;
 import com.finderfeed.solarcraft.content.blocks.blockentities.containers.EnchanterContainer;
 import com.finderfeed.solarcraft.content.blocks.infusing_table_things.InfuserScreen;
-import com.finderfeed.solarcraft.content.blocks.solar_forge_block.solar_forge_screen.SolarForgeButtonYellow;
+import com.finderfeed.solarcraft.content.blocks.solar_forge_block.solar_forge_screen.SolarCraftButton;
 import com.finderfeed.solarcraft.content.items.runic_energy.RunicEnergyCost;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.screen.SolarLexiconScreen;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
@@ -38,7 +38,7 @@ public class EnchanterContainerScreen extends AbstractScrollableContainerScreen<
     public final ResourceLocation RUNIC_ENERGY_BAR = new ResourceLocation("solarcraft","textures/gui/runic_energy_bar.png");
     private EnchanterConfig.ConfigEnchantmentInstance selectedEnchantment = null;
     private int selectedLevel = 0;
-    private final List<SolarForgeButtonYellow> postRender = new ArrayList<>();
+    private final List<SolarCraftButton> postRender = new ArrayList<>();
     private int currentMouseScroll = 0;
     private List<Runnable> postRunRender = new ArrayList<>();
     private Random random = new Random();
@@ -71,7 +71,7 @@ public class EnchanterContainerScreen extends AbstractScrollableContainerScreen<
                     this.selectedLevel = menu.tile.getProcesingEnchantmentLevel();
                 }
             }
-            SolarForgeButtonYellow b = new SolarForgeButtonYellow(relX + 111 ,relY + 60 + iter*16,Component.translatable(e.enchantment().getDescriptionId()),(button)->{
+            SolarCraftButton b = new SolarCraftButton(relX + 111 ,relY + 60 + iter*16,Component.translatable(e.enchantment().getDescriptionId()),(button)->{
                 if (!menu.tile.enchantingInProgress()) {
                     this.selectedEnchantment = e;
                     this.selectedLevel = 1;
@@ -86,18 +86,18 @@ public class EnchanterContainerScreen extends AbstractScrollableContainerScreen<
             iter++;
         }
 
-        Button buttonPlus = new SolarForgeButtonYellow(relX+ 161,relY + 32,15,16,Component.literal("+"),(btn)->{
+        Button buttonPlus = new SolarCraftButton(relX+ 161,relY + 32,15,16,Component.literal("+"),(btn)->{
             if (!(selectedLevel + 1 > selectedEnchantment.maxLevel()) && !menu.tile.enchantingInProgress()){
                 selectedLevel++;
             }
         });
-        Button buttonMinus = new SolarForgeButtonYellow(relX+ 111,relY + 32,15,16,Component.literal("-"),(btn)->{
+        Button buttonMinus = new SolarCraftButton(relX+ 111,relY + 32,15,16,Component.literal("-"),(btn)->{
             if (!(selectedLevel - 1 < 1) && !menu.tile.enchantingInProgress()){
                 selectedLevel--;
             }
         });
 
-        Button button = new SolarForgeButtonYellow(relX+ 111,relY + 12,Component.literal("Enchant"),(btn)->{
+        Button button = new SolarCraftButton(relX+ 111,relY + 12,Component.literal("Enchant"),(btn)->{
             ItemStack stack = menu.tile.getStackInSlot(0);
 
             if (selectedEnchantment != null && stack.canApplyAtEnchantingTable(selectedEnchantment.enchantment())
@@ -196,7 +196,7 @@ public class EnchanterContainerScreen extends AbstractScrollableContainerScreen<
         drawCenteredString(matrices,font,selectedEnchantment.enchantment().getFullname(selectedLevel).getString(),relX + 20,relY + 15, SolarLexiconScreen.TEXT_COLOR);
         RenderSystem.enableScissor((relX + 108  + a)*scale,(relY + 22 )*scale,69*scale,117*scale);
 
-        for (SolarForgeButtonYellow b : postRender){
+        for (SolarCraftButton b : postRender){
             b.render(matrices,mousex,mousey,pticks);
         }
         RenderSystem.disableScissor();
@@ -237,7 +237,7 @@ public class EnchanterContainerScreen extends AbstractScrollableContainerScreen<
             }
 
         }
-        for (SolarForgeButtonYellow b : postRender){
+        for (SolarCraftButton b : postRender){
             if (!(b.y > relY + 45 && b.y <  relY +175) ){
                 b.active = false;
                 b.visible = false;
@@ -252,7 +252,7 @@ public class EnchanterContainerScreen extends AbstractScrollableContainerScreen<
     @Override
     public boolean mouseScrolled(double p_94686_, double p_94687_, double delta) {
 
-        for (SolarForgeButtonYellow b : postRender){
+        for (SolarCraftButton b : postRender){
             if (currentMouseScroll + delta*getScrollValue() >= -getMaxYDownScrollValue() && currentMouseScroll + delta*getScrollValue() <= 0) {
                 b.y = b.y + (int) delta * getScrollValue();
 
@@ -269,7 +269,7 @@ public class EnchanterContainerScreen extends AbstractScrollableContainerScreen<
         int delta = getScrollValue()/2;
         if ((keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_UP)
                 || keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_W)) ){
-            for (SolarForgeButtonYellow b : postRender){
+            for (SolarCraftButton b : postRender){
                 if (currentMouseScroll + delta*getScrollValue() >= -getMaxYDownScrollValue() && currentMouseScroll + delta*getScrollValue() <= 0) {
                     b.y = b.y + (int) delta * getScrollValue();
 
@@ -280,7 +280,7 @@ public class EnchanterContainerScreen extends AbstractScrollableContainerScreen<
             }
         }else if((keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_DOWN)
                 || keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_S)) ){
-            for (SolarForgeButtonYellow b : postRender){
+            for (SolarCraftButton b : postRender){
                 if (currentMouseScroll - delta*getScrollValue() >= -getMaxYDownScrollValue() && currentMouseScroll - delta*getScrollValue() <= 0) {
                     b.y = b.y - (int) delta * getScrollValue();
 

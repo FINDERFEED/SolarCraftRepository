@@ -24,10 +24,10 @@ public class SolarForgeAbilityConfigScreen extends Screen {
         super.init();
         int relX = (this.width - WIDTH) / 2;
         int relY = (this.height - HEIGHT) / 2;
-        addRenderableWidget(new SolarForgeButton(relX +7 , relY + 10-3, 65, 15, Component.literal("Hotkey 1"), button -> Minecraft.getInstance().setScreen(new SolarForgeConfigScreenAdditional(1))));
-        addRenderableWidget(new SolarForgeButton(relX +7, relY + 30-3, 65, 15, Component.literal("Hotkey 2"), button -> Minecraft.getInstance().setScreen(new SolarForgeConfigScreenAdditional(2))));
-        addRenderableWidget(new SolarForgeButton(relX +7, relY + 50-3, 65, 15, Component.literal("Hotkey 3"), button -> Minecraft.getInstance().setScreen(new SolarForgeConfigScreenAdditional(3))));
-        addRenderableWidget(new SolarForgeButton(relX +7, relY + 70-3, 65, 15, Component.literal("Hotkey 4"), button -> Minecraft.getInstance().setScreen(new SolarForgeConfigScreenAdditional(4))));
+        addRenderableWidget(new SolarCraftButtonRed(relX +7 , relY + 10-3, 65, 15, Component.literal("Hotkey 1"), button -> Minecraft.getInstance().setScreen(new SolarForgeConfigScreenAdditional(1))));
+        addRenderableWidget(new SolarCraftButtonRed(relX +7, relY + 30-3, 65, 15, Component.literal("Hotkey 2"), button -> Minecraft.getInstance().setScreen(new SolarForgeConfigScreenAdditional(2))));
+        addRenderableWidget(new SolarCraftButtonRed(relX +7, relY + 50-3, 65, 15, Component.literal("Hotkey 3"), button -> Minecraft.getInstance().setScreen(new SolarForgeConfigScreenAdditional(3))));
+        addRenderableWidget(new SolarCraftButtonRed(relX +7, relY + 70-3, 65, 15, Component.literal("Hotkey 4"), button -> Minecraft.getInstance().setScreen(new SolarForgeConfigScreenAdditional(4))));
     }
 
 

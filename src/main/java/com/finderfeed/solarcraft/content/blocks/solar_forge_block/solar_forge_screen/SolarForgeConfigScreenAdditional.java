@@ -108,7 +108,7 @@ public class SolarForgeConfigScreenAdditional extends ScrollableScreen {
 
 
     public void addSolarButton(int relX, int relY, int offset, String abilityId, String string){
-        addRenderableWidget(new SolarForgeButton(relX + 6, relY-4+offset, 65, 15, Component.literal(string), button -> {
+        addRenderableWidget(new SolarCraftButtonRed(relX + 6, relY-4+offset, 65, 15, Component.literal(string), button -> {
             SCPacketHandler.INSTANCE.sendToServer(new AbilityIndexSetPacket(ids,abilityId));
             Minecraft.getInstance().setScreen(new SolarForgeAbilityConfigScreen());
         }));

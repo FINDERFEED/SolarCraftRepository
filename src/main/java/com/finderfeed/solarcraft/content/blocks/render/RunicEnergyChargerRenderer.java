@@ -10,8 +10,9 @@ import com.finderfeed.solarcraft.content.items.runic_energy.ItemRunicEnergy;
 import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import net.minecraft.world.item.ItemDisplayContext;
 import org.joml.Matrix4f;
-import com.mojang.math.Vector3f;
+import static com.finderfeed.solarcraft.local_library.helpers.RenderingTools.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
@@ -46,7 +47,8 @@ public class RunicEnergyChargerRenderer extends AbstractRunicEnergyContainerRend
             for (int i = 0; i < 2; i++) {
                 matrices.pushPose();
                 matrices.translate(0.5, 0.555, 0.5);
-                matrices.mulPose(Vector3f.YP.rotationDegrees(180 * i + rot));
+//                matrices.mulPose(Vector3f.YP.rotationDegrees(180 * i + rot));
+                matrices.mulPose(rotationDegrees(YP(),180 * i + rot));
                 matrices.translate(0.2, 0, 0);
 
                 Matrix4f mat = matrices.last().pose();
@@ -65,10 +67,11 @@ public class RunicEnergyChargerRenderer extends AbstractRunicEnergyContainerRend
         }
         matrices.pushPose();
         matrices.translate(0.5,0.555 + Math.sin((tile.getLevel().getGameTime() + pticks)/10 )*0.01,0.5);
-        matrices.mulPose(Vector3f.YP.rotationDegrees(rot));
+//        matrices.mulPose(Vector3f.YP.rotationDegrees(rot));
+        matrices.mulPose(rotationDegrees(YP(),rot));
         matrices.scale(0.4f,0.4f,0.4f);
         ItemRenderer renderer = Minecraft.getInstance().getItemRenderer();
-        RenderingTools.renderItemStack(stack, ItemTransforms.TransformType.FIXED,false,matrices,buffer,light, OverlayTexture.NO_OVERLAY,
+        RenderingTools.renderItemStack(stack, ItemDisplayContext.FIXED,false,matrices,buffer,light, OverlayTexture.NO_OVERLAY,
                 renderer.getModel(stack,tile.getLevel(),null,1));
         matrices.popPose();
     }

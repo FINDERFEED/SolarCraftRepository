@@ -7,13 +7,14 @@ import com.finderfeed.solarcraft.content.blocks.render.abstracts.TileEntityRende
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import org.joml.Matrix4f;
-import com.mojang.math.Quaternion;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
+import org.joml.Quaternionf;
 
 public class UlderaPylonRenderer extends TileEntityRenderer<UlderaPylon> {
 
@@ -33,7 +34,7 @@ public class UlderaPylonRenderer extends TileEntityRenderer<UlderaPylon> {
 
 
 
-        Quaternion quaternion = Minecraft.getInstance().gameRenderer.getMainCamera().rotation();
+        Quaternionf quaternion = Minecraft.getInstance().gameRenderer.getMainCamera().rotation();
         matrices.mulPose(quaternion);
 
         matrices.scale(1.5f,1.5f,1.5f);

@@ -4,7 +4,7 @@ import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.SolarCraftTags;
 import com.finderfeed.solarcraft.client.screens.SolarCraftScreen;
 import com.finderfeed.solarcraft.content.abilities.ability_classes.AbstractAbility;
-import com.finderfeed.solarcraft.content.blocks.solar_forge_block.solar_forge_screen.SolarForgeButtonYellow;
+import com.finderfeed.solarcraft.content.blocks.solar_forge_block.solar_forge_screen.SolarCraftButton;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.screen.buttons.InfoButton;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.screen.SolarLexiconScreen;
 import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
@@ -108,7 +108,7 @@ public class AbilitySelectionScreen extends SolarCraftScreen {
         }
 
 
-        SolarForgeButtonYellow b = new SolarForgeButtonYellow(winX - 107,
+        SolarCraftButton b = new SolarCraftButton(winX - 107,
                 winY - 40,65,15,Component.translatable("ability.buy_ability"),(button)->{
             if (selectedAbility != null) {
                 SCPacketHandler.INSTANCE.sendToServer(new BuyAbilityPacket(selectedAbility.id));

@@ -1,6 +1,6 @@
 package com.finderfeed.solarcraft.client.screens;
 
-import com.finderfeed.solarcraft.content.blocks.solar_forge_block.solar_forge_screen.SolarForgeButtonYellow;
+import com.finderfeed.solarcraft.content.blocks.solar_forge_block.solar_forge_screen.SolarCraftButton;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.ProgressionHelper;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
@@ -98,7 +98,7 @@ public class ThreeDStructureViewScreen extends Screen implements IScrollable {
                 p_93665_.play(SimpleSoundInstance.forUI(SolarcraftSounds.BUTTON_PRESS2.get(),1,1));
             }
         });
-        addRenderableWidget(new SolarForgeButtonYellow(relX + 5,relY + 198,60,16,Component.translatable("solarcraft.visualize"),(btn)->{
+        addRenderableWidget(new SolarCraftButton(relX + 5,relY + 198,60,16,Component.translatable("solarcraft.visualize"),(btn)->{
             MultiblockVisualizer.setMultiblock(this.struct);
             Minecraft.getInstance().setScreen(null);
         },(btn,graphics,mx,my)->{

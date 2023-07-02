@@ -4,7 +4,7 @@ import com.finderfeed.solarcraft.content.entities.not_alive.RefractionCrystal;
 import com.finderfeed.solarcraft.events.other_events.OBJModels;
 import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Vector3f;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRenderer;
@@ -35,7 +35,8 @@ public class RefractionCrystalRenderer extends EntityRenderer<RefractionCrystal>
             float time = RenderingTools.getTime(crystal.level,pticks);
             matrices.translate(0,1.1,0);
             matrices.scale(0.7f,0.7f,0.7f);
-            matrices.mulPose(Vector3f.YN.rotationDegrees(time % 360));
+//            matrices.mulPose(Vector3f.YN.rotationDegrees(time % 360));
+            matrices.mulPose(RenderingTools.rotationDegrees(RenderingTools.YN(),time % 360));
             RenderingTools.renderEntityObjModel(OBJModels.CRYSTAL_1, matrices, src, light, OverlayTexture.NO_OVERLAY, (m) -> {
             });
 
