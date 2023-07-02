@@ -18,8 +18,10 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 
 
-import com.mojang.math.Vector3d;
+
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.components.AbstractWidget;
 
@@ -30,6 +32,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.item.Items;
 import net.minecraft.resources.ResourceLocation;
+import org.joml.Vector3d;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL11;
 
@@ -232,13 +235,14 @@ public class SolarLexiconScreen extends Screen implements IScrollable,PostRender
                     .setStartYOpeness(16).addComponents(new ComponentSequence(new ComponentSequence.ComponentSequenceBuilder()
                     .setAlignment(ContentAlignment.NO_ALIGNMENT)
                             .addComponent(new FDTextComponent(ContentAlignment.NO_ALIGNMENT,30,0).setText(a.getTranslation(),0xffffff).setInnerBorder(3))
-                            .addComponent(new CustomRenderComponent(ContentAlignment.NO_ALIGNMENT,16,16,(matrices,x,y,pTicks,mouseX,mouseY,ticker,animationLength)->{
+                            .addComponent(new CustomRenderComponent(ContentAlignment.NO_ALIGNMENT,16,16,(graphics,x,y,pTicks,mouseX,mouseY,ticker,animationLength)->{
                         RenderSystem.disableDepthTest();
                         if (g) {
-                            Minecraft.getInstance().getItemRenderer().renderGuiItem(a.getIcon(), x, y);
+                            graphics.renderItem(a.getIcon(), x, y);
+
                         }else{
                             ClientHelpers.bindText(QMARK);
-                            blit(matrices,x,y,0,0,16,16,16,16);
+                            RenderingTools.blitWithBlend(graphics.pose(),x,y,0,0,16,16,16,16,0,1f);
                         }
                         RenderSystem.disableDepthTest();
                     }))
@@ -254,23 +258,23 @@ public class SolarLexiconScreen extends Screen implements IScrollable,PostRender
                     .addComponent(new EmptySpaceComponent(0,5))
                     .nextLine()
                     .addComponent(new FDTextComponent(ContentAlignment.NO_ALIGNMENT,20,0).setText(Component.literal("Parent progressions:"),0xffffff).setInnerBorder(3))
-                    .addComponent(new CustomRenderComponent(ContentAlignment.NO_ALIGNMENT,16,16,(matrices,x,y,pTicks,mouseX,mouseY,ticker,animationLength)->{
+                    .addComponent(new CustomRenderComponent(ContentAlignment.NO_ALIGNMENT,16,16,(graphics,x,y,pTicks,mouseX,mouseY,ticker,animationLength)->{
                         if (!parents.isEmpty()) {
                             RenderSystem.disableDepthTest();
                             int offset = 0;
                             for (Progression p : parents) {
                                 if (Helpers.hasPlayerCompletedProgression(p,player)) {
-                                    Minecraft.getInstance().getItemRenderer().renderGuiItem(p.getIcon(), x + offset, y-1);
+                                    graphics.renderItem(p.getIcon(), x + offset, y-1);
                                 }else{
                                     ClientHelpers.bindText(QMARK);
-                                    blit(matrices,x,y,0,0,16,16,16,16);
+                                    RenderingTools.blitWithBlend(graphics.pose(),x,y,0,0,16,16,16,16,0,1f);
                                 }
                                 offset += 18;
                             }
                             RenderSystem.disableDepthTest();
                         }else{
                             MultiBufferSource.BufferSource source = MultiBufferSource.immediate(Tesselator.getInstance().getBuilder());
-                            font.drawInBatch("None",x,y + 3,0xffffff,true,matrices.last().pose(),source,true,
+                            font.drawInBatch("None",x,y + 3,0xffffff,true,graphics.pose().last().pose(),source, Font.DisplayMode.NORMAL,
                                     0, 15728880,font.isBidirectional());
                             source.endBatch();
                         }
@@ -285,8 +289,8 @@ public class SolarLexiconScreen extends Screen implements IScrollable,PostRender
             addRenderableWidget(button);
         }
                                                             //nice
-        this.info = new InfoButton(relX + 206 + 35,relY + 69 + 15 + 20,13,13,(button,matrices,mx,my)->{
-            renderTooltip(matrices,font.split(Component.translatable("solarcraft.solar_lexicon_screen_info"),200),mx,my);
+        this.info = new InfoButton(relX + 206 + 35,relY + 69 + 15 + 20,13,13,(button,graphics,mx,my)->{
+            graphics.renderTooltip(font,font.split(Component.translatable("solarcraft.solar_lexicon_screen_info"),200),mx,my);
         });
 
         addRenderableWidget(this.info);
@@ -334,7 +338,9 @@ public class SolarLexiconScreen extends Screen implements IScrollable,PostRender
     }
 
     @Override
-    public void render(PoseStack matrices, int mousex, int mousey, float partialTicks) {
+    public void render(GuiGraphics graphics, int mousex, int mousey, float partialTicks) {
+        PoseStack matrices = graphics.pose();
+
         matrices.pushPose();
 
 
@@ -346,7 +352,7 @@ public class SolarLexiconScreen extends Screen implements IScrollable,PostRender
         int scale = (int)minecraft.getWindow().getGuiScale();
 
         GL11.glScissor(width/2-((30+83)*scale),height/2-(89*scale),((188+33)*scale),189*scale);
-        blit(matrices,relX,relY,0,0,256,256);
+        RenderingTools.blitWithBlend(matrices,relX,relY,0,0,256,256,256,256,0,1f);
         float time = RenderingTools.getTime(Minecraft.getInstance().level,partialTicks);
         double s = Math.sin(time/10);
         int offs = 30;
@@ -373,7 +379,7 @@ public class SolarLexiconScreen extends Screen implements IScrollable,PostRender
         postLinesRender.clear();
         for (Progression a : tree.PROGRESSION_TREE.keySet()) {
             Point first = new Point(relX+scrollX+offs-3+map.get(a.getAchievementTier()).indexOf(a)*OFFSET_X,relY+scrollY+offs-3+(a.getAchievementTier()-1)*OFFSET_Y);
-            blit(matrices,first.x-12,first.y-12,0,0,28,28,28,28);
+            RenderingTools.blitWithBlend(matrices,first.x-12,first.y-12,0,0,28,28,28,28,0,1f);
         }
 
 
@@ -385,7 +391,7 @@ public class SolarLexiconScreen extends Screen implements IScrollable,PostRender
 
         ClientHelpers.bindText(QMARK);
         for (ItemStackButtonAnimatedTooltip button : locked){
-            blit(matrices,button.x+1,button.y+1,0,0,14,14,14,14);
+            RenderingTools.blitWithBlend(matrices,button.x+1,button.y+1,0,0,14,14,14,14,0,1f);
             button.renderTooltip(matrices,mousex,mousey,partialTicks);
         }
         for (Runnable runnable : postRender){
@@ -397,7 +403,7 @@ public class SolarLexiconScreen extends Screen implements IScrollable,PostRender
 
         matrices.pushPose();
         matrices.translate(0,0,100);
-        blit(matrices,relX,relY,0,0,256,256);
+        RenderingTools.blitWithBlend(matrices,relX,relY,0,0,256,256,256,256,0,1f);
         matrices.popPose();
 
 //        drawString(matrices,minecraft.font,currAch,relX+12,relY+124,stringColor);
@@ -419,11 +425,11 @@ public class SolarLexiconScreen extends Screen implements IScrollable,PostRender
 //            }
 //        }
 
-        toggleRecipesScreen.render(matrices,mousex,mousey,partialTicks,101);
-        justForge.render(matrices,mousex,mousey,partialTicks,101);
-        stagesPage.render(matrices,mousex,mousey,partialTicks,101);
-        retainFragmentsScreen.render(matrices,mousex,mousey,partialTicks,101);
-        info.render(matrices,mousex,mousey,partialTicks);
+        toggleRecipesScreen.render(graphics,mousex,mousey,partialTicks,101);
+        justForge.render(graphics,mousex,mousey,partialTicks,101);
+        stagesPage.render(graphics,mousex,mousey,partialTicks,101);
+        retainFragmentsScreen.render(graphics,mousex,mousey,partialTicks,101);
+        info.render(graphics,mousex,mousey,partialTicks);
         matrices.popPose();
 
 
@@ -434,7 +440,7 @@ public class SolarLexiconScreen extends Screen implements IScrollable,PostRender
 
     private void drawLine(PoseStack stack,int x1,int y1,int x2,int y2,int red,int green,int blue){
 
-        GlStateManager._disableTexture();
+//        GlStateManager._disableTexture();
         GlStateManager._depthMask(false);
         GlStateManager._disableCull();
         RenderSystem.setShader(GameRenderer::getRendertypeLinesShader);
@@ -452,7 +458,7 @@ public class SolarLexiconScreen extends Screen implements IScrollable,PostRender
 
         GlStateManager._enableCull();
         GlStateManager._depthMask(true);
-        GlStateManager._enableTexture();
+//        GlStateManager._enableTexture();
     }
 
     @Override

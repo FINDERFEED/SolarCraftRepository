@@ -7,14 +7,17 @@ import com.finderfeed.solarcraft.local_library.client.particles.ScreenParticlesR
 import com.finderfeed.solarcraft.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarcraft.content.blocks.blockentities.containers.RunicTableContainer;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.RunePattern;
+import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
 import com.finderfeed.solarcraft.packet_handler.packets.RunicTablePacket;
 import com.finderfeed.solarcraft.client.rendering.item_renderers.TransparentItemrenderer;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.ProgressionHelper;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
-import net.minecraft.client.gui.components.Widget;
+
+import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.player.Inventory;
@@ -84,13 +87,13 @@ public class RunicTableContainerScreen extends AbstractContainerScreen<RunicTabl
                                     hideButton(this.pattern, v, rune, finalL, finalH);
                                     if (this.pattern.isCompleted()){
                                         this.pattern = new RunePattern(ClientHelpers.getClientPlayer());
-                                        List<Widget> toRemove = new ArrayList<>();
-                                        for (Widget w : this.renderables){
-                                            if (w instanceof RuneButtonRunicTable){
-                                                toRemove.add(w);
+                                        List<AbstractWidget> toRemove = new ArrayList<>();
+                                        for (Renderable w : this.renderables){
+                                            if (w instanceof RuneButtonRunicTable btn){
+                                                toRemove.add(btn);
                                             }
                                         }
-                                        for (Widget w : toRemove){
+                                        for (AbstractWidget w : toRemove){
                                             this.removeWidget(((RuneButtonRunicTable)w));
                                         }
 
@@ -183,14 +186,16 @@ public class RunicTableContainerScreen extends AbstractContainerScreen<RunicTabl
     }
 
     @Override
-    public void render(PoseStack stack, int rouseX, int rouseY, float partialTicks) {
-        this.renderBackground(stack);
-        super.render(stack, rouseX, rouseY, partialTicks);
-        this.renderTooltip(stack,rouseX,rouseY);
+    public void render(GuiGraphics graphics, int rouseX, int rouseY, float partialTicks) {
+        this.renderBackground(graphics);
+        super.render(graphics, rouseX, rouseY, partialTicks);
+        this.renderTooltip(graphics,rouseX,rouseY);
     }
 
     @Override
-    protected void renderBg(PoseStack matrices, float partialTicks, int mousex, int mousey) {
+    protected void renderBg(GuiGraphics graphics, float partialTicks, int mousex, int mousey) {
+
+        PoseStack matrices = graphics.pose();
 
         ClientHelpers.bindText(MAIN_SCREEN);
         int scale = (int) minecraft.getWindow().getGuiScale();
@@ -198,10 +203,10 @@ public class RunicTableContainerScreen extends AbstractContainerScreen<RunicTabl
         if (scale == 2) {
             a = 0;
         }
-        blit(matrices,relX+a+3,relY+4,0,0,256,256,256,256);
+        RenderingTools.blitWithBlend(matrices,relX+a+3,relY+4,0,0,256,256,256,256,0,1f);
         if (menu.hideRuneButtons){
-            drawCenteredString(matrices,font,Component.translatable("solarcraft.no_fragments_available"),relX+135,relY+40,0xffffff);
-            drawCenteredString(matrices,font,Component.translatable("solarcraft.no_fragments_available2"),relX+135,relY+48,0xffffff);
+            graphics.drawCenteredString(font,Component.translatable("solarcraft.no_fragments_available"),relX+135,relY+40,0xffffff);
+            graphics.drawCenteredString(font,Component.translatable("solarcraft.no_fragments_available2"),relX+135,relY+48,0xffffff);
 
         }else{
             ItemStack stack = menu.inventory.getStackInSlot(0);
@@ -213,7 +218,7 @@ public class RunicTableContainerScreen extends AbstractContainerScreen<RunicTabl
                     int x = relX + 98 + winPos[i]*15;
                     int y = relY + 11 + winPos[i+1]*15;
 
-                    blit(matrices,x,y,0,0,15,15,15,15);
+                    RenderingTools.blitWithBlend(matrices,x,y,0,0,15,15,15,15,0,1f);
 
                 }
                 matrices.popPose();
@@ -222,11 +227,7 @@ public class RunicTableContainerScreen extends AbstractContainerScreen<RunicTabl
 
     }
 
-    private void renderItem(ItemStack stack,int x,int y){
 
-        TransparentItemrenderer.INSTANCE.renderGuiItem(stack,relX+x,relY+y);
-            //Minecraft.getInstance().getItemRenderer().renderGuiItem(stack,relX+x,relY+y);
-    }
 
 
 }

@@ -3,6 +3,7 @@ package com.finderfeed.solarcraft.local_library.client.tooltips;
 import com.finderfeed.solarcraft.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.util.Mth;
 
 public class BlackBackgroundTooltip extends AnimatedTooltip{
@@ -14,9 +15,10 @@ public class BlackBackgroundTooltip extends AnimatedTooltip{
     }
 
     @Override
-    public void render(PoseStack matrices, int x, int y, float pTicks, int mousex, int mousey) {
+    public void render(GuiGraphics graphics, int x, int y, float pTicks, int mousex, int mousey) {
         int xPos = calculateXRenderPos(x);
         int yPos = calculateYRenderPos(y);
+        PoseStack matrices = graphics.pose();
         float k = animLength/4f;
 //        float tick = Mth.lerp(pTicks,oldTick,ticker);
         float tick = oldTick != ticker ? oldTick < ticker ? ticker + pTicks : ticker - pTicks : ticker;
@@ -40,7 +42,7 @@ public class BlackBackgroundTooltip extends AnimatedTooltip{
         RenderingTools.fill(matrices,xStartRenderPos - xLeftOpeness,yStartRenderPos,xStartRenderPos,yStartRenderPos - yUpOpeness,0,0,0,0.94f);
         RenderingTools.fill(matrices,xStartRenderPos,yStartRenderPos,xStartRenderPos + xRightOpeness,yStartRenderPos - yUpOpeness,0,0,0,0.94f);
         if (ticker >= animLength) {
-            this.getComponents().render(matrices, xPos + borderWidth, yPos + borderWidth, pTicks, mousex, mousey, ticker, animLength);
+            this.getComponents().render(graphics, xPos + borderWidth, yPos + borderWidth, pTicks, mousex, mousey, ticker, animLength);
         }
     }
 

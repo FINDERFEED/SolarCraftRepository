@@ -23,6 +23,7 @@ import com.finderfeed.solarcraft.content.items.vein_miner.IllidiumPickaxe;
 import com.finderfeed.solarcraft.misc_things.*;
 import com.finderfeed.solarcraft.registries.blocks.SolarcraftBlocks;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.SolarLexicon;
+import com.google.common.collect.Lists;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.effect.MobEffects;
@@ -31,18 +32,23 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.registries.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nullable;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class SolarcraftItems {
 
+    public static Map<CreativeModeTab,List<RegistryObject<? extends Item>>> itemTabs = new HashMap<>();
+
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS,"solarcraft");
 
-    public static final RegistryObject<SolarWandItem> SOLAR_WAND = ITEMS.register("solar_wand",()-> new SolarWandItem(new Item.Properties().rarity(Rarity.EPIC).tab(SolarCraft.SOLAR_GROUP).stacksTo(1)));
+    public static final RegistryObject<SolarWandItem> SOLAR_WAND = registerItem(ITEMS.register("solar_wand",()-> new SolarWandItem(new Item.Properties().rarity(Rarity.EPIC).stacksTo(1))),SolarCraft.SOLAR_GROUP);
     public static  final RegistryObject<Item> SOLAR_INFUSION_POOL = ITEMS.register("solar_forge_infusion_pool",()-> new SolarcraftBlockItem(SolarcraftBlocks.INFUSING_POOL.get(),new Item.Properties().rarity(Rarity.EPIC).tab(SolarCraft.SOLAR_GROUP_BLOCKS),()->AncientFragment.SOLAR_INFUSER));
     public static  final RegistryObject<SolarcraftItem> SOLAR_DUST = ITEMS.register("solar_dust",()-> new SolarcraftItem(new Item.Properties().tab(SolarCraft.SOLAR_GROUP_MATERIALS),()->AncientFragment.DUSTS));
     public static  final RegistryObject<Item> VOID_DUST = ITEMS.register("void_dust",()-> new SolarcraftItem(new Item.Properties().tab(SolarCraft.SOLAR_GROUP_MATERIALS),()->AncientFragment.DUSTS));
@@ -338,5 +344,21 @@ public class SolarcraftItems {
     public static final RegistryObject<Item> RUNIC_ENERGY_CORE = ITEMS.register("runic_energy_core",()->new SolarcraftBlockItem(SolarcraftBlocks.RUNIC_ENERGY_CORE.get(),new Item.Properties().tab(SolarCraft.SOLAR_GROUP_BLOCKS),()->AncientFragment.RUNIC_ENERGY_CORE));
 
     public static final RegistryObject<Item> SUN_SHARD = ITEMS.register("sun_shard",()->new SunShardItem(new Item.Properties().tab(SolarCraft.SOLAR_GROUP_MATERIALS).rarity(Rarity.EPIC)));
+
+
+
+    public static <T extends Item> RegistryObject<T> registerItem(RegistryObject<T> reg,CreativeModeTab tab){
+        var a = itemTabs.get(tab);
+        if (a != null){
+            a.add(reg);
+        }else{
+            itemTabs.put(tab, Lists.newArrayList(reg));
+        }
+        return reg;
+    }
+
+    public static void registerIntoCreativeTabs(BuildCreativeModeTabContentsEvent event){
+        itemTabs.get(event.getTab()).forEach(event::accept);
+    }
 
 }
