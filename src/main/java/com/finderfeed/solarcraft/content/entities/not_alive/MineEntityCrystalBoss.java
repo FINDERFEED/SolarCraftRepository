@@ -3,7 +3,7 @@ package com.finderfeed.solarcraft.content.entities.not_alive;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.content.entities.CrystalBossEntity;
 import com.finderfeed.solarcraft.misc_things.CrystalBossBuddy;
-import com.finderfeed.solarcraft.registries.SolarcraftDamageSources;
+import com.finderfeed.solarcraft.registries.damage_sources.SolarcraftDamageSources;
 import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;

@@ -7,7 +7,7 @@ import com.finderfeed.solarcraft.config.SolarcraftConfig;
 import com.finderfeed.solarcraft.content.entities.ShadowZombie;
 import com.finderfeed.solarcraft.content.items.ModuleItem;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
-import com.finderfeed.solarcraft.registries.SolarcraftDamageSources;
+import com.finderfeed.solarcraft.registries.damage_sources.SolarcraftDamageSources;
 import com.finderfeed.solarcraft.registries.items.SolarcraftItems;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;

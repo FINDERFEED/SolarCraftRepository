@@ -16,8 +16,8 @@ import net.minecraft.world.level.Level;
 
 public class SolarEnergyGeneratorBlockItem extends RareSolarcraftBlockItem {
 
-    public SolarEnergyGeneratorBlockItem() {
-        super(SolarcraftBlocks.SOLAR_ENERGY_GENERATOR.get(),new Item.Properties().tab(SolarCraft.SOLAR_GROUP_BLOCKS),()-> AncientFragment.SOLAR_ENERGY_GENERATOR);
+    public SolarEnergyGeneratorBlockItem(Item.Properties p) {
+        super(SolarcraftBlocks.SOLAR_ENERGY_GENERATOR.get(),p,()-> AncientFragment.SOLAR_ENERGY_GENERATOR);
     }
 
     @Override

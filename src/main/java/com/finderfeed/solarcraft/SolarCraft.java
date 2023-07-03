@@ -117,12 +117,12 @@ public class SolarCraft
 //    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS,"solarcraft");
     public static final DeferredRegister<EntityType<?>> ENTITY_TYPE_REGISTER = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES,"solarcraft");
 
-    public static final CreativeModeTab SOLAR_GROUP = new SolarGroup("solar_forge_group");
-    public static final CreativeModeTab SOLAR_GROUP_BLOCKS = new SolarGroupBlocks("solar_forge_group_blocks");
-    public static final CreativeModeTab SOLAR_GROUP_TOOLS = new SolarGroupTools("solar_forge_group_tools");
-    public static final CreativeModeTab SOLAR_GROUP_MATERIALS = new SolarGroupThemed("solar_group_materials", SolarcraftItems.ILLIDIUM_INGOT);
-    public static final CreativeModeTab SOLAR_GROUP_WEAPONS = new SolarGroupThemed("solar_group_weapons", SolarcraftItems.ILLIDIUM_SWORD);
-    public static final CreativeModeTab SOLAR_GROUP_FRAGMENTS = new SolarGroupFragments("solar_forge_group_fragments");
+//    public static final CreativeModeTab SOLAR_GROUP = new SolarGroup("solar_forge_group");
+//    public static final CreativeModeTab SOLAR_GROUP_BLOCKS = new SolarGroupBlocks("solar_forge_group_blocks");
+//    public static final CreativeModeTab SOLAR_GROUP_TOOLS = new SolarGroupTools("solar_forge_group_tools");
+//    public static final CreativeModeTab SOLAR_GROUP_MATERIALS = new SolarGroupThemed("solar_group_materials", SolarcraftItems.ILLIDIUM_INGOT);
+//    public static final CreativeModeTab SOLAR_GROUP_WEAPONS = new SolarGroupThemed("solar_group_weapons", SolarcraftItems.ILLIDIUM_SWORD);
+//    public static final CreativeModeTab SOLAR_GROUP_FRAGMENTS = new SolarGroupFragments("solar_forge_group_fragments");
 
 
     public static final RegistryObject<SoundEvent> SOLAR_STRIKE_SOUND = SOUND_EVENTS.register("solar_ray_sound",()-> SoundEvent.createVariableRangeEvent(new ResourceLocation("solarcraft","solar_strike_explosion_sound")));
@@ -145,27 +145,20 @@ public class SolarCraft
             BlockEntityType.Builder.of(InfuserTileEntity::new,SOLAR_INFUSER.get()).build(null));
 
     public static final RegistryObject<EntityType<MeteoriteProjectile>> METEORITE = ENTITY_TYPE_REGISTER.register("solar_forge_meteorite_projectile",()->EntityType.Builder.<MeteoriteProjectile>of(MeteoriteProjectile::new,MobCategory.MISC).sized(5,5).build("solar_forge_meteorite_projectile"));
-//    public static  final RegistryObject<Item> SOLAR_SHARD = ITEMS.register("solar_shard",()-> new Item(new Item.Properties().rarity(Rarity.EPIC).tab(SOLAR_GROUP)));
-//    public static  final RegistryObject<Item> SOLAR_FORGE_ITEM = ITEMS.register("solar_forge",()-> new SolarForgeBlockItem(SOLAR_FORGE.get(),new Item.Properties().rarity(Rarity.EPIC).tab(SOLAR_GROUP_BLOCKS).stacksTo(1)));
-//    public static  final RegistryObject<Item> SOLAR_ORE_ITEM = ITEMS.register("solar_ores",()-> new ProgressionBlockItem(SOLAR_ORE.get(),new Item.Properties().tab(SOLAR_GROUP_BLOCKS)));
-//    public static  final RegistryObject<Item> INFUSER_ITEM = ITEMS.register("solar_infuser",()-> new InfuserBlockItem(SOLAR_INFUSER.get(),new Item.Properties().rarity(Rarity.EPIC).tab(SOLAR_GROUP_BLOCKS).stacksTo(1),()-> AncientFragment.SOLAR_INFUSER));
-    // Directly reference a log4j logger.
+
     public static final Logger LOGGER = LogManager.getLogger("SOLARCRAFT");
     public static final RegistryObject<BlockEntityType<SolarForgeBlockEntity>> SOLAR_FORGE_BLOCKENTITY = TILE_ENTITY_TYPE.register("solar_forge_blockentity",()->
             BlockEntityType.Builder.of(SolarForgeBlockEntity::new,SOLAR_FORGE.get()).build(null));
     public static final RegistryObject<MenuType<SolarForgeContainer>> SOLAR_FORGE_CONTAINER = CONTAINER_TYPE.register("solarcraft_container",()-> IForgeMenuType.create(SolarForgeContainer::new));
     public static final RegistryObject<MenuType<InfuserContainer>> INFUSING_TABLE_CONTAINER = CONTAINER_TYPE.register("infusing_stand_container",()-> IForgeMenuType.create(InfuserContainer::new));
 
-//    public static final RecipeType<InfusingCraftingRecipe> INFUSING_CRAFTING_RECIPE_TYPE = new InfusingCraftingRecipeType();
-//    public static final RecipeType<InfusingRecipe> INFUSING_RECIPE_TYPE = new InfusingRecipeType();
-//    public static final RecipeType<SolarSmeltingRecipe> SOLAR_SMELTING = new SolarSmeltingRecipeType();
+
     public SolarCraft() {
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
         SolarcraftParticleTypes.PARTICLES.register(bus);
         EFFECTS.register(bus);
         SOUND_EVENTS.register(bus);
         ENTITY_TYPE_REGISTER.register(bus);
-//        ITEMS.register(bus);
         BLOCKS.register(bus);
         TILE_ENTITY_TYPE.register(bus);
         CONTAINER_TYPE.register(bus);
@@ -193,6 +186,7 @@ public class SolarCraft
         FMLJavaModLoadingContext.get().getModEventBus().addListener(TrunkPlacersRegistry::registerTrunkPlacerTypes);
 
         FMLJavaModLoadingContext.get().getModEventBus().addListener(LazyConfiguredFeatures::registerConfiguredFeatures);
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(SolarcraftItems::registerIntoCreativeTabs);
 
         FMLJavaModLoadingContext.get().getModEventBus().addListener(FeaturesRegistry::registerConfiguredFeatures);
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, SolarcraftConfig.SPEC,"solarcraft-config.toml");

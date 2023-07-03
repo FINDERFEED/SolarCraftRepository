@@ -5,7 +5,7 @@ import com.finderfeed.solarcraft.content.entities.CrystalBossEntity;
 import com.finderfeed.solarcraft.misc_things.CrystalBossBuddy;
 import com.finderfeed.solarcraft.client.particles.SolarcraftParticleTypes;
 import com.finderfeed.solarcraft.packet_handler.packets.misc_packets.ExplosionParticlesPacket;
-import com.finderfeed.solarcraft.registries.SolarcraftDamageSources;
+import com.finderfeed.solarcraft.registries.damage_sources.SolarcraftDamageSources;
 import com.finderfeed.solarcraft.registries.entities.SolarcraftEntityTypes;
 import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
 import net.minecraft.core.particles.ParticleOptions;

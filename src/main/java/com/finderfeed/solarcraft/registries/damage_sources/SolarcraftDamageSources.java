@@ -1,4 +1,4 @@
-package com.finderfeed.solarcraft.registries;
+package com.finderfeed.solarcraft.registries.damage_sources;
 
 import net.minecraft.world.damagesource.DamageSource;
 

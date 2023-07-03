@@ -32,7 +32,7 @@ import com.finderfeed.solarcraft.misc_things.RunicEnergy;
 import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
 import com.finderfeed.solarcraft.packet_handler.packets.*;
 import com.finderfeed.solarcraft.registries.ConfigRegistry;
-import com.finderfeed.solarcraft.registries.SolarcraftDamageSources;
+import com.finderfeed.solarcraft.registries.damage_sources.SolarcraftDamageSources;
 import com.finderfeed.solarcraft.registries.Tags;
 import com.finderfeed.solarcraft.registries.abilities.AbilitiesRegistry;
 import com.finderfeed.solarcraft.registries.attributes.AttributesRegistry;

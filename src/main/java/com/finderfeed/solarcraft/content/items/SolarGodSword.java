@@ -6,6 +6,7 @@ import com.finderfeed.solarcraft.content.items.primitive.RareSolarcraftSword;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarcraft.misc_things.IUpgradable;
 import net.minecraft.core.NonNullList;
+import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.item.*;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -61,7 +62,7 @@ public class SolarGodSword extends RareSolarcraftSword implements IUpgradable {
     public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         if ((getItemLevel(stack) >= 1) && (attacker instanceof Player player)){
             target.invulnerableTime = 0;
-            target.hurt(DamageSource.playerAttack(player).setMagic().bypassArmor(),5);
+            target.hurt(target.level.damageSources().playerAttack(player).setMagic().bypassArmor(),5);
         }
         return super.hurtEnemy(stack, target, attacker);
     }
@@ -72,19 +73,18 @@ public class SolarGodSword extends RareSolarcraftSword implements IUpgradable {
         super.appendHoverText(stack, world, text, flag);
     }
 
-
-    @Override
-    public void fillItemCategory(CreativeModeTab tab, NonNullList<ItemStack> item) {
-        if (this.allowedIn(tab)) {
-            ItemStack def = new ItemStack(this);
-            setItemLevel(def,0);
-            item.add(def);
-
-            ItemStack sword = new ItemStack(this);
-            setItemLevel(sword,getMaxUpgrades());
-            item.add(sword);
-        }
-    }
+//    @Override
+//    public void fillItemCategory(CreativeModeTab tab, NonNullList<ItemStack> item) {
+//        if (this.allowedIn(tab)) {
+//            ItemStack def = new ItemStack(this);
+//            setItemLevel(def,0);
+//            item.add(def);
+//
+//            ItemStack sword = new ItemStack(this);
+//            setItemLevel(sword,getMaxUpgrades());
+//            item.add(sword);
+//        }
+//    }
 
 
 
