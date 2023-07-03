@@ -11,6 +11,7 @@ import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraftforge.client.textures.ForgeTextureMetadata;
 import net.minecraftforge.client.textures.ITextureAtlasSpriteLoader;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
 
@@ -25,24 +26,36 @@ public class RadiantTextureAtlasSpriteLoader implements ITextureAtlasSpriteLoade
     @Override
     public SpriteContents loadContents(ResourceLocation name, Resource resource, FrameSize frameSize, NativeImage image, AnimationMetadataSection animationMeta,
                                        ForgeTextureMetadata forgeMeta) {
-        return null;
+        return new SpriteContents(name,frameSize,image,animationMeta,forgeMeta);
     }
 
-    @Nonnull
     @Override
-    public TextureAtlasSprite load(TextureAtlas atlas,
-                                   ResourceManager resourceManager,
-                                   TextureAtlasSprite.Info textureInfo,
-                                   Resource resource,
-                                   int atlasWidth,
-                                   int atlasHeight,
-                                   int spriteX,
-                                   int spriteY,
-                                   int mipmapLevel,
-                                   NativeImage image) {
-
-
-        RadiantBlocksAtlasSprite sprite = new RadiantBlocksAtlasSprite(atlas,textureInfo,mipmapLevel,atlasWidth,atlasHeight,spriteX,spriteY,image);
+    public @NotNull TextureAtlasSprite makeSprite(ResourceLocation atlasName,
+                                                  SpriteContents contents,
+                                                  int atlasWidth,
+                                                  int atlasHeight,
+                                                  int spriteX,
+                                                  int spriteY,
+                                                  int mipmapLevel) {
+        RadiantBlocksAtlasSprite sprite = new RadiantBlocksAtlasSprite(atlasName,contents,atlasWidth,atlasHeight,spriteX,spriteY);
         return sprite;
     }
+
+//    @Nonnull
+//    @Override
+//    public TextureAtlasSprite load(TextureAtlas atlas,
+//                                   ResourceManager resourceManager,
+//                                   TextureAtlasSprite.Info textureInfo,
+//                                   Resource resource,
+//                                   int atlasWidth,
+//                                   int atlasHeight,
+//                                   int spriteX,
+//                                   int spriteY,
+//                                   int mipmapLevel,
+//                                   NativeImage image) {
+//
+//
+//        RadiantBlocksAtlasSprite sprite = new RadiantBlocksAtlasSprite(atlas,textureInfo,mipmapLevel,atlasWidth,atlasHeight,spriteX,spriteY,image);
+//        return sprite;
+//    }
 }

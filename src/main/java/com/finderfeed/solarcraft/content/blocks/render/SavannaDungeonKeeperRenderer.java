@@ -29,7 +29,7 @@ public class SavannaDungeonKeeperRenderer extends TileEntityRenderer<SavannaDung
 
 
     public static final AABB BOX = new AABB(-3.5,-4.5,-3.5,4.5,-0.45,4.5);
-    public static final AABB BOX2 = new AABB(-0.05,-2.95,-0.05,1.05,-2.05,1.05);
+    //public static final AABB BOX2 = new AABB(-0.05,-2.95,-0.05,1.05,-2.05,1.05);
 
     public SavannaDungeonKeeperRenderer(BlockEntityRendererProvider.Context ctx) {
         super(ctx);
