@@ -1,5 +1,5 @@
 {
   "variants": {
-    "": { "model": "solarcraft:block/solar_ores" }
+    "": { "model": "solarcraft:block/solar_ore" }
   }
 }

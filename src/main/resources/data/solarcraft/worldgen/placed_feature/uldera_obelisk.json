@@ -1,0 +1,12 @@
+{
+  "placement": [
+    {
+      "chance": 100,
+      "type": "minecraft:rarity_filter"
+    },
+    {
+      "type": "minecraft:in_square"
+    }
+  ],
+  "feature": "solarcraft:uldera_obelisk"
+}

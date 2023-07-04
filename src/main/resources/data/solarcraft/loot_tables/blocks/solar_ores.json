@@ -24,7 +24,7 @@
                   }
                 }
               ],
-              "name": "solarcraft:solar_ores"
+              "name": "solarcraft:solar_ore"
             },
             {
               "type": "minecraft:item",

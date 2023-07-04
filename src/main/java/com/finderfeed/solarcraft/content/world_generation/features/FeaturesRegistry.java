@@ -1,62 +1,39 @@
 package com.finderfeed.solarcraft.content.world_generation.features;
 
 import com.finderfeed.solarcraft.SolarCraft;
+import com.finderfeed.solarcraft.content.world_generation.biomes.molten_forest.MoltenForestAmbience;
 import com.finderfeed.solarcraft.content.world_generation.dimension_related.radiant_land.CrystallizedOreVeinFeature;
-import com.finderfeed.solarcraft.content.world_generation.dimension_related.radiant_land.RadiantSmallTreeFoliagePlacer;
-import com.finderfeed.solarcraft.content.world_generation.dimension_related.radiant_land.RadiantTreeFoliagePlacer;
 import com.finderfeed.solarcraft.registries.blocks.SolarcraftBlocks;
 import com.finderfeed.solarcraft.registries.worldgen.configured.LazyConfiguredFeatures;
-import com.finderfeed.solarcraft.content.world_generation.biomes.molten_forest.MoltenForestAmbience;
-
-import com.google.gson.JsonObject;
-import com.mojang.serialization.DynamicOps;
-import com.mojang.serialization.JsonOps;
-import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
+import net.minecraft.core.Registry;
 import net.minecraft.data.worldgen.features.FeatureUtils;
-import net.minecraft.data.worldgen.features.OreFeatures;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.core.Registry;
-import net.minecraft.data.BuiltinRegistries;
-import net.minecraft.util.valueproviders.ConstantInt;
-
-import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.level.biome.Biome;
-import net.minecraft.world.level.block.Blocks;
-
 import net.minecraft.world.level.levelgen.Heightmap;
-import net.minecraft.world.level.levelgen.VerticalAnchor;
-
-
-import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate;
-import net.minecraft.world.level.levelgen.feature.configurations.*;
+import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguration;
+import net.minecraft.world.level.levelgen.feature.configurations.SimpleBlockConfiguration;
+import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
-
-import net.minecraft.world.level.levelgen.feature.trunkplacers.StraightTrunkPlacer;
-
-import net.minecraft.world.level.levelgen.placement.*;
+import net.minecraft.world.level.levelgen.placement.HeightmapPlacement;
+import net.minecraft.world.level.levelgen.placement.InSquarePlacement;
+import net.minecraft.world.level.levelgen.placement.PlacedFeature;
+import net.minecraft.world.level.levelgen.placement.RarityFilter;
 import net.minecraft.world.level.levelgen.structure.templatesystem.RuleTest;
 import net.minecraft.world.level.levelgen.structure.templatesystem.TagMatchTest;
 import net.minecraftforge.common.Tags;
-
-import net.minecraftforge.common.data.DatapackBuiltinEntriesProvider;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-
-
-
-import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
-import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.featuresize.TwoLayersFeatureSize;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
-import java.util.List;
 
-
-//i hate you with every ounce of being mojang!
+//I hate you with every ounce of being mojang!
 public class FeaturesRegistry {
 
 
@@ -72,8 +49,8 @@ public class FeaturesRegistry {
     public static final RuleTest END_STONE = new TagMatchTest(Tags.Blocks.END_STONES);
 
     public static final ResourceLocation BURNT_BIOME_BURNT_TREE = new ResourceLocation("solarcraft","burnt_biome_tree");
-    public static final ResourceLocation MOLTEN_FOREST_BIOME = new ResourceLocation("solarcraft","incinerated_forest");
-    public static final ResourceKey<Biome> MOLTEN_BIOME_KEY = ResourceKey.create(Registry.BIOME_REGISTRY,MOLTEN_FOREST_BIOME);
+//    public static final ResourceLocation MOLTEN_FOREST_BIOME = new ResourceLocation("solarcraft","incinerated_forest");
+//    public static final ResourceKey<Biome> MOLTEN_BIOME_KEY = ResourceKey.create(Registry.BIOME_REGISTRY,MOLTEN_FOREST_BIOME);
 
     public static final DeferredRegister<Feature<?>> FEATURES = DeferredRegister.create(ForgeRegistries.FEATURES, SolarCraft.MOD_ID);
 
@@ -346,154 +323,153 @@ public class FeaturesRegistry {
 //                    PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK,
 //                            new SimpleBlockConfiguration(BlockStateProvider.simple(SolarcraftBlocks.RADIANT_BERRY_BUSH.get())))));
 //            Registry.register(BuiltinRegistries.CONFIGURED_FEATURE,new ResourceLocation("solarcraft","radiant_berry_bush_configured"), RADIANT_BERRY_BUSH_CONF);
-            RADIANT_BERRY_BUSH = registerPlacedFeature("radiant_berry_bush",Holder.direct(RADIANT_BERRY_BUSH_CONF),
-                    InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE);
+//            RADIANT_BERRY_BUSH = registerPlacedFeature("radiant_berry_bush",Holder.direct(RADIANT_BERRY_BUSH_CONF),
+//                    InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE);
 
+//
+//            ENDER_CRACKS_CONF = new ConfiguredFeature<>(Feature.ORE,
+//                    new OreConfiguration(END_STONE, SolarcraftBlocks.ENDER_CRACKS.get().defaultBlockState(),5));
+//            Registry.register(BuiltinRegistries.CONFIGURED_FEATURE,new ResourceLocation("solarcraft","ender_cracks_configured"), ENDER_CRACKS_CONF);
+//
+//            ENDER_CRACKS = registerPlacedFeature("ender_cracks",Holder.direct(ENDER_CRACKS_CONF),
+//                    HeightRangePlacement.uniform(VerticalAnchor.absolute(30),VerticalAnchor.absolute(100)));
 
-            ENDER_CRACKS_CONF = new ConfiguredFeature<>(Feature.ORE,
-                    new OreConfiguration(END_STONE, SolarcraftBlocks.ENDER_CRACKS.get().defaultBlockState(),5));
-            Registry.register(BuiltinRegistries.CONFIGURED_FEATURE,new ResourceLocation("solarcraft","ender_cracks_configured"), ENDER_CRACKS_CONF);
+//            CRYSTAL_CAVE_ORE_CRYSTAL_CONF = new ConfiguredFeature<>(CRYSTAL_CAVE_ORE_CRYSTAL.get(),NoneFeatureConfiguration.INSTANCE);
+//            Registry.register(BuiltinRegistries.CONFIGURED_FEATURE,new ResourceLocation("solarcraft","crystal_cave_ore_crystal"), CRYSTAL_CAVE_ORE_CRYSTAL_CONF);
+//
+//            CRYSTAL_CAVE_ORE_CRYSTAL_PLACEMENT = registerPlacedFeature("crystal_cave_ore_crystal",Holder.direct(CRYSTAL_CAVE_ORE_CRYSTAL_CONF),
+//                    RarityFilter.onAverageOnceEvery(3),
+//                    CountPlacement.of(UniformInt.of(10,15)),InSquarePlacement.spread(), PlacementUtils.RANGE_BOTTOM_TO_MAX_TERRAIN_HEIGHT, BiomeFilter.biome());
 
-            ENDER_CRACKS = registerPlacedFeature("ender_cracks",Holder.direct(ENDER_CRACKS_CONF),
-                    HeightRangePlacement.uniform(VerticalAnchor.absolute(30),VerticalAnchor.absolute(100)));
+//            CEILING_FLOOR_CRYSTALS_CONF = new ConfiguredFeature<>(CEILING_FLOOR_CRYSTALS.get(),NoneFeatureConfiguration.INSTANCE);
+//            registerConfiguredFeature(CEILING_FLOOR_CRYSTALS_CONF,"ceiling_floor_crystals");
 
-            CRYSTAL_CAVE_ORE_CRYSTAL_CONF = new ConfiguredFeature<>(CRYSTAL_CAVE_ORE_CRYSTAL.get(),NoneFeatureConfiguration.INSTANCE);
-            Registry.register(BuiltinRegistries.CONFIGURED_FEATURE,new ResourceLocation("solarcraft","crystal_cave_ore_crystal"), CRYSTAL_CAVE_ORE_CRYSTAL_CONF);
+//            CEILING_FLOOR_CRYSTALS_PLACEMENT = registerPlacedFeature("ceiling_floor_crystals",Holder.direct(CEILING_FLOOR_CRYSTALS_CONF),
+//                    CountPlacement.of(UniformInt.of(13,17)), PlacementUtils.RANGE_BOTTOM_TO_MAX_TERRAIN_HEIGHT,
+//                    BiomeFilter.biome());
 
-            CRYSTAL_CAVE_ORE_CRYSTAL_PLACEMENT = registerPlacedFeature("crystal_cave_ore_crystal",Holder.direct(CRYSTAL_CAVE_ORE_CRYSTAL_CONF),
-                    RarityFilter.onAverageOnceEvery(3),
-                    CountPlacement.of(UniformInt.of(10,15)),InSquarePlacement.spread(), PlacementUtils.RANGE_BOTTOM_TO_MAX_TERRAIN_HEIGHT, BiomeFilter.biome());
+//            CRYSTAL_FLOWER_CONF = new ConfiguredFeature<>(Feature.FLOWER,
+//                    FeatureUtils.simpleRandomPatchConfiguration(7,
+//                            PlacementUtils.onlyWhenEmpty(STONE_FLOWERS.get(),
+//                                    new SimpleBlockConfiguration(BlockStateProvider.simple(SolarcraftBlocks.CRYSTAL_FLOWER.get())))));
+//            registerConfiguredFeature(CRYSTAL_FLOWER_CONF,"crystal_flower");
+//
+//            CRYSTAL_FLOWER_PLACEMENT = registerPlacedFeature("crystal_flower",Holder.direct(CRYSTAL_FLOWER_CONF),
+//                    CountPlacement.of(UniformInt.of(50,60)),PlacementUtils.RANGE_BOTTOM_TO_MAX_TERRAIN_HEIGHT,BiomeFilter.biome() );
 
-            CEILING_FLOOR_CRYSTALS_CONF = new ConfiguredFeature<>(CEILING_FLOOR_CRYSTALS.get(),NoneFeatureConfiguration.INSTANCE);
-            registerConfiguredFeature(CEILING_FLOOR_CRYSTALS_CONF,"ceiling_floor_crystals");
+//            CEILING_DRIPSTONE_LIKE_CRYSTALS_CONF = new ConfiguredFeature<>(CEILING_DRIPSTONE_LIKE_CRYSTALS.get(),NoneFeatureConfiguration.INSTANCE);
+//            registerConfiguredFeature(CEILING_DRIPSTONE_LIKE_CRYSTALS_CONF,"ceiling_dripstonelike_crystals");
+//
+//            CEILING_DRIPSTONE_LIKE_CRYSTALS_PLACEMENT = registerPlacedFeature("ceiling_dripstonelike_crystals",
+//                    Holder.direct(CEILING_DRIPSTONE_LIKE_CRYSTALS_CONF),
+//                    CountPlacement.of(UniformInt.of(20,30)),InSquarePlacement.spread(),
+//                    PlacementUtils.RANGE_BOTTOM_TO_MAX_TERRAIN_HEIGHT,BiomeFilter.biome());
 
-            CEILING_FLOOR_CRYSTALS_PLACEMENT = registerPlacedFeature("ceiling_floor_crystals",Holder.direct(CEILING_FLOOR_CRYSTALS_CONF),
-                    CountPlacement.of(UniformInt.of(13,17)), PlacementUtils.RANGE_BOTTOM_TO_MAX_TERRAIN_HEIGHT,
-                    BiomeFilter.biome());
+//            CRYSTALLIZED_RUNIC_ENERGY_CRYSTALS_CONF = new ConfiguredFeature<>(CRYSTALS_ORE.get(),
+//                    new SimpleBlockConfiguration(BlockStateProvider.simple(SolarcraftBlocks.CRYSTALLIZED_RUNIC_ENERGY.get())));
+//            registerConfiguredFeature(CRYSTALLIZED_RUNIC_ENERGY_CRYSTALS_CONF,"crystallized_runic_energy");
+//
+//            CRYSTALLIZED_RUNIC_ENERGY_CRYSTALS_PLACEMENT = registerPlacedFeature("crystallized_runic_energy",
+//                    Holder.direct(CRYSTALLIZED_RUNIC_ENERGY_CRYSTALS_CONF),
+//                    CountPlacement.of(UniformInt.of(60,100)),InSquarePlacement.spread(),
+//                    HeightRangePlacement.uniform(VerticalAnchor.bottom(),VerticalAnchor.absolute(100)),BiomeFilter.biome());
 
-            CRYSTAL_FLOWER_CONF = new ConfiguredFeature<>(Feature.FLOWER,
-                    FeatureUtils.simpleRandomPatchConfiguration(7,
-                            PlacementUtils.onlyWhenEmpty(STONE_FLOWERS.get(),
-                                    new SimpleBlockConfiguration(BlockStateProvider.simple(SolarcraftBlocks.CRYSTAL_FLOWER.get())))));
-            registerConfiguredFeature(CRYSTAL_FLOWER_CONF,"crystal_flower");
+//            LENSING_CRYSTAL_ORE_CONF = new ConfiguredFeature<>(Feature.ORE,
+//                    new OreConfiguration(OreFeatures.NATURAL_STONE, SolarcraftBlocks.LENSING_CRYSTAL_ORE.get().defaultBlockState(),4));
+//            registerConfiguredFeature(LENSING_CRYSTAL_ORE_CONF,"lensing_crystal_ore");
+//
+//            LENSING_CRYSTAL_ORE_PLACEMENT = registerPlacedFeature("lensing_crystal_ore",Holder.direct(LENSING_CRYSTAL_ORE_CONF),
+//                    CountPlacement.of(UniformInt.of(4,6)),InSquarePlacement.spread(),
+//                    HeightRangePlacement.uniform(VerticalAnchor.absolute(10),VerticalAnchor.absolute(50)));
 
-            CRYSTAL_FLOWER_PLACEMENT = registerPlacedFeature("crystal_flower",Holder.direct(CRYSTAL_FLOWER_CONF),
-                    CountPlacement.of(UniformInt.of(50,60)),PlacementUtils.RANGE_BOTTOM_TO_MAX_TERRAIN_HEIGHT,BiomeFilter.biome() );
-
-            CEILING_DRIPSTONE_LIKE_CRYSTALS_CONF = new ConfiguredFeature<>(CEILING_DRIPSTONE_LIKE_CRYSTALS.get(),NoneFeatureConfiguration.INSTANCE);
-            registerConfiguredFeature(CEILING_DRIPSTONE_LIKE_CRYSTALS_CONF,"ceiling_dripstonelike_crystals");
-
-            CEILING_DRIPSTONE_LIKE_CRYSTALS_PLACEMENT = registerPlacedFeature("ceiling_dripstonelike_crystals",
-                    Holder.direct(CEILING_DRIPSTONE_LIKE_CRYSTALS_CONF),
-                    CountPlacement.of(UniformInt.of(20,30)),InSquarePlacement.spread(),
-                    PlacementUtils.RANGE_BOTTOM_TO_MAX_TERRAIN_HEIGHT,BiomeFilter.biome());
-
-            CRYSTALLIZED_RUNIC_ENERGY_CRYSTALS_CONF = new ConfiguredFeature<>(CRYSTALS_ORE.get(),
-                    new SimpleBlockConfiguration(BlockStateProvider.simple(SolarcraftBlocks.CRYSTALLIZED_RUNIC_ENERGY.get())));
-            registerConfiguredFeature(CRYSTALLIZED_RUNIC_ENERGY_CRYSTALS_CONF,"crystallized_runic_energy");
-
-            CRYSTALLIZED_RUNIC_ENERGY_CRYSTALS_PLACEMENT = registerPlacedFeature("crystallized_runic_energy",
-                    Holder.direct(CRYSTALLIZED_RUNIC_ENERGY_CRYSTALS_CONF),
-                    CountPlacement.of(UniformInt.of(60,100)),InSquarePlacement.spread(),
-                    HeightRangePlacement.uniform(VerticalAnchor.bottom(),VerticalAnchor.absolute(100)),BiomeFilter.biome());
-
-            LENSING_CRYSTAL_ORE_CONF = new ConfiguredFeature<>(Feature.ORE,
-                    new OreConfiguration(OreFeatures.NATURAL_STONE, SolarcraftBlocks.LENSING_CRYSTAL_ORE.get().defaultBlockState(),4));
-            registerConfiguredFeature(LENSING_CRYSTAL_ORE_CONF,"lensing_crystal_ore");
-
-            LENSING_CRYSTAL_ORE_PLACEMENT = registerPlacedFeature("lensing_crystal_ore",Holder.direct(LENSING_CRYSTAL_ORE_CONF),
-                    CountPlacement.of(UniformInt.of(4,6)),InSquarePlacement.spread(),
-                    HeightRangePlacement.uniform(VerticalAnchor.absolute(10),VerticalAnchor.absolute(50)));
-
-            LUNAR_LILY_FEATURE_CONF = new ConfiguredFeature<>(Feature.FLOWER,
-                    FeatureUtils.simpleRandomPatchConfiguration(3,PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK,
-                            new SimpleBlockConfiguration(BlockStateProvider.simple(SolarcraftBlocks.VOID_LILY.get())))));
-            registerConfiguredFeature(LUNAR_LILY_FEATURE_CONF,"lunar_lily");
-
-            LUNAR_LILY_FEATURE_PLACEMENT = registerPlacedFeature("lunar_lily",Holder.direct(LUNAR_LILY_FEATURE_CONF),
-                    NoiseThresholdCountPlacement.of(-0.8D, 15, 4),
-                    RarityFilter.onAverageOnceEvery(32), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP );
-
-            EMPTY_CRYSTALS_CONF = new ConfiguredFeature<>(CRYSTALS_ORE.get(),
-                    new SimpleBlockConfiguration(BlockStateProvider.simple(SolarcraftBlocks.CRYSTAL.get())));
-            registerConfiguredFeature(EMPTY_CRYSTALS_CONF,"empty_crystals");
-
-            EMPTY_CRYSTALS_PLACEMENT = registerPlacedFeature("empty_crystals",Holder.direct(EMPTY_CRYSTALS_CONF),
-                    CountPlacement.of(UniformInt.of(15,30)),
-                    InSquarePlacement.spread(),HeightRangePlacement.uniform(VerticalAnchor.bottom(),
-                            VerticalAnchor.absolute(100)),BiomeFilter.biome() );
-            SOLAR_ORE_CONF = new ConfiguredFeature<>(Feature.ORE,new OreConfiguration(OreFeatures.NATURAL_STONE, SolarCraft.SOLAR_ORE.get().defaultBlockState(),4));
-            registerConfiguredFeature(SOLAR_ORE_CONF,"solar_ore");
-            SOLAR_ORE = registerPlacedFeature("solar_ore",Holder.direct(SOLAR_ORE_CONF),
-                    HeightRangePlacement.uniform(VerticalAnchor.absolute(5),VerticalAnchor.absolute(30)));
-
-
-
-            SOLAR_STONE_CONF = new ConfiguredFeature<>(Feature.ORE,new OreConfiguration(OreFeatures.NATURAL_STONE, SolarcraftBlocks.SOLAR_STONE.get().defaultBlockState(),13));
-            registerConfiguredFeature(SOLAR_STONE_CONF,"solar_stone");
-            SOLAR_STONE = registerPlacedFeature("solar_stone",Holder.direct(SOLAR_STONE_CONF),
-                    CountPlacement.of(UniformInt.of(3,4)), InSquarePlacement.spread(),
-                    HeightRangePlacement.uniform(VerticalAnchor.bottom(),VerticalAnchor.absolute(80)));
-
-
-            MAGISTONE_ORE = new ConfiguredFeature<>(Feature.ORE,
-                    new OreConfiguration(OreFeatures.NATURAL_STONE,
-                            SolarcraftBlocks.MAGISTONE.get().defaultBlockState(),15));
-            registerConfiguredFeature(MAGISTONE_ORE,"magistone");
-            MAGISTONE_ORE_PLACEMENT = registerPlacedFeature("magistone",Holder.direct(MAGISTONE_ORE),
-                    CountPlacement.of(UniformInt.of(3,4)), InSquarePlacement.spread(),
-                    HeightRangePlacement.uniform(VerticalAnchor.bottom(),VerticalAnchor.aboveBottom(64)));
+//            LUNAR_LILY_FEATURE_CONF = new ConfiguredFeature<>(Feature.FLOWER,
+//                    FeatureUtils.simpleRandomPatchConfiguration(3,PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK,
+//                            new SimpleBlockConfiguration(BlockStateProvider.simple(SolarcraftBlocks.VOID_LILY.get())))));
+//            registerConfiguredFeature(LUNAR_LILY_FEATURE_CONF,"lunar_lily");
+//
+//            LUNAR_LILY_FEATURE_PLACEMENT = registerPlacedFeature("lunar_lily",Holder.direct(LUNAR_LILY_FEATURE_CONF),
+//                    NoiseThresholdCountPlacement.of(-0.8D, 15, 4),
+//                    RarityFilter.onAverageOnceEvery(32), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP );
+//
+//            EMPTY_CRYSTALS_CONF = new ConfiguredFeature<>(CRYSTALS_ORE.get(),
+//                    new SimpleBlockConfiguration(BlockStateProvider.simple(SolarcraftBlocks.CRYSTAL.get())));
+//            registerConfiguredFeature(EMPTY_CRYSTALS_CONF,"empty_crystals");
+//
+//            EMPTY_CRYSTALS_PLACEMENT = registerPlacedFeature("empty_crystals",Holder.direct(EMPTY_CRYSTALS_CONF),
+//                    CountPlacement.of(UniformInt.of(15,30)),
+//                    InSquarePlacement.spread(),HeightRangePlacement.uniform(VerticalAnchor.bottom(),
+//                            VerticalAnchor.absolute(100)),BiomeFilter.biome() );
+//            SOLAR_ORE_CONF = new ConfiguredFeature<>(Feature.ORE,new OreConfiguration(OreFeatures.NATURAL_STONE, SolarCraft.SOLAR_ORE.get().defaultBlockState(),4));
+//            registerConfiguredFeature(SOLAR_ORE_CONF,"solar_ore");
+//            SOLAR_ORE = registerPlacedFeature("solar_ore",Holder.direct(SOLAR_ORE_CONF),
+//                    HeightRangePlacement.uniform(VerticalAnchor.absolute(5),VerticalAnchor.absolute(30)));
 
 
 
-            LazyConfiguredFeatures.SOLAR_FLOWER_FEATURE_CONF = new ConfiguredFeature<>(Feature.RANDOM_PATCH,FeatureUtils.simpleRandomPatchConfiguration(2,
-                    PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK,new SimpleBlockConfiguration(BlockStateProvider.simple(SolarcraftBlocks.SOLAR_FLOWER.get())))));
-            registerConfiguredFeature(LazyConfiguredFeatures.SOLAR_FLOWER_FEATURE_CONF,"solar_flower_feature");
-            LazyConfiguredFeatures.SOLAR_FLOWER_FEATURE = registerPlacedFeature("solar_flower_feature",Holder.direct(LazyConfiguredFeatures.SOLAR_FLOWER_FEATURE_CONF),
-                    HeightmapPlacement.onHeightmap(Heightmap.Types.MOTION_BLOCKING),InSquarePlacement.spread());
+//            SOLAR_STONE_CONF = new ConfiguredFeature<>(Feature.ORE,new OreConfiguration(OreFeatures.NATURAL_STONE, SolarcraftBlocks.SOLAR_STONE.get().defaultBlockState(),13));
+//            registerConfiguredFeature(SOLAR_STONE_CONF,"solar_stone");
+//            SOLAR_STONE = registerPlacedFeature("solar_stone",Holder.direct(SOLAR_STONE_CONF),
+//                    CountPlacement.of(UniformInt.of(3,4)), InSquarePlacement.spread(),
+//                    HeightRangePlacement.uniform(VerticalAnchor.bottom(),VerticalAnchor.absolute(80)));
 
 
-            LazyConfiguredFeatures.DEAD_SPROUT_FEATURE_CONF = new ConfiguredFeature<>(Feature.RANDOM_PATCH,
-                    FeatureUtils.simpleRandomPatchConfiguration(7,PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK,
-                            new SimpleBlockConfiguration(BlockStateProvider.simple(SolarcraftBlocks.DEAD_SPROUT.get())))));
-            registerConfiguredFeature(LazyConfiguredFeatures.DEAD_SPROUT_FEATURE_CONF,"dead_sprout_feature");
-            LazyConfiguredFeatures.DEAD_SPROUT_FEATURE = registerPlacedFeature("dead_sprout_feature",Holder.direct(LazyConfiguredFeatures.DEAD_SPROUT_FEATURE_CONF),
-                    HeightmapPlacement.onHeightmap(Heightmap.Types.MOTION_BLOCKING),InSquarePlacement.spread());
-
-            ULDERA_OBELISK_CONFIGURED = new ConfiguredFeature<>(ULDERA_OBELISK.get(),NoneFeatureConfiguration.INSTANCE);
-            registerConfiguredFeature(ULDERA_OBELISK_CONFIGURED,"uldera_obelisk");
-
-            ULDERA_OBELISK_PLACEMENT = registerPlacedFeature("uldera_obelisk",Holder.direct(ULDERA_OBELISK_CONFIGURED),
-                    RarityFilter.onAverageOnceEvery(100),
-//                    HeightRangePlacement.triangle(VerticalAnchor.absolute(75),VerticalAnchor.absolute(90)),
-                    InSquarePlacement.spread());
+//            MAGISTONE_ORE = new ConfiguredFeature<>(Feature.ORE,
+//                    new OreConfiguration(OreFeatures.NATURAL_STONE,
+//                            SolarcraftBlocks.MAGISTONE.get().defaultBlockState(),15));
+//            registerConfiguredFeature(MAGISTONE_ORE,"magistone");
+//            MAGISTONE_ORE_PLACEMENT = registerPlacedFeature("magistone",Holder.direct(MAGISTONE_ORE),
+//                    CountPlacement.of(UniformInt.of(3,4)), InSquarePlacement.spread(),
+//                    HeightRangePlacement.uniform(VerticalAnchor.bottom(),VerticalAnchor.aboveBottom(64)));
 
 
-            ULDERA_PYLON_CONFIGURED = new ConfiguredFeature<>(ULDERA_PYLON.get(),NoneFeatureConfiguration.INSTANCE);
-            registerConfiguredFeature(ULDERA_PYLON_CONFIGURED,"uldera_pylon");
 
-            ULDERA_PYLON_PLACEMENT = registerPlacedFeature("uldera_pylon",Holder.direct(ULDERA_PYLON_CONFIGURED),
-                    RarityFilter.onAverageOnceEvery(300));
+//            LazyConfiguredFeatures.SOLAR_FLOWER_FEATURE_CONF = new ConfiguredFeature<>(Feature.RANDOM_PATCH,FeatureUtils.simpleRandomPatchConfiguration(2,
+//                    PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK,new SimpleBlockConfiguration(BlockStateProvider.simple(SolarcraftBlocks.SOLAR_FLOWER.get())))));
+//            registerConfiguredFeature(LazyConfiguredFeatures.SOLAR_FLOWER_FEATURE_CONF,"solar_flower_feature");
+//            LazyConfiguredFeatures.SOLAR_FLOWER_FEATURE = registerPlacedFeature("solar_flower_feature",Holder.direct(LazyConfiguredFeatures.SOLAR_FLOWER_FEATURE_CONF),
+//                    HeightmapPlacement.onHeightmap(Heightmap.Types.MOTION_BLOCKING),InSquarePlacement.spread());
 
-            CLEARING_CRYSTAL_CONFIGURED = new ConfiguredFeature<>(CLEARING_CRYSTAL.get(),NoneFeatureConfiguration.INSTANCE);
-            registerConfiguredFeature(CLEARING_CRYSTAL_CONFIGURED,"clearing_crystal");
-            CLEARING_CRYSTAL_PLACEMENT = registerPlacedFeature("clearing_crystal",Holder.direct(CLEARING_CRYSTAL_CONFIGURED),
-                    RarityFilter.onAverageOnceEvery(250),InSquarePlacement.spread(),HeightmapPlacement.onHeightmap(Heightmap.Types.MOTION_BLOCKING));
+
+//            LazyConfiguredFeatures.DEAD_SPROUT_FEATURE_CONF = new ConfiguredFeature<>(Feature.RANDOM_PATCH,
+//                    FeatureUtils.simpleRandomPatchConfiguration(7,PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK,
+//                            new SimpleBlockConfiguration(BlockStateProvider.simple(SolarcraftBlocks.DEAD_SPROUT.get())))));
+//            registerConfiguredFeature(LazyConfiguredFeatures.DEAD_SPROUT_FEATURE_CONF,"dead_sprout_feature");
+//            LazyConfiguredFeatures.DEAD_SPROUT_FEATURE = registerPlacedFeature("dead_sprout_feature",Holder.direct(LazyConfiguredFeatures.DEAD_SPROUT_FEATURE_CONF),
+//                    HeightmapPlacement.onHeightmap(Heightmap.Types.MOTION_BLOCKING),InSquarePlacement.spread());
+
+//            ULDERA_OBELISK_CONFIGURED = new ConfiguredFeature<>(ULDERA_OBELISK.get(),NoneFeatureConfiguration.INSTANCE);
+//            registerConfiguredFeature(ULDERA_OBELISK_CONFIGURED,"uldera_obelisk");
+
+//            ULDERA_OBELISK_PLACEMENT = registerPlacedFeature("uldera_obelisk",Holder.direct(ULDERA_OBELISK_CONFIGURED),
+//                    RarityFilter.onAverageOnceEvery(100),
+//                    InSquarePlacement.spread());
+//
+
+//            ULDERA_PYLON_CONFIGURED = new ConfiguredFeature<>(ULDERA_PYLON.get(),NoneFeatureConfiguration.INSTANCE);
+//            registerConfiguredFeature(ULDERA_PYLON_CONFIGURED,"uldera_pylon");
+
+//            ULDERA_PYLON_PLACEMENT = registerPlacedFeature("uldera_pylon",Holder.direct(ULDERA_PYLON_CONFIGURED),
+//                    RarityFilter.onAverageOnceEvery(300));
+
+//            CLEARING_CRYSTAL_CONFIGURED = new ConfiguredFeature<>(CLEARING_CRYSTAL.get(),NoneFeatureConfiguration.INSTANCE);
+//            registerConfiguredFeature(CLEARING_CRYSTAL_CONFIGURED,"clearing_crystal");
+//            CLEARING_CRYSTAL_PLACEMENT = registerPlacedFeature("clearing_crystal",Holder.direct(CLEARING_CRYSTAL_CONFIGURED),
+//                    RarityFilter.onAverageOnceEvery(250),InSquarePlacement.spread(),HeightmapPlacement.onHeightmap(Heightmap.Types.MOTION_BLOCKING));
         });
     }
 
 
 
-    private static void registerConfiguredFeature(ConfiguredFeature<?,?> feature,String registryid){
-        Registry.register(BuiltinRegistries.CONFIGURED_FEATURE,new ResourceLocation(SolarCraft.MOD_ID,registryid),feature);
-    }
-
-    private static void registerPlacedFeature(PlacedFeature feature,String registryid){
-        Registry.register(BuiltinRegistries.PLACED_FEATURE,new ResourceLocation(SolarCraft.MOD_ID,registryid),feature);
-    }
-    public static Holder<PlacedFeature> registerPlacedFeature(String name, Holder<? extends ConfiguredFeature<?, ?>> cFeature, PlacementModifier... mod) {
-        return BuiltinRegistries.register(BuiltinRegistries.PLACED_FEATURE, new ResourceLocation(SolarCraft.MOD_ID,name), new PlacedFeature(Holder.hackyErase(cFeature), List.of(mod)));
-    }
+//    private static void registerConfiguredFeature(ConfiguredFeature<?,?> feature,String registryid){
+//        Registry.register(BuiltinRegistries.CONFIGURED_FEATURE,new ResourceLocation(SolarCraft.MOD_ID,registryid),feature);
+//    }
+//
+//    private static void registerPlacedFeature(PlacedFeature feature,String registryid){
+//        Registry.register(BuiltinRegistries.PLACED_FEATURE,new ResourceLocation(SolarCraft.MOD_ID,registryid),feature);
+//    }
+//    public static Holder<PlacedFeature> registerPlacedFeature(String name, Holder<? extends ConfiguredFeature<?, ?>> cFeature, PlacementModifier... mod) {
+//        return BuiltinRegistries.register(BuiltinRegistries.PLACED_FEATURE, new ResourceLocation(SolarCraft.MOD_ID,name), new PlacedFeature(Holder.hackyErase(cFeature), List.of(mod)));
+//    }
 
 
 

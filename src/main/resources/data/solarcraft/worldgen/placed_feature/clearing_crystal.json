@@ -1,0 +1,16 @@
+{
+  "placement": [
+    {
+      "chance": 250,
+      "type": "minecraft:rarity_filter"
+    },
+    {
+      "type": "minecraft:in_square"
+    },
+    {
+      "heightmap": "MOTION_BLOCKING",
+      "type": "minecraft:heightmap"
+    }
+  ],
+  "feature": "solarcraft:clearing_crystal"
+}

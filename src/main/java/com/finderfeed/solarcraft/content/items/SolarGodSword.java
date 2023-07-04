@@ -23,6 +23,9 @@ import java.util.List;
 import java.util.function.Supplier;
 
 public class SolarGodSword extends RareSolarcraftSword implements IUpgradable {
+
+    public static final int UPGRADE_COUNT = 4;
+
     public SolarGodSword(Tier p_i48460_1_, int p_i48460_2_, float p_i48460_3_, Properties p_i48460_4_, Supplier<AncientFragment> fragmentSupplier) {
         super(p_i48460_1_, p_i48460_2_, p_i48460_3_, p_i48460_4_,fragmentSupplier);
     }
@@ -95,7 +98,7 @@ public class SolarGodSword extends RareSolarcraftSword implements IUpgradable {
 
     @Override
     public int getMaxUpgrades() {
-        return 4;
+        return UPGRADE_COUNT;
     }
 
     @Override

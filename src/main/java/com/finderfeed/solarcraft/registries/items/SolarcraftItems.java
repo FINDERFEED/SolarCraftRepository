@@ -21,6 +21,7 @@ import com.finderfeed.solarcraft.content.items.solar_disc_gun.SolarDiscGunItem;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarcraft.content.items.vein_miner.IllidiumPickaxe;
 import com.finderfeed.solarcraft.misc_things.*;
+import com.finderfeed.solarcraft.registries.SCCreativeTabs;
 import com.finderfeed.solarcraft.registries.blocks.SolarcraftBlocks;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.SolarLexicon;
 import com.google.common.collect.Lists;
@@ -44,7 +45,7 @@ import java.util.Map;
 import static com.finderfeed.solarcraft.registries.SCCreativeTabs.*;
 public class SolarcraftItems {
 
-    public static Map<CreativeModeTab,List<RegistryObject<? extends Item>>> itemTabs = new HashMap<>();
+    public static Map<RegistryObject<CreativeModeTab>,List<RegistryObject<? extends Item>>> itemTabs = new HashMap<>();
 
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS,"solarcraft");
 
@@ -181,7 +182,7 @@ public class SolarcraftItems {
     public static final RegistryObject<Item> SOLAR_FURNACE_BLOCK = registerItem(ITEMS.register("solar_furnace",()->new RareSolarcraftBlockItem(SolarcraftBlocks.SOLAR_FURNACE.get(),new Item.Properties(),()->AncientFragment.SOLAR_FURNACE)),SOLAR_GROUP_BLOCKS);
     public static final RegistryObject<Item> TURRET_BLOCK = registerItem(ITEMS.register("turret_block",()->new TurretBlockItem(SolarcraftBlocks.TURRET_BLOCK.get(),new Item.Properties(),()->AncientFragment.SOLAR_TURRET)),SOLAR_GROUP_BLOCKS);
     public static final RegistryObject<Item> ZAP_TURRET_BLOCK = registerItem(ITEMS.register("zap_turret_block",()->new RareSolarcraftBlockItem(SolarcraftBlocks.ZAP_TURRET_BLOCK.get(),new Item.Properties(),()->AncientFragment.ZAP_TURRET)),SOLAR_GROUP_BLOCKS);
-    public static final RegistryObject<Item> SOLAR_GOD_SWORD = registerItem(ITEMS.register("solar_god_sword",()->new SolarGodSword(SolarCraftToolTiers.SOLAR_GOD_TOOL_TIER,-3,-2.4f,new Item.Properties().rarity(Rarity.EPIC).stacksTo(1),()->AncientFragment.SOLAR_GOD_SWORD)),SOLAR_GROUP_WEAPONS);
+    public static final RegistryObject<Item> SOLAR_GOD_SWORD = ITEMS.register("solar_god_sword",()->new SolarGodSword(SolarCraftToolTiers.SOLAR_GOD_TOOL_TIER,-3,-2.4f,new Item.Properties().rarity(Rarity.EPIC).stacksTo(1),()->AncientFragment.SOLAR_GOD_SWORD));
     public static final RegistryObject<Item> SOLAR_GOD_PICKAXE = registerItem(ITEMS.register("solar_god_pickaxe",()-> new SolarGodPickaxe(SolarCraftToolTiers.SOLAR_GOD_TOOL_TIER, -6, -2.8F, (new Item.Properties()).rarity(Rarity.EPIC),()->AncientFragment.SOLAR_GOD_PICKAXE)),SOLAR_GROUP_TOOLS);
     public static final RegistryObject<Item> ULDORADIUM_ORE = registerItem(ITEMS.register("blue_gem_ore",()->new UldoradiumOreBlockitem(SolarcraftBlocks.BLUE_GEM_ORE.get(),new Item.Properties())),SOLAR_GROUP_BLOCKS);
     public static final RegistryObject<Item> RAY_TRAP_BLOCK = ITEMS.register("ray_trap_block",()->new BlockItem(SolarcraftBlocks.RAY_TRAP_BLOCK.get(),new Item.Properties()));
@@ -322,7 +323,7 @@ public class SolarcraftItems {
 
     public static  final RegistryObject<Item> SOLAR_SHARD = registerItem(ITEMS.register("solar_shard",()-> new Item(new Item.Properties().rarity(Rarity.EPIC))),SOLAR_GROUP);
     public static  final RegistryObject<Item> SOLAR_FORGE_ITEM = registerItem(ITEMS.register("solar_forge",()-> new SolarForgeBlockItem(SolarCraft.SOLAR_FORGE.get(),new Item.Properties().rarity(Rarity.EPIC).stacksTo(1))),SOLAR_GROUP_BLOCKS);
-    public static  final RegistryObject<Item> SOLAR_ORE_ITEM = registerItem(ITEMS.register("solar_ores",()-> new ProgressionBlockItem(SolarCraft.SOLAR_ORE.get(),new Item.Properties())),SOLAR_GROUP_BLOCKS);
+    public static  final RegistryObject<Item> SOLAR_ORE_ITEM = registerItem(ITEMS.register("solar_ore",()-> new ProgressionBlockItem(SolarCraft.SOLAR_ORE.get(),new Item.Properties())),SOLAR_GROUP_BLOCKS);
     public static  final RegistryObject<Item> INFUSER_ITEM = registerItem(ITEMS.register("solar_infuser",()-> new InfuserBlockItem(SolarCraft.SOLAR_INFUSER.get(),new Item.Properties().rarity(Rarity.EPIC).stacksTo(1),()-> AncientFragment.SOLAR_INFUSER)),SOLAR_GROUP_BLOCKS);
 
     public static final RegistryObject<ProgressionBlockItem> MAGISTONE = registerItem(ITEMS.register("magistone",()->new ProgressionBlockItem(SolarcraftBlocks.MAGISTONE.get(),new Item.Properties())),SOLAR_GROUP_BLOCKS);
@@ -347,7 +348,7 @@ public class SolarcraftItems {
 
 
 
-    public static <T extends Item> RegistryObject<T> registerItem(RegistryObject<T> reg,CreativeModeTab tab){
+    public static <T extends Item> RegistryObject<T> registerItem(RegistryObject<T> reg,RegistryObject<CreativeModeTab> tab){
         var a = itemTabs.get(tab);
         if (a != null){
             a.add(reg);
@@ -358,10 +359,18 @@ public class SolarcraftItems {
     }
 
     public static void registerIntoCreativeTabs(BuildCreativeModeTabContentsEvent event){
-        var a = itemTabs.get(event.getTab());
-        if (a != null){
-            a.forEach(event::accept);
-        }
+//        Map<CreativeModeTab,List<RegistryObject<? extends Item>>> newmap = new HashMap<>();
+//        for (var entry : itemTabs.entrySet()){
+//            newmap.put(entry.getKey().get(),entry.getValue());
+//        }
+//        var a = newmap.get(event.getTab());
+//        if (a != null){
+//            a.forEach(event::accept);
+//        }
+//
+//        if (event.getTab() == SOLAR_GROUP_FRAGMENTS.get()){
+//
+//        }
     }
 
 }

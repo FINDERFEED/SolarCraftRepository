@@ -22,6 +22,7 @@ import com.finderfeed.solarcraft.content.blocks.infusing_table_things.infusing_p
 import com.finderfeed.solarcraft.content.items.item_tiers.SolarCraftToolTiers;
 import com.finderfeed.solarcraft.client.particles.SolarcraftParticleTypes;
 import com.finderfeed.solarcraft.registries.ConfigRegistry;
+import com.finderfeed.solarcraft.registries.SCCreativeTabs;
 import com.finderfeed.solarcraft.registries.SolarcraftGamerules;
 import com.finderfeed.solarcraft.registries.Tags;
 import com.finderfeed.solarcraft.registries.abilities.AbilitiesRegistry;
@@ -135,7 +136,7 @@ public class SolarCraft
     public  static  final  RegistryObject<SolarForgeBlock> SOLAR_FORGE = BLOCKS.register("solar_forge",()->
             new SolarForgeBlock(BlockBehaviour.Properties.copy(Blocks.STONE).sound(SoundType.ANCIENT_DEBRIS)));
 
-    public  static  final  RegistryObject<SolarOreBlock> SOLAR_ORE = BLOCKS.register("solar_ores",()-> new SolarOreBlock(BlockBehaviour.Properties.copy(Blocks.STONE)
+    public  static  final  RegistryObject<SolarOreBlock> SOLAR_ORE = BLOCKS.register("solar_ore",()-> new SolarOreBlock(BlockBehaviour.Properties.copy(Blocks.STONE)
             .sound(SoundType.ANCIENT_DEBRIS)));
 
     public  static  final  RegistryObject<InfuserBlock> SOLAR_INFUSER = BLOCKS.register("solar_infuser",
@@ -162,6 +163,7 @@ public class SolarCraft
         BLOCKS.register(bus);
         TILE_ENTITY_TYPE.register(bus);
         CONTAINER_TYPE.register(bus);
+        SCCreativeTabs.REGISTRY.register(bus);
         SolarcraftItems.ITEMS.register(bus);
         SolarcraftBlocks.BLOCKS.register(bus);
         SolarcraftTileEntityTypes.TILE_ENTITY_TYPE.register(bus);

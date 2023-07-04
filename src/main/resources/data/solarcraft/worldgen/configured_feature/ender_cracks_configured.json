@@ -1,0 +1,18 @@
+{
+  "config": {
+    "targets": [
+      {
+        "target": {
+          "tag": "forge:end_stones",
+          "predicate_type": "minecraft:tag_match"
+        },
+        "state": {
+          "Name": "solarcraft:ender_cracks"
+        }
+      }
+    ],
+    "size": 5,
+    "discard_chance_on_air_exposure": 0.0
+  },
+  "type": "minecraft:ore"
+}

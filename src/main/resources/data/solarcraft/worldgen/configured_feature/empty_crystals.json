@@ -1,0 +1,11 @@
+{
+  "config": {
+    "to_place": {
+      "state": {
+        "Name": "solarcraft:crystal"
+      },
+      "type": "minecraft:simple_state_provider"
+    }
+  },
+  "type": "solarcraft:crystallized_runic_energy"
+}

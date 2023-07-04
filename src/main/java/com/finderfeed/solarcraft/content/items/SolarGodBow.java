@@ -32,6 +32,8 @@ import java.util.function.Supplier;
 
 public class SolarGodBow extends RareSolarcraftItem implements IUpgradable {
 
+    public static final int UPGRADE_COUNT = 5;
+
     private static AABB aoe = new AABB(-15,-5,-15,15,5,15);
 
     public SolarGodBow(Properties p_41383_, Supplier<AncientFragment> fragmentSupplier) {
@@ -122,22 +124,22 @@ public class SolarGodBow extends RareSolarcraftItem implements IUpgradable {
         super.releaseUsing(stack, level, entity, remainingTime);
     }
 
-    @Override
-    public void fillItemCategory(CreativeModeTab tab, NonNullList<ItemStack> stacks) {
-        if (this.allowedIn(tab)){
-//            ItemStack stack = new ItemStack(this);
-//            setItemLevel(stack,0);
-//            stacks.add(stack);
-//            ItemStack stack2 = new ItemStack(this);
-//            setItemLevel(stack2,getMaxUpgrades());
-//            stacks.add(stack2);
-            for (int i = 0; i <= getMaxUpgrades();i++){
-                ItemStack stack = new ItemStack(this);
-                setItemLevel(stack,i);
-                stacks.add(stack);
-            }
-        }
-    }
+//    @Override
+//    public void fillItemCategory(CreativeModeTab tab, NonNullList<ItemStack> stacks) {
+//        if (this.allowedIn(tab)){
+////            ItemStack stack = new ItemStack(this);
+////            setItemLevel(stack,0);
+////            stacks.add(stack);
+////            ItemStack stack2 = new ItemStack(this);
+////            setItemLevel(stack2,getMaxUpgrades());
+////            stacks.add(stack2);
+//            for (int i = 0; i <= getMaxUpgrades();i++){
+//                ItemStack stack = new ItemStack(this);
+//                setItemLevel(stack,i);
+//                stacks.add(stack);
+//            }
+//        }
+//    }
 
     @Override
     public int getUseDuration(ItemStack p_41454_) {
@@ -159,7 +161,7 @@ public class SolarGodBow extends RareSolarcraftItem implements IUpgradable {
 
     @Override
     public int getMaxUpgrades() {
-        return 5;
+        return UPGRADE_COUNT;
     }
 
     @Override
