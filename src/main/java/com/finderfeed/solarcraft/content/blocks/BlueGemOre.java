@@ -24,15 +24,15 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class UldoradiumOre extends Block implements IProgressionBlock {
-    public UldoradiumOre(Properties p_i48357_1_) {
+public class BlueGemOre extends Block implements IProgressionBlock {
+    public BlueGemOre(Properties p_i48357_1_) {
         super(p_i48357_1_);
     }
 
     @Override
     public Block getUnlockedBlock() {
 
-        return SolarcraftBlocks.ULDORADIUM_ORE.get();
+        return SolarcraftBlocks.BLUE_GEM_ORE.get();
     }
 
     @Override

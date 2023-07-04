@@ -3,7 +3,7 @@
   "orig_model": {
     "parent": "block/cube_all",
     "textures": {
-      "all": "solarcraft:block/uldoradium_ore"
+      "all": "solarcraft:block/blue_gem_ore"
     }
   }
 }

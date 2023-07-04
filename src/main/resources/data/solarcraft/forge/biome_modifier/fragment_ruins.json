@@ -1,6 +1,6 @@
 {
   "type": "forge:add_features",
   "biomes": "#forge:is_plains",
-  "features": "solarcraft:configured_ruins",
+  "features": "solarcraft:fragment_ruins",
   "step": "local_modifications"
 }

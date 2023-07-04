@@ -1,6 +1,6 @@
 {
   "type": "forge:add_features",
   "biomes": "#minecraft:is_overworld",
-  "features": "solarcraft:uldoradium_ore",
+  "features": "solarcraft:blue_gem_ore",
   "step": "underground_ores"
 }

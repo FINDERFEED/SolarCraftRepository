@@ -1,0 +1,12 @@
+{
+  "feature": "solarcraft:crystallized_ore_vein_configured",
+  "placement": [
+    {
+      "chance": 25,
+      "type": "minecraft:rarity_filter"
+    },
+    {
+      "type": "minecraft:in_square"
+    }
+  ]
+}

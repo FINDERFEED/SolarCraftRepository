@@ -1,0 +1,12 @@
+{
+  "feature": "solarcraft:radiant_berry_bush_configured",
+  "placement": [
+    {
+      "type": "minecraft:in_square"
+    },
+    {
+      "heightmap": "WORLD_SURFACE_WG",
+      "type": "minecraft:heightmap"
+    }
+  ]
+}

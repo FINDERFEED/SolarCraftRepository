@@ -33,7 +33,7 @@ public class RadiantSmallTreeFoliagePlacer extends FoliagePlacer {
     }
 
     @Override
-    protected void createFoliage(LevelSimulatedReader reader, BiConsumer<BlockPos, BlockState> world, RandomSource random, TreeConfiguration cfg, int i, FoliageAttachment place, int i1, int i2, int i3) {
+    protected void createFoliage(LevelSimulatedReader reader, FoliageSetter world, RandomSource random, TreeConfiguration cfg, int i, FoliageAttachment place, int i1, int i2, int i3) {
         BlockPos mainpos = place.pos().below(3);
 
         for (int a = -3;a < 4;a++){
@@ -42,7 +42,7 @@ public class RadiantSmallTreeFoliagePlacer extends FoliagePlacer {
                     BlockPos toCheck = new BlockPos(mainpos.getX() + a,mainpos.getY() + h, mainpos.getZ() + b);
                     if (!reader.isStateAtPosition(toCheck,(state)->state.is(BlockTags.LOGS))) {
                         if (isValidPos(mainpos, toCheck)) {
-                            world.accept(toCheck, cfg.foliageProvider.getState(random, toCheck).setValue(BlockStateProperties.DISTANCE, 1));
+                            world.set(toCheck, cfg.foliageProvider.getState(random, toCheck).setValue(BlockStateProperties.DISTANCE, 1));
                         }
                     }
                 }

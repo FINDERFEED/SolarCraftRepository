@@ -1,0 +1,16 @@
+{
+  "feature": "solarcraft:radiant_grass",
+  "placement": [
+    {
+      "count": 60,
+      "type": "minecraft:count"
+    },
+    {
+      "type": "minecraft:in_square"
+    },
+    {
+      "heightmap": "WORLD_SURFACE_WG",
+      "type": "minecraft:heightmap"
+    }
+  ]
+}

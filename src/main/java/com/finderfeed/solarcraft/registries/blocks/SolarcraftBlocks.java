@@ -26,7 +26,6 @@ import com.finderfeed.solarcraft.content.world_generation.structures.blocks.KeyL
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.*;
@@ -81,7 +80,7 @@ public class SolarcraftBlocks {
     public  static  final RegistryObject<Block> SOLAR_FURNACE = BLOCKS.register("solar_furnace",()-> new SolarEnergyFurnace(BlockBehaviour.Properties.copy(Blocks.STONE)));
     public  static  final RegistryObject<Block> TURRET_BLOCK = BLOCKS.register("turret_block",()-> new TurretBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).noOcclusion()));
     public  static  final RegistryObject<Block> ZAP_TURRET_BLOCK = BLOCKS.register("zap_turret_block",()-> new ZapTurretBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).noOcclusion()));
-    public  static  final RegistryObject<UldoradiumOre> ULDORADIUM_ORE = BLOCKS.register("uldoradium_ore",()-> new UldoradiumOre(BlockBehaviour.Properties.copy(Blocks.STONE)));
+    public  static  final RegistryObject<BlueGemOre> BLUE_GEM_ORE = BLOCKS.register("blue_gem_ore",()-> new BlueGemOre(BlockBehaviour.Properties.copy(Blocks.STONE)));
     public  static  final RegistryObject<RayTrapBlock> RAY_TRAP_BLOCK = BLOCKS.register("ray_trap_block",()-> new RayTrapBlock(BlockBehaviour.Properties.copy(Blocks.BEDROCK).noOcclusion()));
     public  static  final RegistryObject<TrapStructureController> TRAP_CONTROLLER = BLOCKS.register("trap_controller",()-> new TrapStructureController(BlockBehaviour.Properties.copy(Blocks.BEDROCK)));
     public  static  final RegistryObject<BlueGemDoorBlock> BLUE_GEM_DOOR_BLOCK = BLOCKS.register("blue_gem_door_block",()-> new BlueGemDoorBlock(BlockBehaviour.Properties.copy(Blocks.BEDROCK)));

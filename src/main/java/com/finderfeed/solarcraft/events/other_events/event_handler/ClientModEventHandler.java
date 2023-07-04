@@ -162,7 +162,7 @@ public class ClientModEventHandler {
 
                 Player playerEntity = Minecraft.getInstance().player;
                 if (playerEntity != null) {
-                    return Helpers.hasPlayerCompletedProgression(SolarcraftBlocks.ULDORADIUM_ORE.get().getRequiredProgression(), Minecraft.getInstance().player) ? 1f : 0;
+                    return Helpers.hasPlayerCompletedProgression(SolarcraftBlocks.BLUE_GEM_ORE.get().getRequiredProgression(), Minecraft.getInstance().player) ? 1f : 0;
                 }else{
                     return 0;
                 }
