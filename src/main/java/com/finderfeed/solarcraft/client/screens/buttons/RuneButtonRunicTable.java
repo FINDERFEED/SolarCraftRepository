@@ -2,11 +2,10 @@ package com.finderfeed.solarcraft.client.screens.buttons;
 
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.SolarCraft;
-import com.finderfeed.solarcraft.local_library.client.screens.FDButton;
+import com.finderfeed.solarcraft.local_library.client.screens.buttons.FDButton;
 import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.sounds.SoundManager;
 import net.minecraft.network.chat.Component;

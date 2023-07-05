@@ -4,11 +4,14 @@ import com.finderfeed.solarcraft.content.items.solar_lexicon.screen.buttons.Item
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.SolarLexicon;
+import com.finderfeed.solarcraft.local_library.client.screens.buttons.FDImageButton;
+import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.finderfeed.solarcraft.local_library.other.ItemRator;
 import com.finderfeed.solarcraft.misc_things.PhantomInventory;
 import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
@@ -67,26 +70,26 @@ public class CraftingRecipeScreen extends Screen implements PlaceRecipe<Ingredie
         this.prepareSlots();
         this.setupGhostRecipe(recipes.get(0));
         if (maxPages != 0) {
-            addRenderableWidget(new ImageButton(relX + 180 - 10, relY + 36, 16, 16, 0, 0, 0, BUTTONS, 16, 32, (button) -> {
+            addRenderableWidget(new FDImageButton(relX + 180 - 10, relY + 36, 16, 16, 0, 0, 0, BUTTONS, 16, 32, (button) -> {
                 if ((currentPage + 1 <= maxPages)) {
                     currentPage += 1;
                 }
                 this.setupGhostRecipe(recipes.get(currentPage));
-            },(button,matrices,mousex,mousey)->{
-                renderTooltip(matrices,Component.literal("Next recipe"),mousex,mousey);
+            },(button,graphics,mousex,mousey)->{
+                graphics.renderTooltip(font,Component.literal("Next recipe"),mousex,mousey);
             },Component.literal("")){
                 @Override
                 public void playDownSound(SoundManager manager) {
                     manager.play(SimpleSoundInstance.forUI(SolarcraftSounds.BUTTON_PRESS2.get(),1,1));
                 }
             });
-            addRenderableWidget(new ImageButton(relX + 164 - 10, relY + 36, 16, 16, 0, 16, 0, BUTTONS, 16, 32, (button) -> {
+            addRenderableWidget(new FDImageButton(relX + 164 - 10, relY + 36, 16, 16, 0, 16, 0, BUTTONS, 16, 32, (button) -> {
                 if ((currentPage - 1 >= 0)) {
                     currentPage -= 1;
                 }
                 this.setupGhostRecipe(recipes.get(currentPage));
-            },(button,matrices,mousex,mousey)->{
-                renderTooltip(matrices,Component.literal("Previous recipe"),mousex,mousey);
+            },(button,graphics,mousex,mousey)->{
+                graphics.renderTooltip(font,Component.literal("Previous recipe"),mousex,mousey);
             },Component.literal("")){
                 @Override
                 public void playDownSound(SoundManager manager) {
@@ -106,9 +109,12 @@ public class CraftingRecipeScreen extends Screen implements PlaceRecipe<Ingredie
 
 
     @Override
-    public void render(PoseStack matrices, int mousex, int mousey, float partialTicks) {
+    public void render(GuiGraphics graphics, int mousex, int mousey, float partialTicks) {
+
+        PoseStack matrices = graphics.pose();
+
         ClientHelpers.bindText(MAIN_SCREEN);
-        blit(matrices, relX, relY, 0, 0, 256, 256, 256, 256);
+        RenderingTools.blitWithBlend(matrices, relX, relY, 0, 0, 256, 256, 256, 256,0,1f);
         if (!itemRators.isEmpty()){
 
             List<ItemStack> uniqueItems = new ArrayList<>();
@@ -116,7 +122,7 @@ public class CraftingRecipeScreen extends Screen implements PlaceRecipe<Ingredie
             int iter = -1;
 
             for (ItemRator itemRator : itemRators){
-                renderItemAndTooltip(itemRator.getCurrentStack(),itemRator.getX(),itemRator.getY(),mousex,mousey,matrices,false);
+                renderItemAndTooltip(graphics,itemRator.getCurrentStack(),itemRator.getX(),itemRator.getY(),mousex,mousey,matrices,false);
                 if (iter == -1){
                     iter = 0;
                     continue;
@@ -131,9 +137,9 @@ public class CraftingRecipeScreen extends Screen implements PlaceRecipe<Ingredie
             }
 
             ItemRator itemRator = itemRators.get(0);
-            renderItemAndTooltip(itemRator.getCurrentStack(),itemRator.getX(),itemRator.getY(),mousex,mousey,matrices,false);
+            renderItemAndTooltip(graphics,itemRator.getCurrentStack(),itemRator.getX(),itemRator.getY(),mousex,mousey,matrices,false);
             for (ItemStack i : uniqueItems){
-                drawString(matrices,font,Component.literal(counts[uniqueItems.indexOf(i)]+" x: ").append(i.getItem().getName(i)),relX+13,relY+84+iter*9,SolarLexiconScreen.TEXT_COLOR);
+                graphics.drawString(font,Component.literal(counts[uniqueItems.indexOf(i)]+" x: ").append(i.getItem().getName(i)),relX+13,relY+84+iter*9,SolarLexiconScreen.TEXT_COLOR);
                 iter++;
             }
         }
@@ -141,22 +147,22 @@ public class CraftingRecipeScreen extends Screen implements PlaceRecipe<Ingredie
 
 
 
-        super.render(matrices, mousex, mousey, partialTicks);
+        super.render(graphics, mousex, mousey, partialTicks);
     }
 
-    private void renderItemAndTooltip(ItemStack toRender, int place1, int place2, int mousex, int mousey, PoseStack matrices, boolean last){
+    private void renderItemAndTooltip(GuiGraphics graphics,ItemStack toRender, int place1, int place2, int mousex, int mousey, PoseStack matrices, boolean last){
         if (!last) {
-            minecraft.getItemRenderer().renderGuiItem(toRender, place1, place2);
+            graphics.renderItem(toRender, place1, place2);
         }else{
-            ItemStack renderThis = recipes.get(currentPage).getResultItem();
-            minecraft.getItemRenderer().renderGuiItem(renderThis, place1, place2);
-            minecraft.getItemRenderer().renderGuiItemDecorations(font,renderThis,place1,place2);
+            ItemStack renderThis = recipes.get(currentPage).getResultItem(Minecraft.getInstance().level.registryAccess());
+            graphics.renderItem(renderThis, place1, place2);
+            graphics.renderItemDecorations(font,renderThis,place1,place2);
         }
 
 
         if (((mousex >= place1) && (mousex <= place1+16)) && ((mousey >= place2) && (mousey <= place2+16)) && !toRender.getItem().equals(Items.AIR)){
             matrices.pushPose();
-            renderTooltip(matrices,toRender,mousex,mousey);
+            graphics.renderTooltip(font,toRender,mousex,mousey);
             matrices.popPose();
         }
     }
@@ -164,7 +170,7 @@ public class CraftingRecipeScreen extends Screen implements PlaceRecipe<Ingredie
 
     public void setupGhostRecipe(Recipe<?> recipe) {
         itemRators.clear();
-        itemRators.add(new ItemRator(Ingredient.of(recipe.getResultItem()),relX + 81,relY + 34));
+        itemRators.add(new ItemRator(Ingredient.of(recipe.getResultItem(Minecraft.getInstance().level.registryAccess())),relX + 81,relY + 34));
         this.placeRecipe(3,3, Integer.MAX_VALUE, recipe, recipe.getIngredients().iterator(), 0);
     }
 

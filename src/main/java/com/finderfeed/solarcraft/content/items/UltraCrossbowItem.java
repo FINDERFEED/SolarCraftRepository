@@ -36,21 +36,37 @@ public class UltraCrossbowItem extends RareSolarcraftItem implements IRunicEnerg
     }
 
     @Override
-    public void onUsingTick(ItemStack stack, LivingEntity player, int count) {
-        if (!player.level.isClientSide && (player instanceof Player) ) {
+    public void onUseTick(Level level, LivingEntity living, ItemStack stack, int count) {
+        if (!living.level.isClientSide && (living instanceof Player player) ) {
             if (count % 20 == 0){
                 player.level.playSound(null,player, SolarcraftSounds.CROSSBOW_CHARGING.get(), SoundSource.AMBIENT,1f,1f);
             }
 
             if ((float)(72000-count)/20*DAMAGE_PER_SECOND < 120) {
-                ((Player) player).displayClientMessage(Component.literal("-" + String.format("%.1f", (float) (72000 - count) / 20 * DAMAGE_PER_SECOND) + "-").withStyle(ChatFormatting.GOLD), true);
+                player.displayClientMessage(Component.literal("-" + String.format("%.1f", (float) (72000 - count) / 20 * DAMAGE_PER_SECOND) + "-").withStyle(ChatFormatting.GOLD), true);
             }else{
-                ((Player) player).displayClientMessage(Component.literal("-" + 120.0 + "-").withStyle(ChatFormatting.GOLD), true);
+                player.displayClientMessage(Component.literal("-" + 120.0 + "-").withStyle(ChatFormatting.GOLD), true);
             }
         }
-
-        super.onUsingTick(stack, player, count);
+        super.onUseTick(level, living, stack, count);
     }
+
+//    @Override
+//    public void onUsingTick(ItemStack stack, LivingEntity player, int count) {
+//        if (!player.level.isClientSide && (player instanceof Player) ) {
+//            if (count % 20 == 0){
+//                player.level.playSound(null,player, SolarcraftSounds.CROSSBOW_CHARGING.get(), SoundSource.AMBIENT,1f,1f);
+//            }
+//
+//            if ((float)(72000-count)/20*DAMAGE_PER_SECOND < 120) {
+//                ((Player) player).displayClientMessage(Component.literal("-" + String.format("%.1f", (float) (72000 - count) / 20 * DAMAGE_PER_SECOND) + "-").withStyle(ChatFormatting.GOLD), true);
+//            }else{
+//                ((Player) player).displayClientMessage(Component.literal("-" + 120.0 + "-").withStyle(ChatFormatting.GOLD), true);
+//            }
+//        }
+//
+//        super.onUsingTick(stack, player, count);
+//    }
 
     @Override
     public void releaseUsing(ItemStack stack, Level world, LivingEntity player, int remainingSeconds) {

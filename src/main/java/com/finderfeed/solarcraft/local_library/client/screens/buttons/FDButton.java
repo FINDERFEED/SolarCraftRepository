@@ -1,4 +1,4 @@
-package com.finderfeed.solarcraft.local_library.client.screens;
+package com.finderfeed.solarcraft.local_library.client.screens.buttons;
 
 import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import net.minecraft.client.gui.GuiGraphics;

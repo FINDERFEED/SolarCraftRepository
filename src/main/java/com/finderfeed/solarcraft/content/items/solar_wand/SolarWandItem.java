@@ -101,11 +101,7 @@ public class SolarWandItem extends Item implements IRunicEnergyUser {
     }
 
     @Override
-    public void onUsingTick(ItemStack item, LivingEntity player, int time) {
-//        if (player instanceof  Player) {
-//            handleEnergyConsumption(player.level, (Player) player);
-//        }
-
+    public void onUseTick(Level level, LivingEntity player, ItemStack item, int time) {
         var action = getCurrentAction(item);
         if (action != null && player instanceof Player entity && action.getActionType(entity) == WandActionType.ON_USE_TICK ){
             WandUseContext context = new WandUseContext(player.level,entity,item,null,time);
@@ -123,9 +119,35 @@ public class SolarWandItem extends Item implements IRunicEnergyUser {
 
             serializer.hackySerialize(tag,data);
         }
-
-        super.onUsingTick(item, player, time);
+        super.onUseTick(level, player, item, time);
     }
+
+//    @Override
+//    public void onUsingTick(ItemStack item, LivingEntity player, int time) {
+////        if (player instanceof  Player) {
+////            handleEnergyConsumption(player.level, (Player) player);
+////        }
+//
+//        var action = getCurrentAction(item);
+//        if (action != null && player instanceof Player entity && action.getActionType(entity) == WandActionType.ON_USE_TICK ){
+//            WandUseContext context = new WandUseContext(player.level,entity,item,null,time);
+//            WandDataSerializer<? extends WandData<?>> serializer = action.getWandDataSerializer();
+//
+//            String dataname = serializer.getDataName().toString();
+//            if (!item.getOrCreateTag().contains(dataname)){
+//                item.getOrCreateTag().put(dataname,new CompoundTag());
+//            }
+//
+//            CompoundTag tag = item.getOrCreateTag().getCompound(dataname);
+//            WandData<?> data = serializer.deserialize(tag);
+//
+//            action.hackyRun(context,data);
+//
+//            serializer.hackySerialize(tag,data);
+//        }
+//
+//        super.onUsingTick(item, player, time);
+//    }
 
     @Override
     public UseAnim getUseAnimation(ItemStack p_77661_1_) {

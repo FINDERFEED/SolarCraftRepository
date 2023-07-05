@@ -10,6 +10,7 @@ import com.google.common.collect.Lists;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundLightUpdatePacket;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -119,7 +120,7 @@ public class OrbitalCannonExplosionEntity extends Entity {
                     List<ServerPlayer> players = serverLevel.getChunkSource().chunkMap.getPlayers(chunk.getPos(),false);
                     for (ServerPlayer player : players) {
                         player.connection.send(new ClientboundLightUpdatePacket(chunk.getPos(), serverLevel.getLightEngine(),
-                                (BitSet) null, (BitSet) null, true));
+                                (BitSet) null, (BitSet) null));
                     }
                 });
                 for (ServerPlayer player : serverPlayers){
@@ -357,7 +358,7 @@ public class OrbitalCannonExplosionEntity extends Entity {
     }
 
     @Override
-    public Packet<?> getAddEntityPacket() {
+    public Packet<ClientGamePacketListener> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 

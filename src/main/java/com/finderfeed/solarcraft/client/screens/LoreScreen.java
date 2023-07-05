@@ -10,6 +10,7 @@ import com.finderfeed.solarcraft.content.items.solar_lexicon.screen.SolarLexicon
 import com.finderfeed.solarcraft.content.items.solar_lexicon.screen.SolarLexiconScreen;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -55,22 +56,24 @@ public class LoreScreen extends Screen {
     }
 
     @Override
-    public void render(PoseStack matrices, int mousex, int mousey, float partialTicks) {
+    public void render(GuiGraphics graphics, int mousex, int mousey, float partialTicks) {
+
+        PoseStack matrices = graphics.pose();
 
         ClientHelpers.bindText(MAIN);
-        blit(matrices,relX,relY,0,0,256,256,256,256);
+        RenderingTools.blitWithBlend(matrices,relX,relY,0,0,256,256,256,256,0,1f);
         ClientHelpers.bindText(IMAGE_LOCATION);
-        blit(matrices,relX+21,relY+19,0,0,60,60,60,60);
+        RenderingTools.blitWithBlend(matrices,relX+21,relY+19,0,0,60,60,60,60,0,1f);
 
 
         int posX = relX+14;
         int posY = relY+100;
-        RenderingTools.drawBoundedTextObfuscated(matrices,posX,posY,40,lore, SolarLexiconScreen.TEXT_COLOR,ticker*4);
+        RenderingTools.drawBoundedTextObfuscated(graphics,posX,posY,40,lore, SolarLexiconScreen.TEXT_COLOR,ticker*4);
 
 
 
 
-        super.render(matrices, mousex, mousey, partialTicks);
+        super.render(graphics, mousex, mousey, partialTicks);
     }
 
     @Override

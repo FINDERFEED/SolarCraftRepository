@@ -8,6 +8,7 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.commands.arguments.blocks.BlockStateParser;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -197,7 +198,7 @@ public class MultiblockStructure {
         public Builder put(char c, String state) {
 
             try {
-                BlockStateParser.BlockResult parser = BlockStateParser.parseForBlock(Registry.BLOCK,new StringReader(state), true);
+                BlockStateParser.BlockResult parser = BlockStateParser.parseForBlock(Registries.BLOCK,new StringReader(state), true);
                 stateMap.put(c, parser.blockState());
             }catch (CommandSyntaxException e){
                 throw new RuntimeException(e);

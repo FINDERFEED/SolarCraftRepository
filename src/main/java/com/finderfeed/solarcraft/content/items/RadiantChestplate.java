@@ -37,7 +37,7 @@ public class RadiantChestplate extends SolarcraftArmorItem {
                 if (player.tickCount % 20 == 0) {
 
                     ((ServerLevel)world).sendParticles(ParticleTypes.FLAME,entity.getX(),entity.getY()+entity.getBbHeight()*0.5,entity.getZ(),5,0,0,0,0.05);
-                    entity.hurt(DamageSource.MAGIC, 1.5f);
+                    entity.hurt(world.damageSources().magic(), 1.5f);
                     entity.setSecondsOnFire(2);
                     entity.invulnerableTime=0;
 

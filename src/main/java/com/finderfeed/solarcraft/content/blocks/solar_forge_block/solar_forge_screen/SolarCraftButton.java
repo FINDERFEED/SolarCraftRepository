@@ -1,7 +1,7 @@
 package com.finderfeed.solarcraft.content.blocks.solar_forge_block.solar_forge_screen;
 
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
-import com.finderfeed.solarcraft.local_library.client.screens.FDButton;
+import com.finderfeed.solarcraft.local_library.client.screens.buttons.FDButton;
 import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
 import com.mojang.blaze3d.systems.RenderSystem;

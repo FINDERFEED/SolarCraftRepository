@@ -10,6 +10,7 @@ import com.finderfeed.solarcraft.content.items.solar_lexicon.screen.SolarLexicon
 import com.finderfeed.solarcraft.content.items.solar_lexicon.screen.SolarLexiconScreen;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Items;
@@ -40,35 +41,36 @@ public class EightElementsFragmentScreen extends ScreenWithPages{
 
 
     @Override
-    public void render(PoseStack matrices, int mousex, int mousey, float partialTicks) {
+    public void render(GuiGraphics graphics, int mousex, int mousey, float partialTicks) {
+        PoseStack matrices = graphics.pose();
         int stringColor = SolarLexiconScreen.TEXT_COLOR;
         if (getCurrentPage() == 1){
 
             ClientHelpers.bindText(MAIN_SCREEN);
-            blit(matrices,relX,relY,0,0,256,256,256,256);
+            RenderingTools.blitWithBlend(matrices,relX,relY,0,0,256,256,256,256,0,1f);
             ClientHelpers.bindText(IMAGE_LOCATION);
-            blit(matrices,relX+21,relY+19,0,0,60,60,60,60);
+            RenderingTools.blitWithBlend(matrices,relX+21,relY+19,0,0,60,60,60,60,0,1f);
 
 
             int posX = relX+14;
             int posY = relY+100;
 
-            RenderingTools.drawBoundedTextObfuscated(matrices,posX,posY,45,Component.translatable("eight_elements.lore"),stringColor,ticker*4);
+            RenderingTools.drawBoundedTextObfuscated(graphics,posX,posY,45,Component.translatable("eight_elements.lore"),stringColor,ticker*4);
         }else{
             ClientHelpers.bindText(MAIN_SCREEN_2);
-            blit(matrices,relX,relY,0,0,256,256,256,256);
+            RenderingTools.blitWithBlend(matrices,relX,relY,0,0,256,256,256,256,0,1f);
 
             ClientHelpers.bindText(IMAGE_LOCATION_2);
-            blit(matrices,relX+32,relY+32,(getCurrentPage()-2) * 16,0,16,16,128,16);
+            RenderingTools.blitWithBlend(matrices,relX+32,relY+32,(getCurrentPage()-2) * 16,0,16,16,128,16,0,1f);
 
             int posX = relX+14;
             int posY = relY+82;
-            RenderingTools.drawBoundedTextObfuscated(matrices,posX,posY,45,Component.translatable("solarcraft.rune_element_"+(getCurrentPage()-1)),stringColor,ticker*4);
+            RenderingTools.drawBoundedTextObfuscated(graphics,posX,posY,45,Component.translatable("solarcraft.rune_element_"+(getCurrentPage()-1)),stringColor,ticker*4);
 //            RenderingTools.drawBoundedText(matrices,posX,posY,45,Component.translatable("solarcraft.rune_element_"+(getCurrentPage()-1)).getString(),stringColor);
         }
 
 
-        super.render(matrices, mousex, mousey, partialTicks);
+        super.render(graphics, mousex, mousey, partialTicks);
     }
 
     @Override

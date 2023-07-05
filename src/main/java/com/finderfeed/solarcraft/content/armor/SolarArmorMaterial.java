@@ -3,6 +3,7 @@ package com.finderfeed.solarcraft.content.armor;
 import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.registries.items.SolarcraftItems;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.util.LazyLoadedValue;
@@ -44,6 +45,16 @@ public enum SolarArmorMaterial implements ArmorMaterial {
 
     public int getDefenseForSlot(EquipmentSlot p_200902_1_) {
         return this.slotProtections[p_200902_1_.getIndex()];
+    }
+
+    @Override
+    public int getDurabilityForType(ArmorItem.Type type) {
+        return HEALTH_PER_SLOT[type.getSlot().getIndex()];
+    }
+
+    @Override
+    public int getDefenseForType(ArmorItem.Type type) {
+        return this.slotProtections[type.getSlot().getIndex()];
     }
 
     public int getEnchantmentValue() {

@@ -15,7 +15,7 @@ import java.util.function.Supplier;
 public class SolarcraftArmorItem extends ArmorItem implements FragmentItem {
     private Supplier<AncientFragment> fragmentSupplier;
 
-    public SolarcraftArmorItem(ArmorMaterial p_40386_, EquipmentSlot p_40387_, Properties p_40388_,Supplier<AncientFragment> fragmentSupplier) {
+    public SolarcraftArmorItem(ArmorMaterial p_40386_, ArmorItem.Type p_40387_, Properties p_40388_,Supplier<AncientFragment> fragmentSupplier) {
         super(p_40386_, p_40387_, p_40388_);
         this.fragmentSupplier = fragmentSupplier;
     }

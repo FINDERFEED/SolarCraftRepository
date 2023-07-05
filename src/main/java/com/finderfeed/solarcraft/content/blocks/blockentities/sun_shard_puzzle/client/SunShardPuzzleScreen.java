@@ -14,6 +14,7 @@ import com.finderfeed.solarcraft.packet_handler.packets.sun_shard_puzzle.SunShar
 import com.finderfeed.solarcraft.packet_handler.packets.sun_shard_puzzle.SunShardPuzzleTakeTilePacket;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
+import net.minecraft.client.gui.GuiGraphics;
 import org.joml.Matrix4f;
 import static com.finderfeed.solarcraft.local_library.helpers.RenderingTools.*;
 import net.minecraft.client.Minecraft;
@@ -55,9 +56,9 @@ public class SunShardPuzzleScreen extends DefaultScreen {
         this.addFDComponent("remaining_tiles",new SunShardPuzzleRemainingTilesComponent(
                 this,localPuzzle,relX + 220,relY
         ));
-        InfoButton info = new InfoButton(relX - 25, relY + getScreenHeight() / 2 - 8,12,12,(button,matrices,mx,my)->{
+        InfoButton info = new InfoButton(relX - 25, relY + getScreenHeight() / 2 - 8,12,12,(button,graphics,mx,my)->{
             List<FormattedCharSequence> spl = font.split(Component.translatable("solarcraft.sun_shard_puzzle.info"),200);
-            renderTooltip(matrices,spl,mx,my);
+            graphics.renderTooltip(font,spl,mx,my);
         });
         addRenderableWidget(info);
     }
@@ -171,16 +172,17 @@ public class SunShardPuzzleScreen extends DefaultScreen {
     public static final ResourceLocation BACKGROUND = new ResourceLocation(SolarCraft.MOD_ID,"textures/gui/sun_shard_puzzle.png");
 
     @Override
-    public void render(PoseStack matrices, int mx, int my, float pticks) {
+    public void render(GuiGraphics graphics, int mx, int my, float pticks) {
         this.mx = mx;
         this.my = my;
-        renderBackground(matrices);
+        PoseStack matrices = graphics.pose();
+        renderBackground(graphics);
         ClientHelpers.bindText(BACKGROUND);
-        blit(matrices,relX-11,relY-11,0,0,214,214,214,214);
+        RenderingTools.blitWithBlend(matrices,relX-11,relY-11,0,0,214,214,214,214,0,1f);
         this.renderPuzzle(matrices,mx,my,pticks);
-        this.renderComponents(matrices,mx,my,pticks,"remaining_tiles");
+        this.renderComponents(graphics,mx,my,pticks,"remaining_tiles");
         this.renderHeldTile(matrices,mx,my,pticks);
-        super.render(matrices, mx, my, pticks);
+        super.render(graphics, mx, my, pticks);
     }
 
     private void renderHeldTile(PoseStack matrices,int mx,int my,float pticks){
@@ -192,9 +194,11 @@ public class SunShardPuzzleScreen extends DefaultScreen {
                     "textures/misc/solar_shard_puzzle_tiles/" + heldTile.getTileType().getName() + ".png"));
             matrices.pushPose();
             matrices.translate(mx,my,0);
-            matrices.mulPose(Vector3f.ZP.rotationDegrees(heldTile.getRotation()));
+//            matrices.mulPose(Vector3f.ZP.rotationDegrees(heldTile.getRotation()));
+            matrices.mulPose(rotationDegrees(ZP(),heldTile.getRotation()));
             float time = RenderingTools.getTime(Minecraft.getInstance().level,pticks);
-            matrices.mulPose(Vector3f.ZP.rotationDegrees(((float)Math.sin(time))*10));
+//            matrices.mulPose(Vector3f.ZP.rotationDegrees(((float)Math.sin(time))*10));
+            matrices.mulPose(rotationDegrees(ZP(),(float)Math.sin(time)*10));
             matrices.translate(-8,-8,0);
             Matrix4f m = matrices.last().pose();
             float r = 1f;
@@ -204,10 +208,10 @@ public class SunShardPuzzleScreen extends DefaultScreen {
                 g = 0.5f;
                 b = 0.5f;
             }
-            builder.vertex(m,0,16,this.getBlitOffset() - 10).uv(0,1).color(r,g,b,1).endVertex();
-            builder.vertex(m,16,16,this.getBlitOffset() - 10).uv(1,1).color(r,g,b,1).endVertex();
-            builder.vertex(m,16,0,this.getBlitOffset() - 10).uv(1,0).color(r,g,b,1).endVertex();
-            builder.vertex(m,0,0,this.getBlitOffset() - 10).uv(0,0).color(r,g,b,1).endVertex();
+            builder.vertex(m,0,16,10).uv(0,1).color(r,g,b,1).endVertex();
+            builder.vertex(m,16,16,10).uv(1,1).color(r,g,b,1).endVertex();
+            builder.vertex(m,16,0,10).uv(1,0).color(r,g,b,1).endVertex();
+            builder.vertex(m,0,0,10).uv(0,0).color(r,g,b,1).endVertex();
 
 
 
@@ -228,7 +232,8 @@ public class SunShardPuzzleScreen extends DefaultScreen {
             for (RenderedPuzzleTile tile : tiles){
                 matrices.pushPose();
                 matrices.translate(tile.x + 8,tile.y + 8,0);
-                matrices.mulPose(Vector3f.ZP.rotationDegrees(tile.rotation()));
+//                matrices.mulPose(Vector3f.ZP.rotationDegrees(tile.rotation()));
+                matrices.mulPose(rotationDegrees(ZP(),tile.rotation()));
                 Matrix4f m = matrices.last().pose();
                 float r = 1f;
                 float g = 1f;
@@ -237,10 +242,10 @@ public class SunShardPuzzleScreen extends DefaultScreen {
                     g = 0.5f;
                     b = 0.5f;
                 }
-                builder.vertex(m,-8,8,this.getBlitOffset()).uv(0,1).color(r,g,b,1).endVertex();
-                builder.vertex(m,8,8,this.getBlitOffset()).uv(1,1).color(r,g,b,1).endVertex();
-                builder.vertex(m,8,-8,this.getBlitOffset()).uv(1,0).color(r,g,b,1).endVertex();
-                builder.vertex(m,-8,-8,this.getBlitOffset()).uv(0,0).color(r,g,b,1).endVertex();
+                builder.vertex(m,-8,8,0).uv(0,1).color(r,g,b,1).endVertex();
+                builder.vertex(m,8,8,0).uv(1,1).color(r,g,b,1).endVertex();
+                builder.vertex(m,8,-8,0).uv(1,0).color(r,g,b,1).endVertex();
+                builder.vertex(m,-8,-8,0).uv(0,0).color(r,g,b,1).endVertex();
 
 
 

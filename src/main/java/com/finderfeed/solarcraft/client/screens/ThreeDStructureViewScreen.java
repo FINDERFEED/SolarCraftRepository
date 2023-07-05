@@ -7,6 +7,7 @@ import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.helpers.multiblock.MultiblockStructure;
 import com.finderfeed.solarcraft.helpers.multiblock.MultiblockVisualizer;
+import com.finderfeed.solarcraft.local_library.client.screens.buttons.FDImageButton;
 import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.SolarLexicon;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.screen.buttons.ItemStackTabButton;
@@ -88,10 +89,10 @@ public class ThreeDStructureViewScreen extends Screen implements IScrollable {
         POS_STATE_TILEENTITY.clear();
         structScale = 10f/Math.max(struct.pattern.length,struct.pattern[0].length);
         this.POS_STATE_TILEENTITY = RenderingTools.StructureRenderer.prepareList(struct);
-        addRenderableWidget(new ImageButton(relX+216,relY,16,16,0,0,0,THREEDSCREENBTN,16,16,(button)->{
+        addRenderableWidget(new FDImageButton(relX+216,relY,16,16,0,0,0,THREEDSCREENBTN,16,16,(button)->{
             Minecraft.getInstance().setScreen(new StructureScreen(fragment,struct));
-        },(btn,poseStack,mx,my)->{
-            renderTooltip(poseStack,Component.literal("2D View"),mx,my);
+        },(btn,graphics,mx,my)->{
+            graphics.renderTooltip(font,Component.literal("2D View"),mx,my);
         },Component.literal("2D")){
             @Override
             public void playDownSound(SoundManager p_93665_) {
@@ -178,7 +179,7 @@ public class ThreeDStructureViewScreen extends Screen implements IScrollable {
         ClientHelpers.bindText(STRUCTURE_GUI);
         RenderingTools.blitWithBlend(matrices,relX,relY,0,0,256,256,256,256,0,1f);
         super.render(graphics, p_96563_, p_96564_, partialTicks);
-        Helpers.drawBoundedText(matrices,relX+14,relY+10,7,Component.translatable("solarcraft.structure."+struct.getId()).getString(),0xffffff);
+        Helpers.drawBoundedText( graphics,relX+14,relY+10,7,Component.translatable("solarcraft.structure."+struct.getId()).getString(),0xffffff);
         matrices.popPose();
 
         matrices.pushPose();

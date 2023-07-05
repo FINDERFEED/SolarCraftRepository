@@ -17,6 +17,7 @@ import com.finderfeed.solarcraft.packet_handler.packets.LaunchOrbitalMissilePack
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -81,11 +82,11 @@ public class SolarOrbitalMissileLauncherScreen extends DefaultScreen {
                     tilePos,0,0,0,0,true
             ));
         });
-        InfoButton info = new InfoButton(relX - 15,relY +  this.getScreenHeight() / 2 - 6,13,13,(btn,m,mx,my)->{
+        InfoButton info = new InfoButton(relX - 15,relY +  this.getScreenHeight() / 2 - 6,13,13,(btn,graphics,mx,my)->{
             String s = Component.translatable("solarcraft.screens.orbital_missile_launch.info",
                     ""+Level.MAX_LEVEL_SIZE,""+SolarOrbitalMissileLauncherTileEntity.MAX_RADIUS,
                     ""+SolarOrbitalMissileLauncherTileEntity.MAX_DEPTH,""+SolarOrbitalMissileLauncherTileEntity.RE_PER_ONE_RING).getString();
-            renderTooltip(m,font.split(Component.literal(s),200),mx,my);
+            graphics.renderTooltip(font,font.split(Component.literal(s),200),mx,my);
         });
         this.addRenderableWidget(info);
         this.addRenderableWidget(cancelButton);
@@ -94,22 +95,25 @@ public class SolarOrbitalMissileLauncherScreen extends DefaultScreen {
 
 
     @Override
-    public void render(PoseStack matrices, int mx, int my, float pTicks) {
-        this.renderBackground(matrices);
+    public void render(GuiGraphics graphics, int mx, int my, float pTicks) {
+
+        PoseStack matrices = graphics.pose();
+
+        this.renderBackground(graphics);
         ClientHelpers.bindText(LOCATION);
-        this.blit(matrices,relX,relY,0,0,this.getScreenWidth(),this.getScreenHeight(),256,256);
+        RenderingTools.blitWithBlend(matrices,relX,relY,0,0,this.getScreenWidth(),this.getScreenHeight(),256,256,0,1f);
         if (ClientHelpers.getLevel().getBlockEntity(tilePos) instanceof SolarOrbitalMissileLauncherTileEntity tile){
             int tick = tile.getLaunchTicker();
             String s = Helpers.generateMinutesAndSecondsStringFromTicks(tick);
             String s1 = Component.translatable("solarcraft.screens.orbital_missile_launch.launch_time").getString();
 //            drawCenteredString(matrices,font,s1 + ": " + s,relX + this.getScreenWidth()/2,relY + 181, SolarLexiconScreen.TEXT_COLOR);
-            drawString(matrices,font,s1 + ":",relX +  10,relY + 181,SolarLexiconScreen.TEXT_COLOR);
-            drawString(matrices,font,s,relX +  98,relY + 181,SolarLexiconScreen.TEXT_COLOR);
+            graphics.drawString(font,s1 + ":",relX +  10,relY + 181,SolarLexiconScreen.TEXT_COLOR);
+            graphics.drawString(font,s,relX +  98,relY + 181,SolarLexiconScreen.TEXT_COLOR);
 
-            drawCenteredString(matrices,font,Component.translatable("solarcraft.word.x_coordinate"),relX + this.getScreenWidth()/2,relY + 12, SolarLexiconScreen.TEXT_COLOR);
-            drawCenteredString(matrices,font,Component.translatable("solarcraft.word.z_coordinate"),relX + this.getScreenWidth()/2,relY + 32 + 18, SolarLexiconScreen.TEXT_COLOR);
-            drawCenteredString(matrices,font,Component.translatable("solarcraft.word.radius"),relX + this.getScreenWidth()/2,relY + 52 + 18*2, SolarLexiconScreen.TEXT_COLOR);
-            drawCenteredString(matrices,font,Component.translatable("solarcraft.word.depth"),relX + this.getScreenWidth()/2,relY + 72 + 18*3, SolarLexiconScreen.TEXT_COLOR);
+            graphics.drawCenteredString(font,Component.translatable("solarcraft.word.x_coordinate"),relX + this.getScreenWidth()/2,relY + 12, SolarLexiconScreen.TEXT_COLOR);
+            graphics.drawCenteredString(font,Component.translatable("solarcraft.word.z_coordinate"),relX + this.getScreenWidth()/2,relY + 32 + 18, SolarLexiconScreen.TEXT_COLOR);
+            graphics.drawCenteredString(font,Component.translatable("solarcraft.word.radius"),relX + this.getScreenWidth()/2,relY + 52 + 18*2, SolarLexiconScreen.TEXT_COLOR);
+            graphics.drawCenteredString(font,Component.translatable("solarcraft.word.depth"),relX + this.getScreenWidth()/2,relY + 72 + 18*3, SolarLexiconScreen.TEXT_COLOR);
 
 
             float needed = (this.getNumberFromEditBox(radBox) + this.getNumberFromEditBox(depthBox))*SolarOrbitalMissileLauncherTileEntity.RE_PER_ONE_RING;
@@ -119,14 +123,14 @@ public class SolarOrbitalMissileLauncherScreen extends DefaultScreen {
             RenderingTools.fill(matrices,relX + 39 ,relY + 200,relX + 39 + pNeeded*174,relY + 200 + 16,1,1,0,0.5f);
             RenderingTools.fill(matrices,relX + 39 ,relY + 200,relX + 39 + pCurrent*174,relY + 200 + 16,1,1,0,1f);
             if (RenderingTools.isMouseInBorders(mx,my,relX + 39,relY + 200,relX + 39 + 174,relY + 200 + 16)){
-                renderTooltip(matrices,List.of(
+                graphics.renderTooltip(font,List.of(
                         Component.literal(Component.translatable("solarcraft.word.needed").getString() + ": " + needed).withStyle(ChatFormatting.GOLD),
                         Component.literal(Component.translatable("solarcraft.word.current").getString() + ": " + tile.getRunicEnergy(RunicEnergy.Type.KELDA)).withStyle(ChatFormatting.GOLD)
                 ), Optional.empty(),mx,my);
             }
         }
         RenderingTools.renderTextField(matrices,relX + this.getScreenWidth() + 20, relY + 13,60,60);
-        super.render(matrices, mx, my, pTicks);
+        super.render(graphics, mx, my, pTicks);
     }
 
     private int getNumberFromEditBox(EditBox box){

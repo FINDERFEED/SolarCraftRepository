@@ -14,6 +14,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import org.lwjgl.glfw.GLFW;
@@ -56,8 +57,8 @@ public class CrystalEnergyVinesPuzzleScreen extends SolarCraftScreen {
     protected void init() {
         super.init();
         VALUE.reset();
-        InfoButton.Wooden button = new InfoButton.Wooden(relX- 30 ,relY ,13,13,(btn,matrices,mx,my)->{
-            renderTooltip(matrices,font.split(Component.translatable("solarcraft.energy_vines_screen"),200),mx,my);
+        InfoButton.Wooden button = new InfoButton.Wooden(relX- 30 ,relY ,13,13,(btn,graphics,mx,my)->{
+            graphics.renderTooltip(font,font.split(Component.translatable("solarcraft.energy_vines_screen"),200),mx,my);
         });
         addRenderableWidget(button);
     }
@@ -84,15 +85,16 @@ public class CrystalEnergyVinesPuzzleScreen extends SolarCraftScreen {
     };
 
     @Override
-    public void render(PoseStack matrices, int mx, int my, float pTicks) {
+    public void render(GuiGraphics graphics, int mx, int my, float pTicks) {
+        PoseStack matrices = graphics.pose();
         int[][] pattern = tile.getPuzzlePattern();
         ClientHelpers.bindText(MAIN_GUI);
         int offsY = -14;
-        blit(matrices,relX,relY + offsY,0,0,256,256);
+        RenderingTools.blitWithBlend(matrices,relX,relY + offsY,0,0,256,256,256,256,0,1f);
 
         ClientHelpers.bindText(TRIES);
-        blit(matrices,relX - 70 - 10,relY + offsY + 110,0,0,60,18,60,18);
-        Gui.drawString(matrices,font,"Moves: "+tile.getRemainingTries(),relX - 64 - 10,relY + offsY + 115,0xffffff);
+        RenderingTools.blitWithBlend(matrices,relX - 70 - 10,relY + offsY + 110,0,0,60,18,60,18,0,1f);
+        graphics.drawString(font,"Moves: "+tile.getRemainingTries(),relX - 64 - 10,relY + offsY + 115,0xffffff);
 
         if (pattern == null) return;
         ClientHelpers.bindText(NODE);
@@ -124,7 +126,7 @@ public class CrystalEnergyVinesPuzzleScreen extends SolarCraftScreen {
                 int node = pattern[i][j];
                 RenderSystem.enableBlend();
                 RenderSystem.setShaderColor(NODE_COLORS[node][0],NODE_COLORS[node][1],NODE_COLORS[node][2],NODE_COLORS[node][3] * (p + 0.3f) );
-                blit(matrices, relX + j * 14 + 20 - 14, relY + i * 14 - 8, 0, 0, 12, 12, 12, 12);
+                RenderingTools.blitWithBlend(matrices, relX + j * 14 + 20 - 14, relY + i * 14 - 8, 0, 0, 12, 12, 12, 12,0,1f);
             }
         }
 
@@ -137,13 +139,13 @@ public class CrystalEnergyVinesPuzzleScreen extends SolarCraftScreen {
         double v = VALUE.getValue();
         for (int i = 0; i < 6; i ++ ){
             int xp = (int)(relX + (i+1) * 23* (1-v));
-            Gui.blit(matrices,xp - 20,relY - 18,(i % 3) *40,0,40,256,256,256);
+            RenderingTools.blitWithBlend(matrices,xp - 20,relY - 18,(i % 3) *40,0,40,256,256,256,0,1f);
             int xp2 = (int)((i+1) * 23* (1-v));
-            Gui.blit(matrices,relX + 230 - xp2,relY - 18,(i % 3) *40 + 120,0,40,256,256,256);
+            RenderingTools.blitWithBlend(matrices,relX + 230 - xp2,relY - 18,(i % 3) *40 + 120,0,40,256,256,256,0,1f);
         }
 
 
-        super.render(matrices, mx, my, pTicks);
+        super.render(graphics, mx, my, pTicks);
     }
 
 

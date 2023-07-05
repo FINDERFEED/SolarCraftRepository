@@ -56,10 +56,10 @@ public class SmeltingRecipeCategory implements IRecipeCategory<SolarSmeltingReci
         builder.addSlot(RecipeIngredientRole.OUTPUT,150,24).addItemStack(recipe.output.copy());
     }
 
-    @Override
-    public void draw(SolarSmeltingRecipe recipe, IRecipeSlotsView recipeSlotsView, PoseStack stack, double mouseX, double mouseY) {
-
-    }
+//    @Override
+//    public void draw(SolarSmeltingRecipe recipe, IRecipeSlotsView recipeSlotsView, PoseStack stack, double mouseX, double mouseY) {
+//
+//    }
 
     @Override
     public RecipeType<SolarSmeltingRecipe> getRecipeType() {

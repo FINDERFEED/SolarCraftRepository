@@ -4,6 +4,7 @@ import com.finderfeed.solarcraft.local_library.client.particles.ScreenParticlesR
 import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 
@@ -82,11 +83,11 @@ public abstract class DefaultScreen extends Screen {
         return super.mouseScrolled(mousePosX, mousePosY, delta);
     }
 
-    public void renderComponents(PoseStack matrices, int mx, int my, float pticks, String... ids){
+    public void renderComponents(GuiGraphics graphics, int mx, int my, float pticks, String... ids){
         for (String id : ids){
             FDScreenComponent component = components.get(id);
 
-            component.render(matrices,mx - component.x,my - component.y,pticks);
+            component.render(graphics,mx - component.x,my - component.y,pticks);
         }
     }
 
