@@ -1,0 +1,7 @@
+{
+  "type": "solarcraft:sun_shard_puzzle",
+  "biomes": "#solarcraft:has_structure/sun_shard_puzzle",
+  "spawn_overrides": {},
+  "step": "surface_structures",
+  "terrain_adaptation": "beard_thin"
+}

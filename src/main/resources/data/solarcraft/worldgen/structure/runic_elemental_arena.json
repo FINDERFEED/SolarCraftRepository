@@ -1,0 +1,7 @@
+{
+  "type": "solarcraft:runic_elemental_arena",
+  "biomes": "#solarcraft:has_structure/runic_elemental_arena",
+  "spawn_overrides": {},
+  "step": "surface_structures",
+  "terrain_adaptation": "beard_thin"
+}

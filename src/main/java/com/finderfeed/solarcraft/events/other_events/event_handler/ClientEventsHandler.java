@@ -18,6 +18,7 @@ import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
 import com.finderfeed.solarcraft.packet_handler.packets.CastAbilityPacket;
 import com.finderfeed.solarcraft.registries.ConfigRegistry;
 import com.finderfeed.solarcraft.registries.blocks.SolarcraftBlocks;
+import com.finderfeed.solarcraft.registries.damage_sources.SolarcraftDamageSources;
 import com.finderfeed.solarcraft.registries.items.SolarcraftItems;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
@@ -161,7 +162,7 @@ public class ClientEventsHandler {
         if (!ORES_RENDER_POSITIONS.isEmpty()){
             Camera cam = Minecraft.getInstance().gameRenderer.getMainCamera();
             RenderSystem.disableDepthTest();
-            RenderSystem.disableTexture();
+//            RenderSystem.disableTexture();
             RenderSystem.disableCull();
             PoseStack posestack = RenderSystem.getModelViewStack();
             posestack.pushPose();
@@ -192,7 +193,7 @@ public class ClientEventsHandler {
             Camera cam = Minecraft.getInstance().gameRenderer.getMainCamera();
 
             RenderSystem.disableDepthTest();
-            RenderSystem.disableTexture();
+//            RenderSystem.disableTexture();
             RenderSystem.disableCull();
             PoseStack posestack = RenderSystem.getModelViewStack();
             posestack.pushPose();
@@ -323,6 +324,11 @@ public class ClientEventsHandler {
 
     public static void setCameraShakeEffect(CameraShake cameraShakeEffect) {
         ClientEventsHandler.cameraShakeEffect = cameraShakeEffect;
+    }
+
+    @SubscribeEvent
+    public static void initiateClientDamageSources(ClientPlayerNetworkEvent.LoggingIn event){
+        SolarcraftDamageSources.initializeDamageSources(event.getPlayer().clientLevel);
     }
 
 //    @SubscribeEvent

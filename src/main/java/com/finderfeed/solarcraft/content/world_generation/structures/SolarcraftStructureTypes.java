@@ -11,6 +11,7 @@ import com.finderfeed.solarcraft.content.world_generation.structures.runic_eleme
 import com.finderfeed.solarcraft.content.world_generation.structures.sun_shard_puzzle.SunShardPuzzleStructure;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.StructureType;
@@ -31,7 +32,7 @@ public class SolarcraftStructureTypes {
 
 
     private static <S extends Structure> StructureType<S> register(String id, Codec<S> codec) {
-        return Registry.register(Registry.STRUCTURE_TYPES, new ResourceLocation(SolarCraft.MOD_ID,id), () -> {
+        return Registry.register(BuiltInRegistries.STRUCTURE_TYPE, new ResourceLocation(SolarCraft.MOD_ID,id), () -> {
             return codec;
         });
     }

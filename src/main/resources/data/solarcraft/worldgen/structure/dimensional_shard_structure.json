@@ -1,0 +1,7 @@
+{
+  "type": "solarcraft:dimensional_shard_structure",
+  "biomes": "#solarcraft:has_structure/dim_shard_dungeon",
+  "spawn_overrides": {},
+  "step": "surface_structures",
+  "terrain_adaptation": "beard_thin"
+}

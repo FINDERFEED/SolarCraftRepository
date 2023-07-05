@@ -43,18 +43,21 @@ import com.finderfeed.solarcraft.registries.items.SolarcraftItems;
 import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.boss.enderdragon.EnderDragon;
 import net.minecraft.world.entity.boss.wither.WitherBoss;
 import net.minecraft.world.level.Level;
@@ -90,8 +93,7 @@ import java.util.List;
 
 @Mod.EventBusSubscriber(modid = "solarcraft",bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class EventHandler {
-    public static final ResourceKey<Level> RADIANT_LAND_KEY = ResourceKey.create(Registry.DIMENSION_REGISTRY,new ResourceLocation("solarcraft","radiant_land"));
-    public static final ResourceKey<Biome> RADIANT_LAND_BIOME_KEY = ResourceKey.create(Registry.BIOME_REGISTRY,new ResourceLocation("solarcraft","radiant_land"));
+    public static final ResourceKey<Level> RADIANT_LAND_KEY = ResourceKey.create(Registries.DIMENSION,new ResourceLocation("solarcraft","radiant_land"));
     public static List<AbstractAbility> ALLOWED_ABILITIES_DURING_BOSSFIGHT = List.of(
             AbilitiesRegistry.HEAL,
             AbilitiesRegistry.DISPEL
@@ -111,9 +113,9 @@ public class EventHandler {
 
 
         }
-        if (pla.getLevel().getBlockState(pos).is(SolarcraftBlocks.CLEARING_RITUAL_CRYSTAL.get())){
-            if (pla.getLevel().getBlockState(pos.below(2)).is(SolarcraftBlocks.CRYSTAL_ENERGY_VINES.get())
-                    || (pla.getLevel().getBlockEntity(pos) instanceof ClearingRitualCrystalTile tile && tile.isCorrupted())) {
+        if (pla.level.getBlockState(pos).is(SolarcraftBlocks.CLEARING_RITUAL_CRYSTAL.get())){
+            if (pla.level.getBlockState(pos.below(2)).is(SolarcraftBlocks.CRYSTAL_ENERGY_VINES.get())
+                    || (pla.level.getBlockEntity(pos) instanceof ClearingRitualCrystalTile tile && tile.isCorrupted())) {
 
                 event.setNewSpeed(-1);
             }
@@ -331,7 +333,7 @@ public class EventHandler {
 
                 if (player.hasEffect(SolarcraftEffects.STAR_GAZE_EFFECT.get())) {
                     if (world.getGameTime() % 80 == 1) {
-                        DamageSource src = SolarcraftDamageSources.STARGAZE.bypassArmor().setMagic();
+                        DamageSource src = SolarcraftDamageSources.STARGAZE;
                         player.hurt(src, 6);
                     }
                 }
@@ -362,15 +364,23 @@ public class EventHandler {
                 }
 
 
-                AttributeInstance attr = player.getAttribute(ForgeMod.REACH_DISTANCE.get());
+
+                AttributeInstance attr = player.getAttribute(ForgeMod.BLOCK_REACH.get());
+                AttributeInstance attr1 = player.getAttribute(ForgeMod.ENTITY_REACH.get());
                 if (attr != null) {
                     if (FDMathHelper.PlayerThings.doPlayerHasItem(player.getInventory(), SolarcraftItems.REACH_GLOVES.get())) {
                         if (!attr.hasModifier(SolarCraftAttributeModifiers.REACH_2_MODIFIER)) {
                             attr.addTransientModifier(SolarCraftAttributeModifiers.REACH_2_MODIFIER);
                         }
+                        if (!attr1.hasModifier(SolarCraftAttributeModifiers.REACH_2_MODIFIER)) {
+                            attr1.addTransientModifier(SolarCraftAttributeModifiers.REACH_2_MODIFIER);
+                        }
                     } else {
                         if (attr.hasModifier(SolarCraftAttributeModifiers.REACH_2_MODIFIER)) {
                             attr.removeModifier(SolarCraftAttributeModifiers.REACH_2_MODIFIER);
+                        }
+                        if (attr1.hasModifier(SolarCraftAttributeModifiers.REACH_2_MODIFIER)) {
+                            attr1.removeModifier(SolarCraftAttributeModifiers.REACH_2_MODIFIER);
                         }
                     }
                 }
@@ -417,7 +427,7 @@ public class EventHandler {
         DamageSource src = event.getSource();
         LivingEntity entity = event.getEntity();
         if (!entity.level.isClientSide &&
-                (src.isMagic()) &&
+                (src.is(DamageTypeTags.BYPASSES_ARMOR) || src == entity.level.damageSources().magic()) &&
                 (entity.getAttributes().hasAttribute(AttributesRegistry.MAGIC_RESISTANCE.get()))){
             AttributeInstance attr = entity.getAttribute(AttributesRegistry.MAGIC_RESISTANCE.get());
             if (attr != null){
@@ -475,7 +485,7 @@ public class EventHandler {
     }
     public static boolean isExplosionBlockerAround(Level world,Vec3 pos){
         if (!world.isClientSide) {
-            for (LevelChunk chunk : Helpers.getChunksInRadius(world, new BlockPos(pos), 2)) {
+            for (LevelChunk chunk : Helpers.getChunksInRadius(world, new BlockPos((int)pos.x,(int)pos.y,(int)pos.z), 2)) {
                 for (BlockEntity e : chunk.getBlockEntities().values()) {
                     if (e instanceof ExplosionBlockerBlockEntity blocker) {
                         if (blocker.isFunctioning()) {

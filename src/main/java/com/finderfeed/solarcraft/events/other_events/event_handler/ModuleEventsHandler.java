@@ -13,6 +13,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -46,7 +47,7 @@ public class ModuleEventsHandler {
             if ((stack.getItem() instanceof SwordItem)  && (entity instanceof LivingEntity target)){
                 if (hasModule(SolarcraftItems.FURY_SWIPES_MODULE.get(),stack)){
                     if (Helpers.isVulnerable(target)) {
-                    DamageSource src = DamageSource.playerAttack(player);
+                    DamageSource src = player.level.damageSources().playerAttack(player);
 
                         float bonusdmg = target.getPersistentData().getFloat(SolarCraftTags.FURY_SWIPES_DAMAGE);
                         float percent = player.getAttackStrengthScale(0);
@@ -120,7 +121,7 @@ public class ModuleEventsHandler {
                 if (hasModule(SolarcraftItems.MAGIC_DAMAGE_MODULE_5.get(),stack)){
                     if (Helpers.isVulnerable(target)) {
                         float modifier = player.getAttackStrengthScale(0);
-                        DamageSource src = DamageSource.playerAttack(player).bypassArmor().setMagic();
+                        DamageSource src = SolarcraftDamageSources.playerArmorPierce(player);
                         if (target instanceof ShadowZombie){
                             src = SolarcraftDamageSources.RUNIC_MAGIC;
                         }
@@ -144,7 +145,7 @@ public class ModuleEventsHandler {
             if ((stack.getItem() instanceof SwordItem sword) &&  hasModule(SolarcraftItems.SWORD_AOE_ATTACK.get(),stack)){
                 AABB aabb = new AABB(player.position().add(-2.5,0,-2.5),player.position().add(2.5,player.getBbHeight(),2.5));
                 world.getEntitiesOfClass(LivingEntity.class,aabb,(entity)-> !entity.equals(player)).forEach((livingEntity) -> {
-                    livingEntity.hurt(DamageSource.playerAttack(player),sword.getDamage()/2);
+                    livingEntity.hurt(world.damageSources().playerAttack(player),sword.getDamage()/2);
                 });
                 player.getCooldowns().addCooldown(sword,100);
                 ((ServerLevel)world).playSound(null,player, SoundEvents.PLAYER_ATTACK_SWEEP, SoundSource.AMBIENT,0.5f,1);
@@ -196,7 +197,7 @@ public class ModuleEventsHandler {
     public static void handle10PhysicalDefenceModule(LivingDamageEvent event){
         DamageSource src = event.getSource();
         if (!event.getEntity().level.isClientSide) {
-            if (!src.isMagic() && !src.isBypassArmor()) {
+            if (!(src == event.getEntity().level.damageSources().magic()) && !src.is(DamageTypeTags.BYPASSES_ARMOR)) {
                 LivingEntity entity = event.getEntity();
                 entity.getArmorSlots().forEach((stack) -> {
                     if (hasModule(SolarcraftItems.PHYSICAL_DEFENCE_MODULE_10.get(), stack)) {
