@@ -184,7 +184,7 @@ public class ClearingRitual {
                     .getDataStorage()
                     .computeIfAbsent(RadiantLandCleanedData::load,()->new RadiantLandCleanedData(false),"is_radiant_land_cleaned");
             if (!data.isCleaned()){
-                List<ServerPlayer> players = ((ServerLevel) level).getPlayers((p)->p.getLevel().dimension() == EventHandler.RADIANT_LAND_KEY);
+                List<ServerPlayer> players = ((ServerLevel) level).getPlayers((p)->p.level().dimension() == EventHandler.RADIANT_LAND_KEY);
                 List<ServerPlayer> allPlayers = ((ServerLevel) level).getPlayers((p)->true);
                 MinecraftServer server = level.getServer();
                 if (server != null) {

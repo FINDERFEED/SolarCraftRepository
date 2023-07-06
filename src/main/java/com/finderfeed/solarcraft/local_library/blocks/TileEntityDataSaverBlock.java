@@ -9,6 +9,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import org.jetbrains.annotations.Nullable;
 
@@ -23,8 +24,9 @@ public class TileEntityDataSaverBlock extends Block {
         this.modid = modid;
     }
 
+
     @Override
-    public List<ItemStack> getDrops(BlockState state, LootContext.Builder ctx) {
+    public List<ItemStack> getDrops(BlockState state, LootParams.Builder ctx) {
 
         List<ItemStack> stacks = super.getDrops(state,ctx);
         for (ItemStack stack : stacks){

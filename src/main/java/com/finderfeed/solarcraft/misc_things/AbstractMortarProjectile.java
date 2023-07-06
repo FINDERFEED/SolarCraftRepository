@@ -5,6 +5,7 @@ import com.finderfeed.solarcraft.client.particles.SolarcraftParticleTypes;
 import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
 
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 
@@ -107,7 +108,7 @@ public abstract class AbstractMortarProjectile extends AbstractHurtingProjectile
         return false;
     }
     @Override
-    public Packet<?> getAddEntityPacket() {
+    public Packet<ClientGamePacketListener> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 
@@ -119,7 +120,7 @@ public abstract class AbstractMortarProjectile extends AbstractHurtingProjectile
             AABB box = new AABB(-getExplosionRadius(),-getExplosionRadius(),-getExplosionRadius(),getExplosionRadius(),getExplosionRadius(),getExplosionRadius());
             List<LivingEntity> entities = level.getEntitiesOfClass(LivingEntity.class,box.move(pos));
             for (LivingEntity a : entities){
-                a.hurt(DamageSource.MAGIC,(float)getMDamage());
+                a.hurt(level.damageSources().magic(),(float)getMDamage());
                 a.invulnerableTime=0;
             }
         }

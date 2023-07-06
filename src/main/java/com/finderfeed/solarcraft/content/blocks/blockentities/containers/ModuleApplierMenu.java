@@ -8,6 +8,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.ItemCombinerMenu;
+import net.minecraft.world.inventory.ItemCombinerMenuSlotDefinition;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.state.BlockState;
 
@@ -54,6 +55,11 @@ public class ModuleApplierMenu extends ItemCombinerMenu {
     @Override
     public void createResult() {
         valid = isModuleValid();
+    }
+
+    @Override
+    protected ItemCombinerMenuSlotDefinition createInputSlotDefinitions() {
+        return ItemCombinerMenuSlotDefinition.create().build();
     }
 
     private boolean isModuleValid(){

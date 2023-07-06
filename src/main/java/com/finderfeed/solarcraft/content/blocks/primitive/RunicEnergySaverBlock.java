@@ -13,6 +13,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import org.jetbrains.annotations.Nullable;
 
@@ -37,7 +38,7 @@ public abstract class RunicEnergySaverBlock extends RunicEnergyContainerBlock {
     }
 
     @Override
-    public List<ItemStack> getDrops(BlockState state, LootContext.Builder context) {
+    public List<ItemStack> getDrops(BlockState state, LootParams.Builder context) {
         ItemStack stack = new ItemStack(this.asItem());
         if (context.getOptionalParameter(LootContextParams.BLOCK_ENTITY) instanceof AbstractRunicEnergyContainer container){
             IRunicEnergySaver.defaultSave(stack,container);

@@ -3,6 +3,7 @@ package com.finderfeed.solarcraft.content.recipe_types.solar_smelting;
 import com.finderfeed.solarcraft.misc_things.PhantomInventory;
 
 import com.finderfeed.solarcraft.registries.recipe_types.SolarcraftRecipeTypes;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -78,7 +79,7 @@ public class SolarSmeltingRecipe implements Recipe<PhantomInventory> {
     }
 
     @Override
-    public ItemStack assemble(PhantomInventory inv) {
+    public ItemStack assemble(PhantomInventory inv, RegistryAccess access) {
         return this.output.copy();
     }
 
@@ -88,7 +89,7 @@ public class SolarSmeltingRecipe implements Recipe<PhantomInventory> {
     }
 
     @Override
-    public ItemStack getResultItem() {
+    public ItemStack getResultItem(RegistryAccess access) {
         return this.output;
     }
 

@@ -35,7 +35,7 @@ public class TooltipBoxComponent extends FDScreenComponent {
     @Override
     public void render(GuiGraphics graphics, int mousex, int mousey, float pticks) {
         if (RenderingTools.isMouseInBorders(mousex,mousey,0,0,sizeX,sizeY)){
-            tooltip.render(graphics.pose(),x + mousex,y + mousey);
+            tooltip.render(graphics,x + mousex,y + mousey);
         }
     }
 

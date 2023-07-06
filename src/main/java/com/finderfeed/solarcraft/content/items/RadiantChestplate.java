@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.function.Supplier;
 
 public class RadiantChestplate extends SolarcraftArmorItem {
-    public RadiantChestplate(ArmorMaterial p_i48534_1_, EquipmentSlot p_i48534_2_, Properties p_i48534_3_, Supplier<AncientFragment> fragmentSupplier) {
+    public RadiantChestplate(ArmorMaterial p_i48534_1_, Type p_i48534_2_, Properties p_i48534_3_, Supplier<AncientFragment> fragmentSupplier) {
         super(p_i48534_1_, p_i48534_2_, p_i48534_3_,fragmentSupplier);
 
     }

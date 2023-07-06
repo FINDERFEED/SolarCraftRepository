@@ -20,6 +20,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -76,9 +77,9 @@ public class EnchanterContainerScreen extends AbstractScrollableContainerScreen<
                     this.selectedEnchantment = e;
                     this.selectedLevel = 1;
                 }
-            },(btn,matrices,mousex,mousey)->{
+            },(btn,graphics,mousex,mousey)->{
                 postRunRender.add(()->{
-                    renderTooltip(matrices,Component.translatable(e.enchantment().getDescriptionId()),mousex,mousey);
+                    graphics.renderTooltip(font,Component.translatable(e.enchantment().getDescriptionId()),mousex,mousey);
                 });
             });
             postRender.add(b);
@@ -132,9 +133,11 @@ public class EnchanterContainerScreen extends AbstractScrollableContainerScreen<
     }
 
     @Override
-    protected void renderBg(PoseStack matrices, float pticks, int mousex, int mousey) {
+    protected void renderBg(GuiGraphics graphics, float pticks, int mousex, int mousey) {
 
-        super.renderBackground(matrices);
+        PoseStack matrices = graphics.pose();
+
+        super.renderBackground(graphics);
         ClientHelpers.bindText(MAIN_SCREEN);
         int scale = (int) minecraft.getWindow().getGuiScale();
         int a = 1;
@@ -142,7 +145,7 @@ public class EnchanterContainerScreen extends AbstractScrollableContainerScreen<
             a = 0;
         }
 
-        blit(matrices,relX+a-70,relY+4,0,0,256,180,256,256);
+        RenderingTools.blitWithBlend(matrices,relX+a-70,relY+4,0,0,256,180,256,256,0,1f);
 
         if (menu.tile.enchantingInProgress()){
             double xt = menu.tile.getEnchantingTicks()/(double)EnchanterBlockEntity.MAX_ENCHANTING_TICKS * 150;
@@ -159,7 +162,7 @@ public class EnchanterContainerScreen extends AbstractScrollableContainerScreen<
             for (RunicEnergy.Type type : c.getSetTypes()){
                 int x = type.getIndex() * 20;
                 int ytexture = (int)(16*(c.get(type) / menu.config.getMaxEnchanterRunicEnergyCapacity()));
-                RenderingTools.blitWithBlend(matrices,relX + x - 58 + a,relY + 78 + (16-ytexture),0,196 - ytexture,12,16,256,256,getBlitOffset(),0.5f);
+                RenderingTools.blitWithBlend(matrices,relX + x - 58 + a,relY + 78 + (16-ytexture),0,196 - ytexture,12,16,256,256,0,0.5f);
 
             }
 
@@ -174,7 +177,7 @@ public class EnchanterContainerScreen extends AbstractScrollableContainerScreen<
             int x = type.getIndex() * 20;
             int ytexture = (int)(16*(menu.tile.getRunicEnergy(type) / menu.config.getMaxEnchanterRunicEnergyCapacity()));
 
-            RenderingTools.blitWithBlend(matrices,relX + x - 58 + a,relY + 78 + (16-ytexture),0,196 - ytexture,12,16,256,256,getBlitOffset(),1f);
+            RenderingTools.blitWithBlend(matrices,relX + x - 58 + a,relY + 78 + (16-ytexture),0,196 - ytexture,12,16,256,256,0,1f);
             if (RenderingTools.isMouseInBorders(mousex,mousey,relX + x - 58,relY + 78,relX + x - 58 + 12,relY + 78 + 16)){
                 RunicEnergyCost finalCost = cost;
                 rf = ()->
@@ -186,23 +189,23 @@ public class EnchanterContainerScreen extends AbstractScrollableContainerScreen<
                         components.add(Component.translatable("solarcraft.not_enought_runic_energy_needed").withStyle(ChatFormatting.GOLD)
                                 .append(Component.literal(": " + finalCost.get(type)).withStyle(ChatFormatting.WHITE)));
                     }
-                    renderTooltip(matrices,components,Optional.empty(), mousex, mousey);
+                    graphics.renderTooltip(font,components,Optional.empty(), mousex, mousey);
                 };
             }
         }
 
         if (rf != null) rf.run();
-        drawCenteredString(matrices,font,""+selectedLevel,relX + 142,relY + 35,SolarLexiconScreen.TEXT_COLOR);
-        drawCenteredString(matrices,font,selectedEnchantment.enchantment().getFullname(selectedLevel).getString(),relX + 20,relY + 15, SolarLexiconScreen.TEXT_COLOR);
+        graphics.drawCenteredString(font,""+selectedLevel,relX + 142,relY + 35,SolarLexiconScreen.TEXT_COLOR);
+        graphics.drawCenteredString(font,selectedEnchantment.enchantment().getFullname(selectedLevel).getString(),relX + 20,relY + 15, SolarLexiconScreen.TEXT_COLOR);
         RenderSystem.enableScissor((relX + 108  + a)*scale,(relY + 22 )*scale,69*scale,117*scale);
 
         for (SolarCraftButton b : postRender){
-            b.render(matrices,mousex,mousey,pticks);
+            b.render(graphics,mousex,mousey,pticks);
         }
         RenderSystem.disableScissor();
         postRunRender.forEach(Runnable::run);
         postRunRender.clear();
-        super.renderTooltip(matrices,mousex,mousey);
+        super.renderTooltip(graphics,mousex,mousey);
 
     }
 
@@ -293,28 +296,28 @@ public class EnchanterContainerScreen extends AbstractScrollableContainerScreen<
         super.performScroll(keyCode);
     }
 
-    private void renderEnergyBar(PoseStack matrices, int offsetx, int offsety, double energyAmount, boolean simulate,int mousex,int mousey){
-        matrices.pushPose();
-
-        int texturex = Math.round((float)energyAmount/(float)menu.tile.getRunicEnergyLimit()*60);
-        matrices.translate(offsetx,offsety,0);
-        matrices.mulPose(Vector3f.ZN.rotationDegrees(90));
-        if (!simulate) {
-            blit(matrices, 0, 0, 0, 0, texturex, 6);
-            if (mousex > offsetx && mousex < offsetx + 6 && mousey > offsety-60 && mousey < offsety){
-                postRunRender.add(()->{
-                    renderTooltip(matrices,Component.literal((float) energyAmount + "/" + menu.tile.getRunicEnergyLimit()),mousex-3,mousey+3);
-                });
-            }
-        }else{
-
-            InfuserScreen.blitm(matrices, 0, 0, 0, 0, texturex, 6,60,6);
-        }
-
-
-
-        matrices.popPose();
-    }
+//    private void renderEnergyBar(PoseStack matrices, int offsetx, int offsety, double energyAmount, boolean simulate,int mousex,int mousey){
+//        matrices.pushPose();
+//
+//        int texturex = Math.round((float)energyAmount/(float)menu.tile.getRunicEnergyLimit()*60);
+//        matrices.translate(offsetx,offsety,0);
+//        matrices.mulPose(Vector3f.ZN.rotationDegrees(90));
+//        if (!simulate) {
+//            blit(matrices, 0, 0, 0, 0, texturex, 6);
+//            if (mousex > offsetx && mousex < offsetx + 6 && mousey > offsety-60 && mousey < offsety){
+//                postRunRender.add(()->{
+//                    renderTooltip(matrices,Component.literal((float) energyAmount + "/" + menu.tile.getRunicEnergyLimit()),mousex-3,mousey+3);
+//                });
+//            }
+//        }else{
+//
+//            InfuserScreen.blitm(matrices, 0, 0, 0, 0, texturex, 6,60,6);
+//        }
+//
+//
+//
+//        matrices.popPose();
+//    }
 
 
 

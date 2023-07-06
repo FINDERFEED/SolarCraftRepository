@@ -2,6 +2,7 @@ package com.finderfeed.solarcraft.content.blocks.blockentities.projectiles;
 
 import com.finderfeed.solarcraft.client.particles.SolarcraftParticleTypes;
 import com.finderfeed.solarcraft.registries.entities.SolarcraftEntityTypes;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractHurtingProjectile;
@@ -51,9 +52,9 @@ public class AbstractTurretProjectile extends AbstractHurtingProjectile {
     @Override
     protected void onHitEntity(EntityHitResult ctx) {
         if (!level.isClientSide) {
-            ctx.getEntity().hurt(DamageSource.MAGIC.setProjectile(), damage);
+            ctx.getEntity().hurt(level.damageSources().magic(), damage);
             if (explosionPower > 0) {
-                level.explode(null, ctx.getLocation().x, ctx.getLocation().y, ctx.getLocation().z, explosionPower,true, Explosion.BlockInteraction.BREAK);
+                level.explode(null, ctx.getLocation().x, ctx.getLocation().y, ctx.getLocation().z, explosionPower,true, Level.ExplosionInteraction.BLOCK);
             }
         }
         if (HIT_EFFECT != null){
@@ -66,7 +67,7 @@ public class AbstractTurretProjectile extends AbstractHurtingProjectile {
     protected void onHitBlock(BlockHitResult result) {
         if (!level.isClientSide) {
             if (explosionPower > 0) {
-                level.explode(null, result.getLocation().x, result.getLocation().y, result.getLocation().z, explosionPower,true, Explosion.BlockInteraction.BREAK);
+                level.explode(null, result.getLocation().x, result.getLocation().y, result.getLocation().z, explosionPower,true, Level.ExplosionInteraction.BLOCK);
             }
         }
         if (BLOCK_HIT_EFFECT != null){
@@ -113,7 +114,7 @@ public class AbstractTurretProjectile extends AbstractHurtingProjectile {
         return false;
     }
     @Override
-    public Packet<?> getAddEntityPacket() {
+    public Packet<ClientGamePacketListener> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 

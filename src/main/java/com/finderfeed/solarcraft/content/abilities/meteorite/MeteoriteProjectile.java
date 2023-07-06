@@ -3,6 +3,7 @@ package com.finderfeed.solarcraft.content.abilities.meteorite;
 import com.finderfeed.solarcraft.content.abilities.solar_strike.SolarStrikeEntity;
 import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.helpers.Helpers;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.block.Blocks;
 
@@ -43,8 +44,8 @@ public class MeteoriteProjectile extends AbstractHurtingProjectile {
         if (!this.level.isClientSide) {
             Vec3 velocityVector = this.getDeltaMovement().multiply(8,8,8);
             if (Helpers.isSpellGriefingEnabled((ServerLevel) level)) {
-                this.level.explode(null, DamageSource.DRAGON_BREATH, null, this.position().x, this.position().y, this.position().z, 10, true, Explosion.BlockInteraction.DESTROY);
-                this.level.explode(null, DamageSource.DRAGON_BREATH, null, this.position().x + velocityVector.x / 5, this.position().y + velocityVector.y / 15, this.position().z + velocityVector.z / 10, 10, true, Explosion.BlockInteraction.DESTROY);
+                this.level.explode(null, level.damageSources().magic(), null, this.position().x, this.position().y, this.position().z, 10, true, Level.ExplosionInteraction.BLOCK);
+                this.level.explode(null, level.damageSources().magic(), null, this.position().x + velocityVector.x / 5, this.position().y + velocityVector.y / 15, this.position().z + velocityVector.z / 10, 10, true, Level.ExplosionInteraction.BLOCK);
                 double radius = this.level.random.nextFloat() * 1 + 4;
                 for (int i = (int) -Math.ceil(radius); i < Math.ceil(radius); i++) {
                     for (int g = (int) -Math.ceil(radius); g < Math.ceil(radius); g++) {
@@ -67,8 +68,8 @@ public class MeteoriteProjectile extends AbstractHurtingProjectile {
                     }
                 }
             }else{
-                this.level.explode(null, DamageSource.DRAGON_BREATH, null, this.position().x, this.position().y, this.position().z, 10, true, Explosion.BlockInteraction.NONE);
-                this.level.explode(null, DamageSource.DRAGON_BREATH, null, this.position().x + velocityVector.x / 5, this.position().y + velocityVector.y / 15, this.position().z + velocityVector.z / 10, 10, true, Explosion.BlockInteraction.NONE);
+                this.level.explode(null, level.damageSources().magic(), null, this.position().x, this.position().y, this.position().z, 10, true, Level.ExplosionInteraction.NONE);
+                this.level.explode(null, level.damageSources().magic(), null, this.position().x + velocityVector.x / 5, this.position().y + velocityVector.y / 15, this.position().z + velocityVector.z / 10, 10, true, Level.ExplosionInteraction.NONE);
             }
         }
         this.remove(RemovalReason.KILLED);
@@ -111,7 +112,7 @@ public class MeteoriteProjectile extends AbstractHurtingProjectile {
         return false;
     }
     @Override
-    public Packet<?> getAddEntityPacket() {
+    public Packet<ClientGamePacketListener> getAddEntityPacket() {
     return NetworkHooks.getEntitySpawningPacket(this);
     }
     @Override

@@ -4,6 +4,7 @@ import com.finderfeed.solarcraft.content.blocks.infusing_table_things.InfuserTil
 import com.finderfeed.solarcraft.content.items.runic_energy.RunicEnergyCost;
 import com.finderfeed.solarcraft.registries.blocks.SolarcraftBlocks;
 import com.finderfeed.solarcraft.registries.recipe_types.SolarcraftRecipeTypes;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
@@ -79,7 +80,7 @@ public class InfusingRecipe implements Recipe<Container> {
     }
 
     @Override
-    public ItemStack assemble(Container inv) {
+    public ItemStack assemble(Container inv,RegistryAccess access) {
         return this.output.copy();
     }
 
@@ -89,7 +90,7 @@ public class InfusingRecipe implements Recipe<Container> {
     }
 
     @Override
-    public ItemStack getResultItem() {
+    public ItemStack getResultItem(RegistryAccess access) {
         return this.output;
     }
 

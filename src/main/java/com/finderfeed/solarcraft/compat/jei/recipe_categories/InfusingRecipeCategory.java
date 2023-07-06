@@ -27,6 +27,7 @@ import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.FormattedCharSequence;
@@ -99,8 +100,13 @@ public class InfusingRecipeCategory implements IRecipeCategory<InfusingRecipe> {
         builder.addSlot(RecipeIngredientRole.OUTPUT,136,63).addItemStack(recipe.output.copy());
     }
 
+
     @Override
-    public void draw(InfusingRecipe recipe, IRecipeSlotsView recipeSlotsView, PoseStack matrices, double mouseX, double mouseY) {
+    public void draw(InfusingRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics graphics, double mouseX, double mouseY) {
+
+        PoseStack matrices = graphics.pose();
+        matrices.pushPose();
+
 
         AncientFragment fragment = AncientFragment.getFragmentByID(recipe.fragID);
         if (fragment == null) return;
@@ -108,7 +114,7 @@ public class InfusingRecipeCategory implements IRecipeCategory<InfusingRecipe> {
             RenderingTools.fill(matrices,5,5,161-5,141-5,0.3f,0,0.45f,1);
             int iter = 0;
             for (FormattedCharSequence s : Minecraft.getInstance().font.split(Component.translatable("solarcraft.fragment_not_unlocked"),140)) {
-                Gui.drawCenteredString(matrices, Minecraft.getInstance().font, s, 161 / 2, 141 / 2 + iter * 9 - 9, 0xffff00);
+                graphics.drawCenteredString( Minecraft.getInstance().font, s, 161 / 2, 141 / 2 + iter * 9 - 9, 0xffff00);
                 iter++;
             }
             return;
@@ -129,14 +135,14 @@ public class InfusingRecipeCategory implements IRecipeCategory<InfusingRecipe> {
                         .append(Component.literal(": " + recipe.requriedEnergy).withStyle(ChatFormatting.RESET)));
             }
             if (!components.isEmpty()) {
-                screen.renderTooltip(matrices, components, Optional.empty(), (int) mouseX, (int) mouseY - 40* Mth.clamp(components.size()/8,0,1));
+                graphics.renderTooltip(Minecraft.getInstance().font, components, Optional.empty(), (int) mouseX, (int) mouseY - 40* Mth.clamp(components.size()/8,0,1));
             }
         }
         Block[] catalysts = recipe.deserializeCatalysts();
         if (catalysts == null) return;
         ClientHelpers.bindText(InfoButton.LOC);
         if (RenderingTools.isMouseInBorders((int) mouseX, (int) mouseY,137,15,137 + 12,15 + 12)){
-            Gui.blit(matrices,137,15,0,12,12,12,12,24);
+            RenderingTools.blitWithBlend(matrices,137,15,0,12,12,12,12,24,0,1f);
 
             if (Helpers.hasPlayerCompletedProgression(Progression.CATALYSTS,Minecraft.getInstance().player)){
                 /*
@@ -157,17 +163,86 @@ public class InfusingRecipeCategory implements IRecipeCategory<InfusingRecipe> {
                 for (RunicEnergy.Type type : RunicEnergy.Type.getAll()){
                     cmps.add(Component.literal(InfusingRecipe.DESERIALIZATOR_RE_TO_CHARACTER[type.getIndex()] + ": " + type.id.toUpperCase(Locale.ROOT)));
                 }
-                screen.renderTooltip(matrices,cmps,Optional.empty(),(int)mouseX,(int)mouseY);
+                graphics.renderTooltip(Minecraft.getInstance().font,cmps,Optional.empty(),(int)mouseX,(int)mouseY);
             }else{
-                screen.renderTooltip(matrices,Minecraft.getInstance().font.split(Component.translatable("solarcraft.catalysts_not_unlocked"),100),
+                graphics.renderTooltip(Minecraft.getInstance().font,Minecraft.getInstance().font.split(Component.translatable("solarcraft.catalysts_not_unlocked"),100),
                         (int)mouseX,(int)mouseY);
             }
         }else{
-            Gui.blit(matrices,137,15,0,0,12,12,12,24);
+            RenderingTools.blitWithBlend(matrices,137,15,0,0,12,12,12,24,0,1f);
         }
-
-
+        matrices.popPose();
     }
+
+//    @Override
+//    public void draw(InfusingRecipe recipe, IRecipeSlotsView recipeSlotsView, PoseStack matrices, double mouseX, double mouseY) {
+//
+//        AncientFragment fragment = AncientFragment.getFragmentByID(recipe.fragID);
+//        if (fragment == null) return;
+//        if (!ProgressionHelper.doPlayerHasFragment(Minecraft.getInstance().player, fragment) && !Minecraft.getInstance().player.isCreative()) {
+//            RenderingTools.fill(matrices,5,5,161-5,141-5,0.3f,0,0.45f,1);
+//            int iter = 0;
+//            for (FormattedCharSequence s : Minecraft.getInstance().font.split(Component.translatable("solarcraft.fragment_not_unlocked"),140)) {
+//                Gui.drawCenteredString(matrices, Minecraft.getInstance().font, s, 161 / 2, 141 / 2 + iter * 9 - 9, 0xffff00);
+//                iter++;
+//            }
+//            return;
+//        }
+//        Screen screen = Minecraft.getInstance().screen;
+//        if (screen == null) return;
+//        if (RenderingTools.isMouseInBorders((int) mouseX, (int) mouseY, 68, 100, 68 + 6, 100 + 6)) {
+//
+//
+//            List<Component> components = new ArrayList<>();
+//            for (RunicEnergy.Type type : recipe.RUNIC_ENERGY_COST.getSetTypes()) {
+//                float re = recipe.RUNIC_ENERGY_COST.get(type);
+//                components.add(Component.literal(type.id.toUpperCase(Locale.ROOT) + ": ").withStyle(ChatFormatting.GOLD)
+//                        .append(Component.literal(re + "").withStyle(ChatFormatting.RESET)));
+//            }
+//            if (recipe.requriedEnergy != 0) {
+//                components.add(Component.translatable("solarcraft.solar_energy").withStyle(ChatFormatting.GOLD)
+//                        .append(Component.literal(": " + recipe.requriedEnergy).withStyle(ChatFormatting.RESET)));
+//            }
+//            if (!components.isEmpty()) {
+//                screen.renderTooltip(matrices, components, Optional.empty(), (int) mouseX, (int) mouseY - 40* Mth.clamp(components.size()/8,0,1));
+//            }
+//        }
+//        Block[] catalysts = recipe.deserializeCatalysts();
+//        if (catalysts == null) return;
+//        ClientHelpers.bindText(InfoButton.LOC);
+//        if (RenderingTools.isMouseInBorders((int) mouseX, (int) mouseY,137,15,137 + 12,15 + 12)){
+//            Gui.blit(matrices,137,15,0,12,12,12,12,24);
+//
+//            if (Helpers.hasPlayerCompletedProgression(Progression.CATALYSTS,Minecraft.getInstance().player)){
+//                /*
+//                012
+//              11    3
+//              10    4
+//               9    5
+//                876
+//                 */
+//                String cats = recipe.getCatalysts().replace(' ','-');
+//                List<Component> cmps = new ArrayList<>();
+//                cmps.add(Component.literal(" " + cats.substring(0,3) + " "));
+//                cmps.add(Component.literal(cats.charAt(11) + "   " + cats.charAt(3)));
+//                cmps.add(Component.literal(cats.charAt(10) + "   " + cats.charAt(4)));
+//                cmps.add(Component.literal(cats.charAt(9) + "   " + cats.charAt(5)));
+//                cmps.add(Component.literal(" " + cats.charAt(8) + cats.charAt(7) + cats.charAt(6) + " "));
+//                cmps.add(Component.translatable("solarcraft.catalysts_jei"));
+//                for (RunicEnergy.Type type : RunicEnergy.Type.getAll()){
+//                    cmps.add(Component.literal(InfusingRecipe.DESERIALIZATOR_RE_TO_CHARACTER[type.getIndex()] + ": " + type.id.toUpperCase(Locale.ROOT)));
+//                }
+//                screen.renderTooltip(matrices,cmps,Optional.empty(),(int)mouseX,(int)mouseY);
+//            }else{
+//                screen.renderTooltip(matrices,Minecraft.getInstance().font.split(Component.translatable("solarcraft.catalysts_not_unlocked"),100),
+//                        (int)mouseX,(int)mouseY);
+//            }
+//        }else{
+//            Gui.blit(matrices,137,15,0,0,12,12,12,24);
+//        }
+//
+//
+//    }
 
     @Override
     public List<Component> getTooltipStrings(InfusingRecipe recipe, IRecipeSlotsView recipeSlotsView, double mouseX, double mouseY) {

@@ -19,6 +19,7 @@ import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.network.NetworkHooks;
@@ -47,8 +48,9 @@ public class ElementWeaverBlock extends RunicEnergySaverBlock implements EntityB
         return InteractionResult.CONSUME;
     }
 
+
     @Override
-    public List<ItemStack> getDrops(BlockState state, LootContext.Builder context) {
+    public List<ItemStack> getDrops(BlockState state, LootParams.Builder context) {
         List<ItemStack> drops = super.getDrops(state,context);
 
         if (context.getOptionalParameter(LootContextParams.BLOCK_ENTITY) instanceof ElementWeaverTileEntity tile){

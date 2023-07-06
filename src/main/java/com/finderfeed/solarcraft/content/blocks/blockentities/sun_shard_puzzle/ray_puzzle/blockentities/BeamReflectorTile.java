@@ -13,6 +13,8 @@ import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import org.joml.Matrix3f;
+import org.joml.Vector3f;
 
 import java.nio.FloatBuffer;
 import java.util.HashSet;
@@ -41,26 +43,32 @@ public class BeamReflectorTile extends SolarcraftBlockEntity {
             int a;
             Matrix3f m = new Matrix3f();
             if (Math.abs(a = faceNormal.getX()) == 1){
-                m.load(FloatBuffer.wrap(new float[]{
+                m.set(new float[]{
                         1,0,0,
                         0,(float)(Math.cos(Math.PI/2*a)),- (float)(Math.sin(Math.PI/2*a)),
-                        0,(float)(Math.sin(Math.PI/2*a)),(float)(Math.cos(Math.PI/2*a))})
+                        0,(float)(Math.sin(Math.PI/2*a)),(float)(Math.cos(Math.PI/2*a))}
                 );
             }else if (Math.abs(a = faceNormal.getY()) == 1){
-                m.load(FloatBuffer.wrap(new float[]{
+                m.set(new float[]{
                         (float)(Math.cos(Math.PI/2*a)),0,(float)(Math.sin(Math.PI/2*a)),
                         0,1,0,
-                        - (float)(Math.sin(Math.PI/2*a)),0,(float)(Math.cos(Math.PI/2*a))})
+                        - (float)(Math.sin(Math.PI/2*a)),0,(float)(Math.cos(Math.PI/2*a))}
                 );
             }else if (Math.abs(a = faceNormal.getZ()) == 1){
-                m.load(FloatBuffer.wrap(new float[]{
+                m.set(new float[]{
                         (float)(Math.cos(Math.PI/2*a)),- (float)(Math.sin(Math.PI/2*a)),0,
                         (float)(Math.sin(Math.PI/2*a)),(float)(Math.cos(Math.PI/2*a)),0,
-                        0,0,1})
+                        0,0,1}
                 );
+//                m.load(FloatBuffer.wrap(new float[]{
+//                        (float)(Math.cos(Math.PI/2*a)),- (float)(Math.sin(Math.PI/2*a)),0,
+//                        (float)(Math.sin(Math.PI/2*a)),(float)(Math.cos(Math.PI/2*a)),0,
+//                        0,0,1})
+
             }
             Vector3f v = new Vector3f(normal.getX(),normal.getY(),normal.getZ());
-            v.transform(m);
+//            v.transform(m);
+            v = m.transform(v);
             newDirs.add(Direction.fromNormal((int)v.x(),(int)v.y(),(int)v.z()));
         }
         this.directions = newDirs;

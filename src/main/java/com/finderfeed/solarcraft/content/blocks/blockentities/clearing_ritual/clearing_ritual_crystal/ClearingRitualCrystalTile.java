@@ -106,7 +106,7 @@ public class ClearingRitualCrystalTile extends BlockEntity {
 
     private void explode(boolean throwItem){
         Vec3 c = Helpers.getBlockCenter(worldPosition);
-        level.explode(null, c.x, c.y, c.z, 7f, Explosion.BlockInteraction.DESTROY);
+        level.explode(null, c.x, c.y, c.z, 7f, Level.ExplosionInteraction.BLOCK);
         level.destroyBlock(worldPosition, throwItem);
     }
 

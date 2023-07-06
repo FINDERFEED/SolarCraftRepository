@@ -83,7 +83,7 @@ public class SolarcraftItems {
     public static final RegistryObject<ArmorItem> DIVINE_BOOTS = registerItem(ITEMS.register("divine_boots",()-> new DivineBoots(SolarArmorMaterial.DIVINE_ARMOR, EquipmentSlot.FEET,new Item.Properties().rarity(Rarity.EPIC),()->AncientFragment.DIVINE_ARMOR)),SOLAR_GROUP);
 
     //radiant armor
-    public static final RegistryObject<RadiantChestplate> RADIANT_CHESTPLATE = registerItem(ITEMS.register("radiant_chestplate",()-> new RadiantChestplate(SolarArmorMaterial.RADIANT_ARMOR, EquipmentSlot.CHEST,new Item.Properties().rarity(Rarity.EPIC),()->AncientFragment.RADIANT_CHESTPLATE)),SOLAR_GROUP);
+    public static final RegistryObject<RadiantChestplate> RADIANT_CHESTPLATE = registerItem(ITEMS.register("radiant_chestplate",()-> new RadiantChestplate(SolarArmorMaterial.RADIANT_ARMOR, ArmorItem.Type.CHESTPLATE,new Item.Properties().rarity(Rarity.EPIC),()->AncientFragment.RADIANT_CHESTPLATE)),SOLAR_GROUP);
     //lexicon
     public static  final RegistryObject<SolarLexicon> SOLAR_LEXICON = registerItem(ITEMS.register("solar_lexicon",()-> new SolarLexicon(new Item.Properties().stacksTo(1))),SOLAR_GROUP);
 
