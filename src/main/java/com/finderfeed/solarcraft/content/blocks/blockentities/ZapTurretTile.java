@@ -59,7 +59,7 @@ public class ZapTurretTile extends BlockEntity implements OwnedBlock, IStructure
                 );
                 if (targets.size() != 0) {
                     LivingEntity lastTarget = targets.get(world.random.nextInt(targets.size()));
-                    lastTarget.hurt(DamageSource.MAGIC, 5);
+                    lastTarget.hurt(tile.level.damageSources().magic(), 5);
                     List<LivingEntity> invalidTargets = new ArrayList<>();
                     invalidTargets.add(lastTarget);
                     for (int i = 0; i < 4; i++) {
@@ -74,7 +74,7 @@ public class ZapTurretTile extends BlockEntity implements OwnedBlock, IStructure
                         );
                         if (secondaryTargets.size() != 0) {
                             lastTarget = secondaryTargets.get(world.random.nextInt(secondaryTargets.size()));
-                            lastTarget.hurt(DamageSource.MAGIC, 5);
+                            lastTarget.hurt(tile.level.damageSources().magic(), 5);
                             invalidTargets.add(lastTarget);
                         } else {
                             break;

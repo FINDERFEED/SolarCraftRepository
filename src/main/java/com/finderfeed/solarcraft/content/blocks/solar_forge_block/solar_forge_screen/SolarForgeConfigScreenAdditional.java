@@ -87,23 +87,23 @@ public class SolarForgeConfigScreenAdditional extends ScrollableScreen {
     }
 
 
-    @Override
-    public void render(PoseStack stack, int rouseX, int rouseY, float partialTicks){
-
-        ClientHelpers.bindText(GUI);
-
-        this.blit(stack, relX + 82, relY + 30, 0, 0, WIDTH, HEIGHT);
-
-        int scaledWidth = Minecraft.getInstance().getWindow().getGuiScaledWidth();
-        int scaledHeight = Minecraft.getInstance().getWindow().getGuiScaledHeight();
-        int width = Minecraft.getInstance().getWindow().getWidth();
-        int height = Minecraft.getInstance().getWindow().getHeight();
-        int scale = (int)Minecraft.getInstance().getWindow().getGuiScale();
-        RenderSystem.enableScissor((width - WIDTH*scale)/2,(height - HEIGHT*scale + 15*scale)/2,WIDTH*scale,(HEIGHT - 22)*scale);
-
-        super.render(stack,rouseX,rouseY,partialTicks);
-        RenderSystem.disableScissor();
-    }
+//    @Override
+//    public void render(PoseStack stack, int rouseX, int rouseY, float partialTicks){
+//
+//        ClientHelpers.bindText(GUI);
+//
+//        this.blit(stack, relX + 82, relY + 30, 0, 0, WIDTH, HEIGHT);
+//
+//        int scaledWidth = Minecraft.getInstance().getWindow().getGuiScaledWidth();
+//        int scaledHeight = Minecraft.getInstance().getWindow().getGuiScaledHeight();
+//        int width = Minecraft.getInstance().getWindow().getWidth();
+//        int height = Minecraft.getInstance().getWindow().getHeight();
+//        int scale = (int)Minecraft.getInstance().getWindow().getGuiScale();
+//        RenderSystem.enableScissor((width - WIDTH*scale)/2,(height - HEIGHT*scale + 15*scale)/2,WIDTH*scale,(HEIGHT - 22)*scale);
+//
+//        super.render(stack,rouseX,rouseY,partialTicks);
+//        RenderSystem.disableScissor();
+//    }
 
 
 

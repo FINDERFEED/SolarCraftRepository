@@ -31,12 +31,14 @@ public class SolarcraftDamageSources {
     public static final ResourceKey<DamageType> ORBITAL_EXPLOSION_TYPE = ResourceKey.create(Registries.DAMAGE_TYPE,new ResourceLocation(SolarCraft.MOD_ID,"orbital_explosion"));
     public static final ResourceKey<DamageType> PLAYER_ATTACK_ARMOR_PIERCE_TYPE = ResourceKey.create(Registries.DAMAGE_TYPE,new ResourceLocation(SolarCraft.MOD_ID,"player_attack_armor_pierce"));
     public static final ResourceKey<DamageType> MOB_ATTACK_ARMOR_PIERCE_TYPE = ResourceKey.create(Registries.DAMAGE_TYPE,new ResourceLocation(SolarCraft.MOD_ID,"mob_attack_armor_pierce"));
+    public static final ResourceKey<DamageType> MOB_ATTACK_ARMOR_PIERCE_PROJECTILE_TYPE = ResourceKey.create(Registries.DAMAGE_TYPE,new ResourceLocation(SolarCraft.MOD_ID,"mob_attack_armor_pierce_projectile"));
 
     public static DamageSource STARGAZE;
     public static DamageSource SHADOW;
     public static DamageSource RUNIC_MAGIC;
     public static DamageSource ORBITAL_EXPLOSION;
     private static EntityDamageSource PLAYER_ATTACK_ARMOR_PIERCE;
+
 
     public static DamageSource playerArmorPierce(Player player){
         return PLAYER_ATTACK_ARMOR_PIERCE.create(player);
@@ -48,18 +50,23 @@ public class SolarcraftDamageSources {
         return MOB_ATTACK_ARMOR_PIERCE.create(attacker);
     }
 
+    private static EntityDamageSource MOB_ATTACK_ARMOR_PIERCE_PROJECTILE;
+    public static DamageSource livingArmorPierceProjectile(LivingEntity attacker){
+        return MOB_ATTACK_ARMOR_PIERCE_PROJECTILE.create(attacker);
+    }
     public static boolean initializedServerside = false;
     @SubscribeEvent
-    public static void initiateDamageSources(PlayerEvent.PlayerLoggedInEvent event){
-        Player player = event.getEntity();
-        Level level = player.level;
-        if (!level.isClientSide && !initializedServerside){
+    public static void initiateDamageSources(ServerStartedEvent event){
+//        Player player = event.getEntity();
+
+//        Level level = player.level;
+//        if (!level.isClientSide && !initializedServerside){
             initializedServerside = true;
-            initializeDamageSources(level);
-        }
+            initializeDamageSources(event.getServer().registryAccess());
+//        }
     }
-    public static void initializeDamageSources(Level level){
-        RegistryAccess access = level.registryAccess();
+    public static void initializeDamageSources(RegistryAccess access){
+//        RegistryAccess access = level.registryAccess();
         Registry<DamageType> types = access.registryOrThrow(Registries.DAMAGE_TYPE);
         STARGAZE = new DamageSource(types.getHolderOrThrow(STARGAZE_TYPE));
         SHADOW = new DamageSource(types.getHolderOrThrow(SHADOW_TYPE));

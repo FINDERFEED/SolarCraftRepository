@@ -34,6 +34,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.effect.MobEffects;
 
 
+import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -86,9 +87,9 @@ public class SolarcraftBlocks {
     public  static  final RegistryObject<BlueGemDoorBlock> BLUE_GEM_DOOR_BLOCK = BLOCKS.register("blue_gem_door_block",()-> new BlueGemDoorBlock(BlockBehaviour.Properties.copy(Blocks.BEDROCK)));
     public  static  final RegistryObject<LeavesBlock> ASH_LEAVES = BLOCKS.register("ash_leaves",()-> new FlammableLeavesBlock(BlockBehaviour.Properties.copy(Blocks.OAK_LEAVES).noOcclusion(),20));
     public  static  final RegistryObject<RotatedPillarBlock> BURNT_LOG = BLOCKS.register("burnt_log",()-> new RotatedPillarFlammableBlock(BlockBehaviour.Properties.copy(Blocks.OAK_LOG),20));
-    public  static  final RegistryObject<Block> RUNE_ENERGY_PYLON = BLOCKS.register("rune_energy_pylon",()-> new RuneEnergyPylonBlock(BlockBehaviour.Properties.copy(Blocks.BEDROCK).noOcclusion()));
+    public  static  final RegistryObject<Block> RUNE_ENERGY_PYLON = BLOCKS.register("rune_energy_pylon",()-> new RuneEnergyPylonBlock(BlockBehaviour.Properties.copy(Blocks.BEDROCK).pushReaction(PushReaction.IGNORE).noOcclusion()));
 
-    public  static  final RegistryObject<Block> ULDERA_PYLON = BLOCKS.register("uldera_pylon",()-> new UlderaPylonBlock(BlockBehaviour.Properties.copy(Blocks.BEDROCK).noOcclusion()));
+    public  static  final RegistryObject<Block> ULDERA_PYLON = BLOCKS.register("uldera_pylon",()-> new UlderaPylonBlock(BlockBehaviour.Properties.copy(Blocks.BEDROCK).pushReaction(PushReaction.IGNORE).noOcclusion()));
 
     public  static  final RegistryObject<Block> INSCRIPTION_STONE = BLOCKS.register("inscription_stone",()-> new InscriptionStone(BlockBehaviour.Properties.copy(Blocks.STONE)));
     public  static  final RegistryObject<Block> REPEATER = BLOCKS.register("repeater",()-> new RunicNetworkRepeater(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).noOcclusion()));
@@ -204,7 +205,7 @@ public class SolarcraftBlocks {
 
     public  static  final RegistryObject<Block> BEAM_INPUT = BLOCKS.register("beam_input",()-> new Block(BlockBehaviour.Properties.copy(Blocks.BEDROCK)));
 
-    public  static  final RegistryObject<SunShardLockBlock> SUN_SHARD_LOCK = BLOCKS.register("sun_shard_lock",()-> new SunShardLockBlock(BlockBehaviour.Properties.copy(Blocks.BEDROCK)));
+    public  static  final RegistryObject<SunShardLockBlock> SUN_SHARD_LOCK = BLOCKS.register("sun_shard_lock",()-> new SunShardLockBlock(BlockBehaviour.Properties.copy(Blocks.BEDROCK).pushReaction(PushReaction.IGNORE)));
     public  static  final RegistryObject<BeamGeneratorBlock> BEAM_GENERATOR = BLOCKS.register("beam_generator", BeamGeneratorBlock::new);
     public  static  final RegistryObject<BeamReflectorBlock> BEAM_REFLECTOR = BLOCKS.register("beam_reflector",()-> new BeamReflectorBlock(BlockBehaviour.Properties.copy(Blocks.BEDROCK)));
     public  static  final RegistryObject<ElementWeaverBlock> ELEMENT_WEAVER = BLOCKS.register("element_weaver",()-> new ElementWeaverBlock(BlockBehaviour.Properties.copy(Blocks.STONE)));

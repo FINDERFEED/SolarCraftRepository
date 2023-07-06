@@ -350,7 +350,7 @@ public class InfuserTileEntity extends REItemHandlerBlockEntity implements Solar
 
     private static void finishRecipe(Level world, InfuserTileEntity tile, InfusingRecipe recipe){
         tile.resetCatalysts(recipe);
-        ItemStack result = recipe.getResultItem().copy();
+        ItemStack result = recipe.getResultItem(world.registryAccess()).copy();
         int count = tile.getMinRecipeCountOutput(recipe);
         for (RunicEnergy.Type type : recipe.RUNIC_ENERGY_COST.getSetTypes()){
             tile.giveEnergy(type,-recipe.RUNIC_ENERGY_COST.get(type)*count);

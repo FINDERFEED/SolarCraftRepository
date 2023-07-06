@@ -121,7 +121,7 @@ public class InfuserContainer extends AbstractContainerMenu {
         @Nullable
         @Override
         public AbstractContainerMenu createMenu(int id, Inventory playerinv, Player player) {
-            return new InfuserContainer(id,playerinv,(InfuserTileEntity) player.getLevel().getBlockEntity(pos));
+            return new InfuserContainer(id,playerinv,(InfuserTileEntity) player.level.getBlockEntity(pos));
         }
     }
 }

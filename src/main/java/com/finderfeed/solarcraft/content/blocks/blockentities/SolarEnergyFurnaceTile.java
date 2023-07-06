@@ -110,7 +110,7 @@ public class SolarEnergyFurnaceTile extends RandomizableContainerBlockEntity imp
                 if (recipe.isPresent()){
                     SmeltingRecipe recipe1 = recipe.get();
                     ItemStack item = tile.getItem(1);
-                    if (((item.getItem().equals(recipe1.getResultItem().getItem())
+                    if (((item.getItem().equals(recipe1.getResultItem(tile.level.registryAccess()).getItem())
                             && (item.getCount() < item.getMaxStackSize()) )
                             || item.getItem().equals(ItemStack.EMPTY.getItem())) ) {
                         tile.RECIPE_IN_PROGRESS = true;
@@ -124,10 +124,10 @@ public class SolarEnergyFurnaceTile extends RandomizableContainerBlockEntity imp
                             tile.RECIPE_PROGRESS = 0;
                             tile.RECIPE_IN_PROGRESS = false;
                             tile.MAX_RECIPE_TIME = 0;
-                            if ((item.getItem().equals(recipe1.getResultItem().getItem()) )){
+                            if ((item.getItem().equals(recipe1.getResultItem(tile.level.registryAccess()).getItem()) )){
                                 item.grow(1);
                             }else{
-                                tile.setItem(1,recipe1.getResultItem().copy());
+                                tile.setItem(1,recipe1.getResultItem(tile.level.registryAccess()).copy());
                             }
                             tile.getItem(0).grow(-1);
                         }

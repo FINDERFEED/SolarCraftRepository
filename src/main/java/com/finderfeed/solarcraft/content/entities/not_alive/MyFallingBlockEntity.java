@@ -5,9 +5,11 @@ import com.finderfeed.solarcraft.registries.entities.SolarcraftEntityTypes;
 import net.minecraft.CrashReportCategory;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.network.protocol.game.ClientboundBlockUpdatePacket;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -45,9 +47,9 @@ public class MyFallingBlockEntity extends Entity {
     public boolean dropItem = true;
     public boolean cancelDrop;
     private boolean hurtEntities;
-    private int fallDamageMax = 20;
+    private int fallDamageMax = 40;
     private float fallDamagePerDistance;
-    public long removeAtMillis;
+
     @Nullable
     public CompoundTag blockData;
     protected static final EntityDataAccessor<BlockPos> DATA_START_POS = SynchedEntityData.defineId(MyFallingBlockEntity.class, EntityDataSerializers.BLOCK_POS);
@@ -117,7 +119,7 @@ public class MyFallingBlockEntity extends Entity {
                     }
                 }
 
-                if (!this.onGround && !flag1) {
+                if (!this.onGround() && !flag1) {
                     if (!this.level.isClientSide && (this.time > 100 && (blockpos.getY() <= this.level.getMinBuildHeight() || blockpos.getY() > this.level.getMaxBuildHeight()) || this.time > 600)) {
                         if (this.dropItem && this.level.getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
                             this.spawnAtLocation(block);
@@ -190,27 +192,27 @@ public class MyFallingBlockEntity extends Entity {
 
     }
 
-    public boolean causeFallDamage(float damage, float multiplier, DamageSource source) {
+    public boolean causeFallDamage(float p_149643_, float p_149644_, DamageSource p_149645_) {
         if (!this.hurtEntities) {
             return false;
         } else {
-            int i = Mth.ceil(damage - 1.0F);
+            int i = Mth.ceil(p_149643_ - 1.0F);
             if (i < 0) {
                 return false;
             } else {
-                Predicate<Entity> predicate;
-                DamageSource damagesource;
-                if (this.blockState.getBlock() instanceof Fallable) {
-                    Fallable fallable = (Fallable)this.blockState.getBlock();
-                    predicate = fallable.getHurtsEntitySelector();
-                    damagesource = fallable.getFallDamageSource();
+                Predicate<Entity> predicate = EntitySelector.NO_CREATIVE_OR_SPECTATOR.and(EntitySelector.LIVING_ENTITY_STILL_ALIVE);
+                Block $$8 = this.blockState.getBlock();
+                DamageSource damagesource1;
+                if ($$8 instanceof Fallable) {
+                    Fallable fallable = (Fallable)$$8;
+                    damagesource1 = fallable.getFallDamageSource(this);
                 } else {
-                    predicate = EntitySelector.NO_SPECTATORS;
-                    damagesource = DamageSource.FALLING_BLOCK;
+                    damagesource1 = this.damageSources().fallingBlock(this);
                 }
 
+                DamageSource damagesource = damagesource1;
                 float f = (float)Math.min(Mth.floor((float)i * this.fallDamagePerDistance), this.fallDamageMax);
-                this.level.getEntities(this, this.getBoundingBox(), predicate).forEach((p_149649_) -> {
+                this.level().getEntities(this, this.getBoundingBox(), predicate).forEach((p_149649_) -> {
                     p_149649_.hurt(damagesource, f);
                 });
                 boolean flag = this.blockState.is(BlockTags.ANVIL);
@@ -228,36 +230,36 @@ public class MyFallingBlockEntity extends Entity {
         }
     }
 
-    protected void addAdditionalSaveData(CompoundTag p_31973_) {
-        p_31973_.put("BlockState", NbtUtils.writeBlockState(this.blockState));
-        p_31973_.putInt("Time", this.time);
-        p_31973_.putBoolean("DropItem", this.dropItem);
-        p_31973_.putBoolean("HurtEntities", this.hurtEntities);
-        p_31973_.putFloat("FallHurtAmount", this.fallDamagePerDistance);
-        p_31973_.putInt("FallHurtMax", this.fallDamageMax);
+    protected void addAdditionalSaveData(CompoundTag tag) {
+        tag.put("BlockState", NbtUtils.writeBlockState(this.blockState));
+        tag.putInt("Time", this.time);
+        tag.putBoolean("DropItem", this.dropItem);
+        tag.putBoolean("HurtEntities", this.hurtEntities);
+        tag.putFloat("FallHurtAmount", this.fallDamagePerDistance);
+        tag.putInt("FallHurtMax", this.fallDamageMax);
         if (this.blockData != null) {
-            p_31973_.put("TileEntityData", this.blockData);
+            tag.put("TileEntityData", this.blockData);
         }
 
     }
 
-    protected void readAdditionalSaveData(CompoundTag p_31964_) {
-        this.blockState = NbtUtils.readBlockState(p_31964_.getCompound("BlockState"));
-        this.time = p_31964_.getInt("Time");
-        if (p_31964_.contains("HurtEntities", 99)) {
-            this.hurtEntities = p_31964_.getBoolean("HurtEntities");
-            this.fallDamagePerDistance = p_31964_.getFloat("FallHurtAmount");
-            this.fallDamageMax = p_31964_.getInt("FallHurtMax");
+    protected void readAdditionalSaveData(CompoundTag tag) {
+        this.blockState = NbtUtils.readBlockState(this.level().holderLookup(Registries.BLOCK), tag.getCompound("BlockState"));
+        this.time = tag.getInt("Time");
+        if (tag.contains("HurtEntities", 99)) {
+            this.hurtEntities = tag.getBoolean("HurtEntities");
+            this.fallDamagePerDistance = tag.getFloat("FallHurtAmount");
+            this.fallDamageMax = tag.getInt("FallHurtMax");
         } else if (this.blockState.is(BlockTags.ANVIL)) {
             this.hurtEntities = true;
         }
 
-        if (p_31964_.contains("DropItem", 99)) {
-            this.dropItem = p_31964_.getBoolean("DropItem");
+        if (tag.contains("DropItem", 99)) {
+            this.dropItem = tag.getBoolean("DropItem");
         }
 
-        if (p_31964_.contains("TileEntityData", 10)) {
-            this.blockData = p_31964_.getCompound("TileEntityData");
+        if (tag.contains("TileEntityData", 10)) {
+            this.blockData = tag.getCompound("TileEntityData");
         }
 
         if (this.blockState.isAir()) {
@@ -289,7 +291,7 @@ public class MyFallingBlockEntity extends Entity {
         return true;
     }
 
-    public Packet<?> getAddEntityPacket() {
+    public Packet<ClientGamePacketListener> getAddEntityPacket() {
         return new ClientboundAddEntityPacket(this, Block.getId(this.getBlockState()));
     }
 

@@ -1,8 +1,10 @@
 package com.finderfeed.solarcraft.content.blocks.solar_forge_block.solar_forge_screen;
 
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
+import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.Component;
@@ -33,15 +35,16 @@ public class SolarForgeAbilityConfigScreen extends Screen {
 
 
     @Override
-    public void render(PoseStack stack, int rouseX, int rouseY, float partialTicks){
+    public void render(GuiGraphics graphics, int rouseX, int rouseY, float partialTicks){
 
+        PoseStack stack = graphics.pose();
 
 
         ClientHelpers.bindText(GUI);
         int relX = (this.width - WIDTH) / 2;
         int relY = (this.height - HEIGHT) / 2;
-        this.blit(stack, relX, relY, 77, 0, 100, HEIGHT);
+        RenderingTools.blitWithBlend(stack, relX, relY, 77, 0, 100, HEIGHT,256,256,0,1f);
         //this.renderBackground(stack);
-        super.render(stack,rouseX,rouseY,partialTicks);
+        super.render(graphics,rouseX,rouseY,partialTicks);
     }
 }

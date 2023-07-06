@@ -7,6 +7,7 @@ import com.finderfeed.solarcraft.registries.entities.SolarcraftEntityTypes;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -59,7 +60,7 @@ public class SolarFireballProjectile extends AbstractHurtingProjectile {
         super.onHitEntity(res);
         Entity e = res.getEntity();
         if (!level.isClientSide && e instanceof LivingEntity living && living != getOwner()){
-            living.hurt(DamageSource.MAGIC,damage);
+            living.hurt(level.damageSources().magic(),damage);
             living.setSecondsOnFire(6);
             this.discard();
         }
@@ -109,7 +110,7 @@ public class SolarFireballProjectile extends AbstractHurtingProjectile {
     }
 
     @Override
-    public Packet<?> getAddEntityPacket() {
+    public Packet<ClientGamePacketListener> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 }

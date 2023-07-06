@@ -57,11 +57,9 @@ public class RuneBase extends Item implements IImbuableItem {
                     entity.getItem().setCount(stack.getCount() - maxRunes);
                     entity.getPersistentData().putInt(SolarCraftTags.IMBUE_TIME_TAG, 0);
                 }
-                if (entity.getThrower() != null) {
-                    Player player = entity.level.getPlayerByUUID(entity.getThrower());
-                    if (player != null) {
+                if (entity.getOwner() instanceof Player player) {
+
                         Helpers.fireProgressionEvent(player, Progression.SOLAR_RUNE);
-                    }
                 }
                 return true;
             }else{

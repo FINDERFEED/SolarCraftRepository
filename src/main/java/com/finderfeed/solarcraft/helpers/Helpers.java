@@ -63,6 +63,22 @@ public class Helpers {
 
 
 
+    public static Direction directionByNormal(int x,int y, int z){
+        if (x == 1){
+            return Direction.EAST;
+        }else if (x == -1){
+            return Direction.WEST;
+        }else if (y == 1){
+            return Direction.UP;
+        }else if (y == -1){
+            return Direction.DOWN;
+        }else if (z == 1){
+            return Direction.SOUTH;
+        }else if (z == -1){
+            return Direction.NORTH;
+        }
+        throw new RuntimeException("No normal exists for: " + x + " " + y + " " + z);
+    }
     public static boolean isRadiantLandCleanedServer(ServerLevel level){
         RadiantLandCleanedData data = level.getServer().overworld()
                 .getDataStorage()

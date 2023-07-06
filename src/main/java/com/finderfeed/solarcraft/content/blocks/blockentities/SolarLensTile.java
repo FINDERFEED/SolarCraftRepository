@@ -155,7 +155,7 @@ public class SolarLensTile extends BlockEntity  {
 
     private int getMinRecipeOutput(SolarSmeltingRecipe recipe){
         List<ItemStack> recipeItems = new ArrayList<>(recipe.getStacks());
-        ItemStack output = recipe.getResultItem();
+        ItemStack output = recipe.getResultItem(level.registryAccess());
         int outputSize = output.getMaxStackSize();
         if (outputSize == 1){
             return  1;

@@ -6,6 +6,7 @@ import com.finderfeed.solarcraft.registries.data_serializers.FDEntityDataSeriali
 import com.finderfeed.solarcraft.registries.entities.SolarcraftEntityTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
@@ -113,7 +114,7 @@ public class SummoningProjectile extends NormalProjectile {
 
 
     @Override
-    public Packet<?> getAddEntityPacket() {
+    public Packet<ClientGamePacketListener> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 }

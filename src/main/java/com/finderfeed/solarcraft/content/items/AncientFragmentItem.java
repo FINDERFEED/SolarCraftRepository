@@ -43,18 +43,18 @@ public class AncientFragmentItem extends Item implements ICustomTooltip {
 
 
 
-    @Override
-    public void fillItemCategory(CreativeModeTab tab, NonNullList<ItemStack> list) {
-        super.fillItemCategory(tab, list);
-        if (this.allowedIn(tab)) {
-            for (AncientFragment frag : AncientFragment.getAllFragments()) {
-                ItemStack stack = new ItemStack(this, 1);
-                stack.getOrCreateTagElement(ProgressionHelper.TAG_ELEMENT).putString(ProgressionHelper.FRAG_ID, frag.getId());
-                list.add(stack);
-            }
-        }
-
-    }
+//    @Override
+//    public void fillItemCategory(CreativeModeTab tab, NonNullList<ItemStack> list) {
+//        super.fillItemCategory(tab, list);
+//        if (this.allowedIn(tab)) {
+//            for (AncientFragment frag : AncientFragment.getAllFragments()) {
+//                ItemStack stack = new ItemStack(this, 1);
+//                stack.getOrCreateTagElement(ProgressionHelper.TAG_ELEMENT).putString(ProgressionHelper.FRAG_ID, frag.getId());
+//                list.add(stack);
+//            }
+//        }
+//
+//    }
 
 
     @Override

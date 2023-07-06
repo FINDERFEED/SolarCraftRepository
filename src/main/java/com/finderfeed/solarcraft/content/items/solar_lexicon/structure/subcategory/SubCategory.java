@@ -16,6 +16,7 @@ import com.finderfeed.solarcraft.registries.recipe_types.SolarcraftRecipeTypes;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.resources.ResourceLocation;
@@ -63,18 +64,6 @@ public class SubCategory {
             int buttonPosY = y + (int)Math.floor((float) i / 6) * BUTTONS_SIZE;
             AncientFragment frag = fragments.get(i);
             AncientFragment.Type type = frag.getType();
-//            if (type == AncientFragment.Type.ITEM){
-//                if (frag.getRecipeType() == SolarcraftRecipeTypes.INFUSING.get()){
-//                    buttonsToAdd.add(constructInfusingRecipeButton(frag, getInfusingRecipeFromFragment(frag),buttonPosX,buttonPosY));
-//                }else if (frag.getRecipeType() == SolarcraftRecipeTypes.SMELTING.get()){
-//                    buttonsToAdd.add(constructSmeltingRecipeButton(getSmeltingRecipeFromFragment(frag),buttonPosX,buttonPosY));
-//                }else if (frag.getRecipeType() == SolarcraftRecipeTypes.INFUSING_CRAFTING.get()){
-//                    buttonsToAdd.add(constructInfusingCraftingRecipeButton(frag,getInfusingCraftingRecipeFromFragment(frag),buttonPosX,buttonPosY));
-//                }else if (frag.getRecipeType() == RecipeType.CRAFTING){
-//                    buttonsToAdd.add(constructCraftingRecipeButton(frag,List.of(getCraftingRecipeFromFragment(frag)),buttonPosX,buttonPosY));
-//
-//                }
-//            }else
             if (type == AncientFragment.Type.INFORMATION){
                 buttonsToAdd.add(constructInformationButton(frag.getIcon().getDefaultInstance(),buttonPosX,buttonPosY,frag));
             }else if (type == AncientFragment.Type.ITEMS){
@@ -158,7 +147,8 @@ public class SubCategory {
     }
 
 
-    public void renderAtPos(PoseStack matrices,int x, int y) {
+    public void renderAtPos(GuiGraphics graphics, int x, int y) {
+        PoseStack matrices = graphics.pose();
         if (this.category != null) {
             int r = this.getCategory().getLinesRGB()[0];
             int g = this.getCategory().getLinesRGB()[1];
@@ -173,7 +163,7 @@ public class SubCategory {
             scrollX = scrollable.getCurrentScrollX();
             scrollY = scrollable.getCurrentScrollY();
         }
-        Gui.drawString(matrices,Minecraft.getInstance().font,base.getTranslation(),x+scrollX,y-FONT_HEIGHT+scrollY,0xffffff);
+        graphics.drawString(Minecraft.getInstance().font,base.getTranslation(),x+scrollX,y-FONT_HEIGHT+scrollY,0xffffff);
     }
 
     public void putAncientFragment(AncientFragment frag) {
@@ -212,12 +202,12 @@ public class SubCategory {
     public ItemStackButton constructInfusingRecipeButton(AncientFragment fragment, List<InfusingRecipe> recipe, int x , int y){
         return new ItemStackButton(x,y,24,24,(button)->{
             Minecraft.getInstance().setScreen(new InformationScreen(fragment,new InfusingRecipeScreen(recipe)));
-        },fragment.getIcon().getDefaultInstance(),1.5f,(button,matrices,mx,my)->{
+        },fragment.getIcon().getDefaultInstance(),1.5f,(button,graphics,mx,my)->{
             if (Minecraft.getInstance().screen instanceof SolarLexiconRecipesScreen screen) {
-                screen.postRender.add(()->screen.renderTooltip(matrices, fragment.getTranslation(), mx, my));
+                screen.postRender.add(()->graphics.renderTooltip(Minecraft.getInstance().font, fragment.getTranslation(), mx, my));
 
             }else{
-                Minecraft.getInstance().screen.renderTooltip(matrices, fragment.getTranslation(), mx, my);
+                graphics.renderTooltip(Minecraft.getInstance().font, fragment.getTranslation(), mx, my);
             }
         });
     }
@@ -225,12 +215,12 @@ public class SubCategory {
     public ItemStackButton constructCraftingRecipeButton(AncientFragment fragment, List<CraftingRecipe> recipe, int x , int y){
         return new ItemStackButton(x,y,24,24,(button)->{
             Minecraft.getInstance().setScreen(new InformationScreen(fragment,new CraftingRecipeScreen(recipe)));
-        },fragment.getIcon().getDefaultInstance(),1.5f,(button,matrices,mx,my)->{
+        },fragment.getIcon().getDefaultInstance(),1.5f,(button,graphics,mx,my)->{
             if (Minecraft.getInstance().screen instanceof SolarLexiconRecipesScreen screen) {
-                screen.postRender.add(()->screen.renderTooltip(matrices, fragment.getTranslation(), mx, my));
+                screen.postRender.add(()->graphics.renderTooltip(Minecraft.getInstance().font, fragment.getTranslation(), mx, my));
 
             }else{
-                Minecraft.getInstance().screen.renderTooltip(matrices, fragment.getTranslation(), mx, my);
+                graphics.renderTooltip(Minecraft.getInstance().font, fragment.getTranslation(), mx, my);
             }
         });
     }
@@ -238,15 +228,15 @@ public class SubCategory {
     public ItemStackButton constructInfusingRecipeButton(AncientFragment fragment,InfusingRecipe recipe,int x , int y){
         return new ItemStackButton(x,y,24,24,(button)->{
             Minecraft.getInstance().setScreen(new InformationScreen(fragment,new InfusingRecipeScreen(recipe)));
-        },fragment.getIcon().getDefaultInstance(),1.5f,(button,matrices,mx,my)->{
+        },fragment.getIcon().getDefaultInstance(),1.5f,(button,graphics,mx,my)->{
 //            if (button.isHovered()){
 //                this.onHovered();
 //            }
             if (Minecraft.getInstance().screen instanceof SolarLexiconRecipesScreen screen) {
-                screen.postRender.add(()->screen.renderTooltip(matrices, fragment.getTranslation(), mx, my));
+                screen.postRender.add(()->graphics.renderTooltip(Minecraft.getInstance().font, fragment.getTranslation(), mx, my));
 
             }else{
-                Minecraft.getInstance().screen.renderTooltip(matrices, fragment.getTranslation(), mx, my);
+                graphics.renderTooltip(Minecraft.getInstance().font, fragment.getTranslation(), mx, my);
             }
         });
     }
@@ -254,15 +244,15 @@ public class SubCategory {
     public ItemStackButton constructInfusingCraftingRecipeButton(AncientFragment fragment, List<InfusingCraftingRecipe> recipe, int x , int y){
         return new ItemStackButton(x,y,24,24,(button)->{
             Minecraft.getInstance().setScreen(new InformationScreen(fragment,new InfusingCraftingRecipeScreen(recipe)));
-        },fragment.getIcon().getDefaultInstance(),1.5f,(button,matrices,mx,my)->{
+        },fragment.getIcon().getDefaultInstance(),1.5f,(button,graphics,mx,my)->{
 //            if (button.isHovered()){
 //                this.onHovered();
 //            }
             if (Minecraft.getInstance().screen instanceof SolarLexiconRecipesScreen screen) {
-                screen.postRender.add(()->screen.renderTooltip(matrices, fragment.getTranslation(), mx, my));
+                screen.postRender.add(()->graphics.renderTooltip(Minecraft.getInstance().font, fragment.getTranslation(), mx, my));
 
             }else{
-                Minecraft.getInstance().screen.renderTooltip(matrices, fragment.getTranslation(), mx, my);
+                graphics.renderTooltip(Minecraft.getInstance().font, fragment.getTranslation(), mx, my);
             }
         });
     }
@@ -271,15 +261,15 @@ public class SubCategory {
     public ItemStackButton constructInfusingCraftingRecipeButton(AncientFragment fragment, InfusingCraftingRecipe recipe, int x , int y){
         return new ItemStackButton(x,y,24,24,(button)->{
             Minecraft.getInstance().setScreen(new InformationScreen(fragment,new InfusingCraftingRecipeScreen(recipe)));
-        },fragment.getIcon().getDefaultInstance(),1.5f,(button,matrices,mx,my)->{
+        },fragment.getIcon().getDefaultInstance(),1.5f,(button,graphics,mx,my)->{
 //            if (button.isHovered()){
 //                this.onHovered();
 //            }
             if (Minecraft.getInstance().screen instanceof SolarLexiconRecipesScreen screen) {
-                screen.postRender.add(()->screen.renderTooltip(matrices, fragment.getTranslation(), mx, my));
+                screen.postRender.add(()->graphics.renderTooltip(Minecraft.getInstance().font, fragment.getTranslation(), mx, my));
 
             }else{
-                Minecraft.getInstance().screen.renderTooltip(matrices, fragment.getTranslation(), mx, my);
+                graphics.renderTooltip(Minecraft.getInstance().font, fragment.getTranslation(), mx, my);
             }
         });
     }
@@ -288,16 +278,16 @@ public class SubCategory {
     public ItemStackButton constructSmeltingRecipeButton(SolarSmeltingRecipe recipe, int x , int y){
         return new ItemStackButton(x,y,24,24,(button)->{
             Minecraft.getInstance().setScreen(new SmeltingRecipeScreen(recipe));
-        },recipe.output,1.5f,(button,matrices,mx,my)->{
+        },recipe.output,1.5f,(button,graphics,mx,my)->{
 //            if (button.isHovered()){
 //                this.onHovered();
 //            }
 
             if (Minecraft.getInstance().screen instanceof SolarLexiconRecipesScreen screen) {
-                screen.postRender.add(()->screen.renderTooltip(matrices, recipe.output.getHoverName(), mx, my));
+                screen.postRender.add(()->graphics.renderTooltip(Minecraft.getInstance().font, recipe.output.getHoverName(), mx, my));
 
             }else{
-                Minecraft.getInstance().screen.renderTooltip(matrices, recipe.output.getHoverName(), mx, my);
+                graphics.renderTooltip(Minecraft.getInstance().font, recipe.output.getHoverName(), mx, my);
             }
         });
     }
@@ -306,13 +296,13 @@ public class SubCategory {
     public ItemStackButton constructInformationButton(ItemStack logo, int x , int y, AncientFragment fragment){
         return new ItemStackButton(x,y,24,24,(button)->{
             Minecraft.getInstance().setScreen(new InformationScreen(fragment, (InfusingRecipeScreen) null));
-        },logo,1.5f, (button,matrices,mx,my)->{
+        },logo,1.5f, (button,graphics,mx,my)->{
 
             if (Minecraft.getInstance().screen instanceof SolarLexiconRecipesScreen screen) {
-                screen.postRender.add(()->screen.renderTooltip(matrices, fragment.getTranslation(), mx, my));
+                screen.postRender.add(()->graphics.renderTooltip(Minecraft.getInstance().font, fragment.getTranslation(), mx, my));
 
             }else{
-                Minecraft.getInstance().screen.renderTooltip(matrices, fragment.getTranslation(), mx, my);
+                graphics.renderTooltip(Minecraft.getInstance().font, fragment.getTranslation(), mx, my);
             }
         });
     }
@@ -320,13 +310,13 @@ public class SubCategory {
     public ItemStackButton constructStructureButton(MultiblockStructure structure, int x , int y, AncientFragment fragment){
         return new ItemStackButton(x,y,24,24,(button)->{
             Minecraft.getInstance().setScreen(new StructureScreen(fragment,structure));
-        },structure.mainBlock.getBlock().asItem().getDefaultInstance(),1.5f, (button,matrices,mx,my)->{
+        },structure.mainBlock.getBlock().asItem().getDefaultInstance(),1.5f, (button,graphics,mx,my)->{
 
             if (Minecraft.getInstance().screen instanceof SolarLexiconRecipesScreen screen) {
-                screen.postRender.add(()->screen.renderTooltip(matrices, fragment.getTranslation(), mx, my));
+                screen.postRender.add(()->graphics.renderTooltip(Minecraft.getInstance().font, fragment.getTranslation(), mx, my));
 
             }else{
-                Minecraft.getInstance().screen.renderTooltip(matrices, fragment.getTranslation(), mx, my);
+                graphics.renderTooltip(Minecraft.getInstance().font, fragment.getTranslation(), mx, my);
             }
         });
     }
@@ -337,13 +327,13 @@ public class SubCategory {
 
         return new ItemStackButton(x,y,24,24,(button)->{
             Minecraft.getInstance().setScreen(sp.get());
-        },fragment.getIcon().getDefaultInstance(),1.5f,(button,matrices,mx,my)->{
+        },fragment.getIcon().getDefaultInstance(),1.5f,(button,graphics,mx,my)->{
 
             if (Minecraft.getInstance().screen instanceof SolarLexiconRecipesScreen screen) {
-                screen.postRender.add(()->screen.renderTooltip(matrices, fragment.getTranslation(), mx, my));
+                screen.postRender.add(()->graphics.renderTooltip(Minecraft.getInstance().font, fragment.getTranslation(), mx, my));
 
             }else{
-                Minecraft.getInstance().screen.renderTooltip(matrices, fragment.getTranslation(), mx, my);
+                graphics.renderTooltip(Minecraft.getInstance().font, fragment.getTranslation(), mx, my);
             }
         });
     }

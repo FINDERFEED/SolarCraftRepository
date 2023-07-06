@@ -25,10 +25,10 @@ public class SunShardLockBlock extends GlazedTerracottaBlock implements EntityBl
     }
 
 
-    @Override
-    public PushReaction getPistonPushReaction(BlockState p_149656_1_) {
-        return PushReaction.IGNORE;
-    }
+//    @Override
+//    public PushReaction getPistonPushReaction(BlockState p_149656_1_) {
+//        return PushReaction.IGNORE;
+//    }
 
     @Override
     public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult p_60508_) {

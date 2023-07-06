@@ -65,7 +65,7 @@ public class RayTrapTileEntity extends BlockEntity  {
                       List<LivingEntity> entities = tile.level.getEntitiesOfClass(LivingEntity.class,tile.getBoxByDirection());
                       for  (LivingEntity a : entities){
 
-                          a.hurt(DamageSource.MAGIC,1.5f);
+                          a.hurt(world.damageSources().magic(),1.5f);
                           a.invulnerableTime = 0;
                       }
 

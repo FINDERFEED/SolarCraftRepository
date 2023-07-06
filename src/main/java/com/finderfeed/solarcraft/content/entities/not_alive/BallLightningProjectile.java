@@ -7,6 +7,7 @@ import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
@@ -99,7 +100,7 @@ public class BallLightningProjectile extends AbstractHurtingProjectile {
         this.level.playSound(null,this.getX(),this.getY(),this.getZ(), SolarcraftSounds.BALL_LIGHTNING_BLOW.get(), SoundSource.PLAYERS,10,1);
         for (LivingEntity ent : living){
             if (ent.distanceTo(this) <= 10){
-                ent.hurt(DamageSource.LIGHTNING_BOLT.setMagic(),10);
+                ent.hurt(level.damageSources().lightningBolt(),10);
             }
         }
     }
@@ -117,7 +118,7 @@ public class BallLightningProjectile extends AbstractHurtingProjectile {
     }
 
     @Override
-    public Packet<?> getAddEntityPacket() {
+    public Packet<ClientGamePacketListener> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 }

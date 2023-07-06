@@ -4,6 +4,7 @@ import com.finderfeed.solarcraft.local_library.blocks.NormalGrassBlock;
 import com.finderfeed.solarcraft.registries.blocks.SolarcraftBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.placement.VegetationPlacements;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
@@ -23,7 +24,7 @@ public class RadiantGrass extends NormalGrassBlock {
     }
 
     @Override
-    public void performBonemeal(ServerLevel p_221270_, RandomSource p_221271_, BlockPos p_221272_, BlockState p_221273_) {
+    public void performBonemeal(ServerLevel level, RandomSource p_221271_, BlockPos p_221272_, BlockState p_221273_) {
         BlockPos blockpos = p_221272_.above();
         BlockState blockstate = SolarcraftBlocks.RADIANT_GRASS.get().defaultBlockState();
 
@@ -33,30 +34,30 @@ public class RadiantGrass extends NormalGrassBlock {
 
             for(int j = 0; j < i / 16; ++j) {
                 blockpos1 = blockpos1.offset(p_221271_.nextInt(3) - 1, (p_221271_.nextInt(3) - 1) * p_221271_.nextInt(3) / 2, p_221271_.nextInt(3) - 1);
-                if (!p_221270_.getBlockState(blockpos1.below()).is(this) || p_221270_.getBlockState(blockpos1).isCollisionShapeFullBlock(p_221270_, blockpos1)) {
+                if (!level.getBlockState(blockpos1.below()).is(this) || level.getBlockState(blockpos1).isCollisionShapeFullBlock(level, blockpos1)) {
                     continue label46;
                 }
             }
 
-            BlockState blockstate1 = p_221270_.getBlockState(blockpos1);
+            BlockState blockstate1 = level.getBlockState(blockpos1);
             if (blockstate1.is(blockstate.getBlock()) && p_221271_.nextInt(10) == 0) {
-                ((BonemealableBlock)blockstate.getBlock()).performBonemeal(p_221270_, p_221271_, blockpos1, blockstate1);
+                ((BonemealableBlock)blockstate.getBlock()).performBonemeal(level, p_221271_, blockpos1, blockstate1);
             }
 
             if (blockstate1.isAir()) {
                 Holder<PlacedFeature> holder;
                 if (p_221271_.nextInt(8) == 0) {
-                    List<ConfiguredFeature<?, ?>> list = p_221270_.getBiome(blockpos1).value().getGenerationSettings().getFlowerFeatures();
+                    List<ConfiguredFeature<?, ?>> list = level.getBiome(blockpos1).value().getGenerationSettings().getFlowerFeatures();
                     if (list.isEmpty()) {
                         continue;
                     }
 
                     holder = ((RandomPatchConfiguration)list.get(0).config()).feature();
                 } else {
-                    holder = VegetationPlacements.GRASS_BONEMEAL;
+                    holder = level.registryAccess().registryOrThrow(Registries.PLACED_FEATURE).getHolderOrThrow(VegetationPlacements.GRASS_BONEMEAL);
                 }
 
-                holder.value().place(p_221270_, p_221270_.getChunkSource().getGenerator(), p_221271_, blockpos1);
+                holder.value().place(level, level.getChunkSource().getGenerator(), p_221271_, blockpos1);
             }
         }
     }

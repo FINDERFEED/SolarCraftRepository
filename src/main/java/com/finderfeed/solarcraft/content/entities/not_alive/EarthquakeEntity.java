@@ -4,11 +4,13 @@ import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.client.particles.SolarcraftParticleTypes;
 import com.finderfeed.solarcraft.local_library.helpers.CompoundNBTHelper;
 import com.finderfeed.solarcraft.misc_things.CrystalBossBuddy;
+import com.finderfeed.solarcraft.registries.damage_sources.SolarcraftDamageSources;
 import com.finderfeed.solarcraft.registries.data_serializers.FDEntityDataSerializers;
 import com.finderfeed.solarcraft.registries.entities.SolarcraftEntityTypes;
 import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -68,7 +70,7 @@ public class EarthquakeEntity extends Entity {
                     double S = Math.sqrt(p*(p - a)*(p-b)*(p-main));
                     double H = 2*S / main;
                     if (H <= 2){
-                        e.hurt(DamageSource.MAGIC,damage);
+                        e.hurt(SolarcraftDamageSources.RUNIC_MAGIC,damage);
                     }
                 }
                 level.playSound(null,position().x,position().y,position().z, SolarcraftSounds.EARTHQUAKE.get(), SoundSource.HOSTILE,5f,1f);
@@ -149,7 +151,7 @@ public class EarthquakeEntity extends Entity {
     }
 
     @Override
-    public Packet<?> getAddEntityPacket() {
+    public Packet<ClientGamePacketListener> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 

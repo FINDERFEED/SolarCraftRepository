@@ -38,10 +38,7 @@ public class RuneEnergyPylonBlock extends Block implements EntityBlock {
         return SHAPE;
     }
 
-    @Override
-    public PushReaction getPistonPushReaction(BlockState p_149656_1_) {
-        return PushReaction.IGNORE;
-    }
+
 
     @Nullable
     @Override

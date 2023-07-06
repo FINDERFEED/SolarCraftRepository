@@ -3,6 +3,7 @@ package com.finderfeed.solarcraft.content.items.primitive;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.Progression;
 import com.finderfeed.solarcraft.registries.items.SolarcraftItems;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.Blocks;
@@ -26,7 +27,7 @@ public class BlueGemItem extends Item {
         if (!entity.level.isClientSide){
 
             Level world = entity.level;
-            Optional<? extends Registry<Biome>> reg = world.registryAccess().registry(Registry.BIOME_REGISTRY);
+            Optional<? extends Registry<Biome>> reg = world.registryAccess().registry(Registries.BIOME);
             if (reg.isPresent()) {
 
                 if (entity.level.getBlockState(entity.blockPosition()).is(Blocks.LAVA)) {
@@ -38,11 +39,12 @@ public class BlueGemItem extends Item {
                             world.addFreshEntity(new ItemEntity(world, entity.getX(), entity.getY(), entity.getZ(), new ItemStack(SolarcraftItems.BLUE_GEM_ENCHANCED.get(), 1)));
                         }
 
-                        if (entity.getThrower() != null ){
-                            Player player = world.getPlayerByUUID(entity.getThrower());
-                            if (player != null){
+
+                        if (entity.getOwner() instanceof Player player){
+//                            Player player = world.getPlayerByUUID(entity.getThrower());
+//                            if (player != null){
                                 Helpers.fireProgressionEvent(player, Progression.TRANSMUTE_GEM);
-                            }
+//                            }
                         }
                         entity.remove(Entity.RemovalReason.KILLED);
                     }

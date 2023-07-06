@@ -7,6 +7,7 @@ import com.finderfeed.solarcraft.registries.entities.SolarcraftEntityTypes;
 import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
@@ -46,7 +47,7 @@ public class SunstrikeEntity extends Entity {
         for (LivingEntity entity : this.level.getEntitiesOfClass(LivingEntity.class,new AABB(-2,-2,-2,2,2,2)
                 .move(position()),(e)-> !(e instanceof CrystalBossBuddy)) ){
             if (Helpers.isVulnerable(entity)){
-                entity.hurt(DamageSource.MAGIC,damage);
+                entity.hurt(level.damageSources().magic(),damage);
                 entity.invulnerableTime = 0;
             }
         }
@@ -79,7 +80,7 @@ public class SunstrikeEntity extends Entity {
     }
 
     @Override
-    public Packet<?> getAddEntityPacket() {
+    public Packet<ClientGamePacketListener> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 }

@@ -1,8 +1,10 @@
 package com.finderfeed.solarcraft.content.entities.projectiles;
 
 import com.finderfeed.solarcraft.client.particles.SolarcraftParticleTypes;
+import com.finderfeed.solarcraft.registries.damage_sources.SolarcraftDamageSources;
 import com.finderfeed.solarcraft.registries.entities.SolarcraftEntityTypes;
 import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -57,16 +59,16 @@ public class UltraCrossbowProjectile extends AbstractHurtingProjectile {
 
             Entity ent = ctx.getEntity();
             if (getOwner() instanceof LivingEntity entity) {
-                ent.hurt(DamageSource.mobAttack(entity).setMagic().bypassArmor().setProjectile(), (float) damage);
+                ent.hurt(SolarcraftDamageSources.livingArmorPierceProjectile(entity), (float) damage);
             }else{
-                ent.hurt(DamageSource.MAGIC.setProjectile(), (float) damage);
+                ent.hurt(level.damageSources().magic(), (float) damage);
 
             }
             ((ServerLevel)level).sendParticles(SolarcraftParticleTypes.SOLAR_STRIKE_PARTICLE.get(),ent.getX(),ent.getY()+1.2,ent.getZ(),2,0,0.02,0,0.02);
             if (damage >= 30 && (damage < 120) ){
-                level.explode(null,this.getX(),this.getY(),this.getZ(),5,true, Explosion.BlockInteraction.BREAK);
+                level.explode(null,this.getX(),this.getY(),this.getZ(),5,true, Level.ExplosionInteraction.BLOCK);
             }else if (damage >= 120){
-                level.explode(null,this.getX(),this.getY(),this.getZ(),8,true, Explosion.BlockInteraction.BREAK);
+                level.explode(null,this.getX(),this.getY(),this.getZ(),8,true, Level.ExplosionInteraction.BLOCK);
             }
             this.remove(RemovalReason.KILLED);
         }
@@ -77,9 +79,9 @@ public class UltraCrossbowProjectile extends AbstractHurtingProjectile {
 
         if (!level.isClientSide){
             if (damage >= 30 && (damage < 120)){
-                level.explode(null,this.getX(),this.getY(),this.getZ(),5,true, Explosion.BlockInteraction.BREAK);
+                level.explode(null,this.getX(),this.getY(),this.getZ(),5,true, Level.ExplosionInteraction.BLOCK);
             }else if (damage >= 120){
-                level.explode(null,this.getX(),this.getY(),this.getZ(),8,true, Explosion.BlockInteraction.BREAK);
+                level.explode(null,this.getX(),this.getY(),this.getZ(),8,true, Level.ExplosionInteraction.BLOCK);
             }
             if ((level.getBlockState(result.getBlockPos()).getDestroySpeed(level,result.getBlockPos()) >= 0) &&
                     level.getBlockState(result.getBlockPos()).getDestroySpeed(level,result.getBlockPos()) <= 100) {
@@ -122,7 +124,7 @@ public class UltraCrossbowProjectile extends AbstractHurtingProjectile {
         return false;
     }
     @Override
-    public Packet<?> getAddEntityPacket() {
+    public Packet<ClientGamePacketListener> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 

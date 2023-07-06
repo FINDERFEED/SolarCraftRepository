@@ -326,10 +326,10 @@ public class ClientEventsHandler {
         ClientEventsHandler.cameraShakeEffect = cameraShakeEffect;
     }
 
-    @SubscribeEvent
-    public static void initiateClientDamageSources(ClientPlayerNetworkEvent.LoggingIn event){
-        SolarcraftDamageSources.initializeDamageSources(event.getPlayer().clientLevel);
-    }
+//    @SubscribeEvent
+//    public static void initiateClientDamageSources(ClientPlayerNetworkEvent.LoggingIn event){
+//        SolarcraftDamageSources.initializeDamageSources(event.getPlayer().clientLevel);
+//    }
 
 //    @SubscribeEvent
 //    public static void cameraShake(ViewportEvent.ComputeCameraAngles event){

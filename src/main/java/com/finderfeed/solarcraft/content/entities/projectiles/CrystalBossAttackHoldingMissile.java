@@ -8,6 +8,7 @@ import com.finderfeed.solarcraft.registries.entities.SolarcraftEntityTypes;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -116,7 +117,7 @@ public class CrystalBossAttackHoldingMissile extends AbstractHurtingProjectile i
     protected void onHitEntity(EntityHitResult ent) {
         if (!(ent.getEntity() instanceof CrystalBossEntity) && !(ent.getEntity() instanceof CrystalBossBuddy)){
             if (Helpers.isVulnerable(ent.getEntity())) {
-                ent.getEntity().hurt(DamageSource.MAGIC, CrystalBossEntity.MISSILE_DAMAGE);
+                ent.getEntity().hurt(level.damageSources().magic(), CrystalBossEntity.MISSILE_DAMAGE);
                 ent.getEntity().invulnerableTime = 0;
             }
             this.discard();
@@ -142,7 +143,7 @@ public class CrystalBossAttackHoldingMissile extends AbstractHurtingProjectile i
     }
 
     @Override
-    public Packet<?> getAddEntityPacket() {
+    public Packet<ClientGamePacketListener> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 

@@ -79,7 +79,7 @@ public class SavannaDungeonKeeperTile extends SolarcraftBlockEntity {
                     for (BlockPos offset : MONSTER_OFFSETS){
                         EntityType type = MONSTER_TYPES[world.random.nextInt(MONSTER_TYPES.length)];
                         Entity entity = type.spawn((ServerLevel) world,
-                                null,null,pos.offset(offset), MobSpawnType.STRUCTURE,false,false);
+                                (CompoundTag) null,null,pos.offset(offset), MobSpawnType.STRUCTURE,false,false);
                         if (entity instanceof Mob mob){
                             mob.setPersistenceRequired();
                         }
@@ -218,7 +218,7 @@ public class SavannaDungeonKeeperTile extends SolarcraftBlockEntity {
         public static void detectTNT(ExplosionEvent.Start event){
             Level world = event.getLevel();
             if (!world.isClientSide){
-                SavannaDungeonKeeperTile keeper = searchKeeper(world,new BlockPos(event.getExplosion().getPosition()),10);
+                SavannaDungeonKeeperTile keeper = searchKeeper(world,Helpers.vecToPos(event.getExplosion().getPosition()),10);
                 if (keeper != null){
                     keeper.trigger();
                     event.setCanceled(true);

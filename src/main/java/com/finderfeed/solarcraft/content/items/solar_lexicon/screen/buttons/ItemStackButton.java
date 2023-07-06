@@ -55,9 +55,9 @@ public class ItemStackButton extends FDButton {
         PoseStack matrices = graphics.pose();
         this.isHovered = RenderingTools.isMouseInBorders(mousex,mousey,x,y,x + width,y + height);
         matrices.pushPose();
-        if (this.isHovered){
-            this.renderTooltip(graphics,mousex,mousey,partialTicks);
-        }
+//        if (this.isHovered){
+//            this.renderTooltip(graphics,mousex,mousey);
+//        }
         matrices.scale(scaleFactor,scaleFactor,scaleFactor);
         RenderingTools.renderScaledGuiItem(stack,(int) x, (int) y,scaleFactor,zOffset);
 

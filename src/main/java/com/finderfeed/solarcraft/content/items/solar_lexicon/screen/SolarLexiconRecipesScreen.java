@@ -5,12 +5,15 @@ import com.finderfeed.solarcraft.content.items.solar_lexicon.screen.buttons.Item
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.structure.Book;
+import com.finderfeed.solarcraft.local_library.client.screens.IRenderable;
+import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.finderfeed.solarcraft.misc_things.IScrollable;
 import com.finderfeed.solarcraft.registries.items.SolarcraftItems;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.ProgressionHelper;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.components.AbstractWidget;
@@ -128,8 +131,8 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
         int scale = (int) minecraft.getWindow().getGuiScale();
         this.relX = (width/scale - 183)/2-30;
         this.relY = (height - 218*scale)/2/scale;
-        infoButton = new InfoButton(relX  +206+35,relY + 64,13,13,(btn1, matrices1, mx, my)->{
-            renderTooltip(matrices1,font.split(Component.translatable("solarcraft.recipes_screen_info"),200),mx,my);
+        infoButton = new InfoButton(relX  +206+35,relY + 64,13,13,(btn1, graphics, mx, my)->{
+            graphics.renderTooltip(font,font.split(Component.translatable("solarcraft.recipes_screen_info"),200),mx,my);
         });
 
         FRAGMENTS.clear();
@@ -208,7 +211,10 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
     }
 
     @Override
-    public void render(PoseStack matrices, int mousex, int mousey, float partialTicks) {
+    public void render(GuiGraphics graphics, int mousex, int mousey, float partialTicks) {
+
+        PoseStack matrices = graphics.pose();
+
         GL11.glEnable(GL11.GL_SCISSOR_TEST);
         int width = minecraft.getWindow().getWidth();
         int height = minecraft.getWindow().getHeight();
@@ -216,15 +222,15 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
         GL11.glScissor(width/2-((113)*scale),height/2-(89*scale),(221*scale),189*scale);
 
         ClientHelpers.bindText(MAIN_SCREEN_SCROLLABLE);
-        blit(matrices,relX,relY,0,0,256,256);
+        RenderingTools.blitWithBlend(matrices,relX,relY,0,0,256,256,256,256,0,1f);
 
         ClientHelpers.bindText(FRAME);
         if (BOOK != null){
             BOOK.render(matrices);
         }
-        super.render(matrices,mousex,mousey,partialTicks);
+        super.render(graphics,mousex,mousey,partialTicks);
         if (showNoFragmentsMessage){
-            drawString(matrices,font,"No fragments present :(",relX+20+scrollX,relY+40+scrollY,0xffffff);
+            graphics.drawString(font,"No fragments present :(",relX+20+scrollX,relY+40+scrollY,0xffffff);
         }
         GL11.glDisable(GL11.GL_SCISSOR_TEST);
 
@@ -233,12 +239,12 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
 
         matrices.pushPose();
         matrices.translate(0,0,250);
-        blit(matrices,relX,relY,0,0,256,256);
+        RenderingTools.blitWithBlend(matrices,relX,relY,0,0,256,256,256,256,0,1f);
         matrices.popPose();
 
-        goBack.render(matrices,mousex,mousey,partialTicks,300);
-        nothing.render(matrices,mousex,mousey,partialTicks,300);
-        infoButton.render(matrices,mousex,mousey,partialTicks);
+        goBack.render(graphics,mousex,mousey,partialTicks,300);
+        nothing.render(graphics,mousex,mousey,partialTicks,300);
+        infoButton.render(graphics,mousex,mousey,partialTicks);
 
         this.renderables.forEach((widget)->{
 

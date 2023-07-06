@@ -191,7 +191,7 @@ public class InfusingRecipeScreen extends Screen {
         renderItemAndTooltip(graphics,itemRators.get(11).getCurrentStack(),relX+96   -1,relY+150 -1,mousex,mousey,matrices,false);
         renderItemAndTooltip(graphics,itemRators.get(12).getCurrentStack(),relX+142  -1,relY+143 -1,mousex,mousey,matrices,false);
 
-        renderItemAndTooltip(graphics,currentRecipe.getResultItem().copy(),relX+20,relY+21,mousex,mousey,matrices,true);
+        renderItemAndTooltip(graphics,currentRecipe.getResultItem(Minecraft.getInstance().level.registryAccess()).copy(),relX+20,relY+21,mousex,mousey,matrices,true);
 
 
         graphics.drawCenteredString(minecraft.font,Component.literal(recipe.get(currentPage).infusingTime / 20 +" ").append(Component.translatable("solarcraft.seconds2")),relX+170,relY+25,

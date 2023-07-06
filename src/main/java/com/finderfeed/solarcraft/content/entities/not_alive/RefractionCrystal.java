@@ -7,6 +7,7 @@ import com.finderfeed.solarcraft.misc_things.CrystalBossBuddy;
 import com.finderfeed.solarcraft.registries.attributes.AttributesRegistry;
 import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
 import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.damagesource.DamageSource;
@@ -137,7 +138,7 @@ public class RefractionCrystal extends Mob implements CrystalBossBuddy {
     }
 
     @Override
-    public Packet<?> getAddEntityPacket() {
+    public Packet<ClientGamePacketListener> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 

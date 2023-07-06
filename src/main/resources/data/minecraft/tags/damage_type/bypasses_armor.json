@@ -5,7 +5,9 @@
     "solarcraft:runic_magic",
     "solarcraft:shadow",
     "solarcraft:stargaze",
-    "solarcraft:player_attack_armor_pierce"
+    "solarcraft:player_attack_armor_pierce",
+    "solarcraft:mob_attack_armor_pierce_projectile"
+
   ],
   "replace": false
 }

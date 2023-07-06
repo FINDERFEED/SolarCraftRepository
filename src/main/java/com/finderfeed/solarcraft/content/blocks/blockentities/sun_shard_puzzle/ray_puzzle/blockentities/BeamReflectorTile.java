@@ -69,7 +69,7 @@ public class BeamReflectorTile extends SolarcraftBlockEntity {
             Vector3f v = new Vector3f(normal.getX(),normal.getY(),normal.getZ());
 //            v.transform(m);
             v = m.transform(v);
-            newDirs.add(Direction.fromNormal((int)v.x(),(int)v.y(),(int)v.z()));
+            newDirs.add(Helpers.directionByNormal((int)v.x(),(int)v.y(),(int)v.z()));
         }
         this.directions = newDirs;
         if (this.getGenerator() != null){

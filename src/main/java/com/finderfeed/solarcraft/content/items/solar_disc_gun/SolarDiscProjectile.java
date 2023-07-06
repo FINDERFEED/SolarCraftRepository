@@ -2,6 +2,7 @@ package com.finderfeed.solarcraft.content.items.solar_disc_gun;
 
 import com.finderfeed.solarcraft.client.particles.SolarcraftParticleTypes;
 import com.finderfeed.solarcraft.registries.entities.SolarcraftEntityTypes;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
@@ -52,7 +53,7 @@ public class SolarDiscProjectile extends AbstractHurtingProjectile {
 
         if (!this.level.isClientSide && ctx.getEntity() instanceof LivingEntity ){
             LivingEntity ent = (LivingEntity) ctx.getEntity();
-            ent.hurt(DamageSource.MAGIC,5.0f);
+            ent.hurt(level.damageSources().magic(),5.0f);
             AABB box = new AABB(-10,-5,-10,10,5,10).move(this.position().x,this.position().y,this.position().z);
             List<Mob> entities = this.level.getEntitiesOfClass(Mob.class,box);
             entities.remove(ent);
@@ -101,7 +102,7 @@ public class SolarDiscProjectile extends AbstractHurtingProjectile {
         return false;
     }
     @Override
-    public Packet<?> getAddEntityPacket() {
+    public Packet<ClientGamePacketListener> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 

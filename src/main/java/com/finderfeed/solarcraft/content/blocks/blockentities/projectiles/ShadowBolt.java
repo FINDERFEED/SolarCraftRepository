@@ -84,7 +84,7 @@ public class ShadowBolt extends AbstractHurtingProjectile {
             return en.distanceToSqr(this.position()) <= 3.5*3.5;
         })){
 
-            e.hurt(SolarcraftDamageSources.SHADOW.setMagic().bypassArmor().setProjectile(),5);
+            e.hurt(SolarcraftDamageSources.SHADOW,5);
         }
         level.playSound(null,position().x,position().y,position().z, SolarcraftSounds.SHADOW_BOLT_EXPLOSION.get(), SoundSource.HOSTILE,4,0.75f);
     }

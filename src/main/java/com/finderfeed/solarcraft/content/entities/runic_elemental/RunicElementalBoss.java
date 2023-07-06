@@ -14,6 +14,7 @@ import com.finderfeed.solarcraft.packet_handler.packets.DisablePlayerFlightPacke
 import com.finderfeed.solarcraft.packet_handler.packets.TeleportEntityPacket;
 import com.finderfeed.solarcraft.registries.attributes.AttributesRegistry;
 import com.finderfeed.solarcraft.registries.blocks.SolarcraftBlocks;
+import com.finderfeed.solarcraft.registries.damage_sources.SolarcraftDamageSources;
 import com.finderfeed.solarcraft.registries.data_serializers.FDEntityDataSerializers;
 import com.finderfeed.solarcraft.registries.effects.SolarcraftEffects;
 import com.finderfeed.solarcraft.registries.entities.SolarcraftEntityTypes;
@@ -22,12 +23,14 @@ import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.InteractionHand;
@@ -317,7 +320,7 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
             if (BOSS_ATTACK_CHAIN.getTicker() % 10 == 0) {
                 List<MobEffect> toRemove = new ArrayList<>();
                 float damage = (VARTH_DADER_DAMAGE + getDamageBonus()/4f) * getDamageModifier();
-                living.hurt(DamageSource.mobAttack(this).setMagic().bypassArmor(), damage);
+                living.hurt(SolarcraftDamageSources.livingArmorPierce(this), damage);
                 for (MobEffectInstance effect : living.getActiveEffects()){
                     if (effect.getEffect().isBeneficial() && effect.getEffect() != SolarcraftEffects.IMMORTALITY_EFFECT.get()){
                         toRemove.add(effect.getEffect());
@@ -412,7 +415,7 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
                 double attackDirAngle = Math.toDegrees(Math.atan2(attackDir.x,attackDir.z));
                 if (Math.abs(attackDirAngle - angleVec) <= 110 && vec.length() <= 16){
                     float damage = (HAMMER_ATTACK_DAMAGE + getDamageBonus()) * getDamageModifier();
-                    player.hurt(DamageSource.mobAttack(this),damage);
+                    player.hurt(SolarcraftDamageSources.livingArmorPierce(this),damage);
                 }
             }
 
@@ -674,7 +677,7 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
     }
 
     @Override
-    public Packet<?> getAddEntityPacket() {
+    public Packet<ClientGamePacketListener> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 
@@ -804,7 +807,7 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
 
         if (attacker != null ){
             if (this.isWaitingForPlayerToDestroyExplosiveCrystals) {
-                attacker.hurt(DamageSource.MAGIC, 4);
+                attacker.hurt(level.damageSources().magic(), 4);
             }
             if (attacker.position().subtract(this.position()).multiply(1,0,1).length() >= 10){
                 return false;
@@ -828,7 +831,7 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
 
     @Override
     public boolean isInvulnerableTo(DamageSource src) {
-        return this.wasAlreadySummoned() ? src.isProjectile() : src != DamageSource.OUT_OF_WORLD;
+        return this.wasAlreadySummoned() ? src.is(DamageTypeTags.IS_PROJECTILE) : src != level.damageSources().fellOutOfWorld();
     }
 
     public static class AttackType{

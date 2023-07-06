@@ -6,6 +6,7 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -13,7 +14,7 @@ import net.minecraft.world.level.Level;
 import java.util.function.Supplier;
 
 public class DivineChestplate extends BaseDivineArmor{
-    public DivineChestplate(ArmorMaterial p_40386_, EquipmentSlot p_40387_, Properties p_40388_, Supplier<AncientFragment> fragmentSupplier) {
+    public DivineChestplate(ArmorMaterial p_40386_, ArmorItem.Type p_40387_, Properties p_40388_, Supplier<AncientFragment> fragmentSupplier) {
         super(p_40386_, p_40387_, p_40388_, fragmentSupplier);
     }
 

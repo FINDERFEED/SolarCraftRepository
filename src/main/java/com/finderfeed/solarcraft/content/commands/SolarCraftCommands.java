@@ -72,7 +72,7 @@ public class SolarCraftCommands {
         if (code.equals("all")){
             for (Progression a : Progression.allProgressions){
                 Helpers.setProgressionCompletionStatus(a,src.getPlayerOrException(),false);
-                src.sendSuccess(Component.translatable("solarcraft.success_revoke")
+                src.sendSuccess(()->Component.translatable("solarcraft.success_revoke")
                         .append(Component.literal(" "+a.translation.getString()).withStyle(ChatFormatting.GOLD)),false);
             }
             Helpers.updateProgression(src.getPlayerOrException());
@@ -88,7 +88,7 @@ public class SolarCraftCommands {
                 }
                 if (flag) {
                     Helpers.setProgressionCompletionStatus(progression, pl, false);
-                    src.sendSuccess(Component.translatable("solarcraft.success_revoke")
+                    src.sendSuccess(()->Component.translatable("solarcraft.success_revoke")
                             .append(Component.literal(" " + progression.getProgressionCode()).withStyle(ChatFormatting.GOLD)), false);
                     Helpers.updateProgression(src.getPlayerOrException());
                 }else{
@@ -111,7 +111,7 @@ public class SolarCraftCommands {
         if (code.equals("all")){
             for (Progression a : Progression.allProgressions){
                 Helpers.setProgressionCompletionStatus(a,src.getPlayerOrException(),true);
-                src.sendSuccess(Component.translatable("solarcraft.success_unlock")
+                src.sendSuccess(()->Component.translatable("solarcraft.success_unlock")
                         .append(Component.literal(" "+a.translation.getString()).withStyle(ChatFormatting.GOLD)),false);
             }
             Helpers.updateProgression(src.getPlayerOrException());
@@ -119,7 +119,7 @@ public class SolarCraftCommands {
         }else if (progression != null){
             if (Helpers.canPlayerUnlock(progression,pl)){
                 Helpers.setProgressionCompletionStatus(progression,pl,true);
-                src.sendSuccess(Component.translatable("solarcraft.success_unlock")
+                src.sendSuccess(()->Component.translatable("solarcraft.success_unlock")
                         .append(Component.literal(" "+ progression.getProgressionCode()).withStyle(ChatFormatting.GOLD)),false);
 
                 Helpers.updateProgression(src.getPlayerOrException());
@@ -136,14 +136,14 @@ public class SolarCraftCommands {
     }
 
     public static int progressionsHelp(CommandSourceStack src) throws CommandSyntaxException {
-        src.sendSuccess(Component.translatable("solarcraft.gethelpcommand").withStyle(ChatFormatting.GOLD),false);
+        src.sendSuccess(()->Component.translatable("solarcraft.gethelpcommand").withStyle(ChatFormatting.GOLD),false);
         for (Progression ach : Progression.allProgressions){
 
-            src.sendSuccess(Component.literal(ach.translation.getString()).withStyle(ChatFormatting.GOLD)
+            src.sendSuccess(()->Component.literal(ach.translation.getString()).withStyle(ChatFormatting.GOLD)
                     .append(Component.literal(" -> "+ach.getProgressionCode())).withStyle(ChatFormatting.WHITE),false);
 
         }
-        src.sendSuccess(Component.literal("all").withStyle(ChatFormatting.GOLD)
+        src.sendSuccess(()->Component.literal("all").withStyle(ChatFormatting.GOLD)
                 .append(" -> unlocks/revokes all").withStyle(ChatFormatting.WHITE),false);
         return 0;
     }
@@ -179,7 +179,7 @@ public class SolarCraftCommands {
 
 
                         }
-                        src.sendSuccess(Component.literal("Filled lexicon inventory"),false);
+                        src.sendSuccess(()->Component.literal("Filled lexicon inventory"),false);
                     }catch (Exception e){
                         e.printStackTrace();
                         src.sendFailure(Component.literal("CAUGHT FATAL ERROR DURING COMMAND, STACK TRACE PRINTED"));
@@ -199,7 +199,7 @@ public class SolarCraftCommands {
         ServerPlayer player = src.getPlayerOrException();
         if (Multiblocks.STRUCTURES.containsKey(id)){
             Multiblocks.STRUCTURES.get(id).placeInWorld(player,player.level,player.getOnPos().above());
-            src.sendSuccess(Component.literal("Constructed!"),false);
+            src.sendSuccess(()->Component.literal("Constructed!"),false);
         }else{
             src.sendFailure(Component.literal("Structure doesnt exist"));
         }
@@ -225,7 +225,7 @@ class RetainFragments{
                                     AncientFragment fragment = AncientFragment.getFragmentByID(id);
                                     if (fragment != null){
                                         ProgressionHelper.givePlayerFragment(fragment,player);
-                                        stack.sendSuccess(Component.literal("Fragment successefuly given."),true);
+                                        stack.sendSuccess(()->Component.literal("Fragment successefuly given."),true);
                                     }else{
                                         stack.sendFailure(Component.literal("This fragments doesn't exist."));
                                     }
@@ -240,7 +240,7 @@ class RetainFragments{
                                     AncientFragment fragment = AncientFragment.getFragmentByID(id);
                                     if (fragment != null){
                                         ProgressionHelper.revokePlayerFragment(fragment,player);
-                                        stack.sendSuccess(Component.literal("Fragment successfully revoked."),true);
+                                        stack.sendSuccess(()->Component.literal("Fragment successfully revoked."),true);
                                     }else{
                                         stack.sendFailure(Component.literal("This fragments doesn't exist."));
                                     }

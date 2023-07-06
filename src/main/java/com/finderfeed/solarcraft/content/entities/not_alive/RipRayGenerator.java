@@ -5,6 +5,7 @@ import com.finderfeed.solarcraft.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarcraft.local_library.other.CyclingInterpolatedValue;
 import com.finderfeed.solarcraft.misc_things.CrystalBossBuddy;
 import com.finderfeed.solarcraft.client.particles.SolarcraftParticleTypes;
+import com.finderfeed.solarcraft.registries.damage_sources.SolarcraftDamageSources;
 import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -92,7 +93,7 @@ public class RipRayGenerator extends PathfinderMob implements CrystalBossBuddy{
         .move(this.position()));
         for (LivingEntity ent : entities){
             if (!(ent instanceof CrystalBossBuddy)) {
-                ent.hurt(DamageSource.MAGIC, CrystalBossEntity.RIP_RAY_DAMAGE);
+                ent.hurt(SolarcraftDamageSources.RUNIC_MAGIC, CrystalBossEntity.RIP_RAY_DAMAGE);
             }
         }
     }
