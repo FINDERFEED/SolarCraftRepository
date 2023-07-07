@@ -70,6 +70,15 @@ public class ItemStackButton extends FDButton {
     }
 
     @Override
+    protected void renderTooltip(GuiGraphics graphics, int mx, int my) {
+        PoseStack matrices = graphics.pose();
+        matrices.pushPose();
+        matrices.translate(0,0,300);
+        super.renderTooltip(graphics, mx, my);
+        matrices.popPose();
+    }
+
+    @Override
     public void playDownSound(SoundManager manager) {
         manager.play(SimpleSoundInstance.forUI(SolarcraftSounds.BUTTON_PRESS2.get(),1,1));
     }

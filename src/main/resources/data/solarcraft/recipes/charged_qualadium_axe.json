@@ -1,12 +1,15 @@
 {
-  "type": "minecraft:smithing",
-  "base": {
-    "item": "solarcraft:qualadium_axe"
-  },
+  "type": "minecraft:smithing_transform",
   "addition": {
     "item": "solarcraft:charged_qualadium_ingot"
   },
+  "base": {
+    "item": "solarcraft:qualadium_axe"
+  },
   "result": {
     "item": "solarcraft:charged_qualadium_axe"
+  },
+  "template": {
+    "item": "minecraft:netherite_upgrade_smithing_template"
   }
 }

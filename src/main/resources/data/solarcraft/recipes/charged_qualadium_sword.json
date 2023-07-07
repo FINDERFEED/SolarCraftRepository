@@ -1,12 +1,15 @@
 {
-  "type": "minecraft:smithing",
-  "base": {
-    "item": "solarcraft:qualadium_sword"
-  },
+  "type": "minecraft:smithing_transform",
   "addition": {
     "item": "solarcraft:charged_qualadium_ingot"
   },
+  "base": {
+    "item": "solarcraft:qualadium_sword"
+  },
   "result": {
     "item": "solarcraft:charged_qualadium_sword"
+  },
+  "template": {
+    "item": "minecraft:netherite_upgrade_smithing_template"
   }
 }

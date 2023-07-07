@@ -52,7 +52,7 @@ public class TooltipEventHandler {
         tooltip.bindTop();
         int posX = calculateXTopRenderPosition(relX,relX+sizeX,tooltip.getTopTextureWidth());
         int posY = calculateYTopRenderPosition(relY,tooltip.getTopTextureHeight());
-        RenderingTools.blitWithBlend(matrices,posX,posY+tooltip.getyOffsetTop(),0,0,tooltip.getTopTextureWidth(),tooltip.getTopTextureHeight(),tooltip.getTopTextureWidth(),tooltip.getTopTextureHeight(),0,1f);
+        RenderingTools.blitWithBlend(matrices,posX,posY+tooltip.getyOffsetTop(),0,0,tooltip.getTopTextureWidth(),tooltip.getTopTextureHeight(),tooltip.getTopTextureWidth(),tooltip.getTopTextureHeight(),1000,1f);
         matrices.popPose();
     }
 
@@ -61,7 +61,7 @@ public class TooltipEventHandler {
         tooltip.bindBottom();
         int posX = calculateXBottomRenderPosition(relX,relX+sizeX,tooltip.getBottomTextureWidth());
         int posY = calculateYBottomRenderPosition(relY,sizeY,tooltip.getBottomTextureHeight());
-        RenderingTools.blitWithBlend(matrices,posX,posY+tooltip.getyOffsetBottom(),0,0,tooltip.getBottomTextureWidth(),tooltip.getBottomTextureHeight(),tooltip.getBottomTextureWidth(),tooltip.getBottomTextureHeight(),0,1f);
+        RenderingTools.blitWithBlend(matrices,posX,posY+tooltip.getyOffsetBottom(),0,0,tooltip.getBottomTextureWidth(),tooltip.getBottomTextureHeight(),tooltip.getBottomTextureWidth(),tooltip.getBottomTextureHeight(),1000,1f);
         matrices.popPose();
     }
     //in blit first matrix second/third position, 4 5 sdvig, 5 6 skolko vzyat ot teksturi, 7 8 razmer etoy teksturi
@@ -72,13 +72,13 @@ public class TooltipEventHandler {
         int dim = tooltip.getCornerDimensions();
         int half = dim/2;
         int doubled = dim*2;
-        RenderingTools.blitWithBlend(matrices,relX-half,relY-half,0,0,dim,dim,doubled,doubled,0,1f);
+        RenderingTools.blitWithBlend(matrices,relX-half,relY-half,0,0,dim,dim,doubled,doubled,1000,1f);
         int[] leftBottom = calculateLeftBottomCornerPos(relX,relY,sizeY,dim);
-        RenderingTools.blitWithBlend(matrices,leftBottom[0],leftBottom[1],0,dim,dim,dim,doubled,doubled,0,1f);
+        RenderingTools.blitWithBlend(matrices,leftBottom[0],leftBottom[1],0,dim,dim,dim,doubled,doubled,1000,1f);
         int[] rightTop = calculateRightTopCornerPos(relX,relY,sizeX,dim);
-        RenderingTools.blitWithBlend(matrices,rightTop[0],rightTop[1],dim,0,dim,dim,doubled,doubled,0,1f);
+        RenderingTools.blitWithBlend(matrices,rightTop[0],rightTop[1],dim,0,dim,dim,doubled,doubled,1000,1f);
         int[] rightBottom = calculateRightBottomCornerPos(relX,relY,sizeX,sizeY,dim);
-        RenderingTools.blitWithBlend(matrices,rightBottom[0],rightBottom[1],dim,dim,dim,dim,doubled,doubled,0,1f);
+        RenderingTools.blitWithBlend(matrices,rightBottom[0],rightBottom[1],dim,dim,dim,dim,doubled,doubled,1000,1f);
 
 
         matrices.popPose();

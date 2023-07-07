@@ -29,11 +29,11 @@ public class SCCreativeTabs {
     public static RegistryObject<CreativeModeTab> SOLAR_GROUP_WEAPONS_COPY;
     public static RegistryObject<CreativeModeTab> SOLAR_GROUP_TOOLS_COPY;
     public static RegistryObject<CreativeModeTab> SOLAR_GROUP_MATERIALS_COPY;
-    public static RegistryObject<CreativeModeTab> SOLAR_GROUP_FRAGMENTS_COPY = null;
+    public static RegistryObject<CreativeModeTab> SOLAR_GROUP_FRAGMENTS_COPY;
 
     public static final RegistryObject<CreativeModeTab> SOLAR_GROUP = REGISTRY.register("main_group",()->CreativeModeTab.builder()
             .icon(()->SolarcraftItems.SOLAR_SHARD.get().getDefaultInstance())
-            .title(Component.literal("itemGroup.solar_forge_group"))
+            .title(Component.translatable("itemGroup.solar_forge_group"))
             .withTabsImage(TABS)
             .displayItems((parameters,output)->{
                 var a = SolarcraftItems.itemTabs.get(SOLAR_GROUP_COPY);
@@ -48,7 +48,7 @@ public class SCCreativeTabs {
 
     public static final RegistryObject<CreativeModeTab> SOLAR_GROUP_BLOCKS = REGISTRY.register("blocks_group",()->CreativeModeTab.builder()
             .icon(()->SolarcraftItems.MAGISTONE_BRICKS.get().getDefaultInstance())
-            .title(Component.literal("itemGroup.solar_forge_group_blocks"))
+            .title(Component.translatable("itemGroup.solar_forge_group_blocks"))
             .withTabsImage(TABS)
             .withBackgroundLocation(BACKGROUND)
             .displayItems((parameters,output)->{
@@ -62,7 +62,7 @@ public class SCCreativeTabs {
 //    public static final CreativeModeTab SOLAR_GROUP_TOOLS = new SolarGroupTools("solar_forge_group_tools");
     public static final RegistryObject<CreativeModeTab> SOLAR_GROUP_TOOLS = REGISTRY.register("tools_group",()->CreativeModeTab.builder()
             .icon(()->SolarcraftItems.SOLAR_NETWORK_BINDER.get().getDefaultInstance())
-            .title(Component.literal("itemGroup.solar_forge_group_tools"))
+            .title(Component.translatable("itemGroup.solar_forge_group_tools"))
             .withTabsImage(TABS)
             .withBackgroundLocation(BACKGROUND)
         .displayItems((parameters,output)->{
@@ -82,7 +82,7 @@ public class SCCreativeTabs {
 //    public static final CreativeModeTab SOLAR_GROUP_MATERIALS = new SolarGroupThemed("solar_group_materials", SolarcraftItems.ILLIDIUM_INGOT);
     public static final RegistryObject<CreativeModeTab> SOLAR_GROUP_MATERIALS = REGISTRY.register("materials_group",()->CreativeModeTab.builder()
             .icon(()->SolarcraftItems.ILLIDIUM_INGOT.get().getDefaultInstance())
-            .title(Component.literal("itemGroup.solar_group_materials"))
+            .title(Component.translatable("itemGroup.solar_group_materials"))
             .withTabsImage(TABS)
             .withBackgroundLocation(BACKGROUND)
             .displayItems((parameters,output)->{
@@ -96,7 +96,7 @@ public class SCCreativeTabs {
 //    public static final CreativeModeTab SOLAR_GROUP_WEAPONS = new SolarGroupThemed("solar_group_weapons", SolarcraftItems.ILLIDIUM_SWORD);
     public static final RegistryObject<CreativeModeTab> SOLAR_GROUP_WEAPONS = REGISTRY.register("weapons_group",()->CreativeModeTab.builder()
             .icon(()->SolarcraftItems.ILLIDIUM_SWORD.get().getDefaultInstance())
-            .title(Component.literal("itemGroup.solar_group_weapons"))
+            .title(Component.translatable("itemGroup.solar_group_weapons"))
             .withTabsImage(TABS)
             .withBackgroundLocation(BACKGROUND)
             .displayItems((parameters,output)->{
@@ -122,7 +122,7 @@ public class SCCreativeTabs {
 //    public static final CreativeModeTab SOLAR_GROUP_FRAGMENTS = new SolarGroupFragments("solar_forge_group_fragments");
     public static final RegistryObject<CreativeModeTab> SOLAR_GROUP_FRAGMENTS = REGISTRY.register("fragments_group",()->CreativeModeTab.builder()
             .icon(()->SolarcraftItems.INFO_FRAGMENT.get().getDefaultInstance())
-            .title(Component.literal("itemGroup.solar_group_weapons"))
+            .title(Component.translatable("itemGroup.solar_forge_group_fragments"))
             .withTabsImage(TABS)
             .withBackgroundLocation(BACKGROUND)
             .displayItems((parameters,output)->{

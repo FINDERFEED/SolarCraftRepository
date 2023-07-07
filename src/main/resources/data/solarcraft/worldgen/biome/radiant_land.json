@@ -96,5 +96,7 @@
     "solarcraft:clearing_ritual_structure"
   ],
   "player_spawn_friendly": true,
-  "spawn_costs": {}
+  "spawn_costs": {},
+  "has_precipitation": false
+
 }

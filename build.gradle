@@ -221,6 +221,7 @@ repositories {
 dependencies {
     runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:5.2.0-beta.3+1.20.1")
     compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:5.2.0-beta.3+1.20.1:api")
+    implementation fg.deobf("curse.maven:cyanide-forge-541676:4584675")
 }
 
 repositories {

@@ -22,6 +22,7 @@ import org.lwjgl.opengl.GL11;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class StagesScreen extends ScrollableScreen {
     public final Component STAGES_CMP = Component.translatable("solarcraft.stages");

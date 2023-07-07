@@ -32,9 +32,11 @@ public class FDTextComponent extends BaseComponent{
         xy[0] += getInnerBorder();
         xy[1] += getInnerBorder();
         Font font = Minecraft.getInstance().font;
+        matrices.translate(0,0,100);
         for (int i = 0; i < text.size();i++){
             int yOffset = i*TEXT_HEIGHT;
             MultiBufferSource.BufferSource source = MultiBufferSource.immediate(Tesselator.getInstance().getBuilder());
+
             font.drawInBatch(text.get(i),xy[0],xy[1] + yOffset,0xffffff,true,matrices.last().pose(),source, Font.DisplayMode.NORMAL,
                     0, 15728880,font.isBidirectional());
             source.endBatch();

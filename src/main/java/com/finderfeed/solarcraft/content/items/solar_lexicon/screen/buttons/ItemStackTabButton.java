@@ -49,6 +49,14 @@ public class ItemStackTabButton extends ItemStackButton {
         matrices.popPose();
     }
 
+    @Override
+    protected void renderTooltip(GuiGraphics graphics, int mx, int my) {
+        PoseStack matrices = graphics.pose();
+        matrices.pushPose();
+        matrices.translate(0,0,300);
+        super.renderTooltip(graphics, mx, my);
+        matrices.popPose();
+    }
     public void render(GuiGraphics graphics, int mousex, int mousey, float partialTicks, double zOffset){
         this.isHovered = RenderingTools.isMouseInBorders(mousex,mousey,x,y,x + width,y + height);
 //        matrices.pushPose();

@@ -35,9 +35,7 @@ public class InfoButton extends FDButton {
         }else{
             RenderingTools.blitWithBlend(matrices, x, y, width, height, 0, 16, 16, 32,0,1f);
         }
-        if (this.isHoveredOrFocused()){
-            this.renderTooltip(graphics,mx,my);
-        }
+
         matrices.popPose();
     }
 

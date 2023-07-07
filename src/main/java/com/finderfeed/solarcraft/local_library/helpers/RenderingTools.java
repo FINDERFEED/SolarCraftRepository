@@ -285,7 +285,7 @@ public class RenderingTools {
             }
             iter++;
         }
-        g.flush();
+
     }
 
     public static void drawCenteredBoundedTextObfuscated(GuiGraphics gr,int posx,int posy,int bound,Component component,int color,int ticker){

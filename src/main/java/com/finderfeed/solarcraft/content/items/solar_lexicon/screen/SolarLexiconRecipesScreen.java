@@ -135,6 +135,7 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
             graphics.renderTooltip(font,font.split(Component.translatable("solarcraft.recipes_screen_info"),200),mx,my);
         });
 
+
         FRAGMENTS.clear();
         handler = getLexiconInventory();
         collectFragments();

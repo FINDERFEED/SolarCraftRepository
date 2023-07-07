@@ -414,7 +414,7 @@ public class AncientFragment {
     }
 
     public MutableComponent getTranslation() {
-        return translation.plainCopy();
+        return translation.copy();
     }
 
     public Progression[] getNeededProgression() {

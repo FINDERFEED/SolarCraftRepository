@@ -104,15 +104,12 @@ public class InformationScreen extends Screen {
             if (screen != null) {
                 Minecraft.getInstance().setScreen(screen);
             }
-//            else if (screenInfusingCrafting != null){
-//                Minecraft.getInstance().setScreen(screenInfusingCrafting);
-//            }else{
-//                Minecraft.getInstance().setScreen(craftingScreen);
-//            }
         }, icon.getDefaultInstance(),0.7f,(buttons,graphics,b,c)->{
+
             graphics.renderTooltip(font,Component.literal("Crafting Recipe"),b,c);
+
         });
-        if (screen != null/* || screenInfusingCrafting != null || craftingScreen != null*/){
+        if (screen != null){
             addRenderableWidget(button);
         }
 
@@ -139,7 +136,6 @@ public class InformationScreen extends Screen {
                 addRenderableWidget(button1);
             }
         }
-
 
         addRenderableWidget(new ItemStackTabButton(relX+255,relY+28 - 3 ,17,17,(buttons)->{minecraft.setScreen(new SolarLexiconRecipesScreen());},
                 Items.CRAFTING_TABLE.getDefaultInstance(),0.7f,(buttons,graphics,b,c)->{

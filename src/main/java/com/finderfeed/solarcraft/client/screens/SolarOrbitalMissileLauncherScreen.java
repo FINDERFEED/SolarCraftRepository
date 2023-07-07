@@ -129,7 +129,10 @@ public class SolarOrbitalMissileLauncherScreen extends DefaultScreen {
                 ), Optional.empty(),mx,my);
             }
         }
+
+
         RenderingTools.renderTextField(matrices,relX + this.getScreenWidth() + 20, relY + 13,60,60);
+
         super.render(graphics, mx, my, pTicks);
     }
 
