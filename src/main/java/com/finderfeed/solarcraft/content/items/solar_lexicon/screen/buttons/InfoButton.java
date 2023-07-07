@@ -30,10 +30,10 @@ public class InfoButton extends FDButton {
         PoseStack matrices = graphics.pose();
         matrices.pushPose();
         RenderSystem.setShaderTexture(0, LOCR);
-        if (!this.isHoveredOrFocused()) {
-            RenderingTools.blitWithBlend(matrices, x, y, width, height, 0, 0, 16, 32,0,1f);
+        if (!this.isHovered) {
+            RenderingTools.blitWithBlend(matrices, x, y, 0, 0, width, height, width, height*2,0,1f);
         }else{
-            RenderingTools.blitWithBlend(matrices, x, y, width, height, 0, 16, 16, 32,0,1f);
+            RenderingTools.blitWithBlend(matrices, x, y, 0, height, width, height, width, height*2,0,1f);
         }
 
         matrices.popPose();

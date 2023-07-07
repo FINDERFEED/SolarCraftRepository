@@ -46,6 +46,16 @@ public abstract class FDButton extends Button {
     }
 
 
+    protected int getYImage() {
+        int i = 1;
+        if (!this.active) {
+            i = 0;
+        } else if (this.isHovered) {
+            i = 2;
+        }
+
+        return i;
+    }
 
     @FunctionalInterface
     public interface OnTooltip{

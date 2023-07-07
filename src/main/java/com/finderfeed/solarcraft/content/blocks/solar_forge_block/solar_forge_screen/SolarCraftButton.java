@@ -56,8 +56,8 @@ public class SolarCraftButton extends FDButton {
         ClientHelpers.bindText(WIDGETS_SOLARCRAFT);
 
         RenderSystem.setShaderColor(1,1,1,alpha);
-//        int i = this.getYImage(this.isHovered);
-        int i = this.isHovered ? 16 : 0;
+        int i = this.getYImage();
+//        int i = this.isHovered ? 16 : 0;
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
         RenderSystem.enableDepthTest();
@@ -67,6 +67,9 @@ public class SolarCraftButton extends FDButton {
         int j = getFGColor();
         graphics.drawCenteredString(fontrenderer, this.getMessage(), this.x + this.width / 2, this.y + (this.height - 8) / 2, j | Mth.ceil(this.alpha * 255.0F) << 24);
     }
+
+
+
 
 //    @Override
 //    public void renderButton(PoseStack matrices, int mx, int my, float pticks) {
