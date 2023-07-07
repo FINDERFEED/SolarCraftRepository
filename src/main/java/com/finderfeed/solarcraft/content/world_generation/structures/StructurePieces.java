@@ -11,6 +11,7 @@ import com.finderfeed.solarcraft.content.world_generation.structures.maze_key_ke
 import com.finderfeed.solarcraft.content.world_generation.structures.runic_elemental_arena.RunicElementalArenaStructurePieces;
 import com.finderfeed.solarcraft.content.world_generation.structures.sun_shard_puzzle.SunShardPuzzleStructurePieces;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceType;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -36,15 +37,15 @@ public class StructurePieces {
     public static void registerFeatures(FMLCommonSetupEvent event){
         event.enqueueWork(()->{
 
-            Registry.register(Registry.STRUCTURE_PIECE, "solar_forge_dungeon_one_piece_test", DUNGEON_ONE_PIECE);
-            Registry.register(Registry.STRUCTURE_PIECE, "solar_forge_dungeon_maze_piece", DUNGEON_MAZE_PIECE);
-            Registry.register(Registry.STRUCTURE_PIECE, "solar_forge_charging_piece", CHARGING_PIECE);
-            Registry.register(Registry.STRUCTURE_PIECE, "magician_tower_piece", MAGICIAN_TOWER);
-            Registry.register(Registry.STRUCTURE_PIECE, "dimensional_shard_structure", DIMENSIONAL_SHARD_STRUCTURE);
-            Registry.register(Registry.STRUCTURE_PIECE, "crystal_boss_room_piece", CRYSTAL_BOSS_ROOM_PIECE);
-            Registry.register(Registry.STRUCTURE_PIECE, "runic_elemental_arena_piece", RUNIC_ELEMENTAL_ARENA_PIECE);
-            Registry.register(Registry.STRUCTURE_PIECE, "clearing_ritual_piece", CLEARING_RITUAL_STRUCTURE);
-            Registry.register(Registry.STRUCTURE_PIECE, "sun_shard_puzzle_piece", SUN_SHARD_PUZZLE_PIECE);
+            Registry.register(BuiltInRegistries.STRUCTURE_PIECE, "solar_forge_dungeon_one_piece_test", DUNGEON_ONE_PIECE);
+            Registry.register(BuiltInRegistries.STRUCTURE_PIECE, "solar_forge_dungeon_maze_piece", DUNGEON_MAZE_PIECE);
+            Registry.register(BuiltInRegistries.STRUCTURE_PIECE, "solar_forge_charging_piece", CHARGING_PIECE);
+            Registry.register(BuiltInRegistries.STRUCTURE_PIECE, "magician_tower_piece", MAGICIAN_TOWER);
+            Registry.register(BuiltInRegistries.STRUCTURE_PIECE, "dimensional_shard_structure", DIMENSIONAL_SHARD_STRUCTURE);
+            Registry.register(BuiltInRegistries.STRUCTURE_PIECE, "crystal_boss_room_piece", CRYSTAL_BOSS_ROOM_PIECE);
+            Registry.register(BuiltInRegistries.STRUCTURE_PIECE, "runic_elemental_arena_piece", RUNIC_ELEMENTAL_ARENA_PIECE);
+            Registry.register(BuiltInRegistries.STRUCTURE_PIECE, "clearing_ritual_piece", CLEARING_RITUAL_STRUCTURE);
+            Registry.register(BuiltInRegistries.STRUCTURE_PIECE, "sun_shard_puzzle_piece", SUN_SHARD_PUZZLE_PIECE);
             });
         }
 }

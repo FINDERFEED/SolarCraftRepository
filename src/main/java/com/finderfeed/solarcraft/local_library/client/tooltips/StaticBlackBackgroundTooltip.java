@@ -3,6 +3,7 @@ package com.finderfeed.solarcraft.local_library.client.tooltips;
 import com.finderfeed.solarcraft.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.gui.GuiGraphics;
 
 public class StaticBlackBackgroundTooltip extends AnimatedTooltip{
 
@@ -15,7 +16,8 @@ public class StaticBlackBackgroundTooltip extends AnimatedTooltip{
     }
 
     @Override
-    public void render(PoseStack matrices, int x, int y, float pTicks, int mousex, int mousey) {
+    public void render(GuiGraphics graphics, int x, int y, float pTicks, int mousex, int mousey) {
+        PoseStack matrices = graphics.pose();
         int xPos = calculateXRenderPos(x);
         int yPos = calculateYRenderPos(y);
         //double percentXOpeness = 1f;
@@ -36,7 +38,7 @@ public class StaticBlackBackgroundTooltip extends AnimatedTooltip{
         RenderingTools.fill(matrices,xStartRenderPos,yStartRenderPos,xStartRenderPos + xRightOpeness,yStartRenderPos + yDownOpeness,0,0,0,0.94f);
         RenderingTools.fill(matrices,xStartRenderPos - xLeftOpeness,yStartRenderPos,xStartRenderPos,yStartRenderPos - yUpOpeness,0,0,0,0.94f);
         RenderingTools.fill(matrices,xStartRenderPos,yStartRenderPos,xStartRenderPos + xRightOpeness,yStartRenderPos - yUpOpeness,0,0,0,0.94f);
-        this.getComponents().render(matrices, xPos + borderWidth, yPos + borderWidth, pTicks, mousex, mousey, 1, 1);
+        this.getComponents().render(graphics, xPos + borderWidth, yPos + borderWidth, pTicks, mousex, mousey, 1, 1);
 
     }
 

@@ -174,7 +174,7 @@ public class SolarCraft
         FoliagePlacerRegistry.DEFERRED_REGISTER.register(bus);
         AttributesRegistry.DEF_REG.register(bus);
         FDEntityDataSerializers.DEF_REG.register(bus);
-        BiomesRegister.BIOMES.register(bus);
+//        BiomesRegister.BIOMES.register(bus);
         FeaturesRegistry.FEATURES.register(bus);
         SolarcraftRecipeTypes.RECIPE_SERIALIZERS.register(bus);
         SolarcraftRecipeTypes.RECIPE_TYPES.register(bus);

@@ -12,6 +12,7 @@ import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,8 +46,8 @@ public class WandModeSelectionScreen extends DefaultScreen {
                     (matrices, x, y) -> {
                         RenderingTools.renderScaledGuiItemCentered(action.getIcon(),x,y,1,10);
                     },
-                    (matrices, x, y) -> {
-                        renderTooltip(matrices,minecraft.font.split(action.getActionDescription(),
+                    (graphics, x, y) -> {
+                        graphics.renderTooltip(font,minecraft.font.split(action.getActionDescription(),
                                 (int)Math.min(200,window.getGuiScaledWidth() - x)),(int)x,(int)y);
                     }
             );
@@ -63,11 +64,11 @@ public class WandModeSelectionScreen extends DefaultScreen {
     private int my;
 
     @Override
-    public void render(PoseStack matrices, int mx, int my, float pTicks) {
-        super.render(matrices, mx, my, pTicks);
+    public void render(GuiGraphics graphics, int mx, int my, float pTicks) {
+        super.render(graphics, mx, my, pTicks);
         this.mx = mx;
         this.my = my;
-        menu.render(matrices,mx,my,pTicks,0);
+        menu.render(graphics,mx,my,pTicks,0);
     }
 
     @Override

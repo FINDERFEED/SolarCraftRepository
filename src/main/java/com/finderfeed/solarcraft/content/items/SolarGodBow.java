@@ -5,6 +5,7 @@ import com.finderfeed.solarcraft.content.blocks.blockentities.projectiles.Abstra
 import com.finderfeed.solarcraft.content.items.primitive.RareSolarcraftItem;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarcraft.misc_things.IUpgradable;
+import com.finderfeed.solarcraft.registries.damage_sources.SolarcraftDamageSources;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
@@ -93,7 +94,7 @@ public class SolarGodBow extends RareSolarcraftItem implements IUpgradable {
                             AbstractTurretProjectile proj = new AbstractTurretProjectile(level,new AbstractTurretProjectile.Constructor()
                                     .setPosition(origPos)
                                     .setVelocity(velocity.normalize().multiply(3,3,3))
-                                    .setDamageSource(DamageSource.mobAttack(entity).setMagic().bypassArmor())
+                                    .setDamageSource(SolarcraftDamageSources.livingArmorPierceProjectile(entity))
                                     .setDamage(15*power)
                                     .addOnHitEntityEffect((sideContext)->{
                                         if (sideContext.getEntity() instanceof LivingEntity t){
@@ -110,7 +111,7 @@ public class SolarGodBow extends RareSolarcraftItem implements IUpgradable {
             AbstractTurretProjectile proj = new AbstractTurretProjectile(level,new AbstractTurretProjectile.Constructor()
             .setPosition(entity.position().add(entity.getLookAngle().x,entity.getBbHeight()/1.4 + entity.getLookAngle().y,entity.getLookAngle().z))
                     .setVelocity(entity.getLookAngle().multiply(3,3,3))
-                    .setDamageSource(DamageSource.mobAttack(entity).setMagic().bypassArmor())
+                    .setDamageSource(SolarcraftDamageSources.livingArmorPierceProjectile(entity))
                     .setDamage(damage)
                     .addOnHitEntityEffect(cons)
             );

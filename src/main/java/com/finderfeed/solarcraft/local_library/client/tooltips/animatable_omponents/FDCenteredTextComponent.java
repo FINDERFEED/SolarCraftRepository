@@ -5,6 +5,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.Tesselator;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -24,7 +25,8 @@ public class FDCenteredTextComponent extends BaseComponent{
     }
 
     @Override
-    public void render(PoseStack matrices, int x, int y, float pTicks, int mx, int my, int ticker, int animationLength) {
+    public void render(GuiGraphics graphics, int x, int y, float pTicks, int mx, int my, int ticker, int animationLength) {
+        PoseStack matrices = graphics.pose();
         matrices.pushPose();
         int[] xy = this.getAlignment().getCoords(this,x,y);
         xy[0] += getInnerBorder();
@@ -34,7 +36,7 @@ public class FDCenteredTextComponent extends BaseComponent{
             int yOffset = i*TEXT_HEIGHT;
             String s = text.get(i);
             MultiBufferSource.BufferSource source = MultiBufferSource.immediate(Tesselator.getInstance().getBuilder());
-            font.drawInBatch(s,xy[0] - font.width(s)/2f,xy[1] + yOffset,0xffffff,true,matrices.last().pose(),source,true,
+            font.drawInBatch(s,xy[0] - font.width(s)/2f,xy[1] + yOffset,0xffffff,true,matrices.last().pose(),source, Font.DisplayMode.NORMAL,
                     0, 15728880,font.isBidirectional());
             source.endBatch();
         }

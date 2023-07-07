@@ -386,13 +386,13 @@ public class SolarLexiconScreen extends Screen implements IScrollable,PostRender
 
 
         for (ItemStackButtonAnimatedTooltip button : unlocked){
-            button.render(matrices,mousex,mousey,partialTicks,-30);
+            button.render(graphics,mousex,mousey,partialTicks,-30);
         }
 
         ClientHelpers.bindText(QMARK);
         for (ItemStackButtonAnimatedTooltip button : locked){
             RenderingTools.blitWithBlend(matrices,button.x+1,button.y+1,0,0,14,14,14,14,0,1f);
-            button.renderTooltip(matrices,mousex,mousey,partialTicks);
+            button.renderTooltip(graphics,mousex,mousey,partialTicks);
         }
         for (Runnable runnable : postRender){
             runnable.run();

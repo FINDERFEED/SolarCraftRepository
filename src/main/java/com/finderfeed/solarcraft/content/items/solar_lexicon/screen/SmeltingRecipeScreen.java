@@ -4,8 +4,10 @@ import com.finderfeed.solarcraft.content.items.solar_lexicon.screen.buttons.Item
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.SolarLexicon;
 import com.finderfeed.solarcraft.content.recipe_types.solar_smelting.SolarSmeltingRecipe;
+import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -66,9 +68,10 @@ public class SmeltingRecipeScreen extends Screen {
 
 
     @Override
-    public void render(PoseStack matrices, int mousex, int mousey, float partialTicks) {
+    public void render(GuiGraphics graphics, int mousex, int mousey, float partialTicks) {
         ClientHelpers.bindText(MAIN_SCREEN);
-        blit(matrices,relX,relY,0,0,256,256);
+        PoseStack matrices = graphics.pose();
+        RenderingTools.blitWithBlend(matrices,relX,relY,0,0,256,256,256,256,0,1f);
 //        renderItemAndTooltip(stacks.get(0),relX+77,relY+111,mousex,mousey,matrices,false);
 //        renderItemAndTooltip(stacks.get(1),relX+94,relY+111,mousex,mousey,matrices,false);
 //        renderItemAndTooltip(stacks.get(2),relX+111,relY+111,mousex,mousey,matrices,false);
@@ -81,28 +84,28 @@ public class SmeltingRecipeScreen extends Screen {
             int posX = (iter % 3) * 17;
             int posY = (int)Math.floor((float)iter / 3) * 17;
 
-            renderItemAndTooltip(item,relX + 77 + posX , relY + 118 + posY,mousex,mousey,matrices,false);
+            renderItemAndTooltip(graphics,item,relX + 77 + posX , relY + 118 + posY,mousex,mousey,matrices,false);
 
             iter++;
         }
 
 
-        renderItemAndTooltip(recipe.getResultItem(),relX+94,relY+169,mousex,mousey,matrices,false);
-        super.render(matrices,mousex,mousey,partialTicks);
+        renderItemAndTooltip(graphics,recipe.getResultItem(Minecraft.getInstance().level.registryAccess()),relX+94,relY+169,mousex,mousey,matrices,false);
+        super.render(graphics,mousex,mousey,partialTicks);
     }
-    private void renderItemAndTooltip(ItemStack toRender,int place1,int place2,int mousex,int mousey,PoseStack matrices,boolean last){
+    private void renderItemAndTooltip(GuiGraphics graphics,ItemStack toRender,int place1,int place2,int mousex,int mousey,PoseStack matrices,boolean last){
         ItemStack renderThis = toRender.copy();
         if (!last) {
-            minecraft.getItemRenderer().renderGuiItem(toRender, place1, place2);
+            graphics.renderItem(toRender, place1, place2);
         }else{
-            minecraft.getItemRenderer().renderGuiItem(renderThis, place1, place2);
+            graphics.renderItem(renderThis, place1, place2);
         }
-        minecraft.getItemRenderer().renderGuiItemDecorations(font,renderThis,place1,place2);
+        graphics.renderItemDecorations(font,renderThis,place1,place2);
 
 
         if (((mousex >= place1) && (mousex <= place1+16)) && ((mousey >= place2) && (mousey <= place2+16)) && !toRender.getItem().equals(Items.AIR)){
             matrices.pushPose();
-            renderTooltip(matrices,toRender,mousex,mousey);
+            graphics.renderTooltip(font,toRender,mousex,mousey);
             matrices.popPose();
         }
     }

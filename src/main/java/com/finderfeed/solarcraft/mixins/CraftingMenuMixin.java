@@ -39,7 +39,7 @@ public class CraftingMenuMixin {
             Optional<CraftingRecipe> optional = world.getServer().getRecipeManager().getRecipeFor(RecipeType.CRAFTING, container,world);
             if (optional.isPresent()){
                 CraftingRecipe recipe = optional.get();
-                ItemStack its = recipe.getResultItem();
+                ItemStack its = recipe.getResultItem(world.registryAccess());
                 AncientFragment fragment = AncientFragment.CRAFTING_TYPE_ITEMS.get(its.getItem());
                 if (fragment != null){
                     if (!ProgressionHelper.doPlayerHasFragment(player,fragment)){

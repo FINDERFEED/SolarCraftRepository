@@ -8,11 +8,11 @@ import net.minecraft.world.level.material.PushReaction;
 
 public class InvincibleStone extends Block {
     public InvincibleStone() {
-        super(BlockBehaviour.Properties.copy(Blocks.BEDROCK));
+        super(BlockBehaviour.Properties.copy(Blocks.BEDROCK).pushReaction(PushReaction.IGNORE));
     }
 
-    @Override
-    public PushReaction getPistonPushReaction(BlockState p_149656_1_) {
-        return PushReaction.IGNORE;
-    }
+//    @Override
+//    public PushReaction getPistonPushReaction(BlockState p_149656_1_) {
+//        return PushReaction.IGNORE;
+//    }
 }

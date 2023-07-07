@@ -226,7 +226,7 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
 
         ClientHelpers.bindText(FRAME);
         if (BOOK != null){
-            BOOK.render(matrices);
+            BOOK.render(graphics);
         }
         super.render(graphics,mousex,mousey,partialTicks);
         if (showNoFragmentsMessage){

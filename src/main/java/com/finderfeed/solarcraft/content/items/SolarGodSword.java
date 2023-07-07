@@ -5,6 +5,7 @@ import com.finderfeed.solarcraft.content.blocks.blockentities.projectiles.Abstra
 import com.finderfeed.solarcraft.content.items.primitive.RareSolarcraftSword;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarcraft.misc_things.IUpgradable;
+import com.finderfeed.solarcraft.registries.damage_sources.SolarcraftDamageSources;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.item.*;
@@ -65,7 +66,7 @@ public class SolarGodSword extends RareSolarcraftSword implements IUpgradable {
     public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         if ((getItemLevel(stack) >= 1) && (attacker instanceof Player player)){
             target.invulnerableTime = 0;
-            target.hurt(target.level.damageSources().playerAttack(player).setMagic().bypassArmor(),5);
+            target.hurt(SolarcraftDamageSources.playerArmorPierce(player),5);
         }
         return super.hurtEnemy(stack, target, attacker);
     }

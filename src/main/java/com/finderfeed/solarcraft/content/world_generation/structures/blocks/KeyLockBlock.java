@@ -26,7 +26,7 @@ import net.minecraft.world.level.block.state.BlockState;
 public class KeyLockBlock extends GlazedTerracottaBlock implements EntityBlock {
 
     public KeyLockBlock() {
-        super(BlockBehaviour.Properties.copy(Blocks.BEDROCK));
+        super(BlockBehaviour.Properties.copy(Blocks.BEDROCK).pushReaction(PushReaction.IGNORE));
     }
 
 
@@ -45,10 +45,10 @@ public class KeyLockBlock extends GlazedTerracottaBlock implements EntityBlock {
         return super.use(p_225533_1_, p_225533_2_, p_225533_3_, p_225533_4_, p_225533_5_, p_225533_6_);
     }
 
-    @Override
-    public PushReaction getPistonPushReaction(BlockState p_149656_1_) {
-        return PushReaction.IGNORE;
-    }
+//    @Override
+//    public PushReaction getPistonPushReaction(BlockState p_149656_1_) {
+//        return PushReaction.IGNORE;
+//    }
 
 
     @Nullable

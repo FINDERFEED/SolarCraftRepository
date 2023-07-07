@@ -4,6 +4,7 @@ import com.finderfeed.solarcraft.client.particles.SolarcraftParticleTypes;
 import com.finderfeed.solarcraft.content.blocks.blockentities.TemporaryLightTile;
 import com.finderfeed.solarcraft.content.blocks.primitive.TemporaryLightBlock;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
+import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.registries.blocks.SolarcraftBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.EntityType;
@@ -35,7 +36,7 @@ public class ThrownLightProjectile extends NormalProjectile{
     public void tick() {
         super.tick();
         if (level.isClientSide){
-            BlockPos pos = new BlockPos(this.position());
+            BlockPos pos = Helpers.vecToPos(this.position());
             BlockState state = level.getBlockState(pos);
             if (state.isAir() || state.getBlock() == SolarcraftBlocks.TEMPORARY_LIGHT.get()){
                 level.setBlock(pos, TemporaryLightBlock.create(15),3);
@@ -59,7 +60,7 @@ public class ThrownLightProjectile extends NormalProjectile{
     protected void onHitBlock(BlockHitResult res) {
         super.onHitBlock(res);
         if (!level.isClientSide) {
-            BlockPos pos = new BlockPos(this.position());
+            BlockPos pos = new BlockPos(Helpers.vecToPos(this.position()));
             BlockState state = level.getBlockState(pos);
             if (state.isAir() || state.getBlock() == SolarcraftBlocks.TEMPORARY_LIGHT.get()){
                 level.setBlock(pos,SolarcraftBlocks.THROWN_LIGHT.get().defaultBlockState(),3);

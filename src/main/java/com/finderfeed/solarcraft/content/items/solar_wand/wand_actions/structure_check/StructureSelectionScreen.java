@@ -15,6 +15,7 @@ import com.finderfeed.solarcraft.packet_handler.packets.SetREDrainTypePacket;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 
@@ -66,8 +67,8 @@ public class StructureSelectionScreen extends DefaultScreen {
                                 x,y,1f,0
                         );
                     },
-                    (matrices, x, y) -> {
-                        renderTooltip(matrices, Component.translatable("solarcraft.structure." + structure.getId()),(int)x,(int)y);
+                    (graphics, x, y) -> {
+                        graphics.renderTooltip(font, Component.translatable("solarcraft.structure." + structure.getId()),(int)x,(int)y);
                     }
             );
             sections.add(section);
@@ -120,9 +121,9 @@ public class StructureSelectionScreen extends DefaultScreen {
     }
 
     @Override
-    public void render(PoseStack matrices, int mx, int my, float pTicks) {
-        super.render(matrices, mx, my, pTicks);
-        menu.render(matrices,mx,my,pTicks,0);
+    public void render(GuiGraphics graphics, int mx, int my, float pTicks) {
+        super.render(graphics, mx, my, pTicks);
+        menu.render(graphics,mx,my,pTicks,0);
     }
 
     @Override

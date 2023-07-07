@@ -14,6 +14,7 @@ import com.finderfeed.solarcraft.registries.items.SolarcraftItems;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -43,8 +44,8 @@ public class StagesScreen extends ScrollableScreen {
     @Override
     protected void init() {
         super.init();
-        infoButton = new InfoButton(relX +  206 + 35,relY + 43,13,13,(btn1, matrices1, mx, my)->{
-            renderTooltip(matrices1,font.split(STAGES_CMP.copy(),200),mx,my);
+        infoButton = new InfoButton(relX +  206 + 35,relY + 43,13,13,(btn1, graphics, mx, my)->{
+            graphics.renderTooltip(font,font.split(STAGES_CMP.copy(),200),mx,my);
         });
         stagesPage = new ItemStackTabButton(relX+98,relY + 18,17,17,(button)->{minecraft.setScreen(new SolarLexiconScreen());}, SolarcraftItems.SOLAR_FORGE_ITEM.get().getDefaultInstance(),0.7f);
         setAsStaticWidget(stagesPage);
@@ -69,26 +70,26 @@ public class StagesScreen extends ScrollableScreen {
                                 }
                             }));
                 }else{
-                    RENDER_QMARKS.add(((matrices, mousex, mousey, partialTicks) -> {
-                        blit(matrices,x + getCurrentScrollX(),y + getCurrentScrollY(),0,0,16,16,16,16);
+                    RENDER_QMARKS.add(((graphics, mousex, mousey, partialTicks) -> {
+                        RenderingTools.blitWithBlend(graphics.pose(),x + getCurrentScrollX(),y + getCurrentScrollY(),0,0,16,16,16,16,0,1f);
                     }));
-                    RENDER_QMARKS_TOOLTIPS.add(((matrices, mousex, mousey, partialTicks) -> {
+                    RENDER_QMARKS_TOOLTIPS.add(((graphics, mousex, mousey, partialTicks) -> {
                         if ((mousex  >= x + getCurrentScrollX() && mousex  <= x + getCurrentScrollX()+16)
                                 && (mousey  >= y + getCurrentScrollY() && mousey <= y + 16 + getCurrentScrollY()) ) {
-                            renderComponentTooltip(matrices, List.of(progression.translation,
+                            graphics.renderComponentTooltip(font, List.of(progression.translation,
                                     Component.translatable("solarcraft.cannot_be_completed").withStyle(ChatFormatting.GRAY)), mousex , mousey );
                         }
                     }));
                 }
 
-                RENDER_FRAMES.add(((matrices, mousex, mousey, partialTicks) -> {
-                    blit(matrices,x + getCurrentScrollX() - 4,y + getCurrentScrollY() - 4,0,0,24,24,24,24);
+                RENDER_FRAMES.add(((graphics, mousex, mousey, partialTicks) -> {
+                    RenderingTools.blitWithBlend(graphics.pose(),x + getCurrentScrollX() - 4,y + getCurrentScrollY() - 4,0,0,24,24,24,24,0,1f);
                 }));
 
             }
             int l = stage.SELF_PROGRESSIONS.length;
-            RENDER_BORDERS.add((matrices, mousex, mousey, partialTicks) -> {
-                RenderingTools.drawFancyBorder(matrices,getRelX() + getCurrentScrollX() + 25 - 13,y + getCurrentScrollY() - 13,stage.SELF_PROGRESSIONS.length * 40 + 2,42,getBlitOffset());
+            RENDER_BORDERS.add((graphics, mousex, mousey, partialTicks) -> {
+                RenderingTools.drawFancyBorder(graphics.pose(),getRelX() + getCurrentScrollX() + 25 - 13,y + getCurrentScrollY() - 13,stage.SELF_PROGRESSIONS.length * 40 + 2,42,0);
             });
         }
 
@@ -105,44 +106,45 @@ public class StagesScreen extends ScrollableScreen {
     }
 
     @Override
-    public void render(PoseStack matrices, int mousex, int mousey, float pticks) {
+    public void render(GuiGraphics graphics, int mousex, int mousey, float pticks) {
 
+        PoseStack matrices = graphics.pose();
 
         int width = minecraft.getWindow().getWidth();
         int height = minecraft.getWindow().getHeight();
         int scale = (int)minecraft.getWindow().getGuiScale();
         ClientHelpers.bindText(BG);
-        blit(matrices,getRelX()+ 10,getRelY()+ 10,0,0,220,188,512,512);
+        RenderingTools.blitWithBlend(matrices,getRelX()+ 10,getRelY()+ 10,0,0,220,188,512,512,0,1f);
         GL11.glEnable(GL11.GL_SCISSOR_TEST);
         GL11.glScissor(width/2-((30+83)*scale),height/2-(88*scale),((188+35)*scale),187*scale);
         List<AbstractWidget> btns = ClientHelpers.getScreenButtons(this);
         btns.removeAll(getStaticWidgets());
 
         for (AbstractWidget w : btns){
-            w.render(matrices,mousex,mousey,pticks);
+            w.render(graphics,mousex,mousey,pticks);
         }
         ClientHelpers.bindText(FRAME);
         for (PostRender xy : RENDER_FRAMES){
-            xy.doRender(matrices,mousex,mousey,pticks);
+            xy.doRender(graphics,mousex,mousey,pticks);
         }
         ClientHelpers.bindText(QMARK);
         for (PostRender xy : RENDER_QMARKS){
-            xy.doRender(matrices,mousex,mousey,pticks);
+            xy.doRender(graphics,mousex,mousey,pticks);
         }
         for (PostRender xy : RENDER_BORDERS){
-            xy.doRender(matrices,mousex,mousey,pticks);
+            xy.doRender(graphics,mousex,mousey,pticks);
         }
         GL11.glDisable(GL11.GL_SCISSOR_TEST);
 
         ClientHelpers.bindText(MAIN_SCREEN);
-        blit(matrices,getRelX(),getRelY(),0,0,256,256);
+        RenderingTools.blitWithBlend(matrices,getRelX(),getRelY(),0,0,256,256,256,256,0,1f);
 
         for (PostRender xy :RENDER_QMARKS_TOOLTIPS){
-            xy.doRender(matrices,mousex,mousey,pticks);
+            xy.doRender(graphics,mousex,mousey,pticks);
         }
 
-        stagesPage.render(matrices,mousex,mousey,pticks);
-        infoButton.render(matrices,mousex,mousey,pticks);
+        stagesPage.render(graphics,mousex,mousey,pticks);
+        infoButton.render(graphics,mousex,mousey,pticks);
 
     }
 
@@ -176,7 +178,7 @@ public class StagesScreen extends ScrollableScreen {
 @FunctionalInterface
 interface PostRender{
 
-    void doRender(PoseStack matrices,int mousex,int mousey,float partialTicks);
+    void doRender(GuiGraphics graphics, int mousex, int mousey, float partialTicks);
 
 }
 

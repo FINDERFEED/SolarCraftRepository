@@ -120,7 +120,7 @@ public class SCCreativeTabs {
             .build());
 
 //    public static final CreativeModeTab SOLAR_GROUP_FRAGMENTS = new SolarGroupFragments("solar_forge_group_fragments");
-    public static final RegistryObject<CreativeModeTab> SOLAR_GROUP_FRAGMENTS = REGISTRY.register("main_group",()->CreativeModeTab.builder()
+    public static final RegistryObject<CreativeModeTab> SOLAR_GROUP_FRAGMENTS = REGISTRY.register("fragments_group",()->CreativeModeTab.builder()
             .icon(()->SolarcraftItems.INFO_FRAGMENT.get().getDefaultInstance())
             .title(Component.literal("itemGroup.solar_group_weapons"))
             .withTabsImage(TABS)

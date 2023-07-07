@@ -1,6 +1,7 @@
 package com.finderfeed.solarcraft.content.world_generation.features.trunk_placers;
 
 import com.mojang.serialization.Codec;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.core.Registry;
 import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacerType;
@@ -40,7 +41,8 @@ public class TrunkPlacersRegistry {
     public static void registerTrunkPlacerTypes(final FMLCommonSetupEvent event){
         event.enqueueWork(()->{
 
-            Registry.register(Registry.TRUNK_PLACER_TYPES,new ResourceLocation("solarcraft","burnt_tree_trunk_placer_type"),BURNT_TREE_TRUNK_PLACER_TRUNK_PLACER_TYPE);
+
+            Registry.register(BuiltInRegistries.TRUNK_PLACER_TYPE,new ResourceLocation("solarcraft","burnt_tree_trunk_placer_type"),BURNT_TREE_TRUNK_PLACER_TRUNK_PLACER_TYPE);
         });
     }
 }

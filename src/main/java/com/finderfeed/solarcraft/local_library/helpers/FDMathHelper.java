@@ -272,8 +272,8 @@ public class FDMathHelper {
             Predicate<V> sort = (entity)->{
                 if (more.test(entity)) {
                     if (getDistanceBetween(pos, entity.position().add(0, entity.getBbHeight() / 2, 0)) <= radius) {
-                        return canSee(new BlockPos(Math.floor(entity.getX()), Math.floor(entity.getY() + entity.getBbHeight()*1.1 / 2), Math.floor(entity.getZ())),
-                                new BlockPos(Math.floor(pos.x), Math.floor(pos.y), Math.floor(pos.z)), radius, world);
+                        return canSee(new BlockPos((int)Math.floor(entity.getX()), (int)Math.floor(entity.getY() + entity.getBbHeight()*1.1 / 2), (int)Math.floor(entity.getZ())),
+                                new BlockPos((int)Math.floor(pos.x), (int)Math.floor(pos.y), (int)Math.floor(pos.z)), radius, world);
                     }
                 }
                 return false;

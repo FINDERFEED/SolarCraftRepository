@@ -6,6 +6,7 @@ import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.world.item.ItemStack;
 
 public class ItemStackButtonAnimatedTooltip extends ItemStackButton {
@@ -19,7 +20,8 @@ public class ItemStackButtonAnimatedTooltip extends ItemStackButton {
 
 
     @Override
-    public void renderButton(PoseStack matrices, int mousex, int mousey, float partialTicks) {
+    public void renderWidget(GuiGraphics graphics, int mousex, int mousey, float partialTicks) {
+        PoseStack matrices = graphics.pose();
         matrices.pushPose();
 
         matrices.scale(scaleFactor,scaleFactor,scaleFactor);
@@ -33,12 +35,12 @@ public class ItemStackButtonAnimatedTooltip extends ItemStackButton {
             if (Minecraft.getInstance().screen instanceof PostRenderTooltips t) {
                 t.addPostRenderTooltip(()->{
                     RenderSystem.disableDepthTest();
-                    tooltip.render(matrices, this.x, this.y, partialTicks, mousex, mousey);
+                    tooltip.render(graphics, this.x, this.y, partialTicks, mousex, mousey);
                     RenderSystem.enableDepthTest();
                 });
             }else{
                 RenderSystem.disableDepthTest();
-                tooltip.render(matrices, this.x, this.y, partialTicks, mousex, mousey);
+                tooltip.render(graphics, this.x, this.y, partialTicks, mousex, mousey);
                 RenderSystem.enableDepthTest();
             }
         }
@@ -48,8 +50,10 @@ public class ItemStackButtonAnimatedTooltip extends ItemStackButton {
     }
 
 
-    public void render(PoseStack matrices, int mousex, int mousey, float partialTicks,double zOffset){
+    public void render(GuiGraphics graphics, int mousex, int mousey, float partialTicks,double zOffset){
         this.isHovered = RenderingTools.isMouseInBorders(mousex,mousey,x,y,x + width,y + height);
+        PoseStack matrices = graphics.pose();
+
         matrices.pushPose();
 
         matrices.scale(scaleFactor,scaleFactor,scaleFactor);
@@ -63,12 +67,12 @@ public class ItemStackButtonAnimatedTooltip extends ItemStackButton {
             if (Minecraft.getInstance().screen instanceof PostRenderTooltips t) {
                 t.addPostRenderTooltip(()->{
                     RenderSystem.disableDepthTest();
-                    tooltip.render(matrices, this.x, this.y, partialTicks, mousex, mousey);
+                    tooltip.render(graphics, this.x, this.y, partialTicks, mousex, mousey);
                     RenderSystem.enableDepthTest();
                 });
             }else{
                 RenderSystem.disableDepthTest();
-                tooltip.render(matrices, this.x, this.y, partialTicks, mousex, mousey);
+                tooltip.render(graphics, this.x, this.y, partialTicks, mousex, mousey);
                 RenderSystem.enableDepthTest();
             }
         }
@@ -77,7 +81,8 @@ public class ItemStackButtonAnimatedTooltip extends ItemStackButton {
         matrices.popPose();
     }
 
-    public void renderTooltip(PoseStack matrices, int mousex, int mousey, float partialTicks){
+    public void renderTooltip(GuiGraphics graphics, int mousex, int mousey, float partialTicks){
+        PoseStack matrices = graphics.pose();
         matrices.pushPose();
         this.isHovered = RenderingTools.isMouseInBorders(mousex,mousey,x,y,x+width,y+height);
         if (tooltip != null && shouldRenderTooltip) {
@@ -85,12 +90,12 @@ public class ItemStackButtonAnimatedTooltip extends ItemStackButton {
             if (Minecraft.getInstance().screen instanceof PostRenderTooltips t) {
                 t.addPostRenderTooltip(()->{
                     RenderSystem.disableDepthTest();
-                    tooltip.render(matrices, this.x, this.y, partialTicks, mousex, mousey);
+                    tooltip.render(graphics, this.x, this.y, partialTicks, mousex, mousey);
                     RenderSystem.enableDepthTest();
                 });
             }else{
                 RenderSystem.disableDepthTest();
-                tooltip.render(matrices, this.x, this.y, partialTicks, mousex, mousey);
+                tooltip.render(graphics, this.x, this.y, partialTicks, mousex, mousey);
                 RenderSystem.enableDepthTest();
             }
         }

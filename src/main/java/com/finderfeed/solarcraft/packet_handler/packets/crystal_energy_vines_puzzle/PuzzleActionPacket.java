@@ -33,7 +33,7 @@ public class PuzzleActionPacket {
     public void handle(Supplier<NetworkEvent.Context> ctx){
         ctx.get().enqueueWork(()-> {
             ServerPlayer sender = ctx.get().getSender();
-            ServerLevel world = sender.getLevel();
+            ServerLevel world = (ServerLevel) sender.level;
             if (world.getBlockEntity(tilePos) instanceof CrystalEnergyVinesTile tile){
                 tile.handleAction(moveType);
                 Helpers.updateTile(tile);

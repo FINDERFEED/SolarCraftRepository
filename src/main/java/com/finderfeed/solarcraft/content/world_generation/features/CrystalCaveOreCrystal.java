@@ -5,6 +5,7 @@ import com.finderfeed.solarcraft.config.SolarcraftConfig;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
@@ -63,7 +64,7 @@ public class CrystalCaveOreCrystal extends Feature<NoneFeatureConfiguration> {
 
             templ.placeInWorld(world, blockpos1, blockpos1, set, random, 4);
             templ.filterBlocks(blockpos1, set, Blocks.SEA_LANTERN).forEach((info) -> {
-                setBlock(world, info.pos, AVAILABLE_TO_SPAWN.get(world.getRandom().nextInt(AVAILABLE_TO_SPAWN.size())).defaultBlockState());
+                setBlock(world, info.pos(), AVAILABLE_TO_SPAWN.get(world.getRandom().nextInt(AVAILABLE_TO_SPAWN.size())).defaultBlockState());
             });
         }else{
             return false;
@@ -75,7 +76,7 @@ public class CrystalCaveOreCrystal extends Feature<NoneFeatureConfiguration> {
         if (AVAILABLE_TO_SPAWN == null){
             AVAILABLE_TO_SPAWN = new ArrayList<>();
             List<String> ids = SolarcraftConfig.ISLAND_ORES.get();
-            Optional<? extends Registry<Block>> a  = level.registryAccess().registry(Registry.BLOCK_REGISTRY);
+            Optional<? extends Registry<Block>> a  = level.registryAccess().registry(Registries.BLOCK);
             if (a.isPresent()){
                 Registry<Block> reg = a.get();
                 ids.forEach((string)->{

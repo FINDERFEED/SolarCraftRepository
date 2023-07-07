@@ -1,6 +1,7 @@
 package com.finderfeed.solarcraft.packet_handler.packets;
 
 import com.finderfeed.solarcraft.content.abilities.AbilityHelper;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.network.FriendlyByteBuf;
 
@@ -24,7 +25,7 @@ public class CastAbilityPacket {
     public void handle(Supplier<NetworkEvent.Context> ctx){
         ctx.get().enqueueWork(()->{
             ServerPlayer enti = ctx.get().getSender();
-            AbilityHelper.castAbility(enti.getLevel(),enti, AbilityHelper.getBindedAbilityID(enti,index));
+            AbilityHelper.castAbility((ServerLevel) enti.level,enti, AbilityHelper.getBindedAbilityID(enti,index));
         });
         ctx.get().setPacketHandled(true);
     }

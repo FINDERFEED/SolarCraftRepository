@@ -40,7 +40,7 @@ public class SmeltingLootModifier extends LootModifier {
 
         Optional<SmeltingRecipe> opt = ctx.getLevel().getRecipeManager().getRecipeFor(RecipeType.SMELTING,new SimpleContainer(stack),ctx.getLevel());
         if (opt.isPresent()){
-            return new ItemStack(opt.get().getResultItem().getItem(),stack.getCount());
+            return new ItemStack(opt.get().getResultItem(ctx.getLevel().registryAccess()).getItem(),stack.getCount());
         }
         return stack;
     }

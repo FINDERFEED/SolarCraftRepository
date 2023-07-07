@@ -48,7 +48,7 @@ public class SunShardPuzzlePutTilePacket {
         ctx.get().enqueueWork(()->{
             ServerPlayer sender = ctx.get().getSender();
             if (sender != null){
-                Level world = sender.getLevel();
+                Level world = sender.level;
                 if (world.getBlockEntity(tilePos) instanceof SunShardPuzzleBlockEntity tile){
                     tile.onPutTile(sender,this.tile,x,y);
                 }

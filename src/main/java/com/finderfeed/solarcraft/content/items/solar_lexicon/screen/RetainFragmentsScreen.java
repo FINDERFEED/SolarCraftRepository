@@ -8,11 +8,13 @@ import com.finderfeed.solarcraft.content.items.solar_lexicon.screen.buttons.Item
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.ProgressionHelper;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
+import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
 import com.finderfeed.solarcraft.packet_handler.packets.RetainFragmentPacket;
 import com.finderfeed.solarcraft.registries.items.SolarcraftItems;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -33,8 +35,8 @@ public class RetainFragmentsScreen extends ScrollableScreen {
     @Override
     protected void init() {
         super.init();
-        infoButton = new InfoButton(relX +  206 + 35,relY + 43,13,13,(btn1, matrices1, mx, my)->{
-            renderTooltip(matrices1,font.split(RETAIN_FRAGMENTS.copy(),200),mx,my);
+        infoButton = new InfoButton(relX +  206 + 35,relY + 43,13,13,(btn1, graphics, mx, my)->{
+            graphics.renderTooltip(font,font.split(RETAIN_FRAGMENTS.copy(),200),mx,my);
         });
         stagesPage  = new ItemStackTabButton(relX+98,relY + 20,17,17,(button)->{minecraft.setScreen(new SolarLexiconScreen());}, SolarcraftItems.SOLAR_FORGE_ITEM.get().getDefaultInstance(),0.7f);
         setAsStaticWidget(stagesPage);
@@ -46,8 +48,8 @@ public class RetainFragmentsScreen extends ScrollableScreen {
             if (ProgressionHelper.doPlayerHasFragment(Minecraft.getInstance().player,fragment)){
                 ItemStackButton button = new ItemStackButton(relX + 17 + x * 30,relY + 17 + y * 30,24,24,(b)->{
                     SCPacketHandler.INSTANCE.sendToServer(new RetainFragmentPacket(fragment.getId()));
-                },fragment.getIcon().getDefaultInstance(),1.5f,(b,matrices,mx,my)->{
-                    addPostRenderEntry(()->Minecraft.getInstance().screen.renderTooltip(matrices, fragment.getTranslation(), mx, my));
+                },fragment.getIcon().getDefaultInstance(),1.5f,(b,graphics,mx,my)->{
+                    addPostRenderEntry(()->graphics.renderTooltip(font, fragment.getTranslation(), mx, my));
                 });
                 addRenderableWidget(button);
                 x += 1;
@@ -67,29 +69,30 @@ public class RetainFragmentsScreen extends ScrollableScreen {
 
 
     @Override
-    public void render(PoseStack matrices, int mousex, int mousey, float pticks) {
+    public void render(GuiGraphics graphics, int mousex, int mousey, float pticks) {
 
+        PoseStack matrices = graphics.pose();
 
         int width = minecraft.getWindow().getWidth();
         int height = minecraft.getWindow().getHeight();
         int scale = (int)minecraft.getWindow().getGuiScale();
         ClientHelpers.bindText(BG);
-        blit(matrices,getRelX()+ 10,getRelY()+ 10,0,0,220,188,512,512);
+        RenderingTools.blitWithBlend(matrices,getRelX()+ 10,getRelY()+ 10,0,0,220,188,512,512,0,1f);
         GL11.glEnable(GL11.GL_SCISSOR_TEST);
         GL11.glScissor(width/2-((30+83)*scale),height/2-(88*scale),((188+35)*scale),187*scale);
         List<AbstractWidget> btns = ClientHelpers.getScreenButtons(this);
         btns.removeAll(getStaticWidgets());
 
         for (AbstractWidget w : btns){
-            w.render(matrices,mousex,mousey,pticks);
+            w.render(graphics,mousex,mousey,pticks);
         }
 
         GL11.glDisable(GL11.GL_SCISSOR_TEST);
 
         ClientHelpers.bindText(MAIN_SCREEN);
-        blit(matrices,getRelX(),getRelY(),0,0,256,256);
-        stagesPage.render(matrices,mousex,mousey,pticks);
-        infoButton.render(matrices,mousex,mousey,pticks);
+        RenderingTools.blitWithBlend(matrices,getRelX(),getRelY(),0,0,256,256,256,256,0,1f);
+        stagesPage.render(graphics,mousex,mousey,pticks);
+        infoButton.render(graphics,mousex,mousey,pticks);
         this.runPostEntries();
 
 

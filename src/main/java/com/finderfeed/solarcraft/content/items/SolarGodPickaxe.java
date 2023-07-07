@@ -49,22 +49,22 @@ public class SolarGodPickaxe extends RareSolarcraftPickaxe implements IUpgradabl
 
 
 
-    @Override
-    public void fillItemCategory(CreativeModeTab tab, NonNullList<ItemStack> stacks) {
-        if (this.allowedIn(tab)){
-//            ItemStack stack = new ItemStack(this);
-//            setItemLevel(stack,0);
-//            stacks.add(stack);
-//            ItemStack stack2 = new ItemStack(this);
-//            setItemLevel(stack2,getMaxUpgrades());
-//            stacks.add(stack2);
-            for (int i = 0; i <= getMaxUpgrades();i++){
-                ItemStack stack = new ItemStack(this);
-                setItemLevel(stack,i);
-                stacks.add(stack);
-            }
-        }
-    }
+//    @Override
+//    public void fillItemCategory(CreativeModeTab tab, NonNullList<ItemStack> stacks) {
+//        if (this.allowedIn(tab)){
+////            ItemStack stack = new ItemStack(this);
+////            setItemLevel(stack,0);
+////            stacks.add(stack);
+////            ItemStack stack2 = new ItemStack(this);
+////            setItemLevel(stack2,getMaxUpgrades());
+////            stacks.add(stack2);
+//            for (int i = 0; i <= getMaxUpgrades();i++){
+//                ItemStack stack = new ItemStack(this);
+//                setItemLevel(stack,i);
+//                stacks.add(stack);
+//            }
+//        }
+//    }
 
     public static void dropExpWithChance(BlockPos pos,Level world,float chance){
         if ((world.random.nextFloat() >= (1-chance/100) )) {
