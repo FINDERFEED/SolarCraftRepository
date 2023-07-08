@@ -43,4 +43,8 @@ class ProgressionOreGeometry implements IUnbakedGeometry<ProgressionOreGeometry>
         return new ProgressionOreModel(model);
     }
 
+    @Override
+    public void resolveParents(Function<ResourceLocation, UnbakedModel> modelGetter, IGeometryBakingContext context) {
+        this.model.resolveParents(modelGetter);
+    }
 }

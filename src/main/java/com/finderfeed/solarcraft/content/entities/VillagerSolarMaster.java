@@ -57,32 +57,33 @@ public class VillagerSolarMaster extends PathfinderMob {
             stack.setCount(64);
 
 
-            if (Helpers.hasPlayerCompletedProgression(Progression.IMBUED_COLD_STAR, player) &&
-                    ((player.getMainHandItem().getItem() == Items.EMERALD) && (player.getMainHandItem().getCount() == player.getMainHandItem().getMaxStackSize()))) {
-                if (TRADED_WITH.contains(player.getUUID())) {
-                    player.sendSystemMessage(Component.translatable("solarcraft.already_traded"));
-                    playSound(SoundEvents.VILLAGER_NO,1,1);
+            if (Helpers.hasPlayerCompletedProgression(Progression.IMBUED_COLD_STAR, player)) {
+                if (((player.getMainHandItem().getItem() == Items.EMERALD) && (player.getMainHandItem().getCount() == 64))) {
+                    if (TRADED_WITH.contains(player.getUUID())) {
+                        player.sendSystemMessage(Component.translatable("solarcraft.already_traded"));
+                        playSound(SoundEvents.VILLAGER_NO, 1, 1);
+                    } else {
+                        player.sendSystemMessage(Component.translatable("solarcraft.use_villager_success"));
+                        Helpers.fireProgressionEvent(player, Progression.TRADE_FOR_BLUE_GEM);
+
+                        playSound(SoundEvents.VILLAGER_YES, 1, 1);
+                        TRADED_WITH.add(player.getUUID());
+                        player.getMainHandItem().setCount(0);
+                        player.addItem(new ItemStack(SolarcraftItems.BLUE_GEM.get(), 30));
+                    }
+
                 } else {
-                    player.sendSystemMessage(Component.translatable("solarcraft.use_villager_success"));
-                    Helpers.fireProgressionEvent(player, Progression.TRADE_FOR_BLUE_GEM);
+                    if (TRADED_WITH.contains(player.getUUID())) {
+                        player.sendSystemMessage(Component.translatable("solarcraft.already_traded"));
+                        playSound(SoundEvents.VILLAGER_NO, 1, 1);
+                    } else {
+                        player.sendSystemMessage(Component.translatable("solarcraft.bring_emeralds"));
+                    }
 
-                    playSound(SoundEvents.VILLAGER_YES,1,1);
-                    TRADED_WITH.add(player.getUUID());
-                    player.getMainHandItem().setCount(0);
-                    player.addItem(new ItemStack(SolarcraftItems.BLUE_GEM.get(),30));
                 }
-
-            } else if (Helpers.hasPlayerCompletedProgression(Progression.CRAFT_SOLAR_LENS, player)) {
-                if (TRADED_WITH.contains(player.getUUID())) {
-                    player.sendSystemMessage(Component.translatable("solarcraft.already_traded"));
-                    playSound(SoundEvents.VILLAGER_NO,1,1);
-                } else {
-                    player.sendSystemMessage(Component.translatable("solarcraft.bring_emeralds"));
-                }
-
             } else {
                 player.sendSystemMessage(Component.translatable("solarcraft.not_enough_skill"));
-                playSound(SoundEvents.VILLAGER_NO,1,1);
+                playSound(SoundEvents.VILLAGER_NO, 1, 1);
             }
 
         }

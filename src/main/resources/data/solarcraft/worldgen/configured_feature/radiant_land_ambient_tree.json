@@ -22,7 +22,7 @@
           "persistent": "false",
           "distance": "7"
         },
-        "Name": "minecraft:radiant_leaves"
+        "Name": "solarcraft:radiant_leaves"
       },
       "type": "minecraft:simple_state_provider"
     },
@@ -36,7 +36,7 @@
         "Properties": {
           "axis": "y"
         },
-        "Name": "minecraft:radiant_log"
+        "Name": "solarcraft:radiant_log"
       },
       "type": "minecraft:simple_state_provider"
     },

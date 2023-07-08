@@ -72,73 +72,73 @@ public class FeaturesRegistry {
 
 
 
-
-    public static ConfiguredFeature<?,?> RADIANT_TREE_CONFIGURED_CONF;
-    public static ConfiguredFeature<?,?> RADIANT_SMALL_TREE_CONFIGURED_CONF;
-    public static ConfiguredFeature<?,?> ENERGY_PYLON_CONFIGURED_CONF;
-    public static ConfiguredFeature<?,?> RUINS_CONFIGURED;
-    public static ConfiguredFeature<?,?> RANDOM_PATCH_RADIANT_GRASS_CONF;
-    public static ConfiguredFeature<?,?> FLOATING_ISLANDS_RADIANT_LAND_CONFIGURED_CONF;
-    public static ConfiguredFeature<?,?> CRYSTALLIZED_ORE_VEIN_CONFIGURED_CONF;
-    public static ConfiguredFeature<?,?> RADIANT_BERRY_BUSH_CONF;
-    public static ConfiguredFeature<?,?> ENDER_CRACKS_CONF;
-    public static ConfiguredFeature<?,?> LENSING_CRYSTAL_ORE_CONF;
-    public static ConfiguredFeature<?,?> CRYSTAL_CAVE_ORE_CRYSTAL_CONF;
-    public static ConfiguredFeature<?,?> CEILING_FLOOR_CRYSTALS_CONF;
-    public static ConfiguredFeature<?,?> CRYSTAL_FLOWER_CONF;
-    public static ConfiguredFeature<?,?> CEILING_DRIPSTONE_LIKE_CRYSTALS_CONF;
-    public static ConfiguredFeature<?,?> CRYSTALLIZED_RUNIC_ENERGY_CRYSTALS_CONF;
-    public static ConfiguredFeature<?,?> LUNAR_LILY_FEATURE_CONF;
-    public static ConfiguredFeature<?,?> EMPTY_CRYSTALS_CONF;
-    public static ConfiguredFeature<?,?> SOLAR_ORE_CONF;
-    public static ConfiguredFeature<?,?> SOLAR_STONE_CONF;
-    public static ConfiguredFeature<?,?> ULDERA_OBELISK_CONFIGURED;
-    public static ConfiguredFeature<?,?> ULDERA_PYLON_CONFIGURED;
-    public static ConfiguredFeature<?,?> CLEARING_CRYSTAL_CONFIGURED;
-    public static ConfiguredFeature<?,?> MAGISTONE_ORE;
-
-
-    public static Holder<PlacedFeature> ULDERA_OBELISK_PLACEMENT;
-    public static Holder<PlacedFeature> BURNT_TREE_2;
-    public static Holder<PlacedFeature> BURNT_TREE_1;
-    public static Holder<PlacedFeature> RADIANT_TREE_PLACEMENT;
-    public static Holder<PlacedFeature> RADIANT_SMALL_TREE_PLACEMENT;
-    public static Holder<PlacedFeature> ENERGY_PYLON_PLACEMENT;
-    public static Holder<PlacedFeature> RUINS_PLACEMENT;
-    public static Holder<PlacedFeature> RANDOM_PATCH_RADIANT_GRASS;
-    public static Holder<PlacedFeature> FLOATING_ISLANDS_RADIANT_LAND_PLACEMENT;
-    public static Holder<PlacedFeature> CRYSTALLIZED_ORE_VEIN_CONFIGURED;
-    public static Holder<PlacedFeature> RADIANT_BERRY_BUSH;
-    public static Holder<PlacedFeature> ENDER_CRACKS;
-    public static Holder<PlacedFeature> LENSING_CRYSTAL_ORE_PLACEMENT;
-    public static Holder<PlacedFeature> CRYSTAL_CAVE_ORE_CRYSTAL_PLACEMENT;
-    public static Holder<PlacedFeature> CEILING_FLOOR_CRYSTALS_PLACEMENT;
-    public static Holder<PlacedFeature> CRYSTAL_FLOWER_PLACEMENT;
-    public static Holder<PlacedFeature> CEILING_DRIPSTONE_LIKE_CRYSTALS_PLACEMENT;
-    public static Holder<PlacedFeature> CRYSTALLIZED_RUNIC_ENERGY_CRYSTALS_PLACEMENT;
-    public static Holder<PlacedFeature> LUNAR_LILY_FEATURE_PLACEMENT;
-    public static Holder<PlacedFeature> EMPTY_CRYSTALS_PLACEMENT;
-    public static Holder<PlacedFeature> RUNIC_TREE_FEATURE;
-    public static Holder<PlacedFeature> ULDORADIUM_ORE_PLACED_FEATURE;
-    public static Holder<PlacedFeature> BURNT_BIOME_AMBIENECE_PLACED_FEATURE;
-    public static Holder<PlacedFeature> SOLAR_ORE;
-    public static Holder<PlacedFeature> SOLAR_STONE;
-    public static Holder<PlacedFeature> ULDERA_PYLON_PLACEMENT;
-    public static Holder<PlacedFeature> CLEARING_CRYSTAL_PLACEMENT;
-    public static Holder<PlacedFeature> MAGISTONE_ORE_PLACEMENT;
-
-
-
-
-    public static  ConfiguredFeature<?,?> BURNT_BIOME_AMBIENCE_1_CONFIGURED;
-
-
-
-    public static ConfiguredFeature<OreConfiguration,?> ULDORADIUM_ORE;
-
-
-
-    public static ConfiguredFeature<TreeConfiguration,?> RUNIC_TREE_FEATURE_CONF;
+//
+//    public static ConfiguredFeature<?,?> RADIANT_TREE_CONFIGURED_CONF;
+//    public static ConfiguredFeature<?,?> RADIANT_SMALL_TREE_CONFIGURED_CONF;
+//    public static ConfiguredFeature<?,?> ENERGY_PYLON_CONFIGURED_CONF;
+//    public static ConfiguredFeature<?,?> RUINS_CONFIGURED;
+//    public static ConfiguredFeature<?,?> RANDOM_PATCH_RADIANT_GRASS_CONF;
+//    public static ConfiguredFeature<?,?> FLOATING_ISLANDS_RADIANT_LAND_CONFIGURED_CONF;
+//    public static ConfiguredFeature<?,?> CRYSTALLIZED_ORE_VEIN_CONFIGURED_CONF;
+//    public static ConfiguredFeature<?,?> RADIANT_BERRY_BUSH_CONF;
+//    public static ConfiguredFeature<?,?> ENDER_CRACKS_CONF;
+//    public static ConfiguredFeature<?,?> LENSING_CRYSTAL_ORE_CONF;
+//    public static ConfiguredFeature<?,?> CRYSTAL_CAVE_ORE_CRYSTAL_CONF;
+//    public static ConfiguredFeature<?,?> CEILING_FLOOR_CRYSTALS_CONF;
+//    public static ConfiguredFeature<?,?> CRYSTAL_FLOWER_CONF;
+//    public static ConfiguredFeature<?,?> CEILING_DRIPSTONE_LIKE_CRYSTALS_CONF;
+//    public static ConfiguredFeature<?,?> CRYSTALLIZED_RUNIC_ENERGY_CRYSTALS_CONF;
+//    public static ConfiguredFeature<?,?> LUNAR_LILY_FEATURE_CONF;
+//    public static ConfiguredFeature<?,?> EMPTY_CRYSTALS_CONF;
+//    public static ConfiguredFeature<?,?> SOLAR_ORE_CONF;
+//    public static ConfiguredFeature<?,?> SOLAR_STONE_CONF;
+//    public static ConfiguredFeature<?,?> ULDERA_OBELISK_CONFIGURED;
+//    public static ConfiguredFeature<?,?> ULDERA_PYLON_CONFIGURED;
+//    public static ConfiguredFeature<?,?> CLEARING_CRYSTAL_CONFIGURED;
+//    public static ConfiguredFeature<?,?> MAGISTONE_ORE;
+//
+//
+//    public static Holder<PlacedFeature> ULDERA_OBELISK_PLACEMENT;
+//    public static Holder<PlacedFeature> BURNT_TREE_2;
+//    public static Holder<PlacedFeature> BURNT_TREE_1;
+//    public static Holder<PlacedFeature> RADIANT_TREE_PLACEMENT;
+//    public static Holder<PlacedFeature> RADIANT_SMALL_TREE_PLACEMENT;
+//    public static Holder<PlacedFeature> ENERGY_PYLON_PLACEMENT;
+//    public static Holder<PlacedFeature> RUINS_PLACEMENT;
+//    public static Holder<PlacedFeature> RANDOM_PATCH_RADIANT_GRASS;
+//    public static Holder<PlacedFeature> FLOATING_ISLANDS_RADIANT_LAND_PLACEMENT;
+//    public static Holder<PlacedFeature> CRYSTALLIZED_ORE_VEIN_CONFIGURED;
+//    public static Holder<PlacedFeature> RADIANT_BERRY_BUSH;
+//    public static Holder<PlacedFeature> ENDER_CRACKS;
+//    public static Holder<PlacedFeature> LENSING_CRYSTAL_ORE_PLACEMENT;
+//    public static Holder<PlacedFeature> CRYSTAL_CAVE_ORE_CRYSTAL_PLACEMENT;
+//    public static Holder<PlacedFeature> CEILING_FLOOR_CRYSTALS_PLACEMENT;
+//    public static Holder<PlacedFeature> CRYSTAL_FLOWER_PLACEMENT;
+//    public static Holder<PlacedFeature> CEILING_DRIPSTONE_LIKE_CRYSTALS_PLACEMENT;
+//    public static Holder<PlacedFeature> CRYSTALLIZED_RUNIC_ENERGY_CRYSTALS_PLACEMENT;
+//    public static Holder<PlacedFeature> LUNAR_LILY_FEATURE_PLACEMENT;
+//    public static Holder<PlacedFeature> EMPTY_CRYSTALS_PLACEMENT;
+//    public static Holder<PlacedFeature> RUNIC_TREE_FEATURE;
+//    public static Holder<PlacedFeature> ULDORADIUM_ORE_PLACED_FEATURE;
+//    public static Holder<PlacedFeature> BURNT_BIOME_AMBIENECE_PLACED_FEATURE;
+//    public static Holder<PlacedFeature> SOLAR_ORE;
+//    public static Holder<PlacedFeature> SOLAR_STONE;
+//    public static Holder<PlacedFeature> ULDERA_PYLON_PLACEMENT;
+//    public static Holder<PlacedFeature> CLEARING_CRYSTAL_PLACEMENT;
+//    public static Holder<PlacedFeature> MAGISTONE_ORE_PLACEMENT;
+//
+//
+//
+//
+//    public static  ConfiguredFeature<?,?> BURNT_BIOME_AMBIENCE_1_CONFIGURED;
+//
+//
+//
+//    public static ConfiguredFeature<OreConfiguration,?> ULDORADIUM_ORE;
+//
+//
+//
+//    public static ConfiguredFeature<TreeConfiguration,?> RUNIC_TREE_FEATURE_CONF;
 
 
 

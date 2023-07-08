@@ -190,7 +190,7 @@ public class SolarCraft
         FMLJavaModLoadingContext.get().getModEventBus().addListener(LazyConfiguredFeatures::registerConfiguredFeatures);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(SolarcraftItems::registerIntoCreativeTabs);
 
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(FeaturesRegistry::registerConfiguredFeatures);
+//        FMLJavaModLoadingContext.get().getModEventBus().addListener(FeaturesRegistry::registerConfiguredFeatures);
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, SolarcraftConfig.SPEC,"solarcraft-config.toml");
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, SolarcraftClientConfig.SPEC,"solarcraft-client-config.toml");
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
