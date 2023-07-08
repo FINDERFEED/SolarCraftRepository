@@ -68,10 +68,10 @@ public class SolarLexiconScreen extends Screen implements IScrollable,PostRender
     public int scrollX = 0;
     public int scrollY = 0;
 
-    public ItemStackButton stagesPage = new ItemStackButton(relX+100,relY + 40,12,12,(button)->{minecraft.setScreen(new StagesScreen());},Items.BEACON.getDefaultInstance(),0.7f);
-    public ItemStackButton toggleRecipesScreen = new ItemStackButton(relX+100,relY+100,12,12,(button)->{minecraft.setScreen(new SolarLexiconRecipesScreen());}, Items.CRAFTING_TABLE.getDefaultInstance(),0.7f);
-    public ItemStackButton justForge = new ItemStackButton(relX+100,relY+100,12,12,(button)->{}, SolarcraftItems.SOLAR_FORGE_ITEM.get().getDefaultInstance(),0.7f);
-    public ItemStackButton retainFragmentsScreen = new ItemStackButton(relX+100,relY+100,12,12,(button)->{minecraft.setScreen(new RetainFragmentsScreen());}, Items.PAPER.getDefaultInstance(),0.7f);
+    public ItemStackButton stagesPage;
+    public ItemStackButton toggleRecipesScreen;
+    public ItemStackButton justForge;
+    public ItemStackButton retainFragmentsScreen;
 
     public InfoButton info;
 
@@ -171,6 +171,25 @@ public class SolarLexiconScreen extends Screen implements IScrollable,PostRender
     @Override
     protected void init() {
         super.init();
+
+        stagesPage = new ItemStackButton(relX+100,relY + 40,12,12,(button)->{minecraft.setScreen(new StagesScreen());},Items.BEACON.getDefaultInstance(),0.7f,
+                (btn,graphics,mx,my)->{
+            graphics.renderTooltip(font,Component.translatable("solarcraft.screens.buttons.stages_page"),mx,my);
+                });
+        toggleRecipesScreen = new ItemStackButton(relX+100,relY+100,12,12,(button)->{minecraft.setScreen(new SolarLexiconRecipesScreen());}, Items.CRAFTING_TABLE.getDefaultInstance(),0.7f,
+                (btn,graphics,mx,my)->{
+                    graphics.renderTooltip(font,Component.translatable("solarcraft.screens.buttons.recipes_screen"),mx,my);
+                });
+        justForge = new ItemStackButton(relX+100,relY+100,12,12,(button)->{}, SolarcraftItems.SOLAR_FORGE_ITEM.get().getDefaultInstance(),0.7f,
+                (btn,graphics,mx,my)->{
+                    graphics.renderTooltip(font,Component.translatable("solarcraft.screens.buttons.nothing"),mx,my);
+                });
+        retainFragmentsScreen = new ItemStackButton(relX+100,relY+100,12,12,(button)->{minecraft.setScreen(new RetainFragmentsScreen());}, Items.PAPER.getDefaultInstance(),0.7f,
+                (btn,graphics,mx,my)->{
+                    graphics.renderTooltip(font,Component.translatable("solarcraft.screens.buttons.retain_fragments_screen"),mx,my);
+                });
+
+
         postRender.clear();
         locked = new ArrayList<>();
         unlocked = new ArrayList<>();
@@ -425,9 +444,13 @@ public class SolarLexiconScreen extends Screen implements IScrollable,PostRender
 //            }
 //        }
 
+
         toggleRecipesScreen.render(graphics,mousex,mousey,partialTicks,101);
+
         justForge.render(graphics,mousex,mousey,partialTicks,101);
+
         stagesPage.render(graphics,mousex,mousey,partialTicks,101);
+
         retainFragmentsScreen.render(graphics,mousex,mousey,partialTicks,101);
         info.render(graphics,mousex,mousey,partialTicks);
         matrices.popPose();

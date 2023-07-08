@@ -140,7 +140,7 @@ public class SolarCraft
             .sound(SoundType.ANCIENT_DEBRIS)));
 
     public  static  final  RegistryObject<InfuserBlock> SOLAR_INFUSER = BLOCKS.register("solar_infuser",
-            ()-> new InfuserBlock(BlockBehaviour.Properties.copy(Blocks.STONE)));
+            ()-> new InfuserBlock(BlockBehaviour.Properties.copy(Blocks.STONE).noOcclusion()));
 
     public static final RegistryObject<BlockEntityType<InfuserTileEntity>> INFUSING_STAND_BLOCKENTITY = TILE_ENTITY_TYPE.register("infusing_stand_blockentity",()->
             BlockEntityType.Builder.of(InfuserTileEntity::new,SOLAR_INFUSER.get()).build(null));

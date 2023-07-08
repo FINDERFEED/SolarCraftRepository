@@ -45,7 +45,7 @@ import net.minecraftforge.registries.RegistryObject;
 public class SolarcraftBlocks {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS,"solarcraft");
     public  static  final RegistryObject<InfusingStand> INFUSING_POOL = BLOCKS.register("solar_forge_infusion_pool",()-> new InfusingStand(
-            BlockBehaviour.Properties.copy(Blocks.STONE)
+            BlockBehaviour.Properties.copy(Blocks.STONE).noOcclusion()
     ));
 
     public  static  final RegistryObject<Block> INFUSING_CRAFTING_TABLE_BLOCK = BLOCKS.register("infusing_crafting_table",()-> new InfusingTableBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)));

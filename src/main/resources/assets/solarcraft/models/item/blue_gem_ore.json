@@ -5,7 +5,7 @@
       "predicate": {
         "solarcraft:unlocked": 1
       },
-      "model": "solarcraft:item/uldoradium_ore_unlocked"
+      "model": "solarcraft:item/blue_gem_ore_unlocked"
     }
     ]
 }

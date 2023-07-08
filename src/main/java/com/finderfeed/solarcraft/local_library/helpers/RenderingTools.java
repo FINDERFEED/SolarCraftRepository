@@ -506,6 +506,49 @@ public class RenderingTools {
     }
 
 
+    public static void renderScaledGuiItem(GuiGraphics graphics,ItemStack stack, float x, float y,float scale,double zOffset){
+        BakedModel bakedmodel = Minecraft.getInstance().getItemRenderer().getModel(stack,Minecraft.getInstance().level, Minecraft.getInstance().player, 0);
+        PoseStack matrices = graphics.pose();
+
+        matrices.pushPose();
+        matrices.translate((float)(x + 8*scale), (float)(y + 8*scale), zOffset);
+        matrices.mulPoseMatrix((new Matrix4f()).scaling(1.0F, -1.0F, 1.0F));
+        matrices.scale(16.0F*scale, 16.0F*scale, 16.0F*scale);
+        boolean flag = !bakedmodel.usesBlockLight();
+        if (flag) {
+            Lighting.setupForFlatItems();
+        }
+
+        renderItemStack(stack, ItemDisplayContext.GUI, false, matrices, graphics.bufferSource(), 15728880, OverlayTexture.NO_OVERLAY, bakedmodel);
+        graphics.flush();
+        if (flag) {
+            Lighting.setupFor3DItems();
+        }
+        matrices.popPose();
+    }
+
+    public static void renderScaledGuiItemCentered(GuiGraphics graphics,ItemStack stack, float x, float y,float scale,double zOffset){
+        BakedModel bakedmodel = Minecraft.getInstance().getItemRenderer().getModel(stack,Minecraft.getInstance().level, Minecraft.getInstance().player, 0);
+        PoseStack matrices = graphics.pose();
+
+        matrices.pushPose();
+        matrices.translate(x ,y , zOffset);
+        matrices.mulPoseMatrix((new Matrix4f()).scaling(1.0F, -1.0F, 1.0F));
+        matrices.scale(16.0F*scale, 16.0F*scale, 16.0F*scale);
+        boolean flag = !bakedmodel.usesBlockLight();
+        if (flag) {
+            Lighting.setupForFlatItems();
+        }
+
+        renderItemStack(stack, ItemDisplayContext.GUI, false, matrices, graphics.bufferSource(), 15728880, OverlayTexture.NO_OVERLAY, bakedmodel);
+        graphics.flush();
+        if (flag) {
+            Lighting.setupFor3DItems();
+        }
+        matrices.popPose();
+    }
+
+    @Deprecated
     public static void renderScaledGuiItem(ItemStack stack, int x, int y,float scale,double zOffset) {
         Minecraft.getInstance().textureManager.getTexture(TextureAtlas.LOCATION_BLOCKS).setFilter(false, false);
         RenderSystem.setShaderTexture(0, TextureAtlas.LOCATION_BLOCKS);
@@ -544,6 +587,7 @@ public class RenderingTools {
         RenderSystem.applyModelViewMatrix();
     }
 
+    @Deprecated
     public static void renderScaledGuiItemCentered(ItemStack stack, float x, float y,float scale,double zOffset) {
         Minecraft.getInstance().textureManager.getTexture(TextureAtlas.LOCATION_BLOCKS).setFilter(false, false);
         RenderSystem.setShaderTexture(0, TextureAtlas.LOCATION_BLOCKS);
@@ -1443,13 +1487,10 @@ public class RenderingTools {
 
 
 
-        public void renderGuiItemScaled(ItemStack p_115124_, int p_115125_, int p_115126_,float scale) {
-            renderScaledGuiItem(p_115124_, p_115125_, p_115126_,scale,0);
+        public void renderGuiItemScaled(GuiGraphics graphics,ItemStack p_115124_, int p_115125_, int p_115126_,float scale) {
+            renderScaledGuiItem(graphics,p_115124_, p_115125_, p_115126_,scale,0);
         }
 
-        public void renderGuiItem(ItemStack p_115124_, int p_115125_, int p_115126_) {
-            renderScaledGuiItem(p_115124_, p_115125_, p_115126_,1f,0);
-        }
 
 //        protected void renderGuiItem(ItemStack p_115128_, int p_115129_, int p_115130_, BakedModel p_115131_,float scale) {
 //            Minecraft.getInstance().textureManager.getTexture(TextureAtlas.LOCATION_BLOCKS).setFilter(false, false);
@@ -1482,43 +1523,63 @@ public class RenderingTools {
 //            RenderSystem.applyModelViewMatrix();
 //        }
 
-        protected void renderScaledGuiItem(ItemStack stack, int x, int y,float scale,double zOffset) {
-            Minecraft.getInstance().textureManager.getTexture(TextureAtlas.LOCATION_BLOCKS).setFilter(false, false);
-            RenderSystem.setShaderTexture(0, TextureAtlas.LOCATION_BLOCKS);
-            RenderSystem.enableBlend();
-            RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-            RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-            PoseStack posestack = RenderSystem.getModelViewStack();
-            posestack.pushPose();
+        protected void renderScaledGuiItem(GuiGraphics graphics,ItemStack stack, int x, int y,float scale,double zOffset){
+            BakedModel bakedmodel = Minecraft.getInstance().getItemRenderer().getModel(stack,Minecraft.getInstance().level, Minecraft.getInstance().player, 0);
+            PoseStack matrices = graphics.pose();
 
-
-
-            posestack.translate((double)x, (double)y, (double)(100.0F  + zOffset));
-            posestack.translate(8.0D*scale, 8.0D*scale, 0.0D);
-            posestack.scale(1.0F, -1.0F, 1.0F);
-            posestack.scale(16.0F*scale, 16.0F*scale, 16.0F*scale);
-
-            RenderSystem.applyModelViewMatrix();
-            PoseStack posestack1 = new PoseStack();
-
-            MultiBufferSource.BufferSource multibuffersource$buffersource = Minecraft.getInstance().renderBuffers().bufferSource();
-            BakedModel p_115131_ = Minecraft.getInstance().getItemRenderer().getModel(stack,null,null,0);
-            boolean flag = !p_115131_.usesBlockLight();
+            matrices.pushPose();
+            matrices.translate(x ,y , zOffset);
+            matrices.mulPoseMatrix((new Matrix4f()).scaling(1.0F, -1.0F, 1.0F));
+            matrices.scale(16.0F*scale, 16.0F*scale, 16.0F*scale);
+            boolean flag = !bakedmodel.usesBlockLight();
             if (flag) {
                 Lighting.setupForFlatItems();
             }
 
-
-            renderItemStackOptimized(stack, ItemDisplayContext.GUI, false, posestack1, multibuffersource$buffersource, 15728880, OverlayTexture.NO_OVERLAY, p_115131_);
-            multibuffersource$buffersource.endBatch();
-            RenderSystem.enableDepthTest();
+            renderItemStackOptimized(stack, ItemDisplayContext.GUI, false, matrices, graphics.bufferSource(), 15728880, OverlayTexture.NO_OVERLAY, bakedmodel);
+            graphics.flush();
             if (flag) {
                 Lighting.setupFor3DItems();
             }
-
-            posestack.popPose();
-            RenderSystem.applyModelViewMatrix();
+            matrices.popPose();
         }
+//        protected void renderScaledGuiItem(ItemStack stack, int x, int y,float scale,double zOffset) {
+//            Minecraft.getInstance().textureManager.getTexture(TextureAtlas.LOCATION_BLOCKS).setFilter(false, false);
+//            RenderSystem.setShaderTexture(0, TextureAtlas.LOCATION_BLOCKS);
+//            RenderSystem.enableBlend();
+//            RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+//            RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+//            PoseStack posestack = RenderSystem.getModelViewStack();
+//            posestack.pushPose();
+//
+//
+//
+//            posestack.translate((double)x, (double)y, (double)(100.0F  + zOffset));
+//            posestack.translate(8.0D*scale, 8.0D*scale, 0.0D);
+//            posestack.scale(1.0F, -1.0F, 1.0F);
+//            posestack.scale(16.0F*scale, 16.0F*scale, 16.0F*scale);
+//
+//            RenderSystem.applyModelViewMatrix();
+//            PoseStack posestack1 = new PoseStack();
+//
+//            MultiBufferSource.BufferSource multibuffersource$buffersource = Minecraft.getInstance().renderBuffers().bufferSource();
+//            BakedModel p_115131_ = Minecraft.getInstance().getItemRenderer().getModel(stack,null,null,0);
+//            boolean flag = !p_115131_.usesBlockLight();
+//            if (flag) {
+//                Lighting.setupForFlatItems();
+//            }
+//
+//
+//            renderItemStackOptimized(stack, ItemDisplayContext.GUI, false, posestack1, multibuffersource$buffersource, 15728880, OverlayTexture.NO_OVERLAY, p_115131_);
+//            multibuffersource$buffersource.endBatch();
+//            RenderSystem.enableDepthTest();
+//            if (flag) {
+//                Lighting.setupFor3DItems();
+//            }
+//
+//            posestack.popPose();
+//            RenderSystem.applyModelViewMatrix();
+//        }
 
         public void renderItemStackOptimized(ItemStack stack, ItemDisplayContext ctx, boolean idk, PoseStack matrices, MultiBufferSource src, int x, int y, BakedModel mdl) {
             if (!stack.isEmpty()) {

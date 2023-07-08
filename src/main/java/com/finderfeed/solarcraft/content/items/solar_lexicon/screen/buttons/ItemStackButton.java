@@ -39,13 +39,17 @@ public class ItemStackButton extends FDButton {
 //        if (this.isHovered){
 //            this.renderToolTip(matrices,mousex,mousey);
 //        }
-        matrices.scale(scaleFactor,scaleFactor,scaleFactor);
-        RenderingTools.renderScaledGuiItem(stack,(int) x, (int) y,scaleFactor,0);
+//        matrices.scale(scaleFactor,scaleFactor,scaleFactor);
+//        RenderingTools.renderScaledGuiItem(stack,(int) x, (int) y,scaleFactor,0);
+
+        RenderingTools.renderScaledGuiItemCentered(graphics,stack,(int) x + width/2f, (int) y + height/2f,scaleFactor, 300);
+
 
         RenderSystem.setShaderTexture(0,LOC);
         RenderSystem.enableBlend();
         if (this.isHovered){
-            RenderingTools.blitWithBlend(matrices,(int)(x/scaleFactor),(int)(y/scaleFactor),0,0,16,16,16,16,0,1f);
+            //RenderingTools.blitWithBlend(matrices,(int)(x/scaleFactor),(int)(y/scaleFactor),0,0,16,16,16,16,0,1f);
+            graphics.fill(x,y,x + (int)(16*scaleFactor),y + (int)(16*scaleFactor),0x99ffffff);
 
         }
         matrices.popPose();
@@ -55,27 +59,19 @@ public class ItemStackButton extends FDButton {
         PoseStack matrices = graphics.pose();
         this.isHovered = RenderingTools.isMouseInBorders(mousex,mousey,x,y,x + width,y + height);
         matrices.pushPose();
-//        if (this.isHovered){
-//            this.renderTooltip(graphics,mousex,mousey);
-//        }
-        matrices.scale(scaleFactor,scaleFactor,scaleFactor);
-        RenderingTools.renderScaledGuiItem(stack,(int) x, (int) y,scaleFactor,zOffset);
+
+
+        RenderingTools.renderScaledGuiItemCentered(graphics,stack,(int) x + width/2f - 0.5f, (int) y + height/2f - 0.5f,scaleFactor,zOffset + 300);
 
         RenderSystem.setShaderTexture(0,LOC);
-        RenderSystem.enableBlend();
         if (this.isHovered){
-            RenderingTools.blitWithBlend(matrices,(int)(x/scaleFactor),(int)(y/scaleFactor),0,0,16,16,16,16,0,1f);
+//            RenderingTools.blitWithBlend(matrices,(int)x,(int)y,0,0,16,16,16,16,0,1f);
+            graphics.fill(x,y,x + (int)(width*scaleFactor),y + (int)(height*scaleFactor),0xaaffffff);
         }
         matrices.popPose();
-    }
-
-    @Override
-    protected void renderTooltip(GuiGraphics graphics, int mx, int my) {
-        PoseStack matrices = graphics.pose();
-        matrices.pushPose();
-        matrices.translate(0,0,300);
-        super.renderTooltip(graphics, mx, my);
-        matrices.popPose();
+        if (this.isHovered){
+            this.renderTooltip(graphics,mousex,mousey);
+        }
     }
 
     @Override

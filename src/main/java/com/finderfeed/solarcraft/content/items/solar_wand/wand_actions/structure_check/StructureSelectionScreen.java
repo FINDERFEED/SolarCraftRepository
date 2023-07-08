@@ -60,11 +60,12 @@ public class StructureSelectionScreen extends DefaultScreen {
                     ()->{
                         processStructure(checkPos,structure,3);
                     },
-                    (matrices, x, y) -> {
+                    (graphics, x, y) -> {
                         RenderingTools.renderScaledGuiItemCentered(
+                                graphics,
                                 structure.mainBlock.getBlock()
                                         .asItem().getDefaultInstance(),
-                                x,y,1f,0
+                                x,y,1f,300
                         );
                     },
                     (graphics, x, y) -> {

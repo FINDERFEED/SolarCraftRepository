@@ -32,12 +32,12 @@ public class EffectAmulet extends SolarcraftItem {
         if (entity instanceof LivingEntity living){
             if (!living.hasEffect(effect) && !effect.equals(MobEffects.NIGHT_VISION)){
                 if (p_41405_.getGameTime() % 20 == 0) {
-                    living.addEffect(new MobEffectInstance(effect, 400, 0));
+                    living.addEffect(new MobEffectInstance(effect, 400, 0,true,false));
                 }
             }
             if (effect.equals(MobEffects.NIGHT_VISION)){
                 if (p_41405_.getGameTime() % 20 == 0) {
-                    living.addEffect(new MobEffectInstance(effect, 400, 0));
+                    living.addEffect(new MobEffectInstance(effect, 400, 0,true,false));
                 }
             }
         }

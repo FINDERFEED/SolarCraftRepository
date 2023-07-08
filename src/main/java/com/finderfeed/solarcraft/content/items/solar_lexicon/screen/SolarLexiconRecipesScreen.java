@@ -239,7 +239,7 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
         ClientHelpers.bindText(MAIN_SCREEN);
 
         matrices.pushPose();
-        matrices.translate(0,0,250);
+        matrices.translate(0,0,400);
         RenderingTools.blitWithBlend(matrices,relX,relY,0,0,256,256,256,256,0,1f);
         matrices.popPose();
 

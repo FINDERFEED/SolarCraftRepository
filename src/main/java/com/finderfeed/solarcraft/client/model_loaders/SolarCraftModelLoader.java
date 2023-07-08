@@ -49,43 +49,6 @@ class ProgressionOreGeometry implements IUnbakedGeometry<ProgressionOreGeometry>
         this.model = model;
     }
 
-//    @Override
-//    public BakedModel bake(IModelConfiguration owner,
-//                            ModelBakery bakery,
-//                            Function<Material, TextureAtlasSprite> spriteGetter,
-//                            ModelState modelTransform,
-//                            ItemOverrides overrides,
-//                            ResourceLocation modelLocation) {
-//
-//
-//        BakedModel model = this.model.bake(bakery,this.model,spriteGetter,modelTransform,modelLocation,false);
-//        return new ProgressionOreModel(model);
-//    }
-
-//    @Override
-//    public Collection<Material> getTextures(IModelConfiguration owner,
-//                                                  Function<ResourceLocation, UnbakedModel> modelGetter,
-//                                                  Set<Pair<String, String>> missingTextureErrors) {
-//        List<Material> list = new ArrayList<>();
-//        list.addAll(model.getMaterials(modelGetter,missingTextureErrors));
-//
-//        return list;
-//    }
-
-//    @Override
-//    public BakedModel bake(IGeometryBakingContext context, ModelBakery bakery, Function<Material, TextureAtlasSprite> spriteGetter, ModelState modelState, ItemOverrides overrides, ResourceLocation modelLocation) {
-//        BakedModel model = this.model.bake(bakery,this.model,spriteGetter,modelState,modelLocation,false);
-//        return new ProgressionOreModel(model);
-//    }
-
-//    @Override
-//    public Collection<Material> getMaterials(IGeometryBakingContext context, Function<ResourceLocation, UnbakedModel> modelGetter, Set<Pair<String, String>> missingTextureErrors) {
-//        List<Material> list = new ArrayList<>();
-//        list.addAll(model.getMaterials(modelGetter,missingTextureErrors));
-//
-//        return list;
-//    }
-
     @Override
     public BakedModel bake(IGeometryBakingContext context, ModelBaker baker, Function<Material, TextureAtlasSprite> spriteGetter, ModelState modelState, ItemOverrides overrides, ResourceLocation modelLocation) {
         BakedModel model = this.model.bake(baker,this.model,spriteGetter,modelState,modelLocation,false);

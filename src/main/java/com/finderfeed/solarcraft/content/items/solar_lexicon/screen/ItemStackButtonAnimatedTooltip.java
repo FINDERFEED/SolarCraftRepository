@@ -25,7 +25,7 @@ public class ItemStackButtonAnimatedTooltip extends ItemStackButton {
         matrices.pushPose();
 
         matrices.scale(scaleFactor,scaleFactor,scaleFactor);
-        RenderingTools.renderScaledGuiItem(stack,(int) x, (int) y,scaleFactor,0);
+        RenderingTools.renderScaledGuiItem(graphics,stack,(int) x, (int) y,scaleFactor,300);
 
 
         RenderSystem.enableBlend();
@@ -57,7 +57,7 @@ public class ItemStackButtonAnimatedTooltip extends ItemStackButton {
         matrices.pushPose();
 
         matrices.scale(scaleFactor,scaleFactor,scaleFactor);
-        RenderingTools.renderScaledGuiItem(stack,(int) x, (int) y,scaleFactor,zOffset);
+        RenderingTools.renderScaledGuiItem(graphics,stack,(int) x, (int) y,scaleFactor,zOffset);
 
 
         RenderSystem.enableBlend();

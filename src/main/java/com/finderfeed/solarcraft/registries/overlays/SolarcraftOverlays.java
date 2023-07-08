@@ -275,7 +275,7 @@ public class SolarcraftOverlays {
                     ) {
                         ItemStack stack = SolarcraftItems.SOLAR_WAND.get().getDefaultInstance();
                         SolarWandItem.setWandAction(stack,action.getRegistryName());
-                        RenderingTools.renderScaledGuiItemCentered(stack,
+                        RenderingTools.renderScaledGuiItemCentered(graphics,stack,
                                 width / 2f + 16, height / 2f - 1, 1f, 0);
                     }
 

@@ -41,7 +41,9 @@ public abstract class FDButton extends Button {
 
     protected void renderTooltip(GuiGraphics graphics, int mx, int my){
         if (this.tooltip != null){
+            graphics.pose().pushPose();
             this.tooltip.renderTooltip(this,graphics,mx,my);
+            graphics.pose().popPose();
         }
     }
 

@@ -215,11 +215,11 @@ public class StructureScreen extends Screen {
 
     private void renderItemAndTooltip(GuiGraphics graphics,BlockState toRender, int place1, int place2, int mousex, int mousey, PoseStack matrices){
         ItemStack stack = toRender.getBlock().asItem().getDefaultInstance();
-        if (toRender.getBlock() != SolarcraftBlocks.SOLAR_STONE_BRICKS.get()) {
+        if (toRender.getBlock() != SolarcraftBlocks.SOLAR_STONE_BRICKS.get() && toRender.getBlock() != SolarcraftBlocks.MAGISTONE_BRICKS.get()) {
 //            minecraft.getItemRenderer().renderGuiItem(stack, place1, place2);
-            RenderingTools.renderScaledGuiItemCentered(stack,place1,place2,structureScale,0);
+            RenderingTools.renderScaledGuiItemCentered(graphics,stack,place1,place2,structureScale,0);
         }else{
-            optimizedRenderer.renderGuiItemScaled(stack,place1,place2,structureScale);
+            optimizedRenderer.renderGuiItemScaled(graphics,stack,place1,place2,structureScale);
         }
 
         float detectSize = structureScale * 8;

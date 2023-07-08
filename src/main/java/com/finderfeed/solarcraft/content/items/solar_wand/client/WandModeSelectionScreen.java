@@ -43,8 +43,8 @@ public class WandModeSelectionScreen extends DefaultScreen {
                     ()->{
                         SCPacketHandler.INSTANCE.sendToServer(new CastWandActionPacket(action.getRegistryName()));
                     },
-                    (matrices, x, y) -> {
-                        RenderingTools.renderScaledGuiItemCentered(action.getIcon(),x,y,1,10);
+                    (graphics, x, y) -> {
+                        RenderingTools.renderScaledGuiItemCentered(graphics,action.getIcon(),x,y,1,10);
                     },
                     (graphics, x, y) -> {
                         graphics.renderTooltip(font,minecraft.font.split(action.getActionDescription(),
