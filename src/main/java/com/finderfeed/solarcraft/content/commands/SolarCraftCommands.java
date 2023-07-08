@@ -2,7 +2,6 @@ package com.finderfeed.solarcraft.content.commands;
 
 import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.progression_tree.ProgressionTree;
 import com.finderfeed.solarcraft.helpers.Helpers;
-import com.finderfeed.solarcraft.helpers.multiblock.MultiblockStructure;
 import com.finderfeed.solarcraft.helpers.multiblock.Multiblocks;
 import com.finderfeed.solarcraft.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.SolarLexicon;
@@ -22,8 +21,6 @@ import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.network.chat.Component;
@@ -31,7 +28,6 @@ import net.minecraft.ChatFormatting;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.Locale;
 
@@ -50,7 +46,7 @@ public class SolarCraftCommands {
                                         .executes((e)->revokeProgression(e.getSource(),e.getArgument("progression",String.class))))))
 
 
-                        .then(RetainFragments.register())
+                        .then(RestoreFragments.register())
                         .then(Commands.literal("structure")
                                 .then(Commands.literal("construct").then(Commands.argument("structure_code",new SolarcraftStructureArgument())
                                 .executes((cmds)-> constructMultiblock(cmds.getSource(),cmds.getArgument("structure_code", String.class))))))
@@ -211,7 +207,7 @@ public class SolarCraftCommands {
 
 
 
-class RetainFragments{
+class RestoreFragments {
     public static ArgumentBuilder<CommandSourceStack,?> register(){
         return Commands.literal("fragments")
                 .requires(cs->cs.hasPermission(0))

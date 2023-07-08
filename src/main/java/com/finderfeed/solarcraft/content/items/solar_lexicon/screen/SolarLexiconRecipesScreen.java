@@ -40,8 +40,8 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
     private boolean showNoFragmentsMessage = true;
 
     public IItemHandler handler;
-    public final ItemStackButton goBack = new ItemStackButton(0,10,12,12,(button)->{minecraft.setScreen(new SolarLexiconScreen());}, SolarcraftItems.SOLAR_FORGE_ITEM.get().getDefaultInstance(),0.7f);
-    public final ItemStackButton nothing = new ItemStackButton(0,10,12,12,(button)->{}, Items.CRAFTING_TABLE.getDefaultInstance(),0.7f);
+    public ItemStackButton goBack;
+    public ItemStackButton nothing;
     public InfoButton infoButton;
 
     public List<Runnable> postRender = new ArrayList<>();
@@ -126,6 +126,11 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
     @Override
     protected void init() {
         super.init();
+        goBack = new ItemStackButton(0,10,12,12,(button)->{minecraft.setScreen(new SolarLexiconScreen());}, SolarcraftItems.SOLAR_FORGE_ITEM.get().getDefaultInstance(),0.7f,
+                ((button, graphics, mouseX, mouseY) -> {
+                    graphics.renderTooltip(font,Component.translatable("solarcraft.screens.buttons.progression_screen"),mouseX,mouseY);
+                }));
+        nothing = new ItemStackButton(0,10,12,12,(button)->{}, Items.CRAFTING_TABLE.getDefaultInstance(),0.7f);
         int width = minecraft.getWindow().getWidth();
         int height = minecraft.getWindow().getHeight();
         int scale = (int) minecraft.getWindow().getGuiScale();

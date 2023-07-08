@@ -680,7 +680,7 @@
   "solarcraft.raw_solar_energy": "Raw Solar Energy",
   "solarcraft.recipe_requires_fragment": "You can't view this recipe now. Fragment required: ",
   "solarcraft.recipes_screen_info": "This is the fragments page. Put your fragments inside lexicon and they will appear here. Shift-click to open lexicon inventory and then put decrypted fragment inside.",
-  "solarcraft.retain_fragments": "Here you can retain the fragments you have lost somehow. Click on the needed fragment and if you have a piece of paper in your inventory, it will be consumed and then fragment will be put in your inventory.",
+  "solarcraft.retain_fragments": "Here you can restore the fragments you have lost somehow. Click on the needed fragment and if you have a piece of paper in your inventory, it will be consumed and then fragment will be put in your inventory.",
   "solarcraft.ritual_time": "The mysterious crystal structure didn't react.",
   "solarcraft.rune_element_1": "Ardo: The main element. Seems to be the base for all other elements.",
   "solarcraft.rune_element_2": "Fira: The second element. Void and darkness are its children.",
@@ -744,8 +744,6 @@
   "solarcraft.wand_action.re_network": "Check runic network connectivity mode: Click on a repeater or runic energy user and see what RE sources are connected.",
   "solarcraft.wand_action.solar_network_binder_pos": "Position to bind to: ",
   "solarcraft.wand_action.solar_network_binder_wa": "Solar Network Binder mode: Bind to solar energy users together. Shift-click on block will clear position data.",
-  "solarcraft.welcome_message": "Thanks for downloading SolarCraft! If you were playing before 2.3 mod version use /solarcraft fragments transfer (ONLY ONCE PER WORLD!). If you updated the mod and had a solar lexicon",
-  "solarcraft.welcome_message2": "delete it and make new. Use /solarcraft fragments retain to get all the fragments you had. If you open old lexicon it may cause crash.",
   "solarcraft.yours": "Yours",
   "solarcraft.zap_turret": "Zap Turret",
   "solarcraft_10_percent_defence_physical": "Module effect: 10% Physical damage resistance",
@@ -793,5 +791,11 @@
   "solarcraft.word.z_coordinate": "Coordinate Z",
   "solarcraft.minutes_seconds": "%s minutes, %s seconds.",
   "solarcraft.message.incorrect_structure": "Incorrect structure",
-  "solarcraft.message.block_disabled": "Block is not allowed. Allow it in config if you wish to use it."
+  "solarcraft.message.block_disabled": "Block is not allowed. Allow it in config if you wish to use it.",
+  "solarcraft.screens.buttons.stages_page": "Progression Stages",
+  "solarcraft.screens.buttons.recipes_screen": "Information and Recipes",
+  "solarcraft.screens.buttons.retain_fragments_screen": "Restore Fragments",
+  "solarcraft.screens.buttons.crafting_recipe": "Crafting Recipe",
+  "solarcraft.screens.buttons.progression_screen": "Progressions",
+  "solarcraft.screens.buttons.memorize_page": "Memorize Screen"
 }

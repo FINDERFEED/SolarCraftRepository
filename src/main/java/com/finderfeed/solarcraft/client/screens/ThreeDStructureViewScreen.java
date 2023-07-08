@@ -48,13 +48,8 @@ import static com.finderfeed.solarcraft.content.items.solar_lexicon.screen.Infor
 
 public class ThreeDStructureViewScreen extends Screen implements IScrollable {
 
-    private final Button b = new ItemStackTabButton(0,0,17,17,(button)->{minecraft.setScreen(new SolarLexiconRecipesScreen());}, Items.CRAFTING_TABLE.getDefaultInstance(),0.7f);
-    private final Button c = new ItemStackTabButton(0,0,17,17,(button)->{
-        Minecraft mc = Minecraft.getInstance();
-        SolarLexicon lexicon = (SolarLexicon) mc.player.getMainHandItem().getItem();
-        lexicon.currentSavedScreen = this;
-        minecraft.setScreen(null);
-    }, Items.WRITABLE_BOOK.getDefaultInstance(),0.7f);
+    private  Button b;
+    private  Button c;
     public final ResourceLocation THREEDSCREENBTN = new ResourceLocation("solarcraft","textures/misc/button.png");
     public final ResourceLocation STRUCTURE_GUI = new ResourceLocation("solarcraft","textures/gui/structure_screen.png");
     private double xDragPos=0;
@@ -81,6 +76,20 @@ public class ThreeDStructureViewScreen extends Screen implements IScrollable {
     @Override
     protected void init() {
         super.init();
+
+        b = new ItemStackTabButton(0,0,17,17,(button)->{minecraft.setScreen(new SolarLexiconRecipesScreen());}, Items.CRAFTING_TABLE.getDefaultInstance(),0.7f,
+                (buttons, graphics, b, c) -> {
+                    graphics.renderTooltip(font, Component.translatable("solarcraft.screens.buttons.recipes_screen"), b, c);
+                });
+
+        c = new ItemStackTabButton(0,0,17,17,(button)->{
+            Minecraft mc = Minecraft.getInstance();
+            SolarLexicon lexicon = (SolarLexicon) mc.player.getMainHandItem().getItem();
+            lexicon.currentSavedScreen = this;
+            minecraft.setScreen(null);
+        }, Items.WRITABLE_BOOK.getDefaultInstance(),0.7f,(buttons, graphics, b, c) -> {
+            graphics.renderTooltip(font, Component.translatable("solarcraft.screens.buttons.memorize_page"), b, c);
+        });
         int width = minecraft.getWindow().getWidth();
         int height = minecraft.getWindow().getHeight();
         int scale = (int) minecraft.getWindow().getGuiScale();

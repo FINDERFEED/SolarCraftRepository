@@ -56,7 +56,7 @@ public class ItemStackButtonAnimatedTooltip extends ItemStackButton {
 
         matrices.pushPose();
 
-        matrices.scale(scaleFactor,scaleFactor,scaleFactor);
+//        matrices.scale(scaleFactor,scaleFactor,scaleFactor);
         RenderingTools.renderScaledGuiItem(graphics,stack,(int) x, (int) y,scaleFactor,zOffset);
 
 

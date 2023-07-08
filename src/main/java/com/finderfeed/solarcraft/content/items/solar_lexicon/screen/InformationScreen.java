@@ -106,7 +106,7 @@ public class InformationScreen extends Screen {
                 Minecraft.getInstance().setScreen(screen);
             }
         }, icon.getDefaultInstance(),0.7f,(buttons,graphics,b,c)->{
-            graphics.renderTooltip(font,Component.literal("Crafting Recipe"),b,c);
+            graphics.renderTooltip(font,Component.translatable("solarcraft.screens.buttons.crafting_recipe"),b,c);
 
         });
         if (screen != null){
@@ -141,7 +141,7 @@ public class InformationScreen extends Screen {
                 minecraft.setScreen(new SolarLexiconRecipesScreen());
             },
                     Items.CRAFTING_TABLE.getDefaultInstance(), 0.7f, (buttons, graphics, b, c) -> {
-                graphics.renderTooltip(font, Component.literal("Go back"), b, c);
+                graphics.renderTooltip(font, Component.translatable("solarcraft.screens.buttons.recipes_screen"), b, c);
             }));
 
 
