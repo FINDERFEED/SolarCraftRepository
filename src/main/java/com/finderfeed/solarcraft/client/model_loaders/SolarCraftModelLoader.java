@@ -25,15 +25,6 @@ import net.minecraftforge.client.model.geometry.IGeometryLoader;
 import net.minecraftforge.client.model.geometry.IUnbakedGeometry;
 
 public class SolarCraftModelLoader implements IGeometryLoader<ProgressionOreGeometry> {
-
-
-
-//    @Override
-//    public ProgressionOreGeometry read(JsonDeserializationContext deserializationContext, JsonObject modelContents) {
-//            BlockModel model = deserializationContext.deserialize(GsonHelper.getAsJsonObject(modelContents,"orig_model"), BlockModel.class);
-//        return new ProgressionOreGeometry(model);
-//    }
-
     @Override
     public ProgressionOreGeometry read(JsonObject jsonObject, JsonDeserializationContext deserializationContext) throws JsonParseException {
         BlockModel model = deserializationContext.deserialize(GsonHelper.getAsJsonObject(jsonObject,"orig_model"), BlockModel.class);
@@ -42,13 +33,10 @@ public class SolarCraftModelLoader implements IGeometryLoader<ProgressionOreGeom
 }
 
 class ProgressionOreGeometry implements IUnbakedGeometry<ProgressionOreGeometry> {
-
     public BlockModel model;
-
     public ProgressionOreGeometry(BlockModel model){
         this.model = model;
     }
-
     @Override
     public BakedModel bake(IGeometryBakingContext context, ModelBaker baker, Function<Material, TextureAtlasSprite> spriteGetter, ModelState modelState, ItemOverrides overrides, ResourceLocation modelLocation) {
         BakedModel model = this.model.bake(baker,this.model,spriteGetter,modelState,modelLocation,false);

@@ -22,12 +22,9 @@ import java.util.List;
 public class ProgressionOreModel implements BakedModel {
 
     public BakedModel model;
-
     public ProgressionOreModel(BakedModel model){
         this.model = model;
     }
-
-
     @Override
     public List<BakedQuad> getQuads(@org.jetbrains.annotations.Nullable BlockState state, @org.jetbrains.annotations.Nullable Direction direction, RandomSource src) {
         if (state != null && (Minecraft.getInstance().player != null) ) {
@@ -38,7 +35,8 @@ public class ProgressionOreModel implements BakedModel {
                         .getQuads(lockedState,direction,src, ModelData.EMPTY,null);
             }
         }
-        return model.getQuads(state,direction,src, ModelData.EMPTY,null);
+        List<BakedQuad> quads = model.getQuads(state,direction,src, ModelData.EMPTY,null);
+        return quads;
     }
 
     @Override
@@ -69,7 +67,6 @@ public class ProgressionOreModel implements BakedModel {
 
     @Override
     public TextureAtlasSprite getParticleIcon(@Nonnull ModelData data) {
-
         return model.getParticleIcon(data);
     }
 
