@@ -105,7 +105,7 @@ public class InfusingRecipeCategory implements IRecipeCategory<InfusingRecipe> {
     public void draw(InfusingRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics graphics, double mouseX, double mouseY) {
 
         PoseStack matrices = graphics.pose();
-        matrices.pushPose();
+
 
 
         AncientFragment fragment = AncientFragment.getFragmentByID(recipe.fragID);
@@ -117,6 +117,7 @@ public class InfusingRecipeCategory implements IRecipeCategory<InfusingRecipe> {
                 graphics.drawCenteredString( Minecraft.getInstance().font, s, 161 / 2, 141 / 2 + iter * 9 - 9, 0xffff00);
                 iter++;
             }
+
             return;
         }
         Screen screen = Minecraft.getInstance().screen;
@@ -171,7 +172,7 @@ public class InfusingRecipeCategory implements IRecipeCategory<InfusingRecipe> {
         }else{
             RenderingTools.blitWithBlend(matrices,137,15,0,0,12,12,12,24,0,1f);
         }
-        matrices.popPose();
+
     }
 
 //    @Override

@@ -1050,6 +1050,7 @@ public class RenderingTools {
             y1 = y2;
             y2 = k;
         }
+        matrices.pushPose();
         Matrix4f matrix4f = matrices.last().pose();
         BufferBuilder builder = Tesselator.getInstance().getBuilder();
 
@@ -1067,6 +1068,7 @@ public class RenderingTools {
         BufferUploader.drawWithShader(builder.end());
 //        RenderSystem.enableTexture();
         RenderSystem.disableBlend();
+        matrices.popPose();
     }
 
     public static void gradientBarHorizontal(PoseStack matrices,double x1,double y1,double x2,double y2,float r,float g,float b,float a){
