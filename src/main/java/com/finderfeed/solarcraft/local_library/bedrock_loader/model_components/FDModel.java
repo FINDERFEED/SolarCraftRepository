@@ -47,8 +47,8 @@ public class FDModel {
             JsonObject part = epart.getAsJsonObject();
             String name = JsonHelper.getString(part,"name");
             String parent = JsonHelper.getString(part,"parent");
-            Vec3 pivot = JsonHelper.parseVec3(part,"pivot");
-            Vec3 rotation = JsonHelper.parseVec3(part,"rotation");
+            Vec3 pivot = JsonHelper.parseVec3(part,"pivot").multiply(-1,1,1);
+            Vec3 rotation = JsonHelper.parseVec3(part,"rotation").multiply(-1,-1,1);
             List<FDCube> cubes = this.parseCubes(part.getAsJsonArray("cubes"),texWidth,texHeight,cubeScale);
             FDModelPart parsed = new FDModelPart(cubes,pivot,
                     (float)rotation.x,

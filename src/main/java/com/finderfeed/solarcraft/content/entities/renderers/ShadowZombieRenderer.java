@@ -20,7 +20,6 @@ public class ShadowZombieRenderer extends MobRenderer<ShadowZombie, ShadowZombie
     private static final FDModelInfo modelInfo = new FDModelInfo(new ResourceLocation(SolarCraft.MOD_ID,"models/bedrock/test.geo.json"));
 
 
-    private FDModel model = new FDModel(modelInfo,1f);
 
     public ShadowZombieRenderer(EntityRendererProvider.Context ctx) {
         super(ctx,new ShadowZombieModel(ctx.bakeLayer(ModelLayers.ZOMBIE)), 0.0f);
@@ -33,6 +32,8 @@ public class ShadowZombieRenderer extends MobRenderer<ShadowZombie, ShadowZombie
             if (false) {
                 super.render(zombie, p_115456_, p_115457_, matrices, src, p_115460_);
             }
+            FDModel model = new FDModel(modelInfo,1f);
+
             model.render(matrices,src.getBuffer(RenderType.entityTranslucent(new ResourceLocation(SolarCraft.MOD_ID,"textures/misc/texture2.png"))),
                     LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY,1f,1f,1f,1f);
         }

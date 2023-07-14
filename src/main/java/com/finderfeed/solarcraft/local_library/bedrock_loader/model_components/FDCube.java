@@ -80,16 +80,20 @@ public class FDCube {
     public static FDCube fromJson(JsonObject scube,int textureWidth,int textureHeight,float scale){
         Vec3 origin = JsonHelper.parseVec3(scube.getAsJsonArray("origin"));
         Vec3 size = JsonHelper.parseVec3(scube.getAsJsonArray("size"));
-        Vec3 pivot = JsonHelper.parseVec3(scube,"pivot");
-        Vec3 rotation = JsonHelper.parseVec3(scube,"rotation");
+
+        origin = new Vec3(-origin.x - size.x,origin.y,origin.z);
+
+        Vec3 pivot = JsonHelper.parseVec3(scube,"pivot").multiply(-1,1,1);
+        Vec3 rotation = JsonHelper.parseVec3(scube,"rotation").multiply(-1,-1,1);
         // transformations around cube pivot
         PoseStack matrices = new PoseStack();
         matrices.pushPose();
         matrices.translate(pivot.x,pivot.y,pivot.z);
         boolean shouldRotate = rotation.x != 0 || rotation.y != 0 || rotation.z != 0;
         if (shouldRotate) {
-            matrices.mulPose(new Quaternionf().rotationZYX((float) Math.toRadians(rotation.x), (float) Math.toRadians(rotation.y), (float) Math.toRadians(rotation.z)));
+            matrices.mulPose(new Quaternionf().rotationZYX((float) Math.toRadians(rotation.z), (float) Math.toRadians(rotation.y), (float) Math.toRadians(rotation.x)));
         }
+        matrices.translate(-pivot.x,-pivot.y,-pivot.z);
         Matrix4f m = matrices.last().pose();
         //center and size transformations
         Vec3 cubeCenter = origin.add(size.multiply(0.5,0.5,0.5));
@@ -108,14 +112,17 @@ public class FDCube {
         Vec3 v6 = mul(origin.add(0,size.y,size.z),m);
         Vec3 v7 = mul(origin.add(size.x,0,size.z),m);
         Vec3 v8 = mul(origin.add(size),m);
-        matrices.popPose();
+
         //transformed normals
-        matrices.pushPose();
+
         if (shouldRotate) {
             matrices.mulPose(new Quaternionf().rotationZYX((float) Math.toRadians(rotation.x), (float) Math.toRadians(rotation.y), (float) Math.toRadians(rotation.z)));
         }
-        Matrix4f mn = matrices.last().pose();
-        List<Vec3> tnormals = Arrays.stream(normals).map(normal->mul(normal,mn)).toList();
+        Matrix3f mn = matrices.last().normal();
+        List<Vec3> tnormals = Arrays.stream(normals).map(normal->mn.transform(
+                        (float)normal.x, (float)normal.y,(float)normal.z,new Vector3f()))
+                .map(vector3f -> new Vec3(vector3f.x,vector3f.y,vector3f.z))
+                .toList();
         matrices.popPose();
 
         JsonObject faceDatas = scube.getAsJsonObject("uv");
@@ -131,11 +138,18 @@ public class FDCube {
     private static FDFace createFace(Vec3 v1,Vec3 v2,Vec3 v3,Vec3 v4,Vec3 normal,JsonObject faceData,int texWidth,int texHeight){
         Vec2 uv = JsonHelper.parseVec2(faceData.getAsJsonArray("uv"));
         Vec2 uv_size = JsonHelper.parseVec2(faceData.getAsJsonArray("uv_size"));
-        uv = new Vec2(uv.x / texWidth,uv.y / texHeight).add(new Vec2(0,1));
-        uv_size = new Vec2(uv_size.x / texWidth,uv_size.y / texHeight * -1);
+        uv = new Vec2(uv.x / texWidth,uv.y / texHeight);
+        uv_size = new Vec2(uv_size.x / texWidth,uv_size.y / texHeight);
 
-        FDVertex vertex1 = new FDVertex(uv.x + uv_size.x,uv.y + uv_size.y,v1);
-        FDVertex vertex2 = new FDVertex(uv.x ,uv.y + uv_size.y,v2);
+        /*
+        FDVertex vertex1 = new FDVertex(uv.x ,uv.y ,v1);
+        FDVertex vertex2 = new FDVertex(uv.x + uv_size.x,uv.y ,v2);
+        FDVertex vertex3 = new FDVertex(uv.x + uv_size.x ,uv.y + uv_size.y,v3);
+        FDVertex vertex4 = new FDVertex(uv.x ,uv.y + uv_size.y,v4);
+         */
+
+        FDVertex vertex1 = new FDVertex(uv.x + uv_size.x ,uv.y + uv_size.y ,v1);
+        FDVertex vertex2 = new FDVertex(uv.x ,uv.y + uv_size.y ,v2);
         FDVertex vertex3 = new FDVertex(uv.x ,uv.y,v3);
         FDVertex vertex4 = new FDVertex(uv.x + uv_size.x,uv.y,v4);
         return new FDFace(normal,vertex1,vertex2,vertex3,vertex4);
