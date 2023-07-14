@@ -27,4 +27,11 @@ public class JsonHelper {
         return new Vec2(array.get(0).getAsFloat(),array.get(1).getAsFloat());
     }
 
+    public static String getString(JsonObject object,String memberName){
+        if (!object.has(memberName)){
+            return "";
+        }
+        return object.get(memberName).getAsString();
+    }
+
 }

@@ -20,19 +20,21 @@ public class FDModelPart {
     public float yRot;
     public float zRot;
 
-    private float scaleX;
-    private float scaleY;
-    private float scaleZ;
+    public boolean isVisible = true;
+
+    private float scaleX = 1f;
+    private float scaleY = 1f;
+    private float scaleZ = 1f;
     public final Vec3 pivot;
 
     public final List<FDCube> cubes;
 
-    public final Map<String,ModelPart> children;
+    protected final Map<String,FDModelPart> children;
 
-    private FDModelPart(List<FDCube> cubes, Vec3 pivot, float xRot, float yRot, float zRot, Map<String,ModelPart> children){
+    public FDModelPart(List<FDCube> cubes, Vec3 pivot, float xRot, float yRot, float zRot, Map<String,FDModelPart> children){
         this.pivot = pivot;
         this.cubes = Collections.unmodifiableList(cubes);
-        this.children = Collections.unmodifiableMap(children);
+        this.children = children;
         this.xRot = xRot;
         this.yRot = yRot;
         this.zRot = zRot;
@@ -42,7 +44,18 @@ public class FDModelPart {
     public void render(PoseStack matrices, VertexConsumer vertex, int light, int overlay,float r,float g,float b,float a){
         matrices.pushPose();
 
+        if (isVisible){
+            this.translateAndRotate(matrices);
 
+            for (FDCube cube : cubes){
+                cube.render(matrices,vertex,light,overlay,r,g,b,a);
+            }
+
+            for (FDModelPart child : children.values()){
+                child.render(matrices,vertex,light,overlay,r,g,b,a);
+            }
+
+        }
 
         matrices.popPose();
     }
@@ -57,4 +70,8 @@ public class FDModelPart {
         matrices.scale(scaleX,scaleY,scaleZ);
     }
 
+
+    public Map<String, FDModelPart> getChildren() {
+        return Collections.unmodifiableMap(children);
+    }
 }

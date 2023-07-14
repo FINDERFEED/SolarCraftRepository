@@ -134,7 +134,7 @@ public class SolarCraft
 
     public static final RegistryObject<MobEffect> SOLAR_STUN = EFFECTS.register("solar_stun",()-> new SolarStunEffect(MobEffectCategory.HARMFUL,0xd1b515));
     public  static  final  RegistryObject<SolarForgeBlock> SOLAR_FORGE = BLOCKS.register("solar_forge",()->
-            new SolarForgeBlock(BlockBehaviour.Properties.copy(Blocks.STONE).sound(SoundType.ANCIENT_DEBRIS)));
+            new SolarForgeBlock(BlockBehaviour.Properties.copy(Blocks.STONE).noOcclusion().sound(SoundType.ANCIENT_DEBRIS)));
 
     public  static  final  RegistryObject<SolarOreBlock> SOLAR_ORE = BLOCKS.register("solar_ore",()-> new SolarOreBlock(BlockBehaviour.Properties.copy(Blocks.STONE)
             .sound(SoundType.ANCIENT_DEBRIS)));

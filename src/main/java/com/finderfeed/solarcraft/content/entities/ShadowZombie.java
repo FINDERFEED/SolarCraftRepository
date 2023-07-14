@@ -63,7 +63,7 @@ public class ShadowZombie extends Monster implements PowerableMob {
 
     @Override
     public boolean hurt(DamageSource src, float amount) {
-        if (src == SolarcraftDamageSources.RUNIC_MAGIC || src == level.damageSources().fellOutOfWorld()) {
+        if (src == SolarcraftDamageSources.RUNIC_MAGIC || src == level.damageSources().fellOutOfWorld() || src == level.damageSources().genericKill()) {
             return super.hurt(src, amount);
         }else{
             return super.hurt(src,0);

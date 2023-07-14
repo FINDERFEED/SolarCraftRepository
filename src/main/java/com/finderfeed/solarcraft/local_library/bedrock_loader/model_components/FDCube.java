@@ -4,7 +4,6 @@ import com.finderfeed.solarcraft.local_library.bedrock_loader.JsonHelper;
 import com.google.gson.JsonObject;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import net.minecraft.util.GsonHelper;
 import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
 import org.joml.*;
@@ -15,7 +14,7 @@ import java.util.List;
 
 public class FDCube {
 
-    private static final float SIZE_MULTIPLIER = 1/16f;
+    private static final float POS_MULTIPLIER = 1/16f;
     private FDFace[] faces = new FDFace[6];
 
     private FDCube(FDFace... faces){
@@ -45,17 +44,13 @@ public class FDCube {
 
             for (FDVertex v : fdFace.getVertices()){
                 Vec3 vertexPos = v.getPosition();
-                vertex.vertex(m,
-                        (float)vertexPos.x * SIZE_MULTIPLIER,
-                        (float)vertexPos.y * SIZE_MULTIPLIER,
-                        (float)vertexPos.z * SIZE_MULTIPLIER
-                )
-                        .color(r,g,b,a)
-                        .uv2(light)
-                        .overlayCoords(overlay)
-                        .normal(normal.x,
-                                normal.y,
-                                normal.z);
+                vertex.vertex(m,(float)vertexPos.x * POS_MULTIPLIER,(float)vertexPos.y * POS_MULTIPLIER,(float)vertexPos.z * POS_MULTIPLIER);
+                vertex.color(r,g,b,a);
+                vertex.uv(v.getU(),v.getV());
+                vertex.overlayCoords(overlay);
+                vertex.uv2(light);
+                vertex.normal(normal.x, normal.y, normal.z);
+                vertex.endVertex();
             }
         }
 
