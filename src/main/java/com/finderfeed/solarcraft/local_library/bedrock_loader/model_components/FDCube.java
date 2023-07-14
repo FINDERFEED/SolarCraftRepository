@@ -3,18 +3,19 @@ package com.finderfeed.solarcraft.local_library.bedrock_loader.model_components;
 import com.finderfeed.solarcraft.local_library.bedrock_loader.JsonHelper;
 import com.google.gson.JsonObject;
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
-import org.joml.Matrix4f;
-import org.joml.Quaternionf;
-import org.joml.Vector4f;
+import org.joml.*;
 
+import java.lang.Math;
 import java.util.Arrays;
 import java.util.List;
 
 public class FDCube {
 
+    private static final float SIZE_MULTIPLIER = 1/16f;
     private FDFace[] faces = new FDFace[6];
 
     private FDCube(FDFace... faces){
@@ -24,6 +25,41 @@ public class FDCube {
         this.faces[3] = faces[3];
         this.faces[4] = faces[4];
         this.faces[5] = faces[5];
+    }
+
+
+
+    public void render(PoseStack matrices, VertexConsumer vertex, int light, int overlay,float r,float g,float b,float a){
+        matrices.pushPose();
+
+        Matrix4f m = matrices.last().pose();
+        Matrix3f n = matrices.last().normal();
+
+        for (FDFace fdFace : faces){
+
+            Vector3f normal = n.transform(new Vector3f(
+                    (float)fdFace.getNormal().x,
+                    (float)fdFace.getNormal().y,
+                    (float)fdFace.getNormal().z
+            ));
+
+            for (FDVertex v : fdFace.getVertices()){
+                Vec3 vertexPos = v.getPosition();
+                vertex.vertex(m,
+                        (float)vertexPos.x * SIZE_MULTIPLIER,
+                        (float)vertexPos.y * SIZE_MULTIPLIER,
+                        (float)vertexPos.z * SIZE_MULTIPLIER
+                )
+                        .color(r,g,b,a)
+                        .uv2(light)
+                        .overlayCoords(overlay)
+                        .normal(normal.x,
+                                normal.y,
+                                normal.z);
+            }
+        }
+
+        matrices.popPose();
     }
 
 
@@ -45,6 +81,7 @@ public class FDCube {
             new Vec3(0,-1,0),
     };
 
+
     public static FDCube fromJson(JsonObject scube,int textureWidth,int textureHeight,float scale){
         Vec3 origin = JsonHelper.parseVec3(scube.getAsJsonArray("origin"));
         Vec3 size = JsonHelper.parseVec3(scube.getAsJsonArray("size"));
@@ -54,7 +91,10 @@ public class FDCube {
         PoseStack matrices = new PoseStack();
         matrices.pushPose();
         matrices.translate(pivot.x,pivot.y,pivot.z);
-        matrices.mulPose(new Quaternionf().rotationZYX((float)Math.toRadians(rotation.x),(float)Math.toRadians(rotation.y), (float)Math.toRadians(rotation.z)));
+        boolean shouldRotate = rotation.x != 0 || rotation.y != 0 || rotation.z != 0;
+        if (shouldRotate) {
+            matrices.mulPose(new Quaternionf().rotationZYX((float) Math.toRadians(rotation.x), (float) Math.toRadians(rotation.y), (float) Math.toRadians(rotation.z)));
+        }
         Matrix4f m = matrices.last().pose();
         //center and size transformations
         Vec3 cubeCenter = origin.add(size.multiply(0.5,0.5,0.5));
@@ -76,7 +116,9 @@ public class FDCube {
         matrices.popPose();
         //transformed normals
         matrices.pushPose();
-        matrices.mulPose(new Quaternionf().rotationZYX((float)Math.toRadians(rotation.x), (float)Math.toRadians(rotation.y), (float)Math.toRadians(rotation.z)));
+        if (shouldRotate) {
+            matrices.mulPose(new Quaternionf().rotationZYX((float) Math.toRadians(rotation.x), (float) Math.toRadians(rotation.y), (float) Math.toRadians(rotation.z)));
+        }
         Matrix4f mn = matrices.last().pose();
         List<Vec3> tnormals = Arrays.stream(normals).map(normal->mul(normal,mn)).toList();
         matrices.popPose();
