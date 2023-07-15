@@ -3,8 +3,9 @@ package com.finderfeed.solarcraft.content.entities.renderers;
 import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.content.entities.ShadowZombie;
 import com.finderfeed.solarcraft.content.entities.models.ShadowZombieModel;
-import com.finderfeed.solarcraft.local_library.bedrock_loader.FDModelInfo;
+import com.finderfeed.solarcraft.local_library.bedrock_loader.model_components.FDModelInfo;
 import com.finderfeed.solarcraft.local_library.bedrock_loader.model_components.FDModel;
+import com.finderfeed.solarcraft.registries.SCBedrockModels;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.LightTexture;
@@ -17,7 +18,6 @@ import net.minecraft.resources.ResourceLocation;
 
 public class ShadowZombieRenderer extends MobRenderer<ShadowZombie, ShadowZombieModel> {
 
-    private static final FDModelInfo modelInfo = new FDModelInfo(new ResourceLocation(SolarCraft.MOD_ID,"models/bedrock/test.geo.json"));
 
 
 
@@ -32,7 +32,7 @@ public class ShadowZombieRenderer extends MobRenderer<ShadowZombie, ShadowZombie
             if (false) {
                 super.render(zombie, p_115456_, p_115457_, matrices, src, p_115460_);
             }
-            FDModel model = new FDModel(modelInfo,1f);
+            FDModel model = new FDModel(SCBedrockModels.TEST_MODEL);
 
             model.render(matrices,src.getBuffer(RenderType.entityTranslucent(new ResourceLocation(SolarCraft.MOD_ID,"textures/misc/texture2.png"))),
                     LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY,1f,1f,1f,1f);

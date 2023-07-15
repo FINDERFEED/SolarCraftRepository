@@ -7,6 +7,7 @@ import net.minecraft.world.phys.Vec3;
 import org.joml.Quaternionf;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -20,6 +21,7 @@ public class FDModelPart {
     public float yRot;
     public float zRot;
 
+    public Vec3 initRotation;
     public boolean isVisible = true;
 
     private float scaleX = 1f;
@@ -27,17 +29,22 @@ public class FDModelPart {
     private float scaleZ = 1f;
     public final Vec3 pivot;
 
+
     public final List<FDCube> cubes;
 
     protected final Map<String,FDModelPart> children;
 
-    public FDModelPart(List<FDCube> cubes, Vec3 pivot, float xRot, float yRot, float zRot, Map<String,FDModelPart> children){
+    public String name;
+
+    public FDModelPart(String name,List<FDCube> cubes, Vec3 pivot, Vec3 initRotation){
         this.pivot = pivot;
+        this.name = name;
         this.cubes = Collections.unmodifiableList(cubes);
-        this.children = children;
-        this.xRot = xRot;
-        this.yRot = yRot;
-        this.zRot = zRot;
+        this.children = new HashMap<>();
+        this.xRot = (float)initRotation.x;
+        this.yRot = (float)initRotation.y;
+        this.zRot = (float)initRotation.z;
+        this.initRotation = initRotation;
     }
 
 
@@ -75,6 +82,22 @@ public class FDModelPart {
         matrices.scale(scaleX,scaleY,scaleZ);
     }
 
+
+    public void reset(){
+        this.x = 0;
+        this.y = 0;
+        this.z = 0;
+        this.xRot = (float)initRotation.x;
+        this.yRot = (float)initRotation.y;
+        this.zRot = (float)initRotation.z;
+        this.scaleX = 1f;
+        this.scaleY = 1f;
+        this.scaleZ = 1f;
+    }
+
+    public void setVisible(boolean visible) {
+        isVisible = visible;
+    }
 
     public Map<String, FDModelPart> getChildren() {
         return Collections.unmodifiableMap(children);

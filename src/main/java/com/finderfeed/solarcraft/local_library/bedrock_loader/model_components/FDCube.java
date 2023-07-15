@@ -115,9 +115,9 @@ public class FDCube {
 
         //transformed normals
 
-        if (shouldRotate) {
-            matrices.mulPose(new Quaternionf().rotationZYX((float) Math.toRadians(rotation.x), (float) Math.toRadians(rotation.y), (float) Math.toRadians(rotation.z)));
-        }
+//        if (shouldRotate) {
+//            matrices.mulPose(new Quaternionf().rotationZYX((float) Math.toRadians(rotation.x), (float) Math.toRadians(rotation.y), (float) Math.toRadians(rotation.z)));
+//        }
         Matrix3f mn = matrices.last().normal();
         List<Vec3> tnormals = Arrays.stream(normals).map(normal->mn.transform(
                         (float)normal.x, (float)normal.y,(float)normal.z,new Vector3f()))

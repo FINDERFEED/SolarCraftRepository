@@ -1,15 +1,15 @@
 buildscript {
     repositories {
-        maven { url = 'https://maven.minecraftforge.net/' }
+        maven { url = 'https://maven.neoforged.net/releases/' }
         maven { url = 'https://repo.spongepowered.org/repository/maven-public/' }
         mavenCentral()
     }
     dependencies {
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
+        classpath group: 'net.neoforged', name: 'NeoGradle', version: '6.0.+', changing: true
         classpath group: 'org.spongepowered', name: 'mixingradle', version: '0.7-SNAPSHOT'
     }
 }
-apply plugin: 'net.minecraftforge.gradle'
+apply plugin: 'net.neoforged.gradle'
 // Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
@@ -37,8 +37,7 @@ minecraft {
     // Simply re-run your setup task after changing the mappings to update your workspace.
     mappings channel: 'official', version: '1.20.1'
     // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
-    
-    // accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
+
     accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
     // Default run configurations.
     // These can be tweaked, removed, or duplicated as needed.
@@ -128,32 +127,9 @@ dependencies {
     // Specify the version of Minecraft to use, If this is any group other then 'net.minecraft' it is assumed
     // that the dep is a ForgeGradle 'patcher' dependency. And it's patches will be applied.
     // The userdev artifact is a special name and will get all sorts of transformations applied to it.
-    minecraft 'net.minecraftforge:forge:1.20.1-47.0.50'
-
-    //Include CT only on dev and AP. The runtime only thing is to test changes.
-//    compileOnly fg.deobf("com.blamejared.crafttweaker:CraftTweaker-forge-1.18.2:9.1.103")
-//    runtimeOnly fg.deobf("com.blamejared.crafttweaker:CraftTweaker-forge-1.18.2:9.1.103")
-//    annotationProcessor("com.blamejared.crafttweaker:Crafttweaker_Annotation_Processors-1.18.2:2.0.0.90")
-//    annotationProcessor("com.blamejared.crafttweaker:CraftTweaker-forge-1.18.2:9.1.108")
+    minecraft 'net.neoforged:forge:1.20.1-47.1.9'
 
 
-    // You may put jars on which you depend on in ./libs or you may define them like so..
-    // compile "some.group:artifact:version:classifier"
-    // compile "some.group:artifact:version"
-
-    // Real examples
-    // compile 'com.mod-buildcraft:buildcraft:6.0.8:dev'  // adds buildcraft to the dev env
-    // compile 'com.googlecode.efficient-java-matrix-library:ejml:0.24' // adds ejml to the dev env
-
-    // The 'provided' configuration is for optional dependencies that exist at compile-time but might not at runtime.
-    // provided 'com.mod-buildcraft:buildcraft:6.0.8:dev'
-
-    // These dependencies get remapped to your current MCP mappings
-    // deobf 'com.mod-buildcraft:buildcraft:6.0.8:dev'
-
-    // For more info...
-    // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
-    // http://www.gradle.org/docs/current/userguide/dependency_management.html
 //    runtimeOnly fg.deobf("curse.maven:oculus-581495:4299147")
 //    runtimeOnly fg.deobf("curse.maven:rubidium-574856:4448157")
 
@@ -170,7 +146,6 @@ dependencies {
 
 }
 
-// Example for how to get properties into the manifest for reading by the runtime..
 jar {
     manifest {
         attributes([
@@ -185,11 +160,9 @@ jar {
     }
 }
 
-// Example configuration to allow publishing using the maven-publish task
-// This is the preferred method to reobfuscate your jar file
+
 jar.finalizedBy('reobfJar') 
-// However if you are in a multi-project build, dev time needs unobfed jar files, so you can delay the obfuscation until publishing by doing
-//publish.dependsOn('reobfJar')
+
 repositories {
     maven {
         url "https://cursemaven.com"
@@ -246,17 +219,6 @@ dependencies {
     runtimeOnly fg.deobf("mezz.jei:jei-1.20.1-forge:15.2.0.22")
 }
 
-//afterEvaluate {
-//    tasks.withType(JavaCompile) {
-//        //Necessary for the CrT AP to export properly
-//        options.compilerArgs.add("-Acrafttweaker.processor.document.output_directory=${rootProject.file("docsOut")}")
-//    }
-//}
-//task generateDocs {
-//    //Generates the docs in a directory called docsOut
-//    tasks.getByName("compileJava").getOutputs().upToDateWhen {false}
-//    generateDocs.finalizedBy tasks.getByName("compileJava")
-//}
 
 mixin {
     add sourceSets.main, "solarcraft.refmap.json"
