@@ -9,6 +9,9 @@ import net.minecraft.world.phys.Vec3;
 public class JsonHelper {
 
 
+    public static float parseFloat(JsonObject object,String memberName){
+        return object.has(memberName) ? object.get(memberName).getAsFloat() : 0;
+    }
     public static Vec3 parseVec3(JsonElement element){
         JsonArray array = element.getAsJsonArray();
         return new Vec3(array.get(0).getAsDouble(),array.get(1).getAsDouble(),array.get(2).getAsDouble());

@@ -1,6 +1,7 @@
 package com.finderfeed.solarcraft.local_library.bedrock_loader.model_components;
 
 import com.finderfeed.solarcraft.local_library.bedrock_loader.JsonHelper;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -78,10 +79,21 @@ public class FDCube {
 
 
     public static FDCube fromJson(JsonObject scube,int textureWidth,int textureHeight,float scale){
+        if (scube.has("mirror")){
+            throw new RuntimeException("Mirror UV is not supported!" + scube);
+        }
         Vec3 origin = JsonHelper.parseVec3(scube.getAsJsonArray("origin"));
         Vec3 size = JsonHelper.parseVec3(scube.getAsJsonArray("size"));
 
-        origin = new Vec3(-origin.x - size.x,origin.y,origin.z);
+        float inflate = JsonHelper.parseFloat(scube,"inflate");
+
+        size = size.add(inflate*2,inflate*2,inflate*2);
+
+
+
+        origin = new Vec3(-origin.x - size.x - inflate,origin.y - inflate,origin.z - inflate);
+
+
 
         Vec3 pivot = JsonHelper.parseVec3(scube,"pivot").multiply(-1,1,1);
         Vec3 rotation = JsonHelper.parseVec3(scube,"rotation").multiply(-1,-1,1);
@@ -125,14 +137,88 @@ public class FDCube {
                 .toList();
         matrices.popPose();
 
-        JsonObject faceDatas = scube.getAsJsonObject("uv");
-        FDFace north = createFace(v1,v2,v5,v3,tnormals.get(0),faceDatas.getAsJsonObject("north"),textureWidth,textureHeight);
-        FDFace east = createFace(v2,v7,v8,v5,tnormals.get(1),faceDatas.getAsJsonObject("east"),textureWidth,textureHeight);
-        FDFace south = createFace(v7,v4,v6,v8,tnormals.get(2),faceDatas.getAsJsonObject("south"),textureWidth,textureHeight);
-        FDFace west = createFace(v4,v1,v3,v6,tnormals.get(3),faceDatas.getAsJsonObject("west"),textureWidth,textureHeight);
-        FDFace up = createFace(v3,v5,v8,v6,tnormals.get(4),faceDatas.getAsJsonObject("up"),textureWidth,textureHeight);
-        FDFace down = createFace(v1,v2,v7,v4,tnormals.get(5),faceDatas.getAsJsonObject("down"),textureWidth,textureHeight);
+        JsonElement faceDatas = scube.get("uv");
+        FDFace north= null;
+        FDFace east = null;
+        FDFace south = null;
+        FDFace west = null;
+        FDFace up = null;
+        FDFace down = null;
+        if (!faceDatas.isJsonArray()) {
+            north = createFace(v1, v2, v5, v3, tnormals.get(0), faceDatas.getAsJsonObject().getAsJsonObject("north"), textureWidth, textureHeight);
+            east = createFace(v2, v7, v8, v5, tnormals.get(1), faceDatas.getAsJsonObject().getAsJsonObject("east"), textureWidth, textureHeight);
+            south = createFace(v7, v4, v6, v8, tnormals.get(2), faceDatas.getAsJsonObject().getAsJsonObject("south"), textureWidth, textureHeight);
+            west = createFace(v4, v1, v3, v6, tnormals.get(3), faceDatas.getAsJsonObject().getAsJsonObject("west"), textureWidth, textureHeight);
+            up = createFace(v3, v5, v8, v6, tnormals.get(4), faceDatas.getAsJsonObject().getAsJsonObject("up"), textureWidth, textureHeight);
+            down = createFace(v1, v2, v7, v4, tnormals.get(5), faceDatas.getAsJsonObject().getAsJsonObject("down"), textureWidth, textureHeight);
+        }else{
+            Vec2 uv = JsonHelper.parseVec2(faceDatas);
+
+            float x = (float)size.x/scale - inflate*2;
+            float y = (float)size.y/scale - inflate*2;
+            float z = (float)size.z/scale - inflate*2;
+
+            /*
+
+            new Vec2(uv.x,uv.y),
+                    new Vec2(uv.x,uv.y),
+                    new Vec2(uv.x,uv.y),
+                    new Vec2(uv.x,uv.y)
+             */
+            north = createFace(v1, v2, v5, v3, tnormals.get(0),
+                    new Vec2(uv.x + z + x,uv.y + z + y),
+                    new Vec2(uv.x + z,uv.y + z + y),
+                    new Vec2(uv.x + z,uv.y + z),
+                    new Vec2(uv.x + z + x,uv.y + z)
+                    , textureWidth, textureHeight);
+            east = createFace(v2, v7, v8, v5, tnormals.get(1),
+                    new Vec2(uv.x + z,uv.y + z + y),
+                    new Vec2(uv.x ,uv.y + z + y),
+                    new Vec2(uv.x ,uv.y + z),
+                    new Vec2(uv.x + z,uv.y + z)
+                    , textureWidth, textureHeight);
+            south = createFace(v7, v4, v6, v8, tnormals.get(2),
+                    new Vec2(uv.x + z + x + z + x,uv.y + z + y),
+                    new Vec2(uv.x + z + x + z,uv.y + z + y),
+                    new Vec2(uv.x + z + x + z,uv.y + z),
+                    new Vec2(uv.x + z + x + z + x,uv.y + z)
+                    , textureWidth, textureHeight);
+            west = createFace(v4, v1, v3, v6, tnormals.get(3),
+                    new Vec2(uv.x + z + x + z,uv.y + z + y),
+                    new Vec2(uv.x + z + x,uv.y + z + y),
+                    new Vec2(uv.x + z + x,uv.y + z),
+                    new Vec2(uv.x + z + x + z,uv.y + z)
+                    , textureWidth, textureHeight);
+            up = createFace(v3, v5, v8, v6, tnormals.get(4),
+                    new Vec2(uv.x + z + x,uv.y + z),
+                    new Vec2(uv.x + z,uv.y + z),
+                    new Vec2(uv.x + z,uv.y),
+                    new Vec2(uv.x + z + x,uv.y)
+                    , textureWidth, textureHeight);
+            down = createFace(v1, v2, v7, v4, tnormals.get(5),
+                    new Vec2(uv.x + z + x + x,uv.y + z),
+                    new Vec2(uv.x + z + x,uv.y + z),
+                    new Vec2(uv.x + z + x,uv.y),
+                    new Vec2(uv.x + z + x + x,uv.y)
+                    , textureWidth, textureHeight);
+        }
         return new FDCube(north,east,south,west,up,down);
+    }
+
+    private static FDFace createFace(Vec3 v1,Vec3 v2,Vec3 v3,Vec3 v4,Vec3 normal,Vec2 uv1,Vec2 uv2,Vec2 uv3,Vec2 uv4,int texWidth,int texHeight){
+//        uv = new Vec2(uv.x / texWidth,uv.y / texHeight);
+//        uv_size = new Vec2(uv_size.x / texWidth,uv_size.y / texHeight);
+
+        uv1 = new Vec2(uv1.x / texWidth,uv1.y / texHeight);
+        uv2 = new Vec2(uv2.x / texWidth,uv2.y / texHeight);
+        uv3 = new Vec2(uv3.x / texWidth,uv3.y / texHeight);
+        uv4 = new Vec2(uv4.x / texWidth,uv4.y / texHeight);
+
+        FDVertex vertex1 = new FDVertex(uv1.x ,uv1.y ,v1);
+        FDVertex vertex2 = new FDVertex(uv2.x ,uv2.y ,v2);
+        FDVertex vertex3 = new FDVertex(uv3.x ,uv3.y,v3);
+        FDVertex vertex4 = new FDVertex(uv4.x ,uv4.y,v4);
+        return new FDFace(normal,vertex1,vertex2,vertex3,vertex4);
     }
 
     private static FDFace createFace(Vec3 v1,Vec3 v2,Vec3 v3,Vec3 v4,Vec3 normal,JsonObject faceData,int texWidth,int texHeight){
@@ -140,13 +226,6 @@ public class FDCube {
         Vec2 uv_size = JsonHelper.parseVec2(faceData.getAsJsonArray("uv_size"));
         uv = new Vec2(uv.x / texWidth,uv.y / texHeight);
         uv_size = new Vec2(uv_size.x / texWidth,uv_size.y / texHeight);
-
-        /*
-        FDVertex vertex1 = new FDVertex(uv.x ,uv.y ,v1);
-        FDVertex vertex2 = new FDVertex(uv.x + uv_size.x,uv.y ,v2);
-        FDVertex vertex3 = new FDVertex(uv.x + uv_size.x ,uv.y + uv_size.y,v3);
-        FDVertex vertex4 = new FDVertex(uv.x ,uv.y + uv_size.y,v4);
-         */
 
         FDVertex vertex1 = new FDVertex(uv.x + uv_size.x ,uv.y + uv_size.y ,v1);
         FDVertex vertex2 = new FDVertex(uv.x ,uv.y + uv_size.y ,v2);

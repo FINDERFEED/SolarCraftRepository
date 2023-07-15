@@ -33,8 +33,13 @@ public class ShadowZombieRenderer extends MobRenderer<ShadowZombie, ShadowZombie
                 super.render(zombie, p_115456_, p_115457_, matrices, src, p_115460_);
             }
             FDModel model = new FDModel(SCBedrockModels.TEST_MODEL);
-
-            model.render(matrices,src.getBuffer(RenderType.entityTranslucent(new ResourceLocation(SolarCraft.MOD_ID,"textures/misc/texture2.png"))),
+            FDModel model2 = new FDModel(SCBedrockModels.TEST_MODEL2);
+            FDModel model3 = new FDModel(SCBedrockModels.TEST_MODEL3);
+            model.render(matrices,src.getBuffer(RenderType.entityTranslucent(new ResourceLocation(SolarCraft.MOD_ID,"textures/misc/texture.png"))),
+                    LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY,1f,1f,1f,1f);
+            model2.render(matrices,src.getBuffer(RenderType.entityTranslucent(new ResourceLocation(SolarCraft.MOD_ID,"textures/misc/texture.png"))),
+                    LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY,1f,1f,1f,1f);
+            model3.render(matrices,src.getBuffer(RenderType.entityTranslucent(new ResourceLocation(SolarCraft.MOD_ID,"textures/misc/texture.png"))),
                     LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY,1f,1f,1f,1f);
         }
     }
