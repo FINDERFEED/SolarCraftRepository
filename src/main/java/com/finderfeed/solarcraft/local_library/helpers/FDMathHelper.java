@@ -220,6 +220,21 @@ public class FDMathHelper {
         return x*x + z*z <= rad*rad;
     }
 
+    public static double lerp(double i,double e,double f){
+        return i + (e - i) * f;
+    }
+    public static float lerp(float i,float e,float f){
+        return i + (e - i) * f;
+    }
+
+    public static Vec3 lerpv3(Vec3 init,Vec3 end,float i){
+        return new Vec3(
+                lerp(init.x,end.x,i),
+                lerp(init.y,end.y,i),
+                lerp(init.z,end.z,i)
+        );
+    }
+
 
     public static class TileEntityThings{
         public static Vec3 getTileEntityCenter(BlockEntity entity){

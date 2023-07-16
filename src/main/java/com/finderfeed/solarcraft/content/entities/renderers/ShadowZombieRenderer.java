@@ -27,20 +27,15 @@ public class ShadowZombieRenderer extends MobRenderer<ShadowZombie, ShadowZombie
     }
 
     @Override
-    public void render(ShadowZombie zombie, float p_115456_, float p_115457_, PoseStack matrices, MultiBufferSource src, int p_115460_) {
+    public void render(ShadowZombie zombie, float p_115456_, float p_115457_, PoseStack matrices, MultiBufferSource src, int light) {
         if (!zombie.isDeadOrDying()) {
             if (false) {
-                super.render(zombie, p_115456_, p_115457_, matrices, src, p_115460_);
+                super.render(zombie, p_115456_, p_115457_, matrices, src, light);
             }
             FDModel model = new FDModel(SCBedrockModels.TEST_MODEL);
-            FDModel model2 = new FDModel(SCBedrockModels.TEST_MODEL2);
-            FDModel model3 = new FDModel(SCBedrockModels.TEST_MODEL3);
             model.render(matrices,src.getBuffer(RenderType.entityTranslucent(new ResourceLocation(SolarCraft.MOD_ID,"textures/misc/texture.png"))),
-                    LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY,1f,1f,1f,1f);
-            model2.render(matrices,src.getBuffer(RenderType.entityTranslucent(new ResourceLocation(SolarCraft.MOD_ID,"textures/misc/texture.png"))),
-                    LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY,1f,1f,1f,1f);
-            model3.render(matrices,src.getBuffer(RenderType.entityTranslucent(new ResourceLocation(SolarCraft.MOD_ID,"textures/misc/texture.png"))),
-                    LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY,1f,1f,1f,1f);
+                    light, OverlayTexture.NO_OVERLAY,1f,1f,1f,1f);
+
         }
     }
 
