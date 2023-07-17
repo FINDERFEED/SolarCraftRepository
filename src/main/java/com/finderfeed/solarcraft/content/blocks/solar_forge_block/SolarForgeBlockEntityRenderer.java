@@ -1,14 +1,20 @@
 package com.finderfeed.solarcraft.content.blocks.solar_forge_block;
 
+import com.finderfeed.solarcraft.SolarCraft;
+import com.finderfeed.solarcraft.local_library.bedrock_loader.model_components.FDModel;
 import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.finderfeed.solarcraft.registries.ModelLayersRegistry;
+import com.finderfeed.solarcraft.registries.SCBedrockAnimations;
+import com.finderfeed.solarcraft.registries.SCBedrockModels;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import static com.finderfeed.solarcraft.local_library.helpers.RenderingTools.*;
@@ -18,16 +24,22 @@ public class SolarForgeBlockEntityRenderer implements BlockEntityRenderer<SolarF
     public final ResourceLocation LOC = new ResourceLocation("solarcraft","textures/misc/solar_forge_block.png");
     public final ResourceLocation LOCPETALS = new ResourceLocation("solarcraft","textures/misc/solar_forge_petals.png");
     public final ResourceLocation RAY = new ResourceLocation("solarcraft","textures/misc/ray_into_skyy.png");
-    public final SolarForgeBlockModelTrue model;
+    public final SolarForgeBlockModelTrue mainmodel;
     public final SolarForgePetalsTrue petals;
     public final SolarForgePetalsTrue petals2;
 
+
+
+    public static final ResourceLocation texture = new ResourceLocation(SolarCraft.MOD_ID,"textures/misc/texture.png");
+
+    public final FDModel model;
 
     public SolarForgeBlockEntityRenderer(BlockEntityRendererProvider.Context ctx) {
         SolarForgePetalsTrue modelp = new SolarForgePetalsTrue(ctx.bakeLayer(ModelLayersRegistry.SOLAR_FORGE_PETALS));
         petals = modelp;
         petals2 = modelp;
-        model = new SolarForgeBlockModelTrue(ctx.bakeLayer(ModelLayersRegistry.SOLAR_FORGE_MAIN_MODEL));
+        mainmodel = new SolarForgeBlockModelTrue(ctx.bakeLayer(ModelLayersRegistry.SOLAR_FORGE_MAIN_MODEL));
+        model = new FDModel(SCBedrockModels.TEST_MODEL);
     }
 
     @Override
@@ -39,6 +51,23 @@ public class SolarForgeBlockEntityRenderer implements BlockEntityRenderer<SolarF
     public void render(SolarForgeBlockEntity entity, float partialTicks, PoseStack matrices, MultiBufferSource buffer, int light2, int light) {
 
         //matrices.mulPose(Vector3f.ZN.rotationDegrees(180));
+        matrices.pushPose();
+
+
+        model.main.reset();
+
+        int time = (int)(entity.getLevel().getGameTime()) % SCBedrockAnimations.TEST.getAnimTimeInTicks();
+
+//        time = (int)(0.5*20);
+
+        SCBedrockAnimations.TEST.applyAnimation(model,time,partialTicks);
+        model.render(matrices,buffer.getBuffer(RenderType.entityTranslucent(new ResourceLocation(SolarCraft.MOD_ID,"textures/misc/texture2.png"))),
+                LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY,1f,1f,1f,1f);
+
+        matrices.popPose();
+
+        if (true) return;
+
         if (entity.getLevel().getDayTime() % 24000 <= 13000 && entity.getLevel().canSeeSky(entity.getBlockPos().above())) {
             matrices.pushPose();
 
@@ -51,7 +80,7 @@ public class SolarForgeBlockEntityRenderer implements BlockEntityRenderer<SolarF
 //        matrices.mulPose(Vector3f.ZN.rotationDegrees(180));
         matrices.mulPose(rotationDegrees(ZN(),180));
         matrices.translate(-0.5f,-1.5,0.5f);
-        model.renderToBuffer(matrices,vertex,light2,light,255,255,255,255);
+        mainmodel.renderToBuffer(matrices,vertex,light2,light,255,255,255,255);
         matrices.translate(0,-1.5f,0);
         matrices.scale(1.3f,1.3f,1.3f);
         if (entity.getLevel().getDayTime() % 24000 <= 13000 && entity.getLevel().canSeeSky(entity.getBlockPos().above())){

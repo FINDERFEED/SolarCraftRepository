@@ -83,6 +83,13 @@ public class FDMathHelper {
             return Math.min(main, max);
         }
     }
+    public static float clamp(float min,float main, float max){
+        if (main < min){
+            return min;
+        }else {
+            return Math.min(main, max);
+        }
+    }
 
     public static int clamp(int min,int main, int max){
         if (main < min){

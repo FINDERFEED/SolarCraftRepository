@@ -4,7 +4,7 @@
 		"animation.unknown.new": {
 			"loop": "hold_on_last_frame",
 			"animation_length": 1.5,
-			"blend_weight": "2",
+			"blend_weight": "1",
 			"bones": {
 				"bone": {
 					"rotation": {
@@ -13,14 +13,17 @@
 							"lerp_mode": "catmullrom"
 						},
 						"0.5": {
-							"post": [90, 0, 0],
+							"post": [0, 0, -45],
 							"lerp_mode": "catmullrom"
 						},
 						"1.0": {
-							"post": [50.63, 0, 0],
+							"post": [0, 0, 0],
 							"lerp_mode": "catmullrom"
 						},
-						"1.5": {"pre": [12, 0, 0], "post": [134, 0, 0]}
+						"1.5": {
+							"post": [0, 0, 0],
+							"lerp_mode": "catmullrom"
+						}
 					},
 					"position": {
 						"0.0": {
@@ -40,7 +43,29 @@
 							"lerp_mode": "catmullrom"
 						}
 					},
-					"scale": [2, 1, 1]
+					"scale": {
+						"0.5": {
+							"pre": [1, 1, 1],
+							"post": [1, 1, 1],
+							"lerp_mode": "catmullrom"
+						},
+						"1.0": {
+							"post": [2, 1, 1],
+							"lerp_mode": "catmullrom"
+						}
+					}
+				},
+				"bone2": {
+					"rotation": {
+						"0.0": [0, 0, 0],
+						"0.9": [0, -90, 0],
+						"1.5": [0, 0, 0]
+					},
+					"position": {
+						"0.0": [0, 0, 0],
+						"0.9": [0, 21, 0],
+						"1.5": [0, 0, 0]
+					}
 				}
 			}
 		}

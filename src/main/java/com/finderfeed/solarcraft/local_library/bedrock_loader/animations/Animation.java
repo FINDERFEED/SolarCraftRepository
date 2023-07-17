@@ -1,14 +1,18 @@
 package com.finderfeed.solarcraft.local_library.bedrock_loader.animations;
 
+import com.finderfeed.solarcraft.local_library.bedrock_loader.model_components.FDModel;
+import com.finderfeed.solarcraft.local_library.bedrock_loader.model_components.FDModelPart;
+import com.finderfeed.solarcraft.local_library.helpers.FDMathHelper;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.mojang.datafixers.util.Pair;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.server.packs.resources.ResourceManager;
-import net.minecraftforge.fml.common.Mod;
+import net.minecraft.world.phys.Vec3;
 
 import java.io.BufferedReader;
 import java.util.*;
@@ -16,7 +20,6 @@ import java.util.*;
 public class Animation {
 
     private static Gson GSON = new GsonBuilder().create();
-
 
     private Map<String,AnimationData> boneData = new HashMap<>();
     private float animTime;
@@ -32,6 +35,142 @@ public class Animation {
 
 
 
+    public void applyAnimation(FDModel model,int tickTime,float partialTicks){
+        float time = FDMathHelper.clamp(0,tickTime + partialTicks,this.getAnimTimeInTicks()) / 20f;
+        for (var entry  : boneData.entrySet()){
+            FDModelPart modelPart = model.getModelPart(entry.getKey());
+            this.applyToBone(entry.getValue(),modelPart,time);
+        }
+    }
+
+    private void applyToBone(AnimationData data,FDModelPart part,float time){
+        var positionPair = data.getCurrentAndNextPositionKeyFrame(time);
+        this.applyPosition(positionPair,data,part,time);
+
+        var rotationPair = data.getCurrentAndNextRotationKeyFrame(time);
+        this.applyRotation(rotationPair,data,part,time);
+
+        var scalePair = data.getCurrentAndNextScaleKeyFrame(time);
+        this.applyScale(scalePair,data,part,time);
+
+    }
+
+
+    private void applyPosition(Pair<KeyFrame,KeyFrame> positionPair,AnimationData data,FDModelPart part,float time){
+        if (positionPair != null){
+            KeyFrame frame1 = positionPair.getFirst();
+            KeyFrame frame2 = positionPair.getSecond();
+            if (frame2 != null) {
+                float time1 = frame1.getTime();
+                float time2 = frame2.getTime();
+
+                float localTime = time - time1;
+                float percent = localTime / (time2 - time1);
+
+                if (frame1.getLerpMode() == KeyFrame.LerpMode.LINEAR && frame2.getLerpMode() == KeyFrame.LerpMode.LINEAR) {
+                    Vec3 pos = FDMathHelper.lerpv3(frame1.getPost(), frame2.getPre(), percent);
+                    part.x = (float) pos.x;
+                    part.y = (float) pos.y;
+                    part.z = (float) pos.z;
+                } else {
+                    int index = frame1.getIndex();
+                    Vec3 pos = data.getPositionSpline().pointBetweenPoints(index, percent);
+                    part.x = (float) pos.x;
+                    part.y = (float) pos.y;
+                    part.z = (float) pos.z;
+                }
+            }else{
+                Vec3 pos = time < frame1.getTime() ? frame1.getPre() : frame1.getPost();
+                part.x = (float) pos.x;
+                part.y = (float) pos.y;
+                part.z = (float) pos.z;
+            }
+        }
+    }
+    private void applyRotation(Pair<KeyFrame,KeyFrame> rotationPair,AnimationData data,FDModelPart part,float time){
+        if (rotationPair != null){
+            KeyFrame frame1 = rotationPair.getFirst();
+            KeyFrame frame2 = rotationPair.getSecond();
+            if (frame2 != null) {
+                float time1 = frame1.getTime();
+                float time2 = frame2.getTime();
+
+                float localTime = time - time1;
+                float percent = localTime / (time2 - time1);
+
+                if (frame1.getLerpMode() == KeyFrame.LerpMode.LINEAR && frame2.getLerpMode() == KeyFrame.LerpMode.LINEAR) {
+                    Vec3 pos = FDMathHelper.lerpv3(frame1.getPost(), frame2.getPre(), percent);
+                    part.xRot = (float) pos.x;
+                    part.yRot = (float) pos.y;
+                    part.zRot = (float) pos.z;
+                } else {
+                    int index = frame1.getIndex();
+                    Vec3 pos = data.getRotationSpline().pointBetweenPoints(index, percent);
+                    part.xRot = (float) pos.x;
+                    part.yRot = (float) pos.y;
+                    part.zRot = (float) pos.z;
+                }
+            }else{
+                Vec3 pos = time < frame1.getTime() ? frame1.getPre() : frame1.getPost();
+                part.xRot = (float) pos.x;
+                part.yRot = (float) pos.y;
+                part.zRot = (float) pos.z;
+            }
+        }
+    }
+    private void applyScale(Pair<KeyFrame,KeyFrame> scalePair,AnimationData data,FDModelPart part,float time){
+        if (scalePair != null){
+            KeyFrame frame1 = scalePair.getFirst();
+            KeyFrame frame2 = scalePair.getSecond();
+            if (frame2 != null) {
+                float time1 = frame1.getTime();
+                float time2 = frame2.getTime();
+
+                float localTime = time - time1;
+                float percent = localTime / (time2 - time1);
+
+                if (frame1.getLerpMode() == KeyFrame.LerpMode.LINEAR && frame2.getLerpMode() == KeyFrame.LerpMode.LINEAR) {
+                    Vec3 pos = FDMathHelper.lerpv3(frame1.getPost(), frame2.getPre(), percent);
+                    part.scaleX = (float) pos.x;
+                    part.scaleY = (float) pos.y;
+                    part.scaleZ = (float) pos.z;
+                } else {
+                    int index = frame1.getIndex();
+                    Vec3 pos = data.getScaleSpline().pointBetweenPoints(index, percent);
+                    part.scaleX = (float) pos.x;
+                    part.scaleY = (float) pos.y;
+                    part.scaleZ = (float) pos.z;
+                }
+            }else{
+                Vec3 pos = time < frame1.getTime() ? frame1.getPre() : frame1.getPost();
+                part.scaleX = (float) pos.x;
+                part.scaleY = (float) pos.y;
+                part.scaleZ = (float) pos.z;
+            }
+        }
+    }
+
+
+    public int getAnimTimeInTicks(){
+        return (int)(this.animTime*20);
+    }
+
+
+
+
+
+
+
+
+
+    public enum Mode{
+        PLAY_ONCE,
+        HOLD_ON_LAST_FRAME,
+        LOOP
+    }
+
+
+
 
 
     public static Animation loadAnimation(ResourceLocation location, String animationName){
@@ -40,7 +179,7 @@ public class Animation {
         if (!format.equals("1.8.0")){
             throw new IllegalStateException("Animation format " + format + " in animation " + location + " is not supported!");
         }
-        JsonObject sanimation = object.getAsJsonObject(animationName);
+        JsonObject sanimation = object.getAsJsonObject("animations").getAsJsonObject(animationName);
         Animation animation = parseAnimation(sanimation);
         return animation;
     }
@@ -115,12 +254,4 @@ public class Animation {
             throw new RuntimeException("Error loading animation file: " + location,e);
         }
     }
-
-
-    public static enum Mode{
-        PLAY_ONCE,
-        HOLD_ON_LAST_FRAME,
-        LOOP
-    }
-
 }

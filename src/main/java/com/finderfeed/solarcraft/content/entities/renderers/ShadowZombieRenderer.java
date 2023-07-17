@@ -5,6 +5,7 @@ import com.finderfeed.solarcraft.content.entities.ShadowZombie;
 import com.finderfeed.solarcraft.content.entities.models.ShadowZombieModel;
 import com.finderfeed.solarcraft.local_library.bedrock_loader.model_components.FDModelInfo;
 import com.finderfeed.solarcraft.local_library.bedrock_loader.model_components.FDModel;
+import com.finderfeed.solarcraft.registries.SCBedrockAnimations;
 import com.finderfeed.solarcraft.registries.SCBedrockModels;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.geom.ModelLayers;
@@ -20,22 +21,15 @@ public class ShadowZombieRenderer extends MobRenderer<ShadowZombie, ShadowZombie
 
 
 
-
     public ShadowZombieRenderer(EntityRendererProvider.Context ctx) {
         super(ctx,new ShadowZombieModel(ctx.bakeLayer(ModelLayers.ZOMBIE)), 0.0f);
         this.addLayer(new ShadowZombieModel.ShadowZombieLayer(this));
     }
 
     @Override
-    public void render(ShadowZombie zombie, float p_115456_, float p_115457_, PoseStack matrices, MultiBufferSource src, int light) {
+    public void render(ShadowZombie zombie, float p_115456_, float pticks, PoseStack matrices, MultiBufferSource src, int light) {
         if (!zombie.isDeadOrDying()) {
-            if (false) {
-                super.render(zombie, p_115456_, p_115457_, matrices, src, light);
-            }
-            FDModel model = new FDModel(SCBedrockModels.TEST_MODEL);
-            model.render(matrices,src.getBuffer(RenderType.entityTranslucent(new ResourceLocation(SolarCraft.MOD_ID,"textures/misc/texture.png"))),
-                    light, OverlayTexture.NO_OVERLAY,1f,1f,1f,1f);
-
+                super.render(zombie, p_115456_, pticks, matrices, src, light);
         }
     }
 

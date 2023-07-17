@@ -6,7 +6,7 @@ import net.minecraft.resources.ResourceLocation;
 
 public class SCBedrockModels {
 
-    public static final FDModelInfo TEST_MODEL = new FDModelInfo(new ResourceLocation(SolarCraft.MOD_ID,"models/bedrock/model.geo.json"),1f);
+    public static final FDModelInfo TEST_MODEL = new FDModelInfo(new ResourceLocation(SolarCraft.MOD_ID,"models/bedrock/test.geo.json"),1f);
 
 
     public static void init(){}

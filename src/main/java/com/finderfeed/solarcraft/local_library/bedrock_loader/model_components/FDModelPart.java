@@ -24,9 +24,9 @@ public class FDModelPart {
     public Vec3 initRotation;
     public boolean isVisible = true;
 
-    private float scaleX = 1f;
-    private float scaleY = 1f;
-    private float scaleZ = 1f;
+    public float scaleX = 1f;
+    public float scaleY = 1f;
+    public float scaleZ = 1f;
     public final Vec3 pivot;
 
 
@@ -74,8 +74,8 @@ public class FDModelPart {
         if (xRot != 0 || yRot != 0 || zRot != 0){
             matrices.mulPose(new Quaternionf().rotationZYX(
                     (float)Math.toRadians(zRot),
-                    (float)Math.toRadians(yRot),
-                    (float)Math.toRadians(xRot)));
+                    (float)Math.toRadians(-yRot),
+                    (float)Math.toRadians(-xRot)));
         }
         matrices.translate(-pivot.x/16,-pivot.y/16,-pivot.z/16);
 
@@ -93,6 +93,9 @@ public class FDModelPart {
         this.scaleX = 1f;
         this.scaleY = 1f;
         this.scaleZ = 1f;
+        for (FDModelPart part : this.children.values()){
+            part.reset();
+        }
     }
 
     public void setVisible(boolean visible) {

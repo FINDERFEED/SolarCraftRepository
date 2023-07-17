@@ -25,6 +25,14 @@ public class JsonHelper {
         return new Vec3(array.get(0).getAsDouble(),array.get(1).getAsDouble(),array.get(2).getAsDouble());
     }
 
+    public static Vec3 parseVec3(JsonObject element,String memberName,Vec3 def){
+        if (!element.has(memberName)){
+            return def;
+        }
+        JsonArray array = element.getAsJsonArray(memberName);
+        return new Vec3(array.get(0).getAsDouble(),array.get(1).getAsDouble(),array.get(2).getAsDouble());
+    }
+
     public static Vec2 parseVec2(JsonElement element){
         JsonArray array = element.getAsJsonArray();
         return new Vec2(array.get(0).getAsFloat(),array.get(1).getAsFloat());
@@ -33,6 +41,13 @@ public class JsonHelper {
     public static String getString(JsonObject object,String memberName){
         if (!object.has(memberName)){
             return "";
+        }
+        return object.get(memberName).getAsString();
+    }
+
+    public static String getString(JsonObject object,String memberName,String defaults){
+        if (!object.has(memberName)){
+            return defaults;
         }
         return object.get(memberName).getAsString();
     }
