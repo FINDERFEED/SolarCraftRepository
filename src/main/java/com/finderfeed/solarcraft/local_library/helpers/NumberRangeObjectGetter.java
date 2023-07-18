@@ -65,4 +65,11 @@ public class NumberRangeObjectGetter<T> {
     public List<T> getValues() {
         return values;
     }
+
+
+    public NumberRangeObjectGetter<T> replaceAndCopy(int index,T replaceable){
+        var newList = new ArrayList<>(this.values);
+        newList.set(index,replaceable);
+        return new NumberRangeObjectGetter<>(newList,ranges);
+    }
 }

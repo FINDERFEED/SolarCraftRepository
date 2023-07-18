@@ -39,6 +39,8 @@ public class AnimationData {
         }
     }
 
+    private AnimationData(){}
+
     public List<KeyFrame> getPosition() {
         return positionGetter.getValues();
     }
@@ -107,4 +109,33 @@ public class AnimationData {
             return null;
         }
     }
+
+
+    public AnimationData copyWithReplacedFirst(KeyFrame posFrame,KeyFrame rotationFrame,KeyFrame scaleFrame){
+        var newPosGetter = this.positionGetter.replaceAndCopy(0,posFrame);
+        var newRotGetter = this.rotationGetter.replaceAndCopy(0,rotationFrame);
+        var newScaleGetter = this.scaleGetter.replaceAndCopy(0,scaleFrame);
+        CatmullRomSpline positionSpline = null;
+        CatmullRomSpline rotationSpline = null;
+        CatmullRomSpline scaleSpline = null;
+        List<KeyFrame> l;
+        if ((l = newPosGetter.getValues()).size() > 1) {
+            positionSpline = new CatmullRomSpline(l.stream().map(KeyFrame::getPost).toArray(Vec3[]::new));
+        }
+        if ((l = newRotGetter.getValues()).size() > 1) {
+            rotationSpline = new CatmullRomSpline(l.stream().map(KeyFrame::getPost).toArray(Vec3[]::new));
+        }
+        if ((l = newScaleGetter.getValues()).size() > 1) {
+            scaleSpline = new CatmullRomSpline(l.stream().map(KeyFrame::getPost).toArray(Vec3[]::new));
+        }
+        AnimationData data = new AnimationData();
+        data.scaleGetter = newScaleGetter;
+        data.rotationGetter = newRotGetter;
+        data.positionGetter = newPosGetter;
+        data.rotationSpline = rotationSpline;
+        data.scaleSpline = scaleSpline;
+        data.positionSpline = positionSpline;
+        return data;
+    }
+
 }
