@@ -2,14 +2,13 @@ package com.finderfeed.solarcraft.compat.jei.recipe_categories;
 
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.helpers.Helpers;
-import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.compat.jei.drawables.InfusingRecipeJEI;
 import com.finderfeed.solarcraft.compat.jei.JeiRecipeTypes;
 import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.Progression;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.screen.buttons.InfoButton;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
-import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.ProgressionHelper;
+import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragmentHelper;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
 import com.finderfeed.solarcraft.content.recipe_types.infusing_new.InfusingRecipe;
 import com.finderfeed.solarcraft.registries.items.SolarcraftItems;
@@ -26,7 +25,6 @@ import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
@@ -73,7 +71,7 @@ public class InfusingRecipeCategory implements IRecipeCategory<InfusingRecipe> {
     public void setRecipe(IRecipeLayoutBuilder builder, InfusingRecipe recipe, IFocusGroup focuses) {
         AncientFragment fragment = AncientFragment.getFragmentByID(recipe.fragID);
         if (fragment == null) return;
-        if (!ProgressionHelper.doPlayerHasFragment(Minecraft.getInstance().player, fragment) && !Minecraft.getInstance().player.isCreative()) {
+        if (!AncientFragmentHelper.doPlayerHasFragment(Minecraft.getInstance().player, fragment) && !Minecraft.getInstance().player.isCreative()) {
             builder.addInvisibleIngredients(RecipeIngredientRole.OUTPUT).addItemStack(recipe.output.copy());
             return;
         }
@@ -110,7 +108,7 @@ public class InfusingRecipeCategory implements IRecipeCategory<InfusingRecipe> {
 
         AncientFragment fragment = AncientFragment.getFragmentByID(recipe.fragID);
         if (fragment == null) return;
-        if (!ProgressionHelper.doPlayerHasFragment(Minecraft.getInstance().player, fragment) && !Minecraft.getInstance().player.isCreative()) {
+        if (!AncientFragmentHelper.doPlayerHasFragment(Minecraft.getInstance().player, fragment) && !Minecraft.getInstance().player.isCreative()) {
             RenderingTools.fill(matrices,5,5,161-5,141-5,0.3f,0,0.45f,1);
             int iter = 0;
             for (FormattedCharSequence s : Minecraft.getInstance().font.split(Component.translatable("solarcraft.fragment_not_unlocked"),140)) {

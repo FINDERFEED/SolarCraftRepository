@@ -100,9 +100,9 @@ public class FDAnimationsHelper {
         Vec3 currentPos = FDAnimationsHelper.getCurrentPosition(currentPosKeyFrames,data,time);
         Vec3 currentRot = FDAnimationsHelper.getCurrentRotation(currentRotKeyFrames,data,time);
         Vec3 currentScale = FDAnimationsHelper.getCurrentScale(currentScaleKeyFrames,data,time);
-        KeyFrame keyFramePos = new KeyFrame(currentPos,currentPos, KeyFrame.LerpMode.CATMULLROM,1,1);
-        KeyFrame keyFrameRot = new KeyFrame(currentRot,currentRot, KeyFrame.LerpMode.CATMULLROM,1,1);
-        KeyFrame keyFrameScale = new KeyFrame(currentScale,currentScale, KeyFrame.LerpMode.CATMULLROM,1,1);
+        KeyFrame keyFramePos = new KeyFrame(currentPos,currentPos, KeyFrame.LerpMode.CATMULLROM,0,1);
+        KeyFrame keyFrameRot = new KeyFrame(currentRot,currentRot, KeyFrame.LerpMode.CATMULLROM,0,1);
+        KeyFrame keyFrameScale = new KeyFrame(currentScale,currentScale, KeyFrame.LerpMode.CATMULLROM,0,1);
         return ImmutableTriple.of(keyFramePos,keyFrameRot,keyFrameScale);
     }
 

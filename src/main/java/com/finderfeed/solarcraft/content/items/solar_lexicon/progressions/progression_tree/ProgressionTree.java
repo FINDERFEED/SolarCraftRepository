@@ -9,7 +9,6 @@ public class ProgressionTree {
     public static final ProgressionTree INSTANCE = loadTree();
 
     public HashMap<Progression,TreePart<Progression>> PROGRESSION_TREE = new HashMap<>();
-    public List<Progression> PROGRESSIONS = new ArrayList<>();
 
     public ProgressionTree(){
 
@@ -65,16 +64,6 @@ public class ProgressionTree {
         }
     }
 
-    private void addProgressionRequirements(Progression ach, List<Progression> requires) {
-        if (PROGRESSION_TREE.containsKey(ach)){
-            PROGRESSION_TREE.get(ach).TO_UNLOCK_GENERAL_PROGRESSION.addAll(requires);
-            requires.clear();
-        }else{
-            requires.clear();
-            System.out.println(("Cannot add progression "+requires.toString()+" because "+ach.getProgressionCode().toUpperCase()+" root doesnt exist"));
-        }
-    }
-
     private void addProgressionRequirements(Progression ach, Progression... progressions) {
         if (PROGRESSION_TREE.containsKey(ach)){
             for (Progression achi : progressions) {
@@ -98,28 +87,13 @@ public class ProgressionTree {
         }
     }
 
-    public Progression getAchievementById(int id){
-        for (Progression a : PROGRESSION_TREE.keySet()){
-            if (a.getId() == id){
-                return a;
-            }
-        }
-        return Progression.SOLAR_INFUSER;
-    }
-
 
     public static class TreePart<T>{
-
         public Collection<T> TO_UNLOCK_GENERAL_PROGRESSION = new ArrayList<>();
         public Set<Progression> FORWARD_PROGRESSIONS = new HashSet<>();
-
         TreePart(){
 
         }
-
-
-
-
     }
 }
 

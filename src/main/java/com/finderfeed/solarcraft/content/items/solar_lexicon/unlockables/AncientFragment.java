@@ -319,13 +319,6 @@ public class AncientFragment {
         this.lore = lore;
 
     }
-//    AncientFragment(Component translation, String id, Progression[] neededProgression, SubCategoryBase subBase, CategoryBase catBase, ItemWithRecipe item, Component itemLore, RecipeType<?> recipeType, int priority,boolean jsonInit){
-//        this(translation,id,neededProgression,subBase,catBase,Type.ITEM,item.getItem().getItem(),priority,jsonInit);
-//        this.item = item;
-//        this.itemLore = itemLore;
-//        this.recipeType = recipeType;
-//
-//    }
 
     AncientFragment(Component translation, String id, Progression[] neededProgression, SubCategoryBase subBase, CategoryBase catBase, List<ItemWithRecipe> item,RecipeType<?> type, Component upgradeLore, int priority,boolean jsonInit){
         this(translation,id,neededProgression,subBase,catBase,Type.ITEMS,item.get(0).getItem().getItem(),priority,jsonInit);

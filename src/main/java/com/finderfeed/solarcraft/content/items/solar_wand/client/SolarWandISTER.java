@@ -1,7 +1,5 @@
 package com.finderfeed.solarcraft.content.items.solar_wand.client;
 
-import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
-import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.ProgressionHelper;
 import com.finderfeed.solarcraft.content.items.solar_wand.SolarWandItem;
 import com.finderfeed.solarcraft.content.items.solar_wand.WandAction;
 import com.finderfeed.solarcraft.events.other_events.OBJModels;
@@ -11,11 +9,9 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.resources.model.BakedModel;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 

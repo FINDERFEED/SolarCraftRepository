@@ -2,7 +2,7 @@ package com.finderfeed.solarcraft.content.items.solar_lexicon.screen;
 
 import com.finderfeed.solarcraft.content.items.solar_lexicon.screen.buttons.ItemStackTabButton;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
-import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.ProgressionHelper;
+import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragmentHelper;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.client.screens.ThreeDStructureViewScreen;
@@ -12,7 +12,6 @@ import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.SolarLexicon;
 import com.finderfeed.solarcraft.registries.blocks.SolarcraftBlocks;
 import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
@@ -23,7 +22,6 @@ import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.sounds.SoundManager;
 import net.minecraft.network.chat.Component;
-import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.resources.ResourceLocation;
@@ -175,7 +173,7 @@ public class StructureScreen extends Screen {
             List<AncientFragment> refs = new ArrayList<>();
             for (int i = 0; i < items.getSlots();i++){
                 ItemStack item = items.getStackInSlot(i);
-                AncientFragment iFrag = ProgressionHelper.getFragmentFromItem(item);
+                AncientFragment iFrag = AncientFragmentHelper.getFragmentFromItem(item);
                 if (fragment.getReferences().contains(iFrag)){
                     refs.add(iFrag);
                 }

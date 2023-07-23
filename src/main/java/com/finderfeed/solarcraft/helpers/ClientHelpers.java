@@ -10,17 +10,11 @@ import com.finderfeed.solarcraft.client.screens.CrystalEnergyVinesPuzzleScreen;
 import com.finderfeed.solarcraft.client.toasts.UnlockedEnergyTypeToast;
 import com.finderfeed.solarcraft.config.JsonFragmentsHelper;
 import com.finderfeed.solarcraft.config.SolarcraftClientConfig;
-import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.client.SunShardPuzzleScreen;
-import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.puzzle_template.Puzzle;
 import com.finderfeed.solarcraft.content.entities.not_alive.BallLightningProjectile;
 import com.finderfeed.solarcraft.content.items.solar_wand.wand_actions.drain_runic_enenrgy_action.RETypeSelectionScreen;
-import com.finderfeed.solarcraft.content.items.solar_wand.wand_actions.structure_check.StructureSelectionScreen;
 import com.finderfeed.solarcraft.events.RenderEventsHandler;
 import com.finderfeed.solarcraft.events.other_events.event_handler.ClientEventsHandler;
-import com.finderfeed.solarcraft.helpers.multiblock.MultiblockStructure;
-import com.finderfeed.solarcraft.helpers.multiblock.Multiblocks;
 import com.finderfeed.solarcraft.local_library.effects.LightningBoltPath;
-import com.finderfeed.solarcraft.local_library.entities.bossbar.client.ActiveBossBar;
 import com.finderfeed.solarcraft.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarcraft.content.blocks.blockentities.clearing_ritual.CrystalEnergyVinesTile;
 import com.finderfeed.solarcraft.content.blocks.blockentities.RayTrapTileEntity;
@@ -33,11 +27,10 @@ import com.finderfeed.solarcraft.misc_things.*;
 import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
 import com.finderfeed.solarcraft.packet_handler.packets.RequestAbilityScreenPacket;
 import com.finderfeed.solarcraft.registries.items.SolarcraftItems;
-import com.finderfeed.solarcraft.registries.overlays.SolarcraftOverlays;
 import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.SolarLexicon;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.Progression;
-import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.ProgressionHelper;
+import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragmentHelper;
 import com.google.gson.JsonObject;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.components.AbstractWidget;
@@ -55,7 +48,6 @@ import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.BlockItem;
@@ -74,9 +66,7 @@ import net.minecraftforge.items.IItemHandler;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 import java.util.function.Supplier;
-import java.util.stream.Collectors;
 
 
 public class ClientHelpers {
@@ -209,7 +199,7 @@ public class ClientHelpers {
     }
 
     public static boolean doClientPlayerHasFragment(AncientFragment fragment){
-        return ProgressionHelper.doPlayerHasFragment(getClientPlayer(),fragment);
+        return AncientFragmentHelper.doPlayerHasFragment(getClientPlayer(),fragment);
     }
 
     public static void updatePlayerPattern(CompoundTag patternData,boolean shouldHideButtons){
@@ -227,7 +217,7 @@ public class ClientHelpers {
 
     public static void updatePlayerFragments(CompoundTag fragmentData){
         if (getClientPlayer() != null){
-            getClientPlayer().getPersistentData().put(ProgressionHelper.COMPOUND_TAG_FRAGMENTS,fragmentData);
+            getClientPlayer().getPersistentData().put(AncientFragmentHelper.COMPOUND_TAG_FRAGMENTS,fragmentData);
 
         }
     }
@@ -238,7 +228,7 @@ public class ClientHelpers {
             Player player = ClientHelpers.getClientPlayer();
 
             if (player != null && !player.isCreative()) {
-                return !ProgressionHelper.doPlayerHasFragment(player, r.getNeededFragment());
+                return !AncientFragmentHelper.doPlayerHasFragment(player, r.getNeededFragment());
             } else {
                 return false;
             }
@@ -357,15 +347,6 @@ public class ClientHelpers {
         return null;
     }
 
-
-    public static void reloadProgression(ServerPlayer playerServer){
-
-        Player player = Minecraft.getInstance().player;
-        for (Progression a : Progression.getAllAchievements()){
-            Helpers.setProgressionCompletionStatus(a,player,Helpers.hasPlayerCompletedProgression(a,playerServer));
-
-        }
-    }
 
     /**
      * Updates RayTrapTileEntity client trigger

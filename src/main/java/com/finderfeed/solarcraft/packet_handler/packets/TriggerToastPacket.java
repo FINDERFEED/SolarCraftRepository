@@ -1,5 +1,6 @@
 package com.finderfeed.solarcraft.packet_handler.packets;
 
+import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.Progression;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.client.toasts.ProgressionToast;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.progression_tree.ProgressionTree;
@@ -15,23 +16,23 @@ import java.util.function.Supplier;
 
 public class TriggerToastPacket {
 
-    public final int id;
+    public final String id;
 
     public TriggerToastPacket(FriendlyByteBuf buf){
-        this.id = buf.readInt();
+        this.id = buf.readUtf();
     }
-    public TriggerToastPacket(int id){
-        this.id = id;
+    public TriggerToastPacket(String progressionId){
+        this.id = progressionId;
     }
     public void toBytes(FriendlyByteBuf buf){
-        buf.writeInt(id);
+        buf.writeUtf(id);
     }
     public void handle(Supplier<NetworkEvent.Context> ctx){
         ctx.get().enqueueWork(()->{
             DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> ()-> {
-                ProgressionTree tree = ProgressionTree.INSTANCE;
+
                 ClientHelpers.playSound(SolarcraftSounds.PROGRESSION_GAIN.get(),1,1);
-                ProgressionToast.addOrUpdate(Minecraft.getInstance().getToasts(), tree.getAchievementById(id));
+                ProgressionToast.addOrUpdate(Minecraft.getInstance().getToasts(), Progression.getProgressionByName(id));
             });
 
         });

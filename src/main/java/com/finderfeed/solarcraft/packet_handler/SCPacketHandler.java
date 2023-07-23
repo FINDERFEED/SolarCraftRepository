@@ -7,9 +7,8 @@ import com.finderfeed.solarcraft.local_library.entities.bossbar.server.CustomBos
 import com.finderfeed.solarcraft.local_library.entities.bossbar.server.ServerBossEventUpdateProgress;
 import com.finderfeed.solarcraft.packet_handler.packets.*;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.packets.OpenScreenPacket;
-import com.finderfeed.solarcraft.content.items.solar_lexicon.packets.UpdateAllProgressionOnClient;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.packets.UpdateInventoryPacket;
-import com.finderfeed.solarcraft.content.items.solar_lexicon.packets.UpdateProgressionOnClient;
+import com.finderfeed.solarcraft.content.items.solar_lexicon.packets.UpdateProgressionsOnClient;
 import com.finderfeed.solarcraft.packet_handler.packets.crystal_energy_vines_puzzle.OpenPuzzleScreenPacket;
 import com.finderfeed.solarcraft.packet_handler.packets.crystal_energy_vines_puzzle.PuzzleActionPacket;
 import com.finderfeed.solarcraft.packet_handler.packets.misc_packets.BallLightningSpawnLightningParticles;
@@ -43,12 +42,11 @@ public class SCPacketHandler {
         INSTANCE.registerMessage(nextID(), UpdateProgressOnClientPacket.class, UpdateProgressOnClientPacket::toBytes, UpdateProgressOnClientPacket::new, UpdateProgressOnClientPacket::handle);
         INSTANCE.registerMessage(nextID(), UpdateStacksOnClientPacketPool.class, UpdateStacksOnClientPacketPool::toBytes, UpdateStacksOnClientPacketPool::new, UpdateStacksOnClientPacketPool::handle);
         INSTANCE.registerMessage(nextID(), UpdateStacksOnClientTable.class, UpdateStacksOnClientTable::toBytes, UpdateStacksOnClientTable::new, UpdateStacksOnClientTable::handle);
-        INSTANCE.registerMessage(nextID(), UpdateProgressionOnClient.class, UpdateProgressionOnClient::toBytes, UpdateProgressionOnClient::new, UpdateProgressionOnClient::handle);
+        INSTANCE.registerMessage(nextID(), UpdateProgressionsOnClient.class, UpdateProgressionsOnClient::toBytes, UpdateProgressionsOnClient::new, UpdateProgressionsOnClient::handle);
         INSTANCE.registerMessage(nextID(), TriggerToastPacket.class, TriggerToastPacket::toBytes, TriggerToastPacket::new, TriggerToastPacket::handle);
         INSTANCE.registerMessage(nextID(), OpenScreenPacket.class, OpenScreenPacket::toBytes, OpenScreenPacket::new, OpenScreenPacket::handle);
         INSTANCE.registerMessage(nextID(), ProcImmortalityTotemAnimation.class, ProcImmortalityTotemAnimation::toBytes, ProcImmortalityTotemAnimation::new, ProcImmortalityTotemAnimation::handle);
         INSTANCE.registerMessage(nextID(), PlaySoundPacket.class, PlaySoundPacket::toBytes, PlaySoundPacket::new, PlaySoundPacket::handle);
-        INSTANCE.registerMessage(nextID(), UpdateAllProgressionOnClient.class, UpdateAllProgressionOnClient::toBytes, UpdateAllProgressionOnClient::new, UpdateAllProgressionOnClient::handle);
         INSTANCE.registerMessage(nextID(), UpdateLaserTrapTile.class, UpdateLaserTrapTile::toBytes, UpdateLaserTrapTile::new, UpdateLaserTrapTile::handle);
         INSTANCE.registerMessage(nextID(), ReloadChunks.class, ReloadChunks::toBytes, ReloadChunks::new, ReloadChunks::handle);
         INSTANCE.registerMessage(nextID(), UpdateInventoryPacket.class, UpdateInventoryPacket::toBytes, UpdateInventoryPacket::new, UpdateInventoryPacket::handle);

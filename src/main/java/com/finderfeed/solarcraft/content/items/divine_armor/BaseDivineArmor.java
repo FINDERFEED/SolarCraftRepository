@@ -6,7 +6,7 @@ import com.finderfeed.solarcraft.content.items.runic_energy.ItemRunicEnergy;
 import com.finderfeed.solarcraft.content.items.primitive.solacraft_item_classes.SolarcraftArmorItem;
 import com.finderfeed.solarcraft.content.items.runic_energy.RunicEnergyCost;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
-import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.ProgressionHelper;
+import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragmentHelper;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -79,7 +79,7 @@ public abstract class BaseDivineArmor extends SolarcraftArmorItem implements IRu
     public boolean canEquip(ItemStack stack, EquipmentSlot armorType, Entity entity) {
 
         if (entity instanceof Player player){
-            return super.canEquip(stack,armorType,entity) && ProgressionHelper.doPlayerHasFragment(player,AncientFragment.DIVINE_ARMOR);
+            return super.canEquip(stack,armorType,entity) && AncientFragmentHelper.doPlayerHasFragment(player,AncientFragment.DIVINE_ARMOR);
         }
         return super.canEquip(stack, armorType, entity);
     }

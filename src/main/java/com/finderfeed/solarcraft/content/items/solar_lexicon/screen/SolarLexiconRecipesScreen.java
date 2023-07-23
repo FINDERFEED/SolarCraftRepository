@@ -3,14 +3,12 @@ package com.finderfeed.solarcraft.content.items.solar_lexicon.screen;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.screen.buttons.InfoButton;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.screen.buttons.ItemStackButton;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
-import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.structure.Book;
-import com.finderfeed.solarcraft.local_library.client.screens.IRenderable;
 import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.finderfeed.solarcraft.misc_things.IScrollable;
 import com.finderfeed.solarcraft.registries.items.SolarcraftItems;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
-import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.ProgressionHelper;
+import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragmentHelper;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -184,9 +182,9 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
         for (int i = 0;i < handler.getSlots();i++){
             ItemStack stack = handler.getStackInSlot(i);
             if (stack.getItem() == SolarcraftItems.INFO_FRAGMENT.get()){
-                if (stack.getTagElement(ProgressionHelper.TAG_ELEMENT) != null) {
+                if (stack.getTagElement(AncientFragmentHelper.TAG_ELEMENT) != null) {
                     showNoFragmentsMessage = false;
-                    AncientFragment frag = AncientFragment.getFragmentByID(stack.getTagElement(ProgressionHelper.TAG_ELEMENT).getString(ProgressionHelper.FRAG_ID));
+                    AncientFragment frag = AncientFragment.getFragmentByID(stack.getTagElement(AncientFragmentHelper.TAG_ELEMENT).getString(AncientFragmentHelper.FRAG_ID));
                     if (frag != null){
                         FRAGMENTS.add(frag);
                     }

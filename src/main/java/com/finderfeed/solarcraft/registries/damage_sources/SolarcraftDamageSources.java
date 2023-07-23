@@ -74,6 +74,7 @@ public class SolarcraftDamageSources {
         ORBITAL_EXPLOSION = new DamageSource(types.getHolderOrThrow(ORBITAL_EXPLOSION_TYPE));
         PLAYER_ATTACK_ARMOR_PIERCE = new EntityDamageSource(types.getHolderOrThrow(PLAYER_ATTACK_ARMOR_PIERCE_TYPE));
         MOB_ATTACK_ARMOR_PIERCE = new EntityDamageSource(types.getHolderOrThrow(MOB_ATTACK_ARMOR_PIERCE_TYPE));
+        MOB_ATTACK_ARMOR_PIERCE_PROJECTILE = new EntityDamageSource(types.getHolderOrThrow(MOB_ATTACK_ARMOR_PIERCE_PROJECTILE_TYPE));
     }
 
 

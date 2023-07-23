@@ -6,7 +6,7 @@ import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.RunePat
 import com.finderfeed.solarcraft.misc_things.AbstractPacket;
 import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
-import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.ProgressionHelper;
+import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragmentHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
@@ -57,7 +57,7 @@ public class RunicTablePacket extends AbstractPacket {
                 IItemHandler h = table.getInventory();
                 int runeInt = pattern.getRune(xPressPos, yPressPos);
                 if (runeInt != RunePattern.OPENED) {
-                    Item rune = ProgressionHelper.RUNES[runeInt];
+                    Item rune = AncientFragmentHelper.RUNES[runeInt];
                     boolean shouldLookInPlayerInventory = true;
                     for (int i = 1; i < 9; i++) {
                         ItemStack stack = h.getStackInSlot(i);
@@ -83,10 +83,10 @@ public class RunicTablePacket extends AbstractPacket {
 
 
                     if (pattern.isCompleted()) {
-                        AncientFragment fragment = ProgressionHelper.getRandomUnlockableFragment(player);
+                        AncientFragment fragment = AncientFragmentHelper.getRandomUnlockableFragment(player);
                         if (fragment != null) {
-                            ProgressionHelper.applyTagToFragment(h.getStackInSlot(0), fragment);
-                            ProgressionHelper.givePlayerFragment(fragment, player);
+                            AncientFragmentHelper.applyTagToFragment(h.getStackInSlot(0), fragment);
+                            AncientFragmentHelper.givePlayerFragment(fragment, player);
 
                             RunePattern p = new RunePattern();
                             p.generate();
@@ -98,7 +98,7 @@ public class RunicTablePacket extends AbstractPacket {
                         }
                     }
 
-                    SCPacketHandler.INSTANCE.sendTo(new UpdateRunePattern(player, ProgressionHelper.getAllUnlockableFragments(player) == null), player.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+                    SCPacketHandler.INSTANCE.sendTo(new UpdateRunePattern(player, AncientFragmentHelper.getAllUnlockableFragments(player) == null), player.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
                 }
             }
 

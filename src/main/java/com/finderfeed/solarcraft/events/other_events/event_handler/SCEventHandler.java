@@ -7,7 +7,6 @@ import com.finderfeed.solarcraft.config.JsonConfig;
 import com.finderfeed.solarcraft.config.JsonFragmentsHelper;
 import com.finderfeed.solarcraft.config.enchanter_config.EnchanterConfigInit;
 import com.finderfeed.solarcraft.content.items.TotemOfImmortality;
-import com.finderfeed.solarcraft.content.items.solar_lexicon.packets.UpdateProgressionOnClient;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarcraft.content.items.vein_miner.IllidiumPickaxe;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
@@ -27,7 +26,7 @@ import com.finderfeed.solarcraft.content.items.divine_armor.BaseDivineArmor;
 import com.finderfeed.solarcraft.content.items.primitive.solacraft_item_classes.FragmentItem;
 import com.finderfeed.solarcraft.content.items.runic_energy.ItemRunicEnergy;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.Progression;
-import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.ProgressionHelper;
+import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragmentHelper;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
 import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
 import com.finderfeed.solarcraft.packet_handler.packets.*;
@@ -42,7 +41,6 @@ import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTy
 import com.finderfeed.solarcraft.registries.items.SolarcraftItems;
 import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
@@ -57,7 +55,6 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.boss.enderdragon.EnderDragon;
 import net.minecraft.world.entity.boss.wither.WitherBoss;
 import net.minecraft.world.level.Level;
@@ -69,7 +66,6 @@ import net.minecraft.world.item.ItemStack;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.chunk.LevelChunk;
@@ -91,8 +87,8 @@ import net.minecraftforge.network.NetworkDirection;
 import java.util.List;
 
 
-@Mod.EventBusSubscriber(modid = "solarcraft",bus = Mod.EventBusSubscriber.Bus.FORGE)
-public class EventHandler {
+@Mod.EventBusSubscriber(modid = SolarCraft.MOD_ID,bus = Mod.EventBusSubscriber.Bus.FORGE)
+public class SCEventHandler {
     public static final ResourceKey<Level> RADIANT_LAND_KEY = ResourceKey.create(Registries.DIMENSION,new ResourceLocation("solarcraft","radiant_land"));
     public static List<AbstractAbility> ALLOWED_ABILITIES_DURING_BOSSFIGHT = List.of(
             AbilitiesRegistry.HEAL,
@@ -123,46 +119,13 @@ public class EventHandler {
     }
 
 
-//    @SubscribeEvent
-//    public static void addStructures(WorldEvent.Load event){
-//        if (event.getWorld() instanceof ServerLevel serverLevel) {
-//            StructureSettings s = serverLevel.getChunkSource().getGenerator().getSettings();
-//
-//                ImmutableMap.Builder<StructureFeature<?>, ImmutableMultimap<ConfiguredStructureFeature<?, ?>, ResourceKey<Biome>>> map = ImmutableMap.builder();
-//                s.configuredStructures.forEach(map::put);
-//                addStructureToBiomes(s,SolarForgeStructures.DIM_SHARD_STRUCTURE.get(), SolarForgeStructureFeatures.CONF_DIM_SHARD_STRUCT, map, Biomes.JUNGLE);
-//                addStructureToBiomes(s,SolarForgeStructures.DUNGEON_ONE_KEY_LOCK.get(), SolarForgeStructureFeatures.CONF_DUNGEON_ONE, map, Biomes.DESERT);
-//                addStructureToBiomes(s,SolarForgeStructures.CHARGING_STATION.get(), SolarForgeStructureFeatures.CONF_DUNGEON_CHARGING_STATION, map, Biomes.PLAINS);
-//                addStructureToBiomes(s,SolarForgeStructures.DUNGEON_MAZE.get(), SolarForgeStructureFeatures.CONF_DUNGEON_MAZE, map, Biomes.SAVANNA);
-//                addStructureToBiomes(s,SolarForgeStructures.MAGICIAN_TOWER.get(), SolarForgeStructureFeatures.CONF_MAGICIAN_TOWER, map,Biomes.JAGGED_PEAKS,Biomes.STONY_PEAKS);
-//                addStructureToBiomes(s,SolarForgeStructures.CRYSTAL_BOSS_ROOM.get(), SolarForgeStructureFeatures.CONF_CRYSTAL_BOSS_ROOM, map, RADIANT_LAND_BIOME_KEY);
-//                addStructureToBiomes(s,SolarForgeStructures.RUNIC_ELEMENTAL_ARENA.get(), SolarForgeStructureFeatures.RUNIC_ELEMENTAL_ARENA, map, RADIANT_LAND_BIOME_KEY);
-//
-//                s.configuredStructures = map.build();
-//
-//        }
-//    }
-//
-//    private static void addStructureToBiomes(StructureSettings s,StructureFeature<?> feature,
-//                                             ConfiguredStructureFeature<?,?> configuredStruct,
-//                                             ImmutableMap.Builder<StructureFeature<?>, ImmutableMultimap<ConfiguredStructureFeature<?, ?>, ResourceKey<Biome>>> map,
-//                                             ResourceKey<Biome>... biomes){
-//        if (!s.configuredStructures.containsKey(feature)) {
-//            ImmutableMultimap.Builder<ConfiguredStructureFeature<?, ?>, ResourceKey<Biome>> secondMap = ImmutableMultimap.builder();
-//            for (ResourceKey<Biome> key : biomes) {
-//                secondMap.put(configuredStruct, key);
-//            }
-//            map.put(feature, secondMap.build());
-//        }
-//    }
-
 
 
 
     @SubscribeEvent
     public static void respawn(PlayerEvent.PlayerRespawnEvent event){
         if (event.getEntity() instanceof ServerPlayer player){
-            Helpers.updateProgression(player);
+            Helpers.updateProgressionsOnClient(player);
             for (RunicEnergy.Type type : RunicEnergy.Type.getAll()) {
                 Helpers.updateRunicEnergyOnClient(type, RunicEnergy.getEnergy(player, type), player);
             }
@@ -207,15 +170,12 @@ public class EventHandler {
 
         }
         if (!playernew.level.isClientSide) {
-            for (Progression a : Progression.allProgressions) {
-                SCPacketHandler.INSTANCE.sendTo(new UpdateProgressionOnClient(a.getProgressionCode(),playernew.getPersistentData().getBoolean(Helpers.PROGRESSION+a.getProgressionCode())),
-                        ((ServerPlayer) playernew).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
-            }
+            Helpers.updateProgressionsOnClient((ServerPlayer) playernew);
         }
         if (playernew instanceof ServerPlayer player) {
             for (AncientFragment fragment : AncientFragment.getAllFragments()) {
-                if (ProgressionHelper.doPlayerHasFragment(peorig, fragment)) {
-                    ProgressionHelper.givePlayerFragment(fragment, playernew);
+                if (AncientFragmentHelper.doPlayerHasFragment(peorig, fragment)) {
+                    AncientFragmentHelper.givePlayerFragment(fragment, playernew);
                 }
             }
             Helpers.updateFragmentsOnClient(player);
@@ -294,7 +254,7 @@ public class EventHandler {
             if (player instanceof ServerPlayer) {
                 if (player.level.getGameTime() % 200 == 0) {
                     Helpers.updateFragmentsOnClient((ServerPlayer) player);
-                    Helpers.updateProgression((ServerPlayer) player);
+                    Helpers.updateProgressionsOnClient((ServerPlayer) player);
                 }
                 if (player.level.getGameTime() % 20 == 0) {
                     if (player.level.dimension() == Level.NETHER) {
@@ -408,7 +368,7 @@ public class EventHandler {
         Player playerEntity = event.getPlayer();
         Helpers.setProgressionCompletionStatus(ach, playerEntity,true);
         Helpers.triggerToast(ach, playerEntity);
-        Helpers.updateProgression((ServerPlayer)playerEntity );
+        Helpers.updateProgressionsOnClient((ServerPlayer)playerEntity );
         Helpers.forceChunksReload((ServerPlayer) playerEntity);
         Helpers.triggerProgressionShader(playerEntity);
 
@@ -542,7 +502,7 @@ public class EventHandler {
             if (event.getPlayer().isCreative()) return;
 
             if (fragmentItem.getNeededFragment() != null) {
-                if (!ProgressionHelper.doPlayerHasFragment(event.getPlayer(), fragmentItem.getNeededFragment())) {
+                if (!AncientFragmentHelper.doPlayerHasFragment(event.getPlayer(), fragmentItem.getNeededFragment())) {
                     event.getPlayer().sendSystemMessage(Component.translatable("solarcraft.item_unknown").withStyle(ChatFormatting.RED));
                     event.setCanceled(true);
                 }
@@ -557,7 +517,7 @@ public class EventHandler {
             if (event.getEntity().isCreative()) return;
 
             if (fragmentItem.getNeededFragment() != null) {
-                if (!ProgressionHelper.doPlayerHasFragment(event.getEntity(), fragmentItem.getNeededFragment())) {
+                if (!AncientFragmentHelper.doPlayerHasFragment(event.getEntity(), fragmentItem.getNeededFragment())) {
                     event.getEntity().sendSystemMessage(Component.translatable("solarcraft.item_unknown").withStyle(ChatFormatting.RED));
                     event.setCanceled(true);
                 }
@@ -572,7 +532,7 @@ public class EventHandler {
             if (player.isCreative()) return;
 
             if (fragmentItem.getNeededFragment() != null) {
-                if (!ProgressionHelper.doPlayerHasFragment(player, fragmentItem.getNeededFragment())) {
+                if (!AncientFragmentHelper.doPlayerHasFragment(player, fragmentItem.getNeededFragment())) {
                     player.sendSystemMessage(Component.translatable("solarcraft.item_unknown").withStyle(ChatFormatting.RED));
                     event.setCanceled(true);
                 }
@@ -661,6 +621,11 @@ public class EventHandler {
             Player player = event.getEntity();
             if (player instanceof  ServerPlayer sPlayer) {
 
+                if (sPlayer.getPersistentData().getBoolean("received_solar_lexicon")){
+
+                }
+
+
                 for (JsonConfig config : ConfigRegistry.POST_LOAD_CONFIGS.values()){
                     config.deserialize(config.getJson());
                 }
@@ -674,7 +639,7 @@ public class EventHandler {
                 for (RunicEnergy.Type type : RunicEnergy.Type.values()) {
                     Helpers.updateRunicEnergyOnClient(type, RunicEnergy.getEnergy(player, type), player);
                 }
-                Helpers.updateProgression(sPlayer);
+                Helpers.updateProgressionsOnClient(sPlayer);
 
                 if (JsonFragmentsHelper.fragmentsShouldBeRead()) {
                     List<AncientFragment> fragsDes = AncientFragment.deserializeFragments(JsonFragmentsHelper.readFragments());

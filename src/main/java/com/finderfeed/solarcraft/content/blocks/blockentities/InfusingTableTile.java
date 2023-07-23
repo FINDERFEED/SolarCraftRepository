@@ -3,10 +3,9 @@ package com.finderfeed.solarcraft.content.blocks.blockentities;
 import com.finderfeed.solarcraft.content.items.solar_wand.IWandable;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.helpers.Helpers;
-import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.local_library.OwnedBlock;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.Progression;
-import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.ProgressionHelper;
+import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragmentHelper;
 import com.finderfeed.solarcraft.client.particles.SolarcraftParticleTypes;
 import com.finderfeed.solarcraft.misc_things.PhantomInventory;
 import com.finderfeed.solarcraft.content.recipe_types.infusing_crafting.InfusingCraftingRecipe;
@@ -166,7 +165,7 @@ public class InfusingTableTile extends BlockEntity implements OwnedBlock, IWanda
                 Optional<InfusingCraftingRecipe> recipe = level.getRecipeManager().getRecipeFor(SolarcraftRecipeTypes.INFUSING_CRAFTING.get(), phantomInv.set(handler), level);
                     if (recipe.isPresent()) {
                         try {
-                            if (ProgressionHelper.doPlayerHasFragment(pl, recipe.get().getFragment())) {
+                            if (AncientFragmentHelper.doPlayerHasFragment(pl, recipe.get().getFragment())) {
                                 Helpers.fireProgressionEvent(pl, Progression.INFUSING_CRAFTING_TABLE);
                                 this.recipeTrigerred = true;
                                 update();

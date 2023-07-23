@@ -5,7 +5,6 @@ import com.finderfeed.solarcraft.config.SolarcraftConfig;
 import com.finderfeed.solarcraft.content.blocks.solar_energy.Bindable;
 import com.finderfeed.solarcraft.content.blocks.solar_energy.SolarEnergyContainer;
 import com.finderfeed.solarcraft.content.items.SunShardItem;
-import com.finderfeed.solarcraft.content.items.primitive.solacraft_item_classes.SolarcraftItem;
 import com.finderfeed.solarcraft.content.items.solar_wand.IWandable;
 import com.finderfeed.solarcraft.content.items.solar_wand.wand_actions.structure_check.IStructureOwner;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
@@ -20,7 +19,7 @@ import com.finderfeed.solarcraft.content.blocks.blockentities.REItemHandlerBlock
 import com.finderfeed.solarcraft.content.blocks.infusing_table_things.infusing_pool.InfusingStandTileEntity;
 import com.finderfeed.solarcraft.content.items.runic_energy.RunicEnergyCost;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
-import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.ProgressionHelper;
+import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragmentHelper;
 import com.finderfeed.solarcraft.misc_things.*;
 //import com.finderfeed.solarcraft.multiblocks.Multiblocks;
 import com.finderfeed.solarcraft.content.recipe_types.infusing_new.InfusingRecipe;
@@ -425,7 +424,7 @@ public class InfuserTileEntity extends REItemHandlerBlockEntity implements Solar
         Optional<InfusingRecipe> opt = this.level.getRecipeManager().getRecipeFor(SolarcraftRecipeTypes.INFUSING.get(),new PhantomInventory(getInventory()),level);
         calculateTier();
         try {
-            if (opt.isPresent() && ProgressionHelper.doPlayerHasFragment(playerEntity, AncientFragment.getFragmentByID(opt.get().fragID))) {
+            if (opt.isPresent() && AncientFragmentHelper.doPlayerHasFragment(playerEntity, AncientFragment.getFragmentByID(opt.get().fragID))) {
                 if (!this.getItem(outputSlot()).isEmpty()){
                     playerEntity.sendSystemMessage(Component.literal("Clear the output slot").withStyle(ChatFormatting.RED));
                     return;
@@ -467,7 +466,7 @@ public class InfuserTileEntity extends REItemHandlerBlockEntity implements Solar
                 if (opt.isPresent()) {
                     AncientFragment fragment = AncientFragment.getFragmentByID(opt.get().fragID);
                     if (fragment != null){
-                        if (!ProgressionHelper.doPlayerHasFragment(playerEntity,fragment)){
+                        if (!AncientFragmentHelper.doPlayerHasFragment(playerEntity,fragment)){
                             playerEntity.sendSystemMessage(Component.literal("Cant start craft, you dont have "+fragment.getTranslation().getString().toUpperCase()+" fragment unlocked.").withStyle(ChatFormatting.RED));
                         }
                     }

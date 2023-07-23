@@ -5,14 +5,13 @@ import com.finderfeed.solarcraft.content.items.SolarGodBow;
 import com.finderfeed.solarcraft.content.items.SolarGodPickaxe;
 import com.finderfeed.solarcraft.content.items.SolarGodSword;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
-import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.ProgressionHelper;
+import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragmentHelper;
 import com.finderfeed.solarcraft.registries.items.SolarcraftItems;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
@@ -130,7 +129,7 @@ public class SCCreativeTabs {
                 a.forEach(regitem->output.accept(regitem.get()));
                 for (AncientFragment frag : AncientFragment.getAllFragments()) {
                     ItemStack stack = new ItemStack(SolarcraftItems.INFO_FRAGMENT.get(), 1);
-                    stack.getOrCreateTagElement(ProgressionHelper.TAG_ELEMENT).putString(ProgressionHelper.FRAG_ID, frag.getId());
+                    stack.getOrCreateTagElement(AncientFragmentHelper.TAG_ELEMENT).putString(AncientFragmentHelper.FRAG_ID, frag.getId());
                     output.accept(stack);
                 }
             })

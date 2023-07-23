@@ -223,7 +223,7 @@ public class SolarLexiconScreen extends Screen implements IScrollable,PostRender
             ItemStackButtonAnimatedTooltip button = new ItemStackButtonAnimatedTooltip(relX+21+offsetX,relY+21+offsetY,16,16,(btn)->{
                 if (Helpers.hasPlayerCompletedProgression(a,player)){
                     currentText = a.getPretext().getString();
-                    afterTxt = a.afterText.getString();
+                    afterTxt = a.getAfterText().getString();
                 }else if (Helpers.canPlayerUnlock(a,player)){
                     currentText = a.getPretext().getString();
                     afterTxt = "???";
@@ -241,7 +241,7 @@ public class SolarLexiconScreen extends Screen implements IScrollable,PostRender
             boolean g = Helpers.canPlayerUnlock(a,player);
             if (Helpers.hasPlayerCompletedProgression(a,player)){
                 preText = Component.literal(a.getPretext().getString());
-                afterText = Component.literal(a.afterText.getString());
+                afterText = Component.literal(a.getAfterText().getString());
             }else if (g){
                 preText = Component.literal(a.getPretext().getString());
                 afterText = Component.literal("???");

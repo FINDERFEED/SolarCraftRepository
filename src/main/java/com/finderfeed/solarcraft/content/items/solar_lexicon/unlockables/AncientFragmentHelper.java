@@ -17,7 +17,7 @@ import java.util.*;
 /**
  * Class for all things with fragments
  */
-public class ProgressionHelper {
+public class AncientFragmentHelper {
 
 
 

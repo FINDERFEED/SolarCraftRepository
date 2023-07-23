@@ -4,10 +4,9 @@ import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.compat.jei.JeiRecipeTypes;
 import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
-import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.ProgressionHelper;
+import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragmentHelper;
 import com.finderfeed.solarcraft.content.recipe_types.infusing_crafting.InfusingCraftingRecipe;
 import com.finderfeed.solarcraft.registries.items.SolarcraftItems;
-import com.mojang.blaze3d.vertex.PoseStack;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
@@ -18,7 +17,6 @@ import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -58,7 +56,7 @@ public class InfusingCraftingRecipeCategory implements IRecipeCategory<InfusingC
     public void setRecipe(IRecipeLayoutBuilder builder, InfusingCraftingRecipe recipe, IFocusGroup focuses) {
         AncientFragment fragment = recipe.getFragment();
         if (fragment == null) return;
-        if (!ProgressionHelper.doPlayerHasFragment(Minecraft.getInstance().player, fragment) && !Minecraft.getInstance().player.isCreative()){
+        if (!AncientFragmentHelper.doPlayerHasFragment(Minecraft.getInstance().player, fragment) && !Minecraft.getInstance().player.isCreative()){
             builder.addInvisibleIngredients(RecipeIngredientRole.OUTPUT).addItemStack(recipe.getOutput().copy());
             return;
         }
@@ -79,7 +77,7 @@ public class InfusingCraftingRecipeCategory implements IRecipeCategory<InfusingC
     public void draw(InfusingCraftingRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
         AncientFragment fragment = recipe.getFragment();
         if (fragment == null) return;
-        if (!ProgressionHelper.doPlayerHasFragment(Minecraft.getInstance().player,fragment)){
+        if (!AncientFragmentHelper.doPlayerHasFragment(Minecraft.getInstance().player,fragment)){
             RenderingTools.fill(guiGraphics.pose(),6,6,104,68,0.3f,0,0.45f,1);
             int iter = 0;
             for (FormattedCharSequence charSequence : Minecraft.getInstance().font.split(Component.translatable("solarcraft.fragment_not_unlocked"),80)) {

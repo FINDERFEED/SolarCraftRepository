@@ -88,7 +88,7 @@ public class Animation {
         for (AnimationData data : currentAnimation.boneData.values()){
             float time = currentAnimationTime / 20f;
             var keyframes = FDAnimationsHelper.generateKeyFramesForTime(data,time);
-            KeyFrame end = new KeyFrame(Vec3.ZERO,Vec3.ZERO, KeyFrame.LerpMode.CATMULLROM,0,0);
+            KeyFrame end = new KeyFrame(Vec3.ZERO,Vec3.ZERO, KeyFrame.LerpMode.CATMULLROM,1,0);
             AnimationData d = new AnimationData(data.getBoneName(),
                     List.of(keyframes.middle,end),
                     List.of(keyframes.left,end),

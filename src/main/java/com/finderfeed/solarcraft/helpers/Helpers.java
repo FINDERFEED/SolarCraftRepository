@@ -14,9 +14,8 @@ import com.finderfeed.solarcraft.misc_things.RunicEnergy;
 import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
 import com.finderfeed.solarcraft.packet_handler.packets.*;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.progression_tree.ProgressionTree;
-import com.finderfeed.solarcraft.content.items.solar_lexicon.packets.UpdateProgressionOnClient;
+import com.finderfeed.solarcraft.content.items.solar_lexicon.packets.UpdateProgressionsOnClient;
 import com.finderfeed.solarcraft.registries.SolarcraftGamerules;
-import com.mojang.blaze3d.vertex.*;
 import net.minecraft.client.Minecraft;
 
 import net.minecraft.client.gui.GuiGraphics;
@@ -305,12 +304,8 @@ public class Helpers {
     }
 
 
-    public static void updateProgression(ServerPlayer player){
-        for (Progression a : Progression.allProgressions) {
-
-            SCPacketHandler.INSTANCE.sendTo(new UpdateProgressionOnClient(a.getProgressionCode(), hasPlayerCompletedProgression(a,player)),
-                    player.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
-        }
+    public static void updateProgressionsOnClient(ServerPlayer player){
+        UpdateProgressionsOnClient.send(player);
     }
 
     public static void updateFragmentsOnClient(ServerPlayer player){
@@ -384,7 +379,7 @@ public class Helpers {
     }
 
     public static void triggerToast(Progression ach, Player player){
-        SCPacketHandler.INSTANCE.sendTo(new TriggerToastPacket(ach.getId()), ((ServerPlayer)player).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+        SCPacketHandler.INSTANCE.sendTo(new TriggerToastPacket(ach.getProgressionCode()), ((ServerPlayer)player).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
     }
 
     public static void fireProgressionEvent(Player playerEntity, Progression ach){

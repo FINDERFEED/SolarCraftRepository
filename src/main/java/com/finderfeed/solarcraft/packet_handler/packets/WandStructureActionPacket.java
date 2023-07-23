@@ -1,7 +1,7 @@
 package com.finderfeed.solarcraft.packet_handler.packets;
 
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
-import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.ProgressionHelper;
+import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragmentHelper;
 import com.finderfeed.solarcraft.helpers.multiblock.MultiblockStructure;
 import com.finderfeed.solarcraft.packet_handler.ClientPacketHandles;
 import net.minecraft.core.BlockPos;
@@ -24,7 +24,7 @@ public class WandStructureActionPacket {
     public WandStructureActionPacket(Player player, List<MultiblockStructure> structures, BlockPos checkPos){
         CompoundTag tag = new CompoundTag();
         for (AncientFragment fragment : AncientFragment.STRUCTURE_FRAGMENTS.values()){
-            tag.putBoolean(fragment.getId(), ProgressionHelper.doPlayerHasFragment(player,fragment));
+            tag.putBoolean(fragment.getId(), AncientFragmentHelper.doPlayerHasFragment(player,fragment));
         }
         this.data = tag;
         this.structIds = structures.stream().map(MultiblockStructure::getId).collect(Collectors.toList());

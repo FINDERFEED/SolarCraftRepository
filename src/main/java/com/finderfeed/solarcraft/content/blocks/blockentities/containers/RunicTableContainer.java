@@ -4,7 +4,7 @@ import com.finderfeed.solarcraft.content.blocks.blockentities.RunicTableTileEnti
 import com.finderfeed.solarcraft.content.items.RuneItem;
 import com.finderfeed.solarcraft.registries.containers.SolarcraftContainers;
 import com.finderfeed.solarcraft.registries.items.SolarcraftItems;
-import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.ProgressionHelper;
+import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragmentHelper;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
@@ -168,7 +168,7 @@ class FragmentSlot extends SlotItemHandler {
     @Override
     public boolean mayPlace(ItemStack stack) {
         Item item = stack.getItem();
-        return (item == SolarcraftItems.INFO_FRAGMENT.get()) && (stack.getTagElement(ProgressionHelper.TAG_ELEMENT) == null);
+        return (item == SolarcraftItems.INFO_FRAGMENT.get()) && (stack.getTagElement(AncientFragmentHelper.TAG_ELEMENT) == null);
     }
 
     @Override

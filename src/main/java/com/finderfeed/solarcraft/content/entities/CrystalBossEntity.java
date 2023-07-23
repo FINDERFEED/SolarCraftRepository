@@ -2,6 +2,7 @@ package com.finderfeed.solarcraft.content.entities;
 
 
 import com.finderfeed.solarcraft.content.entities.runic_elemental.RunicElementalBoss;
+import com.finderfeed.solarcraft.events.other_events.event_handler.SCEventHandler;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.content.abilities.ability_classes.AbstractAbility;
 import com.finderfeed.solarcraft.SolarCraft;
@@ -10,7 +11,6 @@ import com.finderfeed.solarcraft.content.entities.not_alive.MineEntityCrystalBos
 import com.finderfeed.solarcraft.content.entities.not_alive.RipRayGenerator;
 import com.finderfeed.solarcraft.content.entities.not_alive.ShieldingCrystalCrystalBoss;
 import com.finderfeed.solarcraft.events.my_events.AbilityUseEvent;
-import com.finderfeed.solarcraft.events.other_events.event_handler.EventHandler;
 import com.finderfeed.solarcraft.local_library.entities.BossAttackChain;
 import com.finderfeed.solarcraft.local_library.entities.bossbar.server.CustomServerBossEvent;
 import com.finderfeed.solarcraft.local_library.helpers.FDMathHelper;
@@ -33,10 +33,8 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.world.BossEvent;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -621,7 +619,7 @@ class AntiCheat{
     @SubscribeEvent
     public static void cancelBlockBreak(BlockEvent.BreakEvent event){
         Player pl = event.getPlayer();
-        if (pl.level.dimension()  == EventHandler.RADIANT_LAND_KEY){
+        if (pl.level.dimension()  == SCEventHandler.RADIANT_LAND_KEY){
             if (!pl.level.getEntitiesOfClass(LivingEntity.class,CHECK_AABB.move(pl.position()),
                     (l)-> l instanceof CrystalBossEntity || l instanceof RunicElementalBoss).isEmpty()){
                 pl.sendSystemMessage(Component.translatable("player.boss_cant_break_block").withStyle(ChatFormatting.RED));
@@ -634,7 +632,7 @@ class AntiCheat{
     public static void cancelBlockPlace(BlockEvent.EntityPlaceEvent event){
         Entity pl = event.getEntity();
         if (pl != null) {
-            if (pl.level.dimension() == EventHandler.RADIANT_LAND_KEY) {
+            if (pl.level.dimension() == SCEventHandler.RADIANT_LAND_KEY) {
                 if (!pl.level.getEntitiesOfClass(LivingEntity.class, CHECK_AABB.move(pl.position()),
                         (l)-> l instanceof CrystalBossEntity || l instanceof RunicElementalBoss).isEmpty()) {
                     pl.sendSystemMessage(Component.translatable("player.boss_cant_place_block").withStyle(ChatFormatting.RED));
@@ -647,7 +645,7 @@ class AntiCheat{
     public static void cancelAbilities(AbilityUseEvent event){
         ServerPlayer player = event.getPlayer();
         AbstractAbility ability = event.getAbility();
-        if ((player.level.dimension() == EventHandler.RADIANT_LAND_KEY) && EventHandler.ALLOWED_ABILITIES_DURING_BOSSFIGHT.contains(ability)) {
+        if ((player.level.dimension() == SCEventHandler.RADIANT_LAND_KEY) && SCEventHandler.ALLOWED_ABILITIES_DURING_BOSSFIGHT.contains(ability)) {
             if (!player.level.getEntitiesOfClass(LivingEntity.class, CHECK_AABB_BIGGER.move(player.position()),
                     (l)-> l instanceof CrystalBossEntity || l instanceof RunicElementalBoss).isEmpty()) {
                 player.sendSystemMessage(Component.translatable("player.cant_use_ability_near_boss").withStyle(ChatFormatting.RED));
@@ -660,7 +658,7 @@ class AntiCheat{
     @SubscribeEvent
     public static void cancelExplosions(ExplosionEvent.Detonate event){
 
-            if (event.getLevel().dimension() == EventHandler.RADIANT_LAND_KEY) {
+            if (event.getLevel().dimension() == SCEventHandler.RADIANT_LAND_KEY) {
                 if (!event.getLevel().getEntitiesOfClass(LivingEntity.class, CHECK_AABB.move(event.getExplosion().getPosition()),
                         (l)-> l instanceof CrystalBossEntity || l instanceof RunicElementalBoss).isEmpty()) {
 

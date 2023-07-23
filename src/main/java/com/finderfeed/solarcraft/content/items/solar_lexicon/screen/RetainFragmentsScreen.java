@@ -6,7 +6,7 @@ import com.finderfeed.solarcraft.content.items.solar_lexicon.screen.buttons.Info
 import com.finderfeed.solarcraft.content.items.solar_lexicon.screen.buttons.ItemStackButton;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.screen.buttons.ItemStackTabButton;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
-import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.ProgressionHelper;
+import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragmentHelper;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
@@ -45,7 +45,7 @@ public class RetainFragmentsScreen extends ScrollableScreen {
         int y = 0;
         int x = 0;
         for (AncientFragment fragment : AncientFragment.getAllFragments()){
-            if (ProgressionHelper.doPlayerHasFragment(Minecraft.getInstance().player,fragment)){
+            if (AncientFragmentHelper.doPlayerHasFragment(Minecraft.getInstance().player,fragment)){
                 ItemStackButton button = new ItemStackButton(relX + 17 + x * 30,relY + 17 + y * 30,24,24,(b)->{
                     SCPacketHandler.INSTANCE.sendToServer(new RetainFragmentPacket(fragment.getId()));
                 },fragment.getIcon().getDefaultInstance(),1.5f,(b,graphics,mx,my)->{

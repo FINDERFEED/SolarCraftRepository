@@ -1,7 +1,7 @@
 package com.finderfeed.solarcraft.packet_handler.packets;
 
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
-import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.ProgressionHelper;
+import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragmentHelper;
 import com.finderfeed.solarcraft.misc_things.AbstractPacket;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
@@ -15,7 +15,7 @@ public class UpdateFragmentsOnClient extends AbstractPacket {
     private CompoundTag fragmentData;
 
     public UpdateFragmentsOnClient(Player player){
-        this.fragmentData = player.getPersistentData().getCompound(ProgressionHelper.COMPOUND_TAG_FRAGMENTS);
+        this.fragmentData = player.getPersistentData().getCompound(AncientFragmentHelper.COMPOUND_TAG_FRAGMENTS);
 
     }
 

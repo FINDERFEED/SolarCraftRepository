@@ -4,11 +4,13 @@ import com.finderfeed.solarcraft.config.JsonConfig;
 import com.finderfeed.solarcraft.content.blocks.blockentities.runic_energy.AbstractRunicEnergyContainer;
 import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.client.SunShardPuzzleScreen;
 import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.puzzle_template.Puzzle;
+import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.Progression;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
-import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.ProgressionHelper;
+import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragmentHelper;
 import com.finderfeed.solarcraft.content.items.solar_wand.wand_actions.drain_runic_enenrgy_action.RETypeSelectionScreen;
 import com.finderfeed.solarcraft.content.items.solar_wand.wand_actions.structure_check.StructureSelectionScreen;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
+import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.helpers.multiblock.MultiblockStructure;
 import com.finderfeed.solarcraft.helpers.multiblock.Multiblocks;
 import com.finderfeed.solarcraft.local_library.entities.bossbar.client.ActiveBossBar;
@@ -18,12 +20,12 @@ import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.chunk.ChunkRenderDispatcher;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundLevelChunkPacketData;
 import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 
 import java.util.List;
@@ -94,10 +96,10 @@ public class ClientPacketHandles {
                 continue;
             }
             if (fragments.getBoolean(fragId)){
-                ProgressionHelper.givePlayerFragment(fragment,ClientHelpers.getClientPlayer());
+                AncientFragmentHelper.givePlayerFragment(fragment,ClientHelpers.getClientPlayer());
                 openScreen = true;
             }else{
-                ProgressionHelper.revokePlayerFragment(fragment,ClientHelpers.getClientPlayer());
+                AncientFragmentHelper.revokePlayerFragment(fragment,ClientHelpers.getClientPlayer());
             }
         }
         if (openScreen) {
@@ -130,6 +132,14 @@ public class ClientPacketHandles {
         Level world = ClientHelpers.getLevel();
         if (world.getBlockEntity(pos) instanceof AbstractRunicEnergyContainer container){
             container.loadRunicEnergy(tag);
+        }
+    }
+
+    public static void handleProgressionUpdate(CompoundTag progressionData){
+        Player player = Minecraft.getInstance().player;
+        for (String key : progressionData.getAllKeys()){
+            Progression progression = Progression.getProgressionByName(key);
+            Helpers.setProgressionCompletionStatus(progression,player,progressionData.getBoolean(key));
         }
     }
 

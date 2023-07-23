@@ -2,17 +2,11 @@ package com.finderfeed.solarcraft.content.items.solar_wand.wand_actions.structur
 
 
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
-import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.ProgressionHelper;
-import com.finderfeed.solarcraft.helpers.ClientHelpers;
-import com.finderfeed.solarcraft.helpers.Helpers;
+import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragmentHelper;
 import com.finderfeed.solarcraft.helpers.multiblock.MultiblockStructure;
 import com.finderfeed.solarcraft.local_library.client.screens.DefaultScreen;
 import com.finderfeed.solarcraft.local_library.client.screens.RadialMenu;
 import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
-import com.finderfeed.solarcraft.misc_things.RunicEnergy;
-import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
-import com.finderfeed.solarcraft.packet_handler.packets.SetREDrainTypePacket;
-import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -21,7 +15,6 @@ import net.minecraft.network.chat.Component;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public class StructureSelectionScreen extends DefaultScreen {
 
@@ -50,7 +43,7 @@ public class StructureSelectionScreen extends DefaultScreen {
         for (int i = 0; i < structures.size(); i++){
             MultiblockStructure structure  = structures.get(i);
             try {
-                if (!ProgressionHelper.doPlayerHasFragment(minecraft.player, AncientFragment.STRUCTURE_FRAGMENTS.get(structure))) {
+                if (!AncientFragmentHelper.doPlayerHasFragment(minecraft.player, AncientFragment.STRUCTURE_FRAGMENTS.get(structure))) {
                     continue;
                 }
             }catch (NullPointerException e){

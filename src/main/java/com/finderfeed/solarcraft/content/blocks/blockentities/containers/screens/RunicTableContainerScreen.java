@@ -10,8 +10,7 @@ import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.RunePat
 import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
 import com.finderfeed.solarcraft.packet_handler.packets.RunicTablePacket;
-import com.finderfeed.solarcraft.client.rendering.item_renderers.TransparentItemrenderer;
-import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.ProgressionHelper;
+import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragmentHelper;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -61,7 +60,7 @@ public class RunicTableContainerScreen extends AbstractContainerScreen<RunicTabl
         RunePattern ptrn = new RunePattern(Minecraft.getInstance().player);
         this.pattern = ptrn;
         ItemStack stack =menu.inventory.getStackInSlot(0);
-        if (!stack.isEmpty() && stack.getTagElement(ProgressionHelper.TAG_ELEMENT) == null) {
+        if (!stack.isEmpty() && stack.getTagElement(AncientFragmentHelper.TAG_ELEMENT) == null) {
             initPattern();
         }
 
@@ -110,7 +109,7 @@ public class RunicTableContainerScreen extends AbstractContainerScreen<RunicTabl
 
     private void hideButton(RunePattern pattern,RuneButtonRunicTable v,int rune,int x,int y){
         for (int i = 0; i < menu.inventory.getSlots(); i++) {
-            if (menu.inventory.getStackInSlot(i).getItem() == ProgressionHelper.RUNES[rune]) {
+            if (menu.inventory.getStackInSlot(i).getItem() == AncientFragmentHelper.RUNES[rune]) {
                 v.turnedOff = true;
                 if (pattern.isWinPosition(x,y)){
                     ClientHelpers.playsoundInEars(SoundEvents.EXPERIENCE_ORB_PICKUP,1,1);
@@ -120,7 +119,7 @@ public class RunicTableContainerScreen extends AbstractContainerScreen<RunicTabl
             }
         }
         if (!v.turnedOff) {
-            if (ClientHelpers.getClientPlayer().getInventory().contains(ProgressionHelper.RUNES[rune].getDefaultInstance())) {
+            if (ClientHelpers.getClientPlayer().getInventory().contains(AncientFragmentHelper.RUNES[rune].getDefaultInstance())) {
                 if (pattern.isWinPosition(x,y)){
                     ClientHelpers.playsoundInEars(SoundEvents.EXPERIENCE_ORB_PICKUP,1,1);
                 }
@@ -159,7 +158,7 @@ public class RunicTableContainerScreen extends AbstractContainerScreen<RunicTabl
     protected void slotClicked(Slot p_97778_, int p_97779_, int p_97780_, ClickType p_97781_) {
         super.slotClicked(p_97778_, p_97779_, p_97780_, p_97781_);
         ItemStack stack = menu.inventory.getStackInSlot(0);
-        if (!stack.isEmpty() && stack.getTagElement(ProgressionHelper.TAG_ELEMENT) == null){
+        if (!stack.isEmpty() && stack.getTagElement(AncientFragmentHelper.TAG_ELEMENT) == null){
             int count = 0;
             for (AbstractWidget b : ClientHelpers.getScreenButtons(this)){
 
@@ -210,7 +209,7 @@ public class RunicTableContainerScreen extends AbstractContainerScreen<RunicTabl
 
         }else{
             ItemStack stack = menu.inventory.getStackInSlot(0);
-            if (pattern != null && !menu.inventory.getStackInSlot(0).isEmpty() && stack.getTagElement(ProgressionHelper.TAG_ELEMENT) == null){
+            if (pattern != null && !menu.inventory.getStackInSlot(0).isEmpty() && stack.getTagElement(AncientFragmentHelper.TAG_ELEMENT) == null){
                 int[] winPos = pattern.getXyWinPositions();
                 ClientHelpers.bindText(WIN_POS);
                 matrices.pushPose();

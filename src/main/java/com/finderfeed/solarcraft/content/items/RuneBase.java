@@ -4,7 +4,7 @@ package com.finderfeed.solarcraft.content.items;
 import com.finderfeed.solarcraft.SolarCraftTags;
 import com.finderfeed.solarcraft.content.blocks.blockentities.RuneEnergyPylonTile;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.Progression;
-import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.ProgressionHelper;
+import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragmentHelper;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.misc_things.IImbuableItem;
 import net.minecraft.world.entity.Entity;
@@ -46,13 +46,13 @@ public class RuneBase extends Item implements IImbuableItem {
                 int maxRunes = (int) Math.floor(tile.getCurrentEnergy() / neededEnergy);
                 if (maxRunes > stack.getCount()) {
                     ItemEntity entity1 = new ItemEntity(tile.getLevel(), entity.position().x, entity.position().y, entity.position().z,
-                            new ItemStack(ProgressionHelper.RUNES_MAP.get(tile.getEnergyType()), stack.getCount()));
+                            new ItemStack(AncientFragmentHelper.RUNES_MAP.get(tile.getEnergyType()), stack.getCount()));
                     tile.getLevel().addFreshEntity(entity1);
                     entity.remove(Entity.RemovalReason.DISCARDED);
 
                 } else {
                     ItemEntity entity1 = new ItemEntity(tile.getLevel(), entity.position().x, entity.position().y, entity.position().z,
-                            new ItemStack(ProgressionHelper.RUNES_MAP.get(tile.getEnergyType()), maxRunes));
+                            new ItemStack(AncientFragmentHelper.RUNES_MAP.get(tile.getEnergyType()), maxRunes));
                     tile.getLevel().addFreshEntity(entity1);
                     entity.getItem().setCount(stack.getCount() - maxRunes);
                     entity.getPersistentData().putInt(SolarCraftTags.IMBUE_TIME_TAG, 0);

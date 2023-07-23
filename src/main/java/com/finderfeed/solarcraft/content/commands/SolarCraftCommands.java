@@ -10,7 +10,7 @@ import com.finderfeed.solarcraft.misc_things.RunicEnergy;
 
 import com.finderfeed.solarcraft.registries.items.SolarcraftItems;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
-import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.ProgressionHelper;
+import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragmentHelper;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.FloatArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
@@ -63,7 +63,7 @@ public class SolarCraftCommands {
     }
 
     public static int revokeProgression(CommandSourceStack src,String code) throws CommandSyntaxException {
-        Progression progression = Progression.getAchievementByName(code);
+        Progression progression = Progression.getProgressionByName(code);
         ServerPlayer pl = src.getPlayerOrException();
         if (code.equals("all")){
             for (Progression a : Progression.allProgressions){
@@ -71,7 +71,7 @@ public class SolarCraftCommands {
                 src.sendSuccess(()->Component.translatable("solarcraft.success_revoke")
                         .append(Component.literal(" "+a.translation.getString()).withStyle(ChatFormatting.GOLD)),false);
             }
-            Helpers.updateProgression(src.getPlayerOrException());
+            Helpers.updateProgressionsOnClient(src.getPlayerOrException());
 
         }else if (progression != null){
             if (Helpers.hasPlayerCompletedProgression(progression,pl)){
@@ -86,7 +86,7 @@ public class SolarCraftCommands {
                     Helpers.setProgressionCompletionStatus(progression, pl, false);
                     src.sendSuccess(()->Component.translatable("solarcraft.success_revoke")
                             .append(Component.literal(" " + progression.getProgressionCode()).withStyle(ChatFormatting.GOLD)), false);
-                    Helpers.updateProgression(src.getPlayerOrException());
+                    Helpers.updateProgressionsOnClient(src.getPlayerOrException());
                 }else{
                     src.sendFailure(Component.translatable("solarcraft.failure_revoke"));
 
@@ -102,7 +102,7 @@ public class SolarCraftCommands {
     }
 
     public static int unlockProgression(CommandSourceStack src,String code) throws CommandSyntaxException {
-        Progression progression = Progression.getAchievementByName(code);
+        Progression progression = Progression.getProgressionByName(code);
         ServerPlayer pl = src.getPlayerOrException();
         if (code.equals("all")){
             for (Progression a : Progression.allProgressions){
@@ -110,7 +110,7 @@ public class SolarCraftCommands {
                 src.sendSuccess(()->Component.translatable("solarcraft.success_unlock")
                         .append(Component.literal(" "+a.translation.getString()).withStyle(ChatFormatting.GOLD)),false);
             }
-            Helpers.updateProgression(src.getPlayerOrException());
+            Helpers.updateProgressionsOnClient(src.getPlayerOrException());
 
         }else if (progression != null){
             if (Helpers.canPlayerUnlock(progression,pl)){
@@ -118,7 +118,7 @@ public class SolarCraftCommands {
                 src.sendSuccess(()->Component.translatable("solarcraft.success_unlock")
                         .append(Component.literal(" "+ progression.getProgressionCode()).withStyle(ChatFormatting.GOLD)),false);
 
-                Helpers.updateProgression(src.getPlayerOrException());
+                Helpers.updateProgressionsOnClient(src.getPlayerOrException());
 
 
             }else {
@@ -170,7 +170,7 @@ public class SolarCraftCommands {
 
                             AncientFragment fragment = AncientFragment.getAllFragments()[i];
                             ItemStack stack = SolarcraftItems.INFO_FRAGMENT.get().getDefaultInstance();
-                            ProgressionHelper.applyTagToFragment(stack, fragment);
+                            AncientFragmentHelper.applyTagToFragment(stack, fragment);
                             inv.insertItem(i, stack, false);
 
 
@@ -220,7 +220,7 @@ class RestoreFragments {
                                     String id = cmd.getArgument("fragment_id",String.class);
                                     AncientFragment fragment = AncientFragment.getFragmentByID(id);
                                     if (fragment != null){
-                                        ProgressionHelper.givePlayerFragment(fragment,player);
+                                        AncientFragmentHelper.givePlayerFragment(fragment,player);
                                         stack.sendSuccess(()->Component.literal("Fragment successefuly given."),true);
                                     }else{
                                         stack.sendFailure(Component.literal("This fragments doesn't exist."));
@@ -235,7 +235,7 @@ class RestoreFragments {
                                     String id = cmd.getArgument("fragment_id",String.class);
                                     AncientFragment fragment = AncientFragment.getFragmentByID(id);
                                     if (fragment != null){
-                                        ProgressionHelper.revokePlayerFragment(fragment,player);
+                                        AncientFragmentHelper.revokePlayerFragment(fragment,player);
                                         stack.sendSuccess(()->Component.literal("Fragment successfully revoked."),true);
                                     }else{
                                         stack.sendFailure(Component.literal("This fragments doesn't exist."));
@@ -250,7 +250,7 @@ class RestoreFragments {
     public static int unlockAllFragments(CommandSourceStack src) throws CommandSyntaxException {
         ServerPlayer playerEntity  = src.getPlayerOrException();
         for (AncientFragment fragment : AncientFragment.getAllFragments()){
-            ProgressionHelper.givePlayerFragment(fragment,playerEntity);
+            AncientFragmentHelper.givePlayerFragment(fragment,playerEntity);
         }
         Helpers.updateFragmentsOnClient(playerEntity);
         return 0;
@@ -258,7 +258,7 @@ class RestoreFragments {
     public static int refreshFragments(CommandSourceStack src) throws CommandSyntaxException {
         ServerPlayer playerEntity  = src.getPlayerOrException();
         for (AncientFragment fragment : AncientFragment.getAllFragments()){
-            ProgressionHelper.revokePlayerFragment(fragment,playerEntity);
+            AncientFragmentHelper.revokePlayerFragment(fragment,playerEntity);
         }
         Helpers.updateFragmentsOnClient(playerEntity);
         return 0;

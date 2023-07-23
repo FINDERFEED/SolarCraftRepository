@@ -1,7 +1,7 @@
 package com.finderfeed.solarcraft.content.items.solar_lexicon;
 
 import com.finderfeed.solarcraft.content.items.AncientFragmentItem;
-import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.ProgressionHelper;
+import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragmentHelper;
 import com.finderfeed.solarcraft.registries.containers.SolarcraftContainers;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
 import net.minecraft.world.entity.player.Player;
@@ -49,10 +49,10 @@ public class SolarLexiconContainer extends AbstractContainerMenu {
                 @Override
                 public boolean mayPlace(@NotNull ItemStack stack) {
                     if (!(stack.getItem() instanceof AncientFragmentItem)) return false;
-                    AncientFragment fragment1 = ProgressionHelper.getFragmentFromItem(stack);
+                    AncientFragment fragment1 = AncientFragmentHelper.getFragmentFromItem(stack);
                     if (fragment1 == null) return false;
                     for (int i = 0; i < inventory.getSlots();i++){
-                           AncientFragment fragment2 = ProgressionHelper.getFragmentFromItem(inventory.getStackInSlot(i));
+                           AncientFragment fragment2 = AncientFragmentHelper.getFragmentFromItem(inventory.getStackInSlot(i));
                            if (fragment1 == fragment2) return false;
                     }
                     return true;

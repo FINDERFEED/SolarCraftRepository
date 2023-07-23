@@ -30,16 +30,13 @@ public class SolarForgeBlockEntityRenderer implements BlockEntityRenderer<SolarF
 
 
 
-    public static final ResourceLocation texture = new ResourceLocation(SolarCraft.MOD_ID,"textures/misc/texture.png");
 
-    public final FDModel model;
 
     public SolarForgeBlockEntityRenderer(BlockEntityRendererProvider.Context ctx) {
         SolarForgePetalsTrue modelp = new SolarForgePetalsTrue(ctx.bakeLayer(ModelLayersRegistry.SOLAR_FORGE_PETALS));
         petals = modelp;
         petals2 = modelp;
         mainmodel = new SolarForgeBlockModelTrue(ctx.bakeLayer(ModelLayersRegistry.SOLAR_FORGE_MAIN_MODEL));
-        model = new FDModel(SCBedrockModels.TEST_MODEL);
     }
 
     @Override
@@ -51,22 +48,7 @@ public class SolarForgeBlockEntityRenderer implements BlockEntityRenderer<SolarF
     public void render(SolarForgeBlockEntity entity, float partialTicks, PoseStack matrices, MultiBufferSource buffer, int light2, int light) {
 
         //matrices.mulPose(Vector3f.ZN.rotationDegrees(180));
-        matrices.pushPose();
 
-
-        model.main.reset();
-
-        int time = (int)(entity.getLevel().getGameTime()) % SCBedrockAnimations.TEST.getAnimTimeInTicks();
-
-//        time = (int)(0.5*20);
-
-        SCBedrockAnimations.TEST.applyAnimation(model,time,partialTicks);
-        model.render(matrices,buffer.getBuffer(RenderType.entityTranslucent(new ResourceLocation(SolarCraft.MOD_ID,"textures/misc/texture2.png"))),
-                LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY,1f,1f,1f,1f);
-
-        matrices.popPose();
-
-        if (true) return;
 
         if (entity.getLevel().getDayTime() % 24000 <= 13000 && entity.getLevel().canSeeSky(entity.getBlockPos().above())) {
             matrices.pushPose();

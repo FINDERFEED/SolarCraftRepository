@@ -2,10 +2,10 @@ package com.finderfeed.solarcraft.content.blocks.blockentities.clearing_ritual;
 
 import com.finderfeed.solarcraft.client.particles.SolarcraftParticleTypes;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.Progression;
+import com.finderfeed.solarcraft.events.other_events.event_handler.SCEventHandler;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.content.entities.projectiles.SummoningProjectile;
-import com.finderfeed.solarcraft.events.other_events.event_handler.EventHandler;
 import com.finderfeed.solarcraft.content.blocks.blockentities.clearing_ritual.clearing_ritual_crystal.ClearingRitualCrystalTile;
 import com.finderfeed.solarcraft.content.blocks.blockentities.clearing_ritual.clearing_ritual_main_tile.ClearingRitualMainTile;
 import com.finderfeed.solarcraft.local_library.helpers.FDMathHelper;
@@ -178,13 +178,13 @@ public class ClearingRitual {
 
     private void cleanWorld(){
         Level level = tile.getLevel();
-        if (!level.isClientSide && level.dimension() == EventHandler.RADIANT_LAND_KEY){
+        if (!level.isClientSide && level.dimension() == SCEventHandler.RADIANT_LAND_KEY){
 
             RadiantLandCleanedData data = ((ServerLevel)level).getServer().overworld()
                     .getDataStorage()
                     .computeIfAbsent(RadiantLandCleanedData::load,()->new RadiantLandCleanedData(false),"is_radiant_land_cleaned");
             if (!data.isCleaned()){
-                List<ServerPlayer> players = ((ServerLevel) level).getPlayers((p)->p.level().dimension() == EventHandler.RADIANT_LAND_KEY);
+                List<ServerPlayer> players = ((ServerLevel) level).getPlayers((p)->p.level().dimension() == SCEventHandler.RADIANT_LAND_KEY);
                 List<ServerPlayer> allPlayers = ((ServerLevel) level).getPlayers((p)->true);
                 MinecraftServer server = level.getServer();
                 if (server != null) {

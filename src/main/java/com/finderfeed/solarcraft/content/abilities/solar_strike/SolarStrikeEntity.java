@@ -2,9 +2,9 @@ package com.finderfeed.solarcraft.content.abilities.solar_strike;
 
 
 import com.finderfeed.solarcraft.SolarCraft;
+import com.finderfeed.solarcraft.events.other_events.event_handler.SCEventHandler;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.config.SolarcraftConfig;
-import com.finderfeed.solarcraft.events.other_events.event_handler.EventHandler;
 import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
 import com.finderfeed.solarcraft.packet_handler.packets.misc_packets.SolarStrikeEntityDoExplosion;
 import com.finderfeed.solarcraft.registries.damage_sources.SolarcraftDamageSources;
@@ -24,7 +24,6 @@ import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.sounds.SoundSource;
 
 import net.minecraft.world.phys.AABB;
@@ -145,7 +144,7 @@ public class SolarStrikeEntity extends PathfinderMob {
 
 
     public void doSolarStrikeExplosion(BlockPos pos) {
-        if (!EventHandler.isExplosionBlockerAround(level, Helpers.getBlockCenter(pos)) && Helpers.isSpellGriefingEnabled((ServerLevel) level)) {
+        if (!SCEventHandler.isExplosionBlockerAround(level, Helpers.getBlockCenter(pos)) && Helpers.isSpellGriefingEnabled((ServerLevel) level)) {
             //8
             //3 + Math.ceil(randomRadius) * 3
             double randomRadius = this.level.random.nextFloat() * 2 + 10;

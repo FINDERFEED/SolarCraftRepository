@@ -7,7 +7,7 @@ import com.finderfeed.solarcraft.misc_things.PhantomInventory;
 import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
 import com.finderfeed.solarcraft.packet_handler.packets.UpdateRunePattern;
 import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
-import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.ProgressionHelper;
+import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragmentHelper;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.state.BlockState;
@@ -59,7 +59,7 @@ public class RunicTableBlock extends Block implements EntityBlock {
             }
 
             SCPacketHandler.INSTANCE.sendTo(new UpdateRunePattern(pe,false),serverPlayer.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
-            boolean b = ProgressionHelper.getAllUnlockableFragments(pe) == null ;
+            boolean b = AncientFragmentHelper.getAllUnlockableFragments(pe) == null ;
 
             NetworkHooks.openScreen((ServerPlayer) pe, new RunicTableContainer.Provider(tile,b),
                     (buf) -> {

@@ -2,13 +2,11 @@ package com.finderfeed.solarcraft.content.items.solar_lexicon;
 
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
-import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.ProgressionHelper;
+import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragmentHelper;
 import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.progression_tree.ProgressionTree;
-import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.Progression;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.packets.OpenScreenPacket;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.packets.UpdateInventoryPacket;
-import com.finderfeed.solarcraft.content.items.solar_lexicon.packets.UpdateProgressionOnClient;
 import com.finderfeed.solarcraft.registries.items.SolarcraftItems;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -42,38 +40,39 @@ public class SolarLexicon extends Item {
     public InteractionResultHolder<ItemStack> use(Level world, Player pe, InteractionHand hand) {
         if (!world.isClientSide && hand.equals(InteractionHand.MAIN_HAND)){
 
-            if (!ProgressionHelper.doPlayerHasFragment(pe,AncientFragment.LEXICON)) {
+            if (!AncientFragmentHelper.doPlayerHasFragment(pe,AncientFragment.LEXICON)) {
                 ItemStack frag = SolarcraftItems.INFO_FRAGMENT.get().getDefaultInstance();
-                ProgressionHelper.applyTagToFragment(frag, AncientFragment.LEXICON);
+                AncientFragmentHelper.applyTagToFragment(frag, AncientFragment.LEXICON);
                 ItemEntity entity = new ItemEntity(pe.level, pe.getX(), pe.getY() + 0.3f, pe.getZ(), frag);
-                ProgressionHelper.givePlayerFragment(AncientFragment.LEXICON, pe);
+                AncientFragmentHelper.givePlayerFragment(AncientFragment.LEXICON, pe);
                 pe.level.addFreshEntity(entity);
 
             }
 
-            if (!ProgressionHelper.doPlayerHasFragment(pe,AncientFragment.FRAGMENT)){
+            if (!AncientFragmentHelper.doPlayerHasFragment(pe,AncientFragment.FRAGMENT)){
                 ItemStack frag = SolarcraftItems.INFO_FRAGMENT.get().getDefaultInstance();
-                ProgressionHelper.applyTagToFragment(frag, AncientFragment.FRAGMENT);
+                AncientFragmentHelper.applyTagToFragment(frag, AncientFragment.FRAGMENT);
                 ItemEntity entity = new ItemEntity(pe.level,pe.getX(),pe.getY()+0.3f,pe.getZ(),frag);
-                ProgressionHelper.givePlayerFragment(AncientFragment.FRAGMENT,pe);
+                AncientFragmentHelper.givePlayerFragment(AncientFragment.FRAGMENT,pe);
                 pe.level.addFreshEntity(entity);
             }
 
-            if (!ProgressionHelper.doPlayerHasFragment(pe,AncientFragment.RUNIC_TABLE)){
+            if (!AncientFragmentHelper.doPlayerHasFragment(pe,AncientFragment.RUNIC_TABLE)){
                 ItemStack frag = SolarcraftItems.INFO_FRAGMENT.get().getDefaultInstance();
-                ProgressionHelper.applyTagToFragment(frag, AncientFragment.RUNIC_TABLE);
+                AncientFragmentHelper.applyTagToFragment(frag, AncientFragment.RUNIC_TABLE);
                 ItemEntity entity = new ItemEntity(pe.level,pe.getX(),pe.getY()+0.3f,pe.getZ(),frag);
-                ProgressionHelper.givePlayerFragment(AncientFragment.RUNIC_TABLE,pe);
+                AncientFragmentHelper.givePlayerFragment(AncientFragment.RUNIC_TABLE,pe);
                 pe.level.addFreshEntity(entity);
             }
             Helpers.updateFragmentsOnClient((ServerPlayer) pe);
             updateInventory(pe.getMainHandItem(),pe);
             if (!pe.isCrouching()) {
                 ProgressionTree tree = ProgressionTree.INSTANCE;
-                for (Progression a : tree.PROGRESSION_TREE.keySet()) {
-                    SCPacketHandler.INSTANCE.sendTo(new UpdateProgressionOnClient(a.getProgressionCode(), pe.getPersistentData().getBoolean(Helpers.PROGRESSION + a.getProgressionCode())),
-                            ((ServerPlayer) pe).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
-                }
+//                for (Progression a : tree.PROGRESSION_TREE.keySet()) {
+//                    SCPacketHandler.INSTANCE.sendTo(new UpdateProgressionsOnClient(a.getProgressionCode(), pe.getPersistentData().getBoolean(Helpers.PROGRESSION + a.getProgressionCode())),
+//                            ((ServerPlayer) pe).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+//                }
+                Helpers.updateProgressionsOnClient((ServerPlayer) pe);
                 SCPacketHandler.INSTANCE.sendTo(new OpenScreenPacket(), ((ServerPlayer) pe).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
 
             }else{

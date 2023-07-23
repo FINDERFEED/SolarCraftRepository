@@ -6,7 +6,6 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
 import net.minecraft.client.renderer.texture.OverlayTexture;
@@ -74,10 +73,10 @@ public class AncientFragmentISTER extends BlockEntityWithoutLevelRenderer {
             source.endBatch();
             Lighting.setupFor3DItems();
 
-            CompoundTag nbt = stack.getTagElement(ProgressionHelper.TAG_ELEMENT);
+            CompoundTag nbt = stack.getTagElement(AncientFragmentHelper.TAG_ELEMENT);
 
             if (nbt != null) {
-                AncientFragment frag = AncientFragment.getFragmentByID(nbt.getString(ProgressionHelper.FRAG_ID));
+                AncientFragment frag = AncientFragment.getFragmentByID(nbt.getString(AncientFragmentHelper.FRAG_ID));
                 if (frag != null) {
                     matrices.pushPose();
                     matrices.scale(0.5f,0.5f,0.5f);

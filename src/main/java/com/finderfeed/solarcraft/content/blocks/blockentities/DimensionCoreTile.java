@@ -2,7 +2,7 @@ package com.finderfeed.solarcraft.content.blocks.blockentities;
 
 import com.finderfeed.solarcraft.client.particles.SolarcraftParticleTypes;
 import com.finderfeed.solarcraft.content.items.solar_wand.wand_actions.structure_check.IStructureOwner;
-import com.finderfeed.solarcraft.events.other_events.event_handler.EventHandler;
+import com.finderfeed.solarcraft.events.other_events.event_handler.SCEventHandler;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.helpers.multiblock.MultiblockStructure;
@@ -105,14 +105,14 @@ public class DimensionCoreTile extends BlockEntity implements IStructureOwner {
                 if (world.getServer() != null) {
                     ServerLevel destination;
                     if (entity.level.dimension() == Level.OVERWORLD) {
-                        destination = world.getServer().getLevel(EventHandler.RADIANT_LAND_KEY);
+                        destination = world.getServer().getLevel(SCEventHandler.RADIANT_LAND_KEY);
                     } else {
                         destination = world.getServer().getLevel(Level.OVERWORLD);
                     }
                     if (destination != null) {
 
                         entity.changeDimension(destination, RadiantTeleporter.INSTANCE);
-                        if (destination.dimension() == EventHandler.RADIANT_LAND_KEY) {
+                        if (destination.dimension() == SCEventHandler.RADIANT_LAND_KEY) {
                             createWormhole(destination);
                             entity.sendSystemMessage(Component.literal("Use wormhole on 1,Y(~120),1 coordinates to return back"));
                         }
