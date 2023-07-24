@@ -142,7 +142,7 @@ public class CraftingRecipeScreen extends Screen implements PlaceRecipe<Ingredie
             }
 
             ItemRator itemRator = itemRators.get(0);
-            renderItemAndTooltip(graphics,itemRator.getCurrentStack(),itemRator.getX(),itemRator.getY(),mousex,mousey,matrices,false);
+            renderItemAndTooltip(graphics,itemRator.getCurrentStack(),itemRator.getX(),itemRator.getY(),mousex,mousey,matrices,true);
             for (ItemStack i : uniqueItems){
                 graphics.drawString(font,Component.literal(counts[uniqueItems.indexOf(i)]+" x: ").append(i.getItem().getName(i)),relX+13,relY+84+iter*9,SolarLexiconScreen.TEXT_COLOR);
                 iter++;

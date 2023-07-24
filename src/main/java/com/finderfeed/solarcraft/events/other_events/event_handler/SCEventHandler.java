@@ -621,10 +621,12 @@ public class SCEventHandler {
             Player player = event.getEntity();
             if (player instanceof  ServerPlayer sPlayer) {
 
-                if (sPlayer.getPersistentData().getBoolean("received_solar_lexicon")){
+                if (!Helpers.getPlayerSolarcraftTag(sPlayer).getBoolean("received_lexicon")){
+                    if (sPlayer.addItem(SolarcraftItems.SOLAR_LEXICON.get().getDefaultInstance())){
+                        Helpers.getPlayerSolarcraftTag(sPlayer).putBoolean("received_lexicon",true);
+                    }
 
                 }
-
 
                 for (JsonConfig config : ConfigRegistry.POST_LOAD_CONFIGS.values()){
                     config.deserialize(config.getJson());

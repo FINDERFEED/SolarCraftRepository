@@ -61,6 +61,16 @@ public class Helpers {
     public static BlockPos NULL_POS = new BlockPos(0,-100,0);
 
 
+    public static CompoundTag getPlayerSolarcraftTag(Player player){
+        if (player.getPersistentData().contains("solarcraft_data")){
+            return player.getPersistentData().getCompound("solarcraft_data");
+        }else{
+            CompoundTag tag = new CompoundTag();
+            player.getPersistentData().put("solarcraft_data",tag);
+            return tag;
+        }
+    }
+
 
     public static Direction directionByNormal(int x,int y, int z){
         if (x == 1){

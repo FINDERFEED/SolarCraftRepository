@@ -16,7 +16,7 @@ apply plugin: 'maven-publish'
 apply plugin: 'org.spongepowered.mixin'
 
 
-version = '3.2.1'
+version = '3.2.2'
 group = 'com.finderfeed.solarcraft' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'solarcraft'
 
@@ -127,7 +127,7 @@ dependencies {
     // Specify the version of Minecraft to use, If this is any group other then 'net.minecraft' it is assumed
     // that the dep is a ForgeGradle 'patcher' dependency. And it's patches will be applied.
     // The userdev artifact is a special name and will get all sorts of transformations applied to it.
-    minecraft 'net.neoforged:forge:1.20.1-47.1.9'
+    minecraft 'net.neoforged:forge:1.20.1-47.1.54'
 
 
 //    runtimeOnly fg.deobf("curse.maven:oculus-581495:4299147")

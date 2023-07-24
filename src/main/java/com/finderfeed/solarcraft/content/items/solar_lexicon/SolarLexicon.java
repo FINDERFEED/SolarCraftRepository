@@ -39,39 +39,11 @@ public class SolarLexicon extends Item {
     @Override
     public InteractionResultHolder<ItemStack> use(Level world, Player pe, InteractionHand hand) {
         if (!world.isClientSide && hand.equals(InteractionHand.MAIN_HAND)){
+            this.givePlayerFragmentIfNecessary(pe,AncientFragment.LEXICON,AncientFragment.FRAGMENT,AncientFragment.RUNIC_TABLE);
 
-            if (!AncientFragmentHelper.doPlayerHasFragment(pe,AncientFragment.LEXICON)) {
-                ItemStack frag = SolarcraftItems.INFO_FRAGMENT.get().getDefaultInstance();
-                AncientFragmentHelper.applyTagToFragment(frag, AncientFragment.LEXICON);
-                ItemEntity entity = new ItemEntity(pe.level, pe.getX(), pe.getY() + 0.3f, pe.getZ(), frag);
-                AncientFragmentHelper.givePlayerFragment(AncientFragment.LEXICON, pe);
-                pe.level.addFreshEntity(entity);
-
-            }
-
-            if (!AncientFragmentHelper.doPlayerHasFragment(pe,AncientFragment.FRAGMENT)){
-                ItemStack frag = SolarcraftItems.INFO_FRAGMENT.get().getDefaultInstance();
-                AncientFragmentHelper.applyTagToFragment(frag, AncientFragment.FRAGMENT);
-                ItemEntity entity = new ItemEntity(pe.level,pe.getX(),pe.getY()+0.3f,pe.getZ(),frag);
-                AncientFragmentHelper.givePlayerFragment(AncientFragment.FRAGMENT,pe);
-                pe.level.addFreshEntity(entity);
-            }
-
-            if (!AncientFragmentHelper.doPlayerHasFragment(pe,AncientFragment.RUNIC_TABLE)){
-                ItemStack frag = SolarcraftItems.INFO_FRAGMENT.get().getDefaultInstance();
-                AncientFragmentHelper.applyTagToFragment(frag, AncientFragment.RUNIC_TABLE);
-                ItemEntity entity = new ItemEntity(pe.level,pe.getX(),pe.getY()+0.3f,pe.getZ(),frag);
-                AncientFragmentHelper.givePlayerFragment(AncientFragment.RUNIC_TABLE,pe);
-                pe.level.addFreshEntity(entity);
-            }
             Helpers.updateFragmentsOnClient((ServerPlayer) pe);
             updateInventory(pe.getMainHandItem(),pe);
             if (!pe.isCrouching()) {
-                ProgressionTree tree = ProgressionTree.INSTANCE;
-//                for (Progression a : tree.PROGRESSION_TREE.keySet()) {
-//                    SCPacketHandler.INSTANCE.sendTo(new UpdateProgressionsOnClient(a.getProgressionCode(), pe.getPersistentData().getBoolean(Helpers.PROGRESSION + a.getProgressionCode())),
-//                            ((ServerPlayer) pe).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
-//                }
                 Helpers.updateProgressionsOnClient((ServerPlayer) pe);
                 SCPacketHandler.INSTANCE.sendTo(new OpenScreenPacket(), ((ServerPlayer) pe).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
 
@@ -85,9 +57,21 @@ public class SolarLexicon extends Item {
 
 
 
-    return super.use(world,pe,hand);
+        return super.use(world,pe,hand);
     }
 
+
+    private void givePlayerFragmentIfNecessary(Player pe,AncientFragment... fragments){
+        for (AncientFragment fragment : fragments) {
+            if (!AncientFragmentHelper.doPlayerHasFragment(pe,fragment)) {
+                ItemStack frag = SolarcraftItems.INFO_FRAGMENT.get().getDefaultInstance();
+                AncientFragmentHelper.applyTagToFragment(frag, fragment);
+                ItemEntity entity = new ItemEntity(pe.level, pe.getX(), pe.getY() + 0.3f, pe.getZ(), frag);
+                AncientFragmentHelper.givePlayerFragment(AncientFragment.RUNIC_TABLE, pe);
+                pe.level.addFreshEntity(entity);
+            }
+        }
+    }
 
 
     public void updateInventory(ItemStack stack,Player ent){
