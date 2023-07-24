@@ -67,7 +67,7 @@ public class SolarLexicon extends Item {
                 ItemStack frag = SolarcraftItems.INFO_FRAGMENT.get().getDefaultInstance();
                 AncientFragmentHelper.applyTagToFragment(frag, fragment);
                 ItemEntity entity = new ItemEntity(pe.level, pe.getX(), pe.getY() + 0.3f, pe.getZ(), frag);
-                AncientFragmentHelper.givePlayerFragment(AncientFragment.RUNIC_TABLE, pe);
+                AncientFragmentHelper.givePlayerFragment(fragment, pe);
                 pe.level.addFreshEntity(entity);
             }
         }
