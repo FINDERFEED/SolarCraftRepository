@@ -2,8 +2,10 @@ package com.finderfeed.solarcraft.local_library.bedrock_loader.animations.manage
 
 import com.finderfeed.solarcraft.local_library.bedrock_loader.animations.Animation;
 import com.finderfeed.solarcraft.local_library.bedrock_loader.animations.misc.DummyAnimation;
+import com.finderfeed.solarcraft.local_library.bedrock_loader.animations.misc.ToNullAnimation;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 public abstract class ServerAnimationManager implements AnimationManager{
@@ -23,27 +25,28 @@ public abstract class ServerAnimationManager implements AnimationManager{
             if (!ticker.ended()){
                 ticker.tick();
             }else{
-                if (this.handleAnimationModes(ticker)){
-                    iterator.remove();
-                }
+                this.handleAnimationModes(iterator,ticker);
             }
         }
     }
 
-    private boolean handleAnimationModes(AnimationTicker ticker){
-        switch (ticker.getAnimation().getMode()){
-            case LOOP -> {
+    private void handleAnimationModes(Iterator<Map.Entry<String,AnimationTicker>> iterator,AnimationTicker ticker){
+        Animation animation = ticker.getAnimation();
+        if (animation.getMode() == Animation.Mode.LOOP){
+            ticker.reset();
+        }else if (animation.getMode() == Animation.Mode.PLAY_ONCE){
+            if (animation instanceof DummyAnimation){
+                iterator.remove();
+            } else {
                 ticker.reset();
-                return false;
-            }
-            case HOLD_ON_LAST_FRAME -> {
-                return false;
-            }
-            default -> {
-                return true;
+                DummyAnimation dummyAnimation = new DummyAnimation(ticker.getCurrentTime() / 20f);
+                ticker.setAnimation(dummyAnimation);
+                ticker.setReplaceable(true);
             }
         }
     }
+
+
 
     @Override
     public void setAnimation(String tickerName, AnimationTicker animation) {

@@ -1,10 +1,12 @@
 package com.finderfeed.solarcraft.local_library.bedrock_loader.animations.manager;
 
 import com.finderfeed.solarcraft.local_library.bedrock_loader.animations.Animation;
+import com.finderfeed.solarcraft.local_library.bedrock_loader.animations.misc.DummyAnimation;
 import com.finderfeed.solarcraft.local_library.bedrock_loader.animations.misc.ToNullAnimation;
 import com.finderfeed.solarcraft.local_library.bedrock_loader.model_components.FDModel;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 public class ClientAnimationManager implements AnimationManager{
@@ -20,27 +22,28 @@ public class ClientAnimationManager implements AnimationManager{
             if (!ticker.ended()){
                 ticker.tick();
             }else{
-                if (this.handleAnimationModes(ticker)){
-                    iterator.remove();
-                }
+                this.handleAnimationModes(iterator,ticker);
             }
         }
     }
 
-    private boolean handleAnimationModes(AnimationTicker ticker){
-        switch (ticker.getAnimation().getMode()){
-            case LOOP -> {
+    private void handleAnimationModes(Iterator<Map.Entry<String,AnimationTicker>> iterator, AnimationTicker ticker){
+        Animation animation = ticker.getAnimation();
+        if (animation.getMode() == Animation.Mode.LOOP){
+            ticker.reset();
+        }else if (animation.getMode() == Animation.Mode.PLAY_ONCE){
+            if (animation instanceof ToNullAnimation){
+                iterator.remove();
+            } else {
+                Animation newanim = Animation.generateToNullAnimation(ticker.getAnimation(),ticker.getCurrentTime());
                 ticker.reset();
-                return false;
-            }
-            case HOLD_ON_LAST_FRAME -> {
-                return false;
-            }
-            default -> {
-                return true;
+                ticker.setAnimation(newanim);
+                ticker.setReplaceable(true);
             }
         }
     }
+
+
 
     @Override
     public void stopAnimation(String tickerName){

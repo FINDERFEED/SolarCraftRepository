@@ -89,33 +89,60 @@ public class Animation {
 
     public static Animation generateToNullAnimation(Animation currentAnimation, int currentAnimationTime){
         List<AnimationData> toNullDatas = new ArrayList<>();
+        float time = currentAnimationTime / 20f;
         for (AnimationData data : currentAnimation.boneData.values()){
-            float time = currentAnimationTime / 20f;
-            var keyframes = FDAnimationsHelper.generateKeyFramesForTime(data, KeyFrame.LerpMode.LINEAR,time);
-            KeyFrame end = new KeyFrame(Vec3.ZERO,Vec3.ZERO, KeyFrame.LerpMode.LINEAR,time,1);
-            AnimationData d = new AnimationData(data.getBoneName(),
-                    List.of(keyframes.middle,end),
-                    List.of(keyframes.left,end),
-                    List.of(keyframes.right,end)
-            );
-            toNullDatas.add(d);
+//            var keyframes = FDAnimationsHelper.generateKeyFramesForTime(data, KeyFrame.LerpMode.LINEAR,time);
+//            KeyFrame end = new KeyFrame(Vec3.ZERO,Vec3.ZERO, KeyFrame.LerpMode.LINEAR,time,1);
+//            AnimationData d = new AnimationData(data.getBoneName(),
+//                    List.of(keyframes.middle,end),
+//                    List.of(keyframes.left,end),
+//                    List.of(keyframes.right,end)
+//            );
+            toNullDatas.add(createToZeroAnimationData(data,time,time));
         }
         return new ToNullAnimation(toNullDatas,Mode.PLAY_ONCE,currentAnimationTime / 20f);
     }
 
     public static Animation generateTransitionAnimation(Animation currentAnimation,Animation target,int currentAnimationTime){
         List<AnimationData> datas = new ArrayList<>();
+        fillAnimationDatas(datas,currentAnimation,target,currentAnimationTime);
+
+
+        return new Animation(new ResourceLocation(SolarCraft.MOD_ID,"transition"),datas,target.getMode(),target.animTime);
+    }
+
+    private static void fillAnimationDatas(List<AnimationData> datas,Animation currentAnimation,Animation target,int currentAnimationTime){
+        float time = currentAnimationTime / 20f;
+        var missingCurrentAnimDatas = new HashMap<>(target.boneData);
         for (AnimationData data : currentAnimation.boneData.values()){
+            var keyframes = FDAnimationsHelper.generateKeyFramesForTime(data, KeyFrame.LerpMode.CATMULLROM, time);
             if (!target.boneData.containsKey(data.getBoneName())){
-                continue;
+                AnimationData d = createToZeroAnimationData(data,time,target.animTime);
+                datas.add(d);
+            } else {
+                missingCurrentAnimDatas.remove(data.getBoneName());
+                AnimationData targetData = target.boneData.get(data.getBoneName());
+                AnimationData newData = targetData.copyWithReplacedFirst(keyframes.left, keyframes.middle, keyframes.right);
+                datas.add(newData);
             }
-            float time = currentAnimationTime / 20f;
-            var keyframes = FDAnimationsHelper.generateKeyFramesForTime(data, KeyFrame.LerpMode.CATMULLROM,time);
-            AnimationData targetData = target.boneData.get(data.getBoneName());
-            AnimationData newData = targetData.copyWithReplacedFirst(keyframes.left,keyframes.middle,keyframes.right);
+        }
+        for (var entry : missingCurrentAnimDatas.entrySet()){
+            AnimationData data = entry.getValue();
+            var keyframes = FDAnimationsHelper.generateKeyFramesForTime(data, KeyFrame.LerpMode.CATMULLROM, time);
+            AnimationData newData = data.copyWithReplacedFirst(keyframes.left, keyframes.middle, keyframes.right);
             datas.add(newData);
         }
-        return new Animation(new ResourceLocation(SolarCraft.MOD_ID,"transition"),datas,target.getMode(),target.animTime);
+    }
+
+    private static AnimationData createToZeroAnimationData(AnimationData data,float time,float fullAnimationTime){
+        var keyframes = FDAnimationsHelper.generateKeyFramesForTime(data, KeyFrame.LerpMode.LINEAR, time);
+        KeyFrame end = new KeyFrame(Vec3.ZERO,Vec3.ZERO, KeyFrame.LerpMode.LINEAR,fullAnimationTime,1);
+        AnimationData d = new AnimationData(data.getBoneName(),
+                List.of(keyframes.middle,end),
+                List.of(keyframes.left,end),
+                List.of(keyframes.right,end)
+        );
+        return d;
     }
 
     public enum Mode{

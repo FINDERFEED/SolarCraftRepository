@@ -5,6 +5,7 @@ import com.finderfeed.solarcraft.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarcraft.registries.animations.AnimationReloadableResourceListener;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
+import org.checkerframework.checker.units.qual.A;
 
 public class AnimationTicker {
 
@@ -81,6 +82,13 @@ public class AnimationTicker {
         return new AnimationTicker(replaceable,time,animation);
     }
 
+    protected void setAnimation(Animation animation){
+        this.animation = animation;
+    }
+
+    public void setReplaceable(boolean replaceable) {
+        this.replaceable = replaceable;
+    }
 
     public static class Builder{
 
