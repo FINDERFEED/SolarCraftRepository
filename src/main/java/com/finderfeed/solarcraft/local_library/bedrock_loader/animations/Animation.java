@@ -1,5 +1,6 @@
 package com.finderfeed.solarcraft.local_library.bedrock_loader.animations;
 
+import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.local_library.bedrock_loader.model_components.FDModel;
 import com.finderfeed.solarcraft.local_library.bedrock_loader.model_components.FDModelPart;
 import com.finderfeed.solarcraft.local_library.helpers.FDMathHelper;
@@ -20,16 +21,18 @@ import java.util.*;
 public class Animation {
     private static Gson GSON = new GsonBuilder().create();
 
+    private ResourceLocation name;
     private Map<String,AnimationData> boneData = new HashMap<>();
     private float animTime;
     private Mode mode;
 
-    public Animation(List<AnimationData> data, Mode mode,float animTime){
+    public Animation(ResourceLocation name,List<AnimationData> data, Mode mode,float animTime){
         for (AnimationData d : data){
             boneData.put(d.getBoneName(),d);
         }
         this.animTime = animTime;
         this.mode = mode;
+        this.name = name;
     }
 
 
@@ -83,7 +86,11 @@ public class Animation {
         return mode;
     }
 
-    public static Animation generateToNullAnimation(Animation currentAnimation,int currentAnimationTime){
+    public ResourceLocation getName() {
+        return name;
+    }
+
+    public static Animation generateToNullAnimation(Animation currentAnimation, int currentAnimationTime){
         List<AnimationData> toNullDatas = new ArrayList<>();
         for (AnimationData data : currentAnimation.boneData.values()){
             float time = currentAnimationTime / 20f;
@@ -96,7 +103,7 @@ public class Animation {
             );
             toNullDatas.add(d);
         }
-        return new ToNullAnimation(toNullDatas,Mode.PLAY_ONCE,1f);
+        return new ToNullAnimation(toNullDatas,Mode.PLAY_ONCE,currentAnimationTime);
     }
 
     public static Animation generateTransitionAnimation(Animation currentAnimation,Animation target,int currentAnimationTime){
@@ -111,7 +118,7 @@ public class Animation {
             AnimationData newData = targetData.copyWithReplacedFirst(keyframes.left,keyframes.middle,keyframes.right);
             datas.add(newData);
         }
-        return new Animation(datas,target.getMode(),target.animTime);
+        return new Animation(new ResourceLocation(SolarCraft.MOD_ID,"transition"),datas,target.getMode(),target.animTime);
     }
 
     public enum Mode{
@@ -135,7 +142,7 @@ public class Animation {
 //        return animation;
 //    }
 
-    public static Animation parseAnimation(JsonObject sanimation){
+    public static Animation parseAnimation(ResourceLocation name,JsonObject sanimation){
         float length = sanimation.get("animation_length").getAsFloat();
         JsonObject sbones = sanimation.getAsJsonObject("bones");
 
@@ -184,7 +191,7 @@ public class Animation {
         }else{
             mode = Mode.PLAY_ONCE;
         }
-        return new Animation(datas,mode,length);
+        return new Animation(name,datas,mode,length);
     }
 
 

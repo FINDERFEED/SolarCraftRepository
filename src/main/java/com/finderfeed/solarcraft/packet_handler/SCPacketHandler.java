@@ -17,7 +17,7 @@ import com.finderfeed.solarcraft.packet_handler.packets.misc_packets.SolarStrike
 import com.finderfeed.solarcraft.packet_handler.packets.sun_shard_puzzle.SunShardPuzzleOpenScreen;
 import com.finderfeed.solarcraft.packet_handler.packets.sun_shard_puzzle.SunShardPuzzlePutTilePacket;
 import com.finderfeed.solarcraft.packet_handler.packets.sun_shard_puzzle.SunShardPuzzleTakeTilePacket;
-import com.finderfeed.solarcraft.registries.animations.AnimationsPacket;
+import com.finderfeed.solarcraft.local_library.bedrock_loader.animations.packets.AnimationsPacket;
 import net.minecraft.resources.ResourceLocation;
 
 import net.minecraftforge.network.NetworkRegistry;

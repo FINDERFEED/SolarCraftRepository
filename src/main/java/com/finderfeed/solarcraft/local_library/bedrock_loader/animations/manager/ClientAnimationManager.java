@@ -1,14 +1,17 @@
-package com.finderfeed.solarcraft.local_library.bedrock_loader.animations;
+package com.finderfeed.solarcraft.local_library.bedrock_loader.animations.manager;
 
+import com.finderfeed.solarcraft.local_library.bedrock_loader.animations.Animation;
+import com.finderfeed.solarcraft.local_library.bedrock_loader.animations.ToNullAnimation;
 import com.finderfeed.solarcraft.local_library.bedrock_loader.model_components.FDModel;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class ClientAnimationManager {
+public class ClientAnimationManager implements AnimationManager{
 
-    public Map<String,AnimationTicker> tickers = new HashMap<>();
+    public Map<String, AnimationTicker> tickers = new HashMap<>();
 
+    @Override
     public void tickAnimations(){
         var iterator = tickers.entrySet().iterator();
         while (iterator.hasNext()){
@@ -39,7 +42,8 @@ public class ClientAnimationManager {
         }
     }
 
-    public void removeAnimation(String tickerName){
+    @Override
+    public void stopAnimation(String tickerName){
         AnimationTicker ticker = this.tickers.get(tickerName);
         if (ticker == null) return;
         if (ticker.getAnimation() instanceof ToNullAnimation) return;
@@ -50,6 +54,7 @@ public class ClientAnimationManager {
                 .build());
     }
 
+    @Override
     public void setAnimation(String tickerName,AnimationTicker animation){
         AnimationTicker c = this.tickers.get(tickerName);
         if (c == null){

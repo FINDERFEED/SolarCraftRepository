@@ -1,5 +1,6 @@
-package com.finderfeed.solarcraft.registries.animations;
+package com.finderfeed.solarcraft.local_library.bedrock_loader.animations.packets;
 
+import com.finderfeed.solarcraft.registries.animations.AnimationReloadableResourceListener;
 import com.google.gson.JsonObject;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;

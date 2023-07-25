@@ -1,6 +1,7 @@
 package com.finderfeed.solarcraft.registries.animations;
 
 import com.finderfeed.solarcraft.local_library.bedrock_loader.animations.Animation;
+import com.finderfeed.solarcraft.local_library.bedrock_loader.animations.packets.AnimationsPacket;
 import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
 import com.google.gson.*;
 import net.minecraft.nbt.CompoundTag;
@@ -36,14 +37,15 @@ public class AnimationReloadableResourceListener extends SimpleJsonResourceReloa
             String modid = location.getNamespace();
             JsonObject object = entry.getValue().getAsJsonObject();
             if (!object.get("format_version").getAsString().equals("1.8.0")){
-                throw new IllegalStateException("Loaded animation: \"" + loadedObjects + "\" is not 1.8.0 format!");
+                throw new IllegalStateException("Loaded animation: \"" + location + "\" is not 1.8.0 format!");
             }
             JsonObject animations = object.getAsJsonObject("animations");
             for (var property : animations.entrySet()){
                 ResourceLocation animationName = new ResourceLocation(modid,property.getKey());
-                Animation animation = Animation.parseAnimation(property.getValue().getAsJsonObject());
+                Animation animation = Animation.parseAnimation(animationName,property.getValue().getAsJsonObject());
                 this.animations.put(animationName,animation);
                 this.serialized_animations.put(animationName,property.getValue().getAsJsonObject());
+                SCBedrockAnimations.ANIMATIONS.assignValue(animationName,animation);
             }
         }
     }
@@ -55,14 +57,19 @@ public class AnimationReloadableResourceListener extends SimpleJsonResourceReloa
             ResourceLocation location = new ResourceLocation(key);
             String json = data.getString(key);
             JsonObject object = JsonParser.parseString(json).getAsJsonObject();
-            Animation animation = Animation.parseAnimation(object);
+            Animation animation = Animation.parseAnimation(location,object);
             animations.put(location,animation);
             serialized_animations.put(location,object);
+            SCBedrockAnimations.ANIMATIONS.assignValue(location,animation);
         }
     }
 
     public void sendAnimationsPacket(ServerPlayer player){
         SCPacketHandler.INSTANCE.sendTo(new AnimationsPacket(this.serialized_animations),player.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+    }
+
+    public Animation getAnimation(ResourceLocation location){
+        return this.animations.get(location);
     }
 
 }

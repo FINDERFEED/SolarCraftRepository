@@ -1,6 +1,10 @@
-package com.finderfeed.solarcraft.local_library.bedrock_loader.animations;
+package com.finderfeed.solarcraft.local_library.bedrock_loader.animations.manager;
 
+import com.finderfeed.solarcraft.local_library.bedrock_loader.animations.Animation;
 import com.finderfeed.solarcraft.local_library.helpers.FDMathHelper;
+import com.finderfeed.solarcraft.registries.animations.AnimationReloadableResourceListener;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceLocation;
 
 public class AnimationTicker {
 
@@ -9,6 +13,12 @@ public class AnimationTicker {
     private int innerTicker;
     private Animation animation;
 
+
+    private AnimationTicker(boolean replaceable,int ticker,Animation animation){
+        this.replaceable = replaceable;
+        this.innerTicker = ticker;
+        this.animation = animation;
+    }
 
     public AnimationTicker(Animation animation){
         this.animation = animation;
@@ -53,6 +63,24 @@ public class AnimationTicker {
     public Animation getAnimation() {
         return animation;
     }
+
+
+    public CompoundTag serialize(){
+        CompoundTag tag = new CompoundTag();
+        tag.putBoolean("replaceable",this.replaceable);
+        tag.putInt("time",this.innerTicker);
+        tag.putString("animation_name",this.animation.getName().toString());
+        return tag;
+    }
+
+    public static AnimationTicker deserialize(CompoundTag tag){
+        boolean replaceable = tag.getBoolean("replaceable");
+        int time = tag.getInt("time");
+        ResourceLocation name = new ResourceLocation(tag.getString("animation_name"));
+        Animation animation = AnimationReloadableResourceListener.INSTANCE.getAnimation(name);
+        return new AnimationTicker(replaceable,time,animation);
+    }
+
 
     public static class Builder{
 
