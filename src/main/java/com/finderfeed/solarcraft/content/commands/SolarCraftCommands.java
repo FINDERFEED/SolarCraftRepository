@@ -1,13 +1,18 @@
 package com.finderfeed.solarcraft.content.commands;
 
+import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.progression_tree.ProgressionTree;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.helpers.multiblock.Multiblocks;
+import com.finderfeed.solarcraft.local_library.bedrock_loader.animations.AnimatedObject;
+import com.finderfeed.solarcraft.local_library.bedrock_loader.animations.Animation;
+import com.finderfeed.solarcraft.local_library.bedrock_loader.animations.manager.AnimationTicker;
 import com.finderfeed.solarcraft.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.SolarLexicon;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.Progression;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
 
+import com.finderfeed.solarcraft.registries.animations.AnimationReloadableResourceListener;
 import com.finderfeed.solarcraft.registries.items.SolarcraftItems;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragmentHelper;
@@ -20,11 +25,16 @@ import com.mojang.brigadier.tree.LiteralCommandNode;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.EntityArgument;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.network.chat.Component;
 import net.minecraft.ChatFormatting;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.IItemHandler;
@@ -57,9 +67,38 @@ public class SolarCraftCommands {
                                                 .executes((stack)->setREAmount(stack.getSource(),EntityArgument.getPlayer(stack,"target"),
                                                                 stack.getArgument("type",String.class),
                                                                 stack.getArgument("amount",Float.class)))))))
-                        )
+                        ).then(Commands.literal("animtest")
+                                .then(Commands.argument("animation",StringArgumentType.string())
+                                        .executes(stack->testEntityAnimation(stack.getSource(),stack.getArgument("animation",String.class)))))
 
         );
+    }
+
+    public static int testEntityAnimation(CommandSourceStack src,String animationName) throws CommandSyntaxException {
+        ServerPlayer player = src.getPlayerOrException();
+
+        Vec3 i = player.position().add(0,2,0);
+        Vec3 end = i.add(player.getLookAngle().multiply(10,10,10));
+
+        HitResult result = Helpers.getEntityHitResult(player,player.level,i,end,(e)->true);
+        if (result instanceof EntityHitResult entityHitResult && entityHitResult.getEntity() instanceof AnimatedObject object){
+            if (!animationName.equals("null")) {
+                Animation animation = AnimationReloadableResourceListener.INSTANCE.getAnimation(new ResourceLocation(SolarCraft.MOD_ID,animationName));
+                if (animation == null) {
+                    src.sendFailure(Component.literal("Animation doesn't exist: " + animationName).withStyle(ChatFormatting.RED));
+                    return 0;
+                }
+                object.getAnimationManager().setAnimation("main", new AnimationTicker.Builder(animation)
+                        .replaceable(false)
+                        .startFrom(0)
+                        .build());
+            }else{
+                object.getAnimationManager().stopAnimation("main");
+            }
+        }else{
+            src.sendFailure(Component.literal("Entity not found").withStyle(ChatFormatting.RED));
+        }
+        return 1;
     }
 
     public static int revokeProgression(CommandSourceStack src,String code) throws CommandSyntaxException {

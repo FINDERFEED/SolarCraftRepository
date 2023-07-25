@@ -11,18 +11,18 @@ import net.minecraftforge.network.NetworkEvent;
 import java.util.Map;
 import java.util.function.Supplier;
 
-public class AnimationsPacket {
+public class AnimationsSyncPacket {
 
     private CompoundTag data;
 
-    public AnimationsPacket(Map<ResourceLocation, JsonObject> animationData){
+    public AnimationsSyncPacket(Map<ResourceLocation, JsonObject> animationData){
         data = new CompoundTag();
         for (var entry : animationData.entrySet()){
             data.putString(entry.getKey().toString(),entry.getValue().toString());
         }
     }
 
-    public AnimationsPacket(FriendlyByteBuf buf){
+    public AnimationsSyncPacket(FriendlyByteBuf buf){
         this.data = buf.readAnySizeNbt();
     }
 

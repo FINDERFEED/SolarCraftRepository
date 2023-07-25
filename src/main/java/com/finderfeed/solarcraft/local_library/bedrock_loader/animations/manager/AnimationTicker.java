@@ -14,7 +14,7 @@ public class AnimationTicker {
     private Animation animation;
 
 
-    private AnimationTicker(boolean replaceable,int ticker,Animation animation){
+    protected AnimationTicker(boolean replaceable,int ticker,Animation animation){
         this.replaceable = replaceable;
         this.innerTicker = ticker;
         this.animation = animation;

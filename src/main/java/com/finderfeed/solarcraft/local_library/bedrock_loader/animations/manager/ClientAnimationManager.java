@@ -1,7 +1,7 @@
 package com.finderfeed.solarcraft.local_library.bedrock_loader.animations.manager;
 
 import com.finderfeed.solarcraft.local_library.bedrock_loader.animations.Animation;
-import com.finderfeed.solarcraft.local_library.bedrock_loader.animations.ToNullAnimation;
+import com.finderfeed.solarcraft.local_library.bedrock_loader.animations.misc.ToNullAnimation;
 import com.finderfeed.solarcraft.local_library.bedrock_loader.model_components.FDModel;
 
 import java.util.HashMap;
@@ -52,6 +52,11 @@ public class ClientAnimationManager implements AnimationManager{
         this.tickers.put(tickerName,new AnimationTicker.Builder(animation)
                         .replaceable(true)
                 .build());
+    }
+
+    @Override
+    public AnimationTicker getTicker(String name) {
+        return this.tickers.get(name);
     }
 
     @Override

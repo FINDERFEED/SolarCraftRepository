@@ -61,6 +61,11 @@ public class Helpers {
     public static BlockPos NULL_POS = new BlockPos(0,-100,0);
 
 
+    public static HitResult getEntityHitResult(Player player,Level level,Vec3 init,Vec3 end,Predicate<Entity> predicate){
+        AABB box = new AABB(init,end);
+        return ProjectileUtil.getEntityHitResult(level,player,init,end,box,predicate);
+    }
+
     public static CompoundTag getPlayerSolarcraftTag(Player player){
         if (player.getPersistentData().contains("solarcraft_data")){
             return player.getPersistentData().getCompound("solarcraft_data");

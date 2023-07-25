@@ -13,6 +13,8 @@ import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.helpers.multiblock.MultiblockStructure;
 import com.finderfeed.solarcraft.helpers.multiblock.Multiblocks;
+import com.finderfeed.solarcraft.local_library.bedrock_loader.animations.AnimatedObject;
+import com.finderfeed.solarcraft.local_library.bedrock_loader.animations.manager.AnimationTicker;
 import com.finderfeed.solarcraft.local_library.entities.bossbar.client.ActiveBossBar;
 import com.finderfeed.solarcraft.registries.ConfigRegistry;
 import com.finderfeed.solarcraft.registries.overlays.SolarcraftOverlays;
@@ -20,6 +22,7 @@ import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -140,6 +143,20 @@ public class ClientPacketHandles {
         for (String key : progressionData.getAllKeys()){
             Progression progression = Progression.getProgressionByName(key);
             Helpers.setProgressionCompletionStatus(progression,player,progressionData.getBoolean(key));
+        }
+    }
+
+    public static void handleSetEntityAnimationPacket(int entityId, String tickerName, AnimationTicker ticker){
+        ClientLevel level = ClientHelpers.getLevel();
+        if (level.getEntity(entityId) instanceof AnimatedObject animatable){
+            animatable.getAnimationManager().setAnimation(tickerName,ticker);
+        }
+    }
+
+    public static void handleRemoveEntityAnimationPacket(int entityId, String tickerName){
+        ClientLevel level = ClientHelpers.getLevel();
+        if (level.getEntity(entityId) instanceof AnimatedObject animatable){
+            animatable.getAnimationManager().stopAnimation(tickerName);
         }
     }
 

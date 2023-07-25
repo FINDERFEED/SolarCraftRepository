@@ -3,6 +3,8 @@ package com.finderfeed.solarcraft.packet_handler;
 import com.finderfeed.solarcraft.content.blocks.infusing_table_things.UpdateProgressOnClientPacket;
 import com.finderfeed.solarcraft.content.blocks.infusing_table_things.UpdateStacksOnClientTable;
 import com.finderfeed.solarcraft.content.blocks.infusing_table_things.infusing_pool.UpdateStacksOnClientPacketPool;
+import com.finderfeed.solarcraft.local_library.bedrock_loader.animations.packets.RemoveEntityAnimationPacket;
+import com.finderfeed.solarcraft.local_library.bedrock_loader.animations.packets.StartEntityAnimationPacket;
 import com.finderfeed.solarcraft.local_library.entities.bossbar.server.CustomBossEventInitPacket;
 import com.finderfeed.solarcraft.local_library.entities.bossbar.server.ServerBossEventUpdateProgress;
 import com.finderfeed.solarcraft.packet_handler.packets.*;
@@ -17,7 +19,7 @@ import com.finderfeed.solarcraft.packet_handler.packets.misc_packets.SolarStrike
 import com.finderfeed.solarcraft.packet_handler.packets.sun_shard_puzzle.SunShardPuzzleOpenScreen;
 import com.finderfeed.solarcraft.packet_handler.packets.sun_shard_puzzle.SunShardPuzzlePutTilePacket;
 import com.finderfeed.solarcraft.packet_handler.packets.sun_shard_puzzle.SunShardPuzzleTakeTilePacket;
-import com.finderfeed.solarcraft.local_library.bedrock_loader.animations.packets.AnimationsPacket;
+import com.finderfeed.solarcraft.local_library.bedrock_loader.animations.packets.AnimationsSyncPacket;
 import net.minecraft.resources.ResourceLocation;
 
 import net.minecraftforge.network.NetworkRegistry;
@@ -94,7 +96,9 @@ public class SCPacketHandler {
         INSTANCE.registerMessage(nextID(), CameraShakePacket.class, CameraShakePacket::toBytes, CameraShakePacket::new, CameraShakePacket::handle);
         INSTANCE.registerMessage(nextID(), UpdateChunkPacket.class, UpdateChunkPacket::toBytes, UpdateChunkPacket::new, UpdateChunkPacket::handle);
         INSTANCE.registerMessage(nextID(), LaunchOrbitalMissilePacket.class, LaunchOrbitalMissilePacket::toBytes, LaunchOrbitalMissilePacket::new, LaunchOrbitalMissilePacket::handle);
-        INSTANCE.registerMessage(nextID(), AnimationsPacket.class, AnimationsPacket::toBytes, AnimationsPacket::new, AnimationsPacket::handle);
+        INSTANCE.registerMessage(nextID(), AnimationsSyncPacket.class, AnimationsSyncPacket::toBytes, AnimationsSyncPacket::new, AnimationsSyncPacket::handle);
+        INSTANCE.registerMessage(nextID(), StartEntityAnimationPacket.class, StartEntityAnimationPacket::toBytes, StartEntityAnimationPacket::new, StartEntityAnimationPacket::handle);
+        INSTANCE.registerMessage(nextID(), RemoveEntityAnimationPacket.class, RemoveEntityAnimationPacket::toBytes, RemoveEntityAnimationPacket::new, RemoveEntityAnimationPacket::handle);
 
 
     }

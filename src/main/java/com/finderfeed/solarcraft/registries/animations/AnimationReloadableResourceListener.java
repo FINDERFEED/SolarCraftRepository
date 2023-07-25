@@ -1,7 +1,7 @@
 package com.finderfeed.solarcraft.registries.animations;
 
 import com.finderfeed.solarcraft.local_library.bedrock_loader.animations.Animation;
-import com.finderfeed.solarcraft.local_library.bedrock_loader.animations.packets.AnimationsPacket;
+import com.finderfeed.solarcraft.local_library.bedrock_loader.animations.packets.AnimationsSyncPacket;
 import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
 import com.google.gson.*;
 import net.minecraft.nbt.CompoundTag;
@@ -65,7 +65,7 @@ public class AnimationReloadableResourceListener extends SimpleJsonResourceReloa
     }
 
     public void sendAnimationsPacket(ServerPlayer player){
-        SCPacketHandler.INSTANCE.sendTo(new AnimationsPacket(this.serialized_animations),player.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+        SCPacketHandler.INSTANCE.sendTo(new AnimationsSyncPacket(this.serialized_animations),player.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
     }
 
     public Animation getAnimation(ResourceLocation location){

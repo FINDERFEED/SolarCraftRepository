@@ -1,6 +1,7 @@
 package com.finderfeed.solarcraft.local_library.bedrock_loader.animations;
 
 import com.finderfeed.solarcraft.SolarCraft;
+import com.finderfeed.solarcraft.local_library.bedrock_loader.animations.misc.ToNullAnimation;
 import com.finderfeed.solarcraft.local_library.bedrock_loader.model_components.FDModel;
 import com.finderfeed.solarcraft.local_library.bedrock_loader.model_components.FDModelPart;
 import com.finderfeed.solarcraft.local_library.helpers.FDMathHelper;
@@ -9,13 +10,9 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.mojang.datafixers.util.Pair;
-import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.packs.resources.Resource;
-import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.world.phys.Vec3;
 
-import java.io.BufferedReader;
 import java.util.*;
 
 public class Animation {
