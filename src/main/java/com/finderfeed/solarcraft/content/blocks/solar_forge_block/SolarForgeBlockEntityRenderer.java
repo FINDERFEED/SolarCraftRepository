@@ -1,20 +1,14 @@
 package com.finderfeed.solarcraft.content.blocks.solar_forge_block;
 
-import com.finderfeed.solarcraft.SolarCraft;
-import com.finderfeed.solarcraft.local_library.bedrock_loader.model_components.FDModel;
 import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.finderfeed.solarcraft.registries.ModelLayersRegistry;
-import com.finderfeed.solarcraft.registries.SCBedrockAnimations;
-import com.finderfeed.solarcraft.registries.SCBedrockModels;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
-import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import static com.finderfeed.solarcraft.local_library.helpers.RenderingTools.*;

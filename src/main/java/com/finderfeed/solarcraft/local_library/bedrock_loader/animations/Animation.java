@@ -124,18 +124,18 @@ public class Animation {
 
 
 
-    public static Animation loadAnimation(ResourceLocation location, String animationName){
-        JsonObject object = loadJsonFile(location).getAsJsonObject();
-        String format = object.get("format_version").getAsString();
-        if (!format.equals("1.8.0")){
-            throw new IllegalStateException("Animation format " + format + " in animation " + location + " is not supported!");
-        }
-        JsonObject sanimation = object.getAsJsonObject("animations").getAsJsonObject(animationName);
-        Animation animation = parseAnimation(sanimation);
-        return animation;
-    }
+//    public static Animation loadAnimation(ResourceLocation location, String animationName){
+//        JsonObject object = loadJsonFile(location).getAsJsonObject();
+//        String format = object.get("format_version").getAsString();
+//        if (!format.equals("1.8.0")){
+//            throw new IllegalStateException("Animation format " + format + " in animation " + location + " is not supported!");
+//        }
+//        JsonObject sanimation = object.getAsJsonObject("animations").getAsJsonObject(animationName);
+//        Animation animation = parseAnimation(sanimation);
+//        return animation;
+//    }
 
-    private static Animation parseAnimation(JsonObject sanimation){
+    public static Animation parseAnimation(JsonObject sanimation){
         float length = sanimation.get("animation_length").getAsFloat();
         JsonObject sbones = sanimation.getAsJsonObject("bones");
 
@@ -188,21 +188,21 @@ public class Animation {
     }
 
 
-    private static JsonElement loadJsonFile(ResourceLocation location){
-        ResourceManager manager = Minecraft.getInstance().getResourceManager();
-        Optional<Resource> modelJson = manager.getResource(location);
-        try{
-            if (modelJson.isPresent()){
-
-                BufferedReader stream = modelJson.get().openAsReader();
-                JsonElement element = GSON.fromJson(stream,JsonElement.class);
-                stream.close();
-                return element;
-            }else{
-                throw new RuntimeException("Couldn't find animation: " + location);
-            }
-        }catch (Exception e){
-            throw new RuntimeException("Error loading animation file: " + location,e);
-        }
-    }
+//    private static JsonElement loadJsonFile(ResourceLocation location){
+//        ResourceManager manager = Minecraft.getInstance().getResourceManager();
+//        Optional<Resource> modelJson = manager.getResource(location);
+//        try{
+//            if (modelJson.isPresent()){
+//
+//                BufferedReader stream = modelJson.get().openAsReader();
+//                JsonElement element = GSON.fromJson(stream,JsonElement.class);
+//                stream.close();
+//                return element;
+//            }else{
+//                throw new RuntimeException("Couldn't find animation: " + location);
+//            }
+//        }catch (Exception e){
+//            throw new RuntimeException("Error loading animation file: " + location,e);
+//        }
+//    }
 }

@@ -17,6 +17,7 @@ import com.finderfeed.solarcraft.packet_handler.packets.misc_packets.SolarStrike
 import com.finderfeed.solarcraft.packet_handler.packets.sun_shard_puzzle.SunShardPuzzleOpenScreen;
 import com.finderfeed.solarcraft.packet_handler.packets.sun_shard_puzzle.SunShardPuzzlePutTilePacket;
 import com.finderfeed.solarcraft.packet_handler.packets.sun_shard_puzzle.SunShardPuzzleTakeTilePacket;
+import com.finderfeed.solarcraft.registries.animations.AnimationsPacket;
 import net.minecraft.resources.ResourceLocation;
 
 import net.minecraftforge.network.NetworkRegistry;
@@ -93,6 +94,7 @@ public class SCPacketHandler {
         INSTANCE.registerMessage(nextID(), CameraShakePacket.class, CameraShakePacket::toBytes, CameraShakePacket::new, CameraShakePacket::handle);
         INSTANCE.registerMessage(nextID(), UpdateChunkPacket.class, UpdateChunkPacket::toBytes, UpdateChunkPacket::new, UpdateChunkPacket::handle);
         INSTANCE.registerMessage(nextID(), LaunchOrbitalMissilePacket.class, LaunchOrbitalMissilePacket::toBytes, LaunchOrbitalMissilePacket::new, LaunchOrbitalMissilePacket::handle);
+        INSTANCE.registerMessage(nextID(), AnimationsPacket.class, AnimationsPacket::toBytes, AnimationsPacket::new, AnimationsPacket::handle);
 
 
     }

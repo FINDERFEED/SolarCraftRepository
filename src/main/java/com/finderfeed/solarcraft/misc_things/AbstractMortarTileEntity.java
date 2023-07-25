@@ -3,7 +3,10 @@ package com.finderfeed.solarcraft.misc_things;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
 import com.finderfeed.solarcraft.packet_handler.packets.PlaySoundPacket;
+import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.Level;
@@ -60,8 +63,10 @@ public abstract class AbstractMortarTileEntity extends BlockEntity  {
                         proj.setDeltaMovement(Helpers.blocksPerSecondToVelocity(velX), Helpers.blocksPerSecondToVelocity(velocitystart), Helpers.blocksPerSecondToVelocity(velZ));
                         tile.level.addFreshEntity(proj);
 
-                        SCPacketHandler.INSTANCE.send(PacketDistributor.NEAR.with(PacketDistributor.TargetPoint.p(tile.worldPosition.getX(), tile.worldPosition.getY(), tile.worldPosition.getZ(), 50, tile.level.dimension())),
-                                new PlaySoundPacket(20,1,1,tile.worldPosition.above()));
+//                        SCPacketHandler.INSTANCE.send(PacketDistributor.NEAR.with(PacketDistributor.TargetPoint.p(tile.worldPosition.getX(), tile.worldPosition.getY(), tile.worldPosition.getZ(), 50, tile.level.dimension())),
+//                                new PlaySoundPacket(20,1,1,tile.worldPosition.above()));
+                        ((ServerLevel)world).playSound(null,tile.getBlockPos(), SolarcraftSounds.SOLAR_MORTAR_SHOOT.get(), SoundSource.BLOCKS,
+                                20f,1f);
                     }
                 }
                 tile.attackTick = 0;

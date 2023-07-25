@@ -1,20 +1,12 @@
 package com.finderfeed.solarcraft.content.entities.renderers;
 
-import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.content.entities.ShadowZombie;
 import com.finderfeed.solarcraft.content.entities.models.ShadowZombieModel;
-import com.finderfeed.solarcraft.local_library.bedrock_loader.model_components.FDModelInfo;
-import com.finderfeed.solarcraft.local_library.bedrock_loader.model_components.FDModel;
-import com.finderfeed.solarcraft.registries.SCBedrockAnimations;
-import com.finderfeed.solarcraft.registries.SCBedrockModels;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.geom.ModelLayers;
-import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
-import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 
 public class ShadowZombieRenderer extends MobRenderer<ShadowZombie, ShadowZombieModel> {

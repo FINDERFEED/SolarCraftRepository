@@ -33,7 +33,7 @@ import com.finderfeed.solarcraft.content.runic_network.repeater.RepeaterRenderer
 import com.finderfeed.solarcraft.content.world_generation.dimension_related.radiant_land.RadiantLandDimEffects;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.local_library.client.particles.ScreenParticlesRenderHandler;
-import com.finderfeed.solarcraft.registries.SCBedrockAnimations;
+import com.finderfeed.solarcraft.registries.animations.SCBedrockAnimations;
 import com.finderfeed.solarcraft.registries.SCBedrockModels;
 import com.finderfeed.solarcraft.registries.ScreenSuppliers;
 import com.finderfeed.solarcraft.registries.blocks.SolarcraftBlocks;
@@ -153,7 +153,7 @@ public class ClientModEventHandler {
         event.enqueueWork(()->{
 
             SCBedrockModels.init();
-            SCBedrockAnimations.init();
+//            SCBedrockAnimations.init();
 
             ItemProperties.register(SolarcraftItems.SUN_SHARD.get(),new ResourceLocation("solarcraft","heated_up"),(stack, world, living, a)->{
                 if (stack.getItem() instanceof SunShardItem item){
