@@ -91,8 +91,8 @@ public class Animation {
         List<AnimationData> toNullDatas = new ArrayList<>();
         for (AnimationData data : currentAnimation.boneData.values()){
             float time = currentAnimationTime / 20f;
-            var keyframes = FDAnimationsHelper.generateKeyFramesForTime(data,time);
-            KeyFrame end = new KeyFrame(Vec3.ZERO,Vec3.ZERO, KeyFrame.LerpMode.CATMULLROM,1,0);
+            var keyframes = FDAnimationsHelper.generateKeyFramesForTime(data, KeyFrame.LerpMode.LINEAR,time);
+            KeyFrame end = new KeyFrame(Vec3.ZERO,Vec3.ZERO, KeyFrame.LerpMode.LINEAR,time,1);
             AnimationData d = new AnimationData(data.getBoneName(),
                     List.of(keyframes.middle,end),
                     List.of(keyframes.left,end),
@@ -100,7 +100,7 @@ public class Animation {
             );
             toNullDatas.add(d);
         }
-        return new ToNullAnimation(toNullDatas,Mode.PLAY_ONCE,currentAnimationTime);
+        return new ToNullAnimation(toNullDatas,Mode.PLAY_ONCE,currentAnimationTime / 20f);
     }
 
     public static Animation generateTransitionAnimation(Animation currentAnimation,Animation target,int currentAnimationTime){
@@ -110,7 +110,7 @@ public class Animation {
                 continue;
             }
             float time = currentAnimationTime / 20f;
-            var keyframes = FDAnimationsHelper.generateKeyFramesForTime(data,time);
+            var keyframes = FDAnimationsHelper.generateKeyFramesForTime(data, KeyFrame.LerpMode.CATMULLROM,time);
             AnimationData targetData = target.boneData.get(data.getBoneName());
             AnimationData newData = targetData.copyWithReplacedFirst(keyframes.left,keyframes.middle,keyframes.right);
             datas.add(newData);

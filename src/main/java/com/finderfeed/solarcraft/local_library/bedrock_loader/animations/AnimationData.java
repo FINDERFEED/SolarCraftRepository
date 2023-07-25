@@ -106,7 +106,7 @@ public class AnimationData {
         }else if (frames.size() == 1){
             return new NumberRangeObjectGetter<>(frames,List.of(new NumberRange(0,Integer.MAX_VALUE)));
         }else{
-            return null;
+            return new NumberRangeObjectGetter<>(List.of(new KeyFrame(Vec3.ZERO,Vec3.ZERO, KeyFrame.LerpMode.LINEAR,0)),List.of(new NumberRange(0,Integer.MAX_VALUE)));
         }
     }
 
@@ -135,6 +135,7 @@ public class AnimationData {
         data.rotationSpline = rotationSpline;
         data.scaleSpline = scaleSpline;
         data.positionSpline = positionSpline;
+        data.boneName = this.boneName;
         return data;
     }
 

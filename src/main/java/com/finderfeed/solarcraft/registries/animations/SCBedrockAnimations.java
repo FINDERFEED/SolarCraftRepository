@@ -10,5 +10,6 @@ public class SCBedrockAnimations {
 
     public static final DelayedObjectGetterManager<Animation> ANIMATIONS = new DelayedObjectGetterManager<>();
 
-    public static final DelayedObjectGetter<Animation> TEST = ANIMATIONS.define(new ResourceLocation(SolarCraft.MOD_ID,"animation.unknown.new"));
+    public static final DelayedObjectGetter<Animation> TEST = ANIMATIONS.define(new ResourceLocation(SolarCraft.MOD_ID,"test1"));
+    public static final DelayedObjectGetter<Animation> TEST2 = ANIMATIONS.define(new ResourceLocation(SolarCraft.MOD_ID,"test2"));
 }

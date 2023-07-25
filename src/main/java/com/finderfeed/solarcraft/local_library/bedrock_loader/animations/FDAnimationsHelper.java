@@ -93,16 +93,16 @@ public class FDAnimationsHelper {
         }
     }
 
-    public static ImmutableTriple<KeyFrame,KeyFrame,KeyFrame> generateKeyFramesForTime(AnimationData data,float time){
+    public static ImmutableTriple<KeyFrame,KeyFrame,KeyFrame> generateKeyFramesForTime(AnimationData data, KeyFrame.LerpMode lerpMode,float time){
         Pair<KeyFrame, KeyFrame> currentPosKeyFrames = data.getCurrentAndNextPositionKeyFrame(time);
         Pair<KeyFrame, KeyFrame> currentRotKeyFrames = data.getCurrentAndNextRotationKeyFrame(time);
         Pair<KeyFrame, KeyFrame> currentScaleKeyFrames = data.getCurrentAndNextScaleKeyFrame(time);
         Vec3 currentPos = FDAnimationsHelper.getCurrentPosition(currentPosKeyFrames,data,time);
         Vec3 currentRot = FDAnimationsHelper.getCurrentRotation(currentRotKeyFrames,data,time);
         Vec3 currentScale = FDAnimationsHelper.getCurrentScale(currentScaleKeyFrames,data,time);
-        KeyFrame keyFramePos = new KeyFrame(currentPos,currentPos, KeyFrame.LerpMode.CATMULLROM,0,1);
-        KeyFrame keyFrameRot = new KeyFrame(currentRot,currentRot, KeyFrame.LerpMode.CATMULLROM,0,1);
-        KeyFrame keyFrameScale = new KeyFrame(currentScale,currentScale, KeyFrame.LerpMode.CATMULLROM,0,1);
+        KeyFrame keyFramePos = new KeyFrame(currentPos,currentPos, lerpMode,0,0);
+        KeyFrame keyFrameRot = new KeyFrame(currentRot,currentRot, lerpMode,0,0);
+        KeyFrame keyFrameScale = new KeyFrame(currentScale,currentScale, lerpMode,0,0);
         return ImmutableTriple.of(keyFramePos,keyFrameRot,keyFrameScale);
     }
 

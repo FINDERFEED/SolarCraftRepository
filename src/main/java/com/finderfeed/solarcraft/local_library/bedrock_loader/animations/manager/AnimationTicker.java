@@ -49,7 +49,7 @@ public class AnimationTicker {
     }
 
     public boolean ended(){
-        return this.innerTicker == animation.getAnimTimeInTicks();
+        return this.innerTicker >= animation.getAnimTimeInTicks();
     }
 
     public boolean isReplaceable() {

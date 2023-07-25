@@ -65,7 +65,7 @@ public class ClientAnimationManager implements AnimationManager{
         if (c == null){
             this.tickers.put(tickerName,animation);
         }else{
-            if (c.isReplaceable()){
+            if (c.isReplaceable() || (c.getAnimation() != animation.getAnimation())){
                 Animation transition = Animation.generateTransitionAnimation(c.getAnimation(),animation.getAnimation(),c.getCurrentTime());
                 AnimationTicker ticker = new AnimationTicker(animation,transition);
                 this.tickers.put(tickerName,ticker);

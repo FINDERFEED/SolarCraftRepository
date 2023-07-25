@@ -52,7 +52,7 @@ public abstract class ServerAnimationManager implements AnimationManager{
             this.tickers.put(tickerName,animation);
             this.sendAnimationStartPacket(tickerName,animation);
         }else{
-            if (current.isReplaceable()){
+            if (current.isReplaceable() || (current.getAnimation() != animation.getAnimation())){
                 this.tickers.put(tickerName,animation);
                 this.sendAnimationStartPacket(tickerName,animation);
             }
