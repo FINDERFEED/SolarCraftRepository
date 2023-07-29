@@ -2,6 +2,8 @@ package com.finderfeed.solarcraft.local_library.bedrock_loader.model_components;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.phys.Vec3;
 
@@ -26,6 +28,10 @@ public class FDModel {
     public void render(PoseStack matrices, VertexConsumer vertex, int light, int overlay, float r, float g, float b, float a){
         main.render(matrices,vertex,light,overlay,r,g,b,a);
     }
+
+//    public void renderDebugNormals(PoseStack matrices, MultiBufferSource src, int light, int overlay, float r, float g, float b, float a){
+//        main.renderDebugNormals(matrices,src.getBuffer(RenderType.debugLineStrip(1f)),light,overlay,r,g,b,a);
+//    }
 
 
 

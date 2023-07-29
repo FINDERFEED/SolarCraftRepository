@@ -67,6 +67,25 @@ public class FDModelPart {
         matrices.popPose();
     }
 
+//    public void renderDebugNormals(PoseStack matrices, VertexConsumer vertex, int light, int overlay,float r,float g,float b,float a){
+//        matrices.pushPose();
+//
+//        if (isVisible){
+//            this.translateAndRotate(matrices);
+//
+//            for (FDCube cube : cubes){
+//                cube.renderDebugNormals(matrices,vertex,light,overlay,r,g,b,a);
+//            }
+//
+//            for (FDModelPart child : children.values()){
+//                child.renderDebugNormals(matrices,vertex,light,overlay,r,g,b,a);
+//            }
+//
+//        }
+//
+//        matrices.popPose();
+//    }
+
 
     private void translateAndRotate(PoseStack matrices){
         matrices.translate(x/16,y/16,z/16);

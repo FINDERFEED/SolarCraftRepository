@@ -28,10 +28,11 @@ public class ExplosiveCrystalRenderer extends EntityRenderer<ExplosiveCrystal> {
             matrices.translate(0,2.5,0);
 
             matrices.mulPose(Minecraft.getInstance().gameRenderer.getMainCamera().rotation());
+            matrices.mulPose(RenderingTools.rotationDegrees(RenderingTools.ZP(),180));
             matrices.translate(0.5,0,0);
-            matrices.scale(0.03f,0.03f,0.03f);
-//            matrices.mulPose(Vector3f.ZN.rotationDegrees(180));
-            RenderingTools.rotationDegrees(RenderingTools.ZN(),180);
+
+            matrices.scale(0.03f,0.03f,-1);
+
 
 
             GuiGraphics graphics = new GuiGraphics(Minecraft.getInstance(),matrices,Minecraft.getInstance().renderBuffers().bufferSource());

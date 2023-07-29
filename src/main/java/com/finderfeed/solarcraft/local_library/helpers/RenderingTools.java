@@ -114,6 +114,13 @@ public class RenderingTools {
         return new Vector3f(0,0,-1);
     }
 
+
+    public static Vector3f toV3f(Vec3 vec){
+        return new Vector3f((float)vec.x,(float)vec.y,(float)vec.z);
+    }
+    public static Vector4f toV4f(Vec3 vec,double w){
+        return new Vector4f((float)vec.x,(float)vec.y,(float)vec.z,(float)w);
+    }
     public static Quaternionf rotationDegrees(Vector3f rotation, float angle){
         return new Quaternionf(new AxisAngle4f((float)Math.toRadians(angle),rotation));
     }
