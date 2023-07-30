@@ -81,7 +81,7 @@ public class SolarCraftCommands {
         ServerPlayer player = src.getPlayerOrException();
 
         Vec3 i = player.position().add(0,2,0);
-        Vec3 end = i.add(player.getLookAngle().multiply(10,10,10));
+        Vec3 end = i.add(player.getLookAngle().multiply(20,20,20));
 
         HitResult result = Helpers.getEntityHitResult(player,player.level,i,end,(e)->true);
         if (result instanceof EntityHitResult entityHitResult && entityHitResult.getEntity() instanceof AnimatedObject object){

@@ -93,8 +93,8 @@ public class FDModelPart {
         if (xRot != 0 || yRot != 0 || zRot != 0){
             matrices.mulPose(new Quaternionf().rotationZYX(
                     (float)Math.toRadians(zRot),
-                    (float)Math.toRadians(-yRot),
-                    (float)Math.toRadians(-xRot)));
+                    (float)Math.toRadians(yRot),
+                    (float)Math.toRadians(xRot)));
         }
         matrices.translate(-pivot.x/16,-pivot.y/16,-pivot.z/16);
 
