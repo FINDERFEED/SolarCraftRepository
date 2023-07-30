@@ -10,6 +10,5 @@ public class SCBedrockAnimations {
 
     public static final DelayedObjectGetterManager<Animation> ANIMATIONS = new DelayedObjectGetterManager<>();
 
-    public static final DelayedObjectGetter<Animation> TEST = ANIMATIONS.define(new ResourceLocation(SolarCraft.MOD_ID,"test1"));
-    public static final DelayedObjectGetter<Animation> TEST2 = ANIMATIONS.define(new ResourceLocation(SolarCraft.MOD_ID,"test2"));
+    public static final DelayedObjectGetter<Animation> ULDERA_CRYSTAL_IDLE = ANIMATIONS.define(new ResourceLocation(SolarCraft.MOD_ID,"uldera_crystal_idle"));
 }

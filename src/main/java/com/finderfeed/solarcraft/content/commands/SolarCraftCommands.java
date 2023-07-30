@@ -69,12 +69,15 @@ public class SolarCraftCommands {
                                                                 stack.getArgument("amount",Float.class)))))))
                         ).then(Commands.literal("animtest")
                                 .then(Commands.argument("animation",StringArgumentType.string())
-                                        .executes(stack->testEntityAnimation(stack.getSource(),stack.getArgument("animation",String.class)))))
+                                        .then(Commands.argument("ticker",StringArgumentType.string())
+                                                .executes(stack->testEntityAnimation(stack.getSource(),
+                                                        stack.getArgument("animation",String.class),
+                                                        stack.getArgument("ticker",String.class))))))
 
         );
     }
 
-    public static int testEntityAnimation(CommandSourceStack src,String animationName) throws CommandSyntaxException {
+    public static int testEntityAnimation(CommandSourceStack src,String animationName,String tickerName) throws CommandSyntaxException {
         ServerPlayer player = src.getPlayerOrException();
 
         Vec3 i = player.position().add(0,2,0);
@@ -88,12 +91,12 @@ public class SolarCraftCommands {
                     src.sendFailure(Component.literal("Animation doesn't exist: " + animationName).withStyle(ChatFormatting.RED));
                     return 0;
                 }
-                object.getAnimationManager().setAnimation("main", new AnimationTicker.Builder(animation)
+                object.getAnimationManager().setAnimation(tickerName, new AnimationTicker.Builder(animation)
                         .replaceable(false)
                         .startFrom(0)
                         .build());
             }else{
-                object.getAnimationManager().stopAnimation("main");
+                object.getAnimationManager().stopAnimation(tickerName);
             }
         }else{
             src.sendFailure(Component.literal("Entity not found").withStyle(ChatFormatting.RED));

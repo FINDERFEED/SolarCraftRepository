@@ -1,6 +1,8 @@
 package com.finderfeed.solarcraft.local_library.other.delayed_getter;
 
+import com.finderfeed.solarcraft.SolarCraft;
 import net.minecraft.resources.ResourceLocation;
+import org.apache.logging.log4j.Level;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -22,7 +24,11 @@ public class DelayedObjectGetterManager<T> {
     }
 
     public void assignValue(ResourceLocation location,T object){
-        this.objects.get(location).value = object;
+        if (this.objects.containsKey(location)) {
+            this.objects.get(location).value = object;
+        }else{
+            SolarCraft.LOGGER.log(Level.ERROR,"Value getter with name " + location +" doesn't exist.");
+        }
     }
 
 

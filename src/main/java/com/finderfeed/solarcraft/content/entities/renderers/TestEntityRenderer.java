@@ -24,7 +24,7 @@ public class TestEntityRenderer extends EntityRenderer<TestEntity> {
 
     public TestEntityRenderer(EntityRendererProvider.Context p_174008_) {
         super(p_174008_);
-        this.model = new FDModel(SCBedrockModels.TEST_MODEL);
+        this.model = new FDModel(SCBedrockModels.ULDERA_CRYSTAL);
     }
 
 
@@ -36,7 +36,8 @@ public class TestEntityRenderer extends EntityRenderer<TestEntity> {
 
 //        matrices.mulPose(RenderingTools.rotationDegrees(RenderingTools.YN(),RenderingTools.getTime(entity.level,pticks)));
 
-        model.render(matrices,src.getBuffer(RenderType.entityTranslucentCull(new ResourceLocation(SolarCraft.MOD_ID,"textures/misc/texture2.png"))),
+        matrices.scale(3,3,3);
+        model.render(matrices,src.getBuffer(RenderType.entityTranslucentCull(new ResourceLocation(SolarCraft.MOD_ID,"textures/entities/uldera_crystal.png"))),
                 light, OverlayTexture.NO_OVERLAY,1f,1f,1f,1f);
 
         matrices.popPose();
