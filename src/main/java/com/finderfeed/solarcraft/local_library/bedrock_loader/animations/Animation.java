@@ -178,19 +178,19 @@ public class Animation {
             List<KeyFrame> scale;
             if (boneData.has("rotation")) {
                 JsonElement srotation = boneData.get("rotation");
-                rotation = KeyFrame.parseKeyFrameList(srotation);
+                rotation = KeyFrame.parseKeyFrameList(srotation,1,1,1);
             }else{
                 rotation = new ArrayList<>();
             }
             if (boneData.has("position")) {
                 JsonElement sposition = boneData.get("position");
-                position = KeyFrame.parseKeyFrameList(sposition);
+                position = KeyFrame.parseKeyFrameList(sposition,-1,1,1);
             }else{
                 position = new ArrayList<>();
             }
             if (boneData.has("scale")) {
                 JsonElement sscale = boneData.get("scale");
-                scale = KeyFrame.parseKeyFrameList(sscale);
+                scale = KeyFrame.parseKeyFrameList(sscale,1,1,1);
             }else{
                 scale = new ArrayList<>();
             }
