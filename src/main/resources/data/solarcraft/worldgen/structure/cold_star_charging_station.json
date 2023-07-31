@@ -3,5 +3,5 @@
   "biomes": "#solarcraft:has_structure/charging_station",
   "spawn_overrides": {},
   "step": "surface_structures",
-  "terrain_adaptation": "bury"
+  "terrain_adaptation": "beard_thin"
 }
