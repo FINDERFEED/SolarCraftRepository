@@ -67,7 +67,7 @@ public abstract class ServerAnimationManager implements AnimationManager{
         AnimationTicker ticker = tickers.get(tickerName);
         if (ticker != null && !(ticker.getAnimation() instanceof DummyAnimation)){
             DummyAnimation dummyAnimation = new DummyAnimation(ticker.getCurrentTime() / 20f);
-            this.tickers.put(tickerName,new AnimationTicker(true,0,dummyAnimation));
+            this.tickers.put(tickerName,new AnimationTicker(true,0,dummyAnimation,-1));
             this.sendAnimationStopPacket(tickerName);
         }
     }

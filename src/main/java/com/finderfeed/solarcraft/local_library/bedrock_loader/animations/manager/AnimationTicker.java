@@ -14,11 +14,14 @@ public class AnimationTicker {
     private int innerTicker;
     private Animation animation;
 
+    private int toNullAnimTime = -1;
 
-    protected AnimationTicker(boolean replaceable,int ticker,Animation animation){
+
+    protected AnimationTicker(boolean replaceable,int ticker,Animation animation,int toNullAnimTime){
         this.replaceable = replaceable;
         this.innerTicker = ticker;
         this.animation = animation;
+        this.toNullAnimTime = toNullAnimTime;
     }
 
     public AnimationTicker(Animation animation){
@@ -30,6 +33,7 @@ public class AnimationTicker {
         this.animation = builder.animation;
         this.innerTicker = builder.startFrom;
         this.replaceable = builder.replaceable;
+        this.toNullAnimTime = builder.toNullTransitionTime;
     }
 
     public AnimationTicker(AnimationTicker ticker,Animation animation){
@@ -65,12 +69,16 @@ public class AnimationTicker {
         return animation;
     }
 
+    public int getToNullAnimTime() {
+        return toNullAnimTime;
+    }
 
     public CompoundTag serialize(){
         CompoundTag tag = new CompoundTag();
         tag.putBoolean("replaceable",this.replaceable);
         tag.putInt("time",this.innerTicker);
         tag.putString("animation_name",this.animation.getName().toString());
+        tag.putInt("to_null_time",this.toNullAnimTime);
         return tag;
     }
 
@@ -79,7 +87,8 @@ public class AnimationTicker {
         int time = tag.getInt("time");
         ResourceLocation name = new ResourceLocation(tag.getString("animation_name"));
         Animation animation = AnimationReloadableResourceListener.INSTANCE.getAnimation(name);
-        return new AnimationTicker(replaceable,time,animation);
+        int toNullTime = tag.getInt("to_null_time");
+        return new AnimationTicker(replaceable,time,animation,toNullTime);
     }
 
     protected void setAnimation(Animation animation){
@@ -96,6 +105,8 @@ public class AnimationTicker {
         private Animation animation;
         private int startFrom = 0;
 
+        private int toNullTransitionTime = -1;
+
         public Builder(Animation animation){
             this.animation = animation;
         }
@@ -107,6 +118,11 @@ public class AnimationTicker {
 
         public Builder startFrom(int tick){
             this.startFrom = tick;
+            return this;
+        }
+
+        public Builder toNullTransitionTime(int time){
+            this.toNullTransitionTime = time;
             return this;
         }
 

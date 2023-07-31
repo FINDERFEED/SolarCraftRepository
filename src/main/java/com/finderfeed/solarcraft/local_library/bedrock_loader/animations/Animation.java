@@ -1,7 +1,9 @@
 package com.finderfeed.solarcraft.local_library.bedrock_loader.animations;
 
 import com.finderfeed.solarcraft.SolarCraft;
+import com.finderfeed.solarcraft.local_library.bedrock_loader.animations.manager.AnimationTicker;
 import com.finderfeed.solarcraft.local_library.bedrock_loader.animations.misc.ToNullAnimation;
+import com.finderfeed.solarcraft.local_library.bedrock_loader.animations.misc.TransitionAnimation;
 import com.finderfeed.solarcraft.local_library.bedrock_loader.model_components.FDModel;
 import com.finderfeed.solarcraft.local_library.bedrock_loader.model_components.FDModelPart;
 import com.finderfeed.solarcraft.local_library.helpers.FDMathHelper;
@@ -87,20 +89,14 @@ public class Animation {
         return name;
     }
 
-    public static Animation generateToNullAnimation(Animation currentAnimation, int currentAnimationTime){
+    public static Animation generateToNullAnimation(AnimationTicker  currentAnimation, int currentAnimationTime){
         List<AnimationData> toNullDatas = new ArrayList<>();
         float time = currentAnimationTime / 20f;
-        for (AnimationData data : currentAnimation.boneData.values()){
-//            var keyframes = FDAnimationsHelper.generateKeyFramesForTime(data, KeyFrame.LerpMode.LINEAR,time);
-//            KeyFrame end = new KeyFrame(Vec3.ZERO,Vec3.ZERO, KeyFrame.LerpMode.LINEAR,time,1);
-//            AnimationData d = new AnimationData(data.getBoneName(),
-//                    List.of(keyframes.middle,end),
-//                    List.of(keyframes.left,end),
-//                    List.of(keyframes.right,end)
-//            );
-            toNullDatas.add(createToZeroAnimationData(data,time,time));
+        float timeOverride = currentAnimation.getToNullAnimTime() != -1 ? currentAnimation.getToNullAnimTime() / 20f : time;
+        for (AnimationData data : currentAnimation.getAnimation().boneData.values()){
+            toNullDatas.add(createToZeroAnimationData(data,time,timeOverride));
         }
-        return new ToNullAnimation(toNullDatas,Mode.PLAY_ONCE,currentAnimationTime / 20f);
+        return new ToNullAnimation(toNullDatas,Mode.PLAY_ONCE,timeOverride);
     }
 
     public static Animation generateTransitionAnimation(Animation currentAnimation,Animation target,int currentAnimationTime){
@@ -108,7 +104,7 @@ public class Animation {
         fillAnimationDatas(datas,currentAnimation,target,currentAnimationTime);
 
 
-        return new Animation(new ResourceLocation(SolarCraft.MOD_ID,"transition"),datas,target.getMode(),target.animTime);
+        return new TransitionAnimation(new ResourceLocation(SolarCraft.MOD_ID,"transition"),datas,target.getMode(),target.animTime,target);
     }
 
     private static void fillAnimationDatas(List<AnimationData> datas,Animation currentAnimation,Animation target,int currentAnimationTime){

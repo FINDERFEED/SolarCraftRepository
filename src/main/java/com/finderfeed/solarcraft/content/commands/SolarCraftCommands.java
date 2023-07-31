@@ -68,8 +68,8 @@ public class SolarCraftCommands {
                                                                 stack.getArgument("type",String.class),
                                                                 stack.getArgument("amount",Float.class)))))))
                         ).then(Commands.literal("animtest")
-                                .then(Commands.argument("animation",StringArgumentType.string())
-                                        .then(Commands.argument("ticker",StringArgumentType.string())
+                                .then(Commands.argument("ticker",StringArgumentType.string())
+                                        .then(Commands.argument("animation",StringArgumentType.string())
                                                 .executes(stack->testEntityAnimation(stack.getSource(),
                                                         stack.getArgument("animation",String.class),
                                                         stack.getArgument("ticker",String.class))))))
@@ -94,6 +94,7 @@ public class SolarCraftCommands {
                 object.getAnimationManager().setAnimation(tickerName, new AnimationTicker.Builder(animation)
                         .replaceable(false)
                         .startFrom(0)
+                        .toNullTransitionTime(10)
                         .build());
             }else{
                 object.getAnimationManager().stopAnimation(tickerName);
