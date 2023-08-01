@@ -40,6 +40,22 @@
 						"0.0": [0, 0, 0],
 						"8.0": [0, 1080, 0]
 					}
+				},
+				"core": {
+					"rotation": {
+						"0.0": {
+							"post": [0, 0, 0],
+							"lerp_mode": "catmullrom"
+						},
+						"4.0": {
+							"post": [0, 360, 360],
+							"lerp_mode": "catmullrom"
+						},
+						"8.0": {
+							"post": [0, 720, 0],
+							"lerp_mode": "catmullrom"
+						}
+					}
 				}
 			}
 		},

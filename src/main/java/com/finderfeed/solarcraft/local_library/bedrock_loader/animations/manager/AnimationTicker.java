@@ -5,7 +5,6 @@ import com.finderfeed.solarcraft.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarcraft.registries.animations.AnimationReloadableResourceListener;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
-import org.checkerframework.checker.units.qual.A;
 
 public class AnimationTicker {
 
@@ -44,7 +43,7 @@ public class AnimationTicker {
 
 
     public void tick(){
-        int maxtime = animation.getAnimTimeInTicks();
+        int maxtime = animation.tickLength();
         innerTicker = FDMathHelper.clamp(0,innerTicker + 1,maxtime);
     }
 
@@ -54,7 +53,7 @@ public class AnimationTicker {
     }
 
     public boolean ended(){
-        return this.innerTicker >= animation.getAnimTimeInTicks();
+        return this.innerTicker >= animation.tickLength();
     }
 
     public boolean isReplaceable() {
@@ -109,6 +108,10 @@ public class AnimationTicker {
 
         public Builder(Animation animation){
             this.animation = animation;
+        }
+
+        public static Builder begin(Animation animation){
+            return new Builder(animation);
         }
 
         public Builder replaceable(boolean replaceable){

@@ -37,7 +37,7 @@ public class Animation {
 
 
     public void applyAnimation(FDModel model,int tickTime,float partialTicks){
-        float time = FDMathHelper.clamp(0,tickTime + partialTicks,this.getAnimTimeInTicks()) / 20f;
+        float time = FDMathHelper.clamp(0,tickTime + partialTicks,this.tickLength()) / 20f;
         for (var entry  : boneData.entrySet()){
             FDModelPart modelPart = model.getModelPart(entry.getKey());
             this.applyToBone(entry.getValue(),modelPart,time);
@@ -77,7 +77,7 @@ public class Animation {
     }
 
 
-    public int getAnimTimeInTicks(){
+    public int tickLength(){
         return (int)(this.animTime*20);
     }
 

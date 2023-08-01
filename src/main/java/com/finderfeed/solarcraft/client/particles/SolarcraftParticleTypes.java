@@ -2,6 +2,8 @@ package com.finderfeed.solarcraft.client.particles;
 
 
 
+import com.finderfeed.solarcraft.client.particles.ball_particle.BallParticleOptions;
+import com.mojang.serialization.Codec;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.core.particles.ParticleType;
 
@@ -19,5 +21,12 @@ public class SolarcraftParticleTypes {
     public static final RegistryObject<SimpleParticleType> SOLAR_EXPLOSION_PARTICLE = PARTICLES.register("solar_explosion_particle",()-> new SimpleParticleType(true));
     public static final RegistryObject<SimpleParticleType> SPARK_PARTICLE = PARTICLES.register("spark_particle",()-> new SimpleParticleType(true));
     public static final RegistryObject<SimpleParticleType> CRYSTAL_SPARK_PARTICLE = PARTICLES.register("crystal_spark_particle",()-> new SimpleParticleType(true));
+    public static final RegistryObject<ParticleType<BallParticleOptions>> BALL_PARTICLE = PARTICLES.register("ball_particle",()->
+            new ParticleType<>(true, BallParticleOptions.DESERIALIZER) {
+                @Override
+                public Codec<BallParticleOptions> codec() {
+                    return BallParticleOptions.codec();
+                }
+            });
 
 }

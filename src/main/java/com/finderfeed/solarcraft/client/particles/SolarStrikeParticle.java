@@ -46,7 +46,7 @@ public class SolarStrikeParticle extends TextureSheetParticle {
     public ParticleRenderType getRenderType() {
 
 
-        return SolarCraftRenderTypes.ParticleRenderTypes.SOLAR_STRIKE_PARTICLE_RENDER ;
+        return SolarCraftRenderTypes.ParticleRenderTypes.SOLAR_STRIKE_PARTICLE_RENDER_TYPE;
     }
 
 

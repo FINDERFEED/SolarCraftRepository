@@ -58,7 +58,7 @@ public class SparkParticle extends TextureSheetParticle {
     public ParticleRenderType getRenderType() {
         //setAlphaState(DEFAULT_ALPHA).setTransparencyState(TRANSLUCENT_TRANSPARENCY).setLightmapState(LIGHTMAP).setDepthTestState(NO_DEPTH_TEST).setWriteMaskState(COLOR_WRITE)
 
-        return SolarCraftRenderTypes.ParticleRenderTypes.SOLAR_STRIKE_PARTICLE_RENDER;
+        return SolarCraftRenderTypes.ParticleRenderTypes.SOLAR_STRIKE_PARTICLE_RENDER_TYPE;
     }
 
 

@@ -45,6 +45,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.world.ForgeChunkManager;
 import net.minecraftforge.network.NetworkDirection;
 
+import javax.annotation.Nullable;
 import java.util.*;
 import java.util.function.Predicate;
 
@@ -61,9 +62,22 @@ public class Helpers {
     public static BlockPos NULL_POS = new BlockPos(0,-100,0);
 
 
-    public static HitResult getEntityHitResult(Player player,Level level,Vec3 init,Vec3 end,Predicate<Entity> predicate){
+    public static HitResult getEntityHitResultIgnoreBlocks(Player player, Level level, Vec3 init, Vec3 end, Predicate<Entity> predicate){
         AABB box = new AABB(init,end);
         return ProjectileUtil.getEntityHitResult(level,player,init,end,box,predicate);
+    }
+
+    @Nullable
+    public static HitResult getEntityHitResult(Entity exclude,Level level, Vec3 init, Vec3 end, Predicate<Entity> predicate){
+        AABB box = new AABB(init,end);
+
+        ClipContext clipContext = new ClipContext(init,end, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE,exclude);
+        BlockHitResult hitResult = level.clip(clipContext);
+        if (hitResult.getType() != HitResult.Type.MISS){
+            end = hitResult.getLocation();
+        }
+
+        return ProjectileUtil.getEntityHitResult(level,exclude,init,end,box,predicate);
     }
 
     public static CompoundTag getPlayerSolarcraftTag(Player player){

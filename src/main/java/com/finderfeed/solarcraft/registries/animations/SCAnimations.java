@@ -6,7 +6,7 @@ import com.finderfeed.solarcraft.local_library.other.delayed_getter.DelayedObjec
 import com.finderfeed.solarcraft.local_library.other.delayed_getter.DelayedObjectGetterManager;
 import net.minecraft.resources.ResourceLocation;
 
-public class SCBedrockAnimations {
+public class SCAnimations {
 
     public static final DelayedObjectGetterManager<Animation> ANIMATIONS = new DelayedObjectGetterManager<>();
 

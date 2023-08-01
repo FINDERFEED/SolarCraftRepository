@@ -28,7 +28,6 @@ import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.network.chat.Component;
 import net.minecraft.ChatFormatting;
@@ -83,7 +82,7 @@ public class SolarCraftCommands {
         Vec3 i = player.position().add(0,2,0);
         Vec3 end = i.add(player.getLookAngle().multiply(20,20,20));
 
-        HitResult result = Helpers.getEntityHitResult(player,player.level,i,end,(e)->true);
+        HitResult result = Helpers.getEntityHitResultIgnoreBlocks(player,player.level,i,end,(e)->true);
         if (result instanceof EntityHitResult entityHitResult && entityHitResult.getEntity() instanceof AnimatedObject object){
             if (!animationName.equals("null")) {
                 Animation animation = AnimationReloadableResourceListener.INSTANCE.getAnimation(new ResourceLocation(SolarCraft.MOD_ID,animationName));

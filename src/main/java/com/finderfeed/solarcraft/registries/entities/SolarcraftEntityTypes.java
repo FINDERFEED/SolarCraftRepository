@@ -16,6 +16,7 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.EntityType;
 
+import net.minecraft.world.entity.monster.Monster;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -144,8 +145,8 @@ public class SolarcraftEntityTypes {
             EntityType.Builder.<OrbitalCannonExplosionEntity>of(OrbitalCannonExplosionEntity::new, MobCategory.MISC)
                     .sized(0.1f, 0.1f).build("orbital_explosion"));
 
-    public static final RegistryObject<EntityType<TestEntity>> TEST_ENTITY = ENTITY_TYPE_REGISTER.register("test_entity",()->
-            EntityType.Builder.of(TestEntity::new,MobCategory.CREATURE).sized(1,2).build("test_entity"));
+    public static final RegistryObject<EntityType<UlderaCrystalBoss>> ULDERA_CRYSTAL_BOSS = ENTITY_TYPE_REGISTER.register("uldera_crystal_boss",()->
+            EntityType.Builder.of(UlderaCrystalBoss::new,MobCategory.MONSTER).sized(1,16.5f).build("uldera_crystal_boss"));
 
 
     @Mod.EventBusSubscriber(modid = SolarCraft.MOD_ID,bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -165,7 +166,7 @@ public class SolarcraftEntityTypes {
             event.put(SolarcraftEntityTypes.RUNIC_WARRIOR.get(), RunicWarrior.createAttributes().build());
             event.put(SolarcraftEntityTypes.SHADOW_ZOMBIE.get(), ShadowZombie.createAttributes().build());
             event.put(SolarcraftEntityTypes.CORRUPTION_WISP.get(), CorruptionWisp.createAttributes().build());
-            event.put(SolarcraftEntityTypes.TEST_ENTITY.get(), Mob.createMobAttributes().build());
+            event.put(SolarcraftEntityTypes.ULDERA_CRYSTAL_BOSS.get(), UlderaCrystalBoss.createCrystalAttributes().build());
         }
 
     }

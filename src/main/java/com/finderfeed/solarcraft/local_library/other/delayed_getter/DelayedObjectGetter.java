@@ -12,7 +12,7 @@ public class DelayedObjectGetter<T>{
         this.value = null;
     }
 
-    public T getValue() {
+    public T get() {
         return value;
     }
 }

@@ -45,7 +45,7 @@ public class AnimationReloadableResourceListener extends SimpleJsonResourceReloa
                 Animation animation = Animation.parseAnimation(animationName,property.getValue().getAsJsonObject());
                 this.animations.put(animationName,animation);
                 this.serialized_animations.put(animationName,property.getValue().getAsJsonObject());
-                SCBedrockAnimations.ANIMATIONS.assignValue(animationName,animation);
+                SCAnimations.ANIMATIONS.assignValue(animationName,animation);
             }
         }
     }
@@ -60,7 +60,7 @@ public class AnimationReloadableResourceListener extends SimpleJsonResourceReloa
             Animation animation = Animation.parseAnimation(location,object);
             animations.put(location,animation);
             serialized_animations.put(location,object);
-            SCBedrockAnimations.ANIMATIONS.assignValue(location,animation);
+            SCAnimations.ANIMATIONS.assignValue(location,animation);
         }
     }
 

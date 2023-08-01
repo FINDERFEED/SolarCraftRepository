@@ -71,7 +71,7 @@ public class CatmullRomSpline {
         Vec3 isp = ainit.subtract(init).multiply(2*MULT,2*MULT,2*MULT);
         Vec3 esp = bend.subtract(end).multiply(2*MULT,2*MULT,2*MULT);
         SplinePoint initPoint = new SplinePoint(init,init.add(isp.reverse()),init.add(isp));
-        SplinePoint endPoint = new SplinePoint(end,end.add(esp.reverse()),end.add(esp));
+        SplinePoint endPoint = new SplinePoint(end,end.add(esp),end.add(esp.reverse()));
         this.points[0] = initPoint;
         this.points[points.length - 1] = endPoint;
     }

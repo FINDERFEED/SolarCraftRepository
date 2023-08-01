@@ -1,7 +1,6 @@
 package com.finderfeed.solarcraft.client.rendering.rendertypes;
 
 import com.finderfeed.solarcraft.SolarCraft;
-import com.finderfeed.solarcraft.content.entities.renderers.OrbitalExplosionEntityRenderer;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.mojang.blaze3d.pipeline.RenderTarget;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -17,7 +16,6 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.client.ForgeRenderTypes;
 import org.lwjgl.opengl.GL11;
 
 
@@ -112,7 +110,7 @@ public class SolarCraftRenderTypes extends RenderType{
 
 
     public static class ParticleRenderTypes {
-        public static final ParticleRenderType SOLAR_STRIKE_PARTICLE_RENDER = new ParticleRenderType() {
+        public static final ParticleRenderType SOLAR_STRIKE_PARTICLE_RENDER_TYPE = new ParticleRenderType() {
             @Override
             public void begin(BufferBuilder bufferBuilder, TextureManager textureManager) {
                 RenderSystem.depthMask(false);

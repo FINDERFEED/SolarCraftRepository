@@ -33,7 +33,6 @@ import com.finderfeed.solarcraft.content.runic_network.repeater.RepeaterRenderer
 import com.finderfeed.solarcraft.content.world_generation.dimension_related.radiant_land.RadiantLandDimEffects;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.local_library.client.particles.ScreenParticlesRenderHandler;
-import com.finderfeed.solarcraft.registries.animations.SCBedrockAnimations;
 import com.finderfeed.solarcraft.registries.SCBedrockModels;
 import com.finderfeed.solarcraft.registries.ScreenSuppliers;
 import com.finderfeed.solarcraft.registries.blocks.SolarcraftBlocks;
@@ -266,7 +265,7 @@ public class ClientModEventHandler {
         event.registerEntityRenderer(SolarcraftEntityTypes.THROWN_LIGHT.get(), ThrownLightProjectileRenderer::new);
         event.registerEntityRenderer(SolarcraftEntityTypes.ORBITAL_EXPLOSION.get(), OrbitalExplosionEntityRenderer::new);
         event.registerEntityRenderer(SolarcraftEntityTypes.ORBITAL_EXPLOSION_PROJECTILE.get(), OrbitalExplosionProjectileRenderer::new);
-        event.registerEntityRenderer(SolarcraftEntityTypes.TEST_ENTITY.get(), TestEntityRenderer::new);
+        event.registerEntityRenderer(SolarcraftEntityTypes.ULDERA_CRYSTAL_BOSS.get(), UlderaCrystalBossRenderer::new);
     }
 
 }
