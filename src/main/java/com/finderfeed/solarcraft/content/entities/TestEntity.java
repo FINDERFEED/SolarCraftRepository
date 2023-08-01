@@ -26,5 +26,8 @@ public class TestEntity extends Mob implements AnimatedObject {
         return manager;
     }
 
-
+    @Override
+    public boolean shouldRender(double p_20296_, double p_20297_, double p_20298_) {
+        return true;
+    }
 }
