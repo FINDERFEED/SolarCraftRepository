@@ -1,7 +1,7 @@
 package com.finderfeed.solarcraft.content.items.solar_disc_gun;
 
 import com.finderfeed.solarcraft.client.particles.SolarcraftParticleTypes;
-import com.finderfeed.solarcraft.registries.entities.SolarcraftEntityTypes;
+import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -34,11 +34,11 @@ public class SolarDiscProjectile extends AbstractHurtingProjectile {
     }
 
     public SolarDiscProjectile(double p_i50174_2_, double p_i50174_4_, double p_i50174_6_, double p_i50174_8_, double p_i50174_10_, double p_i50174_12_, Level p_i50174_14_) {
-        super(SolarcraftEntityTypes.SOLAR_DISC.get(), p_i50174_2_, p_i50174_4_, p_i50174_6_, p_i50174_8_, p_i50174_10_, p_i50174_12_, p_i50174_14_);
+        super(SCEntityTypes.SOLAR_DISC.get(), p_i50174_2_, p_i50174_4_, p_i50174_6_, p_i50174_8_, p_i50174_10_, p_i50174_12_, p_i50174_14_);
     }
 
     public SolarDiscProjectile(LivingEntity p_i50175_2_, Level p_i50175_9_) {
-        super(SolarcraftEntityTypes.SOLAR_DISC.get(),  p_i50175_9_);
+        super(SCEntityTypes.SOLAR_DISC.get(),  p_i50175_9_);
     }
 
     @Override

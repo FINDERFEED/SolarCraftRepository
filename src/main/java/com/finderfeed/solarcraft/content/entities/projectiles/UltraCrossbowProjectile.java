@@ -2,7 +2,7 @@ package com.finderfeed.solarcraft.content.entities.projectiles;
 
 import com.finderfeed.solarcraft.client.particles.SolarcraftParticleTypes;
 import com.finderfeed.solarcraft.registries.damage_sources.SolarcraftDamageSources;
-import com.finderfeed.solarcraft.registries.entities.SolarcraftEntityTypes;
+import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
 import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.world.entity.Entity;
@@ -19,7 +19,6 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
-import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.network.NetworkHooks;
@@ -37,12 +36,12 @@ public class UltraCrossbowProjectile extends AbstractHurtingProjectile {
     }
 
     public UltraCrossbowProjectile(double p_i50174_2_, double p_i50174_4_, double p_i50174_6_, double p_i50174_8_, double p_i50174_10_, double p_i50174_12_, Level p_i50174_14_) {
-        super(SolarcraftEntityTypes.ULTRA_CROSSBOW_SHOT.get(), p_i50174_2_, p_i50174_4_, p_i50174_6_, p_i50174_8_, p_i50174_10_, p_i50174_12_, p_i50174_14_);
+        super(SCEntityTypes.ULTRA_CROSSBOW_SHOT.get(), p_i50174_2_, p_i50174_4_, p_i50174_6_, p_i50174_8_, p_i50174_10_, p_i50174_12_, p_i50174_14_);
 
     }
 
     public UltraCrossbowProjectile(LivingEntity p_i50175_2_, Level p_i50175_9_) {
-        super(SolarcraftEntityTypes.ULTRA_CROSSBOW_SHOT.get(),  p_i50175_9_);
+        super(SCEntityTypes.ULTRA_CROSSBOW_SHOT.get(),  p_i50175_9_);
 
     }
 

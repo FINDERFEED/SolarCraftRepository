@@ -3,13 +3,12 @@ package com.finderfeed.solarcraft.content.entities.not_alive;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.misc_things.CrystalBossBuddy;
 import com.finderfeed.solarcraft.packet_handler.packets.misc_packets.ExplosionParticlesPacket;
-import com.finderfeed.solarcraft.registries.entities.SolarcraftEntityTypes;
+import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
 import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -27,7 +26,7 @@ public class SunstrikeEntity extends Entity {
     }
 
     public SunstrikeEntity(Level world,double x,double y,double z){
-        this(SolarcraftEntityTypes.SUNSTRIKE.get(),world);
+        this(SCEntityTypes.SUNSTRIKE.get(),world);
         setPos(x,y,z);
     }
 

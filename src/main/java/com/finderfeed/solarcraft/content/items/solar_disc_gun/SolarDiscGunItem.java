@@ -6,7 +6,7 @@ import com.finderfeed.solarcraft.content.items.runic_energy.ItemRunicEnergy;
 import com.finderfeed.solarcraft.content.items.runic_energy.RunicEnergyCost;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
-import com.finderfeed.solarcraft.registries.entities.SolarcraftEntityTypes;
+import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -32,7 +32,7 @@ public class SolarDiscGunItem extends SolarcraftItem implements IRunicEnergyUser
     public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
 
         if (!world.isClientSide && hand == InteractionHand.MAIN_HAND && ItemRunicEnergy.spendEnergy(this.getCost(),player.getMainHandItem(),this,player)){
-            SolarDiscProjectile projectile = new SolarDiscProjectile(SolarcraftEntityTypes.SOLAR_DISC.get(),world);
+            SolarDiscProjectile projectile = new SolarDiscProjectile(SCEntityTypes.SOLAR_DISC.get(),world);
             projectile.setPos(player.position().x,player.position().y+1.4,player.position().z);
             projectile.setDeltaMovement(player.getLookAngle().multiply(1.5,1.5,1.5));
 

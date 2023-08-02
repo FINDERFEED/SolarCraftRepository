@@ -11,7 +11,7 @@ import com.finderfeed.solarcraft.content.blocks.blockentities.clearing_ritual.cl
 import com.finderfeed.solarcraft.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarcraft.misc_things.RadiantTeleporter;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
-import com.finderfeed.solarcraft.registries.entities.SolarcraftEntityTypes;
+import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
 import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -86,7 +86,7 @@ public class ClearingRitual {
                             crystals.get(world.random.nextInt(crystals.size())).setCorrupted(true);
                         }
                         if (frequency == 100) {
-                            SummoningProjectile projectile = new SummoningProjectile(world, SolarcraftEntityTypes.SHADOW_ZOMBIE.get(),
+                            SummoningProjectile projectile = new SummoningProjectile(world, SCEntityTypes.SHADOW_ZOMBIE.get(),
                                     43, 0, 60);
                             double speedMult = world.random.nextDouble() * 0.2 + 0.1;
                             Vec3 rnd = new Vec3(1, 0, 0).yRot(world.random.nextFloat() * 360).multiply(speedMult, speedMult, speedMult);

@@ -17,7 +17,7 @@ import com.finderfeed.solarcraft.registries.blocks.SolarcraftBlocks;
 import com.finderfeed.solarcraft.registries.damage_sources.SolarcraftDamageSources;
 import com.finderfeed.solarcraft.registries.data_serializers.FDEntityDataSerializers;
 import com.finderfeed.solarcraft.registries.effects.SolarcraftEffects;
-import com.finderfeed.solarcraft.registries.entities.SolarcraftEntityTypes;
+import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
 import com.finderfeed.solarcraft.registries.items.SolarcraftItems;
 import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
 import net.minecraft.core.BlockPos;
@@ -257,7 +257,7 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
         if (BOSS_ATTACK_CHAIN.getTicker() >= 15 && BOSS_ATTACK_CHAIN.getTicker() <= 115){
             if (BOSS_ATTACK_CHAIN.getTicker() % 9 == 0){
                 for (Player player : getPlayersAround(false)){
-                    SunstrikeEntity sunstrike = new SunstrikeEntity(SolarcraftEntityTypes.SUNSTRIKE.get(),level);
+                    SunstrikeEntity sunstrike = new SunstrikeEntity(SCEntityTypes.SUNSTRIKE.get(),level);
                     Vec3 playerSpeed = player.getLookAngle().multiply(1f,0,1f).normalize().multiply(0.5,0,0.5);
                     float damage = (SUNTRIKES_DAMAGE + getDamageBonus()) * getDamageModifier();
                     sunstrike.setDamage(damage);
@@ -268,7 +268,7 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
                     if (!crystals.isEmpty()){
                         List<BlockPos> positions = Helpers.getValidSpawningPositionsAround(level,this.getOnPos(),12,2,2);
                         for (RefractionCrystal crystal : crystals){
-                            SunstrikeEntity s = new SunstrikeEntity(SolarcraftEntityTypes.SUNSTRIKE.get(),level);
+                            SunstrikeEntity s = new SunstrikeEntity(SCEntityTypes.SUNSTRIKE.get(),level);
                             s.setDamage(damage);
                             s.setPos(Helpers.getBlockCenter(positions.get(level.random.nextInt(positions.size())).above()).add(0,-0.5,0));
                             level.addFreshEntity(s);
@@ -342,14 +342,14 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
             this.removeDuplicatePositions(positions);
             if (!positions.isEmpty()) {
                 BlockPos randomPos1 = positions.get(level.random.nextInt(positions.size()));
-                RefractionCrystal crystal = new RefractionCrystal(SolarcraftEntityTypes.REFRACTION_CRYSTAL.get(), level);
+                RefractionCrystal crystal = new RefractionCrystal(SCEntityTypes.REFRACTION_CRYSTAL.get(), level);
                 crystal.setPos(Helpers.getBlockCenter(randomPos1.above()).add(0,-0.5,0));
                 level.addFreshEntity(crystal);
                 if (c == 3) return;
                 positions.remove(randomPos1);
                 if (!positions.isEmpty()){
                     BlockPos randomPos2 = positions.get(level.random.nextInt(positions.size()));
-                    RefractionCrystal crystal2 = new RefractionCrystal(SolarcraftEntityTypes.REFRACTION_CRYSTAL.get(), level);
+                    RefractionCrystal crystal2 = new RefractionCrystal(SCEntityTypes.REFRACTION_CRYSTAL.get(), level);
                     crystal2.setPos(Helpers.getBlockCenter(randomPos2.above()).add(0,-0.5,0));
                     level.addFreshEntity(crystal2);
                 }
@@ -366,14 +366,14 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
             this.removeDuplicatePositions(positions);
             if (!positions.isEmpty()) {
                 BlockPos randomPos1 = positions.get(level.random.nextInt(positions.size()));
-                ExplosiveCrystal crystal = new ExplosiveCrystal(SolarcraftEntityTypes.EXPLOSIVE_CRYSTAL.get(), level);
+                ExplosiveCrystal crystal = new ExplosiveCrystal(SCEntityTypes.EXPLOSIVE_CRYSTAL.get(), level);
                 crystal.setPos(Helpers.getBlockCenter(randomPos1.above()).add(0,-0.5,0));
                 level.addFreshEntity(crystal);
                 if (c == 1) return;
                 positions.remove(randomPos1);
                 if (!positions.isEmpty()){
                     BlockPos randomPos2 = positions.get(level.random.nextInt(positions.size()));
-                    ExplosiveCrystal crystal2 = new ExplosiveCrystal(SolarcraftEntityTypes.EXPLOSIVE_CRYSTAL.get(), level);
+                    ExplosiveCrystal crystal2 = new ExplosiveCrystal(SCEntityTypes.EXPLOSIVE_CRYSTAL.get(), level);
                     crystal2.setPos(Helpers.getBlockCenter(randomPos2.above()).add(0,-0.5,0));
                     level.addFreshEntity(crystal2);
                 }
@@ -385,7 +385,7 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
         if (BOSS_ATTACK_CHAIN.getTicker() == 8) {
             int playersAround = getPlayersAround(false).size();
             for (int i = 0; i < 3 * playersAround; i++) {
-                RunicWarriorSummoningRocket rocket = new RunicWarriorSummoningRocket(SolarcraftEntityTypes.RUNIC_WARRIOR_ROCKET.get(),level);
+                RunicWarriorSummoningRocket rocket = new RunicWarriorSummoningRocket(SCEntityTypes.RUNIC_WARRIOR_ROCKET.get(),level);
                 Vec3 rnd = new Vec3(level.random.nextDouble()*0.5f - 0.25f,0.4f,level.random.nextDouble()*0.5f - 0.25f);
                 rocket.setDeltaMovement(rnd);
                 rocket.setPos(this.position().add(0,this.getBbHeight()/2,0));
@@ -590,7 +590,7 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
     }
     public void spawnWarrior(){
         if (this.getHealth()/this.getMaxHealth() <= 0.5 && getAttackType() != 0) {
-            RunicWarriorSummoningRocket rocket = new RunicWarriorSummoningRocket(SolarcraftEntityTypes.RUNIC_WARRIOR_ROCKET.get(), level);
+            RunicWarriorSummoningRocket rocket = new RunicWarriorSummoningRocket(SCEntityTypes.RUNIC_WARRIOR_ROCKET.get(), level);
             Vec3 rnd = new Vec3(level.random.nextDouble() * 0.5f - 0.25f, 0.4f, level.random.nextDouble() * 0.5f - 0.25f);
             rocket.setDeltaMovement(rnd);
             rocket.setPos(this.position().add(0, this.getBbHeight() / 2, 0));

@@ -8,7 +8,7 @@ import com.finderfeed.solarcraft.content.items.runic_energy.RunicEnergyCost;
 import com.finderfeed.solarcraft.content.entities.projectiles.UltraCrossbowProjectile;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
-import com.finderfeed.solarcraft.registries.entities.SolarcraftEntityTypes;
+import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
 import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.entity.LivingEntity;
@@ -76,7 +76,7 @@ public class UltraCrossbowItem extends RareSolarcraftItem implements IRunicEnerg
         if (!world.isClientSide){
 
             if (player instanceof Player pl && ItemRunicEnergy.spendEnergy(this.getCost(),stack,this,pl)) {
-            UltraCrossbowProjectile proj = new UltraCrossbowProjectile(SolarcraftEntityTypes.ULTRA_CROSSBOW_SHOT.get(),world);
+            UltraCrossbowProjectile proj = new UltraCrossbowProjectile(SCEntityTypes.ULTRA_CROSSBOW_SHOT.get(),world);
             proj.setOwner(pl);
             proj.setPos(player.getX() + player.getLookAngle().x,player.getY()+1.5f+player.getLookAngle().y,player.getZ()+player.getLookAngle().z);
             player.level.playSound(null,player, SolarcraftSounds.CROSSBOW_SHOOT_SOUND.get(), SoundSource.AMBIENT,1,1);

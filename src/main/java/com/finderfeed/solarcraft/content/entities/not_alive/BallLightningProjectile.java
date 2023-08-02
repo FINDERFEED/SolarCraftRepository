@@ -2,14 +2,13 @@ package com.finderfeed.solarcraft.content.entities.not_alive;
 
 import com.finderfeed.solarcraft.client.particles.SolarcraftParticleTypes;
 import com.finderfeed.solarcraft.packet_handler.packets.misc_packets.BallLightningSpawnLightningParticles;
-import com.finderfeed.solarcraft.registries.entities.SolarcraftEntityTypes;
+import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
 import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -34,11 +33,11 @@ public class BallLightningProjectile extends AbstractHurtingProjectile {
     }
 
     public BallLightningProjectile( double x, double y, double z, double xv, double yv, double zv, Level world) {
-        super(SolarcraftEntityTypes.BALL_LIGHTNING.get(), x, y, z, xv, yv, zv, world);
+        super(SCEntityTypes.BALL_LIGHTNING.get(), x, y, z, xv, yv, zv, world);
     }
 
     public BallLightningProjectile( LivingEntity owner, double xv, double yv, double zv, Level world) {
-        super(SolarcraftEntityTypes.BALL_LIGHTNING.get(), owner, xv, yv, zv, world);
+        super(SCEntityTypes.BALL_LIGHTNING.get(), owner, xv, yv, zv, world);
     }
 
 

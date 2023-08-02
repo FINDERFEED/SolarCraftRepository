@@ -9,14 +9,10 @@ import com.finderfeed.solarcraft.config.enchanter_config.EnchanterConfigInit;
 import com.finderfeed.solarcraft.config.JsonFragmentsHelper;
 import com.finderfeed.solarcraft.config.SolarcraftClientConfig;
 import com.finderfeed.solarcraft.config.SolarcraftConfig;
-import com.finderfeed.solarcraft.content.entities.*;
-import com.finderfeed.solarcraft.content.entities.not_alive.*;
 
-import com.finderfeed.solarcraft.content.entities.runic_elemental.RunicElementalBoss;
 import com.finderfeed.solarcraft.content.world_generation.structures.SolarcraftStructureTypes;
 import com.finderfeed.solarcraft.events.RenderEventsHandler;
 import com.finderfeed.solarcraft.content.blocks.SolarOreBlock;
-import com.finderfeed.solarcraft.content.blocks.blockentities.clearing_ritual.clearing_ritual_crystal.corruption_wisp.CorruptionWisp;
 import com.finderfeed.solarcraft.content.blocks.infusing_table_things.*;
 import com.finderfeed.solarcraft.content.blocks.infusing_table_things.infusing_pool.InfusingStand;
 import com.finderfeed.solarcraft.content.items.item_tiers.SolarCraftToolTiers;
@@ -29,7 +25,7 @@ import com.finderfeed.solarcraft.registries.abilities.AbilitiesRegistry;
 import com.finderfeed.solarcraft.registries.attributes.AttributesRegistry;
 import com.finderfeed.solarcraft.registries.command_argument_types.SolarcraftCommandArgumentTypes;
 import com.finderfeed.solarcraft.registries.data_serializers.FDEntityDataSerializers;
-import com.finderfeed.solarcraft.registries.entities.SolarcraftEntityTypes;
+import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
 
 import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
 import com.finderfeed.solarcraft.registries.blocks.SolarcraftBlocks;
@@ -51,7 +47,6 @@ import com.finderfeed.solarcraft.content.blocks.solar_forge_block.solar_forge_sc
 
 
 import com.finderfeed.solarcraft.content.world_generation.structures.SolarcraftStructureHolders;
-import com.finderfeed.solarcraft.content.world_generation.BiomesRegister;
 import com.finderfeed.solarcraft.content.world_generation.features.FeaturesRegistry;
 import com.finderfeed.solarcraft.content.world_generation.features.foliage_placers.FoliagePlacerRegistry;
 import com.finderfeed.solarcraft.content.world_generation.features.trunk_placers.TrunkPlacersRegistry;
@@ -79,9 +74,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.TierSortingRegistry;
 
 import net.minecraftforge.common.extensions.IForgeMenuType;
-import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
@@ -98,7 +91,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 // The value here should match an entry in the META-INF/mods.toml file
-import net.minecraft.world.item.CreativeModeTab;
 
 import java.util.List;
 
@@ -167,7 +159,7 @@ public class SolarCraft
         SolarcraftItems.ITEMS.register(bus);
         SolarcraftBlocks.BLOCKS.register(bus);
         SolarcraftTileEntityTypes.TILE_ENTITY_TYPE.register(bus);
-        SolarcraftEntityTypes.ENTITY_TYPE_REGISTER.register(bus);
+        SCEntityTypes.ENTITY_TYPE_REGISTER.register(bus);
         SolarcraftEffects.EFFECTS.register(bus);
         SolarcraftSounds.SOUND_EVENTS.register(bus);
         SolarcraftContainers.CONTAINER_TYPE.register(bus);

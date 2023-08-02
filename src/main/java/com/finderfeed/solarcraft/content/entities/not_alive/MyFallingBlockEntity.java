@@ -1,7 +1,7 @@
 package com.finderfeed.solarcraft.content.entities.not_alive;
 
 import com.finderfeed.solarcraft.SolarCraft;
-import com.finderfeed.solarcraft.registries.entities.SolarcraftEntityTypes;
+import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
 import net.minecraft.CrashReportCategory;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -59,7 +59,7 @@ public class MyFallingBlockEntity extends Entity {
     }
 
     public MyFallingBlockEntity(Level world, double x, double y, double z, BlockState p_31957_) {
-        this(SolarcraftEntityTypes.FALLING_BLOCK.get(), world);
+        this(SCEntityTypes.FALLING_BLOCK.get(), world);
         this.blockState = p_31957_;
         this.blocksBuilding = true;
         this.setPos(x, y + (double)((1.0F - this.getBbHeight()) / 2.0F), z);

@@ -6,7 +6,7 @@ import com.finderfeed.solarcraft.misc_things.CrystalBossBuddy;
 import com.finderfeed.solarcraft.client.particles.SolarcraftParticleTypes;
 import com.finderfeed.solarcraft.packet_handler.packets.misc_packets.ExplosionParticlesPacket;
 import com.finderfeed.solarcraft.registries.damage_sources.SolarcraftDamageSources;
-import com.finderfeed.solarcraft.registries.entities.SolarcraftEntityTypes;
+import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
 import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.nbt.CompoundTag;
@@ -32,12 +32,12 @@ public class MagicMissile extends AbstractHurtingProjectile implements CrystalBo
 
 
     public MagicMissile(Level p_36834_, double x, double y, double z) {
-        super(SolarcraftEntityTypes.FALLING_MAGIC_MISSILE.get(), p_36834_);
+        super(SCEntityTypes.FALLING_MAGIC_MISSILE.get(), p_36834_);
         this.setDeltaMovement(x,y,z);
     }
 
     public MagicMissile(Level p_36834_, Vec3 speed) {
-        super(SolarcraftEntityTypes.FALLING_MAGIC_MISSILE.get(), p_36834_);
+        super(SCEntityTypes.FALLING_MAGIC_MISSILE.get(), p_36834_);
         this.setDeltaMovement(speed);
     }
 

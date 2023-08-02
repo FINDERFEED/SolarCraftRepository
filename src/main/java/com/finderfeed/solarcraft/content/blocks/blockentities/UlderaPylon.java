@@ -6,7 +6,7 @@ import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.client.particles.SolarcraftParticleTypes;
 import com.finderfeed.solarcraft.content.blocks.blockentities.projectiles.ShadowBolt;
 import com.finderfeed.solarcraft.content.entities.projectiles.SummoningProjectile;
-import com.finderfeed.solarcraft.registries.entities.SolarcraftEntityTypes;
+import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
 import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -56,7 +56,7 @@ public class UlderaPylon extends BlockEntity {
                     LivingEntity target = livings.get(world.random.nextInt(livings.size()));
                     Vec3 ePos = target.position().add(0,target.getBbHeight()/2,0);
                     Vec3 between = ePos.subtract(p);
-                    ShadowBolt bolt = new ShadowBolt(SolarcraftEntityTypes.SHADOW_BOLT.get(),world);
+                    ShadowBolt bolt = new ShadowBolt(SCEntityTypes.SHADOW_BOLT.get(),world);
                     bolt.setPos(p.add(between.normalize().multiply(0.5,0.5,0.5)));
                     bolt.setDeltaMovement(between.normalize().multiply(2,2,2));
                     world.addFreshEntity(bolt);
@@ -65,7 +65,7 @@ public class UlderaPylon extends BlockEntity {
                 List<Player> players = world.getEntitiesOfClass(Player.class,aabb,player->!player.isCreative() && !player.isSpectator());
                 if (!players.isEmpty() && tile.spawnZombieCooldown <= 0 && Helpers.isDay(world)){
                     tile.spawnZombieCooldown = 1200;
-                    SummoningProjectile projectile = new SummoningProjectile(world,SolarcraftEntityTypes.SHADOW_ZOMBIE.get(),
+                    SummoningProjectile projectile = new SummoningProjectile(world, SCEntityTypes.SHADOW_ZOMBIE.get(),
                             43,0,60);
                     double speedMult = world.random.nextDouble()*0.2 + 0.1;
                     Vec3 rnd = new Vec3(1,0,0).yRot(world.random.nextFloat()*360).multiply(speedMult,speedMult,speedMult);

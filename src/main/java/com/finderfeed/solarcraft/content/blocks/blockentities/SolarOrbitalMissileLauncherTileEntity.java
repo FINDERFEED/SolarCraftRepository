@@ -10,7 +10,7 @@ import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.helpers.multiblock.Multiblocks;
 import com.finderfeed.solarcraft.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
-import com.finderfeed.solarcraft.registries.entities.SolarcraftEntityTypes;
+import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
 import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -21,10 +21,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 
 public class SolarOrbitalMissileLauncherTileEntity extends AbstractRunicEnergyContainer {
 
@@ -120,7 +116,7 @@ public class SolarOrbitalMissileLauncherTileEntity extends AbstractRunicEnergyCo
         if (launchTicker <= 0){
             this.spendEnergy(this.getMissileData().cost,1);
             MissileData data = this.getMissileData();
-            OrbitalExplosionProjectile projectile = new OrbitalExplosionProjectile(SolarcraftEntityTypes.ORBITAL_EXPLOSION_PROJECTILE.get(),level);
+            OrbitalExplosionProjectile projectile = new OrbitalExplosionProjectile(SCEntityTypes.Projectiles.ORBITAL_EXPLOSION_PROJECTILE.get(),level);
             projectile.setPos(Helpers.getBlockCenter(this.getBlockPos().above()));
             projectile.setDestination(data.xDest(),data.zDest());
             projectile.setExplosionDepth(data.depth());

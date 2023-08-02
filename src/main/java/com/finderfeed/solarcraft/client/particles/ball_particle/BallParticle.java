@@ -18,6 +18,9 @@ public class BallParticle extends TextureSheetParticle {
         this.rCol = options.getR() / 255f;
         this.gCol = options.getG() / 255f;
         this.bCol = options.getB() / 255f;
+        this.xd = xd;
+        this.yd = yd;
+        this.zd = zd;
         this.lifetime = options.getLifetime();
         this.quadSize = options.getSize();
     }

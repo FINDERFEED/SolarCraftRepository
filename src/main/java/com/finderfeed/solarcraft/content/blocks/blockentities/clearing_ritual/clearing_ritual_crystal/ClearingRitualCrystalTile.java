@@ -7,7 +7,7 @@ import com.finderfeed.solarcraft.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarcraft.content.blocks.blockentities.clearing_ritual.clearing_ritual_crystal.corruption_wisp.CorruptionWisp;
 import com.finderfeed.solarcraft.content.blocks.blockentities.clearing_ritual.clearing_ritual_main_tile.ClearingRitualMainTile;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
-import com.finderfeed.solarcraft.registries.entities.SolarcraftEntityTypes;
+import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
 import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
 import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
 import net.minecraft.core.BlockPos;
@@ -15,7 +15,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -84,7 +83,7 @@ public class ClearingRitualCrystalTile extends BlockEntity {
                 }
                 if (this.wispsCount < 3) {
                     if (this.wispSpawnTicks == 0) {
-                        CorruptionWisp wisp = new CorruptionWisp(SolarcraftEntityTypes.CORRUPTION_WISP.get(), level);
+                        CorruptionWisp wisp = new CorruptionWisp(SCEntityTypes.CORRUPTION_WISP.get(), level);
                         Vec3 p = c.add(2, 0.75 - wispsCount*0.75, 0);
                         wisp.setPos(p);
                         wisp.setFlyAroundPos(c);

@@ -5,7 +5,7 @@ import com.finderfeed.solarcraft.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
 import com.finderfeed.solarcraft.packet_handler.packets.UpdateChunkPacket;
 import com.finderfeed.solarcraft.registries.damage_sources.SolarcraftDamageSources;
-import com.finderfeed.solarcraft.registries.entities.SolarcraftEntityTypes;
+import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
 import com.google.common.collect.Lists;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -67,7 +67,7 @@ public class OrbitalCannonExplosionEntity extends Entity {
     }
 
     public OrbitalCannonExplosionEntity(Level level,int maxBlockRadius,int maxExplosionDepth,int blockCorrosionRadius) {
-        this(SolarcraftEntityTypes.ORBITAL_EXPLOSION.get(), level);
+        this(SCEntityTypes.ORBITAL_EXPLOSION.get(), level);
         this.radius = maxBlockRadius;
         this.depth = maxExplosionDepth;
         this.blockCorrosionRadius = blockCorrosionRadius;

@@ -8,7 +8,7 @@ import com.finderfeed.solarcraft.content.items.runic_energy.ItemRunicEnergy;
 import com.finderfeed.solarcraft.content.items.runic_energy.RunicEnergyCost;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
-import com.finderfeed.solarcraft.registries.entities.SolarcraftEntityTypes;
+import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
 import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -42,7 +42,7 @@ public class LightningGun extends RareSolarcraftItem implements IRunicEnergyUser
                 }
                 world.playSound(player,player.getX(),player.getY()+0.5f,player.getZ(),
                         SolarcraftSounds.LIGHTNING_GUN_SHOT.get(),SoundSource.PLAYERS,1,10);
-                BallLightningProjectile p = new BallLightningProjectile(SolarcraftEntityTypes.BALL_LIGHTNING.get(),world);
+                BallLightningProjectile p = new BallLightningProjectile(SCEntityTypes.BALL_LIGHTNING.get(),world);
                 p.setPos(player.getX(),player.getY() + player.getEyeHeight(player.getPose())* 0.8,player.getZ());
                 p.setDeltaMovement(player.getLookAngle().multiply(0.7,0.7,0.7));
                 world.addFreshEntity(p);

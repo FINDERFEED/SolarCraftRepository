@@ -1,6 +1,7 @@
 package com.finderfeed.solarcraft.content.entities;
 
 import com.finderfeed.solarcraft.client.particles.ball_particle.BallParticleOptions;
+import com.finderfeed.solarcraft.content.entities.projectiles.HomingStarProjectile;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.local_library.bedrock_loader.animations.AnimatedObject;
 import com.finderfeed.solarcraft.local_library.bedrock_loader.animations.manager.AnimationManager;
@@ -14,10 +15,9 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.monster.Monster;
-import net.minecraft.world.entity.projectile.ProjectileUtil;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
-import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
@@ -31,7 +31,7 @@ public class UlderaCrystalBoss extends Monster implements AnimatedObject {
 
     private BossAttackChain bossChain = new BossAttackChain.Builder()
             .setTimeBetweenAttacks(20)
-            .addAttack("test",this::testAttack, 40,1,0)
+            .addAttack("test",this::homingStarsRelease, 40,1,0)
             .build();
 
     public UlderaCrystalBoss(EntityType<? extends Monster> p_21368_, Level level) {
@@ -55,13 +55,25 @@ public class UlderaCrystalBoss extends Monster implements AnimatedObject {
         }
     }
 
-    private void testAttack(){
+    private void homingStarsRelease(){
+        if (this.getTarget() == null) return;
+        if (this.getTarget().isDeadOrDying()) return;
         Vec3 center = this.getCenterPos();
         if (bossChain.getTicker() == 1){
             this.getAnimationManager().setAnimation(ATTACK_1_TICKER,
                     AnimationTicker.Builder.begin(SCAnimations.ULDERA_CRYSTAL_ATTACK_1.get())
                             .startFrom(0)
                             .build());
+        }
+        if (bossChain.getTicker() >= 20 && bossChain.getTicker() % 2 == 0){
+            HomingStarProjectile projectile = new HomingStarProjectile(level);
+            projectile.setPos(this.getCenterPos());
+            projectile.setDeltaMovement(Helpers.randomVector().normalize().multiply(0.5f,0.5f,0.5f));
+            projectile.setTarget(this.getTarget().getUUID());
+            projectile.setRotationSpeed(0.075f);
+            projectile.setShooter(this.getUUID());
+            projectile.setDamage(4f);
+            level.addFreshEntity(projectile);
         }
         ((ServerLevel)level).sendParticles(
                 BallParticleOptions.Builder.begin()
@@ -70,7 +82,7 @@ public class UlderaCrystalBoss extends Monster implements AnimatedObject {
                         .setRGB(90,0,186)
                         .setShouldShrink(true)
                         .build(),
-                center.x,center.y,center.z,10,1,1,1,1
+                center.x,center.y,center.z,10,1,1,1,0.05f
         );
     }
 
@@ -91,6 +103,9 @@ public class UlderaCrystalBoss extends Monster implements AnimatedObject {
         if (target.isDeadOrDying()) return false;
         Vec3 centerPos = this.getCenterPos();
         Vec3 targetCenter = target.position().add(0,target.getEyeHeight(target.getPose())/2f,0);
+        if (centerPos.multiply(1,0,1).subtract(targetCenter.multiply(1,0,1)).length() > 30){
+            return false;
+        }
         if (!this.isEntityReachable(target)){
             return false;
         }
@@ -111,6 +126,9 @@ public class UlderaCrystalBoss extends Monster implements AnimatedObject {
     private static final AABB SEARCH_TARGET_BOX = new AABB(-30,-30,-30,30,30,30);
     private LivingEntity searchTarget(){
         List<LivingEntity> entities = level.getEntitiesOfClass(LivingEntity.class,SEARCH_TARGET_BOX.move(this.getCenterPos()),living->{
+            if (living instanceof Player player){
+                return !player.isSpectator() && !player.isCreative();
+            }
             return this.isEntityReachable(living);
         });
         if (entities.isEmpty()){

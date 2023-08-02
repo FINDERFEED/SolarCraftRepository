@@ -3,7 +3,7 @@ package com.finderfeed.solarcraft.content.entities.projectiles;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.client.particles.SolarcraftParticleTypes;
 import com.finderfeed.solarcraft.registries.data_serializers.FDEntityDataSerializers;
-import com.finderfeed.solarcraft.registries.entities.SolarcraftEntityTypes;
+import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
@@ -34,7 +34,7 @@ public class SummoningProjectile extends NormalProjectile {
     }
 
     public SummoningProjectile(Level world,EntityType<? extends LivingEntity> entityToSummon,float rPCol,float gPCol,float bPCol){
-        super(SolarcraftEntityTypes.SUMMONING_PROJECTILE.get(),world);
+        super(SCEntityTypes.SUMMONING_PROJECTILE.get(),world);
         this.summoningEntityType = entityToSummon;
         this.r = rPCol;
         this.g = gPCol;

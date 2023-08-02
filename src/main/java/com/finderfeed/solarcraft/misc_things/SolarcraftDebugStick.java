@@ -1,20 +1,9 @@
 package com.finderfeed.solarcraft.misc_things;
 
-import com.finderfeed.solarcraft.content.blocks.blockentities.PuzzleBlockEntity;
 import com.finderfeed.solarcraft.content.blocks.blockentities.RuneEnergyPylonTile;
-import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.blockentity.SunShardPuzzleBlockEntity;
-import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.ray_puzzle.blockentities.BeamGenerator;
-import com.finderfeed.solarcraft.content.entities.OrbitalCannonExplosionEntity;
-import com.finderfeed.solarcraft.content.entities.projectiles.OrbitalExplosionProjectile;
-import com.finderfeed.solarcraft.content.runic_network.repeater.RunicEnergyRepeaterTile;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.helpers.multiblock.StructurePatternExporter;
-import com.finderfeed.solarcraft.registries.blocks.SolarcraftBlocks;
-import com.finderfeed.solarcraft.registries.entities.SolarcraftEntityTypes;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
@@ -23,16 +12,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
-import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.Vec3;
-
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 public class SolarcraftDebugStick extends Item {
     public SolarcraftDebugStick(Properties p_41383_) {

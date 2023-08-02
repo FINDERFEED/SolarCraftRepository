@@ -12,11 +12,9 @@ import com.finderfeed.solarcraft.content.blocks.blockentities.projectiles.Mortar
 import com.finderfeed.solarcraft.content.blocks.blockentities.projectiles.ShadowBolt;
 import com.finderfeed.solarcraft.content.entities.runic_elemental.RunicElementalBoss;
 import com.finderfeed.solarcraft.content.items.solar_disc_gun.SolarDiscProjectile;
-import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.EntityType;
 
-import net.minecraft.world.entity.monster.Monster;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -24,9 +22,12 @@ import net.minecraftforge.registries.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
-public class SolarcraftEntityTypes {
+public class SCEntityTypes {
+
 
     public static final DeferredRegister<EntityType<?>> ENTITY_TYPE_REGISTER = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, "solarcraft");
+
+
     public static final RegistryObject<EntityType<SolarDiscProjectile>> SOLAR_DISC = ENTITY_TYPE_REGISTER.register("solar_forge_solar_disc", () ->
             EntityType.Builder.<SolarDiscProjectile>of(SolarDiscProjectile::new, MobCategory.MISC)
                     .sized(0.25f, 0.25f).build("solar_forge_solar_disc"));
@@ -137,10 +138,6 @@ public class SolarcraftEntityTypes {
             EntityType.Builder.<CorruptionWisp>of(CorruptionWisp::new, MobCategory.CREATURE)
                     .sized(0.35f, 0.35f).clientTrackingRange(8).updateInterval(1).build("corruption_wisp"));
 
-
-    public static final RegistryObject<EntityType<OrbitalExplosionProjectile>> ORBITAL_EXPLOSION_PROJECTILE = ENTITY_TYPE_REGISTER.register("orbital_explosion_projectile", () ->
-            EntityType.Builder.<OrbitalExplosionProjectile>of(OrbitalExplosionProjectile::new, MobCategory.MISC)
-                    .sized(0.25f, 0.25f).build("orbital_explosion_projectile"));
     public static final RegistryObject<EntityType<OrbitalCannonExplosionEntity>> ORBITAL_EXPLOSION = ENTITY_TYPE_REGISTER.register("orbital_explosion", () ->
             EntityType.Builder.<OrbitalCannonExplosionEntity>of(OrbitalCannonExplosionEntity::new, MobCategory.MISC)
                     .sized(0.1f, 0.1f).build("orbital_explosion"));
@@ -148,6 +145,23 @@ public class SolarcraftEntityTypes {
     public static final RegistryObject<EntityType<UlderaCrystalBoss>> ULDERA_CRYSTAL_BOSS = ENTITY_TYPE_REGISTER.register("uldera_crystal_boss",()->
             EntityType.Builder.of(UlderaCrystalBoss::new,MobCategory.MONSTER).sized(1,16.5f).build("uldera_crystal_boss"));
 
+    static {
+        Projectiles.init();
+    }
+
+
+    public static class Projectiles {
+
+        public static final RegistryObject<EntityType<OrbitalExplosionProjectile>> ORBITAL_EXPLOSION_PROJECTILE = ENTITY_TYPE_REGISTER.register("orbital_explosion_projectile", () ->
+                EntityType.Builder.<OrbitalExplosionProjectile>of(OrbitalExplosionProjectile::new, MobCategory.MISC)
+                        .sized(0.25f, 0.25f).build("orbital_explosion_projectile"));
+
+        public static final RegistryObject<EntityType<HomingStarProjectile>> HOMING_STAR = ENTITY_TYPE_REGISTER.register("homing_star", () ->
+                EntityType.Builder.<HomingStarProjectile>of(HomingStarProjectile::new, MobCategory.MISC)
+                        .sized(0.25f, 0.25f).build("homing_star"));
+
+        private static void init(){}
+    }
 
     @Mod.EventBusSubscriber(modid = SolarCraft.MOD_ID,bus = Mod.EventBusSubscriber.Bus.MOD)
     public static class AttributeRegistry{
@@ -155,18 +169,18 @@ public class SolarcraftEntityTypes {
         @SubscribeEvent
         public static void entityAttributes(EntityAttributeCreationEvent event) {
             event.put(SolarCraft.SOLAR_STRIKE_ENTITY_REG.get(), SolarStrikeEntity.createAttributes().build());
-            event.put(SolarcraftEntityTypes.VILLAGER_SOLAR_MASTER.get(), VillagerSolarMaster.createAttributes().build());
-            event.put(SolarcraftEntityTypes.CRYSTAL_BOSS.get(), CrystalBossEntity.createAttributes().build());
-            event.put(SolarcraftEntityTypes.RUNIC_ELEMENTAL_BOSS.get(), RunicElementalBoss.createAttributes().build());
-            event.put(SolarcraftEntityTypes.CRYSTAL_BOSS_SHIELDING_CRYSTAL.get(), ShieldingCrystalCrystalBoss.createAttributes().build());
-            event.put(SolarcraftEntityTypes.CRYSTAL_BOSS_MINE.get(), MineEntityCrystalBoss.createAttributes().build());
-            event.put(SolarcraftEntityTypes.RIP_RAY_GENERATOR.get(), RipRayGenerator.createAttributes().build());
-            event.put(SolarcraftEntityTypes.REFRACTION_CRYSTAL.get(), RefractionCrystal.createAttributes().build());
-            event.put(SolarcraftEntityTypes.EXPLOSIVE_CRYSTAL.get(), ExplosiveCrystal.createAttributes().build());
-            event.put(SolarcraftEntityTypes.RUNIC_WARRIOR.get(), RunicWarrior.createAttributes().build());
-            event.put(SolarcraftEntityTypes.SHADOW_ZOMBIE.get(), ShadowZombie.createAttributes().build());
-            event.put(SolarcraftEntityTypes.CORRUPTION_WISP.get(), CorruptionWisp.createAttributes().build());
-            event.put(SolarcraftEntityTypes.ULDERA_CRYSTAL_BOSS.get(), UlderaCrystalBoss.createCrystalAttributes().build());
+            event.put(SCEntityTypes.VILLAGER_SOLAR_MASTER.get(), VillagerSolarMaster.createAttributes().build());
+            event.put(SCEntityTypes.CRYSTAL_BOSS.get(), CrystalBossEntity.createAttributes().build());
+            event.put(SCEntityTypes.RUNIC_ELEMENTAL_BOSS.get(), RunicElementalBoss.createAttributes().build());
+            event.put(SCEntityTypes.CRYSTAL_BOSS_SHIELDING_CRYSTAL.get(), ShieldingCrystalCrystalBoss.createAttributes().build());
+            event.put(SCEntityTypes.CRYSTAL_BOSS_MINE.get(), MineEntityCrystalBoss.createAttributes().build());
+            event.put(SCEntityTypes.RIP_RAY_GENERATOR.get(), RipRayGenerator.createAttributes().build());
+            event.put(SCEntityTypes.REFRACTION_CRYSTAL.get(), RefractionCrystal.createAttributes().build());
+            event.put(SCEntityTypes.EXPLOSIVE_CRYSTAL.get(), ExplosiveCrystal.createAttributes().build());
+            event.put(SCEntityTypes.RUNIC_WARRIOR.get(), RunicWarrior.createAttributes().build());
+            event.put(SCEntityTypes.SHADOW_ZOMBIE.get(), ShadowZombie.createAttributes().build());
+            event.put(SCEntityTypes.CORRUPTION_WISP.get(), CorruptionWisp.createAttributes().build());
+            event.put(SCEntityTypes.ULDERA_CRYSTAL_BOSS.get(), UlderaCrystalBoss.createCrystalAttributes().build());
         }
 
     }

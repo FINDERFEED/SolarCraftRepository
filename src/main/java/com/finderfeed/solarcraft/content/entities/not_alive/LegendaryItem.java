@@ -1,6 +1,6 @@
 package com.finderfeed.solarcraft.content.entities.not_alive;
 
-import com.finderfeed.solarcraft.registries.entities.SolarcraftEntityTypes;
+import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
@@ -31,7 +31,7 @@ public class LegendaryItem extends Entity {
     }
 
     public LegendaryItem(Level world,ItemStack stack){
-        super(SolarcraftEntityTypes.LEGENDARY_ITEM.get(),world);
+        super(SCEntityTypes.LEGENDARY_ITEM.get(),world);
         this.setItem(stack);
     }
 

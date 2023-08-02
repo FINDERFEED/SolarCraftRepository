@@ -7,7 +7,7 @@ import com.finderfeed.solarcraft.helpers.multiblock.Multiblocks;
 import com.finderfeed.solarcraft.misc_things.AbstractMortarProjectile;
 import com.finderfeed.solarcraft.misc_things.AbstractMortarTileEntity;
 
-import com.finderfeed.solarcraft.registries.entities.SolarcraftEntityTypes;
+import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
 import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
@@ -37,7 +37,7 @@ public class MortarTileEntity extends AbstractMortarTileEntity implements IStruc
 
     @Override
     public AbstractMortarProjectile getMortarProjectile() {
-        return new MortarProjectile(SolarcraftEntityTypes.MORTAR_PROJECTILE.get(),level);
+        return new MortarProjectile(SCEntityTypes.MORTAR_PROJECTILE.get(),level);
     }
 
 
