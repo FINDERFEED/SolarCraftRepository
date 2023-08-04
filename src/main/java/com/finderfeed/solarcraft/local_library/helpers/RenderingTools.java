@@ -1856,27 +1856,29 @@ public class RenderingTools {
                                           Vector3f pfe4
         ){
 
-            vertex.vertex(mat,pfe1.x + w,pfe1.y,pfe1.z + w).color(r,g,b,a).uv(1,1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(LightTexture.FULL_BRIGHT).endVertex();
-            vertex.vertex(mat,pfe4.x + w,pfe4.y,pfe4.z - w).color(r,g,b,a).uv(0,1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(LightTexture.FULL_BRIGHT).endVertex();
-            vertex.vertex(mat,pfi2.x + w,pfi2.y,pfi2.z - w).color(r,g,b,a).uv(0,0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(LightTexture.FULL_BRIGHT).endVertex();
             vertex.vertex(mat,pfi1.x + w,pfi1.y,pfi1.z + w).color(r,g,b,a).uv(1,0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(LightTexture.FULL_BRIGHT).endVertex();
+            vertex.vertex(mat,pfi2.x + w,pfi2.y,pfi2.z - w).color(r,g,b,a).uv(0,0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(LightTexture.FULL_BRIGHT).endVertex();
+            vertex.vertex(mat,pfe4.x + w,pfe4.y,pfe4.z - w).color(r,g,b,a).uv(0,1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(LightTexture.FULL_BRIGHT).endVertex();
+            vertex.vertex(mat,pfe1.x + w,pfe1.y,pfe1.z + w).color(r,g,b,a).uv(1,1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(LightTexture.FULL_BRIGHT).endVertex();
 
-            vertex.vertex(mat,pfe4.x + w,pfe4.y,pfe4.z - w).color(r,g,b,a).uv(1,1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(LightTexture.FULL_BRIGHT).endVertex();
-            vertex.vertex(mat,pfe3.x - w,pfe3.y,pfe3.z - w).color(r,g,b,a).uv(0,1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(LightTexture.FULL_BRIGHT).endVertex();
-            vertex.vertex(mat,pfi3.x - w,pfi3.y,pfi3.z - w).color(r,g,b,a).uv(0,0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(LightTexture.FULL_BRIGHT).endVertex();
             vertex.vertex(mat,pfi2.x + w,pfi2.y,pfi2.z - w).color(r,g,b,a).uv(1,0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(LightTexture.FULL_BRIGHT).endVertex();
+            vertex.vertex(mat,pfi3.x - w,pfi3.y,pfi3.z - w).color(r,g,b,a).uv(0,0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(LightTexture.FULL_BRIGHT).endVertex();
+            vertex.vertex(mat,pfe3.x - w,pfe3.y,pfe3.z - w).color(r,g,b,a).uv(0,1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(LightTexture.FULL_BRIGHT).endVertex();
+            vertex.vertex(mat,pfe4.x + w,pfe4.y,pfe4.z - w).color(r,g,b,a).uv(1,1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(LightTexture.FULL_BRIGHT).endVertex();
 
-            vertex.vertex(mat,pfe3.x - w,pfe3.y,pfe3.z - w).color(r,g,b,a).uv(1,1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(LightTexture.FULL_BRIGHT).endVertex();
-            vertex.vertex(mat,pfe2.x - w,pfe2.y,pfe2.z + w).color(r,g,b,a).uv(0,1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(LightTexture.FULL_BRIGHT).endVertex();
-            vertex.vertex(mat,pfi4.x - w,pfi4.y,pfi4.z + w).color(r,g,b,a).uv(0,0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(LightTexture.FULL_BRIGHT).endVertex();
             vertex.vertex(mat,pfi3.x - w,pfi3.y,pfi3.z - w).color(r,g,b,a).uv(1,0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(LightTexture.FULL_BRIGHT).endVertex();
+            vertex.vertex(mat,pfi4.x - w,pfi4.y,pfi4.z + w).color(r,g,b,a).uv(0,0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(LightTexture.FULL_BRIGHT).endVertex();
+            vertex.vertex(mat,pfe2.x - w,pfe2.y,pfe2.z + w).color(r,g,b,a).uv(0,1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(LightTexture.FULL_BRIGHT).endVertex();
+            vertex.vertex(mat,pfe3.x - w,pfe3.y,pfe3.z - w).color(r,g,b,a).uv(1,1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(LightTexture.FULL_BRIGHT).endVertex();
 
-            vertex.vertex(mat,pfe2.x - w,pfe2.y,pfe2.z + w).color(r,g,b,a).uv(1,1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(LightTexture.FULL_BRIGHT).endVertex();
-            vertex.vertex(mat,pfe1.x + w,pfe1.y,pfe1.z + w).color(r,g,b,a).uv(0,1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(LightTexture.FULL_BRIGHT).endVertex();
-            vertex.vertex(mat,pfi1.x + w,pfi1.y,pfi1.z + w).color(r,g,b,a).uv(0,0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(LightTexture.FULL_BRIGHT).endVertex();
             vertex.vertex(mat,pfi4.x - w,pfi4.y,pfi4.z + w).color(r,g,b,a).uv(1,0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(LightTexture.FULL_BRIGHT).endVertex();
+            vertex.vertex(mat,pfi1.x + w,pfi1.y,pfi1.z + w).color(r,g,b,a).uv(0,0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(LightTexture.FULL_BRIGHT).endVertex();
+            vertex.vertex(mat,pfe1.x + w,pfe1.y,pfe1.z + w).color(r,g,b,a).uv(0,1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(LightTexture.FULL_BRIGHT).endVertex();
+            vertex.vertex(mat,pfe2.x - w,pfe2.y,pfe2.z + w).color(r,g,b,a).uv(1,1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(LightTexture.FULL_BRIGHT).endVertex();
+
+
         }
-        private static void generateLightningCube(Matrix4f mat,VertexConsumer vertex,float lwidth,int r,int g,int b,Vec3 init,Vec3 end){
+        private static void generateLightningCube(Matrix4f mat,VertexConsumer vertex,float lwidth,int r,int g,int b,int a,Vec3 init,Vec3 end){
             Vector3f fi = new Vector3f((float)init.x,(float)init.y,(float)init.z);
             Vector3f fe = new Vector3f((float)end.x,(float)end.y,(float)end.z);
 
@@ -1892,16 +1894,16 @@ public class RenderingTools {
 
             placeVertices(mat,vertex,255,255,255,255,lwidth / 2f,pfi1,pfi2,pfi3,pfi4, pfe1,pfe2,pfe3,pfe4);
 
-           placeVertices(mat,vertex,r,g,b,150,0,pfi1,pfi2,pfi3,pfi4, pfe1,pfe2,pfe3,pfe4);
+           placeVertices(mat,vertex,r,g,b,a,0,pfi1,pfi2,pfi3,pfi4, pfe1,pfe2,pfe3,pfe4);
 
         }
 
-        public static void renderLightning3D(MultiBufferSource src,PoseStack matrices,Vec3 init,Vec3 end,int seed,int breaksCount,float lwidth, int r,int g,int b){
+        public static void renderLightning3D(MultiBufferSource src,PoseStack matrices,Vec3 init,Vec3 end,int seed,int breaksCount,float lwidth, int r,int g,int b,int a){
             List<Vec3> points = generateVerticalLightningBreaks(init,end,seed,breaksCount);
             for (int i = 0; i < points.size() - 1;i++){
                 Vec3 p1 = points.get(i);
                 Vec3 p2 = points.get(i + 1);
-                generateLightningCube(matrices.last().pose(),src.getBuffer(SolarCraftRenderTypes.eyesPositionColorTexLightmapNoNormal(WHITE)),lwidth,r,g,b,p1,p2);
+                generateLightningCube(matrices.last().pose(),src.getBuffer(SolarCraftRenderTypes.eyesPositionColorTexLightmapNoNormal(WHITE)),lwidth,r,g,b,a,p1,p2);
             }
         }
 

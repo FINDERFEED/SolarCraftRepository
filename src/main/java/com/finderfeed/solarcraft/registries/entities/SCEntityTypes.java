@@ -11,6 +11,8 @@ import com.finderfeed.solarcraft.content.blocks.blockentities.projectiles.Abstra
 import com.finderfeed.solarcraft.content.blocks.blockentities.projectiles.MortarProjectile;
 import com.finderfeed.solarcraft.content.blocks.blockentities.projectiles.ShadowBolt;
 import com.finderfeed.solarcraft.content.entities.runic_elemental.RunicElementalBoss;
+import com.finderfeed.solarcraft.content.entities.uldera_crystal.UlderaCrystalBoss;
+import com.finderfeed.solarcraft.content.entities.uldera_crystal.UlderaLightningEntity;
 import com.finderfeed.solarcraft.content.items.solar_disc_gun.SolarDiscProjectile;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.EntityType;
@@ -141,6 +143,10 @@ public class SCEntityTypes {
     public static final RegistryObject<EntityType<OrbitalCannonExplosionEntity>> ORBITAL_EXPLOSION = ENTITY_TYPE_REGISTER.register("orbital_explosion", () ->
             EntityType.Builder.<OrbitalCannonExplosionEntity>of(OrbitalCannonExplosionEntity::new, MobCategory.MISC)
                     .sized(0.1f, 0.1f).build("orbital_explosion"));
+
+    public static final RegistryObject<EntityType<UlderaLightningEntity>> ULDERA_LIGHTNING = ENTITY_TYPE_REGISTER.register("uldera_lightning", () ->
+            EntityType.Builder.<UlderaLightningEntity>of(UlderaLightningEntity::new, MobCategory.MISC)
+                    .sized(0.1f, 0.1f).build("uldera_lightning"));
 
     public static final RegistryObject<EntityType<UlderaCrystalBoss>> ULDERA_CRYSTAL_BOSS = ENTITY_TYPE_REGISTER.register("uldera_crystal_boss",()->
             EntityType.Builder.of(UlderaCrystalBoss::new,MobCategory.MONSTER).sized(1,16.5f).build("uldera_crystal_boss"));

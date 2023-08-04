@@ -1,4 +1,4 @@
-package com.finderfeed.solarcraft.content.entities;
+package com.finderfeed.solarcraft.content.entities.uldera_crystal;
 
 import com.finderfeed.solarcraft.client.particles.ball_particle.BallParticleOptions;
 import com.finderfeed.solarcraft.content.entities.projectiles.HomingStarProjectile;

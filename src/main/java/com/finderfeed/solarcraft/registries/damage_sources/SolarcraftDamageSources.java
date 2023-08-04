@@ -57,16 +57,10 @@ public class SolarcraftDamageSources {
     public static boolean initializedServerside = false;
     @SubscribeEvent
     public static void initiateDamageSources(ServerStartedEvent event){
-//        Player player = event.getEntity();
-
-//        Level level = player.level;
-//        if (!level.isClientSide && !initializedServerside){
             initializedServerside = true;
             initializeDamageSources(event.getServer().registryAccess());
-//        }
     }
     public static void initializeDamageSources(RegistryAccess access){
-//        RegistryAccess access = level.registryAccess();
         Registry<DamageType> types = access.registryOrThrow(Registries.DAMAGE_TYPE);
         STARGAZE = new DamageSource(types.getHolderOrThrow(STARGAZE_TYPE));
         SHADOW = new DamageSource(types.getHolderOrThrow(SHADOW_TYPE));
