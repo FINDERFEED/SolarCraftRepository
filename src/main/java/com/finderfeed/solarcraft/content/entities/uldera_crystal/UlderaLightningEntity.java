@@ -1,5 +1,7 @@
 package com.finderfeed.solarcraft.content.entities.uldera_crystal;
 
+import com.finderfeed.solarcraft.client.particles.ball_particle.BallParticleOptions;
+import com.finderfeed.solarcraft.local_library.helpers.CompoundNBTHelper;
 import com.finderfeed.solarcraft.registries.damage_sources.SolarcraftDamageSources;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -9,17 +11,24 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
+
+import java.util.Random;
+import java.util.UUID;
 
 public class UlderaLightningEntity extends Entity {
 
     public static final EntityDataAccessor<Float> HEIGHT = SynchedEntityData.defineId(UlderaLightningEntity.class, EntityDataSerializers.FLOAT);
-    public static final AABB DAMAGE_BOX = new AABB(-2,-2,-2,2,2,2);
+    public static final EntityDataAccessor<Integer> LIGHTNING_DELAY = SynchedEntityData.defineId(UlderaLightningEntity.class, EntityDataSerializers.INT);
+    public static final AABB DAMAGE_BOX = new AABB(-2,-2,-2,2,0,2);
     public float damage;
+    private UUID owner;
 
     public UlderaLightningEntity(EntityType<?> type, Level level) {
         super(type, level);
@@ -28,23 +37,83 @@ public class UlderaLightningEntity extends Entity {
 
     @Override
     public void tick() {
-        if (!level.isClientSide && this.tickCount == 1){
+        super.tick();
+        if (!level.isClientSide){
+            this.serverTick();
+        }else{
+            this.clientTick();
+        }
+    }
+
+    private void serverTick(){
+        if (this.tickCount == this.getLightningDelay()){
             this.dealDamage();
             ((ServerLevel)level).playSound(this,this.getOnPos(), SoundEvents.LIGHTNING_BOLT_IMPACT, SoundSource.HOSTILE,
                     5f,0.5f);
-        }
-        if (!level.isClientSide && tickCount >= 10){
+        }else if (this.tickCount >= this.getLightningDelay() + 10){
             this.remove(RemovalReason.DISCARDED);
         }
-        super.tick();
+    }
+
+    private void clientTick(){
+        if (this.tickCount < this.getLightningDelay()){
+            for (int i = 0; i <= this.getHeight();i++){
+                this.spawnParticleCollumn(i);
+            }
+            RandomSource r = level.random;
+            for (int i = 0; i < 5;i++){
+                Vec3 ppos = this.position();
+                level.addParticle(BallParticleOptions.Builder.begin()
+                        .setSize(0.2f)
+                        .setRGB(90,0,186)
+                        .setShouldShrink(true)
+                        .setLifetime(60)
+                        .build(),true,ppos.x,ppos.y,ppos.z,
+                        (r.nextDouble()*2-1)*0.1f,
+                        0,
+                        (r.nextDouble()*2-1)*0.1f);
+            }
+        } else if (this.tickCount == this.getLightningDelay()){
+            RandomSource r = level.random;
+            for (int i = 0; i < 50;i++){
+                Vec3 ppos = this.position();
+                level.addParticle(BallParticleOptions.Builder.begin()
+                                .setSize(0.2f)
+                                .setRGB(90,0,186)
+                                .setShouldShrink(true)
+                                .setLifetime(60)
+                                .build(),true,ppos.x,ppos.y,ppos.z,
+                        (r.nextDouble()*2-1)*0.1f,
+                        r.nextDouble()*0.1f,
+                        (r.nextDouble()*2-1)*0.1f);
+            }
+        }
+    }
+
+    private void spawnParticleCollumn(int h){
+        RandomSource r = level.random;
+        for (float i = 0; i <= 1;i += 0.2f){
+            Vec3 ppos = this.position().add(0,h + i,0);
+            level.addParticle(BallParticleOptions.Builder.begin()
+                    .setSize(0.2f)
+                    .setRGB(90,0,186)
+                            .setShouldShrink(true)
+                            .setLifetime(10)
+                    .build(),true,ppos.x,ppos.y,ppos.z,(r.nextDouble()*2-1)*0.02f,0,(r.nextDouble()*2-1)*0.02f);
+        }
     }
 
     private void dealDamage(){
-        AABB box = DAMAGE_BOX.move(this.position());
+        ServerLevel l = (ServerLevel)level;
+        AABB box = DAMAGE_BOX.setMaxY(this.getHeight() + 2).move(this.position());
         for (LivingEntity entity : level.getEntitiesOfClass(LivingEntity.class,box,entity->{
-            return !(entity instanceof UlderaCrystalBoss );
+            return !entity.getUUID().equals(this.getOwner());
         })){
-            entity.hurt(SolarcraftDamageSources.SHADOW,damage);
+            if (this.getOwner() != null && l.getEntity(this.getOwner()) instanceof LivingEntity e) {
+                entity.hurt(SolarcraftDamageSources.livingArmorPierce(e),damage);
+            }else{
+                entity.hurt(SolarcraftDamageSources.SHADOW, damage);
+            }
         }
     }
 
@@ -56,23 +125,44 @@ public class UlderaLightningEntity extends Entity {
         return this.entityData.get(HEIGHT);
     }
 
+    public void setLightningDelay(int delay){
+        this.entityData.set(LIGHTNING_DELAY,delay);
+    }
+
+    public int getLightningDelay(){
+        return this.entityData.get(LIGHTNING_DELAY);
+    }
+
+    public void setOwner(UUID owner) {
+        this.owner = owner;
+    }
+
+    public UUID getOwner() {
+        return owner;
+    }
+
     @Override
     public boolean save(CompoundTag tag) {
         tag.putFloat("damage",damage);
         tag.putFloat("height",this.getHeight());
+        tag.putInt("delay",this.getLightningDelay());
+        CompoundNBTHelper.saveUUID(tag,owner,"owner");
         return super.save(tag);
     }
 
     @Override
     public void load(CompoundTag tag) {
         this.damage = tag.getFloat("damage");
-//        this.setHeight(tag.getFloat("height"));
+        this.setHeight(tag.getFloat("height"));
+        this.setLightningDelay(tag.getInt("delay"));
+        this.setOwner(CompoundNBTHelper.getUUID(tag,"owner"));
         super.load(tag);
     }
 
     @Override
     protected void defineSynchedData() {
-        this.entityData.define(HEIGHT,10f);
+        this.entityData.define(HEIGHT, 10f);
+        this.entityData.define(LIGHTNING_DELAY, 0);
     }
 
     @Override

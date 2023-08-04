@@ -18,6 +18,7 @@ public class UlderaLightningRenderer extends EntityRenderer<UlderaLightningEntit
 
     @Override
     public void render(UlderaLightningEntity lightning, float idk, float pticks, PoseStack matrices, MultiBufferSource src, int light) {
+        if (lightning.tickCount < lightning.getLightningDelay()) return;
         matrices.pushPose();
         RenderingTools.Lightning3DRenderer.renderLightning3D(src,matrices,
                 Vec3.ZERO,Vec3.ZERO.add(0,lightning.getHeight(),0),

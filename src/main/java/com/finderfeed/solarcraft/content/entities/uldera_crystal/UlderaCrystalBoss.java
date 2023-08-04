@@ -7,34 +7,50 @@ import com.finderfeed.solarcraft.local_library.bedrock_loader.animations.Animate
 import com.finderfeed.solarcraft.local_library.bedrock_loader.animations.manager.AnimationManager;
 import com.finderfeed.solarcraft.local_library.bedrock_loader.animations.manager.AnimationTicker;
 import com.finderfeed.solarcraft.local_library.entities.BossAttackChain;
+import com.finderfeed.solarcraft.misc_things.NoHealthLimitMob;
 import com.finderfeed.solarcraft.registries.animations.SCAnimations;
+import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.Difficulty;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
-public class UlderaCrystalBoss extends Monster implements AnimatedObject {
+public class UlderaCrystalBoss extends NoHealthLimitMob implements AnimatedObject {
 
     public static final String ATTACK_1_TICKER = "attack_1";
+    public static final String TEMP1 = "temp1";
     private AnimationManager manager;
 
+    private List<BlockPos> lightningPositions = new ArrayList<>();
+
     private BossAttackChain bossChain = new BossAttackChain.Builder()
-            .setTimeBetweenAttacks(20)
-            .addAttack("test",this::homingStarsRelease, 40,1,0)
+            .setTimeBetweenAttacks(40)
+            .addAttack("homingStars",this::homingStarsRelease, 40,1,0)
+            .addAttack("lightnings",this::summonLightnings,200,20,1)
+            .addPostEffectToAttack("lightnings",()->{
+                this.getAnimationManager().stopAnimation(ATTACK_1_TICKER);
+                this.getAnimationManager().stopAnimation(TEMP1);
+            })
             .build();
 
-    public UlderaCrystalBoss(EntityType<? extends Monster> p_21368_, Level level) {
+    public UlderaCrystalBoss(EntityType<? extends NoHealthLimitMob> p_21368_, Level level) {
         super(p_21368_, level);
         this.manager = AnimationManager.createEntityAnimationManager(this,level.isClientSide);
     }
@@ -84,6 +100,121 @@ public class UlderaCrystalBoss extends Monster implements AnimatedObject {
                         .build(),
                 center.x,center.y,center.z,10,1,1,1,0.05f
         );
+    }
+
+    private void summonLightnings(){
+        this.getAnimationManager().setAnimation(ATTACK_1_TICKER,AnimationTicker.Builder.begin(SCAnimations.ULDERA_CRYSTAL_INFLATE_POSE.get())
+                        .toNullTransitionTime(20)
+                .build());
+        this.getAnimationManager().setAnimation(TEMP1,AnimationTicker.Builder.begin(SCAnimations.ULDERA_CRYSTAL_SHAKE.get())
+                        .toNullTransitionTime(5)
+                .build());
+        if (this.lightningPositions.isEmpty()){
+            lightningPositions.addAll(this.generateRandomLightningPositions());
+        }
+        for (BlockPos pos : this.lightningPositions){
+            UlderaLightningEntity lightning = new UlderaLightningEntity(SCEntityTypes.ULDERA_LIGHTNING.get(),level);
+            lightning.setPos(pos.getX() + 0.5,pos.getY() + 1,pos.getZ() + 0.5);
+            lightning.setHeight(30);
+            lightning.setLightningDelay(40);
+            level.addFreshEntity(lightning);
+        }
+        lightningPositions.clear();
+    }
+
+    private List<BlockPos> generateRandomLightningPositions(){
+        double radius = 20;
+        List<BlockPos> sector1 = new ArrayList<>();
+        List<BlockPos> sector2 = new ArrayList<>();
+        List<BlockPos> sector3 = new ArrayList<>();
+        List<BlockPos> sector4 = new ArrayList<>();
+        this.tryAddPositions(0,0,radius,sector1);
+        this.tryAddPositions((int)radius,0,radius,sector2);
+        this.tryAddPositions(0,(int)radius,radius,sector3);
+        this.tryAddPositions((int) radius,(int) radius,radius,sector4);
+        sector1 = generateRandomPositions(sector1,(int)radius);
+        sector2 = generateRandomPositions(sector2,(int)radius);
+        sector3 = generateRandomPositions(sector3,(int)radius);
+        sector4 = generateRandomPositions(sector4,(int)radius);
+        return translateAndMergeLists(sector1,sector2,sector3,sector4);
+    }
+
+    @SafeVarargs
+    private List<BlockPos> translateAndMergeLists(List<BlockPos>... positions){
+        List<BlockPos> first = new ArrayList<>(positions[0].stream().map(this::translatePos).toList());
+        for (int i = 1; i < positions.length;i++){
+            first.addAll(positions[i].stream().map(this::translatePos).toList());
+        }
+        return first;
+    }
+
+    private BlockPos translatePos(BlockPos pos){
+        return pos.offset(0,level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,pos.getX(),pos.getZ()),0);
+    }
+
+    private void tryAddPositions(int sectorOffsetX, int sectorOffsetZ, double radius, List<BlockPos> positions){
+        for (int x = -20 + sectorOffsetX; x < radius + sectorOffsetX; x++){
+            for (int z = -20 + sectorOffsetZ; z < radius + sectorOffsetZ; z++){
+                float xs = x + 0.5f;
+                float zs = z + 0.5f;
+                float lensq = xs*xs + zs*zs;
+                if (xs*xs + zs*zs <= radius*radius && lensq >= 2.5){
+                    positions.add(new BlockPos(x,0,z));
+                }
+            }
+        }
+    }
+
+    private List<BlockPos> generateRandomPositions(List<BlockPos> randomsrc,int count){
+        List<BlockPos> positions = new ArrayList<>();
+        for (int i = 0; i < count;i++){
+            positions.add(randomsrc.remove(level.random.nextInt(randomsrc.size())));
+        }
+        return positions;
+    }
+
+    protected void doPush(Entity entity) {
+        entity.setDeltaMovement(entity.position().add(0,entity.getBbHeight()/2,0).subtract(this.position().add(0,this.getBbHeight()/2,0)).normalize());
+    }
+
+    @Override
+    public boolean isPushable() {
+        return false;
+    }
+
+    @Override
+    public boolean canBeCollidedWith() {
+        return false;
+    }
+
+    @Override
+    public boolean canBeAffected(MobEffectInstance p_21197_) {
+        return false;
+    }
+
+    @Override
+    public boolean canCollideWith(Entity p_20303_) {
+        return false;
+    }
+
+    @Override
+    public boolean ignoreExplosion() {
+        return true;
+    }
+
+    @Override
+    public void knockback(double p_147241_, double p_147242_, double p_147243_) {
+
+    }
+
+    @Override
+    public boolean canBeLeashed(Player player) {
+        return false;
+    }
+
+    @Override
+    protected MovementEmission getMovementEmission() {
+        return MovementEmission.NONE;
     }
 
     @Nullable
