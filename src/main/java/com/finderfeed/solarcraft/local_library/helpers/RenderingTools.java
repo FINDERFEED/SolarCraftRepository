@@ -1,6 +1,7 @@
 package com.finderfeed.solarcraft.local_library.helpers;
 
 import com.finderfeed.solarcraft.SolarCraft;
+import com.finderfeed.solarcraft.client.rendering.rendertypes.SolarCraftRenderTypes;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.client.custom_tooltips.CustomTooltip;
 import com.finderfeed.solarcraft.client.screens.PositionBlockStateTileEntity;
@@ -1816,6 +1817,92 @@ public class RenderingTools {
                 renderLightningRectangle3D(vertex,matrices,init,end,rectangleHeights,r,g,b);
             }
             matrices.popPose();
+        }
+
+    }
+
+    public static class Lightning3DRenderer{
+
+
+        private static final ResourceLocation WHITE = new ResourceLocation(SolarCraft.MOD_ID,"textures/misc/white_square.png");
+
+        public static List<Vec3> generateVerticalLightningBreaks(Vec3 init, Vec3 end, int seed, int count){
+            Random random = new Random(seed);
+            List<Vec3> breaks = new ArrayList<>();
+            breaks.add(init);
+            Vec3 between = end.subtract(init);
+            double len = end.subtract(init).length();
+            between = between.normalize();
+            double fraglen = len / (count + 1);
+            for (int i = 1; i < count + 1; i++){
+                Vec3 v = new Vec3(0,0,1).yRot((float)(Math.PI * 2) * random.nextFloat());
+                Vec3 point = init.add(between.multiply(i * fraglen,i * fraglen,i * fraglen));
+                breaks.add(point.add(v));
+            }
+            breaks.add(end);
+            return breaks;
+        }
+
+        private static void placeVertices(Matrix4f mat,VertexConsumer vertex,
+                                          int r,int g,int b,int a,
+                                          float w,
+                                          Vector3f pfi1,
+                                          Vector3f pfi2,
+                                          Vector3f pfi3,
+                                          Vector3f pfi4,
+                                          Vector3f pfe1,
+                                          Vector3f pfe2,
+                                          Vector3f pfe3,
+                                          Vector3f pfe4
+        ){
+
+            vertex.vertex(mat,pfe1.x + w,pfe1.y,pfe1.z + w).color(r,g,b,a).uv(1,1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(LightTexture.FULL_BRIGHT).endVertex();
+            vertex.vertex(mat,pfe4.x + w,pfe4.y,pfe4.z - w).color(r,g,b,a).uv(0,1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(LightTexture.FULL_BRIGHT).endVertex();
+            vertex.vertex(mat,pfi2.x + w,pfi2.y,pfi2.z - w).color(r,g,b,a).uv(0,0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(LightTexture.FULL_BRIGHT).endVertex();
+            vertex.vertex(mat,pfi1.x + w,pfi1.y,pfi1.z + w).color(r,g,b,a).uv(1,0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(LightTexture.FULL_BRIGHT).endVertex();
+
+            vertex.vertex(mat,pfe4.x + w,pfe4.y,pfe4.z - w).color(r,g,b,a).uv(1,1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(LightTexture.FULL_BRIGHT).endVertex();
+            vertex.vertex(mat,pfe3.x - w,pfe3.y,pfe3.z - w).color(r,g,b,a).uv(0,1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(LightTexture.FULL_BRIGHT).endVertex();
+            vertex.vertex(mat,pfi3.x - w,pfi3.y,pfi3.z - w).color(r,g,b,a).uv(0,0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(LightTexture.FULL_BRIGHT).endVertex();
+            vertex.vertex(mat,pfi2.x + w,pfi2.y,pfi2.z - w).color(r,g,b,a).uv(1,0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(LightTexture.FULL_BRIGHT).endVertex();
+
+            vertex.vertex(mat,pfe3.x - w,pfe3.y,pfe3.z - w).color(r,g,b,a).uv(1,1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(LightTexture.FULL_BRIGHT).endVertex();
+            vertex.vertex(mat,pfe2.x - w,pfe2.y,pfe2.z + w).color(r,g,b,a).uv(0,1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(LightTexture.FULL_BRIGHT).endVertex();
+            vertex.vertex(mat,pfi4.x - w,pfi4.y,pfi4.z + w).color(r,g,b,a).uv(0,0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(LightTexture.FULL_BRIGHT).endVertex();
+            vertex.vertex(mat,pfi3.x - w,pfi3.y,pfi3.z - w).color(r,g,b,a).uv(1,0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(LightTexture.FULL_BRIGHT).endVertex();
+
+            vertex.vertex(mat,pfe2.x - w,pfe2.y,pfe2.z + w).color(r,g,b,a).uv(1,1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(LightTexture.FULL_BRIGHT).endVertex();
+            vertex.vertex(mat,pfe1.x + w,pfe1.y,pfe1.z + w).color(r,g,b,a).uv(0,1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(LightTexture.FULL_BRIGHT).endVertex();
+            vertex.vertex(mat,pfi1.x + w,pfi1.y,pfi1.z + w).color(r,g,b,a).uv(0,0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(LightTexture.FULL_BRIGHT).endVertex();
+            vertex.vertex(mat,pfi4.x - w,pfi4.y,pfi4.z + w).color(r,g,b,a).uv(1,0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(LightTexture.FULL_BRIGHT).endVertex();
+        }
+        private static void generateLightningCube(Matrix4f mat,VertexConsumer vertex,float lwidth,int r,int g,int b,Vec3 init,Vec3 end){
+            Vector3f fi = new Vector3f((float)init.x,(float)init.y,(float)init.z);
+            Vector3f fe = new Vector3f((float)end.x,(float)end.y,(float)end.z);
+
+            Vector3f pfi1 = new Vector3f(fi).add(-lwidth,0,-lwidth);
+            Vector3f pfi2 = new Vector3f(fi).add(-lwidth,0,lwidth);
+            Vector3f pfi3 = new Vector3f(fi).add(lwidth,0,lwidth);
+            Vector3f pfi4 = new Vector3f(fi).add(lwidth,0,-lwidth);
+
+            Vector3f pfe1 = new Vector3f(fe).add(-lwidth,0,-lwidth);
+            Vector3f pfe2 = new Vector3f(fe).add(lwidth,0,-lwidth);
+            Vector3f pfe3 = new Vector3f(fe).add(lwidth,0,lwidth);
+            Vector3f pfe4 = new Vector3f(fe).add(-lwidth,0,lwidth);
+
+            placeVertices(mat,vertex,255,255,255,255,lwidth / 2f,pfi1,pfi2,pfi3,pfi4, pfe1,pfe2,pfe3,pfe4);
+
+           placeVertices(mat,vertex,r,g,b,150,0,pfi1,pfi2,pfi3,pfi4, pfe1,pfe2,pfe3,pfe4);
+
+        }
+
+        public static void renderLightning3D(MultiBufferSource src,PoseStack matrices,Vec3 init,Vec3 end,int seed,int breaksCount,float lwidth, int r,int g,int b){
+            List<Vec3> points = generateVerticalLightningBreaks(init,end,seed,breaksCount);
+            for (int i = 0; i < points.size() - 1;i++){
+                Vec3 p1 = points.get(i);
+                Vec3 p2 = points.get(i + 1);
+                generateLightningCube(matrices.last().pose(),src.getBuffer(SolarCraftRenderTypes.eyesPositionColorTexLightmapNoNormal(WHITE)),lwidth,r,g,b,p1,p2);
+            }
         }
 
     }

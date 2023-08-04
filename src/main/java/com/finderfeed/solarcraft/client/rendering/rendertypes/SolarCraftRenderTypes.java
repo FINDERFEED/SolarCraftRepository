@@ -8,6 +8,7 @@ import com.mojang.blaze3d.vertex.BufferBuilder;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.Tesselator;
 import com.mojang.blaze3d.vertex.VertexFormat;
+import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.ParticleRenderType;
 import net.minecraft.client.renderer.GameRenderer;
@@ -17,6 +18,8 @@ import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.resources.ResourceLocation;
 import org.lwjgl.opengl.GL11;
+
+import java.util.function.Function;
 
 
 public class SolarCraftRenderTypes extends RenderType{
@@ -85,6 +88,18 @@ public class SolarCraftRenderTypes extends RenderType{
                             .setWriteMaskState(COLOR_DEPTH_WRITE)
                             .setTransparencyState(LIGHTNING_TRANSPARENCY)
             .setOutputState(WEATHER_TARGET).createCompositeState(false));
+
+
+    private static final Function<ResourceLocation, RenderType> EYES_POSITION_COLOR_TEX_LIGHTMAP = Util.memoize((p_286170_) -> {
+        RenderStateShard.TextureStateShard renderstateshard$texturestateshard = new RenderStateShard.TextureStateShard(p_286170_, false, false);
+        return create("eyes_position_tex_lightmap_no_normal", DefaultVertexFormat.POSITION_COLOR_TEX_LIGHTMAP, VertexFormat.Mode.QUADS, 256, false, true, RenderType.CompositeState.builder().setShaderState(RENDERTYPE_EYES_SHADER).setTextureState(renderstateshard$texturestateshard).setTransparencyState(ADDITIVE_TRANSPARENCY).setWriteMaskState(COLOR_WRITE).createCompositeState(false));
+    });
+
+    public static RenderType eyesPositionColorTexLightmapNoNormal(ResourceLocation tex){
+        return EYES_POSITION_COLOR_TEX_LIGHTMAP.apply(tex);
+    }
+
+
 
 
     public static RenderTarget orbitalExplosionOutTarget;

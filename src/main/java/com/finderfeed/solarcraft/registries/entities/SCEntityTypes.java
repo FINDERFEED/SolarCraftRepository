@@ -158,6 +158,7 @@ public class SCEntityTypes {
 
         public static final RegistryObject<EntityType<HomingStarProjectile>> HOMING_STAR = ENTITY_TYPE_REGISTER.register("homing_star", () ->
                 EntityType.Builder.<HomingStarProjectile>of(HomingStarProjectile::new, MobCategory.MISC)
+                        .updateInterval(1)
                         .sized(0.25f, 0.25f).build("homing_star"));
 
         private static void init(){}

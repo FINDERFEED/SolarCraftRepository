@@ -3,6 +3,7 @@ package com.finderfeed.solarcraft.content.entities.renderers;
 import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.content.entities.UlderaCrystalBoss;
 import com.finderfeed.solarcraft.local_library.bedrock_loader.model_components.FDModel;
+import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.finderfeed.solarcraft.registries.SCBedrockModels;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.LightTexture;
@@ -14,6 +15,7 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.phys.Vec3;
 
 public class UlderaCrystalBossRenderer extends EntityRenderer<UlderaCrystalBoss> {
 
