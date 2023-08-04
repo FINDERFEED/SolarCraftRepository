@@ -1826,7 +1826,7 @@ public class RenderingTools {
 
         private static final ResourceLocation WHITE = new ResourceLocation(SolarCraft.MOD_ID,"textures/misc/white_square.png");
 
-        public static List<Vec3> generateVerticalLightningBreaks(Vec3 init, Vec3 end, int seed, int count){
+        public static List<Vec3> generateVerticalLightningBreaks(Vec3 init, Vec3 end, int seed, int count,double spread){
             Random random = new Random(seed);
             List<Vec3> breaks = new ArrayList<>();
             breaks.add(init);
@@ -1835,7 +1835,7 @@ public class RenderingTools {
             between = between.normalize();
             double fraglen = len / (count + 1);
             for (int i = 1; i < count + 1; i++){
-                Vec3 v = new Vec3(0,0,1).yRot((float)(Math.PI * 2) * random.nextFloat());
+                Vec3 v = new Vec3(0,0,1).yRot((float)(Math.PI * 2) * random.nextFloat()).multiply(spread,spread,spread);
                 Vec3 point = init.add(between.multiply(i * fraglen,i * fraglen,i * fraglen));
                 breaks.add(point.add(v));
             }
@@ -1898,8 +1898,8 @@ public class RenderingTools {
 
         }
 
-        public static void renderLightning3D(MultiBufferSource src,PoseStack matrices,Vec3 init,Vec3 end,int seed,int breaksCount,float lwidth, int r,int g,int b,int a){
-            List<Vec3> points = generateVerticalLightningBreaks(init,end,seed,breaksCount);
+        public static void renderLightning3D(MultiBufferSource src,PoseStack matrices,Vec3 init,Vec3 end,int seed,int breaksCount,float lwidth,double spread, int r,int g,int b,int a){
+            List<Vec3> points = generateVerticalLightningBreaks(init,end,seed,breaksCount,spread);
             for (int i = 0; i < points.size() - 1;i++){
                 Vec3 p1 = points.get(i);
                 Vec3 p2 = points.get(i + 1);

@@ -42,11 +42,14 @@ public class UlderaCrystalBoss extends NoHealthLimitMob implements AnimatedObjec
 
     private BossAttackChain bossChain = new BossAttackChain.Builder()
             .setTimeBetweenAttacks(40)
-            .addAttack("homingStars",this::homingStarsRelease, 40,1,0)
+            .addAttack("homingStars",this::homingStarsRelease, 50*5,1,0)
             .addAttack("lightnings",this::summonLightnings,200,20,1)
             .addPostEffectToAttack("lightnings",()->{
                 this.getAnimationManager().stopAnimation(ATTACK_1_TICKER);
                 this.getAnimationManager().stopAnimation(TEMP1);
+            })
+            .addPostEffectToAttack("homingStars",()->{
+                this.getAnimationManager().stopAnimation(ATTACK_1_TICKER);
             })
             .build();
 
@@ -75,13 +78,16 @@ public class UlderaCrystalBoss extends NoHealthLimitMob implements AnimatedObjec
         if (this.getTarget() == null) return;
         if (this.getTarget().isDeadOrDying()) return;
         Vec3 center = this.getCenterPos();
-        if (bossChain.getTicker() == 1){
+        int t = bossChain.getTicker() % 50;
+        if (t == 0){
             this.getAnimationManager().setAnimation(ATTACK_1_TICKER,
                     AnimationTicker.Builder.begin(SCAnimations.ULDERA_CRYSTAL_ATTACK_1.get())
                             .startFrom(0)
+                            .replaceable(true)
                             .build());
         }
-        if (bossChain.getTicker() >= 20 && bossChain.getTicker() % 2 == 0){
+
+        if (t > 20 && t <= 40){
             HomingStarProjectile projectile = new HomingStarProjectile(level);
             projectile.setPos(this.getCenterPos());
             projectile.setDeltaMovement(Helpers.randomVector().normalize().multiply(0.5f,0.5f,0.5f));
@@ -114,9 +120,11 @@ public class UlderaCrystalBoss extends NoHealthLimitMob implements AnimatedObjec
         }
         for (BlockPos pos : this.lightningPositions){
             UlderaLightningEntity lightning = new UlderaLightningEntity(SCEntityTypes.ULDERA_LIGHTNING.get(),level);
-            lightning.setPos(pos.getX() + 0.5,pos.getY() + 1,pos.getZ() + 0.5);
-            lightning.setHeight(30);
+            lightning.setPos(pos.getX() + 0.5,pos.getY(),pos.getZ() + 0.5);
+            lightning.setHeight(100);
             lightning.setLightningDelay(40);
+            lightning.setOwner(this.getUUID());
+            lightning.damage = 10;
             level.addFreshEntity(lightning);
         }
         lightningPositions.clear();
@@ -132,10 +140,10 @@ public class UlderaCrystalBoss extends NoHealthLimitMob implements AnimatedObjec
         this.tryAddPositions((int)radius,0,radius,sector2);
         this.tryAddPositions(0,(int)radius,radius,sector3);
         this.tryAddPositions((int) radius,(int) radius,radius,sector4);
-        sector1 = generateRandomPositions(sector1,(int)radius);
-        sector2 = generateRandomPositions(sector2,(int)radius);
-        sector3 = generateRandomPositions(sector3,(int)radius);
-        sector4 = generateRandomPositions(sector4,(int)radius);
+        sector1 = generateRandomPositions(sector1,(int)radius/6);
+        sector2 = generateRandomPositions(sector2,(int)radius/6);
+        sector3 = generateRandomPositions(sector3,(int)radius/6);
+        sector4 = generateRandomPositions(sector4,(int)radius/6);
         return translateAndMergeLists(sector1,sector2,sector3,sector4);
     }
 
@@ -149,12 +157,14 @@ public class UlderaCrystalBoss extends NoHealthLimitMob implements AnimatedObjec
     }
 
     private BlockPos translatePos(BlockPos pos){
+        pos = new BlockPos(this.getOnPos().getX() + pos.getX(),0,this.getOnPos().getZ() + pos.getZ());
         return pos.offset(0,level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,pos.getX(),pos.getZ()),0);
     }
 
     private void tryAddPositions(int sectorOffsetX, int sectorOffsetZ, double radius, List<BlockPos> positions){
-        for (int x = -20 + sectorOffsetX; x < radius + sectorOffsetX; x++){
-            for (int z = -20 + sectorOffsetZ; z < radius + sectorOffsetZ; z++){
+        int r = (int)radius;
+        for (int x = -r + sectorOffsetX; x < sectorOffsetX; x++){
+            for (int z = -r + sectorOffsetZ; z < sectorOffsetZ; z++){
                 float xs = x + 0.5f;
                 float zs = z + 0.5f;
                 float lensq = xs*xs + zs*zs;
@@ -298,7 +308,7 @@ public class UlderaCrystalBoss extends NoHealthLimitMob implements AnimatedObjec
 
 
     public static AttributeSupplier.Builder createCrystalAttributes() {
-        return Monster.createMonsterAttributes();
+        return NoHealthLimitMob.createEntityAttributes();
     }
     public void checkDespawn() {
         if (this.level().getDifficulty() == Difficulty.PEACEFUL && this.shouldDespawnInPeaceful()) {

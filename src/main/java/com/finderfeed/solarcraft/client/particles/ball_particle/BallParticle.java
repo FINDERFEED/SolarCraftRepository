@@ -23,6 +23,9 @@ public class BallParticle extends TextureSheetParticle {
         this.zd = zd;
         this.lifetime = options.getLifetime();
         this.quadSize = options.getSize();
+        this.hasPhysics = options.isHasPhysics();
+        this.gravity = 0;
+        this.friction = 1f;
     }
 
     @Override

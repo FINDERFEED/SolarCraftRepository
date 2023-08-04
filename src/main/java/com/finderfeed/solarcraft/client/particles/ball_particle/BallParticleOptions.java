@@ -13,13 +13,13 @@ public class BallParticleOptions implements ParticleOptions {
     public static final ParticleOptions.Deserializer<BallParticleOptions> DESERIALIZER = new Deserializer<BallParticleOptions>() {
         @Override
         public BallParticleOptions fromCommand(ParticleType<BallParticleOptions> p_123733_, StringReader p_123734_) throws CommandSyntaxException {
-            return new BallParticleOptions(0.25f,255,255,255,60,true);
+            return new BallParticleOptions(0.25f,255,255,255,60,true,true);
         }
 
         @Override
         public BallParticleOptions fromNetwork(ParticleType<BallParticleOptions> type, FriendlyByteBuf buf) {
             if (type != SolarcraftParticleTypes.BALL_PARTICLE.get()){
-                return new BallParticleOptions(0.25f,255,255,255,60,true);
+                return new BallParticleOptions(0.25f,255,255,255,60,true,true);
             }
             return BallParticleOptions.fromNetwork(buf);
         }
@@ -30,13 +30,16 @@ public class BallParticleOptions implements ParticleOptions {
     private int b;
     private int lifetime;
     private boolean shouldShrink;
-    public BallParticleOptions(float size,int r,int g,int b,int lifetime,boolean shouldShrink){
+
+    private boolean hasPhysics = true;
+    public BallParticleOptions(float size,int r,int g,int b,int lifetime,boolean shouldShrink,boolean hasPhysics){
         this.size = size;
         this.r = r;
         this.g = g;
         this.b = b;
         this.lifetime = lifetime;
         this.shouldShrink = shouldShrink;
+        this.hasPhysics = hasPhysics;
     }
     public BallParticleOptions(Builder builder){
         this(
@@ -45,7 +48,8 @@ public class BallParticleOptions implements ParticleOptions {
                 builder.g,
                 builder.b,
                 builder.lifetime,
-                builder.shouldShrink
+                builder.shouldShrink,
+                builder.hasPhysics
         );
     }
 
@@ -62,6 +66,7 @@ public class BallParticleOptions implements ParticleOptions {
         buf.writeInt(b);
         buf.writeInt(lifetime);
         buf.writeBoolean(shouldShrink);
+        buf.writeBoolean(this.hasPhysics);
     }
 
     public static BallParticleOptions fromNetwork(FriendlyByteBuf buf){
@@ -71,7 +76,8 @@ public class BallParticleOptions implements ParticleOptions {
         int b = buf.readInt();
         int lifetime = buf.readInt();
         boolean shrink = buf.readBoolean();
-        return new BallParticleOptions(size,r,g,b,lifetime,shrink);
+        boolean physics = buf.readBoolean();
+        return new BallParticleOptions(size,r,g,b,lifetime,shrink,physics);
     }
 
     @Override
@@ -87,7 +93,8 @@ public class BallParticleOptions implements ParticleOptions {
                    Codec.INT.fieldOf("g").forGetter(options->options.g),
                    Codec.INT.fieldOf("b").forGetter(options->options.b),
                    Codec.INT.fieldOf("lifetime").forGetter(options->options.lifetime),
-                   Codec.BOOL.fieldOf("shrink").forGetter(options->options.shouldShrink)
+                   Codec.BOOL.fieldOf("shrink").forGetter(options->options.shouldShrink),
+                   Codec.BOOL.fieldOf("hasphysics").forGetter(options->options.hasPhysics)
            ).apply(builder,BallParticleOptions::new)
         );
     }
@@ -117,6 +124,10 @@ public class BallParticleOptions implements ParticleOptions {
         return shouldShrink;
     }
 
+    public boolean isHasPhysics() {
+        return hasPhysics;
+    }
+
     public static class Builder{
 
         private float size = 0.5f;
@@ -125,6 +136,7 @@ public class BallParticleOptions implements ParticleOptions {
         private int b;
         private int lifetime = 60;
         private boolean shouldShrink = true;
+        private boolean hasPhysics = true;
 
         public static Builder begin(){
             return new Builder();
@@ -150,6 +162,11 @@ public class BallParticleOptions implements ParticleOptions {
 
         public Builder setShouldShrink(boolean shouldShrink) {
             this.shouldShrink = shouldShrink;
+            return this;
+        }
+
+        public Builder setPhysics(boolean physics){
+            this.hasPhysics = physics;
             return this;
         }
 

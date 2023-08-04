@@ -57,32 +57,36 @@ public class UlderaLightningEntity extends Entity {
 
     private void clientTick(){
         if (this.tickCount < this.getLightningDelay()){
-            for (int i = 0; i <= this.getHeight();i++){
+            float h = this.getHeight() < 10 ? this.getHeight() : 10;
+            for (int i = 0; i <= h;i++){
                 this.spawnParticleCollumn(i);
             }
             RandomSource r = level.random;
             for (int i = 0; i < 5;i++){
-                Vec3 ppos = this.position();
+                Vec3 ppos = this.position().add(0,0.1,0);
                 level.addParticle(BallParticleOptions.Builder.begin()
                         .setSize(0.2f)
                         .setRGB(90,0,186)
                         .setShouldShrink(true)
-                        .setLifetime(60)
-                        .build(),true,ppos.x,ppos.y,ppos.z,
+                                .setPhysics(false)
+                                .setLifetime(60)
+                        .build(),ppos.x,ppos.y,ppos.z,
                         (r.nextDouble()*2-1)*0.1f,
                         0,
-                        (r.nextDouble()*2-1)*0.1f);
+                        (r.nextDouble()*2-1)*0.1f
+                );
             }
         } else if (this.tickCount == this.getLightningDelay()){
             RandomSource r = level.random;
             for (int i = 0; i < 50;i++){
-                Vec3 ppos = this.position();
+                Vec3 ppos = this.position().add(0,0.1,0);
                 level.addParticle(BallParticleOptions.Builder.begin()
                                 .setSize(0.2f)
                                 .setRGB(90,0,186)
                                 .setShouldShrink(true)
                                 .setLifetime(60)
-                                .build(),true,ppos.x,ppos.y,ppos.z,
+                                .setPhysics(false)
+                                .build(),ppos.x,ppos.y,ppos.z,
                         (r.nextDouble()*2-1)*0.1f,
                         r.nextDouble()*0.1f,
                         (r.nextDouble()*2-1)*0.1f);
@@ -92,14 +96,15 @@ public class UlderaLightningEntity extends Entity {
 
     private void spawnParticleCollumn(int h){
         RandomSource r = level.random;
-        for (float i = 0; i <= 1;i += 0.2f){
+        for (float i = 0; i < 1;i += 0.2f){
             Vec3 ppos = this.position().add(0,h + i,0);
             level.addParticle(BallParticleOptions.Builder.begin()
                     .setSize(0.2f)
                     .setRGB(90,0,186)
-                            .setShouldShrink(true)
-                            .setLifetime(10)
-                    .build(),true,ppos.x,ppos.y,ppos.z,(r.nextDouble()*2-1)*0.02f,0,(r.nextDouble()*2-1)*0.02f);
+                    .setPhysics(false)
+                    .setShouldShrink(true)
+                            .setLifetime(20)
+                    .build(),ppos.x,ppos.y,ppos.z,(r.nextDouble()*2-1)*0.2f,0,(r.nextDouble()*2-1)*0.2f);
         }
     }
 
@@ -173,5 +178,15 @@ public class UlderaLightningEntity extends Entity {
     @Override
     protected void addAdditionalSaveData(CompoundTag tag) {
 
+    }
+
+    @Override
+    public boolean shouldRender(double p_20296_, double p_20297_, double p_20298_) {
+        return true;
+    }
+
+    @Override
+    public boolean shouldRenderAtSqrDistance(double p_19883_) {
+        return true;
     }
 }
