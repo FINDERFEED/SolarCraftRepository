@@ -62,7 +62,7 @@ public class UlderaLightningEntity extends Entity {
                 this.spawnParticleCollumn(i);
             }
             RandomSource r = level.random;
-            for (int i = 0; i < 5;i++){
+            for (int i = 0; i < 2;i++){
                 Vec3 ppos = this.position().add(0,0.1,0);
                 level.addParticle(BallParticleOptions.Builder.begin()
                         .setSize(0.2f)
@@ -71,9 +71,9 @@ public class UlderaLightningEntity extends Entity {
                                 .setPhysics(false)
                                 .setLifetime(60)
                         .build(),ppos.x,ppos.y,ppos.z,
-                        (r.nextDouble()*2-1)*0.1f,
+                        (r.nextDouble()*2-1)*0.3f,
                         0,
-                        (r.nextDouble()*2-1)*0.1f
+                        (r.nextDouble()*2-1)*0.3f
                 );
             }
         } else if (this.tickCount == this.getLightningDelay()){
@@ -96,7 +96,7 @@ public class UlderaLightningEntity extends Entity {
 
     private void spawnParticleCollumn(int h){
         RandomSource r = level.random;
-        for (float i = 0; i < 1;i += 0.2f){
+        for (float i = 0; i < 1;i += 0.25f){
             Vec3 ppos = this.position().add(0,h + i,0);
             level.addParticle(BallParticleOptions.Builder.begin()
                     .setSize(0.2f)
@@ -112,7 +112,7 @@ public class UlderaLightningEntity extends Entity {
         ServerLevel l = (ServerLevel)level;
         AABB box = DAMAGE_BOX.setMaxY(this.getHeight() + 2).move(this.position());
         for (LivingEntity entity : level.getEntitiesOfClass(LivingEntity.class,box,entity->{
-            return !entity.getUUID().equals(this.getOwner());
+            return !entity.getUUID().equals(this.getOwner()) && !(entity instanceof UlderaCrystalBuddy);
         })){
             if (this.getOwner() != null && l.getEntity(this.getOwner()) instanceof LivingEntity e) {
                 entity.hurt(SolarcraftDamageSources.livingArmorPierce(e),damage);

@@ -6,6 +6,7 @@ import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.local_library.bedrock_loader.animations.AnimatedObject;
 import com.finderfeed.solarcraft.local_library.bedrock_loader.animations.manager.AnimationManager;
 import com.finderfeed.solarcraft.local_library.bedrock_loader.animations.manager.AnimationTicker;
+import com.finderfeed.solarcraft.local_library.bedrock_loader.animations.manager.EntityServerAnimationManager;
 import com.finderfeed.solarcraft.local_library.entities.BossAttackChain;
 import com.finderfeed.solarcraft.misc_things.NoHealthLimitMob;
 import com.finderfeed.solarcraft.registries.animations.SCAnimations;
@@ -13,6 +14,7 @@ import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
@@ -32,7 +34,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class UlderaCrystalBoss extends NoHealthLimitMob implements AnimatedObject {
+public class UlderaCrystalBoss extends NoHealthLimitMob implements AnimatedObject, UlderaCrystalBuddy {
 
     public static final String ATTACK_1_TICKER = "attack_1";
     public static final String TEMP1 = "temp1";
@@ -42,7 +44,7 @@ public class UlderaCrystalBoss extends NoHealthLimitMob implements AnimatedObjec
 
     private BossAttackChain bossChain = new BossAttackChain.Builder()
             .setTimeBetweenAttacks(40)
-            .addAttack("homingStars",this::homingStarsRelease, 50*5,1,0)
+            .addAttack("homingStars",this::homingStarsRelease, 50*5 - 1,1,0)
             .addAttack("lightnings",this::summonLightnings,200,20,1)
             .addPostEffectToAttack("lightnings",()->{
                 this.getAnimationManager().stopAnimation(ATTACK_1_TICKER);
@@ -124,7 +126,7 @@ public class UlderaCrystalBoss extends NoHealthLimitMob implements AnimatedObjec
             lightning.setHeight(100);
             lightning.setLightningDelay(40);
             lightning.setOwner(this.getUUID());
-            lightning.damage = 10;
+            lightning.damage = 5;
             level.addFreshEntity(lightning);
         }
         lightningPositions.clear();
@@ -187,6 +189,13 @@ public class UlderaCrystalBoss extends NoHealthLimitMob implements AnimatedObjec
         entity.setDeltaMovement(entity.position().add(0,entity.getBbHeight()/2,0).subtract(this.position().add(0,this.getBbHeight()/2,0)).normalize());
     }
 
+
+    @Override
+    public void startSeenByPlayer(ServerPlayer player) {
+        super.startSeenByPlayer(player);
+        ((EntityServerAnimationManager)this.getAnimationManager().getAsServerManager()).sendAllAnimations(player);
+    }
+
     @Override
     public boolean isPushable() {
         return false;
@@ -241,6 +250,7 @@ public class UlderaCrystalBoss extends NoHealthLimitMob implements AnimatedObjec
 
     private boolean checkTarget(LivingEntity target){
         if (target == null) return false;
+        if (target instanceof UlderaCrystalBuddy) return false;
         if (target.isDeadOrDying()) return false;
         Vec3 centerPos = this.getCenterPos();
         Vec3 targetCenter = target.position().add(0,target.getEyeHeight(target.getPose())/2f,0);
@@ -270,7 +280,7 @@ public class UlderaCrystalBoss extends NoHealthLimitMob implements AnimatedObjec
             if (living instanceof Player player){
                 return !player.isSpectator() && !player.isCreative();
             }
-            return this.isEntityReachable(living);
+            return !(living instanceof UlderaCrystalBuddy) && this.isEntityReachable(living);
         });
         if (entities.isEmpty()){
             return null;

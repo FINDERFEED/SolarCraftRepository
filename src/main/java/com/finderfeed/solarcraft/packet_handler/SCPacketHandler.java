@@ -1,5 +1,6 @@
 package com.finderfeed.solarcraft.packet_handler;
 
+import com.finderfeed.solarcraft.client.particles.server_data.shapes.SendShapeParticlesPacket;
 import com.finderfeed.solarcraft.content.blocks.infusing_table_things.UpdateProgressOnClientPacket;
 import com.finderfeed.solarcraft.content.blocks.infusing_table_things.UpdateStacksOnClientTable;
 import com.finderfeed.solarcraft.content.blocks.infusing_table_things.infusing_pool.UpdateStacksOnClientPacketPool;
@@ -99,6 +100,7 @@ public class SCPacketHandler {
         INSTANCE.registerMessage(nextID(), AnimationsSyncPacket.class, AnimationsSyncPacket::toBytes, AnimationsSyncPacket::new, AnimationsSyncPacket::handle);
         INSTANCE.registerMessage(nextID(), StartEntityAnimationPacket.class, StartEntityAnimationPacket::toBytes, StartEntityAnimationPacket::new, StartEntityAnimationPacket::handle);
         INSTANCE.registerMessage(nextID(), RemoveEntityAnimationPacket.class, RemoveEntityAnimationPacket::toBytes, RemoveEntityAnimationPacket::new, RemoveEntityAnimationPacket::handle);
+        INSTANCE.registerMessage(nextID(), SendShapeParticlesPacket.class, SendShapeParticlesPacket::toBytes, SendShapeParticlesPacket::new, SendShapeParticlesPacket::handle);
 
 
     }

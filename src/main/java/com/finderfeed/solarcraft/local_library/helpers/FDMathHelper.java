@@ -25,6 +25,13 @@ public class FDMathHelper {
     public static final Function<Double,Double> SQUARE = (x)->x*x;
     public static final Function<Double,Double> FLIP = (x)->1-x;
 
+
+    //-y1/z1 = *z2;
+    public static Vec3 findRandomNormalVec(Vec3 v){
+        double z = -v.y/v.z;
+        return new Vec3(0,1,z).normalize();
+    }
+
     public static boolean isBetweenValues(float value,float val1,float val2){
         return value >= val1 && value <= val2;
     }

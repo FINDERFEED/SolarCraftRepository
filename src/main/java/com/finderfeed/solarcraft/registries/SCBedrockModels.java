@@ -6,9 +6,8 @@ import net.minecraft.resources.ResourceLocation;
 
 public class SCBedrockModels {
 
-    public static final FDModelInfo TEST_MODEL = new FDModelInfo(new ResourceLocation(SolarCraft.MOD_ID,"models/bedrock/test.geo.json"),1f);
-    public static final FDModelInfo TEST_MODEL_NORMALS = new FDModelInfo(new ResourceLocation(SolarCraft.MOD_ID,"models/bedrock/test_normals.geo.json"),1f);
     public static final FDModelInfo ULDERA_CRYSTAL = new FDModelInfo(new ResourceLocation(SolarCraft.MOD_ID,"models/bedrock/uldera_crystal.geo.json"),1f);
+    public static final FDModelInfo EFFECT_CRYSTAL = new FDModelInfo(new ResourceLocation(SolarCraft.MOD_ID,"models/bedrock/effect_crystal.geo.json"),1f);
 
 
     public static void init(){}

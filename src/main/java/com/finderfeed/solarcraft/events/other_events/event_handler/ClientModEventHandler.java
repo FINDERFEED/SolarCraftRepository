@@ -24,6 +24,7 @@ import com.finderfeed.solarcraft.content.blocks.solar_forge_block.SolarForgeBloc
 import com.finderfeed.solarcraft.content.entities.CrystalBossBar;
 import com.finderfeed.solarcraft.content.entities.projectiles.renderers.*;
 import com.finderfeed.solarcraft.content.entities.renderers.*;
+import com.finderfeed.solarcraft.content.entities.renderers.uldera_crystal.EffectCrystalRenderer;
 import com.finderfeed.solarcraft.content.entities.renderers.uldera_crystal.UlderaCrystalBossRenderer;
 import com.finderfeed.solarcraft.content.entities.renderers.uldera_crystal.UlderaLightningRenderer;
 import com.finderfeed.solarcraft.content.entities.runic_elemental.RunicElementalBossBar;
@@ -271,6 +272,7 @@ public class ClientModEventHandler {
         event.registerEntityRenderer(SCEntityTypes.ULDERA_CRYSTAL_BOSS.get(), UlderaCrystalBossRenderer::new);
         event.registerEntityRenderer(SCEntityTypes.Projectiles.HOMING_STAR.get(), HomingStarProjectileRenderer::new);
         event.registerEntityRenderer(SCEntityTypes.ULDERA_LIGHTNING.get(), UlderaLightningRenderer::new);
+        event.registerEntityRenderer(SCEntityTypes.EFFECT_CRYSTAL.get(), EffectCrystalRenderer::new);
     }
 
 }

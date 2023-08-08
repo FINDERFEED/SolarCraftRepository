@@ -11,6 +11,7 @@ import com.finderfeed.solarcraft.content.blocks.blockentities.projectiles.Abstra
 import com.finderfeed.solarcraft.content.blocks.blockentities.projectiles.MortarProjectile;
 import com.finderfeed.solarcraft.content.blocks.blockentities.projectiles.ShadowBolt;
 import com.finderfeed.solarcraft.content.entities.runic_elemental.RunicElementalBoss;
+import com.finderfeed.solarcraft.content.entities.uldera_crystal.EffectCrystal;
 import com.finderfeed.solarcraft.content.entities.uldera_crystal.UlderaCrystalBoss;
 import com.finderfeed.solarcraft.content.entities.uldera_crystal.UlderaLightningEntity;
 import com.finderfeed.solarcraft.content.items.solar_disc_gun.SolarDiscProjectile;
@@ -148,6 +149,10 @@ public class SCEntityTypes {
             EntityType.Builder.<UlderaLightningEntity>of(UlderaLightningEntity::new, MobCategory.MISC)
                     .sized(0.1f, 0.1f).build("uldera_lightning"));
 
+    public static final RegistryObject<EntityType<EffectCrystal>> EFFECT_CRYSTAL = ENTITY_TYPE_REGISTER.register("effect_crystal", () ->
+            EntityType.Builder.<EffectCrystal>of(EffectCrystal::new, MobCategory.CREATURE)
+                    .sized(1f, 1f).build("effect_crystal"));
+
     public static final RegistryObject<EntityType<UlderaCrystalBoss>> ULDERA_CRYSTAL_BOSS = ENTITY_TYPE_REGISTER.register("uldera_crystal_boss",()->
             EntityType.Builder.of(UlderaCrystalBoss::new,MobCategory.MONSTER).sized(1,16.5f).build("uldera_crystal_boss"));
 
@@ -188,6 +193,7 @@ public class SCEntityTypes {
             event.put(SCEntityTypes.SHADOW_ZOMBIE.get(), ShadowZombie.createAttributes().build());
             event.put(SCEntityTypes.CORRUPTION_WISP.get(), CorruptionWisp.createAttributes().build());
             event.put(SCEntityTypes.ULDERA_CRYSTAL_BOSS.get(), UlderaCrystalBoss.createCrystalAttributes().build());
+            event.put(SCEntityTypes.EFFECT_CRYSTAL.get(), EffectCrystal.createAttributes().build());
         }
 
     }

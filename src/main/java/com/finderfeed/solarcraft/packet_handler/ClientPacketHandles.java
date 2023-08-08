@@ -1,5 +1,6 @@
 package com.finderfeed.solarcraft.packet_handler;
 
+import com.finderfeed.solarcraft.client.particles.server_data.shapes.ParticleSpawnShape;
 import com.finderfeed.solarcraft.config.JsonConfig;
 import com.finderfeed.solarcraft.content.blocks.blockentities.runic_energy.AbstractRunicEnergyContainer;
 import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.client.SunShardPuzzleScreen;
@@ -24,6 +25,7 @@ import com.google.gson.JsonParser;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundLevelChunkPacketData;
@@ -36,6 +38,10 @@ import java.util.UUID;
 
 public class ClientPacketHandles {
 
+
+    public static void handleSpawnShapeParticlesPacket(ParticleSpawnShape spawnShape, ParticleOptions options,double x,double y,double z,double xd,double yd,double zd){
+        spawnShape.placeParticles(ClientHelpers.getLevel(),options, x,y,z,xd,yd,zd);
+    }
 
     public static void handleUpdateChunkPacket(int x, int z, ClientboundLevelChunkPacketData data){
         Minecraft.getInstance().level.getChunkSource().replaceWithPacketData(
