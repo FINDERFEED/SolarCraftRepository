@@ -1,6 +1,8 @@
 package com.finderfeed.solarcraft.content.entities.uldera_crystal;
 
 import com.finderfeed.solarcraft.client.particles.ball_particle.BallParticleOptions;
+import com.finderfeed.solarcraft.client.particles.server_data.shapes.SendShapeParticlesPacket;
+import com.finderfeed.solarcraft.client.particles.server_data.shapes.instances.BurstAttackParticleShape;
 import com.finderfeed.solarcraft.content.entities.projectiles.HomingStarProjectile;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.local_library.bedrock_loader.animations.AnimatedObject;
@@ -9,6 +11,7 @@ import com.finderfeed.solarcraft.local_library.bedrock_loader.animations.manager
 import com.finderfeed.solarcraft.local_library.bedrock_loader.animations.manager.EntityServerAnimationManager;
 import com.finderfeed.solarcraft.local_library.entities.BossAttackChain;
 import com.finderfeed.solarcraft.misc_things.NoHealthLimitMob;
+import com.finderfeed.solarcraft.packet_handler.PacketHelper;
 import com.finderfeed.solarcraft.registries.animations.SCAnimations;
 import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
 import net.minecraft.core.BlockPos;
@@ -46,12 +49,17 @@ public class UlderaCrystalBoss extends NoHealthLimitMob implements AnimatedObjec
             .setTimeBetweenAttacks(40)
             .addAttack("homingStars",this::homingStarsRelease, 50*5 - 1,1,0)
             .addAttack("lightnings",this::summonLightnings,200,20,1)
+            .addAttack("effectCrystals",this::throwEffectCrystals,60,1,2)
             .addPostEffectToAttack("lightnings",()->{
                 this.getAnimationManager().stopAnimation(ATTACK_1_TICKER);
                 this.getAnimationManager().stopAnimation(TEMP1);
             })
             .addPostEffectToAttack("homingStars",()->{
                 this.getAnimationManager().stopAnimation(ATTACK_1_TICKER);
+            })
+            .addPostEffectToAttack("effectCrystals",()->{
+                this.getAnimationManager().stopAnimation(ATTACK_1_TICKER);
+                this.getAnimationManager().stopAnimation(TEMP1);
             })
             .build();
 
@@ -110,6 +118,7 @@ public class UlderaCrystalBoss extends NoHealthLimitMob implements AnimatedObjec
         );
     }
 
+    //lightning start
     private void summonLightnings(){
         this.getAnimationManager().setAnimation(ATTACK_1_TICKER,AnimationTicker.Builder.begin(SCAnimations.ULDERA_CRYSTAL_INFLATE_POSE.get())
                         .toNullTransitionTime(20)
@@ -133,7 +142,7 @@ public class UlderaCrystalBoss extends NoHealthLimitMob implements AnimatedObjec
     }
 
     private List<BlockPos> generateRandomLightningPositions(){
-        double radius = 20;
+        double radius = 30;
         List<BlockPos> sector1 = new ArrayList<>();
         List<BlockPos> sector2 = new ArrayList<>();
         List<BlockPos> sector3 = new ArrayList<>();
@@ -184,6 +193,72 @@ public class UlderaCrystalBoss extends NoHealthLimitMob implements AnimatedObjec
         }
         return positions;
     }
+    //lightning end
+
+
+    //effect crystals
+    private void throwEffectCrystals(){
+        if (this.bossChain.getTicker() == this.bossChain.getCurrentAttack().getTime()) {
+            int rad = 20;
+            if (this.isSectorClearForEffectCrystal(-rad, -rad)) {
+                this.summonCrystal(-rad, -rad);
+            }
+            if (this.isSectorClearForEffectCrystal(rad, -rad)) {
+                this.summonCrystal(rad, -rad);
+            }
+            if (this.isSectorClearForEffectCrystal(-rad, rad)) {
+                this.summonCrystal(-rad, rad);
+            }
+            if (this.isSectorClearForEffectCrystal(rad, rad)) {
+                this.summonCrystal(rad, rad);
+            }
+        }else if (this.bossChain.getTicker() == 0){
+            this.getAnimationManager().setAnimation(ATTACK_1_TICKER,
+                    AnimationTicker.Builder.begin(SCAnimations.ULDERA_CRYSTAL_ATTACK_1_POSE.get())
+                            .startFrom(0)
+                            .replaceable(true)
+                            .toNullTransitionTime(15)
+                            .build());
+            this.getAnimationManager().setAnimation(TEMP1,
+                    AnimationTicker.Builder.begin(SCAnimations.ULDERA_CRYSTAL_INFLATE_POSE.get())
+                            .startFrom(0)
+                            .replaceable(true)
+                            .toNullTransitionTime(15)
+                            .build());
+        }else if (this.bossChain.getTicker() == this.bossChain.getCurrentAttack().getTime() - 5){
+            this.getAnimationManager().stopAnimation(ATTACK_1_TICKER);
+            this.getAnimationManager().stopAnimation(TEMP1);
+        }
+    }
+
+    private void summonCrystal(int xOffs,int zOffs){
+        EffectCrystal crystal = new EffectCrystal(SCEntityTypes.EFFECT_CRYSTAL.get(),level);
+        Vec3 pos = this.position().add(xOffs/2,this.getBbHeight()/2,zOffs/2);
+        crystal.setPos(pos);
+        level.addFreshEntity(crystal);
+        PacketHelper.sendToPlayersTrackingEntity(this,
+                new SendShapeParticlesPacket(
+                        new BurstAttackParticleShape(this.getCenterPos(),pos,0.5f,3,
+                                0.025),
+                        BallParticleOptions.Builder.begin()
+                                .setLifetime(60)
+                                .setSize(0.15f)
+                                .setRGB(90,0,186)
+                                .setShouldShrink(true)
+                                .setPhysics(false)
+                                .build()
+                ));
+    }
+
+    private boolean isSectorClearForEffectCrystal(int offsX,int offsZ){
+        AABB box = new AABB(
+                this.position(),
+                this.position().add(offsX,this.getBbHeight(),offsZ)
+        );
+        return level.getEntitiesOfClass(EffectCrystal.class,box).isEmpty();
+    }
+
+    //effect crystals end
 
     protected void doPush(Entity entity) {
         entity.setDeltaMovement(entity.position().add(0,entity.getBbHeight()/2,0).subtract(this.position().add(0,this.getBbHeight()/2,0)).normalize());
@@ -252,6 +327,7 @@ public class UlderaCrystalBoss extends NoHealthLimitMob implements AnimatedObjec
         if (target == null) return false;
         if (target instanceof UlderaCrystalBuddy) return false;
         if (target.isDeadOrDying()) return false;
+        if (target instanceof Player player && (player.isCreative() || player.isSpectator())) return false;
         Vec3 centerPos = this.getCenterPos();
         Vec3 targetCenter = target.position().add(0,target.getEyeHeight(target.getPose())/2f,0);
         if (centerPos.multiply(1,0,1).subtract(targetCenter.multiply(1,0,1)).length() > 30){

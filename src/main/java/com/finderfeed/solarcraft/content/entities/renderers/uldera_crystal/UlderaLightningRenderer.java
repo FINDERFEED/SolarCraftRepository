@@ -24,7 +24,7 @@ public class UlderaLightningRenderer extends EntityRenderer<UlderaLightningEntit
         RenderingTools.Lightning3DRenderer.renderLightning3D(src,matrices,
                 Vec3.ZERO,Vec3.ZERO.add(0,lightning.getHeight(),0),
                 (int)(lightning.level.getGameTime()/3*4923)
-                + (int)lightning.position().length()*4309,2,0.25f,lightning.getHeight()/40,
+                + (int)lightning.position().length()*4309,2,0.4f,lightning.getHeight()/30,
                 120,40,186,100);
         matrices.popPose();
     }
