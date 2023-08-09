@@ -1,6 +1,6 @@
 package com.finderfeed.solarcraft.content.entities.projectiles;
 
-import com.finderfeed.solarcraft.client.particles.SolarcraftParticleTypes;
+import com.finderfeed.solarcraft.client.particles.SCParticleTypes;
 import com.finderfeed.solarcraft.content.blocks.blockentities.TemporaryLightTile;
 import com.finderfeed.solarcraft.content.blocks.primitive.TemporaryLightBlock;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
@@ -48,7 +48,7 @@ public class ThrownLightProjectile extends NormalProjectile{
             double ry = random.nextDouble() * 0.5 - 0.25f;
             double rz = random.nextDouble() * 0.5 - 0.25f;
             Vec3 p = this.position().add(rx,ry,rz);
-            ClientHelpers.Particles.createParticle(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+            ClientHelpers.Particles.createParticle(SCParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
                     p.x,p.y,p.z,0,0.05,0,random.nextInt(20) + 200,random.nextInt(20) + 200,20,
                     random.nextFloat() * 0.25f + 0.25f);
         }else{

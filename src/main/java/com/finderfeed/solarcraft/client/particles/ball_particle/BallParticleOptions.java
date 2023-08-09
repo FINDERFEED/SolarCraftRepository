@@ -1,6 +1,6 @@
 package com.finderfeed.solarcraft.client.particles.ball_particle;
 
-import com.finderfeed.solarcraft.client.particles.SolarcraftParticleTypes;
+import com.finderfeed.solarcraft.client.particles.SCParticleTypes;
 import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.serialization.Codec;
@@ -18,7 +18,7 @@ public class BallParticleOptions implements ParticleOptions {
 
         @Override
         public BallParticleOptions fromNetwork(ParticleType<BallParticleOptions> type, FriendlyByteBuf buf) {
-            if (type != SolarcraftParticleTypes.BALL_PARTICLE.get()){
+            if (type != SCParticleTypes.BALL_PARTICLE.get()){
                 return new BallParticleOptions(0.25f,255,255,255,60,true,true);
             }
             return BallParticleOptions.fromNetwork(buf);
@@ -55,7 +55,7 @@ public class BallParticleOptions implements ParticleOptions {
 
     @Override
     public ParticleType<?> getType() {
-        return SolarcraftParticleTypes.BALL_PARTICLE.get();
+        return SCParticleTypes.BALL_PARTICLE.get();
     }
 
     @Override

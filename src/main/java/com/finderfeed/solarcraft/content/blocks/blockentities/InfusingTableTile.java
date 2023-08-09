@@ -6,7 +6,7 @@ import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.local_library.OwnedBlock;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.Progression;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragmentHelper;
-import com.finderfeed.solarcraft.client.particles.SolarcraftParticleTypes;
+import com.finderfeed.solarcraft.client.particles.SCParticleTypes;
 import com.finderfeed.solarcraft.misc_things.PhantomInventory;
 import com.finderfeed.solarcraft.content.recipe_types.infusing_crafting.InfusingCraftingRecipe;
 import com.finderfeed.solarcraft.registries.items.SolarcraftItems;
@@ -121,14 +121,14 @@ public class InfusingTableTile extends BlockEntity implements OwnedBlock, IWanda
                         double a = Math.toRadians(i * 180 + time % 360);
                         double x = 0.5 * Math.sin(a);
                         double z = 0.5 * Math.cos(a);
-                        ClientHelpers.ParticleConstructor c = new ClientHelpers.ParticleConstructor(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(), pos.x + x, pos.y + 0.9, pos.z + z, 0, 0, 0);
+                        ClientHelpers.ParticleConstructor c = new ClientHelpers.ParticleConstructor(SCParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(), pos.x + x, pos.y + 0.9, pos.z + z, 0, 0, 0);
                     }
                 }
                 int tm = Math.min(recipeTime*maxOutput,InfusingTableTile.ANIM_TIME);
                 if (remainingRecipeTime < tm) {
                     Vec3 vec3 = Helpers.randomVector();
                     Vec3 pos = Helpers.getBlockCenter(worldPosition);
-                    ClientHelpers.ParticleConstructor c = new ClientHelpers.ParticleConstructor(SolarcraftParticleTypes.SPARK_PARTICLE.get(), pos.x, pos.y + 0.9, pos.z, vec3.x * 0.01, vec3.y * 0.01, vec3.z * 0.01)
+                    ClientHelpers.ParticleConstructor c = new ClientHelpers.ParticleConstructor(SCParticleTypes.SPARK_PARTICLE.get(), pos.x, pos.y + 0.9, pos.z, vec3.x * 0.01, vec3.y * 0.01, vec3.z * 0.01)
                             .setColor(255, 255, Math.round(40 + level.random.nextFloat() * 120));
                 }
             }

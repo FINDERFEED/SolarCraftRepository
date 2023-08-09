@@ -1,7 +1,6 @@
 package com.finderfeed.solarcraft.content.entities.projectiles;
 
-import com.finderfeed.solarcraft.client.particles.SolarcraftParticle;
-import com.finderfeed.solarcraft.client.particles.SolarcraftParticleTypes;
+import com.finderfeed.solarcraft.client.particles.SCParticleTypes;
 import com.finderfeed.solarcraft.content.entities.OrbitalCannonExplosionEntity;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.helpers.Helpers;
@@ -19,10 +18,8 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractHurtingProjectile;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraftforge.common.world.ForgeChunkManager;
 import net.minecraftforge.network.NetworkDirection;
 
 import java.util.List;
@@ -64,7 +61,7 @@ public class OrbitalExplosionProjectile extends NormalProjectile{
 
     private void clientTick(){
         for (int i = 0; i < 5;i++){
-            ClientHelpers.Particles.createParticle(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+            ClientHelpers.Particles.createParticle(SCParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
                     this.getX() + level.random.nextDouble()*3-1.5,
                     this.getY() + level.random.nextDouble()*3-1.5,
                     this.getZ() + level.random.nextDouble()*3-1.5,

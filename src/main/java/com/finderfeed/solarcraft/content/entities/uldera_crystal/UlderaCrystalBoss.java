@@ -1,8 +1,10 @@
 package com.finderfeed.solarcraft.content.entities.uldera_crystal;
 
 import com.finderfeed.solarcraft.client.particles.ball_particle.BallParticleOptions;
+import com.finderfeed.solarcraft.client.particles.lightning_particle.LightningParticleOptions;
 import com.finderfeed.solarcraft.client.particles.server_data.shapes.SendShapeParticlesPacket;
 import com.finderfeed.solarcraft.client.particles.server_data.shapes.instances.BurstAttackParticleShape;
+import com.finderfeed.solarcraft.client.particles.server_data.shapes.instances.SphereParticleShape;
 import com.finderfeed.solarcraft.content.entities.projectiles.HomingStarProjectile;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.local_library.bedrock_loader.animations.AnimatedObject;
@@ -80,6 +82,25 @@ public class UlderaCrystalBoss extends NoHealthLimitMob implements AnimatedObjec
                     .build());
             if (this.getTarget() != null) {
                 bossChain.tick();
+            }
+
+            if (level.getGameTime() % 200 == 0){
+                Vec3 pos = this.getCenterPos().add(0,20,0);
+                PacketHelper.sendToPlayersTrackingEntity(
+                        this,
+                        new SendShapeParticlesPacket(
+                                new SphereParticleShape(1,0.05,2),
+                                new LightningParticleOptions(0.2f,
+                                        90,0,186,
+                                        2,level.random.nextInt(),
+                                        60
+                                        ),
+                                pos.x,pos.y,pos.z,
+                                0,0,0
+
+                        )
+                );
+                System.out.println("particles spawned");
             }
         }
     }
@@ -259,6 +280,9 @@ public class UlderaCrystalBoss extends NoHealthLimitMob implements AnimatedObjec
     }
 
     //effect crystals end
+
+
+
 
     protected void doPush(Entity entity) {
         entity.setDeltaMovement(entity.position().add(0,entity.getBbHeight()/2,0).subtract(this.position().add(0,this.getBbHeight()/2,0)).normalize());

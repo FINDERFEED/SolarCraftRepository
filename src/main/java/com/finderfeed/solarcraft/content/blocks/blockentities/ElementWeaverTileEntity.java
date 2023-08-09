@@ -1,6 +1,6 @@
 package com.finderfeed.solarcraft.content.blocks.blockentities;
 
-import com.finderfeed.solarcraft.client.particles.SolarcraftParticleTypes;
+import com.finderfeed.solarcraft.client.particles.SCParticleTypes;
 import com.finderfeed.solarcraft.content.items.runic_energy.RunicEnergyCost;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.helpers.Helpers;
@@ -12,7 +12,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
@@ -55,12 +54,12 @@ public class ElementWeaverTileEntity extends REItemHandlerBlockEntity{
                         if (tile.isActive()) {
                             Vec3 pos = Helpers.posToVec(tile.getBlockPos()).add(i * (1 - k*2) + k, 0.2, g * (1 - k*2) + k);
                             ClientHelpers.Particles.createParticle(
-                                    SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+                                    SCParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
                                     pos.x, pos.y, pos.z, 0, 0, 0, 255, 255, 40, 0.3f
                             );
                             pos = Helpers.posToVec(tile.getBlockPos()).add(i * (1 - k*2) + k, 0.8, g * (1 - k*2) + k);
                             ClientHelpers.Particles.createParticle(
-                                    SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+                                    SCParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
                                     pos.x, pos.y, pos.z, 0, 0, 0, 255, 255, 40, 0.3f
                             );
                         }

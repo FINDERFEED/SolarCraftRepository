@@ -1,6 +1,6 @@
 package com.finderfeed.solarcraft.content.blocks.blockentities.clearing_ritual;
 
-import com.finderfeed.solarcraft.client.particles.SolarcraftParticleTypes;
+import com.finderfeed.solarcraft.client.particles.SCParticleTypes;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.Progression;
 import com.finderfeed.solarcraft.events.other_events.event_handler.SCEventHandler;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
@@ -110,7 +110,7 @@ public class ClearingRitual {
                 if (worldtime >= 16500 && worldtime <= 19500){
                     Vec3 pos = Helpers.getBlockCenter(tilePos).add(0,-0.25,0)
                             .add(world.random.nextDouble() * 2 - 1,world.random.nextDouble() * 0.5f - 0.25d,world.random.nextDouble() * 2 - 1);
-                    ClientHelpers.Particles.createParticle(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+                    ClientHelpers.Particles.createParticle(SCParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
                             pos.x, pos.y, pos.z, 0, 0.05 * (world.random.nextDouble()*0.5 + 0.5), 0,
                             220 + world.random.nextInt(35), 220 + world.random.nextInt(35), world.random.nextInt(20),
                             0.5f);
@@ -126,7 +126,7 @@ public class ClearingRitual {
             Vec3 particleSpawnPos = center.add(rnd).add(0, -2, 0);
             Vec3 between = center.subtract(particleSpawnPos);
             Vec3 pSpeed = between.multiply(0.03, 0.03, 0.03);
-            ClientHelpers.Particles.createParticle(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+            ClientHelpers.Particles.createParticle(SCParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
                     particleSpawnPos.x, particleSpawnPos.y, particleSpawnPos.z, pSpeed.x, pSpeed.y, pSpeed.z,
                     220 + world.random.nextInt(35), 220 + world.random.nextInt(35), world.random.nextInt(20),
                     0.5f);
@@ -138,7 +138,7 @@ public class ClearingRitual {
                 double rxdoRing = world.random.nextDouble() * 0.06 - 0.03;
                 double rydoRing = world.random.nextDouble() * 0.06 - 0.03;
                 double rzdoRing = world.random.nextDouble() * 0.06 - 0.03;
-                ClientHelpers.Particles.createParticle(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+                ClientHelpers.Particles.createParticle(SCParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
                         pSpawnPosOuterRing.x + rxoRing, pSpawnPosOuterRing.y + ryoRing, pSpawnPosOuterRing.z + rzoRing,
                         rxdoRing, rydoRing, rzdoRing,
                         220 + world.random.nextInt(35), 220 + world.random.nextInt(35), world.random.nextInt(20),
@@ -157,7 +157,7 @@ public class ClearingRitual {
                 double rndZ = tile.getLevel().random.nextDouble()*0.5 - 0.25;
                 double rndY = tile.getLevel().random.nextDouble()*0.2 - 0.1;
                 Vec3 p = pPos.add(rndX,rndY + i,rndZ);
-                ClientHelpers.Particles.createParticle(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+                ClientHelpers.Particles.createParticle(SCParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
                         p.x,p.y,p.z,0,0,0,
                         220 + world.random.nextInt(35), 220 + world.random.nextInt(35), world.random.nextInt(20),0.25f);
             }

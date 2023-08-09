@@ -1,6 +1,6 @@
 package com.finderfeed.solarcraft.content.entities.not_alive;
 
-import com.finderfeed.solarcraft.client.particles.SolarcraftParticleTypes;
+import com.finderfeed.solarcraft.client.particles.SCParticleTypes;
 import com.finderfeed.solarcraft.packet_handler.packets.misc_packets.BallLightningSpawnLightningParticles;
 import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
 import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
@@ -54,7 +54,7 @@ public class BallLightningProjectile extends AbstractHurtingProjectile {
 
     @Override
     protected ParticleOptions getTrailParticle() {
-        return SolarcraftParticleTypes.INVISIBLE_PARTICLE.get();
+        return SCParticleTypes.INVISIBLE_PARTICLE.get();
     }
 
     @Override

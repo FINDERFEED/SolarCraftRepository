@@ -1,6 +1,6 @@
 package com.finderfeed.solarcraft.content.blocks.blockentities;
 
-import com.finderfeed.solarcraft.client.particles.SolarcraftParticleTypes;
+import com.finderfeed.solarcraft.client.particles.SCParticleTypes;
 
 import com.finderfeed.solarcraft.content.items.solar_wand.wand_actions.structure_check.IStructureOwner;
 import com.finderfeed.solarcraft.helpers.multiblock.MultiblockStructure;
@@ -39,7 +39,7 @@ public class AuraHealerTile extends BlockEntity implements IStructureOwner {
                         if (a.getHealth() != a.getMaxHealth()) {
                             a.heal(4);
                             for (int i = 10; i < 16; i++) {
-                                ((ServerLevel) tile.level).sendParticles(SolarcraftParticleTypes.HEAL_PARTICLE.get(), a.position().x, a.position().y + 1.35f, a.position().z, 5, 0, 0.3, 0, 0.02);
+                                ((ServerLevel) tile.level).sendParticles(SCParticleTypes.HEAL_PARTICLE.get(), a.position().x, a.position().y + 1.35f, a.position().z, 5, 0, 0.3, 0, 0.02);
                             }
                         }
                     }

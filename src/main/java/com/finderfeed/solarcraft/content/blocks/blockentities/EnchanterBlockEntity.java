@@ -3,7 +3,7 @@ package com.finderfeed.solarcraft.content.blocks.blockentities;
 
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.helpers.Helpers;
-import com.finderfeed.solarcraft.client.particles.SolarcraftParticleTypes;
+import com.finderfeed.solarcraft.client.particles.SCParticleTypes;
 import com.finderfeed.solarcraft.config.enchanter_config.EnchanterConfig;
 import com.finderfeed.solarcraft.config.enchanter_config.EnchanterConfigInit;
 import com.finderfeed.solarcraft.local_library.helpers.FDMathHelper;
@@ -91,13 +91,13 @@ public class EnchanterBlockEntity extends REItemHandlerBlockEntity {
             if (enchanter.enchantingInProgress() ) {
                 Vec3 center = Helpers.getBlockCenter(pos);
                 ClientHelpers.Particles.verticalCircle(
-                        SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(), center.add(0,-0.25,0), 0.75, 3, new float[]{0, 0, 0},
+                        SCParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(), center.add(0,-0.25,0), 0.75, 3, new float[]{0, 0, 0},
                         () -> 255, () -> 255, () -> 0, 0.25f
                 );
 
                 for (int i = 0; i < 3; i++) {
                     double[] xz = FDMathHelper.rotatePointDegrees(0.5, 0, i * 120 + 120 * Math.sin(world.getGameTime() / 20f));
-                    ClientHelpers.Particles.createParticle(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+                    ClientHelpers.Particles.createParticle(SCParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
                             center.x + xz[0], center.y - 0.2, center.z + xz[1], 0, 0.07, 0, () -> 255, () -> 255, () -> 0, 0.25f);
                 }
             }

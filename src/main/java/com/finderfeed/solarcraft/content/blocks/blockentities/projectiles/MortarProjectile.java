@@ -1,7 +1,7 @@
 package com.finderfeed.solarcraft.content.blocks.blockentities.projectiles;
 
 import com.finderfeed.solarcraft.misc_things.AbstractMortarProjectile;
-import com.finderfeed.solarcraft.client.particles.SolarcraftParticleTypes;
+import com.finderfeed.solarcraft.client.particles.SCParticleTypes;
 import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -28,7 +28,7 @@ public class MortarProjectile extends AbstractMortarProjectile {
 
     @Override
     protected ParticleOptions getTrailParticle() {
-        return SolarcraftParticleTypes.INVISIBLE_PARTICLE.get();
+        return SCParticleTypes.INVISIBLE_PARTICLE.get();
     }
 
     @Override

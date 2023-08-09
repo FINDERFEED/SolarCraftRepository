@@ -1,6 +1,6 @@
 package com.finderfeed.solarcraft.content.blocks.primitive;
 
-import com.finderfeed.solarcraft.client.particles.SolarcraftParticleTypes;
+import com.finderfeed.solarcraft.client.particles.SCParticleTypes;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.DeadBushBlock;
@@ -24,7 +24,7 @@ public class SolarFlower extends DeadBushBlock {
                 BlockState blockstate = level.getBlockState(blockpos);
                 if (!state.canOcclude() || !blockstate.isFaceSturdy(level, blockpos, direction.getOpposite())) {
 
-                    level.addParticle(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(), (double)pos.getX()+0.5f +(random.nextFloat()*0.4)-0.2, (double)pos.getY() +0.5+(random.nextFloat()*0.4)-0.2, (double)pos.getZ()+0.5f +(random.nextFloat()*0.4)-0.2, 0.0D, 0.01D, 0.0D);
+                    level.addParticle(SCParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(), (double)pos.getX()+0.5f +(random.nextFloat()*0.4)-0.2, (double)pos.getY() +0.5+(random.nextFloat()*0.4)-0.2, (double)pos.getZ()+0.5f +(random.nextFloat()*0.4)-0.2, 0.0D, 0.01D, 0.0D);
                 }
             }
         }
@@ -38,7 +38,7 @@ public class SolarFlower extends DeadBushBlock {
                 BlockState blockstate = p_180655_2_.getBlockState(blockpos);
                 if (!p_180655_1_.canOcclude() || !blockstate.isFaceSturdy(p_180655_2_, blockpos, direction.getOpposite())) {
 
-                    p_180655_2_.addParticle(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(), (double)p_180655_3_.getX()+0.5f +(p_180655_2_.random.nextFloat()*0.4)-0.2, (double)p_180655_3_.getY() +0.5+(p_180655_2_.random.nextFloat()*0.4)-0.2, (double)p_180655_3_.getZ()+0.5f +(p_180655_2_.random.nextFloat()*0.4)-0.2, 0.0D, 0.01D, 0.0D);
+                    p_180655_2_.addParticle(SCParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(), (double)p_180655_3_.getX()+0.5f +(p_180655_2_.random.nextFloat()*0.4)-0.2, (double)p_180655_3_.getY() +0.5+(p_180655_2_.random.nextFloat()*0.4)-0.2, (double)p_180655_3_.getZ()+0.5f +(p_180655_2_.random.nextFloat()*0.4)-0.2, 0.0D, 0.01D, 0.0D);
                 }
             }
         }

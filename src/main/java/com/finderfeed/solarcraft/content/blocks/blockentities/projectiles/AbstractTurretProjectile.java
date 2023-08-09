@@ -1,6 +1,6 @@
 package com.finderfeed.solarcraft.content.blocks.blockentities.projectiles;
 
-import com.finderfeed.solarcraft.client.particles.SolarcraftParticleTypes;
+import com.finderfeed.solarcraft.client.particles.SCParticleTypes;
 import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.world.entity.EntityType;
@@ -88,7 +88,7 @@ public class AbstractTurretProjectile extends AbstractHurtingProjectile {
     @Override
     public void tick(){
         if (level.isClientSide) {
-            level.addParticle(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(), true, position().x, position().y + 0.15, position().z, 0, 0, 0);
+            level.addParticle(SCParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(), true, position().x, position().y + 0.15, position().z, 0, 0, 0);
         }
         super.tick();
 
@@ -101,7 +101,7 @@ public class AbstractTurretProjectile extends AbstractHurtingProjectile {
 
     @Override
     protected ParticleOptions getTrailParticle() {
-        return SolarcraftParticleTypes.INVISIBLE_PARTICLE.get();
+        return SCParticleTypes.INVISIBLE_PARTICLE.get();
     }
 
     @Override

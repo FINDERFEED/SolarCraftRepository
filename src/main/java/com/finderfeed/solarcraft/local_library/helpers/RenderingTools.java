@@ -1796,7 +1796,7 @@ public class RenderingTools {
             Vec3 between = end.subtract(init);
             List<Vec3> points = new ArrayList<>(List.of(init));
             for (int i = 0; i < breaksCount;i++){
-                float randomY = random.nextFloat() * maxSpread * (random.nextInt(3) == 0 ? 1 : -1);
+                float randomY = random.nextFloat() * maxSpread * (random.nextInt(2) == 0 ? 1 : -1);
                 double multiplier = (i+1) / (double)(breaksCount+1);
                 Vec3 f = init.add(between.multiply(multiplier,multiplier,multiplier).add(0,randomY,0));
                 points.add(f);
@@ -1807,6 +1807,20 @@ public class RenderingTools {
 
         public static void renderLightning(PoseStack matrices,MultiBufferSource source,int breaksCount,float maxSpread,float rectangleHeights,Vec3 initialPos,Vec3 endPos,Random random,float r,float g,float b){
             VertexConsumer vertex = source.getBuffer(RenderType.lightning());
+            Vec3 between = endPos.subtract(initialPos);
+            float length = (float)between.length();
+            List<Vec3> dots = generateLightningPositions(random,breaksCount,length,maxSpread,initialPos,endPos);
+            matrices.pushPose();
+            for (int i = 0; i < dots.size()-1;i++){
+                Vec3 init = dots.get(i);
+                Vec3 end = dots.get(i+1);
+                renderLightningRectangle3D(vertex,matrices,init,end,rectangleHeights,r,g,b);
+            }
+            matrices.popPose();
+        }
+
+        public static void renderLightning(PoseStack matrices,VertexConsumer vertex,int breaksCount,float maxSpread,float rectangleHeights,Vec3 initialPos,Vec3 endPos,Random random,float r,float g,float b){
+
             Vec3 between = endPos.subtract(initialPos);
             float length = (float)between.length();
             List<Vec3> dots = generateLightningPositions(random,breaksCount,length,maxSpread,initialPos,endPos);

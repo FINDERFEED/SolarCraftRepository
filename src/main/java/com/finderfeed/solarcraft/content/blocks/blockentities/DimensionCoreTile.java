@@ -1,6 +1,6 @@
 package com.finderfeed.solarcraft.content.blocks.blockentities;
 
-import com.finderfeed.solarcraft.client.particles.SolarcraftParticleTypes;
+import com.finderfeed.solarcraft.client.particles.SCParticleTypes;
 import com.finderfeed.solarcraft.content.items.solar_wand.wand_actions.structure_check.IStructureOwner;
 import com.finderfeed.solarcraft.events.other_events.event_handler.SCEventHandler;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
@@ -76,7 +76,7 @@ public class DimensionCoreTile extends BlockEntity implements IStructureOwner {
             double[] xz = FDMathHelper.rotatePointDegrees(x,0,rotAngle);
             x = xz[0];
             double z = xz[1];
-            ClientHelpers.Particles.createParticle(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+            ClientHelpers.Particles.createParticle(SCParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
                     portalCenter.x + x,portalCenter.y + y,portalCenter.z + z,0,0,0,r,gr,b,0.25f);
         }
         for (int i = 0; i < 8;i++){
@@ -91,7 +91,7 @@ public class DimensionCoreTile extends BlockEntity implements IStructureOwner {
                 double rz = world.random.nextDouble()*0.5 - 0.25;
                 double mx = mod * x / rad * 0.05;
                 double mz = mod * z / rad * 0.05;
-                ClientHelpers.Particles.createParticle(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+                ClientHelpers.Particles.createParticle(SCParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
                         portalCenter.x + x + rx,portalCenter.y + ry,portalCenter.z + z + rz,mx,0,mz,r,gr,b,0.25f);
             }
         }

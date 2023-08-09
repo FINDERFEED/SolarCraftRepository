@@ -3,7 +3,7 @@ package com.finderfeed.solarcraft.content.blocks.blockentities;
 import com.finderfeed.solarcraft.content.entities.ShadowZombie;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.helpers.Helpers;
-import com.finderfeed.solarcraft.client.particles.SolarcraftParticleTypes;
+import com.finderfeed.solarcraft.client.particles.SCParticleTypes;
 import com.finderfeed.solarcraft.content.blocks.blockentities.projectiles.ShadowBolt;
 import com.finderfeed.solarcraft.content.entities.projectiles.SummoningProjectile;
 import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
@@ -79,7 +79,7 @@ public class UlderaPylon extends BlockEntity {
         }else{
             if (world.getGameTime() % 4 == 0) {
                 Vec3 p = Helpers.getBlockCenter(pos).add(Helpers.randomVector().multiply(0.5,0.5,0.5));
-                ClientHelpers.Particles.createParticle(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+                ClientHelpers.Particles.createParticle(SCParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
                         p.x, p.y, p.z, 0, 0.05, 0, () -> 50, () -> 0, () -> 130, 0.4f);
             }
         }

@@ -1,7 +1,7 @@
 package com.finderfeed.solarcraft.content.blocks.primitive;
 
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
-import com.finderfeed.solarcraft.client.particles.SolarcraftParticleTypes;
+import com.finderfeed.solarcraft.client.particles.SCParticleTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
@@ -24,7 +24,7 @@ public class VoidLily extends DeadBushBlock {
                 BlockState blockstate = level.getBlockState(blockpos);
                 if (!state.canOcclude() || !blockstate.isFaceSturdy(level, blockpos, direction.getOpposite())) {
                     ClientHelpers.Particles.createParticle(
-                            SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+                            SCParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
                             (double)pos.getX()+0.5f +(level.random.nextFloat()*0.4)-0.2, (double)pos.getY() +0.5+(level.random.nextFloat()*0.4)-0.2, (double)pos.getZ()+0.5f +(level.random.nextFloat()*0.4)-0.2, 0.0D, 0.01D, 0.0D,
                             ()->72,()->0,()->255,0.25f
                     );

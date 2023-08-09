@@ -3,7 +3,7 @@ package com.finderfeed.solarcraft.content.entities.projectiles;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.content.entities.CrystalBossEntity;
 import com.finderfeed.solarcraft.misc_things.CrystalBossBuddy;
-import com.finderfeed.solarcraft.client.particles.SolarcraftParticleTypes;
+import com.finderfeed.solarcraft.client.particles.SCParticleTypes;
 import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.nbt.CompoundTag;
@@ -85,7 +85,7 @@ public class CrystalBossAttackHoldingMissile extends AbstractHurtingProjectile i
             double d0 = this.getX() + vec3.x;
             double d1 = this.getY() + vec3.y;
             double d2 = this.getZ() + vec3.z;
-            this.level.addParticle(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(), d0, d1 + 0.125D, d2, 0.0D, 0.0D, 0.0D);
+            this.level.addParticle(SCParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(), d0, d1 + 0.125D, d2, 0.0D, 0.0D, 0.0D);
 
         }
     }
@@ -149,7 +149,7 @@ public class CrystalBossAttackHoldingMissile extends AbstractHurtingProjectile i
 
     @Override
     protected ParticleOptions getTrailParticle() {
-        return SolarcraftParticleTypes.INVISIBLE_PARTICLE.get();
+        return SCParticleTypes.INVISIBLE_PARTICLE.get();
     }
 
     public static class Builder{

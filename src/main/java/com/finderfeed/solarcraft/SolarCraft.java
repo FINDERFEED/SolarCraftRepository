@@ -16,7 +16,7 @@ import com.finderfeed.solarcraft.content.blocks.SolarOreBlock;
 import com.finderfeed.solarcraft.content.blocks.infusing_table_things.*;
 import com.finderfeed.solarcraft.content.blocks.infusing_table_things.infusing_pool.InfusingStand;
 import com.finderfeed.solarcraft.content.items.item_tiers.SolarCraftToolTiers;
-import com.finderfeed.solarcraft.client.particles.SolarcraftParticleTypes;
+import com.finderfeed.solarcraft.client.particles.SCParticleTypes;
 import com.finderfeed.solarcraft.registries.ConfigRegistry;
 import com.finderfeed.solarcraft.registries.SCCreativeTabs;
 import com.finderfeed.solarcraft.registries.SolarcraftGamerules;
@@ -148,7 +148,7 @@ public class SolarCraft
 
     public SolarCraft() {
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
-        SolarcraftParticleTypes.PARTICLES.register(bus);
+        SCParticleTypes.PARTICLES.register(bus);
         EFFECTS.register(bus);
         SOUND_EVENTS.register(bus);
         ENTITY_TYPE_REGISTER.register(bus);

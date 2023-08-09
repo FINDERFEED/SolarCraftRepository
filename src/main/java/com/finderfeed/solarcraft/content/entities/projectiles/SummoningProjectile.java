@@ -1,7 +1,7 @@
 package com.finderfeed.solarcraft.content.entities.projectiles;
 
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
-import com.finderfeed.solarcraft.client.particles.SolarcraftParticleTypes;
+import com.finderfeed.solarcraft.client.particles.SCParticleTypes;
 import com.finderfeed.solarcraft.registries.data_serializers.FDEntityDataSerializers;
 import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -54,7 +54,7 @@ public class SummoningProjectile extends NormalProjectile {
                 double rz = level.random.nextDouble()-0.5d;
                 Vec3 v = this.position().add(rx,ry,rz);
                 Vec3 color = this.entityData.get(COLOR);
-                ClientHelpers.Particles.createParticle(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+                ClientHelpers.Particles.createParticle(SCParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
                         v.x,v.y,v.z,0,0,0,(int)(color.x*255),(int)(color.y*255),(int)(color.z*255),0.5f);
             }
         }

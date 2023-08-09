@@ -1,6 +1,6 @@
 package com.finderfeed.solarcraft.content.blocks.blockentities;
 
-import com.finderfeed.solarcraft.client.particles.SolarcraftParticleTypes;
+import com.finderfeed.solarcraft.client.particles.SCParticleTypes;
 import com.finderfeed.solarcraft.content.items.solar_wand.wand_actions.structure_check.IStructureOwner;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.helpers.Helpers;
@@ -28,10 +28,10 @@ public class ExplosionBlockerBlockEntity extends SolarcraftBlockEntity implement
     public static void tick(ExplosionBlockerBlockEntity b, Level world){
         if (b.shouldRenderShield) {
 
-            ClientHelpers.Particles.horizontalXCircle(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+            ClientHelpers.Particles.horizontalXCircle(SCParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
                     Helpers.getBlockCenter(b.getBlockPos()), 3, 2, new float[]{0, 0, 0},
                     () -> 87, () -> 202, () -> 255, 0.4f, 2f, 0);
-            ClientHelpers.Particles.horizontalZCircle(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+            ClientHelpers.Particles.horizontalZCircle(SCParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
                     Helpers.getBlockCenter(b.getBlockPos()), 3, 2, new float[]{0, 0, 0},
                     () -> 87, () -> 202, () -> 255, 0.4f, 2f, 90);
         }

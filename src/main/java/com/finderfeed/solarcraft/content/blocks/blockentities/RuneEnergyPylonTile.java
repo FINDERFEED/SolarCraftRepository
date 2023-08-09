@@ -3,7 +3,7 @@ package com.finderfeed.solarcraft.content.blocks.blockentities;
 import com.finderfeed.solarcraft.content.items.solar_wand.wand_actions.drain_runic_enenrgy_action.IREWandDrainable;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.SolarCraftTags;
-import com.finderfeed.solarcraft.client.particles.SolarcraftParticleTypes;
+import com.finderfeed.solarcraft.client.particles.SCParticleTypes;
 import com.finderfeed.solarcraft.config.SolarcraftConfig;
 import com.finderfeed.solarcraft.content.blocks.blockentities.runic_energy.RunicEnergyGiver;
 import com.finderfeed.solarcraft.content.blocks.primitive.InscriptionStone;
@@ -91,7 +91,7 @@ public class RuneEnergyPylonTile extends BlockEntity implements  DebugTarget, Ru
                         double rndY = entity.level.random.nextDouble() * 0.6 - 0.3;
                         double rndZ = entity.level.random.nextDouble() * 0.6 - 0.3;
 
-                        entity.level.addParticle(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+                        entity.level.addParticle(SCParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
                                 entity.position().x + rndX, entity.position().y + rndY, entity.position().z + rndZ, 0, 0.1, 0
                         );
                     }

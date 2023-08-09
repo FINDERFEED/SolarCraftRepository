@@ -1,7 +1,7 @@
 package com.finderfeed.solarcraft.misc_things;
 
 import com.finderfeed.solarcraft.helpers.Helpers;
-import com.finderfeed.solarcraft.client.particles.SolarcraftParticleTypes;
+import com.finderfeed.solarcraft.client.particles.SCParticleTypes;
 import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
 
 import net.minecraft.nbt.CompoundTag;
@@ -84,11 +84,11 @@ public abstract class AbstractMortarProjectile extends AbstractHurtingProjectile
 
 
         }
-        this.level.addParticle(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),this.position().x,this.position().y,this.position().z,0,0,0);
-        this.level.addParticle(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),this.position().x,this.position().y-0.25,this.position().z,0,0,0);
-        this.level.addParticle(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),this.position().x,this.position().y+0.25,this.position().z,0,0,0);
-        this.level.addParticle(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),this.position().x+0.25,this.position().y,this.position().z,0,0,0);
-        this.level.addParticle(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),this.position().x-0.25,this.position().y,this.position().z,0,0,0);
+        this.level.addParticle(SCParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),this.position().x,this.position().y,this.position().z,0,0,0);
+        this.level.addParticle(SCParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),this.position().x,this.position().y-0.25,this.position().z,0,0,0);
+        this.level.addParticle(SCParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),this.position().x,this.position().y+0.25,this.position().z,0,0,0);
+        this.level.addParticle(SCParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),this.position().x+0.25,this.position().y,this.position().z,0,0,0);
+        this.level.addParticle(SCParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),this.position().x-0.25,this.position().y,this.position().z,0,0,0);
 
         if (!level.isClientSide && removeit){
             this.kill();
@@ -132,7 +132,7 @@ public abstract class AbstractMortarProjectile extends AbstractHurtingProjectile
             float length =(float) getExplosionRadius();
             double offsetx = length * Math.cos(Math.toRadians(i*22.5));
             double offsetz = length * Math.sin(Math.toRadians(i*22.5));
-            this.level.addParticle(SolarcraftParticleTypes.SOLAR_STRIKE_PARTICLE.get(),pos.x +offsetx,pos.y,pos.z +offsetz,0,0.05,0);
+            this.level.addParticle(SCParticleTypes.SOLAR_STRIKE_PARTICLE.get(),pos.x +offsetx,pos.y,pos.z +offsetz,0,0.05,0);
 
 
 
@@ -142,7 +142,7 @@ public abstract class AbstractMortarProjectile extends AbstractHurtingProjectile
                 float length = (float) getExplosionRadius();
                 double offsetx = this.level.random.nextFloat()*length * Math.cos(Math.toRadians(i*22.5));
                 double offsetz = this.level.random.nextFloat()*length * Math.sin(Math.toRadians(i*22.5));
-                this.level.addParticle(SolarcraftParticleTypes.SOLAR_STRIKE_PARTICLE.get(),pos.x +offsetx,pos.y,pos.z +offsetz,0,0.05,0);
+                this.level.addParticle(SCParticleTypes.SOLAR_STRIKE_PARTICLE.get(),pos.x +offsetx,pos.y,pos.z +offsetz,0,0.05,0);
 
             }
 

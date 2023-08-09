@@ -21,7 +21,7 @@ import com.finderfeed.solarcraft.content.entities.projectiles.RandomBadEffectPro
 import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.Progression;
 import com.finderfeed.solarcraft.misc_things.CrystalBossBuddy;
 import com.finderfeed.solarcraft.misc_things.NoHealthLimitMob;
-import com.finderfeed.solarcraft.client.particles.SolarcraftParticleTypes;
+import com.finderfeed.solarcraft.client.particles.SCParticleTypes;
 import com.finderfeed.solarcraft.registries.attributes.AttributesRegistry;
 import com.finderfeed.solarcraft.registries.damage_sources.SolarcraftDamageSources;
 import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
@@ -184,7 +184,7 @@ public class CrystalBossEntity extends NoHealthLimitMob implements CrystalBossBu
     private void chargingUpClient(){
         for (int i = 0;i < 5;i++) {
             Vec3 vec = Helpers.randomVector().multiply(3,3,3);
-            level.addParticle(SolarcraftParticleTypes.SOLAR_EXPLOSION_PARTICLE.get(),
+            level.addParticle(SCParticleTypes.SOLAR_EXPLOSION_PARTICLE.get(),
                     this.position().x + vec.x,this.position().y + vec.y + this.getBbHeight()/2,this.position().z + vec.z,
                     -vec.x*0.05,-vec.y*0.05,-vec.z*0.05);
         }
@@ -280,13 +280,13 @@ public class CrystalBossEntity extends NoHealthLimitMob implements CrystalBossBu
                 if (rounded == RAY_PREPARING){
 
                     double[] coords = FDMathHelper.polarToCartesian(0.4,Math.toRadians(level.getGameTime()*30));
-                    level.addParticle(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+                    level.addParticle(SCParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
                             this.position().x+
                                     rayparticlesvalue.getValue(),
                             this.position().y+1.6+coords[0],
                             this.position().z+coords[1],
                             0,0,0);
-                    level.addParticle(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+                    level.addParticle(SCParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
                             this.position().x-
                                     rayparticlesvalue.getValue(),
                             this.position().y+1.6+coords[0],
@@ -299,13 +299,13 @@ public class CrystalBossEntity extends NoHealthLimitMob implements CrystalBossBu
                     Vec3 vec1 = new Vec3(rayparticlesvalue.getValue(),0,coords[0]).yRot(firstangle);
                     Vec3 vec2 = new Vec3(rayparticlesvalue.getValue(),0,coords[0]).yRot(secondangle);
 
-                    level.addParticle(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+                    level.addParticle(SCParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
                                 this.position().x +vec1.x,
                                 this.position().y+1.6+coords[1],
                                 this.position().z + vec1.z,
                                 0,0,0);
 
-                    level.addParticle(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+                    level.addParticle(SCParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
                                 this.position().x  +vec2.x,
                                 this.position().y+1.6 +coords[1],
                                 this.position().z  + vec2.z,

@@ -10,7 +10,7 @@ import com.finderfeed.solarcraft.content.items.solar_wand.wand_actions.structure
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.SolarCraft;
-import com.finderfeed.solarcraft.client.particles.SolarcraftParticleTypes;
+import com.finderfeed.solarcraft.client.particles.SCParticleTypes;
 import com.finderfeed.solarcraft.helpers.multiblock.MultiblockStructure;
 import com.finderfeed.solarcraft.helpers.multiblock.Multiblocks;
 import com.finderfeed.solarcraft.local_library.helpers.FDMathHelper;
@@ -270,7 +270,7 @@ public class InfuserTileEntity extends REItemHandlerBlockEntity implements Solar
                 double[] xz = FDMathHelper.rotatePointRadians(7,0,h);
                 double x = xz[0];
                 double z = xz[1];
-                ClientHelpers.Particles.randomline(SolarcraftParticleTypes.SPARK_PARTICLE.get(),
+                ClientHelpers.Particles.randomline(SCParticleTypes.SPARK_PARTICLE.get(),
                         center.add(x, 4, z), center, 0.5, () -> 255, () -> 255, () -> r, 0.4f,0.05f);
             }
             for (int i = 1; i <= 4; i++) {
@@ -278,10 +278,10 @@ public class InfuserTileEntity extends REItemHandlerBlockEntity implements Solar
                 double[] xz = FDMathHelper.rotatePointRadians(6.5f,0,h);
                 double x = xz[0];
                 double z = xz[1];
-                ClientHelpers.Particles.randomline(SolarcraftParticleTypes.SPARK_PARTICLE.get(),
+                ClientHelpers.Particles.randomline(SCParticleTypes.SPARK_PARTICLE.get(),
                         center.add(x, 4, z), center, 0.5, () -> 255, () -> 255, () -> r, 0.4f,0.05f);
             }
-            ClientHelpers.Particles.verticalCircle(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+            ClientHelpers.Particles.verticalCircle(SCParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
                     center.add(0, -0.5, 0), 3, 4, new float[]{0, 0, 0}, () -> 255, () -> 255, () -> r, 0.35f);
             return true;
         }else{
@@ -293,7 +293,7 @@ public class InfuserTileEntity extends REItemHandlerBlockEntity implements Solar
         if (firstTierAnimation(tile,world)) {
             for (BlockPos pos : NotStructures.infusingPoolsPositions(tile.worldPosition)) {
                 Vec3 center = Helpers.getBlockCenter(pos);
-                ClientHelpers.Particles.verticalCircle(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+                ClientHelpers.Particles.verticalCircle(SCParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
                         center, 1, 3, new float[]{0, 0, 0}, () -> 255, () -> 255, () -> Math.round(world.random.nextFloat() * 128) + 40, 0.25f);
             }
             return true;
@@ -305,9 +305,9 @@ public class InfuserTileEntity extends REItemHandlerBlockEntity implements Solar
     public static void thirdTierAnimation(InfuserTileEntity tile,Level world){
         if (secondTierAnimation(tile,world)) {
             Vec3 center = Helpers.getBlockCenter(tile.getBlockPos());
-            ClientHelpers.Particles.verticalCircle(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+            ClientHelpers.Particles.verticalCircle(SCParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
                     center.add(0, 6, 0), 3, 4, new float[]{0, 0, 0}, () -> 255, () -> 255, ()->40, 0.25f);
-            ClientHelpers.Particles.verticalCircle(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+            ClientHelpers.Particles.verticalCircle(SCParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
                     center.add(0, 8, 0), 3, 4, new float[]{0, 0, 0}, () -> 255, () -> 255, ()->40, 0.25f);
         }
     }
@@ -688,9 +688,9 @@ public class InfuserTileEntity extends REItemHandlerBlockEntity implements Solar
                     BlockPos p = offsets[iter];
                     Vec3 v = new Vec3(p.getX(), p.getY(), p.getZ()).multiply(1 - rotValue, 1 - rotValue, 1 - rotValue).yRot(-(float) Math.toRadians(rotValue * 360));
                     Vec3 ps = Helpers.getBlockCenter(pos).add(v);
-                    ClientHelpers.Particles.createParticle(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(), ps.x, ps.y, ps.z,
+                    ClientHelpers.Particles.createParticle(SCParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(), ps.x, ps.y, ps.z,
                             0, 0, 0, () -> 255, () -> 255, () -> 0, 0.25f);
-                    world.addParticle(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(), ps.x, ps.y, ps.z, 0, 0, 0);
+                    world.addParticle(SCParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(), ps.x, ps.y, ps.z, 0, 0, 0);
                 }
             }
 

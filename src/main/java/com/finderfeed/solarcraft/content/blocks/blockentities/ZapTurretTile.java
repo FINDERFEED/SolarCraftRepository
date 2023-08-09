@@ -7,7 +7,7 @@ import com.finderfeed.solarcraft.helpers.multiblock.Multiblocks;
 import com.finderfeed.solarcraft.local_library.helpers.CompoundNBTHelper;
 import com.finderfeed.solarcraft.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarcraft.local_library.OwnedBlock;
-import com.finderfeed.solarcraft.client.particles.SolarcraftParticleTypes;
+import com.finderfeed.solarcraft.client.particles.SCParticleTypes;
 
 import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
 import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
@@ -16,7 +16,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -104,7 +103,7 @@ public class ZapTurretTile extends BlockEntity implements OwnedBlock, IStructure
                         Vec3 normal = between.normalize().multiply(1 / multiplier, 1 / multiplier, 1 / multiplier);
                         for (float g = 1; g < between.length() * multiplier; g++) {
                             Vec3 position = tile.targets.get(i).add(normal.multiply(g, g, g));
-                            world.addParticle(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(), position.x, position.y, position.z, 0, 0, 0);
+                            world.addParticle(SCParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(), position.x, position.y, position.z, 0, 0, 0);
                         }
                         if (i != 0) {
                             Helpers.createSmallSolarStrikeParticleExplosion(world, tile.targets.get(i),2,0.04f,1f);

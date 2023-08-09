@@ -3,7 +3,7 @@ package com.finderfeed.solarcraft.content.runic_network.repeater;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.local_library.helpers.CompoundNBTHelper;
 import com.finderfeed.solarcraft.local_library.helpers.FDMathHelper;
-import com.finderfeed.solarcraft.client.particles.SolarcraftParticleTypes;
+import com.finderfeed.solarcraft.client.particles.SCParticleTypes;
 import com.finderfeed.solarcraft.misc_things.DebugTarget;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
 import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
@@ -62,7 +62,7 @@ public class BaseRepeaterTile extends BlockEntity implements DebugTarget {
 
             Vec3 basePos = startPos.add(vector.normalize().multiply(i,i,i));
 
-            level.addParticle(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+            level.addParticle(SCParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
                     basePos.x + rndX,
                     basePos.y + rndY,
                     basePos.z + rndZ,

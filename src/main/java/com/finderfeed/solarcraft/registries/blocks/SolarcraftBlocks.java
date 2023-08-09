@@ -16,7 +16,7 @@ import com.finderfeed.solarcraft.content.blocks.primitive.*;
 import com.finderfeed.solarcraft.content.blocks.primitive.SolarFlower;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.Progression;
 import com.finderfeed.solarcraft.content.runic_network.repeater.RunicNetworkRepeater;
-import com.finderfeed.solarcraft.client.particles.SolarcraftParticleTypes;
+import com.finderfeed.solarcraft.client.particles.SCParticleTypes;
 import com.finderfeed.solarcraft.registries.effects.SolarcraftEffects;
 import com.finderfeed.solarcraft.content.world_generation.structures.blocks.ColdStarInfuser;
 import com.finderfeed.solarcraft.content.world_generation.structures.blocks.InvincibleStone;
@@ -175,7 +175,7 @@ public class SolarcraftBlocks {
         public void animateTick(BlockState p_220827_, Level world, BlockPos pos, RandomSource random) {
             if (random.nextInt(5) == 0) {
                 Vec3 vec = Helpers.randomVector().normalize().multiply(0.5,0.5,0.5);
-                world.addParticle(SolarcraftParticleTypes.CRYSTAL_SPARK_PARTICLE.get(),pos.getX() + 0.5 + vec.x,pos.getY() + 0.5 + vec.y,pos.getZ() + 0.5 + vec.z,0,0,0);
+                world.addParticle(SCParticleTypes.CRYSTAL_SPARK_PARTICLE.get(),pos.getX() + 0.5 + vec.x,pos.getY() + 0.5 + vec.y,pos.getZ() + 0.5 + vec.z,0,0,0);
             }
         }
 

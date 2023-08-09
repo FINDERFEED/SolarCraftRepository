@@ -1,6 +1,6 @@
 package com.finderfeed.solarcraft.content.entities.projectiles;
 
-import com.finderfeed.solarcraft.client.particles.SolarcraftParticleTypes;
+import com.finderfeed.solarcraft.client.particles.SCParticleTypes;
 import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
 import com.finderfeed.solarcraft.registries.items.SolarcraftItems;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
@@ -162,7 +162,7 @@ public class BlockBoomerangProjectile extends AbstractHurtingProjectile {
 
     @Override
     protected ParticleOptions getTrailParticle() {
-        return SolarcraftParticleTypes.INVISIBLE_PARTICLE.get();
+        return SCParticleTypes.INVISIBLE_PARTICLE.get();
     }
 
 

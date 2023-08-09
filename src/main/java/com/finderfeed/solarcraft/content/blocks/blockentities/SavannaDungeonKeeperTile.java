@@ -1,7 +1,7 @@
 package com.finderfeed.solarcraft.content.blocks.blockentities;
 
 import com.finderfeed.solarcraft.SolarCraft;
-import com.finderfeed.solarcraft.client.particles.SolarcraftParticleTypes;
+import com.finderfeed.solarcraft.client.particles.SCParticleTypes;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.Progression;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.helpers.Helpers;
@@ -12,20 +12,13 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.util.RandomSource;
-import net.minecraft.world.effect.MobEffect;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.monster.Vex;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.levelgen.RandomState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -35,7 +28,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import java.util.List;
-import java.util.Random;
 
 public class SavannaDungeonKeeperTile extends SolarcraftBlockEntity {
 
@@ -67,7 +59,7 @@ public class SavannaDungeonKeeperTile extends SolarcraftBlockEntity {
         if (!world.isClientSide){
             if (tile.isAlreadyUsed()){
                 world.destroyBlock(pos, false);
-                    ((ServerLevel)world).sendParticles(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+                    ((ServerLevel)world).sendParticles(SCParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
                             pos.getX() + 0.5d, pos.getY() + 0.5d, pos.getZ() + 0.5d,30,
                             0,0,0,0.05d);
 
@@ -110,7 +102,7 @@ public class SavannaDungeonKeeperTile extends SolarcraftBlockEntity {
                         Vec3 ppos = p.add(offset.getX()+0.5f,offset.getY() + 0.25f,offset.getZ()+0.5f);
                         for (int i = 0; i < 10;i++) {
                             ClientHelpers.Particles.createParticle(
-                                    SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+                                    SCParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
                                     ppos.x, ppos.y, ppos.z,
                                     world.random.nextDouble() * 0.05 - 0.025,
                                     world.random.nextDouble() * 0.05 - 0.025,

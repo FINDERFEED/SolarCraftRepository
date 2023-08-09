@@ -1,6 +1,6 @@
 package com.finderfeed.solarcraft.content.blocks.blockentities;
 
-import com.finderfeed.solarcraft.client.particles.SolarcraftParticleTypes;
+import com.finderfeed.solarcraft.client.particles.SCParticleTypes;
 import com.finderfeed.solarcraft.config.SolarcraftConfig;
 import com.finderfeed.solarcraft.content.blocks.blockentities.runic_energy.AbstractRunicEnergyContainer;
 import com.finderfeed.solarcraft.content.entities.projectiles.OrbitalExplosionProjectile;
@@ -65,7 +65,7 @@ public class SolarOrbitalMissileLauncherTileEntity extends AbstractRunicEnergyCo
               level.random.nextFloat(),
               level.random.nextFloat()
             ).add(Helpers.posToVec(this.getBlockPos())).add(0,1,0);
-            ClientHelpers.Particles.createParticle(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+            ClientHelpers.Particles.createParticle(SCParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
                     pos.x,pos.y,pos.z,0,0,0,
                     level.random.nextInt(40)+215,
                     level.random.nextInt(40)+215,
@@ -86,7 +86,7 @@ public class SolarOrbitalMissileLauncherTileEntity extends AbstractRunicEnergyCo
               0,
               Math.cos(angle * i + time) * radius
             ).add(center);
-            ClientHelpers.Particles.createParticle(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+            ClientHelpers.Particles.createParticle(SCParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
                     pos.x,pos.y,pos.z,0,0,0,
                     level.random.nextInt(40)+215,
                     level.random.nextInt(40)+215,
