@@ -89,10 +89,10 @@ public class UlderaCrystalBoss extends NoHealthLimitMob implements AnimatedObjec
                 PacketHelper.sendToPlayersTrackingEntity(
                         this,
                         new SendShapeParticlesPacket(
-                                new SphereParticleShape(1,0.05,2),
-                                new LightningParticleOptions(0.2f,
+                                new SphereParticleShape(0,0.5,2),
+                                new LightningParticleOptions(1f,
                                         90,0,186,
-                                        2,level.random.nextInt(),
+                                        2,-1,
                                         60
                                         ),
                                 pos.x,pos.y,pos.z,

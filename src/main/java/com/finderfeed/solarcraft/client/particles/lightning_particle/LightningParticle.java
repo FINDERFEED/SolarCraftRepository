@@ -16,14 +16,18 @@ import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.util.Mth;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
+import org.joml.Matrix4f;
 
 import java.util.Random;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class LightningParticle extends Particle {
 
     private LightningParticleOptions options;
 
     private float particleRoll;
+
+    private int seed;
     public LightningParticle(LightningParticleOptions options,ClientLevel level, double x, double y, double z, double xd, double yd, double zd) {
         super(level, x, y, z, xd, yd, zd);
         this.x = x;
@@ -36,9 +40,13 @@ public class LightningParticle extends Particle {
         this.lifetime = options.getLifetime();
         if (level != null){
             this.particleRoll = level.random.nextFloat() * 360;
+            if (options.getSeed() == -1){
+                seed = level.random.nextInt();
+            }
         }else{
             this.particleRoll = 0;
         }
+
     }
 
     @Override
@@ -65,23 +73,77 @@ public class LightningParticle extends Particle {
 
         matrices.mulPose(RenderingTools.rotationDegrees(RenderingTools.ZP(),this.particleRoll));
 
-        Random rnd = new Random(
-                level.getGameTime()*3413 + options.getSeed()
+        int lightningLength = 3;
+        matrices.scale(
+                options.getQuadSize(),
+                options.getQuadSize(),
+                options.getQuadSize()
         );
+        matrices.translate(-lightningLength*0.5f*0.1f,0,0);
 
-
-        RenderingTools.Lightning2DRenderer.renderLightning(matrices,vertex,
-                options.getBreaksCount(),size/2f,size/8f,
-                initPos,endPos,rnd,
+        Random rnd = new Random(
+                level.getGameTime()* 42442 + seed
+        );
+        render(lightningLength,matrices.last().pose(),vertex,rnd,0,
                 options.getR()/255f,
                 options.getG()/255f,
                 options.getB()/255f
-        );
-
+                ,1f);
 
         matrices.popPose();
 
     }
+
+
+    private void render(int length,Matrix4f m,VertexConsumer vertex,Random random,float zoffset,float r,float g,float b,float a){
+        int count = length;
+        float prevY = 0;
+        float prevX = 0;
+        for (int i = 0; i < count; i++){
+            int partsCount = 0;
+            if (i > 0){
+                partsCount = random.nextInt(3);
+            }
+            float y = random.nextFloat()*0.2f - 0.1f;
+            quad(m,vertex,prevX,prevY,prevX + 0.1f,y,0,r,g,b,a);
+
+            renderLightningPart(random,m,vertex,prevX,prevY,zoffset,r,g,b,a,new AtomicInteger(partsCount));
+
+            prevX += 0.1f;
+            prevY = y;
+        }
+    }
+
+    private void renderLightningPart(Random random,Matrix4f m, VertexConsumer v, float x, float y,float zoffset,float r,float g,float b,float a, AtomicInteger remaining){
+        int c = remaining.get();
+        if (c <= 0) return;
+        float yoffs = random.nextFloat()*0.2f - 0.1f;
+        quad(m,v,x,y,x + 0.1f,y + yoffs,zoffset,r,g,b,a);
+        int parts = random.nextInt(c) + 1;
+        remaining.set(c - parts);
+        for (int i = 0; i < parts;i++){
+            renderLightningPart(random,m,v,x + 0.1f,y + yoffs,zoffset,r,g,b,a,remaining);
+        }
+    }
+
+
+    private void quad(Matrix4f m,VertexConsumer vertex, float x1, float y1, float x2, float y2, float zoffset, float r, float g, float b,float a){
+        vertex.vertex(m,x1 ,y1 + 0.01f,zoffset).color(r,g,b,a).endVertex();
+        vertex.vertex(m,x2 ,y2 + 0.01f,zoffset).color(r,g,b,a).endVertex();
+        vertex.vertex(m,x2 ,y2 - 0.01f,zoffset).color(r,g,b,a).endVertex();
+        vertex.vertex(m,x1 ,y1 - 0.01f,zoffset).color(r,g,b,a).endVertex();
+
+
+        vertex.vertex(m,x1 ,y1 + 0.0025f,zoffset - 0.001f).color(1f,1f,1f,a).endVertex();
+        vertex.vertex(m,x2 ,y2 + 0.0025f,zoffset - 0.001f).color(1f,1f,1f,a).endVertex();
+        vertex.vertex(m,x2 ,y2 - 0.0025f,zoffset - 0.001f).color(1f,1f,1f,a).endVertex();
+        vertex.vertex(m,x1 ,y1 - 0.0025f,zoffset - 0.001f).color(1f,1f,1f,a).endVertex();
+
+
+
+
+    }
+
 
     @Override
     public ParticleRenderType getRenderType() {

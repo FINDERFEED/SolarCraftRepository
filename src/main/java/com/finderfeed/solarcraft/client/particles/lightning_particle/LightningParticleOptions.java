@@ -16,13 +16,13 @@ public class LightningParticleOptions implements ParticleOptions {
         @Override
         public LightningParticleOptions fromCommand(ParticleType<LightningParticleOptions> p_123733_, StringReader p_123734_) throws CommandSyntaxException {
 
-            return new LightningParticleOptions(0.1f, 255, 255, 0, 2, 2343542, 60);
+            return new LightningParticleOptions(1f, 255, 255, 0, 2, 2343542, 60);
         }
 
         @Override
         public LightningParticleOptions fromNetwork(ParticleType<LightningParticleOptions> type, FriendlyByteBuf buf) {
             if (type != SCParticleTypes.LIGHTNING_PARTICLE.get()) {
-                return new LightningParticleOptions(0.1f, 255, 255, 0, 2, 2343542, 60);
+                return new LightningParticleOptions(1f, 255, 255, 0, 2, 2343542, 60);
             }
             return new LightningParticleOptions(
                     buf.readFloat(),
