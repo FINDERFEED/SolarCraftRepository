@@ -15,11 +15,14 @@ import com.finderfeed.solarcraft.local_library.entities.BossAttackChain;
 import com.finderfeed.solarcraft.misc_things.NoHealthLimitMob;
 import com.finderfeed.solarcraft.packet_handler.PacketHelper;
 import com.finderfeed.solarcraft.registries.animations.SCAnimations;
+import com.finderfeed.solarcraft.registries.damage_sources.SolarcraftDamageSources;
+import com.finderfeed.solarcraft.registries.effects.SolarcraftEffects;
 import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.Mth;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
@@ -43,15 +46,20 @@ public class UlderaCrystalBoss extends NoHealthLimitMob implements AnimatedObjec
 
     public static final String ATTACK_1_TICKER = "attack_1";
     public static final String TEMP1 = "temp1";
+    public static final String TEMP2 = "temp2";
     private AnimationManager manager;
 
+    private int dontPush = 0;
+
     private List<BlockPos> lightningPositions = new ArrayList<>();
+
 
     private BossAttackChain bossChain = new BossAttackChain.Builder()
             .setTimeBetweenAttacks(40)
             .addAttack("homingStars",this::homingStarsRelease, 50*5 - 1,1,0)
             .addAttack("lightnings",this::summonLightnings,200,20,1)
             .addAttack("effectCrystals",this::throwEffectCrystals,60,1,2)
+            .addAttack("pullEntities",this::pullEntities,200,1,3)
             .addPostEffectToAttack("lightnings",()->{
                 this.getAnimationManager().stopAnimation(ATTACK_1_TICKER);
                 this.getAnimationManager().stopAnimation(TEMP1);
@@ -59,10 +67,14 @@ public class UlderaCrystalBoss extends NoHealthLimitMob implements AnimatedObjec
             .addPostEffectToAttack("homingStars",()->{
                 this.getAnimationManager().stopAnimation(ATTACK_1_TICKER);
             })
-            .addPostEffectToAttack("effectCrystals",()->{
-                this.getAnimationManager().stopAnimation(ATTACK_1_TICKER);
-                this.getAnimationManager().stopAnimation(TEMP1);
-            })
+//            .addPostEffectToAttack("effectCrystals",()->{
+//                this.getAnimationManager().stopAnimation(ATTACK_1_TICKER);
+//                this.getAnimationManager().stopAnimation(TEMP1);
+//            })
+//            .addPostEffectToAttack("pullEntities",()->{
+//                this.getAnimationManager().stopAnimation(TEMP2);
+//                this.getAnimationManager().stopAnimation(TEMP1);
+//            })
             .build();
 
     public UlderaCrystalBoss(EntityType<? extends NoHealthLimitMob> p_21368_, Level level) {
@@ -75,6 +87,7 @@ public class UlderaCrystalBoss extends NoHealthLimitMob implements AnimatedObjec
         super.tick();
         this.manager.tickAnimations();
         if (!level.isClientSide){
+            this.dontPush--;
             this.getAnimationManager().setAnimation("main",
                     new AnimationTicker.Builder(SCAnimations.ULDERA_CRYSTAL_IDLE.get())
                             .toNullTransitionTime(20)
@@ -82,25 +95,6 @@ public class UlderaCrystalBoss extends NoHealthLimitMob implements AnimatedObjec
                     .build());
             if (this.getTarget() != null) {
                 bossChain.tick();
-            }
-
-            if (level.getGameTime() % 200 == 0){
-                Vec3 pos = this.getCenterPos().add(0,20,0);
-                PacketHelper.sendToPlayersTrackingEntity(
-                        this,
-                        new SendShapeParticlesPacket(
-                                new SphereParticleShape(0,0.5,2),
-                                new LightningParticleOptions(1f,
-                                        90,0,186,
-                                        2,-1,
-                                        60
-                                        ),
-                                pos.x,pos.y,pos.z,
-                                0,0,0
-
-                        )
-                );
-                System.out.println("particles spawned");
             }
         }
     }
@@ -125,7 +119,7 @@ public class UlderaCrystalBoss extends NoHealthLimitMob implements AnimatedObjec
             projectile.setTarget(this.getTarget().getUUID());
             projectile.setRotationSpeed(0.075f);
             projectile.setShooter(this.getUUID());
-            projectile.setDamage(4f);
+            projectile.setDamage(5f);
             level.addFreshEntity(projectile);
         }
         ((ServerLevel)level).sendParticles(
@@ -156,7 +150,7 @@ public class UlderaCrystalBoss extends NoHealthLimitMob implements AnimatedObjec
             lightning.setHeight(100);
             lightning.setLightningDelay(40);
             lightning.setOwner(this.getUUID());
-            lightning.damage = 5;
+            lightning.damage = 20;
             level.addFreshEntity(lightning);
         }
         lightningPositions.clear();
@@ -282,9 +276,130 @@ public class UlderaCrystalBoss extends NoHealthLimitMob implements AnimatedObjec
     //effect crystals end
 
 
+    //pull attack
+
+    private void pullEntities(){
+        int tick = bossChain.getTicker();
+        if (tick == 0) {
+            this.getAnimationManager().setAnimation(TEMP1, new AnimationTicker.Builder(SCAnimations.ULDERA_CRYSTAL_INFLATE_POSE.get())
+                    .toNullTransitionTime(10)
+                    .replaceable(false)
+                    .build());
+            this.getAnimationManager().setAnimation(TEMP2, new AnimationTicker.Builder(SCAnimations.ULDERA_CRYSTAL_SHAKE.get())
+                    .toNullTransitionTime(10)
+                    .replaceable(false)
+                    .build());
+            this.performEntityPull();
+        }else if (tick == bossChain.getCurrentAttack().getTime() - 5){
+            this.getAnimationManager().stopAnimation(TEMP1);
+            this.getAnimationManager().stopAnimation(TEMP2);
+            this.performEntityPull();
+        }else if (tick >= bossChain.getCurrentAttack().getTime()){
+            this.sendExplosionParticles();
+            this.dealExplosionDamage();
+        }else{
+            this.performEntityPull();
+        }
+    }
+
+
+    public static final float PULL_DISTANCE = 20;
+
+    private void performEntityPull(){
+        for (LivingEntity entity : this.getPullAffectedEntities()){
+            Vec3 dist = this.getCenterPos().subtract(entity.position().add(0,entity.getBbHeight()/2,0));
+            Vec3 vdist = this.position().multiply(1,0,1).subtract(entity.position().multiply(1,0,1));
+
+            double vlen = vdist.length();
+            float str = this.getPullStrength();
+            Vec3 movement = entity.getDeltaMovement();
+            double entitySpeed = movement.length();
+            entitySpeed = Mth.clamp(entitySpeed,0.1,Double.MAX_VALUE);
+            double mult = entitySpeed * str * 0.6;
+            double yMod = 2 / vlen;
+            double ySpeed = 0.1;
+            if (yMod < 1 || str < 1){
+                yMod = 0.05;
+            }else{
+                yMod = Mth.clamp(yMod,0,4);
+            }
+            double finalYSpeed = yMod * ySpeed * str;
+
+            Vec3 pullSpeed = dist.normalize().multiply(mult,finalYSpeed,mult);
+            Vec3 finalSpeed = movement.add(pullSpeed);
+            finalSpeed = new Vec3(finalSpeed.x,Mth.clamp(finalSpeed.y,-0.1,0.1),finalSpeed.z);
+            if (entity instanceof ServerPlayer player){
+                Helpers.setServerPlayerSpeed(player,finalSpeed);
+            }else{
+                entity.setDeltaMovement(finalSpeed);
+            }
+        }
+    }
+
+    private float getPullStrength(){
+        return Mth.clamp(this.bossChain.getTicker()/80f,0,1);
+    }
+    private void dealExplosionDamage(){
+        float baseDamage = 15;
+        for (LivingEntity entity : this.getPullAffectedEntities()){
+            Vec3 dist = entity.position().add(0,entity.getBbHeight()/2,0).subtract(this.getCenterPos());
+            float damage = calculateDistanceDamage(baseDamage,(float)dist.length());
+            entity.hurt(SolarcraftDamageSources.livingArmorPierce(this),damage);
+        }
+    }
+
+    private static final AABB PULL_ENTITY_BOX = new AABB(-PULL_DISTANCE,-PULL_DISTANCE,-PULL_DISTANCE,PULL_DISTANCE,PULL_DISTANCE,PULL_DISTANCE);
+    private List<LivingEntity> getPullAffectedEntities(){
+        return level.getEntitiesOfClass(LivingEntity.class,PULL_ENTITY_BOX.move(this.getCenterPos()),entity->{
+           if (entity instanceof Player player){
+               return !player.isSpectator() && !player.isCreative();
+           }
+           return !(entity instanceof UlderaCrystalBuddy);
+        });
+    }
+
+    private float calculateDistanceDamage(float base,float distance){
+        float distanceMod = distance / (PULL_DISTANCE / 2f);
+        return 4 * (float)Math.pow(4,-distanceMod) * base;
+    }
+
+    private void sendExplosionParticles(){
+        Vec3 v = this.getCenterPos();
+        PacketHelper.sendToPlayersTrackingEntity(this,new SendShapeParticlesPacket(
+                new SphereParticleShape(0.5,0.6f,3),
+                new BallParticleOptions.Builder().setRGB(90,0,186).setPhysics(false)
+                        .setShouldShrink(true).setSize(0.25f).build(),
+                v.x,v.y,v.z,0,0,0
+        ));
+        PacketHelper.sendToPlayersTrackingEntity(this,new SendShapeParticlesPacket(
+                new SphereParticleShape(0,0.6f,2),
+                new LightningParticleOptions(2f,90,0,186,-1,60),
+                v.x,v.y,v.z,0,0,0
+        ));
+        PacketHelper.sendToPlayersTrackingEntity(this,new SendShapeParticlesPacket(
+                new SphereParticleShape(1.5,0.8f,3),
+                new BallParticleOptions.Builder().setRGB(90,0,186).setPhysics(false)
+                        .setShouldShrink(true).setSize(0.25f).build(),
+                v.x,v.y,v.z,0,0,0
+        ));
+        PacketHelper.sendToPlayersTrackingEntity(this,new SendShapeParticlesPacket(
+                new SphereParticleShape(1,0.8f,2),
+                new LightningParticleOptions(2f,90,0,186,-1,60),
+                v.x,v.y,v.z,0,0,0
+        ));
+    }
+
+    //end pull attack
+
 
 
     protected void doPush(Entity entity) {
+        if (this.bossChain.getCurrentAttack() != null && this.bossChain.getCurrentAttack().getSerializationId().equals("pullEntities")){
+            dontPush = 20;
+            return;
+        }else if (this.dontPush > 0){
+            return;
+        }
         entity.setDeltaMovement(entity.position().add(0,entity.getBbHeight()/2,0).subtract(this.position().add(0,this.getBbHeight()/2,0)).normalize());
     }
 
@@ -306,8 +421,8 @@ public class UlderaCrystalBoss extends NoHealthLimitMob implements AnimatedObjec
     }
 
     @Override
-    public boolean canBeAffected(MobEffectInstance p_21197_) {
-        return false;
+    public boolean canBeAffected(MobEffectInstance inst) {
+        return inst.getEffect() == SolarcraftEffects.IMMORTALITY_EFFECT.get();
     }
 
     @Override
@@ -354,7 +469,11 @@ public class UlderaCrystalBoss extends NoHealthLimitMob implements AnimatedObjec
         if (target instanceof Player player && (player.isCreative() || player.isSpectator())) return false;
         Vec3 centerPos = this.getCenterPos();
         Vec3 targetCenter = target.position().add(0,target.getEyeHeight(target.getPose())/2f,0);
-        if (centerPos.multiply(1,0,1).subtract(targetCenter.multiply(1,0,1)).length() > 30){
+        double vlen = centerPos.multiply(1,0,1).subtract(targetCenter.multiply(1,0,1)).length();
+        if (vlen <= 0.1){
+            return true;
+        }
+        if (vlen > 30){
             return false;
         }
         if (!this.isEntityReachable(target)){

@@ -16,17 +16,16 @@ public class LightningParticleOptions implements ParticleOptions {
         @Override
         public LightningParticleOptions fromCommand(ParticleType<LightningParticleOptions> p_123733_, StringReader p_123734_) throws CommandSyntaxException {
 
-            return new LightningParticleOptions(1f, 255, 255, 0, 2, 2343542, 60);
+            return new LightningParticleOptions(1f, 255, 255, 0, -1, 60);
         }
 
         @Override
         public LightningParticleOptions fromNetwork(ParticleType<LightningParticleOptions> type, FriendlyByteBuf buf) {
             if (type != SCParticleTypes.LIGHTNING_PARTICLE.get()) {
-                return new LightningParticleOptions(1f, 255, 255, 0, 2, 2343542, 60);
+                return new LightningParticleOptions(1f, 255, 255, 0,  -1, 60);
             }
             return new LightningParticleOptions(
                     buf.readFloat(),
-                    buf.readInt(),
                     buf.readInt(),
                     buf.readInt(),
                     buf.readInt(),
@@ -41,17 +40,16 @@ public class LightningParticleOptions implements ParticleOptions {
     private int r;
     private int g;
     private int b;
-    private int breaksCount;
 
     private int seed;
     private int lifetime;
 
-    public LightningParticleOptions(float quadSize, int r, int g, int b, int breaksCount,int seed,int lifetime) {
+    public LightningParticleOptions(float quadSize, int r, int g, int b,int seed,int lifetime) {
         this.quadSize = quadSize;
         this.r = r;
         this.g = g;
         this.b = b;
-        this.breaksCount = breaksCount;
+
         this.seed = seed;
         this.lifetime = lifetime;
     }
@@ -73,9 +71,7 @@ public class LightningParticleOptions implements ParticleOptions {
         return quadSize;
     }
 
-    public int getBreaksCount() {
-        return breaksCount;
-    }
+
 
     public int getSeed() {
         return seed;
@@ -96,7 +92,6 @@ public class LightningParticleOptions implements ParticleOptions {
         buf.writeInt(this.r);
         buf.writeInt(this.g);
         buf.writeInt(this.b);
-        buf.writeInt(this.breaksCount);
         buf.writeInt(this.seed);
         buf.writeInt(this.lifetime);
     }
@@ -112,7 +107,6 @@ public class LightningParticleOptions implements ParticleOptions {
                 Codec.INT.fieldOf("r").forGetter(p->p.r),
                 Codec.INT.fieldOf("g").forGetter(p->p.g),
                 Codec.INT.fieldOf("b").forGetter(p->p.b),
-                Codec.INT.fieldOf("breaksCount").forGetter(p->p.breaksCount),
                 Codec.INT.fieldOf("seed").forGetter(p->p.seed),
                 Codec.INT.fieldOf("lifetime").forGetter(p->p.lifetime)
         ).apply(builder,LightningParticleOptions::new)

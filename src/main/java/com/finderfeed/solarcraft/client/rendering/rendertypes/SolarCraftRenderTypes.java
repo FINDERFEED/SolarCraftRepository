@@ -30,6 +30,16 @@ public class SolarCraftRenderTypes extends RenderType{
         super(p_173178_, p_173179_, p_173180_, p_173181_, p_173182_, p_173183_, p_173184_, p_173185_);
     }
 
+
+    public static final RenderType LIGHTNING_PARTICLES = create("lightning_particle",
+            DefaultVertexFormat.POSITION_COLOR, VertexFormat.Mode.QUADS, 256, false, true,
+            RenderType.CompositeState.builder()
+                    .setShaderState(RENDERTYPE_LIGHTNING_SHADER)
+                    .setWriteMaskState(COLOR_DEPTH_WRITE)
+                    .setTransparencyState(LIGHTNING_TRANSPARENCY)
+                    .setOutputState(RenderStateShard.PARTICLES_TARGET)
+                    .createCompositeState(false));
+
     @Deprecated
     public static RenderType cutoutTranslucent(){
         return RenderType.create("cutout_translucent", DefaultVertexFormat.BLOCK, VertexFormat.Mode.QUADS,

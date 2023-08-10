@@ -1,6 +1,7 @@
 package com.finderfeed.solarcraft.content.entities.projectiles;
 
 import com.finderfeed.solarcraft.client.particles.ball_particle.BallParticleOptions;
+import com.finderfeed.solarcraft.content.entities.uldera_crystal.UlderaCrystalBuddy;
 import com.finderfeed.solarcraft.local_library.helpers.CompoundNBTHelper;
 import com.finderfeed.solarcraft.registries.damage_sources.SolarcraftDamageSources;
 import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
@@ -69,8 +70,12 @@ public class HomingStarProjectile extends NormalProjectile {
     }
 
     private Vec3 calculateNewMovementVector(Vec3 targetPosition){
-        Vec3 add = targetPosition.subtract(this.position().add(0,this.getBbHeight()/2,0))
-                .normalize().multiply(rotationSpeed,rotationSpeed,rotationSpeed);
+        Vec3 pos = this.position().add(0,this.getBbHeight()/2,0);
+        Vec3 between = targetPosition.subtract(pos);
+        if (between.length() <= 3){
+            return this.getDeltaMovement();
+        }
+        Vec3 add = between.normalize().multiply(rotationSpeed,rotationSpeed,rotationSpeed);
         Vec3 newSpeed = this.getDeltaMovement().add(add).normalize().multiply(speed,speed,speed);
         return newSpeed;
     }
@@ -118,7 +123,7 @@ public class HomingStarProjectile extends NormalProjectile {
     protected void onHitEntity(EntityHitResult result) {
         if (level instanceof ServerLevel serverLevel && result.getEntity() instanceof LivingEntity living){
             Entity shootEntity = shooter != null ? serverLevel.getEntity(shooter) : null;
-            if (shootEntity != living){
+            if (shootEntity != living && !(living instanceof UlderaCrystalBuddy)){
                 if (shootEntity instanceof LivingEntity  shooterEntity) {
                     living.hurt(SolarcraftDamageSources.livingArmorPierceProjectile(shooterEntity),damage);
                 }else{

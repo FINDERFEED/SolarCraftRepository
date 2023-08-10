@@ -1,6 +1,9 @@
 package com.finderfeed.solarcraft.client.particles.lightning_particle;
 
+import com.finderfeed.solarcraft.SolarCraft;
+import com.finderfeed.solarcraft.client.rendering.rendertypes.SolarCraftRenderTypes;
 import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.BufferBuilder;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.Tesselator;
@@ -15,9 +18,15 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.util.Mth;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.RenderLevelStageEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Matrix4f;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -51,15 +60,13 @@ public class LightningParticle extends Particle {
 
     @Override
     public void render(VertexConsumer vertex, Camera camera, float pticks) {
+        RenderLightningParticles.particles.add(this);
+    }
+
+    private void manualRender(PoseStack matrices,VertexConsumer vertex, Camera camera, float pticks){
         if (Minecraft.getInstance().level == null) return;
 
-        float size = options.getQuadSize();
 
-
-        Vec3 initPos = new Vec3(-size/2,0,0);
-        Vec3 endPos = new Vec3(size/2,0,0);
-
-        PoseStack matrices = new PoseStack();
         matrices.pushPose();
 
         Vec3 vec3 = camera.getPosition();
@@ -84,14 +91,18 @@ public class LightningParticle extends Particle {
         Random rnd = new Random(
                 level.getGameTime()* 42442 + seed
         );
+
+        float a = this.age / (float)this.lifetime;
+
+        a =  -(float)Math.pow(a,4) + 1;
+
         render(lightningLength,matrices.last().pose(),vertex,rnd,0,
                 options.getR()/255f,
                 options.getG()/255f,
                 options.getB()/255f
-                ,1f);
+                ,a);
 
         matrices.popPose();
-
     }
 
 
@@ -147,14 +158,14 @@ public class LightningParticle extends Particle {
 
     @Override
     public ParticleRenderType getRenderType() {
-        return RENDER_TYPE;
+        return ParticleRenderType.PARTICLE_SHEET_OPAQUE;
     }
 
 
     private static final ParticleRenderType RENDER_TYPE = new ParticleRenderType() {
         @Override
         public void begin(BufferBuilder builder, TextureManager manager) {
-            RenderType type = RenderType.lightning();
+            RenderType type = SolarCraftRenderTypes.lightning();
             type.setupRenderState();
             builder.begin(type.mode(),type.format());
         }
@@ -162,7 +173,9 @@ public class LightningParticle extends Particle {
         @Override
         public void end(Tesselator end) {
             end.end();
-            RenderType.lightning().clearRenderState();
+            RenderType type = SolarCraftRenderTypes.lightning();
+            type.clearRenderState();
+
         }
     };
 
@@ -173,6 +186,42 @@ public class LightningParticle extends Particle {
         public Particle createParticle(LightningParticleOptions options, ClientLevel level, double x, double y, double z,double xd, double yd, double zd) {
             return new LightningParticle(options,level,x,y,z,xd,yd,zd);
         }
+    }
+
+    @Mod.EventBusSubscriber(modid = SolarCraft.MOD_ID,bus = Mod.EventBusSubscriber.Bus.FORGE,value = Dist.CLIENT)
+    public static class RenderLightningParticles{
+
+
+        private static final List<LightningParticle> particles = new ArrayList<>();
+
+        @SubscribeEvent
+        public static void renderLightningParticles(RenderLevelStageEvent event){
+            if (event.getStage() != RenderLevelStageEvent.Stage.AFTER_TRANSLUCENT_BLOCKS) return;
+            if (!particles.isEmpty()) {
+
+                PoseStack stack = event.getPoseStack();
+
+
+                PoseStack posestack = RenderSystem.getModelViewStack();
+                posestack.pushPose();
+                posestack.mulPoseMatrix(stack.last().pose());
+                RenderSystem.applyModelViewMatrix();
+
+
+                BufferBuilder bufferBuilder = Tesselator.getInstance().getBuilder();
+                RENDER_TYPE.begin(bufferBuilder, Minecraft.getInstance().textureManager);
+                for (LightningParticle particle : particles) {
+                    particle.manualRender(new PoseStack(),bufferBuilder, event.getCamera(), event.getPartialTick());
+                }
+                RENDER_TYPE.end(Tesselator.getInstance());
+                particles.clear();
+
+                posestack.popPose();
+
+                RenderSystem.applyModelViewMatrix();
+            }
+        }
+
     }
 
 }
