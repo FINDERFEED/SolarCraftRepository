@@ -16,6 +16,7 @@ public class SphereParticleShape implements ParticleSpawnShape {
             buf.writeDouble(shape.startRadius);
             buf.writeDouble(shape.speed);
             buf.writeInt(shape.density);
+            buf.writeBoolean(shape.randomSpeed);
         }
 
         @Override
@@ -23,7 +24,8 @@ public class SphereParticleShape implements ParticleSpawnShape {
             return new SphereParticleShape(
                     buf.readDouble(),
                     buf.readDouble(),
-                    buf.readInt()
+                    buf.readInt(),
+                    buf.readBoolean()
             );
         }
     };
@@ -33,10 +35,13 @@ public class SphereParticleShape implements ParticleSpawnShape {
 
     private int density;
 
-    public SphereParticleShape(double startRadius,double speed,int density){
+    private boolean randomSpeed;
+
+    public SphereParticleShape(double startRadius,double speed,int density,boolean randomSpeed){
         this.startRadius = startRadius;
         this.speed = speed;
         this.density = density;
+        this.randomSpeed = randomSpeed;
     }
 
     @Override
@@ -52,6 +57,17 @@ public class SphereParticleShape implements ParticleSpawnShape {
                     Vec3 add = new Vec3(x,y,z).normalize();
                     Vec3 pos = add.multiply(this.startRadius,this.startRadius,this.startRadius).add(center);
                     Vec3 speed = add.multiply(this.speed,this.speed,this.speed);
+                    Vec3 rnd;
+                    if (randomSpeed){
+                        rnd = new Vec3(
+                                (level.random.nextFloat() * speed.x * 2 - speed.x),
+                                (level.random.nextFloat() * speed.y * 2 - speed.y),
+                                (level.random.nextFloat() * speed.z * 2 - speed.z)
+                        );
+                    }else{
+                        rnd = Vec3.ZERO;
+                    }
+                    speed = speed.add(rnd);
                     level.addParticle(options,true,
                             pos.x,pos.y,pos.z,
                             speed.x,speed.y,speed.z);

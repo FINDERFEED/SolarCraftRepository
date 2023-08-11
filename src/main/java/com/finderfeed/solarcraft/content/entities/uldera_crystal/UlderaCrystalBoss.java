@@ -366,25 +366,25 @@ public class UlderaCrystalBoss extends NoHealthLimitMob implements AnimatedObjec
     private void sendExplosionParticles(){
         Vec3 v = this.getCenterPos();
         PacketHelper.sendToPlayersTrackingEntity(this,new SendShapeParticlesPacket(
-                new SphereParticleShape(0.5,0.6f,3),
+                new SphereParticleShape(0.5,0.6f,3,true),
                 new BallParticleOptions.Builder().setRGB(90,0,186).setPhysics(false)
                         .setShouldShrink(true).setSize(0.25f).build(),
                 v.x,v.y,v.z,0,0,0
         ));
         PacketHelper.sendToPlayersTrackingEntity(this,new SendShapeParticlesPacket(
-                new SphereParticleShape(0,0.6f,2),
-                new LightningParticleOptions(2f,90,0,186,-1,60),
+                new SphereParticleShape(0,0.6f,2,true),
+                new LightningParticleOptions(2f,90,0,186,-1,60,false),
                 v.x,v.y,v.z,0,0,0
         ));
         PacketHelper.sendToPlayersTrackingEntity(this,new SendShapeParticlesPacket(
-                new SphereParticleShape(1.5,0.8f,3),
+                new SphereParticleShape(1.5,0.8f,3,true),
                 new BallParticleOptions.Builder().setRGB(90,0,186).setPhysics(false)
                         .setShouldShrink(true).setSize(0.25f).build(),
                 v.x,v.y,v.z,0,0,0
         ));
         PacketHelper.sendToPlayersTrackingEntity(this,new SendShapeParticlesPacket(
-                new SphereParticleShape(1,0.8f,2),
-                new LightningParticleOptions(2f,90,0,186,-1,60),
+                new SphereParticleShape(1,0.8f,2,true),
+                new LightningParticleOptions(2f,90,0,186,-1,60,false),
                 v.x,v.y,v.z,0,0,0
         ));
     }

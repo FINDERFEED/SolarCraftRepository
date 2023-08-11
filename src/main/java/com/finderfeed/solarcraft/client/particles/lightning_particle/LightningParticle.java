@@ -55,6 +55,7 @@ public class LightningParticle extends Particle {
         }else{
             this.particleRoll = 0;
         }
+        this.hasPhysics = options.hasPhysics();
 
     }
 

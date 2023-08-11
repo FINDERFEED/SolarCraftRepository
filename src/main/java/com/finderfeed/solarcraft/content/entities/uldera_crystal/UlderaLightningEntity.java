@@ -1,6 +1,7 @@
 package com.finderfeed.solarcraft.content.entities.uldera_crystal;
 
 import com.finderfeed.solarcraft.client.particles.ball_particle.BallParticleOptions;
+import com.finderfeed.solarcraft.client.particles.lightning_particle.LightningParticleOptions;
 import com.finderfeed.solarcraft.local_library.helpers.CompoundNBTHelper;
 import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
 import com.finderfeed.solarcraft.packet_handler.packets.CameraShakePacket;
@@ -62,56 +63,62 @@ public class UlderaLightningEntity extends Entity {
 
     private void clientTick(){
         if (this.tickCount < this.getLightningDelay()){
-            float h = this.getHeight() < 10 ? this.getHeight() : 10;
-            for (int i = 0; i <= h;i++){
-                this.spawnParticleCollumn(i);
-            }
-            RandomSource r = level.random;
-            for (int i = 0; i < 2;i++){
-                Vec3 ppos = this.position().add(0,0.1,0);
-                level.addParticle(BallParticleOptions.Builder.begin()
-                        .setSize(0.2f)
-                        .setRGB(90,0,186)
-                        .setShouldShrink(true)
-                                .setPhysics(false)
-                                .setLifetime(60)
-                        .build(),ppos.x,ppos.y,ppos.z,
-                        (r.nextDouble()*2-1)*0.3f,
+            int c = 12;
+            Vec3 p = this.position();
+            double radius = 1;
+            double angle = Math.PI * 2 / c;
+            BallParticleOptions options = BallParticleOptions.Builder.begin()
+                    .setSize(0.2f)
+                    .setRGB(90,0,186)
+                    .setShouldShrink(true)
+                    .setLifetime(20)
+                    .setPhysics(false)
+                    .build();
+            for (int i = 0; i < c; i++){
+                double x = Math.sin(angle * i);
+                double z = Math.cos(angle * i);
+                Vec3 ppos = p.add(x * radius,0,z * radius);
+                Vec3 speed = new Vec3(0.05 * -x,0.1,0.05 * -z);
+                level.addParticle(options,ppos.x,ppos.y,ppos.z,
+                        speed.x + random.nextFloat() * 0.02 - 0.01,speed.y,speed.z + random.nextFloat() * 0.02 - 0.01);
+
+                level.addParticle(options,
+                        ppos.x + random.nextFloat() * 0.5 - 0.25,
+                        ppos.y,
+                        ppos.z + random.nextFloat() * 0.5 - 0.25,
+                        x * 0.05 + random.nextFloat() * 0.05 - 0.025,
                         0,
-                        (r.nextDouble()*2-1)*0.3f
-                );
+                        z * 0.05 + random.nextFloat() * 0.05 - 0.025);
             }
         } else if (this.tickCount == this.getLightningDelay()){
             RandomSource r = level.random;
+            BallParticleOptions options = BallParticleOptions.Builder.begin()
+                    .setSize(0.2f)
+                    .setRGB(90,0,186)
+                    .setShouldShrink(true)
+                    .setLifetime(60)
+                    .setPhysics(false)
+                    .build();
+            LightningParticleOptions optionsl = new LightningParticleOptions(1f, 90, 0, 186, -1, 20, false);
             for (int i = 0; i < 50;i++){
                 Vec3 ppos = this.position().add(0,0.1,0);
-                level.addParticle(BallParticleOptions.Builder.begin()
-                                .setSize(0.2f)
-                                .setRGB(90,0,186)
-                                .setShouldShrink(true)
-                                .setLifetime(60)
-                                .setPhysics(false)
-                                .build(),ppos.x,ppos.y,ppos.z,
+                level.addParticle(options,ppos.x,ppos.y,ppos.z,
                         (r.nextDouble()*2-1)*0.1f,
                         r.nextDouble()*0.1f,
                         (r.nextDouble()*2-1)*0.1f);
+
+                if (i % 2 == 0) {
+                    level.addParticle(optionsl,
+                            ppos.x, ppos.y, ppos.z,
+                            (r.nextDouble()*2-1)*0.1f,
+                            r.nextDouble()*0.1f,
+                            (r.nextDouble()*2-1)*0.1f);
+                }
             }
         }
     }
 
-    private void spawnParticleCollumn(int h){
-        RandomSource r = level.random;
-        for (float i = 0; i < 1;i += 0.25f){
-            Vec3 ppos = this.position().add(0,h + i,0);
-            level.addParticle(BallParticleOptions.Builder.begin()
-                    .setSize(0.2f)
-                    .setRGB(90,0,186)
-                    .setPhysics(false)
-                    .setShouldShrink(true)
-                            .setLifetime(20)
-                    .build(),ppos.x,ppos.y,ppos.z,(r.nextDouble()*2-1)*0.2f,0,(r.nextDouble()*2-1)*0.2f);
-        }
-    }
+
 
     private void dealDamage(){
         ServerLevel l = (ServerLevel)level;
