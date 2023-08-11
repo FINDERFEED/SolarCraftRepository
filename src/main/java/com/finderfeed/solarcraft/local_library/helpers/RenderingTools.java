@@ -1913,12 +1913,17 @@ public class RenderingTools {
         }
 
         public static void renderLightning3D(MultiBufferSource src,PoseStack matrices,Vec3 init,Vec3 end,int seed,int breaksCount,float lwidth,double spread, int r,int g,int b,int a){
+            matrices.pushPose();
+            Vec3 dir = end.subtract(init);
+            RenderingTools.applyMovementMatrixRotations(matrices,dir);
+            end = init.add(0,dir.length(),0);
             List<Vec3> points = generateVerticalLightningBreaks(init,end,seed,breaksCount,spread);
             for (int i = 0; i < points.size() - 1;i++){
                 Vec3 p1 = points.get(i);
                 Vec3 p2 = points.get(i + 1);
                 generateLightningCube(matrices.last().pose(),src.getBuffer(SolarCraftRenderTypes.eyesPositionColorTexLightmapNoNormal(WHITE)),lwidth,r,g,b,a,p1,p2);
             }
+            matrices.popPose();
         }
 
     }

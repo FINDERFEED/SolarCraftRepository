@@ -14,12 +14,17 @@ import com.finderfeed.solarcraft.local_library.bedrock_loader.animations.manager
 import com.finderfeed.solarcraft.local_library.entities.BossAttackChain;
 import com.finderfeed.solarcraft.misc_things.NoHealthLimitMob;
 import com.finderfeed.solarcraft.packet_handler.PacketHelper;
+import com.finderfeed.solarcraft.packet_handler.packets.DisablePlayerFlightPacket;
 import com.finderfeed.solarcraft.registries.animations.SCAnimations;
 import com.finderfeed.solarcraft.registries.damage_sources.SolarcraftDamageSources;
+import com.finderfeed.solarcraft.registries.data_serializers.FDEntityDataSerializers;
 import com.finderfeed.solarcraft.registries.effects.SolarcraftEffects;
 import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
@@ -29,6 +34,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -36,6 +42,7 @@ import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import org.apache.commons.compress.utils.Lists;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -43,6 +50,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class UlderaCrystalBoss extends NoHealthLimitMob implements AnimatedObject, UlderaCrystalBuddy {
+
+    private static final List<Vec3> NODE_POSITIONS = new ArrayList<>(List.of(
+            new Vec3(10,1.5,10),
+            new Vec3(-10,1.5,10),
+            new Vec3(10,1.5,-10),
+            new Vec3(-10,1.5,-10)
+    ));
 
     public static final String ATTACK_1_TICKER = "attack_1";
     public static final String TEMP1 = "temp1";
@@ -52,6 +66,9 @@ public class UlderaCrystalBoss extends NoHealthLimitMob implements AnimatedObjec
     private int dontPush = 0;
 
     private List<BlockPos> lightningPositions = new ArrayList<>();
+
+    private static final EntityDataAccessor<List<Vec3>> NODES = SynchedEntityData.defineId(UlderaCrystalBoss.class, FDEntityDataSerializers.POSITION_LIST.get());
+    private static final EntityDataAccessor<Integer> MISC_TICKER = SynchedEntityData.defineId(UlderaCrystalBoss.class, EntityDataSerializers.INT);
 
 
     private BossAttackChain bossChain = new BossAttackChain.Builder()
@@ -87,6 +104,15 @@ public class UlderaCrystalBoss extends NoHealthLimitMob implements AnimatedObjec
         super.tick();
         this.manager.tickAnimations();
         if (!level.isClientSide){
+
+            if (this.getNodes().isEmpty()){
+                List<Vec3> n = new ArrayList<>();
+                for (Vec3 node : NODE_POSITIONS){
+                    n.add(node.add(this.position()));
+                }
+                this.setNodes(n);
+            }
+
             this.dontPush--;
             this.getAnimationManager().setAnimation("main",
                     new AnimationTicker.Builder(SCAnimations.ULDERA_CRYSTAL_IDLE.get())
@@ -96,6 +122,47 @@ public class UlderaCrystalBoss extends NoHealthLimitMob implements AnimatedObjec
             if (this.getTarget() != null) {
                 bossChain.tick();
             }
+
+            List<ServerPlayer> players = level.getEntitiesOfClass(ServerPlayer.class,SEARCH_TARGET_BOX.move(this.getCenterPos()),player->{
+                return !player.isSpectator() && !player.isCreative();
+            });
+            for (ServerPlayer player : players){
+                this.disableFlight(player);
+            }
+        }
+    }
+
+    private void disableFlight(ServerPlayer player){
+        if (player.getAbilities().mayfly || player.getAbilities().flying){
+            DisablePlayerFlightPacket.send(player,true);
+            PacketHelper.sendToPlayersTrackingEntity(this,
+                    new SendShapeParticlesPacket(
+                            new BurstAttackParticleShape(this.getCenterPos(),
+                                    player.position().add(0,player.getBbHeight()/2,0)
+                                    ,0.5f,3,
+                                    0.025),
+                            BallParticleOptions.Builder.begin()
+                                    .setLifetime(60)
+                                    .setSize(0.15f)
+                                    .setRGB(90,0,186)
+                                    .setShouldShrink(true)
+                                    .setPhysics(false)
+                                    .build()
+                    ));
+            PacketHelper.sendToPlayersTrackingEntity(this,
+                    new SendShapeParticlesPacket(
+                            new BurstAttackParticleShape(this.getCenterPos(),
+                                    player.position().add(0,player.getBbHeight()/2,0)
+                                    ,0.5f,2,
+                                    0.025),
+                            LightningParticleOptions.Builder.start()
+                                    .setHasPhysics(false)
+                                    .setLifetime(60)
+                                    .setQuadSize(1f)
+                                    .setSeed(-1)
+                                    .setRGB(90,0,186)
+                                    .build()
+                    ));
         }
     }
 
@@ -393,6 +460,22 @@ public class UlderaCrystalBoss extends NoHealthLimitMob implements AnimatedObjec
 
 
 
+    public List<Vec3> getNodes(){
+        return this.entityData.get(NODES);
+    }
+
+    public void setNodes(List<Vec3> nodes){
+        this.entityData.set(NODES,nodes);
+    }
+
+    public int getMiscTicker(){
+        return this.entityData.get(MISC_TICKER);
+    }
+
+    public void setMiscTicker(int tick){
+        this.entityData.set(MISC_TICKER,tick);
+    }
+
     protected void doPush(Entity entity) {
         if (this.bossChain.getCurrentAttack() != null && this.bossChain.getCurrentAttack().getSerializationId().equals("pullEntities")){
             dontPush = 20;
@@ -495,15 +578,24 @@ public class UlderaCrystalBoss extends NoHealthLimitMob implements AnimatedObjec
 
     private static final AABB SEARCH_TARGET_BOX = new AABB(-30,-30,-30,30,30,30);
     private LivingEntity searchTarget(){
+        List<Player> players = new ArrayList<>();
         List<LivingEntity> entities = level.getEntitiesOfClass(LivingEntity.class,SEARCH_TARGET_BOX.move(this.getCenterPos()),living->{
             if (living instanceof Player player){
-                return !player.isSpectator() && !player.isCreative();
+                if (!player.isSpectator() && !player.isCreative()){
+                    players.add(player);
+                    return true;
+                }else{
+                    return false;
+                }
             }
             return !(living instanceof UlderaCrystalBuddy) && this.isEntityReachable(living);
         });
         if (entities.isEmpty()){
             return null;
         }else{
+            if (!players.isEmpty()){
+                return players.get(level.random.nextInt(players.size()));
+            }
             return entities.get(level.random.nextInt(entities.size()));
         }
     }
@@ -535,6 +627,12 @@ public class UlderaCrystalBoss extends NoHealthLimitMob implements AnimatedObjec
     }
 
 
+    @Override
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        this.entityData.define(NODES,new ArrayList<>());
+        this.entityData.define(MISC_TICKER,0);
+    }
 
     public static AttributeSupplier.Builder createCrystalAttributes() {
         return NoHealthLimitMob.createEntityAttributes();
