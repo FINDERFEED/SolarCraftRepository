@@ -17,6 +17,8 @@ public class SphereParticleShape implements ParticleSpawnShape {
             buf.writeDouble(shape.speed);
             buf.writeInt(shape.density);
             buf.writeBoolean(shape.randomSpeed);
+            buf.writeBoolean(shape.outside);
+            buf.writeFloat(shape.spawnChance);
         }
 
         @Override
@@ -25,7 +27,9 @@ public class SphereParticleShape implements ParticleSpawnShape {
                     buf.readDouble(),
                     buf.readDouble(),
                     buf.readInt(),
-                    buf.readBoolean()
+                    buf.readBoolean(),
+                    buf.readBoolean(),
+                    buf.readFloat()
             );
         }
     };
@@ -36,12 +40,17 @@ public class SphereParticleShape implements ParticleSpawnShape {
     private int density;
 
     private boolean randomSpeed;
+    private boolean outside;
 
-    public SphereParticleShape(double startRadius,double speed,int density,boolean randomSpeed){
+    private float spawnChance;
+
+    public SphereParticleShape(double startRadius,double speed,int density,boolean randomSpeed,boolean outside,float spawnChance){
         this.startRadius = startRadius;
         this.speed = speed;
         this.density = density;
         this.randomSpeed = randomSpeed;
+        this.outside = outside;
+        this.spawnChance = spawnChance;
     }
 
     @Override
@@ -54,9 +63,13 @@ public class SphereParticleShape implements ParticleSpawnShape {
         for (int x = -density; x <= density;x++){
             for (int y = -density; y <= density;y++){
                 for (int z = -density; z <= density;z++){
+                    if (level.random.nextFloat() > spawnChance) continue;
                     Vec3 add = new Vec3(x,y,z).normalize();
-                    Vec3 pos = add.multiply(this.startRadius,this.startRadius,this.startRadius).add(center);
-                    Vec3 speed = add.multiply(this.speed,this.speed,this.speed);
+                    Vec3 pos = add.multiply(this.startRadius,this.startRadius,this.startRadius).yRot((float)Math.PI/4).add(center);
+                    Vec3 speed = add.multiply(this.speed,this.speed,this.speed).yRot((float)Math.PI/4);
+                    if (!outside){
+                        speed = speed.reverse();
+                    }
                     Vec3 rnd;
                     if (randomSpeed){
                         rnd = new Vec3(

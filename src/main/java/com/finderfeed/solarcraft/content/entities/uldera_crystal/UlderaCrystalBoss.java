@@ -34,20 +34,16 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
-import net.minecraft.world.entity.ai.targeting.TargetingConditions;
-import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import org.apache.commons.compress.utils.Lists;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class UlderaCrystalBoss extends NoHealthLimitMob implements AnimatedObject, UlderaCrystalBuddy {
 
@@ -71,7 +67,7 @@ public class UlderaCrystalBoss extends NoHealthLimitMob implements AnimatedObjec
 
     private List<BlockPos> lightningPositions = new ArrayList<>();
 
-    private static final EntityDataAccessor<List<Vec3>> NODES = SynchedEntityData.defineId(UlderaCrystalBoss.class, FDEntityDataSerializers.POSITION_LIST.get());
+    private static final EntityDataAccessor<List<Vec3>> ELECTRIC_RAIN_POSITIONS = SynchedEntityData.defineId(UlderaCrystalBoss.class, FDEntityDataSerializers.POSITION_LIST.get());
     private static final EntityDataAccessor<Integer> MISC_TICKER = SynchedEntityData.defineId(UlderaCrystalBoss.class, EntityDataSerializers.INT);
 
 
@@ -105,17 +101,16 @@ public class UlderaCrystalBoss extends NoHealthLimitMob implements AnimatedObjec
 
     @Override
     public void tick() {
-        this.remove(RemovalReason.DISCARDED);
         super.tick();
         this.manager.tickAnimations();
         if (!level.isClientSide){
 
-            if (this.getNodes().isEmpty()){
+            if (this.getElectricRainPositions().isEmpty()){
                 List<Vec3> n = new ArrayList<>();
                 for (Vec3 node : NODE_POSITIONS){
                     n.add(node.add(this.position()));
                 }
-                this.setNodes(n);
+                this.setElectricRainPositions(n);
             }
 
             this.dontPush--;
@@ -370,6 +365,15 @@ public class UlderaCrystalBoss extends NoHealthLimitMob implements AnimatedObjec
             this.sendExplosionParticles();
             this.dealExplosionDamage();
         }else{
+            if (tick % 2 == 0) {
+                Vec3 v = this.getCenterPos();
+                PacketHelper.sendToPlayersTrackingEntity(this, new SendShapeParticlesPacket(
+                        new SphereParticleShape(20, 0.6f, 3, true, false, 0.25f),
+                        new BallParticleOptions.Builder().setRGB(90, 0, 186).setPhysics(false)
+                                .setShouldShrink(true).setSize(0.25f).build(),
+                        v.x, v.y, v.z, 0, 0, 0
+                ));
+            }
             this.performEntityPull();
         }
     }
@@ -438,24 +442,24 @@ public class UlderaCrystalBoss extends NoHealthLimitMob implements AnimatedObjec
     private void sendExplosionParticles(){
         Vec3 v = this.getCenterPos();
         PacketHelper.sendToPlayersTrackingEntity(this,new SendShapeParticlesPacket(
-                new SphereParticleShape(0.5,0.6f,3,true),
+                new SphereParticleShape(0.5,0.6f,3,true,true,1f),
                 new BallParticleOptions.Builder().setRGB(90,0,186).setPhysics(false)
                         .setShouldShrink(true).setSize(0.25f).build(),
                 v.x,v.y,v.z,0,0,0
         ));
         PacketHelper.sendToPlayersTrackingEntity(this,new SendShapeParticlesPacket(
-                new SphereParticleShape(0,0.6f,2,true),
+                new SphereParticleShape(0,0.6f,2,true,true,1f),
                 new LightningParticleOptions(2f,90,0,186,-1,60,false),
                 v.x,v.y,v.z,0,0,0
         ));
         PacketHelper.sendToPlayersTrackingEntity(this,new SendShapeParticlesPacket(
-                new SphereParticleShape(1.5,0.8f,3,true),
+                new SphereParticleShape(1.5,0.8f,3,true,true,1f),
                 new BallParticleOptions.Builder().setRGB(90,0,186).setPhysics(false)
                         .setShouldShrink(true).setSize(0.25f).build(),
                 v.x,v.y,v.z,0,0,0
         ));
         PacketHelper.sendToPlayersTrackingEntity(this,new SendShapeParticlesPacket(
-                new SphereParticleShape(1,0.8f,2,true),
+                new SphereParticleShape(1,0.8f,2,true,true,1f),
                 new LightningParticleOptions(2f,90,0,186,-1,60,false),
                 v.x,v.y,v.z,0,0,0
         ));
@@ -465,12 +469,13 @@ public class UlderaCrystalBoss extends NoHealthLimitMob implements AnimatedObjec
 
 
 
-    public List<Vec3> getNodes(){
-        return this.entityData.get(NODES);
+
+    public List<Vec3> getElectricRainPositions(){
+        return this.entityData.get(ELECTRIC_RAIN_POSITIONS);
     }
 
-    public void setNodes(List<Vec3> nodes){
-        this.entityData.set(NODES,nodes);
+    public void setElectricRainPositions(List<Vec3> nodes){
+        this.entityData.set(ELECTRIC_RAIN_POSITIONS,nodes);
     }
 
     public int getMiscTicker(){
@@ -635,7 +640,7 @@ public class UlderaCrystalBoss extends NoHealthLimitMob implements AnimatedObjec
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
-        this.entityData.define(NODES,new ArrayList<>());
+        this.entityData.define(ELECTRIC_RAIN_POSITIONS,new ArrayList<>());
         this.entityData.define(MISC_TICKER,0);
     }
 

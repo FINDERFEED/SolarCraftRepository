@@ -57,7 +57,7 @@ public class UlderaLightningEntity extends Entity {
             ((ServerLevel)level).playSound(this,this.getOnPos(), SoundEvents.LIGHTNING_BOLT_IMPACT, SoundSource.HOSTILE,
                     5f,0.5f);
         }else if (this.tickCount >= this.getLightningDelay() + 10){
-            this.remove(RemovalReason.DISCARDED);
+            this.kill();
         }
     }
 
@@ -199,11 +199,12 @@ public class UlderaLightningEntity extends Entity {
 
     @Override
     public boolean shouldRender(double p_20296_, double p_20297_, double p_20298_) {
-        return true;
+        return super.shouldRender(p_20296_,p_20297_,p_20298_);
     }
 
     @Override
-    public boolean shouldRenderAtSqrDistance(double p_19883_) {
-        return true;
+    public boolean shouldRenderAtSqrDistance(double smth) {
+        double d0 = 64.0D * getViewScale();
+        return smth < d0 * d0;
     }
 }

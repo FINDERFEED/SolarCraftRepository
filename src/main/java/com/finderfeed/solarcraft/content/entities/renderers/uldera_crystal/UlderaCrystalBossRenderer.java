@@ -51,10 +51,7 @@ public class UlderaCrystalBossRenderer extends EntityRenderer<UlderaCrystalBoss>
 
 
 
-        List<Vec3> nodes = entity.getNodes();
-        if (!nodes.isEmpty()){
-            this.renderNodes(nodes,entity,pticks,matrices,src,light);
-        }
+
     }
 
     private void renderNodes(List<Vec3> nodes,UlderaCrystalBoss entity, float pticks, PoseStack matrices, MultiBufferSource src, int light){

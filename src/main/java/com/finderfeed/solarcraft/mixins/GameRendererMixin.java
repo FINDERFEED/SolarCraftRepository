@@ -24,9 +24,17 @@ public class GameRendererMixin {
             float mod = 1f;
             int time = cameraShakeEffect.getTicker();
             if (time <= cameraShakeEffect.getInTime()) {
-                mod = time / (float) cameraShakeEffect.getInTime();
+                if (cameraShakeEffect.getInTime() == 0){
+                    mod = 0;
+                }else {
+                    mod = time / (float) cameraShakeEffect.getInTime();
+                }
             } else if (time >= cameraShakeEffect.getInTime() + cameraShakeEffect.getStayTime()) {
-                mod = 1.0f - (time - (cameraShakeEffect.getInTime() + cameraShakeEffect.getStayTime())) / (float) cameraShakeEffect.getOutTime();
+                if (cameraShakeEffect.getOutTime() == 0){
+                    mod = 0;
+                } else {
+                    mod = 1.0f - (time - (cameraShakeEffect.getInTime() + cameraShakeEffect.getStayTime())) / (float) cameraShakeEffect.getOutTime();
+                }
             }
 
 
@@ -35,6 +43,8 @@ public class GameRendererMixin {
             float rx = random.nextFloat() * spread * 2 - spread;
             float ry = random.nextFloat() * spread * 2 - spread;
             matrices.translate(rx,ry,0);
+            System.out.println(rx);
+            System.out.println(ry);
         }
     }
 

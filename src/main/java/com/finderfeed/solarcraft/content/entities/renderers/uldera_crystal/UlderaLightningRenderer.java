@@ -9,6 +9,7 @@ import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
 public class UlderaLightningRenderer extends EntityRenderer<UlderaLightningEntity> {
@@ -35,7 +36,12 @@ public class UlderaLightningRenderer extends EntityRenderer<UlderaLightningEntit
     }
 
     @Override
-    public boolean shouldRender(UlderaLightningEntity p_114491_, Frustum p_114492_, double p_114493_, double p_114494_, double p_114495_) {
-        return true;
+    public boolean shouldRender(UlderaLightningEntity lightning, Frustum frustum, double p_114493_, double p_114494_, double p_114495_) {
+        double w = lightning.getHeight()/30;
+        AABB box = new AABB(
+                lightning.position().add(-w,0,-w),
+                lightning.position().add(-w,lightning.getHeight(),-w)
+        );
+        return frustum.isVisible(box);
     }
 }

@@ -15,6 +15,7 @@ import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleProvider;
 import net.minecraft.client.particle.ParticleRenderType;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.culling.Frustum;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.util.Mth;
 import net.minecraft.world.phys.Vec3;
@@ -211,8 +212,11 @@ public class LightningParticle extends Particle {
 
                 BufferBuilder bufferBuilder = Tesselator.getInstance().getBuilder();
                 RENDER_TYPE.begin(bufferBuilder, Minecraft.getInstance().textureManager);
+                Frustum frustum = event.getFrustum();
                 for (LightningParticle particle : particles) {
-                    particle.manualRender(new PoseStack(),bufferBuilder, event.getCamera(), event.getPartialTick());
+                    if (frustum.isVisible(particle.getBoundingBox())) {
+                        particle.manualRender(new PoseStack(), bufferBuilder, event.getCamera(), event.getPartialTick());
+                    }
                 }
                 RENDER_TYPE.end(Tesselator.getInstance());
                 particles.clear();
