@@ -55,7 +55,11 @@ public class UlderaCrystalBoss extends NoHealthLimitMob implements AnimatedObjec
             new Vec3(10,1.5,10),
             new Vec3(-10,1.5,10),
             new Vec3(10,1.5,-10),
-            new Vec3(-10,1.5,-10)
+            new Vec3(-10,1.5,-10),
+            new Vec3(0,1.5,-20),
+            new Vec3(0,1.5,20),
+            new Vec3(20,1.5,0),
+            new Vec3(-20,1.5,0)
     ));
 
     public static final String ATTACK_1_TICKER = "attack_1";
@@ -101,6 +105,7 @@ public class UlderaCrystalBoss extends NoHealthLimitMob implements AnimatedObjec
 
     @Override
     public void tick() {
+        this.remove(RemovalReason.DISCARDED);
         super.tick();
         this.manager.tickAnimations();
         if (!level.isClientSide){

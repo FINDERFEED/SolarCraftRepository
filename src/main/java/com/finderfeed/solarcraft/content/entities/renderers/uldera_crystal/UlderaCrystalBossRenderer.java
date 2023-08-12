@@ -64,27 +64,28 @@ public class UlderaCrystalBossRenderer extends EntityRenderer<UlderaCrystalBoss>
         for (int i = 0; i < nodes.size(); i++){
             Vec3 node = nodes.get(i).subtract(entity.position());
             matrices.pushPose();
-
             matrices.translate(node.x,node.y,node.z);
-
-            if (i < nodes.size() - 1){
-
-                Vec3 node1 = nodes.get(i + 1).subtract(entity.position());
-                Vec3 i1 = Vec3.ZERO;
-                Vec3 i2 = node1.subtract(node);
-
-                RenderingTools.Lightning3DRenderer.renderLightning3D(src,matrices,i1,i2,1,0,lwidth,0,120,40,186,100);
-
-
-            }
-
-
-
+            matrices.mulPose(RenderingTools.rotationDegrees(RenderingTools.YP(),45));
             matrices.scale(3f,3f,3f);
-
             nodeModel.render(matrices,src.getBuffer(RenderType.entityTranslucentCull(LOCATION_GLOW)), LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY,1f,1f,1f,1f);
             matrices.popPose();
         }
+
+        for (int i = 0; i < nodes.size(); i++){
+            Vec3 node = nodes.get(i).subtract(entity.position());
+            matrices.pushPose();
+            matrices.translate(node.x,node.y,node.z);
+            for (int g = i + 1; g < nodes.size(); g++){
+                Vec3 node1 = nodes.get(g).subtract(entity.position());
+                Vec3 i1 = Vec3.ZERO;
+                Vec3 i2 = node1.subtract(node);
+                RenderingTools.Lightning3DRenderer.renderLightning3D(src,matrices,i1,i2,1,0,lwidth,0,120,40,186,100);
+            }
+            matrices.popPose();
+        }
+
+
+
     }
 
 

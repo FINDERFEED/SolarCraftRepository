@@ -59,7 +59,11 @@ public class ModuleApplierMenu extends ItemCombinerMenu {
 
     @Override
     protected ItemCombinerMenuSlotDefinition createInputSlotDefinitions() {
-        return ItemCombinerMenuSlotDefinition.create().build();
+        return ItemCombinerMenuSlotDefinition.create().withSlot(0, 27, 47, (p_266635_) -> {
+            return true;
+        }).withSlot(1, 76, 47, (p_266634_) -> {
+            return true;
+        }).withResultSlot(2, 134, 47).build();
     }
 
     private boolean isModuleValid(){
