@@ -12,23 +12,27 @@ import com.finderfeed.solarcraft.local_library.bedrock_loader.animations.manager
 import com.finderfeed.solarcraft.local_library.bedrock_loader.animations.manager.AnimationTicker;
 import com.finderfeed.solarcraft.local_library.bedrock_loader.animations.manager.EntityServerAnimationManager;
 import com.finderfeed.solarcraft.local_library.entities.BossAttackChain;
+import com.finderfeed.solarcraft.local_library.entities.bossbar.server.CustomServerBossEvent;
 import com.finderfeed.solarcraft.misc_things.NoHealthLimitMob;
 import com.finderfeed.solarcraft.packet_handler.PacketHelper;
 import com.finderfeed.solarcraft.packet_handler.packets.DisablePlayerFlightPacket;
 import com.finderfeed.solarcraft.registries.animations.SCAnimations;
+import com.finderfeed.solarcraft.registries.attributes.AttributesRegistry;
 import com.finderfeed.solarcraft.registries.damage_sources.SolarcraftDamageSources;
 import com.finderfeed.solarcraft.registries.data_serializers.FDEntityDataSerializers;
-import com.finderfeed.solarcraft.registries.effects.SolarcraftEffects;
+import com.finderfeed.solarcraft.registries.effects.SCEffects;
 import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.bossevents.CustomBossEvent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.Difficulty;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -36,6 +40,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.HitResult;
@@ -46,6 +51,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UlderaCrystalBoss extends NoHealthLimitMob implements AnimatedObject, UlderaCrystalBuddy {
+
+    public final CustomServerBossEvent BOSS_EVENT = new CustomServerBossEvent(this.getDisplayName(),"uldera_crystal");
 
     private static final List<Vec3> NODE_POSITIONS = new ArrayList<>(List.of(
             new Vec3(10,1.5,10),
@@ -62,6 +69,8 @@ public class UlderaCrystalBoss extends NoHealthLimitMob implements AnimatedObjec
     public static final String TEMP1 = "temp1";
     public static final String TEMP2 = "temp2";
     private AnimationManager manager;
+
+    private int spawnTicks = 0;
 
     private int dontPush = 0;
 
@@ -105,20 +114,33 @@ public class UlderaCrystalBoss extends NoHealthLimitMob implements AnimatedObjec
         this.manager.tickAnimations();
         if (!level.isClientSide){
 
-            if (this.getElectricRainPositions().isEmpty()){
-                List<Vec3> n = new ArrayList<>();
-                for (Vec3 node : NODE_POSITIONS){
-                    n.add(node.add(this.position()));
-                }
-                this.setElectricRainPositions(n);
-            }
+            BOSS_EVENT.setProgress(this.getHealth() / this.getMaxHealth());
 
-            this.dontPush--;
             this.getAnimationManager().setAnimation("main",
                     new AnimationTicker.Builder(SCAnimations.ULDERA_CRYSTAL_IDLE.get())
                             .toNullTransitionTime(20)
                             .replaceable(false)
-                    .build());
+                            .build());
+
+            if (spawnTicks <= 80){
+                if (spawnTicks == 0) {
+                    this.getAnimationManager().setAnimation("spawn",
+                            new AnimationTicker.Builder(SCAnimations.ULDERA_CRYSTAL_SPAWN.get())
+                                    .toNullTransitionTime(5)
+                                    .replaceable(false)
+                                    .build());
+                }else if (spawnTicks == 15){
+                    this.destroyBlocksAround();
+                }
+                spawnTicks++;
+                return;
+            }
+
+
+
+
+            this.dontPush--;
+
             if (this.getTarget() != null) {
                 bossChain.tick();
             }
@@ -128,6 +150,19 @@ public class UlderaCrystalBoss extends NoHealthLimitMob implements AnimatedObjec
             });
             for (ServerPlayer player : players){
                 this.disableFlight(player);
+            }
+        }
+    }
+
+    private void destroyBlocksAround(){
+        for (int x = -6;x <= 7;x++){
+            for (int y = -6;y <= 7;y++){
+                for (int z = -6;z <= 7;z++){
+                    if (x*x + y*y + z*z > 169) return;
+
+                    BlockPos pos = Helpers.vecToPos(this.getCenterPos()).offset(x,y,z);
+                    level.setBlock(pos, Blocks.AIR.defaultBlockState(),3);
+                }
             }
         }
     }
@@ -501,6 +536,24 @@ public class UlderaCrystalBoss extends NoHealthLimitMob implements AnimatedObjec
     public void startSeenByPlayer(ServerPlayer player) {
         super.startSeenByPlayer(player);
         ((EntityServerAnimationManager)this.getAnimationManager().getAsServerManager()).sendAllAnimations(player);
+        BOSS_EVENT.addPlayer(player);
+    }
+
+
+    @Override
+    public void stopSeenByPlayer(ServerPlayer player) {
+        super.stopSeenByPlayer(player);
+        BOSS_EVENT.removePlayer(player);
+    }
+
+    @Override
+    public boolean hurt(DamageSource src, float amount) {
+        if (src.getEntity() instanceof Player player && player.hasEffect(SCEffects.ULDERA_CRYSTAL_PRESENCE.get())){
+            amount = 0;
+        }else if (src.getEntity() instanceof LivingEntity living){
+            amount = amount / 4f;
+        }
+        return super.hurt(src, amount);
     }
 
     @Override
@@ -515,7 +568,7 @@ public class UlderaCrystalBoss extends NoHealthLimitMob implements AnimatedObjec
 
     @Override
     public boolean canBeAffected(MobEffectInstance inst) {
-        return inst.getEffect() == SolarcraftEffects.IMMORTALITY_EFFECT.get();
+        return inst.getEffect() == SCEffects.IMMORTALITY_EFFECT.get();
     }
 
     @Override
@@ -617,12 +670,14 @@ public class UlderaCrystalBoss extends NoHealthLimitMob implements AnimatedObjec
     @Override
     public boolean save(CompoundTag tag) {
         this.bossChain.save(tag);
+        tag.putInt("spawnTicks",this.spawnTicks);
         return super.save(tag);
     }
 
     @Override
     public void load(CompoundTag tag) {
         this.bossChain.load(tag);
+        this.spawnTicks = tag.getInt("spawnTicks");
         super.load(tag);
     }
 
@@ -645,7 +700,7 @@ public class UlderaCrystalBoss extends NoHealthLimitMob implements AnimatedObjec
     }
 
     public static AttributeSupplier.Builder createCrystalAttributes() {
-        return NoHealthLimitMob.createEntityAttributes();
+        return NoHealthLimitMob.createEntityAttributes().add(AttributesRegistry.MAXIMUM_HEALTH_NO_LIMIT.get(),400);
     }
     public void checkDespawn() {
         if (this.level().getDifficulty() == Difficulty.PEACEFUL && this.shouldDespawnInPeaceful()) {
@@ -654,4 +709,5 @@ public class UlderaCrystalBoss extends NoHealthLimitMob implements AnimatedObjec
             this.noActionTime = 0;
         }
     }
+
 }

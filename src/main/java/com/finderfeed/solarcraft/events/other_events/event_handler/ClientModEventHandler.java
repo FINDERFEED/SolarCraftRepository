@@ -28,6 +28,7 @@ import com.finderfeed.solarcraft.content.entities.renderers.uldera_crystal.Effec
 import com.finderfeed.solarcraft.content.entities.renderers.uldera_crystal.UlderaCrystalBossRenderer;
 import com.finderfeed.solarcraft.content.entities.renderers.uldera_crystal.UlderaLightningRenderer;
 import com.finderfeed.solarcraft.content.entities.runic_elemental.RunicElementalBossBar;
+import com.finderfeed.solarcraft.content.entities.uldera_crystal.UlderaCrystalBossBar;
 import com.finderfeed.solarcraft.content.entities.uldera_crystal.UlderaLightningEntity;
 import com.finderfeed.solarcraft.content.items.ProgressionBlockItem;
 import com.finderfeed.solarcraft.content.items.SunShardItem;
@@ -115,6 +116,7 @@ public class ClientModEventHandler {
 
         SolarcraftOverlays.BossBars.registerCustomBossBar("runic_elemental",new RunicElementalBossBar());
         SolarcraftOverlays.BossBars.registerCustomBossBar("defense_crystal",new CrystalBossBar());
+        SolarcraftOverlays.BossBars.registerCustomBossBar("uldera_crystal",new UlderaCrystalBossBar());
 
         BlockEntityRenderers.register(SolarcraftTileEntityTypes.RUNIC_ENERGY_REPEATER.get(), RepeaterRenderer::new);
         BlockEntityRenderers.register(SolarcraftTileEntityTypes.RUNE_ENERGY_PYLON.get(), RuneEnergyPylonRenderer::new);

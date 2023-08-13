@@ -43,6 +43,7 @@ public class ClientAnimationManager implements AnimationManager{
                 ticker.reset();
                 ticker.setAnimation(newanim);
                 ticker.setReplaceable(true);
+                ticker.setToNullAnimTime(newanim.tickLength());
             }
         }
     }

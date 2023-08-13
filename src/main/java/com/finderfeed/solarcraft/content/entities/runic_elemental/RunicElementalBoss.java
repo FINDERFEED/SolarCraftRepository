@@ -16,7 +16,7 @@ import com.finderfeed.solarcraft.registries.attributes.AttributesRegistry;
 import com.finderfeed.solarcraft.registries.blocks.SolarcraftBlocks;
 import com.finderfeed.solarcraft.registries.damage_sources.SolarcraftDamageSources;
 import com.finderfeed.solarcraft.registries.data_serializers.FDEntityDataSerializers;
-import com.finderfeed.solarcraft.registries.effects.SolarcraftEffects;
+import com.finderfeed.solarcraft.registries.effects.SCEffects;
 import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
 import com.finderfeed.solarcraft.registries.items.SolarcraftItems;
 import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
@@ -222,7 +222,7 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
             }else if(b == SolarcraftBlocks.ARMOR_AMPLIFICATION_BLOCK.get()){
                 this.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE,100,0));
             }else if (b == SolarcraftBlocks.EVASION_AMPLIFICATION_BLOCK.get()){
-                this.addEffect(new MobEffectInstance(SolarcraftEffects.EVASION.get(),100,1));
+                this.addEffect(new MobEffectInstance(SCEffects.EVASION.get(),100,1));
             }
         }
     }
@@ -322,7 +322,7 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
                 float damage = (VARTH_DADER_DAMAGE + getDamageBonus()/4f) * getDamageModifier();
                 living.hurt(SolarcraftDamageSources.livingArmorPierce(this), damage);
                 for (MobEffectInstance effect : living.getActiveEffects()){
-                    if (effect.getEffect().isBeneficial() && effect.getEffect() != SolarcraftEffects.IMMORTALITY_EFFECT.get()){
+                    if (effect.getEffect().isBeneficial() && effect.getEffect() != SCEffects.IMMORTALITY_EFFECT.get()){
                         toRemove.add(effect.getEffect());
                     }
                 }
@@ -537,7 +537,7 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
 
     @Override
     public boolean canBeAffected(MobEffectInstance effect) {
-        return effect.getEffect() == MobEffects.DAMAGE_RESISTANCE || effect.getEffect() == SolarcraftEffects.EVASION.get();
+        return effect.getEffect() == MobEffects.DAMAGE_RESISTANCE || effect.getEffect() == SCEffects.EVASION.get();
     }
 
 

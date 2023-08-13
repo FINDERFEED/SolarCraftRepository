@@ -3,6 +3,7 @@ package com.finderfeed.solarcraft.content.entities.renderers.uldera_crystal;
 import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.content.entities.uldera_crystal.UlderaCrystalBoss;
 import com.finderfeed.solarcraft.local_library.bedrock_loader.model_components.FDModel;
+import com.finderfeed.solarcraft.local_library.bedrock_loader.model_components.FDModelPart;
 import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.finderfeed.solarcraft.registries.SCBedrockModels;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -42,6 +43,7 @@ public class UlderaCrystalBossRenderer extends EntityRenderer<UlderaCrystalBoss>
         entity.getAnimationManager().getAsClientManager().applyAnimations(model,pticks);
 
         matrices.scale(3,3,3);
+
         model.render(matrices,src.getBuffer(RenderType.entityTranslucentCull(new ResourceLocation(SolarCraft.MOD_ID,"textures/entities/uldera_crystal_inner.png"))),
                 LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY,1f,1f,1f,1f);
         model.render(matrices,src.getBuffer(RenderType.eyes(new ResourceLocation(SolarCraft.MOD_ID,"textures/entities/uldera_crystal_glow.png"))),

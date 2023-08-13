@@ -39,9 +39,11 @@ public abstract class ServerAnimationManager implements AnimationManager{
                 iterator.remove();
             } else {
                 ticker.reset();
-                DummyAnimation dummyAnimation = new DummyAnimation(ticker.getCurrentTime() / 20f);
+                int time = ticker.getToNullAnimTime() == -1 ? ticker.getCurrentTime() : ticker.getToNullAnimTime();
+                DummyAnimation dummyAnimation = new DummyAnimation(time / 20f);
                 ticker.setAnimation(dummyAnimation);
                 ticker.setReplaceable(true);
+                ticker.setToNullAnimTime(time);
             }
         }
     }

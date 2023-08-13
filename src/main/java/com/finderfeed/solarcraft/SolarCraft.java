@@ -30,7 +30,7 @@ import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
 import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
 import com.finderfeed.solarcraft.registries.blocks.SolarcraftBlocks;
 import com.finderfeed.solarcraft.registries.containers.SolarcraftContainers;
-import com.finderfeed.solarcraft.registries.effects.SolarcraftEffects;
+import com.finderfeed.solarcraft.registries.effects.SCEffects;
 import com.finderfeed.solarcraft.registries.loot_modifiers.SolarcraftLootModifiers;
 import com.finderfeed.solarcraft.registries.recipe_types.SolarcraftRecipeTypes;
 import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
@@ -160,7 +160,7 @@ public class SolarCraft
         SolarcraftBlocks.BLOCKS.register(bus);
         SolarcraftTileEntityTypes.TILE_ENTITY_TYPE.register(bus);
         SCEntityTypes.ENTITY_TYPE_REGISTER.register(bus);
-        SolarcraftEffects.EFFECTS.register(bus);
+        SCEffects.EFFECTS.register(bus);
         SolarcraftSounds.SOUND_EVENTS.register(bus);
         SolarcraftContainers.CONTAINER_TYPE.register(bus);
         FoliagePlacerRegistry.DEFERRED_REGISTER.register(bus);

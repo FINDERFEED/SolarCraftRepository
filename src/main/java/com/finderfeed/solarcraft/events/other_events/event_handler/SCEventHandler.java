@@ -36,7 +36,7 @@ import com.finderfeed.solarcraft.registries.Tags;
 import com.finderfeed.solarcraft.registries.abilities.AbilitiesRegistry;
 import com.finderfeed.solarcraft.registries.attributes.AttributesRegistry;
 import com.finderfeed.solarcraft.registries.blocks.SolarcraftBlocks;
-import com.finderfeed.solarcraft.registries.effects.SolarcraftEffects;
+import com.finderfeed.solarcraft.registries.effects.SCEffects;
 import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
 import com.finderfeed.solarcraft.registries.items.SolarcraftItems;
 import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
@@ -187,7 +187,7 @@ public class SCEventHandler {
 
     @SubscribeEvent
     public static void damageTaken(final LivingDamageEvent event){
-        if ((event.getEntity()).hasEffect(SolarcraftEffects.IMMORTALITY_EFFECT.get()) ){
+        if ((event.getEntity()).hasEffect(SCEffects.IMMORTALITY_EFFECT.get()) ){
             event.setCanceled(true);
         }
     }
@@ -198,7 +198,7 @@ public class SCEventHandler {
             Player player = (Player) event.getEntity();
             int slot = findImmortalityTotem(player);
             if (slot != -10000){
-                player.addEffect(new MobEffectInstance(SolarcraftEffects.IMMORTALITY_EFFECT.get(),400,0));
+                player.addEffect(new MobEffectInstance(SCEffects.IMMORTALITY_EFFECT.get(),400,0));
                 player.setHealth(player.getMaxHealth());
 
                 player.getInventory().setItem(slot, ItemStack.EMPTY);
@@ -287,11 +287,11 @@ public class SCEventHandler {
                  && Helpers.collectTilesInChunks(SolarcraftTileEntityTypes.CLEARING_RITUAL_MAIN_BLOCK.get(),player.level,player.getOnPos(),2).isEmpty()
                   && !Helpers.isRadiantLandCleanedServer((ServerLevel) world)) {
                     if (world.canSeeSky(player.getOnPos().above())) {
-                        player.addEffect(new MobEffectInstance(SolarcraftEffects.STAR_GAZE_EFFECT.get(), 400, 0));
+                        player.addEffect(new MobEffectInstance(SCEffects.STAR_GAZE_EFFECT.get(), 400, 0));
                     }
                 }
 
-                if (player.hasEffect(SolarcraftEffects.STAR_GAZE_EFFECT.get())) {
+                if (player.hasEffect(SCEffects.STAR_GAZE_EFFECT.get())) {
                     if (world.getGameTime() % 80 == 1) {
                         DamageSource src = SolarcraftDamageSources.STARGAZE;
                         player.hurt(src, 6);
@@ -544,8 +544,8 @@ public class SCEventHandler {
     public static void handleEvasion(LivingDamageEvent event){
         LivingEntity living = event.getEntity();
         if (!living.level.isClientSide){
-            if (living.hasEffect(SolarcraftEffects.EVASION.get())){
-                int level = living.getActiveEffectsMap().get(SolarcraftEffects.EVASION.get()).getAmplifier();
+            if (living.hasEffect(SCEffects.EVASION.get())){
+                int level = living.getActiveEffectsMap().get(SCEffects.EVASION.get()).getAmplifier();
                 if (living.level.random.nextDouble() <= 0.2 * (level + 1)){
                     event.setCanceled(true);
                 }

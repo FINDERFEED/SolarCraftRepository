@@ -98,6 +98,14 @@ public class AnimationTicker {
         this.replaceable = replaceable;
     }
 
+    public void setInnerTicker(int innerTicker) {
+        this.innerTicker = innerTicker;
+    }
+
+    public void setToNullAnimTime(int toNullAnimTime) {
+        this.toNullAnimTime = toNullAnimTime;
+    }
+
     public static class Builder{
 
         private boolean replaceable = false;

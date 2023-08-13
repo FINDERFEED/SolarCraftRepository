@@ -69,16 +69,23 @@ public class FDModelPart {
 
     private void translateAndRotate(PoseStack matrices){
         matrices.translate(x/16,y/16,z/16);
-        matrices.translate(pivot.x/16,pivot.y/16,pivot.z/16);
+
+        double px = pivot.x / 16;
+        double py = pivot.y / 16;
+        double pz = pivot.z / 16;
+
+        matrices.translate(px,py,pz);
         if (xRot != 0 || yRot != 0 || zRot != 0){
             matrices.mulPose(new Quaternionf().rotationZYX(
                     (float)Math.toRadians(zRot),
                     (float)Math.toRadians(yRot),
                     (float)Math.toRadians(xRot)));
         }
-        matrices.translate(-pivot.x/16,-pivot.y/16,-pivot.z/16);
-
         matrices.scale(scaleX,scaleY,scaleZ);
+        matrices.translate(-px,-py,-pz);
+
+
+
     }
 
 

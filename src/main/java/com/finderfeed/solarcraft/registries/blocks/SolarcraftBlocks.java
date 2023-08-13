@@ -17,7 +17,7 @@ import com.finderfeed.solarcraft.content.blocks.primitive.SolarFlower;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.Progression;
 import com.finderfeed.solarcraft.content.runic_network.repeater.RunicNetworkRepeater;
 import com.finderfeed.solarcraft.client.particles.SCParticleTypes;
-import com.finderfeed.solarcraft.registries.effects.SolarcraftEffects;
+import com.finderfeed.solarcraft.registries.effects.SCEffects;
 import com.finderfeed.solarcraft.content.world_generation.structures.blocks.ColdStarInfuser;
 import com.finderfeed.solarcraft.content.world_generation.structures.blocks.InvincibleStone;
 import com.finderfeed.solarcraft.content.world_generation.structures.blocks.KeyDefender;
@@ -154,7 +154,7 @@ public class SolarcraftBlocks {
     public static final RegistryObject<Block> REGENERATION_AMPLIFICATION_BLOCK = BLOCKS.register("regen_amp_block",
             ()->new AmplificationBlock(BlockBehaviour.Properties.copy(Blocks.STONE),()->MobEffects.REGENERATION));
     public static final RegistryObject<Block> EVASION_AMPLIFICATION_BLOCK = BLOCKS.register("evasion_amp_block",
-            ()->new AmplificationBlock(BlockBehaviour.Properties.copy(Blocks.STONE), SolarcraftEffects.EVASION));
+            ()->new AmplificationBlock(BlockBehaviour.Properties.copy(Blocks.STONE), SCEffects.EVASION));
 
     public static final RegistryObject<RotatedPillarBlock> RADIANT_LOG = BLOCKS.register("radiant_log",()-> new RotatedPillarFlammableBlock(BlockBehaviour.Properties.copy(Blocks.OAK_LOG),20));
     public static final RegistryObject<Block> RADIANT_PLANKS = BLOCKS.register("radiant_planks",()-> new FlammableBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS),20));
