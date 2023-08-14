@@ -33,21 +33,21 @@ public class KeyFrame {
 
 
 
-    public static List<KeyFrame> parseKeyFrameList(JsonElement element,float xMod,float yMod,float zMod){
+    public static List<KeyFrame> parseKeyFrameList(JsonElement element,float xMult,float yMult,float zMult,float xMod,float yMod,float zMod){
         if (element.isJsonObject()) {
-            return parseJsonObject(element.getAsJsonObject(),xMod,yMod,zMod);
+            return parseJsonObject(element.getAsJsonObject(),xMult,yMult,zMult,xMod,yMod,zMod);
         }else if (element.isJsonPrimitive()){
             Vec3 value = new Vec3(element.getAsFloat(),element.getAsFloat(),element.getAsFloat());
             return List.of(new KeyFrame(value,value,LerpMode.LINEAR,0,0));
         }else if (element.isJsonArray()){
-            Vec3 value = JsonHelper.parseVec3(element).multiply(xMod,yMod,zMod);
+            Vec3 value = JsonHelper.parseVec3(element).multiply(xMult,yMult,zMult);
             return List.of(new KeyFrame(value,value,LerpMode.LINEAR,0,0));
         }else{
             throw new RuntimeException("Error reading keyframe list: " + element);
         }
     }
 
-    private static List<KeyFrame> parseJsonObject(JsonObject object,float xMod,float yMod,float zMod){
+    private static List<KeyFrame> parseJsonObject(JsonObject object,float xMult,float yMult,float zMult,float xMod,float yMod,float zMod){
         List<KeyFrame> frames = new ArrayList<>();
         int index = 0;
         for (var entry : object.entrySet()) {
@@ -56,12 +56,12 @@ public class KeyFrame {
             KeyFrame keyFrame;
             if (e.isJsonObject()) {
                 JsonObject sframe = e.getAsJsonObject();
-                Vec3 pre = JsonHelper.parseVec3(sframe, "pre").multiply(xMod,yMod,zMod);
-                Vec3 post = JsonHelper.parseVec3(sframe, "post").multiply(xMod,yMod,zMod);
+                Vec3 pre = JsonHelper.parseVec3(sframe, "pre").add(xMod,yMod,zMod).multiply(xMult,yMult,zMult);
+                Vec3 post = JsonHelper.parseVec3(sframe, "post").add(xMod,yMod,zMod).multiply(xMult,yMult,zMult);
                 String lerpmode = JsonHelper.getString(sframe,"lerp_mode","LINEAR");
                 keyFrame = new KeyFrame(pre, post, LerpMode.valueOf(lerpmode.toUpperCase()), Float.parseFloat(time));
             } else {
-                Vec3 value = JsonHelper.parseVec3(object, time).multiply(xMod,yMod,zMod);
+                Vec3 value = JsonHelper.parseVec3(object, time).add(xMod,yMod,zMod).multiply(xMult,yMult,zMult);
                 keyFrame = new KeyFrame(value, value, LerpMode.LINEAR, Float.parseFloat(time));
             }
             keyFrame.setIndex(index);

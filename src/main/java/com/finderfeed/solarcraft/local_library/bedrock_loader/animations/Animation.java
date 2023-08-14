@@ -148,20 +148,6 @@ public class Animation {
     }
 
 
-
-
-
-//    public static Animation loadAnimation(ResourceLocation location, String animationName){
-//        JsonObject object = loadJsonFile(location).getAsJsonObject();
-//        String format = object.get("format_version").getAsString();
-//        if (!format.equals("1.8.0")){
-//            throw new IllegalStateException("Animation format " + format + " in animation " + location + " is not supported!");
-//        }
-//        JsonObject sanimation = object.getAsJsonObject("animations").getAsJsonObject(animationName);
-//        Animation animation = parseAnimation(sanimation);
-//        return animation;
-//    }
-
     public static Animation parseAnimation(ResourceLocation name,JsonObject sanimation){
         float length = sanimation.get("animation_length").getAsFloat();
         JsonObject sbones = sanimation.getAsJsonObject("bones");
@@ -178,19 +164,19 @@ public class Animation {
             List<KeyFrame> scale;
             if (boneData.has("rotation")) {
                 JsonElement srotation = boneData.get("rotation");
-                rotation = KeyFrame.parseKeyFrameList(srotation,1,1,1);
+                rotation = KeyFrame.parseKeyFrameList(srotation,1,1,1,0,0,0);
             }else{
                 rotation = new ArrayList<>();
             }
             if (boneData.has("position")) {
                 JsonElement sposition = boneData.get("position");
-                position = KeyFrame.parseKeyFrameList(sposition,-1,1,1);
+                position = KeyFrame.parseKeyFrameList(sposition,-1,1,1,0,0,0);
             }else{
                 position = new ArrayList<>();
             }
             if (boneData.has("scale")) {
                 JsonElement sscale = boneData.get("scale");
-                scale = KeyFrame.parseKeyFrameList(sscale,1,1,1);
+                scale = KeyFrame.parseKeyFrameList(sscale,1,1,1,-1,-1,-1);
             }else{
                 scale = new ArrayList<>();
             }

@@ -155,13 +155,17 @@ public class UlderaCrystalBoss extends NoHealthLimitMob implements AnimatedObjec
     }
 
     private void destroyBlocksAround(){
-        for (int x = -6;x <= 7;x++){
-            for (int y = -6;y <= 7;y++){
-                for (int z = -6;z <= 7;z++){
-                    if (x*x + y*y + z*z > 169) return;
+        for (int x = -8;x <= 8;x++){
+            for (int y = -8;y <= 8;y++){
+                for (int z = -8;z <= 8;z++){
+                    float xd = x + 0.5f;
+                    float yd = y + 0.5f;
+                    float zd = z + 0.5f;
+                    if (xd*xd + yd*yd + zd*zd < 100) {
 
-                    BlockPos pos = Helpers.vecToPos(this.getCenterPos()).offset(x,y,z);
-                    level.setBlock(pos, Blocks.AIR.defaultBlockState(),3);
+                        BlockPos pos = Helpers.vecToPos(this.getCenterPos()).offset(x, y, z);
+                        level.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
+                    }
                 }
             }
         }
