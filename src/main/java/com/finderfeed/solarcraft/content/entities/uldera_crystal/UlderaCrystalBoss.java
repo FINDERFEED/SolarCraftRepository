@@ -14,6 +14,7 @@ import com.finderfeed.solarcraft.local_library.bedrock_loader.animations.manager
 import com.finderfeed.solarcraft.local_library.entities.BossAttackChain;
 import com.finderfeed.solarcraft.local_library.entities.bossbar.server.CustomServerBossEvent;
 import com.finderfeed.solarcraft.misc_things.NoHealthLimitMob;
+import com.finderfeed.solarcraft.misc_things.RunicEnergy;
 import com.finderfeed.solarcraft.packet_handler.PacketHelper;
 import com.finderfeed.solarcraft.packet_handler.packets.DisablePlayerFlightPacket;
 import com.finderfeed.solarcraft.registries.animations.SCAnimations;
@@ -52,6 +53,7 @@ import java.util.List;
 
 public class UlderaCrystalBoss extends NoHealthLimitMob implements AnimatedObject, UlderaCrystalBuddy {
 
+
     public final CustomServerBossEvent BOSS_EVENT = new CustomServerBossEvent(this.getDisplayName(),"uldera_crystal");
 
     private static final List<Vec3> NODE_POSITIONS = new ArrayList<>(List.of(
@@ -68,6 +70,8 @@ public class UlderaCrystalBoss extends NoHealthLimitMob implements AnimatedObjec
     public static final String ATTACK_1_TICKER = "attack_1";
     public static final String TEMP1 = "temp1";
     public static final String TEMP2 = "temp2";
+
+    private RunicEnergy.Type type = RunicEnergy.Type.ARDO;
     private AnimationManager manager;
 
     private int spawnTicks = 0;
@@ -668,6 +672,14 @@ public class UlderaCrystalBoss extends NoHealthLimitMob implements AnimatedObjec
     }
 
 
+    public void setREType(RunicEnergy.Type type) {
+        this.type = type;
+    }
+
+    public RunicEnergy.Type getRETypeType() {
+        return type;
+    }
+
     public Vec3 getCenterPos(){
         return this.position().add(0,this.getBbHeight()/2f,0);
     }
@@ -675,12 +687,14 @@ public class UlderaCrystalBoss extends NoHealthLimitMob implements AnimatedObjec
     public boolean save(CompoundTag tag) {
         this.bossChain.save(tag);
         tag.putInt("spawnTicks",this.spawnTicks);
+        tag.putString("energyType",type.id.toUpperCase());
         return super.save(tag);
     }
 
     @Override
     public void load(CompoundTag tag) {
         this.bossChain.load(tag);
+        this.type = RunicEnergy.Type.byId(tag.getString("energyType"));
         this.spawnTicks = tag.getInt("spawnTicks");
         super.load(tag);
     }
@@ -714,4 +728,8 @@ public class UlderaCrystalBoss extends NoHealthLimitMob implements AnimatedObjec
         }
     }
 
+    @Override
+    public boolean isNoGravity() {
+        return true;
+    }
 }

@@ -12,7 +12,7 @@ import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.Progression;
 import com.finderfeed.solarcraft.misc_things.IScrollable;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.progression_tree.ProgressionTree;
-import com.finderfeed.solarcraft.registries.items.SolarcraftItems;
+import com.finderfeed.solarcraft.registries.items.SCItems;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
@@ -180,7 +180,7 @@ public class SolarLexiconScreen extends Screen implements IScrollable,PostRender
                 (btn,graphics,mx,my)->{
                     graphics.renderTooltip(font,Component.translatable("solarcraft.screens.buttons.recipes_screen"),mx,my);
                 });
-        justForge = new ItemStackButton(relX+100,relY+100,12,12,(button)->{}, SolarcraftItems.SOLAR_FORGE_ITEM.get().getDefaultInstance(),0.7f,
+        justForge = new ItemStackButton(relX+100,relY+100,12,12,(button)->{}, SCItems.SOLAR_FORGE_ITEM.get().getDefaultInstance(),0.7f,
                 (btn,graphics,mx,my)->{
 //                    graphics.renderTooltip(font,Component.translatable("solarcraft.screens.buttons.nothing"),mx,my);
                 });

@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures" : {
-    "layer0": "solarcraft:items/rift_shard"
+    "layer0": "solarcraft:items/corrupted_shard"
   }
 }

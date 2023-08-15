@@ -2,7 +2,7 @@ package com.finderfeed.solarcraft.content.entities.projectiles;
 
 import com.finderfeed.solarcraft.client.particles.SCParticleTypes;
 import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
-import com.finderfeed.solarcraft.registries.items.SolarcraftItems;
+import com.finderfeed.solarcraft.registries.items.SCItems;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -65,7 +65,7 @@ public class BlockBoomerangProjectile extends AbstractHurtingProjectile {
             Player player = (Player)ent;
             if (player.getUUID().equals(owner)){
                 if (player.getInventory().getFreeSlot() != -1) {
-                    player.getInventory().add(SolarcraftItems.BLOCK_BOOMERANG.get().getDefaultInstance());
+                    player.getInventory().add(SCItems.BLOCK_BOOMERANG.get().getDefaultInstance());
                     if (blockToPlace != null){
                         if (player.getInventory().getFreeSlot() != -1) {
                             player.getInventory().add(blockToPlace.asItem().getDefaultInstance());
@@ -202,7 +202,7 @@ public class BlockBoomerangProjectile extends AbstractHurtingProjectile {
             ItemEntity item = new ItemEntity(level, this.getX(), this.getY(), this.getZ(), blockToPlace.asItem().getDefaultInstance());
             level.addFreshEntity(item);
         }
-        ItemEntity boomerang = new ItemEntity(level,this.getX(),this.getY(),this.getZ(), SolarcraftItems.BLOCK_BOOMERANG.get().getDefaultInstance());
+        ItemEntity boomerang = new ItemEntity(level,this.getX(),this.getY(),this.getZ(), SCItems.BLOCK_BOOMERANG.get().getDefaultInstance());
         level.addFreshEntity(boomerang);
         this.remove(RemovalReason.KILLED);
     }

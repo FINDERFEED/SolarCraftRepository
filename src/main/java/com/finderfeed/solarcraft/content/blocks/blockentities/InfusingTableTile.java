@@ -9,7 +9,7 @@ import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.Ancient
 import com.finderfeed.solarcraft.client.particles.SCParticleTypes;
 import com.finderfeed.solarcraft.misc_things.PhantomInventory;
 import com.finderfeed.solarcraft.content.recipe_types.infusing_crafting.InfusingCraftingRecipe;
-import com.finderfeed.solarcraft.registries.items.SolarcraftItems;
+import com.finderfeed.solarcraft.registries.items.SCItems;
 import com.finderfeed.solarcraft.registries.recipe_types.SolarcraftRecipeTypes;
 import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
 import net.minecraft.ChatFormatting;
@@ -62,13 +62,13 @@ public class InfusingTableTile extends BlockEntity implements OwnedBlock, IWanda
                         tile.recipeTime++;
                     }else{
                         ItemStack stack = recipe.getOutput().copy();
-                        if (stack.is(SolarcraftItems.SOLAR_FORGE_ITEM.get()) || stack.is(SolarcraftItems.INFUSER_ITEM.get())) {
+                        if (stack.is(SCItems.SOLAR_FORGE_ITEM.get()) || stack.is(SCItems.INFUSER_ITEM.get())) {
                             if (tile.getOwner() != null) {
                                 Player player = world.getPlayerByUUID(tile.getOwner());
                                 if (player != null) {
-                                    if (stack.is(SolarcraftItems.SOLAR_FORGE_ITEM.get())) {
+                                    if (stack.is(SCItems.SOLAR_FORGE_ITEM.get())) {
                                         Helpers.fireProgressionEvent(player, Progression.CRAFT_SOLAR_FORGE);
-                                    }else if (stack.is(SolarcraftItems.INFUSER_ITEM.get())){
+                                    }else if (stack.is(SCItems.INFUSER_ITEM.get())){
                                         Helpers.fireProgressionEvent(player,Progression.SOLAR_INFUSER);
                                     }
                                 }

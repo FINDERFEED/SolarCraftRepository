@@ -26,7 +26,7 @@ import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.RunePat
 import com.finderfeed.solarcraft.misc_things.*;
 import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
 import com.finderfeed.solarcraft.packet_handler.packets.RequestAbilityScreenPacket;
-import com.finderfeed.solarcraft.registries.items.SolarcraftItems;
+import com.finderfeed.solarcraft.registries.items.SCItems;
 import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.SolarLexicon;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragmentHelper;
@@ -319,7 +319,7 @@ public class ClientHelpers {
     public static void playTotemAnimation( ){
         LocalPlayer ent = Minecraft.getInstance().player;
         Minecraft.getInstance().particleEngine.createTrackingEmitter(ent, ParticleTypes.TOTEM_OF_UNDYING, 30);
-        Minecraft.getInstance().gameRenderer.displayItemActivation(SolarcraftItems.TOTEM_OF_IMMORTALITY.get().getDefaultInstance());
+        Minecraft.getInstance().gameRenderer.displayItemActivation(SCItems.TOTEM_OF_IMMORTALITY.get().getDefaultInstance());
         Minecraft.getInstance().level.playLocalSound(ent.getX(), ent.getY(), ent.getZ(), SoundEvents.TOTEM_USE, ent.getSoundSource(), 1F, 0.6F, false);
     }
 

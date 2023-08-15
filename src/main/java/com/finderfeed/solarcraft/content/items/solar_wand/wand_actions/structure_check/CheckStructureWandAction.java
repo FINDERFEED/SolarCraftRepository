@@ -5,7 +5,7 @@ import com.finderfeed.solarcraft.content.items.solar_wand.*;
 import com.finderfeed.solarcraft.helpers.multiblock.MultiblockStructure;
 import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
 import com.finderfeed.solarcraft.packet_handler.packets.WandStructureActionPacket;
-import com.finderfeed.solarcraft.registries.items.SolarcraftItems;
+import com.finderfeed.solarcraft.registries.items.SCItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -55,6 +55,6 @@ public class CheckStructureWandAction implements WandAction<EmptyWandData> {
 
     @Override
     public ItemStack getIcon() {
-        return SolarcraftItems.MAGISTONE_BRICKS.get().getDefaultInstance();
+        return SCItems.MAGISTONE_BRICKS.get().getDefaultInstance();
     }
 }

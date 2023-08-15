@@ -13,7 +13,7 @@ import com.finderfeed.solarcraft.local_library.custom_registries.RegistryDelegat
 import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarcraft.registries.SolarCraftClientRegistries;
-import com.finderfeed.solarcraft.registries.items.SolarcraftItems;
+import com.finderfeed.solarcraft.registries.items.SCItems;
 import com.finderfeed.solarcraft.registries.recipe_types.SolarcraftRecipeTypes;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
@@ -53,7 +53,7 @@ public class InformationScreen extends Screen {
     public InformationScreen(AncientFragment fragment,InfusingRecipeScreen screen) {
         super(Component.literal(""));
         this.screen = screen;
-        this.icon = SolarcraftItems.INFUSER_ITEM.get();
+        this.icon = SCItems.INFUSER_ITEM.get();
         this.fragment = fragment;
     }
 
@@ -61,7 +61,7 @@ public class InformationScreen extends Screen {
         super(Component.literal(""));
 //        this.screenInfusingCrafting = screen;
         this.screen = screen;
-        this.icon = SolarcraftItems.INFUSING_TABLE.get();
+        this.icon = SCItems.INFUSING_TABLE.get();
         this.fragment = fragment;
     }
 

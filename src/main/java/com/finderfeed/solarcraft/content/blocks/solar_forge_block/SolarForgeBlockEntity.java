@@ -1,7 +1,7 @@
 package com.finderfeed.solarcraft.content.blocks.solar_forge_block;
 
 import com.finderfeed.solarcraft.SolarCraft;
-import com.finderfeed.solarcraft.registries.items.SolarcraftItems;
+import com.finderfeed.solarcraft.registries.items.SCItems;
 import com.finderfeed.solarcraft.content.blocks.solar_forge_block.solar_forge_screen.SolarForgeContainer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
@@ -92,7 +92,7 @@ public class SolarForgeBlockEntity extends RandomizableContainerBlockEntity  {
                 if ((world.getGameTime() % 20 == 1)){
                     if (world.random.nextDouble() > 0.96) {
                         if (tile.getItem(1).isEmpty()) {
-                            tile.setItem(1, new ItemStack(SolarcraftItems.SOLAR_DUST.get(), 1));
+                            tile.setItem(1, new ItemStack(SCItems.SOLAR_DUST.get(), 1));
                         } else {
                             ItemStack stack = tile.getItem(1).copy();
                             stack.grow(1);
@@ -103,11 +103,11 @@ public class SolarForgeBlockEntity extends RandomizableContainerBlockEntity  {
 
 
             }
-            if (tile.getItems().get(0).getItem() == SolarcraftItems.SOLAR_SHARD.get() && tile.SOLAR_ENERGY_LEVEL+300 <= 30000){
+            if (tile.getItems().get(0).getItem() == SCItems.SOLAR_SHARD.get() && tile.SOLAR_ENERGY_LEVEL+300 <= 30000){
                 tile.getItems().get(0).grow(-1);
                 if (world.random.nextDouble() > 0.85) {
                     if (tile.getItem(1).isEmpty()) {
-                        tile.setItem(1, new ItemStack(SolarcraftItems.SOLAR_DUST.get(), 1));
+                        tile.setItem(1, new ItemStack(SCItems.SOLAR_DUST.get(), 1));
                     } else {
                         ItemStack stack = tile.getItem(1).copy();
                         stack.grow(1);

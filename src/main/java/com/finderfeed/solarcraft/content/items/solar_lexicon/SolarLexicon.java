@@ -4,10 +4,9 @@ import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragmentHelper;
 import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
-import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.progression_tree.ProgressionTree;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.packets.OpenScreenPacket;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.packets.UpdateInventoryPacket;
-import com.finderfeed.solarcraft.registries.items.SolarcraftItems;
+import com.finderfeed.solarcraft.registries.items.SCItems;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
@@ -64,7 +63,7 @@ public class SolarLexicon extends Item {
     private void givePlayerFragmentIfNecessary(Player pe,AncientFragment... fragments){
         for (AncientFragment fragment : fragments) {
             if (!AncientFragmentHelper.doPlayerHasFragment(pe,fragment)) {
-                ItemStack frag = SolarcraftItems.INFO_FRAGMENT.get().getDefaultInstance();
+                ItemStack frag = SCItems.INFO_FRAGMENT.get().getDefaultInstance();
                 AncientFragmentHelper.applyTagToFragment(frag, fragment);
                 ItemEntity entity = new ItemEntity(pe.level, pe.getX(), pe.getY() + 0.3f, pe.getZ(), frag);
                 AncientFragmentHelper.givePlayerFragment(fragment, pe);

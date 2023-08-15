@@ -27,7 +27,7 @@ import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.Progre
 import com.finderfeed.solarcraft.registries.Tags;
 import com.finderfeed.solarcraft.registries.blocks.SolarcraftBlocks;
 import com.finderfeed.solarcraft.content.world_generation.structures.NotStructures;
-import com.finderfeed.solarcraft.registries.items.SolarcraftItems;
+import com.finderfeed.solarcraft.registries.items.SCItems;
 import com.finderfeed.solarcraft.registries.recipe_types.SolarcraftRecipeTypes;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
@@ -430,7 +430,7 @@ public class InfuserTileEntity extends REItemHandlerBlockEntity implements Solar
                     return;
                 }
                 InfusingRecipe recipe = opt.get();
-                if (recipe.output.getItem() == SolarcraftItems.ENERGY_GENERATOR_BLOCK.get()) {
+                if (recipe.output.getItem() == SCItems.ENERGY_GENERATOR_BLOCK.get()) {
                     ItemStack input = this.getItem(inputSlot());
                     if (input.getItem() instanceof SunShardItem shard && !shard.isHeated(input)){
                         playerEntity.sendSystemMessage(Component.literal("Unable to start ").withStyle(ChatFormatting.RED)
@@ -438,7 +438,7 @@ public class InfuserTileEntity extends REItemHandlerBlockEntity implements Solar
                                 .withStyle(ChatFormatting.RED));
                         return;
                     }
-                }else if (recipe.output.getItem() == SolarcraftItems.ORBITAL_MISSILE_LAUNCHER.get()){
+                }else if (recipe.output.getItem() == SCItems.ORBITAL_MISSILE_LAUNCHER.get()){
                     if (!SolarcraftConfig.IS_ORBITAL_MISSILE_LAUNCHER_ALLOWED.get()){
                         playerEntity.sendSystemMessage(Component.translatable("solarcraft.message.block_disabled").withStyle(ChatFormatting.RED));
                         return;

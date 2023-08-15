@@ -7,7 +7,7 @@ import com.finderfeed.solarcraft.content.items.solar_wand.*;
 import com.finderfeed.solarcraft.content.runic_network.algorithms.RunicEnergyPath;
 import com.finderfeed.solarcraft.content.runic_network.repeater.BaseRepeaterTile;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
-import com.finderfeed.solarcraft.registries.items.SolarcraftItems;
+import com.finderfeed.solarcraft.registries.items.SCItems;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -99,6 +99,6 @@ public class RENetworkConnectivityWandAction implements WandAction<EmptyWandData
 
     @Override
     public ItemStack getIcon() {
-        return SolarcraftItems.REPEATER.get().getDefaultInstance();
+        return SCItems.REPEATER.get().getDefaultInstance();
     }
 }

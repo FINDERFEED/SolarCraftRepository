@@ -36,7 +36,7 @@ import com.finderfeed.solarcraft.registries.recipe_types.SolarcraftRecipeTypes;
 import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
 import com.finderfeed.solarcraft.registries.wand_actions.SolarCraftWandActionRegistry;
 import com.finderfeed.solarcraft.registries.worldgen.configured.LazyConfiguredFeatures;
-import com.finderfeed.solarcraft.registries.items.SolarcraftItems;
+import com.finderfeed.solarcraft.registries.items.SCItems;
 import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
 import com.finderfeed.solarcraft.content.blocks.solar_forge_block.SolarForgeBlock;
 import com.finderfeed.solarcraft.content.blocks.solar_forge_block.SolarForgeBlockEntity;
@@ -156,7 +156,7 @@ public class SolarCraft
         TILE_ENTITY_TYPE.register(bus);
         CONTAINER_TYPE.register(bus);
         SCCreativeTabs.REGISTRY.register(bus);
-        SolarcraftItems.ITEMS.register(bus);
+        SCItems.ITEMS.register(bus);
         SolarcraftBlocks.BLOCKS.register(bus);
         SolarcraftTileEntityTypes.TILE_ENTITY_TYPE.register(bus);
         SCEntityTypes.ENTITY_TYPE_REGISTER.register(bus);
@@ -180,7 +180,7 @@ public class SolarCraft
         FMLJavaModLoadingContext.get().getModEventBus().addListener(TrunkPlacersRegistry::registerTrunkPlacerTypes);
 
         FMLJavaModLoadingContext.get().getModEventBus().addListener(LazyConfiguredFeatures::registerConfiguredFeatures);
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(SolarcraftItems::registerIntoCreativeTabs);
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(SCItems::registerIntoCreativeTabs);
 
 //        FMLJavaModLoadingContext.get().getModEventBus().addListener(FeaturesRegistry::registerConfiguredFeatures);
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, SolarcraftConfig.SPEC,"solarcraft-config.toml");

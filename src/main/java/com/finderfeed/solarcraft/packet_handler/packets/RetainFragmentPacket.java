@@ -2,7 +2,7 @@ package com.finderfeed.solarcraft.packet_handler.packets;
 
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragmentHelper;
-import com.finderfeed.solarcraft.registries.items.SolarcraftItems;
+import com.finderfeed.solarcraft.registries.items.SCItems;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -44,7 +44,7 @@ public class RetainFragmentPacket {
                 }
                 if (slot != -1){
                     sender.getInventory().getItem(slot).shrink(1);
-                    ItemStack frag = SolarcraftItems.INFO_FRAGMENT.get().getDefaultInstance();
+                    ItemStack frag = SCItems.INFO_FRAGMENT.get().getDefaultInstance();
                     AncientFragmentHelper.applyTagToFragment(frag,fragment);
                     if (!sender.addItem(frag)){
                         ItemEntity entity = new ItemEntity(sender.level,sender.getX(),sender.getY(),sender.getZ(),frag);

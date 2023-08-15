@@ -3,7 +3,7 @@ package com.finderfeed.solarcraft.content.blocks.blockentities.containers;
 import com.finderfeed.solarcraft.content.blocks.blockentities.RunicTableTileEntity;
 import com.finderfeed.solarcraft.content.items.RuneItem;
 import com.finderfeed.solarcraft.registries.containers.SolarcraftContainers;
-import com.finderfeed.solarcraft.registries.items.SolarcraftItems;
+import com.finderfeed.solarcraft.registries.items.SCItems;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragmentHelper;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
@@ -148,14 +148,14 @@ class RuneSlot extends Slot{
     @Override
     public boolean mayPlace(ItemStack stack) {
         Item item = stack.getItem();
-        return (item == SolarcraftItems.SOLAR_RUNE_ARDO.get()) ||
-                (item == SolarcraftItems.SOLAR_RUNE_ZETA.get()) ||
-                (item == SolarcraftItems.SOLAR_RUNE_TERA.get()) ||
-                (item == SolarcraftItems.SOLAR_RUNE_URBA.get()) ||
-                (item == SolarcraftItems.SOLAR_RUNE_KELDA.get()) ||
-                (item == SolarcraftItems.SOLAR_RUNE_FIRA.get()) ||
-                (item == SolarcraftItems.SOLAR_RUNE_GIRO.get()) ||
-                (item == SolarcraftItems.SOLAR_RUNE_ULTIMA.get());
+        return (item == SCItems.SOLAR_RUNE_ARDO.get()) ||
+                (item == SCItems.SOLAR_RUNE_ZETA.get()) ||
+                (item == SCItems.SOLAR_RUNE_TERA.get()) ||
+                (item == SCItems.SOLAR_RUNE_URBA.get()) ||
+                (item == SCItems.SOLAR_RUNE_KELDA.get()) ||
+                (item == SCItems.SOLAR_RUNE_FIRA.get()) ||
+                (item == SCItems.SOLAR_RUNE_GIRO.get()) ||
+                (item == SCItems.SOLAR_RUNE_ULTIMA.get());
     }
 }
 class FragmentSlot extends SlotItemHandler {
@@ -168,7 +168,7 @@ class FragmentSlot extends SlotItemHandler {
     @Override
     public boolean mayPlace(ItemStack stack) {
         Item item = stack.getItem();
-        return (item == SolarcraftItems.INFO_FRAGMENT.get()) && (stack.getTagElement(AncientFragmentHelper.TAG_ELEMENT) == null);
+        return (item == SCItems.INFO_FRAGMENT.get()) && (stack.getTagElement(AncientFragmentHelper.TAG_ELEMENT) == null);
     }
 
     @Override

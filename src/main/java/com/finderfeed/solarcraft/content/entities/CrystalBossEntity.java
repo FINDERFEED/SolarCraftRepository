@@ -25,7 +25,7 @@ import com.finderfeed.solarcraft.client.particles.SCParticleTypes;
 import com.finderfeed.solarcraft.registries.attributes.AttributesRegistry;
 import com.finderfeed.solarcraft.registries.damage_sources.SolarcraftDamageSources;
 import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
-import com.finderfeed.solarcraft.registries.items.SolarcraftItems;
+import com.finderfeed.solarcraft.registries.items.SCItems;
 import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
@@ -587,7 +587,7 @@ public class CrystalBossEntity extends NoHealthLimitMob implements CrystalBossBu
     @Override
     protected void dropAllDeathLoot(DamageSource p_21192_) {
         super.dropAllDeathLoot(p_21192_);
-        LegendaryItem item = new LegendaryItem(level, new ItemStack(SolarcraftItems.CRYSTALLITE_CORE.get(),1));
+        LegendaryItem item = new LegendaryItem(level, new ItemStack(SCItems.CRYSTALLITE_CORE.get(),1));
         item.setPos(this.position().add(0,this.getBbHeight()/2,0));
         level.addFreshEntity(item);
     }

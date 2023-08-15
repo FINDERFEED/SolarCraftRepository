@@ -18,7 +18,7 @@ import com.finderfeed.solarcraft.registries.damage_sources.SolarcraftDamageSourc
 import com.finderfeed.solarcraft.registries.data_serializers.FDEntityDataSerializers;
 import com.finderfeed.solarcraft.registries.effects.SCEffects;
 import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
-import com.finderfeed.solarcraft.registries.items.SolarcraftItems;
+import com.finderfeed.solarcraft.registries.items.SCItems;
 import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -478,7 +478,7 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
     public InteractionResult interactAt(Player player, Vec3 vec, InteractionHand hand) {
         if (!level.isClientSide && hand == InteractionHand.MAIN_HAND && !wasAlreadySummoned()) {
             ItemStack item = player.getItemInHand(hand);
-            if (item.is(SolarcraftItems.CRYSTALLITE_CORE.get())){
+            if (item.is(SCItems.CRYSTALLITE_CORE.get())){
                 setSummoned(true);
                 setSummoningPos(this.getOnPos().above());
                 item.shrink(1);
@@ -819,7 +819,7 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
     @Override
     protected void dropAllDeathLoot(DamageSource src) {
         super.dropAllDeathLoot(src);
-        LegendaryItem item = new LegendaryItem(level, new ItemStack(SolarcraftItems.CRYSTAL_HEART.get(),1));
+        LegendaryItem item = new LegendaryItem(level, new ItemStack(SCItems.CRYSTAL_HEART.get(),1));
         item.setPos(this.position().add(0,this.getBbHeight()/2,0));
         level.addFreshEntity(item);
         if (!level.isClientSide) {

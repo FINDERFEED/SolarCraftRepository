@@ -44,12 +44,12 @@ public class SphereParticleShape implements ParticleSpawnShape {
 
     private float spawnChance;
 
-    public SphereParticleShape(double startRadius,double speed,int density,boolean randomSpeed,boolean outside,float spawnChance){
+    public SphereParticleShape(double startRadius,double speed,int density,boolean randomSpeed,boolean moveOutside,float spawnChance){
         this.startRadius = startRadius;
         this.speed = speed;
         this.density = density;
         this.randomSpeed = randomSpeed;
-        this.outside = outside;
+        this.outside = moveOutside;
         this.spawnChance = spawnChance;
     }
 
@@ -66,7 +66,7 @@ public class SphereParticleShape implements ParticleSpawnShape {
                     if (level.random.nextFloat() > spawnChance) continue;
                     Vec3 add = new Vec3(x,y,z).normalize();
                     Vec3 pos = add.multiply(this.startRadius,this.startRadius,this.startRadius).yRot((float)Math.PI/4).add(center);
-                    Vec3 speed = add.multiply(this.speed,this.speed,this.speed).yRot((float)Math.PI/4);
+                    Vec3 speed = add.multiply(this.speed,this.speed,this.speed).yRot((float)Math.PI/8);
                     if (!outside){
                         speed = speed.reverse();
                     }

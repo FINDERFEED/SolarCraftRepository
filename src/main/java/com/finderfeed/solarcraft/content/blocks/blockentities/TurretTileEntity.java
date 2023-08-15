@@ -2,7 +2,7 @@ package com.finderfeed.solarcraft.content.blocks.blockentities;
 
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.content.blocks.blockentities.projectiles.AbstractTurretProjectile;
-import com.finderfeed.solarcraft.registries.items.SolarcraftItems;
+import com.finderfeed.solarcraft.registries.items.SCItems;
 import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
@@ -88,7 +88,7 @@ public class TurretTileEntity extends BlockEntity  {
     }
 
     public Item getUpgradeItem(){
-        return SolarcraftItems.CHARGED_QUALADIUM_INGOT.get();
+        return SCItems.CHARGED_QUALADIUM_INGOT.get();
     }
 
     public int getMaxTurretLevel(){

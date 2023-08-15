@@ -1,18 +1,15 @@
 package com.finderfeed.solarcraft.registries.overlays;
 
 import com.finderfeed.solarcraft.SolarCraft;
-import com.finderfeed.solarcraft.client.rendering.CoreShaders;
 import com.finderfeed.solarcraft.content.abilities.ability_classes.ToggleableAbility;
 import com.finderfeed.solarcraft.content.blocks.blockentities.runic_energy.AbstractRunicEnergyContainer;
 import com.finderfeed.solarcraft.content.blocks.infusing_table_things.InfuserTileEntity;
 import com.finderfeed.solarcraft.content.blocks.solar_energy.Bindable;
 import com.finderfeed.solarcraft.content.blocks.solar_energy.SolarEnergyContainer;
-import com.finderfeed.solarcraft.content.items.primitive.solacraft_item_classes.SolarcraftItem;
 import com.finderfeed.solarcraft.content.items.solar_wand.IWandable;
 import com.finderfeed.solarcraft.content.items.solar_wand.SolarWandItem;
 import com.finderfeed.solarcraft.content.items.UltraCrossbowItem;
 import com.finderfeed.solarcraft.content.items.solar_wand.WandAction;
-import com.finderfeed.solarcraft.content.items.solar_wand.wand_actions.drain_runic_enenrgy_action.REDrainWandAction;
 import com.finderfeed.solarcraft.content.items.solar_wand.wand_actions.drain_runic_enenrgy_action.REDrainWandActionData;
 import com.finderfeed.solarcraft.content.items.solar_wand.wand_actions.drain_runic_enenrgy_action.REDrainWandActionDataSerializer;
 import com.finderfeed.solarcraft.content.items.solar_wand.wand_actions.structure_check.IStructureOwner;
@@ -23,23 +20,19 @@ import com.finderfeed.solarcraft.local_library.entities.bossbar.client.CustomBos
 import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
 import com.finderfeed.solarcraft.registries.abilities.AbilitiesRegistry;
-import com.finderfeed.solarcraft.registries.items.SolarcraftItems;
+import com.finderfeed.solarcraft.registries.items.SCItems;
 import com.finderfeed.solarcraft.registries.wand_actions.SolarCraftWandActionRegistry;
 import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Gui;
 
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.GameRenderer;
-import net.minecraft.client.renderer.ShaderInstance;
-import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.phys.BlockHitResult;
@@ -273,7 +266,7 @@ public class SolarcraftOverlays {
                             || ((action == SolarCraftWandActionRegistry.CHECK_STRUCTURE_WAND_ACTION)
                             && (tile instanceof IStructureOwner))
                     ) {
-                        ItemStack stack = SolarcraftItems.SOLAR_WAND.get().getDefaultInstance();
+                        ItemStack stack = SCItems.SOLAR_WAND.get().getDefaultInstance();
                         SolarWandItem.setWandAction(stack,action.getRegistryName());
                         RenderingTools.renderScaledGuiItemCentered(graphics,stack,
                                 width / 2f + 16, height / 2f - 1, 1f, 0);

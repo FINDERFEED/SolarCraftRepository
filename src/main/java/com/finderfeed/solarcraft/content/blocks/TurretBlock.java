@@ -1,7 +1,7 @@
 package com.finderfeed.solarcraft.content.blocks;
 
 import com.finderfeed.solarcraft.content.blocks.blockentities.TurretTileEntity;
-import com.finderfeed.solarcraft.registries.items.SolarcraftItems;
+import com.finderfeed.solarcraft.registries.items.SCItems;
 import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
@@ -62,7 +62,7 @@ public class TurretBlock extends Block implements EntityBlock {
             BlockEntity test = world.getBlockEntity(pos);
             if (test instanceof TurretTileEntity) {
                 TurretTileEntity tile = (TurretTileEntity) test;
-                ItemStack stack = SolarcraftItems.TURRET_BLOCK.get().getDefaultInstance();
+                ItemStack stack = SCItems.TURRET_BLOCK.get().getDefaultInstance();
                 stack.getOrCreateTagElement(SUBTAG).putInt(LEVEL_TAG, tile.turretLevel);
                 world.addFreshEntity(new ItemEntity(world, pos.getX() + 0.5f, pos.getY() + 0.5, pos.getZ() + 0.5, stack));
             }

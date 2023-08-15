@@ -18,8 +18,7 @@ import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
 import com.finderfeed.solarcraft.packet_handler.packets.CastAbilityPacket;
 import com.finderfeed.solarcraft.registries.ConfigRegistry;
 import com.finderfeed.solarcraft.registries.blocks.SolarcraftBlocks;
-import com.finderfeed.solarcraft.registries.damage_sources.SolarcraftDamageSources;
-import com.finderfeed.solarcraft.registries.items.SolarcraftItems;
+import com.finderfeed.solarcraft.registries.items.SCItems;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import com.mojang.datafixers.util.Either;
@@ -27,7 +26,6 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.core.BlockPos;
@@ -94,7 +92,7 @@ public class ClientEventsHandler {
         }
 
         if (ClientModEventHandler.GUI_WAND_MODE_SELECTION.isDown() && event.getAction() == GLFW.GLFW_PRESS
-                && Minecraft.getInstance().player != null && Minecraft.getInstance().player.getMainHandItem().is(SolarcraftItems.SOLAR_WAND.get())){
+                && Minecraft.getInstance().player != null && Minecraft.getInstance().player.getMainHandItem().is(SCItems.SOLAR_WAND.get())){
             Minecraft.getInstance().setScreen(new WandModeSelectionScreen());
         }
 
@@ -142,7 +140,7 @@ public class ClientEventsHandler {
         LocalPlayer player = Minecraft.getInstance().player;
         if (player != null){
             if (player.level.getGameTime() % 5 == 0){
-                if (player.getInventory().countItem(SolarcraftItems.ENDER_RADAR.get()) > 0){
+                if (player.getInventory().countItem(SCItems.ENDER_RADAR.get()) > 0){
                         fillList(player.getOnPos().above(),player.level);
                 }else{
                     ORES_RENDER_POSITIONS.clear();

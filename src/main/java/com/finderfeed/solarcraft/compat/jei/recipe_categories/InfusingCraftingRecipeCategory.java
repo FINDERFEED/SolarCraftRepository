@@ -6,7 +6,7 @@ import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragmentHelper;
 import com.finderfeed.solarcraft.content.recipe_types.infusing_crafting.InfusingCraftingRecipe;
-import com.finderfeed.solarcraft.registries.items.SolarcraftItems;
+import com.finderfeed.solarcraft.registries.items.SCItems;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
@@ -49,7 +49,7 @@ public class InfusingCraftingRecipeCategory implements IRecipeCategory<InfusingC
 
     @Override
     public IDrawable getIcon() {
-        return helpers.getGuiHelper().createDrawableIngredient(VanillaTypes.ITEM_STACK, SolarcraftItems.INFUSING_TABLE.get().getDefaultInstance());
+        return helpers.getGuiHelper().createDrawableIngredient(VanillaTypes.ITEM_STACK, SCItems.INFUSING_TABLE.get().getDefaultInstance());
     }
 
     @Override

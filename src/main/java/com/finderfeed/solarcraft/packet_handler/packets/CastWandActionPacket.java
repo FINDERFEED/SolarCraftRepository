@@ -1,12 +1,10 @@
 package com.finderfeed.solarcraft.packet_handler.packets;
 
-import com.finderfeed.solarcraft.content.abilities.AbilityHelper;
 import com.finderfeed.solarcraft.content.items.solar_wand.SolarWandItem;
-import com.finderfeed.solarcraft.registries.items.SolarcraftItems;
+import com.finderfeed.solarcraft.registries.items.SCItems;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.network.NetworkEvent;
 
@@ -32,7 +30,7 @@ public class CastWandActionPacket {
         ctx.get().enqueueWork(()->{
             ServerPlayer player = ctx.get().getSender();
             ItemStack stack = player.getMainHandItem();
-            if (stack.is(SolarcraftItems.SOLAR_WAND.get())){
+            if (stack.is(SCItems.SOLAR_WAND.get())){
                 SolarWandItem.setWandAction(stack,actionId);
             }
         });

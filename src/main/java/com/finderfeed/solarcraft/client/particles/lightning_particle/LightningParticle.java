@@ -94,7 +94,7 @@ public class LightningParticle extends Particle {
                 level.getGameTime()* 42442 + seed
         );
 
-        float a = this.age / (float)this.lifetime;
+        float a = Mth.clamp(this.age / (float)this.lifetime,0,1f);
 
         a =  -(float)Math.pow(a,4) + 1;
 

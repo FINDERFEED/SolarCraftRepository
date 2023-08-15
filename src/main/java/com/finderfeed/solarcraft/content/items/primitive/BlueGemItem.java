@@ -2,7 +2,7 @@ package com.finderfeed.solarcraft.content.items.primitive;
 
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.Progression;
-import com.finderfeed.solarcraft.registries.items.SolarcraftItems;
+import com.finderfeed.solarcraft.registries.items.SCItems;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
@@ -36,7 +36,7 @@ public class BlueGemItem extends Item {
 
                     if (ticks >= 500){
                         for (int i = 0; i < stack.getCount();i++) {
-                            world.addFreshEntity(new ItemEntity(world, entity.getX(), entity.getY(), entity.getZ(), new ItemStack(SolarcraftItems.BLUE_GEM_ENCHANCED.get(), 1)));
+                            world.addFreshEntity(new ItemEntity(world, entity.getX(), entity.getY(), entity.getZ(), new ItemStack(SCItems.BLUE_GEM_ENCHANCED.get(), 1)));
                         }
 
 

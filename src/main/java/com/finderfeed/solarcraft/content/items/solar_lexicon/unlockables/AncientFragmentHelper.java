@@ -4,7 +4,7 @@ import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.Progression;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
-import com.finderfeed.solarcraft.registries.items.SolarcraftItems;
+import com.finderfeed.solarcraft.registries.items.SCItems;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -32,14 +32,14 @@ public class AncientFragmentHelper {
 
     //they have weird names didn't they?
     public static final Item[] RUNES = {
-            SolarcraftItems.SOLAR_RUNE_ARDO.get(),
-            SolarcraftItems.SOLAR_RUNE_FIRA.get(),
-            SolarcraftItems.SOLAR_RUNE_KELDA.get(),
-            SolarcraftItems.SOLAR_RUNE_TERA.get(),
-            SolarcraftItems.SOLAR_RUNE_URBA.get(),
-            SolarcraftItems.SOLAR_RUNE_ZETA.get(),
-            SolarcraftItems.SOLAR_RUNE_GIRO.get(),
-            SolarcraftItems.SOLAR_RUNE_ULTIMA.get()
+            SCItems.SOLAR_RUNE_ARDO.get(),
+            SCItems.SOLAR_RUNE_FIRA.get(),
+            SCItems.SOLAR_RUNE_KELDA.get(),
+            SCItems.SOLAR_RUNE_TERA.get(),
+            SCItems.SOLAR_RUNE_URBA.get(),
+            SCItems.SOLAR_RUNE_ZETA.get(),
+            SCItems.SOLAR_RUNE_GIRO.get(),
+            SCItems.SOLAR_RUNE_ULTIMA.get()
     };
 
     public static Map<RunicEnergy.Type,Item> RUNES_MAP = initRunesMap();
@@ -47,14 +47,14 @@ public class AncientFragmentHelper {
 
     public static Map<RunicEnergy.Type,Item> initRunesMap(){
         RUNES_MAP = new HashMap<>();
-        RUNES_MAP.put(RunicEnergy.Type.ARDO, SolarcraftItems.SOLAR_RUNE_ARDO.get());
-        RUNES_MAP.put(RunicEnergy.Type.FIRA, SolarcraftItems.SOLAR_RUNE_FIRA.get());
-        RUNES_MAP.put(RunicEnergy.Type.ZETA, SolarcraftItems.SOLAR_RUNE_ZETA.get());
-        RUNES_MAP.put(RunicEnergy.Type.KELDA, SolarcraftItems.SOLAR_RUNE_KELDA.get());
-        RUNES_MAP.put(RunicEnergy.Type.URBA, SolarcraftItems.SOLAR_RUNE_URBA.get());
-        RUNES_MAP.put(RunicEnergy.Type.TERA, SolarcraftItems.SOLAR_RUNE_TERA.get());
-        RUNES_MAP.put(RunicEnergy.Type.GIRO, SolarcraftItems.SOLAR_RUNE_GIRO.get());
-        RUNES_MAP.put(RunicEnergy.Type.ULTIMA, SolarcraftItems.SOLAR_RUNE_ULTIMA.get());
+        RUNES_MAP.put(RunicEnergy.Type.ARDO, SCItems.SOLAR_RUNE_ARDO.get());
+        RUNES_MAP.put(RunicEnergy.Type.FIRA, SCItems.SOLAR_RUNE_FIRA.get());
+        RUNES_MAP.put(RunicEnergy.Type.ZETA, SCItems.SOLAR_RUNE_ZETA.get());
+        RUNES_MAP.put(RunicEnergy.Type.KELDA, SCItems.SOLAR_RUNE_KELDA.get());
+        RUNES_MAP.put(RunicEnergy.Type.URBA, SCItems.SOLAR_RUNE_URBA.get());
+        RUNES_MAP.put(RunicEnergy.Type.TERA, SCItems.SOLAR_RUNE_TERA.get());
+        RUNES_MAP.put(RunicEnergy.Type.GIRO, SCItems.SOLAR_RUNE_GIRO.get());
+        RUNES_MAP.put(RunicEnergy.Type.ULTIMA, SCItems.SOLAR_RUNE_ULTIMA.get());
         return RUNES_MAP;
     }
 

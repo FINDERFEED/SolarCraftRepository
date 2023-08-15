@@ -1,7 +1,7 @@
 package com.finderfeed.solarcraft.content.world_generation.structures.blocks;
 
 import com.finderfeed.solarcraft.content.world_generation.structures.blocks.tile_entities.KeyLockStructureTile;
-import com.finderfeed.solarcraft.registries.items.SolarcraftItems;
+import com.finderfeed.solarcraft.registries.items.SCItems;
 import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
@@ -34,7 +34,7 @@ public class KeyLockBlock extends GlazedTerracottaBlock implements EntityBlock {
     public InteractionResult use(BlockState p_225533_1_, Level p_225533_2_, BlockPos p_225533_3_, Player p_225533_4_, InteractionHand p_225533_5_, BlockHitResult p_225533_6_) {
 
         if (!p_225533_2_.isClientSide){
-            if (p_225533_4_.getItemInHand(p_225533_5_).getItem() == SolarcraftItems.SOLAR_KEY.get()){
+            if (p_225533_4_.getItemInHand(p_225533_5_).getItem() == SCItems.SOLAR_KEY.get()){
                 p_225533_2_.destroyBlock(p_225533_3_,false);
                 p_225533_2_.destroyBlock(p_225533_3_.below(),false);
                 p_225533_2_.destroyBlock(p_225533_3_.above(),false);

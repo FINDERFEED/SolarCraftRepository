@@ -7,7 +7,7 @@ import com.finderfeed.solarcraft.misc_things.PhantomInventory;
 import com.finderfeed.solarcraft.content.recipe_types.solar_smelting.SolarSmeltingRecipe;
 import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
 import com.finderfeed.solarcraft.packet_handler.packets.UpdateItemTagInItemEntityPacket;
-import com.finderfeed.solarcraft.registries.items.SolarcraftItems;
+import com.finderfeed.solarcraft.registries.items.SCItems;
 import com.finderfeed.solarcraft.registries.recipe_types.SolarcraftRecipeTypes;
 import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
 import net.minecraft.core.BlockPos;
@@ -61,7 +61,7 @@ public class SolarLensTile extends BlockEntity  {
                     } else {
                         ItemEntity entity = list.get(i);
                         ItemStack stack = entity.getItem();
-                        if (stack.getItem() == SolarcraftItems.SUN_SHARD.get()){
+                        if (stack.getItem() == SCItems.SUN_SHARD.get()){
                             shard = entity;
                             break;
                         }

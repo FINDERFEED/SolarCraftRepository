@@ -38,7 +38,7 @@ import com.finderfeed.solarcraft.registries.attributes.AttributesRegistry;
 import com.finderfeed.solarcraft.registries.blocks.SolarcraftBlocks;
 import com.finderfeed.solarcraft.registries.effects.SCEffects;
 import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
-import com.finderfeed.solarcraft.registries.items.SolarcraftItems;
+import com.finderfeed.solarcraft.registries.items.SCItems;
 import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
@@ -236,7 +236,7 @@ public class SCEventHandler {
         if (event.getSource() != null && (event.getSource().getEntity() != null)){
             LivingEntity ent = event.getEntity();
             ent.getArmorSlots().forEach((stack)->{
-                if (stack.getItem().equals(SolarcraftItems.RADIANT_CHESTPLATE.get())){
+                if (stack.getItem().equals(SCItems.RADIANT_CHESTPLATE.get())){
                     if (ent.level.random.nextFloat() <= 0.17){
                         event.setCanceled(true);
                     }
@@ -328,7 +328,7 @@ public class SCEventHandler {
                 AttributeInstance attr = player.getAttribute(ForgeMod.BLOCK_REACH.get());
                 AttributeInstance attr1 = player.getAttribute(ForgeMod.ENTITY_REACH.get());
                 if (attr != null) {
-                    if (FDMathHelper.PlayerThings.doPlayerHasItem(player.getInventory(), SolarcraftItems.REACH_GLOVES.get())) {
+                    if (FDMathHelper.PlayerThings.doPlayerHasItem(player.getInventory(), SCItems.REACH_GLOVES.get())) {
                         if (!attr.hasModifier(SolarCraftAttributeModifiers.REACH_2_MODIFIER)) {
                             attr.addTransientModifier(SolarCraftAttributeModifiers.REACH_2_MODIFIER);
                         }
@@ -558,7 +558,7 @@ public class SCEventHandler {
     public static void cancelFallDamage(LivingFallEvent event){
         if (event.getEntity() instanceof Player player){
             if (player.level.isClientSide) return;
-            if (player.getItemBySlot(EquipmentSlot.CHEST).is(SolarcraftItems.DIVINE_CHESTPLATE.get())){
+            if (player.getItemBySlot(EquipmentSlot.CHEST).is(SCItems.DIVINE_CHESTPLATE.get())){
                 event.setDamageMultiplier(0);
             }
         }
@@ -569,14 +569,14 @@ public class SCEventHandler {
     public static void equipmentChangedEvent(LivingEquipmentChangeEvent event){
         if (event.getEntity() instanceof ServerPlayer player){
             if (event.getSlot() == EquipmentSlot.CHEST){
-                if (event.getTo().is(SolarcraftItems.DIVINE_CHESTPLATE.get()) && !event.getFrom().is(SolarcraftItems.DIVINE_CHESTPLATE.get())){
+                if (event.getTo().is(SCItems.DIVINE_CHESTPLATE.get()) && !event.getFrom().is(SCItems.DIVINE_CHESTPLATE.get())){
                     if (!player.isCreative() && !player.isSpectator()) {
                         DisablePlayerFlightPacket.send(player, false);
                     }
                     if (player.getAbilities().getFlyingSpeed() < 0.1f) {
                         player.getAbilities().setFlyingSpeed(0.10f);
                     }
-                }else if (event.getFrom().is(SolarcraftItems.DIVINE_CHESTPLATE.get()) && !event.getTo().is(SolarcraftItems.DIVINE_CHESTPLATE.get())){
+                }else if (event.getFrom().is(SCItems.DIVINE_CHESTPLATE.get()) && !event.getTo().is(SCItems.DIVINE_CHESTPLATE.get())){
                     if (!player.isCreative() && !player.isSpectator() ) {
                         DisablePlayerFlightPacket.send(player, true);
                     }
@@ -622,7 +622,7 @@ public class SCEventHandler {
             if (player instanceof  ServerPlayer sPlayer) {
 
                 if (!Helpers.getPlayerSolarcraftTag(sPlayer).getBoolean("received_lexicon")){
-                    if (sPlayer.addItem(SolarcraftItems.SOLAR_LEXICON.get().getDefaultInstance())){
+                    if (sPlayer.addItem(SCItems.SOLAR_LEXICON.get().getDefaultInstance())){
                         Helpers.getPlayerSolarcraftTag(sPlayer).putBoolean("received_lexicon",true);
                     }
 

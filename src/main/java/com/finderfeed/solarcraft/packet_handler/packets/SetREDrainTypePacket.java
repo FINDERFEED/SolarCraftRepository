@@ -3,7 +3,7 @@ package com.finderfeed.solarcraft.packet_handler.packets;
 import com.finderfeed.solarcraft.content.items.solar_wand.wand_actions.drain_runic_enenrgy_action.REDrainWandActionData;
 import com.finderfeed.solarcraft.content.items.solar_wand.wand_actions.drain_runic_enenrgy_action.REDrainWandActionDataSerializer;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
-import com.finderfeed.solarcraft.registries.items.SolarcraftItems;
+import com.finderfeed.solarcraft.registries.items.SCItems;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
@@ -31,7 +31,7 @@ public class SetREDrainTypePacket {
     public void handle(Supplier<NetworkEvent.Context> ctx){
         ctx.get().enqueueWork(()->{
             ServerPlayer enti = ctx.get().getSender();
-            if (enti.getMainHandItem().is(SolarcraftItems.SOLAR_WAND.get())){
+            if (enti.getMainHandItem().is(SCItems.SOLAR_WAND.get())){
                 ItemStack stack = enti.getMainHandItem();
                 REDrainWandActionDataSerializer serializer = REDrainWandActionDataSerializer.SERIALIZER;
 

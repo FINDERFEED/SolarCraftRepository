@@ -4,6 +4,7 @@ import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.content.blocks.blockentities.clearing_ritual.ClearingRitual;
 import com.finderfeed.solarcraft.content.entities.CrystalBossEntity;
 import com.finderfeed.solarcraft.content.entities.runic_elemental.RunicElementalBoss;
+import com.finderfeed.solarcraft.content.entities.uldera_crystal.UlderaLightningEntity;
 import com.finderfeed.solarcraft.events.my_events.ProgressionUnlockEvent;
 import com.finderfeed.solarcraft.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarcraft.content.blocks.blockentities.clearing_ritual.RadiantLandCleanedData;
@@ -16,6 +17,7 @@ import com.finderfeed.solarcraft.packet_handler.packets.*;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.progression_tree.ProgressionTree;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.packets.UpdateProgressionsOnClient;
 import com.finderfeed.solarcraft.registries.SolarcraftGamerules;
+import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
 import net.minecraft.client.Minecraft;
 
 import net.minecraft.client.gui.GuiGraphics;
@@ -61,6 +63,16 @@ public class Helpers {
     public static String PROGRESSION = "solar_forge_progression_";
     public static BlockPos NULL_POS = new BlockPos(0,-100,0);
 
+
+
+    public static void spawnUlderaLightning(Level level, Vec3 spawnPos, float damage, int delay, int height){
+        UlderaLightningEntity lightning = new UlderaLightningEntity(SCEntityTypes.ULDERA_LIGHTNING.get(),level);
+        lightning.damage = damage;
+        lightning.setLightningDelay(delay);
+        lightning.setHeight(height);
+        lightning.setPos(spawnPos);
+        level.addFreshEntity(lightning);
+    }
 
     public static HitResult getEntityHitResultIgnoreBlocks(Player player, Level level, Vec3 init, Vec3 end, Predicate<Entity> predicate){
         AABB box = new AABB(init,end);

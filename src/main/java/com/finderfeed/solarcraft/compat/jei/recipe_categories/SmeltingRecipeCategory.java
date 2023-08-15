@@ -3,12 +3,10 @@ package com.finderfeed.solarcraft.compat.jei.recipe_categories;
 import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.compat.jei.JeiRecipeTypes;
 import com.finderfeed.solarcraft.content.recipe_types.solar_smelting.SolarSmeltingRecipe;
-import com.finderfeed.solarcraft.registries.items.SolarcraftItems;
-import com.mojang.blaze3d.vertex.PoseStack;
+import com.finderfeed.solarcraft.registries.items.SCItems;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
-import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.helpers.IJeiHelpers;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
@@ -40,7 +38,7 @@ public class SmeltingRecipeCategory implements IRecipeCategory<SolarSmeltingReci
 
     @Override
     public IDrawable getIcon() {
-        return helpers.getGuiHelper().createDrawableIngredient(VanillaTypes.ITEM_STACK, SolarcraftItems.SOLAR_LENS.get().getDefaultInstance());
+        return helpers.getGuiHelper().createDrawableIngredient(VanillaTypes.ITEM_STACK, SCItems.SOLAR_LENS.get().getDefaultInstance());
     }
 
 

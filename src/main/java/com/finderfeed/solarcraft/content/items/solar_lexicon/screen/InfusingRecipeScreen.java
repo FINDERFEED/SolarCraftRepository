@@ -14,14 +14,12 @@ import com.finderfeed.solarcraft.misc_things.RunicEnergy;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.SolarLexicon;
 import com.finderfeed.solarcraft.content.recipe_types.infusing_new.InfusingRecipe;
 import com.finderfeed.solarcraft.registries.Tags;
-import com.finderfeed.solarcraft.registries.items.SolarcraftItems;
+import com.finderfeed.solarcraft.registries.items.SCItems;
 import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.sounds.SoundManager;
@@ -140,7 +138,7 @@ public class InfusingRecipeScreen extends Screen {
 
             addRenderableWidget(new ItemStackTabButton(relX + 211, relY + 9 + 6, 17, 17, (button) -> {
                 minecraft.setScreen(new InfusingRecipeEnergyScreen(recipe, currentPage));
-            }, SolarcraftItems.SOLAR_WAND.get().getDefaultInstance(), 0.7f));
+            }, SCItems.SOLAR_WAND.get().getDefaultInstance(), 0.7f));
         }
         addRenderableWidget(new ItemStackTabButton(relX + 211,relY+28 + 6 - 1,17,17,(button)->{minecraft.setScreen(new SolarLexiconRecipesScreen());}, Items.CRAFTING_TABLE.getDefaultInstance(),0.7f,
                 (buttons, graphics, b, c) -> {

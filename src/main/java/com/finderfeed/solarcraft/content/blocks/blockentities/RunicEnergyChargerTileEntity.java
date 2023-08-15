@@ -8,7 +8,7 @@ import com.finderfeed.solarcraft.content.items.runic_energy.IRunicEnergyUser;
 import com.finderfeed.solarcraft.content.items.runic_energy.ItemRunicEnergy;
 import com.finderfeed.solarcraft.content.items.runic_energy.RunicEnergyCost;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
-import com.finderfeed.solarcraft.registries.items.SolarcraftItems;
+import com.finderfeed.solarcraft.registries.items.SCItems;
 import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.Connection;
@@ -131,6 +131,6 @@ public class RunicEnergyChargerTileEntity extends REItemHandlerBlockEntity imple
 
     @Override
     public ItemStack droppedStack() {
-        return IRunicEnergySaver.defaultSave(SolarcraftItems.RUNIC_ENERGY_CHARGER.get().getDefaultInstance(),this);
+        return IRunicEnergySaver.defaultSave(SCItems.RUNIC_ENERGY_CHARGER.get().getDefaultInstance(),this);
     }
 }

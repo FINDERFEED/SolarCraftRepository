@@ -3,7 +3,7 @@ package com.finderfeed.solarcraft.content.blocks;
 import com.finderfeed.solarcraft.content.blocks.blockentities.InfusingTableTile;
 import com.finderfeed.solarcraft.content.blocks.blockentities.containers.InfusingTableTileContainer;
 import com.finderfeed.solarcraft.misc_things.PhantomInventory;
-import com.finderfeed.solarcraft.registries.items.SolarcraftItems;
+import com.finderfeed.solarcraft.registries.items.SCItems;
 import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -43,7 +43,7 @@ public class InfusingTableBlock extends Block implements EntityBlock {
 
         if (!level.isClientSide
                 && hand == InteractionHand.MAIN_HAND
-                && !player.getItemInHand(hand).is(SolarcraftItems.SOLAR_WAND.get())){
+                && !player.getItemInHand(hand).is(SCItems.SOLAR_WAND.get())){
             BlockEntity e = level.getBlockEntity(pos);
             if (e instanceof  InfusingTableTile tile) {
                 if (tile.getOwner() != null && (level.getPlayerByUUID(tile.getOwner()) == player)) {
@@ -55,7 +55,7 @@ public class InfusingTableBlock extends Block implements EntityBlock {
                 }
             }
         }
-        if (player.getItemInHand(hand).is(SolarcraftItems.SOLAR_WAND.get())){
+        if (player.getItemInHand(hand).is(SCItems.SOLAR_WAND.get())){
                return InteractionResult.FAIL;
         }else {
             return InteractionResult.SUCCESS;

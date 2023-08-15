@@ -11,7 +11,7 @@ import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.Ancient
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragmentHelper;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
 import com.finderfeed.solarcraft.content.recipe_types.infusing_new.InfusingRecipe;
-import com.finderfeed.solarcraft.registries.items.SolarcraftItems;
+import com.finderfeed.solarcraft.registries.items.SCItems;
 import com.mojang.blaze3d.vertex.PoseStack;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
@@ -63,7 +63,7 @@ public class InfusingRecipeCategory implements IRecipeCategory<InfusingRecipe> {
 
     @Override
     public IDrawable getIcon() {
-        return helpers.getGuiHelper().createDrawableIngredient(VanillaTypes.ITEM_STACK, SolarcraftItems.INFUSER_ITEM.get().getDefaultInstance());
+        return helpers.getGuiHelper().createDrawableIngredient(VanillaTypes.ITEM_STACK, SCItems.INFUSER_ITEM.get().getDefaultInstance());
     }
 
 

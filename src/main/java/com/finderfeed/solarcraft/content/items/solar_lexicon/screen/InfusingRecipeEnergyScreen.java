@@ -1,6 +1,5 @@
 package com.finderfeed.solarcraft.content.items.solar_lexicon.screen;
 
-import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.screen.buttons.ItemStackTabButton;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.local_library.client.screens.buttons.FDImageButton;
@@ -9,12 +8,11 @@ import com.finderfeed.solarcraft.content.items.solar_lexicon.SolarLexicon;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
 
 import com.finderfeed.solarcraft.content.recipe_types.infusing_new.InfusingRecipe;
-import com.finderfeed.solarcraft.registries.items.SolarcraftItems;
+import com.finderfeed.solarcraft.registries.items.SCItems;
 import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.sounds.SoundManager;
@@ -101,7 +99,7 @@ public class InfusingRecipeEnergyScreen extends Screen {
 
 
         int xoffs = 211;
-        addRenderableWidget(new ItemStackTabButton(relX+xoffs,relY+9 + 6,17,17,(button)->{minecraft.setScreen(new InfusingRecipeScreen(recipes,currentPage));}, SolarcraftItems.INFUSER_ITEM.get().getDefaultInstance(),0.7f));
+        addRenderableWidget(new ItemStackTabButton(relX+xoffs,relY+9 + 6,17,17,(button)->{minecraft.setScreen(new InfusingRecipeScreen(recipes,currentPage));}, SCItems.INFUSER_ITEM.get().getDefaultInstance(),0.7f));
         addRenderableWidget(new ItemStackTabButton(relX+xoffs,relY+27 + 6,17,17,(button)->{minecraft.setScreen(new SolarLexiconRecipesScreen());}, Items.CRAFTING_TABLE.getDefaultInstance(),0.7f,
                 (buttons, graphics, b, c) -> {
                     graphics.renderTooltip(font, Component.translatable("solarcraft.screens.buttons.recipes_screen"), b, c);

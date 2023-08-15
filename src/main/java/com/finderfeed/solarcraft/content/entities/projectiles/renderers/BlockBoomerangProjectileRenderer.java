@@ -2,7 +2,7 @@ package com.finderfeed.solarcraft.content.entities.projectiles.renderers;
 
 import com.finderfeed.solarcraft.content.entities.projectiles.BlockBoomerangProjectile;
 import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
-import com.finderfeed.solarcraft.registries.items.SolarcraftItems;
+import com.finderfeed.solarcraft.registries.items.SCItems;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -14,7 +14,6 @@ import net.minecraft.client.renderer.MultiBufferSource;
 
 import net.minecraft.client.renderer.culling.Frustum;
 import net.minecraft.client.renderer.entity.EntityRenderer;
-import net.minecraft.client.renderer.block.model.ItemTransforms;
 
 import net.minecraft.resources.ResourceLocation;
 
@@ -41,8 +40,8 @@ public class BlockBoomerangProjectileRenderer extends EntityRenderer<BlockBoomer
                     matrices,buffer,light, OverlayTexture.NO_OVERLAY,
                     Minecraft.getInstance().getItemRenderer().getModel(Block.stateById(id).getBlock().asItem().getDefaultInstance(),null,null,0));
         }
-        Minecraft.getInstance().getItemRenderer().render(SolarcraftItems.BLOCK_BOOMERANG.get().getDefaultInstance(), ItemDisplayContext.FIXED,false,
-                matrices,buffer,light,getPackedLightCoords(entity,partialTicks),Minecraft.getInstance().getItemRenderer().getModel(SolarcraftItems.BLOCK_BOOMERANG.get().getDefaultInstance(),null,null,0));
+        Minecraft.getInstance().getItemRenderer().render(SCItems.BLOCK_BOOMERANG.get().getDefaultInstance(), ItemDisplayContext.FIXED,false,
+                matrices,buffer,light,getPackedLightCoords(entity,partialTicks),Minecraft.getInstance().getItemRenderer().getModel(SCItems.BLOCK_BOOMERANG.get().getDefaultInstance(),null,null,0));
         matrices.popPose();
     }
 

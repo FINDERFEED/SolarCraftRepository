@@ -29,7 +29,6 @@ import com.finderfeed.solarcraft.content.entities.renderers.uldera_crystal.Ulder
 import com.finderfeed.solarcraft.content.entities.renderers.uldera_crystal.UlderaLightningRenderer;
 import com.finderfeed.solarcraft.content.entities.runic_elemental.RunicElementalBossBar;
 import com.finderfeed.solarcraft.content.entities.uldera_crystal.UlderaCrystalBossBar;
-import com.finderfeed.solarcraft.content.entities.uldera_crystal.UlderaLightningEntity;
 import com.finderfeed.solarcraft.content.items.ProgressionBlockItem;
 import com.finderfeed.solarcraft.content.items.SunShardItem;
 import com.finderfeed.solarcraft.content.items.solar_disc_gun.SolarDiscProjectileRenderer;
@@ -43,7 +42,7 @@ import com.finderfeed.solarcraft.registries.ScreenSuppliers;
 import com.finderfeed.solarcraft.registries.blocks.SolarcraftBlocks;
 import com.finderfeed.solarcraft.registries.containers.SolarcraftContainers;
 import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
-import com.finderfeed.solarcraft.registries.items.SolarcraftItems;
+import com.finderfeed.solarcraft.registries.items.SCItems;
 import com.finderfeed.solarcraft.registries.overlays.SolarcraftOverlays;
 import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
 import com.mojang.blaze3d.platform.InputConstants;
@@ -160,7 +159,7 @@ public class ClientModEventHandler {
             SCBedrockModels.init();
 //            SCBedrockAnimations.init();
 
-            ItemProperties.register(SolarcraftItems.SUN_SHARD.get(),new ResourceLocation("solarcraft","heated_up"),(stack, world, living, a)->{
+            ItemProperties.register(SCItems.SUN_SHARD.get(),new ResourceLocation("solarcraft","heated_up"),(stack, world, living, a)->{
                 if (stack.getItem() instanceof SunShardItem item){
                     return item.isHeated(stack) ? 1 : 0;
                 }else{
@@ -168,7 +167,7 @@ public class ClientModEventHandler {
                 }
             });
 
-            ItemProperties.register(SolarcraftItems.ULDORADIUM_ORE.get(),new ResourceLocation("solarcraft","unlocked"),(stack, world, living, a)->{
+            ItemProperties.register(SCItems.ULDORADIUM_ORE.get(),new ResourceLocation("solarcraft","unlocked"),(stack, world, living, a)->{
 
                 Player playerEntity = Minecraft.getInstance().player;
                 if (playerEntity != null) {
@@ -179,7 +178,7 @@ public class ClientModEventHandler {
             });
 
 
-            ItemProperties.register(SolarcraftItems.SOLAR_STONE.get(),new ResourceLocation("solarcraft","unlocked"),(stack, world, living, a)->{
+            ItemProperties.register(SCItems.SOLAR_STONE.get(),new ResourceLocation("solarcraft","unlocked"),(stack, world, living, a)->{
 
                 Player playerEntity = Minecraft.getInstance().player;
                 if (playerEntity != null) {
@@ -188,7 +187,7 @@ public class ClientModEventHandler {
                     return 0;
                 }
             });
-            ItemProperties.register(SolarcraftItems.ENDER_CRACKS.get(),new ResourceLocation("solarcraft","unlocked"),(stack, world, living, a)->{
+            ItemProperties.register(SCItems.ENDER_CRACKS.get(),new ResourceLocation("solarcraft","unlocked"),(stack, world, living, a)->{
 
                 Player playerEntity = Minecraft.getInstance().player;
                 if (playerEntity != null) {
@@ -197,7 +196,7 @@ public class ClientModEventHandler {
                     return 0;
                 }
             });
-            ItemProperties.register(SolarcraftItems.SOLAR_ORE_ITEM.get(),new ResourceLocation("solarcraft","unlocked"),(stack, world, living, a)->{
+            ItemProperties.register(SCItems.SOLAR_ORE_ITEM.get(),new ResourceLocation("solarcraft","unlocked"),(stack, world, living, a)->{
 
                 Player playerEntity = Minecraft.getInstance().player;
                 if (playerEntity != null) {
@@ -208,7 +207,7 @@ public class ClientModEventHandler {
                 }
             });
 
-            ItemProperties.register(SolarcraftItems.SOLAR_GOD_BOW.get(),new ResourceLocation("solarcraft","pulling"),(stack, world, living, a)->{
+            ItemProperties.register(SCItems.SOLAR_GOD_BOW.get(),new ResourceLocation("solarcraft","pulling"),(stack, world, living, a)->{
 
                 if (living != null){
                     return living.getUseItem() != stack ? 0.0F : (float)(stack.getUseDuration() - living.getUseItemRemainingTicks()) / 20.0F;
@@ -217,8 +216,8 @@ public class ClientModEventHandler {
                 }
             });
         });
-        registerDefaultUnknownBlockItemPredicate(SolarcraftItems.LENSING_CRYSTAL_ORE.get());
-        registerDefaultUnknownBlockItemPredicate(SolarcraftItems.MAGISTONE.get());
+        registerDefaultUnknownBlockItemPredicate(SCItems.LENSING_CRYSTAL_ORE.get());
+        registerDefaultUnknownBlockItemPredicate(SCItems.MAGISTONE.get());
 
     }
 

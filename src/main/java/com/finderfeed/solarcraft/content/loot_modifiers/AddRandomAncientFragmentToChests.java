@@ -1,6 +1,6 @@
 package com.finderfeed.solarcraft.content.loot_modifiers;
 
-import com.finderfeed.solarcraft.registries.items.SolarcraftItems;
+import com.finderfeed.solarcraft.registries.items.SCItems;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
@@ -41,7 +41,7 @@ public class AddRandomAncientFragmentToChests extends LootModifier {
         int amount = min + r.nextInt((max - min) + 1);
         ObjectArrayList<ItemStack> stacks = new ObjectArrayList<>(generatedLoot);
         for (int i = 0; i < amount;i++){
-            stacks.add(SolarcraftItems.INFO_FRAGMENT.get().getDefaultInstance());
+            stacks.add(SCItems.INFO_FRAGMENT.get().getDefaultInstance());
         }
         return stacks;
     }

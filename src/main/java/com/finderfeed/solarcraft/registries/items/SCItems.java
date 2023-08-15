@@ -21,14 +21,12 @@ import com.finderfeed.solarcraft.content.items.solar_disc_gun.SolarDiscGunItem;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarcraft.content.items.vein_miner.IllidiumPickaxe;
 import com.finderfeed.solarcraft.misc_things.*;
-import com.finderfeed.solarcraft.registries.SCCreativeTabs;
 import com.finderfeed.solarcraft.registries.blocks.SolarcraftBlocks;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.SolarLexicon;
 import com.google.common.collect.Lists;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.EquipmentSlot;
 
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.*;
@@ -43,7 +41,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import static com.finderfeed.solarcraft.registries.SCCreativeTabs.*;
-public class SolarcraftItems {
+public class SCItems {
 
     public static Map<RegistryObject<CreativeModeTab>,List<RegistryObject<? extends Item>>> itemTabs = new HashMap<>();
 
@@ -213,7 +211,7 @@ public class SolarcraftItems {
     public static final RegistryObject<Item> RUNIC_SLAB = registerItem(ITEMS.register("runic_slab",()->new FuelBlockItem(SolarcraftBlocks.RUNIC_SLAB.get(),new Item.Properties(),300)),SOLAR_GROUP_BLOCKS);
 
 
-    public static final RegistryObject<Item> RUNE_ENERGY_PYLON = registerItem(ITEMS.register("rune_energy_pylon",()->new EnergyPylonBlockItem(SolarcraftBlocks.RUNE_ENERGY_PYLON.get(),new Item.Properties())),SOLAR_GROUP_BLOCKS);
+    public static final RegistryObject<Item> RUNE_ENERGY_PYLON = ITEMS.register("rune_energy_pylon",()->new RuneEnergyPylonBlockItem(SolarcraftBlocks.RUNE_ENERGY_PYLON.get(),new Item.Properties()));
     public static final RegistryObject<Item> INSCRIPTION_STONE = registerItem(ITEMS.register("inscription_stone",()->new BlockItem(SolarcraftBlocks.INSCRIPTION_STONE.get(),new Item.Properties())),SOLAR_GROUP_BLOCKS);
 
     public static final RegistryObject<Item> DEBUG_STICK = ITEMS.register("solar_debug_stick",()->new SolarcraftDebugStick(new Item.Properties()));
@@ -346,6 +344,7 @@ public class SolarcraftItems {
 
     public static final RegistryObject<Item> SUN_SHARD = registerItem(ITEMS.register("sun_shard",()->new SunShardItem(new Item.Properties().rarity(Rarity.EPIC))),SOLAR_GROUP_MATERIALS);
 
+    public static final RegistryObject<Item> CORRUPTED_SHARD_ITEM = registerItem(ITEMS.register("corrupted_shard",()->new CorruptedShardItem(new Item.Properties().rarity(Rarity.EPIC))),SOLAR_GROUP);
 
 
     public static <T extends Item> RegistryObject<T> registerItem(RegistryObject<T> reg,RegistryObject<CreativeModeTab> tab){

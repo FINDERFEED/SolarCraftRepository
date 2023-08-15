@@ -1,8 +1,6 @@
 package com.finderfeed.solarcraft.content.items.solar_wand.wand_actions.drain_runic_enenrgy_action;
 
 import com.finderfeed.solarcraft.SolarCraft;
-import com.finderfeed.solarcraft.content.blocks.blockentities.RuneEnergyPylonTile;
-import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.Progression;
 import com.finderfeed.solarcraft.content.items.solar_wand.WandAction;
 import com.finderfeed.solarcraft.content.items.solar_wand.WandActionType;
 import com.finderfeed.solarcraft.content.items.solar_wand.WandDataSerializer;
@@ -10,12 +8,11 @@ import com.finderfeed.solarcraft.content.items.solar_wand.WandUseContext;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
-import com.finderfeed.solarcraft.registries.items.SolarcraftItems;
+import com.finderfeed.solarcraft.registries.items.SCItems;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -23,8 +20,6 @@ import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
-
-import java.util.Locale;
 
 public class REDrainWandAction implements WandAction<REDrainWandActionData> {
 
@@ -162,6 +157,6 @@ public class REDrainWandAction implements WandAction<REDrainWandActionData> {
 
     @Override
     public ItemStack getIcon() {
-        return SolarcraftItems.SOLAR_WAND.get().getDefaultInstance();
+        return SCItems.SOLAR_WAND.get().getDefaultInstance();
     }
 }

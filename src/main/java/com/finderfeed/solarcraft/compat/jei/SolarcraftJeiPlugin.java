@@ -8,7 +8,7 @@ import com.finderfeed.solarcraft.content.blocks.blockentities.containers.screens
 import com.finderfeed.solarcraft.content.recipe_types.infusing_crafting.InfusingCraftingRecipe;
 import com.finderfeed.solarcraft.content.recipe_types.infusing_new.InfusingRecipe;
 import com.finderfeed.solarcraft.content.recipe_types.solar_smelting.SolarSmeltingRecipe;
-import com.finderfeed.solarcraft.registries.items.SolarcraftItems;
+import com.finderfeed.solarcraft.registries.items.SCItems;
 import com.finderfeed.solarcraft.registries.recipe_types.SolarcraftRecipeTypes;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
@@ -65,9 +65,9 @@ public class SolarcraftJeiPlugin implements IModPlugin {
     @Override
     public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
         IModPlugin.super.registerRecipeCatalysts(registration);
-        registration.addRecipeCatalyst(SolarcraftItems.INFUSER_ITEM.get().getDefaultInstance(),JeiRecipeTypes.INFUSING_RECIPE);
-        registration.addRecipeCatalyst(SolarcraftItems.SOLAR_LENS.get().getDefaultInstance(),JeiRecipeTypes.SMELTING);
-        registration.addRecipeCatalyst(SolarcraftItems.INFUSING_TABLE.get().getDefaultInstance(),JeiRecipeTypes.INFUSING_CRAFTING_RECIPE);
+        registration.addRecipeCatalyst(SCItems.INFUSER_ITEM.get().getDefaultInstance(),JeiRecipeTypes.INFUSING_RECIPE);
+        registration.addRecipeCatalyst(SCItems.SOLAR_LENS.get().getDefaultInstance(),JeiRecipeTypes.SMELTING);
+        registration.addRecipeCatalyst(SCItems.INFUSING_TABLE.get().getDefaultInstance(),JeiRecipeTypes.INFUSING_CRAFTING_RECIPE);
 
 
     }

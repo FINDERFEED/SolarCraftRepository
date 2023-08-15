@@ -1,6 +1,6 @@
 package com.finderfeed.solarcraft.content.blocks;
 
-import com.finderfeed.solarcraft.registries.items.SolarcraftItems;
+import com.finderfeed.solarcraft.registries.items.SCItems;
 import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -39,7 +39,7 @@ public class BlueGemDoorBlock extends GlazedTerracottaBlock {
     public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult result) {
         if (!world.isClientSide && hand.equals(InteractionHand.MAIN_HAND)){
 
-            if (player.getMainHandItem().getItem() == SolarcraftItems.BLUE_GEM_ENCHANCED.get()){
+            if (player.getMainHandItem().getItem() == SCItems.BLUE_GEM_ENCHANCED.get()){
                 if (!world.getBlockState(pos).getValue(UNLOCKED)) {
                     player.getMainHandItem().grow(-1);
                 }

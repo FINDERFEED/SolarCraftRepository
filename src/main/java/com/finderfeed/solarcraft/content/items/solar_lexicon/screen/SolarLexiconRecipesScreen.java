@@ -6,7 +6,7 @@ import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.structure.Book;
 import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.finderfeed.solarcraft.misc_things.IScrollable;
-import com.finderfeed.solarcraft.registries.items.SolarcraftItems;
+import com.finderfeed.solarcraft.registries.items.SCItems;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragmentHelper;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -124,7 +124,7 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
     @Override
     protected void init() {
         super.init();
-        goBack = new ItemStackButton(0,10,12,12,(button)->{minecraft.setScreen(new SolarLexiconScreen());}, SolarcraftItems.SOLAR_FORGE_ITEM.get().getDefaultInstance(),0.7f,
+        goBack = new ItemStackButton(0,10,12,12,(button)->{minecraft.setScreen(new SolarLexiconScreen());}, SCItems.SOLAR_FORGE_ITEM.get().getDefaultInstance(),0.7f,
                 ((button, graphics, mouseX, mouseY) -> {
                     graphics.renderTooltip(font,Component.translatable("solarcraft.screens.buttons.progression_screen"),mouseX,mouseY);
                 }));
@@ -181,7 +181,7 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
     private void collectFragments(){
         for (int i = 0;i < handler.getSlots();i++){
             ItemStack stack = handler.getStackInSlot(i);
-            if (stack.getItem() == SolarcraftItems.INFO_FRAGMENT.get()){
+            if (stack.getItem() == SCItems.INFO_FRAGMENT.get()){
                 if (stack.getTagElement(AncientFragmentHelper.TAG_ELEMENT) != null) {
                     showNoFragmentsMessage = false;
                     AncientFragment frag = AncientFragment.getFragmentByID(stack.getTagElement(AncientFragmentHelper.TAG_ELEMENT).getString(AncientFragmentHelper.FRAG_ID));

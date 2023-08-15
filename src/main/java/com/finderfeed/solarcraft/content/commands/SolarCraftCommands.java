@@ -13,7 +13,7 @@ import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.Progre
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
 
 import com.finderfeed.solarcraft.registries.animations.AnimationReloadableResourceListener;
-import com.finderfeed.solarcraft.registries.items.SolarcraftItems;
+import com.finderfeed.solarcraft.registries.items.SCItems;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragmentHelper;
 import com.mojang.brigadier.CommandDispatcher;
@@ -211,7 +211,7 @@ public class SolarCraftCommands {
                         for (int i = 0; i < AncientFragment.getAllFragments().length; i++) {
 
                             AncientFragment fragment = AncientFragment.getAllFragments()[i];
-                            ItemStack stack = SolarcraftItems.INFO_FRAGMENT.get().getDefaultInstance();
+                            ItemStack stack = SCItems.INFO_FRAGMENT.get().getDefaultInstance();
                             AncientFragmentHelper.applyTagToFragment(stack, fragment);
                             inv.insertItem(i, stack, false);
 

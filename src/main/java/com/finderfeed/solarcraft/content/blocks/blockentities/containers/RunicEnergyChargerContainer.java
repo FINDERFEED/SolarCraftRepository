@@ -1,13 +1,12 @@
 package com.finderfeed.solarcraft.content.blocks.blockentities.containers;
 
 import com.finderfeed.solarcraft.content.blocks.blockentities.containers.misc.TESlotItemHandler;
-import com.finderfeed.solarcraft.content.items.primitive.solacraft_item_classes.SolarcraftItem;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.content.blocks.blockentities.RunicEnergyChargerTileEntity;
 import com.finderfeed.solarcraft.content.items.RuneItem;
 import com.finderfeed.solarcraft.content.items.runic_energy.IRunicEnergyUser;
 import com.finderfeed.solarcraft.registries.containers.SolarcraftContainers;
-import com.finderfeed.solarcraft.registries.items.SolarcraftItems;
+import com.finderfeed.solarcraft.registries.items.SCItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
@@ -18,7 +17,6 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.SlotItemHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -41,7 +39,7 @@ public class RunicEnergyChargerContainer extends AbstractContainerMenu {
         this.addSlot(new TESlotItemHandler(tile,tile.getInventory(), 1, 25+108, 35-4){
             @Override
             public boolean mayPlace(@NotNull ItemStack stack) {
-                return stack.getItem() instanceof IRunicEnergyUser && stack.getItem() != SolarcraftItems.SOLAR_WAND.get();
+                return stack.getItem() instanceof IRunicEnergyUser && stack.getItem() != SCItems.SOLAR_WAND.get();
             }
 
             @Override
