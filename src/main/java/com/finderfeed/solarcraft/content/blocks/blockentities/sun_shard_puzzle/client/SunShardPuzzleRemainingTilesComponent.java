@@ -67,10 +67,10 @@ public class SunShardPuzzleRemainingTilesComponent extends FDScreenComponent {
 
 
             Matrix4f m = matrices.last().pose();
-            builder.vertex(m,-8,8, -10).uv(0,1).color(1f,1,1,1).endVertex();
-            builder.vertex(m,8,8, -10).uv(1,1).color(1f,1,1,1).endVertex();
-            builder.vertex(m,8,-8, -10).uv(1,0).color(1f,1,1,1).endVertex();
-            builder.vertex(m,-8,-8, -10).uv(0,0).color(1f,1,1,1).endVertex();
+            builder.vertex(m,-8,8, 10).uv(0,1).color(1f,1,1,1).endVertex();
+            builder.vertex(m,8,8, 10).uv(1,1).color(1f,1,1,1).endVertex();
+            builder.vertex(m,8,-8, 10).uv(1,0).color(1f,1,1,1).endVertex();
+            builder.vertex(m,-8,-8, 10).uv(0,0).color(1f,1,1,1).endVertex();
             matrices.popPose();
             BufferUploader.drawWithShader(builder.end());
         }

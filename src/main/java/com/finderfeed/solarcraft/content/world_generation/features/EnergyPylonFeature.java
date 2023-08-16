@@ -5,6 +5,7 @@ import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.config.SolarcraftConfig;
 import com.mojang.serialization.Codec;
 
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.*;
 import net.minecraft.resources.ResourceLocation;
@@ -48,6 +49,7 @@ public class EnergyPylonFeature extends Feature<NoneFeatureConfiguration> {
         if (random.nextFloat() > 1.0f/SolarcraftConfig.ENERGY_PYLON_SPAWN_CHANCE.get()) return false;
         WorldGenLevel world = ctx.level();
         BlockPos pos = ctx.origin();
+
         Rotation rot = Rotation.NONE;
         StructureTemplateManager manager = world.getLevel().getStructureManager();
 
@@ -57,7 +59,8 @@ public class EnergyPylonFeature extends Feature<NoneFeatureConfiguration> {
 
         StructurePlaceSettings set = new StructurePlaceSettings().addProcessor(BlockIgnoreProcessor.AIR).setRandom(random).setRotation(rot).setBoundingBox(BoundingBox.infinite());
 
-        BlockPos pos1 = findFlatChunkPosition(world,pos,5);
+//        BlockPos pos1 = findFlatChunkPosition(world,pos,5);
+        BlockPos pos1 = findMostFlatPosition(world,pos);
 
         if (!pos1.equals(Helpers.NULL_POS)) {
 
@@ -66,6 +69,54 @@ public class EnergyPylonFeature extends Feature<NoneFeatureConfiguration> {
         }
         return true;
     }
+
+    private BlockPos findMostFlatPosition(WorldGenLevel level,BlockPos genPos){
+        int currentIncorrect = Integer.MAX_VALUE;
+        BlockPos bestPos = Helpers.NULL_POS;
+        for (int x = 0; x < 11;x++){
+            for (int z = 0; z < 11;z++){
+                int xt = genPos.getX() + x;
+                int zt = genPos.getZ() + z;
+                BlockPos toTest = new BlockPos(xt,level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,xt,zt),zt).below();
+                int flatness = this.testFlatness(level,toTest);
+                if (flatness < 20 && flatness < currentIncorrect && flatness != -1){
+                    currentIncorrect = flatness;
+                    bestPos = toTest;
+                }
+            }
+        }
+        return bestPos;
+    }
+
+    private int testFlatness(WorldGenLevel level,BlockPos test){
+        int incorrect = 0;
+        for (int x = 0; x < 5;x++){
+            for (int z = 0; z < 5;z++){
+                BlockPos testPos = test.offset(x,0,z);
+                BlockState current = level.getBlockState(testPos);
+                BlockState above = level.getBlockState(testPos.above());
+                int testResult = testBlocks(current,above);
+                if (testResult == 0){
+                    incorrect++;
+                }else if (testResult == -1){
+                    return -1;
+                }
+            }
+        }
+        return incorrect;
+    }
+
+    private int testBlocks(BlockState current,BlockState above){
+        Block bcurrent = current.getBlock();
+        Block babove = above.getBlock();
+        if (bcurrent instanceof LiquidBlock){
+            return -1;
+        }
+        return (babove == Blocks.AIR || babove instanceof BushBlock || babove instanceof SnowLayerBlock)
+                && (bcurrent != Blocks.AIR) ? 1 : 0;
+    }
+
+
 
     public static BlockPos findFlatChunkPosition(WorldGenLevel world, BlockPos mainpos, int blockDiameter){
         int trueDiameter = blockDiameter-1;
