@@ -5,7 +5,9 @@ import com.finderfeed.solarcraft.client.particles.lightning_particle.LightningPa
 import com.finderfeed.solarcraft.client.particles.server_data.shapes.SendShapeParticlesPacket;
 import com.finderfeed.solarcraft.client.particles.server_data.shapes.instances.BurstAttackParticleShape;
 import com.finderfeed.solarcraft.client.particles.server_data.shapes.instances.SphereParticleShape;
+import com.finderfeed.solarcraft.content.entities.not_alive.LegendaryItem;
 import com.finderfeed.solarcraft.content.entities.projectiles.HomingStarProjectile;
+import com.finderfeed.solarcraft.content.items.RuneEnergyPylonBlockItem;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.local_library.bedrock_loader.animations.AnimatedObject;
 import com.finderfeed.solarcraft.local_library.bedrock_loader.animations.manager.AnimationManager;
@@ -16,6 +18,7 @@ import com.finderfeed.solarcraft.local_library.entities.bossbar.server.CustomSer
 import com.finderfeed.solarcraft.misc_things.NoHealthLimitMob;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
 import com.finderfeed.solarcraft.packet_handler.PacketHelper;
+import com.finderfeed.solarcraft.packet_handler.packets.CameraShakePacket;
 import com.finderfeed.solarcraft.packet_handler.packets.DisablePlayerFlightPacket;
 import com.finderfeed.solarcraft.registries.animations.SCAnimations;
 import com.finderfeed.solarcraft.registries.attributes.AttributesRegistry;
@@ -145,7 +148,7 @@ public class UlderaCrystalBoss extends NoHealthLimitMob implements AnimatedObjec
 
             this.dontPush--;
 
-            if (this.getTarget() != null) {
+            if (!this.isDeadOrDying() && this.getTarget() != null) {
                 bossChain.tick();
             }
 
@@ -604,6 +607,61 @@ public class UlderaCrystalBoss extends NoHealthLimitMob implements AnimatedObjec
         return MovementEmission.NONE;
     }
 
+
+    @Override
+    protected void tickDeath() {
+        if (!level.isClientSide && this.deathTime == 0){
+            this.getAnimationManager().setAnimation(ATTACK_1_TICKER,AnimationTicker.Builder.begin(SCAnimations.ULDERA_CRYSTAL_SHAKE.get())
+                            .toNullTransitionTime(0)
+                            .replaceable(false)
+                    .build());
+            this.getAnimationManager().setAnimation(TEMP1,AnimationTicker.Builder.begin(SCAnimations.ULDERA_CRYSTAL_DIE.get())
+                            .toNullTransitionTime(0)
+                            .replaceable(false)
+                    .build());
+            this.getAnimationManager().stopAnimation(TEMP2);
+            PacketHelper.sendToPlayersCloseToSpot(level,this.getCenterPos(),30,new CameraShakePacket(5,
+                    SCAnimations.ULDERA_CRYSTAL_DIE.get().tickLength() - 20,
+                    20,0.5f));
+        }
+        ++this.deathTime;
+        if (!level.isClientSide && deathTime % 2 == 0){
+            Vec3 c = this.getCenterPos();
+            ((ServerLevel)level).sendParticles(new BallParticleOptions.Builder().setRGB(90,0,186).setPhysics(false)
+                    .setShouldShrink(true).setSize(0.5f).build(),c.x,c.y,c.z,10,1,1,1,0.025);
+            ((ServerLevel)level).sendParticles(new LightningParticleOptions(2f,90,0,186,-1,60,false)
+                    ,c.x,c.y,c.z,1,1,1,1,0.025);
+        }
+        if (this.deathTime >= SCAnimations.ULDERA_CRYSTAL_DIE.get().tickLength() && !this.level().isClientSide() && !this.isRemoved()) {
+            Vec3 c = this.getCenterPos();
+            PacketHelper.sendToPlayersTrackingEntity(this,new SendShapeParticlesPacket(
+                    new SphereParticleShape(0.5,0.6f,5,true,true,1f),
+                    new BallParticleOptions.Builder().setRGB(90,0,186).setPhysics(false)
+                            .setShouldShrink(true).setSize(0.5f).build(),
+                    c.x,c.y,c.z,0,0,0
+            ));
+            PacketHelper.sendToPlayersTrackingEntity(this,new SendShapeParticlesPacket(
+                    new SphereParticleShape(0.5,0.6f,3,true,true,1f),
+                    new LightningParticleOptions(2f,90,0,186,-1,60,false),
+                    c.x,c.y,c.z,0,0,0
+            ));
+
+
+            LegendaryItem item = new LegendaryItem(SCEntityTypes.LEGENDARY_ITEM.get(), level);
+            item.setPos(this.getCenterPos());
+            item.setItem(RuneEnergyPylonBlockItem.createWithType(this.type));
+            level.addFreshEntity(item);
+
+            this.level().broadcastEntityEvent(this, (byte)60);
+            this.remove(Entity.RemovalReason.KILLED);
+        }
+    }
+
+    @Override
+    public void die(DamageSource p_21014_) {
+        super.die(p_21014_);
+    }
+
     @Nullable
     @Override
     public LivingEntity getTarget() {
@@ -695,6 +753,9 @@ public class UlderaCrystalBoss extends NoHealthLimitMob implements AnimatedObjec
     public void load(CompoundTag tag) {
         this.bossChain.load(tag);
         this.type = RunicEnergy.Type.byId(tag.getString("energyType"));
+        if (this.type == null){
+            type = RunicEnergy.Type.ARDO;
+        }
         this.spawnTicks = tag.getInt("spawnTicks");
         super.load(tag);
     }
