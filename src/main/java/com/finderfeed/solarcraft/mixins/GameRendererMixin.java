@@ -43,8 +43,8 @@ public class GameRendererMixin {
             float rx = random.nextFloat() * spread * 2 - spread;
             float ry = random.nextFloat() * spread * 2 - spread;
             matrices.translate(rx,ry,0);
-            System.out.println(rx);
-            System.out.println(ry);
+//            System.out.println(rx);
+//            System.out.println(ry);
         }
     }
 

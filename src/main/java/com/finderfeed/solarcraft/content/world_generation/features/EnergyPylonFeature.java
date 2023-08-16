@@ -52,7 +52,7 @@ public class EnergyPylonFeature extends Feature<NoneFeatureConfiguration> {
     public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> ctx) {
         RandomSource random = ctx.random();
 
-//        if (random.nextFloat() > 1.0f/SolarcraftConfig.ENERGY_PYLON_SPAWN_CHANCE.get()) return false;
+        if (random.nextFloat() > 1.0f/SolarcraftConfig.ENERGY_PYLON_SPAWN_CHANCE.get()) return false;
         WorldGenLevel world = ctx.level();
         BlockPos pos = ctx.origin();
 

@@ -128,7 +128,7 @@ public class OrbitalCannonExplosionEntity extends Entity {
                 }
             }
             this.remove(RemovalReason.DISCARDED);
-            System.out.println("finished!");
+//            System.out.println("finished!");
             ChunkPos pos = new ChunkPos(this.getOnPos());
             Helpers.loadChunkAtPos((ServerLevel) level,new BlockPos(pos.getMinBlockX(),0,pos.getMinBlockZ()),false,true);
         }else{
@@ -138,7 +138,7 @@ public class OrbitalCannonExplosionEntity extends Entity {
 
     private void progressExplosion(){
         if (explosionTimer <= 0) {
-            System.out.println("exploded");
+
             this.explode((ServerLevel) level);
             explosionTimer = 30;
         }else{
@@ -216,7 +216,7 @@ public class OrbitalCannonExplosionEntity extends Entity {
             posi.remove();
             iters--;
         }
-        System.out.println("time spent: " + (System.nanoTime() - time)/1000000000f);
+//        System.out.println("time spent: " + (System.nanoTime() - time)/1000000000f);
 
 
 
