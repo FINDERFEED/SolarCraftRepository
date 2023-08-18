@@ -34,6 +34,7 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.bossevents.CustomBossEvent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.damagesource.DamageSource;
@@ -157,6 +158,9 @@ public class UlderaCrystalBoss extends NoHealthLimitMob implements AnimatedObjec
             });
             for (ServerPlayer player : players){
                 this.disableFlight(player);
+                if (!player.hasEffect(SCEffects.ULDERA_CRYSTAL_PRESENCE.get()) && !this.isEntityReachable(player)){
+                    player.addEffect(new MobEffectInstance(SCEffects.ULDERA_CRYSTAL_PRESENCE.get(),40,0,true,false));
+                }
             }
         }
     }
@@ -559,6 +563,8 @@ public class UlderaCrystalBoss extends NoHealthLimitMob implements AnimatedObjec
 
     @Override
     public boolean hurt(DamageSource src, float amount) {
+        if (src.is(DamageTypeTags.IS_PROJECTILE)) return false;
+
         if (src.getEntity() instanceof Player player && player.hasEffect(SCEffects.ULDERA_CRYSTAL_PRESENCE.get())){
             amount = 0;
         }else if (src.getEntity() instanceof LivingEntity living){
@@ -709,15 +715,7 @@ public class UlderaCrystalBoss extends NoHealthLimitMob implements AnimatedObjec
     private LivingEntity searchTarget(){
         List<Player> players = new ArrayList<>();
         List<LivingEntity> entities = level.getEntitiesOfClass(LivingEntity.class,SEARCH_TARGET_BOX.move(this.getCenterPos()),living->{
-            if (living instanceof Player player){
-                if (!player.isSpectator() && !player.isCreative()){
-                    players.add(player);
-                    return true;
-                }else{
-                    return false;
-                }
-            }
-            return !(living instanceof UlderaCrystalBuddy) && this.isEntityReachable(living);
+            return this.checkTarget(living);
         });
         if (entities.isEmpty()){
             return null;
@@ -791,6 +789,11 @@ public class UlderaCrystalBoss extends NoHealthLimitMob implements AnimatedObjec
 
     @Override
     public boolean isNoGravity() {
+        return true;
+    }
+
+    @Override
+    public boolean fireImmune() {
         return true;
     }
 }

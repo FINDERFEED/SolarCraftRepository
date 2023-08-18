@@ -69,6 +69,7 @@ public class ClientAnimationManager implements AnimationManager{
 
     @Override
     public void setAnimation(String tickerName,AnimationTicker animation){
+        if (animation.getAnimation() == null) return;
         AnimationTicker c = this.tickers.get(tickerName);
         if (c == null){
             this.tickers.put(tickerName,animation);
@@ -85,6 +86,7 @@ public class ClientAnimationManager implements AnimationManager{
         model.resetTransformations();
         for (AnimationTicker ticker : tickers.values()){
             Animation animation = ticker.getAnimation();
+            if (animation == null) continue;
             animation.applyAnimation(model,ticker.getCurrentTime(),pticks);
         }
     }

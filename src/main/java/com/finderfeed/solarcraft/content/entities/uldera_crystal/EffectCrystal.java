@@ -36,8 +36,7 @@ public class EffectCrystal extends LivingEntity implements AnimatedObject,Uldera
     public static List<MobEffect> EFFECTS = List.of(
             MobEffects.MOVEMENT_SLOWDOWN,
             MobEffects.POISON,
-            MobEffects.WITHER,
-            MobEffects.LEVITATION
+            MobEffects.WITHER
     );
     public static final AABB BOX = new AABB(-20,-20,-20,20,20,20);
 
