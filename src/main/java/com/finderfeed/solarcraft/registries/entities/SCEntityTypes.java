@@ -54,7 +54,6 @@ public class SCEntityTypes {
     public static final RegistryObject<EntityType<TurretProjectile>> TURRET_PROJECTILE = ENTITY_TYPE_REGISTER.register("turret_projectile", () ->
             EntityType.Builder.<TurretProjectile>of(TurretProjectile::new, MobCategory.MISC)
                     .sized(0.25f, 0.25f).build("turret_projectile"));
-
     public static final RegistryObject<EntityType<SolarGodBowProjectile>> SOLAR_GOD_BOW_PROJECTILE = ENTITY_TYPE_REGISTER.register("sgb_projectile", () ->
             EntityType.Builder.<SolarGodBowProjectile>of(SolarGodBowProjectile::new, MobCategory.MISC)
                     .sized(0.25f, 0.25f).build("sgb_projectile"));
@@ -173,6 +172,11 @@ public class SCEntityTypes {
                 EntityType.Builder.<HomingStarProjectile>of(HomingStarProjectile::new, MobCategory.MISC)
                         .updateInterval(1)
                         .sized(0.25f, 0.25f).build("homing_star"));
+
+        public static final RegistryObject<EntityType<UElectricShockProjectile>> ELECTRIC_SHOCK_PROJECTILE = ENTITY_TYPE_REGISTER.register("electric_shock_projectile", () ->
+                EntityType.Builder.<UElectricShockProjectile>of(UElectricShockProjectile::new, MobCategory.MISC)
+                        .sized(0.25f, 0.25f).build("electric_shock_projectile"));
+
 
         private static void init(){}
     }

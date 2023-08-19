@@ -1031,8 +1031,6 @@ public class RenderingTools {
     public static void applyMovementMatrixRotations(PoseStack matrices, Vec3 vec){
         double angleY = Math.toDegrees(Math.atan2(vec.x,vec.z));
         double angleX = Math.toDegrees(Math.atan2(Math.sqrt(vec.x*vec.x + vec.z*vec.z),vec.y));
-//        matrices.mulPose(Vector3f.YP.rotationDegrees((float)angleY));
-//        matrices.mulPose(Vector3f.XP.rotationDegrees((float)angleX));
         matrices.mulPose(rotationDegrees(YP(),(float)angleY));
         matrices.mulPose(rotationDegrees(XP(),(float)angleX));
     }
