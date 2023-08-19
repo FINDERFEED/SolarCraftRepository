@@ -381,6 +381,7 @@ public class CrystalBossEntity extends NoHealthLimitMob implements CrystalBossBu
                         .setInitialSpeed(vec.multiply(1,0.2,1).normalize())
                         .setPosition(this.position().add(0,this.getBbHeight()/2,0))
                         .build();
+                missile.setOwner(this);
                 level.addFreshEntity(missile);
                 timeOffset+=0.1;
             }

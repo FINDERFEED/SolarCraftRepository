@@ -1,6 +1,6 @@
 package com.finderfeed.solarcraft.content.blocks.blockentities.projectiles.renderers;
 
-import com.finderfeed.solarcraft.content.blocks.blockentities.projectiles.AbstractTurretProjectile;
+import com.finderfeed.solarcraft.content.blocks.blockentities.projectiles.TurretProjectile;
 import com.finderfeed.solarcraft.registries.ModelLayersRegistry;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.geom.PartPose;
@@ -15,11 +15,12 @@ import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 
 import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.entity.projectile.Projectile;
 
 
-public class AbstractTurretProjectileRenderer extends EntityRenderer<AbstractTurretProjectile> {
+public class AbstractTurretProjectileRenderer extends EntityRenderer<Projectile> {
     public final ResourceLocation RAY = new ResourceLocation("solarcraft","textures/misc/crossbow_shot_texture.png");
 
     public final ModelPart ray;
@@ -38,7 +39,7 @@ public class AbstractTurretProjectileRenderer extends EntityRenderer<AbstractTur
     }
 
     @Override
-    public void render(AbstractTurretProjectile entity, float partialTicks, float idk, PoseStack matrices, MultiBufferSource buffer, int light) {
+    public void render(Projectile entity, float partialTicks, float idk, PoseStack matrices, MultiBufferSource buffer, int light) {
         float time = (entity.level().getGameTime() + partialTicks);
 //        matrices.mulPose(Vector3f.XN.rotationDegrees(time%360));
 //        matrices.mulPose(Vector3f.ZN.rotationDegrees(time%360));
@@ -50,12 +51,12 @@ public class AbstractTurretProjectileRenderer extends EntityRenderer<AbstractTur
     }
 
     @Override
-    public boolean shouldRender(AbstractTurretProjectile p_225626_1_, Frustum p_225626_2_, double p_225626_3_, double p_225626_5_, double p_225626_7_) {
+    public boolean shouldRender(Projectile p_225626_1_, Frustum p_225626_2_, double p_225626_3_, double p_225626_5_, double p_225626_7_) {
         return true;
     }
 
     @Override
-    public ResourceLocation getTextureLocation(AbstractTurretProjectile p_110775_1_) {
-        return new ResourceLocation("");
+    public ResourceLocation getTextureLocation(Projectile p_110775_1_) {
+        return TextureAtlas.LOCATION_BLOCKS;
     }
 }

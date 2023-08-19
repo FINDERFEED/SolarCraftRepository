@@ -258,7 +258,6 @@ public class ClientModEventHandler {
         event.registerEntityRenderer(SCEntityTypes.RUNIC_ELEMENTAL_BOSS.get(), RunicElementalRenderer::new);
         event.registerEntityRenderer(SCEntityTypes.SUNSTRIKE.get(), SunstrikeRenderer::new);
         event.registerEntityRenderer(SCEntityTypes.EARTHQUAKE.get(), EarthquakeRenderer::new);
-        event.registerEntityRenderer(SCEntityTypes.SOLAR_FIREBALL.get(), SolarFireballRenderer::new);
         event.registerEntityRenderer(SCEntityTypes.REFRACTION_CRYSTAL.get(), RefractionCrystalRenderer::new);
         event.registerEntityRenderer(SCEntityTypes.EXPLOSIVE_CRYSTAL.get(), ExplosiveCrystalRenderer::new);
         event.registerEntityRenderer(SCEntityTypes.RUNIC_WARRIOR.get(), RunicWarriorRenderer::new);
@@ -274,6 +273,7 @@ public class ClientModEventHandler {
         event.registerEntityRenderer(SCEntityTypes.Projectiles.HOMING_STAR.get(), HomingStarProjectileRenderer::new);
         event.registerEntityRenderer(SCEntityTypes.ULDERA_LIGHTNING.get(), UlderaLightningRenderer::new);
         event.registerEntityRenderer(SCEntityTypes.EFFECT_CRYSTAL.get(), EffectCrystalRenderer::new);
+        event.registerEntityRenderer(SCEntityTypes.SOLAR_GOD_BOW_PROJECTILE.get(), AbstractTurretProjectileRenderer::new);
     }
 
 }

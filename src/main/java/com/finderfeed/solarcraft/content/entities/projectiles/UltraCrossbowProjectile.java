@@ -24,9 +24,8 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.network.NetworkHooks;
 
 
-public class UltraCrossbowProjectile extends AbstractHurtingProjectile {
-    public static EntityDataAccessor<Float> PITCH = SynchedEntityData.defineId(UltraCrossbowProjectile.class, EntityDataSerializers.FLOAT);
-    public static EntityDataAccessor<Float> YAW = SynchedEntityData.defineId(UltraCrossbowProjectile.class, EntityDataSerializers.FLOAT);
+public class UltraCrossbowProjectile extends OwnedProjectile {
+
     public double damage = 0;
     public int livingTicks = 0;
 
@@ -57,7 +56,7 @@ public class UltraCrossbowProjectile extends AbstractHurtingProjectile {
         if (!level.isClientSide) {
 
             Entity ent = ctx.getEntity();
-            if (getOwner() instanceof LivingEntity entity) {
+            if (this.getOwner() instanceof LivingEntity entity) {
                 ent.hurt(SolarcraftDamageSources.livingArmorPierceProjectile(entity), (float) damage);
             }else{
                 ent.hurt(level.damageSources().magic(), (float) damage);
@@ -65,9 +64,9 @@ public class UltraCrossbowProjectile extends AbstractHurtingProjectile {
             }
             ((ServerLevel)level).sendParticles(SCParticleTypes.SOLAR_STRIKE_PARTICLE.get(),ent.getX(),ent.getY()+1.2,ent.getZ(),2,0,0.02,0,0.02);
             if (damage >= 30 && (damage < 120) ){
-                level.explode(null,this.getX(),this.getY(),this.getZ(),5,true, Level.ExplosionInteraction.BLOCK);
+                level.explode(this.getOwner(),this.getX(),this.getY(),this.getZ(),5,true, Level.ExplosionInteraction.BLOCK);
             }else if (damage >= 120){
-                level.explode(null,this.getX(),this.getY(),this.getZ(),8,true, Level.ExplosionInteraction.BLOCK);
+                level.explode(this.getOwner(),this.getX(),this.getY(),this.getZ(),8,true, Level.ExplosionInteraction.BLOCK);
             }
             this.remove(RemovalReason.KILLED);
         }
@@ -78,9 +77,9 @@ public class UltraCrossbowProjectile extends AbstractHurtingProjectile {
 
         if (!level.isClientSide){
             if (damage >= 30 && (damage < 120)){
-                level.explode(null,this.getX(),this.getY(),this.getZ(),5,true, Level.ExplosionInteraction.BLOCK);
+                level.explode(this.getOwner(),this.getX(),this.getY(),this.getZ(),5,true, Level.ExplosionInteraction.BLOCK);
             }else if (damage >= 120){
-                level.explode(null,this.getX(),this.getY(),this.getZ(),8,true, Level.ExplosionInteraction.BLOCK);
+                level.explode(this.getOwner(),this.getX(),this.getY(),this.getZ(),8,true, Level.ExplosionInteraction.BLOCK);
             }
             if ((level.getBlockState(result.getBlockPos()).getDestroySpeed(level,result.getBlockPos()) >= 0) &&
                     level.getBlockState(result.getBlockPos()).getDestroySpeed(level,result.getBlockPos()) <= 100) {
@@ -115,37 +114,10 @@ public class UltraCrossbowProjectile extends AbstractHurtingProjectile {
     }
 
     @Override
-    protected boolean shouldBurn() {
-        return false;
-    }
-    @Override
-    public boolean hurt(DamageSource p_70097_1_, float p_70097_2_) {
-        return false;
-    }
-    @Override
-    public Packet<ClientGamePacketListener> getAddEntityPacket() {
-        return NetworkHooks.getEntitySpawningPacket(this);
-    }
-
-    @Override
-    protected ParticleOptions getTrailParticle() {
-        return SCParticleTypes.INVISIBLE_PARTICLE.get();
-    }
-
-    public void setPITCH(float a ) {
-        this.entityData.set(PITCH,a);
-    }
-
-    public void setYAW(float a ) {
-        this.entityData.set(YAW,a);
-    }
-
-    @Override
     public void load(CompoundTag cmp) {
         damage = cmp.getDouble("damage_ultra");
         tickCount = cmp.getInt("get_tick_count");
-        this.entityData.set(PITCH,cmp.getFloat("curpitch"));
-        this.entityData.set(YAW,cmp.getFloat("curyaw"));
+
         super.load(cmp);
     }
 
@@ -158,8 +130,7 @@ public class UltraCrossbowProjectile extends AbstractHurtingProjectile {
     public boolean save(CompoundTag cmp) {
         cmp.putDouble("damage_ultra",damage);
         cmp.putInt("get_tick_count",tickCount);
-        cmp.putFloat("curyaw",this.entityData.get(YAW));
-        cmp.putFloat("curpitch",this.entityData.get(PITCH));
+
 
         return super.save(cmp);
     }
@@ -168,7 +139,6 @@ public class UltraCrossbowProjectile extends AbstractHurtingProjectile {
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
-        this.entityData.define(PITCH,0f);
-        this.entityData.define(YAW,0f);
+
     }
 }

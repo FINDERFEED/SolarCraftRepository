@@ -1,10 +1,12 @@
 package com.finderfeed.solarcraft.content.blocks.blockentities;
 
+import com.finderfeed.solarcraft.content.blocks.blockentities.projectiles.TurretProjectile;
 import com.finderfeed.solarcraft.helpers.Helpers;
-import com.finderfeed.solarcraft.content.blocks.blockentities.projectiles.AbstractTurretProjectile;
+import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
 import com.finderfeed.solarcraft.registries.items.SCItems;
 import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.LivingEntity;
@@ -37,20 +39,21 @@ public class TurretTileEntity extends BlockEntity  {
             if (tile.attackTick >= tile.getAttackRate()){
                 tile.attackTick = 0;
                 List<LivingEntity> list = tile.level.getEntitiesOfClass(LivingEntity.class,new AABB(-10,-4,-10,10,4,10)
-                        .move(tile.worldPosition),(entity) -> !(entity instanceof Player));
+                        .move(tile.worldPosition),(entity) -> {
+                    return entity instanceof Monster;
+                });
 
                     tile.sortList(list);
                 if (!list.isEmpty()) {
 
                     LivingEntity entity = list.get(tile.level.random.nextInt(list.size()));
                     Vec3 velocity = Helpers.calculateVelocity(Helpers.getBlockCenter(tile.worldPosition), entity.position().add(0, 0.7f, 0));
-                    AbstractTurretProjectile projectile = new AbstractTurretProjectile(tile.level, new AbstractTurretProjectile.Constructor()
-                            .setDamage(tile.turretLevel * 5)
-                            .setPosition(Helpers.getBlockCenter(tile.worldPosition)
-                                    .add(velocity.multiply(0.5,0.5,0.5))
-                                    .add(0,-0.1,0))
-                            .setVelocity(velocity)
-                    );
+                    TurretProjectile projectile = new TurretProjectile(SCEntityTypes.TURRET_PROJECTILE.get(),tile.level);
+                    projectile.damage = tile.turretLevel * 5;
+                    projectile.setPos(Helpers.getBlockCenter(tile.worldPosition)
+                            .add(velocity.multiply(0.5,0.5,0.5))
+                            .add(0,-0.1,0));
+                    projectile.setDeltaMovement(velocity);
 
                     tile.level.addFreshEntity(projectile);
                 }

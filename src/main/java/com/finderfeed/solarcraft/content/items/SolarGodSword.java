@@ -1,22 +1,19 @@
 package com.finderfeed.solarcraft.content.items;
 
 import com.finderfeed.solarcraft.SolarCraftTags;
-import com.finderfeed.solarcraft.content.blocks.blockentities.projectiles.AbstractTurretProjectile;
+import com.finderfeed.solarcraft.content.blocks.blockentities.projectiles.TurretProjectile;
+import com.finderfeed.solarcraft.content.entities.projectiles.SolarGodBowProjectile;
 import com.finderfeed.solarcraft.content.items.primitive.RareSolarcraftSword;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarcraft.misc_things.IUpgradable;
 import com.finderfeed.solarcraft.registries.damage_sources.SolarcraftDamageSources;
-import net.minecraft.core.NonNullList;
-import net.minecraft.world.damagesource.DamageType;
+import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
 import net.minecraft.world.item.*;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.network.chat.Component;
-import net.minecraft.ChatFormatting;
 import net.minecraft.world.level.Level;
 
 import javax.annotation.Nullable;
@@ -38,18 +35,20 @@ public class SolarGodSword extends RareSolarcraftSword implements IUpgradable {
             ItemStack inhand = player.getItemInHand(hand);
             int level = getItemLevel(inhand);
             if (level >= 2) {
-                AbstractTurretProjectile.Constructor constructor = new AbstractTurretProjectile.Constructor()
-                        .setPosition(player.position().add(0, 1.3, 0))
-                        .setVelocity(player.getLookAngle().multiply(2,2,2))
-                        .setDamage(5);
+                SolarGodBowProjectile projectile = new SolarGodBowProjectile(SCEntityTypes.SOLAR_GOD_BOW_PROJECTILE.get(),world);
+                projectile.setPos(player.position().add(0, player.getEyeHeight(), 0));
                 if (level >= 3){
-                    constructor.editDamage(10);
+                    projectile.setDamage(10);
+                }else{
+                    projectile.setDamage(5);
                 }
                 if (level >= 4){
-                    constructor.editExplosionPower(3);
+                    projectile.setExplosionPower(3);
                 }
-                AbstractTurretProjectile proj = new AbstractTurretProjectile(world,constructor);
-                world.addFreshEntity(proj);
+                projectile.setDeltaMovement(player.getLookAngle().multiply(2,2,2));
+                projectile.setOwner(player);
+                projectile.setProjectileLevel(0);
+                world.addFreshEntity(projectile);
                 player.getCooldowns().addCooldown(this,200);
                 return InteractionResultHolder.success(player.getItemInHand(hand));
             }
@@ -76,21 +75,6 @@ public class SolarGodSword extends RareSolarcraftSword implements IUpgradable {
         addComponents(stack,text);
         super.appendHoverText(stack, world, text, flag);
     }
-
-//    @Override
-//    public void fillItemCategory(CreativeModeTab tab, NonNullList<ItemStack> item) {
-//        if (this.allowedIn(tab)) {
-//            ItemStack def = new ItemStack(this);
-//            setItemLevel(def,0);
-//            item.add(def);
-//
-//            ItemStack sword = new ItemStack(this);
-//            setItemLevel(sword,getMaxUpgrades());
-//            item.add(sword);
-//        }
-//    }
-
-
 
     @Override
     public String getUpgradeTagString() {

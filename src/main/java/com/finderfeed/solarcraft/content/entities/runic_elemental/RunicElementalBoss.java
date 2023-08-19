@@ -8,7 +8,7 @@ import com.finderfeed.solarcraft.local_library.helpers.CompoundNBTHelper;
 import com.finderfeed.solarcraft.local_library.other.InterpolatedValue;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.Progression;
 import com.finderfeed.solarcraft.content.entities.projectiles.MagicMissile;
-import com.finderfeed.solarcraft.content.entities.projectiles.RunicWarriorSummoningRocket;
+import com.finderfeed.solarcraft.content.entities.projectiles.RunicWarriorSummoningProjectile;
 import com.finderfeed.solarcraft.misc_things.CrystalBossBuddy;
 import com.finderfeed.solarcraft.packet_handler.packets.DisablePlayerFlightPacket;
 import com.finderfeed.solarcraft.packet_handler.packets.TeleportEntityPacket;
@@ -385,7 +385,7 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
         if (BOSS_ATTACK_CHAIN.getTicker() == 8) {
             int playersAround = getPlayersAround(false).size();
             for (int i = 0; i < 3 * playersAround; i++) {
-                RunicWarriorSummoningRocket rocket = new RunicWarriorSummoningRocket(SCEntityTypes.RUNIC_WARRIOR_ROCKET.get(),level);
+                RunicWarriorSummoningProjectile rocket = new RunicWarriorSummoningProjectile(SCEntityTypes.RUNIC_WARRIOR_ROCKET.get(),level);
                 Vec3 rnd = new Vec3(level.random.nextDouble()*0.5f - 0.25f,0.4f,level.random.nextDouble()*0.5f - 0.25f);
                 rocket.setDeltaMovement(rnd);
                 rocket.setPos(this.position().add(0,this.getBbHeight()/2,0));
@@ -590,7 +590,7 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
     }
     public void spawnWarrior(){
         if (this.getHealth()/this.getMaxHealth() <= 0.5 && getAttackType() != 0) {
-            RunicWarriorSummoningRocket rocket = new RunicWarriorSummoningRocket(SCEntityTypes.RUNIC_WARRIOR_ROCKET.get(), level);
+            RunicWarriorSummoningProjectile rocket = new RunicWarriorSummoningProjectile(SCEntityTypes.RUNIC_WARRIOR_ROCKET.get(), level);
             Vec3 rnd = new Vec3(level.random.nextDouble() * 0.5f - 0.25f, 0.4f, level.random.nextDouble() * 0.5f - 0.25f);
             rocket.setDeltaMovement(rnd);
             rocket.setPos(this.position().add(0, this.getBbHeight() / 2, 0));

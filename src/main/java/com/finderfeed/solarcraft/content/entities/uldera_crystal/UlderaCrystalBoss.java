@@ -563,10 +563,15 @@ public class UlderaCrystalBoss extends NoHealthLimitMob implements AnimatedObjec
 
     @Override
     public boolean hurt(DamageSource src, float amount) {
-        if (src.is(DamageTypeTags.IS_PROJECTILE)) return false;
+        if (src.is(DamageTypeTags.IS_PROJECTILE) || src.is(DamageTypeTags.IS_EXPLOSION)) return false;
 
-        if (src.getEntity() instanceof Player player && player.hasEffect(SCEffects.ULDERA_CRYSTAL_PRESENCE.get())){
-            amount = 0;
+        if (src.getEntity() instanceof Player player){
+            if (player.hasEffect(SCEffects.ULDERA_CRYSTAL_PRESENCE.get())) {
+                amount = 0;
+            }else if (!this.isEntityReachable(player)){
+                player.addEffect(new MobEffectInstance(SCEffects.ULDERA_CRYSTAL_PRESENCE.get(),200,0));
+                amount = 0;
+            }
         }else if (src.getEntity() instanceof LivingEntity living){
             amount = amount / 4f;
         }
@@ -683,7 +688,7 @@ public class UlderaCrystalBoss extends NoHealthLimitMob implements AnimatedObjec
     private boolean checkTarget(LivingEntity target){
         if (target == null) return false;
         if (target instanceof UlderaCrystalBuddy) return false;
-        if (target.isDeadOrDying()) return false;
+        if (target.isDeadOrDying() || target.isRemoved()) return false;
         if (target instanceof Player player && (player.isCreative() || player.isSpectator())) return false;
         Vec3 centerPos = this.getCenterPos();
         Vec3 targetCenter = target.position().add(0,target.getEyeHeight(target.getPose())/2f,0);

@@ -3,11 +3,11 @@ package com.finderfeed.solarcraft.registries.entities;
 
 import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.content.abilities.solar_strike.SolarStrikeEntity;
+import com.finderfeed.solarcraft.content.blocks.blockentities.projectiles.TurretProjectile;
 import com.finderfeed.solarcraft.content.entities.*;
 import com.finderfeed.solarcraft.content.entities.not_alive.*;
 import com.finderfeed.solarcraft.content.entities.projectiles.*;
 import com.finderfeed.solarcraft.content.blocks.blockentities.clearing_ritual.clearing_ritual_crystal.corruption_wisp.CorruptionWisp;
-import com.finderfeed.solarcraft.content.blocks.blockentities.projectiles.AbstractTurretProjectile;
 import com.finderfeed.solarcraft.content.blocks.blockentities.projectiles.MortarProjectile;
 import com.finderfeed.solarcraft.content.blocks.blockentities.projectiles.ShadowBolt;
 import com.finderfeed.solarcraft.content.entities.runic_elemental.RunicElementalBoss;
@@ -51,9 +51,13 @@ public class SCEntityTypes {
             EntityType.Builder.<BallLightningProjectile>of(BallLightningProjectile::new, MobCategory.MISC)
                     .sized(0.4f, 0.4f).build("ball_lightning"));
 
-    public static final RegistryObject<EntityType<AbstractTurretProjectile>> TURRET_PROJECTILE = ENTITY_TYPE_REGISTER.register("turret_projectile", () ->
-            EntityType.Builder.<AbstractTurretProjectile>of(AbstractTurretProjectile::new, MobCategory.MISC)
+    public static final RegistryObject<EntityType<TurretProjectile>> TURRET_PROJECTILE = ENTITY_TYPE_REGISTER.register("turret_projectile", () ->
+            EntityType.Builder.<TurretProjectile>of(TurretProjectile::new, MobCategory.MISC)
                     .sized(0.25f, 0.25f).build("turret_projectile"));
+
+    public static final RegistryObject<EntityType<SolarGodBowProjectile>> SOLAR_GOD_BOW_PROJECTILE = ENTITY_TYPE_REGISTER.register("sgb_projectile", () ->
+            EntityType.Builder.<SolarGodBowProjectile>of(SolarGodBowProjectile::new, MobCategory.MISC)
+                    .sized(0.25f, 0.25f).build("sgb_projectile"));
 
     public static final RegistryObject<EntityType<VillagerSolarMaster>> VILLAGER_SOLAR_MASTER = ENTITY_TYPE_REGISTER.register("solar_master_villager",()->
             EntityType.Builder.of(VillagerSolarMaster::new,MobCategory.CREATURE).sized(1,2).build("solar_master_villager"));
@@ -110,16 +114,14 @@ public class SCEntityTypes {
             EntityType.Builder.<SunstrikeEntity>of(SunstrikeEntity::new, MobCategory.MISC)
                     .sized(0.2f, 0.2f).build("sunstrike"));
 
-    public static final RegistryObject<EntityType<SolarFireballProjectile>> SOLAR_FIREBALL = ENTITY_TYPE_REGISTER.register("solar_fireball", () ->
-            EntityType.Builder.<SolarFireballProjectile>of(SolarFireballProjectile::new, MobCategory.MISC)
-                    .sized(0.2f, 0.2f).build("solar_fireball"));
+
 
     public static final RegistryObject<EntityType<SummoningProjectile>> SUMMONING_PROJECTILE = ENTITY_TYPE_REGISTER.register("summoning_projectile", () ->
             EntityType.Builder.<SummoningProjectile>of(SummoningProjectile::new, MobCategory.MISC)
                     .sized(0.2f, 0.2f).build("summoning_projectile"));
 
-    public static final RegistryObject<EntityType<RunicWarriorSummoningRocket>> RUNIC_WARRIOR_ROCKET = ENTITY_TYPE_REGISTER.register("runic_warrior_rocket", () ->
-            EntityType.Builder.<RunicWarriorSummoningRocket>of(RunicWarriorSummoningRocket::new, MobCategory.MISC)
+    public static final RegistryObject<EntityType<RunicWarriorSummoningProjectile>> RUNIC_WARRIOR_ROCKET = ENTITY_TYPE_REGISTER.register("runic_warrior_rocket", () ->
+            EntityType.Builder.<RunicWarriorSummoningProjectile>of(RunicWarriorSummoningProjectile::new, MobCategory.MISC)
                     .sized(0.2f, 0.2f).build("runic_warrior_rocket"));
 
     public static final RegistryObject<EntityType<EarthquakeEntity>> EARTHQUAKE = ENTITY_TYPE_REGISTER.register("earthquake", () ->

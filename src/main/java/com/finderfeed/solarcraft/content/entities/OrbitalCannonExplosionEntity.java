@@ -1,5 +1,6 @@
 package com.finderfeed.solarcraft.content.entities;
 
+import com.finderfeed.solarcraft.content.entities.not_alive.LegendaryItem;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
@@ -161,6 +162,8 @@ public class OrbitalCannonExplosionEntity extends Entity {
             if (e instanceof LivingEntity living) {
                 living.hurt(SolarcraftDamageSources.ORBITAL_EXPLOSION, 1000000f);
             }else if (e instanceof ItemEntity item){
+                item.remove(RemovalReason.KILLED);
+            }else if (e instanceof LegendaryItem item){
                 item.remove(RemovalReason.KILLED);
             }
         }
