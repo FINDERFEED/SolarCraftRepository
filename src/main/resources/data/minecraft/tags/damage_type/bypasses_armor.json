@@ -6,7 +6,8 @@
     "solarcraft:shadow",
     "solarcraft:stargaze",
     "solarcraft:player_attack_armor_pierce",
-    "solarcraft:mob_attack_armor_pierce_projectile"
+    "solarcraft:mob_attack_armor_pierce_projectile",
+    "solarcraft:mob_attack_all_resistance_ignore"
 
   ],
   "replace": false

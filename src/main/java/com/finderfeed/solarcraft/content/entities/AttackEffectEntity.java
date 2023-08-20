@@ -1,13 +1,17 @@
 package com.finderfeed.solarcraft.content.entities;
 
+import com.finderfeed.solarcraft.local_library.helpers.CompoundNBTHelper;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
 
-public class AttackEffectEntity extends Entity {
+import java.util.UUID;
+
+public abstract class AttackEffectEntity extends Entity {
 
 
+    private UUID owner;
     private int livingTicks;
     private int lifetime;
 
@@ -43,6 +47,7 @@ public class AttackEffectEntity extends Entity {
     public boolean save(CompoundTag tag) {
         tag.putInt("lifetime",lifetime);
         tag.putInt("livingTicks",livingTicks);
+        CompoundNBTHelper.saveUUID(tag,this.owner,"onwer");
         return super.save(tag);
     }
 
@@ -50,7 +55,17 @@ public class AttackEffectEntity extends Entity {
     public void load(CompoundTag tag) {
         this.lifetime = tag.getInt("lifetime");
         this.livingTicks = tag.getInt("livingTicks");
+        this.owner = CompoundNBTHelper.getUUID(tag,"owner");
         super.load(tag);
+
+    }
+
+    public UUID getOwner() {
+        return owner;
+    }
+
+    public void setOwner(UUID owner) {
+        this.owner = owner;
     }
 
     @Override

@@ -38,17 +38,10 @@ public enum SolarArmorMaterial implements ArmorMaterial {
         this.repairIngredient = new LazyLoadedValue<>(p_i231593_10_);
     }
 
-    public int getDurabilityForSlot(EquipmentSlot p_200896_1_) {
-        return HEALTH_PER_SLOT[p_200896_1_.getIndex()] * this.durabilityMultiplier;
-    }
-
-    public int getDefenseForSlot(EquipmentSlot p_200902_1_) {
-        return this.slotProtections[p_200902_1_.getIndex()];
-    }
 
     @Override
     public int getDurabilityForType(ArmorItem.Type type) {
-        return HEALTH_PER_SLOT[type.getSlot().getIndex()];
+        return HEALTH_PER_SLOT[type.getSlot().getIndex()] * durabilityMultiplier;
     }
 
     @Override

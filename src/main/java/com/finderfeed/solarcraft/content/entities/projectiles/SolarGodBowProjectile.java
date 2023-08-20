@@ -1,7 +1,7 @@
 package com.finderfeed.solarcraft.content.entities.projectiles;
 
 import com.finderfeed.solarcraft.client.particles.SCParticleTypes;
-import com.finderfeed.solarcraft.registries.damage_sources.SolarcraftDamageSources;
+import com.finderfeed.solarcraft.registries.damage_sources.SCDamageSources;
 import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -45,7 +45,7 @@ public class SolarGodBowProjectile extends OwnedProjectile {
         LivingEntity owner = null;
         if (entity1 instanceof LivingEntity ent && ent != (owner = this.getLivingEntityOwner())) {
             if (owner != null){
-                ent.hurt(SolarcraftDamageSources.livingArmorPierceProjectile(owner),damage);
+                ent.hurt(SCDamageSources.livingArmorPierceProjectile(owner),damage);
             }else{
                 ent.hurt(damageSources().magic(),damage);
             }

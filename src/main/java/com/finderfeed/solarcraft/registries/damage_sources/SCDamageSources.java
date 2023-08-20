@@ -12,18 +12,13 @@ import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.LevelEvent;
-import net.minecraftforge.client.ForgeHooksClient;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.server.ServerStartedEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 
 @Mod.EventBusSubscriber(modid = SolarCraft.MOD_ID,bus = Mod.EventBusSubscriber.Bus.FORGE)
-public class SolarcraftDamageSources {
+public class SCDamageSources {
 
     public static final ResourceKey<DamageType> STARGAZE_TYPE = ResourceKey.create(Registries.DAMAGE_TYPE,new ResourceLocation(SolarCraft.MOD_ID,"stargaze"));
     public static final ResourceKey<DamageType> SHADOW_TYPE = ResourceKey.create(Registries.DAMAGE_TYPE,new ResourceLocation(SolarCraft.MOD_ID,"shadow"));
@@ -32,6 +27,7 @@ public class SolarcraftDamageSources {
     public static final ResourceKey<DamageType> PLAYER_ATTACK_ARMOR_PIERCE_TYPE = ResourceKey.create(Registries.DAMAGE_TYPE,new ResourceLocation(SolarCraft.MOD_ID,"player_attack_armor_pierce"));
     public static final ResourceKey<DamageType> MOB_ATTACK_ARMOR_PIERCE_TYPE = ResourceKey.create(Registries.DAMAGE_TYPE,new ResourceLocation(SolarCraft.MOD_ID,"mob_attack_armor_pierce"));
     public static final ResourceKey<DamageType> MOB_ATTACK_ARMOR_PIERCE_PROJECTILE_TYPE = ResourceKey.create(Registries.DAMAGE_TYPE,new ResourceLocation(SolarCraft.MOD_ID,"mob_attack_armor_pierce_projectile"));
+    public static final ResourceKey<DamageType> MOB_ATTACK_ALL_RESISTANCE_IGNORE_TYPE = ResourceKey.create(Registries.DAMAGE_TYPE,new ResourceLocation(SolarCraft.MOD_ID,"mob_attack_all_resistance_ignore"));
 
     public static DamageSource STARGAZE;
     public static DamageSource SHADOW;
@@ -45,9 +41,14 @@ public class SolarcraftDamageSources {
     }
 
     private static EntityDamageSource MOB_ATTACK_ARMOR_PIERCE;
+    private static EntityDamageSource MOB_ATTACK_ALL_RESISTANCE_IGNORE;
 
     public static DamageSource livingArmorPierce(LivingEntity attacker){
         return MOB_ATTACK_ARMOR_PIERCE.create(attacker);
+    }
+
+    public static DamageSource livingAllResistanceIgnore(LivingEntity attacker){
+        return MOB_ATTACK_ALL_RESISTANCE_IGNORE.create(attacker);
     }
 
     private static EntityDamageSource MOB_ATTACK_ARMOR_PIERCE_PROJECTILE;
@@ -69,6 +70,7 @@ public class SolarcraftDamageSources {
         PLAYER_ATTACK_ARMOR_PIERCE = new EntityDamageSource(types.getHolderOrThrow(PLAYER_ATTACK_ARMOR_PIERCE_TYPE));
         MOB_ATTACK_ARMOR_PIERCE = new EntityDamageSource(types.getHolderOrThrow(MOB_ATTACK_ARMOR_PIERCE_TYPE));
         MOB_ATTACK_ARMOR_PIERCE_PROJECTILE = new EntityDamageSource(types.getHolderOrThrow(MOB_ATTACK_ARMOR_PIERCE_PROJECTILE_TYPE));
+        MOB_ATTACK_ALL_RESISTANCE_IGNORE = new EntityDamageSource(types.getHolderOrThrow(MOB_ATTACK_ALL_RESISTANCE_IGNORE_TYPE));
     }
 
 

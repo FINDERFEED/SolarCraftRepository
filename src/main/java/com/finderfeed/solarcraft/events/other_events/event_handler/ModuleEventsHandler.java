@@ -7,7 +7,7 @@ import com.finderfeed.solarcraft.config.SolarcraftConfig;
 import com.finderfeed.solarcraft.content.entities.ShadowZombie;
 import com.finderfeed.solarcraft.content.items.ModuleItem;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
-import com.finderfeed.solarcraft.registries.damage_sources.SolarcraftDamageSources;
+import com.finderfeed.solarcraft.registries.damage_sources.SCDamageSources;
 import com.finderfeed.solarcraft.registries.items.SCItems;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -121,9 +121,9 @@ public class ModuleEventsHandler {
                 if (hasModule(SCItems.MAGIC_DAMAGE_MODULE_5.get(),stack)){
                     if (Helpers.isVulnerable(target)) {
                         float modifier = player.getAttackStrengthScale(0);
-                        DamageSource src = SolarcraftDamageSources.playerArmorPierce(player);
+                        DamageSource src = SCDamageSources.playerArmorPierce(player);
                         if (target instanceof ShadowZombie){
-                            src = SolarcraftDamageSources.RUNIC_MAGIC;
+                            src = SCDamageSources.RUNIC_MAGIC;
                         }
                         target.hurt(src, modifier * 5);
                         target.invulnerableTime = 0;

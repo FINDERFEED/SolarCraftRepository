@@ -23,7 +23,7 @@ import com.finderfeed.solarcraft.misc_things.CrystalBossBuddy;
 import com.finderfeed.solarcraft.misc_things.NoHealthLimitMob;
 import com.finderfeed.solarcraft.client.particles.SCParticleTypes;
 import com.finderfeed.solarcraft.registries.attributes.AttributesRegistry;
-import com.finderfeed.solarcraft.registries.damage_sources.SolarcraftDamageSources;
+import com.finderfeed.solarcraft.registries.damage_sources.SCDamageSources;
 import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
 import com.finderfeed.solarcraft.registries.items.SCItems;
 import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
@@ -250,7 +250,7 @@ public class CrystalBossEntity extends NoHealthLimitMob implements CrystalBossBu
                 }));
                 if (res != null) {
                     Entity ent = res.getEntity();
-                    ent.hurt(SolarcraftDamageSources.livingArmorPierce(this), RAY_DAMAGE);
+                    ent.hurt(SCDamageSources.livingArmorPierce(this), RAY_DAMAGE);
                 }
 
                 secondPos = firstPos.add(new Vec3(RAY_LENGTH, 0, 0).yRot((float) Math.toRadians(state+180)));
@@ -259,7 +259,7 @@ public class CrystalBossEntity extends NoHealthLimitMob implements CrystalBossBu
                 }));
                 if (res != null) {
                     Entity ent = res.getEntity();
-                    ent.hurt(SolarcraftDamageSources.livingArmorPierce(this), RAY_DAMAGE);
+                    ent.hurt(SCDamageSources.livingArmorPierce(this), RAY_DAMAGE);
                 }
                 if (state <= 1300) {
                     this.entityData.set(RAY_STATE_FLOAT_OR_ANGLE, state + 2f);

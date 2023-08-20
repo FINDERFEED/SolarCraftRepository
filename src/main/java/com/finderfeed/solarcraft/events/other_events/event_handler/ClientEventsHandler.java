@@ -68,30 +68,30 @@ public class ClientEventsHandler {
 
         if (Minecraft.getInstance().screen != null) return;
 
-        if (ClientModEventHandler.FIRST_ABILITY_KEY.isDown() && event.getAction() == GLFW.GLFW_PRESS){
+        if (SCClientModEventHandler.FIRST_ABILITY_KEY.isDown() && event.getAction() == GLFW.GLFW_PRESS){
             SCPacketHandler.INSTANCE.sendToServer(new CastAbilityPacket(1));
         }
-        if (ClientModEventHandler.SECOND_ABILITY_KEY.isDown() && event.getAction() == GLFW.GLFW_PRESS){
+        if (SCClientModEventHandler.SECOND_ABILITY_KEY.isDown() && event.getAction() == GLFW.GLFW_PRESS){
 
             SCPacketHandler.INSTANCE.sendToServer(new CastAbilityPacket(2));
 
         }
-        if (ClientModEventHandler.THIRD_ABILITY_KEY.isDown() && event.getAction() == GLFW.GLFW_PRESS){
+        if (SCClientModEventHandler.THIRD_ABILITY_KEY.isDown() && event.getAction() == GLFW.GLFW_PRESS){
 
             SCPacketHandler.INSTANCE.sendToServer(new CastAbilityPacket(3));
 
         }
-        if (ClientModEventHandler.FORTH_ABILITY_KEY.isDown() && event.getAction() == GLFW.GLFW_PRESS){
+        if (SCClientModEventHandler.FORTH_ABILITY_KEY.isDown() && event.getAction() == GLFW.GLFW_PRESS){
 
             SCPacketHandler.INSTANCE.sendToServer(new CastAbilityPacket(4));
 
         }
 
-        if (ClientModEventHandler.GUI_ABILITY_BUY_SCREEN.isDown() && event.getAction() == GLFW.GLFW_PRESS){
+        if (SCClientModEventHandler.GUI_ABILITY_BUY_SCREEN.isDown() && event.getAction() == GLFW.GLFW_PRESS){
             ClientHelpers.requestAbilityScreen(false);
         }
 
-        if (ClientModEventHandler.GUI_WAND_MODE_SELECTION.isDown() && event.getAction() == GLFW.GLFW_PRESS
+        if (SCClientModEventHandler.GUI_WAND_MODE_SELECTION.isDown() && event.getAction() == GLFW.GLFW_PRESS
                 && Minecraft.getInstance().player != null && Minecraft.getInstance().player.getMainHandItem().is(SCItems.SOLAR_WAND.get())){
             Minecraft.getInstance().setScreen(new WandModeSelectionScreen());
         }

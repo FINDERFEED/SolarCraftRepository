@@ -4,7 +4,7 @@ import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.client.particles.SCParticleTypes;
 import com.finderfeed.solarcraft.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarcraft.misc_things.CrystalBossBuddy;
-import com.finderfeed.solarcraft.registries.damage_sources.SolarcraftDamageSources;
+import com.finderfeed.solarcraft.registries.damage_sources.SCDamageSources;
 import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -67,7 +67,7 @@ public class ExplosiveCrystal extends Mob implements CrystalBossBuddy {
                     for (LivingEntity living : level.getEntitiesOfClass(LivingEntity.class, new AABB(-32, -32, -32, 32, 32, 32).move(position()),
                             (l)->!(l instanceof CrystalBossBuddy))) {
                         living.invulnerableTime = 0;
-                        living.hurt(SolarcraftDamageSources.livingArmorPierce(this), 60);
+                        living.hurt(SCDamageSources.livingArmorPierce(this), 60);
 
                     }
                     level.playSound(null,position().x,position().y + this.getBbHeight()/2,position().z, SoundEvents.GENERIC_EXPLODE, SoundSource.HOSTILE,1,1);

@@ -5,6 +5,7 @@ import com.finderfeed.solarcraft.client.particles.lightning_particle.LightningPa
 import com.finderfeed.solarcraft.client.particles.server_data.shapes.SendShapeParticlesPacket;
 import com.finderfeed.solarcraft.client.particles.server_data.shapes.instances.BurstAttackParticleShape;
 import com.finderfeed.solarcraft.client.particles.server_data.shapes.instances.SphereParticleShape;
+import com.finderfeed.solarcraft.content.entities.ElectricRainEntity;
 import com.finderfeed.solarcraft.content.entities.not_alive.LegendaryItem;
 import com.finderfeed.solarcraft.content.entities.projectiles.HomingStarProjectile;
 import com.finderfeed.solarcraft.content.items.RuneEnergyPylonBlockItem;
@@ -22,8 +23,7 @@ import com.finderfeed.solarcraft.packet_handler.packets.CameraShakePacket;
 import com.finderfeed.solarcraft.packet_handler.packets.DisablePlayerFlightPacket;
 import com.finderfeed.solarcraft.registries.animations.SCAnimations;
 import com.finderfeed.solarcraft.registries.attributes.AttributesRegistry;
-import com.finderfeed.solarcraft.registries.damage_sources.SolarcraftDamageSources;
-import com.finderfeed.solarcraft.registries.data_serializers.FDEntityDataSerializers;
+import com.finderfeed.solarcraft.registries.damage_sources.SCDamageSources;
 import com.finderfeed.solarcraft.registries.effects.SCEffects;
 import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
 import net.minecraft.core.BlockPos;
@@ -31,7 +31,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.server.bossevents.CustomBossEvent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.DamageTypeTags;
@@ -58,18 +57,23 @@ import java.util.List;
 public class UlderaCrystalBoss extends NoHealthLimitMob implements AnimatedObject, UlderaCrystalBuddy {
 
 
+    public static final BallParticleOptions PURPLE_PARTICLE_OPTIONS = BallParticleOptions.Builder.begin()
+            .setLifetime(60)
+            .setSize(0.15f)
+            .setRGB(90,0,186)
+            .setShouldShrink(true)
+            .setPhysics(false)
+            .build();
     public final CustomServerBossEvent BOSS_EVENT = new CustomServerBossEvent(this.getDisplayName(),"uldera_crystal");
 
-    private static final List<Vec3> NODE_POSITIONS = new ArrayList<>(List.of(
-            new Vec3(10,1.5,10),
-            new Vec3(-10,1.5,10),
-            new Vec3(10,1.5,-10),
-            new Vec3(-10,1.5,-10),
-            new Vec3(0,1.5,-20),
-            new Vec3(0,1.5,20),
-            new Vec3(20,1.5,0),
-            new Vec3(-20,1.5,0)
-    ));
+
+    private static final BlockPos[] ELECTRIC_RAIN_OFFSETS = {
+      new BlockPos(15,0,15),
+      new BlockPos(15,0,-15),
+      new BlockPos(-15,0,-15),
+      new BlockPos(-15,0,15)
+    };
+
 
     public static final String ATTACK_1_TICKER = "attack_1";
     public static final String TEMP1 = "temp1";
@@ -84,7 +88,6 @@ public class UlderaCrystalBoss extends NoHealthLimitMob implements AnimatedObjec
 
     private List<BlockPos> lightningPositions = new ArrayList<>();
 
-    private static final EntityDataAccessor<List<Vec3>> ELECTRIC_RAIN_POSITIONS = SynchedEntityData.defineId(UlderaCrystalBoss.class, FDEntityDataSerializers.POSITION_LIST.get());
     private static final EntityDataAccessor<Integer> MISC_TICKER = SynchedEntityData.defineId(UlderaCrystalBoss.class, EntityDataSerializers.INT);
 
 
@@ -97,18 +100,21 @@ public class UlderaCrystalBoss extends NoHealthLimitMob implements AnimatedObjec
             .addPostEffectToAttack("lightnings",()->{
                 this.getAnimationManager().stopAnimation(ATTACK_1_TICKER);
                 this.getAnimationManager().stopAnimation(TEMP1);
+                this.passiveElectricRainSpawn();
             })
             .addPostEffectToAttack("homingStars",()->{
                 this.getAnimationManager().stopAnimation(ATTACK_1_TICKER);
+                this.passiveElectricRainSpawn();
             })
-//            .addPostEffectToAttack("effectCrystals",()->{
-//                this.getAnimationManager().stopAnimation(ATTACK_1_TICKER);
-//                this.getAnimationManager().stopAnimation(TEMP1);
-//            })
-//            .addPostEffectToAttack("pullEntities",()->{
-//                this.getAnimationManager().stopAnimation(TEMP2);
-//                this.getAnimationManager().stopAnimation(TEMP1);
-//            })
+            .addPostEffectToAttack("effectCrystals",()->{
+                this.getAnimationManager().stopAnimation(ATTACK_1_TICKER);
+                this.getAnimationManager().stopAnimation(TEMP1);
+            })
+            .addPostEffectToAttack("pullEntities",()->{
+                this.getAnimationManager().stopAnimation(TEMP2);
+                this.getAnimationManager().stopAnimation(TEMP1);
+                this.passiveElectricRainSpawn();
+            })
             .build();
 
     public UlderaCrystalBoss(EntityType<? extends NoHealthLimitMob> p_21368_, Level level) {
@@ -183,7 +189,7 @@ public class UlderaCrystalBoss extends NoHealthLimitMob implements AnimatedObjec
     }
 
     private void disableFlight(ServerPlayer player){
-        if (player.getAbilities().mayfly || player.getAbilities().flying){
+        if (player.getAbilities().flying){
             DisablePlayerFlightPacket.send(player,true);
             PacketHelper.sendToPlayersTrackingEntity(this,
                     new SendShapeParticlesPacket(
@@ -466,11 +472,14 @@ public class UlderaCrystalBoss extends NoHealthLimitMob implements AnimatedObjec
         return Mth.clamp(this.bossChain.getTicker()/80f,0,1);
     }
     private void dealExplosionDamage(){
-        float baseDamage = 15;
+        float baseDamage = 10;
         for (LivingEntity entity : this.getPullAffectedEntities()){
             Vec3 dist = entity.position().add(0,entity.getBbHeight()/2,0).subtract(this.getCenterPos());
             float damage = calculateDistanceDamage(baseDamage,(float)dist.length());
-            entity.hurt(SolarcraftDamageSources.livingArmorPierce(this),damage);
+            System.out.println("Entity: " + entity);
+            System.out.println("Damage: " + damage);
+            entity.invulnerableTime = 0;
+            entity.hurt(SCDamageSources.livingAllResistanceIgnore(this),damage);
         }
     }
 
@@ -518,15 +527,21 @@ public class UlderaCrystalBoss extends NoHealthLimitMob implements AnimatedObjec
     //end pull attack
 
 
-
-
-    public List<Vec3> getElectricRainPositions(){
-        return this.entityData.get(ELECTRIC_RAIN_POSITIONS);
+    private void passiveElectricRainSpawn(){
+        BlockPos pos = ELECTRIC_RAIN_OFFSETS[level.random.nextInt(ELECTRIC_RAIN_OFFSETS.length)].offset(this.getOnPos());
+        ElectricRainEntity rain = new ElectricRainEntity(SCEntityTypes.ELECTRIC_RAIN.get(),level);
+        int height = level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,pos.getX(),pos.getZ());
+        Vec3 v = new Vec3(pos.getX() + 0.5,height,pos.getZ() + 0.5);
+        rain.setPos(v);
+        rain.setLifetime(300);
+        rain.setOwner(this.getUUID());
+        rain.setFrequency(2);
+        rain.setRadius(15);
+        rain.setDamage(10);
+        level.addFreshEntity(rain);
     }
 
-    public void setElectricRainPositions(List<Vec3> nodes){
-        this.entityData.set(ELECTRIC_RAIN_POSITIONS,nodes);
-    }
+
 
     public int getMiscTicker(){
         return this.entityData.get(MISC_TICKER);
@@ -777,7 +792,6 @@ public class UlderaCrystalBoss extends NoHealthLimitMob implements AnimatedObjec
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
-        this.entityData.define(ELECTRIC_RAIN_POSITIONS,new ArrayList<>());
         this.entityData.define(MISC_TICKER,0);
     }
 

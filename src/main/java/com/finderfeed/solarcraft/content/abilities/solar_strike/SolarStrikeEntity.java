@@ -7,7 +7,7 @@ import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.config.SolarcraftConfig;
 import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
 import com.finderfeed.solarcraft.packet_handler.packets.misc_packets.SolarStrikeEntityDoExplosion;
-import com.finderfeed.solarcraft.registries.damage_sources.SolarcraftDamageSources;
+import com.finderfeed.solarcraft.registries.damage_sources.SCDamageSources;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
@@ -104,7 +104,7 @@ public class SolarStrikeEntity extends PathfinderMob {
                         .move(this.getOnPos()),x -> x != getOwner());
                 for (Entity entity : list) {
                     if (getOwner() instanceof LivingEntity entity1){
-                        entity.hurt(SolarcraftDamageSources.livingArmorPierce(entity1), SolarcraftConfig.SOLAR_STRIKE_DAMAGE.get().floatValue());
+                        entity.hurt(SCDamageSources.livingArmorPierce(entity1), SolarcraftConfig.SOLAR_STRIKE_DAMAGE.get().floatValue());
                         continue;
                     }
                     entity.hurt(level.damageSources().magic(), SolarcraftConfig.SOLAR_STRIKE_DAMAGE.get().floatValue());

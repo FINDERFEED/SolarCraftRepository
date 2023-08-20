@@ -230,6 +230,7 @@
   "energy_dust.lore": "A magic powder that can be used as a catalyst in many crafts. Can be obtained through Sun-flowers in deserts.",
   "entity.solarcraft.crystal_boss": "Crystal Construct",
   "entity.solarcraft.runic_elemental_boss": "Runic Elemental",
+  "entity.solarcraft.uldera_crystal_boss": "Uldera Crystal",
   "entity.solarcraft.runic_warrior": "Runic Warrior",
   "entity.solarcraft.solar_master_villager": "Master Magician",
   "experience_crystal.lore": "When in inventory, consumes the experience orbs to store them. Right click to release held experience.",

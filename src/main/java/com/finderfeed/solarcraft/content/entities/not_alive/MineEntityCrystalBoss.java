@@ -3,7 +3,7 @@ package com.finderfeed.solarcraft.content.entities.not_alive;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.content.entities.CrystalBossEntity;
 import com.finderfeed.solarcraft.misc_things.CrystalBossBuddy;
-import com.finderfeed.solarcraft.registries.damage_sources.SolarcraftDamageSources;
+import com.finderfeed.solarcraft.registries.damage_sources.SCDamageSources;
 import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
@@ -77,7 +77,7 @@ public class MineEntityCrystalBoss extends PathfinderMob implements CrystalBossB
             level.getEntitiesOfClass(LivingEntity.class,new AABB(-1.5,-1.0,-1.5,1.5,2,1.5).move(position()),(ent)->{
                 return !(ent instanceof CrystalBossBuddy);
             }).forEach((living)->{
-                living.hurt(SolarcraftDamageSources.RUNIC_MAGIC, CrystalBossEntity.MINES_DAMAGE);
+                living.hurt(SCDamageSources.RUNIC_MAGIC, CrystalBossEntity.MINES_DAMAGE);
             });
         }
 

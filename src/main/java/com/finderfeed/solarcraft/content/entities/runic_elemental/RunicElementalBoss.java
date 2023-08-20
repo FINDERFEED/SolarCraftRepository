@@ -14,7 +14,7 @@ import com.finderfeed.solarcraft.packet_handler.packets.DisablePlayerFlightPacke
 import com.finderfeed.solarcraft.packet_handler.packets.TeleportEntityPacket;
 import com.finderfeed.solarcraft.registries.attributes.AttributesRegistry;
 import com.finderfeed.solarcraft.registries.blocks.SolarcraftBlocks;
-import com.finderfeed.solarcraft.registries.damage_sources.SolarcraftDamageSources;
+import com.finderfeed.solarcraft.registries.damage_sources.SCDamageSources;
 import com.finderfeed.solarcraft.registries.data_serializers.FDEntityDataSerializers;
 import com.finderfeed.solarcraft.registries.effects.SCEffects;
 import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
@@ -320,7 +320,7 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
             if (BOSS_ATTACK_CHAIN.getTicker() % 10 == 0) {
                 List<MobEffect> toRemove = new ArrayList<>();
                 float damage = (VARTH_DADER_DAMAGE + getDamageBonus()/4f) * getDamageModifier();
-                living.hurt(SolarcraftDamageSources.livingArmorPierce(this), damage);
+                living.hurt(SCDamageSources.livingArmorPierce(this), damage);
                 for (MobEffectInstance effect : living.getActiveEffects()){
                     if (effect.getEffect().isBeneficial() && effect.getEffect() != SCEffects.IMMORTALITY_EFFECT.get()){
                         toRemove.add(effect.getEffect());
@@ -415,7 +415,7 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
                 double attackDirAngle = Math.toDegrees(Math.atan2(attackDir.x,attackDir.z));
                 if (Math.abs(attackDirAngle - angleVec) <= 110 && vec.length() <= 16){
                     float damage = (HAMMER_ATTACK_DAMAGE + getDamageBonus()) * getDamageModifier();
-                    player.hurt(SolarcraftDamageSources.livingArmorPierce(this),damage);
+                    player.hurt(SCDamageSources.livingArmorPierce(this),damage);
                 }
             }
 

@@ -1,31 +1,23 @@
 package com.finderfeed.solarcraft.content.items;
 
 import com.finderfeed.solarcraft.SolarCraftTags;
-import com.finderfeed.solarcraft.content.blocks.blockentities.projectiles.TurretProjectile;
 import com.finderfeed.solarcraft.content.entities.projectiles.SolarGodBowProjectile;
 import com.finderfeed.solarcraft.content.items.primitive.RareSolarcraftItem;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarcraft.misc_things.IUpgradable;
-import com.finderfeed.solarcraft.registries.damage_sources.SolarcraftDamageSources;
 import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
-import net.minecraft.world.phys.EntityHitResult;
-import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.Nullable;
 import java.util.List;
-import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 public class SolarGodBow extends RareSolarcraftItem implements IUpgradable {

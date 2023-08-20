@@ -31,7 +31,7 @@ import com.finderfeed.solarcraft.misc_things.RunicEnergy;
 import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
 import com.finderfeed.solarcraft.packet_handler.packets.*;
 import com.finderfeed.solarcraft.registries.ConfigRegistry;
-import com.finderfeed.solarcraft.registries.damage_sources.SolarcraftDamageSources;
+import com.finderfeed.solarcraft.registries.damage_sources.SCDamageSources;
 import com.finderfeed.solarcraft.registries.Tags;
 import com.finderfeed.solarcraft.registries.abilities.AbilitiesRegistry;
 import com.finderfeed.solarcraft.registries.attributes.AttributesRegistry;
@@ -49,14 +49,12 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.DamageTypeTags;
-import net.minecraft.world.damagesource.CombatRules;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.boss.enderdragon.EnderDragon;
 import net.minecraft.world.entity.boss.wither.WitherBoss;
 import net.minecraft.world.level.Level;
@@ -295,7 +293,7 @@ public class SCEventHandler {
 
                 if (player.hasEffect(SCEffects.STAR_GAZE_EFFECT.get())) {
                     if (world.getGameTime() % 80 == 1) {
-                        DamageSource src = SolarcraftDamageSources.STARGAZE;
+                        DamageSource src = SCDamageSources.STARGAZE;
                         player.hurt(src, 6);
                     }
                 }
@@ -595,24 +593,22 @@ public class SCEventHandler {
         LivingEntity entity = event.getEntity();
         if (entity instanceof Player player && !player.isCreative() && !player.isSpectator()){
             float damageAmount = event.getAmount();
-            float afterResistancesAmount = CombatRules.getDamageAfterAbsorb(damageAmount, (float)player.getArmorValue(), (float)player.getAttributeValue(Attributes.ARMOR_TOUGHNESS));
-            afterResistancesAmount = player.getDamageAfterMagicAbsorb(event.getSource(),afterResistancesAmount);
 
-            float p = damageAmount / afterResistancesAmount;
+
 
             for (ItemStack stack : player.getArmorSlots()){
-                if (afterResistancesAmount <= 0) break;
+                if (damageAmount <= 0) break;
                 if (stack.getItem() instanceof BaseDivineArmor armor){
                     float energyCost = armor.getCost().get(RunicEnergy.Type.ARDO);
                     float maxBlockedDamage = ItemRunicEnergy.getRunicEnergyFromItem(stack, RunicEnergy.Type.ARDO) / energyCost;
 
-                    float m = Math.min(maxBlockedDamage,afterResistancesAmount);
+                    float m = Math.min(maxBlockedDamage,damageAmount);
                     ItemRunicEnergy.removeRunicEnergy(stack,armor, RunicEnergy.Type.ARDO,m*energyCost);
 
-                    afterResistancesAmount -= maxBlockedDamage;
+                    damageAmount -= maxBlockedDamage;
                 }
             }
-            event.setAmount(Math.max(0,afterResistancesAmount * p));
+            event.setAmount(Math.max(0,damageAmount));
         }
     }
 

@@ -5,27 +5,23 @@ import com.finderfeed.solarcraft.client.particles.lightning_particle.LightningPa
 import com.finderfeed.solarcraft.local_library.helpers.CompoundNBTHelper;
 import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
 import com.finderfeed.solarcraft.packet_handler.packets.CameraShakePacket;
-import com.finderfeed.solarcraft.registries.damage_sources.SolarcraftDamageSources;
-import net.minecraft.core.BlockPos;
+import com.finderfeed.solarcraft.registries.damage_sources.SCDamageSources;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.PacketDistributor;
 
-import java.util.Random;
 import java.util.UUID;
 
 public class UlderaLightningEntity extends Entity {
@@ -128,9 +124,9 @@ public class UlderaLightningEntity extends Entity {
             return !entity.getUUID().equals(this.getOwner()) && !(entity instanceof UlderaCrystalBuddy);
         })){
             if (owner != null) {
-                entity.hurt(SolarcraftDamageSources.livingArmorPierce(owner),damage);
+                entity.hurt(level.damageSources().mobAttack(owner),damage);
             }else{
-                entity.hurt(SolarcraftDamageSources.SHADOW, damage);
+                entity.hurt(SCDamageSources.SHADOW, damage);
             }
         }
         Vec3 c = this.position();

@@ -4,7 +4,7 @@ import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.content.entities.CrystalBossEntity;
 import com.finderfeed.solarcraft.misc_things.CrystalBossBuddy;
 import com.finderfeed.solarcraft.client.particles.SCParticleTypes;
-import com.finderfeed.solarcraft.registries.damage_sources.SolarcraftDamageSources;
+import com.finderfeed.solarcraft.registries.damage_sources.SCDamageSources;
 import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.nbt.CompoundTag;
@@ -120,7 +120,7 @@ public class CrystalBossAttackHoldingMissile extends OwnedProjectile implements 
         if (!(ent.getEntity() instanceof CrystalBossEntity) && !(ent.getEntity() instanceof CrystalBossBuddy)){
             if (Helpers.isVulnerable(ent.getEntity())) {
                 if (this.getOwner() instanceof LivingEntity entity) {
-                    ent.getEntity().hurt(SolarcraftDamageSources.livingArmorPierce(entity), CrystalBossEntity.MISSILE_DAMAGE);
+                    ent.getEntity().hurt(SCDamageSources.livingArmorPierce(entity), CrystalBossEntity.MISSILE_DAMAGE);
                 }else{
                     ent.getEntity().hurt(level.damageSources().magic(), CrystalBossEntity.MISSILE_DAMAGE);
                 }

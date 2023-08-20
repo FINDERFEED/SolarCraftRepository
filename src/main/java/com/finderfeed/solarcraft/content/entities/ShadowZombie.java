@@ -1,6 +1,6 @@
 package com.finderfeed.solarcraft.content.entities;
 
-import com.finderfeed.solarcraft.registries.damage_sources.SolarcraftDamageSources;
+import com.finderfeed.solarcraft.registries.damage_sources.SCDamageSources;
 import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -63,7 +63,7 @@ public class ShadowZombie extends Monster implements PowerableMob {
 
     @Override
     public boolean hurt(DamageSource src, float amount) {
-        if (src == SolarcraftDamageSources.RUNIC_MAGIC ||
+        if (src == SCDamageSources.RUNIC_MAGIC ||
                 src == level.damageSources().fellOutOfWorld() ||
                 src == level.damageSources().genericKill()) {
             return super.hurt(src, amount);

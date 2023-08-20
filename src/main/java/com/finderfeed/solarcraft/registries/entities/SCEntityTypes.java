@@ -154,6 +154,10 @@ public class SCEntityTypes {
             EntityType.Builder.<EffectCrystal>of(EffectCrystal::new, MobCategory.CREATURE)
                     .sized(1f, 1f).build("effect_crystal"));
 
+    public static final RegistryObject<EntityType<ElectricRainEntity>> ELECTRIC_RAIN = ENTITY_TYPE_REGISTER.register("electric_rain", () ->
+            EntityType.Builder.<ElectricRainEntity>of(ElectricRainEntity::new, MobCategory.MISC)
+                    .sized(0.1f, 0.1f).build("electric_rain"));
+
     public static final RegistryObject<EntityType<UlderaCrystalBoss>> ULDERA_CRYSTAL_BOSS = ENTITY_TYPE_REGISTER.register("uldera_crystal_boss",()->
             EntityType.Builder.of(UlderaCrystalBoss::new,MobCategory.MONSTER).sized(1,16.5f).build("uldera_crystal_boss"));
 
@@ -175,7 +179,7 @@ public class SCEntityTypes {
 
         public static final RegistryObject<EntityType<UElectricShockProjectile>> ELECTRIC_SHOCK_PROJECTILE = ENTITY_TYPE_REGISTER.register("electric_shock_projectile", () ->
                 EntityType.Builder.<UElectricShockProjectile>of(UElectricShockProjectile::new, MobCategory.MISC)
-                        .sized(0.25f, 0.25f).build("electric_shock_projectile"));
+                        .sized(0.8f, 0.8f).build("electric_shock_projectile"));
 
 
         private static void init(){}

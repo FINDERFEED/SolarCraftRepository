@@ -66,7 +66,7 @@ import org.lwjgl.glfw.GLFW;
 
 
 @Mod.EventBusSubscriber(modid = "solarcraft",bus = Mod.EventBusSubscriber.Bus.MOD,value = Dist.CLIENT)
-public class ClientModEventHandler {
+public class SCClientModEventHandler {
 
     public static final DimensionSpecialEffects RADIANT_LAND  = new RadiantLandDimEffects();
     public static final RadiantTextureAtlasSpriteLoader RADIANT_TEXTURE_ATLAS_SPRITE_LOADER = new RadiantTextureAtlasSpriteLoader();
@@ -274,6 +274,8 @@ public class ClientModEventHandler {
         event.registerEntityRenderer(SCEntityTypes.ULDERA_LIGHTNING.get(), UlderaLightningRenderer::new);
         event.registerEntityRenderer(SCEntityTypes.EFFECT_CRYSTAL.get(), EffectCrystalRenderer::new);
         event.registerEntityRenderer(SCEntityTypes.SOLAR_GOD_BOW_PROJECTILE.get(), AbstractTurretProjectileRenderer::new);
+        event.registerEntityRenderer(SCEntityTypes.ELECTRIC_RAIN.get(), NullRenderer::new);
+        event.registerEntityRenderer(SCEntityTypes.Projectiles.ELECTRIC_SHOCK_PROJECTILE.get(), NullRenderer::new);
     }
 
 }

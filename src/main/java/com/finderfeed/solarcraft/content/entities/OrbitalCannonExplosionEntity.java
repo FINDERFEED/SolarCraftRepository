@@ -5,7 +5,7 @@ import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
 import com.finderfeed.solarcraft.packet_handler.packets.UpdateChunkPacket;
-import com.finderfeed.solarcraft.registries.damage_sources.SolarcraftDamageSources;
+import com.finderfeed.solarcraft.registries.damage_sources.SCDamageSources;
 import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
 import com.google.common.collect.Lists;
 import net.minecraft.core.BlockPos;
@@ -160,7 +160,7 @@ public class OrbitalCannonExplosionEntity extends Entity {
                     entity.position().multiply(0,1,0).distanceTo(this.position().multiply(0,1,0)) < depth;
         })){
             if (e instanceof LivingEntity living) {
-                living.hurt(SolarcraftDamageSources.ORBITAL_EXPLOSION, 1000000f);
+                living.hurt(SCDamageSources.ORBITAL_EXPLOSION, 1000000f);
             }else if (e instanceof ItemEntity item){
                 item.remove(RemovalReason.KILLED);
             }else if (e instanceof LegendaryItem item){

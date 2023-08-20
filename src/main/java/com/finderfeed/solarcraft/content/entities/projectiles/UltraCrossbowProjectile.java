@@ -1,27 +1,19 @@
 package com.finderfeed.solarcraft.content.entities.projectiles;
 
 import com.finderfeed.solarcraft.client.particles.SCParticleTypes;
-import com.finderfeed.solarcraft.registries.damage_sources.SolarcraftDamageSources;
+import com.finderfeed.solarcraft.registries.damage_sources.SCDamageSources;
 import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
 import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
-import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractHurtingProjectile;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.syncher.EntityDataAccessor;
-import net.minecraft.network.syncher.EntityDataSerializers;
-import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.core.particles.ParticleOptions;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.level.Level;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraftforge.network.NetworkHooks;
 
 
 public class UltraCrossbowProjectile extends OwnedProjectile {
@@ -57,7 +49,7 @@ public class UltraCrossbowProjectile extends OwnedProjectile {
 
             Entity ent = ctx.getEntity();
             if (this.getOwner() instanceof LivingEntity entity) {
-                ent.hurt(SolarcraftDamageSources.livingArmorPierceProjectile(entity), (float) damage);
+                ent.hurt(SCDamageSources.livingArmorPierceProjectile(entity), (float) damage);
             }else{
                 ent.hurt(level.damageSources().magic(), (float) damage);
 

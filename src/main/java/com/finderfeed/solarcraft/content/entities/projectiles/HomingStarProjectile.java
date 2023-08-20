@@ -3,11 +3,10 @@ package com.finderfeed.solarcraft.content.entities.projectiles;
 import com.finderfeed.solarcraft.client.particles.ball_particle.BallParticleOptions;
 import com.finderfeed.solarcraft.content.entities.uldera_crystal.UlderaCrystalBuddy;
 import com.finderfeed.solarcraft.local_library.helpers.CompoundNBTHelper;
-import com.finderfeed.solarcraft.registries.damage_sources.SolarcraftDamageSources;
+import com.finderfeed.solarcraft.registries.damage_sources.SCDamageSources;
 import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -125,9 +124,9 @@ public class HomingStarProjectile extends NormalProjectile {
             Entity shootEntity = shooter != null ? serverLevel.getEntity(shooter) : null;
             if (shootEntity != living && !(living instanceof UlderaCrystalBuddy)){
                 if (shootEntity instanceof LivingEntity  shooterEntity) {
-                    living.hurt(SolarcraftDamageSources.livingArmorPierceProjectile(shooterEntity),damage);
+                    living.hurt(SCDamageSources.livingArmorPierceProjectile(shooterEntity),damage);
                 }else{
-                    living.hurt(SolarcraftDamageSources.SHADOW,damage);
+                    living.hurt(SCDamageSources.SHADOW,damage);
                 }
                 this.explode();
             }

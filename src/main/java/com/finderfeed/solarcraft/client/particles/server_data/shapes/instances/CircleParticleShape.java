@@ -43,8 +43,9 @@ public class CircleParticleShape implements ParticleSpawnShape {
     public void placeParticles(Level level, ParticleOptions options, double posX, double posY, double posZ, double xd, double yd, double zd) {
         for (int i = 0; i < count; i++){
             float rotation = (float)(level.random.nextFloat() * Math.PI * 2);
-            Vec3 c = new Vec3(radius,0,0).yRot(rotation);
+            Vec3 c = new Vec3(radius*level.random.nextFloat(),0,0).yRot(rotation);
             c = transformCoordinates(c);
+
             level.addParticle(options,posX + c.x,posY + c.y,posZ + c.z,xd,yd,zd);
         }
     }

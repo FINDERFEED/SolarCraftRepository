@@ -3,7 +3,7 @@ package com.finderfeed.solarcraft.content.items;
 import com.finderfeed.solarcraft.content.items.isters.ShieldOfSolarGodISTER;
 import com.finderfeed.solarcraft.content.items.primitive.RareSolarcraftShieldItem;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
-import com.finderfeed.solarcraft.registries.damage_sources.SolarcraftDamageSources;
+import com.finderfeed.solarcraft.registries.damage_sources.SCDamageSources;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
@@ -30,7 +30,6 @@ import java.util.function.Supplier;
 
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 
 public class ShieldOfSolarGod extends RareSolarcraftShieldItem {
@@ -73,7 +72,7 @@ public class ShieldOfSolarGod extends RareSolarcraftShieldItem {
                     ent.push(velocity.x*4,velocity.y*4,velocity.z*4);
                 }
 
-                ent.hurt(SolarcraftDamageSources.livingArmorPierce(player), damage);
+                ent.hurt(SCDamageSources.livingArmorPierce(player), damage);
                 ent.setSecondsOnFire(5);
                 ((ServerLevel)world).sendParticles(ParticleTypes.FLAME,ent.getX(),ent.getY()+0.5f,ent.getZ(),20,0,0.02,0,0.1);
 
