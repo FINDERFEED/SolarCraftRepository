@@ -85,10 +85,16 @@ public class UElectricShockProjectile extends OwnedProjectile {
     }
 
     private void onEntityHit(LivingEntity entity){
+        if (entity instanceof Player player){
+            if (player.isCreative() || player.isSpectator()){
+                return;
+            }
+        }
+
         LivingEntity owner = null;
         if (entity != (owner = this.getLivingEntityOwner()) && !(entity instanceof UlderaCrystalBuddy)){
             if (owner != null){
-                entity.hurt(SCDamageSources.livingArmorPierceProjectile(owner),this.damage);
+                entity.hurt(SCDamageSources.livingAllResistanceIgnore(owner),this.damage);
             } else {
                 entity.hurt(level.damageSources().magic(),this.damage);
             }

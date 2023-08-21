@@ -28,7 +28,10 @@ public class UlderaLightningEntity extends Entity {
 
     public static final EntityDataAccessor<Float> HEIGHT = SynchedEntityData.defineId(UlderaLightningEntity.class, EntityDataSerializers.FLOAT);
     public static final EntityDataAccessor<Integer> LIGHTNING_DELAY = SynchedEntityData.defineId(UlderaLightningEntity.class, EntityDataSerializers.INT);
-    public static final AABB DAMAGE_BOX = new AABB(-2.5,-2.5,-2.5,2.5,0,2.5);
+
+    private static final float DAMAGE_BOX_RAD = 3.5f;
+
+    public static final AABB DAMAGE_BOX = new AABB(-DAMAGE_BOX_RAD,-DAMAGE_BOX_RAD,-DAMAGE_BOX_RAD,DAMAGE_BOX_RAD,0,DAMAGE_BOX_RAD);
     public float damage;
     private UUID owner;
 

@@ -1,6 +1,8 @@
 package com.finderfeed.solarcraft.content.commands;
 
 import com.finderfeed.solarcraft.SolarCraft;
+import com.finderfeed.solarcraft.content.abilities.AbilityHelper;
+import com.finderfeed.solarcraft.content.abilities.ability_classes.AbstractAbility;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.progression_tree.ProgressionTree;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.helpers.multiblock.Multiblocks;
@@ -12,6 +14,7 @@ import com.finderfeed.solarcraft.content.items.solar_lexicon.SolarLexicon;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.Progression;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
 
+import com.finderfeed.solarcraft.registries.abilities.AbilitiesRegistry;
 import com.finderfeed.solarcraft.registries.animations.AnimationReloadableResourceListener;
 import com.finderfeed.solarcraft.registries.items.SCItems;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
@@ -72,8 +75,40 @@ public class SolarCraftCommands {
                                                 .executes(stack->testEntityAnimation(stack.getSource(),
                                                         stack.getArgument("animation",String.class),
                                                         stack.getArgument("ticker",String.class))))))
+                        .then(Commands.literal("abilities")
+                                .then(Commands.literal("unlock")
+                                        .then(Commands.argument("ability_id",new SCAbilityArgument())
+                                                .executes(css->unlockAbility(css.getSource(),css.getArgument("ability_id",String.class)))))
+                                .then(Commands.literal("revoke")
+                                        .then(Commands.argument("ability_id",new SCAbilityArgument())
+                                                .executes(css->revokeAbility(css.getSource(),css.getArgument("ability_id",String.class))))))
 
         );
+    }
+
+    public static int revokeAbility(CommandSourceStack stack,String abilityId) throws CommandSyntaxException {
+        AbstractAbility ability = AbilitiesRegistry.getAbilityByID(abilityId);
+        if (ability != null){
+            AbilityHelper.setAbilityUsable(stack.getPlayerOrException(), ability,false);
+            stack.sendSuccess(()->Component.literal("Successfully revoked ability."),true);
+        }else {
+            stack.sendFailure(Component.literal("No ability exists with id: " + abilityId));
+        }
+
+        return 1;
+    }
+
+    public static int unlockAbility(CommandSourceStack stack,String abilityId) throws CommandSyntaxException {
+        AbstractAbility ability = AbilitiesRegistry.getAbilityByID(abilityId);
+        if (ability != null){
+            AbilityHelper.setAbilityUsable(stack.getPlayerOrException(), ability,true);
+            stack.sendSuccess(()->Component.literal("Successfully unlocked ability."),true);
+
+        }else {
+            stack.sendFailure(Component.literal("No ability exists with id: " + abilityId));
+        }
+
+        return 1;
     }
 
     public static int testEntityAnimation(CommandSourceStack src,String animationName,String tickerName) throws CommandSyntaxException {

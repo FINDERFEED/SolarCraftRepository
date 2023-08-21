@@ -92,7 +92,7 @@ public class EffectCrystal extends LivingEntity implements AnimatedObject,Uldera
             return !(entity instanceof UlderaCrystalBuddy) && this.isEntityReachable(entity);
         })){
             entity.addEffect(new MobEffectInstance(EFFECTS.get(level.random.nextInt(EFFECTS.size())),
-                    300,0));
+                    300,1));
             Vec3 epos = entity.position().add(0,entity.getBbHeight()/2f,0);
             PacketHelper.sendToPlayersTrackingEntity(this,
                     new SendShapeParticlesPacket(

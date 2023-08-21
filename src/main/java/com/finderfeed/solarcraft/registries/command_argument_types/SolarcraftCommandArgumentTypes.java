@@ -1,6 +1,7 @@
 package com.finderfeed.solarcraft.registries.command_argument_types;
 
 import com.finderfeed.solarcraft.SolarCraft;
+import com.finderfeed.solarcraft.content.commands.SCAbilityArgument;
 import com.finderfeed.solarcraft.content.commands.SolarCraftCommands;
 import com.finderfeed.solarcraft.content.commands.SolarcraftStructureArgument;
 import com.mojang.brigadier.arguments.ArgumentType;
@@ -18,5 +19,8 @@ public class SolarcraftCommandArgumentTypes {
 
     public static final RegistryObject<ArgumentTypeInfo<?,?>> STRUCTURE_ARGUMENT = ARGUMENT_TYPES.register("structure_type",
             ()-> ArgumentTypeInfos.registerByClass(SolarcraftStructureArgument.class, SingletonArgumentInfo.contextFree(SolarcraftStructureArgument::new)));
+
+    public static final RegistryObject<ArgumentTypeInfo<?,?>> ABILITY_ARGUMENT = ARGUMENT_TYPES.register("ability_type",
+            ()-> ArgumentTypeInfos.registerByClass(SCAbilityArgument.class, SingletonArgumentInfo.contextFree(SCAbilityArgument::new)));
 
 }

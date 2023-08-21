@@ -84,6 +84,13 @@ public class BossAttackChain {
         return ticker;
     }
 
+    /**
+     * Its either attack time or time between attacks.
+     */
+    public void setCurrentWaitTime(int currentWaitTime) {
+        this.currentWaitTime = currentWaitTime;
+    }
+
     private void populateQueue(){
         Random rnd = new Random();
         List<BossAttack> copy = new ArrayList<>(attacks);

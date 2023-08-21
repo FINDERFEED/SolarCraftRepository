@@ -2,9 +2,8 @@ package com.finderfeed.solarcraft.content.entities;
 
 import com.finderfeed.solarcraft.client.particles.ball_particle.BallParticleOptions;
 import com.finderfeed.solarcraft.client.particles.server_data.shapes.SendShapeParticlesPacket;
-import com.finderfeed.solarcraft.client.particles.server_data.shapes.instances.CircleParticleShape;
+import com.finderfeed.solarcraft.client.particles.server_data.shapes.instances.GroundLingeringCircleParticleShape;
 import com.finderfeed.solarcraft.content.entities.projectiles.UElectricShockProjectile;
-import com.finderfeed.solarcraft.content.entities.uldera_crystal.UlderaCrystalBoss;
 import com.finderfeed.solarcraft.packet_handler.PacketHelper;
 import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -12,11 +11,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
-import java.util.UUID;
-
 public class ElectricRainEntity extends AttackEffectEntity {
-
-    private static final Vec3 UP = new Vec3(0,1,0);
     private double radius;
 
     private int frequency;
@@ -54,7 +49,7 @@ public class ElectricRainEntity extends AttackEffectEntity {
 
     private void sendParticles(){
         PacketHelper.sendToPlayersTrackingEntity(this,new SendShapeParticlesPacket(
-                new CircleParticleShape(UP,radius,(int)(radius * 5)),
+                new GroundLingeringCircleParticleShape(radius,(int)(radius * 7)),
                 BallParticleOptions.Builder.begin()
                         .setLifetime(60)
                         .setSize(0.15f)

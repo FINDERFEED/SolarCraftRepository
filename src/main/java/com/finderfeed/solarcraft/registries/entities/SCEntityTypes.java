@@ -179,7 +179,7 @@ public class SCEntityTypes {
 
         public static final RegistryObject<EntityType<UElectricShockProjectile>> ELECTRIC_SHOCK_PROJECTILE = ENTITY_TYPE_REGISTER.register("electric_shock_projectile", () ->
                 EntityType.Builder.<UElectricShockProjectile>of(UElectricShockProjectile::new, MobCategory.MISC)
-                        .sized(0.8f, 0.8f).build("electric_shock_projectile"));
+                        .sized(1.5f, 1.5f).build("electric_shock_projectile"));
 
 
         private static void init(){}
