@@ -6,6 +6,8 @@
     "solarcraft:solar_ore",
     "solarcraft:uldera_rune_block",
     "solarcraft:corrupted_stone",
-    "solarcraft:clearing_ritual_crystal"
+    "solarcraft:clearing_ritual_crystal",
+    "solarcraft:corrupted_shard_ore",
+    "solarcraft:deepslate_corrupted_shard_ore"
   ]
 }

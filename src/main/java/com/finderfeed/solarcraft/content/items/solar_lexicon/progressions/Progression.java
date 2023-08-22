@@ -1,6 +1,6 @@
 package com.finderfeed.solarcraft.content.items.solar_lexicon.progressions;
 
-import com.finderfeed.solarcraft.registries.blocks.SolarcraftBlocks;
+import com.finderfeed.solarcraft.registries.blocks.SCBlocks;
 import com.finderfeed.solarcraft.registries.items.SCItems;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Blocks;
@@ -12,7 +12,7 @@ public enum Progression {
     FIND_INFUSER_DUNGEON("find_infuser_dungeon",1, SCItems.SOLAR_STONE_COLLUMN.get()),
     FIND_KEY_SOURCE("find_key_source",1, SCItems.SOLAR_STONE_COLLUMN_HORIZONTAL.get()),
     GIANT_VAULT("giant_vault",1, SCItems.CHISELED_MAGISTONE.get()),
-    RUNE_ENERGY_PYLON("rune_energy_deposit",1, SCItems.RUNE_ENERGY_PYLON.get()),
+    RUNE_ENERGY_PYLON("rune_energy_deposit",1, SCItems.RUNE_ENERGY_PYLON_ITEM_PLACEHOLDER.get()),
     TRADE_FOR_BLUE_GEM("blue_gem_trade",1, SCItems.BLUE_GEM.get()),
     INFUSING_CRAFTING_TABLE("infusing_crafting_table",1, SCItems.INFUSING_TABLE.get()),
 
@@ -22,12 +22,12 @@ public enum Progression {
     ACQUIRE_COLD_STAR("cold_star_piece",2, SCItems.COLD_STAR_PIECE.get()),
     RUNE_ENERGY_CLAIM("rune_energy_claim",2, SCItems.SOLAR_WAND.get()),
     SOLAR_RUNE("solar_rune",2, SCItems.SOLAR_RUNE_BASE.get()),
-    ALL_ENERGY_TYPES("all_energy_types",3, SCItems.RUNE_ENERGY_PYLON.get()),
+    ALL_ENERGY_TYPES("all_energy_types",3, SCItems.RUNE_ENERGY_PYLON_ITEM_PLACEHOLDER.get()),
 
 
     KILL_DRAGON("kill_dragon",3, Blocks.DRAGON_HEAD.asItem()),
     IMBUED_COLD_STAR("cold_star_piece_activated",3, SCItems.COLD_STAR_PIECE_ACTIVATED.get()),
-    PYLON_INSCRIPTION("pylon_inscription",3, SolarcraftBlocks.INSCRIPTION_STONE.get().asItem()),
+    PYLON_INSCRIPTION("pylon_inscription",3, SCBlocks.INSCRIPTION_STONE.get().asItem()),
 
     CRAFT_SOLAR_FORGE("solar_forge_craft",4, SCItems.SOLAR_FORGE_ITEM.get()),
     TRANSMUTE_GEM("transmute_gem",4, SCItems.BLUE_GEM_ENCHANCED.get()),

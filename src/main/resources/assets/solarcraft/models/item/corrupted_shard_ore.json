@@ -1,0 +1,11 @@
+{
+  "parent": "block/stone",
+  "overrides": [
+    {
+      "predicate": {
+        "solarcraft:unlocked": 1
+      },
+      "model": "solarcraft:item/unlocked_states/corrupted_shard_ore"
+    }
+  ]
+}

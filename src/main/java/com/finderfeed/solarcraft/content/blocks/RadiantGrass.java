@@ -1,7 +1,7 @@
 package com.finderfeed.solarcraft.content.blocks;
 
 import com.finderfeed.solarcraft.local_library.blocks.NormalGrassBlock;
-import com.finderfeed.solarcraft.registries.blocks.SolarcraftBlocks;
+import com.finderfeed.solarcraft.registries.blocks.SCBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
@@ -26,7 +26,7 @@ public class RadiantGrass extends NormalGrassBlock {
     @Override
     public void performBonemeal(ServerLevel level, RandomSource p_221271_, BlockPos p_221272_, BlockState p_221273_) {
         BlockPos blockpos = p_221272_.above();
-        BlockState blockstate = SolarcraftBlocks.RADIANT_GRASS.get().defaultBlockState();
+        BlockState blockstate = SCBlocks.RADIANT_GRASS.get().defaultBlockState();
 
         label46:
         for(int i = 0; i < 128; ++i) {

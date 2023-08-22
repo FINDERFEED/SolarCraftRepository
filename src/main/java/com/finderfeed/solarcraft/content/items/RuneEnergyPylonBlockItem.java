@@ -71,19 +71,4 @@ public class RuneEnergyPylonBlockItem extends BlockItem {
         return true;
     }
 
-    //    @Override
-//    public void initializeClient(Consumer<IClientItemExtensions> consumer) {
-//        super.initializeClient(consumer);
-//        consumer.accept(com.finderfeed.solarcraft.content.items.Properties.INSTANCE);
-//    }
-}
-class Properties implements IClientItemExtensions{
-
-    public static Properties INSTANCE = new Properties();
-
-    @Override
-    public BlockEntityWithoutLevelRenderer getCustomRenderer() {
-
-        return new EnergyPylonISTER(Minecraft.getInstance().getBlockEntityRenderDispatcher(),Minecraft.getInstance().getEntityModels());
-    }
 }

@@ -3,7 +3,7 @@ package com.finderfeed.solarcraft.content.blocks.blockentities;
 import com.finderfeed.solarcraft.events.other_events.event_handler.SCEventHandler;
 
 import com.finderfeed.solarcraft.helpers.multiblock.Multiblocks;
-import com.finderfeed.solarcraft.registries.blocks.SolarcraftBlocks;
+import com.finderfeed.solarcraft.registries.blocks.SCBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -71,13 +71,13 @@ public class RadiantPortalCreatorTile extends BlockEntity {
         int yHeight = destination.getHeight(Heightmap.Types.WORLD_SURFACE,1,1);
         boolean placed = false;
         for (int i = yHeight-10; i <= 255;i++){
-            if (destination.getBlockState(BlockPos.ZERO.offset(1,0,1).above(i)).getBlock() == SolarcraftBlocks.WORMHOLE.get()){
+            if (destination.getBlockState(BlockPos.ZERO.offset(1,0,1).above(i)).getBlock() == SCBlocks.WORMHOLE.get()){
                 placed = true;
                 break;
             }
         }
         if (!placed){
-            destination.setBlockAndUpdate(BlockPos.ZERO.offset(1,0,1).above(yHeight + 50), SolarcraftBlocks.WORMHOLE.get().defaultBlockState());
+            destination.setBlockAndUpdate(BlockPos.ZERO.offset(1,0,1).above(yHeight + 50), SCBlocks.WORMHOLE.get().defaultBlockState());
         }
     }
 

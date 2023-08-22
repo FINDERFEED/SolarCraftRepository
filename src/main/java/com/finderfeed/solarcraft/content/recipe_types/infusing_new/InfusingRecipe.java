@@ -2,7 +2,7 @@ package com.finderfeed.solarcraft.content.recipe_types.infusing_new;
 
 import com.finderfeed.solarcraft.content.blocks.infusing_table_things.InfuserTileEntity;
 import com.finderfeed.solarcraft.content.items.runic_energy.RunicEnergyCost;
-import com.finderfeed.solarcraft.registries.blocks.SolarcraftBlocks;
+import com.finderfeed.solarcraft.registries.blocks.SCBlocks;
 import com.finderfeed.solarcraft.registries.recipe_types.SolarcraftRecipeTypes;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceLocation;
@@ -127,14 +127,14 @@ public class InfusingRecipe implements Recipe<Container> {
     }
 
     private Map<Character,Block> DESERIALIZATOR = Map.of(
-            'T', SolarcraftBlocks.TERA_RUNE_BLOCK.get(),
-            'Z', SolarcraftBlocks.ZETA_RUNE_BLOCK.get(),
-            'K', SolarcraftBlocks.KELDA_RUNE_BLOCK.get(),
-            'R', SolarcraftBlocks.URBA_RUNE_BLOCK.get(),
-            'F', SolarcraftBlocks.FIRA_RUNE_BLOCK.get(),
-            'A', SolarcraftBlocks.ARDO_RUNE_BLOCK.get(),
-            'U', SolarcraftBlocks.ULTIMA_RUNE_BLOCK.get(),
-            'G', SolarcraftBlocks.GIRO_RUNE_BLOCK.get()
+            'T', SCBlocks.TERA_RUNE_BLOCK.get(),
+            'Z', SCBlocks.ZETA_RUNE_BLOCK.get(),
+            'K', SCBlocks.KELDA_RUNE_BLOCK.get(),
+            'R', SCBlocks.URBA_RUNE_BLOCK.get(),
+            'F', SCBlocks.FIRA_RUNE_BLOCK.get(),
+            'A', SCBlocks.ARDO_RUNE_BLOCK.get(),
+            'U', SCBlocks.ULTIMA_RUNE_BLOCK.get(),
+            'G', SCBlocks.GIRO_RUNE_BLOCK.get()
     );
 
     public static final Character[] DESERIALIZATOR_RE_TO_CHARACTER = {'Z','A','R','K','F','T','G','U'};

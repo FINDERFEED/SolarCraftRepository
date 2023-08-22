@@ -1,9 +1,13 @@
 {
-  "feature": "solarcraft:blue_gem_ore",
+  "feature": "solarcraft:corrupted_shard_ore",
   "placement": [
     {
+      "chance": 5,
+      "type": "minecraft:rarity_filter"
+    },
+    {
       "type": "minecraft:count",
-      "count": 10
+      "count": 1
     },
     {
       "type": "minecraft:in_square"
@@ -13,10 +17,10 @@
       "height": {
         "type": "minecraft:uniform",
         "max_inclusive": {
-          "absolute": 60
+          "absolute": 30
         },
         "min_inclusive": {
-          "absolute": 0
+          "absolute": -30
         }
       }
     }

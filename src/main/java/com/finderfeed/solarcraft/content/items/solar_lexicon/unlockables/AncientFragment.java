@@ -45,7 +45,7 @@ public class AncientFragment {
 
     public static final AncientFragment DUSTS = new AncientFragment("dusts",null,SubCategoryBase.WORLD,CategoryBase.EXPLORATION, SCItems.ENERGY_DUST.get(),1);
 
-    public static final AncientFragment RUNIC_ENERGY_PYLON = new AncientFragment("runic_energy_pylon",null,SubCategoryBase.WORLD,CategoryBase.EXPLORATION, RUNE_ENERGY_PYLON.get(),1);
+    public static final AncientFragment RUNIC_ENERGY_PYLON = new AncientFragment("runic_energy_pylon",null,SubCategoryBase.WORLD,CategoryBase.EXPLORATION, RUNE_ENERGY_PYLON_ITEM_PLACEHOLDER.get(),1);
 
     public static final AncientFragment INFUSING_CRAFTING_TABLE = new AncientFragment("infusing_crafting_table",null,SubCategoryBase.BEGINNER_BLOCKS,CategoryBase.BEGINNER,ls(ItemWithRecipe.of(INFUSING_TABLE.get().getDefaultInstance(),"infusing_crafting_table")), RecipeType.CRAFTING,1);
 
@@ -131,7 +131,7 @@ public class AncientFragment {
     public static final AncientFragment SOLAR_LENS = new AncientFragment("solar_lens",ProgressionStage.PRE_LENS.ALL_PROGRESSIONS,SubCategoryBase.SKILLED_ITEMS,CategoryBase.SKILLED,ls(ItemWithRecipe.of(SCItems.SOLAR_LENS.get().getDefaultInstance(),"infusing_new_solar_lens")), SolarcraftRecipeTypes.INFUSING.get(),3);
     public static final AncientFragment RUNIC_ENERGY_REPEATER = new AncientFragment("runic_energy_repeater",ProgressionStage.PRE_LENS.ALL_PROGRESSIONS,SubCategoryBase.RUNIC_ENERGY_TRANSMITTING,CategoryBase.RUNIC_ENERGY,ls(ItemWithRecipe.of(SCItems.REPEATER.get().getDefaultInstance(),"infusing_new_repeater")), SolarcraftRecipeTypes.INFUSING.get(),3).addReferences("runic_energy","solar_infuser","multirune_block","catalysts");
 
-    public static final AncientFragment RUNIC_ENERGY_LORE = new AncientFragment("runic_energy",ProgressionStage.AFTER_LENS.ALL_PROGRESSIONS,SubCategoryBase.RUNIC_ENERGY_TRANSMITTING,CategoryBase.RUNIC_ENERGY,"runic_energy_lore", SCItems.RUNE_ENERGY_PYLON.get().getDefaultInstance(),3).addReferences("runic_energy_repeater");
+    public static final AncientFragment RUNIC_ENERGY_LORE = new AncientFragment("runic_energy",ProgressionStage.AFTER_LENS.ALL_PROGRESSIONS,SubCategoryBase.RUNIC_ENERGY_TRANSMITTING,CategoryBase.RUNIC_ENERGY,"runic_energy_lore", RUNE_ENERGY_PYLON_ITEM_PLACEHOLDER.get().getDefaultInstance(),3).addReferences("runic_energy_repeater");
     public static final AncientFragment QUALADIUM_INGOT = new AncientFragment("qualadium_ingot",ProgressionStage.AFTER_LENS.ALL_PROGRESSIONS,SubCategoryBase.SKILLED_MATERIALS,CategoryBase.SKILLED,ls(ItemWithRecipe.of(SCItems.QUALADIUM_INGOT.get().getDefaultInstance(),"solar_smelting_qualadium_ingot")), SolarcraftRecipeTypes.SMELTING.get(),4).addReferences("solar_lens");
     public static final AncientFragment GEMINIUM_INGOT = new AncientFragment("geminium_ingot",ProgressionStage.AFTER_LENS.ALL_PROGRESSIONS,SubCategoryBase.SKILLED_MATERIALS,CategoryBase.SKILLED,ls(ItemWithRecipe.of(SCItems.GEMINIUM_INGOT.get().getDefaultInstance(),"smelting_geminium_ingot")), SolarcraftRecipeTypes.SMELTING.get(),4).addReferences("solar_lens");
     public static final AncientFragment ENDERIUM_INGOT = new AncientFragment("enderium_ingot",ProgressionStage.AFTER_LENS.ALL_PROGRESSIONS,SubCategoryBase.SKILLED_MATERIALS,CategoryBase.SKILLED,ls(ItemWithRecipe.of(SCItems.ENDERIUM_INGOT.get().getDefaultInstance(),"smelting_enderium_ingot")), SolarcraftRecipeTypes.SMELTING.get(),4).addReferences("solar_lens");

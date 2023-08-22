@@ -447,8 +447,8 @@ public class UlderaCrystalBoss extends NoHealthLimitMob implements AnimatedObjec
                 Vec3 v = this.getCenterPos();
                 PacketHelper.sendToPlayersTrackingEntity(this, new SendShapeParticlesPacket(
                         new SphereParticleShape(PULL_DISTANCE, 0.6f, 3, true, false, 0.25f),
-                        new BallParticleOptions.Builder().setRGB(90, 0, 186).setPhysics(false)
-                                .setShouldShrink(true).setSize(0.25f).build(),
+                        new BallParticleOptions.Builder().setRGB(180,60,255).setPhysics(false)
+                                .setShouldShrink(true).setSize(0.4f).build(),
                         v.x, v.y, v.z, 0, 0, 0
                 ));
             }

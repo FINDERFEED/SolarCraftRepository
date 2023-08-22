@@ -39,7 +39,7 @@ import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.local_library.client.particles.ScreenParticlesRenderHandler;
 import com.finderfeed.solarcraft.registries.SCBedrockModels;
 import com.finderfeed.solarcraft.registries.ScreenSuppliers;
-import com.finderfeed.solarcraft.registries.blocks.SolarcraftBlocks;
+import com.finderfeed.solarcraft.registries.blocks.SCBlocks;
 import com.finderfeed.solarcraft.registries.containers.SolarcraftContainers;
 import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
 import com.finderfeed.solarcraft.registries.items.SCItems;
@@ -171,7 +171,7 @@ public class SCClientModEventHandler {
 
                 Player playerEntity = Minecraft.getInstance().player;
                 if (playerEntity != null) {
-                    return Helpers.hasPlayerCompletedProgression(SolarcraftBlocks.BLUE_GEM_ORE.get().getRequiredProgression(), Minecraft.getInstance().player) ? 1f : 0;
+                    return Helpers.hasPlayerCompletedProgression(SCBlocks.BLUE_GEM_ORE.get().getRequiredProgression(), Minecraft.getInstance().player) ? 1f : 0;
                 }else{
                     return 0;
                 }
@@ -182,7 +182,7 @@ public class SCClientModEventHandler {
 
                 Player playerEntity = Minecraft.getInstance().player;
                 if (playerEntity != null) {
-                    return Helpers.hasPlayerCompletedProgression(SolarcraftBlocks.SOLAR_STONE.get().getRequiredProgression(), Minecraft.getInstance().player) ? 1f : 0;
+                    return Helpers.hasPlayerCompletedProgression(SCBlocks.SOLAR_STONE.get().getRequiredProgression(), Minecraft.getInstance().player) ? 1f : 0;
                 }else{
                     return 0;
                 }
@@ -191,7 +191,7 @@ public class SCClientModEventHandler {
 
                 Player playerEntity = Minecraft.getInstance().player;
                 if (playerEntity != null) {
-                    return Helpers.hasPlayerCompletedProgression(SolarcraftBlocks.ENDER_CRACKS.get().getRequiredProgression(), Minecraft.getInstance().player) ? 1f : 0;
+                    return Helpers.hasPlayerCompletedProgression(SCBlocks.ENDER_CRACKS.get().getRequiredProgression(), Minecraft.getInstance().player) ? 1f : 0;
                 }else{
                     return 0;
                 }
@@ -218,11 +218,13 @@ public class SCClientModEventHandler {
         });
         registerDefaultUnknownBlockItemPredicate(SCItems.LENSING_CRYSTAL_ORE.get());
         registerDefaultUnknownBlockItemPredicate(SCItems.MAGISTONE.get());
+        registerDefaultUnknownBlockItemPredicate(SCItems.CORRUPTED_SHARD_ORE.get());
+        registerDefaultUnknownBlockItemPredicate(SCItems.CORRUPTED_SHARD_ORE_DEEPSLATE.get());
 
     }
 
     private static void registerDefaultUnknownBlockItemPredicate(ProgressionBlockItem item){
-        ItemProperties.register(item,new ResourceLocation("solarcraft","unlocked"),(stack,world,living,a)->{
+        ItemProperties.register(item,new ResourceLocation(SolarCraft.MOD_ID,"unlocked"),(stack,world,living,a)->{
 
             Player playerEntity = Minecraft.getInstance().player;
             if (playerEntity != null) {

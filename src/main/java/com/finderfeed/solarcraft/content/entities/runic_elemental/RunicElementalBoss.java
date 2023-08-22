@@ -13,7 +13,7 @@ import com.finderfeed.solarcraft.misc_things.CrystalBossBuddy;
 import com.finderfeed.solarcraft.packet_handler.packets.DisablePlayerFlightPacket;
 import com.finderfeed.solarcraft.packet_handler.packets.TeleportEntityPacket;
 import com.finderfeed.solarcraft.registries.attributes.AttributesRegistry;
-import com.finderfeed.solarcraft.registries.blocks.SolarcraftBlocks;
+import com.finderfeed.solarcraft.registries.blocks.SCBlocks;
 import com.finderfeed.solarcraft.registries.damage_sources.SCDamageSources;
 import com.finderfeed.solarcraft.registries.data_serializers.FDEntityDataSerializers;
 import com.finderfeed.solarcraft.registries.effects.SCEffects;
@@ -217,11 +217,11 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
 
         if (level.getGameTime() % 20 == 0){
             Block b = getBlockBelow();
-            if (b == SolarcraftBlocks.REGENERATION_AMPLIFICATION_BLOCK.get()){
+            if (b == SCBlocks.REGENERATION_AMPLIFICATION_BLOCK.get()){
                 this.heal(3);
-            }else if(b == SolarcraftBlocks.ARMOR_AMPLIFICATION_BLOCK.get()){
+            }else if(b == SCBlocks.ARMOR_AMPLIFICATION_BLOCK.get()){
                 this.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE,100,0));
-            }else if (b == SolarcraftBlocks.EVASION_AMPLIFICATION_BLOCK.get()){
+            }else if (b == SCBlocks.EVASION_AMPLIFICATION_BLOCK.get()){
                 this.addEffect(new MobEffectInstance(SCEffects.EVASION.get(),100,1));
             }
         }
@@ -448,7 +448,7 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
     }
 
     public float getDamageBonus(){
-        return level.getBlockState(getOnPos()).is(SolarcraftBlocks.DAMAGE_AMPLIFICATION_BLOCK.get()) ? 10 : 0;
+        return level.getBlockState(getOnPos()).is(SCBlocks.DAMAGE_AMPLIFICATION_BLOCK.get()) ? 10 : 0;
     }
 
     public float getDamageModifier(){

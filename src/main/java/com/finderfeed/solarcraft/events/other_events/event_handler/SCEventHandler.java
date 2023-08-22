@@ -31,11 +31,11 @@ import com.finderfeed.solarcraft.misc_things.RunicEnergy;
 import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
 import com.finderfeed.solarcraft.packet_handler.packets.*;
 import com.finderfeed.solarcraft.registries.ConfigRegistry;
+import com.finderfeed.solarcraft.registries.blocks.SCBlocks;
 import com.finderfeed.solarcraft.registries.damage_sources.SCDamageSources;
 import com.finderfeed.solarcraft.registries.Tags;
 import com.finderfeed.solarcraft.registries.abilities.AbilitiesRegistry;
 import com.finderfeed.solarcraft.registries.attributes.AttributesRegistry;
-import com.finderfeed.solarcraft.registries.blocks.SolarcraftBlocks;
 import com.finderfeed.solarcraft.registries.effects.SCEffects;
 import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
 import com.finderfeed.solarcraft.registries.items.SCItems;
@@ -109,8 +109,8 @@ public class SCEventHandler {
 
 
         }
-        if (pla.level.getBlockState(pos).is(SolarcraftBlocks.CLEARING_RITUAL_CRYSTAL.get())){
-            if (pla.level.getBlockState(pos.below(2)).is(SolarcraftBlocks.CRYSTAL_ENERGY_VINES.get())
+        if (pla.level.getBlockState(pos).is(SCBlocks.CLEARING_RITUAL_CRYSTAL.get())){
+            if (pla.level.getBlockState(pos.below(2)).is(SCBlocks.CRYSTAL_ENERGY_VINES.get())
                     || (pla.level.getBlockEntity(pos) instanceof ClearingRitualCrystalTile tile && tile.isCorrupted())) {
 
                 event.setNewSpeed(-1);
@@ -418,7 +418,7 @@ public class SCEventHandler {
     @SubscribeEvent
     public static void catalystsProgression(BlockEvent.EntityPlaceEvent event){
         if (event.getEntity() instanceof Player pl){
-            if (event.getPlacedBlock().is(Tags.CATALYST) && event.getPlacedBlock().getBlock() != SolarcraftBlocks.MAGISTONE_COLUMN.get()) {
+            if (event.getPlacedBlock().is(Tags.CATALYST) && event.getPlacedBlock().getBlock() != SCBlocks.MAGISTONE_COLUMN.get()) {
                 if (!Helpers.hasPlayerCompletedProgression(Progression.CATALYSTS, pl)) {
                     for (int x = -10; x < 10;x++){
                         for (int z = -10; z < 10;z++){

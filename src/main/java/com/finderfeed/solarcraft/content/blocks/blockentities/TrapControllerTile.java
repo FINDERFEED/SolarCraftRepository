@@ -3,7 +3,7 @@ package com.finderfeed.solarcraft.content.blocks.blockentities;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.content.blocks.BlueGemDoorBlock;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.Progression;
-import com.finderfeed.solarcraft.registries.blocks.SolarcraftBlocks;
+import com.finderfeed.solarcraft.registries.blocks.SCBlocks;
 import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
 import net.minecraft.world.level.Level;
 
@@ -95,12 +95,12 @@ public class TrapControllerTile extends BlockEntity  {
 
                 for (BlockPos pos : tile.ENTRANCE_BLOCK_POSITIONS){
 
-                    if ((tile.level.getBlockState(pos).getBlock() != SolarcraftBlocks.INVINCIBLE_STONE.get()) || (tile.level.getBlockState(pos).getBlock() != SolarcraftBlocks.BLUE_GEM_DOOR_BLOCK.get())){
+                    if ((tile.level.getBlockState(pos).getBlock() != SCBlocks.INVINCIBLE_STONE.get()) || (tile.level.getBlockState(pos).getBlock() != SCBlocks.BLUE_GEM_DOOR_BLOCK.get())){
                         if ((!Helpers.equalsBlockPos(pos,tile.worldPosition.offset(8,-4,-1)))
                         && (!Helpers.equalsBlockPos(pos,tile.worldPosition.offset(8,-4,1)))) {
-                            tile.level.setBlock(pos, SolarcraftBlocks.INVINCIBLE_STONE.get().defaultBlockState(), 3);
+                            tile.level.setBlock(pos, SCBlocks.INVINCIBLE_STONE.get().defaultBlockState(), 3);
                         }else {
-                            tile.level.setBlock(pos, SolarcraftBlocks.BLUE_GEM_DOOR_BLOCK.get().defaultBlockState()
+                            tile.level.setBlock(pos, SCBlocks.BLUE_GEM_DOOR_BLOCK.get().defaultBlockState()
                                     .setValue(BlockStateProperties.HORIZONTAL_FACING, Direction.EAST)
                                     .setValue(BlueGemDoorBlock.UNLOCKED, false), 3);
                         }

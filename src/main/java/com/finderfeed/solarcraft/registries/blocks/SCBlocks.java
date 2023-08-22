@@ -2,6 +2,9 @@ package com.finderfeed.solarcraft.registries.blocks;
 
 import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.ray_puzzle.BeamGeneratorBlock;
 import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.ray_puzzle.blocks.BeamReflectorBlock;
+import com.finderfeed.solarcraft.content.blocks.progression_ores.BlueGemOre;
+import com.finderfeed.solarcraft.content.blocks.progression_ores.CorruptedShardOre;
+import com.finderfeed.solarcraft.content.blocks.progression_ores.SolarStoneBlock;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.local_library.blocks.FlammableBlock;
 import com.finderfeed.solarcraft.local_library.blocks.FlammableLeavesBlock;
@@ -42,7 +45,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraftforge.registries.RegistryObject;
 
-public class SolarcraftBlocks {
+public class SCBlocks {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS,"solarcraft");
     public  static  final RegistryObject<InfusingStand> INFUSING_POOL = BLOCKS.register("solar_forge_infusion_pool",()-> new InfusingStand(
             BlockBehaviour.Properties.copy(Blocks.STONE).noOcclusion()
@@ -82,6 +85,10 @@ public class SolarcraftBlocks {
     public  static  final RegistryObject<Block> TURRET_BLOCK = BLOCKS.register("turret_block",()-> new TurretBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).noOcclusion()));
     public  static  final RegistryObject<Block> ZAP_TURRET_BLOCK = BLOCKS.register("zap_turret_block",()-> new ZapTurretBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).noOcclusion()));
     public  static  final RegistryObject<BlueGemOre> BLUE_GEM_ORE = BLOCKS.register("blue_gem_ore",()-> new BlueGemOre(BlockBehaviour.Properties.copy(Blocks.STONE)));
+
+    public  static  final RegistryObject<Block> CORRUPTED_SHARD_ORE = BLOCKS.register("corrupted_shard_ore",()-> new CorruptedShardOre(BlockBehaviour.Properties.copy(Blocks.STONE),()->Progression.RUNIC_ENERGY_REPEATER,Blocks.STONE));
+    public  static  final RegistryObject<Block> CORRUPTED_SHARD_ORE_DEEPSLATE = BLOCKS.register("deepslate_corrupted_shard_ore",()-> new CorruptedShardOre(BlockBehaviour.Properties.copy(Blocks.DEEPSLATE),()->Progression.RUNIC_ENERGY_REPEATER,Blocks.DEEPSLATE));
+
     public  static  final RegistryObject<RayTrapBlock> RAY_TRAP_BLOCK = BLOCKS.register("ray_trap_block",()-> new RayTrapBlock(BlockBehaviour.Properties.copy(Blocks.BEDROCK).noOcclusion()));
     public  static  final RegistryObject<TrapStructureController> TRAP_CONTROLLER = BLOCKS.register("trap_controller",()-> new TrapStructureController(BlockBehaviour.Properties.copy(Blocks.BEDROCK)));
     public  static  final RegistryObject<BlueGemDoorBlock> BLUE_GEM_DOOR_BLOCK = BLOCKS.register("blue_gem_door_block",()-> new BlueGemDoorBlock(BlockBehaviour.Properties.copy(Blocks.BEDROCK)));

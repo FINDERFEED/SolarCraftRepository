@@ -5,7 +5,7 @@ import com.finderfeed.solarcraft.content.blocks.blockentities.TemporaryLightTile
 import com.finderfeed.solarcraft.content.blocks.primitive.TemporaryLightBlock;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.helpers.Helpers;
-import com.finderfeed.solarcraft.registries.blocks.SolarcraftBlocks;
+import com.finderfeed.solarcraft.registries.blocks.SCBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -38,7 +38,7 @@ public class ThrownLightProjectile extends NormalProjectile{
         if (level.isClientSide){
             BlockPos pos = Helpers.vecToPos(this.position());
             BlockState state = level.getBlockState(pos);
-            if (state.isAir() || state.getBlock() == SolarcraftBlocks.TEMPORARY_LIGHT.get()){
+            if (state.isAir() || state.getBlock() == SCBlocks.TEMPORARY_LIGHT.get()){
                 level.setBlock(pos, TemporaryLightBlock.create(15),3);
                 if (level.getBlockEntity(pos) instanceof TemporaryLightTile tile){
                     tile.setLivingTime(5);
@@ -62,12 +62,12 @@ public class ThrownLightProjectile extends NormalProjectile{
         if (!level.isClientSide) {
             BlockPos pos = new BlockPos(Helpers.vecToPos(this.position()));
             BlockState state = level.getBlockState(pos);
-            if (state.isAir() || state.getBlock() == SolarcraftBlocks.TEMPORARY_LIGHT.get()){
-                level.setBlock(pos,SolarcraftBlocks.THROWN_LIGHT.get().defaultBlockState(),3);
+            if (state.isAir() || state.getBlock() == SCBlocks.TEMPORARY_LIGHT.get()){
+                level.setBlock(pos, SCBlocks.THROWN_LIGHT.get().defaultBlockState(),3);
             }
         }
         BlockState s = level.getBlockState(res.getBlockPos());
-        if (s.isAir() || s.is(SolarcraftBlocks.TEMPORARY_LIGHT.get())) return;
+        if (s.isAir() || s.is(SCBlocks.TEMPORARY_LIGHT.get())) return;
         this.remove(RemovalReason.KILLED);
     }
 

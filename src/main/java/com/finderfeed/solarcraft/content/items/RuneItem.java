@@ -7,7 +7,7 @@ import com.finderfeed.solarcraft.content.items.primitive.solacraft_item_classes.
 import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.Progression;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
-import com.finderfeed.solarcraft.registries.blocks.SolarcraftBlocks;
+import com.finderfeed.solarcraft.registries.blocks.SCBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sounds.SoundEvents;
@@ -71,7 +71,7 @@ public class RuneItem extends SolarcraftItem {
                             }else{
                                 Helpers.fireProgressionEvent(pl, Progression.PYLON_INSCRIPTION);
                                 world.playSound(null,pos.getX(),pos.getY(),pos.getZ(), SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.BLOCKS,1,1);
-                                world.setBlock(pos, SolarcraftBlocks.INSCRIPTION_STONE.get().defaultBlockState().setValue(InscriptionStone.PROP,type), 3);
+                                world.setBlock(pos, SCBlocks.INSCRIPTION_STONE.get().defaultBlockState().setValue(InscriptionStone.PROP,type), 3);
 //                                pl.setItemInHand(hand,ItemStack.EMPTY);
 
                                 ItemStack copy = stack.copy();

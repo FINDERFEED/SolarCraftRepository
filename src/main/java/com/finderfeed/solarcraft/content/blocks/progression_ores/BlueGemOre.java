@@ -1,29 +1,38 @@
-package com.finderfeed.solarcraft.content.blocks;
+package com.finderfeed.solarcraft.content.blocks.progression_ores;
 
 import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.Progression;
 import com.finderfeed.solarcraft.misc_things.IProgressionBlock;
-import com.finderfeed.solarcraft.registries.blocks.SolarcraftBlocks;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.Blocks;
+import com.finderfeed.solarcraft.registries.blocks.SCBlocks;
+
+
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+
+
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.Direction;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.Level;
+
 
 import javax.annotation.Nullable;
 
-public class SolarStoneBlock extends Block implements IProgressionBlock {
-    public SolarStoneBlock(Properties p_i48440_1_) {
-        super(p_i48440_1_);
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+
+public class BlueGemOre extends Block implements IProgressionBlock {
+    public BlueGemOre(Properties p_i48357_1_) {
+        super(p_i48357_1_);
     }
 
     @Override
     public Block getUnlockedBlock() {
-        return SolarcraftBlocks.SOLAR_STONE.get();
+
+        return SCBlocks.BLUE_GEM_ORE.get();
     }
 
     @Override
@@ -31,12 +40,11 @@ public class SolarStoneBlock extends Block implements IProgressionBlock {
         return Blocks.STONE;
     }
 
-
-
     @Override
     public Progression getRequiredProgression() {
-        return Progression.ENTER_NETHER;
+        return Progression.TRANSMUTE_GEM;
     }
+
     @Override
     public void playerDestroy(Level p_180657_1_, Player p_180657_2_, BlockPos p_180657_3_, BlockState p_180657_4_, @Nullable BlockEntity p_180657_5_, ItemStack p_180657_6_) {
 
@@ -47,4 +55,11 @@ public class SolarStoneBlock extends Block implements IProgressionBlock {
     public boolean canDropFromExplosion(BlockState state, BlockGetter world, BlockPos pos, Explosion explosion) {
         return false;
     }
+
+    @Override
+    public BlockState updateShape(BlockState p_196271_1_, Direction p_196271_2_, BlockState p_196271_3_, LevelAccessor p_196271_4_, BlockPos p_196271_5_, BlockPos p_196271_6_) {
+
+        return super.updateShape(p_196271_1_, p_196271_2_, p_196271_3_, p_196271_4_, p_196271_5_, p_196271_6_);
+    }
+
 }

@@ -10,7 +10,7 @@ import com.finderfeed.solarcraft.helpers.multiblock.MultiblockStructure;
 import com.finderfeed.solarcraft.local_library.client.screens.buttons.FDImageButton;
 import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.SolarLexicon;
-import com.finderfeed.solarcraft.registries.blocks.SolarcraftBlocks;
+import com.finderfeed.solarcraft.registries.blocks.SCBlocks;
 import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.ChatFormatting;
@@ -218,7 +218,7 @@ public class StructureScreen extends Screen {
 
     private void renderItemAndTooltip(GuiGraphics graphics,BlockState toRender, int place1, int place2, int mousex, int mousey, PoseStack matrices){
         ItemStack stack = toRender.getBlock().asItem().getDefaultInstance();
-        if (toRender.getBlock() != SolarcraftBlocks.SOLAR_STONE_BRICKS.get() && toRender.getBlock() != SolarcraftBlocks.MAGISTONE_BRICKS.get()) {
+        if (toRender.getBlock() != SCBlocks.SOLAR_STONE_BRICKS.get() && toRender.getBlock() != SCBlocks.MAGISTONE_BRICKS.get()) {
 //            minecraft.getItemRenderer().renderGuiItem(stack, place1, place2);
             RenderingTools.renderScaledGuiItemCentered(graphics,stack,place1,place2,structureScale,0);
         }else{

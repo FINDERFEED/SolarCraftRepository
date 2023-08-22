@@ -25,7 +25,7 @@ import com.finderfeed.solarcraft.misc_things.*;
 import com.finderfeed.solarcraft.content.recipe_types.infusing_new.InfusingRecipe;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.Progression;
 import com.finderfeed.solarcraft.registries.Tags;
-import com.finderfeed.solarcraft.registries.blocks.SolarcraftBlocks;
+import com.finderfeed.solarcraft.registries.blocks.SCBlocks;
 import com.finderfeed.solarcraft.content.world_generation.structures.NotStructures;
 import com.finderfeed.solarcraft.registries.items.SCItems;
 import com.finderfeed.solarcraft.registries.recipe_types.SolarcraftRecipeTypes;
@@ -339,7 +339,7 @@ public class InfuserTileEntity extends REItemHandlerBlockEntity implements Solar
             for (BlockPos pos : getCatalystsPositions()){
                 Block c = recipe.getDeserializedCatalysts()[iterator];
                 if (c != null && c.defaultBlockState().is(Tags.CATALYST)){
-                    level.setBlock(pos, SolarcraftBlocks.CATALYST_BASE.get().defaultBlockState(), 3);
+                    level.setBlock(pos, SCBlocks.CATALYST_BASE.get().defaultBlockState(), 3);
                 }
                 iterator++;
             }

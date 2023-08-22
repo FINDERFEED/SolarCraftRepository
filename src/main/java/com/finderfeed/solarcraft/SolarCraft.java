@@ -12,7 +12,7 @@ import com.finderfeed.solarcraft.config.SolarcraftConfig;
 
 import com.finderfeed.solarcraft.content.world_generation.structures.SolarcraftStructureTypes;
 import com.finderfeed.solarcraft.events.RenderEventsHandler;
-import com.finderfeed.solarcraft.content.blocks.SolarOreBlock;
+import com.finderfeed.solarcraft.content.blocks.progression_ores.SolarOreBlock;
 import com.finderfeed.solarcraft.content.blocks.infusing_table_things.*;
 import com.finderfeed.solarcraft.content.blocks.infusing_table_things.infusing_pool.InfusingStand;
 import com.finderfeed.solarcraft.content.items.item_tiers.SolarCraftToolTiers;
@@ -23,12 +23,12 @@ import com.finderfeed.solarcraft.registries.SolarcraftGamerules;
 import com.finderfeed.solarcraft.registries.Tags;
 import com.finderfeed.solarcraft.registries.abilities.AbilitiesRegistry;
 import com.finderfeed.solarcraft.registries.attributes.AttributesRegistry;
+import com.finderfeed.solarcraft.registries.blocks.SCBlocks;
 import com.finderfeed.solarcraft.registries.command_argument_types.SolarcraftCommandArgumentTypes;
 import com.finderfeed.solarcraft.registries.data_serializers.FDEntityDataSerializers;
 import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
 
 import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
-import com.finderfeed.solarcraft.registries.blocks.SolarcraftBlocks;
 import com.finderfeed.solarcraft.registries.containers.SolarcraftContainers;
 import com.finderfeed.solarcraft.registries.effects.SCEffects;
 import com.finderfeed.solarcraft.registries.loot_modifiers.SolarcraftLootModifiers;
@@ -157,7 +157,7 @@ public class SolarCraft
         CONTAINER_TYPE.register(bus);
         SCCreativeTabs.REGISTRY.register(bus);
         SCItems.ITEMS.register(bus);
-        SolarcraftBlocks.BLOCKS.register(bus);
+        SCBlocks.BLOCKS.register(bus);
         SolarcraftTileEntityTypes.TILE_ENTITY_TYPE.register(bus);
         SCEntityTypes.ENTITY_TYPE_REGISTER.register(bus);
         SCEffects.EFFECTS.register(bus);

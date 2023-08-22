@@ -75,6 +75,8 @@
   "ancient_frag.no_tag": "Use the runic table to reveal contents.",
   "aura_healer.lore": "Will heal all players in a huge radius for 2 hearts every 20 seconds. Requires a structure to function.",
   "block.solarcraft.element_weaver": "Element Weaver",
+  "block.solarcraft.corrupted_shard_ore": "Corrupted Shard Ore",
+  "block.solarcraft.deepslate_corrupted_shard_ore": "Corrupted Shard Ore",
   "block.solarcraft.orbital_missile_launcher": "Orbital Missile Launcher",
   "block.solarcraft.algadium_block": "Algadium block",
   "block.solarcraft.ardo_rune_block": "Ardo Rune Catalyst",

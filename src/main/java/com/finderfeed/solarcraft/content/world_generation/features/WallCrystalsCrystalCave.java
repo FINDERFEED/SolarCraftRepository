@@ -1,10 +1,9 @@
 package com.finderfeed.solarcraft.content.world_generation.features;
 
-import com.finderfeed.solarcraft.registries.blocks.SolarcraftBlocks;
+import com.finderfeed.solarcraft.registries.blocks.SCBlocks;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
-import net.minecraft.data.worldgen.features.OreFeatures;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.levelgen.feature.Feature;
@@ -45,7 +44,7 @@ public class WallCrystalsCrystalCave extends Feature<NoneFeatureConfiguration> {
                                 world.getBlockState(pos.west()).isAir() || world.getBlockState(pos.south()).isAir())
 
                                 && ruleTest.test(world.getBlockState(pos),world.getRandom())){
-                            world.setBlock(pos, SolarcraftBlocks.RADIANT_CRYSTAL.get().defaultBlockState(),3);
+                            world.setBlock(pos, SCBlocks.RADIANT_CRYSTAL.get().defaultBlockState(),3);
                         }
                     }
                 }

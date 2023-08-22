@@ -2,7 +2,7 @@ package com.finderfeed.solarcraft.content.blocks.blockentities.clearing_ritual.c
 
 import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.local_library.blocks.TileEntityDataSaverBlock;
-import com.finderfeed.solarcraft.registries.blocks.SolarcraftBlocks;
+import com.finderfeed.solarcraft.registries.blocks.SCBlocks;
 import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
@@ -45,6 +45,6 @@ public class ClearingRitualCrystalBlock extends TileEntityDataSaverBlock impleme
 
     @Override
     public boolean canHarvestBlock(BlockState state, BlockGetter level, BlockPos pos, Player player) {
-        return !level.getBlockState(pos.below(2)).is(SolarcraftBlocks.CRYSTAL_ENERGY_VINES.get());
+        return !level.getBlockState(pos.below(2)).is(SCBlocks.CRYSTAL_ENERGY_VINES.get());
     }
 }

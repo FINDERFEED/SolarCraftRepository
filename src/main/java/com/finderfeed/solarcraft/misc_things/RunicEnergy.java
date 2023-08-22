@@ -1,6 +1,6 @@
 package com.finderfeed.solarcraft.misc_things;
 
-import com.finderfeed.solarcraft.registries.blocks.SolarcraftBlocks;
+import com.finderfeed.solarcraft.registries.blocks.SCBlocks;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.nbt.CompoundTag;
 
@@ -15,27 +15,27 @@ public class RunicEnergy {
     public static String DEFAULT_ENERGY_TAG = "solarcraft.solar_rune_energy_";
 
     public static Map<Block, Type> BLOCK_TO_RUNE_ENERGY_TYPE = Map.of(
-            SolarcraftBlocks.TERA_RUNE_BLOCK.get(), RunicEnergy.Type.TERA,
-            SolarcraftBlocks.FIRA_RUNE_BLOCK.get(), RunicEnergy.Type.FIRA,
-            SolarcraftBlocks.ZETA_RUNE_BLOCK.get(), RunicEnergy.Type.ZETA,
-            SolarcraftBlocks.KELDA_RUNE_BLOCK.get(), RunicEnergy.Type.KELDA,
-            SolarcraftBlocks.URBA_RUNE_BLOCK.get(), RunicEnergy.Type.URBA,
-            SolarcraftBlocks.ARDO_RUNE_BLOCK.get(), RunicEnergy.Type.ARDO,
-            SolarcraftBlocks.ULTIMA_RUNE_BLOCK.get(), RunicEnergy.Type.ULTIMA,
-            SolarcraftBlocks.GIRO_RUNE_BLOCK.get(), RunicEnergy.Type.GIRO
+            SCBlocks.TERA_RUNE_BLOCK.get(), RunicEnergy.Type.TERA,
+            SCBlocks.FIRA_RUNE_BLOCK.get(), RunicEnergy.Type.FIRA,
+            SCBlocks.ZETA_RUNE_BLOCK.get(), RunicEnergy.Type.ZETA,
+            SCBlocks.KELDA_RUNE_BLOCK.get(), RunicEnergy.Type.KELDA,
+            SCBlocks.URBA_RUNE_BLOCK.get(), RunicEnergy.Type.URBA,
+            SCBlocks.ARDO_RUNE_BLOCK.get(), RunicEnergy.Type.ARDO,
+            SCBlocks.ULTIMA_RUNE_BLOCK.get(), RunicEnergy.Type.ULTIMA,
+            SCBlocks.GIRO_RUNE_BLOCK.get(), RunicEnergy.Type.GIRO
 
     );
 
     public static Map<Block, Type[]> BLOCK_TO_RUNE_ENERGY_TYPE_ARRAY = Map.of(
-            SolarcraftBlocks.TERA_RUNE_BLOCK.get(), new Type[]{RunicEnergy.Type.TERA},
-            SolarcraftBlocks.FIRA_RUNE_BLOCK.get(), new Type[]{RunicEnergy.Type.FIRA},
-            SolarcraftBlocks.ZETA_RUNE_BLOCK.get(), new Type[]{RunicEnergy.Type.ZETA},
-            SolarcraftBlocks.KELDA_RUNE_BLOCK.get(), new Type[]{RunicEnergy.Type.KELDA},
-            SolarcraftBlocks.URBA_RUNE_BLOCK.get(), new Type[]{RunicEnergy.Type.URBA},
-            SolarcraftBlocks.ARDO_RUNE_BLOCK.get(), new Type[]{RunicEnergy.Type.ARDO},
-            SolarcraftBlocks.ULTIMA_RUNE_BLOCK.get(), new Type[]{RunicEnergy.Type.ULTIMA},
-            SolarcraftBlocks.GIRO_RUNE_BLOCK.get(), new Type[]{RunicEnergy.Type.GIRO},
-            SolarcraftBlocks.MULTIREPEATER_BLOCK.get(),Type.getAll()
+            SCBlocks.TERA_RUNE_BLOCK.get(), new Type[]{RunicEnergy.Type.TERA},
+            SCBlocks.FIRA_RUNE_BLOCK.get(), new Type[]{RunicEnergy.Type.FIRA},
+            SCBlocks.ZETA_RUNE_BLOCK.get(), new Type[]{RunicEnergy.Type.ZETA},
+            SCBlocks.KELDA_RUNE_BLOCK.get(), new Type[]{RunicEnergy.Type.KELDA},
+            SCBlocks.URBA_RUNE_BLOCK.get(), new Type[]{RunicEnergy.Type.URBA},
+            SCBlocks.ARDO_RUNE_BLOCK.get(), new Type[]{RunicEnergy.Type.ARDO},
+            SCBlocks.ULTIMA_RUNE_BLOCK.get(), new Type[]{RunicEnergy.Type.ULTIMA},
+            SCBlocks.GIRO_RUNE_BLOCK.get(), new Type[]{RunicEnergy.Type.GIRO},
+            SCBlocks.MULTIREPEATER_BLOCK.get(),Type.getAll()
     );
 
     public static void setEnergy(Player playerEntity,float amount, Type type){

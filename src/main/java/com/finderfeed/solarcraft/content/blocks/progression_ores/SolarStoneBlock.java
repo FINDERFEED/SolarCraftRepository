@@ -1,8 +1,8 @@
-package com.finderfeed.solarcraft.content.blocks;
+package com.finderfeed.solarcraft.content.blocks.progression_ores;
 
-import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.Progression;
 import com.finderfeed.solarcraft.misc_things.IProgressionBlock;
+import com.finderfeed.solarcraft.registries.blocks.SCBlocks;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.Blocks;
@@ -16,20 +16,22 @@ import net.minecraft.world.level.Level;
 
 import javax.annotation.Nullable;
 
-public class SolarOreBlock extends Block implements IProgressionBlock {
-    public SolarOreBlock(Properties p_i48357_1_) {
-        super(p_i48357_1_);
+public class SolarStoneBlock extends Block implements IProgressionBlock {
+    public SolarStoneBlock(Properties p_i48440_1_) {
+        super(p_i48440_1_);
     }
 
     @Override
     public Block getUnlockedBlock() {
-        return SolarCraft.SOLAR_ORE.get();
+        return SCBlocks.SOLAR_STONE.get();
     }
 
     @Override
     public Block getLockedBlock() {
         return Blocks.STONE;
     }
+
+
 
     @Override
     public Progression getRequiredProgression() {

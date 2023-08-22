@@ -17,7 +17,7 @@ import com.finderfeed.solarcraft.misc_things.RunicEnergy;
 import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
 import com.finderfeed.solarcraft.packet_handler.packets.CastAbilityPacket;
 import com.finderfeed.solarcraft.registries.ConfigRegistry;
-import com.finderfeed.solarcraft.registries.blocks.SolarcraftBlocks;
+import com.finderfeed.solarcraft.registries.blocks.SCBlocks;
 import com.finderfeed.solarcraft.registries.items.SCItems;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
@@ -277,7 +277,7 @@ public class ClientEventsHandler {
         CATALYST_RENDER_POSITIONS.clear();
         Player pl = Minecraft.getInstance().player;
         if (pl.getMainHandItem().getItem() instanceof BlockItem t) {
-            if ((t.getBlock().defaultBlockState().is(com.finderfeed.solarcraft.registries.Tags.CATALYST)) && (t.getBlock() != SolarcraftBlocks.SOLAR_STONE_COLLUMN.get())) {
+            if ((t.getBlock().defaultBlockState().is(com.finderfeed.solarcraft.registries.Tags.CATALYST)) && (t.getBlock() != SCBlocks.SOLAR_STONE_COLLUMN.get())) {
                 for (LevelChunk c : Helpers.getSurroundingChunks(Minecraft.getInstance().level, Minecraft.getInstance().player.getOnPos())) {
                     for (BlockEntity e : c.getBlockEntities().values()) {
                         if (e instanceof InfuserTileEntity tile) {

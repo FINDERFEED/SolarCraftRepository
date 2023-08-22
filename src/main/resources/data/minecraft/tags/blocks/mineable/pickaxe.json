@@ -67,6 +67,8 @@
     "solarcraft:magistone_stairs",
     "solarcraft:chiseled_magistone",
     "solarcraft:element_weaver",
-    "solarcraft:orbital_missile_launcher"
+    "solarcraft:orbital_missile_launcher",
+    "solarcraft:corrupted_shard_ore",
+    "solarcraft:deepslate_corrupted_shard_ore"
   ]
 }
