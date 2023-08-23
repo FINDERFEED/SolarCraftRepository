@@ -36,7 +36,7 @@ import java.util.List;
 
 public class RuneEnergyPylonTile extends BlockEntity implements  DebugTarget, RunicEnergyGiver,IREWandDrainable{
 
-    private RunicEnergy.Type type = null;
+    private RunicEnergy.Type type = RunicEnergy.Type.ARDO;
     private float currentEnergy = 0;
     private float energyPerTick = 0f;
     private float maxEnergy = 100000;

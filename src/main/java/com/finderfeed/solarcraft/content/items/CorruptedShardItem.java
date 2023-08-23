@@ -7,6 +7,8 @@ import com.finderfeed.solarcraft.client.particles.server_data.shapes.instances.S
 import com.finderfeed.solarcraft.content.blocks.blockentities.RuneEnergyPylonTile;
 import com.finderfeed.solarcraft.content.entities.uldera_crystal.UlderaCrystalBoss;
 import com.finderfeed.solarcraft.content.entities.uldera_crystal.UlderaLightningEntity;
+import com.finderfeed.solarcraft.content.items.primitive.solacraft_item_classes.SolarcraftItem;
+import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
 import com.finderfeed.solarcraft.packet_handler.PacketHelper;
@@ -34,11 +36,11 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class CorruptedShardItem extends Item {
+public class CorruptedShardItem extends SolarcraftItem {
 
     private static final AABB THROW_AWAY_BOX = new AABB(-10,-10,-10,10,10,10);
     public CorruptedShardItem(Properties props) {
-        super(props);
+        super(props,() -> AncientFragment.CORRUPTED_SHARD);
     }
 
     @Override

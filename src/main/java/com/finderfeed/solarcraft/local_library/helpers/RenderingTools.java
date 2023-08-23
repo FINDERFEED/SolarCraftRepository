@@ -12,6 +12,7 @@ import com.finderfeed.solarcraft.content.items.runic_energy.RunicEnergyContainer
 import com.finderfeed.solarcraft.content.items.runic_energy.RunicEnergyCost;
 import com.finderfeed.solarcraft.helpers.multiblock.MultiblockStructure;
 
+import com.finderfeed.solarcraft.local_library.client.screens.FDSizedScreenComponent;
 import com.finderfeed.solarcraft.misc_things.PostShader;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
 import com.finderfeed.solarcraft.client.rendering.rendertypes.RadiantPortalRendertype;
@@ -113,6 +114,21 @@ public class RenderingTools {
     }
     public static Vector3f ZN(){
         return new Vector3f(0,0,-1);
+    }
+
+    //argb
+    public static int extractAlpha(int color){
+        return (color >> 24) & 0x000000ff;
+    }
+    public static int extractRed(int color){
+        return (color >> 16) & 0x000000ff;
+    }
+
+    public static int extractGreen(int color){
+        return (color >> 8) & 0x000000ff;
+    }
+    public static int extractBlue(int color){
+        return color & 0x000000ff;
     }
 
 
@@ -1043,6 +1059,10 @@ public class RenderingTools {
     public static boolean isMouseInBorders(int mx, int my, int x1, int y1, int x2, int y2){
         return (mx >= x1 && mx <= x2) && (my >= y1 && my <= y2);
     }
+    public static boolean isMouseInBorders(int mx, int my, FDSizedScreenComponent component){
+        return (mx >= 0 && mx <= component.getWidth()) &&
+                (my >= 0 && my <= component.getHeight());
+    }
 
 
     public static void fill(PoseStack matrices,double x1,double y1,double x2,double y2,float r,float g,float b,float a){
@@ -1061,7 +1081,6 @@ public class RenderingTools {
         BufferBuilder builder = Tesselator.getInstance().getBuilder();
 
         RenderSystem.enableBlend();
-//        RenderSystem.disableTexture();
         RenderSystem.defaultBlendFunc();
         RenderSystem.setShader(GameRenderer::getPositionColorShader);
         builder.begin(VertexFormat.Mode.QUADS,DefaultVertexFormat.POSITION_COLOR);
@@ -1072,7 +1091,6 @@ public class RenderingTools {
         builder.vertex(matrix4f,(float)x2,(float)y1,0).color(r,g,b,a).endVertex();
 
         BufferUploader.drawWithShader(builder.end());
-//        RenderSystem.enableTexture();
         RenderSystem.disableBlend();
         matrices.popPose();
     }

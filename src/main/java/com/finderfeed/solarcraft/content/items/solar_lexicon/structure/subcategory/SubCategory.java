@@ -12,6 +12,8 @@ import com.finderfeed.solarcraft.content.recipe_types.infusing_new.InfusingRecip
 import com.finderfeed.solarcraft.content.recipe_types.infusing_crafting.InfusingCraftingRecipe;
 import com.finderfeed.solarcraft.content.recipe_types.solar_smelting.SolarSmeltingRecipe;
 import com.finderfeed.solarcraft.registries.SolarCraftClientRegistries;
+import com.finderfeed.solarcraft.registries.blocks.SCBlocks;
+import com.finderfeed.solarcraft.registries.items.SCItems;
 import com.finderfeed.solarcraft.registries.recipe_types.SolarcraftRecipeTypes;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
@@ -20,6 +22,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.Recipe;
@@ -308,9 +311,14 @@ public class SubCategory {
     }
 
     public ItemStackButton constructStructureButton(MultiblockStructure structure, int x , int y, AncientFragment fragment){
+        ItemStack icon = structure.mainBlock.getBlock().asItem().getDefaultInstance();
+        if (structure.mainBlock.getBlock() == SCBlocks.RUNE_ENERGY_PYLON.get()){
+            icon = SCItems.RUNE_ENERGY_PYLON_ITEM_PLACEHOLDER.get().getDefaultInstance();
+        }
+
         return new ItemStackButton(x,y,24,24,(button)->{
             Minecraft.getInstance().setScreen(new StructureScreen(fragment,structure));
-        },structure.mainBlock.getBlock().asItem().getDefaultInstance(),1.5f, (button,graphics,mx,my)->{
+        },icon,1.5f, (button,graphics,mx,my)->{
 
             if (Minecraft.getInstance().screen instanceof SolarLexiconRecipesScreen screen) {
                 screen.postRender.add(()->graphics.renderTooltip(Minecraft.getInstance().font, fragment.getTranslation(), mx, my));

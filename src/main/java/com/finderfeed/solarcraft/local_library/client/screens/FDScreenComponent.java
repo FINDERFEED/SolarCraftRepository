@@ -20,7 +20,7 @@ public abstract class FDScreenComponent {
 
     public abstract void init();
 
-    public abstract void render(GuiGraphics matrices, int mousex, int mousey, float pticks);
+    public abstract void render(GuiGraphics graphics, int mousex, int mousey, float pticks);
 
     public abstract void tick();
 

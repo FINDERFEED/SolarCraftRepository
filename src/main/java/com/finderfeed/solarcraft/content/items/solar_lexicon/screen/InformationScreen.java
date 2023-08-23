@@ -1,6 +1,7 @@
 package com.finderfeed.solarcraft.content.items.solar_lexicon.screen;
 
 import com.finderfeed.solarcraft.SolarCraft;
+import com.finderfeed.solarcraft.content.items.solar_lexicon.SolarLexicon;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.screen.buttons.ItemStackButton;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.screen.buttons.ItemStackTabButton;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragmentHelper;
@@ -9,6 +10,8 @@ import com.finderfeed.solarcraft.content.recipe_types.infusing_new.InfusingRecip
 import com.finderfeed.solarcraft.content.recipe_types.solar_smelting.SolarSmeltingRecipe;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 
+import com.finderfeed.solarcraft.local_library.client.screens.DefaultScreen;
+import com.finderfeed.solarcraft.local_library.client.screens.screen_coomponents.ScissoredTextBox;
 import com.finderfeed.solarcraft.local_library.custom_registries.RegistryDelegate;
 import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
@@ -36,14 +39,11 @@ import java.util.List;
 import java.util.function.Supplier;
 
 
-public class InformationScreen extends Screen {
+public class InformationScreen extends DefaultScreen {
 
     public int relX;
     public int relY;
     private final ResourceLocation LOC = new ResourceLocation("solarcraft","textures/gui/solar_lexicon_info_screen_new.png");
-//    private InfusingRecipeScreen screen;
-//    private InfusingCraftingRecipeScreen screenInfusingCrafting;
-//    private CraftingRecipeScreen craftingScreen;
 
     private Item icon;
     private Screen screen;
@@ -51,23 +51,18 @@ public class InformationScreen extends Screen {
     private AncientFragment fragment;
     private int ticker = 0;
     public InformationScreen(AncientFragment fragment,InfusingRecipeScreen screen) {
-        super(Component.literal(""));
         this.screen = screen;
         this.icon = SCItems.INFUSER_ITEM.get();
         this.fragment = fragment;
     }
 
     public InformationScreen(AncientFragment fragment,InfusingCraftingRecipeScreen screen) {
-        super(Component.literal(""));
-//        this.screenInfusingCrafting = screen;
         this.screen = screen;
         this.icon = SCItems.INFUSING_TABLE.get();
         this.fragment = fragment;
     }
 
     public InformationScreen(AncientFragment fragment,CraftingRecipeScreen screen) {
-        super(Component.literal(""));
-//        this.craftingScreen = screen;
         this.screen = screen;
         this.icon = Items.CRAFTING_TABLE;
         this.fragment = fragment;
@@ -87,9 +82,6 @@ public class InformationScreen extends Screen {
         int scale = (int) minecraft.getWindow().getGuiScale();
         this.relX = (width/scale - 183)/2 - 40;
         this.relY = (height - 218*scale)/2/scale;
-
-//        Item i = screen != null ? SolarcraftItems.INFUSER_ITEM.get() : screenInfusingCrafting != null ? SolarcraftItems.INFUSING_TABLE.get() : Items.CRAFTING_TABLE.asItem();
-
 
         ItemStackButton button = new ItemStackTabButton(relX+255,relY+25 + 18   ,17,17,(buttons)->{
             if (screen != null) {
@@ -135,8 +127,16 @@ public class InformationScreen extends Screen {
             }));
 
 
-
         super.init();
+
+        //232 119 228
+        ScissoredTextBox textBox = new ScissoredTextBox(this,relX + 14,relY + 81,228,115,
+                SolarLexiconScreen.TEXT_COLOR,0xff3A3A3A,0xff999999,
+                fragment.getType() == AncientFragment.Type.INFORMATION ? fragment.getLore() : fragment.getItemDescription());
+        textBox.setFocused(true);
+
+
+        this.addFDComponent("textBox",textBox);
     }
 
     @Override
@@ -147,51 +147,18 @@ public class InformationScreen extends Screen {
         RenderingTools.blitWithBlend(matrices,relX,relY,0,0,256,209,256,256,0,1f);
 
         graphics.drawString(Minecraft.getInstance().font,fragment.getTranslation(), relX+60,relY+35,0xffffff);
-        if (fragment.getType() == AncientFragment.Type.INFORMATION) {
-            RenderingTools.drawBoundedTextObfuscated(graphics, relX + 14, relY + 81, 43, fragment.getLore(),SolarLexiconScreen.TEXT_COLOR,ticker*4);
-        }else{
-            RenderingTools.drawBoundedTextObfuscated(graphics, relX + 14, relY + 81, 43, fragment.getItemDescription(),SolarLexiconScreen.TEXT_COLOR,ticker*4);
-        }
+//        if (fragment.getType() == AncientFragment.Type.INFORMATION) {
+//            RenderingTools.drawBoundedTextObfuscated(graphics, relX + 14, relY + 81, 43, fragment.getLore(),SolarLexiconScreen.TEXT_COLOR,ticker*4);
+//        }else{
+//            RenderingTools.drawBoundedTextObfuscated(graphics, relX + 14, relY + 81, 43, fragment.getItemDescription(),SolarLexiconScreen.TEXT_COLOR,ticker*4);
+//        }
+        this.renderComponents(graphics,mousex,mousey,partialTicks,"textBox");
+
         RenderingTools.renderScaledGuiItem(graphics,fragment.getIcon().getDefaultInstance(),relX + 32, relY + 32,1f,0);
         matrices.popPose();
-//        renderGuiItem(fragment.getIcon().getDefaultInstance(),relX+32,relY+32,Minecraft.getInstance().getItemRenderer().getModel(fragment.getIcon().getDefaultInstance(),null,null,0),1.5,1.5,1.5);
+
         super.render(graphics, mousex, mousey, partialTicks);
     }
-
-
-
-//    protected void renderGuiItem(ItemStack stack, int tx, int ty, BakedModel model,double x,double y,double z) {
-//        Minecraft.getInstance().getTextureManager().getTexture(TextureAtlas.LOCATION_BLOCKS).setFilter(false, false);
-//        RenderSystem.setShaderTexture(0, TextureAtlas.LOCATION_BLOCKS);
-//        RenderSystem.enableBlend();
-//        RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-//        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-//        PoseStack posestack = RenderSystem.getModelViewStack();
-//        posestack.pushPose();
-//        posestack.translate((double)tx, (double)ty, (double)(100.0F + Minecraft.getInstance().getItemRenderer().blitOffset));
-//        posestack.translate(8.0D, 8.0D, 0.0D);
-//        posestack.scale(1.0F, -1.0F, 1.0F);
-//        posestack.scale(16.0F, 16.0F, 16.0F);
-//        RenderSystem.applyModelViewMatrix();
-//        PoseStack posestack1 = new PoseStack();
-//        posestack1.scale((float)x,(float)y,(float)z);
-//        MultiBufferSource.BufferSource multibuffersource$buffersource = Minecraft.getInstance().renderBuffers().bufferSource();
-//        boolean flag = !model.usesBlockLight();
-//        if (flag) {
-//            Lighting.setupForFlatItems();
-//        }
-//
-//        Minecraft.getInstance().getItemRenderer().render(stack, ItemTransforms.TransformType.GUI, false, posestack1, multibuffersource$buffersource, 15728880, OverlayTexture.NO_OVERLAY, model);
-//        multibuffersource$buffersource.endBatch();
-//        RenderSystem.enableDepthTest();
-//        if (flag) {
-//            Lighting.setupFor3DItems();
-//        }
-//
-//        posestack.popPose();
-//        RenderSystem.applyModelViewMatrix();
-//    }
-
 
     public static Screen getScreenFromFragment(AncientFragment fragment){
         switch (fragment.getType()){
@@ -238,4 +205,19 @@ public class InformationScreen extends Screen {
         }
     }
 
+
+    @Override
+    public int getScreenWidth() {
+        return 256;
+    }
+
+    @Override
+    public int getScreenHeight() {
+        return 209;
+    }
+
+    @Override
+    public boolean isPauseScreen() {
+        return false;
+    }
 }
