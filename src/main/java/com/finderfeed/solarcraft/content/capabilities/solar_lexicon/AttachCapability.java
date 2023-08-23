@@ -23,8 +23,8 @@ public class AttachCapability {
     public static void attachItemStackCapabilities(final AttachCapabilitiesEvent<ItemStack> event){
         if (event.getObject().getItem() instanceof SolarLexicon) {
             InventoryProvider prov = new InventoryProvider();
-            event.addCapability(new ResourceLocation("solarcraft","lexicon_inventory"),prov);
-            event.addListener(prov::invalidate);
+            event.addCapability(new ResourceLocation(SolarCraft.MOD_ID,"lexicon_inventory"),prov);
+//            event.addListener(prov::invalidate);
         }
     }
 

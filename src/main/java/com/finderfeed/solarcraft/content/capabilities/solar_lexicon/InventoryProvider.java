@@ -16,7 +16,7 @@ import javax.annotation.Nullable;
 public class InventoryProvider implements ICapabilitySerializable<CompoundTag> {
 
 
-    private final ItemStackHandler lexicon_inv = new ItemStackHandler(AncientFragment.getAllFragments().length);
+    private final ItemStackHandler lexicon_inv = new ItemStackHandler(AncientFragment.getAllFragments().size());
     private final LazyOptional<ItemStackHandler> lexicon_inv_optional = LazyOptional.of(()->lexicon_inv);
     public void invalidate(){
         lexicon_inv_optional.invalidate();
@@ -39,7 +39,7 @@ public class InventoryProvider implements ICapabilitySerializable<CompoundTag> {
     @Override
     public void deserializeNBT(CompoundTag nbt) {
         if (nbt.contains("Size", Tag.TAG_INT)){
-            nbt.putInt("Size",AncientFragment.getAllFragments().length);
+            nbt.putInt("Size",AncientFragment.getAllFragments().size());
         }
         lexicon_inv.deserializeNBT(nbt);
     }

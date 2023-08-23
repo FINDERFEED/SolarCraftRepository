@@ -75,11 +75,11 @@ public class SolarLexicon extends Item {
 
     public void updateInventory(ItemStack stack,Player ent){
         if (stack.getItem() instanceof SolarLexicon){
-            IItemHandler handelr = stack.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(null);
-            if (handelr != null){
+            IItemHandler handler = stack.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(null);
+            if (handler != null){
                 List<ItemStack> stacks = new ArrayList<>();
-                for (int i = 0;i < handelr.getSlots();i++){
-                    stacks.add(handelr.getStackInSlot(i));
+                for (int i = 0;i < handler.getSlots();i++){
+                    stacks.add(handler.getStackInSlot(i));
                 }
                 ItemStack[] arr = new ItemStack[stacks.size()];
                 SCPacketHandler.INSTANCE.sendTo(new UpdateInventoryPacket(stacks.toArray(arr)), ((ServerPlayer) ent).connection.connection, NetworkDirection.PLAY_TO_CLIENT);

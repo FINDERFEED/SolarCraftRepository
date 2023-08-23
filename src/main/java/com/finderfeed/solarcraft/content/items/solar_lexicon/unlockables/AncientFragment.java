@@ -224,7 +224,6 @@ public class AncientFragment {
     public static final AncientFragment INFUSER_TIER_RUNIC_ENERGY = new AncientFragment("solar_infuser_structure_2",ProgressionStage.AFTER_LENS.ALL_PROGRESSIONS, SubCategoryBase.STRUCTURES,CategoryBase.STRUCTURES, Multiblocks.INFUSER_TIER_TWO, SOLAR_INFUSER.priority).addReferences("solar_infuser");
     public static final AncientFragment INFUSER_TIER_SOLAR_ENERGY = new AncientFragment("solar_infuser_structure_3",ProgressionStage.SOLAR_ENERGY.ALL_PROGRESSIONS,SubCategoryBase.STRUCTURES,CategoryBase.STRUCTURES, Multiblocks.INFUSER_TIER_THREE, SOLAR_INFUSER.priority).addReferences("solar_infuser");
 
-
     public static final AncientFragment SOLAR_CORE_STRUCTURE = new AncientFragment("solar_core_structure",SOLAR_CORE.neededProgression,SubCategoryBase.STRUCTURES,CategoryBase.STRUCTURES, Multiblocks.SOLAR_CORE, SOLAR_CORE.priority).addReferences("solar_core");
     public static final AncientFragment SOLAR_ENERGY_GENERATOR_STRUCTURE = new AncientFragment("solar_energy_generator_structure",SOLAR_ENERGY_GENERATOR.neededProgression,SubCategoryBase.STRUCTURES,CategoryBase.STRUCTURES, Multiblocks.ENERGY_GENERATOR, SOLAR_ENERGY_GENERATOR.priority).addReferences("solar_energy_generator");
     public static final AncientFragment DIMENSION_STRUCTURE = new AncientFragment("dimension_structure",ProgressionStage.SOLAR_ENERGY.ALL_PROGRESSIONS,SubCategoryBase.STRUCTURES,CategoryBase.STRUCTURES, Multiblocks.RADIANT_LAND_PORTAL, DIMENSION_CORE.priority).addReferences("dimension_core");
@@ -370,9 +369,9 @@ public class AncientFragment {
         ALL_FRAGMENTS.add(this);
     }
 
-    public static AncientFragment[] getAllFragments(){
-        AncientFragment[] f = new AncientFragment[ALL_FRAGMENTS.size()];
-        return ALL_FRAGMENTS.toArray(f);
+    public static List<AncientFragment> getAllFragments(){
+//        AncientFragment[] f = new AncientFragment[ALL_FRAGMENTS.size()];
+        return ALL_FRAGMENTS;
     }
 
     public CategoryBase getCategory() {

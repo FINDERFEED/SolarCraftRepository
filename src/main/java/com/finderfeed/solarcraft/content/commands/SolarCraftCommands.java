@@ -243,9 +243,9 @@ public class SolarCraftCommands {
             if (cap.isPresent()){
                 cap.ifPresent((inv)->{
                     try {
-                        for (int i = 0; i < AncientFragment.getAllFragments().length; i++) {
+                        for (int i = 0; i < AncientFragment.getAllFragments().size(); i++) {
 
-                            AncientFragment fragment = AncientFragment.getAllFragments()[i];
+                            AncientFragment fragment = AncientFragment.getAllFragments().get(i);
                             ItemStack stack = SCItems.INFO_FRAGMENT.get().getDefaultInstance();
                             AncientFragmentHelper.applyTagToFragment(stack, fragment);
                             inv.insertItem(i, stack, false);

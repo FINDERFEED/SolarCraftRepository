@@ -32,20 +32,16 @@ public class SolarLexiconContainer extends AbstractContainerMenu {
         super(SolarcraftContainers.SOLAR_LEXICON_CONTAINER.get(), p_i50105_2_);
         this.stack = stack;
         this.inventory = stack.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(null);
-        int kolvo = 0;
+        int amount = 0;
         int row = 1;
         int id = 0;
 
         for (AncientFragment fragment : AncientFragment.getAllFragments()){
-            if (kolvo > 8){
-                kolvo = 0;
-//                if (row < 3) {
-                    row += 1;
-//                }else{
-//                    row = 50000;
-//                }
+            if (amount > 8){
+                amount = 0;
+                row += 1;
             }
-            SlotItemHandler s = new SlotItemHandler(inventory,id,8+kolvo*18 - 3,-1+row*18){
+            SlotItemHandler s = new SlotItemHandler(inventory,id,8+amount*18 - 3,-1+row*18){
                 @Override
                 public boolean mayPlace(@NotNull ItemStack stack) {
                     if (!(stack.getItem() instanceof AncientFragmentItem)) return false;
@@ -59,6 +55,11 @@ public class SolarLexiconContainer extends AbstractContainerMenu {
                 }
 
                 @Override
+                public int getMaxStackSize() {
+                    return 1;
+                }
+
+                @Override
                 public boolean isActive() {
                     return this.y > -1 && y <= -1 + 18 * 3;
                 }
@@ -66,7 +67,7 @@ public class SolarLexiconContainer extends AbstractContainerMenu {
             addSlot(s);
             scrollableSlots.add(s);
             id++;
-            kolvo++;
+            amount++;
         }
         maxRows = row;
 
@@ -138,7 +139,7 @@ public class SolarLexiconContainer extends AbstractContainerMenu {
 
         @Override
         public Component getDisplayName() {
-            return Component.translatable("");
+            return Component.literal("");
         }
 
         @Nullable

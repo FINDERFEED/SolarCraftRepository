@@ -1,6 +1,7 @@
 package com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables;
 
 import com.finderfeed.solarcraft.events.other_events.OBJModels;
+import com.finderfeed.solarcraft.registries.items.SCItems;
 import com.mojang.blaze3d.platform.Lighting;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
@@ -24,7 +25,6 @@ public class AncientFragmentISTER extends BlockEntityWithoutLevelRenderer {
 
     @Override
     public void renderByItem(ItemStack stack, ItemDisplayContext transformType, PoseStack matrices, MultiBufferSource buffer, int light, int overlay) {
-
         if (transformType == ItemDisplayContext.NONE){
             matrices.pushPose();
             matrices.translate(0.5,0.5,0.5);
@@ -78,17 +78,21 @@ public class AncientFragmentISTER extends BlockEntityWithoutLevelRenderer {
             if (nbt != null) {
                 AncientFragment frag = AncientFragment.getFragmentByID(nbt.getString(AncientFragmentHelper.FRAG_ID));
                 if (frag != null) {
+                    ItemStack icon = frag.getIcon().getDefaultInstance();
+                    if (icon.getItem() == SCItems.RUNE_ENERGY_PYLON.get()){
+                        icon = SCItems.RUNE_ENERGY_PYLON_ITEM_PLACEHOLDER.get().getDefaultInstance();
+                    }
                     matrices.pushPose();
                     matrices.scale(0.5f,0.5f,0.5f);
                     matrices.translate(1.5,0.5,2);
                     BakedModel model = Minecraft.getInstance().getItemRenderer()
-                            .getModel(frag.getIcon().getDefaultInstance(),Minecraft.getInstance().level, Minecraft.getInstance().player, 0);
+                            .getModel(icon,Minecraft.getInstance().level, Minecraft.getInstance().player, 0);
 
                     MultiBufferSource.BufferSource src2 = Minecraft.getInstance().renderBuffers().bufferSource();
                     if (!model.usesBlockLight()){
                         Lighting.setupForFlatItems();
                     }
-                    Minecraft.getInstance().getItemRenderer().render(frag.getIcon().getDefaultInstance(), ItemDisplayContext.GUI, false, matrices, src2, light,
+                    Minecraft.getInstance().getItemRenderer().render(icon, ItemDisplayContext.GUI, false, matrices, src2, light,
                             OverlayTexture.NO_OVERLAY, model);
                     src2.endBatch();
                     if (!model.usesBlockLight()){
