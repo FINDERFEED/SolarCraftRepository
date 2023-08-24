@@ -17,6 +17,7 @@ import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -47,28 +48,28 @@ public class ZapTurretTile extends BlockEntity implements OwnedBlock, IStructure
                 tile.attackTick = 0;
                 tile.targets.clear();
                 tile.attack = false;
-                List<LivingEntity> targets = FDMathHelper.TargetFinding.getAllValidTargetsFromVec(
-                        LivingEntity.class,
+                List<Monster> targets = FDMathHelper.TargetFinding.getAllValidTargetsFromVec(
+                        Monster.class,
                         20,
                         world,
                         FDMathHelper.TileEntityThings.getTileEntityCenter(tile),
                         (entity) -> {
-                            return !(entity instanceof Player);
+                            return true;
                         }
                 );
                 if (targets.size() != 0) {
-                    LivingEntity lastTarget = targets.get(world.random.nextInt(targets.size()));
+                    Monster lastTarget = targets.get(world.random.nextInt(targets.size()));
                     lastTarget.hurt(tile.level.damageSources().magic(), 5);
-                    List<LivingEntity> invalidTargets = new ArrayList<>();
+                    List<Monster> invalidTargets = new ArrayList<>();
                     invalidTargets.add(lastTarget);
                     for (int i = 0; i < 4; i++) {
-                        List<LivingEntity> secondaryTargets = FDMathHelper.TargetFinding.getAllValidTargetsFromVec(
-                                LivingEntity.class,
+                        List<Monster> secondaryTargets = FDMathHelper.TargetFinding.getAllValidTargetsFromVec(
+                                Monster.class,
                                 20,
                                 world,
                                 lastTarget.position().add(0, lastTarget.getBbHeight() * 1.1 / 2, 0),
                                 (entity) -> {
-                                    return !(entity instanceof Player) && !invalidTargets.contains(entity);
+                                    return !invalidTargets.contains(entity);
                                 }
                         );
                         if (secondaryTargets.size() != 0) {

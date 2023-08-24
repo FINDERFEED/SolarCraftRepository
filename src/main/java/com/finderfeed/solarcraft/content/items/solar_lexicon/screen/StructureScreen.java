@@ -206,6 +206,7 @@ public class StructureScreen extends Screen {
         Helpers.drawBoundedText(graphics,relX+14,relY+10,7,Component.translatable("solarcraft.structure." + structure.getId()).getString(),0xffffff);
 
 
+        matrices.translate(0,0,200);
         for (BlockAndRelxRely obj : structureBlocks.get(currentPage-1)){
             renderItemAndTooltip(graphics,obj.block,obj.posx,obj.posy,mousex,mousey,matrices);
         }

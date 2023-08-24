@@ -23,6 +23,7 @@ public final class SolarcraftConfig {
     public static final ForgeConfigSpec.ConfigValue<Double> RUNIC_ENERGY_PER_TICK_UPGRADE;
     public static final ForgeConfigSpec.ConfigValue<Double> RUNIC_ENERGY_PER_RUNE_CHARGER;
     public static final ForgeConfigSpec.ConfigValue<Integer> ENERGY_PYLON_SPAWN_CHANCE;
+    public static final ForgeConfigSpec.ConfigValue<Boolean> SHOULD_ULDERA_CRYSTAL_REGENERATE;
     public static final ForgeConfigSpec.ConfigValue<List<String>> ISLAND_ORES;
 
     public static final ForgeConfigSpec.ConfigValue<Boolean> IS_ORBITAL_MISSILE_LAUNCHER_ALLOWED;
@@ -50,10 +51,13 @@ public final class SolarcraftConfig {
                 .define("runic_energy_per_rune",7.5d);
 
         ENERGY_PYLON_SPAWN_CHANCE = BUILDER.comment("Runic energy pylon spawn chance. Works similar to datapacks")
-                .define("spawn_chance",150);
+                .define("spawn_chance",170);
 
         IS_ORBITAL_MISSILE_LAUNCHER_ALLOWED = BUILDER.comment("Is Orbital Missile Launcher block allowed")
                         .define("allowed",true);
+
+        SHOULD_ULDERA_CRYSTAL_REGENERATE = BUILDER.comment("Should Uldera Crystal boss regenerate health if no players are nearby")
+                        .define("shouldRegenerate",true);
 
         BUILDER.pop();
         SPEC = BUILDER.build();

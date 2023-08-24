@@ -71,7 +71,7 @@ public class HomingStarProjectile extends NormalProjectile {
     private Vec3 calculateNewMovementVector(Vec3 targetPosition){
         Vec3 pos = this.position().add(0,this.getBbHeight()/2,0);
         Vec3 between = targetPosition.subtract(pos);
-        if (between.length() <= 3){
+        if (between.length() <= 4){
             return this.getDeltaMovement();
         }
         Vec3 add = between.normalize().multiply(rotationSpeed,rotationSpeed,rotationSpeed);

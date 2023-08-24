@@ -18,6 +18,7 @@ import com.finderfeed.solarcraft.misc_things.RunicEnergy;
 import com.finderfeed.solarcraft.client.rendering.rendertypes.RadiantPortalRendertype;
 import com.finderfeed.solarcraft.client.rendering.shaders.post_chains.PostChainPlusUltra;
 import com.finderfeed.solarcraft.client.rendering.shaders.post_chains.UniformPlusPlus;
+import com.finderfeed.solarcraft.registries.blocks.SCBlocks;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.platform.Lighting;
 import com.mojang.blaze3d.platform.Window;
@@ -1410,6 +1411,9 @@ public class RenderingTools {
                         char c = row.charAt(d);
                         if (c != ' '){
                             BlockState state = m.getBlockByCharacter(c);
+                            if (state.getBlock() == SCBlocks.RUNE_ENERGY_PYLON.get()){
+                                continue;
+                            }
                             toReturn.add(new PositionBlockStateTileEntity(new Vec3(d-xzoffset,i-heightOffset,g-xzoffset),state));
                         }
                     }

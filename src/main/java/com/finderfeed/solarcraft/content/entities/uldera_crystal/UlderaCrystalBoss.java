@@ -5,6 +5,7 @@ import com.finderfeed.solarcraft.client.particles.lightning_particle.LightningPa
 import com.finderfeed.solarcraft.client.particles.server_data.shapes.SendShapeParticlesPacket;
 import com.finderfeed.solarcraft.client.particles.server_data.shapes.instances.BurstAttackParticleShape;
 import com.finderfeed.solarcraft.client.particles.server_data.shapes.instances.SphereParticleShape;
+import com.finderfeed.solarcraft.config.SolarcraftConfig;
 import com.finderfeed.solarcraft.content.entities.ElectricRainEntity;
 import com.finderfeed.solarcraft.content.entities.not_alive.LegendaryItem;
 import com.finderfeed.solarcraft.content.entities.projectiles.HomingStarProjectile;
@@ -26,6 +27,7 @@ import com.finderfeed.solarcraft.registries.attributes.AttributesRegistry;
 import com.finderfeed.solarcraft.registries.damage_sources.SCDamageSources;
 import com.finderfeed.solarcraft.registries.effects.SCEffects;
 import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
+import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -34,6 +36,7 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.Difficulty;
@@ -165,13 +168,21 @@ public class UlderaCrystalBoss extends NoHealthLimitMob implements AnimatedObjec
                 bossChain.tick();
             }
 
-            List<ServerPlayer> players = level.getEntitiesOfClass(ServerPlayer.class,SEARCH_TARGET_BOX.move(this.getCenterPos()),player->{
-                return !player.isSpectator() && !player.isCreative();
-            });
-            for (ServerPlayer player : players){
-                this.disableFlight(player);
-                if (!player.hasEffect(SCEffects.ULDERA_CRYSTAL_PRESENCE.get()) && !this.isEntityReachable(player)){
-                    player.addEffect(new MobEffectInstance(SCEffects.ULDERA_CRYSTAL_PRESENCE.get(),40,0,true,false));
+            if (level.getGameTime() % 20 == 0) {
+                List<ServerPlayer> players = level.getEntitiesOfClass(ServerPlayer.class, SEARCH_TARGET_BOX.move(this.getCenterPos()), player -> {
+                    return !player.isSpectator() && !player.isCreative();
+                });
+                if (players.isEmpty()){
+                    if (SolarcraftConfig.SHOULD_ULDERA_CRYSTAL_REGENERATE.get()) {
+                        this.heal(10);
+                    }
+                }else {
+                    for (ServerPlayer player : players) {
+                        this.disableFlight(player);
+                        if (!player.hasEffect(SCEffects.ULDERA_CRYSTAL_PRESENCE.get()) && !this.isEntityReachable(player)) {
+                            player.addEffect(new MobEffectInstance(SCEffects.ULDERA_CRYSTAL_PRESENCE.get(), 40, 0, true, false));
+                        }
+                    }
                 }
             }
         }
@@ -498,9 +509,9 @@ public class UlderaCrystalBoss extends NoHealthLimitMob implements AnimatedObjec
         for (LivingEntity entity : this.getPullAffectedEntities()){
             Vec3 dist = entity.position().add(0,entity.getBbHeight()/2,0).subtract(this.getCenterPos());
             float damage = calculateDistanceDamage(baseDamage,(float)dist.length());
-            if (entity instanceof Player player){
-                player.displayClientMessage(Component.literal("Damage: " + damage + "Distance: " + dist.length()),false);
-            }
+//            if (entity instanceof Player player){
+//                player.displayClientMessage(Component.literal("Damage: " + damage + "Distance: " + dist.length()),false);
+//            }
             entity.invulnerableTime = 0;
             entity.hurt(SCDamageSources.livingAllResistanceIgnore(this),damage);
         }
@@ -629,7 +640,8 @@ public class UlderaCrystalBoss extends NoHealthLimitMob implements AnimatedObjec
 
     @Override
     public boolean hurt(DamageSource src, float amount) {
-        if (src.is(DamageTypeTags.IS_PROJECTILE) || src.is(DamageTypeTags.IS_EXPLOSION)) return false;
+        if (src.is(DamageTypeTags.IS_PROJECTILE) || src.is(DamageTypeTags.IS_EXPLOSION) ||
+                (src.getEntity() == null && src != damageSources().genericKill() && src != damageSources().fellOutOfWorld())) return false;
 
         if (src.getEntity() instanceof Player player){
             if (player.hasEffect(SCEffects.ULDERA_CRYSTAL_PRESENCE.get())) {
@@ -861,7 +873,7 @@ public class UlderaCrystalBoss extends NoHealthLimitMob implements AnimatedObjec
     public static AttributeSupplier.Builder createCrystalAttributes() {
         return NoHealthLimitMob.createEntityAttributes()
                 .add(Attributes.ARMOR,15)
-                .add(Attributes.ARMOR_TOUGHNESS,5)
+                .add(Attributes.ARMOR_TOUGHNESS,7)
                 .add(AttributesRegistry.MAXIMUM_HEALTH_NO_LIMIT.get(),1000);
     }
     public void checkDespawn() {
@@ -873,6 +885,11 @@ public class UlderaCrystalBoss extends NoHealthLimitMob implements AnimatedObjec
     }
 
     @Override
+    protected boolean shouldDespawnInPeaceful() {
+        return true;
+    }
+
+    @Override
     public boolean isNoGravity() {
         return true;
     }
@@ -881,4 +898,15 @@ public class UlderaCrystalBoss extends NoHealthLimitMob implements AnimatedObjec
     public boolean fireImmune() {
         return true;
     }
+
+    @Override
+    protected SoundEvent getHurtSound(DamageSource p_21239_) {
+        return SolarcraftSounds.CRYSTAL_HIT.get();
+    }
+
+    @Override
+    protected SoundEvent getDeathSound() {
+        return SolarcraftSounds.CRYSTAL_HIT.get();
+    }
+
 }

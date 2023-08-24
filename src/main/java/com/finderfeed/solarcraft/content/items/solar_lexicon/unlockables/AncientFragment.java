@@ -231,7 +231,7 @@ public class AncientFragment {
     public static final AncientFragment EXPLOSION_BLOCKER_STRUCTURE = new AncientFragment("explosion_blocker_structure",EXPLOSION_BLOCKER.neededProgression,SubCategoryBase.STRUCTURES,CategoryBase.STRUCTURES, Multiblocks.EXPLOSION_BLOCKER, EXPLOSION_BLOCKER.priority).addReferences("explosion_blocker");
     public static final AncientFragment RUNIC_ENERGY_CORE_STRUCTURE = new AncientFragment("runic_energy_core_structure",RUNIC_ENERGY_CORE.neededProgression,SubCategoryBase.STRUCTURES,CategoryBase.STRUCTURES, Multiblocks.RUNIC_ENERGY_CORE, RUNIC_ENERGY_CORE.priority).addReferences("runic_energy_core");
     public static final AncientFragment ORBITAL_MISSILE_LAUNCHER_STRUCTURE = new AncientFragment("orbital_missile_launcher_structure",ORBITAL_MISSILE_LAUNCHER.neededProgression,SubCategoryBase.STRUCTURES,CategoryBase.STRUCTURES, Multiblocks.ORBITAL_MISSILE_LAUNCHER, ORBITAL_MISSILE_LAUNCHER.priority).addReferences("orbital_missile_launcher");
-    public static final AncientFragment PYLON_STRUCTURE = new AncientFragment("runic_energy_pylon_structure",RUNIC_ENERGY_PYLON.neededProgression,SubCategoryBase.STRUCTURES,CategoryBase.STRUCTURES, Multiblocks.PYLON, RUNIC_ENERGY_PYLON.priority + 1).addReferences("runic_energy_pylon");
+    public static final AncientFragment PYLON_STRUCTURE = new AncientFragment("runic_energy_pylon_structure",RUNIC_ENERGY_PYLON.neededProgression,SubCategoryBase.STRUCTURES,CategoryBase.STRUCTURES, Multiblocks.PYLON_BASE, RUNIC_ENERGY_PYLON.priority + 1).addReferences("runic_energy_pylon");
 
     public static Map<String,AncientFragment> FRAGMENTS_ID_MAP = new HashMap<>();
 

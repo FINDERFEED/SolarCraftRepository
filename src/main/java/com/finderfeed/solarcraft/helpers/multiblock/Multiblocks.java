@@ -283,12 +283,44 @@ public class Multiblocks {
             .build());
 
     public static final MultiblockStructure PYLON = register(MultiblockStructure.Builder.start()
-            .setId("pylon")
+            .setId("pylon_full")
             .setPattern(new String[][]{{"qwwwq", "wwwww", "wweww", "wwwww", "qwwwq"}, {"qqrqq", "qqqqq", "rqqqr", "qqqqq", "qqrqq"}, {"qqtqq", "qqqqq", "tqqqt", "qqqqq", "qqtqq"}, {"qqrqq", "qqqqq", "rqqqr", "qqqqq", "qqrqq"}, {"qyuiq", "oqqqo", "uqqqu", "pqqqp", "qyuiq"}, {"qqaqq", "qqsqq", "dfegh", "qqsqq", "qqjqq"}, {"qqqqq", "qqaqq", "qdehq", "qqjqq", "qqqqq"}, {"qqqqq", "qqqqq", "qqqqq", "qqqqq", "qqqqq"}, {"qqqqq", "qqqqq", "qqkqq", "qqqqq", "qqqqq"}})
             .setMainChar('k')
             .put('h',"solarcraft:solar_stone_stairs[facing=west,half=bottom,shape=straight,waterlogged=false]")
             .put('a',"solarcraft:solar_stone_stairs[facing=south,half=bottom,shape=straight,waterlogged=false]")
             .put('k',"solarcraft:rune_energy_pylon")
+            .put('j',"solarcraft:solar_stone_stairs[facing=north,half=bottom,shape=straight,waterlogged=false]")
+            .put('r',"solarcraft:solar_stone_collumn")
+            .put('f',"solarcraft:solar_stone_collumn_horizontal[facing=north]")
+            .put('w',"solarcraft:solar_stone_bricks")
+            .put('o',"solarcraft:solar_stone_stairs[facing=south,half=top,shape=straight,waterlogged=false]")
+            .put('s',"solarcraft:solar_stone_collumn_horizontal[facing=east]")
+            .put('u',"solarcraft:ardo_rune_block")
+            .put('q',"minecraft:air")
+            .put('t',"solarcraft:inscription_stone[type=none]")
+            .put('d',"solarcraft:solar_stone_stairs[facing=east,half=bottom,shape=straight,waterlogged=false]")
+            .put('e',"solarcraft:chiseled_solar_stone")
+            .put('y',"solarcraft:solar_stone_stairs[facing=east,half=top,shape=straight,waterlogged=false]")
+            .put('i',"solarcraft:solar_stone_stairs[facing=west,half=top,shape=straight,waterlogged=false]")
+            .put('p',"solarcraft:solar_stone_stairs[facing=north,half=top,shape=straight,waterlogged=false]")
+            .put('g',"solarcraft:solar_stone_collumn_horizontal[facing=south]")
+            .checkTag('u',Tags.CATALYST)
+            .checkTag('t',Tags.INSCRIPTION_STONE)
+            .build());
+
+    public static final MultiblockStructure PYLON_BASE = register(MultiblockStructure.Builder.start()
+            .setId("pylon")
+            .setPattern(new String[][]{
+                    {"qwwwq", "wwwww", "wweww", "wwwww", "qwwwq"},
+                    {"qqrqq", "qqqqq", "rqqqr", "qqqqq", "qqrqq"},
+                    {"qqtqq", "qqqqq", "tqqqt", "qqqqq", "qqtqq"},
+                    {"qqrqq", "qqqqq", "rqqqr", "qqqqq", "qqrqq"},
+                    {"qyuiq", "oqqqo", "uqqqu", "pqqqp", "qyuiq"},
+                    {"qqaqq", "qqsqq", "dfegh", "qqsqq", "qqjqq"},
+                    {"qqqqq", "qqaqq", "qdehq", "qqjqq", "qqqqq"}})
+            .setMainChar('u')
+            .put('h',"solarcraft:solar_stone_stairs[facing=west,half=bottom,shape=straight,waterlogged=false]")
+            .put('a',"solarcraft:solar_stone_stairs[facing=south,half=bottom,shape=straight,waterlogged=false]")
             .put('j',"solarcraft:solar_stone_stairs[facing=north,half=bottom,shape=straight,waterlogged=false]")
             .put('r',"solarcraft:solar_stone_collumn")
             .put('f',"solarcraft:solar_stone_collumn_horizontal[facing=north]")
