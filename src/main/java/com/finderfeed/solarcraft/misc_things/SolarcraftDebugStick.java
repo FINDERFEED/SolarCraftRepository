@@ -3,6 +3,7 @@ package com.finderfeed.solarcraft.misc_things;
 import com.finderfeed.solarcraft.content.blocks.blockentities.RuneEnergyPylonTile;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.helpers.multiblock.StructurePatternExporter;
+import com.finderfeed.solarcraft.registries.blocks.SCBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -46,48 +47,15 @@ public class SolarcraftDebugStick extends Item {
 
     @Override
     public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
-//        if (!world.isClientSide){
-//            ItemStack stack = player.getItemInHand(hand);
-//            boolean mode = stack.getOrCreateTagElement("pylon_mode").getBoolean("isCyclingPylons");
-//            if (mode){
-//                stack.getOrCreateTagElement("pylon_mode").putBoolean("isCyclingPylons",false);
-//            }else{
-//                stack.getOrCreateTagElement("pylon_mode").putBoolean("isCyclingPylons",true);
-//            }
-//            SummoningProjectile bolt = new SummoningProjectile(world,SolarcraftEntityTypes.SHADOW_ZOMBIE.get(),
-//                    43,0,87);
-//            bolt.setPos(player.position().add(0,2,0));
-//            bolt.setDeltaMovement(player.getLookAngle());
-//            world.addFreshEntity(bolt);
-//        }
-//        if (!world.isClientSide){
-//            for (int i = 0; i <= 10;i++){
-//                for (int g = 0; g <= 10;g++){
-//                    BlockPos pos = player.getOnPos().offset(i*10,0,g*10);
-//                    world.setBlock(pos,SolarcraftBlocks.REPEATER.get().defaultBlockState(),3);
-//                    world.setBlock(pos.below(),SolarcraftBlocks.FIRA_RUNE_BLOCK.get().defaultBlockState(),3);
-//                }
-//            }
-//        }
-//        if (!world.isClientSide){
-//            OrbitalExplosionProjectile projectile = new OrbitalExplosionProjectile(SolarcraftEntityTypes.ORBITAL_EXPLOSION_PROJECTILE.get(),
-//                    world);
-//
-//            ClipContext context = new ClipContext(player.position(),player.position().add(
-//                    player.getLookAngle().multiply(200,200,200)
-//            ), ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE,null);
-//            BlockHitResult r = world.clip(context);
-//            Vec3 v = r.getLocation();
-//
-//            projectile.setPos(v);
-//
-//
-//            projectile.setExplosionDepth(100);
-//            projectile.setExplosionRadius(200);
-////            projectile.setDestination((int)v.x,(int)v.z);
-//            projectile.setDestination(1000000,1000000);
-//            world.addFreshEntity(projectile);
-//        }
+        if (!world.isClientSide){
+            BlockPos pos = player.getOnPos();
+            for (int i = 0; i < 200; i+=5){
+                for (int g = 0; g < 200; g+=5){
+                    world.setBlock(pos.offset(i,-1,g), SCBlocks.ARDO_RUNE_BLOCK.get().defaultBlockState(),3);
+                    world.setBlock(pos.offset(i,0,g), SCBlocks.REPEATER.get().defaultBlockState(),3);
+                }
+            }
+        }
         return super.use(world, player, hand);
     }
 }
