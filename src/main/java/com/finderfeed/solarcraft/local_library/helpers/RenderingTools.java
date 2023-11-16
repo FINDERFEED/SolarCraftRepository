@@ -708,64 +708,7 @@ public class RenderingTools {
         }
     }
 
-//    public static void render(ItemStack p_115144_, ItemTransforms.TransformType p_115145_, boolean p_115146_, PoseStack p_115147_, MultiBufferSource p_115148_, int p_115149_, int p_115150_, BakedModel p_115151_) {
-//        ItemRenderer r = Minecraft.getInstance().getItemRenderer();
-//        if (!p_115144_.isEmpty()) {
-//            p_115147_.pushPose();
-//            boolean flag = p_115145_ == ItemTransforms.TransformType.GUI || p_115145_ == ItemTransforms.TransformType.GROUND || p_115145_ == ItemTransforms.TransformType.FIXED;
-//            if (flag) {
-//                if (p_115144_.is(Items.TRIDENT)) {
-//                    p_115151_ = r.getItemModelShaper().getModelManager().getModel(new ModelResourceLocation("minecraft:trident#inventory"));
-//                } else if (p_115144_.is(Items.SPYGLASS)) {
-//                    p_115151_ = r.getItemModelShaper().getModelManager().getModel(new ModelResourceLocation("minecraft:spyglass#inventory"));
-//                }
-//            }
-//
-//            p_115151_ = net.minecraftforge.client.ForgeHooksClient.handleCameraTransforms(p_115147_, p_115151_, p_115145_, p_115146_);
-//            p_115147_.translate(-0.5D, -0.5D, -0.5D);
-//            if (!p_115151_.isCustomRenderer() && (!p_115144_.is(Items.TRIDENT) || flag)) {
-//                boolean flag1;
-//                if (p_115145_ != ItemTransforms.TransformType.GUI && !p_115145_.firstPerson() && p_115144_.getItem() instanceof BlockItem) {
-//                    Block block = ((BlockItem)p_115144_.getItem()).getBlock();
-//                    flag1 = !(block instanceof HalfTransparentBlock) && !(block instanceof StainedGlassPaneBlock);
-//                } else {
-//                    flag1 = true;
-//                }
-//                for (var model : p_115151_.getRenderPasses(p_115144_, flag1)) {
-//                    for (var rendertype : model.getRenderTypes(p_115144_, flag1)) {
-//                        VertexConsumer vertexconsumer;
-//                        if (p_115144_.is(ItemTags.COMPASSES) && p_115144_.hasFoil()) {
-//                            p_115147_.pushPose();
-//                            PoseStack.Pose posestack$pose = p_115147_.last();
-//                            if (p_115145_ == ItemTransforms.TransformType.GUI) {
-//                                posestack$pose.pose().multiply(0.5F);
-//                            } else if (p_115145_.firstPerson()) {
-//                                posestack$pose.pose().multiply(0.75F);
-//                            }
-//
-//                            if (flag1) {
-//                                vertexconsumer = ItemRenderer.getCompassFoilBufferDirect(p_115148_, rendertype, posestack$pose);
-//                            } else {
-//                                vertexconsumer = ItemRenderer.getCompassFoilBuffer(p_115148_, rendertype, posestack$pose);
-//                            }
-//
-//                            p_115147_.popPose();
-//                        } else if (flag1) {
-//                            vertexconsumer = ItemRenderer.getFoilBufferDirect(p_115148_, rendertype, true, p_115144_.hasFoil());
-//                        } else {
-//                            vertexconsumer = ItemRenderer.getFoilBuffer(p_115148_, rendertype, true, p_115144_.hasFoil());
-//                        }
-//
-//                        r.renderModelLists(model, p_115144_, p_115149_, p_115150_, p_115147_, vertexconsumer);
-//                    }
-//                }
-//            } else {
-//                net.minecraftforge.client.extensions.common.IClientItemExtensions.of(p_115144_).getCustomRenderer().renderByItem(p_115144_, p_115145_, p_115147_, p_115148_, p_115149_, p_115150_);
-//            }
-//
-//            p_115147_.popPose();
-//        }
-//    }
+
 
     public static void blitWithBlend(PoseStack matrices,float x,float y,float texPosX,float texPosY,float width,float height,float texWidth,float texHeight, float zOffset,float alpha){
         RenderSystem.enableBlend();
@@ -1277,98 +1220,54 @@ public class RenderingTools {
         }
     }
 
-    //using my render tooltip thing because currently post events are removed. (copied from screen class and a bit modified with events)
-//    public static void renderTooltipInternal(PoseStack p_169384_, List<ClientTooltipComponent> p_169385_, int mousex, int mousey, CustomTooltip tooltip) {
-//        if (!p_169385_.isEmpty()) {
-//
-//            int i = 0;
-//            int j = p_169385_.size() == 1 ? -2 : 0;
-//
-//            for(ClientTooltipComponent clienttooltipcomponent : p_169385_) {
-//                int k = clienttooltipcomponent.getWidth(Minecraft.getInstance().font);
-//                if (k > i) {
-//                    i = k;
-//                }
-//
-//                j += clienttooltipcomponent.getHeight();
-//            }
-//
-//            int j2 = mousex + 12;
-//            int k2 = mousey - 12;
-//            if (j2 + i > Minecraft.getInstance().screen.width) {
-//                j2 -= 28 + i;
-//            }
-//
-//            if (k2 + j + 6 > Minecraft.getInstance().screen.height) {
-//                k2 = Minecraft.getInstance().screen.height - j - 6;
-//            }
-//
-//            p_169384_.pushPose();
-//            int l = -267386864;
-//            int i1 = 1347420415;
-//            int j1 = 1344798847;
-//            int k1 = 400;
-//            float f = Minecraft.getInstance().getItemRenderer().blitOffset;
-//            Minecraft.getInstance().getItemRenderer().blitOffset = 400.0F;
-//            Tesselator tesselator = Tesselator.getInstance();
-//            BufferBuilder bufferbuilder = tesselator.getBuilder();
-//            RenderSystem.setShader(GameRenderer::getPositionColorShader);
-//            bufferbuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_COLOR);
-//            Matrix4f matrix4f = p_169384_.last().pose();
-//            MyColorEvent colorEvent = new MyColorEvent(Items.AIR.getDefaultInstance(), p_169384_, j2, k2, Minecraft.getInstance().font,p_169385_,tooltip);
-//            MinecraftForge.EVENT_BUS.post(colorEvent);
-//
-//            fillGradient(matrix4f, bufferbuilder, j2 - 3, k2 - 4, j2 + i + 3, k2 - 3, 400, colorEvent.getBackgroundStart(), colorEvent.getBackgroundStart());
-//            fillGradient(matrix4f, bufferbuilder, j2 - 3, k2 + j + 3, j2 + i + 3, k2 + j + 4, 400, colorEvent.getBackgroundEnd(), colorEvent.getBackgroundEnd());
-//            fillGradient(matrix4f, bufferbuilder, j2 - 3, k2 - 3, j2 + i + 3, k2 + j + 3, 400, colorEvent.getBackgroundStart(), colorEvent.getBackgroundEnd());
-//            fillGradient(matrix4f, bufferbuilder, j2 - 4, k2 - 3, j2 - 3, k2 + j + 3, 400, colorEvent.getBackgroundStart(), colorEvent.getBackgroundEnd());
-//            fillGradient(matrix4f, bufferbuilder, j2 + i + 3, k2 - 3, j2 + i + 4, k2 + j + 3, 400, colorEvent.getBackgroundStart(), colorEvent.getBackgroundEnd());
-//            fillGradient(matrix4f, bufferbuilder, j2 - 3, k2 - 3 + 1, j2 - 3 + 1, k2 + j + 3 - 1, 400, colorEvent.getBorderStart(), colorEvent.getBorderEnd());
-//            fillGradient(matrix4f, bufferbuilder, j2 + i + 2, k2 - 3 + 1, j2 + i + 3, k2 + j + 3 - 1, 400, colorEvent.getBorderStart(), colorEvent.getBorderEnd());
-//            fillGradient(matrix4f, bufferbuilder, j2 - 3, k2 - 3, j2 + i + 3, k2 - 3 + 1, 400, colorEvent.getBorderStart(), colorEvent.getBorderStart());
-//            fillGradient(matrix4f, bufferbuilder, j2 - 3, k2 + j + 2, j2 + i + 3, k2 + j + 3, 400, colorEvent.getBorderEnd(), colorEvent.getBorderEnd());
-//            RenderSystem.enableDepthTest();
-////            RenderSystem.disableTexture();
-//            RenderSystem.enableBlend();
-//            RenderSystem.defaultBlendFunc();
-//
-//            BufferUploader.drawWithShader(bufferbuilder.end());
-//            RenderSystem.disableBlend();
-////            RenderSystem.enableTexture();
-//
-//
-//
-//            MultiBufferSource.BufferSource multibuffersource$buffersource = MultiBufferSource.immediate(Tesselator.getInstance().getBuilder());
-//            p_169384_.translate(0.0D, 0.0D, 400.0D);
-//            int l1 = k2;
-//
-//            for(int i2 = 0; i2 < p_169385_.size(); ++i2) {
-//                ClientTooltipComponent clienttooltipcomponent1 = p_169385_.get(i2);
-//                clienttooltipcomponent1.renderText(Minecraft.getInstance().font, j2, l1, matrix4f, multibuffersource$buffersource);
-//                l1 += clienttooltipcomponent1.getHeight() + (i2 == 0 ? 2 : 0);
-//            }
-//
-//            multibuffersource$buffersource.endBatch();
-//
-//
-//
-//            p_169384_.popPose();
-//
-//            l1 = k2;
-//
-//            for(int l2 = 0; l2 < p_169385_.size(); ++l2) {
-//                ClientTooltipComponent clienttooltipcomponent2 = p_169385_.get(l2);
-//                clienttooltipcomponent2.renderImage(Minecraft.getInstance().font, j2, l1, p_169384_, Minecraft.getInstance().getItemRenderer(), 400);
-//                l1 += clienttooltipcomponent2.getHeight() + (l2 == 0 ? 2 : 0);
-//            }
-//
-//            Minecraft.getInstance().getItemRenderer().blitOffset = f;
-//            PostColorEvent event = new PostColorEvent(p_169384_, j2, k2, Minecraft.getInstance().font,p_169385_,i,j,tooltip);
-//            MinecraftForge.EVENT_BUS.post(event);
-//        }
-//
-//
-//    }
+
+
+    public static final ResourceLocation BASIC_LEXICON_PAGE_COMPONENTS = new ResourceLocation(SolarCraft.MOD_ID,"textures/gui/basic_lexicon_page/basic_lexicon_page_corners_and_bases.png");
+    public static final ResourceLocation BASIC_LEXICON_PAGE_UPDOWN = new ResourceLocation(SolarCraft.MOD_ID,"textures/gui/basic_lexicon_page/basic_lexicon_page_updown.png");
+    public static final ResourceLocation BASIC_LEXICON_PAGE_LEFTRIGHT = new ResourceLocation(SolarCraft.MOD_ID,"textures/gui/basic_lexicon_page/basic_lexicon_page_leftright.png");
+    public static final ResourceLocation BASIC_LEXICON_PAGE_BACKGROUND = new ResourceLocation(SolarCraft.MOD_ID,"textures/gui/solar_lexicon_main_page_scrollablep.png");
+
+
+    public static void renderBasicLexiconPage(PoseStack matrix,int x,int y,int infoWidth,int infoHeight){
+        matrix.pushPose();
+
+        ClientHelpers.bindText(BASIC_LEXICON_PAGE_BACKGROUND);
+        blitWithBlend(matrix,x,y,0,0,infoWidth,infoHeight,512,512,0,1f);
+
+        ClientHelpers.bindText(BASIC_LEXICON_PAGE_COMPONENTS);
+        //0 0 81*13 - lower thingy
+        //0 13 89*12 - upper thingy
+        //89*48
+        /*
+        corners -
+        upright - 0 25 15*23
+        upleft - 15 25 15*23
+        downright - 30 25 15*23
+        downleft - 45 25 15*23
+         */
+        float xCenter = x + infoWidth / 2f;
+        blitWithBlend(matrix,xCenter - 89/2f,y - 10,0,13,89,12,89,48,0,1f);
+        blitWithBlend(matrix,xCenter - 81/2f,y + infoHeight - 2,0,0,81,13,89,48,0,1f);
+        blitWithBlend(matrix,x - 10,y - 10,0,25,15,23,89,48,0,1f);
+        blitWithBlend(matrix,x + infoWidth - 5,y - 10,15,25,15,23,89,48,0,1f);
+        blitWithBlend(matrix,x - 10,y + infoHeight - 13,30,25,15,23,89,48,0,1f);
+        blitWithBlend(matrix,x + infoWidth - 5,y + infoHeight - 13,45,25,15,23,89,48,0,1f);
+
+        ClientHelpers.bindText(BASIC_LEXICON_PAGE_UPDOWN);
+        //5*8
+        blitWithBlend(matrix,x + 5,y - 8,0,0,infoWidth/2f - 89/2f - 5,8,5,8,0,1f);
+        blitWithBlend(matrix,xCenter + 89/2f,y - 8 ,0,0,infoWidth/2f - 89/2f - 5,8,5,8,0,1f);
+
+        blitWithBlend(matrix,x + 5,y + infoHeight ,0,0,infoWidth/2f - 81/2f - 5,8,5,8,0,1f);
+        blitWithBlend(matrix,xCenter + 81/2f,y + infoHeight,0,0,infoWidth/2f - 81/2f - 5,8,5,8,0,1f);
+
+        ClientHelpers.bindText(BASIC_LEXICON_PAGE_LEFTRIGHT);
+        //8*5
+        blitWithBlend(matrix,x - 8,y + 13,0,0,8,infoHeight - 26,8,5,0,1f);
+        blitWithBlend(matrix,x + infoWidth,y + 13,0,0,8,infoHeight - 26,8,5,0,1f);
+
+        matrix.popPose();
+    }
     protected static void fillGradient(Matrix4f p_93124_, BufferBuilder p_93125_, int p_93126_, int p_93127_, int p_93128_, int p_93129_, int p_93130_, int p_93131_, int p_93132_) {
         float f = (float)(p_93131_ >> 24 & 255) / 255.0F;
         float f1 = (float)(p_93131_ >> 16 & 255) / 255.0F;
@@ -1501,15 +1400,6 @@ public class RenderingTools {
             for (List<BakedQuad> quads : ITEMS.get(r)){
                 Minecraft.getInstance().getItemRenderer().renderQuadList(matrices, vertex, quads, item, light, overlay);
             }
-//            for(Direction direction : List.of(Direction.UP,Direction.NORTH,Direction.EAST)) {
-//
-//                    random.setSeed(42L);
-//                    Minecraft.getInstance().getItemRenderer().renderQuadList(matrices, vertex, model.getQuads((BlockState) null, direction, random, EmptyModelData.INSTANCE), item, light, overlay);
-//
-//            }
-
-//            random.setSeed(42L);
-//            Minecraft.getInstance().getItemRenderer().renderQuadList(matrices, vertex, model.getQuads((BlockState)null, (Direction)null, random,EmptyModelData.INSTANCE), item, light, overlay);
         }
 
 
@@ -1522,36 +1412,6 @@ public class RenderingTools {
         }
 
 
-//        protected void renderGuiItem(ItemStack p_115128_, int p_115129_, int p_115130_, BakedModel p_115131_,float scale) {
-//            Minecraft.getInstance().textureManager.getTexture(TextureAtlas.LOCATION_BLOCKS).setFilter(false, false);
-//            RenderSystem.setShaderTexture(0, TextureAtlas.LOCATION_BLOCKS);
-//            RenderSystem.enableBlend();
-//            RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-//            RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-//            PoseStack posestack = RenderSystem.getModelViewStack();
-//            posestack.pushPose();
-//            posestack.translate((double)p_115129_, (double)p_115130_, (double)(100.0F + Minecraft.getInstance().getItemRenderer().blitOffset));
-////            posestack.translate(8.0D, 8.0D, 8.0D);
-//            posestack.scale(1.0F, -1.0F, 1.0F);
-//            posestack.scale(16.0F*scale, 16.0F*scale, 16.0F*scale);
-//            RenderSystem.applyModelViewMatrix();
-//            PoseStack posestack1 = new PoseStack();
-//            MultiBufferSource.BufferSource multibuffersource$buffersource = Minecraft.getInstance().renderBuffers().bufferSource();
-//            boolean flag = !p_115131_.usesBlockLight();
-//            if (flag) {
-//                Lighting.setupForFlatItems();
-//            }
-//
-//            renderOpt(p_115128_, ItemTransforms.TransformType.GUI, false, posestack1, multibuffersource$buffersource, 15728880, OverlayTexture.NO_OVERLAY, p_115131_);
-//            multibuffersource$buffersource.endBatch();
-//            RenderSystem.enableDepthTest();
-//            if (flag) {
-//                Lighting.setupFor3DItems();
-//            }
-//
-//            posestack.popPose();
-//            RenderSystem.applyModelViewMatrix();
-//        }
 
         protected void renderScaledGuiItem(GuiGraphics graphics,ItemStack stack, int x, int y,float scale,double zOffset){
             BakedModel bakedmodel = Minecraft.getInstance().getItemRenderer().getModel(stack,Minecraft.getInstance().level, Minecraft.getInstance().player, 0);
@@ -1573,43 +1433,7 @@ public class RenderingTools {
             }
             matrices.popPose();
         }
-//        protected void renderScaledGuiItem(ItemStack stack, int x, int y,float scale,double zOffset) {
-//            Minecraft.getInstance().textureManager.getTexture(TextureAtlas.LOCATION_BLOCKS).setFilter(false, false);
-//            RenderSystem.setShaderTexture(0, TextureAtlas.LOCATION_BLOCKS);
-//            RenderSystem.enableBlend();
-//            RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-//            RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-//            PoseStack posestack = RenderSystem.getModelViewStack();
-//            posestack.pushPose();
-//
-//
-//
-//            posestack.translate((double)x, (double)y, (double)(100.0F  + zOffset));
-//            posestack.translate(8.0D*scale, 8.0D*scale, 0.0D);
-//            posestack.scale(1.0F, -1.0F, 1.0F);
-//            posestack.scale(16.0F*scale, 16.0F*scale, 16.0F*scale);
-//
-//            RenderSystem.applyModelViewMatrix();
-//            PoseStack posestack1 = new PoseStack();
-//
-//            MultiBufferSource.BufferSource multibuffersource$buffersource = Minecraft.getInstance().renderBuffers().bufferSource();
-//            BakedModel p_115131_ = Minecraft.getInstance().getItemRenderer().getModel(stack,null,null,0);
-//            boolean flag = !p_115131_.usesBlockLight();
-//            if (flag) {
-//                Lighting.setupForFlatItems();
-//            }
-//
-//
-//            renderItemStackOptimized(stack, ItemDisplayContext.GUI, false, posestack1, multibuffersource$buffersource, 15728880, OverlayTexture.NO_OVERLAY, p_115131_);
-//            multibuffersource$buffersource.endBatch();
-//            RenderSystem.enableDepthTest();
-//            if (flag) {
-//                Lighting.setupFor3DItems();
-//            }
-//
-//            posestack.popPose();
-//            RenderSystem.applyModelViewMatrix();
-//        }
+
 
         public void renderItemStackOptimized(ItemStack stack, ItemDisplayContext ctx, boolean idk, PoseStack matrices, MultiBufferSource src, int x, int y, BakedModel mdl) {
             if (!stack.isEmpty()) {
@@ -1670,64 +1494,6 @@ public class RenderingTools {
         }
 
 
-//        public void renderOpt(ItemStack p_115144_, ItemTransforms.TransformType p_115145_, boolean p_115146_, PoseStack p_115147_, MultiBufferSource p_115148_, int p_115149_, int p_115150_, BakedModel p_115151_) {
-//            ItemRenderer r = Minecraft.getInstance().getItemRenderer();
-//            if (!p_115144_.isEmpty()) {
-//                p_115147_.pushPose();
-//                boolean flag = p_115145_ == ItemTransforms.TransformType.GUI || p_115145_ == ItemTransforms.TransformType.GROUND || p_115145_ == ItemTransforms.TransformType.FIXED;
-//                if (flag) {
-//                    if (p_115144_.is(Items.TRIDENT)) {
-//                        p_115151_ = r.getItemModelShaper().getModelManager().getModel(new ModelResourceLocation("minecraft:trident#inventory"));
-//                    } else if (p_115144_.is(Items.SPYGLASS)) {
-//                        p_115151_ = r.getItemModelShaper().getModelManager().getModel(new ModelResourceLocation("minecraft:spyglass#inventory"));
-//                    }
-//                }
-//
-//                p_115151_ = net.minecraftforge.client.ForgeHooksClient.handleCameraTransforms(p_115147_, p_115151_, p_115145_, p_115146_);
-//                p_115147_.translate(-0.5D, -0.5D, -0.5D);
-//                if (!p_115151_.isCustomRenderer() && (!p_115144_.is(Items.TRIDENT) || flag)) {
-//                    boolean flag1;
-//                    if (p_115145_ != ItemTransforms.TransformType.GUI && !p_115145_.firstPerson() && p_115144_.getItem() instanceof BlockItem) {
-//                        Block block = ((BlockItem)p_115144_.getItem()).getBlock();
-//                        flag1 = !(block instanceof HalfTransparentBlock) && !(block instanceof StainedGlassPaneBlock);
-//                    } else {
-//                        flag1 = true;
-//                    }
-//                    for (var model : p_115151_.getRenderPasses(p_115144_, flag1)) {
-//                        for (var rendertype : model.getRenderTypes(p_115144_, flag1)) {
-//                            VertexConsumer vertexconsumer;
-//                            if (p_115144_.is(ItemTags.COMPASSES) && p_115144_.hasFoil()) {
-//                                p_115147_.pushPose();
-//                                PoseStack.Pose posestack$pose = p_115147_.last();
-//                                if (p_115145_ == ItemTransforms.TransformType.GUI) {
-//                                    posestack$pose.pose().multiply(0.5F);
-//                                } else if (p_115145_.firstPerson()) {
-//                                    posestack$pose.pose().multiply(0.75F);
-//                                }
-//
-//                                if (flag1) {
-//                                    vertexconsumer = getCompassFoilBufferDirect(p_115148_, rendertype, posestack$pose);
-//                                } else {
-//                                    vertexconsumer = getCompassFoilBuffer(p_115148_, rendertype, posestack$pose);
-//                                }
-//
-//                                p_115147_.popPose();
-//                            } else if (flag1) {
-//                                vertexconsumer = getFoilBufferDirect(p_115148_, rendertype, true, p_115144_.hasFoil());
-//                            } else {
-//                                vertexconsumer = ItemRenderer.getFoilBuffer(p_115148_, rendertype, true, p_115144_.hasFoil());
-//                            }
-//
-//                            renderModelLists(model, p_115144_, p_115149_, p_115150_, p_115147_, vertexconsumer);
-//                        }
-//                    }
-//                } else {
-//                    net.minecraftforge.client.extensions.common.IClientItemExtensions.of(p_115144_).getCustomRenderer().renderByItem(p_115144_, p_115145_, p_115147_, p_115148_, p_115149_, p_115150_);
-//                }
-//
-//                p_115147_.popPose();
-//            }
-//        }
     }
 
 

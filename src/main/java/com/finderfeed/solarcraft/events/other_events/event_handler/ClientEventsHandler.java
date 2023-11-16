@@ -4,12 +4,19 @@ package com.finderfeed.solarcraft.events.other_events.event_handler;
 import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.client.tooltips.RETooltipComponent;
 import com.finderfeed.solarcraft.content.blocks.infusing_table_things.InfuserTileEntity;
+import com.finderfeed.solarcraft.content.blocks.solar_forge_block.solar_forge_screen.SolarCraftButton;
 import com.finderfeed.solarcraft.content.items.ModuleItem;
 import com.finderfeed.solarcraft.content.items.runic_energy.RunicEnergyCost;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.Progression;
 import com.finderfeed.solarcraft.content.items.solar_wand.client.WandModeSelectionScreen;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.helpers.Helpers;
+import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
+import com.finderfeed.solarcraft.local_library.screen_constructor.BasicBuildableScreen;
+import com.finderfeed.solarcraft.local_library.screen_constructor.RenderableComponentInstance;
+import com.finderfeed.solarcraft.local_library.screen_constructor.ScreenDataBuilder;
+import com.finderfeed.solarcraft.local_library.screen_constructor.WidgetInstance;
+import com.finderfeed.solarcraft.local_library.screen_constructor.renderable_component_instances.ImageComponent;
 import com.finderfeed.solarcraft.misc_things.CameraShake;
 import com.finderfeed.solarcraft.misc_things.Flash;
 import com.finderfeed.solarcraft.misc_things.IScrollable;
@@ -25,11 +32,13 @@ import com.mojang.datafixers.util.Either;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
@@ -96,6 +105,26 @@ public class ClientEventsHandler {
             Minecraft.getInstance().setScreen(new WandModeSelectionScreen());
         }
 
+        if (event.getAction() == GLFW.GLFW_PRESS && event.getKey() == GLFW.GLFW_KEY_K){
+            Minecraft.getInstance().setScreen(new BasicBuildableScreen(
+                    new ScreenDataBuilder<BasicBuildableScreen>()
+                            .setDimensions(304,100)
+                            .addAdditionalData("testData",2424.45f)
+                            .addWidget((screen)->{
+                                return new WidgetInstance("testButton",1,new SolarCraftButton(
+                                        screen.relX + 20,screen.relY + 10,Component.literal("test"),(btn)-> {
+                                            System.out.println(screen.getAdditionalData("testData",Float.class));
+                                        }
+                                ));
+                            })
+                            .addRenderable(new RenderableComponentInstance<>(0,((screen1, graphics, mx, my, pticks) -> {
+                                RenderingTools.renderBasicLexiconPage(graphics.pose(), screen1.relX, screen1.relY, screen1.getScreenWidth(), screen1.getScreenHeight());
+                                }))
+                            )
+                    )
+
+            );
+        }
 
     }
 

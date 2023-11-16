@@ -1,42 +1,47 @@
 package com.finderfeed.solarcraft.local_library.screen_constructor;
 
+import com.finderfeed.solarcraft.local_library.client.screens.DefaultScreen;
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
-import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.network.chat.Component;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
-public abstract class BuildableScreen extends Screen {
-
+public abstract class BuildableScreen extends DefaultScreen {
     private ScreenDataBuilder<? extends BuildableScreen> data;
-
     private HashMap<String,Object> additionalData;
 
+    protected List<RenderableComponentInstance> renderableInstances = new ArrayList<>();
     public BuildableScreen(ScreenDataBuilder<? extends BuildableScreen> data) {
-        super(Component.literal(""));
+        super();
         this.additionalData = new HashMap<>();
         this.data = data;
     }
 
-
-
     @Override
     protected void init() {
         super.init();
+        this.renderableInstances.clear();
         this.additionalData = new HashMap<>(data.additionalData);
-        for (AbstractWidget widget : data.widgets){
-            this.addWidget(widget);
-        }
+        data.applyWidgetsAndRenderablesToScreen(this);
         data.hackyRunOnInit(this);
     }
 
+    public void hackyWidgetAdd(AbstractWidget widget){
+        this.addWidget(widget);
+    }
 
     @Override
     public void render(GuiGraphics graphics, int mx, int my, float pticks) {
-        for (ScreenDataBuilder.RenderableComponentInstance instance : data.renderables){
+        PoseStack matrix = graphics.pose();
+        matrix.pushPose();
+        for (RenderableComponentInstance instance : this.renderableInstances){
             instance.component().hackyRender(this,graphics,mx,my,pticks);
+            matrix.translate(0,0,1);
         }
+        matrix.popPose();
     }
 
 
@@ -83,7 +88,21 @@ public abstract class BuildableScreen extends Screen {
     }
 
 
-    public <U> U getAdditionalData(String name, Class<U> clazz){
+    public <U> U getAdditionalData(String name, Class<U> clazz) {
         return (U)this.additionalData.get(name);
+    }
+
+    public void addAdditionalData(String name,Object data){
+        this.additionalData.put(name,data);
+    }
+
+    @Override
+    public int getScreenWidth() {
+        return data.screenWidth;
+    }
+
+    @Override
+    public int getScreenHeight() {
+        return data.screenHeight;
     }
 }

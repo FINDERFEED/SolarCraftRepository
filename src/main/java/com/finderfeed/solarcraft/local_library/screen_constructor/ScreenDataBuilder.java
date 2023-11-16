@@ -7,12 +7,17 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.function.Consumer;
+import java.util.function.Function;
 
 public class ScreenDataBuilder<T extends BuildableScreen> {
 
-    protected List<AbstractWidget> widgets = new ArrayList<>();
-    protected List<RenderableComponentInstance> renderables = new ArrayList<>();
+    protected List<Function<T,WidgetInstance>> widgets = new ArrayList<>();
+    protected List<RenderableComponentInstance<T>> renderables = new ArrayList<>();
+
     protected HashMap<String,Object> additionalData = new HashMap<>();
+
+    protected int screenWidth;
+    protected int screenHeight;
 
     protected Consumer<T> onTick;
     protected Consumer<T> onInit;
@@ -26,7 +31,6 @@ public class ScreenDataBuilder<T extends BuildableScreen> {
     public ScreenDataBuilder(){
 
     }
-
 
     public ScreenDataBuilder<T> onInit(Consumer<T> onInit){
         this.onInit = onInit;
@@ -63,29 +67,20 @@ public class ScreenDataBuilder<T extends BuildableScreen> {
         return this;
     }
 
-    public ScreenDataBuilder<T> addRenderable(int renderIndex,RenderableComponent<T> renderableComponent){
-        this.renderables.add(new RenderableComponentInstance(renderIndex,renderableComponent));
+    public ScreenDataBuilder<T> addRenderable(RenderableComponentInstance<T> renderableComponent){
+        this.renderables.add(renderableComponent);
         return this;
     }
 
-    public ScreenDataBuilder<T> addWidget(int renderIndex,String name,AbstractWidget widget){
-        if (this.additionalData.containsKey(name)){
-            throw new RuntimeException("Duplicate data: " + name);
-        }
+    public ScreenDataBuilder<T> addWidget(Function<T,WidgetInstance> widget){
         this.widgets.add(widget);
-        this.additionalData.put(name,widget);
-        this.renderables.add(new RenderableComponentInstance(renderIndex,(screen,graphics,mx,my,pticks)->{
-            widget.render(graphics,mx,my,pticks);
-        }));
         return this;
     }
-
-
-    public ScreenDataBuilder<T> build(){
-        this.renderables.sort(Comparator.comparingInt(i->i.renderIndex));
+    public ScreenDataBuilder<T> setDimensions(int width,int height){
+        this.screenWidth = width;
+        this.screenHeight = height;
         return this;
     }
-
 
 
 
@@ -99,7 +94,27 @@ public class ScreenDataBuilder<T extends BuildableScreen> {
         this.onInit.accept((T)screen);
     }
 
-    public record RenderableComponentInstance(int renderIndex,RenderableComponent<?> component){
-
+    public int getScreenHeight() {
+        return screenHeight;
     }
+
+    public int getScreenWidth() {
+        return screenWidth;
+    }
+
+    protected void applyWidgetsAndRenderablesToScreen(BuildableScreen screen){
+        for (Function<T,WidgetInstance> instance : widgets){
+            WidgetInstance widgetInstance = instance.apply((T)screen);
+            AbstractWidget widget = widgetInstance.widget();
+            screen.hackyWidgetAdd(widget);
+            screen.renderableInstances.add(new RenderableComponentInstance(widgetInstance.renderIndex(),(scr,graphics,mx,my,pticks)->{
+                widget.render(graphics,mx,my,pticks);
+            }));
+        }
+        screen.renderableInstances.addAll(this.renderables);
+        screen.renderableInstances.sort(Comparator.comparingInt(i->i.renderIndex()));
+    }
+
+
+
 }
