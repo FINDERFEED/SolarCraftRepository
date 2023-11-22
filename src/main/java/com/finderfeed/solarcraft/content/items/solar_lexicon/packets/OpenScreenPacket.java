@@ -1,7 +1,7 @@
 package com.finderfeed.solarcraft.content.items.solar_lexicon.packets;
 
 import com.finderfeed.solarcraft.misc_things.AbstractPacket;
-import com.finderfeed.solarcraft.content.items.solar_lexicon.screen.InvokeScreenTest;
+import com.finderfeed.solarcraft.packet_handler.ClientPacketHandles;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.network.NetworkEvent;
 
@@ -23,7 +23,7 @@ public class OpenScreenPacket extends AbstractPacket {
     @Override
     public void handle(Supplier<NetworkEvent.Context> ctx) {
 
-        ctx.get().enqueueWork(InvokeScreenTest::openScreen);
+        ctx.get().enqueueWork(ClientPacketHandles::openLexiconScreen);
     ctx.get().setPacketHandled(true);
     }
 }

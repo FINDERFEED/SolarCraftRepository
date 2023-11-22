@@ -29,7 +29,7 @@ public class InfusingRecipe implements Recipe<Container> {
     public final ItemStack output;
     public final String fragID;
     public final int infusingTime;
-    public final int requriedEnergy;
+    public final int requriedSolarEnergy;
     public final String tag;
     public final int count;
     public final RunicEnergyCost RUNIC_ENERGY_COST;
@@ -48,7 +48,7 @@ public class InfusingRecipe implements Recipe<Container> {
         this.infusingTime = infusingTime;
         this.fragID = fragmentID;
         this.RUNIC_ENERGY_COST = costs;
-        this.requriedEnergy = requriedEnergy;
+        this.requriedSolarEnergy = requriedEnergy;
         this.count = output.getCount();
         this.tag = tag;
         if (requriedEnergy > 0){

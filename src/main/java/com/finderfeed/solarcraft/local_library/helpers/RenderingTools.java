@@ -95,6 +95,22 @@ public class RenderingTools {
     public static final ResourceLocation TEXT_FIELD_HORIZONTAL = new ResourceLocation(SolarCraft.MOD_ID,"textures/gui/text_field_horizontal.png");
     public static final ResourceLocation TEXT_FIELD_VERTICAL = new ResourceLocation(SolarCraft.MOD_ID,"textures/gui/text_field_vertical.png");
 
+
+    public static void renderItemAndTooltip(ItemStack item,GuiGraphics graphics,int x,int y,int mx,int my,int tooltipOffset){
+        if (!item.isEmpty()) {
+            PoseStack matrix = graphics.pose();
+
+            matrix.pushPose();
+            graphics.renderItem(item,x,y);
+            graphics.renderItemDecorations(Minecraft.getInstance().font, item, x, y);
+            if (isMouseInBorders(mx, my, x, y, x + 16, y + 16)) {
+                matrix.translate(0, 0, tooltipOffset);
+                graphics.renderTooltip(Minecraft.getInstance().font, item, mx, my);
+            }
+            matrix.popPose();
+        }
+    }
+
     public static GuiGraphics createGraphics(){
         return new GuiGraphics(Minecraft.getInstance(),Minecraft.getInstance().renderBuffers().bufferSource());
     }
@@ -1230,10 +1246,20 @@ public class RenderingTools {
 
     public static void renderBasicLexiconPage(PoseStack matrix,int x,int y,int infoWidth,int infoHeight){
         matrix.pushPose();
+        renderBasicLexiconPageBackground(matrix,x,y,infoWidth,infoHeight);
+        renderBasicLexiconPageOutline(matrix,x,y,infoWidth,infoHeight);
+        matrix.popPose();
+    }
 
+    public static void renderBasicLexiconPageBackground(PoseStack matrix,int x,int y,int infoWidth,int infoHeight){
+        matrix.pushPose();
         ClientHelpers.bindText(BASIC_LEXICON_PAGE_BACKGROUND);
         blitWithBlend(matrix,x,y,0,0,infoWidth,infoHeight,512,512,0,1f);
+        matrix.popPose();
+    }
 
+    public static void renderBasicLexiconPageOutline(PoseStack matrix,int x,int y,int infoWidth,int infoHeight){
+        matrix.pushPose();
         ClientHelpers.bindText(BASIC_LEXICON_PAGE_COMPONENTS);
         //0 0 81*13 - lower thingy
         //0 13 89*12 - upper thingy
@@ -1265,7 +1291,6 @@ public class RenderingTools {
         //8*5
         blitWithBlend(matrix,x - 8,y + 13,0,0,8,infoHeight - 26,8,5,0,1f);
         blitWithBlend(matrix,x + infoWidth,y + 13,0,0,8,infoHeight - 26,8,5,0,1f);
-
         matrix.popPose();
     }
     protected static void fillGradient(Matrix4f p_93124_, BufferBuilder p_93125_, int p_93126_, int p_93127_, int p_93128_, int p_93129_, int p_93130_, int p_93131_, int p_93132_) {

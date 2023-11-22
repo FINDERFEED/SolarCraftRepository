@@ -1,4 +1,4 @@
-package com.finderfeed.solarcraft.content.items.solar_lexicon.screen;
+package com.finderfeed.solarcraft.content.items.solar_lexicon.screen.misc;
 
 import com.finderfeed.solarcraft.content.items.solar_lexicon.screen.buttons.ItemStackButton;
 import com.finderfeed.solarcraft.local_library.client.tooltips.AnimatedTooltip;

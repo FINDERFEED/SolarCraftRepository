@@ -310,7 +310,7 @@ public class RuneEnergyPylonTile extends BlockEntity implements  DebugTarget, Ru
 
     @Override
     public float drainEnergy(RunicEnergy.Type type,Player player, float amount) {
-        if (!player.level.isClientSide) {
+        if (!player.level.isClientSide && type == this.type) {
             float delta = Math.min(amount, currentEnergy);
             this.currentEnergy -= delta;
             Helpers.fireProgressionEvent(player, Progression.RUNE_ENERGY_CLAIM);

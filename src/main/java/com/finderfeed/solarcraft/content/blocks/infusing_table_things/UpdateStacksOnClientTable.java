@@ -86,7 +86,7 @@ public class UpdateStacksOnClientTable {
                     tile.setItem(7, stack7);
                     tile.setItem(8, stack8);
                     tile.setItem(9, output);
-                    tile.RECIPE_IN_PROGRESS = isActive;
+                    tile.isRecipeInProgress = isActive;
                 }
             });
         });

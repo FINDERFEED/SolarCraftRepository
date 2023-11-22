@@ -1,5 +1,6 @@
 package com.finderfeed.solarcraft.content.items.solar_lexicon.screen;
 
+import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.screen.buttons.ItemStackTabButton;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragmentHelper;
@@ -36,11 +37,11 @@ import java.util.List;
 import static com.finderfeed.solarcraft.content.items.solar_lexicon.screen.InformationScreen.getScreenFromFragment;
 
 
-public class StructureScreen extends Screen {
+public class StructureScreen extends LexiconScreen {
 
-    public final ResourceLocation STRUCTURE_GUI = new ResourceLocation("solarcraft","textures/gui/structure_screen.png");
-    public static final ResourceLocation BUTTONS = new ResourceLocation("solarcraft","textures/misc/page_buttons.png");
-    public final ResourceLocation THREEDSCREENBTN = new ResourceLocation("solarcraft","textures/misc/button.png");
+    public final ResourceLocation STRUCTURE_GUI = new ResourceLocation(SolarCraft.MOD_ID,"textures/gui/structure_screen.png");
+    public static final ResourceLocation BUTTONS = new ResourceLocation(SolarCraft.MOD_ID,"textures/misc/page_buttons.png");
+    public final ResourceLocation THREEDSCREENBTN = new ResourceLocation(SolarCraft.MOD_ID,"textures/misc/button.png");
     public int currentPage;
     private List<List<BlockAndRelxRely>> structureBlocks = new ArrayList<>();
 
@@ -50,13 +51,11 @@ public class StructureScreen extends Screen {
     public int structWidth;
     public int structHeightAndPageCount;
     public MultiblockStructure structure;
-    public  int relX;
-    public  int relY;
     public AncientFragment fragment;
     private float structureScale = 1f;
 
     public StructureScreen(AncientFragment fragment,MultiblockStructure structure) {
-        super(Component.literal(""));
+        super();
         this.structure = structure;
         this.fragment = fragment;
     }
@@ -65,11 +64,11 @@ public class StructureScreen extends Screen {
     @Override
     protected void init() {
         structureBlocks.clear();
-        int width = minecraft.getWindow().getWidth();
-        int height = minecraft.getWindow().getHeight();
-        int scale = (int) minecraft.getWindow().getGuiScale();
-        this.relX = (width/scale - 183)/2-15;
-        this.relY = (height - 218*scale)/2/scale;
+//        int width = minecraft.getWindow().getWidth();
+//        int height = minecraft.getWindow().getHeight();
+//        int scale = (int) minecraft.getWindow().getGuiScale();
+//        this.relX = (width/scale - 183)/2-15;
+//        this.relY = (height - 218*scale)/2/scale;
         currentPage = 1;
         structHeightAndPageCount = structure.pattern.length;
         structWidth = structure.pattern[0].length / 2;
@@ -190,6 +189,16 @@ public class StructureScreen extends Screen {
             }
         }
 
+    }
+
+    @Override
+    public int getScreenWidth() {
+        return 217;
+    }
+
+    @Override
+    public int getScreenHeight() {
+        return 217;
     }
 
     @Override

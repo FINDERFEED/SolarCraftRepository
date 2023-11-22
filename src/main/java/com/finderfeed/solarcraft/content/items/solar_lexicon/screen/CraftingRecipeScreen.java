@@ -30,7 +30,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class CraftingRecipeScreen extends Screen implements PlaceRecipe<Ingredient> {
+public class CraftingRecipeScreen extends LexiconScreen implements PlaceRecipe<Ingredient> {
     public final ResourceLocation BUTTONS = new ResourceLocation("solarcraft","textures/misc/page_buttons.png");
 
     private static final ResourceLocation MAIN_SCREEN = new ResourceLocation(SolarCraft.MOD_ID,"textures/gui/solar_lexicon_crafting_recipe_screen.png");
@@ -39,42 +39,34 @@ public class CraftingRecipeScreen extends Screen implements PlaceRecipe<Ingredie
     private PhantomInventory phantomInv = new PhantomInventory(9);
     private List<Slot> phantomSlots = new ArrayList<>();
     private List<ItemRator> itemRators = new ArrayList<>();
-    private int relX;
-    private int relY;
     private final List<CraftingRecipe> recipes;
-    private int currentPage = 0;
-    private int maxPages;
+
     private int time = 0;
 
     public CraftingRecipeScreen(CraftingRecipe recipe) {
-        super(Component.literal(""));
+        super();
         this.recipes = List.of(recipe);
-        this.maxPages = 0;
     }
 
 
     public CraftingRecipeScreen(List<CraftingRecipe> recipe) {
-        super(Component.literal(""));
+        super();
         this.recipes = recipe;
-        this.maxPages = recipe.size()-1;
     }
 
     @Override
     protected void init() {
-        int width = minecraft.getWindow().getWidth();
-        int height = minecraft.getWindow().getHeight();
-        int scale = (int) minecraft.getWindow().getGuiScale();
-        this.relX = (width/scale - 183)/2-12;
-        this.relY = (height - 218*scale)/2/scale;
+        super.init();
         int xoffs = 111;
         this.prepareSlots();
         this.setupGhostRecipe(recipes.get(0));
-        if (maxPages != 0) {
+        if (this.getPagesCount() != 0) {
             addRenderableWidget(new FDImageButton(relX + 180 - 10, relY + 36, 16, 16, 0, 0, 0, BUTTONS, 16, 32, (button) -> {
-                if ((currentPage + 1 <= maxPages)) {
-                    currentPage += 1;
-                }
-                this.setupGhostRecipe(recipes.get(currentPage));
+                this.nextPage();
+                //                if ((currentPage + 1 <= maxPages)) {
+//                    currentPage += 1;
+//                }
+//                this.setupGhostRecipe(recipes.get(currentPage));
             },(button,graphics,mousex,mousey)->{
                 graphics.renderTooltip(font,Component.literal("Next recipe"),mousex,mousey);
             },Component.literal("")){
@@ -84,10 +76,11 @@ public class CraftingRecipeScreen extends Screen implements PlaceRecipe<Ingredie
                 }
             });
             addRenderableWidget(new FDImageButton(relX + 164 - 10, relY + 36, 16, 16, 0, 16, 0, BUTTONS, 16, 32, (button) -> {
-                if ((currentPage - 1 >= 0)) {
-                    currentPage -= 1;
-                }
-                this.setupGhostRecipe(recipes.get(currentPage));
+                this.previousPage();
+                //                if ((currentPage - 1 >= 0)) {
+//                    currentPage -= 1;
+//                }
+//                this.setupGhostRecipe(recipes.get(currentPage));
             },(button,graphics,mousex,mousey)->{
                 graphics.renderTooltip(font,Component.literal("Previous recipe"),mousex,mousey);
             },Component.literal("")){
@@ -109,7 +102,7 @@ public class CraftingRecipeScreen extends Screen implements PlaceRecipe<Ingredie
         }, Items.WRITABLE_BOOK.getDefaultInstance(),0.7f,(buttons, graphics, b, c) -> {
             graphics.renderTooltip(font, Component.translatable("solarcraft.screens.buttons.memorize_page"), b, c);
         }));
-        super.init();
+
     }
 
 
@@ -127,7 +120,8 @@ public class CraftingRecipeScreen extends Screen implements PlaceRecipe<Ingredie
             int iter = -1;
 
             for (ItemRator itemRator : itemRators){
-                renderItemAndTooltip(graphics,itemRator.getCurrentStack(),itemRator.getX(),itemRator.getY(),mousex,mousey,matrices,false);
+//                renderItemAndTooltip(graphics,itemRator.getCurrentStack(),itemRator.getX(),itemRator.getY(),mousex,mousey,matrices,false);
+                RenderingTools.renderItemAndTooltip(itemRator.getCurrentStack(),graphics,itemRator.getX(),itemRator.getY(),mousex,mousey,100);
                 if (iter == -1){
                     iter = 0;
                     continue;
@@ -142,7 +136,8 @@ public class CraftingRecipeScreen extends Screen implements PlaceRecipe<Ingredie
             }
 
             ItemRator itemRator = itemRators.get(0);
-            renderItemAndTooltip(graphics,itemRator.getCurrentStack(),itemRator.getX(),itemRator.getY(),mousex,mousey,matrices,true);
+//            renderItemAndTooltip(graphics,itemRator.getCurrentStack(),itemRator.getX(),itemRator.getY(),mousex,mousey,matrices,true);
+            RenderingTools.renderItemAndTooltip(itemRator.getCurrentStack(),graphics,itemRator.getX(),itemRator.getY(),mousex,mousey,100);
             for (ItemStack i : uniqueItems){
                 graphics.drawString(font,Component.literal(counts[uniqueItems.indexOf(i)]+" x: ").append(i.getItem().getName(i)),relX+13,relY+84+iter*9,SolarLexiconScreen.TEXT_COLOR);
                 iter++;
@@ -184,7 +179,6 @@ public class CraftingRecipeScreen extends Screen implements PlaceRecipe<Ingredie
         Ingredient ingredient = iter.next();
         if (!ingredient.isEmpty()) {
             Slot slot = phantomSlots.get(slotIdx);
-//            this.ghostRecipe.addIngredient(ingredient, slot.x, slot.y);
             this.itemRators.add(new ItemRator(ingredient,slot.x,slot.y));
         }
 
@@ -209,5 +203,25 @@ public class CraftingRecipeScreen extends Screen implements PlaceRecipe<Ingredie
         if (time++ % 30 == 0){
             itemRators.forEach(ItemRator::next);
         }
+    }
+
+    @Override
+    public int getScreenWidth() {
+        return 204;
+    }
+
+    @Override
+    public int getScreenHeight() {
+        return 208;
+    }
+
+    @Override
+    public int getPagesCount() {
+        return recipes.size() - 1;
+    }
+
+    @Override
+    public void onPageChanged(int newPage) {
+        this.setupGhostRecipe(recipes.get(newPage));
     }
 }

@@ -129,9 +129,9 @@ public class InfusingRecipeCategory implements IRecipeCategory<InfusingRecipe> {
                 components.add(Component.literal(type.id.toUpperCase(Locale.ROOT) + ": ").withStyle(ChatFormatting.GOLD)
                         .append(Component.literal(re + "").withStyle(ChatFormatting.RESET)));
             }
-            if (recipe.requriedEnergy != 0) {
+            if (recipe.requriedSolarEnergy != 0) {
                 components.add(Component.translatable("solarcraft.solar_energy").withStyle(ChatFormatting.GOLD)
-                        .append(Component.literal(": " + recipe.requriedEnergy).withStyle(ChatFormatting.RESET)));
+                        .append(Component.literal(": " + recipe.requriedSolarEnergy).withStyle(ChatFormatting.RESET)));
             }
             if (!components.isEmpty()) {
                 graphics.renderTooltip(Minecraft.getInstance().font, components, Optional.empty(), (int) mouseX, (int) mouseY - 40* Mth.clamp(components.size()/8,0,1));

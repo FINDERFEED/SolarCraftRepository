@@ -10,18 +10,14 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 
 public class ScreenDataBuilder<T extends BuildableScreen> {
-
     protected List<Function<T,WidgetInstance>> widgets = new ArrayList<>();
     protected List<RenderableComponentInstance<T>> renderables = new ArrayList<>();
-
     protected HashMap<String,Object> additionalData = new HashMap<>();
-
+    protected HashMap<Integer,RenderableComponentPair<T>> renderTypes = new HashMap<>();
     protected int screenWidth;
     protected int screenHeight;
-
     protected Consumer<T> onTick;
     protected Consumer<T> onInit;
-
     protected OnKeyPress<T> keyPress;
     protected OnMouseClick<T> onMouseClick;
 
@@ -82,6 +78,12 @@ public class ScreenDataBuilder<T extends BuildableScreen> {
         return this;
     }
 
+    public ScreenDataBuilder<T> setRenderTypeForRenderGroup(int renderGroup,RenderableComponent<T> before,RenderableComponent<T> after) {
+        this.renderTypes.put(renderGroup,new RenderableComponentPair<>(before,after));
+        return this;
+    }
+
+
 
 
     protected void hackyRunOnTick(BuildableScreen screen){
@@ -110,9 +112,10 @@ public class ScreenDataBuilder<T extends BuildableScreen> {
             screen.renderableInstances.add(new RenderableComponentInstance(widgetInstance.renderIndex(),(scr,graphics,mx,my,pticks)->{
                 widget.render(graphics,mx,my,pticks);
             }));
+            screen.addAdditionalData(widgetInstance.name(), widget);
         }
         screen.renderableInstances.addAll(this.renderables);
-        screen.renderableInstances.sort(Comparator.comparingInt(i->i.renderIndex()));
+        screen.renderableInstances.sort(Comparator.comparingInt(i->i.renderGroup()));
     }
 
 

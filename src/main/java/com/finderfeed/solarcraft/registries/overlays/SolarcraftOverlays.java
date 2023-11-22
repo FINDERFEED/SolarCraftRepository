@@ -241,8 +241,8 @@ public class SolarcraftOverlays {
                     Block block = player.level.getBlockState(result.getBlockPos()).getBlock();
                     if (tile instanceof InfuserTileEntity tileInfusing) {
                         ClientHelpers.bindText(LOC);
-                        if (tileInfusing.RECIPE_IN_PROGRESS) {
-                            double percent = (float) tileInfusing.CURRENT_PROGRESS / tileInfusing.INFUSING_TIME;
+                        if (tileInfusing.isRecipeInProgress) {
+                            double percent = (float) tileInfusing.currentTime / tileInfusing.infusingTime;
                             RenderingTools.blitWithBlend(poseStack, width / 2 - 20, height / 2 + 11, 0, 9, (int) (40 * percent), 3, 40, 20,0,1f);
                         }
                         RenderingTools.blitWithBlend(poseStack, width / 2 - 20, height / 2 + 8, 0, 0, 40, 9, 40, 20,0,1f);

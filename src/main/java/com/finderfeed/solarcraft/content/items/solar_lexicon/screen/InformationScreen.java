@@ -39,10 +39,9 @@ import java.util.List;
 import java.util.function.Supplier;
 
 
-public class InformationScreen extends DefaultScreen {
+public class InformationScreen extends LexiconScreen {
 
-    public int relX;
-    public int relY;
+
     private final ResourceLocation LOC = new ResourceLocation("solarcraft","textures/gui/solar_lexicon_info_screen_new.png");
 
     private Item icon;
@@ -76,12 +75,8 @@ public class InformationScreen extends DefaultScreen {
 
     @Override
     protected void init() {
+        super.init();
         ticker = 0;
-        int width = minecraft.getWindow().getWidth();
-        int height = minecraft.getWindow().getHeight();
-        int scale = (int) minecraft.getWindow().getGuiScale();
-        this.relX = (width/scale - 183)/2 - 40;
-        this.relY = (height - 218*scale)/2/scale;
 
         ItemStackButton button = new ItemStackTabButton(relX+255,relY+25 + 18   ,17,17,(buttons)->{
             if (screen != null) {
@@ -127,7 +122,7 @@ public class InformationScreen extends DefaultScreen {
             }));
 
 
-        super.init();
+
 
         //232 119 228
         ScissoredTextBox textBox = new ScissoredTextBox(this,relX + 14,relY + 81,228,115,
@@ -147,11 +142,7 @@ public class InformationScreen extends DefaultScreen {
         RenderingTools.blitWithBlend(matrices,relX,relY,0,0,256,209,256,256,0,1f);
 
         graphics.drawString(Minecraft.getInstance().font,fragment.getTranslation(), relX+60,relY+35,0xffffff);
-//        if (fragment.getType() == AncientFragment.Type.INFORMATION) {
-//            RenderingTools.drawBoundedTextObfuscated(graphics, relX + 14, relY + 81, 43, fragment.getLore(),SolarLexiconScreen.TEXT_COLOR,ticker*4);
-//        }else{
-//            RenderingTools.drawBoundedTextObfuscated(graphics, relX + 14, relY + 81, 43, fragment.getItemDescription(),SolarLexiconScreen.TEXT_COLOR,ticker*4);
-//        }
+
         this.renderComponents(graphics,mousex,mousey,partialTicks,"textBox");
 
         RenderingTools.renderScaledGuiItem(graphics,fragment.getIcon().getDefaultInstance(),relX + 32, relY + 32,1f,0);

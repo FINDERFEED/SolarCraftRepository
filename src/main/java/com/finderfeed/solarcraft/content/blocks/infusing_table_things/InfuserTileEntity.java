@@ -60,14 +60,17 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class InfuserTileEntity extends REItemHandlerBlockEntity implements SolarEnergyContainer, Bindable, DebugTarget, IWandable, IStructureOwner {
 
 
+    public static final int MAX_RUNIC_ENERGY = 100000;
+    public static final int MAX_SOLAR_ENERGY = 100000;
+
     private EaseIn rotationValue = new EaseIn(0,1,100);
 
     private Tier tier = null;
 
-    public int energy = 0;
-    public int INFUSING_TIME;
-    public int CURRENT_PROGRESS;
-    public boolean RECIPE_IN_PROGRESS = false;
+    public int solarEnergy = 0;
+    public int infusingTime;
+    public int currentTime;
+    public boolean isRecipeInProgress = false;
     public boolean requiresEnergy = false;
     private InfusingRecipe currentRecipe;
 
@@ -112,19 +115,15 @@ public class InfuserTileEntity extends REItemHandlerBlockEntity implements Solar
     public void saveAdditional(CompoundTag cmp){
         super.saveAdditional(cmp);
         cmp.putBoolean("reqenergy",requiresEnergy);
-        cmp.putInt("energy",energy);
-        cmp.putInt("infusing_time",INFUSING_TIME );
-        cmp.putInt("recipe_progress",CURRENT_PROGRESS );
-        cmp.putBoolean("is_recipe_in_progress",RECIPE_IN_PROGRESS );
+        cmp.putInt("energy", solarEnergy);
+        cmp.putInt("infusing_time", infusingTime);
+        cmp.putInt("recipe_progress", currentTime);
+        cmp.putBoolean("is_recipe_in_progress", isRecipeInProgress);
         if (this.tier != null) {
             cmp.putString("tierid", this.tier.id);
         }else{
             cmp.putString("tierid", "null");
         }
-//        if (!this.trySaveLootTable(cmp)) {
-//            ContainerHelper.saveAllItems(cmp, this.items);
-//        }
-
     }
 
 
@@ -134,10 +133,10 @@ public class InfuserTileEntity extends REItemHandlerBlockEntity implements Solar
         super.load(cmp);
         requiresEnergy = cmp.getBoolean("reqenergy");
         tier = Tier.byId(cmp.getString("tierid"));
-        energy = cmp.getInt("energy");
-        INFUSING_TIME = cmp.getInt("infusing_time");
-        CURRENT_PROGRESS = cmp.getInt("recipe_progress");
-        RECIPE_IN_PROGRESS = cmp.getBoolean("is_recipe_in_progress");
+        solarEnergy = cmp.getInt("energy");
+        infusingTime = cmp.getInt("infusing_time");
+        currentTime = cmp.getInt("recipe_progress");
+        isRecipeInProgress = cmp.getBoolean("is_recipe_in_progress");
 
     }
 
@@ -148,7 +147,7 @@ public class InfuserTileEntity extends REItemHandlerBlockEntity implements Solar
 
     @Override
     public float getRunicEnergyLimit() {
-        return 100000;
+        return MAX_RUNIC_ENERGY;
     }
 
     @Override
@@ -171,7 +170,7 @@ public class InfuserTileEntity extends REItemHandlerBlockEntity implements Solar
             if (inv == null) return;
             tile.updateStacksInPhantomSlots();
             boolean forceUpdate = false;
-            if (tile.RECIPE_IN_PROGRESS) {
+            if (tile.isRecipeInProgress) {
                 
                 Optional<InfusingRecipe> recipe;
                 if (tile.currentRecipe == null){
@@ -187,40 +186,40 @@ public class InfuserTileEntity extends REItemHandlerBlockEntity implements Solar
                 }
 
                 if (recipe.isEmpty()) {
-                    tile.RECIPE_IN_PROGRESS = false;
-                    tile.CURRENT_PROGRESS = 0;
-                    tile.INFUSING_TIME = 0;
+                    tile.isRecipeInProgress = false;
+                    tile.currentTime = 0;
+                    tile.infusingTime = 0;
                     tile.requiresEnergy = false;
                     tile.currentRecipe = null;
                     tile.onTileRemove();
                 }
-                if (tile.RECIPE_IN_PROGRESS && tile.catalystsMatch(recipe.get()) && tile.isStructureCorrect()) {
+                if (tile.isRecipeInProgress && tile.catalystsMatch(recipe.get()) && tile.isStructureCorrect()) {
                     forceUpdate = true;
                     InfusingRecipe recipe1 = recipe.get();
 
                     int count = tile.getMinRecipeCountOutput(recipe1);
                     RunicEnergyCost costs = recipe1.RUNIC_ENERGY_COST;
-                    tile.INFUSING_TIME = recipe1.infusingTime * count;
+                    tile.infusingTime = recipe1.infusingTime * count;
 
                     boolean check = tile.hasEnoughRunicEnergy(costs, count);
-                    if ((tile.energy >= recipe1.requriedEnergy * count) && check) {
+                    if ((tile.solarEnergy >= recipe1.requriedSolarEnergy * count) && check) {
                         tile.onTileRemove();
 
                         tile.requiresEnergy = false;
-                        tile.CURRENT_PROGRESS++;
-                        if (tile.CURRENT_PROGRESS >= tile.INFUSING_TIME) {
+                        tile.currentTime++;
+                        if (tile.currentTime >= tile.infusingTime) {
                             finishRecipe(world, tile, recipe1);
                         }
                     } else {
                         tile.requestRunicEnergy(costs, count);
-                        tile.requiresEnergy = !(tile.energy >= recipe1.requriedEnergy * count);
+                        tile.requiresEnergy = !(tile.solarEnergy >= recipe1.requriedSolarEnergy * count);
                     }
 
                 } else {
                     tile.currentRecipe = null;
-                    tile.RECIPE_IN_PROGRESS = false;
-                    tile.CURRENT_PROGRESS = 0;
-                    tile.INFUSING_TIME = 0;
+                    tile.isRecipeInProgress = false;
+                    tile.currentTime = 0;
+                    tile.infusingTime = 0;
                     tile.requiresEnergy = false;
 //                    tile.currentRecipe = null;
                     tile.onTileRemove();
@@ -248,7 +247,7 @@ public class InfuserTileEntity extends REItemHandlerBlockEntity implements Solar
     }
 
     private static void doParticlesAnimation(Level world, InfuserTileEntity tile){
-        if (tile.RECIPE_IN_PROGRESS){
+        if (tile.isRecipeInProgress){
             if (tile.tier == null){
                 tile.calculateTier();
             }
@@ -376,22 +375,19 @@ public class InfuserTileEntity extends REItemHandlerBlockEntity implements Solar
         result.setCount(count*recipe.count);
         tile.getItem(tile.inputSlot()).grow(-count);
         tile.getInventory().setStackInSlot(tile.outputSlot(), result);
-        tile.RECIPE_IN_PROGRESS = false;
+        tile.isRecipeInProgress = false;
         tile.currentRecipe = null;
-        tile.INFUSING_TIME = 0;
-        tile.CURRENT_PROGRESS = 0;
+        tile.infusingTime = 0;
+        tile.currentTime = 0;
         tile.deleteStacksInPhantomSlots(count);
         tile.level.playSound(null, tile.worldPosition, SoundEvents.BEACON_DEACTIVATE, SoundSource.AMBIENT, 2, 1);
-        tile.energy-= recipe.requriedEnergy*count;
+        tile.solarEnergy -= recipe.requriedSolarEnergy *count;
         tile.resetAllRepeaters();
 
 
     }
 
     public void calculateTier(){
-//        boolean tier1 = Helpers.checkStructure(level,worldPosition.below(1).north(6).west(6),Multiblocks.INFUSER_TIER_FIRST.getM(), true);
-//        boolean tier2 = Helpers.checkStructure(level,worldPosition.below(1).north(9).west(9),Multiblocks.INFUSER_TIER_RUNIC_ENERGY.getM(), true);
-//        boolean tier3 = Helpers.checkStructure(level,worldPosition.below(1).north(9).west(9),Multiblocks.INFUSER_TIER_SOLAR_ENERGY.getM(), true);
         boolean tier1 = Multiblocks.INFUSER_TIER_ONE.check(level,worldPosition,true);
         boolean tier2 = Multiblocks.INFUSER_TIER_TWO.check(level,worldPosition,true);
         boolean tier3 = Multiblocks.INFUSER_TIER_THREE.check(level,worldPosition,true);
@@ -447,10 +443,10 @@ public class InfuserTileEntity extends REItemHandlerBlockEntity implements Solar
 
                 if (tierEquals(recipe.getTier())) {
                     if (catalystsMatch(recipe)) {
-                        if (!RECIPE_IN_PROGRESS) {
+                        if (!isRecipeInProgress) {
                             Helpers.fireProgressionEvent(playerEntity, Progression.SOLAR_INFUSER);
-                            this.INFUSING_TIME = recipe.infusingTime;
-                            this.RECIPE_IN_PROGRESS = true;
+                            this.infusingTime = recipe.infusingTime;
+                            this.isRecipeInProgress = true;
                             this.level.playSound(null, this.worldPosition, SoundEvents.BEACON_ACTIVATE, SoundSource.AMBIENT, 2, 1);
                         } else {
                             this.level.playSound(null, this.worldPosition, SoundEvents.VILLAGER_NO, SoundSource.AMBIENT, 2, 1);
@@ -513,14 +509,14 @@ public class InfuserTileEntity extends REItemHandlerBlockEntity implements Solar
 
         double maxenergycost = getMaxRunicEnergyCostFromRecipe(recipe);
         if (maxenergycost != 0){
-            int maxItems = (int)Math.floor(100000/maxenergycost);
+            int maxItems = (int)Math.floor(this.getMaxSolarEnergy()/maxenergycost);
             if (maxItems < count.get()){
                 count.set(maxItems);
             }
         }
-        int solarEnergyCost = recipe.requriedEnergy;
+        int solarEnergyCost = recipe.requriedSolarEnergy;
         if (solarEnergyCost != 0){
-            int maxItems = (int)Math.floor(100000/(float)solarEnergyCost);
+            int maxItems = (int)Math.floor(this.getMaxSolarEnergy()/(float)solarEnergyCost);
             if (maxItems < count.get()){
                 count.set(maxItems);
             }
@@ -634,7 +630,7 @@ public class InfuserTileEntity extends REItemHandlerBlockEntity implements Solar
                 "KELDA ENERGY "+ this.getRunicEnergy(RunicEnergy.Type.KELDA),
                 "URBA ENERGY "+ this.getRunicEnergy(RunicEnergy.Type.URBA),
                 "ZETA ENERGY "+ this.getRunicEnergy(RunicEnergy.Type.ZETA),
-                "SOLAR ENERGY "+ energy
+                "SOLAR ENERGY "+ solarEnergy
         );
     }
 
@@ -671,8 +667,8 @@ public class InfuserTileEntity extends REItemHandlerBlockEntity implements Solar
 
 
     private static void recipeFinalizationParticles(InfuserTileEntity tile,BlockPos pos,Level world){
-        int maxTime = Math.min(tile.INFUSING_TIME, 100);
-        if (tile.RECIPE_IN_PROGRESS && (tile.INFUSING_TIME - tile.CURRENT_PROGRESS <= maxTime)){
+        int maxTime = Math.min(tile.infusingTime, 100);
+        if (tile.isRecipeInProgress && (tile.infusingTime - tile.currentTime <= maxTime)){
             tile.getRotationValue().setDuration(maxTime);
             tile.getRotationValue().tick();
 
@@ -713,13 +709,13 @@ public class InfuserTileEntity extends REItemHandlerBlockEntity implements Solar
 
     @Override
     public int getSolarEnergy() {
-        return energy;
+        return solarEnergy;
     }
 
     @Override
     public void setSolarEnergy(int energy) {
         boolean flag = energy == getMaxSolarEnergy();
-        this.energy = energy;
+        this.solarEnergy = energy;
         if (!flag) {
             Helpers.updateTile(this);
         }
@@ -727,7 +723,7 @@ public class InfuserTileEntity extends REItemHandlerBlockEntity implements Solar
 
     @Override
     public int getMaxSolarEnergy() {
-        return 100000;
+        return MAX_SOLAR_ENERGY;
     }
 
     @Override

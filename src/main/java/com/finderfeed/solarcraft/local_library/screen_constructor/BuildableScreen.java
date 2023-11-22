@@ -35,13 +35,27 @@ public abstract class BuildableScreen extends DefaultScreen {
 
     @Override
     public void render(GuiGraphics graphics, int mx, int my, float pticks) {
-        PoseStack matrix = graphics.pose();
-        matrix.pushPose();
-        for (RenderableComponentInstance instance : this.renderableInstances){
-            instance.component().hackyRender(this,graphics,mx,my,pticks);
-            matrix.translate(0,0,1);
+        if (!renderableInstances.isEmpty()) {
+            PoseStack matrix = graphics.pose();
+            matrix.pushPose();
+            int currentRenderGroup = -1;
+            RenderableComponentPair<?> pair = null;
+            for (RenderableComponentInstance instance : this.renderableInstances) {
+                if (currentRenderGroup != instance.renderGroup()){
+                    matrix.translate(0, 0, 1);
+                    currentRenderGroup = instance.renderGroup();
+                    pair = this.data.renderTypes.get(currentRenderGroup);
+                }
+                if (pair != null){
+                    pair.before().hackyRender(this,graphics,mx,my,pticks);
+                }
+                instance.component().hackyRender(this, graphics, mx, my, pticks);
+                if (pair != null){
+                    pair.after().hackyRender(this,graphics,mx,my,pticks);
+                }
+            }
+            matrix.popPose();
         }
-        matrix.popPose();
     }
 
 

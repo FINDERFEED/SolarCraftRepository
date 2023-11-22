@@ -32,6 +32,7 @@ import com.mojang.datafixers.util.Either;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.player.LocalPlayer;
@@ -71,7 +72,7 @@ public class ClientEventsHandler {
     public static void handleKeyInputs(final InputEvent.Key event){
 
         if (Minecraft.getInstance().screen instanceof IScrollable){
-            ((IScrollable) Minecraft.getInstance().screen).performScroll(event.getScanCode());
+            ((IScrollable) Minecraft.getInstance().screen).performScroll(event.getKey());
 
         }
 
@@ -103,27 +104,6 @@ public class ClientEventsHandler {
         if (SCClientModEventHandler.GUI_WAND_MODE_SELECTION.isDown() && event.getAction() == GLFW.GLFW_PRESS
                 && Minecraft.getInstance().player != null && Minecraft.getInstance().player.getMainHandItem().is(SCItems.SOLAR_WAND.get())){
             Minecraft.getInstance().setScreen(new WandModeSelectionScreen());
-        }
-
-        if (event.getAction() == GLFW.GLFW_PRESS && event.getKey() == GLFW.GLFW_KEY_K){
-            Minecraft.getInstance().setScreen(new BasicBuildableScreen(
-                    new ScreenDataBuilder<BasicBuildableScreen>()
-                            .setDimensions(304,100)
-                            .addAdditionalData("testData",2424.45f)
-                            .addWidget((screen)->{
-                                return new WidgetInstance("testButton",1,new SolarCraftButton(
-                                        screen.relX + 20,screen.relY + 10,Component.literal("test"),(btn)-> {
-                                            System.out.println(screen.getAdditionalData("testData",Float.class));
-                                        }
-                                ));
-                            })
-                            .addRenderable(new RenderableComponentInstance<>(0,((screen1, graphics, mx, my, pticks) -> {
-                                RenderingTools.renderBasicLexiconPage(graphics.pose(), screen1.relX, screen1.relY, screen1.getScreenWidth(), screen1.getScreenHeight());
-                                }))
-                            )
-                    )
-
-            );
         }
 
     }

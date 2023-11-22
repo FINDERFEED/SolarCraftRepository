@@ -39,17 +39,17 @@ public abstract class AbstractScrollableContainerScreen<T extends AbstractContai
 
     @Override
     public void performScroll(int keyCode) {
-        if ((keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_LEFT) || keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_A))
+        if ((keyCode == GLFW.GLFW_KEY_LEFT || keyCode == GLFW.GLFW_KEY_A)
                 && !(scrollX +getScrollValue() > getMaxXLeftScrollValue())){
             scrollX+=getScrollValue();
-        } else if ((keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_UP)
-                || keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_W)) && !(scrollY +getScrollValue() > getMaxYUpScrollValue())){
+        } else if ((keyCode == GLFW.GLFW_KEY_UP
+                || keyCode == GLFW.GLFW_KEY_W) && !(scrollY +getScrollValue() > getMaxYUpScrollValue())){
             scrollY+=getScrollValue();
-        }else if((keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_DOWN)
-                || keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_S)) && !(scrollY -getScrollValue() < -getMaxYDownScrollValue())){
+        }else if((keyCode == GLFW.GLFW_KEY_DOWN
+                || keyCode == GLFW.GLFW_KEY_S) && !(scrollY -getScrollValue() < -getMaxYDownScrollValue())){
             scrollY-=getScrollValue();
-        }else if ((keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_RIGHT)
-                || keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_D)) && !(scrollX -getScrollValue() < -getMaxXRightScrollValue())){
+        }else if ((keyCode == GLFW.GLFW_KEY_RIGHT
+                || keyCode == GLFW.GLFW_KEY_D) && !(scrollX -getScrollValue() < -getMaxXRightScrollValue())){
             scrollX-=getScrollValue();
         }
         if (this.prevscrollX != scrollX){

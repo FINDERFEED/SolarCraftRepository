@@ -270,8 +270,8 @@ public class EnchanterContainerScreen extends AbstractScrollableContainerScreen<
     @Override
     public void performScroll(int keyCode) {
         int delta = getScrollValue()/2;
-        if ((keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_UP)
-                || keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_W)) ){
+        if ((keyCode == GLFW.GLFW_KEY_UP
+                || keyCode == GLFW.GLFW_KEY_W) ){
             for (SolarCraftButton b : postRender){
                 if (currentMouseScroll + delta*getScrollValue() >= -getMaxYDownScrollValue() && currentMouseScroll + delta*getScrollValue() <= 0) {
                     b.y = b.y + (int) delta * getScrollValue();
@@ -281,8 +281,8 @@ public class EnchanterContainerScreen extends AbstractScrollableContainerScreen<
             if (currentMouseScroll + delta*getScrollValue() >= -getMaxYDownScrollValue() && currentMouseScroll + delta*getScrollValue() <= 0) {
                 currentMouseScroll += delta * getScrollValue();
             }
-        }else if((keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_DOWN)
-                || keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_S)) ){
+        }else if((keyCode == GLFW.GLFW_KEY_DOWN
+                || keyCode == GLFW.GLFW_KEY_S) ){
             for (SolarCraftButton b : postRender){
                 if (currentMouseScroll - delta*getScrollValue() >= -getMaxYDownScrollValue() && currentMouseScroll - delta*getScrollValue() <= 0) {
                     b.y = b.y - (int) delta * getScrollValue();

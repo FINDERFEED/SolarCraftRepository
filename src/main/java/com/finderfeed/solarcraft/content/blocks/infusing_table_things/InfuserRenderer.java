@@ -9,7 +9,6 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.BlockPos;
@@ -33,7 +32,7 @@ public class InfuserRenderer extends AbstractRunicEnergyContainerRenderer<Infuse
     public void render(InfuserTileEntity tile, float partialTicks, PoseStack matrices, MultiBufferSource buffer, int light, int light2) {
         super.render(tile,partialTicks,matrices,buffer,light,light2);
         float time = (tile.getLevel().getGameTime()+partialTicks) ;
-        if (tile.RECIPE_IN_PROGRESS) {
+        if (tile.isRecipeInProgress) {
             matrices.pushPose();
 
             matrices.translate(0, -0.20, 0);
@@ -107,8 +106,8 @@ public class InfuserRenderer extends AbstractRunicEnergyContainerRenderer<Infuse
         matrices.popPose();
 
 
-        float razn = tile.INFUSING_TIME - tile.CURRENT_PROGRESS;
-        if (tile.RECIPE_IN_PROGRESS && (razn <= 100)) {
+        float razn = tile.infusingTime - tile.currentTime;
+        if (tile.isRecipeInProgress && (razn <= 100)) {
             matrices.pushPose();
             List<ItemStack> stacks = tile.getItems();
             BlockPos[] offsets = NotStructures.infusingPoolsPositions(BlockPos.ZERO);

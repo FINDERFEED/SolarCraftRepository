@@ -99,11 +99,11 @@ public class LoreScreen extends DefaultScreen {
 
     @Override
     public int getScreenWidth() {
-        return 0;
+        return 256;
     }
 
     @Override
     public int getScreenHeight() {
-        return 0;
+        return 209;
     }
 }

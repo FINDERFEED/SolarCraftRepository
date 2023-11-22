@@ -106,6 +106,31 @@ public class FDMathHelper {
         }
     }
 
+    public static int getOverflow(int min, int main, int max){
+        if (main < min){
+            return min - main;
+        }else if (main > max){
+            return main - max;
+        }else{
+            return 0;
+        }
+    }
+
+    /**
+     * returns how much is left to the boundaries if main + delta exceeds one of them, else returns the delta
+     */
+    public static int getUnderflow(int min, int main, int max,int delta){
+        if (main > max || main < min) return 0;
+        int value = main + delta;
+        if (value > max){
+            return max - main;
+        }else if (value < min){
+            return main - min;
+        }else{
+            return delta;
+        }
+    }
+
     public static int[] intToRgba(int color){
         int r = (color >> 16) & 0xff;
         int g = (color >>  8) & 0xff;

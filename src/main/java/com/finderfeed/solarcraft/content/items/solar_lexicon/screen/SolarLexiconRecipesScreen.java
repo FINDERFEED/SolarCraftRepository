@@ -1,5 +1,6 @@
 package com.finderfeed.solarcraft.content.items.solar_lexicon.screen;
 
+import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.screen.buttons.InfoButton;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.screen.buttons.ItemStackButton;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
@@ -9,9 +10,11 @@ import com.finderfeed.solarcraft.misc_things.IScrollable;
 import com.finderfeed.solarcraft.registries.items.SCItems;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragmentHelper;
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.components.AbstractWidget;
@@ -27,10 +30,10 @@ import org.lwjgl.opengl.GL11;
 import java.util.*;
 import java.util.List;
 
-public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
-    public final ResourceLocation MAIN_SCREEN = new ResourceLocation("solarcraft","textures/gui/solar_lexicon_recipes_page_new.png");
-    public final ResourceLocation FRAME = new ResourceLocation("solarcraft","textures/misc/frame.png");
-    public final ResourceLocation MAIN_SCREEN_SCROLLABLE = new ResourceLocation("solarcraft","textures/gui/solar_lexicon_main_page_scrollablep.png");
+public class SolarLexiconRecipesScreen extends ScrollableLexiconScreen implements IScrollable {
+    public final ResourceLocation MAIN_SCREEN = new ResourceLocation(SolarCraft.MOD_ID,"textures/gui/solar_lexicon_recipes_page_new.png");
+    public final ResourceLocation FRAME = new ResourceLocation(SolarCraft.MOD_ID,"textures/misc/frame.png");
+    public final ResourceLocation MAIN_SCREEN_SCROLLABLE = new ResourceLocation(SolarCraft.MOD_ID,"textures/gui/solar_lexicon_main_page_scrollablep.png");
 
     private List<AncientFragment> FRAGMENTS = new ArrayList<>();
     private Book BOOK;
@@ -44,96 +47,25 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
 
     public List<Runnable> postRender = new ArrayList<>();
 
-    private EditBox searchBox;
+    public List<AbstractWidget> moveable = new ArrayList<>();
 
 
-//    public Point structures;
-
-    public int scrollX;
-    public int scrollY;
-    public int prevscrollX;
-    public int prevscrollY;
-    public int relX;
-    public int relY;
-
-    @Override
-    public void performScroll(int keyCode) {
-
-        int scroll = 4;
-        if ((keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_LEFT) || keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_A))
-                && !(scrollX +scroll > 0)){
-            scrollX+=scroll;
-        } else if ((keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_UP) || keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_W)) && !(scrollY +scroll > 0)){
-            scrollY+=scroll;
-        }else if((keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_DOWN) || keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_S)) && !(scrollY -scroll < -700)){
-            scrollY-=scroll;
-        }else if ((keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_RIGHT) || keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_D)) && !(scrollX -scroll < -700)){
-            scrollX-=scroll;
-        }
-
-        if (this.prevscrollX != scrollX){
-            List<AbstractWidget> list = ClientHelpers.getScreenButtons(this);
-            list.remove(goBack);
-            list.remove(nothing);
-            list.remove(infoButton);
-            for (AbstractWidget a : list) {
-                if (prevscrollX < scrollX) {
-                    a.x += scroll;
-                } else {
-                    a.x -= scroll;
-                }
-
-            }
-            this.prevscrollX = scrollX;
-        }
-        if (this.prevscrollY != scrollY){
-            List<AbstractWidget> list = ClientHelpers.getScreenButtons(this);
-            list.remove(goBack);
-            list.remove(nothing);
-            list.remove(infoButton);
-            for (AbstractWidget a : list) {
-                if (prevscrollY < scrollY) {
-
-                    a.y += scroll;
-                } else {
-
-                    a.y -= scroll;
-                }
-
-
-            }
-            this.prevscrollY = scrollY;
-        }
-    }
-
-    @Override
-    public int getCurrentScrollX() {
-        return scrollX;
-    }
-
-    @Override
-    public int getCurrentScrollY() {
-        return scrollY;
-    }
 
     public SolarLexiconRecipesScreen() {
-        super(Component.literal(""));
+        super();
     }
 
 
     @Override
     protected void init() {
         super.init();
+        moveable.clear();
         goBack = new ItemStackButton(0,10,12,12,(button)->{minecraft.setScreen(new SolarLexiconScreen());}, SCItems.SOLAR_FORGE_ITEM.get().getDefaultInstance(),0.7f,
                 ((button, graphics, mouseX, mouseY) -> {
                     graphics.renderTooltip(font,Component.translatable("solarcraft.screens.buttons.progression_screen"),mouseX,mouseY);
                 }));
         nothing = new ItemStackButton(0,10,12,12,(button)->{}, Items.CRAFTING_TABLE.getDefaultInstance(),0.7f);
-        int width = minecraft.getWindow().getWidth();
-        int height = minecraft.getWindow().getHeight();
-        int scale = (int) minecraft.getWindow().getGuiScale();
-        this.relX = (width/scale - 183)/2-30;
-        this.relY = (height - 218*scale)/2/scale;
+
         infoButton = new InfoButton(relX  +206+35,relY + 64,13,13,(btn1, graphics, mx, my)->{
             graphics.renderTooltip(font,font.split(Component.translatable("solarcraft.recipes_screen_info"),200),mx,my);
         });
@@ -144,37 +76,41 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
         collectFragments();
 
 
-        scrollX = 0;
-        scrollY = 0;
-        prevscrollX = 0;
-        prevscrollY = 0;
         BOOK = new Book(relX+25,relY+25);
         Book.initializeBook(BOOK,FRAGMENTS);
         BOOK.init();
-        BOOK.getButtons().forEach(this::addRenderableWidget);
-
-        this.searchBox = new EditBox(this.font,relX,relY,100,20,Component.literal("Fragment name")){
-            @Override
-            public boolean charTyped(char character, int smth) {
-                if (super.charTyped(character,smth)){
-
-                }
-                return super.charTyped(character,smth);
-            }
-        };
-
+        for (Button b : BOOK.getButtons()){
+            this.addRenderableWidget(b);
+            this.moveable.add(b);
+        }
 
         addRenderableWidget(goBack);
         addRenderableWidget(nothing);
 
-        //nothing.x = relX +207+35;
-        //nothing.y = relY + 184;
-        //goBack.x = relX +207+35;
-        //goBack.y = relY + 164;
         nothing.x = relX +207+35;
         nothing.y = relY + 184 - 137;
         goBack.x = relX +207+35;
         goBack.y = relY + 164 - 137;
+    }
+
+    @Override
+    public int getScrollValue() {
+        return 4;
+    }
+
+    @Override
+    public int getMaxXScroll() {
+        return 700;
+    }
+
+    @Override
+    public int getMaxYScroll() {
+        return 700;
+    }
+
+    @Override
+    public List<AbstractWidget> getMovableWidgets() {
+        return moveable;
     }
 
 
@@ -199,6 +135,17 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
             this.BOOK.tick();
         }
     }
+
+    @Override
+    public int getScreenWidth() {
+        return 256;
+    }
+
+    @Override
+    public int getScreenHeight() {
+        return 207;
+    }
+
     @Override
     public boolean isPauseScreen() {
         return false;
@@ -219,12 +166,7 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
 
         PoseStack matrices = graphics.pose();
 
-        GL11.glEnable(GL11.GL_SCISSOR_TEST);
-        int width = minecraft.getWindow().getWidth();
-        int height = minecraft.getWindow().getHeight();
-        int scale = (int)minecraft.getWindow().getGuiScale();
-        GL11.glScissor(width/2-((113)*scale),height/2-(89*scale),(221*scale),189*scale);
-
+        RenderingTools.scissor(relX + 8,relY + 8,222,190);
         ClientHelpers.bindText(MAIN_SCREEN_SCROLLABLE);
         RenderingTools.blitWithBlend(matrices,relX,relY,0,0,256,256,256,256,0,1f);
 
@@ -236,7 +178,7 @@ public class SolarLexiconRecipesScreen extends Screen implements IScrollable {
         if (showNoFragmentsMessage){
             graphics.drawString(font,"No fragments present :(",relX+20+scrollX,relY+40+scrollY,0xffffff);
         }
-        GL11.glDisable(GL11.GL_SCISSOR_TEST);
+        RenderSystem.disableScissor();
 
 
         ClientHelpers.bindText(MAIN_SCREEN);

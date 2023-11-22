@@ -47,10 +47,10 @@ public class UpdateProgressOnClientPacket {
                 ClientLevel world = Minecraft.getInstance().level;
                 InfuserTileEntity tile = (InfuserTileEntity) world.getBlockEntity(pos);
                 if (tile != null) {
-                    tile.CURRENT_PROGRESS = progress;
-                    tile.INFUSING_TIME = maxProg;
+                    tile.currentTime = progress;
+                    tile.infusingTime = maxProg;
                     tile.requiresEnergy = reqEnergy;
-                    tile.energy = energy;
+                    tile.solarEnergy = energy;
                 }
 
             });

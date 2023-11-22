@@ -129,7 +129,7 @@ public class InfusingRecipeScreen extends Screen {
 
         boolean d = false;
         for (int i = 0; i <= maxPages;i++){
-            if (recipe.get(i).requriedEnergy != 0 || InfuserTileEntity.doRecipeRequiresRunicEnergy(recipe.get(i).RUNIC_ENERGY_COST)){
+            if (recipe.get(i).requriedSolarEnergy != 0 || InfuserTileEntity.doRecipeRequiresRunicEnergy(recipe.get(i).RUNIC_ENERGY_COST)){
                 d = true;
                 break;
             }

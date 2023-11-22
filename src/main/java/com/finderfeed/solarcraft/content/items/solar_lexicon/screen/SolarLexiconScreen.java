@@ -3,6 +3,8 @@ package com.finderfeed.solarcraft.content.items.solar_lexicon.screen;
 import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.screen.buttons.InfoButton;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.screen.buttons.ItemStackButton;
+import com.finderfeed.solarcraft.content.items.solar_lexicon.screen.misc.ItemStackButtonAnimatedTooltip;
+import com.finderfeed.solarcraft.content.items.solar_lexicon.screen.misc.PostRenderTooltips;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.local_library.client.tooltips.AnimatedTooltip;
@@ -22,7 +24,6 @@ import com.mojang.blaze3d.vertex.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.components.AbstractWidget;
 
 import net.minecraft.client.player.LocalPlayer;
@@ -43,7 +44,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
-public class SolarLexiconScreen extends Screen implements IScrollable,PostRenderTooltips {
+public class SolarLexiconScreen extends LexiconScreen implements IScrollable, PostRenderTooltips {
     private int ticker = 0;
     private int OFFSET_X = 50;
     private int OFFSET_Y = 50;
@@ -82,7 +83,7 @@ public class SolarLexiconScreen extends Screen implements IScrollable,PostRender
 
     private List<Runnable> postRender = new ArrayList<>();
     public SolarLexiconScreen() {
-        super(Component.literal("screen_solar_lexicon"));
+        super();
         this.width = 256;
         this.height = 256;
     }
@@ -357,6 +358,16 @@ public class SolarLexiconScreen extends Screen implements IScrollable,PostRender
     }
 
     @Override
+    public int getScreenWidth() {
+        return 256;
+    }
+
+    @Override
+    public int getScreenHeight() {
+        return 207;
+    }
+
+    @Override
     public void render(GuiGraphics graphics, int mousex, int mousey, float partialTicks) {
         PoseStack matrices = graphics.pose();
 
@@ -422,7 +433,7 @@ public class SolarLexiconScreen extends Screen implements IScrollable,PostRender
 
         matrices.pushPose();
         matrices.translate(0,0,100);
-        RenderingTools.blitWithBlend(matrices,relX,relY,0,0,256,256,256,256,0,1f);
+        RenderingTools.blitWithBlend(matrices,relX,relY,0,0,this.getScreenWidth(),this.getScreenHeight(),256,256,0,1f);
         matrices.popPose();
 
         toggleRecipesScreen.render(graphics,mousex,mousey,partialTicks,101);

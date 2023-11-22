@@ -177,7 +177,7 @@ public class InfusingRecipeSerializer implements RecipeSerializer<InfusingRecipe
         buf.writeItemStack(recipeType.output, true);
         buf.writeInt(recipeType.infusingTime);
         buf.writeUtf(recipeType.fragID);
-        buf.writeInt(recipeType.requriedEnergy);
+        buf.writeInt(recipeType.requriedSolarEnergy);
         buf.writeUtf(recipeType.tag);
         buf.writeInt(recipeType.count);
         buf.writeFloat(recipeType.RUNIC_ENERGY_COST.get(RunicEnergy.Type.ARDO));

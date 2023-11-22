@@ -24,37 +24,31 @@ import net.minecraft.world.item.Items;
 import java.util.ArrayList;
 import java.util.List;
 
-public class InfusingCraftingRecipeScreen extends Screen {
+public class InfusingCraftingRecipeScreen extends LexiconScreen {
     public final ResourceLocation BUTTONS = new ResourceLocation(SolarCraft.MOD_ID,"textures/misc/page_buttons.png");
 
     private static final ResourceLocation MAIN_SCREEN = new ResourceLocation(SolarCraft.MOD_ID,"textures/gui/solar_lexicon_crafting_recipe_screen.png");
 
-    private int relX;
-    private int relY;
+
     private final List<InfusingCraftingRecipe> recipes;
     private int currentPage = 0;
     private int maxPages;
 
     public InfusingCraftingRecipeScreen(InfusingCraftingRecipe recipe) {
-        super(Component.literal(""));
+        super();
         this.recipes = List.of(recipe);
         this.maxPages = 0;
     }
 
 
     public InfusingCraftingRecipeScreen(List<InfusingCraftingRecipe> recipe) {
-        super(Component.literal(""));
+        super();
         this.recipes = recipe;
         this.maxPages = recipe.size()-1;
     }
 
     @Override
     protected void init() {
-        int width = minecraft.getWindow().getWidth();
-        int height = minecraft.getWindow().getHeight();
-        int scale = (int) minecraft.getWindow().getGuiScale();
-        this.relX = (width/scale - 183)/2-12;
-        this.relY = (height - 218*scale)/2/scale;
         int xoffs = 111;
         if (maxPages != 0) {
             addRenderableWidget(new FDImageButton(relX + 180 - 10, relY + 36, 16, 16, 0, 0, 0, BUTTONS, 16, 32, (button) -> {
@@ -95,6 +89,16 @@ public class InfusingCraftingRecipeScreen extends Screen {
             graphics.renderTooltip(font, Component.translatable("solarcraft.screens.buttons.memorize_page"), b, c);
         }));
         super.init();
+    }
+
+    @Override
+    public int getScreenWidth() {
+        return 204;
+    }
+
+    @Override
+    public int getScreenHeight() {
+        return 208;
     }
 
 

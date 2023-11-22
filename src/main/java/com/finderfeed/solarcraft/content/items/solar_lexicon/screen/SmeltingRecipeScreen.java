@@ -1,5 +1,6 @@
 package com.finderfeed.solarcraft.content.items.solar_lexicon.screen;
 
+import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.screen.buttons.ItemStackTabButton;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.SolarLexicon;
@@ -18,15 +19,14 @@ import net.minecraft.world.item.crafting.Ingredient;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SmeltingRecipeScreen extends Screen {
-    public final ResourceLocation MAIN_SCREEN = new ResourceLocation("solarcraft","textures/gui/smelting_recipe_gui.png");
+public class SmeltingRecipeScreen extends LexiconScreen {
+    public final ResourceLocation MAIN_SCREEN = new ResourceLocation(SolarCraft.MOD_ID,"textures/gui/smelting_recipe_gui.png");
     public final SolarSmeltingRecipe recipe;
-    public int relX;
-    public int relY;
+
     public List<ItemStack> stacks ;
 
     public SmeltingRecipeScreen(SolarSmeltingRecipe a) {
-        super(Component.literal(""));
+        super();
         this.recipe = a;
     }
 
@@ -41,17 +41,8 @@ public class SmeltingRecipeScreen extends Screen {
 
     @Override
     protected void init() {
-        int width = minecraft.getWindow().getWidth();
-        int height = minecraft.getWindow().getHeight();
-        int scale = (int) minecraft.getWindow().getGuiScale();
-        this.relX = (width/scale - 183)/2 - 5;
-        this.relY = (height - 218*scale)/2/scale;
+        super.init();
         stacks = new ArrayList<>();
-
-//        stacks.add(recipe.list.get(0).getItems()[0]);
-//        stacks.add(recipe.list.get(1).getItems()[0]);
-//        stacks.add(recipe.list.get(2).getItems()[0]);
-//        stacks.add(recipe.list.get(3).getItems()[0]);
         stacks.add(recipe.output);
 
 
@@ -68,7 +59,17 @@ public class SmeltingRecipeScreen extends Screen {
         }, Items.WRITABLE_BOOK.getDefaultInstance(),0.7f,(buttons, graphics, b, c) -> {
             graphics.renderTooltip(font, Component.translatable("solarcraft.screens.buttons.memorize_page"), b, c);
         }));
-        super.init();
+
+    }
+
+    @Override
+    public int getScreenWidth() {
+        return 204;
+    }
+
+    @Override
+    public int getScreenHeight() {
+        return 207;
     }
 
 
@@ -76,11 +77,7 @@ public class SmeltingRecipeScreen extends Screen {
     public void render(GuiGraphics graphics, int mousex, int mousey, float partialTicks) {
         ClientHelpers.bindText(MAIN_SCREEN);
         PoseStack matrices = graphics.pose();
-        RenderingTools.blitWithBlend(matrices,relX,relY,0,0,256,256,256,256,0,1f);
-//        renderItemAndTooltip(stacks.get(0),relX+77,relY+111,mousex,mousey,matrices,false);
-//        renderItemAndTooltip(stacks.get(1),relX+94,relY+111,mousex,mousey,matrices,false);
-//        renderItemAndTooltip(stacks.get(2),relX+111,relY+111,mousex,mousey,matrices,false);
-//        renderItemAndTooltip(stacks.get(3),relX+77,relY+128,mousex,mousey,matrices,false);
+        RenderingTools.blitWithBlend(matrices,relX,relY,0,0,this.getScreenWidth(),this.getScreenHeight(),256,256,0,1f);
 
         int iter = 0;
 
@@ -89,29 +86,13 @@ public class SmeltingRecipeScreen extends Screen {
             int posX = (iter % 3) * 17;
             int posY = (int)Math.floor((float)iter / 3) * 17;
 
-            renderItemAndTooltip(graphics,item,relX + 77 + posX , relY + 118 + posY,mousex,mousey,matrices,false);
+            RenderingTools.renderItemAndTooltip(item,graphics,relX + 77 + posX , relY + 118 + posY,mousex,mousey,100);
 
             iter++;
         }
 
-
-        renderItemAndTooltip(graphics,recipe.getResultItem(Minecraft.getInstance().level.registryAccess()),relX+94,relY+169,mousex,mousey,matrices,false);
+        ItemStack result = recipe.getResultItem(Minecraft.getInstance().level.registryAccess());
+        RenderingTools.renderItemAndTooltip(result,graphics,relX+94,relY+169,mousex,mousey,100);
         super.render(graphics,mousex,mousey,partialTicks);
-    }
-    private void renderItemAndTooltip(GuiGraphics graphics,ItemStack toRender,int place1,int place2,int mousex,int mousey,PoseStack matrices,boolean last){
-        ItemStack renderThis = toRender.copy();
-        if (!last) {
-            graphics.renderItem(toRender, place1, place2);
-        }else{
-            graphics.renderItem(renderThis, place1, place2);
-        }
-        graphics.renderItemDecorations(font,renderThis,place1,place2);
-
-
-        if (((mousex >= place1) && (mousex <= place1+16)) && ((mousey >= place2) && (mousey <= place2+16)) && !toRender.getItem().equals(Items.AIR)){
-            matrices.pushPose();
-            graphics.renderTooltip(font,toRender,mousex,mousey);
-            matrices.popPose();
-        }
     }
 }

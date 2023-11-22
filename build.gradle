@@ -145,6 +145,9 @@ dependencies {
 
 //    implementation fg.deobf("curse.maven:rubidium-574856:4573226")
 //    implementation fg.deobf("curse.maven:oculus-581495:4578741")
+//    implementation fg.deobf("curse.maven:placebo-283644:4723708")
+//    implementation fg.deobf("curse.maven:toast-control-271740:4711316")
+//    implementation fg.deobf("curse.maven:create-328085:4835191")
 }
 
 jar {

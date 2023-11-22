@@ -5,7 +5,9 @@ import com.finderfeed.solarcraft.config.JsonConfig;
 import com.finderfeed.solarcraft.content.blocks.blockentities.runic_energy.AbstractRunicEnergyContainer;
 import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.client.SunShardPuzzleScreen;
 import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.puzzle_template.Puzzle;
+import com.finderfeed.solarcraft.content.items.solar_lexicon.SolarLexicon;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.Progression;
+import com.finderfeed.solarcraft.content.items.solar_lexicon.screen.SolarLexiconScreen;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragmentHelper;
 import com.finderfeed.solarcraft.content.items.solar_wand.wand_actions.drain_runic_enenrgy_action.RETypeSelectionScreen;
@@ -31,6 +33,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundLevelChunkPacketData;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
 import java.util.List;
@@ -164,6 +167,22 @@ public class ClientPacketHandles {
         if (level.getEntity(entityId) instanceof AnimatedObject animatable){
             animatable.getAnimationManager().stopAnimation(tickerName);
         }
+    }
+
+    public static void openLexiconScreen(){
+        Minecraft mc = Minecraft.getInstance();
+        ItemStack stack = mc.player.getMainHandItem();
+        if (stack.getItem() instanceof SolarLexicon){
+            SolarLexicon lexicon = (SolarLexicon) stack.getItem();
+            if (lexicon.currentSavedScreen == null){
+                mc.setScreen(new SolarLexiconScreen());
+            }else{
+                mc.setScreen(lexicon.currentSavedScreen);
+                lexicon.currentSavedScreen = null;
+            }
+
+        }
+
     }
 
 }

@@ -1,5 +1,7 @@
 package com.finderfeed.solarcraft.content.items.solar_lexicon.screen;
 
+import com.finderfeed.solarcraft.SolarCraft;
+import com.finderfeed.solarcraft.content.blocks.infusing_table_things.InfuserTileEntity;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.screen.buttons.ItemStackTabButton;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.local_library.client.screens.buttons.FDImageButton;
@@ -13,7 +15,6 @@ import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.sounds.SoundManager;
 import net.minecraft.network.chat.Component;
@@ -23,57 +24,42 @@ import net.minecraft.world.item.Items;
 import java.util.ArrayList;
 import java.util.List;
 
-public class InfusingRecipeEnergyScreen extends Screen {
-    public final ResourceLocation BUTTONS = new ResourceLocation("solarcraft","textures/misc/page_buttons.png");
-    public final ResourceLocation MAIN_SCREEN_OPENED = new ResourceLocation("solarcraft","textures/gui/runic_and_solar_energy_costs.png");
-    private int currentPage = 0;
-    private final int maxPages;
+public class InfusingRecipeEnergyScreen extends LexiconScreen {
+    public final ResourceLocation BUTTONS = new ResourceLocation(SolarCraft.MOD_ID,"textures/misc/page_buttons.png");
+    public final ResourceLocation MAIN_SCREEN_OPENED = new ResourceLocation(SolarCraft.MOD_ID,"textures/gui/runic_and_solar_energy_costs.png");
+
     private final List<InfusingRecipe> recipes;
     private final RunicEnergy.Type[] ORDERED_TYPES = {
       RunicEnergy.Type.GIRO, RunicEnergy.Type.ULTIMA, RunicEnergy.Type.ZETA, RunicEnergy.Type.ARDO, RunicEnergy.Type.TERA, RunicEnergy.Type.FIRA, RunicEnergy.Type.URBA
       , RunicEnergy.Type.KELDA
     };
-    private int relX;
-    private int relY;
     private List<Runnable> postRender = new ArrayList<>();
 
     public InfusingRecipeEnergyScreen(InfusingRecipe recipe) {
-        super(Component.literal(""));
+        super();
         this.recipes = List.of(recipe);
-        maxPages = 0;
     }
 
     public InfusingRecipeEnergyScreen(List<InfusingRecipe> recipes) {
-        super(Component.literal(""));
+        super();
         this.recipes = recipes;
-        maxPages = recipes.size()-1;
     }
 
 
     public InfusingRecipeEnergyScreen(List<InfusingRecipe> recipes,int currentPage) {
-        super(Component.literal(""));
+        super();
         this.recipes = recipes;
-        maxPages = recipes.size()-1;
         this.currentPage = currentPage;
     }
 
     @Override
     protected void init() {
         super.init();
-        int width = minecraft.getWindow().getWidth();
-        int height = minecraft.getWindow().getHeight();
-        int scale = (int) minecraft.getWindow().getGuiScale();
-        this.relX = (width/scale - 183)/2 - 12;
-        this.relY = (height - 218*scale)/2/scale;
 
-
-
-        if (maxPages != 0) {
+        if (this.getPagesCount() != 0) {
             addRenderableWidget(new FDImageButton(relX + 193 + 19, relY + 55 + 13, 16, 16, 0, 0, 0, BUTTONS, 16, 32, (button) -> {
-                if ((currentPage + 1 <= maxPages)) {
-                    currentPage += 1;
 
-                }
+                this.nextPage();
             },(button,graphics,mousex,mousey)->{
                 graphics.renderTooltip(font,Component.literal("Next recipe"),mousex,mousey);
             },Component.literal("")){
@@ -83,10 +69,8 @@ public class InfusingRecipeEnergyScreen extends Screen {
                 }
             });
             addRenderableWidget(new FDImageButton(relX + 193 + 19, relY + 55 + 13 + 16, 16, 16, 0, 16, 0, BUTTONS, 16, 32, (button) -> {
-                if ((currentPage - 1 >= 0)) {
-                    currentPage -= 1;
 
-                }
+                this.previousPage();
             },(button,graphics,mousex,mousey)->{
                 graphics.renderTooltip(font,Component.literal("Previous recipe"),mousex,mousey);
             },Component.literal("")){
@@ -114,7 +98,21 @@ public class InfusingRecipeEnergyScreen extends Screen {
         }));
     }
 
+    @Override
+    public int getScreenWidth() {
+        return 207;
+    }
 
+    @Override
+    public int getScreenHeight() {
+        return 208;
+    }
+
+
+    @Override
+    public int getPagesCount() {
+        return recipes.size() - 1;
+    }
 
     @Override
     public void render(GuiGraphics graphics, int mousex, int mousey, float partialTicks) {
@@ -139,24 +137,24 @@ public class InfusingRecipeEnergyScreen extends Screen {
             renderEnergyBar(graphics,relX+64+iter*17 + xoffs,relY+90,type,recipe,mousex,mousey);
             iter++;
         }
-        int solaren = Math.round((float)recipe.requriedEnergy / 100000 * 63);
+        int solaren = Math.round((float)recipe.requriedSolarEnergy / InfuserTileEntity.MAX_SOLAR_ENERGY * 63);
         graphics.fill(relX+15 + xoffs,relY+93-solaren,relX+25 + xoffs,relY+93,0xddffff00);
         if (RenderingTools.isMouseInBorders(mousex,mousey,relX + 17,relY + 31,relX + 17 + 10,relY + 93)){
             postRender.add(()->{
-               graphics.renderTooltip(font,Component.literal(String.valueOf(recipe.requriedEnergy)),mousex,mousey);
+               graphics.renderTooltip(font,Component.literal(String.valueOf(recipe.requriedSolarEnergy)),mousex,mousey);
             });
         }
-        double totalEnergy = recipe.requriedEnergy;
+        double totalEnergy = recipe.requriedSolarEnergy;
         for (double cost : recipe.RUNIC_ENERGY_COST.getCosts()){
             totalEnergy+=cost;
         }
-        int totaltext = Math.round((float)totalEnergy / 900000 * 173);
+        int totaltext = Math.round((float)totalEnergy / (InfuserTileEntity.MAX_RUNIC_ENERGY * 8) * 173);
         graphics.fill(relX+16 + xoffs,relY+145,relX+16+totaltext + xoffs,relY+145+6,0xddffff00);
         graphics.drawString(font,Component.translatable("solarcraft.total_solar_energy"),relX+16 + xoffs,relY+160,SolarLexiconScreen.TEXT_COLOR);
-        graphics.drawCenteredString(font,""+recipe.requriedEnergy,relX+160 + xoffs,relY+161,SolarLexiconScreen.TEXT_COLOR);
+        graphics.drawCenteredString(font,""+recipe.requriedSolarEnergy,relX+160 + xoffs,relY+161,SolarLexiconScreen.TEXT_COLOR);
 
         graphics.drawString(font,Component.translatable("solarcraft.total_runic_energy"),relX+16 + xoffs,relY+160+21,SolarLexiconScreen.TEXT_COLOR);
-        graphics.drawCenteredString(font,""+(int)(totalEnergy-recipe.requriedEnergy),relX+160 + xoffs,relY+161+21,SolarLexiconScreen.TEXT_COLOR);
+        graphics.drawCenteredString(font,""+(int)(totalEnergy-recipe.requriedSolarEnergy),relX+160 + xoffs,relY+161+21,SolarLexiconScreen.TEXT_COLOR);
         matrices.popPose();
         super.render(graphics, mousex, mousey, partialTicks);
         postRender.forEach(Runnable::run);
@@ -168,7 +166,7 @@ public class InfusingRecipeEnergyScreen extends Screen {
         PoseStack matrices = graphics.pose();
         matrices.pushPose();
         float energyCostPerItem = recipe.RUNIC_ENERGY_COST.get(type);
-        int xtexture =  ( Math.round( (float)energyCostPerItem/100000*60));
+        int xtexture =  ( Math.round( (float)energyCostPerItem/InfuserTileEntity.MAX_RUNIC_ENERGY*60));
         graphics.fill(offsetx,offsety-xtexture,offsetx+6,offsety,0xddffff00);
         if (RenderingTools.isMouseInBorders(mx,my,offsetx,offsety - 60,offsetx + 6,offsety)){
             postRender.add(()->{
