@@ -12,6 +12,7 @@ import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.Ancient
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragmentHelper;
 import com.finderfeed.solarcraft.content.items.solar_wand.wand_actions.drain_runic_enenrgy_action.RETypeSelectionScreen;
 import com.finderfeed.solarcraft.content.items.solar_wand.wand_actions.structure_check.StructureSelectionScreen;
+import com.finderfeed.solarcraft.events.other_events.event_handler.ClientEventsHandler;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.helpers.multiblock.MultiblockStructure;
@@ -174,13 +175,13 @@ public class ClientPacketHandles {
         ItemStack stack = mc.player.getMainHandItem();
         if (stack.getItem() instanceof SolarLexicon){
             SolarLexicon lexicon = (SolarLexicon) stack.getItem();
-            if (lexicon.currentSavedScreen == null){
-                mc.setScreen(new SolarLexiconScreen());
-            }else{
-                mc.setScreen(lexicon.currentSavedScreen);
-                lexicon.currentSavedScreen = null;
-            }
-
+//            if (lexicon.currentSavedScreen == null){
+//                mc.setScreen(new SolarLexiconScreen());
+//            }else{
+//                mc.setScreen(lexicon.currentSavedScreen);
+//                lexicon.currentSavedScreen = null;
+//            }
+            ClientEventsHandler.SOLAR_LEXICON_SCREEN_HANDLER.open();
         }
 
     }

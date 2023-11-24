@@ -4,6 +4,7 @@ import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.screen.buttons.ItemStackTabButton;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragmentHelper;
+import com.finderfeed.solarcraft.events.other_events.event_handler.ClientEventsHandler;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.client.screens.ThreeDStructureViewScreen;
@@ -63,12 +64,8 @@ public class StructureScreen extends LexiconScreen {
 
     @Override
     protected void init() {
+        super.init();
         structureBlocks.clear();
-//        int width = minecraft.getWindow().getWidth();
-//        int height = minecraft.getWindow().getHeight();
-//        int scale = (int) minecraft.getWindow().getGuiScale();
-//        this.relX = (width/scale - 183)/2-15;
-//        this.relY = (height - 218*scale)/2/scale;
         currentPage = 1;
         structHeightAndPageCount = structure.pattern.length;
         structWidth = structure.pattern[0].length / 2;
@@ -109,35 +106,14 @@ public class StructureScreen extends LexiconScreen {
                     graphics.renderTooltip(font, Component.translatable("solarcraft.screens.buttons.recipes_screen"), b, c);
                 }));
         addRenderableWidget(new ItemStackTabButton(relX+217,relY+52 + 18,17,17,(button)->{
-            Minecraft mc = Minecraft.getInstance();
-            SolarLexicon lexicon = (SolarLexicon) mc.player.getMainHandItem().getItem();
-            lexicon.currentSavedScreen = this;
-            minecraft.setScreen(null);
+            ClientEventsHandler.SOLAR_LEXICON_SCREEN_HANDLER.memorizeAndClose();
+
         }, Items.WRITABLE_BOOK.getDefaultInstance(),0.7f,(buttons, graphics, b, c) -> {
             graphics.renderTooltip(font, Component.translatable("solarcraft.screens.buttons.memorize_page"), b, c);
         }));
 
-        super.init();
 
 
-//        int a = 0;
-//        if (structWidth*2 > 16){
-//            a = structWidth*2-16;
-//        }
-//        for (int heights = 0;heights < structHeightAndPageCount;heights++) {
-//            ArrayList<BlockAndRelxRely> toAdd = new ArrayList<>();
-//                for (int i = -structWidth; i <= structWidth;i++){
-//                    for (int g = -structWidth; g <= structWidth;g++){
-//
-//                            BlockState state = structure.getBlockByCharacter(structure.pattern[heights][i + structWidth].charAt(g + structWidth));
-//                            if (!state.isAir()) {
-//                                toAdd.add(new BlockAndRelxRely(state, relX + 100 + g * (13 - a), relY + 100 + i * (14 - a)));
-//                            }
-//                        }
-//
-//                }
-//            this.structureBlocks.add(toAdd);
-//        }
         int sX = structure.pattern[0][0].length();
         int sZ = structure.pattern[0].length;
         int max = Math.max(sX,sZ);

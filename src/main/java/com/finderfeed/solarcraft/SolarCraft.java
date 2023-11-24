@@ -10,9 +10,10 @@ import com.finderfeed.solarcraft.config.JsonFragmentsHelper;
 import com.finderfeed.solarcraft.config.SolarcraftClientConfig;
 import com.finderfeed.solarcraft.config.SolarcraftConfig;
 
+import com.finderfeed.solarcraft.content.blocks.primitive.ProgressionBlock;
+import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.Progression;
 import com.finderfeed.solarcraft.content.world_generation.structures.SolarcraftStructureTypes;
 import com.finderfeed.solarcraft.events.RenderEventsHandler;
-import com.finderfeed.solarcraft.content.blocks.progression_ores.SolarOreBlock;
 import com.finderfeed.solarcraft.content.blocks.infusing_table_things.*;
 import com.finderfeed.solarcraft.content.blocks.infusing_table_things.infusing_pool.InfusingStand;
 import com.finderfeed.solarcraft.content.items.item_tiers.SolarCraftToolTiers;
@@ -128,8 +129,7 @@ public class SolarCraft
     public  static  final  RegistryObject<SolarForgeBlock> SOLAR_FORGE = BLOCKS.register("solar_forge",()->
             new SolarForgeBlock(BlockBehaviour.Properties.copy(Blocks.STONE).noOcclusion().sound(SoundType.ANCIENT_DEBRIS)));
 
-    public  static  final  RegistryObject<SolarOreBlock> SOLAR_ORE = BLOCKS.register("solar_ore",()-> new SolarOreBlock(BlockBehaviour.Properties.copy(Blocks.STONE)
-            .sound(SoundType.ANCIENT_DEBRIS)));
+    public  static  final  RegistryObject<ProgressionBlock> SOLAR_ORE = BLOCKS.register("solar_ore",() -> new ProgressionBlock(BlockBehaviour.Properties.copy(Blocks.STONE).sound(SoundType.ANCIENT_DEBRIS),()-> Progression.ENTER_NETHER,Blocks.STONE));
 
     public  static  final  RegistryObject<InfuserBlock> SOLAR_INFUSER = BLOCKS.register("solar_infuser",
             ()-> new InfuserBlock(BlockBehaviour.Properties.copy(Blocks.STONE).noOcclusion()));

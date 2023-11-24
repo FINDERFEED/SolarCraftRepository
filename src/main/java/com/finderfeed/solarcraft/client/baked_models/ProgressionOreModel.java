@@ -1,19 +1,17 @@
 package com.finderfeed.solarcraft.client.baked_models;
 
 
-
+import com.finderfeed.solarcraft.content.blocks.primitive.ProgressionBlock;
 import com.finderfeed.solarcraft.helpers.Helpers;
-import com.finderfeed.solarcraft.misc_things.IProgressionBlock;
-import net.minecraft.util.RandomSource;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.BakedQuad;
-import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.renderer.block.model.ItemOverrides;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.Direction;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.client.model.data.ModelData;
-
 
 import javax.annotation.Nonnull;
 import java.util.List;
@@ -28,8 +26,8 @@ public class ProgressionOreModel implements BakedModel {
     @Override
     public List<BakedQuad> getQuads(@org.jetbrains.annotations.Nullable BlockState state, @org.jetbrains.annotations.Nullable Direction direction, RandomSource src) {
         if (state != null && (Minecraft.getInstance().player != null) ) {
-            if ((state.getBlock() instanceof IProgressionBlock) && !Helpers.hasPlayerCompletedProgression(((IProgressionBlock) state.getBlock()).getRequiredProgression(), Minecraft.getInstance().player)) {
-                BlockState lockedState = ((IProgressionBlock) state.getBlock()).getLockedBlock().defaultBlockState();
+            if ((state.getBlock() instanceof ProgressionBlock block) && !Helpers.hasPlayerCompletedProgression((block).getRequiredProgression(), Minecraft.getInstance().player)) {
+                BlockState lockedState = block.getLockedBlock().defaultBlockState();
 
                 return Minecraft.getInstance().getBlockRenderer().getBlockModel(lockedState)
                         .getQuads(lockedState,direction,src, ModelData.EMPTY,null);

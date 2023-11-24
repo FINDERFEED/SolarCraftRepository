@@ -3,6 +3,7 @@ package com.finderfeed.solarcraft.content.items.solar_lexicon.screen;
 import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.content.blocks.infusing_table_things.InfuserTileEntity;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.screen.buttons.ItemStackTabButton;
+import com.finderfeed.solarcraft.events.other_events.event_handler.ClientEventsHandler;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.local_library.client.screens.buttons.FDImageButton;
 import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
@@ -89,10 +90,8 @@ public class InfusingRecipeEnergyScreen extends LexiconScreen {
                     graphics.renderTooltip(font, Component.translatable("solarcraft.screens.buttons.recipes_screen"), b, c);
                 }));
         addRenderableWidget(new ItemStackTabButton(relX+xoffs,relY+27 + 6 + 18,17,17,(button)->{
-            Minecraft mc = Minecraft.getInstance();
-            SolarLexicon lexicon = (SolarLexicon) mc.player.getMainHandItem().getItem();
-            lexicon.currentSavedScreen = this;
-            minecraft.setScreen(null);
+            ClientEventsHandler.SOLAR_LEXICON_SCREEN_HANDLER.memorizeAndClose();
+
         }, Items.WRITABLE_BOOK.getDefaultInstance(),0.7f,(buttons, graphics, b, c) -> {
             graphics.renderTooltip(font, Component.translatable("solarcraft.screens.buttons.memorize_page"), b, c);
         }));

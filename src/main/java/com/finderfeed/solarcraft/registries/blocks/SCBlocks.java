@@ -2,9 +2,7 @@ package com.finderfeed.solarcraft.registries.blocks;
 
 import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.ray_puzzle.BeamGeneratorBlock;
 import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.ray_puzzle.blocks.BeamReflectorBlock;
-import com.finderfeed.solarcraft.content.blocks.progression_ores.BlueGemOre;
 import com.finderfeed.solarcraft.content.blocks.progression_ores.CorruptedShardOre;
-import com.finderfeed.solarcraft.content.blocks.progression_ores.SolarStoneBlock;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.local_library.blocks.FlammableBlock;
 import com.finderfeed.solarcraft.local_library.blocks.FlammableLeavesBlock;
@@ -52,7 +50,7 @@ public class SCBlocks {
     ));
 
     public  static  final RegistryObject<Block> INFUSING_CRAFTING_TABLE_BLOCK = BLOCKS.register("infusing_crafting_table",()-> new InfusingTableBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)));
-    public  static  final RegistryObject<SolarStoneBlock> SOLAR_STONE = BLOCKS.register("solar_stone",()-> new SolarStoneBlock(BlockBehaviour.Properties.copy(Blocks.ANDESITE)));
+    public  static  final RegistryObject<ProgressionBlock> SOLAR_STONE = BLOCKS.register("solar_stone",()-> new ProgressionBlock(BlockBehaviour.Properties.copy(Blocks.ANDESITE),()->Progression.ENTER_NETHER,Blocks.STONE));
     public  static  final RegistryObject<Block> SOLAR_STONE_CHISELED = BLOCKS.register("chiseled_solar_stone",()-> new Block(BlockBehaviour.Properties.copy(Blocks.STONE)));
     public  static  final RegistryObject<ProgressionBlock> ENDER_CRACKS = BLOCKS.register("ender_cracks",()-> new ProgressionBlock(BlockBehaviour.Properties.copy(Blocks.END_STONE),()-> Progression.KILL_DRAGON,Blocks.END_STONE));
     public  static  final RegistryObject<ProgressionBlock> LENSING_CRYSTAL_ORE = BLOCKS.register("lensing_crystal_ore",()-> new ProgressionBlock(BlockBehaviour.Properties.copy(Blocks.STONE),()-> Progression.KILL_WITHER,Blocks.STONE));
@@ -84,7 +82,7 @@ public class SCBlocks {
     public  static  final RegistryObject<Block> SOLAR_FURNACE = BLOCKS.register("solar_furnace",()-> new SolarEnergyFurnace(BlockBehaviour.Properties.copy(Blocks.STONE)));
     public  static  final RegistryObject<Block> TURRET_BLOCK = BLOCKS.register("turret_block",()-> new TurretBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).noOcclusion()));
     public  static  final RegistryObject<Block> ZAP_TURRET_BLOCK = BLOCKS.register("zap_turret_block",()-> new ZapTurretBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).noOcclusion()));
-    public  static  final RegistryObject<BlueGemOre> BLUE_GEM_ORE = BLOCKS.register("blue_gem_ore",()-> new BlueGemOre(BlockBehaviour.Properties.copy(Blocks.STONE)));
+    public  static  final RegistryObject<ProgressionBlock> BLUE_GEM_ORE = BLOCKS.register("blue_gem_ore",()-> new ProgressionBlock(BlockBehaviour.Properties.copy(Blocks.STONE),()->Progression.TRANSMUTE_GEM,Blocks.STONE));
 
     public  static  final RegistryObject<Block> CORRUPTED_SHARD_ORE = BLOCKS.register("corrupted_shard_ore",()-> new CorruptedShardOre(BlockBehaviour.Properties.copy(Blocks.STONE),()->Progression.RUNIC_ENERGY_REPEATER,Blocks.STONE));
     public  static  final RegistryObject<Block> CORRUPTED_SHARD_ORE_DEEPSLATE = BLOCKS.register("deepslate_corrupted_shard_ore",()-> new CorruptedShardOre(BlockBehaviour.Properties.copy(Blocks.DEEPSLATE),()->Progression.RUNIC_ENERGY_REPEATER,Blocks.DEEPSLATE));

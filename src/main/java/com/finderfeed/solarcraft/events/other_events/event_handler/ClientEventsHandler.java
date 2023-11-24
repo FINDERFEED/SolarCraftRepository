@@ -8,6 +8,8 @@ import com.finderfeed.solarcraft.content.blocks.solar_forge_block.solar_forge_sc
 import com.finderfeed.solarcraft.content.items.ModuleItem;
 import com.finderfeed.solarcraft.content.items.runic_energy.RunicEnergyCost;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.Progression;
+import com.finderfeed.solarcraft.content.items.solar_lexicon.screen.LexiconScreen;
+import com.finderfeed.solarcraft.content.items.solar_lexicon.screen.SolarLexiconScreenHandler;
 import com.finderfeed.solarcraft.content.items.solar_wand.client.WandModeSelectionScreen;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.helpers.Helpers;
@@ -67,13 +69,26 @@ public class ClientEventsHandler {
     private static List<BlockPos> ORES_RENDER_POSITIONS = new ArrayList<>();
     private static List<BlockPos> CATALYST_RENDER_POSITIONS = new ArrayList<>();
 
+    public static SolarLexiconScreenHandler SOLAR_LEXICON_SCREEN_HANDLER = new SolarLexiconScreenHandler();
+
+
+
+    @SubscribeEvent
+    public static void onScreenOpening(ScreenEvent.Opening event){
+        if (event.getNewScreen() instanceof LexiconScreen scr){
+            SOLAR_LEXICON_SCREEN_HANDLER.onNewScreenOpened(scr);
+        }
+    }
 
     @SubscribeEvent
     public static void handleKeyInputs(final InputEvent.Key event){
 
         if (Minecraft.getInstance().screen instanceof IScrollable){
             ((IScrollable) Minecraft.getInstance().screen).performScroll(event.getKey());
+        }
 
+        if (event.getKey() == GLFW.GLFW_KEY_ESCAPE && event.getAction() == GLFW.GLFW_PRESS){
+            SOLAR_LEXICON_SCREEN_HANDLER.escapePressed();
         }
 
         if (Minecraft.getInstance().screen != null) return;
@@ -134,6 +149,8 @@ public class ClientEventsHandler {
     @SubscribeEvent
     public static void onPlayerLogout(final ClientPlayerNetworkEvent.LoggingOut event){
         ClientHelpers.deleteCachedFragments();
+        SOLAR_LEXICON_SCREEN_HANDLER.onLogout();
+
     }
 
 

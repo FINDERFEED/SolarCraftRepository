@@ -20,8 +20,11 @@ public class BlackBackgroundTooltip extends AnimatedTooltip{
         int yPos = calculateYRenderPos(y);
         PoseStack matrices = graphics.pose();
         float k = animLength/4f;
-//        float tick = Mth.lerp(pTicks,oldTick,ticker);
-        float tick = oldTick != ticker ? oldTick < ticker ? ticker + pTicks : ticker - pTicks : ticker;
+
+//        float tick = oldTick != ticker ? oldTick < ticker ? ticker + pTicks : ticker - pTicks : ticker;
+
+        float tick = FDMathHelper.lerpBetweenInDirection(oldTick,ticker,pTicks);
+
 
         double percentXOpeness = ticker < k ? (tick )/animLength*4 : 1f;
         percentXOpeness *= percentXOpeness;

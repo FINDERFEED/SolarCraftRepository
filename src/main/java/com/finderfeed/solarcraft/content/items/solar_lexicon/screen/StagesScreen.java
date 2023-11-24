@@ -163,12 +163,12 @@ public class StagesScreen extends ScrollableLexiconScreen {
     }
 
     @Override
-    public int getMaxXScroll() {
+    public int getXRightScroll() {
         return 100;
     }
 
     @Override
-    public int getMaxYScroll() {
+    public int getYDownScroll() {
         return (ProgressionStage.STAGES_IN_ORDER.length - 1) * DISTANCE_BETWEEN_STAGES_Y;
     }
 
@@ -179,10 +179,3 @@ public class StagesScreen extends ScrollableLexiconScreen {
 
 
 }
-@FunctionalInterface
-interface PostRender{
-
-    void doRender(GuiGraphics graphics, int mousex, int mousey, float partialTicks);
-
-}
-

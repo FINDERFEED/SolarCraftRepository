@@ -721,7 +721,7 @@
   "solarcraft.solar_god_sword_level_3": "Level 3: Can launch a projectile that does 5 damage. Cooldown: 10",
   "solarcraft.solar_god_sword_level_4": "Level 4: Projectile damage +5",
   "solarcraft.solar_god_sword_level_5": "Level 5: Projectile is explosive",
-  "solarcraft.solar_lexicon_screen_info": "This is the progressions page. Progressions hint you the correct way of how to progress in mod. Think how can you complete each one by reading their descriptions carefully, and looking at icon and connections between them. To move inside lexicon use arrows or WASD.",
+  "solarcraft.solar_lexicon_screen_info": "This is the progressions page. Progressions hint you the correct way of how to progress in mod. Think how can you complete each one by reading their descriptions carefully, and looking at icon and connections between them. To move inside lexicon use arrows or WASD. ESC opens the last opened screen, Shift+ESC closes all screens.",
   "solarcraft.solar_network_binder": "Right click on one SOLAR energy user, then right click on second SOLAR energy user and SECOND one will be bound to first one.",
   "solarcraft.solar_shield_of_god": "Charges when being used and when released damages all units in 5 block radius(if damage >= 7.5 knocks mobs away). The longer you use the shield the more damage it will do(seconds): ",
   "solarcraft.stages": "These are progression stages (each row is a progression stage). When you have completed the stage and ALL stages before it you will be able to decrypt more fragments.",
@@ -812,5 +812,8 @@
   "solarcraft.screens.buttons.retain_fragments_screen": "Restore Fragments",
   "solarcraft.screens.buttons.crafting_recipe": "Crafting Recipe",
   "solarcraft.screens.buttons.progression_screen": "Progressions",
-  "solarcraft.screens.buttons.memorize_page": "Memorize Screen"
+  "solarcraft.screens.buttons.memorize_page": "Memorize Screen",
+  "solarcraft.screens.buttons.progression_block.not_unlocked": "Not yet unlocked, progression required",
+  "solarcraft.screens.buttons.progression_blocks_page": "Locked/Unlocked blocks",
+  "solarcraft.screens.buttons.progression_blocks_page.info": "This page shows the blocks that you can or cannot see in the world at your stage of progression."
 }

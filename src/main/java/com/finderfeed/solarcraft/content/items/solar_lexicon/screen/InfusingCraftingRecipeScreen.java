@@ -2,6 +2,7 @@ package com.finderfeed.solarcraft.content.items.solar_lexicon.screen;
 
 import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.screen.buttons.ItemStackTabButton;
+import com.finderfeed.solarcraft.events.other_events.event_handler.ClientEventsHandler;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.SolarLexicon;
 import com.finderfeed.solarcraft.content.recipe_types.infusing_crafting.InfusingCraftingRecipe;
@@ -31,30 +32,27 @@ public class InfusingCraftingRecipeScreen extends LexiconScreen {
 
 
     private final List<InfusingCraftingRecipe> recipes;
-    private int currentPage = 0;
-    private int maxPages;
+
 
     public InfusingCraftingRecipeScreen(InfusingCraftingRecipe recipe) {
         super();
         this.recipes = List.of(recipe);
-        this.maxPages = 0;
+
     }
 
 
     public InfusingCraftingRecipeScreen(List<InfusingCraftingRecipe> recipe) {
         super();
         this.recipes = recipe;
-        this.maxPages = recipe.size()-1;
     }
 
     @Override
     protected void init() {
+        super.init();
         int xoffs = 111;
-        if (maxPages != 0) {
+        if (this.getPagesCount() != 1) {
             addRenderableWidget(new FDImageButton(relX + 180 - 10, relY + 36, 16, 16, 0, 0, 0, BUTTONS, 16, 32, (button) -> {
-                if ((currentPage + 1 <= maxPages)) {
-                    currentPage += 1;
-                }
+                this.nextPage();
             },(button,graphics,mousex,mousey)->{
                 graphics.renderTooltip(font,Component.literal("Next recipe"),mousex,mousey);
             },Component.literal("")){
@@ -64,9 +62,7 @@ public class InfusingCraftingRecipeScreen extends LexiconScreen {
                 }
             });
             addRenderableWidget(new FDImageButton(relX + 164 - 10, relY + 36, 16, 16, 0, 16, 0, BUTTONS, 16, 32, (button) -> {
-                if ((currentPage - 1 >= 0)) {
-                    currentPage -= 1;
-                }
+                this.previousPage();
             },(button,graphics,mousex,mousey)->{
                 graphics.renderTooltip(font,Component.literal("Previous recipe"),mousex,mousey);
             },Component.literal("")){
@@ -81,14 +77,12 @@ public class InfusingCraftingRecipeScreen extends LexiconScreen {
                     graphics.renderTooltip(font, Component.translatable("solarcraft.screens.buttons.recipes_screen"), b, c);
                 }));
         addRenderableWidget(new ItemStackTabButton(relX+97+xoffs,relY+26 + 19,17,17,(button)->{
-            Minecraft mc = Minecraft.getInstance();
-            SolarLexicon lexicon = (SolarLexicon) mc.player.getMainHandItem().getItem();
-            lexicon.currentSavedScreen = this;
-            minecraft.setScreen(null);
+            ClientEventsHandler.SOLAR_LEXICON_SCREEN_HANDLER.memorizeAndClose();
+
         }, Items.WRITABLE_BOOK.getDefaultInstance(),0.7f,(buttons, graphics, b, c) -> {
             graphics.renderTooltip(font, Component.translatable("solarcraft.screens.buttons.memorize_page"), b, c);
         }));
-        super.init();
+
     }
 
     @Override
@@ -103,6 +97,11 @@ public class InfusingCraftingRecipeScreen extends LexiconScreen {
 
 
     @Override
+    public int getPagesCount() {
+        return recipes.size();
+    }
+
+    @Override
     public void render(GuiGraphics graphics, int mousex, int mousey, float partialTicks) {
         PoseStack matrices = graphics.pose();
         ClientHelpers.bindText(MAIN_SCREEN);
@@ -115,14 +114,16 @@ public class InfusingCraftingRecipeScreen extends LexiconScreen {
                 int iteratorLength = 0;
                 for (Item item : arr){
                     if (item != null) {
-                        renderItemAndTooltip(graphics,item.getDefaultInstance(), relX + iteratorLength * 18 + 20, relY + iteratorHeight * 18 + 16, mousex, mousey, matrices, false);
+                        RenderingTools.renderItemAndTooltip(item.getDefaultInstance(),graphics, relX + iteratorLength * 18 + 20, relY + iteratorHeight * 18 + 16, mousex, mousey,100);
                     }
                     iteratorLength++;
                 }
                 iteratorHeight++;
                 iteratorLength = 0;
             }
-            renderItemAndTooltip(graphics,currentRecipe.getOutput(),relX+81,relY+34,mousex,mousey,matrices,true);
+            ItemStack item = currentRecipe.getOutput().copy();
+            item.setCount(currentRecipe.getOutputCount());
+            RenderingTools.renderItemAndTooltip(currentRecipe.getOutput(),graphics,relX+81,relY+34,mousex,mousey,100);
 
             List<Item> uniqueItems = new ArrayList<>();
             Integer[] counts = new Integer[9];

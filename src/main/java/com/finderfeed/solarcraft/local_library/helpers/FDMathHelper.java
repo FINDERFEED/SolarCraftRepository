@@ -26,6 +26,16 @@ public class FDMathHelper {
     public static final Function<Double,Double> FLIP = (x)->1-x;
 
 
+    //.........x1.........x2.......
+    //.........x2.........x1.......
+    public static float lerpBetweenInDirection(float x1,float x2,float percent){
+        if (x1 < x2){
+            return lerp(x1,x2,percent);
+        }else{
+            return lerp(x2,x1,percent);
+        }
+    }
+
     //-y1/z1 = *z2;
     public static Vec3 findRandomNormalVec(Vec3 v){
         double z = -v.y/v.z;

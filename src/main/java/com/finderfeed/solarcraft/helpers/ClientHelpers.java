@@ -10,6 +10,7 @@ import com.finderfeed.solarcraft.client.screens.CrystalEnergyVinesPuzzleScreen;
 import com.finderfeed.solarcraft.client.toasts.UnlockedEnergyTypeToast;
 import com.finderfeed.solarcraft.config.JsonFragmentsHelper;
 import com.finderfeed.solarcraft.config.SolarcraftClientConfig;
+import com.finderfeed.solarcraft.content.blocks.primitive.ProgressionBlock;
 import com.finderfeed.solarcraft.content.entities.not_alive.BallLightningProjectile;
 import com.finderfeed.solarcraft.content.items.solar_wand.wand_actions.drain_runic_enenrgy_action.RETypeSelectionScreen;
 import com.finderfeed.solarcraft.events.RenderEventsHandler;
@@ -364,7 +365,7 @@ public class ClientHelpers {
     }
 
     public static Component getNameBasedOnProgression(ItemStack stack){
-        IProgressionBlock block = (IProgressionBlock) ((BlockItem)stack.getItem()).getBlock();
+        ProgressionBlock block = (ProgressionBlock) ((BlockItem)stack.getItem()).getBlock();
         Player playerEntity = getClientPlayer();
         if (playerEntity != null) {
             if (Helpers.hasPlayerCompletedProgression(block.getRequiredProgression(), playerEntity)) {

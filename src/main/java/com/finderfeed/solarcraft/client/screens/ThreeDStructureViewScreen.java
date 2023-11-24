@@ -1,8 +1,11 @@
 package com.finderfeed.solarcraft.client.screens;
 
+import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.content.blocks.solar_forge_block.solar_forge_screen.SolarCraftButton;
+import com.finderfeed.solarcraft.content.items.solar_lexicon.screen.ScrollableLexiconScreen;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragmentHelper;
+import com.finderfeed.solarcraft.events.other_events.event_handler.ClientEventsHandler;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.helpers.multiblock.MultiblockStructure;
@@ -18,6 +21,7 @@ import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
@@ -45,12 +49,12 @@ import java.util.List;
 import static com.finderfeed.solarcraft.content.items.solar_lexicon.screen.InformationScreen.getScreenFromFragment;
 
 
-public class ThreeDStructureViewScreen extends Screen implements IScrollable {
+public class ThreeDStructureViewScreen extends ScrollableLexiconScreen {
 
     private  Button b;
     private  Button c;
-    public final ResourceLocation THREEDSCREENBTN = new ResourceLocation("solarcraft","textures/misc/button.png");
-    public final ResourceLocation STRUCTURE_GUI = new ResourceLocation("solarcraft","textures/gui/structure_screen.png");
+    public final ResourceLocation THREEDSCREENBTN = new ResourceLocation(SolarCraft.MOD_ID,"textures/misc/button.png");
+    public final ResourceLocation STRUCTURE_GUI = new ResourceLocation(SolarCraft.MOD_ID,"textures/gui/structure_screen.png");
     private double xDragPos=0;
     private double yDragPos=0;
     private float structScale = 1;
@@ -63,10 +67,8 @@ public class ThreeDStructureViewScreen extends Screen implements IScrollable {
     private List<PositionBlockStateTileEntity> POS_STATE_TILEENTITY = new ArrayList<>();
 
 
-    int relX = 0;
-    int relY = 0;
     public ThreeDStructureViewScreen(AncientFragment fragment,MultiblockStructure structure) {
-        super(Component.literal(""));
+        super();
         this.struct = structure;
         this.fragment = fragment;
     }
@@ -82,18 +84,16 @@ public class ThreeDStructureViewScreen extends Screen implements IScrollable {
                 });
 
         c = new ItemStackTabButton(0,0,17,17,(button)->{
-            Minecraft mc = Minecraft.getInstance();
-            SolarLexicon lexicon = (SolarLexicon) mc.player.getMainHandItem().getItem();
-            lexicon.currentSavedScreen = this;
-            minecraft.setScreen(null);
+            ClientEventsHandler.SOLAR_LEXICON_SCREEN_HANDLER.memorizeAndClose();
+
         }, Items.WRITABLE_BOOK.getDefaultInstance(),0.7f,(buttons, graphics, b, c) -> {
             graphics.renderTooltip(font, Component.translatable("solarcraft.screens.buttons.memorize_page"), b, c);
         });
-        int width = minecraft.getWindow().getWidth();
-        int height = minecraft.getWindow().getHeight();
-        int scale = (int) minecraft.getWindow().getGuiScale();
-        this.relX = (width/scale - 183)/2-15;
-        this.relY = (height - 218*scale)/2/scale;
+//        int width = minecraft.getWindow().getWidth();
+//        int height = minecraft.getWindow().getHeight();
+//        int scale = (int) minecraft.getWindow().getGuiScale();
+//        this.relX = (width/scale - 183)/2-15;
+//        this.relY = (height - 218*scale)/2/scale;
         POS_STATE_TILEENTITY.clear();
         structScale = 10f/Math.max(struct.pattern.length,struct.pattern[0].length);
         this.POS_STATE_TILEENTITY = RenderingTools.StructureRenderer.prepareList(struct);
@@ -158,6 +158,16 @@ public class ThreeDStructureViewScreen extends Screen implements IScrollable {
     }
 
     @Override
+    public int getScreenWidth() {
+        return 217;
+    }
+
+    @Override
+    public int getScreenHeight() {
+        return 217;
+    }
+
+    @Override
     public boolean isPauseScreen() {
         return false;
     }
@@ -191,8 +201,6 @@ public class ThreeDStructureViewScreen extends Screen implements IScrollable {
         matrices.popPose();
 
         matrices.pushPose();
-//        matrices.mulPose(Vector3f.XN.rotationDegrees(-45+(int)this.dragUpDown));
-//        matrices.mulPose(Vector3f.YP.rotationDegrees(45+(int)this.dragLeftRight));
         matrices.mulPose(RenderingTools.rotationDegrees(RenderingTools.XN(),-45+(int)this.dragUpDown));
         matrices.mulPose(RenderingTools.rotationDegrees(RenderingTools.YP(),45+(int)this.dragLeftRight));
         matrices.scale(structScale,structScale,structScale);
@@ -211,35 +219,81 @@ public class ThreeDStructureViewScreen extends Screen implements IScrollable {
 
 
 
+//    @Override
+//    public void performScroll(int keyCode) {
+//        double drag = 3;
+//        if (hasShiftDown()){
+//            drag = 4.5;
+//        }
+//        if (keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_UP)){
+//            this.dragUpDown+=drag;
+//        }
+//        if (keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_DOWN)){
+//            this.dragUpDown-=drag;
+//        }
+//        if (keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_LEFT)){
+//            this.dragLeftRight-=drag;
+//        }
+//        if (keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_RIGHT)){
+//            this.dragLeftRight+=drag;
+//        }
+//    }
+
     @Override
-    public void performScroll(int keyCode) {
-        double drag = 3;
-        if (hasShiftDown()){
-            drag = 4.5;
-        }
-        if (keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_UP)){
-            this.dragUpDown+=drag;
-        }
-        if (keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_DOWN)){
-            this.dragUpDown-=drag;
-        }
-        if (keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_LEFT)){
-            this.dragLeftRight-=drag;
-        }
-        if (keyCode == GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_RIGHT)){
-            this.dragLeftRight+=drag;
-        }
+    public void onScrollLeft(int delta) {
+        super.onScrollLeft(delta);
+        this.dragLeftRight += delta;
     }
 
     @Override
-    public int getCurrentScrollX() {
-        return 0;
+    public void onScrollRight(int delta) {
+        super.onScrollRight(delta);
+        this.dragLeftRight += delta;
     }
 
     @Override
-    public int getCurrentScrollY() {
-        return 0;
+    public void onScrollDown(int delta) {
+        super.onScrollDown(delta);
+        this.dragUpDown += delta;
     }
+
+    @Override
+    public void onScrollUp(int delta) {
+        super.onScrollUp(delta);
+        this.dragUpDown += delta;
+    }
+
+    @Override
+    public int getScrollValue() {
+        return 3;
+    }
+
+    @Override
+    public int getXRightScroll() {
+        return Integer.MAX_VALUE;
+    }
+
+    @Override
+    public int getYDownScroll() {
+        return Integer.MAX_VALUE;
+    }
+
+    @Override
+    public int getYUpScroll() {
+        return Integer.MAX_VALUE;
+    }
+
+    @Override
+    public int getXLeftScroll() {
+        return Integer.MAX_VALUE;
+    }
+
+    @Override
+    public List<AbstractWidget> getMovableWidgets() {
+        return List.of();
+    }
+
+
 }
 
 

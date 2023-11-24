@@ -2,6 +2,7 @@ package com.finderfeed.solarcraft.content.items.solar_lexicon.screen;
 
 import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.screen.buttons.ItemStackTabButton;
+import com.finderfeed.solarcraft.events.other_events.event_handler.ClientEventsHandler;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.local_library.client.screens.buttons.FDImageButton;
@@ -34,36 +35,33 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class InfusingRecipeScreen extends Screen {
-    public final ResourceLocation BUTTONS = new ResourceLocation("solarcraft","textures/misc/page_buttons.png");
-    public final ResourceLocation MAIN_SCREEN_OPENED = new ResourceLocation("solarcraft","textures/gui/solar_lexicon_infusing_recipe_with_catalysts_new.png");
-    public final ResourceLocation MAIN_SCREEN_UNOPENED = new ResourceLocation("solarcraft","textures/gui/solar_lexicon_infusing_recipe_without_catalysts_new.png");
+public class InfusingRecipeScreen extends LexiconScreen {
+    public final ResourceLocation BUTTONS = new ResourceLocation(SolarCraft.MOD_ID,"textures/misc/page_buttons.png");
+    public final ResourceLocation MAIN_SCREEN_OPENED = new ResourceLocation(SolarCraft.MOD_ID,"textures/gui/solar_lexicon_infusing_recipe_with_catalysts_new.png");
+    public final ResourceLocation MAIN_SCREEN_UNOPENED = new ResourceLocation(SolarCraft.MOD_ID,"textures/gui/solar_lexicon_infusing_recipe_without_catalysts_new.png");
     //60*6
     private int[][] runicEnergySymbolsRenderPositions = new int[12][2];
     public final List<InfusingRecipe> recipe;
-    private int maxPages;
-    private int currentPage = 0;
-    public int relX;
-    public int relY;
+
+
     public List<ItemRator> itemRators;
     private boolean catalystsUnlocked = false;
     private int ticker = 0;
 
     public InfusingRecipeScreen(InfusingRecipe a) {
-        super(Component.literal(""));
+        super();
         this.recipe = List.of(a);
-        maxPages = 0;
+//        maxPages = 0;
     }
     public InfusingRecipeScreen(List<InfusingRecipe> a) {
-        super(Component.literal(""));
+        super();
         this.recipe = a;
-        maxPages = recipe.size()-1;
+//        maxPages = recipe.size()-1;
     }
 
     public InfusingRecipeScreen(List<InfusingRecipe> a,int page) {
-        super(Component.literal(""));
+        super();
         this.recipe = a;
-        maxPages = recipe.size()-1;
         this.currentPage = page;
     }
 
@@ -85,22 +83,14 @@ public class InfusingRecipeScreen extends Screen {
 
     @Override
     protected void init() {
-        int width = minecraft.getWindow().getWidth();
-        int height = minecraft.getWindow().getHeight();
-        int scale = (int) minecraft.getWindow().getGuiScale();
-        this.relX = (width/scale - 183)/2 - 12;
-        this.relY = (height - 218*scale)/2/scale;
+        super.init();
         fillArray();
         itemRators = new ArrayList<>();
         this.catalystsUnlocked = Helpers.hasPlayerCompletedProgression(Progression.CATALYSTS,Minecraft.getInstance().player);
         fillItemRators();
-        if (maxPages != 0) {
+        if (this.getPagesCount() != 1) {
             addRenderableWidget(new FDImageButton(relX + 193 + 19, relY + 55 + 14  , 16, 16, 0, 0, 0, BUTTONS, 16, 32, (button) -> {
-                if ((currentPage + 1 <= maxPages)) {
-                    currentPage += 1;
-                    this.itemRators.clear();
-                    fillItemRators();
-                }
+                this.nextPage();
             },(button,graphics,mousex,mousey)->{
                 graphics.renderTooltip(font,Component.literal("Next recipe"),mousex,mousey);
             },Component.literal("")){
@@ -110,11 +100,7 @@ public class InfusingRecipeScreen extends Screen {
                 }
             });
             addRenderableWidget(new FDImageButton(relX + 193 + 19, relY + 16 + 55 + 14 , 16, 16, 0, 16, 0, BUTTONS, 16, 32, (button) -> {
-                if ((currentPage - 1 >= 0)) {
-                    currentPage -= 1;
-                    this.itemRators.clear();
-                    fillItemRators();
-                }
+                this.previousPage();
             },(button,graphics,mousex,mousey)->{
                 graphics.renderTooltip(font ,Component.literal("Previous recipe"),mousex,mousey);
             },Component.literal("")){
@@ -128,7 +114,7 @@ public class InfusingRecipeScreen extends Screen {
         //13
 
         boolean d = false;
-        for (int i = 0; i <= maxPages;i++){
+        for (int i = 0; i < this.getPagesCount();i++){
             if (recipe.get(i).requriedSolarEnergy != 0 || InfuserTileEntity.doRecipeRequiresRunicEnergy(recipe.get(i).RUNIC_ENERGY_COST)){
                 d = true;
                 break;
@@ -145,14 +131,12 @@ public class InfusingRecipeScreen extends Screen {
                     graphics.renderTooltip(font, Component.translatable("solarcraft.screens.buttons.recipes_screen"), b, c);
                 }));
         addRenderableWidget(new ItemStackTabButton(relX + 211,relY+28 + 6 - 1 + 18,17,17,(button)->{
-            Minecraft mc = Minecraft.getInstance();
-            SolarLexicon lexicon = (SolarLexicon) mc.player.getMainHandItem().getItem();
-            lexicon.currentSavedScreen = this;
-            minecraft.setScreen(null);
+            ClientEventsHandler.SOLAR_LEXICON_SCREEN_HANDLER.memorizeAndClose();
+
         }, Items.WRITABLE_BOOK.getDefaultInstance(),0.7f,(buttons, graphics, b, c) -> {
             graphics.renderTooltip(font, Component.translatable("solarcraft.screens.buttons.memorize_page"), b, c);
         }));
-        super.init();
+
     }
 
     @Override
@@ -161,6 +145,28 @@ public class InfusingRecipeScreen extends Screen {
         if (ticker++ % 40 == 0){
             itemRators.forEach(ItemRator::next);
         }
+    }
+
+    @Override
+    public int getScreenWidth() {
+        return 208;
+    }
+
+    @Override
+    public int getScreenHeight() {
+        return 208;
+    }
+
+    @Override
+    public int getPagesCount() {
+        return recipe.size();
+    }
+
+    @Override
+    public void onPageChanged(int newPage) {
+        super.onPageChanged(newPage);
+        this.itemRators.clear();
+        fillItemRators();
     }
 
     @Override
@@ -174,27 +180,26 @@ public class InfusingRecipeScreen extends Screen {
         }
         InfusingRecipe currentRecipe = recipe.get(currentPage);
         RenderingTools.blitWithBlend(matrices,relX,relY,0,0,256,208,256,256,0,1f);
-//        blit(matrices,relX + 210,relY + 25,0,208,17,17,256,256);
-//        blit(matrices,relX + 210,relY + 25 + 18,0,208,17,17,256,256);
-//        blit(matrices,relX + 210,relY + 25 + 36,0,208,17,17,256,256);
-        int xOffset = -25;
-        int yOffset = 27;
 
-        renderItemAndTooltip(graphics,itemRators.get(0).getCurrentStack(),relX+50    -1,relY+51  -1,mousex,mousey,matrices,false);
-        renderItemAndTooltip(graphics,itemRators.get(1).getCurrentStack(),relX+96    -1,relY+44  -1,mousex,mousey,matrices,false);
-        renderItemAndTooltip(graphics,itemRators.get(2).getCurrentStack(),relX+142   -1,relY+51  -1,mousex,mousey,matrices,false);
-        renderItemAndTooltip(graphics,itemRators.get(3).getCurrentStack(),relX+70    -1,relY+71  -1,mousex,mousey,matrices,false);
-        renderItemAndTooltip(graphics,itemRators.get(4).getCurrentStack(),relX+122   -1,relY+71  -1,mousex,mousey,matrices,false);
-        renderItemAndTooltip(graphics,itemRators.get(5).getCurrentStack(),relX+43    -1,relY+97  -1,mousex,mousey,matrices,false);
-        renderItemAndTooltip(graphics,itemRators.get(6).getCurrentStack(),relX+96    -1,relY+97  -1,mousex,mousey,matrices,false);
-        renderItemAndTooltip(graphics,itemRators.get(7).getCurrentStack(),relX+149   -1,relY+97  -1,mousex,mousey,matrices,false);
-        renderItemAndTooltip(graphics,itemRators.get(8).getCurrentStack(),relX+70    -1,relY+123 -1,mousex,mousey,matrices,false);
-        renderItemAndTooltip(graphics,itemRators.get(9).getCurrentStack(),relX+122   -1,relY+123 -1,mousex,mousey,matrices,false);
-        renderItemAndTooltip(graphics,itemRators.get(10).getCurrentStack(),relX+50   -1,relY+143 -1,mousex,mousey,matrices,false);
-        renderItemAndTooltip(graphics,itemRators.get(11).getCurrentStack(),relX+96   -1,relY+150 -1,mousex,mousey,matrices,false);
-        renderItemAndTooltip(graphics,itemRators.get(12).getCurrentStack(),relX+142  -1,relY+143 -1,mousex,mousey,matrices,false);
 
-        renderItemAndTooltip(graphics,currentRecipe.getResultItem(Minecraft.getInstance().level.registryAccess()).copy(),relX+20,relY+21,mousex,mousey,matrices,true);
+        RenderingTools.renderItemAndTooltip(itemRators.get(0).getCurrentStack(),graphics,relX+50    -1,relY+51  -1,mousex,mousey,100);
+        RenderingTools.renderItemAndTooltip(itemRators.get(1).getCurrentStack(),graphics,relX+96    -1,relY+44  -1,mousex,mousey,100);
+        RenderingTools.renderItemAndTooltip(itemRators.get(2).getCurrentStack(),graphics,relX+142   -1,relY+51  -1,mousex,mousey,100);
+        RenderingTools.renderItemAndTooltip(itemRators.get(3).getCurrentStack(),graphics,relX+70    -1,relY+71  -1,mousex,mousey,100);
+        RenderingTools.renderItemAndTooltip(itemRators.get(4).getCurrentStack(),graphics,relX+122   -1,relY+71  -1,mousex,mousey,100);
+        RenderingTools.renderItemAndTooltip(itemRators.get(5).getCurrentStack(),graphics,relX+43    -1,relY+97  -1,mousex,mousey,100);
+        RenderingTools.renderItemAndTooltip(itemRators.get(6).getCurrentStack(),graphics,relX+96    -1,relY+97  -1,mousex,mousey,100);
+        RenderingTools.renderItemAndTooltip(itemRators.get(7).getCurrentStack(),graphics,relX+149   -1,relY+97  -1,mousex,mousey,100);
+        RenderingTools.renderItemAndTooltip(itemRators.get(8).getCurrentStack(),graphics,relX+70    -1,relY+123 -1,mousex,mousey,100);
+        RenderingTools.renderItemAndTooltip(itemRators.get(9).getCurrentStack(),graphics,relX+122   -1,relY+123 -1,mousex,mousey,100);
+        RenderingTools.renderItemAndTooltip(itemRators.get(10).getCurrentStack(),graphics,relX+50   -1,relY+143 -1,mousex,mousey,100);
+        RenderingTools.renderItemAndTooltip(itemRators.get(11).getCurrentStack(),graphics,relX+96   -1,relY+150 -1,mousex,mousey,100);
+        RenderingTools.renderItemAndTooltip(itemRators.get(12).getCurrentStack(),graphics,relX+142  -1,relY+143 -1,mousex,mousey,100);
+
+        ItemStack res = currentRecipe.getResultItem(Minecraft.getInstance().level.registryAccess()).copy();
+        int count = recipe.get(currentPage).count;
+        res.setCount(count);
+        RenderingTools.renderItemAndTooltip(res,graphics,relX+20,relY+21,mousex,mousey,100);
 
 
         graphics.drawCenteredString(minecraft.font,Component.literal(recipe.get(currentPage).infusingTime / 20 +" ").append(Component.translatable("solarcraft.seconds2")),relX+170,relY+25,
@@ -237,23 +242,23 @@ public class InfusingRecipeScreen extends Screen {
     }
 
 
-    public void renderItemAndTooltip(GuiGraphics graphics,ItemStack toRender, int place1, int place2, int mousex, int mousey, PoseStack matrices, boolean last){
-        if (!last) {
-            graphics.renderItem(toRender, place1, place2);
-        }else{
-            ItemStack renderThis = toRender.copy();
-            renderThis.setCount(recipe.get(currentPage).count);
-            graphics.renderItem(renderThis, place1, place2);
-            graphics.renderItemDecorations(font,renderThis,place1,place2);
-        }
-
-
-        if (((mousex >= place1) && (mousex <= place1+16)) && ((mousey >= place2) && (mousey <= place2+16)) && !toRender.getItem().equals(Items.AIR)){
-            matrices.pushPose();
-            graphics.renderTooltip(font,toRender,mousex,mousey);
-            matrices.popPose();
-        }
-    }
+//    public void renderItemAndTooltip(GuiGraphics graphics,ItemStack toRender, int place1, int place2, int mousex, int mousey, PoseStack matrices, boolean last){
+//        if (!last) {
+//            graphics.renderItem(toRender, place1, place2);
+//        }else{
+//            ItemStack renderThis = toRender.copy();
+//            renderThis.setCount(recipe.get(currentPage).count);
+//            graphics.renderItem(renderThis, place1, place2);
+//            graphics.renderItemDecorations(font,renderThis,place1,place2);
+//        }
+//
+//
+//        if (((mousex >= place1) && (mousex <= place1+16)) && ((mousey >= place2) && (mousey <= place2+16)) && !toRender.getItem().equals(Items.AIR)){
+//            matrices.pushPose();
+//            graphics.renderTooltip(font,toRender,mousex,mousey);
+//            matrices.popPose();
+//        }
+//    }
 
     private void bindTypeTexture(RunicEnergy.Type type){
         ClientHelpers.bindText(new ResourceLocation(SolarCraft.MOD_ID,"textures/misc/tile_energy_pylon_" + type.id + ".png"));

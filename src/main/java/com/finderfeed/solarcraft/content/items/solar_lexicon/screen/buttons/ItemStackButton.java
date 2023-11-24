@@ -19,15 +19,15 @@ public class ItemStackButton extends FDButton {
     public final ResourceLocation LOC2 = new ResourceLocation("solarcraft","textures/misc/question_mark.png");
     public final float scaleFactor;
 
-    public ItemStackButton(int x, int y, int xLoc, int yLoc, OnPress press,ItemStack stack,float scaleFactor) {
-        super(x,y,xLoc,yLoc,Component.literal(""),press);
+    public ItemStackButton(int x, int y, int xsize, int ysize, OnPress press,ItemStack stack,float scaleFactor) {
+        super(x,y,xsize,ysize,Component.literal(""),press);
         this.stack = stack;
         this.scaleFactor = scaleFactor;
     }
 
 
-    public ItemStackButton(int x, int y, int xLoc, int yLoc, OnPress press,ItemStack stack,float scaleFactor,FDButton.OnTooltip tooltip) {
-        super(x,y,xLoc,yLoc,Component.literal(""),press,tooltip);
+    public ItemStackButton(int x, int y, int xsize, int ysize, OnPress press,ItemStack stack,float scaleFactor,FDButton.OnTooltip tooltip) {
+        super(x,y,xsize,ysize,Component.literal(""),press,tooltip);
         this.stack = stack;
         this.scaleFactor = scaleFactor;
     }
@@ -36,11 +36,6 @@ public class ItemStackButton extends FDButton {
     public void renderWidget(GuiGraphics graphics, int mousex, int mousey, float partialTicks) {
         PoseStack matrices = graphics.pose();
         matrices.pushPose();
-//        if (this.isHovered){
-//            this.renderToolTip(matrices,mousex,mousey);
-//        }
-//        matrices.scale(scaleFactor,scaleFactor,scaleFactor);
-//        RenderingTools.renderScaledGuiItem(stack,(int) x, (int) y,scaleFactor,0);
 
         RenderingTools.renderScaledGuiItemCentered(graphics,stack,(int) x + width/2f, (int) y + height/2f,scaleFactor, 300);
 
@@ -48,7 +43,6 @@ public class ItemStackButton extends FDButton {
         RenderSystem.setShaderTexture(0,LOC);
         RenderSystem.enableBlend();
         if (this.isHovered){
-            //RenderingTools.blitWithBlend(matrices,(int)(x/scaleFactor),(int)(y/scaleFactor),0,0,16,16,16,16,0,1f);
             graphics.fill(x,y,x + (int)(16*scaleFactor),y + (int)(16*scaleFactor),0x99ffffff);
 
         }
@@ -63,9 +57,8 @@ public class ItemStackButton extends FDButton {
 
         RenderingTools.renderScaledGuiItemCentered(graphics,stack,(int) x + width/2f - 0.5f, (int) y + height/2f - 0.5f,scaleFactor,zOffset + 300);
 
-        RenderSystem.setShaderTexture(0,LOC);
+//        RenderSystem.setShaderTexture(0,LOC);
         if (this.isHovered){
-//            RenderingTools.blitWithBlend(matrices,(int)x,(int)y,0,0,16,16,16,16,0,1f);
             graphics.fill(x,y,x + (int)(width*scaleFactor),y + (int)(height*scaleFactor),0xaaffffff);
         }
         matrices.popPose();

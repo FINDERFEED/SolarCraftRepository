@@ -1,6 +1,7 @@
 package com.finderfeed.solarcraft.content.items.solar_lexicon.screen;
 
 import com.finderfeed.solarcraft.content.items.solar_lexicon.screen.buttons.ItemStackTabButton;
+import com.finderfeed.solarcraft.events.other_events.event_handler.ClientEventsHandler;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.SolarLexicon;
@@ -60,7 +61,7 @@ public class CraftingRecipeScreen extends LexiconScreen implements PlaceRecipe<I
         int xoffs = 111;
         this.prepareSlots();
         this.setupGhostRecipe(recipes.get(0));
-        if (this.getPagesCount() != 0) {
+        if (this.getPagesCount() != 1) {
             addRenderableWidget(new FDImageButton(relX + 180 - 10, relY + 36, 16, 16, 0, 0, 0, BUTTONS, 16, 32, (button) -> {
                 this.nextPage();
                 //                if ((currentPage + 1 <= maxPages)) {
@@ -95,10 +96,8 @@ public class CraftingRecipeScreen extends LexiconScreen implements PlaceRecipe<I
                     graphics.renderTooltip(font, Component.translatable("solarcraft.screens.buttons.recipes_screen"), b, c);
                 }));
         addRenderableWidget(new ItemStackTabButton(relX+97+xoffs,relY+29 - 3 + 19,17,17,(button)->{
-            Minecraft mc = Minecraft.getInstance();
-            SolarLexicon lexicon = (SolarLexicon) mc.player.getMainHandItem().getItem();
-            lexicon.currentSavedScreen = this;
-            minecraft.setScreen(null);
+            ClientEventsHandler.SOLAR_LEXICON_SCREEN_HANDLER.memorizeAndClose();
+
         }, Items.WRITABLE_BOOK.getDefaultInstance(),0.7f,(buttons, graphics, b, c) -> {
             graphics.renderTooltip(font, Component.translatable("solarcraft.screens.buttons.memorize_page"), b, c);
         }));
@@ -217,7 +216,7 @@ public class CraftingRecipeScreen extends LexiconScreen implements PlaceRecipe<I
 
     @Override
     public int getPagesCount() {
-        return recipes.size() - 1;
+        return recipes.size();
     }
 
     @Override

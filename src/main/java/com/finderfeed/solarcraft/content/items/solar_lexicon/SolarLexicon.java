@@ -28,8 +28,6 @@ import java.util.List;
 
 public class SolarLexicon extends Item {
 
-    public Screen currentSavedScreen = null;
-
     public SolarLexicon(Properties p_i48487_1_) {
         super(p_i48487_1_);
     }

@@ -55,10 +55,10 @@ public class ItemStackTabButton extends ItemStackButton {
 
 //        matrices.scale(scaleFactor,scaleFactor,scaleFactor);
         float scaleFactor = width / 17f;
-        float itemScale = (width - scaleFactor*2f) / 17f;
+        float itemScale = (width - scaleFactor*5f) / 17f;
 //        RenderingTools.renderScaledGuiItemCentered(stack, x + width / 2f,  y + height / 2f,itemScale,0);
 
-        RenderingTools.renderScaledGuiItemCentered(graphics,stack,(int) x + width/2f - 0.5f, (int) y + height/2f - 0.5f,itemScale,zOffset + 300);
+        RenderingTools.renderScaledGuiItemCentered(graphics,stack,(int) x + width/2f , (int) y + height/2f,itemScale,zOffset + 300);
 
 
         RenderSystem.setShaderTexture(0,LOCATION);
@@ -71,7 +71,10 @@ public class ItemStackTabButton extends ItemStackButton {
 
         matrices.popPose();
         if (this.isHovered){
+            matrices.pushPose();
+            matrices.translate(0,0,100);
             this.renderTooltip(graphics,mousex,mousey);
+            matrices.popPose();
         }
     }
 }

@@ -3,10 +3,10 @@ package com.finderfeed.solarcraft.content.items.solar_lexicon.screen;
 import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.screen.buttons.InfoButton;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.screen.buttons.ItemStackButton;
+import com.finderfeed.solarcraft.content.items.solar_lexicon.screen.buttons.ItemStackTabButton;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.structure.Book;
 import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
-import com.finderfeed.solarcraft.misc_things.IScrollable;
 import com.finderfeed.solarcraft.registries.items.SCItems;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragmentHelper;
@@ -15,8 +15,6 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
-import net.minecraft.client.gui.components.EditBox;
-import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -24,18 +22,16 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.Component;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.IItemHandler;
-import org.lwjgl.glfw.GLFW;
-import org.lwjgl.opengl.GL11;
 
 import java.util.*;
 import java.util.List;
 
-public class SolarLexiconRecipesScreen extends ScrollableLexiconScreen implements IScrollable {
+public class SolarLexiconRecipesScreen extends ScrollableLexiconScreen {
     public final ResourceLocation MAIN_SCREEN = new ResourceLocation(SolarCraft.MOD_ID,"textures/gui/solar_lexicon_recipes_page_new.png");
     public final ResourceLocation FRAME = new ResourceLocation(SolarCraft.MOD_ID,"textures/misc/frame.png");
     public final ResourceLocation MAIN_SCREEN_SCROLLABLE = new ResourceLocation(SolarCraft.MOD_ID,"textures/gui/solar_lexicon_main_page_scrollablep.png");
 
-    private List<AncientFragment> FRAGMENTS = new ArrayList<>();
+    private List<AncientFragment> fragments = new ArrayList<>();
     private Book BOOK;
 
     private boolean showNoFragmentsMessage = true;
@@ -60,24 +56,24 @@ public class SolarLexiconRecipesScreen extends ScrollableLexiconScreen implement
     protected void init() {
         super.init();
         moveable.clear();
-        goBack = new ItemStackButton(0,10,12,12,(button)->{minecraft.setScreen(new SolarLexiconScreen());}, SCItems.SOLAR_FORGE_ITEM.get().getDefaultInstance(),0.7f,
+        goBack = new ItemStackTabButton(0,10,16,16,(button)->{minecraft.setScreen(new SolarLexiconScreen());}, SCItems.SOLAR_FORGE_ITEM.get().getDefaultInstance(),0.7f,
                 ((button, graphics, mouseX, mouseY) -> {
                     graphics.renderTooltip(font,Component.translatable("solarcraft.screens.buttons.progression_screen"),mouseX,mouseY);
                 }));
-        nothing = new ItemStackButton(0,10,12,12,(button)->{}, Items.CRAFTING_TABLE.getDefaultInstance(),0.7f);
+        nothing = new ItemStackTabButton(0,10,16,16,(button)->{}, Items.CRAFTING_TABLE.getDefaultInstance(),0.7f);
 
-        infoButton = new InfoButton(relX  +206+35,relY + 64,13,13,(btn1, graphics, mx, my)->{
+        infoButton = new InfoButton(relX  +206+37,relY + 67,14,14,(btn1, graphics, mx, my)->{
             graphics.renderTooltip(font,font.split(Component.translatable("solarcraft.recipes_screen_info"),200),mx,my);
         });
 
 
-        FRAGMENTS.clear();
+        fragments.clear();
         handler = getLexiconInventory();
         collectFragments();
 
 
         BOOK = new Book(relX+25,relY+25);
-        Book.initializeBook(BOOK,FRAGMENTS);
+        Book.initializeBook(BOOK, fragments);
         BOOK.init();
         for (Button b : BOOK.getButtons()){
             this.addRenderableWidget(b);
@@ -99,12 +95,12 @@ public class SolarLexiconRecipesScreen extends ScrollableLexiconScreen implement
     }
 
     @Override
-    public int getMaxXScroll() {
+    public int getXRightScroll() {
         return 700;
     }
 
     @Override
-    public int getMaxYScroll() {
+    public int getYDownScroll() {
         return 700;
     }
 
@@ -122,7 +118,7 @@ public class SolarLexiconRecipesScreen extends ScrollableLexiconScreen implement
                     showNoFragmentsMessage = false;
                     AncientFragment frag = AncientFragment.getFragmentByID(stack.getTagElement(AncientFragmentHelper.TAG_ELEMENT).getString(AncientFragmentHelper.FRAG_ID));
                     if (frag != null){
-                        FRAGMENTS.add(frag);
+                        fragments.add(frag);
                     }
                 }
             }
@@ -209,7 +205,10 @@ public class SolarLexiconRecipesScreen extends ScrollableLexiconScreen implement
         infoButton.active = true;
 
         for (Runnable r : postRender){
+            matrices.pushPose();
+            matrices.translate(0,0,300);
             r.run();
+            matrices.popPose();
         }
         postRender.clear();
 

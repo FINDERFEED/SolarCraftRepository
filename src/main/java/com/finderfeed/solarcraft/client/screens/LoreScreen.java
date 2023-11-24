@@ -1,7 +1,9 @@
 package com.finderfeed.solarcraft.client.screens;
 
 
+import com.finderfeed.solarcraft.content.items.solar_lexicon.screen.LexiconScreen;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
+import com.finderfeed.solarcraft.events.other_events.event_handler.ClientEventsHandler;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.local_library.client.screens.DefaultScreen;
@@ -20,14 +22,11 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Items;
 
-public class LoreScreen extends DefaultScreen {
+public class LoreScreen extends LexiconScreen {
 
     private final Component lore;
     private final ResourceLocation IMAGE_LOCATION;
     private final ResourceLocation MAIN = new ResourceLocation("solarcraft","textures/gui/lore_screen_new.png");
-
-    public int relX;
-    public int relY;
 
     private int ticker = 0;
 
@@ -39,20 +38,14 @@ public class LoreScreen extends DefaultScreen {
     @Override
     protected void init() {
         super.init();
-        int width = minecraft.getWindow().getWidth();
-        int height = minecraft.getWindow().getHeight();
-        int scale = (int) minecraft.getWindow().getGuiScale();
-        this.relX = (width/scale - 183)/2 - 40;
-        this.relY = (height - 218*scale)/2/scale;
+
         addRenderableWidget(new ItemStackTabButton(relX+255,relY+27,17,17,(button)->{minecraft.setScreen(new SolarLexiconRecipesScreen());}, Items.CRAFTING_TABLE.getDefaultInstance(),0.7f,
                 (buttons, graphics, b, c) -> {
                     graphics.renderTooltip(font, Component.translatable("solarcraft.screens.buttons.recipes_screen"), b, c);
                 }));
         addRenderableWidget(new ItemStackTabButton(relX+255,relY+27 + 21,17,17,(button)->{
-            Minecraft mc = Minecraft.getInstance();
-            SolarLexicon lexicon = (SolarLexicon) mc.player.getMainHandItem().getItem();
-            lexicon.currentSavedScreen = this;
-            minecraft.setScreen(null);
+            ClientEventsHandler.SOLAR_LEXICON_SCREEN_HANDLER.memorizeAndClose();
+
         }, Items.WRITABLE_BOOK.getDefaultInstance(),0.7f,(buttons, graphics, b, c) -> {
             graphics.renderTooltip(font, Component.translatable("solarcraft.screens.buttons.memorize_page"), b, c);
         }));
@@ -78,11 +71,6 @@ public class LoreScreen extends DefaultScreen {
         RenderingTools.blitWithBlend(matrices,relX,relY,0,0,256,256,256,256,0,1f);
         ClientHelpers.bindText(IMAGE_LOCATION);
         RenderingTools.blitWithBlend(matrices,relX+21,relY+19,0,0,60,60,60,60,0,1f);
-
-
-//        int posX = relX+14;
-//        int posY = relY+100;
-//        RenderingTools.drawBoundedTextObfuscated(graphics,posX,posY,40,lore, SolarLexiconScreen.TEXT_COLOR,ticker*4);
 
         this.renderComponents(graphics,mousex,mousey,partialTicks,"textBox");
 
