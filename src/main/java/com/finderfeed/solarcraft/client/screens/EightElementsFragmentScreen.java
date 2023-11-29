@@ -34,19 +34,19 @@ public class EightElementsFragmentScreen extends LexiconScreen {
     protected void init() {
         super.init();
         ticker = 0;
-        addRenderableWidget(new ItemStackTabButton(relX+258,relY+28,17,17,(button)->{minecraft.setScreen(new SolarLexiconRecipesScreen());}, Items.CRAFTING_TABLE.getDefaultInstance(),0.7f,
-                (buttons, graphics, b, c) -> {
-                    graphics.renderTooltip(font, Component.translatable("solarcraft.screens.buttons.recipes_screen"), b, c);
-                }));
-        addRenderableWidget(new ItemStackTabButton(relX+258,relY+28 + 18,17,17,(button)->{
-            Minecraft mc = Minecraft.getInstance();
-//            SolarLexicon lexicon = (SolarLexicon) mc.player.getMainHandItem().getItem();
-//            lexicon.currentSavedScreen = this;
-            ClientEventsHandler.SOLAR_LEXICON_SCREEN_HANDLER.memorizeAndClose();
-//            minecraft.setScreen(null);
-        }, Items.WRITABLE_BOOK.getDefaultInstance(),0.7f,(buttons, graphics, b, c) -> {
-            graphics.renderTooltip(font, Component.translatable("solarcraft.screens.buttons.memorize_page"), b, c);
-        }));
+//        addRenderableWidget(new ItemStackTabButton(relX+258,relY+28,17,17,(button)->{minecraft.setScreen(new SolarLexiconRecipesScreen());}, Items.CRAFTING_TABLE.getDefaultInstance(),0.7f,
+//                (buttons, graphics, b, c) -> {
+//                    graphics.renderTooltip(font, Component.translatable("solarcraft.screens.buttons.recipes_screen"), b, c);
+//                }));
+//        addRenderableWidget(new ItemStackTabButton(relX+258,relY+28 + 18,17,17,(button)->{
+//            Minecraft mc = Minecraft.getInstance();
+////            SolarLexicon lexicon = (SolarLexicon) mc.player.getMainHandItem().getItem();
+////            lexicon.currentSavedScreen = this;
+//            ClientEventsHandler.SOLAR_LEXICON_SCREEN_HANDLER.memorizeAndClose();
+////            minecraft.setScreen(null);
+//        }, Items.WRITABLE_BOOK.getDefaultInstance(),0.7f,(buttons, graphics, b, c) -> {
+//            graphics.renderTooltip(font, Component.translatable("solarcraft.screens.buttons.memorize_page"), b, c);
+//        }));
 
         addRenderableWidget(new ImageButton(relX + 212 + 16, relY + 11, 16, 16, 0, 0, 0, StructureScreen.BUTTONS, 16, 32, (button) -> {
             this.nextPage();

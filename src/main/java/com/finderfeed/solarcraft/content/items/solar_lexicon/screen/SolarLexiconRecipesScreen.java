@@ -37,8 +37,8 @@ public class SolarLexiconRecipesScreen extends ScrollableLexiconScreen {
     private boolean showNoFragmentsMessage = true;
 
     public IItemHandler handler;
-    public ItemStackButton goBack;
-    public ItemStackButton nothing;
+//    public ItemStackButton goBack;
+//    public ItemStackButton nothing;
     public InfoButton infoButton;
 
     public List<Runnable> postRender = new ArrayList<>();
@@ -56,13 +56,13 @@ public class SolarLexiconRecipesScreen extends ScrollableLexiconScreen {
     protected void init() {
         super.init();
         moveable.clear();
-        goBack = new ItemStackTabButton(0,10,16,16,(button)->{minecraft.setScreen(new SolarLexiconScreen());}, SCItems.SOLAR_FORGE_ITEM.get().getDefaultInstance(),0.7f,
-                ((button, graphics, mouseX, mouseY) -> {
-                    graphics.renderTooltip(font,Component.translatable("solarcraft.screens.buttons.progression_screen"),mouseX,mouseY);
-                }));
-        nothing = new ItemStackTabButton(0,10,16,16,(button)->{}, Items.CRAFTING_TABLE.getDefaultInstance(),0.7f);
+//        goBack = new ItemStackTabButton(0,10,16,16,(button)->{minecraft.setScreen(new SolarLexiconScreen());}, SCItems.SOLAR_FORGE_ITEM.get().getDefaultInstance(),0.7f,
+//                ((button, graphics, mouseX, mouseY) -> {
+//                    graphics.renderTooltip(font,Component.translatable("solarcraft.screens.buttons.progression_screen"),mouseX,mouseY);
+//                }));
+        //nothing = new ItemStackTabButton(0,10,16,16,(button)->{}, Items.CRAFTING_TABLE.getDefaultInstance(),0.7f);
 
-        infoButton = new InfoButton(relX  +206+37,relY + 67,14,14,(btn1, graphics, mx, my)->{
+        infoButton = new InfoButton(relX  +206+37,relY + 164 - 137,14,14,(btn1, graphics, mx, my)->{
             graphics.renderTooltip(font,font.split(Component.translatable("solarcraft.recipes_screen_info"),200),mx,my);
         });
 
@@ -80,13 +80,13 @@ public class SolarLexiconRecipesScreen extends ScrollableLexiconScreen {
             this.moveable.add(b);
         }
 
-        addRenderableWidget(goBack);
-        addRenderableWidget(nothing);
-
-        nothing.x = relX +207+35;
-        nothing.y = relY + 184 - 137;
-        goBack.x = relX +207+35;
-        goBack.y = relY + 164 - 137;
+//        addRenderableWidget(goBack);
+//        addRenderableWidget(nothing);
+//
+//        nothing.x = relX +207+35;
+//        nothing.y = relY + 184 - 137;
+//        goBack.x = relX +207+35;
+//        goBack.y = relY + 164 - 137;
     }
 
     @Override
@@ -186,8 +186,8 @@ public class SolarLexiconRecipesScreen extends ScrollableLexiconScreen {
         RenderingTools.blitWithBlend(matrices,relX,relY,0,0,256,256,256,256,0,1f);
         matrices.popPose();
 
-        goBack.render(graphics,mousex,mousey,partialTicks,300);
-        nothing.render(graphics,mousex,mousey,partialTicks,300);
+//        goBack.render(graphics,mousex,mousey,partialTicks,300);
+//        nothing.render(graphics,mousex,mousey,partialTicks,300);
         infoButton.render(graphics,mousex,mousey,partialTicks);
 
         this.renderables.forEach((widget)->{
@@ -199,10 +199,10 @@ public class SolarLexiconRecipesScreen extends ScrollableLexiconScreen {
                 }
 
         });
-        goBack.active = true;
-        nothing.active = true;
-        goBack.visible = true;
-        nothing.visible = true;
+//        goBack.active = true;
+//        nothing.active = true;
+//        goBack.visible = true;
+//        nothing.visible = true;
         infoButton.visible = true;
         infoButton.active = true;
 

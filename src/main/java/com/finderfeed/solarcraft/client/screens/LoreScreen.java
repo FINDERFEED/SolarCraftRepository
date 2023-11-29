@@ -39,16 +39,16 @@ public class LoreScreen extends LexiconScreen {
     protected void init() {
         super.init();
 
-        addRenderableWidget(new ItemStackTabButton(relX+255,relY+27,17,17,(button)->{minecraft.setScreen(new SolarLexiconRecipesScreen());}, Items.CRAFTING_TABLE.getDefaultInstance(),0.7f,
-                (buttons, graphics, b, c) -> {
-                    graphics.renderTooltip(font, Component.translatable("solarcraft.screens.buttons.recipes_screen"), b, c);
-                }));
-        addRenderableWidget(new ItemStackTabButton(relX+255,relY+27 + 21,17,17,(button)->{
-            ClientEventsHandler.SOLAR_LEXICON_SCREEN_HANDLER.memorizeAndClose();
-
-        }, Items.WRITABLE_BOOK.getDefaultInstance(),0.7f,(buttons, graphics, b, c) -> {
-            graphics.renderTooltip(font, Component.translatable("solarcraft.screens.buttons.memorize_page"), b, c);
-        }));
+//        addRenderableWidget(new ItemStackTabButton(relX+255,relY+27,17,17,(button)->{minecraft.setScreen(new SolarLexiconRecipesScreen());}, Items.CRAFTING_TABLE.getDefaultInstance(),0.7f,
+//                (buttons, graphics, b, c) -> {
+//                    graphics.renderTooltip(font, Component.translatable("solarcraft.screens.buttons.recipes_screen"), b, c);
+//                }));
+//        addRenderableWidget(new ItemStackTabButton(relX+255,relY+27 + 21,17,17,(button)->{
+//            ClientEventsHandler.SOLAR_LEXICON_SCREEN_HANDLER.memorizeAndClose();
+//
+//        }, Items.WRITABLE_BOOK.getDefaultInstance(),0.7f,(buttons, graphics, b, c) -> {
+//            graphics.renderTooltip(font, Component.translatable("solarcraft.screens.buttons.memorize_page"), b, c);
+//        }));
 
         ScissoredTextBox textBox = new ScissoredTextBox(this,relX + 14,relY + 101,228,95,
                 SolarLexiconScreen.TEXT_COLOR,0xff3A3A3A,0xff999999,

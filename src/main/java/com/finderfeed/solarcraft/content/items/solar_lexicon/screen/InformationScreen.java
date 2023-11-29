@@ -42,7 +42,7 @@ import java.util.function.Supplier;
 public class InformationScreen extends LexiconScreen {
 
 
-    private final ResourceLocation LOC = new ResourceLocation("solarcraft","textures/gui/solar_lexicon_info_screen_new.png");
+    private final ResourceLocation LOC = new ResourceLocation(SolarCraft.MOD_ID,"textures/gui/solar_lexicon_info_screen_new.png");
 
     private Item icon;
     private Screen screen;
@@ -78,7 +78,7 @@ public class InformationScreen extends LexiconScreen {
         super.init();
         ticker = 0;
 
-        ItemStackButton button = new ItemStackTabButton(relX+255,relY+25 + 18   ,17,17,(buttons)->{
+        ItemStackButton button = new ItemStackTabButton(relX+255,relY+25 + 8   ,17,17,(buttons)->{
             if (screen != null) {
                 Minecraft.getInstance().setScreen(screen);
             }
@@ -114,12 +114,12 @@ public class InformationScreen extends LexiconScreen {
             }
         }
 
-            addRenderableWidget(new ItemStackTabButton(relX + 255, relY + 28 - 3, 17, 17, (buttons) -> {
-                minecraft.setScreen(new SolarLexiconRecipesScreen());
-            },
-                    Items.CRAFTING_TABLE.getDefaultInstance(), 0.7f, (buttons, graphics, b, c) -> {
-                graphics.renderTooltip(font, Component.translatable("solarcraft.screens.buttons.recipes_screen"), b, c);
-            }));
+//            addRenderableWidget(new ItemStackTabButton(relX + 255, relY + 28 - 3, 17, 17, (buttons) -> {
+//                minecraft.setScreen(new SolarLexiconRecipesScreen());
+//            },
+//                    Items.CRAFTING_TABLE.getDefaultInstance(), 0.7f, (buttons, graphics, b, c) -> {
+//                graphics.renderTooltip(font, Component.translatable("solarcraft.screens.buttons.recipes_screen"), b, c);
+//            }));
 
 
 

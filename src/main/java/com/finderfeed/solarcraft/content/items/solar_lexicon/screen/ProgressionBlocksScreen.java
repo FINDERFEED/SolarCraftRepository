@@ -73,9 +73,9 @@ public class ProgressionBlocksScreen extends ScrollableLexiconScreen{
             progressionBlocks.add(button);
             iter++;
         }
-        this.addTab(0,SCItems.SOLAR_FORGE_ITEM.get().getDefaultInstance(),relX + this.getScreenWidth() + 12,relY + 15, SolarLexiconScreen::new,Component.translatable("solarcraft.screens.buttons.progression_screen"));
-        this.addTab(1, Items.IRON_ORE.getDefaultInstance(),relX + this.getScreenWidth() + 12,relY + 15, SolarLexiconScreen::new,null);
-        this.addInfo(2,relX + this.getScreenWidth() + 12,relY + 15,Component.translatable("solarcraft.screens.buttons.progression_blocks_page.info"));
+        //this.addTab(0,SCItems.SOLAR_FORGE_ITEM.get().getDefaultInstance(),relX + this.getScreenWidth() + 12,relY + 15, SolarLexiconScreen::new,Component.translatable("solarcraft.screens.buttons.progression_screen"));
+        //this.addTab(1, Items.IRON_ORE.getDefaultInstance(),relX + this.getScreenWidth() + 12,relY + 15, SolarLexiconScreen::new,null);
+        this.addInfo(0,relX + this.getScreenWidth() + 12,relY + 15,Component.translatable("solarcraft.screens.buttons.progression_blocks_page.info"));
     }
 
 

@@ -46,18 +46,18 @@ public class SmeltingRecipeScreen extends LexiconScreen {
         stacks = new ArrayList<>();
         stacks.add(recipe.output);
 
-
-        addRenderableWidget(new ItemStackTabButton(relX+202,relY+9 + 20,17,17,(button)->{minecraft.setScreen(new SolarLexiconRecipesScreen());},
-                Items.CRAFTING_TABLE.getDefaultInstance(),0.7f,
-                (buttons, graphics, b, c) -> {
-                    graphics.renderTooltip(font, Component.translatable("solarcraft.screens.buttons.recipes_screen"), b, c);
-                }));
-        addRenderableWidget(new ItemStackTabButton(relX + 202,relY+27 + 20,17,17,(button)->{
-            ClientEventsHandler.SOLAR_LEXICON_SCREEN_HANDLER.memorizeAndClose();
-
-        }, Items.WRITABLE_BOOK.getDefaultInstance(),0.7f,(buttons, graphics, b, c) -> {
-            graphics.renderTooltip(font, Component.translatable("solarcraft.screens.buttons.memorize_page"), b, c);
-        }));
+//
+//        addRenderableWidget(new ItemStackTabButton(relX+202,relY+9 + 20,17,17,(button)->{minecraft.setScreen(new SolarLexiconRecipesScreen());},
+//                Items.CRAFTING_TABLE.getDefaultInstance(),0.7f,
+//                (buttons, graphics, b, c) -> {
+//                    graphics.renderTooltip(font, Component.translatable("solarcraft.screens.buttons.recipes_screen"), b, c);
+//                }));
+//        addRenderableWidget(new ItemStackTabButton(relX + 202,relY+27 + 20,17,17,(button)->{
+//            ClientEventsHandler.SOLAR_LEXICON_SCREEN_HANDLER.memorizeAndClose();
+//
+//        }, Items.WRITABLE_BOOK.getDefaultInstance(),0.7f,(buttons, graphics, b, c) -> {
+//            graphics.renderTooltip(font, Component.translatable("solarcraft.screens.buttons.memorize_page"), b, c);
+//        }));
 
     }
 

@@ -50,13 +50,13 @@ public abstract class LexiconScreen extends DefaultScreenWithPages {
         matrices.scale(0.5f,0.5f,1);
         graphics.drawString(mc.font,Component.literal("ESC - ")
                         .append(Component.translatable("solarcraft.screens.lexicon_screen.esc")),
-                0,mc.font.lineHeight * 2 + y,color);
-        graphics.drawString(mc.font,Component.literal("SHIFT + ESC - ")
-                        .append(Component.translatable("solarcraft.screens.lexicon_screen.shift_esc")),
-                0,mc.font.lineHeight + y,color);
-        graphics.drawString(mc.font,Component.literal("F1 + ESC - ")
-                        .append(Component.translatable("solarcraft.screens.lexicon_screen.f1_esc")),
-                0,0 + y,color);
+                y,mc.font.lineHeight * 2 + y,color);
+        graphics.drawString(mc.font,Component.literal("X + ESC - ")
+                        .append(Component.translatable("solarcraft.screens.lexicon_screen.x_esc")),
+                y,mc.font.lineHeight + y,color);
+        graphics.drawString(mc.font,Component.literal("C + ESC - ")
+                        .append(Component.translatable("solarcraft.screens.lexicon_screen.c_esc")),
+                y,0 + y,color);
         matrices.popPose();
     }
 

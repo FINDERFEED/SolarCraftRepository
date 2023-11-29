@@ -31,7 +31,7 @@ public class RetainFragmentsScreen extends ScrollableLexiconScreen {
     public final ResourceLocation MAIN_SCREEN = new ResourceLocation(SolarCraft.MOD_ID,"textures/gui/stages_page.png");
     public final ResourceLocation BG = new ResourceLocation(SolarCraft.MOD_ID,"textures/gui/solar_lexicon_main_page_scrollablep.png");
 
-    public ItemStackButton stagesPage;
+//    public ItemStackButton stagesPage;
     public InfoButton infoButton;
 
     private List<AbstractWidget> moveable = new ArrayList<>();
@@ -43,7 +43,7 @@ public class RetainFragmentsScreen extends ScrollableLexiconScreen {
         infoButton = new InfoButton(relX +  206 + 35,relY + 43,13,13,(btn1, graphics, mx, my)->{
             graphics.renderTooltip(font,font.split(RETAIN_FRAGMENTS.copy(),200),mx,my);
         });
-        stagesPage  = new ItemStackTabButton(relX+98,relY + 20,17,17,(button)->{minecraft.setScreen(new SolarLexiconScreen());}, SCItems.SOLAR_FORGE_ITEM.get().getDefaultInstance(),0.7f);
+//        stagesPage  = new ItemStackTabButton(relX+98,relY + 20,17,17,(button)->{minecraft.setScreen(new SolarLexiconScreen());}, SCItems.SOLAR_FORGE_ITEM.get().getDefaultInstance(),0.7f);
 
 
         int y = 0;
@@ -65,10 +65,10 @@ public class RetainFragmentsScreen extends ScrollableLexiconScreen {
             }
         }
 
-        addRenderableWidget(stagesPage);
+//        addRenderableWidget(stagesPage);
         addRenderableWidget(infoButton);
-        stagesPage.x = relX + 207 + 35 - 3;
-        stagesPage.y = relY + 164 - 137 - 3;
+//        stagesPage.x = relX + 207 + 35 - 3;
+//        stagesPage.y = relY + 164 - 137 - 3;
 
     }
 
@@ -86,6 +86,7 @@ public class RetainFragmentsScreen extends ScrollableLexiconScreen {
     @Override
     public void render(GuiGraphics graphics, int mousex, int mousey, float pticks) {
 
+        renderEscapeText(graphics);
         PoseStack matrices = graphics.pose();
 
         ClientHelpers.bindText(BG);
@@ -99,7 +100,7 @@ public class RetainFragmentsScreen extends ScrollableLexiconScreen {
 
         ClientHelpers.bindText(MAIN_SCREEN);
         RenderingTools.blitWithBlend(matrices,relX,relY,0,0,256,256,256,256,0,1f);
-        stagesPage.render(graphics,mousex,mousey,pticks);
+//        stagesPage.render(graphics,mousex,mousey,pticks);
         infoButton.render(graphics,mousex,mousey,pticks);
         this.runPostEntries(graphics,mousex,mousey,pticks);
 

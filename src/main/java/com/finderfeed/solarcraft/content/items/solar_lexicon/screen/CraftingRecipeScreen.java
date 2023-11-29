@@ -91,16 +91,16 @@ public class CraftingRecipeScreen extends LexiconScreen implements PlaceRecipe<I
                 }
             });
         }
-        addRenderableWidget(new ItemStackTabButton(relX+97+xoffs,relY+29 - 3,17,17,(button)->{minecraft.setScreen(new SolarLexiconRecipesScreen());}, Items.CRAFTING_TABLE.getDefaultInstance(),0.7f,
-                (buttons, graphics, b, c) -> {
-                    graphics.renderTooltip(font, Component.translatable("solarcraft.screens.buttons.recipes_screen"), b, c);
-                }));
-        addRenderableWidget(new ItemStackTabButton(relX+97+xoffs,relY+29 - 3 + 19,17,17,(button)->{
-            ClientEventsHandler.SOLAR_LEXICON_SCREEN_HANDLER.memorizeAndClose();
-
-        }, Items.WRITABLE_BOOK.getDefaultInstance(),0.7f,(buttons, graphics, b, c) -> {
-            graphics.renderTooltip(font, Component.translatable("solarcraft.screens.buttons.memorize_page"), b, c);
-        }));
+//        addRenderableWidget(new ItemStackTabButton(relX+97+xoffs,relY+29 - 3,17,17,(button)->{minecraft.setScreen(new SolarLexiconRecipesScreen());}, Items.CRAFTING_TABLE.getDefaultInstance(),0.7f,
+//                (buttons, graphics, b, c) -> {
+//                    graphics.renderTooltip(font, Component.translatable("solarcraft.screens.buttons.recipes_screen"), b, c);
+//                }));
+//        addRenderableWidget(new ItemStackTabButton(relX+97+xoffs,relY+29 - 3 + 19,17,17,(button)->{
+//            ClientEventsHandler.SOLAR_LEXICON_SCREEN_HANDLER.memorizeAndClose();
+//
+//        }, Items.WRITABLE_BOOK.getDefaultInstance(),0.7f,(buttons, graphics, b, c) -> {
+//            graphics.renderTooltip(font, Component.translatable("solarcraft.screens.buttons.memorize_page"), b, c);
+//        }));
 
     }
 

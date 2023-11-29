@@ -51,8 +51,8 @@ import static com.finderfeed.solarcraft.content.items.solar_lexicon.screen.Infor
 
 public class ThreeDStructureViewScreen extends ScrollableLexiconScreen {
 
-    private  Button b;
-    private  Button c;
+//    private  Button b;
+//    private  Button c;
     public final ResourceLocation THREEDSCREENBTN = new ResourceLocation(SolarCraft.MOD_ID,"textures/misc/button.png");
     public final ResourceLocation STRUCTURE_GUI = new ResourceLocation(SolarCraft.MOD_ID,"textures/gui/structure_screen.png");
     private double xDragPos=0;
@@ -78,17 +78,17 @@ public class ThreeDStructureViewScreen extends ScrollableLexiconScreen {
     protected void init() {
         super.init();
 
-        b = new ItemStackTabButton(0,0,17,17,(button)->{minecraft.setScreen(new SolarLexiconRecipesScreen());}, Items.CRAFTING_TABLE.getDefaultInstance(),0.7f,
-                (buttons, graphics, b, c) -> {
-                    graphics.renderTooltip(font, Component.translatable("solarcraft.screens.buttons.recipes_screen"), b, c);
-                });
-
-        c = new ItemStackTabButton(0,0,17,17,(button)->{
-            ClientEventsHandler.SOLAR_LEXICON_SCREEN_HANDLER.memorizeAndClose();
-
-        }, Items.WRITABLE_BOOK.getDefaultInstance(),0.7f,(buttons, graphics, b, c) -> {
-            graphics.renderTooltip(font, Component.translatable("solarcraft.screens.buttons.memorize_page"), b, c);
-        });
+//        b = new ItemStackTabButton(0,0,17,17,(button)->{minecraft.setScreen(new SolarLexiconRecipesScreen());}, Items.CRAFTING_TABLE.getDefaultInstance(),0.7f,
+//                (buttons, graphics, b, c) -> {
+//                    graphics.renderTooltip(font, Component.translatable("solarcraft.screens.buttons.recipes_screen"), b, c);
+//                });
+//
+//        c = new ItemStackTabButton(0,0,17,17,(button)->{
+//            ClientEventsHandler.SOLAR_LEXICON_SCREEN_HANDLER.memorizeAndClose();
+//
+//        }, Items.WRITABLE_BOOK.getDefaultInstance(),0.7f,(buttons, graphics, b, c) -> {
+//            graphics.renderTooltip(font, Component.translatable("solarcraft.screens.buttons.memorize_page"), b, c);
+//        });
 //        int width = minecraft.getWindow().getWidth();
 //        int height = minecraft.getWindow().getHeight();
 //        int scale = (int) minecraft.getWindow().getGuiScale();
@@ -109,18 +109,18 @@ public class ThreeDStructureViewScreen extends ScrollableLexiconScreen {
         });
         addRenderableWidget(new SolarCraftButton(relX + 5,relY + 198,60,16,Component.translatable("solarcraft.visualize"),(btn)->{
             MultiblockVisualizer.setMultiblock(this.struct);
-            Minecraft.getInstance().setScreen(null);
+            ClientEventsHandler.SOLAR_LEXICON_SCREEN_HANDLER.memorizeAndClose();
         },(btn,graphics,mx,my)->{
             graphics.renderTooltip(font,font.split(Component.translatable("solarcraft.visualize_guide"),200),
                     mx,my);
         }));
 
-        addRenderableWidget(b);
-        addRenderableWidget(c);
-        b.x = relX+216;
-        b.y = relY+20;
-        c.x = relX+216;
-        c.y = relY+20+18;
+//        addRenderableWidget(b);
+//        addRenderableWidget(c);
+//        b.x = relX+216;
+//        b.y = relY+20;
+//        c.x = relX+216;
+//        c.y = relY+20+18;
 
 
         int h = 0;

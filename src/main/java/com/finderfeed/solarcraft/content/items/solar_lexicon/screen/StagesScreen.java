@@ -34,7 +34,7 @@ public class StagesScreen extends ScrollableLexiconScreen {
     private ArrayList<PostRender> RENDER_FRAMES = new ArrayList<>();
     private ArrayList<PostRender> RENDER_BORDERS = new ArrayList<>();
 
-    public ItemStackButton stagesPage;
+//    public ItemStackButton stagesPage;
     public InfoButton infoButton;
     private List<AbstractWidget> moveableWidgets = new ArrayList<>();
 
@@ -49,10 +49,10 @@ public class StagesScreen extends ScrollableLexiconScreen {
     protected void init() {
         super.init();
         moveableWidgets.clear();
-        infoButton = new InfoButton(relX +  206 + 35,relY + 43,13,13,(btn1, graphics, mx, my)->{
+        infoButton = new InfoButton(relX +  206 + 37,relY + 43,13,13,(btn1, graphics, mx, my)->{
             graphics.renderTooltip(font,font.split(STAGES_CMP.copy(),200),mx,my);
         });
-        stagesPage = new ItemStackTabButton(relX+98,relY + 18,17,17,(button)->{minecraft.setScreen(new SolarLexiconScreen());}, SCItems.SOLAR_FORGE_ITEM.get().getDefaultInstance(),0.7f);
+//        stagesPage = new ItemStackTabButton(relX+98,relY + 18,17,17,(button)->{minecraft.setScreen(new SolarLexiconScreen());}, SCItems.SOLAR_FORGE_ITEM.get().getDefaultInstance(),0.7f);
 
         RENDER_QMARKS.clear();
         RENDER_QMARKS_TOOLTIPS.clear();
@@ -98,10 +98,10 @@ public class StagesScreen extends ScrollableLexiconScreen {
             });
         }
 
-        addRenderableWidget(stagesPage);
+//        addRenderableWidget(stagesPage);
         addRenderableWidget(infoButton);
-        stagesPage.x = relX + 207 + 35 - 3;
-        stagesPage.y = relY + 164 - 137 - 3;
+//        stagesPage.x = relX + 207 + 35 - 3;
+//        stagesPage.y = relY + 164 - 137 - 3;
 
     }
 
@@ -123,6 +123,7 @@ public class StagesScreen extends ScrollableLexiconScreen {
     @Override
     public void render(GuiGraphics graphics, int mousex, int mousey, float pticks) {
 
+        this.renderEscapeText(graphics);
         PoseStack matrices = graphics.pose();
         ClientHelpers.bindText(BG);
         RenderingTools.blitWithBlend(matrices,relX+ 10,relY+ 10,0,0,220,188,512,512,0,1f);
@@ -152,7 +153,7 @@ public class StagesScreen extends ScrollableLexiconScreen {
             xy.doRender(graphics,mousex,mousey,pticks);
         }
 
-        stagesPage.render(graphics,mousex,mousey,pticks);
+//        stagesPage.render(graphics,mousex,mousey,pticks);
         infoButton.render(graphics,mousex,mousey,pticks);
 
     }
