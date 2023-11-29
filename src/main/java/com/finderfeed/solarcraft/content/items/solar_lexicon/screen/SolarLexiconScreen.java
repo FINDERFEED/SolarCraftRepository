@@ -275,7 +275,7 @@ public class SolarLexiconScreen extends ScrollableLexiconScreen implements PostR
 
     @Override
     public int getYDownScroll() {
-        return 1000;
+        return 550;
     }
 
     @Override
@@ -319,11 +319,13 @@ public class SolarLexiconScreen extends ScrollableLexiconScreen implements PostR
     public void render(GuiGraphics graphics, int mousex, int mousey, float partialTicks) {
         PoseStack matrices = graphics.pose();
 
+
         matrices.pushPose();
 
+        this.renderEscapeText(graphics);
 
         ClientHelpers.bindText(MAIN_SCREEN_SCROLLABLE);
-        GL11.glEnable(GL11.GL_SCISSOR_TEST);
+//        GL11.glEnable(GL11.GL_SCISSOR_TEST);
 
 //        int width = minecraft.getWindow().getWidth();
 //        int height = minecraft.getWindow().getHeight();

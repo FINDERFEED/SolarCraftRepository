@@ -129,13 +129,14 @@ public class FDMathHelper {
     /**
      * returns how much is left to the boundaries if main + delta exceeds one of them, else returns the delta
      */
+    //   min        x         max
     public static int getUnderflow(int min, int main, int max,int delta){
         if (main > max || main < min) return 0;
         int value = main + delta;
         if (value > max){
             return max - main;
         }else if (value < min){
-            return main - min;
+            return min - main;
         }else{
             return delta;
         }

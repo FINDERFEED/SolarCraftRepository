@@ -3,9 +3,9 @@ package com.finderfeed.solarcraft.content.items.solar_lexicon.screen;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.screen.buttons.InfoButton;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.screen.buttons.ItemStackTabButton;
 import com.finderfeed.solarcraft.local_library.client.screens.DefaultScreenWithPages;
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 
@@ -34,7 +34,33 @@ public abstract class LexiconScreen extends DefaultScreenWithPages {
 
     }
 
-    protected void runPostEntries(GuiGraphics graphics,int mx,int my,float pticks){
+    @Override
+    public void render(GuiGraphics graphics, int mx, int my, float pticks) {
+        super.render(graphics, mx, my, pticks);
+        this.renderEscapeText(graphics);
+    }
+
+    public void renderEscapeText(GuiGraphics graphics){
+        PoseStack matrices = graphics.pose();
+        matrices.pushPose();
+        Minecraft mc = minecraft;
+        int color = 0xccffffff;
+
+        int y = mc.font.lineHeight / 2;
+        matrices.scale(0.5f,0.5f,1);
+        graphics.drawString(mc.font,Component.literal("ESC - ")
+                        .append(Component.translatable("solarcraft.screens.lexicon_screen.esc")),
+                0,mc.font.lineHeight * 2 + y,color);
+        graphics.drawString(mc.font,Component.literal("SHIFT + ESC - ")
+                        .append(Component.translatable("solarcraft.screens.lexicon_screen.shift_esc")),
+                0,mc.font.lineHeight + y,color);
+        graphics.drawString(mc.font,Component.literal("F1 + ESC - ")
+                        .append(Component.translatable("solarcraft.screens.lexicon_screen.f1_esc")),
+                0,0 + y,color);
+        matrices.popPose();
+    }
+
+    protected void runPostEntries(GuiGraphics graphics, int mx, int my, float pticks){
         if (!postRenderEntries.isEmpty()){
             for (PostRender render : postRenderEntries){
                 render.doRender(graphics,mx,my,pticks);

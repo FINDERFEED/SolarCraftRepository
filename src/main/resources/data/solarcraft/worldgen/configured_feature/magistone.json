@@ -9,6 +9,15 @@
         "state": {
           "Name": "solarcraft:magistone"
         }
+      },
+      {
+        "target": {
+          "tag": "minecraft:deepslate_ore_replaceables",
+          "predicate_type": "minecraft:tag_match"
+        },
+        "state": {
+          "Name": "solarcraft:magistone"
+        }
       }
     ],
     "size": 15,

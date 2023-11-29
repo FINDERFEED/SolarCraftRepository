@@ -22,6 +22,9 @@ public class ProgressionBlocksScreen extends ScrollableLexiconScreen{
 
     private int countPerRow;
     private int sizeOfBlock;
+
+    private int betweenBlocks;
+    private int offsetsFromEdges = 5;
     public List<AbstractWidget> progressionBlocks = new ArrayList<>();
 
     @Override
@@ -29,9 +32,11 @@ public class ProgressionBlocksScreen extends ScrollableLexiconScreen{
         super.init();
         var list = ProgressionBlock.PROGRESSION_BLOCKS;
         int iter = 0;
-        int offsetsFromEdgeAndBetweenBlocks = 16;
+        offsetsFromEdges = 5;
         sizeOfBlock = 48;
-        countPerRow = (this.getScreenWidth()) / (sizeOfBlock + offsetsFromEdgeAndBetweenBlocks);
+        int remainingPlace = this.getScreenWidth() - offsetsFromEdges * 2;
+        countPerRow = remainingPlace / sizeOfBlock - 1;
+        betweenBlocks = (remainingPlace - ( (countPerRow) * sizeOfBlock)) /  (countPerRow);
 
 
         progressionBlocks.clear();
@@ -50,12 +55,13 @@ public class ProgressionBlocksScreen extends ScrollableLexiconScreen{
                 item = block.getLockedBlock().asItem().getDefaultInstance();
                 cmp = Component.translatable("solarcraft.screens.buttons.progression_block.not_unlocked")
                         .append(Component.literal(": "))
-                        .append(block.getRequiredProgression().getTranslation()).withStyle(ChatFormatting.RED);
+                        .withStyle(ChatFormatting.RED)
+                        .append(block.getRequiredProgression().getTranslation().copy().withStyle(ChatFormatting.GOLD));
             }
 
 
-            int x = (iter % countPerRow) * (sizeOfBlock + offsetsFromEdgeAndBetweenBlocks) + offsetsFromEdgeAndBetweenBlocks;
-            int y = (iter / countPerRow) * (sizeOfBlock + offsetsFromEdgeAndBetweenBlocks) + offsetsFromEdgeAndBetweenBlocks;
+            int x = (iter % countPerRow) * (sizeOfBlock + betweenBlocks) + offsetsFromEdges + 15;
+            int y = (iter / countPerRow) * (sizeOfBlock + betweenBlocks) + offsetsFromEdges + 15;
 
             ItemStackButton button = new ItemStackButton(relX + x,relY + y,sizeOfBlock - 15,sizeOfBlock - 15,btn->{},
                     item,(sizeOfBlock - 15) / 16f,((button1, graphics, mouseX, mouseY) -> {
@@ -107,7 +113,8 @@ public class ProgressionBlocksScreen extends ScrollableLexiconScreen{
 
     @Override
     public int getYDownScroll() {
-        return progressionBlocks.size() / countPerRow * sizeOfBlock;
+        int coord = progressionBlocks.size() / (countPerRow+1) * (sizeOfBlock + betweenBlocks) + offsetsFromEdges;
+        return coord;
     }
 
     @Override

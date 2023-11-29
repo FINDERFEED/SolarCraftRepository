@@ -31,6 +31,7 @@ public abstract class ScrollableLexiconScreen extends LexiconScreen implements I
         }else if (keyCode == GLFW_KEY_S || keyCode == GLFW_KEY_DOWN){
             int delta = FDMathHelper.getUnderflow(-this.getYDownScroll(),scrollY,this.getYUpScroll(),-scrollValue);
             scrollY = FDMathHelper.clamp(-this.getYDownScroll(),scrollY-scrollValue,0);
+
             this.onScrollDown(delta);
         }
         if (keyCode == GLFW_KEY_A || keyCode == GLFW_KEY_LEFT){

@@ -815,5 +815,16 @@
   "solarcraft.screens.buttons.memorize_page": "Memorize Screen",
   "solarcraft.screens.buttons.progression_block.not_unlocked": "Not yet unlocked, progression required",
   "solarcraft.screens.buttons.progression_blocks_page": "Locked/Unlocked blocks",
-  "solarcraft.screens.buttons.progression_blocks_page.info": "This page shows the blocks that you can or cannot see in the world at your stage of progression."
+  "solarcraft.screens.buttons.progression_blocks_page.info": "This page shows the blocks that you can or cannot see in the world at your stage of progression.",
+  "solarcraft.screens.lexicon_screen.esc": "Go to previous page",
+  "solarcraft.screens.lexicon_screen.shift_esc": "Close all pages",
+  "solarcraft.screens.lexicon_screen.f1_esc": "Memorize and close all pages",
+  "solarcraft.screens.buttons.progression_block.deepslate_corrupted_shard_ore": "Corrupted shard ore. Found between -30 and 30 in overworld.",
+  "solarcraft.screens.buttons.progression_block.corrupted_shard_ore": "Corrupted shard ore. Found between -30 and 30 in overworld.",
+  "solarcraft.screens.buttons.progression_block.magistone": "Magistone. Found between -64 and 0 in overworld.",
+  "solarcraft.screens.buttons.progression_block.lensing_crystal_ore": "Lensing crystal ore. Found between 10 and 50 in overworld.",
+  "solarcraft.screens.buttons.progression_block.blue_gem_ore": "Blue gem ore. Found between 0 and 60 in overworld.",
+  "solarcraft.screens.buttons.progression_block.solar_stone": "Solar stone. Found between 0 and 80 in overworld.",
+  "solarcraft.screens.buttons.progression_block.solar_ore": "Solar ore. Found between 5 and 30 in overworld.",
+  "solarcraft.screens.buttons.progression_block.ender_cracks": "Ender Cracks. Found between 30 and 100 in the end."
 }

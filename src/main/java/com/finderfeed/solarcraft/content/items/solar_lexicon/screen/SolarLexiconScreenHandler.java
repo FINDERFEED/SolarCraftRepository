@@ -1,7 +1,10 @@
 package com.finderfeed.solarcraft.content.items.solar_lexicon.screen;
 
+import com.mojang.blaze3d.platform.InputConstants;
+import net.minecraft.client.KeyboardHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
+import org.lwjgl.glfw.GLFW;
 
 import java.util.Stack;
 
@@ -20,12 +23,17 @@ public class SolarLexiconScreenHandler {
         Screen current = Minecraft.getInstance().screen;
         LexiconScreen lastScreen = this.getLastScreen();
         if (lastScreen == null || (!(current instanceof LexiconScreen))) return;
-        if (lexiconScreens.size() > 1 && !Screen.hasShiftDown()){
+        boolean f1 = InputConstants.isKeyDown(Minecraft.getInstance().getWindow().getWindow(), GLFW.GLFW_KEY_F1);
+        if (lexiconScreens.size() > 1 && !(Screen.hasShiftDown() || f1)){
             lexiconScreens.pop();
             Minecraft.getInstance().setScreen(this.getLastScreen());
-        }else{
-            lexiconScreens.clear();
-            Minecraft.getInstance().setScreen(null);
+        }else {
+            if ((Screen.hasShiftDown() && !f1) || lexiconScreens.size() == 1) {
+                lexiconScreens.clear();
+                Minecraft.getInstance().setScreen(null);
+            }else if (f1){
+                this.memorizeAndClose();
+            }
         }
     }
 

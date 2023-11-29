@@ -161,6 +161,8 @@ public class SolarLexiconRecipesScreen extends ScrollableLexiconScreen {
     public void render(GuiGraphics graphics, int mousex, int mousey, float partialTicks) {
 
         PoseStack matrices = graphics.pose();
+        this.renderEscapeText(graphics);
+
 
         RenderingTools.scissor(relX + 8,relY + 8,222,190);
         ClientHelpers.bindText(MAIN_SCREEN_SCROLLABLE);
