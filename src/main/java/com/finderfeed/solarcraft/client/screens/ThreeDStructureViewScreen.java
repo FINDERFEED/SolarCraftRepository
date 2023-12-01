@@ -97,16 +97,16 @@ public class ThreeDStructureViewScreen extends ScrollableLexiconScreen {
         POS_STATE_TILEENTITY.clear();
         structScale = 10f/Math.max(struct.pattern.length,struct.pattern[0].length);
         this.POS_STATE_TILEENTITY = RenderingTools.StructureRenderer.prepareList(struct);
-        addRenderableWidget(new FDImageButton(relX+216,relY,16,16,0,0,0,THREEDSCREENBTN,16,16,(button)->{
-            Minecraft.getInstance().setScreen(new StructureScreen(fragment,struct));
-        },(btn,graphics,mx,my)->{
-            graphics.renderTooltip(font,Component.literal("2D View"),mx,my);
-        },Component.literal("2D")){
-            @Override
-            public void playDownSound(SoundManager p_93665_) {
-                p_93665_.play(SimpleSoundInstance.forUI(SolarcraftSounds.BUTTON_PRESS2.get(),1,1));
-            }
-        });
+//        addRenderableWidget(new FDImageButton(relX+216,relY,16,16,0,0,0,THREEDSCREENBTN,16,16,(button)->{
+//            Minecraft.getInstance().setScreen(new StructureScreen(fragment,struct));
+//        },(btn,graphics,mx,my)->{
+//            graphics.renderTooltip(font,Component.literal("2D View"),mx,my);
+//        },Component.literal("2D")){
+//            @Override
+//            public void playDownSound(SoundManager p_93665_) {
+//                p_93665_.play(SimpleSoundInstance.forUI(SolarcraftSounds.BUTTON_PRESS2.get(),1,1));
+//            }
+//        });
         addRenderableWidget(new SolarCraftButton(relX + 5,relY + 198,60,16,Component.translatable("solarcraft.visualize"),(btn)->{
             MultiblockVisualizer.setMultiblock(this.struct);
             ClientEventsHandler.SOLAR_LEXICON_SCREEN_HANDLER.memorizeAndClose();
@@ -136,7 +136,7 @@ public class ThreeDStructureViewScreen extends ScrollableLexiconScreen {
             }
 
             for (AncientFragment ref : refs) {
-                ItemStackTabButton button1 = new ItemStackTabButton(relX + 216, relY + 25 + 18 + 3 + h * 18 + 40, 17, 17, b -> {
+                ItemStackTabButton button1 = new ItemStackTabButton(relX + 217, relY + 25 + 18 + 3 + h * 18 + 55, 17, 17, b -> {
                     Minecraft.getInstance().setScreen(getScreenFromFragment(ref));
                 }, ref.getIcon().getDefaultInstance(), 0.7f, (buttons, graphics, b, c) -> {
                     graphics.renderTooltip(font, ref.getTranslation(), b, c);

@@ -32,6 +32,7 @@ import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.SolarLexicon;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragmentHelper;
 import com.google.gson.JsonObject;
+import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.components.AbstractWidget;
 
@@ -661,6 +662,9 @@ public class ClientHelpers {
 
     }
 
+    public static boolean isKeyDown(int keyCode){
+        return InputConstants.isKeyDown(Minecraft.getInstance().getWindow().getWindow(),keyCode);
+    }
 
 
 

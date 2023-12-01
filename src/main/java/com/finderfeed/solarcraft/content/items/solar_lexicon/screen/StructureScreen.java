@@ -155,7 +155,7 @@ public class StructureScreen extends LexiconScreen {
             }
 
             for (AncientFragment ref : refs) {
-                ItemStackTabButton button1 = new ItemStackTabButton(relX + 217, relY + 25 + 18 + 3 + h * 18 + 60, 17, 17, b -> {
+                ItemStackTabButton button1 = new ItemStackTabButton(relX + 217, relY + 25 + 18 + 3 + h * 18 + 55, 17, 17, b -> {
                     Minecraft.getInstance().setScreen(getScreenFromFragment(ref));
                 }, ref.getIcon().getDefaultInstance(), 0.7f, (buttons, graphics, b, c) -> {
                     graphics.renderTooltip(font, ref.getTranslation(), b, c);

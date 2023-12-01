@@ -26,7 +26,7 @@ import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import org.joml.Matrix4f;
-
+import org.joml.Vector3f;
 
 
 public class UltraCrossbowProjectileRenderer extends EntityRenderer<UltraCrossbowProjectile> {
@@ -52,13 +52,18 @@ public class UltraCrossbowProjectileRenderer extends EntityRenderer<UltraCrossbo
         matrices.pushPose();
 
         RenderingTools.applyMovementMatrixRotations(matrices,entity.getDeltaMovement());
+        matrices.mulPose(RenderingTools.rotationDegrees(RenderingTools.XP(),90));
 
+        matrices.translate(0,0,-2);
         ray.setPos(2,2,20);
 
         VertexConsumer vertex1 = buffer.getBuffer(SolarCraftRenderTypes.depthMaskedTextSeeThrough(RAY));
         ray.render(matrices,vertex1,light,light);
         matrices.popPose();
         matrices.pushPose();
+
+        RenderingTools.applyMovementMatrixRotations(matrices,entity.getDeltaMovement());
+        matrices.mulPose(RenderingTools.rotationDegrees(RenderingTools.XP(),90));
 
 
         matrices.mulPose(RenderingTools.rotationDegrees(RenderingTools.ZP(),(entity.level.getGameTime()+partialTicks)*2%360));

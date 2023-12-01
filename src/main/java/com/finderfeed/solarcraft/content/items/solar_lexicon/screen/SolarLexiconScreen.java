@@ -197,7 +197,7 @@ public class SolarLexiconScreen extends ScrollableLexiconScreen implements PostR
                     .nextLine()
                     .addComponent(new EmptySpaceComponent(0,10))
                     .nextLine()
-                    .addComponent(new FDTextComponent(ContentAlignment.NO_ALIGNMENT,30,0).setText(preText,0xffffff).setInnerBorder(3))
+                    .addComponent(new FDTextComponent(ContentAlignment.NO_ALIGNMENT,35,0).setText(preText,0xffffff).setInnerBorder(3))
                     .nextLine()
                     .addComponent(new EmptySpaceComponent(0,10))
                     .nextLine()

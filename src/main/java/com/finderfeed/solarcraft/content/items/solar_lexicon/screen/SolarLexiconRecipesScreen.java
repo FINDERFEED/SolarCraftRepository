@@ -62,7 +62,7 @@ public class SolarLexiconRecipesScreen extends ScrollableLexiconScreen {
 //                }));
         //nothing = new ItemStackTabButton(0,10,16,16,(button)->{}, Items.CRAFTING_TABLE.getDefaultInstance(),0.7f);
 
-        infoButton = new InfoButton(relX  +206+37,relY + 164 - 137,14,14,(btn1, graphics, mx, my)->{
+        infoButton = new InfoButton(relX + this.getScreenWidth() + 10,relY + 18,14,14,(btn1, graphics, mx, my)->{
             graphics.renderTooltip(font,font.split(Component.translatable("solarcraft.recipes_screen_info"),200),mx,my);
         });
 
@@ -72,7 +72,7 @@ public class SolarLexiconRecipesScreen extends ScrollableLexiconScreen {
         collectFragments();
 
 
-        BOOK = new Book(relX+25,relY+25);
+        BOOK = new Book(relX+15,relY+15);
         Book.initializeBook(BOOK, fragments);
         BOOK.init();
         for (Button b : BOOK.getButtons()){
@@ -80,13 +80,6 @@ public class SolarLexiconRecipesScreen extends ScrollableLexiconScreen {
             this.moveable.add(b);
         }
 
-//        addRenderableWidget(goBack);
-//        addRenderableWidget(nothing);
-//
-//        nothing.x = relX +207+35;
-//        nothing.y = relY + 184 - 137;
-//        goBack.x = relX +207+35;
-//        goBack.y = relY + 164 - 137;
     }
 
     @Override
@@ -139,7 +132,7 @@ public class SolarLexiconRecipesScreen extends ScrollableLexiconScreen {
 
     @Override
     public int getScreenHeight() {
-        return 207;
+        return 220;
     }
 
     @Override
@@ -151,10 +144,7 @@ public class SolarLexiconRecipesScreen extends ScrollableLexiconScreen {
 
 
     private boolean isButtonPressable(int x,int y){
-        if (((x + 24 > relX+7) && (x  < relX+7+220)) && ((y + 24 > relY+7) && (y  < relY+7+193))){
-            return true;
-        }
-        return false;
+        return RenderingTools.isMouseInBorders(x,y,relX - 20,relY - 20,relX + this.getScreenWidth() + 20,relY + this.getScreenHeight() + 20);
     }
 
     @Override
@@ -164,9 +154,11 @@ public class SolarLexiconRecipesScreen extends ScrollableLexiconScreen {
         this.renderEscapeText(graphics);
 
 
-        RenderingTools.scissor(relX + 8,relY + 8,222,190);
-        ClientHelpers.bindText(MAIN_SCREEN_SCROLLABLE);
-        RenderingTools.blitWithBlend(matrices,relX,relY,0,0,256,256,256,256,0,1f);
+        RenderingTools.scissor(relX ,relY,this.getScreenWidth(),this.getScreenHeight());
+//        ClientHelpers.bindText(MAIN_SCREEN_SCROLLABLE);
+//        RenderingTools.blitWithBlend(matrices,relX,relY,0,0,256,256,256,256,0,1f);
+
+        RenderingTools.renderBasicLexiconPageBackground(matrices,relX,relY,this.getScreenWidth(),this.getScreenHeight());
 
         ClientHelpers.bindText(FRAME);
         if (BOOK != null){
@@ -179,11 +171,12 @@ public class SolarLexiconRecipesScreen extends ScrollableLexiconScreen {
         RenderSystem.disableScissor();
 
 
-        ClientHelpers.bindText(MAIN_SCREEN);
+//        ClientHelpers.bindText(MAIN_SCREEN);
 
         matrices.pushPose();
         matrices.translate(0,0,400);
-        RenderingTools.blitWithBlend(matrices,relX,relY,0,0,256,256,256,256,0,1f);
+        RenderingTools.renderBasicLexiconPageOutline(matrices,relX,relY,this.getScreenWidth(),this.getScreenHeight());
+//        RenderingTools.blitWithBlend(matrices,relX,relY,0,0,256,256,256,256,0,1f);
         matrices.popPose();
 
 //        goBack.render(graphics,mousex,mousey,partialTicks,300);
