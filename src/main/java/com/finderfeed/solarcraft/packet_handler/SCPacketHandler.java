@@ -23,8 +23,8 @@ import com.finderfeed.solarcraft.packet_handler.packets.sun_shard_puzzle.SunShar
 import com.finderfeed.solarcraft.local_library.bedrock_loader.animations.packets.AnimationsSyncPacket;
 import net.minecraft.resources.ResourceLocation;
 
-import net.minecraftforge.network.NetworkRegistry;
-import net.minecraftforge.network.simple.SimpleChannel;
+import net.neoforged.neoforge.network.NetworkRegistry;
+import net.neoforged.neoforge.network.simple.SimpleChannel;
 
 public class SCPacketHandler {
     private static final String PROTOCOL_VERSION = "1";

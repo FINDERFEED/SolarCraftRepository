@@ -24,7 +24,7 @@ public class CatmullRomSpline {
      * @return a point on a spline
      */
     public Vec3 getSplinePoint(float progress){
-        return this.getLocalSplinePoint(progress * points.length - 1);
+        return this.getLocalSplinePoint(progress * (points.length - 1));
     }
 
     public Vec3 pointBetweenPoints(int pIndex,float progress){

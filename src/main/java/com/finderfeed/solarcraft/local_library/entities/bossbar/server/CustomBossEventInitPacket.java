@@ -6,7 +6,7 @@ import com.finderfeed.solarcraft.packet_handler.ClientPacketHandles;
 import com.finderfeed.solarcraft.registries.overlays.SolarcraftOverlays;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
-import net.minecraftforge.network.NetworkEvent;
+import net.neoforged.neoforge.network.NetworkEvent;
 
 import java.util.UUID;
 import java.util.function.Supplier;

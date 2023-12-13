@@ -23,7 +23,7 @@ import net.minecraft.world.level.Level;
 
 import javax.annotation.Nullable;
 
-import net.minecraftforge.network.NetworkHooks;
+import net.neoforged.neoforge.network.NetworkHooks;
 
 
 public class SolarEnergyFurnace extends GlazedTerracottaBlock implements EntityBlock {

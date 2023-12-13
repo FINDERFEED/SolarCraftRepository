@@ -4,7 +4,7 @@ import com.finderfeed.solarcraft.SolarCraft;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
-import net.minecraftforge.fml.loading.FMLPaths;
+import net.neoforged.neoforge.fml.loading.FMLPaths;
 import org.apache.logging.log4j.Level;
 
 import java.io.IOException;

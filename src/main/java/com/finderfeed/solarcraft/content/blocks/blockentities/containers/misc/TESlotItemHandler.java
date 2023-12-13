@@ -1,8 +1,8 @@
 package com.finderfeed.solarcraft.content.blocks.blockentities.containers.misc;
 
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.SlotItemHandler;
+import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.items.SlotItemHandler;
 
 public class TESlotItemHandler extends SlotItemHandler {
 

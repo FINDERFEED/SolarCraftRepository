@@ -2,7 +2,7 @@ package com.finderfeed.solarcraft.events.my_events;
 
 import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.Progression;
 import net.minecraft.world.entity.player.Player;
-import net.minecraftforge.eventbus.api.Event;
+import net.neoforged.neoforge.eventbus.api.Event;
 
 
 

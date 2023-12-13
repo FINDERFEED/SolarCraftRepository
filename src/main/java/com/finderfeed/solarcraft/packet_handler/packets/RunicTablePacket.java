@@ -18,9 +18,9 @@ import net.minecraft.core.BlockPos;
 
 import java.util.function.Supplier;
 
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.network.NetworkDirection;
-import net.minecraftforge.network.NetworkEvent;
+import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.network.NetworkDirection;
+import net.neoforged.neoforge.network.NetworkEvent;
 
 public class RunicTablePacket extends AbstractPacket {
 

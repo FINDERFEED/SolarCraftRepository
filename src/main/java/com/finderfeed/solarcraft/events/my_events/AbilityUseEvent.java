@@ -2,8 +2,8 @@ package com.finderfeed.solarcraft.events.my_events;
 
 import com.finderfeed.solarcraft.content.abilities.ability_classes.AbstractAbility;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraftforge.eventbus.api.Cancelable;
-import net.minecraftforge.eventbus.api.Event;
+import net.neoforged.neoforge.eventbus.api.Cancelable;
+import net.neoforged.neoforge.eventbus.api.Event;
 
 
 @Cancelable

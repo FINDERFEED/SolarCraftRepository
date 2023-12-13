@@ -10,7 +10,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.util.profiling.ProfilerFiller;
-import net.minecraftforge.network.NetworkDirection;
+import net.neoforged.neoforge.network.NetworkDirection;
 
 import java.util.HashMap;
 import java.util.Map;

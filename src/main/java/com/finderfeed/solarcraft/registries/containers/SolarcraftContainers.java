@@ -3,11 +3,11 @@ package com.finderfeed.solarcraft.registries.containers;
 import com.finderfeed.solarcraft.content.blocks.blockentities.containers.*;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.SolarLexiconContainer;
 import net.minecraft.world.inventory.MenuType;
-import net.minecraftforge.common.extensions.IForgeMenuType;
+import net.neoforged.neoforge.common.extensions.IForgeMenuType;
 
-import net.minecraftforge.registries.RegistryObject;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.neoforged.neoforge.registries.RegistryObject;
+import net.neoforged.neoforge.registries.DeferredRegister;
+import net.neoforged.neoforge.registries.ForgeRegistries;
 
 public class SolarcraftContainers {
     public static final DeferredRegister<MenuType<?>> CONTAINER_TYPE = DeferredRegister.create(ForgeRegistries.MENU_TYPES,"solarcraft");

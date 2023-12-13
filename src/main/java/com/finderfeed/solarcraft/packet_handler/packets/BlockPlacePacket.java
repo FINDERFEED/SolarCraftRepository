@@ -7,8 +7,8 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.network.NetworkEvent;
+import net.neoforged.neoforge.common.MinecraftForge;
+import net.neoforged.neoforge.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
@@ -34,7 +34,7 @@ public class BlockPlacePacket {
 
     public void handle(Supplier<NetworkEvent.Context> ctx) {
         ctx.get().enqueueWork(()->{
-            MinecraftForge.EVENT_BUS.post(new ClientsideBlockPlaceEvent(Block.stateById(id),pos));
+            NeoForge.EVENT_BUS.post(new ClientsideBlockPlaceEvent(Block.stateById(id),pos));
         });
         ctx.get().setPacketHandled(true);
     }

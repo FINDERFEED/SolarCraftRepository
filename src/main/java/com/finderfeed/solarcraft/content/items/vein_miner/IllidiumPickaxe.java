@@ -28,7 +28,7 @@ import java.util.function.Supplier;
 
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Tier;
-import net.minecraftforge.common.Tags;
+import net.neoforged.neoforge.common.Tags;
 
 public class IllidiumPickaxe extends RareSolarcraftPickaxe implements IRunicEnergyUser {
 

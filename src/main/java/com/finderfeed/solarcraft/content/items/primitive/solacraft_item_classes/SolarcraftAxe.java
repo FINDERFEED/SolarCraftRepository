@@ -7,7 +7,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Tier;
-import net.minecraftforge.fml.util.thread.EffectiveSide;
+import net.neoforged.neoforge.fml.util.thread.EffectiveSide;
 
 import java.util.function.Supplier;
 

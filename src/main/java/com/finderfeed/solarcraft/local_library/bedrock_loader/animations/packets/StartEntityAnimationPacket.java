@@ -6,7 +6,7 @@ import com.finderfeed.solarcraft.packet_handler.ClientPacketHandles;
 import com.finderfeed.solarcraft.registries.animations.AnimationReloadableResourceListener;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.Entity;
-import net.minecraftforge.network.NetworkEvent;
+import net.neoforged.neoforge.network.NetworkEvent;
 
 import java.util.function.Supplier;
 

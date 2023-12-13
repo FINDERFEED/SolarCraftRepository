@@ -4,9 +4,9 @@ import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.content.world_generation.dimension_related.radiant_land.RadiantSmallTreeFoliagePlacer;
 import com.finderfeed.solarcraft.content.world_generation.dimension_related.radiant_land.RadiantTreeFoliagePlacer;
 import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacerType;
-import net.minecraftforge.registries.RegistryObject;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.neoforged.neoforge.registries.RegistryObject;
+import net.neoforged.neoforge.registries.DeferredRegister;
+import net.neoforged.neoforge.registries.ForgeRegistries;
 
 public class FoliagePlacerRegistry {
 

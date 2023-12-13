@@ -8,7 +8,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.fml.util.thread.EffectiveSide;
+import net.neoforged.neoforge.fml.util.thread.EffectiveSide;
 
 import java.util.function.Supplier;
 

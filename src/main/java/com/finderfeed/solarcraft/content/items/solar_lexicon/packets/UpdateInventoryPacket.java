@@ -3,7 +3,7 @@ package com.finderfeed.solarcraft.content.items.solar_lexicon.packets;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraftforge.network.NetworkEvent;
+import net.neoforged.neoforge.network.NetworkEvent;
 
 
 import java.util.ArrayList;

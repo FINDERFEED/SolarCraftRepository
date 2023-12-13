@@ -35,8 +35,8 @@ import net.minecraft.world.level.Level;
 
 
 
-import net.minecraftforge.network.NetworkHooks;
-import net.minecraftforge.network.PacketDistributor;
+import net.neoforged.neoforge.network.NetworkHooks;
+import net.neoforged.neoforge.network.PacketDistributor;
 
 import java.util.List;
 import java.util.UUID;

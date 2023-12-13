@@ -65,7 +65,7 @@ public class TransparentItemrenderer extends ItemRenderer {
             boolean flag = p_229111_2_ == ItemDisplayContext.GUI || p_229111_2_ == ItemDisplayContext.GROUND
                     || p_229111_2_ == ItemDisplayContext.FIXED;
 
-            p_229111_8_ = net.minecraftforge.client.ForgeHooksClient.handleCameraTransforms(p_229111_4_, p_229111_8_, p_229111_2_, p_229111_3_);
+            p_229111_8_ = net.neoforged.neoforge.client.ForgeHooksClient.handleCameraTransforms(p_229111_4_, p_229111_8_, p_229111_2_, p_229111_3_);
             p_229111_4_.translate(-0.5D, -0.5D, -0.5D);
 
             if (!p_229111_8_.isCustomRenderer() && (p_229111_1_.getItem() != Items.TRIDENT || flag))

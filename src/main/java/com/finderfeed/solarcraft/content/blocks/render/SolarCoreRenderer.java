@@ -23,7 +23,7 @@ import org.joml.Matrix4f;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.phys.Vec3;
 import static com.finderfeed.solarcraft.local_library.helpers.RenderingTools.*;
-import net.minecraftforge.client.model.data.ModelData;
+import net.neoforged.neoforge.client.model.data.ModelData;
 
 import java.util.List;
 import java.util.Random;

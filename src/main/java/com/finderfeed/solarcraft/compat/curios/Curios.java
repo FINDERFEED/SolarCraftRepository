@@ -1,7 +1,7 @@
 package com.finderfeed.solarcraft.compat.curios;
 
-import net.minecraftforge.fml.InterModComms;
-import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
+import net.neoforged.neoforge.fml.InterModComms;
+import net.neoforged.neoforge.fml.event.lifecycle.InterModEnqueueEvent;
 import top.theillusivec4.curios.api.SlotTypeMessage;
 
 

@@ -1,6 +1,6 @@
 package com.finderfeed.solarcraft.config;
 
-import net.minecraftforge.common.ForgeConfigSpec;
+import net.neoforged.neoforge.common.ForgeConfigSpec;
 
 public final class SolarcraftClientConfig {
 

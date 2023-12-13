@@ -17,7 +17,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.client.model.data.ModelData;
+import net.neoforged.neoforge.client.model.data.ModelData;
 import org.joml.Vector3f;
 
 public class MyFallingBlockEntityRenderer extends EntityRenderer<MyFallingBlockEntity> {
@@ -78,7 +78,7 @@ public class MyFallingBlockEntityRenderer extends EntityRenderer<MyFallingBlockE
 //                BlockRenderDispatcher blockrenderdispatcher = Minecraft.getInstance().getBlockRenderer();
 //                for (net.minecraft.client.renderer.RenderType type : net.minecraft.client.renderer.RenderType.chunkBufferLayers()) {
 //                    if (ItemBlockRenderTypes.canRenderInLayer(blockstate, type)) {
-//                        net.minecraftforge.client.ForgeHooksClient.setRenderType(type);
+//                        net.neoforged.neoforge.client.ForgeHooksClient.setRenderType(type);
 //                        blockrenderdispatcher.getModelRenderer().tesselateBlock(level,
 //                                blockrenderdispatcher.getBlockModel(blockstate), blockstate, blockpos, matrices, p_114638_.getBuffer(type),
 //                                true, new Random(),
@@ -87,7 +87,7 @@ public class MyFallingBlockEntityRenderer extends EntityRenderer<MyFallingBlockE
 //
 //                    }
 //                }
-//                net.minecraftforge.client.ForgeHooksClient.setRenderType(null);
+//                net.neoforged.neoforge.client.ForgeHooksClient.setRenderType(null);
 //                matrices.popPose();
 //                super.render(entity, p_114635_, p_114636_, matrices, p_114638_, p_114639_);
 //            }

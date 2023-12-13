@@ -4,7 +4,7 @@ import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
-import net.minecraftforge.network.NetworkDirection;
+import net.neoforged.neoforge.network.NetworkDirection;
 
 import java.util.HashSet;
 import java.util.Set;

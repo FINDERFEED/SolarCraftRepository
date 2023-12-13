@@ -6,8 +6,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.network.NetworkEvent;
+import net.neoforged.neoforge.common.MinecraftForge;
+import net.neoforged.neoforge.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
@@ -33,7 +33,7 @@ public class BlockBreakPacket {
 
     public void handle(Supplier<NetworkEvent.Context> ctx) {
         ctx.get().enqueueWork(()->{
-            MinecraftForge.EVENT_BUS.post(new ClientsideBlockBreakEvent(Block.stateById(id),pos));
+            NeoForge.EVENT_BUS.post(new ClientsideBlockBreakEvent(Block.stateById(id),pos));
         });
         ctx.get().setPacketHandled(true);
     }

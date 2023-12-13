@@ -5,11 +5,11 @@ import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.content.loot_modifiers.AddRandomAncientFragmentToChests;
 import com.finderfeed.solarcraft.content.loot_modifiers.SmeltingLootModifier;
 import com.mojang.serialization.Codec;
-import net.minecraftforge.common.loot.IGlobalLootModifier;
+import net.neoforged.neoforge.common.loot.IGlobalLootModifier;
 
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.neoforge.registries.DeferredRegister;
+import net.neoforged.neoforge.registries.ForgeRegistries;
+import net.neoforged.neoforge.registries.RegistryObject;
 
 public class SolarcraftLootModifiers {
 

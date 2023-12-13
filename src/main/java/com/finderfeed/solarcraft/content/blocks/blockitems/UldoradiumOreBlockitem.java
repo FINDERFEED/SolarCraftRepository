@@ -9,7 +9,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.network.chat.Component;
 
 
-import net.minecraftforge.fml.util.thread.EffectiveSide;
+import net.neoforged.neoforge.fml.util.thread.EffectiveSide;
 
 public class UldoradiumOreBlockitem extends BlockItem {
 

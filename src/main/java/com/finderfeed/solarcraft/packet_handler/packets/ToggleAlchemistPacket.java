@@ -3,9 +3,9 @@ package com.finderfeed.solarcraft.packet_handler.packets;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.network.NetworkEvent;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.neoforge.fml.DistExecutor;
+import net.neoforged.neoforge.network.NetworkEvent;
 
 
 import java.util.function.Supplier;

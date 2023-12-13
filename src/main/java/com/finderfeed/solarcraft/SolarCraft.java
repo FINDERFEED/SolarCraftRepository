@@ -70,30 +70,23 @@ import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraftforge.common.MinecraftForge;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.ModLoadingContext;
+import net.neoforged.fml.config.ModConfig;
+import net.neoforged.fml.javafmlmod.FMLJavaModLoadingContext;
 
-import net.minecraftforge.common.TierSortingRegistry;
+import net.neoforged.neoforge.common.TierSortingRegistry;
 
-import net.minecraftforge.common.extensions.IForgeMenuType;
-import net.minecraftforge.eventbus.api.IEventBus;
+import net.neoforged.fml.common.Mod;
 
-import net.minecraftforge.fml.ModLoadingContext;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.config.ModConfig;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.neoforge.registries.DeferredRegister;
 
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-// The value here should match an entry in the META-INF/mods.toml file
-
 import java.util.List;
+
 
 @Mod(SolarCraft.MOD_ID)
 public class SolarCraft
@@ -110,14 +103,6 @@ public class SolarCraft
     public static final  DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS,"solarcraft");
 //    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS,"solarcraft");
     public static final DeferredRegister<EntityType<?>> ENTITY_TYPE_REGISTER = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES,"solarcraft");
-
-//    public static final CreativeModeTab SOLAR_GROUP = new SolarGroup("solar_forge_group");
-//    public static final CreativeModeTab SOLAR_GROUP_BLOCKS = new SolarGroupBlocks("solar_forge_group_blocks");
-//    public static final CreativeModeTab SOLAR_GROUP_TOOLS = new SolarGroupTools("solar_forge_group_tools");
-//    public static final CreativeModeTab SOLAR_GROUP_MATERIALS = new SolarGroupThemed("solar_group_materials", SolarcraftItems.ILLIDIUM_INGOT);
-//    public static final CreativeModeTab SOLAR_GROUP_WEAPONS = new SolarGroupThemed("solar_group_weapons", SolarcraftItems.ILLIDIUM_SWORD);
-//    public static final CreativeModeTab SOLAR_GROUP_FRAGMENTS = new SolarGroupFragments("solar_forge_group_fragments");
-
 
     public static final RegistryObject<SoundEvent> SOLAR_STRIKE_SOUND = SOUND_EVENTS.register("solar_ray_sound",()-> SoundEvent.createVariableRangeEvent(new ResourceLocation("solarcraft","solar_strike_explosion_sound")));
     public static final RegistryObject<SoundEvent> SOLAR_STRIKE_BUILD_SOUND = SOUND_EVENTS.register("solar_ray_buildup_sound",()-> SoundEvent.createVariableRangeEvent(new ResourceLocation("solarcraft","solar_strike_buildup")));
@@ -187,7 +172,7 @@ public class SolarCraft
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, SolarcraftClientConfig.SPEC,"solarcraft-client-config.toml");
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
 
-        MinecraftForge.EVENT_BUS.register(this);
+        NeoForge.EVENT_BUS.register(this);
         SCPacketHandler.registerMessages();
 //        SolarForgeStructures.STRUCTURES.register(bus);
 
@@ -215,7 +200,7 @@ public class SolarCraft
         TierSortingRegistry.registerTier(SolarCraftToolTiers.DIVINE_TIER,new ResourceLocation("divine"), List.of(Tiers.DIAMOND),List.of());
 
 
-        MinecraftForge.EVENT_BUS.addListener(InfusingStand::placeBlockEvent);
+        NeoForge.EVENT_BUS.addListener(InfusingStand::placeBlockEvent);
         event.enqueueWork(()->{
             SolarcraftStructureTypes.init();
             SolarcraftStructureHolders.init();
@@ -224,7 +209,7 @@ public class SolarCraft
     }
 
     private void doClientStuff(final FMLClientSetupEvent event) {
-        MinecraftForge.EVENT_BUS.register(new RenderEventsHandler());
+        NeoForge.EVENT_BUS.register(new RenderEventsHandler());
         MenuScreens.register(SOLAR_FORGE_CONTAINER.get(), SolarForgeScreen::new);
         MenuScreens.register(INFUSING_TABLE_CONTAINER.get(), InfuserScreen::new);
     }

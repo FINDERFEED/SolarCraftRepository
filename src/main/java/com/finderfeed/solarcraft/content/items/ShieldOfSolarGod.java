@@ -30,7 +30,7 @@ import java.util.function.Supplier;
 
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraftforge.client.extensions.common.IClientItemExtensions;
+import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
 
 public class ShieldOfSolarGod extends RareSolarcraftShieldItem {
 

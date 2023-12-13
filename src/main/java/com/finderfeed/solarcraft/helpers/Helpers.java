@@ -42,10 +42,10 @@ import net.minecraft.world.phys.*;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.chunk.LevelChunk;
-import net.minecraftforge.common.MinecraftForge;
+import net.neoforged.neoforge.common.MinecraftForge;
 
-import net.minecraftforge.common.world.ForgeChunkManager;
-import net.minecraftforge.network.NetworkDirection;
+import net.neoforged.neoforge.common.world.ForgeChunkManager;
+import net.neoforged.neoforge.network.NetworkDirection;
 
 import javax.annotation.Nullable;
 import java.util.*;
@@ -425,7 +425,7 @@ public class Helpers {
 
     public static void fireProgressionEvent(Player playerEntity, Progression ach){
         if (!Helpers.hasPlayerCompletedProgression(ach,playerEntity) && Helpers.canPlayerUnlock(ach,playerEntity)) {
-            MinecraftForge.EVENT_BUS.post(new ProgressionUnlockEvent(playerEntity, ach));
+            NeoForge.EVENT_BUS.post(new ProgressionUnlockEvent(playerEntity, ach));
         }
     }
 

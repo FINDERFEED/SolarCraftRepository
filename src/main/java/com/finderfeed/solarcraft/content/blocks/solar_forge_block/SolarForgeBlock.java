@@ -22,7 +22,7 @@ import net.minecraft.world.level.Level;
 
 import java.util.function.Consumer;
 
-import net.minecraftforge.network.NetworkHooks;
+import net.neoforged.neoforge.network.NetworkHooks;
 
 
 import javax.annotation.Nullable;

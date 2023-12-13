@@ -89,7 +89,7 @@ public class RunicEnergyChargerRenderer extends AbstractRunicEnergyContainerRend
 //                }
 //            }
 //
-//            model = net.minecraftforge.client.ForgeHooksClient.handleCameraTransforms(matrices, model, trns, p_115146_);
+//            model = net.neoforged.neoforge.client.ForgeHooksClient.handleCameraTransforms(matrices, model, trns, p_115146_);
 //            matrices.translate(-0.5D, -0.5D, -0.5D);
 //            if (!model.isCustomRenderer() && (!stack.is(Items.TRIDENT) || flag)) {
 //                boolean flag1;
@@ -99,7 +99,7 @@ public class RunicEnergyChargerRenderer extends AbstractRunicEnergyContainerRend
 //                } else {
 //                    flag1 = true;
 //                }
-//                if (model.isLayered()) { net.minecraftforge.client.ForgeHooksClient.drawItemLayered(Minecraft.getInstance().getItemRenderer(), model, stack, matrices, src, light, overlay, flag1); }
+//                if (model.isLayered()) { net.neoforged.neoforge.client.ForgeHooksClient.drawItemLayered(Minecraft.getInstance().getItemRenderer(), model, stack, matrices, src, light, overlay, flag1); }
 //                else {
 //                    RenderType rendertype = SolarCraftRenderTypes.test(TextureAtlas.LOCATION_BLOCKS);
 //                    VertexConsumer vertexconsumer;
@@ -128,7 +128,7 @@ public class RunicEnergyChargerRenderer extends AbstractRunicEnergyContainerRend
 //                    Minecraft.getInstance().getItemRenderer().renderModelLists(model, stack, light, overlay, matrices, vertexconsumer);
 //                }
 //            } else {
-//                net.minecraftforge.client.RenderProperties.get(stack).getCustomRenderer().renderByItem(stack, trns, matrices, src, light, overlay);
+//                net.neoforged.neoforge.client.RenderProperties.get(stack).getCustomRenderer().renderByItem(stack, trns, matrices, src, light, overlay);
 //            }
 //
 //            matrices.popPose();

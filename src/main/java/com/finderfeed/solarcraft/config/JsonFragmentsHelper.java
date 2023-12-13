@@ -5,8 +5,8 @@ import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
 import com.finderfeed.solarcraft.packet_handler.packets.SendFragmentsToClientPacket;
 import com.google.gson.*;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraftforge.fml.loading.FMLPaths;
-import net.minecraftforge.network.NetworkDirection;
+import net.neoforged.neoforge.fml.loading.FMLPaths;
+import net.neoforged.neoforge.network.NetworkDirection;
 import org.apache.logging.log4j.Level;
 
 import javax.annotation.Nullable;

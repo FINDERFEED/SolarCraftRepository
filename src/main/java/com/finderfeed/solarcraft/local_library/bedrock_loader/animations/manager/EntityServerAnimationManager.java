@@ -5,7 +5,7 @@ import com.finderfeed.solarcraft.local_library.bedrock_loader.animations.packets
 import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
-import net.minecraftforge.network.PacketDistributor;
+import net.neoforged.neoforge.network.PacketDistributor;
 
 public class EntityServerAnimationManager extends ServerAnimationManager{
 

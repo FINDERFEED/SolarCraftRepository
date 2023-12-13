@@ -9,8 +9,8 @@ import net.minecraft.client.resources.metadata.animation.FrameSize;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.server.packs.resources.ResourceManager;
-import net.minecraftforge.client.textures.ForgeTextureMetadata;
-import net.minecraftforge.client.textures.ITextureAtlasSpriteLoader;
+import net.neoforged.neoforge.client.textures.ForgeTextureMetadata;
+import net.neoforged.neoforge.client.textures.ITextureAtlasSpriteLoader;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
