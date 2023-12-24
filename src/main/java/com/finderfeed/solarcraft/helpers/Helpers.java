@@ -6,6 +6,7 @@ import com.finderfeed.solarcraft.content.entities.CrystalBossEntity;
 import com.finderfeed.solarcraft.content.entities.runic_elemental.RunicElementalBoss;
 import com.finderfeed.solarcraft.content.entities.uldera_crystal.UlderaLightningEntity;
 import com.finderfeed.solarcraft.events.my_events.ProgressionUnlockEvent;
+import com.finderfeed.solarcraft.events.other_events.event_handler.ModEventHandler;
 import com.finderfeed.solarcraft.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarcraft.content.blocks.blockentities.clearing_ritual.RadiantLandCleanedData;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.Progression;
@@ -39,14 +40,11 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.*;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.network.PlayNetworkDirection;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.chunk.LevelChunk;
-import net.neoforged.neoforge.common.MinecraftForge;
-
-import net.neoforged.neoforge.common.world.ForgeChunkManager;
-import net.neoforged.neoforge.network.NetworkDirection;
-
 import javax.annotation.Nullable;
 import java.util.*;
 import java.util.function.Predicate;
@@ -351,22 +349,22 @@ public class Helpers {
 
     public static void updateFragmentsOnClient(ServerPlayer player){
         SCPacketHandler.INSTANCE.sendTo(new UpdateFragmentsOnClient(player),
-                player.connection.connection,NetworkDirection.PLAY_TO_CLIENT);
+                player.connection.connection,PlayNetworkDirection.PLAY_TO_CLIENT);
     }
 
     public static void updateClientRadiantLandStateForPlayer(ServerPlayer player){
         SCPacketHandler.INSTANCE.sendTo(new SetClientRadiantLandStatePacket(ClearingRitual.getRLState((ServerLevel) player.level)),
-                player.connection.connection,NetworkDirection.PLAY_TO_CLIENT);
+                player.connection.connection,PlayNetworkDirection.PLAY_TO_CLIENT);
     }
 
     public static void updateClientRadiantLandStateForPlayer(ServerPlayer player,boolean state){
         SCPacketHandler.INSTANCE.sendTo(new SetClientRadiantLandStatePacket(state),
-                player.connection.connection,NetworkDirection.PLAY_TO_CLIENT);
+                player.connection.connection,PlayNetworkDirection.PLAY_TO_CLIENT);
     }
 
     public static void forceChunksReload(ServerPlayer playerEntity){
 
-        SCPacketHandler.INSTANCE.sendTo(new ReloadChunks(),playerEntity.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+        SCPacketHandler.INSTANCE.sendTo(new ReloadChunks(),playerEntity.connection.connection, PlayNetworkDirection.PLAY_TO_CLIENT);
     }
     public static List<BlockPos> getBlockPositionsByDirection(Direction dir,BlockPos mainpos,int count){
         List<BlockPos> pos = new ArrayList<>();
@@ -420,7 +418,7 @@ public class Helpers {
     }
 
     public static void triggerToast(Progression ach, Player player){
-        SCPacketHandler.INSTANCE.sendTo(new TriggerToastPacket(ach.getProgressionCode()), ((ServerPlayer)player).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+        SCPacketHandler.INSTANCE.sendTo(new TriggerToastPacket(ach.getProgressionCode()), ((ServerPlayer)player).connection.connection, PlayNetworkDirection.PLAY_TO_CLIENT);
     }
 
     public static void fireProgressionEvent(Player playerEntity, Progression ach){
@@ -432,18 +430,17 @@ public class Helpers {
 
     public static void updateRunicEnergyOnClient(RunicEnergy.Type type,float amount,Player player){
         SCPacketHandler.INSTANCE.sendTo(new UpdateEnergyOnClientPacket(type, amount),
-                ((ServerPlayer)player).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+                ((ServerPlayer)player).connection.connection, PlayNetworkDirection.PLAY_TO_CLIENT);
     }
 
     public static void triggerProgressionShader(Player playerEntity){
         SCPacketHandler.INSTANCE.sendTo(new TriggerProgressionShaderPacket(),
-                ((ServerPlayer)playerEntity).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+                ((ServerPlayer)playerEntity).connection.connection, PlayNetworkDirection.PLAY_TO_CLIENT);
     }
 
 
     public static void loadChunkAtPos(ServerLevel world,BlockPos pos,boolean add,boolean ticking){
-        ForgeChunkManager.forceChunk(world,
-                SolarCraft.MOD_ID,pos, SectionPos.blockToSectionCoord(pos.getX()),SectionPos.blockToSectionCoord(pos.getZ()),
+        ModEventHandler.TICKET_CONTROLLER.forceChunk(world,pos, SectionPos.blockToSectionCoord(pos.getX()),SectionPos.blockToSectionCoord(pos.getZ()),
                 add,ticking);
     }
 
@@ -517,7 +514,7 @@ public class Helpers {
     }
 
     public static void sendEnergyTypeToast(ServerPlayer player,RunicEnergy.Type type){
-        SCPacketHandler.INSTANCE.sendTo(new TriggerEnergyTypeToast(type.id),player.connection.connection,NetworkDirection.PLAY_TO_CLIENT);
+        SCPacketHandler.INSTANCE.sendTo(new TriggerEnergyTypeToast(type.id),player.connection.connection,PlayNetworkDirection.PLAY_TO_CLIENT);
     }
 
     private static List<BlockPos> findNormalBlockPositionsOnPlane(Level world,int radius,BlockPos mainpos){
@@ -556,7 +553,7 @@ public class Helpers {
     public static void setServerPlayerSpeed(ServerPlayer player,Vec3 speed){
         player.setDeltaMovement(speed);
 
-        SCPacketHandler.INSTANCE.sendTo(new SetSpeedPacket(speed),player.connection.connection,NetworkDirection.PLAY_TO_CLIENT);
+        SCPacketHandler.INSTANCE.sendTo(new SetSpeedPacket(speed),player.connection.connection,PlayNetworkDirection.PLAY_TO_CLIENT);
     }
 
     public static boolean playerInBossfight(Player pl){
@@ -644,7 +641,7 @@ public class Helpers {
 
     public static void sendDimBreak(ServerLevel world){
         world.getPlayers((e)->true).forEach((player)->{
-            SCPacketHandler.INSTANCE.sendTo(new DimensionBreakPacket(),player.connection.connection,NetworkDirection.PLAY_TO_CLIENT);
+            SCPacketHandler.INSTANCE.sendTo(new DimensionBreakPacket(),player.connection.connection,PlayNetworkDirection.PLAY_TO_CLIENT);
         });
     }
 

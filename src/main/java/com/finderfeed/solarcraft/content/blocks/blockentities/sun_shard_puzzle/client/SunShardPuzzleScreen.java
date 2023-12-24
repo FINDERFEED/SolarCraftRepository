@@ -176,7 +176,7 @@ public class SunShardPuzzleScreen extends DefaultScreen {
         this.mx = mx;
         this.my = my;
         PoseStack matrices = graphics.pose();
-        renderBackground(graphics);
+        renderBackground(graphics,mx,my,pticks);
         ClientHelpers.bindText(BACKGROUND);
         RenderingTools.blitWithBlend(matrices,relX-11,relY-11,0,0,214,214,214,214,0,1f);
         this.renderPuzzle(matrices,mx,my,pticks);

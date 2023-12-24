@@ -9,13 +9,8 @@ import net.minecraft.client.Minecraft;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.phys.Vec2;
-
-
-import net.neoforged.neoforge.client.event.RenderHandEvent;
-import net.neoforged.neoforge.client.event.RenderLevelStageEvent;
-import net.neoforged.neoforge.event.TickEvent;
 import net.neoforged.bus.api.SubscribeEvent;
-
+import net.neoforged.neoforge.event.TickEvent;
 import java.util.HashMap;
 import java.util.Map;
 

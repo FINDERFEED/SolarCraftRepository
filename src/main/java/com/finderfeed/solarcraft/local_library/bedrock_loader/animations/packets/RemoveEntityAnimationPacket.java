@@ -5,7 +5,6 @@ import com.finderfeed.solarcraft.packet_handler.ClientPacketHandles;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.Entity;
 import net.neoforged.neoforge.network.NetworkEvent;
-
 import java.util.function.Supplier;
 
 public class RemoveEntityAnimationPacket {

@@ -6,7 +6,7 @@ import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
 import com.finderfeed.solarcraft.registries.ConfigRegistry;
-import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
+import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.Item;
@@ -37,7 +37,7 @@ public class ElementWeaverTileEntity extends REItemHandlerBlockEntity{
     private boolean active;
 
     public ElementWeaverTileEntity(BlockPos p_155229_, BlockState p_155230_) {
-        super(SolarcraftTileEntityTypes.ELEMENT_WEAVER.get(), p_155229_, p_155230_);
+        super(SCTileEntities.ELEMENT_WEAVER.get(), p_155229_, p_155230_);
     }
 
 

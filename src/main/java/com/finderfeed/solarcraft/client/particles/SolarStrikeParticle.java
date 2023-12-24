@@ -16,7 +16,6 @@ import org.lwjgl.opengl.GL11;
 
 import javax.annotation.Nullable;
 
-import static org.apache.commons.lang3.RandomUtils.nextFloat;
 
 public class SolarStrikeParticle extends TextureSheetParticle {
 

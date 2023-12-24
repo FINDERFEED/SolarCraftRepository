@@ -3,13 +3,11 @@ package com.finderfeed.solarcraft.content.blocks.infusing_table_things;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.world.item.ItemStack;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.fml.DistExecutor;
+import net.neoforged.neoforge.network.NetworkEvent;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.core.BlockPos;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.neoforge.fml.DistExecutor;
-import net.neoforged.neoforge.network.NetworkEvent;
-
-
 import java.util.function.Supplier;
 
 

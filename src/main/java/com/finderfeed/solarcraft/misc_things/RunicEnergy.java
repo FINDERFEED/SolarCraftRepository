@@ -6,7 +6,6 @@ import net.minecraft.nbt.CompoundTag;
 
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
-
 import java.util.Map;
 
 public class RunicEnergy {

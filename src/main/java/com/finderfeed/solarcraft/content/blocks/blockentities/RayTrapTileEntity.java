@@ -5,7 +5,7 @@ import com.finderfeed.solarcraft.content.blocks.RayTrapBlock;
 import com.finderfeed.solarcraft.client.particles.SCParticleTypes;
 import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
 import com.finderfeed.solarcraft.packet_handler.packets.UpdateLaserTrapTile;
-import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
+import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -16,10 +16,8 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.core.Direction;
 import net.minecraft.world.phys.AABB;
-import net.minecraft.server.level.ServerLevel;
 import net.neoforged.neoforge.network.PacketDistributor;
-
-
+import net.minecraft.server.level.ServerLevel;
 import java.util.List;
 
 public class RayTrapTileEntity extends BlockEntity  {
@@ -31,7 +29,7 @@ public class RayTrapTileEntity extends BlockEntity  {
     public int CLIENT_TRIGGER_INTEGER = 0;
 
     public RayTrapTileEntity( BlockPos p_155229_, BlockState p_155230_) {
-        super(SolarcraftTileEntityTypes.RAY_TRAP_TILE_ENTITY.get(), p_155229_, p_155230_);
+        super(SCTileEntities.RAY_TRAP_TILE_ENTITY.get(), p_155229_, p_155230_);
     }
 
 

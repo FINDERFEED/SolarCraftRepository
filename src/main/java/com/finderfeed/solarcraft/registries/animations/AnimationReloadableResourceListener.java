@@ -10,8 +10,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.util.profiling.ProfilerFiller;
-import net.neoforged.neoforge.network.NetworkDirection;
-
+import net.neoforged.neoforge.network.PlayNetworkDirection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -65,7 +64,7 @@ public class AnimationReloadableResourceListener extends SimpleJsonResourceReloa
     }
 
     public void sendAnimationsPacket(ServerPlayer player){
-        SCPacketHandler.INSTANCE.sendTo(new AnimationsSyncPacket(this.serialized_animations),player.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+        SCPacketHandler.INSTANCE.sendTo(new AnimationsSyncPacket(this.serialized_animations),player.connection.connection, PlayNetworkDirection.PLAY_TO_CLIENT);
     }
 
     public Animation getAnimation(ResourceLocation location){

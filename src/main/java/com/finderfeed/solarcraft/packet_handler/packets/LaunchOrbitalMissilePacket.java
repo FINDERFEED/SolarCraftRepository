@@ -10,7 +10,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.network.NetworkEvent;
-
 import java.util.function.Supplier;
 
 public class LaunchOrbitalMissilePacket {

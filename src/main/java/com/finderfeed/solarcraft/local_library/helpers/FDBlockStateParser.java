@@ -1,11 +1,12 @@
 package com.finderfeed.solarcraft.local_library.helpers;
 
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.block.Block;
+
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.StateDefinition;
+
 import net.minecraft.world.level.block.state.properties.Property;
-import net.neoforged.neoforge.registries.ForgeRegistries;
+
 
 import java.util.Optional;
 
@@ -17,10 +18,10 @@ public class FDBlockStateParser {
         try {
             int propertiesIndex = blockState.indexOf("[");
             if (propertiesIndex != -1) {
-                BlockState block = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(blockState.substring(0, propertiesIndex))).defaultBlockState();
+                BlockState block = BuiltInRegistries.BLOCK.get(new ResourceLocation(blockState.substring(0, propertiesIndex))).defaultBlockState();
                 return assignPropertiesNode(block,blockState);
             } else {
-                return ForgeRegistries.BLOCKS.getValue(new ResourceLocation(blockState)).defaultBlockState();
+                return BuiltInRegistries.BLOCK.get(new ResourceLocation(blockState)).defaultBlockState();
             }
         }catch (Exception e){
             throw new RuntimeException("Error reading: " + blockState,e);
@@ -34,7 +35,6 @@ public class FDBlockStateParser {
                 blockState.indexOf("[") + 1,
                 blockState.indexOf("]")
         ).split(",");
-        BlockState finalState = state;
         for (String propertyValue : properties){
             String[] pv = propertyValue.split("=");
             String sproperty = pv[0];

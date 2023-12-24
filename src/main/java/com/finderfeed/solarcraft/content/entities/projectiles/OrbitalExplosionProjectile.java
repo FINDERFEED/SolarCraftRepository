@@ -20,8 +20,7 @@ import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.BlockHitResult;
-import net.neoforged.neoforge.network.NetworkDirection;
-
+import net.neoforged.neoforge.network.PlayNetworkDirection;
 import java.util.List;
 
 public class OrbitalExplosionProjectile extends NormalProjectile{
@@ -110,9 +109,9 @@ public class OrbitalExplosionProjectile extends NormalProjectile{
         List<ServerPlayer> players = level.getEntitiesOfClass(ServerPlayer.class, this.getBoundingBox().inflate(explosionRadius + 100));
         for (ServerPlayer player : players){
             if (explosionRadius >= 15 || explosionDepth >= 15) {
-                SCPacketHandler.INSTANCE.sendTo(new FlashPacket(0, 40, 40), player.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+                SCPacketHandler.INSTANCE.sendTo(new FlashPacket(0, 40, 40), player.connection.connection, PlayNetworkDirection.PLAY_TO_CLIENT);
             }
-            SCPacketHandler.INSTANCE.sendTo(new CameraShakePacket(0,40,160,1.0f),player.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+            SCPacketHandler.INSTANCE.sendTo(new CameraShakePacket(0,40,160,1.0f),player.connection.connection, PlayNetworkDirection.PLAY_TO_CLIENT);
         }
         level.playSound(null,this.getOnPos(), SolarcraftSounds.ORBITAL_EXPLOSION.get(), SoundSource.HOSTILE,
                 100,1);

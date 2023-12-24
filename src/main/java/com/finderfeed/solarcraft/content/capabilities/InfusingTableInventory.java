@@ -2,12 +2,11 @@ package com.finderfeed.solarcraft.content.capabilities;
 
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.neoforged.neoforge.common.capabilities.Capabilities;
 import net.neoforged.neoforge.common.capabilities.Capability;
 import net.neoforged.neoforge.common.capabilities.ICapabilitySerializable;
 import net.neoforged.neoforge.common.util.LazyOptional;
-import net.neoforged.neoforge.common.capabilities.ForgeCapabilities;
 import net.neoforged.neoforge.items.ItemStackHandler;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -22,7 +21,7 @@ public class InfusingTableInventory implements ICapabilitySerializable<CompoundT
     @Nonnull
     @Override
     public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
-        if (cap != ForgeCapabilities.ITEM_HANDLER){
+        if (cap != Capabilities.ITEM_HANDLER){
             return LazyOptional.empty();
         }
         return INFUSING_TABLE_INV_OPTIONAL.cast();

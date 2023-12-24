@@ -33,7 +33,7 @@ public abstract class AbstractAbility {
 }
 //    public boolean shouldBeCasted(ServerPlayer entity, ServerLevel world){
 //        AbilityUseEvent event = new AbilityUseEvent(this,entity);
-//        NeoForge.EVENT_BUS.post(event);
+//        MinecraftForge.EVENT_BUS.post(event);
 //        if (event.isCanceled()) return false;
 ////        allowed = canUse(entity);
 ////        if (!entity.isCreative() && allowed) {

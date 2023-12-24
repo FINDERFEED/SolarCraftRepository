@@ -1,7 +1,9 @@
 package com.finderfeed.solarcraft.local_library.helpers.mafs;
 
+
 import com.finderfeed.solarcraft.local_library.helpers.FDMathHelper;
 import net.minecraft.world.phys.Vec3;
+
 
 
 /**
@@ -24,7 +26,7 @@ public class CatmullRomSpline {
      * @return a point on a spline
      */
     public Vec3 getSplinePoint(float progress){
-        return this.getLocalSplinePoint(progress * (points.length - 1));
+        return this.getLocalSplinePoint(progress * points.length - 1);
     }
 
     public Vec3 pointBetweenPoints(int pIndex,float progress){

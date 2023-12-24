@@ -11,9 +11,9 @@ import com.finderfeed.solarcraft.content.items.solar_lexicon.SolarLexicon;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.neoforged.neoforge.event.AttachCapabilitiesEvent;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.event.AttachCapabilitiesEvent;
 
 @Mod.EventBusSubscriber(modid="solarcraft",bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class AttachCapability {

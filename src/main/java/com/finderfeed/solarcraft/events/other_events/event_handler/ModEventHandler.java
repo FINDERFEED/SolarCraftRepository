@@ -8,11 +8,12 @@ import net.minecraft.server.packs.resources.PreparableReloadListener;
 import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.util.profiling.ProfilerFiller;
-import net.neoforged.neoforge.event.AddReloadListenerEvent;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.neoforge.fml.ModList;
+import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.Mod;
-import net.neoforged.neoforge.fml.event.lifecycle.InterModEnqueueEvent;
+import net.neoforged.fml.event.lifecycle.InterModEnqueueEvent;
+import net.neoforged.neoforge.common.world.chunk.RegisterTicketControllersEvent;
+import net.neoforged.neoforge.common.world.chunk.TicketController;
 import org.apache.logging.log4j.Level;
 
 import java.io.BufferedReader;
@@ -25,6 +26,15 @@ import java.util.concurrent.Executor;
 
 @Mod.EventBusSubscriber(modid = SolarCraft.MOD_ID,bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ModEventHandler {
+
+
+    public static TicketController TICKET_CONTROLLER = new TicketController(new ResourceLocation(SolarCraft.MOD_ID,"ticker_controller"));
+
+
+    @SubscribeEvent
+    public static void registerTicketController(RegisterTicketControllersEvent event){
+        event.register(TICKET_CONTROLLER);
+    }
 
     @SubscribeEvent
     public static void interModComms(InterModEnqueueEvent event){

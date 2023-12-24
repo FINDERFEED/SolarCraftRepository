@@ -7,7 +7,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.neoforge.network.NetworkEvent;
-
 import java.util.function.Supplier;
 
 public class UpdateFragmentsOnClient extends AbstractPacket {

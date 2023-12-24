@@ -2,16 +2,11 @@ package com.finderfeed.solarcraft;
 
 
 import com.finderfeed.solarcraft.config.JsonConfig;
-import com.finderfeed.solarcraft.content.abilities.meteorite.MeteoriteProjectile;
-import com.finderfeed.solarcraft.content.abilities.solar_strike.SolarStrikeEntity;
-import com.finderfeed.solarcraft.content.abilities.SolarStunEffect;
 import com.finderfeed.solarcraft.config.enchanter_config.EnchanterConfigInit;
 import com.finderfeed.solarcraft.config.JsonFragmentsHelper;
 import com.finderfeed.solarcraft.config.SolarcraftClientConfig;
 import com.finderfeed.solarcraft.config.SolarcraftConfig;
 
-import com.finderfeed.solarcraft.content.blocks.primitive.ProgressionBlock;
-import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.Progression;
 import com.finderfeed.solarcraft.content.world_generation.structures.SolarcraftStructureTypes;
 import com.finderfeed.solarcraft.events.RenderEventsHandler;
 import com.finderfeed.solarcraft.content.blocks.infusing_table_things.*;
@@ -34,16 +29,13 @@ import com.finderfeed.solarcraft.registries.containers.SolarcraftContainers;
 import com.finderfeed.solarcraft.registries.effects.SCEffects;
 import com.finderfeed.solarcraft.registries.loot_modifiers.SolarcraftLootModifiers;
 import com.finderfeed.solarcraft.registries.recipe_types.SolarcraftRecipeTypes;
-import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
+import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
 import com.finderfeed.solarcraft.registries.wand_actions.SolarCraftWandActionRegistry;
-import com.finderfeed.solarcraft.registries.worldgen.configured.LazyConfiguredFeatures;
+
 import com.finderfeed.solarcraft.registries.items.SCItems;
 import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
-import com.finderfeed.solarcraft.content.blocks.solar_forge_block.SolarForgeBlock;
-import com.finderfeed.solarcraft.content.blocks.solar_forge_block.SolarForgeBlockEntity;
 
 
-import com.finderfeed.solarcraft.content.blocks.solar_forge_block.solar_forge_screen.SolarForgeContainer;
 import com.finderfeed.solarcraft.content.blocks.solar_forge_block.solar_forge_screen.SolarForgeScreen;
 
 
@@ -52,41 +44,26 @@ import com.finderfeed.solarcraft.content.world_generation.features.FeaturesRegis
 import com.finderfeed.solarcraft.content.world_generation.features.foliage_placers.FoliagePlacerRegistry;
 import com.finderfeed.solarcraft.content.world_generation.features.trunk_placers.TrunkPlacersRegistry;
 import net.minecraft.world.item.Tiers;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.block.Block;
-
-import net.minecraft.world.level.block.SoundType;
-
-import net.minecraft.client.gui.screens.MenuScreens;
-import net.minecraft.world.entity.MobCategory;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.inventory.MenuType;
-
-import net.minecraft.world.effect.MobEffect;
-import net.minecraft.world.effect.MobEffectCategory;
-
-
-import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.sounds.SoundEvent;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModLoadingContext;
+import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
+import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.fml.javafmlmod.FMLJavaModLoadingContext;
-
+import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.common.TierSortingRegistry;
 
-import net.neoforged.fml.common.Mod;
+import net.minecraft.client.gui.screens.MenuScreens;
 
 
-import net.neoforged.neoforge.registries.DeferredRegister;
-
+import net.minecraft.resources.ResourceLocation;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.List;
+// The value here should match an entry in the META-INF/mods.toml file
 
+import java.util.List;
 
 @Mod(SolarCraft.MOD_ID)
 public class SolarCraft
@@ -96,54 +73,30 @@ public class SolarCraft
 
     public static final String MOD_ID = "solarcraft";
 
-    public  static final DeferredRegister<MobEffect> EFFECTS = DeferredRegister.create(ForgeRegistries.MOB_EFFECTS,"solarcraft");
-    public static final DeferredRegister<SoundEvent> SOUND_EVENTS = DeferredRegister.create(ForgeRegistries.SOUND_EVENTS,"solarcraft");
-    public static final DeferredRegister<BlockEntityType<?>> TILE_ENTITY_TYPE = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES,"solarcraft");
-    public static final DeferredRegister<MenuType<?>> CONTAINER_TYPE = DeferredRegister.create(ForgeRegistries.MENU_TYPES,"solarcraft");
-    public static final  DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS,"solarcraft");
-//    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS,"solarcraft");
-    public static final DeferredRegister<EntityType<?>> ENTITY_TYPE_REGISTER = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES,"solarcraft");
 
-    public static final RegistryObject<SoundEvent> SOLAR_STRIKE_SOUND = SOUND_EVENTS.register("solar_ray_sound",()-> SoundEvent.createVariableRangeEvent(new ResourceLocation("solarcraft","solar_strike_explosion_sound")));
-    public static final RegistryObject<SoundEvent> SOLAR_STRIKE_BUILD_SOUND = SOUND_EVENTS.register("solar_ray_buildup_sound",()-> SoundEvent.createVariableRangeEvent(new ResourceLocation("solarcraft","solar_strike_buildup")));
 
-    public static final RegistryObject<EntityType<SolarStrikeEntity>> SOLAR_STRIKE_ENTITY_REG = ENTITY_TYPE_REGISTER.register("solar_strike_entity",
-            ()->EntityType.Builder.of(SolarStrikeEntity::new, MobCategory.CREATURE).sized(0.5F,0.5F).build("solarcraft:solar_strike_entity"));
 
-    public static final RegistryObject<MobEffect> SOLAR_STUN = EFFECTS.register("solar_stun",()-> new SolarStunEffect(MobEffectCategory.HARMFUL,0xd1b515));
-    public  static  final  RegistryObject<SolarForgeBlock> SOLAR_FORGE = BLOCKS.register("solar_forge",()->
-            new SolarForgeBlock(BlockBehaviour.Properties.copy(Blocks.STONE).noOcclusion().sound(SoundType.ANCIENT_DEBRIS)));
 
-    public  static  final  RegistryObject<ProgressionBlock> SOLAR_ORE = BLOCKS.register("solar_ore",() -> new ProgressionBlock(BlockBehaviour.Properties.copy(Blocks.STONE).sound(SoundType.ANCIENT_DEBRIS),()-> Progression.ENTER_NETHER,Blocks.STONE));
 
-    public  static  final  RegistryObject<InfuserBlock> SOLAR_INFUSER = BLOCKS.register("solar_infuser",
-            ()-> new InfuserBlock(BlockBehaviour.Properties.copy(Blocks.STONE).noOcclusion()));
 
-    public static final RegistryObject<BlockEntityType<InfuserTileEntity>> INFUSING_STAND_BLOCKENTITY = TILE_ENTITY_TYPE.register("infusing_stand_blockentity",()->
-            BlockEntityType.Builder.of(InfuserTileEntity::new,SOLAR_INFUSER.get()).build(null));
-
-    public static final RegistryObject<EntityType<MeteoriteProjectile>> METEORITE = ENTITY_TYPE_REGISTER.register("solar_forge_meteorite_projectile",()->EntityType.Builder.<MeteoriteProjectile>of(MeteoriteProjectile::new,MobCategory.MISC).sized(5,5).build("solar_forge_meteorite_projectile"));
 
     public static final Logger LOGGER = LogManager.getLogger("SOLARCRAFT");
-    public static final RegistryObject<BlockEntityType<SolarForgeBlockEntity>> SOLAR_FORGE_BLOCKENTITY = TILE_ENTITY_TYPE.register("solar_forge_blockentity",()->
-            BlockEntityType.Builder.of(SolarForgeBlockEntity::new,SOLAR_FORGE.get()).build(null));
-    public static final RegistryObject<MenuType<SolarForgeContainer>> SOLAR_FORGE_CONTAINER = CONTAINER_TYPE.register("solarcraft_container",()-> IForgeMenuType.create(SolarForgeContainer::new));
-    public static final RegistryObject<MenuType<InfuserContainer>> INFUSING_TABLE_CONTAINER = CONTAINER_TYPE.register("infusing_stand_container",()-> IForgeMenuType.create(InfuserContainer::new));
+
 
 
     public SolarCraft() {
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
         SCParticleTypes.PARTICLES.register(bus);
-        EFFECTS.register(bus);
-        SOUND_EVENTS.register(bus);
-        ENTITY_TYPE_REGISTER.register(bus);
-        BLOCKS.register(bus);
-        TILE_ENTITY_TYPE.register(bus);
-        CONTAINER_TYPE.register(bus);
+//        EFFECTS.register(bus);
+//        SOUND_EVENTS.register(bus);
+//        ENTITY_TYPE_REGISTER.register(bus);
+//        BLOCKS.register(bus);
+//        TILE_ENTITY_TYPE.register(bus);
+//        CONTAINER_TYPE.register(bus);
         SCCreativeTabs.REGISTRY.register(bus);
         SCItems.ITEMS.register(bus);
         SCBlocks.BLOCKS.register(bus);
-        SolarcraftTileEntityTypes.TILE_ENTITY_TYPE.register(bus);
+        SCTileEntities.TILE_ENTITY_TYPE.register(bus);
         SCEntityTypes.ENTITY_TYPE_REGISTER.register(bus);
         SCEffects.EFFECTS.register(bus);
         SolarcraftSounds.SOUND_EVENTS.register(bus);
@@ -164,7 +117,6 @@ public class SolarCraft
 
         FMLJavaModLoadingContext.get().getModEventBus().addListener(TrunkPlacersRegistry::registerTrunkPlacerTypes);
 
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(LazyConfiguredFeatures::registerConfiguredFeatures);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(SCItems::registerIntoCreativeTabs);
 
 //        FMLJavaModLoadingContext.get().getModEventBus().addListener(FeaturesRegistry::registerConfiguredFeatures);
@@ -210,8 +162,7 @@ public class SolarCraft
 
     private void doClientStuff(final FMLClientSetupEvent event) {
         NeoForge.EVENT_BUS.register(new RenderEventsHandler());
-        MenuScreens.register(SOLAR_FORGE_CONTAINER.get(), SolarForgeScreen::new);
-        MenuScreens.register(INFUSING_TABLE_CONTAINER.get(), InfuserScreen::new);
+
     }
 
     @Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.MOD)

@@ -4,12 +4,11 @@ import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.Ancient
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.Tag;
+import net.neoforged.neoforge.common.capabilities.Capabilities;
 import net.neoforged.neoforge.common.capabilities.Capability;
 import net.neoforged.neoforge.common.capabilities.ICapabilitySerializable;
 import net.neoforged.neoforge.common.util.LazyOptional;
-import net.neoforged.neoforge.common.capabilities.ForgeCapabilities;
 import net.neoforged.neoforge.items.ItemStackHandler;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -25,7 +24,7 @@ public class InventoryProvider implements ICapabilitySerializable<CompoundTag> {
     @Nonnull
     @Override
     public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
-        if (cap != ForgeCapabilities.ITEM_HANDLER){
+        if (cap != Capabilities.ITEM_HANDLER){
             return LazyOptional.empty();
         }
         return lexicon_inv_optional.cast();

@@ -6,7 +6,7 @@ import com.finderfeed.solarcraft.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarcraft.client.particles.SCParticleTypes;
 import com.finderfeed.solarcraft.misc_things.DebugTarget;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
-import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
+import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
 import net.minecraft.nbt.CompoundTag;
@@ -31,7 +31,7 @@ public class BaseRepeaterTile extends BlockEntity implements DebugTarget {
 
 
     public BaseRepeaterTile( BlockPos p_155229_, BlockState p_155230_) {
-        super(SolarcraftTileEntityTypes.RUNIC_ENERGY_REPEATER.get(), p_155229_, p_155230_);
+        super(SCTileEntities.RUNIC_ENERGY_REPEATER.get(), p_155229_, p_155230_);
     }
 
 

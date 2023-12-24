@@ -8,10 +8,8 @@ import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 import net.neoforged.api.distmarker.Dist;
-import net.neoforged.neoforge.fml.DistExecutor;
+import net.neoforged.fml.DistExecutor;
 import net.neoforged.neoforge.network.NetworkEvent;
-
-
 import java.util.function.Supplier;
 
 public class TriggerToastPacket {

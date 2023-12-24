@@ -19,11 +19,8 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
-
-import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.network.NetworkHooks;
-
-
+import net.minecraft.world.level.Level;
 import java.util.List;
 
 

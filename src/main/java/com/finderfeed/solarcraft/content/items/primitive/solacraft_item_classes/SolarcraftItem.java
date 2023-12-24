@@ -6,8 +6,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.neoforge.fml.util.thread.EffectiveSide;
-
+import net.neoforged.fml.util.thread.EffectiveSide;
 import java.util.function.Supplier;
 
 public class SolarcraftItem extends Item implements FragmentItem{

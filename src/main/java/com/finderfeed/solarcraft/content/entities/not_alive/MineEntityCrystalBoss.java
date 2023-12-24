@@ -20,7 +20,6 @@ import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
-
 import net.neoforged.neoforge.network.NetworkHooks;
 
 public class MineEntityCrystalBoss extends PathfinderMob implements CrystalBossBuddy {

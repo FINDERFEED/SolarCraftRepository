@@ -2,8 +2,6 @@ package com.finderfeed.solarcraft.misc_things;
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.neoforged.neoforge.network.NetworkEvent;
-
-
 import java.util.function.Supplier;
 
 public abstract class AbstractPacket {

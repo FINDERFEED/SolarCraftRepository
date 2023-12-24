@@ -9,8 +9,9 @@ import com.finderfeed.solarcraft.config.enchanter_config.EnchanterConfigInit;
 import com.finderfeed.solarcraft.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarcraft.content.items.runic_energy.RunicEnergyCost;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
-import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
+import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
@@ -24,7 +25,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
@@ -40,7 +40,7 @@ public class EnchanterBlockEntity extends REItemHandlerBlockEntity {
     private int procesingEnchantmentLevel = 0;
 
     public EnchanterBlockEntity(BlockPos pos, BlockState state) {
-        super(SolarcraftTileEntityTypes.ENCHANTER.get(), pos, state);
+        super(SCTileEntities.ENCHANTER.get(), pos, state);
     }
 
 
@@ -155,7 +155,7 @@ public class EnchanterBlockEntity extends REItemHandlerBlockEntity {
         tag.putInt("enchanting_ticks",enchantingTicks);
         tag.putBoolean("in_progress",enchantingInProgress);
         if (processingEnchantment != null) {
-            tag.putString("enchantment",ForgeRegistries.ENCHANTMENTS.getKey(processingEnchantment.enchantment()).toString());
+            tag.putString("enchantment", BuiltInRegistries.ENCHANTMENT.getKey(processingEnchantment.enchantment()).toString());
         }else{
             tag.putString("enchantment","null");
         }
@@ -169,7 +169,7 @@ public class EnchanterBlockEntity extends REItemHandlerBlockEntity {
         enchantingInProgress = tag.getBoolean("in_progress");
         String enchantment = tag.getString("enchantment");
         if (!enchantment.equals("null")){
-            this.processingEnchantment = SERVERSIDE_CONFIG.getConfigEntryByEnchantment(ForgeRegistries.ENCHANTMENTS.getValue(new ResourceLocation(enchantment)));
+            this.processingEnchantment = SERVERSIDE_CONFIG.getConfigEntryByEnchantment(BuiltInRegistries.ENCHANTMENT.get(new ResourceLocation(enchantment)));
         }else{
             processingEnchantment = null;
         }
@@ -229,10 +229,11 @@ public class EnchanterBlockEntity extends REItemHandlerBlockEntity {
         SERVERSIDE_CONFIG = new EnchanterConfig(EnchanterConfigInit.SERVERSIDE_JSON);
     }
 
-    @Override
-    public AABB getRenderBoundingBox() {
-        return new AABB(-getMaxRange(),-getMaxRange(),-getMaxRange(),getMaxRange(),getMaxRange(),getMaxRange()).move(worldPosition);
-    }
+
+//    @Override
+//    public AABB getRenderBoundingBox() {
+//        return new AABB(-getMaxRange(),-getMaxRange(),-getMaxRange(),getMaxRange(),getMaxRange(),getMaxRange()).move(worldPosition);
+//    }
 
     public static class RunicEnergyCostConstructor{
 

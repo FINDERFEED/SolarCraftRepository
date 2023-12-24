@@ -20,18 +20,20 @@ import net.minecraft.client.sounds.SoundManager;
 import net.minecraft.network.chat.Component;
 import net.minecraft.recipebook.PlaceRecipe;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeHolder;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class CraftingRecipeScreen extends LexiconScreen implements PlaceRecipe<Ingredient> {
+public class CraftingRecipeScreen extends LexiconScreen {
     public final ResourceLocation BUTTONS = new ResourceLocation("solarcraft","textures/misc/page_buttons.png");
 
     private static final ResourceLocation MAIN_SCREEN = new ResourceLocation(SolarCraft.MOD_ID,"textures/gui/solar_lexicon_crafting_recipe_screen.png");
@@ -173,7 +175,7 @@ public class CraftingRecipeScreen extends LexiconScreen implements PlaceRecipe<I
         this.placeRecipe(3,3, Integer.MAX_VALUE, recipe, recipe.getIngredients().iterator(), 0);
     }
 
-    @Override
+
     public void addItemToSlot(Iterator<Ingredient> iter, int slotIdx, int notUsed, int notUsed1, int notUsed2) {
         Ingredient ingredient = iter.next();
         if (!ingredient.isEmpty()) {
@@ -223,4 +225,56 @@ public class CraftingRecipeScreen extends LexiconScreen implements PlaceRecipe<I
     public void onPageChanged(int newPage) {
         this.setupGhostRecipe(recipes.get(newPage));
     }
+
+
+    //PlaceRecipe class
+    void placeRecipe(int p_135409_, int p_135410_, int p_135411_, Recipe<?> recipe, Iterator<Ingredient> p_135413_, int p_135414_) {
+        int i = p_135409_;
+        int j = p_135410_;
+
+        if (recipe instanceof net.neoforged.neoforge.common.crafting.IShapedRecipe shapedrecipe) {
+            i = shapedrecipe.getRecipeWidth();
+            j = shapedrecipe.getRecipeHeight();
+        }
+
+        int k1 = 0;
+
+        for(int k = 0; k < p_135410_; ++k) {
+            if (k1 == p_135411_) {
+                ++k1;
+            }
+
+            boolean flag = (float)j < (float)p_135410_ / 2.0F;
+            int l = Mth.floor((float)p_135410_ / 2.0F - (float)j / 2.0F);
+            if (flag && l > k) {
+                k1 += p_135409_;
+                ++k;
+            }
+
+            for(int i1 = 0; i1 < p_135409_; ++i1) {
+                if (!p_135413_.hasNext()) {
+                    return;
+                }
+
+                flag = (float)i < (float)p_135409_ / 2.0F;
+                l = Mth.floor((float)p_135409_ / 2.0F - (float)i / 2.0F);
+                int j1 = i;
+                boolean flag1 = i1 < i;
+                if (flag) {
+                    j1 = l + i;
+                    flag1 = l <= i1 && i1 < l + i;
+                }
+
+                if (flag1) {
+                    this.addItemToSlot(p_135413_, k1, p_135414_, k, i1);
+                } else if (j1 == i1) {
+                    k1 += p_135409_ - i1;
+                    break;
+                }
+
+                ++k1;
+            }
+        }
+    }
+
 }

@@ -4,7 +4,6 @@ import com.finderfeed.solarcraft.SolarCraft;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
-import net.neoforged.neoforge.fml.loading.FMLPaths;
 import org.apache.logging.log4j.Level;
 
 import java.io.IOException;
@@ -13,6 +12,7 @@ import java.io.Writer;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
+import net.neoforged.fml.loading.FMLPaths;
 
 public abstract class JsonConfig {
 

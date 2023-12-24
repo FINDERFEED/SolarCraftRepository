@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+
 public abstract class ServerAnimationManager implements AnimationManager{
 
     public Map<String,AnimationTicker> tickers = new HashMap<>();

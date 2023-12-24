@@ -8,9 +8,9 @@ import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.Gui;
 import net.neoforged.api.distmarker.Dist;
-import net.neoforged.neoforge.client.event.RenderTooltipEvent;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.client.event.RenderTooltipEvent;
 
 
 //code is mine but idea was taken from SSKirillSS(Relics mod)

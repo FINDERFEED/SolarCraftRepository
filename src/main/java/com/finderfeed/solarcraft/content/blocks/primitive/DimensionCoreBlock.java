@@ -1,7 +1,7 @@
 package com.finderfeed.solarcraft.content.blocks.primitive;
 
 import com.finderfeed.solarcraft.content.blocks.blockentities.DimensionCoreTile;
-import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
+import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -20,7 +20,7 @@ public class DimensionCoreBlock extends Block implements EntityBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos p_153215_, BlockState p_153216_) {
-        return SolarcraftTileEntityTypes.DIMENSION_CORE_TILE.get().create(p_153215_,p_153216_);
+        return SCTileEntities.DIMENSION_CORE_TILE.get().create(p_153215_,p_153216_);
     }
 
     @Nullable

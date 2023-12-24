@@ -15,9 +15,7 @@ import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.portal.PortalInfo;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-
 import net.neoforged.neoforge.common.util.ITeleporter;
-
 import javax.annotation.Nullable;
 import java.util.function.Function;
 

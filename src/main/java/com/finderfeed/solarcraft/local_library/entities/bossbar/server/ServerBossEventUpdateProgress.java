@@ -5,7 +5,6 @@ import com.finderfeed.solarcraft.local_library.entities.bossbar.client.ActiveBos
 import com.finderfeed.solarcraft.packet_handler.ClientPacketHandles;
 import net.minecraft.network.FriendlyByteBuf;
 import net.neoforged.neoforge.network.NetworkEvent;
-
 import java.util.UUID;
 import java.util.function.Supplier;
 

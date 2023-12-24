@@ -1,6 +1,6 @@
 package com.finderfeed.solarcraft.content.blocks.blockentities.clearing_ritual.clearing_ritual_main_tile;
 
-import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
+import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -30,7 +30,7 @@ public class ClearingRitualMainBlock extends Block implements EntityBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return SolarcraftTileEntityTypes.CLEARING_RITUAL_MAIN_BLOCK.get().create(pos,state);
+        return SCTileEntities.CLEARING_RITUAL_MAIN_BLOCK.get().create(pos,state);
     }
 
     @Nullable

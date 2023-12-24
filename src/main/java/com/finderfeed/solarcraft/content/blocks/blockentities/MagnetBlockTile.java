@@ -1,6 +1,6 @@
 package com.finderfeed.solarcraft.content.blocks.blockentities;
 
-import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
+import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
 import net.minecraft.core.BlockPos;
 
 import net.minecraft.world.entity.Entity;
@@ -24,7 +24,7 @@ public class MagnetBlockTile extends BlockEntity  {
     public AABB box;
 
     public MagnetBlockTile( BlockPos p_155229_, BlockState p_155230_) {
-        super(SolarcraftTileEntityTypes.MAGNET_BLOCK_TILE.get(), p_155229_, p_155230_);
+        super(SCTileEntities.MAGNET_BLOCK_TILE.get(), p_155229_, p_155230_);
     }
 
 

@@ -2,18 +2,15 @@ package com.finderfeed.solarcraft.content.blocks.infusing_table_things.infusing_
 
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.content.blocks.blockentities.ItemStackHandlerTile;
-import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
+import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.neoforge.common.capabilities.Capabilities;
+import net.neoforged.neoforge.items.ItemStackHandler;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
-
-import net.neoforged.neoforge.common.capabilities.ForgeCapabilities;
-import net.neoforged.neoforge.items.ItemStackHandler;
-
-
 import javax.annotation.Nullable;
 
 
@@ -24,11 +21,11 @@ public class InfusingStandTileEntity extends ItemStackHandlerTile {
 
 
     public InfusingStandTileEntity(BlockPos p_155630_, BlockState p_155631_) {
-        super(SolarcraftTileEntityTypes.INFUSING_POOL_BLOCKENTITY.get(), p_155630_, p_155631_);
+        super(SCTileEntities.INFUSING_POOL_BLOCKENTITY.get(), p_155630_, p_155631_);
     }
 
     public ItemStackHandler getInventory(){
-        return (ItemStackHandler) this.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(null);
+        return (ItemStackHandler) this.getCapability(Capabilities.ITEM_HANDLER).orElse(null);
     }
 
     public ItemStack getStackInSlot(int i){

@@ -9,7 +9,6 @@ import net.minecraft.network.protocol.game.ClientboundLightUpdatePacketData;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.chunk.LevelChunk;
 import net.neoforged.neoforge.network.NetworkEvent;
-
 import java.util.function.Supplier;
 
 public class UpdateChunkPacket {

@@ -7,7 +7,7 @@ import com.finderfeed.solarcraft.client.particles.SCParticleTypes;
 import com.finderfeed.solarcraft.content.blocks.blockentities.projectiles.ShadowBolt;
 import com.finderfeed.solarcraft.content.entities.projectiles.SummoningProjectile;
 import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
-import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
+import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
@@ -28,7 +28,7 @@ public class UlderaPylon extends BlockEntity {
     private int spawnZombieCooldown = 0;
 
     public UlderaPylon(BlockPos p_155229_, BlockState p_155230_) {
-        super(SolarcraftTileEntityTypes.ULDERA_PYLON.get(), p_155229_, p_155230_);
+        super(SCTileEntities.ULDERA_PYLON.get(), p_155229_, p_155230_);
     }
 
     public static void tick(UlderaPylon tile, BlockPos pos, BlockState state, Level world){

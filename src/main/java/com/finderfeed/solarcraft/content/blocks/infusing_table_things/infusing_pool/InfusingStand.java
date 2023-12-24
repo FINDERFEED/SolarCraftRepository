@@ -1,7 +1,7 @@
 package com.finderfeed.solarcraft.content.blocks.infusing_table_things.infusing_pool;
 
 import com.finderfeed.solarcraft.content.items.solar_wand.SolarWandItem;
-import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
+import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.state.BlockState;
@@ -14,11 +14,9 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.neoforged.neoforge.event.level.BlockEvent;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.neoforged.neoforge.event.level.BlockEvent;
-
-
 import javax.annotation.Nullable;
 
 public class InfusingStand extends Block implements EntityBlock {
@@ -118,7 +116,7 @@ public class InfusingStand extends Block implements EntityBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-        return SolarcraftTileEntityTypes.INFUSING_POOL_BLOCKENTITY.get().create(blockPos,blockState);
+        return SCTileEntities.INFUSING_POOL_BLOCKENTITY.get().create(blockPos,blockState);
     }
 
 //    @Nullable

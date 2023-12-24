@@ -18,13 +18,11 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.neoforged.neoforge.common.capabilities.Capabilities;
+import net.neoforged.neoforge.items.IItemHandler;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.Component;
-import net.neoforged.neoforge.common.capabilities.ForgeCapabilities;
-import net.neoforged.neoforge.items.IItemHandler;
-
 import java.util.*;
-import java.util.List;
 
 public class SolarLexiconRecipesScreen extends ScrollableLexiconScreen {
     public final ResourceLocation MAIN_SCREEN = new ResourceLocation(SolarCraft.MOD_ID,"textures/gui/solar_lexicon_recipes_page_new.png");
@@ -210,7 +208,7 @@ public class SolarLexiconRecipesScreen extends ScrollableLexiconScreen {
     }
 
     public static IItemHandler getLexiconInventory(){
-        return Minecraft.getInstance().player.getMainHandItem().getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(null);
+        return Minecraft.getInstance().player.getMainHandItem().getCapability(Capabilities.ITEM_HANDLER).orElse(null);
     }
 
 }

@@ -6,11 +6,11 @@ import com.finderfeed.solarcraft.client.particles.ball_particle.BallParticleOpti
 import com.finderfeed.solarcraft.client.particles.lightning_particle.LightningParticleOptions;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.particles.SimpleParticleType;
-import net.minecraft.core.particles.ParticleType;
-
 import net.minecraft.core.registries.Registries;
-import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
+
+import net.neoforged.neoforge.registries.DeferredHolder;
+import net.minecraft.core.particles.ParticleType;
 
 public class SCParticleTypes {
     public static final DeferredRegister<ParticleType<?>> PARTICLES = DeferredRegister.create(Registries.PARTICLE_TYPE,"solarcraft");

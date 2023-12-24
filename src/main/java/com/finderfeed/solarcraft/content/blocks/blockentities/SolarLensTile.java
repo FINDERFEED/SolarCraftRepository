@@ -9,7 +9,7 @@ import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
 import com.finderfeed.solarcraft.packet_handler.packets.UpdateItemTagInItemEntityPacket;
 import com.finderfeed.solarcraft.registries.items.SCItems;
 import com.finderfeed.solarcraft.registries.recipe_types.SolarcraftRecipeTypes;
-import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
+import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.Packet;
@@ -42,7 +42,7 @@ public class SolarLensTile extends BlockEntity  {
     public boolean RECIPE_IN_PROGRESS = false;
 
     public SolarLensTile(BlockPos p_155229_, BlockState p_155230_) {
-        super(SolarcraftTileEntityTypes.SOLAR_LENS_TILE.get(), p_155229_, p_155230_);
+        super(SCTileEntities.SOLAR_LENS_TILE.get(), p_155229_, p_155230_);
     }
 
 

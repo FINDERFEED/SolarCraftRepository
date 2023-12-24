@@ -5,9 +5,8 @@ import com.finderfeed.solarcraft.content.abilities.AbilityHelper;
 import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
-import net.neoforged.neoforge.network.NetworkDirection;
+import net.neoforged.neoforge.network.PlayNetworkDirection;
 import net.neoforged.neoforge.network.NetworkEvent;
-
 import java.util.function.Supplier;
 
 public class RequestAbilityScreenPacket {
@@ -37,7 +36,7 @@ public class RequestAbilityScreenPacket {
                             AbilityHelper.getBindedAbilityID(player,3),
                             AbilityHelper.getBindedAbilityID(player,4)
                     )
-                    ,player.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+                    ,player.connection.connection, PlayNetworkDirection.PLAY_TO_CLIENT);
         });
         ctx.get().setPacketHandled(true);
     }

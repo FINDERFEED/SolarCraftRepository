@@ -3,7 +3,7 @@ package com.finderfeed.solarcraft.content.blocks.blockentities;
 import com.finderfeed.solarcraft.content.blocks.blockentities.containers.SolarFurnaceContainer;
 import com.finderfeed.solarcraft.content.blocks.solar_energy.Bindable;
 import com.finderfeed.solarcraft.content.blocks.solar_energy.SolarEnergyContainer;
-import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
+import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.player.Inventory;
@@ -30,7 +30,7 @@ public class SolarEnergyFurnaceTile extends RandomizableContainerBlockEntity imp
     public NonNullList<ItemStack> items = NonNullList.withSize(2,ItemStack.EMPTY);
 
     public SolarEnergyFurnaceTile( BlockPos p_155630_, BlockState p_155631_) {
-        super(SolarcraftTileEntityTypes.SOLAR_FURNACE_TILE_ENTITY.get(), p_155630_, p_155631_);
+        super(SCTileEntities.SOLAR_FURNACE_TILE_ENTITY.get(), p_155630_, p_155631_);
     }
 
 

@@ -15,8 +15,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
-import net.neoforged.neoforge.network.NetworkDirection;
-
+import net.neoforged.neoforge.network.PlayNetworkDirection;
 import java.util.List;
 
 public class CheckStructureWandAction implements WandAction<EmptyWandData> {
@@ -28,7 +27,7 @@ public class CheckStructureWandAction implements WandAction<EmptyWandData> {
         if (context.player() instanceof ServerPlayer serverPlayer && level.getBlockEntity(clickedPos = ctx.getClickedPos()) instanceof IStructureOwner owner){
             List<MultiblockStructure> structures = owner.getMultiblocks();
             SCPacketHandler.INSTANCE.sendTo(new WandStructureActionPacket(serverPlayer,structures,clickedPos),
-                    serverPlayer.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+                    serverPlayer.connection.connection, PlayNetworkDirection.PLAY_TO_CLIENT);
         }
         return InteractionResult.SUCCESS;
     }

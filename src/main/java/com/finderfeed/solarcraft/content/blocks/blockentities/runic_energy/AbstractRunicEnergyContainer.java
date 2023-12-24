@@ -2,6 +2,7 @@ package com.finderfeed.solarcraft.content.blocks.blockentities.runic_energy;
 
 import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.Progression;
+import com.finderfeed.solarcraft.events.other_events.event_handler.ModEventHandler;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.local_library.OwnedBlock;
 import com.finderfeed.solarcraft.local_library.helpers.CompoundNBTHelper;
@@ -28,9 +29,9 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.LevelChunk;
-import net.neoforged.neoforge.common.world.ForgeChunkManager;
+import net.neoforged.neoforge.common.world.chunk.ForcedChunkManager;
+import net.neoforged.neoforge.common.world.chunk.TicketController;
 import net.neoforged.neoforge.network.PacketDistributor;
-
 import javax.annotation.Nullable;
 import java.util.*;
 
@@ -283,7 +284,8 @@ public abstract class AbstractRunicEnergyContainer extends SolarcraftBlockEntity
             if (route != null) {
                 if (level.getBlockEntity(route.get(route.size()-1)) instanceof RuneEnergyPylonTile pylon) {
                     ChunkPos pos = new ChunkPos(pylon.getPos());
-                    ForgeChunkManager.forceChunk((ServerLevel) level, SolarCraft.MOD_ID,
+
+                    ModEventHandler.TICKET_CONTROLLER.forceChunk((ServerLevel) level,
                             pylon.getPos(), pos.x, pos.z, true, true);
                 }
                 PATH_TO_CONTAINERS.put(type, route);
@@ -385,7 +387,7 @@ public abstract class AbstractRunicEnergyContainer extends SolarcraftBlockEntity
         this.removeFirstPos(firstPos);
         if (!level.isClientSide && level.getBlockEntity(path.get(path.size()-1)) instanceof RuneEnergyPylonTile pylon){
             ChunkPos pos = new ChunkPos(pylon.getPos());
-            ForgeChunkManager.forceChunk((ServerLevel)level, SolarCraft.MOD_ID,
+            ModEventHandler.TICKET_CONTROLLER.forceChunk((ServerLevel)level,
                     pylon.getPos(),pos.x,pos.z,false,true);
         }
         RunicEnergyPath.resetRepeaterConnections(path, level);

@@ -19,7 +19,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.items.IItemHandler;
-
 import java.util.Optional;
 
 public class InfusingTableScreen extends AbstractContainerScreen<InfusingTableTileContainer> {

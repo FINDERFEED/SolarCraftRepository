@@ -1,17 +1,18 @@
 package com.finderfeed.solarcraft.registries.tile_entities;
 
-import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.content.blocks.blockentities.clearing_ritual.CrystalEnergyVinesTile;
 import com.finderfeed.solarcraft.content.blocks.blockentities.clearing_ritual.clearing_ritual_crystal.ClearingRitualCrystalTile;
 import com.finderfeed.solarcraft.content.blocks.blockentities.clearing_ritual.clearing_ritual_main_tile.ClearingRitualMainTile;
 import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.blockentity.SunShardPuzzleBlockEntity;
 import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.ray_puzzle.blockentities.BeamGenerator;
 import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.ray_puzzle.blockentities.BeamReflectorTile;
+import com.finderfeed.solarcraft.content.blocks.infusing_table_things.InfuserTileEntity;
 import com.finderfeed.solarcraft.content.blocks.infusing_table_things.infusing_pool.InfusingStandTileEntity;
 import com.finderfeed.solarcraft.content.blocks.blockentities.*;
 import com.finderfeed.solarcraft.content.blocks.solar_energy.SolarEnergyCoreTile;
 import com.finderfeed.solarcraft.content.blocks.solar_energy.SolarEnergyGeneratorTile;
 import com.finderfeed.solarcraft.content.blocks.solar_energy.SolarEnergyRepeaterTile;
+import com.finderfeed.solarcraft.content.blocks.solar_forge_block.SolarForgeBlockEntity;
 import com.finderfeed.solarcraft.content.runic_network.repeater.RunicEnergyRepeaterTile;
 import com.finderfeed.solarcraft.registries.blocks.SCBlocks;
 import com.finderfeed.solarcraft.content.world_generation.structures.blocks.tile_entities.ColdStarInfuserTile;
@@ -19,16 +20,17 @@ import com.finderfeed.solarcraft.content.world_generation.structures.blocks.tile
 import com.finderfeed.solarcraft.content.world_generation.structures.blocks.tile_entities.KeyLockStructureTile;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
+public class SCTileEntities {
+    public static final DeferredRegister<BlockEntityType<?>> TILE_ENTITY_TYPE = DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE,"solarcraft");
 
 
-public class SolarcraftTileEntityTypes {
-    public static final DeferredRegister<BlockEntityType<?>> TILE_ENTITY_TYPE = DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, SolarCraft.MOD_ID);
+    public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<InfuserTileEntity>> INFUSING_STAND_BLOCKENTITY = TILE_ENTITY_TYPE.register("infusing_stand_blockentity",()->
+            BlockEntityType.Builder.of(InfuserTileEntity::new,SCBlocks.SOLAR_INFUSER.get()).build(null));
 
-
-
+    public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<SolarForgeBlockEntity>> SOLAR_FORGE_BLOCKENTITY = TILE_ENTITY_TYPE.register("solar_forge_blockentity",()->
+            BlockEntityType.Builder.of(SolarForgeBlockEntity::new,SCBlocks.SOLAR_FORGE.get()).build(null));
     public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<InfusingStandTileEntity>> INFUSING_POOL_BLOCKENTITY = TILE_ENTITY_TYPE.register("infusing_pool_blockentity",()->
             BlockEntityType.Builder.of(InfusingStandTileEntity::new, SCBlocks.INFUSING_POOL.get()).build(null));
 

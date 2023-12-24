@@ -4,11 +4,8 @@ import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.misc_things.AbstractPacket;
 import net.minecraft.network.FriendlyByteBuf;
 import net.neoforged.api.distmarker.Dist;
-import net.neoforged.neoforge.fml.DistExecutor;
-
-
+import net.neoforged.fml.DistExecutor;
 import net.neoforged.neoforge.network.NetworkEvent;
-
 import java.util.function.Supplier;
 
 public class ProcImmortalityTotemAnimation extends AbstractPacket {

@@ -1,8 +1,11 @@
 package com.finderfeed.solarcraft.registries.blocks;
 
+import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.ray_puzzle.BeamGeneratorBlock;
 import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.ray_puzzle.blocks.BeamReflectorBlock;
+import com.finderfeed.solarcraft.content.blocks.infusing_table_things.InfuserBlock;
 import com.finderfeed.solarcraft.content.blocks.progression_ores.CorruptedShardOre;
+import com.finderfeed.solarcraft.content.blocks.solar_forge_block.SolarForgeBlock;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.local_library.blocks.FlammableBlock;
 import com.finderfeed.solarcraft.local_library.blocks.FlammableLeavesBlock;
@@ -11,10 +14,8 @@ import com.finderfeed.solarcraft.local_library.blocks.RotatedPillarFlammableBloc
 import com.finderfeed.solarcraft.content.blocks.blockentities.clearing_ritual.clearing_ritual_crystal.ClearingRitualCrystalBlock;
 import com.finderfeed.solarcraft.content.blocks.blockentities.clearing_ritual.clearing_ritual_main_tile.ClearingRitualMainBlock;
 import com.finderfeed.solarcraft.content.blocks.infusing_table_things.infusing_pool.InfusingStand;
-import com.finderfeed.solarcraft.content.blocks.BlueGemDoorBlock;
 import com.finderfeed.solarcraft.content.blocks.*;
 import com.finderfeed.solarcraft.content.blocks.primitive.*;
-import com.finderfeed.solarcraft.content.blocks.primitive.SolarFlower;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.Progression;
 import com.finderfeed.solarcraft.content.runic_network.repeater.RunicNetworkRepeater;
 import com.finderfeed.solarcraft.client.particles.SCParticleTypes;
@@ -38,15 +39,23 @@ import net.minecraft.world.effect.MobEffects;
 
 import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
-
+import net.neoforged.neoforge.registries.DeferredHolder;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+
 public class SCBlocks {
-    public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(Registries.BLOCK,"solarcraft");
+    public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(Registries.BLOCK, SolarCraft.MOD_ID);
     public  static  final DeferredHolder<Block,InfusingStand> INFUSING_POOL = BLOCKS.register("solar_forge_infusion_pool",()-> new InfusingStand(
             BlockBehaviour.Properties.copy(Blocks.STONE).noOcclusion()
     ));
+
+    public  static  final  DeferredHolder<Block,SolarForgeBlock> SOLAR_FORGE = BLOCKS.register("solar_forge",()->
+            new SolarForgeBlock(BlockBehaviour.Properties.copy(Blocks.STONE).noOcclusion().sound(SoundType.ANCIENT_DEBRIS)));
+
+    public  static  final  DeferredHolder<Block,ProgressionBlock> SOLAR_ORE = BLOCKS.register("solar_ore",() -> new ProgressionBlock(BlockBehaviour.Properties.copy(Blocks.STONE).sound(SoundType.ANCIENT_DEBRIS),()-> Progression.ENTER_NETHER,Blocks.STONE));
+
+    public  static  final  DeferredHolder<Block,InfuserBlock> SOLAR_INFUSER = BLOCKS.register("solar_infuser",
+            ()-> new InfuserBlock(BlockBehaviour.Properties.copy(Blocks.STONE).noOcclusion()));
 
     public  static  final DeferredHolder<Block,Block> INFUSING_CRAFTING_TABLE_BLOCK = BLOCKS.register("infusing_crafting_table",()-> new InfusingTableBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)));
     public  static  final DeferredHolder<Block,ProgressionBlock> SOLAR_STONE = BLOCKS.register("solar_stone",()-> new ProgressionBlock(BlockBehaviour.Properties.copy(Blocks.ANDESITE),()->Progression.ENTER_NETHER,Blocks.STONE));
@@ -137,7 +146,6 @@ public class SCBlocks {
         public boolean isValidBonemealTarget(LevelReader p_255692_, BlockPos p_57326_, BlockState p_57327_) {
             return false;
         }
-
 
         @Override
         public boolean isBonemealSuccess(Level p_222583_, RandomSource p_222584_, BlockPos p_222585_, BlockState p_222586_) {

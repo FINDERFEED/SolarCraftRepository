@@ -9,7 +9,7 @@ import com.finderfeed.solarcraft.content.blocks.blockentities.clearing_ritual.cl
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
 import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
 import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
-import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
+import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
@@ -34,7 +34,7 @@ public class ClearingRitualCrystalTile extends BlockEntity {
     private RunicEnergy.Type type = null;
 
     public ClearingRitualCrystalTile( BlockPos pos, BlockState state) {
-        super(SolarcraftTileEntityTypes.CLEARING_RITUAL_CRYSTAL.get(), pos, state);
+        super(SCTileEntities.CLEARING_RITUAL_CRYSTAL.get(), pos, state);
     }
 
     //don't ask me
@@ -76,7 +76,7 @@ public class ClearingRitualCrystalTile extends BlockEntity {
                     for (CorruptionWisp wisp : level.getEntitiesOfClass(CorruptionWisp.class,Helpers.createAABBWithRadius(c,3,3))) {
                         wisp.kill();
                     }
-                    Helpers.collectTilesInChunks(SolarcraftTileEntityTypes.CLEARING_RITUAL_MAIN_BLOCK.get(),level,this.getBlockPos(),2)
+                    Helpers.collectTilesInChunks(SCTileEntities.CLEARING_RITUAL_MAIN_BLOCK.get(),level,this.getBlockPos(),2)
                             .forEach(ClearingRitualMainTile::notifyCrystalExploded);
                     this.explode(false);
                     return;

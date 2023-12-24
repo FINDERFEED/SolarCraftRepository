@@ -2,8 +2,11 @@ package com.finderfeed.solarcraft.content.recipe_types.infusing_crafting;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.DataResult;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.ExtraCodecs;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -20,12 +23,22 @@ public class InfusingCraftingRecipeSerializer  implements RecipeSerializer<Infus
 
 
     public InfusingCraftingRecipeSerializer(){
-//        this.setRegistryName(new ResourceLocation("solarcraft","infusing_crafting"));
-
     }
 
+
     @Override
-    public InfusingCraftingRecipe fromJson(ResourceLocation rl, JsonObject json) {
+    public Codec<InfusingCraftingRecipe> codec() {
+        return null;
+    }
+    public static final Codec<InfusingCraftingRecipe> CODEC = ExtraCodecs.JSON.flatXmap(json->{
+        InfusingCraftingRecipe recipe = fromJson(json.getAsJsonObject());
+        return DataResult.success(recipe);
+    },ref->{
+        throw new RuntimeException("Serialization for infusing crafting recipe is not implemented");
+    });
+
+    //    @Override
+    public static InfusingCraftingRecipe fromJson(JsonObject json) {
 
         JsonArray arr = json.getAsJsonArray("pattern");
         int arrsize = arr.size();
@@ -38,21 +51,21 @@ public class InfusingCraftingRecipeSerializer  implements RecipeSerializer<Infus
         JsonObject keys = json.getAsJsonObject("keys");
         Map<Character, Item> ingredientMap = new HashMap<>();
         keys.entrySet().forEach((entry)->{
-            ingredientMap.put(entry.getKey().charAt(0),GsonHelper.getAsItem(entry.getValue().getAsJsonObject(),"item"));
+            ingredientMap.put(entry.getKey().charAt(0),GsonHelper.getAsItem(entry.getValue().getAsJsonObject(),"item").value());
         });
 
-        ItemStack output = GsonHelper.getAsItem(json.getAsJsonObject("output"),"item").getDefaultInstance();
+        ItemStack output = GsonHelper.getAsItem(json.getAsJsonObject("output"),"item").value().getDefaultInstance();
         int time = json.getAsJsonPrimitive("time").getAsInt();
         int c = GsonHelper.getAsInt(json,"count",1);
         String s = json.getAsJsonPrimitive("fragment").getAsString();
 
 
-        return new InfusingCraftingRecipe(rl,pattern,ingredientMap,output,time,c,s);
+        return new InfusingCraftingRecipe(pattern,ingredientMap,output,time,c,s);
     }
 
     @Nullable
     @Override
-    public InfusingCraftingRecipe fromNetwork(ResourceLocation rl, FriendlyByteBuf buf) {
+    public InfusingCraftingRecipe fromNetwork(FriendlyByteBuf buf) {
 
         int size = buf.readInt();
         List<Item> ingrs = new ArrayList<>();
@@ -90,7 +103,7 @@ public class InfusingCraftingRecipeSerializer  implements RecipeSerializer<Infus
         int time = buf.readInt();
         int count = buf.readInt();
         String s = buf.readUtf();
-        return new InfusingCraftingRecipe(rl,pattern,ingredientMap,output,time,count,s);
+        return new InfusingCraftingRecipe(pattern,ingredientMap,output,time,count,s);
     }
 
     @Override

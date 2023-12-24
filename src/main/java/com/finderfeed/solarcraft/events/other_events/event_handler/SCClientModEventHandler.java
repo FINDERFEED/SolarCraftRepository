@@ -17,10 +17,12 @@ import com.finderfeed.solarcraft.content.blocks.blockentities.projectiles.render
 import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.ray_puzzle.blockentities.BeamGeneratorRenderer;
 import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.ray_puzzle.blockentities.BeamReflectorRenderer;
 import com.finderfeed.solarcraft.content.blocks.infusing_table_things.InfuserRenderer;
+import com.finderfeed.solarcraft.content.blocks.infusing_table_things.InfuserScreen;
 import com.finderfeed.solarcraft.content.blocks.infusing_table_things.infusing_pool.InfusingStandRenderer;
 import com.finderfeed.solarcraft.content.blocks.primitive.ProgressionBlock;
 import com.finderfeed.solarcraft.content.blocks.render.*;
 import com.finderfeed.solarcraft.content.blocks.solar_forge_block.SolarForgeBlockEntityRenderer;
+import com.finderfeed.solarcraft.content.blocks.solar_forge_block.solar_forge_screen.SolarForgeScreen;
 import com.finderfeed.solarcraft.content.entities.CrystalBossBar;
 import com.finderfeed.solarcraft.content.entities.projectiles.renderers.*;
 import com.finderfeed.solarcraft.content.entities.renderers.*;
@@ -44,7 +46,7 @@ import com.finderfeed.solarcraft.registries.containers.SolarcraftContainers;
 import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
 import com.finderfeed.solarcraft.registries.items.SCItems;
 import com.finderfeed.solarcraft.registries.overlays.SolarcraftOverlays;
-import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
+import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
 import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
@@ -55,12 +57,15 @@ import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.api.distmarker.Dist;
-import net.neoforged.neoforge.client.event.*;
-import net.neoforged.neoforge.client.settings.KeyConflictContext;
-import net.neoforged.neoforge.eventbus.api.EventPriority;
+import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
-import net.neoforged.neoforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.neoforge.client.event.EntityRenderersEvent;
+import net.neoforged.neoforge.client.event.RegisterClientTooltipComponentFactoriesEvent;
+import net.neoforged.neoforge.client.event.RegisterDimensionSpecialEffectsEvent;
+import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
+import net.neoforged.neoforge.client.settings.KeyConflictContext;
 import org.lwjgl.glfw.GLFW;
 
 
@@ -117,32 +122,32 @@ public class SCClientModEventHandler {
         SolarcraftOverlays.BossBars.registerCustomBossBar("defense_crystal",new CrystalBossBar());
         SolarcraftOverlays.BossBars.registerCustomBossBar("uldera_crystal",new UlderaCrystalBossBar());
 
-        BlockEntityRenderers.register(SolarcraftTileEntityTypes.RUNIC_ENERGY_REPEATER.get(), RepeaterRenderer::new);
-        BlockEntityRenderers.register(SolarcraftTileEntityTypes.RUNE_ENERGY_PYLON.get(), RuneEnergyPylonRenderer::new);
-        BlockEntityRenderers.register(SolarCraft.SOLAR_FORGE_BLOCKENTITY.get(), SolarForgeBlockEntityRenderer::new);
-        BlockEntityRenderers.register(SolarcraftTileEntityTypes.INFUSING_POOL_BLOCKENTITY.get(), InfusingStandRenderer::new);
-        BlockEntityRenderers.register(SolarCraft.INFUSING_STAND_BLOCKENTITY.get(), InfuserRenderer::new);
-        BlockEntityRenderers.register(SolarcraftTileEntityTypes.SOLAR_REPEATER.get(), SolarRepeaterRenderer::new);
-        BlockEntityRenderers.register(SolarcraftTileEntityTypes.ENERGY_GENERATOR_TILE.get(), EnergyGeneratorTileRender::new);
-        BlockEntityRenderers.register(SolarcraftTileEntityTypes.SOLAR_CORE_TILE.get(), SolarCoreRenderer::new);
-        BlockEntityRenderers.register(SolarcraftTileEntityTypes.AURA_HEALER_TILE.get(), AuraHealerRenderer::new);
-        BlockEntityRenderers.register(SolarcraftTileEntityTypes.RAY_TRAP_TILE_ENTITY.get(), RayTrapTileEntityRenderer::new);
-        BlockEntityRenderers.register(SolarcraftTileEntityTypes.WORMHOLE.get(), WormholeRenderer::new);
-        BlockEntityRenderers.register(SolarcraftTileEntityTypes.BONEMEALER.get(), BonemealerRenderer::new);
-        BlockEntityRenderers.register(SolarcraftTileEntityTypes.INFUSING_CRAFTING_TABLE.get(), InfusingTableTileRenderer::new);
-        BlockEntityRenderers.register(SolarcraftTileEntityTypes.EXPLOSTION_BLOCKER.get(), ExplosionBlockerRenderer::new);
-        BlockEntityRenderers.register(SolarcraftTileEntityTypes.ENCHANTER.get(), EnchanterRenderer::new);
-        BlockEntityRenderers.register(SolarcraftTileEntityTypes.RUNIC_ENERGY_CHARGER.get(), RunicEnergyChargerRenderer::new);
-        BlockEntityRenderers.register(SolarcraftTileEntityTypes.ULDERA_PYLON.get(), UlderaPylonRenderer::new);
-        BlockEntityRenderers.register(SolarcraftTileEntityTypes.CLEARING_RITUAL_CRYSTAL.get(), ClearingRitualCrystalRenderer::new);
-        BlockEntityRenderers.register(SolarcraftTileEntityTypes.CLEARING_RITUAL_MAIN_BLOCK.get(), ClearingRitualTileRenderer::new);
-        BlockEntityRenderers.register(SolarcraftTileEntityTypes.DIMENSION_CORE_TILE.get(), DimensionCoreRenderer::new);
-        BlockEntityRenderers.register(SolarcraftTileEntityTypes.SAVANNA_DUNGEON_KEEPER.get(), SavannaDungeonKeeperRenderer::new);
-        BlockEntityRenderers.register(SolarcraftTileEntityTypes.RUNIC_ENERGY_CORE.get(), RunicEnergyCoreRenderer::new);
-        BlockEntityRenderers.register(SolarcraftTileEntityTypes.BEAM_GENERATOR.get(), BeamGeneratorRenderer::new);
-        BlockEntityRenderers.register(SolarcraftTileEntityTypes.BEAM_REFLECTOR.get(), BeamReflectorRenderer::new);
-        BlockEntityRenderers.register(SolarcraftTileEntityTypes.ELEMENT_WEAVER.get(), ElementWeaverRenderer::new);
-        BlockEntityRenderers.register(SolarcraftTileEntityTypes.ORBITAL_MISSILE_LAUNCHER.get(), OrbitalMissileLauncherTERenderer::new);
+        BlockEntityRenderers.register(SCTileEntities.RUNIC_ENERGY_REPEATER.get(), RepeaterRenderer::new);
+        BlockEntityRenderers.register(SCTileEntities.RUNE_ENERGY_PYLON.get(), RuneEnergyPylonRenderer::new);
+        BlockEntityRenderers.register(SCTileEntities.SOLAR_FORGE_BLOCKENTITY.get(), SolarForgeBlockEntityRenderer::new);
+        BlockEntityRenderers.register(SCTileEntities.INFUSING_POOL_BLOCKENTITY.get(), InfusingStandRenderer::new);
+        BlockEntityRenderers.register(SCTileEntities.INFUSING_STAND_BLOCKENTITY.get(), InfuserRenderer::new);
+        BlockEntityRenderers.register(SCTileEntities.SOLAR_REPEATER.get(), SolarRepeaterRenderer::new);
+        BlockEntityRenderers.register(SCTileEntities.ENERGY_GENERATOR_TILE.get(), EnergyGeneratorTileRender::new);
+        BlockEntityRenderers.register(SCTileEntities.SOLAR_CORE_TILE.get(), SolarCoreRenderer::new);
+        BlockEntityRenderers.register(SCTileEntities.AURA_HEALER_TILE.get(), AuraHealerRenderer::new);
+        BlockEntityRenderers.register(SCTileEntities.RAY_TRAP_TILE_ENTITY.get(), RayTrapTileEntityRenderer::new);
+        BlockEntityRenderers.register(SCTileEntities.WORMHOLE.get(), WormholeRenderer::new);
+        BlockEntityRenderers.register(SCTileEntities.BONEMEALER.get(), BonemealerRenderer::new);
+        BlockEntityRenderers.register(SCTileEntities.INFUSING_CRAFTING_TABLE.get(), InfusingTableTileRenderer::new);
+        BlockEntityRenderers.register(SCTileEntities.EXPLOSTION_BLOCKER.get(), ExplosionBlockerRenderer::new);
+        BlockEntityRenderers.register(SCTileEntities.ENCHANTER.get(), EnchanterRenderer::new);
+        BlockEntityRenderers.register(SCTileEntities.RUNIC_ENERGY_CHARGER.get(), RunicEnergyChargerRenderer::new);
+        BlockEntityRenderers.register(SCTileEntities.ULDERA_PYLON.get(), UlderaPylonRenderer::new);
+        BlockEntityRenderers.register(SCTileEntities.CLEARING_RITUAL_CRYSTAL.get(), ClearingRitualCrystalRenderer::new);
+        BlockEntityRenderers.register(SCTileEntities.CLEARING_RITUAL_MAIN_BLOCK.get(), ClearingRitualTileRenderer::new);
+        BlockEntityRenderers.register(SCTileEntities.DIMENSION_CORE_TILE.get(), DimensionCoreRenderer::new);
+        BlockEntityRenderers.register(SCTileEntities.SAVANNA_DUNGEON_KEEPER.get(), SavannaDungeonKeeperRenderer::new);
+        BlockEntityRenderers.register(SCTileEntities.RUNIC_ENERGY_CORE.get(), RunicEnergyCoreRenderer::new);
+        BlockEntityRenderers.register(SCTileEntities.BEAM_GENERATOR.get(), BeamGeneratorRenderer::new);
+        BlockEntityRenderers.register(SCTileEntities.BEAM_REFLECTOR.get(), BeamReflectorRenderer::new);
+        BlockEntityRenderers.register(SCTileEntities.ELEMENT_WEAVER.get(), ElementWeaverRenderer::new);
+        BlockEntityRenderers.register(SCTileEntities.ORBITAL_MISSILE_LAUNCHER.get(), OrbitalMissileLauncherTERenderer::new);
 
 
         MenuScreens.register(SolarcraftContainers.SOLAR_FURNACE_CONTAINER.get(), SolarFurnaceScreen::new);
@@ -153,7 +158,8 @@ public class SCClientModEventHandler {
         MenuScreens.register(SolarcraftContainers.ENCHANTER.get(), EnchanterContainerScreen::new);
         MenuScreens.register(SolarcraftContainers.RUNIC_ENERGY_CHARGER.get(), RunicEnergyChargerScreen::new);
         MenuScreens.register(SolarcraftContainers.ELEMENT_WEAVER.get(), ElementWeaverContainerScreen::new);
-
+        MenuScreens.register(SolarcraftContainers.SOLAR_FORGE_CONTAINER.get(), SolarForgeScreen::new);
+        MenuScreens.register(SolarcraftContainers.INFUSING_TABLE_CONTAINER.get(), InfuserScreen::new);
         event.enqueueWork(()->{
 
             SCBedrockModels.init();
@@ -201,7 +207,7 @@ public class SCClientModEventHandler {
                 Player playerEntity = Minecraft.getInstance().player;
                 if (playerEntity != null) {
 
-                    return Helpers.hasPlayerCompletedProgression(SolarCraft.SOLAR_ORE.get().getRequiredProgression(), Minecraft.getInstance().player) ? 1f : 0;
+                    return Helpers.hasPlayerCompletedProgression(SCBlocks.SOLAR_ORE.get().getRequiredProgression(), Minecraft.getInstance().player) ? 1f : 0;
                 }else{
                     return 0;
                 }
@@ -239,8 +245,8 @@ public class SCClientModEventHandler {
 
     @SubscribeEvent
     public static void registerEntityRendering(EntityRenderersEvent.RegisterRenderers event){
-        event.registerEntityRenderer(SolarCraft.METEORITE.get(), MeteoriteProjectileRenderer::new);
-        event.registerEntityRenderer(SolarCraft.SOLAR_STRIKE_ENTITY_REG.get(), SolarStrikeRenderer::new);
+        event.registerEntityRenderer(SCEntityTypes.METEORITE.get(), MeteoriteProjectileRenderer::new);
+        event.registerEntityRenderer(SCEntityTypes.SOLAR_STRIKE_ENTITY_REG.get(), SolarStrikeRenderer::new);
         event.registerEntityRenderer(SCEntityTypes.SOLAR_DISC.get(), SolarDiscProjectileRenderer::new);
         event.registerEntityRenderer(SCEntityTypes.BLOCK_BOOMERANG.get(), BlockBoomerangProjectileRenderer::new);
         event.registerEntityRenderer(SCEntityTypes.ULTRA_CROSSBOW_SHOT.get(), UltraCrossbowProjectileRenderer::new);

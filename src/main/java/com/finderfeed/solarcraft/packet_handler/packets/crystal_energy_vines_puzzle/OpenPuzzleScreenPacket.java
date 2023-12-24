@@ -5,7 +5,6 @@ import com.finderfeed.solarcraft.content.blocks.blockentities.clearing_ritual.Cr
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.neoforged.neoforge.network.NetworkEvent;
-
 import java.util.function.Supplier;
 
 public class OpenPuzzleScreenPacket {

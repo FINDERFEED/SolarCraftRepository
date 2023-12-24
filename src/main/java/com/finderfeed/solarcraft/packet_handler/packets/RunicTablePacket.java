@@ -13,14 +13,13 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.network.PlayNetworkDirection;
+import net.neoforged.neoforge.network.NetworkEvent;
 import net.minecraft.core.BlockPos;
 
 
 import java.util.function.Supplier;
-
-import net.neoforged.neoforge.items.IItemHandler;
-import net.neoforged.neoforge.network.NetworkDirection;
-import net.neoforged.neoforge.network.NetworkEvent;
 
 public class RunicTablePacket extends AbstractPacket {
 
@@ -98,7 +97,7 @@ public class RunicTablePacket extends AbstractPacket {
                         }
                     }
 
-                    SCPacketHandler.INSTANCE.sendTo(new UpdateRunePattern(player, AncientFragmentHelper.getAllUnlockableFragments(player) == null), player.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+                    SCPacketHandler.INSTANCE.sendTo(new UpdateRunePattern(player, AncientFragmentHelper.getAllUnlockableFragments(player) == null), player.connection.connection, PlayNetworkDirection.PLAY_TO_CLIENT);
                 }
             }
 

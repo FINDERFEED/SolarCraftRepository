@@ -52,7 +52,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.network.NetworkHooks;
-
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.HashMap;

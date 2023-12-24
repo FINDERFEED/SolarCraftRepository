@@ -1,16 +1,14 @@
 package com.finderfeed.solarcraft.config;
 
-import net.neoforged.neoforge.common.ModConfigSpec;
-
 import java.util.ArrayList;
 import java.util.List;
+import net.neoforged.neoforge.common.ModConfigSpec;
 
 
 
 public final class SolarcraftConfig {
     public static final String CUSTOM_CONFIGS_FOLDER = "solarcraft_custom_configs";
     public static final String CUSTOM_BLOCKS_CONFIGS = "block_configs";
-
 
     public static final ModConfigSpec.Builder BUILDER = new ModConfigSpec.Builder();
     public static final ModConfigSpec SPEC;

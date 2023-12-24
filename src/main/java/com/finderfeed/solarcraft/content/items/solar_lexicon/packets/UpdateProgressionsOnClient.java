@@ -10,12 +10,8 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.neoforge.fml.DistExecutor;
-import net.neoforged.neoforge.network.NetworkDirection;
+import net.neoforged.neoforge.network.PlayNetworkDirection;
 import net.neoforged.neoforge.network.NetworkEvent;
-
-
 import java.util.function.Supplier;
 
 public class UpdateProgressionsOnClient {
@@ -47,6 +43,6 @@ public class UpdateProgressionsOnClient {
     }
 
     public static void send(ServerPlayer player){
-        SCPacketHandler.INSTANCE.sendTo(new UpdateProgressionsOnClient(player),player.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+        SCPacketHandler.INSTANCE.sendTo(new UpdateProgressionsOnClient(player),player.connection.connection, PlayNetworkDirection.PLAY_TO_CLIENT);
     }
 }

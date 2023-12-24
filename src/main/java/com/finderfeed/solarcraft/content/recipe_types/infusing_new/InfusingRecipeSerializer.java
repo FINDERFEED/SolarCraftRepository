@@ -6,8 +6,11 @@ import com.finderfeed.solarcraft.misc_things.RunicEnergy;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.DataResult;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.ExtraCodecs;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -28,8 +31,21 @@ public class InfusingRecipeSerializer implements RecipeSerializer<InfusingRecipe
 
     }
 
+
     @Override
-    public InfusingRecipe fromJson(ResourceLocation loc, JsonObject file) {
+    public Codec<InfusingRecipe> codec() {
+        return null;
+    }
+
+    public static final Codec<InfusingRecipe> CODEC = ExtraCodecs.JSON.flatXmap(json->{
+        InfusingRecipe recipe = fromJson(json.getAsJsonObject());
+        return DataResult.success(recipe);
+    },(res)->{
+        throw new RuntimeException("Serialization for infusing recipe is not implemented");
+    });
+
+    //@Override
+    public static InfusingRecipe fromJson(JsonObject file) {
         JsonArray pattern = file.getAsJsonArray("pattern");
         JsonObject items = file.getAsJsonObject("items");
 
@@ -38,7 +54,7 @@ public class InfusingRecipeSerializer implements RecipeSerializer<InfusingRecipe
 
         ingredientMap.put(' ',Ingredient.of(Items.AIR));
         for (Map.Entry<String,JsonElement> obj : items.entrySet()){
-            ingredientMap.put(obj.getKey().charAt(0),Ingredient.fromJson(obj.getValue()));
+            ingredientMap.put(obj.getKey().charAt(0),Ingredient.fromJson(obj.getValue(),false));
         }
 
         String[] fiveRowPattern = {
@@ -49,8 +65,7 @@ public class InfusingRecipeSerializer implements RecipeSerializer<InfusingRecipe
                 pattern.get(4).getAsString()
         };
 
-
-        ItemStack output = ShapedRecipe.itemFromJson(GsonHelper.getAsJsonObject(file, "result")).getDefaultInstance();
+        ItemStack output = GsonHelper.getAsItem(file, "result").value().getDefaultInstance();
         int infusingTime = GsonHelper.getAsInt(file, "time", 20);
         String child = GsonHelper.getAsString(file,"fragment");
         int reqEnergy = GsonHelper.getAsInt(file, "energy", 0);
@@ -65,16 +80,7 @@ public class InfusingRecipeSerializer implements RecipeSerializer<InfusingRecipe
         float URBA = GsonHelper.getAsFloat(file, "urba", 0);
         float GIRO = GsonHelper.getAsFloat(file, "giro", 0);
         float ULTIMA = GsonHelper.getAsFloat(file, "ultima", 0);
-//        Map<RunicEnergy.Type,Double> costs = Map.of(
-//                RunicEnergy.Type.URBA,URBA,
-//                RunicEnergy.Type.KELDA,KELDA,
-//                RunicEnergy.Type.ZETA,ZETA,
-//                RunicEnergy.Type.TERA,TERA,
-//                RunicEnergy.Type.ARDO,ARDO,
-//                RunicEnergy.Type.FIRA,FIRA,
-//                RunicEnergy.Type.GIRO,GIRO,
-//                RunicEnergy.Type.ULTIMA,ULTIMA
-//        );
+
         RunicEnergyCost costs = new RunicEnergyCost().set(RunicEnergy.Type.URBA,URBA)
                 .set(RunicEnergy.Type.KELDA,KELDA)
                 .set(RunicEnergy.Type.TERA,TERA)
@@ -86,10 +92,10 @@ public class InfusingRecipeSerializer implements RecipeSerializer<InfusingRecipe
         costs.nullifyUnusedTypes();
         String catalysts = GsonHelper.getAsString(file,"catalysts","            ");
         if (catalysts.length() != 12){
-            throw new IllegalStateException("Catalysts length cant be != 12, recipe: " + loc.toString());
+            throw new IllegalStateException("Catalysts length cant be != 12, recipe: " + file);
         }
         output.setCount(count);
-        return new InfusingRecipe(loc,ingredientMap,fiveRowPattern,catalysts,output,infusingTime,child,reqEnergy,tag,costs);
+        return new InfusingRecipe(ingredientMap,fiveRowPattern,catalysts,output,infusingTime,child,reqEnergy,tag,costs);
     }
 
     private Ingredient getIngredient(JsonElement element,int i){
@@ -97,13 +103,13 @@ public class InfusingRecipeSerializer implements RecipeSerializer<InfusingRecipe
         if (ingr.equals("minecraft:air")){
             return Ingredient.EMPTY;
         }else {
-            return Ingredient.fromJson(element);
+            return Ingredient.fromJson(element,true);
         }
     }
 
     @Nullable
     @Override
-    public InfusingRecipe fromNetwork(ResourceLocation loc, FriendlyByteBuf buf) {
+    public InfusingRecipe fromNetwork(FriendlyByteBuf buf) {
         Map<Character,Ingredient> ingredientMap = new HashMap<>();
         int ingrMapSize = buf.readInt();
         for (int i = 0; i < ingrMapSize;i++){
@@ -151,7 +157,7 @@ public class InfusingRecipeSerializer implements RecipeSerializer<InfusingRecipe
                 .set(RunicEnergy.Type.GIRO,GIRO)
                 .set(RunicEnergy.Type.ARDO,ARDO);
         String cat = buf.readUtf();
-        return new InfusingRecipe(loc,ingredientMap,pattern,cat,output,infusingTime,child,reqEnergy,tag,costs);
+        return new InfusingRecipe(ingredientMap,pattern,cat,output,infusingTime,child,reqEnergy,tag,costs);
     }
 
     @Override

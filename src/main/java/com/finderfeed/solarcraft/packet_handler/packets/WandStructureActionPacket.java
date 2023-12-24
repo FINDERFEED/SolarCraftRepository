@@ -9,7 +9,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.neoforge.network.NetworkEvent;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;

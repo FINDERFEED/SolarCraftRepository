@@ -13,7 +13,7 @@ import com.finderfeed.solarcraft.misc_things.*;
 
 import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
 import com.finderfeed.solarcraft.packet_handler.packets.UpdateTypeOnClientPacket;
-import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
+import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
@@ -43,7 +43,7 @@ public class RuneEnergyPylonTile extends BlockEntity implements  DebugTarget, Ru
     private int updateTick = 40;
 
     public RuneEnergyPylonTile(BlockPos p_155229_, BlockState p_155230_) {
-        super(SolarcraftTileEntityTypes.RUNE_ENERGY_PYLON.get(), p_155229_, p_155230_);
+        super(SCTileEntities.RUNE_ENERGY_PYLON.get(), p_155229_, p_155230_);
     }
 
 

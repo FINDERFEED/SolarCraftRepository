@@ -1,11 +1,9 @@
 package com.finderfeed.solarcraft.packet_handler.packets;
 
 import net.minecraft.world.entity.player.Player;
+import net.neoforged.neoforge.network.NetworkEvent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.network.FriendlyByteBuf;
-import net.neoforged.neoforge.network.NetworkEvent;
-
-
 import java.util.function.Supplier;
 
 public class AbilityIndexSetPacket {

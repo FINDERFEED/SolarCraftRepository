@@ -5,7 +5,6 @@ import com.finderfeed.solarcraft.content.abilities.ability_classes.ToggleableAbi
 import com.finderfeed.solarcraft.registries.abilities.AbilitiesRegistry;
 import net.minecraft.network.FriendlyByteBuf;
 import net.neoforged.neoforge.network.NetworkEvent;
-
 import java.util.function.Supplier;
 
 public class ToggleableAbilityPacket {

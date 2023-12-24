@@ -11,7 +11,7 @@ import com.finderfeed.solarcraft.misc_things.PhantomInventory;
 import com.finderfeed.solarcraft.content.recipe_types.infusing_crafting.InfusingCraftingRecipe;
 import com.finderfeed.solarcraft.registries.items.SCItems;
 import com.finderfeed.solarcraft.registries.recipe_types.SolarcraftRecipeTypes;
-import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
+import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -25,9 +25,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.common.capabilities.ForgeCapabilities;
+import net.neoforged.neoforge.common.capabilities.Capabilities;
 import net.neoforged.neoforge.items.IItemHandler;
-
 import javax.annotation.Nullable;
 import java.util.*;
 
@@ -40,7 +39,7 @@ public class InfusingTableTile extends BlockEntity implements OwnedBlock, IWanda
 
 
     public InfusingTableTile( BlockPos p_155229_, BlockState p_155230_) {
-        super(SolarcraftTileEntityTypes.INFUSING_CRAFTING_TABLE.get(), p_155229_, p_155230_);
+        super(SCTileEntities.INFUSING_CRAFTING_TABLE.get(), p_155229_, p_155230_);
     }
 
 
@@ -209,7 +208,7 @@ public class InfusingTableTile extends BlockEntity implements OwnedBlock, IWanda
 
 
     public IItemHandler getInventory(){
-        IItemHandler handler = this.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(null);
+        IItemHandler handler = this.getCapability(Capabilities.ITEM_HANDLER).orElse(null);
         return handler;
     }
     @Override

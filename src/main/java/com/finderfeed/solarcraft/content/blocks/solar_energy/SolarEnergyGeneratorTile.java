@@ -6,7 +6,7 @@ import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.helpers.multiblock.MultiblockStructure;
 import com.finderfeed.solarcraft.helpers.multiblock.Multiblocks;
 import com.finderfeed.solarcraft.local_library.helpers.CompoundNBTHelper;
-import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
+import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Mth;
@@ -25,7 +25,7 @@ public class SolarEnergyGeneratorTile extends SolarcraftBlockEntity implements S
     private int solarEnergy = 0;
 
     public SolarEnergyGeneratorTile( BlockPos p_155229_, BlockState p_155230_) {
-        super(SolarcraftTileEntityTypes.ENERGY_GENERATOR_TILE.get(), p_155229_, p_155230_);
+        super(SCTileEntities.ENERGY_GENERATOR_TILE.get(), p_155229_, p_155230_);
     }
 
     public static void tick(Level world, BlockPos pos, BlockState blockState, SolarEnergyGeneratorTile tile) {

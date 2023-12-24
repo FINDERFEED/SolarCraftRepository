@@ -11,7 +11,7 @@ import com.finderfeed.solarcraft.helpers.multiblock.Multiblocks;
 import com.finderfeed.solarcraft.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
 import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
-import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
+import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
@@ -34,7 +34,7 @@ public class SolarOrbitalMissileLauncherTileEntity extends AbstractRunicEnergyCo
     private int launchTicker;
 
     public SolarOrbitalMissileLauncherTileEntity(BlockPos p_155229_, BlockState p_155230_) {
-        super(SolarcraftTileEntityTypes.ORBITAL_MISSILE_LAUNCHER.get(), p_155229_, p_155230_);
+        super(SCTileEntities.ORBITAL_MISSILE_LAUNCHER.get(), p_155229_, p_155230_);
     }
 
 

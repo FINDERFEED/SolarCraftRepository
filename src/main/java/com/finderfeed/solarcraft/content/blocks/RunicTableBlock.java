@@ -6,7 +6,7 @@ import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.RunePat
 import com.finderfeed.solarcraft.misc_things.PhantomInventory;
 import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
 import com.finderfeed.solarcraft.packet_handler.packets.UpdateRunePattern;
-import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
+import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragmentHelper;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
@@ -19,13 +19,12 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.BlockHitResult;
+import net.neoforged.neoforge.network.PlayNetworkDirection;
+import net.neoforged.neoforge.network.NetworkHooks;
 import net.minecraft.world.level.Level;
 
 
 import javax.annotation.Nullable;
-
-import net.neoforged.neoforge.network.NetworkDirection;
-import net.neoforged.neoforge.network.NetworkHooks;
 
 
 public class RunicTableBlock extends Block implements EntityBlock {
@@ -58,7 +57,7 @@ public class RunicTableBlock extends Block implements EntityBlock {
                 pattern.save(pe);
             }
 
-            SCPacketHandler.INSTANCE.sendTo(new UpdateRunePattern(pe,false),serverPlayer.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+            SCPacketHandler.INSTANCE.sendTo(new UpdateRunePattern(pe,false),serverPlayer.connection.connection, PlayNetworkDirection.PLAY_TO_CLIENT);
             boolean b = AncientFragmentHelper.getAllUnlockableFragments(pe) == null ;
 
             NetworkHooks.openScreen((ServerPlayer) pe, new RunicTableContainer.Provider(tile,b),
@@ -75,7 +74,7 @@ public class RunicTableBlock extends Block implements EntityBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-        return SolarcraftTileEntityTypes.RUNIC_TABLE_TILE.get().create(blockPos,blockState);
+        return SCTileEntities.RUNIC_TABLE_TILE.get().create(blockPos,blockState);
     }
 
 

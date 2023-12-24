@@ -37,7 +37,7 @@ import com.finderfeed.solarcraft.registries.Tags;
 import com.finderfeed.solarcraft.registries.abilities.AbilitiesRegistry;
 import com.finderfeed.solarcraft.registries.attributes.AttributesRegistry;
 import com.finderfeed.solarcraft.registries.effects.SCEffects;
-import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
+import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
 import com.finderfeed.solarcraft.registries.items.SCItems;
 import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
 import net.minecraft.core.BlockPos;
@@ -70,20 +70,24 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.common.ForgeMod;
+import net.neoforged.bus.api.EventPriority;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.common.NeoForgeMod;
 import net.neoforged.neoforge.event.TickEvent;
-import net.neoforged.neoforge.event.entity.living.*;
+import net.neoforged.neoforge.event.entity.living.LivingAttackEvent;
+import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
+import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
+import net.neoforged.neoforge.event.entity.living.LivingEquipmentChangeEvent;
+import net.neoforged.neoforge.event.entity.living.LivingFallEvent;
+import net.neoforged.neoforge.event.entity.living.LivingHurtEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerXpEvent;
 import net.neoforged.neoforge.event.level.BlockEvent;
 import net.neoforged.neoforge.event.level.ExplosionEvent;
 import net.neoforged.neoforge.event.server.ServerStartedEvent;
-import net.neoforged.neoforge.eventbus.api.EventPriority;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.Mod;
-import net.neoforged.neoforge.network.NetworkDirection;
-
+import net.neoforged.neoforge.network.PlayNetworkDirection;
 import java.util.List;
 
 
@@ -100,8 +104,8 @@ public class SCEventHandler {
         if (event.getPosition().isEmpty()) return;
         BlockPos pos = event.getPosition().get();
         Player pla = event.getEntity();
-        if (!pla.level.isClientSide){
-            if (pla.level.getBlockEntity(pos) instanceof OwnedBlock block){
+        if (!pla.level().isClientSide){
+            if (pla.level().getBlockEntity(pos) instanceof OwnedBlock block){
                 if (!pla.getUUID().equals(block.getOwner())){
                      event.setCanceled(true);
                 }
@@ -109,9 +113,9 @@ public class SCEventHandler {
 
 
         }
-        if (pla.level.getBlockState(pos).is(SCBlocks.CLEARING_RITUAL_CRYSTAL.get())){
-            if (pla.level.getBlockState(pos.below(2)).is(SCBlocks.CRYSTAL_ENERGY_VINES.get())
-                    || (pla.level.getBlockEntity(pos) instanceof ClearingRitualCrystalTile tile && tile.isCorrupted())) {
+        if (pla.level().getBlockState(pos).is(SCBlocks.CLEARING_RITUAL_CRYSTAL.get())){
+            if (pla.level().getBlockState(pos.below(2)).is(SCBlocks.CRYSTAL_ENERGY_VINES.get())
+                    || (pla.level().getBlockEntity(pos) instanceof ClearingRitualCrystalTile tile && tile.isCorrupted())) {
 
                 event.setNewSpeed(-1);
             }
@@ -169,7 +173,7 @@ public class SCEventHandler {
             Helpers.setProgressionCompletionStatus(a,playernew,Helpers.hasPlayerCompletedProgression(a,peorig));
 
         }
-        if (!playernew.level.isClientSide) {
+        if (!playernew.level().isClientSide) {
             Helpers.updateProgressionsOnClient((ServerPlayer) playernew);
         }
         if (playernew instanceof ServerPlayer player) {
@@ -194,7 +198,7 @@ public class SCEventHandler {
 
     @SubscribeEvent
     public static void procImmortalityTotem(final LivingDeathEvent event){
-        if (event.getEntity() instanceof Player && !event.getEntity().level.isClientSide){
+        if (event.getEntity() instanceof Player && !event.getEntity().level().isClientSide){
             Player player = (Player) event.getEntity();
             int slot = findImmortalityTotem(player);
             if (slot != -10000){
@@ -202,9 +206,9 @@ public class SCEventHandler {
                 player.setHealth(player.getMaxHealth());
 
                 player.getInventory().setItem(slot, ItemStack.EMPTY);
-                ServerLevel world = (ServerLevel)player.level;
+                ServerLevel world = (ServerLevel)player.level();
                 world.playSound(player,player.getX(),player.getY(),player.getZ(), SoundEvents.TOTEM_USE, SoundSource.AMBIENT,0.5f,0.5f);
-                SCPacketHandler.INSTANCE.sendTo(new ProcImmortalityTotemAnimation(),((ServerPlayer)player).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+                SCPacketHandler.INSTANCE.sendTo(new ProcImmortalityTotemAnimation(),((ServerPlayer)player).connection.connection, PlayNetworkDirection.PLAY_TO_CLIENT);
 
                 event.setCanceled(true);
             }
@@ -227,7 +231,7 @@ public class SCEventHandler {
         if (event.getSource() != null) {
             Entity ent = event.getSource().getEntity();
             if (ent instanceof LivingEntity livingEnt) {
-                if (livingEnt.hasEffect(SolarCraft.SOLAR_STUN.get())) {
+                if (livingEnt.hasEffect(SCEffects.SOLAR_STUN.get())) {
                     event.setCanceled(true);
                 }
             }
@@ -237,7 +241,7 @@ public class SCEventHandler {
             LivingEntity ent = event.getEntity();
             ent.getArmorSlots().forEach((stack)->{
                 if (stack.getItem().equals(SCItems.RADIANT_CHESTPLATE.get())){
-                    if (ent.level.random.nextFloat() <= 0.17){
+                    if (ent.level().random.nextFloat() <= 0.17){
                         event.setCanceled(true);
                     }
                 }
@@ -249,15 +253,15 @@ public class SCEventHandler {
     public static void playerTickEvent(final TickEvent.PlayerTickEvent event){
         if (event.phase == TickEvent.Phase.START) {
             Player player = event.player;
-            Level world = player.level;
+            Level world = player.level();
 
             if (player instanceof ServerPlayer) {
-                if (player.level.getGameTime() % 200 == 0) {
+                if (player.level().getGameTime() % 200 == 0) {
                     Helpers.updateFragmentsOnClient((ServerPlayer) player);
                     Helpers.updateProgressionsOnClient((ServerPlayer) player);
                 }
-                if (player.level.getGameTime() % 20 == 0) {
-                    if (player.level.dimension() == Level.NETHER) {
+                if (player.level().getGameTime() % 20 == 0) {
+                    if (player.level().dimension() == Level.NETHER) {
                         Helpers.fireProgressionEvent(player, Progression.ENTER_NETHER);
                     }
                 }
@@ -284,7 +288,7 @@ public class SCEventHandler {
             if (!world.isClientSide && !player.isCreative()) {
 
                 if ((world.dimension() == RADIANT_LAND_KEY) && (world.getGameTime() % 20 == 1) && !(actualtime % 24000 <= 13000)
-                 && Helpers.collectTilesInChunks(SolarcraftTileEntityTypes.CLEARING_RITUAL_MAIN_BLOCK.get(),player.level,player.getOnPos(),2).isEmpty()
+                 && Helpers.collectTilesInChunks(SCTileEntities.CLEARING_RITUAL_MAIN_BLOCK.get(),player.level(),player.getOnPos(),2).isEmpty()
                   && !Helpers.isRadiantLandCleanedServer((ServerLevel) world)) {
                     if (world.canSeeSky(player.getOnPos().above())) {
                         player.addEffect(new MobEffectInstance(SCEffects.STAR_GAZE_EFFECT.get(), 400, 0));
@@ -325,8 +329,8 @@ public class SCEventHandler {
 
 
 
-                AttributeInstance attr = player.getAttribute(ForgeMod.BLOCK_REACH.get());
-                AttributeInstance attr1 = player.getAttribute(ForgeMod.ENTITY_REACH.get());
+                AttributeInstance attr = player.getAttribute(NeoForgeMod.BLOCK_REACH.value());
+                AttributeInstance attr1 = player.getAttribute(NeoForgeMod.ENTITY_REACH.value());
                 if (attr != null) {
                     if (FDMathHelper.PlayerThings.doPlayerHasItem(player.getInventory(), SCItems.REACH_GLOVES.get())) {
                         if (!attr.hasModifier(SolarCraftAttributeModifiers.REACH_2_MODIFIER)) {
@@ -337,10 +341,10 @@ public class SCEventHandler {
                         }
                     } else {
                         if (attr.hasModifier(SolarCraftAttributeModifiers.REACH_2_MODIFIER)) {
-                            attr.removeModifier(SolarCraftAttributeModifiers.REACH_2_MODIFIER);
+                            attr.removeModifier(SolarCraftAttributeModifiers.REACH_2_MODIFIER.getId());
                         }
                         if (attr1.hasModifier(SolarCraftAttributeModifiers.REACH_2_MODIFIER)) {
-                            attr1.removeModifier(SolarCraftAttributeModifiers.REACH_2_MODIFIER);
+                            attr1.removeModifier(SolarCraftAttributeModifiers.REACH_2_MODIFIER.getId());
                         }
                     }
                 }
@@ -354,7 +358,7 @@ public class SCEventHandler {
     public static void handleExperienceCrystal(PlayerXpEvent.PickupXp event){
         ExperienceOrb orb = event.getOrb();
         Player player = event.getEntity();
-        if (!player.level.isClientSide){
+        if (!player.level().isClientSide){
             if (ExperienceCrystal.consumeExperience(player,orb.value)) {
                 orb.remove(Entity.RemovalReason.DISCARDED);
                 event.setCanceled(true);
@@ -376,7 +380,7 @@ public class SCEventHandler {
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public static void assignOwner(BlockEvent.EntityPlaceEvent event){
-        if ((event.getEntity() instanceof Player player) && (player.level.getBlockEntity(event.getPos()) instanceof OwnedBlock tile)){
+        if ((event.getEntity() instanceof Player player) && (player.level().getBlockEntity(event.getPos()) instanceof OwnedBlock tile)){
             tile.setOwner(player.getUUID());
         }
     }
@@ -386,8 +390,8 @@ public class SCEventHandler {
     public static void handleMagicResistanceAttribute(LivingDamageEvent event){
         DamageSource src = event.getSource();
         LivingEntity entity = event.getEntity();
-        if (!entity.level.isClientSide &&
-                (src.is(DamageTypeTags.BYPASSES_ARMOR) || src == entity.level.damageSources().magic()) &&
+        if (!entity.level().isClientSide &&
+                (src.is(DamageTypeTags.BYPASSES_ARMOR) || src == entity.level().damageSources().magic()) &&
                 (entity.getAttributes().hasAttribute(AttributesRegistry.MAGIC_RESISTANCE.get()))){
             AttributeInstance attr = entity.getAttribute(AttributesRegistry.MAGIC_RESISTANCE.get());
             if (attr != null){
@@ -403,7 +407,7 @@ public class SCEventHandler {
         DamageSource src = event.getSource();
         Entity killer = src.getEntity();
         LivingEntity deadEntity = event.getEntity();
-        Level world = event.getEntity().level;
+        Level world = event.getEntity().level();
         if (!world.isClientSide && killer != null){
             if (killer instanceof  Player pl){
                 if (deadEntity instanceof WitherBoss){
@@ -467,7 +471,7 @@ public class SCEventHandler {
     public static void breakEvent(BlockEvent.BreakEvent event) {
         if (event.getPlayer() instanceof ServerPlayer serverPlayer){
             SCPacketHandler.INSTANCE.sendTo(new BlockBreakPacket(event.getPos(),event.getState()),
-                    serverPlayer.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+                    serverPlayer.connection.connection, PlayNetworkDirection.PLAY_TO_CLIENT);
         }
         if (event.getPlayer() instanceof ServerPlayer player) {
             if (AbilitiesRegistry.ALCHEMIST.isToggled(player) && !event.getPlayer().isDeadOrDying() ) {
@@ -491,14 +495,14 @@ public class SCEventHandler {
     public static void sendClientPlaceEvent(BlockEvent.EntityPlaceEvent event){
         if (event.getEntity() instanceof ServerPlayer player){
             SCPacketHandler.INSTANCE.sendTo(new BlockPlacePacket( event.getPos(),event.getState()),
-                    player.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+                    player.connection.connection, PlayNetworkDirection.PLAY_TO_CLIENT);
         }
     }
 
     @SubscribeEvent
     public static void preventBreakingBlocks(BlockEvent.BreakEvent event){
 
-        if ((event.getPlayer().getMainHandItem().getItem() instanceof FragmentItem fragmentItem) && !event.getPlayer().level.isClientSide){
+        if ((event.getPlayer().getMainHandItem().getItem() instanceof FragmentItem fragmentItem) && !event.getPlayer().level().isClientSide){
             if (event.getPlayer().isCreative()) return;
 
             if (fragmentItem.getNeededFragment() != null) {
@@ -513,7 +517,7 @@ public class SCEventHandler {
 
     @SubscribeEvent
     public static void preventItemUsing(PlayerInteractEvent.RightClickItem event) {
-        if (event.getItemStack().getItem() instanceof FragmentItem fragmentItem && !event.getEntity().level.isClientSide) {
+        if (event.getItemStack().getItem() instanceof FragmentItem fragmentItem && !event.getEntity().level().isClientSide) {
             if (event.getEntity().isCreative()) return;
 
             if (fragmentItem.getNeededFragment() != null) {
@@ -543,10 +547,10 @@ public class SCEventHandler {
     @SubscribeEvent
     public static void handleEvasion(LivingDamageEvent event){
         LivingEntity living = event.getEntity();
-        if (!living.level.isClientSide){
+        if (!living.level().isClientSide){
             if (living.hasEffect(SCEffects.EVASION.get())){
                 int level = living.getActiveEffectsMap().get(SCEffects.EVASION.get()).getAmplifier();
-                if (living.level.random.nextDouble() <= 0.2 * (level + 1)){
+                if (living.level().random.nextDouble() <= 0.2 * (level + 1)){
                     event.setCanceled(true);
                 }
             }
@@ -557,7 +561,7 @@ public class SCEventHandler {
     @SubscribeEvent
     public static void cancelFallDamage(LivingFallEvent event){
         if (event.getEntity() instanceof Player player){
-            if (player.level.isClientSide) return;
+            if (player.level().isClientSide) return;
             if (player.getItemBySlot(EquipmentSlot.CHEST).is(SCItems.DIVINE_CHESTPLATE.get())){
                 event.setDamageMultiplier(0);
             }
@@ -639,7 +643,7 @@ public class SCEventHandler {
                     config.deserialize(config.getJson());
                 }
 
-                SCPacketHandler.INSTANCE.sendTo(new SendConfigsToClientPacket(),sPlayer.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+                SCPacketHandler.INSTANCE.sendTo(new SendConfigsToClientPacket(),sPlayer.connection.connection, PlayNetworkDirection.PLAY_TO_CLIENT);
 
 
                 for (RunicEnergy.Type type : RunicEnergy.Type.values()) {

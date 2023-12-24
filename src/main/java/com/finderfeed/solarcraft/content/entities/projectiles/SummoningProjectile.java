@@ -4,6 +4,7 @@ import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.client.particles.SCParticleTypes;
 import com.finderfeed.solarcraft.registries.data_serializers.FDEntityDataSerializers;
 import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
@@ -16,7 +17,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.network.NetworkHooks;
-import net.neoforged.neoforge.registries.ForgeRegistries;
 
 public class SummoningProjectile extends NormalProjectile {
 
@@ -44,14 +44,14 @@ public class SummoningProjectile extends NormalProjectile {
 
     @Override
     public void tick() {
-        if (!level.isClientSide){
+        if (!level().isClientSide){
             this.setDeltaMovement(this.getDeltaMovement().add(0,-fallSpeedDecrement,0));
             this.entityData.set(COLOR,new Vec3(r,g,b));
         }else{
             for (int i = 0; i < 3;i++) {
-                double rx = level.random.nextDouble()-0.5d;
-                double ry = level.random.nextDouble()-0.5d;
-                double rz = level.random.nextDouble()-0.5d;
+                double rx = level().random.nextDouble()-0.5d;
+                double ry = level().random.nextDouble()-0.5d;
+                double rz = level().random.nextDouble()-0.5d;
                 Vec3 v = this.position().add(rx,ry,rz);
                 Vec3 color = this.entityData.get(COLOR);
                 ClientHelpers.Particles.createParticle(SCParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
@@ -63,7 +63,7 @@ public class SummoningProjectile extends NormalProjectile {
 
     @Override
     public boolean save(CompoundTag tag) {
-        tag.putString("typeRegID",ForgeRegistries.ENTITY_TYPES.getKey(summoningEntityType).toString());
+        tag.putString("typeRegID", BuiltInRegistries.ENTITY_TYPE.getKey(summoningEntityType).toString());
         tag.putFloat("rcolor",r);
         tag.putFloat("gcolor",g);
         tag.putFloat("bcolor",b);
@@ -74,7 +74,7 @@ public class SummoningProjectile extends NormalProjectile {
     @Override
     public void load(CompoundTag tag) {
         super.load(tag);
-        EntityType<? extends LivingEntity> type = (EntityType<? extends LivingEntity>) ForgeRegistries.ENTITY_TYPES.getValue(new ResourceLocation(tag.getString("typeRegID")));
+        EntityType<? extends LivingEntity> type = (EntityType<? extends LivingEntity>) BuiltInRegistries.ENTITY_TYPE.get(new ResourceLocation(tag.getString("typeRegID")));
         if (type != null){
             this.summoningEntityType = type;
         }else{
@@ -89,12 +89,12 @@ public class SummoningProjectile extends NormalProjectile {
 
     @Override
     protected void onHitBlock(BlockHitResult res) {
-        if (!level.isClientSide){
-            LivingEntity entity = summoningEntityType.create(level);
+        if (!level().isClientSide){
+            LivingEntity entity = summoningEntityType.create(level());
             if (entity != null) {
                 Vec3 loc = res.getLocation();
                 entity.setPos(loc.add(0, 0.5, 0));
-                level.addFreshEntity(entity);
+                level().addFreshEntity(entity);
             }
         }
         this.remove(RemovalReason.DISCARDED);

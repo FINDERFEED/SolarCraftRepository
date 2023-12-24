@@ -18,7 +18,7 @@ import net.minecraft.world.level.Level;
 import java.util.List;
 
 public class SolarSmeltingRecipe implements Recipe<PhantomInventory> {
-    public final ResourceLocation id;
+
     @Deprecated
     public NonNullList<Ingredient> list;
 
@@ -28,8 +28,7 @@ public class SolarSmeltingRecipe implements Recipe<PhantomInventory> {
 
     public final int smeltingTime;
 //    public static final SolarSmeltingRecipeSerializer serializer = new SolarSmeltingRecipeSerializer();
-    public SolarSmeltingRecipe(ResourceLocation id, List<ItemStack> stacks, ItemStack output, int infusingTime) {
-        this.id = id;
+    public SolarSmeltingRecipe(List<ItemStack> stacks, ItemStack output, int infusingTime) {
         this.stacks = stacks;
         this.output = output;
         this.smeltingTime = infusingTime;
@@ -93,10 +92,7 @@ public class SolarSmeltingRecipe implements Recipe<PhantomInventory> {
         return this.output;
     }
 
-    @Override
-    public ResourceLocation getId() {
-        return this.id;
-    }
+
 
     @Override
     public RecipeSerializer<?> getSerializer() {

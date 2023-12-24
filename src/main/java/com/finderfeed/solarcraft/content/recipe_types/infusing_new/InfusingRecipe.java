@@ -22,7 +22,7 @@ public class InfusingRecipe implements Recipe<Container> {
 
 
     private final InfuserTileEntity.Tier tier;
-    public final ResourceLocation id;
+//    public final ResourceLocation id;
     public final Map<Character,Ingredient> INGR_MAP;
     public final String oneRowPattern;
     public final String[] fiveRowPattern;
@@ -36,12 +36,12 @@ public class InfusingRecipe implements Recipe<Container> {
     private final String catalysts;
     private final Block[] deserializedCatalysts;
 //    public static final InfusingRecipeSerializer serializer = new InfusingRecipeSerializer();
-    public InfusingRecipe(ResourceLocation id,Map<Character,Ingredient> ingredientMap,String[] fiveRowPattern,String catalysts, ItemStack output, int infusingTime,String fragmentID
+    public InfusingRecipe(Map<Character,Ingredient> ingredientMap,String[] fiveRowPattern,String catalysts, ItemStack output, int infusingTime,String fragmentID
             ,int requriedEnergy,String tag,RunicEnergyCost costs) {
         this.INGR_MAP = ingredientMap;
         this.fiveRowPattern = fiveRowPattern;
         this.oneRowPattern = fiveRowPattern[0] + fiveRowPattern[1] + fiveRowPattern[2] + fiveRowPattern[3] + fiveRowPattern[4];
-        this.id = id;
+//        this.id = id;
         this.catalysts = catalysts;
         this.deserializedCatalysts = deserializeCatalysts();
         this.output = output;
@@ -94,10 +94,10 @@ public class InfusingRecipe implements Recipe<Container> {
         return this.output;
     }
 
-    @Override
-    public ResourceLocation getId() {
-        return this.id;
-    }
+//    @Override
+//    public ResourceLocation getId() {
+//        return this.id;
+//    }
 
     @Override
     public RecipeSerializer<?> getSerializer() {
@@ -153,7 +153,7 @@ public class InfusingRecipe implements Recipe<Container> {
                     bl[i] = block;
                 } else {
                     if (c != ' '){
-                        throw new RuntimeException("Incorrect symbol: "+ c + " in catalysts. Recipe: " + this.id);
+                        throw new RuntimeException("Incorrect symbol: "+ c + " in catalysts.");
                     }
                     bl[i] = null;
                 }

@@ -3,10 +3,9 @@ package com.finderfeed.solarcraft.content.items.solar_lexicon;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragmentHelper;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.SlotItemHandler;
-
+import net.minecraft.nbt.CompoundTag;
 import javax.annotation.Nonnull;
 
 public class SolarLexiconContainerSlot extends SlotItemHandler {

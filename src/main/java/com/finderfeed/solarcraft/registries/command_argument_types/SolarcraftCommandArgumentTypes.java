@@ -8,19 +8,19 @@ import com.mojang.brigadier.arguments.ArgumentType;
 import net.minecraft.commands.synchronization.ArgumentTypeInfo;
 import net.minecraft.commands.synchronization.ArgumentTypeInfos;
 import net.minecraft.commands.synchronization.SingletonArgumentInfo;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
-import net.neoforged.neoforge.registries.ForgeRegistries;
-import net.neoforged.neoforge.registries.RegistryObject;
 
 public class SolarcraftCommandArgumentTypes {
 
     public static final DeferredRegister<ArgumentTypeInfo<?,?>> ARGUMENT_TYPES =
-            DeferredRegister.create(ForgeRegistries.COMMAND_ARGUMENT_TYPES, SolarCraft.MOD_ID);
+            DeferredRegister.create(BuiltInRegistries.COMMAND_ARGUMENT_TYPE, SolarCraft.MOD_ID);
 
-    public static final RegistryObject<ArgumentTypeInfo<?,?>> STRUCTURE_ARGUMENT = ARGUMENT_TYPES.register("structure_type",
+    public static final DeferredHolder<ArgumentTypeInfo<?,?>,ArgumentTypeInfo<?,?>> STRUCTURE_ARGUMENT = ARGUMENT_TYPES.register("structure_type",
             ()-> ArgumentTypeInfos.registerByClass(SolarcraftStructureArgument.class, SingletonArgumentInfo.contextFree(SolarcraftStructureArgument::new)));
 
-    public static final RegistryObject<ArgumentTypeInfo<?,?>> ABILITY_ARGUMENT = ARGUMENT_TYPES.register("ability_type",
+    public static final DeferredHolder<ArgumentTypeInfo<?,?>,ArgumentTypeInfo<?,?>> ABILITY_ARGUMENT = ARGUMENT_TYPES.register("ability_type",
             ()-> ArgumentTypeInfos.registerByClass(SCAbilityArgument.class, SingletonArgumentInfo.contextFree(SCAbilityArgument::new)));
 
 }

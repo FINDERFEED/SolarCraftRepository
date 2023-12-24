@@ -3,7 +3,7 @@ package com.finderfeed.solarcraft.content.blocks.solar_energy;
 import com.finderfeed.solarcraft.content.blocks.blockentities.SolarcraftBlockEntity;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.local_library.helpers.CompoundNBTHelper;
-import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
+import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.Level;
@@ -18,7 +18,7 @@ public class SolarEnergyRepeaterTile extends SolarcraftBlockEntity implements Bi
     private BlockPos connection = Helpers.NULL_POS;
 
     public SolarEnergyRepeaterTile( BlockPos p_155229_, BlockState p_155230_) {
-        super(SolarcraftTileEntityTypes.SOLAR_REPEATER.get(), p_155229_, p_155230_);
+        super(SCTileEntities.SOLAR_REPEATER.get(), p_155229_, p_155230_);
     }
 
     public static void tick(Level world, BlockPos pos, BlockState blockState, SolarEnergyRepeaterTile tile) {

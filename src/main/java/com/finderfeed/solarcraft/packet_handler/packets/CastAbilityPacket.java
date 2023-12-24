@@ -3,10 +3,8 @@ package com.finderfeed.solarcraft.packet_handler.packets;
 import com.finderfeed.solarcraft.content.abilities.AbilityHelper;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.network.FriendlyByteBuf;
-
 import net.neoforged.neoforge.network.NetworkEvent;
-
+import net.minecraft.network.FriendlyByteBuf;
 import java.util.function.Supplier;
 
 public class CastAbilityPacket {

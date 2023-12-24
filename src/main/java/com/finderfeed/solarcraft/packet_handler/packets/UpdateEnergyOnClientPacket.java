@@ -5,7 +5,6 @@ import com.finderfeed.solarcraft.misc_things.AbstractPacket;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
 import net.minecraft.network.FriendlyByteBuf;
 import net.neoforged.neoforge.network.NetworkEvent;
-
 import java.util.function.Supplier;
 
 public class UpdateEnergyOnClientPacket extends AbstractPacket {

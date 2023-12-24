@@ -1,7 +1,7 @@
 package com.finderfeed.solarcraft.content.world_generation.structures.blocks.tile_entities;
 
 import com.finderfeed.solarcraft.misc_things.AbstractStructureBlockentity;
-import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
+import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.Progression;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
@@ -16,7 +16,7 @@ import net.minecraft.world.phys.Vec3;
 public class KeyDefenderTile extends AbstractStructureBlockentity {
     public boolean activated= false;
     public KeyDefenderTile(BlockPos pos,BlockState state) {
-        super(SolarcraftTileEntityTypes.KEY_DEFENDER_TILE.get(),pos,state, Progression.FIND_KEY_SOURCE,new AABB(-5,-1,-5,5,1,5));
+        super(SCTileEntities.KEY_DEFENDER_TILE.get(),pos,state, Progression.FIND_KEY_SOURCE,new AABB(-5,-1,-5,5,1,5));
     }
 
 

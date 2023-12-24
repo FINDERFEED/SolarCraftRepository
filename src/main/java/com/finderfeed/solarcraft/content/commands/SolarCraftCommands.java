@@ -37,10 +37,9 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.neoforge.common.capabilities.Capabilities;
 import net.neoforged.neoforge.common.util.LazyOptional;
-import net.neoforged.neoforge.common.capabilities.ForgeCapabilities;
 import net.neoforged.neoforge.items.IItemHandler;
-
 import java.util.Locale;
 
 public class SolarCraftCommands {
@@ -239,7 +238,7 @@ public class SolarCraftCommands {
     public static int fillLexicon(CommandSourceStack src) throws CommandSyntaxException {
         ServerPlayer player = src.getPlayerOrException();
         if (player.getMainHandItem().getItem() instanceof SolarLexicon){
-            LazyOptional<IItemHandler> cap = player.getMainHandItem().getCapability(ForgeCapabilities.ITEM_HANDLER);
+            LazyOptional<IItemHandler> cap = player.getMainHandItem().getCapability(Capabilities.ITEM_HANDLER);
             if (cap.isPresent()){
                 cap.ifPresent((inv)->{
                     try {

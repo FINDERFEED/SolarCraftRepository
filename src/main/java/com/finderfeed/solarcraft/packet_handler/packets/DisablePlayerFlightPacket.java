@@ -4,9 +4,8 @@ import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
-import net.neoforged.neoforge.network.NetworkDirection;
+import net.neoforged.neoforge.network.PlayNetworkDirection;
 import net.neoforged.neoforge.network.NetworkEvent;
-
 import java.util.function.Supplier;
 
 public class DisablePlayerFlightPacket {
@@ -42,6 +41,6 @@ public class DisablePlayerFlightPacket {
             player.getAbilities().flying = false;
         }
         SCPacketHandler.INSTANCE.sendTo(new DisablePlayerFlightPacket(disable),player.connection.connection,
-                NetworkDirection.PLAY_TO_CLIENT);
+                PlayNetworkDirection.PLAY_TO_CLIENT);
     }
 }

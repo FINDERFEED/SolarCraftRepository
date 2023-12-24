@@ -4,9 +4,10 @@ import com.finderfeed.solarcraft.content.items.runic_energy.RunicEnergyCost;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
-import net.neoforged.neoforge.registries.ForgeRegistries;
+import net.minecraft.world.item.Items;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -127,8 +128,8 @@ public class ItemREConfig extends JsonConfig {
             if (element.getKey().contains("_comment")){
                 continue;
             }
-            Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(element.getKey()));
-            if (item == null){
+            Item item = BuiltInRegistries.ITEM.get(new ResourceLocation(element.getKey()));
+            if (item == null || item == Items.AIR){
                 throw new RuntimeException("Item invalid: " + element.getKey());
             }
             JsonObject re = element.getValue().getAsJsonObject();

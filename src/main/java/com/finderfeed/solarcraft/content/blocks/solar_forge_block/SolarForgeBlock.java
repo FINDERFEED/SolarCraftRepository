@@ -17,14 +17,11 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.BlockHitResult;
+import net.neoforged.neoforge.network.NetworkHooks;
 import net.minecraft.world.level.Level;
 
 
 import java.util.function.Consumer;
-
-import net.neoforged.neoforge.network.NetworkHooks;
-
-
 import javax.annotation.Nullable;
 
 public class SolarForgeBlock extends Block implements EntityBlock {

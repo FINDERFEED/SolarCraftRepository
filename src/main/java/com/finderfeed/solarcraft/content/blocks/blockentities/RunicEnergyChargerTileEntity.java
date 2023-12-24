@@ -9,7 +9,7 @@ import com.finderfeed.solarcraft.content.items.runic_energy.ItemRunicEnergy;
 import com.finderfeed.solarcraft.content.items.runic_energy.RunicEnergyCost;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
 import com.finderfeed.solarcraft.registries.items.SCItems;
-import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
+import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
@@ -25,7 +25,7 @@ public class RunicEnergyChargerTileEntity extends REItemHandlerBlockEntity imple
     private static final float CHARGE_RATE_PER_TICK = 2.5f;
 
     public RunicEnergyChargerTileEntity( BlockPos pos, BlockState state) {
-        super(SolarcraftTileEntityTypes.RUNIC_ENERGY_CHARGER.get(), pos, state);
+        super(SCTileEntities.RUNIC_ENERGY_CHARGER.get(), pos, state);
     }
     public static void tick(RunicEnergyChargerTileEntity tile, Level world,BlockState state,BlockPos pos){
         if (!world.isClientSide){

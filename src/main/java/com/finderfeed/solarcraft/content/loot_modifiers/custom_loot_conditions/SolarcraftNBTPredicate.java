@@ -1,12 +1,16 @@
 package com.finderfeed.solarcraft.content.loot_modifiers.custom_loot_conditions;
 
 import com.google.gson.JsonObject;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.DataResult;
 import net.minecraft.advancements.critereon.ItemPredicate;
 
+import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.util.GsonHelper;
+import net.neoforged.neoforge.common.advancements.critereon.ICustomItemPredicate;
 
-public class SolarcraftNBTPredicate extends ItemPredicate{
+public class SolarcraftNBTPredicate implements ICustomItemPredicate {
     //public final NBTPredicate nbt;
     public final String nbt;
     public final String subNBT;
@@ -18,7 +22,9 @@ public class SolarcraftNBTPredicate extends ItemPredicate{
 
         this.higherthan = higherthan;
     }
-    public boolean matches(ItemStack stack){
+
+    @Override
+    public boolean test(ItemStack stack){
         if ((stack.getTagElement(nbt) != null) &&
                 (stack.getTagElement(nbt).getInt(subNBT) >= higherthan)){
             return true;
@@ -31,5 +37,16 @@ public class SolarcraftNBTPredicate extends ItemPredicate{
         String subNBT = GsonHelper.getAsString(json,"subnbt");
         int higherthan = GsonHelper.getAsInt(json,"higherthan");
         return new SolarcraftNBTPredicate(predicate,higherthan,subNBT);
+    }
+
+    public static final Codec<SolarcraftNBTPredicate> CODEC = ExtraCodecs.JSON.flatXmap(json->{
+        SolarcraftNBTPredicate predicate = fromJson(json.getAsJsonObject());
+        return DataResult.success(predicate);
+    },ref->{
+        throw new RuntimeException("Serialization for module item predicate is not implemented");
+    });
+    @Override
+    public Codec<? extends ICustomItemPredicate> codec() {
+        return CODEC;
     }
 }

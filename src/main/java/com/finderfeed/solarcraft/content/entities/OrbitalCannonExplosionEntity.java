@@ -32,9 +32,8 @@ import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraft.world.level.chunk.LevelChunkSection;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.AABB;
-import net.neoforged.neoforge.network.NetworkDirection;
+import net.neoforged.neoforge.network.PlayNetworkDirection;
 import net.neoforged.neoforge.network.NetworkHooks;
-
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
 
@@ -125,7 +124,7 @@ public class OrbitalCannonExplosionEntity extends Entity {
                     }
                 });
                 for (ServerPlayer player : serverPlayers){
-                    SCPacketHandler.INSTANCE.sendTo(new UpdateChunkPacket(chunk),player.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+                    SCPacketHandler.INSTANCE.sendTo(new UpdateChunkPacket(chunk),player.connection.connection, PlayNetworkDirection.PLAY_TO_CLIENT);
                 }
             }
             this.remove(RemovalReason.DISCARDED);

@@ -7,7 +7,6 @@ import com.finderfeed.solarcraft.registries.animations.AnimationReloadableResour
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.Entity;
 import net.neoforged.neoforge.network.NetworkEvent;
-
 import java.util.function.Supplier;
 
 public class StartEntityAnimationPacket {

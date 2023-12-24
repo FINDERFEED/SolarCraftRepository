@@ -19,8 +19,8 @@ public class RadiantBlocksAtlasSprite extends TextureAtlasSprite {
 
     private List<NativeImage> original;
 
-    protected RadiantBlocksAtlasSprite(ResourceLocation p_250211_, SpriteContents p_248526_, int p_248950_, int p_249741_, int p_248672_, int p_248637_) {
-        super(p_250211_, p_248526_, p_248950_, p_249741_, p_248672_, p_248637_);
+    protected RadiantBlocksAtlasSprite(ResourceLocation location, SpriteContents contents, int p_248950_, int p_249741_, int p_248672_, int p_248637_) {
+        super(location, contents, p_248950_, p_249741_, p_248672_, p_248637_);
     }
 
 
@@ -117,67 +117,6 @@ public class RadiantBlocksAtlasSprite extends TextureAtlasSprite {
             }
         };
     }
-
-//    @Override
-//    public void upload(int p_118376_, int p_118377_, NativeImage[] images) {
-//
-//        for(int i = 0; i < this.mainImage.length; ++i) {
-//            NativeImage image = images[i];
-//            if ((this.getWidth() >> i <= 0) || (this.getHeight() >> i <= 0)) break;
-//            if (Minecraft.getInstance().level != null){
-//                ClientLevel level = Minecraft.getInstance().level;
-//
-//                if (original != null) {
-//                    float timeofday = level.getTimeOfDay(Minecraft.getInstance().getDeltaFrameTime());
-//                    NativeImage image2 = original.get(i);
-//                    for (int a = 0; a < image.getWidth(); a++) {
-//                        for (int b = 0; b < image.getHeight(); b++) {
-//                            int color = image2.getPixelRGBA(a, b);
-//                            int[] rgba = FDMathHelper.intToRgba(color);
-//                            int flag = isGray(rgba);
-//                            //rb - night
-//                            //rg - day
-//                            if (flag != -10) {
-//                                float day = getDayPercentage(timeofday);
-//                                float night = getNightPercentage(timeofday);
-//                                if (!((timeofday >= 0.25f ) && (timeofday <= 0.75))){
-//
-//                                    int d = Math.round(flag * (Mth.clamp(0.3f, day, 1f)));
-//                                    int dg = d;
-//                                    int n = 0;
-//                                    if ((timeofday <= 0.25f)) {
-//                                        float percentage = 0.05f - day;
-//                                        if (percentage >= 0) {
-//                                            n = Math.round(flag * percentage);
-//                                        }
-//                                    }
-//
-//                                    int finalColor = FDMathHelper.rgbaToInt(new int[]{d + 10, dg + 10-n*5, n*3, 255});
-//                                    image.setPixelRGBA(a, b, finalColor);
-//                                }else{
-//
-//                                    int n = Math.round(flag * (Mth.clamp(0.2f, night, 1f)));
-//                                    int d = 0;
-//                                    if ((timeofday >= 0.5f)) {
-//                                        float percentage = 0.05f - night;
-//                                        if (percentage >= 0) {
-//                                            d = Math.round(flag * percentage);
-//                                        }
-//                                    }
-//
-//                                    int finalColor = FDMathHelper.rgbaToInt(new int[]{Math.round((float)n/1.8f) + d*3, d*3, n-d*3 , 255});
-//                                    image.setPixelRGBA(a, b, finalColor);
-//                                }
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//
-//
-//            image.upload(i, this.getX() >> i, this.getY() >> i, p_118376_ >> i, p_118377_ >> i, this.getWidth() >> i, this.getHeight() >> i, this.mainImage.length > 1, false);
-//        }
-//    }
 
     private float getDayPercentage(float timeOfDay){
         float toReturn = 0f;

@@ -10,15 +10,13 @@ import com.finderfeed.solarcraft.local_library.OwnedBlock;
 import com.finderfeed.solarcraft.client.particles.SCParticleTypes;
 
 import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
-import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
+import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.Monster;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -38,7 +36,7 @@ public class ZapTurretTile extends BlockEntity implements OwnedBlock, IStructure
     private List<Vec3> targets = new ArrayList<>();
 
     public ZapTurretTile( BlockPos p_155229_, BlockState p_155230_) {
-        super(SolarcraftTileEntityTypes.ZAP_TURRET_TILE.get(), p_155229_, p_155230_);
+        super(SCTileEntities.ZAP_TURRET_TILE.get(), p_155229_, p_155230_);
     }
 
 

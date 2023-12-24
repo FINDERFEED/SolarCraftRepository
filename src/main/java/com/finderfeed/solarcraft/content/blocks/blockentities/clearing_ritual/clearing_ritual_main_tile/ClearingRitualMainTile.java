@@ -2,7 +2,7 @@ package com.finderfeed.solarcraft.content.blocks.blockentities.clearing_ritual.c
 
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.content.blocks.blockentities.clearing_ritual.ClearingRitual;
-import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
+import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
@@ -21,7 +21,7 @@ public class ClearingRitualMainTile extends BlockEntity {
 
 
     public ClearingRitualMainTile(BlockPos pos, BlockState state) {
-        super(SolarcraftTileEntityTypes.CLEARING_RITUAL_MAIN_BLOCK.get(), pos, state);
+        super(SCTileEntities.CLEARING_RITUAL_MAIN_BLOCK.get(), pos, state);
     }
 
     public static void tick(ClearingRitualMainTile tile, BlockPos pos, BlockState state, Level world){

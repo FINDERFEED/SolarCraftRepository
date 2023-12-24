@@ -13,8 +13,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
-import net.neoforged.neoforge.network.NetworkDirection;
-
+import net.neoforged.neoforge.network.PlayNetworkDirection;
 import java.util.Locale;
 
 public class AbilityHelper {
@@ -87,7 +86,7 @@ public class AbilityHelper {
     }
 
     public static void sendTogglePacket(ServerPlayer player, ToggleableAbility ability,boolean toggle){
-        SCPacketHandler.INSTANCE.sendTo(new ToggleableAbilityPacket(ability,toggle),player.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+        SCPacketHandler.INSTANCE.sendTo(new ToggleableAbilityPacket(ability,toggle),player.connection.connection, PlayNetworkDirection.PLAY_TO_CLIENT);
     }
 
     public static void setAbilityUsable(Player player,AbstractAbility ability,boolean usable){

@@ -18,11 +18,10 @@ import net.minecraft.core.BlockPos;
 
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-
+import net.neoforged.neoforge.network.NetworkHooks;
 import net.minecraft.world.level.Explosion;
 
 import net.minecraft.world.level.Level;
-import net.neoforged.neoforge.network.NetworkHooks;
 
 
 public class MeteoriteProjectile extends AbstractHurtingProjectile {

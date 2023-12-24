@@ -4,7 +4,7 @@ import com.finderfeed.solarcraft.content.blocks.blockentities.InfusingTableTile;
 import com.finderfeed.solarcraft.content.blocks.blockentities.containers.InfusingTableTileContainer;
 import com.finderfeed.solarcraft.misc_things.PhantomInventory;
 import com.finderfeed.solarcraft.registries.items.SCItems;
-import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
+import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -22,8 +22,6 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.neoforged.neoforge.network.NetworkHooks;
-
-
 import javax.annotation.Nullable;
 
 public class InfusingTableBlock extends Block implements EntityBlock {
@@ -35,7 +33,7 @@ public class InfusingTableBlock extends Block implements EntityBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return SolarcraftTileEntityTypes.INFUSING_CRAFTING_TABLE.get().create(pos,state);
+        return SCTileEntities.INFUSING_CRAFTING_TABLE.get().create(pos,state);
     }
 
     @Override

@@ -11,7 +11,7 @@ import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.helpers.multiblock.MultiblockStructure;
 import com.finderfeed.solarcraft.helpers.multiblock.Multiblocks;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
-import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
+import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
@@ -41,7 +41,7 @@ public class RunicEnergyCoreTile extends AbstractRunicEnergyContainer implements
             .set(RunicEnergy.Type.ULTIMA, (float) getRunicEnergyLimit());
 
     public RunicEnergyCoreTile( BlockPos pos, BlockState state) {
-        super(SolarcraftTileEntityTypes.RUNIC_ENERGY_CORE.get(), pos, state);
+        super(SCTileEntities.RUNIC_ENERGY_CORE.get(), pos, state);
     }
 
 

@@ -498,7 +498,7 @@ public class AncientFragment {
                 AncientFragment fragment = new AncientFragment(id,stage.ALL_PROGRESSIONS,subBase,catBase,items,recipeType,lore,priority,true);
                 fragments.add(fragment);
             }else if (type == Type.INFORMATION){
-                ItemStack item = GsonHelper.getAsItem(jFragment.getAsJsonObject("icon"),"item").getDefaultInstance();
+                ItemStack item = GsonHelper.getAsItem(jFragment.getAsJsonObject("icon"),"item").value().getDefaultInstance();
                 AncientFragment fragment = new AncientFragment(id,stage.ALL_PROGRESSIONS,subBase,catBase,item.getItem(),lore,priority,true);
                 fragments.add(fragment);
             }
@@ -524,7 +524,7 @@ public class AncientFragment {
     private static List<ItemWithRecipe> getItemsFromJSON(JsonArray array){
         List<ItemWithRecipe> items = new ArrayList<>();
         for (JsonElement f : array){
-            ItemStack item = GsonHelper.getAsItem(f.getAsJsonObject(),"item").getDefaultInstance();
+            ItemStack item = GsonHelper.getAsItem(f.getAsJsonObject(),"item").value().getDefaultInstance();
             ResourceLocation location = new ResourceLocation(GsonHelper.getAsString(f.getAsJsonObject(),"recipe_id"));
             items.add(new ItemWithRecipe(item,location));
         }

@@ -1,7 +1,7 @@
 package com.finderfeed.solarcraft.content.world_generation.structures.blocks;
 
 import com.finderfeed.solarcraft.content.world_generation.structures.blocks.tile_entities.KeyDefenderTile;
-import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
+import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -22,7 +22,7 @@ public class KeyDefender extends Block implements EntityBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-        return SolarcraftTileEntityTypes.KEY_DEFENDER_TILE.get().create(blockPos,blockState);
+        return SCTileEntities.KEY_DEFENDER_TILE.get().create(blockPos,blockState);
     }
 
     @Nullable

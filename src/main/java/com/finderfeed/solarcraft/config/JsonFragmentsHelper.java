@@ -5,8 +5,8 @@ import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
 import com.finderfeed.solarcraft.packet_handler.packets.SendFragmentsToClientPacket;
 import com.google.gson.*;
 import net.minecraft.server.level.ServerPlayer;
-import net.neoforged.neoforge.fml.loading.FMLPaths;
-import net.neoforged.neoforge.network.NetworkDirection;
+import net.neoforged.fml.loading.FMLPaths;
+import net.neoforged.neoforge.network.PlayNetworkDirection;
 import org.apache.logging.log4j.Level;
 
 import javax.annotation.Nullable;
@@ -214,7 +214,7 @@ public class JsonFragmentsHelper {
         }else{
             o = SERVERSIDE_FRAGMENTS_JSON;
         }
-        SCPacketHandler.INSTANCE.sendTo(new SendFragmentsToClientPacket(o),serverPlayer.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+        SCPacketHandler.INSTANCE.sendTo(new SendFragmentsToClientPacket(o),serverPlayer.connection.connection, PlayNetworkDirection.PLAY_TO_CLIENT);
 
     }
 

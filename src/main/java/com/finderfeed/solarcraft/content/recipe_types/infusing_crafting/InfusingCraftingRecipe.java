@@ -19,7 +19,7 @@ import java.util.Map;
 public class InfusingCraftingRecipe implements Recipe<Container> {
 //    public static final InfusingCraftingRecipeSerializer serializer = new InfusingCraftingRecipeSerializer();
 
-    private final ResourceLocation id;
+//    private final ResourceLocation id;
     private final ItemStack output;
     private final String[] pattern;
     private final Map<Character, Item> DEFINITIONS;
@@ -27,13 +27,13 @@ public class InfusingCraftingRecipe implements Recipe<Container> {
     private final int outputCount;
     private AncientFragment desFragment;
     private final String fragment;
-    public InfusingCraftingRecipe(ResourceLocation loc,String[] pattern,Map<Character, Item> defs,ItemStack out,int time,int outputCount,String fragment){
+    public InfusingCraftingRecipe(String[] pattern,Map<Character, Item> defs,ItemStack out,int time,int outputCount,String fragment){
         this.pattern = pattern;
         this.DEFINITIONS = defs;
         this.outputCount = outputCount;
         this.output = out;
         this.time = time;
-        this.id = loc;
+//        this.id = loc;
         this.fragment = fragment;
     }
 
@@ -214,10 +214,10 @@ public class InfusingCraftingRecipe implements Recipe<Container> {
         return output;
     }
 
-    @Override
-    public ResourceLocation getId() {
-        return id;
-    }
+//    @Override
+//    public ResourceLocation getId() {
+//        return id;
+//    }
 
     @Override
     public RecipeSerializer<?> getSerializer() {

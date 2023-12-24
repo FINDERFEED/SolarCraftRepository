@@ -36,7 +36,6 @@ import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
-
 import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.List;
@@ -44,7 +43,7 @@ import java.util.Map;
 import static com.finderfeed.solarcraft.registries.SCCreativeTabs.*;
 public class SCItems {
 
-    public static Map<DeferredHolder<Item,Item>,List<DeferredHolder<Item,? extends Item>>> itemTabs = new HashMap<>();
+    public static Map<DeferredHolder<CreativeModeTab,CreativeModeTab>,List<DeferredHolder<Item,? extends Item>>> itemTabs = new HashMap<>();
 
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(Registries.ITEM,"solarcraft");
 
@@ -322,9 +321,9 @@ public class SCItems {
     public static final DeferredHolder<Item,Item> THROWN_LIGHT = registerItem(ITEMS.register("thrown_light",()->new ThrownLight(SCBlocks.THROWN_LIGHT.get(),new Item.Properties())),SOLAR_GROUP);
 
     public static  final DeferredHolder<Item,Item> SOLAR_SHARD = registerItem(ITEMS.register("solar_shard",()-> new Item(new Item.Properties().rarity(Rarity.EPIC))),SOLAR_GROUP);
-    public static  final DeferredHolder<Item,Item> SOLAR_FORGE_ITEM = registerItem(ITEMS.register("solar_forge",()-> new SolarForgeBlockItem(SolarCraft.SOLAR_FORGE.get(),new Item.Properties().rarity(Rarity.EPIC).stacksTo(1))),SOLAR_GROUP_BLOCKS);
-    public static  final DeferredHolder<Item,Item> SOLAR_ORE_ITEM = registerItem(ITEMS.register("solar_ore",()-> new ProgressionBlockItem(SolarCraft.SOLAR_ORE.get(),new Item.Properties())),SOLAR_GROUP_BLOCKS);
-    public static  final DeferredHolder<Item,Item> INFUSER_ITEM = registerItem(ITEMS.register("solar_infuser",()-> new InfuserBlockItem(SolarCraft.SOLAR_INFUSER.get(),new Item.Properties().rarity(Rarity.EPIC).stacksTo(1),()-> AncientFragment.SOLAR_INFUSER)),SOLAR_GROUP_BLOCKS);
+    public static  final DeferredHolder<Item,Item> SOLAR_FORGE_ITEM = registerItem(ITEMS.register("solar_forge",()-> new SolarForgeBlockItem(SCBlocks.SOLAR_FORGE.get(),new Item.Properties().rarity(Rarity.EPIC).stacksTo(1))),SOLAR_GROUP_BLOCKS);
+    public static  final DeferredHolder<Item,Item> SOLAR_ORE_ITEM = registerItem(ITEMS.register("solar_ore",()-> new ProgressionBlockItem(SCBlocks.SOLAR_ORE.get(),new Item.Properties())),SOLAR_GROUP_BLOCKS);
+    public static  final DeferredHolder<Item,Item> INFUSER_ITEM = registerItem(ITEMS.register("solar_infuser",()-> new InfuserBlockItem(SCBlocks.SOLAR_INFUSER.get(),new Item.Properties().rarity(Rarity.EPIC).stacksTo(1),()-> AncientFragment.SOLAR_INFUSER)),SOLAR_GROUP_BLOCKS);
 
     public static final DeferredHolder<Item,ProgressionBlockItem> MAGISTONE = registerItem(ITEMS.register("magistone",()->new ProgressionBlockItem(SCBlocks.MAGISTONE.get(),new Item.Properties())),SOLAR_GROUP_BLOCKS);
     public static final DeferredHolder<Item,ProgressionBlockItem> CORRUPTED_SHARD_ORE = registerItem(ITEMS.register("corrupted_shard_ore",()->new ProgressionBlockItem(SCBlocks.CORRUPTED_SHARD_ORE.get(),new Item.Properties())),SOLAR_GROUP_BLOCKS);
@@ -351,7 +350,7 @@ public class SCItems {
     public static final DeferredHolder<Item,CorruptedShardItem> CORRUPTED_SHARD_ITEM = registerItem(ITEMS.register("corrupted_shard",()->new CorruptedShardItem(new Item.Properties().rarity(Rarity.EPIC))),SOLAR_GROUP);
 
 
-    public static <T extends Item> DeferredHolder<Item,T> registerItem(DeferredHolder<Item,T> reg,DeferredHolder<CreativeModeTab,CreativeModeTab> tab){
+    public static <T extends Item> DeferredHolder<Item,T> registerItem(DeferredHolder<Item,T> reg, DeferredHolder<CreativeModeTab,CreativeModeTab> tab){
         var a = itemTabs.get(tab);
         if (a != null){
             a.add(reg);
@@ -362,7 +361,7 @@ public class SCItems {
     }
 
     public static void registerIntoCreativeTabs(BuildCreativeModeTabContentsEvent event){
-//        Map<CreativeModeTab,List<DeferredHolder<Item,? extends Item>>> newmap = new HashMap<>();
+//        Map<CreativeModeTab,List DeferredHolder<Item,? extends Item>>> newmap = new HashMap<>();
 //        for (var entry : itemTabs.entrySet()){
 //            newmap.put(entry.getKey().get(),entry.getValue());
 //        }

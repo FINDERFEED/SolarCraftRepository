@@ -50,15 +50,20 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.LevelChunk;
+
 import net.neoforged.api.distmarker.Dist;
-import net.neoforged.neoforge.client.event.*;
+import net.neoforged.bus.api.EventPriority;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.LogicalSide;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
+import net.neoforged.neoforge.client.event.InputEvent;
+import net.neoforged.neoforge.client.event.RenderLevelStageEvent;
+import net.neoforged.neoforge.client.event.RenderTooltipEvent;
+import net.neoforged.neoforge.client.event.ScreenEvent;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.event.TickEvent;
 import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
-import net.neoforged.neoforge.eventbus.api.EventPriority;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.neoforge.fml.LogicalSide;
-import net.neoforged.fml.common.Mod;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.*;
@@ -165,15 +170,15 @@ public class ClientEventsHandler {
     public static void clientFillRenderPositions(TickEvent.ClientTickEvent event){
         LocalPlayer player = Minecraft.getInstance().player;
         if (player != null){
-            if (player.level.getGameTime() % 5 == 0){
+            if (player.level().getGameTime() % 5 == 0){
                 if (player.getInventory().countItem(SCItems.ENDER_RADAR.get()) > 0){
-                        fillList(player.getOnPos().above(),player.level);
+                        fillList(player.getOnPos().above(),player.level());
                 }else{
                     ORES_RENDER_POSITIONS.clear();
                 }
             }
 
-            if (player.level.getGameTime() % 20 == 0){
+            if (player.level().getGameTime() % 20 == 0){
                 fillCatalystRenderPositions();
             }
         }
