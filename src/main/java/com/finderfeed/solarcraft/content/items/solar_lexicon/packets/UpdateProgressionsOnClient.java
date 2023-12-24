@@ -35,11 +35,11 @@ public class UpdateProgressionsOnClient {
     public void toBytes(FriendlyByteBuf buf){
         buf.writeNbt(progressionData);
     }
-    public void handle(Supplier<NetworkEvent.Context> ctx){
-        ctx.get().enqueueWork(()->{
+    public void handle(NetworkEvent.Context ctx){
+        ctx.enqueueWork(()->{
             ClientPacketHandles.handleProgressionUpdate(progressionData);
         });
-        ctx.get().setPacketHandled(true);
+        ctx.setPacketHandled(true);
     }
 
     public static void send(ServerPlayer player){

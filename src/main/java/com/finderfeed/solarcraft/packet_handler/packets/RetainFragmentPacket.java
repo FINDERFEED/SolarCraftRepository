@@ -29,9 +29,9 @@ public class RetainFragmentPacket {
 
 
 
-    public void handle(Supplier<NetworkEvent.Context> ctx) {
-        ctx.get().enqueueWork(()->{
-            ServerPlayer sender = ctx.get().getSender();
+    public void handle(NetworkEvent.Context ctx) {
+        ctx.enqueueWork(()->{
+            ServerPlayer sender = ctx.getSender();
             AncientFragment fragment = AncientFragment.getFragmentByID(fragID);
             if (fragment != null){
                 int slot = -1;
@@ -46,13 +46,13 @@ public class RetainFragmentPacket {
                     ItemStack frag = SCItems.INFO_FRAGMENT.get().getDefaultInstance();
                     AncientFragmentHelper.applyTagToFragment(frag,fragment);
                     if (!sender.addItem(frag)){
-                        ItemEntity entity = new ItemEntity(sender.level,sender.getX(),sender.getY(),sender.getZ(),frag);
-                        sender.level.addFreshEntity(entity);
+                        ItemEntity entity = new ItemEntity(sender.level(),sender.getX(),sender.getY(),sender.getZ(),frag);
+                        sender.level().addFreshEntity(entity);
                     }
                 }
             }
         });
-        ctx.get().setPacketHandled(true);
+        ctx.setPacketHandled(true);
     }
 
 

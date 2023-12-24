@@ -3,6 +3,7 @@ package com.finderfeed.solarcraft.content.abilities.meteorite;
 import com.finderfeed.solarcraft.content.abilities.solar_strike.SolarStrikeEntity;
 import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.helpers.Helpers;
+import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.block.Blocks;
@@ -31,35 +32,35 @@ public class MeteoriteProjectile extends AbstractHurtingProjectile {
     }
 
     public MeteoriteProjectile(double p_i50174_2_, double p_i50174_4_, double p_i50174_6_, double p_i50174_8_, double p_i50174_10_, double p_i50174_12_, Level p_i50174_14_) {
-        super(SolarCraft.METEORITE.get(), p_i50174_2_, p_i50174_4_, p_i50174_6_, p_i50174_8_, p_i50174_10_, p_i50174_12_, p_i50174_14_);
+        super(SCEntityTypes.METEORITE.get(), p_i50174_2_, p_i50174_4_, p_i50174_6_, p_i50174_8_, p_i50174_10_, p_i50174_12_, p_i50174_14_);
     }
 
     public MeteoriteProjectile(LivingEntity p_i50175_2_, Level p_i50175_9_) {
-        super(SolarCraft.METEORITE.get(),  p_i50175_9_);
+        super(SCEntityTypes.METEORITE.get(),  p_i50175_9_);
     }
 
     @Override
     protected void onHit(HitResult p_70227_1_) {
-        if (!this.level.isClientSide) {
+        if (!this.level().isClientSide) {
             Vec3 velocityVector = this.getDeltaMovement().multiply(8,8,8);
-            if (Helpers.isSpellGriefingEnabled((ServerLevel) level)) {
-                this.level.explode(null, level.damageSources().magic(), null, this.position().x, this.position().y, this.position().z, 10, true, Level.ExplosionInteraction.BLOCK);
-                this.level.explode(null, level.damageSources().magic(), null, this.position().x + velocityVector.x / 5, this.position().y + velocityVector.y / 15, this.position().z + velocityVector.z / 10, 10, true, Level.ExplosionInteraction.BLOCK);
-                double radius = this.level.random.nextFloat() * 1 + 4;
+            if (Helpers.isSpellGriefingEnabled((ServerLevel) level())) {
+                this.level().explode(null, level().damageSources().magic(), null, this.position().x, this.position().y, this.position().z, 10, true, Level.ExplosionInteraction.BLOCK);
+                this.level().explode(null, level().damageSources().magic(), null, this.position().x + velocityVector.x / 5, this.position().y + velocityVector.y / 15, this.position().z + velocityVector.z / 10, 10, true, Level.ExplosionInteraction.BLOCK);
+                double radius = this.level().random.nextFloat() * 1 + 4;
                 for (int i = (int) -Math.ceil(radius); i < Math.ceil(radius); i++) {
                     for (int g = (int) -Math.ceil(radius); g < Math.ceil(radius); g++) {
                         for (int h = (int) -Math.ceil(radius); h < Math.ceil(radius); h++) {
                             if (SolarStrikeEntity.checkTochkaVEllipse(i, g, h, radius, radius, radius)) {
                                 BlockPos pos = this.getOnPos().offset((int) Math.floor(i), (int) Math.floor(g), (int) Math.floor(h)).offset((int) Math.ceil(velocityVector.x), (int) Math.ceil(velocityVector.y), (int) Math.ceil(velocityVector.z));
 
-                                if (this.level.random.nextFloat() < 0.8) {
+                                if (this.level().random.nextFloat() < 0.8) {
 
-                                    if (this.level.getBlockState(pos).getDestroySpeed(this.level, pos) >= 0 && this.level.getBlockState(pos).getDestroySpeed(this.level, pos) <= 100) {
-                                        this.level.setBlock(pos, Blocks.OBSIDIAN.defaultBlockState(), 3);
+                                    if (this.level().getBlockState(pos).getDestroySpeed(this.level(), pos) >= 0 && this.level().getBlockState(pos).getDestroySpeed(this.level(), pos) <= 100) {
+                                        this.level().setBlock(pos, Blocks.OBSIDIAN.defaultBlockState(), 3);
                                     }
                                 } else {
-                                    if (this.level.getBlockState(pos).getDestroySpeed(this.level, pos) >= 0 && this.level.getBlockState(pos).getDestroySpeed(this.level, pos) <= 100) {
-                                        this.level.setBlock(pos, Blocks.MAGMA_BLOCK.defaultBlockState(), 3);
+                                    if (this.level().getBlockState(pos).getDestroySpeed(this.level(), pos) >= 0 && this.level().getBlockState(pos).getDestroySpeed(this.level(), pos) <= 100) {
+                                        this.level().setBlock(pos, Blocks.MAGMA_BLOCK.defaultBlockState(), 3);
                                     }
                                 }
                             }
@@ -67,8 +68,8 @@ public class MeteoriteProjectile extends AbstractHurtingProjectile {
                     }
                 }
             }else{
-                this.level.explode(null, level.damageSources().magic(), null, this.position().x, this.position().y, this.position().z, 10, true, Level.ExplosionInteraction.NONE);
-                this.level.explode(null, level.damageSources().magic(), null, this.position().x + velocityVector.x / 5, this.position().y + velocityVector.y / 15, this.position().z + velocityVector.z / 10, 10, true, Level.ExplosionInteraction.NONE);
+                this.level().explode(null, level().damageSources().magic(), null, this.position().x, this.position().y, this.position().z, 10, true, Level.ExplosionInteraction.NONE);
+                this.level().explode(null, level().damageSources().magic(), null, this.position().x + velocityVector.x / 5, this.position().y + velocityVector.y / 15, this.position().z + velocityVector.z / 10, 10, true, Level.ExplosionInteraction.NONE);
             }
         }
         this.remove(RemovalReason.KILLED);
@@ -81,7 +82,7 @@ public class MeteoriteProjectile extends AbstractHurtingProjectile {
     @Override
     public void tick(){
         super.tick();
-        if (!this.level.isClientSide){
+        if (!this.level().isClientSide){
             tickCount++;
             if (this.tickCount > 500){
                 this.remove(RemovalReason.KILLED);
@@ -91,13 +92,13 @@ public class MeteoriteProjectile extends AbstractHurtingProjectile {
             int radius = 3;
             double offsety = radius*Math.cos(Math.toRadians(i*15));
             double offsetz = radius*Math.sin(Math.toRadians(i*15));
-            this.level.addParticle(ParticleTypes.FLAME,this.position().x,this.position().y+offsety,this.position().z+offsetz,0,0,0);
+            this.level().addParticle(ParticleTypes.FLAME,this.position().x,this.position().y+offsety,this.position().z+offsetz,0,0,0);
         }
         for (int i = 0;i<24;i++){
             int radius = 3;
 
             double offsetx = radius*Math.sin(Math.toRadians(i*15));
-            this.level.addParticle(ParticleTypes.FLAME,this.position().x+offsetx,this.position().y,this.position().z,0,0,0);
+            this.level().addParticle(ParticleTypes.FLAME,this.position().x+offsetx,this.position().y,this.position().z,0,0,0);
         }
 
     }

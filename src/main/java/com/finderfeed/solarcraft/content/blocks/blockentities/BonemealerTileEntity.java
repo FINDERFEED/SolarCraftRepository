@@ -70,7 +70,7 @@ public class BonemealerTileEntity extends AbstractRunicEnergyContainer implement
                 for (int h = -10; h <= 10;h++){
                     BlockPos whereToSeek = worldPosition.offset(i,g,h);
                     if (level.getBlockState(whereToSeek).getBlock() instanceof CropBlock crop){
-                        if (crop.isValidBonemealTarget(level,whereToSeek,level.getBlockState(whereToSeek),true)) {
+                        if (crop.isValidBonemealTarget(level,whereToSeek,level.getBlockState(whereToSeek))) {
                             returnThis.add(whereToSeek);
                         }
                     }

@@ -4,6 +4,7 @@ import com.finderfeed.solarcraft.content.blocks.blockentities.containers.SolarFu
 import com.finderfeed.solarcraft.content.blocks.solar_energy.Bindable;
 import com.finderfeed.solarcraft.content.blocks.solar_energy.SolarEnergyContainer;
 import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.player.Inventory;
@@ -106,9 +107,9 @@ public class SolarEnergyFurnaceTile extends RandomizableContainerBlockEntity imp
             tile.arr.set(0,tile.SOLAR_ENERGY_LEVEL);
             tile.arr.set(1,tile.RECIPE_PROGRESS);
             tile.arr.set(2,tile.MAX_RECIPE_TIME);
-            Optional<SmeltingRecipe> recipe =tile.level.getRecipeManager().getRecipeFor(RecipeType.SMELTING,tile,tile.level);
+            Optional<RecipeHolder<SmeltingRecipe>> recipe =tile.level.getRecipeManager().getRecipeFor(RecipeType.SMELTING,tile,tile.level);
                 if (recipe.isPresent()){
-                    SmeltingRecipe recipe1 = recipe.get();
+                    SmeltingRecipe recipe1 = recipe.get().value();
                     ItemStack item = tile.getItem(1);
                     if (((item.getItem().equals(recipe1.getResultItem(tile.level.registryAccess()).getItem())
                             && (item.getCount() < item.getMaxStackSize()) )

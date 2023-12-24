@@ -9,7 +9,7 @@ import com.finderfeed.solarcraft.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarcraft.local_library.OwnedBlock;
 import com.finderfeed.solarcraft.client.particles.SCParticleTypes;
 
-import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
+import com.finderfeed.solarcraft.registries.sounds.SCSounds;
 import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -85,7 +85,7 @@ public class ZapTurretTile extends BlockEntity implements OwnedBlock, IStructure
                         tile.targets.add(trg.position().add(0, trg.getBbHeight() / 2, 0));
                     });
 
-                    world.playSound(null,pos.getX()+0.5f,pos.getY()+0.5f,pos.getZ()+0.5f, SolarcraftSounds.ZAP_TURRET_SHOT.get(), SoundSource.AMBIENT,1f,0.7f);
+                    world.playSound(null,pos.getX()+0.5f,pos.getY()+0.5f,pos.getZ()+0.5f, SCSounds.ZAP_TURRET_SHOT.get(), SoundSource.AMBIENT,1f,0.7f);
                     tile.attack = true;
                     world.sendBlockUpdated(pos, state, state, 3);
 

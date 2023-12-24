@@ -22,16 +22,16 @@ public class TakeEnergyFromForgePacket {
     public void toBytes(FriendlyByteBuf buf){
         buf.writeBlockPos(pos);
     }
-    public void handle(Supplier<NetworkEvent.Context> ctx){
-        ctx.get().enqueueWork(()->{
-            ServerPlayer player = ctx.get().getSender();
-            ServerLevel level = (ServerLevel) player.level;
+    public void handle(NetworkEvent.Context ctx){
+        ctx.enqueueWork(()->{
+            ServerPlayer player = ctx.getSender();
+            ServerLevel level = (ServerLevel) player.level();
             if (level.getBlockEntity(pos) instanceof SolarForgeBlockEntity forge){
                 int penergy = player.getPersistentData().getInt(SolarCraftTags.RAW_SOLAR_ENERGY);
                 player.getPersistentData().putInt(SolarCraftTags.RAW_SOLAR_ENERGY,penergy+forge.getCurrentEnergy());
                 forge.SOLAR_ENERGY_LEVEL = 0;
             }
         });
-        ctx.get().setPacketHandled(true);
+        ctx.setPacketHandled(true);
     }
 }

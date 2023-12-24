@@ -35,10 +35,10 @@ public class PlaySoundPacket {
         buf.writeBlockPos(pos);
     }
 
-    public void handle(Supplier<NetworkEvent.Context> ctx) {
-        ctx.get().enqueueWork(() -> {
+    public void handle(NetworkEvent.Context ctx) {
+        ctx.enqueueWork(() -> {
             ClientHelpers.playSoundAtPos(pos,id,pitch,volume);
         });
-        ctx.get().setPacketHandled(true);
+        ctx.setPacketHandled(true);
     }
 }

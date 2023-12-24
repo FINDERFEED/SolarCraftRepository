@@ -21,6 +21,7 @@ import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -48,9 +49,9 @@ public class InfusingTableTile extends BlockEntity implements OwnedBlock, IWanda
 
             if (tile.isRecipeInProgress()){
                 IItemHandler handler = tile.getInventory();
-                Optional<InfusingCraftingRecipe> optional = world.getRecipeManager().getRecipeFor(SolarcraftRecipeTypes.INFUSING_CRAFTING.get(), tile.phantomInv.set(handler), world);
+                Optional<RecipeHolder<InfusingCraftingRecipe>> optional = world.getRecipeManager().getRecipeFor(SolarcraftRecipeTypes.INFUSING_CRAFTING.get(), tile.phantomInv.set(handler), world);
                 if (optional.isPresent()) {
-                    InfusingCraftingRecipe recipe = optional.get();
+                    InfusingCraftingRecipe recipe = optional.get().value();
                     int recipeTime = recipe.getTime();
                     int maxOutput = tile.calculateMaximumRecipeOutput(recipe);
                     if (tile.getCurrentTime() < recipeTime*maxOutput){
@@ -105,9 +106,9 @@ public class InfusingTableTile extends BlockEntity implements OwnedBlock, IWanda
     public void clientTick(){
         if (isRecipeInProgress()) {
             IItemHandler handler = this.getInventory();
-            Optional<InfusingCraftingRecipe> optional = level.getRecipeManager().getRecipeFor(SolarcraftRecipeTypes.INFUSING_CRAFTING.get(), this.phantomInv.set(handler), level);
+            Optional<RecipeHolder<InfusingCraftingRecipe>> optional = level.getRecipeManager().getRecipeFor(SolarcraftRecipeTypes.INFUSING_CRAFTING.get(), this.phantomInv.set(handler), level);
             if (optional.isPresent()) {
-                InfusingCraftingRecipe recipe = optional.get();
+                InfusingCraftingRecipe recipe = optional.get().value();
                 int recipeTime = recipe.getTime();
                 int maxOutput = this.calculateMaximumRecipeOutput(recipe);
 
@@ -161,19 +162,19 @@ public class InfusingTableTile extends BlockEntity implements OwnedBlock, IWanda
             //    }
             //});
             if (handler.getStackInSlot(9).is(Items.AIR)) {
-                Optional<InfusingCraftingRecipe> recipe = level.getRecipeManager().getRecipeFor(SolarcraftRecipeTypes.INFUSING_CRAFTING.get(), phantomInv.set(handler), level);
+                Optional<RecipeHolder<InfusingCraftingRecipe>> recipe = level.getRecipeManager().getRecipeFor(SolarcraftRecipeTypes.INFUSING_CRAFTING.get(), phantomInv.set(handler), level);
                     if (recipe.isPresent()) {
                         try {
-                            if (AncientFragmentHelper.doPlayerHasFragment(pl, recipe.get().getFragment())) {
+                            if (AncientFragmentHelper.doPlayerHasFragment(pl, recipe.get().value().getFragment())) {
                                 Helpers.fireProgressionEvent(pl, Progression.INFUSING_CRAFTING_TABLE);
                                 this.recipeTrigerred = true;
                                 update();
                             } else {
-                                pl.sendSystemMessage(Component.literal("Cant start craft, you don't have " + recipe.get().getFragment().getId().toUpperCase(Locale.ROOT) +
+                                pl.sendSystemMessage(Component.literal("Cant start craft, you don't have " + recipe.get().value().getFragment().getId().toUpperCase(Locale.ROOT) +
                                         " fragment unlocked.").withStyle(ChatFormatting.RED));
                             }
                         }catch (Exception e){
-                            pl.sendSystemMessage(Component.literal("INCORRECT FRAGMENT IN RECIPE "+ recipe.get().getOutput().getDisplayName()+" TELL MOD AUTHOR TO FIX IT").withStyle(ChatFormatting.RED));
+                            pl.sendSystemMessage(Component.literal("INCORRECT FRAGMENT IN RECIPE "+ recipe.get().value().getOutput().getDisplayName()+" TELL MOD AUTHOR TO FIX IT").withStyle(ChatFormatting.RED));
                         }
                     }else{
                         pl.sendSystemMessage(Component.literal("Recipe invalid.").withStyle(ChatFormatting.RED));

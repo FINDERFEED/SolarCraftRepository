@@ -45,10 +45,10 @@ public class LaunchOrbitalMissilePacket {
     }
 
 
-    public void handle(Supplier<NetworkEvent.Context> ctx) {
-        ctx.get().enqueueWork(()->{
-            ServerPlayer sender = ctx.get().getSender();
-            Level level = sender.level;
+    public void handle(NetworkEvent.Context ctx) {
+        ctx.enqueueWork(()->{
+            ServerPlayer sender = ctx.getSender();
+            Level level = sender.level();
 
             if (!SolarcraftConfig.IS_ORBITAL_MISSILE_LAUNCHER_ALLOWED.get()){
                 sender.sendSystemMessage(Component.translatable("solarcraft.message.block_disabled").withStyle(ChatFormatting.RED));
@@ -68,7 +68,7 @@ public class LaunchOrbitalMissilePacket {
                 }
             }
         });
-        ctx.get().setPacketHandled(true);
+        ctx.setPacketHandled(true);
     }
 
     private void setExplosion(ServerPlayer sender,SolarOrbitalMissileLauncherTileEntity tile){

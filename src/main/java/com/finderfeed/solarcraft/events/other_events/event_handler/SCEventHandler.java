@@ -39,7 +39,7 @@ import com.finderfeed.solarcraft.registries.attributes.AttributesRegistry;
 import com.finderfeed.solarcraft.registries.effects.SCEffects;
 import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
 import com.finderfeed.solarcraft.registries.items.SCItems;
-import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
+import com.finderfeed.solarcraft.registries.sounds.SCSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
@@ -273,14 +273,14 @@ public class SCEventHandler {
 
                     if ((actualtime % 13000 == 0)) {
                         player.sendSystemMessage(Component.translatable("radiant_dimension.nightfall").withStyle(ChatFormatting.RED));
-                        ClientHelpers.playsoundInEars(SolarcraftSounds.NIGHT_DIM.get(), 1, 1);
+                        ClientHelpers.playsoundInEars(SCSounds.NIGHT_DIM.get(), 1, 1);
                     } else if ((actualtime % 14400 == 0)) {
 
-                        ClientHelpers.playsoundInEars(SolarcraftSounds.AMBIENT_DIM_1.get(), 1, 1);
+                        ClientHelpers.playsoundInEars(SCSounds.AMBIENT_DIM_1.get(), 1, 1);
                     } else if ((actualtime % 16800 == 0)) {
-                        ClientHelpers.playsoundInEars(SolarcraftSounds.AMBIENT_DIM_2.get(), 1, 1);
+                        ClientHelpers.playsoundInEars(SCSounds.AMBIENT_DIM_2.get(), 1, 1);
                     } else if ((actualtime % 20000) == 0) {
-                        ClientHelpers.playsoundInEars(SolarcraftSounds.AMBIENT_DIM_1.get(), 1, 1);
+                        ClientHelpers.playsoundInEars(SCSounds.AMBIENT_DIM_1.get(), 1, 1);
                     }
                 }
             }

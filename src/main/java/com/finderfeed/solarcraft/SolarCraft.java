@@ -9,14 +9,10 @@ import com.finderfeed.solarcraft.config.SolarcraftConfig;
 
 import com.finderfeed.solarcraft.content.world_generation.structures.SolarcraftStructureTypes;
 import com.finderfeed.solarcraft.events.RenderEventsHandler;
-import com.finderfeed.solarcraft.content.blocks.infusing_table_things.*;
 import com.finderfeed.solarcraft.content.blocks.infusing_table_things.infusing_pool.InfusingStand;
 import com.finderfeed.solarcraft.content.items.item_tiers.SolarCraftToolTiers;
 import com.finderfeed.solarcraft.client.particles.SCParticleTypes;
-import com.finderfeed.solarcraft.registries.ConfigRegistry;
-import com.finderfeed.solarcraft.registries.SCCreativeTabs;
-import com.finderfeed.solarcraft.registries.SolarcraftGamerules;
-import com.finderfeed.solarcraft.registries.Tags;
+import com.finderfeed.solarcraft.registries.*;
 import com.finderfeed.solarcraft.registries.abilities.AbilitiesRegistry;
 import com.finderfeed.solarcraft.registries.attributes.AttributesRegistry;
 import com.finderfeed.solarcraft.registries.blocks.SCBlocks;
@@ -25,7 +21,7 @@ import com.finderfeed.solarcraft.registries.data_serializers.FDEntityDataSeriali
 import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
 
 import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
-import com.finderfeed.solarcraft.registries.containers.SolarcraftContainers;
+import com.finderfeed.solarcraft.registries.containers.SCContainers;
 import com.finderfeed.solarcraft.registries.effects.SCEffects;
 import com.finderfeed.solarcraft.registries.loot_modifiers.SolarcraftLootModifiers;
 import com.finderfeed.solarcraft.registries.recipe_types.SolarcraftRecipeTypes;
@@ -33,10 +29,7 @@ import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
 import com.finderfeed.solarcraft.registries.wand_actions.SolarCraftWandActionRegistry;
 
 import com.finderfeed.solarcraft.registries.items.SCItems;
-import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
-
-
-import com.finderfeed.solarcraft.content.blocks.solar_forge_block.solar_forge_screen.SolarForgeScreen;
+import com.finderfeed.solarcraft.registries.sounds.SCSounds;
 
 
 import com.finderfeed.solarcraft.content.world_generation.structures.SolarcraftStructureHolders;
@@ -53,8 +46,6 @@ import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.common.TierSortingRegistry;
-
-import net.minecraft.client.gui.screens.MenuScreens;
 
 
 import net.minecraft.resources.ResourceLocation;
@@ -99,8 +90,8 @@ public class SolarCraft
         SCTileEntities.TILE_ENTITY_TYPE.register(bus);
         SCEntityTypes.ENTITY_TYPE_REGISTER.register(bus);
         SCEffects.EFFECTS.register(bus);
-        SolarcraftSounds.SOUND_EVENTS.register(bus);
-        SolarcraftContainers.CONTAINER_TYPE.register(bus);
+        SCSounds.SOUND_EVENTS.register(bus);
+        SCContainers.CONTAINER_TYPE.register(bus);
         FoliagePlacerRegistry.DEFERRED_REGISTER.register(bus);
         AttributesRegistry.DEF_REG.register(bus);
         FDEntityDataSerializers.DEF_REG.register(bus);
@@ -110,6 +101,7 @@ public class SolarCraft
         SolarcraftRecipeTypes.RECIPE_TYPES.register(bus);
         SolarcraftLootModifiers.MODIFIERS.register(bus);
         SolarcraftCommandArgumentTypes.ARGUMENT_TYPES.register(bus);
+        SCItemPredicates.PREDICATES.register(bus);
         SolarcraftGamerules.init();
         ConfigRegistry.init();
         // Register the setup method for modloading

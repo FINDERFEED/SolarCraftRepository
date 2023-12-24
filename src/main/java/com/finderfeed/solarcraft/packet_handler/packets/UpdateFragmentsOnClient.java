@@ -19,7 +19,7 @@ public class UpdateFragmentsOnClient extends AbstractPacket {
     }
 
     public UpdateFragmentsOnClient(FriendlyByteBuf buf){
-        this.fragmentData = buf.readAnySizeNbt();
+        this.fragmentData = buf.readNbt();
 
     }
 
@@ -32,11 +32,11 @@ public class UpdateFragmentsOnClient extends AbstractPacket {
     }
 
     @Override
-    public void handle(Supplier<NetworkEvent.Context> ctx) {
-        ctx.get().enqueueWork(()->{
+    public void handle(NetworkEvent.Context ctx) {
+        ctx.enqueueWork(()->{
 
             ClientHelpers.updatePlayerFragments(fragmentData);
         });
-        ctx.get().setPacketHandled(true);
+        ctx.setPacketHandled(true);
     }
 }

@@ -132,8 +132,8 @@ public class RayTrapTileEntity extends BlockEntity  {
     }
 
 
-    @Override
-    public AABB getRenderBoundingBox() {
-        return new AABB(worldPosition.offset(-6,-6,-6),worldPosition.offset(6,6,6));
-    }
+//    @Override
+//    public AABB getRenderBoundingBox() {
+//        return new AABB(worldPosition.offset(-6,-6,-6),worldPosition.offset(6,6,6));
+//    }
 }

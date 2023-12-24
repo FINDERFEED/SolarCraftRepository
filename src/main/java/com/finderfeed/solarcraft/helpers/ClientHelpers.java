@@ -28,7 +28,7 @@ import com.finderfeed.solarcraft.misc_things.*;
 import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
 import com.finderfeed.solarcraft.packet_handler.packets.RequestAbilityScreenPacket;
 import com.finderfeed.solarcraft.registries.items.SCItems;
-import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
+import com.finderfeed.solarcraft.registries.sounds.SCSounds;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.SolarLexicon;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragmentHelper;
 import com.google.gson.JsonObject;
@@ -293,7 +293,7 @@ public class ClientHelpers {
     }
 
     public static void addEnergyTypeToast(String id){
-        playSound(SolarcraftSounds.PROGRESSION_GAIN.get(),1,1);
+        playSound(SCSounds.PROGRESSION_GAIN.get(),1,1);
         UnlockedEnergyTypeToast.addOrUpdate(Minecraft.getInstance().getToasts(), RunicEnergy.Type.byId(id));
     }
 
@@ -329,7 +329,7 @@ public class ClientHelpers {
 
 
     public static void playSoundAtPos(BlockPos pos,int soundID,float pitch, float volume){
-        Level world = Minecraft.getInstance().player.level;
+        Level world = Minecraft.getInstance().player.level();
 
 
         world.playSound(Minecraft.getInstance().player,pos.getX()+0.5,pos.getY()+0.5,pos.getZ()+0.5,getSoundByID(soundID),
@@ -339,9 +339,9 @@ public class ClientHelpers {
 
     public static SoundEvent getSoundByID(int id){
         if (id == 1){
-            return SolarcraftSounds.SOLAR_MORTAR_SHOOT.get();
+            return SCSounds.SOLAR_MORTAR_SHOOT.get();
         }else if(id == 2){
-            return SolarcraftSounds.SOLAR_MORTAR_PROJECTILE.get();
+            return SCSounds.SOLAR_MORTAR_PROJECTILE.get();
         }
         return null;
     }

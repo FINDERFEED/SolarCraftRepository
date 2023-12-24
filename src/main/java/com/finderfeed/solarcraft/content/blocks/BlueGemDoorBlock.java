@@ -1,7 +1,7 @@
 package com.finderfeed.solarcraft.content.blocks;
 
 import com.finderfeed.solarcraft.registries.items.SCItems;
-import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
+import com.finderfeed.solarcraft.registries.sounds.SCSounds;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.GlazedTerracottaBlock;
@@ -44,7 +44,7 @@ public class BlueGemDoorBlock extends GlazedTerracottaBlock {
                     player.getMainHandItem().grow(-1);
                 }
                 world.setBlock(pos,state.setValue(UNLOCKED,true), 3);
-                world.playSound(null,player, SolarcraftSounds.GEM_INSERT.get(), SoundSource.AMBIENT,1,1);
+                world.playSound(null,player, SCSounds.GEM_INSERT.get(), SoundSource.AMBIENT,1,1);
 
 
                 if ( world.getBlockState(pos.offset(0,0,-2)).hasProperty(UNLOCKED)&& world.getBlockState(pos.offset(0,0,-2)).getValue(UNLOCKED)){

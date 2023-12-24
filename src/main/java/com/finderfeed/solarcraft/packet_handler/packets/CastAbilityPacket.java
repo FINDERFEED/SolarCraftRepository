@@ -10,21 +10,19 @@ import java.util.function.Supplier;
 public class CastAbilityPacket {
     private final int index;
     public CastAbilityPacket(FriendlyByteBuf buf){
-
         index = buf.readInt();
-
     }
     public CastAbilityPacket(int index){
-    this.index = index;
+        this.index = index;
     }
     public void toBytes(FriendlyByteBuf buf){
         buf.writeInt(index);
     }
-    public void handle(Supplier<NetworkEvent.Context> ctx){
-        ctx.get().enqueueWork(()->{
-            ServerPlayer enti = ctx.get().getSender();
-            AbilityHelper.castAbility((ServerLevel) enti.level,enti, AbilityHelper.getBindedAbilityID(enti,index));
+    public void handle(NetworkEvent.Context ctx){
+        ctx.enqueueWork(()->{
+            ServerPlayer enti = ctx.getSender();
+            AbilityHelper.castAbility((ServerLevel) enti.level(),enti, AbilityHelper.getBindedAbilityID(enti,index));
         });
-        ctx.get().setPacketHandled(true);
+        ctx.setPacketHandled(true);
     }
 }

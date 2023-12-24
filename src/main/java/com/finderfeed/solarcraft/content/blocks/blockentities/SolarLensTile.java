@@ -16,6 +16,7 @@ import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -114,11 +115,11 @@ public class SolarLensTile extends BlockEntity  {
 
 
     public static void processRecipe(Level world, BlockPos post, BlockState blockState, SolarLensTile tile,List<ItemEntity> list){
-        Optional<SolarSmeltingRecipe> recipe = tile.level.getRecipeManager().getRecipeFor(SolarcraftRecipeTypes.SMELTING.get(),tile.INVENTORY,tile.level);
+        Optional<RecipeHolder<SolarSmeltingRecipe>> recipe = tile.level.getRecipeManager().getRecipeFor(SolarcraftRecipeTypes.SMELTING.get(),tile.INVENTORY,tile.level);
         if (recipe.isPresent() ){
-            SolarSmeltingRecipe actualRecipe = recipe.get();
+            SolarSmeltingRecipe actualRecipe = recipe.get().value();
             tile.RECIPE_IN_PROGRESS = true;
-            tile.SMELTING_TIME = recipe.get().smeltingTime;
+            tile.SMELTING_TIME = actualRecipe.smeltingTime;
             tile.CURRENT_SMELTING_TIME++;
             if (tile.CURRENT_SMELTING_TIME % 5 == 0){
                 tile.setChanged();
@@ -136,7 +137,7 @@ public class SolarLensTile extends BlockEntity  {
 
                 }
                 Vec3 pos = new Vec3(tile.worldPosition.getX()+0.5d,tile.worldPosition.getY()-1,tile.worldPosition.getZ()+0.5d);
-                ItemEntity entity = new ItemEntity(tile.level,pos.x,pos.y,pos.z,new ItemStack(recipe.get().output.getItem(),count));
+                ItemEntity entity = new ItemEntity(tile.level,pos.x,pos.y,pos.z,new ItemStack(actualRecipe.output.getItem(),count));
                 tile.level.addFreshEntity(entity);
                 tile.SMELTING_TIME = 0;
                 tile.CURRENT_SMELTING_TIME = 0;

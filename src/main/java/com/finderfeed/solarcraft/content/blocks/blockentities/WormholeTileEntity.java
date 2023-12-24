@@ -37,8 +37,8 @@ public class WormholeTileEntity extends BlockEntity {
         });
     }
 
-    @Override
-    public AABB getRenderBoundingBox() {
-        return new AABB(getBlockPos(),getBlockPos().offset(1,1,1));
-    }
+//    @Override
+//    public AABB getRenderBoundingBox() {
+//        return new AABB(getBlockPos(),getBlockPos().offset(1,1,1));
+//    }
 }

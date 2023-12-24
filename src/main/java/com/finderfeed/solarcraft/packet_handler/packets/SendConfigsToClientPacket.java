@@ -41,10 +41,10 @@ public class SendConfigsToClientPacket {
     }
 
 
-    public void handle(Supplier<NetworkEvent.Context> ctx) {
-        ctx.get().enqueueWork(()->{
+    public void handle(NetworkEvent.Context ctx) {
+        ctx.enqueueWork(()->{
             ClientPacketHandles.handleClientConfigsPacket(idJson);
         });
-        ctx.get().setPacketHandled(true);
+        ctx.setPacketHandled(true);
     }
 }

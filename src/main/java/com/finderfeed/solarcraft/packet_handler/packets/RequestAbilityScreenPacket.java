@@ -25,9 +25,9 @@ public class RequestAbilityScreenPacket {
         buf.writeBoolean(dontOpen);
     }
 
-    public void handle(Supplier<NetworkEvent.Context> ctx) {
-        ctx.get().enqueueWork(()->{
-            ServerPlayer player = ctx.get().getSender();
+    public void handle(NetworkEvent.Context ctx) {
+        ctx.enqueueWork(()->{
+            ServerPlayer player = ctx.getSender();
             SCPacketHandler.INSTANCE.sendTo(new OpenAbilityScreenPacket(
                             player.getPersistentData().getInt(SolarCraftTags.RAW_SOLAR_ENERGY),
                             dontOpen,
@@ -38,7 +38,7 @@ public class RequestAbilityScreenPacket {
                     )
                     ,player.connection.connection, PlayNetworkDirection.PLAY_TO_CLIENT);
         });
-        ctx.get().setPacketHandled(true);
+        ctx.setPacketHandled(true);
     }
 
 

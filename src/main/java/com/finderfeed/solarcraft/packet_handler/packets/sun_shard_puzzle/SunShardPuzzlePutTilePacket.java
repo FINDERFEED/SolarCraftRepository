@@ -27,7 +27,7 @@ public class SunShardPuzzlePutTilePacket {
 
 
     public SunShardPuzzlePutTilePacket(FriendlyByteBuf buf){
-        CompoundTag tag = buf.readAnySizeNbt();
+        CompoundTag tag = buf.readNbt());
         tile = PuzzleTile.deserialize(tag);
         this.x = buf.readInt();
         this.y = buf.readInt();
@@ -43,17 +43,17 @@ public class SunShardPuzzlePutTilePacket {
         buf.writeBlockPos(tilePos);
     }
 
-    public void handle(Supplier<NetworkEvent.Context> ctx){
-        ctx.get().enqueueWork(()->{
-            ServerPlayer sender = ctx.get().getSender();
+    public void handle(NetworkEvent.Context ctx){
+        ctx.enqueueWork(()->{
+            ServerPlayer sender = ctx.getSender();
             if (sender != null){
-                Level world = sender.level;
+                Level world = sender.level();
                 if (world.getBlockEntity(tilePos) instanceof SunShardPuzzleBlockEntity tile){
                     tile.onPutTile(sender,this.tile,x,y);
                 }
             }
         });
-        ctx.get().setPacketHandled(true);
+        ctx.setPacketHandled(true);
     }
 
 }

@@ -27,9 +27,9 @@ public class SetREDrainTypePacket {
         buf.writeInt(id);
     }
 
-    public void handle(Supplier<NetworkEvent.Context> ctx){
-        ctx.get().enqueueWork(()->{
-            ServerPlayer enti = ctx.get().getSender();
+    public void handle(NetworkEvent.Context ctx){
+        ctx.enqueueWork(()->{
+            ServerPlayer enti = ctx.getSender();
             if (enti.getMainHandItem().is(SCItems.SOLAR_WAND.get())){
                 ItemStack stack = enti.getMainHandItem();
                 REDrainWandActionDataSerializer serializer = REDrainWandActionDataSerializer.SERIALIZER;
@@ -47,7 +47,7 @@ public class SetREDrainTypePacket {
                 serializer.serialize(tag,data);
             }
         });
-        ctx.get().setPacketHandled(true);
+        ctx.setPacketHandled(true);
     }
 
 

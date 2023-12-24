@@ -5,7 +5,7 @@ import com.finderfeed.solarcraft.client.particles.SCParticleTypes;
 import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.finderfeed.solarcraft.packet_handler.packets.ShadowBoltExplosionPacket;
 import com.finderfeed.solarcraft.registries.damage_sources.SCDamageSources;
-import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
+import com.finderfeed.solarcraft.registries.sounds.SCSounds;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
@@ -86,7 +86,7 @@ public class ShadowBolt extends AbstractHurtingProjectile {
 
             e.hurt(SCDamageSources.SHADOW,5);
         }
-        level.playSound(null,position().x,position().y,position().z, SolarcraftSounds.SHADOW_BOLT_EXPLOSION.get(), SoundSource.HOSTILE,4,0.75f);
+        level.playSound(null,position().x,position().y,position().z, SCSounds.SHADOW_BOLT_EXPLOSION.get(), SoundSource.HOSTILE,4,0.75f);
     }
 
     @Override

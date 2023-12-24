@@ -7,7 +7,7 @@ import com.finderfeed.solarcraft.misc_things.CrystalBossBuddy;
 import com.finderfeed.solarcraft.registries.damage_sources.SCDamageSources;
 import com.finderfeed.solarcraft.registries.data_serializers.FDEntityDataSerializers;
 import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
-import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
+import com.finderfeed.solarcraft.registries.sounds.SCSounds;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
@@ -72,7 +72,7 @@ public class EarthquakeEntity extends Entity {
                         e.hurt(SCDamageSources.RUNIC_MAGIC,damage);
                     }
                 }
-                level.playSound(null,position().x,position().y,position().z, SolarcraftSounds.EARTHQUAKE.get(), SoundSource.HOSTILE,5f,1f);
+                level.playSound(null,position().x,position().y,position().z, SCSounds.EARTHQUAKE.get(), SoundSource.HOSTILE,5f,1f);
             }
             if (tickCount >= DEATH_TIME-20){
                 this.kill();

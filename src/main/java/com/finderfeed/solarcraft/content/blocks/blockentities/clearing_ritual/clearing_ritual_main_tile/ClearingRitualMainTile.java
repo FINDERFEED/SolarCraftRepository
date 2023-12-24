@@ -64,8 +64,9 @@ public class ClearingRitualMainTile extends BlockEntity {
         ritual.load(tag);
     }
 
-    @Override
-    public AABB getRenderBoundingBox() {
-        return Helpers.createAABBWithRadius(Helpers.getBlockCenter(this.getBlockPos()),20,100);
-    }
+
+//    @Override
+//    public AABB getRenderBoundingBox() {
+//        return Helpers.createAABBWithRadius(Helpers.getBlockCenter(this.getBlockPos()),20,100);
+//    }
 }

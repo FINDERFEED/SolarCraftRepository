@@ -27,10 +27,10 @@ public class UpdateLaserTrapTile {
         buf.writeBlockPos(pos);
     }
 
-    public void handle(Supplier<NetworkEvent.Context> ctx) {
-        ctx.get().enqueueWork(() -> {
+    public void handle(NetworkEvent.Context ctx) {
+        ctx.enqueueWork(() -> {
             ClientHelpers.updateIntegerLASERTRAP(pos,updateIt);
         });
-        ctx.get().setPacketHandled(true);
+        ctx.setPacketHandled(true);
     }
 }

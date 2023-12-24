@@ -72,7 +72,7 @@ public class RuneEnergyPylonTile extends BlockEntity implements  DebugTarget, Ru
         if (tile.getEnergyType() != null) {
             AABB bb = new AABB(tile.worldPosition.offset(-8, -10, -8), tile.worldPosition.offset(8, 0, 8));
             tile.level.getEntitiesOfClass(ItemEntity.class, bb, (entity) -> entity.getItem().getItem() instanceof IImbuableItem).forEach(entity -> {
-                if (!entity.level.isClientSide) {
+                if (!entity.level().isClientSide) {
                     IImbuableItem item = (IImbuableItem) entity.getItem().getItem();
                     if (item.imbue(entity,tile)){
                         double neededEnergy = item.getCost();
@@ -85,13 +85,13 @@ public class RuneEnergyPylonTile extends BlockEntity implements  DebugTarget, Ru
                         }
                     }
                 } else {
-                    if (entity.level.getGameTime() % 5 == 1) {
+                    if (entity.level().getGameTime() % 5 == 1) {
 
-                        double rndX = entity.level.random.nextDouble() * 0.6 - 0.3;
-                        double rndY = entity.level.random.nextDouble() * 0.6 - 0.3;
-                        double rndZ = entity.level.random.nextDouble() * 0.6 - 0.3;
+                        double rndX = entity.level().random.nextDouble() * 0.6 - 0.3;
+                        double rndY = entity.level().random.nextDouble() * 0.6 - 0.3;
+                        double rndZ = entity.level().random.nextDouble() * 0.6 - 0.3;
 
-                        entity.level.addParticle(SCParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+                        entity.level().addParticle(SCParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
                                 entity.position().x + rndX, entity.position().y + rndY, entity.position().z + rndZ, 0, 0.1, 0
                         );
                     }
@@ -310,7 +310,7 @@ public class RuneEnergyPylonTile extends BlockEntity implements  DebugTarget, Ru
 
     @Override
     public float drainEnergy(RunicEnergy.Type type,Player player, float amount) {
-        if (!player.level.isClientSide && type == this.type) {
+        if (!player.level().isClientSide && type == this.type) {
             float delta = Math.min(amount, currentEnergy);
             this.currentEnergy -= delta;
             Helpers.fireProgressionEvent(player, Progression.RUNE_ENERGY_CLAIM);

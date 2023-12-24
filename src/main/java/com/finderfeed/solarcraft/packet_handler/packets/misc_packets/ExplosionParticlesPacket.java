@@ -23,11 +23,11 @@ public class ExplosionParticlesPacket {
         buf.writeDouble(pos.y);
         buf.writeDouble(pos.z);
     }
-    public void handle(Supplier<NetworkEvent.Context> ctx){
-        ctx.get().enqueueWork(()->{
+    public void handle(NetworkEvent.Context ctx){
+        ctx.enqueueWork(()->{
             ClientHelpers.doExplosionParticles(pos);
         });
-        ctx.get().setPacketHandled(true);
+        ctx.setPacketHandled(true);
     }
 
     public static void send(Level world, Vec3 pos){

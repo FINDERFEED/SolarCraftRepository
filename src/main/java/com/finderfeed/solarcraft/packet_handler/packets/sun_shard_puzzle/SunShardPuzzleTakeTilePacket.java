@@ -40,17 +40,17 @@ public class SunShardPuzzleTakeTilePacket {
         buf.writeBlockPos(tilePos);
     }
 
-    public void handle(Supplier<NetworkEvent.Context> ctx){
-        ctx.get().enqueueWork(()->{
-            ServerPlayer sender = ctx.get().getSender();
+    public void handle(NetworkEvent.Context ctx){
+        ctx.enqueueWork(()->{
+            ServerPlayer sender = ctx.getSender();
             if (sender != null){
-                Level world = sender.level;
+                Level world = sender.level();
                 if (world.getBlockEntity(tilePos) instanceof SunShardPuzzleBlockEntity tile){
                     tile.onTakeTile(x,y);
                 }
             }
         });
-        ctx.get().setPacketHandled(true);
+        ctx.setPacketHandled(true);
     }
 
 }

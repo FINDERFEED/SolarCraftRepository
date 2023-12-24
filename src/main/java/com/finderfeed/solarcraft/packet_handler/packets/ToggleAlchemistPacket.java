@@ -20,14 +20,14 @@ public class ToggleAlchemistPacket {
     public void toBytes(FriendlyByteBuf buf){
         buf.writeBoolean(toggle);
     }
-    public void handle(Supplier<NetworkEvent.Context> ctx){
-        ctx.get().enqueueWork(()->{
+    public void handle(NetworkEvent.Context ctx){
+        ctx.enqueueWork(()->{
             DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> ()-> {
                 LocalPlayer entitycl = Minecraft.getInstance().player;
                 entitycl.getPersistentData().putBoolean("is_alchemist_toggled", toggle);
             });
 
         });
-        ctx.get().setPacketHandled(true);
+        ctx.setPacketHandled(true);
     }
 }

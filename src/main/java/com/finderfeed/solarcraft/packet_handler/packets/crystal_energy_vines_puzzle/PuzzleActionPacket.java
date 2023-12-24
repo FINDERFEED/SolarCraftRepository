@@ -29,16 +29,16 @@ public class PuzzleActionPacket {
         buf.writeInt(moveType);
     }
 
-    public void handle(Supplier<NetworkEvent.Context> ctx){
-        ctx.get().enqueueWork(()-> {
-            ServerPlayer sender = ctx.get().getSender();
-            ServerLevel world = (ServerLevel) sender.level;
+    public void handle(NetworkEvent.Context ctx){
+        ctx.enqueueWork(()-> {
+            ServerPlayer sender = ctx.getSender();
+            ServerLevel world = (ServerLevel) sender.level();
             if (world.getBlockEntity(tilePos) instanceof CrystalEnergyVinesTile tile){
                 tile.handleAction(moveType);
                 Helpers.updateTile(tile);
             }
         });
-        ctx.get().setPacketHandled(true);
+        ctx.setPacketHandled(true);
     }
 
 }

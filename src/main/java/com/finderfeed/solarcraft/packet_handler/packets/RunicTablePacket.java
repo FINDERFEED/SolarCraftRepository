@@ -48,11 +48,11 @@ public class RunicTablePacket extends AbstractPacket {
     }
 
     @Override
-    public void handle(Supplier<NetworkEvent.Context> ctx) {
-        ctx.get().enqueueWork(()->{
-            ServerPlayer player = ctx.get().getSender();
+    public void handle(NetworkEvent.Context ctx) {
+        ctx.enqueueWork(()->{
+            ServerPlayer player = ctx.getSender();
             RunePattern pattern = new RunePattern(player);
-            if (player.level.getBlockEntity(pos) instanceof RunicTableTileEntity table) {
+            if (player.level().getBlockEntity(pos) instanceof RunicTableTileEntity table) {
                 IItemHandler h = table.getInventory();
                 int runeInt = pattern.getRune(xPressPos, yPressPos);
                 if (runeInt != RunePattern.OPENED) {
@@ -102,6 +102,6 @@ public class RunicTablePacket extends AbstractPacket {
             }
 
         });
-        ctx.get().setPacketHandled(true);
+        ctx.setPacketHandled(true);
     }
 }

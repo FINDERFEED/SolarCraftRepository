@@ -39,10 +39,10 @@ public class UpdateChunkPacket {
     }
 
 
-    public void handle(Supplier<NetworkEvent.Context> ctx) {
-        ctx.get().enqueueWork(()->{
+    public void handle(NetworkEvent.Context ctx) {
+        ctx.enqueueWork(()->{
             ClientPacketHandles.handleUpdateChunkPacket(x,z,chunkData);
         });
-        ctx.get().setPacketHandled(true);
+        ctx.setPacketHandled(true);
     }
 }

@@ -39,8 +39,8 @@ public class UpdateInventoryPacket {
         }
     }
 
-    public void handle(Supplier<NetworkEvent.Context> ctx) {
-        ctx.get().enqueueWork(()-> ClientHelpers.updateLexiconInventory(stacks));
-        ctx.get().setPacketHandled(true);
+    public void handle(NetworkEvent.Context ctx) {
+        ctx.enqueueWork(()-> ClientHelpers.updateLexiconInventory(stacks));
+        ctx.setPacketHandled(true);
     }
 }

@@ -39,8 +39,8 @@ public class UpdateProgressOnClientPacket {
         buf.writeBoolean(reqEnergy);
         buf.writeInt(energy);
     }
-    public void handle(Supplier<NetworkEvent.Context> ctx){
-        ctx.get().enqueueWork(()->{
+    public void handle(NetworkEvent.Context ctx){
+        ctx.enqueueWork(()->{
             DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> ()->{
                 ClientLevel world = Minecraft.getInstance().level;
                 InfuserTileEntity tile = (InfuserTileEntity) world.getBlockEntity(pos);
@@ -54,6 +54,6 @@ public class UpdateProgressOnClientPacket {
             });
 
         });
-        ctx.get().setPacketHandled(true);
+        ctx.setPacketHandled(true);
     }
 }

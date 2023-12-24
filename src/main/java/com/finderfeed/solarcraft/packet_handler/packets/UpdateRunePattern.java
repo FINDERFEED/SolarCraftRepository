@@ -20,7 +20,7 @@ public class UpdateRunePattern {
     }
 
     public UpdateRunePattern(FriendlyByteBuf buf) {
-        this.pattern = buf.readAnySizeNbt();
+        this.pattern = buf.readNbt();
         this.hideButtons = buf.readBoolean();
     }
 
@@ -29,11 +29,11 @@ public class UpdateRunePattern {
         buf.writeBoolean(hideButtons);
     }
 
-    public void handle(Supplier<NetworkEvent.Context> ctx) {
-        ctx.get().enqueueWork(() -> {
+    public void handle(NetworkEvent.Context ctx) {
+        ctx.enqueueWork(() -> {
             ClientHelpers.updatePlayerPattern(pattern, hideButtons);
         });
-        ctx.get().setPacketHandled(true);
+        ctx.setPacketHandled(true);
     }
 
 

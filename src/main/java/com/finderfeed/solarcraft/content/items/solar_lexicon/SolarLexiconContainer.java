@@ -2,7 +2,7 @@ package com.finderfeed.solarcraft.content.items.solar_lexicon;
 
 import com.finderfeed.solarcraft.content.items.AncientFragmentItem;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragmentHelper;
-import com.finderfeed.solarcraft.registries.containers.SolarcraftContainers;
+import com.finderfeed.solarcraft.registries.containers.SCContainers;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
@@ -29,7 +29,7 @@ public class SolarLexiconContainer extends AbstractContainerMenu {
     private final List<SlotItemHandler> scrollableSlots = new ArrayList<>();
     private int maxRows = 0;
     public SolarLexiconContainer(int p_i50105_2_, Inventory inv, ItemStack stack) {
-        super(SolarcraftContainers.SOLAR_LEXICON_CONTAINER.get(), p_i50105_2_);
+        super(SCContainers.SOLAR_LEXICON_CONTAINER.get(), p_i50105_2_);
         this.stack = stack;
         this.inventory = stack.getCapability(Capabilities.ITEM_HANDLER).orElse(null);
         int amount = 0;

@@ -23,7 +23,7 @@ public class UpdateRunicEnergyInContainerPacket {
 
     public UpdateRunicEnergyInContainerPacket(FriendlyByteBuf buf){
         this.containerPos = buf.readBlockPos();
-        this.tag = buf.readAnySizeNbt();
+        this.tag = buf.readNbt();
     }
 
     public void toBytes(FriendlyByteBuf buf){
@@ -32,11 +32,11 @@ public class UpdateRunicEnergyInContainerPacket {
     }
 
 
-    public void handle(Supplier<NetworkEvent.Context> ctx) {
-        ctx.get().enqueueWork(()->{
+    public void handle(NetworkEvent.Context ctx) {
+        ctx.enqueueWork(()->{
             ClientPacketHandles.updateContainerRunicEnergy(containerPos,tag);
         });
-        ctx.get().setPacketHandled(true);
+        ctx.setPacketHandled(true);
     }
 
 }

@@ -31,14 +31,14 @@ public class EnchanterPacket {
         buf.writeInt(level);
         buf.writeBlockPos(enchanterPos);
     }
-    public void handle(Supplier<NetworkEvent.Context> ctx){
-        ctx.get().enqueueWork(()->{
-            ServerPlayer sender  = ctx.get().getSender();
+    public void handle(NetworkEvent.Context ctx){
+        ctx.enqueueWork(()->{
+            ServerPlayer sender  = ctx.getSender();
             if (sender.level().getBlockEntity(enchanterPos) instanceof EnchanterBlockEntity enchanter){
                 enchanter.triggerEnchanting(BuiltInRegistries.ENCHANTMENT.get(location),level);
             }
 
          });
-        ctx.get().setPacketHandled(true);
+        ctx.setPacketHandled(true);
     }
 }

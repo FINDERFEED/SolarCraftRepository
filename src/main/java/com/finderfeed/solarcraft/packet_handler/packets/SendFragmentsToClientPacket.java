@@ -20,10 +20,10 @@ public class SendFragmentsToClientPacket {
     public void toBytes(FriendlyByteBuf buf){
         buf.writeUtf(json);
     }
-    public void handle(Supplier<NetworkEvent.Context> ctx){
-        ctx.get().enqueueWork(()->{
+    public void handle(NetworkEvent.Context ctx){
+        ctx.enqueueWork(()->{
             ClientHelpers.deserializeServersideFragmentsAndPutThemInList(JsonFragmentsHelper.jsonFromString(json));
         });
-        ctx.get().setPacketHandled(true);
+        ctx.setPacketHandled(true);
     }
 }

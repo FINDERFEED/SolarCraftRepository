@@ -29,10 +29,10 @@ public class UpdateEnergyOnClientPacket extends AbstractPacket {
     }
 
     @Override
-    public void handle(Supplier<NetworkEvent.Context> ctx) {
-        ctx.get().enqueueWork(()->{
+    public void handle(NetworkEvent.Context ctx) {
+        ctx.enqueueWork(()->{
             ClientHelpers.updateClientRunicEnergyForPlayer(set,RunicEnergy.Type.byId(id));
         });
-        ctx.get().setPacketHandled(true);
+        ctx.setPacketHandled(true);
     }
 }

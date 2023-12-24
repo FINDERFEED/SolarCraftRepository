@@ -68,10 +68,10 @@ public class ExplosionBlockerBlockEntity extends SolarcraftBlockEntity implement
 //        }
     }
 
-    @Override
-    public AABB getRenderBoundingBox() {
-        return new AABB(-40,-40,-40,40,40,40).move(Helpers.getBlockCenter(worldPosition));
-    }
+//    @Override
+//    public AABB getRenderBoundingBox() {
+//        return new AABB(-40,-40,-40,40,40,40).move(Helpers.getBlockCenter(worldPosition));
+//    }
 
 
     public boolean isFunctioning(){

@@ -27,12 +27,12 @@ public class ToggleableAbilityPacket {
         buf.writeBoolean(toggle);
     }
 
-    public void handle(Supplier<NetworkEvent.Context> ctx) {
-        ctx.get().enqueueWork(()->{
+    public void handle(NetworkEvent.Context ctx) {
+        ctx.enqueueWork(()->{
             ToggleableAbility ability = (ToggleableAbility) AbilitiesRegistry.getAbilityByID(id);
             ClientHelpers.handleToggleAbilityPacket(ability,toggle);
         });
-        ctx.get().setPacketHandled(true);
+        ctx.setPacketHandled(true);
     }
 
 }

@@ -12,7 +12,7 @@ import com.finderfeed.solarcraft.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarcraft.misc_things.RadiantTeleporter;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
 import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
-import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
+import com.finderfeed.solarcraft.registries.sounds.SCSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -164,7 +164,7 @@ public class ClearingRitual {
         }
 
         if (ClearingRitual.MAX_TIME - tile.ritual.getCurrentTime() == RAY_ANIMATION_TICKS){
-            ClientHelpers.playsoundInEars(SolarcraftSounds.RITUAL_TILE_STRIKE.get(),1f,1f);
+            ClientHelpers.playsoundInEars(SCSounds.RITUAL_TILE_STRIKE.get(),1f,1f);
         }
 
 

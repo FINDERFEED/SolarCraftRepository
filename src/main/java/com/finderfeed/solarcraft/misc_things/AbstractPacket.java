@@ -8,5 +8,5 @@ public abstract class AbstractPacket {
     public AbstractPacket(FriendlyByteBuf buf) {}
     public AbstractPacket(){}
     public abstract void toBytes(FriendlyByteBuf buf);
-    public abstract void handle(Supplier<NetworkEvent.Context> ctx);
+    public abstract void handle(NetworkEvent.Context ctx);
 }

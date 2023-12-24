@@ -116,7 +116,7 @@ public class SolarCraftCommands {
         Vec3 i = player.position().add(0,2,0);
         Vec3 end = i.add(player.getLookAngle().multiply(20,20,20));
 
-        HitResult result = Helpers.getEntityHitResultIgnoreBlocks(player,player.level,i,end,(e)->true);
+        HitResult result = Helpers.getEntityHitResultIgnoreBlocks(player,player.level(),i,end,(e)->true);
         if (result instanceof EntityHitResult entityHitResult && entityHitResult.getEntity() instanceof AnimatedObject object){
             if (!animationName.equals("null")) {
                 Animation animation = AnimationReloadableResourceListener.INSTANCE.getAnimation(new ResourceLocation(SolarCraft.MOD_ID,animationName));
@@ -270,7 +270,7 @@ public class SolarCraftCommands {
     public static int constructMultiblock(CommandSourceStack src,String id) throws CommandSyntaxException{
         ServerPlayer player = src.getPlayerOrException();
         if (Multiblocks.STRUCTURES.containsKey(id)){
-            Multiblocks.STRUCTURES.get(id).placeInWorld(player,player.level,player.getOnPos().above());
+            Multiblocks.STRUCTURES.get(id).placeInWorld(player,player.level(),player.getOnPos().above());
             src.sendSuccess(()->Component.literal("Constructed!"),false);
         }else{
             src.sendFailure(Component.literal("Structure doesnt exist"));

@@ -32,11 +32,11 @@ public class FlashPacket {
         buf.writeInt(outTime);
     }
 
-    public void handle(Supplier<NetworkEvent.Context> ctx) {
-        ctx.get().enqueueWork(()->{
+    public void handle(NetworkEvent.Context ctx) {
+        ctx.enqueueWork(()->{
             ClientPacketHandles.handleFlashPacket(inTime,stayTime,outTime);
         });
-        ctx.get().setPacketHandled(true);
+        ctx.setPacketHandled(true);
     }
 
 }

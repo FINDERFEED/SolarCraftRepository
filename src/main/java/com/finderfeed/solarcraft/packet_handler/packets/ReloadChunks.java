@@ -19,8 +19,8 @@ public class ReloadChunks {
 
     }
 
-    public void handle(Supplier<NetworkEvent.Context> ctx) {
-        ctx.get().enqueueWork(ClientHelpers::reloadChunks);
-        ctx.get().setPacketHandled(true);
+    public void handle(NetworkEvent.Context ctx) {
+        ctx.enqueueWork(ClientHelpers::reloadChunks);
+        ctx.setPacketHandled(true);
     }
 }

@@ -104,7 +104,7 @@ public class DimensionCoreTile extends BlockEntity implements IStructureOwner {
             world.getEntitiesOfClass(Entity.class, box, Entity::canChangeDimensions).forEach((entity) -> {
                 if (world.getServer() != null) {
                     ServerLevel destination;
-                    if (entity.level.dimension() == Level.OVERWORLD) {
+                    if (entity.level().dimension() == Level.OVERWORLD) {
                         destination = world.getServer().getLevel(SCEventHandler.RADIANT_LAND_KEY);
                     } else {
                         destination = world.getServer().getLevel(Level.OVERWORLD);
@@ -153,10 +153,10 @@ public class DimensionCoreTile extends BlockEntity implements IStructureOwner {
         return structureCorrect;
     }
 
-    @Override
-    public AABB getRenderBoundingBox() {
-        return Helpers.createAABBWithRadius(Helpers.getBlockCenter(worldPosition).add(0,3,0),3,3);
-    }
+//    @Override
+//    public AABB getRenderBoundingBox() {
+//        return Helpers.createAABBWithRadius(Helpers.getBlockCenter(worldPosition).add(0,3,0),3,3);
+//    }
 
     @Override
     public List<MultiblockStructure> getMultiblocks() {

@@ -33,11 +33,11 @@ public class CameraShakePacket {
         buf.writeFloat(spread);
     }
 
-    public void handle(Supplier<NetworkEvent.Context> ctx) {
-        ctx.get().enqueueWork(()->{
+    public void handle(NetworkEvent.Context ctx) {
+        ctx.enqueueWork(()->{
             ClientPacketHandles.handleCameraShakePacket(inTime,stayTime,outTime,spread);
         });
-        ctx.get().setPacketHandled(true);
+        ctx.setPacketHandled(true);
     }
 
 

@@ -50,10 +50,10 @@ public class BeamGenerator extends PuzzleBlockEntity {
         }
     }
 
-    @Override
-    public AABB getRenderBoundingBox() {
-        return Helpers.createAABBWithRadius(Helpers.getBlockCenter(getBlockPos()),30,30);
-    }
+//    @Override
+//    public AABB getRenderBoundingBox() {
+//        return Helpers.createAABBWithRadius(Helpers.getBlockCenter(getBlockPos()),30,30);
+//    }
 
     @Override
     protected void saveAdditional(CompoundTag tag) {

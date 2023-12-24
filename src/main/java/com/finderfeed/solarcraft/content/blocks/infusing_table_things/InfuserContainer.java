@@ -1,8 +1,8 @@
 package com.finderfeed.solarcraft.content.blocks.infusing_table_things;
 
 import com.finderfeed.solarcraft.helpers.Helpers;
-import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.client.screens.custom_slots.OutputSlot;
+import com.finderfeed.solarcraft.registries.containers.SCContainers;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Player;
@@ -24,7 +24,7 @@ public class InfuserContainer extends AbstractContainerMenu {
     public ItemStackHandler inventory;
 
     public InfuserContainer(final int windowId, final Inventory playerInv, final InfuserTileEntity te) {
-        super(SolarCraft.INFUSING_TABLE_CONTAINER.get(), windowId);
+        super(SCContainers.INFUSING_TABLE_CONTAINER.get(), windowId);
         this.te = te;
         this.inventory = te.getInventory();
 
@@ -64,7 +64,7 @@ public class InfuserContainer extends AbstractContainerMenu {
         Objects.requireNonNull(playerInv, "Player Inventory cannot be null.");
         Objects.requireNonNull(pos, "Pos cannot be null.");
 
-        final BlockEntity te = playerInv.player.level.getBlockEntity(pos);
+        final BlockEntity te = playerInv.player.level().getBlockEntity(pos);
 
         if (te instanceof InfuserTileEntity) {
             return (InfuserTileEntity) te;

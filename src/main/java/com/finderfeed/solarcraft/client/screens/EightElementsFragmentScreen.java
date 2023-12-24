@@ -2,22 +2,17 @@ package com.finderfeed.solarcraft.client.screens;
 
 import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.screen.*;
-import com.finderfeed.solarcraft.events.other_events.event_handler.ClientEventsHandler;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 
 import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
-import com.finderfeed.solarcraft.content.items.solar_lexicon.SolarLexicon;
-import com.finderfeed.solarcraft.content.items.solar_lexicon.screen.buttons.ItemStackTabButton;
-import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
+import com.finderfeed.solarcraft.registries.sounds.SCSounds;
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.sounds.SoundManager;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.Items;
 
 public class EightElementsFragmentScreen extends LexiconScreen {
     private int ticker = 0;
@@ -53,7 +48,7 @@ public class EightElementsFragmentScreen extends LexiconScreen {
         }) {
             @Override
             public void playDownSound(SoundManager smanager) {
-                smanager.play(SimpleSoundInstance.forUI(SolarcraftSounds.BUTTON_PRESS2.get(), 1, 1));
+                smanager.play(SimpleSoundInstance.forUI(SCSounds.BUTTON_PRESS2.get(), 1, 1));
             }
         });
         addRenderableWidget(new ImageButton(relX + 212 , relY+11, 16, 16, 0, 16, 0, StructureScreen.BUTTONS, 16, 32, (button) -> {
@@ -61,7 +56,7 @@ public class EightElementsFragmentScreen extends LexiconScreen {
         }) {
             @Override
             public void playDownSound(SoundManager smanager) {
-                smanager.play(SimpleSoundInstance.forUI(SolarcraftSounds.BUTTON_PRESS2.get(), 1, 1));
+                smanager.play(SimpleSoundInstance.forUI(SCSounds.BUTTON_PRESS2.get(), 1, 1));
             }
         });
     }

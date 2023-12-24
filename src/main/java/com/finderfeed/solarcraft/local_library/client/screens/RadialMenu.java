@@ -1,17 +1,13 @@
 package com.finderfeed.solarcraft.local_library.client.screens;
 
-import com.finderfeed.solarcraft.client.particles.screen.SolarStrikeParticleScreen;
 import com.finderfeed.solarcraft.client.rendering.CoreShaders;
-import com.finderfeed.solarcraft.local_library.client.particles.ScreenParticlesRenderHandler;
-import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
+import com.finderfeed.solarcraft.registries.sounds.SCSounds;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.ShaderInstance;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
-import net.minecraft.client.sounds.SoundManager;
-import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.Mth;
 import net.minecraft.world.phys.Vec2;
 import org.jetbrains.annotations.Nullable;
@@ -177,7 +173,7 @@ public class RadialMenu {
         }
 
         public void playDownSound() {
-            Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SolarcraftSounds.BUTTON_PRESS2.get(),1,1));
+            Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SCSounds.BUTTON_PRESS2.get(),1,1));
         }
     }
 

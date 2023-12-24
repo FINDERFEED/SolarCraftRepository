@@ -19,8 +19,8 @@ public class TriggerProgressionShaderPacket {
 
     }
 
-    public void handle(Supplier<NetworkEvent.Context> ctx) {
-        ctx.get().enqueueWork(ClientHelpers::triggerProgressionUnlockShader);
-        ctx.get().setPacketHandled(true);
+    public void handle(NetworkEvent.Context ctx) {
+        ctx.enqueueWork(ClientHelpers::triggerProgressionUnlockShader);
+        ctx.setPacketHandled(true);
     }
 }

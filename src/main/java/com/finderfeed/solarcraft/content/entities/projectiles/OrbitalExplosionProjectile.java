@@ -7,7 +7,7 @@ import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
 import com.finderfeed.solarcraft.packet_handler.packets.CameraShakePacket;
 import com.finderfeed.solarcraft.packet_handler.packets.FlashPacket;
-import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
+import com.finderfeed.solarcraft.registries.sounds.SCSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
@@ -113,7 +113,7 @@ public class OrbitalExplosionProjectile extends NormalProjectile{
             }
             SCPacketHandler.INSTANCE.sendTo(new CameraShakePacket(0,40,160,1.0f),player.connection.connection, PlayNetworkDirection.PLAY_TO_CLIENT);
         }
-        level.playSound(null,this.getOnPos(), SolarcraftSounds.ORBITAL_EXPLOSION.get(), SoundSource.HOSTILE,
+        level.playSound(null,this.getOnPos(), SCSounds.ORBITAL_EXPLOSION.get(), SoundSource.HOSTILE,
                 100,1);
         OrbitalCannonExplosionEntity explosion = new OrbitalCannonExplosionEntity(level,explosionRadius,explosionDepth,3);
         explosion.setPos(Helpers.getBlockCenter(pos).add(0,-0.5,0));

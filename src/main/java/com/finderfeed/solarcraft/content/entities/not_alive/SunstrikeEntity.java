@@ -4,7 +4,7 @@ import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.misc_things.CrystalBossBuddy;
 import com.finderfeed.solarcraft.packet_handler.packets.misc_packets.ExplosionParticlesPacket;
 import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
-import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
+import com.finderfeed.solarcraft.registries.sounds.SCSounds;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
@@ -34,7 +34,7 @@ public class SunstrikeEntity extends Entity {
     @Override
     public void tick() {
         if (!level.isClientSide && tickCount == 1){
-            level.playSound(null,this.getX(),this.getY(),this.getZ(), SolarcraftSounds.SUNSTRIKE.get(), SoundSource.AMBIENT,1,1f);
+            level.playSound(null,this.getX(),this.getY(),this.getZ(), SCSounds.SUNSTRIKE.get(), SoundSource.AMBIENT,1,1f);
         }
         if (!level.isClientSide && tickCount > FALLING_TIME){
             explode();
@@ -50,7 +50,7 @@ public class SunstrikeEntity extends Entity {
                 entity.invulnerableTime = 0;
             }
         }
-        level.playSound(null,this.getX(),this.getY(),this.getZ(), SolarcraftSounds.SOLAR_EXPLOSION.get(), SoundSource.AMBIENT,level.random.nextFloat()*0.5f+0.5f,1f);
+        level.playSound(null,this.getX(),this.getY(),this.getZ(), SCSounds.SOLAR_EXPLOSION.get(), SoundSource.AMBIENT,level.random.nextFloat()*0.5f+0.5f,1f);
         ExplosionParticlesPacket.send(level,this.position());
         this.discard();
     }

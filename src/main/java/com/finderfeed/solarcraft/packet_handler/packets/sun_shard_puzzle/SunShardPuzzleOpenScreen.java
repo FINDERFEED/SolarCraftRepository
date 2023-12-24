@@ -22,7 +22,7 @@ public class SunShardPuzzleOpenScreen {
 
     public SunShardPuzzleOpenScreen(FriendlyByteBuf buf){
         BlockPos pos = buf.readBlockPos();
-        CompoundTag tag = buf.readAnySizeNbt();
+        CompoundTag tag = buf.readNbt();
         this.puzzle = Puzzle.deserialize("puzzle",tag);
         this.pos = pos;
     }
@@ -35,11 +35,11 @@ public class SunShardPuzzleOpenScreen {
     }
 
 
-    public void handle(Supplier<NetworkEvent.Context> ctx){
-        ctx.get().enqueueWork(()->{
+    public void handle(NetworkEvent.Context ctx){
+        ctx.enqueueWork(()->{
             ClientPacketHandles.handleSunShardOpenScreenPacket(puzzle,pos);
         });
-        ctx.get().setPacketHandled(true);
+        ctx.setPacketHandled(true);
     }
 
 

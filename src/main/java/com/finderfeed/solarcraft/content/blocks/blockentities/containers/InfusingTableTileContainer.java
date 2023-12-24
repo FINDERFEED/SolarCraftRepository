@@ -2,7 +2,7 @@ package com.finderfeed.solarcraft.content.blocks.blockentities.containers;
 
 import com.finderfeed.solarcraft.content.blocks.blockentities.InfusingTableTile;
 import com.finderfeed.solarcraft.content.blocks.blockentities.containers.misc.TESlotItemHandler;
-import com.finderfeed.solarcraft.registries.containers.SolarcraftContainers;
+import com.finderfeed.solarcraft.registries.containers.SCContainers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
@@ -25,8 +25,8 @@ public class InfusingTableTileContainer extends AbstractContainerMenu {
     public IItemHandler inventory;
 
     public InfusingTableTileContainer( int p_38852_,Inventory inv, BlockPos tilepos) {
-        super(SolarcraftContainers.INFUSING_TABLE_TILE.get(), p_38852_);
-        Level world= inv.player.level;
+        super(SCContainers.INFUSING_TABLE_TILE.get(), p_38852_);
+        Level world= inv.player.level();
         this.tile = (InfusingTableTile) world.getBlockEntity(tilepos);
         this.inventory = tile.getCapability(Capabilities.ITEM_HANDLER).orElse(null);
 

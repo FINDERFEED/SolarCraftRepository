@@ -3,7 +3,7 @@ package com.finderfeed.solarcraft.content.entities.projectiles;
 import com.finderfeed.solarcraft.client.particles.SCParticleTypes;
 import com.finderfeed.solarcraft.registries.damage_sources.SCDamageSources;
 import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
-import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
+import com.finderfeed.solarcraft.registries.sounds.SCSounds;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -44,7 +44,7 @@ public class UltraCrossbowProjectile extends OwnedProjectile {
 
     @Override
     protected void onHitEntity(EntityHitResult ctx) {
-        level.playSound(null,this.getX(),this.getY(),this.getZ(), SolarcraftSounds.CROSSBOW_SHOT_IMPACT.get(),SoundSource.AMBIENT,5,1);
+        level.playSound(null,this.getX(),this.getY(),this.getZ(), SCSounds.CROSSBOW_SHOT_IMPACT.get(),SoundSource.AMBIENT,5,1);
         if (!level.isClientSide) {
 
             Entity ent = ctx.getEntity();
@@ -79,7 +79,7 @@ public class UltraCrossbowProjectile extends OwnedProjectile {
             }
 
         }
-        level.playSound(null,this.getX(),this.getY(),this.getZ(), SolarcraftSounds.CROSSBOW_SHOT_IMPACT.get(),SoundSource.AMBIENT,5,1);
+        level.playSound(null,this.getX(),this.getY(),this.getZ(), SCSounds.CROSSBOW_SHOT_IMPACT.get(),SoundSource.AMBIENT,5,1);
         this.remove(RemovalReason.KILLED);
     }
 

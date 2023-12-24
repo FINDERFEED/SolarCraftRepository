@@ -19,9 +19,9 @@ public class OpenScreenPacket extends AbstractPacket {
     }
 
     @Override
-    public void handle(Supplier<NetworkEvent.Context> ctx) {
+    public void handle(NetworkEvent.Context ctx) {
 
-        ctx.get().enqueueWork(ClientPacketHandles::openLexiconScreen);
-    ctx.get().setPacketHandled(true);
+        ctx.enqueueWork(ClientPacketHandles::openLexiconScreen);
+    ctx.setPacketHandled(true);
     }
 }

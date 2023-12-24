@@ -30,11 +30,11 @@ public class ServerBossEventUpdateProgress {
         buf.writeFloat(progress);
     }
 
-    public void handle(Supplier<NetworkEvent.Context> ctx) {
-        ctx.get().enqueueWork(()->{
+    public void handle(NetworkEvent.Context ctx) {
+        ctx.enqueueWork(()->{
             ClientPacketHandles.handleServerBossEventUpdateProgressPacket(id,progress);
         });
-        ctx.get().setPacketHandled(true);
+        ctx.setPacketHandled(true);
     }
 
 }

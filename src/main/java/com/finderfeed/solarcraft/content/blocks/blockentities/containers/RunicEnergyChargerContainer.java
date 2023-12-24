@@ -5,7 +5,7 @@ import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.content.blocks.blockentities.RunicEnergyChargerTileEntity;
 import com.finderfeed.solarcraft.content.items.RuneItem;
 import com.finderfeed.solarcraft.content.items.runic_energy.IRunicEnergyUser;
-import com.finderfeed.solarcraft.registries.containers.SolarcraftContainers;
+import com.finderfeed.solarcraft.registries.containers.SCContainers;
 import com.finderfeed.solarcraft.registries.items.SCItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
@@ -27,7 +27,7 @@ public class RunicEnergyChargerContainer extends AbstractContainerMenu {
     public RunicEnergyChargerTileEntity tile;
 
     public RunicEnergyChargerContainer(int id,Inventory inv,BlockPos pos) {
-        super(SolarcraftContainers.RUNIC_ENERGY_CHARGER.get(), id);
+        super(SCContainers.RUNIC_ENERGY_CHARGER.get(), id);
         this.tile = (RunicEnergyChargerTileEntity) inv.player.level.getBlockEntity(pos);
 
         this.addSlot(new TESlotItemHandler(tile,tile.getInventory(), 0,   25, 35-4){

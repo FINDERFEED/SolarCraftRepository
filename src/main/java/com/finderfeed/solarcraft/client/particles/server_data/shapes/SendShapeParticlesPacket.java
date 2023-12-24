@@ -70,11 +70,11 @@ public class SendShapeParticlesPacket {
         buf.writeDouble(zd);
     }
 
-    public void handle(Supplier<NetworkEvent.Context> ctx){
-        ctx.get().enqueueWork(()->{
+    public void handle(NetworkEvent.Context ctx){
+        ctx.enqueueWork(()->{
             ClientPacketHandles.handleSpawnShapeParticlesPacket(shape,options,x,y,z,xd,yd,zd);
         });
-        ctx.get().setPacketHandled(true);
+        ctx.setPacketHandled(true);
     }
 
 

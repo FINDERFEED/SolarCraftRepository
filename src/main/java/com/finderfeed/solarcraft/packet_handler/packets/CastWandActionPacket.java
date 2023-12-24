@@ -25,14 +25,14 @@ public class CastWandActionPacket {
         buf.writeResourceLocation(actionId);
     }
 
-    public void handle(Supplier<NetworkEvent.Context> ctx){
-        ctx.get().enqueueWork(()->{
-            ServerPlayer player = ctx.get().getSender();
+    public void handle(NetworkEvent.Context ctx){
+        ctx.enqueueWork(()->{
+            ServerPlayer player = ctx.getSender();
             ItemStack stack = player.getMainHandItem();
             if (stack.is(SCItems.SOLAR_WAND.get())){
                 SolarWandItem.setWandAction(stack,actionId);
             }
         });
-        ctx.get().setPacketHandled(true);
+        ctx.setPacketHandled(true);
     }
 }

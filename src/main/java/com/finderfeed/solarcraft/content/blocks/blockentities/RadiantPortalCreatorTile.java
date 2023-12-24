@@ -44,7 +44,7 @@ public class RadiantPortalCreatorTile extends BlockEntity {
             world.getEntitiesOfClass(Entity.class,tile.TP_AABB, Entity::canChangeDimensions).forEach((entity)->{
                 if (world.getServer() != null) {
                     ServerLevel destination;
-                    if (entity.level.dimension() == Level.OVERWORLD){
+                    if (entity.level().dimension() == Level.OVERWORLD){
                         destination = world.getServer().getLevel(SCEventHandler.RADIANT_LAND_KEY);
                     }else{
                         destination = world.getServer().getLevel(Level.OVERWORLD);

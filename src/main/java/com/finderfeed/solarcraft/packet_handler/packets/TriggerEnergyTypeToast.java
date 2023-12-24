@@ -16,10 +16,10 @@ public class TriggerEnergyTypeToast {
     public void toBytes(FriendlyByteBuf buf){
         buf.writeUtf(id);
     }
-    public void handle(Supplier<NetworkEvent.Context> ctx){
-        ctx.get().enqueueWork(()->{
+    public void handle(NetworkEvent.Context ctx){
+        ctx.enqueueWork(()->{
             ClientHelpers.addEnergyTypeToast(id);
         });
-        ctx.get().setPacketHandled(true);
+        ctx.setPacketHandled(true);
     }
 }

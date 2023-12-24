@@ -21,18 +21,18 @@ public class AnimationsSyncPacket {
     }
 
     public AnimationsSyncPacket(FriendlyByteBuf buf){
-        this.data = buf.readAnySizeNbt();
+        this.data = buf.readNbt();
     }
 
     public void toBytes(FriendlyByteBuf buf){
         buf.writeNbt(data);
     }
 
-    public void handle(Supplier<NetworkEvent.Context> ctx){
-        ctx.get().enqueueWork(()->{
+    public void handle(NetworkEvent.Context ctx){
+        ctx.enqueueWork(()->{
            AnimationReloadableResourceListener.INSTANCE.replaceAnimations(data);
         });
-        ctx.get().setPacketHandled(true);
+        ctx.setPacketHandled(true);
     }
 
 }

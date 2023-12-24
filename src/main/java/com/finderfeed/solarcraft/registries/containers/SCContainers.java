@@ -12,7 +12,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 
 import net.neoforged.neoforge.registries.DeferredHolder;
 
-public class SolarcraftContainers {
+public class SCContainers {
     public static final DeferredRegister<MenuType<?>> CONTAINER_TYPE = DeferredRegister.create(Registries.MENU, SolarCraft.MOD_ID);
 
     public static final DeferredHolder<MenuType<?>,MenuType<SolarForgeContainer>> SOLAR_FORGE_CONTAINER = CONTAINER_TYPE.register("solarcraft_container",()-> IMenuTypeExtension.create(SolarForgeContainer::new));

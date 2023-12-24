@@ -110,7 +110,7 @@ public class RunicEnergyCoreTile extends AbstractRunicEnergyContainer implements
     //IREWandDrainable
     @Override
     public float drainEnergy(RunicEnergy.Type type,Player player, float amount) {
-        if (!player.level.isClientSide){
+        if (!player.level().isClientSide){
             float current = getRunicEnergy(type);
             float toReturn = Math.min(current,amount);
             this.giveEnergy(type,-toReturn);
@@ -121,7 +121,7 @@ public class RunicEnergyCoreTile extends AbstractRunicEnergyContainer implements
 
     @Override
     public float returnEnergy(RunicEnergy.Type type,Player player, float amount) {
-        if (!player.level.isClientSide){
+        if (!player.level().isClientSide){
             float current = this.getRunicEnergy(type);
             float r = current + amount - (float)getRunicEnergyLimit();
             this.giveEnergy(type,amount);
@@ -151,7 +151,7 @@ public class RunicEnergyCoreTile extends AbstractRunicEnergyContainer implements
     //IWandable
     @Override
     public void onWandUse(BlockPos usePos, Player user) {
-        if (!user.level.isClientSide){
+        if (!user.level().isClientSide){
             user.sendSystemMessage(Component.literal("Draining Energy: " + !isDrainingEnergy()));
             setDrainingEnergy(!isDrainingEnergy());
         }

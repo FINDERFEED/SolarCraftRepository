@@ -21,7 +21,7 @@ public class UpdateItemTagInItemEntityPacket {
 
     public UpdateItemTagInItemEntityPacket(FriendlyByteBuf buf){
         this.entityId = buf.readInt();
-        this.itemStackTag = buf.readAnySizeNbt();
+        this.itemStackTag = buf.readNbt();
     }
 
     public void toBytes(FriendlyByteBuf buf){
@@ -29,11 +29,11 @@ public class UpdateItemTagInItemEntityPacket {
         buf.writeNbt(itemStackTag);
     }
 
-    public void handle(Supplier<NetworkEvent.Context> ctx) {
-        ctx.get().enqueueWork(() -> {
+    public void handle(NetworkEvent.Context ctx) {
+        ctx.enqueueWork(() -> {
             ClientPacketHandles.handleUpdateItemEntityPacket(entityId,itemStackTag);
         });
-        ctx.get().setPacketHandled(true);
+        ctx.setPacketHandled(true);
     }
 
 }

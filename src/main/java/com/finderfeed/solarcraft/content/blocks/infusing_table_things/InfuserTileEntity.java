@@ -29,10 +29,12 @@ import com.finderfeed.solarcraft.registries.blocks.SCBlocks;
 import com.finderfeed.solarcraft.content.world_generation.structures.NotStructures;
 import com.finderfeed.solarcraft.registries.items.SCItems;
 import com.finderfeed.solarcraft.registries.recipe_types.SolarcraftRecipeTypes;
+import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.TieredItem;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -74,7 +76,7 @@ public class InfuserTileEntity extends REItemHandlerBlockEntity implements Solar
 
 
     public InfuserTileEntity(BlockPos p_155630_, BlockState p_155631_) {
-        super(SolarCraft.INFUSING_STAND_BLOCKENTITY.get(), p_155630_, p_155631_);
+        super(SCTileEntities.INFUSING_STAND_BLOCKENTITY.get(), p_155630_, p_155631_);
     }
 
 
@@ -172,8 +174,13 @@ public class InfuserTileEntity extends REItemHandlerBlockEntity implements Solar
                 
                 Optional<InfusingRecipe> recipe;
                 if (tile.currentRecipe == null){
-                    recipe = tile.level.getRecipeManager().getRecipeFor(SolarcraftRecipeTypes.INFUSING.get(), new PhantomInventory(inv), world);
-                    recipe.ifPresent(infusingRecipe -> tile.currentRecipe = infusingRecipe);
+                    Optional<RecipeHolder<InfusingRecipe>> r = tile.level.getRecipeManager().getRecipeFor(SolarcraftRecipeTypes.INFUSING.get(), new PhantomInventory(inv), world);
+                    if (r.isPresent()){
+                        tile.currentRecipe = r.get().value();
+                        recipe = Optional.of(r.get().value());
+                    }else {
+                        recipe = Optional.empty();
+                    }
                 }else{
                     if (!tile.currentRecipe.matches(new PhantomInventory(inv),world)){
                         recipe = Optional.empty();
@@ -415,15 +422,15 @@ public class InfuserTileEntity extends REItemHandlerBlockEntity implements Solar
             playerEntity.sendSystemMessage(Component.literal("Can't access inventory").withStyle(ChatFormatting.RED));
             return;
         }
-        Optional<InfusingRecipe> opt = this.level.getRecipeManager().getRecipeFor(SolarcraftRecipeTypes.INFUSING.get(),new PhantomInventory(getInventory()),level);
+        Optional<RecipeHolder<InfusingRecipe>> opt = this.level.getRecipeManager().getRecipeFor(SolarcraftRecipeTypes.INFUSING.get(),new PhantomInventory(getInventory()),level);
         calculateTier();
         try {
-            if (opt.isPresent() && AncientFragmentHelper.doPlayerHasFragment(playerEntity, AncientFragment.getFragmentByID(opt.get().fragID))) {
+            if (opt.isPresent() && AncientFragmentHelper.doPlayerHasFragment(playerEntity, AncientFragment.getFragmentByID(opt.get().value().fragID))) {
                 if (!this.getItem(outputSlot()).isEmpty()){
                     playerEntity.sendSystemMessage(Component.literal("Clear the output slot").withStyle(ChatFormatting.RED));
                     return;
                 }
-                InfusingRecipe recipe = opt.get();
+                InfusingRecipe recipe = opt.get().value();
                 if (recipe.output.getItem() == SCItems.ENERGY_GENERATOR_BLOCK.get()) {
                     ItemStack input = this.getItem(inputSlot());
                     if (input.getItem() instanceof SunShardItem shard && !shard.isHeated(input)){
@@ -458,7 +465,7 @@ public class InfuserTileEntity extends REItemHandlerBlockEntity implements Solar
 
             } else {
                 if (opt.isPresent()) {
-                    AncientFragment fragment = AncientFragment.getFragmentByID(opt.get().fragID);
+                    AncientFragment fragment = AncientFragment.getFragmentByID(opt.get().value().fragID);
                     if (fragment != null){
                         if (!AncientFragmentHelper.doPlayerHasFragment(playerEntity,fragment)){
                             playerEntity.sendSystemMessage(Component.literal("Cant start craft, you dont have "+fragment.getTranslation().getString().toUpperCase()+" fragment unlocked.").withStyle(ChatFormatting.RED));
@@ -470,7 +477,7 @@ public class InfuserTileEntity extends REItemHandlerBlockEntity implements Solar
                 this.level.playSound(null, this.worldPosition, SoundEvents.VILLAGER_NO, SoundSource.AMBIENT, 2, 1);
             }
         }catch (NullPointerException e){
-            playerEntity.sendSystemMessage(Component.literal("INCORRECT FRAGMENT IN RECIPE "+ opt.get().output.getDisplayName().getString()+" TELL MOD AUTHOR TO FIX IT").withStyle(ChatFormatting.RED));
+            playerEntity.sendSystemMessage(Component.literal("INCORRECT FRAGMENT IN RECIPE "+ opt.get().value().output.getDisplayName().getString()+" TELL MOD AUTHOR TO FIX IT").withStyle(ChatFormatting.RED));
         }
 
     }
@@ -792,10 +799,10 @@ public class InfuserTileEntity extends REItemHandlerBlockEntity implements Solar
         }
     }
 
-    @Override
-    public AABB getRenderBoundingBox() {
-        return new AABB(-5,-5,-5,5,5,5).move(Helpers.getBlockCenter(getBlockPos()));
-    }
+//    @Override
+//    public AABB getRenderBoundingBox() {
+//        return new AABB(-5,-5,-5,5,5,5).move(Helpers.getBlockCenter(getBlockPos()));
+//    }
 
     public int inputSlot(){
         return 6;

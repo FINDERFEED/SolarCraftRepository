@@ -24,7 +24,7 @@ public class StartEntityAnimationPacket {
     public StartEntityAnimationPacket(FriendlyByteBuf buf){
         this.entityId = buf.readInt();
         this.tickerName = buf.readUtf();
-        this.animationTicker = AnimationTicker.deserialize(buf.readAnySizeNbt());
+        this.animationTicker = AnimationTicker.deserialize(buf.readNbt());
     }
 
     public void toBytes(FriendlyByteBuf buf){
@@ -33,11 +33,11 @@ public class StartEntityAnimationPacket {
         buf.writeNbt(animationTicker.serialize());
     }
 
-    public void handle(Supplier<NetworkEvent.Context> ctx){
-        ctx.get().enqueueWork(()->{
+    public void handle(NetworkEvent.Context ctx){
+        ctx.enqueueWork(()->{
             ClientPacketHandles.handleSetEntityAnimationPacket(entityId,tickerName,animationTicker);
         });
-        ctx.get().setPacketHandled(true);
+        ctx.setPacketHandled(true);
     }
 
 

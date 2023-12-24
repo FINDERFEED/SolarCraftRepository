@@ -67,8 +67,8 @@ public class UpdateStacksOnClientTable {
         buf.writeBlockPos(pos);
         buf.writeBoolean(isActive);
     }
-    public void handle(Supplier<NetworkEvent.Context> ctx){
-        ctx.get().enqueueWork(()->{
+    public void handle(NetworkEvent.Context ctx){
+        ctx.enqueueWork(()->{
             DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> ()-> {
                 ClientLevel world = Minecraft.getInstance().level;
 
@@ -88,6 +88,6 @@ public class UpdateStacksOnClientTable {
                 }
             });
         });
-        ctx.get().setPacketHandled(true);
+        ctx.setPacketHandled(true);
     }
 }

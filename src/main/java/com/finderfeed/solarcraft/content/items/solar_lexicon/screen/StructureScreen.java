@@ -4,21 +4,18 @@ import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.screen.buttons.ItemStackTabButton;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragmentHelper;
-import com.finderfeed.solarcraft.events.other_events.event_handler.ClientEventsHandler;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.client.screens.ThreeDStructureViewScreen;
 import com.finderfeed.solarcraft.helpers.multiblock.MultiblockStructure;
 import com.finderfeed.solarcraft.local_library.client.screens.buttons.FDImageButton;
 import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
-import com.finderfeed.solarcraft.content.items.solar_lexicon.SolarLexicon;
 import com.finderfeed.solarcraft.registries.blocks.SCBlocks;
-import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
+import com.finderfeed.solarcraft.registries.sounds.SCSounds;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.screens.Screen;
 
 import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
@@ -76,7 +73,7 @@ public class StructureScreen extends LexiconScreen {
         }){
             @Override
             public void playDownSound(SoundManager p_93665_) {
-                p_93665_.play(SimpleSoundInstance.forUI(SolarcraftSounds.BUTTON_PRESS2.get(),1,1));
+                p_93665_.play(SimpleSoundInstance.forUI(SCSounds.BUTTON_PRESS2.get(),1,1));
             }
         });
         addRenderableWidget(new ImageButton(relX+216,relY+32,16,16,0,16,0,BUTTONS,16,32,(button)->{
@@ -86,7 +83,7 @@ public class StructureScreen extends LexiconScreen {
         }){
             @Override
             public void playDownSound(SoundManager p_93665_) {
-                p_93665_.play(SimpleSoundInstance.forUI(SolarcraftSounds.BUTTON_PRESS2.get(),1,1));
+                p_93665_.play(SimpleSoundInstance.forUI(SCSounds.BUTTON_PRESS2.get(),1,1));
             }
         });
         addRenderableWidget(new FDImageButton(relX+216,relY,16,16,0,0,0,THREEDSCREENBTN,16,16,(button)->{
@@ -96,7 +93,7 @@ public class StructureScreen extends LexiconScreen {
         },Component.literal("3D")) {
             @Override
             public void playDownSound(SoundManager p_93665_) {
-                p_93665_.play(SimpleSoundInstance.forUI(SolarcraftSounds.BUTTON_PRESS2.get(), 1, 1));
+                p_93665_.play(SimpleSoundInstance.forUI(SCSounds.BUTTON_PRESS2.get(), 1, 1));
             }
         });
 

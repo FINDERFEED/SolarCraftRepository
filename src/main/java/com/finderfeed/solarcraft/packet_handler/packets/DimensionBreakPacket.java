@@ -19,9 +19,9 @@ public class DimensionBreakPacket {
     public void toBytes(FriendlyByteBuf buf){
 
     }
-    public void handle(Supplier<NetworkEvent.Context> ctx){
-        ctx.get().enqueueWork(ClientPacketHandles::handleDimBreakPacket);
-        ctx.get().setPacketHandled(true);
+    public void handle(NetworkEvent.Context ctx){
+        ctx.enqueueWork(ClientPacketHandles::handleDimBreakPacket);
+        ctx.setPacketHandled(true);
     }
 
 }

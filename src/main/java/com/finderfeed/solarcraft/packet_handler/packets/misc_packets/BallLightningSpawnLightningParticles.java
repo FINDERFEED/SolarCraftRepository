@@ -24,11 +24,11 @@ public class BallLightningSpawnLightningParticles {
         buf.writeDouble(pos.y);
         buf.writeDouble(pos.z);
     }
-    public void handle(Supplier<NetworkEvent.Context> ctx){
-        ctx.get().enqueueWork(()->{
+    public void handle(NetworkEvent.Context ctx){
+        ctx.enqueueWork(()->{
             ClientHelpers.handleBallLightningProjectileParticles(pos);
         });
-        ctx.get().setPacketHandled(true);
+        ctx.setPacketHandled(true);
     }
 
     public static void sendToServer(Level world, Vec3 pos){

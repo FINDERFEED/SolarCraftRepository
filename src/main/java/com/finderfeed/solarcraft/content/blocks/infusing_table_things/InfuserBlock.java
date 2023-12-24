@@ -5,6 +5,7 @@ import com.finderfeed.solarcraft.content.blocks.primitive.RunicEnergySaverBlock;
 import com.finderfeed.solarcraft.content.items.SolarNetworkBinder;
 import com.finderfeed.solarcraft.content.items.solar_wand.SolarWandItem;
 import com.finderfeed.solarcraft.misc_things.SolarcraftDebugStick;
+import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.block.Block;
@@ -122,7 +123,7 @@ public class InfuserBlock extends RunicEnergySaverBlock implements EntityBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-        return SolarCraft.INFUSING_STAND_BLOCKENTITY.get().create(blockPos,blockState);
+        return SCTileEntities.INFUSING_STAND_BLOCKENTITY.get().create(blockPos,blockState);
     }
 }
 

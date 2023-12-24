@@ -24,10 +24,10 @@ public class SetClientRadiantLandStatePacket extends AbstractPacket {
     }
 
     @Override
-    public void handle(Supplier<NetworkEvent.Context> ctx) {
-        ctx.get().enqueueWork(()->{
+    public void handle(NetworkEvent.Context ctx) {
+        ctx.enqueueWork(()->{
             ClientHelpers.setClientRadiantLandState(cleaned);
         });
-        ctx.get().setPacketHandled(true);
+        ctx.setPacketHandled(true);
     }
 }

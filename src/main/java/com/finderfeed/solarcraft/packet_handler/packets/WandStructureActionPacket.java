@@ -33,7 +33,7 @@ public class WandStructureActionPacket {
 
 
     public WandStructureActionPacket(FriendlyByteBuf buf){
-        this.data = buf.readAnySizeNbt();
+        this.data = buf.readNbt();
         int size = buf.readInt();
         structIds = new ArrayList<>();
         for (int i = 0; i < size;i++){
@@ -51,10 +51,10 @@ public class WandStructureActionPacket {
         buf.writeBlockPos(checkPos);
     }
 
-    public void handle(Supplier<NetworkEvent.Context> ctx) {
-        ctx.get().enqueueWork(()->{
+    public void handle(NetworkEvent.Context ctx) {
+        ctx.enqueueWork(()->{
             ClientPacketHandles.handleWandStructureActionPacket(checkPos,structIds,data);
         });
-        ctx.get().setPacketHandled(true);
+        ctx.setPacketHandled(true);
     }
 }

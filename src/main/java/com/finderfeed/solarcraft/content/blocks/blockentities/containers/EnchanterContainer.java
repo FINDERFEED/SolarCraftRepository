@@ -3,7 +3,7 @@ package com.finderfeed.solarcraft.content.blocks.blockentities.containers;
 import com.finderfeed.solarcraft.config.enchanter_config.EnchanterConfig;
 import com.finderfeed.solarcraft.content.blocks.blockentities.EnchanterBlockEntity;
 import com.finderfeed.solarcraft.content.blocks.blockentities.containers.misc.TESlotItemHandler;
-import com.finderfeed.solarcraft.registries.containers.SolarcraftContainers;
+import com.finderfeed.solarcraft.registries.containers.SCContainers;
 import com.google.gson.JsonParser;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
@@ -26,8 +26,8 @@ public class EnchanterContainer extends AbstractContainerMenu {
     public final EnchanterConfig config;
 
     public EnchanterContainer( int p_38852_,Inventory inv, BlockPos tilepos,String json) {
-        super(SolarcraftContainers.ENCHANTER.get(), p_38852_);
-        Level world= inv.player.level;
+        super(SCContainers.ENCHANTER.get(), p_38852_);
+        Level world= inv.player.level();
         if (world.isClientSide){
             config = new EnchanterConfig(JsonParser.parseString(json).getAsJsonObject());
         }else{

@@ -42,7 +42,7 @@ import com.finderfeed.solarcraft.local_library.client.particles.ScreenParticlesR
 import com.finderfeed.solarcraft.registries.SCBedrockModels;
 import com.finderfeed.solarcraft.registries.ScreenSuppliers;
 import com.finderfeed.solarcraft.registries.blocks.SCBlocks;
-import com.finderfeed.solarcraft.registries.containers.SolarcraftContainers;
+import com.finderfeed.solarcraft.registries.containers.SCContainers;
 import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
 import com.finderfeed.solarcraft.registries.items.SCItems;
 import com.finderfeed.solarcraft.registries.overlays.SolarcraftOverlays;
@@ -150,16 +150,16 @@ public class SCClientModEventHandler {
         BlockEntityRenderers.register(SCTileEntities.ORBITAL_MISSILE_LAUNCHER.get(), OrbitalMissileLauncherTERenderer::new);
 
 
-        MenuScreens.register(SolarcraftContainers.SOLAR_FURNACE_CONTAINER.get(), SolarFurnaceScreen::new);
-        MenuScreens.register(SolarcraftContainers.RUNIC_TABLE_CONTAINER.get(), RunicTableContainerScreen::new);
-        MenuScreens.register(SolarcraftContainers.SOLAR_LEXICON_CONTAINER.get(), SolarLexiconContScreen::new);
-        MenuScreens.register(SolarcraftContainers.MODULE_APPLIER_CONTAINER.get(), ModuleApplierScreen::new);
-        MenuScreens.register(SolarcraftContainers.INFUSING_TABLE_TILE.get(), InfusingTableScreen::new);
-        MenuScreens.register(SolarcraftContainers.ENCHANTER.get(), EnchanterContainerScreen::new);
-        MenuScreens.register(SolarcraftContainers.RUNIC_ENERGY_CHARGER.get(), RunicEnergyChargerScreen::new);
-        MenuScreens.register(SolarcraftContainers.ELEMENT_WEAVER.get(), ElementWeaverContainerScreen::new);
-        MenuScreens.register(SolarcraftContainers.SOLAR_FORGE_CONTAINER.get(), SolarForgeScreen::new);
-        MenuScreens.register(SolarcraftContainers.INFUSING_TABLE_CONTAINER.get(), InfuserScreen::new);
+        MenuScreens.register(SCContainers.SOLAR_FURNACE_CONTAINER.get(), SolarFurnaceScreen::new);
+        MenuScreens.register(SCContainers.RUNIC_TABLE_CONTAINER.get(), RunicTableContainerScreen::new);
+        MenuScreens.register(SCContainers.SOLAR_LEXICON_CONTAINER.get(), SolarLexiconContScreen::new);
+        MenuScreens.register(SCContainers.MODULE_APPLIER_CONTAINER.get(), ModuleApplierScreen::new);
+        MenuScreens.register(SCContainers.INFUSING_TABLE_TILE.get(), InfusingTableScreen::new);
+        MenuScreens.register(SCContainers.ENCHANTER.get(), EnchanterContainerScreen::new);
+        MenuScreens.register(SCContainers.RUNIC_ENERGY_CHARGER.get(), RunicEnergyChargerScreen::new);
+        MenuScreens.register(SCContainers.ELEMENT_WEAVER.get(), ElementWeaverContainerScreen::new);
+        MenuScreens.register(SCContainers.SOLAR_FORGE_CONTAINER.get(), SolarForgeScreen::new);
+        MenuScreens.register(SCContainers.INFUSING_TABLE_CONTAINER.get(), InfuserScreen::new);
         event.enqueueWork(()->{
 
             SCBedrockModels.init();

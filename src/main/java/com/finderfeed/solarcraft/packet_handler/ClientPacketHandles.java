@@ -7,7 +7,6 @@ import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.c
 import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.puzzle_template.Puzzle;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.SolarLexicon;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.Progression;
-import com.finderfeed.solarcraft.content.items.solar_lexicon.screen.SolarLexiconScreen;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragmentHelper;
 import com.finderfeed.solarcraft.content.items.solar_wand.wand_actions.drain_runic_enenrgy_action.RETypeSelectionScreen;
@@ -22,7 +21,7 @@ import com.finderfeed.solarcraft.local_library.bedrock_loader.animations.manager
 import com.finderfeed.solarcraft.local_library.entities.bossbar.client.ActiveBossBar;
 import com.finderfeed.solarcraft.registries.ConfigRegistry;
 import com.finderfeed.solarcraft.registries.overlays.SolarcraftOverlays;
-import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
+import com.finderfeed.solarcraft.registries.sounds.SCSounds;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import net.minecraft.client.Minecraft;
@@ -62,7 +61,7 @@ public class ClientPacketHandles {
     }
 
     public static void handleDimBreakPacket(){
-        ClientHelpers.playsoundInEars(SolarcraftSounds.DIMENSION_BREAK.get(),1f,0.5f);
+        ClientHelpers.playsoundInEars(SCSounds.DIMENSION_BREAK.get(),1f,0.5f);
         ClientHelpers.flash(100,40,40);
         ClientHelpers.shake(50,50,20,0.5f);
     }

@@ -22,13 +22,13 @@ public class AbilityIndexSetPacket {
         buf.writeInt(index);
         buf.writeUtf(whatAbility);
     }
-    public void handle(Supplier<NetworkEvent.Context> ctx){
-        ctx.get().enqueueWork(()->{
-            ServerPlayer enti = ctx.get().getSender();
+    public void handle(NetworkEvent.Context ctx){
+        ctx.enqueueWork(()->{
+            ServerPlayer enti = ctx.getSender();
             Player entity = (Player)enti;
             entity.getPersistentData().putString("solar_forge_ability_binded_"+Integer.toString(index),whatAbility);
 
         });
-        ctx.get().setPacketHandled(true);
+        ctx.setPacketHandled(true);
     }
 }

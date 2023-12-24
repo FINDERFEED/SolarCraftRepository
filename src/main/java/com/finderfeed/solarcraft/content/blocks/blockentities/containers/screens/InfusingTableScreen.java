@@ -50,7 +50,7 @@ public class InfusingTableScreen extends AbstractContainerScreen<InfusingTableTi
 
     @Override
     public void render(GuiGraphics graphics, int rouseX, int rouseY, float partialTicks){
-        this.renderBackground(graphics);
+        this.renderBackground(graphics,rouseX,rouseY,partialTicks);
         super.render(graphics,rouseX,rouseY,partialTicks);
         this.renderTooltip(graphics,rouseX,rouseY);
 
@@ -70,10 +70,10 @@ public class InfusingTableScreen extends AbstractContainerScreen<InfusingTableTi
 
         Level world = Minecraft.getInstance().level;
         IItemHandler stacks = menu.getInventory();
-        Optional<InfusingCraftingRecipe> opt = world.getRecipeManager().getRecipeFor(SolarcraftRecipeTypes.INFUSING_CRAFTING.get(),new PhantomInventory(stacks),world);
+        var opt = world.getRecipeManager().getRecipeFor(SolarcraftRecipeTypes.INFUSING_CRAFTING.get(),new PhantomInventory(stacks),world);
         if (opt.isPresent()){
-            result = opt.get().getResultItem(world.registryAccess()).getItem();
-            renderItemAndTooltip(graphics,result.getDefaultInstance(),relX+153+a,relY+36,mousex,mousey,matrices,menu.tile.calculateMaximumRecipeOutput(opt.get())*opt.get().getOutputCount());
+            result = opt.get().value().getResultItem(world.registryAccess()).getItem();
+            renderItemAndTooltip(graphics,result.getDefaultInstance(),relX+153+a,relY+36,mousex,mousey,matrices,menu.tile.calculateMaximumRecipeOutput(opt.get().value())*opt.get().value().getOutputCount());
         }else{
             result = null;
         }

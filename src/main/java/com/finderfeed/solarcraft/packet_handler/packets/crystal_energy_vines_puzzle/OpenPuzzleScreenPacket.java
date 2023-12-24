@@ -23,9 +23,9 @@ public class OpenPuzzleScreenPacket {
         buf.writeBlockPos(tilePos);
     }
 
-    public void handle(Supplier<NetworkEvent.Context> ctx){
-        ctx.get().enqueueWork(()-> ClientHelpers.handlePuzzlePacket(tilePos));
-        ctx.get().setPacketHandled(true);
+    public void handle(NetworkEvent.Context ctx){
+        ctx.enqueueWork(()-> ClientHelpers.handlePuzzlePacket(tilePos));
+        ctx.setPacketHandled(true);
     }
 
 }

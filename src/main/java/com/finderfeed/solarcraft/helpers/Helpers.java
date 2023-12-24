@@ -120,7 +120,7 @@ public class Helpers {
     public static boolean isRadiantLandCleanedServer(ServerLevel level){
         RadiantLandCleanedData data = level.getServer().overworld()
                 .getDataStorage()
-                .computeIfAbsent(RadiantLandCleanedData::load,()->new RadiantLandCleanedData(false),"is_radiant_land_cleaned");
+                .computeIfAbsent(RadiantLandCleanedData.factory(false),"is_radiant_land_cleaned");
         return data.isCleaned();
     }
 
@@ -353,7 +353,7 @@ public class Helpers {
     }
 
     public static void updateClientRadiantLandStateForPlayer(ServerPlayer player){
-        SCPacketHandler.INSTANCE.sendTo(new SetClientRadiantLandStatePacket(ClearingRitual.getRLState((ServerLevel) player.level)),
+        SCPacketHandler.INSTANCE.sendTo(new SetClientRadiantLandStatePacket(ClearingRitual.getRLState((ServerLevel) player.level())),
                 player.connection.connection,PlayNetworkDirection.PLAY_TO_CLIENT);
     }
 
@@ -557,7 +557,7 @@ public class Helpers {
     }
 
     public static boolean playerInBossfight(Player pl){
-        return !pl.level.getEntitiesOfClass(LivingEntity.class,new AABB(-20,-20,-20,20,20,20)
+        return !pl.level().getEntitiesOfClass(LivingEntity.class,new AABB(-20,-20,-20,20,20,20)
                 .move(pl.position()),(l)-> l instanceof CrystalBossEntity || l instanceof RunicElementalBoss).isEmpty();
     }
 

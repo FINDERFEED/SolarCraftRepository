@@ -163,10 +163,10 @@ public class SavannaDungeonKeeperTile extends SolarcraftBlockEntity {
         super.load(tag);
     }
 
-    @Override
-    public AABB getRenderBoundingBox() {
-        return Helpers.createAABBWithRadius(Helpers.posToVec(this.getBlockPos()),10,10);
-    }
+//    @Override
+//    public AABB getRenderBoundingBox() {
+//        return Helpers.createAABBWithRadius(Helpers.posToVec(this.getBlockPos()),10,10);
+//    }
 
     @Mod.EventBusSubscriber(modid = SolarCraft.MOD_ID,bus = Mod.EventBusSubscriber.Bus.FORGE)
     public static class LocalEventHandler{
@@ -174,8 +174,8 @@ public class SavannaDungeonKeeperTile extends SolarcraftBlockEntity {
         @SubscribeEvent
         public static void detectChestOpening(PlayerInteractEvent.RightClickBlock event){
             Player player = event.getEntity();
-            if (!player.level.isClientSide){
-                SavannaDungeonKeeperTile keeper = searchKeeper(player.level,event.getPos(),4);
+            if (!player.level().isClientSide){
+                SavannaDungeonKeeperTile keeper = searchKeeper(player.level(),event.getPos(),4);
                 if (keeper != null){
                     keeper.trigger();
                     player.swing(event.getHand());
@@ -186,8 +186,8 @@ public class SavannaDungeonKeeperTile extends SolarcraftBlockEntity {
 
         @SubscribeEvent
         public static void detectBlockPlacing(BlockEvent.EntityPlaceEvent event){
-            if (event.getEntity() instanceof Player player && !player.level.isClientSide){
-                SavannaDungeonKeeperTile keeper = searchKeeper(player.level,event.getPos(),4);
+            if (event.getEntity() instanceof Player player && !player.level().isClientSide){
+                SavannaDungeonKeeperTile keeper = searchKeeper(player.level(),event.getPos(),4);
                 if (keeper != null){
                     keeper.trigger();
                     event.setCanceled(true);
@@ -197,8 +197,8 @@ public class SavannaDungeonKeeperTile extends SolarcraftBlockEntity {
         @SubscribeEvent
         public static void detectBlockBreaking(BlockEvent.BreakEvent event){
             Player player = event.getPlayer();
-            if (!player.level.isClientSide){
-                SavannaDungeonKeeperTile keeper = searchKeeper(player.level,event.getPos(),4);
+            if (!player.level().isClientSide){
+                SavannaDungeonKeeperTile keeper = searchKeeper(player.level(),event.getPos(),4);
                 if (keeper != null){
                     keeper.trigger();
                     event.setCanceled(true);

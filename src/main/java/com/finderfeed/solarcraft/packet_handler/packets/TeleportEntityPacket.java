@@ -30,11 +30,11 @@ public class TeleportEntityPacket {
         buf.writeDouble(position.y);
         buf.writeDouble(position.z);
     }
-    public void handle(Supplier<NetworkEvent.Context> ctx){
-        ctx.get().enqueueWork(()->{
+    public void handle(NetworkEvent.Context ctx){
+        ctx.enqueueWork(()->{
             ClientHelpers.handleTeleportEntityPacket(entityID,position);
         });
-        ctx.get().setPacketHandled(true);
+        ctx.setPacketHandled(true);
     }
 
     public static void sendPacket(ServerLevel world,Entity entity,Vec3 position){

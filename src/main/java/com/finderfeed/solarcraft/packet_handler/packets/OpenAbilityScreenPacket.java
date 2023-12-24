@@ -40,8 +40,8 @@ public class OpenAbilityScreenPacket {
         buf.writeUtf(bindedAbilities[3]);
     }
 
-    public void handle(Supplier<NetworkEvent.Context> ctx) {
-        ctx.get().enqueueWork(()->{
+    public void handle(NetworkEvent.Context ctx) {
+        ctx.enqueueWork(()->{
             ClientHelpers.getClientPlayer().getPersistentData().putInt(SolarCraftTags.RAW_SOLAR_ENERGY,energy);
             if (!dontOpen) {
                 ClientHelpers.openAbilityScreen(bindedAbilities);
@@ -49,6 +49,6 @@ public class OpenAbilityScreenPacket {
                 ClientHelpers.updateAbilityScreen(bindedAbilities);
             }
         });
-        ctx.get().setPacketHandled(true);
+        ctx.setPacketHandled(true);
     }
 }

@@ -2,7 +2,7 @@ package com.finderfeed.solarcraft.content.blocks.blockentities.containers;
 
 import com.finderfeed.solarcraft.content.blocks.blockentities.RunicTableTileEntity;
 import com.finderfeed.solarcraft.content.items.RuneItem;
-import com.finderfeed.solarcraft.registries.containers.SolarcraftContainers;
+import com.finderfeed.solarcraft.registries.containers.SCContainers;
 import com.finderfeed.solarcraft.registries.items.SCItems;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragmentHelper;
 import net.minecraft.network.chat.Component;
@@ -31,9 +31,9 @@ public class RunicTableContainer extends AbstractContainerMenu {
     public boolean hideRuneButtons;
 
     public RunicTableContainer(int windowId, Inventory playerInv,BlockPos tilepos,boolean hideRuneButtons) {
-        super(SolarcraftContainers.RUNIC_TABLE_CONTAINER.get(), windowId);
+        super(SCContainers.RUNIC_TABLE_CONTAINER.get(), windowId);
         this.hideRuneButtons = hideRuneButtons;
-        Level world = playerInv.player.level;
+        Level world = playerInv.player.level();
         this.tile = (RunicTableTileEntity)world.getBlockEntity(tilepos);
         this.inventory = tile.getInventory();
 

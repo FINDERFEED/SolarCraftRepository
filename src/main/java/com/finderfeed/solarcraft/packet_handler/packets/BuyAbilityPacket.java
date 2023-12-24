@@ -28,9 +28,9 @@ public class BuyAbilityPacket {
         buf.writeUtf(id);
     }
 
-    public void handle(Supplier<NetworkEvent.Context> ctx){
-        ctx.get().enqueueWork(()->{
-            ServerPlayer player = ctx.get().getSender();
+    public void handle(NetworkEvent.Context ctx){
+        ctx.enqueueWork(()->{
+            ServerPlayer player = ctx.getSender();
             try {
                 AbstractAbility ability = AbilitiesRegistry.getAbilityByID(id);
                 int en = getPlayerEnergy(player);
@@ -47,7 +47,7 @@ public class BuyAbilityPacket {
 
 
         });
-        ctx.get().setPacketHandled(true);
+        ctx.setPacketHandled(true);
     }
 
     private void spendEnergy(ServerPlayer player,int toSpend){

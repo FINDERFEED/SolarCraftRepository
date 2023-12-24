@@ -8,7 +8,7 @@ import com.finderfeed.solarcraft.content.blocks.blockentities.clearing_ritual.cl
 import com.finderfeed.solarcraft.content.blocks.blockentities.clearing_ritual.clearing_ritual_main_tile.ClearingRitualMainTile;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
 import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
-import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
+import com.finderfeed.solarcraft.registries.sounds.SCSounds;
 import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -116,7 +116,7 @@ public class ClearingRitualCrystalTile extends BlockEntity {
     public void overload(){
         this.overloaded = true;
         Vec3 center = Helpers.getBlockCenter(worldPosition);
-        level.playSound(null,center.x,center.y,center.z, SolarcraftSounds.CLEARING_CRYSTAL_OVERLOAD.get(), SoundSource.BLOCKS,5,1);
+        level.playSound(null,center.x,center.y,center.z, SCSounds.CLEARING_CRYSTAL_OVERLOAD.get(), SoundSource.BLOCKS,5,1);
         Helpers.updateTile(this);
     }
 
