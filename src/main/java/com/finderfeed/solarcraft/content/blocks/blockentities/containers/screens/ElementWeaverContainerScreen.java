@@ -108,7 +108,7 @@ public class ElementWeaverContainerScreen extends DefaultContainerScreen<Element
     @Override
     protected void renderBg(GuiGraphics graphics, float partialTicks, int mx, int my) {
         PoseStack matrix = graphics.pose();
-        this.renderBackground(graphics);
+        this.renderBackground(graphics,mx,my,partialTicks);
         ClientHelpers.bindText(GUI);
         RenderingTools.blitWithBlend(matrix,relX,relY,0,0,getScreenWidth(),getScreenHeight(),256,256,0,1f);
 

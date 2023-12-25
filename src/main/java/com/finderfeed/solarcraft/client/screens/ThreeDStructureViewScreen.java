@@ -172,10 +172,6 @@ public class ThreeDStructureViewScreen extends ScrollableLexiconScreen {
     }
 
 
-    @Override
-    public void renderBackground(GuiGraphics p_96557_) {
-        super.renderBackground(p_96557_);
-    }
 
     @Override
     public void render(GuiGraphics graphics, int p_96563_, int p_96564_, float partialTicks) {

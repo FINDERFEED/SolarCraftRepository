@@ -156,8 +156,9 @@ public class AbilitySelectionScreen extends SolarCraftScreen {
     }
 
 
+
     @Override
-    public boolean mouseScrolled(double mousePosX, double mousePosY, double delta) {
+    public boolean mouseScrolled(double mousePosX, double mousePosY, double delta,double wtf) {
         if (delta > 0){
             currentShift = Mth.clamp(currentShift - 150,0,(btns.size()-1) * 150);
             currentSelectedAbilityIndex = Mth.clamp(currentSelectedAbilityIndex - 1,0,btns.size()-1);
@@ -169,7 +170,7 @@ public class AbilitySelectionScreen extends SolarCraftScreen {
         }
         ticker = 0;
         selectedAbility = btns.get(currentSelectedAbilityIndex).ability;
-        return super.mouseScrolled(mousePosX, mousePosY, delta);
+        return super.mouseScrolled(mousePosX, mousePosY, delta,wtf);
     }
 
     @Override

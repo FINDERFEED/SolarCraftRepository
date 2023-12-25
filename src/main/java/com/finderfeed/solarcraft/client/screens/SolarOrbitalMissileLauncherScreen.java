@@ -99,7 +99,7 @@ public class SolarOrbitalMissileLauncherScreen extends DefaultScreen {
 
         PoseStack matrices = graphics.pose();
 
-        this.renderBackground(graphics);
+        this.renderBackground(graphics,mx,my,pTicks);
         ClientHelpers.bindText(LOCATION);
         RenderingTools.blitWithBlend(matrices,relX,relY,0,0,this.getScreenWidth(),this.getScreenHeight(),256,256,0,1f);
         if (ClientHelpers.getLevel().getBlockEntity(tilePos) instanceof SolarOrbitalMissileLauncherTileEntity tile){

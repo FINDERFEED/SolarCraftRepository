@@ -144,10 +144,10 @@ public class SolarEnergyGeneratorTile extends SolarcraftBlockEntity implements S
         return bindedTiles;
     }
 
-    @Override
-    public AABB getRenderBoundingBox(){
-        return Helpers.createAABBWithRadius(Helpers.getBlockCenter(this.worldPosition),16,16);
-    }
+//    @Override
+//    public AABB getRenderBoundingBox(){
+//        return Helpers.createAABBWithRadius(Helpers.getBlockCenter(this.worldPosition),16,16);
+//    }
 
     @Override
     public List<MultiblockStructure> getMultiblocks() {

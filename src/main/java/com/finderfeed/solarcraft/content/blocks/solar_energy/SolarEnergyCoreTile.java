@@ -123,10 +123,10 @@ public class SolarEnergyCoreTile extends SolarcraftBlockEntity implements SolarE
         return bindedTiles;
     }
 
-    @Override
-    public AABB getRenderBoundingBox() {
-        return Helpers.createAABBWithRadius(Helpers.getBlockCenter(this.worldPosition),16,16);
-    }
+//    @Override
+//    public AABB getRenderBoundingBox() {
+//        return Helpers.createAABBWithRadius(Helpers.getBlockCenter(this.worldPosition),16,16);
+//    }
 
     @Override
     public boolean bind(BlockPos pos) {

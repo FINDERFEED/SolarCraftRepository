@@ -37,7 +37,7 @@ public class RunicEnergyChargerScreen extends AbstractScrollableContainerScreen<
 
     @Override
     public void render(GuiGraphics graphics, int rouseX, int rouseY, float partialTicks) {
-        this.renderBackground(graphics);
+        this.renderBackground(graphics,rouseX,rouseY,partialTicks);
         super.render(graphics, rouseX, rouseY, partialTicks);
         this.renderTooltip(graphics,rouseX,rouseY);
     }

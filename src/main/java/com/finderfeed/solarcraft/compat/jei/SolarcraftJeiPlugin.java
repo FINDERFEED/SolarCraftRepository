@@ -21,8 +21,10 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.Rect2i;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.crafting.RecipeHolder;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @JeiPlugin
 public class SolarcraftJeiPlugin implements IModPlugin {
@@ -35,12 +37,12 @@ public class SolarcraftJeiPlugin implements IModPlugin {
     public void registerRecipes(IRecipeRegistration registration) {
         IModPlugin.super.registerRecipes(registration);
         ClientLevel world = Minecraft.getInstance().level;
-        List<InfusingRecipe> w = world.getRecipeManager().getAllRecipesFor(SolarcraftRecipeTypes.INFUSING.get());
-        registration.addRecipes(JeiRecipeTypes.INFUSING_RECIPE,w);
-        List<InfusingCraftingRecipe> w1 = world.getRecipeManager().getAllRecipesFor(SolarcraftRecipeTypes.INFUSING_CRAFTING.get());
-        List<SolarSmeltingRecipe> sm = world.getRecipeManager().getAllRecipesFor(SolarcraftRecipeTypes.SMELTING.get());
-        registration.addRecipes(JeiRecipeTypes.INFUSING_CRAFTING_RECIPE,w1);
-        registration.addRecipes(JeiRecipeTypes.SMELTING,sm);
+        List<RecipeHolder<InfusingRecipe>> w = world.getRecipeManager().getAllRecipesFor(SolarcraftRecipeTypes.INFUSING.get());
+        registration.addRecipes(JeiRecipeTypes.INFUSING_RECIPE,w.stream().map(r->r.value()).collect(Collectors.toList()));
+        List<RecipeHolder<InfusingCraftingRecipe>> w1 = world.getRecipeManager().getAllRecipesFor(SolarcraftRecipeTypes.INFUSING_CRAFTING.get());
+        List<RecipeHolder<SolarSmeltingRecipe>> sm = world.getRecipeManager().getAllRecipesFor(SolarcraftRecipeTypes.SMELTING.get());
+        registration.addRecipes(JeiRecipeTypes.INFUSING_CRAFTING_RECIPE,w1.stream().map(r->r.value()).collect(Collectors.toList()));
+        registration.addRecipes(JeiRecipeTypes.SMELTING,sm.stream().map(r->r.value()).collect(Collectors.toList()));
     }
 
     @Override

@@ -33,14 +33,14 @@ public class SolarForgeConfigScreenAdditional extends ScrollableScreen {
         this.ids = index;
     }
     @Override
-    public boolean mouseScrolled(double mousePosx, double mousePosy, double delta) {
+    public boolean mouseScrolled(double mousePosx, double mousePosy, double delta,double wtf) {
         if (delta > 0 && page != maxPages){
             page+=1;
         }
         if (delta < 0 && page != 1){
             page-=1;
         }
-        return super.mouseScrolled(mousePosx,mousePosy,delta);
+        return super.mouseScrolled(mousePosx,mousePosy,delta,wtf);
     }
     @Override
     public void init(){

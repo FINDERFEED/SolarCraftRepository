@@ -2,6 +2,7 @@ package com.finderfeed.solarcraft.content.blocks.solar_forge_block;
 
 import com.finderfeed.solarcraft.SolarCraft;
 
+import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.RenderShape;
@@ -83,7 +84,7 @@ public class SolarForgeBlock extends Block implements EntityBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-        return SolarCraft.SOLAR_FORGE_BLOCKENTITY.get().create(blockPos,blockState);
+        return SCTileEntities.SOLAR_FORGE_BLOCKENTITY.get().create(blockPos,blockState);
     }
 
     @Nullable

@@ -182,7 +182,7 @@ public class ClearingRitual {
 
             RadiantLandCleanedData data = ((ServerLevel)level).getServer().overworld()
                     .getDataStorage()
-                    .computeIfAbsent(RadiantLandCleanedData::load,()->new RadiantLandCleanedData(false),"is_radiant_land_cleaned");
+                    .computeIfAbsent(RadiantLandCleanedData.factory(false),"is_radiant_land_cleaned");
             if (!data.isCleaned()){
                 List<ServerPlayer> players = ((ServerLevel) level).getPlayers((p)->p.level().dimension() == SCEventHandler.RADIANT_LAND_KEY);
                 List<ServerPlayer> allPlayers = ((ServerLevel) level).getPlayers((p)->true);

@@ -11,6 +11,8 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
+import net.neoforged.neoforge.client.extensions.IBlockEntityRendererExtension;
+
 import static com.finderfeed.solarcraft.local_library.helpers.RenderingTools.*;
 
 public class SolarForgeBlockEntityRenderer implements BlockEntityRenderer<SolarForgeBlockEntity> {

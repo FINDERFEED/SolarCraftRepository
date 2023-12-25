@@ -137,7 +137,7 @@ public class EnchanterContainerScreen extends AbstractScrollableContainerScreen<
 
         PoseStack matrices = graphics.pose();
 
-        super.renderBackground(graphics);
+        super.renderBackground(graphics,mousex,mousey,pticks);
         ClientHelpers.bindText(MAIN_SCREEN);
         int scale = (int) minecraft.getWindow().getGuiScale();
         int a = 1;
