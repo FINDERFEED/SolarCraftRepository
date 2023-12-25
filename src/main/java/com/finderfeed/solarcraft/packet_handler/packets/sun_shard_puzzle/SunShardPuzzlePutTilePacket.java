@@ -27,7 +27,7 @@ public class SunShardPuzzlePutTilePacket {
 
 
     public SunShardPuzzlePutTilePacket(FriendlyByteBuf buf){
-        CompoundTag tag = buf.readNbt());
+        CompoundTag tag = buf.readNbt();
         tile = PuzzleTile.deserialize(tag);
         this.x = buf.readInt();
         this.y = buf.readInt();

@@ -35,9 +35,9 @@ public class CraftingMenuMixin {
                                                   ResultContainer result,
                                                   CallbackInfo ci){
         if (!world.isClientSide) {
-            Optional<CraftingRecipe> optional = world.getServer().getRecipeManager().getRecipeFor(RecipeType.CRAFTING, container,world);
+            var optional = world.getServer().getRecipeManager().getRecipeFor(RecipeType.CRAFTING, container,world);
             if (optional.isPresent()){
-                CraftingRecipe recipe = optional.get();
+                CraftingRecipe recipe = optional.get().value();
                 ItemStack its = recipe.getResultItem(world.registryAccess());
                 AncientFragment fragment = AncientFragment.CRAFTING_TYPE_ITEMS.get(its.getItem());
                 if (fragment != null){
