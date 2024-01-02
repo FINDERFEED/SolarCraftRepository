@@ -28,7 +28,7 @@ public class InfusingCraftingRecipeSerializer  implements RecipeSerializer<Infus
 
     @Override
     public Codec<InfusingCraftingRecipe> codec() {
-        return null;
+        return CODEC;
     }
     public static final Codec<InfusingCraftingRecipe> CODEC = ExtraCodecs.JSON.flatXmap(json->{
         InfusingCraftingRecipe recipe = fromJson(json.getAsJsonObject());

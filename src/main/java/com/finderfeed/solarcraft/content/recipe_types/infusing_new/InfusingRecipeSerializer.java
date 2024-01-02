@@ -34,7 +34,7 @@ public class InfusingRecipeSerializer implements RecipeSerializer<InfusingRecipe
 
     @Override
     public Codec<InfusingRecipe> codec() {
-        return null;
+        return CODEC;
     }
 
     public static final Codec<InfusingRecipe> CODEC = ExtraCodecs.JSON.flatXmap(json->{
@@ -65,7 +65,9 @@ public class InfusingRecipeSerializer implements RecipeSerializer<InfusingRecipe
                 pattern.get(4).getAsString()
         };
 
-        ItemStack output = GsonHelper.getAsItem(file, "result").value().getDefaultInstance();
+        ItemStack output = GsonHelper.getAsItem(file.get("result").getAsJsonObject(),
+                "item"
+                ).value().getDefaultInstance();
         int infusingTime = GsonHelper.getAsInt(file, "time", 20);
         String child = GsonHelper.getAsString(file,"fragment");
         int reqEnergy = GsonHelper.getAsInt(file, "energy", 0);

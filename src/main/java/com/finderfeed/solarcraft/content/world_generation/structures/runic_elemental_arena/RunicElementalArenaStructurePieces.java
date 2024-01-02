@@ -39,13 +39,13 @@ public class RunicElementalArenaStructurePieces {
     public static class Piece extends TemplateStructurePiece {
 
         public Piece( StructureTemplateManager templateManagerIn, ResourceLocation resourceLocationIn,Rotation rot, BlockPos pos) {
-            super(StructurePieces.RUNIC_ELEMENTAL_ARENA_PIECE, 0, templateManagerIn, resourceLocationIn, resourceLocationIn.toString(),
+            super(StructurePieces.RUNIC_ELEMENTAL_ARENA_PIECE.get(), 0, templateManagerIn, resourceLocationIn, resourceLocationIn.toString(),
                     makeSettings(rot,DUNGEON_PIECE),
                     makePosition(DUNGEON_PIECE,pos,1));
         }
 
         public Piece(StructurePieceSerializationContext p_163670_, CompoundTag tagCompound) {
-            super(StructurePieces.RUNIC_ELEMENTAL_ARENA_PIECE, tagCompound, p_163670_.structureTemplateManager(), (loc)->{
+            super(StructurePieces.RUNIC_ELEMENTAL_ARENA_PIECE.get(), tagCompound, p_163670_.structureTemplateManager(), (loc)->{
                 return makeSettings(Rotation.valueOf(tagCompound.getString("Rot")),loc);
             });
         }

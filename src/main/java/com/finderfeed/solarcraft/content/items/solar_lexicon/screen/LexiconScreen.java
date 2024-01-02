@@ -40,6 +40,11 @@ public abstract class LexiconScreen extends DefaultScreenWithPages {
         this.renderEscapeText(graphics);
     }
 
+    @Override
+    public void renderBackground(GuiGraphics p_283688_, int p_296369_, int p_296477_, float p_294317_) {
+
+    }
+
     public void renderEscapeText(GuiGraphics graphics){
         PoseStack matrices = graphics.pose();
         matrices.pushPose();

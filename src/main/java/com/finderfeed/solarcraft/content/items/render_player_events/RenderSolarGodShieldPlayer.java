@@ -66,7 +66,7 @@ public class RenderSolarGodShieldPlayer {
     }
 
     @SubscribeEvent
-    public static void RenderPlayer(final RenderPlayerEvent event){
+    public static void RenderPlayer(final RenderPlayerEvent.Post event){
         Player playerEntity = Minecraft.getInstance().player;
         if ((playerEntity.getItemInHand(InteractionHand.MAIN_HAND).getItem() instanceof ShieldOfSolarGod) || (playerEntity.getItemInHand(InteractionHand.OFF_HAND).getItem() instanceof ShieldOfSolarGod) ) {
             if  ( playerEntity.getItemInHand(InteractionHand.MAIN_HAND).getItem() instanceof ShieldOfSolarGod &&

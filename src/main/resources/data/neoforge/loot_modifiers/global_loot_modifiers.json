@@ -1,7 +1,7 @@
 {
   "replace": "false",
   "entries": [
-    "solarcraft:solar_god_smelting",
+    "solarcraft:solar_god_pickaxe_smelting",
     "solarcraft:module_smelting",
     "solarcraft:add_fragments_to_monster_room",
     "solarcraft:add_fragments_to_stronghold_library",

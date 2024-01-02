@@ -1,5 +1,5 @@
 {
-  "type": "forge:add_features",
+  "type": "neoforge:add_features",
   "biomes": "#forge:is_plains",
   "features": "solarcraft:runic_tree",
   "step": "vegetal_decoration"

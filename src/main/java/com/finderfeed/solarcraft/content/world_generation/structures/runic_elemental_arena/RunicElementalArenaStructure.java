@@ -45,7 +45,7 @@ public class RunicElementalArenaStructure extends Structure {
 
     @Override
     public StructureType<?> type() {
-        return SolarcraftStructureTypes.RUNIC_ELEMENTAL_ARENA_STRUCTURE_STRUCTURE_TYPE;
+        return SolarcraftStructureTypes.RUNIC_ELEMENTAL_ARENA_STRUCTURE_STRUCTURE_TYPE.get();
     }
 
 }

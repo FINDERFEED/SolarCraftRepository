@@ -45,7 +45,7 @@ public class MagicianTowerStructure extends Structure {
 
     @Override
     public StructureType<?> type() {
-        return SolarcraftStructureTypes.MAGICIAN_TOWER_STRUCTURE_STRUCTURE_TYPE;
+        return SolarcraftStructureTypes.MAGICIAN_TOWER_STRUCTURE_STRUCTURE_TYPE.get();
     }
 
 //    public MagicianTowerStructure(Codec<NoneFeatureConfiguration> codec){

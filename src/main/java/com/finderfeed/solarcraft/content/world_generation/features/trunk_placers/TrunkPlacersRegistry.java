@@ -13,41 +13,41 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
 
-@Mod.EventBusSubscriber(modid = SolarCraft.MOD_ID,bus = Mod.EventBusSubscriber.Bus.MOD)
+//@Mod.EventBusSubscriber(modid = SolarCraft.MOD_ID,bus = Mod.EventBusSubscriber.Bus.MOD)
 public class TrunkPlacersRegistry {
 
 
 
-    public static Constructor<TrunkPlacerType> CONSTRUCTOR = null;
+//    public static Constructor<TrunkPlacerType> CONSTRUCTOR = null;
+//
+//    static {
+//        try {
+//            CONSTRUCTOR = TrunkPlacerType.class.getDeclaredConstructor(Codec.class);
+//            CONSTRUCTOR.setAccessible(true);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            throw new RuntimeException();
+//        }
+//    }
+//
+//    public static TrunkPlacerType<BurntTreeTrunkPlacer> BURNT_TREE_TRUNK_PLACER_TRUNK_PLACER_TYPE = null;
+//
+//    static {
+//        try {
+//            BURNT_TREE_TRUNK_PLACER_TRUNK_PLACER_TYPE = CONSTRUCTOR.newInstance(BurntTreeTrunkPlacer.CODEC);
+//        } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
+//            e.printStackTrace();
+//            throw new RuntimeException();
+//        }
+//    }
 
-    static {
-        try {
-            CONSTRUCTOR = TrunkPlacerType.class.getDeclaredConstructor(Codec.class);
-            CONSTRUCTOR.setAccessible(true);
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new RuntimeException();
-        }
-    }
 
-    public static TrunkPlacerType<BurntTreeTrunkPlacer> BURNT_TREE_TRUNK_PLACER_TRUNK_PLACER_TYPE = null;
-
-    static {
-        try {
-            BURNT_TREE_TRUNK_PLACER_TRUNK_PLACER_TYPE = CONSTRUCTOR.newInstance(BurntTreeTrunkPlacer.CODEC);
-        } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
-            e.printStackTrace();
-            throw new RuntimeException();
-        }
-    }
-
-
-    @SubscribeEvent
+//    @SubscribeEvent
     public static void registerTrunkPlacerTypes(final FMLCommonSetupEvent event){
         event.enqueueWork(()->{
 
 
-            Registry.register(BuiltInRegistries.TRUNK_PLACER_TYPE,new ResourceLocation("solarcraft","burnt_tree_trunk_placer_type"),BURNT_TREE_TRUNK_PLACER_TRUNK_PLACER_TYPE);
+//            Registry.register(BuiltInRegistries.TRUNK_PLACER_TYPE,new ResourceLocation("solarcraft","burnt_tree_trunk_placer_type"),BURNT_TREE_TRUNK_PLACER_TRUNK_PLACER_TYPE);
         });
     }
 }

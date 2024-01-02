@@ -76,10 +76,10 @@ public class ModEventHandler {
         TierSortingRegistry.registerTier(SolarCraftToolTiers.DIVINE_TIER,new ResourceLocation("divine"), List.of(Tiers.DIAMOND),List.of());
 
 
+
         NeoForge.EVENT_BUS.addListener(InfusingStand::placeBlockEvent);
         event.enqueueWork(()->{
-            SolarcraftStructureTypes.init();
-            SolarcraftStructureHolders.init();
+
         });
     }
 

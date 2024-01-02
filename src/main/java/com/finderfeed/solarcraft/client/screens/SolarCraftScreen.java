@@ -1,5 +1,6 @@
 package com.finderfeed.solarcraft.client.screens;
 
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 
@@ -45,6 +46,11 @@ public abstract class SolarCraftScreen extends Screen {
             postRenderEntries.forEach(Runnable::run);
             postRenderEntries.clear();
         }
+    }
+
+    @Override
+    public void renderBackground(GuiGraphics p_283688_, int p_296369_, int p_296477_, float p_294317_) {
+
     }
 
     protected void addPostRenderEntry(Runnable post){

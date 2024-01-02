@@ -19,10 +19,10 @@ public class SolarLexiconScreenHandler {
     public void memorizeAndClose(){
         Minecraft.getInstance().setScreen(null);
     }
-    public void escapePressed(){
+    public boolean escapePressed(){
         Screen current = Minecraft.getInstance().screen;
         LexiconScreen lastScreen = this.getLastScreen();
-        if (lastScreen == null || (!(current instanceof LexiconScreen))) return;
+        if (lastScreen == null || (!(current instanceof LexiconScreen))) return false;
         boolean x = InputConstants.isKeyDown(Minecraft.getInstance().getWindow().getWindow(), GLFW.GLFW_KEY_X);
         boolean c = InputConstants.isKeyDown(Minecraft.getInstance().getWindow().getWindow(), GLFW.GLFW_KEY_C);
         if (lexiconScreens.size() > 1 && !(x || c)){
@@ -36,6 +36,7 @@ public class SolarLexiconScreenHandler {
                 this.memorizeAndClose();
             }
         }
+        return true;
     }
 
     public void open(){

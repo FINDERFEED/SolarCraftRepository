@@ -1,5 +1,5 @@
 {
-  "type": "forge:add_features",
+  "type": "neoforge:add_features",
   "biomes": "#forge:is_dry/overworld",
   "features": "solarcraft:solar_flower_feature",
   "step": "top_layer_modification"

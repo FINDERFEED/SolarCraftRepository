@@ -1,4 +1,4 @@
 {
-  "loader": "forge:obj",
+  "loader": "neoforge:obj",
   "model": "solarcraft:objmodels/rip_ray_generator.obj"
 }

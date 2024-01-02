@@ -44,7 +44,7 @@ public class CrystalBossRoomStructure extends Structure {
 
     @Override
     public StructureType<?> type() {
-        return SolarcraftStructureTypes.CRYSTAL_BOSS_ROOM_STRUCTURE_STRUCTURE_TYPE;
+        return SolarcraftStructureTypes.CRYSTAL_BOSS_ROOM_STRUCTURE_STRUCTURE_TYPE.get();
     }
 //    public CrystalBossRoomStructure(Codec<NoneFeatureConfiguration> codec){
 //        super(codec);

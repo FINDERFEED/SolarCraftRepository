@@ -86,14 +86,19 @@ public class ClientEventsHandler {
     }
 
     @SubscribeEvent
+    public static void handleScreenKeyInputs(ScreenEvent.KeyPressed.Post event){
+
+        if (event.getKeyCode() == GLFW.GLFW_KEY_ESCAPE && SOLAR_LEXICON_SCREEN_HANDLER.escapePressed()){
+            event.setCanceled(true);
+        }
+
+    }
+
+    @SubscribeEvent
     public static void handleKeyInputs(final InputEvent.Key event){
 
         if (Minecraft.getInstance().screen instanceof IScrollable){
             ((IScrollable) Minecraft.getInstance().screen).performScroll(event.getKey());
-        }
-
-        if (event.getKey() == GLFW.GLFW_KEY_ESCAPE && event.getAction() == GLFW.GLFW_PRESS){
-            SOLAR_LEXICON_SCREEN_HANDLER.escapePressed();
         }
 
         if (Minecraft.getInstance().screen != null) return;

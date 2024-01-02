@@ -1,5 +1,7 @@
 package com.finderfeed.solarcraft.local_library.client.screens.buttons;
 
+import com.finderfeed.solarcraft.helpers.ClientHelpers;
+import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.components.WidgetSprites;
@@ -18,8 +20,11 @@ public class FDImageButton extends ImageButton {
 
     @Override
     public void renderWidget(GuiGraphics graphics, int mx, int my, float p_282518_) {
-        super.renderWidget(graphics, mx, my, p_282518_);
-        if (this.isHovered){
+        ResourceLocation resourcelocation = this.sprites.get(this.isActive(), this.isHoveredOrFocused());
+        ClientHelpers.bindText(resourcelocation);
+        RenderingTools.blitWithBlend(graphics.pose(),this.x,this.y,0,0,this.width,this.height,
+                this.width,this.height,0,1f);
+        if (this.isHovered && tooltip != null){
             tooltip.renderTooltip(this,graphics,mx,my);
         }
     }

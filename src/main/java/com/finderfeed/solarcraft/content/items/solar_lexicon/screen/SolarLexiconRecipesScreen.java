@@ -153,8 +153,6 @@ public class SolarLexiconRecipesScreen extends ScrollableLexiconScreen {
 
 
         RenderingTools.scissor(relX ,relY,this.getScreenWidth(),this.getScreenHeight());
-//        ClientHelpers.bindText(MAIN_SCREEN_SCROLLABLE);
-//        RenderingTools.blitWithBlend(matrices,relX,relY,0,0,256,256,256,256,0,1f);
 
         RenderingTools.renderBasicLexiconPageBackground(matrices,relX,relY,this.getScreenWidth(),this.getScreenHeight());
 
@@ -169,16 +167,13 @@ public class SolarLexiconRecipesScreen extends ScrollableLexiconScreen {
         RenderSystem.disableScissor();
 
 
-//        ClientHelpers.bindText(MAIN_SCREEN);
 
         matrices.pushPose();
         matrices.translate(0,0,400);
         RenderingTools.renderBasicLexiconPageOutline(matrices,relX,relY,this.getScreenWidth(),this.getScreenHeight());
-//        RenderingTools.blitWithBlend(matrices,relX,relY,0,0,256,256,256,256,0,1f);
         matrices.popPose();
 
-//        goBack.render(graphics,mousex,mousey,partialTicks,300);
-//        nothing.render(graphics,mousex,mousey,partialTicks,300);
+
         infoButton.render(graphics,mousex,mousey,partialTicks);
 
         this.renderables.forEach((widget)->{
@@ -190,10 +185,7 @@ public class SolarLexiconRecipesScreen extends ScrollableLexiconScreen {
                 }
 
         });
-//        goBack.active = true;
-//        nothing.active = true;
-//        goBack.visible = true;
-//        nothing.visible = true;
+
         infoButton.visible = true;
         infoButton.active = true;
 

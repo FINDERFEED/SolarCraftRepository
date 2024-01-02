@@ -8,6 +8,7 @@ import com.finderfeed.solarcraft.config.SolarcraftClientConfig;
 import com.finderfeed.solarcraft.config.SolarcraftConfig;
 
 import com.finderfeed.solarcraft.content.world_generation.structures.SolarcraftStructureTypes;
+import com.finderfeed.solarcraft.content.world_generation.structures.StructurePieces;
 import com.finderfeed.solarcraft.events.RenderEventsHandler;
 import com.finderfeed.solarcraft.content.blocks.infusing_table_things.infusing_pool.InfusingStand;
 import com.finderfeed.solarcraft.content.items.item_tiers.SolarCraftToolTiers;
@@ -87,6 +88,10 @@ public class SolarCraft {
         SCItemPredicates.PREDICATES.register(bus);
         SolarcraftGamerules.init();
         ConfigRegistry.init();
+        SolarcraftStructureTypes.STRUCTURE_TYPES.register(bus);
+        StructurePieces.STRUCTURE_PIECES.register(bus);
+//        SolarcraftStructureTypes.init();
+        SolarcraftStructureHolders.init();
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, SolarcraftConfig.SPEC,"solarcraft-config.toml");
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, SolarcraftClientConfig.SPEC,"solarcraft-client-config.toml");
         SCPacketHandler.registerMessages();

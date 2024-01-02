@@ -101,6 +101,11 @@ public abstract class DefaultScreen extends Screen {
         ScreenParticlesRenderHandler.clearAllParticles();
     }
 
+    @Override
+    public void renderBackground(GuiGraphics p_283688_, int p_296369_, int p_296477_, float p_294317_) {
+
+    }
+
     public abstract int getScreenWidth();
     public abstract int getScreenHeight();
 
