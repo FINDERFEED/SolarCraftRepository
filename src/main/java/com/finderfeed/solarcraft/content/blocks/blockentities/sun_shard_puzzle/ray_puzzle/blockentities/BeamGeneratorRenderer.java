@@ -4,6 +4,7 @@ import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.client.rendering.rendertypes.SolarCraftRenderTypes;
 import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.ray_puzzle.BeamData;
 import com.finderfeed.solarcraft.content.blocks.render.abstracts.TileEntityRenderer;
+import com.finderfeed.solarcraft.helpers.Helpers;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 
@@ -11,6 +12,7 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.phys.AABB;
 import org.joml.Matrix4f;
 
 public class BeamGeneratorRenderer extends TileEntityRenderer<BeamGenerator> {
@@ -119,5 +121,8 @@ public class BeamGeneratorRenderer extends TileEntityRenderer<BeamGenerator> {
         matrices.popPose();
     }
 
-
+    @Override
+    public AABB getRenderBoundingBox(BeamGenerator blockEntity) {
+        return Helpers.createAABBWithRadius(Helpers.getBlockCenter(blockEntity.getBlockPos()),30,30);
+    }
 }

@@ -153,10 +153,6 @@ public class DimensionCoreTile extends BlockEntity implements IStructureOwner {
         return structureCorrect;
     }
 
-//    @Override
-//    public AABB getRenderBoundingBox() {
-//        return Helpers.createAABBWithRadius(Helpers.getBlockCenter(worldPosition).add(0,3,0),3,3);
-//    }
 
     @Override
     public List<MultiblockStructure> getMultiblocks() {

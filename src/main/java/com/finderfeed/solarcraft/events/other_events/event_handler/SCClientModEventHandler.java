@@ -74,7 +74,7 @@ import org.lwjgl.glfw.GLFW;
 public class SCClientModEventHandler {
 
     public static final DimensionSpecialEffects RADIANT_LAND  = new RadiantLandDimEffects();
-    public static final RadiantTextureAtlasSpriteLoader RADIANT_TEXTURE_ATLAS_SPRITE_LOADER = new RadiantTextureAtlasSpriteLoader();
+//    public static final RadiantTextureAtlasSpriteLoader RADIANT_TEXTURE_ATLAS_SPRITE_LOADER = new RadiantTextureAtlasSpriteLoader();
     public static final KeyMapping FIRST_ABILITY_KEY = new KeyMapping("key.fire_ability_one", KeyConflictContext.UNIVERSAL, InputConstants.Type.SCANCODE, GLFW.GLFW_KEY_H,"key.solarcraft.category");
     public static final KeyMapping SECOND_ABILITY_KEY = new KeyMapping("key.fire_ability_two", KeyConflictContext.UNIVERSAL, InputConstants.Type.SCANCODE, GLFW.GLFW_KEY_J,"key.solarcraft.category");
     public static final KeyMapping THIRD_ABILITY_KEY = new KeyMapping("key.fire_ability_three", KeyConflictContext.UNIVERSAL, InputConstants.Type.SCANCODE, GLFW.GLFW_KEY_S,"key.solarcraft.category");
@@ -89,10 +89,10 @@ public class SCClientModEventHandler {
     }
 
 
-    @SubscribeEvent(priority = EventPriority.HIGHEST)
-    public static void registerTest(RegisterTextureAtlasSpriteLoadersEvent event){
-        event.register("radiant_loader",RADIANT_TEXTURE_ATLAS_SPRITE_LOADER);
-    }
+//    @SubscribeEvent(priority = EventPriority.HIGHEST)
+//    public static void registerTest(RegisterTextureAtlasSpriteLoadersEvent event){
+//        event.register("radiant_loader",RADIANT_TEXTURE_ATLAS_SPRITE_LOADER);
+//    }
 
 
     @SubscribeEvent

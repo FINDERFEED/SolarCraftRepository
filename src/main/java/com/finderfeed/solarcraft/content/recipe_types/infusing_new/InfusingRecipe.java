@@ -3,9 +3,8 @@ package com.finderfeed.solarcraft.content.recipe_types.infusing_new;
 import com.finderfeed.solarcraft.content.blocks.infusing_table_things.InfuserTileEntity;
 import com.finderfeed.solarcraft.content.items.runic_energy.RunicEnergyCost;
 import com.finderfeed.solarcraft.registries.blocks.SCBlocks;
-import com.finderfeed.solarcraft.registries.recipe_types.SolarcraftRecipeTypes;
+import com.finderfeed.solarcraft.registries.recipe_types.SCRecipeTypes;
 import net.minecraft.core.RegistryAccess;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -101,12 +100,12 @@ public class InfusingRecipe implements Recipe<Container> {
 
     @Override
     public RecipeSerializer<?> getSerializer() {
-        return SolarcraftRecipeTypes.INFUSING_SERIALIZER.get();
+        return SCRecipeTypes.INFUSING_SERIALIZER.get();
     }
 
     @Override
     public RecipeType<?> getType() {
-        return SolarcraftRecipeTypes.INFUSING.get();
+        return SCRecipeTypes.INFUSING.get();
     }
 
     public InfuserTileEntity.Tier getTier() {

@@ -8,6 +8,7 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
 public abstract class AbstractRunicEnergyContainerRenderer<T extends AbstractRunicEnergyContainer> implements BlockEntityRenderer<T> {
@@ -25,4 +26,15 @@ public abstract class AbstractRunicEnergyContainerRenderer<T extends AbstractRun
         }
     }
 
+    @Override
+    public AABB getRenderBoundingBox(T blockEntity) {
+        return new AABB(
+                -blockEntity.getMaxRange(),
+                -blockEntity.getMaxRange(),
+                -blockEntity.getMaxRange(),
+                blockEntity.getMaxRange(),
+                blockEntity.getMaxRange(),
+                blockEntity.getMaxRange())
+                .move(blockEntity.getBlockPos());
+    }
 }

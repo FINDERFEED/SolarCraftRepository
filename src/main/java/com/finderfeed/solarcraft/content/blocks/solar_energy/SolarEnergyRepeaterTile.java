@@ -90,8 +90,4 @@ public class SolarEnergyRepeaterTile extends SolarcraftBlockEntity implements Bi
         return connection;
     }
 
-//    @Override
-//    public AABB getRenderBoundingBox() {
-//        return Helpers.createAABBWithRadius(Helpers.getBlockCenter(worldPosition),16,16);
-//    }
 }

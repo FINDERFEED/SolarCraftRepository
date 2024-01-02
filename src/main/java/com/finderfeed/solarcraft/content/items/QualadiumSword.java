@@ -3,6 +3,7 @@ package com.finderfeed.solarcraft.content.items;
 import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.content.items.primitive.RareSolarcraftSword;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
+import com.finderfeed.solarcraft.registries.effects.SCEffects;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -41,7 +42,7 @@ public class QualadiumSword extends RareSolarcraftSword {
         if (!world.isClientSide){
             AABB box = new AABB(-4,-1,-4,4,1,4).move(player.position());
             for (LivingEntity a : world.getEntitiesOfClass(LivingEntity.class,box,(entity) -> !entity.equals(player) )){
-                a.addEffect(new MobEffectInstance(SolarCraft.SOLAR_STUN.get(),160,0));
+                a.addEffect(new MobEffectInstance(SCEffects.SOLAR_STUN.get(),160,0));
 
             }
             player.getCooldowns().addCooldown(this,600);

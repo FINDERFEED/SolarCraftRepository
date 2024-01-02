@@ -137,13 +137,13 @@ public class ThreeDStructureViewScreen extends ScrollableLexiconScreen {
     }
 
     @Override
-    public boolean mouseScrolled(double p_94686_, double p_94687_, double delta) {
-        double d = Math.ceil(delta);
+    public boolean mouseScrolled(double p_94686_, double p_94687_, double delta,double deltaY) {
+        double d = Math.ceil(deltaY);
         if (structScale + d*0.05  >= 0) {
             this.structScale += d * 0.05;
         }
 
-        return super.mouseScrolled(p_94686_, p_94687_, delta);
+        return super.mouseScrolled(p_94686_, p_94687_, delta,deltaY);
     }
 
     @Override

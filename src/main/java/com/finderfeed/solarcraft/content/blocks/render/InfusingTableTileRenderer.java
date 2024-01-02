@@ -1,17 +1,16 @@
 package com.finderfeed.solarcraft.content.blocks.render;
 
 import com.finderfeed.solarcraft.content.recipe_types.infusing_crafting.InfusingCraftingRecipe;
-import com.finderfeed.solarcraft.events.other_events.event_handler.ClientEventsHandler;
+import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.finderfeed.solarcraft.content.blocks.blockentities.InfusingTableTile;
 import com.finderfeed.solarcraft.content.blocks.render.abstracts.TileEntityRenderer;
-import com.finderfeed.solarcraft.registries.recipe_types.SolarcraftRecipeTypes;
+import com.finderfeed.solarcraft.registries.recipe_types.SCRecipeTypes;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
@@ -39,7 +38,7 @@ public class InfusingTableTileRenderer extends TileEntityRenderer<InfusingTableT
                 float rotationModifier = 0;
                 float distanceModifier = 0;
 
-                Optional<InfusingCraftingRecipe> optional = tile.getLevel().getRecipeManager().getRecipeFor(SolarcraftRecipeTypes.INFUSING_CRAFTING.get(), tile.phantomInv, tile.getLevel());
+                Optional<InfusingCraftingRecipe> optional = Helpers.getRecipe(SCRecipeTypes.INFUSING_CRAFTING.get(), tile.phantomInv, tile.getLevel());
                 if (optional.isPresent() && tile.isRecipeInProgress()){
                     InfusingCraftingRecipe recipe = optional.get();
 

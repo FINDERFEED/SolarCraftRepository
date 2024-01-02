@@ -9,7 +9,7 @@ import com.finderfeed.solarcraft.content.recipe_types.infusing_crafting.Infusing
 import com.finderfeed.solarcraft.content.recipe_types.infusing_new.InfusingRecipe;
 import com.finderfeed.solarcraft.content.recipe_types.solar_smelting.SolarSmeltingRecipe;
 import com.finderfeed.solarcraft.registries.items.SCItems;
-import com.finderfeed.solarcraft.registries.recipe_types.SolarcraftRecipeTypes;
+import com.finderfeed.solarcraft.registries.recipe_types.SCRecipeTypes;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.gui.handlers.IGuiContainerHandler;
@@ -37,10 +37,10 @@ public class SolarcraftJeiPlugin implements IModPlugin {
     public void registerRecipes(IRecipeRegistration registration) {
         IModPlugin.super.registerRecipes(registration);
         ClientLevel world = Minecraft.getInstance().level;
-        List<RecipeHolder<InfusingRecipe>> w = world.getRecipeManager().getAllRecipesFor(SolarcraftRecipeTypes.INFUSING.get());
+        List<RecipeHolder<InfusingRecipe>> w = world.getRecipeManager().getAllRecipesFor(SCRecipeTypes.INFUSING.get());
         registration.addRecipes(JeiRecipeTypes.INFUSING_RECIPE,w.stream().map(r->r.value()).collect(Collectors.toList()));
-        List<RecipeHolder<InfusingCraftingRecipe>> w1 = world.getRecipeManager().getAllRecipesFor(SolarcraftRecipeTypes.INFUSING_CRAFTING.get());
-        List<RecipeHolder<SolarSmeltingRecipe>> sm = world.getRecipeManager().getAllRecipesFor(SolarcraftRecipeTypes.SMELTING.get());
+        List<RecipeHolder<InfusingCraftingRecipe>> w1 = world.getRecipeManager().getAllRecipesFor(SCRecipeTypes.INFUSING_CRAFTING.get());
+        List<RecipeHolder<SolarSmeltingRecipe>> sm = world.getRecipeManager().getAllRecipesFor(SCRecipeTypes.SMELTING.get());
         registration.addRecipes(JeiRecipeTypes.INFUSING_CRAFTING_RECIPE,w1.stream().map(r->r.value()).collect(Collectors.toList()));
         registration.addRecipes(JeiRecipeTypes.SMELTING,sm.stream().map(r->r.value()).collect(Collectors.toList()));
     }

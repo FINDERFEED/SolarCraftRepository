@@ -29,7 +29,7 @@ public class UpdateProgressionsOnClient {
 
 
     public UpdateProgressionsOnClient(FriendlyByteBuf buf){
-        this.progressionData = buf.readAnySizeNbt();
+        this.progressionData = buf.readNbt();
     }
 
     public void toBytes(FriendlyByteBuf buf){

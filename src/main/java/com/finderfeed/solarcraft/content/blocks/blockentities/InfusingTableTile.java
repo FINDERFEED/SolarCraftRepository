@@ -10,7 +10,7 @@ import com.finderfeed.solarcraft.client.particles.SCParticleTypes;
 import com.finderfeed.solarcraft.misc_things.PhantomInventory;
 import com.finderfeed.solarcraft.content.recipe_types.infusing_crafting.InfusingCraftingRecipe;
 import com.finderfeed.solarcraft.registries.items.SCItems;
-import com.finderfeed.solarcraft.registries.recipe_types.SolarcraftRecipeTypes;
+import com.finderfeed.solarcraft.registries.recipe_types.SCRecipeTypes;
 import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -49,7 +49,7 @@ public class InfusingTableTile extends BlockEntity implements OwnedBlock, IWanda
 
             if (tile.isRecipeInProgress()){
                 IItemHandler handler = tile.getInventory();
-                Optional<RecipeHolder<InfusingCraftingRecipe>> optional = world.getRecipeManager().getRecipeFor(SolarcraftRecipeTypes.INFUSING_CRAFTING.get(), tile.phantomInv.set(handler), world);
+                Optional<RecipeHolder<InfusingCraftingRecipe>> optional = world.getRecipeManager().getRecipeFor(SCRecipeTypes.INFUSING_CRAFTING.get(), tile.phantomInv.set(handler), world);
                 if (optional.isPresent()) {
                     InfusingCraftingRecipe recipe = optional.get().value();
                     int recipeTime = recipe.getTime();
@@ -106,7 +106,7 @@ public class InfusingTableTile extends BlockEntity implements OwnedBlock, IWanda
     public void clientTick(){
         if (isRecipeInProgress()) {
             IItemHandler handler = this.getInventory();
-            Optional<RecipeHolder<InfusingCraftingRecipe>> optional = level.getRecipeManager().getRecipeFor(SolarcraftRecipeTypes.INFUSING_CRAFTING.get(), this.phantomInv.set(handler), level);
+            Optional<RecipeHolder<InfusingCraftingRecipe>> optional = level.getRecipeManager().getRecipeFor(SCRecipeTypes.INFUSING_CRAFTING.get(), this.phantomInv.set(handler), level);
             if (optional.isPresent()) {
                 InfusingCraftingRecipe recipe = optional.get().value();
                 int recipeTime = recipe.getTime();
@@ -162,7 +162,7 @@ public class InfusingTableTile extends BlockEntity implements OwnedBlock, IWanda
             //    }
             //});
             if (handler.getStackInSlot(9).is(Items.AIR)) {
-                Optional<RecipeHolder<InfusingCraftingRecipe>> recipe = level.getRecipeManager().getRecipeFor(SolarcraftRecipeTypes.INFUSING_CRAFTING.get(), phantomInv.set(handler), level);
+                Optional<RecipeHolder<InfusingCraftingRecipe>> recipe = level.getRecipeManager().getRecipeFor(SCRecipeTypes.INFUSING_CRAFTING.get(), phantomInv.set(handler), level);
                     if (recipe.isPresent()) {
                         try {
                             if (AncientFragmentHelper.doPlayerHasFragment(pl, recipe.get().value().getFragment())) {

@@ -163,10 +163,7 @@ public class SavannaDungeonKeeperTile extends SolarcraftBlockEntity {
         super.load(tag);
     }
 
-//    @Override
-//    public AABB getRenderBoundingBox() {
-//        return Helpers.createAABBWithRadius(Helpers.posToVec(this.getBlockPos()),10,10);
-//    }
+
 
     @Mod.EventBusSubscriber(modid = SolarCraft.MOD_ID,bus = Mod.EventBusSubscriber.Bus.FORGE)
     public static class LocalEventHandler{

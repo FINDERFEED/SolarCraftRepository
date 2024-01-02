@@ -62,16 +62,8 @@ public class ExplosionBlockerBlockEntity extends SolarcraftBlockEntity implement
     public void load(CompoundTag tag) {
         super.load(tag);
         shouldRenderShield = tag.getBoolean("shouldRenderShield");
-//        if (level != null){
-//            this.setChanged();
-//            level.sendBlockUpdated(worldPosition,getBlockState(),getBlockState(),3);
-//        }
     }
 
-//    @Override
-//    public AABB getRenderBoundingBox() {
-//        return new AABB(-40,-40,-40,40,40,40).move(Helpers.getBlockCenter(worldPosition));
-//    }
 
 
     public boolean isFunctioning(){

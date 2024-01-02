@@ -1,6 +1,7 @@
 package com.finderfeed.solarcraft.content.blocks.infusing_table_things;
 
 import com.finderfeed.solarcraft.SolarCraft;
+import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.finderfeed.solarcraft.content.blocks.render.abstracts.AbstractRunicEnergyContainerRenderer;
 import com.finderfeed.solarcraft.content.world_generation.structures.NotStructures;
@@ -16,6 +17,7 @@ import net.minecraft.resources.ResourceLocation;
 
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.List;
@@ -154,5 +156,10 @@ public class InfuserRenderer extends AbstractRunicEnergyContainerRenderer<Infuse
         vertex.vertex(entry.pose(),0.5F*scaleFactor,0,0.5F*scaleFactor).color(255,255,255,255).uv(1,1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
         vertex.vertex(entry.pose(),0.5F*scaleFactor,0,-0.5F*scaleFactor).color(255,255,255,255).uv(0,1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
         vertex.vertex(entry.pose(),-0.5F*scaleFactor,0,-0.5F*scaleFactor).color(255,255,255,255).uv(0,0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
+    }
+
+    @Override
+    public AABB getRenderBoundingBox(InfuserTileEntity blockEntity) {
+        return new AABB(-5,-5,-5,5,5,5).move(Helpers.getBlockCenter(blockEntity.getBlockPos()));
     }
 }

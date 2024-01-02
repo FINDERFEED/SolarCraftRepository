@@ -12,6 +12,7 @@ import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.Progre
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
 
 import com.finderfeed.solarcraft.content.recipe_types.infusing_new.InfusingRecipe;
+import com.finderfeed.solarcraft.misc_things.SCLocations;
 import com.finderfeed.solarcraft.registries.Tags;
 import com.finderfeed.solarcraft.registries.items.SCItems;
 import com.finderfeed.solarcraft.registries.sounds.SCSounds;
@@ -32,7 +33,6 @@ import java.util.List;
 import java.util.Locale;
 
 public class InfusingRecipeScreen extends LexiconScreen {
-    public final ResourceLocation BUTTONS = new ResourceLocation(SolarCraft.MOD_ID,"textures/misc/page_buttons.png");
     public final ResourceLocation MAIN_SCREEN_OPENED = new ResourceLocation(SolarCraft.MOD_ID,"textures/gui/solar_lexicon_infusing_recipe_with_catalysts_new.png");
     public final ResourceLocation MAIN_SCREEN_UNOPENED = new ResourceLocation(SolarCraft.MOD_ID,"textures/gui/solar_lexicon_infusing_recipe_without_catalysts_new.png");
     //60*6
@@ -85,21 +85,23 @@ public class InfusingRecipeScreen extends LexiconScreen {
         this.catalystsUnlocked = Helpers.hasPlayerCompletedProgression(Progression.CATALYSTS,Minecraft.getInstance().player);
         fillItemRators();
         if (this.getPagesCount() != 1) {
-            addRenderableWidget(new FDImageButton(relX + 193 + 19, relY + 55 + 14  , 16, 16, 0, 0, 0, BUTTONS, 16, 32, (button) -> {
+            addRenderableWidget(new FDImageButton(relX + 193 + 19, relY + 55 + 14  , 16, 16,
+                    RenderingTools.singleWidgetSprite(SCLocations.NEXT_PAGE), (button) -> {
                 this.nextPage();
             },(button,graphics,mousex,mousey)->{
                 graphics.renderTooltip(font,Component.literal("Next recipe"),mousex,mousey);
-            },Component.literal("")){
+            }){
                 @Override
                 public void playDownSound(SoundManager manager) {
                     manager.play(SimpleSoundInstance.forUI(SCSounds.BUTTON_PRESS2.get(),1,1));
                 }
             });
-            addRenderableWidget(new FDImageButton(relX + 193 + 19, relY + 16 + 55 + 14 , 16, 16, 0, 16, 0, BUTTONS, 16, 32, (button) -> {
+            addRenderableWidget(new FDImageButton(relX + 193 + 19, relY + 16 + 55 + 14 , 16, 16,
+                    RenderingTools.singleWidgetSprite(SCLocations.PREV_PAGE), (button) -> {
                 this.previousPage();
             },(button,graphics,mousex,mousey)->{
                 graphics.renderTooltip(font ,Component.literal("Previous recipe"),mousex,mousey);
-            },Component.literal("")){
+            }){
                 @Override
                 public void playDownSound(SoundManager manager) {
                     manager.play(SimpleSoundInstance.forUI(SCSounds.BUTTON_PRESS2.get(),1,1));

@@ -6,6 +6,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
 //AND DESERT YOU! NEVER GONNA MAKE YOU CRY, NEVER GONNA SAY GOODBYE, NEVER GONNA TELL A LIE
@@ -30,5 +31,10 @@ public class RepeaterRenderer implements BlockEntityRenderer<BaseRepeaterTile> {
             });
         }
         matrices.popPose();
+    }
+
+    @Override
+    public AABB getRenderBoundingBox(BaseRepeaterTile blockEntity) {
+        return new AABB(blockEntity.getBlockPos().offset(-16,-16,-16),blockEntity.getBlockPos().offset(16,16,16));
     }
 }

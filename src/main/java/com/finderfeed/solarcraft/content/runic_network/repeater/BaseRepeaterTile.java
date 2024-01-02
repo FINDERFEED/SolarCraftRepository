@@ -133,10 +133,10 @@ public class BaseRepeaterTile extends BlockEntity implements DebugTarget {
 
 
 
-    @Override
-    public AABB getRenderBoundingBox() {
-        return new AABB(worldPosition.offset(-16,-16,-16),worldPosition.offset(16,16,16));
-    }
+//    @Override
+//    public AABB getRenderBoundingBox() {
+//        return new AABB(worldPosition.offset(-16,-16,-16),worldPosition.offset(16,16,16));
+//    }
 
     @Override
     public List<String> getDebugStrings() {

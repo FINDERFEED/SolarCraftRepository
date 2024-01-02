@@ -24,7 +24,7 @@ import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
 import com.finderfeed.solarcraft.registries.containers.SCContainers;
 import com.finderfeed.solarcraft.registries.effects.SCEffects;
 import com.finderfeed.solarcraft.registries.loot_modifiers.SolarcraftLootModifiers;
-import com.finderfeed.solarcraft.registries.recipe_types.SolarcraftRecipeTypes;
+import com.finderfeed.solarcraft.registries.recipe_types.SCRecipeTypes;
 import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
 import com.finderfeed.solarcraft.registries.wand_actions.SolarCraftWandActionRegistry;
 
@@ -97,8 +97,8 @@ public class SolarCraft
         FDEntityDataSerializers.DEF_REG.register(bus);
 //        BiomesRegister.BIOMES.register(bus);
         FeaturesRegistry.FEATURES.register(bus);
-        SolarcraftRecipeTypes.RECIPE_SERIALIZERS.register(bus);
-        SolarcraftRecipeTypes.RECIPE_TYPES.register(bus);
+        SCRecipeTypes.RECIPE_SERIALIZERS.register(bus);
+        SCRecipeTypes.RECIPE_TYPES.register(bus);
         SolarcraftLootModifiers.MODIFIERS.register(bus);
         SolarcraftCommandArgumentTypes.ARGUMENT_TYPES.register(bus);
         SCItemPredicates.PREDICATES.register(bus);

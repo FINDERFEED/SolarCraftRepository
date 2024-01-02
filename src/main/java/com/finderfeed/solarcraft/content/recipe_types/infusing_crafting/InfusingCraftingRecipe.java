@@ -1,9 +1,8 @@
 package com.finderfeed.solarcraft.content.recipe_types.infusing_crafting;
 
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
-import com.finderfeed.solarcraft.registries.recipe_types.SolarcraftRecipeTypes;
+import com.finderfeed.solarcraft.registries.recipe_types.SCRecipeTypes;
 import net.minecraft.core.RegistryAccess;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -221,12 +220,12 @@ public class InfusingCraftingRecipe implements Recipe<Container> {
 
     @Override
     public RecipeSerializer<?> getSerializer() {
-        return SolarcraftRecipeTypes.INFUSING_CRAFTING_SERIALIZER.get();
+        return SCRecipeTypes.INFUSING_CRAFTING_SERIALIZER.get();
     }
 
     @Override
     public RecipeType<?> getType() {
-        return SolarcraftRecipeTypes.INFUSING_CRAFTING.get();
+        return SCRecipeTypes.INFUSING_CRAFTING.get();
     }
 }
 //            for (int i = 0; i < 3;i++){

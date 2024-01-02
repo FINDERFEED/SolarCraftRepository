@@ -9,7 +9,6 @@ import com.finderfeed.solarcraft.content.items.solar_wand.IWandable;
 import com.finderfeed.solarcraft.content.items.solar_wand.wand_actions.structure_check.IStructureOwner;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.helpers.Helpers;
-import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.client.particles.SCParticleTypes;
 import com.finderfeed.solarcraft.helpers.multiblock.MultiblockStructure;
 import com.finderfeed.solarcraft.helpers.multiblock.Multiblocks;
@@ -28,7 +27,7 @@ import com.finderfeed.solarcraft.registries.Tags;
 import com.finderfeed.solarcraft.registries.blocks.SCBlocks;
 import com.finderfeed.solarcraft.content.world_generation.structures.NotStructures;
 import com.finderfeed.solarcraft.registries.items.SCItems;
-import com.finderfeed.solarcraft.registries.recipe_types.SolarcraftRecipeTypes;
+import com.finderfeed.solarcraft.registries.recipe_types.SCRecipeTypes;
 import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
@@ -49,7 +48,6 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.ChatFormatting;
-import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
@@ -174,7 +172,7 @@ public class InfuserTileEntity extends REItemHandlerBlockEntity implements Solar
                 
                 Optional<InfusingRecipe> recipe;
                 if (tile.currentRecipe == null){
-                    Optional<RecipeHolder<InfusingRecipe>> r = tile.level.getRecipeManager().getRecipeFor(SolarcraftRecipeTypes.INFUSING.get(), new PhantomInventory(inv), world);
+                    Optional<RecipeHolder<InfusingRecipe>> r = tile.level.getRecipeManager().getRecipeFor(SCRecipeTypes.INFUSING.get(), new PhantomInventory(inv), world);
                     if (r.isPresent()){
                         tile.currentRecipe = r.get().value();
                         recipe = Optional.of(r.get().value());
@@ -422,7 +420,7 @@ public class InfuserTileEntity extends REItemHandlerBlockEntity implements Solar
             playerEntity.sendSystemMessage(Component.literal("Can't access inventory").withStyle(ChatFormatting.RED));
             return;
         }
-        Optional<RecipeHolder<InfusingRecipe>> opt = this.level.getRecipeManager().getRecipeFor(SolarcraftRecipeTypes.INFUSING.get(),new PhantomInventory(getInventory()),level);
+        Optional<RecipeHolder<InfusingRecipe>> opt = this.level.getRecipeManager().getRecipeFor(SCRecipeTypes.INFUSING.get(),new PhantomInventory(getInventory()),level);
         calculateTier();
         try {
             if (opt.isPresent() && AncientFragmentHelper.doPlayerHasFragment(playerEntity, AncientFragment.getFragmentByID(opt.get().value().fragID))) {
@@ -799,10 +797,6 @@ public class InfuserTileEntity extends REItemHandlerBlockEntity implements Solar
         }
     }
 
-//    @Override
-//    public AABB getRenderBoundingBox() {
-//        return new AABB(-5,-5,-5,5,5,5).move(Helpers.getBlockCenter(getBlockPos()));
-//    }
 
     public int inputSlot(){
         return 6;

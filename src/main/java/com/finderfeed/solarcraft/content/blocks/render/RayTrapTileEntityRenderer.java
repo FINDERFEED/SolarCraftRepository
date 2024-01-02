@@ -7,6 +7,7 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.core.Direction;
+import net.minecraft.world.phys.AABB;
 
 public class RayTrapTileEntityRenderer implements BlockEntityRenderer<RayTrapTileEntity> {
 
@@ -19,11 +20,16 @@ public class RayTrapTileEntityRenderer implements BlockEntityRenderer<RayTrapTil
     @Override
     public void render(RayTrapTileEntity tile, float partialTicks, PoseStack matrices, MultiBufferSource buffer, int light, int overlay) {
 
-        if (tile.CLIENT_TRIGGER_INTEGER != 0 ){
+        if (tile.clientTicker != 0 ){
             RenderingTools.renderRay(matrices,buffer,0.25f,5, Direction.byName(tile.direction),true,3,partialTicks);
 
         }
 
+    }
+
+    @Override
+    public AABB getRenderBoundingBox(RayTrapTileEntity blockEntity) {
+        return new AABB(blockEntity.getBlockPos().offset(-6,-6,-6),blockEntity.getBlockPos().offset(6,6,6));
     }
 
     @Override

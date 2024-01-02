@@ -32,6 +32,7 @@ import net.minecraft.client.Minecraft;
 
 
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.components.WidgetSprites;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipPositioner;
 import net.minecraft.client.gui.screens.inventory.tooltip.TooltipRenderUtil;
@@ -1735,6 +1736,10 @@ public class RenderingTools {
             matrices.popPose();
         }
 
+    }
+
+    public static WidgetSprites singleWidgetSprite(ResourceLocation location){
+        return new WidgetSprites(location,location,location,location);
     }
 
 }

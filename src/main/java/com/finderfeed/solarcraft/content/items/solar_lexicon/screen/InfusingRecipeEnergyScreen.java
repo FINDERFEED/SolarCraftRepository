@@ -8,6 +8,7 @@ import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
 
 import com.finderfeed.solarcraft.content.recipe_types.infusing_new.InfusingRecipe;
+import com.finderfeed.solarcraft.misc_things.SCLocations;
 import com.finderfeed.solarcraft.registries.sounds.SCSounds;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.GuiGraphics;
@@ -20,7 +21,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class InfusingRecipeEnergyScreen extends LexiconScreen {
-    public final ResourceLocation BUTTONS = new ResourceLocation(SolarCraft.MOD_ID,"textures/misc/page_buttons.png");
     public final ResourceLocation MAIN_SCREEN_OPENED = new ResourceLocation(SolarCraft.MOD_ID,"textures/gui/runic_and_solar_energy_costs.png");
 
     private final List<InfusingRecipe> recipes;
@@ -52,23 +52,25 @@ public class InfusingRecipeEnergyScreen extends LexiconScreen {
         super.init();
 
         if (this.getPagesCount() != 0) {
-            addRenderableWidget(new FDImageButton(relX + 193 + 19, relY + 55 + 13, 16, 16, 0, 0, 0, BUTTONS, 16, 32, (button) -> {
+            addRenderableWidget(new FDImageButton(relX + 193 + 19, relY + 55 + 13, 16, 16,
+                    RenderingTools.singleWidgetSprite(SCLocations.NEXT_PAGE), (button) -> {
 
                 this.nextPage();
             },(button,graphics,mousex,mousey)->{
                 graphics.renderTooltip(font,Component.literal("Next recipe"),mousex,mousey);
-            },Component.literal("")){
+            }){
                 @Override
                 public void playDownSound(SoundManager manager) {
                     manager.play(SimpleSoundInstance.forUI(SCSounds.BUTTON_PRESS2.get(),1,1));
                 }
             });
-            addRenderableWidget(new FDImageButton(relX + 193 + 19, relY + 55 + 13 + 16, 16, 16, 0, 16, 0, BUTTONS, 16, 32, (button) -> {
+            addRenderableWidget(new FDImageButton(relX + 193 + 19, relY + 55 + 13 + 16, 16, 16,
+                    RenderingTools.singleWidgetSprite(SCLocations.PREV_PAGE), (button) -> {
 
                 this.previousPage();
             },(button,graphics,mousex,mousey)->{
                 graphics.renderTooltip(font,Component.literal("Previous recipe"),mousex,mousey);
-            },Component.literal("")){
+            }){
                 @Override
                 public void playDownSound(SoundManager manager) {
                     manager.play(SimpleSoundInstance.forUI(SCSounds.BUTTON_PRESS2.get(),1,1));

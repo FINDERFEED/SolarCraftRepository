@@ -26,7 +26,7 @@ public class RayTrapTileEntity extends BlockEntity  {
     public String direction = "up";
     public int attackTick = 0;
     public boolean activated = false;
-    public int CLIENT_TRIGGER_INTEGER = 0;
+    public int clientTicker = 0;
 
     public RayTrapTileEntity( BlockPos p_155229_, BlockState p_155230_) {
         super(SCTileEntities.RAY_TRAP_TILE_ENTITY.get(), p_155229_, p_155230_);
@@ -75,12 +75,12 @@ public class RayTrapTileEntity extends BlockEntity  {
             }
         }
         if (tile.level.isClientSide) {
-            if (tile.CLIENT_TRIGGER_INTEGER >= 1){
+            if (tile.clientTicker >= 1){
 
-                tile.CLIENT_TRIGGER_INTEGER++;
+                tile.clientTicker++;
             }
-            if (tile.CLIENT_TRIGGER_INTEGER >= 30){
-                tile.CLIENT_TRIGGER_INTEGER = 0;
+            if (tile.clientTicker >= 30){
+                tile.clientTicker = 0;
             }
         }
     }
@@ -132,8 +132,4 @@ public class RayTrapTileEntity extends BlockEntity  {
     }
 
 
-//    @Override
-//    public AABB getRenderBoundingBox() {
-//        return new AABB(worldPosition.offset(-6,-6,-6),worldPosition.offset(6,6,6));
-//    }
 }

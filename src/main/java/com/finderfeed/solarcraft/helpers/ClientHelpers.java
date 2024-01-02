@@ -353,7 +353,7 @@ public class ClientHelpers {
     public static void updateIntegerLASERTRAP(BlockPos pos, int i){
         BlockEntity tile = Minecraft.getInstance().level.getBlockEntity(pos);
         if (tile instanceof RayTrapTileEntity){
-            ((RayTrapTileEntity) tile).CLIENT_TRIGGER_INTEGER = 1;
+            ((RayTrapTileEntity) tile).clientTicker = 1;
         }
     }
 

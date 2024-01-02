@@ -2,7 +2,7 @@ package com.finderfeed.solarcraft.content.recipe_types.solar_smelting;
 
 import com.finderfeed.solarcraft.misc_things.PhantomInventory;
 
-import com.finderfeed.solarcraft.registries.recipe_types.SolarcraftRecipeTypes;
+import com.finderfeed.solarcraft.registries.recipe_types.SCRecipeTypes;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -12,7 +12,6 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.core.NonNullList;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
 
 import java.util.List;
@@ -96,11 +95,11 @@ public class SolarSmeltingRecipe implements Recipe<PhantomInventory> {
 
     @Override
     public RecipeSerializer<?> getSerializer() {
-        return SolarcraftRecipeTypes.SMELTING_SERIALIZER.get();
+        return SCRecipeTypes.SMELTING_SERIALIZER.get();
     }
 
     @Override
     public RecipeType<?> getType() {
-        return SolarcraftRecipeTypes.SMELTING.get();
+        return SCRecipeTypes.SMELTING.get();
     }
 }

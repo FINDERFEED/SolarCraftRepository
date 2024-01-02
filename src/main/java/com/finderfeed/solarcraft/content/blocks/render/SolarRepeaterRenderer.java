@@ -12,6 +12,7 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.phys.AABB;
 import org.joml.Matrix4f;
 import net.minecraft.world.phys.Vec3;
 import static com.finderfeed.solarcraft.local_library.helpers.RenderingTools.*;
@@ -105,5 +106,8 @@ public class SolarRepeaterRenderer implements BlockEntityRenderer<SolarEnergyRep
         return true;
     }
 
-
+    @Override
+    public AABB getRenderBoundingBox(SolarEnergyRepeaterTile blockEntity) {
+        return Helpers.createAABBWithRadius(Helpers.getBlockCenter(blockEntity.getBlockPos()),16,16);
+    }
 }

@@ -10,6 +10,7 @@ import com.finderfeed.solarcraft.client.screens.ThreeDStructureViewScreen;
 import com.finderfeed.solarcraft.helpers.multiblock.MultiblockStructure;
 import com.finderfeed.solarcraft.local_library.client.screens.buttons.FDImageButton;
 import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
+import com.finderfeed.solarcraft.misc_things.SCLocations;
 import com.finderfeed.solarcraft.registries.blocks.SCBlocks;
 import com.finderfeed.solarcraft.registries.sounds.SCSounds;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -18,6 +19,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 
 import net.minecraft.client.gui.components.ImageButton;
+import net.minecraft.client.gui.components.WidgetSprites;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.sounds.SoundManager;
 import net.minecraft.network.chat.Component;
@@ -66,7 +68,8 @@ public class StructureScreen extends LexiconScreen {
         structHeightAndPageCount = structure.pattern.length;
         structWidth = structure.pattern[0].length / 2;
 
-        addRenderableWidget(new ImageButton(relX+216,relY+16,16,16,0,0,0,BUTTONS,16,32,(button)->{
+        addRenderableWidget(new ImageButton(relX+216,relY+16,16,16,
+                RenderingTools.singleWidgetSprite(SCLocations.NEXT_PAGE),(button)->{
             if ((currentPage+1 <= structHeightAndPageCount) ){
                 currentPage+=1;
             }
@@ -76,7 +79,8 @@ public class StructureScreen extends LexiconScreen {
                 p_93665_.play(SimpleSoundInstance.forUI(SCSounds.BUTTON_PRESS2.get(),1,1));
             }
         });
-        addRenderableWidget(new ImageButton(relX+216,relY+32,16,16,0,16,0,BUTTONS,16,32,(button)->{
+        addRenderableWidget(new ImageButton(relX+216,relY+32,16,16,
+                RenderingTools.singleWidgetSprite(SCLocations.PREV_PAGE),(button)->{
             if ((currentPage-1 > 0)){
                 currentPage-=1;
             }
@@ -86,11 +90,11 @@ public class StructureScreen extends LexiconScreen {
                 p_93665_.play(SimpleSoundInstance.forUI(SCSounds.BUTTON_PRESS2.get(),1,1));
             }
         });
-        addRenderableWidget(new FDImageButton(relX+216,relY,16,16,0,0,0,THREEDSCREENBTN,16,16,(button)->{
+        addRenderableWidget(new FDImageButton(relX+216,relY,16,16,RenderingTools.singleWidgetSprite(THREEDSCREENBTN),(button)->{
             Minecraft.getInstance().setScreen(new ThreeDStructureViewScreen(fragment,structure));
         },(btn,graphics,mx,my)->{
             graphics.renderTooltip(font,Component.literal("3D View"),mx,my);
-        },Component.literal("3D")) {
+        }) {
             @Override
             public void playDownSound(SoundManager p_93665_) {
                 p_93665_.play(SimpleSoundInstance.forUI(SCSounds.BUTTON_PRESS2.get(), 1, 1));

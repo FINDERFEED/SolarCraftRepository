@@ -10,9 +10,10 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.Resource;
 import org.jetbrains.annotations.NotNull;
 
-public class RadiantTextureAtlasSpriteLoader implements ITextureAtlasSpriteLoader {
+public class RadiantTextureAtlasSpriteLoader /*implements ITextureAtlasSpriteLoader*/ {
     public static final ResourceLocation REGISTRY_ID = new ResourceLocation(SolarCraft.MOD_ID,"radiant_loader");
     public RadiantTextureAtlasSpriteLoader(){}
+    /*
     @Override
     public SpriteContents loadContents(ResourceLocation name, Resource resource, FrameSize frameSize, NativeImage image, AnimationMetadataSection animationMeta, ForgeTextureMetadata forgeMeta) {
         return new SpriteContents(name,frameSize,image,animationMeta,forgeMeta);
@@ -22,5 +23,7 @@ public class RadiantTextureAtlasSpriteLoader implements ITextureAtlasSpriteLoade
         RadiantBlocksAtlasSprite sprite = new RadiantBlocksAtlasSprite(atlasName,contents,atlasWidth,atlasHeight,spriteX,spriteY);
         return sprite;
     }
+
+     */
 
 }

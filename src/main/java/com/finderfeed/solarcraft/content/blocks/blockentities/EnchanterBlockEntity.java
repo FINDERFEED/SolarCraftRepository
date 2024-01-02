@@ -230,10 +230,6 @@ public class EnchanterBlockEntity extends REItemHandlerBlockEntity {
     }
 
 
-//    @Override
-//    public AABB getRenderBoundingBox() {
-//        return new AABB(-getMaxRange(),-getMaxRange(),-getMaxRange(),getMaxRange(),getMaxRange(),getMaxRange()).move(worldPosition);
-//    }
 
     public static class RunicEnergyCostConstructor{
 

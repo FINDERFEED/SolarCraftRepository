@@ -8,7 +8,7 @@ import com.finderfeed.solarcraft.content.recipe_types.solar_smelting.SolarSmelti
 import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
 import com.finderfeed.solarcraft.packet_handler.packets.UpdateItemTagInItemEntityPacket;
 import com.finderfeed.solarcraft.registries.items.SCItems;
-import com.finderfeed.solarcraft.registries.recipe_types.SolarcraftRecipeTypes;
+import com.finderfeed.solarcraft.registries.recipe_types.SCRecipeTypes;
 import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.Connection;
@@ -115,7 +115,7 @@ public class SolarLensTile extends BlockEntity  {
 
 
     public static void processRecipe(Level world, BlockPos post, BlockState blockState, SolarLensTile tile,List<ItemEntity> list){
-        Optional<RecipeHolder<SolarSmeltingRecipe>> recipe = tile.level.getRecipeManager().getRecipeFor(SolarcraftRecipeTypes.SMELTING.get(),tile.INVENTORY,tile.level);
+        Optional<RecipeHolder<SolarSmeltingRecipe>> recipe = tile.level.getRecipeManager().getRecipeFor(SCRecipeTypes.SMELTING.get(),tile.INVENTORY,tile.level);
         if (recipe.isPresent() ){
             SolarSmeltingRecipe actualRecipe = recipe.get().value();
             tile.RECIPE_IN_PROGRESS = true;

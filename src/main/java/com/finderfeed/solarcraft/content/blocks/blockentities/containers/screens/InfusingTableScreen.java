@@ -5,8 +5,7 @@ import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.content.blocks.blockentities.containers.InfusingTableTileContainer;
 import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.finderfeed.solarcraft.misc_things.PhantomInventory;
-import com.finderfeed.solarcraft.content.recipe_types.infusing_crafting.InfusingCraftingRecipe;
-import com.finderfeed.solarcraft.registries.recipe_types.SolarcraftRecipeTypes;
+import com.finderfeed.solarcraft.registries.recipe_types.SCRecipeTypes;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -19,7 +18,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.items.IItemHandler;
-import java.util.Optional;
 
 public class InfusingTableScreen extends AbstractContainerScreen<InfusingTableTileContainer> {
 
@@ -70,7 +68,7 @@ public class InfusingTableScreen extends AbstractContainerScreen<InfusingTableTi
 
         Level world = Minecraft.getInstance().level;
         IItemHandler stacks = menu.getInventory();
-        var opt = world.getRecipeManager().getRecipeFor(SolarcraftRecipeTypes.INFUSING_CRAFTING.get(),new PhantomInventory(stacks),world);
+        var opt = world.getRecipeManager().getRecipeFor(SCRecipeTypes.INFUSING_CRAFTING.get(),new PhantomInventory(stacks),world);
         if (opt.isPresent()){
             result = opt.get().value().getResultItem(world.registryAccess()).getItem();
             renderItemAndTooltip(graphics,result.getDefaultInstance(),relX+153+a,relY+36,mousex,mousey,matrices,menu.tile.calculateMaximumRecipeOutput(opt.get().value())*opt.get().value().getOutputCount());

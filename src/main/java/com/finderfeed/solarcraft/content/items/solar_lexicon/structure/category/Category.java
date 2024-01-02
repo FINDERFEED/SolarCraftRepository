@@ -14,6 +14,7 @@ import net.minecraft.client.gui.components.Button;
 import javax.annotation.Nullable;
 import java.awt.*;
 import java.util.*;
+import java.util.List;
 
 public class Category {
 

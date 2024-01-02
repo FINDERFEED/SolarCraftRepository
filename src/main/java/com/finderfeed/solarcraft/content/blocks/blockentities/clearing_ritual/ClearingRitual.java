@@ -211,7 +211,7 @@ public class ClearingRitual {
         }
         RadiantLandCleanedData data = level.getServer().overworld()
                 .getDataStorage()
-                .computeIfAbsent(RadiantLandCleanedData::load,()->new RadiantLandCleanedData(false),"is_radiant_land_cleaned");
+                .computeIfAbsent(RadiantLandCleanedData.factory(false),"is_radiant_land_cleaned");
         data.setCleaned(cleaned);
         data.setDirty();
     }
@@ -219,7 +219,7 @@ public class ClearingRitual {
     public static boolean getRLState(ServerLevel level){
         RadiantLandCleanedData data = level.getServer().overworld()
                 .getDataStorage()
-                .computeIfAbsent(RadiantLandCleanedData::load,()->new RadiantLandCleanedData(false),"is_radiant_land_cleaned");
+                .computeIfAbsent(RadiantLandCleanedData.factory(false),"is_radiant_land_cleaned");
         return data.isCleaned();
     }
 

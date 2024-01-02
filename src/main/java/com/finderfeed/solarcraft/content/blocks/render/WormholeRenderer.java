@@ -15,6 +15,7 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import org.joml.Matrix4f;
 
@@ -83,5 +84,10 @@ public class WormholeRenderer implements BlockEntityRenderer<WormholeTileEntity>
         }else{
             RenderingTools.addActivePostShader(tile.toString(),uniforms,SHADER);
         }
+    }
+
+    @Override
+    public AABB getRenderBoundingBox(WormholeTileEntity blockEntity) {
+        return new AABB(blockEntity.getBlockPos(),blockEntity.getBlockPos().offset(1,1,1));
     }
 }

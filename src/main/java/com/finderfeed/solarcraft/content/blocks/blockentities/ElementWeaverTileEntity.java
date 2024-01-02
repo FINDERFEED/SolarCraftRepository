@@ -202,9 +202,5 @@ public class ElementWeaverTileEntity extends REItemHandlerBlockEntity{
         return true;
     }
 
-//    @Override
-//    public AABB getRenderBoundingBox() {
-//        return Helpers.createAABBWithRadius(Helpers.posToVec(getBlockPos()),10,10);
-//    }
 
 }

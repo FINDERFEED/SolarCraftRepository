@@ -253,18 +253,18 @@ public class EnchanterContainerScreen extends AbstractScrollableContainerScreen<
 
 
     @Override
-    public boolean mouseScrolled(double p_94686_, double p_94687_, double delta) {
+    public boolean mouseScrolled(double p_94686_, double p_94687_, double delta,double deltaY) {
 
         for (SolarCraftButton b : postRender){
-            if (currentMouseScroll + delta*getScrollValue() >= -getMaxYDownScrollValue() && currentMouseScroll + delta*getScrollValue() <= 0) {
-                b.y = b.y + (int) delta * getScrollValue();
+            if (currentMouseScroll + deltaY*getScrollValue() >= -getMaxYDownScrollValue() && currentMouseScroll + deltaY*getScrollValue() <= 0) {
+                b.y = b.y + (int) deltaY * getScrollValue();
 
             }
         }
-        if (currentMouseScroll + delta*getScrollValue() >= -getMaxYDownScrollValue() && currentMouseScroll + delta*getScrollValue() <= 0) {
-            currentMouseScroll += delta * getScrollValue();
+        if (currentMouseScroll + deltaY*getScrollValue() >= -getMaxYDownScrollValue() && currentMouseScroll + deltaY*getScrollValue() <= 0) {
+            currentMouseScroll += deltaY * getScrollValue();
         }
-        return super.mouseScrolled(p_94686_, p_94687_, delta);
+        return super.mouseScrolled(p_94686_, p_94687_, delta,deltaY);
     }
 
     @Override

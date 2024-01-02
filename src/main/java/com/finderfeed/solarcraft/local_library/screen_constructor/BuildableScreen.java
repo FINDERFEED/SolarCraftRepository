@@ -94,11 +94,11 @@ public abstract class BuildableScreen extends DefaultScreen {
     }
 
     @Override
-    public boolean mouseScrolled(double mx, double my, double delta) {
+    public boolean mouseScrolled(double mx, double my, double delta,double deltaY) {
         if (this.data.mouseScrolled != null){
-            this.data.mouseScrolled.hackyScroll(this,mx,my,delta);
+            this.data.mouseScrolled.hackyScroll(this,mx,my,delta,deltaY);
         }
-        return super.mouseScrolled(mx, my, delta);
+        return super.mouseScrolled(mx, my, delta,deltaY);
     }
 
 

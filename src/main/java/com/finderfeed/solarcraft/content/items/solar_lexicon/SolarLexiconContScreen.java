@@ -79,7 +79,7 @@ public class SolarLexiconContScreen extends AbstractContainerScreen<SolarLexicon
 
     @Override
     public void render(GuiGraphics graphics, int p_230430_2_, int p_230430_3_, float p_230430_4_) {
-        this.renderBackground(graphics);
+        this.renderBackground(graphics,p_230430_2_,p_230430_3_,p_230430_4_);
 
         super.render(graphics, p_230430_2_, p_230430_3_, p_230430_4_);
         this.renderTooltip(graphics,p_230430_2_,p_230430_3_);

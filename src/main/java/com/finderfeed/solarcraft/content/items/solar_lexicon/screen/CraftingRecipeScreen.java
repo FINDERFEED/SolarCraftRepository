@@ -6,6 +6,7 @@ import com.finderfeed.solarcraft.local_library.client.screens.buttons.FDImageBut
 import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.finderfeed.solarcraft.local_library.other.ItemRator;
 import com.finderfeed.solarcraft.misc_things.PhantomInventory;
+import com.finderfeed.solarcraft.misc_things.SCLocations;
 import com.finderfeed.solarcraft.registries.sounds.SCSounds;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
@@ -27,7 +28,6 @@ import java.util.Iterator;
 import java.util.List;
 
 public class CraftingRecipeScreen extends LexiconScreen {
-    public final ResourceLocation BUTTONS = new ResourceLocation("solarcraft","textures/misc/page_buttons.png");
 
     private static final ResourceLocation MAIN_SCREEN = new ResourceLocation(SolarCraft.MOD_ID,"textures/gui/solar_lexicon_crafting_recipe_screen.png");
 
@@ -57,45 +57,30 @@ public class CraftingRecipeScreen extends LexiconScreen {
         this.prepareSlots();
         this.setupGhostRecipe(recipes.get(0));
         if (this.getPagesCount() != 1) {
-            addRenderableWidget(new FDImageButton(relX + 180 - 10, relY + 36, 16, 16, 0, 0, 0, BUTTONS, 16, 32, (button) -> {
+            addRenderableWidget(new FDImageButton(relX + 180 - 10, relY + 36, 16, 16,
+                    RenderingTools.singleWidgetSprite(SCLocations.NEXT_PAGE), (button) -> {
                 this.nextPage();
-                //                if ((currentPage + 1 <= maxPages)) {
-//                    currentPage += 1;
-//                }
-//                this.setupGhostRecipe(recipes.get(currentPage));
             },(button,graphics,mousex,mousey)->{
                 graphics.renderTooltip(font,Component.literal("Next recipe"),mousex,mousey);
-            },Component.literal("")){
+            }){
                 @Override
                 public void playDownSound(SoundManager manager) {
                     manager.play(SimpleSoundInstance.forUI(SCSounds.BUTTON_PRESS2.get(),1,1));
                 }
             });
-            addRenderableWidget(new FDImageButton(relX + 164 - 10, relY + 36, 16, 16, 0, 16, 0, BUTTONS, 16, 32, (button) -> {
+            addRenderableWidget(new FDImageButton(relX + 164 - 10, relY + 36, 16, 16,
+                    RenderingTools.singleWidgetSprite(SCLocations.PREV_PAGE), (button) -> {
                 this.previousPage();
-                //                if ((currentPage - 1 >= 0)) {
-//                    currentPage -= 1;
-//                }
-//                this.setupGhostRecipe(recipes.get(currentPage));
             },(button,graphics,mousex,mousey)->{
                 graphics.renderTooltip(font,Component.literal("Previous recipe"),mousex,mousey);
-            },Component.literal("")){
+            }){
                 @Override
                 public void playDownSound(SoundManager manager) {
                     manager.play(SimpleSoundInstance.forUI(SCSounds.BUTTON_PRESS2.get(),1,1));
                 }
             });
         }
-//        addRenderableWidget(new ItemStackTabButton(relX+97+xoffs,relY+29 - 3,17,17,(button)->{minecraft.setScreen(new SolarLexiconRecipesScreen());}, Items.CRAFTING_TABLE.getDefaultInstance(),0.7f,
-//                (buttons, graphics, b, c) -> {
-//                    graphics.renderTooltip(font, Component.translatable("solarcraft.screens.buttons.recipes_screen"), b, c);
-//                }));
-//        addRenderableWidget(new ItemStackTabButton(relX+97+xoffs,relY+29 - 3 + 19,17,17,(button)->{
-//            ClientEventsHandler.SOLAR_LEXICON_SCREEN_HANDLER.memorizeAndClose();
-//
-//        }, Items.WRITABLE_BOOK.getDefaultInstance(),0.7f,(buttons, graphics, b, c) -> {
-//            graphics.renderTooltip(font, Component.translatable("solarcraft.screens.buttons.memorize_page"), b, c);
-//        }));
+
 
     }
 
