@@ -37,6 +37,7 @@ import com.finderfeed.solarcraft.content.items.solar_disc_gun.SolarDiscProjectil
 import com.finderfeed.solarcraft.content.items.solar_lexicon.SolarLexiconContScreen;
 import com.finderfeed.solarcraft.content.runic_network.repeater.RepeaterRenderer;
 import com.finderfeed.solarcraft.content.world_generation.dimension_related.radiant_land.RadiantLandDimEffects;
+import com.finderfeed.solarcraft.events.RenderEventsHandler;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.local_library.client.particles.ScreenParticlesRenderHandler;
 import com.finderfeed.solarcraft.registries.SCBedrockModels;
@@ -66,6 +67,7 @@ import net.neoforged.neoforge.client.event.RegisterClientTooltipComponentFactori
 import net.neoforged.neoforge.client.event.RegisterDimensionSpecialEffectsEvent;
 import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
 import net.neoforged.neoforge.client.settings.KeyConflictContext;
+import net.neoforged.neoforge.common.NeoForge;
 import org.lwjgl.glfw.GLFW;
 
 
@@ -113,6 +115,7 @@ public class SCClientModEventHandler {
     @SubscribeEvent
     public static void registerClientStuff(final FMLClientSetupEvent event){
 
+        NeoForge.EVENT_BUS.register(new RenderEventsHandler());
         ScreenParticlesRenderHandler.registerRenderType(SolarCraftRenderTypes.ParticleRenderTypes.RUNE_TILE_PARTICLE);
         ScreenParticlesRenderHandler.registerRenderType(SolarCraftRenderTypes.ParticleRenderTypes.SOLAR_STRIKE_PARTICLE_SCREEN);
 

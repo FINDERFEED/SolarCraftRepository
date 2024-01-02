@@ -360,19 +360,6 @@ public class SCItems {
         return reg;
     }
 
-    public static void registerIntoCreativeTabs(BuildCreativeModeTabContentsEvent event){
-//        Map<CreativeModeTab,List DeferredHolder<Item,? extends Item>>> newmap = new HashMap<>();
-//        for (var entry : itemTabs.entrySet()){
-//            newmap.put(entry.getKey().get(),entry.getValue());
-//        }
-//        var a = newmap.get(event.getTab());
-//        if (a != null){
-//            a.forEach(event::accept);
-//        }
-//
-//        if (event.getTab() == SOLAR_GROUP_FRAGMENTS.get()){
-//
-//        }
-    }
+
 
 }

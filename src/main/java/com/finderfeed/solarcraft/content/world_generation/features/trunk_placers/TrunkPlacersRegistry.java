@@ -1,15 +1,19 @@
 package com.finderfeed.solarcraft.content.world_generation.features.trunk_placers;
 
+import com.finderfeed.solarcraft.SolarCraft;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.core.Registry;
 import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacerType;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
 
+@Mod.EventBusSubscriber(modid = SolarCraft.MOD_ID,bus = Mod.EventBusSubscriber.Bus.MOD)
 public class TrunkPlacersRegistry {
 
 
@@ -37,6 +41,8 @@ public class TrunkPlacersRegistry {
         }
     }
 
+
+    @SubscribeEvent
     public static void registerTrunkPlacerTypes(final FMLCommonSetupEvent event){
         event.enqueueWork(()->{
 

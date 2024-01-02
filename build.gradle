@@ -79,26 +79,6 @@ dependencies {
 
     implementation "net.neoforged:neoforge:${neo_version}"
 
-    // Example mod dependency with JEI
-    // The JEI API is declared for compile time use, while the full JEI artifact is used at runtime
-    // compileOnly "mezz.jei:jei-${mc_version}-common-api:${jei_version}"
-    // compileOnly "mezz.jei:jei-${mc_version}-forge-api:${jei_version}"
-    // runtimeOnly "mezz.jei:jei-${mc_version}-forge:${jei_version}"
-
-    // Example mod dependency using a mod jar from ./libs with a flat dir repository
-    // This maps to ./libs/coolmod-${mc_version}-${coolmod_version}.jar
-    // The group id is ignored when searching -- in this case, it is "blank"
-    // implementation "blank:coolmod-${mc_version}:${coolmod_version}"
-
-    // Example mod dependency using a file as dependency
-    // implementation files("libs/coolmod-${mc_version}-${coolmod_version}.jar")
-
-    // Example project dependency using a sister or child project:
-    // implementation project(":myproject")
-
-    // For more info:
-    // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
-    // http://www.gradle.org/docs/current/userguide/dependency_management.html
 }
 
 
@@ -149,11 +129,11 @@ repositories {
         name = "Illusive Soulworks maven"
         url = "https://maven.theillusivec4.top/"
     }
-        maven {
-        // location of a maven mirror for JEI files, as a fallback
-        name = "ModMaven"
-        url = "https://modmaven.dev"
-    }
+//        maven {
+//        // location of a maven mirror for JEI files, as a fallback
+//        name = "ModMaven"
+//        url = "https://modmaven.dev"
+//        }
 }
 
 
@@ -164,205 +144,10 @@ dependencies {
     runtimeOnly("top.theillusivec4.curios:curios-neoforge:${curios_version}")
 
 
-    compileOnly ("mezz.jei:jei-1.20.2-common-api:16.0.0.28")
-
-    // compile against the JEI API but do not include it at runtime
-    compileOnly ("mezz.jei:jei-1.20.2-forge-api:16.0.0.28")
-    // at runtime, use the full JEI jar
-    runtimeOnly ("mezz.jei:jei-1.20.2-forge:16.0.0.28")
-}
-
-
-
-
-//buildscript {
-//    repositories {
-//        maven { url = 'https://maven.neoforged.net/releases/' }
-//        maven { url = 'https://repo.spongepowered.org/repository/maven-public/' }
-//        mavenCentral()
-//    }
-//    dependencies {
-//        classpath group: 'net.neoforged', name: 'NeoGradle', version: '6.0.+', changing: true
-//        classpath group: 'org.spongepowered', name: 'mixingradle', version: '0.7-SNAPSHOT'
-//    }
-//}
-//apply plugin: 'net.neoforged.gradle'
-//// Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
-//apply plugin: 'eclipse'
-//apply plugin: 'maven-publish'
-//apply plugin: 'org.spongepowered.mixin'
-//
-//
-//version = '3.3.0'
-//group = 'com.finderfeed.solarcraft' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-//archivesBaseName = 'solarcraft'
-//
-//java.toolchain.languageVersion = JavaLanguageVersion.of(17) // Mojang ships Java 8 to end users, so your mod should target Java 8.
-//
-//println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
-//minecraft {
-//
-//    mappings channel: 'official', version: '1.20.2'
-//
-//    accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
-//
-//    runs {
-//        client {
-//            workingDirectory project.file('run')
-//            property 'mixin.env.remapRefMap', 'true'
-//            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
-//
-//            property 'forge.logging.markers', 'REGISTRIES'
-//
-//             property 'forge.logging.console.level', 'debug'
-//
-//            mods {
-//                solarcraft {
-//                    source sourceSets.main
-//                }
-//            }
-//        }
-//
-//        server {
-//            workingDirectory project.file('run')
-//            property 'mixin.env.remapRefMap', 'true'
-//            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
-//
-//            property 'forge.logging.markers', 'REGISTRIES'
-//
-//            property 'forge.logging.console.level', 'debug'
-//
-//            mods {
-//                solarcraft {
-//                    source sourceSets.main
-//                }
-//            }
-//        }
-//
-//        data {
-//            workingDirectory project.file('run')
-//
-//            property 'forge.logging.markers', 'REGISTRIES'
-//
-//         property 'forge.logging.console.level', 'debug'
-//
-//            args '--mod', 'solarcraft', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
-//
-//            mods {
-//                solarcraft {
-//                    source sourceSets.main
-//                }
-//            }
-//        }
-//    }
-//}
-//
-//// Include resources generated by data generators.
-//sourceSets.main.resources { srcDir 'src/generated/resources' }
-//
-//dependencies {
-//
-//    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
-//
-//    implementation 'net.neoforged:neoforge:20.2.86'
-//
-//
-////    runtimeOnly fg.deobf("curse.maven:oculus-581495:4299147")
-////    runtimeOnly fg.deobf("curse.maven:rubidium-574856:4448157")
-//
-////    runtimeOnly fg.deobf("curse.maven:corailtombstone-243707:4057138")
-//
-////    runtimeOnly fg.deobf("curse.maven:curios-309927:3670447")
-////    runtimeOnly fg.deobf("curse.maven:cyanide-541676:3545771")
-////    runtimeOnly fg.deobf("curse.maven:iceberg-520110:3553159")
-////    runtimeOnly fg.deobf("curse.maven:legendarytooltips-532127:3549889")
-////    runtimeOnly fg.deobf("curse.maven:architectureapi-419699:3544955")
-////        runtimeOnly fg.deobf("curse.maven:tetra-289712:3591751")
-////        runtimeOnly fg.deobf("curse.maven:mutil-351914:3591744")
-//
-////    implementation fg.deobf("curse.maven:rubidium-574856:4573226")
-////    implementation fg.deobf("curse.maven:oculus-581495:4578741")
-////    implementation fg.deobf("curse.maven:placebo-283644:4723708")
-////    implementation fg.deobf("curse.maven:toast-control-271740:4711316")
-////    implementation fg.deobf("curse.maven:create-328085:4835191")
-//}
-//
-//jar {
-//    manifest {
-//        attributes([
-//            "Specification-Title": "solarcraft",
-//            "Specification-Vendor": "solarcraftsareus",
-//            "Specification-Version": "1", // We are version 1 of ourselves
-//            "Implementation-Title": project.name,
-//            "Implementation-Version": "${version}",
-//            "Implementation-Vendor" :"solarcraftsareus",
-//            "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
-//        ])
-//    }
-//}
-//
-//
-//jar.finalizedBy('reobfJar')`
-//
-//repositories {
-//    maven {
-//        url "https://cursemaven.com"
-//        content {
-//            includeGroup "curse.maven"
-//        }
-//    }
-//}
-//
-//publishing {
-//    publications {
-//        mavenJava(MavenPublication) {
-//            artifact jar
-//        }
-//    }
-//    repositories {
-//
-//        maven {
-//            url "file:///${project.projectDir}/mcmodsrepo"
-//        }
-//    }
-//}
-//repositories {
-//    maven {
-//        url = "https://maven.theillusivec4.top/"
-//    }
-//}
-//
-//dependencies {
-//    runtimeOnly "top.theillusivec4.curios:curios-neoforge:6.1.0"
-//    compileOnly "top.theillusivec4.curios:curios-neoforge:6.1.0:api"
-////    implementation fg.deobf("curse.maven:cyanide-forge-541676:4584675")
-//}
-//
-//repositories {
-//    maven {
-//        // location of the maven that hosts JEI files
-//        name = "Progwml6 maven"
-//        url = "https://dvs1.progwml6.com/files/maven/"
-//    }
-//    maven {
-//        // location of a maven mirror for JEI files, as a fallback
-//        name = "ModMaven"
-//        url = "https://modmaven.dev"
-//    }
-//}
-//
-//dependencies {
-//    compileOnly fg.deobf("mezz.jei:jei-1.20.2-common-api:16.0.0.28")
+//    compileOnly ("mezz.jei:jei-1.20.2-common-api:16.0.0.28")
 //
 //    // compile against the JEI API but do not include it at runtime
-//    compileOnly fg.deobf("mezz.jei:jei-1.20.2-forge-api:16.0.0.28")
+//    compileOnly ("mezz.jei:jei-1.20.2-forge-api:16.0.0.28")
 //    // at runtime, use the full JEI jar
-//    runtimeOnly fg.deobf("mezz.jei:jei-1.20.2-forge:16.0.0.28")
-//}
-//
-//
-//mixin {
-//    add sourceSets.main, "solarcraft.refmap.json"
-//
-//    config "solarcraft.mixins.json"
-//}
+//    runtimeOnly ("mezz.jei:jei-1.20.2-forge:16.0.0.28")
+}
