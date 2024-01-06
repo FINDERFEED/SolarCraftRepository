@@ -1,66 +1,44 @@
-package com.finderfeed.solarcraft.client.rendering;
+package com.finderfeed.solarcraft.client.rendering.radiant_texture;
 
 import com.finderfeed.solarcraft.local_library.helpers.FDMathHelper;
 import com.mojang.blaze3d.platform.NativeImage;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.texture.SpriteContents;
-import net.minecraft.client.renderer.texture.TextureAtlas;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.client.renderer.texture.SpriteTicker;
+import net.minecraft.client.resources.metadata.animation.FrameSize;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.packs.resources.ResourceMetadata;
 import net.minecraft.util.Mth;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.List;
+public class RadiantTextureSpriteContets extends SpriteContents {
 
+    public NativeImage original;
 
-public class RadiantBlocksAtlasSprite extends TextureAtlasSprite {
-
-    private List<NativeImage> original;
-
-    public RadiantBlocksAtlasSprite(ResourceLocation location, SpriteContents contents, int p_248950_, int p_249741_, int p_248672_, int p_248637_) {
-        super(location, contents, p_248950_, p_249741_, p_248672_, p_248637_);
+    public RadiantTextureSpriteContets(ResourceLocation location, FrameSize size, NativeImage image, ResourceMetadata metadata) {
+        super(location, size, image, metadata);
+        original = new NativeImage(image.getWidth(),image.getHeight(),true);
+        original.copyFrom(image);
     }
 
-
-    @Override
-    public void uploadFirstFrame() {
-
-        super.uploadFirstFrame();
-        NativeImage[] mainImage = this.contents().byMipLevel;
-        if (original == null) {
-            original = new ArrayList<>();
-            for (int i = 0;i < mainImage.length;i++){
-                NativeImage originalImage = mainImage[i];
-                NativeImage image = new NativeImage(originalImage.getWidth(),originalImage.getHeight(),true);
-                for (int a = 0; a < originalImage.getWidth(); a++) {
-                    for (int b = 0; b < originalImage.getHeight(); b++) {
-                        image.setPixelRGBA(a,b,originalImage.getPixelRGBA(a,b));
-                    }
-                }
-                original.add(image);
-            }
-        }
-    }
 
     @Nullable
     @Override
-    public Ticker createTicker() {
-
-        return new Ticker() {
+    public SpriteTicker createTicker() {
+        return new SpriteTicker() {
             @Override
-            public void tickAndUpload() {
-                NativeImage[] mainImage = contents().byMipLevel;
+            public void tickAndUpload(int idk1, int idk2) {
+                NativeImage[] mainImage = byMipLevel;
                 for(int i = 0; i < mainImage.length; ++i) {
                     NativeImage image = mainImage[i];
-                    if ((contents().width() >> i <= 0) || (contents().height() >> i <= 0)) break;
+                    if ((width() >> i <= 0) || (height() >> i <= 0)) break;
                     if (Minecraft.getInstance().level != null){
                         ClientLevel level = Minecraft.getInstance().level;
 
                         if (original != null) {
                             float timeofday = level.getTimeOfDay(Minecraft.getInstance().getDeltaFrameTime());
-                            NativeImage image2 = original.get(i);
+                            NativeImage image2 = original;
                             for (int a = 0; a < image.getWidth(); a++) {
                                 for (int b = 0; b < image.getHeight(); b++) {
                                     int color = image2.getPixelRGBA(a, b);
@@ -105,18 +83,17 @@ public class RadiantBlocksAtlasSprite extends TextureAtlasSprite {
                         }
                     }
 
-                    image.upload(i, getX() >> i, getY() >> i, 0 >> i, 0 >> i, contents().width() >> i, contents().height() >> i, mainImage.length > 1, false);
+                    image.upload(i, idk1 >> i, idk2 >> i, 0 >> i, 0 >> i, width() >> i, height() >> i, mainImage.length > 1, false);
                 }
             }
 
             @Override
             public void close() {
-                for (NativeImage image : contents().byMipLevel){
-                    image.close();
-                }
+
             }
         };
     }
+
 
     private float getDayPercentage(float timeOfDay){
         float toReturn = 0f;

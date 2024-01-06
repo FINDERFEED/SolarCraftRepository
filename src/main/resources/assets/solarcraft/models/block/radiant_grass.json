@@ -1,4 +1,5 @@
 {
+  "loader": "solarcraft:radiant_blocks_loader",
   "parent": "block/cube",
   "textures": {
     "particle": "block/dirt",

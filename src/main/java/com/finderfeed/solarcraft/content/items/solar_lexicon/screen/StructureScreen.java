@@ -68,23 +68,23 @@ public class StructureScreen extends LexiconScreen {
         structHeightAndPageCount = structure.pattern.length;
         structWidth = structure.pattern[0].length / 2;
 
-        addRenderableWidget(new ImageButton(relX+216,relY+16,16,16,
+        addRenderableWidget(new FDImageButton(relX+216,relY+16,16,16,
                 RenderingTools.singleWidgetSprite(SCLocations.NEXT_PAGE),(button)->{
             if ((currentPage+1 <= structHeightAndPageCount) ){
                 currentPage+=1;
             }
-        }){
+        },null){
             @Override
             public void playDownSound(SoundManager p_93665_) {
                 p_93665_.play(SimpleSoundInstance.forUI(SCSounds.BUTTON_PRESS2.get(),1,1));
             }
         });
-        addRenderableWidget(new ImageButton(relX+216,relY+32,16,16,
+        addRenderableWidget(new FDImageButton(relX+216,relY+32,16,16,
                 RenderingTools.singleWidgetSprite(SCLocations.PREV_PAGE),(button)->{
             if ((currentPage-1 > 0)){
                 currentPage-=1;
             }
-        }){
+        },null){
             @Override
             public void playDownSound(SoundManager p_93665_) {
                 p_93665_.play(SimpleSoundInstance.forUI(SCSounds.BUTTON_PRESS2.get(),1,1));
@@ -100,17 +100,6 @@ public class StructureScreen extends LexiconScreen {
                 p_93665_.play(SimpleSoundInstance.forUI(SCSounds.BUTTON_PRESS2.get(), 1, 1));
             }
         });
-
-//        addRenderableWidget(new ItemStackTabButton(relX+217,relY+52,17,17,(button)->{minecraft.setScreen(new SolarLexiconRecipesScreen());}, Items.CRAFTING_TABLE.getDefaultInstance(),0.7f,
-//                (buttons, graphics, b, c) -> {
-//                    graphics.renderTooltip(font, Component.translatable("solarcraft.screens.buttons.recipes_screen"), b, c);
-//                }));
-//        addRenderableWidget(new ItemStackTabButton(relX+217,relY+52 + 18,17,17,(button)->{
-//            ClientEventsHandler.SOLAR_LEXICON_SCREEN_HANDLER.memorizeAndClose();
-//
-//        }, Items.WRITABLE_BOOK.getDefaultInstance(),0.7f,(buttons, graphics, b, c) -> {
-//            graphics.renderTooltip(font, Component.translatable("solarcraft.screens.buttons.memorize_page"), b, c);
-//        }));
 
 
 

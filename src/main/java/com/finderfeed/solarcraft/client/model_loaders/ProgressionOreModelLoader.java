@@ -4,7 +4,6 @@ import com.finderfeed.solarcraft.client.baked_models.ProgressionOreModel;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
-import com.mojang.datafixers.util.Pair;
 
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.*;
@@ -15,16 +14,12 @@ import net.neoforged.neoforge.client.model.geometry.IUnbakedGeometry;
 import net.minecraft.resources.ResourceLocation;
 
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
 import java.util.function.Function;
 
 import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.client.renderer.block.model.ItemOverrides;
 
-public class SolarCraftModelLoader implements IGeometryLoader<ProgressionOreGeometry> {
+public class ProgressionOreModelLoader implements IGeometryLoader<ProgressionOreGeometry> {
     @Override
     public ProgressionOreGeometry read(JsonObject jsonObject, JsonDeserializationContext deserializationContext) throws JsonParseException {
         BlockModel model = deserializationContext.deserialize(GsonHelper.getAsJsonObject(jsonObject,"orig_model"), BlockModel.class);

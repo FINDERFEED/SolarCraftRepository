@@ -1,7 +1,7 @@
 package com.finderfeed.solarcraft.events.other_events.event_handler;
 
 import com.finderfeed.solarcraft.SolarCraft;
-import com.finderfeed.solarcraft.client.rendering.RadiantTextureAtlasSpriteLoader;
+import com.finderfeed.solarcraft.client.rendering.radiant_texture.RadiantTextureSpriteSource;
 import com.finderfeed.solarcraft.client.rendering.rendertypes.SolarCraftRenderTypes;
 import com.finderfeed.solarcraft.client.tooltips.REClientTooltipComponent;
 import com.finderfeed.solarcraft.client.tooltips.RETooltipComponent;
@@ -55,17 +55,14 @@ import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.DimensionSpecialEffects;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.item.ItemProperties;
+import net.minecraft.client.renderer.texture.atlas.SpriteSourceType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.api.distmarker.Dist;
-import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
-import net.neoforged.neoforge.client.event.EntityRenderersEvent;
-import net.neoforged.neoforge.client.event.RegisterClientTooltipComponentFactoriesEvent;
-import net.neoforged.neoforge.client.event.RegisterDimensionSpecialEffectsEvent;
-import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
+import net.neoforged.neoforge.client.event.*;
 import net.neoforged.neoforge.client.settings.KeyConflictContext;
 import net.neoforged.neoforge.common.NeoForge;
 import org.lwjgl.glfw.GLFW;
@@ -84,17 +81,19 @@ public class SCClientModEventHandler {
     public static final KeyMapping GUI_ABILITY_BUY_SCREEN = new KeyMapping("key.ability_buy_screen.solarcraft", KeyConflictContext.UNIVERSAL, InputConstants.Type.SCANCODE, GLFW.GLFW_KEY_D,"key.solarcraft.category");
     public static final KeyMapping GUI_WAND_MODE_SELECTION = new KeyMapping("key.wand_mode_selection_screen", KeyConflictContext.UNIVERSAL, InputConstants.Type.SCANCODE, GLFW.GLFW_KEY_K,"key.solarcraft.category");
 
+    public static SpriteSourceType RADIANT_TEXTURE_TYPE;
 
     @SubscribeEvent
     public static void registerTooltips(RegisterClientTooltipComponentFactoriesEvent event){
         event.register(RETooltipComponent.class, REClientTooltipComponent::new);
     }
 
+    @SubscribeEvent
+    public static void registerSpriteSourceTypes(RegisterSpriteSourceTypesEvent event){
+        RADIANT_TEXTURE_TYPE = event.register(new ResourceLocation(SolarCraft.MOD_ID,"radiant_texture"), RadiantTextureSpriteSource.CODEC);
+    }
 
-//    @SubscribeEvent(priority = EventPriority.HIGHEST)
-//    public static void registerTest(RegisterTextureAtlasSpriteLoadersEvent event){
-//        event.register("radiant_loader",RADIANT_TEXTURE_ATLAS_SPRITE_LOADER);
-//    }
+
 
 
     @SubscribeEvent

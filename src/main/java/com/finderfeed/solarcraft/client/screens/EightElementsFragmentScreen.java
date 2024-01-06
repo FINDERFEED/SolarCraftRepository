@@ -4,6 +4,7 @@ import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.screen.*;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 
+import com.finderfeed.solarcraft.local_library.client.screens.buttons.FDImageButton;
 import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.finderfeed.solarcraft.misc_things.SCLocations;
 import com.finderfeed.solarcraft.registries.sounds.SCSounds;
@@ -30,19 +31,19 @@ public class EightElementsFragmentScreen extends LexiconScreen {
     protected void init() {
         super.init();
         ticker = 0;
-        addRenderableWidget(new ImageButton(relX + 212 + 16, relY + 11, 16, 16,
+        addRenderableWidget(new FDImageButton(relX + 212 + 16, relY + 11, 16, 16,
                 RenderingTools.singleWidgetSprite(SCLocations.NEXT_PAGE), (button) -> {
             this.nextPage();
-        }) {
+        },null) {
             @Override
             public void playDownSound(SoundManager smanager) {
                 smanager.play(SimpleSoundInstance.forUI(SCSounds.BUTTON_PRESS2.get(), 1, 1));
             }
         });
-        addRenderableWidget(new ImageButton(relX + 212 , relY+11, 16, 16,
+        addRenderableWidget(new FDImageButton(relX + 212 , relY+11, 16, 16,
                 RenderingTools.singleWidgetSprite(SCLocations.PREV_PAGE), (button) -> {
             this.previousPage();
-        }) {
+        },null) {
             @Override
             public void playDownSound(SoundManager smanager) {
                 smanager.play(SimpleSoundInstance.forUI(SCSounds.BUTTON_PRESS2.get(), 1, 1));

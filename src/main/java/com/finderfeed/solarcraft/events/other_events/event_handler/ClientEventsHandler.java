@@ -2,6 +2,7 @@ package com.finderfeed.solarcraft.events.other_events.event_handler;
 
 
 import com.finderfeed.solarcraft.SolarCraft;
+import com.finderfeed.solarcraft.client.model_loaders.RadiantBlocksModelLoader;
 import com.finderfeed.solarcraft.client.tooltips.RETooltipComponent;
 import com.finderfeed.solarcraft.content.blocks.infusing_table_things.InfuserTileEntity;
 import com.finderfeed.solarcraft.content.blocks.solar_forge_block.solar_forge_screen.SolarCraftButton;
@@ -76,6 +77,7 @@ public class ClientEventsHandler {
 
     public static SolarLexiconScreenHandler SOLAR_LEXICON_SCREEN_HANDLER = new SolarLexiconScreenHandler();
 
+    public static Set<Integer> pressedKeys = new HashSet<>();
 
 
     @SubscribeEvent
@@ -86,20 +88,31 @@ public class ClientEventsHandler {
     }
 
     @SubscribeEvent
-    public static void handleScreenKeyInputs(ScreenEvent.KeyPressed.Post event){
-
+    public static void handleScreenKeyInputs(ScreenEvent.KeyPressed.Pre event){
+        pressedKeys.add(event.getKeyCode());
         if (event.getKeyCode() == GLFW.GLFW_KEY_ESCAPE && SOLAR_LEXICON_SCREEN_HANDLER.escapePressed()){
             event.setCanceled(true);
         }
+    }
 
+    @SubscribeEvent
+    public static void handleScreenKeyReleases(ScreenEvent.KeyReleased.Pre event){
+        pressedKeys.remove(event.getKeyCode());
+    }
+
+    @SubscribeEvent
+    public static void clientTick(TickEvent.ClientTickEvent event){
+        if (event.phase == TickEvent.Phase.END){
+            for (int i : pressedKeys){
+                if (Minecraft.getInstance().screen instanceof IScrollable){
+                    ((IScrollable) Minecraft.getInstance().screen).performScroll(i);
+                }
+            }
+        }
     }
 
     @SubscribeEvent
     public static void handleKeyInputs(final InputEvent.Key event){
-
-        if (Minecraft.getInstance().screen instanceof IScrollable){
-            ((IScrollable) Minecraft.getInstance().screen).performScroll(event.getKey());
-        }
 
         if (Minecraft.getInstance().screen != null) return;
 
