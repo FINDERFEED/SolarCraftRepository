@@ -3,11 +3,17 @@ package com.finderfeed.solarcraft.content.runic_network.repeater;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
+import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import org.joml.Matrix4f;
 
 //AND DESERT YOU! NEVER GONNA MAKE YOU CRY, NEVER GONNA SAY GOODBYE, NEVER GONNA TELL A LIE
 public class RepeaterRenderer implements BlockEntityRenderer<BaseRepeaterTile> {
@@ -20,6 +26,16 @@ public class RepeaterRenderer implements BlockEntityRenderer<BaseRepeaterTile> {
     @Override
     public void render(BaseRepeaterTile tile, float v, PoseStack matrices, MultiBufferSource multiBufferSource, int i, int i1) {
         matrices.pushPose();
+        VertexConsumer v1 = multiBufferSource.getBuffer(RenderType.text(TextureAtlas.LOCATION_BLOCKS));
+        matrices.pushPose();
+        Matrix4f m = matrices.last().pose();
+        matrices.translate(0,1,0);
+        v1.vertex(m,0,0,0).color(1f,1f,1f,1f).uv(0,0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(LightTexture.FULL_BRIGHT).endVertex();
+        v1.vertex(m,10,0,0).color(1f,1f,1f,1f).uv(1,0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(LightTexture.FULL_BRIGHT).endVertex();
+        v1.vertex(m,10,10,0).color(1f,1f,1f,1f).uv(1,1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(LightTexture.FULL_BRIGHT).endVertex();
+        v1.vertex(m,0,10,0).color(1f,1f,1f,1f).uv(0,1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(LightTexture.FULL_BRIGHT).endVertex();
+
+        matrices.popPose();
         if (tile.getConnections() != null){
             tile.getConnections().forEach((pos)->{
                 Vec3 tilepos = new Vec3(tile.getBlockPos().getX() +0.5,tile.getBlockPos().getY() +0.5,tile.getBlockPos().getZ() +0.5);

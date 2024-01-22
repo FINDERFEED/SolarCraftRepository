@@ -14,6 +14,10 @@
       "type": "directory",
       "source": "misc",
       "prefix": "misc/"
+    },
+    {
+      "type": "solarcraft:radiant_textures",
+      "texture": "solarcraft:custom/block/radiant_grass_top"
     }
   ]
 }

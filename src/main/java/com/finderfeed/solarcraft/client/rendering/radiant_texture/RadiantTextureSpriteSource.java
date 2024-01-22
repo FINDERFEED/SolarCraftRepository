@@ -34,7 +34,8 @@ public class RadiantTextureSpriteSource implements SpriteSource {
         if (opt.isPresent()){
             Resource r = opt.get();
             LazyLoadedImage image = new LazyLoadedImage(rl,r,1);
-            
+            RadiantSpriteSupplier spriteSupplier = new RadiantSpriteSupplier(texture,image);
+            output.add(texture,spriteSupplier);
         }else{
             SolarCraft.LOGGER.log(Level.ERROR,"Missing texture: " + texture);
         }

@@ -2,7 +2,8 @@ package com.finderfeed.solarcraft.events.other_events.event_handler;
 
 
 import com.finderfeed.solarcraft.SolarCraft;
-import com.finderfeed.solarcraft.client.model_loaders.RadiantBlocksModelLoader;
+//import com.finderfeed.solarcraft.client.model_loaders.RadiantBlocksModelLoader;
+import com.finderfeed.solarcraft.client.rendering.radiant_texture.RadiantTextureSpriteSource;
 import com.finderfeed.solarcraft.client.tooltips.RETooltipComponent;
 import com.finderfeed.solarcraft.content.blocks.infusing_table_things.InfuserTileEntity;
 import com.finderfeed.solarcraft.content.blocks.solar_forge_block.solar_forge_screen.SolarCraftButton;
@@ -57,11 +58,7 @@ import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.LogicalSide;
 import net.neoforged.fml.common.Mod;
-import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
-import net.neoforged.neoforge.client.event.InputEvent;
-import net.neoforged.neoforge.client.event.RenderLevelStageEvent;
-import net.neoforged.neoforge.client.event.RenderTooltipEvent;
-import net.neoforged.neoforge.client.event.ScreenEvent;
+import net.neoforged.neoforge.client.event.*;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.event.TickEvent;
 import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
@@ -78,6 +75,8 @@ public class ClientEventsHandler {
     public static SolarLexiconScreenHandler SOLAR_LEXICON_SCREEN_HANDLER = new SolarLexiconScreenHandler();
 
     public static Set<Integer> pressedKeys = new HashSet<>();
+
+
 
 
     @SubscribeEvent

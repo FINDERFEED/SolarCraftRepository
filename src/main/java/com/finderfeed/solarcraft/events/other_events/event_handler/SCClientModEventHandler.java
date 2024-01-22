@@ -51,13 +51,17 @@ import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
 import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.color.block.BlockColor;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.DimensionSpecialEffects;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.client.renderer.texture.atlas.SpriteSourceType;
+import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.BlockAndTintGetter;
+import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
@@ -65,6 +69,7 @@ import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.*;
 import net.neoforged.neoforge.client.settings.KeyConflictContext;
 import net.neoforged.neoforge.common.NeoForge;
+import org.jetbrains.annotations.Nullable;
 import org.lwjgl.glfw.GLFW;
 
 
@@ -90,8 +95,9 @@ public class SCClientModEventHandler {
 
     @SubscribeEvent
     public static void registerSpriteSourceTypes(RegisterSpriteSourceTypesEvent event){
-        RADIANT_TEXTURE_TYPE = event.register(new ResourceLocation(SolarCraft.MOD_ID,"radiant_texture"), RadiantTextureSpriteSource.CODEC);
+        RADIANT_TEXTURE_TYPE = event.register(new ResourceLocation(SolarCraft.MOD_ID,"radiant_textures"), RadiantTextureSpriteSource.CODEC);
     }
+
 
 
 
