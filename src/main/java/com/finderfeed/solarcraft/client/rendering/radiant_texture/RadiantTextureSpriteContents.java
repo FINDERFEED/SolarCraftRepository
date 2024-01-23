@@ -47,6 +47,8 @@ public class RadiantTextureSpriteContents extends SpriteContents {
         }
     }
 
+
+
     @Nullable
     @Override
     public SpriteTicker createTicker() {
@@ -55,9 +57,9 @@ public class RadiantTextureSpriteContents extends SpriteContents {
             public void tickAndUpload(int atlasX, int atlasY) {
                 var lvl = Minecraft.getInstance().level;
                 if (lvl != null) {
-                    this.recolor(imagesToUpload,byMipLevel,lvl);
+                    this.recolor(byMipLevel,imagesToUpload,lvl);
                 }
-                this.upload(atlasX, atlasY);
+                this.upload(imagesToUpload,atlasX, atlasY);
             }
 
 
@@ -124,11 +126,12 @@ public class RadiantTextureSpriteContents extends SpriteContents {
             }
 
             private int[] unpackABGR(int abgr){
+                int a = (abgr & 0xff000000) >> 24;
+                int b = (abgr & 0x00ff0000) >> 16;
+                int g = (abgr & 0x0000ff00) >> 8;
+                int r = (abgr & 0x000000ff);
                 return new int[]{
-                        abgr & 0xff000000 >> 24,
-                        abgr & 0x00ff0000 >> 16,
-                        abgr & 0x0000ff00 >> 8,
-                        abgr & 0x000000ff
+                       a,b,g,r
                 };
             }
 
@@ -140,54 +143,31 @@ public class RadiantTextureSpriteContents extends SpriteContents {
             }
 
 
-            private void upload(int atlasX,int atlasY){
-                for (int i = 0; i < imagesToUpload.length;i++){
-                    var img = imagesToUpload[i];
+            private void upload(NativeImage[] upload,int atlasX,int atlasY){
+                for (int i = 0; i < upload.length;i++){
+                    var img = upload[i];
                     img.upload(i,atlasX >> i,atlasY >> i,0,0,
                             RadiantTextureSpriteContents.this.width() >> i,
                             RadiantTextureSpriteContents.this.height() >> i,
-                            RadiantTextureSpriteContents.this.byMipLevel.length > 1,
+                            upload.length > 1,
                             false
                     );
                 }
             }
 
             private boolean isGray(int[] abgr){
-                return abgr[1] == abgr[2] && abgr[1] == abgr[3];
+                return abgr[1] == abgr[2] && abgr[1] == abgr[3] && abgr[1] != 0;
             }
 
             @Override
             public void close() {
-
+                for (NativeImage image : RadiantTextureSpriteContents.this.imagesToUpload){
+                    image.close();
+                }
+                RadiantTextureSpriteContents.this.imagesToUpload = null;
             }
 
         };
     }
 
-
-
-
-
-    private float getDayPercentage(float timeOfDay){
-        float toReturn = 0f;
-        if (timeOfDay >= 0.75){
-            toReturn = (timeOfDay-0.75f)*4;
-        }else if ((timeOfDay >= 0) && (timeOfDay <= 0.25f)){
-            toReturn = 1-timeOfDay*4;
-        }
-        return toReturn;
-    }
-
-    private float getNightPercentage(float timeOfDay){
-        float toReturn = 0f;
-        if ((timeOfDay >= 0.25f) && (timeOfDay < 0.5f)){
-            toReturn = (timeOfDay-0.25f)*4;
-        }else if ((timeOfDay >= 0.5f) && (timeOfDay <= 0.75f)){
-            toReturn = 1-(timeOfDay-0.5f)*4;
-        }
-        return toReturn;
-    }
-    private int isGray(int[] rgb){
-        return ((rgb[0] != 0) && (rgb[0] == rgb[1]) && (rgb[0] == rgb[2])) ? rgb[1] : -10;
-    }
 }
