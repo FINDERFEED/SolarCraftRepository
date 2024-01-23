@@ -1,7 +1,7 @@
 {
   "parent": "block/cross",
   "textures": {
-    "cross": "solarcraft:block/radiant_berry_bush"
+    "cross": "solarcraft:custom/block/radiant_berry_bush"
   },
   "render_type": "cutout"
 }

@@ -17,7 +17,13 @@
     },
     {
       "type": "solarcraft:radiant_textures",
-      "texture": "solarcraft:custom/block/radiant_grass_top"
+      "textures": [
+        "solarcraft:custom/block/radiant_grass_top",
+        "solarcraft:custom/block/radiant_grass_side",
+        "solarcraft:custom/block/radiant_grass_grass",
+        "solarcraft:custom/block/radiant_berry_bush",
+        "solarcraft:custom/block/radiant_leaves"
+      ]
     }
   ]
 }
