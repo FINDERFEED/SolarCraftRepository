@@ -1,7 +1,5 @@
 package com.finderfeed.solarcraft.registries.items;
 
-import com.finderfeed.solarcraft.SolarCraft;
-
 import com.finderfeed.solarcraft.content.blocks.FuelBlockItem;
 import com.finderfeed.solarcraft.content.blocks.blockentities.clearing_ritual.clearing_ritual_crystal.ClearingRitualCrystalItem;
 import com.finderfeed.solarcraft.content.blocks.infusing_table_things.InfuserBlockItem;
@@ -32,7 +30,6 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
-import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
@@ -48,7 +45,7 @@ public class SCItems {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(Registries.ITEM,"solarcraft");
 
     public static final DeferredHolder<Item,SolarWandItem> SOLAR_WAND = registerItem(ITEMS.register("solar_wand",()-> new SolarWandItem(new Item.Properties().rarity(Rarity.EPIC).stacksTo(1))),SOLAR_GROUP);
-    public static  final DeferredHolder<Item,Item> SOLAR_INFUSION_POOL = registerItem(ITEMS.register("solar_forge_infusion_pool",()-> new SolarcraftBlockItem(SCBlocks.INFUSING_POOL.get(),new Item.Properties().rarity(Rarity.EPIC),()->AncientFragment.SOLAR_INFUSER)),SOLAR_GROUP_BLOCKS);
+    public static  final DeferredHolder<Item,Item> SOLAR_INFUSION_POOL = registerItem(ITEMS.register("solar_forge_infusion_pool",()-> new SolarcraftBlockItem(SCBlocks.INFUSER_STAND.get(),new Item.Properties().rarity(Rarity.EPIC),()->AncientFragment.SOLAR_INFUSER)),SOLAR_GROUP_BLOCKS);
     public static  final DeferredHolder<Item,SolarcraftItem> SOLAR_DUST = registerItem(ITEMS.register("solar_dust",()-> new SolarcraftItem(new Item.Properties(),()->AncientFragment.DUSTS)),SOLAR_GROUP_MATERIALS);
     public static  final DeferredHolder<Item,Item> VOID_DUST = registerItem(ITEMS.register("void_dust",()-> new SolarcraftItem(new Item.Properties(),()->AncientFragment.DUSTS)),SOLAR_GROUP_MATERIALS);
     public static final DeferredHolder<Item,Item> ENERGY_DUST = registerItem(ITEMS.register("energy_dust",()->new SolarcraftItem(new Item.Properties(),()->AncientFragment.DUSTS)),SOLAR_GROUP_MATERIALS);
@@ -323,7 +320,7 @@ public class SCItems {
     public static  final DeferredHolder<Item,Item> SOLAR_SHARD = registerItem(ITEMS.register("solar_shard",()-> new Item(new Item.Properties().rarity(Rarity.EPIC))),SOLAR_GROUP);
     public static  final DeferredHolder<Item,Item> SOLAR_FORGE_ITEM = registerItem(ITEMS.register("solar_forge",()-> new SolarForgeBlockItem(SCBlocks.SOLAR_FORGE.get(),new Item.Properties().rarity(Rarity.EPIC).stacksTo(1))),SOLAR_GROUP_BLOCKS);
     public static  final DeferredHolder<Item,Item> SOLAR_ORE_ITEM = registerItem(ITEMS.register("solar_ore",()-> new ProgressionBlockItem(SCBlocks.SOLAR_ORE.get(),new Item.Properties())),SOLAR_GROUP_BLOCKS);
-    public static  final DeferredHolder<Item,Item> INFUSER_ITEM = registerItem(ITEMS.register("solar_infuser",()-> new InfuserBlockItem(SCBlocks.SOLAR_INFUSER.get(),new Item.Properties().rarity(Rarity.EPIC).stacksTo(1),()-> AncientFragment.SOLAR_INFUSER)),SOLAR_GROUP_BLOCKS);
+    public static  final DeferredHolder<Item,Item> INFUSER_ITEM = registerItem(ITEMS.register("solar_infuser",()-> new InfuserBlockItem(SCBlocks.INFUSER.get(),new Item.Properties().rarity(Rarity.EPIC).stacksTo(1),()-> AncientFragment.SOLAR_INFUSER)),SOLAR_GROUP_BLOCKS);
 
     public static final DeferredHolder<Item,ProgressionBlockItem> MAGISTONE = registerItem(ITEMS.register("magistone",()->new ProgressionBlockItem(SCBlocks.MAGISTONE.get(),new Item.Properties())),SOLAR_GROUP_BLOCKS);
     public static final DeferredHolder<Item,ProgressionBlockItem> CORRUPTED_SHARD_ORE = registerItem(ITEMS.register("corrupted_shard_ore",()->new ProgressionBlockItem(SCBlocks.CORRUPTED_SHARD_ORE.get(),new Item.Properties())),SOLAR_GROUP_BLOCKS);

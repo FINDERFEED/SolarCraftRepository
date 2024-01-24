@@ -27,12 +27,12 @@ public class SCTileEntities {
 
 
     public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<InfuserTileEntity>> INFUSING_STAND_BLOCKENTITY = TILE_ENTITY_TYPE.register("infusing_stand_blockentity",()->
-            BlockEntityType.Builder.of(InfuserTileEntity::new,SCBlocks.SOLAR_INFUSER.get()).build(null));
+            BlockEntityType.Builder.of(InfuserTileEntity::new,SCBlocks.INFUSER.get()).build(null));
 
     public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<SolarForgeBlockEntity>> SOLAR_FORGE_BLOCKENTITY = TILE_ENTITY_TYPE.register("solar_forge_blockentity",()->
             BlockEntityType.Builder.of(SolarForgeBlockEntity::new,SCBlocks.SOLAR_FORGE.get()).build(null));
     public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<InfusingStandTileEntity>> INFUSING_POOL_BLOCKENTITY = TILE_ENTITY_TYPE.register("infusing_pool_blockentity",()->
-            BlockEntityType.Builder.of(InfusingStandTileEntity::new, SCBlocks.INFUSING_POOL.get()).build(null));
+            BlockEntityType.Builder.of(InfusingStandTileEntity::new, SCBlocks.INFUSER_STAND.get()).build(null));
 
     public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<KeyLockStructureTile>> KEY_LOCK_TILE = TILE_ENTITY_TYPE.register("key_lock_tile",()->
             BlockEntityType.Builder.of(KeyLockStructureTile::new, SCBlocks.KEY_LOCK_BLOCK.get()).build(null));

@@ -1,5 +1,6 @@
 package com.finderfeed.solarcraft.packet_handler;
 
+import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.client.particles.server_data.shapes.SendShapeParticlesPacket;
 import com.finderfeed.solarcraft.content.blocks.infusing_table_things.UpdateProgressOnClientPacket;
 import com.finderfeed.solarcraft.content.blocks.infusing_table_things.UpdateStacksOnClientTable;
@@ -21,11 +22,33 @@ import com.finderfeed.solarcraft.packet_handler.packets.sun_shard_puzzle.SunShar
 import com.finderfeed.solarcraft.packet_handler.packets.sun_shard_puzzle.SunShardPuzzlePutTilePacket;
 import com.finderfeed.solarcraft.packet_handler.packets.sun_shard_puzzle.SunShardPuzzleTakeTilePacket;
 import com.finderfeed.solarcraft.local_library.bedrock_loader.animations.packets.AnimationsSyncPacket;
+import net.minecraft.CrashReport;
+import net.minecraft.client.Minecraft;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.ModList;
 import net.neoforged.neoforge.network.NetworkRegistry;
+import net.neoforged.neoforge.network.PacketDistributor;
+import net.neoforged.neoforge.network.event.RegisterPayloadHandlerEvent;
+import net.neoforged.neoforge.network.handling.IPlayPayloadHandler;
+import net.neoforged.neoforge.network.handling.PlayPayloadContext;
+import net.neoforged.neoforge.network.registration.IPayloadRegistrar;
 import net.neoforged.neoforge.network.simple.SimpleChannel;
 
 public class SCPacketHandler {
+
+    @SubscribeEvent
+    public static void registerPayload(RegisterPayloadHandlerEvent event){
+        final IPayloadRegistrar registrar = event.registrar(SolarCraft.MOD_ID)
+                .versioned("1")
+                .play(WhatTheHell.TEST_ID, WhatTheHell::new, (whatTheHell, playPayloadContext) -> {
+                    Minecraft.getInstance().player.sendSystemMessage(Component.literal("What the hell"));
+                })
+                .optional();
+        var scanData = ModList.get().getAllScanData();
+    }
+
     private static final String PROTOCOL_VERSION = "1";
     public static final SimpleChannel INSTANCE = NetworkRegistry.newSimpleChannel(
             new ResourceLocation("solarcraft", "main"),

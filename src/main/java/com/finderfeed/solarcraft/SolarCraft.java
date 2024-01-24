@@ -66,8 +66,7 @@ public class SolarCraft {
 
     public static final Logger LOGGER = LogManager.getLogger("SOLARCRAFT");
 
-    public SolarCraft() {
-        IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
+    public SolarCraft(IEventBus bus) {
         SCParticleTypes.PARTICLES.register(bus);
         SCCreativeTabs.REGISTRY.register(bus);
         SCItems.ITEMS.register(bus);
