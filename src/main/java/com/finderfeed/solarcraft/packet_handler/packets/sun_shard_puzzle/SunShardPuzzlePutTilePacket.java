@@ -8,7 +8,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.Level;
-import net.neoforged.neoforge.network.NetworkEvent;
+import net.neoforged.neoforge.network.handling.PlayPayloadContext;
 import java.util.function.Supplier;
 
 public class SunShardPuzzlePutTilePacket {
@@ -43,8 +43,8 @@ public class SunShardPuzzlePutTilePacket {
         buf.writeBlockPos(tilePos);
     }
 
-    public void handle(NetworkEvent.Context ctx){
-        ctx.enqueueWork(()->{
+    public void handle(PlayPayloadContext ctx){
+        
             ServerPlayer sender = ctx.getSender();
             if (sender != null){
                 Level world = sender.level();
@@ -53,7 +53,7 @@ public class SunShardPuzzlePutTilePacket {
                 }
             }
         });
-        ctx.setPacketHandled(true);
+        
     }
 
 }

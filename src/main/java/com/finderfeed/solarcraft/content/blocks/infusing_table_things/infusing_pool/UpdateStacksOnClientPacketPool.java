@@ -5,7 +5,7 @@ import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.fml.DistExecutor;
-import net.neoforged.neoforge.network.NetworkEvent;
+import net.neoforged.neoforge.network.handling.PlayPayloadContext;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.core.BlockPos;
 import java.util.function.Supplier;
@@ -27,8 +27,8 @@ public class UpdateStacksOnClientPacketPool {
         buf.writeItem(stack);
         buf.writeBlockPos(pos);
     }
-    public void handle(NetworkEvent.Context ctx){
-        ctx.enqueueWork(()->{
+    public void handle(PlayPayloadContext ctx){
+        
             DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> ()->{
                 ClientLevel world = Minecraft.getInstance().level;
 
@@ -40,6 +40,6 @@ public class UpdateStacksOnClientPacketPool {
             });
 
         });
-        ctx.setPacketHandled(true);
+        
     }
 }

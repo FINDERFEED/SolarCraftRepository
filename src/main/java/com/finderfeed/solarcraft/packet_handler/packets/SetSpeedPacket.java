@@ -4,7 +4,7 @@ import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.misc_things.AbstractPacket;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.network.NetworkEvent;
+import net.neoforged.neoforge.network.handling.PlayPayloadContext;
 import java.util.function.Supplier;
 
 public class SetSpeedPacket extends AbstractPacket {
@@ -28,11 +28,11 @@ public class SetSpeedPacket extends AbstractPacket {
     }
 
     @Override
-    public void handle(NetworkEvent.Context ctx) {
-        ctx.enqueueWork(()->{
+    public void handle(PlayPayloadContext ctx) {
+        
             ClientHelpers.getClientPlayer().setDeltaMovement(speed);
         });
-        ctx.setPacketHandled(true);
+        
     }
 
 

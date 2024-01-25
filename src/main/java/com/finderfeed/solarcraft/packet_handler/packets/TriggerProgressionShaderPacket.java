@@ -2,7 +2,7 @@ package com.finderfeed.solarcraft.packet_handler.packets;
 
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import net.minecraft.network.FriendlyByteBuf;
-import net.neoforged.neoforge.network.NetworkEvent;
+import net.neoforged.neoforge.network.handling.PlayPayloadContext;
 import java.util.function.Supplier;
 
 public class TriggerProgressionShaderPacket {
@@ -19,8 +19,8 @@ public class TriggerProgressionShaderPacket {
 
     }
 
-    public void handle(NetworkEvent.Context ctx) {
+    public void handle(PlayPayloadContext ctx) {
         ctx.enqueueWork(ClientHelpers::triggerProgressionUnlockShader);
-        ctx.setPacketHandled(true);
+        
     }
 }

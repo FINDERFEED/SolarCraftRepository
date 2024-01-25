@@ -15,7 +15,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.network.PlayNetworkDirection;
-import net.neoforged.neoforge.network.NetworkEvent;
+import net.neoforged.neoforge.network.handling.PlayPayloadContext;
 import net.minecraft.core.BlockPos;
 
 
@@ -48,8 +48,8 @@ public class RunicTablePacket extends AbstractPacket {
     }
 
     @Override
-    public void handle(NetworkEvent.Context ctx) {
-        ctx.enqueueWork(()->{
+    public void handle(PlayPayloadContext ctx) {
+        
             ServerPlayer player = ctx.getSender();
             RunePattern pattern = new RunePattern(player);
             if (player.level().getBlockEntity(pos) instanceof RunicTableTileEntity table) {
@@ -102,6 +102,6 @@ public class RunicTablePacket extends AbstractPacket {
             }
 
         });
-        ctx.setPacketHandled(true);
+        
     }
 }

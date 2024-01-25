@@ -5,7 +5,7 @@ import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.RunePat
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Player;
-import net.neoforged.neoforge.network.NetworkEvent;
+import net.neoforged.neoforge.network.handling.PlayPayloadContext;
 import java.util.function.Supplier;
 
 public class UpdateRunePattern {
@@ -29,11 +29,11 @@ public class UpdateRunePattern {
         buf.writeBoolean(hideButtons);
     }
 
-    public void handle(NetworkEvent.Context ctx) {
+    public void handle(PlayPayloadContext ctx) {
         ctx.enqueueWork(() -> {
             ClientHelpers.updatePlayerPattern(pattern, hideButtons);
         });
-        ctx.setPacketHandled(true);
+        
     }
 
 

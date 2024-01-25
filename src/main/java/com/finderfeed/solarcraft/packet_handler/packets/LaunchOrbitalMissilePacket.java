@@ -9,7 +9,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.Level;
-import net.neoforged.neoforge.network.NetworkEvent;
+import net.neoforged.neoforge.network.handling.PlayPayloadContext;
 import java.util.function.Supplier;
 
 public class LaunchOrbitalMissilePacket {
@@ -45,8 +45,8 @@ public class LaunchOrbitalMissilePacket {
     }
 
 
-    public void handle(NetworkEvent.Context ctx) {
-        ctx.enqueueWork(()->{
+    public void handle(PlayPayloadContext ctx) {
+        
             ServerPlayer sender = ctx.getSender();
             Level level = sender.level();
 
@@ -67,8 +67,7 @@ public class LaunchOrbitalMissilePacket {
                     sender.sendSystemMessage(Component.translatable("solarcraft.message.incorrect_structure").withStyle(ChatFormatting.RED));
                 }
             }
-        });
-        ctx.setPacketHandled(true);
+
     }
 
     private void setExplosion(ServerPlayer sender,SolarOrbitalMissileLauncherTileEntity tile){

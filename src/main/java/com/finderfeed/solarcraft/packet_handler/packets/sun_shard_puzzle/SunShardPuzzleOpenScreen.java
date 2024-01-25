@@ -7,7 +7,7 @@ import com.finderfeed.solarcraft.packet_handler.ClientPacketHandles;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
-import net.neoforged.neoforge.network.NetworkEvent;
+import net.neoforged.neoforge.network.handling.PlayPayloadContext;
 import java.util.function.Supplier;
 
 public class SunShardPuzzleOpenScreen {
@@ -35,11 +35,11 @@ public class SunShardPuzzleOpenScreen {
     }
 
 
-    public void handle(NetworkEvent.Context ctx){
-        ctx.enqueueWork(()->{
+    public void handle(PlayPayloadContext ctx){
+        
             ClientPacketHandles.handleSunShardOpenScreenPacket(puzzle,pos);
         });
-        ctx.setPacketHandled(true);
+        
     }
 
 

@@ -6,7 +6,7 @@ import com.finderfeed.solarcraft.packet_handler.ClientPacketHandles;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
-import net.neoforged.neoforge.network.NetworkEvent;
+import net.neoforged.neoforge.network.handling.PlayPayloadContext;
 import java.util.function.Supplier;
 
 public class UpdateRunicEnergyInContainerPacket {
@@ -32,11 +32,11 @@ public class UpdateRunicEnergyInContainerPacket {
     }
 
 
-    public void handle(NetworkEvent.Context ctx) {
-        ctx.enqueueWork(()->{
+    public void handle(PlayPayloadContext ctx) {
+        
             ClientPacketHandles.updateContainerRunicEnergy(containerPos,tag);
         });
-        ctx.setPacketHandled(true);
+        
     }
 
 }

@@ -6,7 +6,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.network.NetworkEvent;
+import net.neoforged.neoforge.network.handling.PlayPayloadContext;
 import net.neoforged.neoforge.network.PacketDistributor;
 import java.util.function.Supplier;
 
@@ -30,11 +30,10 @@ public class TeleportEntityPacket {
         buf.writeDouble(position.y);
         buf.writeDouble(position.z);
     }
-    public void handle(NetworkEvent.Context ctx){
-        ctx.enqueueWork(()->{
+    public void handle(PlayPayloadContext ctx){
+        
             ClientHelpers.handleTeleportEntityPacket(entityID,position);
-        });
-        ctx.setPacketHandled(true);
+
     }
 
     public static void sendPacket(ServerLevel world,Entity entity,Vec3 position){

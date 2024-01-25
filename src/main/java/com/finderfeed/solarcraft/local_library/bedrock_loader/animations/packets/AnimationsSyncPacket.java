@@ -5,7 +5,7 @@ import com.google.gson.JsonObject;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
-import net.neoforged.neoforge.network.NetworkEvent;
+import net.neoforged.neoforge.network.handling.PlayPayloadContext;
 import java.util.Map;
 import java.util.function.Supplier;
 
@@ -28,11 +28,11 @@ public class AnimationsSyncPacket {
         buf.writeNbt(data);
     }
 
-    public void handle(NetworkEvent.Context ctx){
-        ctx.enqueueWork(()->{
+    public void handle(PlayPayloadContext ctx){
+        
            AnimationReloadableResourceListener.INSTANCE.replaceAnimations(data);
         });
-        ctx.setPacketHandled(true);
+        
     }
 
 }

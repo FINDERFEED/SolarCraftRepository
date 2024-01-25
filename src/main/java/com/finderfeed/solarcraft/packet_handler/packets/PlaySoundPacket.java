@@ -2,7 +2,7 @@ package com.finderfeed.solarcraft.packet_handler.packets;
 
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import net.minecraft.network.FriendlyByteBuf;
-import net.neoforged.neoforge.network.NetworkEvent;
+import net.neoforged.neoforge.network.handling.PlayPayloadContext;
 import net.minecraft.core.BlockPos;
 import java.util.function.Supplier;
 
@@ -35,10 +35,10 @@ public class PlaySoundPacket {
         buf.writeBlockPos(pos);
     }
 
-    public void handle(NetworkEvent.Context ctx) {
+    public void handle(PlayPayloadContext ctx) {
         ctx.enqueueWork(() -> {
             ClientHelpers.playSoundAtPos(pos,id,pitch,volume);
         });
-        ctx.setPacketHandled(true);
+        
     }
 }

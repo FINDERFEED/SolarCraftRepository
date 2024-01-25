@@ -2,7 +2,7 @@ package com.finderfeed.solarcraft.content.items.solar_lexicon.packets;
 
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.neoforge.network.NetworkEvent;
+import net.neoforged.neoforge.network.handling.PlayPayloadContext;
 import net.minecraft.network.FriendlyByteBuf;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,8 +39,8 @@ public class UpdateInventoryPacket {
         }
     }
 
-    public void handle(NetworkEvent.Context ctx) {
+    public void handle(PlayPayloadContext ctx) {
         ctx.enqueueWork(()-> ClientHelpers.updateLexiconInventory(stacks));
-        ctx.setPacketHandled(true);
+        
     }
 }

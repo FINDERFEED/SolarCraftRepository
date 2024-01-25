@@ -6,7 +6,7 @@ import com.finderfeed.solarcraft.misc_things.AbstractPacket;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Player;
-import net.neoforged.neoforge.network.NetworkEvent;
+import net.neoforged.neoforge.network.handling.PlayPayloadContext;
 import java.util.function.Supplier;
 
 public class UpdateFragmentsOnClient extends AbstractPacket {
@@ -32,11 +32,11 @@ public class UpdateFragmentsOnClient extends AbstractPacket {
     }
 
     @Override
-    public void handle(NetworkEvent.Context ctx) {
-        ctx.enqueueWork(()->{
+    public void handle(PlayPayloadContext ctx) {
+        
 
             ClientHelpers.updatePlayerFragments(fragmentData);
         });
-        ctx.setPacketHandled(true);
+        
     }
 }

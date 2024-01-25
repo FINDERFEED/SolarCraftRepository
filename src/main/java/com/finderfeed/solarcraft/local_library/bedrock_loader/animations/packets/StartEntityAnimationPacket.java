@@ -6,7 +6,7 @@ import com.finderfeed.solarcraft.packet_handler.ClientPacketHandles;
 import com.finderfeed.solarcraft.registries.animations.AnimationReloadableResourceListener;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.Entity;
-import net.neoforged.neoforge.network.NetworkEvent;
+import net.neoforged.neoforge.network.handling.PlayPayloadContext;
 import java.util.function.Supplier;
 
 public class StartEntityAnimationPacket {
@@ -33,11 +33,11 @@ public class StartEntityAnimationPacket {
         buf.writeNbt(animationTicker.serialize());
     }
 
-    public void handle(NetworkEvent.Context ctx){
-        ctx.enqueueWork(()->{
+    public void handle(PlayPayloadContext ctx){
+        
             ClientPacketHandles.handleSetEntityAnimationPacket(entityId,tickerName,animationTicker);
         });
-        ctx.setPacketHandled(true);
+        
     }
 
 

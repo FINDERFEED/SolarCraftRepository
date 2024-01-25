@@ -8,7 +8,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.fml.DistExecutor;
-import net.neoforged.neoforge.network.NetworkEvent;
+import net.neoforged.neoforge.network.handling.PlayPayloadContext;
 
 public class TriggerToastPacket {
 
@@ -23,8 +23,8 @@ public class TriggerToastPacket {
     public void toBytes(FriendlyByteBuf buf){
         buf.writeUtf(id);
     }
-    public void handle(NetworkEvent.Context ctx){
-        ctx.enqueueWork(()->{
+    public void handle(PlayPayloadContext ctx){
+        
             DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> ()-> {
 
                 ClientHelpers.playSound(SCSounds.PROGRESSION_GAIN.get(),1,1);
@@ -32,6 +32,6 @@ public class TriggerToastPacket {
             });
 
         });
-        ctx.setPacketHandled(true);
+        
     }
 }

@@ -11,7 +11,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.neoforge.network.PlayNetworkDirection;
-import net.neoforged.neoforge.network.NetworkEvent;
+import net.neoforged.neoforge.network.handling.PlayPayloadContext;
 import java.util.function.Supplier;
 
 public class UpdateProgressionsOnClient {
@@ -35,11 +35,11 @@ public class UpdateProgressionsOnClient {
     public void toBytes(FriendlyByteBuf buf){
         buf.writeNbt(progressionData);
     }
-    public void handle(NetworkEvent.Context ctx){
-        ctx.enqueueWork(()->{
+    public void handle(PlayPayloadContext ctx){
+        
             ClientPacketHandles.handleProgressionUpdate(progressionData);
         });
-        ctx.setPacketHandled(true);
+        
     }
 
     public static void send(ServerPlayer player){

@@ -3,7 +3,7 @@ package com.finderfeed.solarcraft.content.items.solar_lexicon.packets;
 import com.finderfeed.solarcraft.misc_things.AbstractPacket;
 import com.finderfeed.solarcraft.packet_handler.ClientPacketHandles;
 import net.minecraft.network.FriendlyByteBuf;
-import net.neoforged.neoforge.network.NetworkEvent;
+import net.neoforged.neoforge.network.handling.PlayPayloadContext;
 import java.util.function.Supplier;
 
 public class OpenScreenPacket extends AbstractPacket {
@@ -19,9 +19,9 @@ public class OpenScreenPacket extends AbstractPacket {
     }
 
     @Override
-    public void handle(NetworkEvent.Context ctx) {
+    public void handle(PlayPayloadContext ctx) {
 
         ctx.enqueueWork(ClientPacketHandles::openLexiconScreen);
-    ctx.setPacketHandled(true);
+    
     }
 }

@@ -5,7 +5,7 @@ import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.network.FriendlyByteBuf;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.fml.DistExecutor;
-import net.neoforged.neoforge.network.NetworkEvent;
+import net.neoforged.neoforge.network.handling.PlayPayloadContext;
 import net.minecraft.core.BlockPos;
 import java.util.function.Supplier;
 
@@ -39,8 +39,8 @@ public class UpdateProgressOnClientPacket {
         buf.writeBoolean(reqEnergy);
         buf.writeInt(energy);
     }
-    public void handle(NetworkEvent.Context ctx){
-        ctx.enqueueWork(()->{
+    public void handle(PlayPayloadContext ctx){
+        
             DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> ()->{
                 ClientLevel world = Minecraft.getInstance().level;
                 InfuserTileEntity tile = (InfuserTileEntity) world.getBlockEntity(pos);
@@ -54,6 +54,6 @@ public class UpdateProgressOnClientPacket {
             });
 
         });
-        ctx.setPacketHandled(true);
+        
     }
 }

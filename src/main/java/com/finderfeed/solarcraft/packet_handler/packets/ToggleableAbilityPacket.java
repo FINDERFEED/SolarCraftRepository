@@ -4,7 +4,7 @@ import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.content.abilities.ability_classes.ToggleableAbility;
 import com.finderfeed.solarcraft.registries.abilities.AbilitiesRegistry;
 import net.minecraft.network.FriendlyByteBuf;
-import net.neoforged.neoforge.network.NetworkEvent;
+import net.neoforged.neoforge.network.handling.PlayPayloadContext;
 import java.util.function.Supplier;
 
 public class ToggleableAbilityPacket {
@@ -27,12 +27,12 @@ public class ToggleableAbilityPacket {
         buf.writeBoolean(toggle);
     }
 
-    public void handle(NetworkEvent.Context ctx) {
-        ctx.enqueueWork(()->{
+    public void handle(PlayPayloadContext ctx) {
+        
             ToggleableAbility ability = (ToggleableAbility) AbilitiesRegistry.getAbilityByID(id);
             ClientHelpers.handleToggleAbilityPacket(ability,toggle);
         });
-        ctx.setPacketHandled(true);
+        
     }
 
 }

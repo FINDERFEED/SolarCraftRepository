@@ -6,7 +6,7 @@ import com.finderfeed.solarcraft.packet_handler.ClientPacketHandles;
 import com.finderfeed.solarcraft.registries.overlays.SolarcraftOverlays;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
-import net.neoforged.neoforge.network.NetworkEvent;
+import net.neoforged.neoforge.network.handling.PlayPayloadContext;
 import java.util.UUID;
 import java.util.function.Supplier;
 
@@ -45,11 +45,11 @@ public class CustomBossEventInitPacket {
     }
 
 
-    public void handle(NetworkEvent.Context ctx){
-        ctx.enqueueWork(()->{
+    public void handle(PlayPayloadContext ctx){
+        
             ClientPacketHandles.handleServerBossInitPacket(uuid,name,rendererId,remove,entityId);
         });
-        ctx.setPacketHandled(true);
+        
     }
 
 

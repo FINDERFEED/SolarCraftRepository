@@ -1,16 +1,20 @@
 package com.finderfeed.solarcraft.packet_handler.packets;
 
 import com.finderfeed.solarcraft.content.blocks.blockentities.EnchanterBlockEntity;
+import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacket;
+import com.finderfeed.solarcraft.packet_handler.packet_system.Packet;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.enchantment.Enchantment;
-import net.neoforged.neoforge.network.NetworkEvent;
+import net.minecraft.world.level.Level;
+import net.neoforged.neoforge.network.handling.PlayPayloadContext;
 import java.util.function.Supplier;
 
-public class EnchanterPacket {
+@Packet("enchanter_packet")
+public class EnchanterPacket extends FDPacket {
 
     private ResourceLocation location;
     private int level;
@@ -31,14 +35,15 @@ public class EnchanterPacket {
         buf.writeInt(level);
         buf.writeBlockPos(enchanterPos);
     }
-    public void handle(NetworkEvent.Context ctx){
-        ctx.enqueueWork(()->{
-            ServerPlayer sender  = ctx.getSender();
-            if (sender.level().getBlockEntity(enchanterPos) instanceof EnchanterBlockEntity enchanter){
-                enchanter.triggerEnchanting(BuiltInRegistries.ENCHANTMENT.get(location),level);
-            }
+    public static void handle(EnchanterPacket packet,PlayPayloadContext ctx){
+        Level level  = ctx.level().get();
+        if (level.getBlockEntity(packet.enchanterPos) instanceof EnchanterBlockEntity enchanter){
+            enchanter.triggerEnchanting(BuiltInRegistries.ENCHANTMENT.get(packet.location), packet.level);
+        }
+    }
 
-         });
-        ctx.setPacketHandled(true);
+    @Override
+    public void write(FriendlyByteBuf friendlyByteBuf) {
+        this.toBytes(friendlyByteBuf);
     }
 }

@@ -4,7 +4,7 @@ import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.misc_things.AbstractPacket;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
 import net.minecraft.network.FriendlyByteBuf;
-import net.neoforged.neoforge.network.NetworkEvent;
+import net.neoforged.neoforge.network.handling.PlayPayloadContext;
 import java.util.function.Supplier;
 
 public class UpdateEnergyOnClientPacket extends AbstractPacket {
@@ -29,10 +29,10 @@ public class UpdateEnergyOnClientPacket extends AbstractPacket {
     }
 
     @Override
-    public void handle(NetworkEvent.Context ctx) {
-        ctx.enqueueWork(()->{
+    public void handle(PlayPayloadContext ctx) {
+        
             ClientHelpers.updateClientRunicEnergyForPlayer(set,RunicEnergy.Type.byId(id));
         });
-        ctx.setPacketHandled(true);
+        
     }
 }

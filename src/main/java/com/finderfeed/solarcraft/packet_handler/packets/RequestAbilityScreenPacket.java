@@ -6,7 +6,7 @@ import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.neoforge.network.PlayNetworkDirection;
-import net.neoforged.neoforge.network.NetworkEvent;
+import net.neoforged.neoforge.network.handling.PlayPayloadContext;
 import java.util.function.Supplier;
 
 public class RequestAbilityScreenPacket {
@@ -25,8 +25,8 @@ public class RequestAbilityScreenPacket {
         buf.writeBoolean(dontOpen);
     }
 
-    public void handle(NetworkEvent.Context ctx) {
-        ctx.enqueueWork(()->{
+    public void handle(PlayPayloadContext ctx) {
+        
             ServerPlayer player = ctx.getSender();
             SCPacketHandler.INSTANCE.sendTo(new OpenAbilityScreenPacket(
                             player.getPersistentData().getInt(SolarCraftTags.RAW_SOLAR_ENERGY),
@@ -38,7 +38,7 @@ public class RequestAbilityScreenPacket {
                     )
                     ,player.connection.connection, PlayNetworkDirection.PLAY_TO_CLIENT);
         });
-        ctx.setPacketHandled(true);
+        
     }
 
 

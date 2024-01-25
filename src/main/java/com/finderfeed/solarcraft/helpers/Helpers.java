@@ -44,11 +44,15 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.*;
+import net.neoforged.fml.ModList;
 import net.neoforged.neoforge.common.NeoForge;
-import net.neoforged.neoforge.network.PlayNetworkDirection;
+
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.chunk.LevelChunk;
+import net.neoforged.neoforgespi.language.ModFileScanData;
+import org.objectweb.asm.Type;
+
 import javax.annotation.Nullable;
 import java.util.*;
 import java.util.function.Predicate;
@@ -712,4 +716,21 @@ public class Helpers {
         }
     }
 
+    public static <T> List<Class<?>> getAnnotatedClasses(Class<T> annotationClass){
+        Type type = Type.getType(annotationClass);
+        ModList modList = ModList.get();
+        ModFileScanData data = modList.getModFileById(SolarCraft.MOD_ID).getFile().getScanResult();
+        var annotationDatas = data.getAnnotations();
+        List<Class<?>> classes = new ArrayList<>();
+        for (var adata : annotationDatas){
+            if (adata.annotationType() != type) continue;
+            try {
+                Class<?> clazz = Class.forName(adata.clazz().getClassName());
+                classes.add(clazz);
+            } catch (ClassNotFoundException e){
+                throw new RuntimeException("Unexpected error - class not found: " + adata.clazz().getClassName());
+            }
+        }
+        return classes;
+    }
 }

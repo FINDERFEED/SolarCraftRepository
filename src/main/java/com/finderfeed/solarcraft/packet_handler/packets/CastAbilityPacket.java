@@ -1,13 +1,15 @@
 package com.finderfeed.solarcraft.packet_handler.packets;
 
 import com.finderfeed.solarcraft.content.abilities.AbilityHelper;
+import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacket;
+import com.finderfeed.solarcraft.packet_handler.packet_system.Packet;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.neoforged.neoforge.network.NetworkEvent;
+import net.neoforged.neoforge.network.handling.PlayPayloadContext;
 import net.minecraft.network.FriendlyByteBuf;
-import java.util.function.Supplier;
 
-public class CastAbilityPacket {
+@Packet("cast_ability_packet")
+public class CastAbilityPacket extends FDPacket {
     private final int index;
     public CastAbilityPacket(FriendlyByteBuf buf){
         index = buf.readInt();
@@ -18,11 +20,15 @@ public class CastAbilityPacket {
     public void toBytes(FriendlyByteBuf buf){
         buf.writeInt(index);
     }
-    public void handle(NetworkEvent.Context ctx){
-        ctx.enqueueWork(()->{
-            ServerPlayer enti = ctx.getSender();
-            AbilityHelper.castAbility((ServerLevel) enti.level(),enti, AbilityHelper.getBindedAbilityID(enti,index));
-        });
-        ctx.setPacketHandled(true);
+    public static void handle(CastAbilityPacket packet, PlayPayloadContext ctx){
+        
+            ServerPlayer enti = (ServerPlayer) ctx.player().get();
+            AbilityHelper.castAbility((ServerLevel) enti.level(),enti, AbilityHelper.getBindedAbilityID(enti,packet.index));
+        
+    }
+
+    @Override
+    public void write(FriendlyByteBuf friendlyByteBuf) {
+        toBytes(friendlyByteBuf);
     }
 }

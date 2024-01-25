@@ -6,7 +6,7 @@ import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.network.NetworkEvent;
+import net.neoforged.neoforge.network.handling.PlayPayloadContext;
 import net.neoforged.neoforge.network.PacketDistributor;
 import java.util.function.Supplier;
 
@@ -32,11 +32,10 @@ public class ShadowBoltExplosionPacket extends AbstractPacket {
     }
 
     @Override
-    public void handle(NetworkEvent.Context ctx) {
-        ctx.enqueueWork(()->{
+    public void handle(PlayPayloadContext ctx) {
+        
             ClientHelpers.handleShadowBoltExplosion(pos);
-        });
-        ctx.setPacketHandled(true);
+
     }
 
     public static void send(Level level, Vec3 pos){

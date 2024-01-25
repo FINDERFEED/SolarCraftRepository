@@ -8,7 +8,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Player;
-import net.neoforged.neoforge.network.NetworkEvent;
+import net.neoforged.neoforge.network.handling.PlayPayloadContext;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
@@ -51,10 +51,10 @@ public class WandStructureActionPacket {
         buf.writeBlockPos(checkPos);
     }
 
-    public void handle(NetworkEvent.Context ctx) {
-        ctx.enqueueWork(()->{
+    public void handle(PlayPayloadContext ctx) {
+        
             ClientPacketHandles.handleWandStructureActionPacket(checkPos,structIds,data);
         });
-        ctx.setPacketHandled(true);
+        
     }
 }

@@ -4,7 +4,7 @@ import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.content.blocks.blockentities.clearing_ritual.CrystalEnergyVinesTile;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
-import net.neoforged.neoforge.network.NetworkEvent;
+import net.neoforged.neoforge.network.handling.PlayPayloadContext;
 import java.util.function.Supplier;
 
 public class OpenPuzzleScreenPacket {
@@ -23,9 +23,9 @@ public class OpenPuzzleScreenPacket {
         buf.writeBlockPos(tilePos);
     }
 
-    public void handle(NetworkEvent.Context ctx){
+    public void handle(PlayPayloadContext ctx){
         ctx.enqueueWork(()-> ClientHelpers.handlePuzzlePacket(tilePos));
-        ctx.setPacketHandled(true);
+        
     }
 
 }

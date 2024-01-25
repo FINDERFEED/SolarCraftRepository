@@ -4,7 +4,7 @@ import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.local_library.entities.bossbar.client.ActiveBossBar;
 import com.finderfeed.solarcraft.packet_handler.ClientPacketHandles;
 import net.minecraft.network.FriendlyByteBuf;
-import net.neoforged.neoforge.network.NetworkEvent;
+import net.neoforged.neoforge.network.handling.PlayPayloadContext;
 import java.util.UUID;
 import java.util.function.Supplier;
 
@@ -30,11 +30,11 @@ public class ServerBossEventUpdateProgress {
         buf.writeFloat(progress);
     }
 
-    public void handle(NetworkEvent.Context ctx) {
-        ctx.enqueueWork(()->{
+    public void handle(PlayPayloadContext ctx) {
+        
             ClientPacketHandles.handleServerBossEventUpdateProgressPacket(id,progress);
         });
-        ctx.setPacketHandled(true);
+        
     }
 
 }

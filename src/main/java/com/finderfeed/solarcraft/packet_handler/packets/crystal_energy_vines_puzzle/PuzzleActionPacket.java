@@ -6,7 +6,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.neoforged.neoforge.network.NetworkEvent;
+import net.neoforged.neoforge.network.handling.PlayPayloadContext;
 import java.util.function.Supplier;
 
 public class PuzzleActionPacket {
@@ -29,7 +29,7 @@ public class PuzzleActionPacket {
         buf.writeInt(moveType);
     }
 
-    public void handle(NetworkEvent.Context ctx){
+    public void handle(PlayPayloadContext ctx){
         ctx.enqueueWork(()-> {
             ServerPlayer sender = ctx.getSender();
             ServerLevel world = (ServerLevel) sender.level();
@@ -38,7 +38,7 @@ public class PuzzleActionPacket {
                 Helpers.updateTile(tile);
             }
         });
-        ctx.setPacketHandled(true);
+        
     }
 
 }

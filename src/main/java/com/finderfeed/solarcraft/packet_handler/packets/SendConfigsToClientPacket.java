@@ -3,7 +3,7 @@ package com.finderfeed.solarcraft.packet_handler.packets;
 import com.finderfeed.solarcraft.packet_handler.ClientPacketHandles;
 import com.finderfeed.solarcraft.registries.ConfigRegistry;
 import net.minecraft.network.FriendlyByteBuf;
-import net.neoforged.neoforge.network.NetworkEvent;
+import net.neoforged.neoforge.network.handling.PlayPayloadContext;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
@@ -41,10 +41,10 @@ public class SendConfigsToClientPacket {
     }
 
 
-    public void handle(NetworkEvent.Context ctx) {
-        ctx.enqueueWork(()->{
+    public void handle(PlayPayloadContext ctx) {
+        
             ClientPacketHandles.handleClientConfigsPacket(idJson);
         });
-        ctx.setPacketHandled(true);
+        
     }
 }

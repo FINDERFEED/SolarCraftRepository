@@ -1,16 +1,17 @@
 package com.finderfeed.solarcraft.packet_handler.packets;
 
 import com.finderfeed.solarcraft.events.my_events.ClientsideBlockBreakEvent;
-import com.finderfeed.solarcraft.events.my_events.ClientsideBlockPlaceEvent;
+import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacket;
+import com.finderfeed.solarcraft.packet_handler.packet_system.Packet;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.common.NeoForge;
-import net.neoforged.neoforge.network.NetworkEvent;
-import java.util.function.Supplier;
+import net.neoforged.neoforge.network.handling.PlayPayloadContext;
 
-public class BlockBreakPacket {
+@Packet("block_break_packet")
+public class BlockBreakPacket extends FDPacket {
 
     private int id;
     private BlockPos pos;
@@ -30,10 +31,12 @@ public class BlockBreakPacket {
         buf.writeBlockPos(pos);
     }
 
-    public void handle(NetworkEvent.Context ctx) {
-        ctx.enqueueWork(()->{
-            NeoForge.EVENT_BUS.post(new ClientsideBlockBreakEvent(Block.stateById(id),pos));
-        });
-        ctx.setPacketHandled(true);
+    public static void handle(BlockBreakPacket packet, PlayPayloadContext ctx) {
+        NeoForge.EVENT_BUS.post(new ClientsideBlockBreakEvent(Block.stateById(packet.id),packet.pos));
+    }
+
+    @Override
+    public void write(FriendlyByteBuf friendlyByteBuf) {
+        this.toBytes(friendlyByteBuf);
     }
 }

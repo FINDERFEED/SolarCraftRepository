@@ -1,14 +1,16 @@
 package com.finderfeed.solarcraft.packet_handler.packets;
 
 import com.finderfeed.solarcraft.content.items.solar_wand.SolarWandItem;
+import com.finderfeed.solarcraft.packet_handler.packet_system.Packet;
 import com.finderfeed.solarcraft.registries.items.SCItems;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.neoforge.network.NetworkEvent;
-import java.util.function.Supplier;
 
+import net.neoforged.neoforge.network.handling.PlayPayloadContext;
+
+@Packet("cast_wand_action")
 public class CastWandActionPacket {
 
     private ResourceLocation actionId;
@@ -25,14 +27,13 @@ public class CastWandActionPacket {
         buf.writeResourceLocation(actionId);
     }
 
-    public void handle(NetworkEvent.Context ctx){
-        ctx.enqueueWork(()->{
-            ServerPlayer player = ctx.getSender();
+    public void handle(PlayPayloadContext ctx){
+        
+            ServerPlayer player = (ServerPlayer) ctx.player().get();
             ItemStack stack = player.getMainHandItem();
             if (stack.is(SCItems.SOLAR_WAND.get())){
                 SolarWandItem.setWandAction(stack,actionId);
             }
-        });
-        ctx.setPacketHandled(true);
+        
     }
 }

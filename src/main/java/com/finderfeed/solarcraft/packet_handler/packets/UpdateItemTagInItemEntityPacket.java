@@ -5,7 +5,7 @@ import com.finderfeed.solarcraft.packet_handler.ClientPacketHandles;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.item.ItemEntity;
-import net.neoforged.neoforge.network.NetworkEvent;
+import net.neoforged.neoforge.network.handling.PlayPayloadContext;
 import java.util.function.Supplier;
 
 public class UpdateItemTagInItemEntityPacket {
@@ -29,11 +29,11 @@ public class UpdateItemTagInItemEntityPacket {
         buf.writeNbt(itemStackTag);
     }
 
-    public void handle(NetworkEvent.Context ctx) {
+    public void handle(PlayPayloadContext ctx) {
         ctx.enqueueWork(() -> {
             ClientPacketHandles.handleUpdateItemEntityPacket(entityId,itemStackTag);
         });
-        ctx.setPacketHandled(true);
+        
     }
 
 }

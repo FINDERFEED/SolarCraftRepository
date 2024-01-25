@@ -8,7 +8,7 @@ import net.minecraft.network.protocol.game.ClientboundLevelChunkPacketData;
 import net.minecraft.network.protocol.game.ClientboundLightUpdatePacketData;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.chunk.LevelChunk;
-import net.neoforged.neoforge.network.NetworkEvent;
+import net.neoforged.neoforge.network.handling.PlayPayloadContext;
 import java.util.function.Supplier;
 
 public class UpdateChunkPacket {
@@ -39,10 +39,10 @@ public class UpdateChunkPacket {
     }
 
 
-    public void handle(NetworkEvent.Context ctx) {
-        ctx.enqueueWork(()->{
+    public void handle(PlayPayloadContext ctx) {
+        
             ClientPacketHandles.handleUpdateChunkPacket(x,z,chunkData);
         });
-        ctx.setPacketHandled(true);
+        
     }
 }

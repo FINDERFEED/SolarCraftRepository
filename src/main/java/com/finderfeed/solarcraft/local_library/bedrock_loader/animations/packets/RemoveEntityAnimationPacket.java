@@ -4,7 +4,7 @@ import com.finderfeed.solarcraft.local_library.bedrock_loader.animations.manager
 import com.finderfeed.solarcraft.packet_handler.ClientPacketHandles;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.Entity;
-import net.neoforged.neoforge.network.NetworkEvent;
+import net.neoforged.neoforge.network.handling.PlayPayloadContext;
 import java.util.function.Supplier;
 
 public class RemoveEntityAnimationPacket {
@@ -27,11 +27,11 @@ public class RemoveEntityAnimationPacket {
         buf.writeUtf(tickerName);
     }
 
-    public void handle(NetworkEvent.Context ctx){
-        ctx.enqueueWork(()->{
+    public void handle(PlayPayloadContext ctx){
+        
             ClientPacketHandles.handleRemoveEntityAnimationPacket(entityId,tickerName);
         });
-        ctx.setPacketHandled(true);
+        
     }
 
 }

@@ -6,7 +6,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.neoforged.neoforge.network.NetworkEvent;
+import net.neoforged.neoforge.network.handling.PlayPayloadContext;
 import java.util.function.Supplier;
 
 public class TakeEnergyFromForgePacket {
@@ -22,8 +22,8 @@ public class TakeEnergyFromForgePacket {
     public void toBytes(FriendlyByteBuf buf){
         buf.writeBlockPos(pos);
     }
-    public void handle(NetworkEvent.Context ctx){
-        ctx.enqueueWork(()->{
+    public void handle(PlayPayloadContext ctx){
+        
             ServerPlayer player = ctx.getSender();
             ServerLevel level = (ServerLevel) player.level();
             if (level.getBlockEntity(pos) instanceof SolarForgeBlockEntity forge){
@@ -32,6 +32,6 @@ public class TakeEnergyFromForgePacket {
                 forge.SOLAR_ENERGY_LEVEL = 0;
             }
         });
-        ctx.setPacketHandled(true);
+        
     }
 }

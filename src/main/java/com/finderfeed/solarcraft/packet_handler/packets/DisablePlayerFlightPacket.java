@@ -1,14 +1,15 @@
 package com.finderfeed.solarcraft.packet_handler.packets;
 
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
-import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
+import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacket;
+import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacketUtil;
+import com.finderfeed.solarcraft.packet_handler.packet_system.Packet;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
-import net.neoforged.neoforge.network.PlayNetworkDirection;
-import net.neoforged.neoforge.network.NetworkEvent;
-import java.util.function.Supplier;
+import net.neoforged.neoforge.network.handling.PlayPayloadContext;
 
-public class DisablePlayerFlightPacket {
+@Packet("disable_player_flight_packet")
+public class DisablePlayerFlightPacket extends FDPacket {
 
     private boolean disable;
 
@@ -27,11 +28,10 @@ public class DisablePlayerFlightPacket {
         buf.writeBoolean(disable);
     }
 
-    public void handle(NetworkEvent.Context ctx){
-        ctx.enqueueWork(()->{
+    public void handle(DisablePlayerFlightPacket packet,PlayPayloadContext ctx){
+        
             ClientHelpers.disableFlight(disable);
-        });
-        ctx.setPacketHandled(true);
+
     }
 
 
@@ -40,7 +40,11 @@ public class DisablePlayerFlightPacket {
         if (disable) {
             player.getAbilities().flying = false;
         }
-        SCPacketHandler.INSTANCE.sendTo(new DisablePlayerFlightPacket(disable),player.connection.connection,
-                PlayNetworkDirection.PLAY_TO_CLIENT);
+        FDPacketUtil.sendToPlayer(player,new DisablePlayerFlightPacket(disable));
+    }
+
+    @Override
+    public void write(FriendlyByteBuf friendlyByteBuf) {
+        this.toBytes(friendlyByteBuf);
     }
 }

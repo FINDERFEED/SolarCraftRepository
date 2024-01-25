@@ -8,7 +8,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.neoforge.network.NetworkEvent;
+import net.neoforged.neoforge.network.handling.PlayPayloadContext;
 import java.util.function.Supplier;
 
 public class SetREDrainTypePacket {
@@ -27,8 +27,8 @@ public class SetREDrainTypePacket {
         buf.writeInt(id);
     }
 
-    public void handle(NetworkEvent.Context ctx){
-        ctx.enqueueWork(()->{
+    public void handle(PlayPayloadContext ctx){
+        
             ServerPlayer enti = ctx.getSender();
             if (enti.getMainHandItem().is(SCItems.SOLAR_WAND.get())){
                 ItemStack stack = enti.getMainHandItem();
@@ -47,7 +47,7 @@ public class SetREDrainTypePacket {
                 serializer.serialize(tag,data);
             }
         });
-        ctx.setPacketHandled(true);
+        
     }
 
 

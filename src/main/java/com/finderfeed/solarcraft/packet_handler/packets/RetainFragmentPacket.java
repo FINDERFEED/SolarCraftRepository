@@ -8,7 +8,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.neoforged.neoforge.network.NetworkEvent;
+import net.neoforged.neoforge.network.handling.PlayPayloadContext;
 import java.util.function.Supplier;
 
 public class RetainFragmentPacket {
@@ -29,8 +29,8 @@ public class RetainFragmentPacket {
 
 
 
-    public void handle(NetworkEvent.Context ctx) {
-        ctx.enqueueWork(()->{
+    public void handle(PlayPayloadContext ctx) {
+        
             ServerPlayer sender = ctx.getSender();
             AncientFragment fragment = AncientFragment.getFragmentByID(fragID);
             if (fragment != null){
@@ -52,7 +52,7 @@ public class RetainFragmentPacket {
                 }
             }
         });
-        ctx.setPacketHandled(true);
+        
     }
 
 
