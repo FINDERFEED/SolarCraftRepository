@@ -21,7 +21,8 @@ public class BlockBreakPacket extends FDPacket {
         this.id = Block.getId(state);
     }
 
-    public BlockBreakPacket(FriendlyByteBuf buf){
+    @Override
+    public void read(FriendlyByteBuf buf) {
         this.id = buf.readInt();
         this.pos = buf.readBlockPos();
     }
@@ -31,8 +32,15 @@ public class BlockBreakPacket extends FDPacket {
         buf.writeBlockPos(pos);
     }
 
-    public static void handle(BlockBreakPacket packet, PlayPayloadContext ctx) {
-        NeoForge.EVENT_BUS.post(new ClientsideBlockBreakEvent(Block.stateById(packet.id),packet.pos));
+//    public static void handle(BlockBreakPacket packet, PlayPayloadContext ctx) {
+//        NeoForge.EVENT_BUS.post(new ClientsideBlockBreakEvent(Block.stateById(packet.id),packet.pos));
+//    }
+
+
+    @Override
+    public void clientPlayHandle(PlayPayloadContext ctx) {
+        super.clientPlayHandle(ctx);
+        NeoForge.EVENT_BUS.post(new ClientsideBlockBreakEvent(Block.stateById(id),pos));
     }
 
     @Override

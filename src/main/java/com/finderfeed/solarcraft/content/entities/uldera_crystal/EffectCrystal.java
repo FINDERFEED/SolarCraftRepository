@@ -8,7 +8,8 @@ import com.finderfeed.solarcraft.local_library.bedrock_loader.animations.Animate
 import com.finderfeed.solarcraft.local_library.bedrock_loader.animations.manager.AnimationManager;
 import com.finderfeed.solarcraft.local_library.bedrock_loader.animations.manager.AnimationTicker;
 import com.finderfeed.solarcraft.local_library.bedrock_loader.animations.manager.EntityServerAnimationManager;
-import com.finderfeed.solarcraft.packet_handler.PacketHelper;
+
+import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacketUtil;
 import com.finderfeed.solarcraft.registries.animations.SCAnimations;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -94,7 +95,7 @@ public class EffectCrystal extends LivingEntity implements AnimatedObject,Uldera
             entity.addEffect(new MobEffectInstance(EFFECTS.get(level.random.nextInt(EFFECTS.size())),
                     300,1));
             Vec3 epos = entity.position().add(0,entity.getBbHeight()/2f,0);
-            PacketHelper.sendToPlayersTrackingEntity(this,
+            FDPacketUtil.sendToTrackingEntity(this,
                     new SendShapeParticlesPacket(
                             new BurstAttackParticleShape(this.getCenterPos(),epos,0.5f,2,
                                     0.05),

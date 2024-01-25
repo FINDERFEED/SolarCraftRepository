@@ -2,11 +2,14 @@ package com.finderfeed.solarcraft.packet_handler.packets;
 
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.SolarCraftTags;
+import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacket;
+import com.finderfeed.solarcraft.packet_handler.packet_system.Packet;
 import net.minecraft.network.FriendlyByteBuf;
 import net.neoforged.neoforge.network.handling.PlayPayloadContext;
 import java.util.function.Supplier;
 
-public class OpenAbilityScreenPacket {
+@Packet("open_ability_screen_packet")
+public class OpenAbilityScreenPacket extends FDPacket {
 
     private String[] bindedAbilities;
     private boolean dontOpen;
@@ -20,7 +23,10 @@ public class OpenAbilityScreenPacket {
         this.bindedAbilities = bindedAbilities;
     }
 
-    public OpenAbilityScreenPacket(FriendlyByteBuf buf) {
+
+
+    @Override
+    public void read(FriendlyByteBuf buf) {
         this.bindedAbilities = new String[4];
         this.dontOpen = buf.readBoolean();
         this.energy = buf.readInt();
@@ -40,15 +46,28 @@ public class OpenAbilityScreenPacket {
         buf.writeUtf(bindedAbilities[3]);
     }
 
-    public void handle(PlayPayloadContext ctx) {
-        
-            ClientHelpers.getClientPlayer().getPersistentData().putInt(SolarCraftTags.RAW_SOLAR_ENERGY,energy);
-            if (!dontOpen) {
-                ClientHelpers.openAbilityScreen(bindedAbilities);
-            }else{
-                ClientHelpers.updateAbilityScreen(bindedAbilities);
-            }
-        });
-        
+//    public void handle(PlayPayloadContext ctx) {
+//
+//            ClientHelpers.getClientPlayer().getPersistentData().putInt(SolarCraftTags.RAW_SOLAR_ENERGY,energy);
+//            if (!dontOpen) {
+//                ClientHelpers.openAbilityScreen(bindedAbilities);
+//            }else{
+//                ClientHelpers.updateAbilityScreen(bindedAbilities);
+//            }
+//    }
+
+    @Override
+    public void clientPlayHandle(PlayPayloadContext ctx) {
+        ClientHelpers.getClientPlayer().getPersistentData().putInt(SolarCraftTags.RAW_SOLAR_ENERGY,energy);
+        if (!dontOpen) {
+            ClientHelpers.openAbilityScreen(bindedAbilities);
+        }else{
+            ClientHelpers.updateAbilityScreen(bindedAbilities);
+        }
+    }
+
+    @Override
+    public void write(FriendlyByteBuf friendlyByteBuf) {
+        this.toBytes(friendlyByteBuf);
     }
 }

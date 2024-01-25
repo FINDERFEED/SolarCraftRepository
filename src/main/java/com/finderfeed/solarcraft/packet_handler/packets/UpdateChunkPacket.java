@@ -3,6 +3,8 @@ package com.finderfeed.solarcraft.packet_handler.packets;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
 import com.finderfeed.solarcraft.packet_handler.ClientPacketHandles;
+import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacket;
+import com.finderfeed.solarcraft.packet_handler.packet_system.Packet;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.protocol.game.ClientboundLevelChunkPacketData;
 import net.minecraft.network.protocol.game.ClientboundLightUpdatePacketData;
@@ -11,13 +13,14 @@ import net.minecraft.world.level.chunk.LevelChunk;
 import net.neoforged.neoforge.network.handling.PlayPayloadContext;
 import java.util.function.Supplier;
 
-public class UpdateChunkPacket {
+@Packet("update_chunk_packet")
+public class UpdateChunkPacket extends FDPacket {
 
 
-    private final int x;
-    private final int z;
+    private int x;
+    private int z;
 
-    private final ClientboundLevelChunkPacketData chunkData;
+    private ClientboundLevelChunkPacketData chunkData;
 
     public UpdateChunkPacket(LevelChunk chunk){
         ChunkPos chunkpos = chunk.getPos();
@@ -26,7 +29,8 @@ public class UpdateChunkPacket {
         this.chunkData = new ClientboundLevelChunkPacketData(chunk);
     }
 
-    public UpdateChunkPacket(FriendlyByteBuf buf) {
+    @Override
+    public void read(FriendlyByteBuf buf) {
         this.x = buf.readInt();
         this.z = buf.readInt();
         this.chunkData = new ClientboundLevelChunkPacketData(buf, this.x, this.z);
@@ -39,10 +43,19 @@ public class UpdateChunkPacket {
     }
 
 
-    public void handle(PlayPayloadContext ctx) {
-        
-            ClientPacketHandles.handleUpdateChunkPacket(x,z,chunkData);
-        });
-        
+//    public void handle(PlayPayloadContext ctx) {
+//
+//            ClientPacketHandles.handleUpdateChunkPacket(x,z,chunkData);
+//
+//    }
+
+    @Override
+    public void clientPlayHandle(PlayPayloadContext ctx) {
+        ClientPacketHandles.handleUpdateChunkPacket(x,z,chunkData);
+    }
+
+    @Override
+    public void write(FriendlyByteBuf friendlyByteBuf) {
+        this.toBytes(friendlyByteBuf);
     }
 }

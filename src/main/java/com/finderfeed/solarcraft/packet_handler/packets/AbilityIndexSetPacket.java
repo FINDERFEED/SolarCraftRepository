@@ -11,11 +11,7 @@ import net.neoforged.neoforge.network.handling.PlayPayloadContext;
 public class AbilityIndexSetPacket extends FDPacket {
     private int index;
     private String whatAbility;
-
-    public AbilityIndexSetPacket(FriendlyByteBuf buf){
-        index = buf.readInt();
-        whatAbility = buf.readUtf();
-    }
+    
     public AbilityIndexSetPacket(int arr,String id){
         this.index = arr;
         this.whatAbility = id;
@@ -24,19 +20,34 @@ public class AbilityIndexSetPacket extends FDPacket {
         buf.writeInt(index);
         buf.writeUtf(whatAbility);
     }
-    public static void handle(AbilityIndexSetPacket packet, PlayPayloadContext context){
-        var opt = context.player();
+//    public static void handle(AbilityIndexSetPacket packet, PlayPayloadContext context){
+//        var opt = context.player();
+//        if (opt.isPresent()) {
+//            bindAbility(opt.get(), packet.index, packet.whatAbility);
+//        }
+//    }
+
+
+    @Override
+    public void serverPlayHandle(PlayPayloadContext ctx) {
+        var opt = ctx.player();
         if (opt.isPresent()) {
-            bindAbility(opt.get(), packet.index, packet.whatAbility);
+            bindAbility(opt.get(), index, whatAbility);
         }
     }
 
-    public static void bindAbility(Player player,int index,String abilityId){
+    public static void bindAbility(Player player, int index, String abilityId){
         player.getPersistentData().putString("solar_forge_ability_binded_"+Integer.toString(index),abilityId);
     }
 
     @Override
     public void write(FriendlyByteBuf friendlyByteBuf) {
         this.toBytes(friendlyByteBuf);
+    }
+
+    @Override
+    public void read(FriendlyByteBuf buf) {
+        index = buf.readInt();
+        whatAbility = buf.readUtf();
     }
 }

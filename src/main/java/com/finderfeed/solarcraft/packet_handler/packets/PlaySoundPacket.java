@@ -36,9 +36,9 @@ public class PlaySoundPacket {
     }
 
     public void handle(PlayPayloadContext ctx) {
-        ctx.enqueueWork(() -> {
+      //  ctx.enqueueWork(() -> {
             ClientHelpers.playSoundAtPos(pos,id,pitch,volume);
-        });
+       // });
         
     }
 }

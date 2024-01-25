@@ -1,6 +1,7 @@
 package com.finderfeed.solarcraft.packet_handler.packets;
 
 import com.finderfeed.solarcraft.content.items.solar_wand.SolarWandItem;
+import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacket;
 import com.finderfeed.solarcraft.packet_handler.packet_system.Packet;
 import com.finderfeed.solarcraft.registries.items.SCItems;
 import net.minecraft.network.FriendlyByteBuf;
@@ -11,7 +12,7 @@ import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.network.handling.PlayPayloadContext;
 
 @Packet("cast_wand_action")
-public class CastWandActionPacket {
+public class CastWandActionPacket extends FDPacket {
 
     private ResourceLocation actionId;
 
@@ -19,7 +20,9 @@ public class CastWandActionPacket {
         this.actionId = actionId;
     }
 
-    public CastWandActionPacket(FriendlyByteBuf buf){
+
+    @Override
+    public void read(FriendlyByteBuf buf) {
         this.actionId = buf.readResourceLocation();
     }
 
@@ -27,13 +30,26 @@ public class CastWandActionPacket {
         buf.writeResourceLocation(actionId);
     }
 
-    public void handle(PlayPayloadContext ctx){
-        
-            ServerPlayer player = (ServerPlayer) ctx.player().get();
-            ItemStack stack = player.getMainHandItem();
-            if (stack.is(SCItems.SOLAR_WAND.get())){
-                SolarWandItem.setWandAction(stack,actionId);
-            }
-        
+//    public void handle(PlayPayloadContext ctx){
+//
+//            ServerPlayer player = (ServerPlayer) ctx.player().get();
+//            ItemStack stack = player.getMainHandItem();
+//            if (stack.is(SCItems.SOLAR_WAND.get())){
+//                SolarWandItem.setWandAction(stack,actionId);
+//            }
+//
+//    }
+
+    @Override
+    public void serverPlayHandle(PlayPayloadContext ctx) {
+        ServerPlayer player = (ServerPlayer) ctx.player().get();
+        ItemStack stack = player.getMainHandItem();
+        if (stack.is(SCItems.SOLAR_WAND.get())){
+            SolarWandItem.setWandAction(stack,actionId);
+        }    }
+
+    @Override
+    public void write(FriendlyByteBuf friendlyByteBuf) {
+        this.toBytes(friendlyByteBuf);
     }
 }

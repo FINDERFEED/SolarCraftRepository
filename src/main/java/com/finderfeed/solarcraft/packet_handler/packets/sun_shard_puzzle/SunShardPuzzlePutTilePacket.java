@@ -3,6 +3,8 @@ package com.finderfeed.solarcraft.packet_handler.packets.sun_shard_puzzle;
 import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.blockentity.SunShardPuzzleBlockEntity;
 import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.puzzle_tiles.PuzzleTile;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
+import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacket;
+import com.finderfeed.solarcraft.packet_handler.packet_system.Packet;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
@@ -11,7 +13,8 @@ import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.network.handling.PlayPayloadContext;
 import java.util.function.Supplier;
 
-public class SunShardPuzzlePutTilePacket {
+@Packet("sun_shard_puzzle_put_tile_packet")
+public class SunShardPuzzlePutTilePacket extends FDPacket {
 
     private PuzzleTile tile;
     private int x;
@@ -25,8 +28,8 @@ public class SunShardPuzzlePutTilePacket {
         this.y = y;
     }
 
-
-    public SunShardPuzzlePutTilePacket(FriendlyByteBuf buf){
+    @Override
+    public void read(FriendlyByteBuf buf) {
         CompoundTag tag = buf.readNbt();
         tile = PuzzleTile.deserialize(tag);
         this.x = buf.readInt();
@@ -43,17 +46,30 @@ public class SunShardPuzzlePutTilePacket {
         buf.writeBlockPos(tilePos);
     }
 
-    public void handle(PlayPayloadContext ctx){
-        
-            ServerPlayer sender = ctx.getSender();
-            if (sender != null){
-                Level world = sender.level();
-                if (world.getBlockEntity(tilePos) instanceof SunShardPuzzleBlockEntity tile){
-                    tile.onPutTile(sender,this.tile,x,y);
-                }
-            }
-        });
-        
+//    public void handle(PlayPayloadContext ctx){
+//
+//            ServerPlayer sender = ctx.getSender();
+//            if (sender != null){
+//                Level world = sender.level();
+//                if (world.getBlockEntity(tilePos) instanceof SunShardPuzzleBlockEntity tile){
+//                    tile.onPutTile(sender,this.tile,x,y);
+//                }
+//            }
+//
+//
+//    }
+
+    @Override
+    public void serverPlayHandle(PlayPayloadContext ctx) {
+        ServerPlayer sender =  (ServerPlayer) ctx.player().get();
+        Level world = sender.level();
+        if (world.getBlockEntity(tilePos) instanceof SunShardPuzzleBlockEntity tile){
+            tile.onPutTile(sender,this.tile,x,y);
+        }
     }
 
+    @Override
+    public void write(FriendlyByteBuf friendlyByteBuf) {
+        this.toBytes(friendlyByteBuf);
+    }
 }

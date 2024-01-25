@@ -20,15 +20,16 @@ public class EnchanterPacket extends FDPacket {
     private int level;
     private BlockPos enchanterPos;
 
-    public EnchanterPacket(FriendlyByteBuf buf){
-        this.location = buf.readResourceLocation();
-        this.level = buf.readInt();
-        this.enchanterPos = buf.readBlockPos();
-    }
     public EnchanterPacket(BlockPos pos,Enchantment e, int level){
         this.level = level;
         this.location = BuiltInRegistries.ENCHANTMENT.getKey(e);
         this.enchanterPos = pos;
+    }
+    @Override
+    public void read(FriendlyByteBuf buf) {
+        this.location = buf.readResourceLocation();
+        this.level = buf.readInt();
+        this.enchanterPos = buf.readBlockPos();
     }
     public void toBytes(FriendlyByteBuf buf){
         buf.writeResourceLocation(location);
@@ -41,6 +42,13 @@ public class EnchanterPacket extends FDPacket {
             enchanter.triggerEnchanting(BuiltInRegistries.ENCHANTMENT.get(packet.location), packet.level);
         }
     }
+
+    @Override
+    public void serverPlayHandle(PlayPayloadContext ctx) {
+        Level level  = ctx.level().get();
+        if (level.getBlockEntity(enchanterPos) instanceof EnchanterBlockEntity enchanter){
+            enchanter.triggerEnchanting(BuiltInRegistries.ENCHANTMENT.get(location), this.level);
+        }    }
 
     @Override
     public void write(FriendlyByteBuf friendlyByteBuf) {

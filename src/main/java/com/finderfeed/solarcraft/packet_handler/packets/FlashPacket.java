@@ -23,7 +23,8 @@ public class FlashPacket extends FDPacket {
         this.outTime = outTime;
     }
 
-    public FlashPacket(FriendlyByteBuf buf){
+    @Override
+    public void read(FriendlyByteBuf buf) {
         this.inTime = buf.readInt();
         this.stayTime = buf.readInt();
         this.outTime = buf.readInt();
@@ -35,8 +36,13 @@ public class FlashPacket extends FDPacket {
         buf.writeInt(outTime);
     }
 
-    public static void handle(FlashPacket packet,PlayPayloadContext ctx) {
+/*    public static void handle(FlashPacket packet,PlayPayloadContext ctx) {
         ClientPacketHandles.handleFlashPacket(packet.inTime,packet.stayTime,packet.outTime);
+    }*/
+
+    @Override
+    public void clientPlayHandle(PlayPayloadContext ctx) {
+        ClientPacketHandles.handleFlashPacket(inTime,stayTime,outTime);
     }
 
     @Override

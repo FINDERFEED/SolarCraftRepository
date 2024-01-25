@@ -16,11 +16,12 @@ import org.apache.logging.log4j.Level;
 
 @Packet("buy_ability_packet")
 public class BuyAbilityPacket extends FDPacket {
-    private final String id;
-
-    public BuyAbilityPacket(FriendlyByteBuf buf){
+    private String id;
+    @Override
+    public void read(FriendlyByteBuf buf) {
         id = buf.readUtf();
     }
+
     public BuyAbilityPacket(String str){
         id = str;
     }
@@ -28,14 +29,32 @@ public class BuyAbilityPacket extends FDPacket {
         buf.writeUtf(id);
     }
 
-    public static void handle(BuyAbilityPacket packet, PlayPayloadContext ctx){
+//    public static void handle(BuyAbilityPacket packet, PlayPayloadContext ctx){
+//        ServerPlayer player = (ServerPlayer) ctx.player().get();
+//        try {
+//            AbstractAbility ability = AbilitiesRegistry.getAbilityByID(packet.id);
+//            int en = packet.getPlayerEnergy(player);
+//            if (en >= ability.buyCost){
+//                if (!AbilityHelper.isAbilityBought(player,ability)) {
+//                    packet.spendEnergy(player, ability.buyCost);
+//                    AbilityHelper.setAbilityUsable(player,ability,true);
+//                }
+//            }
+//        }catch (Exception e){
+//            SolarCraft.LOGGER.log(Level.ERROR,"Exception caught during BuyAbilityPacket handling.");
+//            e.printStackTrace();
+//        }
+//    }
+
+    @Override
+    public void serverPlayHandle(PlayPayloadContext ctx) {
         ServerPlayer player = (ServerPlayer) ctx.player().get();
         try {
-            AbstractAbility ability = AbilitiesRegistry.getAbilityByID(packet.id);
-            int en = packet.getPlayerEnergy(player);
+            AbstractAbility ability = AbilitiesRegistry.getAbilityByID(id);
+            int en = getPlayerEnergy(player);
             if (en >= ability.buyCost){
                 if (!AbilityHelper.isAbilityBought(player,ability)) {
-                    packet.spendEnergy(player, ability.buyCost);
+                    spendEnergy(player, ability.buyCost);
                     AbilityHelper.setAbilityUsable(player,ability,true);
                 }
             }
@@ -45,7 +64,7 @@ public class BuyAbilityPacket extends FDPacket {
         }
     }
 
-    private void spendEnergy(ServerPlayer player,int toSpend){
+    private void spendEnergy(ServerPlayer player, int toSpend){
         player.getPersistentData().putInt(SolarCraftTags.RAW_SOLAR_ENERGY,getPlayerEnergy(player)-toSpend);
     }
 

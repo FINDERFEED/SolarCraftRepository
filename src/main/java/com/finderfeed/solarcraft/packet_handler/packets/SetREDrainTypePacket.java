@@ -3,6 +3,8 @@ package com.finderfeed.solarcraft.packet_handler.packets;
 import com.finderfeed.solarcraft.content.items.solar_wand.wand_actions.drain_runic_enenrgy_action.REDrainWandActionData;
 import com.finderfeed.solarcraft.content.items.solar_wand.wand_actions.drain_runic_enenrgy_action.REDrainWandActionDataSerializer;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
+import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacket;
+import com.finderfeed.solarcraft.packet_handler.packet_system.Packet;
 import com.finderfeed.solarcraft.registries.items.SCItems;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
@@ -11,7 +13,8 @@ import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.network.handling.PlayPayloadContext;
 import java.util.function.Supplier;
 
-public class SetREDrainTypePacket {
+@Packet("set_re_drain_type")
+public class SetREDrainTypePacket extends FDPacket {
 
     private int id;
 
@@ -19,7 +22,8 @@ public class SetREDrainTypePacket {
         this.id = type.getIndex();
     }
 
-    public SetREDrainTypePacket(FriendlyByteBuf buf){
+    @Override
+    public void read(FriendlyByteBuf buf) {
         this.id = buf.readInt();
     }
 
@@ -29,7 +33,7 @@ public class SetREDrainTypePacket {
 
     public void handle(PlayPayloadContext ctx){
         
-            ServerPlayer enti = ctx.getSender();
+            ServerPlayer enti = (ServerPlayer) ctx.player().get();
             if (enti.getMainHandItem().is(SCItems.SOLAR_WAND.get())){
                 ItemStack stack = enti.getMainHandItem();
                 REDrainWandActionDataSerializer serializer = REDrainWandActionDataSerializer.SERIALIZER;
@@ -46,7 +50,16 @@ public class SetREDrainTypePacket {
                 data.setTypeToDrain(RunicEnergy.Type.getAll()[id]);
                 serializer.serialize(tag,data);
             }
-        });
+    }
+
+    @Override
+    public void serverPlayHandle(PlayPayloadContext ctx) {
+        this.handle(ctx);
+    }
+
+    @Override
+    public void write(FriendlyByteBuf friendlyByteBuf) {
+        this.toBytes(friendlyByteBuf);
         
     }
 

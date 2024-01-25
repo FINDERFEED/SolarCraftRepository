@@ -1,6 +1,8 @@
 package com.finderfeed.solarcraft.client.particles.server_data.shapes;
 
 import com.finderfeed.solarcraft.packet_handler.ClientPacketHandles;
+import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacket;
+import com.finderfeed.solarcraft.packet_handler.packet_system.Packet;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -10,7 +12,8 @@ import net.minecraft.world.entity.player.Player;
 import net.neoforged.neoforge.network.handling.PlayPayloadContext;
 import java.util.function.Supplier;
 
-public class SendShapeParticlesPacket {
+@Packet("send_shape_particles_packet")
+public class SendShapeParticlesPacket extends FDPacket {
 
 
     private ParticleSpawnShape shape;
@@ -37,7 +40,8 @@ public class SendShapeParticlesPacket {
         this(shape,options,0,0,0,0,0,0);
     }
 
-    public SendShapeParticlesPacket(FriendlyByteBuf buf){
+    @Override
+    public void read(FriendlyByteBuf buf) {
         String shapeId = buf.readUtf();
         ParticleSpawnShapeType type = ParticleSpawnShapeType.valueOf(shapeId);
         this.shape = type.getSerializer().fromNetwork(buf);
@@ -70,13 +74,19 @@ public class SendShapeParticlesPacket {
         buf.writeDouble(zd);
     }
 
-    public void handle(PlayPayloadContext ctx){
-        
-            ClientPacketHandles.handleSpawnShapeParticlesPacket(shape,options,x,y,z,xd,yd,zd);
-        });
-        
+//    public void handle(PlayPayloadContext ctx){
+//
+//            ClientPacketHandles.handleSpawnShapeParticlesPacket(shape,options,x,y,z,xd,yd,zd);
+//
+//    }
+
+    @Override
+    public void clientPlayHandle(PlayPayloadContext ctx) {
+        ClientPacketHandles.handleSpawnShapeParticlesPacket(shape,options,x,y,z,xd,yd,zd);
     }
 
-
-
+    @Override
+    public void write(FriendlyByteBuf friendlyByteBuf) {
+        this.toBytes(friendlyByteBuf);
+    }
 }

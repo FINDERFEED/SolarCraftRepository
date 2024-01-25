@@ -13,16 +13,23 @@ public class DimensionBreakPacket extends FDPacket {
 
     }
 
-    public DimensionBreakPacket(FriendlyByteBuf buf){
+
+    @Override
+    public void read(FriendlyByteBuf buf) {
 
     }
 
     public void toBytes(FriendlyByteBuf buf){
 
     }
-    public void handle(DimensionBreakPacket packet,PlayPayloadContext ctx){
+//    public void handle(DimensionBreakPacket packet,PlayPayloadContext ctx){
+//        ClientPacketHandles.handleDimBreakPacket();
+//
+//    }
+
+    @Override
+    public void clientPlayHandle(PlayPayloadContext ctx) {
         ClientPacketHandles.handleDimBreakPacket();
-        
     }
 
     @Override

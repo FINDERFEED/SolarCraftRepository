@@ -18,9 +18,12 @@ public class DisablePlayerFlightPacket extends FDPacket {
         this.disable = disable;
     }
 
-    public DisablePlayerFlightPacket(FriendlyByteBuf buffer){
 
-        this.disable = buffer.readBoolean();
+
+    @Override
+    public void read(FriendlyByteBuf buf) {
+        this.disable = buf.readBoolean();
+
     }
 
     public void toBytes(FriendlyByteBuf buf){
@@ -28,14 +31,18 @@ public class DisablePlayerFlightPacket extends FDPacket {
         buf.writeBoolean(disable);
     }
 
-    public void handle(DisablePlayerFlightPacket packet,PlayPayloadContext ctx){
-        
-            ClientHelpers.disableFlight(disable);
+//    public void handle(DisablePlayerFlightPacket packet,PlayPayloadContext ctx){
+//
+//            ClientHelpers.disableFlight(disable);
+//
+//    }
 
+    @Override
+    public void clientPlayHandle(PlayPayloadContext ctx) {
+        ClientHelpers.disableFlight(disable);
     }
 
-
-    public static void send(ServerPlayer player,boolean disable){
+    public static void send(ServerPlayer player, boolean disable){
         player.getAbilities().mayfly = !disable;
         if (disable) {
             player.getAbilities().flying = false;

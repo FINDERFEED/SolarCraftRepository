@@ -3,13 +3,16 @@ package com.finderfeed.solarcraft.packet_handler.packets;
 import com.finderfeed.solarcraft.content.blocks.blockentities.runic_energy.AbstractRunicEnergyContainer;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.packet_handler.ClientPacketHandles;
+import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacket;
+import com.finderfeed.solarcraft.packet_handler.packet_system.Packet;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.neoforged.neoforge.network.handling.PlayPayloadContext;
 import java.util.function.Supplier;
 
-public class UpdateRunicEnergyInContainerPacket {
+@Packet("update_runic_energy_in_container_packet")
+public class UpdateRunicEnergyInContainerPacket extends FDPacket {
 
     private BlockPos containerPos;
     private CompoundTag tag;
@@ -20,8 +23,8 @@ public class UpdateRunicEnergyInContainerPacket {
         this.containerPos = container.getBlockPos();
         this.tag = tag;
     }
-
-    public UpdateRunicEnergyInContainerPacket(FriendlyByteBuf buf){
+    @Override
+    public void read(FriendlyByteBuf buf) {
         this.containerPos = buf.readBlockPos();
         this.tag = buf.readNbt();
     }
@@ -32,11 +35,20 @@ public class UpdateRunicEnergyInContainerPacket {
     }
 
 
-    public void handle(PlayPayloadContext ctx) {
-        
-            ClientPacketHandles.updateContainerRunicEnergy(containerPos,tag);
-        });
-        
+//    public void handle(PlayPayloadContext ctx) {
+//
+//            ClientPacketHandles.updateContainerRunicEnergy(containerPos,tag);
+//    }
+
+    @Override
+    public void clientPlayHandle(PlayPayloadContext ctx) {
+        ClientPacketHandles.updateContainerRunicEnergy(containerPos,tag);
+
+    }
+
+    @Override
+    public void write(FriendlyByteBuf friendlyByteBuf) {
+        this.toBytes(friendlyByteBuf);
     }
 
 }

@@ -21,7 +21,9 @@ public class CameraShakePacket extends FDPacket {
         this.spread = spread;
     }
 
-    public CameraShakePacket(FriendlyByteBuf buf){
+
+    @Override
+    public void read(FriendlyByteBuf buf) {
         this.inTime = buf.readInt();
         this.stayTime = buf.readInt();
         this.outTime = buf.readInt();
@@ -35,13 +37,17 @@ public class CameraShakePacket extends FDPacket {
         buf.writeFloat(spread);
     }
 
-    public static void handle(CameraShakePacket packet, PlayPayloadContext context) {
-        ClientPacketHandles.handleCameraShakePacket(packet.inTime,packet.stayTime,packet.outTime,packet.spread);
-    }
+//    public static void handle(CameraShakePacket packet, PlayPayloadContext context) {
+//        ClientPacketHandles.handleCameraShakePacket(packet.inTime,packet.stayTime,packet.outTime,packet.spread);
+//    }
 
+    @Override
+    public void clientPlayHandle(PlayPayloadContext ctx) {
+        ClientPacketHandles.handleCameraShakePacket(inTime,stayTime,outTime,spread);
+    }
 
     @Override
     public void write(FriendlyByteBuf friendlyByteBuf) {
-        
+        this.toBytes(friendlyByteBuf);
     }
 }

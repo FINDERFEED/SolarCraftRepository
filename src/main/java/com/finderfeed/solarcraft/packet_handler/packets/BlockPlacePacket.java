@@ -18,8 +18,8 @@ public class BlockPlacePacket extends FDPacket {
         this.pos = pos;
         this.id = Block.getId(state);
     }
-
-    public BlockPlacePacket(FriendlyByteBuf buf){
+    @Override
+    public void read(FriendlyByteBuf buf) {
         this.id = buf.readInt();
         this.pos = buf.readBlockPos();
     }
@@ -29,8 +29,15 @@ public class BlockPlacePacket extends FDPacket {
         buf.writeBlockPos(pos);
     }
 
-    public static void handle(BlockPlacePacket packet, PlayPayloadContext ctx) {
-        NeoForge.EVENT_BUS.post(new ClientsideBlockPlaceEvent(Block.stateById(packet.id),packet.pos));
+//    public static void handle(BlockPlacePacket packet, PlayPayloadContext ctx) {
+//        NeoForge.EVENT_BUS.post(new ClientsideBlockPlaceEvent(Block.stateById(packet.id),packet.pos));
+//    }
+
+    @Override
+    public void clientPlayHandle(PlayPayloadContext ctx) {
+        super.clientPlayHandle(ctx);
+        NeoForge.EVENT_BUS.post(new ClientsideBlockPlaceEvent(Block.stateById(id),pos));
+
     }
 
     @Override

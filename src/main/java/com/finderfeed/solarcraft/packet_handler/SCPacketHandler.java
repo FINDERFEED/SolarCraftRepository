@@ -2,6 +2,7 @@ package com.finderfeed.solarcraft.packet_handler;
 
 import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.helpers.Helpers;
+import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacket;
 import com.finderfeed.solarcraft.packet_handler.packet_system.Packet;
 import com.finderfeed.solarcraft.packet_handler.packet_system.PacketType;
 import net.minecraft.network.FriendlyByteBuf;
@@ -21,6 +22,11 @@ import java.util.List;
 
 public class SCPacketHandler {
 
+    //Note for myself - to create a packet
+    /*
+    1) Annotate the packet with @Packet, provide id and PacketType (default is PLAY)
+    2) Extend FDPacket
+     */
     @SubscribeEvent
     public static void registerPayload(RegisterPayloadHandlerEvent event){
         final IPayloadRegistrar registrar = event.registrar(SolarCraft.MOD_ID)
@@ -42,7 +48,7 @@ public class SCPacketHandler {
     public static <T extends CustomPacketPayload> void registerPlayPacket(IPayloadRegistrar register, ResourceLocation id, Class<?> packetClass){
         try {
             Constructor<?> constructor = packetClass.getConstructor(FriendlyByteBuf.class);
-            Method method = packetClass.getDeclaredMethod("handle",packetClass, PlayPayloadContext.class);
+            //Method method = packetClass.getDeclaredMethod("handle",packetClass, PlayPayloadContext.class);
             register.play(id, (buf) -> {
                 T object;
                 try {
@@ -52,11 +58,12 @@ public class SCPacketHandler {
                 }
                 return object;
             },(packetObject,context)->{
-                try {
-                    method.invoke(packetObject,context);
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
+//                try {
+//                    method.invoke(packetObject,context);
+//                } catch (Exception e) {
+//                    throw new RuntimeException(e);
+//                }
+                FDPacket.handlePlayPacket(packetObject,context);
             });
         }catch (Exception e){
             throw new RuntimeException("Error while loading " + id + " packet",e);
@@ -66,7 +73,7 @@ public class SCPacketHandler {
     public static <T extends CustomPacketPayload> void registerConfigurationPacket(IPayloadRegistrar register, ResourceLocation id, Class<?> packetClass){
         try {
             Constructor<?> constructor = packetClass.getConstructor(FriendlyByteBuf.class);
-            Method method = packetClass.getDeclaredMethod("handle",packetClass, ConfigurationPayloadContext.class);
+//            Method method = packetClass.getDeclaredMethod("handle",packetClass, ConfigurationPayloadContext.class);
             register.configuration(id, (buf) -> {
                 T object;
                 try {
@@ -76,11 +83,12 @@ public class SCPacketHandler {
                 }
                 return object;
             },(packetObject,context)->{
-                try {
-                    method.invoke(packetObject,context);
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
+//                try {
+//                    method.invoke(packetObject,context);
+//                } catch (Exception e) {
+//                    throw new RuntimeException(e);
+//                }
+                FDPacket.handleConfigurationPacket(packetObject,context);
             });
         }catch (Exception e){
             throw new RuntimeException("Error while loading " + id + " packet",e);
