@@ -20,6 +20,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.shapes.CollisionContext;
 
 import java.util.List;
 
@@ -49,7 +50,7 @@ public class UlderaPylon extends BlockEntity {
                         return false;
                     }
                     Vec3 v = e.position().add(0,e.getBbHeight()/2,0).subtract(p).normalize().multiply(0.5,0.5,0.5);
-                    ClipContext clipContext = new ClipContext(p.add(v),e.position().add(0,e.getBbHeight()/2,0), ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE,null);
+                    ClipContext clipContext = new ClipContext(p.add(v),e.position().add(0,e.getBbHeight()/2,0), ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, CollisionContext.empty());
                     return world.clip(clipContext).getType() == HitResult.Type.MISS;
                 });
                 if (!livings.isEmpty()) {

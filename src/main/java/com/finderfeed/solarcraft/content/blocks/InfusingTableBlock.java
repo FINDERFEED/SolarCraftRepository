@@ -1,6 +1,6 @@
 package com.finderfeed.solarcraft.content.blocks;
 
-import com.finderfeed.solarcraft.content.blocks.blockentities.InfusingTableTile;
+import com.finderfeed.solarcraft.content.blocks.blockentities.InfusingCraftingTableTile;
 import com.finderfeed.solarcraft.content.blocks.blockentities.containers.InfusingTableTileContainer;
 import com.finderfeed.solarcraft.misc_things.PhantomInventory;
 import com.finderfeed.solarcraft.registries.items.SCItems;
@@ -43,7 +43,7 @@ public class InfusingTableBlock extends Block implements EntityBlock {
                 && hand == InteractionHand.MAIN_HAND
                 && !player.getItemInHand(hand).is(SCItems.SOLAR_WAND.get())){
             BlockEntity e = level.getBlockEntity(pos);
-            if (e instanceof  InfusingTableTile tile) {
+            if (e instanceof  InfusingCraftingTableTile tile) {
                 if (tile.getOwner() != null && (level.getPlayerByUUID(tile.getOwner()) == player)) {
                     ((ServerPlayer) player).openMenu( new InfusingTableTileContainer.Provider(tile), (buf ->
                             buf.writeBlockPos(pos)
@@ -64,7 +64,7 @@ public class InfusingTableBlock extends Block implements EntityBlock {
     @Override
     public void onRemove(BlockState state, Level world, BlockPos pos, BlockState state2, boolean p_51542_) {
         BlockEntity blockentity = world.getBlockEntity(pos);
-        if (blockentity instanceof InfusingTableTile tile) {
+        if (blockentity instanceof InfusingCraftingTableTile tile) {
             Containers.dropContents(world, pos,new PhantomInventory(tile.getInventory()));
             world.updateNeighbourForOutputSignal(pos, this);
         }
@@ -75,7 +75,7 @@ public class InfusingTableBlock extends Block implements EntityBlock {
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level p_153212_, BlockState p_153213_, BlockEntityType<T> p_153214_) {
         return (level,pos,state,tile)->{
-            InfusingTableTile.tick(level,pos,state,(InfusingTableTile) tile);
+            InfusingCraftingTableTile.tick(level,pos,state,(InfusingCraftingTableTile) tile);
         };
     }
 }

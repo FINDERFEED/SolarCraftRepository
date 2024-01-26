@@ -1,6 +1,6 @@
 package com.finderfeed.solarcraft.content.blocks.blockentities.containers;
 
-import com.finderfeed.solarcraft.content.blocks.blockentities.InfusingTableTile;
+import com.finderfeed.solarcraft.content.blocks.blockentities.InfusingCraftingTableTile;
 import com.finderfeed.solarcraft.content.blocks.blockentities.containers.misc.TESlotItemHandler;
 import com.finderfeed.solarcraft.registries.containers.SCContainers;
 import net.minecraft.core.BlockPos;
@@ -22,14 +22,14 @@ import javax.annotation.Nullable;
 
 public class InfusingTableTileContainer extends AbstractContainerMenu {
 
-    public InfusingTableTile tile;
+    public InfusingCraftingTableTile tile;
     public IItemHandler inventory;
 
     public InfusingTableTileContainer( int p_38852_,Inventory inv, BlockPos tilepos) {
         super(SCContainers.INFUSING_TABLE_TILE.get(), p_38852_);
         Level world= inv.player.level();
-        this.tile = (InfusingTableTile) world.getBlockEntity(tilepos);
-        this.inventory = tile.getLevel().getCapability(Capabilities.ItemHandler.BLOCK,tile.getBlockPos(),tile.getBlockState(),tile,null);
+        this.tile = (InfusingCraftingTableTile) world.getBlockEntity(tilepos);
+        this.inventory = tile.getInventory();
 
 
         for(int i = 0; i < 3; ++i) {
@@ -110,9 +110,9 @@ public class InfusingTableTileContainer extends AbstractContainerMenu {
 
     public static class Provider implements MenuProvider{
 
-        private final InfusingTableTile tile;
+        private final InfusingCraftingTableTile tile;
 
-        public Provider(InfusingTableTile tile){
+        public Provider(InfusingCraftingTableTile tile){
             this.tile = tile;
         }
 

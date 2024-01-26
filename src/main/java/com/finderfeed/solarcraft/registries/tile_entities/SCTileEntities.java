@@ -97,8 +97,8 @@ public class SCTileEntities {
     public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<BonemealerTileEntity>> BONEMEALER = TILE_ENTITY_TYPE.register("bonemealer",()->
             BlockEntityType.Builder.of(BonemealerTileEntity::new, SCBlocks.BONEMEALER.get()).build(null));
 
-    public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<InfusingTableTile>> INFUSING_CRAFTING_TABLE = TILE_ENTITY_TYPE.register("infusing_crafting_table",()->
-            BlockEntityType.Builder.of(InfusingTableTile::new, SCBlocks.INFUSING_CRAFTING_TABLE_BLOCK.get()).build(null));
+    public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<InfusingCraftingTableTile>> INFUSING_CRAFTING_TABLE = TILE_ENTITY_TYPE.register("infusing_crafting_table",()->
+            BlockEntityType.Builder.of(InfusingCraftingTableTile::new, SCBlocks.INFUSING_CRAFTING_TABLE_BLOCK.get()).build(null));
 
     public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<ExplosionBlockerBlockEntity>> EXPLOSTION_BLOCKER = TILE_ENTITY_TYPE.register("explosion_blocker",()->
             BlockEntityType.Builder.of(ExplosionBlockerBlockEntity::new, SCBlocks.EXPLOSION_BLOCKER.get()).build(null));

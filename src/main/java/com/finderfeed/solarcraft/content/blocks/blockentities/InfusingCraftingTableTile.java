@@ -9,6 +9,7 @@ import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.Ancient
 import com.finderfeed.solarcraft.client.particles.SCParticleTypes;
 import com.finderfeed.solarcraft.misc_things.PhantomInventory;
 import com.finderfeed.solarcraft.content.recipe_types.infusing_crafting.InfusingCraftingRecipe;
+import com.finderfeed.solarcraft.registries.SCAttachmentTypes;
 import com.finderfeed.solarcraft.registries.items.SCItems;
 import com.finderfeed.solarcraft.registries.recipe_types.SCRecipeTypes;
 import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
@@ -27,12 +28,16 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 
+import net.neoforged.neoforge.attachment.AttachmentType;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.items.ItemStackHandler;
+
 import javax.annotation.Nullable;
 import java.util.*;
+import java.util.function.Supplier;
 
-public class InfusingTableTile extends BlockEntity implements OwnedBlock, IWandable {
+public class InfusingCraftingTableTile extends ItemStackHandlerTile implements OwnedBlock, IWandable {
     public static final int ANIM_TIME = 100;
     public PhantomInventory phantomInv = new PhantomInventory(10);
     private UUID owner;
@@ -40,12 +45,12 @@ public class InfusingTableTile extends BlockEntity implements OwnedBlock, IWanda
     private int recipeTime = 0;
 
 
-    public InfusingTableTile( BlockPos p_155229_, BlockState p_155230_) {
+    public InfusingCraftingTableTile(BlockPos p_155229_, BlockState p_155230_) {
         super(SCTileEntities.INFUSING_CRAFTING_TABLE.get(), p_155229_, p_155230_);
     }
 
 
-    public static void tick(Level world,BlockPos pos,BlockState state,InfusingTableTile tile){
+    public static void tick(Level world, BlockPos pos, BlockState state, InfusingCraftingTableTile tile){
         if (!world.isClientSide){
 
             if (tile.isRecipeInProgress()){
@@ -125,7 +130,7 @@ public class InfusingTableTile extends BlockEntity implements OwnedBlock, IWanda
                         ClientHelpers.ParticleConstructor c = new ClientHelpers.ParticleConstructor(SCParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(), pos.x + x, pos.y + 0.9, pos.z + z, 0, 0, 0);
                     }
                 }
-                int tm = Math.min(recipeTime*maxOutput,InfusingTableTile.ANIM_TIME);
+                int tm = Math.min(recipeTime*maxOutput, InfusingCraftingTableTile.ANIM_TIME);
                 if (remainingRecipeTime < tm) {
                     Vec3 vec3 = Helpers.randomVector();
                     Vec3 pos = Helpers.getBlockCenter(worldPosition);
@@ -209,10 +214,7 @@ public class InfusingTableTile extends BlockEntity implements OwnedBlock, IWanda
     }
 
 
-    public IItemHandler getInventory(){
-        IItemHandler handler = this.level.getCapability(Capabilities.ItemHandler.BLOCK,this.worldPosition,this.getBlockState(),this,null);
-        return handler;
-    }
+
     @Override
     public UUID getOwner() {
         return owner;
@@ -232,6 +234,11 @@ public class InfusingTableTile extends BlockEntity implements OwnedBlock, IWanda
         saveAdditional(tag);
 
         return Helpers.createTilePacket(this,tag);
+    }
+
+    @Override
+    public Supplier<AttachmentType<ItemStackHandler>> getAttachmentType() {
+        return SCAttachmentTypes.INVENTORY_10;
     }
 
     @Override

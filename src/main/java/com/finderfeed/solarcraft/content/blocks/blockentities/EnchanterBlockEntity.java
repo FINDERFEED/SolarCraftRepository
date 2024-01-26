@@ -9,6 +9,7 @@ import com.finderfeed.solarcraft.config.enchanter_config.EnchanterConfigInit;
 import com.finderfeed.solarcraft.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarcraft.content.items.runic_energy.RunicEnergyCost;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
+import com.finderfeed.solarcraft.registries.SCAttachmentTypes;
 import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -25,10 +26,13 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.neoforge.attachment.AttachmentType;
+import net.neoforged.neoforge.items.ItemStackHandler;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Supplier;
 
 public class EnchanterBlockEntity extends REItemHandlerBlockEntity {
 
@@ -229,6 +233,10 @@ public class EnchanterBlockEntity extends REItemHandlerBlockEntity {
         SERVERSIDE_CONFIG = new EnchanterConfig(EnchanterConfigInit.SERVERSIDE_JSON);
     }
 
+    @Override
+    public Supplier<AttachmentType<ItemStackHandler>> getAttachmentType() {
+        return SCAttachmentTypes.INVENTORY_1;
+    }
 
 
     public static class RunicEnergyCostConstructor{

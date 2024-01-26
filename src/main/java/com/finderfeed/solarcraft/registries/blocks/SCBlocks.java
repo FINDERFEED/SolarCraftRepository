@@ -110,7 +110,7 @@ public class SCBlocks {
     public  static  final DeferredHolder<Block,Block> ENCHANTER = BLOCKS.register("elemental_enchanter",()-> new EnchanterBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).noOcclusion()));
     public  static  final DeferredHolder<Block,Block> RUNIC_ENERGY_CHARGER = BLOCKS.register("runic_energy_charger",()-> new RunicEnergyChargerBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).noOcclusion()));
     public  static  final DeferredHolder<Block,Block> RUNIC_TABLE = BLOCKS.register("runic_table",()-> new RunicTableBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_PLANKS).noOcclusion()));
-    public  static  final DeferredHolder<Block,Block> RUNIC_TREE_SAPLING = BLOCKS.register("runic_tree_sapling",()-> new SaplingBlock(new RunicTreeGrower(),BlockBehaviour.Properties.ofFullCopy(Blocks.DARK_OAK_SAPLING)));
+    public  static  final DeferredHolder<Block,Block> RUNIC_TREE_SAPLING = BLOCKS.register("runic_tree_sapling",()-> new SaplingBlock(RunicTreeGrower.GROWER,BlockBehaviour.Properties.ofFullCopy(Blocks.DARK_OAK_SAPLING)));
     public  static  final DeferredHolder<Block,LeavesBlock> RUNIC_LEAVES = BLOCKS.register("runic_leaves",()-> new RunicLeavesBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LEAVES).noOcclusion()));
     public  static  final DeferredHolder<Block,RotatedPillarBlock> RUNIC_LOG = BLOCKS.register("runic_log",()-> new RotatedPillarFlammableBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LOG),20));
     public  static  final DeferredHolder<Block,Block> RUNIC_PLANKS = BLOCKS.register("runic_planks",()-> new FlammableBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_PLANKS),20));
@@ -174,7 +174,7 @@ public class SCBlocks {
     public static final DeferredHolder<Block,Block> RADIANT_PLANKS = BLOCKS.register("radiant_planks",()-> new FlammableBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_PLANKS),20));
     public static final DeferredHolder<Block,Block> RADIANT_WOOD_STAIRS = BLOCKS.register("radiant_stairs",()-> new StairBlock(()-> RADIANT_PLANKS.get().defaultBlockState(),BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_PLANKS)));
     public static final DeferredHolder<Block,Block> RADIANT_WOOD_SLAB = BLOCKS.register("radiant_slab",()-> new FlammableSlabBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_PLANKS),20));
-    public static final DeferredHolder<Block,Block> RADIANT_CRYSTAL = BLOCKS.register("radiant_crystal",()->new StainedGlassBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.GLASS)));
+    public static final DeferredHolder<Block,Block> RADIANT_CRYSTAL = BLOCKS.register("radiant_crystal",()->new GlassLikeBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.GLASS)));
     public  static  final DeferredHolder<Block,Block> CRYSTAL_FLOWER = BLOCKS.register("crystal_flower",()-> new CrystalFlower(BlockBehaviour.Properties.ofFullCopy(Blocks.DEAD_BUSH).lightLevel((i)->6)));
     public static final DeferredHolder<Block,Block> RADIANT_BERRY_BUSH = BLOCKS.register("radiant_berry_bush",()->new DeadBushBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.DEAD_BUSH)));
 

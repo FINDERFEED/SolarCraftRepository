@@ -23,6 +23,7 @@ import com.finderfeed.solarcraft.misc_things.*;
 //import com.finderfeed.solarcraft.multiblocks.Multiblocks;
 import com.finderfeed.solarcraft.content.recipe_types.infusing_new.InfusingRecipe;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.Progression;
+import com.finderfeed.solarcraft.registries.SCAttachmentTypes;
 import com.finderfeed.solarcraft.registries.Tags;
 import com.finderfeed.solarcraft.registries.blocks.SCBlocks;
 import com.finderfeed.solarcraft.content.world_generation.structures.NotStructures;
@@ -49,11 +50,13 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.ChatFormatting;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.neoforge.attachment.AttachmentType;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import javax.annotation.Nullable;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Supplier;
 
 public class InfuserTileEntity extends REItemHandlerBlockEntity implements SolarEnergyContainer, Bindable, DebugTarget, IWandable, IStructureOwner {
 
@@ -761,6 +764,11 @@ public class InfuserTileEntity extends REItemHandlerBlockEntity implements Solar
           Multiblocks.INFUSER_TIER_TWO,
           Multiblocks.INFUSER_TIER_THREE
         );
+    }
+
+    @Override
+    public Supplier<AttachmentType<ItemStackHandler>> getAttachmentType() {
+        return SCAttachmentTypes.INVENTORY_14;
     }
 
 

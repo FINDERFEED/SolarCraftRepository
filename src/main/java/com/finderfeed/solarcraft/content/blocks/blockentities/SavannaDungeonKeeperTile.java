@@ -206,7 +206,7 @@ public class SavannaDungeonKeeperTile extends SolarcraftBlockEntity {
         public static void detectTNT(ExplosionEvent.Start event){
             Level world = event.getLevel();
             if (!world.isClientSide){
-                SavannaDungeonKeeperTile keeper = searchKeeper(world,Helpers.vecToPos(event.getExplosion().getPosition()),10);
+                SavannaDungeonKeeperTile keeper = searchKeeper(world,Helpers.vecToPos(event.getExplosion().center()),10);
                 if (keeper != null){
                     keeper.trigger();
                     event.setCanceled(true);

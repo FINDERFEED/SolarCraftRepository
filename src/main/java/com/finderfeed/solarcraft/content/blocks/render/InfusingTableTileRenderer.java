@@ -3,7 +3,7 @@ package com.finderfeed.solarcraft.content.blocks.render;
 import com.finderfeed.solarcraft.content.recipe_types.infusing_crafting.InfusingCraftingRecipe;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
-import com.finderfeed.solarcraft.content.blocks.blockentities.InfusingTableTile;
+import com.finderfeed.solarcraft.content.blocks.blockentities.InfusingCraftingTableTile;
 import com.finderfeed.solarcraft.content.blocks.render.abstracts.TileEntityRenderer;
 import com.finderfeed.solarcraft.registries.recipe_types.SCRecipeTypes;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -21,13 +21,13 @@ import net.neoforged.neoforge.items.IItemHandler;
 import java.util.ArrayList;
 import java.util.Optional;
 
-public class InfusingTableTileRenderer extends TileEntityRenderer<InfusingTableTile> {
+public class InfusingTableTileRenderer extends TileEntityRenderer<InfusingCraftingTableTile> {
     public InfusingTableTileRenderer(BlockEntityRendererProvider.Context ctx) {
         super(ctx);
     }
 
     @Override
-    public void render(InfusingTableTile tile, float pticks, PoseStack matrices, MultiBufferSource src, int light, int overlay) {
+    public void render(InfusingCraftingTableTile tile, float pticks, PoseStack matrices, MultiBufferSource src, int light, int overlay) {
         IItemHandler handler = tile.getInventory();
         float time = RenderingTools.getTime(tile.getLevel(),pticks);
         double radius = 1.5;
@@ -45,7 +45,7 @@ public class InfusingTableTileRenderer extends TileEntityRenderer<InfusingTableT
                     int recipeTime = recipe.getTime();
                     int maxOutput = tile.calculateMaximumRecipeOutput(recipe);
                     int remainingRecipeTime = recipeTime*maxOutput - tile.getCurrentTime();
-                    int tm = Math.min(recipeTime*maxOutput,InfusingTableTile.ANIM_TIME);
+                    int tm = Math.min(recipeTime*maxOutput, InfusingCraftingTableTile.ANIM_TIME);
                     if (remainingRecipeTime < tm){
                         float t = tm-remainingRecipeTime;
                         rotationModifier = ((tm-remainingRecipeTime)/(float)tm)*1600f + pticks;

@@ -2,6 +2,7 @@ package com.finderfeed.solarcraft.content.items.solar_lexicon;
 
 import com.finderfeed.solarcraft.content.items.AncientFragmentItem;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragmentHelper;
+import com.finderfeed.solarcraft.registries.SCAttachmentTypes;
 import com.finderfeed.solarcraft.registries.containers.SCContainers;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
 import net.minecraft.world.entity.player.Player;
@@ -11,6 +12,7 @@ import net.minecraft.world.MenuProvider;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 
+import net.neoforged.neoforge.attachment.AttachmentType;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.SlotItemHandler;
 import net.minecraft.network.FriendlyByteBuf;
@@ -31,7 +33,7 @@ public class SolarLexiconContainer extends AbstractContainerMenu {
     public SolarLexiconContainer(int p_i50105_2_, Inventory inv, ItemStack stack) {
         super(SCContainers.SOLAR_LEXICON_CONTAINER.get(), p_i50105_2_);
         this.stack = stack;
-        this.inventory = stack.getCapability(Capabilities.ITEM_HANDLER).orElse(null);
+        this.inventory = stack.getData(SCAttachmentTypes.LEXICON_INVENTORY);
         int amount = 0;
         int row = 1;
         int id = 0;

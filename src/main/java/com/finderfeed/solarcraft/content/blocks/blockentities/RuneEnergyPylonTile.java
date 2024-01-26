@@ -70,7 +70,7 @@ public class RuneEnergyPylonTile extends BlockEntity implements  DebugTarget, Ru
 
     public static void imbueItemsNear(RuneEnergyPylonTile tile){
         if (tile.getEnergyType() != null) {
-            AABB bb = new AABB(tile.worldPosition.offset(-8, -10, -8), tile.worldPosition.offset(8, 0, 8));
+            AABB bb = new AABB(Helpers.posToVec(tile.worldPosition.offset(-8, -10, -8)), Helpers.posToVec(tile.worldPosition.offset(8, 0, 8)));
             tile.level.getEntitiesOfClass(ItemEntity.class, bb, (entity) -> entity.getItem().getItem() instanceof IImbuableItem).forEach(entity -> {
                 if (!entity.level().isClientSide) {
                     IImbuableItem item = (IImbuableItem) entity.getItem().getItem();
@@ -183,7 +183,7 @@ public class RuneEnergyPylonTile extends BlockEntity implements  DebugTarget, Ru
 
     public static void doProgression(RuneEnergyPylonTile tile){
         if (tile.level.getGameTime() % 20 == 0) {
-            AABB box = new AABB(tile.worldPosition.offset(-4, -10, -4), tile.worldPosition.offset(4, 2, 4));
+            AABB box = new AABB(Helpers.posToVec(tile.worldPosition.offset(-4, -10, -4)), Helpers.posToVec(tile.worldPosition.offset(4, 2, 4)));
             tile.level.getEntitiesOfClass(Player.class, box).forEach((player) -> {
                 Helpers.fireProgressionEvent(player, Progression.RUNE_ENERGY_PYLON);
             });

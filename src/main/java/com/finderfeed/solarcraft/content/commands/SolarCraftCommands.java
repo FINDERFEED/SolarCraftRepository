@@ -14,6 +14,7 @@ import com.finderfeed.solarcraft.content.items.solar_lexicon.SolarLexicon;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.Progression;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
 
+import com.finderfeed.solarcraft.registries.SCAttachmentTypes;
 import com.finderfeed.solarcraft.registries.abilities.AbilitiesRegistry;
 import com.finderfeed.solarcraft.registries.animations.AnimationReloadableResourceListener;
 import com.finderfeed.solarcraft.registries.items.SCItems;
@@ -38,7 +39,7 @@ import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 
-import net.neoforged.neoforge.common.util.LazyOptional;
+
 import net.neoforged.neoforge.items.IItemHandler;
 import java.util.Locale;
 
@@ -238,9 +239,10 @@ public class SolarCraftCommands {
     public static int fillLexicon(CommandSourceStack src) throws CommandSyntaxException {
         ServerPlayer player = src.getPlayerOrException();
         if (player.getMainHandItem().getItem() instanceof SolarLexicon){
-            LazyOptional<IItemHandler> cap = player.getMainHandItem().getCapability(Capabilities.ITEM_HANDLER);
-            if (cap.isPresent()){
-                cap.ifPresent((inv)->{
+
+            IItemHandler inv = player.getMainHandItem().getData(SCAttachmentTypes.LEXICON_INVENTORY);
+            if (inv != null){
+
                     try {
                         for (int i = 0; i < AncientFragment.getAllFragments().size(); i++) {
 
@@ -257,7 +259,7 @@ public class SolarCraftCommands {
                         src.sendFailure(Component.literal("CAUGHT FATAL ERROR DURING COMMAND, STACK TRACE PRINTED"));
                     }
 
-                });
+
             }else {
                 src.sendFailure(Component.literal("Not found inventory"));
             }

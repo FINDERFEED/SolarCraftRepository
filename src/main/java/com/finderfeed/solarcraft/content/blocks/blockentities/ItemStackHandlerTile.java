@@ -12,9 +12,11 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 
+import net.neoforged.neoforge.attachment.AttachmentType;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import javax.annotation.Nullable;
+import java.util.function.Supplier;
 
 public abstract class ItemStackHandlerTile extends BlockEntity {
     public ItemStackHandlerTile(BlockEntityType<?> type, BlockPos pos, BlockState state) {
@@ -22,13 +24,14 @@ public abstract class ItemStackHandlerTile extends BlockEntity {
     }
 
     public ItemStackHandler getInventory(){
-        return (ItemStackHandler) this.level.getCapability(Capabilities.ItemHandler.BLOCK,this.worldPosition,this.getBlockState(),this,null);
+        return this.getData(this.getAttachmentType());
     }
 
     public void setStackInSlot(int i, ItemStack stack){
         ItemStackHandler handler = getInventory();
         if (handler == null) return;
         this.getInventory().setStackInSlot(i,stack);
+        this.setChanged();
         if (!level.isClientSide){
             Helpers.updateTile(this);
         }
@@ -81,6 +84,9 @@ public abstract class ItemStackHandlerTile extends BlockEntity {
         if (h != null){
             h.deserializeNBT(tag);
         }
+        this.setChanged();
     }
+
+    public abstract Supplier<AttachmentType<ItemStackHandler>> getAttachmentType();
 
 }

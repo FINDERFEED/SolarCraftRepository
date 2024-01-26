@@ -7,6 +7,7 @@ import com.finderfeed.solarcraft.content.items.solar_lexicon.screen.buttons.Item
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.structure.Book;
 import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
+import com.finderfeed.solarcraft.registries.SCAttachmentTypes;
 import com.finderfeed.solarcraft.registries.items.SCItems;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragmentHelper;
@@ -200,7 +201,7 @@ public class SolarLexiconRecipesScreen extends ScrollableLexiconScreen {
     }
 
     public static IItemHandler getLexiconInventory(){
-        return Minecraft.getInstance().player.getMainHandItem().getCapability(Capabilities.ITEM_HANDLER).orElse(null);
+        return Minecraft.getInstance().player.getMainHandItem().getData(SCAttachmentTypes.LEXICON_INVENTORY);
     }
 
 }

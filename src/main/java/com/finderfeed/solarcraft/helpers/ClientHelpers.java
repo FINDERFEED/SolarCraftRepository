@@ -28,6 +28,7 @@ import com.finderfeed.solarcraft.misc_things.*;
 import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
 import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacketUtil;
 import com.finderfeed.solarcraft.packet_handler.packets.RequestAbilityScreenPacket;
+import com.finderfeed.solarcraft.registries.SCAttachmentTypes;
 import com.finderfeed.solarcraft.registries.items.SCItems;
 import com.finderfeed.solarcraft.registries.sounds.SCSounds;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.SolarLexicon;
@@ -355,7 +356,7 @@ public class ClientHelpers {
     public static void updateLexiconInventory(ItemStack[] stacks){
         ItemStack stack = Minecraft.getInstance().player.getMainHandItem();
         if ((stack.getItem() instanceof SolarLexicon)){
-            IItemHandler handler = stack.getCapability(Capabilities.ItemHandler.ITEM);
+            IItemHandler handler = stack.getData(SCAttachmentTypes.LEXICON_INVENTORY);
             if (handler != null){
                 for (int i = 0; i < stacks.length;i++){
                     handler.insertItem(i,stacks[i],false);

@@ -2,13 +2,14 @@ package com.finderfeed.solarcraft.content.capabilities.solar_lexicon;
 
 
 import com.finderfeed.solarcraft.SolarCraft;
+import com.finderfeed.solarcraft.registries.SCAttachmentTypes;
 import com.finderfeed.solarcraft.registries.blocks.SCBlocks;
 import com.finderfeed.solarcraft.registries.items.SCItems;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
-import net.neoforged.neoforge.event.AttachCapabilitiesEvent;
+
 import net.neoforged.neoforge.items.ItemStackHandler;
 
 @Mod.EventBusSubscriber(modid=SolarCraft.MOD_ID,bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -16,30 +17,30 @@ public class AttachCapability {
 
     @SubscribeEvent
     public static void registerCapabilities(RegisterCapabilitiesEvent event) {
-        event.registerItem(Capabilities.ItemHandler.ITEM,(item,ctx)->{
-            return new LexiconInventory();
-        },SCItems.SOLAR_LEXICON.get());
-        event.registerBlock(Capabilities.ItemHandler.BLOCK,(level,pos,state,be,block)->{
-            return new ItemStackHandler(10);
-        }, SCBlocks.INFUSING_CRAFTING_TABLE_BLOCK.get());
-        event.registerBlock(Capabilities.ItemHandler.BLOCK,(level,pos,state,be,block)->{
-            return new ItemStackHandler(9);
-        }, SCBlocks.RUNIC_TABLE.get());
-        event.registerBlock(Capabilities.ItemHandler.BLOCK,(level,pos,state,be,block)->{
-            return new ItemStackHandler(14);
-        }, SCBlocks.INFUSER.get());
-        event.registerBlock(Capabilities.ItemHandler.BLOCK,(level,pos,state,be,block)->{
-            return new ItemStackHandler(1);
-        }, SCBlocks.INFUSER_STAND.get());
-        event.registerBlock(Capabilities.ItemHandler.BLOCK,(level,pos,state,be,block)->{
-            return new ItemStackHandler(1);
-        }, SCBlocks.ENCHANTER.get());
-        event.registerBlock(Capabilities.ItemHandler.BLOCK,(level,pos,state,be,block)->{
-            return new ItemStackHandler(2);
-        }, SCBlocks.RUNIC_ENERGY_CHARGER.get());
-        event.registerBlock(Capabilities.ItemHandler.BLOCK,(level,pos,state,be,block)->{
-            return new ItemStackHandler(2);
-        }, SCBlocks.ELEMENT_WEAVER.get());
+//        event.registerItem(Capabilities.ItemHandler.ITEM,(item,ctx)->{
+//            return item.getData(SCAttachmentTypes.LEXICON_INVENTORY);
+//        },SCItems.SOLAR_LEXICON.get());
+//        event.registerBlock(Capabilities.ItemHandler.BLOCK,(level,pos,state,be,block)->{
+//            return new ItemStackHandler(10);
+//        }, SCBlocks.INFUSING_CRAFTING_TABLE_BLOCK.get());
+//        event.registerBlock(Capabilities.ItemHandler.BLOCK,(level,pos,state,be,block)->{
+//            return new ItemStackHandler(9);
+//        }, SCBlocks.RUNIC_TABLE.get());
+//        event.registerBlock(Capabilities.ItemHandler.BLOCK,(level,pos,state,be,block)->{
+//            return new ItemStackHandler(14);
+//        }, SCBlocks.INFUSER.get());
+//        event.registerBlock(Capabilities.ItemHandler.BLOCK,(level,pos,state,be,block)->{
+//            return new ItemStackHandler(1);
+//        }, SCBlocks.INFUSER_STAND.get());
+//        event.registerBlock(Capabilities.ItemHandler.BLOCK,(level,pos,state,be,block)->{
+//            return new ItemStackHandler(1);
+//        }, SCBlocks.ENCHANTER.get());
+//        event.registerBlock(Capabilities.ItemHandler.BLOCK,(level,pos,state,be,block)->{
+//            return new ItemStackHandler(2);
+//        }, SCBlocks.RUNIC_ENERGY_CHARGER.get());
+//        event.registerBlock(Capabilities.ItemHandler.BLOCK,(level,pos,state,be,block)->{
+//            return new ItemStackHandler(2);
+//        }, SCBlocks.ELEMENT_WEAVER.get());
     }
 
 //    @SubscribeEvent

@@ -8,6 +8,7 @@ import com.finderfeed.solarcraft.content.items.runic_energy.IRunicEnergyUser;
 import com.finderfeed.solarcraft.content.items.runic_energy.ItemRunicEnergy;
 import com.finderfeed.solarcraft.content.items.runic_energy.RunicEnergyCost;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
+import com.finderfeed.solarcraft.registries.SCAttachmentTypes;
 import com.finderfeed.solarcraft.registries.items.SCItems;
 import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
 import net.minecraft.core.BlockPos;
@@ -16,8 +17,11 @@ import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.neoforge.attachment.AttachmentType;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.function.Supplier;
 
 public class RunicEnergyChargerTileEntity extends REItemHandlerBlockEntity implements IRunicEnergySaver {
 
@@ -132,5 +136,10 @@ public class RunicEnergyChargerTileEntity extends REItemHandlerBlockEntity imple
     @Override
     public ItemStack droppedStack() {
         return IRunicEnergySaver.defaultSave(SCItems.RUNIC_ENERGY_CHARGER.get().getDefaultInstance(),this);
+    }
+
+    @Override
+    public Supplier<AttachmentType<ItemStackHandler>> getAttachmentType() {
+        return SCAttachmentTypes.INVENTORY_2;
     }
 }

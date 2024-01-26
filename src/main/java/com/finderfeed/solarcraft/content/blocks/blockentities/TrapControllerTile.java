@@ -20,8 +20,7 @@ import java.util.List;
 
 public class TrapControllerTile extends BlockEntity  {
 
-    public final AABB BOX = new AABB(worldPosition.offset(7,-5,3),
-            worldPosition.offset(-7,-1,-3));
+
     public List<BlockPos> trapPositions = new ArrayList<>();
     public List<BlockPos> entrancePositions = new ArrayList<>();
     public List<BlockPos> resultBlockPositions = new ArrayList<>();
@@ -70,8 +69,8 @@ public class TrapControllerTile extends BlockEntity  {
                 tile.fillTrapPositions();
                 tile.destroyedBlocks = true;
             }
-            AABB box = new AABB(tile.worldPosition.offset(8,-5,4),
-                    tile.worldPosition.offset(-7,-1,-3));
+            AABB box = new AABB(Helpers.posToVec(tile.worldPosition.offset(8,-5,4)),
+                    Helpers.posToVec(tile.worldPosition.offset(-7,-1,-3)));
             List<Player> list = tile.level.getEntitiesOfClass(Player.class,box);
             list.forEach((player)->{
                 Helpers.fireProgressionEvent(player, Progression.DIMENSIONAL_SHARD_DUNGEON);

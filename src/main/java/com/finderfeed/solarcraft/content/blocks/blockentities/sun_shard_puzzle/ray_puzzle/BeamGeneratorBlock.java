@@ -23,7 +23,7 @@ import org.jetbrains.annotations.Nullable;
 public class BeamGeneratorBlock extends Block implements EntityBlock {
 
     public BeamGeneratorBlock() {
-        super(Properties.copy(Blocks.BEDROCK));
+        super(Properties.ofFullCopy(Blocks.BEDROCK));
     }
 
 

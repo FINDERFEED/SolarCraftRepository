@@ -9,8 +9,11 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 
+import net.neoforged.neoforge.attachment.AttachmentType;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.items.ItemStackHandler;
+
+import java.util.function.Supplier;
 
 /**
  * ONLY FOR ItemStackHandler!
@@ -23,7 +26,7 @@ public abstract class REItemHandlerBlockEntity extends AbstractRunicEnergyContai
 
 
     public ItemStackHandler getInventory(){
-        return (ItemStackHandler) this.level.getCapability(Capabilities.ItemHandler.BLOCK,this.worldPosition,this.getBlockState(),this,null);
+        return this.getData(this.getAttachmentType());
     }
 
 
@@ -31,6 +34,7 @@ public abstract class REItemHandlerBlockEntity extends AbstractRunicEnergyContai
         ItemStackHandler handler = getInventory();
         if (handler == null) return;
         this.getInventory().setStackInSlot(i,stack);
+        this.setChanged();
     }
 
     public Container wrapInContainer(){
@@ -68,5 +72,8 @@ public abstract class REItemHandlerBlockEntity extends AbstractRunicEnergyContai
         if (h != null){
             h.deserializeNBT(tag);
         }
+        this.setChanged();
     }
+
+    public abstract Supplier<AttachmentType<ItemStackHandler>> getAttachmentType();
 }
