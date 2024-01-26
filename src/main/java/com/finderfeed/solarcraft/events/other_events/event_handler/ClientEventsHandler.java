@@ -26,6 +26,7 @@ import com.finderfeed.solarcraft.misc_things.Flash;
 import com.finderfeed.solarcraft.misc_things.IScrollable;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
 import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
+import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacketUtil;
 import com.finderfeed.solarcraft.packet_handler.packets.CastAbilityPacket;
 import com.finderfeed.solarcraft.registries.ConfigRegistry;
 import com.finderfeed.solarcraft.registries.blocks.SCBlocks;
@@ -116,21 +117,22 @@ public class ClientEventsHandler {
         if (Minecraft.getInstance().screen != null) return;
 
         if (SCClientModEventHandler.FIRST_ABILITY_KEY.isDown() && event.getAction() == GLFW.GLFW_PRESS){
-            SCPacketHandler.INSTANCE.sendToServer(new CastAbilityPacket(1));
+            FDPacketUtil.sendToServer(new CastAbilityPacket(1));
+//            SCPacketHandler.INSTANCE.sendToServer(new CastAbilityPacket(1));
         }
         if (SCClientModEventHandler.SECOND_ABILITY_KEY.isDown() && event.getAction() == GLFW.GLFW_PRESS){
 
-            SCPacketHandler.INSTANCE.sendToServer(new CastAbilityPacket(2));
+            FDPacketUtil.sendToServer(new CastAbilityPacket(2));
 
         }
         if (SCClientModEventHandler.THIRD_ABILITY_KEY.isDown() && event.getAction() == GLFW.GLFW_PRESS){
 
-            SCPacketHandler.INSTANCE.sendToServer(new CastAbilityPacket(3));
+            FDPacketUtil.sendToServer(new CastAbilityPacket(3));
 
         }
         if (SCClientModEventHandler.FORTH_ABILITY_KEY.isDown() && event.getAction() == GLFW.GLFW_PRESS){
 
-            SCPacketHandler.INSTANCE.sendToServer(new CastAbilityPacket(4));
+            FDPacketUtil.sendToServer(new CastAbilityPacket(4));
 
         }
 

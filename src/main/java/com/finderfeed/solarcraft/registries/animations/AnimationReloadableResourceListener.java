@@ -3,6 +3,8 @@ package com.finderfeed.solarcraft.registries.animations;
 import com.finderfeed.solarcraft.local_library.bedrock_loader.animations.Animation;
 import com.finderfeed.solarcraft.local_library.bedrock_loader.animations.packets.AnimationsSyncPacket;
 import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
+import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacket;
+import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacketUtil;
 import com.google.gson.*;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
@@ -10,7 +12,6 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.util.profiling.ProfilerFiller;
-import net.neoforged.neoforge.network.PlayNetworkDirection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -64,7 +65,8 @@ public class AnimationReloadableResourceListener extends SimpleJsonResourceReloa
     }
 
     public void sendAnimationsPacket(ServerPlayer player){
-        SCPacketHandler.INSTANCE.sendTo(new AnimationsSyncPacket(this.serialized_animations),player.connection.connection, PlayNetworkDirection.PLAY_TO_CLIENT);
+        FDPacketUtil.sendToPlayer(player,new AnimationsSyncPacket(this.serialized_animations));
+//        SCPacketHandler.INSTANCE.sendTo(new AnimationsSyncPacket(this.serialized_animations),player.connection.connection, PlayNetworkDirection.PLAY_TO_CLIENT);
     }
 
     public Animation getAnimation(ResourceLocation location){

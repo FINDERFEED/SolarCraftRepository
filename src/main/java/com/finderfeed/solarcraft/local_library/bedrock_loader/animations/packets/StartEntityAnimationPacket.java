@@ -3,13 +3,16 @@ package com.finderfeed.solarcraft.local_library.bedrock_loader.animations.packet
 import com.finderfeed.solarcraft.local_library.bedrock_loader.animations.Animation;
 import com.finderfeed.solarcraft.local_library.bedrock_loader.animations.manager.AnimationTicker;
 import com.finderfeed.solarcraft.packet_handler.ClientPacketHandles;
+import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacket;
+import com.finderfeed.solarcraft.packet_handler.packet_system.Packet;
 import com.finderfeed.solarcraft.registries.animations.AnimationReloadableResourceListener;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.Entity;
 import net.neoforged.neoforge.network.handling.PlayPayloadContext;
 import java.util.function.Supplier;
 
-public class StartEntityAnimationPacket {
+@Packet("start_entity_animation_packet")
+public class StartEntityAnimationPacket extends FDPacket {
 
     private int entityId;
     private String tickerName;
@@ -21,7 +24,10 @@ public class StartEntityAnimationPacket {
         this.animationTicker = ticker;
     }
 
-    public StartEntityAnimationPacket(FriendlyByteBuf buf){
+
+
+    @Override
+    public void read(FriendlyByteBuf buf) {
         this.entityId = buf.readInt();
         this.tickerName = buf.readUtf();
         this.animationTicker = AnimationTicker.deserialize(buf.readNbt());
@@ -33,12 +39,20 @@ public class StartEntityAnimationPacket {
         buf.writeNbt(animationTicker.serialize());
     }
 
-    public void handle(PlayPayloadContext ctx){
-        
-            ClientPacketHandles.handleSetEntityAnimationPacket(entityId,tickerName,animationTicker);
-        });
-        
+//    public void handle(PlayPayloadContext ctx){
+//
+//            ClientPacketHandles.handleSetEntityAnimationPacket(entityId,tickerName,animationTicker);
+//
+//
+//    }
+
+    @Override
+    public void clientPlayHandle(PlayPayloadContext ctx) {
+        ClientPacketHandles.handleSetEntityAnimationPacket(entityId,tickerName,animationTicker);
     }
 
-
+    @Override
+    public void write(FriendlyByteBuf friendlyByteBuf) {
+        this.toBytes(friendlyByteBuf);
+    }
 }

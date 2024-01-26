@@ -14,7 +14,8 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.neoforged.neoforge.common.capabilities.Capabilities;
+import net.neoforged.neoforge.capabilities.Capabilities;
+
 import net.neoforged.neoforge.items.IItemHandler;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -28,7 +29,7 @@ public class InfusingTableTileContainer extends AbstractContainerMenu {
         super(SCContainers.INFUSING_TABLE_TILE.get(), p_38852_);
         Level world= inv.player.level();
         this.tile = (InfusingTableTile) world.getBlockEntity(tilepos);
-        this.inventory = tile.getCapability(Capabilities.ITEM_HANDLER).orElse(null);
+        this.inventory = tile.getLevel().getCapability(Capabilities.ItemHandler.BLOCK,tile.getBlockPos(),tile.getBlockState(),tile,null);
 
 
         for(int i = 0; i < 3; ++i) {

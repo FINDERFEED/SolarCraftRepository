@@ -4,6 +4,7 @@ import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.content.items.solar_wand.*;
 import com.finderfeed.solarcraft.helpers.multiblock.MultiblockStructure;
 import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
+import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacketUtil;
 import com.finderfeed.solarcraft.packet_handler.packets.WandStructureActionPacket;
 import com.finderfeed.solarcraft.registries.items.SCItems;
 import net.minecraft.core.BlockPos;
@@ -15,7 +16,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
-import net.neoforged.neoforge.network.PlayNetworkDirection;
+
 import java.util.List;
 
 public class CheckStructureWandAction implements WandAction<EmptyWandData> {
@@ -26,8 +27,9 @@ public class CheckStructureWandAction implements WandAction<EmptyWandData> {
         BlockPos clickedPos;
         if (context.player() instanceof ServerPlayer serverPlayer && level.getBlockEntity(clickedPos = ctx.getClickedPos()) instanceof IStructureOwner owner){
             List<MultiblockStructure> structures = owner.getMultiblocks();
-            SCPacketHandler.INSTANCE.sendTo(new WandStructureActionPacket(serverPlayer,structures,clickedPos),
-                    serverPlayer.connection.connection, PlayNetworkDirection.PLAY_TO_CLIENT);
+            FDPacketUtil.sendToPlayer(serverPlayer,new WandStructureActionPacket(serverPlayer,structures,clickedPos));
+//            SCPacketHandler.INSTANCE.sendTo(new WandStructureActionPacket(serverPlayer,structures,clickedPos),
+//                    serverPlayer.connection.connection, PlayNetworkDirection.PLAY_TO_CLIENT);
         }
         return InteractionResult.SUCCESS;
     }

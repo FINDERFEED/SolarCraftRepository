@@ -19,8 +19,8 @@ import net.minecraft.core.BlockPos;
 
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.network.NetworkHooks;
-import net.minecraft.world.level.Explosion;
+
+
 
 import net.minecraft.world.level.Level;
 
@@ -111,10 +111,10 @@ public class MeteoriteProjectile extends AbstractHurtingProjectile {
     public boolean hurt(DamageSource p_70097_1_, float p_70097_2_) {
         return false;
     }
-    @Override
-    public Packet<ClientGamePacketListener> getAddEntityPacket() {
-    return NetworkHooks.getEntitySpawningPacket(this);
-    }
+//    @Override
+//    public Packet<ClientGamePacketListener> getAddEntityPacket() {
+//        return NetworkHooks.getEntitySpawningPacket(this);
+//    }
     @Override
     public void load(CompoundTag cmp) {
         tickCount = cmp.getInt("tick");

@@ -3,6 +3,8 @@ package com.finderfeed.solarcraft.local_library.entities.bossbar.server;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.local_library.entities.bossbar.client.ActiveBossBar;
 import com.finderfeed.solarcraft.packet_handler.ClientPacketHandles;
+import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacket;
+import com.finderfeed.solarcraft.packet_handler.packet_system.Packet;
 import com.finderfeed.solarcraft.registries.overlays.SolarcraftOverlays;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
@@ -10,7 +12,8 @@ import net.neoforged.neoforge.network.handling.PlayPayloadContext;
 import java.util.UUID;
 import java.util.function.Supplier;
 
-public class CustomBossEventInitPacket {
+@Packet("custom_boss_event_init_packet")
+public class CustomBossEventInitPacket extends FDPacket {
 
     private UUID uuid;
     private String rendererId;
@@ -27,7 +30,8 @@ public class CustomBossEventInitPacket {
         this.entityId = entotyId;
     }
 
-    public CustomBossEventInitPacket(FriendlyByteBuf buf){
+    @Override
+    public void read(FriendlyByteBuf buf) {
         this.uuid = buf.readUUID();
         this.rendererId = buf.readUtf();
         this.remove = buf.readBoolean();
@@ -45,13 +49,16 @@ public class CustomBossEventInitPacket {
     }
 
 
-    public void handle(PlayPayloadContext ctx){
-        
-            ClientPacketHandles.handleServerBossInitPacket(uuid,name,rendererId,remove,entityId);
-        });
-        
+
+
+    @Override
+    public void clientPlayHandle(PlayPayloadContext ctx) {
+        ClientPacketHandles.handleServerBossInitPacket(uuid,name,rendererId,remove,entityId);
+
     }
 
-
-
+    @Override
+    public void write(FriendlyByteBuf friendlyByteBuf) {
+        this.toBytes(friendlyByteBuf);
+    }
 }

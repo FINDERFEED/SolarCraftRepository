@@ -19,7 +19,7 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.network.NetworkHooks;
+
 import net.minecraft.world.level.Level;
 import java.util.List;
 
@@ -104,10 +104,10 @@ public abstract class AbstractMortarProjectile extends AbstractHurtingProjectile
     public boolean hurt(DamageSource p_70097_1_, float p_70097_2_) {
         return false;
     }
-    @Override
-    public Packet<ClientGamePacketListener> getAddEntityPacket() {
-        return NetworkHooks.getEntitySpawningPacket(this);
-    }
+//    @Override
+//    public Packet<ClientGamePacketListener> getAddEntityPacket() {
+//        return NetworkHooks.getEntitySpawningPacket(this);
+//    }
 
     public abstract double getMDamage();
     public abstract double getExplosionRadius();

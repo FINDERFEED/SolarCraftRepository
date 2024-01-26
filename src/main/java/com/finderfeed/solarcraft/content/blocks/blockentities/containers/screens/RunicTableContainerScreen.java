@@ -9,6 +9,8 @@ import com.finderfeed.solarcraft.content.blocks.blockentities.containers.RunicTa
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.RunePattern;
 import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
+import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacket;
+import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacketUtil;
 import com.finderfeed.solarcraft.packet_handler.packets.RunicTablePacket;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragmentHelper;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -80,7 +82,8 @@ public class RunicTableContainerScreen extends AbstractContainerScreen<RunicTabl
                     if (rune != RunePattern.OPENED) {
                         this.addRenderableWidget(new RuneButtonRunicTable(relX + 98 + l * 15, relY + 11 + h * 15, 15, 15,
                                 (button) -> {
-                                    SCPacketHandler.INSTANCE.sendToServer(new RunicTablePacket(finalL, finalH, menu.tile.getBlockPos()));
+                                    FDPacketUtil.sendToServer(new RunicTablePacket(finalL, finalH, menu.tile.getBlockPos()));
+//                                    SCPacketHandler.INSTANCE.sendToServer(new RunicTablePacket(finalL, finalH, menu.tile.getBlockPos()));
                                     RuneButtonRunicTable v = ((RuneButtonRunicTable) button);
 
                                     hideButton(this.pattern, v, rune, finalL, finalH);

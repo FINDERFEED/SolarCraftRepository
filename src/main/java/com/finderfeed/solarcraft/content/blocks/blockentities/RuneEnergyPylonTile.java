@@ -174,7 +174,8 @@ public class RuneEnergyPylonTile extends BlockEntity implements  DebugTarget, Ru
     public static void doUpdate(RuneEnergyPylonTile tile){
         tile.updateTick++;
         if (tile.updateTick >= 40){
-            SCPacketHandler.INSTANCE.send(PacketDistributor.NEAR.with(PacketDistributor.TargetPoint.p(tile.worldPosition.getX(), tile.worldPosition.getY(), tile.worldPosition.getZ(), 40, tile.level.dimension())),
+
+            PacketDistributor.NEAR.with(PacketDistributor.TargetPoint.p(tile.worldPosition.getX(), tile.worldPosition.getY(), tile.worldPosition.getZ(), 40, tile.level.dimension()).get()).send(
                     new UpdateTypeOnClientPacket(tile.worldPosition, tile.type.id));
             tile.updateTick = 0;
         }

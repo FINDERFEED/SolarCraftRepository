@@ -2,7 +2,7 @@ package com.finderfeed.solarcraft.content.capabilities.solar_lexicon;
 
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
-import net.neoforged.neoforge.common.capabilities.Capabilities;
+
 import net.neoforged.neoforge.common.capabilities.Capability;
 import net.neoforged.neoforge.common.capabilities.ICapabilitySerializable;
 import net.neoforged.neoforge.common.util.LazyOptional;

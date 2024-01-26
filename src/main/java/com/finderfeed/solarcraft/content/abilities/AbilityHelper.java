@@ -7,13 +7,15 @@ import com.finderfeed.solarcraft.content.abilities.ability_classes.ToggleableAbi
 import com.finderfeed.solarcraft.content.items.runic_energy.RunicEnergyCost;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
 import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
+import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacket;
+import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacketUtil;
 import com.finderfeed.solarcraft.packet_handler.packets.ToggleableAbilityPacket;
 import com.finderfeed.solarcraft.registries.abilities.AbilitiesRegistry;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
-import net.neoforged.neoforge.network.PlayNetworkDirection;
+
 import java.util.Locale;
 
 public class AbilityHelper {
@@ -86,7 +88,8 @@ public class AbilityHelper {
     }
 
     public static void sendTogglePacket(ServerPlayer player, ToggleableAbility ability,boolean toggle){
-        SCPacketHandler.INSTANCE.sendTo(new ToggleableAbilityPacket(ability,toggle),player.connection.connection, PlayNetworkDirection.PLAY_TO_CLIENT);
+        FDPacketUtil.sendToPlayer(player,new ToggleableAbilityPacket(ability,toggle));
+//        SCPacketHandler.INSTANCE.sendTo(new ToggleableAbilityPacket(ability,toggle),player.connection.connection, PlayNetworkDirection.PLAY_TO_CLIENT);
     }
 
     public static void setAbilityUsable(Player player,AbstractAbility ability,boolean usable){

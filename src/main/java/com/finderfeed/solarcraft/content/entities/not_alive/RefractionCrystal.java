@@ -20,7 +20,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
-import net.neoforged.neoforge.network.NetworkHooks;
+
 import javax.annotation.Nullable;
 
 public class RefractionCrystal extends Mob implements CrystalBossBuddy {

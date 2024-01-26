@@ -29,6 +29,7 @@ import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.Progre
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragmentHelper;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
 import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
+import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacketUtil;
 import com.finderfeed.solarcraft.packet_handler.packets.*;
 import com.finderfeed.solarcraft.registries.ConfigRegistry;
 import com.finderfeed.solarcraft.registries.blocks.SCBlocks;
@@ -87,7 +88,7 @@ import net.neoforged.neoforge.event.entity.player.PlayerXpEvent;
 import net.neoforged.neoforge.event.level.BlockEvent;
 import net.neoforged.neoforge.event.level.ExplosionEvent;
 import net.neoforged.neoforge.event.server.ServerStartedEvent;
-import net.neoforged.neoforge.network.PlayNetworkDirection;
+
 import java.util.List;
 
 
@@ -208,7 +209,8 @@ public class SCEventHandler {
                 player.getInventory().setItem(slot, ItemStack.EMPTY);
                 ServerLevel world = (ServerLevel)player.level();
                 world.playSound(player,player.getX(),player.getY(),player.getZ(), SoundEvents.TOTEM_USE, SoundSource.AMBIENT,0.5f,0.5f);
-                SCPacketHandler.INSTANCE.sendTo(new ProcImmortalityTotemAnimation(),((ServerPlayer)player).connection.connection, PlayNetworkDirection.PLAY_TO_CLIENT);
+                FDPacketUtil.sendToPlayer((ServerPlayer) player,new ProcImmortalityTotemAnimation());
+//                SCPacketHandler.INSTANCE.sendTo(new ProcImmortalityTotemAnimation(),((ServerPlayer)player).connection.connection, PlayNetworkDirection.PLAY_TO_CLIENT);
 
                 event.setCanceled(true);
             }
@@ -440,7 +442,7 @@ public class SCEventHandler {
 
     @SubscribeEvent
     public static void cancelExplosionsInRangeOfExplosionBlocker(ExplosionEvent.Detonate event){
-        Vec3 pos = event.getExplosion().getPosition();
+        Vec3 pos = event.getExplosion().center();
         if (!event.getLevel().isClientSide) {
             if (isExplosionBlockerAround(event.getLevel(),pos)){
                 event.getAffectedBlocks().clear();
@@ -470,8 +472,9 @@ public class SCEventHandler {
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public static void breakEvent(BlockEvent.BreakEvent event) {
         if (event.getPlayer() instanceof ServerPlayer serverPlayer){
-            SCPacketHandler.INSTANCE.sendTo(new BlockBreakPacket(event.getPos(),event.getState()),
-                    serverPlayer.connection.connection, PlayNetworkDirection.PLAY_TO_CLIENT);
+            FDPacketUtil.sendToPlayer(serverPlayer,new BlockBreakPacket(event.getPos(),event.getState()));
+//            SCPacketHandler.INSTANCE.sendTo(new BlockBreakPacket(event.getPos(),event.getState()),
+//                    serverPlayer.connection.connection, PlayNetworkDirection.PLAY_TO_CLIENT);
         }
         if (event.getPlayer() instanceof ServerPlayer player) {
             if (AbilitiesRegistry.ALCHEMIST.isToggled(player) && !event.getPlayer().isDeadOrDying() ) {
@@ -494,8 +497,9 @@ public class SCEventHandler {
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public static void sendClientPlaceEvent(BlockEvent.EntityPlaceEvent event){
         if (event.getEntity() instanceof ServerPlayer player){
-            SCPacketHandler.INSTANCE.sendTo(new BlockPlacePacket( event.getPos(),event.getState()),
-                    player.connection.connection, PlayNetworkDirection.PLAY_TO_CLIENT);
+            FDPacketUtil.sendToPlayer(player,new BlockPlacePacket( event.getPos(),event.getState()));
+//            SCPacketHandler.INSTANCE.sendTo(new BlockPlacePacket( event.getPos(),event.getState()),
+//                    player.connection.connection, PlayNetworkDirection.PLAY_TO_CLIENT);
         }
     }
 
@@ -643,7 +647,8 @@ public class SCEventHandler {
                     config.deserialize(config.getJson());
                 }
 
-                SCPacketHandler.INSTANCE.sendTo(new SendConfigsToClientPacket(),sPlayer.connection.connection, PlayNetworkDirection.PLAY_TO_CLIENT);
+                FDPacketUtil.sendToPlayer(sPlayer,new SendConfigsToClientPacket());
+//                SCPacketHandler.INSTANCE.sendTo(new SendConfigsToClientPacket(),sPlayer.connection.connection, PlayNetworkDirection.PLAY_TO_CLIENT);
 
 
                 for (RunicEnergy.Type type : RunicEnergy.Type.values()) {

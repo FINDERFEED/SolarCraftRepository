@@ -10,6 +10,7 @@ import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.Ancient
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
+import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacketUtil;
 import com.finderfeed.solarcraft.packet_handler.packets.RetainFragmentPacket;
 import com.finderfeed.solarcraft.registries.items.SCItems;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -51,7 +52,8 @@ public class RetainFragmentsScreen extends ScrollableLexiconScreen {
         for (AncientFragment fragment : AncientFragment.getAllFragments()){
             if (AncientFragmentHelper.doPlayerHasFragment(Minecraft.getInstance().player,fragment)){
                 ItemStackButton button = new ItemStackButton(relX + 17 + x * 30,relY + 17 + y * 30,24,24,(b)->{
-                    SCPacketHandler.INSTANCE.sendToServer(new RetainFragmentPacket(fragment.getId()));
+                    FDPacketUtil.sendToServer(new RetainFragmentPacket(fragment.getId()));
+//                    SCPacketHandler.INSTANCE.sendToServer(new RetainFragmentPacket(fragment.getId()));
                 },fragment.getIcon().getDefaultInstance(),1.5f,(b,graphics,mx,my)->{
                     addPostRenderEntry((gr,mousex,mousey,partialTicks)->graphics.renderTooltip(font, fragment.getTranslation(), mx, my));
                 });

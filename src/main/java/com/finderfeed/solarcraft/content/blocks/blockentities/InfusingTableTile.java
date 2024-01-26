@@ -26,7 +26,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.common.capabilities.Capabilities;
+
+import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.items.IItemHandler;
 import javax.annotation.Nullable;
 import java.util.*;
@@ -209,7 +210,7 @@ public class InfusingTableTile extends BlockEntity implements OwnedBlock, IWanda
 
 
     public IItemHandler getInventory(){
-        IItemHandler handler = this.getCapability(Capabilities.ITEM_HANDLER).orElse(null);
+        IItemHandler handler = this.level.getCapability(Capabilities.ItemHandler.BLOCK,this.worldPosition,this.getBlockState(),this,null);
         return handler;
     }
     @Override

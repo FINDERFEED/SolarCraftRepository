@@ -20,7 +20,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.BlockHitResult;
-import net.neoforged.neoforge.network.NetworkHooks;
+
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -36,9 +36,9 @@ public class ElementWeaverBlock extends RunicEnergySaverBlock implements EntityB
         if (player instanceof ServerPlayer serverPlayer && world.getBlockEntity(pos) instanceof ElementWeaverTileEntity tile){
             if (!player.isCrouching()){
                 Helpers.updateTile(tile);
-                NetworkHooks.openScreen(serverPlayer,new ElementWeaverContainer.Provider(pos), buf->{
+               serverPlayer.openMenu(new ElementWeaverContainer.Provider(pos), buf->{
                     buf.writeBlockPos(pos);
-                });
+               });
             }else{
                 tile.onUse();
             }
@@ -53,7 +53,7 @@ public class ElementWeaverBlock extends RunicEnergySaverBlock implements EntityB
 
         if (context.getOptionalParameter(LootContextParams.BLOCK_ENTITY) instanceof ElementWeaverTileEntity tile){
             ItemStack i;
-            tile.reviveCaps();
+//            tile.reviveCaps();
             if (!(i = tile.getStackInSlot(0)).isEmpty()){
                 drops.add(i);
             }
@@ -61,7 +61,7 @@ public class ElementWeaverBlock extends RunicEnergySaverBlock implements EntityB
             if (!(i1 = tile.getStackInSlot(1)).isEmpty()){
                 drops.add(i1);
             }
-            tile.invalidateCaps();
+//            tile.invalidateCaps();
         }
         return drops;
     }

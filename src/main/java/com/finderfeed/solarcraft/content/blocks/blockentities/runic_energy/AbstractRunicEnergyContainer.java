@@ -367,15 +367,15 @@ public abstract class AbstractRunicEnergyContainer extends SolarcraftBlockEntity
 
     public void updateRunicEnergy(float radiusOfUpdate){
         if (!level.isClientSide){
-            SCPacketHandler.INSTANCE.send(PacketDistributor.NEAR.with(
+            PacketDistributor.NEAR.with(
                 PacketDistributor.TargetPoint.p(
                         this.getBlockPos().getX(),
                         this.getBlockPos().getY(),
                         this.getBlockPos().getZ(),
                         radiusOfUpdate,
                         this.level.dimension()
-                )
-            ),new UpdateRunicEnergyInContainerPacket(this));
+                ).get()
+            ).send(new UpdateRunicEnergyInContainerPacket(this));
         }
     }
 

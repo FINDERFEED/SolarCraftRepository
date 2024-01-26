@@ -132,9 +132,9 @@ public class UlderaLightningEntity extends Entity {
             }
         }
         Vec3 c = this.position();
-        SCPacketHandler.INSTANCE.send(PacketDistributor.NEAR.with(()->new PacketDistributor.TargetPoint(
+        PacketDistributor.NEAR.with(new PacketDistributor.TargetPoint(
                 c.x,c.y,c.z,10,this.level().dimension()
-        )),new CameraShakePacket(0,10,10,0.35f));
+        )).send(new CameraShakePacket(0,10,10,0.35f));
     }
 
     public void setHeight(float h){

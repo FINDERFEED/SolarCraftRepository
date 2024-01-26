@@ -21,7 +21,7 @@ import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
-import net.neoforged.neoforge.network.NetworkHooks;
+
 import javax.annotation.Nullable;
 
 public class InfusingTableBlock extends Block implements EntityBlock {
@@ -45,7 +45,7 @@ public class InfusingTableBlock extends Block implements EntityBlock {
             BlockEntity e = level.getBlockEntity(pos);
             if (e instanceof  InfusingTableTile tile) {
                 if (tile.getOwner() != null && (level.getPlayerByUUID(tile.getOwner()) == player)) {
-                    NetworkHooks.openScreen((ServerPlayer) player, new InfusingTableTileContainer.Provider(tile), (buf ->
+                    ((ServerPlayer) player).openMenu( new InfusingTableTileContainer.Provider(tile), (buf ->
                             buf.writeBlockPos(pos)
                     ));
                 }else {

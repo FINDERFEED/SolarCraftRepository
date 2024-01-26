@@ -5,6 +5,7 @@ import com.finderfeed.solarcraft.events.other_events.event_handler.SCEventHandle
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.config.SolarcraftConfig;
 import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
+import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacketUtil;
 import com.finderfeed.solarcraft.packet_handler.packets.misc_packets.SolarStrikeEntityDoExplosion;
 import com.finderfeed.solarcraft.registries.damage_sources.SCDamageSources;
 import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
@@ -30,7 +31,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.network.NetworkHooks;
+
 import net.neoforged.neoforge.network.PacketDistributor;
 import net.minecraft.world.level.Level;
 import java.util.List;
@@ -48,10 +49,10 @@ public class SolarStrikeEntity extends PathfinderMob {
         super(SCEntityTypes.SOLAR_STRIKE_ENTITY_REG.get(), p_i48581_2_);
     }
 
-    @Override
-    public Packet<ClientGamePacketListener> getAddEntityPacket() {
-        return NetworkHooks.getEntitySpawningPacket(this);
-    }
+//    @Override
+//    public Packet<ClientGamePacketListener> getAddEntityPacket() {
+//        return NetworkHooks.getEntitySpawningPacket(this);
+//    }
 
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -106,9 +107,11 @@ public class SolarStrikeEntity extends PathfinderMob {
                 }
                 this.level().playSound(null,this.getOnPos().offset(0,5,0), SCSounds.SOLAR_STRIKE_SOUND.get(),SoundSource.AMBIENT,10,0.4F);
 
-                SCPacketHandler.INSTANCE.send(PacketDistributor.NEAR.with(PacketDistributor.TargetPoint.p(
-                        this.position().x,this.position().y,this.position().z,100,level().dimension()
-                )),new SolarStrikeEntityDoExplosion(this.position()));
+                FDPacketUtil.sendToTrackingEntity(this,new SolarStrikeEntityDoExplosion(this.position()));
+
+//                SCPacketHandler.INSTANCE.send(PacketDistributor.NEAR.with(PacketDistributor.TargetPoint.p(
+//                        this.position().x,this.position().y,this.position().z,100,level().dimension()
+//                )),new SolarStrikeEntityDoExplosion(this.position()));
 
                 this.remove(RemovalReason.KILLED);
             }

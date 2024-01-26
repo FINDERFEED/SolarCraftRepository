@@ -7,6 +7,7 @@ import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.p
 import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.Progression;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
+import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacketUtil;
 import com.finderfeed.solarcraft.packet_handler.packets.sun_shard_puzzle.SunShardPuzzleOpenScreen;
 import com.finderfeed.solarcraft.registries.ConfigRegistry;
 import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
@@ -15,7 +16,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.network.PlayNetworkDirection;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,8 +72,9 @@ public class SunShardPuzzleBlockEntity extends PuzzleBlockEntity {
                 String template = templates.get(player.level().random.nextInt(templates.size()));
                 puzzle = new Puzzle(template);
             }
-            SCPacketHandler.INSTANCE.sendTo(new SunShardPuzzleOpenScreen(puzzle,getBlockPos()),
-                    ((ServerPlayer)player).connection.connection, PlayNetworkDirection.PLAY_TO_CLIENT);
+            FDPacketUtil.sendToPlayer((ServerPlayer) player,new SunShardPuzzleOpenScreen(puzzle,getBlockPos()));
+//            SCPacketHandler.INSTANCE.sendTo(new SunShardPuzzleOpenScreen(puzzle,getBlockPos()),
+//                    ((ServerPlayer)player).connection.connection, PlayNetworkDirection.PLAY_TO_CLIENT);
         }
     }
 

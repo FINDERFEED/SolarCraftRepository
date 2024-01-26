@@ -6,6 +6,7 @@ import com.finderfeed.solarcraft.client.particles.SCParticleTypes;
 import com.finderfeed.solarcraft.misc_things.PhantomInventory;
 import com.finderfeed.solarcraft.content.recipe_types.solar_smelting.SolarSmeltingRecipe;
 import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
+import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacketUtil;
 import com.finderfeed.solarcraft.packet_handler.packets.UpdateItemTagInItemEntityPacket;
 import com.finderfeed.solarcraft.registries.items.SCItems;
 import com.finderfeed.solarcraft.registries.recipe_types.SCRecipeTypes;
@@ -98,7 +99,7 @@ public class SolarLensTile extends BlockEntity  {
             int time = item.getHeatedTime(stack);
             if (time >= SunShardItem.MAX_HEATED_TIME){
                 item.setHeated(stack,true);
-                SCPacketHandler.INSTANCE.send(PacketDistributor.NEAR.with(()->
+                PacketDistributor.NEAR.with(
                         new PacketDistributor.TargetPoint(
                                 null,
                                 lens.getBlockPos().getX(),
@@ -106,7 +107,7 @@ public class SolarLensTile extends BlockEntity  {
                                 lens.getBlockPos().getZ(),
                                 50,
                                 lens.getLevel().dimension()
-                        )),new UpdateItemTagInItemEntityPacket(shard));
+                        )).send(new UpdateItemTagInItemEntityPacket(shard));
             }else{
                 item.setHeatedTime(stack,time + 1);
             }

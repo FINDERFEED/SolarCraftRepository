@@ -26,7 +26,7 @@ import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.BlockHitResult;
-import net.neoforged.neoforge.network.NetworkHooks;
+
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -88,7 +88,7 @@ public class RunicEnergyChargerBlock extends RunicEnergySaverBlock implements En
 
         if (context.getOptionalParameter(LootContextParams.BLOCK_ENTITY) instanceof RunicEnergyChargerTileEntity charger){
             ItemStack i;
-            charger.reviveCaps();
+//            charger.reviveCaps();
             if (!(i = charger.getStackInSlot(0)).isEmpty()){
                 drops.add(i);
             }
@@ -96,7 +96,7 @@ public class RunicEnergyChargerBlock extends RunicEnergySaverBlock implements En
             if (!(i1 = charger.getStackInSlot(1)).isEmpty()){
                 drops.add(i1);
             }
-            charger.invalidateCaps();
+//            charger.invalidateCaps();
         }
         return drops;
     }

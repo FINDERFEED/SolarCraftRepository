@@ -1,6 +1,8 @@
 package com.finderfeed.solarcraft.content.items.solar_lexicon.packets;
 
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
+import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacket;
+import com.finderfeed.solarcraft.packet_handler.packet_system.Packet;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.network.handling.PlayPayloadContext;
 import net.minecraft.network.FriendlyByteBuf;
@@ -11,17 +13,21 @@ import java.util.function.Supplier;
 
 
 
-public class UpdateInventoryPacket {
+@Packet("update_lexicon_inventory_packet")
+public class UpdateInventoryPacket extends FDPacket {
 
-    public final int length;
-    public final ItemStack[] stacks;
+    public int length;
+    public ItemStack[] stacks;
 
     public UpdateInventoryPacket(ItemStack[] stacks) {
         this.stacks = stacks;
         this.length = stacks.length;
     }
 
-    public UpdateInventoryPacket(FriendlyByteBuf buf) {
+
+
+    @Override
+    public void read(FriendlyByteBuf buf) {
         this.length = buf.readInt();
 
         List<ItemStack> list = new ArrayList<>();
@@ -38,9 +44,19 @@ public class UpdateInventoryPacket {
             buf.writeItem(stacks[i]);
         }
     }
+//
+//    public void handle(PlayPayloadContext ctx) {
+//        ctx.enqueueWork(()-> ClientHelpers.updateLexiconInventory(stacks));
+//
+//    }
 
-    public void handle(PlayPayloadContext ctx) {
-        ctx.enqueueWork(()-> ClientHelpers.updateLexiconInventory(stacks));
-        
+    @Override
+    public void clientPlayHandle(PlayPayloadContext ctx) {
+        ClientHelpers.updateLexiconInventory(stacks);
+    }
+
+    @Override
+    public void write(FriendlyByteBuf friendlyByteBuf) {
+        this.toBytes(friendlyByteBuf);
     }
 }

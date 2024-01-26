@@ -18,7 +18,7 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.neoforged.neoforge.common.capabilities.Capabilities;
+
 import net.neoforged.neoforge.items.IItemHandler;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.Component;

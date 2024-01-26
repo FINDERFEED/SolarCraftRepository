@@ -3,6 +3,7 @@ package com.finderfeed.solarcraft.content.blocks;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.content.blocks.blockentities.clearing_ritual.CrystalEnergyVinesTile;
 import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
+import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacketUtil;
 import com.finderfeed.solarcraft.packet_handler.packets.crystal_energy_vines_puzzle.OpenPuzzleScreenPacket;
 import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
 import net.minecraft.core.BlockPos;
@@ -17,7 +18,7 @@ import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
-import net.neoforged.neoforge.network.PlayNetworkDirection;
+
 import org.jetbrains.annotations.Nullable;
 
 public class CrystalEnergyVinesBlock extends Block implements EntityBlock {
@@ -31,7 +32,8 @@ public class CrystalEnergyVinesBlock extends Block implements EntityBlock {
         if (player instanceof ServerPlayer s && level.getBlockEntity(pos) instanceof CrystalEnergyVinesTile tile) {
             if (tile.generatePattern()){
                 Helpers.updateTile(tile);
-                SCPacketHandler.INSTANCE.sendTo(new OpenPuzzleScreenPacket(tile),s.connection.connection, PlayNetworkDirection.PLAY_TO_CLIENT);
+                FDPacketUtil.sendToPlayer(s,new OpenPuzzleScreenPacket(tile));
+//                SCPacketHandler.INSTANCE.sendTo(new OpenPuzzleScreenPacket(tile),s.connection.connection, PlayNetworkDirection.PLAY_TO_CLIENT);
             }else{
                 player.sendSystemMessage(Component.translatable("solarcraft.failed_to_generate_puzzle"));
             }

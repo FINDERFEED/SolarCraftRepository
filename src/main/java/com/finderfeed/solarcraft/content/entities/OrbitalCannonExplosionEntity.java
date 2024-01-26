@@ -4,6 +4,7 @@ import com.finderfeed.solarcraft.content.entities.not_alive.LegendaryItem;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
+import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacketUtil;
 import com.finderfeed.solarcraft.packet_handler.packets.UpdateChunkPacket;
 import com.finderfeed.solarcraft.registries.damage_sources.SCDamageSources;
 import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
@@ -32,8 +33,8 @@ import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraft.world.level.chunk.LevelChunkSection;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.AABB;
-import net.neoforged.neoforge.network.PlayNetworkDirection;
-import net.neoforged.neoforge.network.NetworkHooks;
+
+
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
 
@@ -124,7 +125,8 @@ public class OrbitalCannonExplosionEntity extends Entity {
                     }
                 });
                 for (ServerPlayer player : serverPlayers){
-                    SCPacketHandler.INSTANCE.sendTo(new UpdateChunkPacket(chunk),player.connection.connection, PlayNetworkDirection.PLAY_TO_CLIENT);
+                    FDPacketUtil.sendToPlayer(player,new UpdateChunkPacket(chunk));
+//                    SCPacketHandler.INSTANCE.sendTo(new UpdateChunkPacket(chunk),player.connection.connection, PlayNetworkDirection.PLAY_TO_CLIENT);
                 }
             }
             this.remove(RemovalReason.DISCARDED);

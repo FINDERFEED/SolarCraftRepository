@@ -16,6 +16,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.core.Direction;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.network.PacketDistributor;
 import net.minecraft.server.level.ServerLevel;
 import java.util.List;
@@ -52,7 +53,7 @@ public class RayTrapTileEntity extends BlockEntity  {
                     }
 
                   if (tile.attackTick >= tile.getAttackWhen()){
-                      SCPacketHandler.INSTANCE.send(PacketDistributor.NEAR.with(PacketDistributor.TargetPoint.p(tile.worldPosition.getX(),tile.worldPosition.getY(),tile.worldPosition.getZ(),20,tile.level.dimension())),
+                      PacketDistributor.NEAR.with(PacketDistributor.TargetPoint.p(tile.worldPosition.getX(),tile.worldPosition.getY(),tile.worldPosition.getZ(),20,tile.level.dimension()).get()).send(
                               new UpdateLaserTrapTile(1,tile.worldPosition));
 //                      Helpers.getBlockPositionsByDirection(Direction.byName(direction),worldPosition,5).forEach((pos)->{
 //                          ((ServerWorld)level).sendParticles(ParticlesList.SMALL_SOLAR_STRIKE_PARTICLE.get(),pos.getX()+0.5,pos.getY()+0.5,pos.getZ()+0.5,1,0,0,0,0);
@@ -99,19 +100,19 @@ public class RayTrapTileEntity extends BlockEntity  {
     private AABB getBoxByDirection(){
         Direction dir = Direction.byName(direction);
 
+        Vec3 pos = Helpers.posToVec(worldPosition);
         if (dir.equals(Direction.UP)){
-
-            return new AABB(worldPosition,worldPosition.offset(1,5,1));
+            return new AABB(pos,pos.add(1,5,1));
         }else if (dir.equals(Direction.DOWN)){
-            return new AABB(worldPosition,worldPosition.offset(1,-5,1));
+            return new AABB(pos,pos.add(1,-5,1));
         }else if (dir.equals(Direction.NORTH)) {
-            return new AABB(worldPosition, worldPosition.offset(1, 1, -5));
+            return new AABB(pos, pos.add(1, 1, -5));
         }else if (dir.equals(Direction.SOUTH)){
-            return new AABB(worldPosition,worldPosition.offset(1,1,5));
+            return new AABB(pos,pos.add(1,1,5));
         }else if (dir.equals(Direction.EAST)){
-            return new AABB(worldPosition,worldPosition.offset(5,1,1));
+            return new AABB(pos,pos.add(5,1,1));
         }else{
-            return new AABB(worldPosition,worldPosition.offset(1,5,1));
+            return new AABB(pos,pos.add(1,5,1));
         }
 
 

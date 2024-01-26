@@ -1,5 +1,7 @@
 package com.finderfeed.solarcraft.local_library.bedrock_loader.animations.packets;
 
+import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacket;
+import com.finderfeed.solarcraft.packet_handler.packet_system.Packet;
 import com.finderfeed.solarcraft.registries.animations.AnimationReloadableResourceListener;
 import com.google.gson.JsonObject;
 import net.minecraft.nbt.CompoundTag;
@@ -9,7 +11,8 @@ import net.neoforged.neoforge.network.handling.PlayPayloadContext;
 import java.util.Map;
 import java.util.function.Supplier;
 
-public class AnimationsSyncPacket {
+@Packet("animations_sync_packet")
+public class AnimationsSyncPacket extends FDPacket {
 
     private CompoundTag data;
 
@@ -20,7 +23,10 @@ public class AnimationsSyncPacket {
         }
     }
 
-    public AnimationsSyncPacket(FriendlyByteBuf buf){
+
+
+    @Override
+    public void read(FriendlyByteBuf buf) {
         this.data = buf.readNbt();
     }
 
@@ -28,11 +34,13 @@ public class AnimationsSyncPacket {
         buf.writeNbt(data);
     }
 
-    public void handle(PlayPayloadContext ctx){
-        
-           AnimationReloadableResourceListener.INSTANCE.replaceAnimations(data);
-        });
-        
+    @Override
+    public void clientPlayHandle(PlayPayloadContext ctx) {
+        AnimationReloadableResourceListener.INSTANCE.replaceAnimations(data);
     }
 
+    @Override
+    public void write(FriendlyByteBuf friendlyByteBuf) {
+        this.toBytes(friendlyByteBuf);
+    }
 }
