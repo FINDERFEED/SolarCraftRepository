@@ -45,7 +45,6 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.neoforged.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.common.TierSortingRegistry;
 
@@ -89,11 +88,12 @@ public class SolarCraft {
         ConfigRegistry.init();
         SolarcraftStructureTypes.STRUCTURE_TYPES.register(bus);
         StructurePieces.STRUCTURE_PIECES.register(bus);
+        SCAttachmentTypes.ATTACHMENT_TYPES.register(bus);
 //        SolarcraftStructureTypes.init();
         SolarcraftStructureHolders.init();
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, SolarcraftConfig.SPEC,"solarcraft-config.toml");
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, SolarcraftClientConfig.SPEC,"solarcraft-client-config.toml");
-        SCPacketHandler.registerMessages();
+//        SCPacketHandler.registerMessages();
 
         for (JsonConfig early : ConfigRegistry.EARLY_LOAD_CONFIGS.values()){
             early.init();

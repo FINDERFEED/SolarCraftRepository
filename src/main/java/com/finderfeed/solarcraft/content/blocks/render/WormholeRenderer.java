@@ -1,6 +1,7 @@
 package com.finderfeed.solarcraft.content.blocks.render;
 
 import com.finderfeed.solarcraft.events.other_events.OBJModels;
+import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.finderfeed.solarcraft.content.blocks.blockentities.WormholeTileEntity;
@@ -88,6 +89,6 @@ public class WormholeRenderer implements BlockEntityRenderer<WormholeTileEntity>
 
     @Override
     public AABB getRenderBoundingBox(WormholeTileEntity blockEntity) {
-        return new AABB(blockEntity.getBlockPos(),blockEntity.getBlockPos().offset(1,1,1));
+        return new AABB(Helpers.posToVec(blockEntity.getBlockPos()),Helpers.posToVec(blockEntity.getBlockPos().offset(1,1,1)));
     }
 }

@@ -51,6 +51,7 @@ public class RepeaterRenderer implements BlockEntityRenderer<BaseRepeaterTile> {
 
     @Override
     public AABB getRenderBoundingBox(BaseRepeaterTile blockEntity) {
-        return new AABB(blockEntity.getBlockPos().offset(-16,-16,-16),blockEntity.getBlockPos().offset(16,16,16));
+        return new AABB(Helpers.posToVec(blockEntity.getBlockPos().offset(-16,-16,-16)),
+                Helpers.posToVec(blockEntity.getBlockPos().offset(16,16,16)));
     }
 }

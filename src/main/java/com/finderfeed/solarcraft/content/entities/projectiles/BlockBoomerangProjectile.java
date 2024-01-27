@@ -153,10 +153,10 @@ public class BlockBoomerangProjectile extends AbstractHurtingProjectile {
         return false;
     }
 
-    @Override
-    public Packet<ClientGamePacketListener> getAddEntityPacket() {
-        return NetworkHooks.getEntitySpawningPacket(this);
-    }
+//    @Override
+//    public Packet<ClientGamePacketListener> getAddEntityPacket() {
+//        return NetworkHooks.getEntitySpawningPacket(this);
+//    }
 
     @Override
     protected ParticleOptions getTrailParticle() {

@@ -149,10 +149,10 @@ public class EarthquakeEntity extends Entity {
         CompoundNBTHelper.writeVec3("dir",entityData.get(DIRECTION_VECTOR),tag);
     }
 
-    @Override
-    public Packet<ClientGamePacketListener> getAddEntityPacket() {
-        return NetworkHooks.getEntitySpawningPacket(this);
-    }
+//    @Override
+//    public Packet<ClientGamePacketListener> getAddEntityPacket() {
+//        return NetworkHooks.getEntitySpawningPacket(this);
+//    }
 
 
 

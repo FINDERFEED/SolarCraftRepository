@@ -13,6 +13,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.shapes.CollisionContext;
 
 import java.util.List;
 import java.util.Random;
@@ -192,7 +193,7 @@ public class FDMathHelper {
 
 
         if (between.length() <= radius) {
-            ClipContext ctx = new ClipContext(startPos.add(between.normalize().x,between.normalize().y,between.normalize().z), tileEntityPos, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, null);
+            ClipContext ctx = new ClipContext(startPos.add(between.normalize().x,between.normalize().y,between.normalize().z), tileEntityPos, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, CollisionContext.empty());
             BlockHitResult res = start.getLevel().clip(ctx);
             if (equalsBlockPos(tile.getBlockPos(), res.getBlockPos())) {
                 return true;
@@ -203,7 +204,7 @@ public class FDMathHelper {
     public static boolean canSeeBlock(BlockPos tile, Player player){
         Vec3 playerHeadPos = player.position().add(0,player.getStandingEyeHeight(player.getPose(),player.getDimensions(player.getPose())),0);
         Vec3 tileEntityPos = new Vec3(tile.getX()+0.5,tile.getY()+0.5,tile.getZ()+0.5);
-        ClipContext ctx = new ClipContext(playerHeadPos,tileEntityPos, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE,null);
+        ClipContext ctx = new ClipContext(playerHeadPos,tileEntityPos, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE,CollisionContext.empty());
         BlockHitResult res = player.level().clip(ctx);
         if (equalsBlockPos(tile,res.getBlockPos())){
             return true;
@@ -220,7 +221,7 @@ public class FDMathHelper {
 
 
         if (between.length() <= radius) {
-            ClipContext ctx = new ClipContext(startPos.add(between.normalize().x,between.normalize().y,between.normalize().z), tileEntityPos, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, null);
+            ClipContext ctx = new ClipContext(startPos.add(between.normalize().x,between.normalize().y,between.normalize().z), tileEntityPos, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE,CollisionContext.empty());
             BlockHitResult res = world.clip(ctx);
             if (equalsBlockPos(tile, res.getBlockPos())) {
                 return true;
@@ -236,7 +237,7 @@ public class FDMathHelper {
 
 
         if (between.length() <= radius) {
-            ClipContext ctx = new ClipContext(startPos.add(between.normalize().x,between.normalize().y,between.normalize().z), tileEntityPos, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, null);
+            ClipContext ctx = new ClipContext(startPos.add(between.normalize().x,between.normalize().y,between.normalize().z), tileEntityPos, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE,CollisionContext.empty());
             BlockHitResult res = world.clip(ctx);
             if (equalsBlockPos(tile, res.getBlockPos())) {
                 return true;
@@ -249,7 +250,7 @@ public class FDMathHelper {
     public static boolean canSeeTileEntity(BlockEntity tile, Player player){
         Vec3 playerHeadPos = player.position().add(0,player.getStandingEyeHeight(player.getPose(),player.getDimensions(player.getPose())),0);
         Vec3 tileEntityPos = new Vec3(tile.getBlockPos().getX()+0.5,tile.getBlockPos().getY()+0.5,tile.getBlockPos().getZ()+0.5);
-        ClipContext ctx = new ClipContext(playerHeadPos,tileEntityPos, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE,null);
+        ClipContext ctx = new ClipContext(playerHeadPos,tileEntityPos, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE,CollisionContext.empty());
         BlockHitResult res = player.level().clip(ctx);
         if (equalsBlockPos(tile.getBlockPos(),res.getBlockPos())){
             return true;

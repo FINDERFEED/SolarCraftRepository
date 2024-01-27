@@ -100,7 +100,7 @@ public class SolarSmeltingRecipeSerializer  implements RecipeSerializer<SolarSme
             buf.writeItem(stack);
         }
 
-        buf.writeItemStack(recipeType.output, true);
+        buf.writeItem(recipeType.output);
         buf.writeVarInt(recipeType.smeltingTime);
 //        buf.writeUtf(recipeType.child);
 //        buf.writeUtf(recipeType.category);

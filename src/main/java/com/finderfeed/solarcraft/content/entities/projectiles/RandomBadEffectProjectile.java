@@ -144,10 +144,10 @@ public class RandomBadEffectProjectile extends AbstractHurtingProjectile {
         return SCParticleTypes.INVISIBLE_PARTICLE.get();
     }
 
-    @Override
-    public boolean ignoreExplosion() {
-        return true;
-    }
+//    @Override
+//    public boolean ignoreExplosion() {
+//        return true;
+//    }
 
     @Override
     public boolean save(CompoundTag tag) {

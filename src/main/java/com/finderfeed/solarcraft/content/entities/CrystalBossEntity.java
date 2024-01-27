@@ -47,6 +47,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Abilities;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.EntityHitResult;
@@ -556,7 +557,7 @@ public class CrystalBossEntity extends NoHealthLimitMob implements CrystalBossBu
     }
 
     @Override
-    public boolean ignoreExplosion() {
+    public boolean ignoreExplosion(Explosion e) {
         return true;
     }
 
@@ -659,7 +660,7 @@ class AntiCheat{
     public static void cancelExplosions(ExplosionEvent.Detonate event){
 
             if (event.getLevel().dimension() == SCEventHandler.RADIANT_LAND_KEY) {
-                if (!event.getLevel().getEntitiesOfClass(LivingEntity.class, CHECK_AABB.move(event.getExplosion().getPosition()),
+                if (!event.getLevel().getEntitiesOfClass(LivingEntity.class, CHECK_AABB.move(event.getExplosion().center()),
                         (l)-> l instanceof CrystalBossEntity || l instanceof RunicElementalBoss).isEmpty()) {
 
 //                    if (ent != null) {

@@ -62,7 +62,7 @@ public class SolarForgeBlock extends Block implements EntityBlock {
             if (entity instanceof SolarForgeBlockEntity) {
                 Consumer<FriendlyByteBuf> cons = x -> { x.writeBlockPos(pos);
                 };
-                NetworkHooks.openScreen((ServerPlayer) user, (SolarForgeBlockEntity) entity, cons);
+                ((ServerPlayer) user).openMenu( (SolarForgeBlockEntity) entity, cons);
 
 
             };

@@ -26,7 +26,7 @@ import net.minecraft.world.level.block.state.BlockState;
 public class KeyLockBlock extends GlazedTerracottaBlock implements EntityBlock {
 
     public KeyLockBlock() {
-        super(BlockBehaviour.Properties.copy(Blocks.BEDROCK).pushReaction(PushReaction.IGNORE));
+        super(BlockBehaviour.Properties.ofFullCopy(Blocks.BEDROCK).pushReaction(PushReaction.IGNORE));
     }
 
 

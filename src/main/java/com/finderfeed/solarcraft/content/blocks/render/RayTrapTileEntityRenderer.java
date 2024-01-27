@@ -1,5 +1,6 @@
 package com.finderfeed.solarcraft.content.blocks.render;
 
+import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.finderfeed.solarcraft.content.blocks.blockentities.RayTrapTileEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -29,7 +30,8 @@ public class RayTrapTileEntityRenderer implements BlockEntityRenderer<RayTrapTil
 
     @Override
     public AABB getRenderBoundingBox(RayTrapTileEntity blockEntity) {
-        return new AABB(blockEntity.getBlockPos().offset(-6,-6,-6),blockEntity.getBlockPos().offset(6,6,6));
+        return new AABB(Helpers.posToVec(blockEntity.getBlockPos().offset(-6,-6,-6)),
+                Helpers.posToVec(blockEntity.getBlockPos().offset(6,6,6)));
     }
 
     @Override

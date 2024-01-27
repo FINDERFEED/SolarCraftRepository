@@ -101,10 +101,10 @@ public class SolarDiscProjectile extends AbstractHurtingProjectile {
     public boolean hurt(DamageSource p_70097_1_, float p_70097_2_) {
         return false;
     }
-    @Override
-    public Packet<ClientGamePacketListener> getAddEntityPacket() {
-        return NetworkHooks.getEntitySpawningPacket(this);
-    }
+//    @Override
+//    public Packet<ClientGamePacketListener> getAddEntityPacket() {
+//        return NetworkHooks.getEntitySpawningPacket(this);
+//    }
 
     @Override
     protected ParticleOptions getTrailParticle() {

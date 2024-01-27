@@ -34,6 +34,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.shapes.CollisionContext;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
@@ -87,7 +88,7 @@ public class MultiblockVisualizer {
             Vec3 look = player.getLookAngle().multiply(4,4,4);
             double eyes = player.getStandingEyeHeight(player.getPose(),player.getDimensions(player.getPose()));
             Vec3 e = player.position().add(0,eyes,0);
-            ClipContext context = new ClipContext(e,e.add(look), ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE,null);
+            ClipContext context = new ClipContext(e,e.add(look), ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, CollisionContext.empty());
             BlockHitResult result = world.clip(context);
             renderMultiblock(event.getPoseStack(),multiblock,world,Helpers.posToVec(result.getBlockPos()
                             .relative(result.getDirection()))

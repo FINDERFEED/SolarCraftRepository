@@ -20,6 +20,7 @@ import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.shapes.CollisionContext;
 
 public class REDrainWandAction implements WandAction<REDrainWandActionData> {
 
@@ -45,7 +46,7 @@ public class REDrainWandAction implements WandAction<REDrainWandActionData> {
             ),0);
             Vec3 look = player.getLookAngle().multiply(30,30,30);
             Vec3 to = from.add(look);
-            ClipContext ctx = new ClipContext(from,to, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE,null);
+            ClipContext ctx = new ClipContext(from,to, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, CollisionContext.empty());
             BlockHitResult result = level.clip(ctx);
             if (level.getBlockEntity(result.getBlockPos()) instanceof IREWandDrainable source){
                 if (!source.shouldAutomaticallySwitchWandType()){

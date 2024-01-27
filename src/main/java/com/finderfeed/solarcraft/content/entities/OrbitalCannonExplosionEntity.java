@@ -361,10 +361,10 @@ public class OrbitalCannonExplosionEntity extends Entity {
         tag.putInt("corrosion",this.blockCorrosionRadius);
     }
 
-    @Override
-    public Packet<ClientGamePacketListener> getAddEntityPacket() {
-        return NetworkHooks.getEntitySpawningPacket(this);
-    }
+//    @Override
+//    public Packet<ClientGamePacketListener> getAddEntityPacket() {
+//        return NetworkHooks.getEntitySpawningPacket(this);
+//    }
 
     @Override
     public boolean shouldRender(double p_20296_, double p_20297_, double p_20298_) {

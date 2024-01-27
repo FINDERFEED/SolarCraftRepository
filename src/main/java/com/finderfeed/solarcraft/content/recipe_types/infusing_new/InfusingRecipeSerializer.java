@@ -182,7 +182,8 @@ public class InfusingRecipeSerializer implements RecipeSerializer<InfusingRecipe
 
 
 
-        buf.writeItemStack(recipeType.output, true);
+
+        buf.writeItem(recipeType.output);
         buf.writeInt(recipeType.infusingTime);
         buf.writeUtf(recipeType.fragID);
         buf.writeInt(recipeType.requriedSolarEnergy);
