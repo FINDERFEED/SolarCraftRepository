@@ -19,8 +19,7 @@ public class SolarStrikeEntityDoExplosion extends FDPacket {
         this.speed = speed;
     }
 
-    @Override
-    public void read(FriendlyByteBuf buf) {
+    public SolarStrikeEntityDoExplosion(FriendlyByteBuf buf) {
         speed = new Vec3(buf.readDouble(),buf.readDouble(),buf.readDouble());
 
     }

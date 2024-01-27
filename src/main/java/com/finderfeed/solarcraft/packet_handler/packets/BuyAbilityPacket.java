@@ -17,8 +17,7 @@ import org.apache.logging.log4j.Level;
 @Packet("buy_ability_packet")
 public class BuyAbilityPacket extends FDPacket {
     private String id;
-    @Override
-    public void read(FriendlyByteBuf buf) {
+    public BuyAbilityPacket(FriendlyByteBuf buf) {
         id = buf.readUtf();
     }
 

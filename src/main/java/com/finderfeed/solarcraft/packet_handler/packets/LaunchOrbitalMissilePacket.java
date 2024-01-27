@@ -29,8 +29,7 @@ public class LaunchOrbitalMissilePacket extends FDPacket {
 
 
 
-    @Override
-    public void read(FriendlyByteBuf buf) {
+    public LaunchOrbitalMissilePacket(FriendlyByteBuf buf) {
         this.tilePos = buf.readBlockPos();
         this.data = new SolarOrbitalMissileLauncherTileEntity.MissileData(
                 buf.readInt(),

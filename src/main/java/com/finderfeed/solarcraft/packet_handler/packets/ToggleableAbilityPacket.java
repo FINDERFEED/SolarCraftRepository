@@ -21,8 +21,7 @@ public class ToggleableAbilityPacket extends FDPacket {
     }
 
 
-    @Override
-    public void read(FriendlyByteBuf buf) {
+    public ToggleableAbilityPacket(FriendlyByteBuf buf) {
         this.id = buf.readUtf();
         this.toggle = buf.readBoolean();
     }

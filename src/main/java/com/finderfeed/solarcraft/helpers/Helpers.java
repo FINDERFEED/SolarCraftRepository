@@ -741,7 +741,7 @@ public class Helpers {
         var annotationDatas = data.getAnnotations();
         List<Class<?>> classes = new ArrayList<>();
         for (var adata : annotationDatas){
-            if (adata.annotationType() != type) continue;
+            if (!adata.annotationType().equals(type)) continue;
             try {
                 Class<?> clazz = Class.forName(adata.clazz().getClassName());
                 classes.add(clazz);

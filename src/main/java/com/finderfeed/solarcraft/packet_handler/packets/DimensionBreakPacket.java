@@ -14,8 +14,7 @@ public class DimensionBreakPacket extends FDPacket {
     }
 
 
-    @Override
-    public void read(FriendlyByteBuf buf) {
+    public DimensionBreakPacket(FriendlyByteBuf buf) {
 
     }
 

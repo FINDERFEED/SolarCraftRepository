@@ -17,8 +17,7 @@ public class SetClientRadiantLandStatePacket extends FDPacket {
         this.cleaned = cleaned;
     }
 
-    @Override
-    public void read(FriendlyByteBuf buf) {
+    public SetClientRadiantLandStatePacket(FriendlyByteBuf buf) {
         this.cleaned = buf.readBoolean();
 
     }

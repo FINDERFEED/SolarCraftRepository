@@ -21,8 +21,7 @@ public class UpdateEnergyOnClientPacket extends FDPacket {
     }
 
 
-    @Override
-    public void read(FriendlyByteBuf buf) {
+    public UpdateEnergyOnClientPacket(FriendlyByteBuf buf) {
         this.id = buf.readUtf();
         this.set = buf.readFloat();
     }

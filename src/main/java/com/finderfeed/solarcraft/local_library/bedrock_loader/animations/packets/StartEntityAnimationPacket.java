@@ -26,8 +26,7 @@ public class StartEntityAnimationPacket extends FDPacket {
 
 
 
-    @Override
-    public void read(FriendlyByteBuf buf) {
+    public StartEntityAnimationPacket(FriendlyByteBuf buf) {
         this.entityId = buf.readInt();
         this.tickerName = buf.readUtf();
         this.animationTicker = AnimationTicker.deserialize(buf.readNbt());

@@ -20,8 +20,7 @@ public class UpdateFragmentsOnClient extends FDPacket {
         this.fragmentData = player.getPersistentData().getCompound(AncientFragmentHelper.COMPOUND_TAG_FRAGMENTS);
 
     }
-    @Override
-    public void read(FriendlyByteBuf buf) {
+    public UpdateFragmentsOnClient(FriendlyByteBuf buf) {
         this.fragmentData = buf.readNbt();
     }
 

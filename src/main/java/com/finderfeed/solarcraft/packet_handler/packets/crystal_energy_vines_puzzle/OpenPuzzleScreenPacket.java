@@ -18,8 +18,7 @@ public class OpenPuzzleScreenPacket extends FDPacket {
         this.tilePos = tile.getBlockPos();
     }
 
-    @Override
-    public void read(FriendlyByteBuf buf) {
+    public OpenPuzzleScreenPacket(FriendlyByteBuf buf) {
         this.tilePos = buf.readBlockPos();
 
     }

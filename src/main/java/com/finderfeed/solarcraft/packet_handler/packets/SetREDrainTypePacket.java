@@ -22,8 +22,7 @@ public class SetREDrainTypePacket extends FDPacket {
         this.id = type.getIndex();
     }
 
-    @Override
-    public void read(FriendlyByteBuf buf) {
+    public SetREDrainTypePacket(FriendlyByteBuf buf) {
         this.id = buf.readInt();
     }
 

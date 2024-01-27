@@ -22,8 +22,7 @@ public class UpdateItemTagInItemEntityPacket extends FDPacket {
     }
 
 
-    @Override
-    public void read(FriendlyByteBuf buf) {
+    public UpdateItemTagInItemEntityPacket(FriendlyByteBuf buf) {
         this.entityId = buf.readInt();
         this.itemStackTag = buf.readNbt();
     }

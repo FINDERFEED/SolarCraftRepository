@@ -14,8 +14,7 @@ public class ReloadChunks extends FDPacket {
 
     }
 
-    @Override
-    public void read(FriendlyByteBuf buf) {
+    public ReloadChunks(FriendlyByteBuf buf) {
 
     }
 

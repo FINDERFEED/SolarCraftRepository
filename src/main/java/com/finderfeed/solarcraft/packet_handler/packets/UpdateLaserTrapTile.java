@@ -19,8 +19,7 @@ public class UpdateLaserTrapTile extends FDPacket {
         this.updateIt = i;
         this.pos = pos;
     }
-    @Override
-    public void read(FriendlyByteBuf buf) {
+    public UpdateLaserTrapTile(FriendlyByteBuf buf) {
         updateIt = buf.readInt();
         pos = buf.readBlockPos();
     }

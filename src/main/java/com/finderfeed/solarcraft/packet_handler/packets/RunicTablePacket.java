@@ -38,8 +38,7 @@ public class RunicTablePacket extends FDPacket {
     }
 
 
-    @Override
-    public void read(FriendlyByteBuf buffer) {
+    public RunicTablePacket(FriendlyByteBuf buffer) {
         this.xPressPos = buffer.readInt();
         this.yPressPos = buffer.readInt();
         this.pos = buffer.readBlockPos();

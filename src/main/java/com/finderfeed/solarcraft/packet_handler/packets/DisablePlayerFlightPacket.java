@@ -20,8 +20,7 @@ public class DisablePlayerFlightPacket extends FDPacket {
 
 
 
-    @Override
-    public void read(FriendlyByteBuf buf) {
+    public DisablePlayerFlightPacket(FriendlyByteBuf buf) {
         this.disable = buf.readBoolean();
 
     }

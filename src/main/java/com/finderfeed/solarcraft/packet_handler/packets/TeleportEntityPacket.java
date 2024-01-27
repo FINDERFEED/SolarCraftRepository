@@ -19,8 +19,7 @@ public class TeleportEntityPacket extends FDPacket {
     private Vec3 position;
 
 
-    @Override
-    public void read(FriendlyByteBuf buf) {
+    public TeleportEntityPacket(FriendlyByteBuf buf) {
         this.entityID = buf.readInt();
         this.position = new Vec3(buf.readDouble(),buf.readDouble(),buf.readDouble());
     }

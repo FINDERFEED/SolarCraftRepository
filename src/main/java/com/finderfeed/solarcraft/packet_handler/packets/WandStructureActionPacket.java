@@ -37,8 +37,7 @@ public class WandStructureActionPacket extends FDPacket {
 
 
 
-    @Override
-    public void read(FriendlyByteBuf buf) {
+    public WandStructureActionPacket(FriendlyByteBuf buf) {
         this.data = buf.readNbt();
         int size = buf.readInt();
         structIds = new ArrayList<>();

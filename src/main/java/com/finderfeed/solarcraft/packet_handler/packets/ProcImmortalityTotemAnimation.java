@@ -16,8 +16,7 @@ public class ProcImmortalityTotemAnimation extends FDPacket {
 
 
 
-    @Override
-    public void read(FriendlyByteBuf buf) {
+    public ProcImmortalityTotemAnimation(FriendlyByteBuf buf) {
 
     }
 

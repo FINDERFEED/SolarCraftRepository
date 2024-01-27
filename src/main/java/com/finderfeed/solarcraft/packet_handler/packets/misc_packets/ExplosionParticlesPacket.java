@@ -15,8 +15,7 @@ import java.util.function.Supplier;
 public class ExplosionParticlesPacket extends FDPacket {
     private Vec3 pos;
 
-    @Override
-    public void read(FriendlyByteBuf buf) {
+    public ExplosionParticlesPacket(FriendlyByteBuf buf) {
         this.pos = new Vec3(buf.readDouble(),buf.readDouble(),buf.readDouble());
     }
 

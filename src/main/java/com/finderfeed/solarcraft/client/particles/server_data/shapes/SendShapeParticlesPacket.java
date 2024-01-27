@@ -40,8 +40,7 @@ public class SendShapeParticlesPacket extends FDPacket {
         this(shape,options,0,0,0,0,0,0);
     }
 
-    @Override
-    public void read(FriendlyByteBuf buf) {
+    public SendShapeParticlesPacket(FriendlyByteBuf buf) {
         String shapeId = buf.readUtf();
         ParticleSpawnShapeType type = ParticleSpawnShapeType.valueOf(shapeId);
         this.shape = type.getSerializer().fromNetwork(buf);

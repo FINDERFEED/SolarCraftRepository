@@ -14,8 +14,7 @@ public class TriggerProgressionShaderPacket extends FDPacket {
 
     }
 
-    @Override
-    public void read(FriendlyByteBuf buf) {
+    public TriggerProgressionShaderPacket(FriendlyByteBuf buf) {
 
     }
 

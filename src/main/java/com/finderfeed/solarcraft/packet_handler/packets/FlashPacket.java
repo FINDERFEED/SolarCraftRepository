@@ -23,8 +23,7 @@ public class FlashPacket extends FDPacket {
         this.outTime = outTime;
     }
 
-    @Override
-    public void read(FriendlyByteBuf buf) {
+    public FlashPacket(FriendlyByteBuf buf) {
         this.inTime = buf.readInt();
         this.stayTime = buf.readInt();
         this.outTime = buf.readInt();

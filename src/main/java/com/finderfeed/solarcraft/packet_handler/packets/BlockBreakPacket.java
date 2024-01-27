@@ -21,8 +21,7 @@ public class BlockBreakPacket extends FDPacket {
         this.id = Block.getId(state);
     }
 
-    @Override
-    public void read(FriendlyByteBuf buf) {
+    public BlockBreakPacket(FriendlyByteBuf buf) {
         this.id = buf.readInt();
         this.pos = buf.readBlockPos();
     }

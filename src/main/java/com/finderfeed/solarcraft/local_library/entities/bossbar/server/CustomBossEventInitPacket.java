@@ -30,8 +30,7 @@ public class CustomBossEventInitPacket extends FDPacket {
         this.entityId = entotyId;
     }
 
-    @Override
-    public void read(FriendlyByteBuf buf) {
+    public CustomBossEventInitPacket(FriendlyByteBuf buf) {
         this.uuid = buf.readUUID();
         this.rendererId = buf.readUtf();
         this.remove = buf.readBoolean();

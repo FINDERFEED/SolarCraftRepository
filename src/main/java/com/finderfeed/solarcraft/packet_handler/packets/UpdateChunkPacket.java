@@ -29,8 +29,7 @@ public class UpdateChunkPacket extends FDPacket {
         this.chunkData = new ClientboundLevelChunkPacketData(chunk);
     }
 
-    @Override
-    public void read(FriendlyByteBuf buf) {
+    public UpdateChunkPacket(FriendlyByteBuf buf) {
         this.x = buf.readInt();
         this.z = buf.readInt();
         this.chunkData = new ClientboundLevelChunkPacketData(buf, this.x, this.z);

@@ -18,8 +18,7 @@ public class BlockPlacePacket extends FDPacket {
         this.pos = pos;
         this.id = Block.getId(state);
     }
-    @Override
-    public void read(FriendlyByteBuf buf) {
+    public BlockPlacePacket(FriendlyByteBuf buf) {
         this.id = buf.readInt();
         this.pos = buf.readBlockPos();
     }

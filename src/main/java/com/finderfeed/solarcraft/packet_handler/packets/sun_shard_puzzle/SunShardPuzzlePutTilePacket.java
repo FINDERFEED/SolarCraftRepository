@@ -28,8 +28,7 @@ public class SunShardPuzzlePutTilePacket extends FDPacket {
         this.y = y;
     }
 
-    @Override
-    public void read(FriendlyByteBuf buf) {
+    public SunShardPuzzlePutTilePacket(FriendlyByteBuf buf) {
         CompoundTag tag = buf.readNbt();
         tile = PuzzleTile.deserialize(tag);
         this.x = buf.readInt();

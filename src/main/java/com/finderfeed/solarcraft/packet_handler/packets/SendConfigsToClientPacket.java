@@ -28,8 +28,7 @@ public class SendConfigsToClientPacket extends FDPacket {
     }
 
 
-    @Override
-    public void read(FriendlyByteBuf buf) {
+    public SendConfigsToClientPacket(FriendlyByteBuf buf) {
         int size = buf.readInt();
         idJson = new ArrayList<>();
         for (int i = 0; i < size;i++){

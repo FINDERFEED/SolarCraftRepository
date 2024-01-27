@@ -45,8 +45,7 @@ public class AbilityIndexSetPacket extends FDPacket {
         this.toBytes(friendlyByteBuf);
     }
 
-    @Override
-    public void read(FriendlyByteBuf buf) {
+    public AbilityIndexSetPacket(FriendlyByteBuf buf) {
         index = buf.readInt();
         whatAbility = buf.readUtf();
     }

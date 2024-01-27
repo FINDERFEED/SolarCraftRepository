@@ -31,8 +31,7 @@ public class UpdateProgressionsOnClient extends FDPacket {
     }
 
 
-    @Override
-    public void read(FriendlyByteBuf buf) {
+    public UpdateProgressionsOnClient(FriendlyByteBuf buf) {
         this.progressionData = buf.readNbt();
     }
 

@@ -21,8 +21,7 @@ public class CastWandActionPacket extends FDPacket {
     }
 
 
-    @Override
-    public void read(FriendlyByteBuf buf) {
+    public CastWandActionPacket(FriendlyByteBuf buf) {
         this.actionId = buf.readResourceLocation();
     }
 

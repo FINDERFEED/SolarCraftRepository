@@ -25,8 +25,7 @@ public class OpenAbilityScreenPacket extends FDPacket {
 
 
 
-    @Override
-    public void read(FriendlyByteBuf buf) {
+    public OpenAbilityScreenPacket(FriendlyByteBuf buf) {
         this.bindedAbilities = new String[4];
         this.dontOpen = buf.readBoolean();
         this.energy = buf.readInt();

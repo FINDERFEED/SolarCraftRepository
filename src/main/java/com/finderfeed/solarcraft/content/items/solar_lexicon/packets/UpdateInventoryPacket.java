@@ -26,8 +26,7 @@ public class UpdateInventoryPacket extends FDPacket {
 
 
 
-    @Override
-    public void read(FriendlyByteBuf buf) {
+    public UpdateInventoryPacket(FriendlyByteBuf buf) {
         this.length = buf.readInt();
 
         List<ItemStack> list = new ArrayList<>();

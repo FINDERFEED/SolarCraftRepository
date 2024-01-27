@@ -25,8 +25,7 @@ public class UpdateTypeOnClientPacket extends FDPacket {
 
 
 
-    @Override
-    public void read(FriendlyByteBuf buf) {
+    public UpdateTypeOnClientPacket(FriendlyByteBuf buf) {
         id = buf.readUtf();
         pos = buf.readBlockPos();
     }

@@ -21,8 +21,7 @@ public class SetSpeedPacket extends FDPacket {
 
 
 
-    @Override
-    public void read(FriendlyByteBuf buf) {
+    public SetSpeedPacket(FriendlyByteBuf buf) {
         speed = new Vec3(buf.readDouble(),buf.readDouble(),buf.readDouble());
 
     }

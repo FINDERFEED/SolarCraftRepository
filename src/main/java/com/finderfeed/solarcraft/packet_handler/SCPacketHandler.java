@@ -1,6 +1,7 @@
 package com.finderfeed.solarcraft.packet_handler;
 
 import com.finderfeed.solarcraft.SolarCraft;
+import com.finderfeed.solarcraft.client.particles.server_data.shapes.SendShapeParticlesPacket;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacket;
 import com.finderfeed.solarcraft.packet_handler.packet_system.Packet;
@@ -10,6 +11,7 @@ import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.bus.api.SubscribeEvent;
 
+import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlerEvent;
 import net.neoforged.neoforge.network.handling.ConfigurationPayloadContext;
 import net.neoforged.neoforge.network.handling.PlayPayloadContext;
@@ -20,12 +22,14 @@ import java.lang.reflect.Method;
 import java.util.List;
 
 
+@Mod.EventBusSubscriber(modid = SolarCraft.MOD_ID,bus = Mod.EventBusSubscriber.Bus.MOD)
 public class SCPacketHandler {
 
     //Note for myself - to create a packet
     /*
     1) Annotate the packet with @Packet, provide id and PacketType (default is PLAY)
     2) Extend FDPacket
+    3) Create constructor with FriendlyByteBuf
      */
     @SubscribeEvent
     public static void registerPayload(RegisterPayloadHandlerEvent event){

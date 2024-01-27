@@ -22,8 +22,7 @@ public class RequestAbilityScreenPacket extends FDPacket {
     }
 
 
-    @Override
-    public void read(FriendlyByteBuf buf) {
+    public RequestAbilityScreenPacket(FriendlyByteBuf buf) {
         this.dontOpen = buf.readBoolean();
 
     }

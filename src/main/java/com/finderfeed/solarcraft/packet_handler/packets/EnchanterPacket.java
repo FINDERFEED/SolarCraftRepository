@@ -25,8 +25,7 @@ public class EnchanterPacket extends FDPacket {
         this.location = BuiltInRegistries.ENCHANTMENT.getKey(e);
         this.enchanterPos = pos;
     }
-    @Override
-    public void read(FriendlyByteBuf buf) {
+    public EnchanterPacket(FriendlyByteBuf buf) {
         this.location = buf.readResourceLocation();
         this.level = buf.readInt();
         this.enchanterPos = buf.readBlockPos();

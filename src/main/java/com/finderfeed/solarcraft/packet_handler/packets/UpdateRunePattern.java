@@ -23,8 +23,7 @@ public class UpdateRunePattern extends FDPacket {
     }
 
 
-    @Override
-    public void read(FriendlyByteBuf buf) {
+    public UpdateRunePattern(FriendlyByteBuf buf) {
         this.pattern = buf.readNbt();
         this.hideButtons = buf.readBoolean();
     }

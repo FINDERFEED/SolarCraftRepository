@@ -15,8 +15,7 @@ import java.util.function.Supplier;
 public class TakeEnergyFromForgePacket extends FDPacket {
 
     public BlockPos pos;
-    @Override
-    public void read(FriendlyByteBuf buf) {
+    public TakeEnergyFromForgePacket(FriendlyByteBuf buf) {
         pos = buf.readBlockPos();
     }
 

@@ -15,8 +15,7 @@ public class CastAbilityPacket extends FDPacket {
         this.index = index;
     }
 
-    @Override
-    public void read(FriendlyByteBuf buf) {
+    public CastAbilityPacket(FriendlyByteBuf buf) {
         index = buf.readInt();
 
     }

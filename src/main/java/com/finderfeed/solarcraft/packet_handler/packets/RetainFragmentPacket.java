@@ -23,8 +23,7 @@ public class RetainFragmentPacket extends FDPacket {
     }
 
 
-    @Override
-    public void read(FriendlyByteBuf buf) {
+    public RetainFragmentPacket(FriendlyByteBuf buf) {
         this.fragID = buf.readUtf();
     }
 

@@ -22,8 +22,7 @@ public class ServerBossEventUpdateProgress extends FDPacket {
     }
 
 
-    @Override
-    public void read(FriendlyByteBuf buf) {
+    public ServerBossEventUpdateProgress(FriendlyByteBuf buf) {
         this.id = buf.readUUID();
         this.progress = buf.readFloat();
     }

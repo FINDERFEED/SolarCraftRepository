@@ -23,8 +23,7 @@ public class ShadowBoltExplosionPacket extends FDPacket {
     }
 
 
-    @Override
-    public void read(FriendlyByteBuf buffer) {
+    public ShadowBoltExplosionPacket(FriendlyByteBuf buffer) {
         this.pos = new Vec3(buffer.readDouble(),buffer.readDouble(),buffer.readDouble());
 
     }

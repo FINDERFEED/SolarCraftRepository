@@ -23,8 +23,7 @@ public class UpdateRunicEnergyInContainerPacket extends FDPacket {
         this.containerPos = container.getBlockPos();
         this.tag = tag;
     }
-    @Override
-    public void read(FriendlyByteBuf buf) {
+    public UpdateRunicEnergyInContainerPacket(FriendlyByteBuf buf) {
         this.containerPos = buf.readBlockPos();
         this.tag = buf.readNbt();
     }

@@ -14,8 +14,7 @@ public class SendFragmentsToClientPacket extends FDPacket {
 
     private String json;
 
-    @Override
-    public void read(FriendlyByteBuf buf) {
+    public SendFragmentsToClientPacket(FriendlyByteBuf buf) {
         this.json = buf.readUtf();
     }
 

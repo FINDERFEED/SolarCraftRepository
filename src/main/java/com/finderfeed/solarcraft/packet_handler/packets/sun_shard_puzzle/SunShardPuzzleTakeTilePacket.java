@@ -27,8 +27,7 @@ public class SunShardPuzzleTakeTilePacket extends FDPacket {
     }
 
 
-    @Override
-    public void read(FriendlyByteBuf buf) {
+    public SunShardPuzzleTakeTilePacket(FriendlyByteBuf buf) {
         this.x = buf.readInt();
         this.y = buf.readInt();
         this.tilePos = buf.readBlockPos();

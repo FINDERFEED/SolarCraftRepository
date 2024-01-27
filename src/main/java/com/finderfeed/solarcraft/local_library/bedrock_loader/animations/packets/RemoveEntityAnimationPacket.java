@@ -25,8 +25,7 @@ public class RemoveEntityAnimationPacket extends FDPacket {
 //        this.tickerName = buf.readUtf();
 //    }
 
-    @Override
-    public void read(FriendlyByteBuf buf) {
+    public RemoveEntityAnimationPacket(FriendlyByteBuf buf) {
         this.entityId = buf.readInt();
         this.tickerName = buf.readUtf();
     }

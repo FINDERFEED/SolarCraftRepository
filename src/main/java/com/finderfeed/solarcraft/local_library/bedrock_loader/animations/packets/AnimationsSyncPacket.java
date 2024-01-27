@@ -25,8 +25,7 @@ public class AnimationsSyncPacket extends FDPacket {
 
 
 
-    @Override
-    public void read(FriendlyByteBuf buf) {
+    public AnimationsSyncPacket(FriendlyByteBuf buf) {
         this.data = buf.readNbt();
     }
 

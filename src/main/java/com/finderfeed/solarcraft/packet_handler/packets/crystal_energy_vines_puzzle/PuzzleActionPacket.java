@@ -23,8 +23,7 @@ public class PuzzleActionPacket extends FDPacket {
     }
 
 
-    @Override
-    public void read(FriendlyByteBuf buf) {
+    public PuzzleActionPacket(FriendlyByteBuf buf) {
         this.tilePos = buf.readBlockPos();
         this.moveType = buf.readInt();
     }

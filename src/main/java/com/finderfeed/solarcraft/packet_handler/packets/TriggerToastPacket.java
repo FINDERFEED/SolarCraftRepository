@@ -18,8 +18,7 @@ public class TriggerToastPacket extends FDPacket {
 
     public String id;
 
-    @Override
-    public void read(FriendlyByteBuf buf) {
+    public TriggerToastPacket(FriendlyByteBuf buf) {
         this.id = buf.readUtf();
 
     }

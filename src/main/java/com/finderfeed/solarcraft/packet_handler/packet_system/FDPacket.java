@@ -10,12 +10,7 @@ import net.neoforged.neoforge.network.handling.PlayPayloadContext;
 
 public abstract class FDPacket implements CustomPacketPayload {
 
-    public FDPacket(){}
-    public FDPacket(FriendlyByteBuf buf){
-        this.read(buf);
-    }
 
-    public abstract void read(FriendlyByteBuf buf);
     private ResourceLocation id;
     public ResourceLocation id(){
         if (id == null) {

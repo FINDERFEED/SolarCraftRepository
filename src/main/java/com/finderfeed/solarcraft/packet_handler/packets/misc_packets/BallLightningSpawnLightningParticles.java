@@ -18,8 +18,7 @@ public class BallLightningSpawnLightningParticles extends FDPacket {
     private Vec3 pos;
 
 
-    @Override
-    public void read(FriendlyByteBuf buf) {
+    public BallLightningSpawnLightningParticles(FriendlyByteBuf buf) {
         this.pos = new Vec3(buf.readDouble(),buf.readDouble(),buf.readDouble());
 
     }

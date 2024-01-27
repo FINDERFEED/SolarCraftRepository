@@ -24,8 +24,7 @@ public class SunShardPuzzleOpenScreen extends FDPacket {
     }
 
 
-    @Override
-    public void read(FriendlyByteBuf buf) {
+    public SunShardPuzzleOpenScreen(FriendlyByteBuf buf) {
         BlockPos pos = buf.readBlockPos();
         CompoundTag tag = buf.readNbt();
         this.puzzle = Puzzle.deserialize("puzzle",tag);

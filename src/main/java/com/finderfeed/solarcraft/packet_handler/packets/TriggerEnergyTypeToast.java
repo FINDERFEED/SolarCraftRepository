@@ -9,8 +9,7 @@ import java.util.function.Supplier;
 @Packet("trigger_energy_type_toast")
 public class TriggerEnergyTypeToast extends FDPacket {
     public String id;
-    @Override
-    public void read(FriendlyByteBuf buf) {
+    public TriggerEnergyTypeToast(FriendlyByteBuf buf) {
         this.id = buf.readUtf();
 
     }

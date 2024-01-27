@@ -11,8 +11,7 @@ import java.util.function.Supplier;
 @Packet("open_lexicon_screen_packet")
 public class OpenScreenPacket extends FDPacket {
 
-    @Override
-    public void read(FriendlyByteBuf buf) {
+    public OpenScreenPacket(FriendlyByteBuf buf) {
 
     }
 
