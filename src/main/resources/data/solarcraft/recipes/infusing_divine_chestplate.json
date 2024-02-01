@@ -22,13 +22,15 @@
   },
   "time": 2000,
   "energy": 5000,
-  "zeta": 5000,
-  "kelda": 5000,
-  "fira": 5000,
-  "tera": 5000,
-  "urba": 5000,
-  "ardo": 5000,
-  "giro": 5000,
-  "ultima": 5000,
+  "re_cost": {
+    "zeta": 5000,
+    "kelda": 5000,
+    "fira": 5000,
+    "tera": 5000,
+    "urba": 5000,
+    "ardo": 5000,
+    "giro": 5000,
+    "ultima": 5000
+  },
   "fragment": "divine_armor"
 }

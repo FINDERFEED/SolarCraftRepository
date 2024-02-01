@@ -7,6 +7,7 @@ import net.minecraft.world.Container;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
@@ -21,12 +22,12 @@ public class InfusingCraftingRecipe implements Recipe<Container> {
 //    private final ResourceLocation id;
     private final ItemStack output;
     private final String[] pattern;
-    private final Map<Character, Item> DEFINITIONS;
+    private final Map<Character, Ingredient> DEFINITIONS;
     private final int time;
     private final int outputCount;
     private AncientFragment desFragment;
     private final String fragment;
-    public InfusingCraftingRecipe(String[] pattern,Map<Character, Item> defs,ItemStack out,int time,int outputCount,String fragment){
+    public InfusingCraftingRecipe(String[] pattern,Map<Character, Ingredient> defs,ItemStack out,int time,int outputCount,String fragment){
         this.pattern = pattern;
         this.DEFINITIONS = defs;
         this.outputCount = outputCount;
@@ -64,83 +65,84 @@ public class InfusingCraftingRecipe implements Recipe<Container> {
         return pattern;
     }
 
-    public Map<Character, Item> getDefinitions() {
+    public Map<Character, Ingredient> getDefinitions() {
         return DEFINITIONS;
     }
 
     @Override
     public boolean matches(Container c, Level world) {
-        Item[][] arr = new Item[3][3];
-        int iterator = 0;
-        for (int i =0;i < 3;i++){
-            for (int g = 0; g < 3;g++){
-                arr[i][g] = c.getItem(iterator).getItem();
-                iterator++;
-            }
-        }
-
-
-
-        return patternEquals(arr);
+//        Item[][] arr = new Item[3][3];
+//        int iterator = 0;
+//        for (int i =0;i < 3;i++){
+//            for (int g = 0; g < 3;g++){
+//                arr[i][g] = c.getItem(iterator).getItem();
+//                iterator++;
+//            }
+//        }
+//
+//
+//
+//        return patternEquals(arr);
+        return false;
     }
 
-    private boolean patternEquals(Item[][] craftingPattern){
-        int rows = pattern.length;
-        int cols = pattern[0].length();
-        Item[][] recipePattern = new Item[rows][cols];
-        for (int i =0;i < rows;i++){
-            for (int g = 0; g < cols;g++){
-                char c = pattern[i].charAt(g);
-                if (c != ' ') {
-                    Item item = DEFINITIONS.get(c);
-                    recipePattern[i][g] = item;
-                }else{
-                    recipePattern[i][g] = Items.AIR;
-                }
-            }
-        }
-
-
-
-        int raznRows = 3 - rows;
-        int raznCols = 3 - cols;
-
-        boolean c = false;
-        int rowSaved = -1;
-        int colSaved = -1;
-        for (int row = 0;row <= raznRows;row++ ){
-            for (int col = 0;col <= raznCols;col++ ){
-                if (check(craftingPattern, recipePattern, row, col, rows, cols)) {
-                    c = true;
-                    rowSaved = row;
-                    colSaved = col;
-                    break;
-                }
-            }
-            if (c){
-                break;
-            }
-        }
-
-
-
-        if (c){
-            int[][] savedArray = new int[rows*cols][2];
-            fillArray(savedArray,rowSaved,colSaved,rows,cols);
-            for (int i = 0 ; i < 3;i++){
-                for(int g = 0; g < 3;g++){
-                    if (!arrayContains(savedArray,i,true) || !arrayContains(savedArray,g,false)){
-                        if (craftingPattern[i][g] != Items.AIR){
-                            return false;
-                        }
-                    }
-
-                }
-            }
-        }
-
-        return c;
-    }
+//    private boolean patternEquals(Item[][] craftingPattern){
+//        int rows = pattern.length;
+//        int cols = pattern[0].length();
+//        Item[][] recipePattern = new Item[rows][cols];
+//        for (int i =0;i < rows;i++){
+//            for (int g = 0; g < cols;g++){
+//                char c = pattern[i].charAt(g);
+//                if (c != ' ') {
+//                    Item item = DEFINITIONS.get(c);
+//                    recipePattern[i][g] = item;
+//                }else{
+//                    recipePattern[i][g] = Items.AIR;
+//                }
+//            }
+//        }
+//
+//
+//
+//        int raznRows = 3 - rows;
+//        int raznCols = 3 - cols;
+//
+//        boolean c = false;
+//        int rowSaved = -1;
+//        int colSaved = -1;
+//        for (int row = 0;row <= raznRows;row++ ){
+//            for (int col = 0;col <= raznCols;col++ ){
+//                if (check(craftingPattern, recipePattern, row, col, rows, cols)) {
+//                    c = true;
+//                    rowSaved = row;
+//                    colSaved = col;
+//                    break;
+//                }
+//            }
+//            if (c){
+//                break;
+//            }
+//        }
+//
+//
+//
+//        if (c){
+//            int[][] savedArray = new int[rows*cols][2];
+//            fillArray(savedArray,rowSaved,colSaved,rows,cols);
+//            for (int i = 0 ; i < 3;i++){
+//                for(int g = 0; g < 3;g++){
+//                    if (!arrayContains(savedArray,i,true) || !arrayContains(savedArray,g,false)){
+//                        if (craftingPattern[i][g] != Items.AIR){
+//                            return false;
+//                        }
+//                    }
+//
+//                }
+//            }
+//        }
+//
+//        return c;
+//    }
 
     private boolean arrayContains(int[][] arr,int num,boolean left){
         for (int i = 0; i < arr.length;i++){

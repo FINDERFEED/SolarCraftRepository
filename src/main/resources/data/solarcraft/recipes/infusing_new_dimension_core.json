@@ -23,13 +23,15 @@
   "time": 5000,
   "fragment": "dimension_core",
   "energy": 50000,
-  "zeta": 50000,
-  "kelda": 50000,
-  "fira": 50000,
-  "tera": 50000,
-  "urba": 50000,
-  "ardo": 50000,
-  "giro": 50000,
-  "ultima": 50000,
+  "re_cost": {
+    "zeta": 50000,
+    "kelda": 50000,
+    "fira": 50000,
+    "tera": 50000,
+    "urba": 50000,
+    "ardo": 50000,
+    "giro": 50000,
+    "ultima": 50000
+  },
   "catalysts": "Z KF TR AG U"
 }

@@ -22,7 +22,7 @@ public class SolarcraftModulePredicate implements ICustomItemPredicate {
         return new SolarcraftModulePredicate(predicate);
     }
 
-    public static final Codec<SolarcraftModulePredicate> CODEC = ExtraCodecs.JSON.flatXmap(json->{
+    public static final Codec<SolarcraftModulePredicate> CODEC = ExtraCodecs.FLAT_JSON.flatXmap(json->{
         SolarcraftModulePredicate predicate = fromJson(json.getAsJsonObject());
         return DataResult.success(predicate);
     },ref->{

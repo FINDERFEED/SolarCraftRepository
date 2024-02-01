@@ -39,7 +39,7 @@ public class SolarcraftNBTPredicate implements ICustomItemPredicate {
         return new SolarcraftNBTPredicate(predicate,higherthan,subNBT);
     }
 
-    public static final Codec<SolarcraftNBTPredicate> CODEC = ExtraCodecs.JSON.flatXmap(json->{
+    public static final Codec<SolarcraftNBTPredicate> CODEC = ExtraCodecs.FLAT_JSON.flatXmap(json->{
         SolarcraftNBTPredicate predicate = fromJson(json.getAsJsonObject());
         return DataResult.success(predicate);
     },ref->{

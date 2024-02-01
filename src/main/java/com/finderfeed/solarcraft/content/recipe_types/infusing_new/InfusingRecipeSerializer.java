@@ -1,6 +1,7 @@
 package com.finderfeed.solarcraft.content.recipe_types.infusing_new;
 
 import com.finderfeed.solarcraft.content.items.runic_energy.RunicEnergyCost;
+import com.finderfeed.solarcraft.content.recipe_types.infusing_crafting.InfusingCraftingRecipeSerializer;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
 
 import com.google.gson.JsonArray;
@@ -8,6 +9,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.ExtraCodecs;
@@ -37,12 +39,31 @@ public class InfusingRecipeSerializer implements RecipeSerializer<InfusingRecipe
         return CODEC;
     }
 
-    public static final Codec<InfusingRecipe> CODEC = ExtraCodecs.JSON.flatXmap(json->{
-        InfusingRecipe recipe = fromJson(json.getAsJsonObject());
-        return DataResult.success(recipe);
-    },(res)->{
-        throw new RuntimeException("Serialization for infusing recipe is not implemented");
-    });
+//    public static final Codec<InfusingRecipe> CODEC = ExtraCodecs.FLAT_JSON.flatXmap(json->{
+//        InfusingRecipe recipe = fromJson(json.getAsJsonObject());
+//        return DataResult.success(recipe);
+//    },(res)->{
+//        throw new RuntimeException("Serialization for infusing recipe is not implemented");
+//    });
+
+    public static final Codec<String> STRICT_12_CHARACTERS_STRING_CODEC = Codec.STRING.comapFlatMap(str->{
+        if (str.length() != 12){
+            return DataResult.error(()->"Catalysts string length should be equal to 12");
+        }
+        return DataResult.success(str);
+    },f->f);
+
+    public static final Codec<InfusingRecipe> CODEC = RecordCodecBuilder.create(p->p.group(
+            ExtraCodecs.strictUnboundedMap(InfusingCraftingRecipeSerializer.SYMBOL_CODEC,Ingredient.CODEC_NONEMPTY).fieldOf("items").forGetter(recipe->recipe.INGR_MAP),
+            InfusingCraftingRecipeSerializer.STRING_ARRAY.fieldOf("pattern").forGetter(recipe->recipe.fiveRowPattern),
+            ExtraCodecs.strictOptionalField(STRICT_12_CHARACTERS_STRING_CODEC,"catalysts","            ").forGetter(recipe->recipe.getCatalysts()),
+            ItemStack.ITEM_WITH_COUNT_CODEC.fieldOf("result").forGetter(recipe->recipe.output),
+            Codec.INT.fieldOf("time").forGetter(recipe->recipe.infusingTime),
+            Codec.STRING.fieldOf("fragment").forGetter(recipe->recipe.fragID),
+            ExtraCodecs.strictOptionalField(Codec.INT,"energy",0).forGetter(recipe->recipe.requriedSolarEnergy),
+            ExtraCodecs.strictOptionalField(Codec.STRING,"tag","").forGetter(recipe->recipe.tag),
+            RunicEnergyCost.CODEC.fieldOf("re_cost").forGetter(recipe->recipe.RUNIC_ENERGY_COST)
+    ).apply(p,InfusingRecipe::new));
 
     //@Override
     public static InfusingRecipe fromJson(JsonObject file) {

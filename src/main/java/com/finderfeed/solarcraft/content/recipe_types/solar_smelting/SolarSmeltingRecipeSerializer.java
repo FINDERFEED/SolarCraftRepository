@@ -37,7 +37,7 @@ public class SolarSmeltingRecipeSerializer  implements RecipeSerializer<SolarSme
         return CODEC;
     }
 
-    public static final Codec<SolarSmeltingRecipe> CODEC = ExtraCodecs.JSON.flatXmap(json->{
+    public static final Codec<SolarSmeltingRecipe> CODEC = ExtraCodecs.FLAT_JSON.flatXmap(json->{
         SolarSmeltingRecipe recipe = fromJson(json.getAsJsonObject());
         return DataResult.success(recipe);
     },res->{
