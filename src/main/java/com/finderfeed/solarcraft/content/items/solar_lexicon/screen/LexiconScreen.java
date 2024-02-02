@@ -48,7 +48,7 @@ public abstract class LexiconScreen extends DefaultScreenWithPages {
     public void renderEscapeText(GuiGraphics graphics){
         PoseStack matrices = graphics.pose();
         matrices.pushPose();
-        Minecraft mc = minecraft;
+        Minecraft mc = Minecraft.getInstance();
         int color = 0xccffffff;
 
         int y = mc.font.lineHeight / 2;

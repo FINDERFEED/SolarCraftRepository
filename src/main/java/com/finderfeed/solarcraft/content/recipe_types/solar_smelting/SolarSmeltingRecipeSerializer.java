@@ -11,6 +11,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.Ingredient;
 
@@ -37,12 +38,36 @@ public class SolarSmeltingRecipeSerializer  implements RecipeSerializer<SolarSme
         return CODEC;
     }
 
-    public static final Codec<SolarSmeltingRecipe> CODEC = ExtraCodecs.FLAT_JSON.flatXmap(json->{
-        SolarSmeltingRecipe recipe = fromJson(json.getAsJsonObject());
-        return DataResult.success(recipe);
-    },res->{
-        throw new RuntimeException("Serialization for Solar Smelting recipe is not implemented");
+//    public static final Codec<SolarSmeltingRecipe> CODEC = ExtraCodecs.FLAT_JSON.flatXmap(json->{
+//        SolarSmeltingRecipe recipe = fromJson(json.getAsJsonObject());
+//        return DataResult.success(recipe);
+//    },res->{
+//        throw new RuntimeException("Serialization for Solar Smelting recipe is not implemented");
+//    });
+
+    public static final Codec<ItemStack> SMELTING_ITEM = RecordCodecBuilder.create(p->p.group(
+            BuiltInRegistries.ITEM.holderByNameCodec().fieldOf("smelting_item").forGetter(stack->stack.getItemHolder()),
+            ExtraCodecs.strictOptionalField(Codec.INT,"count",1).forGetter(stack->stack.getCount())
+    ).apply(p,ItemStack::new));
+
+    public static final Codec<List<ItemStack>> NONEMPTY_STACK_LIST = Codec.list(SMELTING_ITEM).comapFlatMap(l->{
+        if (l.size() == 0) return DataResult.error(()->"Size of item list cannot be zero.");
+        return DataResult.success(l);
+        },l->l);
+
+    public static final Codec<ItemStack> RESULT_ITEM = Codec.STRING.flatXmap(str->{
+        Item item = BuiltInRegistries.ITEM.get(new ResourceLocation(str));
+        if (item == Items.AIR) return DataResult.error(()->"Couldn't find item: " + str);
+        return DataResult.success(new ItemStack(item));
+    },item->{
+        return DataResult.success(BuiltInRegistries.ITEM.getKey(item.getItem()).toString());
     });
+
+    public static final Codec<SolarSmeltingRecipe> CODEC = RecordCodecBuilder.create(p->p.group(
+            NONEMPTY_STACK_LIST.fieldOf("ingredients").forGetter(recipe->recipe.stacks),
+            RESULT_ITEM.fieldOf("result").forGetter(recipe->recipe.output),
+            Codec.INT.fieldOf("time").forGetter(recipe-> recipe.smeltingTime)
+    ).apply(p,SolarSmeltingRecipe::new));
 
     //@Override
     public static SolarSmeltingRecipe fromJson(JsonObject file) {

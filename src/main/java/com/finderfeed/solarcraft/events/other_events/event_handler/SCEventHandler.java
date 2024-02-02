@@ -647,14 +647,14 @@ public class SCEventHandler {
                     config.deserialize(config.getJson());
                 }
 
-                FDPacketUtil.sendToPlayer(sPlayer,new SendConfigsToClientPacket());
+//                FDPacketUtil.sendToPlayer(sPlayer,new SendConfigsToClientPacket());
 //                SCPacketHandler.INSTANCE.sendTo(new SendConfigsToClientPacket(),sPlayer.connection.connection, PlayNetworkDirection.PLAY_TO_CLIENT);
 
 
-                for (RunicEnergy.Type type : RunicEnergy.Type.values()) {
-                    Helpers.updateRunicEnergyOnClient(type, RunicEnergy.getEnergy(player, type), player);
-                }
-                Helpers.updateProgressionsOnClient(sPlayer);
+//                for (RunicEnergy.Type type : RunicEnergy.Type.values()) {
+//                    Helpers.updateRunicEnergyOnClient(type, RunicEnergy.getEnergy(player, type), player);
+//                }
+//                Helpers.updateProgressionsOnClient(sPlayer);
 
                 if (JsonFragmentsHelper.fragmentsShouldBeRead()) {
                     List<AncientFragment> fragsDes = AncientFragment.deserializeFragments(JsonFragmentsHelper.readFragments());
@@ -664,16 +664,16 @@ public class SCEventHandler {
                     }
                 }
 
-                for (ToggleableAbility ability : AbilitiesRegistry.getToggleableAbilities()) {
-                    AbilityHelper.sendTogglePacket(sPlayer,ability,ability.isToggled(sPlayer));
-                }
+//                for (ToggleableAbility ability : AbilitiesRegistry.getToggleableAbilities()) {
+//                    AbilityHelper.sendTogglePacket(sPlayer,ability,ability.isToggled(sPlayer));
+//                }
 
-                JsonFragmentsHelper.sendUpdatePacketToClient(sPlayer);
+//                JsonFragmentsHelper.sendUpdatePacketToClient(sPlayer);
                 if (EnchanterConfigInit.shouldBeRead()) {
                     EnchanterConfigInit.readJson();
                 }
-                Helpers.updateFragmentsOnClient(sPlayer);
-                Helpers.updateClientRadiantLandStateForPlayer(sPlayer);
+//                Helpers.updateFragmentsOnClient(sPlayer);
+//                Helpers.updateClientRadiantLandStateForPlayer(sPlayer);
                 AncientFragment.initFragmentsMap();
 
 

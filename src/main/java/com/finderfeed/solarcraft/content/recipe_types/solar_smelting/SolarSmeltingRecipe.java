@@ -18,8 +18,8 @@ import java.util.List;
 
 public class SolarSmeltingRecipe implements Recipe<PhantomInventory> {
 
-    @Deprecated
-    public NonNullList<Ingredient> list;
+//    @Deprecated
+//    public NonNullList<Ingredient> list;
 
     public final List<ItemStack> stacks;
 
@@ -64,13 +64,13 @@ public class SolarSmeltingRecipe implements Recipe<PhantomInventory> {
         return false;
     }
 
-    private boolean containsOrNot(List<Item> lists,int index){
-        if (!list.get(index).isEmpty()){
-            return lists.contains(list.get(index).getItems()[0].getItem());
-        }else{
-            return lists.contains(Items.AIR);
-        }
-    }
+//    private boolean containsOrNot(List<Item> lists,int index){
+//        if (!list.get(index).isEmpty()){
+//            return lists.contains(list.get(index).getItems()[0].getItem());
+//        }else{
+//            return lists.contains(Items.AIR);
+//        }
+//    }
 
     public List<ItemStack> getStacks() {
         return stacks;

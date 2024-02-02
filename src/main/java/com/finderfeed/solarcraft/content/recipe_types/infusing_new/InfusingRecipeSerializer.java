@@ -62,7 +62,7 @@ public class InfusingRecipeSerializer implements RecipeSerializer<InfusingRecipe
             Codec.STRING.fieldOf("fragment").forGetter(recipe->recipe.fragID),
             ExtraCodecs.strictOptionalField(Codec.INT,"energy",0).forGetter(recipe->recipe.requriedSolarEnergy),
             ExtraCodecs.strictOptionalField(Codec.STRING,"tag","").forGetter(recipe->recipe.tag),
-            RunicEnergyCost.CODEC.fieldOf("re_cost").forGetter(recipe->recipe.RUNIC_ENERGY_COST)
+            ExtraCodecs.strictOptionalField(RunicEnergyCost.CODEC,"re_cost",RunicEnergyCost.EMPTY).forGetter(recipe->recipe.RUNIC_ENERGY_COST)
     ).apply(p,InfusingRecipe::new));
 
     //@Override

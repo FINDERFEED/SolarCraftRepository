@@ -62,12 +62,9 @@ public class SCPacketHandler {
                 }
                 return object;
             },(packetObject,context)->{
-//                try {
-//                    method.invoke(packetObject,context);
-//                } catch (Exception e) {
-//                    throw new RuntimeException(e);
-//                }
-                FDPacket.handlePlayPacket(packetObject,context);
+                context.workHandler().execute(()->{
+                    FDPacket.handlePlayPacket(packetObject,context);
+                });
             });
         }catch (Exception e){
             throw new RuntimeException("Error while loading " + id + " packet",e);
@@ -92,7 +89,9 @@ public class SCPacketHandler {
 //                } catch (Exception e) {
 //                    throw new RuntimeException(e);
 //                }
-                FDPacket.handleConfigurationPacket(packetObject,context);
+                context.workHandler().execute(()->{
+                    FDPacket.handleConfigurationPacket(packetObject,context);
+                });
             });
         }catch (Exception e){
             throw new RuntimeException("Error while loading " + id + " packet",e);

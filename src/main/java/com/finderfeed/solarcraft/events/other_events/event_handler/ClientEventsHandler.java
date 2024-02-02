@@ -28,6 +28,7 @@ import com.finderfeed.solarcraft.misc_things.RunicEnergy;
 import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
 import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacketUtil;
 import com.finderfeed.solarcraft.packet_handler.packets.CastAbilityPacket;
+import com.finderfeed.solarcraft.packet_handler.packets.RequestLoginDataPacket;
 import com.finderfeed.solarcraft.registries.ConfigRegistry;
 import com.finderfeed.solarcraft.registries.blocks.SCBlocks;
 import com.finderfeed.solarcraft.registries.items.SCItems;
@@ -63,6 +64,7 @@ import net.neoforged.neoforge.client.event.*;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.event.TickEvent;
 import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
+import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.*;
@@ -175,6 +177,12 @@ public class ClientEventsHandler {
         ClientHelpers.deleteCachedFragments();
         SOLAR_LEXICON_SCREEN_HANDLER.onLogout();
 
+    }
+
+    @SubscribeEvent
+    public static void onPlayerLogin(final ClientPlayerNetworkEvent.LoggingIn event){
+        System.out.println(Minecraft.getInstance().player);
+        FDPacketUtil.sendToServer(new RequestLoginDataPacket());
     }
 
 

@@ -2,6 +2,7 @@ package com.finderfeed.solarcraft.packet_handler.packets;
 
 import com.finderfeed.solarcraft.events.my_events.ClientsideBlockPlaceEvent;
 import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacket;
+import com.finderfeed.solarcraft.packet_handler.packet_system.Packet;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.level.block.Block;
@@ -9,6 +10,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.network.handling.PlayPayloadContext;
 
+
+@Packet("block_place_packet")
 public class BlockPlacePacket extends FDPacket {
 
     private int id;

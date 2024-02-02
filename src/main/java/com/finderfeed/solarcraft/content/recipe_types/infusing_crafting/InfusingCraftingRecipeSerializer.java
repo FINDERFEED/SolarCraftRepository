@@ -59,7 +59,7 @@ public class InfusingCraftingRecipeSerializer  implements RecipeSerializer<Infus
                 ExtraCodecs.strictUnboundedMap(SYMBOL_CODEC,Ingredient.CODEC_NONEMPTY).fieldOf("keys").forGetter(InfusingCraftingRecipe::getDefinitions),
                 ItemStack.ITEM_WITH_COUNT_CODEC.fieldOf("output").forGetter(InfusingCraftingRecipe::getOutput),
                 Codec.INT.fieldOf("time").forGetter(InfusingCraftingRecipe::getTime),
-                Codec.INT.fieldOf("count").forGetter(InfusingCraftingRecipe::getOutputCount),
+                ExtraCodecs.strictOptionalField(Codec.INT,"count",1).forGetter(InfusingCraftingRecipe::getOutputCount),
                 Codec.STRING.fieldOf("fragment").forGetter(InfusingCraftingRecipe::getFragmentID)
         ).apply(shit,InfusingCraftingRecipe::new);
     });

@@ -3,6 +3,7 @@ package com.finderfeed.solarcraft.content.loot_modifiers.custom_loot_conditions;
 import com.google.gson.JsonObject;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.advancements.critereon.ItemPredicate;
 
 import net.minecraft.util.ExtraCodecs;
@@ -39,12 +40,11 @@ public class SolarcraftNBTPredicate implements ICustomItemPredicate {
         return new SolarcraftNBTPredicate(predicate,higherthan,subNBT);
     }
 
-    public static final Codec<SolarcraftNBTPredicate> CODEC = ExtraCodecs.FLAT_JSON.flatXmap(json->{
-        SolarcraftNBTPredicate predicate = fromJson(json.getAsJsonObject());
-        return DataResult.success(predicate);
-    },ref->{
-        throw new RuntimeException("Serialization for module item predicate is not implemented");
-    });
+    public static final Codec<SolarcraftNBTPredicate> CODEC = RecordCodecBuilder.create(p->p.group(
+            Codec.STRING.fieldOf("nbt").forGetter(pr->pr.nbt),
+            Codec.INT.fieldOf("higherthan").forGetter(pr->pr.higherthan),
+            Codec.STRING.fieldOf("subnbt").forGetter(pr->pr.subNBT)
+    ).apply(p,SolarcraftNBTPredicate::new));
     @Override
     public Codec<? extends ICustomItemPredicate> codec() {
         return CODEC;
