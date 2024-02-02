@@ -1,8 +1,12 @@
 {
   "type": "solarcraft:infusing_new",
   "items": {
-    "A": {"item": "minecraft:diamond_pickaxe"},
-    "B": {"item": "solarcraft:illidium_ingot"}
+    "A": {
+      "item": "minecraft:diamond_pickaxe"
+    },
+    "B": {
+      "item": "solarcraft:illidium_ingot"
+    }
   },
   "pattern": [
     "   ",

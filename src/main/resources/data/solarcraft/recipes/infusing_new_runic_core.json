@@ -1,16 +1,36 @@
 {
   "type": "solarcraft:infusing_new",
   "items": {
-    "A": {"item": "solarcraft:small_solar_reactor"},
-    "B": {"item": "solarcraft:solar_rune_zeta"},
-    "C": {"item": "solarcraft:solar_rune_fira"},
-    "D": {"item": "solarcraft:solar_rune_tera"},
-    "E": {"item": "solarcraft:solar_rune_urba"},
-    "F": {"item": "solarcraft:solar_rune_kelda"},
-    "G": {"item": "solarcraft:solar_rune_giro"},
-    "H": {"item": "solarcraft:solar_rune_ultima"},
-    "I": {"item": "solarcraft:solar_rune_ardo"},
-    "J": {"item": "solarcraft:ardo_crystal"}
+    "A": {
+      "item": "solarcraft:small_solar_reactor"
+    },
+    "B": {
+      "item": "solarcraft:solar_rune_zeta"
+    },
+    "C": {
+      "item": "solarcraft:solar_rune_fira"
+    },
+    "D": {
+      "item": "solarcraft:solar_rune_tera"
+    },
+    "E": {
+      "item": "solarcraft:solar_rune_urba"
+    },
+    "F": {
+      "item": "solarcraft:solar_rune_kelda"
+    },
+    "G": {
+      "item": "solarcraft:solar_rune_giro"
+    },
+    "H": {
+      "item": "solarcraft:solar_rune_ultima"
+    },
+    "I": {
+      "item": "solarcraft:solar_rune_ardo"
+    },
+    "J": {
+      "item": "solarcraft:ardo_crystal"
+    }
   },
   "pattern": [
     "JDJ",

@@ -1,11 +1,21 @@
 {
   "type": "solarcraft:infusing_new",
   "items": {
-    "A": {"item": "solarcraft:algadium_block"},
-    "B": {"item": "solarcraft:geminium_ingot"},
-    "C": {"item": "solarcraft:energetic_ingot"},
-    "D": {"item": "solarcraft:medium_solar_reactor"},
-    "K": {"item": "solarcraft:turret_radar"}
+    "A": {
+      "item": "solarcraft:algadium_block"
+    },
+    "B": {
+      "item": "solarcraft:geminium_ingot"
+    },
+    "C": {
+      "item": "solarcraft:energetic_ingot"
+    },
+    "D": {
+      "item": "solarcraft:medium_solar_reactor"
+    },
+    "K": {
+      "item": "solarcraft:turret_radar"
+    }
   },
   "pattern": [
     " K ",
@@ -19,8 +29,10 @@
   },
   "time": 1500,
   "fragment": "zap_turret",
-  "tera": 2000,
-  "kelda": 2000,
   "energy": 7500,
-  "catalysts": " T     T    "
+  "catalysts": " T     T    ",
+  "re_cost": {
+    "tera": 2000,
+    "kelda": 2000
+  }
 }

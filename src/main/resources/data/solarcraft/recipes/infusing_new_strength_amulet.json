@@ -1,12 +1,24 @@
 {
   "type": "solarcraft:infusing_new",
   "items": {
-    "A": {"item": "solarcraft:tera_crystal"},
-    "B": {"item": "minecraft:obsidian"},
-    "C": {"item": "minecraft:glass"},
-    "D": {"item": "minecraft:string"},
-    "E": {"item": "solarcraft:energetic_ingot"},
-    "F": {"item": "minecraft:netherite_ingot"}
+    "A": {
+      "item": "solarcraft:tera_crystal"
+    },
+    "B": {
+      "item": "minecraft:obsidian"
+    },
+    "C": {
+      "item": "minecraft:glass"
+    },
+    "D": {
+      "item": "minecraft:string"
+    },
+    "E": {
+      "item": "solarcraft:energetic_ingot"
+    },
+    "F": {
+      "item": "minecraft:netherite_ingot"
+    }
   },
   "pattern": [
     " D ",

@@ -1,9 +1,15 @@
 {
   "type": "solarcraft:infusing_new",
   "items": {
-    "A": {"item": "solarcraft:illidium_axe"},
-    "B": {"item": "solarcraft:geminium_ingot"},
-    "C": {"item": "solarcraft:qualadium_ingot"}
+    "A": {
+      "item": "solarcraft:illidium_axe"
+    },
+    "B": {
+      "item": "solarcraft:geminium_ingot"
+    },
+    "C": {
+      "item": "solarcraft:qualadium_ingot"
+    }
   },
   "pattern": [
     " B ",
@@ -17,6 +23,8 @@
   },
   "time": 2500,
   "fragment": "qualadium_axe",
-  "urba": 2500,
-  "catalysts": "R R   R R   "
+  "catalysts": "R R   R R   ",
+  "re_cost": {
+    "urba": 2500
+  }
 }

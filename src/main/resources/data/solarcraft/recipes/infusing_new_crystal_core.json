@@ -1,15 +1,33 @@
 {
   "type": "solarcraft:infusing_new",
   "items": {
-    "D": {"item": "minecraft:diamond"},
-    "A": {"item": "solarcraft:zeta_crystal"},
-    "B": {"item": "solarcraft:fira_crystal"},
-    "C": {"item": "solarcraft:tera_crystal"},
-    "E": {"item": "solarcraft:kelda_crystal"},
-    "F": {"item": "solarcraft:urba_crystal"},
-    "G": {"item": "solarcraft:giro_crystal"},
-    "H": {"item": "solarcraft:ardo_crystal"},
-    "J": {"item": "solarcraft:ultima_crystal"}
+    "D": {
+      "item": "minecraft:diamond"
+    },
+    "A": {
+      "item": "solarcraft:zeta_crystal"
+    },
+    "B": {
+      "item": "solarcraft:fira_crystal"
+    },
+    "C": {
+      "item": "solarcraft:tera_crystal"
+    },
+    "E": {
+      "item": "solarcraft:kelda_crystal"
+    },
+    "F": {
+      "item": "solarcraft:urba_crystal"
+    },
+    "G": {
+      "item": "solarcraft:giro_crystal"
+    },
+    "H": {
+      "item": "solarcraft:ardo_crystal"
+    },
+    "J": {
+      "item": "solarcraft:ultima_crystal"
+    }
   },
   "pattern": [
     " C ",
@@ -18,7 +36,6 @@
     "GJ",
     " H "
   ],
-
   "result": {
     "item": "solarcraft:crystal_core"
   },

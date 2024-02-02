@@ -1,9 +1,15 @@
 {
   "type": "solarcraft:infusing_new",
   "items": {
-    "A": {"item": "solarcraft:illidium_hoe"},
-    "B": {"item": "solarcraft:geminium_ingot"},
-    "C": {"item": "solarcraft:qualadium_ingot"}
+    "A": {
+      "item": "solarcraft:illidium_hoe"
+    },
+    "B": {
+      "item": "solarcraft:geminium_ingot"
+    },
+    "C": {
+      "item": "solarcraft:qualadium_ingot"
+    }
   },
   "pattern": [
     " B ",
@@ -17,6 +23,8 @@
   },
   "time": 3000,
   "fragment": "qualadium_hoe",
-  "tera": 2500,
-  "catalysts": "   T T   T T"
+  "catalysts": "   T T   T T",
+  "re_cost": {
+    "tera": 2500
+  }
 }

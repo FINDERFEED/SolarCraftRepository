@@ -1,13 +1,27 @@
 {
   "type": "solarcraft:infusing_new",
   "items": {
-    "A": {"item": "solarcraft:algadium_block"},
-    "B": {"item": "solarcraft:qualadium_ingot"},
-    "C": {"item": "solarcraft:amethyst_core"},
-    "D": {"item": "solarcraft:turret_radar"},
-    "E": {"item": "solarcraft:materialization_core"},
-    "F": {"item": "solarcraft:geminium_ingot"},
-    "K": {"item": "solarcraft:ardo_crystal"}
+    "A": {
+      "item": "solarcraft:algadium_block"
+    },
+    "B": {
+      "item": "solarcraft:qualadium_ingot"
+    },
+    "C": {
+      "item": "solarcraft:amethyst_core"
+    },
+    "D": {
+      "item": "solarcraft:turret_radar"
+    },
+    "E": {
+      "item": "solarcraft:materialization_core"
+    },
+    "F": {
+      "item": "solarcraft:geminium_ingot"
+    },
+    "K": {
+      "item": "solarcraft:ardo_crystal"
+    }
   },
   "pattern": [
     "KDK",
@@ -22,8 +36,10 @@
   "time": 3000,
   "fragment": "solar_mortar",
   "energy": 50000,
-  "zeta": 10000,
-  "kelda": 5000,
-  "fira": 4500,
-  "catalysts": "U KK UU KK U"
+  "catalysts": "U KK UU KK U",
+  "re_cost": {
+    "zeta": 10000,
+    "kelda": 5000,
+    "fira": 4500
+  }
 }

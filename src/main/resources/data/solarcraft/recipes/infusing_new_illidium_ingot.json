@@ -1,9 +1,15 @@
 {
   "type": "solarcraft:infusing_new",
   "items": {
-    "A": {"item": "minecraft:iron_ingot"},
-    "B": {"item": "solarcraft:energy_dust"},
-    "C": {"item": "solarcraft:solar_dust"}
+    "A": {
+      "item": "minecraft:iron_ingot"
+    },
+    "B": {
+      "item": "solarcraft:energy_dust"
+    },
+    "C": {
+      "item": "solarcraft:solar_dust"
+    }
   },
   "pattern": [
     "   ",

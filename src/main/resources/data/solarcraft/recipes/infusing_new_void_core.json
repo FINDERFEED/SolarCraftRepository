@@ -1,9 +1,15 @@
 {
   "type": "solarcraft:infusing_new",
   "items": {
-    "B": {"item": "solarcraft:crystal_core"},
-    "C": {"item": "solarcraft:void_dust"},
-    "D": {"item": "minecraft:obsidian"}
+    "B": {
+      "item": "solarcraft:crystal_core"
+    },
+    "C": {
+      "item": "solarcraft:void_dust"
+    },
+    "D": {
+      "item": "minecraft:obsidian"
+    }
   },
   "pattern": [
     " C ",
@@ -12,7 +18,6 @@
     "DD",
     " C "
   ],
-
   "result": {
     "item": "solarcraft:void_core"
   },

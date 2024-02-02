@@ -1,9 +1,15 @@
 {
   "type": "solarcraft:infusing_new",
   "items": {
-    "F": {"item": "solarcraft:solar_dust"},
-    "G": {"item": "solarcraft:qualadium_ingot"},
-    "Q": {"item": "solarcraft:energy_dust"}
+    "F": {
+      "item": "solarcraft:solar_dust"
+    },
+    "G": {
+      "item": "solarcraft:qualadium_ingot"
+    },
+    "Q": {
+      "item": "solarcraft:energy_dust"
+    }
   },
   "pattern": [
     " Q ",
@@ -12,7 +18,6 @@
     "FF",
     " Q "
   ],
-
   "result": {
     "item": "solarcraft:charged_qualadium_ingot"
   },

@@ -1,11 +1,21 @@
 {
   "type": "solarcraft:infusing_new",
   "items": {
-    "C": {"item": "solarcraft:amethyst_core"},
-    "D": {"item": "solarcraft:kelda_crystal"},
-    "F": {"item": "solarcraft:zeta_crystal"},
-    "G": {"item": "minecraft:iron_pickaxe"},
-    "Q": {"item": "minecraft:gold_block"}
+    "C": {
+      "item": "solarcraft:amethyst_core"
+    },
+    "D": {
+      "item": "solarcraft:kelda_crystal"
+    },
+    "F": {
+      "item": "solarcraft:zeta_crystal"
+    },
+    "G": {
+      "item": "minecraft:iron_pickaxe"
+    },
+    "Q": {
+      "item": "minecraft:gold_block"
+    }
   },
   "pattern": [
     " F ",
@@ -19,7 +29,9 @@
   },
   "time": 700,
   "fragment": "modules",
-  "kelda": 2000,
-  "zeta": 2000,
-  "catalysts": "K KK KZ ZZ Z"
+  "catalysts": "K KK KZ ZZ Z",
+  "re_cost": {
+    "zeta": 2000,
+    "kelda": 2000
+  }
 }

@@ -1,11 +1,21 @@
 {
   "type": "solarcraft:infusing_new",
   "items": {
-    "C": {"item": "solarcraft:amethyst_core"},
-    "D": {"item": "solarcraft:kelda_crystal"},
-    "F": {"item": "solarcraft:tera_crystal"},
-    "G": {"item": "minecraft:iron_sword"},
-    "Q": {"item": "solarcraft:qualadium_ingot"}
+    "C": {
+      "item": "solarcraft:amethyst_core"
+    },
+    "D": {
+      "item": "solarcraft:kelda_crystal"
+    },
+    "F": {
+      "item": "solarcraft:tera_crystal"
+    },
+    "G": {
+      "item": "minecraft:iron_sword"
+    },
+    "Q": {
+      "item": "solarcraft:qualadium_ingot"
+    }
   },
   "pattern": [
     " F ",
@@ -14,13 +24,14 @@
     "QQ",
     " F "
   ],
-
   "result": {
     "item": "solarcraft:fury_swipes_module"
   },
   "time": 700,
   "fragment": "modules",
-  "tera": 2000,
-  "kelda": 2000,
-  "catalysts": "T TT TK KK K"
+  "catalysts": "T TT TK KK K",
+  "re_cost": {
+    "tera": 2000,
+    "kelda": 2000
+  }
 }

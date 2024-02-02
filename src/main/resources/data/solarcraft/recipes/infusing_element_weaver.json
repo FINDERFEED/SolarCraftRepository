@@ -1,11 +1,21 @@
 {
   "type": "solarcraft:infusing_new",
   "items": {
-    "A": {"item": "solarcraft:energy_core"},
-    "B": {"item": "solarcraft:qualadium_ingot"},
-    "C": {"item": "minecraft:iron_ingot"},
-    "D": {"item": "solarcraft:runic_core"},
-    "E": {"item": "solarcraft:energetic_ingot"}
+    "A": {
+      "item": "solarcraft:energy_core"
+    },
+    "B": {
+      "item": "solarcraft:qualadium_ingot"
+    },
+    "C": {
+      "item": "minecraft:iron_ingot"
+    },
+    "D": {
+      "item": "solarcraft:runic_core"
+    },
+    "E": {
+      "item": "solarcraft:energetic_ingot"
+    }
   },
   "pattern": [
     "BCB",
@@ -14,7 +24,6 @@
     "EE",
     "BAB"
   ],
-
   "result": {
     "item": "solarcraft:element_weaver"
   },

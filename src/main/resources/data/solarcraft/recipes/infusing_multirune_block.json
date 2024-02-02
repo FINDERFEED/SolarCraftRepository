@@ -1,16 +1,36 @@
 {
   "type": "solarcraft:infusing_new",
   "items": {
-    "A": {"item": "solarcraft:ardo_rune_block"},
-    "B": {"item": "solarcraft:zeta_rune_block"},
-    "C": {"item": "solarcraft:fira_rune_block"},
-    "D": {"item": "solarcraft:tera_rune_block"},
-    "E": {"item": "solarcraft:urba_rune_block"},
-    "F": {"item": "solarcraft:kelda_rune_block"},
-    "G": {"item": "solarcraft:ultima_rune_block"},
-    "H": {"item": "solarcraft:giro_rune_block"},
-    "K": {"item": "solarcraft:energetic_ingot"},
-    "L": {"item": "solarcraft:crystal_core"}
+    "A": {
+      "item": "solarcraft:ardo_rune_block"
+    },
+    "B": {
+      "item": "solarcraft:zeta_rune_block"
+    },
+    "C": {
+      "item": "solarcraft:fira_rune_block"
+    },
+    "D": {
+      "item": "solarcraft:tera_rune_block"
+    },
+    "E": {
+      "item": "solarcraft:urba_rune_block"
+    },
+    "F": {
+      "item": "solarcraft:kelda_rune_block"
+    },
+    "G": {
+      "item": "solarcraft:ultima_rune_block"
+    },
+    "H": {
+      "item": "solarcraft:giro_rune_block"
+    },
+    "K": {
+      "item": "solarcraft:energetic_ingot"
+    },
+    "L": {
+      "item": "solarcraft:crystal_core"
+    }
   },
   "pattern": [
     "ABC",
@@ -19,12 +39,13 @@
     "KK",
     "FGH"
   ],
-
   "result": {
     "item": "solarcraft:multirune_block"
   },
   "time": 400,
   "count": 4,
-  "ardo": 500,
-  "fragment": "multirune_block"
+  "fragment": "multirune_block",
+  "re_cost": {
+    "ardo": 500
+  }
 }

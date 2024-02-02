@@ -1,9 +1,15 @@
 {
   "type": "solarcraft:infusing_new",
   "items": {
-    "F": {"item": "solarcraft:solar_dust"},
-    "G": {"item": "minecraft:stone"},
-    "Q": {"item": "solarcraft:illidium_ingot"}
+    "F": {
+      "item": "solarcraft:solar_dust"
+    },
+    "G": {
+      "item": "minecraft:stone"
+    },
+    "Q": {
+      "item": "solarcraft:illidium_ingot"
+    }
   },
   "pattern": [
     "   ",
@@ -12,7 +18,6 @@
     "QQ",
     "   "
   ],
-
   "result": {
     "item": "solarcraft:block_boomerang"
   },

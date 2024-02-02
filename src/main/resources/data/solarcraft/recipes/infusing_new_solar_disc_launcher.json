@@ -1,12 +1,24 @@
 {
   "type": "solarcraft:infusing_new",
   "items": {
-    "A": {"item": "solarcraft:small_solar_reactor"},
-    "B": {"item": "solarcraft:energy_dust"},
-    "C": {"item": "minecraft:iron_block"},
-    "D": {"item": "minecraft:glass"},
-    "E": {"item": "minecraft:leather"},
-    "F": {"item": "minecraft:iron_ingot"}
+    "A": {
+      "item": "solarcraft:small_solar_reactor"
+    },
+    "B": {
+      "item": "solarcraft:energy_dust"
+    },
+    "C": {
+      "item": "minecraft:iron_block"
+    },
+    "D": {
+      "item": "minecraft:glass"
+    },
+    "E": {
+      "item": "minecraft:leather"
+    },
+    "F": {
+      "item": "minecraft:iron_ingot"
+    }
   },
   "pattern": [
     " D ",

@@ -1,13 +1,24 @@
 {
   "type": "solarcraft:infusing_new",
   "items": {
-    "B": {"item": "solarcraft:crystal_heart_piece"},
-    "C": {"item": "solarcraft:solar_chestplate"},
-    "D": {"item": "minecraft:netherite_ingot"},
-    "N": {"item": "solarcraft:qualadium_ingot"},
-    "S": {"item": "solarcraft:crystal_star"},
-    "F": {"item": "minecraft:feather"}
-
+    "B": {
+      "item": "solarcraft:crystal_heart_piece"
+    },
+    "C": {
+      "item": "solarcraft:solar_chestplate"
+    },
+    "D": {
+      "item": "minecraft:netherite_ingot"
+    },
+    "N": {
+      "item": "solarcraft:qualadium_ingot"
+    },
+    "S": {
+      "item": "solarcraft:crystal_star"
+    },
+    "F": {
+      "item": "minecraft:feather"
+    }
   },
   "pattern": [
     "NBN",
@@ -16,7 +27,6 @@
     "DD",
     "NSN"
   ],
-
   "result": {
     "item": "solarcraft:divine_chestplate"
   },

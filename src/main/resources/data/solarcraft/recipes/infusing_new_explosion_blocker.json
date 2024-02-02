@@ -1,10 +1,18 @@
 {
   "type": "solarcraft:infusing_new",
   "items": {
-    "B": {"item": "solarcraft:small_solar_reactor"},
-    "C": {"item": "solarcraft:algadium_ingot"},
-    "D": {"item": "solarcraft:ultima_crystal"},
-    "Q": {"item": "minecraft:obsidian"}
+    "B": {
+      "item": "solarcraft:small_solar_reactor"
+    },
+    "C": {
+      "item": "solarcraft:algadium_ingot"
+    },
+    "D": {
+      "item": "solarcraft:ultima_crystal"
+    },
+    "Q": {
+      "item": "minecraft:obsidian"
+    }
   },
   "pattern": [
     " C ",
@@ -13,7 +21,6 @@
     "QQ",
     " C "
   ],
-
   "result": {
     "item": "solarcraft:explosion_blocker"
   },

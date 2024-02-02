@@ -1,11 +1,21 @@
 {
   "type": "solarcraft:infusing_new",
   "items": {
-    "A": {"item": "solarcraft:solar_god_sword"},
-    "B": {"item": "solarcraft:enderium_ingot"},
-    "C": {"item": "solarcraft:energetic_ingot"},
-    "D": {"item": "solarcraft:charged_qualadium_ingot"},
-    "E": {"item": "solarcraft:blue_gem_enriched"}
+    "A": {
+      "item": "solarcraft:solar_god_sword"
+    },
+    "B": {
+      "item": "solarcraft:enderium_ingot"
+    },
+    "C": {
+      "item": "solarcraft:energetic_ingot"
+    },
+    "D": {
+      "item": "solarcraft:charged_qualadium_ingot"
+    },
+    "E": {
+      "item": "solarcraft:blue_gem_enriched"
+    }
   },
   "pattern": [
     " D ",
@@ -20,8 +30,10 @@
   "time": 500,
   "fragment": "solar_god_sword_upgrade",
   "tag": "yes",
-  "energy" : 10000,
-  "ardo": 2500,
-  "urba": 1500,
-  "catalysts":"Z    ZZ    Z"
+  "energy": 10000,
+  "catalysts": "Z    ZZ    Z",
+  "re_cost": {
+    "ardo": 2500,
+    "urba": 1500
+  }
 }
