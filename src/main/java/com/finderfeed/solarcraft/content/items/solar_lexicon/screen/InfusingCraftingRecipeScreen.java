@@ -114,7 +114,7 @@ public class InfusingCraftingRecipeScreen extends LexiconScreen {
             }
             ItemStack item = currentRecipe.getOutput().copy();
             item.setCount(currentRecipe.getOutputCount());
-            RenderingTools.renderItemAndTooltip(currentRecipe.getOutput(),graphics,relX+81,relY+34,mousex,mousey,100);
+            RenderingTools.renderItemAndTooltip(item,graphics,relX+81,relY+34,mousex,mousey,100);
 
             List<Item> uniqueItems = new ArrayList<>();
             Integer[] counts = new Integer[9];

@@ -46,6 +46,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class SolarLexiconScreen extends ScrollableLexiconScreen implements PostRenderTooltips {
+    public static boolean SPOILER_MODE = false;
     private int ticker = 0;
     private int OFFSET_X = 50;
     private int OFFSET_Y = 50;
@@ -69,6 +70,7 @@ public class SolarLexiconScreen extends ScrollableLexiconScreen implements PostR
     public ItemStackButton justForge;
     public ItemStackButton restoreFragmentsScreen;
     public ItemStackButton progressionBlocksScreen;
+    public ItemStackButton spoilerButton;
 
     public InfoButton info;
 
@@ -125,6 +127,10 @@ public class SolarLexiconScreen extends ScrollableLexiconScreen implements PostR
                 (btn,graphics,mx,my)->{
                     graphics.renderTooltip(font,Component.translatable("solarcraft.screens.buttons.progression_blocks_page"),mx,my);
                 });
+        spoilerButton = new ItemStackTabButton(relX+100,relY+100,16,16,(button)->{minecraft.setScreen(new ToggleSpoilersScreen());}, Items.BARRIER.getDefaultInstance(),1f,
+                (btn,graphics,mx,my)->{
+                    graphics.renderTooltip(font,Component.translatable("solarcraft.screens.buttons.spoilers"),mx,my);
+                });
 
 
         moveable.clear();
@@ -179,11 +185,12 @@ public class SolarLexiconScreen extends ScrollableLexiconScreen implements PostR
                 preText = Component.literal("???");
             }
             Collection<Progression> parents = ProgressionTree.INSTANCE.getProgressionRequirements(a);
-            AnimatedTooltip tooltip = new BlackBackgroundTooltip(-1000,-1000,relX + 230,relY + 200,7,5)
-                    .setStartYOpeness(16).addComponents(new ComponentSequence(new ComponentSequence.ComponentSequenceBuilder()
+
+            int size = this.getScreenWidth() - 50;
+            var builder = new ComponentSequence.ComponentSequenceBuilder()
                     .setAlignment(ContentAlignment.NO_ALIGNMENT)
-                            .addComponent(new FDTextComponent(ContentAlignment.NO_ALIGNMENT,30,0).setText(a.getTranslation(),0xffffff).setInnerBorder(3))
-                            .addComponent(new CustomRenderComponent(ContentAlignment.NO_ALIGNMENT,16,16,(graphics,x,y,pTicks,mouseX,mouseY,ticker,animationLength)->{
+                    .addComponent(new FDTextComponent(ContentAlignment.NO_ALIGNMENT,size,0).setText(a.getTranslation(),0xffffff).setInnerBorder(3))
+                    .addComponent(new CustomRenderComponent(ContentAlignment.NO_ALIGNMENT,16,16,(graphics,x,y,pTicks,mouseX,mouseY,ticker,animationLength)->{
                         RenderSystem.disableDepthTest();
                         if (g) {
                             graphics.renderItem(a.getIcon(), x, y);
@@ -197,15 +204,15 @@ public class SolarLexiconScreen extends ScrollableLexiconScreen implements PostR
                     .nextLine()
                     .addComponent(new EmptySpaceComponent(0,10))
                     .nextLine()
-                    .addComponent(new FDTextComponent(ContentAlignment.NO_ALIGNMENT,35,0).setText(preText,0xffffff).setInnerBorder(3))
+                    .addComponent(new FDTextComponent(ContentAlignment.NO_ALIGNMENT,size,0).setText(preText,0xffffff).setInnerBorder(3))
                     .nextLine()
                     .addComponent(new EmptySpaceComponent(0,10))
                     .nextLine()
-                    .addComponent(new FDTextComponent(ContentAlignment.NO_ALIGNMENT,30,0).setText(afterText,0xffffff).setInnerBorder(3))
+                    .addComponent(new FDTextComponent(ContentAlignment.NO_ALIGNMENT,size,0).setText(afterText,0xffffff).setInnerBorder(3))
                     .nextLine()
                     .addComponent(new EmptySpaceComponent(0,5))
                     .nextLine()
-                    .addComponent(new FDTextComponent(ContentAlignment.NO_ALIGNMENT,20,0).setText(Component.literal("Parent progressions:"),0xffffff).setInnerBorder(3))
+                    .addComponent(new FDTextComponent(ContentAlignment.NO_ALIGNMENT,size,0).setText(Component.literal("Parent progressions:"),0xffffff).setInnerBorder(3))
                     .addComponent(new CustomRenderComponent(ContentAlignment.NO_ALIGNMENT,16,16,(graphics,x,y,pTicks,mouseX,mouseY,ticker,animationLength)->{
                         if (!parents.isEmpty()) {
                             RenderSystem.disableDepthTest();
@@ -222,12 +229,27 @@ public class SolarLexiconScreen extends ScrollableLexiconScreen implements PostR
                             RenderSystem.disableDepthTest();
                         }else{
                             MultiBufferSource.BufferSource source = MultiBufferSource.immediate(Tesselator.getInstance().getBuilder());
+                            graphics.pose().pushPose();
+                            graphics.pose().translate(0,0,100);
                             font.drawInBatch("None",x,y + 3,0xffffff,true,graphics.pose().last().pose(),source, Font.DisplayMode.NORMAL,
                                     0, 15728880,font.isBidirectional());
+                            graphics.pose().popPose();
                             source.endBatch();
                         }
-                    }).forceXSize(parents.isEmpty() ? font.width("None") : parents.size()*18))
-                    .build()));
+                    }).forceXSize(parents.isEmpty() ? font.width("None") : parents.size()*18));
+
+            if (SPOILER_MODE && Helpers.hasPlayerCompletedProgression(a,player)){
+                builder.nextLine();
+                builder.addComponent(new EmptySpaceComponent(0,5));
+                builder.nextLine();
+                builder.addComponent(new FDTextComponent(ContentAlignment.NO_ALIGNMENT,size,0).setText(Component.literal("SPOIILER: ")
+                        .append(a.getSpoilerText()),0xffffff).setInnerBorder(3));
+            }
+
+            ComponentSequence sequence = new ComponentSequence(builder.build());
+
+            AnimatedTooltip tooltip = new BlackBackgroundTooltip(-1000,-1000,relX + 230,relY + 200,7,5)
+                    .setStartYOpeness(16).addComponents(sequence);
             button.setTooltip(tooltip);
             if (c){
                 unlocked.add(button);
@@ -238,7 +260,7 @@ public class SolarLexiconScreen extends ScrollableLexiconScreen implements PostR
             moveable.add(button);
         }
                                                             //nice
-        this.info = new InfoButton(relX + 206 + 37,relY + 69 + 38 + 20,14,14,(button,graphics,mx,my)->{
+        this.info = new InfoButton(relX - 17,relY + this.getScreenHeight() / 2  - 7,14,14,(button,graphics,mx,my)->{
             graphics.renderTooltip(font,font.split(Component.translatable("solarcraft.solar_lexicon_screen_info"),200),mx,my);
         });
 
@@ -248,6 +270,7 @@ public class SolarLexiconScreen extends ScrollableLexiconScreen implements PostR
         addWidget(stagesPage);
         addWidget(restoreFragmentsScreen);
         addWidget(progressionBlocksScreen);
+        addWidget(spoilerButton);
         int x = 242;
         toggleRecipesScreen.x = relX + x;
         toggleRecipesScreen.y = relY + 184 - 137;
@@ -259,7 +282,9 @@ public class SolarLexiconScreen extends ScrollableLexiconScreen implements PostR
         restoreFragmentsScreen.y = relY + 87;
         progressionBlocksScreen.x = relX + x;
         progressionBlocksScreen.y = relY + 87 + 20;
-        this.info.x = relX + x + 1;
+        spoilerButton.x = relX + x;
+        spoilerButton.y = relY + 87 + 40;
+//        this.info.x = relX + x + 1;
 
     }
 
@@ -396,6 +421,7 @@ public class SolarLexiconScreen extends ScrollableLexiconScreen implements PostR
 
         restoreFragmentsScreen.render(graphics,mousex,mousey,partialTicks,101);
         progressionBlocksScreen.render(graphics,mousex,mousey,partialTicks,101);
+        spoilerButton.render(graphics,mousex,mousey,partialTicks,101);
         info.render(graphics,mousex,mousey,partialTicks);
         matrices.popPose();
 
