@@ -165,10 +165,6 @@ public class ElementWeaverTileEntity extends REItemHandlerBlockEntity{
     }
 
 
-    @Override
-    public boolean saveAndLoadEverything() {
-        return true;
-    }
 
     public RunicEnergyCost getProcessingItemCost() {
         return processingItemCost;

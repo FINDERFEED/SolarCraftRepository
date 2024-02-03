@@ -20,7 +20,7 @@ public class SunShardPuzzleOpenScreen extends FDPacket {
 
     public SunShardPuzzleOpenScreen(Puzzle puzzle, BlockPos tilePosition){
         this.pos = tilePosition;
-        this.puzzle = puzzle;
+        this.puzzle = new Puzzle(puzzle);
     }
 
 

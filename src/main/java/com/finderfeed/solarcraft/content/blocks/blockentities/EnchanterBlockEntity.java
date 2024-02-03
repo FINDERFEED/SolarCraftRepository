@@ -183,20 +183,6 @@ public class EnchanterBlockEntity extends REItemHandlerBlockEntity {
         }
     }
 
-    @Nullable
-    @Override
-    public ClientboundBlockEntityDataPacket getUpdatePacket() {
-        CompoundTag tag1 = saveWithFullMetadata();
-        CompoundTag tag = super.getUpdatePacket().getTag();
-        tag1.merge(tag);
-        return Helpers.createTilePacket(this,tag1);
-    }
-
-    @Override
-    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
-        super.onDataPacket(net, pkt);
-        this.load(pkt.getTag());
-    }
 
     @Override
     public float getREPerTickInput() {
@@ -239,15 +225,4 @@ public class EnchanterBlockEntity extends REItemHandlerBlockEntity {
     }
 
 
-    public static class RunicEnergyCostConstructor{
-
-        public Map<RunicEnergy.Type,Double> COSTS=new HashMap<>();
-
-        public RunicEnergyCostConstructor(){}
-
-        public RunicEnergyCostConstructor addRunicEnergy(RunicEnergy.Type type, double amount){
-            COSTS.put(type,amount);
-            return this;
-        }
-    }
 }

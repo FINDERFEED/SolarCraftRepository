@@ -40,6 +40,7 @@ public class InfuserContainer extends AbstractContainerMenu {
                 public void setChanged() {
                     super.setChanged();
                     te.setChanged();
+                    Helpers.updateTile(te);
                 }
             });
 

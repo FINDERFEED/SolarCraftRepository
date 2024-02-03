@@ -55,13 +55,14 @@ public class SunShardPuzzleTakeTilePacket extends FDPacket {
 
 
     @Override
-    public void clientPlayHandle(PlayPayloadContext ctx) {
+    public void serverPlayHandle(PlayPayloadContext ctx) {
         ServerPlayer sender = (ServerPlayer) ctx.player().get();
         Level world = sender.level();
         if (world.getBlockEntity(tilePos) instanceof SunShardPuzzleBlockEntity tile){
             tile.onTakeTile(x,y);
         }
     }
+
 
     @Override
     public void write(FriendlyByteBuf friendlyByteBuf) {

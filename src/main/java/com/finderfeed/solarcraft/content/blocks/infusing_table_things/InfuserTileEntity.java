@@ -166,10 +166,11 @@ public class InfuserTileEntity extends REItemHandlerBlockEntity implements Solar
     }
 
     public static void tick(Level world, BlockPos pos, BlockState blockState, InfuserTileEntity tile) {
+        tile.updateStacksInPhantomSlots();
         if (!world.isClientSide){
             IItemHandler inv = tile.getInventory();
             if (inv == null) return;
-            tile.updateStacksInPhantomSlots();
+
             boolean forceUpdate = false;
             if (tile.isRecipeInProgress) {
                 
@@ -319,22 +320,22 @@ public class InfuserTileEntity extends REItemHandlerBlockEntity implements Solar
 
 
 
-    @Override
-    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
-        this.load(pkt.getTag());
-        super.onDataPacket(net, pkt);
-    }
-
-    @Nullable
-    @Override
-    public ClientboundBlockEntityDataPacket getUpdatePacket() {
-
-        ClientboundBlockEntityDataPacket pkt = super.getUpdatePacket();
-        CompoundTag tag = saveWithFullMetadata();
-        tag.merge(pkt.getTag());
-
-        return Helpers.createTilePacket(this,tag);
-    }
+//    @Override
+//    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
+//        this.load(pkt.getTag());
+//        super.onDataPacket(net, pkt);
+//    }
+//
+//    @Nullable
+//    @Override
+//    public ClientboundBlockEntityDataPacket getUpdatePacket() {
+//
+//        ClientboundBlockEntityDataPacket pkt = super.getUpdatePacket();
+//        CompoundTag tag = saveWithFullMetadata();
+//        tag.merge(pkt.getTag());
+//
+//        return Helpers.createTilePacket(this,tag);
+//    }
 
 
 

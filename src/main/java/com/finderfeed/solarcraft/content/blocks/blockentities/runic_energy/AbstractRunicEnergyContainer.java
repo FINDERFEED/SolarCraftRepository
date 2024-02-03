@@ -198,18 +198,15 @@ public abstract class AbstractRunicEnergyContainer extends SolarcraftBlockEntity
     public ClientboundBlockEntityDataPacket getUpdatePacket() {
         CompoundTag cmp = new CompoundTag();
         CompoundNBTHelper.writeBlockPosList("posclient",nullOrGiverPositionForClient,cmp);
-        if (this.saveAndLoadEverything()){
-            this.saveAdditional(cmp);
-        }
+        this.saveAdditional(cmp);
         return ClientboundBlockEntityDataPacket.create(this,(tile)->{return cmp;});
     }
 
     @Override
     public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
         nullOrGiverPositionForClient = CompoundNBTHelper.getBlockPosList("posclient",pkt.getTag());
-        if (this.saveAndLoadEverything()){
-            this.load(pkt.getTag());
-        }
+        this.load(pkt.getTag());
+
     }
 
     public void giveEnergy(RunicEnergy.Type type, double amount){
@@ -405,9 +402,7 @@ public abstract class AbstractRunicEnergyContainer extends SolarcraftBlockEntity
         this.container = container;
     }
 
-    public boolean saveAndLoadEverything(){
-        return false;
-    }
+
 
     public List<BlockPos> getNullOrGiverPositionForClient() {
         return nullOrGiverPositionForClient;
@@ -418,9 +413,7 @@ public abstract class AbstractRunicEnergyContainer extends SolarcraftBlockEntity
         super.onLoad();
         if (!level.isClientSide) {
             this.container.setMaximumEnergy((float) getRunicEnergyLimit());
-            if (this.saveAndLoadEverything()){
-                Helpers.updateTile(this);
-            }
+            Helpers.updateTile(this);
         }
     }
 }

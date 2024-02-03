@@ -50,6 +50,18 @@ public class Puzzle {
         return puzzle;
     }
 
+    public Puzzle(Puzzle puzzle){
+        this.tiles = new PuzzleTile[PUZZLE_SIZE][PUZZLE_SIZE];
+        Helpers.copyMatrixArray(puzzle.tiles,this.tiles);
+        this.templateId = puzzle.templateId;
+        this.remainingTiles = new ArrayList<>();
+        for (var tile : puzzle.remainingTiles){
+            this.remainingTiles.add(new PuzzleTile(tile));
+        }
+        this.remainingTypes = new HashMap<>(puzzle.remainingTypes);
+        this.defaultTemplate = puzzle.defaultTemplate;
+    }
+
     public static Puzzle editorPuzzle(Puzzle puzzle,int tilesAmount){
         for (PuzzleTileType tileType : PuzzleTileTypes.getAllTypes()){
             for (int i = 0; i < tilesAmount;i++) {

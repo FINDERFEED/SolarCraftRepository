@@ -72,7 +72,7 @@ public class REDrainWandAction implements WandAction<REDrainWandActionData> {
                         float energy = source.drainEnergy(type,player,source.getMaxEnergyDrain());
                         float delta = RunicEnergy.givePlayerEnergy(player,energy,newtype);
                         source.returnEnergy(type,player,delta);
-                        player.displayClientMessage(Component.literal(type.id.toUpperCase() + " " + RunicEnergy.getEnergy(player, newtype))
+                        player.displayClientMessage(Component.literal(String.format(type.id.toUpperCase() + " %.1f",  RunicEnergy.getEnergy(player, newtype)))
                                 .withStyle(ChatFormatting.GOLD), true);
                         Helpers.updateRunicEnergyOnClient(newtype,RunicEnergy.getEnergy(player,newtype),player);
                     }else{
