@@ -122,12 +122,13 @@ public class InfusingCraftingRecipeScreen extends LexiconScreen {
                 for (int g = 0 ; g < 3; g ++){
                     ItemRator t = r[i][g];
                     if (t != null) {
-                        if (t.getCurrentStack().getItem() != Items.AIR && !uniqueItems.contains(t)) {
+                        Item it = t.getCurrentStack().getItem();
+                        if (t.getCurrentStack().getItem() != Items.AIR && !uniqueItems.contains(it)) {
                             uniqueItems.add(t.getCurrentStack().getItem());
-                            int index = uniqueItems.indexOf(t);
+                            int index = uniqueItems.indexOf(it);
                             counts[index] = 1;
-                        } else if (uniqueItems.contains(t)) {
-                            int index = uniqueItems.indexOf(t);
+                        } else if (uniqueItems.contains(it)) {
+                            int index = uniqueItems.indexOf(it);
                             counts[index]++;
                         }
                     }

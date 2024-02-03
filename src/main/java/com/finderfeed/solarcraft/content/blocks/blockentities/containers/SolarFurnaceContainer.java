@@ -19,7 +19,13 @@ public class SolarFurnaceContainer extends AbstractContainer<SolarEnergyFurnaceT
     public SolarFurnaceContainer( int windowId, Inventory playerInv, SolarEnergyFurnaceTile te, ContainerData array) {
         super(SCContainers.SOLAR_FURNACE_CONTAINER.get(), windowId, playerInv, te, array);
         this.addSlot(new Slot(te,0,48,35));
-        this.addSlot(new FurnaceResultSlot(playerInv.player,te,1,108,35));
+        this.addSlot(new FurnaceResultSlot(playerInv.player,te,1,108,35){
+            @Override
+            public void setChanged() {
+                super.setChanged();
+                te.setChanged();
+            }
+        });
 
                 for(int l = 0; l < 3; ++l) {
             for(int j1 = 0; j1 < 9; ++j1) {

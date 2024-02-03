@@ -13,8 +13,7 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 
-import java.util.Arrays;
-import java.util.Map;
+import java.util.*;
 
 public class InfusingCraftingRecipe implements Recipe<Container> {
 //    public static final InfusingCraftingRecipeSerializer serializer = new InfusingCraftingRecipeSerializer();
@@ -29,12 +28,24 @@ public class InfusingCraftingRecipe implements Recipe<Container> {
     private final String fragment;
     public InfusingCraftingRecipe(String[] pattern,Map<Character, Ingredient> defs,ItemStack out,int time,int outputCount,String fragment){
         this.pattern = pattern;
-        this.DEFINITIONS = defs;
+        this.DEFINITIONS = new HashMap<>(defs);
+        this.DEFINITIONS.put(' ',Ingredient.of(Items.AIR));
         this.outputCount = outputCount;
         this.output = out;
         this.time = time;
-//        this.id = loc;
         this.fragment = fragment;
+        this.validate(pattern,defs);
+    }
+
+    private void validate(String[] pattern,Map<Character,Ingredient> defs){
+        for (String s : pattern){
+            for (int i = 0;i < s.length();i++){
+                char c = s.charAt(i);
+                if (c != ' ' && !defs.containsKey(c)){
+                    throw new RuntimeException("No character defined: " + c);
+                }
+            }
+        }
     }
 
     public String getFragmentID(){
@@ -83,7 +94,141 @@ public class InfusingCraftingRecipe implements Recipe<Container> {
 //
 //
 //        return patternEquals(arr);
-        return false;
+
+        int width = Arrays.stream(pattern).mapToInt(String::length).max().getAsInt();
+        int height = pattern.length;
+        var items = itemsFromContainer(c);
+        this.removeEmptyRows(items);
+        int itemsHeight = items.size();
+        if (items.isEmpty() || itemsHeight != height){
+            return false;
+        }
+        this.removeEmptyColumns(items);
+        int itemsWidth = items.get(0).size();
+
+        if (itemsWidth != width){
+            return false;
+        }
+        for (int x = 0; x < width;x++){
+            for (int y = 0; y < height;y++){
+                char ch = pattern[y].charAt(x);
+                ItemStack item = items.get(y).get(x);
+                if (ch == ' '){
+                    if (!item.isEmpty()){
+                        return false;
+                    }
+                }else{
+                    Ingredient ingredient = this.getDefinitions().get(ch);
+                    if (!ingredient.test(item)){
+                        return false;
+                    }
+                }
+
+            }
+        }
+
+        return true;
+    }
+
+    public void removeEmptyColumns(List<List<ItemStack>> stacks){
+        for (int x = 0; x < 3;x++){
+            boolean flag = true;
+            for (int y = 0;y < stacks.size();y++){
+                ItemStack item = stacks.get(y).get(0);
+                if (!item.isEmpty()){
+                    flag = false;
+                    break;
+                }
+            }
+            if (flag){
+                for (int y = 0;y < stacks.size();y++){
+                    stacks.get(y).remove(0);
+                }
+            }else{
+                break;
+            }
+        }
+        for (int x = stacks.get(0).size() - 1; x >= 0;x--){
+            boolean flag = true;
+            for (int y = 0;y < stacks.size();y++){
+                ItemStack item = stacks.get(y).get(x);
+                if (!item.isEmpty()){
+                    flag = false;
+                    break;
+                }
+            }
+            if (flag){
+                for (int y = 0;y < stacks.size();y++){
+                    stacks.get(y).remove(x);
+                }
+            }else{
+                break;
+            }
+        }
+    }
+
+    public void removeEmptyRows(List<List<ItemStack>> stacks){
+        for (int y = 0; y < 3;y++){
+            boolean flag = true;
+            for (int x = 0; x < 3;x++){
+                if (!stacks.get(0).get(x).isEmpty()){
+                    flag = false;
+                    break;
+                }
+            }
+            if (flag){
+                stacks.remove(0);
+            }else{
+                break;
+            }
+        }
+        int s = stacks.size() - 1;
+        for (int y = s; y >= 0;y--){
+            boolean flag = true;
+            for (int x = 0; x < 3;x++){
+                if (!stacks.get(y).get(x).isEmpty()){
+                    flag = false;
+                    break;
+                }
+            }
+            if (flag){
+                stacks.remove(y);
+            }else{
+                break;
+            }
+        }
+    }
+
+    //3*3
+    public List<List<ItemStack>> itemsFromContainer(Container container){
+        List<List<ItemStack>> list =  new ArrayList<>();
+        list.add(new ArrayList<>(List.of(ItemStack.EMPTY,ItemStack.EMPTY,ItemStack.EMPTY)));
+        list.add(new ArrayList<>(List.of(ItemStack.EMPTY,ItemStack.EMPTY,ItemStack.EMPTY)));
+        list.add(new ArrayList<>(List.of(ItemStack.EMPTY,ItemStack.EMPTY,ItemStack.EMPTY)));
+        for(int x = 0; x < 3;x++){
+            for(int y = 0; y < 3;y++){
+                List<ItemStack> i = list.get(y);
+                int index = x + 3 * y;
+                i.set(x,container.getItem(index));
+            }
+        }
+        return list;
+    }
+
+
+
+    private Ingredient[][] constructIngredientArray(int width,int height){
+        Ingredient[][] arr = new Ingredient[height][width];
+        for (int x = 0; x < width;x++){
+            for (int y = 0; y < height;y++){
+                char character = pattern[y].charAt(x);
+                if (character != ' '){
+                    Ingredient ingredient = this.getDefinitions().get(character);
+                    arr[y][x] = ingredient;
+                }
+            }
+        }
+        return arr;
     }
 
 //    private boolean patternEquals(Item[][] craftingPattern){

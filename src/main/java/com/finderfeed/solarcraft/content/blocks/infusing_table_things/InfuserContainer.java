@@ -1,5 +1,6 @@
 package com.finderfeed.solarcraft.content.blocks.infusing_table_things;
 
+import com.finderfeed.solarcraft.content.blocks.blockentities.containers.misc.TESlotItemHandler;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.client.screens.custom_slots.OutputSlot;
 import com.finderfeed.solarcraft.registries.containers.SCContainers;
@@ -33,8 +34,14 @@ public class InfuserContainer extends AbstractContainerMenu {
         int offsx = 0;
         // Tile Entity
         //for (int kj = 0; kj <= te.getContainerSize()-1;kj++){
-            this.addSlot(new SlotItemHandler(inventory, te.inputSlot(), 120 + offsx, 34));
-            this.addSlot(new OutputSlot.ItemHandler(inventory, te.outputSlot(), 195 + offsx, -22));
+            this.addSlot(new TESlotItemHandler(te,inventory, te.inputSlot(), 120 + offsx, 34));
+            this.addSlot(new OutputSlot.ItemHandler(inventory, te.outputSlot(), 195 + offsx, -22){
+                @Override
+                public void setChanged() {
+                    super.setChanged();
+                    te.setChanged();
+                }
+            });
 
         //}
 

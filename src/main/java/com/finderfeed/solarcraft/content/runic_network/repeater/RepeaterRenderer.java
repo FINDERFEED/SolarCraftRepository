@@ -26,16 +26,6 @@ public class RepeaterRenderer implements BlockEntityRenderer<BaseRepeaterTile> {
     @Override
     public void render(BaseRepeaterTile tile, float v, PoseStack matrices, MultiBufferSource multiBufferSource, int i, int i1) {
         matrices.pushPose();
-        VertexConsumer v1 = multiBufferSource.getBuffer(RenderType.text(TextureAtlas.LOCATION_BLOCKS));
-        matrices.pushPose();
-        Matrix4f m = matrices.last().pose();
-        matrices.translate(0,1,0);
-        v1.vertex(m,0,0,0).color(1f,1f,1f,1f).uv(0,0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(LightTexture.FULL_BRIGHT).endVertex();
-        v1.vertex(m,10,0,0).color(1f,1f,1f,1f).uv(1,0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(LightTexture.FULL_BRIGHT).endVertex();
-        v1.vertex(m,10,10,0).color(1f,1f,1f,1f).uv(1,1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(LightTexture.FULL_BRIGHT).endVertex();
-        v1.vertex(m,0,10,0).color(1f,1f,1f,1f).uv(0,1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(LightTexture.FULL_BRIGHT).endVertex();
-
-        matrices.popPose();
         if (tile.getConnections() != null){
             tile.getConnections().forEach((pos)->{
                 Vec3 tilepos = new Vec3(tile.getBlockPos().getX() +0.5,tile.getBlockPos().getY() +0.5,tile.getBlockPos().getZ() +0.5);

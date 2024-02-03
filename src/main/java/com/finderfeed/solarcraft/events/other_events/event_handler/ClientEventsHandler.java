@@ -181,7 +181,6 @@ public class ClientEventsHandler {
 
     @SubscribeEvent
     public static void onPlayerLogin(final ClientPlayerNetworkEvent.LoggingIn event){
-        System.out.println(Minecraft.getInstance().player);
         FDPacketUtil.sendToServer(new RequestLoginDataPacket());
     }
 

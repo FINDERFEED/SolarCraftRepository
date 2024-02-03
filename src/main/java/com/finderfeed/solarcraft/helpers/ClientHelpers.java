@@ -179,6 +179,7 @@ public class ClientHelpers {
 
 
     public static boolean doClientPlayerHasFragment(AncientFragment fragment){
+        if (getClientPlayer() == null) return false;
         return AncientFragmentHelper.doPlayerHasFragment(getClientPlayer(),fragment);
     }
 
