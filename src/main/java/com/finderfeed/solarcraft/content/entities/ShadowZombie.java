@@ -67,6 +67,9 @@ public class ShadowZombie extends Monster implements PowerableMob {
         if (src == SCDamageSources.RUNIC_MAGIC || src.is(DamageTypeTags.BYPASSES_ARMOR) ||
                 src == level.damageSources().fellOutOfWorld() ||
                 src == level.damageSources().genericKill()) {
+            if (!level.isClientSide) {
+                System.out.println(this.getHealth());
+            }
             return super.hurt(src, amount);
         }else{
             return super.hurt(src,0);

@@ -29,7 +29,7 @@ import net.neoforged.neoforge.common.CommonHooks;
 import org.checkerframework.checker.units.qual.A;
 import org.jetbrains.annotations.Nullable;
 
-public abstract class GrowableBush extends DeadBushBlock implements BonemealableBlock {
+public abstract class GrowableBush extends NABushBlock implements BonemealableBlock {
 
     public static final Property<Integer> AGE_3 = BlockStateProperties.AGE_3;
 

@@ -32,6 +32,7 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.event.TickEvent;
 import net.neoforged.neoforge.event.entity.living.LivingAttackEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
+import net.neoforged.neoforge.event.entity.living.LivingHurtEvent;
 import net.neoforged.neoforge.event.entity.player.AttackEntityEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 
@@ -112,27 +113,27 @@ public class ModuleEventsHandler {
     }
 
 
-    @SubscribeEvent
-    public static void handleMagicDamageBonus(AttackEntityEvent event){
-        Player player = event.getEntity();
-        Entity entity = event.getTarget();
-        if (!player.level().isClientSide){
-            ItemStack stack = player.getMainHandItem();
-            if ((stack.getItem() instanceof SwordItem)  && (entity instanceof LivingEntity target)){
-                if (hasModule(SCItems.MAGIC_DAMAGE_MODULE_5.get(),stack)){
-                    if (Helpers.isVulnerable(target)) {
-                        float modifier = player.getAttackStrengthScale(0);
-                        DamageSource src = SCDamageSources.playerArmorPierce(player);
-                        if (target instanceof ShadowZombie){
-                            src = SCDamageSources.RUNIC_MAGIC;
-                        }
-                        target.hurt(src, modifier * 5);
-                        target.invulnerableTime = 0;
-                    }
-                }
-            }
-        }
-    }
+//    @SubscribeEvent
+//    public static void handleMagicDamageBonus(AttackEntityEvent event){
+//        Player player = event.getEntity();
+//        Entity entity = event.getTarget();
+//        if (!player.level().isClientSide){
+//            ItemStack stack = player.getMainHandItem();
+//            if ((stack.getItem() instanceof SwordItem)  && (entity instanceof LivingEntity target)){
+//                if (hasModule(SCItems.MAGIC_DAMAGE_MODULE_5.get(),stack)){
+//                    if (Helpers.isVulnerable(target)) {
+//                        float modifier = player.getAttackStrengthScale(0);
+//                        DamageSource src = SCDamageSources.playerArmorPierce(player);
+//                        if (target instanceof ShadowZombie){
+//                            src = SCDamageSources.RUNIC_MAGIC;
+//                        }
+//                        target.hurt(src, modifier * 5);
+//                        target.invulnerableTime = 0;
+//                    }
+//                }
+//            }
+//        }
+//    }
 
 
 

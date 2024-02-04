@@ -176,7 +176,7 @@ public class SCBlocks {
     public static final DeferredHolder<Block,Block> RADIANT_WOOD_SLAB = BLOCKS.register("radiant_slab",()-> new FlammableSlabBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_PLANKS),20));
     public static final DeferredHolder<Block,Block> RADIANT_CRYSTAL = BLOCKS.register("radiant_crystal",()->new GlassLikeBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.GLASS)));
     public  static  final DeferredHolder<Block,Block> CRYSTAL_FLOWER = BLOCKS.register("crystal_flower",()-> new CrystalFlower(BlockBehaviour.Properties.ofFullCopy(Blocks.DEAD_BUSH).lightLevel((i)->6)));
-    public static final DeferredHolder<Block,Block> RADIANT_BERRY_BUSH = BLOCKS.register("radiant_berry_bush",()->new DeadBushBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.DEAD_BUSH)));
+    public static final DeferredHolder<Block,Block> RADIANT_BERRY_BUSH = BLOCKS.register("radiant_berry_bush",()->new NABushBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.DEAD_BUSH)));
 
     public  static  final DeferredHolder<Block,Block> DIMENSION_CORE = BLOCKS.register("dimension_core",()-> new DimensionCoreBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE)));
 
