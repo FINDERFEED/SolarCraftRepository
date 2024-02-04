@@ -73,8 +73,8 @@ public class UlderaLightningEntity extends Entity {
                     .setPhysics(false)
                     .build();
             for (int i = 0; i < c; i++){
-                double x = Math.sin(angle * i);
-                double z = Math.cos(angle * i);
+                double x = Math.sin(angle * i + random.nextFloat() * angle);
+                double z = Math.cos(angle * i + random.nextFloat() * angle);
                 Vec3 ppos = p.add(x * radius,0,z * radius);
                 Vec3 speed = new Vec3(0.05 * -x,0.1,0.05 * -z);
                 level.addParticle(options,ppos.x,ppos.y,ppos.z,

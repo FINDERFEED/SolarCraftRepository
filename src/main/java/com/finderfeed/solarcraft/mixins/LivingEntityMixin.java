@@ -1,6 +1,7 @@
 package com.finderfeed.solarcraft.mixins;
 
 import com.finderfeed.solarcraft.content.entities.ShadowZombie;
+import com.finderfeed.solarcraft.content.items.SolarGodSword;
 import com.finderfeed.solarcraft.events.other_events.event_handler.ModuleEventsHandler;
 import com.finderfeed.solarcraft.registries.damage_sources.SCDamageSources;
 import com.finderfeed.solarcraft.registries.items.SCItems;
@@ -25,15 +26,23 @@ public abstract class LivingEntityMixin {
     @Inject(method = "hurt",at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;actuallyHurt(Lnet/minecraft/world/damagesource/DamageSource;F)V"))
     public void hurt(DamageSource srce, float amount, CallbackInfoReturnable<Boolean> cir){
         LivingEntity entity = (LivingEntity) (Object) this;
-        ItemStack item;
-        if (srce.getEntity() instanceof ServerPlayer player && (item = player.getMainHandItem()).getItem() instanceof SwordItem sword &&
-                ModuleEventsHandler.hasModule(SCItems.MAGIC_DAMAGE_MODULE_5.get(),item)){
+        if (srce.getEntity() instanceof ServerPlayer player){
+            ItemStack item = player.getMainHandItem();
             float modifier = player.getAttackStrengthScale(0);
-            DamageSource src = SCDamageSources.playerArmorPierce(player);
-            if (entity instanceof ShadowZombie){
-                src = SCDamageSources.RUNIC_MAGIC;
+            if (item.getItem() instanceof SwordItem sword && ModuleEventsHandler.hasModule(SCItems.MAGIC_DAMAGE_MODULE_5.get(),item)) {
+                DamageSource src = SCDamageSources.playerArmorPierce(player);
+                if (entity instanceof ShadowZombie) {
+                    src = SCDamageSources.RUNIC_MAGIC;
+                }
+                actuallyHurt(src, modifier * 5);
             }
-            actuallyHurt(src,modifier * 5);
+            if (item.getItem() instanceof SolarGodSword sword && sword.getItemLevel(item) >= 1){
+                DamageSource src = SCDamageSources.playerArmorPierce(player);
+                if (entity instanceof ShadowZombie) {
+                    src = SCDamageSources.RUNIC_MAGIC;
+                }
+                actuallyHurt(src, modifier * 5);
+            }
         }
     }
 

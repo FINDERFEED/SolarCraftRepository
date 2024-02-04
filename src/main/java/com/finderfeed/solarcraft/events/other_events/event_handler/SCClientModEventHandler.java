@@ -51,17 +51,13 @@ import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
 import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.color.block.BlockColor;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.DimensionSpecialEffects;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.client.renderer.texture.atlas.SpriteSourceType;
-import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.BlockAndTintGetter;
-import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
@@ -69,7 +65,6 @@ import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.*;
 import net.neoforged.neoforge.client.settings.KeyConflictContext;
 import net.neoforged.neoforge.common.NeoForge;
-import org.jetbrains.annotations.Nullable;
 import org.lwjgl.glfw.GLFW;
 
 
@@ -85,6 +80,8 @@ public class SCClientModEventHandler {
     public static final KeyMapping FORTH_ABILITY_KEY = new KeyMapping("key.fire_ability_four", KeyConflictContext.UNIVERSAL, InputConstants.Type.SCANCODE, GLFW.GLFW_KEY_D,"key.solarcraft.category");
     public static final KeyMapping GUI_ABILITY_BUY_SCREEN = new KeyMapping("key.ability_buy_screen.solarcraft", KeyConflictContext.UNIVERSAL, InputConstants.Type.SCANCODE, GLFW.GLFW_KEY_D,"key.solarcraft.category");
     public static final KeyMapping GUI_WAND_MODE_SELECTION = new KeyMapping("key.wand_mode_selection_screen", KeyConflictContext.UNIVERSAL, InputConstants.Type.SCANCODE, GLFW.GLFW_KEY_K,"key.solarcraft.category");
+    public static final KeyMapping MEMORIZE_AND_CLOSE = new KeyMapping("key.memorize_and_close", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_C,"key.solarcraft.category");
+    public static final KeyMapping CLOSE_ALL_PAGES = new KeyMapping("key.close_all_pages", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_X,"key.solarcraft.category");
 
     public static SpriteSourceType RADIANT_TEXTURE_TYPE;
 
@@ -110,6 +107,8 @@ public class SCClientModEventHandler {
         event.register(FORTH_ABILITY_KEY);
         event.register(GUI_ABILITY_BUY_SCREEN);
         event.register(GUI_WAND_MODE_SELECTION);
+        event.register(MEMORIZE_AND_CLOSE);
+        event.register(CLOSE_ALL_PAGES);
     }
 
     @SubscribeEvent

@@ -21,7 +21,7 @@ public class StartEntityAnimationPacket extends FDPacket {
     public StartEntityAnimationPacket(Entity entity, String tickerName, AnimationTicker ticker) {
         this.entityId = entity.getId();
         this.tickerName = tickerName;
-        this.animationTicker = ticker;
+        this.animationTicker = new AnimationTicker(ticker);
     }
 
 

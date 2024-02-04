@@ -64,7 +64,7 @@ public class TrapControllerTile extends BlockEntity  {
     public static void tick(Level world, BlockPos post, BlockState blockState, TrapControllerTile tile) {
         if (!tile.level.isClientSide && !tile.isActivated){
             if (!tile.destroyedBlocks){
-                tile.fillEntrancePositions();
+//                tile.fillEntrancePositions();
                 tile.fillResultPositions();
                 tile.fillTrapPositions();
                 tile.destroyedBlocks = true;
@@ -134,7 +134,7 @@ public class TrapControllerTile extends BlockEntity  {
                 if (tile.ticks >= 1800){
                     tile.isAttackingPlayer = false;
                     tile.isActivated = true;
-                    tile.entrancePositions.forEach((pos) -> tile.level.destroyBlock(pos, false));
+                    //tile.entrancePositions.forEach((pos) -> tile.level.destroyBlock(pos, false));
                     tile.resultBlockPositions.forEach((pos) -> tile.level.destroyBlock(pos, false));
                 }
             }

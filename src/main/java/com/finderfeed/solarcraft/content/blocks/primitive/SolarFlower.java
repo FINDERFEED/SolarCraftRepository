@@ -2,9 +2,12 @@ package com.finderfeed.solarcraft.content.blocks.primitive;
 
 import com.finderfeed.solarcraft.client.particles.SCParticleTypes;
 import com.finderfeed.solarcraft.registries.items.SCItems;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.DeadBushBlock;
 import net.minecraft.core.Direction;
@@ -23,6 +26,11 @@ public class SolarFlower extends GrowableBush {
         ItemStack itemStack = SCItems.ENERGY_DUST.get().getDefaultInstance();
         itemStack.setCount(source.nextInt(3) + 2);
         return itemStack;
+    }
+
+    @Override
+    protected boolean mayPlaceOn(BlockState p_51042_, BlockGetter p_51043_, BlockPos p_51044_) {
+        return p_51042_.is(BlockTags.DEAD_BUSH_MAY_PLACE_ON);
     }
 
     @Override

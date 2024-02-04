@@ -860,5 +860,7 @@
   "spoiler.dimension_core": "Go into Radiant Land dimension.",
   "spoiler.crystal_boss": "Defeat the Crystal Construct.",
   "spoiler.runic_elemental": "Kill the Runic Elemental.",
-  "spoiler.clear_world": "Get a crystal of each type that are scattered among Radiant Land, find a special structure with 8 stands in circle, place the crystals on them. Wait for the night and click on the block in the middle. Don't let the crystals corrupt and explode by killing corruption wisps around them."
+  "spoiler.clear_world": "Get a crystal of each type that are scattered among Radiant Land, find a special structure with 8 stands in circle, place the crystals on them. Wait for the night and click on the block in the middle. Don't let the crystals corrupt and explode by killing corruption wisps around them.",
+  "key.memorize_and_close": "Lexicon memorize and close",
+  "key.close_all_pages": "Lexicon close all pages"
 }
