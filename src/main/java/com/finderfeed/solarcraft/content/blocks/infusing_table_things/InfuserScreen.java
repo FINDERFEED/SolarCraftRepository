@@ -128,9 +128,9 @@ public class InfuserScreen extends AbstractContainerScreen<InfuserContainer> {
             }
             RenderingTools.fill(matrices,relX + 11 + a,relY + 80,relX + 21 + a,relY + (int)(80 - percent),1,1,0,1);
         }
-
+        matrices.pushPose();
         if (tier == InfuserTileEntity.Tier.RUNIC_ENERGY || tier == InfuserTileEntity.Tier.SOLAR_ENERGY ) {
-            matrices.pushPose();
+
 
             if (recipe.isPresent()) {
                 InfusingRecipe recipe1 = recipe.get().value();
