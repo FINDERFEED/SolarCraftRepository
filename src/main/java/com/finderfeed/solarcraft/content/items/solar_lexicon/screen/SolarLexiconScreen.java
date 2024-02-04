@@ -238,7 +238,7 @@ public class SolarLexiconScreen extends ScrollableLexiconScreen implements PostR
                         }
                     }).forceXSize(parents.isEmpty() ? font.width("None") : parents.size()*18));
 
-            if (SPOILER_MODE && Helpers.hasPlayerCompletedProgression(a,player)){
+            if (SPOILER_MODE){
                 builder.nextLine();
                 builder.addComponent(new EmptySpaceComponent(0,5));
                 builder.nextLine();

@@ -18,7 +18,7 @@ plugins {
 //apply plugin: 'org.spongepowered.mixin'
 
 
-version = mod_version
+version = "${mod_version}-${minecraft_version}"
 group = mod_group_id
 
 repositories {
